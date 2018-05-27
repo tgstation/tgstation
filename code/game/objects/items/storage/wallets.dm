@@ -41,13 +41,13 @@
 	refreshID()
 
 /obj/item/storage/wallet/proc/refreshID()
+	LAZYCLEARLIST(combined_access)
 	if(!(front_id in src))
 		front_id = null
 	for(var/obj/item/card/id/I in contents)
-		LAZYINITLIST(combined_access)
-		LAZYCLEARLIST(combined_access)
 		if(!front_id)
 			front_id = I
+		LAZYINITLIST(combined_access)
 		combined_access |= I.access
 	update_icon()
 

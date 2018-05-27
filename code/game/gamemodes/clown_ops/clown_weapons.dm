@@ -107,7 +107,7 @@
 /obj/item/melee/transforming/energy/sword/bananium/suicide_act(mob/user)
 	if(!active)
 		transform_weapon(user, TRUE)
-	user.visible_message("<span class='suicide'>[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku, but the blade slips off of them harmlessly!</span>")
+	user.visible_message("<span class='suicide'>[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku, but the blade slips off of [user.p_them()] harmlessly!</span>")
 	GET_COMPONENT(slipper, /datum/component/slippery)
 	slipper.Slip(user)
 	return SHAME

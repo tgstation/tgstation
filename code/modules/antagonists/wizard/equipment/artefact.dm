@@ -98,8 +98,10 @@
 	icon_state = "reality"
 	pixel_x = -96
 	pixel_y = -96
-	grav_pull = 6
+	dissipate = 0
+	move_self = 0
 	consume_range = 3
+	grav_pull = 4
 	current_size = STAGE_FOUR
 	allowed_size = STAGE_FOUR
 
@@ -177,7 +179,7 @@
 	M.revive(full_heal = 1, admin_revive = 1)
 	spooky_scaries |= M
 	to_chat(M, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
-	to_chat(M, "<span class='userdanger'>[user.p_they(TRUE)] [user.p_are()] your master now, assist them even if it costs you your new life!</span>")
+	to_chat(M, "<span class='userdanger'>[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!</span>")
 
 	equip_roman_skeleton(M)
 
@@ -318,7 +320,7 @@
 		to_chat(victim, "<span class='notice'>You feel a dark presence from [A.name]</span>")
 
 /obj/item/voodoo/suicide_act(mob/living/carbon/user)
-    user.visible_message("<span class='suicide'>[user] links the voodoo doll to themself and sits on it, infinitely crushing themself! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+    user.visible_message("<span class='suicide'>[user] links the voodoo doll to [user.p_them()]self and sits on it, infinitely crushing [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
     user.gib()
     return(BRUTELOSS)
 

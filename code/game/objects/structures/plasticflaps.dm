@@ -10,6 +10,9 @@
 	CanAtmosPass = ATMOS_PASS_NO
 	var/state = PLASTIC_FLAPS_NORMAL
 
+/obj/structure/plasticflaps/opaque
+	opacity = TRUE
+
 /obj/structure/plasticflaps/examine(mob/user)
 	. = ..()
 	switch(state)
@@ -103,4 +106,3 @@
 	. = ..()
 	if (oldloc)
 		oldloc.air_update_turf(1)
-		

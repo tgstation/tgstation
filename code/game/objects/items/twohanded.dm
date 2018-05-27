@@ -236,7 +236,7 @@
 
 /obj/item/twohanded/fireaxe/Initialize()
 	. = ..()
-	AddComponent(/datum/component/butchering, 100, 80, hitsound) //axes are not known for being precision butchering tools
+	AddComponent(/datum/component/butchering, 100, 80, 0 , hitsound) //axes are not known for being precision butchering tools
 
 /obj/item/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
@@ -418,7 +418,7 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(C.wear_mask)
-			in_mouth = ", barely missing their nose"
+			in_mouth = ", barely missing [user.p_their()] nose"
 	. = "<span class='warning'>[user] swings [user.p_their()] [name][in_mouth]. [user.p_they(TRUE)] light[user.p_s()] [user.p_their()] [A.name] in the process.</span>"
 	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 	add_fingerprint(user)

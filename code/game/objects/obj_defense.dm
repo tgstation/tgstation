@@ -1,6 +1,9 @@
 
 //the essential proc to call when an obj must receive damage of any kind.
 /obj/proc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, armour_penetration = 0)
+	if(QDELETED(src))
+		stack_trace("[src] taking damage after deletion")
+		return
 	if(sound_effect)
 		play_attack_sound(damage_amount, damage_type, damage_flag)
 	if(!(resistance_flags & INDESTRUCTIBLE) && obj_integrity > 0)
@@ -219,12 +222,10 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		cut_overlay(GLOB.fire_overlay, TRUE)
 		SSfire_burning.processing -= src
 
-
-
-/obj/proc/tesla_act(var/power)
+/obj/proc/tesla_act(power, tesla_flags, shocked_targets)
 	obj_flags |= BEING_SHOCKED
 	var/power_bounced = power / 2
-	tesla_zap(src, 3, power_bounced)
+	tesla_zap(src, 3, power_bounced, tesla_flags, shocked_targets)
 	addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 
 //The surgeon general warns that being buckled to certain objects recieving powerful shocks is greatly hazardous to your health

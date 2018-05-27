@@ -432,7 +432,7 @@
 		return
 
 	var/list/options = list("Regular Restart", "Hard Restart (No Delay/Feeback Reason)", "Hardest Restart (No actions, just reboot)")
-	if(SERVER_TOOLS_PRESENT)
+	if(world.TgsAvailable())
 		options += "Server Restart (Kill and restart DD)";
 
 	var/rebootconfirm
@@ -457,7 +457,7 @@
 					world.Reboot(fast_track = TRUE)
 				if("Server Restart (Kill and restart DD)")
 					to_chat(world, "Server restart - [init_by]")
-					SERVER_TOOLS_REBOOT_BYOND
+					world.TgsEndProcess()
 
 /datum/admins/proc/end_round()
 	set category = "Server"
@@ -643,7 +643,7 @@
 		T.ChangeTurf(chosen)
 	else
 		var/atom/A = new chosen(usr.loc)
-		A.admin_spawned = TRUE
+		A.flags_1 |= ADMIN_SPAWNED_1
 
 	log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

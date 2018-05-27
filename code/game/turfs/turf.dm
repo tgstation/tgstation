@@ -29,6 +29,10 @@
 	var/requires_activation	//add to air processing after initialize?
 	var/changing_turf = FALSE
 
+	var/bullet_bounce_sound = 'sound/weapons/bulletremove.ogg' //sound played when a shell casing is ejected ontop of the turf.
+	var/bullet_sizzle = FALSE //used by ammo_casing/bounce_away() to determine if the shell casing should make a sizzle sound when it's ejected over the turf
+							//IE if the turf is supposed to be water, set TRUE.
+
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list("x", "y", "z")
 	if(var_name in banned_edits)
@@ -36,9 +40,9 @@
 	. = ..()
 
 /turf/Initialize()
-	if(initialized)
+	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	initialized = TRUE
+	flags_1 |= INITIALIZED_1
 
 	assemble_baseturfs()
 
@@ -88,7 +92,7 @@
 	SSair.remove_from_active(src)
 	visibilityChanged()
 	QDEL_LIST(blueprint_data)
-	initialized = FALSE
+	flags_1 &= ~INITIALIZED_1
 	requires_activation = FALSE
 	..()
 
@@ -184,7 +188,7 @@
 	//melting
 	if(isobj(AM) && air && air.temperature > T0C)
 		var/obj/O = AM
-		if(O.flags_2 & FROZEN_2)
+		if(O.obj_flags & FROZEN)
 			O.make_unfrozen()
 
 /turf/proc/is_plasteel_floor()
@@ -241,19 +245,19 @@
 
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
-		if(O.level == 1 && O.initialized)
+		if(O.level == 1 && (O.flags_1 & INITIALIZED_1))
 			O.hide(src.intact)
 
 // override for space turfs, since they should never hide anything
 /turf/open/space/levelupdate()
 	for(var/obj/O in src)
-		if(O.level == 1 && O.initialized)
+		if(O.level == 1 && (O.flags_1 & INITIALIZED_1))
 			O.hide(0)
 
 // Removes all signs of lattice on the pos of the turf -Donkieyo
 /turf/proc/RemoveLattice()
 	var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-	if(L && L.initialized)
+	if(L && (L.flags_1 & INITIALIZED_1))
 		qdel(L)
 
 /turf/proc/phase_damage_creatures(damage,mob/U = null)//>Ninja Code. Hurts and knocks out creatures on this turf //NINJACODE
@@ -339,7 +343,7 @@
 
 	for(var/V in contents)
 		var/atom/A = V
-		if(A.level >= affecting_level)
+		if(!QDELETED(A) && A.level >= affecting_level)
 			if(ismovableatom(A))
 				var/atom/movable/AM = A
 				if(!AM.ex_check(explosion_id))

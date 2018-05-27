@@ -28,13 +28,7 @@
 			CRASH("Unable to find a blobstart landmark")
 
 	var/atom/movable/AM = parent
-	if(ismob(AM.loc))
-		var/mob/M = AM.loc
-		M.transferItemToLoc(AM, targetturf, TRUE)	//nodrops disks when?
-	else if(AM.loc.SendSignal(COMSIG_CONTAINS_STORAGE))
-		AM.loc.SendSignal(COMSIG_TRY_STORAGE_TAKE, src, targetturf, TRUE)
-	else
-		AM.forceMove(targetturf)
+	AM.forceMove(targetturf)
 	// move the disc, so ghosts remain orbiting it even if it's "destroyed"
 	return targetturf
 
@@ -57,10 +51,12 @@
 	var/turf/T = get_turf(parent)
 	if (!T)
 		return FALSE
+	var/area/A = T.loc
+	if(istype(A, /area/fabric_of_reality)) // Obviously terrible, just for test merging
+		return FALSE
 	if (is_station_level(T.z) || is_centcom_level(T.z))
 		return TRUE
 	if (is_transit_level(T.z))
-		var/area/A = T.loc
 		if (is_type_in_typecache(A, allowed_shuttles))
 			return TRUE
 

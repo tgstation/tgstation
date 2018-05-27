@@ -17,6 +17,10 @@ GLOBAL_PROTECT(security_mode)
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
+	TgsNew()
+
+	GLOB.revdata = new
+
 	config.Load()
 
 	//SetupLogs depends on the RoundID, so lets check
@@ -24,8 +28,6 @@ GLOBAL_PROTECT(security_mode)
 	SSdbcore.CheckSchemaVersion()
 	SSdbcore.SetRoundID()
 	SetupLogs()
-
-	SERVER_TOOLS_ON_NEW
 
 	load_admins()
 	LoadVerbs(/datum/verbs/menu)
@@ -90,6 +92,7 @@ GLOBAL_PROTECT(security_mode)
 	GLOB.sql_error_log = "[GLOB.log_directory]/sql.log"
 	GLOB.world_qdel_log = "[GLOB.log_directory]/qdel.log"
 	GLOB.world_runtime_log = "[GLOB.log_directory]/runtime.log"
+	GLOB.query_debug_log = "[GLOB.log_directory]/query_debug.log"
 
 #ifdef UNIT_TESTS
 	GLOB.test_log = file("[GLOB.log_directory]/tests.log")
@@ -126,7 +129,7 @@ GLOBAL_PROTECT(security_mode)
 		warning("/tg/station 13 uses many file operations, a few shell()s, and some external call()s. Trusted mode is recommended. You can download our source code for your own browsing and compilation at https://github.com/tgstation/tgstation")
 
 /world/Topic(T, addr, master, key)
-	SERVER_TOOLS_ON_TOPIC	//redirect to server tools if necessary
+	TGS_TOPIC	//redirect to server tools if necessary
 
 	var/static/list/topic_handlers = TopicHandlers()
 
@@ -182,7 +185,7 @@ GLOBAL_PROTECT(security_mode)
 	qdel(src)	//shut it down
 
 /world/Reboot(reason = 0, fast_track = FALSE)
-	SERVER_TOOLS_ON_REBOOT
+	TgsReboot()
 	if (reason || fast_track) //special reboot, do none of the normal stuff
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
@@ -196,7 +199,7 @@ GLOBAL_PROTECT(security_mode)
 		FinishTestRun()
 		return
 
-	if(SERVER_TOOLS_PRESENT)
+	if(TgsAvailable())
 		var/do_hard_reboot
 		// check the hard reboot counter
 		var/ruhr = CONFIG_GET(number/rounds_until_hard_restart)
@@ -215,7 +218,7 @@ GLOBAL_PROTECT(security_mode)
 		if(do_hard_reboot)
 			log_world("World hard rebooted at [time_stamp()]")
 			shutdown_logging() // See comment below.
-			SERVER_TOOLS_REBOOT_BYOND
+			TgsEndProcess()
 
 	log_world("World rebooted at [time_stamp()]")
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.

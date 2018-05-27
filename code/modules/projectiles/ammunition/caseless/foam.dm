@@ -5,8 +5,9 @@
 	caliber = "foam_force"
 	icon = 'icons/obj/guns/toy.dmi'
 	icon_state = "foamdart"
-	var/modified = 0
+	materials = list(MAT_METAL = 11.25)
 	harmful = FALSE
+	var/modified = FALSE
 
 /obj/item/ammo_casing/caseless/foam_dart/update_icon()
 	..()
@@ -25,8 +26,8 @@
 /obj/item/ammo_casing/caseless/foam_dart/attackby(obj/item/A, mob/user, params)
 	var/obj/item/projectile/bullet/reusable/foam_dart/FD = BB
 	if (istype(A, /obj/item/screwdriver) && !modified)
-		modified = 1
-		FD.modified = 1
+		modified = TRUE
+		FD.modified = TRUE
 		FD.damage_type = BRUTE
 		to_chat(user, "<span class='notice'>You pop the safety cap off [src].</span>")
 		update_icon()
@@ -38,7 +39,7 @@
 					return
 				FD.pen = A
 				FD.damage = 5
-				FD.nodamage = 0
+				FD.nodamage = FALSE
 				to_chat(user, "<span class='notice'>You insert [A] into [src].</span>")
 			else
 				to_chat(user, "<span class='warning'>There's already something in [src].</span>")
@@ -61,3 +62,4 @@
 	desc = "Whose smart idea was it to use toys as crowd control? Ages 18 and up."
 	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart/riot
 	icon_state = "foamdart_riot"
+	materials = list(MAT_METAL = 1125)

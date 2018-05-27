@@ -19,9 +19,6 @@ Mineral Sheets
 		- Abductor
 */
 
-/obj/item/stack/sheet/mineral
-	icon = 'icons/obj/mining.dmi'
-
 /obj/item/stack/sheet/mineral/Initialize(mapload)
 	pixel_x = rand(-4, 4)
 	pixel_y = rand(-4, 4)
@@ -63,7 +60,6 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 
 /obj/item/stack/sheet/mineral/sandbags
 	name = "sandbags"
-	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "sandbags"
 	singular_name = "sandbag"
 	layer = LOW_ITEM_LAYER
@@ -88,9 +84,10 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	if(istype(W, /obj/item/stack/ore/glass))
 		var/obj/item/stack/ore/glass/G = W
 		to_chat(user, "<span class='notice'>You fill the sandbag.</span>")
-		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags
+		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags(drop_location())
 		qdel(src)
-		user.put_in_hands(I)
+		if (Adjacent(user) && !issilicon(user))
+			user.put_in_hands(I)
 		G.use(1)
 	else
 		return ..()
@@ -336,16 +333,6 @@ GLOBAL_LIST_INIT(snow_recipes, list ( \
 	. = ..()
 
 /****************************** Others ****************************/
-
-/*
- * Enriched Uranium
- */
-/obj/item/stack/sheet/mineral/enruranium
-	name = "enriched uranium"
-	icon_state = "sheet-enruranium"
-	item_state = "sheet-enruranium"
-	singular_name = "enriched uranium sheet"
-	materials = list(MAT_URANIUM=3000)
 
 /*
  * Adamantine

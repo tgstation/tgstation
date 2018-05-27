@@ -33,10 +33,8 @@
 	desc = "A sword humming with unholy energy. It glows with a dim red light."
 	icon_state = "cultblade"
 	item_state = "cultblade"
-	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
-	inhand_x_dimension = 64
-	inhand_y_dimension = 64
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
 	sharpness = IS_SHARP
 	w_class = WEIGHT_CLASS_BULKY
@@ -73,8 +71,6 @@
 	if(!iscultist(user))
 		if(!is_servant_of_ratvar(user))
 			to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
-			to_chat(user, "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>")
-			user.Dizzy(120)
 		else
 			to_chat(user, "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things [user.p_they()] shouldn't. Cute.\"</span>")
 			to_chat(user, "<span class='userdanger'>A horrible force yanks at your arm!</span>")
@@ -103,7 +99,7 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	actions_types = list()
-	flags_2 = SLOWS_WHILE_IN_HAND_2
+	item_flags = SLOWS_WHILE_IN_HAND
 	var/datum/action/innate/dash/cult/jaunt
 	var/datum/action/innate/cult/spin2win/linked_action
 	var/spinning = FALSE
@@ -138,10 +134,7 @@
 	if(!iscultist(user))
 		if(!is_servant_of_ratvar(user))
 			to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
-			to_chat(user, "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>")
-			user.Dizzy(80)
-			user.dropItemToGround(src, TRUE)
-			user.Knockdown(30)
+			force = 5
 			return
 		else
 			to_chat(user, "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things [user.p_they()] shouldn't. Cute.\"</span>")
@@ -151,6 +144,7 @@
 			user.dropItemToGround(src, TRUE)
 			user.Knockdown(50)
 			return
+	force = initial(force)
 	jaunt.Grant(user, src)
 	linked_action.Grant(user, src)
 	user.update_icons()

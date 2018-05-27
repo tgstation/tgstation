@@ -156,7 +156,8 @@
 	visible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", "<span class='notice'>[src] bleeps electronically.</span>")
 
 /obj/item/paicard/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
 	if(pai)
 		pai.emp_act(severity)
-	..()
-

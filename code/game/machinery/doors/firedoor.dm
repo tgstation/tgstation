@@ -142,19 +142,9 @@
 	if(density)
 		open()
 	else
-		if(iscarbon(user))
-			var/mob/living/carbon/C = user
-			if(C.has_trait(TRAIT_PACIFISM))
-				var/T = get_turf(src)
-				for(var/mob/living/L in T)
-					if((L.stat != DEAD) && !L.has_trait(TRAIT_FAKEDEATH))
-						to_chat(user, "<span class='notice'>Closing [src] would hurt [L]!</span>")
-						return
 		close()
 
-/obj/machinery/door/firedoor/interact(mob/user)
-	if(!issilicon(user))
-		return TRUE
+/obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)
 	if(welded || operating || stat & NOPOWER)
 		return TRUE
@@ -163,6 +153,9 @@
 	else
 		close()
 	return TRUE
+
+/obj/machinery/door/firedoor/attack_robot(mob/user)
+	return attack_ai(user)
 
 /obj/machinery/door/firedoor/attack_alien(mob/user)
 	add_fingerprint(user)
@@ -363,8 +356,7 @@
 					return
 				user.visible_message("<span class='notice'>[user] removes the wires from [src].</span>", \
 									 "<span class='notice'>You remove the wiring from [src], exposing the circuit board.</span>")
-				var/obj/item/stack/cable_coil/B = new(get_turf(src))
-				B.amount = 5
+				new/obj/item/stack/cable_coil(get_turf(src), 5)
 				constructionStep = CONSTRUCTION_GUTTED
 				update_icon()
 				return

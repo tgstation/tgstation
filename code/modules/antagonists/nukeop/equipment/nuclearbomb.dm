@@ -395,9 +395,9 @@
 		return
 	qdel(src)
 
-/obj/machinery/nuclearbomb/tesla_act(power, explosive)
+/obj/machinery/nuclearbomb/tesla_act(power, tesla_flags)
 	..()
-	if(explosive)
+	if(tesla_flags & TESLA_MACHINE_EXPLOSIVE)
 		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
 #define NUKERANGE 127
@@ -501,15 +501,36 @@ This is here to make the tiles around the station mininuke change when it's arme
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/fake = FALSE
+	var/turf/lastlocation
+	var/last_disk_move
 
 /obj/item/disk/nuclear/Initialize()
 	. = ..()
 	if(!fake)
 		GLOB.poi_list |= src
+		last_disk_move = world.time
+		START_PROCESSING(SSobj, src)
 
 /obj/item/disk/nuclear/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/stationloving, !fake)
+
+/obj/item/disk/nuclear/process()
+	if(fake)
+		STOP_PROCESSING(SSobj, src)
+		CRASH("A fake nuke disk tried to call process(). Who the fuck and how the fuck")
+	var/turf/newturf = get_turf(src)
+	if(newturf && lastlocation == newturf)
+		if(last_disk_move < world.time - 5000 && prob((world.time - 5000 - last_disk_move)*0.00001))
+			var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
+			if(istype(loneop))
+				loneop.weight += 1
+	else
+		lastlocation = newturf
+		last_disk_move = world.time
+		var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
+		if(istype(loneop) && prob(loneop.weight))
+			loneop.weight = max(loneop.weight - 1, 0)
 
 /obj/item/disk/nuclear/examine(mob/user)
 	. = ..()

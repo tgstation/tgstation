@@ -126,7 +126,7 @@
 	return examine(user)
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions, list/traits)
+/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions, list/quirks)
 	if(panel_open)
 		return FALSE
 	if(mess || attempting)
@@ -134,8 +134,11 @@
 	clonemind = locate(mindref) in SSticker.minds
 	if(!istype(clonemind))	//not a mind
 		return FALSE
-	if( clonemind.current && clonemind.current.stat != DEAD )	//mind is associated with a non-dead body
-		return FALSE
+	if(clonemind.current)
+		if(clonemind.current.stat != DEAD)	//mind is associated with a non-dead body
+			return FALSE
+		if(clonemind.current.suiciding) // Mind is associated with a body that is suiciding.
+			return FALSE
 	if(clonemind.active)	//somebody is using that mind
 		if( ckey(clonemind.key)!=ckey )
 			return FALSE
@@ -143,6 +146,8 @@
 		// get_ghost() will fail if they're unable to reenter their body
 		var/mob/dead/observer/G = clonemind.get_ghost()
 		if(!G)
+			return FALSE
+		if(G.suiciding) // The ghost came from a body that is suiciding.
 			return FALSE
 	if(clonemind.damnation_type) //Can't clone the damned.
 		INVOKE_ASYNC(src, .proc/horrifyingsound)
@@ -198,7 +203,7 @@
 	if(H)
 		H.faction |= factions
 
-		for(var/V in traits)
+		for(var/V in quirks)
 			new V(H)
 
 		H.set_cloned_appearance()
@@ -390,19 +395,20 @@
 		QDEL_IN(mob_occupant, 40)
 
 /obj/machinery/clonepod/relaymove(mob/user)
-	container_resist()
+	container_resist(user)
 
 /obj/machinery/clonepod/container_resist(mob/living/user)
 	if(user.stat == CONSCIOUS)
 		go_out()
 
 /obj/machinery/clonepod/emp_act(severity)
-	var/mob/living/mob_occupant = occupant
-	if(mob_occupant && prob(100/(severity*efficiency)))
-		connected_message(Gibberish("EMP-caused Accidental Ejection", 0))
-		SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of [mob_occupant.real_name] prematurely." ,0))
-		go_out()
-	..()
+	. = ..()
+	if (!(. & EMP_PROTECT_SELF))
+		var/mob/living/mob_occupant = occupant
+		if(mob_occupant && prob(100/(severity*efficiency)))
+			connected_message(Gibberish("EMP-caused Accidental Ejection", 0))
+			SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of [mob_occupant.real_name] prematurely." ,0))
+			go_out()
 
 /obj/machinery/clonepod/ex_act(severity, target)
 	..()

@@ -54,7 +54,7 @@
 			user.visible_message("[user] inserts a cell into [src].", "<span class='notice'>You insert a cell into [src].</span>")
 			chargelevel = -1
 			updateicon()
-	else 
+	else
 		if(!charging && default_deconstruction_screwdriver(user, icon_state, icon_state, W))
 			return
 		if(default_deconstruction_crowbar(W))
@@ -105,13 +105,13 @@
 	return
 
 /obj/machinery/cell_charger/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
+	. = ..()
+
+	if(stat & (BROKEN|NOPOWER) || . & EMP_PROTECT_CONTENTS)
 		return
 
 	if(charging)
 		charging.emp_act(severity)
-
-	..(severity)
 
 /obj/machinery/cell_charger/RefreshParts()
 	charge_rate = 500
@@ -128,4 +128,3 @@
 	charging.give(charge_rate)	//this is 2558, efficient batteries exist
 
 	updateicon()
- 
