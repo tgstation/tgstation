@@ -395,9 +395,9 @@
 		return
 	qdel(src)
 
-/obj/machinery/nuclearbomb/tesla_act(power, explosive)
+/obj/machinery/nuclearbomb/tesla_act(power, tesla_flags)
 	..()
-	if(explosive)
+	if(tesla_flags & TESLA_MACHINE_EXPLOSIVE)
 		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
 #define NUKERANGE 127

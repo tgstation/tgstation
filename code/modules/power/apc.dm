@@ -105,6 +105,9 @@
 
 /obj/machinery/power/apc/unlocked
 	locked = FALSE
+	
+/obj/machinery/power/apc/syndicate //general syndicate access
+	req_access = list(ACCESS_SYNDICATE)
 
 /obj/machinery/power/apc/highcap/five_k
 	cell_type = /obj/item/stock_parts/cell/upgraded/plus
@@ -1254,17 +1257,20 @@
 
 // damage and destruction acts
 /obj/machinery/power/apc/emp_act(severity)
-	if(cell)
-		cell.emp_act(severity)
-	if(occupier)
-		occupier.emp_act(severity)
+	. = ..()
+	if (!(. & EMP_PROTECT_CONTENTS))
+		if(cell)
+			cell.emp_act(severity)
+		if(occupier)
+			occupier.emp_act(severity)
+	if(. & EMP_PROTECT_SELF)
+		return
 	lighting = 0
 	equipment = 0
 	environ = 0
 	update_icon()
 	update()
 	addtimer(CALLBACK(src, .proc/reset, APC_RESET_EMP), 600)
-	..()
 
 /obj/machinery/power/apc/blob_act(obj/structure/blob/B)
 	set_broken()

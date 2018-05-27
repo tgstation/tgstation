@@ -29,13 +29,6 @@
 		copy_overlays(bombassembly)
 		add_overlay("bomb_assembly")
 
-/obj/item/onetankbomb/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/analyzer))
-		bombtank.attackby(W, user)
-		return
-	add_fingerprint(user)
-	..()
-
 /obj/item/onetankbomb/wrench_act(mob/living/user, obj/item/I)
 	to_chat(user, "<span class='notice'>You disassemble [src]!</span>")
 	if(bombassembly)
@@ -64,6 +57,9 @@
 		add_fingerprint(user)
 		return TRUE
 
+
+/obj/item/onetankbomb/analyzer_act(mob/living/user, obj/item/I)
+	bombtank.analyzer_act(user, I)
 
 /obj/item/onetankbomb/attack_self(mob/user) //pressing the bomb accesses its assembly
 	bombassembly.attack_self(user, TRUE)

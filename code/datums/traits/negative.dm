@@ -30,11 +30,11 @@
 
 /datum/quirk/family_heirloom
 	name = "Family Heirloom"
-	desc = "You are the current owner of an heirloom. passed down for generations. You have to keep it safe!"
+	desc = "You are the current owner of an heirloom, passed down for generations. You have to keep it safe!"
 	value = -1
 	mood_quirk = TRUE
 	var/obj/item/heirloom
-	var/where_text
+	var/where
 
 /datum/quirk/family_heirloom/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -61,19 +61,18 @@
 		/obj/item/dice/d20)
 	heirloom = new heirloom_type(get_turf(quirk_holder))
 	var/list/slots = list(
-		"in your backpack" = SLOT_IN_BACKPACK,
 		"in your left pocket" = SLOT_L_STORE,
-		"in your right pocket" = SLOT_R_STORE
+		"in your right pocket" = SLOT_R_STORE,
+		"in your backpack" = SLOT_IN_BACKPACK
 	)
-	var/where = H.equip_in_one_of_slots(heirloom, slots)
-	if(!where)
-		where = "at your feet"
-		if(where == "in your backpack")
-			H.back.SendSignal(COMSIG_TRY_STORAGE_SHOW, H)
-	where_text = "<span class='boldnotice'>There is a precious family [heirloom.name] [where], passed down from generation to generation. Keep it safe!</span>"
+	where = H.equip_in_one_of_slots(heirloom, slots, FALSE) || "at your feet"
 
 /datum/quirk/family_heirloom/post_add()
-	to_chat(quirk_holder, where_text)
+	if(where == "in your backpack")
+		var/mob/living/carbon/human/H = quirk_holder
+		H.back.SendSignal(COMSIG_TRY_STORAGE_SHOW, H)
+
+	to_chat(quirk_holder, "<span class='boldnotice'>There is a precious family [heirloom.name] [where], passed down from generation to generation. Keep it safe!</span>")
 	var/list/family_name = splittext(quirk_holder.real_name, " ")
 	heirloom.name = "\improper [family_name[family_name.len]] family [heirloom.name]"
 
@@ -234,15 +233,8 @@
 	if(prob(2)) //we'll all be mad soon enough
 		madness()
 
-/datum/quirk/insanity/proc/madness(mad_fools)
-	set waitfor = FALSE
-	if(!mad_fools)
-		mad_fools = prob(20)
-	if(mad_fools)
-		var/hallucination_type = pick(subtypesof(/datum/hallucination/rds))
-		new hallucination_type (quirk_holder, FALSE)
-	else
-		quirk_holder.hallucination += rand(10, 50)
+/datum/quirk/insanity/proc/madness()
+	quirk_holder.hallucination += rand(10, 25)
 
 /datum/quirk/insanity/post_add() //I don't /think/ we'll need this but for newbies who think "roleplay as insane" = "license to kill" it's probably a good thing to have
 	if(!quirk_holder.mind || quirk_holder.mind.special_role)

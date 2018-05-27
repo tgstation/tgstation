@@ -2012,10 +2012,9 @@
 		var/X = offset.len > 0 ? text2num(offset[1]) : 0
 		var/Y = offset.len > 1 ? text2num(offset[2]) : 0
 		var/Z = offset.len > 2 ? text2num(offset[3]) : 0
-		var/tmp_dir = href_list["object_dir"]
-		var/obj_dir = tmp_dir ? text2num(tmp_dir) : 2
-		if(!obj_dir || !(obj_dir in list(1,2,4,8,5,6,9,10)))
-			obj_dir = 2
+		var/obj_dir = text2num(href_list["object_dir"])
+		if(obj_dir && !(obj_dir in list(1,2,4,8,5,6,9,10)))
+			obj_dir = null
 		var/obj_name = sanitize(href_list["object_name"])
 
 
@@ -2058,9 +2057,10 @@
 							N.name = obj_name
 					else
 						var/atom/O = new path(target)
-						if(O)
-							O.admin_spawned = TRUE
-							O.setDir(obj_dir)
+						if(!QDELETED(O))
+							O.flags_1 |= ADMIN_SPAWNED_1
+							if(obj_dir)
+								O.setDir(obj_dir)
 							if(obj_name)
 								O.name = obj_name
 								if(ismob(O))
@@ -2460,6 +2460,19 @@
 		var/client/C = M.client
 		usr.client.cmd_admin_mod_antag_rep(C, href_list["modantagrep"])
 		show_player_panel(M)
+
+	else if(href_list["slowquery"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/answer = href_list["slowquery"]
+		if(answer == "yes")
+			log_query_debug("[usr.key] | Reported a server hang")
+			if(alert(usr, "Had you just press any admin buttons?", "Query server hang report", "Yes", "No") == "Yes")
+				var/response = input(usr,"What were you just doing?","Query server hang report") as null|text
+				if(response)
+					log_query_debug("[usr.key] | [response]")
+		else if(answer == "no")
+			log_query_debug("[usr.key] | Reported no server hang")
 
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))

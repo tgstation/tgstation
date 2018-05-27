@@ -77,12 +77,14 @@
 
 
 /mob/living/silicon/robot/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	switch(severity)
 		if(1)
 			Stun(160)
 		if(2)
 			Stun(60)
-	..()
 
 
 /mob/living/silicon/robot/emag_act(mob/user)

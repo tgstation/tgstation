@@ -66,7 +66,7 @@
 			loaded_tank.air_contents.gases[/datum/gas/carbon_dioxide][MOLES] += gasdrained*2
 			loaded_tank.air_contents.garbage_collect()
 			var/bitcoins_mined = min(last_power, (last_power*RAD_COLLECTOR_STORED_OUT)+1000)
-			SSresearch.science_tech.research_points += bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE
+			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
 			last_power-=bitcoins_mined
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user)
@@ -104,9 +104,7 @@
 			disconnect_from_network()
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/analyzer) && loaded_tank)
-		atmosanalyzer_scan(loaded_tank.air_contents, user)
-	else if(istype(W, /obj/item/tank/internals/plasma))
+	if(istype(W, /obj/item/tank/internals/plasma))
 		if(!anchored)
 			to_chat(user, "<span class='warning'>[src] needs to be secured to the floor first!</span>")
 			return TRUE
@@ -169,6 +167,10 @@
 	bitcoinmining = !bitcoinmining
 	to_chat(user, "<span class='warning'>You [bitcoinmining ? "enable":"disable"] the research point production feature of [src].</span>")
 	return TRUE
+
+/obj/machinery/power/rad_collector/analyzer_act(mob/living/user, obj/item/I)
+	if(loaded_tank)
+		loaded_tank.analyzer_act(user, I)
 
 /obj/machinery/power/rad_collector/examine(mob/user)
 	. = ..()

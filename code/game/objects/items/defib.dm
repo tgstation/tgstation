@@ -46,11 +46,11 @@
 	update_charge()
 
 /obj/item/defibrillator/proc/update_power()
-	if(cell)
-		if(cell.charge < paddles.revivecost)
+	if(!QDELETED(cell))
+		if(QDELETED(paddles) || cell.charge < paddles.revivecost)
 			powered = FALSE
 		else
-			powered = 1
+			powered = TRUE
 	else
 		powered = FALSE
 
@@ -67,7 +67,7 @@
 
 /obj/item/defibrillator/proc/update_charge()
 	if(powered) //so it doesn't show charge if it's unpowered
-		if(cell)
+		if(!QDELETED(cell))
 			var/ratio = cell.charge / cell.maxcharge
 			ratio = CEILING(ratio*4, 1) * 25
 			add_overlay("[initial(icon_state)]-charge[ratio]")
@@ -144,8 +144,11 @@
 		to_chat(user, "<span class='notice'>You silently enable [src]'s safety protocols with the cryptographic sequencer.</span>")
 
 /obj/item/defibrillator/emp_act(severity)
-	if(cell)
+	. = ..()
+	if(cell && !(. & EMP_PROTECT_CONTENTS))
 		deductcharge(1000 / severity)
+	if (. & EMP_PROTECT_SELF)
+		return
 	if(safety)
 		safety = FALSE
 		visible_message("<span class='notice'>[src] beeps: Safety protocols disabled!</span>")
@@ -155,7 +158,6 @@
 		visible_message("<span class='notice'>[src] beeps: Safety protocols enabled!</span>")
 		playsound(src, 'sound/machines/defib_saftyOn.ogg', 50, 0)
 	update_icon()
-	..()
 
 /obj/item/defibrillator/proc/toggle_paddles()
 	set name = "Toggle Paddles"
@@ -170,7 +172,6 @@
 			to_chat(user, "<span class='warning'>You need a free hand to hold the paddles!</span>")
 			update_icon()
 			return
-		paddles.forceMove(user)
 	else
 		//Remove from their hands and back onto the defib unit
 		paddles.unwield()
@@ -276,8 +277,8 @@
 	name = "defibrillator paddles"
 	desc = "A pair of plastic-gripped paddles with flat metal surfaces that are used to deliver powerful electric shocks."
 	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "defibpaddles"
-	item_state = "defibpaddles"
+	icon_state = "defibpaddles0"
+	item_state = "defibpaddles0"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 

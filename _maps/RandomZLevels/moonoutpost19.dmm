@@ -728,7 +728,7 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/computer/monitor,
+/obj/machinery/computer/monitor/secret,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -2707,12 +2707,10 @@
 /turf/open/floor/engine,
 /area/awaymission/moonoutpost19/research)
 "fJ" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector{
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	desc = "Has a valve and pump attached to it. This one has been applied with an acid-proof coating.";
 	dir = 8;
-	icon_state = "on";
-	name = "Acid-Proof Air Injector";
-	on = 1
+	name = "Acid-Proof Air Injector"
 	},
 /obj/structure/alien/weeds,
 /turf/open/floor/engine,
@@ -3126,7 +3124,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gA" = (
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -3973,7 +3971,6 @@
 /area/awaymission/moonoutpost19/research)
 "ie" = (
 /obj/machinery/door/airlock/medical{
-	id_tag = "";
 	name = "Research Division";
 	req_access_txt = "201"
 	},
@@ -5348,7 +5345,6 @@
 "kW" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel/blue/side{
-	dir = 0;
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -5360,7 +5356,6 @@
 	},
 /obj/item/multitool,
 /turf/open/floor/plasteel/blue/side{
-	dir = 0;
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -5372,14 +5367,12 @@
 	maxcharge = 15000
 	},
 /turf/open/floor/plasteel/blue/side{
-	dir = 0;
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kZ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/blue/side{
-	dir = 0;
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -6776,7 +6769,6 @@
 /area/awaymission/moonoutpost19/arrivals)
 "Mm" = (
 /obj/machinery/door/airlock/medical{
-	id_tag = "";
 	name = "Research Division";
 	req_access_txt = "201"
 	},

@@ -76,7 +76,6 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "ar" = (
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},

@@ -122,7 +122,7 @@
 	owner.grant_language(/datum/language/slime)
 
 /obj/item/organ/heart/gland/slime/activate()
-	to_chat(owner, "<span class='warning'>You feel nauseous!</span>")
+	to_chat(owner, "<span class='warning'>You feel nauseated!</span>")
 	owner.vomit(20)
 
 	var/mob/living/simple_animal/slime/Slime = new(get_turf(owner), "grey")
@@ -153,7 +153,7 @@
 				H.confused += 15
 				H.adjustBrainLoss(10, 160)
 			if(3)
-				H.hallucination += 80
+				H.hallucination += 60
 
 /obj/item/organ/heart/gland/pop
 	cooldown_low = 900
@@ -272,10 +272,10 @@
 
 /obj/item/organ/heart/gland/electric/Insert(mob/living/carbon/M, special = 0)
 	..()
-	owner.add_trait(TRAIT_SHOCKIMMUNE, "abductor_gland")
+	owner.add_trait(TRAIT_SHOCKIMMUNE, ORGAN_TRAIT)
 
 /obj/item/organ/heart/gland/electric/Remove(mob/living/carbon/M, special = 0)
-	owner.remove_trait(TRAIT_SHOCKIMMUNE, "abductor_gland")
+	owner.remove_trait(TRAIT_SHOCKIMMUNE, ORGAN_TRAIT)
 	..()
 
 /obj/item/organ/heart/gland/electric/activate()
@@ -285,7 +285,7 @@
 	addtimer(CALLBACK(src, .proc/zap), rand(30, 100))
 
 /obj/item/organ/heart/gland/electric/proc/zap()
-	tesla_zap(owner, 4, 8000, FALSE, TRUE)
+	tesla_zap(owner, 4, 8000, TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE | TESLA_MOB_STUN)
 	playsound(get_turf(owner), 'sound/magic/lightningshock.ogg', 50, 1)
 
 /obj/item/organ/heart/gland/chem

@@ -41,7 +41,7 @@
 			C.reagents.metabolize(C, can_overdose=TRUE)
 
 			if(damage > 10 && prob(damage/3))//the higher the damage the higher the probability
-				to_chat(C, "<span class='notice'>You feel [pick("nauseous", "dull pain in your lower body", "confused")].</span>")
+				to_chat(C, "<span class='notice'>You feel [pick("nauseated", "a dull pain in your lower body", "confused")].</span>")
 
 	if(damage > maxHealth)//cap liver damage
 		damage = maxHealth
@@ -78,6 +78,9 @@
 	toxLethality = 0.008 //20% less damage than a normal liver
 
 /obj/item/organ/liver/cybernetic/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	switch(severity)
 		if(1)
 			damage+=100

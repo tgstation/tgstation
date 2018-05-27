@@ -15,8 +15,9 @@
 		if(B.mod_type == mod_type)
 			qdel(src)
 			return
+	owner.bioware += src
 	on_gain()
-
+	
 /datum/bioware/Destroy()
 	owner = null
 	if(active)

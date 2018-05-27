@@ -94,7 +94,7 @@
 
 	for(var/A in location)
 		var/atom/AT = A
-		if(AT && AT != src) // It's possible that the item is deleted in temperature_expose
+		if(!QDELETED(AT) && AT != src) // It's possible that the item is deleted in temperature_expose
 			AT.fire_act(temperature, volume)
 	return
 

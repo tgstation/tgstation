@@ -125,17 +125,6 @@
 	new /obj/item/storage/fancy/candle_box(src)
 	return
 
-/obj/structure/closet/coffin
-	name = "coffin"
-	desc = "It's a burial receptacle for the dearly departed."
-	icon_state = "coffin"
-	resistance_flags = FLAMMABLE
-	max_integrity = 70
-	horizontal = TRUE
-	delivery_icon = "deliverycrate"
-	material_drop = /obj/item/stack/sheet/mineral/wood
-	material_drop_amount = 5
-
 /obj/structure/closet/wardrobe/red
 	name = "security wardrobe"
 	icon_door = "red"
@@ -148,6 +137,8 @@
 	new /obj/item/storage/backpack/duffelbag/sec(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/under/rank/security(src)
+	for(var/i in 1 to 2)
+		new /obj/item/clothing/under/rank/security/skirt(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/shoes/jackboots(src)
 	for(var/i in 1 to 3)

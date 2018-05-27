@@ -189,11 +189,13 @@
 	. = ..()
 
 /obj/item/flightpack/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	var/damage = severity == 1 ? emp_strong_damage : emp_weak_damage
 	if(emp_damage <= (emp_disable_threshold * 1.5))
 		emp_damage += damage
 		usermessage("WARNING: Class [severity] EMP detected! Circuit damage at [(emp_damage/emp_disable_threshold)*100]%!", "boldwarning")
-	return ..()
 
 //Proc to change amount of momentum the wearer has, or dampen all momentum by a certain amount.
 /obj/item/flightpack/proc/adjust_momentum(amountx, amounty, reduce_amount_total = 0)
