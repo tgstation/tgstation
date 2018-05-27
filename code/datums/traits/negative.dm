@@ -10,9 +10,16 @@
 
 /datum/quirk/blooddeficiency/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
+<<<<<<< HEAD
 		if(NOBLOOD in H.dna.species.species_traits) //can't lose blood if your species doesn't have any
 			return
 		else quirk_holder.blood_volume -= 0.275
+=======
+	if(NOBLOOD in H.dna.species.species_traits) //can't lose blood if your species doesn't have any
+		return
+	else 
+		quirk_holder.blood_volume -= 0.275
+>>>>>>> c71ef017b6a9959fa434fe74b21625e529f7f389
 
 
 
