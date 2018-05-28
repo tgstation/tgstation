@@ -143,12 +143,8 @@
 		return
 
 	var/time = TIME_LEFT
-	message_admins("[key_name_admin(user.client)] \
-	(<A HREF='?_src_=holder;[HrefToken()];adminmoreinfo=[REF(user)]'>?</A>) \
-	(<A HREF='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(user)]'>FLW</A>) \
-	has emagged the emergency shuttle [time] seconds before launch.", 0, 1)
-	log_game("[key_name(user)] has emagged the emergency shuttle in \
-		[COORD(src)] [time] seconds before launch.")
+	message_admins("[ADMIN_LOOKUPFLW(user.client)] has emagged the emergency shuttle [time] seconds before launch.", 0, 1)
+	log_game("[key_name(user)] has emagged the emergency shuttle in [COORD(src)] [time] seconds before launch.")
 	obj_flags |= EMAGGED
 	SSshuttle.emergency.movement_force = list("KNOCKDOWN" = 60, "THROW" = 20)//YOUR PUNY SEATBELTS can SAVE YOU NOW, MORTAL
 	var/datum/species/S = new

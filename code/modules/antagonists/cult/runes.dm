@@ -497,12 +497,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 		user.visible_message("<span class='warning'>[user.name] begins erasing [src]...</span>", "<span class='notice'>You begin erasing [src]...</span>")
 		if(do_after(user, 50, target = src))	//Prevents accidental erasures.
 			log_game("Summon Narsie rune erased by [user.mind.key] (ckey) with [I.name]")
-			message_admins("[key_name_admin(user)] erased a Narsie rune with [I.name]")
+			message_admins("[ADMIN_LOOKUPFLW(user)] erased a Narsie rune with [I.name]")
 			..()
 	else
 		if(istype(I, /obj/item/nullrod))	//Begone foul magiks. You cannot hinder me.
 			log_game("Summon Narsie rune erased by [user.mind.key] (ckey) using a null rod")
-			message_admins("[key_name_admin(user)] erased a Narsie rune with a null rod")
+			message_admins("[ADMIN_LOOKUPFLW(user)] erased a Narsie rune with a null rod")
 			..()
 
 //Rite of Resurrection: Requires a dead or inactive cultist. When reviving the dead, you can only perform one revival for every sacrifice your cult has carried out.

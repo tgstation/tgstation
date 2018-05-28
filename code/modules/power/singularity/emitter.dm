@@ -93,9 +93,9 @@
 /obj/machinery/power/emitter/Destroy()
 	if(SSticker.IsRoundInProgress())
 		var/turf/T = get_turf(src)
-		message_admins("Emitter deleted at [ADMIN_COORDJMP(T)]",0,1)
-		log_game("Emitter deleted at [COORD(T)]")
-		investigate_log("<font color='red'>deleted</font> at [get_area(src)] [COORD(T)]", INVESTIGATE_SINGULO)
+		message_admins("Emitter deleted at [ADMIN_VERBOSEJMP(T)]",0,1)
+		log_game("Emitter deleted at [AREACOORD(T)]")
+		investigate_log("<font color='red'>deleted</font> at [AREACOORD(T)]", INVESTIGATE_SINGULO)
 	QDEL_NULL(sparks)
 	return ..()
 
@@ -116,15 +116,15 @@
 			if(src.active==1)
 				src.active = 0
 				to_chat(user, "<span class='notice'>You turn off \the [src].</span>")
-				message_admins("Emitter turned off by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]",0,1)
-				log_game("Emitter turned off by [key_name(user)] in [COORD(src)]")
-				investigate_log("turned <font color='red'>off</font> by [key_name(user)] at [get_area(src)]", INVESTIGATE_SINGULO)
+				message_admins("Emitter turned off by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]",0,1)
+				log_game("Emitter turned off by [key_name(user)] in [AREACOORD(user)]")
+				investigate_log("turned <font color='red'>off</font> by [key_name(user)] at [AREACOORD(src)]", INVESTIGATE_SINGULO)
 			else
 				src.active = 1
 				to_chat(user, "<span class='notice'>You turn on \the [src].</span>")
 				src.shot_number = 0
 				src.fire_delay = maximum_fire_delay
-				investigate_log("turned <font color='green'>on</font> by [key_name(user)] at [get_area(src)]", INVESTIGATE_SINGULO)
+				investigate_log("turned <font color='green'>on</font> by [key_name(user)] at [AREACOORD(src)]", INVESTIGATE_SINGULO)
 			update_icon()
 		else
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")

@@ -233,7 +233,7 @@
 			if(obj_flags & EMAGGED)
 				new /obj/effect/spawner/newbomb/timer/syndicate(loc)
 				new /obj/item/clothing/head/collectable/petehat(loc)
-				message_admins("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				log_game("[key_name(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				Reset()
 				obj_flags &= ~EMAGGED
@@ -1028,7 +1028,7 @@
 	say("Congratulations, you made it to Orion!")
 	if(obj_flags & EMAGGED)
 		new /obj/item/orion_ship(loc)
-		message_admins("[key_name_admin(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
+		message_admins("[ADMIN_LOOKUPFLW(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 		log_game("[key_name(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 	else
 		prizevend(user)
@@ -1073,8 +1073,8 @@
 	if(active)
 		return
 
-	message_admins("[key_name_admin(usr)] primed an explosive Orion ship for detonation.")
-	log_game("[key_name(usr)] primed an explosive Orion ship for detonation.")
+	message_admins("[ADMIN_LOOKUPFLW(usr)] primed an explosive Orion ship for detonation at [AREACOORD(usr)].")
+	log_game("[key_name(usr)] primed an explosive Orion ship for detonation at [AREACOORD(usr)].")
 
 	to_chat(user, "<span class='warning'>You flip the switch on the underside of [src].</span>")
 	active = 1
