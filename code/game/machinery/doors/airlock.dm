@@ -1193,7 +1193,7 @@
 		optionlist = list("Standard", "Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Freezer", "Science", "Virology", "Mining", "Maintenance", "External", "External Maintenance")
 
 	var/paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
-	if((!in_range(src, usr) && src.loc != usr) || !W.use(user))
+	if((!in_range(src, usr)) || (W.loc != user) || (!W.use_paint(user)))
 		return
 	switch(paintjob)
 		if("Standard")
