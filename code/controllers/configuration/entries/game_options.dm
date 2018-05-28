@@ -287,3 +287,5 @@
 /datum/config_entry/flag/randomize_shift_time
 
 /datum/config_entry/flag/shift_time_realtime
+
+/datum/config_entry/keyed_number_list/antag_rep

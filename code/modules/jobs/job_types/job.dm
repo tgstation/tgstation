@@ -69,8 +69,8 @@
 	return TRUE
 
 /datum/job/proc/GetAntagRep()
-	. = config.antag_rep_values[title]
-	if(!.)
+	. = CONFIG_GET(keyed_number_list/antag_rep)[lowertext(title)]
+	if(. == null)
 		return antag_rep
 
 //Don't override this unless the job transforms into a non-human (Silicons do this for example)

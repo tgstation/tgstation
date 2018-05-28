@@ -16,7 +16,6 @@
 	var/list/mode_names
 	var/list/mode_reports
 	var/list/mode_false_report_weight
-	var/list/antag_rep_values
 
 	var/motd
 
@@ -32,7 +31,6 @@
 		LoadEntries("comms.txt")
 	loadmaplist(CONFIG_MAPS_FILE)
 	LoadMOTD()
-	LoadAntagRep()
 
 /datum/controller/configuration/Destroy()
 	entries_by_type.Cut()
@@ -326,16 +324,3 @@
 				continue
 			runnable_modes[M] = probabilities[M.config_tag]
 	return runnable_modes
-
-/datum/controller/configuration/proc/LoadAntagRep()
-	antag_rep_values = list()
-	var/list/data = world.file2list("[directory]/antag_rep.txt")
-	for(var/I in data)
-		I = trim(I)
-		if(I[0] == "#")
-			continue
-		var/lastindex = findlasttext(I, " ")
-		if(!lastindex)
-			continue
-		var/list/splits = splittext(I, " ", lastindex)
-		antag_rep_values[splits[1]] = text2num(trim(splits[2]))
