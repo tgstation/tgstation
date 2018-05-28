@@ -33,7 +33,6 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(list(/obj/item/construction/rcd,/obj
 	var/bad_thing_coeff = 0
 	var/reset_time = 15
 	var/list/item_reactions = list()
-
 	var/list/experiments = list()
 
 /obj/machinery/rnd/experimentor/RefreshParts()

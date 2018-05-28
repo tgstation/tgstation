@@ -1,8 +1,0 @@
-author: "Cobby"
-delete-after: True
-changes: 
-  - tweak: "Several of the recent drinks added have now been given effects!"
-  - rscadd: "Alexander: Conquer the world... or just the station with this drink! If you have a shield, it will increase the block chance by 10 percent! Careful not to drop it in battle though...."
-  - rscadd: "Between The Sheets: Save the pillow talk for next shift, having this in your system while you're asleep will slowly heal you!"
-  - rscadd: "Menthol: Prevents coughing. Good for a cold or if the Chaplain gets his hands on a smoke book!"
-  - tweak: "Descriptions have been edited so that if you view these under a chem master they will tell you the effect."

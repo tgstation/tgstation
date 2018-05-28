@@ -23,7 +23,7 @@
 
 /obj/structure/closet/supplypod/bluespacepod
 	name = "Bluespace Drop Pod"
-	desc = "A Nanotrasen Bluespace drop pod. Teleports back to Centcom after delivery."
+	desc = "A Nanotrasen Bluespace drop pod. Teleports back to CentCom after delivery."
 	icon_state = "bluespacepod"
 
 /obj/structure/closet/supplypod/Initialize(mapload, datum/supply_order/so)

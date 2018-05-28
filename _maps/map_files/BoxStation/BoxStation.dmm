@@ -41396,7 +41396,7 @@
 /turf/closed/wall/r_wall,
 /area/medical/virology)
 "bZQ" = (
-/obj/machinery/atmospherics/components/binary/valve/open{
+/obj/machinery/atmospherics/components/binary/valve/on{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -52262,10 +52262,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/machinery/atmospherics/components/binary/valve/digital{
+/obj/machinery/atmospherics/components/binary/valve/digital/on{
 	dir = 4;
-	name = "Output Release";
-	open = 1
+	name = "Output Release"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)

@@ -44580,11 +44580,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/structure/reagent_dispensers/beerkeg{
-	desc = "One of the more successful achievements of the Nanotrasen Corporate Warfare Division, their nuclear fission explosives are renowned for being cheap to produce and devastatingly effective. Signs explain that though this particular device has been decommissioned, every Nanotrasen station is equipped with an equivalent one, just in case. All Captains carefully guard the disk needed to detonate them - at least, the sign says they do. There seems to be a tap on the back.";
-	icon = 'icons/obj/machines/nuke.dmi';
-	icon_state = "nuclearbomb_base";
-	name = "Nanotrasen-brand nuclear fission explosive";
+/obj/machinery/nuclearbomb/beer{
 	pixel_x = 2;
 	pixel_y = 6
 	},
@@ -76464,11 +76460,7 @@
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/server)
 "mjJ" = (
-/obj/structure/reagent_dispensers/beerkeg{
-	desc = "One of the more successful achievements of the Nanotrasen Corporate Warfare Division, their nuclear fission explosives are renowned for being cheap to produce and devastatingly effective. Signs explain that though this particular device has been decommissioned, every Nanotrasen station is equipped with an equivalent one, just in case. All Captains carefully guard the disk needed to detonate them - at least, the sign says they do. There seems to be a tap on the back.";
-	icon = 'icons/obj/machines/nuke.dmi';
-	icon_state = "nuclearbomb_base";
-	name = "Nanotrasen-brand nuclear fission explosive";
+/obj/machinery/nuclearbomb/beer{
 	pixel_x = 2;
 	pixel_y = 6
 	},

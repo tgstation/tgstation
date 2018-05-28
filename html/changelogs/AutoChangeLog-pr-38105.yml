@@ -1,0 +1,5 @@
+author: "CitrusGender"
+delete-after: True
+changes: 
+  - bugfix: "Kills you if you're under 0% blood and above -9999% blood level (shouldn't be possible through normal means to be below that.)"
+  - bugfix: "Stops bloodloss trait from happening if your race contains the NO_BLOOD"
