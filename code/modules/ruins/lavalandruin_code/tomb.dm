@@ -197,7 +197,7 @@
 	icon_state = "antikytherasword-sleeping"
 	icon = 'icons/mecha/mecha.dmi'
 	sentience_type = SENTIENCE_BOSS
-	loot = list(/obj/mecha/combat/stone/loaded)
+	loot = list(/obj/mecha/combat/necropolis/loaded)
 	var/quest = FALSE
 	var/list/guards = list()
 	var/obj/structure/necropolis_gate/trapgate = list()
@@ -309,7 +309,7 @@
 	force = 40
 	wreckage = /obj/structure/mecha_wreckage/necropolis
 
-/obj/mecha/combat/stone/loaded/Initialize()
+/obj/mecha/combat/necropolis/loaded/Initialize()
 	..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
 	ME.attach(src)
