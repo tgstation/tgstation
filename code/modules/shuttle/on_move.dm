@@ -204,11 +204,6 @@ All ShuttleMove procs go here
 		on = TRUE
 	update_list()
 
-/obj/machinery/thruster/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
-	. = ..()
-	if(. & MOVE_AREA)
-		. |= MOVE_CONTENTS
-
 /obj/machinery/atmospherics/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	var/missing_nodes = FALSE

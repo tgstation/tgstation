@@ -355,6 +355,7 @@ Difficulty: Very Hard
 	light_range = 8
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	use_power = NO_POWER_USE
+	anchored = FALSE
 	density = TRUE
 	flags_1 = HEAR_1
 	var/activation_method

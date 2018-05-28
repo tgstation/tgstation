@@ -6,6 +6,7 @@
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "machinegun"
 	can_buckle = TRUE
+	anchored = FALSE
 	density = TRUE
 	max_integrity = 100
 	buckle_lying = FALSE

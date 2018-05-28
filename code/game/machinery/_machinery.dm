@@ -92,6 +92,7 @@ Class Procs:
 	pressure_resistance = 15
 	max_integrity = 200
 
+	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 
 	var/stat = 0
