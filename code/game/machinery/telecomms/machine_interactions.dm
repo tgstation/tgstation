@@ -55,7 +55,7 @@
 		dat += "<br>Linked Network Entities: <ol>"
 
 		var/i = 0
-		for(var/obj/machinery/telecomms/T in TCLinks())
+		for(var/obj/machinery/telecomms/T in links)
 			i++
 			if(T.hide && !hide)
 				continue
@@ -192,7 +192,7 @@
 						temp = "<font color = #666633>-% Too many characters in new network tag %-</font color>"
 
 					else
-						for(var/obj/machinery/telecomms/T in TCLinks())
+						for(var/obj/machinery/telecomms/T in links)
 							T.links.Remove(src)
 
 						network = newnet

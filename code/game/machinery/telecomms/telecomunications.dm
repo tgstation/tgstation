@@ -12,11 +12,15 @@
 	Look at radio.dm for the prequel to this code.
 */
 
+GLOBAL_LIST_EMPTY(telecomms_list)
+
 /obj/machinery/telecomms
 	icon = 'icons/obj/machines/telecomms.dmi'
 	critical_machine = TRUE
+	var/list/links = list() // list of machines this machine is linked to
 	var/traffic = 0 // value increases as traffic increases
 	var/netspeed = 5 // how much traffic to lose per tick (50 gigabytes/second * netspeed)
+	var/list/autolinkers = list() // list of text/number values to link with
 	var/id = "NULL" // identification string
 	var/network = "NULL" // the network of the machinery
 
@@ -27,8 +31,6 @@
 	var/long_range_link = FALSE  // Can you link it across Z levels or on the otherside of the map? (Relay & Hub)
 	var/hide = FALSE  // Is it a hidden machine?
 
-/obj/machinery/telecomms/proc/TCLinks()
-	return GetLinkedAtoms(long_range_link ? /obj/machinery/telecomms : GetZLevelLinkGroupId())
 
 /obj/machinery/telecomms/proc/relay_information(datum/signal/subspace/signal, filter, copysig, amount = 20)
 	// relay signal to all linked machinery that are of type [filter]. If signal has been sent [amount] times, stop sending
@@ -43,17 +45,14 @@
 		signal.data["slow"] = netlag
 
 	// Loop through all linked machines and send the signal or copy.
-	for(var/obj/machinery/telecomms/machine in TCLinks())
-		if(machine == src)
-			return
+	for(var/obj/machinery/telecomms/machine in links)
 		if(filter && !istype( machine, filter ))
 			continue
 		if(!machine.on)
 			continue
 		if(amount && send_count >= amount)
 			break
-		var/turf/their_turf = get_turf(machine)
-		if(z != their_turf?.z && !machine.long_range_link)
+		if(z != machine.loc.z && !long_range_link && !machine.long_range_link)
 			continue
 
 		send_count++
@@ -83,33 +82,31 @@
 
 /obj/machinery/telecomms/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/atom_linker, /obj/machinery/telecomms)
-	var/turf/T = get_turf(src)
-	if(T)
-		JoinZLevelLinkGroup(T.z)
+	GLOB.telecomms_list += src
 	if(mapload && autolinkers.len)
 		return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/telecomms/proc/GetZLevelLinkGroupId(z_level)
-	if(!z_level)
-		var/turf/T = get_turf(src)
-		if(!T)
-			return	//this is an error
-		z_level = T.z
-	return "[/obj/machinery/telecomms][z_level]"
+/obj/machinery/telecomms/LateInitialize()
+	..()
+	for(var/obj/machinery/telecomms/T in (long_range_link ? GLOB.telecomms_list : urange(20, src, 1)))
+		add_link(T)
 
-/obj/machinery/telecomms/proc/JoinZLevelLinkGroup(z_level)
-	AddComponent(/datum/component/atom_linker, GetZLevelLinkGroupId(z_level))
+/obj/machinery/telecomms/Destroy()
+	GLOB.telecomms_list -= src
+	for(var/obj/machinery/telecomms/comm in GLOB.telecomms_list)
+		comm.links -= src
+	links = list()
+	return ..()
 
-/obj/machinery/telecomms/onTransitZ(old_z, new_z)
-	. = ..()
-	var/search = GetZLevelLinkGroupId(old_z)
-	for(var/I in GetComponents(/datum/component/atom_linker))
-		var/datum/component/atom_linker/al = I
-		if(al.id == search)
-			qdel(al)
-			break
-	JoinZLevelLinkGroup(new_z)
+// Used in auto linking
+/obj/machinery/telecomms/proc/add_link(obj/machinery/telecomms/T)
+	var/turf/position = get_turf(src)
+	var/turf/T_position = get_turf(T)
+	if((position.z == T_position.z) || (long_range_link && T.long_range_link))
+		if(src != T)
+			for(var/x in autolinkers)
+				if(x in T.autolinkers)
+					links |= T
 
 /obj/machinery/telecomms/update_icon()
 	if(on)

@@ -12,7 +12,7 @@
 	icon_screen = "comm_logs"
 	circuit = /obj/item/circuitboard/computer/message_monitor
 	//Server linked to.
-	var/datum/weakref/linkedServerRef
+	var/obj/machinery/telecomms/message_server/linkedServer = null
 	//Sparks effect - For emag
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 	//Messages - Saves me time if I want to change something.
@@ -44,7 +44,6 @@
 /obj/machinery/computer/message_monitor/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
-	var/obj/machinery/telecomms/message_server/linkedServer = GetLinkedServer()
 	if(!isnull(linkedServer))
 		obj_flags |= EMAGGED
 		screen = 2
@@ -59,18 +58,24 @@
 	else
 		to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
 
+/obj/machinery/computer/message_monitor/New()
+	. = ..()
+	GLOB.telecomms_list += src
 
-/obj/machinery/computer/message_monitor/proc/GetLinkedServer()
-	if(linkedServerRef)
-		return linkedServerRef.resolve()
-	//pick the first one
-	var/obj/machinery/telecomms/message_server/S = locate() in GetLinkedAtomsWithId(/obj/machinery/telecomms)
-	linkedServerRef = WEAKREF(S)
-	return S
+/obj/machinery/computer/message_monitor/Initialize()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/message_monitor/LateInitialize()
+	//Is the server isn't linked to a server, and there's a server available, default it to the first one in the list.
+	if(!linkedServer)
+		for(var/obj/machinery/telecomms/message_server/S in GLOB.telecomms_list)
+			linkedServer = S
+			break
 
 /obj/machinery/computer/message_monitor/Destroy()
-	linkedServerRef = null
-	return ..()
+	GLOB.telecomms_list -= src
+	. = ..()
 
 /obj/machinery/computer/message_monitor/ui_interact(mob/living/user)
 	. = ..()
@@ -79,7 +84,6 @@
 		message = rebootmsg
 	var/dat = "<center><font color='blue'[message]</font></center>"
 
-	var/obj/machinery/telecomms/message_server/linkedServer = GetLinkedServer()
 	if(auth)
 		dat += "<h4><dd><A href='?src=[REF(src)];auth=1'>&#09;<font color='green'>\[Authenticated\]</font></a>&#09;/"
 		dat += " Server Power: <A href='?src=[REF(src)];active=1'>[linkedServer && linkedServer.toggled ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</a></h4>"
@@ -232,11 +236,7 @@
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
-/obj/machinery/computer/message_monitor/proc/BruteForce(datum/weakref/userref)
-	var/mob/user = userref.resolve()
-	if(!user)
-		return
-	var/obj/machinery/telecomms/message_server/linkedServer = GetLinkedServer()
+/obj/machinery/computer/message_monitor/proc/BruteForce(mob/user)
 	if(isnull(linkedServer))
 		to_chat(user, "<span class='warning'>Could not complete brute-force: Linked Server Disconnected!</span>")
 	else
@@ -258,7 +258,6 @@
 	if(..())
 		return
 
-	var/obj/machinery/telecomms/message_server/linkedServer = GetLinkedServer()
 	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr))
 		//Authenticate
 		if (href_list["auth"])
@@ -284,7 +283,7 @@
 		//Find a server
 		if (href_list["find"])
 			var/list/message_servers = list()
-			for (var/obj/machinery/telecomms/message_server/M in GetLinkedAtomsWithId(/obj/machinery/telecomms))
+			for (var/obj/machinery/telecomms/message_server/M in GLOB.telecomms_list)
 				message_servers += M
 
 			if(message_servers.len > 1)
@@ -343,7 +342,9 @@
 				hacking = TRUE
 				screen = 2
 				//Time it takes to bruteforce is dependant on the password length.
-				addtimer(CALLBACK(src, .proc/BruteForce, WEAKREF(usr)), 100 * length(linkedServer.decryptkey))
+				spawn(100*length(linkedServer.decryptkey))
+					if(src && linkedServer && usr)
+						BruteForce(usr)
 		//Delete the log.
 		if (href_list["delete_logs"])
 			//Are they on the view logs screen?
@@ -456,6 +457,7 @@
 	add_overlay("paper_words")
 
 /obj/item/paper/monitorkey/LateInitialize()
-	var/obj/machinery/telecomms/message_server/server = locate() in GetLinkedAtomsWithId(/obj/machinery/telecomms)
-	if (server?.decryptkey)
-		print(server)
+	for (var/obj/machinery/telecomms/message_server/server in GLOB.telecomms_list)
+		if (server.decryptkey)
+			print(server)
+			break

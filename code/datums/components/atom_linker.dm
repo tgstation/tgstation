@@ -8,9 +8,9 @@
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	
-	if(!id || (!istext(id) && !ispath(id)))
+	if(!istext(id))
 		. = COMPONENT_INCOMPATIBLE
-		CRASH("Invalid link id: [id]")
+		CRASH("Non-text id!")
 
 	src.id = id
 	linked_components = linker_lists[id]
@@ -28,47 +28,31 @@
 /datum/component/atom_linker/proc/GetLinks()
 	return linked_components.Copy()
 
-/atom/proc/GetLinkedAtoms(id)
-	for(var/I in GetComponents(/datum/component/atom_linker))
-		var/datum/component/atom_linker/al = I
-		if(al.id == id)
-			return al.linked_components.Copy()
-
-/proc/GetLinkedAtomsWithId(id)
-	var/datum/component/atom_linker/al
-	//remove compiler warning
-	pass(al)
-	var/list/linker_lists = al.linker_lists
-	return linker_lists[id]
-
-/proc/GetLinkedAtomIds()
-	var/datum/component/atom_linker/al
-	//remove compiler warning
-	pass(al)
-	. = al.linker_lists.Copy()
-	for(var/I in .)
-		.[I] = null
-
 /datum/admins/proc/ViewLinkedAtoms()
 	set name = "View Linked Atoms"
 	set category = "Mapping"
 	set desc = "View current lists of design time linked atoms"
 
-	var/id = input(usr, "Select group to view", "Link Groups") in GetLinkedAtomIds() | null
+	var/datum/component/atom_linker/al
+	//remove compiler warning
+	pass(al)
+	var/list/linker_lists = al.linker_lists
+	var/id = input(usr, "Select group to view", "Link Groups") in linker_lists | null
 	if(!id)
 		return
 	
 	var/list/atom_list = list()
-	for(var/I in GetLinkedAtomsWithId(id))
-		var/atom/A = I
-		atom_list["[A.name] ([A.type]) ([COORD(A)])"] = I
+	for(var/I in linker_lists[id])
+		al = I
+		var/atom/A = al.parent
+		atom_list["[A.name] ([A.type]) ([COORD(A)])"] = al.parent
 	
-	if(!atom_list.len)
+	if(!al)
 		if(usr)
 			alert(usr, "Group is now empty!")
 		return
 
-	var/to_view = input(usr, "Select atom to view", "Link Group \"[id]\"") in atom_list | null
+	var/to_view = input(usr, "Select atom to view", "Link Group \"[al.id]\"") in atom_list | null
 	if(!to_view)
 		return
 

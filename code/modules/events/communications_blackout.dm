@@ -22,5 +22,5 @@
 
 
 /datum/round_event/communications_blackout/start()
-	for(var/obj/machinery/telecomms/T in GetLinkedAtomsWithId(/obj/machinery/telecomms))
+	for(var/obj/machinery/telecomms/T in GLOB.telecomms_list)
 		T.emp_act(EMP_HEAVY)
