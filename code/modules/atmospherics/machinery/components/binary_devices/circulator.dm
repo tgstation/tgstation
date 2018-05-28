@@ -13,7 +13,6 @@
 	var/last_pressure_delta = 0
 	pipe_flags = PIPING_ONE_PER_TURF
 
-	anchored = TRUE
 	density = TRUE
 
 	var/global/const/CIRC_LEFT = 1

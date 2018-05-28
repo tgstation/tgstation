@@ -10,7 +10,6 @@
 	icon_state = "control_boxp1"
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	density = TRUE
-	anchored = TRUE
 
 /obj/machinery/artillerycontrol/process()
 	if(reload < reload_cooldown)

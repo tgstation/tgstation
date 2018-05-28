@@ -6,7 +6,6 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "smoke0"
 	density = TRUE
-	anchored = TRUE
 	circuit = /obj/item/circuitboard/machine/smoke_machine
 	var/efficiency = 10
 	var/on = FALSE

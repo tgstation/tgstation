@@ -7,7 +7,6 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "rtg"
 	density = TRUE
-	anchored = TRUE
 	use_power = NO_POWER_USE
 	circuit = /obj/item/circuitboard/machine/rtg
 

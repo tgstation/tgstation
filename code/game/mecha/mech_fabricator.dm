@@ -4,7 +4,6 @@
 	name = "exosuit fabricator"
 	desc = "Nothing is being built."
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 5000
