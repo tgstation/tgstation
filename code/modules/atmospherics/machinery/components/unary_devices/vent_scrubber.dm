@@ -64,15 +64,13 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	var/area/A = get_area(src)
-	A.air_scrub_names -= id_tag
-	A.air_scrub_info -= id_tag
+	if (A)
+		A.air_scrub_names -= id_tag
+		A.air_scrub_info -= id_tag
 
 	SSradio.remove_object(src,frequency)
 	radio_connection = null
-
-	for(var/I in adjacent_turfs)
-		I = null
-
+	adjacent_turfs.Cut()
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/auto_use_power()
