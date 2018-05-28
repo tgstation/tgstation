@@ -100071,7 +100071,6 @@
 	frequency = 1449;
 	id = "tox_airlock_pump"
 	},
-/obj/effect/landmark/blobstart,
 /turf/open/floor/engine,
 /area/science/mixing)
 "lEl" = (
