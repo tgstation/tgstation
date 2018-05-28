@@ -263,3 +263,6 @@
 		if(HF.loc == src)
 			HF.forceMove(drop_location())
 	qdel(src)
+
+/obj/structure/beebox/unwrenched
+		anchored = FALSE
