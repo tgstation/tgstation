@@ -256,7 +256,32 @@ SLIME SCANNER
 	// Species and body temperature
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		to_chat(user, "<span class='info'>Species: [H.dna.species.name]</span>")
+		var/datum/species/S = H.dna.species
+		var/mutant = FALSE
+		if (H.dna.check_mutation(HULK))
+			mutant = TRUE
+		else if (S.mutantlungs != initial(S.mutantlungs))
+			mutant = TRUE
+		else if (S.mutant_brain != initial(S.mutant_brain))
+			mutant = TRUE
+		else if (S.mutant_heart != initial(S.mutant_heart))
+			mutant = TRUE
+		else if (S.mutanteyes != initial(S.mutanteyes))
+			mutant = TRUE
+		else if (S.mutantears != initial(S.mutantears))
+			mutant = TRUE
+		else if (S.mutanthands != initial(S.mutanthands))
+			mutant = TRUE
+		else if (S.mutanttongue != initial(S.mutanttongue))
+			mutant = TRUE
+		else if (S.mutanttail != initial(S.mutanttail))
+			mutant = TRUE
+		else if (S.mutantliver != initial(S.mutantliver))
+			mutant = TRUE
+		else if (S.mutantstomach != initial(S.mutantstomach))
+			mutant = TRUE
+
+		to_chat(user, "<span class='info'>Species: [S.name][mutant ? "-derived mutant" : ""]</span>")
 	to_chat(user, "<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>")
 
 	// Time of death
