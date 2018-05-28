@@ -270,8 +270,11 @@ All ShuttleMove procs go here
 
 /obj/item/storage/pod/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
-	unlocked = TRUE
-	// If the pod was launched, the storage will always open.
+	// If the pod was launched, the storage will always open. The CentCom check
+	// ignores the movement of the shuttle from the staging area on CentCom to
+	// the station as it is loaded in.
+	if (oldT && !is_centcom_level(oldT.z))
+		unlocked = TRUE
 
 /************************************Mob move procs************************************/
 

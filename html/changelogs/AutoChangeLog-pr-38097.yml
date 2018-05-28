@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "Observers can no longer move the action button toggle or change the ambient occlusion setting of their targets."

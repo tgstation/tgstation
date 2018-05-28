@@ -22891,7 +22891,8 @@
 	dir = 2;
 	id = "Skynet_launch";
 	name = "Mech Bay Door Control";
-	pixel_x = 25
+	pixel_x = 25;
+	req_access_txt = "29"
 	},
 /turf/open/floor/plasteel/purple/corner,
 /area/hallway/primary/central)
@@ -22903,7 +22904,8 @@
 	dir = 2;
 	id = "Skynet_launch";
 	name = "Mech Bay Door Control";
-	pixel_x = -25
+	pixel_x = -25;
+	req_access_txt = "29"
 	},
 /obj/machinery/camera{
 	c_tag = "Mech Bay";
@@ -26095,7 +26097,6 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
@@ -27192,7 +27193,6 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
@@ -27224,9 +27224,6 @@
 	icon_state = "1-8"
 	},
 /obj/effect/landmark/blobstart,
-/obj/structure/disposalpipe/junction/flip{
-	dir = 1
-	},
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
@@ -27234,6 +27231,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/science/xenobiology)
 "btK" = (
