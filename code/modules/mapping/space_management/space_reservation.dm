@@ -3,6 +3,8 @@
 //Yes, I'm sorry.
 /datum/turf_reservation
 	var/list/reserved_turfs = list()
+	var/width = 0
+	var/height = 0
 	var/bottom_left_coords[3]
 	var/top_right_coords[3]
 	var/wipe_reservation_on_release = TRUE
@@ -59,6 +61,8 @@
 		SSmapping.unused_turfs["[T.z]"] -= T
 		SSmapping.used_turfs[T] = src
 		T.ChangeTurf(turf_type, turf_type)
+	src.width = width
+	src.height = height
 	return TRUE
 
 /datum/turf_reservation/New()

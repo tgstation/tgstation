@@ -125,6 +125,12 @@ LOG_MANIFEST
 ## As an example of how this could be """useful""" look towards Poly (https://twitter.com/Poly_the_Parrot)
 # LOG_TWITTER
 
+## Enable logging pictures
+LOG_PICTURES
+
+##Log camera pictures - Must have picture logging enabled
+PICTURE_LOGGING_CAMERA
+
 ## period of time in seconds for players to be considered inactive
 # INACTIVITY_PERIOD 300
 

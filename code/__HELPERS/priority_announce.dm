@@ -19,7 +19,7 @@
 			announcement += "<h1 class='alert'>[sender_override]</h1>"
 		if (title && length(title) > 0)
 			announcement += "<br><h2 class='alert'>[html_encode(title)]</h2>"
-		
+
 		if(!sender_override)
 			if(title == "")
 				GLOB.news_network.SubmitArticle(text, "Central Command Update", "Station Announcements", null)
@@ -46,7 +46,7 @@
 	var/datum/comm_message/M  = new
 	M.title = title
 	M.content =  text
-	
+
 	SScommunications.send_message(M)
 
 /proc/minor_announce(message, title = "Attention:", alert)

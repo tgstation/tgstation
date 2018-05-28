@@ -42,3 +42,13 @@ GLOBAL_LIST_EMPTY(adminlog)
 GLOBAL_PROTECT(adminlog)
 
 GLOBAL_LIST_EMPTY(active_turfs_startlist)
+
+/////Picture logging
+GLOBAL_VAR(picture_log_directory)
+GLOBAL_PROTECT(picture_log_directory)
+
+//Not protected - The worst you can do is overwrite pictures, and we really aren't at the point of using pictures for attack logging/investigation.
+GLOBAL_VAR_INIT(picture_datum_id, 1)
+
+GLOBAL_LIST_INIT(picture_logging_information, list())
+/////
