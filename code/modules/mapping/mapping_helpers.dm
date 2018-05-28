@@ -201,14 +201,13 @@ GLOBAL_LIST_EMPTY(z_is_planet)
 /obj/effect/mapping_helpers/component_injector/atom_linker
 	name = "Atom Linker"
 	component_type = /datum/component/atom_linker
-	maptext = "NEEDS ID"
 	late = FALSE
+	var/_atom_link_id = "NEEDS ID"
 
 /obj/effect/mapping_helpers/component_injector/atom_linker/Initialize()
 	. = ..()
-	if(maptext == "NEEDS ID")
-		. = INITIALIZE_HINT_QDEL
-		CRASH("[type] at ([COORD(src)]) is missing link id! Set it using maptext")
+	if(_atom_link_id == "NEEDS ID")
+		CRASH("[type] at ([COORD(src)]) is missing link id! Set it using [NAMEOF(src, _atom_link_id)]")
 
 /obj/effect/mapping_helpers/component_injector/infective/build_args()
-	return list(maptext)
+	return list(_atom_link_id)
