@@ -3,7 +3,6 @@
 	desc = "It opens and closes."
 	icon = 'icons/obj/doors/Doorint.dmi'
 	icon_state = "door1"
-	anchored = TRUE
 	opacity = 1
 	density = TRUE
 	layer = OPEN_DOOR_LAYER

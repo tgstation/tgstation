@@ -4,7 +4,6 @@
 	icon_state = "pipe_d"
 	desc = "Dispenses countless types of pipes. Very useful if you need pipes."
 	density = TRUE
-	anchored = TRUE
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_OFFLINE
 	var/wait = 0
 	var/piping_layer = PIPING_LAYER_DEFAULT
@@ -80,7 +79,6 @@
 	icon_state = "pipe_d"
 	desc = "Dispenses pipes that will ultimately be used to move trash around."
 	density = TRUE
-	anchored = TRUE
 
 
 //Allow you to drag-drop disposal pipes and transit tubes into it
@@ -147,7 +145,6 @@
 	icon_state = "pipe_d"
 	density = TRUE
 	desc = "Dispenses pipes that will move beings around."
-	anchored = TRUE
 
 /obj/machinery/pipedispenser/disposal/transit_tube/interact(mob/user)
 

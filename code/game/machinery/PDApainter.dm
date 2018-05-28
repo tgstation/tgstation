@@ -4,10 +4,9 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pdapainter"
 	density = TRUE
-	anchored = TRUE
+	max_integrity = 200
 	var/obj/item/pda/storedpda = null
 	var/list/colorlist = list()
-	max_integrity = 200
 
 
 /obj/machinery/pdapainter/update_icon()

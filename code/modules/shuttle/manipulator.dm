@@ -9,7 +9,6 @@
 	icon = 'icons/obj/machines/shuttle_manipulator.dmi'
 	icon_state = "holograph_on"
 
-	anchored = TRUE
 	density = TRUE
 
 	// UI state variables
