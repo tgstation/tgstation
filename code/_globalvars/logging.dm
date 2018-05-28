@@ -42,3 +42,11 @@ GLOBAL_LIST_EMPTY(adminlog)
 GLOBAL_PROTECT(adminlog)
 
 GLOBAL_LIST_EMPTY(active_turfs_startlist)
+
+/////Picture logging
+GLOBAL_VAR(picture_log_directory)
+GLOBAL_PROTECT(picture_log_directory)
+
+GLOBAL_VAR_INIT(picture_logging_id, 1)
+GLOBAL_VAR(picture_logging_prefix)
+/////

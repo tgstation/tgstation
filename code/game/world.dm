@@ -76,13 +76,19 @@ GLOBAL_PROTECT(security_mode)
 /world/proc/SetupLogs()
 	var/override_dir = params[OVERRIDE_LOG_DIRECTORY_PARAMETER]
 	if(!override_dir)
-		GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
+		var/realtime = world.realtime
+		GLOB.log_directory = "data/logs/[time2text(realtime, "YYYY/MM/DD")]/round-"
+		GLOB.picture_logging_prefix = "L_[time2text(realtime, "YYYYMMDD")]_"
 		if(GLOB.round_id)
 			GLOB.log_directory += "[GLOB.round_id]"
+			GLOB.picture_logging_prefix += "_R[GLOB.round_id]_"
 		else
-			GLOB.log_directory += "[replacetext(time_stamp(), ":", ".")]"
+			var/timestamp = time_stamp()
+			GLOB.log_directory += "[replacetext(timestamp, ":", ".")]"
+			GLOB.picture_logging_prefix += "_T[replacetext(timestamp, ":", ".")]_"
 	else
 		GLOB.log_directory = "data/logs/[override_dir]"
+		GLOB.picture_logging_prefix = "O_[override_dir]_"
 
 	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
 	GLOB.world_attack_log = "[GLOB.log_directory]/attack.log"
@@ -93,6 +99,7 @@ GLOBAL_PROTECT(security_mode)
 	GLOB.world_qdel_log = "[GLOB.log_directory]/qdel.log"
 	GLOB.world_runtime_log = "[GLOB.log_directory]/runtime.log"
 	GLOB.query_debug_log = "[GLOB.log_directory]/query_debug.log"
+	GLOB.picture_log_directory = GLOB.log_directory + "/pictures"
 
 #ifdef UNIT_TESTS
 	GLOB.test_log = file("[GLOB.log_directory]/tests.log")

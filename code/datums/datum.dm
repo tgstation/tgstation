@@ -69,3 +69,67 @@
 /datum/proc/to_chat_check_changed_vars(target = world)
 	to_chat(target, txt_changed_vars())
 #endif
+
+//Return a LIST for serialize_datum to encode! Not the actual json!
+/datum/proc/serialize_list(list/options)
+	return NOT_IMPLEMENTED
+
+//Accepts a LIST from deserialize_datum. Should return src or another datum.
+/datum/proc/deserialize_list(json, list/options)
+	return NOT_IMPLEMENTED
+
+//Serializes into JSON. Does not encode type.
+/datum/proc/serialize_json(list/options)
+	. = serialize_list(options)
+	if((. == NOT_IMPLEMENTED) || !islist(.))
+		. = null
+	else
+		. = json_encode(.)
+
+//Deserializes from JSON. Does not parse type.
+/datum/proc/deserialize_json(list/input, list/options)
+	var/list/jsonlist = json_decode(input)
+	. = deserialize_list(jsonlist)
+	if(!istype(., /datum))
+		. = null
+
+/proc/json_serialize_datum(datum/D, list/options)
+	if(!istype(D))
+		return
+	var/list/jsonlist = D.serialize_list(options)
+	if(islist(jsonlist))
+		jsonlist["DATUM_TYPE"] = D.type
+	return json_encode(jsonlist)
+
+/proc/json_deserialize_datum(list/jsonlist, list/options, target_type, strict_target_type = FALSE)
+	if(!islist(jsonlist))
+		if(!istext(jsonlist))
+			CRASH("Invalid JSON")
+			return
+		jsonlist = json_decode(jsonlist)
+		if(!islist(jsonlist))
+			CRASH("Invalid JSON")
+			return
+	if(!jsonlist["DATUM_TYPE"])
+		return
+	if(!ispath(jsonlist["DATUM_TYPE"]))
+		if(!istext(jsonlist["DATUM_TYPE"]))
+			return
+		jsonlist["DATUM_TYPE"] = text2path(jsonlist["DATUM_TYPE"])
+		if(!ispath(jsonlist["DATUM_TYPE"]))
+			return
+	if(target_type)
+		if(!ispath(target_type))
+			return
+		if(strict_target_type)
+			if(target_type != jsonlist["DATUM_TYPE"])
+				return
+		else if(!ispath(jsonlist["DATUM_TYPE"], target_type))
+			return
+	var/typeofdatum = jsonlist["DATUM_TYPE"]			//BYOND won't directly read if this is just put in the line below, and will instead runtime because it thinks you're trying to make a new list?
+	var/datum/D = new typeofdatum
+	var/datum/returned = D.deserialize_list(jsonlist, options)
+	if(!istype(returned, /datum))
+		qdel(D)
+	else
+		return returned

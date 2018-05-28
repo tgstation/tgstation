@@ -23,6 +23,8 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 //define THIS_PROC_TYPE_WEIRD_STR "[THIS_PROC_TYPE_WEIRD]" //Included for completeness
 //define THIS_PROC_TYPE_WEIRD_STR_WITH_ARGS "[THIS_PROC_TYPE_WEIRD]([args.Join(",")])" //Ditto
 
+#define NOT_IMPLEMENTED "NOT_IMPLEMENTED"
+
 #define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
 
 #define JANUARY		1
@@ -448,6 +450,9 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 //Filters
 #define AMBIENT_OCCLUSION filter(type="drop_shadow", x=0, y=-2, size=4, border=4, color="#04080FAA")
 
-
 #define STANDARD_GRAVITY 1 //Anything above this is high gravity, anything below no grav
 #define GRAVITY_DAMAGE_TRESHOLD 3 //Starting with this value gravity will start to damage mobs
+
+#define CAMERA_NO_GHOSTS 0
+#define CAMERA_SEE_GHOSTS_BASIC 1
+#define CAMERA_SEE_GHOSTS_ORBIT 2

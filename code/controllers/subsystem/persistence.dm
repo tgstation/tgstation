@@ -15,6 +15,9 @@ SUBSYSTEM_DEF(persistence)
 	var/list/spawned_objects = list()
 	var/list/antag_rep = list()
 	var/list/antag_rep_change = list()
+	var/list/picture_logging_information = list()
+	var/list/obj/structure/sign/picture_frame/photo_frames
+	var/list/obj/item/storage/photo_album/photo_albums
 
 /datum/controller/subsystem/persistence/Initialize()
 	LoadSatchels()
@@ -22,6 +25,7 @@ SUBSYSTEM_DEF(persistence)
 	LoadChiselMessages()
 	LoadTrophies()
 	LoadRecentModes()
+	LoadPhotoPersistence()
 	if(CONFIG_GET(flag/use_antag_rep))
 		LoadAntagReputation()
 	..()
@@ -194,14 +198,42 @@ SUBSYSTEM_DEF(persistence)
 		T.placer_key = chosen_trophy["placer_key"]
 		T.update_icon()
 
+/datum/controller/subsystem/persistence/Shutdown()
+	SavePhotoData()									//THIS IS LOGGING, NOT THE PERSISTENCE PORTION.
 
 /datum/controller/subsystem/persistence/proc/CollectData()
 	CollectChiselMessages()
 	CollectSecretSatchels()
 	CollectTrophies()
 	CollectRoundtype()
+	SavePhotoPersistence()						//THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
 	if(CONFIG_GET(flag/use_antag_rep))
 		CollectAntagReputation()
+
+/datum/controller/subsystem/persistence/proc/LoadPhotoPersistence()
+	var/album_path = "data/photo_albums.json"
+	var/frame_path = "data/photo_frames.json"
+	if(fexists(album_path))
+		var/list/json = json_decode(file2text(album_path))
+		if(json.len)
+			for(var/i in photo_albums)
+				var/obj/item/storage/photo_album/A = i
+				if(!A.persistence_id)
+					continue
+
+	for(var/i in photo_frames)
+		pass()
+
+/datum/controller/subsystem/persistence/proc/SavePhotoPersistence()
+	for(var/i in photo_albums)
+		pass()
+
+	for(var/i in photo_frames)
+		pass()	//wip
+
+/datum/controller/subsystem/persistence/proc/SavePhotoData()
+	var/path = "[GLOB.picture_log_directory]/metadata.json"
+	file(path) << json_encode(picture_logging_information)
 
 /datum/controller/subsystem/persistence/proc/CollectSecretSatchels()
 	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/crowbar))

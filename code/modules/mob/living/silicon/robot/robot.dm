@@ -1151,4 +1151,12 @@
 		lawsync()
 		lawupdate = 1
 		return TRUE
+	picturesync()
 	return FALSE
+
+/mob/living/silicon/robot/proc/picturesync()
+	if(connected_ai && connected_ai.aicamera && aicamera)
+		for(var/i in aicamera.stored)
+			connected_ai.aicamera.stored[i] = TRUE
+		for(var/i in connected_ai.aicamera.stored)
+			aicamera.stored[i] = TRUE
