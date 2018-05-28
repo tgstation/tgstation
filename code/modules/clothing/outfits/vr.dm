@@ -9,7 +9,7 @@
 	var/datum/job/captain/J = new/datum/job/captain
 	var/obj/item/card/id/id = H.wear_id
 	if (id)
-		id.access = J.get_access()
+		id.access |= J.get_access()
 
 /datum/outfit/vr/syndicate
 	name = "Syndicate VR Operative - Basic"
