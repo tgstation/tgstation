@@ -1,0 +1,5 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "Deltastation's firing range has been decommisioned and replaced with a brand new toxins burn chamber."
+  - bugfix: "Delta toxins disposals are now actually connected to the disposals loop. Toxins storage has a fire alarm too."
