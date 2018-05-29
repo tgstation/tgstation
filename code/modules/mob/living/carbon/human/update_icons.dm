@@ -291,6 +291,7 @@ There are several things that need to be remembered:
 	if(client && hud_used)
 		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_S_STORE]
 		inv.update_icon()
+
 	if(s_store)
 		s_store.screen_loc = ui_sstore1
 		if(client && hud_used && hud_used.hud_shown)
