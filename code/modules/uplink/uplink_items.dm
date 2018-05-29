@@ -293,6 +293,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 		 deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks."
 	item = /obj/item/melee/powerfist
 	cost = 8
+	surplus = 35
 
 /datum/uplink_item/dangerous/emp
 	name = "EMP Grenades and Implanter Kit"
@@ -300,6 +301,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			security's energy weapons, and silicon lifeforms when you're in a tight spot."
 	item = /obj/item/storage/box/syndie_kit/emp
 	cost = 2
+	surplus = 25
 
 /datum/uplink_item/dangerous/syndicate_minibomb
 	name = "Syndicate Minibomb"
@@ -390,15 +392,17 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			organic host as a home base and source of fuel."
 	item = /obj/item/storage/box/syndie_kit/guardian
 	cost = 18
-	surplus = 0
+	surplus = 10
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	player_minimum = 25
 	restricted = TRUE
+	/datum/uplink_item/dangerous/guardian/get_discount()
+	return pick(4;0.8,2;0.65,1;0.5)
 
 // Ammunition
 /datum/uplink_item/ammo
 	category = "Ammunition"
-	surplus = 40
+	surplus = 35
 
 /datum/uplink_item/ammo/pistol
 	name = "10mm Handgun Magazine"
@@ -664,12 +668,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			 throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
 	item = /obj/item/storage/box/syndie_kit/throwing_weapons
 	cost = 3
+	surplus = 25
 
 /datum/uplink_item/stealthy_weapons/edagger
 	name = "Energy Dagger"
 	desc = "A dagger made of energy that looks and functions as a pen when off."
 	item = /obj/item/pen/edagger
 	cost = 2
+	surplus = 35
 
 /datum/uplink_item/stealthy_weapons/foampistol
 	name = "Toy Gun with Riot Darts"
@@ -687,6 +693,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			falls asleep, they will be able to move and act."
 	item = /obj/item/pen/sleepy
 	cost = 4
+	surplus = 45
 	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_weapons/soap
@@ -695,7 +702,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			You can also drop it underfoot to slip people."
 	item = /obj/item/soap/syndie
 	cost = 1
-	surplus = 50
+	surplus = 35
 
 /datum/uplink_item/stealthy_weapons/traitor_chem_bottle
 	name = "Poison Kit"
@@ -753,6 +760,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			your hand before use so it knows not to kill you."
 	item = /obj/item/toy/plush/carpplushie/dehy_carp
 	cost = 1
+	surplus = 50
 
 /datum/uplink_item/stealthy_weapons/soap_clusterbang
 	name = "Slipocalypse Clusterbang"
@@ -932,6 +940,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			in electronic devices, subverts intended functions, and easily breaks security mechanisms."
 	item = /obj/item/card/emag
 	cost = 6
+	surplus = 35
 
 /datum/uplink_item/device_tools/toolbox
 	name = "Full Syndicate Toolbox"
@@ -1150,7 +1159,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			operatives in the fight, even while under fire."
 	item = /obj/item/gun/medbeam
 	cost = 15
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	surplus = 45
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/)
 
 /datum/uplink_item/device_tools/potion
 	name = "Syndicate Sentience Potion"
@@ -1187,6 +1197,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "This device will disrupt any nearby outgoing radio communication when activated."
 	item = /obj/item/jammer
 	cost = 5
+	surplus = 45
 
 /datum/uplink_item/device_tools/codespeak_manual
 	name = "Codespeak Manual"
