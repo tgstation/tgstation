@@ -198,7 +198,7 @@
 	var/total = 0
 	var/item
 	for (item in L)
-		if (!L[item])
+		if(isnull(L[item]))
 			L[item] = 1
 		total += L[item]
 
