@@ -291,7 +291,6 @@ There are several things that need to be remembered:
 	if(client && hud_used)
 		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_S_STORE]
 		inv.update_icon()
-
 	if(s_store)
 		s_store.screen_loc = ui_sstore1
 		if(client && hud_used && hud_used.hud_shown)
@@ -300,12 +299,13 @@ There are several things that need to be remembered:
 		var/t_state = s_store.item_state
 		if(!t_state)
 			t_state = s_store.icon_state
-		overlays_standing[SUIT_STORE_LAYER]	= mutable_appearance('icons/mob/belt_mirror.dmi', t_state, -SUIT_STORE_LAYER)
-		var/mutable_appearance/s_store_overlay = overlays_standing[SUIT_LAYER]
-		if(OFFSET_S_STORE in dna.species.offset_features)
-			s_store_overlay.pixel_x += dna.species.offset_features[OFFSET_S_STORE][1]
-			s_store_overlay.pixel_y += dna.species.offset_features[OFFSET_S_STORE][2]
-		overlays_standing[SUIT_STORE_LAYER] = s_store_overlay
+		if(is_disguised == 0)
+			overlays_standing[SUIT_STORE_LAYER]	= mutable_appearance('icons/mob/belt_mirror.dmi', t_state, -SUIT_STORE_LAYER)
+			var/mutable_appearance/s_store_overlay = overlays_standing[SUIT_LAYER]
+			if(OFFSET_S_STORE in dna.species.offset_features)
+				s_store_overlay.pixel_x += dna.species.offset_features[OFFSET_S_STORE][1]
+				s_store_overlay.pixel_y += dna.species.offset_features[OFFSET_S_STORE][2]
+			overlays_standing[SUIT_STORE_LAYER] = s_store_overlay
 	apply_overlay(SUIT_STORE_LAYER)
 
 
