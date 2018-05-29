@@ -209,5 +209,5 @@ GLOBAL_LIST_EMPTY(z_is_planet)
 	if(_atom_link_id == "NEEDS ID")
 		CRASH("[type] at ([COORD(src)]) is missing link id! Set it using [NAMEOF(src, _atom_link_id)]")
 
-/obj/effect/mapping_helpers/component_injector/infective/build_args()
+/obj/effect/mapping_helpers/component_injector/atom_linker/build_args()
 	return list(_atom_link_id)
