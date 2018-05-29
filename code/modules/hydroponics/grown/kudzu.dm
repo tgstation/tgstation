@@ -36,7 +36,7 @@
 		to_chat(user, "<span class='warning'>There is too much kudzu here to plant [src].</span>")
 		return FALSE
 	to_chat(user, "<span class='notice'>You plant [src].</span>")
-	message_admins("Kudzu planted by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(user)]",0,1)
+	message_admins("Kudzu planted by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(user)]")
 	investigate_log("was planted by [key_name(user)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
 	new /datum/spacevine_controller(get_turf(user), mutations, potency, production)
 	qdel(src)
