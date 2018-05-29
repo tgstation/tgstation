@@ -395,10 +395,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 10
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	player_minimum = 25
-	restricted = TRUE
-	/datum/uplink_item/dangerous/guardian/get_discount()
-	return pick(4;0.8,2;0.65,1;0.5)
-
+	
+	
 // Ammunition
 /datum/uplink_item/ammo
 	category = "Ammunition"
