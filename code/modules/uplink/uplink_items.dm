@@ -392,10 +392,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			organic host as a home base and source of fuel."
 	item = /obj/item/storage/box/syndie_kit/guardian
 	cost = 18
-	surplus = 1
+	surplus = 15
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	player_minimum = 25
-	
+	restricted = TRUE
 	
 // Ammunition
 /datum/uplink_item/ammo
