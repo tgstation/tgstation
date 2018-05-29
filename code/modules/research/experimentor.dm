@@ -131,11 +131,11 @@
 			for(var/node_id in listin)
 				var/datum/techweb_node/N = get_techweb_node_by_id(node_id)
 				var/str = "<b>[N.display_name]</b>: [listin[N]] points.</b>"
-				if(SSresearch.science_tech.researched_nodes[N])
+				if(SSresearch.science_tech.researched_node_ids[N])
 					res += str
-				else if(SSresearch.science_tech.boosted_nodes[N])
+				else if(SSresearch.science_tech.boosted_node_ids[N])
 					boosted += str
-				if(SSresearch.science_tech.visible_nodes[N])	//JOY OF DISCOVERY!
+				if(SSresearch.science_tech.visible_node_ids[N])	//JOY OF DISCOVERY!
 					output += str
 			output += boosted + res
 			dat += output

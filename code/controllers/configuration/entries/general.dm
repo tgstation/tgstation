@@ -408,3 +408,6 @@
 
 /datum/config_entry/string/default_view
 	config_entry_value = "15x15"
+
+/datum/config_entry/string/techweb_config_path
+	config_entry_value = "research/techwebs_config.txt"
