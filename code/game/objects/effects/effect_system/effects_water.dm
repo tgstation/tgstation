@@ -10,7 +10,10 @@
 /obj/effect/particle_effect/water/New()
 	..()
 	QDEL_IN(src, 70)
-
+	
+/obj/effect/particle_effect/water/can_be_pulled(user)
+	return FALSE
+	
 /obj/effect/particle_effect/water/Move(turf/newloc)
 	if (--src.life < 1)
 		qdel(src)
