@@ -72,7 +72,6 @@
 		M.cut_overlays()
 		M.add_overlay(disguise.overlays)
 		M.update_inv_hands()
-		M.is_disguised = TRUE
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/DeactivateStealth()
 	if(!stealth_active)
