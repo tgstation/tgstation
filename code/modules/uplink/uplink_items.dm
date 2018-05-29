@@ -1149,7 +1149,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A wonder of Syndicate engineering, the Medbeam gun, or Medi-Gun enables a medic to keep his fellow \
 			operatives in the fight, even while under fire."
 	item = /obj/item/gun/medbeam
-	cost = 15
+	cost = 10
+	surplus = 35
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/)
 
 /datum/uplink_item/device_tools/potion
