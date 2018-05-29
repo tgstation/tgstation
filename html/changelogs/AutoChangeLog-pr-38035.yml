@@ -1,4 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - rscadd: "Collectors show their real produced power and stored power when examined"
