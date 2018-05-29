@@ -186,6 +186,13 @@ function iconError(E) {
 	}, opts.imageRetryDelay);
 }
 
+function stripHtml(html)
+{
+   var tmp = document.createElement("DIV");
+   tmp.innerHTML = html;
+   return tmp.textContent || tmp.innerText || "";
+}
+
 //Send a message to the client
 function output(message, flag) {
 	if (typeof message === 'undefined') {
@@ -301,7 +308,7 @@ function output(message, flag) {
 	var lastmessages = $messages.children('div.entry:last-child');
 	if (opts.messageCombining && lastmessages.length && $last_message)
 	{
-		if($last_message == trimmed_message)
+		if(stripHtml($last_message) == stripHtml(trimmed_message))
 		{
 			if(lastmessages.children('span.r').length)
 			{
