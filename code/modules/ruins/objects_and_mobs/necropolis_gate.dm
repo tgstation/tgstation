@@ -74,7 +74,10 @@
 	pixel_y = -32
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	opacity = TRUE
-
+	
+/obj/structure/opacity_blocker/can_be_pulled(user)
+	return FALSE
+	
 /obj/structure/opacity_blocker/singularity_pull()
 	return 0
 
