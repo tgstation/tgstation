@@ -148,6 +148,9 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 		CRASH("Bad summon_type given: [summon_type]")
 
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
+		var/turf/T = get_turf(H)
+		if(T && is_away_level(T.z))
+			continue
 		if(summon_type == SUMMON_MAGIC)
 			give_magic(H)
 		else

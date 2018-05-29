@@ -13,7 +13,6 @@
 	circuit = /obj/item/circuitboard/machine/thermomachine
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 
-	var/on = FALSE
 	var/min_temperature = 0
 	var/max_temperature = 0
 	var/target_temperature = T20C

@@ -154,6 +154,10 @@
 			var/mob/living/L = i
 			if(isdrone(L) || !L.staticOverlays.len)
 				continue
+			if(isrevenant(L))
+				var/mob/living/simple_animal/revenant/R = L
+				if (!R.revealed)
+					continue
 			var/image/chosen
 			if(staticChoice in L.staticOverlays)
 				chosen = L.staticOverlays[staticChoice]

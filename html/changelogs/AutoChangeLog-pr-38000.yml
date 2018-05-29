@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - code_imp: "changed the shockedby list on doors to be only initialized when needed."

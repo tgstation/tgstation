@@ -496,12 +496,12 @@
 	// If targeting anything else, see if the wear suit is thin enough.
 	if (!penetrate_thick)
 		if(above_neck(target_zone))
-			if(head && is_type_in_typecache(head, GLOB.typecache_clothing))
+			if(head && istype(head, /obj/item/clothing))
 				var/obj/item/clothing/CH = head
 				if (CH.clothing_flags & THICKMATERIAL)
 					. = 0
 		else
-			if(wear_suit && is_type_in_typecache(wear_suit, GLOB.typecache_clothing))
+			if(wear_suit && istype(wear_suit, /obj/item/clothing))
 				var/obj/item/clothing/CS = wear_suit
 				if (CS.clothing_flags & THICKMATERIAL)
 					. = 0
@@ -571,11 +571,11 @@
 	//Check for weapons
 	if( (judgement_criteria & JUDGE_WEAPONCHECK) && weaponcheck)
 		if(!idcard || !(ACCESS_WEAPONS in idcard.access))
-			for(var/obj/item/I in held_items)
+			for(var/obj/item/I in held_items) //if they're holding a gun
 				if(weaponcheck.Invoke(I))
 					threatcount += 4
-			if(weaponcheck.Invoke(belt))
-				threatcount += 2
+			if(weaponcheck.Invoke(belt) || weaponcheck.Invoke(back)) //if a weapon is present in the belt or back slot
+				threatcount += 2 //not enough to trigger look_for_perp() on it's own unless they also have criminal status.
 
 	//Check for arrest warrant
 	if(judgement_criteria & JUDGE_RECORDCHECK)

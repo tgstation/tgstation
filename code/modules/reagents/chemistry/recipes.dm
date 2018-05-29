@@ -50,7 +50,7 @@
 
 /datum/chemical_reaction/proc/goonchem_vortex(turf/T, setting_type, range)
 	for(var/atom/movable/X in orange(range, T))
-		if(istype(X, /obj/effect))
+		if(iseffect(X))
 			continue
 		if(!X.anchored)
 			var/distance = get_dist(X, T)
