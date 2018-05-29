@@ -367,7 +367,10 @@
 
 /obj/effect/warp_cube
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
+	
+/obj/effect/warp_cube/can_be_pulled(user)
+	return FALSE
+	
 /obj/effect/warp_cube/ex_act(severity, target)
 	return
 
