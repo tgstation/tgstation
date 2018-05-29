@@ -10,7 +10,10 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	name = "particle effect"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pass_flags = PASSTABLE | PASSGRILLE
-
+	
+/obj/effect/particle_effect/can_be_pulled(user)
+	return FALSE
+	
 /obj/effect/particle_effect/New()
 	..()
 	GLOB.cameranet.updateVisibility(src)
