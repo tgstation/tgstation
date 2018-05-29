@@ -49,5 +49,8 @@ steam.start() -- spawns the effect
 	..()
 	QDEL_IN(src, 20)
 
+/obj/effect/particle_effect/steam/can_be_pulled(user)
+	return FALSE
+	
 /datum/effect_system/steam_spread
 	effect_type = /obj/effect/particle_effect/steam
