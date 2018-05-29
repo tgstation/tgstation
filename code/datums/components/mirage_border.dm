@@ -38,3 +38,6 @@
 /obj/effect/abstract/mirage_holder
 	name = "Mirage holder"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	
+/obj/effect/abstract/mirage_holder/can_be_pulled(user)
+	return FALSE
