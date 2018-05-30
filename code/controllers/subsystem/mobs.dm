@@ -7,6 +7,8 @@ SUBSYSTEM_DEF(mobs)
 	var/list/currentrun = list()
 	var/static/list/clients_by_zlevel[][]
 	var/static/list/cubemonkeys = list()
+
+/datum/controller/subsystem/mobs/PreInit()
 	var/cubemonkeycap = CONFIG_GET(number/monkeycap)
 
 /datum/controller/subsystem/mobs/stat_entry()
