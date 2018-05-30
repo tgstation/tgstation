@@ -15,7 +15,8 @@ RLD
 	opacity = 0
 	density = FALSE
 	anchored = FALSE
-	flags_1 = CONDUCT_1 | NOBLUDGEON_1
+	flags_1 = CONDUCT_1
+	item_flags = NOBLUDGEON
 	force = 0
 	throwforce = 10
 	throw_speed = 3

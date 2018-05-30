@@ -114,7 +114,7 @@
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	container_type = OPENCONTAINER
 	slot_flags = 0
 

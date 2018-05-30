@@ -382,7 +382,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	fire_sound = 'sound/weapons/batonextend.ogg'
 	max_charges = 1
-	flags_1 = NOBLUDGEON_1
+	item_flags = NEEDS_PERMIT | NOBLUDGEON
 	force = 18
 
 /obj/item/ammo_casing/magic/hook
