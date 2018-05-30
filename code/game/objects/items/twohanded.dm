@@ -63,11 +63,7 @@
 	if(ismonkey(user))
 		to_chat(user, "<span class='warning'>It's too heavy for you to wield fully.</span>")
 		return
-<<<<<<< HEAD
-	if(user.get_inactive_held_item())
-=======
 	if(user.get_inactive_held_item() && !(iscyborg(user)))
->>>>>>> 7ca223918efe8525c28bdedcc8768a714d562d61
 		to_chat(user, "<span class='warning'>You need your other hand to be empty!</span>")
 		return
 	if(user.get_num_arms() < 2)
