@@ -32,7 +32,7 @@
 /datum/bounty/item/security/captains_spare
 	name = "Captain's Spare"
 	description = "Captain Bart of Station 12 has forgotten his ID! Ship him your station's spare, would you?"
-	reward = 8000
+	reward = 5000
 	wanted_types = list(/obj/item/card/id/captains_spare)
 
 /datum/bounty/item/security/hardsuit
