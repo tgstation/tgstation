@@ -353,6 +353,7 @@
 			D.rank.rights = new_flags &= ~new_exclude_flags
 			D.rank.include_rights = new_flags
 			D.rank.exclude_rights = new_exclude_flags
+			D.rank.can_edit_rights = new_can_edit_flags
 		var/client/C = GLOB.directory[admin_ckey] //find the client with the specified ckey (if they are logged in)
 		D.associate(C) //link up with the client and add verbs
 	message_admins("[key_name_admin(usr)] edited the permissions of [use_db ? " rank [D.rank.name] permanently" : "[admin_ckey] temporarily"]")
