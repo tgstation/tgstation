@@ -161,41 +161,45 @@
 		else //Diagonal move, split it into cardinal moves
 			moving_diagonally = FIRST_DIAG_STEP
 			var/first_step_dir
+			// The `&& moving_diagonally` checks are so that a forceMove taking
+			// place due to a Crossed, Collided, etc. call will interrupt
+			// the second half of the diagonal movement, or the second attempt
+			// at a first half if step() fails because we hit something.
 			if (direct & NORTH)
 				if (direct & EAST)
-					if (step(src, NORTH))
+					if (step(src, NORTH) && moving_diagonally)
 						first_step_dir = NORTH
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, EAST)
-					else if (step(src, EAST))
+					else if (moving_diagonally && step(src, EAST))
 						first_step_dir = EAST
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, NORTH)
 				else if (direct & WEST)
-					if (step(src, NORTH))
+					if (step(src, NORTH) && moving_diagonally)
 						first_step_dir = NORTH
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, WEST)
-					else if (step(src, WEST))
+					else if (moving_diagonally && step(src, WEST))
 						first_step_dir = WEST
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, NORTH)
 			else if (direct & SOUTH)
 				if (direct & EAST)
-					if (step(src, SOUTH))
+					if (step(src, SOUTH) && moving_diagonally)
 						first_step_dir = SOUTH
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, EAST)
-					else if (step(src, EAST))
+					else if (moving_diagonally && step(src, EAST))
 						first_step_dir = EAST
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, SOUTH)
 				else if (direct & WEST)
-					if (step(src, SOUTH))
+					if (step(src, SOUTH) && moving_diagonally)
 						first_step_dir = SOUTH
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, WEST)
-					else if (step(src, WEST))
+					else if (moving_diagonally && step(src, WEST))
 						first_step_dir = WEST
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, SOUTH)
@@ -310,8 +314,8 @@
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
 
-
 		loc = destination
+		moving_diagonally = 0
 
 		if(!same_loc)
 			if(oldloc)
