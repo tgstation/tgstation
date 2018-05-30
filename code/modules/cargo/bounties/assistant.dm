@@ -161,12 +161,6 @@
 	reward = 6000
 	wanted_types = list(/obj/item/gun/ballistic/revolver)
 
-/datum/bounty/item/assistant/hand_tele
-	name = "Hand Tele"
-	description = "Central Command has come up with a genius idea: Why not teleport cargo rather than ship it? Send over a hand tele, receive payment, then wait 6-8 years while they deliberate."
-	reward = 8000
-	wanted_types = list(/obj/item/hand_tele)
-
 /datum/bounty/item/assistant/geranium
 	name = "Geraniums"
 	description = "Commander Zot has the hots for Commander Zena. Send a shipment of geraniums - her favorite flower - and he'll happily reward you."
