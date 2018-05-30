@@ -203,17 +203,17 @@
 /obj/item/borg/upgrade/tboh/action(mob/living/silicon/robot/R)
 	. = ..()
 	if(.)
-		for(var/obj/item/storage/bag/trash/cyborg/TB in R.module)
+		for(var/obj/item/storage/bag/trash/cyborg/TB in R.module.modules)
 			R.module.remove_module(TB, TRUE)
 
-		var/obj/item/storage/bag/trash/bluespace/B = new /obj/item/storage/bag/trash/bluespace(R.module)
+		var/obj/item/storage/bag/trash/bluespace/cyborg/B = new /obj/item/storage/bag/trash/bluespace/cyborg(R.module)
 		R.module.basic_modules += B
 		R.module.add_module(B, FALSE, TRUE)
 
 /obj/item/borg/upgrade/tboh/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		for(var/obj/item/storage/bag/trash/bluespace/B in R.module)
+		for(var/obj/item/storage/bag/trash/bluespace/cyborg/B in R.module.modules)
 			R.module.remove_module(B, TRUE)
 
 		var/obj/item/storage/bag/trash/cyborg/TB = new (R.module)
@@ -230,17 +230,17 @@
 /obj/item/borg/upgrade/amop/action(mob/living/silicon/robot/R)
 	. = ..()
 	if(.)
-		for(var/obj/item/mop/cyborg/M in R.module)
+		for(var/obj/item/mop/cyborg/M in R.module.modules)
 			R.module.remove_module(M, TRUE)
 
-	var/obj/item/mop/advanced/A = new /obj/item/mop/advanced(R.module)
+	var/obj/item/mop/advanced/cyborg/A = new /obj/item/mop/advanced/cyborg(R.module)
 	R.module.basic_modules += A
 	R.module.add_module(A, FALSE, TRUE)
 
 /obj/item/borg/upgrade/amop/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		for(var/obj/item/mop/advanced/A in R.module)
+		for(var/obj/item/mop/advanced/cyborg/A in R.module.modules)
 			R.module.remove_module(A, TRUE)
 
 		var/obj/item/mop/cyborg/M = new (R.module)
