@@ -33,10 +33,10 @@
 		inv3.icon_state = "inv3"
 		held_items[3] = null
 
-	O.forceMove(module) //Return item to module so it appears in its contents, so it can be taken out again.
-
 	if(O.flags_1 & DROPDEL_1)
 		O.flags_1 &= ~DROPDEL_1 //we shouldn't HAVE things with DROPDEL_1 in our modules, but better safe than runtiming horribly
+
+	O.forceMove(module) //Return item to module so it appears in its contents, so it can be taken out again.
 
 	hud_used.update_robot_modules_display()
 	return 1
