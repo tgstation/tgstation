@@ -36,5 +36,3 @@
 	var/selectedStatic = input("Select a vision filter", "Vision Filter") as null|anything in staticChoices
 	if(selectedStatic in staticChoices)
 		staticChoice = selectedStatic
-
-	updateSeeStaticMobs()
