@@ -103,7 +103,6 @@
 	               "If you were a carp I'd fi-lay you.",
 	               "I'm a nuke op, and my pinpointer leads to your heart.",
 	               "Wanna slay my megafauna?",
-	               "I'm a clockwork cultist. Or zl inyragvar.",
 	               "If you were a disposal bin I'd ride you all day.",
 	               "Put on your explorer's suit because I'm taking you to LOVEaland.",
 	               "I must be the CMO, 'cause I saw you on my CUTE sensors.",
@@ -173,7 +172,6 @@
                 "A heart-shaped candy that reads: VALIDTINES",
                 "A heart-shaped candy that reads: FACEHUGGER",
                 "A heart-shaped candy that reads: BOX OF HUGS",
-                "A heart-shaped candy that reads: REEBE MINE",
                 "A heart-shaped candy that reads: PET ME",
                 "A heart-shaped candy that reads: TO THE DORMS",
                 "A heart-shaped candy that reads: DIS MEMBER")

@@ -51,7 +51,6 @@
 #define ANTAG_HUD_DEVIL			18
 #define ANTAG_HUD_SINTOUCHED	19
 #define ANTAG_HUD_SOULLESS		20
-#define ANTAG_HUD_CLOCKWORK		21
 #define ANTAG_HUD_BROTHER		22
 
 // Notification action types

@@ -161,7 +161,6 @@
 	network = list("thunder")
 	density = FALSE
 	circuit = null
-	clockwork = TRUE //it'd look very weird
 
 	light_power = 0
 
@@ -186,7 +185,6 @@
 	icon_state = "television"
 	icon_keyboard = null
 	icon_screen = "detective_tv"
-	clockwork = TRUE //it'd look weird
 
 
 /obj/machinery/computer/security/mining
@@ -196,7 +194,7 @@
 	icon_keyboard = "mining_key"
 	network = list("mine")
 	circuit = /obj/item/circuitboard/computer/mining
-	
+
 /obj/machinery/computer/security/research
 	name = "research camera console"
 	desc = "Used to access the various cameras in science."

@@ -28,9 +28,6 @@ SUBSYSTEM_DEF(ticker)
 	var/list/syndicate_coalition = list()	//list of traitor-compatible factions
 	var/list/factions = list()				//list of all factions
 	var/list/availablefactions = list()		//list of factions with openings
-	var/list/scripture_states = list(SCRIPTURE_DRIVER = TRUE, \
-	SCRIPTURE_SCRIPT = FALSE, \
-	SCRIPTURE_APPLICATION = FALSE) //list of clockcult scripture states for announcements
 
 	var/delay_end = 0						//if set true, the round will not restart on it's own
 	var/admin_delay_notice = ""				//a message to display to anyone who tries to restart the world after a delay
@@ -190,7 +187,6 @@ SUBSYSTEM_DEF(ticker)
 			mode.process(wait * 0.1)
 			check_queue()
 			check_maprotate()
-			scripture_states = scripture_unlock_alert(scripture_states)
 
 			if(!roundend_check_paused && mode.check_finished(force_ending) || force_ending)
 				current_state = GAME_STATE_FINISHED

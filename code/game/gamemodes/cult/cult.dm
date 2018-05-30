@@ -26,8 +26,8 @@
 			return FALSE
 	else
 		return FALSE
-	if(M.isloyal() || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M) || !M.client)
-		return FALSE //can't convert machines, shielded, braindead, or ratvar's dogs
+	if(M.isloyal() || issilicon(M) || isbot(M) || isdrone(M) || !M.client)
+		return FALSE //can't convert machines, shielded, or braindead
 	return TRUE
 
 /datum/game_mode/cult

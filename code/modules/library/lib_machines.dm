@@ -26,7 +26,6 @@
 	var/category = "Any"
 	var/author
 	var/SQLquery
-	clockwork = TRUE //it'd look weird
 
 /obj/machinery/computer/libraryconsole/ui_interact(mob/user)
 	. = ..()
@@ -314,14 +313,8 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	return null
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/print_forbidden_lore(mob/user)
-	var/spook = pick("blood", "brass")
-	var/turf/T = get_turf(src)
-	if(spook == "blood")
-		new /obj/item/melee/cultblade/dagger(T)
-	else
-		new /obj/item/clockwork/slab(T)
-
-	to_chat(user, "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a [spook == "blood" ? "sinister dagger" : "strange metal tablet"] sitting on the desk. You don't even remember where it came from...</span>")
+	new /obj/item/melee/cultblade/dagger(get_turf(src))
+	to_chat(user, "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a sinister dagger sitting on the desk. You don't even remember where it came from...</span>")
 	user.visible_message("[user] stares at the blank screen for a few moments, [user.p_their()] expression frozen in fear. When [user.p_they()] finally awaken[user.p_s()] from it, [user.p_they()] look[user.p_s()] a lot older.", 2)
 
 /obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/W, mob/user, params)
