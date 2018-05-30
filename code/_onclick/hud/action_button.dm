@@ -138,7 +138,7 @@
 
 /datum/hud/proc/get_action_buttons_icons()
 	. = list()
-	.["bg_icon"] = ui_style_icon
+	.["bg_icon"] = ui_style
 	.["bg_state"] = "template"
 
 	//TODO : Make these fit theme
