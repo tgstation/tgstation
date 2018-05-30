@@ -200,7 +200,7 @@
 
 
 /mob/proc/put_in_hand_check(obj/item/I)
-	if(lying && !(I.flags_1&ABSTRACT_1))
+	if(lying && !(I.item_flags & ABSTRACT))
 		return FALSE
 	if(!istype(I))
 		return FALSE

@@ -18,7 +18,7 @@
 		msg += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck.\n"
 
 	for(var/obj/item/I in held_items)
-		if(!(I.flags_1 & ABSTRACT_1))
+		if(!(I.item_flags & ABSTRACT))
 			msg += "[t_He] [t_is] holding [I.get_examine_string(user)] in [t_his] [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	if (back)

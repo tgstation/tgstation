@@ -24,7 +24,7 @@
 #define DROPDEL						(1<<6) // When dropped, it calls qdel on itself
 #define NOBLUDGEON				(1<<7)		// when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
 #define NODROP					(1<<8)		// This flag makes it so that an item literally cannot be removed at all, or at least that's how it should be. Only deleted.
-#define ABSTRACT				(1<<9)
+#define ABSTRACT				(1<<9) 	// for all things that are technically items but used for various different stuff
 
 // Flags for the clothing_flags var on /obj/item/clothing
 

@@ -166,7 +166,7 @@
 	listener = newloc.AddComponent(/datum/component/redirect, COMSIG_ATOM_EXITED, CALLBACK(src, .proc/check_exit))
 
 /obj/item/assembly/infra/proc/check_exit(atom/movable/offender)
-	if(offender && ((offender.flags_1 & ABSTRACT_1) || offender == src))
+	if(offender && ((offender.item_flags & ABSTRACT) || offender == src))
 		return
 	return refreshBeam()
 
@@ -216,10 +216,10 @@
 	var/obj/item/assembly/infra/master
 	anchored = TRUE
 	density = FALSE
-	flags_1 = ABSTRACT_1
+	item_flags = ABSTRACT
 	pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE|LETPASSTHROW
 
 /obj/effect/beam/i_beam/Crossed(atom/movable/AM as mob|obj)
-	if(istype(AM, /obj/effect/beam) || (AM.flags_1 & ABSTRACT_1))
+	if(istype(AM, /obj/effect/beam) || (AM.item_flags & ABSTRACT))
 		return
 	master.trigger_beam(AM, get_turf(src))
