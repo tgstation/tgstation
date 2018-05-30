@@ -22,7 +22,7 @@
 
 		if(!marked_item) //linking item to the spell
 			message = "<span class='notice'>"
-			for(var/obj/item in hand_items)
+			for(var/obj/item/item in hand_items)
 				if(item.item_flags & ABSTRACT)
 					continue
 				if(item.item_flags & NODROP)

@@ -31,7 +31,7 @@
 
 		var/obj/item/marked_item
 
-		for(var/obj/item in hand_items)
+		for(var/obj/item/item in hand_items)
 			// I ensouled the nuke disk once. But it's probably a really
 			// mean tactic, so probably should discourage it.
 			if((item.item_flags & ABSTRACT) || (item.item_flags & NODROP) || item.SendSignal(COMSIG_ITEM_IMBUE_SOUL, user))

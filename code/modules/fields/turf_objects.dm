@@ -7,7 +7,6 @@
 	alpha = 0
 	invisibility = INVISIBILITY_ABSTRACT
 	flags_1 = ON_BORDER_1
-	item_flags = ABSTRACT
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/datum/proximity_monitor/advanced/parent = null
 

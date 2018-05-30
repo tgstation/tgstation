@@ -301,7 +301,7 @@
 	item_state = "cult_hoodalt"
 
 /obj/item/clothing/head/culthood/alt/ghost
-item_flags = NODROP | DROPDEL
+	item_flags = NODROP | DROPDEL
 
 /obj/item/clothing/suit/cultrobes/alt
 	name = "cultist robes"
@@ -310,7 +310,7 @@ item_flags = NODROP | DROPDEL
 	item_state = "cultrobesalt"
 
 /obj/item/clothing/suit/cultrobes/alt/ghost
-	flags = NODROP | DROPDEL
+	item_flags = NODROP | DROPDEL
 
 
 /obj/item/clothing/head/magus
