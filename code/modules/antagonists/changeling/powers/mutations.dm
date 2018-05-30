@@ -29,7 +29,7 @@
 
 /obj/effect/proc_holder/changeling/weapon/proc/check_weapon(mob/user, obj/item/hand_item)
 	if(istype(hand_item, weapon_type))
-		user.temporarilyRemoveItemFromInventory(hand_item, TRUE) //DROPDEL_1 will delete the item
+		user.temporarilyRemoveItemFromInventory(hand_item, TRUE) //DROPDEL will delete the item
 		if(!silent)
 			playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
 			user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms [user.p_their()] [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")

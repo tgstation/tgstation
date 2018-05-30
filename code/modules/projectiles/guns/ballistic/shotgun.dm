@@ -146,7 +146,7 @@
 	item_state = "arcane_barrage"
 	can_bayonet = FALSE
 
-	flags_1 = DROPDEL_1
+	item_flags = NEEDS_PERMIT | DROPDEL
 
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage
 

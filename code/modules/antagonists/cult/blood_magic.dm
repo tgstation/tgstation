@@ -521,7 +521,7 @@
 	name = "shadow shackles"
 	desc = "Shackles that bind the wrists with sinister magic."
 	trashtype = /obj/item/restraints/handcuffs/energy/used
-	flags_1 = DROPDEL_1
+	item_flags = DROPDEL
 
 /obj/item/restraints/handcuffs/energy/cult/used/dropped(mob/user)
 	user.visible_message("<span class='danger'>[user]'s shackles shatter in a discharge of dark magic!</span>", \

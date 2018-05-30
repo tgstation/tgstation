@@ -754,7 +754,7 @@ item_flags = NODROP | DROPDEL
 	guns_left = 24
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage/blood
 	fire_sound = 'sound/magic/wand_teleport.ogg'
-	flags_1 = NOBLUDGEON_1 | DROPDEL_1
+	item_flags = NEEDS_PERMIT | NOBLUDGEON | DROPDEL
 
 
 /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage/blood

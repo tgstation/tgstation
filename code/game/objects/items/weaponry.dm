@@ -595,7 +595,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "madeyoulook"
 	force = 0
 	throwforce = 0
-	flags_1 = DROPDEL_1 | ABSTRACT_1
+	item_flags = DROPDEL | ABSTRACT
 	attack_verb = list("bopped")
 
 /obj/item/slapper
@@ -605,7 +605,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	item_state = "nothing"
 	force = 0
 	throwforce = 0
-	flags_1 = DROPDEL_1 | ABSTRACT_1
+	item_flags = DROPDEL | ABSTRACT
 	attack_verb = list("slapped")
 	hitsound = 'sound/effects/snap.ogg'
 

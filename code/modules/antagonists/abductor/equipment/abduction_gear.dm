@@ -591,7 +591,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	trashtype = /obj/item/restraints/handcuffs/energy/used
 
 /obj/item/restraints/handcuffs/energy/used
-	flags_1 = DROPDEL_1
+	item_flags = DROPDEL
 
 /obj/item/restraints/handcuffs/energy/used/dropped(mob/user)
 	user.visible_message("<span class='danger'>[user]'s [name] breaks in a discharge of energy!</span>", \
