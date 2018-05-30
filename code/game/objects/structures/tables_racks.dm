@@ -381,7 +381,7 @@
 	obj_integrity = max_integrity
 
 /obj/structure/table/bronze
-	name = "brass table"
+	name = "bronze table"
 	desc = "A solid table made out of bronze."
 	icon = 'icons/obj/smooth_structures/brass_table.dmi'
 	icon_state = "brass_table"
