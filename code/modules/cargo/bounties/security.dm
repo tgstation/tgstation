@@ -60,3 +60,9 @@
 	reward = 4000
 	wanted_types = list(/obj/item/melee/sabre)
 
+/datum/bounty/item/security/hand_tele
+	name = "Hand Tele"
+	description = "Central Command has come up with a genius idea: Why not teleport cargo rather than ship it? Send over a hand tele, receive payment, then wait 6-8 years while they deliberate."
+	reward = 6000
+	wanted_types = list(/obj/item/hand_tele)
+
