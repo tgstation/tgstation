@@ -27,12 +27,6 @@
 	icon_state = "crowbar_red"
 	force = 8
 
-/obj/item/crowbar/brass
-	name = "brass crowbar"
-	desc = "A brass crowbar. It feels faintly warm to the touch."
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	icon_state = "crowbar_brass"
-	toolspeed = 0.5
 
 /obj/item/crowbar/abductor
 	name = "alien crowbar"

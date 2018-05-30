@@ -374,9 +374,6 @@
 /atom/proc/narsie_act()
 	SendSignal(COMSIG_ATOM_NARSIE_ACT)
 
-/atom/proc/ratvar_act()
-	SendSignal(COMSIG_ATOM_RATVAR_ACT)
-
 /atom/proc/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	return FALSE
 
