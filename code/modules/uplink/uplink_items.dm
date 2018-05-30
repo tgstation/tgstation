@@ -1149,7 +1149,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A wonder of Syndicate engineering, the Medbeam gun, or Medi-Gun enables a medic to keep his fellow \
 			operatives in the fight, even while under fire."
 	item = /obj/item/gun/medbeam
-	cost = 20
+	cost = 10
 	surplus = 35
 	restricted_roles = list("Medical Doctor", "Chief Medical Officer")
 	
