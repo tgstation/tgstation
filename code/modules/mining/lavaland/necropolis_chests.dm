@@ -189,7 +189,7 @@
 	activated()
 
 /obj/item/rod_of_asclepius/proc/activated()
-	flags_1 = NODROP_1 | DROPDEL_1
+	item_flags = NODROP | DROPDEL
 	desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
 	icon_state = "asclepius_active"
 	activated = TRUE

@@ -22,7 +22,7 @@
 	observer_screen_update(O,FALSE)
 	O.forceMove(module) //Return item to module so it appears in its contents, so it can be taken out again.
 
-	if(O.flags_1 & DROPDEL_1)
+	if(O.item_flags & DROPDEL)
 		O.flags_1 &= ~DROPDEL_1 //we shouldn't HAVE things with DROPDEL_1 in our modules, but better safe than runtiming horribly
 
 	O.dropped(src)

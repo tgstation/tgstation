@@ -404,7 +404,7 @@
 
 /atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback) //If this returns FALSE then callback will not be called.
 	. = FALSE
-	if (!target || (flags_1 & NODROP_1) || speed <= 0)
+	if (!target || speed <= 0)
 		return
 
 	if (pulledby)

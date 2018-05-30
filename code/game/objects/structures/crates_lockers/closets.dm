@@ -163,18 +163,20 @@
 	else if(istype(AM, /obj/structure/closet))
 		return
 	else if(isobj(AM))
-		if(!allow_objects && !istype(AM, /obj/item) && !istype(AM, /obj/effect/dummy/chameleon))
+		if (istype(AM, /obj/item))
+			var/obj/item/I = AM
+			if (I.item_flags & NODROP)
+				return
+		else if(!allow_objects && !istype(AM, /obj/effect/dummy/chameleon))
 			return
 		if(!allow_dense && AM.density)
 			return
-		if(AM.anchored || AM.has_buckled_mobs() || (AM.flags_1 & NODROP_1))
+		if(AM.anchored || AM.has_buckled_mobs())
 			return
 	else
 		return
 
 	AM.forceMove(src)
-	if(AM.pulledby)
-		AM.pulledby.stop_pulling()
 
 	return 1
 

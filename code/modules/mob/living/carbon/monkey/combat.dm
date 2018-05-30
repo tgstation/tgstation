@@ -133,7 +133,7 @@
 
 /mob/living/carbon/monkey/proc/handle_combat()
 	if(pickupTarget)
-		if(restrained() || blacklistItems[pickupTarget] || (pickupTarget.flags_1 & NODROP_1))
+		if(restrained() || blacklistItems[pickupTarget] || (pickupTarget.item_flags & NODROP))
 			pickupTarget = null
 		else
 			pickupTimer++

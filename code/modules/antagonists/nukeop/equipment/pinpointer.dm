@@ -65,7 +65,7 @@
 /obj/item/pinpointer/syndicate_cyborg // Cyborg pinpointers just look for a random operative.
 	name = "cyborg syndicate pinpointer"
 	desc = "An integrated tracking device, jury-rigged to search for living Syndicate operatives."
-	flags_1 = NODROP_1
+	item_flags = NODROP
 
 /obj/item/pinpointer/syndicate_cyborg/scan_for_target()
 	target = null
@@ -79,4 +79,3 @@
 	if(closest_operative)
 		target = closest_operative
 	..()
-

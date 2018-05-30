@@ -772,3 +772,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			appearance_flags &= ~NO_CLIENT_COLOR
 			dropped(M)
 	return ..()
+
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
+	if (item_flags & NODROP)
+		return
+	return ..()

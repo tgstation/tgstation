@@ -77,5 +77,5 @@
 
 /obj/item/clothing/gloves/space_ninja/examine(mob/user)
 	..()
-	if(flags_1 & NODROP_1)
+	if(item_flags & NODROP)
 		to_chat(user, "The energy drain mechanism is <B>[candrain?"active":"inactive"]</B>.")

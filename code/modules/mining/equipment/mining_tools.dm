@@ -63,7 +63,7 @@
 /obj/item/pickaxe/drill/cyborg
 	name = "cyborg mining drill"
 	desc = "An integrated electric mining drill."
-	flags_1 = NODROP_1
+	item_flags = NODROP
 
 /obj/item/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"

@@ -133,7 +133,7 @@
 		return
 	update_icon()
 	if(sticky)
-		flags_1 |= NODROP_1
+		item_flags |= NODROP
 	name = "primed [name]"
 	activation_time = timer + world.time
 	detonation_timerid = addtimer(CALLBACK(src, .proc/detonate), delay, TIMER_STOPPABLE)
@@ -146,7 +146,7 @@
 /obj/item/hot_potato/proc/deactivate()
 	update_icon()
 	name = initial(name)
-	flags_1 &= ~NODROP_1
+	item_flags &= ~NODROP
 	deltimer(detonation_timerid)
 	STOP_PROCESSING(SSfastprocess, src)
 	detonation_timerid = null

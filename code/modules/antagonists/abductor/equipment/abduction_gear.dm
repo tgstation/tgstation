@@ -30,9 +30,9 @@
 	var/combat_armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 50, "rad" = 50, "fire" = 90, "acid" = 90)
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/toggle_nodrop()
-	flags_1 ^= NODROP_1
+	item_flags ^= NODROP
 	if(ismob(loc))
-		to_chat(loc, "<span class='notice'>Your vest is now [flags_1 & NODROP_1 ? "locked" : "unlocked"].</span>")
+		to_chat(loc, "<span class='notice'>Your vest is now [item_flags & NODROP ? "locked" : "unlocked"].</span>")
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/flip_mode()
 	switch(mode)

@@ -64,7 +64,7 @@
 /obj/item/melee/cultblade/ghost
 	name = "eldritch sword"
 	force = 19 //can't break normal airlocks
-	flags_1 = NODROP_1|DROPDEL_1
+	item_flags = NEEDS_PERMIT | NODROP | DROPDEL
 
 /obj/item/melee/cultblade/pickup(mob/living/user)
 	..()
@@ -301,7 +301,7 @@
 	item_state = "cult_hoodalt"
 
 /obj/item/clothing/head/culthood/alt/ghost
-	flags_1 = NODROP_1|DROPDEL_1
+item_flags = NODROP | DROPDEL
 
 /obj/item/clothing/suit/cultrobes/alt
 	name = "cultist robes"
@@ -310,7 +310,7 @@
 	item_state = "cultrobesalt"
 
 /obj/item/clothing/suit/cultrobes/alt/ghost
-	flags_1 = NODROP_1|DROPDEL_1
+	flags = NODROP | DROPDEL
 
 
 /obj/item/clothing/head/magus
@@ -792,7 +792,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "disintegrate"
 	item_state = null
-	flags_1 = ABSTRACT_1 | NODROP_1 | DROPDEL_1
+	item_flags = ABSTRACT | NODROP | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	throwforce = 0
 	throw_range = 0

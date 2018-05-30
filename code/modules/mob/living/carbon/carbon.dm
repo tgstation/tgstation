@@ -166,7 +166,7 @@
 					var/end_T_descriptor = "tile at [get_area_name(end_T, TRUE)] ([end_T.x],[end_T.y],[end_T.z])"
 					add_logs(src, throwable_mob, "thrown", addition="grab from [start_T_descriptor] towards [end_T_descriptor]")
 
-	else if(!(I.flags_1 & (NODROP_1|ABSTRACT_1)))
+	else if(!(I.item_flags & (NODROP | ABSTRACT)))
 		thrown_thing = I
 		dropItemToGround(I)
 
@@ -396,7 +396,7 @@
 		return initial(pixel_y)
 
 /mob/living/carbon/proc/accident(obj/item/I)
-	if(!I || (I.flags_1 & (NODROP_1|ABSTRACT_1)))
+	if(!I || (I.item_flags & (NODROP | ABSTRACT)))
 		return
 
 	dropItemToGround(I)

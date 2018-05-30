@@ -573,7 +573,7 @@
 			if(!stop_messages)
 				to_chat(M, "<span class='warning'>[IP] cannot hold [I] as it's a storage item of the same size!</span>")
 			return FALSE //To prevent the stacking of same sized storage items.
-	if(I.flags_1 & NODROP_1) //SHOULD be handled in unEquip, but better safe than sorry.
+	if(I.item_flags & NODROP) //SHOULD be handled in unEquip, but better safe than sorry.
 		to_chat(M, "<span class='warning'>\the [I] is stuck to your hand, you can't put it in \the [host]!</span>")
 		return FALSE
 	var/datum/component/storage/concrete/master = master()
