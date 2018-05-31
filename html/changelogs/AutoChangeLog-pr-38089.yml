@@ -1,5 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "Changing UI Style preference now takes effect immediately rather than next round."
-  - bugfix: "Mindswapping with someone no longer gives you their UI style."

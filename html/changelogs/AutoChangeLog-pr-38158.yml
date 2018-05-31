@@ -1,4 +1,0 @@
-author: "CitrusGender"
-delete-after: True
-changes: 
-  - bugfix: "Fixes cyborgs not being able to use two-handed modules while other modules are equipped."
