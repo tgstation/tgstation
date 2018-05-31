@@ -2416,7 +2416,6 @@
 #include "code\modules\research\relics\effects_automatic.dm"
 #include "code\modules\research\relics\effects_cost.dm"
 #include "code\modules\research\relics\effects_passive.dm"
-#include "code\modules\research\relics\effects_reaction.dm"
 #include "code\modules\research\relics\effects_targeted.dm"
 #include "code\modules\research\relics\effects_toggle.dm"
 #include "code\modules\research\relics\effects_untargeted.dm"
