@@ -476,7 +476,7 @@
 	R.fields["quirks"] = list()
 	for(var/V in mob_occupant.roundstart_quirks)
 		var/datum/quirk/T = V
-		R.fields["quirks"] += T.type
+		R.fields["quirks"][T.type] = T.clone_data()
 
 	if (!isnull(mob_occupant.mind)) //Save that mind so traitors can continue traitoring after cloning.
 		R.fields["mind"] = "[REF(mob_occupant.mind)]"

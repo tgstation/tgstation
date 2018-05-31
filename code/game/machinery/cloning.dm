@@ -204,7 +204,8 @@
 		H.faction |= factions
 
 		for(var/V in quirks)
-			new V(H)
+			var/datum/quirk/Q = new V(H)
+			Q.on_clone(quirks[V])
 
 		H.set_cloned_appearance()
 
