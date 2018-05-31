@@ -58,10 +58,8 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 
-//Sorts stock parts inside an RPED by their rating.
-//Only use /obj/item/stock_parts/ with this sort proc!
-/proc/cmp_rped_sort(obj/item/stock_parts/A, obj/item/stock_parts/B)
-	return B.rating - A.rating
+/proc/cmp_rped_sort(obj/item/A, obj/item/B)
+	return B.get_part_rating() - A.get_part_rating()
 
 /obj/item/stock_parts
 	name = "stock part"
