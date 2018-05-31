@@ -54,21 +54,26 @@
 		data["has_disk"] = TRUE
 		var/list/disk_data = list()
 		var/datum/nanite_program/P = disk.program
-		disk_data["name"] = P.name
-		disk_data["desc"] = P.desc
+		if(P)
+			data["has_program"] = TRUE
+			disk_data["name"] = P.name
+			disk_data["desc"] = P.desc
 
-		disk_data["activated"] = P.activated
-		disk_data["activation_delay"] = P.activation_delay
-		disk_data["timer"] = P.timer
-		disk_data["activation_code"] = P.activation_code
-		disk_data["deactivation_code"] = P.deactivation_code
-		disk_data["kill_code"] = P.kill_code
-		disk_data["trigger_code"] = P.trigger_code
-		disk_data["timer_type"] = P.get_timer_type_text()
+			disk_data["activated"] = P.activated
+			disk_data["activation_delay"] = P.activation_delay
+			disk_data["timer"] = P.timer
+			disk_data["activation_code"] = P.activation_code
+			disk_data["deactivation_code"] = P.deactivation_code
+			disk_data["kill_code"] = P.kill_code
+			disk_data["trigger_code"] = P.trigger_code
+			disk_data["timer_type"] = P.get_timer_type_text()
 
-		if(istype(P, /datum/nanite_program/relay))
-			var/datum/nanite_program/relay/S = P
-			disk_data["relay_code"] = S.relay_code
+			if(istype(P, /datum/nanite_program/relay))
+				var/datum/nanite_program/relay/S = P
+				disk_data["relay_code"] = S.relay_code
+			if(istype(P, /datum/nanite_program/triggered/cloud))
+				var/datum/nanite_program/triggered/cloud/S = P
+				disk_data["cloud_code"] = S.cloud_id
 		data["disk"] = disk_data
 
 	if(!chamber)

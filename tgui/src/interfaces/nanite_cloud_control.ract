@@ -4,33 +4,33 @@
 		<ui-button icon='eject' action='eject'>Eject Disk</ui-button><br>
 		{{#if data.has_program}}
 			<ui-section>
-				<ui-section label='Program Name'>{{disk.name}}</ui-section>
-				<ui-section label='Description'>{{disk.desc}}</ui-section>
-				<ui-section label='Activation Status'>{{disk.activated ? "Active" : "Inactive" }}</ui-section>
-				{{#if disk.activation_delay}}
-					<ui-section label='Activation Delay'>{{disk.activation_delay}}</ui-section>
+				<ui-section label='Program Name'>{{data.disk.name}}</ui-section>
+				<ui-section label='Description'>{{data.disk.desc}}</ui-section>
+				<ui-section label='Activation Status'>{{data.disk.activated ? "Active" : "Inactive" }}</ui-section>
+				{{#if data.disk.activation_delay}}
+					<ui-section label='Activation Delay'>{{data.disk.activation_delay}}</ui-section>
 				{{/if}}
-				{{#if disk.timer}}
-					<ui-section label='Timer'>{{disk.timer}}</ui-section>
-					<ui-section label='Timer Type '>{{disk.timer_type}}</ui-section>
+				{{#if data.disk.timer}}
+					<ui-section label='Timer'>{{data.disk.timer}}</ui-section>
+					<ui-section label='Timer Type '>{{data.disk.timer_type}}</ui-section>
 				{{/if}}
-				{{#if disk.activation_code}}
-					<ui-section label='Activation Code'>{{disk.activation_code}}</ui-section>
+				{{#if data.disk.activation_code}}
+					<ui-section label='Activation Code'>{{data.disk.activation_code}}</ui-section>
 				{{/if}}
-				{{#if disk.deactivation_code}}
-					<ui-section label='Deactivation Code'>{{disk.deactivation_code}}</ui-section>
+				{{#if data.disk.deactivation_code}}
+					<ui-section label='Deactivation Code'>{{data.disk.deactivation_code}}</ui-section>
 				{{/if}}
-				{{#if disk.kill_code}}
-					<ui-section label='Kill Code'>{{disk.kill_code}}</ui-section>
+				{{#if data.disk.kill_code}}
+					<ui-section label='Kill Code'>{{data.disk.kill_code}}</ui-section>
 				{{/if}}
-				{{#if disk.trigger_code}}
-					<ui-section label='Trigger Code'>{{disk.trigger_code}}</ui-section>
+				{{#if data.disk.trigger_code}}
+					<ui-section label='Trigger Code'>{{data.disk.trigger_code}}</ui-section>
 				{{/if}}
-				{{#if disk.relay_code}}
-					<ui-section label='Relay Code'>{{disk.relay_code}}</ui-section>
+				{{#if data.disk.relay_code}}
+					<ui-section label='Relay Code'>{{data.disk.relay_code}}</ui-section>
 				{{/if}}
-				{{#if disk.cloud_code}}
-					<ui-section label='Cloud ID'>{{disk.cloud_code}}</ui-section>
+				{{#if data.disk.cloud_code}}
+					<ui-section label='Cloud ID'>{{data.disk.cloud_code}}</ui-section>
 				{{/if}}
 			</ui-section>
 		{{else}}

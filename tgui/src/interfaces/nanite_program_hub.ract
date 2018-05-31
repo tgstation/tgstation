@@ -6,8 +6,8 @@
 			<ui-button icon='minus-circle' action='clear'>Delete Program</ui-button>
 		</ui-section>
 		{{#if data.has_program}}
-			<ui-section label='Program Name'>{{disk.name}}</ui-section>
-			<ui-section label='Description'>{{disk.desc}}</ui-section>
+			<ui-section label='Program Name'>{{data.disk.name}}</ui-section>
+			<ui-section label='Description'>{{data.disk.desc}}</ui-section>
 		{{else}}
 			<ui-notice>No program installed.</ui-notice>
 		{{/if}}
