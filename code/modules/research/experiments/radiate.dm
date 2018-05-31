@@ -99,6 +99,9 @@
 	holder.hogged_signals += sm.hogged_signals
 	holder.apply_effects(O)
 
+	if(O.name == "super matter bin")
+		O.name = "Supermatter bin" //I just had to do this joke
+
 	E.eject_item()
 
 /datum/experiment/neutron_layer
