@@ -71,7 +71,7 @@
 
 /datum/experiment/analyse_relic/proc/get_robustness(force)
 	switch(force)
-		if(0)
+		if(-INFINITY to 0)
 			return "worthless"
 		if(1 to 10)
 			return "weak"

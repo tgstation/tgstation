@@ -26,7 +26,8 @@
 		var/obj/item/stock_parts/P = O
 		if(P.rating <= 4) //because someone's going to try to get T100+ parts
 			P.rating *= 3
-			P.name = "improved " + P.name
+			if(!findtext(P.name, "improved"))
+				P.name = "improved " + P.name
 			success = TRUE
 		else
 			E.say("Object already advanced to limit of current knowledge.")
