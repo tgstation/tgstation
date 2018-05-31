@@ -44,7 +44,7 @@
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
-	if (wear_suit && head && is_type_in_typecache(wear_suit, GLOB.typecache_clothing) && is_type_in_typecache(head, GLOB.typecache_clothing))
+	if (wear_suit && head && istype(wear_suit, /obj/item/clothing) && istype(head, /obj/item/clothing))
 		var/obj/item/clothing/CS = wear_suit
 		var/obj/item/clothing/CH = head
 		if (CS.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
@@ -274,7 +274,7 @@
 	if(glasses)
 		if(glasses.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
-	if(head && is_type_in_typecache(head, GLOB.typecache_clothing))
+	if(head && istype(head, /obj/item/clothing))
 		var/obj/item/clothing/CH = head
 		if(CH.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE

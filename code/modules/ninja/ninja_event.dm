@@ -72,7 +72,7 @@ Contents:
 		throw EXCEPTION("Ninja created with incorrect mind")
 
 	spawned_mobs += Ninja
-	message_admins("[key_name_admin(Ninja)] has been made into a ninja by an event.")
+	message_admins("[ADMIN_LOOKUPFLW(Ninja)] has been made into a ninja by an event.")
 	log_game("[key_name(Ninja)] was spawned as a ninja by an event.")
 
 	return SUCCESSFUL_SPAWN

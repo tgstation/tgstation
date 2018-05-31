@@ -45,11 +45,6 @@
 #define GLASS_CORE 4
 #define AI_READY_CORE 5
 
-//emitter construction defines
-#define EM_UNSECURED 0
-#define EM_SECURED 1
-#define EM_WELDED 2
-
 //Construction defines for the pinion airlock
 #define GEAR_SECURE 1
 #define GEAR_LOOSE 2

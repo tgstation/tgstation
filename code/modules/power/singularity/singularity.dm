@@ -129,12 +129,11 @@
 
 /obj/singularity/proc/admin_investigate_setup()
 	var/turf/T = get_turf(src)
-	var/area/A = get_area(T)
 	last_warning = world.time
 	var/count = locate(/obj/machinery/field/containment) in urange(30, src, 1)
 	if(!count)
-		message_admins("A singulo has been created without containment fields active at [A] [ADMIN_COORDJMP(T)].")
-	investigate_log("was created at [A] [COORD(T)]. [count?"":"<font color='red'>No containment fields were active</font>"]", INVESTIGATE_SINGULO)
+		message_admins("A singulo has been created without containment fields active at [ADMIN_VERBOSEJMP(T)].")
+	investigate_log("was created at [AREACOORD(T)]. [count?"":"<font color='red'>No containment fields were active</font>"]", INVESTIGATE_SINGULO)
 
 /obj/singularity/proc/dissipate()
 	if(!dissipate)

@@ -496,12 +496,12 @@
 	// If targeting anything else, see if the wear suit is thin enough.
 	if (!penetrate_thick)
 		if(above_neck(target_zone))
-			if(head && is_type_in_typecache(head, GLOB.typecache_clothing))
+			if(head && istype(head, /obj/item/clothing))
 				var/obj/item/clothing/CH = head
 				if (CH.clothing_flags & THICKMATERIAL)
 					. = 0
 		else
-			if(wear_suit && is_type_in_typecache(wear_suit, GLOB.typecache_clothing))
+			if(wear_suit && istype(wear_suit, /obj/item/clothing))
 				var/obj/item/clothing/CS = wear_suit
 				if (CS.clothing_flags & THICKMATERIAL)
 					. = 0
