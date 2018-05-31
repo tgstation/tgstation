@@ -65,6 +65,7 @@
 	name = "eldritch sword"
 	force = 19 //can't break normal airlocks
 	item_flags = NEEDS_PERMIT | NODROP | DROPDEL
+	flags_1 = NONE
 
 /obj/item/melee/cultblade/pickup(mob/living/user)
 	..()
