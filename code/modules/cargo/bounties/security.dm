@@ -7,13 +7,13 @@
 /datum/bounty/item/security/securitybelt
 	name = "Security Belt"
 	description = "CentCom is having difficulties with their security belts. Ship one from the station to receive compensation."
-	reward = 800
+	reward = 1500
 	wanted_types = list(/obj/item/storage/belt/security)
 
 /datum/bounty/item/security/sechuds
 	name = "Security HUDSunglasses"
 	description = "CentCom screwed up and ordered the wrong type of security sunglasses. They request the station ship some of theirs."
-	reward = 800
+	reward = 2000
 	wanted_types = list(/obj/item/clothing/glasses/hud/security/sunglasses)
 
 /datum/bounty/item/security/riotshotgun
@@ -26,25 +26,25 @@
 /datum/bounty/item/security/pinpointer
 	name = "Nuclear Pinpointer"
 	description = "There's a teeny-tiny itty-bitty chance CentCom may have lost a nuke disk. Can the station spare a pinpointer to help out?"
-	reward = 1500
+	reward = 5000
 	wanted_types = list(/obj/item/pinpointer/nuke)
 
 /datum/bounty/item/security/captains_spare
 	name = "Captain's Spare"
 	description = "Captain Bart of Station 12 has forgotten his ID! Ship him your station's spare, would you?"
-	reward = 1500
+	reward = 5000
 	wanted_types = list(/obj/item/card/id/captains_spare)
 
 /datum/bounty/item/security/hardsuit
 	name = "Security Hardsuit"
 	description = "Space pirates are heading towards CentCom! Quick! Ship a security hardsuit to aid the fight!"
-	reward = 2000
+	reward = 3000
 	wanted_types = list(/obj/item/clothing/suit/space/hardsuit/security)
 
 /datum/bounty/item/security/krav_maga
 	name = "Krav Maga Gloves"
 	description = "Chef Howerwitz of CentCom is trying to take a kung-fu Pizza out of the oven, but his mitts aren't up to the task. Ship them a pair of Krav Maga gloves to do the job right."
-	reward = 2000
+	reward = 5000
 	wanted_types = list(/obj/item/clothing/gloves/krav_maga)
 
 /datum/bounty/item/security/recharger
@@ -57,6 +57,12 @@
 /datum/bounty/item/security/sabre
 	name = "Officer's Sabre"
 	description = "A 3-hour LARP session will be held at CentCom in the upcoming months. A shipped officer's sabre would make a good prop."
-	reward = 2500
+	reward = 4000
 	wanted_types = list(/obj/item/melee/sabre)
+
+/datum/bounty/item/security/hand_tele
+	name = "Hand Tele"
+	description = "Central Command has come up with a genius idea: Why not teleport cargo rather than ship it? Send over a hand tele, receive payment, then wait 6-8 years while they deliberate."
+	reward = 6000
+	wanted_types = list(/obj/item/hand_tele)
 

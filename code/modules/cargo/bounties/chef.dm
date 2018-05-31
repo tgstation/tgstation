@@ -105,8 +105,8 @@
 
 /datum/bounty/item/chef/chawanmushi
 	name = "Chawanmushi"
-	description = "Nanotrasen wants to improve relations with its sister company, Japanotrasen. Ship Chawanmushi immediately."
-	reward = 8000
+	description = "The Head of External Relationships will meet up with a Spider Clan representative,send asiatic food to make sure the meeting wont be a failure."
+	reward = 6000
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/chawanmushi)
 
 /datum/bounty/item/chef/kebab

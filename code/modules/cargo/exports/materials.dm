@@ -30,43 +30,43 @@
 // Materials. Nothing but plasma is really worth selling. Better leave it all to RnD and sell some plasma instead.
 
 /datum/export/material/bananium
-	cost = 1000
+	cost = 4000
 	material_id = MAT_BANANIUM
 	message = "cm3 of bananium"
 
 /datum/export/material/diamond
-	cost = 500
+	cost = 2000
 	material_id = MAT_DIAMOND
 	message = "cm3 of diamonds"
 
 /datum/export/material/plasma
-	cost = 200
+	cost = 250
 	k_elasticity = 0
 	material_id = MAT_PLASMA
 	message = "cm3 of plasma"
 
 /datum/export/material/uranium
-	cost = 100
+	cost = 225
 	material_id = MAT_URANIUM
 	message = "cm3 of uranium"
 
 /datum/export/material/gold
-	cost = 125
+	cost = 200
 	material_id = MAT_GOLD
 	message = "cm3 of gold"
 
 /datum/export/material/silver
-	cost = 50
+	cost = 150
 	material_id = MAT_SILVER
 	message = "cm3 of silver"
 
 /datum/export/material/titanium
-	cost = 125
+	cost = 175
 	material_id = MAT_TITANIUM
 	message = "cm3 of titanium"
 
 /datum/export/material/plastitanium
-	cost = 325 // plasma + titanium costs
+	cost = 425 // plasma + titanium costs
 	material_id = MAT_TITANIUM // code can only check for one material_id; plastitanium is half plasma, half titanium
 	message = "cm3 of plastitanium"
 
