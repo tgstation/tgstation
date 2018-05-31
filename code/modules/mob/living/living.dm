@@ -1,15 +1,5 @@
 /mob/living/Initialize()
 	. = ..()
-	generateStaticOverlay()
-	if(staticOverlays.len)
-		for(var/mob/living/simple_animal/drone/D in GLOB.player_list)
-			if(D && D.seeStatic)
-				if(D.staticChoice in staticOverlays)
-					D.staticOverlays |= staticOverlays[D.staticChoice]
-					D.client.images |= staticOverlays[D.staticChoice]
-				else //no choice? force static
-					D.staticOverlays |= staticOverlays["static"]
-					D.client.images |= staticOverlays["static"]
 	if(unique_name)
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
@@ -40,12 +30,6 @@
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 
-	for(var/mob/living/simple_animal/drone/D in GLOB.player_list)
-		for(var/image/I in staticOverlays)
-			D.staticOverlays.Remove(I)
-			D.client.images.Remove(I)
-			qdel(I)
-	staticOverlays.len = 0
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
 	QDEL_LIST(diseases)
@@ -61,25 +45,6 @@
 
 /mob/living/proc/OpenCraftingMenu()
 	return
-
-/mob/living/proc/generateStaticOverlay()
-	staticOverlays.Add(list("static", "blank", "letter", "animal"))
-	var/image/staticOverlay = image(getStaticIcon(new/icon(icon,icon_state)), loc = src)
-	staticOverlay.override = 1
-	staticOverlays["static"] = staticOverlay
-
-	staticOverlay = image(getBlankIcon(new/icon(icon, icon_state)), loc = src)
-	staticOverlay.override = 1
-	staticOverlays["blank"] = staticOverlay
-
-	staticOverlay = getLetterImage(src)
-	staticOverlay.override = 1
-	staticOverlays["letter"] = staticOverlay
-
-	staticOverlay = getRandomAnimalImage(src)
-	staticOverlay.override = 1
-	staticOverlays["animal"] = staticOverlay
-
 
 //Generic Collide(). Override MobCollide() and ObjCollide() instead of this.
 /mob/living/Collide(atom/A)
