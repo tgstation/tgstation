@@ -696,6 +696,24 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_upgrade_trashofholding
+	name = "Cyborg Upgrade (Trash Bag of Holding)"
+	id = "borg_upgrade_trashofholding"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/tboh
+	materials = list(MAT_METAL=10000, MAT_GOLD=1500, MAT_URANIUM=250, MAT_PLASMA=1500)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_upgrade_advancedmop
+	name = "Cyborg Upgrade (Advanced Mop)"
+	id = "borg_upgrade_advancedmop"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/amop
+	materials = list(MAT_METAL=10000, MAT_GLASS=200, MAT_TITANIUM=1000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
 /datum/design/borg_upgrade_expand
 	name = "Cyborg Upgrade (Expand)"
 	id = "borg_upgrade_expand"
