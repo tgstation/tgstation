@@ -143,7 +143,7 @@
 		if(M.client.prefs.toggles & SOUND_MIDI)
 			M.playsound_local(M, sound_file, sound_volume, FALSE, channel = CHANNEL_ADMIN, pressure_affected = FALSE)
 	if(user)
-		log_admin("[ADMIN_LOOKUPFLW(user)] activated a sound emitter with file \"[sound_file]\" at [COORD(src)]")
+		log_admin("[ADMIN_LOOKUPFLW(user)] activated a sound emitter with file \"[sound_file]\" at [AREACOORD(src)]")
 	flick("shield1", src)
 
 #undef SOUND_EMITTER_LOCAL

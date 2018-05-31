@@ -162,9 +162,7 @@
 				var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 				var/turf/end_T = get_turf(target)
 				if(start_T && end_T)
-					var/start_T_descriptor = "tile in [get_area_name(start_T, TRUE)] ([start_T.x],[start_T.y],[start_T.z])"
-					var/end_T_descriptor = "tile at [get_area_name(end_T, TRUE)] ([end_T.x],[end_T.y],[end_T.z])"
-					add_logs(src, throwable_mob, "thrown", addition="grab from [start_T_descriptor] towards [end_T_descriptor]")
+					add_logs(src, throwable_mob, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
 
 	else if(!(I.flags_1 & (NODROP_1|ABSTRACT_1)))
 		thrown_thing = I
