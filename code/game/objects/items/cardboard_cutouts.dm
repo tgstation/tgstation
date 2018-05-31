@@ -12,7 +12,7 @@
 		"Traitor", "Nuke Op", "Cultist", "Clockwork Cultist",
 		"Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Xenomorph Maid", "Swarmer",
 		"Ash Walker", "Deathsquad Officer", "Ian", "Slaughter Demon",
-		"Laughter Demon", "Private Security Officer")
+		"Laughter Demon", "Private Security Officer", "Light-Green Catgirl")
 	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
 	var/deceptive = FALSE //If the cutout actually appears as what it portray and not a discolored version
 
@@ -179,6 +179,10 @@
 			name = "Private Security Officer"
 			desc = "A cardboard cutout of a private security officer."
 			icon_state = "cutout_ntsec"
+		if("Light-Green Catgirl")
+			name = "Private Security Officer"
+			desc = "A cardboard cutout of a catgirl roboticist."
+			icon_state = "cutout_pepper"
 	return 1
 
 /obj/item/cardboard_cutout/setDir(newdir)
