@@ -13,13 +13,12 @@
 /obj/structure/fluff/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/wrench) && deconstructible)
 		user.visible_message("<span class='notice'>[user] starts disassembling [src]...</span>", "<span class='notice'>You start disassembling [src]...</span>")
-		playsound(user, I.usesound, 50, 1)
-		if(!do_after(user, 50, target = src))
-			return 0
-		user.visible_message("<span class='notice'>[user] disassembles [src]!</span>", "<span class='notice'>You break down [src] into scrap metal.</span>")
-		playsound(user, 'sound/items/deconstruct.ogg', 50, 1)
-		new/obj/item/stack/sheet/metal(get_turf(src))
-		qdel(src)
+		I.play_tool_sound(src)
+		if(I.use_tool(src, user, 50))
+			user.visible_message("<span class='notice'>[user] disassembles [src]!</span>", "<span class='notice'>You break down [src] into scrap metal.</span>")
+			playsound(user, 'sound/items/deconstruct.ogg', 50, 1)
+			new/obj/item/stack/sheet/metal(drop_location())
+			qdel(src)
 		return
 	..()
 
@@ -33,7 +32,7 @@
 /obj/structure/fluff/empty_sleeper //Empty sleepers are created by a good few ghost roles in lavaland.
 	name = "empty sleeper"
 	desc = "An open sleeper. It looks as though it would be awaiting another patient, were it not broken."
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper-open"
 
 /obj/structure/fluff/empty_sleeper/nanotrasen
@@ -105,7 +104,8 @@
 	icon_state = "driverseat"
 
 /obj/structure/fluff/bus/passable/seat/driver/attack_hand(mob/user)
-	playsound(src.loc, 'sound/items/carhorn.ogg', 50, 1)
+	playsound(src, 'sound/items/carhorn.ogg', 50, 1)
+	. = ..()
 
 /obj/structure/fluff/paper
 	name = "dense lining of papers"
@@ -161,3 +161,9 @@
 	name = "shrine"
 	desc = "A shrine dedicated to a deity."
 	icon_state = "shrine"
+
+/obj/structure/fluff/fokoff_sign
+	name = "crude sign"
+	desc = "A crudely-made sign with the words 'fok of' written in some sort of red paint."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "fokof"

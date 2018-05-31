@@ -18,7 +18,7 @@
 	health = 30
 	maxHealth = 120 //If you murder other drones and cannibalize them you can get much stronger
 	initial_language_holder = /datum/language_holder/drone/syndicate
-	faction = list("syndicate")
+	faction = list(ROLE_SYNDICATE)
 	speak_emote = list("hisses")
 	bubble_icon = "syndibot"
 	heavy_emp_damage = 10
@@ -26,15 +26,15 @@
 	"1. Interfere.\n"+\
 	"2. Kill.\n"+\
 	"3. Destroy."
-	default_storage = /obj/item/device/radio/uplink
+	default_storage = /obj/item/radio/uplink
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
-	seeStatic = 0 //Our programming is superior.
 	hacked = TRUE
 	flavortext = null
 
 /mob/living/simple_animal/drone/syndrone/Initialize()
 	. = ..()
-	internal_storage.hidden_uplink.telecrystals = 10
+	GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, internal_storage)
+	hidden_uplink.telecrystals = 10
 
 /mob/living/simple_animal/drone/syndrone/Login()
 	..()
@@ -43,11 +43,12 @@
 /mob/living/simple_animal/drone/syndrone/badass
 	name = "Badass Syndrone"
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
-	default_storage = /obj/item/device/radio/uplink/nuclear
+	default_storage = /obj/item/radio/uplink/nuclear
 
 /mob/living/simple_animal/drone/syndrone/badass/Initialize()
 	. = ..()
-	internal_storage.hidden_uplink.telecrystals = 30
+	GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, internal_storage)
+	hidden_uplink.telecrystals = 30
 	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(src)
 	W.implant(src)
 
@@ -126,7 +127,6 @@
 	heavy_emp_damage = 0
 	laws = "0. Purge all untruths and honor Ratvar."
 	default_storage = /obj/item/storage/toolbox/brass/prefilled
-	seeStatic = 0
 	hacked = TRUE
 	visualAppearence = CLOCKDRONE
 	can_be_held = FALSE
@@ -146,12 +146,11 @@
 	qdel(access_card) //we don't have free access
 	access_card = null
 	verbs -= /mob/living/simple_animal/drone/verb/check_laws
-	verbs -= /mob/living/simple_animal/drone/verb/toggle_light
 	verbs -= /mob/living/simple_animal/drone/verb/drone_ping
 
 /mob/living/simple_animal/drone/cogscarab/Login()
 	..()
-	add_servant_of_ratvar(src, TRUE)
+	add_servant_of_ratvar(src, TRUE, GLOB.servants_active)
 	to_chat(src,"<b>You yourself are one of these servants, and will be able to utilize almost anything they can[GLOB.ratvar_awakens ? "":", <i>excluding a clockwork slab</i>"].</b>") // this can't go with flavortext because i'm assuming it requires them to be ratvar'd
 
 /mob/living/simple_animal/drone/cogscarab/binarycheck()

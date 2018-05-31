@@ -24,7 +24,7 @@
 
 /obj/effect/countdown/proc/attach(atom/A)
 	attached_to = A
-	loc = get_turf(A)
+	forceMove(get_turf(A))
 
 /obj/effect/countdown/proc/start()
 	if(!started)
@@ -116,7 +116,7 @@
 	color = "#00ff80"
 
 /obj/effect/countdown/supermatter/get_value()
-	var/obj/machinery/power/supermatter_shard/S = attached_to
+	var/obj/machinery/power/supermatter_crystal/S = attached_to
 	if(!istype(S))
 		return
 	return "<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[round(S.get_integrity(), 1)]%</div>"
@@ -154,3 +154,9 @@
 	else
 		var/time_left = max(0, (A.death_time - world.time) / 10)
 		return round(time_left)
+
+/obj/effect/countdown/singularity_pull()
+	return
+
+/obj/effect/countdown/singularity_act()
+	return

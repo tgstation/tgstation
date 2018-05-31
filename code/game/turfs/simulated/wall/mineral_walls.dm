@@ -13,8 +13,6 @@
 	icon = 'icons/turf/walls/gold_wall.dmi'
 	icon_state = "gold"
 	sheet_type = /obj/item/stack/sheet/mineral/gold
-	//var/electro = 1
-	//var/shocked = null
 	explosion_block = 0 //gold is a soft metal you dingus.
 	canSmoothWith = list(/turf/closed/wall/mineral/gold, /obj/structure/falsewall/gold)
 
@@ -24,8 +22,6 @@
 	icon = 'icons/turf/walls/silver_wall.dmi'
 	icon_state = "silver"
 	sheet_type = /obj/item/stack/sheet/mineral/silver
-	//var/electro = 0.75
-	//var/shocked = null
 	canSmoothWith = list(/turf/closed/wall/mineral/silver, /obj/structure/falsewall/silver)
 
 /turf/closed/wall/mineral/diamond
@@ -38,13 +34,13 @@
 	explosion_block = 3
 	canSmoothWith = list(/turf/closed/wall/mineral/diamond, /obj/structure/falsewall/diamond)
 
-/turf/closed/wall/mineral/clown
+/turf/closed/wall/mineral/bananium
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
 	icon = 'icons/turf/walls/bananium_wall.dmi'
 	icon_state = "bananium"
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
-	canSmoothWith = list(/turf/closed/wall/mineral/clown, /obj/structure/falsewall/clown)
+	canSmoothWith = list(/turf/closed/wall/mineral/bananium, /obj/structure/falsewall/bananium)
 
 /turf/closed/wall/mineral/sandstone
 	name = "sandstone wall"
@@ -77,7 +73,7 @@
 
 /turf/closed/wall/mineral/uranium/attack_hand(mob/user)
 	radiate()
-	..()
+	. = ..()
 
 /turf/closed/wall/mineral/uranium/attackby(obj/item/W, mob/user, params)
 	radiate()
@@ -98,15 +94,15 @@
 
 /turf/closed/wall/mineral/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma wall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]",0,1)
-		log_game("Plasma wall ignited by [key_name(user)] in [COORD(src)]")
+		message_admins("Plasma wall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
+		log_game("Plasma wall ignited by [key_name(user)] in [AREACOORD(src)]")
 		ignite(W.is_hot())
 		return
 	..()
 
 /turf/closed/wall/mineral/plasma/proc/PlasmaBurn(temperature)
 	new girder_type(src)
-	src.ChangeTurf(/turf/open/floor/plasteel)
+	ScrapeAway()
 	var/turf/open/T = src
 	T.atmos_spawn_air("plasma=400;TEMP=[temperature]")
 
@@ -134,7 +130,23 @@
 	sheet_type = /obj/item/stack/sheet/mineral/wood
 	hardness = 70
 	explosion_block = 0
-	canSmoothWith = list(/turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood)
+	canSmoothWith = list(/turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood, /turf/closed/wall/mineral/wood/nonmetal)
+
+/turf/closed/wall/mineral/wood/attackby(obj/item/W, mob/user)
+	var/duration = (48/W.force) * 2 //In seconds, for now.
+	if(W.sharpness)
+		if(istype(W, /obj/item/hatchet) || istype(W, /obj/item/twohanded/fireaxe))
+			duration /= 4 //Much better with hatchets and axes.
+		if(do_after(user, duration*10, target=src)) //Into deciseconds.
+			dismantle_wall(FALSE,FALSE)
+			return
+	return ..()
+
+/turf/closed/wall/mineral/wood/nonmetal
+	desc = "A solidly wooden wall. It's a bit weaker than a wall made with metal."
+	girder_type = /obj/structure/barricade/wooden
+	hardness = 50
+	canSmoothWith = list(/turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood, /turf/closed/wall/mineral/wood/nonmetal)
 
 /turf/closed/wall/mineral/iron
 	name = "rough metal wall"
@@ -155,6 +167,8 @@
 	sheet_type = /obj/item/stack/sheet/mineral/snow
 	canSmoothWith = null
 	girder_type = null
+	bullet_sizzle = TRUE
+	bullet_bounce_sound = null
 
 /turf/closed/wall/mineral/abductor
 	name = "alien wall"
@@ -255,9 +269,14 @@
 	icon_state = "map-overspace"
 	fixed_underlay = list("space"=1)
 
-/turf/closed/wall/mineral/plastitanium/explosive/dismantle_wall(devastated, explode)
-	var/obj/item/bombcore/large/bombcore = new(get_turf(src))
-	if(devastated || explode)
+/turf/closed/wall/mineral/plastitanium/explosive/ex_act(severity)
+	var/datum/explosion/acted_explosion = null
+	for(var/datum/explosion/E in GLOB.explosions)
+		if(E.explosion_id == explosion_id)
+			acted_explosion = E
+			break
+	if(acted_explosion && istype(acted_explosion.explosion_source, /obj/item/bombcore))
+		var/obj/item/bombcore/large/bombcore = new(get_turf(src))
 		bombcore.detonate()
 	..()
 

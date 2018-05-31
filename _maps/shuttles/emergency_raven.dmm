@@ -19,8 +19,8 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ae" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
@@ -33,24 +33,24 @@
 /area/shuttle/escape)
 "ag" = (
 /obj/machinery/computer/med_data,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ah" = (
 /obj/machinery/computer/shuttle,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ai" = (
 /obj/machinery/computer/communications,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aj" = (
 /obj/machinery/computer/crew,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ak" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs,
-/obj/item/device/assembly/flash,
+/obj/item/assembly/flash,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/escape)
 "al" = (
@@ -62,7 +62,7 @@
 /obj/machinery/computer/security{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "an" = (
 /turf/open/floor/plasteel/darkblue/side{
@@ -86,7 +86,7 @@
 /obj/machinery/computer/station_alert{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ar" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -110,7 +110,7 @@
 /obj/machinery/computer/secure_data{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "av" = (
 /obj/structure/chair/office/dark{
@@ -144,7 +144,7 @@
 /obj/machinery/computer/atmos_alert{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aB" = (
 /obj/structure/table/reinforced,
@@ -157,13 +157,13 @@
 	},
 /area/shuttle/escape)
 "aC" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aD" = (
 /obj/structure/chair/office/dark{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aE" = (
 /obj/structure/table/reinforced,
@@ -259,21 +259,21 @@
 	name = "Shuttle Security Bride Access";
 	req_access_txt = "2"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aQ" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Shuttle Bridge Access";
 	req_access_txt = "19"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aR" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Shuttle EVA";
 	req_access_txt = "19"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aS" = (
 /turf/open/floor/plasteel/darkpurple/side{
@@ -287,7 +287,7 @@
 	pixel_y = 4
 	},
 /obj/item/storage/firstaid/toxin,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aU" = (
 /obj/structure/table/reinforced,
@@ -296,7 +296,7 @@
 	pixel_y = 4
 	},
 /obj/item/storage/firstaid/fire,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aV" = (
 /turf/open/floor/plasteel/darkpurple/side{
@@ -315,15 +315,6 @@
 	dir = 4;
 	floor_tile = /obj/item/stack/tile/plasteel;
 	icon_state = "darkred"
-	},
-/area/shuttle/escape)
-"aY" = (
-/obj/machinery/flasher{
-	id = "shuttleflash";
-	pixel_x = -26
-	},
-/turf/open/floor/plasteel/darkgreen/side{
-	dir = 8
 	},
 /area/shuttle/escape)
 "aZ" = (
@@ -460,7 +451,7 @@
 /obj/structure/chair/office/dark{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bi" = (
 /obj/structure/bed/roller,
@@ -564,7 +555,7 @@
 /area/shuttle/escape)
 "bs" = (
 /obj/machinery/door/airlock/hatch,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bt" = (
 /turf/open/floor/plasteel/darkpurple/side{
@@ -578,11 +569,7 @@
 /area/shuttle/escape)
 "bv" = (
 /obj/structure/chair/office/dark,
-/turf/open/floor/plasteel/black,
-/area/shuttle/escape)
-"bw" = (
-/obj/machinery/door/airlock/shuttle,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bx" = (
 /obj/structure/chair{
@@ -620,23 +607,21 @@
 	name = "Shuttle Brig";
 	req_access_txt = "2"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bE" = (
 /obj/docking_port/mobile/emergency{
 	dwidth = 14;
 	height = 18;
 	name = "CentCom Raven Battlecruiser";
-	timid = 1;
 	width = 32
 	},
 /obj/machinery/door/airlock/hatch,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bF" = (
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen"
+	dir = 9
 	},
 /area/shuttle/escape)
 "bG" = (
@@ -656,8 +641,7 @@
 	pixel_y = -6
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen"
+	dir = 9
 	},
 /area/shuttle/escape)
 "bI" = (
@@ -805,8 +789,7 @@
 "bT" = (
 /obj/machinery/recharge_station,
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen"
+	dir = 9
 	},
 /area/shuttle/escape)
 "bU" = (
@@ -820,8 +803,7 @@
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen"
+	dir = 9
 	},
 /area/shuttle/escape)
 "bW" = (
@@ -839,7 +821,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bY" = (
 /obj/structure/chair{
@@ -848,21 +830,21 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bZ" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ca" = (
 /obj/structure/chair,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "cb" = (
 /obj/structure/chair,
@@ -892,30 +874,13 @@
 	dir = 6
 	},
 /area/shuttle/escape)
-"cf" = (
-/obj/machinery/door/airlock/glass_titanium{
-	name = "Shuttle Engine Room"
-	},
-/turf/open/floor/plasteel/darkgreen/side{
-	dir = 8
-	},
-/area/shuttle/escape)
-"cg" = (
-/obj/machinery/door/airlock/glass_titanium{
-	name = "Shuttle Engine Room"
-	},
-/turf/open/floor/plasteel/darkgreen/side{
-	dir = 4
-	},
-/area/shuttle/escape)
 "ch" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen"
+	dir = 9
 	},
 /area/shuttle/escape)
 "ci" = (
@@ -988,20 +953,6 @@
 "cs" = (
 /turf/closed/wall/mineral/plastitanium/interior,
 /area/shuttle/escape)
-"cx" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
-"cy" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
 "cz" = (
 /obj/machinery/button/door{
 	id = "shuttleshutters";
@@ -1011,27 +962,6 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/darkblue/side,
-/area/shuttle/escape)
-"cA" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "shuttleshutters";
-	name = "blast shutters"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"cD" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
-"cI" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
 /area/shuttle/escape)
 "ei" = (
 /obj/machinery/porta_turret/centcom_shuttle{
@@ -1095,15 +1025,6 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel/darkgreen/side,
 /area/shuttle/escape)
-"eJ" = (
-/obj/machinery/button/flasher{
-	id = "cockpit_flasher";
-	pixel_x = 6;
-	pixel_y = -24
-	},
-/obj/machinery/light,
-/turf/open/floor/mineral/titanium/blue,
-/area/space)
 "eN" = (
 /obj/machinery/light{
 	dir = 4
@@ -1119,9 +1040,6 @@
 "eP" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/escape)
-"eQ" = (
-/turf/open/space/basic,
-/area/space)
 
 (1,1,1) = {"
 aa
@@ -1547,8 +1465,8 @@ bu
 bA
 bJ
 ad
-eQ
-eQ
+ad
+ad
 ad
 cs
 bV
@@ -1581,8 +1499,8 @@ bv
 bB
 bJ
 ad
-eQ
-eQ
+ad
+ad
 ad
 bJ
 br
@@ -1615,8 +1533,8 @@ aC
 bC
 bJ
 ad
-eQ
-eQ
+ad
+ad
 ad
 bJ
 br
@@ -1649,8 +1567,8 @@ bm
 ar
 cs
 ad
-eQ
-eQ
+ad
+ad
 ad
 cs
 bW

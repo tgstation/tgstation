@@ -18,7 +18,7 @@
 		if(notices > 4)
 			break
 		if(istype(I, /obj/item/paper))
-			I.loc = src
+			I.forceMove(src)
 			notices++
 	icon_state = "nboard0[notices]"
 
@@ -39,7 +39,11 @@
 	else
 		return ..()
 
-/obj/structure/noticeboard/attack_hand(mob/user)
+/obj/structure/noticeboard/interact(mob/user)
+	ui_interact(user)
+
+/obj/structure/noticeboard/ui_interact(mob/user)
+	. = ..()
 	var/auth = allowed(user)
 	var/dat = "<B>[name]</B><BR>"
 	for(var/obj/item/P in src)
@@ -58,7 +62,7 @@
 			return
 		var/obj/item/I = locate(href_list["remove"]) in contents
 		if(istype(I) && I.loc == src)
-			I.loc = usr.loc
+			I.forceMove(usr.loc)
 			usr.put_in_hands(I)
 			notices--
 			icon_state = "nboard0[notices]"

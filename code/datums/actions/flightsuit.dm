@@ -1,5 +1,3 @@
-
-
 /datum/action/item_action/flightsuit
 	icon_icon = 'icons/mob/actions/actions_flightsuit.dmi'
 
@@ -56,7 +54,7 @@
 	background_icon_state = "bg_tech_blue"
 
 /datum/action/item_action/flightpack/toggle_flight/Trigger()
-	var/obj/item/device/flightpack/F = target
+	var/obj/item/flightpack/F = target
 	if(istype(F))
 		F.flight? F.disable_flight() : F.enable_flight()
 	return ..()
@@ -67,7 +65,7 @@
 	background_icon_state = "bg_tech_blue"
 
 /datum/action/item_action/flightpack/engage_boosters/Trigger()
-	var/obj/item/device/flightpack/F = target
+	var/obj/item/flightpack/F = target
 	if(istype(F))
 		F.boost? F.deactivate_booster() : F.activate_booster()
 	return ..()
@@ -78,7 +76,7 @@
 	background_icon_state = "bg_tech_blue"
 
 /datum/action/item_action/flightpack/toggle_stabilizers/Trigger()
-	var/obj/item/device/flightpack/F = target
+	var/obj/item/flightpack/F = target
 	if(istype(F))
 		F.stabilizer? F.disable_stabilizers() : F.enable_stabilizers()
 	return ..()
@@ -89,7 +87,7 @@
 	background_icon_state = "bg_tech_blue"
 
 /datum/action/item_action/flightpack/change_power/Trigger()
-	var/obj/item/device/flightpack/F = target
+	var/obj/item/flightpack/F = target
 	if(istype(F))
 		F.cycle_power()
 	return ..()
@@ -100,7 +98,7 @@
 	background_icon_state = "bg_tech_blue"
 
 /datum/action/item_action/flightpack/toggle_airbrake/Trigger()
-	var/obj/item/device/flightpack/F = target
+	var/obj/item/flightpack/F = target
 	if(istype(F))
 		F.brake? F.disable_airbrake() : F.enable_airbrake()
 	return ..()

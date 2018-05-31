@@ -1,4 +1,3 @@
-
 /*
 	The HUB idles until it receives information. It then passes on that information
 	depending on where it came from.
@@ -17,20 +16,22 @@
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 80
-	machinetype = 7
-	long_range_link = 1
+	long_range_link = TRUE
 	netspeed = 40
 	circuit = /obj/item/circuitboard/machine/telecomms/hub
 
 /obj/machinery/telecomms/hub/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
-	if(is_freq_listening(signal))
-		if(istype(machine_from, /obj/machinery/telecomms/receiver))
-			//If the signal is compressed, send it to the bus.
-			relay_information(signal, "/obj/machinery/telecomms/bus", 1) // ideally relay the copied information to bus units
-		else
-			// Get a list of relays that we're linked to, then send the signal to their levels.
-			relay_information(signal, "/obj/machinery/telecomms/relay", 1)
-			relay_information(signal, "/obj/machinery/telecomms/broadcaster", 1) // Send it to a broadcaster.
+	if(!is_freq_listening(signal))
+		return
+
+	if(istype(machine_from, /obj/machinery/telecomms/receiver))
+		// It's probably compressed so send it to the bus.
+		relay_information(signal, /obj/machinery/telecomms/bus, TRUE)
+	else
+		// Send it to each relay so their levels get added...
+		relay_information(signal, /obj/machinery/telecomms/relay)
+		// Then broadcast that signal to
+		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
 //Preset HUB
 

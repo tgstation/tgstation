@@ -1,7 +1,7 @@
 /obj/machinery/dna_scannernew
 	name = "\improper DNA scanner"
 	desc = "It scans DNA structures."
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/cloning.dmi'
 	icon_state = "scanner"
 	density = TRUE
 	anchored = TRUE
@@ -100,7 +100,7 @@
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
 	if(istype(mob_occupant))
 		if(locate_computer(/obj/machinery/computer/cloning))
-			if(!mob_occupant.suiciding && !(mob_occupant.disabilities & NOCLONE) && !mob_occupant.hellbound)
+			if(!mob_occupant.suiciding && !(mob_occupant.has_trait(TRAIT_NOCLONE)) && !mob_occupant.hellbound)
 				mob_occupant.notify_ghost_cloning("Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned!", source = src)
 
 	// DNA manipulators cannot operate on severed heads or brains
@@ -133,9 +133,6 @@
 		update_icon()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
 		return
 
-	if(exchange_parts(user, I))
-		return
-
 	if(default_pry_open(I))
 		return
 
@@ -144,10 +141,7 @@
 
 	return ..()
 
-/obj/machinery/dna_scannernew/attack_hand(mob/user)
-	if(..(user,1,0)) //don't set the machine, since there's no dialog
-		return
-
+/obj/machinery/dna_scannernew/interact(mob/user)
 	toggle_open(user)
 
 /obj/machinery/dna_scannernew/MouseDrop_T(mob/target, mob/user)

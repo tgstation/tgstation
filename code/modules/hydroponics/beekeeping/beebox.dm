@@ -18,8 +18,11 @@
 /mob/living/carbon/human/bee_friendly()
 	if(dna && dna.species && dna.species.id == "pod") //bees pollinate plants, duh.
 		return 1
-	if((wear_suit && (wear_suit.flags_1 & THICKMATERIAL_1)) && (head && (head.flags_1 & THICKMATERIAL_1)))
-		return 1
+	if (wear_suit && head && istype(wear_suit, /obj/item/clothing) && istype(head, /obj/item/clothing))
+		var/obj/item/clothing/CS = wear_suit
+		var/obj/item/clothing/CH = head
+		if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)
+			return 1
 	return 0
 
 
@@ -102,7 +105,7 @@
 			if((bee_resources >= BEE_RESOURCE_NEW_BEE_COST && prob(BEE_PROB_NEW_BEE)) || freebee)
 				if(!freebee)
 					bee_resources = max(bee_resources - BEE_RESOURCE_NEW_BEE_COST, 0)
-				var/mob/living/simple_animal/hostile/poison/bees/B = new(src)
+				var/mob/living/simple_animal/hostile/poison/bees/B = new(get_turf(src))
 				B.beehome = src
 				B.assign_reagent(queen_bee.beegent)
 				bees += B
@@ -179,7 +182,7 @@
 					bees -= B
 					B.beehome = null
 					if(B.loc == src)
-						B.loc = get_turf(src)
+						B.forceMove(drop_location())
 					relocated++
 			if(relocated)
 				to_chat(user, "<span class='warning'>This queen has a different reagent to some of the bees who live here, those bees will not return to this apiary!</span>")
@@ -192,8 +195,8 @@
 
 	..()
 
-
-/obj/structure/beebox/attack_hand(mob/user)
+/obj/structure/beebox/interact(mob/user)
+	. = ..()
 	if(!user.bee_friendly())
 		//Time to get stung!
 		var/bees = FALSE
@@ -202,7 +205,7 @@
 			if(B.isqueen)
 				continue
 			if(B.loc == src)
-				B.loc = get_turf(src)
+				B.forceMove(drop_location())
 			B.target = user
 			bees = TRUE
 		if(bees)
@@ -222,7 +225,7 @@
 				var/obj/item/honey_frame/HF = pick_n_take(honey_frames)
 				if(HF)
 					if(!user.put_in_active_hand(HF))
-						HF.loc = get_turf(src)
+						HF.forceMove(drop_location())
 					visible_message("<span class='notice'>[user] removes a frame from the apiary.</span>")
 
 					var/amtH = HF.honeycomb_capacity
@@ -230,7 +233,7 @@
 					while(honeycombs.len && amtH) //let's pretend you always grab the frame with the most honeycomb on it
 						var/obj/item/reagent_containers/honeycomb/HC = pick_n_take(honeycombs)
 						if(HC)
-							HC.loc = get_turf(user)
+							HC.forceMove(drop_location())
 							amtH--
 							fallen++
 					if(fallen)
@@ -242,12 +245,12 @@
 					to_chat(user, "<span class='warning'>There is no queen bee to remove!</span>")
 					return
 				var/obj/item/queen_bee/QB = new()
-				queen_bee.loc = QB
+				queen_bee.forceMove(QB)
 				bees -= queen_bee
 				QB.queen = queen_bee
 				QB.name = queen_bee.name
 				if(!user.put_in_active_hand(QB))
-					QB.loc = get_turf(src)
+					QB.forceMove(drop_location())
 				visible_message("<span class='notice'>[user] removes the queen from the apiary.</span>")
 				queen_bee = null
 
@@ -255,8 +258,11 @@
 	new /obj/item/stack/sheet/mineral/wood (loc, 20)
 	for(var/mob/living/simple_animal/hostile/poison/bees/B in bees)
 		if(B.loc == src)
-			B.loc = get_turf(src)
+			B.forceMove(drop_location())
 	for(var/obj/item/honey_frame/HF in honey_frames)
 		if(HF.loc == src)
-			HF.loc = get_turf(src)
+			HF.forceMove(drop_location())
 	qdel(src)
+
+/obj/structure/beebox/unwrenched
+		anchored = FALSE

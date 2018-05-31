@@ -1,9 +1,8 @@
 GLOBAL_REAL(config, /datum/controller/configuration)
 
-GLOBAL_DATUM_INIT(revdata, /datum/getrev, new)
+GLOBAL_DATUM(revdata, /datum/getrev)
 
 GLOBAL_VAR(host)
-GLOBAL_VAR(join_motd)
 GLOBAL_VAR(station_name)
 GLOBAL_VAR_INIT(game_version, "/tg/ Station 13")
 GLOBAL_VAR_INIT(changelog_hash, "")
@@ -35,4 +34,3 @@ GLOBAL_PROTECT(MAX_EX_FLASH_RANGE)
 GLOBAL_VAR_INIT(MAX_EX_FLAME_RANGE, 14)
 GLOBAL_PROTECT(MAX_EX_FLAME_RANGE)
 GLOBAL_VAR_INIT(DYN_EX_SCALE, 0.5)
-

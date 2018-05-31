@@ -411,7 +411,9 @@
 /area/awaymission/cabin)
 "bv" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bw" = (
@@ -456,11 +458,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "bG" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	target_temperature = 80;
-	dir = 2;
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "bH" = (
@@ -529,7 +527,7 @@
 /area/awaymission/snowforest)
 "bT" = (
 /obj/structure/table/wood,
-/obj/item/device/instrument/violin,
+/obj/item/instrument/violin,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bU" = (
@@ -622,7 +620,7 @@
 	dir = 8
 	},
 /obj/structure/table/wood,
-/obj/item/device/instrument/guitar,
+/obj/item/instrument/guitar,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ci" = (
@@ -812,20 +810,20 @@
 /area/awaymission/cabin)
 "cR" = (
 /obj/machinery/door/poddoor/shutters{
-	id = 42;
+	id = "garage_cabin";
 	name = "garage door"
 	},
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/cabin)
 "cS" = (
 /obj/machinery/button/door{
-	id = 42;
+	id = "garage_cabin";
 	pixel_y = 24
 	},
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/cabin)
 "cT" = (
-/obj/vehicle/atv,
+/obj/vehicle/ridden/atv,
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/cabin)
 "cU" = (
@@ -954,7 +952,7 @@
 /area/awaymission/snowforest)
 "du" = (
 /obj/structure/closet/toolcloset,
-/obj/item/device/lightreplacer,
+/obj/item/lightreplacer,
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
 /area/awaymission/cabin)

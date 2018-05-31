@@ -4,13 +4,12 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	icon_state = "teleprod_nocell"
 	item_state = "teleprod"
-	origin_tech = "combat=2;bluespace=4;materials=3"
 	slot_flags = null
 
 /obj/item/melee/baton/cattleprod/teleprod/attack(mob/living/carbon/M, mob/living/carbon/user)//handles making things teleport when hit
 	..()
-	if(status && user.disabilities & CLUMSY && prob(50))
-		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
+	if(status && user.has_trait(TRAIT_CLUMSY) && prob(50))
+		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 		if(do_teleport(user, get_turf(user), 50))//honk honk
 			user.Knockdown(stunforce*3)
@@ -27,12 +26,13 @@
 				do_teleport(M, get_turf(M), 15)
 
 /obj/item/melee/baton/cattleprod/attackby(obj/item/I, mob/user, params)//handles sticking a crystal onto a stunprod to make a teleprod
-	if(istype(I, /obj/item/ore/bluespace_crystal))
+	if(istype(I, /obj/item/stack/ore/bluespace_crystal))
 		if(!cell)
+			var/obj/item/stack/ore/bluespace_crystal/BSC = I
 			var/obj/item/melee/baton/cattleprod/teleprod/S = new /obj/item/melee/baton/cattleprod/teleprod
 			remove_item_from_storage(user)
 			qdel(src)
-			qdel(I)
+			BSC.use(1)
 			user.put_in_hands(S)
 			to_chat(user, "<span class='notice'>You place the bluespace crystal firmly into the igniter.</span>")
 		else

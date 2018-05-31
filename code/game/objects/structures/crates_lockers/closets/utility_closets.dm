@@ -53,11 +53,6 @@
 		if ("delete")
 			qdel(src)
 
-		//If you want to re-add fire, just add "fire" = 15 to the pick list.
-		/*if ("fire")
-			new /obj/structure/closet/firecloset(src.loc)
-			qdel(src)*/
-
 /*
  * Fire Closet
  */
@@ -78,7 +73,7 @@
 /obj/structure/closet/firecloset/full/PopulateContents()
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/clothing/mask/gas(src)
-	new /obj/item/device/flashlight(src)
+	new /obj/item/flashlight(src)
 	new /obj/item/tank/internals/oxygen/red(src)
 	new /obj/item/extinguisher(src)
 	new /obj/item/clothing/head/hardhat/red(src)
@@ -97,7 +92,7 @@
 	if(prob(40))
 		new /obj/item/clothing/suit/hazardvest(src)
 	if(prob(70))
-		new /obj/item/device/flashlight(src)
+		new /obj/item/flashlight(src)
 	if(prob(70))
 		new /obj/item/screwdriver(src)
 	if(prob(70))
@@ -109,7 +104,7 @@
 	if(prob(70))
 		new /obj/item/wirecutters(src)
 	if(prob(70))
-		new /obj/item/device/t_scanner(src)
+		new /obj/item/t_scanner(src)
 	if(prob(20))
 		new /obj/item/storage/belt/utility(src)
 	if(prob(30))
@@ -119,7 +114,7 @@
 	if(prob(30))
 		new /obj/item/stack/cable_coil/random(src)
 	if(prob(20))
-		new /obj/item/device/multitool(src)
+		new /obj/item/multitool(src)
 	if(prob(5))
 		new /obj/item/clothing/gloves/color/yellow(src)
 	if(prob(40))
@@ -137,7 +132,7 @@
 
 /obj/structure/closet/radiation/PopulateContents()
 	..()
-	new /obj/item/device/geiger_counter(src)
+	new /obj/item/geiger_counter(src)
 	new /obj/item/clothing/suit/radiation(src)
 	new /obj/item/clothing/head/radiation(src)
 

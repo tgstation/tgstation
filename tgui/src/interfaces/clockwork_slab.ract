@@ -22,6 +22,9 @@
 			<ui-button state='{{data.selected == "Script" ? "selected" : null}}' action='select' params='{"category": "Script"}'>Scripts</ui-button> 
 			<ui-button state='{{data.selected == "Application" ? "selected" : null}}' action='select' params='{"category": "Application"}'>Applications</ui-button> 
 			<br>{{{data.tier_info}}}
+		</ui-section>
+		<ui-section>
+			{{{data.scripturecolors}}}
 		</ui-section><hr>
 		<ui-section>
 		{{#each data.scripture}}

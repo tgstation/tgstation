@@ -34,12 +34,11 @@
 	else
 		return ..()
 
-/obj/machinery/computer/med_data/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/med_data/ui_interact(mob/user)
+	. = ..()
 	var/dat
-	if(src.temp)
-		dat = text("<TT>[src.temp]</TT><BR><BR><A href='?src=[REF(src)];temp=1'>Clear Screen</A>")
+	if(temp)
+		dat = text("<TT>[temp]</TT><BR><BR><A href='?src=[REF(src)];temp=1'>Clear Screen</A>")
 	else
 		dat = text("Confirm Identity: <A href='?src=[REF(src)];scan=1'>[]</A><HR>", (src.scan ? text("[]", src.scan.name) : "----------"))
 		if(src.authenticated)
@@ -100,10 +99,6 @@
 							dat += text("<td>[]</td>", R.fields["p_stat"])
 							dat += text("<td>[]</td></tr>", R.fields["m_stat"])
 					dat += "</table><hr width='75%' />"
-//					if(GLOB.data_core.general)
-//						for(var/datum/data/record/R in sortRecord(GLOB.data_core.general))
-//							dat += "<A href='?src=[REF(src)];d_rec=[R.fields["id"]]'>[R.fields["id"]]: [R.fields["name"]]<BR>"
-//							//Foreach goto(132)
 					dat += "<HR><A href='?src=[REF(src)];screen=1'>Back</A>"
 				if(3)
 					dat += "<B>Records Maintenance</B><HR>\n<A href='?src=[REF(src)];back=1'>Backup To Disk</A><BR>\n<A href='?src=[REF(src)];u_load=1'>Upload From Disk</A><BR>\n<A href='?src=[REF(src)];del_all=1'>Delete All Records</A><BR>\n<BR>\n<A href='?src=[REF(src)];screen=1'>Back</A>"
@@ -196,7 +191,6 @@
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
-	return
 
 /obj/machinery/computer/med_data/Topic(href, href_list)
 	. = ..()
@@ -499,7 +493,7 @@
 				var/counter = 1
 				while(src.active2.fields[text("com_[]", counter)])
 					counter++
-				src.active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, worldtime2text(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
+				src.active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, station_time_timestamp(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
 
 			else if(href_list["del_c"])
 				if((istype(src.active2, /datum/data/record) && src.active2.fields[text("com_[]", href_list["del_c"])]))
@@ -559,7 +553,8 @@
 	return
 
 /obj/machinery/computer/med_data/emp_act(severity)
-	if(!(stat & (BROKEN|NOPOWER)))
+	. = ..()
+	if(!(stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
 		for(var/datum/data/record/R in GLOB.data_core.medical)
 			if(prob(10/severity))
 				switch(rand(1,6))
@@ -583,7 +578,6 @@
 			else if(prob(1))
 				qdel(R)
 				continue
-	..()
 
 /obj/machinery/computer/med_data/proc/canUseMedicalRecordsConsole(mob/user, message = 1, record1, record2)
 	if(user)

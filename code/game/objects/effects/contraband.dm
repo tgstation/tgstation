@@ -60,6 +60,7 @@
 
 /obj/structure/sign/poster/Initialize()
 	. = ..()
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 75), 0)
 	if(random_basetype)
 		randomise(random_basetype)
 	if(!ruined)
@@ -88,7 +89,7 @@
 
 /obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/wirecutters))
-		playsound(loc, I.usesound, 100, 1)
+		I.play_tool_sound(src, 100)
 		if(ruined)
 			to_chat(user, "<span class='notice'>You remove the remnants of the poster.</span>")
 			qdel(src)
@@ -97,6 +98,9 @@
 			roll_and_drop(user.loc)
 
 /obj/structure/sign/poster/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(ruined)
 		return
 	visible_message("[user] rips [src] in a single, decisive motion!" )
@@ -123,7 +127,7 @@
 
 	// Deny placing posters on currently-diagonal walls, although the wall may change in the future.
 	if (smooth & SMOOTH_DIAGONAL)
-		for (var/O in our_overlays)
+		for (var/O in overlays)
 			var/image/I = O
 			if (copytext(I.icon_state, 1, 3) == "d-")
 				return

@@ -4,10 +4,11 @@
 	name = "ambrosia branch"
 	desc = "This is a plant."
 	icon_state = "ambrosiavulgaris"
-	slot_flags = SLOT_HEAD
+	slot_flags = ITEM_SLOT_HEAD
 	filling_color = "#008000"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
+	tastes = list("ambrosia" = 1)
 
 // Ambrosia Vulgaris
 /obj/item/seeds/ambrosia
@@ -30,7 +31,6 @@
 	seed = /obj/item/seeds/ambrosia
 	name = "ambrosia vulgaris branch"
 	desc = "This is a plant containing various healing chemicals."
-	origin_tech = "biotech=2"
 
 // Ambrosia Deus
 /obj/item/seeds/ambrosia/deus
@@ -50,7 +50,6 @@
 	desc = "Eating this makes you feel immortal!"
 	icon_state = "ambrosiadeus"
 	filling_color = "#008B8B"
-	origin_tech = "biotech=4;materials=3"
 
 //Ambrosia Gaia
 /obj/item/seeds/ambrosia/gaia
@@ -72,6 +71,5 @@
 	desc = "Eating this <i>makes</i> you immortal."
 	icon_state = "ambrosia_gaia"
 	filling_color = rgb(255, 175, 0)
-	origin_tech = "biotech=6;materials=5"
 	light_range = 3
 	seed = /obj/item/seeds/ambrosia/gaia

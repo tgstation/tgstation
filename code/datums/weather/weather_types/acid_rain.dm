@@ -18,9 +18,11 @@
 	end_sound = 'sound/ambience/acidrain_end.ogg'
 
 	area_type = /area/lavaland/surface/outdoors
-	target_z = ZLEVEL_LAVALAND
+	target_trait = ZTRAIT_MINING
 
 	immunity_type = "acid" // temp
+
+	barometer_predictable = TRUE
 
 
 /datum/weather/acid_rain/weather_act(mob/living/L)

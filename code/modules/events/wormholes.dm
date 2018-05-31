@@ -21,7 +21,7 @@
 
 /datum/round_event/wormholes/start()
 	for(var/turf/open/floor/T in world)
-		if(T.z in GLOB.station_z_levels)
+		if(is_station_level(T.z))
 			pick_turfs += T
 
 	for(var/i = 1, i <= number_of_wormholes, i++)
@@ -50,7 +50,7 @@
 	mech_sized = TRUE
 
 /obj/effect/portal/wormhole/teleport(atom/movable/M)
-	if(istype(M, /obj/effect))	//sparks don't teleport
+	if(iseffect(M))	//sparks don't teleport
 		return
 	if(M.anchored)
 		if(!(ismecha(M) && mech_sized))

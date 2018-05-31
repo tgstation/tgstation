@@ -6,18 +6,16 @@
 	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "materials=1;biotech=1"
 
 
 /obj/item/retractor/augment
-	name = "toolarm retractor"
+	name = "retractor"
 	desc = "Micro-mechanical manipulator for retracting stuff."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
 	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "materials=1;biotech=1"
 	toolspeed = 0.5
 
 
@@ -29,19 +27,17 @@
 	materials = list(MAT_METAL=5000, MAT_GLASS=2500)
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
 
 
 /obj/item/hemostat/augment
-	name = "toolarm hemostat"
+	name = "hemostat"
 	desc = "Tiny servos power a pair of pincers to stop bleeding."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
 	materials = list(MAT_METAL=5000, MAT_GLASS=2500)
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "materials=1;biotech=1"
 	toolspeed = 0.5
 	attack_verb = list("attacked", "pinched")
 
@@ -54,19 +50,17 @@
 	materials = list(MAT_METAL=2500, MAT_GLASS=750)
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
 
 
 /obj/item/cautery/augment
-	name = "toolarm cautery"
+	name = "cautery"
 	desc = "A heated element that cauterizes wounds."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
 	materials = list(MAT_METAL=2500, MAT_GLASS=750)
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "materials=1;biotech=1"
 	toolspeed = 0.5
 	attack_verb = list("burnt")
 
@@ -83,12 +77,11 @@
 	flags_1 = CONDUCT_1
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
-	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("drilled")
 
 
 /obj/item/surgicaldrill/augment
-	name = "toolarm surgical drill"
+	name = "surgical drill"
 	desc = "Effectively a small power drill contained within your arm, edges dulled to prevent tissue damage. May or may not pierce the heavens."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "drill"
@@ -97,7 +90,6 @@
 	flags_1 = CONDUCT_1
 	force = 10
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "materials=1;biotech=1"
 	toolspeed = 0.5
 	attack_verb = list("drilled")
 
@@ -116,13 +108,16 @@
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=4000, MAT_GLASS=1000)
-	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP_ACCURATE
 
+/obj/item/scalpel/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 80 * toolspeed, 100, 0)
+
 /obj/item/scalpel/augment
-	name = "toolarm scalpel"
+	name = "scalpel"
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel"
@@ -133,7 +128,6 @@
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=4000, MAT_GLASS=1000)
-	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	toolspeed = 0.5
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -160,12 +154,15 @@
 	throw_speed = 2
 	throw_range = 5
 	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
-	origin_tech = "biotech=1;combat=1"
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharpness = IS_SHARP
 
+/obj/item/circular_saw/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 40 * toolspeed, 100, 5, 'sound/weapons/circsawhit.ogg') //saws are very accurate and fast at butchering
+
 /obj/item/circular_saw/augment
-	name = "toolarm circular saw"
+	name = "circular saw"
 	desc = "A small but very fast spinning saw. Edges dulled to prevent accidental cutting inside of the surgeon."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw"
@@ -178,7 +175,6 @@
 	throw_speed = 2
 	throw_range = 5
 	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
-	origin_tech = "biotech=1;combat=1"
 	toolspeed = 0.5
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharpness = IS_SHARP
@@ -189,7 +185,6 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "surgical_drapes"
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "biotech=1"
 	attack_verb = list("slapped")
 
 /obj/item/surgical_drapes/attack(mob/living/M, mob/user)
@@ -225,7 +220,7 @@
 	add_overlay(img)
 	add_overlay("evidence")
 	desc = "An organ storage container holding [I]."
-	I.loc = src
+	I.forceMove(src)
 	w_class = I.w_class
 
 /obj/item/organ_storage/attack_self(mob/user)

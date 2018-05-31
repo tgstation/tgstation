@@ -6,11 +6,11 @@
 	icon_state = "waterbackpack"
 	item_state = "waterbackpack"
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/toggle_mister)
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
 	resistance_flags = FIRE_PROOF
 
 	var/obj/item/noz
@@ -49,7 +49,6 @@
 			on = FALSE
 			to_chat(user, "<span class='warning'>You need a free hand to hold the mister!</span>")
 			return
-		noz.loc = user
 	else
 		//Remove from their hands and put back "into" the tank
 		remove_noz()
@@ -60,7 +59,7 @@
 
 /obj/item/watertank/equipped(mob/user, slot)
 	..()
-	if(slot != slot_back)
+	if(slot != SLOT_BACK)
 		remove_noz()
 
 /obj/item/watertank/proc/remove_noz()
@@ -75,16 +74,18 @@
 	return ..()
 
 /obj/item/watertank/attack_hand(mob/user)
-	if(src.loc == user)
-		ui_action_click()
+	. = ..()
+	if(.)
 		return
-	..()
+	if(loc == user)
+		ui_action_click()
 
 /obj/item/watertank/MouseDrop(obj/over_object)
-	var/mob/M = src.loc
+	var/mob/M = loc
 	if(istype(M) && istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
+	return ..()
 
 /obj/item/watertank/attackby(obj/item/W, mob/user, params)
 	if(W == noz)
@@ -92,6 +93,10 @@
 		return 1
 	else
 		return ..()
+
+/obj/item/watertank/dropped(mob/user)
+	..()
+	remove_noz()
 
 // This mister item is intended as an extension of the watertank and always attached to it.
 // Therefore, it's designed to be "locked" to the player's hands or extended back onto
@@ -109,8 +114,8 @@
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
-	flags_1 = NODROP_1 | NOBLUDGEON_1
-	container_type = OPENCONTAINER_1
+	flags_1 = NOBLUDGEON_1
+	container_type = OPENCONTAINER
 	slot_flags = 0
 
 	var/obj/item/watertank/tank
@@ -120,14 +125,14 @@
 	if(check_tank_exists(parent_tank, src))
 		tank = parent_tank
 		reagents = tank.reagents	//This mister is really just a proxy for the tank's reagents
-		loc = tank
+		forceMove(tank)
 	return
 
 /obj/item/reagent_containers/spray/mister/dropped(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>The mister snaps back onto the watertank.</span>")
 	tank.on = 0
-	loc = tank
+	forceMove(tank)
 
 /obj/item/reagent_containers/spray/mister/attack_self()
 	return
@@ -142,7 +147,7 @@
 /obj/item/reagent_containers/spray/mister/Move()
 	..()
 	if(loc != tank.loc)
-		loc = tank.loc
+		forceMove(tank.loc)
 
 /obj/item/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
 	if(target.loc == loc) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it
@@ -221,7 +226,6 @@
 	precision = 1
 	cooling_power = 5
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 = NODROP_1 //Necessary to ensure that the nozzle and tank never separate
 	var/obj/item/watertank/tank
 	var/nozzle_mode = 0
 	var/metal_synthesis_cooldown = 0
@@ -233,13 +237,13 @@
 		tank = parent_tank
 		reagents = tank.reagents
 		max_water = tank.volume
-		loc = tank
+		forceMove(tank)
 
 
 /obj/item/extinguisher/mini/nozzle/Move()
 	..()
 	if(loc != tank.loc)
-		loc = tank
+		forceMove(tank)
 	return
 
 /obj/item/extinguisher/mini/nozzle/attack_self(mob/user)
@@ -265,7 +269,7 @@
 	..()
 	to_chat(user, "<span class='notice'>The nozzle snaps back onto the tank!</span>")
 	tank.on = 0
-	loc = tank
+	forceMove(tank)
 
 /obj/item/extinguisher/mini/nozzle/afterattack(atom/target, mob/user)
 	if(nozzle_mode == EXTINGUISHER)
@@ -287,7 +291,7 @@
 		resin_cooldown = TRUE
 		R.remove_any(100)
 		var/obj/effect/resin_container/A = new (get_turf(src))
-		log_game("[key_name_admin(user)] used Resin Launcher at [get_area(user)] [COORD(user)].")
+		log_game("[key_name(user)] used Resin Launcher at [AREACOORD(user)].")
 		playsound(src,'sound/items/syringeproj.ogg',40,1)
 		for(var/a=0, a<5, a++)
 			step_towards(A, target)
@@ -339,7 +343,7 @@
 	icon_state = "waterbackpackatmos"
 	item_state = "waterbackpackatmos"
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/activate_injector)
 
@@ -348,22 +352,22 @@
 	var/usage_ratio = 5 //5 unit added per 1 removed
 	var/injection_amount = 1
 	amount_per_transfer_from_this = 5
-	container_type = OPENCONTAINER_1
-	spillable = 0
+	container_type = OPENCONTAINER
+	spillable = FALSE
 	possible_transfer_amounts = list(5,10,15)
 
 /obj/item/reagent_containers/chemtank/ui_action_click()
 	toggle_injection()
 
 /obj/item/reagent_containers/chemtank/item_action_slot_check(slot, mob/user)
-	if(slot == slot_back)
+	if(slot == SLOT_BACK)
 		return 1
 
 /obj/item/reagent_containers/chemtank/proc/toggle_injection()
 	var/mob/living/carbon/human/user = usr
 	if(!istype(user))
 		return
-	if (user.get_item_by_slot(slot_back) != src)
+	if (user.get_item_by_slot(SLOT_BACK) != src)
 		to_chat(user, "<span class='warning'>The chemtank needs to be on your back before you can activate it!</span>")
 		return
 	if(on)

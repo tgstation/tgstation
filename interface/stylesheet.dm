@@ -36,6 +36,9 @@ em						{font-style: normal;	font-weight: bold;}
 
 .say					{}
 .deadsay				{color: #5c00e6;}
+.binarysay    			{color: #20c20e; background-color: #000000; display: block;}
+.binarysay a  			{color: #00ff00;}
+.binarysay a:active, .binarysay a:visited {color: #88ff88;}
 .radio					{color: #008000;}
 .sciradio				{color: #993399;}
 .comradio				{color: #948f02;}
@@ -78,9 +81,9 @@ h1.alert, h2.alert		{color: #000000;}
 .unconscious			{color: #0000ff;	font-weight: bold;}
 .suicide				{color: #ff5050;	font-style: italic;}
 .green					{color: #03ff39;}
+.nicegreen					{color: #14a833;}
 .shadowling				{color: #3b2769;}
 .cult					{color: #960000;}
-.cultitalic				{color: #960000;	font-style: italic;}
 .cultlarge				{color: #960000; font-weight: bold; font-size: 3;}
 .narsie					{color: #960000; font-weight: bold; font-size: 15;}
 .narsiesmall			{color: #960000; font-weight: bold; font-size: 6;}
@@ -89,7 +92,6 @@ h1.alert, h2.alert		{color: #000000;}
 .hierophant_warning		{color: #660099; font-style: italic;}
 .purple					{color: #5e2d79;}
 .holoparasite			{color: #35333a;}
-.holoparasitebold		{color: #35333a;	font-weight: bold;}
 
 .revennotice			{color: #1d2953;}
 .revenboldnotice		{color: #1d2953;	font-weight: bold;}
@@ -98,10 +100,10 @@ h1.alert, h2.alert		{color: #000000;}
 .revenwarning			{color: #760fbb;	font-style: italic;}
 .revendanger			{color: #760fbb;	font-weight: bold; font-size: 3;}
 .umbra					{color: #5000A0;}
-.umbra_bold				{color: #5000A0;	font-weight: bold;}
-.umbra_italics			{color: #5000A0;	font-style: italic;}
 .umbra_emphasis			{color: #5000A0;	font-weight: bold;	font-style: italic;}
-.umbra_large			{color: #5000A0;	font-size: 3;}
+.umbra_large			{color: #5000A0; font-size: 3; font-weight: bold; font-style: italic;}
+
+.deconversion_message	{color: #5000A0; font-size: 3; font-style: italic;}
 
 .brass					{color: #BE8700;}
 .heavy_brass			{color: #BE8700; font-weight: bold; font-style: italic;}
@@ -110,7 +112,6 @@ h1.alert, h2.alert		{color: #000000;}
 .ratvar					{color: #BE8700; font-size: 6; font-weight: bold; font-style: italic;}
 .alloy					{color: #42474D;}
 .heavy_alloy			{color: #42474D; font-weight: bold; font-style: italic;}
-.large_alloy			{color: #42474D; font-size: 3;}
 .nezbere_large			{color: #42474D; font-size: 3; font-weight: bold; font-style: italic;}
 .nezbere				{color: #42474D; font-weight: bold; font-style: italic;}
 .nezbere_small			{color: #42474D;}
@@ -135,6 +136,8 @@ h1.alert, h2.alert		{color: #000000;}
 .alertalien				{color: #00c000;	font-weight: bold;}
 .changeling				{color: #800080;	font-style: italic;}
 
+.spider					{color: #4d004d;}
+
 .interface				{color: #330033;}
 
 .sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
@@ -145,6 +148,7 @@ h1.alert, h2.alert		{color: #000000;}
 .small					{font-size: 1;}
 .big					{font-size: 3;}
 .reallybig				{font-size: 4;}
+.extremelybig			{font-size: 5;}
 .greentext				{color: #00FF00;	font-size: 3;}
 .redtext				{color: #FF0000;	font-size: 3;}
 .clown					{color: #FF69Bf;	font-size: 3; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}
@@ -155,9 +159,13 @@ h1.alert, h2.alert		{color: #000000;}
 .memo					{color: #638500;	text-align: center;}
 .memoedit				{text-align: center;	font-size: 2;}
 .abductor				{color: #800080; font-style: italic;}
+.mind_control			{color: #A00D6F; font-size: 3; font-weight: bold; font-style: italic;}
 .slime					{color: #00CED1;}
 .drone					{color: #848482;}
 .monkey					{color: #975032;}
 .swarmer				{color: #2C75FF;}
 .resonate				{color: #298F85;}
+
+.monkeyhive				{color: #774704;}
+.monkeylead				{color: #774704;	font-size: 2;}
 </style>"}

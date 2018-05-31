@@ -66,7 +66,7 @@
 #define ui_monkey_neck "CENTER-3:15,SOUTH:5"	//monkey
 #define ui_monkey_back "CENTER-2:16,SOUTH:5"	//monkey
 
-#define ui_alien_storage_l "CENTER-2:14,SOUTH:5"//alien
+//#define ui_alien_storage_l "CENTER-2:14,SOUTH:5"//alien
 #define ui_alien_storage_r "CENTER+1:18,SOUTH:5"//alien
 #define ui_alien_language_menu "EAST-3:26,SOUTH:5" //alien
 
@@ -103,6 +103,7 @@
 #define ui_healthdoll "EAST-1:28,CENTER-2:13"
 #define ui_health "EAST-1:28,CENTER-1:15"
 #define ui_internal "EAST-1:28,CENTER:17"
+#define ui_mood "EAST-1:28,CENTER-3:10"
 
 //borgs
 #define ui_borg_health "EAST-1:28,CENTER-1:15"		//borgs have the health display where humans have the pressure damage indicator.
@@ -133,6 +134,8 @@
 #define ui_ai_take_picture "SOUTH:6,WEST+12"
 #define ui_ai_view_images "SOUTH:6,WEST+13"
 #define ui_ai_sensor "SOUTH:6,WEST+14"
+#define ui_ai_multicam "SOUTH+1:6,WEST+13"
+#define ui_ai_add_multicam "SOUTH+1:6,WEST+14"
 
 //Pop-up inventory
 #define ui_shoes "WEST+1:8,SOUTH:5"

@@ -11,6 +11,7 @@
 	icon_state = "wabbajack_statue"
 	icon_state_on = "wabbajack_statue_on"
 	active = FALSE
+	allow_switch_interact = FALSE
 	var/list/active_tables = list()
 	var/tables_required = 2
 
@@ -39,10 +40,6 @@
 				[src] closes its eyes.</span>")
 		active = FALSE
 	update_icon()
-
-
-/obj/machinery/power/emitter/energycannon/magical/attack_hand(mob/user)
-	return
 
 /obj/machinery/power/emitter/energycannon/magical/attackby(obj/item/W, mob/user, params)
 	return
@@ -139,7 +136,7 @@
 /mob/living/simple_animal/drone/snowflake/bardrone
 	name = "Bardrone"
 	desc = "A barkeeping drone, an indestructible robot built to tend bars."
-	seeStatic = FALSE
+	hacked = TRUE
 	laws = "1. Serve drinks.\n\
 		2. Talk to patrons.\n\
 		3. Don't get messed up in their affairs."
@@ -152,7 +149,7 @@
 	access_card.access |= ACCESS_CENT_BAR
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 	name = "Barmaid"
 	desc = "A barmaid, a maiden found in a bar."
 	pass_flags = PASSTABLE
@@ -209,9 +206,11 @@
 //Luxury Shuttle Blockers
 
 /obj/effect/forcefield/luxury_shuttle
+	timeleft = 0
 	var/threshold = 500
 	var/static/list/approved_passengers = list()
 	var/static/list/check_times = list()
+
 
 /obj/effect/forcefield/luxury_shuttle/CanPass(atom/movable/mover, turf/target)
 	if(mover in approved_passengers)
@@ -227,10 +226,10 @@
 /obj/effect/forcefield/luxury_shuttle/CollidedWith(atom/movable/AM)
 	if(!isliving(AM))
 		return ..()
-	
+
 	if(check_times[AM] && check_times[AM] > world.time) //Let's not spam the message
 		return ..()
-	
+
 	check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
 
 	var/total_cash = 0

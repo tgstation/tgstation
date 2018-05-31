@@ -4,7 +4,6 @@
 	icon_state = "energy"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
-	origin_tech = "combat=4;magnets=3"
 	modifystate = 1
 	can_flashlight = 1
 	ammo_x_offset = 3
@@ -23,7 +22,7 @@
 	can_flashlight = 0 // Can't attach or detach the flashlight, and override it's icon update
 
 /obj/item/gun/energy/e_gun/mini/Initialize()
-	gun_light = new /obj/item/device/flashlight/seclite(src)
+	gun_light = new /obj/item/flashlight/seclite(src)
 	return ..()
 
 /obj/item/gun/energy/e_gun/mini/update_icon()
@@ -55,7 +54,6 @@
 	name = "\improper X-01 MultiPhase Energy Gun"
 	desc = "This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
 	icon_state = "hoslaser"
-	origin_tech = null
 	force = 10
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 4
@@ -68,7 +66,6 @@
 	item_state = "dragnet"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	origin_tech = "combat=4;magnets=3;bluespace=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/net, /obj/item/ammo_casing/energy/trap)
 	can_flashlight = 0
 	ammo_x_offset = 1
@@ -96,7 +93,6 @@
 	desc = "An energy gun with an experimental miniaturized nuclear reactor that automatically charges the internal power cell."
 	icon_state = "nucgun"
 	item_state = "nucgun"
-	origin_tech = "combat=4;magnets=4;powerstorage=4"
 	charge_delay = 5
 	pin = null
 	can_charge = 0
@@ -131,7 +127,9 @@
 				to_chat(M, "<span class='userdanger'>Your [name]'s reactor overloads!</span>")
 
 /obj/item/gun/energy/e_gun/nuclear/emp_act(severity)
-	..()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	fail_chance = min(fail_chance + round(15/severity), 100)
 
 /obj/item/gun/energy/e_gun/nuclear/update_icon()

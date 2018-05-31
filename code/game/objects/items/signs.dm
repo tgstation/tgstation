@@ -10,13 +10,26 @@
 	var/label = ""
 	var/last_wave = 0
 
+/obj/item/picket_sign/cyborg
+	name = "metallic nano-sign"
+	desc = "A high tech picket sign used by silicons that can reprogram its surface at will. Probably hurts to get hit by, too."
+	force = 13
+	resistance_flags = NONE
+	actions_types = list(/datum/action/item_action/nano_picket_sign)
+
+/obj/item/picket_sign/proc/retext(mob/user)
+	if(!user.is_literate())
+		to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
+		return
+	var/txt = stripped_input(user, "What would you like to write on the sign?", "Sign Label", null , 30)
+	if(txt && user.canUseTopic(src, BE_CLOSE))
+		label = txt
+		name = "[label] sign"
+		desc =	"It reads: [label]"
+
 /obj/item/picket_sign/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen) || istype(W, /obj/item/toy/crayon))
-		var/txt = stripped_input(user, "What would you like to write on the sign?", "Sign Label", null , 30)
-		if(txt)
-			label = txt
-			src.name = "[label] sign"
-			desc =	"It reads: [label]"
+		retext(user)
 	else
 		return ..()
 

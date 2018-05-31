@@ -63,6 +63,7 @@
 		return 1
 	return 0
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/silicon/attack_hand(mob/living/carbon/human/M)
 	switch(M.a_intent)
 		if ("help")
@@ -90,20 +91,22 @@
 	return 0 //So borgs they don't die trying to fix wiring
 
 /mob/living/silicon/emp_act(severity)
+	. = ..()
+	to_chat(src, "<span class='danger'>Warning: Electromagnetic pulse detected.</span>")
+	if(. & EMP_PROTECT_SELF)
+		return
 	switch(severity)
 		if(1)
 			src.take_bodypart_damage(20)
 		if(2)
 			src.take_bodypart_damage(10)
 	to_chat(src, "<span class='userdanger'>*BZZZT*</span>")
-	to_chat(src, "<span class='danger'>Warning: Electromagnetic pulse detected.</span>")
 	for(var/mob/living/M in buckled_mobs)
 		if(prob(severity*50))
 			unbuckle_mob(M)
 			M.Knockdown(40)
 			M.visible_message("<span class='boldwarning'>[M] is thrown off of [src]!</span>")
 	flash_act(affect_silicon = 1)
-	..()
 
 /mob/living/silicon/bullet_act(obj/item/projectile/Proj)
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))

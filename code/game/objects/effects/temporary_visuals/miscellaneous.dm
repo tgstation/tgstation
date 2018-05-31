@@ -246,6 +246,11 @@
 	duration = 8
 	randomdir = 0
 
+/obj/effect/temp_visual/bluespace_fissure
+	name = "bluespace fissure"
+	icon_state = "bluestream_fade"
+	duration = 9
+
 /obj/effect/temp_visual/gib_animation
 	icon = 'icons/mob/mob.dmi'
 	duration = 15

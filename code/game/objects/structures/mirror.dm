@@ -9,8 +9,15 @@
 	max_integrity = 200
 	integrity_failure = 100
 
+/obj/structure/mirror/Initialize(mapload)
+	. = ..()
+	if(icon_state == "mirror_broke" && !broken)
+		obj_break(null, mapload)
 
 /obj/structure/mirror/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(broken || !Adjacent(user))
 		return
 
@@ -46,12 +53,14 @@
 		return // no message spam
 	..()
 
-/obj/structure/mirror/obj_break(damage_flag)
+/obj/structure/mirror/obj_break(damage_flag, mapload)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		icon_state = "mirror_broke"
-		playsound(src, "shatter", 70, 1)
-		desc = "Oh no, seven years of bad luck!"
-		broken = 1
+		if(!mapload)
+			playsound(src, "shatter", 70, 1)
+		if(desc == initial(desc))
+			desc = "Oh no, seven years of bad luck!"
+		broken = TRUE
 
 /obj/structure/mirror/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -59,23 +68,24 @@
 			new /obj/item/shard( src.loc )
 	qdel(src)
 
-/obj/structure/mirror/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
-		var/obj/item/weldingtool/WT = I
-		if(broken)
-			user.changeNext_move(CLICK_CD_MELEE)
-			if(WT.remove_fuel(0, user))
-				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-				playsound(src, 'sound/items/welder.ogg', 100, 1)
-				if(do_after(user, 10*I.toolspeed, target = src))
-					if(!user || !WT || !WT.isOn())
-						return
-					to_chat(user, "<span class='notice'>You repair [src].</span>")
-					broken = 0
-					icon_state = initial(icon_state)
-					desc = initial(desc)
-	else
-		return ..()
+/obj/structure/mirror/welder_act(mob/living/user, obj/item/I)
+	if(user.a_intent == INTENT_HARM)
+		return FALSE
+
+	if(!broken)
+		return TRUE
+
+	if(!I.tool_start_check(user, amount=0))
+		return TRUE
+
+	to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+	if(I.use_tool(src, user, 10, volume=50))
+		to_chat(user, "<span class='notice'>You repair [src].</span>")
+		broken = 0
+		icon_state = initial(icon_state)
+		desc = initial(desc)
+
+	return TRUE
 
 /obj/structure/mirror/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -89,7 +99,7 @@
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
-	var/list/races_blacklist = list("skeleton", "agent", "angel", "military_synth", "memezombie")
+	var/list/races_blacklist = list("skeleton", "agent", "angel", "military_synth", "memezombies", "clockwork golem servant", "android", "synth", "mush")
 	var/list/choosable_races = list()
 
 /obj/structure/mirror/magic/New()
@@ -111,6 +121,9 @@
 	..()
 
 /obj/structure/mirror/magic/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!ishuman(user))
 		return
 
@@ -155,7 +168,7 @@
 					H.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
 
 			if(MUTCOLORS in H.dna.species.species_traits)
-				var/new_mutantcolor = input(user, "Choose your skin color:", "Race change") as color|null
+				var/new_mutantcolor = input(user, "Choose your skin color:", "Race change","#"+H.dna.features["mcolor"]) as color|null
 				if(new_mutantcolor)
 					var/temp_hsv = RGBtoHSV(new_mutantcolor)
 
@@ -199,19 +212,19 @@
 			if(hairchoice == "Style") //So you just want to use a mirror then?
 				..()
 			else
-				var/new_hair_color = input(H, "Choose your hair color", "Hair Color") as null|color
+				var/new_hair_color = input(H, "Choose your hair color", "Hair Color","#"+H.hair_color) as color|null
 				if(new_hair_color)
 					H.hair_color = sanitize_hexcolor(new_hair_color)
 					H.dna.update_ui_block(DNA_HAIR_COLOR_BLOCK)
 				if(H.gender == "male")
-					var/new_face_color = input(H, "Choose your facial hair color", "Hair Color") as null|color
+					var/new_face_color = input(H, "Choose your facial hair color", "Hair Color","#"+H.facial_hair_color) as color|null
 					if(new_face_color)
 						H.facial_hair_color = sanitize_hexcolor(new_face_color)
 						H.dna.update_ui_block(DNA_FACIAL_HAIR_COLOR_BLOCK)
 				H.update_hair()
 
-		if("eyes")
-			var/new_eye_color = input(H, "Choose your eye color", "Eye Color") as null|color
+		if(BODY_ZONE_PRECISE_EYES)
+			var/new_eye_color = input(H, "Choose your eye color", "Eye Color","#"+H.eye_color) as color|null
 			if(!Adjacent(user))
 				return
 			if(new_eye_color)

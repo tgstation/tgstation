@@ -28,11 +28,3 @@ Unless otherwise noted all images were created by Cuban Pete on July 26, 2555. T
 
 ---END EXAMPLES (NOT PART OF ANY LICENSE)---
 
-
-
-
----ADD LICENSING INFORMATION BELOW---
-
-blank.png and default.dmi use the default licensing found in README.md in the root directory of the project.
-
-

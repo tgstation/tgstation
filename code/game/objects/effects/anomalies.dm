@@ -8,7 +8,7 @@
 	anchored = TRUE
 	light_range = 3
 	var/movechance = 70
-	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
+	var/obj/item/assembly/signaler/anomaly/aSignal
 	var/area/impact_area
 
 	var/lifespan = 990
@@ -26,10 +26,12 @@
 	aSignal = new(src)
 	aSignal.name = "[name] core"
 	aSignal.code = rand(1,100)
+	aSignal.anomaly_type = type
 
-	aSignal.frequency = rand(1200, 1599)
-	if(IsMultiple(aSignal.frequency, 2))//signaller frequencies are always uneven!
-		aSignal.frequency++
+	var/frequency = rand(MIN_FREE_FREQ, MAX_FREE_FREQ)
+	if(ISMULTIPLE(frequency, 2))//signaller frequencies are always uneven!
+		frequency++
+	aSignal.set_frequency(frequency)
 
 	if(new_lifespan)
 		lifespan = new_lifespan
@@ -67,13 +69,13 @@
 	new /obj/effect/particle_effect/smoke/bad(loc)
 
 	for(var/atom/movable/O in src)
-		O.loc = src.loc
+		O.forceMove(drop_location())
 
 	qdel(src)
 
 
 /obj/effect/anomaly/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/analyzer))
+	if(istype(I, /obj/item/analyzer))
 		to_chat(user, "<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(aSignal.frequency)], code [aSignal.code].</span>")
 
 ///////////////////////
@@ -86,7 +88,6 @@
 
 /obj/effect/anomaly/grav/New()
 	..()
-	aSignal.origin_tech = "magnets=7"
 
 /obj/effect/anomaly/grav/anomalyEffect()
 	..()
@@ -132,7 +133,6 @@
 
 /obj/effect/anomaly/flux/New()
 	..()
-	aSignal.origin_tech = "powerstorage=7"
 
 /obj/effect/anomaly/flux/anomalyEffect()
 	..()
@@ -181,7 +181,6 @@
 
 /obj/effect/anomaly/bluespace/New()
 	..()
-	aSignal.origin_tech = "bluespace=7"
 
 /obj/effect/anomaly/bluespace/anomalyEffect()
 	..()
@@ -196,9 +195,9 @@
 	var/turf/T = safepick(get_area_turfs(impact_area))
 	if(T)
 			// Calculate new position (searches through beacons in world)
-		var/obj/item/device/radio/beacon/chosen
+		var/obj/item/beacon/chosen
 		var/list/possible = list()
-		for(var/obj/item/device/radio/beacon/W in GLOB.teleportbeacons)
+		for(var/obj/item/beacon/W in GLOB.teleportbeacons)
 			possible += W
 
 		if(possible.len > 0)
@@ -221,14 +220,14 @@
 			var/y_distance = TO.y - FROM.y
 			var/x_distance = TO.x - FROM.x
 			for (var/atom/movable/A in urange(12, FROM )) // iterate thru list of mobs in the area
-				if(istype(A, /obj/item/device/radio/beacon))
+				if(istype(A, /obj/item/beacon))
 					continue // don't teleport beacons because that's just insanely stupid
 				if(A.anchored)
 					continue
 
 				var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
 				if(!A.Move(newloc) && newloc) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
-					A.loc = newloc
+					A.forceMove(newloc)
 
 				spawn()
 					if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
@@ -255,7 +254,6 @@
 
 /obj/effect/anomaly/pyro/New()
 	..()
-	aSignal.origin_tech = "plasmatech=7"
 
 /obj/effect/anomaly/pyro/anomalyEffect()
 	..()
@@ -291,7 +289,6 @@
 
 /obj/effect/anomaly/bhole/New()
 	..()
-	aSignal.origin_tech = "engineering=7"
 
 /obj/effect/anomaly/bhole/anomalyEffect()
 	..()

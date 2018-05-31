@@ -30,6 +30,7 @@
 	desc = "It's so sour, your face will twist."
 	icon_state = "lime"
 	filling_color = "#00FF00"
+	juice_results = list("limejuice" = 0)
 
 // Orange
 /obj/item/seeds/orange
@@ -56,6 +57,7 @@
 	desc = "It's a tangy fruit."
 	icon_state = "orange"
 	filling_color = "#FFA500"
+	juice_results = list("orangejuice" = 0)
 
 // Lemon
 /obj/item/seeds/lemon
@@ -81,6 +83,7 @@
 	desc = "When life gives you lemons, make lemonade."
 	icon_state = "lemon"
 	filling_color = "#FFD700"
+	juice_results = list("lemonjuice" = 0)
 
 // Combustible lemon
 /obj/item/seeds/firelemon //combustible lemon is too long so firelemon
@@ -108,12 +111,11 @@
 	foodtype = FRUIT
 
 /obj/item/reagent_containers/food/snacks/grown/firelemon/attack_self(mob/living/user)
-	var/area/A = get_area(user)
 	user.visible_message("<span class='warning'>[user] primes [src]!</span>", "<span class='userdanger'>You prime [src]!</span>")
-	var/message = "[ADMIN_LOOKUPFLW(user)] primed a combustible lemon for detonation at [A] [ADMIN_COORDJMP(user)]"
+	var/message = "[ADMIN_LOOKUPFLW(user)] primed a combustible lemon for detonation at [ADMIN_VERBOSEJMP(user)]"
 	GLOB.bombers += message
 	message_admins(message)
-	log_game("[key_name(user)] primed a combustible lemon for detonation at [A] [COORD(user)].")
+	log_game("[key_name(user)] primed a combustible lemon for detonation at [AREACOORD(user)].")
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.throw_mode_on()

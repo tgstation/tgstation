@@ -8,7 +8,6 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "biotech=1"
 
 	var/damage_coeff  = 1
 	var/list/fields
@@ -32,14 +31,14 @@
 /obj/item/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
 	prepare()
 
-	if(M.has_dna() && !(RADIMMUNE in M.dna.species.species_traits) && !(M.disabilities & NOCLONE))
+	if(M.has_dna() && !M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_NOCLONE))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/datum/mutation/human/HM in remove_mutations)
 			HM.force_lose(M)
 		for(var/datum/mutation/human/HM in add_mutations)
 			if(HM.name == RACEMUT)
-				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
+				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
 				log_msg += " (MONKEY)"
 			HM.force_give(M)
 		if(fields)
@@ -265,13 +264,13 @@
 	name = "\improper DNA injector (Smile)"
 	add_mutations_static = list(SMILE)
 
-/obj/item/dnainjector/unintelligablemut
-	name = "\improper DNA injector (Unintelligable)"
-	add_mutations_static = list(UNINTELLIGABLE)
+/obj/item/dnainjector/unintelligiblemut
+	name = "\improper DNA injector (Unintelligible)"
+	add_mutations_static = list(UNINTELLIGIBLE)
 
-/obj/item/dnainjector/antiunintelligable
-	name = "\improper DNA injector (Anti-Unintelligable)"
-	remove_mutations_static = list(UNINTELLIGABLE)
+/obj/item/dnainjector/antiunintelligible
+	name = "\improper DNA injector (Anti-Unintelligible)"
+	remove_mutations_static = list(UNINTELLIGIBLE)
 
 /obj/item/dnainjector/swedishmut
 	name = "\improper DNA injector (Swedish)"
@@ -314,7 +313,7 @@
 		to_chat(user, "<span class='notice'>You can't modify [M]'s DNA while [M.p_theyre()] dead.</span>")
 		return FALSE
 
-	if(M.has_dna() && !(M.disabilities & NOCLONE))
+	if(M.has_dna() && !(M.has_trait(TRAIT_NOCLONE)))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		var/endtime = world.time+duration
@@ -329,7 +328,7 @@
 			if((HM in M.dna.mutations) && !(M.dna.temporary_mutations[HM.name]))
 				continue //Skip permanent mutations we already have.
 			if(HM.name == RACEMUT && ishuman(M))
-				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
+				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
 				log_msg += " (MONKEY)"
 				M = HM.force_give(M)
 			else

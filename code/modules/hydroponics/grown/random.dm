@@ -16,9 +16,9 @@
 	. = ..()
 	randomize_stats()
 	if(prob(60))
-		add_random_reagents()
+		add_random_reagents(1, 3)
 	if(prob(50))
-		add_random_traits()
+		add_random_traits(1, 2)
 	add_random_plant_type(35)
 
 /obj/item/reagent_containers/food/snacks/grown/random

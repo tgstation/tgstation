@@ -137,7 +137,6 @@
 /datum/plant_gene/trait
 	var/rate = 0.05
 	var/examine_line = ""
-	var/list/origin_tech = null
 	var/trait_id // must be set and equal for any two traits of the same type
 
 /datum/plant_gene/trait/Copy()
@@ -157,24 +156,9 @@
 	return TRUE
 
 /datum/plant_gene/trait/proc/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
-	if(!origin_tech) // This ugly code segment adds RnD tech levels to resulting plants.
-		return
-
-	if(G.origin_tech)
-		var/list/tech = params2list(G.origin_tech)
-		for(var/t in origin_tech)
-			if(t in tech)
-				tech[t] = max(text2num(tech[t]), origin_tech[t])
-			else
-				tech[t] = origin_tech[t]
-		G.origin_tech = list2params(tech)
-	else
-		G.origin_tech = list2params(origin_tech)
-
-/datum/plant_gene/trait/proc/on_consume(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	return
 
-/datum/plant_gene/trait/proc/on_cross(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
+/datum/plant_gene/trait/proc/on_consume(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	return
 
 /datum/plant_gene/trait/proc/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
@@ -195,7 +179,6 @@
 	// For code, see grown.dm
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
-	origin_tech = list("biotech" = 5)
 
 /datum/plant_gene/trait/slip
 	// Makes plant slippery, unless it has a grown-type trash. Then the trash gets slippery.
@@ -204,32 +187,29 @@
 	rate = 1.6
 	examine_line = "<span class='info'>It has a very slippery skin.</span>"
 
-/datum/plant_gene/trait/slip/on_cross(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
-	if(iscarbon(target))
-		var/obj/item/seeds/seed = G.seed
-		var/mob/living/carbon/M = target
+/datum/plant_gene/trait/slip/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
+	..()
+	if(istype(G) && ispath(G.trash, /obj/item/grown))
+		return
+	var/obj/item/seeds/seed = G.seed
+	var/stun_len = seed.potency * rate
 
-		if(istype(G) && ispath(G.trash, /obj/item/grown))
-			return
-		var/stun_len = seed.potency * rate
+	if(!istype(G, /obj/item/grown/bananapeel) && (!G.reagents || !G.reagents.has_reagent("lube")))
+		stun_len /= 3
 
-		if(!istype(G, /obj/item/grown/bananapeel) && (!G.reagents || !G.reagents.has_reagent("lube")))
-			stun_len /= 3
+	G.AddComponent(/datum/component/slippery, min(stun_len,140), NONE, CALLBACK(src, .proc/handle_slip, G))
 
-		var/knockdown = min(stun_len, 140)
-
-		if(M.slip(knockdown, G))
-			for(var/datum/plant_gene/trait/T in seed.genes)
-				T.on_slip(G, M)
+/datum/plant_gene/trait/slip/proc/handle_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/M)
+	for(var/datum/plant_gene/trait/T in G.seed.genes)
+		T.on_slip(G, M)
 
 /datum/plant_gene/trait/cell_charge
 	// Cell recharging trait. Charges all mob's power cells to (potency*rate)% mark when eaten.
 	// Generates sparks on squash.
 	// Small (potency*rate*5) chance to shock squish or slip target for (potency*rate*5) damage.
-	// Multiplies max charge by (rate*1000) when used in potato power cells.
+	// Also affects plant batteries see capatative cell production datum
 	name = "Electrical Activity"
 	rate = 0.2
-	origin_tech = list("powerstorage" = 5)
 
 /datum/plant_gene/trait/cell_charge/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
 	var/power = G.seed.potency*rate
@@ -281,13 +261,13 @@
 
 /datum/plant_gene/trait/glow/shadow
 	//makes plant emit slightly purple shadows
-	//adds -potency*(rate*0.05) light power to products
+	//adds -potency*(rate*0.2) light power to products
 	name = "Shadow Emission"
 	rate = 0.04
 	glow_color = "#AAD84B"
 
 /datum/plant_gene/trait/glow/shadow/glow_power(obj/item/seeds/S)
-	return -max(S.potency*(rate*0.05), 0.075)
+	return -max(S.potency*(rate*0.2), 0.2)
 
 /datum/plant_gene/trait/glow/red
 	name = "Red Electrical Glow"
@@ -304,7 +284,6 @@
 	// Teleport radius is calculated as max(round(potency*rate), 1)
 	name = "Bluespace Activity"
 	rate = 0.1
-	origin_tech = list("bluespace" = 5)
 
 /datum/plant_gene/trait/teleport/on_squash(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
 	if(isliving(target))
@@ -371,14 +350,14 @@
 
 			// The secret of potato supercells!
 			var/datum/plant_gene/trait/cell_charge/CG = G.seed.get_gene(/datum/plant_gene/trait/cell_charge)
-			if(CG) // 10x charge for deafult cell charge gene - 20 000 with 100 potency.
-				pocell.maxcharge *= CG.rate*1000
+			if(CG) // Cell charge max is now 40MJ or otherwise known as 400KJ (Same as bluespace powercells)
+				pocell.maxcharge *= CG.rate*100
 			pocell.charge = pocell.maxcharge
 			pocell.name = "[G.name] battery"
-			pocell.desc = "A rechargeable plant based power cell. This one has a power rating of [pocell.maxcharge], and you should not swallow it."
+			pocell.desc = "A rechargeable plant-based power cell. This one has a rating of [DisplayEnergy(pocell.maxcharge)], and you should not swallow it."
 
 			if(G.reagents.has_reagent("plasma", 2))
-				pocell.rigged = 1
+				pocell.rigged = TRUE
 
 			qdel(G)
 		else

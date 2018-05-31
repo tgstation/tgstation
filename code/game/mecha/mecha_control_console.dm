@@ -9,10 +9,8 @@
 	var/screen = 0
 	var/stored_data
 
-/obj/machinery/computer/mecha/attack_hand(mob/user)
-	if(..())
-		return
-	user.set_machine(src)
+/obj/machinery/computer/mecha/ui_interact(mob/user)
+	. = ..()
 	var/dat = "<html><head><title>[src.name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body>"
 	if(screen == 0)
 		dat += "<h3>Tracking beacons data</h3>"
@@ -36,7 +34,6 @@
 
 	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
-	return
 
 /obj/machinery/computer/mecha/Topic(href, href_list)
 	if(..())
@@ -67,7 +64,6 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "motion2"
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "programming=2;magnets=2"
 	var/ai_beacon = FALSE //If this beacon allows for AI control. Exists to avoid using istype() on checking.
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info()
@@ -89,7 +85,9 @@
 	return answer
 
 /obj/item/mecha_parts/mecha_tracking/emp_act()
-	qdel(src)
+	. = ..()
+	if(!(. & EMP_PROTECT_SELF))
+		qdel(src)
 
 /obj/item/mecha_parts/mecha_tracking/Destroy()
 	if(ismecha(loc))
@@ -119,14 +117,13 @@
 /obj/item/mecha_parts/mecha_tracking/ai_control
 	name = "exosuit AI control beacon"
 	desc = "A device used to transmit exosuit data. Also allows active AI units to take control of said exosuit."
-	origin_tech = "programming=3;magnets=2;engineering=2"
 	ai_beacon = TRUE
 
 
 /obj/item/storage/box/mechabeacons
 	name = "exosuit tracking beacons"
 
-/obj/item/storage/box/mechabeacons/New()
+/obj/item/storage/box/mechabeacons/PopulateContents()
 	..()
 	new /obj/item/mecha_parts/mecha_tracking(src)
 	new /obj/item/mecha_parts/mecha_tracking(src)

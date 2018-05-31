@@ -2,8 +2,9 @@
 	name = "void"
 	icon_state = "reebemap"
 	layer = SPACE_LAYER
-	baseturf = /turf/open/indestructible/reebe_void
+	baseturfs = /turf/open/indestructible/reebe_void
 	planetary_atmos = TRUE
+	bullet_bounce_sound = null //forever falling
 
 /turf/open/indestructible/reebe_void/Initialize(mapload)
 	. = ..()

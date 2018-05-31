@@ -5,6 +5,10 @@
 #It can be downloaded from command line with pip:
 #pip install mysqlclient
 #
+#tgstation no longer supports MySQL which has been superseded by MariaDB, a drop-in replacement.
+#Before running this script you will need to migrate to MariaDB.
+#Migrating is very easy to do, for details on how see: https://mariadb.com/kb/en/library/upgrading-from-mysql-to-mariadb/
+#
 #You will also have to create a new feedback table for inserting converted data to per the schema:
 #CREATE TABLE `feedback_new` (
 #  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -476,11 +480,25 @@ parser.add_argument("newtable", help="Name of the new table to insert to, can't 
 args = parser.parse_args()
 db=MySQLdb.connect(host=args.address, user=args.username, passwd=args.password, db=args.database)
 cursor=db.cursor()
+cursor.execute("SELECT @@GLOBAL.version_comment")
+db_version = "".join([x for x in cursor.fetchone()])
+database_mysql = False
+if 'MySQL' in db_version:
+    database_mysql = True
+elif 'mariadb' not in db_version:
+    choice = input("Unable to determine database version installed, are you using MySQL? Type Yes or No and press enter...").lower()
+    if choice == "yes":
+        database_mysql = True
+if database_mysql == True:
+    print("WARNING Database detected to be MySQL: tgstation no longer supports MySQL which has been superseded by MariaDB, a drop-in replacement.\nBefore running this script you will need to migrate to MariaDB.\nMigrating is very easy to do, for details on how see: https://mariadb.com/kb/en/library/upgrading-from-mysql-to-mariadb/")
+    input("Press enter to quit...")
+    quit()
 current_table = args.curtable
 new_table = args.newtable
-cursor.execute("SELECT max(id) FROM {0}".format(current_table))
+cursor.execute("SELECT max(id), max(round_id) FROM {0}".format(current_table))
 query_id = cursor.fetchone()
 max_id = query_id[0]
+max_round_id = query_id[1]
 start_time = datetime.now()
 print("Beginning conversion at {0}".format(start_time.strftime("%Y-%m-%d %H:%M:%S")))
 try:
@@ -493,7 +511,7 @@ try:
         if not query_row:
             continue
         else:
-            if current_round != query_row[2]:
+            if current_round != query_row[2] or current_round == max_round_id:
                 multirows_completed.clear()
                 if query_values:
                     query_values = query_values[:-1]
@@ -524,8 +542,11 @@ try:
     print("Conversion completed at {0}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
     print("Script duration: {0}".format(end_time - start_time))
 except Exception as e:
+    cursor.execute("SELECT round_id FROM {0} WHERE id = {1}".format(current_table, current_id-1))
+    query_round_id = cursor.fetchone()
     end_time = datetime.now()
     print("Error encountered on row ID {0} at {1}".format(current_id, datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+    print("Note SQL insertion errors will be due to data from round ID {0}".format(query_round_id[0])) #since data is inserted when the round id changes on a new row
     print("Script duration: {0}".format(end_time - start_time))
     cursor.execute("TRUNCATE {0} ".format(new_table))
     raise e

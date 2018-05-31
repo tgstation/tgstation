@@ -12,6 +12,16 @@
 
 	construction_type = /obj/item/pipe/trinary
 	pipe_state = "he_manifold"
+	
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/SetInitDirections()
 	switch(dir)
@@ -32,9 +42,9 @@
 	cut_overlays()
 
 	//Add non-broken pieces
-	for(DEVICE_TYPE_LOOP)
-		if(NODE_I)
-			add_overlay(getpipeimage('icons/obj/atmospherics/pipes/heat.dmi', "manifold_intact[invis]", get_dir(src, NODE_I)))
+	for(var/i in 1 to device_type)
+		if(nodes[i])
+			add_overlay(getpipeimage('icons/obj/atmospherics/pipes/heat.dmi', "manifold_intact[invis]", get_dir(src, nodes[i])))
 
 //4-way manifold
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w
@@ -49,6 +59,16 @@
 
 	construction_type = /obj/item/pipe/quaternary
 	pipe_state = "he_manifold4w"
+	
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/SetInitDirections()
 	initialize_directions_he = initial(initialize_directions_he)
@@ -61,6 +81,6 @@
 	cut_overlays()
 
 	//Add non-broken pieces
-	for(DEVICE_TYPE_LOOP)
-		if(NODE_I)
-			add_overlay(getpipeimage('icons/obj/atmospherics/pipes/heat.dmi', "manifold_intact[invis]", get_dir(src, NODE_I)))
+	for(var/i in 1 to device_type)
+		if(nodes[i])
+			add_overlay(getpipeimage('icons/obj/atmospherics/pipes/heat.dmi', "manifold_intact[invis]", get_dir(src, nodes[i])))

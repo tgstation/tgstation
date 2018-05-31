@@ -17,6 +17,7 @@
 	var/mopcap = 5
 	var/mopspeed = 30
 	force_string = "robust... against germs"
+	var/insertable = TRUE
 
 /obj/item/mop/New()
 	..()
@@ -25,7 +26,6 @@
 
 /obj/item/mop/proc/clean(turf/A)
 	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1) || reagents.has_reagent("vodka", 1) || reagents.has_reagent("cleaner", 1))
-		A.clean_blood()
 		A.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
 		for(var/obj/effect/O in A)
 			if(is_cleanable(O))
@@ -63,21 +63,25 @@
 
 
 /obj/item/mop/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	J.put_in_cart(src, user)
-	J.mymop=src
-	J.update_icon()
+	if(insertable)
+		J.put_in_cart(src, user)
+		J.mymop=src
+		J.update_icon()
+	else
+		to_chat(user, "<span class='warning'>You are unable to fit your [name] into the [J.name].</span>")
+		return
 
 /obj/item/mop/cyborg
-
-/obj/item/mop/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	return
+	insertable = FALSE
 
 /obj/item/mop/advanced
 	desc = "The most advanced tool in a custodian's arsenal, complete with a condenser for self-wetting! Just think of all the viscera you will clean up with this!"
 	name = "advanced mop"
 	mopcap = 10
 	icon_state = "advmop"
-	origin_tech = "materials=3;engineering=3"
+	item_state = "mop"
+	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	force = 6
 	throwforce = 8
 	throw_range = 4
@@ -112,3 +116,6 @@
 	if(refill_enabled)
 		STOP_PROCESSING(SSobj, src)
 	return ..()
+
+/obj/item/mop/advanced/cyborg
+	insertable = FALSE

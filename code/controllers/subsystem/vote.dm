@@ -158,7 +158,7 @@ SUBSYSTEM_DEF(vote)
 
 			var/admin = FALSE
 			var/ckey = ckey(initiator_key)
-			if((GLOB.admin_datums[ckey]) || (ckey in GLOB.deadmins))
+			if(GLOB.admin_datums[ckey])
 				admin = TRUE
 
 			if(next_allowed_time > world.time && !admin)
@@ -197,6 +197,7 @@ SUBSYSTEM_DEF(vote)
 			var/datum/action/vote/V = new
 			if(question)
 				V.name = "Vote: [question]"
+			C.player_details.player_actions += V
 			V.Grant(C.mob)
 			generated_actions += V
 		return 1
@@ -290,6 +291,7 @@ SUBSYSTEM_DEF(vote)
 	for(var/v in generated_actions)
 		var/datum/action/vote/V = v
 		if(!QDELETED(V))
+			V.remove_from_client()
 			V.Remove(V.owner)
 	generated_actions = list()
 
@@ -309,7 +311,16 @@ SUBSYSTEM_DEF(vote)
 /datum/action/vote/Trigger()
 	if(owner)
 		owner.vote()
+		remove_from_client()
 		Remove(owner)
 
 /datum/action/vote/IsAvailable()
 	return 1
+
+/datum/action/vote/proc/remove_from_client()
+	if(owner.client)
+		owner.client.player_details.player_actions -= src
+	else if(owner.ckey)
+		var/datum/player_details/P = GLOB.player_details[owner.ckey]
+		if(P)
+			P.player_actions -= src

@@ -10,8 +10,8 @@
 	volume = 30
 	possible_transfer_amounts = list()
 	resistance_flags = ACID_PROOF
-	container_type = OPENCONTAINER_1
-	slot_flags = SLOT_BELT
+	container_type = OPENCONTAINER
+	slot_flags = ITEM_SLOT_BELT
 	var/ignore_flags = 0
 	var/infinite = FALSE
 
@@ -88,9 +88,13 @@
 	amount_per_transfer_from_this = 10
 	volume = 10
 	ignore_flags = 1 //so you can medipen through hardsuits
-	container_type = DRAWABLE_1
+	container_type = DRAWABLE
 	flags_1 = null
 	list_reagents = list("epinephrine" = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return OXYLOSS//ironic. he could save others from oxyloss, but not himself.
 
 /obj/item/reagent_containers/hypospray/medipen/attack(mob/M, mob/user)
 	if(!reagents.total_volume)
@@ -163,3 +167,10 @@
 	volume = 1
 	amount_per_transfer_from_this = 1
 	list_reagents = list("unstablemutationtoxin" = 1)
+
+/obj/item/reagent_containers/hypospray/combat/heresypurge
+	name = "holy water autoinjector"
+	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with 5 doses of a holy water mixture."
+	volume = 250
+	list_reagents = list("holywater" = 150, "tiresolution" = 50, "dizzysolution" = 50)
+	amount_per_transfer_from_this = 50

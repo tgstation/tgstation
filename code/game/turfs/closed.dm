@@ -18,8 +18,7 @@
 /turf/closed/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSCLOSEDTURF))
 		return TRUE
-	else
-		..()
+	return ..()
 
 /turf/closed/indestructible
 	name = "wall"
@@ -45,6 +44,7 @@
 	icon = 'icons/blank_title.png'
 	icon_state = ""
 	layer = FLY_LAYER
+	bullet_bounce_sound = null
 
 /turf/closed/indestructible/splashscreen/New()
 	SStitle.splash_turf = src
@@ -103,6 +103,8 @@
 	desc = "An extremely densely-packed rock, sheeted over with centuries worth of ice and snow."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "snowrock"
+	bullet_sizzle = TRUE
+	bullet_bounce_sound = null
 
 /turf/closed/indestructible/rock/snow/ice
 	name = "iced rock"
@@ -122,7 +124,7 @@
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "necro"
 	explosion_block = 50
-	baseturf = /turf/closed/indestructible/necropolis
+	baseturfs = /turf/closed/indestructible/necropolis
 
 /turf/closed/indestructible/necropolis/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
@@ -136,7 +138,7 @@
 	icon_state = "wall"
 	canSmoothWith = list(/turf/closed/indestructible/riveted/boss, /turf/closed/indestructible/riveted/boss/see_through)
 	explosion_block = 50
-	baseturf = /turf/closed/indestructible/riveted/boss
+	baseturfs = /turf/closed/indestructible/riveted/boss
 
 /turf/closed/indestructible/riveted/boss/see_through
 	opacity = FALSE

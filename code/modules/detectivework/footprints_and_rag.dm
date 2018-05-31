@@ -13,11 +13,11 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "rag"
 	flags_1 = NOBLUDGEON_1
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()
 	volume = 5
-	spillable = 0
+	spillable = FALSE
 
 /obj/item/reagent_containers/glass/rag/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is smothering [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -45,7 +45,6 @@
 	else if(istype(A) && src in user)
 		user.visible_message("[user] starts to wipe down [A] with [src]!", "<span class='notice'>You start to wipe down [A] with [src]...</span>")
 		if(do_after(user,30, target = A))
-			user.visible_message("[user] finishes wiping off the [A]!", "<span class='notice'>You finish wiping off the [A].</span>")
-			A.clean_blood()
-			A.wash_cream()
+			user.visible_message("[user] finishes wiping off [A]!", "<span class='notice'>You finish wiping off [A].</span>")
+			A.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
 	return

@@ -10,7 +10,7 @@
 
 	density = FALSE
 	stat = DEAD
-	canmove = 0
+	canmove = FALSE
 
 	anchored = TRUE	//  don't get pushed around
 	var/mob/living/new_character	//for instant transfer once the round is set up
@@ -21,9 +21,9 @@
 		S.Fade(TRUE)
 
 	if(length(GLOB.newplayer_start))
-		loc = pick(GLOB.newplayer_start)
+		forceMove(pick(GLOB.newplayer_start))
 	else
-		loc = locate(1,1,1)
+		forceMove(locate(1,1,1))
 
 	ComponentInitialize()
 
@@ -72,26 +72,6 @@
 	popup.set_content(output)
 	popup.open(0)
 	return
-
-/mob/dead/new_player/Stat()
-	..()
-
-	if(statpanel("Lobby"))
-		stat("Game Mode:", (SSticker.hide_mode) ? "Secret" : "[GLOB.master_mode]")
-		stat("Map:", SSmapping.config.map_name)
-
-		if(SSticker.current_state == GAME_STATE_PREGAME)
-			var/time_remaining = SSticker.GetTimeLeft()
-			if(time_remaining > 0)
-				stat("Time To Start:", "[round(time_remaining/10)]s")
-			else if(time_remaining == -10)
-				stat("Time To Start:", "DELAYED")
-			else
-				stat("Time To Start:", "SOON")
-
-			stat("Players:", "[SSticker.totalPlayers]")
-			if(client.holder)
-				stat("Players Ready:", "[SSticker.totalPlayersReady]")
 
 
 /mob/dead/new_player/Topic(href, href_list[])
@@ -185,7 +165,7 @@
 		var/pollid = href_list["pollid"]
 		if(istext(pollid))
 			pollid = text2num(pollid)
-		if(isnum(pollid) && IsInteger(pollid))
+		if(isnum(pollid) && ISINTEGER(pollid))
 			src.poll_player(pollid)
 		return
 
@@ -223,7 +203,7 @@
 							rating = null
 						else
 							rating = text2num(href_list["o[optionid]"])
-							if(!isnum(rating) || !IsInteger(rating))
+							if(!isnum(rating) || !ISINTEGER(rating))
 								return
 
 						if(!vote_on_numval_poll(pollid, optionid, rating))
@@ -254,6 +234,7 @@
 			if(POLLTYPE_IRV)
 				if (!href_list["IRVdata"])
 					to_chat(src, "<span class='danger'>No ordering data found. Please try again or contact an administrator.</span>")
+					return
 				var/list/votelist = splittext(href_list["IRVdata"], ",")
 				if (!vote_on_irv_poll(pollid, votelist))
 					to_chat(src, "<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
@@ -282,7 +263,7 @@
 	var/obj/effect/landmark/observer_start/O = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
 	to_chat(src, "<span class='notice'>Now teleporting.</span>")
 	if (O)
-		observer.loc = O.loc
+		observer.forceMove(O.loc)
 	else
 		to_chat(src, "<span class='notice'>Teleporting failed. Ahelp an admin please</span>")
 		stack_trace("There's no freaking observer landmark available on this map or you're making observers before the map is initialised")
@@ -298,31 +279,49 @@
 	qdel(src)
 	return TRUE
 
-/mob/dead/new_player/proc/IsJobAvailable(rank)
+/proc/get_job_unavailable_error_message(retval, jobtitle)
+	switch(retval)
+		if(JOB_AVAILABLE)
+			return "[jobtitle] is available."
+		if(JOB_UNAVAILABLE_GENERIC)
+			return "[jobtitle] is unavailable."
+		if(JOB_UNAVAILABLE_BANNED)
+			return "You are currently banned from [jobtitle]."
+		if(JOB_UNAVAILABLE_PLAYTIME)
+			return "You do not have enough relevant playtime for [jobtitle]."
+		if(JOB_UNAVAILABLE_ACCOUNTAGE)
+			return "Your account is not old enough for [jobtitle]."
+		if(JOB_UNAVAILABLE_SLOTFULL)
+			return "[jobtitle] is already filled to capacity."
+	return "Error: Unknown job availability."
+
+/mob/dead/new_player/proc/IsJobUnavailable(rank, latejoin = FALSE)
 	var/datum/job/job = SSjob.GetJob(rank)
 	if(!job)
-		return 0
+		return JOB_UNAVAILABLE_GENERIC
 	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
 		if(job.title == "Assistant")
 			if(isnum(client.player_age) && client.player_age <= 14) //Newbies can always be assistants
-				return 1
+				return JOB_AVAILABLE
 			for(var/datum/job/J in SSjob.occupations)
 				if(J && J.current_positions < J.total_positions && J.title != job.title)
-					return 0
+					return JOB_UNAVAILABLE_SLOTFULL
 		else
-			return 0
+			return JOB_UNAVAILABLE_SLOTFULL
 	if(jobban_isbanned(src,rank))
-		return 0
-	if(!job.player_old_enough(src.client))
-		return 0
+		return JOB_UNAVAILABLE_BANNED
+	if(!job.player_old_enough(client))
+		return JOB_UNAVAILABLE_ACCOUNTAGE
 	if(job.required_playtime_remaining(client))
-		return 0
-	return 1
-
+		return JOB_UNAVAILABLE_PLAYTIME
+	if(latejoin && !job.special_check_latejoin(client))
+		return JOB_UNAVAILABLE_GENERIC
+	return JOB_AVAILABLE
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
-	if(!IsJobAvailable(rank))
-		alert(src, "[rank] is not available. Please try another.")
+	var/error = IsJobUnavailable(rank)
+	if(error != JOB_AVAILABLE)
+		alert(src, get_job_unavailable_error_message(error, rank))
 		return FALSE
 
 	if(SSticker.late_join_disabled)
@@ -347,18 +346,20 @@
 	SSjob.AssignRole(src, rank, 1)
 
 	var/mob/living/character = create_character(TRUE)	//creates the human and transfers vars and mind
-	var/equip = SSjob.EquipRank(character, rank, 1)
+	var/equip = SSjob.EquipRank(character, rank, TRUE)
 	if(isliving(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
 
-	SSjob.SendToLateJoin(character)
+	var/datum/job/job = SSjob.GetJob(rank)
 
-	if(!arrivals_docked)
-		var/obj/screen/splash/Spl = new(character.client, TRUE)
-		Spl.Fade(TRUE)
-		character.playsound_local(get_turf(character), 'sound/voice/ApproachingTG.ogg', 25)
+	if(job && !job.override_latejoin_spawn(character))
+		SSjob.SendToLateJoin(character)
+		if(!arrivals_docked)
+			var/obj/screen/splash/Spl = new(character.client, TRUE)
+			Spl.Fade(TRUE)
+			character.playsound_local(get_turf(character), 'sound/voice/ApproachingTG.ogg', 25)
 
-	character.update_parallax_teleport()
+		character.update_parallax_teleport()
 
 	SSticker.minds += character.mind
 
@@ -377,6 +378,11 @@
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
 
+		if(GLOB.summon_guns_triggered)
+			give_guns(humanc)
+		if(GLOB.summon_magic_triggered)
+			give_magic(humanc)
+
 	GLOB.joined_player_list += character.ckey
 
 	if(CONFIG_GET(flag/allow_latejoin_antagonists) && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
@@ -387,6 +393,9 @@
 				if(SHUTTLE_CALL)
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
 						SSticker.mode.make_antag_chance(humanc)
+
+	if(humanc && CONFIG_GET(flag/roundstart_traits))
+		SSquirks.AssignQuirks(humanc, humanc.client, TRUE)
 
 	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 
@@ -411,9 +420,8 @@
 
 	var/available_job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
-		if(job && IsJobAvailable(job.title))
+		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
 			available_job_count++;
-
 
 	for(var/datum/job/prioritized_job in SSjob.prioritized_jobs)
 		if(prioritized_job.current_positions >= prioritized_job.total_positions)
@@ -434,7 +442,7 @@
 	dat += "<div class='jobs'><div class='jobsColumn'>"
 	var/job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
-		if(job && IsJobAvailable(job.title))
+		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
 			job_count++;
 			if (job_count > round(available_job_count / 2))
 				dat += "</div><div class='jobsColumn'>"
@@ -442,9 +450,9 @@
 			if (job.title in GLOB.command_positions)
 				position_class = "commandPosition"
 			dat += "<a class='[position_class]' href='byond://?src=[REF(src)];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
-	if(!job_count) //if there's nowhere to go, assistant opens up.
+	if(!job_count) //if there's nowhere to go, overflow opens up.
 		for(var/datum/job/job in SSjob.occupations)
-			if(job.title != "Assistant")
+			if(job.title != SSjob.overflow_role)
 				continue
 			dat += "<a class='otherPosition' href='byond://?src=[REF(src)];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
 			break

@@ -29,12 +29,15 @@
 
 /datum/radiation_wave/process()
 	master_turf = get_step(master_turf, move_dir)
+	if(!master_turf)
+		qdel(src)
+		return
 	steps++
 	var/list/atoms = get_rad_atoms()
 
 	var/strength
 	if(steps>1)
-		strength = InverseSquareLaw(intensity, max(range_modifier*steps, 1), 1)
+		strength = INVERSE_SQUARE(intensity, max(range_modifier*steps, 1), 1)
 	else
 		strength = intensity
 
@@ -42,7 +45,7 @@
 		qdel(src)
 		return
 
-	radiate(atoms, Floor(strength))
+	radiate(atoms, FLOOR(strength, 1))
 
 	check_obstructions(atoms) // reduce our overall strength if there are radiation insulators
 

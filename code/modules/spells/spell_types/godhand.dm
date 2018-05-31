@@ -13,10 +13,7 @@
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0
-
-/obj/item/melee/touch_attack/Initialize()
-	attached_spell = loc
-	. = ..()
+	var/charges = 1
 
 /obj/item/melee/touch_attack/attack(mob/target, mob/living/carbon/user)
 	if(!iscarbon(user)) //Look ma, no hands
@@ -29,13 +26,13 @@
 /obj/item/melee/touch_attack/afterattack(atom/target, mob/user, proximity)
 	user.say(catchphrase)
 	playsound(get_turf(user), on_use_sound,50,1)
-	if(attached_spell)
-		attached_spell.attached_hand = null
-	qdel(src)
+	charges--
+	if(charges <= 0)
+		qdel(src)
 
 /obj/item/melee/touch_attack/Destroy()
 	if(attached_spell)
-		attached_spell.attached_hand = null
+		attached_spell.on_hand_destroy(src)
 	return ..()
 
 /obj/item/melee/touch_attack/disintegrate
@@ -57,6 +54,20 @@
 	for(var/mob/living/L in view(src, 7))
 		if(L != user)
 			L.flash_act(affect_silicon = FALSE)
+	var/atom/A = M.anti_magic_check()
+	if(A)
+		if(isitem(A))
+			target.visible_message("<span class='warning'>[target]'s [A] glows brightly as it wards off the spell!</span>")
+		user.visible_message("<span class='warning'>The feedback blows [user]'s arm off!</span>","<span class='userdanger'>The spell bounces from [M]'s skin back into your arm!</span>")
+		user.flash_act()
+		var/obj/item/bodypart/part
+		var/index = user.get_held_index_of_item(src)
+		if(index)
+			part = user.hand_bodyparts[index]
+		if(part)
+			part.dismember()
+		..()
+		return
 	M.gib()
 	..()
 
@@ -78,6 +89,11 @@
 		to_chat(user, "<span class='notice'>You can't get the words out!</span>")
 		return
 	var/mob/living/M = target
+	if(M.anti_magic_check())
+		to_chat(user, "<span class='warning'>The spell can't seem to affect [M]!</span>")
+		to_chat(M, "<span class='warning'>You feel your flesh turn to stone for a moment, then revert back!</span>")
+		..()
+		return
 	M.Stun(40)
 	M.petrify()
 	..()

@@ -6,7 +6,7 @@
 /obj/item/robot_suit
 	name = "cyborg endoskeleton"
 	desc = "A complex metal backbone with standard limb sockets and pseudomuscle anchors."
-	icon =  'icons/obj/robot_parts.dmi'
+	icon = 'icons/mob/augmentation/augments.dmi'
 	icon_state = "robo_suit"
 	var/obj/item/bodypart/l_arm/robot/l_arm = null
 	var/obj/item/bodypart/r_arm/robot/r_arm = null
@@ -68,8 +68,8 @@
 		var/obj/item/stack/sheet/metal/M = W
 		if(!l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
 			if (M.use(1))
-				var/obj/item/ed209_assembly/B = new /obj/item/ed209_assembly
-				B.loc = get_turf(src)
+				var/obj/item/bot_assembly/ed209/B = new
+				B.forceMove(drop_location())
 				to_chat(user, "<span class='notice'>You arm the robot frame.</span>")
 				var/holding_this = user.get_inactive_held_item()==src
 				qdel(src)
@@ -152,14 +152,14 @@
 		else
 			to_chat(user, "<span class='warning'>You need to attach a flash to it first!</span>")
 
-	else if (istype(W, /obj/item/device/multitool))
+	else if (istype(W, /obj/item/multitool))
 		if(check_completion())
 			Interact(user)
 		else
 			to_chat(user, "<span class='warning'>The endoskeleton must be assembled before debugging can begin!</span>")
 
-	else if(istype(W, /obj/item/device/mmi))
-		var/obj/item/device/mmi/M = W
+	else if(istype(W, /obj/item/mmi))
+		var/obj/item/mmi/M = W
 		if(check_completion())
 			if(!isturf(loc))
 				to_chat(user, "<span class='warning'>You can't put [M] in, the frame has to be standing on the ground to be perfectly precise!</span>")
@@ -227,7 +227,7 @@
 			O.job = "Cyborg"
 
 			O.cell = chest.cell
-			chest.cell.loc = O
+			chest.cell.forceMove(O)
 			chest.cell = null
 			W.forceMove(O)//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 			if(O.mmi) //we delete the mmi created by robot/New()
@@ -271,7 +271,7 @@
 
 
 			O.cell = chest.cell
-			chest.cell.loc = O
+			chest.cell.forceMove(O)
 			chest.cell = null
 			O.locked = panel_locked
 			O.job = "Cyborg"
@@ -304,7 +304,7 @@
 
 	var/mob/living/living_user = usr
 	var/obj/item/item_in_hand = living_user.get_active_held_item()
-	if(!istype(item_in_hand, /obj/item/device/multitool))
+	if(!istype(item_in_hand, /obj/item/multitool))
 		to_chat(living_user, "<span class='warning'>You need a multitool!</span>")
 		return
 

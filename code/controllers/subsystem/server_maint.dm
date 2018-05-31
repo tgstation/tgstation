@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(server_maint)
 	name = "Server Tasks"
 	wait = 6
 	flags = SS_POST_FIRE_TIMING
-	priority = 10
+	priority = FIRE_PRIORITY_SERVER_MAINT
 	init_order = INIT_ORDER_SERVER_MAINT
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun
@@ -55,5 +55,8 @@ SUBSYSTEM_DEF(server_maint)
 			co.ehjax_send(data = "roundrestart")
 		if(server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[server]")
+	var/tgsversion = world.TgsVersion()
+	if(tgsversion)
+		SSblackbox.record_feedback("text", "server_tools", 1, tgsversion)
 
 #undef PING_BUFFER_TIME

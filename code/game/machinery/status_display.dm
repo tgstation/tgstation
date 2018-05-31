@@ -32,7 +32,7 @@
 	var/index1			// display index for scrolling messages or 0 if non-scrolling
 	var/index2
 
-	var/frequency = 1435		// radio frequency
+	var/frequency = FREQ_STATUS_DISPLAYS
 	var/supply_display = 0		// true if a supply shuttle display
 	var/shuttle_id				// Id used for "generic shuttle timer" mode
 
@@ -63,11 +63,10 @@
 	update()
 
 /obj/machinery/status_display/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
+	. = ..()
+	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
 	set_picture("ai_bsod")
-	..(severity)
 
 // set what is displayed
 
@@ -107,7 +106,7 @@
 			var/line1
 			var/line2
 			if(SSshuttle.supply.mode == SHUTTLE_IDLE)
-				if(SSshuttle.supply.z in GLOB.station_z_levels)
+				if(is_station_level(SSshuttle.supply.z))
 					line1 = "CARGO"
 					line2 = "Docked"
 			else
@@ -140,7 +139,7 @@
 			var/obj/docking_port/mobile/shuttle = SSshuttle.supply
 			var/shuttleMsg = null
 			if (shuttle.mode == SHUTTLE_IDLE)
-				if (shuttle.z in GLOB.station_z_levels)
+				if (is_station_level(shuttle.z))
 					shuttleMsg = "Docked"
 			else
 				shuttleMsg = "[shuttle.getModeStr()]: [shuttle.getTimerStr()]"
@@ -259,11 +258,10 @@
 	update()
 
 /obj/machinery/ai_status_display/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
+	. = ..()
+	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
 	set_picture("ai_bsod")
-	..(severity)
 
 /obj/machinery/ai_status_display/proc/update()
 
@@ -317,7 +315,7 @@
 	add_overlay(picture_state)
 
 #undef CHARS_PER_LINE
-#undef FOND_SIZE
+#undef FONT_SIZE
 #undef FONT_COLOR
 #undef FONT_STYLE
 #undef SCROLL_SPEED

@@ -86,7 +86,7 @@
 	else
 		to_chat(src, "<span class='warning'><i>I have failed to latch onto the subject!</i></span>")
 
-/mob/living/simple_animal/slime/proc/Feedstop(silent=0, living=1)
+/mob/living/simple_animal/slime/proc/Feedstop(silent = FALSE, living=1)
 	if(buckled)
 		if(!living)
 			to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
@@ -166,7 +166,7 @@
 					step_away(M,src)
 				M.Friends = Friends.Copy()
 				babies += M
-				M.mutation_chance = Clamp(mutation_chance+(rand(5,-5)),0,100)
+				M.mutation_chance = CLAMP(mutation_chance+(rand(5,-5)),0,100)
 				SSblackbox.record_feedback("tally", "slime_babies_born", 1, M.colour)
 
 			var/mob/living/simple_animal/slime/new_slime = pick(babies)

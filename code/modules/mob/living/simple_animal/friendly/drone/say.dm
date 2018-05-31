@@ -3,14 +3,6 @@
 /////////////
 //Drone speach
 
-/mob/living/simple_animal/drone/handle_inherent_channels(message, message_mode)
-	if(message_mode == MODE_BINARY)
-		drone_chat(message)
-		return 1
-	else
-		..()
-
-
 /mob/living/simple_animal/drone/get_spans()
 	return ..() | SPAN_ROBOT
 

@@ -8,7 +8,7 @@
 	max_integrity = 250
 	integrity_failure = 100
 	anchored = TRUE
-	var/obj/item/device/assembly/flash/handheld/bulb
+	var/obj/item/assembly/flash/handheld/bulb
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
@@ -54,14 +54,13 @@
 	if (istype(W, /obj/item/wirecutters))
 		if (bulb)
 			user.visible_message("[user] begins to disconnect [src]'s flashbulb.", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
-			playsound(src.loc, W.usesound, 100, 1)
-			if(do_after(user, 30*W.toolspeed, target = src) && bulb)
+			if(W.use_tool(src, user, 30, volume=50) && bulb)
 				user.visible_message("[user] has disconnected [src]'s flashbulb!", "<span class='notice'>You disconnect [src]'s flashbulb.</span>")
 				bulb.forceMove(loc)
 				bulb = null
 				power_change()
 
-	else if (istype(W, /obj/item/device/assembly/flash/handheld))
+	else if (istype(W, /obj/item/assembly/flash/handheld))
 		if (!bulb)
 			if(!user.transferItemToLoc(W, src))
 				return
@@ -74,8 +73,7 @@
 	else if (istype(W, /obj/item/wrench))
 		if(!bulb)
 			to_chat(user, "<span class='notice'>You start unsecuring the flasher frame...</span>")
-			playsound(loc, W.usesound, 50, 1)
-			if(do_after(user, 40*W.toolspeed, target = src))
+			if(W.use_tool(src, user, 40, volume=50))
 				to_chat(user, "<span class='notice'>You unsecure the flasher frame.</span>")
 				deconstruct(TRUE)
 		else
@@ -121,12 +119,12 @@
 
 
 /obj/machinery/flasher/emp_act(severity)
-	if(!(stat & (BROKEN|NOPOWER)))
+	. = ..()
+	if(!(stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
 		if(bulb && prob(75/severity))
 			flash()
 			bulb.burn_out()
 			power_change()
-	..()
 
 /obj/machinery/flasher/obj_break(damage_flag)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -165,7 +163,7 @@
 
 /obj/machinery/flasher/portable/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/wrench))
-		playsound(src.loc, W.usesound, 100, 1)
+		W.play_tool_sound(src, 100)
 
 		if (!anchored && !isinspace())
 			to_chat(user, "<span class='notice'>[src] is now secured.</span>")

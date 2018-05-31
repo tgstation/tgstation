@@ -1,6 +1,5 @@
 /mob/living/Life(seconds, times_fired)
 	set invisibility = 0
-	set background = BACKGROUND_ENABLED
 
 	if(digitalinvis)
 		handle_diginvis() //AI becomes unable to see mob
@@ -8,17 +7,32 @@
 	if((movement_type & FLYING) && !floating)	//TODO: Better floating
 		float(on = TRUE)
 
+	if (client)
+		var/turf/T = get_turf(src)
+		if(!T)
+			for(var/obj/effect/landmark/error/E in GLOB.landmarks_list)
+				forceMove(E.loc)
+				break
+			var/msg = "[key_name_admin(src)] [ADMIN_JMP(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
+			message_admins(msg)
+			send2irc_adminless_only("Mob", msg, R_ADMIN)
+			log_game("[key_name(src)] was found to have no .loc with an attached client.")
+
+		// This is a temporary error tracker to make sure we've caught everything
+		else if (registered_z != T.z)
+#ifdef TESTING
+			message_admins("[src] [ADMIN_FLW(src)] has somehow ended up in Z-level [T.z] despite being registered in Z-level [registered_z]. If you could ask them how that happened and notify coderbus, it would be appreciated.")
+#endif
+			log_game("Z-TRACKING: [src] has somehow ended up in Z-level [T.z] despite being registered in Z-level [registered_z].")
+			update_z(T.z)
+	else if (registered_z)
+		log_game("Z-TRACKING: [src] of type [src.type] has a Z-registration despite not having a client.")
+		update_z(null)
+
 	if (notransform)
 		return
 	if(!loc)
-		if(client)
-			for(var/obj/effect/landmark/error/E in GLOB.landmarks_list)
-				loc = E.loc
-				break
-			message_admins("[key_name_admin(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished.")
-			log_game("[key_name(src)] was found to have no .loc with an attached client.")
-		else
-			return
+		return
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	if(stat != DEAD)
@@ -50,7 +64,7 @@
 		machine.check_eye(src)
 
 	if(stat != DEAD)
-		handle_disabilities() // eye, ear, brain damages
+		handle_traits() // eye, ear, brain damages
 	if(stat != DEAD)
 		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
@@ -106,10 +120,10 @@
 	if(confused)
 		confused = max(0, confused - 1)
 
-/mob/living/proc/handle_disabilities()
+/mob/living/proc/handle_traits()
 	//Eyes
 	if(eye_blind)			//blindness, heals slowly over time
-		if(!stat && !(disabilities & BLIND))
+		if(!stat && !(has_trait(TRAIT_BLIND)))
 			eye_blind = max(eye_blind-1,0)
 			if(client && !eye_blind)
 				clear_alert("blind")

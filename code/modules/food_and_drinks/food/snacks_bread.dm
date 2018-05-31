@@ -13,7 +13,7 @@
 	custom_food_type = /obj/item/reagent_containers/food/snacks/customizable/sandwich
 	filling_color = "#FFA500"
 	list_reagents = list("nutriment" = 2)
-	slot_flags = SLOT_HEAD
+	slot_flags = ITEM_SLOT_HEAD
 	customfoodfilling = 0 //to avoid infinite bread-ception
 	foodtype = GRAIN
 
@@ -190,13 +190,36 @@
 	name = fried.name //We'll determine the other stuff when it's actually removed
 	icon = fried.icon
 	overlays = fried.copy_overlays()
+	lefthand_file = fried.lefthand_file
+	righthand_file = fried.righthand_file
 	icon_state = fried.icon_state
+	item_state = fried.item_state
 	desc = fried.desc
+	w_class = fried.w_class
+	slowdown = fried.slowdown
+	equip_delay_self = fried.equip_delay_self
+	equip_delay_other = fried.equip_delay_other
+	strip_delay = fried.strip_delay
+	species_exception = fried.species_exception
+	item_flags = fried.item_flags
+	obj_flags = fried.obj_flags
+
 	if(istype(fried, /obj/item/reagent_containers/food/snacks))
 		fried.reagents.trans_to(src, fried.reagents.total_volume)
 		qdel(fried)
 	else
 		fried.forceMove(src)
+		trash = fried
+
+/obj/item/reagent_containers/food/snacks/deepfryholder/Destroy()
+	if(trash)
+		QDEL_NULL(trash)
+	. = ..()
+
+/obj/item/reagent_containers/food/snacks/deepfryholder/On_Consume(mob/living/eater)
+	if(trash)
+		QDEL_NULL(trash)
+	..()
 
 /obj/item/reagent_containers/food/snacks/deepfryholder/proc/fry(cook_time = 30)
 	switch(cook_time)
@@ -239,3 +262,18 @@
 	list_reagents = list("nutriment" = 5)
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	tastes = list("butter" = 1, "biscuit" = 1)
+
+/obj/item/reagent_containers/food/snacks/butterdog
+	name = "butterdog"
+	desc = "Made from exotic butters."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "butterdog"
+	bitesize = 1
+	filling_color = "#F1F49A"
+	list_reagents = list("nutriment" = 5)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	tastes = list("butter", "exotic butter")
+
+/obj/item/reagent_containers/food/snacks/butterdog/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/slippery, 80)

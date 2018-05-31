@@ -4,10 +4,10 @@
 /area/space)
 "ab" = (
 /turf/closed/mineral,
-/area/space)
+/area/space/nearstation)
 "ac" = (
 /turf/open/floor/plating/asteroid/airless,
-/area/space)
+/area/space/nearstation)
 "ad" = (
 /turf/closed/mineral,
 /area/awaymission/research/exterior)
@@ -19,10 +19,8 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/awaymission/research/exterior)
 "ag" = (
-/turf/open/floor/plating/asteroid/airless,
 /turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
+	dir = 8
 	},
 /area/awaymission/research/interior/engineering)
 "ah" = (
@@ -42,10 +40,8 @@
 /turf/open/space,
 /area/awaymission/research/interior/engineering)
 "ak" = (
-/turf/open/floor/plating/asteroid/airless,
 /turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
+	dir = 1
 	},
 /area/awaymission/research/interior/engineering)
 "al" = (
@@ -233,9 +229,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "damaged4"
 	},
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/awaymission/research/interior/engineering)
 "aT" = (
 /mob/living/simple_animal/hostile/syndicate/melee,
@@ -246,8 +240,7 @@
 	icon_state = "damaged1"
 	},
 /turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
+	dir = 4
 	},
 /area/awaymission/research/interior/engineering)
 "aV" = (
@@ -268,7 +261,7 @@
 	amount = 50
 	},
 /turf/open/floor/plating/asteroid/airless,
-/area/space)
+/area/space/nearstation)
 "aY" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -305,9 +298,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "damaged5"
 	},
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/awaymission/research/interior/engineering)
 "bd" = (
 /turf/open/floor/plasteel{
@@ -322,12 +313,8 @@
 	},
 /area/awaymission/research/interior/engineering)
 "bf" = (
-/turf/open/floor/plasteel{
-	icon_state = "damaged3"
-	},
 /turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
+	dir = 4
 	},
 /area/awaymission/research/interior/engineering)
 "bg" = (
@@ -355,7 +342,7 @@
 "bk" = (
 /obj/item/bikehorn,
 /turf/open/floor/plating/asteroid/airless,
-/area/space)
+/area/space/nearstation)
 "bl" = (
 /turf/closed/wall/r_wall,
 /area/awaymission/research/interior/gateway)
@@ -449,9 +436,9 @@
 "by" = (
 /obj/item/clothing/mask/gas/clown_hat,
 /turf/open/floor/plating/asteroid/airless,
-/area/space)
+/area/space/nearstation)
 "bz" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bA" = (
 /obj/machinery/gateway{
@@ -460,7 +447,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bB" = (
 /obj/machinery/gateway{
@@ -469,7 +456,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bC" = (
 /obj/machinery/gateway{
@@ -478,7 +465,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bD" = (
 /obj/structure/cable{
@@ -564,18 +551,18 @@
 	},
 /area/awaymission/research/interior/engineering)
 "bP" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_x = 32
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "bQ" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bR" = (
 /obj/effect/landmark/awaystart,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bS" = (
 /obj/machinery/gateway{
@@ -584,13 +571,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bT" = (
 /obj/machinery/gateway/centeraway{
 	calibrated = 0
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bU" = (
 /obj/machinery/gateway{
@@ -599,10 +586,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bV" = (
-/obj/structure/sign/nosmoking_1{
+/obj/structure/sign/warning/nosmoking/circle{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/whiteyellow/side{
@@ -634,13 +621,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bZ" = (
 /obj/machinery/gateway,
 /obj/effect/landmark/awaystart,
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "ca" = (
 /obj/machinery/gateway{
@@ -649,7 +636,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "cb" = (
 /obj/machinery/power/apc/highcap/fifteen_k{
@@ -660,7 +647,7 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "cc" = (
 /obj/structure/cable{
@@ -706,12 +693,12 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/closet/emcloset,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "cj" = (
 /obj/structure/window/reinforced,
 /obj/effect/landmark/awaystart,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "ck" = (
 /obj/machinery/door/window/eastright{
@@ -719,7 +706,7 @@
 	dir = 2
 	},
 /obj/effect/landmark/awaystart,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "cl" = (
 /obj/machinery/light{
@@ -729,7 +716,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "cm" = (
 /obj/structure/cable{
@@ -744,12 +731,6 @@
 /obj/machinery/light/small,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
-"co" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "cp" = (
 /turf/closed/wall/r_wall,
 /area/awaymission/research/interior)
@@ -758,6 +739,7 @@
 	name = "Engine Room";
 	req_access_txt = "10"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 4
 	},
@@ -776,6 +758,7 @@
 	name = "Engine Room";
 	req_access_txt = "10"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 8
 	},
@@ -787,20 +770,20 @@
 	dir = 4;
 	pixel_x = -32
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "cu" = (
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "cv" = (
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
 /obj/structure/table,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "cw" = (
 /obj/structure/cable{
@@ -844,15 +827,15 @@
 /area/awaymission/research/interior)
 "cD" = (
 /obj/structure/table,
-/obj/item/device/radio,
-/obj/item/device/radio,
-/turf/open/floor/plasteel/black,
+/obj/item/radio,
+/obj/item/radio,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "cE" = (
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "cF" = (
 /obj/structure/cable{
@@ -861,7 +844,7 @@
 /obj/structure/table,
 /obj/item/paper/pamphlet/gateway,
 /obj/item/paper/pamphlet/gateway,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "cG" = (
 /obj/structure/reagent_dispensers/peppertank{
@@ -1004,10 +987,10 @@
 /area/awaymission/research/interior)
 "db" = (
 /obj/structure/filingcabinet,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "dc" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "dd" = (
 /obj/structure/closet/crate,
@@ -1016,13 +999,13 @@
 	name = "encrypted genetic data disk";
 	read_only = 1
 	},
-/obj/item/device/firing_pin/dna,
-/turf/open/floor/plasteel/black,
+/obj/item/firing_pin/dna,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "de" = (
 /obj/structure/filingcabinet,
 /obj/structure/filingcabinet,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "df" = (
 /obj/structure/closet/crate,
@@ -1039,7 +1022,7 @@
 	},
 /obj/item/dnainjector/xraymut,
 /obj/item/dnainjector/xraymut,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "dg" = (
 /obj/structure/cable{
@@ -1098,7 +1081,7 @@
 /obj/item/dnainjector/telemut,
 /obj/item/dnainjector/telemut,
 /obj/item/dnainjector/chavmut,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "dq" = (
 /obj/machinery/light{
@@ -1226,7 +1209,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "dL" = (
 /obj/structure/closet/crate,
@@ -1240,10 +1223,10 @@
 	name = "encrypted genetic data disk";
 	read_only = 1
 	},
-/obj/item/device/firing_pin/dna,
+/obj/item/firing_pin/dna,
 /obj/item/dnainjector/dwarf,
 /obj/item/dnainjector/dwarf,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "dM" = (
 /obj/structure/closet/crate,
@@ -1258,7 +1241,7 @@
 	read_only = 1
 	},
 /obj/item/dnainjector/chameleonmut,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "dN" = (
 /obj/item/twohanded/required/kirbyplants{
@@ -1268,10 +1251,6 @@
 /area/awaymission/research/interior/genetics)
 "dO" = (
 /obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/plasteel/darkpurple,
-/area/awaymission/research/interior/genetics)
-"dP" = (
-/mob/living/carbon/human/interactive/greytide,
 /turf/open/floor/plasteel/darkpurple,
 /area/awaymission/research/interior/genetics)
 "dQ" = (
@@ -1318,22 +1297,22 @@
 /turf/open/floor/plasteel/red,
 /area/awaymission/research/interior/security)
 "dW" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 1;
-	locked = 1;
 	name = "Secure Storage C";
 	req_access_txt = "36"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "dX" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 1;
-	locked = 1;
 	name = "Secure Storage D";
 	req_access_txt = "36"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "dY" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -1440,7 +1419,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "es" = (
 /turf/open/floor/plating,
@@ -1452,6 +1431,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "eu" = (
@@ -1598,7 +1578,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/security)
 "eS" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	id_tag = "outerbrig";
 	name = "Brig";
 	req_access_txt = "63"
@@ -1612,19 +1592,19 @@
 	dir = 4;
 	pixel_x = -32
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "eU" = (
 /obj/item/paper/crumpled/awaymissions/research/sensitive_info,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "eV" = (
 /mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "eW" = (
 /obj/structure/barricade/security,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "eX" = (
 /obj/machinery/light/small{
@@ -1776,7 +1756,7 @@
 /turf/open/floor/plasteel/whitered/side,
 /area/awaymission/research/interior/security)
 "fv" = (
-/obj/structure/sign/goldenplaque{
+/obj/structure/sign/plaques/golden{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/whitered/corner{
@@ -1788,7 +1768,7 @@
 	capacity = 9e+006;
 	charge = 10000
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "fx" = (
 /obj/structure/cable{
@@ -1797,7 +1777,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "fy" = (
 /obj/machinery/power/apc/highcap/fifteen_k{
@@ -1808,20 +1788,20 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "fz" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "fA" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "fB" = (
 /obj/machinery/light/small{
@@ -1885,6 +1865,9 @@
 	name = "Cryogenetics Research";
 	req_access_txt = "9"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plasteel/whitepurple/side,
 /area/awaymission/research/interior)
 "fN" = (
@@ -1915,7 +1898,7 @@
 	},
 /area/awaymission/research/interior)
 "fS" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	id_tag = "outerbrig";
 	name = "Brig";
 	req_access_txt = "63"
@@ -1982,7 +1965,7 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "ge" = (
 /obj/structure/cable{
@@ -1991,7 +1974,7 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gf" = (
 /obj/machinery/power/terminal,
@@ -2001,7 +1984,7 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gg" = (
 /obj/machinery/door/airlock/highsecurity{
@@ -2012,33 +1995,27 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gh" = (
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/black,
-/area/awaymission/research/interior/secure)
-"gi" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gj" = (
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
 /mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gk" = (
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/structure/barricade/security,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gl" = (
 /obj/structure/cable{
@@ -2049,14 +2026,17 @@
 	name = "Vault Storage";
 	req_access_txt = "36"
 	},
-/turf/open/floor/plasteel/black,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gm" = (
 /obj/structure/barricade/security,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gn" = (
 /obj/machinery/door/airlock/research{
@@ -2065,6 +2045,9 @@
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/secure)
@@ -2092,6 +2075,9 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior)
 "gr" = (
@@ -2116,6 +2102,9 @@
 /obj/machinery/door/airlock/research{
 	name = "Cryogenetics Research";
 	req_access_txt = "9"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/plasteel/whitepurple,
 /area/awaymission/research/interior/cryo)
@@ -2160,7 +2149,7 @@
 /turf/open/floor/plasteel/whitepurple,
 /area/awaymission/research/interior)
 "gB" = (
-/obj/structure/sign/science,
+/obj/structure/sign/departments/science,
 /turf/closed/wall/r_wall,
 /area/awaymission/research/interior)
 "gC" = (
@@ -2297,12 +2286,6 @@
 	dir = 1
 	},
 /area/awaymission/research/interior)
-"gW" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel/whitepurple,
-/area/awaymission/research/interior)
 "gX" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/plasteel/whitepurple/side{
@@ -2325,7 +2308,7 @@
 	},
 /area/awaymission/research/interior)
 "hb" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	id_tag = "outerbrig";
 	name = "Brig";
 	req_access_txt = "63"
@@ -2432,7 +2415,7 @@
 /area/awaymission/research/interior/security)
 "hs" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "ht" = (
 /obj/machinery/light,
@@ -2449,12 +2432,6 @@
 	dir = 10
 	},
 /area/awaymission/research/interior/cryo)
-"hw" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "hx" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -2527,22 +2504,22 @@
 	},
 /area/awaymission/research/interior/security)
 "hI" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 1;
-	locked = 1;
 	name = "Secure Storage A";
 	req_access_txt = "36"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "hJ" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 1;
-	locked = 1;
 	name = "Secure Storage B";
 	req_access_txt = "36"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "hK" = (
 /obj/machinery/door/poddoor{
@@ -2619,8 +2596,8 @@
 /obj/item/clothing/head/collectable/petehat{
 	name = "dusty hat"
 	},
-/obj/item/device/firing_pin/dna,
-/turf/open/floor/plasteel/black,
+/obj/item/firing_pin/dna,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "hT" = (
 /obj/structure/closet/crate,
@@ -2634,9 +2611,9 @@
 	name = "encrypted genetic data disk";
 	read_only = 1
 	},
-/obj/item/device/firing_pin/dna,
+/obj/item/firing_pin/dna,
 /obj/item/dnainjector/hulkmut,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "hU" = (
 /obj/item/shard,
@@ -2662,8 +2639,7 @@
 /area/awaymission/research/interior/maint)
 "hY" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
@@ -2681,12 +2657,6 @@
 "ib" = (
 /obj/structure/window/reinforced{
 	dir = 8
-	},
-/turf/open/floor/plasteel/purple,
-/area/awaymission/research/interior/genetics)
-"ic" = (
-/obj/machinery/light{
-	dir = 4
 	},
 /turf/open/floor/plasteel/purple,
 /area/awaymission/research/interior/genetics)
@@ -2759,11 +2729,11 @@
 	name = "encrypted genetic data disk";
 	read_only = 1
 	},
-/obj/item/device/firing_pin/dna/dredd,
-/obj/item/device/firing_pin/dna/dredd,
+/obj/item/firing_pin/dna/dredd,
+/obj/item/firing_pin/dna/dredd,
 /obj/item/dnainjector/lasereyesmut,
 /obj/item/dnainjector/lasereyesmut,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "im" = (
 /obj/item/stack/rods,
@@ -3133,19 +3103,16 @@
 "jr" = (
 /obj/structure/sign/directions/security{
 	dir = 1;
-	icon_state = "direction_sec";
 	pixel_x = 32;
 	pixel_y = 40
 	},
 /obj/structure/sign/directions/engineering{
 	dir = 1;
-	icon_state = "direction_eng";
 	pixel_x = 32;
 	pixel_y = 33
 	},
 /obj/structure/sign/directions/science{
 	dir = 1;
-	icon_state = "direction_sci";
 	pixel_x = 32;
 	pixel_y = 26
 	},
@@ -3248,14 +3215,8 @@
 /turf/open/floor/plasteel/whiteblue,
 /area/awaymission/research/interior)
 "jK" = (
-/obj/structure/sign/bluecross,
+/obj/structure/sign/departments/medbay,
 /turf/closed/wall/r_wall,
-/area/awaymission/research/interior)
-"jL" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/whiteblue,
 /area/awaymission/research/interior)
 "jM" = (
 /obj/machinery/light{
@@ -3544,43 +3505,6 @@
 	dir = 4
 	},
 /area/awaymission/research/interior/dorm)
-"kG" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_access_txt = "12"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
-"kH" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/whitegreen/side{
-	dir = 4
-	},
-/area/awaymission/research/interior)
-"kI" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/whitegreen,
-/area/awaymission/research/interior)
-"kJ" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/whitegreen/side{
-	dir = 8
-	},
-/area/awaymission/research/interior)
-"kK" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "kL" = (
 /turf/open/floor/plating,
 /area/awaymission/research/interior/medbay)
@@ -3598,15 +3522,6 @@
 /obj/structure/chair/comfy/beige,
 /turf/open/floor/plasteel/whiteblue/side,
 /area/awaymission/research/interior/medbay)
-"kP" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "kQ" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/yellowsiding{
@@ -3756,7 +3671,7 @@
 /area/awaymission/research/interior/dorm)
 "ln" = (
 /turf/open/floor/plasteel,
-/area/space)
+/area/space/nearstation)
 "lo" = (
 /obj/structure/table/wood,
 /obj/structure/bedsheetbin,
@@ -4043,7 +3958,6 @@
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/research/exterior)
 "mf" = (
-/turf/open/floor/plating/asteroid/airless,
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4
 	},
@@ -4051,13 +3965,13 @@
 /area/awaymission/research/exterior)
 "mg" = (
 /obj/structure/closet/emcloset,
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
 "mh" = (
-/obj/structure/sign/pods{
+/obj/structure/sign/warning/pods{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/whitegreen/corner,
@@ -4132,6 +4046,9 @@
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod One"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
 "mv" = (
@@ -4151,15 +4068,7 @@
 	},
 /area/awaymission/research/interior/escapepods)
 "my" = (
-/turf/open/floor/plating/asteroid/airless,
 /turf/closed/wall/mineral/titanium/interior,
-/area/awaymission/research/exterior)
-"mz" = (
-/turf/open/floor/plating/asteroid/airless,
-/obj/structure/shuttle/engine/propulsion/burst{
-	dir = 8
-	},
-/turf/closed/wall/mineral/titanium,
 /area/awaymission/research/exterior)
 "mA" = (
 /obj/structure/chair{
@@ -4214,7 +4123,7 @@
 	},
 /area/awaymission/research/interior/escapepods)
 "mI" = (
-/obj/structure/sign/pods{
+/obj/structure/sign/warning/pods{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/whitegreen/side{
@@ -4266,6 +4175,9 @@
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Two"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
 "mP" = (
@@ -4279,18 +4191,12 @@
 	},
 /turf/open/floor/plasteel/whitegreen/side,
 /area/awaymission/research/interior/escapepods)
-"mR" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel/whitegreen/side{
-	dir = 4
-	},
-/area/awaymission/research/interior/escapepods)
 "mS" = (
 /obj/machinery/door/airlock/external{
-	name = "Escape Pod Three";
-	req_access_txt = "0"
+	name = "Escape Pod Three"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
@@ -4300,7 +4206,7 @@
 	},
 /area/awaymission/research/interior/escapepods)
 "mU" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_y = -32
 	},
 /obj/machinery/light,
@@ -4315,7 +4221,7 @@
 	},
 /area/awaymission/research/interior/escapepods)
 "mW" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/whitegreen/side{
@@ -4339,27 +4245,219 @@
 /obj/machinery/door/airlock/external{
 	name = "Escape Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
 "na" = (
 /turf/closed/wall/mineral/plasma,
-/area/space)
+/area/space/nearstation)
 "nb" = (
 /obj/structure/table/wood,
-/obj/item/spellbook/oneuse/random,
+/obj/item/book/granter/spell/random,
 /turf/open/floor/mineral/plasma,
-/area/space)
+/area/space/nearstation)
 "nc" = (
-/mob/living/simple_animal/hostile/creature,
+/mob/living/simple_animal/hostile/netherworld,
 /turf/open/floor/mineral/plasma,
-/area/space)
+/area/space/nearstation)
 "nd" = (
 /obj/structure/healingfountain,
 /turf/open/floor/mineral/plasma,
-/area/space)
+/area/space/nearstation)
 "ne" = (
 /turf/open/floor/mineral/plasma,
-/area/space)
+/area/space/nearstation)
+"nf" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/awaymission/research/interior/engineering)
+"pt" = (
+/obj/machinery/door/airlock/external{
+	name = "Escape Pod Three"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/escapepods)
+"su" = (
+/obj/machinery/door/airlock/medical{
+	name = "Medical"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plasteel/whiteblue/side,
+/area/awaymission/research/interior)
+"tE" = (
+/obj/machinery/door/airlock/medical{
+	name = "Medical"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plasteel/whiteblue/side{
+	dir = 1
+	},
+/area/awaymission/research/interior)
+"va" = (
+/obj/machinery/door/airlock/research{
+	name = "Cryogenetics Research";
+	req_access_txt = "9"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel/whitepurple/side,
+/area/awaymission/research/interior)
+"wM" = (
+/obj/machinery/door/airlock/medical{
+	name = "Medical"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel/whiteblue/side,
+/area/awaymission/research/interior)
+"xG" = (
+/obj/machinery/door/airlock/external{
+	name = "Escape Pod Two"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/escapepods)
+"zn" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_access_txt = "12"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+"Bx" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engine Room";
+	req_access_txt = "10"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plasteel/whiteyellow/side{
+	dir = 4
+	},
+/area/awaymission/research/interior)
+"Do" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+"Km" = (
+/obj/machinery/door/airlock/security/glass{
+	id_tag = "outerbrig";
+	name = "Brig";
+	req_access_txt = "63"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plasteel/whitered/side,
+/area/awaymission/research/interior)
+"Qd" = (
+/obj/machinery/door/airlock/medical{
+	name = "Medical"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel/whiteblue/side{
+	dir = 1
+	},
+/area/awaymission/research/interior)
+"Qz" = (
+/obj/machinery/door/airlock/security/glass{
+	id_tag = "outerbrig";
+	name = "Brig";
+	req_access_txt = "63"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plasteel/whitered/side{
+	dir = 1
+	},
+/area/awaymission/research/interior)
+"TD" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engine Room";
+	req_access_txt = "10"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plasteel/whiteyellow/side{
+	dir = 8
+	},
+/area/awaymission/research/interior)
+"TE" = (
+/obj/machinery/door/airlock/external{
+	name = "Escape Pod One"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/escapepods)
+"Uu" = (
+/obj/machinery/door/airlock/security/glass{
+	id_tag = "outerbrig";
+	name = "Brig";
+	req_access_txt = "63"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel/whitered/side,
+/area/awaymission/research/interior)
+"UA" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+"WR" = (
+/obj/machinery/door/airlock/security/glass{
+	id_tag = "outerbrig";
+	name = "Brig";
+	req_access_txt = "63"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel/whitered/side{
+	dir = 1
+	},
+/area/awaymission/research/interior)
+"XE" = (
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/escapepods)
 
 (1,1,1) = {"
 aa
@@ -35069,7 +35167,7 @@ fC
 gs
 fC
 fC
-et
+zn
 dZ
 cc
 aH
@@ -36871,7 +36969,7 @@ fc
 fE
 ea
 cK
-dP
+cK
 dt
 cK
 cK
@@ -37631,7 +37729,7 @@ cJ
 cK
 cK
 cK
-dP
+cK
 ea
 ez
 fg
@@ -37901,7 +37999,7 @@ ea
 hV
 cK
 cK
-dP
+cK
 iI
 cx
 cd
@@ -38696,15 +38794,15 @@ iX
 cd
 ma
 mb
-mu
+TE
 mb
 mb
 mb
-mO
+xG
 mb
 mb
 mb
-mS
+pt
 mb
 mb
 ad
@@ -39736,7 +39834,7 @@ mE
 mZ
 mv
 mv
-mZ
+XE
 aa
 aa
 aa
@@ -40976,9 +41074,9 @@ cp
 cp
 eH
 cp
-fM
+va
 gB
-fM
+va
 cp
 eH
 cp
@@ -41731,7 +41829,7 @@ ap
 ap
 an
 aJ
-al
+nf
 bc
 bp
 bH
@@ -41741,7 +41839,7 @@ cp
 cp
 cM
 cp
-aP
+UA
 cp
 cp
 ej
@@ -41997,7 +42095,7 @@ cf
 cq
 cA
 cN
-cZ
+Bx
 dl
 dz
 cZ
@@ -42049,7 +42147,7 @@ mE
 mZ
 mv
 mv
-mZ
+XE
 aa
 aa
 aa
@@ -42502,7 +42600,7 @@ aq
 ay
 an
 aL
-al
+nf
 bf
 bs
 bK
@@ -42511,7 +42609,7 @@ bd
 cs
 cC
 cP
-da
+TD
 dn
 dB
 da
@@ -42769,7 +42867,7 @@ cp
 cp
 cp
 cp
-aP
+Do
 cp
 cp
 ei
@@ -43048,9 +43146,9 @@ bD
 bD
 cc
 cp
-jt
+su
 jK
-kf
+tE
 cp
 cd
 dC
@@ -43546,9 +43644,9 @@ cp
 cp
 cp
 cp
-fS
+Km
 cp
-hb
+Qz
 cp
 cp
 cp
@@ -43819,9 +43917,9 @@ ad
 aH
 cd
 cp
-jt
+wM
 cp
-kf
+Qd
 cp
 cd
 aH
@@ -44317,9 +44415,9 @@ aH
 aH
 eP
 cp
-fS
+Uu
 cp
-hb
+WR
 cp
 hD
 aH

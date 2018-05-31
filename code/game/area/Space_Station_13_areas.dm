@@ -67,11 +67,24 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	valid_territory = FALSE
 	ambientsounds = MINING
 
+/area/asteroid/nearstation
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	ambientsounds = RUINS
+	always_unpowered = FALSE
+	requires_power = TRUE
+	blob_allowed = TRUE
+
+/area/asteroid/nearstation/bomb_site
+	name = "Bomb Testing Asteroid"
+
 /area/asteroid/cave
 	name = "Asteroid - Underground"
 	icon_state = "cave"
 	requires_power = FALSE
 	outdoors = TRUE
+
+/area/asteroid/cave/space
+	name = "Asteroid - Space"
 
 /area/asteroid/artifactroom
 	name = "Asteroid - Artifact"
@@ -81,16 +94,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/asteroid/artifactroom/Initialize()
 	. = ..()
 	set_dynamic_lighting()
-
-/area/planet/clown
-	name = "Clown Planet"
-	icon_state = "honk"
-	requires_power = FALSE
-
-/area/telesciareas
-	name = "Cosmic Anomaly"
-	icon_state = "telesci"
-	requires_power = FALSE
 
 
 //STATION13
@@ -171,6 +174,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/department/science/xenobiology
 	name = "Xenobiology Maintenance"
 	icon_state = "xenomaint"
+	xenobiology_compatible = TRUE
 
 
 //Maintenance - Generic
@@ -244,103 +248,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "disposal"
 
 /area/maintenance/disposal/incinerator
-//	/area/maintenance/incinerator
 	name = "Incinerator"
 	icon_state = "disposal"
-
-
-//Cere / Asteroid Specific
-
-/area/maintenance/asteroid/aft/science
-	name = "Aft Maintenance"
-	icon_state = "amaint"
-
-/area/maintenance/asteroid/aft/arrivals
-	name = "Aft Maintenance"
-	icon_state = "amaint"
-
-/area/maintenance/asteroid/central
-	name = "Central Asteroid Maintenance"
-	icon_state = "maintcentral"
-
-/area/maintenance/asteroid/disposal
-	icon_state = "disposal"
-
-/area/maintenance/asteroid/disposal/north
-	name = "Northern Disposal"
-
-/area/maintenance/asteroid/disposal/north/east
-	name = "North-Eastern Disposal"
-
-/area/maintenance/asteroid/disposal/north/west
-	name = "North-Western Disposal"
-
-/area/maintenance/asteroid/disposal/east
-	name = "Eastern Disposal"
-
-/area/maintenance/asteroid/disposal/west
-	name = "Western Disposal"
-
-/area/maintenance/asteroid/disposal/west/secondary
-	name = "Secondary Western Disposal"
-
-/area/maintenance/asteroid/disposal/south
-	name = "Southern Disposal"
-
-/area/maintenance/asteroid/disposal/south/west
-	name = "South-Western Disposal"
-
-/area/maintenance/asteroid/disposal/external/east
-	name = "Eastern External Waste Belt"
-
-/area/maintenance/asteroid/disposal/external/north
-	name = "Northern External Waste Belt"
-
-/area/maintenance/asteroid/disposal/external/southeast
-	name = "South-Eastern External Waste Belt"
-
-/area/maintenance/asteroid/disposal/external/southwest
-	name = "South-Western External Waste Belt"
-
-/area/maintenance/asteroid/fore/cargo_west
-	name = "Fore Asteroid Maintenance"
-	icon_state = "fmaint"
-
-/area/maintenance/asteroid/fore/cargo_south
-	name = "Fore Asteroid Maintenance"
-	icon_state = "fmaint"
-
-/area/maintenance/asteroid/fore/com_west
-	name = "Fore Asteroid Maintenance"
-	icon_state = "fmaint"
-
-/area/maintenance/asteroid/fore/com_north
-	name = "Fore Asteroid Maintenance"
-	icon_state = "fmaint"
-
-/area/maintenance/asteroid/fore/com_east
-	name = "Fore Asteroid Maintenance"
-	icon_state = "fmaint"
-
-/area/maintenance/asteroid/fore/com_south
-	name = "Fore Asteroid Maintenance"
-	icon_state = "fmaint"
-
-/area/maintenance/asteroid/port/neast
-	name = "Port Asteroid Maintenance"
-	icon_state = "pmaint"
-
-/area/maintenance/asteroid/port/east
-	name = "Port Asteroid Maintenance"
-	icon_state = "pmaint"
-
-/area/maintenance/asteroid/port/west
-	name = "Port Asteroid Maintenance"
-	icon_state = "pmaint"
-
-/area/maintenance/asteroid/starboard
-	name = "Starboard Asteroid Maintenance"
-	icon_state = "smaint"
 
 
 //Hallway
@@ -404,42 +313,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hallway/secondary/service
 	name = "Service Hallway"
 	icon_state = "hall_service"
-
-/area/hallway/secondary/bridges/cargo_ai
-	name = "Cargo-AI-Command Bridge"
-	icon_state = "yellow"
-
-/area/hallway/secondary/bridges/com_engi
-	name = "Command-Engineering Bridge"
-	icon_state = "yellow"
-
-/area/hallway/secondary/bridges/com_serv
-	name = "Command-Service Bridge"
-	icon_state = "yellow"
-
-/area/hallway/secondary/bridges/dock_med
-	name = "Docking-Medical Bridge"
-	icon_state = "yellow"
-
-/area/hallway/secondary/bridges/engi_med
-	name = "Engineering-Medical Bridge"
-	icon_state = "yellow"
-
-/area/hallway/secondary/bridges/med_cargo
-	name = "Medical-Cargo Bridge"
-	icon_state = "yellow"
-
-/area/hallway/secondary/bridges/sci_dock
-	name = "Science-Docking Bridge"
-	icon_state = "yellow"
-
-/area/hallway/secondary/bridges/serv_engi
-	name = "Service-Engineering Bridge"
-	icon_state = "yellow"
-
-/area/hallway/secondary/bridges/serv_sci
-	name = "Service-Science Bridge"
-	icon_state = "yellow"
 
 //Command
 
@@ -510,10 +383,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/heads/hor/private
 	name = "Research Director's Private Quarters"
 	icon_state = "rd_private"
-
-/area/mint
-	name = "Mint"
-	icon_state = "green"
 
 /area/comms
 	name = "Communications Relay"
@@ -664,6 +533,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Chapel Asteroid"
 	icon_state = "explored"
 
+/area/chapel/asteroid/monastery
+	name = "Monastery Asteroid"
+
 /area/chapel/dock
 	name = "Chapel Dock"
 	icon_state = "construction"
@@ -732,18 +604,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	flags_1 = NONE
 	ambientsounds = ENGINEERING
 
-/area/solar/asteroid/aft
-	name = "Aft Asteroid Solar"
-	icon_state = "panelsA"
-
-/area/solar/asteroid/command
-	name = "Command Asteroid Solar"
-	icon_state = "panelsA"
-
-/area/solar/asteroid/fore
-	name = "Fore Asteroid Solar"
-	icon_state = "panelsA"
-
 /area/solar/fore
 	name = "Fore Solar Array"
 	icon_state = "yellow"
@@ -790,18 +650,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/solars
 	name = "Solar Maintenance"
 	icon_state = "yellow"
-
-/area/maintenance/solars/asteroid/aft
-	name = "Aft Asteroid Solar Maintenance"
-	icon_state = "SolarcontrolA"
-
-/area/maintenance/solars/asteroid/command
-	name = "Command Asteroid Solar Maintenance"
-	icon_state = "SolarcontrolP"
-
-/area/maintenance/solars/asteroid/fore
-	name = "Fore Asteroid Solar Maintenance"
-	icon_state = "SolarcontrolP"
 
 /area/maintenance/solars/port
 	name = "Port Solar Maintenance"
@@ -858,22 +706,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "teleporter"
 	music = "signal"
 	ambientsounds = ENGINEERING
-
-/area/teleporter/quantum/cargo
-	name = "Cargo Quantum Pad"
-	icon_state = "teleporter"
-
-/area/teleporter/quantum/docking
-	name = "Docking Quantum Pad"
-	icon_state = "teleporter"
-
-/area/teleporter/quantum/research
-	name = "Research Quantum Pad"
-	icon_state = "teleporter"
-
-/area/teleporter/quantum/security
-	name = "Security Quantum Pad"
-	icon_state = "teleporter"
 
 /area/gateway
 	name = "Gateway"
@@ -1243,6 +1075,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Research Division"
 	icon_state = "medresearch"
 
+/area/science/circuit
+	name = "Circuitry Lab"
+	icon_state = "cir_lab"
+
 /area/science/research/lobby
 	name = "Research Division Lobby"
 	icon_state = "medresearch"
@@ -1375,16 +1211,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "eva"
 	ambientsounds = HIGHSEC
 
-/area/ai_monitored/storage/secure
-	name = "AI Satellite Storage"
-	icon_state = "storage"
-	ambientsounds = HIGHSEC
-
-/area/ai_monitored/storage/emergency
-	name = "Emergency Storage"
-	icon_state = "storage"
-	ambientsounds = HIGHSEC
-
 /area/ai_monitored/storage/satellite
 	name = "AI Satellite Maint"
 	icon_state = "storage"
@@ -1451,11 +1277,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "AI Sat Ext"
 	icon_state = "storage"
 
-/area/ai_monitored/turret_protected/NewAIMain
-	name = "AI Main New"
-	icon_state = "storage"
-
-
 
 // Telecommunications Satellite
 
@@ -1500,39 +1321,3 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/tcommsat/lounge
 	name = "Telecommunications Satellite Lounge"
 	icon_state = "tcomsatlounge"
-
-/////////////////////////////////////////////////////////////////////
-/*
- Lists of areas to be used with is_type_in_list.
- Used in gamemodes code at the moment. --rastaf0
-*/
-
-//SPACE STATION 13
-GLOBAL_LIST_INIT(the_station_areas, list (
-	/area/bridge,
-	/area/chapel,
-	/area/construction,
-	/area/crew_quarters,
-	/area/engine,
-	/area/hallway,
-	/area/holodeck,
-	/area/hydroponics,
-	/area/janitor,
-	/area/lawoffice,
-	/area/library,
-	/area/maintenance,
-	/area/medical,
-//	/area/mint,		//not present on map
-	/area/quartermaster,
-	/area/science,
-	/area/security,
-	/area/solar,
-	/area/storage,
-	/area/teleporter,
-	/area/ai_monitored/storage/eva, //do not try to simplify to "/area/ai_monitored" --rastaf0
-//	/area/ai_monitored/storage/secure,	//not present on map
-//	/area/ai_monitored/storage/emergency,	//not present on map
-	/area/ai_monitored/turret_protected/ai_upload, //do not try to simplify to "/area/ai_monitored/turret_protected" --rastaf0
-	/area/ai_monitored/turret_protected/ai_upload_foyer,
-	/area/ai_monitored/turret_protected/ai,
-))

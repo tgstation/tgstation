@@ -266,7 +266,7 @@
 			var/datum/DBQuery/query_edit_ban_reason = SSdbcore.NewQuery("UPDATE [format_table_name("ban")] SET reason = '[value]', edits = CONCAT(edits,'- [eckey] changed ban reason from <cite><b>\\\"[reason]\\\"</b></cite> to <cite><b>\\\"[value]\\\"</b></cite><BR>') WHERE id = [banid]")
 			if(!query_edit_ban_reason.warn_execute())
 				return
-			message_admins("[key_name_admin(usr)] has edited a ban for [pckey]'s reason from [reason] to [value]",1)
+			message_admins("[key_name_admin(usr)] has edited a ban for [pckey]'s reason from [reason] to [value]")
 		if("duration")
 			if(!value)
 				value = input("Insert the new duration (in minutes) for [pckey]'s ban", "New Duration", "[duration]", null) as null|num
@@ -277,7 +277,7 @@
 			var/datum/DBQuery/query_edit_ban_duration = SSdbcore.NewQuery("UPDATE [format_table_name("ban")] SET duration = [value], edits = CONCAT(edits,'- [eckey] changed ban duration from [duration] to [value]<br>'), expiration_time = DATE_ADD(bantime, INTERVAL [value] MINUTE) WHERE id = [banid]")
 			if(!query_edit_ban_duration.warn_execute())
 				return
-			message_admins("[key_name_admin(usr)] has edited a ban for [pckey]'s duration from [duration] to [value]",1)
+			message_admins("[key_name_admin(usr)] has edited a ban for [pckey]'s duration from [duration] to [value]")
 		if("unban")
 			if(alert("Unban [pckey]?", "Unban?", "Yes", "No") == "Yes")
 				DB_ban_unban_by_id(banid)
@@ -328,7 +328,7 @@
 	var/datum/DBQuery/query_unban = SSdbcore.NewQuery(sql_update)
 	if(!query_unban.warn_execute())
 		return
-	message_admins("[key_name_admin(usr)] has lifted [pckey]'s ban.",1)
+	message_admins("[key_name_admin(usr)] has lifted [pckey]'s ban.")
 
 /client/proc/DB_ban_panel()
 	set category = "Admin"
@@ -341,7 +341,7 @@
 	holder.DB_ban_panel()
 
 
-/datum/admins/proc/DB_ban_panel(playerckey = null, adminckey = null, page = 0)
+/datum/admins/proc/DB_ban_panel(playerckey, adminckey, ip, cid, page = 0)
 	if(!usr.client)
 		return
 
@@ -383,7 +383,7 @@
 		output += "<option value='[j]'>[j]</option>"
 	for(var/j in GLOB.nonhuman_positions)
 		output += "<option value='[j]'>[j]</option>"
-	for(var/j in list("traitor","changeling","operative","revolutionary", "gangster","cultist","wizard"))
+	for(var/j in list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_OPERATIVE, ROLE_REV, ROLE_CULTIST, ROLE_WIZARD))
 		output += "<option value='[j]'>[j]</option>"
 	output += "</select></td></tr></table>"
 	output += "<b>Reason:<br></b><textarea name='dbbanreason' cols='50'></textarea><br>"
@@ -398,25 +398,29 @@
 	output += "<input type='hidden' name='src' value='[REF(src)]'>"
 	output += HrefTokenFormField()
 	output += "<b>Ckey:</b> <input type='text' name='dbsearchckey' value='[playerckey]'>"
-	output += "<b>Admin ckey:</b> <input type='text' name='dbsearchadmin' value='[adminckey]'>"
+	output += "<b>Admin ckey:</b> <input type='text' name='dbsearchadmin' value='[adminckey]'><br>"
+	output += "<b>IP:</b> <input type='text' name='dbsearchip' value='[ip]'>"
+	output += "<b>CID:</b> <input type='text' name='dbsearchcid' value='[cid]'>"
 	output += "<input type='submit' value='search'>"
 	output += "</form>"
 	output += "Please note that all jobban bans or unbans are in-effect the following round."
 
-	if(adminckey || playerckey)
-		playerckey = sanitizeSQL(ckey(playerckey))
-		adminckey = sanitizeSQL(ckey(adminckey))
-		var/playersearch = ""
-		var/adminsearch = ""
+	if(adminckey || playerckey || ip || cid)
+		var/list/searchlist = list()
 		if(playerckey)
-			playersearch = "AND ckey = '[playerckey]' "
+			searchlist += "ckey = '[sanitizeSQL(ckey(playerckey))]'"
 		if(adminckey)
-			adminsearch = "AND a_ckey = '[adminckey]' "
+			searchlist += "a_ckey = '[sanitizeSQL(ckey(adminckey))]'"
+		if(ip)
+			searchlist += "ip = INET_ATON('[sanitizeSQL(ip)]')"
+		if(cid)
+			searchlist += "computerid = '[sanitizeSQL(cid)]'"
+		var/search = searchlist.Join(" AND ")
 		var/bancount = 0
 		var/bansperpage = 15
 		var/pagecount = 0
 		page = text2num(page)
-		var/datum/DBQuery/query_count_bans = SSdbcore.NewQuery("SELECT COUNT(id) FROM [format_table_name("ban")] WHERE 1 [playersearch] [adminsearch]")
+		var/datum/DBQuery/query_count_bans = SSdbcore.NewQuery("SELECT COUNT(id) FROM [format_table_name("ban")] WHERE [search]")
 		if(!query_count_bans.warn_execute())
 			return
 		if(query_count_bans.NextRow())
@@ -442,7 +446,7 @@
 		output += "<th width='15%'><b>OPTIONS</b></th>"
 		output += "</tr>"
 		var/limit = " LIMIT [bansperpage * page], [bansperpage]"
-		var/datum/DBQuery/query_search_bans = SSdbcore.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits, round_id FROM [format_table_name("ban")] WHERE 1 [playersearch] [adminsearch] ORDER BY bantime DESC[limit]")
+		var/datum/DBQuery/query_search_bans = SSdbcore.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits, round_id FROM [format_table_name("ban")] WHERE [search] ORDER BY bantime DESC[limit]")
 		if(!query_search_bans.warn_execute())
 			return
 

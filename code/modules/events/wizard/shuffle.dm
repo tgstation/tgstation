@@ -6,14 +6,14 @@
 	weight = 2
 	typepath = /datum/round_event/wizard/shuffleloc
 	max_occurrences = 5
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/shuffleloc/start()
 	var/list/moblocs = list()
 	var/list/mobs	 = list()
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
-		if(!(H.z in GLOB.station_z_levels))
+		if(!is_station_level(H.z))
 			continue //lets not try to strand people in space or stuck in the wizards den
 		moblocs += H.loc
 		mobs += H
@@ -42,7 +42,7 @@
 	weight = 4
 	typepath = /datum/round_event/wizard/shufflenames
 	max_occurrences = 5
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/shufflenames/start()
 	var/list/mobnames = list()
@@ -76,7 +76,7 @@
 	weight = 1
 	typepath = /datum/round_event/wizard/shuffleminds
 	max_occurrences = 3
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/shuffleminds/start()
 	var/list/mobs	 = list()

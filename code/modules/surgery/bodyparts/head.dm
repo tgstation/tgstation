@@ -1,10 +1,10 @@
 /obj/item/bodypart/head
-	name = "head"
+	name = BODY_ZONE_HEAD
 	desc = "Didn't make sense not to live for fun, your brain gets smart but your head gets dumb."
 	icon = 'icons/mob/human_parts.dmi'
 	icon_state = "default_human_head"
 	max_damage = 200
-	body_zone = "head"
+	body_zone = BODY_ZONE_HEAD
 	body_part = HEAD
 	w_class = WEIGHT_CLASS_BULKY //Quite a hefty load
 	slowdown = 1 //Balancing measure
@@ -41,10 +41,10 @@
 				user.visible_message("<span class='warning'>[user] saws [src] open and pulls out a brain!</span>", "<span class='notice'>You saw [src] open and pull out a brain.</span>")
 			if(brainmob)
 				brainmob.container = null
-				brainmob.loc = brain
+				brainmob.forceMove(brain)
 				brain.brainmob = brainmob
 				brainmob = null
-			brain.loc = T
+			brain.forceMove(T)
 			brain = null
 			update_icon_dropped()
 		else
@@ -61,7 +61,7 @@
 		C = owner
 
 	real_name = C.real_name
-	if(C.disabilities & HUSK)
+	if(C.has_trait(TRAIT_HUSK))
 		real_name = "Unknown"
 		hair_style = "Bald"
 		facial_hair_style = "Shaved"

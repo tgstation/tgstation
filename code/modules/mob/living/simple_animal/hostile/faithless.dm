@@ -4,6 +4,7 @@
 	icon_state = "faithless"
 	icon_living = "faithless"
 	icon_dead = "faithless_dead"
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	gender = MALE
 	speak_chance = 0
 	turns_per_move = 5
@@ -31,7 +32,7 @@
 	minbodytemp = 0
 
 	faction = list("faithless")
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN
 
 /mob/living/simple_animal/hostile/faithless/AttackingTarget()
 	. = ..()

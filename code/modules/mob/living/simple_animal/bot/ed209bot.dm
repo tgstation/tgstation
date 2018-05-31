@@ -12,7 +12,7 @@
 	environment_smash = ENVIRONMENT_SMASH_WALLS //Walls can't stop THE LAW
 	mob_size = MOB_SIZE_LARGE
 
-	radio_key = /obj/item/device/encryptionkey/headset_sec
+	radio_key = /obj/item/encryptionkey/headset_sec
 	radio_channel = "Security"
 	bot_type = SEC_BOT
 	model = "ED-209"
@@ -21,6 +21,7 @@
 	window_name = "Automatic Security Unit v2.6"
 	allow_pai = 0
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
+	path_image_color = "#FF0000"
 
 	var/lastfired = 0
 	var/shot_delay = 15
@@ -40,6 +41,8 @@
 	var/arrest_type = 0 //If true, don't handcuff
 	var/projectile = /obj/item/projectile/energy/electrode //Holder for projectile type
 	var/shoot_sound = 'sound/weapons/taser.ogg'
+	var/cell_type = /obj/item/stock_parts/cell
+	var/vest_type = /obj/item/clothing/suit/armor/vest
 
 
 /mob/living/simple_animal/bot/ed209/Initialize(mapload,created_name,created_lasercolor)
@@ -160,7 +163,7 @@ Auto Patrol[]"},
 		final = final|JUDGE_RECORDCHECK
 	if(weaponscheck)
 		final = final|JUDGE_WEAPONCHECK
-	if(emagged)
+	if(emagged == 2)
 		final = final|JUDGE_EMAGGED
 	//ED209's ignore monkeys
 	final = final|JUDGE_IGNOREMONKEYS
@@ -364,31 +367,32 @@ Auto Patrol[]"},
 			continue
 
 /mob/living/simple_animal/bot/ed209/proc/check_for_weapons(var/obj/item/slot_item)
-	if(slot_item && slot_item.needs_permit)
+	if(slot_item && (slot_item.item_flags & NEEDS_PERMIT))
 		return 1
 	return 0
 
 /mob/living/simple_animal/bot/ed209/explode()
 	walk_to(src,0)
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
-	var/turf/Tsec = get_turf(src)
+	var/atom/Tsec = drop_location()
 
-	var/obj/item/ed209_assembly/Sa = new /obj/item/ed209_assembly(Tsec)
+	var/obj/item/bot_assembly/ed209/Sa = new (Tsec)
 	Sa.build_step = 1
 	Sa.add_overlay("hs_hole")
 	Sa.created_name = name
-	new /obj/item/device/assembly/prox_sensor(Tsec)
+	new /obj/item/assembly/prox_sensor(Tsec)
+	drop_part(cell_type, Tsec)
 
 	if(!lasercolor)
-		var/obj/item/gun/energy/e_gun/advtaser/G = new /obj/item/gun/energy/e_gun/advtaser(Tsec)
+		var/obj/item/gun/energy/e_gun/advtaser/G = new (Tsec)
 		G.cell.charge = 0
 		G.update_icon()
 	else if(lasercolor == "b")
-		var/obj/item/gun/energy/laser/bluetag/G = new /obj/item/gun/energy/laser/bluetag(Tsec)
+		var/obj/item/gun/energy/laser/bluetag/G = new (Tsec)
 		G.cell.charge = 0
 		G.update_icon()
 	else if(lasercolor == "r")
-		var/obj/item/gun/energy/laser/redtag/G = new /obj/item/gun/energy/laser/redtag(Tsec)
+		var/obj/item/gun/energy/laser/redtag/G = new (Tsec)
 		G.cell.charge = 0
 		G.update_icon()
 
@@ -401,7 +405,7 @@ Auto Patrol[]"},
 			new /obj/item/clothing/head/helmet(Tsec)
 		else
 			if(!lasercolor)
-				new /obj/item/clothing/suit/armor/vest(Tsec)
+				drop_part(vest_type, Tsec)
 			if(lasercolor == "b")
 				new /obj/item/clothing/suit/bluetag(Tsec)
 			if(lasercolor == "r")
@@ -455,10 +459,12 @@ Auto Patrol[]"},
 
 
 /mob/living/simple_animal/bot/ed209/emp_act(severity)
-
-	if(severity==2 && prob(70))
-		..(severity-1)
-	else
+	if(severity == 2 && prob(70))
+		severity = 1
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if (severity >= 2)
 		new /obj/effect/temp_visual/emp(loc)
 		var/list/mob/living/carbon/targets = new
 		for(var/mob/living/carbon/C in view(12,src))
