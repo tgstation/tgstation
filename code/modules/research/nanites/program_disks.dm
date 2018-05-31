@@ -3,13 +3,14 @@
 
 /obj/item/disk/nanite_program
 	name = "nanite program disk"
-	desc = "A disk containing a nanite program that can be loaded into a nanite swarm. Can be customized using a Nanite Programming Console."
+	desc = "A disk capable of storing nanite programs. Can be customized using a Nanite Programming Console."
 	var/program_type
 	var/datum/nanite_program/program
 
 /obj/item/disk/nanite_program/Initialize()
 	. = ..()
-	program = new program_type
+	if(program_type)
+		program = new program_type
 
 /obj/item/disk/nanite_program/aggressive_replication
 	program_type = /datum/nanite_program/aggressive_replication
@@ -35,8 +36,14 @@
 /obj/item/disk/nanite_program/emp
 	program_type = /datum/nanite_program/triggered/emp
 
+/obj/item/disk/nanite_program/spreading
+	program_type = /datum/nanite_program/spreading
+
 /obj/item/disk/nanite_program/regenerative
 	program_type = /datum/nanite_program/regenerative
+
+/obj/item/disk/nanite_program/regenerative_advanced
+	program_type = /datum/nanite_program/regenerative_advanced
 
 /obj/item/disk/nanite_program/temperature
 	program_type = /datum/nanite_program/temperature
@@ -44,8 +51,14 @@
 /obj/item/disk/nanite_program/purging
 	program_type = /datum/nanite_program/purging
 
+/obj/item/disk/nanite_program/purging_advanced
+	program_type = /datum/nanite_program/purging_advanced
+
 /obj/item/disk/nanite_program/brain_heal
 	program_type = /datum/nanite_program/brain_heal
+
+/obj/item/disk/nanite_program/brain_heal_advanced
+	program_type = /datum/nanite_program/brain_heal_advanced
 
 /obj/item/disk/nanite_program/blood_restoring
 	program_type = /datum/nanite_program/blood_restoring

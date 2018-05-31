@@ -15,17 +15,18 @@
 	if(istype(I, /obj/item/disk/nanite_program))
 		var/obj/item/disk/nanite_program/N = I
 		if(disk)
-			eject()
+			eject(user)
 		if(user.transferItemToLoc(N, src))
 			to_chat(user, "<span class='notice'>You insert [N] into [src]</span>")
 			disk = N
 	else
 		..()
 
-/obj/machinery/computer/nanite_chamber_control/proc/eject()
+/obj/machinery/computer/nanite_chamber_control/proc/eject(mob/living/user)
 	if(!disk)
 		return
-	disk.forceMove(drop_location()) //TODO: put in mob active hand
+	if(!istype(user) || !Adjacent(user) || !user.put_in_active_hand(disk))
+		disk.forceMove(drop_location())
 	disk = null
 
 /obj/machinery/computer/nanite_chamber_control/proc/find_chamber()
@@ -74,15 +75,16 @@
 		data["status_msg"] = "No chamber detected."
 		return data
 
-	data["scan_level"] = chamber.scan_level
-
 	if(!chamber.occupant)
 		data["status_msg"] = "No occupant detected."
 		return data
 
 	if(chamber.busy)
 		data["status_msg"] = chamber.busy_message
+		return data
 
+	data["scan_level"] = chamber.scan_level
+	data["locked"] = chamber.locked
 	data["occupant_name"] = chamber.occupant.name
 
 	GET_COMPONENT_FROM(nanites, /datum/component/nanites, chamber.occupant)
@@ -120,7 +122,7 @@
 					var/datum/nanite_program/relay/S = P
 					mob_program["relay_code"] = S.relay_code
 			id++
-			mob_programs += mob_program
+			mob_programs += list(mob_program)
 		data["mob_programs"] = mob_programs
 
 	return data
@@ -133,7 +135,7 @@
 			chamber.locked = !chamber.locked
 			. = TRUE
 		if("eject")
-			eject()
+			eject(usr)
 			. = TRUE
 		if("set_safety")
 			var/threshold = input("Set safety threshold (0-500):", name, null) as null|num
@@ -156,6 +158,6 @@
 				return
 			GET_COMPONENT_FROM(nanites, /datum/component/nanites, chamber.occupant)
 			if(nanites)
-				var/datum/nanite_program/P = nanites.programs[params["program_id"]]
+				var/datum/nanite_program/P = nanites.programs[text2num(params["program_id"])]
 				chamber.uninstall_program(P)
 			. = TRUE

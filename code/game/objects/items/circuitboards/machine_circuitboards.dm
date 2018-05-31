@@ -750,15 +750,12 @@
 		/obj/item/stock_parts/micro_laser = 2,
 		/obj/item/stock_parts/manipulator = 1)
 
-/* TODO Convert this to a disk printer
-/obj/item/circuitboard/machine/nanite_printer
-	name = "Nanite Printer (Machine Board)"
-	build_path = /obj/machinery/rnd/production/nanite_printer
+/obj/item/circuitboard/machine/nanite_program_hub
+	name = "Nanite Program Hub (Machine Board)"
+	build_path = /obj/machinery/nanite_program_hub
 	req_components = list(
-		/obj/item/stock_parts/manipulator = 2,
-		/obj/item/stock_parts/micro_laser = 2,
-		/obj/item/stock_parts/scanning_module = 1)
-*/
+		/obj/item/stock_parts/matter_bin = 1,
+		/obj/item/stock_parts/manipulator = 1)
 
 /obj/item/circuitboard/machine/nanite_programmer
 	name = "Nanite Programmer (Machine Board)"

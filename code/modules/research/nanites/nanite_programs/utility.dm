@@ -6,10 +6,17 @@
 	trigger_cost = 5
 	trigger_cooldown = 100
 	rogue_types = list(/datum/nanite_program/toxic)
+	var/cloud_id = 1
 
 /datum/nanite_program/triggered/cloud/trigger()
-	var/datum/component/nanites/cloud_copy = SSnanites.cloud_copy
-	nanites.sync(cloud_copy)
+	var/datum/component/nanites/cloud/cloud_copy = SSnanites.get_cloud_backup(cloud_id)
+	if(cloud_copy)
+		nanites.sync(cloud_copy)
+
+/datum/nanite_program/triggered/cloud/copy()
+	var/datum/nanite_program/triggered/cloud/new_program = ..()
+	new_program.cloud_id = cloud_id
+	return new_program
 
 /datum/nanite_program/viral
 	name = "Viral Replica"

@@ -27,6 +27,7 @@
 /obj/machinery/nanite_chamber/proc/set_busy(status, message)
 	busy = status
 	busy_message = message
+	update_icon()
 
 /obj/machinery/nanite_chamber/proc/set_safety(threshold)
 	if(!occupant)
@@ -37,7 +38,7 @@
 	nanites.safety_threshold = threshold
 
 /obj/machinery/nanite_chamber/proc/inject_nanites()
-	if(stat & NOPOWER|BROKEN)
+	if(stat & (NOPOWER|BROKEN))
 		return
 	if((stat & MAINT) || panel_open)
 		return
@@ -63,7 +64,7 @@
 	occupant.AddComponent(/datum/component/nanites, 100)
 
 /obj/machinery/nanite_chamber/proc/install_program(datum/nanite_program/NP)
-	if(stat & NOPOWER|BROKEN)
+	if(stat & (NOPOWER|BROKEN))
 		return
 	if((stat & MAINT) || panel_open)
 		return
@@ -90,7 +91,7 @@
 		nanites.add_program(NP.copy())
 
 /obj/machinery/nanite_chamber/proc/uninstall_program(datum/nanite_program/NP)
-	if(stat & NOPOWER|BROKEN)
+	if(stat & (NOPOWER|BROKEN))
 		return
 	if((stat & MAINT) || panel_open)
 		return
@@ -104,7 +105,7 @@
 	set_busy(TRUE, "Initializing uninstallation protocol...")
 	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Connecting to nanite framework..."),15)
 	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Uninstalling program..."),25)
-	addtimer(CALLBACK(src, .proc/complete_uninstallation, locked_state, NP),35)
+	addtimer(CALLBACK(src, .proc/complete_uninstallation, locked_state, NP),40)
 
 /obj/machinery/nanite_chamber/proc/complete_uninstallation(locked_state, datum/nanite_program/NP)
 	//TODO MACHINE DING
@@ -112,10 +113,7 @@
 	locked = locked_state
 	if(!occupant)
 		return
-	GET_COMPONENT_FROM(nanites, /datum/component/nanites, occupant)
-	if(nanites)
-		if(NP in nanites.programs)
-			qdel(NP)
+	qdel(NP)
 
 /obj/machinery/nanite_chamber/update_icon()
 	//no power or maintenance
@@ -129,7 +127,10 @@
 
 	//running and someone in there
 	if(occupant)
-		icon_state = initial(icon_state)+ "_occupied"
+		if(busy)
+			icon_state = initial(icon_state)+ "_working"
+		else
+			icon_state = initial(icon_state)+ "_occupied"
 		return
 
 	//running

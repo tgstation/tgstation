@@ -26,10 +26,11 @@
 	else
 		..()
 
-/obj/item/nanite_hijacker/proc/eject()
+/obj/item/nanite_hijacker/proc/eject(mob/living/user)
 	if(!disk)
 		return
-	disk.forceMove(drop_location()) //TODO: put in mob active hand
+	if(!istype(user) || !Adjacent(user) || !user.put_in_hand(disk))
+		disk.forceMove(drop_location())
 	disk = null
 	program = null
 
@@ -53,9 +54,9 @@
 
 /obj/item/nanite_hijacker/ui_data()
 	var/list/data = list()
-	var/has_program = istype(program)
-	data["has_program"] = has_program
-	if(has_program)
+	data["has_disk"] = istype(disk)
+	data["has_program"] = istype(program)
+	if(program)
 		data["name"] = program.name
 		data["desc"] = program.desc
 		data["use_rate"] = program.use_rate
@@ -135,10 +136,3 @@
 					if("Reset Activation Timer")
 						program.timer_type = NANITE_TIMER_RESET
 			. = TRUE
-
-
-#undef REMOTE_MODE_OFF
-#undef REMOTE_MODE_SELF
-#undef REMOTE_MODE_TARGET
-#undef REMOTE_MODE_AOE
-#undef REMOTE_MODE_RELAY

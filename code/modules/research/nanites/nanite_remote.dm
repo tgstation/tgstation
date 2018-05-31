@@ -72,7 +72,7 @@
 			signal_relay(code, relay_code)
 
 /obj/item/nanite_remote/proc/signal_mob(mob/living/M, code)
-	SendSignal(M, COMSIG_NANITE_SIGNAL, code)
+	M.SendSignal(COMSIG_NANITE_SIGNAL, code)
 
 /obj/item/nanite_remote/proc/signal_relay(code, relay_code)
 	for(var/datum/nanite_program/relay/N in SSnanites.nanite_relays)

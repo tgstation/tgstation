@@ -118,5 +118,7 @@
 		var/datum/nanite_program/NP = X
 		NP.receive_signal(code)
 
-
-
+//Nanite components used for cloud storage
+/datum/component/nanites/cloud
+	dupe_mode = COMPONENT_DUPE_ALLOWED
+	var/cloud_id = 1

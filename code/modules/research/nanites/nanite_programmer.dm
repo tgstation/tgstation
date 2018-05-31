@@ -14,7 +14,7 @@
 	if(istype(I, /obj/item/disk/nanite_program))
 		var/obj/item/disk/nanite_program/N = I
 		if(disk)
-			eject()
+			eject(user)
 		if(user.transferItemToLoc(N, src))
 			to_chat(user, "<span class='notice'>You insert [N] into [src]</span>")
 			disk = N
@@ -22,10 +22,11 @@
 	else
 		..()
 
-/obj/machinery/nanite_programmer/proc/eject()
+/obj/machinery/nanite_programmer/proc/eject(mob/living/user)
 	if(!disk)
 		return
-	disk.forceMove(drop_location()) //TODO: put in mob active hand
+	if(!istype(user) || !Adjacent(user) || !user.put_in_active_hand(disk))
+		disk.forceMove(drop_location())
 	disk = null
 	program = null
 
@@ -37,9 +38,9 @@
 
 /obj/machinery/nanite_programmer/ui_data()
 	var/list/data = list()
-	var/has_program = istype(program)
-	data["has_program"] = has_program
-	if(has_program)
+	data["has_disk"] = istype(disk)
+	data["has_program"] = istype(program)
+	if(program)
 		data["name"] = program.name
 		data["desc"] = program.desc
 		data["use_rate"] = program.use_rate
@@ -60,6 +61,11 @@
 			var/datum/nanite_program/relay/S = program
 			data["is_relay"] = TRUE
 			data["relay_code"] = S.relay_code
+
+		if(istype(program, /datum/nanite_program/triggered/cloud))
+			data["is_cloud"] = TRUE
+			var/datum/nanite_program/triggered/cloud/S = program
+			data["cloud_code"] = S.cloud_id
 	return data
 
 /obj/machinery/nanite_programmer/ui_act(action, params)
@@ -67,7 +73,7 @@
 		return
 	switch(action)
 		if("eject")
-			eject()
+			eject(usr)
 			. = TRUE
 		if("toggle_active")
 			program.activated = !program.activated //we don't use the activation procs since we aren't in a mob
@@ -93,6 +99,11 @@
 					if(istype(program, /datum/nanite_program/relay))
 						var/datum/nanite_program/relay/S = program
 						S.relay_code = new_code
+				if("cloud")
+					if(istype(program, /datum/nanite_program/triggered/cloud))
+						var/datum/nanite_program/triggered/cloud/S = program
+						new_code = CLAMP(new_code, 1, 100)
+						S.cloud_id = new_code
 			. = TRUE
 		if("set_activation_delay")
 			var/delay = input("Set activation delay in seconds (0-1800):", name, program.activation_delay) as null|num
