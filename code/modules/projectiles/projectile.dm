@@ -356,7 +356,7 @@
 	fired = TRUE
 	if(hitscan)
 		process_hitscan()
-	if(!isprocessing)
+	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)
 	pixel_move(1)	//move it now!
 
