@@ -4,7 +4,7 @@
 	var/uses = 0
 
 /datum/experiment/clone
-	weight = 800
+	weight = 50
 	experiment_type = /datum/experiment_type/clone
 
 /datum/experiment/clone/can_perform(obj/machinery/rnd/experimentor/E,obj/item/O)
@@ -24,7 +24,7 @@
 		mode.uses--
 
 /datum/experiment/bad_clone
-	weight = 80
+	weight = 1000
 	is_bad = TRUE
 	experiment_type = /datum/experiment_type/clone
 
@@ -32,6 +32,8 @@
 	. = ..()
 	var/datum/experiment_type/clone/mode = E.experiments[/datum/experiment_type/clone]
 	if(!mode || mode.uses <= 0)
+		. = FALSE
+	if(is_type_in_typecache(O, GLOB.critical_items) && is_valid_critical(O)) //crit items cant be badcloned
 		. = FALSE
 
 /datum/experiment/bad_clone/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
