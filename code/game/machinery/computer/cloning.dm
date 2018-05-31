@@ -59,6 +59,7 @@
 	if(!(scanner && LAZYLEN(pods) && autoprocess))
 		return
 
+
 	if(scanner.occupant && scanner.scan_level > 2)
 		scan_occupant(scanner.occupant)
 
@@ -76,9 +77,13 @@
 			records -= R
 
 /obj/machinery/computer/cloning/proc/updatemodules(findfirstcloner)
-	src.scanner = findscanner()
+	scanner = findscanner()
 	if(findfirstcloner && !LAZYLEN(pods))
 		findcloner()
+	if (!isprocessing && autoprocess && !CONFIG_GET(flag/disable_autocloning))
+		START_PROCESSING(SSmachines, src)
+	else if (isprocessing && (!autoprocess || CONFIG_GET(flag/disable_autocloning)))
+		STOP_PROCESSING(SSmachines, src)
 
 /obj/machinery/computer/cloning/proc/findscanner()
 	var/obj/machinery/dna_scannernew/scannerf = null
@@ -151,17 +156,19 @@
 	var/dat = ""
 	dat += "<a href='byond://?src=[REF(src)];refresh=1'>Refresh</a>"
 
-	if(scanner && HasEfficientPod() && scanner.scan_level > 2)
-		if(!autoprocess)
-			dat += "<a href='byond://?src=[REF(src)];task=autoprocess'>Autoprocess</a>"
+	if (!CONFIG_GET(flag/disable_autocloning))
+		if(scanner && HasEfficientPod() && scanner.scan_level > 2)
+			if(!autoprocess)
+				dat += "<a href='byond://?src=[REF(src)];task=autoprocess'>Autoprocess</a>"
+			else
+				dat += "<a href='byond://?src=[REF(src)];task=stopautoprocess'>Stop autoprocess</a>"
 		else
-			dat += "<a href='byond://?src=[REF(src)];task=stopautoprocess'>Stop autoprocess</a>"
-	else
-		dat += "<span class='linkOff'>Autoprocess</span>"
+			dat += "<span class='linkOff'>Autoprocess</span>"
+
 	dat += "<h3>Cloning Pod Status</h3>"
 	dat += "<div class='statusDisplay'>[temp]&nbsp;</div>"
 
-	switch(src.menu)
+	switch(menu)
 		if(1)
 			// Modules
 			if (isnull(src.scanner) || !LAZYLEN(pods))
@@ -273,7 +280,7 @@
 	if(loading)
 		return
 
-	if(href_list["task"])
+	if(href_list["task"] && !CONFIG_GET(flag/disable_autocloning))
 		switch(href_list["task"])
 			if("autoprocess")
 				autoprocess = 1
