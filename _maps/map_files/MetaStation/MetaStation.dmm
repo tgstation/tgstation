@@ -77009,7 +77009,6 @@
 /turf/closed/wall,
 /area/science/circuit)
 "wOE" = (
-/obj/machinery/droneDispenser,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "wPk" = (

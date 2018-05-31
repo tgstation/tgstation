@@ -751,17 +751,6 @@
 	construction_time = 50
 	category = list("Misc")
 
-/datum/design/drone_shell
-	name = "Drone Shell"
-	desc = "A shell of a maintenance drone, an expendable robot built to perform station repairs."
-	id = "drone_shell"
-	build_type = MECHFAB | PROTOLATHE
-	materials = list(MAT_METAL = 800, MAT_GLASS = 350)
-	construction_time=150
-	build_path = /obj/item/drone_shell
-	category = list("Misc")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
 /datum/design/synthetic_flash
 	name = "Flash"
 	desc = "When a problem arises, SCIENCE is the solution."

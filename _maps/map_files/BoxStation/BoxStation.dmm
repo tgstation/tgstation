@@ -36814,7 +36814,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/droneDispenser,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "bOx" = (
@@ -53558,7 +53557,6 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "ipA" = (
-/obj/machinery/droneDispenser,
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
 "itG" = (

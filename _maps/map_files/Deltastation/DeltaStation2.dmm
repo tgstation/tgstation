@@ -92691,7 +92691,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "dQF" = (
-/obj/machinery/droneDispenser,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
