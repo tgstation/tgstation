@@ -74,7 +74,7 @@
 	var/nuking = FALSE
 	var/obj/machinery/doomsday_device/doomsday_device
 
-	var/mob/camera/aiEye/eyeobj = new
+	var/mob/camera/aiEye/eyeobj
 	var/sprint = 10
 	var/cooldown = 0
 	var/acceleration = 1
@@ -84,6 +84,13 @@
 	var/datum/action/innate/deploy_shell/deploy_action = new
 	var/datum/action/innate/deploy_last_shell/redeploy_action = new
 	var/chnotify = 0
+
+	var/multicam_allowed = FALSE
+	var/multicam_on = FALSE
+	var/obj/screen/movable/pic_in_pic/ai/master_multicam
+	var/list/multicam_screens = list()
+	var/list/all_eyes = list()
+	var/max_multicams = 6
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
@@ -116,8 +123,7 @@
 
 	job = "AI"
 
-	eyeobj.ai = src
-	eyeobj.forceMove(src.loc)
+	create_eye()
 	rename_self("ai")
 
 	holo_icon = getHologramIcon(icon('icons/mob/ai.dmi',"default"))
@@ -870,9 +876,12 @@
 		current = A
 	if(client)
 		if(ismovableatom(A))
+			if(A != GLOB.ai_camera_room_landmark)
+				end_multicam()
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = A
 		else
+			end_multicam()
 			if(isturf(loc))
 				if(eyeobj)
 					client.eye = eyeobj
@@ -992,3 +1001,11 @@
 	. = ..()
 	if(!target_ai)
 		target_ai = src //cheat! just give... ourselves as the spawned AI, because that's technically correct
+
+/mob/living/silicon/ai/proc/camera_visibility(mob/camera/aiEye/moved_eye)
+	GLOB.cameranet.visibility(moved_eye, client, all_eyes)
+
+/mob/living/silicon/ai/forceMove(atom/destination)
+	. = ..()
+	if(.)
+		end_multicam()

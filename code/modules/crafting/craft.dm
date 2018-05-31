@@ -100,6 +100,7 @@
 			.["other"][I.type] += S.amount
 		else if(I.tool_behaviour)
 			.["tool_behaviour"] += I.tool_behaviour
+			.["other"][I.type] += 1
 		else
 			if(istype(I, /obj/item/reagent_containers))
 				var/obj/item/reagent_containers/RC = I

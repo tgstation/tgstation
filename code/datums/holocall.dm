@@ -60,9 +60,6 @@
 		user.remote_control = null
 
 	if(!QDELETED(eye))
-		if(user_good && user.client)
-			for(var/datum/camerachunk/chunk in eye.visibleCameraChunks)
-				chunk.remove(eye)
 		qdel(eye)
 	eye = null
 
@@ -284,7 +281,7 @@
 	else
 		var/datum/preset_holoimage/H = new preset_image_type
 		record.caller_image = H.build_image()
-		
+
 //These build caller image from outfit and some additional data, for use by mappers for ruin holorecords
 /datum/preset_holoimage
 	var/nonhuman_mobtype //Fill this if you just want something nonhuman

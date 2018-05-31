@@ -441,10 +441,7 @@
 	held_items.len = amt
 
 	if(hud_used)
-		var/style
-		if(client && client.prefs)
-			style = ui_style2icon(client.prefs.UI_style)
-		hud_used.build_hand_slots(style)
+		hud_used.build_hand_slots()
 
 
 /mob/living/carbon/human/change_number_of_hands(amt)

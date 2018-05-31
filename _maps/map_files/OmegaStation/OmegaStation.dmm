@@ -7629,7 +7629,6 @@
 	},
 /area/teleporter)
 "aoJ" = (
-/obj/machinery/droneDispenser,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},

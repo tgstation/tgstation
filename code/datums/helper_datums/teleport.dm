@@ -112,13 +112,13 @@
 	if(force_teleport)
 		teleatom.forceMove(destturf)
 		if(ismegafauna(teleatom))
-			message_admins("[teleatom] [ADMIN_FLW(teleatom)] has teleported from [ADMIN_COORDJMP(curturf)] to [ADMIN_COORDJMP(destturf)].")
+			message_admins("[teleatom] [ADMIN_FLW(teleatom)] has teleported from [ADMIN_VERBOSEJMP(curturf)] to [ADMIN_VERBOSEJMP(destturf)].")
 		playSpecials(destturf,effectout,soundout)
 	else
 		if(teleatom.Move(destturf))
 			playSpecials(destturf,effectout,soundout)
 			if(ismegafauna(teleatom))
-				message_admins("[teleatom] [ADMIN_FLW(teleatom)] has teleported from [ADMIN_COORDJMP(curturf)] to [ADMIN_COORDJMP(destturf)].")
+				message_admins("[teleatom] [ADMIN_FLW(teleatom)] has teleported from [ADMIN_VERBOSEJMP(curturf)] to [ADMIN_VERBOSEJMP(destturf)].")
 	if(ismob(teleatom))
 		var/mob/M = teleatom
 		M.cancel_camera()
