@@ -51651,7 +51651,7 @@
 /obj/machinery/door/window/eastright{
 	dir = 2;
 	name = "Research and Development Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "research_shutters";
@@ -55830,7 +55830,7 @@
 /obj/machinery/door/window/eastright{
 	dir = 4;
 	name = "Research and Development Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/item/folder/white{
 	pixel_x = 4;
@@ -56670,7 +56670,7 @@
 /obj/machinery/door/window/eastleft{
 	dir = 1;
 	name = "Research and Development Deliveries";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -76251,7 +76251,7 @@
 /obj/machinery/door/window/eastright{
 	dir = 2;
 	name = "Research and Development Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{

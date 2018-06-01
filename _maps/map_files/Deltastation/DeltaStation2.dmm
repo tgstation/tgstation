@@ -72556,7 +72556,7 @@
 /obj/item/pen,
 /obj/machinery/door/window/southleft{
 	name = "Research Lab Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "rndlab1";
@@ -76089,7 +76089,7 @@
 /obj/machinery/door/window/southleft{
 	dir = 4;
 	name = "Research Lab Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/machinery/door/window/westleft,
 /obj/effect/turf_decal/delivery,
@@ -76754,7 +76754,7 @@
 /obj/machinery/door/window/southleft{
 	dir = 8;
 	name = "Research Lab Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "rndlab2";
@@ -92690,11 +92690,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"dQF" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
-/area/maintenance/port/aft)
 "dQG" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -100047,7 +100042,7 @@
 /obj/machinery/autolathe,
 /obj/machinery/door/window/southleft{
 	name = "Research Lab Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -134174,7 +134169,7 @@ dNC
 dNC
 dOT
 dPM
-dQF
+dOb
 dRE
 dSC
 dTA
