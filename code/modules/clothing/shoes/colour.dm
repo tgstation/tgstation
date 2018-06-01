@@ -75,6 +75,10 @@
 	permeability_coefficient = 0.01
 	item_color = "white"
 
+/obj/item/clothing/shoes/sneakers/white/damndaniel/pointed_at(var/mob/user)
+	spawn(10)
+		user.say("DAMN DANIEL!")
+
 /obj/item/clothing/shoes/sneakers/rainbow
 	name = "rainbow shoes"
 	desc = "Very gay shoes."
@@ -120,5 +124,4 @@
 			to_chat(c, "<span class='warning'>You need help taking these off!</span>")
 			return
 	return ..()
-	
-	
+
