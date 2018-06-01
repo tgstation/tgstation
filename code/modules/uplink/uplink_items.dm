@@ -1150,7 +1150,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			operatives/traitors in the fight, even while under fire."
 	item = /obj/item/gun/medbeam
 	cost = 10
-	surplus = 35
+	surplus = 40
 	restricted_roles = list("Medical Doctor", "Chief Medical Officer")
 	
 /datum/uplink_item/device_tools/potion
