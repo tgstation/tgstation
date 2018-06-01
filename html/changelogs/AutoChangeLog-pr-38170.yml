@@ -1,4 +1,0 @@
-author: "theo2003"
-delete-after: True
-changes: 
-  - bugfix: "fixed the clockwork helmet not dropping to ground when used by non-clock cultists"
