@@ -202,7 +202,7 @@
 /datum/holorecord/proc/set_caller_image(mob/user)
 	var/olddir = user.dir
 	user.setDir(SOUTH)
-	caller_image = getFlatIcon(user)
+	caller_image = image(user)
 	user.setDir(olddir)
 
 /obj/item/disk/holodisk
@@ -300,7 +300,7 @@
 			mannequin.equipOutfit(outfit_type,TRUE)
 		mannequin.setDir(SOUTH)
 		COMPILE_OVERLAYS(mannequin)
-		. = getFlatIcon(mannequin)
+		. = image(mannequin)
 		unset_busy_human_dummy("HOLODISK_PRESET")
 
 /obj/item/disk/holodisk/example
@@ -344,4 +344,3 @@
 
 /datum/preset_holoimage/clown
 	outfit_type = /datum/outfit/job/clown
-
