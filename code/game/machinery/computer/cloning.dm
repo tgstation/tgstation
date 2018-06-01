@@ -81,6 +81,10 @@
 	src.scanner = findscanner()
 	if(findfirstcloner && !LAZYLEN(pods))
 		findcloner()
+	if(!autoprocess)
+		STOP_PROCESSING(SSmachines, src)
+	else
+		START_PROCESSING(SSmachines, src)
 
 /obj/machinery/computer/cloning/proc/findscanner()
 	var/obj/machinery/dna_scannernew/scannerf = null
@@ -280,9 +284,11 @@
 			if("autoprocess")
 				if(!(scanner && HasEfficientPod() && scanner.scan_level >= AUTOCLONING_MINIMAL_LEVEL))
 					autoprocess = TRUE
+					START_PROCESSING(SSmachines, src)
 					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 			if("stopautoprocess")
 				autoprocess = FALSE
+				STOP_PROCESSING(SSmachines, src)
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 
 	else if ((href_list["scan"]) && !isnull(scanner) && scanner.is_operational())
