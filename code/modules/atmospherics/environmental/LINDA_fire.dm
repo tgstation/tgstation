@@ -5,11 +5,11 @@
 
 
 
-/turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0, heatless = 0)
+/turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh, noheat)
 	return
 
 
-/turf/open/hotspot_expose(exposed_temperature, exposed_volume, soh, heatless)
+/turf/open/hotspot_expose(exposed_temperature, exposed_volume, soh, noheat)
 	var/datum/gas_mixture/air_contents = return_air()
 	if(!air_contents)
 		return 0
@@ -43,7 +43,7 @@
 			//remove just_spawned protection if no longer processing this cell
 		SSair.add_to_active(src, 0)
 	else
-		if(heatless == 1)
+		if(noheat)
 			return
 		var/datum/gas_mixture/heating = air_contents.remove_ratio(exposed_volume/air_contents.volume)
 		heating.temperature = exposed_temperature
