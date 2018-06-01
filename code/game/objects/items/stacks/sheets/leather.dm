@@ -187,7 +187,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	singular_name = "hide plate"
 	max_amount = 6
 	novariants = FALSE
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 
@@ -200,7 +200,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	singular_name = "drake plate"
 	max_amount = 10
 	novariants = FALSE
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 
@@ -211,10 +211,9 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	if(W.is_sharp())
 		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
 		user.visible_message("[user] starts cutting hair off \the [src].", "<span class='notice'>You start cutting the hair off \the [src]...</span>", "<span class='italics'>You hear the sound of a knife rubbing against flesh.</span>")
-		if(do_after(user,50, target = src))
+		if(do_after(user, 50, target = src))
 			to_chat(user, "<span class='notice'>You cut the hair from this [src.singular_name].</span>")
-			var/obj/item/stack/sheet/hairlesshide/HS = new(user.loc)
-			HS.amount = 1
+			new /obj/item/stack/sheet/hairlesshide(user.drop_location(), 1)
 			use(1)
 	else
 		return ..()
@@ -228,21 +227,11 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	if(exposed_temperature >= drying_threshold_temperature)
 		wetness--
 		if(wetness == 0)
-			//Try locating an exisitng stack on the tile and add to there if possible
-			for(var/obj/item/stack/sheet/leather/HS in src.loc)
-				if(HS.amount < 50)
-					HS.amount++
-					src.use(1)
-					wetness = initial(wetness)
-					break
-			//If it gets to here it means it did not find a suitable stack on the tile.
-			var/obj/item/stack/sheet/leather/HS = new(src.loc)
-			HS.amount = 1
+			new /obj/item/stack/sheet/leather(drop_location(), 1)
 			wetness = initial(wetness)
-			src.use(1)
+			use(1)
 
 /obj/item/stack/sheet/wetleather/microwave_act(obj/machinery/microwave/MW)
 	..()
-	var/obj/item/stack/sheet/leather/L = new(loc)
-	L.amount = amount
+	new /obj/item/stack/sheet/leather(drop_location(), amount)
 	qdel(src)

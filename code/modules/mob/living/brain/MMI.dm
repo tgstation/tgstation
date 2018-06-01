@@ -1,11 +1,11 @@
-/obj/item/device/mmi
+/obj/item/mmi
 	name = "Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity, that nevertheless has become standard-issue on Nanotrasen stations."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mmi_off"
 	w_class = WEIGHT_CLASS_NORMAL
 	var/braintype = "Cyborg"
-	var/obj/item/device/radio/radio = null //Let's give it a radio.
+	var/obj/item/radio/radio = null //Let's give it a radio.
 	var/mob/living/brain/brainmob = null //The current occupant.
 	var/mob/living/silicon/robot = null //Appears unused.
 	var/obj/mecha = null //This does not appear to be used outside of reference in mecha.dm.
@@ -14,7 +14,7 @@
 	var/force_replace_ai_name = FALSE
 	var/overrides_aicore_laws = FALSE // Whether the laws on the MMI, if any, override possible pre-existing laws loaded on the AI core.
 
-/obj/item/device/mmi/update_icon()
+/obj/item/mmi/update_icon()
 	if(!brain)
 		icon_state = "mmi_off"
 		return
@@ -29,13 +29,13 @@
 	else
 		add_overlay("mmi_dead")
 
-/obj/item/device/mmi/Initialize()
+/obj/item/mmi/Initialize()
 	. = ..()
 	radio = new(src) //Spawns a radio inside the MMI.
 	radio.broadcasting = 0 //researching radio mmis turned the robofabs into radios because this didnt start as 0.
 	laws.set_laws_config()
 
-/obj/item/device/mmi/attackby(obj/item/O, mob/user, params)
+/obj/item/mmi/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(O, /obj/item/organ/brain)) //Time to stick a brain in it --NEO
 		var/obj/item/organ/brain/newbrain = O
@@ -76,7 +76,7 @@
 		return ..()
 
 
-/obj/item/device/mmi/attack_self(mob/user)
+/obj/item/mmi/attack_self(mob/user)
 	if(!brain)
 		radio.on = !radio.on
 		to_chat(user, "<span class='notice'>You toggle the MMI's radio system [radio.on==1 ? "on" : "off"].</span>")
@@ -86,7 +86,7 @@
 		update_icon()
 		name = "Man-Machine Interface"
 
-/obj/item/device/mmi/proc/eject_brain(mob/user)
+/obj/item/mmi/proc/eject_brain(mob/user)
 	brainmob.container = null //Reset brainmob mmi var.
 	brainmob.forceMove(brain) //Throw mob into brain.
 	brainmob.stat = DEAD
@@ -103,7 +103,7 @@
 	brain = null //No more brain in here
 
 
-/obj/item/device/mmi/proc/transfer_identity(mob/living/L) //Same deal as the regular brain proc. Used for human-->robot people.
+/obj/item/mmi/proc/transfer_identity(mob/living/L) //Same deal as the regular brain proc. Used for human-->robot people.
 	if(!brainmob)
 		brainmob = new(src)
 	brainmob.name = L.real_name
@@ -128,10 +128,10 @@
 	update_icon()
 	return
 
-/obj/item/device/mmi/proc/replacement_ai_name()
+/obj/item/mmi/proc/replacement_ai_name()
 	return brainmob.name
 
-/obj/item/device/mmi/verb/Toggle_Listening()
+/obj/item/mmi/verb/Toggle_Listening()
 	set name = "Toggle Listening"
 	set desc = "Toggle listening channel on or off."
 	set category = "MMI"
@@ -147,7 +147,10 @@
 	radio.listening = radio.listening==1 ? 0 : 1
 	to_chat(brainmob, "<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>")
 
-/obj/item/device/mmi/emp_act(severity)
+/obj/item/mmi/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	if(!brainmob || iscyborg(loc))
 		return
 	else
@@ -159,9 +162,8 @@
 			if(3)
 				brainmob.emp_damage = min(brainmob.emp_damage + rand(0,10), 30)
 		brainmob.emote("alarm")
-	..()
 
-/obj/item/device/mmi/Destroy()
+/obj/item/mmi/Destroy()
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/borg = loc
 		borg.mmi = null
@@ -178,12 +180,12 @@
 		radio = null
 	return ..()
 
-/obj/item/device/mmi/deconstruct(disassembled = TRUE)
+/obj/item/mmi/deconstruct(disassembled = TRUE)
 	if(brain)
 		eject_brain()
 	qdel(src)
 
-/obj/item/device/mmi/examine(mob/user)
+/obj/item/mmi/examine(mob/user)
 	..()
 	if(brainmob)
 		var/mob/living/brain/B = brainmob
@@ -196,15 +198,15 @@
 		else
 			to_chat(user, "<span class='notice'>The MMI indicates the brain is active.</span>")
 
-/obj/item/device/mmi/relaymove(mob/user)
+/obj/item/mmi/relaymove(mob/user)
 	return //so that the MMI won't get a warning about not being able to move if it tries to move
 
-/obj/item/device/mmi/syndie
+/obj/item/mmi/syndie
 	name = "Syndicate Man-Machine Interface"
 	desc = "Syndicate's own brand of MMI. It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs and AIs created with it."
 	overrides_aicore_laws = TRUE
 
-/obj/item/device/mmi/syndie/Initialize()
+/obj/item/mmi/syndie/Initialize()
 	. = ..()
 	laws = new /datum/ai_laws/syndicate_override()
 	radio.on = 0

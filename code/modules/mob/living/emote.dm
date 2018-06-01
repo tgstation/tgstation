@@ -58,6 +58,11 @@
 	message = "coughs!"
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE)
+	. = ..()
+	if(user.reagents.get_reagent("menthol"))
+		return FALSE
+
 /datum/emote/living/dance
 	key = "dance"
 	key_third_person = "dances"
@@ -240,7 +245,7 @@
 				message_param = "tries to point at %t with a leg, <span class='userdanger'>falling down</span> in the process!"
 				H.Knockdown(20)
 			else
-				message_param = "<span class='userdanger'>bumps their head on the ground</span> trying to motion towards %t."
+				message_param = "<span class='userdanger'>bumps [user.p_their()] head on the ground</span> trying to motion towards %t."
 				H.adjustBrainLoss(5)
 	..()
 

@@ -388,7 +388,7 @@
 	req_access_txt = "201"
 	},
 /obj/item/storage/bag/plants/portaseeder,
-/obj/item/device/plant_analyzer,
+/obj/item/plant_analyzer,
 /obj/item/clothing/mask/bandana,
 /obj/item/hatchet,
 /turf/open/floor/plasteel/vault{
@@ -398,7 +398,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "bf" = (
 /obj/item/storage/belt/security,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet{
 	icon_state = "sec";
@@ -458,8 +458,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "bm" = (
 /obj/structure/chair/comfy/beige{
-	dir = 1;
-	icon_state = "comfychair"
+	dir = 1
 	},
 /turf/open/floor/plasteel/grimy{
 	heat_capacity = 1e+006
@@ -467,7 +466,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "bn" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -2166,7 +2165,7 @@
 "eX" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
@@ -3927,8 +3926,8 @@
 /area/awaymission/undergroundoutpost45/gateway)
 "iO" = (
 /obj/structure/table,
-/obj/item/device/radio/off,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
+/obj/item/radio/off,
 /turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -4787,7 +4786,7 @@
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -4799,8 +4798,8 @@
 /obj/structure/sign/warning/biohazard{
 	pixel_y = 32
 	},
-/obj/item/device/assembly/prox_sensor,
-/obj/item/device/assembly/prox_sensor,
+/obj/item/assembly/prox_sensor,
+/obj/item/assembly/prox_sensor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -5230,7 +5229,7 @@
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/device/multitool,
+/obj/item/multitool,
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = -32
 	},
@@ -5308,7 +5307,7 @@
 "lu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/item/restraints/handcuffs,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /obj/item/reagent_containers/spray/pepper,
 /obj/structure/closet/secure_closet{
 	icon_state = "sec";
@@ -5989,9 +5988,9 @@
 "mB" = (
 /obj/structure/table,
 /obj/item/hand_labeler,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
+/obj/item/flashlight,
+/obj/item/flashlight,
+/obj/item/flashlight,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
@@ -6238,10 +6237,9 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "mZ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Air to Distro";
-	on = 1
+	name = "Air to Distro"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -6653,8 +6651,8 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/device/radio/off,
-/obj/item/device/laser_pointer,
+/obj/item/radio/off,
+/obj/item/laser_pointer,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
@@ -6715,10 +6713,10 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/device/taperecorder{
+/obj/item/taperecorder{
 	pixel_x = -3
 	},
-/obj/item/device/paicard{
+/obj/item/paicard{
 	pixel_x = 4
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -6734,7 +6732,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
@@ -8238,7 +8236,7 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	name = "primary power monitoring console"
 	},
 /obj/structure/sign/warning/nosmoking{
@@ -8324,7 +8322,7 @@
 	dir = 2;
 	pixel_y = 24
 	},
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 1;
 	heat_capacity = 1e+006
@@ -8749,10 +8747,9 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "Mix to Exterior";
-	on = 1
+	name = "Mix to Exterior"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -9649,10 +9646,9 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "sU" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
-	name = "Waste In";
-	on = 1
+	name = "Waste In"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -9688,10 +9684,8 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "sY" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 0;
-	name = "Mix to Filter";
-	on = 1
+/obj/machinery/atmospherics/components/binary/pump/on{
+	name = "Mix to Filter"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -9987,7 +9981,7 @@
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /turf/open/floor/plasteel/red/side{
 	dir = 4;
 	heat_capacity = 1e+006
@@ -10043,20 +10037,18 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "tH" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "N2 Outlet Pump";
-	on = 1
+	name = "N2 Outlet Pump"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "tI" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "O2 Outlet Pump";
-	on = 1
+	name = "O2 Outlet Pump"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
@@ -10064,10 +10056,9 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "tJ" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "Unfiltered to Mix";
-	on = 1
+	name = "Unfiltered to Mix"
 	},
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = 32
@@ -10336,20 +10327,17 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "External to Filter";
-	on = 1
+	name = "External to Filter"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "uk" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 0;
-	name = "Air to External";
-	on = 1
+/obj/machinery/atmospherics/components/binary/pump/on{
+	name = "Air to External"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -11923,7 +11911,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "xk" = (
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	dir = 1;
 	name = "primary power monitoring console"
 	},
@@ -12034,7 +12022,7 @@
 "xv" = (
 /obj/structure/table,
 /obj/item/pickaxe,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006

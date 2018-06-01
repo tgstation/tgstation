@@ -314,7 +314,7 @@
 /datum/chemical_reaction/slime/slimeglow/on_reaction(datum/reagents/holder)
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime begins to emit a soft light. Squeezing it will cause it to grow brightly.</span>")
-	new /obj/item/device/flashlight/slime(T)
+	new /obj/item/flashlight/slime(T)
 	..()
 
 //Purple
@@ -428,14 +428,13 @@
 
 /datum/chemical_reaction/slime/slimeexplosion/on_reaction(datum/reagents/holder)
 	var/turf/T = get_turf(holder.my_atom)
-	var/area/A = get_area(T)
 	var/lastkey = holder.my_atom.fingerprintslast
 	var/touch_msg = "N/A"
 	if(lastkey)
 		var/mob/toucher = get_mob_by_key(lastkey)
 		touch_msg = "[ADMIN_LOOKUPFLW(toucher)]."
-	message_admins("Slime Explosion reaction started at [A] [ADMIN_COORDJMP(T)]. Last Fingerprint: [touch_msg]")
-	log_game("Slime Explosion reaction started at [A] [COORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"].")
+	message_admins("Slime Explosion reaction started at [ADMIN_VERBOSEJMP(T)]. Last Fingerprint: [touch_msg]")
+	log_game("Slime Explosion reaction started at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"].")
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
 	addtimer(CALLBACK(src, .proc/boom, holder), 50)
 	var/obj/item/slime_extract/M = holder.my_atom
@@ -561,8 +560,8 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/slimecamera/on_reaction(datum/reagents/holder)
-	new /obj/item/device/camera(get_turf(holder.my_atom))
-	new /obj/item/device/camera_film(get_turf(holder.my_atom))
+	new /obj/item/camera(get_turf(holder.my_atom))
+	new /obj/item/camera_film(get_turf(holder.my_atom))
 	..()
 
 /datum/chemical_reaction/slime/slimefloor

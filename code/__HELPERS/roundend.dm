@@ -220,7 +220,7 @@
 		log_game("[i]s[total_antagonists[i]].")
 
 	CHECK_TICK
-
+	SSdbcore.SetRoundEnd()
 	//Collects persistence features
 	if(mode.allow_persistence_save)
 		SSpersistence.CollectData()
@@ -285,23 +285,31 @@
 			var/list/ded = SSblackbox.first_death
 			if(ded.len)
 				parts += "[GLOB.TAB]First Death: <b>[ded["name"]], [ded["role"]], at [ded["area"]]. Damage taken: [ded["damage"]].[ded["last_words"] ? " Their last words were: \"[ded["last_words"]]\"" : ""]</b>"
+			//ignore this comment, it fixes the broken sytax parsing caused by the " above
 			else
 				parts += "[GLOB.TAB]<i>Nobody died this shift!</i>"
 	return parts.Join("<br>")
 
-/datum/controller/subsystem/ticker/proc/show_roundend_report(client/C,common_report, popcount)
-	var/list/report_parts = list()
+/client/proc/roundend_report_file()
+	return "data/roundend_reports/[ckey].html"
 
-	report_parts += personal_report(C, popcount)
-	report_parts += common_report
-
+/datum/controller/subsystem/ticker/proc/show_roundend_report(client/C, previous = FALSE)
 	var/datum/browser/roundend_report = new(C, "roundend")
 	roundend_report.width = 800
 	roundend_report.height = 600
-	roundend_report.set_content(report_parts.Join())
+	var/content
+	var/filename = C.roundend_report_file()
+	if(!previous)
+		var/list/report_parts = list(personal_report(C), GLOB.common_report)
+		content = report_parts.Join()
+		C.verbs -= /client/proc/show_previous_roundend_report
+		fdel(filename)
+		text2file(content, filename)
+	else
+		content = file2text(filename)
+	roundend_report.set_content(content)
 	roundend_report.stylesheets = list()
-	roundend_report.add_stylesheet("roundend",'html/browser/roundend.css')
-
+	roundend_report.add_stylesheet("roundend", 'html/browser/roundend.css')
 	roundend_report.open(0)
 
 /datum/controller/subsystem/ticker/proc/personal_report(client/C, popcount)
@@ -326,8 +334,6 @@
 	else
 		parts += "<div class='panel stationborder'>"
 	parts += "<br>"
-	if(!GLOB.survivor_report)
-		GLOB.survivor_report = survivor_report(popcount)
 	parts += GLOB.survivor_report
 	parts += "</div>"
 
@@ -335,38 +341,45 @@
 
 /datum/controller/subsystem/ticker/proc/display_report(popcount)
 	GLOB.common_report = build_roundend_report()
+	GLOB.survivor_report = survivor_report(popcount)
 	for(var/client/C in GLOB.clients)
-		show_roundend_report(C,GLOB.common_report, popcount)
+		show_roundend_report(C, FALSE)
 		give_show_report_button(C)
 		CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/law_report()
 	var/list/parts = list()
+	var/borg_spacer = FALSE //inserts an extra linebreak to seperate AIs from independent borgs, and then multiple independent borgs.
 	//Silicon laws report
 	for (var/i in GLOB.ai_list)
 		var/mob/living/silicon/ai/aiPlayer = i
 		if(aiPlayer.mind)
-			parts += "<b>[aiPlayer.name] (Played by: [aiPlayer.mind.key])'s laws [aiPlayer.stat != DEAD ? "at the end of the round" : "when it was deactivated"] were:</b>"
+			parts += "<b>[aiPlayer.name]</b> (Played by: <b>[aiPlayer.mind.key]</b>)'s laws [aiPlayer.stat != DEAD ? "at the end of the round" : "when it was <span class='redtext'>deactivated</span>"] were:"
 			parts += aiPlayer.laws.get_law_list(include_zeroth=TRUE)
 
 		parts += "<b>Total law changes: [aiPlayer.law_change_counter]</b>"
 
 		if (aiPlayer.connected_robots.len)
-			var/robolist = "<b>[aiPlayer.real_name]'s minions were:</b> "
+			var/borg_num = aiPlayer.connected_robots.len
+			var/robolist = "<br><b>[aiPlayer.real_name]</b>'s minions were: "
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
+				borg_num--
 				if(robo.mind)
-					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
+					robolist += "<b>[robo.name]</b> (Played by: <b>[robo.mind.key]</b>)[robo.stat == DEAD ? " <span class='redtext'>(Deactivated)</span>" : ""][borg_num ?", ":""]<br>"
 			parts += "[robolist]"
+		if(!borg_spacer)
+			borg_spacer = TRUE
 
 	for (var/mob/living/silicon/robot/robo in GLOB.silicon_mobs)
 		if (!robo.connected_ai && robo.mind)
-			if (robo.stat != DEAD)
-				parts += "<b>[robo.name] (Played by: [robo.mind.key]) survived as an AI-less borg! Its laws were:</b>"
-			else
-				parts += "<b>[robo.name] (Played by: [robo.mind.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>"
+			parts += "[borg_spacer?"<br>":""]<b>[robo.name]</b> (Played by: <b>[robo.mind.key]</b>) [(robo.stat != DEAD)? "<span class='greentext'>survived</span> as an AI-less borg!" : "was <span class='redtext'>unable to survive</span> the rigors of being a cyborg without an AI."] Its laws were:"
 
 			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
 				parts += robo.laws.get_law_list(include_zeroth=TRUE)
+
+			if(!borg_spacer)
+				borg_spacer = TRUE
+
 	if(parts.len)
 		return "<div class='panel stationborder'>[parts.Join("<br>")]</div>"
 	else
@@ -451,7 +464,7 @@
 
 /datum/action/report/Trigger()
 	if(owner && GLOB.common_report && SSticker.current_state == GAME_STATE_FINISHED)
-		SSticker.show_roundend_report(owner.client,GLOB.common_report)
+		SSticker.show_roundend_report(owner.client, FALSE)
 
 /datum/action/report/IsAvailable()
 	return 1

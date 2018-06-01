@@ -191,12 +191,12 @@
 
 // Give back the glass type we were supplied with
 /obj/item/solar_assembly/proc/give_glass(device_broken)
+	var/atom/Tsec = drop_location()
 	if(device_broken)
-		new /obj/item/shard(loc)
-		new /obj/item/shard(loc)
+		new /obj/item/shard(Tsec)
+		new /obj/item/shard(Tsec)
 	else if(glass_type)
-		var/obj/item/stack/sheet/S = new glass_type(loc)
-		S.amount = 2
+		new glass_type(Tsec, 2)
 	glass_type = null
 
 
@@ -425,7 +425,7 @@
 				A.icon_state = "4"
 				A.anchored = TRUE
 				qdel(src)
-	else if(user.a_intent != INTENT_HARM && !(I.flags_1 & NOBLUDGEON_1))
+	else if(user.a_intent != INTENT_HARM && !(I.item_flags & NOBLUDGEON))
 		attack_hand(user)
 	else
 		return ..()

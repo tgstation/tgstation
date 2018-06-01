@@ -14,7 +14,7 @@
 #define SUPPORT_LINES 1
 #define COVER 2
 #define CUT_COVER 3
-#define BOLTS 4
+#define ANCHOR_BOLTS 4
 #define SUPPORT_RODS 5
 #define SHEATH 6
 
@@ -44,11 +44,6 @@
 #define CABLED_CORE 3
 #define GLASS_CORE 4
 #define AI_READY_CORE 5
-
-//emitter construction defines
-#define EM_UNSECURED 0
-#define EM_SECURED 1
-#define EM_WELDED 2
 
 //Construction defines for the pinion airlock
 #define GEAR_SECURE 1

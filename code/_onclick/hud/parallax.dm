@@ -167,6 +167,8 @@
 /datum/hud/proc/update_parallax()
 	var/client/C = mymob.client
 	var/turf/posobj = get_turf(C.eye)
+	if(!posobj) 
+		return
 	var/area/areaobj = posobj.loc
 
 	// Update the movement direction of the parallax if necessary (for shuttles)
@@ -310,8 +312,3 @@
 
 /obj/screen/parallax_layer/planet/update_o()
 	return //Shit wont move
-
-#undef LOOP_NONE
-#undef LOOP_NORMAL
-#undef LOOP_REVERSE
-#undef LOOP_TIME

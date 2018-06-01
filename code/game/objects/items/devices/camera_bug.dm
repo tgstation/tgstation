@@ -5,7 +5,7 @@
 
 
 
-/obj/item/device/camera_bug
+/obj/item/camera_bug
 	name = "camera bug"
 	desc = "For illicit snooping through the camera network."
 	icon = 'icons/obj/device.dmi'
@@ -14,7 +14,7 @@
 	item_state	= "camera_bug"
 	throw_speed	= 4
 	throw_range	= 20
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 
 	var/obj/machinery/camera/current = null
 
@@ -31,11 +31,11 @@
 	var/last_found = null
 	var/last_seen = null
 
-/obj/item/device/camera_bug/New()
+/obj/item/camera_bug/New()
 	..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/device/camera_bug/Destroy()
+/obj/item/camera_bug/Destroy()
 	get_cameras()
 	for(var/cam_tag in bugged_cameras)
 		var/obj/machinery/camera/camera = bugged_cameras[cam_tag]
@@ -46,20 +46,20 @@
 		tracking = null
 	return ..()
 
-/obj/item/device/camera_bug/interact(mob/user)
+/obj/item/camera_bug/interact(mob/user)
 	ui_interact(user)
 
-/obj/item/device/camera_bug/ui_interact(mob/user = usr)
+/obj/item/camera_bug/ui_interact(mob/user = usr)
 	. = ..()
 	var/datum/browser/popup = new(user, "camerabug","Camera Bug",nref=src)
 	popup.set_content(menu(get_cameras()))
 	popup.open()
 
-/obj/item/device/camera_bug/attack_self(mob/user)
+/obj/item/camera_bug/attack_self(mob/user)
 	user.set_machine(src)
 	interact(user)
 
-/obj/item/device/camera_bug/check_eye(mob/user)
+/obj/item/camera_bug/check_eye(mob/user)
 	if ( loc != user || user.incapacitated() || user.eye_blind || !current )
 		user.unset_machine()
 		return 0
@@ -70,10 +70,10 @@
 		user.unset_machine()
 		return 0
 	return 1
-/obj/item/device/camera_bug/on_unset_machine(mob/user)
+/obj/item/camera_bug/on_unset_machine(mob/user)
 	user.reset_perspective(null)
 
-/obj/item/device/camera_bug/proc/get_cameras()
+/obj/item/camera_bug/proc/get_cameras()
 	if( world.time > (last_net_update + 100))
 		bugged_cameras = list()
 		for(var/obj/machinery/camera/camera in GLOB.cameranet.cameras)
@@ -85,7 +85,7 @@
 	return bugged_cameras
 
 
-/obj/item/device/camera_bug/proc/menu(list/cameras)
+/obj/item/camera_bug/proc/menu(list/cameras)
 	if(!cameras || !cameras.len)
 		return "No bugged cameras found."
 
@@ -139,12 +139,12 @@
 				return .(cameras)
 	return html
 
-/obj/item/device/camera_bug/proc/get_seens()
+/obj/item/camera_bug/proc/get_seens()
 	if(current && current.can_use())
 		var/list/seen = current.can_see()
 		return seen
 
-/obj/item/device/camera_bug/proc/camera_report()
+/obj/item/camera_bug/proc/camera_report()
 	// this should only be called if current exists
 	var/dat = ""
 	var/list/seen = get_seens()
@@ -189,7 +189,7 @@
 	else
 		return "Camera Offline<br>"
 
-/obj/item/device/camera_bug/Topic(href,list/href_list)
+/obj/item/camera_bug/Topic(href,list/href_list)
 	if(usr != loc)
 		usr.unset_machine()
 		usr << browse(null, "window=camerabug")
@@ -202,6 +202,8 @@
 		var/list/cameras = flatten_list(bugged_cameras)
 		var/obj/machinery/camera/C = locate(href_list["monitor"]) in cameras
 		if(C && istype(C))
+			if(!same_z_level(C))
+				return
 			track_mode = BUGMODE_MONITOR
 			current = C
 			usr.reset_perspective(null)
@@ -221,6 +223,8 @@
 		var/list/cameras = flatten_list(bugged_cameras)
 		var/obj/machinery/camera/C = locate(href_list["emp"]) in cameras
 		if(C && istype(C) && C.bug == src)
+			if(!same_z_level(C))
+				return
 			C.emp_act(EMP_HEAVY)
 			C.bug = null
 			bugged_cameras -= C.c_tag
@@ -235,12 +239,10 @@
 		var/list/cameras = flatten_list(bugged_cameras)
 		var/obj/machinery/camera/C = locate(href_list["view"]) in cameras
 		if(C && istype(C))
+			if(!same_z_level(C))
+				return
 			if(!C.can_use())
 				to_chat(usr, "<span class='warning'>Something's wrong with that camera!  You can't get a feed.</span>")
-				return
-			var/turf/T = get_turf(loc)
-			if(!T || C.z != T.z)
-				to_chat(usr, "<span class='warning'>You can't get a signal!</span>")
 				return
 			current = C
 			spawn(6)
@@ -256,7 +258,7 @@
 
 	interact()
 
-/obj/item/device/camera_bug/process()
+/obj/item/camera_bug/process()
 	if(track_mode == BUGMODE_LIST || (world.time < (last_tracked + refresh_interval)))
 		return
 	last_tracked = world.time
@@ -293,6 +295,12 @@
 				break
 	src.updateSelfDialog()
 
+/obj/item/camera_bug/proc/same_z_level(var/obj/machinery/camera/C)
+	var/turf/T = get_turf(loc)
+	if(!T || C.z != T.z)
+		to_chat(usr, "<span class='warning'>You can't get a signal!</span>")
+		return FALSE
+	return TRUE
 
 #undef BUGMODE_LIST
 #undef BUGMODE_MONITOR

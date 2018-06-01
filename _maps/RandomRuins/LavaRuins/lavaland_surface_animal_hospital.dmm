@@ -37,12 +37,12 @@
 /area/ruin/powered/animal_hospital)
 "aj" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/open/floor/plasteel/cmo,
 /area/ruin/powered/animal_hospital)
 "ak" = (
 /obj/structure/table/wood,
-/obj/item/device/taperecorder,
+/obj/item/taperecorder,
 /obj/item/pen/blue,
 /turf/open/floor/plasteel/cmo,
 /area/ruin/powered/animal_hospital)
@@ -211,9 +211,7 @@
 	},
 /area/ruin/powered/animal_hospital)
 "aP" = (
-/turf/open/floor/plasteel/blue/side{
-	dir = 0
-	},
+/turf/open/floor/plasteel/blue/side,
 /area/ruin/powered/animal_hospital)
 "aQ" = (
 /turf/open/floor/plasteel/blue/corner{
@@ -281,7 +279,7 @@
 /area/ruin/powered/animal_hospital)
 "bb" = (
 /obj/structure/table/reinforced,
-/obj/item/device/laser_pointer,
+/obj/item/laser_pointer,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -335,9 +333,9 @@
 /area/ruin/powered/animal_hospital)
 "bk" = (
 /obj/structure/reagent_dispensers/fueltank,
-/obj/item/device/flashlight/glowstick/blue,
-/obj/item/device/flashlight/glowstick/blue,
-/obj/item/device/flashlight/glowstick/blue,
+/obj/item/flashlight/glowstick/blue,
+/obj/item/flashlight/glowstick/blue,
+/obj/item/flashlight/glowstick/blue,
 /turf/open/floor/plating,
 /area/ruin/powered/animal_hospital)
 "bl" = (
@@ -435,7 +433,7 @@
 /area/ruin/powered/animal_hospital)
 "by" = (
 /obj/structure/table/reinforced,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/open/floor/plasteel/blue/side{
 	dir = 8
 	},
@@ -721,9 +719,7 @@
 /area/ruin/powered/animal_hospital)
 "cw" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/blue/side{
-	dir = 0
-	},
+/turf/open/floor/plasteel/blue/side,
 /area/ruin/powered/animal_hospital)
 "cx" = (
 /obj/machinery/light{
@@ -782,9 +778,7 @@
 /area/ruin/powered/animal_hospital)
 "cH" = (
 /mob/living/simple_animal/bot/cleanbot,
-/turf/open/floor/plasteel/blue/side{
-	dir = 0
-	},
+/turf/open/floor/plasteel/blue/side,
 /area/ruin/powered/animal_hospital)
 "cI" = (
 /obj/structure/table/glass,

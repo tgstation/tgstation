@@ -54,7 +54,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "an" = (
-/obj/item/device/flashlight/lantern,
+/obj/item/flashlight/lantern,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -207,7 +207,7 @@
 /area/ruin/powered/beach)
 "aQ" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "aR" = (
@@ -341,7 +341,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/obj/item/device/megaphone,
+/obj/item/megaphone,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "bH" = (
@@ -382,7 +382,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bO" = (
-/obj/item/device/camera,
+/obj/item/camera,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bP" = (

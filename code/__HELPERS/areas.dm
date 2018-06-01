@@ -15,7 +15,7 @@
 		var/turf/sourceT = found_turfs[1]
 		if(break_if_found[sourceT.type])
 			return FALSE
-		if (is_type_in_typecache(sourceT.loc, GLOB.typecache_shuttle_area))
+		if (istype(sourceT.loc, /area/shuttle))
 			return FALSE
 		found_turfs.Cut(1, 2)
 		var/dir_flags = checked_turfs[sourceT]
@@ -50,7 +50,7 @@
 	var/list/areas = list("New Area" = /area)
 	for(var/i in 1 to turfs.len)
 		var/area/place = get_area(turfs[i])
-		if(blacklisted_areas[place.type] || GLOB.typecache_shuttle_area[place.type])
+		if(blacklisted_areas[place.type] || istype(place, /area/shuttle))
 			continue
 		if(!place.requires_power || place.noteleport || place.hidden)
 			continue // No expanding powerless rooms etc
@@ -83,15 +83,10 @@
 		newA.contents += thing
 		thing.change_area(old_area, newA)
 
-	var/list/related_areas = oldA.related
-	for(var/i in 1 to related_areas.len)
-		var/area/place = related_areas[i]
-		var/list/firedoors = place.firedoors
-		if(!LAZYLEN(firedoors))
-			continue
-		for(var/k in 1 to firedoors.len)
-			var/obj/machinery/door/firedoor/FD = firedoors[k]
-			FD.CalculateAffectingAreas()
+	var/list/firedoors = oldA.firedoors
+	for(var/door in firedoors)
+		var/obj/machinery/door/firedoor/FD = door
+		FD.CalculateAffectingAreas()
 
 	to_chat(creator, "<span class='notice'>You have created a new area, named [newA.name]. It is now weather proof, and constructing an APC will allow it to be powered.</span>")
 	return TRUE

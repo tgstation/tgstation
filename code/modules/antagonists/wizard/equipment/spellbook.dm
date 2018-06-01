@@ -217,7 +217,7 @@
 
 /datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user,obj/item/spellbook/book) //return 1 on success
 	. = ..()
-	user.flags_2 |= TESLA_IGNORE_2
+	user.flags_1 |= TESLA_IGNORE_1
 
 /datum/spellbook_entry/infinite_guns
 	name = "Lesser Summon Guns"
@@ -337,7 +337,7 @@
 /datum/spellbook_entry/item/necrostone
 	name = "A Necromantic Stone"
 	desc = "A Necromantic stone is able to resurrect three dead individuals as skeletal thralls for you to command."
-	item_path = /obj/item/device/necromantic_stone
+	item_path = /obj/item/necromantic_stone
 	category = "Assistance"
 
 /datum/spellbook_entry/item/wands

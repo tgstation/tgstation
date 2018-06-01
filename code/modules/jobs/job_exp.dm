@@ -25,22 +25,22 @@ GLOBAL_PROTECT(exp_to_update)
 		return (job_requirement - my_exp)
 
 /datum/job/proc/get_exp_req_amount()
-	if(title in GLOB.command_positions)
+	if(title in (GLOB.command_positions | list("AI")))
 		var/uerhh = CONFIG_GET(number/use_exp_restrictions_heads_hours)
 		if(uerhh)
 			return uerhh * 60
 	return exp_requirements
 
 /datum/job/proc/get_exp_req_type()
-	if(title in GLOB.command_positions)
+	if(title in (GLOB.command_positions | list("AI")))
 		if(CONFIG_GET(flag/use_exp_restrictions_heads_department) && exp_type_department)
 			return exp_type_department
 	return exp_type
 
 /proc/job_is_xp_locked(jobtitle)
-	if(!CONFIG_GET(flag/use_exp_restrictions_heads) && jobtitle in GLOB.command_positions)
+	if(!CONFIG_GET(flag/use_exp_restrictions_heads) && jobtitle in (GLOB.command_positions | list("AI")))
 		return FALSE
-	if(!CONFIG_GET(flag/use_exp_restrictions_other) && !(jobtitle in GLOB.command_positions))
+	if(!CONFIG_GET(flag/use_exp_restrictions_other) && !(jobtitle in (GLOB.command_positions | list("AI"))))
 		return FALSE
 	return TRUE
 
@@ -226,9 +226,14 @@ GLOBAL_PROTECT(exp_to_update)
 			if(!rolefound)
 				play_records["Unknown"] += minutes
 		else
-			play_records[EXP_TYPE_GHOST] += minutes
-			if(announce_changes)
-				to_chat(src,"<span class='notice'>You got: [minutes] Ghost EXP!</span>")
+			if(holder && !holder.deadmined)
+				play_records[EXP_TYPE_ADMIN] += minutes
+				if(announce_changes)
+					to_chat(src,"<span class='notice'>You got: [minutes] Admin EXP!</span>")
+			else
+				play_records[EXP_TYPE_GHOST] += minutes
+				if(announce_changes)
+					to_chat(src,"<span class='notice'>You got: [minutes] Ghost EXP!</span>")
 	else if(isobserver(mob))
 		play_records[EXP_TYPE_GHOST] += minutes
 		if(announce_changes)

@@ -11,7 +11,7 @@
 	clumsy_check = FALSE
 	randomspread = FALSE
 
-	var/obj/item/device/transfer_valve/bomb
+	var/obj/item/transfer_valve/bomb
 
 /obj/item/gun/blastcannon/Initialize()
 	. = ..()
@@ -19,9 +19,7 @@
 		pin = new
 
 /obj/item/gun/blastcannon/Destroy()
-	if(bomb)
-		qdel(bomb)
-		bomb = null
+	QDEL_NULL(bomb)
 	return ..()
 
 /obj/item/gun/blastcannon/attack_self(mob/user)
@@ -44,48 +42,48 @@
 		desc = initial(desc)
 
 /obj/item/gun/blastcannon/attackby(obj/O, mob/user)
-	if(istype(O, /obj/item/device/transfer_valve))
-		var/obj/item/device/transfer_valve/T = O
+	if(istype(O, /obj/item/transfer_valve))
+		var/obj/item/transfer_valve/T = O
 		if(!T.tank_one || !T.tank_two)
 			to_chat(user, "<span class='warning'>What good would an incomplete bomb do?</span>")
 			return FALSE
-		if(!user.transferItemToLoc(O, src))
-			to_chat(user, "<span class='warning'>[O] seems to be stuck to your hand!</span>")
+		if(!user.transferItemToLoc(T, src))
+			to_chat(user, "<span class='warning'>[T] seems to be stuck to your hand!</span>")
 			return FALSE
-		user.visible_message("<span class='warning'>[user] attaches [O] to [src]!</span>")
-		bomb = O
+		user.visible_message("<span class='warning'>[user] attaches [T] to [src]!</span>")
+		bomb = T
 		update_icon()
 		return TRUE
 	return ..()
 
 /obj/item/gun/blastcannon/proc/calculate_bomb()
-	if(!istype(bomb)||!istype(bomb.tank_one)||!istype(bomb.tank_two))
+	if(!istype(bomb) || !istype(bomb.tank_one) || !istype(bomb.tank_two))
 		return 0
 	var/datum/gas_mixture/temp = new(60)	//directional buff.
 	temp.merge(bomb.tank_one.air_contents.remove_ratio(1))
 	temp.merge(bomb.tank_two.air_contents.remove_ratio(2))
 	for(var/i in 1 to 6)
-		temp.react()
+		temp.react(src)
 	var/pressure = temp.return_pressure()
 	qdel(temp)
 	if(pressure < TANK_FRAGMENT_PRESSURE)
 		return 0
-	return (pressure/TANK_FRAGMENT_SCALE)
+	return (pressure / TANK_FRAGMENT_SCALE)
 
 /obj/item/gun/blastcannon/afterattack(atom/target, mob/user, flag, params)
 	if((!bomb) || (!target) || (get_dist(get_turf(target), get_turf(user)) <= 2))
 		return ..()
 	var/power = calculate_bomb()
-	qdel(bomb)
+	QDEL_NULL(bomb)
 	update_icon()
 	var/heavy = power * 0.2
 	var/medium = power * 0.5
 	var/light = power
-	user.visible_message("<span class='danger'>[user] opens \the [bomb] on \his [name] and fires a blast wave at \the [target]!</span>","<span class='danger'>You open \the [bomb] on your [name] and fire a blast wave at \the [target]!</span>")
+	user.visible_message("<span class='danger'>[user] opens [bomb] on [user.p_their()] [name] and fires a blast wave at [target]!</span>","<span class='danger'>You open [bomb] on your [name] and fire a blast wave at [target]!</span>")
 	playsound(user, "explosion", 100, 1)
 	var/turf/starting = get_turf(user)
 	var/turf/targturf = get_turf(target)
-	var/log_str = "Blast wave fired from [ADMIN_COORDJMP(starting)] ([get_area_name(user, TRUE)]) at [ADMIN_COORDJMP(targturf)] ([target.name]) by [user.name]([user.ckey]) with power [heavy]/[medium]/[light]."
+	var/log_str = "Blast wave fired from [ADMIN_VERBOSEJMP(starting)] ([get_area_name(user, TRUE)]) at [ADMIN_VERBOSEJMP(targturf)] ([target.name]) by [user.name]([user.ckey]) with power [heavy]/[medium]/[light]."
 	message_admins(log_str)
 	log_game(log_str)
 	var/obj/item/projectile/blastwave/BW = new(loc, heavy, medium, light)
@@ -111,17 +109,21 @@
 
 /obj/item/projectile/blastwave/Range()
 	..()
+	var/amount_destruction = EXPLODE_NONE
 	if(heavyr)
-		loc.ex_act(EXPLODE_DEVASTATE)
+		amount_destruction = EXPLODE_DEVASTATE
 	else if(mediumr)
-		loc.ex_act(EXPLODE_HEAVY)
+		amount_destruction = EXPLODE_HEAVY
 	else if(lightr)
-		loc.ex_act(EXPLODE_LIGHT)
+		amount_destruction = EXPLODE_LIGHT
+	if(amount_destruction)
+		loc.ex_act(amount_destruction)
 	else
 		qdel(src)
-	heavyr--
-	mediumr--
-	lightr--
+
+	heavyr = max(heavyr - 1, 0)
+	mediumr = max(mediumr - 1, 0)
+	lightr = max(lightr - 1, 0)
 
 /obj/item/projectile/blastwave/ex_act()
 	return

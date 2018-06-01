@@ -39,7 +39,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "ak" = (
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "al" = (
@@ -74,7 +74,6 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
@@ -158,7 +157,7 @@
 /area/ruin/space/djstation)
 "aE" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/djstation)
 "aF" = (
@@ -176,7 +175,7 @@
 /area/ruin/space/djstation)
 "aH" = (
 /obj/structure/table,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	broadcasting = 0;
 	dir = 8;
 	freerange = 1;
@@ -226,7 +225,7 @@
 /area/ruin/space/djstation)
 "aQ" = (
 /obj/structure/table,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	broadcasting = 1;
 	dir = 8;
 	freerange = 1;

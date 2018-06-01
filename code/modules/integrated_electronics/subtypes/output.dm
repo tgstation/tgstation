@@ -56,7 +56,7 @@
 
 /obj/item/integrated_circuit/output/screen/large/do_work()
 	..()
-	var/obj/O = assembly ? loc : assembly
+	var/obj/O = assembly ? get_turf(assembly) : loc
 	O.visible_message("<span class='notice'>[icon2html(O.icon, world, O.icon_state)]  [stuff_to_display]</span>")
 
 /obj/item/integrated_circuit/output/light
@@ -92,7 +92,7 @@
 
 /obj/item/integrated_circuit/output/light/advanced
 	name = "advanced light"
-	desc = "A light that takes a hexadecimal color value and a brightness value, and can be toggled on/off with a pulse."
+	desc = "A light that takes a hexadecimal color value and a brightness value, and can be toggled on/off by pulsing it."
 	icon_state = "light_adv"
 	complexity = 8
 	inputs = list(

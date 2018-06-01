@@ -31,7 +31,7 @@
 /datum/bioware/spliced_nerves
 	name = "Spliced Nerves"
 	desc = "Nerves are connected to each other multiple times, greatly reducing the impact of stunning effects."
-	mod_type = "nerves"
+	mod_type = BIOWARE_NERVES
 
 /datum/bioware/spliced_nerves/on_gain()
 	..()

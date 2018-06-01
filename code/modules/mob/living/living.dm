@@ -1,15 +1,5 @@
 /mob/living/Initialize()
 	. = ..()
-	generateStaticOverlay()
-	if(staticOverlays.len)
-		for(var/mob/living/simple_animal/drone/D in GLOB.player_list)
-			if(D && D.seeStatic)
-				if(D.staticChoice in staticOverlays)
-					D.staticOverlays |= staticOverlays[D.staticChoice]
-					D.client.images |= staticOverlays[D.staticChoice]
-				else //no choice? force static
-					D.staticOverlays |= staticOverlays["static"]
-					D.client.images |= staticOverlays["static"]
 	if(unique_name)
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
@@ -40,12 +30,6 @@
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 
-	for(var/mob/living/simple_animal/drone/D in GLOB.player_list)
-		for(var/image/I in staticOverlays)
-			D.staticOverlays.Remove(I)
-			D.client.images.Remove(I)
-			qdel(I)
-	staticOverlays.len = 0
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
 	QDEL_LIST(diseases)
@@ -61,25 +45,6 @@
 
 /mob/living/proc/OpenCraftingMenu()
 	return
-
-/mob/living/proc/generateStaticOverlay()
-	staticOverlays.Add(list("static", "blank", "letter", "animal"))
-	var/image/staticOverlay = image(getStaticIcon(new/icon(icon,icon_state)), loc = src)
-	staticOverlay.override = 1
-	staticOverlays["static"] = staticOverlay
-
-	staticOverlay = image(getBlankIcon(new/icon(icon, icon_state)), loc = src)
-	staticOverlay.override = 1
-	staticOverlays["blank"] = staticOverlay
-
-	staticOverlay = getLetterImage(src)
-	staticOverlay.override = 1
-	staticOverlays["letter"] = staticOverlay
-
-	staticOverlay = getRandomAnimalImage(src)
-	staticOverlay.override = 1
-	staticOverlays["animal"] = staticOverlay
-
 
 //Generic Collide(). Override MobCollide() and ObjCollide() instead of this.
 /mob/living/Collide(atom/A)
@@ -301,16 +266,16 @@
 //same as above
 /mob/living/pointed(atom/A as mob|obj|turf in view())
 	if(incapacitated())
-		return 0
-	if(src.has_trait(TRAIT_FAKEDEATH))
-		return 0
+		return FALSE
+	if(has_trait(TRAIT_FAKEDEATH))
+		return FALSE
 	if(!..())
-		return 0
-	visible_message("<b>[src]</b> points to [A]")
-	return 1
+		return FALSE
+	visible_message("<b>[src]</b> points at [A].", "<span class='notice'>You point at [A].</span>")
+	return TRUE
 
 /mob/living/verb/succumb(whispered as null)
-	set hidden = 1
+	set hidden = TRUE
 	if (InCritical())
 		log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", INDIVIDUAL_ATTACK_LOG)
 		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
@@ -321,7 +286,7 @@
 
 /mob/living/incapacitated(ignore_restraints, ignore_grab)
 	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || (!ignore_restraints && restrained(ignore_grab)))
-		return 1
+		return TRUE
 
 /mob/living/proc/InCritical()
 	return (health <= HEALTH_THRESHOLD_CRIT && (stat == SOFT_CRIT || stat == UNCONSCIOUS))
@@ -385,30 +350,16 @@
 	to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 	update_canmove()
 
-//Recursive function to find everything a mob is holding.
-/mob/living/get_contents(obj/item/storage/Storage = null)
-	var/list/L = list()
-
-	if(Storage) //If it called itself
-		L += Storage.return_inv()
-		return L
-	else
-		L += src.contents
-		for(var/obj/item/storage/S in src.contents)	//Check for storage items
-			L += get_contents(S)
-		for(var/obj/item/clothing/under/U in src.contents)	//Check for jumpsuit accessories
-			L += U.contents
-		for(var/obj/item/folder/F in src.contents)	//Check for folders
-			L += F.contents
-		return L
-
-/mob/living/proc/check_contents_for(A)
-	var/list/L = src.get_contents()
-
-	for(var/obj/B in L)
-		if(B.type == A)
-			return 1
-	return 0
+//Recursive function to find everything a mob is holding. Really shitty proc tbh.
+/mob/living/get_contents()
+	var/list/ret = list()
+	ret |= contents						//add our contents
+	for(var/i in ret.Copy())			//iterate storage objects
+		var/atom/A = i
+		A.SendSignal(COMSIG_TRY_STORAGE_RETURN_INVENTORY, ret)
+	for(var/obj/item/folder/F in ret.Copy())		//very snowflakey-ly iterate folders
+		ret |= F.contents
+	return ret
 
 // Living mobs use can_inject() to make sure that the mob is not syringe-proof in general.
 /mob/living/proc/can_inject()
@@ -486,6 +437,11 @@
 	ExtinguishMob()
 	fire_stacks = 0
 	update_canmove()
+	GET_COMPONENT(mood, /datum/component/mood)
+	if (mood)
+		QDEL_LIST_ASSOC_VAL(mood.mood_events)
+		mood.sanity = SANITY_GREAT
+		mood.update_mood()
 
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
@@ -526,8 +482,8 @@
 	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
 
-	if (s_active && !(CanReach(s_active,view_only = TRUE)))
-		s_active.close(src)
+	if(active_storage && !(CanReach(active_storage.parent,view_only = TRUE)))
+		active_storage.close(src)
 
 	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
 		makeTrail(newloc, T, old_direction)
@@ -723,7 +679,7 @@
 // The src mob is trying to strip an item from someone
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
 /mob/living/stripPanelUnequip(obj/item/what, mob/who, where)
-	if(what.flags_1 & NODROP_1)
+	if(what.item_flags & NODROP)
 		to_chat(src, "<span class='warning'>You can't remove \the [what.name], it appears to be stuck!</span>")
 		return
 	who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
@@ -744,7 +700,7 @@
 // Override if a certain mob should be behave differently when placing items (can't, for example)
 /mob/living/stripPanelEquip(obj/item/what, mob/who, where)
 	what = src.get_active_held_item()
-	if(what && (what.flags_1 & NODROP_1))
+	if(what && (what.item_flags & NODROP))
 		to_chat(src, "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>")
 		return
 	if(what)
@@ -855,14 +811,6 @@
 	if(G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return FALSE
-	var/obj/item/gun/shooty
-	if(istype(G, /obj/item/gun))
-		shooty = G
-	if(has_trait(TRAIT_PACIFISM))
-		if(shooty && !shooty.harmful)
-			return TRUE
-		to_chat(src, "<span class='notice'>You don't want to risk harming anyone!</span>")
-		return FALSE
 	return TRUE
 
 /mob/living/proc/update_stamina()
@@ -932,7 +880,7 @@
 /mob/living/rad_act(amount)
 	. = ..()
 
-	if(!amount || amount < RAD_MOB_SKIN_PROTECTION)
+	if(!amount || (amount < RAD_MOB_SKIN_PROTECTION) || has_trait(TRAIT_RADIMMUNE))
 		return
 
 	amount -= RAD_BACKGROUND_RADIATION // This will always be at least 1 because of how skin protection is calculated

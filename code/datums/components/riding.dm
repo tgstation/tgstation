@@ -20,8 +20,7 @@
 
 /datum/component/riding/Initialize()
 	if(!ismovableatom(parent))
-		. = COMPONENT_INCOMPATIBLE
-		CRASH("RIDING COMPONENT ASSIGNED TO NON ATOM MOVABLE!")
+		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(COMSIG_MOVABLE_BUCKLE, .proc/vehicle_mob_buckle)
 	RegisterSignal(COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
 	RegisterSignal(COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
@@ -209,7 +208,7 @@
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(user)
 	user.Knockdown(60)
-	user.visible_message("<span class='warning'>[AM] pushes [user] off of them!</span>")
+	user.visible_message("<span class='warning'>[AM] pushes [user] off of [AM.p_them()]!</span>")
 
 /datum/component/riding/cyborg
 
@@ -302,7 +301,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 = ABSTRACT_1 | DROPDEL_1 | NOBLUDGEON_1
+	item_flags = ABSTRACT | DROPDEL | NOBLUDGEON
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/mob/living/carbon/rider
 	var/mob/living/parent

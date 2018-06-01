@@ -74,6 +74,9 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 /obj/machinery/gateway/proc/toggleon(mob/user)
 	return FALSE
 
+/obj/machinery/gateway/safe_throw_at()
+	return
+
 /obj/machinery/gateway/centerstation/Initialize()
 	. = ..()
 	if(!GLOB.the_gateway)
@@ -156,8 +159,8 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 			use_power(5000)
 		return
 
-/obj/machinery/gateway/centeraway/attackby(obj/item/device/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
+/obj/machinery/gateway/centeraway/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/multitool))
 		if(calibrated)
 			to_chat(user, "\black The gate is already calibrated, there is no work for you to do here.")
 			return

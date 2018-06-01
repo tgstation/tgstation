@@ -38,6 +38,7 @@ Pipelines + Other Objects -> Pipe network
 
 	var/construction_type
 	var/pipe_state //icon_state as a pipe item
+	var/on = FALSE
 
 /obj/machinery/atmospherics/examine(mob/user)
 	..()

@@ -3,7 +3,7 @@
 	name = "banhammer"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "toyhammer"
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	force = 1
 	w_class = WEIGHT_CLASS_TINY
@@ -17,7 +17,11 @@
 /obj/item/banhammer/suicide_act(mob/user)
 		user.visible_message("<span class='suicide'>[user] is hitting [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to ban [user.p_them()]self from life.</span>")
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
-
+/*
+oranges says: This is a meme relating to the english translation of the ss13 russian wiki page on lurkmore.
+mrdoombringer sez: and remember kids, if you try and PR a fix for this item's grammar, you are admitting that you are, indeed, a newfriend.
+for further reading, please see: https://github.com/tgstation/tgstation/pull/30173 and https://translate.google.com/translate?sl=auto&tl=en&js=y&prev=_t&hl=en&ie=UTF-8&u=%2F%2Flurkmore.to%2FSS13&edit-text=&act=url
+*/
 /obj/item/banhammer/attack(mob/M, mob/user)
 	if(user.zone_selected == BODY_ZONE_HEAD)
 		M.visible_message("<span class='danger'>[user] are stroking the head of [M] with a bangammer</span>", "<span class='userdanger'>[user] are stroking the head with a bangammer</span>", "you hear a bangammer stroking a head");
@@ -34,7 +38,7 @@
 	item_state = "sord"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	force = 2
 	throwforce = 1
 	w_class = WEIGHT_CLASS_NORMAL
@@ -55,7 +59,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT | SLOT_BACK
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	force = 40
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
@@ -76,7 +80,8 @@
 
 /obj/item/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
-	flags_1 = CONDUCT_1 | NODROP_1 | DROPDEL_1
+	flags_1 = CONDUCT_1
+	item_flags = NODROP | DROPDEL
 	slot_flags = null
 	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
 	light_range = 3
@@ -102,7 +107,7 @@
 		loc.layer = LARGE_MOB_LAYER //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
 		H.bleedsuppress = TRUE //AND WE WON'T BLEED OUT LIKE COWARDS
 	else
-		if(!admin_spawned)
+		if(!(flags_1 & ADMIN_SPAWNED_1))
 			qdel(src)
 
 
@@ -205,7 +210,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT | SLOT_BACK
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	force = 40
 	throwforce = 10
 	w_class = WEIGHT_CLASS_HUGE
@@ -247,7 +252,7 @@
 		user.put_in_hands(S)
 		to_chat(user, "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>")
 
-	else if(istype(I, /obj/item/device/assembly/igniter) && !(I.flags_1 & NODROP_1))
+	else if(istype(I, /obj/item/assembly/igniter) && !(I.item_flags & NODROP))
 		var/obj/item/melee/baton/cattleprod/P = new /obj/item/melee/baton/cattleprod
 
 		remove_item_from_storage(user)
@@ -382,7 +387,7 @@
 	name = "stick"
 	desc = "A great tool to drag someone else's drinks across the bar."
 	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "stick"
+	icon_state = "cane"
 	item_state = "stick"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
@@ -410,7 +415,7 @@
 	item_state = "mounted_chainsaw"
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
-	flags_1 = NODROP_1 | ABSTRACT_1 | DROPDEL_1
+	item_flags = NODROP | ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	force = 24
 	throwforce = 0
@@ -576,7 +581,7 @@
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
 		if(is_type_in_typecache(target, strong_against))
-			new /obj/effect/decal/cleanable/deadcockroach(get_turf(target))
+			new /obj/effect/decal/cleanable/insectguts(target.drop_location())
 			to_chat(user, "<span class='warning'>You easily splat the [target].</span>")
 			if(istype(target, /mob/living/))
 				var/mob/living/bug = target
@@ -590,7 +595,7 @@
 	icon_state = "madeyoulook"
 	force = 0
 	throwforce = 0
-	flags_1 = DROPDEL_1 | ABSTRACT_1
+	item_flags = DROPDEL | ABSTRACT
 	attack_verb = list("bopped")
 
 /obj/item/slapper
@@ -600,7 +605,7 @@
 	item_state = "nothing"
 	force = 0
 	throwforce = 0
-	flags_1 = DROPDEL_1 | ABSTRACT_1
+	item_flags = DROPDEL | ABSTRACT
 	attack_verb = list("slapped")
 	hitsound = 'sound/effects/snap.ogg'
 

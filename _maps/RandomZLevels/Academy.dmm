@@ -194,7 +194,7 @@
 /area/awaymission/academy/headmaster)
 "aI" = (
 /obj/structure/table/reinforced,
-/obj/item/device/laser_pointer/upgraded,
+/obj/item/laser_pointer/upgraded,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aJ" = (
@@ -2624,7 +2624,7 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "iK" = (
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/engine,
 /area/awaymission/academy/academyaft)
 "iL" = (
@@ -2729,7 +2729,7 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/device/soulstone,
+/obj/item/soulstone,
 /turf/open/floor/plasteel/airless{
 	icon_state = "whitered";
 	dir = 4
@@ -2930,7 +2930,7 @@
 "jA" = (
 /obj/structure/table,
 /obj/structure/window/reinforced,
-/obj/item/device/batterer,
+/obj/item/batterer,
 /turf/open/floor/plasteel/airless{
 	icon_state = "whitered";
 	dir = 4
@@ -3688,7 +3688,7 @@
 /turf/open/floor/vault,
 /area/awaymission/academy/academyengine)
 "mm" = (
-/obj/structure/closet/coffin,
+/obj/structure/closet/crate/coffin,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "mn" = (

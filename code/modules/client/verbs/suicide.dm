@@ -12,7 +12,6 @@
 		return
 	if(confirm == "Yes")
 		suiciding = TRUE
-		log_game("[key_name(src)] (job: [job ? "[job]" : "None"]) committed suicide at [get_area(src)].")
 		var/obj/item/held_item = get_active_held_item()
 		if(held_item)
 			var/damagetype = held_item.suicide_act(src)
@@ -22,6 +21,9 @@
 					suiciding = FALSE
 					SendSignal(COMSIG_ADD_MOOD_EVENT, "shameful_suicide", /datum/mood_event/shameful_suicide)
 					return
+
+				suicide_log()
+
 				var/damage_mod = 0
 				for(var/T in list(BRUTELOSS, FIRELOSS, TOXLOSS, OXYLOSS))
 					damage_mod += (T & damagetype) ? 1 : 0
@@ -48,6 +50,7 @@
 					adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 
 				death(FALSE)
+
 				return
 
 		var/suicide_message
@@ -72,6 +75,8 @@
 
 		visible_message("<span class='danger'>[suicide_message]</span>", "<span class='userdanger'>[suicide_message]</span>")
 
+		suicide_log()
+
 		adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(0)
 
@@ -86,6 +91,9 @@
 		suiciding = 1
 		visible_message("<span class='danger'>[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live.</span>", \
 						"<span class='userdanger'>[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live.</span>")
+
+		suicide_log()
+
 		death(0)
 
 /mob/living/carbon/monkey/verb/suicide()
@@ -99,6 +107,9 @@
 		suiciding = 1
 		visible_message("<span class='danger'>[src] is attempting to bite [p_their()] tongue. It looks like [p_theyre()] trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is attempting to bite [p_their()] tongue. It looks like [p_theyre()] trying to commit suicide.</span>")
+
+		suicide_log()
+
 		adjustOxyLoss(max(200- getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(0)
 
@@ -113,6 +124,9 @@
 		suiciding = 1
 		visible_message("<span class='danger'>[src] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>")
+
+		suicide_log()
+
 		//put em at -175
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(0)
@@ -128,6 +142,9 @@
 		suiciding = 1
 		visible_message("<span class='danger'>[src] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>")
+
+		suicide_log()
+
 		//put em at -175
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(0)
@@ -139,6 +156,9 @@
 		var/turf/T = get_turf(src.loc)
 		T.visible_message("<span class='notice'>[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"</span>", null, \
 		 "<span class='notice'>[src] bleeps electronically.</span>")
+
+		suicide_log()
+
 		death(0)
 	else
 		to_chat(src, "Aborting suicide attempt.")
@@ -155,6 +175,9 @@
 		visible_message("<span class='danger'>[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide.</span>", \
 				"<span class='italics'>You hear thrashing.</span>")
+
+		suicide_log()
+
 		//put em at -175
 		adjustOxyLoss(max(200 - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(0)
@@ -170,8 +193,16 @@
 		suiciding = 1
 		visible_message("<span class='danger'>[src] begins to fall down. It looks like [p_theyve()] lost the will to live.</span>", \
 						"<span class='userdanger'>[src] begins to fall down. It looks like [p_theyve()] lost the will to live.</span>")
+
+		suicide_log()
+
 		death(0)
 
+/mob/living/proc/suicide_log()
+	log_game("[key_name(src)] committed suicide at [AREACOORD(src)] as [src.type].")
+
+/mob/living/carbon/human/suicide_log()
+	log_game("[key_name(src)] (job: [src.job ? "[src.job]" : "None"]) committed suicide at [AREACOORD(src)].")
 
 /mob/living/proc/canSuicide()
 	if(stat == CONSCIOUS)

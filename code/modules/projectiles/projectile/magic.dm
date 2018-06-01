@@ -164,7 +164,7 @@
 				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
 				Robot.clear_inherent_laws(0)
 				Robot.clear_zeroth_law(0)
-        
+
 		if("slime")
 			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
 
@@ -231,7 +231,6 @@
 	if(!new_mob)
 		return
 	new_mob.grant_language(/datum/language/common)
-	new_mob.flags_2 |= OMNITONGUE_2
 	new_mob.logging = M.logging
 
 	// Some forms can still wear some items
@@ -361,7 +360,7 @@
 
 	var/tesla_power = 20000
 	var/tesla_range = 15
-	var/tesla_boom = FALSE
+	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_MOB_STUN | TESLA_OBJ_DAMAGE
 	var/chain
 	var/mob/living/caster
 
@@ -378,7 +377,7 @@
 			visible_message("<span class='warning'>[src] fizzles on contact with [target]!</span>")
 			qdel(src)
 			return
-	tesla_zap(src, tesla_range, tesla_power, tesla_boom)
+	tesla_zap(src, tesla_range, tesla_power, tesla_flags)
 	qdel(src)
 
 /obj/item/projectile/magic/aoe/lightning/Destroy()

@@ -78,9 +78,11 @@
 			to_chat(occupant, "[enter_message]")
 
 /obj/machinery/sleeper/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
 	if(is_operational() && occupant)
 		open_machine()
-	..(severity)
 
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
@@ -92,8 +94,6 @@
 		if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
 			return
 	if(default_change_direction_wrench(user, I))
-		return
-	if(exchange_parts(user, I))
 		return
 	if(default_pry_open(I))
 		return

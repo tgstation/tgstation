@@ -72,7 +72,7 @@
 		H.throw_at(throw_target, 4, 3)
 		H.Knockdown(100)
 		H.adjustStaminaLoss(40)
-		var/head_slot = H.get_item_by_slot(slot_head)
+		var/head_slot = H.get_item_by_slot(SLOT_HEAD)
 		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
 			H.adjustBrainLoss(3)
 			H.updatehealth()
@@ -147,6 +147,9 @@
 		qdel(src)
 	return TRUE
 
+/obj/vehicle/ridden/scooter/skateboard/wrench_act(mob/living/user, obj/item/I)
+	return
+
 //Wheelys
 /obj/vehicle/ridden/scooter/wheelys
 	name = "Wheely-Heels"
@@ -182,7 +185,7 @@
 		H.throw_at(throw_target, 4, 3)
 		H.Knockdown(30)
 		H.adjustStaminaLoss(10)
-		var/head_slot = H.get_item_by_slot(slot_head)
+		var/head_slot = H.get_item_by_slot(SLOT_HEAD)
 		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
 			H.adjustBrainLoss(1)
 			H.updatehealth()

@@ -2,24 +2,6 @@
 
 //NOTE: Breathing happens once per FOUR TICKS, unless the last breath fails. In which case it happens once per ONE TICK! So oxyloss healing is done once per 4 ticks while oxyloss damage is applied once per tick!
 
-
-#define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
-#define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
-#define HEAT_DAMAGE_LEVEL_3 10 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
-
-#define COLD_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when your body temperature just passes the 260.15k safety point
-#define COLD_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 200K point
-#define COLD_DAMAGE_LEVEL_3 3 //Amount of damage applied when your body temperature passes the 120K point
-
-//Note that gas heat damage is only applied once every FOUR ticks.
-#define HEAT_GAS_DAMAGE_LEVEL_1 2 //Amount of damage applied when the current breath's temperature just passes the 360.15k safety point
-#define HEAT_GAS_DAMAGE_LEVEL_2 4 //Amount of damage applied when the current breath's temperature passes the 400K point
-#define HEAT_GAS_DAMAGE_LEVEL_3 8 //Amount of damage applied when the current breath's temperature passes the 1000K point
-
-#define COLD_GAS_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when the current breath's temperature just passes the 260.15k safety point
-#define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
-#define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
-
 // bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
 // Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()
 // The values here should add up to 1.
@@ -62,10 +44,12 @@
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
-	if((wear_suit && (wear_suit.flags_1 & STOPSPRESSUREDMAGE_1)) && (head && (head.flags_1 & STOPSPRESSUREDMAGE_1)))
-		return ONE_ATMOSPHERE
-	else
-		return pressure
+	if (wear_suit && head && istype(wear_suit, /obj/item/clothing) && istype(head, /obj/item/clothing))
+		var/obj/item/clothing/CS = wear_suit
+		var/obj/item/clothing/CH = head
+		if (CS.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
+			return ONE_ATMOSPHERE
+	return pressure
 
 
 /mob/living/carbon/human/handle_traits()
@@ -76,10 +60,6 @@
 			adjust_blindness(-1)
 	else if(eye_blurry)			//blurry eyes heal slowly
 		adjust_blurriness(-1)
-
-	if(has_trait(TRAIT_PACIFISM) && a_intent == INTENT_HARM)
-		to_chat(src, "<span class='notice'>You don't feel like harming anybody.</span>")
-		a_intent_change(INTENT_HELP)
 
 	if (getBrainLoss() >= 60 && !incapacitated(TRUE))
 		SendSignal(COMSIG_ADD_MOOD_EVENT, "brain_damage", /datum/mood_event/brain_damage)
@@ -98,8 +78,7 @@
 /mob/living/carbon/human/breathe()
 	if(!dna.species.breathe(src))
 		..()
-#define HUMAN_MAX_OXYLOSS 3
-#define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30)
+
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
 
 	var/L = getorganslot(ORGAN_SLOT_LUNGS)
@@ -128,9 +107,6 @@
 		if(istype(L, /obj/item/organ/lungs))
 			var/obj/item/organ/lungs/lun = L
 			lun.check_breath(breath,src)
-
-#undef HUMAN_MAX_OXYLOSS
-#undef HUMAN_CRIT_MAX_OXYLOSS
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
 	dna.species.handle_environment(environment, src)
@@ -293,13 +269,14 @@
 
 /mob/living/carbon/human/has_smoke_protection()
 	if(wear_mask)
-		if(wear_mask.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
+		if(wear_mask.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
 	if(glasses)
-		if(glasses.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
+		if(glasses.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
-	if(head)
-		if(head.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
+	if(head && istype(head, /obj/item/clothing))
+		var/obj/item/clothing/CH = head
+		if(CH.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
 	return ..()
 
@@ -383,9 +360,13 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			if(prob(25))
 				slurring += 2
 			jitteriness = max(jitteriness - 3, 0)
+			if(has_trait(TRAIT_DRUNK_HEALING))
+				adjustBruteLoss(-0.12, FALSE)
+				adjustFireLoss(-0.06, FALSE)
 
 		if(drunkenness >= 11 && slurring < 5)
 			slurring += 1.2
+
 		if(mind && (mind.assigned_role == "Scientist" || mind.assigned_role == "Research Director"))
 			if(SSresearch.science_tech)
 				if(drunkenness >= 12.9 && drunkenness <= 13.8)
@@ -397,15 +378,19 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 						ballmer_percent = (-abs(drunkenness - 13.35) / 0.9) + 1
 					if(prob(5))
 						say(pick(GLOB.ballmer_good_msg))
-					SSresearch.science_tech.research_points += (BALLMER_POINTS * ballmer_percent)
+					SSresearch.science_tech.add_points_all(TECHWEB_POINT_TYPE_DEFAULT, (BALLMER_POINTS * ballmer_percent))
 				if(drunkenness > 26) // by this point you're into windows ME territory
 					if(prob(5))
-						SSresearch.science_tech.research_points -= BALLMER_POINTS
+						SSresearch.science_tech.remove_points_all(TECHWEB_POINT_TYPE_DEFAULT, BALLMER_POINTS)
 						say(pick(GLOB.ballmer_windows_me_msg))
+
 		if(drunkenness >= 41)
 			if(prob(25))
 				confused += 2
 			Dizzy(10)
+			if(has_trait(TRAIT_DRUNK_HEALING)) // effects stack with lower tiers
+				adjustBruteLoss(-0.3, FALSE)
+				adjustFireLoss(-0.15, FALSE)
 
 		if(drunkenness >= 51)
 			if(prob(5))
@@ -416,6 +401,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		if(drunkenness >= 61)
 			if(prob(50))
 				blur_eyes(5)
+			if(has_trait(TRAIT_DRUNK_HEALING))
+				adjustBruteLoss(-0.4, FALSE)
+				adjustFireLoss(-0.2, FALSE)
 
 		if(drunkenness >= 71)
 			blur_eyes(5)
@@ -437,7 +425,6 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		if(drunkenness >= 101)
 			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now
 
-#undef HUMAN_MAX_OXYLOSS
 #undef THERMAL_PROTECTION_HEAD
 #undef THERMAL_PROTECTION_CHEST
 #undef THERMAL_PROTECTION_GROIN

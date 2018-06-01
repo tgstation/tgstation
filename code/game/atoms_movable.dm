@@ -161,46 +161,54 @@
 		else //Diagonal move, split it into cardinal moves
 			moving_diagonally = FIRST_DIAG_STEP
 			var/first_step_dir
+			// The `&& moving_diagonally` checks are so that a forceMove taking
+			// place due to a Crossed, Collided, etc. call will interrupt
+			// the second half of the diagonal movement, or the second attempt
+			// at a first half if step() fails because we hit something.
 			if (direct & NORTH)
 				if (direct & EAST)
-					if (step(src, NORTH))
+					if (step(src, NORTH) && moving_diagonally)
 						first_step_dir = NORTH
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, EAST)
-					else if (step(src, EAST))
+					else if (moving_diagonally && step(src, EAST))
 						first_step_dir = EAST
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, NORTH)
 				else if (direct & WEST)
-					if (step(src, NORTH))
+					if (step(src, NORTH) && moving_diagonally)
 						first_step_dir = NORTH
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, WEST)
-					else if (step(src, WEST))
+					else if (moving_diagonally && step(src, WEST))
 						first_step_dir = WEST
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, NORTH)
 			else if (direct & SOUTH)
 				if (direct & EAST)
-					if (step(src, SOUTH))
+					if (step(src, SOUTH) && moving_diagonally)
 						first_step_dir = SOUTH
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, EAST)
-					else if (step(src, EAST))
+					else if (moving_diagonally && step(src, EAST))
 						first_step_dir = EAST
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, SOUTH)
 				else if (direct & WEST)
-					if (step(src, SOUTH))
+					if (step(src, SOUTH) && moving_diagonally)
 						first_step_dir = SOUTH
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, WEST)
-					else if (step(src, WEST))
+					else if (moving_diagonally && step(src, WEST))
 						first_step_dir = WEST
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, SOUTH)
-			if(!. && moving_diagonally == SECOND_DIAG_STEP)
-				setDir(first_step_dir)
+			if(moving_diagonally == SECOND_DIAG_STEP)
+				if(!.)
+					setDir(first_step_dir)
+				else if (!inertia_moving)
+					inertia_next_move = world.time + inertia_move_delay
+					newtonian_move(direct)
 			moving_diagonally = 0
 			return
 
@@ -244,31 +252,9 @@
 	if (orbiting)
 		orbiting.Check()
 
-	var/datum/proximity_monitor/proximity_monitor = src.proximity_monitor
-	if(proximity_monitor)
-		proximity_monitor.HandleMove()
-
 	return 1
 
 /atom/movable/Destroy(force)
-	var/inform_admins = (flags_2 & INFORM_ADMINS_ON_RELOCATE_2)
-	var/stationloving = (flags_2 & STATIONLOVING_2)
-
-	if(inform_admins && force)
-		var/turf/T = get_turf(src)
-		message_admins("[src] has been !!force deleted!! in [ADMIN_COORDJMP(T)].")
-		log_game("[src] has been !!force deleted!! in [COORD(T)].")
-
-	if(stationloving && !force)
-		var/turf/currentturf = get_turf(src)
-		var/turf/targetturf = relocate()
-		log_game("[src] has been destroyed in [COORD(currentturf)]. Moving it to [COORD(targetturf)].")
-		if(inform_admins)
-			message_admins("[src] has been destroyed in [ADMIN_COORDJMP(currentturf)]. Moving it to [ADMIN_COORDJMP(targetturf)].")
-		return QDEL_HINT_LETMELIVE
-
-	if(stationloving && force)
-		STOP_PROCESSING(SSinbounds, src)
 
 	QDEL_NULL(proximity_monitor)
 	QDEL_NULL(language_holder)
@@ -328,14 +314,14 @@
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
 
-		if(oldloc && !same_loc)
-			oldloc.Exited(src, destination)
-			if(old_area)
-				old_area.Exited(src, destination)
-
 		loc = destination
+		moving_diagonally = 0
 
 		if(!same_loc)
+			if(oldloc)
+				oldloc.Exited(src, destination)
+				if(old_area)
+					old_area.Exited(src, destination)
 			var/turf/oldturf = get_turf(oldloc)
 			var/turf/destturf = get_turf(destination)
 			var/old_z = (oldturf ? oldturf.z : null)
@@ -350,6 +336,7 @@
 				if(AM == src)
 					continue
 				AM.Crossed(src, oldloc)
+
 		Moved(oldloc, NONE, TRUE)
 		. = TRUE
 
@@ -365,6 +352,7 @@
 		loc = null
 
 /atom/movable/proc/onTransitZ(old_z,new_z)
+	SendSignal(COMSIG_MOVABLE_Z_CHANGED, old_z, new_z)
 	for (var/item in src) // Notify contents of Z-transition. This can be overridden IF we know the items contents do not care.
 		var/atom/movable/AM = item
 		AM.onTransitZ(old_z,new_z)
@@ -382,6 +370,9 @@
 		return 1
 
 	if(throwing)
+		return 1
+
+	if(!isturf(loc))
 		return 1
 
 	if(locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
@@ -412,9 +403,12 @@
 		step(src, AM.dir)
 	..()
 
+/atom/movable/proc/safe_throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
+	return throw_at(target, range, speed, thrower, spin, diagonals_first, callback)
+
 /atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback) //If this returns FALSE then callback will not be called.
 	. = FALSE
-	if (!target || (flags_1 & NODROP_1) || speed <= 0)
+	if (!target || speed <= 0)
 		return
 
 	if (pulledby)
@@ -486,11 +480,11 @@
 	if(spin)
 		SpinAnimation(5, 1)
 
+	SendSignal(COMSIG_MOVABLE_THROW, TT, spin)
 	SSthrowing.processing[src] = TT
 	if (SSthrowing.state == SS_PAUSED && length(SSthrowing.currentrun))
 		SSthrowing.currentrun[src] = TT
 	TT.tick()
-
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
 	for(var/m in buckled_mobs)
@@ -508,6 +502,13 @@
 		return 1
 	return ..()
 
+// called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
+/atom/movable/proc/on_exit_storage(datum/component/storage/concrete/S)
+	return
+
+// called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
+/atom/movable/proc/on_enter_storage(datum/component/storage/concrete/S)
+	return
 
 /atom/movable/proc/get_spacemove_backup()
 	var/atom/movable/dense_object_backup
@@ -618,90 +619,6 @@
 	else if (!on && floating)
 		animate(src, pixel_y = initial(pixel_y), time = 10)
 		floating = FALSE
-
-/* Stationloving
-*
-* A stationloving atom will always teleport back to the station
-* if it ever leaves the station z-levels or CentCom. It will also,
-* when Destroy() is called, will teleport to a random turf on the
-* station.
-*
-* The turf is guaranteed to be "safe" for normal humans, probably.
-* If the station is SUPER SMASHED UP, it might not work.
-*
-* Here are some important procs:
-* relocate()
-* moves the atom to a safe turf on the station
-*
-* check_in_bounds()
-* regularly called and checks if `in_bounds()` returns true. If false, it
-* triggers a `relocate()`.
-*
-* in_bounds()
-* By default, checks that the atom's z is the station z or centcom.
-*/
-
-/atom/movable/proc/set_stationloving(state, inform_admins=FALSE)
-	var/currently = (flags_2 & STATIONLOVING_2)
-
-	if(inform_admins)
-		flags_2 |= INFORM_ADMINS_ON_RELOCATE_2
-	else
-		flags_2 &= ~INFORM_ADMINS_ON_RELOCATE_2
-
-	if(state == currently)
-		return
-	else if(!state)
-		STOP_PROCESSING(SSinbounds, src)
-		flags_2 &= ~STATIONLOVING_2
-	else
-		START_PROCESSING(SSinbounds, src)
-		flags_2 |= STATIONLOVING_2
-
-/atom/movable/proc/relocate()
-	var/targetturf = find_safe_turf()
-	if(!targetturf)
-		if(GLOB.blobstart.len > 0)
-			targetturf = get_turf(pick(GLOB.blobstart))
-		else
-			throw EXCEPTION("Unable to find a blobstart landmark")
-
-	if(ismob(loc))
-		var/mob/M = loc
-		M.transferItemToLoc(src, targetturf, TRUE)	//nodrops disks when?
-	else if(istype(loc, /obj/item/storage))
-		var/obj/item/storage/S = loc
-		S.remove_from_storage(src, targetturf)
-	else
-		forceMove(targetturf)
-	// move the disc, so ghosts remain orbiting it even if it's "destroyed"
-	return targetturf
-
-/atom/movable/proc/check_in_bounds()
-	if(in_bounds())
-		return
-	else
-		var/turf/currentturf = get_turf(src)
-		to_chat(get(src, /mob), "<span class='danger'>You can't help but feel that you just lost something back there...</span>")
-		var/turf/targetturf = relocate()
-		log_game("[src] has been moved out of bounds in [COORD(currentturf)]. Moving it to [COORD(targetturf)].")
-		if(flags_2 & INFORM_ADMINS_ON_RELOCATE_2)
-			message_admins("[src] has been moved out of bounds in [ADMIN_COORDJMP(currentturf)]. Moving it to [ADMIN_COORDJMP(targetturf)].")
-
-/atom/movable/proc/in_bounds()
-	var/static/list/allowed_shuttles = typecacheof(list(/area/shuttle/syndicate, /area/shuttle/escape, /area/shuttle/pod_1, /area/shuttle/pod_2, /area/shuttle/pod_3, /area/shuttle/pod_4))
-	var/turf/T = get_turf(src)
-	if (!T)
-		return FALSE
-	if (is_station_level(T.z) || is_centcom_level(T.z))
-		return TRUE
-	if (is_transit_level(T.z))
-		var/area/A = T.loc
-		if (is_type_in_typecache(A, allowed_shuttles))
-			return TRUE
-
-	return FALSE
-
 
 /* Language procs */
 /atom/movable/proc/get_language_holder(shadow=TRUE)

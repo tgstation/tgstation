@@ -527,7 +527,7 @@
 /area/awaymission/snowforest)
 "bT" = (
 /obj/structure/table/wood,
-/obj/item/device/instrument/violin,
+/obj/item/instrument/violin,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bU" = (
@@ -620,7 +620,7 @@
 	dir = 8
 	},
 /obj/structure/table/wood,
-/obj/item/device/instrument/guitar,
+/obj/item/instrument/guitar,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ci" = (
@@ -952,7 +952,7 @@
 /area/awaymission/snowforest)
 "du" = (
 /obj/structure/closet/toolcloset,
-/obj/item/device/lightreplacer,
+/obj/item/lightreplacer,
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
 /area/awaymission/cabin)

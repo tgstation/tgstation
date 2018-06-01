@@ -89,7 +89,7 @@
 		if(!cell_connectors)
 			to_chat(user, "<span class='warning'>This [name] can't support a power cell!</span>")
 			return
-		if(W.flags_1 & NODROP_1)
+		if(W.item_flags & NODROP)
 			to_chat(user, "<span class='warning'>[W] is stuck to your hand!</span>")
 			return
 		user.dropItemToGround(W)
@@ -397,8 +397,8 @@
 /obj/machinery/light/attackby(obj/item/W, mob/living/user, params)
 
 	//Light replacer code
-	if(istype(W, /obj/item/device/lightreplacer))
-		var/obj/item/device/lightreplacer/LR = W
+	if(istype(W, /obj/item/lightreplacer))
+		var/obj/item/lightreplacer/LR = W
 		LR.ReplaceLight(src, user)
 
 	// attempt to insert light
@@ -662,10 +662,12 @@
 	on = TRUE
 	update()
 
-/obj/machinery/light/tesla_act(power, explosive = FALSE)
-	if(explosive)
-		explosion(src.loc,0,0,0,flame_range = 5, adminlog = 0)
-	qdel(src)
+/obj/machinery/light/tesla_act(power, tesla_flags)
+	if(tesla_flags & TESLA_MACHINE_EXPLOSIVE)
+		explosion(src,0,0,0,flame_range = 5, adminlog = 0)
+		qdel(src)
+	else
+		return ..()
 
 // called when area power state changes
 /obj/machinery/light/power_change()
@@ -791,7 +793,7 @@
 
 /obj/item/light/proc/shatter()
 	if(status == LIGHT_OK || status == LIGHT_BURNED)
-		visible_message("<span class='danger'>[name] shatters.</span>","<span class='italics'>You hear a small glass object shatter.</span>")
+		visible_message("<span class='danger'>[src] shatters.</span>","<span class='italics'>You hear a small glass object shatter.</span>")
 		status = LIGHT_BROKEN
 		force = 5
 		playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)

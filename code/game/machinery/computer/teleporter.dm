@@ -5,7 +5,7 @@
 	icon_keyboard = "teleport_key"
 	light_color = LIGHT_COLOR_BLUE
 	circuit = /obj/item/circuitboard/computer/teleporter
-	var/obj/item/device/gps/locked
+	var/obj/item/gps/locked
 	var/regime_set = "Teleporter"
 	var/id
 	var/obj/machinery/teleport/station/power_station
@@ -34,8 +34,8 @@
 	return power_station
 
 /obj/machinery/computer/teleporter/attackby(obj/I, mob/living/user, params)
-	if(istype(I, /obj/item/device/gps))
-		var/obj/item/device/gps/L = I
+	if(istype(I, /obj/item/gps))
+		var/obj/item/gps/L = I
 		if(L.locked_location && !(stat & (NOPOWER|BROKEN)))
 			if(!user.transferItemToLoc(L, src))
 				to_chat(user, "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>")
@@ -153,7 +153,7 @@
 	var/list/L = list()
 	var/list/areaindex = list()
 	if(regime_set == "Teleporter")
-		for(var/obj/item/device/beacon/R in GLOB.teleportbeacons)
+		for(var/obj/item/beacon/R in GLOB.teleportbeacons)
 			if(is_eligible(R))
 				var/area/A = get_area(R)
 				L[avoid_assoc_duplicate_keys(A.name, areaindex)] = R
@@ -174,25 +174,26 @@
 
 	else
 		var/list/S = power_station.linked_stations
-		if(!S.len)
-			to_chat(user, "<span class='alert'>No connected stations located.</span>")
-			return
 		for(var/obj/machinery/teleport/station/R in S)
-			if(is_eligible(R))
+			if(is_eligible(R) && R.teleporter_hub)
 				var/area/A = get_area(R)
 				L[avoid_assoc_duplicate_keys(A.name, areaindex)] = R
+		if(!L.len)
+			to_chat(user, "<span class='alert'>No active connected stations located.</span>")
+			return
 		var/desc = input("Please select a station to lock in.", "Locking Computer") as null|anything in L
-		target = L[desc]
-		if(target)
-			var/obj/machinery/teleport/station/trg = target
-			trg.linked_stations |= power_station
-			trg.stat &= ~NOPOWER
-			if(trg.teleporter_hub)
-				trg.teleporter_hub.stat &= ~NOPOWER
-				trg.teleporter_hub.update_icon()
-			if(trg.teleporter_console)
-				trg.teleporter_console.stat &= ~NOPOWER
-				trg.teleporter_console.update_icon()
+		var/obj/machinery/teleport/station/target_station = L[desc]
+		if(!target_station || !target_station.teleporter_hub)
+			return
+		target = target_station.teleporter_hub
+		target_station.linked_stations |= power_station
+		target_station.stat &= ~NOPOWER
+		if(target_station.teleporter_hub)
+			target_station.teleporter_hub.stat &= ~NOPOWER
+			target_station.teleporter_hub.update_icon()
+		if(target_station.teleporter_console)
+			target_station.teleporter_console.stat &= ~NOPOWER
+			target_station.teleporter_console.update_icon()
 
 /obj/machinery/computer/teleporter/proc/is_eligible(atom/movable/AM)
 	var/turf/T = get_turf(AM)

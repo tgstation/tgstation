@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag", "datum_components", "area"
 			M.power_change()
 
 	if(holoitem)
-		O.flags_2 |= HOLOGRAM_2
+		O.flags_1 |= HOLOGRAM_1
 	return O
 
 

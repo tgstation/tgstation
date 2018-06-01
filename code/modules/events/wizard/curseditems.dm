@@ -11,29 +11,29 @@
 
 /datum/round_event/wizard/cursed_items/start()
 	var/item_set = pick("wizardmimic", "swords", "bigfatdoobie", "boxing", "voicemodulators", "catgirls2015")
-	var/list/loadout[slots_amt]
+	var/list/loadout[SLOTS_AMT]
 	var/ruins_spaceworthiness
 	var/ruins_wizard_loadout
 
 	switch(item_set)
 		if("wizardmimic")
-			loadout[slot_wear_suit] = /obj/item/clothing/suit/wizrobe
-			loadout[slot_shoes] = /obj/item/clothing/shoes/sandal/magic
-			loadout[slot_head] = /obj/item/clothing/head/wizard
+			loadout[SLOT_WEAR_SUIT] = /obj/item/clothing/suit/wizrobe
+			loadout[SLOT_SHOES] = /obj/item/clothing/shoes/sandal/magic
+			loadout[SLOT_HEAD] = /obj/item/clothing/head/wizard
 			ruins_spaceworthiness = 1
 		if("swords")
-			loadout[slot_hands] = /obj/item/katana/cursed
+			loadout[SLOT_HANDS] = /obj/item/katana/cursed
 		if("bigfatdoobie")
-			loadout[slot_wear_mask] = /obj/item/clothing/mask/cigarette/rollie/trippy
+			loadout[SLOT_WEAR_MASK] = /obj/item/clothing/mask/cigarette/rollie/trippy
 			ruins_spaceworthiness = 1
 		if("boxing")
-			loadout[slot_wear_mask] = /obj/item/clothing/mask/luchador
-			loadout[slot_gloves] = /obj/item/clothing/gloves/boxing
+			loadout[SLOT_WEAR_MASK] = /obj/item/clothing/mask/luchador
+			loadout[SLOT_GLOVES] = /obj/item/clothing/gloves/boxing
 			ruins_spaceworthiness = 1
 		if("voicemodulators")
-			loadout[slot_wear_mask] = /obj/item/clothing/mask/chameleon
+			loadout[SLOT_WEAR_MASK] = /obj/item/clothing/mask/chameleon
 		if("catgirls2015")
-			loadout[slot_head] = /obj/item/clothing/head/kitty
+			loadout[SLOT_HEAD] = /obj/item/clothing/head/kitty
 			ruins_spaceworthiness = 1
 			ruins_wizard_loadout = 1
 
@@ -50,7 +50,7 @@
 				var/obj/item/I = new J //dumb but required because of byond throwing a fit anytime new gets too close to a list
 				H.dropItemToGround(H.get_item_by_slot(i), TRUE)
 				H.equip_to_slot_or_del(I, i)
-				I.flags_1 |= NODROP_1 | DROPDEL_1
+				I.item_flags |= NODROP | DROPDEL
 				I.name = "cursed " + I.name
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)

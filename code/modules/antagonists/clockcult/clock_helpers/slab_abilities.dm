@@ -35,13 +35,13 @@
 	if(iscarbon(target) && target.Adjacent(ranged_ability_user))
 		var/mob/living/carbon/L = target
 		if(is_servant_of_ratvar(L))
-			to_chat(ranged_ability_user, "<span class='neovgre'>\"They're a servant.\"</span>")
+			to_chat(ranged_ability_user, "<span class='neovgre'>\"[L.p_theyre(TRUE)] a servant.\"</span>")
 			return TRUE
 		else if(L.stat)
 			to_chat(ranged_ability_user, "<span class='neovgre'>\"There is use in shackling the dead, but for examples.\"</span>")
 			return TRUE
 		else if (istype(L.handcuffed,/obj/item/restraints/handcuffs/clockwork))
-			to_chat(ranged_ability_user, "<span class='neovgre'>\"They are already helpless, no?\"</span>")
+			to_chat(ranged_ability_user, "<span class='neovgre'>\"[L.p_theyre(TRUE)] already helpless, no?\"</span>")
 			return TRUE
 
 		playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE)
@@ -67,7 +67,7 @@
 	name = "replicant manacles"
 	desc = "Heavy manacles made out of freezing-cold metal. It looks like brass, but feels much more solid."
 	icon_state = "brass_manacles"
-	flags_1 = DROPDEL_1
+	item_flags = DROPDEL
 
 /obj/item/restraints/handcuffs/clockwork/dropped(mob/user)
 	user.visible_message("<span class='danger'>[user]'s [name] come apart at the seams!</span>", \
@@ -92,7 +92,7 @@
 			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L] does not yet serve Ratvar.\"</span>")
 			return TRUE
 		if(L.stat == DEAD)
-			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] dead. [text2ratvar("Oh, child. To have your life cut short...")]\"</span>")
+			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_theyre(TRUE)] dead. [text2ratvar("Oh, child. To have your life cut short...")]\"</span>")
 			return TRUE
 
 		var/brutedamage = L.getBruteLoss()
@@ -220,10 +220,10 @@
 			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L] does not yet serve Ratvar.\"</span>")
 			return TRUE
 		if(L.stat == DEAD)
-			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] dead. [text2ratvar("Oh, child. To have your life cut short...")]\"</span>")
+			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_theyre(TRUE)] dead. [text2ratvar("Oh, child. To have your life cut short...")]\"</span>")
 			return TRUE
 		if(islist(L.stun_absorption) && L.stun_absorption["vanguard"] && L.stun_absorption["vanguard"]["end_time"] > world.time)
-			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] already shielded by a Vanguard.\"</span>")
+			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_theyre(TRUE)] already shielded by a Vanguard.\"</span>")
 			return TRUE
 
 		successful = TRUE
