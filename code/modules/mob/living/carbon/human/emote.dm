@@ -174,3 +174,24 @@
 		T.Entered(src)
 
 //Ayy lmao
+
+
+//I'm going too far.
+
+/datum/emote/sound/carbon/human/meow
+	key = "meow"
+	key_third_person = "meows"
+	message = "mewls!"
+	emote_type = EMOTE_AUDIBLE
+	sound = 'sound/effects/meow1.ogg'
+
+/datum/emote/sound/carbon/human/meow/run_emote(mob/user, params)
+	var/yes = FALSE
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna && H.dna.features)
+			if((H.dna.features["tail_human"] == "Cat") && (H.dna.features["ears"] == "Cat"))
+				yes = TRUE
+	if(!yes)
+		return FALSE
+	. = ..(user, params)
