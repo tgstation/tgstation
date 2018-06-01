@@ -1,5 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - code_imp: "NODROP_1, DROPDEL_1, ABSTRACT_1 and NOBLUDGEON_1 have been moved to item_flags"
-  - tweak: "brass handcuffs, meat hook and the chrono gun now conduct electricity."
