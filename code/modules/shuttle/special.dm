@@ -165,7 +165,7 @@
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
 	access_card.access |= ACCESS_CENT_BAR
-	access_card.flags_1 |= NODROP_1
+	access_card.item_flags |= NODROP
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
 	qdel(access_card)

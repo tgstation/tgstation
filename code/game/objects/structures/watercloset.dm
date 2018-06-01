@@ -540,7 +540,7 @@
 
 	if(!istype(O))
 		return
-	if(O.flags_1 & ABSTRACT_1) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
+	if(O.item_flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
 		return
 
 	if(user.a_intent != INTENT_HARM)

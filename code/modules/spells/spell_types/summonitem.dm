@@ -22,10 +22,10 @@
 
 		if(!marked_item) //linking item to the spell
 			message = "<span class='notice'>"
-			for(var/obj/item in hand_items)
-				if(item.flags_1 & ABSTRACT_1)
+			for(var/obj/item/item in hand_items)
+				if(item.item_flags & ABSTRACT)
 					continue
-				if(item.flags_1 & NODROP_1)
+				if(item.item_flags & NODROP)
 					message += "Though it feels redundant, "
 				marked_item = 		item
 				message += "You mark [item] for recall.</span>"

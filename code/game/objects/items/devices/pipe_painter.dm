@@ -3,7 +3,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler1"
 	item_state = "flight"
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	var/paint_color = "grey"
 
 	materials = list(MAT_METAL=5000, MAT_GLASS=2000)

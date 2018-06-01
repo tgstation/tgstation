@@ -4,7 +4,7 @@
 	desc = "A label on the side of this potato reads \"Product of DonkCo Service Wing. Activate far away from populated areas. Device will only attach to sapient creatures.\" <span class='boldnotice'>You can attack anyone with it to force it on them instead of yourself!</span>"
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "potato"
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	force = 0
 	var/icon_off = "potato"
 	var/icon_on = "potato_active"
@@ -133,7 +133,7 @@
 		return
 	update_icon()
 	if(sticky)
-		flags_1 |= NODROP_1
+		item_flags |= NODROP
 	name = "primed [name]"
 	activation_time = timer + world.time
 	detonation_timerid = addtimer(CALLBACK(src, .proc/detonate), delay, TIMER_STOPPABLE)
@@ -146,7 +146,7 @@
 /obj/item/hot_potato/proc/deactivate()
 	update_icon()
 	name = initial(name)
-	flags_1 &= ~NODROP_1
+	item_flags &= ~NODROP
 	deltimer(detonation_timerid)
 	STOP_PROCESSING(SSfastprocess, src)
 	detonation_timerid = null

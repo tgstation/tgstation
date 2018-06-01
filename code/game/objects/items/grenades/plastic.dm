@@ -5,7 +5,8 @@
 	item_state = "plastic-explosive"
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
+	flags_1 = NONE
 	det_time = 10
 	display_timer = 0
 	w_class = WEIGHT_CLASS_SMALL

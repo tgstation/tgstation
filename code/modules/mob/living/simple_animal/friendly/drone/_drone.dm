@@ -92,7 +92,7 @@
 		var/obj/item/I = new default_hatmask(src)
 		equip_to_slot_or_del(I, SLOT_HEAD)
 
-	access_card.flags_1 |= NODROP_1
+	access_card.item_flags |= NODROP
 
 	alert_drones(DRONE_NET_CONNECT)
 
@@ -168,15 +168,15 @@
 
 	//Hands
 	for(var/obj/item/I in held_items)
-		if(!(I.flags_1 & ABSTRACT_1))
+		if(!(I.item_flags & ABSTRACT))
 			msg += "It has [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	//Internal storage
-	if(internal_storage && !(internal_storage.flags_1&ABSTRACT_1))
+	if(internal_storage && !(internal_storage.item_flags & ABSTRACT))
 		msg += "It is holding [internal_storage.get_examine_string(user)] in its internal storage.\n"
 
 	//Cosmetic hat - provides no function other than looks
-	if(head && !(head.flags_1&ABSTRACT_1))
+	if(head && !(head.item_flags & ABSTRACT))
 		msg += "It is wearing [head.get_examine_string(user)] on its head.\n"
 
 	//Braindead
