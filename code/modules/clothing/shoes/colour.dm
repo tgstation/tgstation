@@ -75,6 +75,8 @@
 	permeability_coefficient = 0.01
 	item_color = "white"
 
+/obj/item/clothing/shoes/sneakers/white/damndaniel
+
 /obj/item/clothing/shoes/sneakers/rainbow
 	name = "rainbow shoes"
 	desc = "Very gay shoes."
@@ -120,5 +122,4 @@
 			to_chat(c, "<span class='warning'>You need help taking these off!</span>")
 			return
 	return ..()
-	
-	
+

@@ -319,6 +319,18 @@
 
 	new /obj/effect/temp_visual/point(A,invisibility)
 
+	var/obj/item/clothing/shoes/sneakers/white/damndaniel/damn_daniel
+
+	if(istype(A, /obj/item/clothing/shoes/sneakers/white/damndaniel/))
+		damn_daniel = A
+	else
+		for(var/obj/item/clothing/shoes/sneakers/white/damndaniel/DamnDanielShoes in A.contents)
+			damn_daniel = DamnDanielShoes
+
+	if(damn_daniel)
+		spawn(10)
+			src.say("DAMN DANIEL!")
+
 	return 1
 
 /mob/proc/can_resist()
