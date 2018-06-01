@@ -12417,8 +12417,8 @@
 	id = "rnd";
 	name = "research lab shutters"
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/science/lab)
@@ -13100,7 +13100,6 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -13554,10 +13553,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/science/lab)
-"aFE" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall,
-/area/science/lab)
 "aFF" = (
 /obj/machinery/newscaster{
 	pixel_x = -32
@@ -13961,8 +13956,8 @@
 /obj/structure/cable/white{
 	icon_state = "0-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
@@ -13989,10 +13984,6 @@
 	icon_state = "0-2"
 	},
 /turf/open/floor/circuit,
-/area/science/robotics/mechbay)
-"aGF" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall,
 /area/science/robotics/mechbay)
 "aGG" = (
 /turf/open/floor/plasteel/whitepurple/side{
@@ -14391,14 +14382,11 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "aHJ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/circuit,
 /area/science/robotics/mechbay)
 "aHK" = (
@@ -14408,16 +14396,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/circuit,
-/area/science/robotics/mechbay)
-"aHL" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
-	},
-/turf/closed/wall,
 /area/science/robotics/mechbay)
 "aHM" = (
 /turf/closed/wall,
@@ -68911,9 +68890,9 @@ aBk
 aCu
 aDx
 aED
-aFE
-aGF
-aHL
+ayv
+aIM
+aIM
 aIM
 aJO
 aIM
