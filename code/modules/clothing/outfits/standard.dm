@@ -151,7 +151,7 @@
 	r_hand = /obj/item/twohanded/fireaxe
 
 /datum/outfit/psycho/post_equip(mob/living/carbon/human/H)
-	for(var/obj/item/carried_item in H.get_equipped_items())
+	for(var/obj/item/carried_item in H.get_equipped_items(TRUE))
 		carried_item.add_mob_blood(H)//Oh yes, there will be blood...
 	for(var/obj/item/I in H.held_items)
 		I.add_mob_blood(H)
