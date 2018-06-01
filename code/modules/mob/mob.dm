@@ -836,6 +836,15 @@
 		if (L)
 			L.alpha = lighting_alpha
 
+/mob/proc/update_mouse_pointer()
+	if (!client)
+		return
+	client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
+	if (ismecha(loc))
+		var/obj/mecha/M = loc
+		if(M.mouse_pointer)
+			client.mouse_pointer_icon = M.mouse_pointer
+
 /mob/proc/is_literate()
 	return 0
 
