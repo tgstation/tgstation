@@ -21,11 +21,7 @@
 
 /obj/machinery/rnd/production/Initialize(mapload)
 	. = ..()
-	if(mapload)
-		GLOB.silo_access_lathes[src] = TRUE
-	else
-		GLOB.silo_access_lathes[src] = FALSE
-
+	GLOB.silo_access_lathes[src] = mapload
 	create_reagents(0)
 	RefreshParts()
 	matching_designs = list()
@@ -50,6 +46,18 @@
 
 /obj/machinery/rnd/production/attack_hand(mob/user)
 	interact(user)									//remove this snowflake shit when the refactor of storage components or some other pr that unsnowflakes attack_hand on machinery is in
+
+/obj/machinery/rnd/production/attackby(obj/item/I, mob/user, params)
+	..()
+	if(istype(I, /obj/item/multitool))
+		var/obj/item/multitool/M = I
+		to_chat(user, "You set [M]'s buffer to [src].")
+		M.buffer = src
+		return
+	if(!GLOB.ore_silo)
+		return
+	GET_COMPONENT_FROM(materials, /datum/component/material_container, GLOB.ore_silo)
+	materials.OnAttackBy(I, user)
 
 /obj/machinery/rnd/production/ui_interact(mob/user)
 	if(!consoleless_interface)
@@ -132,9 +140,12 @@
 	power = min(3000, power)
 	use_power(power)
 	var/list/efficient_mats = list()
+	var/design_log = "[src] produced [D.name] using up "
 	GET_COMPONENT_FROM(materials, /datum/component/material_container, GLOB.ore_silo)
 	for(var/MAT in D.materials)
 		efficient_mats[MAT] = D.materials[MAT]/efficiency_coeff
+		var/string_bullshit = efficient_mats[MAT]
+		design_log += "<b>[tempaass] [CallMaterialName(MAT)]</b>
 	if(!materials.has_materials(efficient_mats, amount))
 		say("Not enough materials to complete prototype[amount > 1? "s" : ""].")
 		return FALSE
@@ -143,6 +154,7 @@
 			say("Not enough reagents to complete prototype[amount > 1? "s" : ""].")
 			return FALSE
 	materials.use_amount(efficient_mats, amount)
+	GLOB.silo_access_log += design_log
 	for(var/R in D.reagents_list)
 		reagents.remove_reagent(R, D.reagents_list[R]*amount/efficiency_coeff)
 	busy = TRUE
