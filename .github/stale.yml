@@ -1,0 +1,31 @@
+# Configuration for probot-stale - https://github.com/probot/stale
+
+# Number of days of inactivity before an Issue or Pull Request becomes stale
+daysUntilStale: 365
+
+# Number of days of inactivity before a stale Issue or Pull Request is closed.
+# Set to false to disable. If disabled, issues still need to be closed manually, but will remain marked as stale.
+daysUntilClose: 3
+
+# Issues or Pull Requests with these labels will never be considered stale. Set to `[]` to disable
+exemptLabels:
+  - BYOND Issue
+  - Priority: High
+  - Priority: Critical
+  - Maintainability/Hinders improvements 
+  - Performance
+
+# Set to true to ignore issues in a project (defaults to false)
+exemptProjects: true
+
+# Set to true to ignore issues in a milestone (defaults to false)
+exemptMilestones: true
+
+# Label to use when marking as stale
+staleLabel: Stale
+
+# Comment to post when marking as stale. Set to `false` to disable
+markComment: >
+  This issue has been automatically marked as stale because it has not had
+  recent activity. It will be closed if no further activity occurs. Please
+  comment if this issue is still relevent/reproducable
