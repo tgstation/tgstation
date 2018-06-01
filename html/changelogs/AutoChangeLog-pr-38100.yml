@@ -1,4 +1,0 @@
-author: "steamport"
-delete-after: True
-changes: 
-  - bugfix: "Borgs/AIs can now toggle rad collectors"

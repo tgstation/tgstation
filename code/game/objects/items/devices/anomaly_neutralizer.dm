@@ -8,7 +8,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 
 /obj/item/anomaly_neutralizer/afterattack(atom/target, mob/user, proximity)
 	..()

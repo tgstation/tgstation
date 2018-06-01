@@ -568,7 +568,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	Consume(nom)
 
 /obj/machinery/power/supermatter_crystal/attackby(obj/item/W, mob/living/user, params)
-	if(!istype(W) || (W.flags_1 & ABSTRACT_1) || !istype(user))
+	if(!istype(W) || (W.item_flags & ABSTRACT) || !istype(user))
 		return
 	if (istype(W, /obj/item/melee/roastingstick))
 		return ..()

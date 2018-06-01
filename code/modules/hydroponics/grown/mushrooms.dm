@@ -303,7 +303,7 @@
 /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom/shadowshroom/attack_self(mob/user)
 	. = ..()
 	if(.)
-		investigate_log("was planted by [key_name(user)] at [COORD(user)]", INVESTIGATE_BOTANY)
+		investigate_log("was planted by [key_name(user)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
 
 //// LAVALAND MUSHROOMS ////
 

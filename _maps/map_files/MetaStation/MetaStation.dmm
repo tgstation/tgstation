@@ -54353,8 +54353,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cmb" = (
-/obj/machinery/chem_master/condimaster{
-	name = "CondiMaster Neo";
+/obj/machinery/chem_master{
 	pixel_x = -4
 	},
 /turf/open/floor/plating,
@@ -77010,7 +77009,6 @@
 /turf/closed/wall,
 /area/science/circuit)
 "wOE" = (
-/obj/machinery/droneDispenser,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "wPk" = (

@@ -15,7 +15,8 @@ RLD
 	opacity = 0
 	density = FALSE
 	anchored = FALSE
-	flags_1 = CONDUCT_1 | NOBLUDGEON_1
+	flags_1 = CONDUCT_1
+	item_flags = NOBLUDGEON
 	force = 0
 	throwforce = 10
 	throw_speed = 3
@@ -129,7 +130,7 @@ RLD
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	max_matter = 160
-	item_flags = NO_MAT_REDEMPTION
+	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
 	var/mode = 1
 	var/ranged = FALSE

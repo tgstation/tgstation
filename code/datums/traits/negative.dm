@@ -9,7 +9,11 @@
 	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
 
 /datum/quirk/blooddeficiency/on_process()
-	quirk_holder.blood_volume -= 0.275
+	var/mob/living/carbon/human/H = quirk_holder
+	if(NOBLOOD in H.dna.species.species_traits) //can't lose blood if your species doesn't have any
+		return
+	else 
+		quirk_holder.blood_volume -= 0.275
 
 
 

@@ -15,7 +15,7 @@
 			organ = new organ
 			organ.Insert(C)
 			log_admin("[key_name(usr)] has added organ [organ.type] to [key_name(C)]")
-			message_admins("[key_name_admin(usr)] has added organ [organ.type] to [key_name(C)]")
+			message_admins("[key_name_admin(usr)] has added organ [organ.type] to [ADMIN_LOOKUPFLW(C)]")
 
 		if("add implant")
 			for(var/path in subtypesof(/obj/item/implant))
@@ -27,7 +27,7 @@
 			organ = new organ
 			organ.implant(C)
 			log_admin("[key_name(usr)] has added implant [organ.type] to [key_name(C)]")
-			message_admins("[key_name_admin(usr)] has added implant [organ.type] to [key_name(C)]")
+			message_admins("[key_name_admin(usr)] has added implant [organ.type] to [ADMIN_LOOKUPFLW(C)]")
 
 		if("drop organ/implant", "remove organ/implant")
 			for(var/X in C.internal_organs)
@@ -46,7 +46,7 @@
 			var/obj/item/implant/I
 
 			log_admin("[key_name(usr)] has removed [organ.type] from [key_name(C)]")
-			message_admins("[key_name_admin(usr)] has removed [organ.type] from [key_name(C)]")
+			message_admins("[key_name_admin(usr)] has removed [organ.type] from [ADMIN_LOOKUPFLW(C)]")
 
 			if(isorgan(organ))
 				O = organ

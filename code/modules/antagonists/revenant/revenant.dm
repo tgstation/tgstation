@@ -109,11 +109,6 @@
 		revealed = FALSE
 		incorporeal_move = INCORPOREAL_MOVE_JAUNT
 		invisibility = INVISIBILITY_REVENANT
-		if(staticOverlays.len)
-			for(var/mob/living/simple_animal/drone/D in GLOB.drones_list)
-				if(D && D.client && D.seeStatic)
-					D.staticOverlays.Remove(staticOverlays)
-					D.client.images.Remove(staticOverlays)
 		to_chat(src, "<span class='revenboldnotice'>You are once more concealed.</span>")
 	if(unstun_time && world.time >= unstun_time)
 		unstun_time = 0
@@ -250,15 +245,6 @@
 	else
 		to_chat(src, "<span class='revenwarning'>You have been revealed!</span>")
 		unreveal_time = unreveal_time + time
-	if(staticOverlays.len)
-		for(var/mob/living/simple_animal/drone/D in GLOB.drones_list)
-			if(D && D.client && D.seeStatic)
-				if(D.staticChoice in staticOverlays)
-					D.staticOverlays |= staticOverlays[D.staticChoice]
-					D.client.images |= staticOverlays[D.staticChoice]
-				else
-					D.staticOverlays |= staticOverlays["static"]
-					D.client.images |= staticOverlays["static"]
 	update_spooky_icon()
 
 /mob/living/simple_animal/revenant/proc/stun(time)

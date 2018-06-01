@@ -302,8 +302,8 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			message = L.treat_message(message)
 		minor_announce(message, "[department] Announcement:")
 		GLOB.news_network.SubmitArticle(message, department, "Station Announcements", null)
-		log_talk(usr,"[key_name(usr)] has made a station announcement: [message]",LOGSAY)
-		message_admins("[key_name_admin(usr)] has made a station announcement.")
+		log_talk(usr,"[key_name(usr)] has made a station announcement from [src] at [AREACOORD(usr)]: [message]",LOGSAY)
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has made a station announcement from [src] at [AREACOORD(usr)].")
 		announceAuth = FALSE
 		message = ""
 		screen = 0

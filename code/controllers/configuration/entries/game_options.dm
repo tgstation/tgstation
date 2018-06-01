@@ -287,3 +287,7 @@
 /datum/config_entry/flag/randomize_shift_time
 
 /datum/config_entry/flag/shift_time_realtime
+
+/datum/config_entry/number/monkeycap
+	config_entry_value = 64
+	min_val = 0
