@@ -3,6 +3,7 @@
 	desc = "You probably shouldn't stick around to see if this is armed."
 	icon = 'icons/obj/machines/nuke.dmi'
 	icon_state = "nuclearbomb_base"
+	anchored = FALSE
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 

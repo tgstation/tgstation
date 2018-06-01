@@ -3,12 +3,11 @@
 	desc = "A bluespace pad able to thrust matter through bluespace, teleporting it to or from nearby locations."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "lpad-idle"
-	var/icon_teleport = "lpad-beam"
-	anchored = TRUE
 	use_power = TRUE
 	idle_power_usage = 200
 	active_power_usage = 2500
 	circuit = /obj/item/circuitboard/machine/launchpad
+	var/icon_teleport = "lpad-beam"
 	var/stationary = TRUE //to prevent briefcase pad deconstruction and such
 	var/display_name = "Launchpad"
 	var/teleport_speed = 35
@@ -53,7 +52,7 @@
 	if(teleporting)
 		to_chat(user, "<span class='warning'>ERROR: Launchpad busy.</span>")
 		return
-	
+
 	var/turf/dest = get_turf(src)
 
 	if(dest && is_centcom_level(dest.z))

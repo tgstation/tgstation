@@ -2,7 +2,6 @@
 	name = "ChemMaster 3000"
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
 	density = TRUE
-	anchored = TRUE
 	layer = BELOW_OBJ_LAYER
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"

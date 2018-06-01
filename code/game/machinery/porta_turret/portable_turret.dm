@@ -8,7 +8,6 @@
 	name = "turret"
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turretCover"
-	anchored = TRUE
 	layer = OBJ_LAYER
 	invisibility = INVISIBILITY_OBSERVER	//the turret is invisible if it's inside its cover
 	density = TRUE
@@ -754,7 +753,6 @@
 	desc = "Used to control a room's automated defenses."
 	icon = 'icons/obj/machines/turret_control.dmi'
 	icon_state = "control_standby"
-	anchored = TRUE
 	density = FALSE
 	var/enabled = 1
 	var/lethal = 0

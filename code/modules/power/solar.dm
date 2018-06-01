@@ -6,7 +6,6 @@
 	desc = "A solar panel. Generates electricity when in contact with sunlight."
 	icon = 'goon/icons/obj/power.dmi'
 	icon_state = "sp_base"
-	anchored = TRUE
 	density = TRUE
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
@@ -257,7 +256,6 @@
 	desc = "A controller for solar panel arrays."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
-	anchored = TRUE
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 250

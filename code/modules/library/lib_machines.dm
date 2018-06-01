@@ -494,7 +494,6 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bigscanner"
 	desc = "It servers the purpose of scanning stuff."
-	anchored = TRUE
 	density = TRUE
 	var/obj/item/book/cache		// Last scanned book
 
@@ -553,7 +552,6 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	icon = 'icons/obj/library.dmi'
 	icon_state = "binder"
 	desc = "Only intended for binding paper products."
-	anchored = TRUE
 	density = TRUE
 	var/busy = FALSE
 

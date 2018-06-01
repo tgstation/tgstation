@@ -5,7 +5,6 @@
 	icon_state = "dorm_taken"
 	req_access = list(ACCESS_SECURITY) //REQACCESS TO ACCESS ALL STORED ITEMS
 	density = FALSE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 100
 	active_power_usage = 2500

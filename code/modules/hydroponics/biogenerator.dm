@@ -4,7 +4,6 @@
 	icon = 'icons/obj/machines/biogenerator.dmi'
 	icon_state = "biogen-empty"
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
 	circuit = /obj/item/circuitboard/machine/biogenerator

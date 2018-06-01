@@ -1,0 +1,8 @@
+author: "Big Tobacco"
+delete-after: True
+changes: 
+  - rscadd: "Cheap lighters now come in four different shapes and Zippos can have one of four different designs, collect them all and improve our sales!"
+  - imageadd: "All existing lighter sprites have been given a face-lift and the flames are now subtly animated."
+  - tweak: "Cheap lighters now use a fixed list of 16 colors to pick from instead of using totally randomized colors."
+  - imageadd: "Cigar cases have been tweaked to be a bit smaller and to have a modified design."
+  - imageadd: "Cohiba Robusto and Havanan cigars now use separate case sprites from the generic premium cigar cases."

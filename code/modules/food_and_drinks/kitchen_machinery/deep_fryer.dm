@@ -26,7 +26,6 @@ God bless America.
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "fryer_off"
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	container_type = OPENCONTAINER

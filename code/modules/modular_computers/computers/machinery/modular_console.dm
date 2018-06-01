@@ -8,8 +8,6 @@
 	icon_state_unpowered = "console-off"
 	screen_icon_state_menu = "menu"
 	hardware_flag = PROGRAM_CONSOLE
-	var/console_department = "" // Used in New() to set network tag according to our area.
-	anchored = TRUE
 	density = TRUE
 	base_idle_power_usage = 100
 	base_active_power_usage = 500
@@ -18,6 +16,7 @@
 	light_strength = 2
 	max_integrity = 300
 	integrity_failure = 150
+	var/console_department = "" // Used in New() to set network tag according to our area.
 
 /obj/machinery/modular_computer/console/buildable/Initialize()
 	. = ..()
