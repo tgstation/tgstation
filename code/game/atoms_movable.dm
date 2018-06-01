@@ -562,14 +562,13 @@
 	if(visual_effect_icon)
 		I = image('icons/effects/effects.dmi', A, visual_effect_icon, A.layer + 0.1)
 	else if(used_item)
-		var/mutable_appearance/MA = new(used_item)
+		I = image(icon = used_item, loc = A, layer = A.layer + 0.1)
+
 		// Scale the icon.
-		MA.transform *= 0.75
-
-		I = image(icon = MA, loc = A, layer = A.layer + 0.1)
-
+		I.transform *= 0.75
 		// The icon should not rotate.
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+
 		// Set the direction of the icon animation.
 		var/direction = get_dir(src, A)
 		if(direction & NORTH)
