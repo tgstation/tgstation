@@ -264,3 +264,4 @@
 	if(!isliving(loc))
 		return INITIALIZE_HINT_QDEL
 #undef INSUFFICIENT
+
