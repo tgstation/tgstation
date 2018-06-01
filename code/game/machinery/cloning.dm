@@ -9,7 +9,6 @@
 #define SPEAK(message) radio.talk_into(src, message, radio_channel, get_spans(), get_default_language())
 
 /obj/machinery/clonepod
-	anchored = TRUE
 	name = "cloning pod"
 	desc = "An electronically-lockable pod for growing organic tissue."
 	density = TRUE

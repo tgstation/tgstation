@@ -14,7 +14,6 @@
 
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "shield"
-	anchored = TRUE
 	density = TRUE
 	dir = NORTH
 	use_power = NO_POWER_USE//Living things generally dont use power
