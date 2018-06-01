@@ -300,6 +300,8 @@
 	face_atom(A)
 	A.examine(src)
 
+/atom/proc/pointed_at(var/mob/user)
+
 //same as above
 //note: ghosts can point, this is intended
 //visible_message will handle invisibility properly
@@ -319,17 +321,8 @@
 
 	new /obj/effect/temp_visual/point(A,invisibility)
 
-	var/obj/item/clothing/shoes/sneakers/white/damndaniel/damn_daniel
-
-	if(istype(A, /obj/item/clothing/shoes/sneakers/white/damndaniel/))
-		damn_daniel = A
-	else
-		for(var/obj/item/clothing/shoes/sneakers/white/damndaniel/DamnDanielShoes in A.contents)
-			damn_daniel = DamnDanielShoes
-
-	if(damn_daniel)
-		spawn(10)
-			src.say("DAMN DANIEL!")
+	for(var/atom/on_tile in A.contents + A)
+		on_tile.pointed_at(src)
 
 	return 1
 
