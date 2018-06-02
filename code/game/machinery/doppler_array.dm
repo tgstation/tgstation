@@ -6,7 +6,6 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
 	density = TRUE
-	anchored = TRUE
 	var/integrated = FALSE
 	var/max_dist = 150
 	verb_say = "states coldly"

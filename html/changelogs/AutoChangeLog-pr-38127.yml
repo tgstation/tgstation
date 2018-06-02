@@ -1,5 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - bugfix: "Fixes the wrong tiles in Syndicate VR trainer and uses different tiny fans."
-  - bugfix: "Access didn't append to VR IDs"

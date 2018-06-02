@@ -157,11 +157,11 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	icon_state = "gps-b"
 	gpstag = "BORG0"
 	desc = "A mining cyborg internal positioning system. Used as a recovery beacon for damaged cyborg assets, or a collaboration tool for mining teams."
-	flags_1 = NODROP_1
+	item_flags = NODROP
 
 /obj/item/gps/internal
 	icon_state = null
-	flags_1 = ABSTRACT_1
+	item_flags = ABSTRACT
 	gpstag = "Eerie Signal"
 	desc = "Report to a coder immediately."
 	invisibility = INVISIBILITY_MAXIMUM

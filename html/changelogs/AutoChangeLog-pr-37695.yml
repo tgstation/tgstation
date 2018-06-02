@@ -1,4 +1,0 @@
-author: "Cruix"
-delete-after: True
-changes: 
-  - rscadd: "AIs now have an experimental multi-camera mode that allows them to view up to six map areas at the same time, accessible through two new buttons on their HUD."

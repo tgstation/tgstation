@@ -837,6 +837,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 // Machinery to simplify topic and access calls
 /obj/machinery/bot_core
 	use_power = NO_POWER_USE
+	anchored = FALSE
 	var/mob/living/simple_animal/bot/owner = null
 
 /obj/machinery/bot_core/Initialize()

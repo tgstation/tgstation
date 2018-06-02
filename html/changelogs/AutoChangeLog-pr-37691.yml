@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - rscadd: "Plasma specific heat is 500J/K*unit, everything else is 200"

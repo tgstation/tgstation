@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - rscadd: "Things that are capable of igniting plasma fires will now generate heat if there's no plasma to ignite. Building a bonfire inside the station without taking safety precautions is now a bad idea."

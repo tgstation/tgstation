@@ -2,7 +2,8 @@
 	name = "chameleon-projector"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "shield0"
-	flags_1 = CONDUCT_1 | NOBLUDGEON_1
+	flags_1 = CONDUCT_1
+	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
@@ -49,7 +50,7 @@
 		return
 	if(iseffect(target))
 		if(!(istype(target, /obj/effect/decal))) //be a footprint
-			return	
+			return
 	playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
 	to_chat(user, "<span class='notice'>Scanned [target].</span>")
 	var/obj/temp = new/obj()

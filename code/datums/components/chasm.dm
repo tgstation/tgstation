@@ -11,6 +11,7 @@
 		/obj/structure/lattice,
 		/obj/structure/stone_tile,
 		/obj/item/projectile,
+		/obj/effect/projectile,
 		/obj/effect/portal,
 		/obj/effect/abstract,
 		/obj/effect/hotspot,

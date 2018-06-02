@@ -1,5 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "The destructive analyzer can once again be used to reveal nodes."
-  - spellcheck: "Some references to \"deconstructive analyzer\" have been updated to \"destructive\"."

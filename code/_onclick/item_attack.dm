@@ -53,7 +53,7 @@
 
 /obj/item/proc/attack(mob/living/M, mob/living/user)
 	SendSignal(COMSIG_ITEM_ATTACK, M, user)
-	if(flags_1 & NOBLUDGEON_1)
+	if(item_flags & NOBLUDGEON)
 		return
 
 	if(force && user.has_trait(TRAIT_PACIFISM))
@@ -79,7 +79,7 @@
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
 	if(SendSignal(COMSIG_ITEM_ATTACK_OBJ, O, user) & COMPONENT_NO_ATTACK_OBJ)
 		return
-	if(flags_1 & NOBLUDGEON_1)
+	if(item_flags & NOBLUDGEON)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(O)

@@ -26,7 +26,6 @@ God bless America.
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "fryer_off"
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	container_type = OPENCONTAINER
@@ -96,7 +95,7 @@ God bless America.
 	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I))	//where's the open maint panel icon?!
 		return
 	else
-		if(is_type_in_typecache(I, deepfry_blacklisted_items) || (I.flags_1 & (ABSTRACT_1 | NODROP_1 | DROPDEL_1)))
+		if(is_type_in_typecache(I, deepfry_blacklisted_items) || (I.item_flags & (ABSTRACT | NODROP | DROPDEL)))
 			return ..()
 		else if(!frying && user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
