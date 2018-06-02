@@ -83692,6 +83692,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/pump{
+	name = "Lil Pump"
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dxQ" = (
