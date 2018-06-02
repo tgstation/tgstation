@@ -45,7 +45,7 @@
 /obj/machinery/computer/nanite_chamber_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "nanite_chamber_control", name, 600, 1200, master_ui, state)
+		ui = new(user, src, ui_key, "nanite_chamber_control", name, 550, 800, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/nanite_chamber_control/ui_data()
@@ -68,12 +68,9 @@
 			disk_data["trigger_code"] = P.trigger_code
 			disk_data["timer_type"] = P.get_timer_type_text()
 
-			if(istype(P, /datum/nanite_program/relay))
-				var/datum/nanite_program/relay/S = P
-				disk_data["relay_code"] = S.relay_code
-			if(istype(P, /datum/nanite_program/triggered/cloud))
-				var/datum/nanite_program/triggered/cloud/S = P
-				disk_data["cloud_code"] = S.cloud_id
+			disk_data["has_extra_code"] = P.has_extra_code
+			disk_data["extra_code"] = P.extra_code
+			disk_data["extra_code_name"] = P.extra_code_name
 		data["disk"] = disk_data
 
 	if(!chamber)
@@ -98,6 +95,7 @@
 		data["nanite_volume"] = nanites.nanite_volume
 		data["regen_rate"] = nanites.regen_rate
 		data["safety_threshold"] = nanites.safety_threshold
+		data["cloud_id"] = nanites.cloud_id
 		var/list/mob_programs = list()
 		for(var/datum/nanite_program/P in nanites.programs)
 			var/list/mob_program = list()
@@ -123,9 +121,9 @@
 				mob_program["deactivation_code"] = P.deactivation_code
 				mob_program["kill_code"] = P.kill_code
 				mob_program["trigger_code"] = P.trigger_code
-				if(istype(P, /datum/nanite_program/relay))
-					var/datum/nanite_program/relay/S = P
-					mob_program["relay_code"] = S.relay_code
+				mob_program["has_extra_code"] = P.has_extra_code
+				mob_program["extra_code"] = P.extra_code
+				mob_program["extra_code_name"] = P.extra_code_name
 			id++
 			mob_programs += list(mob_program)
 		data["mob_programs"] = mob_programs
@@ -145,7 +143,12 @@
 		if("set_safety")
 			var/threshold = input("Set safety threshold (0-500):", name, null) as null|num
 			if(!isnull(threshold))
-				chamber.set_safety(threshold)
+				chamber.set_safety(CLAMP(round(threshold, 1),0,500))
+			. = TRUE
+		if("set_cloud")
+			var/cloud_id = input("Set cloud ID (0-100):", name, null) as null|num
+			if(!isnull(cloud_id))
+				chamber.set_cloud(CLAMP(round(cloud_id, 1),0,100))
 			. = TRUE
 		if("connect_chamber")
 			find_chamber()

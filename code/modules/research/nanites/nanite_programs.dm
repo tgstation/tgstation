@@ -37,6 +37,13 @@
 	var/deactivation_code 	= 0 	//Code that deactivates the program [1-9999]
 	var/kill_code 			= 0		//Code that permanently removes the program [1-9999]
 	var/trigger_code 		= 0 	//Code that triggers the program (if available) [1-9999]
+	
+	//Potential extra code, for programs with extra customization
+	var/has_extra_code = FALSE
+	var/extra_code = 0
+	var/extra_code_name = "Extra Code"
+	var/extra_code_min = 0
+	var/extra_code_max = 0
 
 /datum/nanite_program/Destroy()
 	if(host_mob)
@@ -59,6 +66,7 @@
 	new_program.deactivation_code = deactivation_code
 	new_program.kill_code = kill_code
 	new_program.trigger_code = trigger_code
+	new_program.set_extra_code(extra_code)
 
 	return new_program
 
@@ -72,7 +80,11 @@
 	target.deactivation_code = deactivation_code
 	target.kill_code = kill_code
 	target.trigger_code = trigger_code
+	target.set_extra_code(extra_code)
 
+/datum/nanite_program/proc/set_extra_code(code)
+	extra_code = CLAMP(round(code, 1),extra_code_min, extra_code_max)
+	
 /datum/nanite_program/proc/on_add(datum/component/nanites/_nanites)
 	nanites = _nanites
 	if(nanites.host_mob)

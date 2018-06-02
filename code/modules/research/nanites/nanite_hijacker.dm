@@ -73,10 +73,11 @@
 		data["trigger_code"] = program.trigger_code
 		data["timer_type"] = program.get_timer_type_text()
 
-		if(istype(program, /datum/nanite_program/relay))
-			var/datum/nanite_program/relay/S = program
-			data["is_relay"] = TRUE
-			data["relay_code"] = S.relay_code
+		data["has_extra_code"] = program.has_extra_code
+		data["extra_code"] = program.extra_code
+		data["extra_code_name"] = program.extra_code_name
+		data["extra_code_min"] = program.extra_code_min
+		data["extra_code_max"] = program.extra_code_max
 	return data
 
 /obj/item/nanite_hijacker/ui_act(action, params)
@@ -104,10 +105,12 @@
 					program.kill_code = new_code
 				if("trigger")
 					program.trigger_code = new_code
-				if("relay")
-					if(istype(program, /datum/nanite_program/relay))
-						var/datum/nanite_program/relay/S = program
-						S.relay_code = new_code
+			. = TRUE
+		if("set_extra_code")
+			var/new_code = input("Set [program.extra_code_name] ([program.extra_code_min]-[program.extra_code_max]):", name, null) as null|num
+			if(isnull(new_code))
+				return
+			program.set_extra_code(new_code)
 			. = TRUE
 		if("set_activation_delay")
 			var/delay = input("Set activation delay in seconds (0-1800):", name, program.activation_delay) as null|num

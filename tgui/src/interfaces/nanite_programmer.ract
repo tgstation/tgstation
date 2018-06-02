@@ -34,11 +34,8 @@
       {{#if data.can_trigger}}
         Trigger Code: {{data.trigger_code}} <ui-button icon='pencil' action='set_code' params='{"target_code": "trigger"}'>Set</ui-button><br>
       {{/if}}
-      {{#if data.is_relay}}
-        Relay Code: {{data.relay_code}} <ui-button icon='pencil' action='set_code' params='{"target_code": "relay"}'>Set</ui-button><br>
-      {{/if}}
-      {{#if data.is_cloud}}
-        Cloud ID: {{data.cloud_code}} <ui-button icon='pencil' action='set_code' params='{"target_code": "cloud"}'>Set</ui-button><br>
+      {{#if data.has_extra_code}}
+        {{data.extra_code_name}}: {{data.extra_code}} <ui-button icon='pencil' action='set_extra_code'>Set</ui-button><br>
       {{/if}}
     </ui-section>
   {{/if}}

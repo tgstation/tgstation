@@ -11,6 +11,8 @@
 	if(IsAdminGhost(M))
 		//Access can't stop the abuse
 		return TRUE
+	else if(check_nanite_access(M))
+		return TRUE
 	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
@@ -59,6 +61,13 @@
 /obj/proc/check_access(obj/item/I)
 	return check_access_list(I ? I.GetAccess() : null)
 
+/obj/proc/check_nanite_access(mob/living/L)
+	GET_COMPONENT_FROM(nanites, /datum/component/nanites, L)
+	if(!nanites)
+		return FALSE
+	for(var/datum/nanite_program/triggered/access/access_program in nanites.programs)
+		return check_access_list(access_program.access)
+	return FALSE
 
 /obj/proc/check_access_list(list/access_list)
 	gen_access()

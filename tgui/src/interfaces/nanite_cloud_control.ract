@@ -26,11 +26,8 @@
 				{{#if data.disk.trigger_code}}
 					<ui-section label='Trigger Code'>{{data.disk.trigger_code}}</ui-section>
 				{{/if}}
-				{{#if data.disk.relay_code}}
-					<ui-section label='Relay Code'>{{data.disk.relay_code}}</ui-section>
-				{{/if}}
-				{{#if data.disk.cloud_code}}
-					<ui-section label='Cloud ID'>{{data.disk.cloud_code}}</ui-section>
+				{{#if data.disk.has_extra_code}}
+					<ui-section label='{{data.disk.extra_code_name}}'>{{data.disk.extra_code}}</ui-section>
 				{{/if}}
 			</ui-section>
 		{{else}}
@@ -86,8 +83,8 @@
 					{{#if trigger_code}}
 						<ui-section label='Trigger Code'>{{trigger_code}}</ui-section>
 					{{/if}}
-					{{#if relay_code}}
-						<ui-section label='Relay Code'>{{relay_code}}</ui-section>
+					{{#if has_extra_code}}
+						<ui-section label='{{extra_code_name}}'>{{extra_code}}</ui-section>
 					{{/if}}
 				{{/each}}
 			</ui-display>

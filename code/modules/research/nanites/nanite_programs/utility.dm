@@ -1,23 +1,4 @@
 //Programs that interact with other programs or nanites directly, or have other special purposes.
-
-/datum/nanite_program/triggered/cloud
-	name = "Cloud Sync"
-	desc = "When triggered, syncs nanite programs to a console-controlled cloud copy."
-	trigger_cost = 5
-	trigger_cooldown = 100
-	rogue_types = list(/datum/nanite_program/toxic)
-	var/cloud_id = 1
-
-/datum/nanite_program/triggered/cloud/trigger()
-	var/datum/component/nanites/cloud/cloud_copy = SSnanites.get_cloud_backup(cloud_id)
-	if(cloud_copy)
-		nanites.sync(cloud_copy)
-
-/datum/nanite_program/triggered/cloud/copy()
-	var/datum/nanite_program/triggered/cloud/new_program = ..()
-	new_program.cloud_id = cloud_id
-	return new_program
-
 /datum/nanite_program/viral
 	name = "Viral Replica"
 	desc = "The nanites constantly send encrypted signals attempting to forcefully copy their own programming into other nanite clusters."
@@ -47,7 +28,12 @@
 	name = "Relay"
 	desc = "The nanites receive and relay long-range nanite signals."
 	rogue_types = list(/datum/nanite_program/toxic)
-	var/relay_code = 0 //code used to identify the relay channel
+
+	has_extra_code = TRUE
+	extra_code = 1
+	extra_code_name = "Relay Channel"
+	extra_code_min = 1
+	extra_code_max = 9999
 
 /datum/nanite_program/relay/enable_passive_effect()
 	..()
@@ -57,24 +43,19 @@
 	..()
 	SSnanites.nanite_relays -= src
 
-/datum/nanite_program/relay/proc/relay_signal(code, _relay_code)
+/datum/nanite_program/relay/proc/relay_signal(code, relay_code)
 	if(!activated)
 		return
 	if(!host_mob)
 		return
-	if(_relay_code != relay_code)
+	if(relay_code != extra_code)
 		return
 	host_mob.SendSignal(COMSIG_NANITE_SIGNAL, code)
-
-/datum/nanite_program/relay/copy()
-	var/datum/nanite_program/relay/new_program = ..()
-	new_program.relay_code = relay_code
-	return new_program
 
 /datum/nanite_program/metabolic_synthesis
 	name = "Metabolic Synthesis"
 	desc = "The nanites use the metabolic cycle of the host to speed up their replication rate, using their extra nutrition as fuel."
-	use_rate = -1 //generates nanites
+	use_rate = -0.5 //generates nanites
 	rogue_types = list(/datum/nanite_program/toxic)
 
 /datum/nanite_program/metabolic_synthesis/check_conditions()
@@ -86,7 +67,35 @@
 	return ..()
 
 /datum/nanite_program/metabolic_synthesis/active_effect()
-	host_mob.nutrition--
+	host_mob.nutrition -= 0.5
+
+/datum/nanite_program/triggered/access
+	name = "Subdermal ID"
+	desc = "The nanites store the host's ID access rights in a subdermal magnetic strip. Updates when triggered, copying the host's current access."
+	rogue_types = list(/datum/nanite_program/skin_decay)
+	var/access = list()
+
+//Syncs the nanites with the cumulative current mob's access level. Can potentially wipe existing access.
+/datum/nanite_program/triggered/access/trigger()
+	var/list/new_access = list()
+	var/obj/item/current_item
+	current_item = host_mob.get_active_held_item()
+	if(current_item)
+		new_access += current_item.GetAccess()
+	current_item = host_mob.get_inactive_held_item()
+	if(current_item)
+		new_access += current_item.GetAccess()
+	if(ishuman(host_mob))
+		var/mob/living/carbon/human/H = host_mob
+		current_item = H.wear_id
+		if(current_item)
+			new_access += current_item.GetAccess()
+	else if(isanimal(host_mob))
+		var/mob/living/simple_animal/A = host_mob
+		current_item = A.access_card
+		if(current_item)
+			new_access += current_item.GetAccess()
+	access = new_access
 
 /datum/nanite_program/spreading
 	name = "Infective Exo-Locomotion"

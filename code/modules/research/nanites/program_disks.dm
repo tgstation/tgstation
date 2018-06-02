@@ -15,9 +15,6 @@
 /obj/item/disk/nanite_program/aggressive_replication
 	program_type = /datum/nanite_program/aggressive_replication
 
-/obj/item/disk/nanite_program/cloud
-	program_type = /datum/nanite_program/triggered/cloud
-
 /obj/item/disk/nanite_program/metabolic_synthesis
 	program_type = /datum/nanite_program/metabolic_synthesis
 

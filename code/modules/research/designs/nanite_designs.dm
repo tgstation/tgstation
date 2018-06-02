@@ -9,13 +9,6 @@
 
 ////////////////////UTILITY NANITES//////////////////////////////////////
 
-/datum/design/nanites/cloud
-	name = "Cloud Sync"
-	desc = "When triggered, syncs nanite programs to a console-controlled cloud copy."
-	id = "cloud_nanites"
-	program_type = /datum/nanite_program/triggered/cloud
-	category = list("Utility Nanites")
-
 /datum/design/nanites/metabolic_synthesis
 	name = "Metabolic Synthesis"
 	desc = "The nanites use the metabolic cycle of the host to speed up their replication rate, using their extra nutrition as fuel."
@@ -35,6 +28,13 @@
 	desc = "The nanites monitor the host's vitals and location, sending them to the suit sensor network."
 	id = "monitoring_nanites"
 	program_type = /datum/nanite_program/monitoring
+	category = list("Utility Nanites")
+
+/datum/design/nanites/access
+	name = "Subdermal ID"
+	desc = "The nanites store the host's ID access rights in a subdermal magnetic strip. Updates when triggered, copying the host's current access."
+	id = "access_nanites"
+	program_type = /datum/nanite_program/triggered/access
 	category = list("Utility Nanites")
 
 /datum/design/nanites/relay
@@ -266,46 +266,46 @@
 	program_type = /datum/nanite_program/triggered/explosive
 	category = list("Weaponized Nanites")
 
-////////////////////SUPPRESSING NANITES//////////////////////////////////////
+////////////////////Suppression NANITES//////////////////////////////////////
 
 /datum/design/nanites/shock
 	name = "Electric Shock"
 	desc = "The nanites shock the host when triggered. Destroys a large amount of nanites!"
 	id = "shock_nanites"
 	program_type = /datum/nanite_program/triggered/shocking
-	category = list("Suppressing Nanites")
+	category = list("Suppression Nanites")
 
 /datum/design/nanites/stun
 	name = "Neural Shock"
 	desc = "The nanites pulse the host's nerves when triggered, inapacitating them for a short period."
 	id = "stun_nanites"
 	program_type = /datum/nanite_program/triggered/stun
-	category = list("Suppressing Nanites")
+	category = list("Suppression Nanites")
 
 /datum/design/nanites/sleepy
 	name = "Sleep Induction"
 	desc = "The nanites cause rapid narcolepsy when triggered."
 	id = "sleep_nanites"
 	program_type = /datum/nanite_program/triggered/sleepy
-	category = list("Suppressing Nanites")
+	category = list("Suppression Nanites")
 
 /datum/design/nanites/paralyzing
 	name = "Paralysis"
 	desc = "The nanites actively suppress nervous pulses, effectively paralyzing the host."
 	id = "paralyzing_nanites"
 	program_type = /datum/nanite_program/paralyzing
-	category = list("Suppressing Nanites")
+	category = list("Suppression Nanites")
 
 /datum/design/nanites/fake_death
 	name = "Death Simulation"
 	desc = "The nanites induce a death-like coma into the host, able to fool most medical scans."
 	id = "fakedeath_nanites"
 	program_type = /datum/nanite_program/fake_death
-	category = list("Suppressing Nanites")
+	category = list("Suppression Nanites")
 
 /datum/design/nanites/pacifying
 	name = "Pacification"
 	desc = "The nanites suppress the aggression center of the brain, preventing the host from causing direct harm to others."
 	id = "pacifying_nanites"
 	program_type = /datum/nanite_program/pacifying
-	category = list("Suppressing Nanites")
+	category = list("Suppression Nanites")

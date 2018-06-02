@@ -56,16 +56,12 @@
 		data["kill_code"] = program.kill_code
 		data["trigger_code"] = program.trigger_code
 		data["timer_type"] = program.get_timer_type_text()
-
-		if(istype(program, /datum/nanite_program/relay))
-			var/datum/nanite_program/relay/S = program
-			data["is_relay"] = TRUE
-			data["relay_code"] = S.relay_code
-
-		if(istype(program, /datum/nanite_program/triggered/cloud))
-			data["is_cloud"] = TRUE
-			var/datum/nanite_program/triggered/cloud/S = program
-			data["cloud_code"] = S.cloud_id
+	
+		data["has_extra_code"] = program.has_extra_code
+		data["extra_code"] = program.extra_code
+		data["extra_code_name"] = program.extra_code_name
+		data["extra_code_min"] = program.extra_code_min
+		data["extra_code_max"] = program.extra_code_max
 	return data
 
 /obj/machinery/nanite_programmer/ui_act(action, params)
@@ -84,26 +80,25 @@
 			var/new_code = input("Set code (0000-9999):", name, null) as null|num
 			if(!isnull(new_code))
 				new_code = CLAMP(round(new_code, 1),0,9999)
+			else
+				return
 
 			var/target_code = params["target_code"]
 			switch(target_code)
 				if("activation")
-					program.activation_code = new_code
+					program.activation_code = CLAMP(round(new_code, 1),0,9999)
 				if("deactivation")
-					program.deactivation_code = new_code
+					program.deactivation_code = CLAMP(round(new_code, 1),0,9999)
 				if("kill")
-					program.kill_code = new_code
+					program.kill_code = CLAMP(round(new_code, 1),0,9999)
 				if("trigger")
-					program.trigger_code = new_code
-				if("relay")
-					if(istype(program, /datum/nanite_program/relay))
-						var/datum/nanite_program/relay/S = program
-						S.relay_code = new_code
-				if("cloud")
-					if(istype(program, /datum/nanite_program/triggered/cloud))
-						var/datum/nanite_program/triggered/cloud/S = program
-						new_code = CLAMP(new_code, 1, 100)
-						S.cloud_id = new_code
+					program.trigger_code = CLAMP(round(new_code, 1),0,9999)
+			. = TRUE
+		if("set_extra_code")
+			var/new_code = input("Set [program.extra_code_name] ([program.extra_code_min]-[program.extra_code_max]):", name, null) as null|num
+			if(isnull(new_code))
+				return
+			program.set_extra_code(new_code)
 			. = TRUE
 		if("set_activation_delay")
 			var/delay = input("Set activation delay in seconds (0-1800):", name, program.activation_delay) as null|num

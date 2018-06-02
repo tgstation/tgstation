@@ -10,6 +10,8 @@
 	var/max_nanites = 500		//maximum amount of nanites in the system
 	var/regen_rate = 0.5		//nanites generated per second
 	var/safety_threshold = 50	//how low nanites will get before they stop processing/triggering
+	var/cloud_id = 0 			//0 if not connected to the cloud, 1-100 to set a determined cloud backup to draw from
+	var/next_sync = 0
 	var/list/datum/nanite_program/programs = list()
 
 /datum/component/nanites/Initialize(amount)
@@ -24,6 +26,8 @@
 		RegisterSignal(COMSIG_ATOM_EMP_ACT, .proc/on_emp)
 		RegisterSignal(COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_shock)
 		RegisterSignal(COMSIG_NANITE_SIGNAL, .proc/receive_signal)
+		if(cloud_id)
+			cloud_sync()
 
 /datum/component/nanites/Destroy()
 	for(var/X in programs)
@@ -44,6 +48,9 @@
 			var/datum/nanite_program/NP = X
 			NP.on_process()
 		host_mob.diag_hud_set_nanite_bar()
+		if(cloud_id && world.time > next_sync)
+			cloud_sync()
+			next_sync = world.time + NANITE_SYNC_DELAY
 
 /datum/component/nanites/proc/copy(amount)
 	var/datum/component/nanites/new_nanites = new type()
@@ -76,6 +83,13 @@
 		var/datum/nanite_program/SNP = X
 		add_program(SNP.copy())
 
+/datum/component/nanites/proc/cloud_sync()
+	if(!cloud_id)
+		return
+	var/datum/component/nanites/cloud/cloud_copy = SSnanites.get_cloud_backup(cloud_id)
+	if(cloud_copy)
+		sync(cloud_copy)
+		
 /datum/component/nanites/proc/add_program(datum/nanite_program/new_program, datum/nanite_program/source_program)
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
@@ -121,4 +135,3 @@
 //Nanite components used for cloud storage
 /datum/component/nanites/cloud
 	dupe_mode = COMPONENT_DUPE_ALLOWED
-	var/cloud_id = 1

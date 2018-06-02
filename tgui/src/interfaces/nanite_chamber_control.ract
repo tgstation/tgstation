@@ -25,8 +25,8 @@
 		{{#if data.disk.trigger_code}}
 			<ui-section label='Trigger Code'>{{data.disk.trigger_code}}</ui-section>
 		{{/if}}
-		{{#if data.disk.relay_code}}
-			<ui-section label='Relay Code'>{{data.disk.relay_code}}</ui-section>
+		{{#if data.disk.has_extra_code}}
+			<ui-section label='{{data.disk.extra_code_name}}'>{{data.disk.extra_code}}</ui-section>
 		{{/if}}
 	{{else}}
 		<ui-notice>No program detected.</ui-notice>
@@ -55,6 +55,7 @@
 				<ui-section label='Nanite Volume'>{{data.nanite_volume}}</ui-section>
 				<ui-section label='Growth Rate'>{{data.regen_rate}}</ui-section>
 				<ui-section label='Safety Threshold'>{{data.safety_threshold}} <ui-button icon='pencil' action='set_safety'>Set</ui-button> </ui-section>
+				<ui-section label='Cloud ID'>{{data.cloud_id ? data.cloud_id : "No Cloud" }} <ui-button icon='pencil' action='set_cloud'>Set</ui-button> </ui-section>
 			</ui-section>
 			<ui-display title='Programs'>
 				{{#each data.mob_programs}}
@@ -89,8 +90,8 @@
 								{{#if trigger_code}}
 									<ui-section label='Trigger Code'>{{trigger_code}}</ui-section>
 								{{/if}}
-								{{#if relay_code}}
-									<ui-section label='Relay Code'>{{relay_code}}</ui-section>
+								{{#if has_extra_code}}
+									<ui-section label='{{extra_code_name}}'>{{extra_code}}</ui-section>
 								{{/if}}
 							{{/if}}
 						{{/if}}

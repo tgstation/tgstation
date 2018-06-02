@@ -36,6 +36,14 @@
 	if(!nanites)
 		return
 	nanites.safety_threshold = threshold
+	
+/obj/machinery/nanite_chamber/proc/set_cloud(cloud_id)
+	if(!occupant)
+		return
+	GET_COMPONENT_FROM(nanites, /datum/component/nanites, occupant)
+	if(!nanites)
+		return
+	nanites.cloud_id = cloud_id
 
 /obj/machinery/nanite_chamber/proc/inject_nanites()
 	if(stat & (NOPOWER|BROKEN))

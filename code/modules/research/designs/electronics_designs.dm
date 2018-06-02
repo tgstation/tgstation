@@ -56,6 +56,16 @@
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/nanite_disk
+	name = "Nanite Program Disk"
+	desc = "Stores nanite programs."
+	id = "nanite_disk"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
+	build_path = /obj/item/disk/nanite_program
+	category = list("Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/integrated_printer
 	name = "Integrated circuit printer"
 	desc = "This machine provides all neccesary things for circuitry."

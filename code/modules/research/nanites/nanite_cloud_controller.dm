@@ -55,12 +55,9 @@
 			disk_data["trigger_code"] = P.trigger_code
 			disk_data["timer_type"] = P.get_timer_type_text()
 
-			if(istype(P, /datum/nanite_program/relay))
-				var/datum/nanite_program/relay/S = P
-				disk_data["relay_code"] = S.relay_code
-			if(istype(P, /datum/nanite_program/triggered/cloud))
-				var/datum/nanite_program/triggered/cloud/S = P
-				disk_data["cloud_code"] = S.cloud_id
+			disk_data["has_extra_code"] = P.has_extra_code
+			disk_data["extra_code"] = P.extra_code
+			disk_data["extra_code_name"] = P.extra_code_name
 		data["disk"] = disk_data
 
 	data["current_view"] = current_view
@@ -87,9 +84,9 @@
 				cloud_program["deactivation_code"] = P.deactivation_code
 				cloud_program["kill_code"] = P.kill_code
 				cloud_program["trigger_code"] = P.trigger_code
-				if(istype(P, /datum/nanite_program/relay))
-					var/datum/nanite_program/relay/S = P
-					cloud_program["relay_code"] = S.relay_code
+				cloud_program["has_extra_code"] = P.has_extra_code
+				cloud_program["extra_code"] = P.extra_code
+				cloud_program["extra_code_name"] = P.extra_code_name
 				id++
 				cloud_programs += list(cloud_program)
 			data["cloud_programs"] = cloud_programs
