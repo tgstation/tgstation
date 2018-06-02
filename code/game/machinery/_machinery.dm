@@ -92,6 +92,7 @@ Class Procs:
 	pressure_resistance = 15
 	max_integrity = 200
 
+	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 
 	var/stat = 0
@@ -180,7 +181,7 @@ Class Procs:
 	density = TRUE
 	if(!target)
 		for(var/am in loc)
-			if(!is_type_in_typecache(am, (occupant_typecache || GLOB.typecache_living)))
+			if (!(occupant_typecache ? is_type_in_typecache(am, occupant_typecache) : isliving(am)))
 				continue
 			var/atom/movable/AM = am
 			if(AM.has_buckled_mobs())

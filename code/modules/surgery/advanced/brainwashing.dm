@@ -46,7 +46,7 @@
 	user.visible_message("[user] successfully brainwashes [target]!", "<span class='notice'>You succeed in brainwashing [target].</span>")
 	to_chat(target, "<span class='userdanger'>A new compulsion fills your mind... you feel forced to obey it!</span>")
 	brainwash(target, objective)
-	message_admins("[key_name_admin(user)] surgically brainwashed [key_name_admin(target)] with the objective '[objective]'.")
+	message_admins("[ADMIN_LOOKUPFLW(user)] surgically brainwashed [ADMIN_LOOKUPFLW(target)] with the objective '[objective]'.")
 	log_game("[key_name(user)] surgically brainwashed [key_name(target)] with the objective '[objective]'.")
 	return TRUE
 

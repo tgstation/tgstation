@@ -9,7 +9,7 @@
 
 	var/list/baseturf_to_replace
 	var/baseturf
-	
+
 	layer = POINT_LAYER
 
 /obj/effect/baseturf_helper/Initialize()
@@ -30,7 +30,7 @@
 	var/area/our_area = get_area(src)
 	for(var/i in get_area_turfs(our_area, z))
 		replace_baseturf(i)
-	
+
 	qdel(src)
 
 /obj/effect/baseturf_helper/proc/replace_baseturf(turf/thing)
@@ -108,11 +108,11 @@
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
 	if(airlock)
 		if(airlock.cyclelinkeddir)
-			log_world("### MAP WARNING, [src] at [COORD(src)] tried to set [airlock] cyclelinkeddir, but it's already set!")
+			log_world("### MAP WARNING, [src] at [AREACOORD(src)] tried to set [airlock] cyclelinkeddir, but it's already set!")
 		else
 			airlock.cyclelinkeddir = dir
 	else
-		log_world("### MAP WARNING, [src] failed to find an airlock at [COORD(src)]")		
+		log_world("### MAP WARNING, [src] failed to find an airlock at [AREACOORD(src)]")
 
 
 /obj/effect/mapping_helpers/airlock/locked
@@ -127,11 +127,11 @@
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
 	if(airlock)
 		if(airlock.locked)
-			log_world("### MAP WARNING, [src] at [COORD(src)] tried to bolt [airlock] but it's already locked!")
+			log_world("### MAP WARNING, [src] at [AREACOORD(src)] tried to bolt [airlock] but it's already locked!")
 		else
 			airlock.locked = TRUE
 	else
-		log_world("### MAP WARNING, [src] failed to find an airlock at [COORD(src)]")
+		log_world("### MAP WARNING, [src] failed to find an airlock at [AREACOORD(src)]")
 
 
 //needs to do its thing before spawn_rivers() is called

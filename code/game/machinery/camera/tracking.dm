@@ -146,10 +146,6 @@
 		for (var/j = 1 to i - 1)
 			a = L[j]
 			b = L[j + 1]
-			if (a.c_tag_order != b.c_tag_order)
-				if (a.c_tag_order > b.c_tag_order)
-					L.Swap(j, j + 1)
-			else
-				if (sorttext(a.c_tag, b.c_tag) < 0)
-					L.Swap(j, j + 1)
+			if (sorttext(a.c_tag, b.c_tag) < 0)
+				L.Swap(j, j + 1)
 	return L

@@ -40,6 +40,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 
 	w_class = WEIGHT_CLASS_BULKY
+	var/insertable = TRUE
 
 /obj/item/storage/bag/trash/ComponentInitialize()
 	. = ..()
@@ -64,14 +65,16 @@
 	else icon_state = "[initial(icon_state)]3"
 
 /obj/item/storage/bag/trash/cyborg
+	insertable = FALSE
 
 /obj/item/storage/bag/trash/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	J.put_in_cart(src, user)
-	J.mybag=src
-	J.update_icon()
-
-/obj/item/storage/bag/trash/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	return
+	if(insertable)
+		J.put_in_cart(src, user)
+		J.mybag=src
+		J.update_icon()
+	else
+		to_chat(user, "<span class='warning'>You are unable to fit your [name] into the [J.name].</span>")
+		return
 
 /obj/item/storage/bag/trash/bluespace
 	name = "trash bag of holding"
@@ -84,6 +87,9 @@
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_combined_w_class = 60
 	STR.max_items = 60
+
+/obj/item/storage/bag/trash/bluespace/cyborg
+	insertable = FALSE
 
 // -----------------------------
 //        Mining Satchel

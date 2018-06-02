@@ -187,7 +187,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	singular_name = "hide plate"
 	max_amount = 6
 	novariants = FALSE
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 
@@ -200,7 +200,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	singular_name = "drake plate"
 	max_amount = 10
 	novariants = FALSE
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 

@@ -9,7 +9,11 @@
 	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
 
 /datum/quirk/blooddeficiency/on_process()
-	quirk_holder.blood_volume -= 0.275
+	var/mob/living/carbon/human/H = quirk_holder
+	if(NOBLOOD in H.dna.species.species_traits) //can't lose blood if your species doesn't have any
+		return
+	else 
+		quirk_holder.blood_volume -= 0.275
 
 
 
@@ -81,7 +85,11 @@
 		quirk_holder.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
 		quirk_holder.SendSignal(COMSIG_ADD_MOOD_EVENT, "family_heirloom_missing", /datum/mood_event/family_heirloom_missing)
 
+/datum/quirk/family_heirloom/clone_data()
+	return heirloom
 
+/datum/quirk/family_heirloom/on_clone(data)
+	heirloom = data
 
 /datum/quirk/heavy_sleeper
 	name = "Heavy Sleeper"

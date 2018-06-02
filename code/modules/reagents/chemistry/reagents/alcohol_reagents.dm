@@ -1562,35 +1562,70 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/alexander
 	name = "Alexander"
 	id = "alexander"
-	description = "A creamy, indulgent delight that is stronger than it seems."
+	description = "Named after a Greek hero, this mix is said to embolden a user's shield as if they were in a phalanx."
 	color = "#F5E9D3"
 	boozepwr = 80
 	taste_description = "bitter, creamy cacao"
 	glass_icon_state = "alexander"
 	glass_name = "Alexander"
 	glass_desc = "A creamy, indulgent delight that is stronger than it seems."
+	var/obj/item/shield/mighty_shield
+
+/datum/reagent/consumable/ethanol/alexander/on_mob_add(mob/living/L)
+	if(ishuman(L))
+		var/mob/living/carbon/human/thehuman = L
+		for(var/obj/item/shield/theshield in thehuman.contents)
+			mighty_shield = theshield
+			mighty_shield.block_chance += 10
+			to_chat(thehuman, "<span class='notice'>[theshield] appears polished, although you don't recall polishing it.</span>")
+			return TRUE
+
+/datum/reagent/consumable/ethanol/alexander/on_mob_life(mob/living/L)
+	..()
+	if(mighty_shield && !(mighty_shield in L.contents)) //If you had a shield and lose it, you lose the reagent as well. Otherwise this is just a normal drink.
+		L.reagents.del_reagent("alexander")
+
+/datum/reagent/consumable/ethanol/alexander/on_mob_delete(mob/living/L)
+	if(mighty_shield)
+		mighty_shield.block_chance -= 10
+		to_chat(L,"<span class='notice'>You notice [mighty_shield] looks worn again. Weird.</span>")
+	..()
+
 
 /datum/reagent/consumable/ethanol/sidecar
 	name = "Sidecar"
 	id = "sidecar"
-	description = "The one ride you’ll gladly give up the wheel for."
+	description = "The one ride you'll gladly give up the wheel for."
 	color = "#FFC55B"
 	boozepwr = 80
 	taste_description = "delicious freedom"
 	glass_icon_state = "sidecar"
 	glass_name = "Sidecar"
-	glass_desc = "The one ride you’ll gladly give up the wheel for."
+	glass_desc = "The one ride you'll gladly give up the wheel for."
 
 /datum/reagent/consumable/ethanol/between_the_sheets
 	name = "Between the Sheets"
 	id = "between_the_sheets"
-	description = "A provocatively named classic."
+	description = "A provocatively named classic. Funny enough, doctors recommend drinking it before taking a nap."
 	color = "#F4C35A"
 	boozepwr = 80
 	taste_description = "seduction"
 	glass_icon_state = "between_the_sheets"
 	glass_name = "Between the Sheets"
-	glass_desc = "A provocatively named classic."
+	glass_desc = "The only drink that comes with a label reminding you of Nanotrasen's zero-tolerance promiscuity policy."
+
+/datum/reagent/consumable/ethanol/between_the_sheets/on_mob_life(mob/living/L)
+	..()
+	if(L.IsSleeping())
+		if(L.bruteloss && L.fireloss) //If you are damaged by both types, slightly increased healing but it only heals one. The more the merrier wink wink.
+			if(prob(50))
+				L.adjustBruteLoss(-0.25)
+			else
+				L.adjustFireLoss(-0.25)
+		else if(L.bruteloss && !L.fireloss) //If you have only one, it still heals but not as well.
+			L.adjustBruteLoss(-0.2)
+		else if(!L.bruteloss && L.fireloss)
+			L.adjustFireLoss(-0.2)
 
 /datum/reagent/consumable/ethanol/kamikaze
 	name = "Kamikaze"

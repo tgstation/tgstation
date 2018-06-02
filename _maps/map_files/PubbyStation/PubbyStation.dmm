@@ -21208,7 +21208,6 @@
 	},
 /area/maintenance/department/cargo)
 "bdA" = (
-/obj/machinery/droneDispenser,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "bdB" = (
@@ -22891,7 +22890,8 @@
 	dir = 2;
 	id = "Skynet_launch";
 	name = "Mech Bay Door Control";
-	pixel_x = 25
+	pixel_x = 25;
+	req_access_txt = "29"
 	},
 /turf/open/floor/plasteel/purple/corner,
 /area/hallway/primary/central)
@@ -22903,7 +22903,8 @@
 	dir = 2;
 	id = "Skynet_launch";
 	name = "Mech Bay Door Control";
-	pixel_x = -25
+	pixel_x = -25;
+	req_access_txt = "29"
 	},
 /obj/machinery/camera{
 	c_tag = "Mech Bay";
@@ -26095,7 +26096,6 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
@@ -27192,7 +27192,6 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
@@ -27224,9 +27223,6 @@
 	icon_state = "1-8"
 	},
 /obj/effect/landmark/blobstart,
-/obj/structure/disposalpipe/junction/flip{
-	dir = 1
-	},
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
@@ -27234,6 +27230,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/science/xenobiology)
 "btK" = (
@@ -47957,7 +47956,6 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/general/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
@@ -51625,12 +51623,6 @@
 	dir = 8
 	},
 /area/hallway/secondary/exit/departure_lounge)
-"pvY" = (
-/obj/machinery/computer/bounty{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/heads/hop)
 "pwj" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -51690,6 +51682,12 @@
 	},
 /turf/open/floor/plasteel/neutral/side,
 /area/hallway/secondary/exit/departure_lounge)
+"pHo" = (
+/obj/machinery/computer/bounty{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/heads/hop)
 "pKd" = (
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -52382,7 +52380,7 @@
 	width = 9
 	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/construction/mining/aux_base)
 "rKr" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -53163,7 +53161,7 @@
 /area/construction/mining/aux_base)
 "uoS" = (
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/construction/mining/aux_base)
 "uqJ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -87471,7 +87469,7 @@ aAG
 aBA
 aCQ
 aDS
-pvY
+pHo
 aAH
 aGu
 aHh

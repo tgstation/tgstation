@@ -209,6 +209,17 @@
 		qdel(fried)
 	else
 		fried.forceMove(src)
+		trash = fried
+
+/obj/item/reagent_containers/food/snacks/deepfryholder/Destroy()
+	if(trash)
+		QDEL_NULL(trash)
+	. = ..()
+
+/obj/item/reagent_containers/food/snacks/deepfryholder/On_Consume(mob/living/eater)
+	if(trash)
+		QDEL_NULL(trash)
+	..()
 
 /obj/item/reagent_containers/food/snacks/deepfryholder/proc/fry(cook_time = 30)
 	switch(cook_time)

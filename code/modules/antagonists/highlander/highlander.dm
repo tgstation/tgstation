@@ -42,7 +42,7 @@
 	if(!istype(H))
 		return
 
-	for(var/obj/item/I in H.get_equipped_items())
+	for(var/obj/item/I in H.get_equipped_items(TRUE))
 		qdel(I)
 	for(var/obj/item/I in H.held_items)
 		qdel(I)
@@ -59,7 +59,7 @@
 	W.access += get_all_centcom_access()
 	W.assignment = "Highlander"
 	W.registered_name = H.real_name
-	W.flags_1 |= NODROP_1
+	W.item_flags |= NODROP
 	W.update_label(H.real_name)
 	H.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 

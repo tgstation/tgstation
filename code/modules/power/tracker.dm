@@ -8,7 +8,6 @@
 	desc = "A solar directional tracker."
 	icon = 'goon/icons/obj/power.dmi'
 	icon_state = "tracker"
-	anchored = TRUE
 	density = TRUE
 	use_power = NO_POWER_USE
 	max_integrity = 250

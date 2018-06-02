@@ -90,7 +90,7 @@
 	/obj/item/clothing/head/wizard,
 	/obj/item/clothing/head/nursehat,
 	/obj/item/clothing/head/sombrero,
-	/obj/item/clothing/head/witchunter_hat)
+	/obj/item/clothing/head/helmet/chaplain/witchunter_hat)
 
 	can_buckle = TRUE
 	buckle_lying = FALSE
@@ -105,6 +105,7 @@
 	spark_system.attach(src)
 
 	wires = new /datum/wires/robot(src)
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
