@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(list(/obj/item/construction/rcd,/obj
 /obj/machinery/rnd/experimentor/Insert_Item(obj/item/O, mob/user)
 	if(user.a_intent != INTENT_HARM && istype(O))
 		. = 1
-		if(O.item_flags & ABSTRACT_1) //Yeah lets just stop this before it becomes a problem.
+		if(O.item_flags & ABSTRACT) //Yeah lets just stop this before it becomes a problem.
 			return
 		if(!is_insertion_ready(user))
 			return
