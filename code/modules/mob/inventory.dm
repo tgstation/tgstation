@@ -379,7 +379,7 @@
 
 /mob/living/proc/unequip_everything()
 	var/list/items = list()
-	items |= get_equipped_items()
+	items |= get_equipped_items(TRUE)
 	for(var/I in items)
 		dropItemToGround(I)
 	drop_all_held_items()

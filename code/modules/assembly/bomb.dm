@@ -117,7 +117,7 @@
 	if(isigniter(assembly.a_left) == isigniter(assembly.a_right))
 		return
 
-	if((src in user.get_equipped_items()) && !user.canUnEquip(src))
+	if((src in user.get_equipped_items(TRUE)) && !user.canUnEquip(src))
 		to_chat(user, "<span class='warning'>[src] is stuck to you!</span>")
 		return
 
