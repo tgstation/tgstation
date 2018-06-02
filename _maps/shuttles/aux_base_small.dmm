@@ -35,7 +35,6 @@
 /area/shuttle/auxillary_base)
 "h" = (
 /obj/machinery/camera{
-	c_tag = "Auxillary Mining Base";
 	dir = 1
 	},
 /obj/structure/mining_shuttle_beacon,

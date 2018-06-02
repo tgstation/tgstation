@@ -19,7 +19,6 @@
 	integrity_failure = 50
 	var/list/network = list("ss13")
 	var/c_tag = null
-	var/c_tag_order = 999
 	var/status = TRUE
 	var/start_active = FALSE //If it ignores the random chance to start broken on round start
 	var/invuln = null

@@ -12246,7 +12246,6 @@
 "aFe" = (
 /obj/machinery/camera{
 	c_tag = "Dormitory South";
-	c_tag_order = 999;
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
