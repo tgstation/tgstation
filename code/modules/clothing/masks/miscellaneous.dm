@@ -123,7 +123,7 @@ obj/item/clothing/mask/frog
 	return message
 
 obj/item/clothing/mask/frog/cursed
-	flags_1 = NODROP_1 //reee!!
+	item_flags = NODROP //reee!!
 
 /obj/item/clothing/mask/frog/cursed/attack_self(mob/user)
 	return //no voicebox to alter.

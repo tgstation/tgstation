@@ -467,7 +467,12 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/simple/IRV
 	assets = list(
 		"jquery-ui.custom-core-widgit-mouse-sortable-min.js" = 'html/IRV/jquery-ui.custom-core-widgit-mouse-sortable-min.js',
-		"jquery-1.10.2.min.js" = 'html/IRV/jquery-1.10.2.min.js'
+	)
+
+/datum/asset/group/IRV
+	children = list(
+		/datum/asset/simple/jquery,
+		/datum/asset/simple/IRV
 	)
 
 /datum/asset/simple/changelog

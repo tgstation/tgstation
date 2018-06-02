@@ -11,7 +11,7 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,27)
+	var/loot = rand(1,28)
 	switch(loot)
 		if(1)
 			new /obj/item/shared_storage/red(src)
@@ -75,6 +75,8 @@
 		if(27)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/bedsheet/cult(src)
+		if(28)
+			new /obj/item/clothing/neck/necklace/memento_mori(src)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
@@ -187,10 +189,68 @@
 	activated()
 
 /obj/item/rod_of_asclepius/proc/activated()
-	flags_1 = NODROP_1 | DROPDEL_1
+	item_flags = NODROP | DROPDEL
 	desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
 	icon_state = "asclepius_active"
 	activated = TRUE
+
+//Memento Mori
+/obj/item/clothing/neck/necklace/memento_mori
+	name = "Memento Mori"
+	desc = "A mysterious pendant. An inscription on it says: \"Certain death tomorrow means certain life today.\""
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "memento_mori"
+	actions_types = list(/datum/action/item_action/hands_free/memento_mori)
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	var/mob/living/carbon/human/active_owner
+
+/obj/item/clothing/neck/necklace/memento_mori/item_action_slot_check(slot)
+	return slot == SLOT_NECK
+
+/obj/item/clothing/neck/necklace/memento_mori/dropped(mob/user)
+	..()
+	if(active_owner)
+		mori()
+
+//Just in case
+/obj/item/clothing/neck/necklace/memento_mori/Destroy()
+	if(active_owner)
+		mori()
+	return ..()
+
+/obj/item/clothing/neck/necklace/memento_mori/proc/memento(mob/living/carbon/human/user)
+	to_chat(user, "<span class='warning'>You feel your life being drained by the pendant...</span>")
+	if(do_after(user, 40, target = user))
+		to_chat(user, "<span class='notice'>Your lifeforce is now linked to the pendant! You feel like removing it would kill you, and yet you instinctively know that until then, you won't die.</span>")
+		user.add_trait(TRAIT_NODEATH, "memento_mori")
+		user.add_trait(TRAIT_NOHARDCRIT, "memento_mori")
+		user.add_trait(TRAIT_NOCRITDAMAGE, "memento_mori")
+		icon_state = "memento_mori_active"
+		active_owner = user
+
+/obj/item/clothing/neck/necklace/memento_mori/proc/mori()
+	icon_state = "memento_mori"
+	if(!active_owner)
+		return
+	var/mob/living/carbon/human/H = active_owner //to avoid infinite looping when dust unequips the pendant
+	active_owner = null
+	to_chat(H, "<span class='userdanger'>You feel your life rapidly slipping away from you!</span>")
+	H.dust(TRUE, TRUE)
+
+/datum/action/item_action/hands_free/memento_mori
+	check_flags = NONE
+	name = "Memento Mori"
+	desc = "Bind your life to the pendant."
+
+/datum/action/item_action/hands_free/memento_mori/Trigger()
+	var/obj/item/clothing/neck/necklace/memento_mori/MM = target
+	if(!MM.active_owner)
+		if(ishuman(owner))
+			MM.memento(owner)
+	else
+		to_chat(owner, "<span class='warning'>You try to free your lifeforce from the pendant...</span>")
+		if(do_after(owner, 40, target = owner))
+			MM.mori()
 
 //Wisp Lantern
 /obj/item/wisp_lantern
@@ -322,7 +382,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	fire_sound = 'sound/weapons/batonextend.ogg'
 	max_charges = 1
-	flags_1 = NOBLUDGEON_1
+	item_flags = NEEDS_PERMIT | NOBLUDGEON
 	force = 18
 
 /obj/item/ammo_casing/magic/hook
@@ -529,7 +589,7 @@
 	to_chat(user, "<span class='notice'>You unfold the ladder. It extends much farther than you were expecting.</span>")
 	var/last_ladder = null
 	for(var/i in 1 to world.maxz)
-		if(is_centcom_level(i) || is_transit_level(i) || is_reebe(i))
+		if(is_centcom_level(i) || is_transit_level(i) || is_reebe(i) || is_away_level(i))
 			continue
 		var/turf/T2 = locate(ladder_x, ladder_y, i)
 		last_ladder = new /obj/structure/ladder/unbreakable/jacob(T2, null, last_ladder)
@@ -855,8 +915,8 @@
 				var/old_name = T.name
 				if(T.TerraformTurf(turf_type))
 					user.visible_message("<span class='danger'>[user] turns \the [old_name] into [transform_string]!</span>")
-					message_admins("[key_name_admin(user)] fired the lava staff at [get_area(target)]. [ADMIN_COORDJMP(T)]")
-					log_game("[key_name(user)] fired the lava staff at [get_area(target)] [COORD(T)].")
+					message_admins("[ADMIN_LOOKUPFLW(user)] fired the lava staff at [ADMIN_VERBOSEJMP(T)]")
+					log_game("[key_name(user)] fired the lava staff at [AREACOORD(T)].")
 					timer = world.time + create_cooldown
 					playsound(T,'sound/magic/fireball.ogg', 200, 1)
 			else
@@ -908,6 +968,8 @@
 		INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, H)
 	to_chat(user, "<span class='notice'>You shatter the bottle!</span>")
 	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
+	message_admins("<span class='adminnotice'>[ADMIN_LOOKUPFLW(user)] has activated a bottle of mayhem!</span>")
+	add_logs(user, null, "activated a bottle of mayhem", src)
 	qdel(src)
 
 /obj/item/blood_contract
@@ -946,7 +1008,7 @@
 
 	var/mob/living/L = choice
 
-	message_admins("<span class='adminnotice'>[key_name_admin(L)][ADMIN_FLW(L)] has been marked for death by [key_name_admin(user)]!</span>")
+	message_admins("<span class='adminnotice'>[ADMIN_LOOKUPFLW(L)] has been marked for death by [ADMIN_LOOKUPFLW(user)]!</span>")
 
 	var/datum/objective/survive/survive = new
 	survive.owner = L.mind

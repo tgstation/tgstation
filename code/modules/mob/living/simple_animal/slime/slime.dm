@@ -224,8 +224,10 @@
 	return 0
 
 /mob/living/simple_animal/slime/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	powerlevel = 0 // oh no, the power!
-	..()
 
 /mob/living/simple_animal/slime/MouseDrop(atom/movable/A as mob|obj)
 	if(isliving(A) && A != src && usr == src)

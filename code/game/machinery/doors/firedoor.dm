@@ -144,9 +144,7 @@
 	else
 		close()
 
-/obj/machinery/door/firedoor/interact(mob/user)
-	if(!issilicon(user))
-		return TRUE
+/obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)
 	if(welded || operating || stat & NOPOWER)
 		return TRUE
@@ -155,6 +153,9 @@
 	else
 		close()
 	return TRUE
+
+/obj/machinery/door/firedoor/attack_robot(mob/user)
+	return attack_ai(user)
 
 /obj/machinery/door/firedoor/attack_alien(mob/user)
 	add_fingerprint(user)

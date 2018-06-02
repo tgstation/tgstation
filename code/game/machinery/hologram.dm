@@ -34,7 +34,6 @@ Possible to do for anyone motivated enough:
 	layer = LOW_OBJ_LAYER
 	plane = FLOOR_PLANE
 	flags_1 = HEAR_1
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100

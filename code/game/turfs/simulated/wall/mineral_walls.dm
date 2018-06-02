@@ -94,8 +94,8 @@
 
 /turf/closed/wall/mineral/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma wall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]",0,1)
-		log_game("Plasma wall ignited by [key_name(user)] in [COORD(src)]")
+		message_admins("Plasma wall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
+		log_game("Plasma wall ignited by [key_name(user)] in [AREACOORD(src)]")
 		ignite(W.is_hot())
 		return
 	..()

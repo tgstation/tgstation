@@ -11,6 +11,7 @@
 		create_mob_hud()
 	if(hud_used)
 		hud_used.show_hud(hud_used.hud_version)
+		hud_used.update_ui_style(ui_style2icon(client.prefs.UI_style))
 
 	next_move = 1
 
@@ -38,6 +39,7 @@
 		AA.onNewMob(src)
 
 	update_client_colour()
+	update_mouse_pointer()
 	if(client)
 		client.click_intercept = null
 

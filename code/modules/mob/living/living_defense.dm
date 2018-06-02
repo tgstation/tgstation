@@ -317,9 +317,11 @@
 		return shock_damage
 
 /mob/living/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_CONTENTS)
+		return
 	for(var/obj/O in contents)
 		O.emp_act(severity)
-	..()
 
 /mob/living/singularity_act()
 	var/gain = 20

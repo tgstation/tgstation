@@ -133,7 +133,6 @@
 		to_chat(src, "<i>Your onboard antivirus has initiated lockdown. Motor servos are impaired, ventilation access is denied, and your display reports that you are hacked to all nearby.</i>")
 		hacked = TRUE
 		mind.special_role = "hacked drone"
-		seeStatic = 0 //I MUST SEE THEIR TERRIFIED FACES
 		ventcrawler = VENTCRAWLER_NONE //Again, balance
 		speed = 1 //gotta go slow
 		message_admins("[src] ([src.key]) became a hacked drone hellbent on [clockwork ? "serving Ratvar" : "destroying the station"]!")
@@ -149,21 +148,17 @@
 		to_chat(src, "<i>Having been restored, your onboard antivirus reports the all-clear and you are able to perform all actions again.</i>")
 		hacked = FALSE
 		mind.special_role = null
-		seeStatic = initial(seeStatic)
 		ventcrawler = initial(ventcrawler)
 		speed = initial(speed)
 		if(is_servant_of_ratvar(src))
 			remove_servant_of_ratvar(src, TRUE)
 		message_admins("[src] ([src.key]), a hacked drone, was restored to factory defaults!")
 	update_drone_icon()
-	updateSeeStaticMobs()
 
 /mob/living/simple_animal/drone/proc/liberate()
 	// F R E E D R O N E
 	laws = "1. You are a Free Drone."
 	to_chat(src, laws)
-	seeStatic = FALSE
-	updateSeeStaticMobs()
 
 /mob/living/simple_animal/drone/proc/update_drone_icon()
 	//Different icons for different hack states
@@ -188,9 +183,3 @@
 		icon_state = icon_dead
 	else
 		icon_state = icon_living
-
-/datum/action/generic/drone/select_filter
-	name = "Select Vision Filter"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
-	button_icon_state = "drone_vision"
-	procname = /mob/living/simple_animal/drone/verb/toggle_statics

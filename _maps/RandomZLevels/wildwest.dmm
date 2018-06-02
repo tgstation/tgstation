@@ -1076,8 +1076,7 @@
 /area/awaymission/wildwest/mines)
 "dO" = (
 /obj/structure/chair/comfy/beige{
-	dir = 1;
-	icon_state = "comfychair"
+	dir = 1
 	},
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
@@ -1331,14 +1330,8 @@
 	icon_state = "ironsand4"
 	},
 /area/awaymission/wildwest/gov)
-"ez" = (
-/turf/open/floor/plasteel,
-/area/awaymission/wildwest/refine)
 "eA" = (
 /obj/machinery/mineral/mint,
-/turf/open/floor/plasteel,
-/area/awaymission/wildwest/refine)
-"eB" = (
 /turf/open/floor/plasteel,
 /area/awaymission/wildwest/refine)
 "eC" = (
@@ -28798,7 +28791,7 @@ aG
 aG
 aG
 et
-ez
+eu
 eu
 eu
 eu
@@ -29312,7 +29305,7 @@ aW
 aW
 aW
 et
-eB
+eu
 eu
 eu
 eu

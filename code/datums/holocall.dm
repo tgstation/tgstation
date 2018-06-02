@@ -60,9 +60,6 @@
 		user.remote_control = null
 
 	if(!QDELETED(eye))
-		if(user_good && user.client)
-			for(var/datum/camerachunk/chunk in eye.visibleCameraChunks)
-				chunk.remove(eye)
 		qdel(eye)
 	eye = null
 
@@ -205,7 +202,7 @@
 /datum/holorecord/proc/set_caller_image(mob/user)
 	var/olddir = user.dir
 	user.setDir(SOUTH)
-	caller_image = getFlatIcon(user)
+	caller_image = image(user)
 	user.setDir(olddir)
 
 /obj/item/disk/holodisk
@@ -284,7 +281,7 @@
 	else
 		var/datum/preset_holoimage/H = new preset_image_type
 		record.caller_image = H.build_image()
-		
+
 //These build caller image from outfit and some additional data, for use by mappers for ruin holorecords
 /datum/preset_holoimage
 	var/nonhuman_mobtype //Fill this if you just want something nonhuman
@@ -303,7 +300,7 @@
 			mannequin.equipOutfit(outfit_type,TRUE)
 		mannequin.setDir(SOUTH)
 		COMPILE_OVERLAYS(mannequin)
-		. = getFlatIcon(mannequin)
+		. = image(mannequin)
 		unset_busy_human_dummy("HOLODISK_PRESET")
 
 /obj/item/disk/holodisk/example
@@ -347,4 +344,3 @@
 
 /datum/preset_holoimage/clown
 	outfit_type = /datum/outfit/job/clown
-

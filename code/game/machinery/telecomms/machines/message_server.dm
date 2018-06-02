@@ -11,7 +11,6 @@
 	icon_state = "blackbox"
 	name = "Blackbox Recorder"
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
@@ -25,7 +24,6 @@
 	name = "Messaging Server"
 	desc = "A machine that attempts to gather the secret knowledge of the universe."
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100

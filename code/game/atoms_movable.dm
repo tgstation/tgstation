@@ -161,46 +161,54 @@
 		else //Diagonal move, split it into cardinal moves
 			moving_diagonally = FIRST_DIAG_STEP
 			var/first_step_dir
+			// The `&& moving_diagonally` checks are so that a forceMove taking
+			// place due to a Crossed, Collided, etc. call will interrupt
+			// the second half of the diagonal movement, or the second attempt
+			// at a first half if step() fails because we hit something.
 			if (direct & NORTH)
 				if (direct & EAST)
-					if (step(src, NORTH))
+					if (step(src, NORTH) && moving_diagonally)
 						first_step_dir = NORTH
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, EAST)
-					else if (step(src, EAST))
+					else if (moving_diagonally && step(src, EAST))
 						first_step_dir = EAST
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, NORTH)
 				else if (direct & WEST)
-					if (step(src, NORTH))
+					if (step(src, NORTH) && moving_diagonally)
 						first_step_dir = NORTH
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, WEST)
-					else if (step(src, WEST))
+					else if (moving_diagonally && step(src, WEST))
 						first_step_dir = WEST
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, NORTH)
 			else if (direct & SOUTH)
 				if (direct & EAST)
-					if (step(src, SOUTH))
+					if (step(src, SOUTH) && moving_diagonally)
 						first_step_dir = SOUTH
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, EAST)
-					else if (step(src, EAST))
+					else if (moving_diagonally && step(src, EAST))
 						first_step_dir = EAST
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, SOUTH)
 				else if (direct & WEST)
-					if (step(src, SOUTH))
+					if (step(src, SOUTH) && moving_diagonally)
 						first_step_dir = SOUTH
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, WEST)
-					else if (step(src, WEST))
+					else if (moving_diagonally && step(src, WEST))
 						first_step_dir = WEST
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, SOUTH)
-			if(!. && moving_diagonally == SECOND_DIAG_STEP)
-				setDir(first_step_dir)
+			if(moving_diagonally == SECOND_DIAG_STEP)
+				if(!.)
+					setDir(first_step_dir)
+				else if (!inertia_moving)
+					inertia_next_move = world.time + inertia_move_delay
+					newtonian_move(direct)
 			moving_diagonally = 0
 			return
 
@@ -243,10 +251,6 @@
 			O.Check()
 	if (orbiting)
 		orbiting.Check()
-
-	var/datum/proximity_monitor/proximity_monitor = src.proximity_monitor
-	if(proximity_monitor)
-		proximity_monitor.HandleMove()
 
 	return 1
 
@@ -310,14 +314,14 @@
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
 
-		if(oldloc && !same_loc)
-			oldloc.Exited(src, destination)
-			if(old_area)
-				old_area.Exited(src, destination)
-
 		loc = destination
+		moving_diagonally = 0
 
 		if(!same_loc)
+			if(oldloc)
+				oldloc.Exited(src, destination)
+				if(old_area)
+					old_area.Exited(src, destination)
 			var/turf/oldturf = get_turf(oldloc)
 			var/turf/destturf = get_turf(destination)
 			var/old_z = (oldturf ? oldturf.z : null)
@@ -332,6 +336,7 @@
 				if(AM == src)
 					continue
 				AM.Crossed(src, oldloc)
+
 		Moved(oldloc, NONE, TRUE)
 		. = TRUE
 
@@ -403,7 +408,7 @@
 
 /atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback) //If this returns FALSE then callback will not be called.
 	. = FALSE
-	if (!target || (flags_1 & NODROP_1) || speed <= 0)
+	if (!target || speed <= 0)
 		return
 
 	if (pulledby)
@@ -557,7 +562,7 @@
 	if(visual_effect_icon)
 		I = image('icons/effects/effects.dmi', A, visual_effect_icon, A.layer + 0.1)
 	else if(used_item)
-		I = image(used_item.icon, A, used_item.icon_state, A.layer + 0.1)
+		I = image(icon = used_item, loc = A, layer = A.layer + 0.1)
 
 		// Scale the icon.
 		I.transform *= 0.75

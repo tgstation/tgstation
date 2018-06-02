@@ -16,7 +16,6 @@
 	layer = GAS_SCRUBBER_LAYER
 
 	var/id_tag = null
-	var/on = FALSE
 	var/pump_direction = RELEASING
 
 	var/pressure_checks = EXT_BOUND
@@ -32,7 +31,7 @@
 	var/radio_filter_in
 
 	pipe_state = "uvent"
-	
+
 /obj/machinery/atmospherics/components/unary/vent_pump/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
@@ -46,7 +45,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on
 	on = TRUE
 	icon_state = "vent_map_on"
-	
+
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
@@ -62,7 +61,7 @@
 	pressure_checks = INT_BOUND
 	internal_pressure_bound = 4000
 	external_pressure_bound = 0
-	
+
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
@@ -76,7 +75,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on
 	on = TRUE
 	icon_state = "vent_map_siphon_on"
-	
+
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
@@ -126,8 +125,9 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	var/area/A = get_area(src)
-	A.air_vent_names -= id_tag
-	A.air_vent_info -= id_tag
+	if (A)
+		A.air_vent_names -= id_tag
+		A.air_vent_info -= id_tag
 
 	SSradio.remove_object(src,frequency)
 	radio_connection = null
@@ -136,7 +136,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume
 	name = "large air vent"
 	power_channel = EQUIP
-	
+
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
@@ -150,7 +150,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on
 	on = TRUE
 	icon_state = "vent_map_on"
-	
+
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
@@ -166,7 +166,7 @@
 	pressure_checks = INT_BOUND
 	internal_pressure_bound = 2000
 	external_pressure_bound = 0
-	
+
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
@@ -180,7 +180,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on
 	on = TRUE
 	icon_state = "vent_map_siphon_on"
-	
+
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X

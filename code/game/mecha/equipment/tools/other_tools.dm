@@ -58,8 +58,8 @@
 		return
 	var/list/obj/effect/portal/created = create_portal_pair(get_turf(src), target_turf, src, 300, 1, /obj/effect/portal/anom)
 	var/turf/T = get_turf(target)
-	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] used a Wormhole Generator in [ADMIN_COORDJMP(T)]",0,1)
-	log_game("[key_name(chassis.occupant)] used a Wormhole Generator in [COORD(T)]")
+	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] used a Wormhole Generator in [ADMIN_VERBOSEJMP(T)]")
+	log_game("[key_name(chassis.occupant)] used a Wormhole Generator in [AREACOORD(T)]")
 	src = null
 	QDEL_LIST_IN(created, rand(150,300))
 	return 1
@@ -97,7 +97,7 @@
 					locked.throw_at(target, 14, 1.5)
 					locked = null
 					send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
-					log_game("[key_name(chassis.occupant)] used a Gravitational Catapult to throw [locked]([COORD(orig)]) at [target]([COORD(targ)]).")
+					log_game("[key_name(chassis.occupant)] used a Gravitational Catapult to throw [locked] (From [AREACOORD(orig)]) at [target] ([AREACOORD(targ)]).")
 					return TRUE
 				else
 					locked = null
@@ -118,7 +118,7 @@
 						step_away(A,target)
 						sleep(2)
 			var/turf/T = get_turf(target)
-			log_game("[key_name(chassis.occupant)] used a Gravitational Catapult repulse wave on ([COORD(T)])")
+			log_game("[key_name(chassis.occupant)] used a Gravitational Catapult repulse wave on [AREACOORD(T)]")
 			return TRUE
 
 

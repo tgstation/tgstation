@@ -564,19 +564,6 @@
 /datum/action/innate/proc/Deactivate()
 	return
 
-//Preset for action that call specific procs (consider innate).
-/datum/action/generic
-	check_flags = 0
-	var/procname
-
-/datum/action/generic/Trigger()
-	if(!..())
-		return 0
-	if(target && procname)
-		call(target, procname)(usr)
-	return 1
-
-
 //Preset for an action with a cooldown
 
 /datum/action/cooldown

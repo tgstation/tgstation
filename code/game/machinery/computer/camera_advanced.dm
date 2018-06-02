@@ -190,7 +190,7 @@
 		else
 			moveToNullspace()
 		if(use_static)
-			GLOB.cameranet.visibility(src)
+			GLOB.cameranet.visibility(src, GetViewerClient())
 		if(visible_icon)
 			if(eye_user.client)
 				eye_user.client.images -= user_image

@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "b" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -44,10 +44,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
-"y" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "z" = (
 /obj/machinery/light{
 	dir = 8
@@ -82,7 +78,6 @@
 /area/shuttle/auxillary_base)
 "X" = (
 /obj/machinery/camera{
-	c_tag = "Auxillary Mining Base";
 	dir = 1
 	},
 /obj/structure/mining_shuttle_beacon,
@@ -142,7 +137,7 @@ P
 k
 k
 k
-y
+x
 "}
 (6,1,1) = {"
 v

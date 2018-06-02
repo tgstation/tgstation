@@ -101,7 +101,8 @@
 
 /obj/structure/table/proc/tableplace(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(src.loc)
-	pushed_mob.lay_down()
+	pushed_mob.resting = TRUE
+	pushed_mob.update_canmove()
 	pushed_mob.visible_message("<span class='notice'>[user] places [pushed_mob] onto [src].</span>", \
 								"<span class='notice'>[user] places [pushed_mob] onto [src].</span>")
 	add_logs(user, pushed_mob, "placed")
@@ -140,7 +141,7 @@
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
-	if(user.a_intent != INTENT_HARM && !(I.flags_1 & ABSTRACT_1))
+	if(user.a_intent != INTENT_HARM && !(I.item_flags & ABSTRACT))
 		if(user.transferItemToLoc(I, drop_location()))
 			var/list/click_params = params2list(params)
 			//Center the icon where the user clicked.
@@ -380,7 +381,7 @@
 	obj_integrity = max_integrity
 
 /obj/structure/table/bronze
-	name = "brass table"
+	name = "bronze table"
 	desc = "A solid table made out of bronze."
 	icon = 'icons/obj/smooth_structures/brass_table.dmi'
 	icon_state = "brass_table"

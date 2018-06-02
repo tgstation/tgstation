@@ -1,7 +1,7 @@
 # In-code keypress handling system
 
 This whole system is heavily based off of forum_account's keyboard library.
-Thanks to forum_account for saving the day, the library can be found [here](http://www.byond.com/developer/Forum_account/Keyboard)!
+Thanks to forum_account for saving the day, the library can be found [here](https://secure.byond.com/developer/Forum_account/Keyboard)!
 
 .dmf macros have some very serious shortcomings. For example, they do not allow reusing parts
 of one macro in another, so giving cyborgs their own shortcuts to swap active module couldn't

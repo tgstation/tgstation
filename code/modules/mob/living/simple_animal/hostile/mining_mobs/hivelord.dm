@@ -36,7 +36,8 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	if(world.time >= ranged_cooldown)
 		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new brood_type(src.loc)
-		A.admin_spawned = admin_spawned
+
+		A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 		A.GiveTarget(target)
 		A.friends = friends
 		A.faction = faction.Copy()

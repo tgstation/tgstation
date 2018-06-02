@@ -47,7 +47,7 @@
 "ah" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -72,8 +72,6 @@
 	req_access = null
 	},
 /obj/structure/chair{
-	tag = "icon-chair (WEST)";
-	icon_state = "chair";
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -416,8 +414,6 @@
 	req_access = null
 	},
 /obj/structure/chair{
-	tag = "icon-chair (WEST)";
-	icon_state = "chair";
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1193,7 +1189,7 @@
 	},
 /area/shuttle/pirate)
 "cI" = (
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	dir = 8
 	},
 /obj/structure/cable/yellow{
@@ -1552,8 +1548,6 @@
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/yellow/corner{
-	tag = "icon-yellowcorner (WEST)";
-	icon_state = "yellowcorner";
 	dir = 8
 	},
 /area/shuttle/pirate)

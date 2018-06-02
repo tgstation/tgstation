@@ -157,7 +157,7 @@
 	icon_state = "cultalt"
 
 /obj/item/clothing/shoes/cult/alt/ghost
-	flags_1 = NODROP_1|DROPDEL_1
+	item_flags = NODROP | DROPDEL
 
 /obj/item/clothing/shoes/cyborg
 	name = "cyborg boots"

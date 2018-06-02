@@ -9,7 +9,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_range = 4
 	throw_speed = 1
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	force = 3
 	attack_verb = list("blown up", "exploded", "detonated")
 	materials = list(MAT_METAL=50, MAT_GLASS=30)

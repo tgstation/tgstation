@@ -445,7 +445,7 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bm" = (
-/obj/machinery/atmospherics/components/binary/valve/open{
+/obj/machinery/atmospherics/components/binary/valve/on{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -1370,6 +1370,13 @@
 /obj/item/storage/toolbox/syndicate,
 /turf/open/floor/plasteel,
 /area/storage/primary)
+"oL" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/vr_sleeper,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "oV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -1434,6 +1441,13 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
+"wV" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/vr_sleeper,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "yp" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -3123,7 +3137,7 @@ dA
 dl
 dD
 dc
-dc
+oL
 cS
 af
 bY
@@ -3555,7 +3569,7 @@ dC
 dl
 dF
 dk
-dk
+wV
 cS
 af
 ad

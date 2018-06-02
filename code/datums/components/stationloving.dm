@@ -39,9 +39,9 @@
 		var/turf/currentturf = get_turf(src)
 		to_chat(get(parent, /mob), "<span class='danger'>You can't help but feel that you just lost something back there...</span>")
 		var/turf/targetturf = relocate()
-		log_game("[parent] has been moved out of bounds in [COORD(currentturf)]. Moving it to [COORD(targetturf)].")
+		log_game("[parent] has been moved out of bounds in [AREACOORD(currentturf)]. Moving it to [AREACOORD(targetturf)].")
 		if(inform_admins)
-			message_admins("[parent] has been moved out of bounds in [ADMIN_COORDJMP(currentturf)]. Moving it to [ADMIN_COORDJMP(targetturf)].")
+			message_admins("[parent] has been moved out of bounds in [ADMIN_VERBOSEJMP(currentturf)]. Moving it to [ADMIN_VERBOSEJMP(targetturf)].")
 
 /datum/component/stationloving/proc/check_soul_imbue()
 	return disallow_soul_imbue
@@ -51,10 +51,12 @@
 	var/turf/T = get_turf(parent)
 	if (!T)
 		return FALSE
+	var/area/A = T.loc
+	if(istype(A, /area/fabric_of_reality)) // Obviously terrible, just for test merging
+		return FALSE
 	if (is_station_level(T.z) || is_centcom_level(T.z))
 		return TRUE
 	if (is_transit_level(T.z))
-		var/area/A = T.loc
 		if (is_type_in_typecache(A, allowed_shuttles))
 			return TRUE
 
@@ -65,13 +67,13 @@
 	var/turf/T = get_turf(parent)
 
 	if(inform_admins && force)
-		message_admins("[parent] has been !!force deleted!! in [ADMIN_COORDJMP(T)].")
-		log_game("[parent] has been !!force deleted!! in [COORD(T)].")
+		message_admins("[parent] has been !!force deleted!! in [ADMIN_VERBOSEJMP(T)].")
+		log_game("[parent] has been !!force deleted!! in [AREACOORD(T)].")
 
 	if(!force)
 		var/turf/targetturf = relocate()
-		log_game("[parent] has been destroyed in [COORD(T)]. Moving it to [COORD(targetturf)].")
+		log_game("[parent] has been destroyed in [AREACOORD(T)]. Moving it to [AREACOORD(targetturf)].")
 		if(inform_admins)
-			message_admins("[parent] has been destroyed in [ADMIN_COORDJMP(T)]. Moving it to [ADMIN_COORDJMP(targetturf)].")
+			message_admins("[parent] has been destroyed in [ADMIN_VERBOSEJMP(T)]. Moving it to [ADMIN_VERBOSEJMP(targetturf)].")
 		return TRUE
 	return FALSE

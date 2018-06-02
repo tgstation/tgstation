@@ -73,7 +73,7 @@
 	if(user.a_intent == INTENT_GRAB && user_buckle_mob(user.pulling, user, check_loc = 0))
 		return ..()
 
-/obj/machinery/power/tesla_coil/tesla_act(var/power)
+/obj/machinery/power/tesla_coil/tesla_act(power, tesla_flags, shocked_targets)
 	if(anchored && !panel_open)
 		obj_flags |= BEING_SHOCKED
 		//don't lose arc power when it's not connected to anything
@@ -82,9 +82,9 @@
 		add_avail(power_produced*input_power_multiplier)
 		flick("coilhit", src)
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
-		tesla_zap(src, 5, power_produced)
+		tesla_zap(src, 5, power_produced, tesla_flags, shocked_targets)
 		if(istype(linked_techweb))
-			linked_techweb.research_points += min(power_produced, 1) // x4 coils = ~240/m point bonus for R&D
+			linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, min(power_produced, 1)) // x4 coils = ~240/m point bonus for R&D
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 		tesla_buckle_check(power)
 	else
@@ -110,16 +110,16 @@
 	circuit = /obj/item/circuitboard/machine/tesla_coil/research
 	power_loss = 20 // something something, high voltage + resistance
 
-/obj/machinery/power/tesla_coil/research/tesla_act(var/power)
+/obj/machinery/power/tesla_coil/research/tesla_act(power, tesla_flags, shocked_things)
 	if(anchored && !panel_open)
 		obj_flags |= BEING_SHOCKED
 		var/power_produced = powernet ? power / power_loss : power
 		add_avail(power_produced*input_power_multiplier)
 		flick("rpcoilhit", src)
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
-		tesla_zap(src, 5, power_produced)
+		tesla_zap(src, 5, power_produced, tesla_flags, shocked_things)
 		if(istype(linked_techweb))
-			linked_techweb.research_points += min(power_produced, 3) // x4 coils with a pulse per second or so = ~720/m point bonus for R&D
+			linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, min(power_produced, 3)) // x4 coils with a pulse per second or so = ~720/m point bonus for R&D
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 		tesla_buckle_check(power)
 	else

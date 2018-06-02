@@ -288,7 +288,7 @@
 /mob/proc/show_inv(mob/user)
 	return
 
-//mob verbs are faster than object verbs. See http://www.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
+//mob verbs are faster than object verbs. See https://secure.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
 /mob/verb/examinate(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
 	set name = "Examine"
 	set category = "IC"
@@ -460,7 +460,7 @@
 			else
 				what = get_item_by_slot(slot)
 			if(what)
-				if(!(what.flags_1 & ABSTRACT_1))
+				if(!(what.item_flags & ABSTRACT))
 					usr.stripPanelUnequip(what,src,slot)
 			else
 				usr.stripPanelEquip(what,src,slot)
@@ -835,6 +835,15 @@
 		var/obj/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
 		if (L)
 			L.alpha = lighting_alpha
+
+/mob/proc/update_mouse_pointer()
+	if (!client)
+		return
+	client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
+	if (ismecha(loc))
+		var/obj/mecha/M = loc
+		if(M.mouse_pointer)
+			client.mouse_pointer_icon = M.mouse_pointer
 
 /mob/proc/is_literate()
 	return 0

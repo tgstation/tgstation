@@ -260,10 +260,16 @@ Code:
 
 
 
+			var/turf/pda_turf = get_turf(src)
 			for(var/obj/machinery/computer/monitor/pMon in GLOB.machines)
-				if(!(pMon.stat & (NOPOWER | BROKEN)) )
-					powercount++
-					powermonitors += pMon
+				if(pMon.stat & (NOPOWER | BROKEN)) //check to make sure the computer is functional
+					continue
+				if(pda_turf.z != pMon.z) //and that we're on the same zlevel as the computer (lore: limited signal strength)
+					continue
+				if(pMon.is_secret_monitor) //make sure it isn't a secret one (ie located on a ruin), allowing people to metagame that the location exists
+					continue
+				powercount++
+				powermonitors += pMon
 
 
 			if(!powercount)
@@ -274,22 +280,23 @@ Code:
 				var/count = 0
 				for(var/obj/machinery/computer/monitor/pMon in powermonitors)
 					count++
-					menu += "<a href='byond://?src=[REF(src)];choice=Power Select;target=[count]'>[pMon] </a><BR>"
+					menu += "<a href='byond://?src=[REF(src)];choice=Power Select;target=[count]'>[pMon] - [get_area_name(pMon, TRUE)] </a><BR>"
 
 				menu += "</FONT>"
 
 		if (433)
 			menu = "<h4>[PDAIMG(power)] Power Monitor </h4><BR>"
-			if(!powmonitor)
+			if(!powmonitor || !powmonitor.get_powernet())
 				menu += "<span class='danger'>No connection<BR></span>"
 			else
 				var/list/L = list()
-				for(var/obj/machinery/power/terminal/term in powmonitor.attached.powernet.nodes)
+				var/datum/powernet/connected_powernet = powmonitor.get_powernet()
+				for(var/obj/machinery/power/terminal/term in connected_powernet.nodes)
 					if(istype(term.master, /obj/machinery/power/apc))
 						var/obj/machinery/power/apc/A = term.master
 						L += A
 
-				menu += "<PRE>Total power: [DisplayPower(powmonitor.attached.powernet.viewavail)]<BR>Total load:  [DisplayPower(powmonitor.attached.powernet.viewload)]<BR>"
+				menu += "<PRE>Location: [get_area_name(powmonitor, TRUE)]<BR>Total power: [DisplayPower(connected_powernet.viewavail)]<BR>Total load:  [DisplayPower(connected_powernet.viewload)]<BR>"
 
 				menu += "<FONT SIZE=-1>"
 
@@ -427,12 +434,12 @@ Code:
 					if(!is_station_level(SSshuttle.supply.z))
 						menu += "station"
 					else
-						menu += "centcom"
+						menu += "CentCom"
 					menu += " ([SSshuttle.supply.timeLeft(600)] Mins)"
 				else
 					menu += "At "
 					if(!is_station_level(SSshuttle.supply.z))
-						menu += "centcom"
+						menu += "CentCom"
 					else
 						menu += "station"
 			menu += "<BR>Current approved orders: <BR><ol>"

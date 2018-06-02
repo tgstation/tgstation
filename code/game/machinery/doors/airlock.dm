@@ -178,7 +178,7 @@
 		limit--
 	while(!FoundDoor && limit)
 	if (!FoundDoor)
-		log_world("### MAP WARNING, [src] at [get_area_name(src, TRUE)] [COORD(src)] failed to find a valid airlock to cyclelink with!")
+		log_world("### MAP WARNING, [src] at [AREACOORD(src)] failed to find a valid airlock to cyclelink with!")
 		return
 	FoundDoor.cyclelinkedairlock = src
 	cyclelinkedairlock = FoundDoor
@@ -1070,10 +1070,8 @@
 	else
 		playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
 
-	if(autoclose && normalspeed)
-		addtimer(CALLBACK(src, .proc/autoclose), 150)
-	else if(autoclose && !normalspeed)
-		addtimer(CALLBACK(src, .proc/autoclose), 15)
+	if(autoclose)
+		autoclose_in(normalspeed ? 150 : 15)
 
 	if(!density)
 		return TRUE
@@ -1106,7 +1104,7 @@
 	if(safe)
 		for(var/atom/movable/M in get_turf(src))
 			if(M.density && M != src) //something is blocking the door
-				addtimer(CALLBACK(src, .proc/autoclose), 60)
+				autoclose_in(60)
 				return
 
 	if(forced < 2)
@@ -1282,7 +1280,7 @@
 		bolt() //Bolt it!
 		set_electrified(ELECTRIFIED_PERMANENT)  //Shock it!
 		if(origin)
-			shockedby += "\[[time_stamp()]\][origin](ckey:[origin.ckey])"
+			LAZYADD(shockedby, "\[[time_stamp()]\][origin](ckey:[origin.ckey])")
 
 
 /obj/machinery/door/airlock/disable_lockdown()
@@ -1551,7 +1549,7 @@
 	if(wires.is_cut(WIRE_SHOCK))
 		to_chat(user, "The electrification wire has been cut")
 	else
-		shockedby += "\[[time_stamp()]\][user](ckey:[user.ckey])"
+		LAZYADD(shockedby, "\[[time_stamp()]\][user](ckey:[user.ckey])")
 		add_logs(user, src, "electrified")
 		set_electrified(AI_ELECTRIFY_DOOR_TIME)
 
@@ -1561,7 +1559,7 @@
 	if(wires.is_cut(WIRE_SHOCK))
 		to_chat(user, "The electrification wire has been cut")
 	else
-		shockedby += text("\[[time_stamp()]\][user](ckey:[user.ckey])")
+		LAZYADD(shockedby, text("\[[time_stamp()]\][user](ckey:[user.ckey])"))
 		add_logs(user, src, "electrified")
 		set_electrified(ELECTRIFIED_PERMANENT)
 
