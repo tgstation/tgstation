@@ -1,0 +1,11 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed items in pockets vanishing when a mob is monkeyized."
+  - bugfix: "Fixed items in pockets vanishing when a mob is gorillized."
+  - bugfix: "Fixed items in pockets vanishing when a mob is infected with a transformation disease."
+  - bugfix: "Fixed items in pockets not being properly deleted when a mob goes through a recycler"
+  - bugfix: "Fixed items in pockets not being properly deleted when highlander mode is enabled."
+  - bugfix: "Fixed exploit allowing you to remove unremovable tanks from pockets."
+  - bugfix: "Fixed items in pockets dropping when a mob is equipped with a new outfit."
+  - bugfix: "Fixed items in pockets not being covered in blood when equipping the psycho outfit."
