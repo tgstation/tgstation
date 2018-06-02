@@ -1,0 +1,6 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed cigar cases & cigarette packets taking two inventory slots"
+  - bugfix: "Fixed cigar cases showing the wrong icon for the cigars inside them."
+  - bugfix: "Fixed cigar cases & cigarette packets stating the wrong name of the cigar/cigarette when removed via altclick."
