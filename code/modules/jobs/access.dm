@@ -66,7 +66,10 @@
 	if(!nanites)
 		return FALSE
 	for(var/datum/nanite_program/triggered/access/access_program in nanites.programs)
-		return check_access_list(access_program.access)
+		if(access_program.activated)
+			return check_access_list(access_program.access)
+		else
+			return FALSE
 	return FALSE
 
 /obj/proc/check_access_list(list/access_list)
