@@ -36,30 +36,34 @@
 	attacktext = "tears into"
 	attack_sound = 'sound/creatures/hit3.ogg'
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 15) //It's a pretty big dude. Actually killing one is a feat.
-	var/time_spent_as_true = 0
 	var/playstyle_string = "<b><span class='big danger'>We have entered our true form!</span><br>We are unbelievably deadly, and regenerate life at a steady rate. We must utilise the abilities that we have gained as a result of our transformation, as our old ones are not usable in this form. Taking too much damage will also turn us back into a \
 	human in addition to knocking us out. We are not as strong health-wise as we are damage, and we must avoid fire at all costs. Finally, we will uncontrollably revert into a human after some time due to our inability to maintain this form.</b>"
 	var/mob/living/carbon/human/stored_changeling = null //The changeling that transformed
 	var/devouring = FALSE //If the true changeling is currently devouring a human
+	var/assimilation = FALSE
 	var/wallcrawl = FALSE //If the true changeling is crawling around the place, allowing it to counteract gravity loss
 	var/range = 7
-	var/datum/action/innate/changeling/reform/reform
 	var/datum/action/innate/changeling/devour/devour
+	//var/datum/action/innate/changeling/pull/pull
+	var/datum/action/innate/changeling/assimilate/assimilate
 	var/datum/action/innate/changeling/spine_crawl/spine_crawl
 
 /mob/living/simple_animal/hostile/true_changeling/Initialize()
 	. = ..()
 	icon_state = "horror[rand(1, 5)]"
-	reform = new
-	reform.Grant(src)
 	devour = new
 	devour.Grant(src)
+	//pull = new
+	//pull.Grant(src)
+	assimilate = new
+	assimilate.Grant(src)
 	spine_crawl = new
 	spine_crawl.Grant(src)
 
 /mob/living/simple_animal/hostile/true_changeling/Destroy()
-	QDEL_NULL(reform)
 	QDEL_NULL(devour)
+	//QDEL_NULL(pull)
+	QDEL_NULL(assimilate)
 	QDEL_NULL(spine_crawl)
 	stored_changeling = null
 	return ..()
@@ -71,17 +75,10 @@
 /mob/living/simple_animal/hostile/true_changeling/Life()
 	..()
 	adjustBruteLoss(-TRUE_CHANGELING_PASSIVE_HEAL) //True changelings slowly regenerate
-	time_spent_as_true++ //Used for re-forming
-	if(stored_changeling && time_spent_as_true >= TRUE_CHANGELING_FORCED_REFORM)
-		death() //After a while, the ling'll revert back without being able to control it
 
 /mob/living/simple_animal/hostile/true_changeling/Stat()
 	..()
 	if(statpanel("Status"))
-		if(stored_changeling)
-			var/time_left = TRUE_CHANGELING_FORCED_REFORM - time_spent_as_true
-			time_left = CLAMP(time_left, 0, INFINITY)
-			stat(null, "Time Remaining: [time_left]")
 		stat(null, "Ignoring Gravity: [wallcrawl ? "YES" : "NO"]")
 
 /mob/living/simple_animal/hostile/true_changeling/death()
@@ -121,31 +118,6 @@
 	icon_icon = 'icons/mob/changeling.dmi'
 	background_icon_state = "bg_ling"
 
-/datum/action/innate/changeling/reform
-	name = "Re-Form Human Shell"
-	desc = "We turn back into a human. This takes considerable effort and will stun us for some time afterwards."
-	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "reform"
-
-/datum/action/innate/changeling/reform/Activate()
-	var/mob/living/simple_animal/hostile/true_changeling/M = owner
-	if(!istype(M))
-		return
-	if(!M.stored_changeling)
-		to_chat(M, "<span class='warning'>We do not have a form other than this!</span>")
-		return FALSE
-	if(M.time_spent_as_true < TRUE_CHANGELING_REFORM_THRESHOLD)
-		to_chat(M, "<span class='warning'>We are not able to change back at will!</span>")
-		return FALSE
-	M.visible_message("<span class='warning'>[M] suddenly crunches and twists into a smaller form!</span>", \
-					"<span class='danger'>We return to our human form.</span>")
-	M.stored_changeling.forceMove(get_turf(M))
-	M.mind.transfer_to(M.stored_changeling)
-	M.stored_changeling.Unconscious(200)
-	M.stored_changeling.status_flags &= ~GODMODE
-	qdel(M)
-	return TRUE
-
 /datum/action/innate/changeling/devour
 	name = "Devour"
 	desc = "We tear into the innards of a human. After some time, they will be significantly damaged and our health partially restored."
@@ -157,23 +129,26 @@
 	if(!istype(M))
 		return
 	if(M.devouring)
-		to_chat(M, "<span class='warning'>We are already feasting on a human!</span>")
+		to_chat(M, "<span class='warning'>We are already feasting on a victim!</span>")
+		return FALSE
+	if(M.assimilation)
+		to_chat(M, "<span class='warning'>Assimilation in progress.</span>")
 		return FALSE
 	var/list/potential_targets = list()
 	for(var/mob/living/carbon/human/H in range(1, M))
 		potential_targets.Add(H)
 	if(!potential_targets.len)
-		to_chat(M, "<span class='warning'>There are no humans nearby!</span>")
+		to_chat(M, "<span class='warning'>There are no victims nearby!</span>")
 		return FALSE
 	var/mob/living/carbon/human/lunch
 	if(potential_targets.len == 1)
 		lunch = potential_targets[1]
 	else
-		lunch = input(src, "Choose a human to devour.", "Lunch") as null|anything in potential_targets
+		lunch = input(src, "Choose a victim to devour.", "Lunch") as null|anything in potential_targets
 	if(!lunch)
 		return FALSE
 	if(lunch.getBruteLoss() >= 200)
-		to_chat(M, "<span class='warning'>This human's flesh is too mangled to devour!</span>")
+		to_chat(M, "<span class='warning'>This victim's flesh is too mangled to devour!</span>")
 		return FALSE
 	M.devouring = TRUE
 	M.visible_message("<span class='warning'>[M] begins ripping apart and feasting on [lunch]!</span>", \
@@ -192,6 +167,93 @@
 	if(!lunch.stat)
 		lunch.emote("scream")
 	M.adjustBruteLoss(-50)
+
+/datum/action/innate/changeling/assimilate
+	name = "Assimilate"
+	desc = "We replace a victim's simple consciousness with our own, adding them to our hivemind. victim must be conscious for this."
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "assimilate"
+
+/datum/action/innate/changeling/assimilate/Activate()
+	var/mob/living/simple_animal/hostile/true_changeling/M = owner
+	if(!istype(M))
+		return
+	if(M.devouring)
+		to_chat(M, "<span class='warning'>We are already feasting on a target!</span>")
+		return FALSE
+	if(M.assimilation)
+		to_chat(M, "<span class='warning'>Assimilation in progress.</span>")
+		return FALSE
+	var/list/potential_targets = list()
+	for(var/mob/living/carbon/human/H in range(1, M))
+		potential_targets.Add(H)
+	if(!potential_targets.len)
+		to_chat(M, "<span class='warning'>There are no valid targets nearby.</span>")
+		return FALSE
+	var/mob/living/carbon/human/target
+	if(potential_targets.len == 1)
+		target = potential_targets[1]
+	else
+		target = input(src, "Choose a target to assimilate.", "Assimilation") as null|anything in potential_targets
+	if(!target)
+		return FALSE
+	if(target.stat != CONSCIOUS)
+		to_chat(M, "<span class='warning'>Target not suitable for assimilation: Target is not conscious.</span>")
+		return FALSE
+	if(!target.mind)
+		to_chat(M, "<span class='warning'>Target not suitable for assimilation: Target has no mind.</span>")
+		return FALSE
+	if(target.mind.has_antag_datum(/datum/antagonist/changeling))
+		to_chat(M, "<span class='warning'>Target not suitable for assimilation: Target is already a changeling!</span>")
+		return FALSE
+	to_chat(M, "<span class='warning'>Target suitable for assimilation. We begin to ready our appendages...</span>")
+	M.assimilation = TRUE
+	for(var/progress = 0, progress <= 3, progress++)
+		var/datum/beam/B = M.Beam(target, icon_state = "cord-[progress]", time=INFINITY)
+		switch(progress)
+			if(1)
+				M.visible_message("<span class='warning'>[M] constricts [target]!</span>", "<span class='notice'>We constrict [target] with our appendages...</span>")
+				target.handcuffed = new/obj/item/restraints/handcuffs/horrorform(target)
+			if(2)
+				to_chat(M, "<span class='notice'>We begin to assimilate [target].</span>")
+				to_chat(target, "<span class='danger'>You suddenly feel like your skin is <i>wrong</i>...</span>")
+				sleep(20)
+				if(target.isloyal())
+					to_chat(M, "<span class='notice'>They are protected by a mindshield implant. The creature will have to destroy it - it will take time.</span>")
+					to_chat(target, "<span class='boldannounce'>You feel a sharp pain in your head!</span>")
+					sleep(100) //10 seconds
+					to_chat(M, "<span class='notice'>The creature has destroyed the mindshield. Assimilation will resume.</span>")
+					for(var/obj/item/implant/mindshield/L in target.implants)
+						if(L)
+							qdel(L)
+					to_chat(target, "<span class='boldannounce'>You feel the protection from your mindshield implant strain and fail.</span>")
+			if(3)
+				target.visible_message("<span class='danger'>[M] extends a proboscis!</span>")
+				to_chat(M, "<span class='notice'>We prepare to finalize [target]'s assimilation process...</span>")
+				to_chat(target, "<span class='boldannounce'>Your skin is wriggling and peeling apart. Your memories are contorting into horror.</span>")
+		if(!do_mob(M, target, 70)) //around 23 seconds total for enthralling, 33 for someone with a mindshield implant
+			to_chat(M, "<span class='danger'>Assimilation interrupted!</span>")
+			target.uncuff()
+			to_chat(target, "<span class='userdanger'>You wrest yourself away from [M]'s tendrils and compose yourself.</span>")
+			qdel(B)
+			M.assimilation = FALSE
+			return
+		qdel(B)
+//YOU COMPILED
+	M.assimilation = FALSE
+	target.uncuff()
+	target.visible_message("<span class='big'>[target] shudders, and looks around curiously.</span>", \
+						   "<span class='boldannounce'>False faces all f<span class='big'>ake not real not real not--</span></span>")
+	to_chat(M, "<span class='shadowling'><b>[target.real_name]</b> has joined the hivemind.</span>")
+	var/datum/antagonist/changeling/ASSIMILATEEE = new()
+	target.mind.add_antag_datum(ASSIMILATEEE)
+	return
+
+/datum/action/innate/changeling/tendrilgrab
+	name = "Use Tentacle"
+	desc = "Lash a tendril out, multiple uses."
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "jammer"
 
 /datum/action/innate/changeling/spine_crawl
 	name = "Spine Crawl"
@@ -212,6 +274,18 @@
 		M.visible_message("<span class='danger'>[M] recedes their spines back into their body!</span>", \
 							"<span class='notice'>We return moving normally.</span>")
 		M.speed = initial(M.speed)
+
+/obj/item/restraints/handcuffs/horrorform
+	name = "writhing tentacles"
+	desc = "appendages from a hideous creature."
+	icon = 'icons/mob/changeling.dmi'
+	icon_state = "cordgrab"
+	item_flags = DROPDEL
+
+/obj/item/restraints/handcuffs/clockwork/dropped(mob/user)
+	user.visible_message("<span class='danger'>The [name] holding [user] violently jerk and recede!</span>", \
+	"<span class='userdanger'>The [name] convulse and recede!</span>")
+	. = ..()
 
 #undef TRUE_CHANGELING_REFORM_THRESHOLD
 #undef TRUE_CHANGELING_PASSIVE_HEAL
