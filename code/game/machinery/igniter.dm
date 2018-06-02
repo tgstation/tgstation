@@ -14,6 +14,15 @@
 	armor = list("melee" = 50, "bullet" = 30, "laser" = 70, "energy" = 50, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
 	resistance_flags = FIRE_PROOF
 
+/obj/machinery/igniter/incinerator_toxmix
+	id = INCINERATOR_TOXMIX_IGNITER
+
+/obj/machinery/igniter/incinerator_atmos
+	id = INCINERATOR_ATMOS_IGNITER
+
+/obj/machinery/igniter/incinerator_syndicatelava
+	id = INCINERATOR_SYNDICATELAVA_IGNITER
+
 /obj/machinery/igniter/on
 	on = TRUE
 	icon_state = "igniter1"
@@ -59,6 +68,9 @@
 	var/datum/effect_system/spark_spread/spark_system
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF
+
+/obj/machinery/sparker/toxmix
+	id = INCINERATOR_TOXMIX_IGNITER
 
 /obj/machinery/sparker/Initialize()
 	. = ..()
