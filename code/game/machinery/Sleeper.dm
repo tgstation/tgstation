@@ -3,7 +3,6 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "console"
 	density = FALSE
-	anchored = TRUE
 
 /obj/machinery/sleeper
 	name = "sleeper"
@@ -11,7 +10,6 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	density = FALSE
-	anchored = TRUE
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/sleeper
 	var/efficiency = 1

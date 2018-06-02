@@ -189,7 +189,7 @@
 	activated()
 
 /obj/item/rod_of_asclepius/proc/activated()
-	flags_1 = NODROP_1 | DROPDEL_1
+	item_flags = NODROP | DROPDEL
 	desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
 	icon_state = "asclepius_active"
 	activated = TRUE
@@ -382,7 +382,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	fire_sound = 'sound/weapons/batonextend.ogg'
 	max_charges = 1
-	flags_1 = NOBLUDGEON_1
+	item_flags = NEEDS_PERMIT | NOBLUDGEON
 	force = 18
 
 /obj/item/ammo_casing/magic/hook
@@ -915,8 +915,8 @@
 				var/old_name = T.name
 				if(T.TerraformTurf(turf_type))
 					user.visible_message("<span class='danger'>[user] turns \the [old_name] into [transform_string]!</span>")
-					message_admins("[key_name_admin(user)] fired the lava staff at [get_area(target)]. [ADMIN_COORDJMP(T)]")
-					log_game("[key_name(user)] fired the lava staff at [get_area(target)] [COORD(T)].")
+					message_admins("[ADMIN_LOOKUPFLW(user)] fired the lava staff at [ADMIN_VERBOSEJMP(T)]")
+					log_game("[key_name(user)] fired the lava staff at [AREACOORD(T)].")
 					timer = world.time + create_cooldown
 					playsound(T,'sound/magic/fireball.ogg', 200, 1)
 			else
@@ -968,7 +968,7 @@
 		INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, H)
 	to_chat(user, "<span class='notice'>You shatter the bottle!</span>")
 	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
-	message_admins("<span class='adminnotice'>[key_name_admin(user)][ADMIN_FLW(user)] has activated a bottle of mayhem!</span>")
+	message_admins("<span class='adminnotice'>[ADMIN_LOOKUPFLW(user)] has activated a bottle of mayhem!</span>")
 	add_logs(user, null, "activated a bottle of mayhem", src)
 	qdel(src)
 
@@ -1008,7 +1008,7 @@
 
 	var/mob/living/L = choice
 
-	message_admins("<span class='adminnotice'>[key_name_admin(L)][ADMIN_FLW(L)] has been marked for death by [key_name_admin(user)]!</span>")
+	message_admins("<span class='adminnotice'>[ADMIN_LOOKUPFLW(L)] has been marked for death by [ADMIN_LOOKUPFLW(user)]!</span>")
 
 	var/datum/objective/survive/survive = new
 	survive.owner = L.mind

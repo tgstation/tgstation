@@ -105,6 +105,7 @@
 	spark_system.attach(src)
 
 	wires = new /datum/wires/robot(src)
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"

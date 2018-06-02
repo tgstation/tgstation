@@ -6,7 +6,7 @@
 	item_state = "cleaner"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	container_type = OPENCONTAINER
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
@@ -50,16 +50,15 @@
 	user.changeNext_move(CLICK_CD_RANGE*2)
 	user.newtonian_move(get_dir(A, user))
 	var/turf/T = get_turf(src)
-	var/area/area = get_area(src)
 	if(reagents.has_reagent("sacid"))
-		message_admins("[ADMIN_LOOKUPFLW(user)] fired sulphuric acid from \a [src] at [area] [ADMIN_COORDJMP(T)].")
-		log_game("[key_name(user)] fired sulphuric acid from \a [src] at [area] ([T.x], [T.y], [T.z]).")
+		message_admins("[ADMIN_LOOKUPFLW(user)] fired sulphuric acid from \a [src] at [ADMIN_VERBOSEJMP(T)].")
+		log_game("[key_name(user)] fired sulphuric acid from \a [src] at [AREACOORD(T)].")
 	if(reagents.has_reagent("facid"))
-		message_admins("[ADMIN_LOOKUPFLW(user)] fired Fluacid from \a [src] at [area] [ADMIN_COORDJMP(T)].")
-		log_game("[key_name(user)] fired Fluacid from \a [src] at [area] [COORD(T)].")
+		message_admins("[ADMIN_LOOKUPFLW(user)] fired Fluacid from \a [src] at [ADMIN_VERBOSEJMP(T)].")
+		log_game("[key_name(user)] fired Fluacid from \a [src] at [AREACOORD(T)].")
 	if(reagents.has_reagent("lube"))
-		message_admins("[ADMIN_LOOKUPFLW(user)] fired Space lube from \a [src] at [area] [ADMIN_COORDJMP(T)].")
-		log_game("[key_name(user)] fired Space lube from \a [src] at [area] [COORD(T)].")
+		message_admins("[ADMIN_LOOKUPFLW(user)] fired Space lube from \a [src] at [ADMIN_VERBOSEJMP(T)].")
+		log_game("[key_name(user)] fired Space lube from \a [src] at [AREACOORD(T)].")
 	return
 
 

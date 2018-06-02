@@ -45,7 +45,6 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "sextractor"
 	density = TRUE
-	anchored = TRUE
 	circuit = /obj/item/circuitboard/machine/seed_extractor
 	var/piles = list()
 	var/max_seeds = 1000

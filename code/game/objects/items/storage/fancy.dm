@@ -293,22 +293,24 @@
 /obj/item/storage/fancy/cigarettes/cigars/update_icon()
 	cut_overlays()
 	if(fancy_open)
-		add_overlay("[icon_state]_open")
+		icon_state = "[initial(icon_state)]_open"
 		var/mutable_appearance/cigar_overlay = mutable_appearance(icon, icon_type)
 		for(var/c = contents.len, c >= 1, c--)
-			cigar_overlay.pixel_x = 4 * (c - 1)
+			cigar_overlay.pixel_x = 3 * (c - 1)
 			add_overlay(cigar_overlay)
 	else
-		icon_state = "cigarcase"
+		icon_state = "[initial(icon_state)]"
 
 /obj/item/storage/fancy/cigarettes/cigars/cohiba
 	name = "\improper cohiba robusto cigar case"
 	desc = "A case of imported Cohiba cigars, renowned for their strong flavor."
+	icon_state = "cohibacase"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/cohiba
 
 /obj/item/storage/fancy/cigarettes/cigars/havana
 	name = "\improper premium havanian cigar case"
 	desc = "A case of classy Havanian cigars."
+	icon_state = "cohibacase"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/havana
 
 /*
