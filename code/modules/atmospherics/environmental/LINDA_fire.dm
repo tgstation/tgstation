@@ -45,7 +45,7 @@
 	else
 		var/datum/gas_mixture/heating = air_contents.remove_ratio(exposed_volume/air_contents.volume)
 		heating.temperature = exposed_temperature
-		heating.react()
+		heating.react(src)
 		assume_air(heating)
 	return igniting
 
