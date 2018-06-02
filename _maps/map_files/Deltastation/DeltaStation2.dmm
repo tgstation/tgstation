@@ -82923,7 +82923,6 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
-/obj/structure/window/spawner/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -84469,7 +84468,6 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister,
-/obj/structure/window/spawner,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -84989,7 +84987,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/window/spawner,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dAD" = (
@@ -85787,6 +85784,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/item/radio/intercom{
+	pixel_x = -26
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dCb" = (
@@ -86384,7 +86384,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/window/spawner/north,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dDt" = (
@@ -86891,6 +86890,7 @@
 /obj/structure/sign/poster/official/science{
 	pixel_x = 32
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dEv" = (
@@ -87473,6 +87473,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dFM" = (
@@ -92689,11 +92690,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
-"dQF" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
 /area/maintenance/port/aft)
 "dQG" = (
 /obj/structure/table,
@@ -134174,7 +134170,7 @@ dNC
 dNC
 dOT
 dPM
-dQF
+dOb
 dRE
 dSC
 dTA
