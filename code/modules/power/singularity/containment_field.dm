@@ -5,7 +5,6 @@
 	desc = "An energy field."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
-	anchored = TRUE
 	density = FALSE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	use_power = NO_POWER_USE

@@ -3,7 +3,6 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "console"
 	density = FALSE
-	anchored = TRUE
 
 /obj/machinery/sleeper
 	name = "sleeper"
@@ -11,7 +10,6 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	density = FALSE
-	anchored = TRUE
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/sleeper
 	var/efficiency = 1
@@ -78,9 +76,11 @@
 			to_chat(occupant, "[enter_message]")
 
 /obj/machinery/sleeper/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
 	if(is_operational() && occupant)
 		open_machine()
-	..(severity)
 
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())

@@ -16,7 +16,6 @@
 	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
-	anchored = TRUE
 	max_integrity = 250
 	integrity_failure = 100
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 30)
@@ -81,9 +80,13 @@
 			add_overlay("overlay_fire")
 
 /obj/machinery/firealarm/emp_act(severity)
+	. = ..()
+
+	if (. & EMP_PROTECT_SELF)
+		return
+
 	if(prob(50 / severity))
 		alarm()
-	..()
 
 /obj/machinery/firealarm/emag_act(mob/user)
 	if(obj_flags & EMAGGED)

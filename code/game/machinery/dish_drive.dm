@@ -7,7 +7,6 @@
 	icon_state = "synthesizer"
 	idle_power_usage = 8 //5 with default parts
 	active_power_usage = 13 //10 with default parts
-	anchored = TRUE
 	density = FALSE
 	circuit = /obj/item/circuitboard/machine/dish_drive
 	var/static/list/item_types = list(/obj/item/trash/waffles,

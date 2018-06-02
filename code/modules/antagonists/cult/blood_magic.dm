@@ -340,7 +340,8 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "disintegrate"
 	item_state = null
-	flags_1 = ABSTRACT_1 | NODROP_1 | DROPDEL_1
+	item_flags = NEEDS_PERMIT | ABSTRACT | NODROP | DROPDEL
+
 	w_class = WEIGHT_CLASS_HUGE
 	throwforce = 0
 	throw_range = 0
@@ -520,7 +521,7 @@
 	name = "shadow shackles"
 	desc = "Shackles that bind the wrists with sinister magic."
 	trashtype = /obj/item/restraints/handcuffs/energy/used
-	flags_1 = DROPDEL_1
+	item_flags = DROPDEL
 
 /obj/item/restraints/handcuffs/energy/cult/used/dropped(mob/user)
 	user.visible_message("<span class='danger'>[user]'s shackles shatter in a discharge of dark magic!</span>", \

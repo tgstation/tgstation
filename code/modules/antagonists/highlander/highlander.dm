@@ -59,13 +59,13 @@
 	W.access += get_all_centcom_access()
 	W.assignment = "Highlander"
 	W.registered_name = H.real_name
-	W.flags_1 |= NODROP_1
+	W.item_flags |= NODROP
 	W.update_label(H.real_name)
 	H.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
 	sword = new(H)
 	if(!GLOB.highlander)
-		sword.admin_spawned = TRUE //To prevent announcing
+		sword.flags_1 |= ADMIN_SPAWNED_1 //To prevent announcing
 	sword.pickup(H) //For the stun shielding
 	H.put_in_hands(sword)
 

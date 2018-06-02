@@ -49,7 +49,7 @@
 	var/exp_type_department = ""
 
 	//The amount of good boy points playing this role will earn you towards a higher chance to roll antagonist next round
-	var/antag_rep = 0
+	var/antag_rep = 10
 
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
@@ -198,3 +198,11 @@
 		PDA.owner = H.real_name
 		PDA.ownjob = J.title
 		PDA.update_label()
+
+/datum/outfit/job/get_chameleon_disguise_info()
+	var/list/types = ..()
+	types -= /obj/item/storage/backpack //otherwise this will override the actual backpacks
+	types += backpack
+	types += satchel
+	types += duffelbag
+	return types

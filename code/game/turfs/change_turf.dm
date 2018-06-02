@@ -130,7 +130,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		if(new_baseturfs.len == 1)
 			new_baseturfs = new_baseturfs[1]
 		return ChangeTurf(turf_type, new_baseturfs, flags)
-	
+
 	if(baseturfs == type)
 		return src
 
@@ -171,7 +171,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	var/turf/newT
 	if(flags & CHANGETURF_SKIP) // We haven't been initialized
-		if(initialized)
+		if(flags_1 & INITIALIZED_1)
 			stack_trace("CHANGETURF_SKIP was used in a PlaceOnTop call for a turf that's initialized. This is a mistake. [src]([type])")
 		assemble_baseturfs()
 	if(fake_turf_type)
@@ -217,7 +217,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	if(depth)
 		var/list/target_baseturfs
-		if(length(copytarget.baseturfs)) 
+		if(length(copytarget.baseturfs))
 			// with default inputs this would be Copy(CLAMP(2, -INFINITY, baseturfs.len))
 			// Don't forget a lower index is lower in the baseturfs stack, the bottom is baseturfs[1]
 			target_baseturfs = copytarget.baseturfs.Copy(CLAMP(1 + ignore_bottom, 1 + copytarget.baseturfs.len - depth, copytarget.baseturfs.len))

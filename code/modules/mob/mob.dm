@@ -288,7 +288,7 @@
 /mob/proc/show_inv(mob/user)
 	return
 
-//mob verbs are faster than object verbs. See http://www.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
+//mob verbs are faster than object verbs. See https://secure.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
 /mob/verb/examinate(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
 	set name = "Examine"
 	set category = "IC"
@@ -460,7 +460,7 @@
 			else
 				what = get_item_by_slot(slot)
 			if(what)
-				if(!(what.flags_1 & ABSTRACT_1))
+				if(!(what.item_flags & ABSTRACT))
 					usr.stripPanelUnequip(what,src,slot)
 			else
 				usr.stripPanelEquip(what,src,slot)

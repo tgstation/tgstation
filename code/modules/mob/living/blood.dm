@@ -68,8 +68,9 @@
 				if(prob(15))
 					Unconscious(rand(20,60))
 					to_chat(src, "<span class='warning'>You feel extremely [word].</span>")
-			if(0 to BLOOD_VOLUME_SURVIVE)
-				death()
+			if(-INFINITY to BLOOD_VOLUME_SURVIVE)
+				if(!has_trait(TRAIT_NODEATH))
+					death()
 
 		var/temp_bleed = 0
 		//Bleeding out

@@ -150,7 +150,7 @@
 
 /obj/item/integrated_circuit/input/slime_scanner
 	name = "slime_scanner"
-	desc = "A very small version of the xenobio analyser. This allows the machine to know every needed properties of slime. Output mutation list is non associative."
+	desc = "A very small version of the xenobio analyser. This allows the machine to know every needed properties of slime. Output mutation list is non-associative."
 	icon_state = "medscan_adv"
 	complexity = 12
 	inputs = list("target" = IC_PINTYPE_REF)
@@ -193,8 +193,8 @@
 
 /obj/item/integrated_circuit/input/plant_scanner
 	name = "integrated plant analyzer"
-	desc = "A very small version of the plant analyser. This allows the machine to know all valuable params of plants in trays. \
-			It cannot scan seeds nor fruits, only plants."
+	desc = "A very small version of the plant analyser. This allows the machine to know all valuable parameters of plants in trays. \
+			It can only scan plants, not seeds or fruits."
 	icon_state = "medscan_adv"
 	complexity = 12
 	inputs = list("target" = IC_PINTYPE_REF)
@@ -259,9 +259,9 @@
 
 /obj/item/integrated_circuit/input/gene_scanner
 	name = "gene scanner"
-	desc = "This circuit will scan plant for traits and reagent genes. Output is non-associative."
+	desc = "This circuit will scan the target plant for traits and reagent genes. Output is non-associative."
 	extended_desc = "This allows the machine to scan plants in trays for reagent and trait genes. \
-			It cannot scan seeds nor fruits, only plants."
+			It can only scan plants, not seeds or fruits."
 	inputs = list(
 		"target" = IC_PINTYPE_REF
 	)
@@ -358,9 +358,9 @@
 
 /obj/item/integrated_circuit/input/turfpoint
 	name = "Tile pointer"
-	desc = "This circuit will get tile ref with given absolute coordinates."
+	desc = "This circuit will get a tile ref with the provided absolute coordinates."
 	extended_desc = "If the machine	cannot see the target, it will not be able to calculate the correct direction.\
-	This circuit works only inside an assembly."
+	This circuit only works while inside an assembly."
 	icon_state = "numberpad"
 	complexity = 5
 	inputs = list("X" = IC_PINTYPE_NUMBER,"Y" = IC_PINTYPE_NUMBER)
@@ -461,7 +461,7 @@
 /obj/item/integrated_circuit/input/adjacent_locator
 	name = "adjacent locator"
 	desc = "This is needed for certain devices that demand a reference for a target to act upon. This type only locates something \
-	that is standing a meter away from the machine."
+	that is standing up to a meter away from the machine."
 	extended_desc = "The first pin requires a ref to the kind of object that you want the locator to acquire. This means that it will \
 	give refs to nearby objects that are similar. If more than one valid object is found nearby, it will choose one of them at \
 	random."
@@ -500,9 +500,9 @@
 /obj/item/integrated_circuit/input/advanced_locator_list
 	complexity = 6
 	name = "list advanced locator"
-	desc = "This is needed for certain devices that demand list of names for a targets to act upon. This type locates something \
-	that is standing in given radius up to 8 meters. Output is non-associative. Input will only consider keys if associative."
-	extended_desc = "The first pin requires a list of kinds of objects that you want the locator to acquire. It will locate nearby objects by name and description, \
+	desc = "This is needed for certain devices that demand list of names for a target to act upon. This type locates something \
+	that is standing in given radius of up to 8 meters. Output is non-associative. Input will only consider keys if associative."
+	extended_desc = "The first pin requires a list of the kinds of objects that you want the locator to acquire. It will locate nearby objects by name and description, \
 	and will then provide a list of all found objects which are similar. \
 	The second pin is a radius."
 	inputs = list("desired type ref" = IC_PINTYPE_LIST, "radius" = IC_PINTYPE_NUMBER)
@@ -564,10 +564,10 @@
 	complexity = 6
 	name = "advanced locator"
 	desc = "This is needed for certain devices that demand a reference for a target to act upon. This type locates something \
-	that is standing in given radius up to 8 meters"
-	extended_desc = "The first pin requires a ref to a kind of object that you want the locator to acquire. This means that it will \
-	give refs to nearby objects which are similar. If this pin is string, this locator will search for an \
-	item by matching desired text in it's name and description. If more than one valid object is found nearby, it will choose one of them at \
+	that is standing in given radius of up to 8 meters"
+	extended_desc = "The first pin requires a ref to the kind of object that you want the locator to acquire. This means that it will \
+	give refs to nearby objects which are similar. If this pin is a string, the locator will search for an \
+	item matching the desired text in its name and description. If more than one valid object is found nearby, it will choose one of them at \
 	random. The second pin is a radius."
 	inputs = list("desired type" = IC_PINTYPE_ANY, "radius" = IC_PINTYPE_NUMBER)
 	outputs = list("located ref" = IC_PINTYPE_REF)
@@ -617,7 +617,7 @@
 
 /obj/item/integrated_circuit/input/signaler
 	name = "integrated signaler"
-	desc = "Signals from a signaler can be received with this, allowing for remote control. Additionally, it can send signals as well."
+	desc = "Signals from a signaler can be received with this, allowing for remote control. It can also send signals."
 	extended_desc = "When a signal is received from another signaler, the 'on signal received' activator pin will be pulsed. \
 	The two input pins are to configure the integrated signaler's settings. Note that the frequency should not have a decimal in it, \
 	meaning the default frequency is expressed as 1457, not 145.7. To send a signal, pulse the 'send signal' activator pin."
@@ -699,11 +699,11 @@
 
 /obj/item/integrated_circuit/input/ntnet_packet
 	name = "NTNet networking circuit"
-	desc = "Enables the sending and receiving of messages on NTNet via packet data protocol."
-	extended_desc = "Data can be send or received using the second pin on each side, \
+	desc = "Enables the sending and receiving of messages over NTNet via packet data protocol."
+	extended_desc = "Data can be sent or received using the second pin on each side, \
 	with additonal data reserved for the third pin. When a message is received, the second activation pin \
-	will pulse whatever's connected to it. Pulsing the first activation pin will send a message. Message \
-	can be send to multiple recepients. Addresses must be separated with ; symbol."
+	will pulse whatever is connected to it. Pulsing the first activation pin will send a message. Messages \
+	can be sent to multiple recepients. Addresses must be separated with a semicolon, like this: Address1;Address2;Etc."
 	icon_state = "signal"
 	complexity = 2
 	cooldown_per_use = 1
@@ -756,11 +756,11 @@
 
 /obj/item/integrated_circuit/input/ntnet_advanced
 	name = "Low level NTNet transreciever"
-	desc = "Enables the sending and receiving of messages on NTNet via packet data protocol. Allows advanced control of message contents and signalling. Must use associative lists. Outputs associative list. Has a slower transmission rate than normal NTNet circuits, due to increased data processing complexity.."
-	extended_desc = "Data can be send or received using the second pin on each side, \
+	desc = "Enables the sending and receiving of messages over NTNet via packet data protocol. Allows advanced control of message contents and signalling. Must use associative lists. Outputs associative list. Has a slower transmission rate than normal NTNet circuits, due to increased data processing complexity."
+	extended_desc = "Data can be sent or received using the second pin on each side, \
 	with additonal data reserved for the third pin. When a message is received, the second activation pin \
-	will pulse whatever's connected to it. Pulsing the first activation pin will send a message. Message \
-	can be send to multiple recepients. Addresses must be separated with ; symbol."
+	will pulse whatever is connected to it. Pulsing the first activation pin will send a message. Messages \
+	can be sent to multiple recepients. Addresses must be separated with a semicolon, like this: Address1;Address2;Etc."
 	icon_state = "signal"
 	complexity = 4
 	cooldown_per_use = 10
@@ -802,7 +802,7 @@
 /obj/item/integrated_circuit/input/gps
 	name = "global positioning system"
 	desc = "This allows you to easily know the position of a machine containing this device."
-	extended_desc = "The GPS's coordinates it gives is absolute, not relative."
+	extended_desc = "The coordinates that the GPS outputs are absolute, not relative."
 	icon_state = "gps"
 	complexity = 4
 	inputs = list()
@@ -829,7 +829,7 @@
 
 /obj/item/integrated_circuit/input/microphone
 	name = "microphone"
-	desc = "Useful for spying on people or for voice activated machines."
+	desc = "Useful for spying on people, or for voice-activated machines."
 	extended_desc = "This will automatically translate most languages it hears to Galactic Common. \
 	The first activation pin is always pulsed when the circuit hears someone talk, while the second one \
 	is only triggered if it hears someone speaking a language other than Galactic Common."
@@ -883,6 +883,7 @@
 			return FALSE
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
 	push_data()
+	to_chat(user, "<span class='notice'>You scan [A] with [assembly].</span>")
 	activate_pin(1)
 	return TRUE
 
@@ -915,13 +916,14 @@
 			return FALSE
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
 	push_data()
+	to_chat(user, "<span class='notice'>You scan [A] with [assembly].</span>")
 	activate_pin(1)
 	return TRUE
 
 /obj/item/integrated_circuit/input/obj_scanner
 	name = "scanner"
 	desc = "Scans and obtains a reference for any objects you use on the assembly."
-	extended_desc = "If the 'put down' pin is set to true, the assembly will take the scanned object from your hands to it's location. \
+	extended_desc = "If the 'put down' pin is set to true, the assembly will take the scanned object from your hands to its location. \
 	Useful for interaction with the grabber. The scanner only works using the help intent."
 	icon_state = "recorder"
 	complexity = 4
@@ -941,6 +943,7 @@
 		user.transferItemToLoc(A,drop_location())
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
 	push_data()
+	to_chat(user, "<span class='notice'>You let [assembly] scan [A].</span>")
 	activate_pin(1)
 	return TRUE
 
@@ -948,7 +951,7 @@
 	name = "internal battery monitor"
 	desc = "This monitors the charge level of an internal battery."
 	icon_state = "internalbm"
-	extended_desc = "This circuit will give you values of charge, max charge, and percentage of the internal battery on demand."
+	extended_desc = "This circuit will give you the values of charge, max charge, and the current percentage of the internal battery on demand."
 	w_class = WEIGHT_CLASS_TINY
 	complexity = 1
 	inputs = list()
@@ -981,9 +984,9 @@
 
 /obj/item/integrated_circuit/input/externalbm
 	name = "external battery monitor"
-	desc = "This can help to watch battery state of any device in view"
+	desc = "This can read the battery state of any device in view."
 	icon_state = "externalbm"
-	extended_desc = "This circuit will give you values of charge, max charge, and percentage of any device or battery in view"
+	extended_desc = "This circuit will give you the charge, max charge, and the current percentage values of any device or battery in view."
 	w_class = WEIGHT_CLASS_TINY
 	complexity = 2
 	inputs = list("target" = IC_PINTYPE_REF)
@@ -1016,7 +1019,7 @@
 
 /obj/item/integrated_circuit/input/ntnetsc
 	name = "NTNet scanner"
-	desc = "This can return NTNet IDs of a component inside the given object, if there are any."
+	desc = "This can return the NTNet IDs of a component inside the given object, if there are any."
 	icon_state = "signalsc"
 	w_class = WEIGHT_CLASS_TINY
 	complexity = 2

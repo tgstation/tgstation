@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 										//autocorrected this round, not that you'd need to check that.
 
 
-	var/UI_style = "Midnight"
+	var/UI_style = null
 	var/buttons_locked = FALSE
 	var/hotkeys = FALSE
 	var/tgui_fancy = TRUE
@@ -129,6 +129,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	custom_names["cyborg"] = pick(GLOB.ai_names)
 	custom_names["clown"] = pick(GLOB.clown_names)
 	custom_names["mime"] = pick(GLOB.mime_names)
+	UI_style = GLOB.available_ui_styles[1]
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
@@ -194,7 +195,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(CONFIG_GET(flag/roundstart_traits))
 				dat += "<center><h2>Quirk Setup</h2>"
 				dat += "<a href='?_src_=prefs;preference=trait;task=menu'>Configure Quirks</a><br></center>"
-				dat += "<center><b>Current quirks:</b> [all_quirks.len ? all_quirks.Join(", ") : "None"]</center>"
+				dat += "<center><b>Current Quirks:</b> [all_quirks.len ? all_quirks.Join(", ") : "None"]</center>"
 			dat += "<h2>Identity</h2>"
 			dat += "<table width='100%'><tr><td width='75%' valign='top'>"
 			if(jobban_isbanned(user, "appearance"))
@@ -1383,11 +1384,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						clientfps = desiredfps
 						parent.fps = desiredfps
 				if("ui")
-					var/pickedui = input(user, "Choose your UI style.", "Character Preference")  as null|anything in list("Midnight", "Plasmafire", "Retro", "Slimecore", "Operative", "Clockwork")
+					var/pickedui = input(user, "Choose your UI style.", "Character Preference", UI_style)  as null|anything in GLOB.available_ui_styles
 					if(pickedui)
 						UI_style = pickedui
+						if (parent && parent.mob && parent.mob.hud_used)
+							parent.mob.hud_used.update_ui_style(ui_style2icon(UI_style))
 				if("pda_style")
-					var/pickedPDAStyle = input(user, "Choose your PDA style.", "Character Preference")  as null|anything in list(MONO, SHARE, ORBITRON, VT)
+					var/pickedPDAStyle = input(user, "Choose your PDA style.", "Character Preference", pda_style)  as null|anything in list(MONO, SHARE, ORBITRON, VT)
 					if(pickedPDAStyle)
 						pda_style = pickedPDAStyle
 				if("pda_color")
@@ -1490,9 +1493,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					ambientocclusion = !ambientocclusion
 					if(parent && parent.screen && parent.screen.len)
 						var/obj/screen/plane_master/game_world/PM = locate(/obj/screen/plane_master/game_world) in parent.screen
-						PM.filters -= AMBIENT_OCCLUSION
-						if(ambientocclusion)
-							PM.filters += AMBIENT_OCCLUSION
+						PM.backdrop(parent.mob)
 
 				if("save")
 					save_preferences()
@@ -1522,7 +1523,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(be_random_body)
 		random_character(gender)
 
-	if(CONFIG_GET(flag/humans_need_surnames))
+	if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == "human"))
 		var/firstspace = findtext(real_name, " ")
 		var/name_length = length(real_name)
 		if(!firstspace)	//we need a surname

@@ -567,9 +567,7 @@ generate/load female uniform sprites matching all previously decided variables
 		if(4) //even = right hands
 			return list("x" = 0, "y" = 16)
 		else //No offsets or Unwritten number of hands
-			return list("x" = 0, "y" = 0)
-
-
+			return list("x" = 0, "y" = 0)//Handle held offsets
 
 //produces a key based on the human's limbs
 /mob/living/carbon/human/generate_icon_render_key()

@@ -29,13 +29,6 @@
 		copy_overlays(bombassembly)
 		add_overlay("bomb_assembly")
 
-/obj/item/onetankbomb/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/analyzer))
-		bombtank.attackby(W, user)
-		return
-	add_fingerprint(user)
-	..()
-
 /obj/item/onetankbomb/wrench_act(mob/living/user, obj/item/I)
 	to_chat(user, "<span class='notice'>You disassemble [src]!</span>")
 	if(bombassembly)
@@ -59,11 +52,14 @@
 	if(I.use_tool(src, user, 0, volume=40))
 		status = TRUE
 		GLOB.bombers += "[key_name(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
-		message_admins("[key_name_admin(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]")
+		message_admins("[ADMIN_LOOKUPFLW(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]")
 		to_chat(user, "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>")
 		add_fingerprint(user)
 		return TRUE
 
+
+/obj/item/onetankbomb/analyzer_act(mob/living/user, obj/item/I)
+	bombtank.analyzer_act(user, I)
 
 /obj/item/onetankbomb/attack_self(mob/user) //pressing the bomb accesses its assembly
 	bombassembly.attack_self(user, TRUE)

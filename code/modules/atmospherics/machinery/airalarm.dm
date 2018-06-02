@@ -61,7 +61,6 @@
 	desc = "A machine that monitors atmosphere levels. Goes off if the area is dangerous."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm0"
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 4
 	active_power_usage = 8
@@ -152,6 +151,9 @@
 	locked = FALSE
 	req_access = null
 	req_one_access = null
+
+/obj/machinery/airalarm/syndicate //general syndicate access
+	req_access = list(ACCESS_SYNDICATE)
 
 //all air alarms in area are connected via magic
 /area

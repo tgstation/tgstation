@@ -98,8 +98,10 @@
 	icon_state = "reality"
 	pixel_x = -96
 	pixel_y = -96
-	grav_pull = 6
+	dissipate = 0
+	move_self = 0
 	consume_range = 3
+	grav_pull = 4
 	current_size = STAGE_FOUR
 	allowed_size = STAGE_FOUR
 

@@ -122,12 +122,12 @@
 			active_apc.locked = TRUE
 			active_apc.update_icon()
 			active_apc = null
-		to_chat(usr, "<span class='robot notice'>[icon2html(src, usr)] Connected to APC in [APC.area]. Interface request sent.</span>")
-		log_activity("remotely accessed APC in [APC.area]")
+		to_chat(usr, "<span class='robot notice'>[icon2html(src, usr)] Connected to APC in [get_area_name(APC.area, TRUE)]. Interface request sent.</span>")
+		log_activity("remotely accessed APC in [get_area_name(APC.area, TRUE)]")
 		APC.ui_interact(usr, state = GLOB.not_incapacitated_state)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-		message_admins("[key_name_admin(usr)] remotely accessed [APC] from [src] at [get_area(src)].")
-		log_game("[key_name(usr)] remotely accessed [APC] from [src] at [get_area(src)].")
+		message_admins("[ADMIN_LOOKUPFLW(usr)] remotely accessed [APC] from [src] at [AREACOORD(src)].")
+		log_game("[key_name(usr)] remotely accessed [APC] from [src] at [AREACOORD(src)].")
 		if(APC.locked)
 			APC.say("Remote access detected. Interface unlocked.")
 			playsound(APC, 'sound/machines/boltsup.ogg', 25, 0)
@@ -188,7 +188,7 @@
 		log_activity("logged in")
 	else if(!(obj_flags & EMAGGED))
 		user.visible_message("<span class='warning'>You emag [src], disabling precise logging and allowing you to clear logs.</span>")
-		log_game("[key_name(user)] emagged [src] at [get_area(src)], disabling operator tracking.")
+		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], disabling operator tracking.")
 		obj_flags |= EMAGGED
 	playsound(src, "sparks", 50, 1)
 

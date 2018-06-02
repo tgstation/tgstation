@@ -459,10 +459,12 @@ Auto Patrol[]"},
 
 
 /mob/living/simple_animal/bot/ed209/emp_act(severity)
-
-	if(severity==2 && prob(70))
-		..(severity-1)
-	else
+	if(severity == 2 && prob(70))
+		severity = 1
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if (severity >= 2)
 		new /obj/effect/temp_visual/emp(loc)
 		var/list/mob/living/carbon/targets = new
 		for(var/mob/living/carbon/C in view(12,src))

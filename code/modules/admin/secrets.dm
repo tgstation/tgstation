@@ -428,7 +428,7 @@
 						H.equip_to_slot_or_del(I, SLOT_W_UNIFORM)
 						qdel(olduniform)
 						if(droptype == "Yes")
-							I.flags_1 |= NODROP_1
+							I.item_flags |= NODROP
 				else
 					to_chat(H, "You're not kawaii enough for this.")
 

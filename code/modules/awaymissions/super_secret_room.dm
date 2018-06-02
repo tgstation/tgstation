@@ -5,6 +5,7 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "speaking_tile"
 	layer = 5
+	resistance_flags = INDESTRUCTIBLE
 	var/speaking = FALSE
 	var/times_spoken_to = 0
 	var/list/shenanigans = list()
@@ -87,6 +88,27 @@
 			y += 2
 	speaking = FALSE
 	times_spoken_to++
+
+/obj/structure/speaking_tile/attackby(obj/item/W, mob/user, params)
+	return interact(user)
+
+/obj/structure/speaking_tile/attack_paw(mob/user)
+	return interact(user)
+
+/obj/structure/speaking_tile/attack_hulk(mob/user, does_attack_animation = 0)
+	return interact(user)
+
+/obj/structure/speaking_tile/attack_larva(mob/user)
+	return interact(user)
+
+/obj/structure/speaking_tile/attack_ai(mob/user)
+	return interact(user)
+
+/obj/structure/speaking_tile/attack_slime(mob/user)
+	return interact(user)
+
+/obj/structure/speaking_tile/attack_animal(mob/user)
+	return interact(user)
 
 /obj/structure/speaking_tile/proc/SpeakPeace(list/statements)
 	for(var/i in 1 to statements.len)

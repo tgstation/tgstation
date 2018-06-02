@@ -55,7 +55,7 @@ AI MODULES
 					tot_laws++
 		if(tot_laws > CONFIG_GET(number/silicon_max_law_amount) && !bypass_law_amt_check)//allows certain boards to avoid this check, eg: reset
 			to_chat(user, "<span class='caution'>Not enough memory allocated to [law_datum.owner ? law_datum.owner : "the AI core"]'s law processor to handle this amount of laws.</span>")
-			message_admins("[key_name_admin(user)] tried to upload laws to [law_datum.owner ? key_name_admin(law_datum.owner) : "an AI core"] that would exceed the law cap.")
+			message_admins("[ADMIN_LOOKUPFLW(user)] tried to upload laws to [law_datum.owner ? ADMIN_LOOKUPFLW(law_datum.owner) : "an AI core"] that would exceed the law cap.")
 			overflow = TRUE
 
 	var/law2log = transmitInstructions(law_datum, user, overflow) //Freeforms return something extra we need to log
@@ -69,8 +69,8 @@ AI MODULES
 	var/ainame = law_datum.owner ? law_datum.owner.name : "empty AI core"
 	var/aikey = law_datum.owner ? law_datum.owner.ckey : "null"
 	GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) used [src.name] on [ainame]([aikey]).[law2log ? " The law specified [law2log]" : ""]")
-	log_law("[user.key]/[user.name] used [src.name] on [aikey]/([ainame]).[law2log ? " The law specified [law2log]" : ""]")
-	message_admins("[key_name_admin(user)] used [src.name] on [key_name_admin(law_datum.owner)].[law2log ? " The law specified [law2log]" : ""]")
+	log_law("[user.key]/[user.name] used [src.name] on [aikey]/([ainame]) from [AREACOORD(user)].[law2log ? " The law specified [law2log]" : ""]")
+	message_admins("[ADMIN_LOOKUPFLW(user)] used [src.name] on [ADMIN_LOOKUPFLW(law_datum.owner)] from [AREACOORD(user)].[law2log ? " The law specified [law2log]" : ""]")
 
 //The proc that actually changes the silicon's laws.
 /obj/item/aiModule/proc/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow = FALSE)

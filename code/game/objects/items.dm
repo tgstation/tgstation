@@ -135,7 +135,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
 
 /obj/item/Destroy()
-	flags_1 &= ~DROPDEL_1	//prevent reqdels
+	item_flags &= ~DROPDEL	//prevent reqdels
 	if(ismob(loc))
 		var/mob/m = loc
 		m.temporarilyRemoveItemFromInventory(src, TRUE)
@@ -202,11 +202,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			research_msg += sep
 			research_msg += node.display_name
 			sep = ", "
-	var/points = techweb_item_point_check(src)
-	if (points)
-		research_msg += sep
-		research_msg += "[points] points"
+	var/list/points = techweb_item_point_check(src)
+	if (length(points))
 		sep = ", "
+		research_msg += techweb_point_display_generic(points)
 
 	if (!sep) // nothing was shown
 		research_msg += "None"
@@ -350,7 +349,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
-	if(DROPDEL_1 & flags_1)
+	if(item_flags & DROPDEL)
 		qdel(src)
 	item_flags &= ~IN_INVENTORY
 	SendSignal(COMSIG_ITEM_DROPPED,user)
@@ -772,4 +771,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			plane = initial(plane)
 			appearance_flags &= ~NO_CLIENT_COLOR
 			dropped(M)
+	return ..()
+
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
+	if (item_flags & NODROP)
+		return
 	return ..()

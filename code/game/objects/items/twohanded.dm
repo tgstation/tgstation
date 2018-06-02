@@ -121,7 +121,7 @@
 	name = "offhand"
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 = ABSTRACT_1
+	item_flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/item/twohanded/offhand/Destroy()
@@ -236,7 +236,7 @@
 
 /obj/item/twohanded/fireaxe/Initialize()
 	. = ..()
-	AddComponent(/datum/component/butchering, 100, 80, hitsound) //axes are not known for being precision butchering tools
+	AddComponent(/datum/component/butchering, 100, 80, 0 , hitsound) //axes are not known for being precision butchering tools
 
 /obj/item/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"

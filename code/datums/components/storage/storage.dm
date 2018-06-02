@@ -87,7 +87,8 @@
 	RegisterSignal(COMSIG_ATOM_ATTACK_PAW, .proc/on_attack_hand)
 	RegisterSignal(COMSIG_ATOM_EMP_ACT, .proc/emp_act)
 	RegisterSignal(COMSIG_ATOM_ATTACK_GHOST, .proc/show_to_ghost)
-	RegisterSignal(COMSIG_ATOM_EXITED, .proc/_removal_reset)
+	RegisterSignal(COMSIG_ATOM_ENTERED, .proc/refresh_mob_views)
+	RegisterSignal(COMSIG_ATOM_EXITED, .proc/_remove_and_refresh)
 
 	RegisterSignal(COMSIG_ITEM_PRE_ATTACK, .proc/preattack_intercept)
 	RegisterSignal(COMSIG_ITEM_ATTACK_SELF, .proc/attack_self)
@@ -402,6 +403,10 @@
 		return FALSE
 	return master._removal_reset(thing)
 
+/datum/component/storage/proc/_remove_and_refresh(atom/movable/thing)
+	_removal_reset(thing)
+	refresh_mob_views()
+
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the new_location target, if that is null it's being deleted
 /datum/component/storage/proc/remove_from_storage(atom/movable/AM, atom/new_location)
 	if(!istype(AM))
@@ -524,7 +529,7 @@
 //This proc return 1 if the item can be picked up and 0 if it can't.
 //Set the stop_messages to stop it from printing messages
 /datum/component/storage/proc/can_be_inserted(obj/item/I, stop_messages = FALSE, mob/M)
-	if(!istype(I) || (I.flags_1 & ABSTRACT_1))
+	if(!istype(I) || (I.item_flags & ABSTRACT))
 		return FALSE //Not an item
 	if(I == parent)
 		return FALSE	//no paradoxes for you
@@ -568,7 +573,7 @@
 			if(!stop_messages)
 				to_chat(M, "<span class='warning'>[IP] cannot hold [I] as it's a storage item of the same size!</span>")
 			return FALSE //To prevent the stacking of same sized storage items.
-	if(I.flags_1 & NODROP_1) //SHOULD be handled in unEquip, but better safe than sorry.
+	if(I.item_flags & NODROP) //SHOULD be handled in unEquip, but better safe than sorry.
 		to_chat(M, "<span class='warning'>\the [I] is stuck to your hand, you can't put it in \the [host]!</span>")
 		return FALSE
 	var/datum/component/storage/concrete/master = master()

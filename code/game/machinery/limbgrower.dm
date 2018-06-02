@@ -11,7 +11,6 @@
 	icon_state = "limbgrower_idleoff"
 	density = TRUE
 	container_type = OPENCONTAINER
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100

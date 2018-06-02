@@ -189,11 +189,13 @@
 	. = ..()
 
 /obj/item/flightpack/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	var/damage = severity == 1 ? emp_strong_damage : emp_weak_damage
 	if(emp_damage <= (emp_disable_threshold * 1.5))
 		emp_damage += damage
 		usermessage("WARNING: Class [severity] EMP detected! Circuit damage at [(emp_damage/emp_disable_threshold)*100]%!", "boldwarning")
-	return ..()
 
 //Proc to change amount of momentum the wearer has, or dampen all momentum by a certain amount.
 /obj/item/flightpack/proc/adjust_momentum(amountx, amounty, reduce_amount_total = 0)
@@ -895,7 +897,7 @@
 			usermessage("You're already wearing something on your back!", "boldwarning")
 			return FALSE
 		user.equip_to_slot_if_possible(pack,SLOT_BACK,0,0,1)
-		pack.flags_1 |= NODROP_1
+		pack.item_flags |= NODROP
 		resync()
 		user.visible_message("<span class='notice'>A [pack.name] extends from [user]'s [name] and clamps to [user.p_their()] back!</span>")
 		user.update_inv_wear_suit()
@@ -909,7 +911,7 @@
 			return FALSE
 		if(pack.flight && forced)
 			pack.disable_flight(1)
-		pack.flags_1 &= ~NODROP_1
+		pack.item_flags &= ~NODROP
 		resync()
 		if(user)
 			user.transferItemToLoc(pack, src, TRUE)
@@ -933,14 +935,14 @@
 			usermessage("You're already wearing something on your feet!", "boldwarning")
 			return FALSE
 		user.equip_to_slot_if_possible(shoes,SLOT_SHOES,0,0,1)
-		shoes.flags_1 |= NODROP_1
+		shoes.item_flags |= NODROP
 		user.visible_message("<span class='notice'>[user]'s [name] extends a pair of [shoes.name] over [user.p_their()] feet!</span>")
 		user.update_inv_wear_suit()
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	deployedshoes = TRUE
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/retract_flightshoes(forced = FALSE)
-	shoes.flags_1 &= ~NODROP_1
+	shoes.item_flags &= ~NODROP
 	playsound(src, 'sound/mecha/mechmove03.ogg', 50, 1)
 	if(user)
 		user.transferItemToLoc(shoes, src, TRUE)

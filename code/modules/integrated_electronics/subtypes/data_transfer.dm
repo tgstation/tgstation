@@ -4,7 +4,7 @@
 
 /obj/item/integrated_circuit/transfer/multiplexer
 	name = "two multiplexer"
-	desc = "This is what those in the business tend to refer to as a 'mux' or data selector. It moves data from one of the selected inputs to the output."
+	desc = "This is what those in the business tend to refer to as a 'mux', or data selector. It moves data from one of the selected inputs to the output."
 	extended_desc = "The first input pin is used to select which of the other input pins which has its data moved to the output. \
 	If the input selection is outside the valid range then no output is given."
 	complexity = 2
@@ -147,7 +147,7 @@
 
 /obj/item/integrated_circuit/transfer/wire_node
 	name = "wire node"
-	desc = "Just wire node to make wiring more easy.Transfer pulse from in to out."
+	desc = "Just a wire node to make wiring easier. Transfers the pulse from in to out."
 	icon_state = "wire_node"
 	activators = list("pulse in" = IC_PINTYPE_PULSE_IN, "pulse out" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
