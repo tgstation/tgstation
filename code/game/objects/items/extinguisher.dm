@@ -20,6 +20,7 @@
 	var/last_use = 1
 	var/safety = TRUE
 	var/refilling = FALSE
+	var/tanktype = /obj/structure/reagent_dispensers/watertank
 	var/sprite_name = "fire_extinguisher"
 	var/power = 5 //Maximum distance launched water will travel
 	var/precision = 0 //By default, turfs picked from a spray are random, set to 1 to make it always have at least one water effect per row
@@ -39,6 +40,15 @@
 	max_water = 30
 	sprite_name = "miniFE"
 	dog_fashion = null
+
+/obj/item/extinguisher/advanced
+	name = "pocket fire extinguisher"
+	desc = "A light and compact fibreglass-framed model fire extinguisher."
+	icon_state = "miniFE0"
+	item_state = "miniFE"
+	sprite_name = "miniFE"
+	dog_fashion = null
+	tanktype = /obj/structure/reagent_dispensers/foamtank
 
 /obj/item/extinguisher/New()
 	..()
@@ -84,14 +94,14 @@
 		to_chat(user, "<span class='notice'>Alt-click to empty it.</span>")
 
 /obj/item/extinguisher/proc/AttemptRefill(atom/target, mob/user)
-	if(istype(target, /obj/structure/reagent_dispensers/watertank) && target.Adjacent(user))
+	if(istype(target, tanktype) && target.Adjacent(user))
 		var/safety_save = safety
 		safety = TRUE
 		if(reagents.total_volume == reagents.maximum_volume)
 			to_chat(user, "<span class='warning'>\The [src] is already full!</span>")
 			safety = safety_save
 			return 1
-		var/obj/structure/reagent_dispensers/watertank/W = target
+		var/obj/structure/reagent_dispensers/W = target //will it work?
 		var/transferred = W.reagents.trans_to(src, max_water)
 		if(transferred > 0)
 			to_chat(user, "<span class='notice'>\The [src] has been refilled by [transferred] units.</span>")
