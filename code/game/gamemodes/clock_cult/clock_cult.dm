@@ -148,7 +148,7 @@ Credit where due:
 	if(errorList.len)	// reebe failed to load
 		message_admins("Rebee failed to load!")
 		log_game("Rebee failed to load!")
-		return 0
+		return FALSE
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
