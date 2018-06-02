@@ -420,7 +420,7 @@ SUBSYSTEM_DEF(job)
 			else
 				M = H
 
-		SSpersistence.antag_rep_change[M.client.ckey] += job.antag_rep
+		SSpersistence.antag_rep_change[M.client.ckey] += job.GetAntagRep()
 
 	to_chat(M, "<b>You are the [rank].</b>")
 	if(job)
