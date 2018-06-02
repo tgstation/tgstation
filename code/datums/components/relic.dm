@@ -7,7 +7,7 @@
 	var/list/process_callbacks = list()
 	var/list/attackby_callbacks = list() //While it's not really reasonable to have multiple attackself or afterattack, this feels acceptable
 
-/datum/component/relic/Initialize(var/datum/relic_type/mytype,var/maxcharges = 30,var/cooldowntime = 30)
+/datum/component/relic/Initialize(datum/relic_type/mytype,maxcharges = 30,cooldowntime = 30)
 	cooldown_time = cooldowntime
 	max_charges = maxcharges
 	charges = maxcharges

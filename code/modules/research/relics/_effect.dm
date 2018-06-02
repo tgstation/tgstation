@@ -1,4 +1,4 @@
-/proc/get_valid_relic_effects(var/type)
+/proc/get_valid_relic_effects(type)
 	var/list/L = list()
 	for(var/efftype in typesof(type))
 		var/datum/relic_effect/efftype2 = efftype
