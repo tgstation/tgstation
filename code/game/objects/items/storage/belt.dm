@@ -326,6 +326,21 @@
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/storage/belt/military/snack
+	name = "snack rig"
+	desc = "A set of tactical webbing worn by athletes of the DonkCo VR sports division. May contain nuts."
+
+/obj/item/storage/belt/military/snack/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 7
+	STR.max_w_class = WEIGHT_CLASS_SMALL
+	STR.can_hold = typecacheof(list(
+		/obj/item/reagent_containers/food/snacks,
+		/obj/item/reagent_containers/food/drinks/dry_ramen,
+		/obj/item/reagent_containers/food/drinks/soda_cans
+		))
+
 /obj/item/storage/belt/military/abductor
 	name = "agent belt"
 	desc = "A belt used by abductor agents."
