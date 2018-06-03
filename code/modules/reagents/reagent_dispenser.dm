@@ -51,7 +51,7 @@
 	icon_state = "water_high" //I was gonna clean my room...
 	tank_volume = 100000
 
-/obj/structure/reagent_dispensers/firefoam
+/obj/structure/reagent_dispensers/foamtank
 	name = "firefoam tank"
 	desc = "A tank full of foaming things."
 	icon_state = "fuel"

@@ -63,7 +63,8 @@
 /datum/supply_pack/emergency/equipment
 	name "testcrate"
 	cost= 1
-	contains = list(/obj/item/extinguisher/advanced)
+	contains = list(/obj/item/extinguisher/advanced,
+				/obj/structure/reagent_dispensers/foamtank)
 
 /datum/supply_pack/emergency/equipment
 	name = "Emergency Bot/Internals Crate"
