@@ -47,7 +47,12 @@
 		return
 	if(on)
 		if(beaker)
-			beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
+			if(beaker.reagents.chem_temp > target_temperature)
+				beaker.reagents.chem_temp += min(-1, (target_temperature - beaker.reagents.chem_temp) * heater_coefficient)
+			if(beaker.reagents.chem_temp < target_temperature)
+				beaker.reagents.chem_temp += max(1, (target_temperature - beaker.reagents.chem_temp) * heater_coefficient)
+
+			beaker.reagents.chem_temp = round(beaker.reagents.chem_temp)
 			beaker.reagents.handle_reactions()
 
 /obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)
