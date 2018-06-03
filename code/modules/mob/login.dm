@@ -39,6 +39,7 @@
 		AA.onNewMob(src)
 
 	update_client_colour()
+	update_mouse_pointer()
 	if(client)
 		client.click_intercept = null
 

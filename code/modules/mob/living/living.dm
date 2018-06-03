@@ -35,14 +35,6 @@
 	QDEL_LIST(diseases)
 	return ..()
 
-/mob/living/ghostize(can_reenter_corpse = 1)
-	var/prev_client = client
-	. = ..()
-	if(.)
-		if(ranged_ability && prev_client)
-			ranged_ability.remove_mousepointer(prev_client)
-
-
 /mob/living/proc/OpenCraftingMenu()
 	return
 
@@ -1113,6 +1105,11 @@
 		else
 			clear_fullscreen("remote_view", 0)
 		update_pipe_vision()
+
+/mob/living/update_mouse_pointer()
+	..()
+	if (client && ranged_ability && ranged_ability.ranged_mousepointer)
+		client.mouse_pointer_icon = ranged_ability.ranged_mousepointer
 
 /mob/living/vv_edit_var(var_name, var_value)
 	switch(var_name)
