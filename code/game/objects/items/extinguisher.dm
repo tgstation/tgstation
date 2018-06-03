@@ -22,7 +22,7 @@
 	var/refilling = FALSE
 	var/tanktype = /obj/structure/reagent_dispensers/watertank
 	var/sprite_name = "fire_extinguisher"
-	var/chemused = water
+	var/chemused = "water"
 	var/power = 5 //Maximum distance launched water will travel
 	var/precision = 0 //By default, turfs picked from a spray are random, set to 1 to make it always have at least one water effect per row
 	var/cooling_power = 2 //Sets the cooling_temperature of the water reagent datum inside of the extinguisher when it is refilled
@@ -50,7 +50,7 @@
 	sprite_name = "miniFE"
 	dog_fashion = null
 	tanktype = /obj/structure/reagent_dispensers/foamtank
-	chemused = firefighting_foam
+	chemused = "firefighting_foam"
 	precision = 1
 
 /obj/item/extinguisher/New()
