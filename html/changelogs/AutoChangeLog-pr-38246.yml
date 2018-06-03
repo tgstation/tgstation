@@ -1,4 +1,0 @@
-author: "theo2003"
-delete-after: True
-changes: 
-  - bugfix: "fixed hydroponics tray weed light staying on when removing weeds with integrated circuits"
