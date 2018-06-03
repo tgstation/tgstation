@@ -74,20 +74,19 @@ GLOBAL_LIST_EMPTY(uplinks)
 		return	//no hitting everyone/everything just to try to slot tcs in!
 	if(istype(I, /obj/item/stack/telecrystal))
 		LoadTC(user, I)
-	for(var/item in subtypesof(/datum/uplink_item))
+	for(var/item in uplink_items)
 		var/datum/uplink_item/UI = item
 		var/path = null
-		if(initial(UI.refund_path))
-			path = initial(UI.refund_path)
+		if(UI.refund_path)
+			path = UI.refund_path
 		else
-			path = initial(UI.item)
+			path = UI.item
 		var/cost = 0
-		if(initial(UI.refund_amount))
-			cost = initial(UI.refund_amount)
+		if(UI.refund_amount)
+			cost = UI.refund_amount
 		else
-			cost = initial(UI.cost)
-		var/refundable = initial(UI.refundable)
-		if(I.type == path && refundable && I.check_uplink_validity())
+			cost = UI.cost
+		if(I.type == path && UI.refundable && I.check_uplink_validity())
 			telecrystals += cost
 			purchase_log.total_spent -= cost
 			to_chat(user, "<span class='notice'>[I] refunded.</span>")
