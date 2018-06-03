@@ -25,6 +25,7 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(list(/obj/item/construction/rcd,/obj
 	icon = 'icons/obj/machines/heavy_lathe.dmi'
 	icon_state = "h_lathe"
 	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	circuit = /obj/item/circuitboard/machine/experimentor
 	verb_say = "beeps"
@@ -194,7 +195,8 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(list(/obj/item/construction/rcd,/obj
 	if(ispath(type,/datum/experiment) && web.all_experiments[type])
 		picked = web.all_experiments[type]
 	if(experiments[type])
-		var/list/possible_experiments = experiments[type].get_valid_experiments(src,loaded_item,bad_thing_coeff)
+		var/datum/experiment_type/chosen = experiments[type]
+		var/list/possible_experiments = chosen.get_valid_experiments(src,loaded_item,bad_thing_coeff)
 		picked = pickweight(possible_experiments)
 
 	if(picked)
