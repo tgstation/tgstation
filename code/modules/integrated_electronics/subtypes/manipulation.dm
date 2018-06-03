@@ -286,6 +286,7 @@
 					push_data()
 			if(1)
 				TR.weedlevel = 0
+				TR.update_icon()
 			if(2)
 				if(TR.myseed) //Could be that they're just using it as a de-weeder
 					TR.age = 0
