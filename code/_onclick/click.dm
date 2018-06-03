@@ -125,7 +125,7 @@
 
 	//These are always reachable.
 	//User itself, current loc, and user inventory
-	if(DirectAccess(A))
+	if(A in DirectAccess())
 		if(W)
 			W.melee_attack_chain(src, A, params)
 		else
