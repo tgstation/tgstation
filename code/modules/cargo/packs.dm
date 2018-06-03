@@ -1645,6 +1645,18 @@
 			qdel(D)
 			new /mob/living/simple_animal/pet/dog/corgi/Lisa(.)
 
+/datum/supply_pack/critter/corgi/exotic
+	name = "Exotic Corgi Crate"
+	desc = "Corgis fit for a king, these corgis come in a unique color to signify their superiority. Comes with a cute collar!"
+	cost = 5500
+	crate_name = "exotic corgi crate"
+
+/datum/supply_pack/critter/corgi/exotic/generate()
+	. = ..()
+	var/mob/living/simple_animal/pet/dog/corgi/D = locate() in .
+	D.name = "exotic corgi"
+	D.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+
 /datum/supply_pack/critter/cow
 	name = "Cow Crate"
 	desc = "The cow goes moo!"
