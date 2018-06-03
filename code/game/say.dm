@@ -166,7 +166,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/virtualspeaker
 	var/job
 	var/atom/movable/source
-	var/obj/item/device/radio/radio
+	var/obj/item/radio/radio
 
 INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 /atom/movable/virtualspeaker/Initialize(mapload, atom/movable/M, radio)

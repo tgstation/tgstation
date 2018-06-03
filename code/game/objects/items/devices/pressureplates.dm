@@ -1,7 +1,8 @@
 
-/obj/item/device/pressure_plate
+/obj/item/pressure_plate
 	name = "pressure plate"
 	desc = "An electronic device that triggers when stepped on."
+	icon = 'icons/obj/device.dmi'
 	item_state = "flash"
 	icon_state = "pressureplate"
 	level = 1
@@ -9,7 +10,7 @@
 	var/trigger_item = FALSE
 	var/trigger_silent = FALSE
 	var/sound/trigger_sound = 'sound/effects/pressureplate.ogg'
-	var/obj/item/device/assembly/signaler/sigdev = null
+	var/obj/item/assembly/signaler/sigdev = null
 	var/roundstart_signaller = FALSE
 	var/roundstart_signaller_freq = FREQ_PRESSURE_PLATE
 	var/roundstart_signaller_code = 30
@@ -20,7 +21,7 @@
 	var/can_trigger = TRUE
 	var/trigger_delay = 10
 
-/obj/item/device/pressure_plate/Initialize()
+/obj/item/pressure_plate/Initialize()
 	. = ..()
 	tile_overlay = image(icon = 'icons/turf/floors.dmi', icon_state = "pp_overlay")
 	if(roundstart_signaller)
@@ -30,7 +31,7 @@
 		if(isopenturf(loc))
 			hide(TRUE)
 
-/obj/item/device/pressure_plate/Crossed(atom/movable/AM)
+/obj/item/pressure_plate/Crossed(atom/movable/AM)
 	. = ..()
 	if(!can_trigger || !active)
 		return
@@ -42,18 +43,18 @@
 	can_trigger = FALSE
 	addtimer(CALLBACK(src, .proc/trigger), trigger_delay)
 
-/obj/item/device/pressure_plate/proc/trigger()
+/obj/item/pressure_plate/proc/trigger()
 	can_trigger = TRUE
 	if(istype(sigdev))
 		sigdev.signal()
 
-/obj/item/device/pressure_plate/attackby(obj/item/I, mob/living/L)
-	if(istype(I, /obj/item/device/assembly/signaler) && !istype(sigdev) && removable_signaller && L.transferItemToLoc(I, src))
+/obj/item/pressure_plate/attackby(obj/item/I, mob/living/L)
+	if(istype(I, /obj/item/assembly/signaler) && !istype(sigdev) && removable_signaller && L.transferItemToLoc(I, src))
 		sigdev = I
 		to_chat(L, "<span class='notice'>You attach [I] to [src]!</span>")
 	return ..()
 
-/obj/item/device/pressure_plate/attack_self(mob/living/L)
+/obj/item/pressure_plate/attack_self(mob/living/L)
 	if(removable_signaller && istype(sigdev))
 		to_chat(L, "<span class='notice'>You remove [sigdev] from [src]</span>")
 		if(!L.put_in_hands(sigdev))
@@ -61,7 +62,7 @@
 		sigdev = null
 	return ..()
 
-/obj/item/device/pressure_plate/hide(yes)
+/obj/item/pressure_plate/hide(yes)
 	if(yes)
 		invisibility = INVISIBILITY_MAXIMUM
 		anchored = TRUE

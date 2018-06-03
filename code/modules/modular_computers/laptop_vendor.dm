@@ -6,12 +6,11 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "robotics"
 	layer = 2.9
-	anchored = TRUE
 	density = TRUE
 
 	// The actual laptop/tablet
-	var/obj/item/device/modular_computer/laptop/fabricated_laptop = null
-	var/obj/item/device/modular_computer/tablet/fabricated_tablet = null
+	var/obj/item/modular_computer/laptop/fabricated_laptop = null
+	var/obj/item/modular_computer/tablet/fabricated_tablet = null
 
 	// Utility vars
 	var/state = 0 							// 0: Select device type, 1: Select loadout, 2: Payment, 3: Thankyou screen
@@ -52,7 +51,7 @@
 	if(devtype == 1) 		// Laptop, generally cheaper to make it accessible for most station roles
 		var/obj/item/computer_hardware/battery/battery_module = null
 		if(fabricate)
-			fabricated_laptop = new /obj/item/device/modular_computer/laptop/buildable(src)
+			fabricated_laptop = new /obj/item/modular_computer/laptop/buildable(src)
 			fabricated_laptop.install_component(new /obj/item/computer_hardware/battery)
 			battery_module = fabricated_laptop.all_components[MC_CELL]
 		total_price = 99

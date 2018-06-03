@@ -23,7 +23,7 @@
 	name = "\improper SWAT boots"
 	desc = "High speed, no drag combat boots."
 	permeability_coefficient = 0.01
-	flags_1 = NOSLIP_1
+	clothing_flags = NOSLIP
 	armor = list("melee" = 40, "bullet" = 30, "laser" = 25, "energy" = 25, "bomb" = 50, "bio" = 30, "rad" = 30, "fire" = 90, "acid" = 50)
 
 /obj/item/clothing/shoes/sandal
@@ -50,7 +50,7 @@
 	name = "galoshes"
 	icon_state = "galoshes"
 	permeability_coefficient = 0.01
-	flags_1 = NOSLIP_1
+	clothing_flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN+1
 	strip_delay = 50
 	equip_delay_other = 50
@@ -157,7 +157,7 @@
 	icon_state = "cultalt"
 
 /obj/item/clothing/shoes/cult/alt/ghost
-	flags_1 = NODROP_1|DROPDEL_1
+	item_flags = NODROP | DROPDEL
 
 /obj/item/clothing/shoes/cyborg
 	name = "cyborg boots"
@@ -264,7 +264,7 @@
 /obj/item/clothing/shoes/wheelys/ui_action_click(mob/user, action)
 	if(!isliving(user))
 		return
-	if(!istype(user.get_item_by_slot(slot_shoes), /obj/item/clothing/shoes/wheelys))
+	if(!istype(user.get_item_by_slot(SLOT_SHOES), /obj/item/clothing/shoes/wheelys))
 		to_chat(user, "<span class='warning'>You must be wearing the wheely-heels to use them!</span>")
 		return
 	if(!(W.is_occupant(user)))

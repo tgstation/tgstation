@@ -3,7 +3,6 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 300
 	active_power_usage = 300
@@ -95,14 +94,15 @@
 			set_light(0)
 
 /obj/machinery/computer/emp_act(severity)
-	switch(severity)
-		if(1)
-			if(prob(50))
-				obj_break("energy")
-		if(2)
-			if(prob(10))
-				obj_break("energy")
-	..()
+	. = ..()
+	if (!(. & EMP_PROTECT_SELF))
+		switch(severity)
+			if(1)
+				if(prob(50))
+					obj_break("energy")
+			if(2)
+				if(prob(10))
+					obj_break("energy")
 
 /obj/machinery/computer/deconstruct(disassembled = TRUE, mob/user)
 	on_deconstruction()

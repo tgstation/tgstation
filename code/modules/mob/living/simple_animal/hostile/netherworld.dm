@@ -100,6 +100,6 @@
 				var/mob/living/simple_animal/hostile/netherworld/blankbody/blank
 				blank = new(loc)
 				blank.name = "[M]"
-				blank.desc = "It's [M], but their flesh has an ashy texture, and their face is featureless save an eerie smile."
+				blank.desc = "It's [M], but [M.p_their()] flesh has an ashy texture, and [M.p_their()] face is featureless save an eerie smile."
 				src.visible_message("<span class='warning'>[M] reemerges from the link!</span>")
 				qdel(M)

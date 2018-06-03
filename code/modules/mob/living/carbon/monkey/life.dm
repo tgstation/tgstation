@@ -12,7 +12,7 @@
 	if(..())
 
 		if(!client)
-			if(stat == CONSCIOUS)	
+			if(stat == CONSCIOUS)
 				if(on_fire || buckled || restrained())
 					if(!resisting && prob(MONKEY_RESIST_PROB))
 						resisting = TRUE
@@ -140,7 +140,7 @@
 
 /mob/living/carbon/monkey/has_smoke_protection()
 	if(wear_mask)
-		if(wear_mask.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
+		if(wear_mask.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return 1
 
 /mob/living/carbon/monkey/handle_fire()

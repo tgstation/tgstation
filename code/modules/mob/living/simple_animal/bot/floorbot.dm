@@ -10,7 +10,7 @@
 	maxHealth = 25
 	spacewalk = TRUE
 
-	radio_key = /obj/item/device/encryptionkey/headset_eng
+	radio_key = /obj/item/encryptionkey/headset_eng
 	radio_channel = "Engineering"
 	bot_type = FLOOR_BOT
 	model = "Floorbot"
@@ -164,12 +164,7 @@
 	update_controls()
 
 /mob/living/simple_animal/bot/floorbot/proc/empty_tiles()
-	var/atom/Tsec = drop_location()
-
-	while(specialtiles > initial(tiletype.max_amount))
-		new tiletype(Tsec,initial(tiletype.max_amount))
-		specialtiles -= initial(tiletype.max_amount)
-	new tiletype(Tsec,specialtiles)
+	new tiletype(drop_location(), specialtiles)
 	specialtiles = 0
 	tiletype = null
 
@@ -370,7 +365,7 @@
 
 	drop_part(toolbox, Tsec)
 
-	new /obj/item/device/assembly/prox_sensor(Tsec)
+	new /obj/item/assembly/prox_sensor(Tsec)
 
 	if(specialtiles && tiletype != null)
 		empty_tiles()
@@ -378,8 +373,7 @@
 	if(prob(50))
 		drop_part(robot_arm, Tsec)
 
-	var/obj/item/stack/tile/plasteel/T = new (Tsec)
-	T.amount = 1
+	new /obj/item/stack/tile/plasteel(Tsec, 1)
 
 	do_sparks(3, TRUE, src)
 	..()

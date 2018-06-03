@@ -6,18 +6,17 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
 	density = FALSE
-	anchored = TRUE
 	var/obj/machinery/mineral/stacking_machine/laborstacker/stacking_machine = null
 	var/machinedir = SOUTH
 	var/obj/item/card/id/prisoner/inserted_id
 	var/obj/machinery/door/airlock/release_door
 	var/door_tag = "prisonshuttle"
-	var/obj/item/device/radio/Radio //needed to send messages to sec radio
+	var/obj/item/radio/Radio //needed to send messages to sec radio
 
 
 /obj/machinery/mineral/labor_claim_console/Initialize()
 	. = ..()
-	Radio = new/obj/item/device/radio(src)
+	Radio = new/obj/item/radio(src)
 	Radio.listening = FALSE
 	locate_stacking_machine()
 
@@ -147,7 +146,6 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
 	density = FALSE
-	anchored = TRUE
 
 /obj/machinery/mineral/labor_points_checker/attack_hand(mob/user)
 	. = ..()

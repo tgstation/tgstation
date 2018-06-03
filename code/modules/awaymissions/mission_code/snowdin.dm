@@ -242,12 +242,12 @@
 							NB.species_id = "plasmaman"//change the species_id of the limb to that of a plasmaman
 							NB.no_update = TRUE
 							NB.change_bodypart_status()
-							PP.visible_message("<span class='warning'>[L] screams in pain as their [NB] melts down to the bone!</span>", \
+							PP.visible_message("<span class='warning'>[L] screams in pain as [L.p_their()] [NB] melts down to the bone!</span>", \
 											  "<span class='userdanger'>You scream out in pain as your [NB] melts down to the bone, leaving an eerie plasma-like glow where flesh used to be!</span>")
 						if(!plasma_parts.len && !robo_parts.len) //a person with no potential organic limbs left AND no robotic limbs, time to turn them into a plasmaman
 							PP.IgniteMob()
 							PP.set_species(/datum/species/plasmaman)
-							PP.visible_message("<span class='warning'>[L] bursts into a brilliant purple flame as their entire body is that of a skeleton!</span>", \
+							PP.visible_message("<span class='warning'>[L] bursts into a brilliant purple flame as [L.p_their()] entire body is that of a skeleton!</span>", \
 											  "<span class='userdanger'>Your senses numb as all of your remaining flesh is turned into a purple slurry, sloshing off your body and leaving only your bones to show in a vibrant purple!</span>")
 
 
@@ -529,7 +529,7 @@
 				/obj/item/gun/ballistic/automatic/c20r/unrestricted = 16,
 				/obj/item/gun/magic/wand/resurrection/inert = 15,
 				/obj/item/gun/magic/wand/resurrection = 10,
-				/obj/item/device/radio/uplink/old = 2,
+				/obj/item/radio/uplink/old = 2,
 				/obj/item/book/granter/spell/charge = 12,
 				/obj/item/grenade/clusterbuster/spawner_manhacks = 15,
 				/obj/item/book/granter/spell/fireball = 10,
@@ -601,10 +601,19 @@
 	name = "Syndicate Snow Operative"
 	uniform = /obj/item/clothing/under/syndicate/coldres
 	shoes = /obj/item/clothing/shoes/combat/coldres
-	ears = /obj/item/device/radio/headset/syndicate/alt
+	ears = /obj/item/radio/headset/syndicate/alt
 	r_pocket = /obj/item/gun/ballistic/automatic/pistol
 	id = /obj/item/card/id/syndicate
 	implants = list(/obj/item/implant/exile)
+
+/datum/outfit/vr/snowtide
+	name = "Snowdin Outfit"
+	shoes = /obj/item/clothing/shoes/winterboots
+	suit = /obj/item/clothing/suit/hooded/wintercoat
+	back = /obj/item/storage/backpack
+	mask = /obj/item/clothing/mask/breath
+	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
+	internals_slot = SLOT_R_STORE
 
 /obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive/female
 	mob_gender = FEMALE
@@ -666,4 +675,5 @@
 /obj/effect/turf_decal/snowdin_station_sign/up/seven
 	icon_state = "AOPU7"
 
-
+/obj/effect/landmark/vr_spawn/snowdin
+	vr_outfit = /datum/outfit/vr/snowtide

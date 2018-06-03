@@ -135,7 +135,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
 
 /obj/item/Destroy()
-	flags_1 &= ~DROPDEL_1	//prevent reqdels
+	item_flags &= ~DROPDEL	//prevent reqdels
 	if(ismob(loc))
 		var/mob/m = loc
 		m.temporarilyRemoveItemFromInventory(src, TRUE)
@@ -143,9 +143,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		qdel(X)
 	QDEL_NULL(rpg_loot)
 	return ..()
-
-/obj/item/device
-	icon = 'icons/obj/device.dmi'
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || (!isturf(target.loc) && !isturf(target) && not_inside))
@@ -205,11 +202,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			research_msg += sep
 			research_msg += node.display_name
 			sep = ", "
-	var/points = techweb_item_point_check(src)
-	if (points)
-		research_msg += sep
-		research_msg += "[points] points"
+	var/list/points = techweb_item_point_check(src)
+	if (length(points))
 		sep = ", "
+		research_msg += techweb_point_display_generic(points)
 
 	if (!sep) // nothing was shown
 		research_msg += "None"
@@ -350,11 +346,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return ITALICS | REDUCE_RANGE
 
 /obj/item/proc/dropped(mob/user)
-	SendSignal(COMSIG_ITEM_DROPPED, user)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
-	if(DROPDEL_1 & flags_1)
+	if(item_flags & DROPDEL)
 		qdel(src)
 	item_flags &= ~IN_INVENTORY
 	SendSignal(COMSIG_ITEM_DROPPED,user)
@@ -383,7 +378,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user)
-	if(slot == slot_in_backpack || slot == slot_legcuffed) //these aren't true slots, so avoid granting actions there
+	if(slot == SLOT_IN_BACKPACK || slot == SLOT_LEGCUFFED) //these aren't true slots, so avoid granting actions there
 		return FALSE
 	return TRUE
 
@@ -459,7 +454,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 							"<span class='userdanger'>[user] stabs you in the eye with [src]!</span>")
 	else
 		user.visible_message( \
-			"<span class='danger'>[user] has stabbed themself in the eyes with [src]!</span>", \
+			"<span class='danger'>[user] has stabbed [user.p_them()]self in the eyes with [src]!</span>", \
 			"<span class='userdanger'>You stab yourself in the eyes with [src]!</span>" \
 		)
 	if(is_human_victim)
@@ -541,29 +536,29 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return
 	var/mob/owner = loc
 	var/flags = slot_flags
-	if(flags & SLOT_OCLOTHING)
+	if(flags & ITEM_SLOT_OCLOTHING)
 		owner.update_inv_wear_suit()
-	if(flags & SLOT_ICLOTHING)
+	if(flags & ITEM_SLOT_ICLOTHING)
 		owner.update_inv_w_uniform()
-	if(flags & SLOT_GLOVES)
+	if(flags & ITEM_SLOT_GLOVES)
 		owner.update_inv_gloves()
-	if(flags & SLOT_EYES)
+	if(flags & ITEM_SLOT_EYES)
 		owner.update_inv_glasses()
-	if(flags & SLOT_EARS)
+	if(flags & ITEM_SLOT_EARS)
 		owner.update_inv_ears()
-	if(flags & SLOT_MASK)
+	if(flags & ITEM_SLOT_MASK)
 		owner.update_inv_wear_mask()
-	if(flags & SLOT_HEAD)
+	if(flags & ITEM_SLOT_HEAD)
 		owner.update_inv_head()
-	if(flags & SLOT_FEET)
+	if(flags & ITEM_SLOT_FEET)
 		owner.update_inv_shoes()
-	if(flags & SLOT_ID)
+	if(flags & ITEM_SLOT_ID)
 		owner.update_inv_wear_id()
-	if(flags & SLOT_BELT)
+	if(flags & ITEM_SLOT_BELT)
 		owner.update_inv_belt()
-	if(flags & SLOT_BACK)
+	if(flags & ITEM_SLOT_BACK)
 		owner.update_inv_back()
-	if(flags & SLOT_NECK)
+	if(flags & ITEM_SLOT_NECK)
 		owner.update_inv_neck()
 
 /obj/item/proc/is_hot()
@@ -588,7 +583,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(ismob(location))
 		var/mob/M = location
 		var/success = FALSE
-		if(src == M.get_item_by_slot(slot_wear_mask))
+		if(src == M.get_item_by_slot(SLOT_WEAR_MASK))
 			success = TRUE
 		if(success)
 			location = get_turf(M)
@@ -762,3 +757,23 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // Returns a numeric value for sorting items used as parts in machines, so they can be replaced by the rped
 /obj/item/proc/get_part_rating()
 	return 0
+
+/obj/item/doMove(atom/destination)
+	if (ismob(loc))
+		var/mob/M = loc
+		var/hand_index = M.get_held_index_of_item(src)
+		if(hand_index)
+			M.held_items[hand_index] = null
+			M.update_inv_hands()
+			if(M.client)
+				M.client.screen -= src
+			layer = initial(layer)
+			plane = initial(plane)
+			appearance_flags &= ~NO_CLIENT_COLOR
+			dropped(M)
+	return ..()
+
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
+	if (item_flags & NODROP)
+		return
+	return ..()

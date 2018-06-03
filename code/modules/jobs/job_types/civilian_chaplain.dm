@@ -12,7 +12,6 @@ Chaplain
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	antag_rep = 14
 
 	outfit = /datum/outfit/job/chaplain
 
@@ -31,7 +30,7 @@ Chaplain
 		B.icon_state = SSreligion.bible_icon_state
 		B.item_state = SSreligion.bible_item_state
 		to_chat(H, "There is already an established religion onboard the station. You are an acolyte of [SSreligion.deity]. Defer to the Chaplain.")
-		H.equip_to_slot_or_del(B, slot_in_backpack)
+		H.equip_to_slot_or_del(B, SLOT_IN_BACKPACK)
 		var/nrt = SSreligion.holy_weapon_type || /obj/item/nullrod
 		var/obj/item/nullrod/N = new nrt(H)
 		H.put_in_hands(N)
@@ -79,7 +78,7 @@ Chaplain
 	SSreligion.bible_name = B.name
 	SSreligion.deity = B.deity_name
 
-	H.equip_to_slot_or_del(B, slot_in_backpack)
+	H.equip_to_slot_or_del(B, SLOT_IN_BACKPACK)
 
 	SSblackbox.record_feedback("text", "religion_name", 1, "[new_religion]", 1)
 	SSblackbox.record_feedback("text", "religion_deity", 1, "[new_deity]", 1)
@@ -88,8 +87,8 @@ Chaplain
 	name = "Chaplain"
 	jobtype = /datum/job/chaplain
 
-	belt = /obj/item/device/pda/chaplain
+	belt = /obj/item/pda/chaplain
 	uniform = /obj/item/clothing/under/rank/chaplain
-	backpack_contents = list(/obj/item/device/camera/spooky = 1)
+	backpack_contents = list(/obj/item/camera/spooky = 1)
 	backpack = /obj/item/storage/backpack/cultpack
 	satchel = /obj/item/storage/backpack/cultpack

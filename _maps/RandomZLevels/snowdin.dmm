@@ -102,7 +102,7 @@
 /area/awaymission/snowdin/post/research)
 "ay" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/post/research)
 "az" = (
@@ -126,7 +126,7 @@
 /area/awaymission/snowdin/post/research)
 "aD" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /obj/item/pen,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/post/research)
@@ -304,7 +304,7 @@
 /area/awaymission/snowdin/post/research)
 "bd" = (
 /obj/structure/window,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/post/research)
 "be" = (
@@ -2168,7 +2168,7 @@
 /turf/open/floor/plasteel/cmo,
 /area/awaymission/snowdin/post)
 "fz" = (
-/obj/item/device/flashlight/pen,
+/obj/item/flashlight/pen,
 /turf/open/floor/plasteel/cmo,
 /area/awaymission/snowdin/post)
 "fA" = (
@@ -5713,7 +5713,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/engineering)
 "ns" = (
-/obj/machinery/computer/monitor,
+/obj/machinery/computer/monitor/secret,
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
@@ -5944,7 +5944,7 @@
 	req_access_txt = "201"
 	},
 /obj/item/restraints/handcuffs,
-/obj/item/device/assembly/flash,
+/obj/item/assembly/flash,
 /obj/item/storage/box/rubbershot,
 /obj/structure/fireaxecabinet{
 	pixel_y = 32
@@ -6341,7 +6341,7 @@
 /area/awaymission/snowdin/post/cavern2)
 "pb" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp{
+/obj/item/flashlight/lamp{
 	pixel_x = -5;
 	pixel_y = 5
 	},
@@ -7654,7 +7654,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/cavern2)
 "sv" = (
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	dir = 8
 	},
 /obj/structure/cable/yellow,
@@ -8295,7 +8295,7 @@
 	},
 /area/awaymission/snowdin/post/cavern1)
 "uA" = (
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	dir = 1
 	},
 /obj/structure/cable/yellow{
@@ -9090,7 +9090,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "wJ" = (
-/obj/machinery/computer/monitor,
+/obj/machinery/computer/monitor/secret,
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
@@ -10483,7 +10483,7 @@
 /area/awaymission/snowdin/post/minipost)
 "AF" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
@@ -10729,7 +10729,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/minipost)
 "Br" = (
-/obj/machinery/computer/monitor,
+/obj/machinery/computer/monitor/secret,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/minipost)
 "Bs" = (
@@ -10881,7 +10881,6 @@
 /area/awaymission/snowdin/cave)
 "BO" = (
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 1
 	},
 /turf/open/floor/plating/snowed/cavern,
@@ -10895,7 +10894,6 @@
 /area/awaymission/snowdin/cave/cavern)
 "BQ" = (
 /obj/effect/turf_decal/stripes/end{
-	icon_state = "warn_end";
 	dir = 8
 	},
 /turf/open/floor/plating/snowed/cavern,
@@ -11269,7 +11267,7 @@
 	},
 /area/awaymission/snowdin/cave)
 "CY" = (
-/obj/item/device/aicard,
+/obj/item/aicard,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -13360,7 +13358,7 @@
 	},
 /area/awaymission/snowdin/post/mining_main)
 "IZ" = (
-/obj/machinery/computer/monitor,
+/obj/machinery/computer/monitor/secret,
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
 	},
@@ -13779,7 +13777,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
-/obj/machinery/computer/monitor,
+/obj/machinery/computer/monitor/secret,
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},

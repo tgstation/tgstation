@@ -6,14 +6,12 @@
 	var/icon_state_on = "cold_on"
 	var/icon_state_open = "cold_off"
 	density = TRUE
-	anchored = TRUE
 	max_integrity = 300
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 30)
 	layer = OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/thermomachine
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 
-	var/on = FALSE
 	var/min_temperature = 0
 	var/max_temperature = 0
 	var/target_temperature = T20C
@@ -79,8 +77,6 @@
 	if(default_change_direction_wrench(user, I))
 		return
 	if(default_deconstruction_crowbar(I))
-		return
-	if(exchange_parts(user, I))
 		return
 	return ..()
 
@@ -166,11 +162,11 @@
 	max_temperature = T20C
 	min_temperature = 170 //actual minimum temperature is defined by RefreshParts()
 	circuit = /obj/item/circuitboard/machine/thermomachine/freezer
-	
+
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
 	on = TRUE
 	icon_state = "freezer_1"
-	
+
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/Initialize()
 	. = ..()
 	if(target_temperature == initial(target_temperature))
@@ -195,7 +191,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/on
 	on = TRUE
 	icon_state = "heater_1"
-	
+
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/RefreshParts()
 	..()
 	var/L

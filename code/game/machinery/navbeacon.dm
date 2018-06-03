@@ -9,7 +9,6 @@
 	desc = "A radio beacon used for bot navigation."
 	level = 1		// underfloor
 	layer = LOW_OBJ_LAYER
-	anchored = TRUE
 	max_integrity = 500
 	armor = list("melee" = 70, "bullet" = 70, "laser" = 70, "energy" = 70, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 
@@ -20,7 +19,7 @@
 	var/list/codes		// assoc. list of transponder codes
 	var/codes_txt = ""	// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
 
-	req_access = list(ACCESS_ENGINE, ACCESS_ROBOTICS)
+	req_one_access = list(ACCESS_ENGINE, ACCESS_ROBOTICS)
 
 /obj/machinery/navbeacon/Initialize()
 	. = ..()
@@ -89,7 +88,7 @@
 
 		updateicon()
 
-	else if (istype(I, /obj/item/card/id)||istype(I, /obj/item/device/pda))
+	else if (istype(I, /obj/item/card/id)||istype(I, /obj/item/pda))
 		if(open)
 			if (src.allowed(user))
 				src.locked = !src.locked

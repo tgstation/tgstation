@@ -59,7 +59,7 @@
 	if(!D.default_hatmask && seasonal_hats && possible_seasonal_hats.len)
 		var/hat_type = pick(possible_seasonal_hats)
 		var/obj/item/new_hat = new hat_type(D)
-		D.equip_to_slot_or_del(new_hat, slot_head)
-	D.admin_spawned = admin_spawned
+		D.equip_to_slot_or_del(new_hat, SLOT_HEAD)
+	D.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 	D.key = user.key
 	qdel(src)

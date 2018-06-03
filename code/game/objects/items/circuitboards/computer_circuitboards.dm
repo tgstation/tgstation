@@ -135,6 +135,10 @@
 	name = "Power Monitor (Computer Board)"  //name fixed 250810
 	build_path = /obj/machinery/computer/monitor
 
+/obj/item/circuitboard/computer/powermonitor/secret
+	name = "Outdated Power Monitor (Computer Board)" //Variant used on ruins to prevent them from showing up on PDA's.
+	build_path = /obj/machinery/computer/monitor/secret
+
 /obj/item/circuitboard/computer/olddoor
 	name = "DoorMex (Computer Board)"
 	build_path = /obj/machinery/computer/pod/old
@@ -153,6 +157,10 @@
 /obj/item/circuitboard/computer/gulag_teleporter_console
 	name = "Labor Camp teleporter console (Computer Board)"
 	build_path = /obj/machinery/computer/gulag_teleporter_computer
+
+/obj/item/circuitboard/computer/rdconsole/production
+	name = "R&D Console Production Only (Computer Board)"
+	build_path = /obj/machinery/computer/rdconsole/production
 
 /obj/item/circuitboard/computer/rdconsole
 	name = "R&D Console (Computer Board)"
@@ -224,9 +232,9 @@
 	name = "Supply Request Console (Computer Board)"
 	build_path = /obj/machinery/computer/cargo/request
 
-/obj/item/circuitboard/computer/stockexchange
-	name = "circuit board (Stock Exchange Console)"
-	build_path = /obj/machinery/computer/stockexchange
+/obj/item/circuitboard/computer/bounty
+	name = "Nanotrasen Bounty Console (Computer Board)"
+	build_path = /obj/machinery/computer/cargo/request
 
 /obj/item/circuitboard/computer/operating
 	name = "Operating Computer (Computer Board)"

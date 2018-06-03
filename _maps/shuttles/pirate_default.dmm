@@ -29,7 +29,7 @@
 	pixel_y = -5
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/dark,
@@ -47,7 +47,7 @@
 "ah" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -72,8 +72,6 @@
 	req_access = null
 	},
 /obj/structure/chair{
-	tag = "icon-chair (WEST)";
-	icon_state = "chair";
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -416,8 +414,6 @@
 	req_access = null
 	},
 /obj/structure/chair{
-	tag = "icon-chair (WEST)";
-	icon_state = "chair";
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -564,8 +560,8 @@
 	layer = 2.9
 	},
 /obj/item/storage/belt/utility,
-/obj/item/device/radio/off,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
+/obj/item/radio/off,
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
 "bx" = (
@@ -615,8 +611,8 @@
 	layer = 2.9
 	},
 /obj/item/storage/belt/utility,
-/obj/item/device/radio/off,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
+/obj/item/radio/off,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/pirate)
@@ -717,7 +713,7 @@
 	layer = 2.9
 	},
 /obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/pirate)
 "bL" = (
@@ -961,8 +957,7 @@
 	},
 /obj/item/melee/transforming/energy/sword/pirate{
 	pixel_x = 12;
-	pixel_y = 7;
-	pixel_z = 0
+	pixel_y = 7
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -1078,7 +1073,7 @@
 /obj/item/storage/belt/utility{
 	pixel_x = 4
 	},
-/obj/item/device/analyzer{
+/obj/item/analyzer{
 	pixel_x = 3;
 	pixel_y = 2
 	},
@@ -1194,7 +1189,7 @@
 	},
 /area/shuttle/pirate)
 "cI" = (
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	dir = 8
 	},
 /obj/structure/cable/yellow{
@@ -1553,8 +1548,6 @@
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/yellow/corner{
-	tag = "icon-yellowcorner (WEST)";
-	icon_state = "yellowcorner";
 	dir = 8
 	},
 /area/shuttle/pirate)
@@ -1615,7 +1608,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/device/multitool,
+/obj/item/multitool,
 /obj/machinery/light/small,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/yellow/corner,

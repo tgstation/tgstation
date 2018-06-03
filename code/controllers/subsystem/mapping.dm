@@ -355,8 +355,8 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			var/mapfile = input("Pick file:", "File") as null|file
 			if(!mapfile)
 				return
-			away_name = mapfile
-			to_chat(usr,"<span class='notice'>Loading [mapfile]...</span>")
+			away_name = "[mapfile] custom"
+			to_chat(usr,"<span class='notice'>Loading [away_name]...</span>")
 			var/datum/map_template/template = new(mapfile, "Away Mission")
 			away_level = template.load_new_z()
 		else

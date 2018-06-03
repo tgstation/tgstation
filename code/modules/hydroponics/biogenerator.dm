@@ -4,7 +4,6 @@
 	icon = 'icons/obj/machines/biogenerator.dmi'
 	icon_state = "biogen-empty"
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
 	circuit = /obj/item/circuitboard/machine/biogenerator
@@ -81,9 +80,6 @@
 			B.forceMove(drop_location())
 			beaker = null
 		update_icon()
-		return
-
-	if(exchange_parts(user, O))
 		return
 
 	if(default_deconstruction_crowbar(O))
@@ -265,8 +261,7 @@
 		if(!check_cost(D.materials, amount))
 			return FALSE
 
-		var/obj/item/stack/product = new D.build_path(loc)
-		product.amount = amount
+		new D.build_path(drop_location(), amount)
 		for(var/R in D.make_reagents)
 			beaker.reagents.add_reagent(R, D.make_reagents[R]*amount)
 	else

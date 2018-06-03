@@ -42,7 +42,6 @@
 	mob_size = MOB_SIZE_SMALL
 	has_unlimited_silicon_privilege = 1
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	staticOverlays = list()
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
 	faction = list("neutral","silicon","turret")
@@ -67,7 +66,6 @@
 	var/obj/item/head
 	var/obj/item/default_storage = /obj/item/storage/backpack/duffelbag/drone //If this exists, it will spawn in internal storage
 	var/obj/item/default_hatmask //If this exists, it will spawn in the hat/mask slot if it can fit
-	var/seeStatic = 1 //Whether we see static instead of mobs
 	var/visualAppearence = MAINTDRONE //What we appear as
 	var/hacked = FALSE //If we have laws to destroy the station
 	var/flavortext = \
@@ -89,20 +87,14 @@
 
 	if(default_storage)
 		var/obj/item/I = new default_storage(src)
-		equip_to_slot_or_del(I, slot_generic_dextrous_storage)
+		equip_to_slot_or_del(I, SLOT_GENERC_DEXTROUS_STORAGE)
 	if(default_hatmask)
 		var/obj/item/I = new default_hatmask(src)
-		equip_to_slot_or_del(I, slot_head)
+		equip_to_slot_or_del(I, SLOT_HEAD)
 
-	access_card.flags_1 |= NODROP_1
+	access_card.item_flags |= NODROP
 
 	alert_drones(DRONE_NET_CONNECT)
-
-	if(seeStatic)
-		var/datum/action/generic/drone/select_filter/SF = new(src)
-		SF.Grant(src)
-	else
-		verbs -= /mob/living/simple_animal/drone/verb/toggle_statics
 
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_to_hud(src)
@@ -136,8 +128,6 @@
 
 	if(flavortext)
 		to_chat(src, "[flavortext]")
-
-	updateSeeStaticMobs()
 
 	if(!picked)
 		pickVisualAppearence()
@@ -178,15 +168,15 @@
 
 	//Hands
 	for(var/obj/item/I in held_items)
-		if(!(I.flags_1 & ABSTRACT_1))
+		if(!(I.item_flags & ABSTRACT))
 			msg += "It has [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	//Internal storage
-	if(internal_storage && !(internal_storage.flags_1&ABSTRACT_1))
+	if(internal_storage && !(internal_storage.item_flags & ABSTRACT))
 		msg += "It is holding [internal_storage.get_examine_string(user)] in its internal storage.\n"
 
 	//Cosmetic hat - provides no function other than looks
-	if(head && !(head.flags_1&ABSTRACT_1))
+	if(head && !(head.item_flags & ABSTRACT))
 		msg += "It is wearing [head.get_examine_string(user)] on its head.\n"
 
 	//Braindead
@@ -219,6 +209,9 @@
 
 
 /mob/living/simple_animal/drone/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	Stun(100)
 	to_chat(src, "<span class='danger'><b>ER@%R: MME^RY CO#RU9T!</b> R&$b@0tin)...</span>")
 	if(severity == 1)

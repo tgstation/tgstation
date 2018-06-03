@@ -19,12 +19,10 @@
 	integrity_failure = 50
 	var/list/network = list("ss13")
 	var/c_tag = null
-	var/c_tag_order = 999
 	var/status = TRUE
-	anchored = TRUE
 	var/start_active = FALSE //If it ignores the random chance to start broken on round start
 	var/invuln = null
-	var/obj/item/device/camera_bug/bug = null
+	var/obj/item/camera_bug/bug = null
 	var/obj/structure/camera_assembly/assembly = null
 	var/area/myarea = null
 
@@ -36,6 +34,7 @@
 	var/alarm_on = FALSE
 	var/busy = FALSE
 	var/emped = FALSE  //Number of consecutive EMP's on this camera
+	var/in_use_lights = 0
 
 	// Upgrades bitflag
 	var/upgrades = 0
@@ -77,9 +76,10 @@
 	return ..()
 
 /obj/machinery/camera/emp_act(severity)
+	. = ..()
 	if(!status)
 		return
-	if(!isEmpProof())
+	if(!(. & EMP_PROTECT_SELF))
 		if(prob(150/severity))
 			update_icon()
 			var/list/previous_network = network
@@ -107,13 +107,6 @@
 					M.unset_machine()
 					M.reset_perspective(null)
 					to_chat(M, "The screen bursts into static.")
-			..()
-
-/obj/machinery/camera/tesla_act(var/power)//EMP proof upgrade also makes it tesla immune
-	if(isEmpProof())
-		return
-	..()
-	qdel(src)//to prevent bomb testing camera from exploding over and over forever
 
 /obj/machinery/camera/ex_act(severity, target)
 	if(invuln)
@@ -175,7 +168,7 @@
 /obj/machinery/camera/attackby(obj/item/I, mob/living/user, params)
 	// UPGRADES
 	if(panel_open)
-		if(istype(I, /obj/item/device/analyzer))
+		if(istype(I, /obj/item/analyzer))
 			if(!isXRay())
 				if(!user.temporarilyRemoveItemFromInventory(I))
 					return
@@ -195,7 +188,7 @@
 				to_chat(user, "<span class='notice'>[src] already has that upgrade!</span>")
 			return
 
-		else if(istype(I, /obj/item/device/assembly/prox_sensor))
+		else if(istype(I, /obj/item/assembly/prox_sensor))
 			if(!isMotion())
 				if(!user.temporarilyRemoveItemFromInventory(I))
 					return
@@ -207,10 +200,10 @@
 			return
 
 	// OTHER
-	if((istype(I, /obj/item/paper) || istype(I, /obj/item/device/pda)) && isliving(user))
+	if((istype(I, /obj/item/paper) || istype(I, /obj/item/pda)) && isliving(user))
 		var/mob/living/U = user
 		var/obj/item/paper/X = null
-		var/obj/item/device/pda/P = null
+		var/obj/item/pda/P = null
 
 		var/itemname = ""
 		var/info = ""
@@ -239,7 +232,7 @@
 				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
 		return
 
-	else if(istype(I, /obj/item/device/camera_bug))
+	else if(istype(I, /obj/item/camera_bug))
 		if(!can_use())
 			to_chat(user, "<span class='notice'>Camera non-functional.</span>")
 			return
@@ -291,7 +284,7 @@
 	else if (stat & EMPED)
 		icon_state = "[initial(icon_state)]emp"
 	else
-		icon_state = "[initial(icon_state)]"
+		icon_state = "[initial(icon_state)][in_use_lights ? "_in_use" : ""]"
 
 /obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = 1)
 	status = !status

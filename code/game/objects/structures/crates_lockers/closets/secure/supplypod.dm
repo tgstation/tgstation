@@ -1,5 +1,6 @@
 //The "BDPtarget" temp visual is created by the expressconsole, which in turn makes two things: a falling droppod animation, and the droppod itself.
-
+#define POD_STANDARD 0
+#define POD_BLUESPACE 1
 
 //------------------------------------SUPPLY POD-------------------------------------//
 /obj/structure/closet/supplypod
@@ -17,11 +18,12 @@
 	armor = list("melee" = 30, "bullet" = 50, "laser" = 50, "energy" = 100, "bomb" = 90, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 	anchored = TRUE
 	anchorable = FALSE
+	var/generated = FALSE
 	var/datum/supply_order/SupplyOrder
 
 /obj/structure/closet/supplypod/bluespacepod
 	name = "Bluespace Drop Pod"
-	desc = "A Nanotrasen Bluespace drop pod. Teleports back to Centcom after delivery."
+	desc = "A Nanotrasen Bluespace drop pod. Teleports back to CentCom after delivery."
 	icon_state = "bluespacepod"
 
 /obj/structure/closet/supplypod/Initialize(mapload, datum/supply_order/so)
@@ -45,15 +47,17 @@
 /obj/structure/closet/supplypod/open()
 	var/turf/T = get_turf(src)
 	opened = TRUE
-	SupplyOrder.generate(T)//not called during populateContents as supplyorder generation requires a turf
+	if(!generated)
+		generated = TRUE
+		SupplyOrder.generate(T)//not called during populateContents as supplyorder generation requires a turf
 	update_icon()
 	playsound(src, open_sound, 15, 1, -3)
 	if(istype(src,/obj/structure/closet/supplypod/bluespacepod))
-		addtimer(CALLBACK(src, .proc/sparks), 30)//if bluespace, then 3 seconds after opening, make some sparks and delete		
- 		
-/obj/structure/closet/supplypod/proc/sparks()//sparks cant be called from addtimer		
- 	do_sparks(5, TRUE, src)		
- 	qdel(src)//no need for QDEL_IN if we already have a timer 
+		addtimer(CALLBACK(src, .proc/sparks), 30)//if bluespace, then 3 seconds after opening, make some sparks and delete
+
+/obj/structure/closet/supplypod/proc/sparks()//sparks cant be called from addtimer
+ 	do_sparks(5, TRUE, src)
+ 	qdel(src)//no need for QDEL_IN if we already have a timer
 
 /obj/structure/closet/supplypod/Destroy()//make some sparks b4 deletion
 	QDEL_NULL(SupplyOrder)
@@ -62,6 +66,7 @@
 //------------------------------------FALLING SUPPLY POD-------------------------------------//
 /obj/effect/temp_visual/DPfall
 	icon = 'icons/obj/2x2.dmi'
+	icon_state = "supplypod_falling"
 	pixel_x = -16
 	pixel_y = -5
 	pixel_z = 200
@@ -70,7 +75,7 @@
 	randomdir = FALSE
 
 /obj/effect/temp_visual/DPfall/Initialize(var/dropLocation, var/podID)
-	if (podID == 1)
+	if (podID == POD_BLUESPACE)
 		icon_state = "bluespacepod_falling"
 		name = "Bluespace Drop Pod"
 	else
@@ -88,15 +93,15 @@
 
 /obj/effect/DPtarget/Initialize(mapload, datum/supply_order/SO, var/podID)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/beginLaunch, SO, podID), 30)//wait 3 seconds
+	addtimer(CALLBACK(src, .proc/beginLaunch, SO, podID), podID == POD_BLUESPACE ? 15 : 30)//standard pods take 3 seconds to come in, bluespace pods take 1.5
 
 /obj/effect/DPtarget/proc/beginLaunch(datum/supply_order/SO, var/podID)
 	fallingPod = new /obj/effect/temp_visual/DPfall(drop_location(), podID)
 	animate(fallingPod, pixel_z = 0, time = 3, easing = LINEAR_EASING)//make and animate a falling pod
-	addtimer(CALLBACK(src, .proc/endLaunch, SO, podID), 3, TIMER_CLIENT_TIME)//fall 0.3seconds 
+	addtimer(CALLBACK(src, .proc/endLaunch, SO, podID), 3, TIMER_CLIENT_TIME)//fall 0.3seconds
 
 /obj/effect/DPtarget/proc/endLaunch(datum/supply_order/SO, var/podID)
-	if (podID == 1)//podID 1 = bluespace supplypod, podID 0 = standard supplypod
+	if (podID == POD_BLUESPACE)
 		new /obj/structure/closet/supplypod/bluespacepod(drop_location(), SO)//pod is created
 		explosion(src,0,0,2, flame_range = 1) //explosion and camshake (shoutout to @cyberboss)
 	else

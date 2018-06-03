@@ -13,6 +13,7 @@
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turret_frame"
 	desc = "An unfinished covered turret frame."
+	anchored = FALSE
 	density = TRUE
 	var/build_step = PTURRET_UNSECURED //the current step in the building process
 	var/finish_name = "turret"	//the name applied to the product turret
@@ -181,7 +182,7 @@
 
 		if(PTURRET_SENSORS_ON)
 			to_chat(user, "<span class='notice'>You remove the prox sensor from the turret frame.</span>")
-			new /obj/item/device/assembly/prox_sensor(loc)
+			new /obj/item/assembly/prox_sensor(loc)
 			build_step = PTURRET_GUN_EQUIPPED
 
 /obj/machinery/porta_turret_construct/attack_ai()

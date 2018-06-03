@@ -14,13 +14,24 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
 
-/obj/item/storage/part_replacer/afterattack(obj/machinery/T, mob/living/carbon/human/user, flag, params)
+/obj/item/storage/part_replacer/pre_attack(obj/machinery/T, mob/living/user, params)
 	if(!istype(T) || !T.component_parts)
 		return ..()
-	if(works_from_distance || user.Adjacent(T))
+	if(user.Adjacent(T)) // no TK upgrading.
+		if(works_from_distance)
+			user.Beam(T, icon_state = "rped_upgrade", time = 5)
 		T.exchange_parts(user, src)
+		return FALSE
+	return ..()
+
+/obj/item/storage/part_replacer/afterattack(obj/machinery/T, mob/living/user, adjacent, params)
+	if(adjacent || !istype(T) || !T.component_parts)
+		return ..()
 	if(works_from_distance)
 		user.Beam(T, icon_state = "rped_upgrade", time = 5)
+		T.exchange_parts(user, src)
+		return
+	return ..()
 
 /obj/item/storage/part_replacer/proc/play_rped_sound()
 	//Plays the sound for RPED exhanging or installing parts.
@@ -47,10 +58,8 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 
-//Sorts stock parts inside an RPED by their rating.
-//Only use /obj/item/stock_parts/ with this sort proc!
-/proc/cmp_rped_sort(obj/item/stock_parts/A, obj/item/stock_parts/B)
-	return B.rating - A.rating
+/proc/cmp_rped_sort(obj/item/A, obj/item/B)
+	return B.get_part_rating() - A.get_part_rating()
 
 /obj/item/stock_parts
 	name = "stock part"

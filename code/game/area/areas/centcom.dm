@@ -107,7 +107,12 @@
 	name = "Syndicate Elite Squad"
 	icon_state = "syndie-elite"
 
-
+/area/fabric_of_reality
+	name = "Tear in the Fabric of Reality"
+	requires_power = FALSE
+	has_gravity = TRUE
+	noteleport = TRUE
+	blob_allowed = FALSE
 
 //CAPTURE THE FLAG
 

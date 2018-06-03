@@ -7,31 +7,32 @@
 	if((movement_type & FLYING) && !floating)	//TODO: Better floating
 		float(on = TRUE)
 
-	if (client || registered_z) // This is a temporary error tracker to make sure we've caught everything
+	if (client)
 		var/turf/T = get_turf(src)
-		if (client && registered_z != T.z)
+		if(!T)
+			for(var/obj/effect/landmark/error/E in GLOB.landmarks_list)
+				forceMove(E.loc)
+				break
+			var/msg = "[key_name_admin(src)] [ADMIN_JMP(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
+			message_admins(msg)
+			send2irc_adminless_only("Mob", msg, R_ADMIN)
+			log_game("[key_name(src)] was found to have no .loc with an attached client.")
+
+		// This is a temporary error tracker to make sure we've caught everything
+		else if (registered_z != T.z)
 #ifdef TESTING
 			message_admins("[src] [ADMIN_FLW(src)] has somehow ended up in Z-level [T.z] despite being registered in Z-level [registered_z]. If you could ask them how that happened and notify coderbus, it would be appreciated.")
 #endif
 			log_game("Z-TRACKING: [src] has somehow ended up in Z-level [T.z] despite being registered in Z-level [registered_z].")
 			update_z(T.z)
-		else if (!client && registered_z)
-			log_game("Z-TRACKING: [src] of type [src.type] has a Z-registration despite not having a client.")
-			update_z(null)
+	else if (registered_z)
+		log_game("Z-TRACKING: [src] of type [src.type] has a Z-registration despite not having a client.")
+		update_z(null)
 
 	if (notransform)
 		return
 	if(!loc)
-		if(client)
-			for(var/obj/effect/landmark/error/E in GLOB.landmarks_list)
-				forceMove(E.loc)
-				break
-			var/msg = "[key_name_admin(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
-			message_admins(msg)
-			send2irc_adminless_only("Mob", msg, R_ADMIN)
-			log_game("[key_name(src)] was found to have no .loc with an attached client.")
-		else
-			return
+		return
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	if(stat != DEAD)
@@ -133,9 +134,6 @@
 		eye_blurry = max(eye_blurry-1, 0)
 		if(client && !eye_blurry)
 			clear_fullscreen("blurry")
-	if(has_trait(TRAIT_PACIFISM) && a_intent == INTENT_HARM)
-		to_chat(src, "<span class='notice'>You don't feel like harming anybody.</span>")
-		a_intent_change(INTENT_HELP)
 
 /mob/living/proc/update_damage_hud()
 	return

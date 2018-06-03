@@ -28,7 +28,7 @@
 	if (.)
 		if (ishuman(user))
 			// Need hands to clap
-			if (!user.get_bodypart("l_arm") || !user.get_bodypart("r_arm"))
+			if (!user.get_bodypart(BODY_ZONE_L_ARM) || !user.get_bodypart(BODY_ZONE_R_ARM))
 				return
 			var/clap = pick('sound/misc/clap1.ogg',
 				            'sound/misc/clap2.ogg',

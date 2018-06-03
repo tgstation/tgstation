@@ -8,8 +8,8 @@
 /obj/structure/closet/gmcloset/PopulateContents()
 	..()
 	new /obj/item/clothing/head/that(src)
-	new /obj/item/device/radio/headset/headset_srv(src)
-	new /obj/item/device/radio/headset/headset_srv(src)
+	new /obj/item/radio/headset/headset_srv(src)
+	new /obj/item/radio/headset/headset_srv(src)
 	new /obj/item/clothing/head/that(src)
 	new /obj/item/clothing/under/sl_suit(src)
 	new /obj/item/clothing/under/sl_suit(src)
@@ -39,8 +39,8 @@
 	..()
 	new /obj/item/clothing/under/waiter(src)
 	new /obj/item/clothing/under/waiter(src)
-	new /obj/item/device/radio/headset/headset_srv(src)
-	new /obj/item/device/radio/headset/headset_srv(src)
+	new /obj/item/radio/headset/headset_srv(src)
+	new /obj/item/radio/headset/headset_srv(src)
 	new /obj/item/clothing/accessory/waistcoat(src)
 	new /obj/item/clothing/accessory/waistcoat(src)
 	for(var/i in 1 to 3)
@@ -68,11 +68,11 @@
 	new /obj/item/clothing/head/soft/purple(src)
 	new /obj/item/paint/paint_remover(src)
 	new /obj/item/melee/flyswatter(src)
-	new /obj/item/device/flashlight(src)
+	new /obj/item/flashlight(src)
 	for(var/i in 1 to 3)
 		new /obj/item/caution(src)
 	new /obj/item/holosign_creator(src)
-	new /obj/item/device/lightreplacer(src)
+	new /obj/item/lightreplacer(src)
 	new /obj/item/soap(src)
 	new /obj/item/storage/bag/trash(src)
 	new /obj/item/clothing/shoes/galoshes(src)
@@ -107,34 +107,17 @@
 	icon_door = "black"
 
 /obj/structure/closet/wardrobe/chaplain_black/PopulateContents()
+	new /obj/item/holybeacon(src)
 	new /obj/item/clothing/accessory/pocketprotector/cosmetology(src)
 	new /obj/item/clothing/under/rank/chaplain(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/suit/nun(src)
 	new /obj/item/clothing/head/nun_hood(src)
-	new /obj/item/clothing/suit/studentuni(src)
-	new /obj/item/clothing/head/cage(src)
-	new /obj/item/clothing/suit/witchhunter(src)
-	new /obj/item/clothing/head/witchunter_hat(src)
-	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 	new /obj/item/clothing/suit/holidaypriest(src)
-	new /obj/item/storage/backpack/cultpack (src)
-	new /obj/item/clothing/head/helmet/knight/templar(src)
-	new /obj/item/clothing/suit/armor/riot/knight/templar(src)
+	new /obj/item/storage/backpack/cultpack(src)
 	new /obj/item/storage/fancy/candle_box(src)
 	new /obj/item/storage/fancy/candle_box(src)
 	return
-
-/obj/structure/closet/coffin
-	name = "coffin"
-	desc = "It's a burial receptacle for the dearly departed."
-	icon_state = "coffin"
-	resistance_flags = FLAMMABLE
-	max_integrity = 70
-	horizontal = TRUE
-	delivery_icon = "deliverycrate"
-	material_drop = /obj/item/stack/sheet/mineral/wood
-	material_drop_amount = 5
 
 /obj/structure/closet/wardrobe/red
 	name = "security wardrobe"
@@ -148,6 +131,8 @@
 	new /obj/item/storage/backpack/duffelbag/sec(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/under/rank/security(src)
+	for(var/i in 1 to 2)
+		new /obj/item/clothing/under/rank/security/skirt(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/shoes/jackboots(src)
 	for(var/i in 1 to 3)
@@ -173,7 +158,7 @@
 		new /obj/item/clothing/gloves/fingerless(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/soft(src)
-	new /obj/item/device/radio/headset/headset_cargo(src)
+	new /obj/item/radio/headset/headset_cargo(src)
 
 /obj/structure/closet/wardrobe/atmospherics_yellow
 	name = "atmospherics wardrobe"
@@ -336,8 +321,8 @@
 		new /obj/item/clothing/suit/toggle/labcoat/science(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/shoes/sneakers/white(src)
-	new /obj/item/device/radio/headset/headset_sci(src)
-	new /obj/item/device/radio/headset/headset_sci(src)
+	new /obj/item/radio/headset/headset_sci(src)
+	new /obj/item/radio/headset/headset_sci(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/mask/gas(src)
 	return

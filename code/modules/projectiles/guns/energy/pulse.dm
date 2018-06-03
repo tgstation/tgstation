@@ -7,7 +7,7 @@
 	force = 10
 	modifystate = TRUE
 	flags_1 =  CONDUCT_1
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	cell_type = "/obj/item/stock_parts/cell/pulse"
 
@@ -15,13 +15,13 @@
 	return
 
 /obj/item/gun/energy/pulse/prize
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/pulse/prize/Initialize()
 	. = ..()
 	GLOB.poi_list += src
 	var/turf/T = get_turf(src)
-	var/msg = "A pulse rifle prize has been created at [ADMIN_COORDJMP(T)]"
+	var/msg = "A pulse rifle prize has been created at [ADMIN_VERBOSEJMP(T)]"
 
 	message_admins(msg)
 	log_game(msg)
@@ -33,13 +33,13 @@
 	. = ..()
 
 /obj/item/gun/energy/pulse/loyalpin
-	pin = /obj/item/device/firing_pin/implant/mindshield
+	pin = /obj/item/firing_pin/implant/mindshield
 
 /obj/item/gun/energy/pulse/carbine
 	name = "pulse carbine"
 	desc = "A compact variant of the pulse rifle with less firepower but easier storage."
 	w_class = WEIGHT_CLASS_NORMAL
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	icon_state = "pulse_carbine"
 	item_state = null
 	cell_type = "/obj/item/stock_parts/cell/pulse/carbine"
@@ -48,19 +48,19 @@
 	flight_y_offset = 12
 
 /obj/item/gun/energy/pulse/carbine/loyalpin
-	pin = /obj/item/device/firing_pin/implant/mindshield
+	pin = /obj/item/firing_pin/implant/mindshield
 
 /obj/item/gun/energy/pulse/pistol
 	name = "pulse pistol"
 	desc = "A pulse rifle in an easily concealed handgun package with low capacity."
 	w_class = WEIGHT_CLASS_SMALL
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	icon_state = "pulse_pistol"
 	item_state = "gun"
 	cell_type = "/obj/item/stock_parts/cell/pulse/pistol"
 
 /obj/item/gun/energy/pulse/pistol/loyalpin
-	pin = /obj/item/device/firing_pin/implant/mindshield
+	pin = /obj/item/firing_pin/implant/mindshield
 
 /obj/item/gun/energy/pulse/destroyer
 	name = "pulse destroyer"

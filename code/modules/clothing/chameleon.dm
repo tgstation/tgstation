@@ -63,9 +63,76 @@
 		// it's NODROP_1
 		D.dropItemToGround(target, TRUE)
 		qdel(old_headgear)
-		// where is `slot_head` defined? WHO KNOWS
-		D.equip_to_slot(new_headgear, slot_head)
+		// where is `SLOT_HEAD` defined? WHO KNOWS
+		D.equip_to_slot(new_headgear, SLOT_HEAD)
 	return 1
+
+
+/datum/action/chameleon_outfit
+	name = "Select Chameleon Outfit"
+	button_icon_state = "chameleon_outfit"
+	var/list/outfit_options //By default, this list is shared between all instances. It is not static because if it were, subtypes would not be able to have their own. If you ever want to edit it, copy it first.
+
+/datum/action/chameleon_outfit/New()
+	..()
+	initialize_outfits()
+
+/datum/action/chameleon_outfit/proc/initialize_outfits()
+	var/static/list/standard_outfit_options
+	if(!standard_outfit_options)
+		standard_outfit_options = list()
+		for(var/path in subtypesof(/datum/outfit/job))
+			var/datum/outfit/O = path
+			if(initial(O.can_be_admin_equipped))
+				standard_outfit_options[initial(O.name)] = path
+		sortTim(standard_outfit_options, /proc/cmp_text_asc)
+	outfit_options = standard_outfit_options
+
+/datum/action/chameleon_outfit/Trigger()
+	return select_outfit(owner)
+
+/datum/action/chameleon_outfit/proc/select_outfit(mob/user)
+	if(!user || !IsAvailable())
+		return FALSE
+	var/selected = input("Select outfit to change into", "Chameleon Outfit") as null|anything in outfit_options
+	if(!IsAvailable() || QDELETED(src) || QDELETED(user))
+		return FALSE
+	var/outfit_type = outfit_options[selected]
+	if(!outfit_type)
+		return FALSE
+	var/datum/outfit/O = new outfit_type()
+	var/list/outfit_types = O.get_chameleon_disguise_info()
+
+	for(var/V in user.chameleon_item_actions)
+		var/datum/action/item_action/chameleon/change/A = V
+		var/done = FALSE
+		for(var/T in outfit_types)
+			for(var/name in A.chameleon_list)
+				if(A.chameleon_list[name] == T)
+					A.update_look(user, T)
+					outfit_types -= T
+					done = TRUE
+					break
+			if(done)
+				break
+	//hardsuit helmets/suit hoods
+	if(O.toggle_helmet && (ispath(O.suit, /obj/item/clothing/suit/space/hardsuit) || ispath(O.suit, /obj/item/clothing/suit/hooded)) && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		//make sure they are actually wearing the suit, not just holding it, and that they have a chameleon hat
+		if(istype(H.wear_suit, /obj/item/clothing/suit/chameleon) && istype(H.head, /obj/item/clothing/head/chameleon))
+			var/helmet_type
+			if(ispath(O.suit, /obj/item/clothing/suit/space/hardsuit))
+				var/obj/item/clothing/suit/space/hardsuit/hardsuit = O.suit
+				helmet_type = initial(hardsuit.helmettype)
+			else
+				var/obj/item/clothing/suit/hooded/hooded = O.suit
+				helmet_type = initial(hooded.hoodtype)
+
+			if(helmet_type)
+				var/obj/item/clothing/head/chameleon/hat = H.head
+				hat.chameleon_action.update_look(user, helmet_type)
+	qdel(O)
+	return TRUE
 
 
 /datum/action/item_action/chameleon/change
@@ -77,6 +144,24 @@
 
 	var/emp_timer
 
+/datum/action/item_action/chameleon/change/Grant(mob/M)
+	if(M && (owner != M))
+		if(!M.chameleon_item_actions)
+			M.chameleon_item_actions = list(src)
+			var/datum/action/chameleon_outfit/O = new /datum/action/chameleon_outfit()
+			O.Grant(M)
+		else
+			M.chameleon_item_actions |= src
+	..()
+
+/datum/action/item_action/chameleon/change/Remove(mob/M)
+	if(M && (M == owner))
+		LAZYREMOVE(M.chameleon_item_actions, src)
+		if(!LAZYLEN(M.chameleon_item_actions))
+			var/datum/action/chameleon_outfit/O = locate(/datum/action/chameleon_outfit) in M.actions
+			qdel(O)
+	..()
+
 /datum/action/item_action/chameleon/change/proc/initialize_disguises()
 	if(button)
 		button.name = "Change [chameleon_name] Appearance"
@@ -85,9 +170,7 @@
 	for(var/V in typesof(chameleon_type))
 		if(ispath(V) && ispath(V, /obj/item))
 			var/obj/item/I = V
-			if(chameleon_blacklist[V] || (initial(I.flags_1) & ABSTRACT_1))
-				continue
-			if(!initial(I.icon_state) || !initial(I.item_state))
+			if(chameleon_blacklist[V] || (initial(I.item_flags) & ABSTRACT) || !initial(I.icon_state))
 				continue
 			var/chameleon_item_name = "[initial(I.name)] ([initial(I.icon_state)])"
 			chameleon_list[chameleon_item_name] = I
@@ -119,9 +202,6 @@
 		update_item(chameleon_list[picked_name])
 
 /datum/action/item_action/chameleon/change/proc/update_look(mob/user, obj/item/picked_item)
-	if(istype(target, /obj/item/gun/energy/laser/chameleon))
-		var/obj/item/gun/energy/laser/chameleon/CG = target
-		CG.get_chameleon_projectile(picked_item)
 	if(isliving(user))
 		var/mob/living/C = user
 		if(C.stat != CONSCIOUS)
@@ -154,8 +234,6 @@
 	return 1
 
 /datum/action/item_action/chameleon/change/proc/emp_randomise(var/amount = EMP_RANDOMISE_TIME)
-	if(istype(target, /obj/item/gun/energy/laser/chameleon))
-		return	//Please no crash!
 	START_PROCESSING(SSprocessing, src)
 	random_look(owner)
 
@@ -200,6 +278,9 @@
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/under/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/under/chameleon/broken/Initialize()
@@ -226,6 +307,9 @@
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/suit/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/suit/chameleon/broken/Initialize()
@@ -251,6 +335,9 @@
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/glasses/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/glasses/chameleon/broken/Initialize()
@@ -277,6 +364,9 @@
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/gloves/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/gloves/chameleon/broken/Initialize()
@@ -303,6 +393,9 @@
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/head/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/head/chameleon/broken/Initialize()
@@ -312,7 +405,7 @@
 /obj/item/clothing/head/chameleon/drone
 	// The camohat, I mean, holographic hat projection, is part of the
 	// drone itself.
-	flags_1 = NODROP_1
+	item_flags = NODROP
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	// which means it offers no protection, it's just air and light
 
@@ -331,8 +424,7 @@
 	item_state = "gas_alt"
 	resistance_flags = NONE
 	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
-
-	flags_1 = BLOCK_GAS_SMOKE_EFFECT_1 | MASKINTERNALS_1
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
@@ -351,6 +443,9 @@
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/mask/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/mask/chameleon/broken/Initialize()
@@ -364,7 +459,7 @@
 
 /obj/item/clothing/mask/chameleon/drone
 	//Same as the drone chameleon hat, undroppable and no protection
-	flags_1 = NODROP_1
+	item_flags = NODROP
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	// Can drones use the voice changer part? Let's not find out.
 	vchange = 0
@@ -401,6 +496,9 @@
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/shoes/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/shoes/chameleon/noslip
@@ -408,155 +506,11 @@
 	icon_state = "black"
 	item_color = "black"
 	desc = "A pair of black shoes."
-	flags_1 = NOSLIP_1
+	clothing_flags = NOSLIP
 
 /obj/item/clothing/shoes/chameleon/noslip/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
-
-/obj/item/gun/energy/laser/chameleon
-	name = "practice laser gun"
-	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
-	ammo_type = list(/obj/item/ammo_casing/energy/chameleon)
-	clumsy_check = 0
-	item_flags = NONE
-	pin = /obj/item/device/firing_pin
-	cell_type = /obj/item/stock_parts/cell/bluespace
-
-	var/datum/action/item_action/chameleon/change/chameleon_action
-	var/list/chameleon_projectile_vars
-	var/list/chameleon_ammo_vars
-	var/list/chameleon_gun_vars
-	var/list/projectile_copy_vars
-	var/list/ammo_copy_vars
-	var/list/gun_copy_vars
-	var/badmin_mode = FALSE
-	var/can_hitscan = FALSE
-	var/hitscan_mode = FALSE
-	var/static/list/blacklisted_vars = list("locs", "loc", "contents", "x", "y", "z")
-
-/obj/item/gun/energy/laser/chameleon/Initialize()
-	. = ..()
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/gun
-	chameleon_action.chameleon_name = "Gun"
-	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/gun/magic, ignore_root_path = FALSE)
-	chameleon_action.initialize_disguises()
-
-	projectile_copy_vars = list("name", "icon", "icon_state", "item_state", "speed", "color", "hitsound", "forcedodge", "impact_effect_type", "range", "suppressed", "hitsound_wall", "impact_effect_type", "pass_flags", "tracer_type", "muzzle_type", "impact_type")
-	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/projectiles.dmi', "icon_state" = "laser")
-	gun_copy_vars = list("fire_sound", "burst_size", "fire_delay")
-	chameleon_gun_vars = list()
-	ammo_copy_vars = list("firing_effect_type")
-	chameleon_ammo_vars = list()
-	recharge_newshot()
-	get_chameleon_projectile(/obj/item/gun/energy/laser)
-
-/obj/item/gun/energy/laser/chameleon/emp_act(severity)
-	return
-
-/obj/item/gun/energy/laser/chameleon/proc/reset_chameleon_vars()
-	chameleon_ammo_vars = list()
-	chameleon_gun_vars = list()
-	chameleon_projectile_vars = list()
-	if(chambered)
-		for(var/v in ammo_copy_vars)
-			if(v in blacklisted_vars)	//Just in case admins go crazy.
-				continue
-			chambered.vars[v] = initial(chambered.vars[v])
-	for(var/v in gun_copy_vars)
-		if(v in blacklisted_vars)
-			continue
-		vars[v] = initial(vars[v])
-	QDEL_NULL(chambered.BB)
-	chambered.newshot()
-
-/obj/item/gun/energy/laser/chameleon/proc/set_chameleon_ammo(obj/item/ammo_casing/AC, passthrough = TRUE, reset = FALSE)
-	if(!istype(AC))
-		CRASH("[AC] is not /obj/item/ammo_casing!")
-		return FALSE
-	for(var/V in ammo_copy_vars)
-		if(AC.vars[V])
-			chameleon_ammo_vars[V] = AC.vars[V]
-			if(chambered && chambered.vars[V])
-				chambered.vars[V] = AC.vars[V]
-	if(passthrough)
-		var/obj/item/projectile/P = AC.BB
-		set_chameleon_projectile(P)
-
-/obj/item/gun/energy/laser/chameleon/proc/set_chameleon_projectile(obj/item/projectile/P)
-	if(!istype(P))
-		CRASH("[P] is not /obj/item/projectile!")
-		return FALSE
-	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/projectiles.dmi', "icon_state" = "laser", "nodamage" = TRUE)
-	for(var/V in projectile_copy_vars)
-		if(P.vars[V])
-			chameleon_projectile_vars[V] = P.vars[V]
-	if(istype(chambered, /obj/item/ammo_casing/energy/chameleon))
-		var/obj/item/ammo_casing/energy/chameleon/AC = chambered
-		AC.projectile_vars = chameleon_projectile_vars.Copy()
-	if(!P.tracer_type)
-		can_hitscan = FALSE
-		set_hitscan(FALSE)
-	else
-		can_hitscan = TRUE
-	if(badmin_mode)
-		qdel(chambered.BB)
-		chambered.projectile_type = P.type
-		chambered.newshot()
-
-/obj/item/gun/energy/laser/chameleon/proc/set_chameleon_gun(obj/item/gun/G , passthrough = TRUE)
-	if(!istype(G))
-		CRASH("[G] is not /obj/item/gun!")
-		return FALSE
-	for(var/V in gun_copy_vars)
-		if(vars[V] && G.vars[V])
-			chameleon_gun_vars[V] = G.vars[V]
-			vars[V] = G.vars[V]
-	if(passthrough)
-		if(istype(G, /obj/item/gun/ballistic))
-			var/obj/item/gun/ballistic/BG = G
-			var/obj/item/ammo_box/AB = new BG.mag_type(G)
-			qdel(BG)
-			if(!istype(AB)||!AB.ammo_type)
-				qdel(AB)
-				return FALSE
-			var/obj/item/ammo_casing/AC = new AB.ammo_type(G)
-			set_chameleon_ammo(AC)
-		else if(istype(G, /obj/item/gun/magic))
-			var/obj/item/gun/magic/MG = G
-			var/obj/item/ammo_casing/AC = new MG.ammo_type(G)
-			set_chameleon_ammo(AC)
-		else if(istype(G, /obj/item/gun/energy))
-			var/obj/item/gun/energy/EG = G
-			if(islist(EG.ammo_type) && EG.ammo_type.len)
-				var/obj/item/ammo_casing/AC = EG.ammo_type[1]
-				set_chameleon_ammo(AC)
-		else if(istype(G, /obj/item/gun/syringe))
-			var/obj/item/ammo_casing/AC = new /obj/item/ammo_casing/syringegun(src)
-			set_chameleon_ammo(AC)
-
-/obj/item/gun/energy/laser/chameleon/attack_self(mob/user)
-	. = ..()
-	if(!can_hitscan)
-		to_chat(user, "<span class='warning'>[src]'s current disguised gun does not allow it to enable high velocity mode!</span>")
-		return
-	if(!chambered)
-		to_chat(user, "<span class='warning'>Unknown error in energy lens: Please reset chameleon disguise and try again.</span>")
-		return
-	set_hitscan(!hitscan_mode)
-	to_chat(user, "<span class='notice'>You toggle [src]'s high velocity beam mode to [hitscan_mode? "on" : "off"].</span>")
-
-/obj/item/gun/energy/laser/chameleon/proc/set_hitscan(hitscan)
-	var/obj/item/ammo_casing/energy/chameleon/AC = chambered
-	AC.hitscan_mode = hitscan
-	hitscan_mode = hitscan
-
-/obj/item/gun/energy/laser/chameleon/proc/get_chameleon_projectile(guntype)
-	reset_chameleon_vars()
-	var/obj/item/gun/G = new guntype(src)
-	set_chameleon_gun(G)
-	qdel(G)
 
 /obj/item/storage/backpack/chameleon
 	name = "backpack"
@@ -570,6 +524,9 @@
 	chameleon_action.initialize_disguises()
 
 /obj/item/storage/backpack/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 /obj/item/storage/backpack/chameleon/broken/Initialize()
@@ -595,46 +552,68 @@
 	STR.silent = TRUE
 
 /obj/item/storage/belt/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 /obj/item/storage/belt/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
-/obj/item/device/radio/headset/chameleon
+/obj/item/radio/headset/chameleon
 	name = "radio headset"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/device/radio/headset/chameleon/Initialize()
+/obj/item/radio/headset/chameleon/Initialize()
 	. = ..()
 	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/device/radio/headset
+	chameleon_action.chameleon_type = /obj/item/radio/headset
 	chameleon_action.chameleon_name = "Headset"
 	chameleon_action.initialize_disguises()
 
-/obj/item/device/radio/headset/chameleon/emp_act(severity)
+/obj/item/radio/headset/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
-/obj/item/device/radio/headset/chameleon/broken/Initialize()
+/obj/item/radio/headset/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
-/obj/item/device/pda/chameleon
+/obj/item/pda/chameleon
 	name = "PDA"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/device/pda/chameleon/Initialize()
+/obj/item/pda/chameleon/Initialize()
 	. = ..()
 	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/device/pda
+	chameleon_action.chameleon_type = /obj/item/pda
 	chameleon_action.chameleon_name = "PDA"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/device/pda/heads, /obj/item/device/pda/ai, /obj/item/device/pda/ai/pai), only_root_path = TRUE)
+	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/pda/heads, /obj/item/pda/ai, /obj/item/pda/ai/pai), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 
-/obj/item/device/pda/chameleon/emp_act(severity)
+/obj/item/pda/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
-/obj/item/device/pda/chameleon/broken/Initialize()
+/obj/item/pda/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
+/obj/item/stamp/chameleon
+	var/datum/action/item_action/chameleon/change/chameleon_action
+
+/obj/item/stamp/chameleon/Initialize()
+	. = ..()
+	chameleon_action = new(src)
+	chameleon_action.chameleon_type = /obj/item/stamp
+	chameleon_action.chameleon_name = "Stamp"
+	chameleon_action.initialize_disguises()
+
+/obj/item/stamp/chameleon/broken/Initialize()
+	. = ..()
+	chameleon_action.emp_randomise(INFINITY)

@@ -16,7 +16,6 @@ Passive gate is similar to the regular pump except:
 
 	interaction_flags_machine = INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
 
-	var/on = FALSE
 	var/target_pressure = ONE_ATMOSPHERE
 
 	var/frequency = 0
@@ -25,6 +24,16 @@ Passive gate is similar to the regular pump except:
 
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "passivegate"
+
+/obj/machinery/atmospherics/components/binary/passive_gate/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/binary/passive_gate/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/binary/passive_gate/Destroy()
 	SSradio.remove_object(src,frequency)

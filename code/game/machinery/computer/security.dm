@@ -783,8 +783,9 @@ What a mess.*/
 	printing = FALSE
 
 /obj/machinery/computer/secure_data/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
+	. = ..()
+
+	if(stat & (BROKEN|NOPOWER) || . & EMP_PROTECT_SELF)
 		return
 
 	for(var/datum/data/record/R in GLOB.data_core.security)
@@ -817,8 +818,6 @@ What a mess.*/
 			qdel(R)
 			continue
 
-	..(severity)
-
 /obj/machinery/computer/secure_data/proc/canUseSecurityRecordsConsole(mob/user, message1 = 0, record1, record2)
 	if(user)
 		if(authenticated)
@@ -831,18 +830,21 @@ What a mess.*/
 	return 0
 
 /obj/machinery/computer/secure_data/AltClick(mob/user)
-	if(user.canUseTopic(src) && scan)
+	if(user.canUseTopic(src))
 		eject_id(user)
 
 /obj/machinery/computer/secure_data/proc/eject_id(mob/user)
 	if(scan)
-		user.put_in_hands(scan)
+		scan.forceMove(drop_location())
+		if(!issilicon(user) && Adjacent(user))
+			user.put_in_hands(scan)
 		scan = null
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 	else //switching the ID with the one you're holding
-		var/obj/item/I = user.is_holding_item_of_type(/obj/item/card/id)
-		if(I)
-			if(!user.transferItemToLoc(I, src))
-				return
-			scan = I
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+		if(issilicon(user) || !Adjacent(user))
+			return
+		var/obj/item/card/id/held_id = user.is_holding_item_of_type(/obj/item/card/id)
+		if(QDELETED(held_id) || !user.transferItemToLoc(held_id, src))
+			return
+		scan = held_id
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)

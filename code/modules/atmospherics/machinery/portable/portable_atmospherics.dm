@@ -4,7 +4,7 @@
 	use_power = NO_POWER_USE
 	max_integrity = 250
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 60, "acid" = 30)
-
+	anchored = FALSE
 
 	var/datum/gas_mixture/air_contents
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
@@ -35,7 +35,7 @@
 
 /obj/machinery/portable_atmospherics/process_atmos()
 	if(!connected_port) // Pipe network handles reactions if connected.
-		air_contents.react()
+		air_contents.react(src)
 	else
 		update_icon()
 
@@ -138,10 +138,11 @@
 					"<span class='notice'>You fasten [src] to the port.</span>", \
 					"<span class='italics'>You hear a ratchet.</span>")
 				update_icon()
-	else if(istype(W, /obj/item/device/analyzer) && Adjacent(user))
-		atmosanalyzer_scan(air_contents, user)
 	else
 		return ..()
+
+/obj/machinery/portable_atmospherics/analyzer_act(mob/living/user, obj/item/I)
+	atmosanalyzer_scan(air_contents, user, src)
 
 /obj/machinery/portable_atmospherics/attacked_by(obj/item/I, mob/user)
 	if(I.force < 10 && !(stat & BROKEN))

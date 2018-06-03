@@ -6,7 +6,6 @@
 	name = "R&D Device"
 	icon = 'icons/obj/machines/research.dmi'
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	var/busy = FALSE
 	var/hacked = FALSE
@@ -42,8 +41,6 @@
 	if (default_deconstruction_screwdriver(user, "[initial(icon_state)]_t", initial(icon_state), O))
 		if(linked_console)
 			disconnect_console()
-		return
-	if(exchange_parts(user, O))
 		return
 	if(default_deconstruction_crowbar(O))
 		return

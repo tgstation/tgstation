@@ -11,7 +11,6 @@
 	icon_state = "blackbox"
 	name = "Blackbox Recorder"
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
@@ -25,7 +24,6 @@
 	name = "Messaging Server"
 	desc = "A machine that attempts to gather the secret knowledge of the universe."
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
@@ -116,7 +114,7 @@
 /datum/signal/subspace/pda/broadcast()
 	if (!logged)  // Can only go through if a message server logs it
 		return
-	for (var/obj/item/device/pda/P in GLOB.PDAs)
+	for (var/obj/item/pda/P in GLOB.PDAs)
 		if ("[P.owner] ([P.ownjob])" in data["targets"])
 			P.receive_message(src)
 

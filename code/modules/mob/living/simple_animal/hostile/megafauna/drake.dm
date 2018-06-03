@@ -66,7 +66,7 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
 	smallsprite.Grant(src)
 	. = ..()
-	internal = new/obj/item/device/gps/internal/dragon(src)
+	internal = new/obj/item/gps/internal/dragon(src)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
 	if(severity == 3)
@@ -271,7 +271,7 @@ Difficulty: Medium
 		return
 	swoop_attack(TRUE, A, 25)
 
-/obj/item/device/gps/internal/dragon
+/obj/item/gps/internal/dragon
 	icon_state = null
 	gpstag = "Fiery Signal"
 	desc = "Here there be dragons."

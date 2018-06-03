@@ -31,7 +31,7 @@
 	var/window_name = "Protobot 1.0" //Popup title
 	var/window_width = 0 //0 for default size
 	var/window_height = 0
-	var/obj/item/device/paicard/paicard // Inserted pai card.
+	var/obj/item/paicard/paicard // Inserted pai card.
 	var/allow_pai = 1 // Are we even allowed to insert a pai card.
 	var/bot_name
 
@@ -56,7 +56,7 @@
 	var/tries = 0 //Number of times the bot tried and failed to move.
 	var/remote_disabled = 0 //If enabled, the AI cannot *Remotely* control a bot. It can still control it through cameras.
 	var/mob/living/silicon/ai/calling_ai //Links a bot to the AI calling it.
-	var/obj/item/device/radio/Radio //The bot's radio, for speaking to people.
+	var/obj/item/radio/Radio //The bot's radio, for speaking to people.
 	var/radio_key = null //which channels can the bot listen to
 	var/radio_channel = "Common" //The bot's default radio channel
 	var/auto_patrol = 0// set to make bot automatically patrol
@@ -130,7 +130,7 @@
 //This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
 	access_card.access += ACCESS_ROBOTICS
 	set_custom_texts()
-	Radio = new/obj/item/device/radio(src)
+	Radio = new/obj/item/radio(src)
 	if(radio_key)
 		Radio.keyslot = new radio_key
 	Radio.subspace_transmission = TRUE
@@ -273,7 +273,7 @@
 			to_chat(user, "<span class='notice'>The maintenance panel is now [open ? "opened" : "closed"].</span>")
 		else
 			to_chat(user, "<span class='warning'>The maintenance panel is locked.</span>")
-	else if(istype(W, /obj/item/card/id) || istype(W, /obj/item/device/pda))
+	else if(istype(W, /obj/item/card/id) || istype(W, /obj/item/pda))
 		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
 			to_chat(user, "Controls are now [locked ? "locked." : "unlocked."]")
@@ -284,7 +284,7 @@
 				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
 			else
 				to_chat(user, "<span class='warning'>Access denied.</span>")
-	else if(istype(W, /obj/item/device/paicard))
+	else if(istype(W, /obj/item/paicard))
 		insertpai(user, W)
 	else if(istype(W, /obj/item/hemostat) && paicard)
 		if(open)
@@ -320,6 +320,9 @@
 	return ..()
 
 /mob/living/simple_animal/bot/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	var/was_on = on
 	stat |= EMPED
 	new /obj/effect/temp_visual/emp(loc)
@@ -834,6 +837,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 // Machinery to simplify topic and access calls
 /obj/machinery/bot_core
 	use_power = NO_POWER_USE
+	anchored = FALSE
 	var/mob/living/simple_animal/bot/owner = null
 
 /obj/machinery/bot_core/Initialize()
@@ -880,7 +884,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		eject += "<BR>"
 	return eject
 
-/mob/living/simple_animal/bot/proc/insertpai(mob/user, obj/item/device/paicard/card)
+/mob/living/simple_animal/bot/proc/insertpai(mob/user, obj/item/paicard/card)
 	if(paicard)
 		to_chat(user, "<span class='warning'>A [paicard] is already inserted!</span>")
 	else if(allow_pai && !key)

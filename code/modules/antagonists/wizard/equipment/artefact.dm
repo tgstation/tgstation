@@ -98,8 +98,10 @@
 	icon_state = "reality"
 	pixel_x = -96
 	pixel_y = -96
-	grav_pull = 6
+	dissipate = 0
+	move_self = 0
 	consume_range = 3
+	grav_pull = 4
 	current_size = STAGE_FOUR
 	allowed_size = STAGE_FOUR
 
@@ -138,7 +140,7 @@
 
 /////////////////////////////////////////Necromantic Stone///////////////////
 
-/obj/item/device/necromantic_stone
+/obj/item/necromantic_stone
 	name = "necromantic stone"
 	desc = "A shard capable of resurrecting humans as skeleton thralls."
 	icon = 'icons/obj/wizard.dmi'
@@ -150,10 +152,10 @@
 	var/list/spooky_scaries = list()
 	var/unlimited = 0
 
-/obj/item/device/necromantic_stone/unlimited
+/obj/item/necromantic_stone/unlimited
 	unlimited = 1
 
-/obj/item/device/necromantic_stone/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
+/obj/item/necromantic_stone/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
 	if(!istype(M))
 		return ..()
 
@@ -177,13 +179,13 @@
 	M.revive(full_heal = 1, admin_revive = 1)
 	spooky_scaries |= M
 	to_chat(M, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
-	to_chat(M, "<span class='userdanger'>[user.p_they(TRUE)] [user.p_are()] your master now, assist them even if it costs you your new life!</span>")
+	to_chat(M, "<span class='userdanger'>[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!</span>")
 
 	equip_roman_skeleton(M)
 
 	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/3 active thralls."]"
 
-/obj/item/device/necromantic_stone/proc/check_spooky()
+/obj/item/necromantic_stone/proc/check_spooky()
 	if(unlimited) //no point, the list isn't used.
 		return
 
@@ -199,17 +201,17 @@
 	listclearnulls(spooky_scaries)
 
 //Funny gimmick, skeletons always seem to wear roman/ancient armour
-/obj/item/device/necromantic_stone/proc/equip_roman_skeleton(mob/living/carbon/human/H)
+/obj/item/necromantic_stone/proc/equip_roman_skeleton(mob/living/carbon/human/H)
 	for(var/obj/item/I in H)
 		H.dropItemToGround(I)
 
 	var/hat = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionaire)
-	H.equip_to_slot_or_del(new hat(H), slot_head)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), slot_shoes)
+	H.equip_to_slot_or_del(new hat(H), SLOT_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), SLOT_SHOES)
 	H.put_in_hands(new /obj/item/shield/riot/roman(H), TRUE)
 	H.put_in_hands(new /obj/item/claymore(H), TRUE)
-	H.equip_to_slot_or_del(new /obj/item/twohanded/spear(H), slot_back)
+	H.equip_to_slot_or_del(new /obj/item/twohanded/spear(H), SLOT_BACK)
 
 
 /obj/item/voodoo
@@ -318,7 +320,7 @@
 		to_chat(victim, "<span class='notice'>You feel a dark presence from [A.name]</span>")
 
 /obj/item/voodoo/suicide_act(mob/living/carbon/user)
-    user.visible_message("<span class='suicide'>[user] links the voodoo doll to themself and sits on it, infinitely crushing themself! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+    user.visible_message("<span class='suicide'>[user] links the voodoo doll to [user.p_them()]self and sits on it, infinitely crushing [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
     user.gib()
     return(BRUTELOSS)
 

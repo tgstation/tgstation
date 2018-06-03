@@ -1,0 +1,5 @@
+author: "Nichlas0010"
+delete-after: True
+changes: 
+  - bugfix: "You now can't get multiple download objectives!"
+  - tweak: "RDs, Scientists and Roboticists can no longer get download objectives!"

@@ -24,10 +24,6 @@
 
 /mob/living/carbon/get_ear_protection()
 	var/number = ..()
-	if(ears && (ears.flags_2 & BANG_PROTECT_2))
-		number += 1
-	if(head && (head.flags_2 & BANG_PROTECT_2))
-		number += 1
 	var/obj/item/organ/ears/E = getorganslot(ORGAN_SLOT_EARS)
 	if(!E)
 		number = INFINITY
@@ -207,13 +203,15 @@
 		adjustBruteLoss(10)
 
 /mob/living/carbon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_CONTENTS)
+		return
 	for(var/X in internal_organs)
 		var/obj/item/organ/O = X
 		O.emp_act(severity)
-	..()
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	if(tesla_shock && (flags_2 & TESLA_IGNORE_2))
+	if(tesla_shock && (flags_1 & TESLA_IGNORE_1))
 		return FALSE
 	if(has_trait(TRAIT_SHOCKIMMUNE))
 		return FALSE
@@ -249,7 +247,7 @@
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if(on_fire)
-		to_chat(M, "<span class='warning'>You can't put them out with just your bare hands!</span>")
+		to_chat(M, "<span class='warning'>You can't put [p_them()] out with just your bare hands!</span>")
 		return
 
 	if(health >= 0 && !(has_trait(TRAIT_FAKEDEATH)))
@@ -327,6 +325,9 @@
 
 
 /mob/living/carbon/soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15)
+	var/list/reflist = list(intensity) // Need to wrap this in a list so we can pass a reference
+	SendSignal(COMSIG_CARBON_SOUNDBANG, reflist)
+	intensity = reflist[1]
 	var/ear_safety = get_ear_protection()
 	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	var/effect_amount = intensity - ear_safety

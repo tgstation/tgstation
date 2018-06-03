@@ -11,6 +11,7 @@
 		/obj/structure/lattice,
 		/obj/structure/stone_tile,
 		/obj/item/projectile,
+		/obj/effect/projectile,
 		/obj/effect/portal,
 		/obj/effect/abstract,
 		/obj/effect/hotspot,
@@ -64,18 +65,22 @@
 	if(is_type_in_typecache(AM, forbidden_types) || AM.throwing || AM.floating)
 		return FALSE
 	//Flies right over the chasm
-	if(isliving(AM))
+	if(ismob(AM))
 		var/mob/M = AM
+		if(M.buckled)		//middle statement to prevent infinite loops just in case!
+			var/mob/buckled_to = M.buckled
+			if((!ismob(M.buckled) || (buckled_to.buckled != M)) && !droppable(M.buckled))
+				return FALSE
 		if(M.is_flying())
 			return FALSE
-	if(ishuman(AM))
-		var/mob/living/carbon/human/H = AM
-		if(istype(H.belt, /obj/item/device/wormhole_jaunter))
-			var/obj/item/device/wormhole_jaunter/J = H.belt
-			//To freak out any bystanders
-			H.visible_message("<span class='boldwarning'>[H] falls into [parent]!</span>")
-			J.chasm_react(H)
-			return FALSE
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			if(istype(H.belt, /obj/item/wormhole_jaunter))
+				var/obj/item/wormhole_jaunter/J = H.belt
+				//To freak out any bystanders
+				H.visible_message("<span class='boldwarning'>[H] falls into [parent]!</span>")
+				J.chasm_react(H)
+				return FALSE
 	return TRUE
 
 /datum/component/chasm/proc/drop(atom/movable/AM)

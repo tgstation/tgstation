@@ -284,7 +284,7 @@
 "aW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/device/megaphone,
+/obj/item/megaphone,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/comm)
 "aX" = (
@@ -1218,10 +1218,7 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
+/turf/open/floor/plating/airless,
 /area/template_noop)
 "dM" = (
 /obj/structure/table,
@@ -1542,19 +1539,13 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/solar,
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
+/turf/open/floor/plating/airless,
 /area/template_noop)
 "eJ" = (
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
+/turf/open/floor/plating/airless,
 /area/template_noop)
 "eK" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1648,7 +1639,7 @@
 "eV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -2823,8 +2814,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/orange/side{
-	tag = "icon-orange (NORTHWEST)";
-	icon_state = "orange";
 	dir = 9
 	},
 /area/ruin/space/has_grav/ancientstation/rnd)
@@ -2838,8 +2827,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/orange/side{
-	tag = "icon-orange (NORTH)";
-	icon_state = "orange";
 	dir = 1
 	},
 /area/ruin/space/has_grav/ancientstation/rnd)
@@ -2853,8 +2840,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/orange/side{
-	tag = "icon-orange (NORTHEAST)";
-	icon_state = "orange";
 	dir = 5
 	},
 /area/ruin/space/has_grav/ancientstation/rnd)
@@ -2886,10 +2871,7 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
+/turf/open/floor/plating/airless,
 /area/template_noop)
 "hN" = (
 /obj/structure/lattice/catwalk,
@@ -3002,8 +2984,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/orange/side{
-	tag = "icon-orange (EAST)";
-	icon_state = "orange";
 	dir = 4
 	},
 /area/ruin/space/has_grav/ancientstation/rnd)
@@ -3129,8 +3109,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/orange/side{
-	tag = "icon-orange (EAST)";
-	icon_state = "orange";
 	dir = 4
 	},
 /area/ruin/space/has_grav/ancientstation/rnd)
@@ -3181,8 +3159,6 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/orange/side{
-	tag = "icon-orange (EAST)";
-	icon_state = "orange";
 	dir = 4
 	},
 /area/ruin/space/has_grav/ancientstation/rnd)
@@ -3191,7 +3167,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/gloves/color/fyellow/old,
 /obj/item/clothing/gloves/color/fyellow/old,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 10
 	},
@@ -3297,8 +3273,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/orange/side{
-	tag = "icon-orange (EAST)";
-	icon_state = "orange";
 	dir = 4
 	},
 /area/ruin/space/has_grav/ancientstation/rnd)
@@ -3387,8 +3361,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/orange/side{
-	tag = "icon-orange (SOUTHWEST)";
-	icon_state = "orange";
 	dir = 10
 	},
 /area/ruin/space/has_grav/ancientstation/rnd)
@@ -3413,8 +3385,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/orange/side{
-	tag = "icon-orange (SOUTHEAST)";
-	icon_state = "orange";
 	dir = 6
 	},
 /area/ruin/space/has_grav/ancientstation/rnd)
@@ -3648,8 +3618,8 @@
 	dir = 4
 	},
 /obj/structure/closet/crate,
-/obj/item/device/assembly/flash/handheld,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /obj/item/storage/box/firingpins,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
@@ -4039,13 +4009,13 @@
 "kD" = (
 /obj/structure/table,
 /obj/item/crowbar,
-/obj/item/device/flashlight/glowstick,
+/obj/item/flashlight/glowstick,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation)
 "kE" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/deadcockroach,
+/obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation)
 "kF" = (
@@ -4110,7 +4080,7 @@
 "kN" = (
 /obj/structure/table,
 /obj/item/crowbar,
-/obj/item/device/flashlight/glowstick,
+/obj/item/flashlight/glowstick,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
 	dir = 8
@@ -4225,7 +4195,7 @@
 /area/ruin/space/has_grav/ancientstation)
 "kZ" = (
 /obj/structure/table/reinforced,
-/obj/item/device/healthanalyzer{
+/obj/item/healthanalyzer{
 	desc = "A prototype hand-held body scanner able to distinguish vital signs of the subject.";
 	name = "prototype health analyzer"
 	},
@@ -4338,10 +4308,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/hivebot)
 "lz" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
+/turf/open/floor/plating/airless,
 /area/template_noop)
 "lL" = (
 /obj/effect/decal/cleanable/dirt,
@@ -4351,8 +4318,6 @@
 "lM" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/orange/side{
-	tag = "icon-orange (WEST)";
-	icon_state = "orange";
 	dir = 8
 	},
 /area/ruin/space/has_grav/ancientstation/rnd)
@@ -4360,8 +4325,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/orange/corner{
-	tag = "icon-orangecorner (EAST)";
-	icon_state = "orangecorner";
 	dir = 4
 	},
 /area/ruin/space/has_grav/ancientstation/rnd)

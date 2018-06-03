@@ -75,14 +75,15 @@
 // UPGRADE PROCS
 
 /obj/machinery/camera/proc/upgradeEmpProof()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES | EMP_PROTECT_CONTENTS)
 	assembly.upgrades.Add(new /obj/item/stack/sheet/mineral/plasma(assembly))
 	upgrades |= CAMERA_UPGRADE_EMP_PROOF
 
 /obj/machinery/camera/proc/upgradeXRay()
-	assembly.upgrades.Add(new /obj/item/device/analyzer(assembly))
+	assembly.upgrades.Add(new /obj/item/analyzer(assembly))
 	upgrades |= CAMERA_UPGRADE_XRAY
 
 // If you are upgrading Motion, and it isn't in the camera's Initialize(), add it to the machines list.
 /obj/machinery/camera/proc/upgradeMotion()
-	assembly.upgrades.Add(new /obj/item/device/assembly/prox_sensor(assembly))
+	assembly.upgrades.Add(new /obj/item/assembly/prox_sensor(assembly))
 	upgrades |= CAMERA_UPGRADE_MOTION

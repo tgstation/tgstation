@@ -5,7 +5,6 @@
 	icon = 'icons/obj/cryogenics.dmi'
 	icon_state = "pod-off"
 	density = TRUE
-	anchored = TRUE
 	max_integrity = 350
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 30, "acid" = 30)
 	layer = ABOVE_WINDOW_LAYER
@@ -14,7 +13,6 @@
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 	occupant_typecache = list(/mob/living/carbon, /mob/living/simple_animal)
 
-	var/on = FALSE
 	var/autoeject = FALSE
 	var/volume = 100
 
@@ -27,8 +25,8 @@
 	var/obj/item/reagent_containers/glass/beaker = null
 	var/reagent_transfer = 0
 
-	var/obj/item/device/radio/radio
-	var/radio_key = /obj/item/device/encryptionkey/headset_med
+	var/obj/item/radio/radio
+	var/radio_key = /obj/item/encryptionkey/headset_med
 	var/radio_channel = "Medical"
 
 	var/running_anim = FALSE
@@ -298,7 +296,7 @@
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cyro containing [reagentlist]")
 		return
-	if(!on && !occupant && !state_open && (default_deconstruction_screwdriver(user, "pod-off", "pod-off", I) || exchange_parts(user, I)) \
+	if(!on && !occupant && !state_open && (default_deconstruction_screwdriver(user, "pod-off", "pod-off", I)) \
 		|| default_change_direction_wrench(user, I) \
 		|| default_pry_open(I) \
 		|| default_deconstruction_crowbar(I))

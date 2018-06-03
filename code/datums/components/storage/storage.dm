@@ -60,7 +60,7 @@
 
 /datum/component/storage/Initialize(datum/component/storage/concrete/master)
 	if(!isatom(parent))
-		. = COMPONENT_INCOMPATIBLE
+		return COMPONENT_INCOMPATIBLE
 	if(master)
 		change_master(master)
 	boxes = new(null, src)
@@ -87,7 +87,8 @@
 	RegisterSignal(COMSIG_ATOM_ATTACK_PAW, .proc/on_attack_hand)
 	RegisterSignal(COMSIG_ATOM_EMP_ACT, .proc/emp_act)
 	RegisterSignal(COMSIG_ATOM_ATTACK_GHOST, .proc/show_to_ghost)
-	RegisterSignal(COMSIG_ATOM_EXITED, .proc/_removal_reset)
+	RegisterSignal(COMSIG_ATOM_ENTERED, .proc/refresh_mob_views)
+	RegisterSignal(COMSIG_ATOM_EXITED, .proc/_remove_and_refresh)
 
 	RegisterSignal(COMSIG_ITEM_PRE_ATTACK, .proc/preattack_intercept)
 	RegisterSignal(COMSIG_ITEM_ATTACK_SELF, .proc/attack_self)
@@ -108,7 +109,7 @@
 	LAZYCLEARLIST(is_using)
 	return ..()
 
-/datum/component/storage/OnTransfer(datum/new_parent)
+/datum/component/storage/PreTransfer()
 	update_actions()
 
 /datum/component/storage/proc/update_actions()
@@ -232,13 +233,15 @@
 		stoplag(1)
 	qdel(progress)
 
-/datum/component/storage/proc/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress)
+/datum/component/storage/proc/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress, trigger_on_found = TRUE)
 	var/atom/real_location = real_location()
 	for(var/obj/item/I in things)
 		things -= I
 		if(I.loc != real_location)
 			continue
 		remove_from_storage(I, target)
+		if(trigger_on_found && I.on_found())
+			return FALSE
 		if(TICK_CHECK)
 			progress.update(progress.goal - length(things))
 			return TRUE
@@ -367,10 +370,10 @@
 		. = TRUE //returns TRUE if any mobs actually got a close(M) call
 
 /datum/component/storage/proc/emp_act(severity)
-	var/atom/A = parent
-	if(!isliving(A.loc) && !emp_shielded)
-		var/datum/component/storage/concrete/master = master()
-		master.emp_act(severity)
+	if(emp_shielded)
+		return
+	var/datum/component/storage/concrete/master = master()
+	master.emp_act(severity)
 
 //This proc draws out the inventory and places the items on it. tx and ty are the upper left tile and mx, my are the bottm right.
 //The numbers are calculated from the bottom-left The bottom-left slot being 1,1.
@@ -399,6 +402,10 @@
 	if(!istype(master))
 		return FALSE
 	return master._removal_reset(thing)
+
+/datum/component/storage/proc/_remove_and_refresh(atom/movable/thing)
+	_removal_reset(thing)
+	refresh_mob_views()
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the new_location target, if that is null it's being deleted
 /datum/component/storage/proc/remove_from_storage(atom/movable/AM, atom/new_location)
@@ -453,23 +460,24 @@
 		return FALSE
 	handle_item_insertion(I, FALSE, M)
 
-/datum/component/storage/proc/return_inv()
-	. = list()
-	. += contents()
-	for(var/i in contents())
-		var/atom/a = i
-		GET_COMPONENT_FROM(STR, /datum/component/storage, a)
-		if(STR)
-			. += STR.return_inv()
+/datum/component/storage/proc/return_inv(recursive)
+	var/list/ret = list()
+	ret |= contents()
+	if(recursive)
+		for(var/i in ret.Copy())
+			var/atom/A = i
+			A.SendSignal(COMSIG_TRY_STORAGE_RETURN_INVENTORY, ret, TRUE)
+	return ret
 
 /datum/component/storage/proc/contents()			//ONLY USE IF YOU NEED TO COPY CONTENTS OF REAL LOCATION, COPYING IS NOT AS FAST AS DIRECT ACCESS!
 	var/atom/real_location = real_location()
 	return real_location.contents.Copy()
 
-/datum/component/storage/proc/signal_return_inv(list/interface)
+//Abuses the fact that lists are just references, or something like that.
+/datum/component/storage/proc/signal_return_inv(list/interface, recursive = TRUE)
 	if(!islist(interface))
 		return FALSE
-	interface |= return_inv()
+	interface |= return_inv(recursive)
 	return TRUE
 
 /datum/component/storage/proc/mousedrop_onto(atom/over_object, mob/M)
@@ -503,10 +511,10 @@
 	if(!istype(M))
 		return FALSE
 	A.add_fingerprint(M)
-	if(locked)
+	if(locked && !force)
 		to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")
 		return FALSE
-	if(M.CanReach(parent, view_only = TRUE))
+	if(force || M.CanReach(parent, view_only = TRUE))
 		show_to(M)
 
 /datum/component/storage/proc/mousedrop_recieve(atom/movable/O, mob/M)
@@ -521,50 +529,52 @@
 //This proc return 1 if the item can be picked up and 0 if it can't.
 //Set the stop_messages to stop it from printing messages
 /datum/component/storage/proc/can_be_inserted(obj/item/I, stop_messages = FALSE, mob/M)
-	if(!istype(I) || (I.flags_1 & ABSTRACT_1))
+	if(!istype(I) || (I.item_flags & ABSTRACT))
 		return FALSE //Not an item
+	if(I == parent)
+		return FALSE	//no paradoxes for you
 	var/atom/real_location = real_location()
-	var/atom/parent = src.parent
+	var/atom/host = parent
 	if(real_location == I.loc)
 		return FALSE //Means the item is already in the storage item
 	if(locked)
 		if(M)
-			parent.add_fingerprint(M)
-			to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")
+			host.add_fingerprint(M)
+			to_chat(M, "<span class='warning'>[host] seems to be locked!</span>")
 		return FALSE
 	if(real_location.contents.len >= max_items)
 		if(!stop_messages)
-			to_chat(M, "<span class='warning'>[parent] is full, make some space!</span>")
+			to_chat(M, "<span class='warning'>[host] is full, make some space!</span>")
 		return FALSE //Storage item is full
 	if(length(can_hold))
 		if(!is_type_in_typecache(I, can_hold))
 			if(!stop_messages)
-				to_chat(M, "<span class='warning'>[parent] cannot hold [I]!</span>")
+				to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
 			return FALSE
 	if(is_type_in_typecache(I, cant_hold)) //Check for specific items which this container can't hold.
 		if(!stop_messages)
-			to_chat(M, "<span class='warning'>[parent] cannot hold [I]!</span>")
+			to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
 		return FALSE
 	if(I.w_class > max_w_class)
 		if(!stop_messages)
-			to_chat(M, "<span class='warning'>[I] is too big for [parent]!</span>")
+			to_chat(M, "<span class='warning'>[I] is too big for [host]!</span>")
 		return FALSE
 	var/sum_w_class = I.w_class
 	for(var/obj/item/_I in real_location)
 		sum_w_class += _I.w_class //Adds up the combined w_classes which will be in the storage item if the item is added to it.
 	if(sum_w_class > max_combined_w_class)
 		if(!stop_messages)
-			to_chat(M, "<span class='warning'>[I] won't fit in [parent], make some space!</span>")
+			to_chat(M, "<span class='warning'>[I] won't fit in [host], make some space!</span>")
 		return FALSE
-	if(isitem(parent))
-		var/obj/item/IP = parent
+	if(isitem(host))
+		var/obj/item/IP = host
 		GET_COMPONENT_FROM(STR_I, /datum/component/storage, I)
 		if((I.w_class >= IP.w_class) && STR_I && !allow_big_nesting)
 			if(!stop_messages)
 				to_chat(M, "<span class='warning'>[IP] cannot hold [I] as it's a storage item of the same size!</span>")
 			return FALSE //To prevent the stacking of same sized storage items.
-	if(I.flags_1 & NODROP_1) //SHOULD be handled in unEquip, but better safe than sorry.
-		to_chat(M, "<span class='warning'>\the [I] is stuck to your hand, you can't put it in \the [parent]!</span>")
+	if(I.item_flags & NODROP) //SHOULD be handled in unEquip, but better safe than sorry.
+		to_chat(M, "<span class='warning'>\the [I] is stuck to your hand, you can't put it in \the [host]!</span>")
 		return FALSE
 	var/datum/component/storage/concrete/master = master()
 	if(!istype(master))
@@ -607,7 +617,7 @@
 		O.update_icon()
 
 /datum/component/storage/proc/signal_insertion_attempt(obj/item/I, mob/M, silent = FALSE, force = FALSE)
-	if(!force && !can_be_inserted(I, TRUE, M))
+	if((!force && !can_be_inserted(I, TRUE, M)) || (I == parent))
 		return FALSE
 	return handle_item_insertion(I, silent, M)
 

@@ -17,8 +17,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "console"
 	density = TRUE
-	anchored = TRUE
-	var/obj/item/device/abductor/gizmo/gizmo
+	var/obj/item/abductor/gizmo/gizmo
 	var/obj/item/clothing/suit/armor/abductor/vest/vest
 	var/obj/machinery/abductor/experiment/experiment
 	var/obj/machinery/abductor/pad/pad
@@ -76,7 +75,7 @@
 
 		dat+="<br>"
 		dat += "<a href='?src=[REF(src)];select_disguise=1'>Select Agent Vest Disguise</a><br>"
-		dat += "<a href='?src=[REF(src)];toggle_vest=1'>[vest.flags_1 & NODROP_1 ? "Unlock" : "Lock"] Vest</a><br>"
+		dat += "<a href='?src=[REF(src)];toggle_vest=1'>[vest.item_flags & NODROP ? "Unlock" : "Lock"] Vest</a><br>"
 	else
 		dat += "<span class='bad'>NO AGENT VEST DETECTED</span>"
 	var/datum/browser/popup = new(user, "computer", "Abductor Console", 400, 500)
@@ -106,13 +105,13 @@
 			if("helmet")
 				Dispense(/obj/item/clothing/head/helmet/abductor)
 			if("silencer")
-				Dispense(/obj/item/device/abductor/silencer)
+				Dispense(/obj/item/abductor/silencer)
 			if("tool")
-				Dispense(/obj/item/device/abductor/gizmo)
+				Dispense(/obj/item/abductor/gizmo)
 			if("vest")
 				Dispense(/obj/item/clothing/suit/armor/abductor/vest)
 			if("mind_device")
-				Dispense(/obj/item/device/abductor/mind_device,cost=2)
+				Dispense(/obj/item/abductor/mind_device,cost=2)
 	updateUsrDialog()
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()
@@ -167,7 +166,7 @@
 			c.console = src
 
 /obj/machinery/abductor/console/proc/AddSnapshot(mob/living/carbon/human/target)
-	if(istype(target.get_item_by_slot(slot_head), /obj/item/clothing/head/foilhat))
+	if(istype(target.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
 		say("Subject wearing specialized protective headgear, unable to get a proper scan!")
 		return
 	var/datum/icon_snapshot/entry = new
@@ -181,7 +180,7 @@
 		return
 	disguises[entry.name] = entry
 
-/obj/machinery/abductor/console/proc/AddGizmo(obj/item/device/abductor/gizmo/G)
+/obj/machinery/abductor/console/proc/AddGizmo(obj/item/abductor/gizmo/G)
 	if(G == gizmo && G.console == src)
 		return FALSE
 
@@ -205,7 +204,7 @@
 	return TRUE
 
 /obj/machinery/abductor/console/attackby(obj/O, mob/user, params)
-	if(istype(O, /obj/item/device/abductor/gizmo) && AddGizmo(O))
+	if(istype(O, /obj/item/abductor/gizmo) && AddGizmo(O))
 		to_chat(user, "<span class='notice'>You link the tool to the console.</span>")
 	else if(istype(O, /obj/item/clothing/suit/armor/abductor/vest) && AddVest(O))
 		to_chat(user, "<span class='notice'>You link the vest to the console.</span>")

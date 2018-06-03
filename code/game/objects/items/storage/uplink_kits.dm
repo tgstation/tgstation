@@ -7,20 +7,20 @@
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
 			new /obj/item/card/id/syndicate(src) // 2 tc
 			new /obj/item/clothing/shoes/chameleon/noslip(src) // 2 tc
-			new /obj/item/device/camera_bug(src) // 1 tc
-			new /obj/item/device/multitool/ai_detect(src) // 1 tc
-			new /obj/item/device/encryptionkey/syndicate(src) // 2 tc
+			new /obj/item/camera_bug(src) // 1 tc
+			new /obj/item/multitool/ai_detect(src) // 1 tc
+			new /obj/item/encryptionkey/syndicate(src) // 2 tc
 			new /obj/item/reagent_containers/syringe/mulligan(src) // 4 tc
 			new /obj/item/switchblade(src) //I'll count this as 2 tc
 			new /obj/item/storage/fancy/cigarettes/cigpack_syndicate (src) // 2 tc this shit heals
-			new /obj/item/device/flashlight/emp(src) // 2 tc
-			new /obj/item/device/chameleon(src) // 7 tc
+			new /obj/item/flashlight/emp(src) // 2 tc
+			new /obj/item/chameleon(src) // 7 tc
 
 		if("stealth") // 31 tc
 			new /obj/item/gun/energy/kinetic_accelerator/crossbow(src)
 			new /obj/item/pen/sleepy(src)
-			new /obj/item/device/healthanalyzer/rad_laser(src)
-			new /obj/item/device/chameleon(src)
+			new /obj/item/healthanalyzer/rad_laser(src)
+			new /obj/item/chameleon(src)
 			new /obj/item/soap/syndie(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 
@@ -34,12 +34,12 @@
 			new /obj/item/reagent_containers/syringe/stimulants(src)
 
 		if("screwed") // 29 tc
-			new /obj/item/device/sbeacondrop/bomb(src)
+			new /obj/item/sbeacondrop/bomb(src)
 			new /obj/item/grenade/syndieminibomb(src)
-			new /obj/item/device/sbeacondrop/powersink(src)
+			new /obj/item/sbeacondrop/powersink(src)
 			new /obj/item/clothing/suit/space/syndicate/black/red(src)
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
-			new /obj/item/device/encryptionkey/syndicate(src)
+			new /obj/item/encryptionkey/syndicate(src)
 
 		if("guns") // 28 tc now
 			new /obj/item/gun/ballistic/revolver(src)
@@ -56,7 +56,7 @@
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/card/emag(src)
 			new /obj/item/clothing/shoes/chameleon/noslip(src)
-			new /obj/item/device/encryptionkey/syndicate(src)
+			new /obj/item/encryptionkey/syndicate(src)
 			new /obj/item/grenade/syndieminibomb(src)
 
 		if("implant") // 55+ tc holy shit what the fuck this is a lottery disguised as fun boxes isn't it?
@@ -70,12 +70,12 @@
 		if("hacker") // 26 tc
 			new /obj/item/aiModule/syndicate(src)
 			new /obj/item/card/emag(src)
-			new /obj/item/device/encryptionkey/binary(src)
+			new /obj/item/encryptionkey/binary(src)
 			new /obj/item/aiModule/toyAI(src)
-			new /obj/item/device/multitool/ai_detect(src)
+			new /obj/item/multitool/ai_detect(src)
 
 		if("lordsingulo") // 24 tc
-			new /obj/item/device/sbeacondrop(src)
+			new /obj/item/sbeacondrop(src)
 			new /obj/item/clothing/suit/space/syndicate/black/red(src)
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 			new /obj/item/card/emag(src)
@@ -83,10 +83,10 @@
 		if("sabotage") // 26 tc now
 			new /obj/item/grenade/plastic/c4 (src)
 			new /obj/item/grenade/plastic/c4 (src)
-			new /obj/item/device/doorCharge(src)
-			new /obj/item/device/doorCharge(src)
-			new /obj/item/device/camera_bug(src)
-			new /obj/item/device/sbeacondrop/powersink(src)
+			new /obj/item/doorCharge(src)
+			new /obj/item/doorCharge(src)
+			new /obj/item/camera_bug(src)
+			new /obj/item/sbeacondrop/powersink(src)
 			new /obj/item/cartridge/virus/syndicate(src)
 			new /obj/item/storage/toolbox/syndicate(src) //To actually get to those places
 			new /obj/item/pizzabox/bomb
@@ -111,8 +111,8 @@
 			new /obj/item/clothing/suit/space/hardsuit/syndi(src) // 8 tc
 			new /obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted(src) // 8 tc
 			new /obj/item/implanter/explosive(src) // 2 tc
-			new /obj/item/ammo_box/magazine/m12g/buckshot(src) // 2 tc
-			new /obj/item/ammo_box/magazine/m12g/buckshot(src) // 2 tc
+			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
+			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
 			new /obj/item/grenade/plastic/c4 (src) // 1 tc
 			new /obj/item/grenade/plastic/c4 (src) // 1 tc
 			new /obj/item/card/emag(src) // 6 tc
@@ -128,7 +128,7 @@
 			new /obj/item/throwing_star(src)
 			new /obj/item/storage/belt/chameleon(src) // Unique but worth at least 2 tc
 			new /obj/item/card/id/syndicate(src) // 2 tc
-			new /obj/item/device/chameleon(src) // 7 tc
+			new /obj/item/chameleon(src) // 7 tc
 
 /obj/item/storage/box/syndie_kit
 	name = "box"
@@ -277,10 +277,9 @@
 	new /obj/item/clothing/head/chameleon(src)
 	new /obj/item/clothing/mask/chameleon(src)
 	new /obj/item/storage/backpack/chameleon(src)
-	new /obj/item/device/radio/headset/chameleon(src)
+	new /obj/item/radio/headset/chameleon(src)
 	new /obj/item/stamp/chameleon(src)
-	new /obj/item/device/pda/chameleon(src)
-	new /obj/item/gun/energy/laser/chameleon(src)
+	new /obj/item/pda/chameleon(src)
 
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
@@ -321,10 +320,10 @@
 	new /obj/item/clothing/under/rank/centcom_officer(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/gloves/color/black(src)
-	new /obj/item/device/radio/headset/headset_cent/empty(src)
+	new /obj/item/radio/headset/headset_cent/empty(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/storage/backpack/satchel(src)
-	new /obj/item/device/pda/heads(src)
+	new /obj/item/pda/heads(src)
 	new /obj/item/clipboard(src)
 
 /obj/item/storage/box/syndie_kit/chameleon/broken/PopulateContents()
@@ -336,7 +335,7 @@
 	new /obj/item/clothing/head/chameleon/broken(src)
 	new /obj/item/clothing/mask/chameleon/broken(src)
 	new /obj/item/storage/backpack/chameleon/broken(src)
-	new /obj/item/device/radio/headset/chameleon/broken(src)
+	new /obj/item/radio/headset/chameleon/broken(src)
 	new /obj/item/stamp/chameleon/broken(src)
-	new /obj/item/device/pda/chameleon/broken(src)
+	new /obj/item/pda/chameleon/broken(src)
 	// No chameleon laser, they can't randomise for //REASONS//

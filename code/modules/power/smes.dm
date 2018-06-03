@@ -19,7 +19,6 @@
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
 	icon_state = "smes"
 	density = TRUE
-	anchored = TRUE
 	use_power = NO_POWER_USE
 	circuit = /obj/item/circuitboard/machine/smes
 	var/capacity = 5e6 // maximum charge
@@ -98,10 +97,6 @@
 		update_icon()
 		return
 
-	//exchanging parts using the RPE
-	if(exchange_parts(user, I))
-		return
-
 	//building and linking a terminal
 	if(istype(I, /obj/item/stack/cable_coil))
 		var/dir = get_dir(user,src)
@@ -156,9 +151,9 @@
 	//crowbarring it !
 	var/turf/T = get_turf(src)
 	if(default_deconstruction_crowbar(I))
-		message_admins("[src] has been deconstructed by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
-		log_game("[src] has been deconstructed by [key_name(user)]")
-		investigate_log("SMES deconstructed by [key_name(user)]", INVESTIGATE_SINGULO)
+		message_admins("[src] has been deconstructed by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
+		log_game("[src] has been deconstructed by [key_name(user)] at [AREACOORD(src)]")
+		investigate_log("SMES deconstructed by [key_name(user)] at [AREACOORD(src)]", INVESTIGATE_SINGULO)
 		return
 	else if(panel_open && istype(I, /obj/item/crowbar))
 		return
@@ -178,11 +173,10 @@
 
 /obj/machinery/power/smes/Destroy()
 	if(SSticker.IsRoundInProgress())
-		var/area/A = get_area(src)
 		var/turf/T = get_turf(src)
-		message_admins("SMES deleted at [A][ADMIN_JMP(T)]")
-		log_game("SMES deleted at [A][COORD(T)]")
-		investigate_log("<font color='red'>deleted</font> at [A][COORD(T)]", INVESTIGATE_SINGULO)
+		message_admins("SMES deleted at [ADMIN_VERBOSEJMP(T)]")
+		log_game("SMES deleted at [AREACOORD(T)]")
+		investigate_log("<font color='red'>deleted</font> at [AREACOORD(T)]", INVESTIGATE_SINGULO)
 	if(terminal)
 		disconnect_terminal()
 	return ..()
@@ -412,6 +406,9 @@
 
 
 /obj/machinery/power/smes/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	input_attempt = rand(0,1)
 	inputting = input_attempt
 	output_attempt = rand(0,1)
@@ -423,7 +420,6 @@
 		charge = 0
 	update_icon()
 	log_smes("an emp")
-	..()
 
 /obj/machinery/power/smes/engineering
 	charge = 1.5e6 // Engineering starts with some charge for singulo

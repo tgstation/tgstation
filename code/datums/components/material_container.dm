@@ -15,16 +15,18 @@
 	var/sheet_type
 	var/list/materials
 	var/show_on_examine
+	var/disable_attackby
 	var/list/allowed_typecache
 	var/last_inserted_id
 	var/precise_insertion = FALSE
 	var/datum/callback/precondition
 	var/datum/callback/after_insert
 
-/datum/component/material_container/Initialize(list/mat_list, max_amt = 0, _show_on_examine = FALSE, list/allowed_types, datum/callback/_precondition, datum/callback/_after_insert)
+/datum/component/material_container/Initialize(list/mat_list, max_amt = 0, _show_on_examine = FALSE, list/allowed_types, datum/callback/_precondition, datum/callback/_after_insert, _disable_attackby)
 	materials = list()
 	max_amount = max(0, max_amt)
 	show_on_examine = _show_on_examine
+	disable_attackby = _disable_attackby
 	if(allowed_types)
 		allowed_typecache = typecacheof(allowed_types)
 	precondition = _precondition
@@ -43,17 +45,22 @@
 			materials[id] = new mat_path()
 
 /datum/component/material_container/proc/OnExamine(mob/user)
-	for(var/I in materials)
-		var/datum/material/M = materials[I]
-		var/amt = amount(M.id)
-		if(amt)
-			to_chat(user, "<span class='notice'>It has [amt] units of [lowertext(M.name)] stored.</span>")
+	if(show_on_examine)
+		for(var/I in materials)
+			var/datum/material/M = materials[I]
+			var/amt = amount(M.id)
+			if(amt)
+				to_chat(user, "<span class='notice'>It has [amt] units of [lowertext(M.name)] stored.</span>")
 
 /datum/component/material_container/proc/OnAttackBy(obj/item/I, mob/living/user)
 	var/list/tc = allowed_typecache
+	if(disable_attackby)
+		return
 	if(user.a_intent != INTENT_HELP)
 		return
-	if((I.flags_2 & (HOLOGRAM_2 | NO_MAT_REDEMPTION_2)) || (tc && !is_type_in_typecache(I, tc)))
+	if(I.item_flags & ABSTRACT)
+		return
+	if((I.flags_1 & HOLOGRAM_1) || (I.item_flags & NO_MAT_REDEMPTION) || (tc && !is_type_in_typecache(I, tc)))
 		to_chat(user, "<span class='warning'>[parent] won't accept [I]!</span>")
 		return
 	. = COMPONENT_NO_AFTERATTACK
@@ -72,13 +79,14 @@
 /datum/component/material_container/proc/user_insert(obj/item/I, mob/living/user)
 	set waitfor = FALSE
 	var/requested_amount
+	var/active_held = user.get_active_held_item()  // differs from I when using TK
 	if(istype(I, /obj/item/stack) && precise_insertion)
 		var/atom/current_parent = parent
 		var/obj/item/stack/S = I
 		requested_amount = input(user, "How much do you want to insert?", "Inserting [S.singular_name]s") as num|null
 		if(isnull(requested_amount) || (requested_amount <= 0))
 			return
-		if(QDELETED(I) || QDELETED(user) || QDELETED(src) || parent != current_parent || !user.canUseTopic(current_parent, BE_CLOSE) || !user.is_holding(I))
+		if(QDELETED(I) || QDELETED(user) || QDELETED(src) || parent != current_parent || user.physical_can_use_topic(current_parent) < UI_INTERACTIVE || user.get_active_held_item() != active_held)
 			return
 	if(!user.temporarilyRemoveItemFromInventory(I))
 		to_chat(user, "<span class='warning'>[I] is stuck to you and cannot be placed into [parent].</span>")
@@ -88,16 +96,15 @@
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
 			to_chat(user, "<span class='notice'>You insert [inserted] [S.singular_name][inserted>1 ? "s" : ""] into [parent].</span>")
-			if(!QDELETED(I))
-				if(!user.put_in_hands(I))
-					stack_trace("Warning: User could not put object back in hand during material container insertion, line [__LINE__]! This can lead to issues.")
-					I.forceMove(user.drop_location())
+			if(!QDELETED(I) && I == active_held && !user.put_in_hands(I))
+				stack_trace("Warning: User could not put object back in hand during material container insertion, line [__LINE__]! This can lead to issues.")
+				I.forceMove(user.drop_location())
 		else
 			to_chat(user, "<span class='notice'>You insert a material total of [inserted] into [parent].</span>")
 			qdel(I)
 		if(after_insert)
 			after_insert.Invoke(I.type, last_inserted_id, inserted)
-	else
+	else if(I == active_held)
 		user.put_in_active_hand(I)
 
 //For inserting an amount of material

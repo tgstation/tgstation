@@ -1,6 +1,6 @@
 #define MAX_CIRCUIT_CLONE_TIME 3 MINUTES //circuit slow-clones can only take up this amount of time to complete
 
-/obj/item/device/integrated_circuit_printer
+/obj/item/integrated_circuit_printer
 	name = "integrated circuit printer"
 	desc = "A portable(ish) machine made to print tiny modular circuitry out of metal."
 	icon = 'icons/obj/assemblies/electronic_tools.dmi'
@@ -16,30 +16,30 @@
 	var/recycling = FALSE		// If an assembly is being emptied into this printer
 	var/list/program			// Currently loaded save, in form of list
 
-/obj/item/device/integrated_circuit_printer/proc/check_interactivity(mob/user)
+/obj/item/integrated_circuit_printer/proc/check_interactivity(mob/user)
 	return user.canUseTopic(src, BE_CLOSE)
 
-/obj/item/device/integrated_circuit_printer/upgraded
+/obj/item/integrated_circuit_printer/upgraded
 	upgraded = TRUE
 	can_clone = TRUE
 	fast_clone = TRUE
 
-/obj/item/device/integrated_circuit_printer/debug //translation: "integrated_circuit_printer/local_server"
+/obj/item/integrated_circuit_printer/debug //translation: "integrated_circuit_printer/local_server"
 	name = "debug circuit printer"
 	debug = TRUE
 	upgraded = TRUE
 	can_clone = TRUE
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/device/integrated_circuit_printer/Initialize()
+/obj/item/integrated_circuit_printer/Initialize()
 	. = ..()
-	AddComponent(/datum/component/material_container, list(MAT_METAL), MINERAL_MATERIAL_AMOUNT * 25, TRUE, list(/obj/item/stack, /obj/item/integrated_circuit, /obj/item/device/electronic_assembly))
+	AddComponent(/datum/component/material_container, list(MAT_METAL), MINERAL_MATERIAL_AMOUNT * 25, TRUE, list(/obj/item/stack, /obj/item/integrated_circuit, /obj/item/electronic_assembly))
 
-/obj/item/device/integrated_circuit_printer/Destroy()
+/obj/item/integrated_circuit_printer/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
-/obj/item/device/integrated_circuit_printer/process()
+/obj/item/integrated_circuit_printer/process()
 	if(!cloning)
 		STOP_PROCESSING(SSprocessing, src)
 	if(world.time >= clone_countdown || fast_clone)
@@ -50,7 +50,7 @@
 		cloning = FALSE
 		STOP_PROCESSING(SSprocessing, src)
 
-/obj/item/device/integrated_circuit_printer/attackby(obj/item/O, mob/user)
+/obj/item/integrated_circuit_printer/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/disk/integrated_circuit/upgrade/advanced))
 		if(upgraded)
 			to_chat(user, "<span class='warning'>[src] already has this upgrade. </span>")
@@ -69,8 +69,8 @@
 		interact(user)
 		return TRUE
 
-	if(istype(O, /obj/item/device/electronic_assembly))
-		var/obj/item/device/electronic_assembly/EA = O //microtransactions not included
+	if(istype(O, /obj/item/electronic_assembly))
+		var/obj/item/electronic_assembly/EA = O //microtransactions not included
 		if(EA.assembly_components.len)
 			if(recycling)
 				return
@@ -109,10 +109,10 @@
 
 	return ..()
 
-/obj/item/device/integrated_circuit_printer/attack_self(mob/user)
+/obj/item/integrated_circuit_printer/attack_self(mob/user)
 	interact(user)
 
-/obj/item/device/integrated_circuit_printer/interact(mob/user)
+/obj/item/integrated_circuit_printer/interact(mob/user)
 	if(isnull(current_category))
 		current_category = SScircuit.circuit_fabricator_recipe_list[1]
 
@@ -170,7 +170,7 @@
 
 	user << browse(HTML, "window=integrated_printer;size=600x500;border=1;can_resize=1;can_close=1;can_minimize=1")
 
-/obj/item/device/integrated_circuit_printer/Topic(href, href_list)
+/obj/item/integrated_circuit_printer/Topic(href, href_list)
 	if(!check_interactivity(usr))
 		return
 	if(..())
@@ -186,12 +186,14 @@
 			return TRUE
 
 		var/cost = 400
-		if(ispath(build_type, /obj/item/device/electronic_assembly))
-			var/obj/item/device/electronic_assembly/E = SScircuit.cached_assemblies[build_type]
+		if(ispath(build_type, /obj/item/electronic_assembly))
+			var/obj/item/electronic_assembly/E = SScircuit.cached_assemblies[build_type]
 			cost = E.materials[MAT_METAL]
 		else if(ispath(build_type, /obj/item/integrated_circuit))
 			var/obj/item/integrated_circuit/IC = SScircuit.cached_components[build_type]
 			cost = IC.materials[MAT_METAL]
+		else if(!build_type in SScircuit.circuit_fabricator_recipe_list["Tools"])
+			return
 
 		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 
@@ -202,8 +204,8 @@
 		var/obj/item/built = new build_type(drop_location())
 		usr.put_in_hands(built)
 
-		if(istype(built, /obj/item/device/electronic_assembly))
-			var/obj/item/device/electronic_assembly/E = built
+		if(istype(built, /obj/item/electronic_assembly))
+			var/obj/item/electronic_assembly/E = built
 			E.opened = TRUE
 			E.update_icon()
 			//reupdate diagnostic hud because it was put_in_hands() and not pickup()'ed
@@ -257,8 +259,10 @@
 
 				if(program["requires_upgrades"] && !upgraded && !debug)
 					to_chat(usr, "<span class='warning'>This program uses unknown component designs. Printer upgrade is required to proceed.</span>")
+					return
 				if(program["unsupported_circuit"] && !debug)
 					to_chat(usr, "<span class='warning'>This program uses components not supported by the specified assembly. Please change the assembly type in the save file to a supported one.</span>")
+					return
 				else if(fast_clone || debug)
 					var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 					if(debug || materials.use_amount_type(program["metal_cost"], MAT_METAL))

@@ -1,4 +1,5 @@
 /turf/open
+	plane = FLOOR_PLANE
 	var/slowdown = 0 //negative for faster, positive for slower
 
 	var/mutable_appearance/wet_overlay
@@ -70,6 +71,17 @@
 	name = "notebook floor"
 	desc = "A floor made of invulnerable notebook paper."
 	icon_state = "paperfloor"
+
+/turf/open/indestructible/binary
+	name = "tear in the fabric of reality"
+	CanAtmosPass = ATMOS_PASS_NO
+	baseturfs = /turf/open/indestructible/binary
+	icon_state = "binary"
+
+/turf/open/indestructible/airblock
+	icon_state = "bluespace"
+	CanAtmosPass = ATMOS_PASS_NO
+	baseturfs = /turf/open/indestructible/airblock
 
 /turf/open/indestructible/clock_spawn_room
 	name = "cogmetal"
@@ -159,7 +171,7 @@
 	for(var/obj/I in contents)
 		if(I.resistance_flags & FREEZE_PROOF)
 			return
-		if(!(I.flags_2 & FROZEN_2)) //let it go
+		if(!(I.obj_flags & FROZEN))
 			I.make_frozen_visual()
 	for(var/mob/living/L in contents)
 		if(L.bodytemperature <= 50)

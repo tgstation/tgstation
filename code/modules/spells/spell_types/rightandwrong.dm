@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(summoned_magic, list(
 	/obj/item/voodoo,
 	/obj/item/warpwhistle,
 	/obj/item/clothing/suit/space/hardsuit/shielded/wizard,
-	/obj/item/device/immortality_talisman,
+	/obj/item/immortality_talisman,
 	/obj/item/melee/ghost_sword))
 
 GLOBAL_LIST_INIT(summoned_special_magic, list(
@@ -78,7 +78,7 @@ GLOBAL_LIST_INIT(summoned_special_magic, list(
 	/obj/item/storage/belt/wands/full,
 	/obj/item/antag_spawner/contract,
 	/obj/item/gun/magic/staff/chaos,
-	/obj/item/device/necromantic_stone,
+	/obj/item/necromantic_stone,
 	/obj/item/blood_contract))
 
 // If true, it's the probability of triggering "survivor" antag.
@@ -137,7 +137,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 /proc/rightandwrong(summon_type, mob/user, survivor_probability)
 	if(user) //in this case either someone holding a spellbook or a badmin
 		to_chat(user, "<span class='warning'>You summoned [summon_type]!</span>")
-		message_admins("[key_name_admin(user, 1)] summoned [summon_type]!")
+		message_admins("[key_name_admin(user, TRUE)] summoned [summon_type]!")
 		log_game("[key_name(user)] summoned [summon_type]!")
 
 	if(summon_type == SUMMON_MAGIC)
@@ -148,6 +148,9 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 		CRASH("Bad summon_type given: [summon_type]")
 
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
+		var/turf/T = get_turf(H)
+		if(T && is_away_level(T.z))
+			continue
 		if(summon_type == SUMMON_MAGIC)
 			give_magic(H)
 		else

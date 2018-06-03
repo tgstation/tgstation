@@ -29,7 +29,8 @@ SUBSYSTEM_DEF(air)
 	var/list/obj/machinery/atmos_machinery = list()
 	var/list/pipe_init_dirs_cache = list()
 
-
+	//atmos singletons
+	var/list/gas_reactions = list()
 
 	//Special functions lists
 	var/list/turf/active_super_conductivity = list()
@@ -165,7 +166,6 @@ SUBSYSTEM_DEF(air)
 		currentrun.len--
 		if(!M || (M.process_atmos(seconds) == PROCESS_KILL))
 			atmos_machinery.Remove(M)
-		M.SendSignal(COMSIG_MACHINE_PROCESS_ATMOS)
 		if(MC_TICK_CHECK)
 			return
 
@@ -263,7 +263,7 @@ SUBSYSTEM_DEF(air)
 			currentrun |= T
 		if(blockchanges && T.excited_group)
 			T.excited_group.garbage_collect()
-	else if(T.initialized)
+	else if(T.flags_1 & INITIALIZED_1)
 		for(var/turf/S in T.atmos_adjacent_turfs)
 			add_to_active(S)
 	else if(map_loading)

@@ -50,7 +50,7 @@
 		playsound(chassis, fire_sound, 50, 1)
 
 		sleep(max(0, projectile_delay))
-	
+
 	if(kickback)
 		chassis.newtonian_move(turn(chassis.dir,180))
 	chassis.log_message("Fired from [src.name], targeting [target].")
@@ -186,8 +186,8 @@
 
 	log_message("Honked from [src.name]. HONK!")
 	var/turf/T = get_turf(src)
-	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] used a Mecha Honker in [ADMIN_COORDJMP(T)]",0,1)
-	log_game("[chassis.occupant.ckey]([chassis.occupant]) used a Mecha Honker in [COORD(T)]")
+	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] used a Mecha Honker in [ADMIN_VERBOSEJMP(T)]")
+	log_game("[chassis.occupant.ckey]([chassis.occupant]) used a Mecha Honker in [AREACOORD(T)]")
 	return 1
 
 
@@ -336,8 +336,8 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/proj_init(var/obj/item/grenade/flashbang/F)
 	var/turf/T = get_turf(src)
-	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] fired a [src] in [ADMIN_COORDJMP(T)]",0,1)
-	log_game("[key_name(chassis.occupant)] fired a [src] [COORD(T)]")
+	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] fired a [src] in [ADMIN_VERBOSEJMP(T)]")
+	log_game("[key_name(chassis.occupant)] fired a [src] in [AREACOORD(T)]")
 	addtimer(CALLBACK(F, /obj/item/grenade/flashbang.proc/prime), det_time)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/clusterbang //Because I am a heartless bastard -Sieve //Heartless? for making the poor man's honkblast? - Kaze
@@ -369,7 +369,7 @@
 	name = "mousetrap mortar"
 	desc = "Equipment for clown exosuits. Launches armed mousetraps."
 	icon_state = "mecha_mousetrapmrtr"
-	projectile = /obj/item/device/assembly/mousetrap/armed
+	projectile = /obj/item/assembly/mousetrap/armed
 	fire_sound = 'sound/items/bikehorn.ogg'
 	projectiles = 15
 	missile_speed = 1.5
@@ -382,7 +382,7 @@
 			return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(var/obj/item/device/assembly/mousetrap/armed/M)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(var/obj/item/assembly/mousetrap/armed/M)
 	M.secured = 1
 
 
@@ -428,6 +428,5 @@
 	if(!..())
 		if(ismovableatom(hit_atom))
 			var/atom/movable/AM = hit_atom
-			AM.throw_at(get_edge_target_turf(AM,get_dir(src, AM)), 7, 2)
+			AM.safe_throw_at(get_edge_target_turf(AM,get_dir(src, AM)), 7, 2)
 		qdel(src)
-

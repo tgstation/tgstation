@@ -2,7 +2,6 @@
 	name = "ChemMaster 3000"
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
 	density = TRUE
-	anchored = TRUE
 	layer = BELOW_OBJ_LAYER
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
@@ -79,15 +78,13 @@
 	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0", I))
 		return
 
-	else if(exchange_parts(user, I))
-		return
 	else if(default_deconstruction_crowbar(I))
 		return
 
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/reagent_containers) && !(I.flags_1 & ABSTRACT_1) && I.is_open_container())
+	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		. = 1 // no afterattack
 		if(panel_open)
 			to_chat(user, "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>")

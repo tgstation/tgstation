@@ -432,7 +432,13 @@
 		underlying_area_type = current_dock.area_type
 
 	var/list/old_turfs = return_ordered_turfs(x, y, z, dir)
-	var/area/underlying_area = locate(underlying_area_type) in GLOB.sortedAreas
+	
+	var/area/underlying_area
+	for(var/i in GLOB.sortedAreas)
+		var/area/place = i
+		if(place.type == underlying_area_type)
+			underlying_area = place
+			break
 	if(!underlying_area)
 		underlying_area = new underlying_area_type(null)
 
@@ -443,7 +449,7 @@
 		var/area/old_area = oldT.loc
 		underlying_area.contents += oldT
 		oldT.change_area(old_area, underlying_area)
-		oldT.empty(null)
+		oldT.empty(FALSE)
 		
 		// Here we locate the bottomost shuttle boundary and remove all turfs above it
 		var/list/baseturf_cache = oldT.baseturfs

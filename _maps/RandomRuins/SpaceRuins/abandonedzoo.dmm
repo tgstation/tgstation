@@ -394,7 +394,7 @@
 "aY" = (
 /obj/structure/table/reinforced,
 /obj/item/gun/energy/temperature{
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 	},
 /turf/open/floor/plasteel{
 	icon_state = "dark"

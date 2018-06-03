@@ -5,7 +5,6 @@
 	icon_state = "mw"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
@@ -49,8 +48,6 @@
 		if(default_deconstruction_screwdriver(user, "mw-o", "mw", O))
 			return
 		if(default_unfasten_wrench(user, O))
-			return
-		if(exchange_parts(user, O))
 			return
 
 	if(default_deconstruction_crowbar(O))

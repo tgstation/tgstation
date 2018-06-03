@@ -2,7 +2,7 @@
 	name = "\improper honkbot"
 	desc = "A little robot. It looks happy with its bike horn."
 	icon = 'icons/mob/aibots.dmi'
-	icon_state = "honkbot"
+	icon_state = "honkbot1"
 	density = FALSE
 	anchored = FALSE
 	health = 25
@@ -10,7 +10,7 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB
 
-	radio_key = /obj/item/device/encryptionkey/headset_service //doesn't have security key
+	radio_key = /obj/item/encryptionkey/headset_service //doesn't have security key
 	radio_channel = "Service" //Doesn't even use the radio anyway.
 	bot_type = HONK_BOT
 	model = "Honkbot"
@@ -334,7 +334,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	if(prob(50))
 		drop_part(robot_arm, Tsec)
 	new bikehorn(Tsec)
-	new /obj/item/device/assembly/prox_sensor(Tsec)
+	new /obj/item/assembly/prox_sensor(Tsec)
 
 	var/datum/effect_system/spark_spread/s = new
 	s.set_up(3, 1, src)

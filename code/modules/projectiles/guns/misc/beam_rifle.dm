@@ -17,7 +17,7 @@
 	icon_state = "esniper"
 	item_state = "esniper"
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	force = 15
 	materials = list()
 	recoil = 4
@@ -58,7 +58,7 @@
 	var/projectile_damage = 30
 	var/projectile_stun = 0
 	var/projectile_setting_pierce = TRUE
-	var/delay = 65
+	var/delay = 25
 	var/lastfire = 0
 
 	//ZOOMING
@@ -82,7 +82,7 @@
 	cell_type = /obj/item/stock_parts/cell/infinite
 	aiming_time = 0
 	recoil = 0
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/beam_rifle/equipped(mob/user)
 	set_user(user)
@@ -182,6 +182,7 @@
 
 /obj/item/gun/energy/beam_rifle/Initialize()
 	. = ..()
+	fire_delay = delay
 	current_tracers = list()
 	START_PROCESSING(SSprojectiles, src)
 	zoom_lock_action = new(src)
@@ -194,6 +195,9 @@
 	return ..()
 
 /obj/item/gun/energy/beam_rifle/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chambered = null
 	recharge_newshot()
 
@@ -435,7 +439,7 @@
 
 /obj/item/projectile/beam/beam_rifle
 	name = "particle beam"
-	icon = ""
+	icon = null
 	hitsound = 'sound/effects/explosion3.ogg'
 	damage = 0				//Handled manually.
 	damage_type = BURN

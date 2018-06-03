@@ -5,7 +5,6 @@
 	icon_state = "grinder"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 50
@@ -27,9 +26,6 @@
 
 /obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
-		return
-
-	if(exchange_parts(user, O))
 		return
 
 	if(default_pry_open(O))

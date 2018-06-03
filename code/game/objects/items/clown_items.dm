@@ -19,7 +19,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
@@ -52,7 +52,7 @@
 
 /obj/item/soap/suicide_act(mob/user)
 	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!")
-	user.visible_message("<span class='suicide'>[user] lifts [src] to their mouth and gnaws on it furiously, producing a thick froth! [user.p_they(TRUE)]'ll never get that BB gun now!</span>")
+	user.visible_message("<span class='suicide'>[user] lifts [src] to [user.p_their()] mouth and gnaws on it furiously, producing a thick froth! [user.p_they(TRUE)]'ll never get that BB gun now!</span>")
 	new /obj/effect/particle_effect/foam(loc)
 	return (TOXLOSS)
 
@@ -116,8 +116,9 @@
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
 
-/obj/item/weapon/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
+/obj/item/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
 	M.SendSignal(COMSIG_ADD_MOOD_EVENT, "honk", /datum/mood_event/honk)
+	return ..()
 
 /obj/item/bikehorn/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] solemnly points the horn at [user.p_their()] temple! It looks like [user.p_theyre()] trying to commit suicide!</span>")

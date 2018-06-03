@@ -29,7 +29,7 @@
 
 #define RDSCREEN_TEXT_NO_PROTOLATHE "<div><h3>No Protolathe Linked!</h3></div><br>"
 #define RDSCREEN_TEXT_NO_IMPRINTER "<div><h3>No Circuit Imprinter Linked!</h3></div><br>"
-#define RDSCREEN_TEXT_NO_DECONSTRUCT "<div><h3>No Deconstructive Analyzer Linked!</h3></div><br>"
+#define RDSCREEN_TEXT_NO_DECONSTRUCT "<div><h3>No Destructive Analyzer Linked!</h3></div><br>"
 #define RDSCREEN_TEXT_NO_TDISK "<div><h3>No Technology Disk Inserted!</h3></div><br>"
 #define RDSCREEN_TEXT_NO_DDISK "<div><h3>No Design Disk Inserted!</h3></div><br>"
 #define RDSCREEN_TEXT_NO_SNODE "<div><h3>No Technology Node Selected!</h3></div><br>"
@@ -49,15 +49,25 @@
 #define RESEARCH_FABRICATOR_SCREEN_SEARCH 4
 #define RESEARCH_FABRICATOR_SCREEN_CATEGORYVIEW 5
 
-#define DEPARTMENTAL_FLAG_SECURITY 1
-#define DEPARTMENTAL_FLAG_MEDICAL 2
-#define DEPARTMENTAL_FLAG_CARGO 4
-#define DEPARTMENTAL_FLAG_SCIENCE 8
-#define DEPARTMENTAL_FLAG_ENGINEERING 16
-#define DEPARTMENTAL_FLAG_SERVICE 32
-#define DEPARTMENTAL_FLAG_ALL 64			//NO THIS DOESN'T ALLOW YOU TO PRINT EVERYTHING, IT'S FOR ALL DEPARTMENTS!
-//#define DEPARTMENTAL_FLAG_MINING 128
+#define DEPARTMENTAL_FLAG_SECURITY		(1<<0)
+#define DEPARTMENTAL_FLAG_MEDICAL		(1<<1)
+#define DEPARTMENTAL_FLAG_CARGO			(1<<2)
+#define DEPARTMENTAL_FLAG_SCIENCE		(1<<3)
+#define DEPARTMENTAL_FLAG_ENGINEERING	(1<<4)
+#define DEPARTMENTAL_FLAG_SERVICE		(1<<5)
+#define DEPARTMENTAL_FLAG_ALL			(1<<6)			//NO THIS DOESN'T ALLOW YOU TO PRINT EVERYTHING, IT'S FOR ALL DEPARTMENTS!
+//#define DEPARTMENTAL_FLAG_MINING		(1<<7)
 
 #define DESIGN_ID_IGNORE "IGNORE_THIS_DESIGN"
 
 #define RESEARCH_MATERIAL_RECLAMATION_ID "__materials"
+
+//When adding new types, update the list below!
+#define TECHWEB_POINT_TYPE_GENERIC "General Research"
+
+#define TECHWEB_POINT_TYPE_DEFAULT TECHWEB_POINT_TYPE_GENERIC
+
+//defined here so people don't forget to change this!
+#define TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES list(\
+	TECHWEB_POINT_TYPE_GENERIC = "General Research"\
+	)

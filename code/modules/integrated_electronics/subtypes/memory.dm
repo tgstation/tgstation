@@ -56,14 +56,14 @@
 
 /obj/item/integrated_circuit/memory/large
 	name = "large memory circuit"
-	desc = "This big circuit can hold eight pieces of data."
+	desc = "This big circuit can store eight pieces of data."
 	icon_state = "memory8"
 	power_draw_per_use = 4
 	number_of_pins = 8
 
 /obj/item/integrated_circuit/memory/huge
 	name = "large memory stick"
-	desc = "This stick of memory can hold up up to sixteen pieces of data."
+	desc = "This stick of memory can store up up to sixteen pieces of data."
 	icon_state = "memory16"
 	w_class = WEIGHT_CLASS_SMALL
 	spawn_flags = IC_SPAWN_RESEARCH
@@ -79,6 +79,7 @@
 	activators = list("push data" = IC_PINTYPE_PULSE_IN)
 	var/accepting_refs = FALSE
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	number_of_pins = 0
 
 /obj/item/integrated_circuit/memory/constant/do_work()
 	var/datum/integrated_io/O = outputs[1]

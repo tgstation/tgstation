@@ -103,7 +103,7 @@
 /datum/reagent/blackpowder/on_mob_life(mob/living/M)
 	..()
 	if(isplasmaman(M))
-		M.hallucination += 10
+		M.hallucination += 5
 
 /datum/reagent/blackpowder/on_ex_act()
 	var/location = get_turf(holder.my_atom)
@@ -273,7 +273,7 @@
 			var/datum/gas_mixture/G = T.air
 			if(G.temperature > T20C)
 				G.temperature = max(G.temperature/2,T20C)
-			G.react()
+			G.react(src)
 			qdel(hotspot)
 
 /datum/reagent/firefighting_foam/reaction_obj(obj/O, reac_volume)

@@ -6,7 +6,6 @@
 	icon_state = "processor1"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 50
@@ -44,9 +43,6 @@
 		to_chat(user, "<span class='warning'>[src] is in the process of processing!</span>")
 		return TRUE
 	if(default_deconstruction_screwdriver(user, "processor", "processor1", O))
-		return
-
-	if(exchange_parts(user, O))
 		return
 
 	if(default_pry_open(O))

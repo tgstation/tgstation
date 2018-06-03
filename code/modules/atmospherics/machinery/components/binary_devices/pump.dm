@@ -19,7 +19,6 @@ Thus, the two variables affect pump operation are set in New():
 
 	can_unwrench = TRUE
 
-	var/on = FALSE
 	var/target_pressure = ONE_ATMOSPHERE
 
 	var/frequency = 0
@@ -29,10 +28,30 @@ Thus, the two variables affect pump operation are set in New():
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "pump"
 
+/obj/machinery/atmospherics/components/binary/pump/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/binary/pump/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
+
 /obj/machinery/atmospherics/components/binary/pump/on
 	on = TRUE
 	icon_state = "pump_on_map"
-	
+
+/obj/machinery/atmospherics/components/binary/pump/on/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/binary/pump/on/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
+
 /obj/machinery/atmospherics/components/binary/pump/Destroy()
 	SSradio.remove_object(src,frequency)
 	if(radio_connection)

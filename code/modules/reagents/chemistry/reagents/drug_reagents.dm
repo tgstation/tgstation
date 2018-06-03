@@ -57,15 +57,6 @@
 	..()
 	. = 1
 
-/datum/reagent/drug/menthol
-	name = "Menthol"
-	id = "menthol"
-	description = "Tastes naturally minty, and imparts a very mild numbing sensation."
-	taste_description = "mint"
-	reagent_state = LIQUID
-	color = "#80AF9C"
-	trippy = FALSE
-
 /datum/reagent/drug/crank
 	name = "Crank"
 	id = "crank"
@@ -287,7 +278,7 @@
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	M.adjustStaminaLoss(-5, 0)
 	M.adjustBrainLoss(4)
-	M.hallucination += 10
+	M.hallucination += 5
 	if(M.canmove && !ismovableatom(M.loc))
 		step(M, pick(GLOB.cardinals))
 		step(M, pick(GLOB.cardinals))
@@ -295,7 +286,7 @@
 	. = 1
 
 /datum/reagent/drug/bath_salts/overdose_process(mob/living/M)
-	M.hallucination += 10
+	M.hallucination += 5
 	if(M.canmove && !ismovableatom(M.loc))
 		for(var/i in 1 to 8)
 			step(M, pick(GLOB.cardinals))
@@ -341,7 +332,7 @@
 	..()
 
 /datum/reagent/drug/bath_salts/addiction_act_stage4(mob/living/carbon/human/M)
-	M.hallucination += 40
+	M.hallucination += 30
 	if(M.canmove && !ismovableatom(M.loc))
 		for(var/i = 0, i < 16, i++)
 			step(M, pick(GLOB.cardinals))

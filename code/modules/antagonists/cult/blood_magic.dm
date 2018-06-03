@@ -64,7 +64,7 @@
 			qdel(nullify_spell)
 		return
 	BS = possible_spells[entered_spell_name]
-	if(QDELETED(src) || owner.incapacitated() || !BS)
+	if(QDELETED(src) || owner.incapacitated() || !BS || (rune && !(locate(/obj/effect/rune/empower) in range(1, owner))) || (spells.len >= limit))
 		return
 	to_chat(owner,"<span class='warning'>You begin to carve unnatural symbols into your flesh!</span>")
 	SEND_SOUND(owner, sound('sound/weapons/slice.ogg',0,1,10))
@@ -260,7 +260,7 @@
 		if(!ishuman(target) || iscultist(target))
 			return
 		var/mob/living/carbon/human/H = target
-		H.hallucination = max(H.hallucination, 240)
+		H.hallucination = max(H.hallucination, 120)
 		SEND_SOUND(ranged_ability_user, sound('sound/effects/ghost.ogg',0,1,50))
 		var/image/C = image('icons/effects/cult_effects.dmi',H,"bloodsparkles", ABOVE_MOB_LAYER)
 		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", C, FALSE)
@@ -271,7 +271,6 @@
 		attached_action.desc += "<br><b><u>Has [attached_action.charges] use\s remaining</u></b>."
 		attached_action.UpdateButtonIcon()
 		if(attached_action.charges <= 0)
-			remove_mousepointer(ranged_ability_user.client)
 			remove_ranged_ability("<span class='cult'>You have exhausted the spell's power!</span>")
 			qdel(src)
 
@@ -340,7 +339,8 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "disintegrate"
 	item_state = null
-	flags_1 = ABSTRACT_1 | NODROP_1 | DROPDEL_1
+	item_flags = NEEDS_PERMIT | ABSTRACT | NODROP | DROPDEL
+
 	w_class = WEIGHT_CLASS_HUGE
 	throwforce = 0
 	throw_range = 0
@@ -410,7 +410,7 @@
 	if(iscultist(target))
 		return
 	if(iscultist(user))
-		user.visible_message("<span class='warning'>[user] holds up their hand, which explodes in a flash of red light!</span>", \
+		user.visible_message("<span class='warning'>[user] holds up [user.p_their()] hand, which explodes in a flash of red light!</span>", \
 							 "<span class='cultitalic'>You stun [L] with the spell!</span>")
 		var/obj/item/nullrod/N = locate() in L
 		if(N)
@@ -520,7 +520,7 @@
 	name = "shadow shackles"
 	desc = "Shackles that bind the wrists with sinister magic."
 	trashtype = /obj/item/restraints/handcuffs/energy/used
-	flags_1 = DROPDEL_1
+	item_flags = DROPDEL
 
 /obj/item/restraints/handcuffs/energy/cult/used/dropped(mob/user)
 	user.visible_message("<span class='danger'>[user]'s shackles shatter in a discharge of dark magic!</span>", \
@@ -605,11 +605,11 @@
 		uses--
 		var/mob/living/carbon/C = target
 		C.visible_message("<span class='warning'>Otherworldly armor suddenly appears on [C]!</span>")
-		C.equip_to_slot_or_del(new /obj/item/clothing/under/color/black,slot_w_uniform)
-		C.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), slot_head)
-		C.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
-		C.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult/alt(user), slot_shoes)
-		C.equip_to_slot_or_del(new /obj/item/storage/backpack/cultpack(user), slot_back)
+		C.equip_to_slot_or_del(new /obj/item/clothing/under/color/black,SLOT_W_UNIFORM)
+		C.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), SLOT_HEAD)
+		C.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), SLOT_WEAR_SUIT)
+		C.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult/alt(user), SLOT_SHOES)
+		C.equip_to_slot_or_del(new /obj/item/storage/backpack/cultpack(user), SLOT_BACK)
 		if(C == user)
 			qdel(src) //Clears the hands
 		C.put_in_hands(new /obj/item/melee/cultblade(user))
@@ -642,7 +642,7 @@
 					else
 						H.blood_volume = BLOOD_VOLUME_SAFE
 						uses -= round(restore_blood/2)
-						to_chat(user,"<span class='warning'>Your blood rites have restored [H == user ? "your" : "their"] blood to safe levels!</span>")
+						to_chat(user,"<span class='warning'>Your blood rites have restored [H == user ? "your" : "[H.p_their()]"] blood to safe levels!</span>")
 				var/overall_damage = H.getBruteLoss() + H.getFireLoss() + H.getToxLoss() + H.getOxyLoss()
 				if(overall_damage == 0)
 					to_chat(user,"<span class='cult'>That cultist doesn't require healing!</span>")
@@ -655,9 +655,9 @@
 					if(ratio>1)
 						ratio = 1
 						uses -= round(overall_damage)
-						H.visible_message("<span class='warning'>[H] is fully healed by [H==user ? "their":"[H]'s"]'s blood magic!</span>")
+						H.visible_message("<span class='warning'>[H] is fully healed by [H==user ? "[H.p_their()]":"[H]'s"]'s blood magic!</span>")
 					else
-						H.visible_message("<span class='warning'>[H] is partially healed by [H==user ? "their":"[H]'s"] blood magic.</span>")
+						H.visible_message("<span class='warning'>[H] is partially healed by [H==user ? "[H.p_their()]":"[H]'s"] blood magic.</span>")
 						uses = 0
 					ratio *= -1
 					H.adjustOxyLoss((overall_damage*ratio) * (H.getOxyLoss() / overall_damage), 0)
@@ -670,10 +670,10 @@
 					user.Beam(H,icon_state="sendbeam",time=15)
 			else
 				if(H.stat == DEAD)
-					to_chat(user,"<span class='warning'>Their blood has stopped flowing, you'll have to find another way to extract it.</span>")
+					to_chat(user,"<span class='warning'>[H.p_their(TRUE)] blood has stopped flowing, you'll have to find another way to extract it.</span>")
 					return
 				if(H.cultslurring)
-					to_chat(user,"<span class='danger'>Their blood has been tainted by an even stronger form of blood magic, it's no use to us like this!</span>")
+					to_chat(user,"<span class='danger'>[H.p_their(TRUE)] blood has been tainted by an even stronger form of blood magic, it's no use to us like this!</span>")
 					return
 				if(H.blood_volume > BLOOD_VOLUME_SAFE)
 					H.blood_volume -= 100
@@ -684,7 +684,7 @@
 					to_chat(user,"<span class='cultitalic'>Your blood rite gains 50 charges from draining [H]'s blood.</span>")
 					new /obj/effect/temp_visual/cult/sparks(get_turf(H))
 				else
-					to_chat(user,"<span class='danger'>They're missing too much blood - you cannot drain them further!</span>")
+					to_chat(user,"<span class='danger'>[H.p_theyre(TRUE)] missing too much blood - you cannot drain [H.p_them()] further!</span>")
 					return
 		if(isconstruct(target))
 			var/mob/living/simple_animal/M = target

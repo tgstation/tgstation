@@ -193,7 +193,7 @@
 	if(user.gender == FEMALE)
 		return 0
 	var/mob/living/carbon/human/H = user
-	user.visible_message("<span class='suicide'>[user] is donning [src]! It looks like they're trying to be nice to girls.</span>")
+	user.visible_message("<span class='suicide'>[user] is donning [src]! It looks like [user.p_theyre()] trying to be nice to girls.</span>")
 	user.say("M'lady.")
 	sleep(10)
 	H.facial_hair_style = "Neckbeard"
@@ -221,7 +221,7 @@
 	icon_state = "shamebrero"
 	item_state = "shamebrero"
 	desc = "Once it's on, it never comes off."
-	flags_1 = NODROP_1
+	item_flags = NODROP
 	dog_fashion = null
 
 /obj/item/clothing/head/cone
@@ -322,3 +322,26 @@
 	desc = "Lavish space tomb not included."
 	icon_state = "nemes_headdress"
 	icon_state = "nemes_headdress"
+
+/obj/item/clothing/head/frenchberet
+	name = "french beret"
+	desc = "A quality beret, infused with the aroma of chain-smoking, wine-swilling Parisians. You feel less inclined to engage military conflict, for some reason."
+	icon_state = "beretblack"
+
+/obj/item/clothing/head/frenchberet/speechModification(M)
+	if(copytext(M, 1, 2) != "*")
+		M = " [M]"
+		var/list/french_words = strings("french_replacement.json", "french")
+
+		for(var/key in french_words)
+			var/value = french_words[key]
+			if(islist(value))
+				value = pick(value)
+
+			M = replacetextEx(M, " [uppertext(key)]", " [uppertext(value)]")
+			M = replacetextEx(M, " [capitalize(key)]", " [capitalize(value)]")
+			M = replacetextEx(M, " [key]", " [value]")
+
+		if(prob(3))
+			M += pick(" Honh honh honh!"," Honh!"," Zut Alors!")
+	return trim(M)

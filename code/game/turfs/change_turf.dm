@@ -25,8 +25,6 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			O = new()
 			O.underlays.Add(T)
 		T.ChangeTurf(type)
-		for(var/group in decals)
-			T.add_decal(decals[group],group)
 		if(underlays.len)
 			T.underlays = O.underlays
 	if(T.icon_state != icon_state)
@@ -70,10 +68,19 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	blueprint_data = null
 
 	var/list/old_baseturfs = baseturfs
-	changing_turf = TRUE
 
+	var/list/transferring_comps = list()
+	SendSignal(COMSIG_TURF_CHANGE, path, new_baseturfs, flags, transferring_comps)
+	for(var/i in transferring_comps)
+		var/datum/component/comp = i
+		comp.RemoveComponent()
+
+	changing_turf = TRUE
 	qdel(src)	//Just get the side effects and call Destroy
 	var/turf/W = new path(src)
+
+	for(var/i in transferring_comps)
+		W.TakeComponent(i)
 
 	if(new_baseturfs)
 		W.baseturfs = new_baseturfs
@@ -123,7 +130,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		if(new_baseturfs.len == 1)
 			new_baseturfs = new_baseturfs[1]
 		return ChangeTurf(turf_type, new_baseturfs, flags)
-	
+
 	if(baseturfs == type)
 		return src
 
@@ -164,7 +171,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	var/turf/newT
 	if(flags & CHANGETURF_SKIP) // We haven't been initialized
-		if(initialized)
+		if(flags_1 & INITIALIZED_1)
 			stack_trace("CHANGETURF_SKIP was used in a PlaceOnTop call for a turf that's initialized. This is a mistake. [src]([type])")
 		assemble_baseturfs()
 	if(fake_turf_type)
@@ -210,7 +217,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	if(depth)
 		var/list/target_baseturfs
-		if(length(copytarget.baseturfs)) 
+		if(length(copytarget.baseturfs))
 			// with default inputs this would be Copy(CLAMP(2, -INFINITY, baseturfs.len))
 			// Don't forget a lower index is lower in the baseturfs stack, the bottom is baseturfs[1]
 			target_baseturfs = copytarget.baseturfs.Copy(CLAMP(1 + ignore_bottom, 1 + copytarget.baseturfs.len - depth, copytarget.baseturfs.len))

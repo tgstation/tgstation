@@ -45,13 +45,10 @@
 	var/turf/p_turf = get_turf(P)
 	var/face_direction = get_dir(src, p_turf)
 	var/face_angle = dir2angle(face_direction)
-	var/incidence_s = WRAP(GET_ANGLE_OF_INCIDENCE(face_angle, P.Angle), -90, 90)
-	var/new_angle = face_angle + incidence_s
-	var/new_angle_s = new_angle
-	while(new_angle_s > 180)	// Translate to regular projectile degrees
-		new_angle_s -= 360
-	while(new_angle_s < -180)
-		new_angle_s += 360
+	var/incidence_s = GET_ANGLE_OF_INCIDENCE(face_angle, (P.Angle + 180))
+	if(abs(incidence_s) > 90 && abs(incidence_s) < 270)
+		return FALSE
+	var/new_angle_s = SIMPLIFY_DEGREES(face_angle + incidence_s)
 	P.setAngle(new_angle_s)
 	return TRUE
 
@@ -209,8 +206,8 @@
 		place_poster(W,user)
 		return TRUE
 	//wall mounted IC assembly stuff
-	else if(istype(W, /obj/item/device/electronic_assembly/wallmount))
-		var/obj/item/device/electronic_assembly/wallmount/A = W
+	else if(istype(W, /obj/item/electronic_assembly/wallmount))
+		var/obj/item/electronic_assembly/wallmount/A = W
 		A.mount_assembly(src, user)
 		return TRUE
 

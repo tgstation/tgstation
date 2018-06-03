@@ -6,7 +6,7 @@
 	can_flashlight = 1
 	w_class = WEIGHT_CLASS_HUGE
 	flags_1 =  CONDUCT_1
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 	ammo_x_offset = 3
 	flight_x_offset = 17
@@ -20,7 +20,7 @@
 	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
 	icon_state = "ioncarbine"
 	w_class = WEIGHT_CLASS_NORMAL
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	pin = null
 	ammo_x_offset = 2
 	flight_x_offset = 18
@@ -95,7 +95,6 @@
 	unique_frequency = TRUE
 	can_flashlight = 0
 	max_mod_capacity = 0
-	empty_state = null
 
 /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
 	name = "candy corn crossbow"
@@ -267,7 +266,7 @@
 /obj/item/gun/energy/temperature/security
 	name = "security temperature gun"
 	desc = "A weapon that can only be used to its full potential by the truly robust."
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/laser/instakill
 	name = "instakill rifle"

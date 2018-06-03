@@ -236,14 +236,14 @@
 
 	if(!slot_priority)
 		slot_priority = list( \
-			slot_back, slot_wear_id,\
-			slot_w_uniform, slot_wear_suit,\
-			slot_wear_mask, slot_head, slot_neck,\
-			slot_shoes, slot_gloves,\
-			slot_ears, slot_glasses,\
-			slot_belt, slot_s_store,\
-			slot_l_store, slot_r_store,\
-			slot_generic_dextrous_storage\
+			SLOT_BACK, SLOT_WEAR_ID,\
+			SLOT_W_UNIFORM, SLOT_WEAR_SUIT,\
+			SLOT_WEAR_MASK, SLOT_HEAD, SLOT_NECK,\
+			SLOT_SHOES, SLOT_GLOVES,\
+			SLOT_EARS, SLOT_GLASSES,\
+			SLOT_BELT, SLOT_S_STORE,\
+			SLOT_L_STORE, SLOT_R_STORE,\
+			SLOT_GENERC_DEXTROUS_STORAGE\
 		)
 
 	for(var/slot in slot_priority)
@@ -288,7 +288,7 @@
 /mob/proc/show_inv(mob/user)
 	return
 
-//mob verbs are faster than object verbs. See http://www.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
+//mob verbs are faster than object verbs. See https://secure.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
 /mob/verb/examinate(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
 	set name = "Examine"
 	set category = "IC"
@@ -460,7 +460,7 @@
 			else
 				what = get_item_by_slot(slot)
 			if(what)
-				if(!(what.flags_1 & ABSTRACT_1))
+				if(!(what.item_flags & ABSTRACT))
 					usr.stripPanelUnequip(what,src,slot)
 			else
 				usr.stripPanelEquip(what,src,slot)
@@ -493,21 +493,8 @@
 		return
 	show_inv(usr)
 
-/mob/proc/is_active()
-	return (0 >= usr.stat)
-
 /mob/proc/is_muzzled()
 	return 0
-
-/mob/proc/see(message)
-	if(!is_active())
-		return 0
-	to_chat(src, message)
-	return 1
-
-/mob/proc/show_viewers(message)
-	for(var/mob/M in viewers())
-		M.see(message)
 
 /mob/Stat()
 	..()
@@ -825,8 +812,8 @@
 					break
 				search_id = 0
 
-		else if( search_pda && istype(A, /obj/item/device/pda) )
-			var/obj/item/device/pda/PDA = A
+		else if( search_pda && istype(A, /obj/item/pda) )
+			var/obj/item/pda/PDA = A
 			if(PDA.owner == oldname)
 				PDA.owner = newname
 				PDA.update_label()
@@ -848,6 +835,15 @@
 		var/obj/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
 		if (L)
 			L.alpha = lighting_alpha
+
+/mob/proc/update_mouse_pointer()
+	if (!client)
+		return
+	client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
+	if (ismecha(loc))
+		var/obj/mecha/M = loc
+		if(M.mouse_pointer)
+			client.mouse_pointer_icon = M.mouse_pointer
 
 /mob/proc/is_literate()
 	return 0

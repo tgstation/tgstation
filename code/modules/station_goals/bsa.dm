@@ -40,8 +40,8 @@
 	icon_state = "power_box"
 
 /obj/machinery/bsa/back/multitool_act(mob/living/user, obj/item/I)
-	if(istype(I, /obj/item/device/multitool)) // Only this multitool type has a data buffer.
-		var/obj/item/device/multitool/M = I
+	if(istype(I, /obj/item/multitool)) // Only this multitool type has a data buffer.
+		var/obj/item/multitool/M = I
 		M.buffer = src
 		to_chat(user, "<span class='notice'>You store linkage information in [I]'s buffer.</span>")
 	else
@@ -54,8 +54,8 @@
 	icon_state = "emitter_center"
 
 /obj/machinery/bsa/front/multitool_act(mob/living/user, obj/item/I)
-	if(istype(I, /obj/item/device/multitool)) // Only this multitool type has a data buffer.
-		var/obj/item/device/multitool/M = I
+	if(istype(I, /obj/item/multitool)) // Only this multitool type has a data buffer.
+		var/obj/item/multitool/M = I
 		M.buffer = src
 		to_chat(user, "<span class='notice'>You store linkage information in [I]'s buffer.</span>")
 	else
@@ -70,8 +70,8 @@
 	var/obj/machinery/bsa/front/front
 
 /obj/machinery/bsa/middle/multitool_act(mob/living/user, obj/item/I)
-	if(istype(I, /obj/item/device/multitool)) // Only this multitool type has a data buffer.
-		var/obj/item/device/multitool/M = I
+	if(istype(I, /obj/item/multitool)) // Only this multitool type has a data buffer.
+		var/obj/item/multitool/M = I
 		if(M.buffer)
 			if(istype(M.buffer, /obj/machinery/bsa/back))
 				back = M.buffer
@@ -185,7 +185,7 @@
 		T.ex_act(EXPLODE_DEVASTATE)
 	point.Beam(get_target_turf(),icon_state="bsa_beam",time=50,maxdistance = world.maxx) //ZZZAP
 
-	message_admins("[key_name_admin(user)] has launched an artillery strike.")
+	message_admins("[ADMIN_LOOKUPFLW(user)] has launched an artillery strike.")
 	explosion(bullseye,ex_power,ex_power*2,ex_power*4)
 
 	reload()
@@ -253,7 +253,7 @@
 
 /obj/machinery/computer/bsa_control/proc/calibrate(mob/user)
 	var/list/gps_locators = list()
-	for(var/obj/item/device/gps/G in GLOB.GPS_list) //nulls on the list somehow
+	for(var/obj/item/gps/G in GLOB.GPS_list) //nulls on the list somehow
 		if(G.tracking)
 			gps_locators[G.gpstag] = G
 
@@ -267,14 +267,14 @@
 /obj/machinery/computer/bsa_control/proc/get_target_name()
 	if(istype(target, /area))
 		return get_area_name(target, TRUE)
-	else if(istype(target, /obj/item/device/gps))
-		var/obj/item/device/gps/G = target
+	else if(istype(target, /obj/item/gps))
+		var/obj/item/gps/G = target
 		return G.gpstag
 
 /obj/machinery/computer/bsa_control/proc/get_impact_turf()
 	if(istype(target, /area))
 		return pick(get_area_turfs(target))
-	else if(istype(target, /obj/item/device/gps))
+	else if(istype(target, /obj/item/gps))
 		return get_turf(target)
 
 /obj/machinery/computer/bsa_control/proc/fire(mob/user)

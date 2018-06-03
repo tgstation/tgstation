@@ -6,8 +6,6 @@
 	can_unwrench = TRUE
 	desc = "Very useful for mixing gasses."
 
-	var/on = FALSE
-
 	var/target_pressure = ONE_ATMOSPHERE
 	var/node1_concentration = 0.5
 	var/node2_concentration = 0.5
@@ -17,9 +15,29 @@
 
 	//node 3 is the outlet, nodes 1 & 2 are intakes
 
+/obj/machinery/atmospherics/components/trinary/mixer/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/trinary/mixer/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
+
 /obj/machinery/atmospherics/components/trinary/mixer/flipped
 	icon_state = "mixer_off_f"
 	flipped = TRUE
+
+/obj/machinery/atmospherics/components/trinary/mixer/flipped/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/trinary/mixer/flipped/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/trinary/mixer/airmix //For standard airmix to distro
 	name = "air mixer"
@@ -28,19 +46,19 @@
 	node2_concentration = O2STANDARD
 	on = TRUE
 	target_pressure = MAX_OUTPUT_PRESSURE
-	
+
 /obj/machinery/atmospherics/components/trinary/mixer/airmix/inverse
 	node1_concentration = O2STANDARD
 	node2_concentration = N2STANDARD
-	
+
 /obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped
 	icon_state = "mixer_on_f"
 	flipped = TRUE
-	
+
 /obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/inverse
 	node1_concentration = O2STANDARD
 	node2_concentration = N2STANDARD
-	
+
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon()
 	cut_overlays()
 	for(var/direction in GLOB.cardinals)

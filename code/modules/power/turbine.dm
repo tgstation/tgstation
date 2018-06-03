@@ -27,7 +27,6 @@
 	desc = "The compressor stage of a gas turbine generator."
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "compressor"
-	anchored = TRUE
 	density = TRUE
 	resistance_flags = FIRE_PROOF
 	CanAtmosPass = ATMOS_PASS_DENSITY
@@ -48,7 +47,6 @@
 	desc = "A gas turbine used for backup power generation."
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "turbine"
-	anchored = TRUE
 	density = TRUE
 	resistance_flags = FIRE_PROOF
 	CanAtmosPass = ATMOS_PASS_DENSITY
@@ -110,9 +108,6 @@
 		else
 			to_chat(user, "<span class='alert'>Turbine not connected.</span>")
 			stat |= BROKEN
-		return
-
-	if(exchange_parts(user, I))
 		return
 
 	default_deconstruction_crowbar(I)
@@ -241,9 +236,6 @@
 		else
 			to_chat(user, "<span class='alert'>Compressor not connected.</span>")
 			stat |= BROKEN
-		return
-
-	if(exchange_parts(user, I))
 		return
 
 	default_deconstruction_crowbar(I)

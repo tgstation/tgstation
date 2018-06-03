@@ -77,12 +77,14 @@
 
 
 /mob/living/silicon/robot/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	switch(severity)
 		if(1)
 			Stun(160)
 		if(2)
 			Stun(60)
-	..()
 
 
 /mob/living/silicon/robot/emag_act(mob/user)
@@ -128,7 +130,7 @@
 	SetStun(60) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
 	lawupdate = 0
 	connected_ai = null
-	message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
+	message_admins("[ADMIN_LOOKUPFLW(user)] emagged cyborg [ADMIN_LOOKUPFLW(src)].  Laws overridden.")
 	log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
@@ -145,9 +147,9 @@
 	to_chat(src, "<span class='danger'>> N</span>")
 	sleep(20)
 	to_chat(src, "<span class='danger'>ERRORERRORERROR</span>")
-	to_chat(src, "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>")
+	to_chat(src, "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and [user.p_their()] commands.</span>")
 	laws = new /datum/ai_laws/syndicate_override
-	set_zeroth_law("Only [user.real_name] and people they designate as being such are Syndicate Agents.")
+	set_zeroth_law("Only [user.real_name] and people [user.p_they()] designate[user.p_s()] as being such are Syndicate Agents.")
 	laws.associate(src)
 	update_icons()
 

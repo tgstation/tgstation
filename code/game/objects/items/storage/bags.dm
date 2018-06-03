@@ -17,7 +17,7 @@
 
 //  Generic non-item
 /obj/item/storage/bag
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/storage/bag/ComponentInitialize()
 	. = ..()
@@ -40,6 +40,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 
 	w_class = WEIGHT_CLASS_BULKY
+	var/insertable = TRUE
 
 /obj/item/storage/bag/trash/ComponentInitialize()
 	. = ..()
@@ -64,26 +65,31 @@
 	else icon_state = "[initial(icon_state)]3"
 
 /obj/item/storage/bag/trash/cyborg
+	insertable = FALSE
 
 /obj/item/storage/bag/trash/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	J.put_in_cart(src, user)
-	J.mybag=src
-	J.update_icon()
-
-/obj/item/storage/bag/trash/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	return
+	if(insertable)
+		J.put_in_cart(src, user)
+		J.mybag=src
+		J.update_icon()
+	else
+		to_chat(user, "<span class='warning'>You are unable to fit your [name] into the [J.name].</span>")
+		return
 
 /obj/item/storage/bag/trash/bluespace
 	name = "trash bag of holding"
 	desc = "The latest and greatest in custodial convenience, a trashbag that is capable of holding vast quantities of garbage."
 	icon_state = "bluetrashbag"
-	flags_2 = NO_MAT_REDEMPTION_2
+	item_flags = NO_MAT_REDEMPTION
 
 /obj/item/storage/bag/trash/bluespace/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_combined_w_class = 60
 	STR.max_items = 60
+
+/obj/item/storage/bag/trash/bluespace/cyborg
+	insertable = FALSE
 
 // -----------------------------
 //        Mining Satchel
@@ -94,7 +100,7 @@
 	desc = "This little bugger can be used to store and transport ores."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "satchel"
-	slot_flags = SLOT_BELT | SLOT_POCKET
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKET
 	w_class = WEIGHT_CLASS_NORMAL
 	component_type = /datum/component/storage/concrete/stack
 	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
@@ -146,10 +152,10 @@
 	if(show_message)
 		playsound(user, "rustle", 50, TRUE)
 		if (box)
-			user.visible_message("<span class='notice'>[user] offloads the ores beneath them into [box].</span>", \
+			user.visible_message("<span class='notice'>[user] offloads the ores beneath [user.p_them()] into [box].</span>", \
 			"<span class='notice'>You offload the ores beneath you into your [box].</span>")
 		else
-			user.visible_message("<span class='notice'>[user] scoops up the ores beneath them.</span>", \
+			user.visible_message("<span class='notice'>[user] scoops up the ores beneath [user.p_them()].</span>", \
 				"<span class='notice'>You scoop up the ores beneath you with your [name].</span>")
 	spam_protection = FALSE
 

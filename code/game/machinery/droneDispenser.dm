@@ -8,7 +8,6 @@
 
 	icon = 'icons/obj/machines/droneDispenser.dmi'
 	icon_state = "on"
-	anchored = TRUE
 	density = TRUE
 
 	max_integrity = 250
@@ -51,7 +50,7 @@
 
 /obj/machinery/droneDispenser/Initialize()
 	. = ..()
-	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, TRUE)
+	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, TRUE, list(/obj/item/stack))
 	materials.insert_amount(starting_amount)
 	materials.precise_insertion = TRUE
 	using_materials = list(MAT_METAL=metal_cost, MAT_GLASS=glass_cost)
@@ -174,7 +173,7 @@
 				use_power(power_used)
 
 			var/atom/A = new dispense_type(loc)
-			A.admin_spawned = admin_spawned
+			A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 
 			if(create_sound)
 				playsound(src, create_sound, 50, 1)

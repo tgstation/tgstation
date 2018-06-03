@@ -425,10 +425,10 @@
 						var/obj/item/clothing/under/schoolgirl/I = new seifuku
 						var/olduniform = H.w_uniform
 						H.temporarilyRemoveItemFromInventory(H.w_uniform, TRUE, FALSE)
-						H.equip_to_slot_or_del(I, slot_w_uniform)
+						H.equip_to_slot_or_del(I, SLOT_W_UNIFORM)
 						qdel(olduniform)
 						if(droptype == "Yes")
-							I.flags_1 |= NODROP_1
+							I.item_flags |= NODROP
 				else
 					to_chat(H, "You're not kawaii enough for this.")
 

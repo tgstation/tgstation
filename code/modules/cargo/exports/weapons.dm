@@ -11,18 +11,18 @@
 	include_subtypes = TRUE
 
 /datum/export/weapon/knife
-	cost = 750
+	cost = 100
 	unit_name = "combat knife"
 	export_types = list(/obj/item/kitchen/knife/combat)
 
 
 /datum/export/weapon/taser
-	cost = 250
+	cost = 200
 	unit_name = "advanced taser"
 	export_types = list(/obj/item/gun/energy/e_gun/advtaser)
 
 /datum/export/weapon/laser
-	cost = 250
+	cost = 200
 	unit_name = "laser gun"
 	export_types = list(/obj/item/gun/energy/laser)
 
@@ -32,37 +32,36 @@
 	export_types = list(/obj/item/gun/energy/disabler)
 
 /datum/export/weapon/energy_gun
-	cost = 900
+	cost = 300
 	unit_name = "energy gun"
 	export_types = list(/obj/item/gun/energy/e_gun)
 
-
 /datum/export/weapon/wt550
-	cost = 1400
+	cost = 300
 	unit_name = "WT-550 automatic rifle"
 	export_types = list(/obj/item/gun/ballistic/automatic/wt550)
 
 /datum/export/weapon/shotgun
-	cost = 350
+	cost = 300
 	unit_name = "combat shotgun"
 	export_types = list(/obj/item/gun/ballistic/shotgun/automatic/combat)
 
 
 /datum/export/weapon/flashbang
-	cost = 15
+	cost = 5
 	unit_name = "flashbang grenade"
 	export_types = list(/obj/item/grenade/flashbang)
 
 /datum/export/weapon/teargas
-	cost = 15
+	cost = 5
 	unit_name = "tear gas grenade"
 	export_types = list(/obj/item/grenade/chem_grenade/teargas)
 
 
 /datum/export/weapon/flash
-	cost = 10
+	cost = 5
 	unit_name = "handheld flash"
-	export_types = list(/obj/item/device/assembly/flash)
+	export_types = list(/obj/item/assembly/flash)
 	include_subtypes = TRUE
 
 /datum/export/weapon/handcuffs
@@ -97,13 +96,13 @@
 	cost = 40000
 	unit_name = "Blood Contract"
 	export_types = list(/obj/item/blood_contract)
-	
+
 //Artifacts of lavaland
 
 /datum/export/weapon/immortality_talisman
 	cost = 10000
 	unit_name = "Immortality Talisman"
-	export_types = list(/obj/item/device/immortality_talisman)
+	export_types = list(/obj/item/immortality_talisman)
 	
 /datum/export/weapon/babel
 	cost = 10000
@@ -128,17 +127,17 @@
 /datum/export/weapon/red //second half of telecube
 	cost = 5000
 	unit_name = "Red Cube"
-	export_types = list(/obj/item/device/warp_cube/red)
+	export_types = list(/obj/item/warp_cube/red)
 	
 /datum/export/weapon/blue //first half of telecube
 	cost = 5000
 	unit_name = "Blue Cube"
-	export_types = list(/obj/item/device/warp_cube)
+	export_types = list(/obj/item/warp_cube)
 	
 /datum/export/weapon/wisplantern //thermals on lavaland
 	cost = 10000
 	unit_name = "Wisp Lantern"
-	export_types = list(/obj/item/device/wisp_lantern)
+	export_types = list(/obj/item/wisp_lantern)
 	
 /datum/export/weapon/flight //if xenobiology ever reaches the point to get these without shuttle being called they deserve it
 	cost = 10000
