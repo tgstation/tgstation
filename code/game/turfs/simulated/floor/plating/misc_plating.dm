@@ -119,10 +119,116 @@
 	icon_state = "water"
 	baseturfs = /turf/open/floor/plating/beach/water
 
+/turf/open/floor/plating/beach/water_r
+	name = "coastline"
+	icon_state = "water_r"
+	baseturfs = /turf/open/floor/plating/beach/water_r
 
+/turf/open/floor/plating/beach/water_t
+	name = "coastline"
+	icon_state = "water_t"
+	baseturfs = /turf/open/floor/plating/beach/water_t
+
+/turf/open/floor/plating/beach/water_l
+	name = "coastline"
+	icon_state = "water_l"
+	baseturfs = /turf/open/floor/plating/beach/water_l
+
+/turf/open/floor/plating/beach/water_tr
+	name = "coastline"
+	icon_state = "water_tr"
+	baseturfs = /turf/open/floor/plating/beach/water_tr
+
+/turf/open/floor/plating/beach/water_br
+	name = "coastline"
+	icon_state = "water_br"
+	baseturfs = /turf/open/floor/plating/beach/water_br
+
+/turf/open/floor/plating/beach/water_bl
+	name = "coastline"
+	icon_state = "water_bl"
+	baseturfs = /turf/open/floor/plating/beach/water_bl
+
+/turf/open/floor/plating/beach/water_tl
+	name = "coastline"
+	icon_state = "water_tl"
+	baseturfs = /turf/open/floor/plating/beach/water_tl
+
+/turf/open/floor/plating/beach/coastline_r
+	name = "coastline"
+	desc = "Tide's high tonight. Charge your batons."
+	icon_state = "sandwater_r"
+	baseturfs = /turf/open/floor/plating/beach/coastline_r
+
+/turf/open/floor/plating/beach/coastline_a
+	name = "coastline"
+	desc = "Tide's high tonight. Charge your batons."
+	icon_state = "sandwater_a"
+	baseturfs = /turf/open/floor/plating/beach/coastline_a
+
+/turf/open/floor/plating/beach/coastline_l
+	name = "coastline"
+	desc = "Tide's high tonight. Charge your batons."
+	icon_state = "sandwater_l"
+	baseturfs = /turf/open/floor/plating/beach/coastline_l
+
+/turf/open/floor/plating/beach/coastline_corner_br
+	name = "coastline"
+	desc = "Tide's high tonight. Charge your batons."
+	icon_state = "sandwater_br"
+	baseturfs = /turf/open/floor/plating/beach/coastline_l
+
+/turf/open/floor/plating/beach/coastline_corner_bl
+	name = "coastline"
+	desc = "Tide's high tonight. Charge your batons."
+	icon_state = "sandwater_bl"
+	baseturfs = /turf/open/floor/plating/beach/coastline_corner_bl
+
+/turf/open/floor/plating/beach/coastline_corner_tr
+	name = "coastline"
+	desc = "Tide's high tonight. Charge your batons."
+	icon_state = "sandwater_tr"
+	baseturfs = /turf/open/floor/plating/beach/coastline_corner_tr
+
+/turf/open/floor/plating/beach/coastline_corner_tl
+	name = "coastline"
+	desc = "Tide's high tonight. Charge your batons."
+	icon_state = "sandwater_tl"
+	baseturfs = /turf/open/floor/plating/beach/coastline_corner_tl
+
+/turf/open/floor/plating/beach/coastline_inner_bl
+	name = "coastline"
+	desc = "Tide's high tonight. Charge your batons."
+	icon_state = "sandwater_bl"
+	baseturfs = /turf/open/floor/plating/beach/coastline_inner_bl
+
+/turf/open/floor/plating/beach/coastline_inner_br
+	name = "coastline"
+	desc = "Tide's high tonight. Charge your batons."
+	icon_state = "sandwater_br_inner"
+	baseturfs = /turf/open/floor/plating/beach/coastline_inner_br
+
+/turf/open/floor/plating/beach/coastline_inner_tr
+	name = "coastline"
+	desc = "Tide's high tonight. Charge your batons."
+	icon_state = "sandwater_tr_inner"
+	baseturfs = /turf/open/floor/plating/beach/coastline_inner_tr
+
+/turf/open/floor/plating/beach/coastline_inner_tl
+	name = "coastline"
+	desc = "Tide's high tonight. Charge your batons."
+	icon_state = "sandwater_tl_inner"
+	baseturfs = /turf/open/floor/plating/beach/coastline_inner_tl
+
+/turf/open/floor/plating/beach/coastline_inner_bl
+	name = "coastline"
+	desc = "Tide's high tonight. Charge your batons."
+	icon_state = "sandwater_bl_inner"
+	baseturfs = /turf/open/floor/plating/beach/coastline_inner_bl
 /turf/open/floor/plating/ironsand
 	name = "iron sand"
 	desc = "Like sand, but more <i>metal</i>."
+
 
 /turf/open/floor/plating/ironsand/Initialize()
 	. = ..()
