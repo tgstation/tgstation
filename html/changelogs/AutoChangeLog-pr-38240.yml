@@ -1,0 +1,5 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "Pubbystation: Added a dual-port vent pump to the toxins burn chamber."
+  - code_imp: "Removed most airlock_controller/incinerator related varedits and replaced them with defines/subtypes."
