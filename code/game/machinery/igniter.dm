@@ -13,6 +13,15 @@
 	var/id = null
 	var/on = FALSE
 
+/obj/machinery/igniter/incinerator_toxmix
+	id = INCINERATOR_TOXMIX_IGNITER
+
+/obj/machinery/igniter/incinerator_atmos
+	id = INCINERATOR_ATMOS_IGNITER
+
+/obj/machinery/igniter/incinerator_syndicatelava
+	id = INCINERATOR_SYNDICATELAVA_IGNITER
+
 /obj/machinery/igniter/on
 	on = TRUE
 	icon_state = "igniter1"
@@ -57,6 +66,9 @@
 	var/last_spark = 0
 	var/base_state = "migniter"
 	var/datum/effect_system/spark_spread/spark_system
+
+/obj/machinery/sparker/toxmix
+	id = INCINERATOR_TOXMIX_IGNITER
 
 /obj/machinery/sparker/Initialize()
 	. = ..()

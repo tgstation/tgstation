@@ -31513,8 +31513,8 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -32095,9 +32095,6 @@
 	dir = 4
 	},
 /area/science/explab)
-"bFg" = (
-/turf/open/floor/plasteel/white,
-/area/science/mixing)
 "bFh" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -32532,6 +32529,9 @@
 /area/science/mixing)
 "bGn" = (
 /obj/machinery/vending/wardrobe/science_wardrobe,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/mixing)
 "bGo" = (
@@ -32551,6 +32551,9 @@
 	pixel_y = -2
 	},
 /obj/structure/table/reinforced,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/mixing)
 "bGp" = (
@@ -32575,6 +32578,9 @@
 	network = list("ss13","rd")
 	},
 /obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/mixing)
 "bGq" = (
@@ -32592,15 +32598,24 @@
 	},
 /obj/item/assembly/timer,
 /obj/structure/table/reinforced,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/mixing)
 "bGr" = (
 /obj/structure/tank_dispenser,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/mixing)
 "bGs" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
 	},
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/mixing)
@@ -33054,12 +33069,8 @@
 /area/science/mixing)
 "bHz" = (
 /obj/machinery/atmospherics/components/binary/valve,
-/obj/machinery/button/door{
-	id = "toxvent";
-	name = "Aft Vent Control";
-	pixel_y = -24;
-	req_access_txt = "0";
-	req_one_access_txt = "8;24"
+/obj/machinery/button/door/incinerator_vent_toxmix{
+	pixel_y = -24
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -33075,14 +33086,9 @@
 	pixel_x = -6;
 	pixel_y = -24
 	},
-/obj/machinery/doorButtons/airlock_controller{
-	idExterior = "tox_airlock_exterior";
-	idInterior = "tox_airlock_interior";
-	idSelf = "tox_access_control";
-	name = "Mixing Chamber Access Console";
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
 	pixel_x = 6;
-	pixel_y = -26;
-	req_access_txt = "0"
+	pixel_y = -26
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -33099,9 +33105,15 @@
 	dir = 2;
 	name = "Incinerator Output Pump"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bHD" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/purple/side,
 /area/science/mixing)
 "bHE" = (
@@ -33111,6 +33123,9 @@
 	},
 /obj/effect/turf_decal/bot{
 	dir = 2
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
 	},
 /turf/open/floor/plasteel/purple/side,
 /area/science/mixing)
@@ -33550,15 +33565,7 @@
 /area/science/mixing)
 "bIL" = (
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/public/glass{
-	autoclose = 0;
-	frequency = 1449;
-	heat_proof = 1;
-	id_tag = "tox_airlock_interior";
-	name = "Interior Airlock";
-	req_access_txt = "8";
-	req_one_access_txt = "0"
-	},
+/obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/engine,
 /area/science/mixing)
@@ -33989,34 +33996,31 @@
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 2
 	},
-/obj/machinery/doorButtons/access_button{
-	idDoor = "tox_airlock_exterior";
-	idSelf = "tox_access_control";
-	layer = 3.1;
-	name = "airlock control";
-	pixel_x = 8;
-	pixel_y = -24
-	},
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/airlock_sensor/incinerator_toxmix{
+	pixel_x = -24
 	},
 /turf/open/floor/engine,
 /area/science/mixing)
 "bJR" = (
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_toxmix{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/science/mixing)
 "bJS" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1
 	},
-/obj/machinery/doorButtons/access_button{
-	idDoor = "tox_airlock_interior";
-	idSelf = "tox_access_control";
-	name = "airlock control";
-	pixel_x = -8;
-	pixel_y = 24
-	},
 /obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -34502,15 +34506,7 @@
 /area/engine/atmos)
 "bLf" = (
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/public/glass{
-	autoclose = 0;
-	frequency = 1449;
-	heat_proof = 1;
-	id_tag = "tox_airlock_exterior";
-	name = "Exterior Airlock";
-	req_access_txt = "8";
-	req_one_access_txt = "0"
-	},
+/obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
@@ -35715,10 +35711,7 @@
 /turf/closed/wall/r_wall,
 /area/science/mixing)
 "bOt" = (
-/obj/machinery/door/poddoor{
-	id = "toxvent";
-	name = "Aft Vent"
-	},
+/obj/machinery/door/poddoor/incinerator_toxmix,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
 "bOu" = (
@@ -40343,19 +40336,13 @@
 	dir = 8;
 	id = "incineratorturbine"
 	},
-/obj/machinery/button/door{
-	id = "turbinevent";
-	name = "Outtake Vent Control";
+/obj/machinery/button/door/incinerator_vent_atmos_main{
 	pixel_x = 24;
-	pixel_y = 6;
-	req_one_access_txt = "8;24"
+	pixel_y = 6
 	},
-/obj/machinery/button/door{
-	id = "mixvent";
-	name = "Intake Vent Control";
+/obj/machinery/button/door/incinerator_vent_atmos_aux{
 	pixel_x = 24;
-	pixel_y = -6;
-	req_one_access_txt = "8;24"
+	pixel_y = -6
 	},
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 4
@@ -40375,6 +40362,9 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/airlock_sensor/incinerator_atmos{
+	pixel_y = 22
+	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "bZT" = (
@@ -40642,24 +40632,10 @@
 	icon_state = "4-8"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/public/glass{
-	autoclose = 0;
-	frequency = 1449;
-	heat_proof = 1;
-	id_tag = "incinerator_airlock_interior";
-	name = "Turbine Interior Airlock";
-	req_access_txt = "24"
-	},
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	airpump_tag = "incinerator_airlock_pump";
-	exterior_door_tag = "incinerator_airlock_exterior";
-	id_tag = "incinerator_airlock_control";
-	interior_door_tag = "incinerator_airlock_interior";
-	name = "Incinerator Access Console";
+/obj/machinery/door/airlock/public/glass/incinerator/atmos_interior,
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_atmos{
 	pixel_x = -6;
-	pixel_y = -26;
-	sanitize_external = 1;
-	sensor_tag = "incinerator_airlock_sensor"
+	pixel_y = -26
 	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
@@ -40667,10 +40643,8 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume{
-	dir = 2;
-	frequency = 1449;
-	id = "incinerator_airlock_pump"
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_atmos{
+	dir = 2
 	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
@@ -40679,23 +40653,14 @@
 	icon_state = "4-8"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/public/glass{
-	autoclose = 0;
-	frequency = 1449;
-	heat_proof = 1;
-	id_tag = "incinerator_airlock_exterior";
-	name = "Turbine Exterior Airlock";
-	req_access_txt = "24"
-	},
+/obj/machinery/door/airlock/public/glass/incinerator/atmos_exterior,
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "caO" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/machinery/igniter{
-	id = "Incinerator"
-	},
+/obj/machinery/igniter/incinerator_atmos,
 /obj/machinery/air_sensor/atmos/incinerator_tank{
 	pixel_x = 32;
 	pixel_y = -32
@@ -40732,10 +40697,7 @@
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "caR" = (
-/obj/machinery/door/poddoor{
-	id = "turbinevent";
-	name = "Outtake Vent"
-	},
+/obj/machinery/door/poddoor/incinerator_atmos_main,
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "caS" = (
@@ -40955,8 +40917,7 @@
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
 "cbC" = (
-/obj/machinery/button/ignition{
-	id = "Incinerator";
+/obj/machinery/button/ignition/incinerator/atmos{
 	pixel_x = 26;
 	pixel_y = -6
 	},
@@ -40980,12 +40941,6 @@
 	},
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
-/obj/machinery/airlock_sensor{
-	id_tag = "incinerator_airlock_sensor";
-	master_tag = "incinerator_airlock_control";
-	pixel_x = -26;
-	pixel_y = 8
-	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "cbF" = (
@@ -41229,10 +41184,7 @@
 	},
 /area/maintenance/disposal/incinerator)
 "ccs" = (
-/obj/machinery/door/poddoor{
-	id = "mixvent";
-	name = "Intake Vent"
-	},
+/obj/machinery/door/poddoor/incinerator_atmos_aux,
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "ccu" = (
@@ -49766,6 +49718,12 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/department/engine)
+"kfh" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/closed/wall/r_wall,
+/area/science/mixing)
 "kfM" = (
 /obj/structure/closet,
 /obj/machinery/light/small{
@@ -49830,6 +49788,10 @@
 /obj/item/clothing/under/rank/clown/sexy,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/crew_quarters/dorms)
+"kmn" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/white,
+/area/science/mixing)
 "knw" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -49872,9 +49834,6 @@
 	dir = 9
 	},
 /area/chapel/office)
-"kwI" = (
-/turf/open/floor/plasteel,
-/area/science/mixing)
 "kxj" = (
 /obj/structure/chair/office/dark{
 	dir = 1
@@ -50769,6 +50728,12 @@
 /obj/item/stack/spacecash/c10,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/crew_quarters/dorms)
+"noM" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "npE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
@@ -50806,6 +50771,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
+"nsD" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/closed/wall/r_wall,
+/area/science/mixing)
 "ntj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -52430,6 +52401,10 @@
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
+"rPW" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/science/mixing)
 "rSH" = (
 /obj/item/trash/can,
 /turf/open/floor/wood,
@@ -53043,6 +53018,10 @@
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
+"ubW" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/science/mixing)
 "uek" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -54325,6 +54304,12 @@
 	},
 /turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
+"xIx" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
+/turf/closed/wall/r_wall,
+/area/science/mixing)
 "xJy" = (
 /obj/structure/chair/comfy/black,
 /obj/structure/sign/plaques/atmos{
@@ -94967,7 +94952,7 @@ bAF
 bBK
 bCW
 bDV
-bFg
+bFh
 bGm
 bHy
 aaa
@@ -95224,7 +95209,7 @@ bAF
 bBL
 bCW
 bDW
-bFh
+kmn
 bGn
 bHy
 aaa
@@ -96511,9 +96496,9 @@ bDa
 bEa
 bFm
 bGs
-bHy
-bHy
-bHy
+ubW
+ubW
+xIx
 bHy
 bHy
 bHy
@@ -97539,9 +97524,9 @@ bHy
 bHy
 bHy
 bGw
-bHy
-bHy
-bHy
+nsD
+rPW
+kfh
 bHy
 bHy
 bHy
@@ -97796,7 +97781,7 @@ bwm
 glf
 bFr
 qtA
-kwI
+khk
 bIN
 dAF
 bCV
@@ -98566,7 +98551,7 @@ nev
 hgD
 bEf
 bFu
-khk
+noM
 bHE
 bJV
 bLh
