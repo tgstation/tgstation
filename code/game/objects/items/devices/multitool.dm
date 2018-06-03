@@ -116,6 +116,8 @@
 
 /obj/item/multitool/ai_detect/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	if(hud_on && ismob(loc))
+		remove_hud(loc)
 	QDEL_NULL(toggle_action)
 	QDEL_NULL(eye)
 	return ..()
@@ -164,8 +166,9 @@
 		PM.alpha = 255
 		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		H.remove_hud_from(user)
-		eye.setLoc(null)
-		eye.eye_user = null
+		if(eye)
+			eye.setLoc(null)
+			eye.eye_user = null
 
 /obj/item/multitool/ai_detect/proc/multitool_detect()
 	var/turf/our_turf = get_turf(src)
