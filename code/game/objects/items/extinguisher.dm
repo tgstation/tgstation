@@ -22,6 +22,7 @@
 	var/refilling = FALSE
 	var/tanktype = /obj/structure/reagent_dispensers/watertank
 	var/sprite_name = "fire_extinguisher"
+	var/chemused = water
 	var/power = 5 //Maximum distance launched water will travel
 	var/precision = 0 //By default, turfs picked from a spray are random, set to 1 to make it always have at least one water effect per row
 	var/cooling_power = 2 //Sets the cooling_temperature of the water reagent datum inside of the extinguisher when it is refilled
@@ -42,18 +43,20 @@
 	dog_fashion = null
 
 /obj/item/extinguisher/advanced
-	name = "pocket fire extinguisher"
-	desc = "A light and compact fibreglass-framed model fire extinguisher."
+	name = "advanced fire extinguisher"
+	desc = "Used to stop thermonuclear fires from spreading inside your engine."
 	icon_state = "miniFE0"
 	item_state = "miniFE"
 	sprite_name = "miniFE"
 	dog_fashion = null
 	tanktype = /obj/structure/reagent_dispensers/foamtank
+	chemused = firefighting_foam
+	precision = 1
 
 /obj/item/extinguisher/New()
 	..()
 	create_reagents(max_water)
-	reagents.add_reagent("water", max_water)
+	reagents.add_reagent(chemused, max_water)
 
 /obj/item/extinguisher/suicide_act(mob/living/carbon/user)
 	if (!safety && (reagents.total_volume >= 1))
