@@ -63,11 +63,11 @@
 	update_icon()
 	playsound(src, open_sound, 15, 1, -3)
 	if(istype(src,/obj/structure/closet/supplypod/bluespacepod))
-		addtimer(CALLBACK(src, .proc/sparks), 30)//if bluespace, then 3 seconds after opening, make some sparks and delete		
- 		
-/obj/structure/closet/supplypod/proc/sparks()//sparks cant be called from addtimer		
- 	do_sparks(5, TRUE, src)		
- 	qdel(src)//no need for QDEL_IN if we already have a timer 
+		addtimer(CALLBACK(src, .proc/sparks), 30)//if bluespace, then 3 seconds after opening, make some sparks and delete
+
+/obj/structure/closet/supplypod/proc/sparks()//sparks cant be called from addtimer
+ 	do_sparks(5, TRUE, src)
+ 	qdel(src)//no need for QDEL_IN if we already have a timer
 
 /obj/structure/closet/supplypod/Destroy()//make some sparks b4 deletion
 	QDEL_NULL(SupplyOrder)
@@ -82,6 +82,7 @@
 	desc = "Get out of the way!"
 	layer = FLY_LAYER//that wasnt flying, that was falling with style!
 	randomdir = FALSE
+	icon_state = "supplypod_falling"
 
 /obj/effect/temp_visual/DPfall/Initialize(var/dropLocation, var/podID)
 	if (podID == POD_STANDARD)
@@ -119,7 +120,7 @@
 /obj/effect/DPtarget/proc/beginLaunch(var/SO, var/podID)
 	fallingPod = new /obj/effect/temp_visual/DPfall(drop_location(), podID)
 	animate(fallingPod, pixel_z = 0, time = 3, easing = LINEAR_EASING)//make and animate a falling pod
-	addtimer(CALLBACK(src, .proc/endLaunch, SO, podID), 3, TIMER_CLIENT_TIME)//fall 0.3seconds 
+	addtimer(CALLBACK(src, .proc/endLaunch, SO, podID), 3, TIMER_CLIENT_TIME)//fall 0.3seconds
 
 /obj/effect/DPtarget/proc/endLaunch(var/SO, var/podID)
 	if (podID == POD_STANDARD)
@@ -130,7 +131,7 @@
 		explosion(src,0,0,2, flame_range = 1) //explosion and camshake (shoutout to @cyberboss)
 	else
 		new /obj/structure/closet/supplypod/bluespacepod/centcompod(drop_location(), SO)
-		explosion(src,0,0,2, flame_range = 1) 
+		explosion(src,0,0,2, flame_range = 1)
 	qdel(src)
 
 /obj/effect/DPtarget/Destroy()
