@@ -74,24 +74,25 @@ GLOBAL_LIST_EMPTY(uplinks)
 		return	//no hitting everyone/everything just to try to slot tcs in!
 	if(istype(I, /obj/item/stack/telecrystal))
 		LoadTC(user, I)
-	for(var/item in uplink_items)
-		var/datum/uplink_item/UI = item
-		var/path = null
-		if(UI.refund_path)
-			path = UI.refund_path
-		else
-			path = UI.item
-		var/cost = 0
-		if(UI.refund_amount)
-			cost = UI.refund_amount
-		else
-			cost = UI.cost
-		if(I.type == path && UI.refundable && I.check_uplink_validity())
-			telecrystals += cost
-			purchase_log.total_spent -= cost
-			to_chat(user, "<span class='notice'>[I] refunded.</span>")
-			qdel(I)
-			return
+	for(var/category in uplink_items)
+		for(var/item in uplink_items[category])
+			var/datum/uplink_item/UI = uplink_items[category][item]
+			var/path = null
+			if(UI.refund_path)
+				path = UI.refund_path
+			else
+				path = UI.item
+			var/cost = 0
+			if(UI.refund_amount)
+				cost = UI.refund_amount
+			else
+				cost = UI.cost
+			if(I.type == path && UI.refundable && I.check_uplink_validity())
+				telecrystals += cost
+				purchase_log.total_spent -= cost
+				to_chat(user, "<span class='notice'>[I] refunded.</span>")
+				qdel(I)
+				return
 
 /datum/component/uplink/proc/interact(mob/user)
 	if(locked)
