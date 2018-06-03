@@ -123,11 +123,9 @@
 	icon_state = "sandwater_inner"
 	baseturfs = /turf/open/floor/plating/beach/coastline_t/sandwater_inner
 
-
 /turf/open/floor/plating/ironsand
 	name = "iron sand"
 	desc = "Like sand, but more <i>metal</i>."
-
 
 /turf/open/floor/plating/ironsand/Initialize()
 	. = ..()
