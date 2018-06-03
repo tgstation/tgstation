@@ -21207,9 +21207,6 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/department/cargo)
-"bdA" = (
-/turf/open/floor/plating,
-/area/maintenance/department/cargo)
 "bdB" = (
 /obj/structure/cable{
 	icon_state = "1-4"
@@ -25766,7 +25763,7 @@
 /obj/machinery/door/window/eastright{
 	dir = 2;
 	name = "Research and Development Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "research_shutters_2";
@@ -91348,7 +91345,7 @@ aPY
 bau
 aLf
 aFi
-bdA
+aFi
 beI
 beI
 bgD
