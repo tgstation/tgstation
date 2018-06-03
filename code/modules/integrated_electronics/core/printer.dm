@@ -87,7 +87,7 @@
 					return
 			to_chat(user, "<span class='notice'>You begin recycling [EA]'s components...</span>")
 			playsound(src, 'sound/items/electronic_assembly_emptying.ogg', 50, TRUE)
-			if(!do_after(user, 30, target = src)) //short channel so you don't accidentally start emptying out a complex assembly
+			if(!do_after(user, 30, target = src) || recycling) //short channel so you don't accidentally start emptying out a complex assembly
 				return
 			recycling = TRUE
 			var/datum/component/material_container/mats = GetComponent(/datum/component/material_container)
