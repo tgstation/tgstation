@@ -408,6 +408,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 				return reserve
 	else
 		if(!level_trait(z, ZTRAIT_RESERVED))
+			qdel(reserve)
 			return
 		else
 			if(reserve.Reserve(width, height, z))
