@@ -316,7 +316,7 @@
 /obj/item/storage/bag/tray/update_icon()
 	cut_overlays()
 	for(var/obj/item/I in contents)
-		add_overlay(mutable_appearance(I.icon, I.icon_state))
+		add_overlay(new /mutable_appearance(I))
 
 /obj/item/storage/bag/tray/Entered()
 	. = ..()
