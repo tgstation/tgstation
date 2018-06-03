@@ -586,7 +586,7 @@
 	cost = 2000	//Made of pure-grade bullshittinium
 	contains = list(/obj/item/clothing/gloves/color/yellow,
 					/obj/item/clothing/gloves/color/yellow,
-					/obj/item/clothing/gloves/color/yellow)
+					/obj/item/clothing/gloves/color/yellow/two)
 	crate_name = "insulated gloves crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
