@@ -45,7 +45,8 @@
 
 /obj/machinery/computer/communications/process()
 	if(..())
-		if(state != STATE_STATUSDISPLAY && state != STATE_CALLSHUTTLE)
+		//if(state != STATE_STATUSDISPLAY && state != STATE_CALLSHUTTLE)
+		if(state == STATE_DEFAULT)
 			updateDialog()
 
 
