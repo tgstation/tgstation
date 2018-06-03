@@ -311,7 +311,7 @@
 			"push ref" = IC_PINTYPE_PULSE_IN
 			)
 	var/datum/gas_mixture/air_contents
-	var/volume = 40 //about half of an emergency tank
+	var/volume = 3 //emergency tank sized
 	var/broken = FALSE
 
 /obj/item/integrated_circuit/atmospherics/tank/Initialize()
@@ -342,7 +342,7 @@
 /obj/item/integrated_circuit/atmospherics/tank/large
 	name = "large integrated tank"
 	desc = "A less small tank for the storage of gases."
-	volume = 80
+	volume = 6
 	size = 8
 	spawn_flags = IC_SPAWN_RESEARCH
 
