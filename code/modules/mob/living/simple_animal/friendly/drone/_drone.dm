@@ -23,8 +23,8 @@
 	icon_living = "drone_maint_grey"
 	icon_dead = "drone_maint_dead"
 	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
-	health = 30
-	maxHealth = 30
+	health = 40
+	maxHealth = 40
 	unsuitable_atmos_damage = 0
 	wander = 0
 	speed = 0
@@ -57,9 +57,9 @@
 	var/colour = "grey"	//Stored drone color, so we can go back when unhacked.
 	var/list/drone_overlays[DRONE_TOTAL_LAYERS]
 	var/laws = \
-	"1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.\n"+\
-	"2. You may not harm any being, regardless of intent or circumstance.\n"+\
-	"3. Your goals are to build, maintain, repair, improve, and provide power to the best of your abilities, You must never actively work against these goals."
+	"1. You are crew sided \n"+\
+	"2. You are not a bad guy\n"+\
+	"3. Your goals are to build, maintain, repair, improve, and provide power to the best of your abilities, but you can also just hang out and do whatever."
 	var/heavy_emp_damage = 25 //Amount of damage sustained if hit by a heavy EMP pulse
 	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
@@ -70,11 +70,11 @@
 	var/hacked = FALSE //If we have laws to destroy the station
 	var/flavortext = \
 	"\n<big><span class='warning'>DO NOT INTERFERE WITH THE ROUND AS A DRONE OR YOU WILL BE DRONE BANNED</span></big>\n"+\
-	"<span class='notify'>Drones are a ghost role that are allowed to fix the station and build things. Interfering with the round as a drone is against the rules.</span>\n"+\
-	"<span class='notify'>Actions that constitute interference include, but are not limited to:</span>\n"+\
-	"<span class='notify'>     - Interacting with round critical objects (IDs, weapons, contraband, powersinks, bombs, etc.)</span>\n"+\
-	"<span class='notify'>     - Interacting with living beings (communication, attacking, healing, etc.)</span>\n"+\
-	"<span class='notify'>     - Interacting with non-living beings (dragging bodies, looting bodies, etc.)</span>\n"+\
+	"<span class='notify'>Drones are a ghost role that are allowed to fix the station and build things and hangout and talk with the crew. </span>\n"+\
+	"<span class='notify'>Do not do these things:</span>\n"+\
+	"<span class='notify'>     - Self-Antag</span>\n"+\
+	"<span class='notify'>     - Be a troll/goon/goblin/retard </span>\n"+\
+	"<span class='notify'>     -  Break the normal rules of the server but as a drone</span>\n"+\
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
 	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
 
