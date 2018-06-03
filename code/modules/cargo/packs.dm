@@ -61,12 +61,6 @@
 	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/emergency/equipment
-	name "testcrate"
-	cost= 1
-	contains = list(/obj/item/extinguisher/advanced,
-				/obj/structure/reagent_dispensers/foamtank)
-
-/datum/supply_pack/emergency/equipment
 	name = "Emergency Bot/Internals Crate"
 	desc = "Explosions got you down? These supplies are guaranteed to patch up holes, in stations and people alike! Comes with two floorbots, two medbots, five oxygen masks and five small oxygen tanks."
 	cost = 3500
