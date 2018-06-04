@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "Atom initialization and icon smoothing no longer race, causing late-loading mineral turfs to have no icon."
