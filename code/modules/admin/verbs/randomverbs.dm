@@ -1320,7 +1320,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 					alert("ERROR: Incorrect / improper path given.")
 					return
 			//send the pod
-			target.stun(10)//takes 0.53 seconds for CentCom pod to land
+			target.Stun(10)//takes 0.53 seconds for CentCom pod to land
 			new /obj/effect/DPtarget(get_turf(target), delivery, POD_CENTCOM, target)
 
 	var/msg = "[key_name_admin(usr)] punished [key_name_admin(target)] with [punishment]."
