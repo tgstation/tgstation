@@ -77,16 +77,8 @@ GLOBAL_LIST_EMPTY(uplinks)
 	for(var/category in uplink_items)
 		for(var/item in uplink_items[category])
 			var/datum/uplink_item/UI = uplink_items[category][item]
-			var/path = null
-			if(UI.refund_path)
-				path = UI.refund_path
-			else
-				path = UI.item
-			var/cost = 0
-			if(UI.refund_amount)
-				cost = UI.refund_amount
-			else
-				cost = UI.cost
+			var/path = UI.refund_path || UI.item
+			var/cost = UI.refund_amount || UI.cost
 			if(I.type == path && UI.refundable && I.check_uplink_validity())
 				telecrystals += cost
 				purchase_log.total_spent -= cost
