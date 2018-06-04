@@ -18,6 +18,7 @@
 	container_type = AMOUNT_VISIBLE
 	var/max_water = 50
 	var/last_use = 1
+	var/chem = "water"
 	var/safety = TRUE
 	var/refilling = FALSE
 	var/tanktype = /obj/structure/reagent_dispensers/watertank
@@ -44,7 +45,7 @@
 /obj/item/extinguisher/New()
 	..()
 	create_reagents(max_water)
-	reagents.add_reagent("water", max_water)
+	reagents.add_reagent(chem, max_water)
 
 
 /obj/item/extinguisher/advanced
@@ -53,14 +54,9 @@
 	icon_state = "foam_extinguisher0"
 	item_state = "foam_extimguisher1"
 	dog_fashion = null
+	chem = "firefighting_foam"
 	tanktype = /obj/structure/reagent_dispensers/foamtank
 	precision = 1
-
-
-/obj/item/extinguisher/advanced/New()
-	..()
-	create_reagents(max_water)
-	reagents.add_reagent("firefighting_foam", max_water)
 
 /obj/item/extinguisher/suicide_act(mob/living/carbon/user)
 	if (!safety && (reagents.total_volume >= 1))
