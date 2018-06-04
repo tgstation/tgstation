@@ -69,6 +69,7 @@
 #define ADMIN_PUNISHMENT_BSA "Bluespace Artillery Device"
 #define ADMIN_PUNISHMENT_FIREBALL "Fireball"
 #define ADMIN_PUNISHMENT_ROD "Immovable Rod"
+#define ADMIN_PUNISHMENT_SUPPLYPOD "Supply Pod"
 
 #define AHELP_ACTIVE 1
 #define AHELP_CLOSED 2
