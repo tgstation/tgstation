@@ -561,6 +561,14 @@
 					viable_occupant.dna.unique_enzymes = buffer_slot["UE"]
 					viable_occupant.dna.blood_type = buffer_slot["blood_type"]
 
+	if(prob(1))
+		var/mob/living/carbon/human/H = viable_occupant
+		if(istype(H))
+			src.visible_message("<span class='warning'>The machine starts to malfunction!</span>")
+			H.corgize()
+			if(connected)
+				connected.toggle_open(usr)
+
 /obj/machinery/computer/scan_consolenew/proc/on_scanner_close()
 	to_chat(connected.occupant, "<span class='notice'>[src] activates!</span>")
 	if(delayed_action)
