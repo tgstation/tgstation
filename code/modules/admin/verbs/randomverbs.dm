@@ -1307,11 +1307,11 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			new /obj/effect/immovablerod(startT, endT,target)
 		if(ADMIN_PUNISHMENT_SUPPLYPOD)
 			///////load the supply pod up with something!
-			var/target_path = input(usr,"Enter typepath of an atom you'd like to send with the pod (type \"cancel\" to abort smiting):" ,"Typepath","/obj/item/reagent_containers/food/snacks/grown/harebell")
-			if (target_path == "cancel")//if you hit cancel, then stop
+			var/target_path = input(usr,"Enter typepath of an atom you'd like to send with the pod (type \"empty\" to send an empty pod):" ,"Typepath","/obj/item/reagent_containers/food/snacks/grown/harebell") as null|text
+			if (isnull(target_path))
 				return
-			if (target_path == "")//if you dont type anything, spawn an empty pod
-				new /obj/effect/DPtarget(get_turf(target), null, 1)
+			if (target_path == "empty")//if you type "abort", spawn an empty pod
+				new /obj/effect/DPtarget(get_turf(target), null, POD_CENTCOM)
 				return
 			var/delivery = text2path(target_path)
 			if(!ispath(delivery))
@@ -1320,7 +1320,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 					delivery = /obj/item/reagent_containers/food/snacks/grown/harebell
 					alert("That path is not allowed.")
 			//send the pod
-			new /obj/effect/DPtarget(get_turf(target), delivery, 2)
+			new /obj/effect/DPtarget(get_turf(target), delivery, POD_CENTCOM)
 
 	var/msg = "[key_name_admin(usr)] punished [key_name_admin(target)] with [punishment]."
 	message_admins(msg)
