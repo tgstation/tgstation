@@ -28,6 +28,7 @@
 	new /obj/item/pipe_dispenser(src)
 	new /obj/item/inducer(src)
 	new /obj/item/circuitboard/machine/techfab/department/engineering(src)
+	new /obj/item/extinguisher/advanced(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "electrical supplies locker"
@@ -94,3 +95,4 @@
 	new /obj/item/clothing/suit/fire/atmos(src)
 	new /obj/item/clothing/head/hardhat/atmos(src)
 	new /obj/item/clothing/glasses/meson/engine/tray(src)
+	new /obj/item/extinguisher/advanced(src)
