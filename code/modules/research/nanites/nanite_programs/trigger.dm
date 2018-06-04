@@ -9,7 +9,7 @@
 /datum/nanite_program/triggered/shocking
 	name = "Electric Shock"
 	desc = "The nanites shock the host when triggered. Destroys a large amount of nanites!"
-	trigger_cost = 7.5
+	trigger_cost = 10
 	trigger_cooldown = 300
 	program_flags = NANITE_SHOCK_IMMUNE
 	rogue_types = list(/datum/nanite_program/toxic)
@@ -35,7 +35,7 @@
 /datum/nanite_program/triggered/emp
 	name = "Electromagnetic Resonance"
 	desc = "The nanites cause an elctromagnetic pulse around the host when triggered. Will corrupt other nanite programs!"
-	trigger_cost = 7.5
+	trigger_cost = 10
 	program_flags = NANITE_EMP_IMMUNE
 	rogue_types = list(/datum/nanite_program/toxic)
 
@@ -50,6 +50,32 @@
 	trigger_cost = 15
 	trigger_cooldown = 1200
 	rogue_types = list(/datum/nanite_program/brain_misfire, /datum/nanite_program/brain_decay)
+
+/datum/nanite_program/triggered/sleepy/trigger()
+	if(!..())
+		return
+	to_chat(host_mob, "<span class='warning'>You start to feel very sleepy...</span>")
+	host_mob.drowsyness += 20
+	addtimer(CALLBACK(host_mob, /mob/living.proc/Sleeping, 200), rand(60,200))
+	
+/datum/nanite_program/triggered/adrenaline
+	name = "Adrenaline Burst"
+	desc = "The nanites cause a burst of adrenaline when triggered, waking the host from stuns and temporarily increasing their speed."
+	trigger_cost = 25
+	trigger_cooldown = 900
+	rogue_types = list(/datum/nanite_program/toxic, /datum/nanite_program/nerve_decay)
+	
+/datum/nanite_program/triggered/adrenaline/trigger()
+	if(!..())
+		return
+	to_chat(host_mob, "<span class='notice'>You feel a sudden surge of energy!</span>")
+	host_mob.SetStun(0)
+	host_mob.SetKnockdown(0)
+	host_mob.SetUnconscious(0)
+	host_mob.adjustStaminaLoss(-75)
+	host_mob.lying = 0
+	host_mob.update_canmove()
+	host_mob.reagents.add_reagent("stimulants", 5)
 
 /datum/nanite_program/triggered/sleepy/trigger()
 	if(!..())

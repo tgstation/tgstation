@@ -846,7 +846,7 @@
 	id = "nanite_roam"
 	display_name = "Roaming Nanite Programming"
 	description = "Nanite programs that require nanites to act independently, roam or seek targets."
-	prereq_ids = list("nanite_base")
+	prereq_ids = list("nanite_base","adv_robotics")
 	design_ids = list("purging_nanites", "necrotic_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
@@ -855,7 +855,7 @@
 	id = "nanite_mesh"
 	display_name = "Mesh Nanite Programming"
 	description = "Nanite programs that require static structures and membranes."
-	prereq_ids = list("nanite_base")
+	prereq_ids = list("nanite_base","engineering")
 	design_ids = list("hardening_nanites", "refractive_nanites", "cryo_nanites", "pyro_nanites", "conductive_nanites", "shock_nanites", "emp_nanites", "temperature_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
@@ -878,12 +878,12 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
-/datum/techweb_node/nanite_bio_advanced
-	id = "nanite_bio_advanced"
+/datum/techweb_node/nanite_harmonic
+	id = "nanite_harmonic"
 	display_name = "Harmonic Nanite Programming"
 	description = "Nanite programs that require seamless integration between nanites and biology."
 	prereq_ids = list("nanite_bio","nanite_roam","nanite_mesh")
-	design_ids = list("fakedeath_nanites", "aggressive_nanites","regenerative_plus_nanites","brainheal_plus_nanites","purging_plus_nanites") //TODO heartstop?
+	design_ids = list("fakedeath_nanites", "aggressive_nanites","regenerative_plus_nanites","brainheal_plus_nanites","purging_plus_nanites","adrenaline_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 10000
 
@@ -891,7 +891,7 @@
 	id = "nanite_combat"
 	display_name = "Weaponized Nanite Programming"
 	description = "Nanite programs that harness the full destructive power of nanites."
-	prereq_ids = list("nanite_bio_advanced", "syndicate_basic")
+	prereq_ids = list("nanite_harmonic", "syndicate_basic")
 	design_ids = list("explosive_nanites", "meltdown_nanites", "viral_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 	export_price = 12500
