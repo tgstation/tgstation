@@ -114,3 +114,10 @@
 	. = ..()
 	transform = matrix()*1.5
 	animate(src, transform = matrix()*0.1, alpha = 50, time = 4)
+
+/obj/effect/resonance/proc/replicate(turf/M, creator, timetoburst) 
+	for(var/turf/closed/T in orange(1, M))
+		if(istype(T, M))
+			var/turf/closed/mineral/T2 = T
+			if(T2.mineralType) // so we don't end up in the ultimate chain reaction - Super322
+				new /obj/effect/resonance(T, creator, timetoburst)
