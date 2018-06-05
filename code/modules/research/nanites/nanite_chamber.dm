@@ -16,6 +16,7 @@
 	var/breakout_time = 1200
 	var/scan_level
 	var/busy = FALSE
+	var/busy_icon_state
 	var/busy_message
 	var/message_cooldown = 0
 
@@ -24,9 +25,10 @@
 	for(var/obj/item/stock_parts/scanning_module/P in component_parts)
 		scan_level += P.rating
 
-/obj/machinery/nanite_chamber/proc/set_busy(status, message)
+/obj/machinery/nanite_chamber/proc/set_busy(status, message, working_icon)
 	busy = status
 	busy_message = message
+	busy_icon_state = working_icon
 	update_icon()
 
 /obj/machinery/nanite_chamber/proc/set_safety(threshold)
@@ -57,10 +59,11 @@
 	locked = TRUE
 
 	//TODO OMINOUS MACHINE SOUNDS
-	set_busy(TRUE, "Initializing injection protocol...")
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Analyzing host bio-structure..."),35)
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Activating nanites..."),70)
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Injecting..."),105)
+	set_busy(TRUE, "Initializing injection protocol...", "[initial(icon_state)]_raising")
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Analyzing host bio-structure...", "[initial(icon_state)]_raised"),20)
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Priming nanites...", "[initial(icon_state)]_raised"),40)
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Injecting...", "[initial(icon_state)]_raised"),70)
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Activating nanites...", "[initial(icon_state)]_lowering"),110)
 	addtimer(CALLBACK(src, .proc/complete_injection, locked_state),130)
 
 /obj/machinery/nanite_chamber/proc/complete_injection(locked_state)
@@ -83,10 +86,10 @@
 	locked = TRUE
 
 	//TODO COMPUTERY MACHINE SOUNDS
-	set_busy(TRUE, "Initializing installation protocol...")
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Connecting to nanite framework..."),15)
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Installing program..."),25)
-	addtimer(CALLBACK(src, .proc/complete_installation, locked_state, NP),35)
+	set_busy(TRUE, "Initializing installation protocol...", "[initial(icon_state)]_raising")
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Connecting to nanite framework...", "[initial(icon_state)]_raised"),20)
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Installing program...", "[initial(icon_state)]_lowering"),35)
+	addtimer(CALLBACK(src, .proc/complete_installation, locked_state, NP),55)
 
 /obj/machinery/nanite_chamber/proc/complete_installation(locked_state, datum/nanite_program/NP)
 	//TODO MACHINE DING
@@ -110,10 +113,10 @@
 	locked = TRUE
 
 	//TODO COMPUTERY MACHINE SOUNDS
-	set_busy(TRUE, "Initializing uninstallation protocol...")
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Connecting to nanite framework..."),15)
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Uninstalling program..."),25)
-	addtimer(CALLBACK(src, .proc/complete_uninstallation, locked_state, NP),40)
+	set_busy(TRUE, "Initializing uninstallation protocol...", "[initial(icon_state)]_raising")
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Connecting to nanite framework...", "[initial(icon_state)]_raised"),20)
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Uninstalling program...", "[initial(icon_state)]_lowering"),35)
+	addtimer(CALLBACK(src, .proc/complete_uninstallation, locked_state, NP),55)
 
 /obj/machinery/nanite_chamber/proc/complete_uninstallation(locked_state, datum/nanite_program/NP)
 	//TODO MACHINE DING
@@ -128,7 +131,9 @@
 	if(stat & (NOPOWER|BROKEN))
 		icon_state = initial(icon_state)+ (state_open ? "_open" : "") + "_unpowered"
 		return
-
+	
+	
+	//TODO make an overlay for the panel
 	if((stat & MAINT) || panel_open)
 		icon_state = initial(icon_state)+ (state_open ? "_open" : "") + "_maintenance"
 		return
@@ -136,7 +141,7 @@
 	//running and someone in there
 	if(occupant)
 		if(busy)
-			icon_state = initial(icon_state)+ "_working"
+			icon_state = busy_icon_state
 		else
 			icon_state = initial(icon_state)+ "_occupied"
 		return
@@ -167,13 +172,15 @@
 	if(!locked)
 		open_machine()
 		return
+	if(busy)
+		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
 		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear a metallic creaking from [src].</span>")
 	if(do_after(user,(breakout_time), target = src))
-		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
+		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked || busy)
 			return
 		locked = FALSE
 		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \

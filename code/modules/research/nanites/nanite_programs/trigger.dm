@@ -3,7 +3,7 @@
 /datum/nanite_program/triggered
 	use_rate = 0
 	trigger_cost = 5
-	trigger_cooldown = 5
+	trigger_cooldown = 50
 	can_trigger = TRUE
 
 /datum/nanite_program/triggered/shocking
