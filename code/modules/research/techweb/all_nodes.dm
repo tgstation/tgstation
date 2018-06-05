@@ -838,7 +838,7 @@
 	display_name = "Basic Nanite Programming"
 	description = "Vanilla nanite programs, that require little complex interaction between nanites and body."
 	prereq_ids = list("datatheory","robotics")
-	design_ids = list("nanite_disk","relay_nanites", "monitoring_nanites", "access_nanites", "glitch_nanites", "repairing_nanites")
+	design_ids = list("nanite_disk","relay_nanites", "monitoring_nanites", "access_nanites", "glitch_nanites", "repairing_nanites", "sensor_full_nanites","sensor_high_nanites","sensor_low_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -865,7 +865,7 @@
 	display_name = "Biological Nanite Programming"
 	description = "Nanite programs that require complex biological interaction."
 	prereq_ids = list("nanite_base","biotech")
-	design_ids = list("regenerative_nanites", "bloodheal_nanites", "suffocating_nanites", "coagulating_nanites", "metabolic_nanites", "toxic_nanites", "skindecay_nanites")
+	design_ids = list("regenerative_nanites", "bloodheal_nanites", "suffocating_nanites", "coagulating_nanites", "metabolic_nanites", "toxic_nanites", "skindecay_nanites","sensor_healthy_nanites","sensor_crit_nanites","sensor_death_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 

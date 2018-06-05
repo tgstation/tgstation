@@ -273,7 +273,7 @@
 	program_type = /datum/nanite_program/triggered/explosive
 	category = list("Weaponized Nanites")
 
-////////////////////Suppression NANITES//////////////////////////////////////
+////////////////////SUPPRESSION NANITES//////////////////////////////////////
 
 /datum/design/nanites/shock
 	name = "Electric Shock"
@@ -316,3 +316,46 @@
 	id = "pacifying_nanites"
 	program_type = /datum/nanite_program/pacifying
 	category = list("Suppression Nanites")
+	
+////////////////////SENSOR NANITES//////////////////////////////////////
+/datum/design/nanites/sensor_healthy
+	name = "Perfect Health Sensor"
+	desc = "The nanites receive a signal when the host is in perfect health."
+	id = "sensor_healthy_nanites"
+	program_type = /datum/nanite_program/sensor/healthy
+	category = list("Sensor Nanites")
+	
+/datum/design/nanites/sensor_crit
+	name = "Critical Health Sensor"
+	desc = "The nanites receive a signal when the host first reaches critical health."
+	id = "sensor_crit_nanites"
+	program_type = /datum/nanite_program/sensor/crit
+	category = list("Sensor Nanites")
+	
+/datum/design/nanites/sensor_death
+	name = "Death Sensor"
+	desc = "The nanites receive a signal when they detect the host is dead."
+	id = "sensor_death_nanites"
+	program_type = /datum/nanite_program/sensor/death
+	category = list("Sensor Nanites")
+	
+/datum/design/nanites/sensor_full_nanites
+	name = "Nanite Volume Sensor - FULL"
+	desc = "The nanites receive a signal when the nanite supply is at the cap."
+	id = "sensor_full_nanites"
+	program_type = /datum/nanite_program/sensor/nanites_full
+	category = list("Sensor Nanites")
+	
+/datum/design/nanites/sensor_high_nanites
+	name = "Nanite Volume Sensor - HIGH"
+	desc = "The nanites receive a signal when the nanite supply is above 75%."
+	id = "sensor_high_nanites"
+	program_type = /datum/nanite_program/sensor/nanites_high
+	category = list("Sensor Nanites")
+	
+/datum/design/nanites/sensor_low_nanites
+	name = "Nanite Volume Sensor - LOW"
+	desc = "The nanites receive a signal when the nanite supply is below 25%."
+	id = "sensor_low_nanites"
+	program_type = /datum/nanite_program/sensor/nanites_low
+	category = list("Sensor Nanites")
