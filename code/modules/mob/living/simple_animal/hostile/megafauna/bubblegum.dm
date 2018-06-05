@@ -82,8 +82,8 @@ Difficulty: Hard
 			INVOKE_ASYNC(src, .proc/triple_charge)
 
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/New()
-	..()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
+	. = ..()
 	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in GLOB.mob_list)
 		if(B != src)
 			return INITIALIZE_HINT_QDEL //There can be only one
@@ -214,7 +214,7 @@ Difficulty: Hard
 	visible_message("<span class='danger'>[src] summons a shoal of slaughterlings!</span>")
 	for(var/obj/effect/decal/cleanable/blood/H in range(src, 10))
 		if(prob(25))
-			new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/slaughter(H.loc)
+			new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter(H.loc)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter
 	name = "slaughterling"
