@@ -11609,7 +11609,7 @@
 /area/tdome/tdomeobserve)
 "Hj" = (
 /obj/structure/urinal{
-	step_y = 28
+	pixel_y = 28
 	},
 /turf/open/floor/plasteel/airless/white,
 /area/centcom/holding)
