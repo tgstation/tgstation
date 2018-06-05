@@ -2414,6 +2414,7 @@
 #include "code\modules\research\nanites\nanite_programs\healing.dm"
 #include "code\modules\research\nanites\nanite_programs\hostile.dm"
 #include "code\modules\research\nanites\nanite_programs\rogue.dm"
+#include "code\modules\research\nanites\nanite_programs\sensor.dm"
 #include "code\modules\research\nanites\nanite_programs\suppression.dm"
 #include "code\modules\research\nanites\nanite_programs\trigger.dm"
 #include "code\modules\research\nanites\nanite_programs\utility.dm"
