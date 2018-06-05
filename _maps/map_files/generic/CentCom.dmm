@@ -9160,9 +9160,6 @@
 /obj/structure/closet/secure_closet/freezer/meat{
 	locked = 0
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
 /obj/item/reagent_containers/food/snacks/carpmeat,
 /obj/item/reagent_containers/food/snacks/carpmeat,
 /obj/item/reagent_containers/food/snacks/carpmeat,
@@ -9175,6 +9172,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/soap/deluxe,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "Ab" = (
@@ -10920,6 +10918,7 @@
 "Fa" = (
 /obj/structure/table/wood,
 /obj/item/instrument/piano_synth,
+/obj/item/instrument/guitar,
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
 "Fb" = (
@@ -11608,6 +11607,12 @@
 	dir = 4
 	},
 /area/tdome/tdomeobserve)
+"Hj" = (
+/obj/structure/urinal{
+	step_y = 28
+	},
+/turf/open/floor/plasteel/airless/white,
+/area/centcom/holding)
 "Hm" = (
 /obj/structure/flora/ausbushes/fernybush,
 /obj/structure/flora/ausbushes/ppflowers,
@@ -13502,6 +13507,7 @@
 /obj/item/storage/fancy/candle_box,
 /obj/item/storage/fancy/candle_box,
 /obj/item/storage/fancy/candle_box,
+/obj/item/storage/box/lights/mixed,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Nn" = (
@@ -13555,6 +13561,7 @@
 /obj/structure/table,
 /obj/item/book/manual/hydroponics_pod_people,
 /obj/item/seeds/pumpkin/blumpkin,
+/obj/item/paper/guides/jobs/hydroponics,
 /turf/open/floor/plasteel/whitegreen,
 /area/centcom/holding)
 "NT" = (
@@ -13887,6 +13894,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/metal/fifty,
 /obj/item/storage/toolbox/mechanical,
+/obj/item/multitool,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Tr" = (
@@ -13929,6 +13937,13 @@
 /area/centcom/holding)
 "Um" = (
 /obj/structure/closet/crate/hydroponics,
+/obj/item/shovel/spade,
+/obj/item/wirecutters,
+/obj/item/wrench,
+/obj/item/watertank,
+/obj/item/cultivator,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel/whitegreen,
 /area/centcom/holding)
 "Un" = (
@@ -38926,7 +38941,7 @@ PY
 PY
 PY
 Nd
-ZW
+Hj
 ZW
 ZW
 Za
