@@ -1,29 +1,38 @@
 /datum/component/status_effect_listener
 	dupe_mode = COMPONENT_DUPE_UNIQUE
-	var/list/effects = list()
+	report_signal_origin = TRUE
+	var/list/effect_signals = list()
 
-/datum/component/status_effect_listener/Initialize()
-	RegisterSignal(COMSIG_ATOM_EX_ACT, .proc/explosion)
-	RegisterSignal(COMSIG_MOVABLE_MOVED, .proc/movement)
-	RegisterSignal(COMSIG_LIVING_RESIST, .proc/resist)
-	RegisterSignal(COMSIG_LIVING_IGNITED, .proc/ignited)
-	RegisterSignal(COMSIG_LIVING_EXTINGUISHED, .proc/extinguished)
+/datum/component/status_effect_listener/proc/RegisterEffectSignal(datum/status_effect/se, sig_type_or_types, proc_or_callback)
+	var/list/sig_types = islist(sig_type_or_types) ? sig_type_or_types : list(sig_type_or_types)
+	RegisterSignal(sig_type_or_types, .proc/signal, override = TRUE)
+	for(var/type in sig_types)
+		var/list/callbacks = effect_signals[type]
+		if(!callbacks)
+			callbacks = list()
+			effect_signals[type] = callbacks
+		if(!istype(proc_or_callback, /datum/callback)) //if it wasnt a callback before, it is now
+			proc_or_callback = CALLBACK(se, proc_or_callback)
+		effect_signals[type] += proc_or_callback
 
-/datum/component/status_effect_listener/proc/signal(var/sigtype)
-	for(var/datum/status_effect/effect in effects)
-		effect.receiveSignal(sigtype)
+/datum/component/status_effect_listener/proc/ClearSignalRegister(datum/status_effect/se)
+	for(var/type in effect_signals)
+		for(var/datum/callback/cb in effect_signals[type])
+			if(cb.object == se)
+				effect_signals[type] -= cb
+				QDEL_NULL(cb)
+		if(effect_signals[type].len <= 0)
+			QDEL_LIST(effect_signals[type])
+			effect_signals[type] = null
+			effect_signals -= type
+	if(effect_signals.len <= 0)
+		QDEL_LIST(effect_signals)
+		qdel(src)
 
-/datum/component/status_effect_listener/proc/explosion()
-	signal(STATUS_LISTENER_EXPLOSION)
-
-/datum/component/status_effect_listener/proc/movement()
-	signal(STATUS_LISTENER_MOVEMENT)
-
-/datum/component/status_effect_listener/proc/resist()
-	signal(STATUS_LISTENER_RESIST)
-
-/datum/component/status_effect_listener/proc/ignited()
-	signal(STATUS_LISTENER_IGNITED)
-
-/datum/component/status_effect_listener/proc/extinguished()
-	signal(STATUS_LISTENER_EXTINGUISHED)
+/datum/component/status_effect_listener/proc/signal(sigtype, ...)
+	var/list/arguments = args.Copy(2)
+	if(effect_signals[sigtype])
+		for(var/datum/callback/CB in effect_signals[sigtype])
+			if(!CB)
+				continue
+			. |= CB.InvokeAsync(arglist(arguments))

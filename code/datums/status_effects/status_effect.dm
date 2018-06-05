@@ -12,23 +12,26 @@
 	var/examine_text //If defined, this text will appear when the mob is examined - to use he, she etc. use "SUBJECTPRONOUN" and replace it in the examines themselves
 	var/alert_type = /obj/screen/alert/status_effect //the alert thrown by the status effect, contains name and description
 	var/obj/screen/alert/status_effect/linked_alert = null //the alert itself, if it exists
-	var/listening = FALSE //Whether or not the status effect listens to mob interaction, using the status_effect_listener component.
+
+	var/listening = FALSE //Whether or not the status effect listens to mob interaction, using the status_effect_listener. Don't touch!
 
 /datum/status_effect/New(list/arguments)
 	on_creation(arglist(arguments))
+
+/datum/status_effect/proc/RegisterEffectSignal(sig_type_or_types, proc_or_callback)
+	if(!owner)
+		CRASH("[src] attempted to apply a status effect listener before it had an owner.")
+	GET_COMPONENT_FROM(listener, /datum/component/status_effect_listener, owner)
+	if(!listener)
+		listener = owner.AddComponent(/datum/component/status_effect_listener)
+	listener.RegisterEffectSignal(src,sig_type_or_types, proc_or_callback)
+	listening = TRUE
 
 /datum/status_effect/proc/on_creation(mob/living/new_owner, ...)
 	if(new_owner)
 		owner = new_owner
 	if(owner)
 		LAZYADD(owner.status_effects, src)
-		if(listening)
-			GET_COMPONENT(listener, /datum/component/status_effect_listener)
-			if(istype(listener))
-				listener.effects |= src
-			else
-				listener = owner.AddComponent(/datum/component/status_effect_listener)
-				listener.effects |= src
 	if(!owner || !on_apply())
 		qdel(src)
 		return
@@ -49,11 +52,9 @@
 		LAZYREMOVE(owner.status_effects, src)
 		on_remove()
 		if(listening)
-			GET_COMPONENT(listener, /datum/component/status_effect_listener)
+			GET_COMPONENT_FROM(listener, /datum/component/status_effect_listener, owner)
 			if(listener)
-				listener.effects -= src
-				if(listener.effects.len <= 0)
-					qdel(listener)
+				listener.ClearSignalRegister(src)
 		owner = null
 	return ..()
 

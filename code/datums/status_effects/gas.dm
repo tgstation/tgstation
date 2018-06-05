@@ -4,8 +4,7 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /obj/screen/alert/status_effect/freon
 	var/icon/cube
-	listening = TRUE
-	var/can_melt = FALSE
+	var/can_melt = TRUE
 	var/active
 
 /obj/screen/alert/status_effect/freon
@@ -14,6 +13,7 @@
 	icon_state = "frozen"
 
 /datum/status_effect/freon/on_apply()
+	RegisterEffectSignal(COMSIG_LIVING_RESIST, .proc/owner_resist)
 	if(!owner.stat)
 		to_chat(owner, "<span class='userdanger'>You become frozen in a cube!</span>")
 	cube = icon('icons/effects/freeze.dmi', "ice_cube")
@@ -27,14 +27,13 @@
 	if(can_melt && owner.bodytemperature >= BODYTEMP_NORMAL)
 		qdel(src)
 
-/datum/status_effect/freon/receiveSignal(sigtype)
-	if(sigtype == STATUS_LISTENER_RESIST)
-		to_chat(owner, "You start breaking out of the ice cube!")
-		if(do_mob(owner, owner, 40))
-			if(active)
-				to_chat(owner, "You break out of the ice cube!")
-				owner.remove_status_effect(/datum/status_effect/freon)
-				owner.update_canmove()
+/datum/status_effect/freon/proc/owner_resist()
+	to_chat(owner, "You start breaking out of the ice cube!")
+	if(do_mob(owner, owner, 40))
+		if(active)
+			to_chat(owner, "You break out of the ice cube!")
+			owner.remove_status_effect(/datum/status_effect/freon)
+			owner.update_canmove()
 
 /datum/status_effect/freon/on_remove()
 	if(!owner.stat)
