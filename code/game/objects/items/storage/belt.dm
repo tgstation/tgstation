@@ -328,7 +328,26 @@
 
 /obj/item/storage/belt/military/snack
 	name = "tactical snack rig"
-	var/list/stop_eating_like_a_noob = list(
+
+/obj/item/storage/belt/military/snack/Initialize()
+	. = ..()
+	var/sponsor = pick("DonkCo", "Waffle Co.", "Roffle Co.", "Gorlax Marauders", "Tiger Cooperative")
+	desc = "A set of snack-tical webbing worn by athletes of the [sponsor] VR sports division."
+
+/obj/item/storage/belt/military/snack/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 6
+	STR.max_w_class = WEIGHT_CLASS_SMALL
+	STR.can_hold = typecacheof(list(
+		/obj/item/reagent_containers/food/snacks,
+		/obj/item/reagent_containers/food/drinks
+		))
+	
+	var/amount = 5
+	var/rig_snacks
+	while(contents.len <= amount)
+		rig_snacks = pick(list(
 		/obj/item/reagent_containers/food/snacks/candy,
 		/obj/item/reagent_containers/food/drinks/dry_ramen,
 		/obj/item/reagent_containers/food/snacks/chips,
@@ -351,25 +370,7 @@
 		/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game,
 		/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime,
 		/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola
-		)
-	var/amount = 6
-
-/obj/item/storage/belt/military/snack/ComponentInitialize()
-	. = ..()
-	var/sponsor = pick("DonkCo", "Waffle Co.", "Roffle Co.", "Gorlax Marauders", "Tiger Cooperative")
-	desc = "A set of snack-tical webbing worn by athletes of the [sponsor] VR sports division."
-
-	GET_COMPONENT(STR, /datum/component/storage)
-	STR.max_items = 6
-	STR.max_w_class = WEIGHT_CLASS_SMALL
-	STR.can_hold = typecacheof(list(
-		/obj/item/reagent_containers/food/snacks,
-		/obj/item/reagent_containers/food/drinks
 		))
-
-	var/rig_snacks
-	while(contents.len <= amount)
-		rig_snacks = pick(stop_eating_like_a_noob)
 		new rig_snacks(src)
 
 /obj/item/storage/belt/military/abductor
