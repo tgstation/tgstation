@@ -31,7 +31,7 @@
 		GET_COMPONENT_FROM(nanites, /datum/component/nanites, L)
 		if(!nanites)
 			return
-		nanites.adjust_volume(regen_rate)	
+		nanites.adjust_nanites(regen_rate)	
 	
 /obj/item/nanite_syringe
 	name = "nanite booster shot"
