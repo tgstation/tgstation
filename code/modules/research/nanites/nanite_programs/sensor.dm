@@ -21,7 +21,7 @@
 	var/spent = FALSE
 	
 /datum/nanite_program/sensor/healthy/check_event()
-	if(host_mob.health == host_mob.max_health)
+	if(host_mob.health == host_mob.maxHealth)
 		if(!spent)
 			spent = TRUE
 			return TRUE
