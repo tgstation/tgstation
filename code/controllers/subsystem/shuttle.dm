@@ -106,18 +106,19 @@ SUBSYSTEM_DEF(shuttle)
 				qdel(T, force=TRUE)
 	CheckAutoEvac()
 
-	while(transit_requesters.len)
-		var/requester = popleft(transit_requesters)
-		var/success = generate_transit_dock(requester)
-		if(!success) // BACK OF THE QUEUE
-			transit_request_failures[requester]++
-			if(transit_request_failures[requester] < MAX_TRANSIT_REQUEST_RETRIES)
-				transit_requesters += requester
-			else
-				var/obj/docking_port/mobile/M = requester
-				M.transit_failure()
-		if(MC_TICK_CHECK)
-			break
+	if(!SSmapping.clearing_reserved_turfs)
+		while(transit_requesters.len)
+			var/requester = popleft(transit_requesters)
+			var/success = generate_transit_dock(requester)
+			if(!success) // BACK OF THE QUEUE
+				transit_request_failures[requester]++
+				if(transit_request_failures[requester] < MAX_TRANSIT_REQUEST_RETRIES)
+					transit_requesters += requester
+				else
+					var/obj/docking_port/mobile/M = requester
+					M.transit_failure()
+			if(MC_TICK_CHECK)
+				break
 
 /datum/controller/subsystem/shuttle/proc/CheckAutoEvac()
 	if(emergencyNoEscape || emergencyNoRecall || !emergency || !SSticker.HasRoundStarted())

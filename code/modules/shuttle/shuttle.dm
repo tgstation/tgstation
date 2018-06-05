@@ -219,8 +219,10 @@
 			if(owner.assigned_transit == src)
 				owner.assigned_transit = null
 			owner = null
-		QDEL_NULL(reserved_area)
-	. = ..()
+		if(!QDELETED(reserved_area))
+			qdel(reserved_area)
+		reserved_area = null
+	return ..()
 
 /obj/docking_port/mobile
 	name = "shuttle"
