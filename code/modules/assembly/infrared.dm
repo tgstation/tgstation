@@ -33,6 +33,7 @@
 
 /obj/item/assembly/infra/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(listener)
 	QDEL_LIST(beams)
 	. = ..()
 
