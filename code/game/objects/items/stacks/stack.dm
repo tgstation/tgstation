@@ -33,10 +33,13 @@
 		return
 	return TRUE
 
-/obj/item/stack/Initialize(mapload, new_amount=null , merge = TRUE)
+/obj/item/stack/Initialize(mapload, new_amount, merge = TRUE)
 	. = ..()
-	if(new_amount)
+	if(new_amount != null)
 		amount = new_amount
+	while(amount > max_amount)
+		amount -= max_amount
+		new type(loc, max_amount, FALSE)
 	if(!merge_type)
 		merge_type = type
 	if(merge)

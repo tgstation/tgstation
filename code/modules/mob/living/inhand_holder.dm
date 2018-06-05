@@ -5,7 +5,7 @@
 	desc = "Yell at coderbrush."
 	icon = null
 	icon_state = ""
-	flags_1 = DROPDEL_1
+	item_flags = DROPDEL
 	var/mob/living/held_mob
 	var/can_head = TRUE
 	var/destroying = FALSE

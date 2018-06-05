@@ -115,6 +115,7 @@
 	var/smashcooldown = 3	//deciseconds
 
 	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
+	var/mouse_pointer
 
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
 
@@ -812,16 +813,18 @@
 		to_chat(usr, "<span class='warning'>The [name] is already occupied!</span>")
 		log_append_to_last("Permission denied.")
 		return
-	var/passed
 	if(dna_lock)
+		var/passed = FALSE
 		if(user.has_dna())
 			var/mob/living/carbon/C = user
 			if(C.dna.unique_enzymes==dna_lock)
-				passed = 1
-	else if(operation_allowed(user))
-		passed = 1
-	if(!passed)
-		to_chat(user, "<span class='warning'>Access denied.</span>")
+				passed = TRUE
+		if (!passed)
+			to_chat(user, "<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>")
+			log_append_to_last("Permission denied.")
+			return
+	if(!operation_allowed(user))
+		to_chat(user, "<span class='warning'>Access denied. Insufficient operation keycodes.</span>")
 		log_append_to_last("Permission denied.")
 		return
 	if(user.buckled)
@@ -853,6 +856,7 @@
 	if(H && H.client && H in range(1))
 		occupant = H
 		H.forceMove(src)
+		H.update_mouse_pointer()
 		add_fingerprint(H)
 		GrantActions(H, human_occupant=1)
 		forceMove(loc)
@@ -910,6 +914,7 @@
 	brainmob.reset_perspective(src)
 	brainmob.remote_control = src
 	brainmob.update_canmove()
+	brainmob.update_mouse_pointer()
 	icon_state = initial(icon_state)
 	update_icon()
 	setDir(dir_in)
@@ -925,9 +930,9 @@
 
 /obj/mecha/Exited(atom/movable/M, atom/newloc)
 	if(occupant && occupant == M) // The occupant exited the mech without calling go_out()
-		go_out(1, newloc)
+		go_out(TRUE, newloc)
 
-/obj/mecha/proc/go_out(var/forced, var/atom/newloc = loc)
+/obj/mecha/proc/go_out(forced, atom/newloc = loc)
 	if(!occupant)
 		return
 	var/atom/movable/mob_container
@@ -979,6 +984,7 @@
 		setDir(dir_in)
 
 	if(L && L.client)
+		L.update_mouse_pointer()
 		L.client.change_view(CONFIG_GET(string/default_view))
 		zoom_mode = 0
 

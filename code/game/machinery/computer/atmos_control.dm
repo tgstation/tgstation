@@ -6,7 +6,6 @@
 	name = "gas sensor"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gsensor1"
-	anchored = TRUE
 
 	var/on = TRUE
 

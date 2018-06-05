@@ -103,7 +103,7 @@
 /datum/reagent/blackpowder/on_mob_life(mob/living/M)
 	..()
 	if(isplasmaman(M))
-		M.hallucination += 10
+		M.hallucination += 5
 
 /datum/reagent/blackpowder/on_ex_act()
 	var/location = get_turf(holder.my_atom)

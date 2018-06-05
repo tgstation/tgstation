@@ -175,7 +175,7 @@
 	if(!LAZYLEN(time_left_list))
 		if(on_init)
 			var/turf/T = parent
-			stack_trace("Warning: Wet floor component gc'd right initializatoin! What a waste of time and CPU! Type = [T? T.type : "ERROR - NO PARENT"], Coords = [istype(T)? COORD(T) : "ERROR - INVALID PARENT"].")
+			stack_trace("Warning: Wet floor component gc'd right after initialization! What a waste of time and CPU! Type = [T? T.type : "ERROR - NO PARENT"], Location = [istype(T)? AREACOORD(T) : "ERROR - INVALID PARENT"].")
 		qdel(src)
 		return TRUE
 	return FALSE

@@ -119,6 +119,9 @@
 	icon_state = "water"
 	baseturfs = /turf/open/floor/plating/beach/water
 
+/turf/open/floor/plating/beach/coastline_t/sandwater_inner
+	icon_state = "sandwater_inner"
+	baseturfs = /turf/open/floor/plating/beach/coastline_t/sandwater_inner
 
 /turf/open/floor/plating/ironsand
 	name = "iron sand"

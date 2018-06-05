@@ -4,7 +4,6 @@
 	icon = 'icons/obj/machines/washing_machine.dmi'
 	icon_state = "wm_1_0"
 	density = TRUE
-	anchored = TRUE
 	state_open = TRUE
 	var/busy = FALSE
 	var/bloody_mess = 0
@@ -65,8 +64,7 @@
 	return
 
 /obj/item/stack/sheet/hairlesshide/machine_wash(obj/machinery/washing_machine/WM)
-	var/obj/item/stack/sheet/wetleather/WL = new(loc)
-	WL.amount = amount
+	new /obj/item/stack/sheet/wetleather(drop_location(), amount)
 	qdel(src)
 
 /obj/item/clothing/suit/hooded/ian_costume/machine_wash(obj/machinery/washing_machine/WM)

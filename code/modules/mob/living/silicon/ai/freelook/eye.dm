@@ -11,6 +11,7 @@
 	var/mob/living/silicon/ai/ai = null
 	var/relay_speech = FALSE
 	var/use_static = TRUE
+	var/static_visibility_range = 16
 
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
@@ -25,8 +26,8 @@
 		else
 			moveToNullspace() // ????
 		if(use_static)
-			GLOB.cameranet.visibility(src)
-		if(ai.client)
+			ai.camera_visibility(src)
+		if(ai.client && !ai.multicam_on)
 			ai.client.eye = src
 		update_parallax_contents()
 		//Holopad
@@ -35,6 +36,8 @@
 			H.move_hologram(ai, T)
 		if(ai.camera_light_on)
 			ai.light_cameras()
+		if(ai.master_multicam)
+			ai.master_multicam.refresh_view()
 
 /mob/camera/aiEye/Move()
 	return 0
@@ -45,20 +48,27 @@
 	return null
 
 /mob/camera/aiEye/proc/RemoveImages()
-	if(use_static)
-		for(var/datum/camerachunk/chunk in visibleCameraChunks)
-			chunk.remove(src)
+	var/client/C = GetViewerClient()
+	if(C && use_static)
+		for(var/V in visibleCameraChunks)
+			var/datum/camerachunk/c = V
+			C.images -= c.obscured
 
 /mob/camera/aiEye/Destroy()
-	ai = null
+	if(ai)
+		ai.all_eyes -= src
+		ai = null
+	for(var/V in visibleCameraChunks)
+		var/datum/camerachunk/c = V
+		c.remove(src)
 	return ..()
 
 /atom/proc/move_camera_by_click()
 	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = usr
-		if(AI.eyeobj && AI.client.eye == AI.eyeobj)
+		if(AI.eyeobj && (AI.multicam_on || (AI.client.eye == AI.eyeobj)) && (AI.eyeobj.z == z))
 			AI.cameraFollow = null
-			if (isturf(src.loc) || isturf(src))
+			if (isturf(loc) || isturf(src))
 				AI.eyeobj.setLoc(src)
 
 // This will move the AIEye. It will also cause lights near the eye to light up, if toggled.
@@ -95,11 +105,18 @@
 
 	if(!eyeobj || !eyeobj.loc || QDELETED(eyeobj))
 		to_chat(src, "ERROR: Eyeobj not found. Creating new eye...")
-		eyeobj = new(loc)
-		eyeobj.ai = src
-		eyeobj.name = "[src.name] (AI Eye)" // Give it a name
+		create_eye()
 
 	eyeobj.setLoc(loc)
+
+/mob/living/silicon/ai/proc/create_eye()
+	if(eyeobj)
+		return
+	eyeobj = new /mob/camera/aiEye()
+	all_eyes += eyeobj
+	eyeobj.ai = src
+	eyeobj.setLoc(loc)
+	eyeobj.name = "[name] (AI Eye)"
 
 /mob/living/silicon/ai/verb/toggle_acceleration()
 	set category = "AI Commands"

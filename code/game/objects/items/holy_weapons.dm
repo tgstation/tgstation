@@ -1,3 +1,172 @@
+// CHAPLAIN CUSTOM ARMORS //
+
+/obj/item/clothing/head/helmet/chaplain
+	name = "crusader helmet"
+	desc = "Deus Vult."
+	icon_state = "knight_templar"
+	item_state = "knight_templar"
+	armor = list("melee" = 41, "bullet" = 15, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 2, "rad" = 0, "fire" = 0, "acid" = 50)
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	strip_delay = 80
+	dog_fashion = null
+
+/obj/item/clothing/suit/armor/riot/chaplain
+	name = "crusader armour"
+	desc = "God wills it!"
+	icon_state = "knight_templar"
+	item_state = "knight_templar"
+
+/obj/item/holybeacon
+	name = "armaments beacon"
+	desc = "Contains a set of armaments for the chaplain."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "gangtool-red"
+	item_state = "radio"
+
+/obj/item/holybeacon/attack_self(mob/user)
+	if(user.mind && (user.mind.isholy) && !SSreligion.holy_armor_type)
+		beacon_armor(user)
+	else
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, 1)
+
+/obj/item/holybeacon/proc/beacon_armor(mob/M)
+	var/list/holy_armor_list = typesof(/obj/item/storage/box/holy)
+	var/list/display_names = list()
+	for(var/V in holy_armor_list)
+		var/atom/A = V
+		display_names += list(initial(A.name) = A)
+
+	var/choice = input(M,"What holy armor kit would you like to order?","Holy Armor Theme") as null|anything in display_names
+	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || SSreligion.holy_armor_type)
+		return
+
+	var/index = display_names.Find(choice)
+	var/A = holy_armor_list[index]
+
+	SSreligion.holy_armor_type = A
+	var/holy_armor_box = new A
+
+	SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
+
+	if(holy_armor_box)
+		qdel(src)
+		M.put_in_active_hand(holy_armor_box)///YOU COMPILED
+
+/obj/item/storage/box/holy
+	name = "Templar Kit"
+
+/obj/item/storage/box/holy/PopulateContents()
+	new /obj/item/clothing/head/helmet/chaplain(src)
+	new /obj/item/clothing/suit/armor/riot/chaplain(src)
+
+/obj/item/storage/box/holy/student
+	name = "Profane Scholar Kit"
+
+/obj/item/storage/box/holy/student/PopulateContents()
+	new /obj/item/clothing/suit/armor/riot/chaplain/studentuni(src)
+	new /obj/item/clothing/head/helmet/chaplain/cage(src)
+
+/obj/item/clothing/suit/armor/riot/chaplain/studentuni
+	name = "student robe"
+	desc = "The uniform of a bygone institute of learning."
+	icon_state = "studentuni"
+	item_state = "studentuni"
+	body_parts_covered = ARMS|CHEST
+	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+
+/obj/item/clothing/head/helmet/chaplain/cage
+	name = "cage"
+	desc = "A cage that restrains the will of the self, allowing one to see the profane world for what it is."
+	alternate_worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	icon_state = "cage"
+	item_state = "cage"
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	dynamic_hair_suffix = ""
+
+/obj/item/storage/box/holy/sentinel
+	name = "Stone Sentinel Kit"
+
+/obj/item/storage/box/holy/sentinel/PopulateContents()
+	new /obj/item/clothing/suit/armor/riot/chaplain/ancient(src)
+	new /obj/item/clothing/head/helmet/chaplain/ancient(src)
+
+/obj/item/clothing/head/helmet/chaplain/ancient
+	name = "ancient helmet"
+	desc = "None may pass!"
+	icon_state = "knight_ancient"
+	item_state = "knight_ancient"
+
+/obj/item/clothing/suit/armor/riot/chaplain/ancient
+	name = "ancient armour"
+	desc = "Defend the treasure..."
+	icon_state = "knight_ancient"
+	item_state = "knight_ancient"
+
+/obj/item/storage/box/holy/witchhunter
+	name = "Witchhunter Kit"
+
+/obj/item/storage/box/holy/witchhunter/PopulateContents()
+	new /obj/item/clothing/suit/armor/riot/chaplain/witchhunter(src)
+	new /obj/item/clothing/head/helmet/chaplain/witchunter_hat(src)
+
+/obj/item/clothing/suit/armor/riot/chaplain/witchhunter
+	name = "witchunter garb"
+	desc = "This worn outfit saw much use back in the day."
+	icon_state = "witchhunter"
+	item_state = "witchhunter"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+
+/obj/item/clothing/head/helmet/chaplain/witchunter_hat
+	name = "witchunter hat"
+	desc = "This hat saw much use back in the day."
+	icon_state = "witchhunterhat"
+	item_state = "witchhunterhat"
+	flags_cover = HEADCOVERSEYES
+
+/obj/item/storage/box/holy/follower
+	name = "Followers of the Chaplain Kit"
+
+/obj/item/storage/box/holy/follower/PopulateContents()
+	new /obj/item/clothing/suit/hooded/chaplain_hoodie/leader(src)
+	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
+	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
+	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
+	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
+
+/obj/item/clothing/suit/hooded/chaplain_hoodie
+	name = "follower hoodie"
+	desc = "Hoodie made for acolytes of the chaplain."
+	icon_state = "chaplain_hoodie"
+	item_state = "chaplain_hoodie"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood
+
+/obj/item/clothing/head/hooded/chaplain_hood
+	name = "follower hood"
+	desc = "Hood made for acolytes of the chaplain."
+	icon_state = "chaplain_hood"
+	body_parts_covered = HEAD
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+
+/obj/item/clothing/suit/hooded/chaplain_hoodie/leader
+	name = "leader hoodie"
+	desc = "Now you're ready for some 50 dollar bling water."
+	icon_state = "chaplain_hoodie_leader"
+	item_state = "chaplain_hoodie_leader"
+	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood/leader
+
+/obj/item/clothing/head/hooded/chaplain_hood/leader
+	name = "leader hood"
+	desc = "I mean, you don't /have/ to seek bling water. I just think you should."
+	icon_state = "chaplain_hood_leader"
+
+
+// CHAPLAIN NULLROD AND CUSTOM WEAPONS //
+
 /obj/item/nullrod
 	name = "null rod"
 	desc = "A rod of pure obsidian; its very presence disrupts and dampens the powers of Nar-Sie and Ratvar's followers."
@@ -60,7 +229,7 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	name = "god hand"
 	desc = "This hand of yours glows with an awesome power!"
-	flags_1 = ABSTRACT_1 | NODROP_1 | DROPDEL_1
+	item_flags = ABSTRACT | NODROP | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	hitsound = 'sound/weapons/sear.ogg'
 	damtype = BURN
@@ -304,7 +473,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 = NODROP_1 | ABSTRACT_1
+	item_flags = NODROP | ABSTRACT
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
@@ -375,7 +544,7 @@
 	item_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
-	flags_1 = ABSTRACT_1 | NODROP_1
+	item_flags = ABSTRACT | NODROP
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = IS_SHARP
 

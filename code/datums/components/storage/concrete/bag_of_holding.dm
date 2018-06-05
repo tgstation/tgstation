@@ -6,17 +6,20 @@
 			user.visible_message("<span class='warning'>An unseen force knocks [user] to the ground!</span>", "<span class='big_brass'>\"I think not!\"</span>")
 			user.Knockdown(60)
 			return
-		var/safety = alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [A.name]?", "Proceed", "Abort")
+		if(istype(loccheck.loc, /area/fabric_of_reality))
+			to_chat(user, "<span class='danger'>You can't do that here!</span>")
+		var/safety = alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [A.name]?", "Abort", "Proceed")
 		if(safety == "Abort" || !in_range(A, user) || !A || !W || user.incapacitated())
 			return
-		A.investigate_log("has become a singularity. Caused by [user.key]", INVESTIGATE_SINGULO)
 		to_chat(user, "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>")
 		qdel(W)
-		var/obj/singularity/singulo = new /obj/singularity (get_turf(A))
-		singulo.energy = 300 //should make it a bit bigger~
-		message_admins("[key_name_admin(user)] detonated a bag of holding")
-		log_game("[key_name(user)] detonated a bag of holding")
+		playsound(loccheck,'sound/effects/supermatter.ogg', 200, 1)
+		for(var/turf/T in range(6,loccheck))
+			if(istype(T, /turf/open/space/transit))
+				continue
+			T.TerraformTurf(/turf/open/chasm/magic, /turf/open/chasm/magic)
+		message_admins("[ADMIN_LOOKUPFLW(user)] detonated a bag of holding at [ADMIN_VERBOSEJMP(loccheck)].")
+		log_game("[key_name(user)] detonated a bag of holding at [AREACOORD(loccheck)].")
 		qdel(A)
-		singulo.process()
 		return
 	. = ..()

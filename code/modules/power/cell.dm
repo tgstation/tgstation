@@ -131,10 +131,12 @@
 		rigged = TRUE //broken batterys are dangerous
 
 /obj/item/stock_parts/cell/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	charge -= 1000 / severity
 	if (charge < 0)
 		charge = 0
-	..()
 
 /obj/item/stock_parts/cell/ex_act(severity, target)
 	..()
@@ -320,8 +322,9 @@
 	charge = 0
 	update_icon()
 
-/obj/item/stock_parts/cell/emproof/emp_act(severity)
-	return
+/obj/item/stock_parts/cell/emproof/empty/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
 
 /obj/item/stock_parts/cell/emproof/corrupt()
 	return
@@ -336,6 +339,9 @@
 	return
 
 /obj/item/stock_parts/cell/beam_rifle/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	charge = CLAMP((charge-(10000/severity)),0,maxcharge)
 
 /obj/item/stock_parts/cell/emergency_light

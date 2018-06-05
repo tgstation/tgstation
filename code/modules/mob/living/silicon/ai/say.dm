@@ -45,10 +45,10 @@
 		var/turf/padturf = get_turf(T)
 		var/padloc
 		if(padturf)
-			padloc = COORD(padturf)
+			padloc = AREACOORD(padturf)
 		else
 			padloc = "(UNKNOWN)"
-		log_talk(src,"HOLOPAD [padloc]: [key_name(src)] : [message]", LOGSAY)
+		log_talk(src,"HOLOPAD in [padloc]: [key_name(src)] : [message]", LOGSAY)
 		send_speech(message, 7, T, "robot", get_spans(), language)
 		to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>")
 	else

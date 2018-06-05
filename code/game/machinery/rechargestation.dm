@@ -4,7 +4,6 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "borgcharger0"
 	density = FALSE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 1000
@@ -43,11 +42,12 @@
 	open_machine()
 
 /obj/machinery/recharge_station/emp_act(severity)
+	. = ..()
 	if(!(stat & (BROKEN|NOPOWER)))
-		if(occupant)
+		if(occupant && !(. & EMP_PROTECT_CONTENTS))
 			occupant.emp_act(severity)
-		open_machine()
-	..()
+		if (!(. & EMP_PROTECT_SELF))
+			open_machine()
 
 /obj/machinery/recharge_station/attackby(obj/item/P, mob/user, params)
 	if(state_open)

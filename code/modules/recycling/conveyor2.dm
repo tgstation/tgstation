@@ -8,7 +8,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	icon_state = "conveyor_map"
 	name = "conveyor belt"
 	desc = "A conveyor belt."
-	anchored = TRUE
 	layer = BELOW_OPEN_DOOR_LAYER
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
@@ -32,7 +31,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor/inverted/Initialize(mapload)
 	. = ..()
 	if(mapload && !(dir in GLOB.diagonals))
-		log_game("### MAPPING ERROR: [src] at [COORD(src)] spawned without using a diagonal dir. Please replace with a normal version.")
+		log_game("### MAPPING ERROR: [src] at [AREACOORD(src)] spawned without using a diagonal dir. Please replace with a normal version.")
 
 // Auto conveyour is always on unless unpowered
 
@@ -215,11 +214,12 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 //
 
 /obj/machinery/conveyor_switch
-
 	name = "conveyor switch"
 	desc = "A conveyor control switch."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
+	speed_process = TRUE
+
 	var/position = 0			// 0 off, -1 reverse, 1 forward
 	var/last_pos = -1			// last direction setting
 	var/operated = 1			// true if just operated
@@ -227,11 +227,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/invert_icon = FALSE		// If the level points the opposite direction when it's turned on.
 
 	var/id = "" 				// must match conveyor IDs to control them
-
-	anchored = TRUE
-	speed_process = TRUE
-
-
 
 /obj/machinery/conveyor_switch/Initialize(mapload, newid)
 	. = ..()

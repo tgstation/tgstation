@@ -11,7 +11,6 @@
 	var/id = null
 	var/initialized_button = 0
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 70)
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -96,7 +95,7 @@
 		update_icon()
 		return
 
-	if(user.a_intent != INTENT_HARM && !(W.flags_1 & NOBLUDGEON_1))
+	if(user.a_intent != INTENT_HARM && !(W.item_flags & NOBLUDGEON))
 		return attack_hand(user)
 	else
 		return ..()
@@ -190,6 +189,31 @@
 			device = new /obj/item/assembly/control(src)
 	..()
 
+/obj/machinery/button/door/incinerator_vent_toxmix
+	name = "combustion chamber vent control"
+	id = INCINERATOR_TOXMIX_VENT
+	req_access = list(ACCESS_TOX)
+
+/obj/machinery/button/door/incinerator_vent_atmos_main
+	name = "turbine vent control"
+	id = INCINERATOR_ATMOS_MAINVENT
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS)
+
+/obj/machinery/button/door/incinerator_vent_atmos_aux
+	name = "combustion chamber vent control"
+	id = INCINERATOR_ATMOS_AUXVENT
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS)
+
+/obj/machinery/button/door/incinerator_vent_syndicatelava_main
+	name = "turbine vent control"
+	id = INCINERATOR_SYNDICATELAVA_MAINVENT
+	req_access = list(ACCESS_SYNDICATE)
+
+/obj/machinery/button/door/incinerator_vent_syndicatelava_aux
+	name = "combustion chamber vent control"
+	id = INCINERATOR_SYNDICATELAVA_AUXVENT
+	req_access = list(ACCESS_SYNDICATE)
+
 /obj/machinery/button/massdriver
 	name = "mass driver button"
 	desc = "A remote control switch for a mass driver."
@@ -203,6 +227,19 @@
 	icon_state = "launcher"
 	skin = "launcher"
 	device_type = /obj/item/assembly/control/igniter
+
+/obj/machinery/button/ignition/incinerator
+	name = "combustion chamber ignition switch"
+	desc = "A remote control switch for the combustion chamber's igniter."
+
+/obj/machinery/button/ignition/incinerator/toxmix
+	id = INCINERATOR_TOXMIX_IGNITER
+
+/obj/machinery/button/ignition/incinerator/atmos
+	id = INCINERATOR_ATMOS_IGNITER
+
+/obj/machinery/button/ignition/incinerator/syndicatelava
+	id = INCINERATOR_SYNDICATELAVA_IGNITER
 
 /obj/machinery/button/flasher
 	name = "flasher button"

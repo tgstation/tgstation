@@ -1253,9 +1253,6 @@
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/plasteel/darkpurple,
 /area/awaymission/research/interior/genetics)
-"dP" = (
-/turf/open/floor/plasteel/darkpurple,
-/area/awaymission/research/interior/genetics)
 "dQ" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -3106,19 +3103,16 @@
 "jr" = (
 /obj/structure/sign/directions/security{
 	dir = 1;
-	icon_state = "direction_sec";
 	pixel_x = 32;
 	pixel_y = 40
 	},
 /obj/structure/sign/directions/engineering{
 	dir = 1;
-	icon_state = "direction_eng";
 	pixel_x = 32;
 	pixel_y = 33
 	},
 /obj/structure/sign/directions/science{
 	dir = 1;
-	icon_state = "direction_sci";
 	pixel_x = 32;
 	pixel_y = 26
 	},
@@ -36975,7 +36969,7 @@ fc
 fE
 ea
 cK
-dP
+cK
 dt
 cK
 cK
@@ -37735,7 +37729,7 @@ cJ
 cK
 cK
 cK
-dP
+cK
 ea
 ez
 fg
@@ -38005,7 +37999,7 @@ ea
 hV
 cK
 cK
-dP
+cK
 iI
 cx
 cd

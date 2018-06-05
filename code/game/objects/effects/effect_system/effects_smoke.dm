@@ -279,20 +279,19 @@
 			contained += " [reagent] "
 		if(contained)
 			contained = "\[[contained]\]"
-		var/area/A = get_area(location)
 
-		var/where = "[A.name] | [location.x], [location.y]"
+		var/where = "[AREACOORD(location)]"
 		var/whereLink = "<A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[location.x];Y=[location.y];Z=[location.z]'>[where]</a>"
 
 		if(carry.my_atom.fingerprintslast)
 			var/mob/M = get_mob_by_key(carry.my_atom.fingerprintslast)
 			var/more = ""
 			if(M)
-				more = "(<A HREF='?_src_=holder;[HrefToken()];adminmoreinfo=[REF(M)]'>?</a>) (<A HREF='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(M)]'>FLW</A>) "
-			message_admins("Smoke: ([whereLink])[contained]. Key: [carry.my_atom.fingerprintslast][more].", 0, 1)
+				more = "[ADMIN_LOOKUPFLW(M)] "
+			message_admins("Smoke: ([whereLink])[contained]. Key: [more ? more : carry.my_atom.fingerprintslast].")
 			log_game("A chemical smoke reaction has taken place in ([where])[contained]. Last associated key is [carry.my_atom.fingerprintslast].")
 		else
-			message_admins("Smoke: ([whereLink])[contained]. No associated key.", 0, 1)
+			message_admins("Smoke: ([whereLink])[contained]. No associated key.")
 			log_game("A chemical smoke reaction has taken place in ([where])[contained]. No associated key.")
 
 

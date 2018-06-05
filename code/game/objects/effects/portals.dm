@@ -145,7 +145,7 @@
 		return ..()
 
 /obj/effect/portal/proc/teleport(atom/movable/M, force = FALSE)
-	if(!force && (!istype(M) || istype(M, /obj/effect) || (ismecha(M) && !mech_sized) || (!isobj(M) && !ismob(M)))) //Things that shouldn't teleport.
+	if(!force && (!istype(M) || iseffect(M) || (ismecha(M) && !mech_sized) || (!isobj(M) && !ismob(M)))) //Things that shouldn't teleport.
 		return
 	var/turf/real_target = get_link_target_turf()
 	if(!istype(real_target))
@@ -153,7 +153,7 @@
 	if(!force && (!ismecha(M) && !istype(M, /obj/item/projectile) && M.anchored && !allow_anchored))
 		return
 	if(ismegafauna(M))
-		message_admins("[M] has used a portal at [ADMIN_COORDJMP(src)] made by [usr].")
+		message_admins("[M] has used a portal at [ADMIN_VERBOSEJMP(src)] made by [usr].")
 	if(do_teleport(M, real_target, innate_accuracy_penalty))
 		if(istype(M, /obj/item/projectile))
 			var/obj/item/projectile/P = M
@@ -175,4 +175,3 @@
 	else
 		real_target = get_turf(linked)
 	return real_target
-

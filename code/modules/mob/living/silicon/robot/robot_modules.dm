@@ -1,7 +1,7 @@
 /obj/item/robot_module
 	name = "Default"
 	icon = 'icons/obj/module.dmi'
-	icon_state = "std_module"
+	icon_state = "std_mod"
 	w_class = WEIGHT_CLASS_GIGANTIC
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
@@ -58,6 +58,9 @@
 	return ..()
 
 /obj/item/robot_module/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_CONTENTS)
+		return
 	for(var/obj/O in modules)
 		O.emp_act(severity)
 	..()
@@ -116,7 +119,7 @@
 	if(I.loc != src)
 		I.forceMove(src)
 	modules += I
-	I.flags_1 |= NODROP_1
+	I.item_flags |= NODROP
 	I.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	if(nonstandard)
 		added_modules += I

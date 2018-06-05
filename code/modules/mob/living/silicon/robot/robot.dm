@@ -90,7 +90,7 @@
 	/obj/item/clothing/head/wizard,
 	/obj/item/clothing/head/nursehat,
 	/obj/item/clothing/head/sombrero,
-	/obj/item/clothing/head/witchunter_hat)
+	/obj/item/clothing/head/helmet/chaplain/witchunter_hat)
 
 	can_buckle = TRUE
 	buckle_lying = FALSE
@@ -105,6 +105,7 @@
 	spark_system.attach(src)
 
 	wires = new /datum/wires/robot(src)
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
@@ -790,7 +791,7 @@
 	set_module = /obj/item/robot_module/janitor
 
 /mob/living/silicon/robot/modules/syndicate
-	icon_state = "syndie_bloodhound"
+	icon_state = "synd_sec"
 	faction = list(ROLE_SYNDICATE)
 	bubble_icon = "syndibot"
 	req_access = list(ACCESS_SYNDICATE)
@@ -818,7 +819,7 @@
 	return
 
 /mob/living/silicon/robot/modules/syndicate/medical
-	icon_state = "syndi-medi"
+	icon_state = "synd_medical"
 	playstyle_string = "<span class='big bold'>You are a Syndicate medical cyborg!</span><br>\
 						<b>You are armed with powerful medical tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
 						Your hypospray will produce Restorative Nanites, a wonder-drug that will heal most types of bodily damages, including clone and brain damage. It also produces morphine for offense. \

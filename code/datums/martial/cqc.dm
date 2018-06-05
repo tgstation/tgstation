@@ -21,7 +21,8 @@
 	restraining = FALSE
 
 /datum/martial_art/cqc/can_use(mob/living/carbon/human/H)
-	if(just_a_cook && !(is_type_in_typecache(get_area(H), areas_under_siege)))
+	var/area/A = get_area(H)
+	if(just_a_cook && !(is_type_in_typecache(A, areas_under_siege)))
 		return FALSE
 	return ..()
 
