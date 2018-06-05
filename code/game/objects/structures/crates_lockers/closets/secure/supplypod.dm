@@ -104,16 +104,14 @@
 	light_range = 2
 	var/obj/effect/temp_visual/fallingPod
 
-/obj/effect/DPtarget/Initialize(mapload, var/SO, var/podID)
+/obj/effect/DPtarget/Initialize(mapload, var/SO, var/podID, var/target)
 	. = ..()
-	var/delayTime = 0
+	var/delayTime = 30//default time is 30 seconds
 	switch(podID)
-		if(POD_STANDARD)
-			delayTime = 30
 		if(POD_BLUESPACE)
 			delayTime = 15
 		if(POD_CENTCOM)
-			delayTime = 1
+			delayTime = 5//speedy delivery
 
 	addtimer(CALLBACK(src, .proc/beginLaunch, SO, podID), delayTime)//standard pods take 3 seconds to come in, bluespace pods take 1.5
 
@@ -130,8 +128,11 @@
 		new /obj/structure/closet/supplypod/bluespacepod(drop_location(), SO)//pod is created
 		explosion(src,0,0,2, flame_range = 1) //explosion and camshake (shoutout to @cyberboss)
 	else
-		new /obj/structure/closet/supplypod/bluespacepod/centcompod(drop_location(), SO)
-		explosion(src,0,0,2, flame_range = 1)
+		new /obj/structure/closet/supplypod/bluespacepod/centcompod(drop_location(), SO)//CentCom supplypods dont create explosions; instead they directly deal 40 fire damage to people on the turf
+		var/turf/T = get_turf(src)
+		T.hotspot_expose(700, 50, 1)//same as fireball
+		for(var/mob/living/M in T.contents)
+			M.adjustFireLoss(40)
 	qdel(src)
 
 /obj/effect/DPtarget/Destroy()

@@ -1310,17 +1310,18 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			var/target_path = input(usr,"Enter typepath of an atom you'd like to send with the pod (type \"empty\" to send an empty pod):" ,"Typepath","/obj/item/reagent_containers/food/snacks/grown/harebell") as null|text
 			if (isnull(target_path))
 				return
-			if (target_path == "empty")//if you type "abort", spawn an empty pod
+			if (target_path == "empty")//if you type "empty", spawn an empty pod
 				new /obj/effect/DPtarget(get_turf(target), null, POD_CENTCOM)
 				return
 			var/delivery = text2path(target_path)
 			if(!ispath(delivery))
 				delivery = pick_closest_path(target_path)
 				if(!delivery)
-					delivery = /obj/item/reagent_containers/food/snacks/grown/harebell
-					alert("That path is not allowed.")
+					alert("ERROR: Incorrect / improper path given.")
+					return
 			//send the pod
-			new /obj/effect/DPtarget(get_turf(target), delivery, POD_CENTCOM)
+			target.Stun(10)//takes 0.53 seconds for CentCom pod to land
+			new /obj/effect/DPtarget(get_turf(target), delivery, POD_CENTCOM, target)
 
 	var/msg = "[key_name_admin(usr)] punished [key_name_admin(target)] with [punishment]."
 	message_admins(msg)
