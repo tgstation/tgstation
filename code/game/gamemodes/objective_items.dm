@@ -156,7 +156,7 @@
 	return 0
 
 /datum/objective_item/steal/slime
-	name = "an unused sample of slime extract."
+	name = "an unused sample of any slime extract."
 	targetitem = /obj/item/slime_extract
 	difficulty = 3
 	excludefromjob = list("Research Director","Scientist")
@@ -165,6 +165,15 @@
 	if(E.Uses > 0)
 		return 1
 	return 0
+
+/datum/objective_item/steal/specific
+	difficulty = 5
+
+/datum/objective_item/steal/specific/New()
+	..()
+	var/obj/target = pick(subtypesof(/obj/item/slime_extract))
+	name = initial(target.name)
+	targetitem = "an unused sample of [target]."
 
 //Unique Objectives
 /datum/objective_item/unique/docs_red
