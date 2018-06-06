@@ -52,7 +52,7 @@
 	name = "advanced fire extinguisher"
 	desc = "Used to stop thermonuclear fires from spreading inside your engine."
 	icon_state = "foam_extinguisher0"
-	item_state = "foam_extimguisher1"
+	item_state = "foam_extimguisher"
 	dog_fashion = null
 	chem = "firefighting_foam"
 	tanktype = /obj/structure/reagent_dispensers/foamtank
