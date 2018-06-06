@@ -148,7 +148,7 @@ SUBSYSTEM_DEF(dbcore)
 		log_admin_private("ERROR: Advanced admin proc call led to sql query: [sql_query]. Query has been blocked")
 		message_admins("ERROR: Advanced admin proc call led to sql query. Query has been blocked")
 		return FALSE
-	return new /datum/DBQuery(sql_query, src)
+	return new /datum/DBQuery(sql_query, connection)
 
 /*
 Takes a list of rows (each row being an associated list of column => value) and inserts them via a single mass query.
