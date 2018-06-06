@@ -3,4 +3,4 @@
 #define BSQL_DEL_CALL(obj) qdel(##obj)
 #define BSQL_IS_DELETED(obj) (QDELETED(obj))
 #define BSQL_PROTECT_DATUM(path) GENERAL_PROTECT_DATUM(##path)
-#define BSQL_ERROR(message) CRASH("BSQL: [##message]")
+#define BSQL_ERROR(message) SSdbcore.ReportError(message)

@@ -219,6 +219,8 @@ GLOBAL_PROTECT(security_mode)
 			log_world("World hard rebooted at [time_stamp()]")
 			shutdown_logging() // See comment below.
 			TgsEndProcess()
+	
+	world.BSQL_Shutdown()
 
 	log_world("World rebooted at [time_stamp()]")
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
