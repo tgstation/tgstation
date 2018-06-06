@@ -1748,6 +1748,7 @@
 					/obj/item/clothing/under/syndicate/tacticool,
 					/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
 					/obj/item/storage/fancy/cigarettes/cigpack_shadyjims,
+					/obj/item/clothing/mask/gas/syndicate,
 					/obj/item/clothing/neck/necklace/dope)
 	crate_name = "crate"
 
