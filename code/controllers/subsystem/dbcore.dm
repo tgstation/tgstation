@@ -242,6 +242,9 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 		to_chat(usr, "<span class='danger'>A SQL error occurred during this operation, check the server logs.</span>")
 
 /datum/DBQuery/proc/Execute(log_error = TRUE)
+	if(QDELETED(connection))
+		last_error = "No connection!"
+		return FALSE
 	var/start_time
 	var/timeout = CONFIG_GET(number/query_debug_log_timeout)
 	if(timeout)
