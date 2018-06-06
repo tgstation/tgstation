@@ -914,6 +914,9 @@
 /mob/living/carbon/human/species/corporate
 	race = /datum/species/corporate
 
+/mob/living/carbon/human/species/dullahan
+	race = /datum/species/dullahan
+
 /mob/living/carbon/human/species/fly
 	race = /datum/species/fly
 
@@ -977,17 +980,35 @@
 /mob/living/carbon/human/species/golem/plastic
 	race = /datum/species/golem/plastic
 
+/mob/living/carbon/human/species/golem/clockwork
+	race = /datum/species/golem/clockwork
+
+/mob/living/carbon/human/species/golem/clockwork/no_scrap
+	race = /datum/species/golem/clockwork/no_scrap
+
 /mob/living/carbon/human/species/jelly
 	race = /datum/species/jelly
 
 /mob/living/carbon/human/species/jelly/slime
 	race = /datum/species/jelly/slime
 
+/mob/living/carbon/human/species/jelly/stargazer
+	race = /datum/species/jelly/stargazer
+
+/mob/living/carbon/human/species/jelly/luminescent
+	race = /datum/species/jelly/luminescent
+
 /mob/living/carbon/human/species/lizard
 	race = /datum/species/lizard
 
 /mob/living/carbon/human/species/lizard/ashwalker
 	race = /datum/species/lizard/ashwalker
+
+/mob/living/carbon/human/species/moth
+	race = /datum/species/moth
+
+/mob/living/carbon/human/species/mush
+	race = /datum/species/mush
 
 /mob/living/carbon/human/species/plasma
 	race = /datum/species/plasmaman
@@ -998,6 +1019,9 @@
 /mob/living/carbon/human/species/shadow
 	race = /datum/species/shadow
 
+/mob/living/carbon/human/species/shadow/nightmare
+	race = /datum/species/shadow/nightmare
+
 /mob/living/carbon/human/species/skeleton
 	race = /datum/species/skeleton
 
@@ -1006,6 +1030,9 @@
 
 /mob/living/carbon/human/species/synth/military
 	race = /datum/species/synth/military
+
+/mob/living/carbon/human/species/vampire
+	race = /datum/species/vampire
 
 /mob/living/carbon/human/species/zombie
 	race = /datum/species/zombie
