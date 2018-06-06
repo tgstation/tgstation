@@ -44,6 +44,13 @@ if [ "$BUILD_TOOLS" = false ]; then
 	#config folder should not be mandatory
 	rm -rf config/*
 	
+	#db test config
+	cp tools/travis/travis_config.txt config/config.txt
+
+	#set up db
+	mysql -e 'CREATE DATABASE tg_travis;'
+	mysql -u root -p "" tg_travis < SQL/tgstation_schema.sql
+
 	#disable all ruins
 	echo -e "LAVALAND_BUDGET 0\nSPACE_BUDGET 0" > config/config.txt
 

@@ -36,6 +36,9 @@ addons:
       - python3-pip
       - libssl-dev:i386
 
+services:
+  - mysql
+
 install:
   - tools/travis/install_build_tools.sh
 
