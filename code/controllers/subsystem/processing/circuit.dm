@@ -78,5 +78,6 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 		/obj/item/integrated_electronics/wirer,
 		/obj/item/integrated_electronics/debugger,
 		/obj/item/integrated_electronics/analyzer,
-		/obj/item/integrated_electronics/detailer
+		/obj/item/integrated_electronics/detailer,
+		/obj/item/card/data
 		)
