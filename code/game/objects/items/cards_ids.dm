@@ -9,7 +9,7 @@
 
 
 /*
- * DATA CARDS - Used for the teleporter
+ * DATA CARDS - Used for the IC data card reader
  */
 /obj/item/card
 	name = "card"
@@ -24,8 +24,8 @@
 	return BRUTELOSS
 
 /obj/item/card/data
-	name = "data disk"
-	desc = "A disk of data."
+	name = "data card"
+	desc = "A plastic magstripe card for simple and speedy data storage and transfer."
 	icon_state = "data"
 	var/function = "storage"
 	var/data = "null"
@@ -33,9 +33,18 @@
 	item_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	var/detail_color = COLOR_FLOORTILE_GRAY
+
+/obj/item/card/data/update_icon()
+	cut_overlays()
+	if(detail_color == COLOR_FLOORTILE_GRAY)
+		return
+	var/mutable_appearance/detail_overlay = mutable_appearance('icons/obj/card.dmi', "[icon_state]-color")
+	detail_overlay.color = detail_color
+	add_overlay(detail_overlay)
 
 /obj/item/card/data/verb/label(t as text)
-	set name = "Label Disk"
+	set name = "Label Card"
 	set category = "Object"
 	set src in usr
 
@@ -43,11 +52,22 @@
 		return
 
 	if (t)
-		src.name = "data disk- '[t]'"
+		src.name = "data card- '[t]'"
 	else
-		src.name = "data disk"
+		src.name = "data card"
 	src.add_fingerprint(usr)
 	return
+
+/obj/item/card/data/attackby(obj/item/I, mob/living/user)
+	if(istype(I, /obj/item/integrated_electronics/detailer))
+		var/obj/item/integrated_electronics/detailer/D = I
+		detail_color = D.detail_color
+		update_icon()
+
+/obj/item/proc/GetCard()
+
+/obj/item/card/data/GetCard()
+	return src
 
 /*
  * ID CARDS
