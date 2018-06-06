@@ -71,8 +71,8 @@ SUBSYSTEM_DEF(dbcore)
 	if (!.)
 		log_sql("Connect() failed | [error]")
 		++failed_connections
-		QDEL_NULL(connectOperation)
 		QDEL_NULL(connection)
+		QDEL_NULL(connectOperation)
 
 /datum/controller/subsystem/dbcore/proc/CheckSchemaVersion()
 	if(CONFIG_GET(flag/sql_enabled))
@@ -119,6 +119,7 @@ SUBSYSTEM_DEF(dbcore)
 
 /datum/controller/subsystem/dbcore/proc/Disconnect()
 	failed_connections = 0
+	QDEL_NULL(connectOperation)
 	QDEL_NULL(connection)
 
 /datum/controller/subsystem/dbcore/proc/IsConnected()
