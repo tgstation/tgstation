@@ -39,8 +39,8 @@
 	var/announce_span = "warning" //The gamemode's name will be in this span during announcement.
 	var/announce_text = "This gamemode forgot to set a descriptive text! Uh oh!" //Used to describe a gamemode when it's announced.
 
-	var/const/waittime_l = 600
-	var/const/waittime_h = 1800 // started at 1800
+	var/waittime_l = 600
+	var/waittime_h = 1800 // started at 1800
 
 	var/list/datum/station_goal/station_goals = list()
 

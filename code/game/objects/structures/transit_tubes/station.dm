@@ -19,9 +19,6 @@
 	var/base_icon = "station0"
 	var/boarding_dir //from which direction you can board the tube
 
-	var/const/OPEN_DURATION = 6
-	var/const/CLOSE_DURATION = 6
-
 /obj/structure/transit_tube/station/New()
 	..()
 	START_PROCESSING(SSobj, src)
@@ -107,7 +104,7 @@
 	if(open_status == STATION_TUBE_CLOSED)
 		icon_state = "opening_[base_icon]"
 		open_status = STATION_TUBE_OPENING
-		spawn(OPEN_DURATION)
+		spawn(6)
 			if(open_status == STATION_TUBE_OPENING)
 				icon_state = "open_[base_icon]"
 				open_status = STATION_TUBE_OPEN
@@ -148,7 +145,7 @@
 			pod.setDir(tube_dirs[1]) //turning the pod around for next launch.
 		launch_cooldown = world.time + cooldown_delay
 		open_animation()
-		sleep(OPEN_DURATION + 2)
+		sleep(8)
 		pod_moving = 0
 		if(!QDELETED(pod))
 			var/datum/gas_mixture/floor_mixture = loc.return_air()

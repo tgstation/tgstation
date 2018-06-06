@@ -28,17 +28,17 @@
 	if(cold_circ)
 		switch(cold_dir)
 			if(EAST)
-				cold_circ.side = circpath.CIRC_RIGHT
+				cold_circ.side = CIRC_RIGHT
 			if(WEST)
-				cold_circ.side = circpath.CIRC_LEFT
+				cold_circ.side = CIRC_LEFT
 		cold_circ.update_icon()
 
 	if(hot_circ)
 		switch(hot_dir)
 			if(EAST)
-				hot_circ.side = circpath.CIRC_RIGHT
+				hot_circ.side = CIRC_RIGHT
 			if(WEST)
-				hot_circ.side = circpath.CIRC_LEFT
+				hot_circ.side = CIRC_LEFT
 		hot_circ.update_icon()
 
 	if(!cold_circ || !hot_circ)

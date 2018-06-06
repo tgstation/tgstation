@@ -453,8 +453,8 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 /datum/holiday/easter
 	name = EASTER
 	drone_hat = /obj/item/clothing/head/rabbitears
-	var/const/days_early = 1 //to make editing the holiday easier
-	var/const/days_extra = 1
+	var/days_early = 1 //to make editing the holiday easier
+	var/days_extra = 1
 
 /datum/holiday/easter/shouldCelebrate(dd, mm, yy, ww, ddd)
 	if(!begin_month)

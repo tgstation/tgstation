@@ -1,6 +1,8 @@
 //node2, air2, network2 correspond to input
 //node1, air1, network1 correspond to output
 
+#define CIRC_LEFT 1
+#define CIRC_RIGHT 2
 
 /obj/machinery/atmospherics/components/binary/circulator
 	name = "circulator/heat exchanger"
@@ -14,10 +16,6 @@
 	pipe_flags = PIPING_ONE_PER_TURF
 
 	density = TRUE
-
-	var/global/const/CIRC_LEFT = 1
-	var/global/const/CIRC_RIGHT = 2
-
 
 /obj/machinery/atmospherics/components/binary/circulator/proc/return_transfer_air()
 

@@ -13,7 +13,7 @@
 	var/obj/item/reagent_containers/spray/cleaner/myspray = null
 	var/obj/item/lightreplacer/myreplacer = null
 	var/signs = 0
-	var/const/max_signs = 4
+	var/max_signs = 4
 
 
 /obj/structure/janitorialcart/Initialize()

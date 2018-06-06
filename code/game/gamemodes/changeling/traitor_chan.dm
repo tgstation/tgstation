@@ -11,7 +11,7 @@
 
 	var/list/possible_changelings = list()
 	var/list/changelings = list()
-	var/const/changeling_amount = 1 //hard limit on changelings if scaling is turned off
+	var/changeling_amount = 1 //hard limit on changelings if scaling is turned off
 
 /datum/game_mode/traitor/changeling/announce()
 	to_chat(world, "<B>The current game mode is - Traitor+Changeling!</B>")
