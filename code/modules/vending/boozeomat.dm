@@ -38,6 +38,18 @@
 	req_access_txt = "25"
 	refill_canister = /obj/item/vending_refill/boozeomat
 
+/obj/machinery/vending/boozeomat/maint
+	products = list(/obj/item/reagent_containers/food/drinks/bottle/whiskey = 1,
+			/obj/item/reagent_containers/food/drinks/bottle/absinthe = 1,
+			/obj/item/reagent_containers/food/drinks/bottle/limejuice = 1,
+			/obj/item/reagent_containers/food/drinks/bottle/cream = 1,
+			/obj/item/reagent_containers/food/drinks/soda_cans/tonic = 1,
+			/obj/item/reagent_containers/food/drinks/drinkingglass = 10,
+			/obj/item/reagent_containers/food/drinks/ice = 3,
+			/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 6,
+			/obj/item/reagent_containers/food/drinks/flask = 1)
+	req_access_txt = "0"
+
 /obj/item/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"
 	icon_state = "refill_booze"
