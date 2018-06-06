@@ -176,7 +176,8 @@
 /mob/living/carbon/update_inv_handcuffed()
 	remove_overlay(HANDCUFF_LAYER)
 	if(handcuffed)
-		overlays_standing[HANDCUFF_LAYER] = mutable_appearance('icons/mob/mob.dmi', "handcuff1", -HANDCUFF_LAYER)
+		var/obj/item/restraints/handcuffs/cuff = handcuffed
+		overlays_standing[HANDCUFF_LAYER] = mutable_appearance(cuff.cufficon, cuff.cuffsprite, -HANDCUFF_LAYER)
 		apply_overlay(HANDCUFF_LAYER)
 
 

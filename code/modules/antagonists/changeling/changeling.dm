@@ -55,7 +55,7 @@
 		honorific = "Ms."
 	else
 		honorific = "Mr."
-	if(GLOB.possible_changeling_IDs.len) //remind me to add lesserling check, we don't want converts to immediately steal all the names creating a division of real names and numerals
+	if(GLOB.possible_changeling_IDs.len && !lesserling) //remind me to add lesserling check, we don't want converts to immediately steal all the names creating a division of real names and numerals
 		changelingID = pick(GLOB.possible_changeling_IDs)
 		GLOB.possible_changeling_IDs -= changelingID
 		changelingID = "[honorific] [changelingID]"
@@ -541,6 +541,7 @@
 	name = "Assimilated Victim"
 	show_in_roundend = FALSE
 	lesserling = TRUE
+	give_objectives = FALSE //IF THIS ISN'T REMOVED PING ME IN THE PR
 //	var/mob/living/simple_animal/hostile/true_changeling/horrormaster
 
 ///datum/antagonist/changeling/lesser/Initialize(mapload, horrormaster)

@@ -1,6 +1,5 @@
 #define TRUE_CHANGELING_REFORM_THRESHOLD 0 //Can turn back at will, by default
 #define TRUE_CHANGELING_PASSIVE_HEAL 3 //Amount of brute damage restored per tick
-#define TRUE_CHANGELING_FORCED_REFORM 180 //3 minutes
 
 //Changelings in their true form.
 //Massive health and damage, but all of their chems and it's really obvious it's >them
@@ -39,12 +38,15 @@
 	var/playstyle_string = "<b><span class='big danger'>We have entered our true form!</span><br>We are unbelievably deadly, and regenerate life at a steady rate. We must utilise the abilities that we have gained as a result of our transformation, as our old ones are not usable in this form. Taking too much damage will also turn us back into a \
 	human in addition to knocking us out. We are not as strong health-wise as we are damage, and we must avoid fire at all costs. Finally, we will uncontrollably revert into a human after some time due to our inability to maintain this form.</b>"
 	var/mob/living/carbon/human/stored_changeling = null //The changeling that transformed
-	var/devouring = FALSE //If the true changeling is currently devouring a human
+
+	var/devouring = FALSE
 	var/assimilation = FALSE
-	var/wallcrawl = FALSE //If the true changeling is crawling around the place, allowing it to counteract gravity loss
+	var/tendrilgrab = FALSE
+	var/wallcrawl = FALSE
+
 	var/range = 7
 	var/datum/action/innate/changeling/devour/devour
-	//var/datum/action/innate/changeling/pull/pull
+	var/datum/action/innate/changeling/tendril_grab/tendril_grab
 	var/datum/action/innate/changeling/assimilate/assimilate
 	var/datum/action/innate/changeling/spine_crawl/spine_crawl
 
@@ -53,19 +55,23 @@
 	icon_state = "horror[rand(1, 5)]"
 	devour = new
 	devour.Grant(src)
-	//pull = new
-	//pull.Grant(src)
+	tendril_grab = new
+	tendril_grab.Grant(src)
 	assimilate = new
 	assimilate.Grant(src)
 	spine_crawl = new
 	spine_crawl.Grant(src)
+	var/datum/atom_hud/hud = GLOB.huds[ANTAG_HUD_CHANGELING]
+	hud.add_hud_to(src)
 
 /mob/living/simple_animal/hostile/true_changeling/Destroy()
 	QDEL_NULL(devour)
-	//QDEL_NULL(pull)
+	QDEL_NULL(tendril_grab)
 	QDEL_NULL(assimilate)
 	QDEL_NULL(spine_crawl)
 	stored_changeling = null
+	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_CHANGELING]
+	hud.remove_hud_from(src)
 	return ..()
 
 /mob/living/simple_animal/hostile/true_changeling/Login()
@@ -132,7 +138,10 @@
 		to_chat(M, "<span class='warning'>We are already feasting on a victim!</span>")
 		return FALSE
 	if(M.assimilation)
-		to_chat(M, "<span class='warning'>Assimilation in progress.</span>")
+		to_chat(M, "<span class='warning'>We are already busy with assimilation.</span>")
+		return FALSE
+	if(M.tendrilgrab)
+		to_chat(M, "<span class='warning'>We are already busy grabbing someone!</span>")
 		return FALSE
 	var/list/potential_targets = list()
 	for(var/mob/living/carbon/human/H in range(1, M))
@@ -179,10 +188,13 @@
 	if(!istype(M))
 		return
 	if(M.devouring)
-		to_chat(M, "<span class='warning'>We are already feasting on a target!</span>")
+		to_chat(M, "<span class='warning'>We are already busy feasting on a target!</span>")
 		return FALSE
 	if(M.assimilation)
-		to_chat(M, "<span class='warning'>Assimilation in progress.</span>")
+		to_chat(M, "<span class='warning'>Assimilation already in progress.</span>")
+		return FALSE
+	if(M.tendrilgrab)
+		to_chat(M, "<span class='warning'>We are already busy grabbing someone!</span>")
 		return FALSE
 	var/list/potential_targets = list()
 	for(var/mob/living/carbon/human/H in range(1, M))
@@ -206,7 +218,8 @@
 	if(target.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(M, "<span class='warning'>Target not suitable for assimilation: Target is already a changeling!</span>")
 		return FALSE
-	to_chat(M, "<span class='warning'>Target suitable for assimilation. We begin to ready our appendages...</span>")
+	M.visible_message("<span class='warning'>[M] begins to convulse!</span>", "<span class='warning'>Target suitable for assimilation. We begin to ready our appendages...</span>")
+	M.Shake(15, 15, 350)
 	M.assimilation = TRUE
 	for(var/progress = 0, progress <= 3, progress++)
 		var/datum/beam/B = M.Beam(target, icon_state = "cord-[progress]", time=INFINITY)
@@ -214,10 +227,10 @@
 			if(1)
 				M.visible_message("<span class='warning'>[M] constricts [target]!</span>", "<span class='notice'>We constrict [target] with our appendages...</span>")
 				target.handcuffed = new/obj/item/restraints/handcuffs/horrorform(target)
+				target.update_handcuffed()
 			if(2)
 				to_chat(M, "<span class='notice'>We begin to assimilate [target].</span>")
 				to_chat(target, "<span class='danger'>You suddenly feel like your skin is <i>wrong</i>...</span>")
-				sleep(20)
 				if(target.isloyal())
 					to_chat(M, "<span class='notice'>They are protected by a mindshield implant. The creature will have to destroy it - it will take time.</span>")
 					to_chat(target, "<span class='boldannounce'>You feel a sharp pain in your head!</span>")
@@ -239,21 +252,79 @@
 			M.assimilation = FALSE
 			return
 		qdel(B)
-//YOU COMPILED
+
 	M.assimilation = FALSE
 	target.uncuff()
 	target.visible_message("<span class='big'>[target] shudders, and looks around curiously.</span>", \
 						   "<span class='boldannounce'>False faces all f<span class='big'>ake not real not real not--</span></span>")
 	to_chat(M, "<span class='shadowling'><b>[target.real_name]</b> has joined the hivemind.</span>")
-	var/datum/antagonist/changeling/ASSIMILATEEE = new()
+	var/datum/antagonist/changeling/lesser/ASSIMILATEEE = new()
+	//try assimilateee.horrormaster = src!
 	target.mind.add_antag_datum(ASSIMILATEEE)
 	return
 
-/datum/action/innate/changeling/tendrilgrab
-	name = "Use Tentacle"
-	desc = "Lash a tendril out, multiple uses."
+/datum/action/innate/changeling/tendril_grab //TODO: ADD ASSIMILATION COMBO HERE.
+	name = "Tendril Grab"
+	desc = "Lash a tendril out, grabbing prey. We must be spine crawling to do this. We can begin assimilation from a tendril grab too, keep in mind."
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "jammer"
+
+/datum/action/innate/changeling/tendril_grab/Activate()
+	var/mob/living/simple_animal/hostile/true_changeling/M = owner
+	if(!istype(M))
+		return
+	if(M.devouring)
+		to_chat(M, "<span class='warning'>We are already busy feasting on a target!</span>")
+		return FALSE
+	if(M.assimilation)
+		to_chat(M, "<span class='warning'>We are already busy with assimilation.</span>")
+		return FALSE
+	if(M.tendrilgrab)
+		to_chat(M, "<span class='warning'>We are already grabbing someone!</span>")
+		return FALSE
+	if(!M.wallcrawl)
+		to_chat(M, "<span class='warning'>We must be spine crawling to pull someone!</span>")
+		return FALSE
+	var/list/potential_targets = list()
+	for(var/mob/living/carbon/human/H in view(7, M))
+		potential_targets.Add(H)
+	if(!potential_targets.len)
+		to_chat(M, "<span class='warning'>There are no valid targets nearby.</span>")
+		return FALSE
+	var/mob/living/carbon/human/target
+	if(potential_targets.len == 1)
+		target = potential_targets[1]
+	else
+		target = input(src, "Choose a target to assimilate.", "Grabby grabbing time") as null|anything in potential_targets
+	if(!target)
+		return FALSE
+	if(!target in view(7, M))
+		to_chat(M, "<span class='warning'>Target left our sight!</span>")
+		return FALSE
+	M.tendrilgrab = TRUE
+	M.visible_message("<span class='danger'>[M] shoots out a tendril!</span>", "<span class='notice'>We have constricted [target]! We will now reel him in, and moving will cancel the pull.</span>")
+	var/obj/item/restraints/handcuffs/horrorform/cuffs = new(target)
+	target.handcuffed = cuffs
+	target.update_handcuffed()
+	var/turf/T = get_turf(M)
+	to_chat(target, "<span class='userdanger'>You have been constricted by [M]! Resist to escape!</span>")
+	var/datum/beam/B = M.Beam(target, icon_state = "cord-2", time=INFINITY)
+	var/ticker = 0
+	while(target.handcuffed && M.loc == T && target in view(7, M))
+		to_chat(target, "<span class='userdanger'>You're getting pulled to [M]!</span>")
+		target.Stun(6)
+		sleep(5)
+		if(ticker == 2)
+			ticker = 0
+			var/turf/REELEMINBOYS = get_step_to(target, M)
+			if(REELEMINBOYS != T)
+				target.forceMove(REELEMINBOYS)
+		else
+			ticker++
+	to_chat(M, "<span class='userdanger'>Tendril grab has ended!</span>")
+	qdel(B)
+	target.uncuff()
+	M.tendrilgrab = FALSE
 
 /datum/action/innate/changeling/spine_crawl
 	name = "Spine Crawl"
@@ -264,6 +335,9 @@
 /datum/action/innate/changeling/spine_crawl/Activate()
 	var/mob/living/simple_animal/hostile/true_changeling/M = owner
 	if(!istype(M))
+		return FALSE
+	if(M.tendrilgrab)
+		to_chat(M, "<span class='warning'>We are grabbing someone, release them to undo our spines.</span>")
 		return FALSE
 	M.wallcrawl = !M.wallcrawl
 	if(M.wallcrawl)
@@ -278,15 +352,16 @@
 /obj/item/restraints/handcuffs/horrorform
 	name = "writhing tentacles"
 	desc = "appendages from a hideous creature."
-	icon = 'icons/mob/changeling.dmi'
 	icon_state = "cordgrab"
 	item_flags = DROPDEL
+	cufficon = 'icons/mob/changeling.dmi'
+	cuffsprite = "cordgrab"
+	breakouttime = 350 //BARELY enough for assimilation cuffs
 
-/obj/item/restraints/handcuffs/clockwork/dropped(mob/user)
+/obj/item/restraints/handcuffs/horrorform/dropped(mob/user)
 	user.visible_message("<span class='danger'>The [name] holding [user] violently jerk and recede!</span>", \
 	"<span class='userdanger'>The [name] convulse and recede!</span>")
 	. = ..()
 
 #undef TRUE_CHANGELING_REFORM_THRESHOLD
 #undef TRUE_CHANGELING_PASSIVE_HEAL
-#undef TRUE_CHANGELING_FORCED_REFORM
