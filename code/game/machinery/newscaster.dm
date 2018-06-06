@@ -202,7 +202,6 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/c_locked=0
 	var/datum/newscaster/feed_channel/viewing_channel = null
 	var/allow_comments = 1
-	anchored = TRUE
 
 /obj/machinery/newscaster/security_unit
 	name = "security newscaster"

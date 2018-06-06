@@ -58,7 +58,7 @@
 		return
 	if(user.a_intent != INTENT_HELP)
 		return
-	if(I.flags_1 & ABSTRACT_1)
+	if(I.item_flags & ABSTRACT)
 		return
 	if((I.flags_1 & HOLOGRAM_1) || (I.item_flags & NO_MAT_REDEMPTION) || (tc && !is_type_in_typecache(I, tc)))
 		to_chat(user, "<span class='warning'>[parent] won't accept [I]!</span>")

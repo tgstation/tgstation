@@ -8,7 +8,7 @@
 	icon_state = "bullet"
 	density = FALSE
 	anchored = TRUE
-	flags_1 = ABSTRACT_1
+	item_flags = ABSTRACT
 	pass_flags = PASSTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	hitsound = 'sound/weapons/pierce.ogg'

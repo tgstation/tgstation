@@ -85,7 +85,11 @@
 		quirk_holder.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
 		quirk_holder.SendSignal(COMSIG_ADD_MOOD_EVENT, "family_heirloom_missing", /datum/mood_event/family_heirloom_missing)
 
+/datum/quirk/family_heirloom/clone_data()
+	return heirloom
 
+/datum/quirk/family_heirloom/on_clone(data)
+	heirloom = data
 
 /datum/quirk/heavy_sleeper
 	name = "Heavy Sleeper"

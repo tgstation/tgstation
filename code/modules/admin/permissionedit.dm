@@ -165,7 +165,7 @@
 			return
 	switch(task)
 		if("add")
-			admin_ckey = add_admin(null, use_db)
+			admin_ckey = add_admin(admin_ckey, use_db)
 			if(!admin_ckey)
 				return
 			change_admin_rank(admin_ckey, use_db, null, legacy_only)

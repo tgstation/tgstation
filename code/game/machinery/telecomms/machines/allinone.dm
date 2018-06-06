@@ -8,7 +8,6 @@
 	icon_state = "comm_server"
 	desc = "A compact machine used for portable subspace telecommuniations processing."
 	density = TRUE
-	anchored = TRUE
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	var/intercept = FALSE  // If true, only works on the Syndicate frequency.
