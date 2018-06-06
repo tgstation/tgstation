@@ -1734,6 +1734,11 @@
 	cost = 3000
 	num_contained = 5
 	contains = list(/obj/item/poster/random_contraband,
+					/obj/item/poster/random_contraband,
+					/obj/item/reagent_containers/food/snacks/grown/cannabis,
+					/obj/item/reagent_containers/food/snacks/grown/cannabis/rainbow,
+					/obj/item/reagent_containers/food/snacks/grown/cannabis/white,
+					/obj/item/toy/cards/deck/syndicate,
 					/obj/item/storage/fancy/cigarettes/cigpack_shadyjims,
 					/obj/item/clothing/neck/necklace/dope)
 	crate_name = "crate"
