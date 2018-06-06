@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "Swarmers can no longer attack field generators and turret covers."
