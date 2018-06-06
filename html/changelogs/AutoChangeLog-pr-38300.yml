@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "The Pubbystation maint bar Booze-O-Mat now shows its contents correctly."
