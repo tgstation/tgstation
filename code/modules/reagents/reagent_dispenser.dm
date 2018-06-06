@@ -58,13 +58,6 @@
 	reagent_id = "firefighting_foam"
 	tank_volume = 500
 
-/obj/structure/reagent_dispensers/foamtank
-	name = "firefoam tank"
-	desc = "A tank full of foaming things."
-	icon_state = "foam"
-	reagent_id = "firefighting_foam"
-	tank_volume = 1000
-
 /obj/structure/reagent_dispensers/fueltank
 	name = "fuel tank"
 	desc = "A tank full of industrial welding fuel. Do not consume."
