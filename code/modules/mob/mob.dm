@@ -300,6 +300,8 @@
 	face_atom(A)
 	A.examine(src)
 
+/atom/proc/pointed_at(var/mob/user)
+
 //same as above
 //note: ghosts can point, this is intended
 //visible_message will handle invisibility properly
@@ -318,6 +320,9 @@
 		return 0
 
 	new /obj/effect/temp_visual/point(A,invisibility)
+
+	for(var/atom/on_tile in A.contents + A)
+		on_tile.pointed_at(src)
 
 	return 1
 
