@@ -1735,8 +1735,6 @@
 	num_contained = 5
 	contains = list(/obj/item/poster/random_contraband,
 					/obj/item/storage/fancy/cigarettes/cigpack_shadyjims,
-					/obj/item/storage/fancy/cigarettes/cigpack_midori,
-					/obj/item/seeds/ambrosia/deus,
 					/obj/item/clothing/neck/necklace/dope)
 	crate_name = "crate"
 
