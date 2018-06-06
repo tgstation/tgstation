@@ -130,7 +130,7 @@
 		var/datum/callback/CB = C.signal_procs[sigtype]
 		if(!CB)
 			return NONE
-		if(C.report_signal_origin)
+		if(initial(C.report_signal_origin))
 			arguments = list(sigtype) + arguments
 		return CB.InvokeAsync(arglist(arguments))
 	. = NONE
@@ -141,9 +141,10 @@
 		var/datum/callback/CB = C.signal_procs[sigtype]
 		if(!CB)
 			continue
-		if(C.report_signal_origin)
-			arguments = list(sigtype) + arguments
-		. |= CB.InvokeAsync(arglist(arguments))
+		if(initial(C.report_signal_origin))
+			. |= CB.InvokeAsync(arglist(list(sigtype) + arguments))
+		else
+			. |= CB.InvokeAsync(arglist(arguments))
 
 /datum/proc/GetComponent(c_type)
 	var/list/dc = datum_components
