@@ -37,6 +37,7 @@ SUBSYSTEM_DEF(dbcore)
 		query_round_shutdown.Execute()
 	if(IsConnected())
 		Disconnect()
+	world.BSQL_Shutdown()
 
 //nu
 /datum/controller/subsystem/dbcore/can_vv_get(var_name)
