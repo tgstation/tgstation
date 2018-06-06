@@ -274,6 +274,7 @@
 					/obj/item/clothing/shoes/galoshes = 1,
 					/obj/item/watertank/janitor = 1,
 					/obj/item/storage/belt/janitor = 1)
+	contraband = list(/obj/item/gun/energy/laser = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/jani_wardrobe
 
 /obj/item/vending_refill/wardrobe/jani_wardrobe

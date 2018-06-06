@@ -115,3 +115,11 @@
 
 /obj/item/reagent_containers/food/snacks/deadmouse/on_grind()
 	reagents.clear_reagents()
+
+/obj/item/reagent_containers/food/snacks/deadmouse/On_Consume(mob/living/eater)
+	var/datum/mind/M = eater.mind
+
+	if(M && M.assigned_role == "Janitor")
+		to_chat(eater, "<span class='notice'>You feel yourself getting stronger after consuming the mouse...</span>")
+		eater.heal_overall_damage(INFINITY, INFINITY, INFINITY, FALSE, FALSE, TRUE)
+		qdel(src)
