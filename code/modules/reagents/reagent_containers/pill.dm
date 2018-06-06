@@ -158,3 +158,25 @@
 	icon_state = "pill9"
 	color = "#454545"
 	list_reagents = list("shadowmutationtoxin" = 1)
+
+/obj/item/reagent_containers/pill/zoom
+	name = "zoom pill"
+	list_reagents = list("synaptizine" = 10, "nicotine" = 10, "methamphetamine" = 1)
+
+
+/obj/item/reagent_containers/pill/happy
+	name = "happy pill"
+	list_reagents = list("sugar" = 10, "space_drugs" = 10)
+
+
+/obj/item/reagent_containers/pill/lsd
+	name = "hallucinogen pill"
+	list_reagents = list("mushroomhallucinogen" = 15, "mindbreaker" = 15)
+
+
+/obj/item/reagent_containers/pill/aransep
+	name = "speedy pill"
+	list_reagents = list("aransep" = 10)
+
+
+
