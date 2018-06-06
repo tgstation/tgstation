@@ -56,6 +56,7 @@
 	desc = "A tank full of foaming things."
 	icon_state = "fuel"
 	reagent_id = "firefighting_foam"
+	tank_volume = 500
 
 /obj/structure/reagent_dispensers/fueltank
 	name = "fuel tank"
