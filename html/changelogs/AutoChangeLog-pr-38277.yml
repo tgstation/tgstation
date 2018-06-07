@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "It is now possible to access the wires of RND machines in order to repair them if they have been EMP'd."
