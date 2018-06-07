@@ -139,7 +139,7 @@ SUBSYSTEM_DEF(dbcore)
 
 /datum/controller/subsystem/dbcore/proc/Quote(str)
 	if(connection)
-		return "'[connection.Quote(str)]'"
+		return connection.Quote(str)
 
 /datum/controller/subsystem/dbcore/proc/ErrorMsg()
 	if(!CONFIG_GET(flag/sql_enabled))
