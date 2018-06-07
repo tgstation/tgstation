@@ -133,7 +133,8 @@ SUBSYSTEM_DEF(dbcore)
 	return !QDELETED(connection) && !op.GetError()
 
 /datum/controller/subsystem/dbcore/proc/Quote(str)
-	return connection && connection.Quote(str)
+	if(connection)
+		return "'[connection.Quote(str)]'"
 
 /datum/controller/subsystem/dbcore/proc/ErrorMsg()
 	if(!CONFIG_GET(flag/sql_enabled))
@@ -252,7 +253,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	Close()
 	query = connection.BeginQuery(sql)
 	in_progress = TRUE
-	UNTIL(QDELETED(query) || query.IsComplete())
+	while(QDELETED(query) || query.IsComplete())
 	in_progress = FALSE
 	skip_next_is_complete = TRUE
 	var/error = QDELETED(query) ? "Query object deleted!" : query.GetError()
@@ -289,6 +290,3 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 /datum/DBQuery/proc/Close()
 	item.Cut()
 	QDEL_NULL(query)
-
-/datum/DBQuery/proc/Quote(str)
-	return connection.Quote(str)
