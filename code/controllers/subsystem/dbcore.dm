@@ -65,9 +65,14 @@ SUBSYSTEM_DEF(dbcore)
 	var/port = CONFIG_GET(number/port)
 
 	connection = new /datum/BSQL_Connection(BSQL_CONNECTION_TYPE_MARIADB)
-	connectOperation = connection.BeginConnect(address, port, user, pass, db)
-	UNTIL(connectOperation.IsComplete())
-	var/error = connectOperation.GetError()
+	var/error
+	if(QDELETED(connection))
+		connection = null
+		error = last_error
+	else
+		connectOperation = connection.BeginConnect(address, port, user, pass, db)
+		UNTIL(connectOperation.IsComplete())
+		error = connectOperation.GetError()
 	. = !error
 	if (!.)
 		log_sql("Connect() failed | [error]")
