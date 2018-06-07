@@ -1,3 +1,6 @@
+#define BOMB_TIMER_MIN 1
+#define BOMB_TIMER_MAX 10
+
 /obj/item/bombcore/miniature/pizza
 	name = "pizza bomb"
 	desc = "Special delivery!"
@@ -26,8 +29,6 @@
 	var/bomb_active = FALSE // If the bomb is counting down.
 	var/bomb_defused = TRUE // If the bomb is inert.
 	var/bomb_timer = 1 // How long before blowing the bomb.
-	var/const/BOMB_TIMER_MIN = 1
-	var/const/BOMB_TIMER_MAX = 10
 
 /obj/item/pizzabox/Initialize()
 	. = ..()

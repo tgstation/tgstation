@@ -1,22 +1,41 @@
+#define FAILED_DB_CONNECTION_CUTOFF 5
+
+	//conversions
+#define Default_Cursor 0
+#define Client_Cursor 1
+#define Server_Cursor 2
+
+#define TEXT_CONV 1
+#define RSC_FILE_CONV 2
+#define NUMBER_CONV 3
+	//column flag values:
+#define IS_NUMERIC 1
+#define IS_BINARY 2
+#define IS_NOT_NULL 4
+#define IS_PRIMARY_KEY 8
+#define IS_UNSIGNED 16
+
+//types
+#define TINYINT 1
+#define SMALLINT 2
+#define MEDIUMINT 3
+#define INTEGER 4
+#define BIGINT 5
+#define DECIMAL 6
+#define FLOAT 7
+#define DOUBLE 8
+#define DATE 9
+#define DATETIME 10
+#define TIMESTAMP 11
+#define TIME 12
+#define STRING 13
+#define BLOB 14
+
 SUBSYSTEM_DEF(dbcore)
 	name = "Database"
 	flags = SS_NO_FIRE
 	init_order = INIT_ORDER_DBCORE
-	var/const/FAILED_DB_CONNECTION_CUTOFF = 5
 
-	var/const/Default_Cursor = 0
-	var/const/Client_Cursor = 1
-	var/const/Server_Cursor = 2
-	//conversions
-	var/const/TEXT_CONV = 1
-	var/const/RSC_FILE_CONV = 2
-	var/const/NUMBER_CONV = 3
-	//column flag values:
-	var/const/IS_NUMERIC = 1
-	var/const/IS_BINARY = 2
-	var/const/IS_NOT_NULL = 4
-	var/const/IS_PRIMARY_KEY = 8
-	var/const/IS_UNSIGNED = 16
 	var/schema_mismatch = 0
 	var/db_minor = 0
 	var/db_major = 0
@@ -317,21 +336,6 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	var/flags
 	var/length
 	var/max_length
-	//types
-	var/const/TINYINT = 1
-	var/const/SMALLINT = 2
-	var/const/MEDIUMINT = 3
-	var/const/INTEGER = 4
-	var/const/BIGINT = 5
-	var/const/DECIMAL = 6
-	var/const/FLOAT = 7
-	var/const/DOUBLE = 8
-	var/const/DATE = 9
-	var/const/DATETIME = 10
-	var/const/TIMESTAMP = 11
-	var/const/TIME = 12
-	var/const/STRING = 13
-	var/const/BLOB = 14
 
 /datum/DBColumn/New(name_handler, table_handler, position_handler, type_handler, flag_handler, length_handler, max_length_handler)
 	name = name_handler

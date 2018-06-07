@@ -22,7 +22,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 	<span class='green'>Changelings</span>: Accomplish the objectives assigned to you.\n\
 	<span class='notice'>Crew</span>: Root out and eliminate the changeling menace."
 
-	var/const/changeling_amount = 4 //hard limit on changelings if scaling is turned off
+	var/changeling_amount = 4 //hard limit on changelings if scaling is turned off
 	var/list/changelings = list()
 
 /datum/game_mode/changeling/pre_setup()

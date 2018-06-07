@@ -1,5 +1,9 @@
 // Powersink - used to drain station power
 
+#define PS_DISCONNECTED 0
+#define PS_CLAMPED_OFF 1
+#define PS_OPERATING 2
+
 /obj/item/powersink
 	desc = "A nulling power sink which drains energy from electrical systems."
 	name = "power sink"
@@ -17,12 +21,8 @@
 	var/drain_rate = 1600000	// amount of power to drain per tick
 	var/power_drained = 0 		// has drained this much power
 	var/max_power = 1e10		// maximum power that can be drained before exploding
-	var/mode = 0		// 0 = off, 1=clamped (off), 2=operating
+	var/mode = PS_DISCONNECTED
 	var/admins_warned = FALSE // stop spam, only warn the admins once that we are about to boom
-
-	var/const/DISCONNECTED = 0
-	var/const/CLAMPED_OFF = 1
-	var/const/OPERATING = 2
 
 	var/obj/structure/cable/attached		// the attached cable
 
@@ -33,20 +33,20 @@
 	if(value == mode)
 		return
 	switch(value)
-		if(DISCONNECTED)
+		if(PS_DISCONNECTED)
 			attached = null
 			if(mode == OPERATING)
 				STOP_PROCESSING(SSobj, src)
 			anchored = FALSE
 
-		if(CLAMPED_OFF)
+		if(PS_CLAMPED_OFF)
 			if(!attached)
 				return
 			if(mode == OPERATING)
 				STOP_PROCESSING(SSobj, src)
 			anchored = TRUE
 
-		if(OPERATING)
+		if(PS_OPERATING)
 			if(!attached)
 				return
 			START_PROCESSING(SSobj, src)
@@ -58,14 +58,14 @@
 
 /obj/item/powersink/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver))
-		if(mode == DISCONNECTED)
+		if(mode == PS_DISCONNECTED)
 			var/turf/T = loc
 			if(isturf(T) && !T.intact)
 				attached = locate() in T
 				if(!attached)
 					to_chat(user, "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>")
 				else
-					set_mode(CLAMPED_OFF)
+					set_mode(PS_CLAMPED_OFF)
 					user.visible_message( \
 						"[user] attaches \the [src] to the cable.", \
 						"<span class='notice'>You attach \the [src] to the cable.</span>",
@@ -73,7 +73,7 @@
 			else
 				to_chat(user, "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>")
 		else
-			set_mode(DISCONNECTED)
+			set_mode(PS_DISCONNECTED)
 			user.visible_message( \
 				"[user] detaches \the [src] from the cable.", \
 				"<span class='notice'>You detach \the [src] from the cable.</span>",
@@ -92,10 +92,10 @@
 	if(.)
 		return
 	switch(mode)
-		if(DISCONNECTED)
+		if(PS_DISCONNECTED)
 			..()
 
-		if(CLAMPED_OFF)
+		if(PS_CLAMPED_OFF)
 			user.visible_message( \
 				"[user] activates \the [src]!", \
 				"<span class='notice'>You activate \the [src].</span>",
@@ -104,16 +104,16 @@
 			log_game("Power sink activated by [key_name(user)] at [AREACOORD(src)]")
 			set_mode(OPERATING)
 
-		if(OPERATING)
+		if(PS_OPERATING)
 			user.visible_message( \
 				"[user] deactivates \the [src]!", \
 				"<span class='notice'>You deactivate \the [src].</span>",
 				"<span class='italics'>You hear a click.</span>")
-			set_mode(CLAMPED_OFF)
+			set_mode(PS_CLAMPED_OFF)
 
 /obj/item/powersink/process()
 	if(!attached)
-		set_mode(DISCONNECTED)
+		set_mode(PS_DISCONNECTED)
 		return
 
 	var/datum/powernet/PN = attached.powernet

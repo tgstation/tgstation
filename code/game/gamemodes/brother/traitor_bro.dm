@@ -14,8 +14,8 @@
 	<span class='notice'>Crew</span>: Do not let the traitors or brothers succeed!"
 
 	var/list/datum/team/brother_team/pre_brother_teams = list()
-	var/const/team_amount = 2 //hard limit on brother teams if scaling is turned off
-	var/const/min_team_size = 2
+	var/team_amount = 2 //hard limit on brother teams if scaling is turned off
+	var/min_team_size = 2
 	traitors_required = FALSE //Only teams are possible
 
 /datum/game_mode/traitor/bros/pre_setup()
