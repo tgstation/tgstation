@@ -53,7 +53,7 @@
  * ID CARDS
  */
 /obj/item/card/emag
-	desc = "It's a card with a magnetic strip attached to some circuitry."
+	desc = "It's a card with a magnetic strip attached to some circuitry, You look at the back and see the letter S."
 	name = "cryptographic sequencer"
 	icon_state = "emag"
 	item_state = "card-id"
@@ -78,7 +78,7 @@
 	A.emag_act(user)
 
 /obj/item/card/emagfake
-	desc = "It's a card with a magnetic strip attached to some circuitry."
+	desc = "It's a card with a magnetic strip attached to some circuitry, You look at the back and see the letter N."
 	name = "cryptographic sequencer"
 	icon_state = "emag"
 	item_state = "card-id"
