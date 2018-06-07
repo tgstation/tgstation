@@ -36,8 +36,8 @@ addons:
       - python3-pip
       - libssl-dev:i386
 
-services:
-  - mysql
+addons:
+  - mariadb: '10.0'
 
 install:
   - mysql -u root -e 'CREATE DATABASE tg_travis;'
