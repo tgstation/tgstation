@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	name = "Water Vapor"
 	gas_overlay = "water_vapor"
 	moles_visible = MOLES_GAS_VISIBLE
-	fusion_power = 6
+	fusion_power = 4
 
 /datum/gas/hypernoblium
 	id = "nob"

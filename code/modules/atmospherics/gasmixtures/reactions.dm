@@ -25,23 +25,32 @@
 #define FUSION_ENERGY_THRESHOLD				3e9 	//Amount of energy it takes to start a fusion reaction
 #define FUSION_TEMPERATURE_THRESHOLD		1000 	//Temperature required to start a fusion reaction
 #define FUSION_MOLE_THRESHOLD				250 	//Mole count required (tritium/plasma) to start a fusion reaction
+#define FUSION_RELEASE_ENERGY_SUPER			3e9 	//Amount of energy released in the fusion process, super tier
 #define FUSION_RELEASE_ENERGY_HIGH			1e9 	//Amount of energy released in the fusion process, high tier
 #define FUSION_RELEASE_ENERGY_MID			5e8 	//Amount of energy released in the fusion process, mid tier
 #define FUSION_RELEASE_ENERGY_LOW			1e8 	//Amount of energy released in the fusion process, low tier
-#define FUSION_RADIOACTIVITY_FACTOR			2.5e9 	//Seems arbitrary, but based on the grounds that a power_ratio 100 reaction at 7500 mol should max out at around 15000 rads (those arent arbitrary numbers either, I tested this alright)
 #define FUSION_MEDIATION_FACTOR				80 		//Arbitrary
-#define FUSION_HIGH_TIER					20 //anything above this is high tier
-#define FUSION_MID_TIER						5 //anything above this and below 20 is mid tier - below this is low tier, but that doesnt need a define
-#define FUSION_REACTION_ENERGY_DIVISOR_HIGH	20
-#define FUSION_REACTION_ENERGY_DIVISOR_MID	10
-#define FUSION_REACTION_ENERGY_DIVISOR_LOW	2
+#define FUSION_SUPER_TIER					50 		//anything above this is super tier
+#define FUSION_HIGH_TIER					20 		//anything above this and below 50 is high tier
+#define FUSION_MID_TIER						5 		//anything above this and below 20 is mid tier - below this is low tier, but that doesnt need a define
+#define FUSION_ENERGY_DIVISOR_SUPER			25
+#define FUSION_ENERGY_DIVISOR_HIGH			20
+#define FUSION_ENERGY_DIVISOR_MID			10
+#define FUSION_ENERGY_DIVISOR_LOW			2
+#define FUSION_GAS_CREATION_FACTOR_SUPER	0.20	//stimulum and pluoxium - 40% in total
 #define FUSION_GAS_CREATION_FACTOR_HIGH		0.60 	//trit - one gas, so its higher than the other two - 60% in total
 #define FUSION_GAS_CREATION_FACTOR_MID		0.45 	//BZ and N2O - 90% in total
 #define FUSION_GAS_CREATION_FACTOR_LOW		0.48 	//O2 and CO2 - 96% in total
-#define FUSION_MID_TIER_RAD_PROB_FACTOR		2
+#define FUSION_MID_TIER_RAD_PROB_FACTOR		2		//probability of radpulse is power ratio * this for whatever tier
 #define FUSION_LOW_TIER_RAD_PROB_FACTOR		5
-#define FUSION_EFFICIENCY_BASE				60
-#define FUSION_EFFICIENCY_DIVISOR			0.6
+#define FUSION_EFFICIENCY_BASE				60		//used in the fusion efficiency calculations
+#define FUSION_EFFICIENCY_DIVISOR			0.6		//ditto
+#define FUSION_RADIATION_FACTOR				15000	//horizontal asymptote
+#define FUSION_RADIATION_CONSTANT			30		//equation is form of (ax) / (x + b), where a = radiation factor and b = radiation constant (https://www.desmos.com/calculator/frqfjjrr3r)
+#define FUSION_VOLUME_SUPER					100		//volume of the sound the fusion noises make
+#define FUSION_VOLUME_HIGH					50
+#define FUSION_VOLUME_MID					25
+#define FUSION_VOLUME_LOW					10
 
 
 /proc/init_gas_reactions()
@@ -269,59 +278,72 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/reaction_energy = 0
 
-	var/mediation = FUSION_MEDIATION_FACTOR*(air.heat_capacity()-(cached_gases[/datum/gas/plasma][MOLES]*cached_gases[/datum/gas/plasma][GAS_META][META_GAS_SPECIFIC_HEAT]))/(air.total_moles()-cached_gases[/datum/gas/plasma][MOLES]) //This is the average heat capacity of the mixture,not including plasma.
+	var/mediation = FUSION_MEDIATION_FACTOR*(air.heat_capacity()-(cached_gases[/datum/gas/plasma][MOLES]*cached_gases[/datum/gas/plasma][GAS_META][META_GAS_SPECIFIC_HEAT]))/(air.total_moles()-cached_gases[/datum/gas/plasma][MOLES]) //This is the average specific heat of the mixture,not including plasma.
 
 	var/moles_excluding_plasma = air.total_moles() - cached_gases[/datum/gas/plasma][MOLES]
 	var/plasma_differential = (cached_gases[/datum/gas/plasma][MOLES] - moles_excluding_plasma) / air.total_moles()
 	var/reaction_efficiency = FUSION_EFFICIENCY_BASE ** -((plasma_differential ** 2) / FUSION_EFFICIENCY_DIVISOR) //https://www.desmos.com/calculator/6jjx3vdrvx
 	var/gases_fused = air.total_moles()
 
-	message_admins("Mediation: [mediation]")
-	message_admins("Moles exc. plasma: [moles_excluding_plasma]")
-	message_admins("Plasma diff: [plasma_differential]")
-	message_admins("Efficiency: [reaction_efficiency]")
-	message_admins("Gases fused: [gases_fused]")
-
 	var/gas_power = 0
 	for (var/id in cached_gases)
 		gas_power += reaction_efficiency * (cached_gases[id][GAS_META][META_GAS_FUSION_POWER]*cached_gases[id][MOLES])
 
 	var/power_ratio = gas_power/mediation
+	var/radiation_power = (FUSION_RADIATION_FACTOR * power_ratio) / (power_ratio + FUSION_RADIATION_CONSTANT) //https://www.desmos.com/calculator/frqfjjrr3r
 
-	message_admins("Gas power: [gas_power]")
-	message_admins("Power ratio: [power_ratio]")
+	if (power_ratio > FUSION_SUPER_TIER) //power ratio 50+: SUPER TIER. The gases become so energized that they fuse into stimulum and pluoxium, which is pretty nice! IF you can salvage them, which is going to be hard because this reaction is ridiculously dangerous.
+		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_SUPER * (power_ratio / FUSION_ENERGY_DIVISOR_SUPER)
+		for (var/id in cached_gases)
+			cached_gases[id][MOLES] = 0
+		cached_gases[/datum/gas/stimulum][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_SUPER //60% of the gas is converted to energy, 40% to stimulum and pluoxium
+		cached_gases[/datum/gas/pluoxium][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_SUPER
+		if (location) //It's going to happen regardless of whether you want it to or not
+			radiation_pulse(location, radiation_power)
+			explosion(location,0,4,8,power_ratio,TRUE,TRUE)//A decent explosion with a huge shockwave. People WILL know you're doing fusion.
+			playsound(location, "sound/effects/supermatter.ogg", FUSION_VOLUME_SUPER, 0)
 
-	if (power_ratio > FUSION_HIGH_TIER) //power ratio 20+; Super-fusion. Fuses everything into one big atom which then turns to tritium instantly. Very dangerous, but super cool.
-		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_HIGH * (power_ratio / FUSION_REACTION_ENERGY_DIVISOR_HIGH)
-		message_admins("Reaction energy: [reaction_energy]")
+	else if (power_ratio > FUSION_HIGH_TIER) //power ratio 20-50; High tier. Fuses into one big atom which then turns to tritium instantly. Very dangerous, but super cool.
+		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_HIGH * (power_ratio / FUSION_ENERGY_DIVISOR_HIGH)
 		for (var/id in cached_gases)
 			cached_gases[id][MOLES] = 0
 		cached_gases[/datum/gas/tritium][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_HIGH //40% of the gas is converted to energy, 60% to tritium
-		if (location && prob(power_ratio)) //You don't really want this to happen
-			radiation_pulse(location, reaction_energy / FUSION_RADIOACTIVITY_FACTOR)
-			explosion(location,0,0,3,power_ratio * 0.5,TRUE,TRUE)//A tiny explosion with a large shockwave. People will know you're doing fusion.
+		if (location)
+			if(prob(power_ratio)) //You really don't want this to happen.
+				radiation_pulse(location, radiation_power)
+				explosion(location,0,0,3,power_ratio * 0.5,TRUE,TRUE)//A tiny explosion with a large shockwave. People will know you're doing fusion.
+				playsound(location, "sound/effects/supermatter.ogg", FUSION_VOLUME_HIGH, 0)
+			else
+				playsound(location, "sound/effects/phasein.ogg", FUSION_VOLUME_HIGH, 0)
 
 	else if (power_ratio > FUSION_MID_TIER) //power_ratio 5 to 20; Mediation is overpowered, fusion reaction starts to break down.
-		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_MID * (power_ratio / FUSION_REACTION_ENERGY_DIVISOR_MID)
-		message_admins("Reaction energy: [reaction_energy]")
+		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_MID * (power_ratio / FUSION_ENERGY_DIVISOR_MID)
 		for (var/id in cached_gases)
 			cached_gases[id][MOLES] = 0
 		air.assert_gases(/datum/gas/bz,/datum/gas/nitrous_oxide)
 		cached_gases[/datum/gas/bz][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_MID //10% of the gas is converted to energy, 90% to BZ and N2O
 		cached_gases[/datum/gas/nitrous_oxide][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_MID
-		if (location && prob(power_ratio * FUSION_MID_TIER_RAD_PROB_FACTOR)) //Fairly good chances of happening
-			radiation_pulse(location, reaction_energy / FUSION_RADIOACTIVITY_FACTOR)
+		if (location)
+			if(prob(power_ratio * FUSION_MID_TIER_RAD_PROB_FACTOR)) //Still weak, but don't stand next to it unprotected
+				radiation_pulse(location, radiation_power)
+				playsound(location, "sound/effects/supermatter.ogg", FUSION_VOLUME_MID, 0)
+			else
+				playsound(location, "sound/effects/phasein.ogg", FUSION_VOLUME_MID, 0)
 
 	else //power ratio 0 to 5; Gas power is overpowered. Fusion isn't nearly as powerful.
-		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_LOW * (power_ratio / FUSION_REACTION_ENERGY_DIVISOR_LOW)
-		message_admins("Reaction energy: [reaction_energy]")
+		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_LOW * (power_ratio / FUSION_ENERGY_DIVISOR_LOW)
 		for (var/gas in cached_gases)
 			cached_gases[gas][MOLES] = 0
 		air.assert_gases(/datum/gas/oxygen, /datum/gas/carbon_dioxide)
 		cached_gases[/datum/gas/oxygen][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_LOW //4% of the gas is converted to energy, 94% to oxygen and CO2
 		cached_gases[/datum/gas/carbon_dioxide][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_LOW
-		if (location && prob(power_ratio * FUSION_LOW_TIER_RAD_PROB_FACTOR)) //Won't happen often, but the threat is there
-			radiation_pulse(location, reaction_energy / FUSION_RADIOACTIVITY_FACTOR)
+		if (location)
+			if(prob(power_ratio * FUSION_LOW_TIER_RAD_PROB_FACTOR)) //Weak, but still something to look out for
+				radiation_pulse(location, radiation_power)
+				explosion(location,0,0,3,power_ratio * 0.5,TRUE,TRUE)//A tiny explosion with a large shockwave. People will know you're doing fusion.
+				playsound(location, "sound/effects/supermatter.ogg", FUSION_VOLUME_LOW, 0)
+			else
+				playsound(location, "sound/effects/phasein.ogg", FUSION_VOLUME_LOW, 0)
 
 	if(reaction_energy > 0)
 		var/new_heat_capacity = air.heat_capacity()
