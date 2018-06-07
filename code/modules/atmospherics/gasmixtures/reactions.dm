@@ -46,7 +46,7 @@
 #define FUSION_EFFICIENCY_BASE				60		//used in the fusion efficiency calculations
 #define FUSION_EFFICIENCY_DIVISOR			0.6		//ditto
 #define FUSION_RADIATION_FACTOR				15000	//horizontal asymptote
-#define FUSION_RADIATION_CONSTANT			10		//equation is form of (ax) / (x + b), where a = radiation factor and b = radiation constant (https://www.desmos.com/calculator/frqfjjrr3r)
+#define FUSION_RADIATION_CONSTANT			10		//equation is form of (ax) / (x + b), where a = radiation factor and b = radiation constant (https://www.desmos.com/calculator/j5h7d4cfen)
 #define FUSION_VOLUME_SUPER					100		//volume of the sound the fusion noises make
 #define FUSION_VOLUME_HIGH					50
 #define FUSION_VOLUME_MID					25
@@ -290,7 +290,7 @@
 		gas_power += reaction_efficiency * (cached_gases[id][GAS_META][META_GAS_FUSION_POWER]*cached_gases[id][MOLES])
 
 	var/power_ratio = gas_power/mediation
-	var/radiation_power = (FUSION_RADIATION_FACTOR * power_ratio) / (power_ratio + FUSION_RADIATION_CONSTANT) //https://www.desmos.com/calculator/frqfjjrr3r
+	var/radiation_power = (FUSION_RADIATION_FACTOR * power_ratio) / (power_ratio + FUSION_RADIATION_CONSTANT) //https://www.desmos.com/calculator/j5h7d4cfen
 
 	if (power_ratio > FUSION_SUPER_TIER) //power ratio 50+: SUPER TIER. The gases become so energized that they fuse into stimulum and pluoxium, which is pretty nice! IF you can salvage them, which is going to be hard because this reaction is ridiculously dangerous.
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_SUPER * (power_ratio / FUSION_ENERGY_DIVISOR_SUPER)
