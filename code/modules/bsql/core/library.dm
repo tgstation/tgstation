@@ -28,7 +28,7 @@
 	return bsql_library_initialized
 
 /world/BSQL_Shutdown()
-	if(!_BSQL_Initialized()))
+	if(!_BSQL_Initialized())
 		return
 	_BSQL_Internal_Call("Shutdown")
 	_BSQL_Initialized(FALSE)
