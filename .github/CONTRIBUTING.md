@@ -377,6 +377,8 @@ There is also an undocumented keyword called `static` that has the same behaviou
 
 There is no strict process when it comes to merging pull requests. Pull requests will sometimes take a while before they are looked at by a maintainer; the bigger the change, the more time it will take before they are accepted into the code. Every team member is a volunteer who is giving up their own time to help maintain and contribute, so please be courteous and respectful. Here are some helpful ways to make it easier for you and for the maintainers when making a pull request.
 
+* Please quickly glance over the currently open PRs prior to making your own. Particularly with balance-related PRs, if there is a similar PR please do NOT pull request until maintainers have closed the original PR. Besides being courteous, this ensures all discussion of the change is localized to a singular location, avoiding repeats. This also allows you to reflect appropriate changes in your code that come out of maintainer's requests in the other individual's PR. That said, feel free to discuss your approach on the other PR and see if you can contribute to the current project.
+
 * Make sure your pull request complies to the requirements outlined in [this guide](http://tgstation13.org/wiki/Getting_Your_Pull_Accepted)
 
 * You are going to be expected to document all your changes in the pull request. Failing to do so will mean delaying it as we will have to question why you made the change. On the other hand, you can speed up the process by making the pull request readable and easy to understand, with diagrams or before/after data.
