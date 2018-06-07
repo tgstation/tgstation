@@ -54,10 +54,10 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	var/triggered = FALSE
 
 	var/mob/M = loc
 	if(istype(M))
+		var/triggered = FALSE
 		if(M.get_item_by_slot(SLOT_BELT) == src)
 			if(power == 1)
 				triggered = TRUE
