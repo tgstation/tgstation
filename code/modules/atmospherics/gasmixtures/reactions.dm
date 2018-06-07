@@ -300,7 +300,7 @@
 		cached_gases[/datum/gas/stimulum][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_SUPER //60% of the gas is converted to energy, 40% to stimulum and pluoxium
 		cached_gases[/datum/gas/pluoxium][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_SUPER
 		if (location) //It's going to happen regardless of whether you want it to or not
-			radiation_pulse(location, radiation_power)
+			radiation_pulse(location, radiation_power * 2)
 			explosion(location,0,0,10,power_ratio,TRUE,TRUE)//A decent explosion with a huge shockwave. People WILL know you're doing fusion.
 			playsound(location, "sound/effects/supermatter.ogg", FUSION_VOLUME_SUPER, 0)
 
@@ -326,7 +326,7 @@
 		cached_gases[/datum/gas/nitrous_oxide][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_MID
 		if (location)
 			if(prob(power_ratio * FUSION_MID_TIER_RAD_PROB_FACTOR)) //Still weak, but don't stand next to it unprotected
-				radiation_pulse(location, radiation_power)
+				radiation_pulse(location, radiation_power * 0.5)
 				playsound(location, "sound/effects/supermatter.ogg", FUSION_VOLUME_MID, 0)
 			else
 				playsound(location, "sound/effects/phasein.ogg", FUSION_VOLUME_MID, 0)
@@ -340,8 +340,7 @@
 		cached_gases[/datum/gas/carbon_dioxide][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_LOW
 		if (location)
 			if(prob(power_ratio * FUSION_LOW_TIER_RAD_PROB_FACTOR)) //Weak, but still something to look out for
-				radiation_pulse(location, radiation_power)
-				explosion(location,0,0,3,power_ratio * 0.5,TRUE,TRUE)//A tiny explosion with a large shockwave. People will know you're doing fusion.
+				radiation_pulse(location, radiation_power * 0.25)
 				playsound(location, "sound/effects/supermatter.ogg", FUSION_VOLUME_LOW, 0)
 			else
 				playsound(location, "sound/effects/phasein.ogg", FUSION_VOLUME_LOW, 0)
