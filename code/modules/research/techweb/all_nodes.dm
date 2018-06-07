@@ -847,7 +847,7 @@
 	display_name = "Roaming Nanite Programming"
 	description = "Nanite programs that require nanites to act independently, roam or seek targets."
 	prereq_ids = list("nanite_base","adv_robotics")
-	design_ids = list("purging_nanites", "necrotic_nanites")
+	design_ids = list("purging_nanites", "necrotic_nanites", "metabolic_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -865,7 +865,7 @@
 	display_name = "Biological Nanite Programming"
 	description = "Nanite programs that require complex biological interaction."
 	prereq_ids = list("nanite_base","biotech")
-	design_ids = list("regenerative_nanites", "bloodheal_nanites", "suffocating_nanites", "coagulating_nanites", "metabolic_nanites", "toxic_nanites", "skindecay_nanites","sensor_healthy_nanites","sensor_crit_nanites","sensor_death_nanites")
+	design_ids = list("regenerative_nanites", "bloodheal_nanites", "suffocating_nanites", "coagulating_nanites", "toxic_nanites", "skindecay_nanites","sensor_healthy_nanites","sensor_crit_nanites","sensor_death_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
