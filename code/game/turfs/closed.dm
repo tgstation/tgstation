@@ -31,6 +31,10 @@
 /turf/closed/indestructible/acid_act(acidpwr, acid_volume, acid_id)
 	return 0
 
+/turf/closed/indestructible/Melt()
+	to_be_destroyed = FALSE
+	return src
+
 /turf/closed/indestructible/oldshuttle
 	name = "strange shuttle wall"
 	icon = 'icons/turf/shuttleold.dmi'
