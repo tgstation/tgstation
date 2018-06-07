@@ -296,6 +296,7 @@
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_SUPER * (power_ratio / FUSION_ENERGY_DIVISOR_SUPER)
 		for (var/id in cached_gases)
 			cached_gases[id][MOLES] = 0
+		air.assert_gases(/datum/gas/stimulum,/datum/gas/pluoxium)
 		cached_gases[/datum/gas/stimulum][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_SUPER //60% of the gas is converted to energy, 40% to stimulum and pluoxium
 		cached_gases[/datum/gas/pluoxium][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_SUPER
 		if (location) //It's going to happen regardless of whether you want it to or not
