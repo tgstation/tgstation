@@ -80,7 +80,7 @@
 
 /obj/item/card/emagfake
 	desc = "It's a card with a magnetic strip attached to some circuitry."
-	name = "cryptographic sequencer"
+	name = "toy cryptographic sequencer"
 	icon_state = "emag"
 	item_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
