@@ -28,10 +28,10 @@
 							"<span class='shadowling'>We create your chrysalis and begin to contort within.</span>")
 			sleep(100) //NOW we do sleeps- we're going too deep into the transformation to cancel and we're cocooned in indestructable walls anyways.
 			H.visible_message("<span class='warning'><b>The skin on [H]'s back begins to split apart. Sickly spines slowly emerge from the divide.</b></span>", \
-							"<span class='shadowling'>Spines pierce our back. Our claws break apart your fingers.</span>")
+							"<span class='shadowling'>Spines pierce our back. Claws break apart our melding fingers.</span>")
 			sleep(90)
-			H.visible_message("<span class='warning'><b>[H]'s skin shifts and morphing new faces, appendages slipping out and hang at the floor. A few of these appendages begin to scratch at the membrane.</b></span>", \
-							"<span class='shadowling'>Our stable form finally gives way to something so much more beautiful. We begin tearing at the fragile membrane protecting us.</span>")
+			H.visible_message("<span class='warning'><b>[H]'s skin shifts and morphs new faces, appendages slipping out and hang at the floor.</b></span>", \
+							"<span class='shadowling'>Our stable form finally gives way to something so much more beautiful.</span>")
 			sleep(80)
 			playsound(H.loc, 'sound/weapons/slash.ogg', 25, 1)
 			to_chat(H, "<i><b>You rip and slice.</b></i>")
