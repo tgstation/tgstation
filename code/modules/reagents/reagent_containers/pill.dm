@@ -151,14 +151,14 @@
 	icon_state = "pill18"
 	list_reagents = list("insulin" = 50)
 	roundstart = 1
-
+///////////////////////////////////////// this pill is used only in a legion mob drop 
 /obj/item/reagent_containers/pill/shadowtoxin
 	name = "black pill"
 	desc = "I wouldn't eat this if I were you."
 	icon_state = "pill9"
 	color = "#454545"
 	list_reagents = list("shadowmutationtoxin" = 1)
-
+//////////////////////////////////////// drugs
 /obj/item/reagent_containers/pill/zoom
 	name = "zoom pill"
 	list_reagents = list("synaptizine" = 10, "nicotine" = 10, "methamphetamine" = 1)
@@ -174,9 +174,9 @@
 	list_reagents = list("mushroomhallucinogen" = 15, "mindbreaker" = 15)
 
 
-/obj/item/reagent_containers/pill/aransep
+/obj/item/reagent_containers/pill/aranesp
 	name = "speedy pill"
-	list_reagents = list("aransep" = 10)
+	list_reagents = list("aranesp" = 10)
 
 
 
