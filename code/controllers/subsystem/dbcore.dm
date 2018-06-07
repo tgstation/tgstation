@@ -253,7 +253,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	Close()
 	query = connection.BeginQuery(sql)
 	in_progress = TRUE
-	while(QDELETED(query) || query.IsComplete())
+	UNTIL(QDELETED(query) || query.IsComplete())
 	in_progress = FALSE
 	skip_next_is_complete = TRUE
 	var/error = QDELETED(query) ? "Query object deleted!" : query.GetError()
