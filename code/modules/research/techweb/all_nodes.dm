@@ -874,7 +874,7 @@
 	display_name = "Neural Nanite Programming"
 	description = "Nanite programs affecting brains and nerves."
 	prereq_ids = list("nanite_base","neural_programming")
-	design_ids = list("nervous_nanites", "brainheal_nanites", "braindecay_nanites", "brainmisfire_nanites", "paralyzing_nanites", "pacifying_nanites", "sleep_nanites", "stun_nanites", "nervedecay_nanites")
+	design_ids = list("nervous_nanites", "brainheal_nanites", "braindecay_nanites", "brainmisfire_nanites", "paralyzing_nanites", "pacifying_nanites", "blinding_nanites", "sleep_nanites", "stun_nanites", "nervedecay_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 

@@ -317,6 +317,13 @@
 	program_type = /datum/nanite_program/pacifying
 	category = list("Suppression Nanites")
 	
+/datum/design/nanites/blinding
+	name = "Blindness"
+	desc = "The nanites suppress the host's ocular nerves, blinding them while they're active."
+	id = "blinding_nanites"
+	program_type = /datum/nanite_program/blinding
+	category = list("Suppression Nanites")
+	
 ////////////////////SENSOR NANITES//////////////////////////////////////
 /datum/design/nanites/sensor_healthy
 	name = "Perfect Health Sensor"

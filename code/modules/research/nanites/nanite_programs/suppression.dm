@@ -22,6 +22,20 @@
 /datum/nanite_program/pacifying/disable_passive_effect()
 	..()
 	host_mob.remove_trait(TRAIT_PACIFISM, "nanites")
+	
+/datum/nanite_program/blinding
+	name = "Blindness"
+	desc = "The nanites suppress the host's ocular nerves, blinding them while they're active."
+	use_rate = 1.5
+	rogue_types = list(/datum/nanite_program/nerve_decay)
+
+/datum/nanite_program/blinding/enable_passive_effect()
+	..()
+	host_mob.add_trait(TRAIT_BLIND, "nanites")
+
+/datum/nanite_program/blinding/disable_passive_effect()
+	..()
+	host_mob.remove_trait(TRAIT_BLIND, "nanites")
 
 /datum/nanite_program/fake_death
 	name = "Death Simulation"
