@@ -1741,7 +1741,7 @@
 					/obj/item/storage/pill_bottle/zoom,
 					/obj/item/storage/pill_bottle/happy,
 					/obj/item/storage/pill_bottle/lsd,
-					/obj/item/storage/pill_bottle/aransep,
+					/obj/item/storage/pill_bottle/aranesp,
 					/obj/item/storage/pill_bottle/stimulant,
 					/obj/item/toy/cards/deck/syndicate,				
 					/obj/item/reagent_containers/food/drinks/bottle/absinthe,
