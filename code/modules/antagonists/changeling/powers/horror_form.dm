@@ -5,9 +5,10 @@
 	chemical_cost = 75
 	dna_cost = 1
 	req_human = TRUE
+	var/inprogress = FALSE
 
 /obj/effect/proc_holder/changeling/horror_form/sting_action(mob/living/carbon/human/user)
-	if(!user || user.notransform || !ishuman(user))
+	if(!user || user.notransform || !ishuman(user) || inprogress)
 		return 0
 	var/mob/living/carbon/human/H = user
 	var/OwO = alert(H, "Are you sure you want to hatch? You cannot undo this!",,"Yes", "No")
@@ -15,37 +16,45 @@
 		if("No")
 			return FALSE
 		if("Yes")
+			inprogress = TRUE
 			H.visible_message("<span class='warning'>[H]'s things suddenly slip off. They hunch over and vomit up a copious amount of purple goo which begins to shape around them!</span>", \
-							"<span class='shadowling'>You remove any equipment which would hinder your hatching and begin regurgitating the resin which will protect you. Moving will disrupt the transformation!</span>")
+							"<font color=#800080>You remove any equipment which would hinder your hatching and begin regurgitating the resin which will protect you. <b>Moving will disrupt the transformation!</b></font>")
 			for(var/obj/item/I in H)
 				H.dropItemToGround(I)
 			if(!do_mob(H, H, 50))
 				to_chat(H, "<span class='userdanger'Transformation interrupted!</span>")
-				return TRUE //yeah, still steal all of their chems. If someone pushes you while you're cocooning you get FUCKED, should have just cancelled
+				inprogress = FALSE
+				return FALSE
+			var/turf/damonster = get_turf(H)
 			for(var/turf/open/floor/F in orange(1, H))
 				new /obj/structure/alien/resin/wall/horrorform(F)
+			for(var/obj/structure/alien/resin/wall/horrorform/R in damonster) //extremely hacky
+				qdel(R)
+				new /obj/structure/alien/weeds/node(damonster) //Dim lighting in the chrysalis -- removes itself afterwards
 			H.visible_message("<span class='warning'>A chrysalis forms around [H], sealing them inside.</span>", \
-							"<span class='shadowling'>We create your chrysalis and begin to contort within.</span>")
+							"<font color=#800080>We create your chrysalis and begin to contort within.</font>")
 			sleep(100) //NOW we do sleeps- we're going too deep into the transformation to cancel and we're cocooned in indestructable walls anyways.
 			H.visible_message("<span class='warning'><b>The skin on [H]'s back begins to split apart. Sickly spines slowly emerge from the divide.</b></span>", \
-							"<span class='shadowling'>Spines pierce our back. Claws break apart our melding fingers.</span>")
+							"<font color=#800080>Spines pierce our back. Claws break apart our melding fingers.</font>")
 			sleep(90)
-			H.visible_message("<span class='warning'><b>[H]'s skin shifts and morphs new faces, appendages slipping out and hang at the floor.</b></span>", \
-							"<span class='shadowling'>Our stable form finally gives way to something so much more beautiful.</span>")
+			H.visible_message("<span class='warning'><b>[H]'s skin shifts and morphs new faces, appendages slipping out and hanging at the floor.</b></span>", \
+							"<font color=#800080>Our stable form finally gives way to something so much more beautiful.</font>")
 			sleep(80)
 			playsound(H.loc, 'sound/weapons/slash.ogg', 25, 1)
-			to_chat(H, "<i><b>You rip and slice.</b></i>")
+			to_chat(H, "<i><b>We rip and we slice...</b></i>")
 			sleep(10)
 			playsound(H.loc, 'sound/weapons/slashmiss.ogg', 25, 1)
-			to_chat(H, "<i><b>The chrysalis falls like water before you.</b></i>")
+			to_chat(H, "<i><b>The chrysalis falls like water before us.</b></i>")
 			sleep(10)
 			playsound(H.loc, 'sound/weapons/slice.ogg', 25, 1)
-			to_chat(H, "<i><b>FREEDOM FROM OUR LESSER FORM!</b></i>")
+			to_chat(H, "<i><b>The chrysalis begins to tear away, our metamorphosis nearing completion...</b></i>")
 			sleep(10)
 			for(var/obj/structure/alien/resin/wall/horrorform/W in orange(1, H))
 				playsound(W, 'sound/effects/splat.ogg', 50, 1)
 				qdel(W)
-			to_chat(H, "<i><b><font size=3>FREEDOM TO TAKE OVER THIS PITIFUL WORLD!!!</i></b></font>")
+			for(var/obj/structure/alien/weeds/node/N in damonster)
+				qdel(N)
+			to_chat(H, "<font color=#800080><i><b>Flesh and sinew shift and flow into place, breaking bone and ripping muscle apart. We shall be prisoner of static inferior flesh no longer!</i></b></font>")
 			playsound(user, 'sound/creatures/rawrXD.ogg', 100, 1)
 			var/mob/living/simple_animal/hostile/true_changeling/new_mob = new(get_turf(H))
 			var/datum/antagonist/changeling/ling_datum = H.mind.has_antag_datum(/datum/antagonist/changeling)
@@ -58,4 +67,5 @@
 			H.status_flags |= GODMODE
 			H.mind.transfer_to(new_mob)
 			new /obj/effect/gibspawner/human(get_turf(H))
+			inprogress = FALSE
 			return TRUE

@@ -36,7 +36,7 @@
 	attack_sound = 'sound/creatures/hit3.ogg'
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 15) //It's a pretty big dude. Actually killing one is a feat.
 	var/playstyle_string = "<b><span class='big danger'>We have entered our true form!</span><br>We are unbelievably deadly, and regenerate life at a steady rate. We must utilise the abilities that we have gained as a result of our transformation, as our old ones are not usable in this form. Taking too much damage will \
-	cause us to deform into a more vulnerable form for until we can reform.</b><br>Devour can be used on corpses that are not too damaged to restore our health.<br>Tendril grab allows us to silently bring prey to us, and the  <br>Assimilate converts humans into lesser changelings, following our every command. We can use tendril grab to easily assimilate people as the abilities can chain with each other and both cuff the target.<br>Spine crawl lets us negate gravity, and is needed for tendril grab."
+	cause us to deform into a more vulnerable form for until we can reform.</b><font color=#800080><br>Devour can be used on corpses that are not too damaged to restore our health.<br>Tendril grab allows us to silently bring prey to us, and the  <br>Assimilate converts humans into lesser changelings, following our every command. We can use tendril grab to easily assimilate people as the abilities can chain with each other and both cuff the target.</font>"
 	var/mob/living/carbon/human/stored_changeling = null //The changeling that transformed
 
 	var/devouring = FALSE
@@ -81,18 +81,9 @@
 /mob/living/simple_animal/hostile/true_changeling/death()
 	..(1)
 	new /obj/effect/gibspawner/human(get_turf(src))
-	if(stored_changeling && mind)
-		visible_message("<span class='warning'>[src] lets out a furious scream as it shrinks into its human form.</span>", \
-						"<span class='userdanger'>We lack the power to maintain this form! We helplessly turn back into a human...</span>")
-		stored_changeling.loc = get_turf(src)
-		mind.transfer_to(stored_changeling)
-		stored_changeling.Unconscious(300) //Make them helpless for some time
-		stored_changeling.status_flags &= ~GODMODE
-		qdel(src)
-	else
-		visible_message("<span class='warning'>[src] lets out a waning scream as it falls, twitching, to the floor.</span>", \
-						"<span class='userdanger'>We have fallen! We begin the revival process...</span>")
-		addtimer(CALLBACK(src, .proc/lingreform), 450)
+	visible_message("<span class='warning'>[src] lets out a waning scream as it falls, twitching, to the floor.</span>", \
+					"<span class='userdanger'>We have fallen! We begin the revival process...</span>")
+	addtimer(CALLBACK(src, .proc/lingreform), 450)
 
 /mob/living/simple_animal/hostile/true_changeling/proc/lingreform()
 	if(!src)
@@ -133,7 +124,8 @@
 		return FALSE
 	var/list/potential_targets = list()
 	for(var/mob/living/carbon/human/H in range(1, M))
-		potential_targets.Add(H)
+		if(H != M.stored_changeling)
+			potential_targets.Add(H)
 	if(!potential_targets.len)
 		to_chat(M, "<span class='warning'>There are no victims nearby!</span>")
 		return FALSE
@@ -183,7 +175,8 @@
 		return FALSE
 	var/list/potential_targets = list()
 	for(var/mob/living/carbon/human/H in range(1, M))
-		potential_targets.Add(H)
+		if(H != M.stored_changeling)
+			potential_targets.Add(H)
 	if(!potential_targets.len)
 		to_chat(M, "<span class='warning'>There are no valid targets nearby.</span>")
 		return FALSE
@@ -246,8 +239,9 @@
 	target.visible_message("<span class='big'>[target] shudders, and looks around curiously.</span>", \
 						   "<span class='boldannounce'>False faces all f<span class='big'>ake not real not real not--</span></span>")
 	to_chat(M, "<span class='shadowling'><b>[target.real_name]</b> has joined the hivemind.</span>")
+
 	var/datum/antagonist/changeling/lesser/ASSIMILATEEE = new()
-	//try assimilateee.horrormaster = src!
+	ASSIMILATEEE.master = M
 	target.mind.add_antag_datum(ASSIMILATEEE)
 	return
 
@@ -272,7 +266,8 @@
 		return FALSE
 	var/list/potential_targets = list()
 	for(var/mob/living/carbon/human/H in view(7, M))
-		potential_targets.Add(H)
+		if(H != M.stored_changeling)
+			potential_targets.Add(H)
 	if(!potential_targets.len)
 		to_chat(M, "<span class='warning'>There are no valid targets nearby.</span>")
 		return FALSE

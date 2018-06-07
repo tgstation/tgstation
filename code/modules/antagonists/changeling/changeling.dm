@@ -74,8 +74,6 @@
 	if(give_objectives)
 		if(team_mode)
 			forge_team_objectives()
-//		if(lesserling)
-//			forge_lesserling_objectives()
 		else
 			forge_objectives()
 	remove_clownmut()
@@ -464,14 +462,15 @@
 	hud.leave_hud(owner.current)
 	set_antag_hud(owner.current, null)
 
-/*/datum/antagonist/changeling/lesser/proc/forge_lesserling_objectives()
+/datum/antagonist/changeling/lesser/proc/forge_lesserling_objectives()
 	//OBJECTIVES - for lesserlings, the only need to make sure the horror form escapes alive.
-	var/datum/objective/escape/lingmaster/lingmaster = new
-	lingmaster.owner = owner
-	objectives += lingmaster*/
+	var/datum/objective/protect/new_objective = new /datum/objective/protect
+	new_objective.owner = owner
+	new_objective.target = master
+	new_objective.explanation_text = "Protect [master.current.real_name], the horrorform."
+	owner.objectives += new_objective
+	objectives += new_objective
 
-///datum/objective/escape/lingmaster
-//	explanation_text = "Protect the horrorform [horrormaster.name] at all costs!"
 
 /datum/antagonist/changeling/admin_add(datum/mind/new_owner,mob/admin)
 	. = ..()
@@ -541,12 +540,14 @@
 	name = "Assimilated Victim"
 	show_in_roundend = FALSE
 	lesserling = TRUE
-	give_objectives = FALSE //IF THIS ISN'T REMOVED PING ME IN THE PR
-//	var/mob/living/simple_animal/hostile/true_changeling/horrormaster
+	var/datum/mind/master
 
-///datum/antagonist/changeling/lesser/Initialize(mapload, horrormaster)
-//	. = ..()
-//	src.horrormaster = horrormaster
+/datum/antagonist/changeling/lesser/on_gain()
+	generate_name()
+	create_actions()
+	reset_powers()
+	create_initial_profile()
+	forge_lesserling_objectives()
 
 /datum/antagonist/changeling/roundend_report()
 	var/list/parts = list()
