@@ -46,7 +46,7 @@
 #define FUSION_EFFICIENCY_BASE				60		//used in the fusion efficiency calculations
 #define FUSION_EFFICIENCY_DIVISOR			0.6		//ditto
 #define FUSION_RADIATION_FACTOR				15000	//horizontal asymptote
-#define FUSION_RADIATION_CONSTANT			30		//equation is form of (ax) / (x + b), where a = radiation factor and b = radiation constant (https://www.desmos.com/calculator/frqfjjrr3r)
+#define FUSION_RADIATION_CONSTANT			10		//equation is form of (ax) / (x + b), where a = radiation factor and b = radiation constant (https://www.desmos.com/calculator/frqfjjrr3r)
 #define FUSION_VOLUME_SUPER					100		//volume of the sound the fusion noises make
 #define FUSION_VOLUME_HIGH					50
 #define FUSION_VOLUME_MID					25
