@@ -64,11 +64,14 @@
 	return FALSE
 
 /obj/structure/lattice/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	var/turf/ST = get_turf(src)
+	if(!istype(ST, /turf/open/space))
+		return FALSE
+
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a floor.</span>")
-			var/turf/T = get_turf(src)
-			T.PlaceOnTop(/turf/open/floor/plating)
+			ST.PlaceOnTop(/turf/open/floor/plating)
 			return TRUE
 		if(RCD_DECONSTRUCT)
 			to_chat(user, "<span class='notice'>You deconstruct the lattice.</span>")
