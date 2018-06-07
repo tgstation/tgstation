@@ -301,7 +301,7 @@
 		cached_gases[/datum/gas/pluoxium][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_SUPER
 		if (location) //It's going to happen regardless of whether you want it to or not
 			radiation_pulse(location, radiation_power)
-			explosion(location,0,4,8,power_ratio,TRUE,TRUE)//A decent explosion with a huge shockwave. People WILL know you're doing fusion.
+			explosion(location,0,0,10,power_ratio,TRUE,TRUE)//A decent explosion with a huge shockwave. People WILL know you're doing fusion.
 			playsound(location, "sound/effects/supermatter.ogg", FUSION_VOLUME_SUPER, 0)
 
 	else if (power_ratio > FUSION_HIGH_TIER) //power ratio 20-50; High tier. Fuses into one big atom which then turns to tritium instantly. Very dangerous, but super cool.
