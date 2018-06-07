@@ -90,7 +90,7 @@
 //air filled floors; used in atmos pressure chambers
 
 /turf/open/floor/engine/n2o
-	gender = PLURAL // avoid "a N2O floor"
+	article = "an"
 	name = "\improper N2O floor"
 	initial_gas_mix = "n2o=6000;TEMP=293.15"
 
@@ -107,7 +107,7 @@
 	initial_gas_mix = "o2=100000;TEMP=293.15"
 
 /turf/open/floor/engine/n2
-	gender = PLURAL // avoid "a N2 floor"
+	article = "an"
 	name = "\improper N2 floor"
 	initial_gas_mix = "n2=100000;TEMP=293.15"
 
