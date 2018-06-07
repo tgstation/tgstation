@@ -346,6 +346,10 @@
 	button_icon_state = "lay_web"
 
 /datum/action/innate/spider/lay_web/Activate()
+	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider))
+		return
+	var/mob/living/simple_animal/hostile/poison/giant_spider/S = owner
+
 	if(!isturf(S.loc))
 		return
 	var/turf/T = get_turf(S)
