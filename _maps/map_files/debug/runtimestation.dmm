@@ -123,6 +123,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "au" = (
@@ -437,7 +438,7 @@
 /obj/structure/table,
 /obj/item/analyzer,
 /obj/item/wrench,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel,
 /area/engine/atmos)
 "bk" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -1003,7 +1004,8 @@
 	pixel_x = -24
 	},
 /obj/structure/cable,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "dc" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1307,10 +1309,10 @@
 /turf/open/floor/plating,
 /area/science)
 "gM" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -1430,6 +1432,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
+"qn" = (
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/bridge)
 "sE" = (
 /obj/machinery/power/rtg/advanced,
 /obj/structure/cable,
@@ -1494,6 +1502,12 @@
 /obj/machinery/rnd/production/techfab/department,
 /turf/open/floor/plasteel,
 /area/science)
+"Bl" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/engine/gravity_generator)
 "BB" = (
 /obj/item/storage/backpack/duffelbag/syndie/surgery,
 /obj/structure/table,
@@ -3116,7 +3130,7 @@ cF
 bE
 bE
 cS
-dl
+dB
 dl
 dl
 dl
@@ -3370,8 +3384,8 @@ aa
 ab
 ac
 ad
-af
-ak
+qn
+Bl
 at
 aH
 aW
