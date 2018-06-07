@@ -1130,20 +1130,17 @@
 /obj/item/integrated_circuit/input/data_card_reader/attackby_react(obj/item/I, mob/living/user, intent)
 	var/obj/item/card/data/card = I.GetCard()
 	var/write_mode = get_pin_data(IC_INPUT, 3)
-	if(write_mode == TRUE)
-		if(card)
+	if(card)
+		if(write_mode == TRUE)
 			card.function = get_pin_data(IC_INPUT, 1)
 			card.data = get_pin_data(IC_INPUT, 2)
+			push_data()
+			activate_pin(1)
 		else
-			return FALSE
-		push_data()
-		activate_pin(1)
-	else
-		if(card)
 			set_pin_data(IC_OUTPUT, 1, card.function)
 			set_pin_data(IC_OUTPUT, 2, card.data)
-		else
-			return FALSE
-		push_data()
-		activate_pin(2)
+			push_data()
+			activate_pin(2)
+	else
+		return FALSE
 	return TRUE
