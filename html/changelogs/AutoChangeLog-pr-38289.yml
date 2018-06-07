@@ -1,0 +1,4 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - bugfix: "rad collectors set to research point gen are somewhat ok now"
