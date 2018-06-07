@@ -241,7 +241,7 @@
 		new /obj/item/reagent_containers/pill/zoom(src)
 
 /obj/item/storage/pill_bottle/happy
-	name = "suspicious  pill bottle"
+	name = "suspicious pill bottle"
 	desc = "There is a smiley on the top."
 
 /obj/item/storage/pill_bottle/happy/PopulateContents()
@@ -249,7 +249,7 @@
 		new /obj/item/reagent_containers/pill/happy(src)
 
 /obj/item/storage/pill_bottle/lsd
-	name = "suspicious  pill bottle"
+	name = "suspicious pill bottle"
 	desc = "There is a badly drawn thing with the shape of a mushroom."
 
 /obj/item/storage/pill_bottle/lsd/PopulateContents()
@@ -257,7 +257,7 @@
 		new /obj/item/reagent_containers/pill/lsd(src)
 
 /obj/item/storage/pill_bottle/aranesp
-	name = "suspicious  pill bottle"
+	name = "suspicious pill bottle"
 	desc = "The label says 'gotta go fast'."
 
 /obj/item/storage/pill_bottle/aranesp/PopulateContents()
