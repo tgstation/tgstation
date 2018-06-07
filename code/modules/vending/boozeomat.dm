@@ -35,7 +35,7 @@
 	contraband = list(/obj/item/reagent_containers/food/drinks/mug/tea = 12)
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
-	req_access_txt = "25"
+	req_access = list(ACCESS_BAR)
 	refill_canister = /obj/item/vending_refill/boozeomat
 
 /obj/machinery/vending/boozeomat/maint

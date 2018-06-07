@@ -3,7 +3,7 @@
 	desc = "Tools for tools."
 	icon_state = "tool"
 	icon_deny = "tool-deny"
-	//req_access_txt = "12" //Maintenance access
+	//req_access = list(ACCESS_MAINT_TUNNELS)
 	products = list(/obj/item/stack/cable_coil/random = 10,
 		            /obj/item/crowbar = 5,
 		            /obj/item/weldingtool = 3,
