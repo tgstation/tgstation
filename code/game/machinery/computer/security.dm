@@ -653,6 +653,7 @@ What a mess.*/
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, station_time_timestamp())
 							GLOB.data_core.addMinorCrime(active1.fields["id"], crime)
+							investigate_log("New Minor Crime: <strong>[t1]</strong>: [t2] | Added to [active1.fields["name"]] by [usr.name] ([usr.key])", INVESTIGATE_RECORDS)
 					if("mi_crim_delete")
 						if(istype(active1, /datum/data/record))
 							if(href_list["cdataid"])
@@ -667,6 +668,7 @@ What a mess.*/
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, station_time_timestamp())
 							GLOB.data_core.addMajorCrime(active1.fields["id"], crime)
+							investigate_log("New Major Crime: <strong>[t1]</strong>: [t2] | Added to [active1.fields["name"]] by [usr.name] ([usr.key])", INVESTIGATE_RECORDS)
 					if("ma_crim_delete")
 						if(istype(active1, /datum/data/record))
 							if(href_list["cdataid"])

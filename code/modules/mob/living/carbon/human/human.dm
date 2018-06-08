@@ -433,6 +433,7 @@
 														return
 													var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, station_time_timestamp())
 													GLOB.data_core.addMinorCrime(R.fields["id"], crime)
+													investigate_log("New Minor Crime: <strong>[t1]</strong>: [t2] | Added to [active1.fields["name"]] by [usr.name] ([usr.key])", INVESTIGATE_RECORDS)
 													to_chat(usr, "<span class='notice'>Successfully added a minor crime.</span>")
 													return
 										if("Major Crime")
@@ -448,6 +449,7 @@
 														return
 													var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, station_time_timestamp())
 													GLOB.data_core.addMajorCrime(R.fields["id"], crime)
+													investigate_log("New Major Crime: <strong>[t1]</strong>: [t2] | Added to [active1.fields["name"]] by [usr.name] ([usr.key])", INVESTIGATE_RECORDS)
 													to_chat(usr, "<span class='notice'>Successfully added a major crime.</span>")
 									return
 
