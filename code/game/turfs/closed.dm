@@ -68,6 +68,12 @@
 	icon = 'icons/turf/walls/uranium_wall.dmi'
 	icon_state = "uranium"
 
+/turf/closed/indestructible/riveted/sandstone
+	name = "sandstone wall"
+	desc = "A wall with sandstone plating. Rough."
+	icon = 'icons/turf/walls/sandstone_wall.dmi'
+	icon_state = "sandstone"
+
 /turf/closed/indestructible/abductor
 	icon_state = "alien1"
 
