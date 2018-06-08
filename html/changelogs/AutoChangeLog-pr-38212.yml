@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "Paradox bags no longer block the middle of your screen until reconnect, and also actually work."
