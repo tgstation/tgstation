@@ -693,7 +693,10 @@
 		if(has_gravity == 1)
 			clear_alert("gravity")
 		else
-			throw_alert("gravity", /obj/screen/alert/highgravity)
+			if(has_gravity > GRAVITY_DAMAGE_TRESHOLD)
+				throw_alert("gravity", /obj/screen/alert/veryhighgravity)
+			else
+				throw_alert("gravity", /obj/screen/alert/highgravity)
 	else
 		throw_alert("gravity", /obj/screen/alert/weightless)
 	if(!override && !is_flying())

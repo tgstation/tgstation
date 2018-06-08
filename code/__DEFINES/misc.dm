@@ -448,3 +448,4 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 
 #define STANDARD_GRAVITY 1 //Anything above this is high gravity, anything below no grav
+#define GRAVITY_DAMAGE_TRESHOLD 3 //Starting with this value gravity will start to damage mobs

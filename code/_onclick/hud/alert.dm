@@ -239,7 +239,12 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/highgravity
 	name = "High Gravity"
-	desc = "You're getting crushed by high gravity, you'll accumulate brute damage and your movement and picking up items will be slowed."
+	desc = "You're getting crushed by high gravity, picking up items and movement will be slowed."
+	icon_state = "paralysis"
+
+/obj/screen/alert/veryhighgravity
+	name = "Crushing Gravity"
+	desc = "You're getting crushed by high gravity, picking up items and movement will be slowed. You'll also accumulate brute damage!"
 	icon_state = "paralysis"
 
 /obj/screen/alert/fire
