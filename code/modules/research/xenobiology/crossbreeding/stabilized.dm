@@ -96,6 +96,38 @@ Stabilized extracts:
 
 /obj/item/slimecross/stabilized/gold
 	colour = "gold"
+	var/mob_type
+	var/datum/mind/saved_mind
+
+/obj/item/slimecross/stabilized/gold/proc/generate_mobtype()
+	var/static/list/mob_spawn_pets = list()
+	if(mob_spawn_pets.len <= 0)
+		for(var/T in typesof(/mob/living/simple_animal))
+			var/mob/living/simple_animal/SA = T
+			switch(initial(SA.gold_core_spawnable))
+				if(FRIENDLY_SPAWN)
+					mob_spawn_pets += T
+	mob_type = pick(mob_spawn_pets)
+
+/obj/item/slimecross/stabilized/gold/Initialize()
+	..()
+	generate_mobtype()
+
+/obj/item/slimecross/stabilized/gold/attack_self(mob/user)
+	var/choice = input(user, "Which do you want to reset?", "Familiar Adjustment") as null|anything in list("Familiar Species", "Familiar Sentience")
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.has_status_effect(/datum/status_effect/stabilized/gold))
+			L.remove_status_effect(/datum/status_effect/stabilized/gold)
+			START_PROCESSING(SSobj, src)
+	if(choice == "Familiar Species")
+		to_chat(user, "<span class='notice'>You squeeze [src], and a shape seems to shift around inside.</span>")
+		generate_mobtype()
+	if(choice == "Familiar Sentience")
+		to_chat(user, "<span class='notice'>You poke [src], and it lets out a glowing pulse.</span>")
+		saved_mind = null
 
 /obj/item/slimecross/stabilized/oil
 	colour = "oil"
