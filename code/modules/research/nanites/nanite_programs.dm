@@ -183,6 +183,11 @@
 			software_error()
 		else if(prob(33))
 			qdel(src)
+			
+/datum/nanite_program/proc/on_minor_shock()
+	if(!program_flags & NANITE_SHOCK_IMMUNE)
+		if(prob(10))
+			software_error()
 
 /datum/nanite_program/proc/software_error(type)
 	if(!type)

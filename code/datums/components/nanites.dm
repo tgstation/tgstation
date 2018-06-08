@@ -24,6 +24,7 @@
 		START_PROCESSING(SSprocessing, src)
 		RegisterSignal(COMSIG_ATOM_EMP_ACT, .proc/on_emp)
 		RegisterSignal(COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_shock)
+		RegisterSignal(COMSIG_LIVING_STUN_SHOCK, .proc/on_minor_shock)
 		RegisterSignal(COMSIG_NANITE_SIGNAL, .proc/receive_signal)
 		if(cloud_id)
 			cloud_sync()
@@ -124,6 +125,12 @@
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_shock(shock_damage)
+		
+/datum/component/nanites/proc/on_minor_shock()
+	adjust_nanites(-(rand(5, 15)))			//Lose 5-15 flat nanite volume
+	for(var/X in programs)
+		var/datum/nanite_program/NP = X
+		NP.on_minor_shock()
 
 /datum/component/nanites/proc/receive_signal(code)
 	if(!host_mob) //dormant
