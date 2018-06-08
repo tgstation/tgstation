@@ -1,5 +1,19 @@
 //Programs that are generally useful for population control and non-harmful suppression.
 
+/datum/nanite_program/triggered/sleepy
+	name = "Sleep Induction"
+	desc = "The nanites cause rapid narcolepsy when triggered."
+	trigger_cost = 15
+	trigger_cooldown = 1200
+	rogue_types = list(/datum/nanite_program/brain_misfire, /datum/nanite_program/brain_decay)
+
+/datum/nanite_program/triggered/sleepy/trigger()
+	if(!..())
+		return
+	to_chat(host_mob, "<span class='warning'>You start to feel very sleepy...</span>")
+	host_mob.drowsyness += 20
+	addtimer(CALLBACK(host_mob, /mob/living.proc/Sleeping, 200), rand(60,200))
+	
 /datum/nanite_program/paralyzing
 	name = "Paralysis"
 	desc = "The nanites actively suppress nervous pulses, effectively paralyzing the host."
@@ -9,6 +23,32 @@
 /datum/nanite_program/paralyzing/active_effect()
 	host_mob.Knockdown(30)
 
+/datum/nanite_program/triggered/shocking
+	name = "Electric Shock"
+	desc = "The nanites shock the host when triggered. Destroys a large amount of nanites!"
+	trigger_cost = 10
+	trigger_cooldown = 300
+	program_flags = NANITE_SHOCK_IMMUNE
+	rogue_types = list(/datum/nanite_program/toxic)
+
+/datum/nanite_program/triggered/shocking/trigger()
+	if(!..())
+		return
+	host_mob.electrocute_act(rand(5,10), "shock nanites", TRUE, TRUE)
+
+/datum/nanite_program/triggered/stun
+	name = "Neural Shock"
+	desc = "The nanites pulse the host's nerves when triggered, inapacitating them for a short period."
+	trigger_cost = 4
+	trigger_cooldown = 300
+	rogue_types = list(/datum/nanite_program/triggered/shocking, /datum/nanite_program/nerve_decay)
+
+/datum/nanite_program/triggered/stun/trigger()
+	if(!..())
+		return
+	playsound(host_mob, "sparks", 75, 1, -1)
+	host_mob.Knockdown(80)	
+	
 /datum/nanite_program/pacifying
 	name = "Pacification"
 	desc = "The nanites suppress the aggression center of the brain, preventing the host from causing direct harm to others."

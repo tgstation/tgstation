@@ -29,6 +29,61 @@
 	..()
 	to_chat(host_mob, "<span class='warning'>Your blood cools down, and the pain gradually fades.</span>")
 
+/datum/nanite_program/triggered/explosive
+	name = "Chain Detonation"
+	desc = "Detonates all the nanites inside the host in a chain reaction when triggered."
+	trigger_cost = 25 //plus every idle nanite left afterwards
+	trigger_cooldown = 100 //Just to avoid double-triggering
+	rogue_types = list(/datum/nanite_program/toxic)
+
+/datum/nanite_program/triggered/explosive/trigger()
+	if(!..())
+		return
+	host_mob.visible_message("<span class='warning'>[host_mob] starts emitting a high-pitched buzzing, and [host_mob.p_their()] skin begins to glow...</span>",\
+							"<span class='userdanger'>You start emitting a high-pitched buzzing, and your skin begins to glow...</span>")
+	addtimer(CALLBACK(src, .proc/boom), CLAMP((nanites.nanite_volume * 0.35), 25, 150))
+
+/datum/nanite_program/triggered/explosive/proc/boom()
+	var/nanite_amount = nanites.nanite_volume
+	var/dev_range = FLOOR(nanite_amount/200, 1) - 1
+	var/heavy_range = FLOOR(nanite_amount/100, 1) - 1
+	var/light_range = FLOOR(nanite_amount/50, 1) - 1
+	explosion(host_mob, dev_range, heavy_range, light_range)
+	qdel(nanites)
+
+//TODO make it defuse if triggered again
+
+/datum/nanite_program/triggered/heart_stop
+	name = "Heart-Stopping Nanites"
+	desc = "Stops the host's heart when triggered; restarts it if triggered again."
+	trigger_cost = 12
+	trigger_cooldown = 10
+	rogue_types = list(/datum/nanite_program/nerve_decay)
+
+/datum/nanite_program/triggered/heart_stop/trigger()
+	if(!..())
+		return
+	if(iscarbon(host_mob))
+		var/mob/living/carbon/C = host_mob
+		var/obj/item/organ/heart/heart = C.getorganslot(ORGAN_SLOT_HEART)
+		if(heart)
+			if(heart.beating)
+				heart.Stop()
+			else
+				heart.Restart()	
+	
+/datum/nanite_program/triggered/emp
+	name = "Electromagnetic Resonance"
+	desc = "The nanites cause an elctromagnetic pulse around the host when triggered. Will corrupt other nanite programs!"
+	trigger_cost = 10
+	program_flags = NANITE_EMP_IMMUNE
+	rogue_types = list(/datum/nanite_program/toxic)
+
+/datum/nanite_program/triggered/emp/trigger()
+	if(!..())
+		return
+	empulse(host_mob, 1, 2)	
+	
 /datum/nanite_program/pyro/active_effect()
 	host_mob.fire_stacks += 1
 	host_mob.IgniteMob()

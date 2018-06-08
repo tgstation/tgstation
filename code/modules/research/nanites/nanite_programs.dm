@@ -44,6 +44,12 @@
 	var/extra_code_name = "Extra Code"
 	var/extra_code_min = 0
 	var/extra_code_max = 0
+	
+/datum/nanite_program/triggered
+	use_rate = 0
+	trigger_cost = 5
+	trigger_cooldown = 50
+	can_trigger = TRUE	
 
 /datum/nanite_program/Destroy()
 	if(host_mob)
