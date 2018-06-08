@@ -1,0 +1,5 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - balance: "Sparks, using welding tools, using igniters, etc, will no longer cause an instant fireless inferno in small rooms."
+  - tweak: "The revert of the original hotspot_expose() PR has been reverted, since the reason as to why it was reverted was resolved with this change."
