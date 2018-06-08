@@ -50,7 +50,10 @@
 		if(stage5)
 			to_chat(affected_mob, pick(stage5))
 		if(jobban_isbanned(affected_mob, new_form))
-			affected_mob.death(1)
+			if(!QDELETED(affected_mob))
+				affected_mob.death(1)
+			return
+		if(QDELETED(affected_mob))
 			return
 		if(affected_mob.notransform)
 			return

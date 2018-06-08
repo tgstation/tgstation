@@ -110,6 +110,10 @@ GLOBAL_LIST(round_end_notifiees)
 	admin_only = TRUE
 
 /datum/tgs_chat_command/reload_admins/Run(datum/tgs_chat_user/sender, params)
-	load_admins()
+	ReloadAsync()
 	log_admin("[sender.friendly_name] reloaded admins via chat command.")
 	return "Admins reloaded."
+
+/datum/tgs_chat_command/reload_admins/proc/ReloadAsync()
+	set waitfor = FALSE
+	load_admins()

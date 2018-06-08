@@ -49,6 +49,7 @@ SUBSYSTEM_DEF(dbcore)
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_round_shutdown = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET shutdown_datetime = Now(), end_state = '[sanitizeSQL(SSticker.end_state)]' WHERE id = [GLOB.round_id]")
 		query_round_shutdown.Execute()
+		qdel(query_round_shutdown)
 	if(IsConnected())
 		Disconnect()
 
@@ -95,6 +96,7 @@ SUBSYSTEM_DEF(dbcore)
 				if(db_major != DB_MAJOR_VERSION || db_minor != DB_MINOR_VERSION)
 					schema_mismatch = 1 // flag admin message about mismatch
 					log_sql("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
+			qdel(query_db_version)
 			else
 				schema_mismatch = 2 //flag admin message about no schema version
 				log_sql("Could not get schema version from database")
@@ -104,27 +106,31 @@ SUBSYSTEM_DEF(dbcore)
 		log_sql("Database is not enabled in configuration.")
 
 /datum/controller/subsystem/dbcore/proc/SetRoundID()
-	if(CONFIG_GET(flag/sql_enabled))
-		if(SSdbcore.Connect())
-			var/datum/DBQuery/query_round_initialize = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (initialize_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
-			query_round_initialize.Execute()
-			var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
-			query_round_last_id.Execute()
-			if(query_round_last_id.NextRow())
-				GLOB.round_id = query_round_last_id.item[1]
+	if(!Connect())
+		return
+	var/datum/DBQuery/query_round_initialize = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (initialize_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
+	query_round_initialize.Execute()
+	qdel(query_round_initialize)
+	var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
+	query_round_last_id.Execute()
+	if(query_round_last_id.NextRow())
+		GLOB.round_id = query_round_last_id.item[1]
+	qdel(query_round_last_id)
 
 /datum/controller/subsystem/dbcore/proc/SetRoundStart()
-	if(CONFIG_GET(flag/sql_enabled))
-		if(SSdbcore.Connect())
-			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET start_datetime = Now() WHERE id = [GLOB.round_id]")
-			query_round_start.Execute()
+	if(!Connect())
+		return
+	var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET start_datetime = Now() WHERE id = [GLOB.round_id]")
+	query_round_start.Execute()
+	qdel(query_round_start)
 
 /datum/controller/subsystem/dbcore/proc/SetRoundEnd()
-	if(CONFIG_GET(flag/sql_enabled))
-		if(SSdbcore.Connect())
-			var/sql_station_name = sanitizeSQL(station_name())
-			var/datum/DBQuery/query_round_end = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET end_datetime = Now(), game_mode_result = '[sanitizeSQL(SSticker.mode_result)]', station_name = '[sql_station_name]' WHERE id = [GLOB.round_id]")
-			query_round_end.Execute()
+	if(!Connect())
+		return
+	var/sql_station_name = sanitizeSQL(station_name())
+	var/datum/DBQuery/query_round_end = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET end_datetime = Now(), game_mode_result = '[sanitizeSQL(SSticker.mode_result)]', station_name = '[sql_station_name]' WHERE id = [GLOB.round_id]")
+	query_round_end.Execute()
+	qdel(query_round_end)
 
 /datum/controller/subsystem/dbcore/proc/Disconnect()
 	failed_connections = 0
@@ -215,6 +221,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 		return Query.warn_execute()
 	else
 		return Query.Execute()
+	qdel(Query)
 
 
 /datum/DBQuery

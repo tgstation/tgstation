@@ -23,13 +23,18 @@ GLOBAL_PROTECT(security_mode)
 
 	config.Load()
 
+	Startup()
+
+//some other stuff that is still super important but requires the ability to sleep
+/world/proc/Startup()
+	set waitfor = FALSE
 	//SetupLogs depends on the RoundID, so lets check
 	//DB schema and set RoundID if we can
-	SSdbcore.CheckSchemaVersion()
-	SSdbcore.SetRoundID()
+	SSdbcore.CheckSchemaVersion()	//sleep
+	SSdbcore.SetRoundID()	//sleep
 	SetupLogs()
 
-	load_admins()
+	load_admins()	//sleep
 	LoadVerbs(/datum/verbs/menu)
 	if(CONFIG_GET(flag/usewhitelist))
 		load_whitelist()

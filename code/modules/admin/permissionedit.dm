@@ -31,9 +31,11 @@
 		page = text2num(page)
 		var/datum/DBQuery/query_count_admin_logs = SSdbcore.NewQuery("SELECT COUNT(id) FROM [format_table_name("admin_log")][search]")
 		if(!query_count_admin_logs.warn_execute())
+			qdel(query_count_admin_logs)
 			return
 		if(query_count_admin_logs.NextRow())
 			logcount = text2num(query_count_admin_logs.item[1])
+		qdel(query_count_admin_logs)
 		if(logcount > logssperpage)
 			output += "<br><b>Page: </b>"
 			while(logcount > 0)
@@ -44,6 +46,7 @@
 		var/limit = " LIMIT [logssperpage * page], [logssperpage]"
 		var/datum/DBQuery/query_search_admin_logs = SSdbcore.NewQuery("SELECT datetime, round_id, adminckey, operation, target, log FROM [format_table_name("admin_log")][search] ORDER BY datetime DESC[limit]")
 		if(!query_search_admin_logs.warn_execute())
+			qdel(query_search_admin_logs)
 			return
 		while(query_search_admin_logs.NextRow())
 			var/datetime = query_search_admin_logs.item[1]
@@ -53,19 +56,23 @@
 			target = query_search_admin_logs.item[5]
 			var/log = query_search_admin_logs.item[6]
 			output += "<p style='margin:0px'><b>[datetime] | Round ID [round_id] | Admin [admin_ckey] | Operation [operation] on [target]</b><br>[log]</p><hr style='background:#000000; border:0; height:3px'>"
+		qdel(query_search_admin_logs)
 	if(action == 2)
 		output += "<h3>Admin ckeys with invalid ranks</h3>"
 		var/datum/DBQuery/query_check_admin_errors = SSdbcore.NewQuery("SELECT ckey, [format_table_name("admin")].rank FROM [format_table_name("admin")] LEFT JOIN [format_table_name("admin_ranks")] ON [format_table_name("admin_ranks")].rank = [format_table_name("admin")].rank WHERE [format_table_name("admin_ranks")].rank IS NULL")
 		if(!query_check_admin_errors.warn_execute())
+			qdel(query_check_admin_errors)
 			return
 		while(query_check_admin_errors.NextRow())
 			var/admin_ckey = query_check_admin_errors.item[1]
 			var/admin_rank = query_check_admin_errors.item[2]
 			output += "[admin_ckey] has non-existant rank [admin_rank] | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightschange=[admin_ckey]'>\[Change Rank\]</a> | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightsremove=[admin_ckey]'>\[Remove\]</a>"
 			output += "<hr style='background:#000000; border:0; height:1px'>"
+		qdel(query_check_admin_errors)
 		output += "<h3>Unused ranks</h3>"
 		var/datum/DBQuery/query_check_unused_rank = SSdbcore.NewQuery("SELECT [format_table_name("admin_ranks")].rank, flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")] LEFT JOIN [format_table_name("admin")] ON [format_table_name("admin")].rank = [format_table_name("admin_ranks")].rank WHERE [format_table_name("admin")].rank IS NULL")
 		if(!query_check_unused_rank.warn_execute())
+			qdel(query_check_unused_rank)
 			return
 		while(query_check_unused_rank.NextRow())
 			var/admin_rank = query_check_unused_rank.item[1]
@@ -74,6 +81,7 @@
 			<br>Denied: [rights2text(text2num(query_check_unused_rank.item[3])," ", "-")]
 			<br>Allowed to edit: [rights2text(text2num(query_check_unused_rank.item[4])," ", "*")]
 			<hr style='background:#000000; border:0; height:1px'>"}
+		qdel(query_check_unused_rank)
 	else if(!action)
 		output += {"<head>
 		<title>Permissions Panel</title>
@@ -108,6 +116,8 @@
 			output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;ckey=[adm_ckey]'>[rights2text(D.rank.can_edit_rights," ", "*")]</a></td>"
 			output += "</tr>"
 		output += "</table></div><div id='top'><b>Search:</b> <input type='text' id='filter' value='' style='width:70%;' onkeyup='updateSearch();'></div></body>"
+	if(QDELETED(usr))
+		return
 	usr << browse("<!DOCTYPE html><html>[jointext(output, "")]</html>","window=editrights;size=1000x650")
 
 /datum/admins/proc/edit_rights_topic(list/href_list)
@@ -153,6 +163,8 @@
 					admin_ckey = sanitizeSQL(admin_ckey)
 				else
 					use_db = FALSE
+			if(QDELETED(usr))
+				return
 	if(task != "add")
 		D = GLOB.admin_datums[admin_ckey]
 		if(!D)
@@ -198,16 +210,23 @@
 		//if an admin exists without a datum they won't be caught by the above
 		var/datum/DBQuery/query_admin_in_db = SSdbcore.NewQuery("SELECT 1 FROM [format_table_name("admin")] WHERE ckey = '[.]'")
 		if(!query_admin_in_db.warn_execute())
+			qdel(query_admin_in_db)
 			return FALSE
 		if(query_admin_in_db.NextRow())
+			qdel(query_admin_in_db)
 			to_chat(usr, "<span class='danger'>[.] already listed in admin database. Check the Management tab if they don't appear in the list of admins.</span>")
 			return FALSE
+		qdel(query_admin_in_db)
 		var/datum/DBQuery/query_add_admin = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin")] (ckey, rank) VALUES ('[.]', 'NEW ADMIN')")
 		if(!query_add_admin.warn_execute())
+			qdel(query_add_admin)
 			return FALSE
+		qdel(query_add_admin)
 		var/datum/DBQuery/query_add_admin_log = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_log")] (datetime, round_id, adminckey, adminip, operation, target, log) VALUES ('[SQLtime()]', '[GLOB.round_id]', '[sanitizeSQL(usr.ckey)]', INET_ATON('[sanitizeSQL(usr.client.address)]'), 'add admin', '[.]', 'New admin added: [.]')")
 		if(!query_add_admin_log.warn_execute())
+			qdel(query_add_admin_log)
 			return FALSE
+		qdel(query_add_admin_log)
 
 /datum/admins/proc/remove_admin(admin_ckey, use_db, datum/admins/D)
 	if(alert("Are you sure you want to remove [admin_ckey]?","Confirm Removal","Do it","Cancel") == "Do it")
@@ -215,16 +234,22 @@
 		GLOB.deadmins -= admin_ckey
 		if(D)
 			D.disassociate()
+		var/m1 = "[key_name_admin(usr)] removed [admin_ckey] from the admins list [use_db ? "permanently" : "temporarily"]"
+		var/m2 = "[key_name(usr)] removed [admin_ckey] from the admins list [use_db ? "permanently" : "temporarily"]"
 		if(use_db)
 			var/datum/DBQuery/query_add_rank = SSdbcore.NewQuery("DELETE FROM [format_table_name("admin")] WHERE ckey = '[admin_ckey]'")
 			if(!query_add_rank.warn_execute())
+				qdel(query_add_rank)
 				return
+			qdel(query_add_rank)
 			var/datum/DBQuery/query_add_rank_log = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_log")] (datetime, round_id, adminckey, adminip, operation, target, log) VALUES ('[SQLtime()]', '[GLOB.round_id]', '[sanitizeSQL(usr.ckey)]', INET_ATON('[sanitizeSQL(usr.client.address)]'), 'remove admin', '[admin_ckey]', 'Admin removed: [admin_ckey]')")
 			if(!query_add_rank_log.warn_execute())
+				qdel(query_add_rank_log)
 				return
+			qdel(query_add_rank_log)
 			sync_lastadminrank(admin_ckey)
-		message_admins("[key_name_admin(usr)] removed [admin_ckey] from the admins list [use_db ? "permanently" : "temporarily"]")
-		log_admin("[key_name(usr)] removed [admin_ckey] from the admins list [use_db ? "permanently" : "temporarily"]")
+		message_admins(m1)
+		log_admin(m2)
 
 /datum/admins/proc/force_readmin(admin_ckey, datum/admins/D)
 	if(!D || !D.deadmined)
@@ -260,35 +285,50 @@
 		else
 			R = new(new_rank) //blank new admin_rank
 		GLOB.admin_ranks += R
+	var/m1 = "[key_name_admin(usr)] edited the admin rank of [admin_ckey] to [new_rank] [use_db ? "permanently" : "temporarily"]"
+	var/m2 = "[key_name(usr)] edited the admin rank of [admin_ckey] to [new_rank] [use_db ? "permanently" : "temporarily"]"
 	if(use_db)
 		new_rank = sanitizeSQL(new_rank)
 		//if a player was tempminned before having a permanent change made to their rank they won't yet be in the db
 		var/old_rank
 		var/datum/DBQuery/query_admin_in_db = SSdbcore.NewQuery("SELECT rank FROM [format_table_name("admin")] WHERE ckey = '[admin_ckey]'")
 		if(!query_admin_in_db.warn_execute())
+			qdel(query_admin_in_db)
 			return
 		if(!query_admin_in_db.NextRow())
 			add_admin(admin_ckey, TRUE)
 			old_rank = "NEW ADMIN"
 		else
 			old_rank = query_admin_in_db.item[1]
+		qdel(query_admin_in_db)
 		//similarly if a temp rank is created it won't be in the db if someone is permanently changed to it
 		var/datum/DBQuery/query_rank_in_db = SSdbcore.NewQuery("SELECT 1 FROM [format_table_name("admin_ranks")] WHERE rank = '[new_rank]'")
 		if(!query_rank_in_db.warn_execute())
+			qdel(query_rank_in_db)
 			return
 		if(!query_rank_in_db.NextRow())
+			QDEL_NULL(query_rank_in_db)
 			var/datum/DBQuery/query_add_rank = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_ranks")] (rank, flags, exclude_flags, can_edit_flags) VALUES ('[new_rank]', '0', '0', '0')")
 			if(!query_add_rank.warn_execute())
+				qdel(query_add_rank)
 				return
+			qdel(query_add_rank)
 			var/datum/DBQuery/query_add_rank_log = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_log")] (datetime, round_id, adminckey, adminip, operation, target, log) VALUES ('[SQLtime()]', '[GLOB.round_id]', '[sanitizeSQL(usr.ckey)]', INET_ATON('[sanitizeSQL(usr.client.address)]'), 'add rank', '[new_rank]', 'New rank added: [new_rank]')")
 			if(!query_add_rank_log.warn_execute())
+				qdel(query_add_rank_log)
 				return
+			qdel(query_add_rank_log)
+		qdel(query_rank_in_db)
 		var/datum/DBQuery/query_change_rank = SSdbcore.NewQuery("UPDATE [format_table_name("admin")] SET rank = '[new_rank]' WHERE ckey = '[admin_ckey]'")
 		if(!query_change_rank.warn_execute())
+			qdel(query_change_rank)
 			return
+		qdel(query_change_rank)
 		var/datum/DBQuery/query_change_rank_log = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_log")] (datetime, round_id, adminckey, adminip, operation, target, log) VALUES ('[SQLtime()]', '[GLOB.round_id]', '[sanitizeSQL(usr.ckey)]', INET_ATON('[sanitizeSQL(usr.client.address)]'), 'change admin rank', '[admin_ckey]', 'Rank of [admin_ckey] changed from [old_rank] to [new_rank]')")
 		if(!query_change_rank_log.warn_execute())
+			qdel(query_change_rank_log)
 			return
+		qdel(query_change_rank_log)
 	if(D) //they were previously an admin
 		D.disassociate() //existing admin needs to be disassociated
 		D.rank = R //set the admin_rank as our rank
@@ -296,8 +336,8 @@
 		D.associate(C)
 	else
 		D = new(R, admin_ckey, TRUE) //new admin
-	message_admins("[key_name_admin(usr)] edited the admin rank of [admin_ckey] to [new_rank] [use_db ? "permanently" : "temporarily"]")
-	log_admin("[key_name(usr)] edited the admin rank of [admin_ckey] to [new_rank] [use_db ? "permanently" : "temporarily"]")
+	message_admins(m1)
+	log_admin(m2)
 
 /datum/admins/proc/change_admin_flags(admin_ckey, use_db, datum/admins/D, legacy_only)
 	var/new_flags = input_bitfield(usr, "Include permission flags<br>[use_db ? "This will affect ALL admins with this rank." : "This will affect only the current admin [admin_ckey]"]", "admin_flags", D.rank.include_rights, 350, 590, allowed_edit_list = usr.client.holder.rank.can_edit_rights)
@@ -309,23 +349,31 @@
 	var/new_can_edit_flags = input_bitfield(usr, "Editable permission flags<br>These are the flags this rank is allowed to edit if they have access to the permissions panel.<br>They will be unable to modify admins to a rank that has a flag not included here.<br>[use_db ? "This will affect ALL admins with this rank." : "This will affect only the current admin [admin_ckey]"]", "admin_flags", D.rank.can_edit_rights, 350, 710, allowed_edit_list = usr.client.holder.rank.can_edit_rights)
 	if(isnull(new_can_edit_flags))
 		return
+	var/m1 = "[key_name_admin(usr)] edited the permissions of [use_db ? " rank [D.rank.name] permanently" : "[admin_ckey] temporarily"]"
+	var/m2 = "[key_name(usr)] edited the permissions of [use_db ? " rank [D.rank.name] permanently" : "[admin_ckey] temporarily"]"
 	if(use_db || legacy_only)
 		var/old_flags
 		var/old_exclude_flags
 		var/old_can_edit_flags
 		var/datum/DBQuery/query_get_rank_flags = SSdbcore.NewQuery("SELECT flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")] WHERE rank = '[D.rank.name]'")
 		if(!query_get_rank_flags.warn_execute())
+			qdel(query_get_rank_flags)
 			return
 		if(query_get_rank_flags.NextRow())
 			old_flags = text2num(query_get_rank_flags.item[1])
 			old_exclude_flags = text2num(query_get_rank_flags.item[2])
 			old_can_edit_flags = text2num(query_get_rank_flags.item[3])
+		qdel(query_get_rank_flags)
 		var/datum/DBQuery/query_change_rank_flags = SSdbcore.NewQuery("UPDATE [format_table_name("admin_ranks")] SET flags = '[new_flags]', exclude_flags = '[new_exclude_flags]', can_edit_flags = '[new_can_edit_flags]' WHERE rank = '[D.rank.name]'")
 		if(!query_change_rank_flags.warn_execute())
+			qdel(query_change_rank_flags)
 			return
+		qdel(query_change_rank_flags)
 		var/datum/DBQuery/query_change_rank_flags_log = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_log")] (datetime, round_id, adminckey, adminip, operation, target, log) VALUES ('[SQLtime()]', '[GLOB.round_id]', '[sanitizeSQL(usr.ckey)]', INET_ATON('[sanitizeSQL(usr.client.address)]'), 'change rank flags', '[D.rank.name]', 'Permissions of [D.rank.name] changed from[rights2text(old_flags," ")][rights2text(old_exclude_flags," ", "-")][rights2text(old_can_edit_flags," ", "*")] to[rights2text(new_flags," ")][rights2text(new_exclude_flags," ", "-")][rights2text(new_can_edit_flags," ", "*")]')")
 		if(!query_change_rank_flags_log.warn_execute())
+			qdel(query_change_rank_flags_log)
 			return
+		qdel(query_change_rank_flags_log)
 		for(var/datum/admin_rank/R in GLOB.admin_ranks)
 			if(R.name != D.rank.name)
 				continue
@@ -356,8 +404,8 @@
 			D.rank.can_edit_rights = new_can_edit_flags
 		var/client/C = GLOB.directory[admin_ckey] //find the client with the specified ckey (if they are logged in)
 		D.associate(C) //link up with the client and add verbs
-	message_admins("[key_name_admin(usr)] edited the permissions of [use_db ? " rank [D.rank.name] permanently" : "[admin_ckey] temporarily"]")
-	log_admin("[key_name(usr)] edited the permissions of [use_db ? " rank [D.rank.name] permanently" : "[admin_ckey] temporarily"]")
+	message_admins(m1)
+	log_admin(m2)
 
 /datum/admins/proc/remove_rank(admin_rank)
 	if(!admin_rank)
@@ -375,19 +423,28 @@
 	admin_rank = sanitizeSQL(admin_rank)
 	var/datum/DBQuery/query_admins_with_rank = SSdbcore.NewQuery("SELECT 1 FROM [format_table_name("admin")] WHERE rank = '[admin_rank]'")
 	if(!query_admins_with_rank.warn_execute())
+		qdel(query_admins_with_rank)
 		return
 	if(query_admins_with_rank.NextRow())
+		qdel(query_admins_with_rank)
 		to_chat(usr, "<span class='danger'>Error: Rank deletion attempted while rank still used; Tell a coder, this shouldn't happen.</span>")
 		return
+	qdel(query_admins_with_rank)
 	if(alert("Are you sure you want to remove [admin_rank]?","Confirm Removal","Do it","Cancel") == "Do it")
+		var/m1 = "[key_name_admin(usr)] removed rank [admin_rank] permanently"
+		var/m2 = "[key_name(usr)] removed rank [admin_rank] permanently"
 		var/datum/DBQuery/query_add_rank = SSdbcore.NewQuery("DELETE FROM [format_table_name("admin_ranks")] WHERE rank = '[admin_rank]'")
 		if(!query_add_rank.warn_execute())
+			qdel(query_add_rank)
 			return
+		qdel(query_add_rank)
 		var/datum/DBQuery/query_add_rank_log = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_log")] (datetime, round_id, adminckey, adminip, operation, target, log) VALUES ('[SQLtime()]', '[GLOB.round_id]', '[sanitizeSQL(usr.ckey)]', INET_ATON('[sanitizeSQL(usr.client.address)]'), 'remove rank', '[admin_rank]', 'Rank removed: [admin_rank]')")
 		if(!query_add_rank_log.warn_execute())
+			qdel(query_add_rank_log)
 			return
-		message_admins("[key_name_admin(usr)] removed rank [admin_rank] permanently")
-		log_admin("[key_name(usr)] removed rank [admin_rank] permanently")
+		qdel(query_add_rank_log)
+		message_admins(m1)
+		log_admin(m2)
 
 /datum/admins/proc/sync_lastadminrank(admin_ckey, datum/admins/D)
 	var/sqlrank = "Player"
@@ -396,5 +453,7 @@
 	admin_ckey = sanitizeSQL(admin_ckey)
 	var/datum/DBQuery/query_sync_lastadminrank = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET lastadminrank = '[sqlrank]' WHERE ckey = '[admin_ckey]'")
 	if(!query_sync_lastadminrank.warn_execute())
+		qdel(query_sync_lastadminrank)
 		return
+	qdel(query_sync_lastadminrank)
 	to_chat(usr, "<span class='admin'>Sync of [admin_ckey] successful.</span>")

@@ -169,6 +169,7 @@ GLOBAL_PROTECT(protected_ranks)
 						if(!R)
 							continue
 						GLOB.admin_ranks += R
+			qdel(query_load_admin_ranks)
 	//load ranks from backup file
 	if(dbfail)
 		var/backup_file = file("data/admins_backup.json")
@@ -247,6 +248,7 @@ GLOBAL_PROTECT(protected_ranks)
 					skip = 1
 				if(!skip)
 					new /datum/admins(rank_names[admin_rank], admin_ckey)
+		qdel(query_load_admins)
 	//load admins from backup file
 	if(dbfail)
 		var/backup_file = file("data/admins_backup.json")

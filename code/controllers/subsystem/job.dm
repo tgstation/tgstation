@@ -85,7 +85,7 @@ SUBSYSTEM_DEF(job)
 		var/datum/job/job = GetJob(rank)
 		if(!job)
 			return FALSE
-		if(jobban_isbanned(player, rank))
+		if(jobban_isbanned(player, rank) || QDELETED(player))
 			return FALSE
 		if(!job.player_old_enough(player.client))
 			return FALSE
@@ -107,7 +107,7 @@ SUBSYSTEM_DEF(job)
 	Debug("Running FOC, Job: [job], Level: [level], Flag: [flag]")
 	var/list/candidates = list()
 	for(var/mob/dead/new_player/player in unassigned)
-		if(jobban_isbanned(player, job.title))
+		if(jobban_isbanned(player, job.title) || QDELETED(player))
 			Debug("FOC isbanned failed, Player: [player]")
 			continue
 		if(!job.player_old_enough(player.client))
@@ -140,7 +140,10 @@ SUBSYSTEM_DEF(job)
 		if(job.title in GLOB.command_positions) //If you want a command position, select it!
 			continue
 
-		if(jobban_isbanned(player, job.title))
+		if(jobban_isbanned(player, job.title) || QDELETED(player))
+			if(QDELETED(player))
+				Debug("GRJ isbanned failed, Player deleted")
+				break
 			Debug("GRJ isbanned failed, Player: [player], Job: [job.title]")
 			continue
 
@@ -316,6 +319,10 @@ SUBSYSTEM_DEF(job)
 					Debug("DO isbanned failed, Player: [player], Job:[job.title]")
 					continue
 
+				if(QDELETED(player))
+					Debug("DO player deleted during job ban check")
+					break
+
 				if(!job.player_old_enough(player.client))
 					Debug("DO player not old enough, Player: [player], Job:[job.title]")
 					continue
@@ -344,7 +351,7 @@ SUBSYSTEM_DEF(job)
 	for(var/mob/dead/new_player/player in unassigned)
 		if(PopcapReached())
 			RejectPlayer(player)
-		else if(jobban_isbanned(player, SSjob.overflow_role))
+		else if(jobban_isbanned(player, SSjob.overflow_role) || QDELETED(player))
 			GiveRandomJob(player) //you get to roll for random before everyone else just to be sure you don't get overflow. you're so speshul
 
 	for(var/mob/dead/new_player/player in unassigned)
@@ -482,7 +489,7 @@ SUBSYSTEM_DEF(job)
 		for(var/mob/dead/new_player/player in GLOB.player_list)
 			if(!(player.ready == PLAYER_READY_TO_PLAY && player.mind && !player.mind.assigned_role))
 				continue //This player is not ready
-			if(jobban_isbanned(player, job.title))
+			if(jobban_isbanned(player, job.title) || QDELETED(player))
 				banned++
 				continue
 			if(!job.player_old_enough(player.client))

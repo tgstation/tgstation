@@ -181,8 +181,9 @@
 				to_chat(user, "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>")
 				return
 
-			if(jobban_isbanned(BM, "Cyborg"))
-				to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
+			if(jobban_isbanned(BM, "Cyborg") || QDELETED(src) || QDELETED(BM) || QDELETED(user) || QDELETED(M) || !Adjacent(user))
+				if(!QDELETED(M))
+					to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
 				return
 
 			if(!user.temporarilyRemoveItemFromInventory(W))
