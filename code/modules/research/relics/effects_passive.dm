@@ -31,7 +31,7 @@
 	var/force
 
 /datum/relic_effect/weapon/attack_power/init()
-	force = rand(1,30)
+	force = rand(5,30)
 	if(prob(30))
 		force *= rand(1,3)
 
@@ -53,7 +53,7 @@
 	A.damtype = damtype
 
 /datum/relic_effect/passive/tool
-	weight = 20
+	weight = 0 //until tool_behavior is actually used
 	hogged_signals = list(COMSIG_ITEM_ATTACK_SELF)
 	var/tooltype
 	var/toolspeed
@@ -160,6 +160,7 @@
 	var/volume
 
 /datum/relic_effect/reagents/big_beaker/init()
+	..()
 	volume += rand(1,100)
 	if(prob(60))
 		volume *= rand(2,10)

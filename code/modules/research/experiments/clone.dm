@@ -24,7 +24,7 @@
 		mode.uses--
 
 /datum/experiment/bad_clone
-	weight = 1000
+	weight = 800
 	is_bad = TRUE
 	experiment_type = /datum/experiment_type/clone
 
@@ -41,7 +41,7 @@
 	E.visible_message("<span class='notice'>A duplicate [O] pops out!</span>")
 	E.investigate_log("Experimentor has cloned [O], but it will melt sometime soon.", INVESTIGATE_EXPERIMENTOR)
 	E.eject_item()
-	var/turf/T = get_turf(pick(oview(1,src)))
+	var/turf/T = get_turf(pick(oview(1,E)))
 	var/obj/item/NO = new O.type(T)
 	addtimer(CALLBACK(src, .proc/melt, NO), rand(10,150) ** 2)
 	var/datum/experiment_type/clone/mode = E.experiments[/datum/experiment_type/clone]
@@ -52,3 +52,21 @@
 	O.visible_message("<span class='notice'>[O] melts into a puddle of grey slag.</span>")
 	new /obj/effect/decal/cleanable/molten_object(get_turf(O))
 	qdel(O)
+
+/datum/experiment/vaporize //no cloning valuable items without being careful
+	weight = 800
+	is_bad = TRUE
+	experiment_type = /datum/experiment_type/clone
+
+/datum/experiment/vaporize/can_perform(obj/machinery/rnd/experimentor/E,obj/item/O)
+	. = ..()
+	var/datum/experiment_type/clone/mode = E.experiments[/datum/experiment_type/clone]
+	if(!mode || mode.uses <= 0)
+		. = FALSE
+	if(is_type_in_typecache(O, GLOB.critical_items) && is_valid_critical(O))
+		. = FALSE
+
+/datum/experiment/vaporize/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
+	. = ..()
+	E.visible_message("<span class='danger'>[E] malfunctions, vaporizing [O]!</span>")
+	E.destroy_item()

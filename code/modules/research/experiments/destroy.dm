@@ -67,6 +67,6 @@
 	var/turf/T = get_turf(E)
 	E.visible_message("<span class='danger'>[E]'s crusher goes infinite levels too high, creating a miniature black hole!</span>")
 	playsound(E, 'sound/effects/supermatter.ogg', 50, 1, -3)
-	E.investigate_log("Experimentor has created a black hole.", INVESTIGATE_EXPERIMENTOR)
+	E.investigate_log("Experimentor has created a fake black hole.", INVESTIGATE_EXPERIMENTOR)
 	new /obj/item/toy/spinningtoy(T)
 	T.ChangeTurf(/turf/open/floor/fakespace)

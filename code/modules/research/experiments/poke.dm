@@ -22,7 +22,7 @@
 
 /datum/experiment/instead_obliterate/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
 	..()
-	E.visible_message("<span class='warning'>[src] malfunctions!</span>")
+	E.visible_message("<span class='warning'>[E] malfunctions!</span>")
 	. = E.perform_experiment(/datum/experiment_type/destroy)
 
 /datum/experiment/throw_item
@@ -101,10 +101,10 @@
 	. = ..()
 	if(E.linked_console)
 		var/datum/techweb/web = E.linked_console.stored_research
-		var/datum/experiment_type/clone/mode = web.all_experiment_types[/datum/experiment_type/improve]
+		var/datum/experiment_type/improve/mode = web.all_experiment_types[/datum/experiment_type/improve]
 		mode.hidden = FALSE
 		mode.uses = E.bad_thing_coeff
 		E.experiments[mode.type] = mode //Give it to this experimentor. Others need to relink to unlock.
 
 		E.visible_message("[E] displays a message: New data discovered. Potential optimizations availible.")
-		playsound(E, 'sound/effects/genetics.ogg', 50, 1)
+		playsound(E, 'sound/machines/ping.ogg', 50, 1)

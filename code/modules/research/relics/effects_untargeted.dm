@@ -1,8 +1,10 @@
 /datum/relic_effect/activate/shockwave
-	weight = 60
+	weight = 30
 	var/radius = 1
 
 /datum/relic_effect/activate/shockwave/activate(obj/item/A,atom/target,mob/user)
+	if(!..())
+		return
 	var/turf/T = get_turf(A)
 	for(var/mob/living/L in view(radius,T))
 		if(L == user)
@@ -15,11 +17,12 @@
 	playsound(A, 'sound/effects/explosion_distant.ogg', rand(25,50), 1)
 
 /datum/relic_effect/activate/bomb
-	weight = 40
+	weight = 10
 
 /datum/relic_effect/activate/bomb
 	firstname = list("exploding","fragmenting","fulminating","thermic","blast","nitro")
 	lastname = list("bomb","surprise","explodinator","destructor","obliteration")
+	hint = list("There is a large red button on the back with a cover over it.")
 	var/light = 0
 	var/heavy = 0
 	var/devastation = 0
@@ -30,14 +33,14 @@
 
 /datum/relic_effect/activate/bomb/init()
 	..()
-	reusable = prob(10) //Yeah no you only get this rarely my friend and you better hope it's useful
+	reusable = prob(5) //Yeah no you only get this rarely my friend and you better hope it's useful
 	light = rand(0,5)
 	heavy = rand(0,5)
 	if(!reusable)
 		devastation = rand(0,5)
 	flash = rand(0,5)
 	fire = rand(0,5)
-	timer = rand(10,120)
+	timer = rand(50,300)
 	if(prob(10))
 		timer = timer ** 2 //some bombs take extremely long to trigger
 
@@ -46,6 +49,8 @@
 		A.resistance_flags |= INDESTRUCTIBLE
 
 /datum/relic_effect/activate/bomb/activate(obj/item/A,atom/target,mob/user)
+	if(!..())
+		return
 	if(user)
 		to_chat(user, "<span class='danger'>[A] begins to heat up!</span>")
 	playsound(A, 'sound/machines/engine_alert1.ogg', rand(25,50), 1)
@@ -55,12 +60,12 @@
 	A.visible_message("<span class='notice'>\The [A]'s top opens, releasing a powerful blast!</span>")
 	explosion(A, devastation, heavy, light, flash, flame_range = fire)
 	if(!reusable)
-		qdel(src)
+		qdel(A)
 	else
 		playsound(A, 'sound/magic/clockwork/ark_activation.ogg', rand(25,50), 1) //CUCKOO CUCKOO CUCKOO
 
 /datum/relic_effect/activate/teleport
-	weight = 40
+	weight = 30
 	var/radius = 8
 	var/timer = 0
 
@@ -116,7 +121,7 @@
 		new mob_type(T)
 	if(prob(60))
 		A.visible_message("<span class='warning'>[A] falls apart!</span>")
-		qdel(src)
+		qdel(A)
 
 /datum/relic_effect/activate/loot
 	hint = list("It contains something unknown.")
