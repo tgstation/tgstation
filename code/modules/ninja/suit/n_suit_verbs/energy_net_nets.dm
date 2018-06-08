@@ -63,8 +63,6 @@ It is possible to destroy the net by the occupant or someone else.
 				if(istype(W, /obj/item/restraints/)) //No need for restraints once they're inside the weeb jail.
 					W.forceMove(get_turf(H.loc))
 					continue
-				else
-					W.forceMove(get_turf(H.loc))
 
 	playsound(affecting, 'sound/effects/sparks4.ogg', 50, TRUE)
 	new /obj/effect/temp_visual/dir_setting/ninja/phase/out(affecting.drop_location(), affecting.dir)
