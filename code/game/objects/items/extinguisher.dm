@@ -56,6 +56,7 @@
 	dog_fashion = null
 	chem = "firefighting_foam"
 	tanktype = /obj/structure/reagent_dispensers/foamtank
+	sprite_name = "foam_extinguisher"
 	precision = 1
 
 /obj/item/extinguisher/suicide_act(mob/living/carbon/user)
