@@ -1,4 +1,0 @@
-author: "AnturK"
-delete-after: True
-changes: 
-  - code_imp: "Gravity can now go above 1g"

@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "Added missing vents to runtimestation."
-  - tweak: "Runtimestation: Added /debug EMP flashlight, emag, techfab and tiny fans. Replaced RCD, healing wand and sleeper with more suitable subtypes."
