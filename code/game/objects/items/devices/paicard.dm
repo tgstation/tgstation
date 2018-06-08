@@ -155,5 +155,5 @@
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
 		return
-	if(pai)
+	if(pai && !pai.holoform)
 		pai.emp_act(severity)
