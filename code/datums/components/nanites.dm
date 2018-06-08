@@ -15,7 +15,6 @@
 	var/list/datum/nanite_program/programs = list()
 
 /datum/component/nanites/Initialize(amount)
-	..()
 	nanite_volume = amount
 
 	//Nanites without hosts are non-interactive through normal means
@@ -30,6 +29,7 @@
 			cloud_sync()
 
 /datum/component/nanites/Destroy()
+	STOP_PROCESSING(SSprocessing, src)
 	for(var/X in programs)
 		qdel(X)
 	if(host_mob)

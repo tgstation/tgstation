@@ -146,7 +146,7 @@
 				chamber.set_safety(CLAMP(round(threshold, 1),0,500))
 			. = TRUE
 		if("set_cloud")
-			var/cloud_id = input("Set cloud ID (0-100):", name, null) as null|num
+			var/cloud_id = input("Set cloud ID (1-100, 0 to disable):", name, null) as null|num
 			if(!isnull(cloud_id))
 				chamber.set_cloud(CLAMP(round(cloud_id, 1),0,100))
 			. = TRUE
