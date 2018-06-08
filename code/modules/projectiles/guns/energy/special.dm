@@ -176,6 +176,7 @@
 	desc = "A projector that emits high density quantum-coupled bluespace beams."
 	ammo_type = list(/obj/item/ammo_casing/energy/wormhole, /obj/item/ammo_casing/energy/wormhole/orange)
 	item_state = null
+	pin = null
 	icon_state = "wormhole_projector"
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
@@ -297,4 +298,5 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/gravityrepulse, /obj/item/ammo_casing/energy/gravityattract, /obj/item/ammo_casing/energy/gravitychaos)
 	item_state = "gravity_gun"
 	icon_state = "gravity_gun"
+	pin = null
 	var/power = 4
