@@ -26,7 +26,7 @@
 		            /obj/item/clothing/under/pants/blackjeans = 2,
 		            /obj/item/clothing/under/pants/khaki = 2,
 		            /obj/item/clothing/under/pants/white = 2,
-		            /obj/item/clothing/under/pants/red = 1,
+		            /obj/item/clothing/under/pants/red = 2,
 		            /obj/item/clothing/under/pants/black = 2,
 		            /obj/item/clothing/under/pants/tan = 2,
 		            /obj/item/clothing/under/pants/track = 1,
@@ -63,6 +63,11 @@
 		            /obj/item/clothing/under/plaid_skirt/blue = 1,
 		            /obj/item/clothing/under/plaid_skirt/purple = 1,
 		            /obj/item/clothing/under/plaid_skirt/green = 1,
+					/obj/item/clothing/under/swimsuit = 1,
+					/obj/item/clothing/under/swimsuit/blue = 1,
+					/obj/item/clothing/under/swimsuit/green = 1,
+					/obj/item/clothing/under/swimsuit/purple = 1,
+					/obj/item/clothing/under/swimsuit/red = 1,
 		            /obj/item/clothing/glasses/regular = 1,
 		            /obj/item/clothing/glasses/regular/jamjar = 1,
 		            /obj/item/clothing/head/sombrero = 1,
@@ -118,5 +123,5 @@
 /obj/item/vending_refill/clothing
 	machine_name = "ClothesMate"
 	icon_state = "refill_clothes"
-	charges = list(37, 4, 4)// of 111 standard, 12 contraband, 10 premium(?)
-	init_charges = list(37, 4, 4)
+	charges = list(42, 4, 4)// of 126 standard, 10 contraband, 10 premium(?)
+	init_charges = list(42, 4, 4)

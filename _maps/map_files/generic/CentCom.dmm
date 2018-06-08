@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space/basic,
 /area/space)
@@ -697,7 +697,7 @@
 	},
 /area/holodeck/rec_center/basketball)
 "cl" = (
-/obj/item/clothing/under/color/rainbow,
+/obj/item/clothing/under/swimsuit,
 /obj/item/clothing/glasses/sunglasses,
 /turf/open/floor/holofloor/beach,
 /area/holodeck/rec_center/beach)

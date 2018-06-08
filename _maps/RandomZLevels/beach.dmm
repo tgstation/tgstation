@@ -336,7 +336,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bg" = (
-/obj/structure/closet/athletic_mixed,
+/obj/structure/closet/athletic_mixed/beach,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
