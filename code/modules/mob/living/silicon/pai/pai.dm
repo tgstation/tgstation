@@ -90,6 +90,11 @@
 	return FALSE
 
 /mob/living/silicon/pai/Destroy()
+	if (loc != card)
+		card.forceMove(drop_location())
+	card.pai = null
+	card.cut_overlays()
+	card.add_overlay("pai-off")
 	GLOB.pai_list -= src
 	return ..()
 
