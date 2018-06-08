@@ -1,0 +1,8 @@
+author: "fludd12"
+delete-after: True
+changes: 
+  - rscadd: "Love potions are marginally more interesting! This same effect applies to if you are a valentine!"
+  - tweak: "The names of extracts are now in the proper order, finally!"
+  - rscadd: "Self-sustaining extracts are in! Technically, this is a fix, but whatever."
+  - bugfix: "Stabilized Cerulean extracts no longer vaporize items into the Aetherium."
+  - rscadd: "Stabilized Gold extracts are now moderately more fun to use! The randomized creature persists if it is killed, and can be rerolled at will! Also, if you give the creature a sentience potion, the mind will transfer over!"

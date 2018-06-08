@@ -125,7 +125,7 @@
 
 	//These are always reachable.
 	//User itself, current loc, and user inventory
-	if(DirectAccess(A))
+	if(A in DirectAccess())
 		if(W)
 			W.melee_attack_chain(src, A, params)
 		else
@@ -170,40 +170,50 @@
 			return TRUE
 	return FALSE
 
-/atom/movable/proc/CanReach(atom/target,obj/item/tool,view_only = FALSE)
-	if(isturf(target) || isturf(target.loc) || DirectAccess(target)) //Directly accessible atoms
-		if(Adjacent(target) || (tool && CheckToolReach(src, target, tool.reach))) //Adjacent or reaching attacks
-			return TRUE
-	else
-		//Things inside storage insde another storage
-		//Eg Contents of a box in a backpack
-		var/atom/outer_storage = get_atom_on_turf(target)
-		if(outer_storage == target) //whatever that is we don't want infinite loop.
-			return FALSE
-		if(outer_storage && CanReach(outer_storage,tool) && outer_storage.CanReachStorage(target,src,view_only ? STORAGE_VIEW_DEPTH : INVENTORY_DEPTH))
-			return TRUE
+/atom/movable/proc/CanReach(atom/ultimate_target, obj/item/tool, view_only = FALSE)
+	// A backwards depth-limited breadth-first-search to see if the target is
+	// logically "in" anything adjacent to us.
+	var/list/direct_access = DirectAccess()
+	var/depth = 1 + (view_only ? STORAGE_VIEW_DEPTH : INVENTORY_DEPTH)
+
+	var/list/closed = list()
+	var/list/checking = list(ultimate_target)
+	while (checking.len && depth > 0)
+		var/list/next = list()
+		--depth
+
+		for(var/atom/target in checking)  // will filter out nulls
+			if(closed[target] || isarea(target))  // avoid infinity situations
+				continue
+			closed[target] = TRUE
+			if(isturf(target) || isturf(target.loc) || (target in direct_access)) //Directly accessible atoms
+				if(Adjacent(target) || (tool && CheckToolReach(src, target, tool.reach))) //Adjacent or reaching attacks
+					return TRUE
+
+			GET_COMPONENT_FROM(storage, /datum/component/storage, target.loc)
+			if (storage)
+				var/datum/component/storage/concrete/master = storage.master()
+				if (master)
+					next += master.parent
+					for(var/S in master.slaves)
+						var/datum/component/storage/slave = S
+						next += slave.parent
+				else
+					next += target.loc
+			else
+				next += target.loc
+
+		checking = next
 	return FALSE
 
-//Can [target] in this container be reached by [user], can't be more than [depth] levels deep
-/atom/proc/CanReachStorage(atom/target,user,depth)
-	return FALSE
-
-/obj/item/storage/CanReachStorage(atom/target,user,depth)
-	while(target && depth > 0)
-		target = target.loc
-		depth--
-		if(target == src)
-			return TRUE
-	return FALSE
-
-/atom/movable/proc/DirectAccess(atom/target)
-	return (target == src || target == loc)
+/atom/movable/proc/DirectAccess()
+	return list(src, loc)
 
 /mob/DirectAccess(atom/target)
-	return (..() || (target in contents))
+	return ..() + contents
 
 /mob/living/DirectAccess(atom/target)
-	return (..() || (target in GetAllContents()))
+	return ..() + GetAllContents()
 
 /atom/proc/AllowClick()
 	return FALSE

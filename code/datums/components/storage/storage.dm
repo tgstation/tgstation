@@ -125,11 +125,13 @@
 		modeswitch_action.Grant(M)
 
 /datum/component/storage/proc/change_master(datum/component/storage/concrete/new_master)
-	if(!istype(new_master))
+	if(new_master == src || (!isnull(new_master) && !istype(new_master)))
 		return FALSE
-	master.on_slave_unlink(src)
+	if(master)
+		master.on_slave_unlink(src)
 	master = new_master
-	master.on_slave_link(src)
+	if(master)
+		master.on_slave_link(src)
 	return TRUE
 
 /datum/component/storage/proc/master()
@@ -639,10 +641,7 @@
 /datum/component/storage/proc/signal_take_type(type, atom/destination, amount = INFINITY, check_adjacent = FALSE, force = FALSE, mob/user, list/inserted)
 	if(!force)
 		if(check_adjacent)
-			if(user)
-				if(!user.CanReach(destination) || !user.CanReach(parent))
-					return FALSE
-			else if(!destination.CanReachStorage(parent))
+			if(!user || !user.CanReach(destination) || !user.CanReach(parent))
 				return FALSE
 	var/list/taking = typecache_filter_list(contents(), typecacheof(type))
 	if(length(taking) > amount)
