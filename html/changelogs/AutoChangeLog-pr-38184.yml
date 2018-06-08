@@ -1,0 +1,5 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "The elevators in the Snowdin away and VR missions work again."
+  - bugfix: "Minor atmos issues in Snowdin and UO45 have been corrected."
