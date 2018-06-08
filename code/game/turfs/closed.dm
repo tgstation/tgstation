@@ -36,6 +36,14 @@
 	icon = 'icons/turf/shuttleold.dmi'
 	icon_state = "block"
 
+/turf/closed/indestructible/riveted/sandstone
+	name = "sandstone wall"
+	desc = "A wall with sandstone plating. Rough."
+	icon = 'icons/turf/walls/sandstone_wall.dmi'
+	icon_state = "sandstone"
+	baseturfs = /turf/closed/indestructible/riveted/sandstone
+	smooth = SMOOTH_TRUE
+
 /turf/closed/indestructible/oldshuttle/corner
 	icon_state = "corner"
 
@@ -67,13 +75,6 @@
 /turf/closed/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'
 	icon_state = "uranium"
-
-/turf/closed/indestructible/riveted/sandstone
-	name = "sandstone wall"
-	desc = "A wall with sandstone plating. Rough."
-	icon = 'icons/turf/walls/sandstone_wall.dmi'
-	icon_state = "sandstone"
-	baseturfs = /turf/closed/indestructible/riveted/sandstone
 
 /turf/closed/indestructible/abductor
 	icon_state = "alien1"
