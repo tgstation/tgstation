@@ -1,6 +1,7 @@
 SUBSYSTEM_DEF(dbcore)
 	name = "Database"
-	flags = SS_NO_FIRE
+	flags = SS_BACKGROUND
+	wait = 100
 	init_order = INIT_ORDER_DBCORE
 	var/const/FAILED_DB_CONNECTION_CUTOFF = 5
 
@@ -25,6 +26,8 @@ SUBSYSTEM_DEF(dbcore)
 	var/_db_con// This variable contains a reference to the actual database connection.
 	var/failed_connections = 0
 
+	var/list/active_queries = list()
+
 /datum/controller/subsystem/dbcore/PreInit()
 	if(!_db_con)
 		_db_con = _dm_db_new_con()
@@ -40,6 +43,14 @@ SUBSYSTEM_DEF(dbcore)
 
 	return ..()
 
+/datum/controller/subsystem/dbcore/fire()
+	for(var/I in active_queries)
+		var/datum/DBQuery/Q = I
+		if(world.time - Q.last_activity_time > (5 MINUTES))
+			message_admins("Found undeleted query, last activity: [Q.last_activity] SQL: [Q.sql]. Please report this to your coders")
+			qdel(Q)
+		if(MC_TICK_CHECK)
+			return
 
 /datum/controller/subsystem/dbcore/Recover()
 	_db_con = SSdbcore._db_con
@@ -55,7 +66,7 @@ SUBSYSTEM_DEF(dbcore)
 
 //nu
 /datum/controller/subsystem/dbcore/can_vv_get(var_name)
-	return var_name != "_db_con" && ..()
+	return var_name != NAMEOF(src, _db_con) && var_name != NAMEOF(src, active_queries) && ..()
 
 /datum/controller/subsystem/dbcore/vv_edit_var(var_name, var_value)
 	if(var_name == "_db_con")
@@ -230,11 +241,14 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	var/list/columns //list of DB Columns populated by Columns()
 	var/list/conversions
 	var/list/item  //list of data values populated by NextRow()
-
+	var/last_activity
+	var/last_activity_time
 	var/datum/controller/subsystem/dbcore/db_connection
 	var/_db_query
 
 /datum/DBQuery/New(sql_query, datum/controller/subsystem/dbcore/connection_handler, cursor_handler)
+	SSdbcore.active_queries[src] = TRUE
+	Activity("Created")
 	if(sql_query)
 		sql = sql_query
 	if(connection_handler)
@@ -244,12 +258,22 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	item = list()
 	_db_query = _dm_db_new_query()
 
+/datum/DBQuery/Destroy()
+	Close()
+	SSdbcore.active_queries -= src
+	return ..()
+
+/datum/DBQuery/proc/Activity(activity)
+	last_activity = activity
+	last_activity_time = world.time
+
 /datum/DBQuery/proc/warn_execute()
 	. = Execute()
 	if(!.)
 		to_chat(usr, "<span class='danger'>A SQL error occurred during this operation, check the server logs.</span>")
 
 /datum/DBQuery/proc/Execute(sql_query = sql, cursor_handler = default_cursor, log_error = TRUE)
+	Activity("Execute")
 	var/start_time
 	var/timeout = CONFIG_GET(number/query_debug_log_timeout)
 	if(timeout)
@@ -270,6 +294,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	message_admins("HEY! A database query may have timed out. Did the server just hang? <a href='?_src_=holder;[HrefToken()];slowquery=yes'>\[YES\]</a>|<a href='?_src_=holder;[HrefToken()];slowquery=no'>\[NO\]</a>")
 
 /datum/DBQuery/proc/NextRow()
+	Activity("NextRow")
 	return _dm_db_next_row(_db_query,item,conversions)
 
 /datum/DBQuery/proc/RowsAffected()
