@@ -647,9 +647,15 @@
 	if(!SSticker.HasRoundStarted())
 		return
 	if(has_gravity)
-		clear_alert("weightless")
+		if(has_gravity == 1)
+			clear_alert("gravity")
+		else
+			if(has_gravity >= GRAVITY_DAMAGE_TRESHOLD)
+				throw_alert("gravity", /obj/screen/alert/veryhighgravity)
+			else
+				throw_alert("gravity", /obj/screen/alert/highgravity)
 	else
-		throw_alert("weightless", /obj/screen/alert/weightless)
+		throw_alert("gravity", /obj/screen/alert/weightless)
 	if(!override && !is_flying())
 		float(!has_gravity)
 

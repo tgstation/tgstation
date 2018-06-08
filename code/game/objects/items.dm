@@ -275,6 +275,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(!(interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP))		//See if we're supposed to auto pickup.
 		return
 
+	//Heavy gravity makes picking up things very slow.
+	var/grav = user.has_gravity()
+	if(grav > STANDARD_GRAVITY)
+		var/grav_power = min(3,grav - STANDARD_GRAVITY)
+		to_chat(user,"<span class='notice'>You start picking up [src]...</span>")
+		if(!do_mob(user,src,30*grav_power))
+			return
+
+
 	//If the item is in a storage item, take it out
 	loc.SendSignal(COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
 

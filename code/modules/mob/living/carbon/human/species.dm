@@ -1074,8 +1074,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(H.movement_type & FLYING)
 		flight = 1
 
-	if(H.has_gravity())
-		gravity = TRUE
+	gravity = H.has_gravity()
 
 	if(!flightpack && gravity)	//Check for chemicals and innate speedups and slowdowns if we're moving using our body and not a flying suit
 		if(H.has_trait(TRAIT_GOTTAGOFAST))
@@ -1126,6 +1125,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			var/hungry = (500 - H.nutrition) / 5 //So overeat would be 100 and default level would be 80
 			if((hungry >= 70) && !flight) //Being hungry will still allow you to use a flightsuit/wings.
 				. += hungry / 50
+
+		//Moving in high gravity is very slow (Flying too)
+		if(gravity > STANDARD_GRAVITY)
+			var/grav_force = min(gravity - STANDARD_GRAVITY,3)
+			. += 1 + grav_force
 
 		GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 		if(mood && !flight) //How can depression slow you down if you can just fly away from your problems?
