@@ -109,6 +109,10 @@
 	move()
 	eat()
 	return
+
+/obj/singularity/wizard/mapped/admin_investigate_setup()
+	return
+
 /////////////////////////////////////////Scrying///////////////////
 
 /obj/item/scrying
