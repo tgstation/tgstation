@@ -61,6 +61,11 @@
 		to_chat(user, "<span class='notice'>The anchoring bolts [anchored ? "are" : "can be"] <b>wrenched</b> in place and the maintainence panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>")
 	else
 		to_chat(user, "<span class='notice'>The maintainence panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>")
+	if(isobserver(user))
+		if(!length(src.assembly_components))
+			to_chat(user, "It is empty.")
+		else
+			to_chat(user, "<a href='?src=[REF(src)];get_scan=1'>\[Get assembly scan.\]</a>\n")
 
 /obj/item/electronic_assembly/proc/check_interactivity(mob/user)
 	return user.canUseTopic(src, BE_CLOSE)
@@ -180,6 +185,15 @@
 /obj/item/electronic_assembly/Topic(href, href_list)
 	if(..())
 		return 1
+
+	if(href_list["get_scan"])
+		if(isobserver(usr))
+			if(length(src.assembly_components))
+				var/saved = "On circuit printers with cloning enabled, you may use the code below to clone the circuit:<br><br><code>[SScircuit.save_electronic_assembly(src)]</code>"
+				usr << browse(saved, "window=circuit_scan;size=500x600;border=1;can_resize=1;can_close=1;can_minimize=1")
+			else
+				to_chat(usr, "<span class='warning'>[src] is empty!</span>")
+		return
 
 	if(href_list["rename"])
 		rename(usr)
