@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - balance: "Temperature gun projectiles now respect armor/dodge, and will no longer freeze you if they don't hit you."
