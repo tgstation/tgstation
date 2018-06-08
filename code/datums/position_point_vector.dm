@@ -1,8 +1,26 @@
 //Designed for things that need precision trajectories like projectiles.
 //Don't use this for anything that you don't absolutely have to use this with (like projectiles!) because it isn't worth using a datum unless you need accuracy down to decimal places in pixels.
 
+//You might see places where it does - 16 - 1. This is intentionally 17 instead of 16, because of how byond's tiles work and how not doing it will result in rounding errors like things getting put on the wrong turf.
+
 #define RETURN_PRECISE_POSITION(A) new /datum/position(A)
 #define RETURN_PRECISE_POINT(A) new /datum/point(A)
+
+#define RETURN_POINT_VECTOR(ATOM, ANGLE, SPEED) {new /datum/point/vector(ATOM, null, null, null, null, ANGLE, SPEED)}
+#define RETURN_POINT_VECTOR_INCREMENT(ATOM, ANGLE, SPEED, AMT) {new /datum/point/vector(ATOM, null, null, null, null, ANGLE, SPEED, AMT)}
+
+/proc/point_midpoint_points(datum/point/a, datum/point/b)	//Obviously will not support multiZ calculations! Same for the two below.
+	var/datum/point/P = new
+	P.x = a.x + (b.x - a.x) / 2
+	P.y = a.y + (b.y - a.y) / 2
+	P.z = a.z
+	return P
+
+/proc/pixel_length_between_points(datum/point/a, datum/point/b)
+	return sqrt(((b.x - a.x) ** 2) + ((b.y - a.y) ** 2))
+
+/proc/angle_between_points(datum/point/a, datum/point/b)
+	return ATAN2((b.y - a.y), (b.x - a.x))
 
 /datum/position			//For positions with map x/y/z and pixel x/y so you don't have to return lists. Could use addition/subtraction in the future I guess.
 	var/x = 0
@@ -48,19 +66,6 @@
 /datum/position/proc/return_point()
 	return new /datum/point(src)
 
-/proc/point_midpoint_points(datum/point/a, datum/point/b)	//Obviously will not support multiZ calculations! Same for the two below.
-	var/datum/point/P = new
-	P.x = round(a.x + (b.x - a.x) / 2, 1)
-	P.y = round(a.y + (b.y - a.y) / 2, 1)
-	P.z = a.z
-	return P
-
-/proc/pixel_length_between_points(datum/point/a, datum/point/b)
-	return sqrt(((b.x - a.x) ** 2) + ((b.y - a.y) ** 2))
-
-/proc/angle_between_points(datum/point/a, datum/point/b)
-	return ATAN2((b.y - a.y), (b.x - a.x))
-
 /datum/point		//A precise point on the map in absolute pixel locations based on world.icon_size. Pixels are FROM THE EDGE OF THE MAP!
 	var/x = 0
 	var/y = 0
@@ -94,11 +99,20 @@
 
 /datum/point/proc/initialize_location(tile_x, tile_y, tile_z, p_x = 0, p_y = 0)
 	if(!isnull(tile_x))
-		x = ((tile_x - 1) * world.icon_size) + world.icon_size / 2 + p_x
+		x = ((tile_x - 1) * world.icon_size) + world.icon_size / 2 + p_x + 1
 	if(!isnull(tile_y))
-		y = ((tile_y - 1) * world.icon_size) + world.icon_size / 2+ p_y
+		y = ((tile_y - 1) * world.icon_size) + world.icon_size / 2 + p_y + 1
 	if(!isnull(tile_z))
 		z = tile_z
+
+/datum/point/proc/debug_out()
+	var/turf/T = return_turf()
+	return "\ref[src] aX [x] aY [y] aZ [z] pX [return_px()] pY [return_py()] mX [T.x] mY [T.y] mZ [T.z]"
+
+/datum/point/proc/move_atom_to_src(atom/movable/AM)
+	AM.forceMove(return_turf())
+	AM.pixel_x = return_px()
+	AM.pixel_y = return_py()
 
 /datum/point/proc/return_turf()
 	return locate(CEILING(x / world.icon_size, 1), CEILING(y / world.icon_size, 1), z)
@@ -110,38 +124,10 @@
 	return new /datum/position(src)
 
 /datum/point/proc/return_px()
-	return MODULUS(x, world.icon_size) - 16
+	return MODULUS(x, world.icon_size) - 16 - 1
 
 /datum/point/proc/return_py()
-	return MODULUS(y, world.icon_size) - 16
-
-/datum/point/proc/mapcheck()
-	. = FALSE
-	var/maxx = world.icon_size * world.maxx
-	var/maxy = world.icon_size * world.maxy
-	var/move_zx = 0
-	var/move_zy = 0
-	if(x < 0)
-		x += maxx
-		move_zx -= 1
-	if(y < 0)
-		y += maxy
-		move_zy -= 1
-	if(x > maxx)
-		x -= maxx
-		move_zx += 1
-	if(y > maxy)
-		y -= maxy
-		move_zy += 1
-	var/datum/space_level/S = SSmapping.get_level(z)
-	if(move_zx != 0)
-		var/datum/space_level/L = S.neigbours["[move_zx < 0? WEST : EAST]"]
-		z = L.z_value
-		. = TRUE
-	if(move_zy != 0)
-		var/datum/space_level/L = S.neigbours["[move_zy < 0? SOUTH : NORTH]"]
-		z = L.z_value
-		. = TRUE
+	return MODULUS(y, world.icon_size) - 16 - 1
 
 /datum/point/vector
 	var/speed = 32				//pixels per iteration
@@ -153,9 +139,11 @@
 	var/starting_y = 0
 	var/starting_z = 0
 
-/datum/point/vector/New(_x, _y, _z, _pixel_x = 0, _pixel_y = 0, _angle, _speed)
+/datum/point/vector/New(_x, _y, _z, _pixel_x = 0, _pixel_y = 0, _angle, _speed, initial_increment = 0)
 	..()
 	initialize_trajectory(_speed, _angle)
+	if(initial_increment)
+		increment(initial_increment)
 
 /datum/point/vector/initialize_location(tile_x, tile_y, tile_z, p_x = 0, p_y = 0)
 	. = ..()
@@ -200,8 +188,6 @@
 	iteration++
 	x += mpx * 1
 	y += mpy * 1
-	if(mapcheck())
-		on_z_change()
 
 /datum/point/vector/proc/return_vector_after_increments(amount = 7, multiplier = 1, force_simulate = FALSE)
 	var/datum/point/vector/v = copy_to()
@@ -236,4 +222,4 @@
 	var/needed_time = world.time - last_move
 	last_process = world.time
 	last_move = world.time
-	increment(needed_time)
+	increment(needed_time / SSprojectiles.wait)

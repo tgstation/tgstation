@@ -15,7 +15,6 @@
 	bitesize = 4
 	w_class = WEIGHT_CLASS_SMALL
 	volume = 80
-	unique_rename = 1
 
 	var/ingMax = 12
 	var/list/ingredients = list()
@@ -119,8 +118,8 @@
 		if(INGREDIENTS_STACKPLUSTOP)
 			filling.pixel_x = rand(-1,1)
 			filling.pixel_y = 2 * ingredients.len - 1
-			if(our_overlays)
-				our_overlays.Cut(ingredients.len)	//???, add overlay calls later in this proc will queue the compile if necessary
+			if(overlays)
+				overlays -= overlays[ingredients.len]
 			var/mutable_appearance/TOP = mutable_appearance(icon, "[icon_state]_top")
 			TOP.pixel_y = 2 * ingredients.len + 3
 			add_overlay(filling)
@@ -159,7 +158,7 @@
 	desc = "A timeless classic."
 	ingredients_placement = INGREDIENTS_STACKPLUSTOP
 	icon = 'icons/obj/food/burgerbread.dmi'
-	icon_state = "bun"
+	icon_state = "custburg"
 	foodtype = GRAIN
 
 

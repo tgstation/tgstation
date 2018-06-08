@@ -1,12 +1,12 @@
 #define LIVER_DEFAULT_HEALTH 100 //amount of damage required for liver failure
 #define LIVER_DEFAULT_TOX_TOLERANCE 3 //amount of toxins the liver can filter out
-#define LIVER_DEFAULT_TOX_LETHALITY 0.5 //lower values lower how harmful toxins are to the liver
+#define LIVER_DEFAULT_TOX_LETHALITY 0.01 //lower values lower how harmful toxins are to the liver
 
 /obj/item/organ/liver
 	name = "liver"
 	icon_state = "liver"
 	w_class = WEIGHT_CLASS_NORMAL
-	zone = "chest"
+	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_LIVER
 	desc = "Pairing suggestion: chianti and fava beans."
 	var/damage = 0 //liver damage, 0 is no damage, damage=maxHealth causes liver failure
@@ -20,32 +20,30 @@
 /obj/item/organ/liver/on_life()
 	var/mob/living/carbon/C = owner
 
-	//slowly heal liver damage
-	damage = max(0, damage - 0.1)
-	if(damage > maxHealth)//cap liver damage
-		damage = maxHealth
-
 	if(istype(C))
 		if(!failing)//can't process reagents with a failing liver
-			if(filterToxins)
+			//slowly heal liver damage
+			damage = max(0, damage - 0.1)
+
+			if(filterToxins && !owner.has_trait(TRAIT_TOXINLOVER))
 				//handle liver toxin filtration
-				var/toxamount
-				var/static/list/listOfToxinsInThisBitch = typesof(/datum/reagent/toxin)
-				for(var/datum/reagent/toxin/toxin in listOfToxinsInThisBitch)
-					toxamount += C.reagents.get_reagent_amount(initial(toxin.id))
-
-				if(toxamount <= toxTolerance && toxamount > 0)
-					for(var/datum/reagent/toxin/toxin in listOfToxinsInThisBitch)
-						C.reagents.remove_reagent(initial(toxin.id), 1)
-				else if(toxamount > toxTolerance)
-					damage += toxamount*toxLethality
-
+				for(var/I in C.reagents.reagent_list)
+					var/datum/reagent/pickedreagent = I
+					if(istype(pickedreagent, /datum/reagent/toxin))
+						var/thisamount = C.reagents.get_reagent_amount(initial(pickedreagent.id))
+						if (thisamount <= toxTolerance && thisamount)
+							C.reagents.remove_reagent(initial(pickedreagent.id), 1)
+						else
+							damage += (thisamount*toxLethality)
 
 			//metabolize reagents
 			C.reagents.metabolize(C, can_overdose=TRUE)
 
 			if(damage > 10 && prob(damage/3))//the higher the damage the higher the probability
-				to_chat(C, "<span class='notice'>You feel [pick("nauseous", "dull pain in your lower body", "confused")].</span>")
+				to_chat(C, "<span class='notice'>You feel [pick("nauseated", "a dull pain in your lower body", "confused")].</span>")
+
+	if(damage > maxHealth)//cap liver damage
+		damage = maxHealth
 
 /obj/item/organ/liver/prepare_eat()
 	var/obj/S = ..()
@@ -60,13 +58,14 @@
 
 /obj/item/organ/liver/plasmaman
 	name = "reagent processing crystal"
-	icon_state = "pliver"
+	icon_state = "liver-p"
 	desc = "A large crystal that is somehow capable of metabolizing chemicals, these are found in plasmamen."
 
 /obj/item/organ/liver/cybernetic
 	name = "cybernetic liver"
 	icon_state = "liver-c"
 	desc = "An electronic device designed to mimic the functions of a human liver. It has no benefits over an organic liver, but is easy to produce."
+	synthetic = TRUE
 
 /obj/item/organ/liver/cybernetic/upgraded
 	name = "upgraded cybernetic liver"
@@ -75,9 +74,12 @@
 	alcohol_tolerance = 0.001
 	maxHealth = 200 //double the health of a normal liver
 	toxTolerance = 15 //can shrug off up to 15u of toxins
-	toxLethality = 0.3 //20% less damage than a normal liver
+	toxLethality = 0.008 //20% less damage than a normal liver
 
 /obj/item/organ/liver/cybernetic/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	switch(severity)
 		if(1)
 			damage+=100

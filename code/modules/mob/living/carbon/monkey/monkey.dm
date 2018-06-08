@@ -1,6 +1,5 @@
 /mob/living/carbon/monkey
 	name = "monkey"
-	voice_name = "monkey"
 	verb_say = "chimpers"
 	initial_language_holder = /datum/language_holder/monkey
 	icon = 'icons/mob/monkey.dmi'
@@ -8,6 +7,7 @@
 	gender = NEUTER
 	pass_flags = PASSTABLE
 	ventcrawler = VENTCRAWLER_NUDE
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
 	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/monkey
 	gib_type = /obj/effect/decal/cleanable/blood/gibs
@@ -17,7 +17,7 @@
 
 
 
-/mob/living/carbon/monkey/Initialize()
+/mob/living/carbon/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
@@ -32,8 +32,20 @@
 
 	. = ..()
 
+	if (cubespawned)
+		var/cap = CONFIG_GET(number/monkeycap)
+		if (LAZYLEN(SSmobs.cubemonkeys) > cap)
+			if (spawner)
+				to_chat(spawner, "<span class='warning'>Bluespace harmonics prevent the spawning of more than [cap] monkeys on the station at one time!</span>")
+			return INITIALIZE_HINT_QDEL
+		SSmobs.cubemonkeys += src
+
 	create_dna(src)
 	dna.initialize_dna(random_blood_type())
+
+/mob/living/carbon/monkey/Destroy()
+	SSmobs.cubemonkeys -= src
+	return ..()
 
 /mob/living/carbon/monkey/create_internal_organs()
 	internal_organs += new /obj/item/organ/appendix
@@ -123,9 +135,11 @@
 
 	//Check for weapons
 	if( (judgement_criteria & JUDGE_WEAPONCHECK) && weaponcheck )
-		for(var/obj/item/I in held_items)
+		for(var/obj/item/I in held_items) //if they're holding a gun
 			if(weaponcheck.Invoke(I))
 				threatcount += 4
+		if(weaponcheck.Invoke(back)) //if a weapon is present in the back slot
+			threatcount += 4 //trigger look_for_perp() since they're nonhuman and very likely hostile
 
 	//mindshield implants imply trustworthyness
 	if(isloyal())
@@ -157,5 +171,5 @@
 	. = ..()
 	if(prob(10))
 		var/obj/item/clothing/head/helmet/justice/escape/helmet = new(src)
-		equip_to_slot_or_del(helmet,slot_head)
+		equip_to_slot_or_del(helmet,SLOT_HEAD)
 		helmet.attack_self(src) // todo encapsulate toggle

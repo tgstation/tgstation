@@ -9,6 +9,12 @@
 	earliest_start = 30 MINUTES
 	gamemode_blacklist = list("nuclear")
 
+/datum/round_event_control/pirates/preRunEvent()
+	if (!SSmapping.empty_space)
+		return EVENT_CANT_RUN
+
+	return ..()
+
 /datum/round_event/pirates
 	startWhen = 60 //2 minutes to answer
 	var/datum/comm_message/threat
@@ -57,10 +63,10 @@
 	var/list/candidates = pollGhostCandidates("Do you wish to be considered for pirate crew ?", ROLE_TRAITOR)
 	shuffle_inplace(candidates)
 
-	var/datum/map_template/pirate_event_ship/ship = new
+	var/datum/map_template/shuttle/pirate/default/ship = new
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
-	var/z = ZLEVEL_EMPTY_SPACE
+	var/z = SSmapping.empty_space.z_value
 	var/turf/T = locate(x,y,z)
 	if(!T)
 		CRASH("Pirate event found no turf to load in")
@@ -86,15 +92,14 @@
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
 	density = TRUE
-	anchored = TRUE
 	var/active = FALSE
-	var/obj/item/device/gps/gps
+	var/obj/item/gps/gps
 	var/credits_stored = 0
 	var/siphon_per_tick = 5
 
 /obj/machinery/shuttle_scrambler/Initialize(mapload)
 	. = ..()
-	gps = new/obj/item/device/gps/internal/pirate(src)
+	gps = new/obj/item/gps/internal/pirate(src)
 	gps.tracking = FALSE
 	update_icon()
 
@@ -168,11 +173,7 @@
 	QDEL_NULL(gps)
 	return ..()
 
-/datum/map_template/pirate_event_ship
-	name = "Pirate Ship"
-	mappath = "_maps/templates/pirate_ship.dmm"
-
-/obj/item/device/gps/internal/pirate
+/obj/item/gps/internal/pirate
 	gpstag = "Nautical Signal"
 	desc = "You can hear shanties over the static."
 
@@ -188,7 +189,7 @@
 	name = "pirate shuttle navigation computer"
 	desc = "Used to designate a precise transit location for the pirate shuttle."
 	shuttleId = "pirateship"
-	station_lock_override = TRUE
+	lock_override = CAMERA_LOCK_STATION
 	shuttlePortId = "pirateship_custom"
 	shuttlePortName = "custom location"
 	x_offset = 9
@@ -232,7 +233,6 @@
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
 	density = TRUE
-	anchored = TRUE
 	var/cooldown = 0
 	var/result_count = 3 //Show X results.
 

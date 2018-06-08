@@ -1,15 +1,16 @@
 /obj/machinery/recharge_station
 	name = "cyborg recharging station"
+	desc = "This device recharges cyborgs and resupplies them with materials."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "borgcharger0"
 	density = FALSE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 1000
 	req_access = list(ACCESS_ROBOTICS)
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/cyborgrecharger
+	occupant_typecache = list(/mob/living/silicon/robot)
 	var/recharge_speed
 	var/repairs
 
@@ -41,25 +42,17 @@
 	open_machine()
 
 /obj/machinery/recharge_station/emp_act(severity)
+	. = ..()
 	if(!(stat & (BROKEN|NOPOWER)))
-		if(occupant)
+		if(occupant && !(. & EMP_PROTECT_CONTENTS))
 			occupant.emp_act(severity)
-		open_machine()
-	..()
-
-/obj/machinery/recharge_station/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/recharge_station/attack_ai(mob/user)
-	return attack_hand(user)
+		if (!(. & EMP_PROTECT_SELF))
+			open_machine()
 
 /obj/machinery/recharge_station/attackby(obj/item/P, mob/user, params)
 	if(state_open)
 		if(default_deconstruction_screwdriver(user, "borgdecon2", "borgcharger0", P))
 			return
-
-	if(exchange_parts(user, P))
-		return
 
 	if(default_pry_open(P))
 		return
@@ -68,12 +61,9 @@
 		return
 	return ..()
 
-/obj/machinery/recharge_station/attack_hand(mob/user)
-	if(..(user,1,set_machine = 0))
-		return
-
+/obj/machinery/recharge_station/interact(mob/user)
 	toggle_open()
-	add_fingerprint(user)
+	return TRUE
 
 /obj/machinery/recharge_station/proc/toggle_open()
 	if(state_open)
@@ -82,20 +72,16 @@
 		open_machine()
 
 /obj/machinery/recharge_station/open_machine()
-	..()
-	use_power = IDLE_POWER_USE
+	. = ..()
+	if(iscyborg(occupant))
+		use_power = IDLE_POWER_USE
 
 /obj/machinery/recharge_station/close_machine()
-	if(!panel_open)
-		for(var/mob/living/silicon/robot/R in loc)
-			R.forceMove(src)
-			occupant = R
+	. = ..()
+	if(occupant)
+		if(iscyborg(occupant))
 			use_power = ACTIVE_POWER_USE
-			add_fingerprint(R)
-			break
-		state_open = FALSE
-		density = TRUE
-		update_icon()
+		add_fingerprint(occupant)
 
 /obj/machinery/recharge_station/update_icon()
 	if(is_operational())
@@ -111,7 +97,7 @@
 	update_icon()
 
 /obj/machinery/recharge_station/proc/process_occupant()
-	if(occupant)
+	if(occupant && iscyborg(occupant))
 		var/mob/living/silicon/robot/R = occupant
 		restock_modules()
 		if(repairs)

@@ -50,7 +50,7 @@
 
 /datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/M)
 	if(istype(M))
-		M.apply_effect(5,IRRADIATE,0)
+		M.apply_effect(5,EFFECT_IRRADIATE,0)
 	return ..()
 
 /datum/reagent/toxin/plasma
@@ -58,6 +58,7 @@
 	id = "plasma"
 	description = "Plasma in its liquid form."
 	taste_description = "bitterness"
+	specific_heat = SPECIFIC_HEAT_PLASMA
 	taste_mult = 1.5
 	color = "#8228A0"
 	toxpwr = 3
@@ -73,11 +74,13 @@
 /datum/reagent/toxin/plasma/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
-	O.atmos_spawn_air("plasma=[reac_volume];TEMP=[T20C]")
+	var/temp = holder ? holder.chem_temp : T20C
+	O.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
 
 /datum/reagent/toxin/plasma/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
-		T.atmos_spawn_air("plasma=[reac_volume];TEMP=[T20C]")
+		var/temp = holder ? holder.chem_temp : T20C
+		T.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
 	return
 
 /datum/reagent/toxin/plasma/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
@@ -98,16 +101,14 @@
 
 /datum/reagent/toxin/lexorin/on_mob_life(mob/living/M)
 	. = TRUE
-	var/mob/living/carbon/C
-	if(iscarbon(M))
-		C = M
-		CHECK_DNA_AND_SPECIES(C)
-		if(NOBREATH in C.dna.species.species_traits)
-			. = FALSE
+
+	if(M.has_trait(TRAIT_NOBREATH))
+		. = FALSE
 
 	if(.)
 		M.adjustOxyLoss(5, 0)
-		if(C)
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
 			C.losebreath += 2
 		if(prob(20))
 			M.emote("gasp")
@@ -128,7 +129,7 @@
 		M.adjustToxLoss(rand(20,60)*REM, 0)
 		. = 1
 	else if(prob(40))
-		M.heal_bodypart_damage(5*REM,0, 0)
+		M.heal_bodypart_damage(5*REM)
 		. = 1
 	..()
 
@@ -141,7 +142,7 @@
 	taste_description = "mint"
 
 /datum/reagent/toxin/minttoxin/on_mob_life(mob/living/M)
-	if(M.has_disability(DISABILITY_FAT))
+	if(M.has_trait(TRAIT_FAT))
 		M.gib()
 	return ..()
 
@@ -162,29 +163,33 @@
 	toxpwr = 0.5
 	taste_description = "death"
 
-/datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/carbon/M)
-	M.status_flags |= FAKEDEATH
-	M.adjustOxyLoss(0.5*REM, 0)
-	M.Knockdown(100, 0)
-	M.silent = max(M.silent, 5)
-	M.tod = worldtime2text()
+/datum/reagent/toxin/zombiepowder/on_mob_add(mob/M)
 	..()
-	. = 1
+	if(isliving(M))
+		var/mob/living/L = M
+		L.fakedeath(id)
 
 /datum/reagent/toxin/zombiepowder/on_mob_delete(mob/M)
-	M.status_flags &= ~FAKEDEATH
+	if(isliving(M))
+		var/mob/living/L = M
+		L.cure_fakedeath(id)
 	..()
+
+/datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/carbon/M)
+	M.adjustOxyLoss(0.5*REM, 0)
+	..()
+	. = 1
 
 /datum/reagent/toxin/mindbreaker
 	name = "Mindbreaker Toxin"
 	id = "mindbreaker"
-	description = "A powerful hallucinogen. Not a thing to be messed with."
+	description = "A powerful hallucinogen. Not a thing to be messed with. For some mental patients. it counteracts their symptoms and anchors them to reality."
 	color = "#B31008" // rgb: 139, 166, 233
 	toxpwr = 0
 	taste_description = "sourness"
 
 /datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/M)
-	M.hallucination += 10
+	M.hallucination += 5
 	return ..()
 
 /datum/reagent/toxin/plantbgone
@@ -227,12 +232,10 @@
 	toxpwr = 1
 
 /datum/reagent/toxin/pestkiller/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method == VAPOR)
-		if(iscarbon(M))
-			var/mob/living/carbon/C = M
-			if(!C.wear_mask) // If not wearing a mask
-				var/damage = min(round(0.4*reac_volume, 0.1),10)
-				C.adjustToxLoss(damage)
+	..()
+	if(MOB_BUG in M.mob_biotypes)
+		var/damage = min(round(0.4*reac_volume, 0.1),10)
+		M.adjustToxLoss(damage)
 
 /datum/reagent/toxin/spore
 	name = "Spore Toxin"
@@ -242,8 +245,10 @@
 	toxpwr = 1
 
 /datum/reagent/toxin/spore/on_mob_life(mob/living/M)
-	M.damageoverlaytemp = 60
-	M.update_damage_hud()
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.damageoverlaytemp = 60
+		C.update_damage_hud()
 	M.blur_eyes(3)
 	return ..()
 
@@ -283,9 +288,9 @@
 			. = 1
 	..()
 
-/datum/reagent/toxin/chloralhydratedelayed
+/datum/reagent/toxin/chloralhydratedelayed //sedates half as quickly and does not cause toxloss. same name/desc so it doesn't give away sleepypens
 	name = "Chloral Hydrate"
-	id = "chloralhydrate2"
+	id = "chloralhydratedelayed"
 	description = "A powerful sedative that induces confusion and drowsiness before putting its target to sleep."
 	reagent_state = SOLID
 	color = "#000067" // rgb: 0, 0, 103
@@ -301,9 +306,9 @@
 			M.Sleeping(40, 0)
 	..()
 
-/datum/reagent/toxin/beer2	//disguised as normal beer for use by emagged brobots
+/datum/reagent/toxin/fakebeer	//disguised as normal beer for use by emagged brobots
 	name = "Beer"
-	id = "beer2"
+	id = "fakebeer"
 	description = "A specially-engineered sedative disguised as beer. It induces instant sleep in its target."
 	color = "#664300" // rgb: 102, 67, 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
@@ -312,7 +317,7 @@
 	glass_name = "glass of beer"
 	glass_desc = "A freezing pint of beer."
 
-/datum/reagent/toxin/beer2/on_mob_life(mob/living/M)
+/datum/reagent/toxin/fakebeer/on_mob_life(mob/living/M)
 	switch(current_cycle)
 		if(1 to 50)
 			M.Sleeping(40, 0)
@@ -445,16 +450,16 @@
 	else
 		..()
 
-/datum/reagent/toxin/neurotoxin2
-	name = "Neurotoxin"
-	id = "neurotoxin2"
-	description = "Neurotoxin will inhibit brain function and cause toxin damage before eventually knocking out its victim."
+/datum/reagent/toxin/fentanyl
+	name = "Fentanyl"
+	id = "fentanyl"
+	description = "Fentanyl will inhibit brain function and cause toxin damage before eventually knocking out its victim."
 	reagent_state = LIQUID
 	color = "#64916E"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/neurotoxin2/on_mob_life(mob/living/M)
+/datum/reagent/toxin/fentanyl/on_mob_life(mob/living/M)
 	M.adjustBrainLoss(3*REM, 150)
 	. = 1
 	if(M.toxloss <= 60)
@@ -622,16 +627,16 @@
 /datum/reagent/toxin/lipolicide
 	name = "Lipolicide"
 	id = "lipolicide"
-	description = "A powerful toxin that will destroy fat cells, massively reducing body weight in a short time. More deadly to those without nutriment in their body."
+	description = "A powerful toxin that will destroy fat cells, massively reducing body weight in a short time. Deadly to those without nutriment in their body."
 	taste_description = "mothballs"
 	reagent_state = LIQUID
 	color = "#F0FFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	toxpwr = 0.5
+	toxpwr = 0
 
 /datum/reagent/toxin/lipolicide/on_mob_life(mob/living/M)
 	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
-		M.adjustToxLoss(0.5*REM, 0)
+		M.adjustToxLoss(1*REM, 0)
 	M.nutrition = max(M.nutrition - 3, 0) // making the chef more valuable, one meme trap at a time
 	M.overeatduration = 0
 	return ..()
@@ -724,7 +729,7 @@
 /datum/reagent/toxin/rotatium/on_mob_life(mob/living/M)
 	if(M.hud_used)
 		if(current_cycle >= 20 && current_cycle%20 == 0)
-			var/list/screens = list(M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
+			var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
 			var/rotation = min(round(current_cycle/20), 89) // By this point the player is probably puking and quitting anyway
 			for(var/whole_screen in screens)
 				animate(whole_screen, transform = matrix(rotation, MATRIX_ROTATE), time = 5, easing = QUAD_EASING, loop = -1)
@@ -733,7 +738,7 @@
 
 /datum/reagent/toxin/rotatium/on_mob_delete(mob/living/M)
 	if(M && M.hud_used)
-		var/list/screens = list(M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
+		var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
 		for(var/whole_screen in screens)
 			animate(whole_screen, transform = matrix(), time = 5, easing = QUAD_EASING)
 	..()
@@ -751,7 +756,7 @@
 /datum/reagent/toxin/skewium/on_mob_life(mob/living/M)
 	if(M.hud_used)
 		if(current_cycle >= 5 && current_cycle % 3 == 0)
-			var/list/screens = list(M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
+			var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
 			var/matrix/skew = matrix()
 			var/intensity = 8
 			skew.set_skew(rand(-intensity,intensity), rand(-intensity,intensity))
@@ -768,7 +773,7 @@
 
 /datum/reagent/toxin/skewium/on_mob_delete(mob/living/M)
 	if(M && M.hud_used)
-		var/list/screens = list(M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
+		var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
 		for(var/whole_screen in screens)
 			animate(whole_screen, transform = matrix(), time = 5, easing = QUAD_EASING)
 	..()
@@ -802,6 +807,7 @@
 	toxpwr = 1
 	var/acidpwr = 10 //the amount of protection removed from the armour
 	taste_description = "acid"
+	self_consuming = TRUE
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
 	if(!istype(C))
@@ -836,41 +842,8 @@
 	acidpwr = 42.0
 
 /datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/M)
-	M.adjustFireLoss(current_cycle/10, 0) // I rode a tank, held a general's rank
-	. = 1 // When the blitzkrieg raged and the bodies stank
-	..() // Pleased to meet you, hope you guess my name
-
-/datum/reagent/toxin/peaceborg/confuse
-	name = "Dizzying Solution"
-	id = "dizzysolution"
-	description = "Makes the target off balance and dizzy"
-	toxpwr = 0
-	metabolization_rate = 1.5 * REAGENTS_METABOLISM
-	taste_description = "dizziness"
-
-/datum/reagent/toxin/peaceborg/confuse/on_mob_life(mob/living/M)
-	if(M.confused < 6)
-		M.confused = CLAMP(M.confused + 3, 0, 5)
-	if(M.dizziness < 6)
-		M.dizziness = CLAMP(M.dizziness + 3, 0, 5)
-	if(prob(20))
-		to_chat(M, "You feel confused and disorientated.")
-	..()
-
-/datum/reagent/toxin/peaceborg/tire
-	name = "Tiring Solution"
-	id = "tiresolution"
-	description = "An extremely weak stamina-toxin that tires out the target. Completely harmless."
-	toxpwr = 0
-	metabolization_rate = 1.5 * REAGENTS_METABOLISM
-	taste_description = "tiredness"
-
-/datum/reagent/toxin/peaceborg/tire/on_mob_life(mob/living/M)
-	var/healthcomp = (100 - M.health)	//DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
-	if(M.staminaloss < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
-		M.adjustStaminaLoss(10)
-	if(prob(30))
-		to_chat(M, "You should sit down and take a rest...")
+	M.adjustFireLoss(current_cycle/10, 0)
+	. = 1
 	..()
 
 /datum/reagent/toxin/delayed
@@ -900,3 +873,9 @@
 	color = "#F0F8FF" // rgb: 240, 248, 255
 	toxpwr = 0
 	taste_description = "stillness"
+
+/datum/reagent/toxin/mimesbane/on_mob_add(mob/living/L)
+	L.add_trait(TRAIT_EMOTEMUTE, id)
+
+/datum/reagent/toxin/mimesbane/on_mob_delete(mob/living/L)
+	L.remove_trait(TRAIT_EMOTEMUTE, id)

@@ -95,7 +95,7 @@
 /area/reebe/city_of_cogs)
 "au" = (
 /obj/structure/table/reinforced/brass,
-/obj/item/device/radio/intercom/ratvar,
+/obj/item/radio/intercom/ratvar,
 /turf/open/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "av" = (

@@ -15,7 +15,7 @@
   * return UI_state The state of the UI.
  **/
 /datum/proc/ui_status(mob/user, datum/ui_state/state)
-	var/src_object = ui_host()
+	var/src_object = ui_host(user)
 	. = UI_CLOSE
 	if(!state)
 		return
@@ -70,7 +70,7 @@
 	return ..()
 
 /mob/living/silicon/robot/shared_ui_interaction(src_object)
-	if(cell.charge <= 0 || lockcharge) // Disable UIs if the Borg is unpowered or locked.
+	if(!cell || cell.charge <= 0 || lockcharge) // Disable UIs if the Borg is unpowered or locked.
 		return UI_DISABLED
 	return ..()
 

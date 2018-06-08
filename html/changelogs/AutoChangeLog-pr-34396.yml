@@ -1,4 +1,0 @@
-author: "JohnGinnane"
-delete-after: True
-changes: 
-  - bugfix: "Fixed not being able to alt click on a stack"

@@ -1,16 +1,15 @@
 // Disposal bin and Delivery chute.
 
-#define SEND_PRESSURE 0.05*ONE_ATMOSPHERE
+#define SEND_PRESSURE (0.05*ONE_ATMOSPHERE)
 
 /obj/machinery/disposal
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
-	anchored = TRUE
 	density = TRUE
-	on_blueprints = TRUE
-	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
+	armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 30)
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF
-	interact_open = TRUE
+	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
+	obj_flags = CAN_BE_HIT | USES_TGUI
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/full_pressure = FALSE
 	var/pressure_charging = TRUE
@@ -33,7 +32,7 @@
 		stored = make_from
 		pressure_charging = FALSE // newly built disposal bins start with pump off
 	else
-		stored = new /obj/structure/disposalconstruct(null, make_from = src)
+		stored = new /obj/structure/disposalconstruct(null, null , SOUTH , FALSE , src)
 
 	trunk_check()
 
@@ -83,23 +82,21 @@
 	if(!pressure_charging && !full_pressure && !flush)
 		if(istype(I, /obj/item/screwdriver))
 			panel_open = !panel_open
-			playsound(get_turf(src), I.usesound, 50, 1)
+			I.play_tool_sound(src)
 			to_chat(user, "<span class='notice'>You [panel_open ? "remove":"attach"] the screws around the power connection.</span>")
 			return
 		else if(istype(I, /obj/item/weldingtool) && panel_open)
-			var/obj/item/weldingtool/W = I
-			if(W.remove_fuel(0,user))
-				playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
-				to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
-				if(do_after(user,20*I.toolspeed, target = src) && panel_open)
-					if(!W.isOn())
-						return
-					to_chat(user, "<span class='notice'>You slice the floorweld off \the [src].</span>")
-					deconstruct()
+			if(!I.tool_start_check(user, amount=0))
+				return
+
+			to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
+			if(I.use_tool(src, user, 20, volume=100) && panel_open)
+				to_chat(user, "<span class='notice'>You slice the floorweld off \the [src].</span>")
+				deconstruct()
 			return
 
 	if(user.a_intent != INTENT_HARM)
-		if((I.flags_1 & ABSTRACT_1) || !user.temporarilyRemoveItemFromInventory(I))
+		if((I.item_flags & ABSTRACT) || !user.temporarilyRemoveItemFromInventory(I))
 			return
 		place_item_in_disposal(I, user)
 		update_icon()
@@ -190,7 +187,7 @@
 	sleep(5)
 	if(QDELETED(src))
 		return
-	var/obj/structure/disposalholder/H = new()
+	var/obj/structure/disposalholder/H = new(src)
 	newHolderDestination(H)
 	H.init(src)
 	air_contents = new()
@@ -248,13 +245,16 @@
 	return src
 
 //How disposal handles getting a storage dump from a storage object
-/obj/machinery/disposal/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
+/obj/machinery/disposal/storage_contents_dump_act(datum/component/storage/src_object, mob/user)
+	. = ..()
+	if(.)
+		return
 	for(var/obj/item/I in src_object)
-		if(user.s_active != src_object)
+		if(user.active_storage != src_object)
 			if(I.on_found(user))
 				return
 		src_object.remove_from_storage(I, src)
-	return 1
+	return TRUE
 
 // Disposal bin
 // Holds items for disposal into pipe system
@@ -270,11 +270,12 @@
 
 // attack by item places it in to disposal
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/storage/bag/trash))
+	if(istype(I, /obj/item/storage/bag/trash))	//Not doing component overrides because this is a specific type.
 		var/obj/item/storage/bag/trash/T = I
+		GET_COMPONENT_FROM(STR, /datum/component/storage, T)
 		to_chat(user, "<span class='warning'>You empty the bag.</span>")
 		for(var/obj/item/O in T.contents)
-			T.remove_from_storage(O,src)
+			STR.remove_from_storage(O,src)
 		T.update_icon()
 		update_icon()
 	else

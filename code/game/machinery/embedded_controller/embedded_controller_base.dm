@@ -22,19 +22,16 @@
 
 	name = "embedded controller"
 	density = FALSE
-	anchored = TRUE
 
 	var/on = TRUE
 
-/obj/machinery/embedded_controller/interact(mob/user)
+/obj/machinery/embedded_controller/ui_interact(mob/user)
+	. = ..()
 	user.set_machine(src)
 	var/datum/browser/popup = new(user, "computer", name) // Set up the popup browser window
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.set_content(return_text())
 	popup.open()
-
-/obj/machinery/embedded_controller/attack_hand(mob/user)
-	interact(user)
 
 /obj/machinery/embedded_controller/update_icon()
 

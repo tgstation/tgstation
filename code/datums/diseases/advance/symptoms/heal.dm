@@ -60,7 +60,7 @@
 /datum/symptom/heal/starlight/Start(datum/disease/advance/A)
 	if(!..())
 		return
-	if(A.properties["transmission"] >= 6)
+	if(A.properties["transmittable"] >= 6)
 		nearspace_penalty = 1
 	if(A.properties["stage_rate"] >= 6)
 		power = 2
@@ -233,7 +233,7 @@
 
 /datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
-	if(M.status_flags & FAKEDEATH)
+	if(M.has_trait(TRAIT_FAKEDEATH))
 		return power
 	else if(M.IsUnconscious() || M.stat == UNCONSCIOUS)
 		return power * 0.9
@@ -249,7 +249,7 @@
 /datum/symptom/heal/coma/proc/coma(mob/living/M)
 	if(deathgasp)
 		M.emote("deathgasp")
-	M.status_flags |= FAKEDEATH
+	M.fakedeath("regenerative_coma")
 	M.update_stat()
 	M.update_canmove()
 	addtimer(CALLBACK(src, .proc/uncoma, M), 300)
@@ -258,7 +258,7 @@
 	if(!active_coma)
 		return
 	active_coma = FALSE
-	M.status_flags &= ~FAKEDEATH
+	M.cure_fakedeath("regenerative_coma")
 	M.update_stat()
 	M.update_canmove()
 
@@ -358,7 +358,7 @@
 		return
 	if(A.properties["stage_rate"] >= 7)
 		power = 2
-	if(A.properties["trasmission"] >= 6)
+	if(A.properties["transmittable"] >= 6)
 		temp_rate = 4
 
 /datum/symptom/heal/plasma/CanHeal(datum/disease/advance/A)
@@ -384,11 +384,11 @@
 		to_chat(M, "<span class='notice'>You feel yourself absorbing plasma inside and around you...</span>")
 
 	if(M.bodytemperature > BODYTEMP_NORMAL)
-		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT))
+		M.adjust_bodytemperature(-20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT,BODYTEMP_NORMAL)
 		if(prob(5))
 			to_chat(M, "<span class='notice'>You feel less hot.</span>")
 	else if(M.bodytemperature < (BODYTEMP_NORMAL + 1))
-		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT))
+		M.adjust_bodytemperature(20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT,0,BODYTEMP_NORMAL)
 		if(prob(5))
 			to_chat(M, "<span class='notice'>You feel warmer.</span>")
 
@@ -425,7 +425,7 @@
 		return
 	if(A.properties["resistance"] >= 7)
 		power = 2
-	if(A.properties["trasmission"] >= 6)
+	if(A.properties["transmittable"] >= 6)
 		cellular_damage = TRUE
 
 /datum/symptom/heal/radiation/CanHeal(datum/disease/advance/A)

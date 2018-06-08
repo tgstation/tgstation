@@ -21,6 +21,13 @@
 
 {{#if !data.locked }}
   <ui-display title='Express Cargo Console'>
+
+    <ui-section label='Landing Location'>
+      <ui-button state='{{data.usingBeacon ? null : "selected"}}' action='LZCargo'> Cargo Bay</ui-button>
+      <ui-button state='{{data.hasBeacon ? data.usingBeacon ? "selected" : null : "disabled"}}' action='LZBeacon'> {{data.beaconzone}} ({{data.beaconName}})</ui-button>
+      <ui-button state='{{data.canBuyBeacon ? null : "disabled"}}' action='printBeacon'> {{data.printMsg}}</ui-button>
+    </ui-section>
+
     <ui-section label='Credits'>
       <span>{{Math.floor(adata.points)}}</span>
     </ui-section>
@@ -34,7 +41,7 @@
       <tab name='{{name}}'>
         {{#each packs}}
           <ui-section label='{{name}}' candystripe right>
-            <ui-button action='add' params='{"id": "{{id}}"}'>{{cost}} Credits (Premium Pricing)</ui-button>
+            <ui-button state='{{data.canBeacon ? null : "disabled"}}' tooltip='{{desc}}' tooltip-side='left' action='add' params='{"id": "{{id}}"}'>{{cost}} Credits {{data.beaconError}}</ui-button>
           </ui-section>
         {{/each}}
       </tab>

@@ -17,7 +17,7 @@ PROCESSING_SUBSYSTEM_DEF(flightpacks)
 			sync_flightsuit_processing()
 
 /datum/controller/subsystem/processing/flightpacks/proc/sync_flightsuit_processing()
-	for(var/obj/item/device/flightpack/FP in processing)
+	for(var/obj/item/flightpack/FP in processing)
 		FP.sync_processing(src)
 	if(flightsuit_processing == FLIGHTSUIT_PROCESSING_NONE)	//Don't even bother firing.
 		can_fire = FALSE

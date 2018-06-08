@@ -5,7 +5,7 @@
 	throw_speed = 3
 	var/signed = FALSE
 	var/datum/mind/target
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 
 /obj/item/paper/contract/proc/update_text()
 	return
@@ -93,7 +93,7 @@
 /obj/item/paper/contract/infernal/New(atom/loc, mob/living/nTarget, datum/mind/nOwner)
 	..()
 	owner = nOwner
-	devil_datum = owner.has_antag_datum(ANTAG_DATUM_DEVIL)
+	devil_datum = owner.has_antag_datum(/datum/antagonist/devil)
 	target = nTarget
 	update_text()
 
@@ -194,7 +194,7 @@
 		to_chat(user, "<span class='notice'>Your signature simply slides off the sheet, it seems this contract is not meant for you to sign.</span>")
 		return 0
 	if(user.mind.soulOwner == owner)
-		to_chat(user, "<span class='notice'>This devil already owns your soul, you may not sell it to them again.</span>")
+		to_chat(user, "<span class='notice'>This devil already owns your soul, you may not sell it to [owner.p_them()] again.</span>")
 		return 0
 	if(signed)
 		to_chat(user, "<span class='notice'>This contract has already been signed.  It may not be signed again.</span>")
@@ -202,7 +202,7 @@
 	if(!user.mind.hasSoul)
 		to_chat(user, "<span class='notice'>You do not possess a soul.</span>")
 		return 0
-	if(user.has_disability(DISABILITY_DUMB))
+	if(user.has_trait(TRAIT_DUMB))
 		to_chat(user, "<span class='notice'>You quickly scrawl 'your name' on the contract.</span>")
 		signIncorrectly()
 		return 0
@@ -220,7 +220,7 @@
 /obj/item/paper/contract/infernal/revive/attack(mob/M, mob/living/user)
 	if (target == M.mind && M.stat == DEAD && M.mind.soulOwner == M.mind)
 		if (cooldown)
-			to_chat(user, "<span class='notice'>Give [M] a chance to think through the contract, don't rush them.</span>")
+			to_chat(user, "<span class='notice'>Give [M] a chance to think through the contract, don't rush [M.p_them()].</span>")
 			return 0
 		cooldown = TRUE
 		var/mob/living/carbon/human/H = M
@@ -251,12 +251,12 @@
 /obj/item/paper/contract/infernal/proc/fulfillContract(mob/living/carbon/human/user = target.current, blood = FALSE)
 	signed = TRUE
 	if(user.mind.soulOwner != user.mind) //They already sold their soul to someone else?
-		var/datum/antagonist/devil/ownerDevilInfo = user.mind.soulOwner.has_antag_datum(ANTAG_DATUM_DEVIL)
+		var/datum/antagonist/devil/ownerDevilInfo = user.mind.soulOwner.has_antag_datum(/datum/antagonist/devil)
 		ownerDevilInfo.remove_soul(user.mind) //Then they lose their claim.
 	user.mind.soulOwner = owner
 	user.hellbound = contractType
 	user.mind.damnation_type = contractType
-	var/datum/antagonist/devil/devilInfo = owner.has_antag_datum(ANTAG_DATUM_DEVIL)
+	var/datum/antagonist/devil/devilInfo = owner.has_antag_datum(/datum/antagonist/devil)
 	devilInfo.add_soul(user.mind)
 	update_text(user.real_name, blood)
 	to_chat(user, "<span class='notice'>A profound emptiness washes over you as you lose ownership of your soul.</span>")
@@ -299,8 +299,8 @@
 		id.assignment = "Captain"
 		id.update_label()
 		if(worn)
-			if(istype(worn, /obj/item/device/pda))
-				var/obj/item/device/pda/PDA = worn
+			if(istype(worn, /obj/item/pda))
+				var/obj/item/pda/PDA = worn
 				PDA.id = id
 				id.forceMove(worn)
 			else if(istype(worn, /obj/item/storage/wallet))

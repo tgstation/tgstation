@@ -3,7 +3,6 @@
 	desc = "The finest in spring-loaded piston toy technology, now on a space station near you."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mass_driver"
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 50
@@ -31,7 +30,9 @@
 
 
 /obj/machinery/mass_driver/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
 	if(stat & (BROKEN|NOPOWER))
 		return
 	drive()
-	..(severity)

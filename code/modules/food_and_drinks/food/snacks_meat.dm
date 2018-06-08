@@ -113,6 +113,7 @@
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
 	tastes = list("meat" = 1)
 	foodtype = MEAT
+	var/roasted = FALSE
 
 /obj/item/reagent_containers/food/snacks/sausage/Initialize()
 	. = ..()
@@ -184,10 +185,13 @@
 	foodtype = MEAT | SUGAR
 
 /obj/item/reagent_containers/food/snacks/monkeycube/proc/Expand()
-	visible_message("<span class='notice'>[src] expands!</span>")
 	var/mob/spammer = get_mob_by_key(fingerprintslast)
-	var/mob/living/carbon/monkey/bananas = new(drop_location())
-	bananas.log_message("Spawned via [src] at [COORD(src)], Last attached mob: [key_name(spammer)].", INDIVIDUAL_ATTACK_LOG) 
+	var/mob/living/carbon/monkey/bananas = new(drop_location(), TRUE, spammer)
+	if (!QDELETED(bananas))
+		visible_message("<span class='notice'>[src] expands!</span>")
+		bananas.log_message("Spawned via [src] at [AREACOORD(src)], Last attached mob: [key_name(spammer)].", INDIVIDUAL_ATTACK_LOG)
+	else if (!spammer) // Visible message in case there are no fingerprints
+		visible_message("<span class='notice'>[src] fails to expand!</span>")
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/enchiladas

@@ -1,4 +1,0 @@
-author: "F-OS"
-delete-after: True
-changes: 
-  - rscadd: "NT has disabled their automatic APC lock"

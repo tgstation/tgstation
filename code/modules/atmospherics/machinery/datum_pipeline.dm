@@ -27,7 +27,7 @@
 	if(update)
 		update = FALSE
 		reconcile_air()
-	update = air.react()
+	update = air.react(src)
 
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/base)
 	var/volume = 0
@@ -88,6 +88,8 @@
 /datum/pipeline/proc/addMember(obj/machinery/atmospherics/A, obj/machinery/atmospherics/N)
 	if(istype(A, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/P = A
+		if(P.parent)
+			merge(P.parent)
 		P.parent = src
 		var/list/adjacent = P.pipeline_expansion()
 		for(var/obj/machinery/atmospherics/pipe/I in adjacent)
@@ -103,6 +105,8 @@
 		addMachineryMember(A)
 
 /datum/pipeline/proc/merge(datum/pipeline/E)
+	if(E == src)
+		return
 	air.volume += E.air.volume
 	members.Add(E.members)
 	for(var/obj/machinery/atmospherics/pipe/S in E.members)
@@ -215,7 +219,7 @@
 			continue
 		GL += P.return_air()
 		for(var/obj/machinery/atmospherics/components/binary/valve/V in P.other_atmosmch)
-			if(V.open)
+			if(V.on)
 				PL |= V.parents[1]
 				PL |= V.parents[2]
 		for(var/obj/machinery/atmospherics/components/unary/portables_connector/C in P.other_atmosmch)

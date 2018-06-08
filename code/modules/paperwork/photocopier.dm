@@ -12,7 +12,6 @@
 	desc = "Used to copy important documents and anatomy studies."
 	icon = 'icons/obj/library.dmi'
 	icon_state = "photocopier"
-	anchored = TRUE
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
@@ -30,15 +29,8 @@
 	var/mob/living/ass //i can't believe i didn't write a stupid-ass comment about this var when i first coded asscopy.
 	var/busy = FALSE
 
-/obj/machinery/photocopier/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/photocopier/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/photocopier/attack_hand(mob/user)
-	user.set_machine(src)
-
+/obj/machinery/photocopier/ui_interact(mob/user)
+	. = ..()
 	var/dat = "Photocopier<BR><BR>"
 	if(copy || photocopy || doccopy || (ass && (ass.loc == src.loc)))
 		dat += "<a href='byond://?src=[REF(src)];remove=1'>Remove Paper</a><BR>"
@@ -145,8 +137,8 @@
 		else if(ass) //ASS COPY. By Miauw
 			for(var/i = 0, i < copies, i++)
 				var/icon/temp_img
-				if(ishuman(ass) && (ass.get_item_by_slot(slot_w_uniform) || ass.get_item_by_slot(slot_wear_suit)))
-					to_chat(usr, "<span class='notice'>You feel kind of silly, copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "their"] clothes on.</span>" )
+				if(ishuman(ass) && (ass.get_item_by_slot(SLOT_W_UNIFORM) || ass.get_item_by_slot(SLOT_WEAR_SUIT)))
+					to_chat(usr, "<span class='notice'>You feel kind of silly, copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "[ass.p_their()]"] clothes on.</span>" )
 					break
 				else if(toner >= 5 && !busy && check_ass()) //You have to be sitting on the copier and either be a xeno or a human without clothes on.
 					if(isalienadult(ass) || istype(ass, /mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
@@ -254,7 +246,10 @@
 	to_chat(user, "<span class='notice'>You take [O] out of [src].</span>")
 
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/paper))
+	if(default_unfasten_wrench(user, O))
+		return
+
+	else if(istype(O, /obj/item/paper))
 		if(copier_empty())
 			if(istype(O, /obj/item/paper/contract/infernal))
 				to_chat(user, "<span class='warning'>[src] smokes, smelling of brimstone!</span>")
@@ -286,7 +281,7 @@
 		else
 			to_chat(user, "<span class='warning'>There is already something in [src]!</span>")
 
-	else if(istype(O, /obj/item/device/toner))
+	else if(istype(O, /obj/item/toner))
 		if(toner <= 0)
 			if(!user.temporarilyRemoveItemFromInventory(O))
 				return
@@ -297,17 +292,6 @@
 		else
 			to_chat(user, "<span class='warning'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>")
 
-	else if(istype(O, /obj/item/wrench))
-		if(isinspace())
-			to_chat(user, "<span class='warning'>There's nothing to fasten [src] to!</span>")
-			return
-		playsound(loc, O.usesound, 50, 1)
-		to_chat(user, "<span class='warning'>You start [anchored ? "unwrenching" : "wrenching"] [src]...</span>")
-		if(do_after(user, 20*O.toolspeed, target = src))
-			if(QDELETED(src))
-				return
-			to_chat(user, "<span class='notice'>You [anchored ? "unwrench" : "wrench"] [src].</span>")
-			anchored = !anchored
 	else if(istype(O, /obj/item/areaeditor/blueprints))
 		to_chat(user, "<span class='warning'>The Blueprint is too large to put into the copier. You need to find something else to record the document</span>")
 	else
@@ -321,7 +305,7 @@
 
 /obj/machinery/photocopier/MouseDrop_T(mob/target, mob/user)
 	check_ass() //Just to make sure that you can re-drag somebody onto it after they moved off.
-	if (!istype(target) || target.anchored || target.buckled || !Adjacent(user) || !Adjacent(target) || !user.canUseTopic(src, 1) || target == ass || copier_blocked())
+	if (!istype(target) || target.anchored || target.buckled || !Adjacent(target) || !user.canUseTopic(src, BE_CLOSE) || target == ass || copier_blocked())
 		return
 	src.add_fingerprint(user)
 	if(target == user)
@@ -360,7 +344,7 @@
 		updateUsrDialog()
 		return 0
 	else if(ishuman(ass))
-		if(!ass.get_item_by_slot(slot_w_uniform) && !ass.get_item_by_slot(slot_wear_suit))
+		if(!ass.get_item_by_slot(SLOT_W_UNIFORM) && !ass.get_item_by_slot(SLOT_WEAR_SUIT))
 			return 1
 		else
 			return 0
@@ -388,8 +372,9 @@
 /*
  * Toner cartridge
  */
-/obj/item/device/toner
+/obj/item/toner
 	name = "toner cartridge"
+	icon = 'icons/obj/device.dmi'
 	icon_state = "tonercartridge"
 	grind_results = list("iodine" = 40, "iron" = 10)
 	var/charges = 5

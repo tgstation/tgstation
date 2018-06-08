@@ -16,10 +16,9 @@
 	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
-	anchored = TRUE
 	max_integrity = 250
 	integrity_failure = 100
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 30)
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
@@ -30,8 +29,8 @@
 	var/last_alarm = 0
 	var/area/myarea = null
 
-/obj/machinery/firealarm/New(loc, dir, building)
-	..()
+/obj/machinery/firealarm/Initialize(mapload, dir, building)
+	. = ..()
 	if(dir)
 		src.setDir(dir)
 	if(building)
@@ -81,21 +80,25 @@
 			add_overlay("overlay_fire")
 
 /obj/machinery/firealarm/emp_act(severity)
+	. = ..()
+
+	if (. & EMP_PROTECT_SELF)
+		return
+
 	if(prob(50 / severity))
 		alarm()
-	..()
 
 /obj/machinery/firealarm/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	if(user)
 		user.visible_message("<span class='warning'>Sparks fly out of [src]!</span>",
 							"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
 	playsound(src, "sparks", 50, 1)
 
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
-	if((temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && (last_alarm+FIREALARM_COOLDOWN < world.time) && !emagged && detecting && !stat)
+	if((temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && (last_alarm+FIREALARM_COOLDOWN < world.time) && !(obj_flags & EMAGGED) && detecting && !stat)
 		alarm()
 	..()
 
@@ -122,7 +125,7 @@
 
 /obj/machinery/firealarm/ui_data(mob/user)
 	var/list/data = list()
-	data["emagged"] = emagged
+	data["emagged"] = obj_flags & EMAGGED ? 1 : 0
 
 	if(is_station_level(z))
 		data["seclevel"] = get_security_level()
@@ -149,7 +152,7 @@
 	add_fingerprint(user)
 
 	if(istype(W, /obj/item/screwdriver) && buildstage == 2)
-		playsound(src.loc, W.usesound, 50, 1)
+		W.play_tool_sound(src)
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
 		update_icon()
@@ -158,22 +161,21 @@
 	if(panel_open)
 
 		if(istype(W, /obj/item/weldingtool) && user.a_intent == INTENT_HELP)
-			var/obj/item/weldingtool/WT = W
 			if(obj_integrity < max_integrity)
-				if(WT.remove_fuel(0,user))
-					to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-					playsound(loc, WT.usesound, 40, 1)
-					if(do_after(user, 40*WT.toolspeed, target = src))
-						obj_integrity = max_integrity
-						playsound(loc, 'sound/items/welder2.ogg', 50, 1)
-						to_chat(user, "<span class='notice'>You repair [src].</span>")
+				if(!W.tool_start_check(user, amount=0))
+					return
+
+				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+				if(W.use_tool(src, user, 40, volume=50))
+					obj_integrity = max_integrity
+					to_chat(user, "<span class='notice'>You repair [src].</span>")
 			else
 				to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 			return
 
 		switch(buildstage)
 			if(2)
-				if(istype(W, /obj/item/device/multitool))
+				if(istype(W, /obj/item/multitool))
 					detecting = !detecting
 					if (src.detecting)
 						user.visible_message("[user] has reconnected [src]'s detecting unit!", "<span class='notice'>You reconnect [src]'s detecting unit.</span>")
@@ -183,7 +185,7 @@
 
 				else if (istype(W, /obj/item/wirecutters))
 					buildstage = 1
-					playsound(src.loc, W.usesound, 50, 1)
+					W.play_tool_sound(src)
 					new /obj/item/stack/cable_coil(user.loc, 5)
 					to_chat(user, "<span class='notice'>You cut the wires from \the [src].</span>")
 					update_icon()
@@ -201,10 +203,9 @@
 					return
 
 				else if(istype(W, /obj/item/crowbar))
-					playsound(src.loc, W.usesound, 50, 1)
 					user.visible_message("[user.name] removes the electronics from [src.name].", \
 										"<span class='notice'>You start prying out the circuit...</span>")
-					if(do_after(user, 20*W.toolspeed, target = src))
+					if(W.use_tool(src, user, 20, volume=50))
 						if(buildstage == 1)
 							if(stat & BROKEN)
 								to_chat(user, "<span class='notice'>You remove the destroyed circuit.</span>")
@@ -223,8 +224,8 @@
 					update_icon()
 					return
 
-				else if(istype(W, /obj/item/device/electroadaptive_pseudocircuit))
-					var/obj/item/device/electroadaptive_pseudocircuit/P = W
+				else if(istype(W, /obj/item/electroadaptive_pseudocircuit))
+					var/obj/item/electroadaptive_pseudocircuit/P = W
 					if(!P.adapt_circuit(user, 15))
 						return
 					user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
@@ -238,7 +239,7 @@
 										 "<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
 					var/obj/item/wallframe/firealarm/frame = new /obj/item/wallframe/firealarm()
 					frame.forceMove(user.drop_location())
-					playsound(src.loc, W.usesound, 50, 1)
+					W.play_tool_sound(src)
 					qdel(src)
 					return
 	return ..()
@@ -289,9 +290,7 @@
 	A = A.loc
 	if (!( istype(A, /area) ))
 		return
-	for(var/area/RA in A.related)
-		RA.partyreset()
-	return
+	A.partyreset()
 
 /obj/machinery/firealarm/partyalarm/alarm()
 	if (stat & (NOPOWER|BROKEN))
@@ -300,9 +299,7 @@
 	A = A.loc
 	if (!( istype(A, /area) ))
 		return
-	for(var/area/RA in A.related)
-		RA.partyalert()
-	return
+	A.partyalert()
 
 /obj/machinery/firealarm/partyalarm/ui_data(mob/user)
 	. = ..()

@@ -179,7 +179,9 @@ function set_labels($payload, $labels, $remove) {
 
 	$tags = array_merge($labels, $existing);
 	$tags = array_unique($tags);
-	$tags = array_diff($tags, $remove);
+	if($remove) {
+		$tags = array_diff($tags, $remove);
+	}
 
 	$final = array();
 	foreach($tags as $t)
@@ -208,11 +210,13 @@ function tag_pr($payload, $opened) {
 		if(strpos(strtolower($title), 'refactor') !== FALSE)
 			$tags[] = 'Refactor';
 		
-		if(strpos(strtolower($title), 'revert') !== FALSE || strpos(strtolower($title), 'removes') !== FALSE)
-			$tags[] = 'Revert/Removal';
+		if(strpos(strtolower($title), 'revert') !== FALSE)
+			$tags[] = 'Revert';
+		if(strpos(strtolower($title), 'removes') !== FALSE)
+			$tags[] = 'Removal';
 	}
 
-	$remove = array();
+	$remove = array('Test Merge Candidate');
 
 	$mergeable = $payload['pull_request']['mergeable'];
 	if($mergeable === TRUE)	//only look for the false value
@@ -452,6 +456,7 @@ function get_pr_code_friendliness($payload, $oldbalance = null){
 	$label_values = array(
 		'Fix' => 2,
 		'Refactor' => 2,
+		'CI/Tests' => 3,
 		'Code Improvement' => 1,
 		'Grammar and Formatting' => 1,
 		'Priority: High' => 4,
@@ -545,7 +550,7 @@ function auto_update($payload){
 	get_diff($payload);
 	$content = file_get_contents('https://raw.githubusercontent.com/' . $repoOwnerAndName . '/' . $tracked_branch . '/'. $path_to_script);
 	$content_diff = "### Diff not available. :slightly_frowning_face:";
-	if($github_diff && preg_match('/(diff --git a\/' . preg_quote($path_to_script, '/') . '.+?)(?:^diff)?/sm', $github_diff, $matches)) {
+	if($github_diff && preg_match('/(diff --git a\/' . preg_quote($path_to_script, '/') . '.+?)(?:\Rdiff|$)/s', $github_diff, $matches)) {
 		$script_diff = $matches[1];
 		if($script_diff) {
 			$content_diff = "``" . "`DIFF\n" . $script_diff ."\n``" . "`";
@@ -592,7 +597,7 @@ function checkchangelog($payload, $compile = true) {
 	$foundcltag = false;
 	foreach ($body as $line) {
 		$line = trim($line);
-		if (substr($line,0,4) == ':cl:' || substr($line,0,4) == '🆑') {
+		if (substr($line,0,4) == ':cl:' || substr($line,0,1) == '🆑') {
 			$incltag = true;
 			$foundcltag = true;
 			$pos = strpos($line, " ");
@@ -659,7 +664,7 @@ function checkchangelog($payload, $compile = true) {
 			case 'sounddel':
 				if($item != 'removed an old sound thingy') {
 					$tags[] = 'Sound';
-					$tags[] = 'Revert/Removal';
+					$tags[] = 'Removal';
 					$currentchangelogblock[] = array('type' => 'sounddel', 'body' => $item);
 				}
 				break;
@@ -675,7 +680,7 @@ function checkchangelog($payload, $compile = true) {
 			case 'dels':
 			case 'rscdel':
 				if($item != 'Removed old things') {
-					$tags[] = 'Revert/Removal';
+					$tags[] = 'Removal';
 					$currentchangelogblock[] = array('type' => 'rscdel', 'body' => $item);
 				}
 				break;
@@ -688,7 +693,7 @@ function checkchangelog($payload, $compile = true) {
 			case 'imagedel':
 				if($item != 'deleted some icons and images') {
 					$tags[] = 'Sprites';
-					$tags[] = 'Revert/Removal';
+					$tags[] = 'Removal';
 					$currentchangelogblock[] = array('type' => 'imagedel', 'body' => $item);
 				}
 				break;

@@ -54,12 +54,11 @@
 		M.adjustBrainLoss(-3)
 		if(trauma_heal_mild && iscarbon(M))
 			var/mob/living/carbon/C = M
-			if(prob(30) && C.has_trauma_type(BRAIN_TRAUMA_SPECIAL))
-				C.cure_trauma_type(BRAIN_TRAUMA_SPECIAL)
-			if(prob(10) && C.has_trauma_type(BRAIN_TRAUMA_MILD))
-				C.cure_trauma_type(BRAIN_TRAUMA_MILD)
-			if(trauma_heal_severe && prob(10) && C.has_trauma_type(BRAIN_TRAUMA_SEVERE))
-				C.cure_trauma_type(BRAIN_TRAUMA_SEVERE)
+			if(prob(10))
+				if(trauma_heal_severe)
+					C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)
+				else
+					C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
 
 
 
@@ -86,14 +85,14 @@
 		if(4, 5)
 			M.restoreEars()
 
-			if(M.has_disability(DISABILITY_BLIND, EYE_DAMAGE))
+			if(M.has_trait(TRAIT_BLIND, EYE_DAMAGE))
 				if(prob(20))
 					to_chat(M, "<span class='notice'>Your vision slowly returns...</span>")
 					M.cure_blind(EYE_DAMAGE)
 					M.cure_nearsighted(EYE_DAMAGE)
 					M.blur_eyes(35)
 
-				else if(M.has_disability(DISABILITY_NEARSIGHT, EYE_DAMAGE))
+				else if(M.has_trait(TRAIT_NEARSIGHT, EYE_DAMAGE))
 					to_chat(M, "<span class='notice'>You can finally focus your eyes on distant objects.</span>")
 					M.cure_nearsighted(EYE_DAMAGE)
 					M.blur_eyes(10)

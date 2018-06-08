@@ -6,7 +6,6 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "smoke0"
 	density = TRUE
-	anchored = TRUE
 	circuit = /obj/item/circuitboard/machine/smoke_machine
 	var/efficiency = 10
 	var/on = FALSE
@@ -17,7 +16,7 @@
 	var/max_range = 3 // displayed max range is 3 * max range
 
 /datum/effect_system/smoke_spread/chem/smoke_machine/set_up(datum/reagents/carry, setting=1, efficiency=10, loc)
-	amount = setting * 3
+	amount = setting
 	carry.copy_to(chemholder, 20)
 	carry.remove_any(amount * 16 / efficiency)
 	location = loc
@@ -37,10 +36,13 @@
 
 /obj/machinery/smoke_machine/update_icon()
 	if((!is_operational()) || (!on) || (reagents.total_volume == 0))
-		icon_state = "smoke0"
+		if (panel_open)
+			icon_state = "smoke0-o"
+		else
+			icon_state = "smoke0"
 	else
 		icon_state = "smoke1"
-	. = ..()
+	return ..()
 
 /obj/machinery/smoke_machine/RefreshParts()
 	var/new_volume = REAGENTS_BASE_VOLUME
@@ -62,17 +64,18 @@
 
 /obj/machinery/smoke_machine/process()
 	..()
-	update_icon()
 	if(!is_operational())
 		return
 	if(reagents.total_volume == 0)
 		on = FALSE
+		update_icon()
 		return
 	var/turf/T = get_turf(src)
 	var/smoke_test = locate(/obj/effect/particle_effect/smoke) in T
 	if(on && !smoke_test)
+		update_icon()
 		var/datum/effect_system/smoke_spread/chem/smoke_machine/smoke = new()
-		smoke.set_up(reagents, setting, efficiency, T)
+		smoke.set_up(reagents, setting*3, efficiency, T)
 		smoke.start()
 
 /obj/machinery/smoke_machine/attackby(obj/item/I, mob/user, params)
@@ -86,6 +89,10 @@
 			return
 	if(default_unfasten_wrench(user, I, 40))
 		on = FALSE
+		return
+	if(default_deconstruction_screwdriver(user, "smoke0-o", "smoke0", I))
+		return
+	if(default_deconstruction_crowbar(I))
 		return
 	return ..()
 
@@ -124,6 +131,7 @@
 	switch(action)
 		if("purge")
 			reagents.clear_reagents()
+			update_icon()
 			. = TRUE
 		if("setting")
 			var/amount = text2num(params["amount"])
@@ -132,10 +140,11 @@
 				. = TRUE
 		if("power")
 			on = !on
+			update_icon()
 			if(on)
-				message_admins("[key_name_admin(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [ADMIN_COORDJMP(src)].")
-				log_game("[key_name(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [COORD(src)].")
-				add_logs(usr, src, "has activated [src] which contains [english_list(reagents.reagent_list)].")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [ADMIN_VERBOSEJMP(src)].")
+				log_game("[key_name(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [AREACOORD(src)].")
+				add_logs(usr, src, "has activated [src] which contains [english_list(reagents.reagent_list)] at [AREACOORD(src)].")
 		if("goScreen")
 			screen = params["screen"]
 			. = TRUE

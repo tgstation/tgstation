@@ -5,7 +5,7 @@
 	icon_state = null
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	unique_rename = 1
+	obj_flags = UNIQUE_RENAME
 	grind_results = list() //To let them be ground up to transfer their reagents
 	var/bitesize = 2
 	var/bitecount = 0
@@ -37,20 +37,20 @@
 	else
 		..()
 
-/obj/item/reagent_containers/food/snacks/proc/On_Consume()
-	if(!usr)
+/obj/item/reagent_containers/food/snacks/proc/On_Consume(mob/living/eater)
+	if(!eater)
 		return
 	if(!reagents.total_volume)
-		var/obj/item/trash_item = generate_trash(usr)
+		var/obj/item/trash_item = generate_trash(eater)
 		qdel(src)
-		usr.put_in_hands(trash_item)
+		eater.put_in_hands(trash_item)
 
 
 /obj/item/reagent_containers/food/snacks/attack_self(mob/user)
 	return
 
 
-/obj/item/reagent_containers/food/snacks/attack(mob/M, mob/user, def_zone)
+/obj/item/reagent_containers/food/snacks/attack(mob/living/M, mob/living/user, def_zone)
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 	if(!eatverb)
@@ -82,6 +82,8 @@
 			else if(fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 				to_chat(M, "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>")
 				return 0
+			if(M.has_trait(TRAIT_VORACIOUS))
+				M.changeNext_move(CLICK_CD_MELEE * 0.5) //nom nom nom
 		else
 			if(!isbrain(M))		//If you're feeding it to someone else.
 				if(fullness <= (600 * (1 + M.overeatduration / 1000)))
@@ -107,11 +109,12 @@
 				M.satiety -= junkiness
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			if(reagents.total_volume)
+				SendSignal(COMSIG_FOOD_EATEN, M, user)
 				var/fraction = min(bitesize / reagents.total_volume, 1)
 				reagents.reaction(M, INGEST, fraction)
 				reagents.trans_to(M, bitesize)
 				bitecount++
-				On_Consume()
+				On_Consume(M)
 				checkLiked(fraction, M)
 				return 1
 
@@ -223,6 +226,8 @@
 		slice.name = "slice of [name]"
 	if(desc != initial(desc))
 		slice.desc = "[desc]"
+	if(foodtype != initial(foodtype))
+		slice.foodtype = foodtype //if something happens that overrode our food type, make sure the slice carries that over
 
 /obj/item/reagent_containers/food/snacks/proc/generate_trash(atom/location)
 	if(trash)
@@ -357,4 +362,4 @@
 	if(TB)
 		TB.MouseDrop(over)
 	else
-		..()
+		return ..()

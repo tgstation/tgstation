@@ -36,9 +36,9 @@
 			var/atom/summoned_object = new summoned_object_type(spawn_place)
 
 			for(var/varName in newVars)
-				if(varName in summoned_object.vars)
-					summoned_object.vars[varName] = newVars[varName]
-			summoned_object.admin_spawned = TRUE
+				if(varName in newVars)
+					summoned_object.vv_edit_var(varName, newVars[varName])
+			summoned_object.flags_1 |= ADMIN_SPAWNED_1
 			if(summon_lifespan)
 				QDEL_IN(summoned_object, summon_lifespan)
 

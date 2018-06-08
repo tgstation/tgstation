@@ -10,7 +10,7 @@ LINEN BINS
 	icon = 'icons/obj/bedsheets.dmi'
 	icon_state = "sheetwhite"
 	item_state = "bedsheet"
-	slot_flags = SLOT_NECK
+	slot_flags = ITEM_SLOT_NECK
 	layer = MOB_LAYER
 	throwforce = 0
 	throw_speed = 1
@@ -223,6 +223,14 @@ LINEN BINS
 	item_color = "ian"
 	dream_messages = list("a dog", "a corgi", "woof", "bark", "arf")
 
+/obj/item/bedsheet/cosmos
+	name = "cosmic space bedsheet"
+	desc = "Made from the dreams of those who wonder at the stars."
+	icon_state = "sheetcosmos"
+	item_color = "cosmos"
+	dream_messages = list("the infinite cosmos", "Hans Zimmer music", "a flight through space", "the galaxy", "being fabulous", "shooting stars")
+	light_power = 2
+	light_range = 1.4
 
 /obj/item/bedsheet/random
 	icon_state = "random_bedsheet"
@@ -290,12 +298,13 @@ LINEN BINS
 		to_chat(user, "<span class='notice'>You hide [I] among the sheets.</span>")
 
 
-
 /obj/structure/bedsheetbin/attack_paw(mob/user)
 	return attack_hand(user)
 
-
 /obj/structure/bedsheetbin/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(user.lying)
 		return
 	if(amount >= 1)

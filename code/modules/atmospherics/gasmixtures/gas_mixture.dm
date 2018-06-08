@@ -4,6 +4,7 @@ What are the archived variables for?
 	This prevents race conditions that arise based on the order of tile processing.
 */
 #define MINIMUM_HEAT_CAPACITY	0.0003
+#define MINIMUM_MOLE_COUNT		0.01
 #define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
@@ -67,7 +68,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/garbage_collect(list/tocheck)
 	var/list/cached_gases = gases
 	for(var/id in (tocheck || cached_gases))
-		if(cached_gases[id][MOLES] <= 0 && cached_gases[id][ARCHIVE] <= 0)
+		if(QUANTIZE(cached_gases[id][MOLES]) <= 0 && QUANTIZE(cached_gases[id][ARCHIVE]) <= 0)
 			cached_gases -= id
 
 	//PV = nRT
@@ -409,12 +410,20 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return ""
 
-/datum/gas_mixture/react(turf/open/dump_location)
+/datum/gas_mixture/react(datum/holder)
 	. = NO_REACTION
-
-	reaction_results = new
-
 	var/list/cached_gases = gases
+	if(!cached_gases.len)
+		return
+	var/possible
+	for(var/I in cached_gases)
+		if(GLOB.nonreactive_gases[I])
+			continue
+		possible = TRUE
+		break
+	if(!possible)
+		return
+	reaction_results = new
 	var/temp = temperature
 	var/ener = THERMAL_ENERGY(src)
 
@@ -450,7 +459,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			//at this point, all requirements for the reaction are satisfied. we can now react()
 			*/
 
-			. |= reaction.react(src, dump_location)
+			. |= reaction.react(src, holder)
 			if (. & STOP_REACTIONS)
 				break
 	if(.)

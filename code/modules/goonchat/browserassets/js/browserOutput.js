@@ -312,8 +312,14 @@ function output(message, flag) {
 			{
 				lastmessages.append($('<span/>', { 'class': 'r', 'text': 2}));
 			}
-			if(parseInt(lastmessages.css("font-size")) < 24) //Completely arbitrary max size
-				lastmessages.css("font-size","+=2")
+			var insertedBadge = $(lastmessages).find('.r');
+			insertedBadge.animate({
+				"font-size": "0.9em"
+			}, 100, function() {
+				insertedBadge.animate({
+					"font-size": "0.7em"
+				}, 100);
+			});
 			opts.messageCount--;
 			handled = true;
 		}
@@ -436,6 +442,8 @@ function ehjaxCallback(data) {
 	} else if (data == 'roundrestart') {
 		opts.restarting = true;
 		internalOutput('<div class="connectionClosed internal restarting">The connection has been closed because the server is restarting. Please wait while you automatically reconnect.</div>', 'internal');
+	} else if (data == 'stopMusic') {
+		$('#adminMusic').prop('src', '');
 	} else {
 		//Oh we're actually being sent data instead of an instruction
 		var dataJ;

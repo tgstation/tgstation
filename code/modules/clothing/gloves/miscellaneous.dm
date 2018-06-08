@@ -22,7 +22,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 70, acid = 30)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 30)
 
 /obj/item/clothing/gloves/combat
 	name = "combat gloves"
@@ -37,7 +37,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 50)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
 
 
 /obj/item/clothing/gloves/bracer
@@ -54,4 +54,26 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
-	armor = list(melee = 15, bullet = 35, laser = 35, energy = 20, bomb = 35, bio = 35, rad = 35, fire = 0, acid = 0)
+	armor = list("melee" = 15, "bullet" = 35, "laser" = 35, "energy" = 20, "bomb" = 35, "bio" = 35, "rad" = 35, "fire" = 0, "acid" = 0)
+
+/obj/item/clothing/gloves/rapid
+	name = "Gloves of the North Star"
+	desc = "Just looking at these fills you with an urge to beat the shit out of people."
+	icon_state = "rapid"
+	item_state = "rapid"
+	transfer_prints = TRUE
+	var/warcry = "AT"
+
+/obj/item/clothing/gloves/rapid/Touch(mob/living/target,proximity = TRUE)
+	var/mob/living/M = loc
+
+	if(M.a_intent == INTENT_HARM)
+		M.changeNext_move(CLICK_CD_RAPID)
+		if(warcry)
+			M.say("[warcry]", ignore_spam = TRUE)
+	.= FALSE
+
+/obj/item/clothing/gloves/rapid/attack_self(mob/user)
+	var/input = stripped_input(user,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 7)
+	if(input)
+		warcry = input

@@ -27,6 +27,7 @@
 	var/show_flavour = TRUE
 	var/banType = "lavaland"
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/mob_spawn/attack_ghost(mob/user)
 	if(!SSticker.HasRoundStarted() || !loc)
 		return
@@ -54,6 +55,8 @@
 	GLOB.poi_list -= src
 	var/list/spawners = GLOB.mob_spawners[name]
 	LAZYREMOVE(spawners, src)
+	if(!LAZYLEN(spawners))
+		GLOB.mob_spawners -= name
 	return ..()
 
 /obj/effect/mob_spawn/proc/special(mob/M)
@@ -106,6 +109,7 @@
 	var/mob_species = null		//Set to make them a mutant race such as lizard or skeleton. Uses the datum typepath instead of the ID.
 	var/datum/outfit/outfit = /datum/outfit	//If this is a path, it will be instanced in Initialize()
 	var/disable_pda = TRUE
+	var/disable_sensors = TRUE
 	//All of these only affect the ID that the outfit has placed in the ID slot
 	var/id_job = null			//Such as "Clown" or "Chef." This just determines what the ID reads as, not their access
 	var/id_access = null		//This is for access. See access.dm for which jobs give what access. Use "Captain" if you want it to be all access.
@@ -178,9 +182,15 @@
 		H.equipOutfit(outfit)
 		if(disable_pda)
 			// We don't want corpse PDAs to show up in the messenger list.
-			var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H
+			var/obj/item/pda/PDA = locate(/obj/item/pda) in H
 			if(PDA)
 				PDA.toff = TRUE
+		if(disable_sensors)
+			// Using crew monitors to find corpses while creative makes finding certain ruins too easy.
+			var/obj/item/clothing/under/C = H.w_uniform
+			if(istype(C))
+				C.sensor_mode = NO_SENSORS
+
 	var/obj/item/card/id/W = H.wear_id
 	if(W)
 		if(id_access)
@@ -222,7 +232,7 @@
 	var/mob/living/silicon/ai/spawned/M = new(loc) //spawn new AI at landmark as var M
 	M.name = src.name
 	M.real_name = src.name
-	M.aiPDA.toff = 1 //turns the AI's PDA messenger off, stopping it showing up on player PDAs
+	M.aiPDA.toff = TRUE //turns the AI's PDA messenger off, stopping it showing up on player PDAs
 	M.death() //call the AI's death proc
 	qdel(src)
 
@@ -275,6 +285,10 @@
 /obj/effect/mob_spawn/human/corpse/assistant/spanishflu_infection
 	disease = /datum/disease/fluspanish
 
+/obj/effect/mob_spawn/human/corpse/cargo_tech
+	name = "Cargo Tech"
+	outfit = /datum/outfit/job/cargo_tech
+
 /obj/effect/mob_spawn/human/cook
 	name = "Cook"
 	outfit = /datum/outfit/job/cook
@@ -298,7 +312,7 @@
 /obj/effect/mob_spawn/human/doctor/alive/equip(mob/living/carbon/human/H)
 	..()
 	// Remove radio and PDA so they wouldn't annoy station crew.
-	var/list/del_types = list(/obj/item/device/pda, /obj/item/device/radio/headset)
+	var/list/del_types = list(/obj/item/pda, /obj/item/radio/headset)
 	for(var/del_type in del_types)
 		var/obj/item/I = locate(del_type) in H
 		qdel(I)
@@ -396,7 +410,7 @@
 
 /datum/outfit/nanotrasenbridgeofficercorpse
 	name = "Bridge Officer Corpse"
-	ears = /obj/item/device/radio/headset/heads/hop
+	ears = /obj/item/radio/headset/heads/hop
 	uniform = /obj/item/clothing/under/rank/centcom_officer
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	shoes = /obj/item/clothing/shoes/sneakers/black
@@ -414,7 +428,7 @@
 	name = "Nanotrasen Private Security Commander"
 	uniform = /obj/item/clothing/under/rank/centcom_commander
 	suit = /obj/item/clothing/suit/armor/bulletproof
-	ears = /obj/item/device/radio/headset/heads/captain
+	ears = /obj/item/radio/headset/heads/captain
 	glasses = /obj/item/clothing/glasses/eyepatch
 	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
 	head = /obj/item/clothing/head/centhat
@@ -514,6 +528,7 @@
 	outfit = /datum/outfit/spacebartender
 	assignedrole = "Space Bar Patron"
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/mob_spawn/human/alive/space_bar_patron/attack_hand(mob/user)
 	var/despawn = alert("Return to cryosleep? (Warning, Your mob will be deleted!)",,"Yes","No")
 	if(despawn == "No" || !loc || !Adjacent(user))

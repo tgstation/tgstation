@@ -19,12 +19,12 @@
 /datum/round_event/ghost_role/blob/spawn_role()
 	if(!GLOB.blobstart.len)
 		return MAP_ERROR
-	var/list/candidates = get_candidates("blob", null, ROLE_BLOB)
+	var/list/candidates = get_candidates(ROLE_BLOB, null, ROLE_BLOB)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 	var/mob/dead/observer/new_blob = pick(candidates)
 	var/mob/camera/blob/BC = new_blob.become_overmind()
 	spawned_mobs += BC
-	message_admins("[key_name_admin(BC)] has been made into a blob overmind by an event.")
+	message_admins("[ADMIN_LOOKUPFLW(BC)] has been made into a blob overmind by an event.")
 	log_game("[key_name(BC)] was spawned as a blob overmind by an event.")
 	return SUCCESSFUL_SPAWN

@@ -6,11 +6,11 @@
 	icon_state = "waterbackpack"
 	item_state = "waterbackpack"
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/toggle_mister)
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
 	resistance_flags = FIRE_PROOF
 
 	var/obj/item/noz
@@ -49,7 +49,6 @@
 			on = FALSE
 			to_chat(user, "<span class='warning'>You need a free hand to hold the mister!</span>")
 			return
-		noz.forceMove(user)
 	else
 		//Remove from their hands and put back "into" the tank
 		remove_noz()
@@ -60,7 +59,7 @@
 
 /obj/item/watertank/equipped(mob/user, slot)
 	..()
-	if(slot != slot_back)
+	if(slot != SLOT_BACK)
 		remove_noz()
 
 /obj/item/watertank/proc/remove_noz()
@@ -75,16 +74,18 @@
 	return ..()
 
 /obj/item/watertank/attack_hand(mob/user)
-	if(src.loc == user)
-		ui_action_click()
+	. = ..()
+	if(.)
 		return
-	..()
+	if(loc == user)
+		ui_action_click()
 
 /obj/item/watertank/MouseDrop(obj/over_object)
-	var/mob/M = src.loc
+	var/mob/M = loc
 	if(istype(M) && istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
+	return ..()
 
 /obj/item/watertank/attackby(obj/item/W, mob/user, params)
 	if(W == noz)
@@ -113,7 +114,7 @@
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	container_type = OPENCONTAINER
 	slot_flags = 0
 
@@ -290,7 +291,7 @@
 		resin_cooldown = TRUE
 		R.remove_any(100)
 		var/obj/effect/resin_container/A = new (get_turf(src))
-		log_game("[key_name(user)] used Resin Launcher at [get_area(user)] [COORD(user)].")
+		log_game("[key_name(user)] used Resin Launcher at [AREACOORD(user)].")
 		playsound(src,'sound/items/syringeproj.ogg',40,1)
 		for(var/a=0, a<5, a++)
 			step_towards(A, target)
@@ -342,7 +343,7 @@
 	icon_state = "waterbackpackatmos"
 	item_state = "waterbackpackatmos"
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/activate_injector)
 
@@ -359,14 +360,14 @@
 	toggle_injection()
 
 /obj/item/reagent_containers/chemtank/item_action_slot_check(slot, mob/user)
-	if(slot == slot_back)
+	if(slot == SLOT_BACK)
 		return 1
 
 /obj/item/reagent_containers/chemtank/proc/toggle_injection()
 	var/mob/living/carbon/human/user = usr
 	if(!istype(user))
 		return
-	if (user.get_item_by_slot(slot_back) != src)
+	if (user.get_item_by_slot(SLOT_BACK) != src)
 		to_chat(user, "<span class='warning'>The chemtank needs to be on your back before you can activate it!</span>")
 		return
 	if(on)

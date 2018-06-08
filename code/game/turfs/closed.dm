@@ -36,6 +36,14 @@
 	icon = 'icons/turf/shuttleold.dmi'
 	icon_state = "block"
 
+/turf/closed/indestructible/sandstone
+	name = "sandstone wall"
+	desc = "A wall with sandstone plating. Rough."
+	icon = 'icons/turf/walls/sandstone_wall.dmi'
+	icon_state = "sandstone"
+	baseturfs = /turf/closed/indestructible/sandstone
+	smooth = SMOOTH_TRUE
+
 /turf/closed/indestructible/oldshuttle/corner
 	icon_state = "corner"
 
@@ -44,6 +52,7 @@
 	icon = 'icons/blank_title.png'
 	icon_state = ""
 	layer = FLY_LAYER
+	bullet_bounce_sound = null
 
 /turf/closed/indestructible/splashscreen/New()
 	SStitle.splash_turf = src
@@ -102,6 +111,8 @@
 	desc = "An extremely densely-packed rock, sheeted over with centuries worth of ice and snow."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "snowrock"
+	bullet_sizzle = TRUE
+	bullet_bounce_sound = null
 
 /turf/closed/indestructible/rock/snow/ice
 	name = "iced rock"

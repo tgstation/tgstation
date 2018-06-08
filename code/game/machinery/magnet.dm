@@ -11,7 +11,6 @@
 	desc = "A device that uses station power to create points of magnetic energy."
 	level = 1		// underfloor
 	layer = LOW_OBJ_LAYER
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 
@@ -195,7 +194,6 @@
 	icon = 'icons/obj/airlock_machines.dmi' // uses an airlock machine icon, THINK GREEN HELP THE ENVIRONMENT - RECYCLING!
 	icon_state = "airlock_control_standby"
 	density = FALSE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 45
 	var/frequency = FREQ_MAGNETS
@@ -238,14 +236,8 @@
 			if(M.freq == frequency && M.code == code)
 				magnets.Add(M)
 
-
-/obj/machinery/magnetic_controller/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/magnetic_controller/attack_hand(mob/user)
-	if(stat & (BROKEN|NOPOWER))
-		return
-	user.set_machine(src)
+/obj/machinery/magnetic_controller/ui_interact(mob/user)
+	. = ..()
 	var/dat = "<B>Magnetic Control Console</B><BR><BR>"
 	if(!autolink)
 		dat += {"

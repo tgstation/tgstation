@@ -10,12 +10,11 @@
 	..()
 	new /obj/item/clothing/under/syndicate(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/device/radio/headset/syndicate(src)
+	new /obj/item/radio/headset/syndicate(src)
 	new /obj/item/ammo_box/magazine/m10mm(src)
 	new /obj/item/storage/belt/military(src)
 	new /obj/item/crowbar/red(src)
 	new /obj/item/clothing/glasses/night(src)
-	return
 
 /obj/structure/closet/syndicate/nuclear
 	desc = "It's a storage unit for a Syndicate boarding party."
@@ -26,8 +25,7 @@
 	new /obj/item/storage/box/flashbangs(src)
 	new /obj/item/storage/box/teargas(src)
 	new /obj/item/storage/backpack/duffelbag/syndie/med(src)
-	new /obj/item/device/pda/syndicate(src)
-	return
+	new /obj/item/pda/syndicate(src)
 
 /obj/structure/closet/syndicate/resources
 	desc = "An old, dusty locker."
@@ -92,8 +90,6 @@
 	if(pickednum == 50)
 		new /obj/item/tank/jetpack/carbondioxide(src)
 
-	return
-
 /obj/structure/closet/syndicate/resources/everything
 	desc = "It's an emergency storage closet for repairs."
 
@@ -110,12 +106,14 @@
 	/obj/item/stack/sheet/plasteel,
 	/obj/item/stack/sheet/mineral/titanium,
 	/obj/item/stack/sheet/mineral/plastitanium,
-	/obj/item/stack/rods
+	/obj/item/stack/rods,
+	/obj/item/stack/sheet/bluespace_crystal,
+	/obj/item/stack/sheet/mineral/abductor,
+	/obj/item/stack/sheet/plastic,
+	/obj/item/stack/sheet/mineral/wood
 	)
 
 	for(var/i = 0, i<2, i++)
 		for(var/res in resources)
-			var/obj/item/stack/R = new res(src)
-			R.amount = R.max_amount
-
-	return
+			var/obj/item/stack/R = res
+			new res(src, initial(R.max_amount))

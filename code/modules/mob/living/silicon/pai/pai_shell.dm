@@ -20,8 +20,8 @@
 	addtimer(CALLBACK(src, .proc/emittercool), emittercd)
 	canmove = TRUE
 	density = TRUE
-	if(istype(card.loc, /obj/item/device/pda))
-		var/obj/item/device/pda/P = card.loc
+	if(istype(card.loc, /obj/item/pda))
+		var/obj/item/pda/P = card.loc
 		P.pai = null
 		P.visible_message("<span class='notice'>[src] ejects itself from [P]!</span>")
 	if(isliving(card.loc))
@@ -57,7 +57,7 @@
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = card
-	var/turf/T = get_turf(src)
+	var/turf/T = drop_location()
 	card.forceMove(T)
 	forceMove(card)
 	canmove = FALSE

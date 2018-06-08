@@ -13,7 +13,8 @@
 
 /obj/vehicle/ridden/examine(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>Put a key inside it by clicking it with the key. If there's a key inside, you can remove it via Alt-Click!</span>")
+	if(key_type)
+		to_chat(user, "<span class='notice'>Put a key inside it by clicking it with the key. If there's a key inside, you can remove it via Alt-Click!</span>")
 
 /obj/vehicle/ridden/generate_action_type(actiontype)
 	var/datum/action/vehicle/ridden/A = ..()
@@ -42,7 +43,7 @@
 	return ..()
 
 /obj/vehicle/ridden/AltClick(mob/user)
-	if(user.Adjacent(src) && inserted_key)
+	if(inserted_key && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		if(!is_occupant(user))
 			to_chat(user, "<span class='notice'>You must be riding the [src] to remove [src]'s key!</span>")
 			return

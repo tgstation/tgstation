@@ -4,7 +4,6 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pdapainter"
 	density = TRUE
-	anchored = TRUE
 	obj_integrity = 200
 	max_integrity = 200
 	var/obj/item/bodypart/storedpart
@@ -74,21 +73,21 @@
 			update_icon()
 
 	else if(istype(O, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
-		var/obj/item/weldingtool/WT = O
 		if(obj_integrity < max_integrity)
-			if(WT.remove_fuel(0,user))
-				user.visible_message("[user] begins repairing [src].", \
-								"<span class='notice'>You begin repairing [src]...</span>", \
-								"<span class='italics'>You hear welding.</span>")
-				playsound(src, WT.usesound, 40, 1)
-				if(do_after(user,40*WT.toolspeed, TRUE, target = src))
-					if(!WT.isOn() || !(stat & BROKEN))
-						return
-					to_chat(user, "<span class='notice'>You repair [src].</span>")
-					playsound(src, 'sound/items/welder2.ogg', 50, 1)
-					stat &= ~BROKEN
-					obj_integrity = max(obj_integrity, max_integrity)
-					update_icon()
+			if(!O.tool_start_check(user, amount=0))
+				return
+
+			user.visible_message("[user] begins repairing [src].", \
+				"<span class='notice'>You begin repairing [src]...</span>", \
+				"<span class='italics'>You hear welding.</span>")
+
+			if(O.use_tool(src, user, 40, volume=50))
+				if(!(stat & BROKEN))
+					return
+				to_chat(user, "<span class='notice'>You repair [src].</span>")
+				stat &= ~BROKEN
+				obj_integrity = max(obj_integrity, max_integrity)
+				update_icon()
 		else
 			to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
 	else
@@ -101,22 +100,24 @@
 			update_icon()
 
 /obj/machinery/aug_manipulator/attack_hand(mob/user)
-	if(!..())
-		add_fingerprint(user)
+	. = ..()
+	if(.)
+		return
+	add_fingerprint(user)
 
-		if(storedpart)
-			var/augstyle = input(user, "Select style.", "Augment Custom Fitting") as null|anything in style_list_icons
-			if(!augstyle)
-				return
-			if(!in_range(src, user))
-				return
-			if(!storedpart)
-				return
-			storedpart.icon = style_list_icons[augstyle]
-			eject_part(user)
+	if(storedpart)
+		var/augstyle = input(user, "Select style.", "Augment Custom Fitting") as null|anything in style_list_icons
+		if(!augstyle)
+			return
+		if(!in_range(src, user))
+			return
+		if(!storedpart)
+			return
+		storedpart.icon = style_list_icons[augstyle]
+		eject_part(user)
 
-		else
-			to_chat(user, "<span class='notice'>\The [src] is empty.</span>")
+	else
+		to_chat(user, "<span class='notice'>\The [src] is empty.</span>")
 
 /obj/machinery/aug_manipulator/proc/eject_part(mob/living/user)
 	if(storedpart)

@@ -7,6 +7,7 @@
 	icon_state = "arachnid"
 	icon_living = "arachnid"
 	icon_dead = "arachnid_dead"
+	mob_biotypes = list(MOB_ORGANIC, MOB_BUG)
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	maxHealth = 300
@@ -60,6 +61,7 @@
 /obj/item/restraints/legcuffs/beartrap/mega_arachnid
 	name = "fleshy restraints"
 	desc = "Used by mega arachnids to immobilize their prey."
-	flags_1 = DROPDEL_1
+	item_flags = DROPDEL
+	flags_1 = NONE
 	icon_state = "tentacle_end"
 	icon = 'icons/obj/projectiles.dmi'

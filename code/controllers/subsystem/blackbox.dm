@@ -6,16 +6,20 @@ SUBSYSTEM_DEF(blackbox)
 	init_order = INIT_ORDER_BLACKBOX
 
 	var/list/feedback = list()	//list of datum/feedback_variable
+	var/list/first_death = list() //the first death of this round, assoc. vars keep track of different things
 	var/triggertime = 0
 	var/sealed = FALSE	//time to stop tracking stats?
 	var/list/versions = list("antagonists" = 3,
 							"admin_secrets_fun_used" = 2,
 							"time_dilation_current" = 3,
-							"science_techweb_unlock" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
+							"science_techweb_unlock" = 2,
+							"round_end_stats" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
 
 /datum/controller/subsystem/blackbox/Initialize()
 	triggertime = world.time
 	record_feedback("amount", "random_seed", Master.random_seed)
+	record_feedback("amount", "dm_version", DM_VERSION)
+	record_feedback("amount", "byond_version", world.byond_version)
 	. = ..()
 
 //poll population
@@ -223,7 +227,7 @@ Versioning
 				if(islist(data[i]))
 					FV.json["data"]["[pos]"]["[i]"] = data[i] //and here with "[FV.json["data"].len]"
 				else
-					FV.json["data"]["[pos]"]["[i]"] = "[data[i]]" 
+					FV.json["data"]["[pos]"]["[i]"] = "[data[i]]"
 		else
 			CRASH("Invalid feedback key_type: [key_type]")
 
@@ -253,9 +257,17 @@ Versioning
 /datum/controller/subsystem/blackbox/proc/ReportDeath(mob/living/L)
 	if(sealed)
 		return
-	if(!SSdbcore.Connect())
-		return
 	if(!L || !L.key || !L.mind)
+		return
+	if(!L.suiciding && !first_death.len)
+		first_death["name"] = "[(L.real_name == L.name) ? L.real_name : "[L.real_name] as [L.name]"]"
+		first_death["role"] = null
+		if(L.mind.assigned_role)
+			first_death["role"] = L.mind.assigned_role
+		first_death["area"] = "[AREACOORD(L)]"
+		first_death["damage"] = "<font color='#FF5555'>[L.getBruteLoss()]</font>/<font color='orange'>[L.getFireLoss()]</font>/<font color='lightgreen'>[L.getToxLoss()]</font>/<font color='lightblue'>[L.getOxyLoss()]</font>/<font color='pink'>[L.getCloneLoss()]</font>"
+		first_death["last_words"] = L.last_words
+	if(!SSdbcore.Connect())
 		return
 	var/area/placeofdeath = get_area(L)
 	var/sqlname = sanitizeSQL(L.real_name)

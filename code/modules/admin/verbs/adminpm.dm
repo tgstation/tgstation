@@ -50,7 +50,7 @@
 		if(holder)
 			to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
 		return
-	
+
 	var/datum/admin_help/AH = C.current_ticket
 
 	if(AH)
@@ -84,7 +84,7 @@
 			recipient = GLOB.directory[whom]
 	else if(istype(whom, /client))
 		recipient = whom
-	
+
 
 	if(irc)
 		if(!ircreplyamount)	//to prevent people from spamming irc
@@ -103,10 +103,12 @@
 		if(!recipient)
 			if(holder)
 				to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
-				to_chat(src, msg)
-			else
+				if(msg)
+					to_chat(src, msg)
+				return
+			else if(msg) // you want to continue if there's no message instead of returning now
 				current_ticket.MessageNoRecipient(msg)
-			return
+				return
 
 		//get message text, limit it's length.and clean/escape html
 		if(!msg)

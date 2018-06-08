@@ -10,7 +10,7 @@
 	max_integrity = 20
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
-	unique_rename = 1
+	obj_flags = UNIQUE_RENAME
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/on_reagent_change(changetype)
 	cut_overlays()

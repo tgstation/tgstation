@@ -6,15 +6,9 @@ All ShuttleMove procs go here
 
 // Called on every turf in the shuttle region, returns a bitflag for allowed movements of that turf
 // returns the new move_mode (based on the old)
-/turf/proc/fromShuttleMove(turf/newT, turf_type, list/baseturf_cache, move_mode)
-	if(!(move_mode & MOVE_AREA))
+/turf/proc/fromShuttleMove(turf/newT, move_mode)
+	if(!(move_mode & MOVE_AREA) || !isshuttleturf(src))
 		return move_mode
-	if(istype(src, turf_type))
-		if(length(baseturfs))
-			if(baseturf_cache[baseturfs[1]])
-				return move_mode
-		else if(baseturf_cache[baseturfs])
-			return move_mode
 
 	return move_mode | MOVE_TURF | MOVE_CONTENTS
 
@@ -54,7 +48,12 @@ All ShuttleMove procs go here
 	if(newT == src) // In case of in place shuttle rotation shenanigans.
 		return
 	//Destination turf changes
-	newT.CopyOnTop(src, 1, 0) // We only want a surface copy
+	//Baseturfs is definitely a list or this proc wouldnt be called
+	var/shuttle_boundary = baseturfs.Find(/turf/baseturf_skipover/shuttle)
+	if(!shuttle_boundary)
+		CRASH("A turf queued to move via shuttle somehow had no skipover in baseturfs. [src]([type]):[loc]")
+	var/depth = baseturfs.len - shuttle_boundary + 1
+	newT.CopyOnTop(src, 1, depth)
 	//Air stuff
 	newT.blocks_air = TRUE
 	newT.air_update_turf(TRUE)
@@ -67,10 +66,12 @@ All ShuttleMove procs go here
 	return TRUE
 
 // Called on the new turf after everything has been moved
-/turf/proc/afterShuttleMove(turf/oldT, turf_type, baseturf_type, rotation)
+/turf/proc/afterShuttleMove(turf/oldT, rotation)
 	//Dealing with the turf we left behind
 	oldT.TransferComponents(src)
-	oldT.ChangeTurf(turf_type, baseturf_type, CHANGETURF_IGNORE_AIR) // TODO: make this oldT.ScrapeAway() which requires templating all shuttles
+	var/shuttle_boundary = baseturfs.Find(/turf/baseturf_skipover/shuttle)
+	if(shuttle_boundary)
+		oldT.ScrapeAway(baseturfs.len - shuttle_boundary + 1)
 
 	if(rotation)
 		shuttleRotate(rotation) //see shuttle_rotate.dm
@@ -82,7 +83,7 @@ All ShuttleMove procs go here
 // Called on every atom in shuttle turf contents before anything has been moved
 // returns the new move_mode (based on the old)
 // WARNING: Do not leave turf contents in beforeShuttleMove or dock() will runtime
-/atom/movable/proc/beforeShuttleMove(turf/newT, rotation, move_mode)
+/atom/movable/proc/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	return move_mode
 
 // Called on atoms to move the atom to the new location
@@ -154,21 +155,21 @@ All ShuttleMove procs go here
 
 /************************************Machinery move procs************************************/
 
-/obj/machinery/door/airlock/beforeShuttleMove(turf/newT, rotation, move_mode)
+/obj/machinery/door/airlock/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
-	shuttledocked = 0
-	for(var/obj/machinery/door/airlock/A in range(1, src))
-		A.shuttledocked = 0
+	for(var/obj/machinery/door/airlock/A in range(1, src))  // includes src
+		A.shuttledocked = FALSE
 		A.air_tight = TRUE
 		INVOKE_ASYNC(A, /obj/machinery/door/.proc/close)
 
 /obj/machinery/door/airlock/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
-	shuttledocked =  1
-	for(var/obj/machinery/door/airlock/A in range(1, src))
-		A.shuttledocked = 1
+	for(var/obj/machinery/door/airlock/A in orange(1, src))  // does not include src
+		// Cycle linking is only disabled if we are actually adjacent to another airlock
+		shuttledocked = TRUE
+		A.shuttledocked = TRUE
 
-/obj/machinery/camera/beforeShuttleMove(turf/newT, rotation, move_mode)
+/obj/machinery/camera/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
 	if(. & MOVE_AREA)
 		. |= MOVE_CONTENTS
@@ -192,7 +193,7 @@ All ShuttleMove procs go here
 	if(is_mining_level(z)) //Avoids double logging and landing on other Z-levels due to badminnery
 		SSblackbox.record_feedback("associative", "colonies_dropped", 1, list("x" = x, "y" = y, "z" = z))
 
-/obj/machinery/gravity_generator/main/beforeShuttleMove(turf/newT, rotation, move_mode)
+/obj/machinery/gravity_generator/main/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
 	on = FALSE
 	update_list()
@@ -202,11 +203,6 @@ All ShuttleMove procs go here
 	if(charge_count != 0 && charging_state != POWER_UP)
 		on = TRUE
 	update_list()
-
-/obj/machinery/thruster/beforeShuttleMove(turf/newT, rotation, move_mode)
-	. = ..()
-	if(. & MOVE_AREA)
-		. |= MOVE_CONTENTS
 
 /obj/machinery/atmospherics/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
@@ -242,7 +238,7 @@ All ShuttleMove procs go here
 	var/turf/T = loc
 	hide(T.intact)
 
-/obj/machinery/navbeacon/beforeShuttleMove(turf/newT, rotation, move_mode)
+/obj/machinery/navbeacon/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
 	GLOB.navbeacons["[z]"] -= src
 	GLOB.deliverybeacons -= src
@@ -269,8 +265,11 @@ All ShuttleMove procs go here
 
 /obj/item/storage/pod/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
-	unlocked = TRUE
-	// If the pod was launched, the storage will always open.
+	// If the pod was launched, the storage will always open. The CentCom check
+	// ignores the movement of the shuttle from the staging area on CentCom to
+	// the station as it is loaded in.
+	if (oldT && !is_centcom_level(oldT.z))
+		unlocked = TRUE
 
 /************************************Mob move procs************************************/
 
@@ -307,12 +306,12 @@ All ShuttleMove procs go here
 
 /************************************Structure move procs************************************/
 
-/obj/structure/grille/beforeShuttleMove(turf/newT, rotation, move_mode)
+/obj/structure/grille/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
 	if(. & MOVE_AREA)
 		. |= MOVE_CONTENTS
 
-/obj/structure/lattice/beforeShuttleMove(turf/newT, rotation, move_mode)
+/obj/structure/lattice/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
 	if(. & MOVE_AREA)
 		. |= MOVE_CONTENTS
@@ -327,7 +326,7 @@ All ShuttleMove procs go here
 	if(level==1)
 		hide(T.intact)
 
-/obj/structure/shuttle/beforeShuttleMove(turf/newT, rotation, move_mode)
+/obj/structure/shuttle/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
 	if(. & MOVE_AREA)
 		. |= MOVE_CONTENTS
@@ -337,6 +336,11 @@ All ShuttleMove procs go here
 
 /atom/movable/lighting_object/onShuttleMove()
 	return FALSE
+
+/obj/docking_port/mobile/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
+	. = ..()
+	if(moving_dock == src)
+		. |= MOVE_CONTENTS
 
 /obj/docking_port/stationary/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
 	if(!moving_dock.can_move_docking_ports || old_dock == src)

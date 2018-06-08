@@ -10,7 +10,6 @@
 	desc = "Gasses mined from the gas giant below (above?) flow out through this massive vent."
 	icon = 'icons/obj/atmospherics/components/miners.dmi'
 	icon_state = "miner"
-	anchored = TRUE
 	density = FALSE
 	resistance_flags = INDESTRUCTIBLE|ACID_PROOF|FIRE_PROOF
 	var/spawn_id = null
@@ -136,7 +135,7 @@
 	merger.gases[spawn_id][MOLES] = (spawn_mol)
 	merger.temperature = spawn_temp
 	O.assume_air(merger)
-	SSair.add_to_active(O)
+	O.air_update_turf(TRUE)
 
 /obj/machinery/atmospherics/miner/attack_ai(mob/living/silicon/user)
 	if(broken)

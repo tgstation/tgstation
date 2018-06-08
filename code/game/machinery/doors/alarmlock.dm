@@ -10,8 +10,8 @@
 	var/air_frequency = FREQ_ATMOS_ALARMS
 	autoclose = FALSE
 
-/obj/machinery/door/airlock/alarmlock/New()
-	..()
+/obj/machinery/door/airlock/alarmlock/Initialize()
+	. = ..()
 	air_connection = new
 
 /obj/machinery/door/airlock/alarmlock/Destroy()

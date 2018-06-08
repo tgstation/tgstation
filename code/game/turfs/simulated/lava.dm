@@ -10,11 +10,15 @@
 	light_range = 2
 	light_power = 0.75
 	light_color = LIGHT_COLOR_LAVA
+	bullet_bounce_sound = 'sound/items/welder2.ogg'
 
 /turf/open/lava/ex_act(severity, target)
 	contents_explosion(severity, target)
 
-/turf/open/lava/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0)
+/turf/open/lava/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
+	return
+
+/turf/open/lava/acid_act(acidpwr, acid_volume)
 	return
 
 /turf/open/lava/MakeDry(wet_setting = TURF_WET_WATER)
@@ -45,7 +49,7 @@
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a floor.</span>")
-			ChangeTurf(/turf/open/floor/plating)
+			PlaceOnTop(/turf/open/floor/plating)
 			return TRUE
 	return FALSE
 
@@ -100,8 +104,8 @@
 				O.resistance_flags |= FLAMMABLE //Even fireproof things burn up in lava
 			if(O.resistance_flags & FIRE_PROOF)
 				O.resistance_flags &= ~FIRE_PROOF
-			if(O.armor["fire"] > 50) //obj with 100% fire armor still get slowly burned away.
-				O.armor["fire"] = 50
+			if(O.armor.fire > 50) //obj with 100% fire armor still get slowly burned away.
+				O.armor = O.armor.setRating(fire = 50)
 			O.fire_act(10000, 1000)
 
 		else if (isliving(thing))
@@ -111,15 +115,24 @@
 				continue	//YOU'RE FLYING OVER IT
 			if("lava" in L.weather_immunities)
 				continue
-			if(L.buckled)
-				if(isobj(L.buckled))
-					var/obj/O = L.buckled
-					if(O.resistance_flags & LAVA_PROOF)
-						continue
-				if(isliving(L.buckled)) //Goliath riding
-					var/mob/living/live = L.buckled
-					if("lava" in live.weather_immunities)
-						continue
+			var/buckle_check = L.buckling
+			if(!buckle_check)
+				buckle_check = L.buckled
+			if(isobj(buckle_check))
+				var/obj/O = buckle_check
+				if(O.resistance_flags & LAVA_PROOF)
+					continue
+			else if(isliving(buckle_check))
+				var/mob/living/live = buckle_check
+				if("lava" in live.weather_immunities)
+					continue
+			if(iscarbon(L))
+				var/mob/living/carbon/C = L
+				var/obj/item/clothing/S = C.get_item_by_slot(SLOT_WEAR_SUIT)
+				var/obj/item/clothing/H = C.get_item_by_slot(SLOT_HEAD)
+
+				if(S && H && S.clothing_flags & LAVAPROTECT && H.clothing_flags & LAVAPROTECT)
+					return
 
 			L.adjustFireLoss(20)
 			if(L) //mobs turning into object corpses could get deleted here.
@@ -137,7 +150,7 @@
 /turf/open/lava/smooth/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
-	baseturfs = /turf/open/chasm/lavaland
+	baseturfs = /turf/open/lava/smooth/lava_land_surface
 
 /turf/open/lava/smooth/airless
 	initial_gas_mix = "TEMP=2.7"

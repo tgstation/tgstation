@@ -17,6 +17,7 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
 	faction = list("neutral")
+	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	attack_same = 1
 	attacktext = "kicks"
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -90,6 +91,16 @@
 	else
 		return ..()
 
+
+/mob/living/simple_animal/hostile/retaliate/goat/AttackingTarget()
+	. = ..()
+	if(. && ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(istype(H.dna.species, /datum/species/pod))
+			var/obj/item/bodypart/NB = pick(H.bodyparts)
+			H.visible_message("<span class='warning'>[src] takes a big chomp out of [H]!</span>", \
+								  "<span class='userdanger'>[src] takes a big chomp out of your [NB]!</span>")
+			NB.dismember()
 //cow
 /mob/living/simple_animal/cow
 	name = "cow"
@@ -99,6 +110,7 @@
 	icon_dead = "cow_dead"
 	icon_gib = "cow_gib"
 	gender = FEMALE
+	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	speak = list("moo?","moo","MOOOOOO")
 	speak_emote = list("moos","moos hauntingly")
 	emote_hear = list("brays.")
@@ -144,7 +156,7 @@
 		M.visible_message("<span class='warning'>[M] tips over [src].</span>",
 			"<span class='notice'>You tip over [src].</span>")
 		to_chat(src, "<span class='userdanger'>You are tipped over by [M]!</span>")
-		Knockdown(60)
+		Knockdown(60,ignore_canknockdown = TRUE)
 		icon_state = icon_dead
 		spawn(rand(20,50))
 			if(!stat && M)
@@ -173,6 +185,7 @@
 	icon_dead = "chick_dead"
 	icon_gib = "chick_gib"
 	gender = FEMALE
+	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	speak = list("Cherp.","Cherp?","Chirrup.","Cheep!")
 	speak_emote = list("cheeps")
 	emote_hear = list("cheeps.")
@@ -216,6 +229,7 @@
 	name = "\improper chicken"
 	desc = "Hopefully the eggs are good this season."
 	gender = FEMALE
+	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	icon_state = "chicken_brown"
 	icon_living = "chicken_brown"
 	icon_dead = "chicken_brown_dead"
@@ -243,7 +257,7 @@
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
 	var/list/feedMessages = list("It clucks happily.","It clucks happily.")
-	var/list/layMessage = list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
+	var/list/layMessage = EGG_LAYING_MESSAGES
 	var/list/validColors = list("brown","black","white")
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/static/chicken_count = 0
@@ -280,7 +294,7 @@
 	if(!.)
 		return
 	if((!stat && prob(3) && eggsleft > 0) && egg_type)
-		visible_message("[src] [pick(layMessage)]")
+		visible_message("<span class='alertalien'>[src] [pick(layMessage)]</span>")
 		eggsleft--
 		var/obj/item/E = new egg_type(get_turf(src))
 		E.pixel_x = rand(-6,6)
