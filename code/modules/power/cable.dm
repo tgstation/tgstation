@@ -78,7 +78,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	color = "#ffffff"
 
 // the power cable object
-/obj/structure/cable/Initialize(mapload, param_color, d1, d2, autoinit = FALSE)
+/obj/structure/cable/Initialize(mapload, param_color, nd1, nd2, autoinit = FALSE)
 	. = ..()
 	if(!autoinit)
 		// ensure d1 & d2 reflect the icon_state for entering and exiting cable
@@ -97,11 +97,13 @@ By design, d1 is the smallest direction and d2 is the highest
 		cable_color = cable_colors[cable_color]
 
 	if(autoinit)
-		src.d1 = d1
-		src.d2 = d2
+		d1 = nd1
+		d2 = nd2
 		if(!d1 && !d2)
 			return INITIALIZE_HINT_QDEL
 		for(var/obj/structure/cable/LC in loc)
+			if(LC == src)
+				continue
 			if(LC.d2 == d2 && LC.d1 == d1)
 				return INITIALIZE_HINT_QDEL
 		var/datum/powernet/PN = new

@@ -28,11 +28,19 @@
 			qdel(WH)
 			if(mapload)
 				stack_trace("Extraneous wire helper with the same ID erased at [COORD(src)].")
+
+
+	if(debug_var_1)
+		return ..()
+
+
 	if(mapload)
 		activate_mapload()
+		return INITIALIZE_HINT_QDEL
 	else			//Adminspawn
 		GLOB.inactive_mapping_helpers += src
 		activate_adminspawn()
+		return ..()
 
 /obj/effect/mapping/wire_helper/proc/activate_adminspawn(list/propagation)
 	LAZYINITLIST(propagation)
@@ -91,11 +99,18 @@
 					dir_place_cable(dir, last)
 			last = i
 
-	qdel(src)
-
 /obj/effect/mapping/wire_helper/proc/dir_place_cable(dir, obj/structure/cable/last)
 	var/dir2 = get_dir(src, last)
 	new /obj/structure/cable(loc, wire_color, dir, dir2, TRUE)
 
 /obj/effect/mapping/wire_helper/proc/dir_place_node(dir)
 	new /obj/structure/cable(loc, wire_color, 0, dir, TRUE)
+
+/proc/debug_wires()
+	for(var/obj/effect/mapping/wire_helper/WH in world)
+		WH.activate_mapload()
+
+var/global/debug_var_1 = FALSE
+
+/proc/debug_wires_two(val)
+	debug_var_1 = val
