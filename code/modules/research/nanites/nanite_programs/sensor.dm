@@ -11,9 +11,12 @@
 /datum/nanite_program/sensor/proc/check_event()
 	return FALSE
 	
+/datum/nanite_program/sensor/proc/send_code()
+	host_mob.SendSignal(COMSIG_NANITE_SIGNAL, extra_code)
+	
 /datum/nanite_program/sensor/active_effect()
 	if(extra_code && check_event())
-		host_mob.SendSignal(COMSIG_NANITE_SIGNAL, extra_code)
+		send_code()
 	
 /datum/nanite_program/sensor/healthy
 	name = "Perfect Health Sensor"
@@ -50,15 +53,8 @@
 	desc = "The nanites receive a signal when they detect the host is dead."
 	var/spent = FALSE
 	
-/datum/nanite_program/sensor/death/check_event()
-	if(host_mob.stat == DEAD)
-		if(!spent)
-			spent = TRUE
-			return TRUE
-		return FALSE
-	else
-		spent = FALSE
-		return FALSE
+/datum/nanite_program/sensor/death/on_death()
+	send_code()
 		
 /datum/nanite_program/sensor/nanites_low
 	name = "Nanite Volume Sensor - LOW"

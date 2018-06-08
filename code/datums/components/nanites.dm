@@ -23,6 +23,7 @@
 		host_mob.hud_set_nanite_indicator()
 		START_PROCESSING(SSprocessing, src)
 		RegisterSignal(COMSIG_ATOM_EMP_ACT, .proc/on_emp)
+		RegisterSignal(COMSIG_MOB_DEATH, .proc/on_death)
 		RegisterSignal(COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_shock)
 		RegisterSignal(COMSIG_LIVING_MINOR_SHOCK, .proc/on_minor_shock)
 		RegisterSignal(COMSIG_NANITE_SIGNAL, .proc/receive_signal)
@@ -131,6 +132,11 @@
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_minor_shock()
+		
+/datum/component/nanites/proc/on_death(gibbed)
+	for(var/X in programs)
+		var/datum/nanite_program/NP = X
+		NP.on_death(gibbed)
 
 /datum/component/nanites/proc/receive_signal(code)
 	if(!host_mob) //dormant

@@ -1,4 +1,4 @@
-//Programs specifically engineered to cause harm (as opposed to ones that only do it due to broken programming)
+//Programs specifically engineered to cause harm to either the user or its surroundings (as opposed to ones that only do it due to broken programming)
 //Very dangerous!
 
 /datum/nanite_program/aggressive_replication

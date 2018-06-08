@@ -848,8 +848,8 @@
 	description = "Nanite programs that require nanites to act independently, roam or seek targets."
 	prereq_ids = list("nanite_base","adv_robotics")
 	design_ids = list("purging_nanites", "necrotic_nanites", "metabolic_nanites")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	export_price = 5000
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
+	export_price = 4000
 
 /datum/techweb_node/nanite_mesh
 	id = "nanite_mesh"
@@ -872,9 +872,18 @@
 /datum/techweb_node/nanite_neural
 	id = "nanite_neural"
 	display_name = "Neural Nanite Programming"
-	description = "Nanite programs affecting brains and nerves."
+	description = "Nanite programs affecting nerves and brain matter."
 	prereq_ids = list("nanite_base","neural_programming")
-	design_ids = list("nervous_nanites", "brainheal_nanites", "braindecay_nanites", "brainmisfire_nanites", "paralyzing_nanites", "pacifying_nanites", "blinding_nanites", "sleep_nanites", "stun_nanites", "nervedecay_nanites")
+	design_ids = list("nervous_nanites", "brainheal_nanites", "braindecay_nanites", "brainmisfire_nanites", "paralyzing_nanites", "stun_nanites", "nervedecay_nanites")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+	
+/datum/techweb_node/nanite_synaptic
+	id = "nanite_synaptic"
+	display_name = "Synaptic Nanite Programming"
+	description = "Nanite programs affecting the host's mind and thoughts."
+	prereq_ids = list("nanite_neural")
+	design_ids = list("mindshield_nanites", "pacifying_nanites", "blinding_nanites", "sleep_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -884,8 +893,8 @@
 	description = "Nanite programs that require seamless integration between nanites and biology."
 	prereq_ids = list("nanite_bio","nanite_roam","nanite_mesh")
 	design_ids = list("fakedeath_nanites", "aggressive_nanites","regenerative_plus_nanites","brainheal_plus_nanites","purging_plus_nanites","adrenaline_nanites")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	export_price = 10000
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
+	export_price = 8000
 
 /datum/techweb_node/nanite_combat
 	id = "nanite_combat"
@@ -900,7 +909,7 @@
 	id = "nanite_hazard"
 	display_name = "Hazard Nanite Programs"
 	description = "Nanite programs with extremely dangerous effects, whose production is universally banned."
-	prereq_ids = list("nanite_combat", "alientech")
+	prereq_ids = list("nanite_harmonic", "alientech")
 	design_ids = list("spreading_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	export_price = 10000

@@ -169,6 +169,13 @@
 	id = "adrenaline_nanites"
 	program_type = /datum/nanite_program/triggered/adrenaline
 	category = list("Augmentation Nanites")
+	
+/datum/design/nanites/mindshield
+	name = "Mental Barrier"
+	desc = "The nanites form a protective membrane around the host's brain, shielding them from abnormal influences while they're active."
+	id = "mindshield_nanites"
+	program_type = /datum/nanite_program/mindshield
+	category = list("Augmentation Nanites")
 
 ////////////////////DEFECTIVE NANITES//////////////////////////////////////
 

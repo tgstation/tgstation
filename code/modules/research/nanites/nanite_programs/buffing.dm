@@ -18,6 +18,25 @@
 		var/mob/living/carbon/human/H = host_mob
 		H.physiology.stun_mod *= 2
 
+/datum/nanite_program/triggered/adrenaline
+	name = "Adrenaline Burst"
+	desc = "The nanites cause a burst of adrenaline when triggered, waking the host from stuns and temporarily increasing their speed."
+	trigger_cost = 25
+	trigger_cooldown = 900
+	rogue_types = list(/datum/nanite_program/toxic, /datum/nanite_program/nerve_decay)
+	
+/datum/nanite_program/triggered/adrenaline/trigger()
+	if(!..())
+		return
+	to_chat(host_mob, "<span class='notice'>You feel a sudden surge of energy!</span>")
+	host_mob.SetStun(0)
+	host_mob.SetKnockdown(0)
+	host_mob.SetUnconscious(0)
+	host_mob.adjustStaminaLoss(-75)
+	host_mob.lying = 0
+	host_mob.update_canmove()
+	host_mob.reagents.add_reagent("stimulants", 5)		
+		
 /datum/nanite_program/hardening
 	name = "Dermal Hardening"
 	desc = "The nanites form a mesh under the host's skin, protecting them from melee and bullet impacts."
