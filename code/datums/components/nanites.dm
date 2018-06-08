@@ -24,7 +24,7 @@
 		START_PROCESSING(SSprocessing, src)
 		RegisterSignal(COMSIG_ATOM_EMP_ACT, .proc/on_emp)
 		RegisterSignal(COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_shock)
-		RegisterSignal(COMSIG_LIVING_STUN_SHOCK, .proc/on_minor_shock)
+		RegisterSignal(COMSIG_LIVING_MINOR_SHOCK, .proc/on_minor_shock)
 		RegisterSignal(COMSIG_NANITE_SIGNAL, .proc/receive_signal)
 		if(cloud_id)
 			cloud_sync()
