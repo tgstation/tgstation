@@ -1144,14 +1144,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
-/datum/uplink_item/device_tools/medgun
+/datum/uplink_item/role_restricted/medgun
 	name = "Medbeam Gun"
 	desc = "A wonder of Syndicate engineering, the Medbeam gun, or Medi-Gun enables a medic to keep his fellow \
-			operatives in the fight, even while under fire."
+			operatives/traitors in the fight, even while under fire."
 	item = /obj/item/gun/medbeam
-	cost = 15
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
-
+	cost = 10
+	surplus = 40
+	restricted_roles = list("Medical Doctor", "Chief Medical Officer")
+	
 /datum/uplink_item/device_tools/potion
 	name = "Syndicate Sentience Potion"
 	item = /obj/item/slimepotion/slime/sentience/nuclear
