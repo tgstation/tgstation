@@ -2397,6 +2397,7 @@
 #include "code\modules\research\techweb\_techweb.dm"
 #include "code\modules\research\techweb\_techweb_node.dm"
 #include "code\modules\research\techweb\all_nodes.dm"
+#include "code\modules\research\techweb\tech_tree_view.dm"
 #include "code\modules\research\xenobiology\xenobio_camera.dm"
 #include "code\modules\research\xenobiology\xenobiology.dm"
 #include "code\modules\research\xenobiology\crossbreeding\_corecross.dm"
