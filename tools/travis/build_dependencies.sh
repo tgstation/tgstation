@@ -2,7 +2,7 @@
 
 set -e
 
-if [ $BUILD_TOOLS = false ]; then
+if [ $BUILD_TOOLS = true ]; then
     curl https://sh.rustup.rs -sSf | sh -s -- -y --default-host i686-unknown-linux-gnu
     source ~/.profile
 
