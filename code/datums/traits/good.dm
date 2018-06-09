@@ -35,26 +35,19 @@
 	value = 3
 	gain_text = "<span class='notice'>Your fists feel more dangerous.</span>"
 	lose_text = "<span class='notice'>Your fists feel less dangerous.</span>"
-	var/applied = FALSE
 
-/datum/quirk/buster/on_process()
+/datum/quirk/buster/add()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/datum/species/species = H.dna.species
-	if(applied != TRUE)
-		species.punchdamagelow = initial(species.punchdamagelow)+1
-		species.punchdamagehigh = initial(species.punchdamagehigh) + 6
-		species.punchstunthreshold = initial(species.punchstunthreshold) + 6
-		applied = TRUE
-	if(species.punchstunthreshold == initial(species.punchstunthreshold))
-		applied = FALSE
+	H.physiology.punchlow += 1
+	H.physiology.punchhigh += 6
+	H.physiology.punchstun += 6
 
 /datum/quirk/buster/remove()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/datum/species/species = H.dna.species
-	species.punchdamagelow = initial(species.punchdamagelow)
-	species.punchdamagehigh = initial(species.punchdamagehigh)
-	species.punchstunthreshold = initial(species.punchstunthreshold)
-	applied = FALSE
+	H.physiology.punchlow = 0
+	H.physiology.punchhigh = 0
+	H.physiology.punchstun = 0
+
 
 
 /datum/quirk/drunkhealing
