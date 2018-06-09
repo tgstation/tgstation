@@ -134,7 +134,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = SPACEVINE_MOB_LAYER
 	icon = 'icons/misc/beach.dmi'
-	icon_state = "water3"
+	icon_state = "water2"
 
 /turf/open/floor/plating/beach/coastline_t/sandwater_inner
 	icon_state = "sandwater_inner"
