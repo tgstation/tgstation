@@ -1,4 +1,3 @@
-#define TRUE_CHANGELING_REFORM_THRESHOLD 0 //Can turn back at will, by default
 #define TRUE_CHANGELING_PASSIVE_HEAL 3 //Amount of brute damage restored per tick
 
 //Changelings in their true form.
@@ -197,7 +196,7 @@
 		to_chat(M, "<span class='warning'>Target not suitable for assimilation: Target is already a changeling!</span>")
 		return FALSE
 	M.visible_message("<span class='warning'>[M] begins to convulse!</span>", "<span class='warning'>Target suitable for assimilation. We begin to ready our appendages...</span>")
-	M.Shake(15, 15, 350)
+	M.Shake(2, 2, 350)
 	M.assimilation = TRUE
 	for(var/progress = 0, progress <= 3, progress++)
 		var/datum/beam/B = M.Beam(target, icon_state = "cord-[progress]", time=INFINITY)
@@ -205,15 +204,18 @@
 			if(1)
 				if(M.tendrilgrab)
 					M.endtendril = TRUE
-				else
-					M.visible_message("<span class='warning'>[M] constricts [target]!</span>", "<span class='notice'>We constrict [target] with our appendages...</span>")
-					target.handcuffed = new/obj/item/restraints/handcuffs/horrorform(target)
-					target.update_handcuffed()
+				M.visible_message("<span class='warning'>[M] constricts [target]!</span>", "<span class='notice'>We constrict [target] with our appendages...</span>")
+				target.handcuffed = new/obj/item/restraints/handcuffs/changeling(target)
+				target.update_handcuffed()
+				//var/static/list/tendril_angles = list(0, -90, 90, 180)
+				//for(var/i in whirlwind_angles)
+					//var/turf/Twhirl = get_step(src_turf, turn(dir_to_target, i))
+					//new /obj/effect/temp_visual/tendril(Twhirl, src)
 			if(2)
 				to_chat(M, "<span class='notice'>We begin to assimilate [target].</span>")
 				to_chat(target, "<span class='danger'>You suddenly feel like your skin is <i>wrong</i>...</span>")
 				if(target.isloyal())
-					to_chat(M, "<span class='notice'>They are protected by a mindshield implant. The creature will have to destroy it - it will take time.</span>")
+					to_chat(M, "<span class='notice'>They are protected by a mindshield implant. we will have to destroy it - it will take time.</span>")
 					to_chat(target, "<span class='boldannounce'>You feel a sharp pain in your head!</span>")
 					sleep(100) //10 seconds
 					to_chat(M, "<span class='notice'>The creature has destroyed the mindshield. Assimilation will resume.</span>")
@@ -241,7 +243,7 @@
 	to_chat(M, "<span class='shadowling'><b>[target.real_name]</b> has joined the hivemind.</span>")
 
 	var/datum/antagonist/changeling/lesser/ASSIMILATEEE = new()
-	ASSIMILATEEE.master = M
+	ASSIMILATEEE.master = M.mind
 	target.mind.add_antag_datum(ASSIMILATEEE)
 	return
 
@@ -283,21 +285,20 @@
 		return FALSE
 	M.tendrilgrab = TRUE
 	M.visible_message("<span class='danger'>[M] shoots out a tendril!</span>", "<span class='notice'>We have constricted [target]! We will now reel him in, and moving will cancel the pull.</span>")
-	var/obj/item/restraints/handcuffs/horrorform/cuffs = new(target)
+	var/obj/item/restraints/handcuffs/changeling/cuffs = new(target)
 	target.handcuffed = cuffs
 	target.update_handcuffed()
 	var/turf/T = get_turf(M)
-	to_chat(target, "<span class='userdanger'>You have been constricted by [M]! Resist to escape!</span>")
-	var/datum/beam/B = M.Beam(target, icon_state = "cord-2", time=INFINITY)
+	var/datum/beam/B = M.Beam(target, icon_state = "tendrilgrab", time=INFINITY)
 	var/ticker = 0
 	while(M.endtendril == FALSE && target.handcuffed && M.loc == T && target in view(7, M))
-		to_chat(target, "<span class='userdanger'>You're getting pulled to [M]!</span>")
 		target.Stun(6)
 		sleep(5)
 		if(ticker == 2)
 			ticker = 0
 			var/turf/REELEMINBOYS = get_step_to(target, M)
-			if(REELEMINBOYS != T)
+			if(REELEMINBOYS.loc != T.loc)
+				to_chat(target, "<span class='danger'>You're getting pulled to [M]!</span>")
 				target.forceMove(REELEMINBOYS)
 		else
 			ticker++
@@ -308,7 +309,13 @@
 	M.tendrilgrab = FALSE
 	M.endtendril = FALSE
 
-/obj/item/restraints/handcuffs/horrorform
+#undef TRUE_CHANGELING_PASSIVE_HEAL
+
+/////////////////////////
+//MISC HORRORFORM STUFF//
+/////////////////////////
+
+/obj/item/restraints/handcuffs/changeling
 	name = "writhing tentacles"
 	desc = "appendages from a hideous creature."
 	icon_state = "cordgrab"
@@ -317,10 +324,35 @@
 	cuffsprite = "cordgrab"
 	var/loud = FALSE
 
-/obj/item/restraints/handcuffs/horrorform/dropped(mob/user)
-	user.visible_message("<span class='danger'>The [name] holding [user] violently jerk and recede!</span>", \
+/obj/item/restraints/handcuffs/horrorform/oncuff(mob/living/carbon/target)
+	target.add_trait(TRAIT_MUTE, CHANGELING_GRAPPLE)
+	return
+
+/obj/item/restraints/handcuffs/horrorform/dropped(mob/living/carbon/target)
+	target.visible_message("<span class='danger'>The [name] holding [target] violently jerk and recede!</span>", \
 	"<span class='userdanger'>The [name] convulse and recede!</span>")
+	target.remove_trait(TRAIT_MUTE, CHANGELING_GRAPPLE)
 	. = ..()
 
-#undef TRUE_CHANGELING_REFORM_THRESHOLD
-#undef TRUE_CHANGELING_PASSIVE_HEAL
+/obj/structure/alien/resin/wall/cocoon //For horror forms hatching, the meat walls and floor are below
+	name = "chrysalis wall"
+	desc = "Some sort of purple substance in an egglike shape. It pulses and throbs from within and seems impenetrable."
+	max_integrity = INFINITY //oh man can't wait for a maintainer to find this gem
+	icon = 'icons/mob/changeling.dmi'
+	icon_state = "smooth"
+
+/*
+/obj/effect/temp_visual/tendril
+	name = "writhing tentacle"
+	desc = "Gross!"
+	icon = 'icons/mob/changeling.dmi'
+	icon_state = "tentacleend"
+	layer = BELOW_MOB_LAYER
+	duration = 7
+*/
+
+////////////////////////////
+//LESSERLING BUILDING BITS//
+////////////////////////////
+
+//wip!

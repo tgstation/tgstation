@@ -84,11 +84,6 @@
 /obj/structure/alien/resin/wall/BlockSuperconductivity()
 	return 1
 
-/obj/structure/alien/resin/wall/horrorform //For horror forms!
-	name = "chrysalis wall"
-	desc = "Some sort of purple substance in an egglike shape. It pulses and throbs from within and seems impenetrable."
-	max_integrity = INFINITY //oh man can't wait for a maintainer to find this gem
-
 
 /obj/structure/alien/resin/membrane
 	name = "resin membrane"

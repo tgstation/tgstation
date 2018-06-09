@@ -19,6 +19,7 @@
 	var/datum/changelingprofile/first_prof = null
 	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 0
+	var/absorbedchangelings = 0 //how many changelings we succed
 	var/trueabsorbs = 0//dna gained using absorb, not dna sting
 	var/lesserling = FALSE //changelings created by horrorform, cannot buy some things in the store.
 	var/chem_charges = 20
@@ -462,7 +463,7 @@
 	hud.leave_hud(owner.current)
 	set_antag_hud(owner.current, null)
 
-/datum/antagonist/changeling/lesser/proc/forge_lesserling_objectives()
+/datum/antagonist/changeling/lesser/proc/forge_lesserling_objectives() //problem: doesn't know what current is. runtimes.
 	//OBJECTIVES - for lesserlings, the only need to make sure the horror form escapes alive.
 	var/datum/objective/protect/new_objective = new /datum/objective/protect
 	new_objective.owner = owner

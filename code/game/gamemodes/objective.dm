@@ -639,6 +639,9 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 			return TRUE
 	return FALSE
 
+/datum/objective/horrorform //completion handled by the spell itself.
+	explanation_text = "Evolve into a horrorform."
+
 //End Changeling Objectives
 
 /datum/objective/destroy

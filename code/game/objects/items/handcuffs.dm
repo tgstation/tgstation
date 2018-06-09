@@ -90,12 +90,17 @@
 	else if(dispense)
 		cuffs = new type()
 
+	oncuff(target)
+
 	cuffs.forceMove(target)
 	target.handcuffed = cuffs
 
 	target.update_handcuffed()
 	if(trashtype && !dispense)
 		qdel(src)
+	return
+
+/obj/item/restraints/handcuffs/proc/oncuff(mob/living/carbon/target)
 	return
 
 /obj/item/restraints/handcuffs/sinew

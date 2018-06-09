@@ -1,9 +1,10 @@
 /obj/effect/proc_holder/changeling/horror_form //Horror Form: turns the changeling into a terrifying abomination
 	name = "Horror Form"
 	desc = "We tear apart our human disguise, revealing our true form."
-	helptext = "We will become an unstoppable force of destruction. We will turn back into a human after some time."
+	helptext = "We will cocoon and metamorph into our horror form, allowing us to enslave others and take over. We need to absorb three other true changelings (xenobiology and other lesser changelings do not count) to do this."
 	chemical_cost = 75
 	dna_cost = 1
+	req_changelingabsorbs = 3
 	req_human = TRUE
 	var/inprogress = FALSE
 
@@ -27,8 +28,8 @@
 				return FALSE
 			var/turf/damonster = get_turf(H)
 			for(var/turf/open/floor/F in orange(1, H))
-				new /obj/structure/alien/resin/wall/horrorform(F)
-			for(var/obj/structure/alien/resin/wall/horrorform/R in damonster) //extremely hacky
+				new /obj/structure/alien/resin/wall/cocoon(F)
+			for(var/obj/structure/alien/resin/wall/cocoon/R in damonster) //extremely hacky
 				qdel(R)
 				new /obj/structure/alien/weeds/node(damonster) //Dim lighting in the chrysalis -- removes itself afterwards
 			H.visible_message("<span class='warning'>A chrysalis forms around [H], sealing them inside.</span>", \
@@ -36,9 +37,12 @@
 			sleep(100) //NOW we do sleeps- we're going too deep into the transformation to cancel and we're cocooned in indestructable walls anyways.
 			H.visible_message("<span class='warning'><b>The skin on [H]'s back begins to split apart. Sickly spines slowly emerge from the divide.</b></span>", \
 							"<font color=#800080>Spines pierce our back. Claws break apart our melding fingers.</font>")
+			animate(H, color = "#FF0000", time = 850)
+			H.Shake(2, 2, 450)
 			sleep(90)
 			H.visible_message("<span class='warning'><b>[H]'s skin shifts and morphs new faces, appendages slipping out and hanging at the floor.</b></span>", \
 							"<font color=#800080>Our stable form finally gives way to something so much more beautiful.</font>")
+			H.become_husk("changelingevolve")
 			sleep(80)
 			playsound(H.loc, 'sound/weapons/slash.ogg', 25, 1)
 			to_chat(H, "<i><b>We rip and we slice...</b></i>")
@@ -49,7 +53,7 @@
 			playsound(H.loc, 'sound/weapons/slice.ogg', 25, 1)
 			to_chat(H, "<i><b>The chrysalis begins to tear away, our metamorphosis nearing completion...</b></i>")
 			sleep(10)
-			for(var/obj/structure/alien/resin/wall/horrorform/W in orange(1, H))
+			for(var/obj/structure/alien/resin/wall/cocoon/W in orange(1, H))
 				playsound(W, 'sound/effects/splat.ogg', 50, 1)
 				qdel(W)
 			for(var/obj/structure/alien/weeds/node/N in damonster)
@@ -58,12 +62,14 @@
 			playsound(user, 'sound/creatures/rawrXD.ogg', 100, 1)
 			var/mob/living/simple_animal/hostile/true_changeling/new_mob = new(get_turf(H))
 			var/datum/antagonist/changeling/ling_datum = H.mind.has_antag_datum(/datum/antagonist/changeling)
+			for(var/datum/objective/horrorform/evolveobjective in ling_datum.objectives)
+				evolveobjective.completed = 1
 			new_mob.real_name = ling_datum.changelingID
 			new_mob.name = new_mob.real_name
 			for(var/mob/M in view(7, H))
 				flash_color(M, flash_color = list("#db0000", "#db0000", "#db0000", rgb(0,0,0)), flash_time = 50)
 			new_mob.stored_changeling = H
-			H.loc = new_mob
+			H.forceMove(new_mob)
 			H.status_flags |= GODMODE
 			H.mind.transfer_to(new_mob)
 			new /obj/effect/gibspawner/human(get_turf(H))
