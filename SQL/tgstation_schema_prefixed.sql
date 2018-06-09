@@ -450,8 +450,7 @@ CREATE TABLE `SS13_schema_revision` (
   PRIMARY KEY (`major`,`minor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-DELIMITER
-$$
+DELIMITER $$
 CREATE TRIGGER `role_timeTlogupdate` AFTER UPDATE ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (NEW.CKEY, NEW.job, NEW.minutes-OLD.minutes);
 END
 $$
