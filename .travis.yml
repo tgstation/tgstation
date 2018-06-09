@@ -40,12 +40,13 @@ addons:
   - mariadb: '10.0'
 
 install:
-  - mysql -u root -e 'CREATE DATABASE tg_travis;'
-  - mysql -u root tg_travis < SQL/tgstation_schema.sql
   - tools/travis/install_build_tools.sh
 
 before_script:
   - tools/travis/before_build_tools.sh
+  - mysql -u root -e 'CREATE DATABASE tg_travis;'
+  - mysql -u root -e 'SELECT version();'
+  - mysql -u root tg_travis < SQL/tgstation_schema.sql
   - tools/travis/before_build_byond.sh
 
 script:
