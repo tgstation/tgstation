@@ -60,7 +60,7 @@ if [ "$BUILD_TOOLS" = false ]; then
 			mkdir $HOME/libmariadb
 		fi
 		if [ ! -f $HOME/libmariadb/libmariadb.so ]; then
-			wget -O http://www.byond.com/download/db/mariadb_client-2.0.0-linux.tgz
+			wget http://www.byond.com/download/db/mariadb_client-2.0.0-linux.tgz
 			tar -xvf mariadb_client-2.0.0-linux.tgz
 			mv mariadb_client-2.0.0-linux/libmariadb.so $HOME/libmariadb/libmariadb.so
 			rm -rf mariadb_client-2.0.0-linux.tgz mariadb_client-2.0.0-linux
