@@ -53,10 +53,15 @@ if [ "$BUILD_TOOLS" = false ]; then
 		#test config
 		cp tools/travis/travis_config.txt config/config.txt
 
-		# get libmariadb
-		wget http://www.byond.com/download/db/mariadb_client-2.0.0-linux.tgz
+		# get libmariadb, cache it so limmex doesn't get angery
+		mkdir $HOME/libmariadb
+		if [ ! -f $HOME/libmariadb/mariadb_client-2.0.0-linux.tgz ]; then
+			wget -O $HOME/libmariadb/mariadb_client-2.0.0-linux.tgz http://www.byond.com/download/db/mariadb_client-2.0.0-linux.tgz
+		fi
+		cp $HOME/libmariadb/mariadb_client-2.0.0-linux.tgz mariadb_client-2.0.0-linux.tgz
 		tar -xvf mariadb_client-2.0.0-linux.tgz
 		mv mariadb_client-2.0.0-linux/libmariadb.so ./
+		rm -rf mariadb_client-2.0.0-linux.tgz mariadb_client-2.0.0-linux
 	
 		DreamDaemon tgstation.dmb -close -trusted -params "test-run&log-directory=travis"
 		cat data/logs/travis/clean_run.lk

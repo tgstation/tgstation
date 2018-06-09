@@ -49,6 +49,7 @@ matrix:
       cache:
         directories:
           - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
+          - $HOME/libmariadb
 
 install:
   - tools/travis/install_build_tools.sh
