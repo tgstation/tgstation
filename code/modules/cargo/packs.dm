@@ -1657,6 +1657,19 @@
 	D.name = "exotic corgi"
 	D.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
+/mob/living/carbon/human/talking_corgi/Initialize()
+	. = ..()
+	reagents.add_reagent("whiskey", 80)
+	put_in_hands(new /obj/item/reagent_containers/food/drinks/bottle/whiskey)
+	equip_to_appropriate_slot(new /obj/item/clothing/suit/hooded/ian_costume)
+	equip_to_appropriate_slot(new /obj/item/clothing/head/hooded/ian_hood)
+	hair_style = "Skinhead"
+	facial_hair_style = "Neckbeard"
+	gender = MALE
+	update_body()
+	update_hair()
+	name = "talking corgi"
+
 /mob/living/carbon/human/talking_corgi/handle_status_effects()
 	..()
 	if(prob(5))
