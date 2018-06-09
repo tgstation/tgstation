@@ -44,7 +44,7 @@
 	<ui-section><b>Occupant:</b> {{data.occupant_name}}</ui-section>
 	{{#if !data.has_nanites}}
 			<ui-section><ui-notice>No nanites detected.</ui-notice></ui-section>
-			<ui-section><ui-button icon='syringe' action='nanite_injection'>Inject Nanites</ui-button></ui-section>
+			<ui-section><ui-button icon='syringe' action='nanite_injection'>Implant Nanites</ui-button></ui-section>
 	{{else}}
 		<ui-display title='Nanites'>
 			{{#if data.has_disk}}
