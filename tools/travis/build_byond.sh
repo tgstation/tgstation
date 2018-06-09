@@ -54,7 +54,7 @@ if [ "$BUILD_TOOLS" = false ]; then
 		cp tools/travis/travis_config.txt config/config.txt
 
 		# get libmariadb, cache it so limmex doesn't get angery
-		mkdir $HOME/libmariadb
+		mkdir -p $HOME/libmariadb
 		if [ ! -f $HOME/libmariadb/mariadb_client-2.0.0-linux.tgz ]; then
 			wget -O $HOME/libmariadb/mariadb_client-2.0.0-linux.tgz http://www.byond.com/download/db/mariadb_client-2.0.0-linux.tgz
 		fi
