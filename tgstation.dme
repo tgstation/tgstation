@@ -2410,6 +2410,7 @@
 #include "code\modules\research\xenobiology\crossbreeding\_status_effects.dm"
 #include "code\modules\research\xenobiology\crossbreeding\burning.dm"
 #include "code\modules\research\xenobiology\crossbreeding\charged.dm"
+#include "code\modules\research\xenobiology\crossbreeding\chilling.dm"
 #include "code\modules\research\xenobiology\crossbreeding\consuming.dm"
 #include "code\modules\research\xenobiology\crossbreeding\industrial.dm"
 #include "code\modules\research\xenobiology\crossbreeding\prismatic.dm"

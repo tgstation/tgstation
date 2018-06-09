@@ -166,6 +166,8 @@
 
 	else if(!(I.item_flags & (NODROP | ABSTRACT)))
 		thrown_thing = I
+		if(SendSignal(COMSIG_CARBON_THROW_ITEM, thrown_thing, src) & COMPONENT_STOP_THROW)
+			return
 		dropItemToGround(I)
 
 		if(has_trait(TRAIT_PACIFISM) && I.throwforce)
