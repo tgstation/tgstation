@@ -10,44 +10,45 @@ env:
     - NODE_VERSION="4"
     - RUST_G_VERSION="0.3.0"
 matrix:
-  - env:
-    - BUILD_TOOLS=true
-    addons:
-      apt:
-        packages:
-          - python3
-          - python3-pip
-          - libssl-dev:i386
-          - gcc-multilib
-    cache:
-      directories:
-        - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
-        - tgui/node_modules
-        - $HOME/.rustup
-        - $HOME/.cargo
-  - env:
-    - BUILD_TESTING=true
-    - BUILD_TOOLS=false
-    addons:
-      apt:
-        packages:
-          - libc6-i386
-          - libstdc++6:i386
-    cache:
-      directories:
-        - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
-  - env:
-    - BUILD_TESTING=false
-    - BUILD_TOOLS=false
-    addons:
-      mariadb: '10.2'
-      apt:
-        packages:
-          - libc6-i386
-          - libstdc++6:i386
-    cache:
-      directories:
-        - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
+  include:
+    - env:
+      - BUILD_TOOLS=true
+      addons:
+        apt:
+          packages:
+            - python3
+            - python3-pip
+            - libssl-dev:i386
+            - gcc-multilib
+      cache:
+        directories:
+          - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
+          - tgui/node_modules
+          - $HOME/.rustup
+          - $HOME/.cargo
+    - env:
+      - BUILD_TESTING=true
+      - BUILD_TOOLS=false
+      addons:
+        apt:
+          packages:
+            - libc6-i386
+            - libstdc++6:i386
+      cache:
+        directories:
+          - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
+    - env:
+      - BUILD_TESTING=false
+      - BUILD_TOOLS=false
+      addons:
+        mariadb: '10.2'
+        apt:
+          packages:
+            - libc6-i386
+            - libstdc++6:i386
+      cache:
+        directories:
+          - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
 
 install:
   - tools/travis/install_build_tools.sh
