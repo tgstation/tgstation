@@ -348,12 +348,12 @@
 	switch(action)
 		if("tryinput")
 			input_attempt = !input_attempt
-			log_smes(usr.ckey)
+			log_smes(usr)
 			update_icon()
 			. = TRUE
 		if("tryoutput")
 			output_attempt = !output_attempt
-			log_smes(usr.ckey)
+			log_smes(usr)
 			update_icon()
 			. = TRUE
 		if("input")
@@ -377,7 +377,7 @@
 				. = TRUE
 			if(.)
 				input_level = CLAMP(target, 0, input_level_max)
-				log_smes(usr.ckey)
+				log_smes(usr)
 		if("output")
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
@@ -399,10 +399,10 @@
 				. = TRUE
 			if(.)
 				output_level = CLAMP(target, 0, output_level_max)
-				log_smes(usr.ckey)
+				log_smes(usr)
 
-/obj/machinery/power/smes/proc/log_smes(user = "")
-	investigate_log("input/output; [input_level>output_level?"<font color='green'>":"<font color='red'>"][input_level]/[output_level]</font> | Charge: [charge] | Output-mode: [output_attempt?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [input_attempt?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [user]", INVESTIGATE_SINGULO)
+/obj/machinery/power/smes/proc/log_smes(mob/user)
+	investigate_log("input/output; [input_level>output_level?"<font color='green'>":"<font color='red'>"][input_level]/[output_level]</font> | Charge: [charge] | Output-mode: [output_attempt?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [input_attempt?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [user ? key_name(user) : "outside forces"]", INVESTIGATE_SINGULO)
 
 
 /obj/machinery/power/smes/emp_act(severity)
@@ -419,7 +419,7 @@
 	if (charge < 0)
 		charge = 0
 	update_icon()
-	log_smes("an emp")
+	log_smes()
 
 /obj/machinery/power/smes/engineering
 	charge = 1.5e6 // Engineering starts with some charge for singulo

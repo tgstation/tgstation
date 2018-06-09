@@ -1231,7 +1231,7 @@
 			INVOKE_ASYNC(src, .proc/prepare_icon_update)
 			beacon.icon_state = "hierophant_tele_off"
 			return
-		add_logs(user, beacon, "teleported self from ([source.x],[source.y],[source.z]) to")
+		add_logs(user, beacon, "teleported self from [AREACOORD(source)] to")
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, user)
 		for(var/t in RANGE_TURFS(1, T))
@@ -1278,7 +1278,7 @@
 		return
 	M.visible_message("<span class='hierophant_warning'>[M] fades in!</span>")
 	if(user != M)
-		add_logs(user, M, "teleported", null, "from ([source.x],[source.y],[source.z])")
+		add_logs(user, M, "teleported", null, "from [AREACOORD(source)]")
 
 /obj/item/hierophant_club/proc/cardinal_blasts(turf/T, mob/living/user) //fire cardinal cross blasts with a delay
 	if(!T)

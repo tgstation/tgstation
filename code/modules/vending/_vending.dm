@@ -434,7 +434,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 		else if (!(R in product_records))
 			vend_ready = 1
-			message_admins("Vending machine exploit attempted by [key_name(usr, usr.client)]!")
+			message_admins("Vending machine exploit attempted by [ADMIN_LOOKUPFLW(usr)]!")
 			return
 
 		if (R.amount <= 0)

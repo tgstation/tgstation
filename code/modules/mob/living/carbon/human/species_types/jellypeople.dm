@@ -675,7 +675,7 @@
 
 	var/msg = sanitize(input("Message:", "Telepathy") as text|null)
 	if(msg)
-		log_talk(H,"SlimeTelepathy: [key_name(H)]->[M.key] : [msg]",LOGSAY)
+		log_talk(H,"SlimeTelepathy: [key_name(H)]->[key_name(M)] : [msg]",LOGSAY)
 		to_chat(M, "<span class='notice'>You hear an alien voice in your head... </span><font color=#008CA2>[msg]</font>")
 		to_chat(H, "<span class='notice'>You telepathically said: \"[msg]\" to [M]</span>")
 		for(var/dead in GLOB.dead_mob_list)
