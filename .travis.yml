@@ -26,7 +26,7 @@ cache:
 
 
 addons:
-  - mariadb: '10.0'
+  mariadb: '10.0'
   apt:
     packages:
       - libc6-i386
