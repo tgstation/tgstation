@@ -37,19 +37,19 @@
 	var/deactivation_code 	= 0 	//Code that deactivates the program [1-9999]
 	var/kill_code 			= 0		//Code that permanently removes the program [1-9999]
 	var/trigger_code 		= 0 	//Code that triggers the program (if available) [1-9999]
-	
+
 	//Potential extra code, for programs with extra customization
 	var/has_extra_code = FALSE
 	var/extra_code = 0
 	var/extra_code_name = "Extra Code"
 	var/extra_code_min = 0
 	var/extra_code_max = 0
-	
+
 /datum/nanite_program/triggered
 	use_rate = 0
 	trigger_cost = 5
 	trigger_cooldown = 50
-	can_trigger = TRUE	
+	can_trigger = TRUE
 
 /datum/nanite_program/Destroy()
 	if(host_mob)
@@ -90,7 +90,7 @@
 
 /datum/nanite_program/proc/set_extra_code(code)
 	extra_code = CLAMP(round(code, 1),extra_code_min, extra_code_max)
-	
+
 /datum/nanite_program/proc/on_add(datum/component/nanites/_nanites)
 	nanites = _nanites
 	if(nanites.host_mob)
@@ -189,11 +189,14 @@
 			software_error()
 		else if(prob(33))
 			qdel(src)
-			
+
 /datum/nanite_program/proc/on_minor_shock()
 	if(!program_flags & NANITE_SHOCK_IMMUNE)
 		if(prob(10))
 			software_error()
+
+/datum/nanite_program/proc/on_death()
+	return
 
 /datum/nanite_program/proc/software_error(type)
 	if(!type)

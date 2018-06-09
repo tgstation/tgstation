@@ -30,6 +30,13 @@
 	program_type = /datum/nanite_program/monitoring
 	category = list("Utility Nanites")
 
+/datum/design/nanites/stealth
+	name = "Stealth"
+	desc = "The nanites hide their activity and programming from superficial scans."
+	id = "stealth_nanites"
+	program_type = /datum/nanite_program/stealth
+	category = list("Utility Nanites")
+
 /datum/design/nanites/access
 	name = "Subdermal ID"
 	desc = "The nanites store the host's ID access rights in a subdermal magnetic strip. Updates when triggered, copying the host's current access."
@@ -162,14 +169,14 @@
 	id = "conductive_nanites"
 	program_type = /datum/nanite_program/conductive
 	category = list("Augmentation Nanites")
-	
+
 /datum/design/nanites/adrenaline
 	name = "Adrenaline Burst"
 	desc = "The nanites cause a burst of adrenaline when triggered, waking the host from stuns and temporarily increasing their speed."
 	id = "adrenaline_nanites"
 	program_type = /datum/nanite_program/triggered/adrenaline
 	category = list("Augmentation Nanites")
-	
+
 /datum/design/nanites/mindshield
 	name = "Mental Barrier"
 	desc = "The nanites form a protective membrane around the host's brain, shielding them from abnormal influences while they're active."
@@ -323,14 +330,14 @@
 	id = "pacifying_nanites"
 	program_type = /datum/nanite_program/pacifying
 	category = list("Suppression Nanites")
-	
+
 /datum/design/nanites/blinding
 	name = "Blindness"
 	desc = "The nanites suppress the host's ocular nerves, blinding them while they're active."
 	id = "blinding_nanites"
 	program_type = /datum/nanite_program/blinding
 	category = list("Suppression Nanites")
-	
+
 ////////////////////SENSOR NANITES//////////////////////////////////////
 /datum/design/nanites/sensor_healthy
 	name = "Perfect Health Sensor"
@@ -338,35 +345,35 @@
 	id = "sensor_healthy_nanites"
 	program_type = /datum/nanite_program/sensor/healthy
 	category = list("Sensor Nanites")
-	
+
 /datum/design/nanites/sensor_crit
 	name = "Critical Health Sensor"
 	desc = "The nanites receive a signal when the host first reaches critical health."
 	id = "sensor_crit_nanites"
 	program_type = /datum/nanite_program/sensor/crit
 	category = list("Sensor Nanites")
-	
+
 /datum/design/nanites/sensor_death
 	name = "Death Sensor"
 	desc = "The nanites receive a signal when they detect the host is dead."
 	id = "sensor_death_nanites"
 	program_type = /datum/nanite_program/sensor/death
 	category = list("Sensor Nanites")
-	
+
 /datum/design/nanites/sensor_full_nanites
 	name = "Nanite Volume Sensor - FULL"
 	desc = "The nanites receive a signal when the nanite supply is at the cap."
 	id = "sensor_full_nanites"
 	program_type = /datum/nanite_program/sensor/nanites_full
 	category = list("Sensor Nanites")
-	
+
 /datum/design/nanites/sensor_high_nanites
 	name = "Nanite Volume Sensor - HIGH"
 	desc = "The nanites receive a signal when the nanite supply is above 75%."
 	id = "sensor_high_nanites"
 	program_type = /datum/nanite_program/sensor/nanites_high
 	category = list("Sensor Nanites")
-	
+
 /datum/design/nanites/sensor_low_nanites
 	name = "Nanite Volume Sensor - LOW"
 	desc = "The nanites receive a signal when the nanite supply is below 25%."

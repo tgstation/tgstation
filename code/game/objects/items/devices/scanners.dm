@@ -328,6 +328,10 @@ SLIME SCANNER
 		if(cyberimp_detect)
 			to_chat(user, "<span class='notice'>Detected cybernetic modifications:</span>")
 			to_chat(user, "<span class='notice'>[cyberimp_detect]</span>")
+	GET_COMPONENT_FROM(nanites, /datum/component/nanites, M)
+	if(nanites && !nanites.stealth)
+		to_chat(user, "<span class='notice'><b>Nanites Detected</b></span>")
+		to_chat(user, "<span class='notice'>Saturation: [nanites.nanite_volume]/[nanites.max_nanites]</span>")
 
 /proc/chemscan(mob/living/user, mob/living/M)
 	if(istype(M))
@@ -603,3 +607,47 @@ SLIME SCANNER
 		to_chat(user, "<span class='notice'>Core mutation in progress: [T.effectmod]</span>")
 		to_chat(user, "<span_class = 'notice'>Progress in core mutation: [T.applied] / [SLIME_EXTRACT_CROSSING_REQUIRED]</span>")
 	to_chat(user, "========================")
+
+
+/obj/item/nanite_scanner
+	name = "nanite scanner"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "health"
+	item_state = "nanite_remote"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	desc = "A hand-held body scanner able to detect nanites and their programming."
+	flags_1 = CONDUCT_1
+	item_flags = NOBLUDGEON
+	slot_flags = ITEM_SLOT_BELT
+	throwforce = 3
+	w_class = WEIGHT_CLASS_TINY
+	throw_speed = 3
+	throw_range = 7
+	materials = list(MAT_METAL=200)
+
+/obj/item/nanite_scanner/attack(mob/living/M, mob/living/carbon/human/user)
+	user.visible_message("<span class='notice'>[user] has analyzed [M]'s nanites.</span>")
+
+	nanite_scan(user, M)
+
+	add_fingerprint(user)
+
+/proc/nanite_scan(mob/user, mob/living/M)
+	GET_COMPONENT_FROM(nanites, /datum/component/nanites, M)
+	if(!nanites)
+		to_chat(user, "<span class='info'>No nanites detected in the subject.</span>")
+		return
+	to_chat(user, "<span class='info'>NANITES DETECTED</span>")
+	to_chat(user, "<span class='info'>================</span>")
+	to_chat(user, "<span class='info'>Saturation: [nanites.nanite_volume]/[nanites.max_nanites]</span>")
+	to_chat(user, "<span class='info'>Safety Threshold: [nanites.safety_threshold]</span>")
+	to_chat(user, "<span class='info'>Cloud ID: [nanites.cloud_id ? "Disabled" : nanites.cloud_id]</span>")
+	to_chat(user, "<span class='info'>================</span>")
+	to_chat(user, "<span class='info'>Program List:</span>")
+	if(nanites.stealth)
+		to_chat(user, "<span class='alert'>%#$ENCRYPTED&^@</span>")
+	else
+		for(var/X in nanites.programs)
+			var/datum/nanite_program/NP = X
+			to_chat(user, "<span class='info'><b>[NP.name]</b> | [NP.activated ? "Active" : "Inactive"]</span>")

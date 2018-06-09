@@ -19,10 +19,25 @@
 /datum/nanite_program/monitoring/enable_passive_effect()
 	..()
 	SSnanites.nanite_monitored_mobs |= host_mob
+	host_mob.hud_set_nanite_indicator()
 
 /datum/nanite_program/monitoring/disable_passive_effect()
 	..()
 	SSnanites.nanite_monitored_mobs -= host_mob
+	host_mob.hud_set_nanite_indicator()
+
+/datum/nanite_program/stealth
+	name = "Stealth"
+	desc = "The nanites hide their activity and programming from superficial scans."
+	rogue_types = list(/datum/nanite_program/toxic)
+
+/datum/nanite_program/stealth/enable_passive_effect()
+	..()
+	nanites.stealth = TRUE
+
+/datum/nanite_program/stealth/disable_passive_effect()
+	..()
+	nanites.stealth = FALSE
 
 /datum/nanite_program/relay
 	name = "Relay"
@@ -107,7 +122,7 @@
 /datum/nanite_program/spreading/active_effect()
 	if(prob(10))
 		var/list/mob/living/target_hosts = list()
-		for(var/mob/living/L in oview(host_mob, 5))
+		for(var/mob/living/L in oview(5, host_mob))
 			target_hosts += L
 		var/mob/living/infectee = pick(target_hosts)
 		if(prob(infectee.get_permeability_protection() * 100))

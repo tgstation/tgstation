@@ -846,7 +846,7 @@
 	id = "nanite_roam"
 	display_name = "Roaming Nanite Programming"
 	description = "Nanite programs that require nanites to act independently, roam or seek targets."
-	prereq_ids = list("nanite_base","adv_robotics")
+	prereq_ids = list("nanite_base","adv_robotics","stealth_nanites")
 	design_ids = list("purging_nanites", "necrotic_nanites", "metabolic_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 4000
@@ -873,16 +873,16 @@
 	id = "nanite_neural"
 	display_name = "Neural Nanite Programming"
 	description = "Nanite programs affecting nerves and brain matter."
-	prereq_ids = list("nanite_base","neural_programming")
+	prereq_ids = list("nanite_bio")
 	design_ids = list("nervous_nanites", "brainheal_nanites", "braindecay_nanites", "brainmisfire_nanites", "paralyzing_nanites", "stun_nanites", "nervedecay_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
-	
+
 /datum/techweb_node/nanite_synaptic
 	id = "nanite_synaptic"
 	display_name = "Synaptic Nanite Programming"
-	description = "Nanite programs affecting the host's mind and thoughts."
-	prereq_ids = list("nanite_neural")
+	description = "Nanite programs affecting mind and thoughts."
+	prereq_ids = list("nanite_neural","neural_programming")
 	design_ids = list("mindshield_nanites", "pacifying_nanites", "blinding_nanites", "sleep_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000

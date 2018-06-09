@@ -14,6 +14,8 @@
 	var/next_sync = 0
 	var/list/datum/nanite_program/programs = list()
 
+	var/stealth = FALSE //if TRUE, does not appear on HUDs and health scans, and does not display the program list on nanite scans
+
 /datum/component/nanites/Initialize(amount)
 	nanite_volume = amount
 
@@ -39,13 +41,13 @@
 	return ..()
 
 /datum/component/nanites/InheritComponent(datum/component/new_nanites, i_am_original, list/arguments)
-	nanite_volume += arguments[1] //just add to the nanite volume
+	adjust_nanites(arguments[1]) //just add to the nanite volume
 
 /datum/component/nanites/process()
 	if(nanite_volume <= 0) //oops we ran out
 		qdel(src)
 	if(host_mob)
-		nanite_volume += regen_rate
+		adjust_nanites(regen_rate)
 		for(var/X in programs)
 			var/datum/nanite_program/NP = X
 			NP.on_process()
@@ -66,7 +68,7 @@
 		new_nanites.add_program(NP.copy())
 
 //Syncs the nanite component to another, making it so programs are the same with the same programming (except activation status)
-/datum/component/nanites/proc/sync(datum/component/nanites/source, full_overwrite = TRUE)
+/datum/component/nanites/proc/sync(datum/component/nanites/source, full_overwrite = TRUE, copy_activation = FALSE)
 	var/list/programs_to_remove = programs.Copy()
 	var/list/programs_to_add = source.programs.Copy()
 	for(var/X in programs)
@@ -76,7 +78,7 @@
 			if(NP.type == SNP.type)
 				programs_to_remove -= NP
 				programs_to_add -= SNP
-				SNP.copy_programming(NP, FALSE)
+				SNP.copy_programming(NP, copy_activation)
 				break
 	if(full_overwrite)
 		for(var/X in programs_to_remove)
@@ -91,7 +93,7 @@
 	var/datum/component/nanites/cloud/cloud_copy = SSnanites.get_cloud_backup(cloud_id)
 	if(cloud_copy)
 		sync(cloud_copy)
-		
+
 /datum/component/nanites/proc/add_program(datum/nanite_program/new_program, datum/nanite_program/source_program)
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
@@ -126,13 +128,13 @@
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_shock(shock_damage)
-		
+
 /datum/component/nanites/proc/on_minor_shock()
 	adjust_nanites(-(rand(5, 15)))			//Lose 5-15 flat nanite volume
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_minor_shock()
-		
+
 /datum/component/nanites/proc/on_death(gibbed)
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X

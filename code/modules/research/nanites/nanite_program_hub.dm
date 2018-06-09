@@ -15,6 +15,7 @@
 	var/categories = list(
 						list(name = "Utility Nanites"),
 						list(name = "Medical Nanites"),
+						list(name = "Sensor Nanites"),
 						list(name = "Augmentation Nanites"),
 						list(name = "Suppression Nanites"),
 						list(name = "Weaponized Nanites"),
