@@ -104,6 +104,7 @@
 	return
 
 /turf/open/floor/grass/snow/basalt //By your powers combined, I am captain planet
+	gender = NEUTER
 	name = "volcanic floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"

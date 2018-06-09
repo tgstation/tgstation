@@ -118,7 +118,7 @@
 	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/mineral/plastitanium/brig
-	name = "Brig floor"
+	name = "brig floor"
 
 //BANANIUM
 
