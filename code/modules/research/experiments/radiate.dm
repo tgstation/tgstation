@@ -2,7 +2,7 @@
 	name = "Irradiate"
 
 /datum/experiment/enable_clone
-	weight = 20
+	weight = 0 //disabled until further testing
 	experiment_type = /datum/experiment_type/radiate
 	base_points = 2500
 	critical = TRUE

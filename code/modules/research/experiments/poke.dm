@@ -86,7 +86,7 @@
 	chem_splash(get_turf(E),3,list(O.reagents))
 
 /datum/experiment/enable_improve
-	weight = 20
+	weight = 0 //disabled until further testing
 	experiment_type = /datum/experiment_type/poke
 	base_points = 2500
 	critical = TRUE

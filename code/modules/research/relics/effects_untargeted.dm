@@ -126,12 +126,9 @@
 /datum/relic_effect/activate/loot
 	hint = list("It contains something unknown.")
 	weight = 40
-	var/multiuse = FALSE
 
 /datum/relic_effect/activate/loot/init()
 	..()
-	if(prob(8))
-		multiuse = TRUE
 
 /datum/relic_effect/activate/loot/activate(obj/item/A,atom/target,mob/user)
 	if(!..())
@@ -141,5 +138,4 @@
 	new gift_type(get_turf(A))
 	A.visible_message("<span class='warning'>[A] pops open!</span>")
 	qdel(lootbox)
-	if(!multiuse)
-		qdel(A)
+	qdel(A)

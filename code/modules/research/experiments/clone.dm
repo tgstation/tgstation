@@ -53,7 +53,7 @@
 	new /obj/effect/decal/cleanable/molten_object(get_turf(O))
 	qdel(O)
 
-/datum/experiment/vaporize //no cloning valuable items without being careful
+/datum/experiment/destroy/clone //no cloning valuable items without being careful
 	weight = 800
 	is_bad = TRUE
 	experiment_type = /datum/experiment_type/clone
@@ -67,6 +67,5 @@
 		. = FALSE
 
 /datum/experiment/vaporize/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
-	. = ..()
 	E.visible_message("<span class='danger'>[E] malfunctions, vaporizing [O]!</span>")
-	E.destroy_item()
+	. = ..()

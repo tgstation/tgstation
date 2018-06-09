@@ -36,7 +36,7 @@
 		E.say("Unknown object, unable to modify.")
 
 	if(success)
-		E.visible_message("<span class='notice'>[E] uses its data to improve [originalname]!</span>")
+		E.visible_message("<span class='notice'>[E] uses its data to improve the [originalname]!</span>")
 		E.investigate_log("Experimentor has improved [originalname]", INVESTIGATE_EXPERIMENTOR)
 		var/datum/experiment_type/improve/mode = E.experiments[/datum/experiment_type/improve]
 		if(mode)
