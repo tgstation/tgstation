@@ -96,10 +96,10 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = -1 //Will remove self when block breaks.
 	alert_type = /obj/screen/alert/status_effect/freon/stasis
-	listening = TRUE
 	var/obj/structure/ice_stasis/cube
 
 /datum/status_effect/frozenstasis/on_apply()
+	RegisterEffectSignal(COMSIG_LIVING_RESIST, .proc/breakCube())
 	cube = new /obj/structure/ice_stasis(get_turf(owner.loc))
 	owner.forceMove(cube)
 	owner.status_flags |= GODMODE
@@ -109,9 +109,8 @@
 	if(!cube || owner.loc != cube)
 		owner.remove_status_effect(src)
 
-/datum/status_effect/frozenstasis/receiveSignal(var/sigtype)
-	if(sigtype == "resist")
-		owner.remove_status_effect(src)
+/datum/status_effect/frozenstasis/proc/breakCube()
+	owner.remove_status_effect(src)
 
 /datum/status_effect/frozenstasis/on_remove()
 	if(cube)
