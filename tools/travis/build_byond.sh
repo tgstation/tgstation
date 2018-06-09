@@ -65,7 +65,7 @@ if [ "$BUILD_TOOLS" = false ]; then
 			mv mariadb_client-2.0.0-linux/libmariadb.so $HOME/libmariadb/libmariadb.so
 			rm -rf mariadb_client-2.0.0-linux.tgz mariadb_client-2.0.0-linux
 		fi
-    	ln -s $HOME/libmariadb/librust_g.so ~/.byond/bin/libmariadb.so
+    	ln -s $HOME/libmariadb/libmariadb.so ~/.byond/bin/libmariadb.so
 	
 		DreamDaemon tgstation.dmb -close -trusted -params "test-run&log-directory=travis"
 		cat data/logs/travis/clean_run.lk
