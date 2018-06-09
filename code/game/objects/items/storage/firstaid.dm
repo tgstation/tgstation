@@ -234,7 +234,7 @@
 
 /obj/item/storage/pill_bottle/zoom
 	name = "suspicious pill bottle"
-	desc = "The label is pretty old and almost unreadable, you recognize some chemical coumpounds."
+	desc = "The label is pretty old and almost unreadable, you recognize some chemical compounds."
 
 /obj/item/storage/pill_bottle/zoom/PopulateContents()
 	for(var/i in 1 to 5)
