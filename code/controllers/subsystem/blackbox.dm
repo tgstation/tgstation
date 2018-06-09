@@ -33,6 +33,8 @@ SUBSYSTEM_DEF(blackbox)
 			update_exp(10,FALSE)
 
 /datum/controller/subsystem/blackbox/proc/CheckPlayerCount()
+	set waitfor = FALSE
+
 	if(!SSdbcore.Connect())
 		return
 	var/playercount = 0

@@ -107,10 +107,10 @@ SUBSYSTEM_DEF(dbcore)
 				if(db_major != DB_MAJOR_VERSION || db_minor != DB_MINOR_VERSION)
 					schema_mismatch = 1 // flag admin message about mismatch
 					log_sql("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
-			qdel(query_db_version)
 			else
 				schema_mismatch = 2 //flag admin message about no schema version
 				log_sql("Could not get schema version from database")
+			qdel(query_db_version)
 		else
 			log_sql("Your server failed to establish a connection with the database.")
 	else

@@ -144,8 +144,8 @@
 	if(!message_id)
 		return
 	var/editor_ckey = usr.ckey
-	var/m1 = "[key_name(usr)] has toggled [target_ckey]'s [type] made by [admin_ckey] to [secret ? "not secret" : "secret"]"
-	var/m2 = "[key_name_admin(usr)] has toggled [target_ckey]'s [type] made by [admin_ckey] to [secret ? "not secret" : "secret"]"
+	var/kn = key_name(usr)
+	var/kna = key_name_admin(usr)
 	var/datum/DBQuery/query_find_message_secret = SSdbcore.NewQuery("SELECT type, targetckey, adminckey, secret FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
 	if(!query_find_message_secret.warn_execute())
 		qdel(query_find_message_secret)
@@ -163,8 +163,8 @@
 			qdel(query_message_secret)
 			return
 		qdel(query_message_secret)
-		log_admin_private(m1)
-		message_admins(m2)
+		log_admin_private("[kn] has toggled [target_ckey]'s [type] made by [admin_ckey] to [secret ? "not secret" : "secret"]")
+		message_admins("[kna] has toggled [target_ckey]'s [type] made by [admin_ckey] to [secret ? "not secret" : "secret"]")
 		browse_messages(target_ckey = target_ckey, agegate = TRUE)
 	qdel(query_find_message_secret)
 

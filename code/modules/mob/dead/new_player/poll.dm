@@ -594,7 +594,7 @@
 	if(!i)
 		return 2
 	var/adminrank = "Player"
-	if(!QELETED(client) && client.holder)
+	if(!QDELETED(client) && client.holder)
 		adminrank = client.holder.rank.name
 	adminrank = sanitizeSQL(adminrank)
 	var/datum/DBQuery/query_multi_vote = SSdbcore.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime, pollid, optionid, ckey, ip, adminrank) VALUES (Now(), [pollid], [optionid], '[ckey]', INET_ATON('[client.address]'), '[adminrank]')")

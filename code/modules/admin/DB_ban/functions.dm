@@ -76,7 +76,7 @@
 		ip = banip
 	
 	var/had_banned_mob = banned_mob != null
-	var/banned_client = banned_mob?.client
+	var/client/banned_client = banned_mob?.client
 	var/banned_mob_guest_key = had_banned_mob && IsGuestKey(banned_mob.key)
 	banned_mob = null
 
