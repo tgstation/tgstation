@@ -190,6 +190,8 @@
 				if(Adjacent(target) || (tool && CheckToolReach(src, target, tool.reach))) //Adjacent or reaching attacks
 					return TRUE
 
+			if (!target.loc)
+				continue
 			GET_COMPONENT_FROM(storage, /datum/component/storage, target.loc)
 			if (storage)
 				var/datum/component/storage/concrete/master = storage.master()
