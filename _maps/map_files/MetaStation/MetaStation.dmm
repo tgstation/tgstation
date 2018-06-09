@@ -47495,8 +47495,10 @@
 	},
 /area/maintenance/port/aft)
 "bXA" = (
-/obj/structure/light_construct{
-	dir = 8
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12;
+	pixel_y = 2
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -47938,9 +47940,6 @@
 /area/maintenance/port/aft)
 "bYH" = (
 /obj/structure/rack,
-/obj/item/stack/cable_coil{
-	amount = 16
-	},
 /obj/item/stack/rods{
 	amount = 4
 	},
