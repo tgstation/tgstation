@@ -612,31 +612,6 @@
 	icon_state = null
 	gender = NEUTER
 
-/datum/sprite_accessory/underwear/swimsuit
-	name = "Swimsuit - Black"
-	icon_state = "swim_black"
-	gender = NEUTER
-
-/datum/sprite_accessory/underwear/swimsuit_blue
-	name = "Swimsuit - Blue"
-	icon_state = "swim_blue"
-	gender = NEUTER
-
-/datum/sprite_accessory/underwear/swimsuit_green
-	name = "Swimsuit - Green"
-	icon_state = "swim_green"
-	gender = NEUTER
-
-/datum/sprite_accessory/underwear/swimsuit_purple
-	name = "Swimsuit - Purple"
-	icon_state = "swim_purple"
-	gender = NEUTER
-
-/datum/sprite_accessory/underwear/swimsuit_red
-	name = "Swimsuit - Red"
-	icon_state = "swim_red"
-	gender = NEUTER
-
 /datum/sprite_accessory/underwear/male_white
 	name = "Mens White"
 	icon_state = "male_white"
