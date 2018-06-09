@@ -46754,11 +46754,9 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bVW" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/table,
+/obj/item/kitchen/rollingpin,
+/obj/item/reagent_containers/glass/beaker,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -47497,15 +47495,14 @@
 	},
 /area/maintenance/port/aft)
 "bXA" = (
-/obj/structure/barricade/wooden,
+/obj/structure/light_construct{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bXC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
-	},
-/obj/structure/light_construct{
-	dir = 8
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -47940,7 +47937,13 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bYH" = (
-/obj/structure/closet/secure_closet/freezer/kitchen/maintenance,
+/obj/structure/rack,
+/obj/item/stack/cable_coil{
+	amount = 16
+	},
+/obj/item/stack/rods{
+	amount = 4
+	},
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -74187,8 +74190,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "diy" = (
-/obj/structure/kitchenspike,
-/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/structure/closet/secure_closet/freezer/kitchen/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "diz" = (
@@ -76104,6 +76106,11 @@
 /obj/machinery/autolathe,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"hvt" = (
+/obj/structure/kitchenspike_frame,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "hyP" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Two"
@@ -76149,8 +76156,6 @@
 /area/science/lab)
 "iLj" = (
 /obj/structure/table,
-/obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/glass/beaker,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "jeV" = (
@@ -76608,6 +76613,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"qhe" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
 "qqg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -93620,9 +93631,9 @@ alK
 cgH
 dux
 iLj
+dvt
 bXE
-dux
-dux
+hvt
 dux
 dux
 dux
@@ -94391,7 +94402,7 @@ alK
 bSr
 dux
 bUX
-bXE
+bUU
 gqA
 xEf
 dux
@@ -94905,7 +94916,7 @@ alK
 bOf
 bOv
 alC
-aob
+qhe
 dux
 bYK
 bZP
