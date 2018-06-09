@@ -99,7 +99,7 @@
 	var/obj/structure/ice_stasis/cube
 
 /datum/status_effect/frozenstasis/on_apply()
-	RegisterEffectSignal(COMSIG_LIVING_RESIST, .proc/breakCube())
+	RegisterEffectSignal(COMSIG_LIVING_RESIST, .proc/breakCube)
 	cube = new /obj/structure/ice_stasis(get_turf(owner.loc))
 	owner.forceMove(cube)
 	owner.status_flags |= GODMODE
