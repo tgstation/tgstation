@@ -2,7 +2,7 @@
 /datum/nanite_program/viral
 	name = "Viral Replica"
 	desc = "The nanites constantly send encrypted signals attempting to forcefully copy their own programming into other nanite clusters."
-	use_rate = 1.5
+	use_rate = 0.5
 	rogue_types = list(/datum/nanite_program/toxic)
 
 /datum/nanite_program/viral/active_effect()
@@ -30,6 +30,7 @@
 	name = "Stealth"
 	desc = "The nanites hide their activity and programming from superficial scans."
 	rogue_types = list(/datum/nanite_program/toxic)
+	use_rate = 0.2
 
 /datum/nanite_program/stealth/enable_passive_effect()
 	..()
