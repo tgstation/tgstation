@@ -26,6 +26,7 @@ cache:
 
 
 addons:
+  - mariadb: '10.0'
   apt:
     packages:
       - libc6-i386
@@ -36,11 +37,7 @@ addons:
       - python3-pip
       - libssl-dev:i386
 
-addons:
-  - mariadb: '10.0'
-
-services:
-  - mariadb
+services: mariadb
 
 install:
   - tools/travis/install_build_tools.sh
