@@ -123,6 +123,23 @@
 	desc = "You get the feeling that nobody's bothered to actually make this water functional..."
 	icon_state = "water"
 	baseturfs = /turf/open/floor/plating/beach/water
+	slowdown = 2
+	var/obj/effect/overlay/water/water
+
+/turf/open/floor/plating/beach/water/Initialize()
+	. = ..()
+	water = new /obj/effect/overlay/water(src)
+
+/turf/open/floor/plating/beach/water/Destroy()
+	if(water)
+		QDEL_NULL(water)
+	return ..()
+
+/obj/effect/overlay/water
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	layer = SPACEVINE_MOB_LAYER
+	icon = 'icons/misc/beach.dmi'
+	icon_state = "water3"
 
 /turf/open/floor/plating/beach/coastline_t/sandwater_inner
 	icon_state = "sandwater_inner"
