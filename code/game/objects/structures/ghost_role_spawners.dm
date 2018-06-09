@@ -309,6 +309,7 @@
 	flavour_text = "<span class='big bold'>You are a staff member of a top-of-the-line space hotel!</span><b> Cater to guests and <font size=6><b>DON'T</b></font> leave the hotel, lest the manager fire you for\
 		dereliction of duty!</b>"
 	assignedrole = "Hotel Staff"
+	lock_to_zlevel = 1
 
 /datum/outfit/hotelstaff
 	name = "Hotel Staff"
@@ -325,6 +326,7 @@
 	flavour_text = "<span class='big bold'>You are a peacekeeper</span><b> assigned to this hotel to protect the interests of the company while keeping the peace between \
 		guests and the staff. Do <font size=6>NOT</font> leave the hotel, as that is grounds for contract termination.</b>"
 	objectives = "Do not leave your assigned hotel. Try and keep the peace between staff and guests, non-lethal force heavily advised if possible."
+	assignedrole = "Hotel Security"
 
 /datum/outfit/hotelstaff/security
 	name = "Hotel Secuirty"

@@ -35,7 +35,7 @@
 		if(!isnum(bounds[MAP_MAXZ]) || !isnum(bounds[MAP_MINZ]))
 			continue
 		z_offset += bounds[MAP_MAXZ] - bounds[MAP_MINZ] + 1
-	if(!bounds || !(istype(bounds,/list)))
+	if(!bounds)
 		message_admins("Error loading map files for \"/datum/mapGeneratorModule/reload_station_map/generate()\".")
 		GLOB.reloading_map = FALSE
 		return

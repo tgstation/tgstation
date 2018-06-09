@@ -26,6 +26,7 @@
 	var/assignedrole
 	var/show_flavour = TRUE
 	var/banType = "lavaland"
+	var/lock_to_zlevel = 0
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/mob_spawn/attack_ghost(mob/user)
@@ -99,8 +100,65 @@
 		MM.name = M.real_name
 	if(uses > 0)
 		uses--
+	if(M.mind && lock_to_zlevel)
+		M.mind.restrict_z_level()
 	if(!permanent && !uses)
 		qdel(src)
+
+/datum/mind/var/permanently_disable_z_level_restriction = 0
+/datum/mind/proc/restrict_z_level()
+	spawn(0)
+		if(istype(current))
+			var/turf/lastturf = get_turf(current)
+			var/thez = lastturf.z
+			while(1)
+				sleep(50)
+				if(permanently_disable_z_level_restriction)
+					permanently_disable_z_level_restriction = 0
+					if(current && current.key)
+						message_admins("Z_level_restriction on [name] the [assigned_role]([current.key])'s mind has been disabled. Call proc \"restrict_z_level\" on the /datum/mind of [name]([current.key]) to re-enable.")
+					break
+				if(!current)
+					continue
+				var/turf/T = get_turf(current)
+				if(!T)
+					continue
+				if(T.z != thez)
+					var/movespot = 0
+					if(lastturf.density)
+						movespot = 1
+					if(!movespot)
+						for(var/obj/O in lastturf)
+							if(O.density)
+								movespot = 1
+								break
+					if(movespot)
+						var/turf/newspot
+						for(var/turf/F in orange(1,lastturf))
+							if(F.loc.type != lastturf.loc.type)
+								continue
+							if(F.density)
+								continue
+							var/skip = 0
+							for(var/obj/O in F)
+								if(O.density)
+									skip = 1
+									break
+							if(skip)
+								continue
+							newspot = F
+							break
+						if(newspot)
+							lastturf = newspot
+					current.forceMove(lastturf)
+					to_chat(current,"<B><font color='red' size='4'>You may not leave the sector.</font></B>")
+					message_admins("[current.key] as \"[assigned_role]\" attempted to leave their restricted zlevel of \"[thez]\".")
+					log_game("[current.key] as \"[assigned_role]\" attempted to leave their restricted zlevel of \"[thez]\".")
+				else
+					var/area/A = T.loc
+					if(istype(A, /area/shuttle))
+						continue
+					lastturf = T
 
 // Base version - place these on maps/templates.
 /obj/effect/mob_spawn/human

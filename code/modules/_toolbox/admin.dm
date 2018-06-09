@@ -134,8 +134,11 @@ GLOBAL_VAR_INIT(override_lobby_player_count,0)
 						for(var/datum/antagonist/changeling/changeling in C.mob.mind.antag_datums)
 							entry += " - <b><font>Non Antag Ling</font></b>-(<i><font color=#800080><b>[changeling.changelingID]</b></font></i>)"
 							break
-			if(C.mob.mind && C.mob.mind.assigned_role && !(C.mob.mind in GLOB.Original_Minds))
-				entry += " - <b><font>[C.mob.mind.assigned_role]</font></b>"
+			if(!C.mob.mind || !(C.mob.mind in GLOB.Original_Minds))
+				var/assigned_role_text = "No Role"
+				if(C.mob.mind && C.mob.mind.assigned_role)
+					assigned_role_text = C.mob.mind.assigned_role
+				entry += " - <b><font>[assigned_role_text]</font></b>"
 			var/list/sharedlist = list()
 			for(var/client/S in C.shared_ips)
 				if(S == C)
