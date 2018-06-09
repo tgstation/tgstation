@@ -12,13 +12,13 @@ env:
 matrix:
   - env:
     - BUILD_TOOLS=true
-      addons:
-        apt:
-          packages:
-            - python3
-            - python3-pip
-            - libssl-dev:i386
-            - gcc-multilib
+    addons:
+      apt:
+        packages:
+          - python3
+          - python3-pip
+          - libssl-dev:i386
+          - gcc-multilib
     cache:
       directories:
         - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
