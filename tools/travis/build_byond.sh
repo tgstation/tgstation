@@ -54,14 +54,18 @@ if [ "$BUILD_TOOLS" = false ]; then
 		cp tools/travis/travis_config.txt config/config.txt
 
 		# get libmariadb, cache it so limmex doesn't get angery
-		mkdir -p $HOME/libmariadb
-		if [ ! -f $HOME/libmariadb/mariadb_client-2.0.0-linux.tgz ]; then
-			wget -O $HOME/libmariadb/mariadb_client-2.0.0-linux.tgz http://www.byond.com/download/db/mariadb_client-2.0.0-linux.tgz
+		if [ -f $HOME/libmariadb ]; then
+			#travis likes to interpret the cache command as it being a file for some reason
+			rm $HOME/libmariadb
+			mkdir $HOME/libmariadb
 		fi
-		cp $HOME/libmariadb/mariadb_client-2.0.0-linux.tgz mariadb_client-2.0.0-linux.tgz
-		tar -xvf mariadb_client-2.0.0-linux.tgz
-		mv mariadb_client-2.0.0-linux/libmariadb.so ./
-		rm -rf mariadb_client-2.0.0-linux.tgz mariadb_client-2.0.0-linux
+		if [ ! -f $HOME/libmariadb/libmariadb.so ]; then
+			wget -O http://www.byond.com/download/db/mariadb_client-2.0.0-linux.tgz
+			tar -xvf mariadb_client-2.0.0-linux.tgz
+			mv mariadb_client-2.0.0-linux/libmariadb.so $HOME/libmariadb/libmariadb.so
+			rm -rf mariadb_client-2.0.0-linux.tgz mariadb_client-2.0.0-linux
+		fi
+		cp $HOME/libmariadb/libmariadb.so ./
 	
 		DreamDaemon tgstation.dmb -close -trusted -params "test-run&log-directory=travis"
 		cat data/logs/travis/clean_run.lk
