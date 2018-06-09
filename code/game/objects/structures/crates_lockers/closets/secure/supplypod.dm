@@ -106,11 +106,13 @@
 
 /obj/effect/DPtarget/Initialize(mapload, var/SO, var/podID, var/target)
 	. = ..()
-	var/delayTime = 30//default time is 3 seconds
+	var/delayTime = 17			//We're forcefully adminspawned, make it faster
 	switch(podID)
+		if(POD_STANDARD)
+			delayTime = 30
 		if(POD_BLUESPACE)
 			delayTime = 15
-		if(POD_CENTCOM)
+		if(POD_CENTCOM)			//Admin smite, even faster.
 			delayTime = 5//speedy delivery
 
 	addtimer(CALLBACK(src, .proc/beginLaunch, SO, podID), delayTime)//standard pods take 3 seconds to come in, bluespace pods take 1.5
