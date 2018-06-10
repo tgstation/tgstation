@@ -26,6 +26,7 @@
 			reagent_overlay.color = mix_color_from_reagents(reagents.reagent_list)
 			add_overlay(reagent_overlay)
 	else
+		icon_state = "glass_empty"
 		name = "empty glass of [name]"
 		desc = "Why is the rum always gone?"
 
