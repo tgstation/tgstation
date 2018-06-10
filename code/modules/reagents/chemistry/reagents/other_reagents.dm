@@ -470,7 +470,6 @@
 	name = "Lizard Mutation Toxin"
 	id = "lizardmutationtoxin"
 	description = "A lizarding toxin."
-	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/lizard
 	mutationtext = "<span class='danger'>The pain subsides. You feel... scaly.</span>"
 
@@ -478,7 +477,6 @@
 	name = "Fly Mutation Toxin"
 	id = "flymutationtoxin"
 	description = "An insectifying toxin."
-	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/fly
 	mutationtext = "<span class='danger'>The pain subsides. You feel... buzzy.</span>"
 
@@ -486,7 +484,6 @@
 	name = "Moth Mutation Toxin"
 	id = "mothmutationtoxin"
 	description = "A glowing toxin."
-	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/moth
 	mutationtext = "<span class='danger'>The pain subsides. You feel... attracted to light.</span>"
 
@@ -494,7 +491,6 @@
 	name = "Podperson Mutation Toxin"
 	id = "podmutationtoxin"
 	description = "A vegetalizing toxin."
-	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/pod
 	mutationtext = "<span class='danger'>The pain subsides. You feel... plantlike.</span>"
 
@@ -502,7 +498,6 @@
 	name = "Imperfect Mutation Toxin"
 	id = "jellymutationtoxin"
 	description = "An jellyfying toxin."
-	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/jelly
 	mutationtext = "<span class='danger'>The pain subsides. You feel... wobbly.</span>"
 
@@ -510,7 +505,6 @@
 	name = "Golem Mutation Toxin"
 	id = "golemmutationtoxin"
 	description = "A crystal toxin."
-	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/golem/random
 	mutationtext = "<span class='danger'>The pain subsides. You feel... rocky.</span>"
 
@@ -518,7 +512,6 @@
 	name = "Abductor Mutation Toxin"
 	id = "abductormutationtoxin"
 	description = "An alien toxin."
-	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/abductor
 	mutationtext = "<span class='danger'>The pain subsides. You feel... alien.</span>"
 
@@ -526,9 +519,15 @@
 	name = "Android Mutation Toxin"
 	id = "androidmutationtoxin"
 	description = "A robotic toxin."
-	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/android
 	mutationtext = "<span class='danger'>The pain subsides. You feel... artificial.</span>"
+
+/datum/reagent/mutationtoxin/fungus
+	name = "Fungus Mutation Toxin"
+	id = "fungusmutationtoxin"
+	description = "A fungus toxin."
+	race = /datum/species/mush
+	mutationtext = "<span class='danger'>The pain subsides. You feel... shroomy.</span>"
 
 
 //BLACKLISTED RACES
@@ -536,7 +535,6 @@
 	name = "Skeleton Mutation Toxin"
 	id = "skeletonmutationtoxin"
 	description = "A scary toxin."
-	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/skeleton
 	mutationtext = "<span class='danger'>The pain subsides. You feel... spooky.</span>"
 
@@ -544,7 +542,6 @@
 	name = "Zombie Mutation Toxin"
 	id = "zombiemutationtoxin"
 	description = "An undead toxin."
-	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/zombie //Not the infectious kind. The days of xenobio zombie outbreaks are long past.
 	mutationtext = "<span class='danger'>The pain subsides. You feel... undead.</span>"
 
@@ -552,17 +549,28 @@
 	name = "Ash Mutation Toxin"
 	id = "ashmutationtoxin"
 	description = "An ashen toxin."
-	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/lizard/ashwalker
 	mutationtext = "<span class='danger'>The pain subsides. You feel... savage.</span>"
 
+/datum/reagent/mutationtoxin/angel
+	name = "Angelic Mutation Toxin"
+	id = "angelicmutationtoxin"
+	description = "A holy toxin."
+	race = /datum/species/angel
+	mutationtext = "<span class='danger'>The pain subsides. You feel... angelic.</span>"
+
+/datum/reagent/mutationtoxin/headless
+	name = "Headless Mutation Toxin"
+	id = "headlessmutationtoxin"
+	description = "A headless toxin."
+	race = /datum/species/dullahan
+	mutationtext = "<span class='danger'>The pain subsides. You feel... headless.</span>"
 
 //DANGEROUS RACES
 /datum/reagent/mutationtoxin/shadow
 	name = "Shadow Mutation Toxin"
 	id = "shadowmutationtoxin"
 	description = "A dark toxin."
-	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/shadow
 	mutationtext = "<span class='danger'>The pain subsides. You feel... darker.</span>"
 
@@ -570,9 +578,15 @@
 	name = "Plasma Mutation Toxin"
 	id = "plasmamutationtoxin"
 	description = "A plasma-based toxin."
-	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/plasmaman
 	mutationtext = "<span class='danger'>The pain subsides. You feel... flammable.</span>"
+
+/datum/reagent/mutationtoxin/vampiric
+	name = "Bloody Mutation Toxin"
+	id = "bloodymutationtoxin"
+	description = "A vampiric toxin."
+	race = /datum/species/vampire
+	mutationtext = "<span class='danger'>The pain subsides. You feel... batty.</span>"
 
 /datum/reagent/slime_toxin
 	name = "Slime Mutation Toxin"
