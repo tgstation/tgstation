@@ -80,7 +80,7 @@
 			else if(fullness > 500 && fullness < 600)
 				user.visible_message("[user] unwillingly [eatverb]s a bit of \the [src].", "<span class='notice'>You unwillingly [eatverb] a bit of \the [src].</span>")
 			else if(fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
-				user.visible_message("[user] cannot force any more of \the [src] to go down [user.p_they()] throat!</span>", "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>")	
+				user.visible_message("[user] cannot force any more of \the [src] to go down [user.p_their()] throat!</span>", "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>")	
 				return 0
 			if(M.has_trait(TRAIT_VORACIOUS))
 				M.changeNext_move(CLICK_CD_MELEE * 0.5) //nom nom nom
