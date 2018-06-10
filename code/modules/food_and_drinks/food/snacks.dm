@@ -72,15 +72,15 @@
 				to_chat(M, "<span class='notice'>You don't feel like eating any more junk food at the moment.</span>")
 				return 0
 			else if(fullness <= 50)
-				to_chat(M, "<span class='notice'>You hungrily [eatverb] some of \the [src] and gobble it down!</span>")
+				user.visible_message("[user] hungrily [eatverb]s some of \the [src] and gobbles it down!", "<span class='notice'>You hungrily [eatverb] some of \the [src] and gobble it down!</span>")
 			else if(fullness > 50 && fullness < 150)
-				to_chat(M, "<span class='notice'>You hungrily begin to [eatverb] \the [src].</span>")
+				user.visible_message("[user] hungrily begins to [eatverb] \the [src].", "<span class='notice'>You hungrily begin to [eatverb] \the [src].</span>")
 			else if(fullness > 150 && fullness < 500)
-				to_chat(M, "<span class='notice'>You [eatverb] \the [src].</span>")
+				user.visible_message("[user] [eatverb]s \the [src].", "<span class='notice'>You [eatverb] \the [src].</span>")		
 			else if(fullness > 500 && fullness < 600)
-				to_chat(M, "<span class='notice'>You unwillingly [eatverb] a bit of \the [src].</span>")
+				user.visible_message("[user] unwillingly [eatverb]s a bit of \the [src].", "<span class='notice'>You unwillingly [eatverb] a bit of \the [src].</span>")
 			else if(fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
-				to_chat(M, "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>")
+				user.visible_message("[user] cannot force any more of \the [src] to go down [user.p_they()] throat!</span>", "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>")	
 				return 0
 			if(M.has_trait(TRAIT_VORACIOUS))
 				M.changeNext_move(CLICK_CD_MELEE * 0.5) //nom nom nom
