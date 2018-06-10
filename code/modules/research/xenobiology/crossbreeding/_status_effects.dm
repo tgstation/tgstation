@@ -67,13 +67,14 @@
 	var/icon/bluespace
 
 /datum/status_effect/slimerecall/on_apply()
+	RegisterEffectSignal(COMSIG_LIVING_RESIST, .proc/resistField)
 	to_chat(owner, "<span class='danger'>You feel a sudden tug from an unknown force, and feel a pull to bluespace!</span>")
 	to_chat(owner, "<span class='notice'>Resist if you wish avoid the force!</span>")
 	bluespace = icon('icons/effects/effects.dmi',"chronofield")
 	owner.add_overlay(bluespace)
 	return ..()
 
-/datum/status_effect/slimerecall/receiveSignal(var/sigtype)
+/datum/status_effect/slimerecall/proc/resistField()
 	if(sigtype == "resist")
 		interrupted = TRUE
 		owner.remove_status_effect(src)
