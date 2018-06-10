@@ -75,9 +75,8 @@
 	return ..()
 
 /datum/status_effect/slimerecall/proc/resistField()
-	if(sigtype == "resist")
-		interrupted = TRUE
-		owner.remove_status_effect(src)
+	interrupted = TRUE
+	owner.remove_status_effect(src)
 
 /datum/status_effect/slimerecall/on_remove()
 	owner.cut_overlay(bluespace)
