@@ -16,7 +16,7 @@
 	var/power_efficiency = 1
 	var/x_offset = 0
 	var/y_offset = 0
-	var/max_teleportable = 10
+	var/max_teleportable = 20
 
 /obj/machinery/launchpad/RefreshParts()
 	var/E = -1 //to make default parts have the base value

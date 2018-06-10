@@ -13,7 +13,7 @@
 	var/last_teleport //to handle the cooldown
 	var/teleporting = 0 //if it's in the process of teleporting
 	var/power_efficiency = 1
-	var/max_teleportable = 10
+	var/max_teleportable = 20
 	var/obj/machinery/quantumpad/linked_pad
 
 	//mapping
