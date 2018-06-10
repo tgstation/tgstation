@@ -27,7 +27,7 @@
 			add_overlay(reagent_overlay)
 	else
 		name = "empty glass of [name]"
-		desc = "A sad sight to behold."
+		desc = "Why is the rum always gone?"
 
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //
