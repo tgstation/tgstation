@@ -72,13 +72,13 @@
 				to_chat(M, "<span class='notice'>You don't feel like eating any more junk food at the moment.</span>")
 				return 0
 			else if(fullness <= 50)
-				user.visible_message("[user] hungrily [eatverb]s some of \the [src] and gobbles it down!", "<span class='notice'>You hungrily [eatverb] some of \the [src] and gobble it down!</span>")
+				user.visible_message("[user] hungrily takes a [eatverb] from \the [src], gobbling it down!", "<span class='notice'>You hungrily take a [eatverb] from \the [src], gobbling it down!</span>")
 			else if(fullness > 50 && fullness < 150)
-				user.visible_message("[user] hungrily begins to [eatverb] \the [src].", "<span class='notice'>You hungrily begin to [eatverb] \the [src].</span>")
+				user.visible_message("[user] hungrily takes a [eatverb] from \the [src].", "<span class='notice'>You hungrily take a [eatverb] from \the [src].</span>")
 			else if(fullness > 150 && fullness < 500)
-				user.visible_message("[user] [eatverb]s \the [src].", "<span class='notice'>You [eatverb] \the [src].</span>")		
+				user.visible_message("[user] takes a [eatverb] from \the [src].", "<span class='notice'>You take a [eatverb] from \the [src].</span>")		
 			else if(fullness > 500 && fullness < 600)
-				user.visible_message("[user] unwillingly [eatverb]s a bit of \the [src].", "<span class='notice'>You unwillingly [eatverb] a bit of \the [src].</span>")
+				user.visible_message("[user] unwillingly takes a [eatverb] of a bit of \the [src].", "<span class='notice'>You unwillingly take a [eatverb] of a bit of \the [src].</span>")
 			else if(fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 				user.visible_message("[user] cannot force any more of \the [src] to go down [user.p_their()] throat!</span>", "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>")	
 				return 0
