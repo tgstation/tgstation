@@ -62,6 +62,8 @@
 		body += "<a href='?_src_=holder;[HrefToken()];borgpanel=[REF(M)]'>BP</a> - "
 	body += "<a href='?priv_msg=[M.ckey]'>PM</a> - "
 	body += "<a href='?_src_=holder;[HrefToken()];subtlemessage=[REF(M)]'>SM</a> - "
+	if (ishuman(M) && M.mind)
+		body += "<a href='?_src_=holder;[HrefToken()];CentComReply=[REF(M)]'>CM</a> - "
 	body += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(M)]'>FLW</a> - "
 	//Default to client logs if available
 	var/source = LOGSRC_MOB
