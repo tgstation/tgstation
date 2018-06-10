@@ -198,7 +198,6 @@
 	var/static_power_used = 0
 	var/brightness = 8			// luminosity when on, also used in power calculation
 	var/bulb_power = 1			// basically the alpha of the emitted light source
-	var/bulb_colour = "#FFFFFF"	// befault colour of the light.
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/flickering = FALSE
 	var/light_type = /obj/item/light/tube		// the type of light item
@@ -321,7 +320,7 @@
 	if(on)
 		var/BR = nightshift_enabled? nightshift_brightness : brightness
 		var/PO = nightshift_enabled? nightshift_light_power : bulb_power
-		var/CO = nightshift_enabled? nightshift_light_color : bulb_colour
+		var/CO = nightshift_enabled? nightshift_light_color : light_color
 		var/matching = light && BR == light.light_range && PO == light.light_power && CO == light.light_color
 		if(!matching)
 			switchcount++
