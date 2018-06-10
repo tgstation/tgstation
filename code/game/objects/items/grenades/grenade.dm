@@ -18,6 +18,9 @@
 	var/display_timer = 1
 	var/clumsy_check = GRENADE_CLUMSY_FUMBLE
 
+/obj/item/grenade/New()
+	del(src)
+
 /obj/item/grenade/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] primes [src], then eats it! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(src, 'sound/items/eatfood.ogg', 50, 1)
