@@ -20,7 +20,6 @@ matrix:
             - python3-pip
       cache:
         directories:
-          - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
           - tgui/node_modules
     - env:
       - BUILD_TESTING=true
