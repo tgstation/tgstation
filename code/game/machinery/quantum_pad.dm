@@ -13,6 +13,7 @@
 	var/last_teleport //to handle the cooldown
 	var/teleporting = 0 //if it's in the process of teleporting
 	var/power_efficiency = 1
+	var/max_teleportable = 10
 	var/obj/machinery/quantumpad/linked_pad
 
 	//mapping
@@ -132,6 +133,7 @@
 			playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, 1, extrarange = 3, falloff = 5)
 			flick("qpad-beam", linked_pad)
 			playsound(get_turf(linked_pad), 'sound/weapons/emitter2.ogg', 25, 1, extrarange = 3, falloff = 5)
+			var/teleport_count = 0
 			for(var/atom/movable/ROI in get_turf(src))
 				// if is anchored, don't let through
 				if(ROI.anchored)
@@ -146,6 +148,9 @@
 					else if(!isobserver(ROI))
 						continue
 				do_teleport(ROI, get_turf(linked_pad))
+				teleport_count++
+				if(teleport_count >= max_teleportable)
+					break
 
 /obj/machinery/quantumpad/proc/initMappedLink()
 	. = FALSE
