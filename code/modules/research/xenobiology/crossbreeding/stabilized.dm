@@ -135,9 +135,8 @@ Stabilized extracts:
 		START_PROCESSING(SSobj, src)
 	if(choice == "Familiar Name")
 		var/newname = copytext(sanitize(input(user, "Would you like to change the name of [mob_name]", "Name change", mob_name) as null|text),1,MAX_NAME_LEN)
-		if (!newname)
-			newname = mob_name
-		mob_name = newname
+		if(newname)
+			mob_name = newname
 		to_chat(user, "<span class='notice'>You speak softly into [src], and it shakes slightly in response.</span>")
 		START_PROCESSING(SSobj, src)
 
