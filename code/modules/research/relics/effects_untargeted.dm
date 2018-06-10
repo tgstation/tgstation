@@ -122,20 +122,3 @@
 	if(prob(60))
 		A.visible_message("<span class='warning'>[A] falls apart!</span>")
 		qdel(A)
-
-/datum/relic_effect/activate/loot
-	hint = list("It contains something unknown.")
-	weight = 40
-
-/datum/relic_effect/activate/loot/init()
-	..()
-
-/datum/relic_effect/activate/loot/activate(obj/item/A,atom/target,mob/user)
-	if(!..())
-		return
-	var/obj/item/a_gift/anything/lootbox = new()
-	var/gift_type = lootbox.get_gift_type()
-	new gift_type(get_turf(A))
-	A.visible_message("<span class='warning'>[A] pops open!</span>")
-	qdel(lootbox)
-	qdel(A)

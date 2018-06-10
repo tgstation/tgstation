@@ -4,7 +4,7 @@
 	var/mob/living/simple_animal/pet/tracked
 
 /datum/experiment/destroy/summon_pet/init()
-	pet_path = locate(pet_path) in GLOB.mob_living_list
+	tracked = locate(pet_path) in GLOB.mob_living_list
 
 /datum/experiment/destroy/summon_pet/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
 	. = ..()
@@ -88,7 +88,7 @@
 	weight = 5
 	experiment_type = /datum/experiment_type
 	is_bad = TRUE
-	var/list/blacklist = list(/obj/item/grenade/chem_grenade,/obj/item/grenade,/obj/item/grenade/chem_grenade,/obj/item/grenade/chem_grenade/adv_release,/obj/item/grenade/chem_grenade/cryo,/obj/item/grenade/chem_grenade/pyro)
+	var/list/blacklist = list(/obj/item/grenade/chem_grenade,/obj/item/grenade,/obj/item/grenade/chem_grenade,/obj/item/grenade/chem_grenade/adv_release,/obj/item/grenade/chem_grenade/cryo,/obj/item/grenade/chem_grenade/pyro, /obj/item/grenade/chem_grenade/tuberculosis)
 
 /datum/experiment/destroy/transform/grenade/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
 	E.investigate_log("Experimentor has transformed an [O] into a grenade", INVESTIGATE_EXPERIMENTOR)
