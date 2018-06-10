@@ -27,8 +27,6 @@
 			add_overlay(reagent_overlay)
 	else
 		icon_state = "glass_empty"
-		name = "empty glass of [name]"
-		desc = "Why is the rum always gone?"
 
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //
