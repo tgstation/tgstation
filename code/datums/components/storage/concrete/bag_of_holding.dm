@@ -17,7 +17,7 @@
 		for(var/turf/T in range(6,loccheck))
 			if(istype(T, /turf/open/space/transit))
 				continue
-			for(var/mob/M in T)
+			for(var/mob/living/M in T)
 				if(M.movement_type & FLYING)
 					M.visible_message("<span class='danger'>The bluespace collapse crushes the air towards it, pulling [M] towards the ground...</span>")
 					M.Knockdown(5, TRUE, TRUE)		//Overrides stun absorbs.
