@@ -13,6 +13,13 @@
 	new /obj/item/clothing/under/shorts/green(src)
 	new /obj/item/clothing/under/jabroni(src)
 
+/obj/structure/closet/athletic_mixed/beach/PopulateContents()
+	..()
+	new /obj/item/clothing/under/swimsuit(src)
+	new /obj/item/clothing/under/swimsuit/blue(src)
+	new /obj/item/clothing/under/swimsuit/green(src)
+	new /obj/item/clothing/under/swimsuit/purple(src)
+	new /obj/item/clothing/under/swimsuit/red(src)
 
 /obj/structure/closet/boxinggloves
 	name = "boxing gloves"

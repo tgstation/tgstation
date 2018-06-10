@@ -697,7 +697,7 @@
 	},
 /area/holodeck/rec_center/basketball)
 "cl" = (
-/obj/item/clothing/under/color/rainbow,
+/obj/item/clothing/under/swimsuit,
 /obj/item/clothing/glasses/sunglasses,
 /turf/open/floor/holofloor/beach,
 /area/holodeck/rec_center/beach)

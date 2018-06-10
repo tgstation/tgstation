@@ -3784,7 +3784,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/has_grav/hotel/pool)
 "lo" = (
-/obj/structure/closet/athletic_mixed,
+/obj/structure/closet/athletic_mixed/beach,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/has_grav/hotel/pool)
 "lp" = (

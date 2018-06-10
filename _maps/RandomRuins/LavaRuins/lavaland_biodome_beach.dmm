@@ -515,14 +515,14 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
 "vl" = (
-/obj/structure/closet/athletic_mixed,
+/obj/structure/closet/athletic_mixed/beach,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
 "wY" = (
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
 "zw" = (
-/obj/structure/closet/athletic_mixed,
+/obj/structure/closet/athletic_mixed/beach,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
