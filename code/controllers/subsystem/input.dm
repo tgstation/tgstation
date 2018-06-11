@@ -34,6 +34,9 @@ SUBSYSTEM_DEF(input)
 			"O" = "\".winset \\\"input.focus=true input.background-color=[COLOR_INPUT_ENABLED] input.command=\\\"!ooc \\\\\\\"\\\"\\\"\"",
 			"T" = "\".winset \\\"input.focus=true input.background-color=[COLOR_INPUT_ENABLED] input.command=\\\"!say \\\\\\\"\\\"\\\"\"",
 			"M" = "\".winset \\\"input.focus=true input.background-color=[COLOR_INPUT_ENABLED] input.command=\\\"!me \\\\\\\"\\\"\\\"\"",
+			"Ctrl+O" = "ooc",
+			"Ctrl+T" = "say",
+			"Ctrl+M" = "me",
 			"Return" = "\".winset \\\"input.command=\\\"\\\" map.focus=true input.background-color=[COLOR_INPUT_DISABLED]\\\"\"",
 			"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"", // This makes it so backspace can remove default inputs
 			"Any" = "\"KeyDown \[\[*\]\]\"",
@@ -43,6 +46,7 @@ SUBSYSTEM_DEF(input)
 			"Tab" = "\".winset \\\"input.command=\\\"\\\" mainwindow.macro=old_hotkeys map.focus=true input.background-color=[COLOR_INPUT_DISABLED]\\\"\"",
 			"Ctrl+O" = "\".winset \\\"input.command=\\\"!ooc \\\\\\\"\\\"\\\"\"",
 			"Ctrl+T" = "\".winset \\\"input.command=\\\"!say \\\\\\\"\\\"\\\"\"",
+			"Ctrl+M" = "\".winset \\\"input.command=\\\"!me \\\\\\\"\\\"\\\"\"",
 			),
 		"old_hotkeys" = list(
 			"Tab" = "\".winset \\\"input.command=\\\"\\\" mainwindow.macro=old_default input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
