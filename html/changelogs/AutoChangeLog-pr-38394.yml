@@ -1,6 +1,0 @@
-author: "fludd12"
-delete-after: True
-changes: 
-  - bugfix: "Stabilized gold extracts now respawn the familiar properly."
-  - bugfix: "Stabilized gold familiars retain the proper languages even after respawning."
-  - tweak: "Stabilized gold familiars can be renamed and have their positions reset at will."
