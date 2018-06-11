@@ -64,6 +64,7 @@
 			var/datum/antagonist/changeling/ling_datum = H.mind.has_antag_datum(/datum/antagonist/changeling)
 			for(var/datum/objective/horrorform/evolveobjective in ling_datum.objectives)
 				evolveobjective.completed = 1
+			priority_announce("Confirmed outbreak of level UNDEFINED biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreakerror.ogg')
 			new_mob.real_name = ling_datum.changelingID
 			new_mob.name = new_mob.real_name
 			for(var/mob/M in view(7, H))

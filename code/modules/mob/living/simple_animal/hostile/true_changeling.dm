@@ -20,8 +20,8 @@
 	status_flags = 0
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
-	health = 340
-	maxHealth = 340 //pretty durable
+	health = 500
+	maxHealth = 500 //pretty durable
 	damage_coeff = list(BRUTE = 0.75, BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) //feel the burn!!
 	force_threshold = 10
 	healable = 0
@@ -47,6 +47,7 @@
 	var/datum/action/innate/changeling/devour/devour
 	var/datum/action/innate/changeling/tendril_grab/tendril_grab
 	var/datum/action/innate/changeling/assimilate/assimilate
+	var/datum/action/innate/changeling/screech/screech
 
 /mob/living/simple_animal/hostile/true_changeling/Initialize()
 	. = ..()
@@ -247,7 +248,7 @@
 	target.mind.add_antag_datum(ASSIMILATEEE)
 	return
 
-/datum/action/innate/changeling/tendril_grab //TODO: ADD ASSIMILATION COMBO HERE.
+/datum/action/innate/changeling/tendril_grab
 	name = "Tendril Grab"
 	desc = "Lash a tendril out, grabbing prey. We can begin assimilation from a tendril grab too, keep in mind."
 	check_flags = AB_CHECK_CONSCIOUS
@@ -292,8 +293,8 @@
 	var/datum/beam/B = M.Beam(target, icon_state = "tendrilgrab", time=INFINITY)
 	var/ticker = 0
 	while(M.endtendril == FALSE && target.handcuffed && M.loc == T && target in view(7, M))
-		target.Stun(6)
-		sleep(5)
+		target.Stun(4)
+		sleep(3)
 		if(ticker == 2)
 			ticker = 0
 			var/turf/REELEMINBOYS = get_step_to(target, M)
@@ -308,6 +309,18 @@
 		target.uncuff()
 	M.tendrilgrab = FALSE
 	M.endtendril = FALSE
+
+/datum/action/innate/changeling/screech
+	name = "Screech"
+	desc = "We produce a noise lesser creatures cannot take well. They will have a hard time keeping their eyes open and will be unable to communicate."
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "screech"
+
+/datum/action/innate/changeling/screech/Activate()
+	playsound(src, 'sound/creatures/ling_scream.ogg', 100, 1)
+	var/mob/living/simple_animal/hostile/true_changeling/M = owner
+	for(var/mob/living/carbon/C in get_hearers_in_view(7, M))
+		C.Jitter(50)
 
 #undef TRUE_CHANGELING_PASSIVE_HEAL
 
