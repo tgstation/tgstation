@@ -9,8 +9,8 @@
 	var/turf/T = get_turf(O)
 
 	if(T)
-		log_admin("[key_name(usr)] has possessed [O] ([O.type]) at ([T.x], [T.y], [T.z])")
-		message_admins("[key_name(usr)] has possessed [O] ([O.type]) at ([T.x], [T.y], [T.z])")
+		log_admin("[key_name(usr)] has possessed [O] ([O.type]) at [AREACOORD(T)]")
+		message_admins("[key_name(usr)] has possessed [O] ([O.type]) at [AREACOORD(T)]")
 	else
 		log_admin("[key_name(usr)] has possessed [O] ([O.type]) at an unknown location")
 		message_admins("[key_name(usr)] has possessed [O] ([O.type]) at an unknown location")

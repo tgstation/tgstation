@@ -496,12 +496,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if((istype(I, /obj/item/melee/cultblade/dagger) && iscultist(user)))
 		user.visible_message("<span class='warning'>[user.name] begins erasing [src]...</span>", "<span class='notice'>You begin erasing [src]...</span>")
 		if(do_after(user, 50, target = src))	//Prevents accidental erasures.
-			log_game("Summon Narsie rune erased by [user.mind.key] (ckey) with [I.name]")
+			log_game("Summon Narsie rune erased by [key_name(user)] with [I.name]")
 			message_admins("[ADMIN_LOOKUPFLW(user)] erased a Narsie rune with [I.name]")
 			..()
 	else
 		if(istype(I, /obj/item/nullrod))	//Begone foul magiks. You cannot hinder me.
-			log_game("Summon Narsie rune erased by [user.mind.key] (ckey) using a null rod")
+			log_game("Summon Narsie rune erased by [key_name(user)] using a null rod")
 			message_admins("[ADMIN_LOOKUPFLW(user)] erased a Narsie rune with a null rod")
 			..()
 

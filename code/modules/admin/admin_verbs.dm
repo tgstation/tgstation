@@ -592,8 +592,8 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	if(!message)
 		return
 	O.say(message)
-	log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z] say \"[message]\"")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. say \"[message]\"</span>")
+	log_admin("[key_name(usr)] made [O] at [AREACOORD(O)] say \"[message]\"")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [O] at [AREACOORD(O)]. say \"[message]\"</span>")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Object Say") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"
@@ -684,7 +684,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 						if (tile)
 							var/mob/living/carbon/human/hooman = new(tile)
 							hooman.equipOutfit(pick(subtypesof(/datum/outfit)))
-							testing("Spawned test mob at [tile.x],[tile.y],[tile.z]")
+							testing("Spawned test mob at [COORD(tile)]")
 			while (!area && --j > 0)
 
 /client/proc/toggle_AI_interact()
