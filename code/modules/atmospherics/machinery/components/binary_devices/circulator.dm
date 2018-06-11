@@ -29,6 +29,10 @@
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/circulator(null)
 
+/obj/machinery/atmospherics/components/binary/circulator/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS )
+
 /obj/machinery/atmospherics/components/binary/circulator/proc/return_transfer_air()
 
 	var/datum/gas_mixture/air1 = airs[1]
@@ -118,14 +122,3 @@
 	..()
 	pixel_x = 0
 	pixel_y = 0
-
-/obj/machinery/atmospherics/components/binary/circulator/AltClick(mob/user)
-	..()
-	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		return
-
-	if(anchored)
-		to_chat(usr, "<span class='warning'>You must unwrench [src] before rotating it!</span>")
-		return
-
-	setDir(turn(dir, -90))
