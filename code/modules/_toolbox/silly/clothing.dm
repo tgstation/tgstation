@@ -61,3 +61,42 @@
 	if(loc)
 		var/obj/item/reagent_containers/food/drinks/bottle/vodka/V = new(loc)
 		V.layer = layer-0.1
+
+/obj/effect/mob_spawn/human/plasma_miner
+	name = "Plasma Rig Miner"
+	desc = null
+	mob_name = "Rig Miner"
+	icon = 'icons/obj/lavaland/spawners.dmi'
+	icon_state = "cryostasis_sleeper"
+	density = TRUE
+	roundstart = FALSE
+	death = FALSE
+	mob_species = /datum/species/plasmaman
+	flavour_text = ""/*"<span class='big bold'>You are a sentient ecosystem,</span><b> an example of the mastery over life that your creators possessed. Your masters, benevolent as they were, created uncounted \
+	seed vaults and spread them across the universe to every planet they could chart. You are in one such seed vault. Your goal is to cultivate and spread life wherever it will go while waiting \
+	for contact from your creators. Estimated time of last contact: Deployment, 5x10^3 millennia ago.</b>"*/
+	assignedrole = "Rig Miner"
+	lock_to_zlevel = 1
+	uniform = /obj/item/clothing/under/plasmaman
+	shoes = /obj/item/clothing/shoes/workboots/mining
+	gloves = /obj/item/clothing/gloves/combat
+	glasses = /obj/item/clothing/glasses/meson
+	mask = /obj/item/clothing/mask/breath
+	head = /obj/item/clothing/head/helmet/space/plasmaman
+	belt = /obj/item/tank/internals/plasmaman/belt/full
+	back = /obj/item/storage/backpack/explorer
+	backpack_contents = list(/obj/item/storage/box/survival/plasmaman,/obj/item/reagent_containers/hypospray/medipen/survival)
+
+/obj/effect/mob_spawn/human/plasma_miner/create(ckey, name)
+	. = ..()
+	if(istype(.,/mob/living/carbon))
+		var/mob/living/carbon/M = .
+		for(var/obj/item/tank/internals/plasmaman/belt/full/F in M)
+			M.internal = F
+		M.real_name = generate_plasmaman_name()
+
+/obj/item/storage/box/survival/plasmaman/PopulateContents()
+	. = ..()
+	for(var/obj/item/tank/internals/emergency_oxygen/E in src)
+		qdel(E)
+		new /obj/item/tank/internals/plasmaman/belt/full(src)

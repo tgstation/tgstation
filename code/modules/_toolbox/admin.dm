@@ -85,6 +85,7 @@ GLOBAL_VAR_INIT(override_lobby_player_count,0)
 			var/entry = "\t[C.key]"
 			if(C.holder && C.holder.fakekey)
 				entry += " <i>(as [C.holder.fakekey])</i>"
+			var/isobserver = 0
 			if (isnewplayer(C.mob))
 				entry += " - <font color='darkgray'><b>In Lobby</b></font>"
 			else
@@ -96,6 +97,7 @@ GLOBAL_VAR_INIT(override_lobby_player_count,0)
 						if(isobserver(C.mob))
 							var/mob/dead/observer/O = C.mob
 							if(O.started_as_observer)
+								isobserver = 1
 								entry += " - <font color='gray'>Observing</font>"
 							else
 								entry += " - <font color='gray'><b>Ghost</b></font>"
@@ -134,7 +136,7 @@ GLOBAL_VAR_INIT(override_lobby_player_count,0)
 						for(var/datum/antagonist/changeling/changeling in C.mob.mind.antag_datums)
 							entry += " - <b><font>Non Antag Ling</font></b>-(<i><font color=#800080><b>[changeling.changelingID]</b></font></i>)"
 							break
-			if(!C.mob.mind || !(C.mob.mind in GLOB.Original_Minds))
+			if((!C.mob.mind || !(C.mob.mind in GLOB.Original_Minds)) && !isobserver)
 				var/assigned_role_text = "No Role"
 				if(C.mob.mind && C.mob.mind.assigned_role)
 					assigned_role_text = C.mob.mind.assigned_role

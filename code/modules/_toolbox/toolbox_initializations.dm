@@ -116,3 +116,14 @@ GLOBAL_LIST_EMPTY(hub_features)
 	. = ..()
 	for(var/obj/item/gun/ballistic/shotgun/automatic/combat/compact/C in src)
 		qdel(C)
+
+/proc/generate_plasmaman_name()
+	var/list/elements = list("Helium", "Lithium", "Beryllium", "Sodium", "Magnesium", "Aluminum", "Potassium",\
+		"Calcium", "Scandium", "Titanium", "Vanadium", "Chromium", "Gallium", "Germanium", "Selenium", "Rubidium", "Strontium",\
+		"Yttrium", "Zirconium", "Niobium", "Molybdenum", "Technetium", "Ruthenium", "Rhodium", "Palladium", "Cadmium", "Indium",\
+		"Tellurium", "Cesium", "Barium", "Lanthanum", "Cerium", "Praseodymium", "Neodymium", "Promethium", "Samarium", "Europium",\
+		"Gadolinium", "Terbium", "Dysprosium", "Holmium", "Erbium", "Thulium", "Ytterbium", "Lutetium", "Hafnium", "Rhenium", "Osmium",\
+		"Iridium", "Platinum", "Thallium", "Polonium", "Francium", "Radium", "Actinium", "Thorium", "Protactinium", "Uranium",\
+		"Neptunium", "Plutonium", "Americium", "Curium", "Berkelium", "Californium", "Einsteinium", "Fermium", "Nobelium",\
+		"Lawrencium", "Rutherfordium", "Dubnium", "Seaborgium", "Bohrium", "Hassium", "Meitnerium")
+	return "[pick(elements)] \Roman[rand(1,100)]"

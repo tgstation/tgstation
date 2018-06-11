@@ -68,6 +68,7 @@
 
 /obj/effect/mob_spawn/proc/create(ckey, name)
 	var/mob/living/M = new mob_type(get_turf(src)) //living mobs only
+	. = M
 	if(!random)
 		M.real_name = mob_name ? mob_name : M.name
 		if(!mob_gender)
