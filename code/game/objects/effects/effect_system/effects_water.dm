@@ -10,7 +10,10 @@
 /obj/effect/particle_effect/water/New()
 	..()
 	QDEL_IN(src, 70)
-
+	
+/obj/effect/particle_effect/water/can_be_pulled(user)
+	return FALSE
+	
 /obj/effect/particle_effect/water/Move(turf/newloc)
 	if (--src.life < 1)
 		qdel(src)
@@ -49,5 +52,8 @@ steam.start() -- spawns the effect
 	..()
 	QDEL_IN(src, 20)
 
+/obj/effect/particle_effect/steam/can_be_pulled(user)
+	return FALSE
+	
 /datum/effect_system/steam_spread
 	effect_type = /obj/effect/particle_effect/steam

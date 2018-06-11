@@ -326,6 +326,9 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pass_flags = PASSTABLE
 
+/obj/effect/resin_container/can_be_pulled(user)
+	return FALSE
+	
 /obj/effect/resin_container/proc/Smoke()
 	var/obj/effect/particle_effect/foam/metal/resin/S = new /obj/effect/particle_effect/foam/metal/resin(get_turf(loc))
 	S.amount = 4
