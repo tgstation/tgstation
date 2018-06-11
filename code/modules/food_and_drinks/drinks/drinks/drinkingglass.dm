@@ -27,6 +27,7 @@
 			add_overlay(reagent_overlay)
 	else
 		icon_state = "glass_empty"
+		O.renamedByPlayer = FALSE //so new drinks can rename the glass
 
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //
