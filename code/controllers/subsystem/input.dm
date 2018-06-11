@@ -34,7 +34,7 @@ SUBSYSTEM_DEF(input)
 			"O" = "\".winset \\\"input.focus=true input.background-color=[COLOR_INPUT_ENABLED] input.command=\\\"!ooc \\\\\\\"\\\"\\\"\"",
 			"T" = "\".winset \\\"input.focus=true input.background-color=[COLOR_INPUT_ENABLED] input.command=\\\"!say \\\\\\\"\\\"\\\"\"",
 			"M" = "\".winset \\\"input.focus=true input.background-color=[COLOR_INPUT_ENABLED] input.command=\\\"!me \\\\\\\"\\\"\\\"\"",
-			"Return" = "\".winset \\\"map.focus=true input.background-color=[COLOR_INPUT_DISABLED]\\\"\"",
+			"Return" = "\".winset \\\"input.command=\\\"\\\" map.focus=true input.background-color=[COLOR_INPUT_DISABLED]\\\"\"",
 			"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"", // This makes it so backspace can remove default inputs
 			"Any" = "\"KeyDown \[\[*\]\]\"",
 			"Any+UP" = "\"KeyUp \[\[*\]\]\"",
@@ -49,7 +49,7 @@ SUBSYSTEM_DEF(input)
 			"O" = "\".winset \\\"input.focus=true input.command=\\\"!ooc \\\\\\\"\\\"\\\"\"",
 			"T" = "\".winset \\\"input.focus=true input.command=\\\"!say \\\\\\\"\\\"\\\"\"",
 			"M" = "\".winset \\\"input.focus=true input.command=\\\"!me \\\\\\\"\\\"\\\"\"",
-			"Return" = "\".winset \\\"map.focus=true\\\"\"",
+			"Return" = "\".winset \\\"input.command=\\\"\\\" map.focus=true\\\"\"",
 			"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"", // This makes it so backspace can remove default inputs
 			"Any" = "\"KeyDown \[\[*\]\]\"",
 			"Any+UP" = "\"KeyUp \[\[*\]\]\"",
