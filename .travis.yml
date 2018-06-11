@@ -54,6 +54,8 @@ install:
   - tools/travis/install_build_tools.sh
   - if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then mysql -u root -e 'CREATE DATABASE tg_travis;'; fi
   - if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then mysql -u root tg_travis < SQL/tgstation_schema.sql; fi
+  - if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then mysql -u root -e 'CREATE DATABASE tg_travis_prefixed;'; fi
+  - if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then mysql -u root tg_travis_prefixed < SQL/tgstation_schema_prefixed.sql; fi
 
 before_script:
   - tools/travis/before_build_tools.sh
