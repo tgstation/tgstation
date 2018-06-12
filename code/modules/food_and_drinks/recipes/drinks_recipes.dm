@@ -640,13 +640,6 @@
 	required_reagents = list("hot_coco" = 6, "creme_de_cacao" = 1, "creme_de_menthe" = 1, "vodka" = 1, "menthol" = 1)
 	mix_message = "The coco turns mint green just as the strong scent hits your nose."
 
-/datum/chemical_reaction/candyland_extract
-	name = "Candyland Extract"
-	id = "candyland_extract"
-	results = list("candyland_extract" = 10)
-	required_reagents = list("sugar" = 5, "space_drugs" = 6, "mercury" = 3, "redcrayonpowder" = 1, "orangecrayonpowder" = 1, "yellowcrayonpowder" = 1, "greencrayonpowder" = 1, "bluecrayonpowder" = 1, "purplecrayonpowder" = 1)
-	mix_message = "The mixture falls in on itself and violently rumbles before giving way to a rainbow."
-
 /datum/chemical_reaction/alexander
 	name = "Alexander"
 	id = "alexander"

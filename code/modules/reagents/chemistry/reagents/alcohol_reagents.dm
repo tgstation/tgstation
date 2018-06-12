@@ -1574,38 +1574,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 
-/datum/reagent/consumable/ethanol/candyland_extract
-	name = "Candyland Extract"
-	id = "candyland_extract"
-	description = "This mesmerizing drink has it's properties from the mercury and space drugs. consumption not suggested."
-	color = "#664300"
-	taste_description = "the rainbow" //taste the rainbow!
-	boozepwr = 0
-	glass_icon_state = "candyland_extract"
-	glass_name = "Candyland Extract"
-	glass_desc = "A very nice shifting rainbow in a glass!"
-
-/datum/reagent/consumable/ethanol/candyland_extract/on_mob_add(mob/living/M)
-	for(var/turf/globalturf in world) //disaster strikes
-		var/image/I = image(icon = 'icons/effects/effects.dmi', icon_state = "blessed", layer = ABOVE_OPEN_TURF_LAYER, loc = globalturf)
-		M.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/candyland, "druggywuggiesuguu", I)
-
-/datum/reagent/consumable/ethanol/candyland_extract/on_mob_delete(mob/living/M)
-	M.remove_alt_appearance("druggywuggiesuguu")
-
-/datum/atom_hud/alternate_appearance/basic/candyland
-
-/datum/atom_hud/alternate_appearance/basic/candyland/New()
-	..()
-	for(var/mob in GLOB.mob_list)
-		if(mobShouldSee(mob))
-			add_hud_to(mob)
-
-/datum/atom_hud/alternate_appearance/basic/candyland/mobShouldSee(mob/M)
-	if(M.reagents.get_reagent("candyland_extract"))
-		return TRUE
-	return FALSE
-
 /datum/reagent/consumable/ethanol/alexander
 	name = "Alexander"
 	id = "alexander"
@@ -1637,7 +1605,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		mighty_shield.block_chance -= 10
 		to_chat(L,"<span class='notice'>You notice [mighty_shield] looks worn again. Weird.</span>")
 	..()
-
 
 /datum/reagent/consumable/ethanol/sidecar
 	name = "Sidecar"
