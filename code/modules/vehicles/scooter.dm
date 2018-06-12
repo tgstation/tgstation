@@ -26,7 +26,7 @@
 	. = ..()
 	for(var/m in buckled_mobs)
 		var/mob/living/buckled_mob = m
-		if(buckled_mob.get_num_legs() > 0)
+		if(buckled_mob.get_num_legs(FALSE) > 0)
 			buckled_mob.pixel_y = 5
 		else
 			buckled_mob.pixel_y = -4

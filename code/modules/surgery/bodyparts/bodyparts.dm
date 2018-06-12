@@ -10,6 +10,7 @@
 	var/mob/living/carbon/owner = null
 	var/mob/living/carbon/original_owner = null
 	var/status = BODYPART_ORGANIC
+	var/disabled = FALSE //If TRUE, limb is as good as missing
 	var/body_zone //BODY_ZONE_CHEST, BODY_ZONE_L_ARM, etc , used for def_zone
 	var/aux_zone // used for hands
 	var/aux_layer
@@ -159,6 +160,7 @@
 		owner.updatehealth()
 		if(stamina)
 			owner.update_stamina()
+	check_disabled()
 	return update_bodypart_damage_state()
 
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
@@ -185,6 +187,20 @@
 	return brute_dam + burn_dam
 
 
+//Returns total damage...kinda pointless really
+/obj/item/bodypart/proc/check_disabled()
+	if(!disabled && (get_damage() >= max_damage))
+		disabled = TRUE
+		C.update_health_hud() //update the healthdoll
+		C.update_body()
+		C.update_canmove()
+	else if(disabled && (get_damage() <= (max_damage * 0.5)))
+		disabled = FALSE
+		C.update_health_hud() //update the healthdoll
+		C.update_body()
+		C.update_canmove()
+		
+	
 //Updates an organ's brute/burn states for use by update_damage_overlays()
 //Returns 1 if we need to update overlays. 0 otherwise.
 /obj/item/bodypart/proc/update_bodypart_damage_state()
