@@ -13,7 +13,7 @@
 /mob/living/carbon/has_hand_for_held_index(i)
 	if(i)
 		var/obj/item/bodypart/L = hand_bodyparts[i]
-		if(L)
+		if(L && !L.disabled)
 			return L
 	return FALSE
 
@@ -115,6 +115,27 @@
 		if(get_bodypart(zone))
 			full -= zone
 	return full
+
+/mob/living/proc/get_disabled_limbs()
+	return list()
+
+/mob/living/carbon/get_disabled_limbs()
+	var/list/full = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+	var/list/disabled = list()
+	for(var/zone in full)
+		var/obj/item/bodypart/affecting = get_bodypart(zone)
+		if(affecting && affecting.disabled)
+			disabled += zone
+	return disabled
+
+/mob/living/carbon/alien/larva/get_disabled_limbs()
+	var/list/full = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST)
+	var/list/disabled = list()
+	for(var/zone in full)
+		var/obj/item/bodypart/affecting = get_bodypart(zone)
+		if(affecting && affecting.disabled)
+			disabled += zone
+	return disabled
 
 //Remove all embedded objects from all limbs on the carbon mob
 /mob/living/carbon/proc/remove_all_embedded_objects()

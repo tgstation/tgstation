@@ -10,21 +10,24 @@
 	var/mob/living/carbon/owner = null
 	var/mob/living/carbon/original_owner = null
 	var/status = BODYPART_ORGANIC
-	var/disabled = FALSE //If TRUE, limb is as good as missing
+
 	var/body_zone //BODY_ZONE_CHEST, BODY_ZONE_L_ARM, etc , used for def_zone
 	var/aux_zone // used for hands
 	var/aux_layer
 	var/body_part = null //bitflag used to check which clothes cover this bodypart
 	var/use_digitigrade = NOT_DIGITIGRADE //Used for alternate legs, useless elsewhere
+	var/list/embedded_objects = list()
+	var/held_index = 0 //are we a hand? if so, which one!
+	var/is_pseudopart = FALSE //For limbs that don't really exist, eg chainsaws
+
+	var/disabled = FALSE //If TRUE, limb is as good as missing
+	var/body_damage = TRUE //If TRUE, damage is counted for mob health, otherwise it's limited to the limb
 	var/brutestate = 0
 	var/burnstate = 0
 	var/brute_dam = 0
 	var/burn_dam = 0
 	var/stamina_dam = 0
 	var/max_damage = 0
-	var/list/embedded_objects = list()
-	var/held_index = 0 //are we a hand? if so, which one!
-	var/is_pseudopart = FALSE //For limbs that don't really exist, eg chainsaws
 
 	//Coloring and proper item icon update
 	var/skin_tone = ""
@@ -179,6 +182,7 @@
 	stamina_dam = max(stamina_dam - stamina, 0)
 	if(owner && updating_health)
 		owner.updatehealth()
+	check_disabled()
 	return update_bodypart_damage_state()
 
 
@@ -187,20 +191,23 @@
 	return brute_dam + burn_dam
 
 
-//Returns total damage...kinda pointless really
+//Checks disabled status thresholds
 /obj/item/bodypart/proc/check_disabled()
+	if(!can_dismember() || owner.has_trait(TRAIT_NODISMEMBER))
+		return
 	if(!disabled && (get_damage() >= max_damage))
-		disabled = TRUE
-		owner.update_health_hud() //update the healthdoll
-		owner.update_body()
-		owner.update_canmove()
+		set_disabled(TRUE)
 	else if(disabled && (get_damage() <= (max_damage * 0.5)))
-		disabled = FALSE
-		owner.update_health_hud() //update the healthdoll
-		owner.update_body()
-		owner.update_canmove()
-		
-	
+		set_disabled(FALSE)
+
+/obj/item/bodypart/proc/set_disabled(new_disabled = TRUE)
+	if(disabled == new_disabled)
+		return
+	disabled = new_disabled
+	owner.update_health_hud() //update the healthdoll
+	owner.update_body()
+	owner.update_canmove()
+
 //Updates an organ's brute/burn states for use by update_damage_overlays()
 //Returns 1 if we need to update overlays. 0 otherwise.
 /obj/item/bodypart/proc/update_bodypart_damage_state()
@@ -452,9 +459,22 @@
 	body_part = ARM_LEFT
 	aux_zone = BODY_ZONE_PRECISE_L_HAND
 	aux_layer = HANDS_PART_LAYER
+	body_damage = FALSE
 	held_index = 1
 	px_x = -6
 	px_y = 0
+
+/obj/item/bodypart/l_arm/set_disabled(new_disabled = TRUE)
+	..()
+	if(disabled)
+		to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
+		owner.emote("scream")
+		if(held_index)
+			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
+	if(owner.hud_used)
+		var/obj/screen/inventory/hand/L = owner.hud_used.hand_slots["[held_index]"]
+		if(L)
+			L.update_icon()
 
 /obj/item/bodypart/l_arm/monkey
 	icon = 'icons/mob/animal_parts.dmi'
@@ -488,9 +508,22 @@
 	body_part = ARM_RIGHT
 	aux_zone = BODY_ZONE_PRECISE_R_HAND
 	aux_layer = HANDS_PART_LAYER
+	body_damage = FALSE
 	held_index = 2
 	px_x = 6
 	px_y = 0
+
+/obj/item/bodypart/r_arm/set_disabled(new_disabled = TRUE)
+	..()
+	if(disabled)
+		to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
+		owner.emote("scream")
+		if(held_index)
+			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
+	if(owner.hud_used)
+		var/obj/screen/inventory/hand/R = owner.hud_used.hand_slots["[held_index]"]
+		if(R)
+			R.update_icon()
 
 /obj/item/bodypart/r_arm/monkey
 	icon = 'icons/mob/animal_parts.dmi'
@@ -522,8 +555,15 @@
 	max_damage = 50
 	body_zone = BODY_ZONE_L_LEG
 	body_part = LEG_LEFT
+	body_damage = FALSE
 	px_x = -2
 	px_y = 12
+
+/obj/item/bodypart/l_leg/set_disabled(new_disabled = TRUE)
+	..()
+	if(disabled)
+		to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
+		owner.emote("scream")
 
 /obj/item/bodypart/l_leg/digitigrade
 	name = "left digitigrade leg"
@@ -560,8 +600,15 @@
 	max_damage = 50
 	body_zone = BODY_ZONE_R_LEG
 	body_part = LEG_RIGHT
+	body_damage = FALSE
 	px_x = 2
 	px_y = 12
+
+/obj/item/bodypart/r_leg/set_disabled(new_disabled = TRUE)
+	..()
+	if(disabled)
+		to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
+		owner.emote("scream")
 
 /obj/item/bodypart/r_leg/digitigrade
 	name = "right digitigrade leg"
