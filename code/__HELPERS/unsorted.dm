@@ -1272,9 +1272,10 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 		return
 
 	var/animate_color = initial(C.color)
-	var/datum/client_colour/CC = C.mob.client_colours[1]
-	if(CC)
-		animate_color = CC.colour
+	if(C.mob.client_colours.len)
+		var/datum/client_colour/CC = C.mob.client_colours[1]
+		if(CC)
+			animate_color = CC.colour
 	C.color = flash_color
 	animate(C, color = animate_color, time = flash_time)
 
