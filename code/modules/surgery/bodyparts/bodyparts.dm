@@ -191,14 +191,14 @@
 /obj/item/bodypart/proc/check_disabled()
 	if(!disabled && (get_damage() >= max_damage))
 		disabled = TRUE
-		C.update_health_hud() //update the healthdoll
-		C.update_body()
-		C.update_canmove()
+		owner.update_health_hud() //update the healthdoll
+		owner.update_body()
+		owner.update_canmove()
 	else if(disabled && (get_damage() <= (max_damage * 0.5)))
 		disabled = FALSE
-		C.update_health_hud() //update the healthdoll
-		C.update_body()
-		C.update_canmove()
+		owner.update_health_hud() //update the healthdoll
+		owner.update_body()
+		owner.update_canmove()
 		
 	
 //Updates an organ's brute/burn states for use by update_damage_overlays()
