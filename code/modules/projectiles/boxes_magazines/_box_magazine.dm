@@ -132,3 +132,9 @@
 	for(var/obj/item/ammo in stored_ammo)
 		ammo.forceMove(turf_mag)
 		stored_ammo -= ammo
+
+/obj/item/ammo_box/magazine/handle_atom_del(atom/A)
+	if(A.type == ammo_type)
+		for(var/obj/item/ammo_casing/AC in stored_ammo)
+			stored_ammo -= AC
+		update_icon()
