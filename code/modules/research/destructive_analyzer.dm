@@ -13,6 +13,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	icon_state = "d_analyzer"
 	circuit = /obj/item/circuitboard/machine/destructive_analyzer
 	var/decon_mod = 0
+	var/safety = TRUE
 
 /obj/machinery/rnd/destructive_analyzer/RefreshParts()
 	var/T = 0
@@ -36,7 +37,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		. = 1
 		if(!is_insertion_ready(user))
 			return
-		if(!istype(O, /mob/living/brain) && !istype(O, /obj/item/mmi) && !istype(O, /obj/item/aicard) && !istype(O, /obj/item/organ/brain))
+		if(safety && !istype(O, /mob/living/brain) && !istype(O, /obj/item/mmi) && !istype(O, /obj/item/aicard) && !istype(O, /obj/item/organ/brain))
 			var/list/L = typecache_filter_list(O.GetAllContents(), GLOB.typecache_mob)
 			if(L.len)
 				to_chat(user, "<span class='warning'>[src] rejects [O], having detected biological entities within it.</span>")
