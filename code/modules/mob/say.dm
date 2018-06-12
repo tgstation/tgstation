@@ -1,24 +1,14 @@
-/mob/verb/fake_say_verb()
+/mob/verb/talk_verb()
 	set name = "Talk"
 	set category = "IC"
-	if(!client)
+	if(!usr.prefs.chatbar)
+		// Say box
 		return
-	if(client.prefs.hotkeys)
-		winset(client, "input", "focus=true background-color=[COLOR_INPUT_ENABLED] command=\"!say \\\"\"")
+	if(usr.prefs.hotkeys)
+		winset(usr, "input", "focus=true background-color=[COLOR_INPUT_ENABLED] command=\"!say \\\"\"")
 	else
-		winset(client, "input", "focus=true command=\"!say \\\"\"")
+		winset(usr, "input", "focus=true command=\"!say \\\"\"")
 
-/mob/verb/fake_whisper_verb()
-	set name = "Whisper"
-	set category = "IC"
-	if(!client)
-		return
-	if(client.prefs.hotkeys)
-		winset(client, "input", "focus=true background-color=[COLOR_INPUT_ENABLED] command=\"!say \\\"#\"")
-	else
-		winset(client, "input", "focus=true command=\"!say \\\"#\"")
-
-//Speech verbs.
 /mob/verb/say_verb(message="" as text)
 	set name = "Say"
 	set hidden = TRUE
@@ -29,8 +19,20 @@
 		say(message)
 
 
+/mob/verb/whisper_verb()
+	set name = "Whisper"
+	set category = "IC"
+	if(!usr.prefs.chatbar)
+		// Whisper box
+		return
+	if(usr.prefs.hotkeys)
+		winset(usr, "input", "focus=true background-color=[COLOR_INPUT_ENABLED] command=\"!say \\\"#\"")
+	else
+		winset(usr, "input", "focus=true command=\"!say \\\"#\"")
+
 /mob/proc/whisper(message, datum/language/language=null)
 	say(message, language) //only living mobs actually whisper, everything else just talks
+
 
 /mob/verb/me_verb(message as text)
 	set name = "Me"
