@@ -6,7 +6,7 @@
 	icon_vend = "coffee-vend"
 	products = list(/obj/item/reagent_containers/food/drinks/coffee = 25, 
 		            /obj/item/reagent_containers/food/drinks/mug/tea = 25, 
-		            /obj/item/reagent_containers/food/drinks/mug/coco = 25)
+		            /obj/item/reagent_containers/food/drinks/mug/cocoa = 25)
 	contraband = list(/obj/item/reagent_containers/food/drinks/ice = 12)
 	refill_canister = /obj/item/vending_refill/coffee
 

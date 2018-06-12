@@ -45,10 +45,10 @@
 		new /obj/item/reagent_containers/food/snacks/chocolatebar(location)
 	return
 
-/datum/chemical_reaction/hot_coco
-	name = "Hot Coco"
-	id = "hot_coco"
-	results = list("hot_coco" = 5)
+/datum/chemical_reaction/hot_cocoa
+	name = "Hot Cocoa"
+	id = "hot_cocoa"
+	results = list("hot_cocoa" = 5)
 	required_reagents = list("water" = 5, "cocoa" = 1)
 
 /datum/chemical_reaction/coffee
