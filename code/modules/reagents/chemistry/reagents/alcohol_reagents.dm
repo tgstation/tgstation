@@ -1588,7 +1588,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/candyland_extract/on_mob_add(mob/living/M)
 	for(var/turf/globalturf in world) //disaster strikes
 		var/image/I = image(icon = 'icons/effects/effects.dmi', icon_state = "blessed", layer = ABOVE_OPEN_TURF_LAYER, loc = globalturf)
-		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/candyland, "druggywuggiesuguu", I)
+		M.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/candyland, "druggywuggiesuguu", I)
 
 /datum/reagent/consumable/ethanol/candyland_extract/on_mob_delete(mob/living/M)
 	M.remove_alt_appearance("druggywuggiesuguu")
