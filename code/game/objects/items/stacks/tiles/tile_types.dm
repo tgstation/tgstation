@@ -132,6 +132,17 @@
 /obj/item/stack/tile/fakepit/loaded
 	amount = 30
 
+/obj/item/stack/tile/faketear
+	name = "fake tears"
+	singular_name = "fake tear"
+	desc = "A piece of carpet with a forced perspective illusion of a tear in reality. No way this could fool anyone!"
+	turf_type =  /turf/open/floor/faketear
+	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/tile/faketear
+
+/obj/item/stack/tile/faketear/loaded
+	amount = 30
+
 //High-traction
 /obj/item/stack/tile/noslip
 	name = "high-traction floor tile"
