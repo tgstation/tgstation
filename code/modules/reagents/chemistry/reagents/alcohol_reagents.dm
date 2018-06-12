@@ -1574,6 +1574,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 
+/datum/reagent/consumable/ethanol/candyland_extract
+	name = "Candyland Extract"
+	id = "candyland_extract"
+	description = "This mesmerizing drink has it's properties from the mercury and space drugs. consumption not suggested."
+	color = "#664300" //stolen from gargleblaster I'M SORRY
+	taste_description = "the rainbow" //taste the rainbow!
+	boozepwr = 0
+	glass_icon_state = "candyland_extract"
+	glass_name = "Candyland Extract"
+	glass_desc = "A very nice shifting rainbow in a glass!"
+
 /datum/reagent/consumable/ethanol/alexander
 	name = "Alexander"
 	id = "alexander"
