@@ -2,7 +2,7 @@
 	name = "nanite chamber"
 	desc = "A device that can scan, reprogram, and inject nanites."
 	circuit = /obj/item/circuitboard/machine/nanite_chamber
-	icon = 'icons/obj/machines/research.dmi'
+	icon = 'icons/obj/machines/nanite_chamber.dmi'
 	icon_state = "nanite_chamber"
 	use_power = IDLE_POWER_USE
 	anchored = TRUE
@@ -38,7 +38,7 @@
 	if(!nanites)
 		return
 	nanites.safety_threshold = threshold
-	
+
 /obj/machinery/nanite_chamber/proc/set_cloud(cloud_id)
 	if(!occupant)
 		return
@@ -60,16 +60,16 @@
 
 	//TODO OMINOUS MACHINE SOUNDS
 	set_busy(TRUE, "Initializing injection protocol...", "[initial(icon_state)]_raising")
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Analyzing host bio-structure...", "[initial(icon_state)]_raised"),20)
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Priming nanites...", "[initial(icon_state)]_raised"),40)
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Injecting...", "[initial(icon_state)]_raised"),70)
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Activating nanites...", "[initial(icon_state)]_lowering"),110)
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Analyzing host bio-structure...", "[initial(icon_state)]_active"),20)
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Priming nanites...", "[initial(icon_state)]_active"),40)
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Injecting...", "[initial(icon_state)]_active"),70)
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Activating nanites...", "[initial(icon_state)]_falling"),110)
 	addtimer(CALLBACK(src, .proc/complete_injection, locked_state),130)
 
 /obj/machinery/nanite_chamber/proc/complete_injection(locked_state)
 	//TODO MACHINE DING
-	set_busy(FALSE)
 	locked = locked_state
+	set_busy(FALSE)
 	if(!occupant)
 		return
 	occupant.AddComponent(/datum/component/nanites, 100)
@@ -87,14 +87,14 @@
 
 	//TODO COMPUTERY MACHINE SOUNDS
 	set_busy(TRUE, "Initializing installation protocol...", "[initial(icon_state)]_raising")
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Connecting to nanite framework...", "[initial(icon_state)]_raised"),20)
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Installing program...", "[initial(icon_state)]_lowering"),35)
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Connecting to nanite framework...", "[initial(icon_state)]_active"),20)
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Installing program...", "[initial(icon_state)]_falling"),35)
 	addtimer(CALLBACK(src, .proc/complete_installation, locked_state, NP),55)
 
 /obj/machinery/nanite_chamber/proc/complete_installation(locked_state, datum/nanite_program/NP)
 	//TODO MACHINE DING
-	set_busy(FALSE)
 	locked = locked_state
+	set_busy(FALSE)
 	if(!occupant)
 		return
 	GET_COMPONENT_FROM(nanites, /datum/component/nanites, occupant)
@@ -114,25 +114,32 @@
 
 	//TODO COMPUTERY MACHINE SOUNDS
 	set_busy(TRUE, "Initializing uninstallation protocol...", "[initial(icon_state)]_raising")
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Connecting to nanite framework...", "[initial(icon_state)]_raised"),20)
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Uninstalling program...", "[initial(icon_state)]_lowering"),35)
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Connecting to nanite framework...", "[initial(icon_state)]_active"),20)
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Uninstalling program...", "[initial(icon_state)]_falling"),35)
 	addtimer(CALLBACK(src, .proc/complete_uninstallation, locked_state, NP),55)
 
 /obj/machinery/nanite_chamber/proc/complete_uninstallation(locked_state, datum/nanite_program/NP)
 	//TODO MACHINE DING
-	set_busy(FALSE)
 	locked = locked_state
+	set_busy(FALSE)
 	if(!occupant)
 		return
 	qdel(NP)
 
 /obj/machinery/nanite_chamber/update_icon()
+	cut_overlays()
 	//no power or maintenance
 	if(stat & (NOPOWER|BROKEN))
 		icon_state = initial(icon_state)+ (state_open ? "_open" : "") + "_unpowered"
 		return
-	
-	
+
+	if(busy || locked)
+		add_overlay("red")
+		if(locked)
+			add_overlay("bolted")
+	else
+		add_overlay("green")
+
 	//TODO make an overlay for the panel
 	if((stat & MAINT) || panel_open)
 		icon_state = initial(icon_state)+ (state_open ? "_open" : "") + "_maintenance"
