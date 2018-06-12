@@ -97,6 +97,7 @@
 	RegisterSignal(COMSIG_MOVABLE_THROW, .proc/close_all)
 
 	RegisterSignal(COMSIG_CLICK_ALT, .proc/on_alt_click)
+	RegisterSignal(COMSIG_CLICK_CTRL, .proc/on_ctrl_click)
 	RegisterSignal(COMSIG_MOUSEDROP_ONTO, .proc/mousedrop_onto)
 	RegisterSignal(COMSIG_MOUSEDROPPED_ONTO, .proc/mousedrop_recieve)
 
@@ -507,6 +508,9 @@
 				M.putItemFromInventoryInHandIfPossible(A, H.held_index)
 				return
 			A.add_fingerprint(M)
+
+/datum/component/storage/proc/on_ctrl_click(mob/user)
+	mousedrop_onto(user, user)
 
 /datum/component/storage/proc/user_show_to_mob(mob/M, force = FALSE)
 	var/atom/A = parent
