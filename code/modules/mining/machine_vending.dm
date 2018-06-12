@@ -6,7 +6,6 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "mining"
 	density = TRUE
-	anchored = TRUE
 	circuit = /obj/item/circuitboard/machine/mining_equipment_vendor
 	var/icon_deny = "mining-deny"
 	var/obj/item/card/id/inserted_id

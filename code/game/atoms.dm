@@ -19,12 +19,15 @@
 	var/list/atom_colours	 //used to store the different colors on an atom
 							//its inherent color, the colored paint applied on it, special color effect etc...
 
-	var/list/our_overlays	//our local copy of (non-priority) overlays without byond magic. Use procs in SSoverlays to manipulate
 	var/list/priority_overlays	//overlays that should remain on top and not normally removed when using cut_overlay functions, like c4.
+	var/list/remove_overlays // a very temporary list of overlays to remove
+	var/list/add_overlays // a very temporary list of overlays to add
 
 	var/datum/proximity_monitor/proximity_monitor
 	var/buckle_message_cooldown = 0
 	var/fingerprintslast
+
+	var/list/filter_data //For handling persistent filters
 
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
@@ -425,23 +428,6 @@
 /atom/proc/update_remote_sight(mob/living/user)
 	return
 
-/atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
-	if(isturf(src))
-		var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
-		// Make toxins vomit look different
-		if(toxvomit)
-			V.icon_state = "vomittox_[pick(1,4)]"
-		if(M.reagents)
-			clear_reagents_to_vomit_pool(M,V)
-
-/atom/proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V)
-	M.reagents.trans_to(V, M.reagents.total_volume / 10)
-	for(var/datum/reagent/R in M.reagents.reagent_list)                //clears the stomach of anything that might be digested as food
-		if(istype(R, /datum/reagent/consumable))
-			var/datum/reagent/consumable/nutri_check = R
-			if(nutri_check.nutriment_factor >0)
-				M.reagents.remove_reagent(R.id,R.volume)
-
 
 //Hook for running code when a dir change occurs
 /atom/proc/setDir(newdir)
@@ -592,3 +578,25 @@
 
 /atom/proc/GenerateTag()
 	return
+
+// Filter stuff
+/atom/movable/proc/add_filter(name,priority,list/params)
+	if(!filter_data)
+		filter_data = list()
+	var/list/p = params.Copy()
+	p["priority"] = priority
+	filter_data[name] = p
+	update_filters()
+
+/atom/movable/proc/update_filters()
+	filters = null
+	sortTim(filter_data,associative = TRUE)
+	for(var/f in filter_data)
+		var/list/data = filter_data[f]
+		var/list/arguments = data.Copy()
+		arguments -= "priority"
+		filters += filter(arglist(arguments))
+
+/atom/movable/proc/get_filter(name)
+	if(filter_data && filter_data[name])
+		return filters[filter_data.Find(name)]

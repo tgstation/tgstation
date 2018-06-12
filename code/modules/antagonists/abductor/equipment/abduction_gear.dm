@@ -30,9 +30,9 @@
 	var/combat_armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 50, "rad" = 50, "fire" = 90, "acid" = 90)
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/toggle_nodrop()
-	flags_1 ^= NODROP_1
+	item_flags ^= NODROP
 	if(ismob(loc))
-		to_chat(loc, "<span class='notice'>Your vest is now [flags_1 & NODROP_1 ? "locked" : "unlocked"].</span>")
+		to_chat(loc, "<span class='notice'>Your vest is now [item_flags & NODROP ? "locked" : "unlocked"].</span>")
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/flip_mode()
 	switch(mode)
@@ -359,7 +359,7 @@
 
 		to_chat(L, "<span class='italics'>You hear a voice in your head saying: </span><span class='abductor'>[message]</span>")
 		to_chat(user, "<span class='notice'>You send the message to your target.</span>")
-		log_talk(user,"[key_name(user)] sent an abductor mind message to [L]/[L.ckey]: '[message]'", LOGSAY)
+		log_talk(user,"[key_name(user)] sent an abductor mind message to [key_name(L)]: '[message]'", LOGSAY)
 
 
 /obj/item/firing_pin/abductor
@@ -589,9 +589,10 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	breakouttime = 450
 	trashtype = /obj/item/restraints/handcuffs/energy/used
+	flags_1 = NONE
 
 /obj/item/restraints/handcuffs/energy/used
-	flags_1 = DROPDEL_1
+	item_flags = DROPDEL
 
 /obj/item/restraints/handcuffs/energy/used/dropped(mob/user)
 	user.visible_message("<span class='danger'>[user]'s [name] breaks in a discharge of energy!</span>", \

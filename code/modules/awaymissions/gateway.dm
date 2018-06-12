@@ -6,7 +6,6 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	icon = 'icons/obj/machines/gateway.dmi'
 	icon_state = "off"
 	density = TRUE
-	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/active = 0
 	var/checkparts = TRUE

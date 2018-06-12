@@ -24,11 +24,10 @@
 	desc = "Allows you to sense the general direction of your Queen."
 	screen_loc = ui_alien_queen_finder
 
-
 /datum/hud/alien
-	ui_style_icon = 'icons/mob/screen_alien.dmi'
+	ui_style = 'icons/mob/screen_alien.dmi'
 
-/datum/hud/alien/New(mob/living/carbon/alien/humanoid/owner, ui_style = 'icons/mob/screen_alien.dmi')
+/datum/hud/alien/New(mob/living/carbon/alien/humanoid/owner)
 	..()
 
 	var/obj/screen/using
@@ -36,7 +35,7 @@
 //equippable shit
 
 //hands
-	build_hand_slots(ui_style)
+	build_hand_slots()
 
 //begin buttons
 

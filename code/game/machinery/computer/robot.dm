@@ -104,7 +104,7 @@
 				var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm" && can_control(usr, R) && !..())
 					var/turf/T = get_turf(R)
-					message_admins("<span class='notice'>[ADMIN_LOOKUPFLW(usr)] detonated [key_name(R, R.client)][ADMIN_JMP(T)]!</span>")
+					message_admins("<span class='notice'>[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(R, R.client)] at [ADMIN_VERBOSEJMP(T)]!</span>")
 					log_game("\<span class='notice'>[key_name(usr)] detonated [key_name(R)]!</span>")
 					if(R.connected_ai)
 						to_chat(R.connected_ai, "<br><br><span class='alert'>ALERT - Cyborg detonation detected: [R.name]</span><br>")
@@ -133,16 +133,16 @@
 		if((istype(S) && S.hack_software) || IsAdminGhost(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["magbot"]) in GLOB.silicon_mobs
 			if(istype(R) && !R.emagged && (R.connected_ai == usr || IsAdminGhost(usr)) && !R.scrambledcodes && can_control(usr, R))
-				log_game("[key_name(usr)] emagged [R.name] using robotic console!")
-				message_admins("[key_name_admin(usr)] emagged cyborg [key_name_admin(R)] using robotic console!")
+				log_game("[key_name(usr)] emagged [key_name(R)] using robotic console!")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] emagged cyborg [key_name_admin(R)] using robotic console!")
 				R.SetEmagged(1)
 
 	else if(href_list["convert"])
 		if(isAI(usr) && is_servant_of_ratvar(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["convert"]) in GLOB.silicon_mobs
 			if(istype(R) && !is_servant_of_ratvar(R) && R.connected_ai == usr)
-				log_game("[key_name(usr)] converted [R.name] using robotic console!")
-				message_admins("[key_name_admin(usr)] converted cyborg [key_name_admin(R)] using robotic console!")
+				log_game("[key_name(usr)] converted [key_name(R)] using robotic console!")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] converted cyborg [key_name_admin(R)] using robotic console!")
 				add_servant_of_ratvar(R)
 
 	else if (href_list["killdrone"])
@@ -152,7 +152,7 @@
 				to_chat(usr, "<span class='danger'>ERROR: [D] is not responding to external commands.</span>")
 			else
 				var/turf/T = get_turf(D)
-				message_admins("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(D)][ADMIN_JMP(T)]!")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(D)] at [ADMIN_VERBOSEJMP(T)]!")
 				log_game("[key_name(usr)] detonated [key_name(D)]!")
 				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 				s.set_up(3, 1, D)

@@ -153,7 +153,7 @@
 	if(!force && (!ismecha(M) && !istype(M, /obj/item/projectile) && M.anchored && !allow_anchored))
 		return
 	if(ismegafauna(M))
-		message_admins("[M] has used a portal at [ADMIN_COORDJMP(src)] made by [usr].")
+		message_admins("[M] has used a portal at [ADMIN_VERBOSEJMP(src)] made by [usr].")
 	if(do_teleport(M, real_target, innate_accuracy_penalty))
 		if(istype(M, /obj/item/projectile))
 			var/obj/item/projectile/P = M

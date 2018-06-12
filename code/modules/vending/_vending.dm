@@ -33,7 +33,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "generic"
 	layer = BELOW_OBJ_LAYER
-	anchored = TRUE
 	density = TRUE
 	verb_say = "beeps"
 	verb_ask = "beeps"
@@ -435,7 +434,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 		else if (!(R in product_records))
 			vend_ready = 1
-			message_admins("Vending machine exploit attempted by [key_name(usr, usr.client)]!")
+			message_admins("Vending machine exploit attempted by [ADMIN_LOOKUPFLW(usr)]!")
 			return
 
 		if (R.amount <= 0)

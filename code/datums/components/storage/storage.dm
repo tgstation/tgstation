@@ -125,11 +125,13 @@
 		modeswitch_action.Grant(M)
 
 /datum/component/storage/proc/change_master(datum/component/storage/concrete/new_master)
-	if(!istype(new_master))
+	if(new_master == src || (!isnull(new_master) && !istype(new_master)))
 		return FALSE
-	master.on_slave_unlink(src)
+	if(master)
+		master.on_slave_unlink(src)
 	master = new_master
-	master.on_slave_link(src)
+	if(master)
+		master.on_slave_link(src)
 	return TRUE
 
 /datum/component/storage/proc/master()
@@ -529,7 +531,7 @@
 //This proc return 1 if the item can be picked up and 0 if it can't.
 //Set the stop_messages to stop it from printing messages
 /datum/component/storage/proc/can_be_inserted(obj/item/I, stop_messages = FALSE, mob/M)
-	if(!istype(I) || (I.flags_1 & ABSTRACT_1))
+	if(!istype(I) || (I.item_flags & ABSTRACT))
 		return FALSE //Not an item
 	if(I == parent)
 		return FALSE	//no paradoxes for you
@@ -573,7 +575,7 @@
 			if(!stop_messages)
 				to_chat(M, "<span class='warning'>[IP] cannot hold [I] as it's a storage item of the same size!</span>")
 			return FALSE //To prevent the stacking of same sized storage items.
-	if(I.flags_1 & NODROP_1) //SHOULD be handled in unEquip, but better safe than sorry.
+	if(I.item_flags & NODROP) //SHOULD be handled in unEquip, but better safe than sorry.
 		to_chat(M, "<span class='warning'>\the [I] is stuck to your hand, you can't put it in \the [host]!</span>")
 		return FALSE
 	var/datum/component/storage/concrete/master = master()
@@ -639,10 +641,7 @@
 /datum/component/storage/proc/signal_take_type(type, atom/destination, amount = INFINITY, check_adjacent = FALSE, force = FALSE, mob/user, list/inserted)
 	if(!force)
 		if(check_adjacent)
-			if(user)
-				if(!user.CanReach(destination) || !user.CanReach(parent))
-					return FALSE
-			else if(!destination.CanReachStorage(parent))
+			if(!user || !user.CanReach(destination) || !user.CanReach(parent))
 				return FALSE
 	var/list/taking = typecache_filter_list(contents(), typecacheof(type))
 	if(length(taking) > amount)
@@ -697,7 +696,10 @@
 
 	if(A.loc == user)
 		. = COMPONENT_NO_ATTACK_HAND
-		show_to(user)
+		if(locked)
+			to_chat(user, "<span class='warning'>[parent] seems to be locked!</span>")
+		else
+			show_to(user)
 
 /datum/component/storage/proc/signal_on_pickup(mob/user)
 	var/atom/A = parent
@@ -718,7 +720,7 @@
 	return hide_from(target)
 
 /datum/component/storage/proc/on_alt_click(mob/user)
-	if(!isliving(user) || user.incapacitated() || !quickdraw || !user.CanReach(parent))
+	if(!isliving(user) || user.incapacitated() || !quickdraw || locked || !user.CanReach(parent))
 		return
 	var/obj/item/I = locate() in real_location()
 	if(!I)

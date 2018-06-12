@@ -19,9 +19,7 @@
 	integrity_failure = 50
 	var/list/network = list("ss13")
 	var/c_tag = null
-	var/c_tag_order = 999
 	var/status = TRUE
-	anchored = TRUE
 	var/start_active = FALSE //If it ignores the random chance to start broken on round start
 	var/invuln = null
 	var/obj/item/camera_bug/bug = null
@@ -36,6 +34,7 @@
 	var/alarm_on = FALSE
 	var/busy = FALSE
 	var/emped = FALSE  //Number of consecutive EMP's on this camera
+	var/in_use_lights = 0
 
 	// Upgrades bitflag
 	var/upgrades = 0
@@ -285,7 +284,7 @@
 	else if (stat & EMPED)
 		icon_state = "[initial(icon_state)]emp"
 	else
-		icon_state = "[initial(icon_state)]"
+		icon_state = "[initial(icon_state)][in_use_lights ? "_in_use" : ""]"
 
 /obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = 1)
 	status = !status

@@ -109,6 +109,10 @@
 	move()
 	eat()
 	return
+
+/obj/singularity/wizard/mapped/admin_investigate_setup()
+	return
+
 /////////////////////////////////////////Scrying///////////////////
 
 /obj/item/scrying
@@ -279,7 +283,7 @@
 			if(BODY_ZONE_PRECISE_MOUTH)
 				var/wgw =  sanitize(input(user, "What would you like the victim to say", "Voodoo", null)  as text)
 				target.say(wgw)
-				log_game("[user][user.key] made [target][target.key] say [wgw] with a voodoo doll.")
+				log_game("[key_name(user)] made [key_name(target)] say [wgw] with a voodoo doll.")
 			if(BODY_ZONE_PRECISE_EYES)
 				user.set_machine(src)
 				user.reset_perspective(target)

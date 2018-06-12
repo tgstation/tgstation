@@ -154,7 +154,7 @@
 		SendSignal(COMSIG_TRY_STORAGE_TAKE, W, user)
 		user.put_in_hands(W)
 		contents -= W
-		to_chat(user, "<span class='notice'>You take a [icon_type] out of the pack.</span>")
+		to_chat(user, "<span class='notice'>You take \a [W] out of the pack.</span>")
 	else
 		to_chat(user, "<span class='notice'>There are no [icon_type]s left in the pack.</span>")
 
@@ -166,18 +166,20 @@
 		else
 			icon_state = initial(icon_state)
 			add_overlay("[icon_state]_open")
-			var/i = contents.len
+			var/cig_position = 1
 			for(var/C in contents)
 				var/mutable_appearance/inserted_overlay = mutable_appearance(icon)
-				inserted_overlay.pixel_x = 1 * (i - 1)
+
 				if(istype(C, /obj/item/lighter/greyscale))
 					inserted_overlay.icon_state = "lighter_in"
 				else if(istype(C, /obj/item/lighter))
 					inserted_overlay.icon_state = "zippo_in"
 				else
 					inserted_overlay.icon_state = "cigarette"
+
+				inserted_overlay.icon_state = "[inserted_overlay.icon_state]_[cig_position]"
 				add_overlay(inserted_overlay)
-				i--
+				cig_position++
 	else
 		cut_overlays()
 
@@ -191,7 +193,7 @@
 			SendSignal(COMSIG_TRY_STORAGE_TAKE, W, M)
 			M.equip_to_slot_if_possible(W, SLOT_WEAR_MASK)
 			contents -= W
-			to_chat(user, "<span class='notice'>You take a [icon_type] out of the pack.</span>")
+			to_chat(user, "<span class='notice'>You take \a [W] out of the pack.</span>")
 		else
 			..()
 	else
@@ -293,22 +295,27 @@
 /obj/item/storage/fancy/cigarettes/cigars/update_icon()
 	cut_overlays()
 	if(fancy_open)
-		add_overlay("[icon_state]_open")
-		var/mutable_appearance/cigar_overlay = mutable_appearance(icon, icon_type)
-		for(var/c = contents.len, c >= 1, c--)
-			cigar_overlay.pixel_x = 4 * (c - 1)
+		icon_state = "[initial(icon_state)]_open"
+
+		var/cigar_position = 1 //generate sprites for cigars in the box
+		for(var/obj/item/clothing/mask/cigarette/cigar/smokes in contents)
+			var/mutable_appearance/cigar_overlay = mutable_appearance(icon, "[smokes.icon_off]_[cigar_position]")
 			add_overlay(cigar_overlay)
+			cigar_position++
+
 	else
-		icon_state = "cigarcase"
+		icon_state = "[initial(icon_state)]"
 
 /obj/item/storage/fancy/cigarettes/cigars/cohiba
 	name = "\improper cohiba robusto cigar case"
 	desc = "A case of imported Cohiba cigars, renowned for their strong flavor."
+	icon_state = "cohibacase"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/cohiba
 
 /obj/item/storage/fancy/cigarettes/cigars/havana
 	name = "\improper premium havanian cigar case"
 	desc = "A case of classy Havanian cigars."
+	icon_state = "cohibacase"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/havana
 
 /*
