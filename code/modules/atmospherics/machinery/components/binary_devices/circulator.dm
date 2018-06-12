@@ -26,8 +26,7 @@
 
 /obj/machinery/atmospherics/components/binary/circulator/Initialize(mapload)
 	.=..()
-	component_parts = list()
-	component_parts += new /obj/item/circuitboard/machine/circulator(null)
+	component_parts = list(new /obj/item/circuitboard/machine/circulator)
 
 /obj/machinery/atmospherics/components/binary/circulator/ComponentInitialize()
 	. = ..()
