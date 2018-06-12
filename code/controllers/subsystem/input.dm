@@ -23,31 +23,34 @@ SUBSYSTEM_DEF(input)
 // This is for when macro sets are eventualy datumized
 /datum/controller/subsystem/input/proc/setup_default_macro_sets()
 	var/list/static/default_macro_sets
-	
+
 	if(default_macro_sets)
 		macro_sets = default_macro_sets
 		return
 
 	default_macro_sets = list(
 		"default" = list(
-			"Tab" = "\".winset \\\"input.focus=true?map.focus=true input.background-color=[COLOR_INPUT_DISABLED]:input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
+			"Tab" = "\".winset \\\"input.command=\\\"\\\" input.focus=true?map.focus=true input.background-color=[COLOR_INPUT_DISABLED]:input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
 			"O" = "ooc",
-			"T" = "say",
+			"T" = "talk",
 			"M" = "me",
+			"Return" = "\".winset \\\"input.command=\\\"\\\" map.focus=true input.background-color=[COLOR_INPUT_DISABLED]\\\"\"",
 			"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"", // This makes it so backspace can remove default inputs
 			"Any" = "\"KeyDown \[\[*\]\]\"",
 			"Any+UP" = "\"KeyUp \[\[*\]\]\"",
 			),
 		"old_default" = list(
-			"Tab" = "\".winset \\\"mainwindow.macro=old_hotkeys map.focus=true input.background-color=[COLOR_INPUT_DISABLED]\\\"\"",
-			"Ctrl+T" = "say",
+			"Tab" = "\".winset \\\"input.command=\\\"\\\" mainwindow.macro=old_hotkeys map.focus=true input.background-color=[COLOR_INPUT_DISABLED]\\\"\"",
 			"Ctrl+O" = "ooc",
+			"Ctrl+T" = "talk",
+			"Ctrl+M" = "me",
 			),
 		"old_hotkeys" = list(
-			"Tab" = "\".winset \\\"mainwindow.macro=old_default input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
+			"Tab" = "\".winset \\\"input.command=\\\"\\\" mainwindow.macro=old_default input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
 			"O" = "ooc",
-			"T" = "say",
+			"T" = "talk",
 			"M" = "me",
+			"Return" = "\".winset \\\"input.command=\\\"\\\" map.focus=true\\\"\"",
 			"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"", // This makes it so backspace can remove default inputs
 			"Any" = "\"KeyDown \[\[*\]\]\"",
 			"Any+UP" = "\"KeyUp \[\[*\]\]\"",

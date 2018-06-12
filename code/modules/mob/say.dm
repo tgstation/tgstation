@@ -1,7 +1,17 @@
-//Speech verbs.
-/mob/verb/say_verb(message as text)
-	set name = "Say"
+/mob/verb/talk_verb()
+	set name = "Talk"
 	set category = "IC"
+	if(!usr.prefs.chatbar)
+		// Say box
+		return
+	if(usr.prefs.hotkeys)
+		winset(usr, "input", "focus=true background-color=[COLOR_INPUT_ENABLED] command=\"!say \\\"\"")
+	else
+		winset(usr, "input", "focus=true command=\"!say \\\"\"")
+
+/mob/verb/say_verb(message="" as text)
+	set name = "Say"
+	set hidden = TRUE
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
@@ -9,16 +19,20 @@
 		say(message)
 
 
-/mob/verb/whisper_verb(message as text)
+/mob/verb/whisper_verb()
 	set name = "Whisper"
 	set category = "IC"
-	if(GLOB.say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+	if(!usr.prefs.chatbar)
+		// Whisper box
 		return
-	whisper(message)
+	if(usr.prefs.hotkeys)
+		winset(usr, "input", "focus=true background-color=[COLOR_INPUT_ENABLED] command=\"!say \\\"#\"")
+	else
+		winset(usr, "input", "focus=true command=\"!say \\\"#\"")
 
 /mob/proc/whisper(message, datum/language/language=null)
 	say(message, language) //only living mobs actually whisper, everything else just talks
+
 
 /mob/verb/me_verb(message as text)
 	set name = "Me"
