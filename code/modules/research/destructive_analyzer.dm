@@ -36,10 +36,11 @@ Note: Must be placed within 3 tiles of the R&D Console
 		. = 1
 		if(!is_insertion_ready(user))
 			return
-		var/list/L = typecache_filter_list(O.GetAllContents(), GLOB.typecache_mob)
-		if(L.len)
-			to_chat(user, "<span class='warning'>[src] rejects [O], having detected biological entities within it.</span>")
-			return
+		if(!istype(O, /mob/living/brain) && !istype(O, /obj/item/mmi) && !istype(O, /obj/item/aicard) && !istype(O, /obj/item/organ/brain))
+			var/list/L = typecache_filter_list(O.GetAllContents(), GLOB.typecache_mob)
+			if(L.len)
+				to_chat(user, "<span class='warning'>[src] rejects [O], having detected biological entities within it.</span>")
+				return
 		if(!user.transferItemToLoc(O, src))
 			to_chat(user, "<span class='warning'>\The [O] is stuck to your hand, you cannot put it in the [src.name]!</span>")
 			return
