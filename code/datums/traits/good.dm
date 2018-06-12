@@ -44,9 +44,9 @@
 
 /datum/quirk/buster/remove()
 	var/mob/living/carbon/human/H = quirk_holder
-	H.physiology.punchlow = 0
-	H.physiology.punchhigh = 0
-	H.physiology.punchstun = 0
+	H.physiology.punchlow -= 1
+	H.physiology.punchhigh -= 6
+	H.physiology.punchstun -= 6
 
 
 
