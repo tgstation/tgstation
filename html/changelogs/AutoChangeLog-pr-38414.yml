@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - tweak: "Coldproof mobs can now be cooled down, but are still immune to the negative effects of cold."
-  - bugfix: "This also fixes some edge cases (freezing beams) where mobs could be cooled down and damaged despite cold resistance."
