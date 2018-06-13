@@ -1,0 +1,5 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - balance: "Virus crates now contain several bottles of randomly generated diseases with symptom levels up to 8."
+  - rscdel: "Removed the single-symptom bottles that were included in the virus crate."
