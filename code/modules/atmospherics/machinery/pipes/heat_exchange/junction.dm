@@ -46,6 +46,9 @@
 	return list(turn(dir, 180), dir)
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction/can_be_node(obj/machinery/atmospherics/target, iteration)
+	. = ..()
+	if(!.)
+		return FALSE
 	var/init_dir
 	switch(iteration)
 		if(1)
@@ -53,7 +56,7 @@
 		if(2)
 			var/obj/machinery/atmospherics/pipe/heat_exchanging/H = target
 			if(!istype(H))
-				return 0
+				return FALSE
 			init_dir = H.initialize_directions_he
 	if(init_dir & get_dir(target,src))
-		return 1
+		return TRUE
