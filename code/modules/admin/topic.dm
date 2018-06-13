@@ -1817,7 +1817,7 @@
 			return
 
 		var/mob/M = locate(href_list["CentComReply"])
-		usr.client.cmd_admin_centcom_message(M)
+		cmd_admin_centcom_message(M)
 
 	else if(href_list["SyndicateReply"])
 		var/mob/living/carbon/human/H = locate(href_list["SyndicateReply"])
