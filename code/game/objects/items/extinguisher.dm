@@ -24,7 +24,7 @@
 	var/tanktype = /obj/structure/reagent_dispensers/watertank
 	var/sprite_name = "fire_extinguisher"
 	var/power = 5 //Maximum distance launched water will travel
-	var/precision = 0 //By default, turfs picked from a spray are random, set to 1 to make it always have at least one water effect per row
+	var/precision = FALSE //By default, turfs picked from a spray are random, set to 1 to make it always have at least one water effect per row
 	var/cooling_power = 2 //Sets the cooling_temperature of the water reagent datum inside of the extinguisher when it is refilled
 
 /obj/item/extinguisher/mini
@@ -57,7 +57,7 @@
 	chem = "firefighting_foam"
 	tanktype = /obj/structure/reagent_dispensers/foamtank
 	sprite_name = "foam_extinguisher"
-	precision = 1
+	precision = TRUE
 
 /obj/item/extinguisher/suicide_act(mob/living/carbon/user)
 	if (!safety && (reagents.total_volume >= 1))
