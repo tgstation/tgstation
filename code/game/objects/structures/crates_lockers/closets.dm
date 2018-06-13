@@ -163,18 +163,20 @@
 	else if(istype(AM, /obj/structure/closet))
 		return
 	else if(isobj(AM))
-		if(!allow_objects && !istype(AM, /obj/item) && !istype(AM, /obj/effect/dummy/chameleon))
+		if (istype(AM, /obj/item))
+			var/obj/item/I = AM
+			if (I.item_flags & NODROP)
+				return
+		else if(!allow_objects && !istype(AM, /obj/effect/dummy/chameleon))
 			return
 		if(!allow_dense && AM.density)
 			return
-		if(AM.anchored || AM.has_buckled_mobs() || (AM.flags_1 & NODROP_1))
+		if(AM.anchored || AM.has_buckled_mobs())
 			return
 	else
 		return
 
 	AM.forceMove(src)
-	if(AM.pulledby)
-		AM.pulledby.stop_pulling()
 
 	return 1
 
@@ -257,7 +259,7 @@
 		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='notice'>You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='italics'>You hear a ratchet.</span>")
-	else if(user.a_intent != INTENT_HARM && !(W.flags_1 & NOBLUDGEON_1))
+	else if(user.a_intent != INTENT_HARM && !(W.item_flags & NOBLUDGEON))
 		if(W.GetID() || !toggle(user))
 			togglelock(user)
 	else

@@ -1,4 +1,4 @@
-/datum/hud/dextrous/drone/New(mob/owner, ui_style = 'icons/mob/screen_midnight.dmi')
+/datum/hud/dextrous/drone/New(mob/owner)
 	..()
 	var/obj/screen/inventory/inv_box
 

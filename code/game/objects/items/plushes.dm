@@ -141,8 +141,8 @@
 		user.visible_message("<span class='warning'>[user] slides [grenade] into [src].</span>", \
 		"<span class='danger'>You slide [I] into [src].</span>")
 		grenade = I
-		var/turf/T = get_turf(user)
-		log_game("[key_name(user)] added a grenade ([I.name]) to [src] at [COORD(T)].")
+		var/turf/grenade_turf = get_turf(src)
+		log_game("[key_name(user)] added a grenade ([I.name]) to [src] at [AREACOORD(grenade_turf)].")
 		return
 	if(istype(I, /obj/item/toy/plush))
 		love(I, user)

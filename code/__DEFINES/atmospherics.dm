@@ -194,6 +194,37 @@
 #define ATMOS_GAS_MONITOR_WASTE_ENGINE "engine-waste_out"
 #define ATMOS_GAS_MONITOR_WASTE_ATMOS "atmos-waste_out"
 
+//AIRLOCK CONTROLLER TAGS
+
+//RnD toxins burn chamber
+#define INCINERATOR_TOXMIX_IGNITER 				"toxmix_igniter"
+#define INCINERATOR_TOXMIX_VENT 				"toxmix_vent"
+#define INCINERATOR_TOXMIX_DP_VENTPUMP			"toxmix_airlock_pump"
+#define INCINERATOR_TOXMIX_AIRLOCK_SENSOR 		"toxmix_airlock_sensor"
+#define INCINERATOR_TOXMIX_AIRLOCK_CONTROLLER 	"toxmix_airlock_controller"
+#define INCINERATOR_TOXMIX_AIRLOCK_INTERIOR 	"toxmix_airlock_interior"
+#define INCINERATOR_TOXMIX_AIRLOCK_EXTERIOR 	"toxmix_airlock_exterior"
+
+//Atmospherics/maintenance incinerator
+#define INCINERATOR_ATMOS_IGNITER 				"atmos_incinerator_igniter"
+#define INCINERATOR_ATMOS_MAINVENT 				"atmos_incinerator_mainvent"
+#define INCINERATOR_ATMOS_AUXVENT 				"atmos_incinerator_auxvent"
+#define INCINERATOR_ATMOS_DP_VENTPUMP			"atmos_incinerator_airlock_pump"
+#define INCINERATOR_ATMOS_AIRLOCK_SENSOR 		"atmos_incinerator_airlock_sensor"
+#define INCINERATOR_ATMOS_AIRLOCK_CONTROLLER	"atmos_incinerator_airlock_controller"
+#define INCINERATOR_ATMOS_AIRLOCK_INTERIOR 		"atmos_incinerator_airlock_interior"
+#define INCINERATOR_ATMOS_AIRLOCK_EXTERIOR 		"atmos_incinerator_airlock_exterior"
+
+//Syndicate lavaland base incinerator (lavaland_surface_syndicate_base1.dmm)
+#define INCINERATOR_SYNDICATELAVA_IGNITER 				"syndicatelava_igniter"
+#define INCINERATOR_SYNDICATELAVA_MAINVENT 				"syndicatelava_mainvent"
+#define INCINERATOR_SYNDICATELAVA_AUXVENT 				"syndicatelava_auxvent"
+#define INCINERATOR_SYNDICATELAVA_DP_VENTPUMP			"syndicatelava_airlock_pump"
+#define INCINERATOR_SYNDICATELAVA_AIRLOCK_SENSOR 		"syndicatelava_airlock_sensor"
+#define INCINERATOR_SYNDICATELAVA_AIRLOCK_CONTROLLER 	"syndicatelava_airlock_controller"
+#define INCINERATOR_SYNDICATELAVA_AIRLOCK_INTERIOR 		"syndicatelava_airlock_interior"
+#define INCINERATOR_SYNDICATELAVA_AIRLOCK_EXTERIOR	 	"syndicatelava_airlock_exterior"
+
 //MULTIPIPES
 //IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.
 #define PIPING_LAYER_MIN 1

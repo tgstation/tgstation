@@ -2853,7 +2853,6 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post)
 "hk" = (
-/turf/open/floor/plating/asteroid/snow/ice,
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/conveyor_switch/oneway{
 	id = "snowdin_belt_mine";
@@ -2893,7 +2892,6 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "ho" = (
-/turf/open/floor/plating/asteroid/snow/ice,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plating/snowed/cavern,
@@ -3854,13 +3852,6 @@
 /obj/effect/landmark/vr_spawn/snowdin,
 /turf/open/floor/plasteel/floorgrime,
 /area/awaymission/snowdin/post/garage)
-"jv" = (
-/turf/open/floor/plating/asteroid/snow/ice,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/turf/open/floor/plating/snowed/cavern,
-/area/awaymission/snowdin/cave/cavern)
 "jw" = (
 /obj/structure/table,
 /obj/item/paper/pamphlet/gateway,
@@ -3940,13 +3931,6 @@
 	},
 /turf/open/floor/plating/snowed/smoothed,
 /area/awaymission/snowdin/outside)
-"jE" = (
-/turf/open/floor/plating/asteroid/snow/ice,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plating/snowed/cavern,
-/area/awaymission/snowdin/cave/cavern)
 "jF" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
@@ -4377,7 +4361,6 @@
 	},
 /area/awaymission/snowdin/post)
 "kK" = (
-/turf/open/floor/plating/asteroid/snow/ice,
 /obj/machinery/conveyor{
 	dir = 2;
 	id = "snowdin_belt_mine"
@@ -9211,23 +9194,10 @@
 /turf/open/floor/plating/snowed,
 /area/awaymission/snowdin/cave)
 "xl" = (
-/obj/effect/baseturf_helper/asteroid/snow,
-/turf/closed/wall/ice,
-/area/shuttle/snowdin/elevator1)
-"xm" = (
-/obj/structure/window/reinforced/fulltile/ice,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/shuttle/snowdin/elevator1)
-"xn" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Elevator Access"
+/turf/open/floor/plasteel/elevatorshaft{
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
-/turf/open/floor/plating,
-/area/shuttle/snowdin/elevator1)
-"xo" = (
-/turf/closed/wall/ice,
-/area/shuttle/snowdin/elevator1)
+/area/awaymission/snowdin/cave)
 "xp" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
@@ -9278,18 +9248,6 @@
 	},
 /turf/open/floor/engine/cult,
 /area/awaymission/snowdin/post/mining_dock)
-"xv" = (
-/turf/open/floor/engine,
-/area/shuttle/snowdin/elevator1)
-"xw" = (
-/obj/machinery/computer/shuttle/snowdin/mining{
-	dir = 2;
-	name = "Excavation Elevator Console";
-	possible_destinations = "snowdin_excavation_top;snowdin_excavation_down";
-	shuttleId = "snowdin_excavation"
-	},
-/turf/open/floor/engine,
-/area/shuttle/snowdin/elevator1)
 "xx" = (
 /obj/effect/spawner/lootdrop/crate_spawner,
 /turf/open/floor/plasteel/neutral,
@@ -9378,26 +9336,20 @@
 	},
 /area/awaymission/snowdin/post/mining_dock)
 "xK" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Elevator Access"
-	},
-/obj/docking_port/mobile/elevator{
-	dir = 4;
-	height = 6;
-	id = "snowdin_excavation";
-	name = "excavation elevator";
-	width = 6
-	},
 /obj/docking_port/stationary{
+	area_type = /area/awaymission/snowdin/cave;
 	dir = 4;
 	dwidth = 3;
 	height = 6;
 	id = "snowdin_excavation_top";
 	name = "snowdin excavation top";
+	roundstart_template = /datum/map_template/shuttle/snowdin/excavation;
 	width = 6
 	},
-/turf/open/floor/plating,
-/area/shuttle/snowdin/elevator1)
+/turf/open/floor/plasteel/elevatorshaft{
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	},
+/area/awaymission/snowdin/cave)
 "xL" = (
 /obj/machinery/atmospherics/pipe/manifold/orange/visible{
 	dir = 8
@@ -9424,6 +9376,7 @@
 /area/awaymission/snowdin/post/mining_dock)
 "xP" = (
 /obj/docking_port/stationary{
+	area_type = /area/awaymission/snowdin/post/mining_dock;
 	dir = 4;
 	dwidth = 3;
 	height = 6;
@@ -9431,7 +9384,7 @@
 	name = "snowdin excavation down";
 	width = 6
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/elevatorshaft,
 /area/awaymission/snowdin/post/mining_dock)
 "xQ" = (
 /obj/effect/turf_decal/stripes/line{
@@ -9860,20 +9813,6 @@
 	name = "toxin out"
 	},
 /turf/open/floor/engine/vacuum,
-/area/awaymission/snowdin/cave)
-"zb" = (
-/obj/structure/window/reinforced/fulltile/ice,
-/obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 4;
-	frequency = 1442;
-	id_tag = "snowdin_toxins_mine_1";
-	name = "toxin out"
-	},
-/turf/open/floor/plating,
 /area/awaymission/snowdin/cave)
 "zc" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
@@ -13339,9 +13278,6 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "Jl" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining Dock";
 	req_access_txt = "48"
@@ -13384,9 +13320,6 @@
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "Jr" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining Dock";
 	req_access_txt = "48"
@@ -13546,20 +13479,6 @@
 	dir = 4
 	},
 /area/awaymission/snowdin/post/mining_main)
-"JR" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
-/area/shuttle/snowdin/elevator2)
-"JS" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Elevator Access"
-	},
-/turf/open/floor/plating,
-/area/shuttle/snowdin/elevator2)
-"JT" = (
-/turf/closed/wall,
-/area/shuttle/snowdin/elevator2)
 "JU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -13622,19 +13541,6 @@
 	dir = 8
 	},
 /area/awaymission/snowdin/post/mining_main)
-"Kd" = (
-/obj/machinery/computer/shuttle/snowdin/mining,
-/turf/open/floor/engine,
-/area/shuttle/snowdin/elevator2)
-"Ke" = (
-/turf/open/floor/engine,
-/area/shuttle/snowdin/elevator2)
-"Kf" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/shuttle/snowdin/elevator2)
 "Kg" = (
 /obj/structure/ore_box,
 /obj/effect/turf_decal/bot,
@@ -13696,27 +13602,18 @@
 	},
 /area/awaymission/snowdin/post/mining_main)
 "Kn" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Elevator Access"
-	},
-/obj/docking_port/mobile/elevator{
-	dir = 4;
-	dwidth = 2;
-	height = 5;
-	id = "snowdin_mining";
-	name = "mining elevator";
-	width = 5
-	},
 /obj/docking_port/stationary{
+	area_type = /area/awaymission/snowdin/post/mining_main;
 	dir = 4;
 	dwidth = 2;
 	height = 5;
 	id = "snowdin_mining_top";
 	name = "snowdin mining top";
+	roundstart_template = /datum/map_template/shuttle/snowdin/mining;
 	width = 5
 	},
-/turf/open/floor/plating,
-/area/shuttle/snowdin/elevator2)
+/turf/open/floor/plasteel/elevatorshaft,
+/area/awaymission/snowdin/post/mining_main)
 "Ko" = (
 /obj/machinery/light{
 	dir = 4
@@ -13766,7 +13663,7 @@
 	name = "snowdin mining bottom";
 	width = 5
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/elevatorshaft,
 /area/awaymission/snowdin/post/mining_dock)
 "Ku" = (
 /obj/machinery/light{
@@ -13835,10 +13732,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/mining_main)
-"KC" = (
-/obj/machinery/light/small,
-/turf/open/floor/engine,
-/area/shuttle/snowdin/elevator2)
 "KD" = (
 /obj/structure/ore_box,
 /obj/effect/turf_decal/bot,
@@ -13912,8 +13805,8 @@
 	},
 /area/awaymission/snowdin/post/mining_main)
 "KP" = (
-/turf/closed/wall/rust,
-/area/shuttle/snowdin/elevator2)
+/turf/open/floor/plasteel/elevatorshaft,
+/area/awaymission/snowdin/post/mining_main)
 "KQ" = (
 /obj/machinery/computer/shuttle/snowdin/mining{
 	dir = 8
@@ -14013,6 +13906,9 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
+/area/awaymission/snowdin/post/mining_dock)
+"ND" = (
+/turf/open/floor/plasteel/elevatorshaft,
 /area/awaymission/snowdin/post/mining_dock)
 "OF" = (
 /obj/machinery/door/airlock/external{
@@ -28100,7 +27996,7 @@ wS
 wS
 ai
 yf
-zb
+yt
 ai
 wS
 wS
@@ -28184,10 +28080,10 @@ IY
 Go
 Jx
 KP
-JR
+KP
 Kn
-JR
-JT
+KP
+KP
 KT
 Go
 ac
@@ -28339,7 +28235,7 @@ ii
 yb
 an
 yf
-zb
+yt
 yf
 ai
 ai
@@ -28440,11 +28336,11 @@ Gq
 Gq
 Go
 Jx
-JR
-Kd
-Ke
-KC
-JR
+KP
+KP
+KP
+KP
+KP
 KT
 GP
 ac
@@ -28697,11 +28593,11 @@ Iy
 Iy
 Go
 Jy
-JS
-Ke
-Ke
-Ke
-JS
+KP
+KP
+KP
+KP
+KP
 KU
 GP
 ac
@@ -28954,11 +28850,11 @@ GP
 GP
 GP
 Jx
-JR
-Kf
-Ke
-Ke
-JR
+KP
+KP
+KP
+KP
+KP
 KT
 GP
 ac
@@ -29211,10 +29107,10 @@ ae
 ae
 Go
 Jx
-JT
-JR
-JS
-JR
+KP
+KP
+KP
+KP
 KP
 KT
 GP
@@ -30131,11 +30027,11 @@ ae
 aj
 xa
 xl
-xm
-xn
+xl
+xl
 xK
-xm
-xo
+xl
+xl
 an
 ii
 ii
@@ -30387,12 +30283,12 @@ ae
 ae
 aj
 xa
-xm
-xv
-xv
-xv
-xv
-xm
+xl
+xl
+xl
+xl
+xl
+xl
 yp
 ii
 wS
@@ -30644,12 +30540,12 @@ ae
 wQ
 ai
 xb
-xn
-xv
-xv
-xv
-xv
-xn
+xl
+xl
+xl
+xl
+xl
+xl
 yq
 ii
 wS
@@ -30901,12 +30797,12 @@ ae
 wQ
 ai
 xb
-xn
-xv
-xv
-xv
-xv
-xn
+xl
+xl
+xl
+xl
+xl
+xl
 yq
 an
 ii
@@ -31158,12 +31054,12 @@ ae
 wQ
 wS
 xa
-xm
-xw
-xv
-xv
-xv
-xm
+xl
+xl
+xl
+xl
+xl
+xl
 yr
 an
 ii
@@ -31415,12 +31311,12 @@ ae
 wQ
 wS
 xa
-xo
-xm
-xn
-xn
-xm
-xo
+xl
+xl
+xl
+xl
+xl
+xl
 yp
 an
 an
@@ -62364,11 +62260,11 @@ IO
 wL
 wE
 JH
-wL
-wL
+ND
+ND
 Kt
-wL
-wL
+ND
+ND
 KX
 wE
 bh
@@ -62621,11 +62517,11 @@ IQ
 wL
 wE
 JH
-wL
-wL
-wL
-wL
-wL
+ND
+ND
+ND
+ND
+ND
 KX
 wE
 bh
@@ -62878,11 +62774,11 @@ wL
 wL
 wE
 JI
-wL
-wL
-wL
-wL
-wL
+ND
+ND
+ND
+ND
+ND
 KY
 wE
 bh
@@ -63135,11 +63031,11 @@ wL
 wL
 wE
 JH
-wL
-wL
-wL
-wL
-wL
+ND
+ND
+ND
+ND
+ND
 KX
 wE
 bh
@@ -63392,11 +63288,11 @@ wL
 wL
 wD
 JH
-wL
-wL
-wL
-wL
-wL
+ND
+ND
+ND
+ND
+ND
 KX
 wD
 bh
@@ -64151,7 +64047,7 @@ oZ
 oZ
 oZ
 hk
-jE
+sl
 Gk
 GN
 Hj
@@ -64664,7 +64560,7 @@ oZ
 oZ
 oZ
 oZ
-jv
+By
 xW
 xW
 xW
@@ -65339,12 +65235,12 @@ eJ
 wE
 wV
 xg
-wL
-wL
-wL
+ND
+ND
+ND
 xP
-wL
-wL
+ND
+ND
 yz
 yR
 wD
@@ -65596,12 +65492,12 @@ eJ
 wD
 wW
 xg
-wL
-wL
-wL
-wL
-wL
-wL
+ND
+ND
+ND
+ND
+ND
+ND
 yA
 wM
 zm
@@ -65853,12 +65749,12 @@ wD
 wP
 wX
 xg
-wL
-wL
-wL
-wL
-wL
-wL
+ND
+ND
+ND
+ND
+ND
+ND
 yB
 xy
 zn
@@ -66111,11 +66007,11 @@ wP
 wW
 xh
 wW
-wL
-wL
-wL
-wL
-wL
+ND
+ND
+ND
+ND
+ND
 yB
 xy
 zn
@@ -66369,10 +66265,10 @@ wW
 xh
 wW
 wW
-wW
-wL
-wL
-wL
+ND
+ND
+ND
+ND
 yC
 yS
 zm
@@ -66627,9 +66523,9 @@ xi
 wW
 wW
 wW
-wL
-wL
-wL
+ND
+ND
+ND
 yD
 yT
 wE

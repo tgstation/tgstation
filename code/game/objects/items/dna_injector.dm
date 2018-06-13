@@ -38,7 +38,7 @@
 			HM.force_lose(M)
 		for(var/datum/mutation/human/HM in add_mutations)
 			if(HM.name == RACEMUT)
-				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
+				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
 				log_msg += " (MONKEY)"
 			HM.force_give(M)
 		if(fields)
@@ -328,7 +328,7 @@
 			if((HM in M.dna.mutations) && !(M.dna.temporary_mutations[HM.name]))
 				continue //Skip permanent mutations we already have.
 			if(HM.name == RACEMUT && ishuman(M))
-				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
+				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
 				log_msg += " (MONKEY)"
 				M = HM.force_give(M)
 			else

@@ -90,6 +90,11 @@
 	return FALSE
 
 /mob/living/silicon/pai/Destroy()
+	if (loc != card)
+		card.forceMove(drop_location())
+	card.pai = null
+	card.cut_overlays()
+	card.add_overlay("pai-off")
 	GLOB.pai_list -= src
 	return ..()
 
@@ -292,6 +297,3 @@
 /mob/living/silicon/pai/process()
 	emitterhealth = CLAMP((emitterhealth + emitterregen), -50, emittermaxhealth)
 	hit_slowdown = CLAMP((hit_slowdown - 1), 0, 100)
-
-/mob/living/silicon/pai/generateStaticOverlay()
-	return

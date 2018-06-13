@@ -51,7 +51,7 @@
 	active = !active
 	if(active)
 		for(var/obj/item/I in owner.held_items)
-			if(!(I.flags_1 & NODROP_1))
+			if(!(I.item_flags & NODROP))
 				stored_items += I
 
 		var/list/L = owner.get_empty_held_indexes()
@@ -62,7 +62,7 @@
 		else
 			for(var/obj/item/I in stored_items)
 				to_chat(owner, "<span class='notice'>Your [owner.get_held_index_name(owner.get_held_index_of_item(I))]'s grip tightens.</span>")
-				I.flags_1 |= NODROP_1
+				I.item_flags |= NODROP
 
 	else
 		release_items()
@@ -86,7 +86,7 @@
 
 /obj/item/organ/cyberimp/brain/anti_drop/proc/release_items()
 	for(var/obj/item/I in stored_items)
-		I.flags_1 &= ~NODROP_1
+		I.item_flags &= ~NODROP
 	stored_items = list()
 
 

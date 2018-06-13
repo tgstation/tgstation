@@ -434,7 +434,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	to_chat(M, "Control of your mob has been offered to dead players.")
 	if(usr)
 		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
-		message_admins("[key_name_admin(usr)] has offered control of ([key_name_admin(M)]) to ghosts")
+		message_admins("[key_name_admin(usr)] has offered control of ([ADMIN_LOOKUPFLW(M)]) to ghosts")
 	var/poll_message = "Do you want to play as [M.real_name]?"
 	if(M.mind && M.mind.assigned_role)
 		poll_message = "[poll_message] Job:[M.mind.assigned_role]."
@@ -455,7 +455,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return TRUE
 	else
 		to_chat(M, "There were no ghosts willing to take control.")
-		message_admins("No ghosts were willing to take control of [key_name_admin(M)])")
+		message_admins("No ghosts were willing to take control of [ADMIN_LOOKUPFLW(M)])")
 		return FALSE
 
 /mob/proc/is_flying(mob/M = src)
@@ -477,12 +477,18 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(!LAZYLEN(message) || !message_type)
 		return
 
+	if(client)
+		if(!islist(client.player_details.logging[message_type]))
+			client.player_details.logging[message_type] = list()
+
 	if(!islist(logging[message_type]))
 		logging[message_type] = list()
 
 	var/list/timestamped_message = list("[LAZYLEN(logging[message_type]) + 1]\[[time_stamp()]\] [key_name(src)]" = message)
 
 	logging[message_type] += timestamped_message
+	if(client)
+		client.player_details.logging[message_type] += timestamped_message
 
 /mob/proc/can_hear()
 	. = TRUE

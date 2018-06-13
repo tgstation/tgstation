@@ -92,7 +92,6 @@
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
 	density = TRUE
-	anchored = TRUE
 	var/active = FALSE
 	var/obj/item/gps/gps
 	var/credits_stored = 0
@@ -234,7 +233,6 @@
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
 	density = TRUE
-	anchored = TRUE
 	var/cooldown = 0
 	var/result_count = 3 //Show X results.
 

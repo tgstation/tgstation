@@ -86,9 +86,6 @@
 	density = FALSE
 	var/boing = 0
 
-/obj/effect/anomaly/grav/New()
-	..()
-
 /obj/effect/anomaly/grav/anomalyEffect()
 	..()
 	boing = 1
@@ -121,6 +118,20 @@
 		A.throw_at(target, 5, 1)
 		boing = 0
 
+/obj/effect/anomaly/grav/high
+	var/grav_field
+
+/obj/effect/anomaly/grav/high/Initialize(mapload, new_lifespan)
+	. = ..()
+	setup_grav_field()
+
+/obj/effect/anomaly/grav/high/proc/setup_grav_field()
+	grav_field = make_field(/datum/proximity_monitor/advanced/gravity, list("current_range" = 7, "host" = src, "gravity_value" = rand(0,3)))
+
+/obj/effect/anomaly/grav/high/Destroy()
+	QDEL_NULL(grav_field)
+	. = ..()
+
 /////////////////////
 
 /obj/effect/anomaly/flux
@@ -130,9 +141,6 @@
 	var/canshock = 0
 	var/shockdamage = 20
 	var/explosive = TRUE
-
-/obj/effect/anomaly/flux/New()
-	..()
 
 /obj/effect/anomaly/flux/anomalyEffect()
 	..()
@@ -178,9 +186,6 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bluespace"
 	density = TRUE
-
-/obj/effect/anomaly/bluespace/New()
-	..()
 
 /obj/effect/anomaly/bluespace/anomalyEffect()
 	..()
@@ -252,9 +257,6 @@
 	icon_state = "mustard"
 	var/ticks = 0
 
-/obj/effect/anomaly/pyro/New()
-	..()
-
 /obj/effect/anomaly/pyro/anomalyEffect()
 	..()
 	ticks++
@@ -286,9 +288,6 @@
 	name = "vortex anomaly"
 	icon_state = "bhole3"
 	desc = "That's a nice station you have there. It'd be a shame if something happened to it."
-
-/obj/effect/anomaly/bhole/New()
-	..()
 
 /obj/effect/anomaly/bhole/anomalyEffect()
 	..()

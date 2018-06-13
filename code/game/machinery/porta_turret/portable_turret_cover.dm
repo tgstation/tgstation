@@ -7,7 +7,6 @@
 	name = "turret"
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turretCover"
-	anchored = TRUE
 	layer = HIGH_OBJ_LAYER
 	density = FALSE
 	max_integrity = 80

@@ -96,6 +96,10 @@
 	charges--
 	..()
 
+/obj/item/gun/magic/wand/resurrection/debug //for testing
+	name = "debug wand of healing"
+	max_charges = 500
+
 /////////////////////////////////////
 //WAND OF POLYMORPH
 /////////////////////////////////////
