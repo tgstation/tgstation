@@ -45,7 +45,7 @@
 	admin_ticket_log(M, msg)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Subtle Message") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_centcom_message(mob/M in GLOB.mob_list)
+/datum/admins/proc/cmd_admin_centcom_message(mob/M in GLOB.mob_list)
 	set category = "Special Verbs"
 	set name = "CentCom Message"
 	var/mob/living/carbon/human/H = M
