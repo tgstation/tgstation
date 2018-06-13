@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		H.visible_message("<span class='notice'>[user] heals [H] with the power of [deity_name]!</span>")
 		to_chat(H, "<span class='boldnotice'>May the power of [deity_name] compel you to be healed!</span>")
 		playsound(src.loc, "punch", 25, 1, -1)
-		H.SendSignal(COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return 1
 
 /obj/item/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)

@@ -241,7 +241,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 //the obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
 /obj/proc/deconstruct(disassembled = TRUE)
-	SendSignal(COMSIG_OBJ_DECONSTRUCT, disassembled)
+	SEND_SIGNAL(src, COMSIG_OBJ_DECONSTRUCT, disassembled)
 	qdel(src)
 
 //what happens when the obj's health is below integrity_failure level.

@@ -112,7 +112,7 @@
 			for(var/obj/item/reagent_containers/food/snacks/grown/G in PB.contents)
 				if(i >= max_items)
 					break
-				if(PB.SendSignal(COMSIG_TRY_STORAGE_TAKE, G, src))
+				if(SEND_SIGNAL(PB, COMSIG_TRY_STORAGE_TAKE, G, src))
 					i++
 			if(i<max_items)
 				to_chat(user, "<span class='info'>You empty the plant bag into the biogenerator.</span>")

@@ -116,7 +116,7 @@
 	if(!ishuman(pushed_mob))
 		return
 	var/mob/living/carbon/human/H = pushed_mob
-	H.SendSignal(COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
+	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
 
 /obj/structure/table/attackby(obj/item/I, mob/user, params)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -136,7 +136,7 @@
 	if(istype(I, /obj/item/storage/bag/tray))
 		var/obj/item/storage/bag/tray/T = I
 		if(T.contents.len > 0) // If the tray isn't empty
-			I.SendSignal(COMSIG_TRY_STORAGE_QUICK_EMPTY, drop_location())
+			SEND_SIGNAL(I, COMSIG_TRY_STORAGE_QUICK_EMPTY, drop_location())
 			user.visible_message("[user] empties [I] on [src].")
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)

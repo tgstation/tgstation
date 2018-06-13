@@ -903,7 +903,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			return TRUE
 		if(SLOT_IN_BACKPACK)
 			if(H.back)
-				if(H.back.SendSignal(COMSIG_TRY_STORAGE_CAN_INSERT, I, H, TRUE))
+				if(SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_CAN_INSERT, I, H, TRUE))
 					return TRUE
 			return FALSE
 	return FALSE //Unsupported slot
@@ -1001,22 +1001,22 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	switch(H.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
-			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/fat)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/fat)
 			H.throw_alert("nutrition", /obj/screen/alert/fat)
 		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/wellfed)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/wellfed)
 			H.clear_alert("nutrition")
 		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/fed)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/fed)
 			H.clear_alert("nutrition")
 		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-			H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "nutrition")
+			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "nutrition")
 			H.clear_alert("nutrition")
 		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/hungry)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/hungry)
 			H.throw_alert("nutrition", /obj/screen/alert/hungry)
 		if(0 to NUTRITION_LEVEL_STARVING)
-			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/starving)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/starving)
 			H.throw_alert("nutrition", /obj/screen/alert/starving)
 
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
@@ -1253,7 +1253,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
 		var/randomized_zone = ran_zone(user.zone_selected)
-		target.SendSignal(COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
+		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
 		var/obj/item/bodypart/affecting = target.get_bodypart(randomized_zone)
 		var/randn = rand(1, 100)
 		if(randn <= 25)
@@ -1514,9 +1514,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	// +/- 50 degrees from 310K is the 'safe' zone, where no damage is dealt.
 	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !H.has_trait(TRAIT_RESISTHEAT))
 		//Body temperature is too hot.
+		
+		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
+		
 		var/burn_damage
-		H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "cold")
-		H.SendSignal(COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
 		switch(H.bodytemperature)
 			if(BODYTEMP_HEAT_DAMAGE_LIMIT to 400)
 				H.throw_alert("temp", /obj/screen/alert/hot, 1)
@@ -1536,8 +1538,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		H.apply_damage(burn_damage, BURN)
 
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !H.has_trait(TRAIT_RESISTCOLD))
-		H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "hot")
-		H.SendSignal(COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
+		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
 		switch(H.bodytemperature)
 			if(200 to BODYTEMP_COLD_DAMAGE_LIMIT)
 				H.throw_alert("temp", /obj/screen/alert/cold, 1)
@@ -1551,8 +1553,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	else
 		H.clear_alert("temp")
-		H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "cold")
-		H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "hot")
+		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
+		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
 
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = H.calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
@@ -1646,7 +1648,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.adjust_bodytemperature(11)
 		else
 			H.adjust_bodytemperature(BODYTEMP_HEATING_MAX + (H.fire_stacks * 12))
-			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
 
 /datum/species/proc/CanIgniteMob(mob/living/carbon/human/H)
 	if(H.has_trait(TRAIT_NOFIRE))

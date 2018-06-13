@@ -232,7 +232,7 @@
 		return
 	if(!item_to_add)
 		user.visible_message("[user] pets [src].","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
-		user.SendSignal(COMSIG_ADD_MOOD_EVENT, "pet_corgi", /datum/mood_event/pet_corgi)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "pet_corgi", /datum/mood_event/pet_corgi)
 		return
 
 	if(user && !user.temporarilyRemoveItemFromInventory(item_to_add))
@@ -615,7 +615,7 @@
 			if(M && stat != DEAD) // Added check to see if this mob (the dog) is dead to fix issue 2454
 				new /obj/effect/temp_visual/heart(loc)
 				emote("me", 1, "yaps happily!")
-				M.SendSignal(COMSIG_ADD_MOOD_EVENT, "pet_corgi", /datum/mood_event/pet_corgi)
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "pet_corgi", /datum/mood_event/pet_corgi)
 		else
 			if(M && stat != DEAD) // Same check here, even though emote checks it as well (poor form to check it only in the help case)
 				emote("me", 1, "growls!")

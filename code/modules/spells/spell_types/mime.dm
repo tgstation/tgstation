@@ -58,9 +58,9 @@
 		H.mind.miming=!H.mind.miming
 		if(H.mind.miming)
 			to_chat(H, "<span class='notice'>You make a vow of silence.</span>")
-			H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "vow")
+			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "vow")
 		else
-			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "vow", /datum/mood_event/broken_vow)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "vow", /datum/mood_event/broken_vow)
 			to_chat(H, "<span class='notice'>You break your vow of silence.</span>")
 
 // These spells can only be gotten from the "Guide for Advanced Mimery series" for Mime Traitors.

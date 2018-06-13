@@ -22,18 +22,18 @@
 	STR.locked = TRUE
 
 /obj/item/storage/lockbox/attackby(obj/item/W, mob/user, params)
-	var/locked = SendSignal(COMSIG_IS_STORAGE_LOCKED)
+	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 	if(W.GetID())
 		if(broken)
 			to_chat(user, "<span class='danger'>It appears to be broken.</span>")
 			return
 		if(allowed(user))
-			SendSignal(COMSIG_TRY_STORAGE_SET_LOCKSTATE, !locked)
-			locked = SendSignal(COMSIG_IS_STORAGE_LOCKED)
+			SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, !locked)
+			locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 			if(locked)
 				icon_state = icon_locked
 				to_chat(user, "<span class='danger'>You lock the [src.name]!</span>")
-				SendSignal(COMSIG_TRY_STORAGE_HIDE_ALL)
+				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_HIDE_ALL)
 				return
 			else
 				icon_state = icon_closed
@@ -50,7 +50,7 @@
 /obj/item/storage/lockbox/emag_act(mob/user)
 	if(!broken)
 		broken = TRUE
-		SendSignal(COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
+		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
 		desc += "It appears to be broken."
 		icon_state = src.icon_broken
 		if(user)
@@ -107,13 +107,13 @@
 
 /obj/item/storage/lockbox/medal/examine(mob/user)
 	..()
-	var/locked = SendSignal(COMSIG_IS_STORAGE_LOCKED)
+	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 	if(!locked)
 		to_chat(user, "<span class='notice'>Alt-click to [open ? "close":"open"] it.</span>")
 
 /obj/item/storage/lockbox/medal/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE))
-		if(!SendSignal(COMSIG_IS_STORAGE_LOCKED))
+		if(!SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
 			open = (open ? FALSE : TRUE)
 			update_icon()
 		..()
@@ -131,7 +131,7 @@
 
 /obj/item/storage/lockbox/medal/update_icon()
 	cut_overlays()
-	var/locked = SendSignal(COMSIG_IS_STORAGE_LOCKED)
+	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 	if(locked)
 		icon_state = "medalbox+l"
 		open = FALSE
