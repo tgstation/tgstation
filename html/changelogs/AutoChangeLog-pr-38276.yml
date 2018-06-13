@@ -1,6 +1,0 @@
-author: "chesse20"
-delete-after: True
-changes: 
-  - rscadd: "Adds Exotic Corgi Crate to Cargo"
-  - rscadd: "Adds Exotic Corgi, a Corgi with a random hue applied to it"
-  - rscadd: "Adds Talking Corgi Crate, and talking Corgi"

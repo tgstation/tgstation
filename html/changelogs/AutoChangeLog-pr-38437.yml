@@ -1,4 +1,0 @@
-author: "CitrusGender"
-delete-after: True
-changes: 
-  - bugfix: "checks to see if bullets are deleted if they are the ammo type and the bullet chambered."

@@ -1,6 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - rscadd: "You can now see what other people are eating or drinking."
-  - rscadd: "Borg shaker can now synthesise milk, lemon juice, banana juice and coffee"
-  - bugfix: "Renamed drinks no longer revert to their original name when their reagents change"
