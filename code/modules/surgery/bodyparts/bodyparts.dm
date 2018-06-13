@@ -21,7 +21,7 @@
 	var/is_pseudopart = FALSE //For limbs that don't really exist, eg chainsaws
 
 	var/disabled = FALSE //If TRUE, limb is as good as missing
-	var/body_damage = TRUE //If TRUE, damage is counted for mob health, otherwise it's limited to the limb
+	var/body_damage_coeff = 1 //Multiplier of the limb's damage that gets applied to the mob
 	var/brutestate = 0
 	var/burnstate = 0
 	var/brute_dam = 0
@@ -459,7 +459,7 @@
 	body_part = ARM_LEFT
 	aux_zone = BODY_ZONE_PRECISE_L_HAND
 	aux_layer = HANDS_PART_LAYER
-	body_damage = FALSE
+	body_damage_coeff = 0.75
 	held_index = 1
 	px_x = -6
 	px_y = 0
@@ -508,7 +508,7 @@
 	body_part = ARM_RIGHT
 	aux_zone = BODY_ZONE_PRECISE_R_HAND
 	aux_layer = HANDS_PART_LAYER
-	body_damage = FALSE
+	body_damage_coeff = 0.75
 	held_index = 2
 	px_x = 6
 	px_y = 0
@@ -555,7 +555,7 @@
 	max_damage = 50
 	body_zone = BODY_ZONE_L_LEG
 	body_part = LEG_LEFT
-	body_damage = FALSE
+	body_damage_coeff = 0.75
 	px_x = -2
 	px_y = 12
 
@@ -600,7 +600,7 @@
 	max_damage = 50
 	body_zone = BODY_ZONE_R_LEG
 	body_part = LEG_RIGHT
-	body_damage = FALSE
+	body_damage_coeff = 0.75
 	px_x = 2
 	px_y = 12
 

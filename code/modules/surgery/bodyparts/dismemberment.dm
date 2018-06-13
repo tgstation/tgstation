@@ -16,8 +16,7 @@
 		return FALSE
 
 	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
-	if(body_damage)
-		affecting.receive_damage(CLAMP(brute_dam/2, 15, 50), CLAMP(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
+	affecting.receive_damage(CLAMP(brute_dam/2 * BP.body_damage_coeff, 15, 50), CLAMP(burn_dam/2 * BP.body_damage_coeff, 0, 50)) //Damage the chest based on limb's existing damage
 	C.visible_message("<span class='danger'><B>[C]'s [src.name] has been violently dismembered!</B></span>")
 	C.emote("scream")
 	C.SendSignal(COMSIG_ADD_MOOD_EVENT, "dismembered", /datum/mood_event/dismembered)
