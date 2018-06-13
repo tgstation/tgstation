@@ -223,8 +223,9 @@
 					var/list/plasma_parts = list()//a list of the organic parts to be turned into plasma limbs
 					var/list/robo_parts = list()//keep a reference of robotic parts so we know if we can turn them into a plasmaman
 					var/mob/living/carbon/human/PP = L
-					if(istype(PP.dna.species, /datum/species/plasmaman || /datum/species/android || /datum/species/synth)) //ignore plasmamen/robotic species
-						return
+					var/S = PP.dna.species
+					if(istype(S, /datum/species/plasmaman) || istype(S, /datum/species/android) || istype(S, /datum/species/synth)) //ignore plasmamen/robotic species
+						continue
 
 					for(var/BP in PP.bodyparts)
 						var/obj/item/bodypart/NN = BP
