@@ -2,7 +2,7 @@
 	var/atom/A = parent
 	if((istype(W, /obj/item/storage/backpack/holding) || count_by_type(W.GetAllContents(), /obj/item/storage/backpack/holding)))
 		var/safety = alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [A.name]?", "Abort", "Proceed")
-		if(safety != "Proceed" || QDELETED(A) || QDELETED(W) || QDELETED(user) || !in_range(A, user) || user.incapacitated())
+		if(safety != "Proceed" || QDELETED(A) || QDELETED(W) || QDELETED(user) || !user.canUseTopic(A, BE_CLOSE, iscarbon(user)))
 			return
 		var/turf/loccheck = get_turf(A)
 		if(is_reebe(loccheck.z))
