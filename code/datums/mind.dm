@@ -195,9 +195,7 @@
 		special_role = null
 
 /datum/mind/proc/remove_traitor()
-	if(src in SSticker.mode.traitors)
-		remove_antag_datum(/datum/antagonist/traitor)
-	SSticker.mode.update_traitor_icons_removed(src)
+	remove_antag_datum(/datum/antagonist/traitor)
 
 /datum/mind/proc/remove_brother()
 	if(src in SSticker.mode.brothers)
@@ -245,7 +243,6 @@
 	remove_wizard()
 	remove_cultist()
 	remove_rev()
-	SSticker.mode.update_traitor_icons_removed(src)
 	SSticker.mode.update_cult_icons_removed(src)
 
 /datum/mind/proc/equip_traitor(employer = "The Syndicate", silent = FALSE, datum/antagonist/uplink_owner)

@@ -13,6 +13,15 @@
 	var/id = null
 	var/on = FALSE
 
+/obj/machinery/igniter/incinerator_toxmix
+	id = INCINERATOR_TOXMIX_IGNITER
+
+/obj/machinery/igniter/incinerator_atmos
+	id = INCINERATOR_ATMOS_IGNITER
+
+/obj/machinery/igniter/incinerator_syndicatelava
+	id = INCINERATOR_SYNDICATELAVA_IGNITER
+
 /obj/machinery/igniter/on
 	on = TRUE
 	icon_state = "igniter1"
@@ -31,7 +40,7 @@
 	if (src.on && !(stat & NOPOWER) )
 		var/turf/location = src.loc
 		if (isturf(location))
-			location.hotspot_expose(1000,500,1)
+			location.hotspot_expose(700,10,1)
 	return 1
 
 /obj/machinery/igniter/Initialize()
@@ -57,6 +66,9 @@
 	var/last_spark = 0
 	var/base_state = "migniter"
 	var/datum/effect_system/spark_spread/spark_system
+
+/obj/machinery/sparker/toxmix
+	id = INCINERATOR_TOXMIX_IGNITER
 
 /obj/machinery/sparker/Initialize()
 	. = ..()
@@ -114,7 +126,7 @@
 	use_power(1000)
 	var/turf/location = src.loc
 	if (isturf(location))
-		location.hotspot_expose(1000,500,1)
+		location.hotspot_expose(1000,100,1)
 	return 1
 
 /obj/machinery/sparker/emp_act(severity)

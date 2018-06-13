@@ -35,14 +35,6 @@
 	QDEL_LIST(diseases)
 	return ..()
 
-/mob/living/ghostize(can_reenter_corpse = 1)
-	var/prev_client = client
-	. = ..()
-	if(.)
-		if(ranged_ability && prev_client)
-			ranged_ability.remove_mousepointer(prev_client)
-
-
 /mob/living/proc/OpenCraftingMenu()
 	return
 
@@ -436,6 +428,7 @@
 	heal_overall_damage(INFINITY, INFINITY, INFINITY, FALSE, FALSE, TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	ExtinguishMob()
 	fire_stacks = 0
+	confused = 0
 	update_canmove()
 	GET_COMPONENT(mood, /datum/component/mood)
 	if (mood)
@@ -591,6 +584,7 @@
 		return
 	changeNext_move(CLICK_CD_RESIST)
 
+	SendSignal(COMSIG_LIVING_RESIST, src)
 	//resisting grabs (as if it helps anyone...)
 	if(!restrained(ignore_grab = 1) && pulledby)
 		visible_message("<span class='danger'>[src] resists against [pulledby]'s grip!</span>")
@@ -606,14 +600,6 @@
 	else if(isobj(loc))
 		var/obj/C = loc
 		C.container_resist(src)
-
-	else if(IsFrozen())
-		to_chat(src, "You start breaking out of the ice cube!")
-		if(do_mob(src, src, 40))
-			if(IsFrozen())
-				to_chat(src, "You break out of the ice cube!")
-				remove_status_effect(/datum/status_effect/freon)
-				update_canmove()
 
 	else if(canmove)
 		if(on_fire)
@@ -655,9 +641,15 @@
 	if(!SSticker.HasRoundStarted())
 		return
 	if(has_gravity)
-		clear_alert("weightless")
+		if(has_gravity == 1)
+			clear_alert("gravity")
+		else
+			if(has_gravity >= GRAVITY_DAMAGE_TRESHOLD)
+				throw_alert("gravity", /obj/screen/alert/veryhighgravity)
+			else
+				throw_alert("gravity", /obj/screen/alert/highgravity)
 	else
-		throw_alert("weightless", /obj/screen/alert/weightless)
+		throw_alert("gravity", /obj/screen/alert/weightless)
 	if(!override && !is_flying())
 		float(!has_gravity)
 
@@ -909,6 +901,7 @@
 		new/obj/effect/dummy/fire(src)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
+		SendSignal(COMSIG_LIVING_IGNITED,src)
 		return TRUE
 	return FALSE
 
@@ -920,6 +913,7 @@
 			qdel(F)
 		clear_alert("fire")
 		SendSignal(COMSIG_CLEAR_MOOD_EVENT, "on_fire")
+		SendSignal(COMSIG_LIVING_EXTINGUISHED, src)
 		update_fire()
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
@@ -1113,6 +1107,11 @@
 		else
 			clear_fullscreen("remote_view", 0)
 		update_pipe_vision()
+
+/mob/living/update_mouse_pointer()
+	..()
+	if (client && ranged_ability && ranged_ability.ranged_mousepointer)
+		client.mouse_pointer_icon = ranged_ability.ranged_mousepointer
 
 /mob/living/vv_edit_var(var_name, var_value)
 	switch(var_name)
