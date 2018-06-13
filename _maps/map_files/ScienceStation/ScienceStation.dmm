@@ -12324,9 +12324,7 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "Bp" = (
-/obj/machinery/atmospherics/components/binary/valve/digital{
-	open = 1
-	},
+/obj/machinery/atmospherics/components/binary/valve/digital/on,
 /obj/machinery/light/small{
 	brightness = 3;
 	dir = 8;
