@@ -137,6 +137,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 	var/datum/looping_sound/supermatter/soundloop
 
+	var/exploding = 0
+	var/explodesleeping = 0
+
 /obj/machinery/power/supermatter_shard/Initialize()
 	. = ..()
 	uid = gl_uid++
@@ -227,7 +230,48 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	integrity = integrity < 0 ? 0 : integrity
 	return integrity
 
+/obj/machinery/power/supermatter_shard/Topic(href,href_list)
+	. = ..()
+	if(href_list["explode"])
+		if(!loc)
+			return
+		if(usr && usr.client && usr.client.holder)
+			var/explodeaction = href_list["explode"]
+			if(istext(explodeaction) && explodeaction in list("pause","cancel","resume"))
+				switch(explodeaction)
+					if("pause")
+						exploding = 3
+						message_admins("[usr.key] has paused the supermatter explosion at \"[get_area(src)]\". Options(<A href='?src=[REF(src)];explode=resume'>Resume</A> or <A href='?src=[REF(src)];explode=cancel'>Cancel</A>)")
+						investigate_log("[usr.key] has paused the supermatter explosion at \"[get_area(src)]\".", INVESTIGATE_SUPERMATTER)
+					if("cancel")
+						exploding = 0
+						damage = round(explosion_point/2,1)
+						message_admins("[usr.key] has selected to cancel the supermatter explosion at \"[get_area(src)]\". The supermatter has been healed to 50% integrity.")
+						investigate_log("[usr.key] has selected to cancel the supermatter explosion at \"[get_area(src)]\". The supermatter has been healed to 50% integrity.", INVESTIGATE_SUPERMATTER)
+					if("resume")
+						if(exploding != 1)
+							exploding = 1
+						message_admins("[usr.key] has allowed the supermatter explosion to resume at \"[get_area(src)]\".")
+						investigate_log("[usr.key] has allowed the supermatter explosion to resume at \"[get_area(src)]\".", INVESTIGATE_SUPERMATTER)
+				explodesleeping = 0
+
 /obj/machinery/power/supermatter_shard/proc/explode()
+	if(exploding)
+		return
+	exploding = 1
+	message_admins("<font color='#ff0000'><B>SUPERMATTER AT \"[get_area(src)]\" HAS EXPLODED! [ADMIN_JMP(src)] You have 10 seconds to reverse this.</B></font> Options(<A href='?src=[REF(src)];explode=resume'>Allow</A>, <A href='?src=[REF(src)];explode=pause'>Pause</A> or <A href='?src=[REF(src)];explode=cancel'>Cancel</A>)",'sound/magic/charge.ogg')
+	explodesleeping = 1
+	var/stopsleepingat = world.time+100
+	while(explodesleeping)
+		sleep(5)
+		if(world.time > stopsleepingat)
+			explodesleeping = 0
+	if(exploding == 3)
+		while(exploding == 3)
+			sleep(10)
+	if(exploding == 0)
+		return
+	exploding = 0
 	var/turf/T = get_turf(src)
 	for(var/mob/M in GLOB.player_list)
 		if(M.z == z)
@@ -250,6 +294,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 		qdel(src)
 
 /obj/machinery/power/supermatter_shard/process_atmos()
+	if(exploding)
+		return
 	var/turf/T = loc
 
 	if(isnull(T))		// We have a null turf...something is wrong, stop processing this entity.
@@ -409,8 +455,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 					message_admins("[src] has reached the emergency point [ADMIN_JMP(src)].")
 					has_reached_emergency = TRUE
 			else if(damage >= damage_archived) // The damage is still going up
-				radio.talk_into(src, "[warning_alert] Integrity: [get_integrity()]%", engineering_channel, get_spans(), get_default_language())
+				var/percentintegrity = get_integrity()
+				radio.talk_into(src, "[warning_alert] Integrity: [percentintegrity]%", engineering_channel, get_spans(), get_default_language())
 				lastwarning = REALTIMEOFDAY - (WARNING_DELAY * 5)
+				if(percentintegrity <= 60 && loc)
+					message_admins("<B>SUPERMATTER INTEGRITY FAILURE, NOW [percentintegrity]%</B> at [get_area(src)] [ADMIN_JMP(src)]",'sound/machines/terminal_alert.ogg')
 
 			else                                                 // Phew, we're safe
 				radio.talk_into(src, "[safe_alert] Integrity: [get_integrity()]%", engineering_channel, get_spans(), get_default_language())

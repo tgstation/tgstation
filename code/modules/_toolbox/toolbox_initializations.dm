@@ -126,4 +126,4 @@ GLOBAL_LIST_EMPTY(hub_features)
 		"Iridium", "Platinum", "Thallium", "Polonium", "Francium", "Radium", "Actinium", "Thorium", "Protactinium", "Uranium",\
 		"Neptunium", "Plutonium", "Americium", "Curium", "Berkelium", "Californium", "Einsteinium", "Fermium", "Nobelium",\
 		"Lawrencium", "Rutherfordium", "Dubnium", "Seaborgium", "Bohrium", "Hassium", "Meitnerium")
-	return "[pick(elements)] \Roman[rand(1,100)]"
+	return "[pick(elements)] \Roman[rand(1,25)]"

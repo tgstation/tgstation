@@ -1,8 +1,11 @@
 
 ////////////////////////////////
-/proc/message_admins(msg)
+/proc/message_admins(msg,alertsound = null)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
 	to_chat(GLOB.admins, msg)
+	if(alertsound)
+		for(var/client/C in GLOB.admins)
+			C << sound(alertsound,0,0,0,50)
 
 /proc/relay_msg_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message\">[msg]</span></span>"

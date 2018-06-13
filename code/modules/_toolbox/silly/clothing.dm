@@ -83,17 +83,19 @@
 	glasses = /obj/item/clothing/glasses/meson
 	mask = /obj/item/clothing/mask/breath
 	head = /obj/item/clothing/head/helmet/space/plasmaman
-	belt = /obj/item/tank/internals/plasmaman/belt/full
-	back = /obj/item/storage/backpack/explorer
-	backpack_contents = list(/obj/item/storage/box/survival/plasmaman,/obj/item/reagent_containers/hypospray/medipen/survival)
+	back = /obj/item/tank/internals/plasmaman
+	l_pocket = /obj/item/reagent_containers/hypospray/medipen/survival
 
 /obj/effect/mob_spawn/human/plasma_miner/create(ckey, name)
 	. = ..()
 	if(istype(.,/mob/living/carbon))
 		var/mob/living/carbon/M = .
-		for(var/obj/item/tank/internals/plasmaman/belt/full/F in M)
+		for(var/obj/item/tank/internals/plasmaman/F in M)
 			M.internal = F
+			break
 		M.real_name = generate_plasmaman_name()
+		if(M.mind)
+			M.mind.name = M.real_name
 
 /obj/item/storage/box/survival/plasmaman/PopulateContents()
 	. = ..()
