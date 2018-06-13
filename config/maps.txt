@@ -49,7 +49,3 @@ endmap
 map nssfrenzy
 	maxplayers 20
 endmap
-
-map crashland
-	maxplayers 20
-endmap
