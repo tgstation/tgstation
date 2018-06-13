@@ -39360,7 +39360,7 @@
 	},
 /obj/machinery/door/airlock/engineering{
 	name = "Engine Room";
-	req_access_txt = "10"
+	req_one_access_txt = "10;24"
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
