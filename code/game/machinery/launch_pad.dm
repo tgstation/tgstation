@@ -16,6 +16,7 @@
 	var/power_efficiency = 1
 	var/x_offset = 0
 	var/y_offset = 0
+	var/max_teleportable = 20
 
 /obj/machinery/launchpad/RefreshParts()
 	var/E = -1 //to make default parts have the base value
@@ -88,6 +89,7 @@
 		dest = target
 
 	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, 1)
+	var/teleport_count = 0
 	for(var/atom/movable/ROI in source)
 		if(ROI == src)
 			continue
@@ -125,6 +127,9 @@
 					log_msg += ")"
 			log_msg += ", "
 		do_teleport(ROI, dest)
+		teleport_count++
+		if(teleport_count >= max_teleportable)
+			break
 
 	if (dd_hassuffix(log_msg, ", "))
 		log_msg = dd_limittext(log_msg, length(log_msg) - 2)
