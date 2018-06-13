@@ -114,7 +114,7 @@ SUBSYSTEM_DEF(mapping)
 		in_transit[T] = T.get_docked()
 	var/go_ahead = world.time + wipe_safety_delay
 	if(in_transit.len)
-		message_admins("Shuttles in transit detected. Attempting to fast travel. Timeout is [go_ahead/10] seconds.")
+		message_admins("Shuttles in transit detected. Attempting to fast travel. Timeout is [wipe_safety_delay/10] seconds.")
 	var/list/cleared = list()
 	for(var/i in in_transit)
 		INVOKE_ASYNC(src, .proc/safety_clear_transit_dock, i, in_transit[i], cleared)
@@ -148,6 +148,7 @@ SUBSYSTEM_DEF(mapping)
 
 /datum/controller/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT
+	initialized = SSmapping.initialized
 	map_templates = SSmapping.map_templates
 	ruins_templates = SSmapping.ruins_templates
 	space_ruins_templates = SSmapping.space_ruins_templates
