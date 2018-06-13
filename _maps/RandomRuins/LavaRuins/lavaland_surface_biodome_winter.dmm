@@ -150,7 +150,7 @@
 /area/ruin/powered/snow_biodome)
 "aF" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/mug/coco,
+/obj/item/reagent_containers/food/drinks/mug/cocoa,
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
 "aG" = (
