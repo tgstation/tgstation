@@ -27466,6 +27466,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/machinery/disposal/bin,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bum" = (
@@ -28442,7 +28443,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bwV" = (
-/obj/machinery/disposal/bin,
 /turf/open/floor/plasteel/whiteyellow/corner,
 /area/medical/chemistry)
 "bwW" = (
@@ -49149,6 +49149,9 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
+"iqc" = (
+/turf/open/floor/plasteel/stairs/right,
+/area/maintenance/department/crew_quarters/dorms)
 "itl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -91019,7 +91022,7 @@ aaa
 aaa
 aiS
 qPB
-gNv
+iqc
 ngp
 cBr
 cBs
