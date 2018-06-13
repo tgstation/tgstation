@@ -28,6 +28,9 @@
 	var/burn_dam = 0
 	var/stamina_dam = 0
 	var/max_damage = 0
+	
+	var/brute_reduction = 0 //Subtracted to brute damage taken
+	var/burn_reduction = 0	//Subtracted to burn damage taken
 
 	//Coloring and proper item icon update
 	var/skin_tone = ""
@@ -128,10 +131,9 @@
 	brute = max(brute * dmg_mlt, 0)
 	burn = max(burn * dmg_mlt, 0)
 	stamina = max(stamina * dmg_mlt, 0)
-	if(status == BODYPART_ROBOTIC) //This makes robolimbs not damageable by chems and makes it stronger
-		brute = max(0, brute - 5)
-		burn = max(0, burn - 4)
-		//No stamina scaling.. for now..
+	brute = max(0, brute - brute_reduction)
+	burn = max(0, burn - burn_reduction)
+	//No stamina scaling.. for now..
 
 	if(!brute && !burn && !stamina)
 		return FALSE
