@@ -1123,18 +1123,19 @@
 
 /datum/supply_pack/medical/virus
 	name = "Virus Crate"
-	desc = "Contains twelve different bottles, each filled with a different chemical compound, each useful for virology. Also includes seven beakers and syringes. Balled-up jeans not included. Requires CMO access to open."
+	desc = "Contains twelve different bottles, containing several viral samples for virology research. Also includes seven beakers and syringes. Balled-up jeans not included. Requires CMO access to open."
 	cost = 2500
 	access = ACCESS_CMO
 	contains = list(/obj/item/reagent_containers/glass/bottle/flu_virion,
 					/obj/item/reagent_containers/glass/bottle/cold,
-					/obj/item/reagent_containers/glass/bottle/epiglottis_virion,
-					/obj/item/reagent_containers/glass/bottle/liver_enhance_virion,
+					/obj/item/reagent_containers/glass/bottle/random_virus,
+					/obj/item/reagent_containers/glass/bottle/random_virus,
+					/obj/item/reagent_containers/glass/bottle/random_virus,
+					/obj/item/reagent_containers/glass/bottle/random_virus,
 					/obj/item/reagent_containers/glass/bottle/fake_gbs,
 					/obj/item/reagent_containers/glass/bottle/magnitis,
 					/obj/item/reagent_containers/glass/bottle/pierrot_throat,
 					/obj/item/reagent_containers/glass/bottle/brainrot,
-					/obj/item/reagent_containers/glass/bottle/hallucigen_virion,
 					/obj/item/reagent_containers/glass/bottle/anxiety,
 					/obj/item/reagent_containers/glass/bottle/beesease,
 					/obj/item/storage/box/syringes,
@@ -1644,6 +1645,43 @@
 		if(D.gender == FEMALE)
 			qdel(D)
 			new /mob/living/simple_animal/pet/dog/corgi/Lisa(.)
+
+/datum/supply_pack/critter/corgi/exotic
+	name = "Exotic Corgi Crate"
+	desc = "Corgis fit for a king, these corgis come in a unique color to signify their superiority. Comes with a cute collar!"
+	cost = 5500
+	crate_name = "exotic corgi crate"
+
+/datum/supply_pack/critter/corgi/exotic/generate()
+	. = ..()
+	var/mob/living/simple_animal/pet/dog/corgi/D = locate() in .
+	D.name = "exotic corgi"
+	D.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+
+/mob/living/carbon/human/talking_corgi/Initialize()
+	. = ..()
+	reagents.add_reagent("whiskey", 80)
+	put_in_hands(new /obj/item/reagent_containers/food/drinks/bottle/whiskey)
+	equip_to_appropriate_slot(new /obj/item/clothing/suit/hooded/ian_costume)
+	equip_to_appropriate_slot(new /obj/item/clothing/head/hooded/ian_hood)
+	hair_style = "Skinhead"
+	facial_hair_style = "Neckbeard"
+	gender = MALE
+	update_body()
+	update_hair()
+	name = "talking corgi"
+
+/mob/living/carbon/human/talking_corgi/handle_status_effects()
+	..()
+	if(prob(5))
+		say(pick("Woof.", "Bark.", "Arf.", "Woof woof.", "Give me a treat."))
+
+/datum/supply_pack/critter/corgi/talking
+	name = "Talking Corgi Crate"
+	desc = "The smart folks at NenoTresen have designed the perfect corgi! It talks! Buy it! Now! Now!" //the spelling mistake is intentional
+	cost = 4500
+	contains = list(/mob/living/carbon/human/talking_corgi)
+	crate_name = "talking corgi crate"
 
 /datum/supply_pack/critter/cow
 	name = "Cow Crate"
