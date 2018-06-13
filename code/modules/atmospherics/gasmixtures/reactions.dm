@@ -111,7 +111,7 @@
 	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
 	var/temperature = air.temperature
 	var/list/cached_results = air.reaction_results
-	cached_results[id] = 0
+	cached_results["fire"] = 0
 	var/turf/open/location = isturf(holder) ? holder : null
 
 	var/burned_fuel = 0
@@ -131,7 +131,7 @@
 		ASSERT_GAS(/datum/gas/water_vapor, air) //oxygen+more-or-less hydrogen=H2O
 		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel/TRITIUM_BURN_OXY_FACTOR
 
-		cached_results[id] += burned_fuel
+		cached_results["fire"] += burned_fuel
 
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
@@ -148,7 +148,7 @@
 				item.temperature_expose(air, temperature, CELL_VOLUME)
 			location.temperature_expose(air, temperature, CELL_VOLUME)
 
-	return cached_results[id] ? REACTING : NO_REACTION
+	return cached_results["fire"] ? REACTING : NO_REACTION
 
 //plasma combustion: combustion of oxygen and plasma (treated as hydrocarbons). creates hotspots. exothermic
 /datum/gas_reaction/plasmafire
@@ -169,7 +169,7 @@
 	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
 	var/temperature = air.temperature
 	var/list/cached_results = air.reaction_results
-	cached_results[id] = 0
+	cached_results["fire"] = 0
 	var/turf/open/location = isturf(holder) ? holder : null
 
 	//Handle plasma burning
@@ -206,7 +206,7 @@
 
 			energy_released += FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
 
-			cached_results[id] += (plasma_burn_rate)*(1+oxygen_burn_rate)
+			cached_results["fire"] += (plasma_burn_rate)*(1+oxygen_burn_rate)
 
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
@@ -223,7 +223,7 @@
 				item.temperature_expose(air, temperature, CELL_VOLUME)
 			location.temperature_expose(air, temperature, CELL_VOLUME)
 
-	return cached_results[id] ? REACTING : NO_REACTION
+	return cached_results["fire"] ? REACTING : NO_REACTION
 
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again.
 /datum/gas_reaction/fusion

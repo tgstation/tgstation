@@ -915,7 +915,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /datum/hallucination/fake_alert/New(mob/living/carbon/C, forced = TRUE, specific, duration = 150)
 	set waitfor = FALSE
 	..()
-	var/alert_type = pick("not_enough_oxy","not_enough_tox","not_enough_co2","too_much_oxy","too_much_co2","too_much_tox","newlaw","nutrition","charge","weightless","fire","locked","hacked","temphot","tempcold","pressure")
+	var/alert_type = pick("not_enough_oxy","not_enough_tox","not_enough_co2","too_much_oxy","too_much_co2","too_much_tox","newlaw","nutrition","charge","gravity","fire","locked","hacked","temphot","tempcold","pressure")
 	if(specific)
 		alert_type = specific
 	feedback_details += "Type: [alert_type]"
@@ -937,7 +937,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 				target.throw_alert(alert_type, /obj/screen/alert/fat, override = TRUE)
 			else
 				target.throw_alert(alert_type, /obj/screen/alert/starving, override = TRUE)
-		if("weightless")
+		if("gravity")
 			target.throw_alert(alert_type, /obj/screen/alert/weightless, override = TRUE)
 		if("fire")
 			target.throw_alert(alert_type, /obj/screen/alert/fire, override = TRUE)

@@ -411,12 +411,12 @@
 /area/shuttle/syndicate/airlock)
 "bi" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/space/syndicate/black/red,
-/obj/item/clothing/head/helmet/space/syndicate/black/red,
 /obj/effect/turf_decal/bot_white,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/item/clothing/suit/space/syndicate,
+/obj/item/clothing/head/helmet/space/syndicate,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "bj" = (

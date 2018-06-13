@@ -58,7 +58,7 @@
 	//stuff in the stomach
 	handle_stomach()
 
-	update_gravity(mob_has_gravity())
+	handle_gravity()
 
 	if(machine)
 		machine.check_eye(src)
@@ -110,7 +110,7 @@
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
 	var/turf/location = get_turf(src)
-	location.hotspot_expose(700, 50, 1)
+	location.hotspot_expose(700, 10, 1)
 
 /mob/living/proc/handle_stomach()
 	return
@@ -137,3 +137,26 @@
 
 /mob/living/proc/update_damage_hud()
 	return
+
+/mob/living/proc/handle_gravity()
+	var/gravity = mob_has_gravity()
+	update_gravity(gravity)
+
+	if(gravity > STANDARD_GRAVITY)
+		gravity_animate()
+		handle_high_gravity(gravity)
+
+/mob/living/proc/gravity_animate()
+	if(!get_filter("gravity"))
+		add_filter("gravity",1,list("type"="motion_blur", "x"=0, "y"=0))
+	INVOKE_ASYNC(src, .proc/gravity_pulse_animation)
+
+/mob/living/proc/gravity_pulse_animation()
+	animate(get_filter("gravity"), y = 1, time = 10)
+	sleep(10)
+	animate(get_filter("gravity"), y = 0, time = 10)
+
+/mob/living/proc/handle_high_gravity(gravity)
+	if(gravity >= GRAVITY_DAMAGE_TRESHOLD) //Aka gravity values of 3 or more
+		var/grav_stregth = gravity - GRAVITY_DAMAGE_TRESHOLD
+		adjustBruteLoss(min(grav_stregth,3))

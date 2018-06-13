@@ -39,7 +39,7 @@ To add a crossbreed:
 
 /obj/item/slimecross/Initialize()
 	..()
-	name = colour + " " + name
+	name =  effect + " " + colour + " extract"
 	var/itemcolor = "#FFFFFF"
 	switch(colour)
 		if("orange")

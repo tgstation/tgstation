@@ -35,7 +35,8 @@ GLOBAL_LIST_INIT(bitfields, list(
 		),
 	"datum_flags" = list(
 		"DF_USE_TAG" = DF_USE_TAG,
-		"DF_VAR_EDITED" = DF_VAR_EDITED
+		"DF_VAR_EDITED" = DF_VAR_EDITED,
+		"DF_ISPROCESSING" = DF_ISPROCESSING,
 		),
 	"item_flags" = list(
 		"BEING_REMOVED" = BEING_REMOVED,

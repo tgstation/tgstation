@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(icon_smooth)
 /datum/controller/subsystem/icon_smooth/fire()
 	var/list/cached = smooth_queue
 	while(cached.len)
-		var/atom/A = cached[smooth_queue.len]
+		var/atom/A = cached[cached.len]
 		cached.len--
 		if (A.flags_1 & INITIALIZED_1)
 			smooth_icon(A)

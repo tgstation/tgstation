@@ -286,6 +286,7 @@
 					push_data()
 			if(1)
 				TR.weedlevel = 0
+				TR.update_icon()
 			if(2)
 				if(TR.myseed) //Could be that they're just using it as a de-weeder
 					TR.age = 0
@@ -305,7 +306,7 @@
 				else if(istype(O, /obj/item/seeds) && !istype(O, /obj/item/seeds/sample))
 					if(!TR.myseed)
 						if(istype(O, /obj/item/seeds/kudzu))
-							investigate_log("had Kudzu planted in it by [acting_object] at ([x],[y],[z])","kudzu")
+							investigate_log("had Kudzu planted in it by [acting_object] at [AREACOORD(src)]","kudzu")
 						acting_object.visible_message("<span class='notice'>[acting_object] plants [O].</span>")
 						TR.dead = 0
 						TR.myseed = O
