@@ -8674,7 +8674,6 @@
 	height = 1;
 	id = "emergency_home";
 	name = "not a real evac bay";
-	turf_type = /turf/open/space;
 	width = 1
 	},
 /turf/open/space/basic,
