@@ -60,14 +60,14 @@
 		to_chat(usr, "The person you are trying to contact is not wearing a headset.")
 		return
 
-	message_admins("[key_name_admin(src)] has started answering [key_name(H)]'s CentCom request.")
+	message_admins("[key_name_admin(src)] has started answering [key_name_admin(H)]'s CentCom request.")
 	var/input = input("Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from CentCom", "") as text|null
 	if(!input)
-		message_admins("[key_name_admin(src)] decided not to answer [key_name(H)]'s CentCom request.")
+		message_admins("[key_name_admin(src)] decided not to answer [key_name_admin(H)]'s CentCom request.")
 		return
 
-	log_admin("[key_name_admin(src)] replied to [key_name(H)]'s CentCom message with the message [input].")
-	message_admins("[key_name_admin(src)] replied to [key_name(H)]'s CentCom message with: \"[input]\"")
+	log_admin("[key_name(src)] replied to [key_name(H)]'s CentCom message with the message [input].")
+	message_admins("[key_name_admin(src)] replied to [key_name_admin(H)]'s CentCom message with: \"[input]\"")
 	to_chat(H, "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows: <span class='bold'>[input].</span> Message ends.\"")
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "CentCom Message") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
