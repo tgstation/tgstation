@@ -133,9 +133,10 @@
 	amount = 30
 
 /obj/item/stack/tile/faketear
-	name = "fake tears"
-	singular_name = "fake tear"
-	desc = "A piece of carpet with a forced perspective illusion of a tear in reality. No way this could fool anyone!"
+	name = "snow pits"
+	singular_name = "snow pit"
+	desc = "A piece of carpet with a forced perspective illusion of a pit, Modeled how a pit would look like in the popular snowdin VR training mission."
+	icon_state = "tile_magicpit"
 	turf_type =  /turf/open/floor/faketear
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/tile/faketear
