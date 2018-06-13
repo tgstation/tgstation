@@ -88,7 +88,7 @@
 	baseturfs = /turf/open/indestructible/airblock
 
 /turf/open/indestructible/clock_spawn_room
-	name = "cogmetal"
+	name = "cogmetal floor"
 	desc = "Brass plating that gently radiates heat. For some reason, it reminds you of blood."
 	icon_state = "reebe"
 	baseturfs = /turf/open/indestructible/clock_spawn_room
