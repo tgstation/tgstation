@@ -1817,27 +1817,21 @@
 			return
 
 		var/mob/M = locate(href_list["CentComReply"])
-		cmd_admin_centcom_message(M)
+		usr.client.admin_headset_message(M, "CentCom")
 
 	else if(href_list["SyndicateReply"])
-		var/mob/living/carbon/human/H = locate(href_list["SyndicateReply"])
-		if(!istype(H))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.")
-			return
-		if(!istype(H.ears, /obj/item/radio/headset))
-			to_chat(usr, "The person you are trying to contact is not wearing a headset.")
+		if(!check_rights(R_ADMIN))
 			return
 
-		message_admins("[src.owner] has started answering [key_name(H)]'s syndicate request.")
-		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", "")
-		if(!input)
-			message_admins("[src.owner] decided not to answer [key_name(H)]'s syndicate request.")
+		var/mob/M = locate(href_list["SyndicateReply"])
+		usr.client.admin_headset_message(M, "Syndicate")
+
+	else if(href_list["HeadsetMessage"])
+		if(!check_rights(R_ADMIN))
 			return
 
-		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
-		log_admin("[src.owner] replied to [key_name(H)]'s Syndicate message with the message [input].")
-		message_admins("[src.owner] replied to [key_name(H)]'s Syndicate message with: \"[input]\"")
-		to_chat(H, "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. [input].  Message ends.\"")
+		var/mob/M = locate(href_list["HeadsetMessage"])
+		usr.client.admin_headset_message(M)
 
 	else if(href_list["reject_custom_name"])
 		if(!check_rights(R_ADMIN))
