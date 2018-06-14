@@ -38,15 +38,15 @@
 
 /datum/quirk/buster/add()
 	var/mob/living/carbon/human/H = quirk_holder
-	H.physiology.punchlow += 1
-	H.physiology.punchhigh += 6
-	H.physiology.punchstun += 6
+	H.physiology.punchdamagelow += 1
+	H.physiology.punchdamagehigh += 6
+	H.physiology.punchstunthreshold += 6
 
 /datum/quirk/buster/remove()
 	var/mob/living/carbon/human/H = quirk_holder
-	H.physiology.punchlow -= 1
-	H.physiology.punchhigh -= 6
-	H.physiology.punchstun -= 6
+	H.physiology.punchdamagelow -= 1
+	H.physiology.punchdamagehigh -= 6
+	H.physiology.punchstunthreshold -= 6
 
 
 
