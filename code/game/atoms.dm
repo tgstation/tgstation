@@ -2,6 +2,7 @@
 	layer = TURF_LAYER
 	plane = GAME_PLANE
 	var/level = 2
+	var/article  // If non-null, overrides a/an/some in all cases
 
 	var/flags_1 = NONE
 	var/interaction_flags_atom = NONE
@@ -241,7 +242,10 @@
 
 /atom/proc/get_examine_name(mob/user)
 	. = "\a [src]"
-	var/list/override = list(gender == PLURAL? "some" : "a" , " ", "[name]")
+	var/list/override = list(gender == PLURAL ? "some" : "a", " ", "[name]")
+	if(article)
+		. = "[article] [src]"
+		override[EXAMINE_POSITION_ARTICLE] = article
 	if(SendSignal(COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
 		. = override.Join("")
 

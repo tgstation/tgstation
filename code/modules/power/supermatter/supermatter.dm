@@ -255,9 +255,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			sleep(10)
 			continue
 		else if(i > 50)
-			speaking = "[i/10] seconds remain before causality stabilization."
+			speaking = "[DisplayTimeText(i, TRUE)] remain before causality stabilization."
 		else
-			speaking = "[i/10]..."
+			speaking = "[i*0.1]..."
 		radio.talk_into(src, speaking, common_channel, get_spans(), get_default_language())
 		sleep(10)
 
