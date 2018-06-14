@@ -364,7 +364,6 @@
 	},
 /obj/structure/table,
 /obj/item/reagent_containers/food/snacks/beans{
-	step_x = -1;
 	pixel_x = 3;
 	pixel_y = 4
 	},
