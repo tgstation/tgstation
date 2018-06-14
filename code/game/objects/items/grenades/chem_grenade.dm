@@ -75,10 +75,9 @@
 					return
 				to_chat(user, "<span class='notice'>You add [I] to the [initial(name)] assembly.</span>")
 				beakers += I
-				for(var/datum/reagent/R in I.reagents.reagent_list)
-					var/reagent_vol = R.volume
-					add_logs(user, src, "inserted [I]", addition = "[reagent_vol] units of [R] inside.")
-					log_game("[key_name(user)] inserted [I] into [src] containing [reagent_vol] units of [R] ")
+				var/reagent_list = pretty_string_from_reagent_list(I.reagents)
+				add_logs(user, src, "inserted [I]", addition = "[reagent_list] inside.")
+				log_game("[key_name(user)] inserted [I] into [src] containing [reagent_list] ")
 			else
 				to_chat(user, "<span class='warning'>[I] is empty!</span>")
 
@@ -117,10 +116,9 @@
 				O.forceMove(drop_location())
 				if(!O.reagents)
 					continue
-				for(var/datum/reagent/R in O.reagents.reagent_list)
-					var/reagent_vol = R.volume
-					add_logs(user, src, "removed [O]", addition = "[reagent_vol] units of [R] inside.")
-					log_game("[key_name(user)] removed [O] from [src] containing [reagent_vol] units of [R]")
+				var/reagent_list = pretty_string_from_reagent_list(O.reagents)
+				add_logs(user, src, "removed [O]", addition = "[reagent_list] inside.")
+				log_game("[key_name(user)] removed [O] from [src] containing [reagent_list]")
 			beakers = list()
 			to_chat(user, "<span class='notice'>You open the [initial(name)] assembly and remove the payload.</span>")
 			return // First use of the wrench remove beakers, then use the wrench to remove the activation mechanism.
@@ -170,13 +168,12 @@
 	for(var/obj/exploded_beaker in beakers)
 		if(!exploded_beaker.reagents)
 			continue
-		for(var/datum/reagent/R in exploded_beaker.reagents.reagent_list)
-			var/reagent_volume = R.volume
-			var/message = "[src] primed by [user] at [ADMIN_VERBOSEJMP(T)] contained [reagent_volume] units of [R]."
-			GLOB.bombers += message
-			message_admins(message)
-			log_game("[src] primed by [user] at [AREACOORD(T)] contained [reagent_volume] units of [R].")
-			add_logs(user, src, "primed", addition = "[reagent_volume] units of [R] inside.")
+		var/reagent_list = pretty_string_from_reagent_list(exploded_beaker.reagents)
+		var/message = "[src] primed by [user] at [ADMIN_VERBOSEJMP(T)] contained [reagent_list]."
+		GLOB.bombers += message
+		message_admins(message)
+		log_game("[src] primed by [user] at [AREACOORD(T)] contained [reagent_list].")
+		add_logs(user, src, "primed", addition = "[reagent_list] inside.")
 
 /obj/item/grenade/chem_grenade/prime()
 	if(stage != READY)
