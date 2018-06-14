@@ -88,10 +88,12 @@
 		dest = target
 
 	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, 1)
+	var/first = TRUE
 	for(var/atom/movable/ROI in source)
 		if(ROI == src)
 			continue
 		// if it's anchored, don't teleport
+		var/on_chair = ""
 		if(ROI.anchored)
 			if(isliving(ROI))
 				var/mob/living/L = ROI
@@ -100,35 +102,36 @@
 					if(L.buckled.anchored)
 						continue
 
-					log_msg += "[key_name(L)] (on a chair), "
+					on_chair = " (on a chair)"
 				else
 					continue
 			else if(!isobserver(ROI))
 				continue
+		if(!first)
+			log_msg += ", "
 		if(ismob(ROI))
 			var/mob/T = ROI
-			log_msg += "[key_name(T)], "
+			log_msg += "[key_name(T)][on_chair]"
 		else
 			log_msg += "[ROI.name]"
 			if (istype(ROI, /obj/structure/closet))
-				var/obj/structure/closet/C = ROI
 				log_msg += " ("
-				for(var/atom/movable/Q as mob|obj in C)
+				var/first_inner = TRUE
+				for(var/atom/movable/Q as mob|obj in ROI)
+					if(!first_inner)
+						log_msg += ", "
+					first_inner = FALSE
 					if(ismob(Q))
-						log_msg += "[key_name(Q)], "
+						log_msg += "[key_name(Q)]"
 					else
-						log_msg += "[Q.name], "
-				if (dd_hassuffix(log_msg, "("))
-					log_msg += "empty)"
-				else
-					log_msg = dd_limittext(log_msg, length(log_msg) - 2)
-					log_msg += ")"
-			log_msg += ", "
-		do_teleport(ROI, dest)
+						log_msg += "[Q.name]"
+				if(first_inner)
+					log_msg += "empty"
+				log_msg += ")"
+		do_teleport(ROI, dest, no_effects = !first)
+		first = FALSE
 
-	if (dd_hassuffix(log_msg, ", "))
-		log_msg = dd_limittext(log_msg, length(log_msg) - 2)
-	else
+	if (first)
 		log_msg += "nothing"
 	log_msg += " [sending ? "to" : "from"] [target_x], [target_y], [z] ([A ? A.name : "null area"])"
 	investigate_log(log_msg.Join(), INVESTIGATE_TELESCI)
