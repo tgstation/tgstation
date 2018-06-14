@@ -275,12 +275,11 @@ Versioning
 		first_death["area"] = "[AREACOORD(L)]"
 		first_death["damage"] = "<font color='#FF5555'>[L.getBruteLoss()]</font>/<font color='orange'>[L.getFireLoss()]</font>/<font color='lightgreen'>[L.getToxLoss()]</font>/<font color='lightblue'>[L.getOxyLoss()]</font>/<font color='pink'>[L.getCloneLoss()]</font>"
 		first_death["last_words"] = L.last_words
-	var/area/placeofdeath = get_area(L)
 	var/sqlname = L.real_name
 	var/sqlkey = L.ckey
 	var/sqljob = L.mind.assigned_role
 	var/sqlspecial = L.mind.special_role
-	var/sqlpod = placeofdeath.name
+	var/sqlpod = get_area_name(L, TRUE)
 	var/laname = L.lastattacker
 	var/lakey = L.lastattackerckey
 	var/sqlbrute = L.getBruteLoss()
