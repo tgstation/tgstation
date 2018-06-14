@@ -226,10 +226,25 @@
 	desc = "A small bottle of Romerol. The REAL zombie powder."
 	list_reagents = list("romerol" = 30)
 
-/obj/item/reagent_containers/glass/bottle/random_virus
-	name = "Experimental disease culture bottle"
-	desc = "A small bottle. Contains an untested viral culture in synthblood medium."
-	spawned_disease = /datum/disease/advance/random
+/obj/item/reagent_containers/glass/bottle/flu_virion
+	name = "Flu virion culture bottle"
+	desc = "A small bottle. Contains H13N1 flu virion culture in synthblood medium."
+	spawned_disease = /datum/disease/advance/flu
+
+/obj/item/reagent_containers/glass/bottle/epiglottis_virion
+	name = "Epiglottis virion culture bottle"
+	desc = "A small bottle. Contains Epiglottis virion culture in synthblood medium."
+	spawned_disease = /datum/disease/advance/voice_change
+
+/obj/item/reagent_containers/glass/bottle/liver_enhance_virion
+	name = "Liver enhancement virion culture bottle"
+	desc = "A small bottle. Contains liver enhancement virion culture in synthblood medium."
+	spawned_disease = /datum/disease/advance/heal
+
+/obj/item/reagent_containers/glass/bottle/hallucigen_virion
+	name = "Hallucigen virion culture bottle"
+	desc = "A small bottle. Contains hallucigen virion culture in synthblood medium."
+	spawned_disease = /datum/disease/advance/hallucigen
 
 /obj/item/reagent_containers/glass/bottle/pierrot_throat
 	name = "Pierrot's Throat culture bottle"
@@ -240,11 +255,6 @@
 	name = "Rhinovirus culture bottle"
 	desc = "A small bottle. Contains XY-rhinovirus culture in synthblood medium."
 	spawned_disease = /datum/disease/advance/cold
-	
-/obj/item/reagent_containers/glass/bottle/flu_virion
-	name = "Flu virion culture bottle"
-	desc = "A small bottle. Contains H13N1 flu virion culture in synthblood medium."
-	spawned_disease = /datum/disease/advance/flu
 
 /obj/item/reagent_containers/glass/bottle/retrovirus
 	name = "Retrovirus culture bottle"
