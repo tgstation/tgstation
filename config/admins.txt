@@ -10,6 +10,7 @@
 # and will override any duplicate entries in the database.									  #
 ###############################################################################################
 Optimumtact = Host
+CitrusGender = Game Master
 NewSta = Game Master
 Expletives = Game Master
 kingofkosmos = Game Master
