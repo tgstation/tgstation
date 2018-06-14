@@ -12334,10 +12334,7 @@
 /turf/open/floor/plasteel/neutral/side,
 /area/storage/primary)
 "aGk" = (
-/obj/machinery/vending/boozeomat{
-	products = list(/obj/item/reagent_containers/food/drinks/bottle/rum = 1, /obj/item/reagent_containers/food/drinks/bottle/wine = 1, /obj/item/reagent_containers/food/drinks/ale = 1, /obj/item/reagent_containers/food/drinks/drinkingglass = 6, /obj/item/reagent_containers/food/drinks/ice = 1, /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 4);
-	req_access_txt = "20"
-	},
+/obj/machinery/vending/boozeomat/pubby_captain,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -27466,6 +27463,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/machinery/disposal/bin,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bum" = (
@@ -28442,7 +28440,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bwV" = (
-/obj/machinery/disposal/bin,
 /turf/open/floor/plasteel/whiteyellow/corner,
 /area/medical/chemistry)
 "bwW" = (
@@ -46986,7 +46983,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cBk" = (
-/obj/machinery/vending/boozeomat/maint,
+/obj/machinery/vending/boozeomat/pubby_maint,
 /turf/closed/wall,
 /area/maintenance/department/crew_quarters/dorms)
 "cBl" = (
@@ -49149,6 +49146,9 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
+"iqc" = (
+/turf/open/floor/plasteel/stairs/right,
+/area/maintenance/department/crew_quarters/dorms)
 "itl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -91019,7 +91019,7 @@ aaa
 aaa
 aiS
 qPB
-gNv
+iqc
 ngp
 cBr
 cBs
