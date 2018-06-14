@@ -1,4 +1,4 @@
-//BSQL - DMAPI v1.0.2.0
+//BSQL - DMAPI v1.1.0.0
 
 //types of connections
 #define BSQL_CONNECTION_TYPE_MARIADB "MySql"
@@ -6,6 +6,13 @@
 
 //Call this before rebooting or shutting down your world to clean up gracefully. This invalidates all active connection and operation datums
 /world/proc/BSQL_Shutdown()
+	return
+
+/*
+Called whenever a library call is made with verbose information, override and do with as you please
+  message: English debug message
+*/
+/world/proc/BSQL_Debug(msg)
 	return
 
 /*
@@ -44,13 +51,19 @@ Starts an operation for a query
 */
 /datum/BSQL_Connection/proc/BeginQuery(query)
 	return
-
+	
 /*
 Checks if the operation is complete. This, in some cases must be called multiple times with false return before a result is present regardless of timespan. For best performance check it once per tick
 
  Returns: TRUE if the operation is complete, FALSE if it's not, null on error
 */
 /datum/BSQL_Operation/proc/IsComplete()
+	return
+
+/*
+Blocks the entire game until the given operation completes. IsComplete should not be checked after calling this to avoid potential side effects
+*/
+/datum/BSQL_Operation/proc/WaitForCompletion()
 	return
 
 /*
@@ -62,7 +75,7 @@ Get the error message associated with an operation. Should not be used while IsC
 	return
 
 /*
-Gets an associated list of column name -> value representation of the most recent row in the query. Only valid if IsComplete() returns TRUE. If this returns null and no errors are present there are no more results in the query.
+Gets an associated list of column name -> value representation of the most recent row in the query. Only valid if IsComplete() returns TRUE. If this returns null and no errors are present there are no more results in the query. Important to note that once IsComplete() returns TRUE it must not be called again without checking this or the row values may be lost
 
  Returns: An associated list of column name -> value for the row. Values will always be either strings or null
 */

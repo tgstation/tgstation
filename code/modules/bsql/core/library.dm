@@ -1,5 +1,8 @@
 /world/proc/_BSQL_Internal_Call(func, ...)
-	return call(_BSQL_Library_Path(), func)(arglist(args.Copy(2)))
+	var/list/call_args = args.Copy(2)
+	BSQL_Debug("[.....]: [args[1]]([call_args.Join(", ")])")
+	. = call(_BSQL_Library_Path(), func)(arglist(call_args))
+	BSQL_Debug("Result: [. == null ? "NULL" : "\"[.]\""]")
 
 /world/proc/_BSQL_Library_Path()
 	return system_type == MS_WINDOWS ? "BSQL.dll" : "libBSQL.so"

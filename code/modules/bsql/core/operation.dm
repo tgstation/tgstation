@@ -29,3 +29,10 @@ BSQL_DEL_PROC(/datum/BSQL_Operation)
 	if(BSQL_IS_DELETED(connection))
 		return "Connection deleted!"
 	return world._BSQL_Internal_Call("GetError", connection.id, id)
+
+/datum/BSQL_Operation/WaitForCompletion()
+	if(BSQL_IS_DELETED(connection))
+		return
+	var/error = world._BSQL_Internal_Call("BlockOnOperation", connection.id, id)
+	if(error)
+		BSQL_ERROR("Error waiting for operation [id] for connection [connection.id]! [error]")
