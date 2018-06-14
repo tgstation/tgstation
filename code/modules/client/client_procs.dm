@@ -158,9 +158,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	return var_name != NAMEOF(src, holder) && ..()
 
 /client/New(TopicData)
-	//hold the connection until a certain point in world/Startup()
-	UNTIL(GLOB.log_directory)
-
 	var/tdata = TopicData //save this for later use
 	chatOutput = new /datum/chatOutput(src)
 	TopicData = null							//Prevent calls to client.Topic from connect
