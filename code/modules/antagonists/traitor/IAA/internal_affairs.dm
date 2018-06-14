@@ -6,11 +6,6 @@
 
 /datum/antagonist/traitor/internal_affairs
 	name = "Internal Affairs Agent"
-	antagpanel_category = "IAA"
-
-
-/datum/antagonist/traitor/internal_affairs
-	name = "Internal Affairs Agent"
 	employer = "Nanotrasen"
 	special_role = "internal affairs agent"
 	antagpanel_category = "IAA"

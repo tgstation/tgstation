@@ -146,9 +146,9 @@
 	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
-	var/output
+	var/list/output = list()
 	var/ruler = "<hr style='background:#000000; border:0; height:3px'>"
-	var/navbar = "<a href='?_src_=holder;[HrefToken()];nonalpha=1'>\[All\]</a>|<a href='?_src_=holder;[HrefToken()];nonalpha=2'>\[#\]</a>"
+	var/list/navbar = list("<a href='?_src_=holder;[HrefToken()];nonalpha=1'>\[All\]</a>|<a href='?_src_=holder;[HrefToken()];nonalpha=2'>\[#\]</a>")
 	for(var/letter in GLOB.alphabet)
 		navbar += "|<a href='?_src_=holder;[HrefToken()];showmessages=[letter]'>\[[letter]\]</a>"
 	navbar += "|<a href='?_src_=holder;[HrefToken()];showmemo=1'>\[Memos\]</a>|<a href='?_src_=holder;[HrefToken()];showwatch=1'>\[Watchlist\]</a>"
@@ -198,9 +198,9 @@
 		var/datum/DBQuery/query_get_messages = SSdbcore.NewQuery("SELECT type, secret, id, adminckey, text, timestamp, server, lasteditor, DATEDIFF(NOW(), timestamp) AS `age` FROM [format_table_name("messages")] WHERE type <> 'memo' AND targetckey = '[target_ckey]' AND deleted = 0 ORDER BY timestamp DESC")
 		if(!query_get_messages.warn_execute())
 			return
-		var/messagedata
-		var/watchdata
-		var/notedata
+		var/list/messagedata = list()
+		var/list/watchdata = list()
+		var/list/notedata = list()
 		var/skipped = 0
 		while(query_get_messages.NextRow())
 			type = query_get_messages.item[1]
@@ -230,8 +230,7 @@
 						skipped = TRUE
 					alphatext = "filter: alpha(opacity=[alpha]); opacity: [alpha/100];"
 
-			var/data
-			data += "<p style='margin:0px;[alphatext]'> <b>[timestamp] | [server] | [admin_ckey]</b>"
+			var/list/data = list("<p style='margin:0px;[alphatext]'> <b>[timestamp] | [server] | [admin_ckey]</b>")
 			if(!linkless)
 				data += " <a href='?_src_=holder;[HrefToken()];deletemessage=[id]'>\[Delete\]</a>"
 				if(type == "note")
@@ -304,7 +303,7 @@
 	else if(!type && !target_ckey && !index)
 		output += "<center></a> <a href='?_src_=holder;[HrefToken()];addmessageempty=1'>\[Add message\]</a><a href='?_src_=holder;[HrefToken()];addwatchempty=1'>\[Add watchlist entry\]</a><a href='?_src_=holder;[HrefToken()];addnoteempty=1'>\[Add note\]</a></center>"
 		output += ruler
-	usr << browse({"<!DOCTYPE html><html><head><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /></head><body>[output]</body></html>"}, "window=browse_messages;size=900x500")
+	usr << browse({"<!DOCTYPE html><html><head><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /></head><body>[jointext(output, "")]</body></html>"}, "window=browse_messages;size=900x500")
 
 proc/get_message_output(type, target_ckey)
 	if(!SSdbcore.Connect())

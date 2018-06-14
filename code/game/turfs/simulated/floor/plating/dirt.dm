@@ -1,4 +1,5 @@
 /turf/open/floor/plating/dirt
+	gender = PLURAL
 	name = "dirt"
 	desc = "Upon closer examination, it's still dirt."
 	icon = 'icons/turf/floors.dmi'

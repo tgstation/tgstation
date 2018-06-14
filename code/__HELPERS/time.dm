@@ -64,7 +64,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 //Takes a value of time in deciseconds.
 //Returns a text value of that number in hours, minutes, or seconds.
 /proc/DisplayTimeText(time_value, truncate = FALSE)
-	var/second = time_value*0.1
+	var/second = (time_value)*0.1
 	var/second_adjusted = null
 	var/second_rounded = FALSE
 	var/minute = null

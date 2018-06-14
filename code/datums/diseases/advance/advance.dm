@@ -189,7 +189,9 @@
 
 	if(properties && properties.len)
 		if(properties["stealth"] >= 2)
-			visibility_flags = HIDDEN_SCANNER
+			visibility_flags |= HIDDEN_SCANNER
+		else
+			visibility_flags &= ~HIDDEN_SCANNER
 
 		SetSpread(CLAMP(2 ** (properties["transmittable"] - symptoms.len), DISEASE_SPREAD_BLOOD, DISEASE_SPREAD_AIRBORNE))
 

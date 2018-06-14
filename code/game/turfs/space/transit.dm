@@ -1,4 +1,5 @@
 /turf/open/space/transit
+	name = "\proper hyperspace"
 	icon_state = "black"
 	dir = SOUTH
 	baseturfs = /turf/open/space/transit
