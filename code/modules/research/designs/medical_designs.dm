@@ -141,6 +141,15 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/autosurgeon
+	name = "Autosurgeon"
+	id = "autosurgeon"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 6000, MAT_SILVER = 2000, MAT_GOLD = 600, MAT_DIAMOND = 2500)
+	build_path = /obj/item/autosurgeon/tech
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/alienscalpel
 	name = "Alien Scalpel"
 	desc = "An advanced scalpel obtained through Abductor technology."
@@ -149,7 +158,7 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
 	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL 
 
 /datum/design/alienhemostat
 	name = "Alien Hemostat"
