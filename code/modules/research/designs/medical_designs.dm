@@ -158,7 +158,7 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
 	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL 
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/alienhemostat
 	name = "Alien Hemostat"
