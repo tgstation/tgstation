@@ -1,10 +1,16 @@
 // Cold
+/datum/disease/advance/cold
+	copy_type = /datum/disease/advance
+
 /datum/disease/advance/cold/New()
 	name = "Cold"
 	symptoms = list(new/datum/symptom/sneeze)
 	..()
 
 // Flu
+/datum/disease/advance/flu
+	copy_type = /datum/disease/advance
+
 /datum/disease/advance/flu/New()
 	name = "Flu"
 	symptoms = list(new/datum/symptom/cough)
@@ -13,6 +19,7 @@
 //Randomly generated Disease, for virus crates and events
 /datum/disease/advance/random
 	name = "Experimental Disease"
+	copy_type = /datum/disease/advance
 
 /datum/disease/advance/random/New(max_symptoms, max_level = 8)
 	if(!max_symptoms)
@@ -31,5 +38,5 @@
 			var/datum/symptom/S = new chosen_symptom
 			symptoms += S
 	Refresh()
-	
+
 	name = "Sample #[rand(1,10000)]"
