@@ -249,6 +249,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 						message_admins("[usr.key] has selected to cancel the supermatter explosion at \"[get_area(src)]\". The supermatter has been healed to 50% integrity.")
 						investigate_log("[usr.key] has selected to cancel the supermatter explosion at \"[get_area(src)]\". The supermatter has been healed to 50% integrity.", INVESTIGATE_SUPERMATTER)
 					if("resume")
+						var/asking = alert(usr,"This will cause an immediate explosion of the supermatter. Are you sure?","Super Matter Explosion","Fuck No!","Explode Now!")
+						if(asking != "Explode Now!")
+							return
 						if(exploding != 1)
 							exploding = 1
 						message_admins("[usr.key] has allowed the supermatter explosion to resume at \"[get_area(src)]\".")

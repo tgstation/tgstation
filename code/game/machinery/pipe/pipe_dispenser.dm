@@ -9,6 +9,15 @@
 	var/wait = 0
 	var/piping_layer = PIPING_LAYER_DEFAULT
 
+/obj/machinery/pipedispenser/proc/verify_recipe(recipes, path)
+	for(var/category in recipes)
+		var/list/cat_recipes = recipes[category]
+		for(var/i in cat_recipes)
+			var/datum/pipe_info/info = i
+			if (path == info.id)
+				return TRUE
+	return FALSE
+
 /obj/machinery/pipedispenser/attack_paw(mob/user)
 	return attack_hand(user)
 
@@ -43,6 +52,8 @@
 	if(href_list["makepipe"])
 		if(wait < world.time)
 			var/p_type = text2path(href_list["makepipe"])
+			if(!verify_recipe(GLOB.atmos_pipe_recipes, p_type))
+				return
 			var/p_dir = text2num(href_list["dir"])
 			var/obj/item/pipe/P = new (loc, p_type, p_dir)
 			P.setPipingLayer(piping_layer)
@@ -126,6 +137,8 @@
 	if(href_list["dmake"])
 		if(wait < world.time)
 			var/p_type = text2path(href_list["dmake"])
+			if(!verify_recipe(GLOB.disposal_pipe_recipes, p_type))
+				return
 			var/obj/structure/disposalconstruct/C = new (loc, p_type)
 
 			if(!C.can_place())
