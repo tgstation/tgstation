@@ -168,7 +168,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	It was included because it is still supported in mariadb.
 	It does not work with duplicate_key and the mysql server ignores it in those cases
 */
-/datum/controller/subsystem/dbcore/proc/MassInsert(table, list/rows, duplicate_key = FALSE, ignore_errors = FALSE, delayed = FALSE, warn = FALSE)
+/datum/controller/subsystem/dbcore/proc/MassInsert(table, list/rows, duplicate_key = FALSE, ignore_errors = FALSE, delayed = FALSE, warn = FALSE, async = FALSE)
 	if (!table || !rows || !istype(rows))
 		return
 	var/list/columns = list()
@@ -218,10 +218,9 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	sqlrowlist = "	[sqlrowlist.Join(",\n	")]"
 	var/datum/DBQuery/Query = NewQuery("INSERT[delayed][ignore_errors] INTO [table]\n([columns.Join(", ")])\nVALUES\n[sqlrowlist]\n[duplicate_key]")
 	if (warn)
-		return Query.warn_execute()
+		return Query.warn_execute(async)
 	else
-		return Query.Execute()
-
+		return Query.Execute(async)
 
 /datum/DBQuery
 	var/sql // The sql query being executed.
@@ -242,24 +241,33 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	Close()
 	return ..()
 
-/datum/DBQuery/proc/warn_execute()
-	. = Execute()
+/datum/DBQuery/proc/warn_execute(async = FALSE)
+	. = Execute(async)
 	if(!.)
 		to_chat(usr, "<span class='danger'>A SQL error occurred during this operation, check the server logs.</span>")
 
-/datum/DBQuery/proc/Execute(log_error = TRUE)
+/datum/DBQuery/proc/Execute(async = FALSE, log_error = TRUE)
+	if(in_progress)
+		CRASH("Attempted to start a new query while waiting on the old one")
+
 	if(QDELETED(connection))
 		last_error = "No connection!"
 		return FALSE
+
 	var/start_time
-	var/timeout = CONFIG_GET(number/query_debug_log_timeout)
+	var/timeout
+	if(!async)
+		timeout = CONFIG_GET(number/query_debug_log_timeout)
 	if(timeout)
 		start_time = REALTIMEOFDAY
 	Close()
 	query = connection.BeginQuery(sql)
-	in_progress = TRUE
-	UNTIL(QDELETED(query) || query.IsComplete())
-	in_progress = FALSE
+	if(!async)
+		query.WaitForCompletion()
+	else
+		in_progress = TRUE
+		UNTIL(query.IsComplete())
+		in_progress = FALSE
 	skip_next_is_complete = TRUE
 	var/error = QDELETED(query) ? "Query object deleted!" : query.GetError()
 	last_error = error
@@ -277,11 +285,20 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 /datum/DBQuery/proc/slow_query_check()
 	message_admins("HEY! A database query may have timed out. Did the server just hang? <a href='?_src_=holder;[HrefToken()];slowquery=yes'>\[YES\]</a>|<a href='?_src_=holder;[HrefToken()];slowquery=no'>\[NO\]</a>")
 
-/datum/DBQuery/proc/NextRow()
-	UNTIL(!in_progress && (skip_next_is_complete || query.IsComplete()))
+/datum/DBQuery/proc/NextRow(async)
+	UNTIL(!in_progress)
+	if(!skip_next_is_complete)
+		if(!async)
+			query.WaitForCompletion()
+		else
+			in_progress = TRUE
+			UNTIL(query.IsComplete())
+			in_progress = FALSE
+	else
+		skip_next_is_complete = FALSE
+
 	last_error = query.GetError()
 	var/list/results = query.CurrentRow()
-	skip_next_is_complete = query.IsComplete()
 	. = results != null
 
 	item.Cut()
