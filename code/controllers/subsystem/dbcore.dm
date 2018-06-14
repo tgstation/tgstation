@@ -121,10 +121,10 @@ SUBSYSTEM_DEF(dbcore)
 	if(!Connect())
 		return
 	var/datum/DBQuery/query_round_initialize = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (initialize_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
-	query_round_initialize.BlockingExecute()
+	query_round_initialize.Execute()
 	qdel(query_round_initialize)
 	var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
-	query_round_last_id.BlockingExecute()
+	query_round_last_id.Execute()
 	if(query_round_last_id.NextRow())
 		GLOB.round_id = query_round_last_id.item[1]
 	qdel(query_round_last_id)
@@ -133,7 +133,7 @@ SUBSYSTEM_DEF(dbcore)
 	if(!Connect())
 		return
 	var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET start_datetime = Now() WHERE id = [GLOB.round_id]")
-	query_round_start.BlockingExecute()
+	query_round_start.Execute()
 	qdel(query_round_start)
 
 /datum/controller/subsystem/dbcore/proc/SetRoundEnd()
@@ -180,7 +180,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	It was included because it is still supported in mariadb.
 	It does not work with duplicate_key and the mysql server ignores it in those cases
 */
-/datum/controller/subsystem/dbcore/proc/MassInsert(table, list/rows, duplicate_key = FALSE, ignore_errors = FALSE, delayed = FALSE, warn = FALSE, blocking = FALSE)
+/datum/controller/subsystem/dbcore/proc/MassInsert(table, list/rows, duplicate_key = FALSE, ignore_errors = FALSE, delayed = FALSE, warn = FALSE)
 	if (!table || !rows || !istype(rows))
 		return
 	var/list/columns = list()
@@ -232,7 +232,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	if (warn)
 		return Query.warn_execute()
 	else
-		return blocking ? Query.BlockingExecute() : Query.Execute()
+		return Query.Execute()
 	qdel(Query)
 
 
@@ -272,10 +272,6 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	. = Execute()
 	if(!.)
 		to_chat(usr, "<span class='danger'>A SQL error occurred during this operation, check the server logs.</span>")
-
-/datum/DBQuery/proc/BlockingExecute()
-	//stub, to be replaced once migrated to BSQL
-	Execute()
 
 /datum/DBQuery/proc/Execute(sql_query = sql, cursor_handler = default_cursor, log_error = TRUE)
 	Activity("Execute")
