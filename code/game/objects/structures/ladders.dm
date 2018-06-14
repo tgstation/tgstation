@@ -23,13 +23,7 @@
 /obj/structure/ladder/Destroy(force)
 	if ((resistance_flags & INDESTRUCTIBLE) && !force)
 		return QDEL_HINT_LETMELIVE
-
-	if(up && up.down == src)
-		up.down = null
-		up.update_icon()
-	if(down && down.up == src)
-		down.up = null
-		down.update_icon()
+	disconnect()
 	return ..()
 
 /obj/structure/ladder/LateInitialize()
@@ -51,6 +45,15 @@
 			L.update_icon()
 
 	update_icon()
+
+/obj/structure/ladder/proc/disconnect()
+	if(up && up.down == src)
+		up.down = null
+		up.update_icon()
+	if(down && down.up == src)
+		down.up = null
+		down.update_icon()
+	up = down = null
 
 /obj/structure/ladder/update_icon()
 	if(up && down)
