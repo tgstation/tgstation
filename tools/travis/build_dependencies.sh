@@ -16,4 +16,17 @@ if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then
 
     mkdir -p ~/.byond/bin
     ln -s $PWD/target/release/librust_g.so ~/.byond/bin/rust_g
+
+    mkdir -p ../BSQL/artifacts
+    cd ../BSQL
+    git init
+    git remote add origin https://github.com/tgstation/BSQL
+    git fetch --depth 1 origin $BSQL_VERSION
+    git checkout FETCH_HEAD
+
+    export CXX=g++-7
+    cd artifacts
+    cmake ..
+    make
+    ln -s src/BSQL/libBSQL.so ~/.byond/bin/
 fi
