@@ -388,7 +388,7 @@
 "bh" = (
 /obj/structure/window/reinforced,
 /obj/structure/table/glass,
-/obj/item/defibrillator,
+/obj/item/defibrillator/loaded,
 /turf/open/floor/plasteel/cmo,
 /area/shuttle/escape)
 "bi" = (
