@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "Pubbystation: Connected Chemistry disposals to the pipenet and fixed Booze-O-Mat related display/access issues."
