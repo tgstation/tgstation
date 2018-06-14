@@ -139,7 +139,8 @@
 
 /obj/item/book/granter/spell/mimery_blockade/attack_self(mob/user)
 	..()
-	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak)
+	if(!locate(/obj/effect/proc_holder/spell/targeted/mime/speak) in user.mind.spell_list)
+		user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak)
 
 /obj/item/book/granter/spell/mimery_guns
 	spell = /obj/effect/proc_holder/spell/aimed/finger_guns
@@ -151,4 +152,5 @@
 
 /obj/item/book/granter/spell/mimery_guns/attack_self(mob/user)
 	..()
-	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak)
+	if(!locate(/obj/effect/proc_holder/spell/targeted/mime/speak) in user.mind.spell_list)
+		user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak)
