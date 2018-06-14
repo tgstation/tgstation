@@ -122,6 +122,15 @@
 	QDEL_NULL(eye)
 	return ..()
 
+/obj/item/multitool/ai_detect/ui_action_click()
+	return
+
+/obj/item/multitool/ai_detect/update_icon()
+	if(selected_io)
+		icon_state = "multitool_red"
+	else
+		icon_state = "[initial(icon_state)][detect_state]"
+
 /obj/item/multitool/ai_detect/equipped(mob/living/carbon/human/user, slot)
 	..()
 	if(hud_on)
@@ -139,7 +148,7 @@
 	if(eye.eye_user)
 		eye.setLoc(get_turf(src))
 	multitool_detect()
-	icon_state = "[initial(icon_state)][detect_state]"
+	update_icon()
 	track_cooldown = world.time + track_delay
 
 /obj/item/multitool/ai_detect/proc/toggle_hud(mob/user)
@@ -156,7 +165,8 @@
 		var/obj/screen/plane_master/camera_static/PM = user.hud_used.plane_masters["[CAMERA_STATIC_PLANE]"]
 		PM.alpha = 150
 		var/datum/atom_hud/H = GLOB.huds[hud_type]
-		H.add_hud_to(user)
+		if(!H.hudusers[user])
+			H.add_hud_to(user)
 		eye.eye_user = user
 		eye.setLoc(get_turf(src))
 
@@ -201,6 +211,7 @@
 
 /datum/action/item_action/toggle_multitool
 	name = "Toggle AI detector HUD"
+	check_flags = NONE
 
 /datum/action/item_action/toggle_multitool/Trigger()
 	if(!..())
