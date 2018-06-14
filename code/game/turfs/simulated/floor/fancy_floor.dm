@@ -205,7 +205,7 @@
 	return TRUE
 
 /turf/open/floor/faketear
-	desc = "A clever illusion designed to look like a tear in reality."
+	desc = "A clever illusion designed to look like a snow chasm."
 	smooth = SMOOTH_TRUE | SMOOTH_BORDER | SMOOTH_MORE
 	canSmoothWith = list(/obj/item/stack/tile/faketear)
 	icon = 'icons/turf/floors/magic_chasm.dmi'
