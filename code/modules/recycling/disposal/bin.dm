@@ -106,6 +106,7 @@
 
 /obj/machinery/disposal/proc/place_item_in_disposal(obj/item/I, mob/user)
 	I.forceMove(src)
+	I.update_icon() // in case it has inhand overlays
 	user.visible_message("[user.name] places \the [I] into \the [src].", "<span class='notice'>You place \the [I] into \the [src].</span>")
 
 //mouse drop another mob or self
