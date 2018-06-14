@@ -8238,6 +8238,17 @@
 /obj/item/toy/cards/deck,
 /turf/open/floor/carpet,
 /area/wizard_station)
+"wT" = (
+/obj/structure/closet,
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/machinery/iv_drip,
+/obj/item/roller,
+/obj/item/storage/firstaid/regular,
+/obj/item/reagent_containers/medspray/synthflesh,
+/obj/item/reagent_containers/medspray/synthflesh,
+/obj/item/reagent_containers/medspray/synthflesh,
+/turf/open/floor/wood,
+/area/centcom/holding)
 "wV" = (
 /obj/machinery/computer/telecrystals/boss{
 	dir = 1
@@ -9003,6 +9014,12 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/corgi,
 /turf/open/floor/grass,
 /area/wizard_station)
+"zs" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/carpet/black,
+/area/centcom/holding)
 "zx" = (
 /obj/structure/closet/syndicate/personal,
 /obj/effect/turf_decal/stripes/line{
@@ -9143,9 +9160,11 @@
 /obj/structure/closet/secure_closet/freezer/meat{
 	locked = 0
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
+/obj/item/reagent_containers/food/snacks/carpmeat,
+/obj/item/reagent_containers/food/snacks/carpmeat,
+/obj/item/reagent_containers/food/snacks/carpmeat,
+/obj/item/reagent_containers/food/snacks/carpmeat,
+/obj/item/reagent_containers/food/snacks/carpmeat,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "zX" = (
@@ -9153,6 +9172,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/soap/deluxe,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "Ab" = (
@@ -9504,6 +9524,25 @@
 /obj/machinery/reagentgrinder,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/open/floor/plasteel/whitegreen,
+/area/centcom/holding)
+"Br" = (
+/obj/structure/closet{
+	anchored = 1;
+	desc = "A storage unit for plasmaman internals, courtesy of the Spider Clan.";
+	icon_state = "emergency";
+	name = "Plasmaman emergency closet"
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/internals/plasmaman/belt/full,
+/obj/item/tank/internals/plasmaman/belt/full,
+/obj/item/tank/internals/plasmaman/belt/full,
+/obj/item/tank/internals/plasmaman/belt/full,
+/obj/item/tank/internals/plasmaman/belt/full,
+/turf/open/floor/wood,
 /area/centcom/holding)
 "Bs" = (
 /obj/structure/table/wood,
@@ -10879,6 +10918,7 @@
 "Fa" = (
 /obj/structure/table/wood,
 /obj/item/instrument/piano_synth,
+/obj/item/instrument/guitar,
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
 "Fb" = (
@@ -10894,6 +10934,14 @@
 	},
 /obj/structure/chair/stool,
 /turf/open/floor/carpet/black,
+/area/centcom/holding)
+"Fg" = (
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-21";
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/turf/open/floor/wood,
 /area/centcom/holding)
 "Fh" = (
 /turf/open/floor/plasteel/cafeteria,
@@ -11559,6 +11607,12 @@
 	dir = 4
 	},
 /area/tdome/tdomeobserve)
+"Hj" = (
+/obj/structure/urinal{
+	pixel_y = 28
+	},
+/turf/open/floor/plasteel/airless/white,
+/area/centcom/holding)
 "Hm" = (
 /obj/structure/flora/ausbushes/fernybush,
 /obj/structure/flora/ausbushes/ppflowers,
@@ -13453,6 +13507,7 @@
 /obj/item/storage/fancy/candle_box,
 /obj/item/storage/fancy/candle_box,
 /obj/item/storage/fancy/candle_box,
+/obj/item/storage/box/lights/mixed,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Nn" = (
@@ -13460,14 +13515,6 @@
 	locked = 0
 	},
 /turf/open/floor/plasteel/whitegreen,
-/area/centcom/holding)
-"Nq" = (
-/mob/living/simple_animal/bot/medbot/mysterious{
-	desc = "If you don't accidentally blow yourself up from time to time you're not really a wizard anyway.";
-	faction = list("neutral","silicon","creature");
-	name = "Nobody's Perfect"
-	},
-/turf/open/floor/carpet/black,
 /area/centcom/holding)
 "Nv" = (
 /obj/structure/table,
@@ -13478,6 +13525,12 @@
 "Nw" = (
 /obj/machinery/recharge_station,
 /turf/open/floor/plasteel/airless/white,
+/area/centcom/holding)
+"Nx" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 32
+	},
+/turf/open/floor/wood,
 /area/centcom/holding)
 "Ny" = (
 /obj/machinery/modular_computer/console/preset/research,
@@ -13508,6 +13561,7 @@
 /obj/structure/table,
 /obj/item/book/manual/hydroponics_pod_people,
 /obj/item/seeds/pumpkin/blumpkin,
+/obj/item/paper/guides/jobs/hydroponics,
 /turf/open/floor/plasteel/whitegreen,
 /area/centcom/holding)
 "NT" = (
@@ -13543,6 +13597,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"Oo" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/snacks/chawanmushi,
+/turf/open/floor/wood,
+/area/centcom/holding)
 "Op" = (
 /obj/structure/sink{
 	dir = 8;
@@ -13568,6 +13627,7 @@
 /obj/item/clothing/under/geisha,
 /obj/item/clothing/under/kilt,
 /obj/structure/closet,
+/obj/item/clothing/under/roman,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Pa" = (
@@ -13612,6 +13672,15 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
+"PH" = (
+/obj/structure/chair/wood/wings{
+	dir = 4
+	},
+/obj/machinery/defibrillator_mount/loaded{
+	pixel_y = 28
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
 "PI" = (
 /obj/machinery/biogenerator,
 /turf/open/floor/plasteel/whitegreen,
@@ -13634,6 +13703,12 @@
 "Qe" = (
 /turf/open/ai_visible,
 /area/ai_multicam_room)
+"Qj" = (
+/obj/structure/mineral_door/paperframe{
+	name = "Arcade"
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
 "Qk" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/ppflowers,
@@ -13723,6 +13798,11 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
+"Rp" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/snacks/sashimi,
+/turf/open/floor/wood,
+/area/centcom/holding)
 "RS" = (
 /obj/machinery/light{
 	dir = 8
@@ -13734,8 +13814,18 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
+"Sa" = (
+/obj/machinery/door/window/westleft,
+/turf/open/floor/carpet/black,
+/area/centcom/holding)
 "Sd" = (
 /turf/open/floor/carpet/black,
+/area/centcom/holding)
+"Sm" = (
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-10"
+	},
+/turf/open/floor/wood,
 /area/centcom/holding)
 "Sw" = (
 /obj/machinery/hydroponics/constructable,
@@ -13786,8 +13876,7 @@
 /turf/open/floor/plasteel/whitegreen,
 /area/centcom/holding)
 "Tb" = (
-/obj/item/clothing/under/roman,
-/obj/structure/closet,
+/obj/structure/closet/crate/freezer/blood,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Tn" = (
@@ -13805,6 +13894,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/metal/fifty,
 /obj/item/storage/toolbox/mechanical,
+/obj/item/multitool,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Tr" = (
@@ -13847,6 +13937,13 @@
 /area/centcom/holding)
 "Um" = (
 /obj/structure/closet/crate/hydroponics,
+/obj/item/shovel/spade,
+/obj/item/wirecutters,
+/obj/item/wrench,
+/obj/item/watertank,
+/obj/item/cultivator,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel/whitegreen,
 /area/centcom/holding)
 "Un" = (
@@ -13865,12 +13962,6 @@
 /obj/structure/chair/stool/bar,
 /turf/open/floor/wood,
 /area/centcom/holding)
-"UH" = (
-/obj/machinery/door/airlock/wood{
-	req_one_access_txt = "28"
-	},
-/turf/open/floor/wood,
-/area/centcom/holding)
 "UO" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -13885,6 +13976,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"UQ" = (
+/obj/structure/mineral_door/paperframe{
+	name = "Dojo"
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
 "UT" = (
 /obj/structure/chair/wood/wings{
 	dir = 1
@@ -13895,12 +13992,34 @@
 /obj/machinery/computer/arcade,
 /turf/open/floor/wood,
 /area/centcom/holding)
+"UW" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/carpet/black,
+/area/centcom/holding)
+"Vf" = (
+/mob/living/simple_animal/bot/medbot{
+	desc = "When engaged in combat, the vanquishing of thine enemy can be the warrior's only concern.";
+	name = "Hattori";
+	radio_key = null;
+	stationary_mode = 1
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
 "Vm" = (
 /obj/machinery/gibber,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
+"Vq" = (
+/obj/machinery/door/window/eastright,
+/turf/open/floor/carpet/black,
 /area/centcom/holding)
 "Vu" = (
 /obj/structure/flora/ausbushes/fernybush,
@@ -13935,6 +14054,24 @@
 /obj/item/nullrod/scythe/vibro{
 	damtype = "stamina";
 	force = 30
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"VR" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/carpet/black,
+/area/centcom/holding)
+"VU" = (
+/obj/structure/chair/wood/wings{
+	dir = 8
+	},
+/obj/machinery/defibrillator_mount/loaded{
+	pixel_y = 28
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
@@ -14052,7 +14189,7 @@
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Yf" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Yh" = (
@@ -14143,7 +14280,12 @@
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Zx" = (
-/mob/living/simple_animal/bot/medbot,
+/mob/living/simple_animal/bot/medbot{
+	desc = "A little medical robot. You can make out the word \"sincerity\" on its chassis.";
+	name = "Hijikata";
+	radio_key = null;
+	stationary_mode = 1
+	},
 /turf/open/floor/wood,
 /area/centcom/holding)
 "ZJ" = (
@@ -14160,6 +14302,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/evac)
+"ZK" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/bottle/sake,
+/turf/open/floor/wood,
+/area/centcom/holding)
 "ZT" = (
 /mob/living/simple_animal/cow,
 /turf/open/floor/grass,
@@ -38794,7 +38941,7 @@ PY
 PY
 PY
 Nd
-ZW
+Hj
 ZW
 ZW
 Za
@@ -38806,7 +38953,7 @@ Xk
 Xk
 Tn
 NT
-Xk
+Fg
 Xk
 Xk
 NT
@@ -39323,7 +39470,7 @@ Nd
 Gs
 Xk
 Xk
-Re
+Qj
 Xk
 PF
 Xk
@@ -39834,7 +39981,7 @@ Xk
 Xk
 Tn
 NT
-Xk
+Sm
 Xk
 Xk
 NT
@@ -40612,7 +40759,7 @@ NT
 vt
 YV
 OU
-Tb
+OU
 RS
 VF
 Nd
@@ -40865,7 +41012,7 @@ Nd
 Gs
 Zx
 Xk
-Re
+UQ
 Xk
 Xk
 Xk
@@ -41123,7 +41270,7 @@ Xk
 Xk
 Xk
 NT
-XM
+PH
 XM
 Xk
 XM
@@ -41376,13 +41523,13 @@ Xk
 Xk
 HH
 Nd
-Xk
+Nx
 Ud
 Ud
 NT
+UW
 Po
-Po
-Sd
+Sa
 Po
 ZU
 Xk
@@ -41637,7 +41784,7 @@ Xk
 Ud
 Ud
 NT
-Sd
+zs
 Sd
 Sd
 Sd
@@ -41880,7 +42027,7 @@ Fh
 Nv
 ED
 Yo
-Yf
+Oo
 UE
 Xk
 Xk
@@ -41890,16 +42037,16 @@ Xk
 Xk
 Tn
 NT
-Xk
+Br
 Ud
 Ud
 NT
+zs
 Sd
 Sd
-Nq
 Sd
 MM
-Xk
+Vf
 Nd
 aa
 aa
@@ -42151,7 +42298,7 @@ Xk
 Ud
 Ud
 NT
-Sd
+zs
 Sd
 Sd
 Sd
@@ -42394,7 +42541,7 @@ Fh
 Fh
 BV
 Xk
-Yf
+Rp
 UE
 Xk
 Xk
@@ -42408,9 +42555,9 @@ Gs
 Ud
 Ud
 NT
+VR
 PA
-PA
-Sd
+Vq
 PA
 Pl
 Xk
@@ -42665,7 +42812,7 @@ Xk
 Xk
 Xk
 NT
-GY
+VU
 GY
 Xk
 GY
@@ -42906,9 +43053,9 @@ XL
 Fh
 Fh
 Fh
-UH
+XL
 Xk
-Yf
+ZK
 UE
 Xk
 Xk
@@ -42921,7 +43068,7 @@ NT
 Xk
 Xk
 Xk
-Re
+UQ
 Xk
 Xk
 Xk
@@ -43181,7 +43328,7 @@ Xk
 NT
 vt
 Mx
-OU
+wT
 Tb
 Uh
 tW
