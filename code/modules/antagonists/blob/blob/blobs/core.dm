@@ -60,6 +60,10 @@
 		if(overmind) //we should have an overmind, but...
 			overmind.update_health_hud()
 
+/obj/structure/blob/core/deconstruct()
+	qdel(GetComponent(/datum/component/stationloving))
+	return ..()
+
 /obj/structure/blob/core/Life()
 	if(QDELETED(src))
 		return
