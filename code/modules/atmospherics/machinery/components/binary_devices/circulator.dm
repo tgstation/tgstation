@@ -32,6 +32,11 @@
 	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS )
 
+/obj/machinery/atmospherics/components/binary/circulator/Destroy()
+	if(generator)
+		disconnectFromGenerator()
+	..()
+
 /obj/machinery/atmospherics/components/binary/circulator/proc/return_transfer_air()
 
 	var/datum/gas_mixture/air1 = airs[1]
