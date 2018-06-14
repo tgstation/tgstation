@@ -58,6 +58,8 @@
 	tendril_grab.Grant(src)
 	assimilate = new
 	assimilate.Grant(src)
+	screech = new
+	screech.Grant(src)
 	var/datum/atom_hud/hud = GLOB.huds[ANTAG_HUD_CHANGELING]
 	hud.add_hud_to(src)
 
@@ -65,6 +67,7 @@
 	QDEL_NULL(devour)
 	QDEL_NULL(tendril_grab)
 	QDEL_NULL(assimilate)
+	QDEL_NULL(screech)
 	stored_changeling = null
 	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_CHANGELING]
 	hud.remove_hud_from(src)
@@ -320,7 +323,15 @@
 	playsound(src, 'sound/creatures/ling_scream.ogg', 100, 1)
 	var/mob/living/simple_animal/hostile/true_changeling/M = owner
 	for(var/mob/living/carbon/C in get_hearers_in_view(7, M))
-		C.Jitter(50)
+		if(C != M.stored_changeling)
+			C.Jitter(50)
+			C.overlay_fullscreen("screeching", /obj/screen/fullscreen/horrorform)
+			C.add_trait(TRAIT_MUTE, CHANGELING_GRAPPLE)
+			addtimer(CALLBACK(src, .proc/endscream, C), 200)
+
+/datum/action/innate/changeling/screech/proc/endscream(mob/living/carbon/C)
+		C.clear_fullscreen("screeching")
+		C.remove_trait(TRAIT_MUTE, CHANGELING_GRAPPLE)
 
 #undef TRUE_CHANGELING_PASSIVE_HEAL
 
@@ -346,6 +357,9 @@
 	"<span class='userdanger'>The [name] convulse and recede!</span>")
 	target.remove_trait(TRAIT_MUTE, CHANGELING_GRAPPLE)
 	. = ..()
+
+/obj/screen/fullscreen/horrorform
+	icon_state = "changelingrain"
 
 /obj/structure/alien/resin/wall/cocoon //For horror forms hatching, the meat walls and floor are below
 	name = "chrysalis wall"
