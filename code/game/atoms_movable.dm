@@ -221,14 +221,15 @@
 	if(. && pulling && pulling == pullee) //we were pulling a thing and didn't lose it during our move.
 		if(pulling.anchored)
 			stop_pulling()
-			return
-		var/pull_dir = get_dir(src, pulling)
-		if(get_dist(src, pulling) > 1 || ((pull_dir - 1) & pull_dir)) //puller and pullee more than one tile away or in diagonal position
-			pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
-			if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
-				stop_pulling()
-		if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
-			pulledby.stop_pulling()
+		else
+			var/pull_dir = get_dir(src, pulling)
+			//puller and pullee more than one tile away or in diagonal position
+			if(get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir)))
+				pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
+				if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
+					stop_pulling()
+			if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
+				pulledby.stop_pulling()
 
 
 	last_move = direct
@@ -563,6 +564,7 @@
 		I = image('icons/effects/effects.dmi', A, visual_effect_icon, A.layer + 0.1)
 	else if(used_item)
 		I = image(icon = used_item, loc = A, layer = A.layer + 0.1)
+		I.plane = GAME_PLANE
 
 		// Scale the icon.
 		I.transform *= 0.75

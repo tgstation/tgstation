@@ -60,14 +60,19 @@
 		user.remote_control = null
 
 	if(!QDELETED(eye))
-		qdel(eye)
-	eye = null
+		eye.RemoveImages()
+		QDEL_NULL(eye)
+
+	if(connected_holopad && !QDELETED(hologram))
+		hologram = null
+		connected_holopad.clear_holo(user)
 
 	user = null
 
-	if(hologram)
+	//Hologram survived holopad destro
+	if(!QDELETED(hologram))
 		hologram.HC = null
-		hologram = null
+		QDEL_NULL(hologram)
 
 	for(var/I in dialed_holopads)
 		var/obj/machinery/holopad/H = I
@@ -90,9 +95,10 @@
 /datum/holocall/proc/Disconnect(obj/machinery/holopad/H)
 	testing("Holocall disconnect")
 	if(H == connected_holopad)
-		calling_holopad.say("[usr] disconnected.")
+		var/area/A = get_area(connected_holopad)
+		calling_holopad.say("[A] holopad disconnected.")
 	else if(H == calling_holopad && connected_holopad)
-		connected_holopad.say("[usr] disconnected.")
+		connected_holopad.say("[user] disconnected.")
 
 	ConnectionFailure(H, TRUE)
 
@@ -154,6 +160,7 @@
 	eye.setLoc(H.loc)
 
 	hangup = new(eye, src)
+	hangup.Grant(user)
 
 //Checks the validity of a holocall and qdels itself if it's not. Returns TRUE if valid, FALSE otherwise
 /datum/holocall/proc/Check()

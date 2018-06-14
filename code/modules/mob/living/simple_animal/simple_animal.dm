@@ -104,6 +104,15 @@
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
+
+	if(nest)
+		nest.spawned_mobs -= src
+		nest = null
+
+	var/turf/T = get_turf(src)
+	if (T && AIStatus == AI_Z_OFF)
+		SSidlenpcpool.idle_mobs_by_zlevel[T.z] -= src
+
 	return ..()
 
 /mob/living/simple_animal/updatehealth()
@@ -419,16 +428,6 @@
 
 	if(changed)
 		animate(src, transform = ntransform, time = 2, easing = EASE_IN|EASE_OUT)
-
-
-
-/mob/living/simple_animal/Destroy()
-	if(nest)
-		nest.spawned_mobs -= src
-	nest = null
-	GLOB.simple_animals -= src
-	return ..()
-
 
 /mob/living/simple_animal/proc/sentience_act() //Called when a simple animal gains sentience via gold slime potion
 	toggle_ai(AI_OFF) // To prevent any weirdness.

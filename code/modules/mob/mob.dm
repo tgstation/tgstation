@@ -395,22 +395,22 @@
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
 		return
 
-	log_game("[usr.name]/[usr.key] used abandon mob.")
+	log_game("[key_name(usr)] used abandon mob.")
 
 	to_chat(usr, "<span class='boldnotice'>Please roleplay correctly!</span>")
 
 	if(!client)
-		log_game("[usr.key] AM failed due to disconnect.")
+		log_game("[key_name(usr)] AM failed due to disconnect.")
 		return
 	client.screen.Cut()
 	client.screen += client.void
 	if(!client)
-		log_game("[usr.key] AM failed due to disconnect.")
+		log_game("[key_name(usr)] AM failed due to disconnect.")
 		return
 
 	var/mob/dead/new_player/M = new /mob/dead/new_player()
 	if(!client)
-		log_game("[usr.key] AM failed due to disconnect.")
+		log_game("[key_name(usr)] AM failed due to disconnect.")
 		qdel(M)
 		return
 
@@ -829,6 +829,14 @@
 	return
 
 /mob/proc/update_sight()
+	for(var/O in orbiters)
+		var/datum/orbit/orbit = O
+		var/obj/effect/wisp/wisp = orbit.orbiter
+		if (istype(wisp))
+			sight |= wisp.sight_flags
+			if(!isnull(wisp.lighting_alpha))
+				lighting_alpha = min(lighting_alpha, wisp.lighting_alpha)
+
 	sync_lighting_plane_alpha()
 
 /mob/proc/sync_lighting_plane_alpha()

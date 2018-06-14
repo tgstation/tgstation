@@ -2,6 +2,7 @@
 	layer = TURF_LAYER
 	plane = GAME_PLANE
 	var/level = 2
+	var/article  // If non-null, overrides a/an/some in all cases
 
 	var/flags_1 = NONE
 	var/interaction_flags_atom = NONE
@@ -26,6 +27,8 @@
 	var/datum/proximity_monitor/proximity_monitor
 	var/buckle_message_cooldown = 0
 	var/fingerprintslast
+
+	var/list/filter_data //For handling persistent filters
 
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
@@ -239,7 +242,10 @@
 
 /atom/proc/get_examine_name(mob/user)
 	. = "\a [src]"
-	var/list/override = list(gender == PLURAL? "some" : "a" , " ", "[name]")
+	var/list/override = list(gender == PLURAL ? "some" : "a", " ", "[name]")
+	if(article)
+		. = "[article] [src]"
+		override[EXAMINE_POSITION_ARTICLE] = article
 	if(SendSignal(COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
 		. = override.Join("")
 
@@ -576,3 +582,25 @@
 
 /atom/proc/GenerateTag()
 	return
+
+// Filter stuff
+/atom/movable/proc/add_filter(name,priority,list/params)
+	if(!filter_data)
+		filter_data = list()
+	var/list/p = params.Copy()
+	p["priority"] = priority
+	filter_data[name] = p
+	update_filters()
+
+/atom/movable/proc/update_filters()
+	filters = null
+	sortTim(filter_data,associative = TRUE)
+	for(var/f in filter_data)
+		var/list/data = filter_data[f]
+		var/list/arguments = data.Copy()
+		arguments -= "priority"
+		filters += filter(arglist(arguments))
+
+/atom/movable/proc/get_filter(name)
+	if(filter_data && filter_data[name])
+		return filters[filter_data.Find(name)]

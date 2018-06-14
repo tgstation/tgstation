@@ -133,7 +133,7 @@
 	clonemind = locate(mindref) in SSticker.minds
 	if(!istype(clonemind))	//not a mind
 		return FALSE
-	if(clonemind.current)
+	if(!QDELETED(clonemind.current))
 		if(clonemind.current.stat != DEAD)	//mind is associated with a non-dead body
 			return FALSE
 		if(clonemind.current.suiciding) // Mind is associated with a body that is suiciding.

@@ -1813,23 +1813,11 @@
 		usr.client.smite(H)
 
 	else if(href_list["CentComReply"])
-		var/mob/living/carbon/human/H = locate(href_list["CentComReply"]) in GLOB.mob_list
-		if(!istype(H))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human")
-			return
-		if(!istype(H.ears, /obj/item/radio/headset))
-			to_chat(usr, "The person you are trying to contact is not wearing a headset.")
+		if(!check_rights(R_ADMIN))
 			return
 
-		message_admins("[src.owner] has started answering [key_name(H)]'s CentCom request.")
-		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from CentCom", "")
-		if(!input)
-			message_admins("[src.owner] decided not to answer [key_name(H)]'s CentCom request.")
-			return
-
-		log_admin("[src.owner] replied to [key_name(H)]'s CentCom message with the message [input].")
-		message_admins("[src.owner] replied to [key_name(H)]'s CentCom message with: \"[input]\"")
-		to_chat(H, "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. [input].  Message ends.\"")
+		var/mob/M = locate(href_list["CentComReply"])
+		cmd_admin_centcom_message(M)
 
 	else if(href_list["SyndicateReply"])
 		var/mob/living/carbon/human/H = locate(href_list["SyndicateReply"])

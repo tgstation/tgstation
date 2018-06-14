@@ -266,26 +266,29 @@
 /obj/item/wisp_lantern/attack_self(mob/user)
 	if(!wisp)
 		to_chat(user, "<span class='warning'>The wisp has gone missing!</span>")
+		icon_state = "lantern"
 		return
+
 	if(wisp.loc == src)
 		to_chat(user, "<span class='notice'>You release the wisp. It begins to bob around your head.</span>")
-		user.sight |= SEE_MOBS
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
+		user.update_sight()
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Freed")
 
 	else
 		to_chat(user, "<span class='notice'>You return the wisp to the lantern.</span>")
 
+		var/mob/target
 		if(wisp.orbiting)
-			var/atom/A = wisp.orbiting.orbiting
-			if(isliving(A))
-				var/mob/living/M = A
-				M.sight &= ~SEE_MOBS
-				to_chat(M, "<span class='notice'>Your vision returns to normal.</span>")
-
+			target = wisp.orbiting.orbiting
 		wisp.stop_orbit()
 		wisp.forceMove(src)
+
+		if (istype(target))
+			target.update_sight()
+			to_chat(target, "<span class='notice'>Your vision returns to normal.</span>")
+
 		icon_state = "lantern-blue"
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
 
@@ -308,6 +311,8 @@
 	icon_state = "orb"
 	light_range = 7
 	layer = ABOVE_ALL_MOB_LAYER
+	var/sight_flags = SEE_MOBS
+	var/lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 
 //Red/Blue Cubes
 /obj/item/warp_cube
@@ -1226,7 +1231,7 @@
 			INVOKE_ASYNC(src, .proc/prepare_icon_update)
 			beacon.icon_state = "hierophant_tele_off"
 			return
-		add_logs(user, beacon, "teleported self from ([source.x],[source.y],[source.z]) to")
+		add_logs(user, beacon, "teleported self from [AREACOORD(source)] to")
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, user)
 		for(var/t in RANGE_TURFS(1, T))
@@ -1273,7 +1278,7 @@
 		return
 	M.visible_message("<span class='hierophant_warning'>[M] fades in!</span>")
 	if(user != M)
-		add_logs(user, M, "teleported", null, "from ([source.x],[source.y],[source.z])")
+		add_logs(user, M, "teleported", null, "from [AREACOORD(source)]")
 
 /obj/item/hierophant_club/proc/cardinal_blasts(turf/T, mob/living/user) //fire cardinal cross blasts with a delay
 	if(!T)

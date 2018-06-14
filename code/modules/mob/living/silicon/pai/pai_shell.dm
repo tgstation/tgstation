@@ -57,7 +57,7 @@
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = card
-	var/turf/T = get_turf(src)
+	var/turf/T = drop_location()
 	card.forceMove(T)
 	forceMove(card)
 	canmove = FALSE
