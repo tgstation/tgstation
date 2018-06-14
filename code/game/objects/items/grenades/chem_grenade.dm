@@ -77,7 +77,7 @@
 				beakers += I
 				for(var/datum/reagent/R in I.reagents.reagent_list)
 					var/reagent_vol = R.volume
-					add_logs(user, src, "inserted [I]", additional = "[reagent_vol] units of [R] inside.")
+					add_logs(user, src, "inserted [I]", addition = "[reagent_vol] units of [R] inside.")
 					log_game("[key_name(user)] inserted [I] into [src] containing [reagent_vol] units of [R] ")
 			else
 				to_chat(user, "<span class='warning'>[I] is empty!</span>")
@@ -119,7 +119,7 @@
 					continue
 				for(var/datum/reagent/R in O.reagents.reagent_list)
 					var/reagent_vol = R.volume
-					add_logs(user, src, "removed [O]", additional = "[reagent_vol] units of [R] inside.")
+					add_logs(user, src, "removed [O]", addition = "[reagent_vol] units of [R] inside.")
 					log_game("[key_name(user)] removed [O] from [src] containing [reagent_vol] units of [R]")
 			beakers = list()
 			to_chat(user, "<span class='notice'>You open the [initial(name)] assembly and remove the payload.</span>")
@@ -176,7 +176,7 @@
 			GLOB.bombers += message
 			message_admins(message)
 			log_game("[src] primed by [user] at [AREACOORD(T)] contained [reagent_volume] units of [R].")
-			add_logs(user, src, "primed", additional = "[reagent_volume] units of [R] inside.")
+			add_logs(user, src, "primed", addition = "[reagent_volume] units of [R] inside.")
 
 /obj/item/grenade/chem_grenade/prime()
 	if(stage != READY)
