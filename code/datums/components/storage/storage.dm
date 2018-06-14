@@ -696,7 +696,10 @@
 
 	if(A.loc == user)
 		. = COMPONENT_NO_ATTACK_HAND
-		show_to(user)
+		if(locked)
+			to_chat(user, "<span class='warning'>[parent] seems to be locked!</span>")
+		else
+			show_to(user)
 
 /datum/component/storage/proc/signal_on_pickup(mob/user)
 	var/atom/A = parent
@@ -717,7 +720,7 @@
 	return hide_from(target)
 
 /datum/component/storage/proc/on_alt_click(mob/user)
-	if(!isliving(user) || user.incapacitated() || !quickdraw || !user.CanReach(parent))
+	if(!isliving(user) || user.incapacitated() || !quickdraw || locked || !user.CanReach(parent))
 		return
 	var/obj/item/I = locate() in real_location()
 	if(!I)
