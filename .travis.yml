@@ -45,6 +45,7 @@ matrix:
             - libc6-i386
             - libstdc++6:i386
             - libssl-dev:i386
+            - gcc-multilib
             - g++-7
             - g++-7-multilib
             - libmariadbclient-dev:i386
