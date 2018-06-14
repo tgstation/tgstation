@@ -72,8 +72,8 @@
 	for(var/category in recipes)
 		var/list/cat_recipes = recipes[category]
 		for(var/i in cat_recipes)
-			var/datum/pipe_info/I = i
-			if (path == I.id)
+			var/datum/pipe_info/info = i
+			if (path == info.id)
 				return TRUE
 	return FALSE
 
