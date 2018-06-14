@@ -92,3 +92,7 @@
 
 /obj/item/autosurgeon/reviver
 	starting_organ = /obj/item/organ/cyberimp/chest/reviver
+
+/obj/item/autosurgeon/tech
+	uses = 1
+	
