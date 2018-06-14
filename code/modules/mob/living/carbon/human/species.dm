@@ -285,7 +285,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		for(var/datum/disease/A in C.diseases)
 			A.cure(FALSE)
 
-
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species.exotic_bloodtype)
 		C.dna.blood_type = random_blood_type()
@@ -703,6 +702,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H)
+	if(H.has_trait(TRAIT_TOXIMMUNE))
+		H.setToxLoss(0)
+
 	if(H.has_trait(TRAIT_NOBREATH))
 		H.setOxyLoss(0)
 		H.losebreath = 0
@@ -1656,6 +1658,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/ExtinguishMob(mob/living/carbon/human/H)
 	return
 
+/datum/species/proc/spec_revival(mob/living/carbon/human/H)
+	return
 
 ////////////
 //Stun//
