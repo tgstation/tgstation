@@ -8,13 +8,13 @@
 	RegisterSignal(COMSIG_PARENT_EXAMINE, .proc/examine)
 
 /datum/component/magnetic_catch/proc/uncross_react(atom/movable/thing)
-	if(!thing.throwing)
+	if(!thing.throwing || thing.throwing.thrower)
 		return
 	qdel(thing.throwing)
 	return COMPONENT_MOVABLE_BLOCK_UNCROSS
 
 /datum/component/magnetic_catch/proc/exit_react(atom/movable/thing, atom/newloc)
-	if(!thing.throwing)
+	if(!thing.throwing || thing.throwing.thrower)
 		return
 	qdel(thing.throwing)
 	return COMPONENT_ATOM_BLOCK_EXIT
