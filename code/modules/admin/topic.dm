@@ -445,6 +445,8 @@
 			if("Yes")
 				delmob = 1
 
+		log_admin("[key_name(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]</span>")
 		switch(href_list["simplemake"])
 			if("observer")
 				M.change_mob_type( /mob/dead/observer , null, null, delmob )
@@ -497,8 +499,6 @@
 				M.change_mob_type( /mob/living/simple_animal/hostile/construct/wraith , null, null, delmob )
 			if("shade")
 				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
-		log_admin("[key_name(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]")
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]</span>")
 
 
 	/////////////////////////////////////new ban stuff
