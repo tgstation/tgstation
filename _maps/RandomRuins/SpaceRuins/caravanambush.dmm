@@ -33,7 +33,9 @@
 /area/template_noop)
 "ah" = (
 /obj/structure/lattice/catwalk,
-/mob/living/simple_animal/hostile/pirate/space/ranged,
+/mob/living/simple_animal/hostile/pirate/space/ranged{
+	environment_smash = 0
+	},
 /turf/template_noop,
 /area/template_noop)
 "ai" = (

@@ -80,7 +80,9 @@
 /turf/open/floor/plasteel/red/side,
 /area/shuttle/caravan/pirate)
 "hh" = (
-/mob/living/simple_animal/hostile/pirate,
+/mob/living/simple_animal/hostile/pirate{
+	environment_smash = 0
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/caravan/pirate)
 "hI" = (
@@ -398,7 +400,9 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/pirate)
 "tM" = (
-/mob/living/simple_animal/hostile/pirate/ranged,
+/mob/living/simple_animal/hostile/pirate/ranged{
+	environment_smash = 0
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/caravan/pirate)
 "ul" = (
