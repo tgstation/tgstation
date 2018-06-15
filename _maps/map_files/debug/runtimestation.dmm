@@ -1850,7 +1850,7 @@
 	dwidth = 9;
 	height = 25;
 	id = "emergency_home";
-	name = "MetaStation emergency evac bay";
+	name = "Runtimestation emergency evac bay";
 	width = 29
 	},
 /turf/open/space/basic,
@@ -2081,12 +2081,10 @@
 "fM" = (
 /obj/structure/sign/directions/supply{
 	dir = 4;
-	icon_state = "direction_supply";
 	pixel_x = 32
 	},
 /obj/structure/sign/directions/engineering{
 	dir = 1;
-	icon_state = "direction_eng";
 	pixel_x = 32;
 	pixel_y = 7
 	},
@@ -2180,12 +2178,10 @@
 "fX" = (
 /obj/structure/sign/directions/supply{
 	dir = 4;
-	icon_state = "direction_supply";
 	pixel_x = -32
 	},
 /obj/structure/sign/directions/engineering{
 	dir = 1;
-	icon_state = "direction_eng";
 	pixel_x = -32;
 	pixel_y = 7
 	},
@@ -2241,12 +2237,10 @@
 "gg" = (
 /obj/structure/sign/directions/supply{
 	dir = 4;
-	icon_state = "direction_supply";
 	pixel_x = 32
 	},
 /obj/structure/sign/directions/engineering{
 	dir = 1;
-	icon_state = "direction_eng";
 	pixel_x = 32;
 	pixel_y = 7
 	},
