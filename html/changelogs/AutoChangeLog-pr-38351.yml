@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - rscadd: "A new OOC verb \"Fit Viewport\" can be used to adjust the window splitter to eliminate letterboxing around the map. It can also be set to run automatically in Preferences."

@@ -1,4 +1,0 @@
-author: "CitrusGender"
-delete-after: True
-changes: 
-  - bugfix: "logs will now show ckeys when admin transformations are done"
