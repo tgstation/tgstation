@@ -372,6 +372,7 @@
 
 /obj/effect/warp_cube
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
 
 /obj/effect/warp_cube/ex_act(severity, target)
 	return
