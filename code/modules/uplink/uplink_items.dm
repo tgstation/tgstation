@@ -1335,6 +1335,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Laser arm implant"
 	desc = "A variant of the arm cannon implant that fires lethal laser beams. The cannon emerges from the subject's arm and remains inside when not in use"
 	cost = 20
+	item = /obj/item/autosurgeon/robotics
 	surplus = 0
 	restricted_roles = list("Roboticist")
 
@@ -1343,7 +1344,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A potato rigged with explosives. On activation, a special mechanism is activated that prevents it from being dropped. The only way to get rid of it if you are holding it is to attack someone else with it, causing it to latch to that person instead."
 	item = /obj/item/hot_potato/syndicate
 	cost = 4
-	item = /obj/item/autosurgeon/robotics
 	surplus = 0
 	restricted_roles = list("Cook", "Botanist", "Clown", "Mime")
 
