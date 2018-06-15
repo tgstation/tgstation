@@ -48,7 +48,7 @@
 		/obj/item/reagent_containers/spray/waterflower/lube)
 	implants = list(/obj/item/implant/sad_trombone)
 
-	uplink_type = /obj/item/radio/uplink/clownop
+	uplink_type = /obj/item/uplink/clownop
 
 /datum/outfit/syndicate/clownop/no_crystals
 	tc = 0
