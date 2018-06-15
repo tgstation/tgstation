@@ -32,6 +32,8 @@
 			for(var/obj/structure/alien/resin/wall/cocoon/R in damonster) //extremely hacky
 				qdel(R)
 				new /obj/structure/alien/weeds/node(damonster) //Dim lighting in the chrysalis -- removes itself afterwards
+			for(var/obj/structure/alien/weeds/node/shitcode in damonster) //i'm so sorry
+				shitcode.color = "#FF0000"
 			H.visible_message("<span class='warning'>A chrysalis forms around [H], sealing them inside.</span>", \
 							"<font color=#800080>We create your chrysalis and begin to contort within.</font>")
 			sleep(100) //NOW we do sleeps- we're going too deep into the transformation to cancel and we're cocooned in indestructable walls anyways.

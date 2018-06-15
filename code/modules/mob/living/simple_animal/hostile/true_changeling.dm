@@ -296,8 +296,8 @@
 	var/datum/beam/B = M.Beam(target, icon_state = "tendrilgrab", time=INFINITY)
 	var/ticker = 0
 	while(M.endtendril == FALSE && target.handcuffed && M.loc == T && target in view(7, M))
-		target.Stun(4)
-		sleep(3)
+		target.Stun(3)
+		sleep(2)
 		if(ticker == 2)
 			ticker = 0
 			var/turf/REELEMINBOYS = get_step_to(target, M)
