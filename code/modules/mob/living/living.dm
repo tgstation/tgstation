@@ -348,7 +348,7 @@
 	ret |= contents						//add our contents
 	for(var/i in ret.Copy())			//iterate storage objects
 		var/atom/A = i
-		A.SendSignal(COMSIG_TRY_STORAGE_RETURN_INVENTORY, ret)
+		SEND_SIGNAL(A, COMSIG_TRY_STORAGE_RETURN_INVENTORY, ret)
 	for(var/obj/item/folder/F in ret.Copy())		//very snowflakey-ly iterate folders
 		ret |= F.contents
 	return ret
@@ -584,7 +584,7 @@
 		return
 	changeNext_move(CLICK_CD_RESIST)
 
-	SendSignal(COMSIG_LIVING_RESIST, src)
+	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
 	//resisting grabs (as if it helps anyone...)
 	if(!restrained(ignore_grab = 1) && pulledby)
 		visible_message("<span class='danger'>[src] resists against [pulledby]'s grip!</span>")
@@ -901,7 +901,7 @@
 		new/obj/effect/dummy/fire(src)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
-		SendSignal(COMSIG_LIVING_IGNITED,src)
+		SEND_SIGNAL(src, COMSIG_LIVING_IGNITED,src)
 		return TRUE
 	return FALSE
 
@@ -912,8 +912,8 @@
 		for(var/obj/effect/dummy/fire/F in src)
 			qdel(F)
 		clear_alert("fire")
-		SendSignal(COMSIG_CLEAR_MOOD_EVENT, "on_fire")
-		SendSignal(COMSIG_LIVING_EXTINGUISHED, src)
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
+		SEND_SIGNAL(src, COMSIG_LIVING_EXTINGUISHED, src)
 		update_fire()
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person

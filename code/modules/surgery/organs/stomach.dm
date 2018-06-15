@@ -39,22 +39,22 @@
 	switch(H.disgust)
 		if(0 to DISGUST_LEVEL_GROSS)
 			H.clear_alert("disgust")
-			H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "disgust")
+			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "disgust")
 		if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
 			H.throw_alert("disgust", /obj/screen/alert/gross)
-			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgust/gross)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgust/gross)
 		if(DISGUST_LEVEL_VERYGROSS to DISGUST_LEVEL_DISGUSTED)
 			H.throw_alert("disgust", /obj/screen/alert/verygross)
-			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgust/verygross)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgust/verygross)
 		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
 			H.throw_alert("disgust", /obj/screen/alert/disgusted)
-			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgust/disgusted)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgust/disgusted)
 
 /obj/item/organ/stomach/Remove(mob/living/carbon/M, special = 0)
 	var/mob/living/carbon/human/H = owner
 	if(istype(H))
 		H.clear_alert("disgust")
-		H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "disgust")
+		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "disgust")
 	..()
 
 /obj/item/organ/stomach/fly

@@ -169,4 +169,4 @@
 				I.take_damage(fire_stacks, BURN, "fire", 0)
 
 		adjust_bodytemperature(BODYTEMP_HEATING_MAX)
-		SendSignal(COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)

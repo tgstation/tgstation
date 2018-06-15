@@ -125,8 +125,8 @@
 		else
 			return TRUE
 	else
-		if(O.loc.SendSignal(COMSIG_CONTAINS_STORAGE))
-			return O.loc.SendSignal(COMSIG_TRY_STORAGE_TAKE, O, src)
+		if(SEND_SIGNAL(O.loc, COMSIG_CONTAINS_STORAGE))
+			return SEND_SIGNAL(O.loc, COMSIG_TRY_STORAGE_TAKE, O, src)
 		else
 			O.forceMove(src)
 			return TRUE

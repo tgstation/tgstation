@@ -14,7 +14,7 @@
 	owner.add_trait(TRAIT_STUNIMMUNE, TRAIT_HULK)
 	owner.add_trait(TRAIT_PUSHIMMUNE, TRAIT_HULK)
 	owner.update_body_parts()
-	owner.SendSignal(COMSIG_ADD_MOOD_EVENT, "hulk", /datum/mood_event/hulk)
+	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "hulk", /datum/mood_event/hulk)
 
 /datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
 	if(proximity) //no telekinetic hulk attack
@@ -31,7 +31,7 @@
 	owner.remove_trait(TRAIT_STUNIMMUNE, TRAIT_HULK)
 	owner.remove_trait(TRAIT_PUSHIMMUNE, TRAIT_HULK)
 	owner.update_body_parts()
-	owner.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "hulk")
+	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "hulk")
 
 /datum/mutation/human/hulk/say_mod(message)
 	if(message)

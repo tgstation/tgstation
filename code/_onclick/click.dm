@@ -40,7 +40,7 @@
 */
 /atom/Click(location,control,params)
 	if(flags_1 & INITIALIZED_1)
-		SendSignal(COMSIG_CLICK, location, control, params)
+		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params)
 		usr.ClickOn(src, params)
 
 /atom/DblClick(location,control,params)
@@ -317,7 +317,7 @@
 	A.ShiftClick(src)
 	return
 /atom/proc/ShiftClick(mob/user)
-	SendSignal(COMSIG_CLICK_SHIFT, user)
+	SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user)
 	if(user.client && user.client.eye == user || user.client.eye == user.loc)
 		user.examinate(src)
 	return
@@ -332,7 +332,7 @@
 	return
 
 /atom/proc/CtrlClick(mob/user)
-	SendSignal(COMSIG_CLICK_CTRL, user)
+	SEND_SIGNAL(src, COMSIG_CLICK_CTRL, user)
 	var/mob/living/ML = user
 	if(istype(ML))
 		ML.pulled(src)
@@ -364,7 +364,7 @@
 	..()
 
 /atom/proc/AltClick(mob/user)
-	SendSignal(COMSIG_CLICK_ALT, user)
+	SEND_SIGNAL(src, COMSIG_CLICK_ALT, user)
 	var/turf/T = get_turf(src)
 	if(T && user.TurfAdjacent(T))
 		if(user.listed_turf == T)
@@ -389,7 +389,7 @@
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)
-	SendSignal(COMSIG_CLICK_CTRL_SHIFT)
+	SEND_SIGNAL(src, COMSIG_CLICK_CTRL_SHIFT)
 	return
 
 /*

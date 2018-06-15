@@ -142,7 +142,7 @@
 			if (box)
 				user.transferItemToLoc(A, box)
 				show_message = TRUE
-			else if(SendSignal(COMSIG_TRY_STORAGE_INSERT, A, user, TRUE))
+			else if(SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, A, user, TRUE))
 				show_message = TRUE
 			else
 				if(!spam_protection)
