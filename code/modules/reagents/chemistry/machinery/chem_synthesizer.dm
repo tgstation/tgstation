@@ -16,7 +16,7 @@
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "chem_synthesizer", name, 390, 315, master_ui, state)
+		ui = new(user, src, ui_key, "chem_synthesizer", name, 390, 330, master_ui, state)
 		ui.open()
 
 /obj/machinery/chem_dispenser/chem_synthesizer/ui_act(action, params)
@@ -50,6 +50,10 @@
 				return
 			beaker = new /obj/item/reagent_containers/glass/beaker/bluespace(src)
 			visible_message("<span class='notice'>[src] dispenses a bluespace beaker.</span>")
+		if("amount")
+			var/input = input("Units to dispense", "Units") as num|null
+			if(input)
+				amount = input
 	update_icon()
 
 /obj/machinery/chem_dispenser/chem_synthesizer/proc/find_reagent(input)
