@@ -92,6 +92,8 @@ GLOBAL_LIST_EMPTY(uplinks)
 	active = TRUE
 	if(user)
 		ui_interact(user)
+	// an unlocked uplink blocks also opening the PDA or headset menu
+	return COMPONENT_NO_INTERACT
 
 /datum/component/uplink/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
