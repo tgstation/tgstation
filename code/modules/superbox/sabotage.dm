@@ -68,6 +68,7 @@
 
 /datum/objective/sabotage/check_completion()
 	. = TRUE
+	var/list/missed = list()
 	for (var/O in GLOB.machines)
 		var/obj/machinery/M = O
 		// must be the same thing or a child type with the same name
@@ -90,11 +91,14 @@
 		if (M.obj_flags & EMAGGED)
 			continue
 
-		message_admins("[key_name_admin(owner.current)] did not sabotage [M] [ADMIN_COORDJMP(T)] [ADMIN_VV(M)]")
+		missed += "[M] [ADMIN_COORDJMP(T)] [ADMIN_VV(M)]"
 		. = FALSE
 
-/datum/antagonist/traitor/human/forge_single_objective()
-	if (prob(70) && !(locate(/datum/objective/sabotage) in owner.objectives))
+	if (!.)
+		message_admins("[key_name_admin(owner.current)] did not sabotage:\n[missed.Join("\n")]")
+
+/datum/antagonist/traitor/forge_single_objective()
+	if (prob(30) && !(locate(/datum/objective/sabotage) in owner.objectives))
 		var/datum/objective/sabotage/sabotage_objective = new
 		sabotage_objective.owner = owner
 		sabotage_objective.pick_target_machine()
