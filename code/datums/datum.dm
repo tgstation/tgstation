@@ -2,6 +2,7 @@
 	var/gc_destroyed //Time when this object was destroyed.
 	var/list/active_timers  //for SStimer
 	var/list/datum_components //for /datum/components
+	var/list/status_traits
 	var/datum_flags = NONE
 	var/datum/weakref/weak_reference
 
