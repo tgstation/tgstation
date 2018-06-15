@@ -3,8 +3,6 @@ SUBSYSTEM_DEF(mapping)
 	init_order = INIT_ORDER_MAPPING
 	flags = SS_NO_FIRE
 
-	var/world_loaded = FALSE
-
 	var/list/nuke_tiles = list()
 	var/list/nuke_threats = list()
 
