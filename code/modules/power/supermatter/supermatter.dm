@@ -231,7 +231,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	return integrity
 
 /obj/machinery/power/supermatter_shard/Topic(href,href_list)
-	. = ..()
 	if(href_list["explode"])
 		if(!loc)
 			return
@@ -257,6 +256,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 						message_admins("[usr.key] has allowed the supermatter explosion to resume at \"[get_area(src)]\".")
 						investigate_log("[usr.key] has allowed the supermatter explosion to resume at \"[get_area(src)]\".", INVESTIGATE_SUPERMATTER)
 				explodesleeping = 0
+				return
+	. = ..()
 
 /obj/machinery/power/supermatter_shard/proc/explode()
 	if(exploding)
