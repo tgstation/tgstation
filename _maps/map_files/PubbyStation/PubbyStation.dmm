@@ -31872,9 +31872,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/landmark/blobstart,
-/obj/item/melee/baton/cattleprod{
-	cell = new /obj/item/stock_parts/cell/high()
-	},
+/obj/item/melee/baton/cattleprod,
 /turf/open/floor/plasteel/dark,
 /area/medical/exam_room)
 "bEK" = (
