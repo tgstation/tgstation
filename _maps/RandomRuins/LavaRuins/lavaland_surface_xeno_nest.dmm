@@ -48,11 +48,6 @@
 /obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
-"p" = (
-/obj/structure/alien/weeds,
-/obj/structure/alien/resin/wall,
-/turf/open/space/basic,
-/area/ruin/unpowered/xenonest)
 "r" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
@@ -112,10 +107,6 @@
 /obj/structure/alien/egg/burst,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/xenonest)
-"D" = (
-/obj/structure/alien/weeds,
-/turf/open/space/basic,
 /area/ruin/unpowered/xenonest)
 "E" = (
 /obj/structure/alien/weeds,
@@ -329,7 +320,7 @@ g
 g
 y
 b
-p
+b
 b
 y
 b
@@ -455,7 +446,7 @@ G
 b
 o
 v
-D
+g
 b
 s
 g
