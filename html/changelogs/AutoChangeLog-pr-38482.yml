@@ -1,0 +1,5 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - refactor: "Syndicate and Centcom messages have been squashed together."
+  - admin: "You can now send both Syndicate and Centcom headset messages. Be mindful that the button was changed to HM in the playerpanel"

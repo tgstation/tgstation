@@ -98,6 +98,7 @@ Stabilized extracts:
 	colour = "gold"
 	var/mob_type
 	var/datum/mind/saved_mind
+	var/mob_name = "Familiar"
 
 /obj/item/slimecross/stabilized/gold/proc/generate_mobtype()
 	var/static/list/mob_spawn_pets = list()
@@ -114,20 +115,30 @@ Stabilized extracts:
 	generate_mobtype()
 
 /obj/item/slimecross/stabilized/gold/attack_self(mob/user)
-	var/choice = input(user, "Which do you want to reset?", "Familiar Adjustment") as null|anything in list("Familiar Species", "Familiar Sentience")
+	var/choice = input(user, "Which do you want to reset?", "Familiar Adjustment") as null|anything in list("Familiar Location", "Familiar Species", "Familiar Sentience", "Familiar Name")
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 	if(isliving(user))
 		var/mob/living/L = user
 		if(L.has_status_effect(/datum/status_effect/stabilized/gold))
 			L.remove_status_effect(/datum/status_effect/stabilized/gold)
-			START_PROCESSING(SSobj, src)
+	if(choice == "Familiar Location")
+		to_chat(user, "<span class='notice'>You prod [src], and it shudders slightly.</span>")
+		START_PROCESSING(SSobj, src)
 	if(choice == "Familiar Species")
 		to_chat(user, "<span class='notice'>You squeeze [src], and a shape seems to shift around inside.</span>")
 		generate_mobtype()
+		START_PROCESSING(SSobj, src)
 	if(choice == "Familiar Sentience")
 		to_chat(user, "<span class='notice'>You poke [src], and it lets out a glowing pulse.</span>")
 		saved_mind = null
+		START_PROCESSING(SSobj, src)
+	if(choice == "Familiar Name")
+		var/newname = copytext(sanitize(input(user, "Would you like to change the name of [mob_name]", "Name change", mob_name) as null|text),1,MAX_NAME_LEN)
+		if(newname)
+			mob_name = newname
+		to_chat(user, "<span class='notice'>You speak softly into [src], and it shakes slightly in response.</span>")
+		START_PROCESSING(SSobj, src)
 
 /obj/item/slimecross/stabilized/oil
 	colour = "oil"

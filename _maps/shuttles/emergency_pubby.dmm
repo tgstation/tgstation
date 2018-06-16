@@ -109,7 +109,9 @@
 /area/shuttle/escape)
 "av" = (
 /obj/structure/table/wood/poker,
-/obj/item/toy/cards/deck,
+/obj/item/toy/cards/deck{
+	pixel_y = 5
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aw" = (
@@ -200,6 +202,14 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/reagent_containers/food/snacks/butterdog,
+/obj/item/reagent_containers/food/snacks/cakeslice/apple,
+/obj/item/reagent_containers/food/snacks/cakeslice/brioche,
+/obj/item/reagent_containers/food/snacks/cakeslice/cheese,
+/obj/item/reagent_containers/food/snacks/cakeslice/chocolate,
+/obj/item/reagent_containers/food/snacks/cakeslice/lemon,
+/obj/item/reagent_containers/food/snacks/cakeslice/lime,
+/obj/item/reagent_containers/food/snacks/cakeslice/orange,
 /turf/open/floor/plasteel/cafeteria,
 /area/shuttle/escape)
 "aH" = (
@@ -314,8 +324,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/shuttle/escape)
 "aX" = (
-/obj/structure/table/glass,
-/obj/item/clothing/neck/stethoscope,
+/obj/machinery/sleeper,
 /turf/open/floor/plasteel/cmo,
 /area/shuttle/escape)
 "aY" = (
@@ -330,7 +339,11 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/storage/firstaid,
+/obj/item/storage/firstaid/regular,
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
 /turf/open/floor/plasteel/cmo,
 /area/shuttle/escape)
 "ba" = (
@@ -350,7 +363,10 @@
 	layer = 2.9
 	},
 /obj/structure/table,
-/obj/item/storage/bag/tray,
+/obj/item/reagent_containers/food/snacks/beans{
+	pixel_x = 3;
+	pixel_y = 4
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/shuttle/escape)
 "be" = (
@@ -360,6 +376,7 @@
 "bf" = (
 /obj/structure/window/reinforced,
 /obj/structure/table,
+/obj/item/storage/bag/tray,
 /obj/item/clothing/under/waiter,
 /turf/open/floor/plasteel/cafeteria,
 /area/shuttle/escape)
@@ -371,7 +388,7 @@
 "bh" = (
 /obj/structure/window/reinforced,
 /obj/structure/table/glass,
-/obj/item/defibrillator,
+/obj/item/defibrillator/loaded,
 /turf/open/floor/plasteel/cmo,
 /area/shuttle/escape)
 "bi" = (
@@ -380,7 +397,7 @@
 	dir = 4
 	},
 /obj/structure/table/glass,
-/obj/item/storage/firstaid,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/cmo,
 /area/shuttle/escape)
 "bj" = (
@@ -445,6 +462,7 @@
 /area/shuttle/escape)
 "bv" = (
 /obj/structure/window/plastitanium,
+/obj/structure/grille,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bw" = (

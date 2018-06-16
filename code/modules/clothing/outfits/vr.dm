@@ -5,11 +5,13 @@
 	ears = /obj/item/radio/headset
 	id = /obj/item/card/id
 
+/datum/outfit/vr/pre_equip(mob/living/carbon/human/H)
+	H.dna.species.before_equip_job(null, H)
+
 /datum/outfit/vr/post_equip(mob/living/carbon/human/H)
-	var/datum/job/captain/J = new/datum/job/captain
 	var/obj/item/card/id/id = H.wear_id
-	if (id)
-		id.access |= J.get_access()
+	if (istype(id))
+		id.access |= get_all_accesses()
 
 /datum/outfit/vr/syndicate
 	name = "Syndicate VR Operative - Basic"

@@ -1559,6 +1559,21 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "cup of sake"
 	glass_desc = "A traditional cup of sake."
 
+/datum/reagent/consumable/ethanol/peppermint_patty
+	name = "Peppermint Patty"
+	id = "peppermint_patty"
+	description = "This lightly alcoholic drink combines the benefits of menthol and cocoa."
+	color = "#45ca7a"
+	taste_description = "mint and chocolate"
+	boozepwr = 25
+	glass_icon_state = "peppermint_patty"
+	glass_name = "Peppermint Patty"
+	glass_desc = "A boozy minty hot cocoa that warms your belly on a cold night."
+
+/datum/reagent/consumable/ethanol/peppermint_patty/on_mob_life(mob/living/M)
+	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	..()
+
 /datum/reagent/consumable/ethanol/alexander
 	name = "Alexander"
 	id = "alexander"
@@ -1590,7 +1605,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		mighty_shield.block_chance -= 10
 		to_chat(L,"<span class='notice'>You notice [mighty_shield] looks worn again. Weird.</span>")
 	..()
-
 
 /datum/reagent/consumable/ethanol/sidecar
 	name = "Sidecar"
@@ -1648,7 +1662,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "mojito"
 	glass_name = "Mojito"
 	glass_desc = "A drink that looks as refreshing as it tastes."
-	
+
 /datum/reagent/consumable/ethanol/fernet
 	name = "Fernet"
 	id = "fernet"
@@ -1697,9 +1711,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "fanciulli"
 	glass_name = "glass of fanciulli"
 	glass_desc = "A glass of Fanciulli. It's just Manhattan with Fernet."
-	
+
 /datum/reagent/consumable/ethanol/fanciulli/on_mob_life(mob/living/M)
-	
+
 	M.nutrition = max(M.nutrition - 5, 0)
 	M.overeatduration = 0
 	return ..()

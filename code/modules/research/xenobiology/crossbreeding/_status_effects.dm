@@ -762,9 +762,11 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/gold/tick()
 	var/obj/item/slimecross/stabilized/gold/linked = linked_extract
-	if(!familiar)
+	if(QDELETED(familiar))
 		familiar = new linked.mob_type(get_turf(owner.loc))
+		familiar.name = linked.mob_name
 		familiar.del_on_death = TRUE
+		familiar.copy_known_languages_from(owner, FALSE)
 		if(linked.saved_mind)
 			linked.saved_mind.transfer_to(familiar)
 			familiar.ckey = linked.saved_mind.key

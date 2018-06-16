@@ -773,6 +773,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if (isliving(mob))
 		var/mob/living/M = mob
 		M.update_damage_hud()
+	if (prefs.auto_fit_viewport)
+		fit_viewport()
 
 /client/proc/generate_clickcatcher()
 	if(!void)

@@ -732,35 +732,3 @@
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
-
-/obj/item/clothing/under/swimsuit
-	name = "black swimsuit"
-	desc = "Perfect for the beach episode."
-	icon_state = "swim_black"
-	item_state = "bl_suit"
-	item_color = "swim_black"
-	can_adjust = FALSE
-
-/obj/item/clothing/under/swimsuit/blue
-	name = "blue swimsuit"
-	icon_state = "swim_blue"
-	item_state = "b_suit"
-	item_color = "swim_blue"
-
-/obj/item/clothing/under/swimsuit/green
-	name = "green swimsuit"
-	icon_state = "swim_green"
-	item_state = "g_suit"
-	item_color = "swim_green"
-
-/obj/item/clothing/under/swimsuit/purple
-	name = "purple swimsuit"
-	icon_state = "swim_purple"
-	item_state = "p_suit"
-	item_color = "swim_purple"
-
-/obj/item/clothing/under/swimsuit/red
-	name = "red swimsuit"
-	icon_state = "swim_red"
-	item_state = "r_suit"
-	item_color = "swim_red"
