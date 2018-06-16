@@ -52947,6 +52947,10 @@
 /obj/item/pen,
 /turf/open/floor/plasteel/dark,
 /area/science/explab)
+"tCP" = (
+/obj/docking_port/stationary/public_mining_dock,
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
 "tDn" = (
 /obj/item/wrench,
 /turf/open/floor/plating,
@@ -76929,7 +76933,7 @@ uoS
 rJZ
 uoS
 uoS
-uoS
+tCP
 xOC
 jAy
 rHA
