@@ -45,8 +45,9 @@
 
 /obj/machinery/computer/communications/process()
 	if(..())
-		if(state != STATE_STATUSDISPLAY && state != STATE_CALLSHUTTLE && state != STATE_PURCHASE && state != STATE_VIEWMESSAGE)
-			updateDialog()
+		var/skip_ai = aistate != STATE_STATUSDISPLAY && aistate != STATE_CALLSHUTTLE && aistate != STATE_PURCHASE && aistate != STATE_VIEWMESSAGE
+		var/skip_machine_users = state != STATE_STATUSDISPLAY && state != STATE_CALLSHUTTLE && state != STATE_PURCHASE && state != STATE_VIEWMESSAGE
+		updateDialog(!skip_machine_users,!skip_ai)
 
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..())
