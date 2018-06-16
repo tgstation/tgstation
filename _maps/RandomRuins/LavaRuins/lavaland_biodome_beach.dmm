@@ -538,7 +538,7 @@
 /turf/open/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
 "sO" = (
-/obj/machinery/jukebox/disco,
+/obj/machinery/jukebox/disco/indestructible,
 /turf/open/floor/light/colour_cycle,
 /area/ruin/powered/beach)
 "vl" = (
