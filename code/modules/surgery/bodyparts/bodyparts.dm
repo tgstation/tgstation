@@ -74,7 +74,7 @@
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if(C.has_trait(TRAIT_LIMBATTACHMENT))
-			if(((src.status == BODYPART_ORGANIC) && (!(ROBOTIC_LIMBS in H.dna.species.species_traits))) || ((src.status == BODYPART_ROBOTIC) && (ROBOTIC_LIMBS in H.dna.species.species_traits))) // Can't mix organic and robotic.
+			if((src.status == BODYPART_ORGANIC) && !(ROBOTIC_LIMBS in H.dna.species.species_traits)) // Robots can't integrate flesh sticks.
 				if(!H.get_bodypart(body_zone) && !animal_origin)
 					if(H == user)
 						H.visible_message("<span class='notice'>[H] is attempting to re-attach [src]...</span>")
@@ -181,7 +181,7 @@
 	stamina_dam = max(stamina_dam - stamina, 0)
 	if(owner && updating_health)
 		owner.updatehealth()
-	if(owner.dna && owner.dna.species && (REVIVESBYHEALING in owner.dna.species.species_traits))
+	if(owner.has_trait(TRAIT_REVIVESBYHEALING))
 		if(owner.health > 0 && !owner.hellbound)
 			owner.revive(0)
 			owner.cure_husk(0) // If it has REVIVESBYHEALING, it probably can't be cloned. No husk cure.

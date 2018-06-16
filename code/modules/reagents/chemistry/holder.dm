@@ -270,12 +270,10 @@
 			//Check if this mob's species is set and can process this type of reagent
 			var/can_process = FALSE
 			//If we somehow avoided getting a species or reagent_tag set, we'll assume we aren't meant to process ANY reagents (CODERS: SET YOUR SPECIES AND TAG!)
-			if(H.dna && H.dna.species.reagent_tag)
-				if((R.process_flags & SYNTHETIC) && (H.dna.species.reagent_tag & PROCESS_SYNTHETIC))		//SYNTHETIC-oriented reagents require PROCESS_SYNTHETIC
+			for(var/bio_type in R.applicable_biotypes)
+				if(bio_type in H.mob_biotypes)
 					can_process = TRUE
-				if((R.process_flags & ORGANIC) && (H.dna.species.reagent_tag & PROCESS_ORGANIC))		//ORGANIC-oriented reagents require PROCESS_ORGANIC
-					can_process = TRUE
-
+					break
 			//If handle_reagents returns 0, it's doing the reagent removal on its own
 			var/species_handled = !(H.dna.species.handle_reagents(H, R))
 			can_process = can_process && !species_handled
@@ -283,11 +281,6 @@
 			if(!can_process)
 				if(!species_handled)
 					R.holder.remove_reagent(R.id, R.metabolization_rate)
-				continue
-		//We'll assume that non-human mobs lack the ability to process synthetic-oriented reagents (adjust this if we need to change that assumption)
-		else
-			if(R.process_flags == SYNTHETIC)
-				R.holder.remove_reagent(R.id, R.metabolization_rate)
 				continue
 		//If you got this far, that means we can process whatever reagent this iteration is for. Handle things normally from here.
 		if(C && R)
@@ -520,18 +513,10 @@
 
 /datum/reagents/proc/reaction_check(mob/living/M, datum/reagent/R)
 	var/can_process = FALSE
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		//Check if this mob's species is set and can process this type of reagent
-		if(H.dna && H.dna.species.reagent_tag)
-			if((R.process_flags & SYNTHETIC) && (H.dna.species.reagent_tag & PROCESS_SYNTHETIC))		//SYNTHETIC-oriented reagents require PROCESS_SYNTHETIC
-				can_process = TRUE
-			if((R.process_flags & ORGANIC) && (H.dna.species.reagent_tag & PROCESS_ORGANIC))		//ORGANIC-oriented reagents require PROCESS_ORGANIC
-				can_process = TRUE
-	//We'll assume that non-human mobs lack the ability to process synthetic-oriented reagents (adjust this if we need to change that assumption)
-	else
-		if(R.process_flags != SYNTHETIC)
+	for(var/bio_type in R.applicable_biotypes)
+		if(bio_type in M.mob_biotypes)
 			can_process = TRUE
+			break
 	return can_process
 
 /datum/reagents/proc/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1)

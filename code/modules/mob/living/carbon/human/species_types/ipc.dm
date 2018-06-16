@@ -7,8 +7,8 @@
 	burnmod = 1.8 // Wiring doesn't hold up to fire well.
 	brutemod = 1.8 // Thin metal, cheap materials. Mind you brute hits have to overcome the inherent armor of BODYPART_ROBOTIC, but if it can, bigger damage.
 	siemens_coeff = 2 // Overload!
-	species_traits = list(MUTCOLORS, NOBLOOD, NOZOMBIE, NOTRANSSTING, NO_DNA_COPY, REVIVESBYHEALING, NOMOUTH, ROBOTIC_LIMBS)
-	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RADIMMUNE, TRAIT_VIRUSIMMUNE, TRAIT_EASYDISMEMBER, TRAIT_LIMBATTACHMENT, TRAIT_NOCLONE, TRAIT_NOSCAN)
+	species_traits = list(MUTCOLORS, NOBLOOD, NOZOMBIE, NOTRANSSTING, NO_DNA_COPY, NOMOUTH, ROBOTIC_LIMBS)
+	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RADIMMUNE, TRAIT_VIRUSIMMUNE, TRAIT_EASYDISMEMBER, TRAIT_LIMBATTACHMENT, TRAIT_NOCLONE, TRAIT_NOSCAN, TRAIT_REVIVESBYHEALING)
 	inherent_biotypes = list(MOB_ROBOTIC, MOB_HUMANOID)
 	mutant_organs = list(/obj/item/organ/cyberimp/arm/power_cord)
 	mutant_bodyparts = list("ipc_screen", "ipc_antenna", "ipc_chassis")
@@ -21,7 +21,6 @@
 	mutantstomach = /obj/item/organ/stomach/cell
 	mutantears = /obj/item/organ/ears/robot
 	mutant_brain = /obj/item/organ/brain/mmi_holder/posibrain
-	reagent_tag = PROCESS_SYNTHETIC
 	species_gibs = "robotic"
 	attack_sound = 'sound/items/trayhit1.ogg'
 	allow_numbers_in_name = TRUE

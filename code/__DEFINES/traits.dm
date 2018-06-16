@@ -47,6 +47,7 @@
 #define TRAIT_NOCRITDAMAGE		"no_crit"
 #define TRAIT_NOSLIPWATER		"noslip_water"
 #define TRAIT_NOSLIPALL			"noslip_all"
+#define TRAIT_REVIVESBYHEALING	"revivesbyhealing"
 #define TRAIT_NODEATH			"nodeath"
 #define TRAIT_NOHARDCRIT		"nohardcrit"
 #define TRAIT_NOSOFTCRIT		"nosoftcrit"
