@@ -284,6 +284,7 @@
 		previous = null
 		assigned_transit = null
 		shuttle_areas = null
+		remove_ripples()
 	. = ..()
 
 /obj/docking_port/mobile/Initialize(mapload)
@@ -432,7 +433,7 @@
 		underlying_area_type = current_dock.area_type
 
 	var/list/old_turfs = return_ordered_turfs(x, y, z, dir)
-	
+
 	var/area/underlying_area
 	for(var/i in GLOB.sortedAreas)
 		var/area/place = i
@@ -450,7 +451,7 @@
 		underlying_area.contents += oldT
 		oldT.change_area(old_area, underlying_area)
 		oldT.empty(FALSE)
-		
+
 		// Here we locate the bottomost shuttle boundary and remove all turfs above it
 		var/list/baseturf_cache = oldT.baseturfs
 		for(var/k in 1 to length(baseturf_cache))
@@ -463,7 +464,7 @@
 /obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1, animate_time)
 	var/list/turfs = ripple_area(S1)
 	for(var/t in turfs)
-		ripples += new /obj/effect/temp_visual/ripple(t, animate_time)
+		ripples += new /obj/effect/abstract/ripple(t, animate_time)
 
 /obj/docking_port/mobile/proc/remove_ripples()
 	for(var/R in ripples)
@@ -478,12 +479,8 @@
 
 	for(var/i in 1 to L0.len)
 		var/turf/T0 = L0[i]
-		if(!T0 || !istype(T0.loc, area_type))
-			continue
 		var/turf/T1 = L1[i]
-		if(!T1)
-			continue
-		if(T0.type != T0.baseturfs)
+		if(T0 && T1 && T0.type != T0.baseturfs && istype(T0.loc, area_type) && !istype(T0.loc, /area/shuttle/transit))
 			ripple_turfs += T1
 
 	return ripple_turfs
