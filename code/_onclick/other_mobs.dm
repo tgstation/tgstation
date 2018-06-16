@@ -89,7 +89,7 @@
 	for(var/datum/mutation/human/HM in dna.mutations)
 		HM.on_ranged_attack(src, A, mouseparams)
 
-	SendSignal(COMSIG_HUMAN_RANGED_ATTACK, A)
+	SEND_SIGNAL(src, COMSIG_HUMAN_RANGED_ATTACK, A)
 
 	if(isturf(A) && get_dist(src,A) <= 1)
 		src.Move_Pulled(A)
