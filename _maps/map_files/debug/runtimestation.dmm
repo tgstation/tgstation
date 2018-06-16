@@ -1811,6 +1811,7 @@
 	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
 	width = 3
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/space/basic,
 /area/space)
 "fj" = (
@@ -2693,6 +2694,10 @@
 /obj/machinery/rnd/production/protolathe/department,
 /turf/open/floor/plasteel,
 /area/science)
+"PI" = (
+/obj/structure/fans/tiny/invisible,
+/turf/open/space/basic,
+/area/space)
 "Qt" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -4614,7 +4619,7 @@ aa
 aa
 aa
 aa
-aa
+PI
 dj
 ed
 eh
@@ -4798,7 +4803,7 @@ aa
 aa
 aa
 aa
-aa
+PI
 dV
 dY
 ej
