@@ -319,9 +319,8 @@
 /obj/structure/chair/office/dark{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/syndicate{
-	environment_smash = 0;
-	name = "Syndicate Salvage Pilot"
+/mob/living/simple_animal/hostile/syndicate/ranged/pilot{
+	environment_smash = 0
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/syndicate3)
