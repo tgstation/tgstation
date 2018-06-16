@@ -24987,7 +24987,7 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "bnZ" = (
-/obj/machinery/rnd/production/protolathe/department/security,
+/obj/machinery/rnd/production/techfab/department/science,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
