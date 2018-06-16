@@ -462,6 +462,10 @@
 		scantemp = "<font class='average'>Subject already in database.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
+	if(mob_occupant.has_trait(TRAIT_NOSCAN))
+		scantemp = "<font class='bad'>Subject has no DNA, or has DNA that cannot be scanned.</font>"
+		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+		return
 
 	var/datum/data/record/R = new()
 	if(dna.species)

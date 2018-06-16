@@ -21,7 +21,6 @@
 	var/temp
 	var/list/part_sets = list(
 								"Cyborg",
-								"IPC Components",
 								"Ripley",
 								"Firefighter",
 								"Odysseus",
@@ -31,6 +30,7 @@
 								"Phazon",
 								"Exosuit Equipment",
 								"Cyborg Upgrade Modules",
+								"IPC Components",
 								"Misc"
 								)
 

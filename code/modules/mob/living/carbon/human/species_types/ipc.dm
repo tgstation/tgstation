@@ -7,8 +7,8 @@
 	burnmod = 1.8 // Wiring doesn't hold up to fire well.
 	brutemod = 1.8 // Thin metal, cheap materials. Mind you brute hits have to overcome the inherent armor of BODYPART_ROBOTIC, but if it can, bigger damage.
 	siemens_coeff = 2 // Overload!
-	species_traits = list(MUTCOLORS, NOBLOOD, NOZOMBIE, NOTRANSSTING, NO_DNA_COPY, REVIVESBYHEALING)
-	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RADIMMUNE, TRAIT_EASYDISMEMBER, TRAIT_LIMBATTACHMENT, TRAIT_NOCLONE, TRAIT_TOXIMMUNE)
+	species_traits = list(MUTCOLORS, NOBLOOD, NOZOMBIE, NOTRANSSTING, NO_DNA_COPY, REVIVESBYHEALING, NOMOUTH, ROBOTIC_LIMBS)
+	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RADIMMUNE, TRAIT_VIRUSIMMUNE, TRAIT_EASYDISMEMBER, TRAIT_LIMBATTACHMENT, TRAIT_NOCLONE, TRAIT_NOSCAN)
 	inherent_biotypes = list(MOB_ROBOTIC, MOB_HUMANOID)
 	mutant_organs = list(/obj/item/organ/cyberimp/arm/power_cord)
 	mutant_bodyparts = list("ipc_screen", "ipc_antenna", "ipc_chassis")
@@ -21,7 +21,10 @@
 	mutantstomach = /obj/item/organ/stomach/cell
 	mutantears = /obj/item/organ/ears/robot
 	mutant_brain = /obj/item/organ/brain/mmi_holder/posibrain
+	reagent_tag = PROCESS_SYNTHETIC
+	species_gibs = "robotic"
 	attack_sound = 'sound/items/trayhit1.ogg'
+	allow_numbers_in_name = TRUE
 	var/datum/action/innate/change_screen/change_screen
 	var/saved_screen //for saving the screen when they die
 
@@ -34,6 +37,11 @@
 	var/obj/item/organ/appendix/appendix = C.getorganslot(ORGAN_SLOT_APPENDIX) // Easiest way to remove it.
 	appendix.Remove(C)
 	QDEL_NULL(appendix)
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		if(!H.dna.features["ipc_chassis"])
+			H.dna.features["ipc_chassis"] = "[(H.client && H.client.prefs && LAZYLEN(H.client.prefs.features) && H.client.prefs.features["ipc_chassis"]) ? H.client.prefs.features["ipc_chassis"] : "Morpheus Cyberkinetics(Greyscale)"]"
+			handle_mutant_bodyparts(H)
 	if(ishuman(C) && !change_screen)
 		change_screen = new
 		change_screen.Grant(C)
@@ -60,6 +68,15 @@ datum/species/ipc/on_species_loss(mob/living/carbon/C)
 		H.nutrition = min(H.nutrition + 5, NUTRITION_LEVEL_FULL)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
+
+/datum/species/ipc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
+	if(damagetype == TOX)
+		return ..(damage * 0.5, damagetype, def_zone, blocked, H)
+	else if(damagetype == CLONE)
+		return ..(damage * 0, damagetype, def_zone, blocked, H)
+	else
+		return ..(damage, damagetype, def_zone, blocked, H)
+
 
 /datum/species/ipc/spec_death(gibbed, mob/living/carbon/C)
 	saved_screen = C.dna.features["ipc_screen"]

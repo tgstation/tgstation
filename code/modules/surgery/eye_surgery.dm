@@ -3,7 +3,7 @@
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/fix_eyes, /datum/surgery_step/close)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_PRECISE_EYES)
-	requires_bodypart_type = 0
+	bodypart_types = BODYPART_ORGANIC | BODYPART_ROBOTIC
 
 //fix eyes
 /datum/surgery_step/fix_eyes

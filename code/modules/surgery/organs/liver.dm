@@ -97,3 +97,8 @@
 
 /obj/item/organ/liver/cybernetic/upgraded/ipc/emp_act(severity)
 	to_chat(owner, "<span class='warning'>Alert: Your Substance Processor has been damaged. An internal chemical leak is affecting performance.</span>")
+	switch(severity)
+		if(1)
+			owner.toxloss += 15
+		if(2)
+			owner.toxloss += 5

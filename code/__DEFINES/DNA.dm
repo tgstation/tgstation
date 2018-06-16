@@ -91,6 +91,9 @@
 #define DRINKSBLOOD		15
 #define NOEYES			16
 #define REVIVESBYHEALING 17
+#define ROBOTIC_LIMBS	18
+#define NOMOUTH			19
+#define NOHUSK			20
 
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"

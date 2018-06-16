@@ -60,6 +60,7 @@
 	var/dimension_x = 32
 	var/dimension_y = 32
 	var/center = FALSE	//Should we center the sprite?
+	var/limbs_id // The limbs id supplied for full-body replacing features.
 
 //////////////////////
 // Hair Definitions //
@@ -1649,7 +1650,6 @@ datum/sprite_accessory/ipc_screens/textdrop
 /datum/sprite_accessory/ipc_chassis // Used for changing limb icons, doesn't need to hold the actual icon. That's handled in ipc.dm
 	icon = null
 	icon_state = "who cares fuck you" // In order to pull the chassis correctly, we need AN icon_state(see line 36-39). It doesn't have to be useful, because it isn't used.
-	var/limbs_id
 	color_src = 0
 
 /datum/sprite_accessory/ipc_chassis/mcgreyscale

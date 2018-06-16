@@ -55,7 +55,8 @@
 	var/organ_spilled = 0
 	var/turf/T = get_turf(C)
 	C.add_splatter_floor(T)
-	playsound(get_turf(C), 'sound/misc/splort.ogg', 80, 1)
+	if(status != BODYPART_ROBOTIC)
+		playsound(get_turf(C), 'sound/misc/splort.ogg', 80, 1)
 	for(var/X in C.internal_organs)
 		var/obj/item/organ/O = X
 		var/org_zone = check_zone(O.zone)
@@ -363,6 +364,15 @@
 			L.burn_dam = 0
 			L.brutestate = 0
 			L.burnstate = 0
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(H.dna && H.dna.species && (ROBOTIC_LIMBS in H.dna.species.species_traits))
+				L.change_bodypart_status(BODYPART_ROBOTIC)
+				L.render_like_organic = TRUE
+			if(limb_zone == BODY_ZONE_HEAD && H.dna && H.dna.species && (NOMOUTH in H.dna.species.species_traits))
+				var/obj/item/bodypart/head/head = L
+				if(head)
+					head.mouth = FALSE
 
 		L.attach_limb(src, 1)
 		return 1

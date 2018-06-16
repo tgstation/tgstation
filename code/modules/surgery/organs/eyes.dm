@@ -85,7 +85,7 @@
 /obj/item/organ/eyes/robotic
 	name = "robotic eyes"
 	icon_state = "cybernetic_eyeballs"
-	desc = "Your vision is augmented."
+	desc = "A very basic set of optical sensors with no extra vision modes or functions."
 	status = ORGAN_ROBOTIC
 
 /obj/item/organ/eyes/robotic/emp_act(severity)
