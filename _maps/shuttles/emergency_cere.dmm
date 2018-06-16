@@ -330,7 +330,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bd" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/brig,
@@ -339,7 +339,7 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bf" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
 	dir = 8
 	},
 /obj/machinery/flasher{
@@ -381,7 +381,7 @@
 /turf/open/floor/mech_bay_recharge_floor,
 /area/shuttle/escape)
 "bk" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/brig,
@@ -412,7 +412,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bp" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
 	dir = 4
 	},
 /obj/machinery/flasher{
@@ -479,7 +479,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bw" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/brig{
@@ -489,7 +489,7 @@
 	},
 /area/shuttle/escape)
 "bx" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/brig{
@@ -509,7 +509,7 @@
 	},
 /area/shuttle/escape)
 "bz" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/brig{
@@ -658,7 +658,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bW" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -667,7 +667,7 @@
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "bX" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
 	dir = 4
 	},
 /obj/structure/window/reinforced{

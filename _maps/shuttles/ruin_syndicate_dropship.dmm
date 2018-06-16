@@ -104,7 +104,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/caravan/syndicate3)
 "ka" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /obj/machinery/light/small{
@@ -169,7 +169,7 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate3)
 "rV" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -247,7 +247,7 @@
 /turf/open/floor/plasteel/darkred/side,
 /area/shuttle/caravan/syndicate3)
 "Cm" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /obj/machinery/firealarm{
