@@ -100,13 +100,13 @@
 
 	if (atmos_overlay_types)
 		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
-			vars["vis_contents"] -= overlay
+			vis_contents -= overlay
 
 	if (new_overlay_types.len)
 		if (atmos_overlay_types)
-			vars["vis_contents"] += new_overlay_types - atmos_overlay_types //don't add overlays that already exist
+			vis_contents += new_overlay_types - atmos_overlay_types //don't add overlays that already exist
 		else
-			vars["vis_contents"] += new_overlay_types
+			vis_contents += new_overlay_types
 
 	UNSETEMPTY(new_overlay_types)
 	src.atmos_overlay_types = new_overlay_types

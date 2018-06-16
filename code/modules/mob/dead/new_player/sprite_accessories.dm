@@ -777,6 +777,32 @@
 	icon_state = "female_commie"
 	gender = FEMALE
 
+/datum/sprite_accessory/underwear/swimsuit
+	name = "Ladies Black Swimsuit"
+	icon_state = "swim_black"
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/swimsuit_blue
+	name = "Ladies Blue Swimsuit"
+	icon_state = "swim_blue"
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/swimsuit_green
+	name = "Ladies Green Swimsuit"
+	icon_state = "swim_green"
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/swimsuit_purple
+	name = "Ladies Purple Swimsuit"
+	icon_state = "swim_purple"
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/swimsuit_red
+	name = "Ladies Red Swimsuit"
+	icon_state = "swim_red"
+	gender = FEMALE
+
+
 ////////////////////////////
 // Undershirt Definitions //
 ////////////////////////////

@@ -92,7 +92,7 @@
 				to_chat(user, "<span class='warning'>[src] is at full capacity.</span>")
 				break
 			else
-				if(T.SendSignal(COMSIG_TRY_STORAGE_TAKE, S, src))
+				if(SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src))
 					if(stored_food[sanitize(S.name)])
 						stored_food[sanitize(S.name)]++
 					else
