@@ -86,15 +86,14 @@
 		procs = list()
 		signal_procs = procs
 
+	if(!istype(proc_or_callback, /datum/callback)) //if it wasnt a callback before, it is now
+		proc_or_callback = CALLBACK(src, proc_or_callback)
+
 	var/list/sig_types = islist(sig_type_or_types) ? sig_type_or_types : list(sig_type_or_types)
 	for(var/sig_type in sig_types)
-		if(!override)
-			. = procs[sig_type]
-			if(.)
-				stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
+		if(!override && procs[sig_type])
+			stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
 
-		if(!istype(proc_or_callback, /datum/callback)) //if it wasnt a callback before, it is now
-			proc_or_callback = CALLBACK(src, proc_or_callback)
 		procs[sig_type] = proc_or_callback
 
 	enabled = TRUE
