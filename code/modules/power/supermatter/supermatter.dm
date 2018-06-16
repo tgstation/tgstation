@@ -653,7 +653,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	name = "anchored supermatter shard"
 	is_main_engine = TRUE
 	anchored = TRUE
-	moveable = FALE
+	moveable = FALSE
 
 // When you wanna make a supermatter shard for the dramatic effect, but
 // don't want it exploding suddenly
