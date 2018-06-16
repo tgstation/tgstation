@@ -43,6 +43,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	var/moles_visible = null
 	var/dangerous = FALSE //currently used by canisters
 	var/fusion_power = 0 //How much the gas accelerates a fusion reaction
+
 /datum/gas/oxygen
 	id = "o2"
 	specific_heat = 20
@@ -131,6 +132,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 /obj/effect/overlay/gas
 	icon = 'icons/effects/tile_effects.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE  // should only appear in vis_contents, but to be safe
 	layer = FLY_LAYER
 	appearance_flags = TILE_BOUND
 
