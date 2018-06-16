@@ -99,6 +99,12 @@
 
 	enabled = TRUE
 
+/datum/component/proc/HasSignal(sig_type)
+	return signal_procs[sig_type] != null
+
+/datum/component/proc/UnregisterSignal(sig_type_or_types)
+	signal_procs -= sig_type_or_types
+
 /datum/component/proc/InheritComponent(datum/component/C, i_am_original)
 	return
 
