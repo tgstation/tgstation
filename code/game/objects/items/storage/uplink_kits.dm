@@ -273,6 +273,7 @@
 	new /obj/item/clothing/suit/chameleon(src)
 	new /obj/item/clothing/gloves/chameleon(src)
 	new /obj/item/clothing/shoes/chameleon(src)
+	new /obj/item/storage/belt/chameleon(src)
 	new /obj/item/clothing/glasses/chameleon(src)
 	new /obj/item/clothing/head/chameleon(src)
 	new /obj/item/clothing/mask/chameleon(src)
