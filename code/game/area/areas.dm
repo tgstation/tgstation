@@ -18,13 +18,10 @@
 	var/clockwork_warp_allowed = TRUE // Can servants warp into this area from Reebe?
 	var/clockwork_warp_fail = "The structure there is too dense for warping to pierce. (This is normal in high-security areas.)"
 
-	var/eject = null
-
 	var/fire = null
 	var/atmos = TRUE
 	var/atmosalm = FALSE
 	var/poweralm = TRUE
-	var/party = null
 	var/lightswitch = TRUE
 
 	var/requires_power = TRUE
@@ -256,9 +253,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /area/proc/firereset(obj/source)
 	if (fire)
-		fire = 0
-		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		updateicon()
+		unset_fire_alarm_effects()
 		ModifyFiredoors(TRUE)
 		for(var/item in firealarms)
 			var/obj/machinery/firealarm/F = item
@@ -290,7 +285,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		DOOR.lock()
 
 /area/proc/burglaralert(obj/trigger)
-	if(always_unpowered == 1) //no burglar alarms in space/asteroid
+	if(always_unpowered) //no burglar alarms in space/asteroid
 		return
 
 	//Trigger alarm effect
@@ -306,61 +301,32 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			addtimer(CALLBACK(SILICON, /mob/living/silicon.proc/cancelAlarm,"Burglar",src,trigger), 600)
 
 /area/proc/set_fire_alarm_effect()
-	fire = 1
-	updateicon()
+	fire = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	for(var/alarm in firealarms)
+		var/obj/machinery/firealarm/F = alarm
+		F.update_fire_light(fire)
+	for(var/obj/machinery/light/L in src)
+		L.update()
 
-/area/proc/readyalert()
-	if(name == "Space")
-		return
-	if(!eject)
-		eject = 1
-		updateicon()
-
-/area/proc/readyreset()
-	if(eject)
-		eject = 0
-		updateicon()
-
-/area/proc/partyalert()
-	if(src.name == "Space") //no parties in space!!!
-		return
-	if (!( src.party ))
-		src.party = 1
-		src.updateicon()
-		src.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-/area/proc/partyreset()
-	if (src.party)
-		src.party = 0
-		src.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		src.updateicon()
-		for(var/obj/machinery/door/firedoor/D in src)
-			if(!D.welded)
-				if(D.operating)
-					D.nextstate = OPEN
-				else if(D.density)
-					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/open)
+/area/proc/unset_fire_alarm_effects()
+	fire = FALSE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	for(var/alarm in firealarms)
+		var/obj/machinery/firealarm/F = alarm
+		F.update_fire_light(fire)
+	for(var/obj/machinery/light/L in src)
+		L.update()
 
 /area/proc/updateicon()
-	if ((fire || eject || party) && (!requires_power||power_environ))//If it doesn't require power, can still activate this proc.
-		if(fire && !eject && !party)
-			icon_state = "blue"
-		else if(!fire && eject && !party)
-			icon_state = "red"
-		else if(party && !fire && !eject)
-			icon_state = "party"
-		else
-			icon_state = "blue-red"
-	else
-		var/weather_icon
-		for(var/V in SSweather.processing)
-			var/datum/weather/W = V
-			if(W.stage != END_STAGE && (src in W.impacted_areas))
-				W.update_areas()
-				weather_icon = TRUE
-		if(!weather_icon)
-			icon_state = null
+	var/weather_icon
+	for(var/V in SSweather.processing)
+		var/datum/weather/W = V
+		if(W.stage != END_STAGE && (src in W.impacted_areas))
+			W.update_areas()
+			weather_icon = TRUE
+	if(!weather_icon)
+		icon_state = null
 
 /area/space/updateicon()
 	icon_state = null
@@ -443,8 +409,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /area/Entered(atom/movable/M)
 	set waitfor = FALSE
-	SendSignal(COMSIG_AREA_ENTERED, M)
-	M.SendSignal(COMSIG_ENTER_AREA, src) //The atom that enters the area
+	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, M)
+	SEND_SIGNAL(M, COMSIG_ENTER_AREA, src) //The atom that enters the area
 	if(!isliving(M))
 		return
 
@@ -469,8 +435,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
 
 /area/Exited(atom/movable/M)
-	SendSignal(COMSIG_AREA_EXITED, M)
-	M.SendSignal(COMSIG_EXIT_AREA, src) //The atom that exits the area
+	SEND_SIGNAL(src, COMSIG_AREA_EXITED, M)
+	SEND_SIGNAL(M, COMSIG_EXIT_AREA, src) //The atom that exits the area
 
 /client/proc/ResetAmbiencePlayed()
 	played = FALSE

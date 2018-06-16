@@ -32,7 +32,7 @@
 	return ..()
 
 /datum/component/ntnet_interface/proc/__network_recieve(datum/netdata/data)			//Do not directly proccall!
-	parent.SendSignal(COMSIG_COMPONENT_NTNET_RECIEVE, data)
+	SEND_SIGNAL(parent, COMSIG_COMPONENT_NTNET_RECIEVE, data)
 	if(differentiate_broadcast && data.broadcast)
 		parent.ntnet_recieve_broadcast(data)
 	else
