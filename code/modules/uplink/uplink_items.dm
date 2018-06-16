@@ -1333,7 +1333,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	
 /datum/uplink_item/role_restricted/combatarm
 	name = "Laser arm implant"
-	desc = "A variant of the arm cannon implant that fires lethal laser beams. The cannon emerges from the subject's arm and remains inside when not in use"
+	desc = "A variant of the arm cannon implant that fires lethal laser beams. The cannon emerges from the subject's arm and remains inside when not in use."
 	cost = 10
 	item = /obj/item/autosurgeon/robotics
 	surplus = 0
