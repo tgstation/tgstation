@@ -115,7 +115,7 @@
 	if(!T)
 		return FALSE
 
-	if(is_transit_level(T.z))
+	if(is_reserved_level(T.z))
 		for(var/A in SSshuttle.mobile)
 			var/obj/docking_port/mobile/M = A
 			if(M.launch_status == ENDGAME_TRANSIT)
