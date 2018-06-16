@@ -22,10 +22,6 @@
 	if(prob(floor_variance))
 		icon_state = "[environment_type][rand(0,12)]"
 
-	if(LAZYLEN(archdrops))
-		AddComponent(/datum/component/archaeology, archdrops)
-
-
 /turf/open/floor/plating/asteroid/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
 
