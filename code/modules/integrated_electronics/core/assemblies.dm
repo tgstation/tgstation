@@ -193,6 +193,9 @@
 			else
 				to_chat(usr, "<span class='warning'>The circuit is empty!</span>")
 		return
+		
+	if(!check_interactivity(usr))
+		return
 
 	if(href_list["rename"])
 		rename(usr)
