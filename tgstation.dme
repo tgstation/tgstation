@@ -341,7 +341,6 @@
 #include "code\datums\components\spooky.dm"
 #include "code\datums\components\squeek.dm"
 #include "code\datums\components\stationloving.dm"
-#include "code\datums\components\status_effect_listener.dm"
 #include "code\datums\components\swarming.dm"
 #include "code\datums\components\thermite.dm"
 #include "code\datums\components\wearertargeting.dm"
