@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "Runtimestation: Added shuttle docking ports, a comms console, cargo bay and syndicate/centcom IDs."
