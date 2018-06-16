@@ -188,9 +188,7 @@
 /turf/open/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
 "aL" = (
-/obj/effect/mob_spawn/human/bartender/alive{
-	name = "bartender sleeper"
-	},
+/obj/effect/mob_spawn/human/bartender/alive,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "aM" = (
@@ -232,11 +230,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "aV" = (
-/obj/effect/mob_spawn/human/beach/alive{
-	flavour_text = "<span class='big bold'>You're, like, totally a dudebro, bruh.</span><b> Ch'yea. You came here, like, on spring break, hopin' to pick up some bangin' hot chicks, y'knaw?</b>";
-	l_pocket = /obj/item/reagent_containers/food/snacks/pizzaslice/dank;
-	uniform = /obj/item/clothing/under/pants/youngfolksjeans
-	},
+/obj/effect/mob_spawn/human/beach/alive,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "aW" = (
@@ -341,14 +335,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/effect/mob_spawn/human/beach/alive{
-	flavour_text = "<span class='big bold'>You're a spunky lifeguard!</span><b> It's up to you to make sure nobody drowns or gets eaten by sharks and stuff.</b>";
-	id = /obj/item/card/id;
-	id_access = "Medical Doctor";
-	id_job = "Lifeguard";
-	mob_gender = "female";
-	name = "lifeguard sleeper"
-	},
+/obj/effect/mob_spawn/human/beach/alive/lifeguard,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "bJ" = (
