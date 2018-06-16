@@ -1,0 +1,6 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - bugfix: "Chem synths overlays aren't all kinds of fucked anymore."
+  - refactor: "Unfucked all of the remaining chem synth code."
+  - refactor: "Reagents no longer have an unused var that's always set to true. Who did this?"
