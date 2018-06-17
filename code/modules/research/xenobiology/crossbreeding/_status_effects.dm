@@ -65,9 +65,10 @@
 	var/interrupted = FALSE
 	var/mob/target
 	var/icon/bluespace
+	var/datum/weakref/redirect_component
 
 /datum/status_effect/slimerecall/on_apply()
-	RegisterEffectSignal(COMSIG_LIVING_RESIST, .proc/resistField)
+	redirect_component = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST), CALLBACK(src, .proc/resistField)))
 	to_chat(owner, "<span class='danger'>You feel a sudden tug from an unknown force, and feel a pull to bluespace!</span>")
 	to_chat(owner, "<span class='notice'>Resist if you wish avoid the force!</span>")
 	bluespace = icon('icons/effects/effects.dmi',"chronofield")
@@ -79,6 +80,8 @@
 	owner.remove_status_effect(src)
 
 /datum/status_effect/slimerecall/on_remove()
+	qdel(redirect_component.resolve())
+	redirect_component = null
 	owner.cut_overlay(bluespace)
 	if(interrupted || !ismob(target))
 		to_chat(owner, "<span class='warning'>The bluespace tug fades away, and you feel that the force has passed you by.</span>")
