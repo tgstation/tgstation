@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "It is no longer possible to pull the mirages images at space transitions, and some other abstract effects."

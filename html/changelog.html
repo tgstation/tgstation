@@ -55,6 +55,47 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">17 June 2018</h2>
+			<h3 class="author">Dax Dupont updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="refactor">Syndicate and Centcom messages have been squashed together.</li>
+				<li class="admin">You can now send both Syndicate and Centcom headset messages. Be mindful that the button was changed to HM in the playerpanel</li>
+				<li class="bugfix">Fixed missing grilles under brig windows of the pubby shuttle.</li>
+				<li class="rscadd">For the pubby shuttle, added some food in the fridge, mostly pie slices. Also added a sleeper to the minimedbay.</li>
+				<li class="tweak">Reworded pubby shuttle description to be more inline with the new train shuttle.</li>
+				<li class="bugfix">Chem synths overlays aren't all kinds of fucked anymore.</li>
+				<li class="refactor">Unfucked all of the remaining chem synth code.</li>
+				<li class="refactor">Reagents no longer have an unused var that's always set to true. Who did this?</li>
+				<li class="bugfix">You can no longer remove circuits with your mind.</li>
+			</ul>
+			<h3 class="author">Denton updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Runtimestation: Added shuttle docking ports, a comms console, cargo bay and syndicate/centcom IDs.</li>
+				<li class="balance">Pirates and Syndicate salvage workers have been beefed up around the caravan ambush ruin.</li>
+			</ul>
+			<h3 class="author">Pubby updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">PubbyStation: Fixed disposals issue in security hallway</li>
+			</ul>
+			<h3 class="author">SpaceManiac updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Moving large amounts of items with bluespace launchpads no longer creates a laggy amount of sparks.</li>
+				<li class="bugfix">Unbreakable ladders are now left behind when shuttles move.</li>
+				<li class="bugfix">It is no longer possible to pull the mirages images at space transitions, and some other abstract effects.</li>
+			</ul>
+			<h3 class="author">cyclowns updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Fusion has been re-enabled! It works similarly to before, but with some slight modification.</li>
+				<li class="tweak">Fusion now requires huge amounts of plasma and tritium, as well as a very high thermal energy and temperature to start. There are several tiers of fusion that cause different benefits and effects.</li>
+				<li class="tweak">The fusion power of most gases has been tweaked to allow for more interesting interactions.</li>
+				<li class="tweak">BZ now takes N2O and plasma to create, rather than tritium and plasma.</li>
+				<li class="bugfix">Fusion no longer delivers server-crashingly large amounts of radiation and stationwide EMPs.</li>
+			</ul>
+			<h3 class="author">theo2003 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Players who edited a circuit assembly can scan it as a ghost.</li>
+			</ul>
+
 			<h2 class="date">15 June 2018</h2>
 			<h3 class="author">CitrusGender updated:</h3>
 			<ul class="changes bgimages16">
@@ -1448,36 +1489,6 @@
 			<ul class="changes bgimages16">
 				<li class="bugfix">The aux base properly loads in rather than leaving an empty room.</li>
 				<li class="bugfix">Admin loaded map templates can be designated as shuttles during the upload process. Make sure to load them on space first.</li>
-			</ul>
-
-			<h2 class="date">15 April 2018</h2>
-			<h3 class="author">JohnGinnane updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Reorganised circuit component controls within an assembly, so they appear before the name of the component</li>
-			</ul>
-			<h3 class="author">Naksu updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Bluespace slime cookies can no longer be used to travel to CentCom</li>
-				<li class="bugfix">Borgs can no longer accidentally end up inside a cryo cell</li>
-				<li class="bugfix">Shoving someone inside a cryo cell now has a small delay unless they are knocked down, stunned, sleeping or unconscious</li>
-				<li class="admin">Station borgs can no longer control the CentCom ferry.</li>
-				<li class="bugfix">Ghosts can no longer interact with the round via teleporter effects of any kind</li>
-				<li class="tweak">His Grace can no longer be deep-fried</li>
-				<li class="bugfix">Passive gates can be interacted with in unpowered areas</li>
-			</ul>
-
-			<h2 class="date">14 April 2018</h2>
-			<h3 class="author">JohnGinnane updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">PDA messages you send are now displayed in the chat for your confirmation</li>
-			</ul>
-			<h3 class="author">Naksu updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">SCP-294 can no longer be deconstructed.</li>
-			</ul>
-			<h3 class="author">kevinz000 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">After a severe security breach occurred due to lazily configured Nanotrasen Network DHCP servers where attackers were able to hijack every airlock connected to the Nanotrasen Intranet, the Central Command engineering team reports that they have properly configured network address servers to give out (relatively) secure network IDs again. [NTNet addresses reverted to 16-hex format. they will now be randomized across a ~billion trillion possibilities instead of being 1-1000 every round for doors and stuff.]</li>
 			</ul>
 		</div>
 

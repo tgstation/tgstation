@@ -1,8 +1,0 @@
-author: "cyclowns"
-delete-after: True
-changes: 
-  - rscadd: "Fusion has been re-enabled! It works similarly to before, but with some slight modification."
-  - tweak: "Fusion now requires huge amounts of plasma and tritium, as well as a very high thermal energy and temperature to start. There are several tiers of fusion that cause different benefits and effects."
-  - tweak: "The fusion power of most gases has been tweaked to allow for more interesting interactions."
-  - tweak: "BZ now takes N2O and plasma to create, rather than tritium and plasma."
-  - bugfix: "Fusion no longer delivers server-crashingly large amounts of radiation and stationwide EMPs."
