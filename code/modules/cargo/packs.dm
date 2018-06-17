@@ -1359,7 +1359,7 @@
 
 /datum/supply_pack/service/vending/cigarette
 	name = "Cigarette Supply Crate"
-	desc = "Don't believe the reports - smoke today! Contains cigarette vending machine refills."
+	desc = "Don't believe the reports - smoke today! Contains a cigarette vending machine refill."
 	cost = 1500
 	contains = list(/obj/item/vending_refill/cigarette)
 	crate_name = "cigarette supply crate"
@@ -1367,7 +1367,7 @@
 
 /datum/supply_pack/service/vending/games
 	name = "Games Supply Crate"
-	desc = "Get your game on with these three game vending machine refills."
+	desc = "Get your game on with this game vending machine refill."
 	cost = 1000
 	contains = list(/obj/item/vending_refill/games)
 	crate_name = "games supply crate"
