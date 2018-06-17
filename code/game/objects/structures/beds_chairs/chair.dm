@@ -148,13 +148,16 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
 	buildstackamount = 2
-	var/mutable_appearance/armrest
 	item_chair = null
+	var/mutable_appearance/armrest
 
 /obj/structure/chair/comfy/Initialize()
-	armrest = mutable_appearance('icons/obj/chairs.dmi', "comfychair_armrest")
+	armrest = GetArmrest()
 	armrest.layer = ABOVE_MOB_LAYER
 	return ..()
+
+/obj/structure/chair/comfy/proc/GetArmrest()
+	return mutable_appearance('icons/obj/chairs.dmi', "comfychair_armrest")
 
 /obj/structure/chair/comfy/Destroy()
 	QDEL_NULL(armrest)
@@ -188,6 +191,15 @@
 
 /obj/structure/chair/comfy/lime
 	color = rgb(255,251,0)
+
+/obj/structure/chair/comfy/shuttle
+	name = "shuttle seat"
+	desc = "A comfortable, secure seat. It has a more sturdy looking buckling system, for smoother flights."
+	icon_state = "shuttle_chair"
+	item_chair = null
+
+/obj/structure/chair/comfy/shuttle/GetArmrest()
+	return mutable_appearance('icons/obj/chairs.dmi', "shuttle_chair_armrest")
 
 /obj/structure/chair/office
 	anchored = FALSE
@@ -407,16 +419,3 @@
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
-
-/obj/structure/chair/shuttle
-	name = "shuttle seat"
-	desc = "A comfortable, secure seat. It has a more sturdy looking buckling system, for smoother flights."
-	icon_state = "shuttle_chair"
-	buildstackamount = 2
-	var/mutable_appearance/armrest
-	item_chair = null
-
-/obj/structure/chair/shuttle/Initialize()
-	armrest = mutable_appearance('icons/obj/chairs.dmi', "shuttle_chair_armrest")
-	armrest.layer = ABOVE_MOB_LAYER
-	return ..()
