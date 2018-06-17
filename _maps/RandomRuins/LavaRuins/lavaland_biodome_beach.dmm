@@ -29,7 +29,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "ah" = (
-/obj/machinery/power/smes,
+/obj/effect/mob_spawn/human/bartender/alive,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "ai" = (
@@ -187,16 +187,12 @@
 "aK" = (
 /turf/open/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
-"aL" = (
-/obj/effect/mob_spawn/human/bartender/alive,
-/turf/open/floor/wood,
-/area/ruin/powered/beach)
 "aM" = (
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "aN" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/vending/cigarette/beach,
 /turf/open/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
 "aO" = (
@@ -498,6 +494,13 @@
 	},
 /turf/open/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
+"pg" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/shower{
+	dir = 4
+	},
+/turf/open/floor/pod/light,
+/area/ruin/powered/beach)
 "pI" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Lava Beach Club"
@@ -517,6 +520,12 @@
 	dir = 4
 	},
 /turf/open/floor/pod/dark,
+/area/ruin/powered/beach)
+"qT" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/turf/open/floor/pod/light,
 /area/ruin/powered/beach)
 "sy" = (
 /obj/effect/turf_decal/caution{
@@ -544,6 +553,13 @@
 /obj/effect/turf_decal/sand,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
+"Bl" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plating/beach/sand,
+/area/ruin/powered/beach)
 "Ec" = (
 /obj/machinery/door/airlock/sandstone{
 	name = "Beach Access"
@@ -567,6 +583,13 @@
 /obj/item/clothing/shoes/sandal,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/pod/dark,
+/area/ruin/powered/beach)
+"QS" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "TP" = (
 /obj/machinery/light{
@@ -636,7 +659,7 @@ bW
 vl
 iw
 wY
-Gc
+pg
 wY
 Xp
 cR
@@ -731,9 +754,9 @@ ar
 cg
 ar
 ar
+Bl
 aA
-aA
-aA
+Bl
 ar
 ar
 cg
@@ -1011,7 +1034,7 @@ ai
 at
 ax
 hY
-aL
+aC
 aP
 aW
 aK
@@ -1403,9 +1426,9 @@ ar
 ch
 ar
 ar
+QS
 aA
-aA
-aA
+QS
 ar
 ar
 cs
@@ -1500,7 +1523,7 @@ bW
 HC
 qa
 wY
-wY
+qT
 Gc
 pU
 cR

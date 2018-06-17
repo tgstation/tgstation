@@ -253,6 +253,18 @@
 	icon_state = "slime"
 	spawn_type = /obj/item/clothing/mask/cigarette/xeno
 
+/obj/item/storage/fancy/cigarettes/cigpack_cannabis
+	name = "\improper Freak Brothers' Special packet"
+	desc = "A label on the packaging reads, \"Endorsed by Phineas, Freddy and Franklin.\""
+	icon_state = "midori"
+	spawn_type = /obj/item/clothing/mask/cigarette/rollie/cannabis
+
+/obj/item/storage/fancy/cigarettes/cigpack_mindbreaker
+	name = "\improper Leary's Delight packet"
+	desc = "Banned in over 36 galaxies."
+	icon_state = "shadyjim"
+	spawn_type = /obj/item/clothing/mask/cigarette/rollie/mindbreaker
+
 /obj/item/storage/fancy/rollingpapers
 	name = "rolling paper pack"
 	desc = "A pack of Nanotrasen brand rolling papers."
