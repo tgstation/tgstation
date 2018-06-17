@@ -174,7 +174,7 @@
 	dog_fashion = null
 
 
-obj/item/clothing/mask/gas/tiki_mask/ui_action_click(mob/user)
+/obj/item/clothing/mask/gas/tiki_mask/ui_action_click(mob/user)
 
 	var/mob/M = usr
 	var/list/options = list()
