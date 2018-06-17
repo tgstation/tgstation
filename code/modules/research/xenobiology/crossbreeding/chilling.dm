@@ -11,7 +11,7 @@ Chilling extracts:
 	icon_state = "chilling"
 
 /obj/item/slimecross/chilling/Initialize()
-	..()
+	. = ..()
 	create_reagents(10)
 
 /obj/item/slimecross/chilling/attack_self(mob/user)
@@ -42,7 +42,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/orange/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] shatters, and lets out a jet of heat!</span>")
-	for(var/turf/T in range(get_turf(user),2))
+	for(var/turf/T in orange(get_turf(user),2))
 		if(get_dist(get_turf(user), T) > 1)
 			new /obj/effect/hotspot(T)
 	..()
@@ -73,7 +73,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/metal/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] melts like quicksilver, and surrounds [user] in a wall!</span>")
-	for(var/turf/T in range(get_turf(user),1))
+	for(var/turf/T in orange(get_turf(user),1))
 		if(get_dist(get_turf(user), T) > 0)
 			new /obj/effect/forcefield/slimewall(T)
 	..()
