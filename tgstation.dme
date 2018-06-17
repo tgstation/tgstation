@@ -2406,6 +2406,7 @@
 #include "code\modules\research\xenobiology\xenobio_camera.dm"
 #include "code\modules\research\xenobiology\xenobiology.dm"
 #include "code\modules\research\xenobiology\crossbreeding\_corecross.dm"
+#include "code\modules\research\xenobiology\crossbreeding\_products.dm"
 #include "code\modules\research\xenobiology\crossbreeding\_status_effects.dm"
 #include "code\modules\research\xenobiology\crossbreeding\burning.dm"
 #include "code\modules\research\xenobiology\crossbreeding\charged.dm"

@@ -129,7 +129,7 @@ Chilling extracts:
 	user.visible_message("<span class='notice'>[src] crumbles into icy powder, leaving behind several emergency food supplies!</span>")
 	var/amount = rand(5, 10)
 	for(var/i in 1 to amount)
-		new /obj/item/reagent_containers/food/snacks/rationpack(get_turf(user.loc))
+		new /obj/item/reagent_containers/food/snacks/rationpack(get_turf(user))
 	..()
 
 /obj/item/slimecross/chilling/bluespace
@@ -137,15 +137,15 @@ Chilling extracts:
 	var/list/allies = list()
 	var/active = FALSE
 
-/obj/item/slimecross/chilling/bluespace/afterattack(atom/O, mob/user, proximity)
-	if(!proximity || !isliving(O) || active)
+/obj/item/slimecross/chilling/bluespace/afterattack(atom/target, mob/user, proximity)
+	if(!proximity || !isliving(target) || active)
 		return
-	if(O in allies)
-		allies -= O
-		to_chat(user, "<span class='notice'>You unlink [src] with [O].</span>")
+	if(target in allies)
+		allies -= target
+		to_chat(user, "<span class='notice'>You unlink [src] with [target].</span>")
 	else
-		allies |= O
-		to_chat(user, "<span class='notice'>You link [src] with [O].</span>")
+		allies |= target
+		to_chat(user, "<span class='notice'>You link [src] with [target].</span>")
 	return
 
 /obj/item/slimecross/chilling/bluespace/do_effect(mob/user)
@@ -175,15 +175,15 @@ Chilling extracts:
 	colour = "sepia"
 	var/list/allies = list()
 
-/obj/item/slimecross/chilling/sepia/afterattack(atom/O, mob/user, proximity)
-	if(!proximity || !isliving(O))
+/obj/item/slimecross/chilling/sepia/afterattack(atom/target, mob/user, proximity)
+	if(!proximity || !isliving(target))
 		return
-	if(O in allies)
-		allies -= O
-		to_chat(user, "<span class='notice'>You unlink [src] with [O].</span>")
+	if(target in allies)
+		allies -= target
+		to_chat(user, "<span class='notice'>You unlink [src] with [target].</span>")
 	else
-		allies |= O
-		to_chat(user, "<span class='notice'>You link [src] with [O].</span>")
+		allies |= target
+		to_chat(user, "<span class='notice'>You link [src] with [target].</span>")
 	return
 
 /obj/item/slimecross/chilling/sepia/do_effect(mob/user)
@@ -205,7 +205,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/pyrite/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] crystallizes into a pair of spectacles!</span>")
-	new /obj/item/clothing/glasses/prism_glasses(get_turf(user.loc))
+	new /obj/item/clothing/glasses/prism_glasses(get_turf(user))
 	..()
 
 /obj/item/slimecross/chilling/red
@@ -249,7 +249,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/pink/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] cracks like an egg, and an adorable puppy comes tumbling out!</span>")
-	new /mob/living/simple_animal/pet/dog/corgi/puppy/slime(get_turf(user.loc))
+	new /mob/living/simple_animal/pet/dog/corgi/puppy/slime(get_turf(user))
 	..()
 
 /obj/item/slimecross/chilling/gold
@@ -257,7 +257,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/gold/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] lets off golden light as it melts and reforms into an egg-like device!</span>")
-	new /obj/item/capturedevice(get_turf(user.loc))
+	new /obj/item/capturedevice(get_turf(user))
 	..()
 
 /obj/item/slimecross/chilling/oil
@@ -286,7 +286,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/lightpink/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] blooms into a beautiful flower!</span>")
-	new /obj/item/clothing/head/peaceflower(get_turf(user.loc))
+	new /obj/item/clothing/head/peaceflower(get_turf(user))
 	..()
 
 /obj/item/slimecross/chilling/adamantine
@@ -294,14 +294,14 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/adamantine/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] creaks and breaks as it shifts into a heavy set of armor!</span>")
-	new /obj/item/clothing/suit/armor/heavy/adamantine(get_turf(user.loc))
+	new /obj/item/clothing/suit/armor/heavy/adamantine(get_turf(user))
 	..()
 
 /obj/item/slimecross/chilling/rainbow
 	colour = "rainbow"
 
 /obj/item/slimecross/chilling/rainbow/do_effect(mob/user)
-	var/area/A = get_area(get_turf(user))
+	var/area/A = detect_room(get_turf(user))
 	if(A.outdoors)
 		to_chat(user, "<span class='warning'>[src] can't effect such a large area.</span>")
 		return
@@ -309,326 +309,3 @@ Chilling extracts:
 	for(var/obj/machinery/door/airlock/door in A)
 		new /obj/effect/forcefield/slimewall/rainbow(door.loc)
 	..()
-
-/////////////////////////////////////
-///////		MISC STUFF		/////////
-/////////////////////////////////////
-
-/obj/item/barriercube
-	name = "barrier cube"
-	desc = "A compressed cube of slime. When squeezed, it grows to massive size!"
-	icon = 'icons/obj/slimecrossing.dmi'
-	icon_state = "barriercube"
-	w_class = WEIGHT_CLASS_TINY
-
-/obj/item/barriercube/attack_self(mob/user)
-	if(locate(/obj/structure/barricade/slime) in get_turf(src.loc))
-		to_chat(user, "<span class='warning'>You can't fit more than one barrier in the same space!</span>")
-		return
-	to_chat(user, "<span class='notice'>You squeeze [src].</span>")
-	var/obj/B = new /obj/structure/barricade/slime(get_turf(src.loc))
-	B.visible_message("<span class='warning'>[src] suddenly grows into a large, gelatinous barrier!</span>")
-	qdel(src)
-
-/obj/structure/barricade/slime
-	name = "gelatinous barrier"
-	desc = "A huge chunk of grey slime. Bullets might get stuck in it."
-	icon = 'icons/obj/slimecrossing.dmi'
-	icon_state = "slimebarrier"
-	proj_pass_rate = 40
-	max_integrity = 60
-
-/obj/item/clothing/mask/nobreath
-	name = "rebreather mask"
-	desc = "A transparent mask, resembling a conventional breath mask, but made of bluish slime. Seems to lack any air supply tube, though."
-	icon_state = "slime"
-	item_state = "slime"
-	body_parts_covered = 0
-	w_class = WEIGHT_CLASS_SMALL
-	gas_transfer_coefficient = 0
-	permeability_coefficient = 0.5
-	flags_cover = MASKCOVERSMOUTH
-	resistance_flags = NONE
-
-/obj/item/clothing/mask/nobreath/equipped(mob/living/carbon/human/user, slot)
-	. = ..()
-	if(slot == SLOT_WEAR_MASK)
-		user.add_trait(TRAIT_NOBREATH, "breathmask_[REF(src)]")
-
-/obj/item/clothing/mask/nobreath/dropped(mob/living/carbon/human/user)
-	..()
-	user.remove_trait(TRAIT_NOBREATH, "breathmask_[REF(src)]")
-
-/obj/effect/forcefield/slimewall
-	name = "solidified gel"
-	desc = "A mass of solidified slime gel - completely impenetrable, but it's melting away!"
-	icon = 'icons/obj/slimecrossing.dmi'
-	icon_state = "slimebarrier_thick"
-	CanAtmosPass = ATMOS_PASS_NO
-	opacity = TRUE
-	timeleft = 100
-
-/obj/effect/forcefield/slimewall/rainbow
-	name = "rainbow barrier"
-	desc = "Despite others' urgings, you probably shouldn't taste this."
-	icon_state = "rainbowbarrier"
-
-/obj/item/reagent_containers/food/snacks/rationpack
-	name = "ration pack"
-	desc = "A square bar that sadly <i>looks</i> like chocolate, packaged in a nondescript grey wrapper. Has saved soldiers' lives before - usually by stopping bullets."
-	icon_state = "rationpack"
-	bitesize = 3
-	eatverb = "choke down"
-	junkiness = 15
-	filling_color = "#964B00"
-	tastes = list("cardboard" = 3, "sadness" = 3)
-	foodtype = null //Don't ask what went into them. You're better off not knowing.
-	list_reagents = list("stabilizednutriment" = 10, "nutriment" = 2) //Won't make you fat. Will make you question your sanity.
-
-/obj/item/reagent_containers/food/snacks/rationpack/checkLiked(fraction, mob/M)	//Nobody likes rationpacks. Nobody.
-	if(last_check_time + 50 < world.time)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(H.mind && !H.has_trait(TRAIT_AGEUSIA))
-				to_chat(H,"<span class='notice'>That didn't taste very good...</span>") //No disgust, though. It's just not good tasting.
-				GET_COMPONENT_FROM(mood, /datum/component/mood, H)
-				if(mood)
-					mood.add_event("gross_food", /datum/mood_event/gross_food)
-				last_check_time = world.time
-				return
-	..()
-
-/obj/structure/ice_stasis
-	name = "ice block"
-	desc = "A massive block of ice. You can see something vaguely humanoid inside."
-	icon = 'icons/obj/slimecrossing.dmi'
-	icon_state = "frozen"
-	density = TRUE
-	max_integrity = 100
-	armor = list("melee" = 30, "bullet" = 50, "laser" = -50, "energy" = -50, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = -80, "acid" = 30)
-
-/obj/structure/ice_stasis/Initialize()
-	playsound(src, 'sound/magic/ethereal_exit.ogg', 50, 1)
-	..()
-
-/obj/structure/ice_stasis/Destroy()
-	for(var/atom/movable/M in contents)
-		M.forceMove(loc)
-	playsound(src, 'sound/effects/glassbr3.ogg', 50, 1)
-	..()
-
-/obj/item/clothing/glasses/prism_glasses
-	name = "prism glasses"
-	desc = "The lenses seem to glow slightly, and reflect light into dazzling colors."
-	icon = 'icons/obj/slimecrossing.dmi'
-	icon_state = "prismglasses"
-	var/colour = "#FFFFFF"
-	actions_types = list(/datum/action/item_action/change_prism_colour, /datum/action/item_action/place_light_prism)
-
-/obj/item/clothing/glasses/prism_glasses/item_action_slot_check(slot)
-	if(slot == SLOT_GLASSES)
-		return 1
-
-/obj/structure/light_prism
-	name = "light prism"
-	desc = "A shining crystal of semi-solid light. Looks fragile."
-	icon = 'icons/obj/slimecrossing.dmi'
-	icon_state = "lightprism"
-	density = FALSE
-	anchored = TRUE
-	max_integrity = 10
-
-/obj/structure/light_prism/Initialize(var/colour)
-	. = ..()
-	color = colour
-	light_color = colour
-	set_light(5)
-
-/obj/structure/light_prism/attack_hand(mob/user)
-	to_chat(user, "<span class='notice'>You dispel [src]</span>")
-	qdel(src)
-
-/datum/action/item_action/change_prism_colour
-	name = "Adjust Prismatic Lens"
-	icon_icon = 'icons/obj/slimecrossing.dmi'
-	button_icon_state = "prismcolor"
-
-/datum/action/item_action/change_prism_colour/Trigger()
-	var/obj/item/clothing/glasses/prism_glasses/glasses = target
-	var/new_color = input(owner, "Choose the lens color:", "Color change",glasses.colour) as color|null
-	if(!new_color)
-		return
-	glasses.colour = new_color
-
-/datum/action/item_action/place_light_prism
-	name = "Fabricate Light Prism"
-	icon_icon = 'icons/obj/slimecrossing.dmi'
-	button_icon_state = "lightprism"
-
-/datum/action/item_action/place_light_prism/Trigger()
-	var/obj/item/clothing/glasses/prism_glasses/glasses = target
-	if(locate(/obj/structure/light_prism) in get_turf(owner))
-		to_chat(owner, "<span class='warning'>There isn't enough ambient energy to fabricate another light prism here.</span>")
-		return
-	if(istype(glasses))
-		if(!glasses.colour)
-			to_chat(owner, "<span class='warning'>The lens is oddly opaque...</span>")
-			return
-		to_chat(owner, "<span class='notice'>You channel nearby light into a glowing, ethereal prism.</span>")
-		new /obj/structure/light_prism(get_turf(owner), glasses.colour)
-
-/obj/item/gun/magic/bloodchill
-	name = "blood chiller"
-	desc = "A horrifying weapon made of your own bone and blood vessels. It shoots slowing globules of your own blood. Ech."
-	icon = 'icons/obj/slimecrossing.dmi'
-	icon_state = "bloodgun"
-	item_state = "bloodgun"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	item_flags = ABSTRACT | NODROP | DROPDEL
-	w_class = WEIGHT_CLASS_HUGE
-	force = 5
-	max_charges = 1 //Recharging costs blood.
-	recharge_rate = 1
-	ammo_type = /obj/item/ammo_casing/magic/bloodchill
-	fire_sound = 'sound/effects/attackblob.ogg'
-
-/obj/item/gun/magic/bloodchill/process()
-	charge_tick++
-	if(charge_tick < recharge_rate || charges >= max_charges)
-		return 0
-	charge_tick = 0
-	var/mob/living/M = loc
-	if(istype(M) && M.blood_volume >= 20)
-		charges++
-		M.blood_volume -= 20
-	if(charges == 1)
-		recharge_newshot()
-	return 1
-
-/obj/item/ammo_casing/magic/bloodchill
-	projectile_type = /obj/item/projectile/magic/bloodchill
-
-/obj/item/projectile/magic/bloodchill
-	name = "blood ball"
-	icon_state = "pulse0_bl"
-	damage = 0
-	damage_type = OXY
-	nodamage = 1
-	hitsound = 'sound/effects/splat.ogg'
-
-/obj/item/projectile/magic/bloodchill/on_hit(mob/living/carbon/human/target)
-	. = ..()
-	if(ishuman(target))
-		target.apply_status_effect(/datum/status_effect/bloodchill)
-
-/mob/living/simple_animal/pet/dog/corgi/puppy/slime
-	name = "\improper slime corgi puppy"
-	real_name = "slime corgi puppy"
-	desc = "An unbearably cute pink slime corgi puppy."
-	icon_state = "slime_puppy"
-	icon_living = "slime_puppy"
-	icon_dead = "slime_puppy_dead"
-	nofur = TRUE
-	gold_core_spawnable = NO_SPAWN
-	speak_emote = list("blorbles", "bubbles", "borks")
-	emote_hear = list("bubbles!", "splorts.", "splops!")
-	emote_see = list("gets goop everywhere.", "flops.", "jiggles!")
-
-/obj/item/capturedevice
-	name = "gold capture device"
-	desc = "Bluespace technology packed into a roughly egg-shaped device, used to store nonhuman creatures. Can't catch them all, though - it only fits one."
-	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/obj/slimecrossing.dmi'
-	icon_state = "capturedevice"
-
-/obj/item/capturedevice/attack(mob/living/M, mob/user)
-	if(contents.len)
-		to_chat(user, "<span class='warning'>The device already has something inside.</span>")
-	if(!isanimal(M))
-		to_chat(user, "<span class='warning'>The capture device only works on simple creatures.</span>")
-		return
-	if(M.mind)
-		to_chat(user, "<span class='notice'>You offer the device to [M].</span>")
-		if(alert(M, "Would you like to enter [user]'s capture device?", "Yes", "No") == "Yes")
-			if(user.canUseTopic(src, BE_CLOSE) && user.canUseTopic(M, BE_CLOSE))
-				to_chat(user, "<span class='notice'>You store [M] in the capture device.</span>")
-				to_chat(M, "<span class='notice'>The world warps around you, and you're suddenly in an endless void, with a window to the outside floating in front of you.</span>")
-				store(M, user)
-			else
-				to_chat(user, "<span class='warning'>You were too far away from [M].</span>")
-				to_chat(M, "<span class='warning'>You were too far away from [user].</span>")
-		else
-			to_chat(user, "<span class='warning'>[M] refused to enter the device.</span>")
-			return
-	else
-		if(istype(M, /mob/living/simple_animal/hostile) && !("neutral" in M.faction))
-			to_chat(user, "<span class='warning'>This creature is too aggressive to capture.</span>")
-			return
-	to_chat(user, "<span class='notice'>You store [M] in the capture device.</span>")
-	store(M)
-
-/obj/item/capturedevice/attack_self(mob/user)
-	if(contents.len)
-		to_chat(user, "<span class='notice'>You open the capture device!</span>")
-		release()
-	else
-		to_chat(user, "<span class='warning'>The device is empty...</span>")
-
-/obj/item/capturedevice/proc/store(var/mob/living/M)
-	M.forceMove(src)
-
-/obj/item/capturedevice/proc/release()
-	for(var/atom/movable/M in contents)
-		M.forceMove(get_turf(loc))
-
-/obj/item/clothing/head/peaceflower
-	name = "heroine bud"
-	desc = "You feel at peace. How could you ever want to feel any different?"
-	icon = 'icons/obj/slimecrossing.dmi'
-	icon_state = "peaceflower"
-	item_state = "peaceflower"
-
-/obj/item/clothing/head/peaceflower/equipped(mob/living/carbon/human/user, slot)
-	. = ..()
-	if(slot == SLOT_HEAD)
-		user.add_trait(TRAIT_PACIFISM, "peaceflower_[REF(src)]")
-
-/obj/item/clothing/head/peaceflower/dropped(mob/living/carbon/human/user)
-	..()
-	user.remove_trait(TRAIT_PACIFISM, "peaceflower_[REF(src)]")
-
-/obj/item/clothing/head/peaceflower/attack_hand(mob/user)
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(src == C.head)
-			to_chat(user, "<span class='warning'>You feel at peace. <b style='color:pink'>Why would you want anything else?</b></span>")
-			return
-	return ..()
-
-/obj/item/clothing/suit/armor/heavy/adamantine
-	name = "adamantine armor"
-	desc = "A full suit of adamantine plate armor. Impressively resistant to damage, but weighs about as much as you do."
-	icon_state = "adamsuit"
-	item_state = "adamsuit"
-	flags_inv = list()
-	var/hit_reflect_chance = 40
-	slowdown = 4
-
-
-/obj/item/clothing/suit/armor/heavy/adamantine/IsReflect(def_zone)
-	if(def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) && prob(hit_reflect_chance))
-		return TRUE
-	else
-		return FALSE
-
-/obj/item/clothing/suit/armor/heavy/adamantine/Initialize()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/clothing/suit/armor/heavy/adamantine/process()
-	slowdown = 4
-
-/obj/item/clothing/suit/armor/heavy/adamantine/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
