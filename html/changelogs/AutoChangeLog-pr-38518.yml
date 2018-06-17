@@ -1,5 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - tweak: "PDAs and radios with unlocked uplinks no longer open their normal interface in addition to the uplink when activated."
-  - tweak: "Nuclear operative uplinks are no longer also radios."
