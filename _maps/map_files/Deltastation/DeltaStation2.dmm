@@ -204,6 +204,7 @@
 	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
 	width = 3
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/space/basic,
 /area/space)
 "abv" = (
@@ -22725,6 +22726,7 @@
 	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
 	width = 3
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/space/basic,
 /area/space)
 "bbz" = (
@@ -100478,6 +100480,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxins_mixing_output,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
+"xZM" = (
+/obj/structure/fans/tiny/invisible,
+/turf/open/space/basic,
+/area/space)
 "yiv" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
@@ -136773,7 +136779,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+xZM
 abE
 aaO
 aca
@@ -137287,7 +137293,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+xZM
 abG
 aaO
 acc
@@ -141399,7 +141405,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+xZM
 abE
 aaO
 aca
@@ -141913,7 +141919,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+xZM
 abG
 aaO
 acc
@@ -158676,9 +158682,9 @@ aaa
 ajr
 aad
 aKV
-aaa
+xZM
 bbv
-aaa
+xZM
 aKV
 aad
 aad
