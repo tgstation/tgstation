@@ -166,7 +166,6 @@
 
 	else if(!(I.item_flags & (NODROP | ABSTRACT)))
 		thrown_thing = I
-			return
 		dropItemToGround(I)
 
 		if(has_trait(TRAIT_PACIFISM) && I.throwforce)
