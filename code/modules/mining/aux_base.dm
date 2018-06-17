@@ -260,6 +260,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	dwidth = 3
 	width = 7
 	height = 5
+	area_type = /area/construction/mining/aux_base
 
 /obj/structure/mining_shuttle_beacon
 	name = "mining shuttle beacon"

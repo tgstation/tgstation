@@ -20206,7 +20206,9 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/computer/camera_advanced/base_construction,
+/obj/machinery/computer/camera_advanced/base_construction{
+	dir = 4
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 9
 	},
@@ -20709,7 +20711,9 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "aSJ" = (
-/obj/machinery/computer/shuttle/mining,
+/obj/machinery/computer/shuttle/mining{
+	dir = 4
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 10
 	},
@@ -76327,6 +76331,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"lGS" = (
+/obj/docking_port/stationary/public_mining_dock,
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
 "lMz" = (
 /obj/structure/falsewall,
 /turf/open/floor/plating,
@@ -88973,7 +88981,7 @@ obX
 aDa
 aDa
 aDa
-aDa
+lGS
 cWM
 cXR
 cYG

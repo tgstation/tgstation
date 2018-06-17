@@ -897,7 +897,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/engineering{
 	name = "Auxiliary Construction Storage";
-	req_access_txt = "10;32;47;48"
+	req_one_access_txt = "10;32;47;48"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -100149,6 +100149,12 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/engine,
 /area/science/mixing)
+"oMw" = (
+/obj/docking_port/stationary/public_mining_dock{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
 "oNd" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -143475,7 +143481,7 @@ aeF
 aeF
 aeF
 aeF
-aeF
+oMw
 aeF
 aeF
 aeF
