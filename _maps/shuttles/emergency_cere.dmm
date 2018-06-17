@@ -251,11 +251,11 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aS" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aT" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -283,7 +283,7 @@
 	},
 /area/shuttle/escape)
 "aW" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -294,7 +294,7 @@
 	},
 /area/shuttle/escape)
 "aX" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/plastitanium/brig{
 	icon_state = "darkred";
 	dir = 1;
@@ -302,7 +302,7 @@
 	},
 /area/shuttle/escape)
 "aY" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/plastitanium/brig{
 	icon_state = "darkred";
 	dir = 5;

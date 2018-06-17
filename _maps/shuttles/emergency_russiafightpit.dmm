@@ -91,7 +91,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aq" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ar" = (
@@ -102,7 +102,7 @@
 	pixel_y = -6;
 	req_access_txt = "19"
 	},
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /obj/machinery/button/door{
 	id = "bearsbearsbears";
 	name = "release bears";
@@ -131,7 +131,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "av" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aw" = (

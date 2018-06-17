@@ -45,7 +45,7 @@
 /turf/open/floor/plating,
 /area/shuttle/assault_pod)
 "D" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /obj/machinery/light{
 	dir = 1
 	},

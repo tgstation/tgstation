@@ -672,7 +672,7 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bx" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "by" = (
@@ -709,12 +709,12 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bC" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bD" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /obj/machinery/status_display{
 	pixel_y = 32
 	},

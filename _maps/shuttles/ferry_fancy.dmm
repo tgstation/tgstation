@@ -27,7 +27,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "g" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "h" = (

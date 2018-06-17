@@ -753,7 +753,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bo" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"

@@ -171,7 +171,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "C" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "D" = (
@@ -261,7 +261,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "R" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "S" = (

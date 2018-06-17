@@ -222,7 +222,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aJ" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 9
 	},
@@ -235,7 +235,7 @@
 /turf/open/floor/plasteel/darkgreen/side,
 /area/shuttle/escape)
 "aL" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 5
 	},
@@ -291,7 +291,7 @@
 	},
 /area/shuttle/escape)
 "aT" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -370,7 +370,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/shuttle/escape)
 "be" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/plasteel/cmo,
 /area/shuttle/escape)
 "bf" = (
@@ -424,7 +424,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bo" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 2

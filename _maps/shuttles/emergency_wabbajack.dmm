@@ -102,7 +102,7 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "av" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aw" = (

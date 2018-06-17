@@ -36,7 +36,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "j" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "k" = (

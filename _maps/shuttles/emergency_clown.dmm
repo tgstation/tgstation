@@ -154,7 +154,7 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aC" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aD" = (

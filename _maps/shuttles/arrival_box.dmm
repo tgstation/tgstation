@@ -78,11 +78,11 @@
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "p" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "q" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /obj/machinery/light/small{
 	dir = 4
 	},

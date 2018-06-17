@@ -21,7 +21,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "ah" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "ai" = (
@@ -247,7 +247,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bb" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},

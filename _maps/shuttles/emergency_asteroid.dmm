@@ -131,7 +131,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aK" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aL" = (
@@ -427,7 +427,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bK" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /obj/machinery/light{
 	dir = 1
 	},

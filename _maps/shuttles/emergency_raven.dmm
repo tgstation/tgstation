@@ -660,7 +660,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bK" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 8
 	},
@@ -840,14 +840,14 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ca" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "cb" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 1
 	},

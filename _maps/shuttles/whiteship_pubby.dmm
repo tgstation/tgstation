@@ -42,7 +42,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "i" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "j" = (

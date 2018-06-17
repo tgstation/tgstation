@@ -232,7 +232,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bd" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bf" = (
