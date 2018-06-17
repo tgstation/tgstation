@@ -14,6 +14,8 @@
 	var/req_human = 0 //if you need to be human to use this ability
 	var/req_absorbs = 0 //similar to req_dna, but only gained from absorbing, not DNA sting
 	var/req_changelingabsorbs = 0 //see above, but with absorbing other changelings
+	var/lesserling = FALSE //if this is an ability for lesser changelings (assimilated victims)
+	var/lesserling_blacklisted = FALSE //lets abilities bypass the whitelist
 	var/req_stat = CONSCIOUS // CONSCIOUS, UNCONSCIOUS or DEAD
 	var/always_keep = 0 // important for abilities like revive that screw you if you lose them.
 	var/ignores_fakedeath = FALSE // usable with the FAKEDEATH flag

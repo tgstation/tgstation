@@ -39,13 +39,16 @@
 			sleep(100) //NOW we do sleeps- we're going too deep into the transformation to cancel and we're cocooned in indestructable walls anyways.
 			H.visible_message("<span class='warning'><b>The skin on [H]'s back begins to split apart. Sickly spines slowly emerge from the divide.</b></span>", \
 							"<font color=#800080>Spines pierce our back. Claws break apart our melding fingers.</font>")
+			playsound(H.loc, 'sound/effects/stretch.ogg', 50, 2)
 			animate(H, color = "#FF0000", time = 850)
-			H.Shake(2, 2, 450)
-			sleep(90)
+			H.Shake(3, 3, 850)
+			sleep(7)
+			playsound(H.loc, 'sound/effects/splat.ogg', 50, 2)
+			sleep(83)
 			H.visible_message("<span class='warning'><b>[H]'s skin shifts and morphs new faces, appendages slipping out and hanging at the floor.</b></span>", \
 							"<font color=#800080>Our stable form finally gives way to something so much more beautiful.</font>")
 			H.become_husk("changelingevolve")
-			sleep(80)
+			sleep(10)
 			playsound(H.loc, 'sound/weapons/slash.ogg', 25, 1)
 			to_chat(H, "<i><b>We rip and we slice...</b></i>")
 			sleep(10)
@@ -66,6 +69,7 @@
 			var/datum/antagonist/changeling/ling_datum = H.mind.has_antag_datum(/datum/antagonist/changeling)
 			for(var/datum/objective/horrorform/evolveobjective in ling_datum.objectives)
 				evolveobjective.completed = 1
+
 			priority_announce("Confirmed outbreak of level UNDEFINED biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreakerror.ogg')
 			new_mob.real_name = ling_datum.changelingID
 			new_mob.name = new_mob.real_name
@@ -78,3 +82,15 @@
 			new /obj/effect/gibspawner/human(get_turf(H))
 			inprogress = FALSE
 			return TRUE
+
+/*/obj/effect/proc_holder/changeling/horror_form_lesser //Lesser Horror Form: instant horror form but a weaker one given to lesserlings
+	name = "Evolved Form"
+	desc = "Granted to the assimilated, our armblade has been replaced with a more deadly weapon."
+	helptext = ""
+	chemical_cost = 20
+	dna_cost = 1
+	lesserling = TRUE
+	req_human = TRUE
+
+/obj/effect/proc_holder/changeling/horror_form_lesser/sting_action(mob/living/carbon/human/user)
+	to_chat(world, "you're winner!")*/

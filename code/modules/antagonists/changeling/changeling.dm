@@ -468,7 +468,7 @@
 	var/datum/objective/protect/new_objective = new /datum/objective/protect
 	new_objective.owner = owner
 	new_objective.target = master
-	new_objective.explanation_text = "Protect [master.current.real_name], the horrorform."
+	new_objective.explanation_text = "Protect the horrorform." //[master.current.real_name]
 	owner.objectives += new_objective
 	objectives += new_objective
 

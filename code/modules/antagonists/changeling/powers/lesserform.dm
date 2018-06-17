@@ -4,6 +4,7 @@
 	chemical_cost = 5
 	dna_cost = 1
 	req_human = 1
+	lesserling_blacklisted = TRUE
 
 //Transform into a monkey.
 /obj/effect/proc_holder/changeling/lesserform/sting_action(mob/living/carbon/human/user)

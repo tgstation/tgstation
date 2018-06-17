@@ -41,14 +41,20 @@
 		if(dna_cost <= 0)
 			continue
 
+		if(changeling.lesserling == TRUE && initial(ability.lesserling_blacklisted) == TRUE) //Stops lesserlings from seeing abilities they should not have
+			continue
+
+		if(changeling.lesserling == FALSE && initial(ability.lesserling) == TRUE) //Same here, but this one stops normal changelings from seeing lesserling abilities
+			continue
+
 		var/list/AL = list()
+		var/req_dna = initial(ability.req_dna)
+		var/req_absorbs = initial(ability.req_absorbs)
+		var/req_changelingabsorbs = initial(ability.req_changelingabsorbs)
 		AL["name"] = initial(ability.name)
 		AL["desc"] = initial(ability.desc)
 		AL["helptext"] = initial(ability.helptext)
 		AL["owned"] = changeling.has_sting(ability)
-		var/req_dna = initial(ability.req_dna)
-		var/req_absorbs = initial(ability.req_absorbs)
-		var/req_changelingabsorbs = initial(ability.req_changelingabsorbs)
 		AL["dna_cost"] = dna_cost
 		AL["can_purchase"] = ((req_changelingabsorbs <= changeling_absorbs) && (req_absorbs <= true_absorbs) && (req_dna <= absorbed_dna_count) && (dna_cost <= genetic_points_remaining))
 

@@ -1,4 +1,6 @@
 #define TRUE_CHANGELING_PASSIVE_HEAL 3 //Amount of brute damage restored per tick
+#define SCREECH_COOLDOWN 600 //one minute
+#define TENDRIL_COOLDOWN 50 //5 seconds
 
 //Changelings in their true form.
 //Massive health and damage, but all of their chems and it's really obvious it's >them
@@ -43,13 +45,16 @@
 	var/tendrilgrab = FALSE
 	var/endtendril = FALSE
 
+	var/screechcooldown = 0
+	var/tendrilcooldown = 0
+
 	var/range = 7
-	var/datum/action/innate/changeling/devour/devour
 	var/datum/action/innate/changeling/tendril_grab/tendril_grab
 	var/datum/action/innate/changeling/assimilate/assimilate
+	var/datum/action/innate/changeling/devour/devour
 	var/datum/action/innate/changeling/screech/screech
 
-/mob/living/simple_animal/hostile/true_changeling/Initialize()
+/mob/living/simple_animal/hostile/true_changeling/Initialize(mapload)
 	. = ..()
 	icon_state = "horror[rand(1, 5)]"
 	devour = new
@@ -320,10 +325,17 @@
 	button_icon_state = "screech"
 
 /datum/action/innate/changeling/screech/Activate()
-	playsound(src, 'sound/creatures/ling_scream.ogg', 100, 1)
 	var/mob/living/simple_animal/hostile/true_changeling/M = owner
+	if(M.screechcooldown > world.time)
+		var/math = M.screechcooldown - world.time
+		var/timer = math/10
+		to_chat(M, "<span class='warning'>Another screech is not ready yet! We need to wait [timer] seconds!</span>")
+		return
+	playsound(src, 'sound/creatures/longscreech.ogg', 25, 1)
 	for(var/mob/living/carbon/C in get_hearers_in_view(7, M))
-		if(C != M.stored_changeling)
+		if(!C.mind)
+			continue
+		if(C != M.stored_changeling && !C.mind.has_antag_datum(/datum/antagonist/changeling))
 			C.Jitter(50)
 			C.overlay_fullscreen("screeching", /obj/screen/fullscreen/horrorform)
 			C.add_trait(TRAIT_MUTE, CHANGELING_GRAPPLE)
@@ -333,7 +345,13 @@
 		C.clear_fullscreen("screeching")
 		C.remove_trait(TRAIT_MUTE, CHANGELING_GRAPPLE)
 
+/*/mob/living/simple_animal/hostile/true_changeling/mega
+	var/datum/action/innate/changeling/tendril_grab/tendril_grab
+	var/datum/action/innate/changeling/assimilate/assimilate*/
+
 #undef TRUE_CHANGELING_PASSIVE_HEAL
+#undef SCREECH_COOLDOWN
+#undef TENDRIL_COOLDOWN
 
 /////////////////////////
 //MISC HORRORFORM STUFF//
