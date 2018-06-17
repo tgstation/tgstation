@@ -125,5 +125,3 @@
 /obj/item/vending_refill/autodrobe
 	machine_name = "AutoDrobe"
 	icon_state = "refill_costume"
-	charges = list(32, 2, 3)// of 96 standard, 6 contraband, 9 premium
-	init_charges = list(32, 2, 3)
