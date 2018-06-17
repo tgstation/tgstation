@@ -480,8 +480,13 @@
 	for(var/i in 1 to L0.len)
 		var/turf/T0 = L0[i]
 		var/turf/T1 = L1[i]
-		if(T0 && T1 && T0.type != T0.baseturfs && istype(T0.loc, area_type) && !istype(T0.loc, /area/shuttle/transit))
-			ripple_turfs += T1
+		if(!T0 || !T1)
+			continue  // out of bounds
+		if(T0.type == T0.baseturfs)
+			continue  // indestructible
+		if(!istype(T0.loc, area_type) || istype(T0.loc, /area/shuttle/transit))
+			continue  // not part of the shuttle
+		ripple_turfs += T1
 
 	return ripple_turfs
 
