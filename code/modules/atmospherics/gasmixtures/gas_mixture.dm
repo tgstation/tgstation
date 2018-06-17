@@ -285,8 +285,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	return 1
 
 /datum/gas_mixture/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
-	if(!sharer)
-		return 0
 
 	var/list/cached_gases = gases
 	var/list/sharer_gases = sharer.gases
@@ -322,7 +320,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			if(delta > 0)
 				heat_capacity_self_to_sharer += gas_heat_capacity
 			else
-				heat_capacity_sharer_to_self -= gas_heat_capacity //subtract here instead of adding the absolute value because we know that delta is negative. saves a proc call.
+				heat_capacity_sharer_to_self -= gas_heat_capacity //subtract here instead of adding the absolute value because we know that delta is negative.
 
 		gas[MOLES]			-= delta
 		sharergas[MOLES]	+= delta
@@ -348,8 +346,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.1) // <10% change in sharer heat capacity
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
 
-	var/list/unique_gases = cached_gases ^ sharer_gases
-	if(unique_gases.len) //if all gases were present in both mixtures, we know that no gases are 0
+	if(length(cached_gases ^ sharer_gases)) //if all gases were present in both mixtures, we know that no gases are 0
 		garbage_collect(cached_gases - sharer_gases) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
 		sharer.garbage_collect(sharer_gases - cached_gases) //the reverse is equally true
 	sharer.after_share(src, atmos_adjacent_turfs)
@@ -358,8 +355,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		TOTAL_MOLES(cached_gases,our_moles)
 		var/their_moles
 		TOTAL_MOLES(sharer_gases,their_moles)
-		var/delta_pressure = temperature_archived*(our_moles + moved_moles) - sharer.temperature_archived*(their_moles - moved_moles)
-		return delta_pressure * R_IDEAL_GAS_EQUATION / volume
+		return (temperature_archived*(our_moles + moved_moles) - sharer.temperature_archived*(their_moles - moved_moles)) * R_IDEAL_GAS_EQUATION / volume
 
 /datum/gas_mixture/after_share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 	return

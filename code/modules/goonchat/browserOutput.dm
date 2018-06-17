@@ -206,7 +206,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	for(var/I in targets)
 		//Grab us a client if possible
-		var/client/C = grab_client(I)
+		var/client/C = istype(I, /client) ? I : grab_client(I)
 
 		if (!C)
 			continue
@@ -226,9 +226,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		C << output(url_encode(url_encode(message)), "browseroutput:output")
 
 /proc/grab_client(target)
-	if(istype(target, /client))
-		return target
-	else if(ismob(target))
+	if(ismob(target))
 		var/mob/M = target
 		if(M.client)
 			return M.client
@@ -236,3 +234,5 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		var/datum/mind/M = target
 		if(M.current && M.current.client)
 			return M.current.client
+	else if(istype(target, /client))
+		return target
