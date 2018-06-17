@@ -1060,11 +1060,15 @@
 			if(!check_if_greater_rights_than(M.client))
 				to_chat(usr, "<span class='danger'>Error: They have more rights than you do.</span>")
 				return
-			to_chat(M, "<span class='danger'>You have been kicked from the server by [usr.client.holder.fakekey ? "an Administrator" : "[usr.client.ckey]"].</span>")
-			log_admin("[key_name(usr)] kicked [key_name(M)].")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] kicked [key_name_admin(M)].</span>")
-			//M.client = null
-			qdel(M.client)
+			switch(alert(usr, "Kick [key_name(M)]?", "CHATSHITGETBANGED", "Yes", "No"))
+				if("Yes")
+					to_chat(M, "<span class='danger'>You have been kicked from the server by [usr.client.holder.fakekey ? "an Administrator" : "[usr.client.ckey]"].</span>")
+					log_admin("[key_name(usr)] kicked [key_name(M)].")
+					message_admins("<span class='adminnotice'>[key_name_admin(usr)] kicked [key_name_admin(M)].</span>")
+					//M.client = null
+					qdel(M.client)
+				else
+					return
 
 	else if(href_list["addmessage"])
 		if(!check_rights(R_ADMIN))
