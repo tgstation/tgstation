@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "The mining shuttle can once again fly to the aux base construction room after the base has dropped."
