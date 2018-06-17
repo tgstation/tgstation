@@ -293,7 +293,10 @@
 						windoor.setDir(dir)
 						windoor.density = FALSE
 
-						windoor.req_access = electronics.accesses
+						if(electronics.one_access)
+							windoor.req_one_access = electronics.accesses
+						else
+							windoor.req_access = electronics.accesses
 						windoor.electronics = electronics
 						electronics.loc = windoor
 						if(created_name)
