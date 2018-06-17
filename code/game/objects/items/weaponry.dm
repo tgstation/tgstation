@@ -204,7 +204,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/claymore/highlander/supermatter // THIS IS THE BEST IDEA
 	name = "supermatter claymore"
-	var/obj/machinery/power/supermatter_shard/shard
+	var/obj/machinery/power/supermatter_crystal/shard
 
 /obj/item/claymore/highlander/supermatter/Initialize()
 	. = ..()
