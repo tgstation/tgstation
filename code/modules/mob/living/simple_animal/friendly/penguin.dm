@@ -25,14 +25,6 @@
 	butcher_results = list()
 	gold_core_spawnable = FRIENDLY_SPAWN
 
-/mob/living/simple_animal/pet/penguin/emperor/shamebrero
-	name = "Shamebrero penguin"
-	desc = "Shameful of all he surveys."
-	icon_state = "penguin_shamebrero"
-	icon_living = "penguin_shamebrero"
-	gold_core_spawnable = NO_SPAWN
-	unique_pet = TRUE
-
 /mob/living/simple_animal/pet/penguin/baby
 	speak = list("gah", "noot noot", "noot!", "noot", "squeee!", "noo!")
 	name = "Penguin chick"
