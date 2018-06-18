@@ -14,25 +14,34 @@ Format:
 endmap
 
 map boxstation
-	default
+	disabled
 	#voteweight 1.5
 endmap
 
 map metastation
 	minplayers 25
 	#voteweight 0.5
+	disabled
 endmap
 
 map pubbystation
+	disabled
 endmap
 
 map omegastation
+	disabled
 	maxplayers 35
 endmap
 
 map deltastation
+	disabled
 	minplayers 50
 endmap
 
 map runtimestation
+	disabled
+endmap
+
+map shosdorlag
+
 endmap
