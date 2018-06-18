@@ -114,6 +114,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/parallax
 
 	var/ambientocclusion = TRUE
+	var/auto_fit_viewport = FALSE
 
 	var/uplink_spawn_loc = UPLINK_PDA
 
@@ -157,7 +158,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return
 	update_preview_icon()
 	user << browse_rsc(preview_icon, "previewicon.png")
-	var/dat = "<center>"
+	var/list/dat = list("<center>")
 
 	dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>Game Preferences</a>"
@@ -512,6 +513,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "</a><br>"
 
 			dat += "<b>Ambient Occlusion:</b> <a href='?_src_=prefs;preference=ambientocclusion'>[ambientocclusion ? "Enabled" : "Disabled"]</a><br>"
+			dat += "<b>Fit Viewport:</b> <a href='?_src_=prefs;preference=auto_fit_viewport'>[auto_fit_viewport ? "Auto" : "Manual"]</a><br>"
 
 			if (CONFIG_GET(flag/maprotation))
 				var/p_map = preferred_map
@@ -604,7 +606,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	dat += "</center>"
 
 	var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 640, 770)
-	popup.set_content(dat)
+	popup.set_content(dat.Join())
 	popup.open(0)
 
 #undef APPEARANCE_CATEGORY_COLUMN
@@ -1390,7 +1392,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if (parent && parent.mob && parent.mob.hud_used)
 							parent.mob.hud_used.update_ui_style(ui_style2icon(UI_style))
 				if("pda_style")
-					var/pickedPDAStyle = input(user, "Choose your PDA style.", "Character Preference", pda_style)  as null|anything in list(MONO, SHARE, ORBITRON, VT)
+					var/pickedPDAStyle = input(user, "Choose your PDA style.", "Character Preference", pda_style)  as null|anything in GLOB.pda_styles
 					if(pickedPDAStyle)
 						pda_style = pickedPDAStyle
 				if("pda_color")
@@ -1494,6 +1496,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(parent && parent.screen && parent.screen.len)
 						var/obj/screen/plane_master/game_world/PM = locate(/obj/screen/plane_master/game_world) in parent.screen
 						PM.backdrop(parent.mob)
+
+				if("auto_fit_viewport")
+					auto_fit_viewport = !auto_fit_viewport
+					if(auto_fit_viewport && parent)
+						parent.fit_viewport()
 
 				if("save")
 					save_preferences()

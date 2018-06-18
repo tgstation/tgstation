@@ -537,7 +537,7 @@
 
 /obj/item/storage/pod/attack_hand(mob/user)
 	if (can_interact(user))
-		SendSignal(COMSIG_TRY_STORAGE_SHOW, user)
+		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SHOW, user)
 	return TRUE
 
 /obj/item/storage/pod/MouseDrop(over_object, src_location, over_location)

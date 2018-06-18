@@ -125,11 +125,13 @@
 		modeswitch_action.Grant(M)
 
 /datum/component/storage/proc/change_master(datum/component/storage/concrete/new_master)
-	if(!istype(new_master))
+	if(new_master == src || (!isnull(new_master) && !istype(new_master)))
 		return FALSE
-	master.on_slave_unlink(src)
+	if(master)
+		master.on_slave_unlink(src)
 	master = new_master
-	master.on_slave_link(src)
+	if(master)
+		master.on_slave_link(src)
 	return TRUE
 
 /datum/component/storage/proc/master()
@@ -149,7 +151,7 @@
 		quick_empty(M)
 
 /datum/component/storage/proc/preattack_intercept(obj/O, mob/M, params)
-	if(!isitem(O) || !click_gather || O.SendSignal(COMSIG_CONTAINS_STORAGE))
+	if(!isitem(O) || !click_gather || SEND_SIGNAL(O, COMSIG_CONTAINS_STORAGE))
 		return FALSE
 	. = COMPONENT_NO_ATTACK
 	if(locked)
@@ -466,7 +468,7 @@
 	if(recursive)
 		for(var/i in ret.Copy())
 			var/atom/A = i
-			A.SendSignal(COMSIG_TRY_STORAGE_RETURN_INVENTORY, ret, TRUE)
+			SEND_SIGNAL(A, COMSIG_TRY_STORAGE_RETURN_INVENTORY, ret, TRUE)
 	return ret
 
 /datum/component/storage/proc/contents()			//ONLY USE IF YOU NEED TO COPY CONTENTS OF REAL LOCATION, COPYING IS NOT AS FAST AS DIRECT ACCESS!
@@ -523,7 +525,7 @@
 		if(iscarbon(M) || isdrone(M))
 			var/mob/living/L = M
 			if(!L.incapacitated() && I == L.get_active_held_item())
-				if(!I.SendSignal(COMSIG_CONTAINS_STORAGE) && can_be_inserted(I, FALSE))	//If it has storage it should be trying to dump, not insert.
+				if(!SEND_SIGNAL(I, COMSIG_CONTAINS_STORAGE) && can_be_inserted(I, FALSE))	//If it has storage it should be trying to dump, not insert.
 					handle_item_insertion(I, FALSE, L)
 
 //This proc return 1 if the item can be picked up and 0 if it can't.
@@ -639,10 +641,7 @@
 /datum/component/storage/proc/signal_take_type(type, atom/destination, amount = INFINITY, check_adjacent = FALSE, force = FALSE, mob/user, list/inserted)
 	if(!force)
 		if(check_adjacent)
-			if(user)
-				if(!user.CanReach(destination) || !user.CanReach(parent))
-					return FALSE
-			else if(!destination.CanReachStorage(parent))
+			if(!user || !user.CanReach(destination) || !user.CanReach(parent))
 				return FALSE
 	var/list/taking = typecache_filter_list(contents(), typecacheof(type))
 	if(length(taking) > amount)
@@ -697,7 +696,10 @@
 
 	if(A.loc == user)
 		. = COMPONENT_NO_ATTACK_HAND
-		show_to(user)
+		if(locked)
+			to_chat(user, "<span class='warning'>[parent] seems to be locked!</span>")
+		else
+			show_to(user)
 
 /datum/component/storage/proc/signal_on_pickup(mob/user)
 	var/atom/A = parent
@@ -718,7 +720,7 @@
 	return hide_from(target)
 
 /datum/component/storage/proc/on_alt_click(mob/user)
-	if(!isliving(user) || user.incapacitated() || !quickdraw || !user.CanReach(parent))
+	if(!isliving(user) || user.incapacitated() || !quickdraw || locked || !user.CanReach(parent))
 		return
 	var/obj/item/I = locate() in real_location()
 	if(!I)

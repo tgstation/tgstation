@@ -189,6 +189,31 @@
 			device = new /obj/item/assembly/control(src)
 	..()
 
+/obj/machinery/button/door/incinerator_vent_toxmix
+	name = "combustion chamber vent control"
+	id = INCINERATOR_TOXMIX_VENT
+	req_access = list(ACCESS_TOX)
+
+/obj/machinery/button/door/incinerator_vent_atmos_main
+	name = "turbine vent control"
+	id = INCINERATOR_ATMOS_MAINVENT
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS)
+
+/obj/machinery/button/door/incinerator_vent_atmos_aux
+	name = "combustion chamber vent control"
+	id = INCINERATOR_ATMOS_AUXVENT
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS)
+
+/obj/machinery/button/door/incinerator_vent_syndicatelava_main
+	name = "turbine vent control"
+	id = INCINERATOR_SYNDICATELAVA_MAINVENT
+	req_access = list(ACCESS_SYNDICATE)
+
+/obj/machinery/button/door/incinerator_vent_syndicatelava_aux
+	name = "combustion chamber vent control"
+	id = INCINERATOR_SYNDICATELAVA_AUXVENT
+	req_access = list(ACCESS_SYNDICATE)
+
 /obj/machinery/button/massdriver
 	name = "mass driver button"
 	desc = "A remote control switch for a mass driver."
@@ -202,6 +227,19 @@
 	icon_state = "launcher"
 	skin = "launcher"
 	device_type = /obj/item/assembly/control/igniter
+
+/obj/machinery/button/ignition/incinerator
+	name = "combustion chamber ignition switch"
+	desc = "A remote control switch for the combustion chamber's igniter."
+
+/obj/machinery/button/ignition/incinerator/toxmix
+	id = INCINERATOR_TOXMIX_IGNITER
+
+/obj/machinery/button/ignition/incinerator/atmos
+	id = INCINERATOR_ATMOS_IGNITER
+
+/obj/machinery/button/ignition/incinerator/syndicatelava
+	id = INCINERATOR_SYNDICATELAVA_IGNITER
 
 /obj/machinery/button/flasher
 	name = "flasher button"

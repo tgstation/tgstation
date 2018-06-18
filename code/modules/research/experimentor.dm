@@ -173,7 +173,6 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(list(/obj/item/construction/rcd,/obj
 	smoke.set_up(radius, T)
 	smoke.start()
 
-
 /obj/machinery/rnd/experimentor/vv_get_dropdown()
 	. = ..()
 	. += "---"

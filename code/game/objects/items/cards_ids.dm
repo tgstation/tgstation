@@ -78,7 +78,7 @@
 	A.emag_act(user)
 
 /obj/item/card/emagfake
-	desc = "It's a card with a magnetic strip attached to some circuitry."
+	desc = "It's a card with a magnetic strip attached to some circuitry. Closer inspection shows that this card is a poorly made replica, with a \"DonkCo\" logo stamped on the back."
 	name = "cryptographic sequencer"
 	icon_state = "emag"
 	item_state = "card-id"

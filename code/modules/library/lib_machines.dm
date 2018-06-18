@@ -419,7 +419,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 							alert("Database error encountered uploading to Archive")
 							return
 						else
-							log_game("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
+							log_game("[key_name(usr)] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
 							alert("Upload Complete. Uploaded title will be unavailable for printing for a short period")
 	if(href_list["newspost"])
 		if(!GLOB.news_network)

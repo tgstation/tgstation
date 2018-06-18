@@ -501,7 +501,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				if(!account_join_date)
 					account_age = -1
 				else
-					var/datum/DBQuery/query_datediff = SSdbcore.NewQuery("SELECT DATEDIFF(Now(),[account_join_date])")
+					var/datum/DBQuery/query_datediff = SSdbcore.NewQuery("SELECT DATEDIFF(Now(),'[account_join_date]')")
 					if(!query_datediff.Execute())
 						return
 					if(query_datediff.NextRow())
@@ -773,6 +773,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if (isliving(mob))
 		var/mob/living/M = mob
 		M.update_damage_hud()
+	if (prefs.auto_fit_viewport)
+		fit_viewport()
 
 /client/proc/generate_clickcatcher()
 	if(!void)

@@ -124,6 +124,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	var/charge_count = 100
 	var/current_overlay = null
 	var/broken_state = 0
+	var/setting = 1	//Gravity value when on
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
 	investigate_log("was destroyed!", INVESTIGATE_GRAVITY)
@@ -249,7 +250,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 	if(href_list["gentoggle"])
 		breaker = !breaker
-		investigate_log("was toggled [breaker ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [usr.key].", INVESTIGATE_GRAVITY)
+		investigate_log("was toggled [breaker ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [key_name(usr)].", INVESTIGATE_GRAVITY)
 		set_power()
 		src.updateUsrDialog()
 
@@ -384,6 +385,11 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 			GLOB.gravity_generators["[T.z]"] |= src
 		else
 			GLOB.gravity_generators["[T.z]"] -= src
+
+/obj/machinery/gravity_generator/main/proc/change_setting(value)
+	if(value != setting)
+		setting = value
+		shake_everyone()
 
 // Misc
 

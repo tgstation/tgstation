@@ -67,8 +67,6 @@
 
 	var/research_scanner = 0 //For research scanner equipped mobs. Enable to show research data when examining.
 
-	var/list/mapobjs = list()
-
 	var/in_throw_mode = 0
 
 	var/job = null//Living

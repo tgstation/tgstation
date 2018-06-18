@@ -94,6 +94,10 @@
 	port_id = "ruin"
 	can_be_bought = FALSE
 
+/datum/map_template/shuttle/snowdin
+	port_id = "snowdin"
+	can_be_bought = FALSE
+
 // Shuttles start here:
 
 /datum/map_template/shuttle/emergency/airless
@@ -228,7 +232,8 @@
 /datum/map_template/shuttle/emergency/pubby
 	suffix = "pubby"
 	name = "Pubby Station Emergency Shuttle"
-	description = "A small, but feature complete shuttle. It boasts a card table to keep crew members occupied on the long flight home."
+	description = "A train but in space! Complete with a first, second class, brig and storage area."
+	admin_notes = "Choo choo motherfucker!"
 	credit_cost = 1000
 
 /datum/map_template/shuttle/emergency/cere
@@ -431,3 +436,11 @@
 /datum/map_template/shuttle/ruin/syndicate_fighter
 	suffix = "syndicate_fighter"
 	name = "Syndicate Fighter"
+
+/datum/map_template/shuttle/snowdin/mining
+	suffix = "mining"
+	name = "Snowdin Mining Elevator"
+
+/datum/map_template/shuttle/snowdin/excavation
+	suffix = "excavation"
+	name = "Snowdin Excavation Elevator"

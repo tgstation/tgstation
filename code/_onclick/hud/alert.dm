@@ -237,6 +237,16 @@ magboots would let you walk around normally on the floor. Barring those, you can
 or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "weightless"
 
+/obj/screen/alert/highgravity
+	name = "High Gravity"
+	desc = "You're getting crushed by high gravity, picking up items and movement will be slowed."
+	icon_state = "paralysis"
+
+/obj/screen/alert/veryhighgravity
+	name = "Crushing Gravity"
+	desc = "You're getting crushed by high gravity, picking up items and movement will be slowed. You'll also accumulate brute damage!"
+	icon_state = "paralysis"
+
 /obj/screen/alert/fire
 	name = "On Fire"
 	desc = "You're on fire. Stop, drop and roll to put the fire out or move to a vacuum area."

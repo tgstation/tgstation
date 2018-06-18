@@ -253,13 +253,14 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 			place.ScrapeAway()
 	return ..()
 
-obj/docking_port/stationary/public_mining_dock
+/obj/docking_port/stationary/public_mining_dock
 	name = "public mining base dock"
 	id = "disabled" //The Aux Base has to leave before this can be used as a dock.
 	//Should be checked on the map to ensure it matchs the mining shuttle dimensions.
 	dwidth = 3
 	width = 7
 	height = 5
+	area_type = /area/construction/mining/aux_base
 
 /obj/structure/mining_shuttle_beacon
 	name = "mining shuttle beacon"

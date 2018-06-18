@@ -57,12 +57,11 @@
 	if(!bounds)
 		return FALSE
 
-	smooth_zlevel(world.maxz)
 	repopulate_sorted_areas()
 
-	SSlighting.initialize_lighting_objects(block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
 	//initialize things that are normally initialized after map load
 	initTemplateBounds(bounds)
+	smooth_zlevel(world.maxz)
 	log_game("Z-level [name] loaded at at [x],[y],[world.maxz]")
 
 	return level

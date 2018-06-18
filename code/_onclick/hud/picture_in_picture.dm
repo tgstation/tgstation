@@ -1,7 +1,7 @@
 /obj/screen/movable/pic_in_pic
 	name = "Picture-in-picture"
 	screen_loc = "CENTER"
-	plane = GAME_PLANE
+	plane = FLOOR_PLANE
 	var/atom/center
 	var/width = 0
 	var/height = 0

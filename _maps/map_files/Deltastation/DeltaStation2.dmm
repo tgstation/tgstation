@@ -204,6 +204,7 @@
 	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
 	width = 3
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/space/basic,
 /area/space)
 "abv" = (
@@ -896,7 +897,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/engineering{
 	name = "Auxiliary Construction Storage";
-	req_access_txt = "10;32;47;48"
+	req_one_access_txt = "10;32;47;48"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -15401,9 +15402,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/airlock_sensor{
-	id_tag = "incinerator_airlock_sensor";
-	master_tag = "incinerator_airlock_control";
+/obj/machinery/airlock_sensor/incinerator_atmos{
 	pixel_y = 24
 	},
 /turf/open/floor/engine,
@@ -15960,10 +15959,7 @@
 	},
 /area/security/execution/education)
 "aNO" = (
-/obj/machinery/door/poddoor{
-	id = "turbinevent";
-	name = "Turbine Vent"
-	},
+/obj/machinery/door/poddoor/incinerator_atmos_main,
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "aNP" = (
@@ -15997,9 +15993,7 @@
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "aNR" = (
-/obj/machinery/igniter{
-	id = "Incinerator"
-	},
+/obj/machinery/igniter/incinerator_atmos,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -16011,14 +16005,7 @@
 /area/maintenance/disposal/incinerator)
 "aNS" = (
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/public/glass{
-	autoclose = 0;
-	frequency = 1449;
-	heat_proof = 1;
-	id_tag = "incinerator_airlock_exterior";
-	name = "Incinerator Exterior Airlock";
-	req_access_txt = "12"
-	},
+/obj/machinery/door/airlock/public/glass/incinerator/atmos_exterior,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -16033,23 +16020,14 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume{
-	dir = 2;
-	frequency = 1449;
-	id = "incinerator_airlock_pump"
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_atmos{
+	dir = 2
 	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "aNU" = (
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/public/glass{
-	autoclose = 0;
-	frequency = 1449;
-	heat_proof = 1;
-	id_tag = "incinerator_airlock_interior";
-	name = "Incinerator Interior Airlock";
-	req_access_txt = "12"
-	},
+/obj/machinery/door/airlock/public/glass/incinerator/atmos_interior,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -16057,16 +16035,8 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	airpump_tag = "incinerator_airlock_pump";
-	exterior_door_tag = "incinerator_airlock_exterior";
-	id_tag = "incinerator_airlock_control";
-	interior_door_tag = "incinerator_airlock_interior";
-	name = "Incinerator Access Console";
-	pixel_y = 27;
-	req_access_txt = "12";
-	sanitize_external = 1;
-	sensor_tag = "incinerator_airlock_sensor"
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_atmos{
+	pixel_y = 27
 	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
@@ -16735,24 +16705,17 @@
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "aPA" = (
-/obj/machinery/button/ignition{
-	id = "Incinerator";
+/obj/machinery/button/ignition/incinerator/atmos{
 	pixel_x = 8;
 	pixel_y = -36
 	},
-/obj/machinery/button/door{
-	id = "turbinevent";
-	name = "Turbine Vent Control";
+/obj/machinery/button/door/incinerator_vent_atmos_main{
 	pixel_x = -8;
-	pixel_y = -36;
-	req_access_txt = "12"
+	pixel_y = -36
 	},
-/obj/machinery/button/door{
-	id = "auxincineratorvent";
-	name = "Auxiliary Vent Control";
+/obj/machinery/button/door/incinerator_vent_atmos_aux{
 	pixel_x = -8;
-	pixel_y = -24;
-	req_access_txt = "12"
+	pixel_y = -24
 	},
 /obj/machinery/computer/turbine_computer{
 	dir = 1;
@@ -17622,10 +17585,7 @@
 /turf/open/floor/plating/airless,
 /area/maintenance/disposal/incinerator)
 "aRo" = (
-/obj/machinery/door/poddoor{
-	id = "auxincineratorvent";
-	name = "Incineration Chamber Vent"
-	},
+/obj/machinery/door/poddoor/incinerator_atmos_aux,
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "aRp" = (
@@ -22766,6 +22726,7 @@
 	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
 	width = 3
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/space/basic,
 /area/space)
 "bbz" = (
@@ -72556,7 +72517,7 @@
 /obj/item/pen,
 /obj/machinery/door/window/southleft{
 	name = "Research Lab Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "rndlab1";
@@ -76089,7 +76050,7 @@
 /obj/machinery/door/window/southleft{
 	dir = 4;
 	name = "Research Lab Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/machinery/door/window/westleft,
 /obj/effect/turf_decal/delivery,
@@ -76754,7 +76715,7 @@
 /obj/machinery/door/window/southleft{
 	dir = 8;
 	name = "Research Lab Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "rndlab2";
@@ -82923,7 +82884,6 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
-/obj/structure/window/spawner/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -83692,6 +83652,9 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/portable_atmospherics/pump{
+	name = "Lil Pump"
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -84469,7 +84432,6 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister,
-/obj/structure/window/spawner,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -84989,7 +84951,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/window/spawner,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dAD" = (
@@ -85787,6 +85748,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/item/radio/intercom{
+	pixel_x = -26
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dCb" = (
@@ -86384,7 +86348,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/window/spawner/north,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dDt" = (
@@ -86891,6 +86854,7 @@
 /obj/structure/sign/poster/official/science{
 	pixel_x = 32
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dEv" = (
@@ -87473,6 +87437,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dFM" = (
@@ -92689,11 +92654,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
-"dQF" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
 /area/maintenance/port/aft)
 "dQG" = (
 /obj/structure/table,
@@ -99678,14 +99638,7 @@
 	},
 /area/science/mixing)
 "fpQ" = (
-/obj/machinery/door/airlock/research/glass{
-	autoclose = 0;
-	frequency = 1449;
-	heat_proof = 1;
-	id_tag = "tox_airlock_interior";
-	name = "Mixing Room Interior Airlock";
-	req_access_txt = "8"
-	},
+/obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/engine,
 /area/science/mixing)
@@ -99713,9 +99666,7 @@
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1
 	},
-/obj/machinery/airlock_sensor{
-	id_tag = "tox_airlock_sensor";
-	master_tag = "tox_airlock_control";
+/obj/machinery/airlock_sensor/incinerator_toxmix{
 	pixel_x = -24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -99950,17 +99901,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/button/ignition{
-	id = "herrington_memorial_toxigniter";
+/obj/machinery/button/ignition/incinerator/toxmix{
 	pixel_x = -6;
 	pixel_y = 30
 	},
-/obj/machinery/button/door{
-	id = "mixvent";
+/obj/machinery/button/door/incinerator_vent_toxmix{
 	pixel_x = 8;
-	pixel_y = 30;
-	req_one_access = null;
-	req_one_access_txt = "8"
+	pixel_y = 30
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
@@ -100047,7 +99994,7 @@
 /obj/machinery/autolathe,
 /obj/machinery/door/window/southleft{
 	name = "Research Lab Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -100065,10 +100012,8 @@
 	},
 /area/science/mixing)
 "lyU" = (
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume{
-	dir = 8;
-	frequency = 1449;
-	id = "tox_airlock_pump"
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_toxmix{
+	dir = 8
 	},
 /turf/open/floor/engine,
 /area/science/mixing)
@@ -100143,14 +100088,8 @@
 /area/science/circuit)
 "mkm" = (
 /obj/machinery/atmospherics/components/binary/valve,
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	airpump_tag = "tox_airlock_pump";
-	exterior_door_tag = "tox_airlock_exterior";
-	id_tag = "tox_airlock_control";
-	interior_door_tag = "tox_airlock_interior";
-	pixel_y = 26;
-	sanitize_external = 1;
-	sensor_tag = "tox_airlock_sensor"
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
+	pixel_y = 26
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
@@ -100206,18 +100145,16 @@
 	},
 /area/science/mixing)
 "oIE" = (
-/obj/machinery/door/airlock/research/glass{
-	autoclose = 0;
-	frequency = 1449;
-	heat_proof = 1;
-	id_tag = "tox_airlock_exterior";
-	name = "Mixing Room Exterior Airlock";
-	req_one_access = "8";
-	req_one_access_txt = "0"
-	},
+/obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior,
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/engine,
 /area/science/mixing)
+"oMw" = (
+/obj/docking_port/stationary/public_mining_dock{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
 "oNd" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -100254,9 +100191,7 @@
 	},
 /area/science/research)
 "oYI" = (
-/obj/machinery/igniter{
-	id = "herrington_memorial_toxigniter"
-	},
+/obj/machinery/igniter/incinerator_toxmix,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
 "oZC" = (
@@ -100359,9 +100294,7 @@
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
 "svv" = (
-/obj/machinery/door/poddoor{
-	id = "mixvent"
-	},
+/obj/machinery/door/poddoor/incinerator_toxmix,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
 "tmi" = (
@@ -100553,6 +100486,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxins_mixing_output,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
+"xZM" = (
+/obj/structure/fans/tiny/invisible,
+/turf/open/space/basic,
+/area/space)
 "yiv" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
@@ -134174,7 +134111,7 @@ dNC
 dNC
 dOT
 dPM
-dQF
+dOb
 dRE
 dSC
 dTA
@@ -136848,7 +136785,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+xZM
 abE
 aaO
 aca
@@ -137362,7 +137299,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+xZM
 abG
 aaO
 acc
@@ -141474,7 +141411,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+xZM
 abE
 aaO
 aca
@@ -141988,7 +141925,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+xZM
 abG
 aaO
 acc
@@ -143544,7 +143481,7 @@ aeF
 aeF
 aeF
 aeF
-aeF
+oMw
 aeF
 aeF
 aeF
@@ -158751,9 +158688,9 @@ aaa
 ajr
 aad
 aKV
-aaa
+xZM
 bbv
-aaa
+xZM
 aKV
 aad
 aad

@@ -31,10 +31,22 @@
 /turf/closed/indestructible/acid_act(acidpwr, acid_volume, acid_id)
 	return 0
 
+/turf/closed/indestructible/Melt()
+	to_be_destroyed = FALSE
+	return src
+
 /turf/closed/indestructible/oldshuttle
 	name = "strange shuttle wall"
 	icon = 'icons/turf/shuttleold.dmi'
 	icon_state = "block"
+
+/turf/closed/indestructible/sandstone
+	name = "sandstone wall"
+	desc = "A wall with sandstone plating. Rough."
+	icon = 'icons/turf/walls/sandstone_wall.dmi'
+	icon_state = "sandstone"
+	baseturfs = /turf/closed/indestructible/sandstone
+	smooth = SMOOTH_TRUE
 
 /turf/closed/indestructible/oldshuttle/corner
 	icon_state = "corner"

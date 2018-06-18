@@ -13,7 +13,7 @@
 					/obj/item/reagent_containers/food/snacks/cheesiehonkers = 6)
 	contraband = list(/obj/item/reagent_containers/food/snacks/syndicake = 6)
 	refill_canister = /obj/item/vending_refill/snack
-	var/chef_compartment_access = "28"
+	var/chef_compartment_access = "28" //ACCESS_KITCHEN
 
 /obj/item/vending_refill/snack
 	machine_name = "Getmore Chocolate Corp"
@@ -44,7 +44,7 @@
 			if(iscompartmentfull(user))
 				break
 			if(!S.junkiness)
-				T.SendSignal(COMSIG_TRY_STORAGE_TAKE, S, src, TRUE)
+				SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src, TRUE)
 				food_load(S)
 				loaded++
 			else
