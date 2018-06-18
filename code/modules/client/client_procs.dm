@@ -512,11 +512,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				else
 					var/datum/DBQuery/query_datediff = SSdbcore.NewQuery("SELECT DATEDIFF(Now(),'[account_join_date]')")
 					if(!query_datediff.Execute())
-						qdel(query_get_client_age)
+						qdel(query_datediff)
 						return
 					if(query_datediff.NextRow())
 						account_age = text2num(query_datediff.item[1])
-					qdel(query_get_client_age)
+					qdel(query_datediff)
 	qdel(query_get_client_age)
 	if(!new_player)
 		var/datum/DBQuery/query_log_player = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET lastseen = Now(), lastseen_round_id = '[GLOB.round_id]', ip = INET_ATON('[sql_ip]'), computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]', accountjoindate = [account_join_date ? "'[account_join_date]'" : "NULL"] WHERE ckey = '[sql_ckey]'")
