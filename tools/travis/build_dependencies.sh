@@ -26,7 +26,7 @@ if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then
 
     export CXX=g++-7
     cd artifacts
-    cmake .. -DMARIA_INCLUDE_DIR=/usr/include/ -DMARIA_LIBRARY=/usr/lib/i386-linux-gnu/libmariadbclient.so
+    cmake .. -DMARIA_INCLUDE_DIR=/usr/include -DMARIA_LIBRARY=/usr/lib/i386-linux-gnu/libmariadbclient.so
     make
     ln -s src/BSQL/libBSQL.so ~/.byond/bin/
 fi
