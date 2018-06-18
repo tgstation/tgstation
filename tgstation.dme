@@ -6,6 +6,8 @@
 
 // BEGIN_FILE_DIR
 #define FILE_DIR .
+#define FILE_DIR "data"
+#define FILE_DIR "data/spritesheets"
 #define FILE_DIR "goon"
 #define FILE_DIR "goon/icons"
 #define FILE_DIR "goon/icons/obj"
@@ -66,6 +68,11 @@
 #define FILE_DIR "icons/obj/tesla_engine"
 #define FILE_DIR "icons/pda_icons"
 #define FILE_DIR "icons/program_icons"
+#define FILE_DIR "icons/shosdorlag"
+#define FILE_DIR "icons/shosdorlag/clothing"
+#define FILE_DIR "icons/shosdorlag/clothing_w"
+#define FILE_DIR "icons/shosdorlag/objects"
+#define FILE_DIR "icons/shosdorlag/objects/guns"
 #define FILE_DIR "icons/stamp_icons"
 #define FILE_DIR "icons/Testing"
 #define FILE_DIR "icons/turf"
@@ -130,7 +137,9 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "_maps\_basemap.dm"
+#include "_maps\shosdorlag.dm"
+#include "_maps\map_files\Shosdorlag\weather_steppe.dm"
+#include "_maps\map_files\Shosdorlag\Shosdorlag.dmm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_globals.dm"
@@ -2557,6 +2566,12 @@
 #include "code\modules\ruins\spaceruin_code\whiteshipruin_box.dm"
 #include "code\modules\security_levels\keycard_authentication.dm"
 #include "code\modules\security_levels\security_levels.dm"
+#include "code\modules\shosdorlag\obj\clothing\head\head.dm"
+#include "code\modules\shosdorlag\projectiles\ammunition\ammo_boxes.dm"
+#include "code\modules\shosdorlag\projectiles\ammunition\bullets.dm"
+#include "code\modules\shosdorlag\projectiles\ammunition\calibers.dm"
+#include "code\modules\shosdorlag\projectiles\ammunition\magazines.dm"
+#include "code\modules\shosdorlag\projectiles\guns\ballistic.dm"
 #include "code\modules\shuttle\arrivals.dm"
 #include "code\modules\shuttle\assault_pod.dm"
 #include "code\modules\shuttle\computer.dm"
