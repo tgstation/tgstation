@@ -93,7 +93,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(!id && !inserted_item)
 		return
 	else
-		to_chat(user, "<span class='notice'>Alt-click to remove contents.<br>Ctrl-click, while its in an inventory, to remove the pen</span>")
+		to_chat(user, "<span class='notice'>Alt-click to remove contents.<br>Ctrl-click while its in an inventory to remove the pen</span>")
 
 /obj/item/pda/Initialize()
 	. = ..()
