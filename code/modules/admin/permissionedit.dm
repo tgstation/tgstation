@@ -125,6 +125,7 @@
 	var/use_db
 	var/task = href_list["editrights"]
 	var/skip
+	var/legacy_only
 	if(task == "activate" || task == "deactivate" || task == "sync")
 		skip = TRUE
 	if(!CONFIG_GET(flag/admin_legacy_system) && CONFIG_GET(flag/protect_legacy_admins) && task == "rank")
@@ -135,10 +136,9 @@
 		if(D.rank in GLOB.protected_ranks)
 			to_chat(usr, "<span class='admin prefix'>Editing the flags of this rank is blocked by server configuration.</span>")
 			return
-	if(CONFIG_GET(flag/load_legacy_ranks_only) && (task == "rank" || task == "permissions"))
-		to_chat(usr, "<span class='admin prefix'>Database rank loading is disabled, only temporary changes can be made to an admin's rank or permissions.</span>")
-		use_db = FALSE
-		skip = TRUE
+	if(CONFIG_GET(flag/load_legacy_ranks_only) && (task == "add" || task == "rank" || task == "permissions"))
+		to_chat(usr, "<span class='admin prefix'>Database rank loading is disabled, only temporary changes can be made to a rank's permissions and permanently creating a new rank is blocked.</span>")
+		legacy_only = TRUE
 	if(check_rights(R_DBRANKS, FALSE))
 		if(!skip)
 			if(!SSdbcore.Connect())
@@ -165,16 +165,16 @@
 			return
 	switch(task)
 		if("add")
-			admin_ckey = add_admin(null, use_db)
+			admin_ckey = add_admin(admin_ckey, use_db)
 			if(!admin_ckey)
 				return
-			change_admin_rank(admin_ckey, use_db)
+			change_admin_rank(admin_ckey, use_db, null, legacy_only)
 		if("remove")
 			remove_admin(admin_ckey, use_db, D)
 		if("rank")
-			change_admin_rank(admin_ckey, use_db, D)
+			change_admin_rank(admin_ckey, use_db, D, legacy_only)
 		if("permissions")
-			change_admin_flags(admin_ckey, use_db, D)
+			change_admin_flags(admin_ckey, use_db, D, legacy_only)
 		if("activate")
 			force_readmin(admin_ckey, D)
 		if("deactivate")
@@ -222,6 +222,7 @@
 			var/datum/DBQuery/query_add_rank_log = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_log")] (datetime, round_id, adminckey, adminip, operation, target, log) VALUES ('[SQLtime()]', '[GLOB.round_id]', '[sanitizeSQL(usr.ckey)]', INET_ATON('[sanitizeSQL(usr.client.address)]'), 'remove admin', '[admin_ckey]', 'Admin removed: [admin_ckey]')")
 			if(!query_add_rank_log.warn_execute())
 				return
+			sync_lastadminrank(admin_ckey)
 		message_admins("[key_name_admin(usr)] removed [admin_ckey] from the admins list [use_db ? "permanently" : "temporarily"]")
 		log_admin("[key_name(usr)] removed [admin_ckey] from the admins list [use_db ? "permanently" : "temporarily"]")
 
@@ -239,9 +240,11 @@
 	log_admin("[key_name(usr)] forcefully deadmined [admin_ckey]")
 	D.deactivate() //after logs so the deadmined admin can see the message.
 
-/datum/admins/proc/change_admin_rank(admin_ckey, use_db, datum/admins/D)
+/datum/admins/proc/change_admin_rank(admin_ckey, use_db, datum/admins/D, legacy_only)
 	var/datum/admin_rank/R
-	var/list/rank_names = list("*New Rank*")
+	var/list/rank_names = list()
+	if(!use_db || (use_db && !legacy_only))
+		rank_names += "*New Rank*"
 	for(R in GLOB.admin_ranks)
 		if((R.rights & usr.client.holder.rank.can_edit_rights) == R.rights)
 			rank_names[R.name] = R
@@ -296,7 +299,7 @@
 	message_admins("[key_name_admin(usr)] edited the admin rank of [admin_ckey] to [new_rank] [use_db ? "permanently" : "temporarily"]")
 	log_admin("[key_name(usr)] edited the admin rank of [admin_ckey] to [new_rank] [use_db ? "permanently" : "temporarily"]")
 
-/datum/admins/proc/change_admin_flags(admin_ckey, use_db, datum/admins/D)
+/datum/admins/proc/change_admin_flags(admin_ckey, use_db, datum/admins/D, legacy_only)
 	var/new_flags = input_bitfield(usr, "Include permission flags<br>[use_db ? "This will affect ALL admins with this rank." : "This will affect only the current admin [admin_ckey]"]", "admin_flags", D.rank.include_rights, 350, 590, allowed_edit_list = usr.client.holder.rank.can_edit_rights)
 	if(isnull(new_flags))
 		return
@@ -306,7 +309,7 @@
 	var/new_can_edit_flags = input_bitfield(usr, "Editable permission flags<br>These are the flags this rank is allowed to edit if they have access to the permissions panel.<br>They will be unable to modify admins to a rank that has a flag not included here.<br>[use_db ? "This will affect ALL admins with this rank." : "This will affect only the current admin [admin_ckey]"]", "admin_flags", D.rank.can_edit_rights, 350, 710, allowed_edit_list = usr.client.holder.rank.can_edit_rights)
 	if(isnull(new_can_edit_flags))
 		return
-	if(use_db)
+	if(use_db || legacy_only)
 		var/old_flags
 		var/old_exclude_flags
 		var/old_can_edit_flags
@@ -350,6 +353,7 @@
 			D.rank.rights = new_flags &= ~new_exclude_flags
 			D.rank.include_rights = new_flags
 			D.rank.exclude_rights = new_exclude_flags
+			D.rank.can_edit_rights = new_can_edit_flags
 		var/client/C = GLOB.directory[admin_ckey] //find the client with the specified ckey (if they are logged in)
 		D.associate(C) //link up with the client and add verbs
 	message_admins("[key_name_admin(usr)] edited the permissions of [use_db ? " rank [D.rank.name] permanently" : "[admin_ckey] temporarily"]")
@@ -386,7 +390,9 @@
 		log_admin("[key_name(usr)] removed rank [admin_rank] permanently")
 
 /datum/admins/proc/sync_lastadminrank(admin_ckey, datum/admins/D)
-	var/sqlrank = sanitizeSQL(D.rank.name)
+	var/sqlrank = "Player"
+	if (D)
+		sqlrank = sanitizeSQL(D.rank.name)
 	admin_ckey = sanitizeSQL(admin_ckey)
 	var/datum/DBQuery/query_sync_lastadminrank = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET lastadminrank = '[sqlrank]' WHERE ckey = '[admin_ckey]'")
 	if(!query_sync_lastadminrank.warn_execute())

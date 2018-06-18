@@ -33,6 +33,7 @@
 
 /obj/item/assembly/infra/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(listener)
 	QDEL_LIST(beams)
 	. = ..()
 
@@ -166,8 +167,14 @@
 	listener = newloc.AddComponent(/datum/component/redirect, COMSIG_ATOM_EXITED, CALLBACK(src, .proc/check_exit))
 
 /obj/item/assembly/infra/proc/check_exit(atom/movable/offender)
-	if(offender && ((offender.flags_1 & ABSTRACT_1) || offender == src))
+	if(QDELETED(src))
 		return
+	if(offender == src || istype(offender,/obj/effect/beam/i_beam))
+		return
+	if (offender && isitem(offender))
+		var/obj/item/I = offender
+		if (I.item_flags & ABSTRACT)
+			return
 	return refreshBeam()
 
 /obj/item/assembly/infra/ui_interact(mob/user)//TODO: change this this to the wire control panel
@@ -216,10 +223,13 @@
 	var/obj/item/assembly/infra/master
 	anchored = TRUE
 	density = FALSE
-	flags_1 = ABSTRACT_1
 	pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE|LETPASSTHROW
 
 /obj/effect/beam/i_beam/Crossed(atom/movable/AM as mob|obj)
-	if(istype(AM, /obj/effect/beam) || (AM.flags_1 & ABSTRACT_1))
+	if(istype(AM, /obj/effect/beam))
 		return
+	if (isitem(AM))
+		var/obj/item/I = AM
+		if (I.item_flags & ABSTRACT)
+			return
 	master.trigger_beam(AM, get_turf(src))

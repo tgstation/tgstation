@@ -198,7 +198,7 @@ function output(message, flag) {
 	if (flag !== 'internal')
 		opts.lastPang = Date.now();
 
-	message = byondDecode(message)
+	message = byondDecode(message).trim();
 
 	//The behemoth of filter-code (for Admin message filters)
 	//Note: This is proooobably hella inefficient
@@ -296,27 +296,30 @@ function output(message, flag) {
 		opts.messageCount--; //I guess the count should only ever equal the limit
 	}
 
+	// Create the element - if combining is off, we use it, and if it's on, we
+	// might discard it bug need to check its text content. Some messages vary
+	// only in HTML markup, have the same text content, and should combine.
+	var entry = document.createElement('div');
+	entry.innerHTML = message;
+	var trimmed_message = entry.textContent || entry.innerText || "";
+
 	var handled = false;
-	var trimmed_message = message.trim()
-	var lastmessages = $messages.children('div.entry:last-child');
-	if (opts.messageCombining && lastmessages.length && $last_message)
-	{
-		if($last_message == trimmed_message)
-		{
-			if(lastmessages.children('span.r').length)
-			{
-				var current_value = parseInt(lastmessages.children('span.r').text())
-				lastmessages.children('span.r').text(current_value+1)
+	if (opts.messageCombining) {
+		var lastmessages = $messages.children('div.entry:last-child').last();
+		if (lastmessages.length && $last_message && $last_message == trimmed_message) {
+			var badge = lastmessages.children('.r').last();
+			if (badge.length) {
+				badge = badge.detach();
+				badge.text(parseInt(badge.text()) + 1);
+			} else {
+				badge = $('<span/>', {'class': 'r', 'text': 2});
 			}
-			else
-			{
-				lastmessages.append($('<span/>', { 'class': 'r', 'text': 2}));
-			}
-			var insertedBadge = $(lastmessages).find('.r');
-			insertedBadge.animate({
+			lastmessages.html(message);
+			lastmessages.append(badge);
+			badge.animate({
 				"font-size": "0.9em"
 			}, 100, function() {
-				insertedBadge.animate({
+				badge.animate({
 					"font-size": "0.7em"
 				}, 100);
 			});
@@ -325,10 +328,8 @@ function output(message, flag) {
 		}
 	}
 
-	if(!handled)
-	{
+	if (!handled) {
 		//Actually append the message
-		var entry = document.createElement('div');
 		entry.className = 'entry';
 
 		if (filteredOut) {
@@ -337,7 +338,6 @@ function output(message, flag) {
 		}
 
 		$last_message = trimmed_message;
-		entry.innerHTML = trimmed_message;
 		$messages[0].appendChild(entry);
 		$(entry).find("img.icon").error(iconError);
 		//Actually do the snap

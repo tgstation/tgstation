@@ -32,6 +32,7 @@
 	var/list/strain_data = list() //dna_spread special bullshit
 	var/list/infectable_biotypes = list(MOB_ORGANIC) //if the disease can spread on organics, synthetics, or undead
 	var/process_dead = FALSE //if this ticks while the host is dead
+	var/copy_type = null //if this is null, copies will use the type of the instance being copied
 
 /datum/disease/Destroy()
 	. = ..()
@@ -141,7 +142,7 @@
 									"bypasses_immunity", "permeability_mod", "severity", "required_organs", "needs_all_cures", "strain_data",
 									"infectable_biotypes", "process_dead")
 
-	var/datum/disease/D = new type()
+	var/datum/disease/D = copy_type ? new copy_type() : new type()
 	for(var/V in copy_vars)
 		var/val = vars[V]
 		if(islist(val))

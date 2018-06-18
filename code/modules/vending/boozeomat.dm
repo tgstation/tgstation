@@ -35,8 +35,29 @@
 	contraband = list(/obj/item/reagent_containers/food/drinks/mug/tea = 12)
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
-	req_access_txt = "25"
+	req_access = list(ACCESS_BAR)
 	refill_canister = /obj/item/vending_refill/boozeomat
+
+/obj/machinery/vending/boozeomat/pubby_maint //abandoned bar on Pubbystation
+	products = list(/obj/item/reagent_containers/food/drinks/bottle/whiskey = 1,
+			/obj/item/reagent_containers/food/drinks/bottle/absinthe = 1,
+			/obj/item/reagent_containers/food/drinks/bottle/limejuice = 1,
+			/obj/item/reagent_containers/food/drinks/bottle/cream = 1,
+			/obj/item/reagent_containers/food/drinks/soda_cans/tonic = 1,
+			/obj/item/reagent_containers/food/drinks/drinkingglass = 10,
+			/obj/item/reagent_containers/food/drinks/ice = 3,
+			/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 6,
+			/obj/item/reagent_containers/food/drinks/flask = 1)
+	req_access = null
+
+/obj/machinery/vending/boozeomat/pubby_captain //Captain's quarters on Pubbystation
+	products = list(/obj/item/reagent_containers/food/drinks/bottle/rum = 1, 
+					/obj/item/reagent_containers/food/drinks/bottle/wine = 1, 
+					/obj/item/reagent_containers/food/drinks/ale = 1, 
+					/obj/item/reagent_containers/food/drinks/drinkingglass = 6, 
+					/obj/item/reagent_containers/food/drinks/ice = 1, 
+					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 4);
+	req_access = list(ACCESS_CAPTAIN)
 
 /obj/item/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"

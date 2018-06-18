@@ -90,11 +90,12 @@
 //air filled floors; used in atmos pressure chambers
 
 /turf/open/floor/engine/n2o
-	name = "n2o floor"
+	article = "an"
+	name = "\improper N2O floor"
 	initial_gas_mix = "n2o=6000;TEMP=293.15"
 
 /turf/open/floor/engine/co2
-	name = "co2 floor"
+	name = "\improper CO2 floor"
 	initial_gas_mix = "co2=50000;TEMP=293.15"
 
 /turf/open/floor/engine/plasma
@@ -102,11 +103,12 @@
 	initial_gas_mix = "plasma=70000;TEMP=293.15"
 
 /turf/open/floor/engine/o2
-	name = "o2 floor"
+	name = "\improper O2 floor"
 	initial_gas_mix = "o2=100000;TEMP=293.15"
 
 /turf/open/floor/engine/n2
-	name = "n2 floor"
+	article = "an"
+	name = "\improper N2 floor"
 	initial_gas_mix = "n2=100000;TEMP=293.15"
 
 /turf/open/floor/engine/air

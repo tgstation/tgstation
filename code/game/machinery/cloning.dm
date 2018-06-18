@@ -9,7 +9,6 @@
 #define SPEAK(message) radio.talk_into(src, message, radio_channel, get_spans(), get_default_language())
 
 /obj/machinery/clonepod
-	anchored = TRUE
 	name = "cloning pod"
 	desc = "An electronically-lockable pod for growing organic tissue."
 	density = TRUE
@@ -134,7 +133,7 @@
 	clonemind = locate(mindref) in SSticker.minds
 	if(!istype(clonemind))	//not a mind
 		return FALSE
-	if(clonemind.current)
+	if(!QDELETED(clonemind.current))
 		if(clonemind.current.stat != DEAD)	//mind is associated with a non-dead body
 			return FALSE
 		if(clonemind.current.suiciding) // Mind is associated with a body that is suiciding.
@@ -204,7 +203,8 @@
 		H.faction |= factions
 
 		for(var/V in quirks)
-			new V(H)
+			var/datum/quirk/Q = new V(H)
+			Q.on_clone(quirks[V])
 
 		H.set_cloned_appearance()
 

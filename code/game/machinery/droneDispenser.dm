@@ -8,7 +8,6 @@
 
 	icon = 'icons/obj/machines/droneDispenser.dmi'
 	icon_state = "on"
-	anchored = TRUE
 	density = TRUE
 
 	max_integrity = 250

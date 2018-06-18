@@ -14,7 +14,7 @@
 	item_state	= "camera_bug"
 	throw_speed	= 4
 	throw_range	= 20
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 
 	var/obj/machinery/camera/current = null
 

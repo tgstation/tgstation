@@ -185,12 +185,6 @@
 /obj/effect/decal/cleanable/oil,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/hangar)
-"bf" = (
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/bar{
-	dir = 2
-	},
-/area/awaymission/centcomAway/cafe)
 "bg" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/condiment/peppermill,
@@ -388,8 +382,8 @@
 /area/awaymission/centcomAway/maint)
 "ck" = (
 /obj/machinery/door/airlock/external,
-/obj/structure/fans/tiny,
-/turf/open/floor/plating/airless,
+/obj/structure/fans/tiny/invisible,
+/turf/open/indestructible,
 /area/awaymission/centcomAway/maint)
 "cl" = (
 /turf/open/floor/plating/airless,
@@ -1663,8 +1657,8 @@
 	name = "XCC Ferry Hangar"
 	},
 /obj/effect/turf_decal/delivery,
-/obj/structure/fans/tiny,
-/turf/open/floor/plasteel,
+/obj/structure/fans/tiny/invisible,
+/turf/open/indestructible,
 /area/awaymission/centcomAway/hangar)
 "jM" = (
 /obj/structure/chair,
@@ -1868,7 +1862,7 @@
 /area/awaymission/centcomAway/thunderdome)
 "kY" = (
 /obj/machinery/door/airlock/external,
-/obj/structure/fans/tiny,
+/obj/structure/fans/tiny/invisible,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/thunderdome)
 "kZ" = (
@@ -2045,10 +2039,6 @@
 	},
 /turf/open/indestructible,
 /area/awaymission/centcomAway/thunderdome)
-"lR" = (
-/obj/machinery/door/airlock/centcom,
-/turf/open/floor/plasteel/white,
-/area/awaymission/centcomAway/general)
 "lS" = (
 /obj/machinery/chem_master,
 /turf/open/indestructible,
@@ -2251,10 +2241,8 @@
 /area/awaymission/centcomAway/cafe)
 "mN" = (
 /obj/machinery/door/airlock/centcom,
-/obj/structure/fans/tiny,
-/turf/open/floor/plasteel{
-	icon_state = "floor"
-	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/indestructible,
 /area/awaymission/centcomAway/hangar)
 "mQ" = (
 /obj/structure/safe/floor,
@@ -2273,7 +2261,7 @@
 /area/awaymission/centcomAway/hangar)
 "mT" = (
 /obj/machinery/door/airlock/external,
-/obj/structure/fans/tiny,
+/obj/structure/fans/tiny/invisible,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/hangar)
 "mU" = (
@@ -2428,7 +2416,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Arrival Airlock"
 	},
-/obj/structure/fans/tiny,
+/obj/structure/fans/tiny/invisible,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "zk" = (
@@ -2438,11 +2426,6 @@
 /obj/structure/chair,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
-"GV" = (
-/obj/machinery/door/airlock/external,
-/obj/structure/fans/tiny,
-/turf/open/indestructible,
-/area/awaymission/centcomAway/maint)
 "KX" = (
 /obj/effect/vr_clean_master,
 /turf/open/indestructible,
@@ -9398,8 +9381,8 @@ aV
 aV
 aV
 aV
-GV
-GV
+ck
+ck
 aV
 dp
 dv
@@ -11602,9 +11585,9 @@ ac
 aK
 bt
 aK
-bf
-bf
-bf
+aW
+aW
+aW
 ac
 aK
 cB
@@ -12412,7 +12395,7 @@ eY
 fT
 eY
 eu
-lR
+dY
 eu
 eu
 bk
@@ -14730,7 +14713,7 @@ ab
 bk
 bk
 ab
-GV
+ck
 ab
 bk
 bk

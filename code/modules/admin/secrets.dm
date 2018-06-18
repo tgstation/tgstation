@@ -362,7 +362,7 @@
 					continue
 				if(is_special_character(H))
 					continue
-				var/datum/antagonist/traitor/human/T = new()
+				var/datum/antagonist/traitor/T = new()
 				T.give_objectives = FALSE
 				var/datum/objective/new_objective = new
 				new_objective.owner = H
@@ -428,7 +428,7 @@
 						H.equip_to_slot_or_del(I, SLOT_W_UNIFORM)
 						qdel(olduniform)
 						if(droptype == "Yes")
-							I.flags_1 |= NODROP_1
+							I.item_flags |= NODROP
 				else
 					to_chat(H, "You're not kawaii enough for this.")
 

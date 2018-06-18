@@ -8,7 +8,6 @@
 	icon_state = "smartfridge"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
@@ -126,8 +125,8 @@
 		else
 			return TRUE
 	else
-		if(O.loc.SendSignal(COMSIG_CONTAINS_STORAGE))
-			return O.loc.SendSignal(COMSIG_TRY_STORAGE_TAKE, O, src)
+		if(SEND_SIGNAL(O.loc, COMSIG_CONTAINS_STORAGE))
+			return SEND_SIGNAL(O.loc, COMSIG_TRY_STORAGE_TAKE, O, src)
 		else
 			O.forceMove(src)
 			return TRUE
@@ -179,6 +178,15 @@
 
 			if(QDELETED(src) || QDELETED(usr) || !usr.Adjacent(src)) // Sanity checkin' in case stupid stuff happens while we wait for input()
 				return FALSE
+
+			if(desired == 1 && Adjacent(usr) && !issilicon(usr))
+				for(var/obj/item/O in src)
+					if(O.name == params["name"])
+						if(!usr.put_in_hands(O))
+							O.forceMove(drop_location())
+							adjust_item_drop_location(O)
+						break
+				return TRUE
 
 			for(var/obj/item/O in src)
 				if(desired <= 0)
@@ -319,7 +327,7 @@
 	desc = "A refrigerated storage unit for tasty tasty alcohol."
 
 /obj/machinery/smartfridge/drinks/accept_check(obj/item/O)
-	if(!istype(O, /obj/item/reagent_containers) || (O.flags_1 & ABSTRACT_1) || !O.reagents || !O.reagents.reagent_list.len)
+	if(!istype(O, /obj/item/reagent_containers) || (O.item_flags & ABSTRACT) || !O.reagents || !O.reagents.reagent_list.len)
 		return FALSE
 	if(istype(O, /obj/item/reagent_containers/glass) || istype(O, /obj/item/reagent_containers/food/drinks) || istype(O, /obj/item/reagent_containers/food/condiment))
 		return TRUE
@@ -367,7 +375,7 @@
 					return FALSE
 			return TRUE
 		return FALSE
-	if(!istype(O, /obj/item/reagent_containers) || (O.flags_1 & ABSTRACT_1))
+	if(!istype(O, /obj/item/reagent_containers) || (O.item_flags & ABSTRACT))
 		return FALSE
 	if(istype(O, /obj/item/reagent_containers/pill)) // empty pill prank ok
 		return TRUE

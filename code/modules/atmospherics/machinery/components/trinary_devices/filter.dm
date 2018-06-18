@@ -4,7 +4,6 @@
 	desc = "Very useful for filtering gasses."
 	density = FALSE
 	can_unwrench = TRUE
-	var/on = FALSE
 	var/target_pressure = ONE_ATMOSPHERE
 	var/filter_type = null
 	var/frequency = 0
@@ -22,11 +21,11 @@
 	piping_layer = PIPING_LAYER_MAX
 	pixel_x = PIPING_LAYER_P_X
 	pixel_y = PIPING_LAYER_P_Y
-	
+
 /obj/machinery/atmospherics/components/trinary/filter/flipped
 	icon_state = "filter_off_f"
 	flipped = TRUE
-	
+
 /obj/machinery/atmospherics/components/trinary/filter/flipped/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
@@ -58,7 +57,7 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos //Used for atmos waste loops
 	on = TRUE
 	icon_state = "filter_on"
-	
+
 /obj/machinery/atmospherics/components/trinary/filter/atmos/n2
 	name = "nitrogen filter"
 	filter_type = "n2"
@@ -78,7 +77,7 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped //This feels wrong, I know
 	icon_state = "filter_on_f"
 	flipped = TRUE
-	
+
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/n2
 	name = "nitrogen filter"
 	filter_type = "n2"
@@ -94,7 +93,7 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/plasma
 	name = "plasma filter"
 	filter_type = "plasma"
-	
+
 /obj/machinery/atmospherics/components/trinary/filter/update_icon()
 	cut_overlays()
 	for(var/direction in GLOB.cardinals)

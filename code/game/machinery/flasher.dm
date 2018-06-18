@@ -7,7 +7,6 @@
 	icon_state = "mflash1"
 	max_integrity = 250
 	integrity_failure = 100
-	anchored = TRUE
 	var/obj/item/assembly/flash/handheld/bulb
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell

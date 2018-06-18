@@ -7629,7 +7629,6 @@
 	},
 /area/teleporter)
 "aoJ" = (
-/obj/machinery/droneDispenser,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -15111,6 +15110,9 @@
 	codes_txt = "patrol;next_patrol=9.4-EnteringDorms";
 	location = "9.3-Engi"
 	},
+/obj/structure/cable/white{
+	icon_state = "2-4"
+	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/break_room)
 "aFF" = (
@@ -15471,6 +15473,7 @@
 	name = "Engineering Foyer APC";
 	pixel_y = -26
 	},
+/obj/structure/cable/white,
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 8
 	},
@@ -18949,10 +18952,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aOa" = (
-/obj/machinery/power/supermatter_crystal/shard/engine{
-	anchored = 1;
-	moveable = 0
-	},
+/obj/machinery/power/supermatter_crystal/shard/engine,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "aOb" = (
@@ -20535,7 +20535,7 @@
 /obj/item/pen,
 /obj/machinery/door/window/southleft{
 	name = "Research Lab Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "rndlab1";
@@ -21488,7 +21488,7 @@
 /obj/machinery/door/window/southleft{
 	dir = 4;
 	name = "Research Lab Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "rndlab1";
@@ -31751,6 +31751,10 @@
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/aft)
+"iUq" = (
+/obj/machinery/status_display,
+/turf/closed/wall,
+/area/library)
 "iVw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -31816,6 +31820,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"jnK" = (
+/obj/machinery/light_switch{
+	pixel_y = 24
+	},
+/obj/structure/destructible/cult/tome,
+/obj/item/book/codex_gigas,
+/turf/open/floor/wood,
+/area/library)
 "jpv" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/machinery/light{
@@ -32215,14 +32227,6 @@
 /obj/item/paper/guides/jobs/hydroponics,
 /turf/open/floor/plasteel/neutral,
 /area/hydroponics)
-"mLL" = (
-/obj/machinery/light_switch{
-	pixel_y = 24
-	},
-/obj/structure/destructible/cult/tome,
-/obj/item/book/codex_gigas,
-/turf/open/floor/wood,
-/area/library)
 "mQi" = (
 /turf/closed/wall/rust,
 /area/maintenance/starboard/central)
@@ -32282,16 +32286,6 @@
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
-"nJb" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/door/morgue{
-	name = "Curator's Study";
-	req_access_txt = "37"
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/library)
 "nKi" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
@@ -35325,6 +35319,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"tXd" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/morgue{
+	name = "Curator's Study";
+	req_access_txt = "37"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/library)
 "udT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/power/apc{
@@ -35929,10 +35933,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
-"yde" = (
-/obj/machinery/status_display,
-/turf/closed/wall,
-/area/library)
 "yeE" = (
 /obj/machinery/door/window/brigdoor{
 	dir = 4;
@@ -70042,7 +70042,7 @@ aUV
 aVN
 aWA
 aQW
-mLL
+jnK
 aYw
 aZu
 aQW
@@ -70298,7 +70298,7 @@ aUd
 sKd
 aVO
 aWB
-nJb
+tXd
 aXL
 aYx
 aZv
@@ -70812,7 +70812,7 @@ aUf
 aUX
 aVQ
 aWD
-yde
+iUq
 aQW
 aQW
 aQW

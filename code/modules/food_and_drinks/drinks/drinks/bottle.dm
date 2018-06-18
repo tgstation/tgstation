@@ -51,6 +51,9 @@
 	if(user.a_intent != INTENT_HARM || !isGlass)
 		return ..()
 
+	if(user.has_trait(TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
+		return
 
 	force = 15 //Smashing bottles over someoen's head hurts.
 
@@ -422,12 +425,10 @@
 /obj/item/reagent_containers/food/drinks/bottle/molotov/attackby(obj/item/I, mob/user, params)
 	if(I.is_hot() && !active)
 		active = 1
-		var/turf/bombturf = get_turf(src)
-		var/area/bombarea = get_area(bombturf)
-		var/message = "[ADMIN_LOOKUP(user)] has primed a [name] for detonation at [ADMIN_COORDJMP(bombturf)]."
+		var/message = "[ADMIN_LOOKUP(user)] has primed a [name] for detonation at [ADMIN_VERBOSEJMP(user)]."
 		GLOB.bombers += message
 		message_admins(message)
-		log_game("[key_name(user)] has primed a [name] for detonation at [bombarea] [COORD(bombturf)].")
+		log_game("[key_name(user)] has primed a [name] for detonation at [AREACOORD(user)].")
 
 		to_chat(user, "<span class='info'>You light [src] on fire.</span>")
 		add_overlay(GLOB.fire_overlay)

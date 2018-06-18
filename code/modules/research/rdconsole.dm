@@ -861,7 +861,7 @@ Nothing else in the console has ID requirements.
 		switch(ls["disconnect"])
 			if("destroy")
 				if(QDELETED(linked_destroy))
-					say("No Deconstructive Analyzer Linked!")
+					say("No Destructive Analyzer Linked!")
 					return
 				linked_destroy.linked_console = null
 				linked_destroy = null
@@ -887,9 +887,10 @@ Nothing else in the console has ID requirements.
 		say("Ejecting Technology Disk")
 	if(ls["deconstruct"])
 		if(QDELETED(linked_destroy))
-			say("No Deconstructive Analyzer Linked!")
+			say("No Destructive Analyzer Linked!")
 			return
-		linked_destroy.user_try_decon_id(ls["deconstruct"], usr)
+		if(!linked_destroy.user_try_decon_id(ls["deconstruct"], usr))
+			say("Destructive analysis failed!")
 	//Protolathe Materials
 	if(ls["disposeP"])  //Causes the protolathe to dispose of a single reagent (all of it)
 		if(QDELETED(linked_lathe))
@@ -995,7 +996,7 @@ Nothing else in the console has ID requirements.
 		screen = RDSCREEN_DESIGNDISK
 	if(ls["eject_item"]) //Eject the item inside the destructive analyzer.
 		if(QDELETED(linked_destroy))
-			say("No Deconstructive Analyzer Linked!")
+			say("No Destructive Analyzer Linked!")
 			return
 		if(linked_destroy.busy)
 			to_chat(usr, "<span class='danger'>The destructive analyzer is busy at the moment.</span>")

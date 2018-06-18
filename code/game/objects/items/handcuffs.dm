@@ -297,7 +297,8 @@
 	armed = 1
 	icon_state = "e_snare"
 	trap_damage = 0
-	flags_1 = DROPDEL_1
+	item_flags = DROPDEL
+	flags_1 = NONE
 
 /obj/item/restraints/legcuffs/beartrap/energy/New()
 	..()

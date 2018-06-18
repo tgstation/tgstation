@@ -131,7 +131,7 @@
 
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
-		message_admins("[key_name_admin(C)] was spawned as Wizard Academy Defender")
+		message_admins("[ADMIN_LOOKUPFLW(C)] was spawned as Wizard Academy Defender")
 		current_wizard.ghostize() // on the off chance braindead defender gets back in
 		current_wizard.key = C.key
 
@@ -273,7 +273,7 @@
 			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [user.real_name] Servant?", ROLE_WIZARD, null, ROLE_WIZARD, 50, H)
 			if(LAZYLEN(candidates))
 				var/mob/dead/observer/C = pick(candidates)
-				message_admins("[key_name_admin(C)] was spawned as Dice Servant")
+				message_admins("[ADMIN_LOOKUPFLW(C)] was spawned as Dice Servant")
 				H.key = C.key
 
 			var/obj/effect/proc_holder/spell/targeted/summonmob/S = new

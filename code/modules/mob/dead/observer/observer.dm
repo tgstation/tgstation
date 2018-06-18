@@ -79,7 +79,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/mob/body = loc
 	if(ismob(body))
 		T = get_turf(body)				//Where is the body located?
-		logging = body.logging			//preserve our logs by copying them to our ghost
 
 		gender = body.gender
 		if(body.mind && body.mind.name)

@@ -75,6 +75,9 @@
 					return
 				to_chat(user, "<span class='notice'>You add [I] to the [initial(name)] assembly.</span>")
 				beakers += I
+				var/reagent_list = pretty_string_from_reagent_list(I.reagents)
+				add_logs(user, src, "inserted [I]", addition = "[reagent_list] inside.")
+				log_game("[key_name(user)] inserted [I] into [src] containing [reagent_list] ")
 			else
 				to_chat(user, "<span class='warning'>[I] is empty!</span>")
 
@@ -111,6 +114,11 @@
 		if(beakers.len)
 			for(var/obj/O in beakers)
 				O.forceMove(drop_location())
+				if(!O.reagents)
+					continue
+				var/reagent_list = pretty_string_from_reagent_list(O.reagents)
+				add_logs(user, src, "removed [O]", addition = "[reagent_list] inside.")
+				log_game("[key_name(user)] removed [O] from [src] containing [reagent_list]")
 			beakers = list()
 			to_chat(user, "<span class='notice'>You open the [initial(name)] assembly and remove the payload.</span>")
 			return // First use of the wrench remove beakers, then use the wrench to remove the activation mechanism.
@@ -155,6 +163,18 @@
 	if(nadeassembly)
 		nadeassembly.on_found(finder)
 
+/obj/item/grenade/chem_grenade/log_grenade(mob/user, turf/T)
+	..()
+	for(var/obj/exploded_beaker in beakers)
+		if(!exploded_beaker.reagents)
+			continue
+		var/reagent_list = pretty_string_from_reagent_list(exploded_beaker.reagents)
+		var/message = "[src] primed by [user] at [ADMIN_VERBOSEJMP(T)] contained [reagent_list]."
+		GLOB.bombers += message
+		message_admins(message)
+		log_game("[src] primed by [user] at [AREACOORD(T)] contained [reagent_list].")
+		add_logs(user, src, "primed", addition = "[reagent_list] inside.")
+
 /obj/item/grenade/chem_grenade/prime()
 	if(stage != READY)
 		return
@@ -174,15 +194,13 @@
 		stage_change(EMPTY)
 		return
 
-	var/areas_name = get_area_name(src, TRUE)
-
 	if(nadeassembly)
 		var/mob/M = get_mob_by_ckey(assemblyattacher)
 		var/mob/last = get_mob_by_ckey(nadeassembly.fingerprintslast)
-		message_admins("grenade primed by an assembly, attached by [ADMIN_LOOKUPFLW(M)] and last touched by [ADMIN_LOOKUPFLW(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [areas_name] [ADMIN_JMP(detonation_turf)]</a>.")
-		log_game("grenade primed by an assembly, attached by [key_name(M)] and last touched by [key_name(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [areas_name] [COORD(detonation_turf)]")
+		message_admins("grenade primed by an assembly, attached by [ADMIN_LOOKUPFLW(M)] and last touched by [ADMIN_LOOKUPFLW(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [ADMIN_VERBOSEJMP(detonation_turf)]</a>.")
+		log_game("grenade primed by an assembly, attached by [key_name(M)] and last touched by [key_name(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [AREACOORD(detonation_turf)]")
 
-	log_game("A grenade detonated at [areas_name] [COORD(detonation_turf)]")
+	log_game("A grenade detonated at [AREACOORD(detonation_turf)]")
 
 	update_mob()
 
@@ -284,18 +302,15 @@
 		RC.reagents.trans_to(reactants, RC.reagents.total_volume*fraction, threatscale, 1, 1)
 	chem_splash(get_turf(src), affected_area, list(reactants), ignition_temp, threatscale)
 
+	var/turf/DT = get_turf(src)
 	if(nadeassembly)
 		var/mob/M = get_mob_by_ckey(assemblyattacher)
 		var/mob/last = get_mob_by_ckey(nadeassembly.fingerprintslast)
-		var/turf/T = get_turf(src)
-		var/area/A = get_area(T)
-		message_admins("grenade primed by an assembly, attached by [key_name_admin(M)]<A HREF='?_src_=holder;[HrefToken()];adminmoreinfo=[REF(M)]'>(?)</A> (<A HREF='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(M)]'>FLW</A>) and last touched by [key_name_admin(last)]<A HREF='?_src_=holder;[HrefToken()];adminmoreinfo=[REF(last)]'>(?)</A> (<A HREF='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(last)]'>FLW</A>) ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at <A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[A.name] (JMP)</a>.")
-		log_game("grenade primed by an assembly, attached by [key_name(M)] and last touched by [key_name(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [A.name] ([T.x], [T.y], [T.z])")
+		message_admins("grenade primed by an assembly at [AREACOORD(DT)], attached by [ADMIN_LOOKUPFLW(M)] and last touched by [ADMIN_LOOKUPFLW(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name])</a>.")
+		log_game("grenade primed by an assembly at [AREACOORD(DT)], attached by [key_name(M)] and last touched by [key_name(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name])")
 	else
 		addtimer(CALLBACK(src, .proc/prime), det_time)
-	var/turf/DT = get_turf(src)
-	var/area/DA = get_area(DT)
-	log_game("A grenade detonated at [DA.name] ([DT.x], [DT.y], [DT.z])")
+	log_game("A grenade detonated at [AREACOORD(DT)]")
 
 
 

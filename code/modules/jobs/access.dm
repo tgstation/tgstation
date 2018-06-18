@@ -222,7 +222,7 @@
 		if(ACCESS_ENGINE)
 			return "Engineering"
 		if(ACCESS_ENGINE_EQUIP)
-			return "Power Equipment"
+			return "Power and Engineering Equipment"
 		if(ACCESS_MAINT_TUNNELS)
 			return "Maintenance"
 		if(ACCESS_EXTERNAL_AIRLOCKS)

@@ -922,7 +922,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 		else
 			return "white"
 
-/proc/params2turf(scr_loc, turf/origin)
+/proc/params2turf(scr_loc, turf/origin, client/C)
 	if(!scr_loc)
 		return null
 	var/tX = splittext(scr_loc, ",")
@@ -931,11 +931,12 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	tY = tY[1]
 	tX = splittext(tX[1], ":")
 	tX = tX[1]
-	tX = CLAMP(origin.x + text2num(tX) - world.view - 1, 1, world.maxx)
-	tY = CLAMP(origin.y + text2num(tY) - world.view - 1, 1, world.maxy)
+	var/list/actual_view = getviewsize(C ? C.view : world.view)
+	tX = CLAMP(origin.x + text2num(tX) - round(actual_view[1] / 2) - 1, 1, world.maxx)
+	tY = CLAMP(origin.y + text2num(tY) - round(actual_view[2] / 2) - 1, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
-/proc/screen_loc2turf(text, turf/origin)
+/proc/screen_loc2turf(text, turf/origin, client/C)
 	if(!text)
 		return null
 	var/tZ = splittext(text, ",")
@@ -944,8 +945,9 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	tX = splittext(tZ[2], "-")
 	tX = text2num(tX[2])
 	tZ = origin.z
-	tX = CLAMP(origin.x + 7 - tX, 1, world.maxx)
-	tY = CLAMP(origin.y + 7 - tY, 1, world.maxy)
+	var/list/actual_view = getviewsize(C ? C.view : world.view)
+	tX = CLAMP(origin.x + round(actual_view[1] / 2) - tX, 1, world.maxx)
+	tY = CLAMP(origin.y + round(actual_view[2] / 2) - tY, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/IsValidSrc(datum/D)
@@ -1269,10 +1271,7 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 	if(!istype(C))
 		return
 
-	var/animate_color = initial(C.color)
-	var/datum/client_colour/CC = C.mob.client_colours[1]
-	if(CC)
-		animate_color = CC.colour
+	var/animate_color = C.color
 	C.color = flash_color
 	animate(C, color = animate_color, time = flash_time)
 

@@ -44,9 +44,8 @@ SUBSYSTEM_DEF(research)
 	handle_research_income()
 
 /datum/controller/subsystem/research/proc/handle_research_income()
-	var/list/bitcoins
+	var/list/bitcoins = list()
 	if(multiserver_calculation)
-		bitcoins = list()
 		var/eff = calculate_server_coefficient()
 		for(var/obj/machinery/rnd/server/miner in servers)
 			var/list/result = (miner.mine())	//SLAVE AWAY, SLAVE.

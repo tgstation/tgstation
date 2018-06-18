@@ -696,6 +696,24 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_upgrade_trashofholding
+	name = "Cyborg Upgrade (Trash Bag of Holding)"
+	id = "borg_upgrade_trashofholding"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/tboh
+	materials = list(MAT_METAL=10000, MAT_GOLD=1500, MAT_URANIUM=250, MAT_PLASMA=1500)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_upgrade_advancedmop
+	name = "Cyborg Upgrade (Advanced Mop)"
+	id = "borg_upgrade_advancedmop"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/amop
+	materials = list(MAT_METAL=10000, MAT_GLASS=200, MAT_TITANIUM=1000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
 /datum/design/borg_upgrade_expand
 	name = "Cyborg Upgrade (Expand)"
 	id = "borg_upgrade_expand"
@@ -750,17 +768,6 @@
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_SILVER = 200)
 	construction_time = 50
 	category = list("Misc")
-
-/datum/design/drone_shell
-	name = "Drone Shell"
-	desc = "A shell of a maintenance drone, an expendable robot built to perform station repairs."
-	id = "drone_shell"
-	build_type = MECHFAB | PROTOLATHE
-	materials = list(MAT_METAL = 800, MAT_GLASS = 350)
-	construction_time=150
-	build_path = /obj/item/drone_shell
-	category = list("Misc")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/synthetic_flash
 	name = "Flash"

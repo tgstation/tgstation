@@ -6,7 +6,6 @@
 	circuit = /obj/item/circuitboard/computer/security
 	var/last_pic = 1
 	var/list/network = list("ss13")
-	var/mapping = 0//For the overview file, interesting bit of code.
 	var/list/watchers = list() //who's using the console, associated with the camera they're on.
 
 	light_color = LIGHT_COLOR_RED
@@ -196,7 +195,7 @@
 	icon_keyboard = "mining_key"
 	network = list("mine")
 	circuit = /obj/item/circuitboard/computer/mining
-	
+
 /obj/machinery/computer/security/research
 	name = "research camera console"
 	desc = "Used to access the various cameras in science."

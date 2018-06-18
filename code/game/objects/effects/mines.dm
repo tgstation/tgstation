@@ -131,7 +131,7 @@
 	var/obj/item/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
 	add_logs(victim, null, "entered a blood frenzy")
 
-	chainsaw.flags_1 |= NODROP_1
+	chainsaw.item_flags |= NODROP
 	victim.drop_all_held_items()
 	victim.put_in_hands(chainsaw, forced = TRUE)
 	chainsaw.attack_self(victim)

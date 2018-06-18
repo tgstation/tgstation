@@ -42,5 +42,6 @@
 		last_huge_pulse = world.time
 		log = TRUE
 	if(log)
-		log_game("Radiation pulse with intensity:[intensity] and range modifier:[range_modifier] in area [get_area(source)] ")
+		var/turf/_source_T = isturf(source) ? source : get_turf(source)
+		log_game("Radiation pulse with intensity: [intensity] and range modifier: [range_modifier] in [AREACOORD(_source_T)] ")
 	return TRUE

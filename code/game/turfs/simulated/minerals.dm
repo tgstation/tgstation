@@ -6,7 +6,7 @@
 	icon_state = "rock"
 	var/smooth_icon = 'icons/turf/smoothrocks.dmi'
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
-	canSmoothWith
+	canSmoothWith = null
 	baseturfs = /turf/open/floor/plating/asteroid/airless
 	initial_gas_mix = "TEMP=2.7"
 	opacity = 1
@@ -451,20 +451,19 @@
 		stage = GIBTONITE_ACTIVE
 		visible_message("<span class='danger'>There was gibtonite inside! It's going to explode!</span>")
 		var/turf/bombturf = get_turf(src)
-		var/area/A = get_area(bombturf)
 
 		var/notify_admins = 0
 		if(z != 5)
 			notify_admins = 1
 			if(!triggered_by_explosion)
-				message_admins("[ADMIN_LOOKUPFLW(user)] has triggered a gibtonite deposit reaction at [A.name] [ADMIN_JMP(bombturf)].")
+				message_admins("[ADMIN_LOOKUPFLW(user)] has triggered a gibtonite deposit reaction at [ADMIN_VERBOSEJMP(bombturf)].")
 			else
-				message_admins("An explosion has triggered a gibtonite deposit reaction at [A.name] [ADMIN_JMP(bombturf)].")
+				message_admins("An explosion has triggered a gibtonite deposit reaction at [ADMIN_VERBOSEJMP(bombturf)].")
 
 		if(!triggered_by_explosion)
-			log_game("[key_name(user)] has triggered a gibtonite deposit reaction at [A.name] [COORD(bombturf)].")
+			log_game("[key_name(user)] has triggered a gibtonite deposit reaction at [AREACOORD(bombturf)].")
 		else
-			log_game("An explosion has triggered a gibtonite deposit reaction at [A.name] [COORD(bombturf)]")
+			log_game("An explosion has triggered a gibtonite deposit reaction at [AREACOORD(bombturf)]")
 
 		countdown(notify_admins)
 

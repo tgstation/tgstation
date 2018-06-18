@@ -3,7 +3,6 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "console"
 	density = FALSE
-	anchored = TRUE
 
 /obj/machinery/sleeper
 	name = "sleeper"
@@ -11,7 +10,6 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	density = FALSE
-	anchored = TRUE
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/sleeper
 	var/efficiency = 1
@@ -172,7 +170,7 @@
 				return
 			if(mob_occupant.health < min_health && chem != "epinephrine")
 				return
-			if(inject_chem(chem))
+			if(inject_chem(chem, usr))
 				. = TRUE
 				if(scrambled_chems && prob(5))
 					to_chat(usr, "<span class='warning'>Chem System Re-route detected, results may not be as expected!</span>")
@@ -181,9 +179,11 @@
 	scramble_chem_buttons()
 	to_chat(user, "<span class='warning'>You scramble the sleeper's user interface!</span>")
 
-/obj/machinery/sleeper/proc/inject_chem(chem)
+/obj/machinery/sleeper/proc/inject_chem(chem, mob/user)
 	if((chem in available_chems) && chem_allowed(chem))
 		occupant.reagents.add_reagent(chem_buttons[chem], 10) //emag effect kicks in here so that the "intended" chem is used for all checks, for extra FUUU
+		if(user)
+			add_logs(user, occupant, "injected [chem] into", addition = "via [src]")
 		return TRUE
 
 /obj/machinery/sleeper/proc/chem_allowed(chem)

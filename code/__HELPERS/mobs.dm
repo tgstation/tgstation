@@ -178,8 +178,8 @@ Proc for attack log creation, because really why not
 /proc/add_logs(mob/user, mob/target, what_done, object=null, addition=null)
 	var/turf/attack_location = get_turf(target)
 
-	var/is_mob_user = user && GLOB.typecache_mob[user.type]
-	var/is_mob_target = target && GLOB.typecache_mob[target.type]
+	var/is_mob_user = user && ismob(user)
+	var/is_mob_target = target && ismob(target)
 
 	var/mob/living/living_target
 

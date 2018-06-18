@@ -58,6 +58,11 @@
 	message = "coughs!"
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE)
+	. = ..()
+	if(user.reagents.get_reagent("menthol") || user.reagents.get_reagent("peppermint_patty"))
+		return FALSE
+
 /datum/emote/living/dance
 	key = "dance"
 	key_third_person = "dances"

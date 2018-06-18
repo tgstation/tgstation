@@ -49,7 +49,7 @@
 		change_appearance(I, user)
 		return
 	// Why yes, this does closely resemble mob and object attack code.
-	if(I.flags_1 & NOBLUDGEON_1)
+	if(I.item_flags & NOBLUDGEON)
 		return
 	if(!I.force)
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)

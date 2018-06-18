@@ -17,7 +17,8 @@
 					/obj/item/clothing/head/soft/sec = 3,
 					/obj/item/clothing/mask/bandana/red = 3,
 					/obj/item/clothing/under/rank/security/skirt = 3,
-					/obj/item/clothing/under/rank/security/grey = 3)
+					/obj/item/clothing/under/rank/security/grey = 3,
+					/obj/item/clothing/under/pants/khaki = 3)
 	premium = list(/obj/item/clothing/under/rank/security/navyblue = 3,
 					/obj/item/clothing/suit/security/officer = 3,
 					/obj/item/clothing/head/beret/sec/navyofficer = 3)
@@ -311,20 +312,14 @@
 	icon_state = "chapdrobe"
 	product_ads = "Are you being bothered by cultists or pesky revenants? Then come and dress like the holy man!;Clothes for men of the cloth!"
 	vend_reply = "Thank you for using the ChapDrobe!"
-	products = list(/obj/item/clothing/accessory/pocketprotector/cosmetology = 1,
+	products = list(/obj/item/holybeacon = 1,
+					/obj/item/storage/backpack/cultpack = 1,
+					/obj/item/clothing/accessory/pocketprotector/cosmetology = 1,
 					/obj/item/clothing/under/rank/chaplain = 1,
 					/obj/item/clothing/shoes/sneakers/black = 1,
 					/obj/item/clothing/suit/nun = 1,
 					/obj/item/clothing/head/nun_hood = 1,
-					/obj/item/clothing/suit/studentuni = 1,
-					/obj/item/clothing/head/cage = 1,
-					/obj/item/clothing/suit/witchhunter = 1,
-					/obj/item/clothing/head/witchunter_hat = 1,
-					/obj/item/clothing/suit/hooded/chaplain_hoodie = 1,
 					/obj/item/clothing/suit/holidaypriest = 1,
-					/obj/item/storage/backpack/cultpack = 1,
-					/obj/item/clothing/head/helmet/knight/templar = 1,
-					/obj/item/clothing/suit/armor/riot/knight/templar = 1,
 					/obj/item/storage/fancy/candle_box = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/chap_wardrobe
 

@@ -165,6 +165,11 @@ Buildable meters
 
 	if(pipename)
 		A.name = pipename
+	if(A.on)
+		// Certain pre-mapped subtypes are on by default, we want to preserve
+		// every other aspect of these subtypes (name, pre-set filters, etc.)
+		// but they shouldn't turn on automatically when wrenched.
+		A.on = FALSE
 
 /obj/item/pipe/trinary/flippable/build_pipe(obj/machinery/atmospherics/components/trinary/T)
 	..()
@@ -191,7 +196,7 @@ Buildable meters
 	w_class = WEIGHT_CLASS_BULKY
 	var/piping_layer = PIPING_LAYER_DEFAULT
 
-obj/item/pipe_meter/wrench_act(mob/living/user, obj/item/wrench/W)
+/obj/item/pipe_meter/wrench_act(mob/living/user, obj/item/wrench/W)
 
 	var/obj/machinery/atmospherics/pipe/pipe
 	for(var/obj/machinery/atmospherics/pipe/P in loc)
@@ -206,7 +211,7 @@ obj/item/pipe_meter/wrench_act(mob/living/user, obj/item/wrench/W)
 	to_chat(user, "<span class='notice'>You fasten the meter to the pipe.</span>")
 	qdel(src)
 
-obj/item/pipe_meter/screwdriver_act(mob/living/user, obj/item/S)
+/obj/item/pipe_meter/screwdriver_act(mob/living/user, obj/item/S)
 	if(!isturf(loc))
 		to_chat(user, "<span class='warning'>You need to fasten it to the floor!</span>")
 		return TRUE

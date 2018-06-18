@@ -11,7 +11,24 @@
 	var/id
 	var/ordered = TRUE //If the button gets placed into the default bar
 
+/obj/screen/movable/action_button/proc/can_use(mob/user)
+	if (linked_action)
+		return linked_action.owner == user
+	else if (isobserver(user))
+		var/mob/dead/observer/O = user
+		return !O.observetarget
+	else
+		return TRUE
+
+/obj/screen/movable/action_button/MouseDrop()
+	if (!can_use(usr))
+		return
+	return ..()
+
 /obj/screen/movable/action_button/Click(location,control,params)
+	if (!can_use(usr))
+		return
+
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])
 		if(locked)
@@ -44,6 +61,9 @@
 	var/show_state = "show"
 
 /obj/screen/movable/action_button/hide_toggle/Click(location,control,params)
+	if (!can_use(usr))
+		return
+
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])
 		if(locked)
@@ -118,7 +138,7 @@
 
 /datum/hud/proc/get_action_buttons_icons()
 	. = list()
-	.["bg_icon"] = ui_style_icon
+	.["bg_icon"] = ui_style
 	.["bg_state"] = "template"
 
 	//TODO : Make these fit theme

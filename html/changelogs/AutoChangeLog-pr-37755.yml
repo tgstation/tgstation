@@ -1,8 +1,0 @@
-author: "Garen"
-delete-after: True
-changes: 
-  - rscdel: "Removed circuitry save files saving whether or not the assembly is open."
-  - rscadd: "Adds messages for when you successfully use a sensor or scanner circuit."
-  - bugfix: "Fixed circuit printers printing advanced assemblies from save files despite not being upgraded."
-  - bugfix: "Fixed circuit printers printing circuits into assemblies that wouldn't normally be able to hold them."
-  - bugfix: "Fixed circuit assemblies taking damage when using objects with the help intent."

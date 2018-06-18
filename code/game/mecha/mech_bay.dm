@@ -15,7 +15,6 @@
 	name = "mech bay power port"
 	desc = "This port recharges a mech's internal power cell."
 	density = TRUE
-	anchored = TRUE
 	dir = EAST
 	icon = 'icons/mecha/mech_bay.dmi'
 	icon_state = "recharge_port"

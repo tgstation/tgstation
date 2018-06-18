@@ -65,6 +65,8 @@
 				nuke.r_code = nuke_team.memorized_code
 			else //Already set by admins/something else?
 				nuke_team.memorized_code = nuke.r_code
+			for(var/obj/machinery/nuclearbomb/beer/beernuke in GLOB.nuke_list)
+				beernuke.r_code = nuke_team.memorized_code
 		else
 			stack_trace("Syndicate nuke not found during nuke team creation.")
 			nuke_team.memorized_code = null
@@ -256,7 +258,8 @@
 
 /datum/team/nuclear/proc/syndies_escaped()
 	var/obj/docking_port/mobile/S = SSshuttle.getShuttle("syndicate")
-	return S && (is_centcom_level(S.z) || is_transit_level(S.z))
+	var/obj/docking_port/stationary/transit/T = locate() in S.loc
+	return S && (is_centcom_level(S.z) || T)
 
 /datum/team/nuclear/proc/get_result()
 	var/evacuation = SSshuttle.emergency.mode == SHUTTLE_ENDGAME

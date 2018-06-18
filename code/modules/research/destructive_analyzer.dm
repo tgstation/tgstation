@@ -102,9 +102,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 		var/datum/techweb_node/TN = get_techweb_node_by_id(id)
 		if(!istype(TN))
 			return FALSE
-		var/list/can_boost = techweb_item_boost_check(loaded_item)
-		if(isnull(can_boost[id]))
-			return FALSE
 		var/dpath = loaded_item.type
 		var/list/worths = TN.boost_item_paths[dpath]
 		var/list/differences = list()
@@ -114,7 +111,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			var/value = min(worths[i], TN.research_costs[i]) - used
 			if(value > 0)
 				differences[i] = value
-		if(!length(differences))
+		if(length(worths) && !length(differences))
 			return FALSE
 		var/choice = input("Are you sure you want to destroy [loaded_item] to [!length(worths) ? "reveal [TN.display_name]" : "boost [TN.display_name] by [json_encode(differences)] point\s"]?") in list("Proceed", "Cancel")
 		if(choice == "Cancel")

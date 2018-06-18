@@ -1,8 +1,9 @@
-// last_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
+// stored_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
 #define RAD_COLLECTOR_EFFICIENCY 80 	// radiation needs to be over this amount to get power
 #define RAD_COLLECTOR_COEFFICIENT 100
 #define RAD_COLLECTOR_STORED_OUT 0.04	// (this*100)% of stored power outputted per tick. Doesn't actualy change output total, lower numbers just means collectors output for longer in absence of a source
 #define RAD_COLLECTOR_MINING_CONVERSION_RATE 0.00001 //This is gonna need a lot of tweaking to get right. This is the number used to calculate the conversion of watts to research points per process()
+#define RAD_COLLECTOR_OUTPUT min(stored_power, (stored_power*RAD_COLLECTOR_STORED_OUT)+1000) //Produces at least 1000 watts if it has more than that stored
 
 /obj/machinery/power/rad_collector
 	name = "Radiation Collector Array"
@@ -17,7 +18,7 @@
 	integrity_failure = 80
 	circuit = /obj/item/circuitboard/machine/rad_collector
 	var/obj/item/tank/internals/plasma/loaded_tank = null
-	var/last_power = 0
+	var/stored_power = 0
 	var/active = 0
 	var/locked = FALSE
 	var/drainratio = 1
@@ -51,9 +52,9 @@
 			loaded_tank.air_contents.gases[/datum/gas/tritium][MOLES] += gasdrained
 			loaded_tank.air_contents.garbage_collect()
 
-			var/power_produced = min(last_power, (last_power*RAD_COLLECTOR_STORED_OUT)+1000) //Produces at least 1000 watts if it has more than that stored
+			var/power_produced = RAD_COLLECTOR_OUTPUT
 			add_avail(power_produced)
-			last_power-=power_produced
+			stored_power-=power_produced
 	else if(is_station_level(z) && SSresearch.science_tech)
 		if(!loaded_tank.air_contents.gases[/datum/gas/tritium] || !loaded_tank.air_contents.gases[/datum/gas/oxygen])
 			playsound(src, 'sound/machines/ding.ogg', 50, 1)
@@ -65,14 +66,11 @@
 			loaded_tank.air_contents.assert_gas(/datum/gas/carbon_dioxide)
 			loaded_tank.air_contents.gases[/datum/gas/carbon_dioxide][MOLES] += gasdrained*2
 			loaded_tank.air_contents.garbage_collect()
-			var/bitcoins_mined = min(last_power, (last_power*RAD_COLLECTOR_STORED_OUT)+1000)
+			var/bitcoins_mined = RAD_COLLECTOR_OUTPUT
 			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
-			last_power-=bitcoins_mined
+			stored_power-=bitcoins_mined
 
-/obj/machinery/power/rad_collector/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/power/rad_collector/interact(mob/user)
 	if(anchored)
 		if(!src.locked)
 			toggle_power()
@@ -82,7 +80,7 @@
 			if(loaded_tank)
 				fuel = loaded_tank.air_contents.gases[/datum/gas/plasma]
 			fuel = fuel ? fuel[MOLES] : 0
-			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [loaded_tank?"Fuel: [round(fuel/0.29)]%":"<font color='red'>It is empty</font>"].", INVESTIGATE_SINGULO)
+			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [key_name(user)]. [loaded_tank?"Fuel: [round(fuel/0.29)]%":"<font color='red'>It is empty</font>"].", INVESTIGATE_SINGULO)
 			return
 		else
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
@@ -176,9 +174,9 @@
 	. = ..()
 	if(active)
 		if(!bitcoinmining)
-			to_chat(user, "<span class='notice'>[src]'s display states that it is processing <b>[DisplayPower(last_power)]</b>.</span>")
+			to_chat(user, "<span class='notice'>[src]'s display states that it has stored <b>[DisplayPower(stored_power)]</b>, and processing <b>[DisplayPower(RAD_COLLECTOR_OUTPUT)]</b>.</span>")
 		else
-			to_chat(user, "<span class='notice'>[src]'s display states that it is producing a total of <b>[last_power*RAD_COLLECTOR_MINING_CONVERSION_RATE]</b> research points per minute.</span>")
+			to_chat(user, "<span class='notice'>[src]'s display states that it has stored a total of <b>[stored_power*RAD_COLLECTOR_MINING_CONVERSION_RATE]</b>, and producing [RAD_COLLECTOR_OUTPUT*RAD_COLLECTOR_MINING_CONVERSION_RATE] research points per minute.</span>")
 	else
 		if(!bitcoinmining)
 			to_chat(user,"<span class='notice'><b>[src]'s display displays the words:</b> \"Power production mode. Please insert <b>Plasma</b>. Use a multitool to change production modes.\"</span>")
@@ -207,7 +205,7 @@
 /obj/machinery/power/rad_collector/rad_act(pulse_strength)
 	. = ..()
 	if(loaded_tank && active && pulse_strength > RAD_COLLECTOR_EFFICIENCY)
-		last_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
+		stored_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
 
 /obj/machinery/power/rad_collector/proc/update_icons()
 	cut_overlays()
@@ -233,3 +231,5 @@
 #undef RAD_COLLECTOR_EFFICIENCY
 #undef RAD_COLLECTOR_COEFFICIENT
 #undef RAD_COLLECTOR_STORED_OUT
+#undef RAD_COLLECTOR_MINING_CONVERSION_RATE
+#undef RAD_COLLECTOR_OUTPUT

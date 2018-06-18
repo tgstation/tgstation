@@ -60,7 +60,7 @@
 
 	if(amount >= 50)
 		var/burning_time = max(100, 100-amount)
-		master = master.ScrapeAway()
+		master = master.Melt()
 		master.burn_tile()
 		if(user)
 			master.add_hiddenprint(user)
