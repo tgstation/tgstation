@@ -718,7 +718,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(issilicon(usr))
 		return
 
-	if(usr.canUseTopic(src))
+	if(usr.canUseTopic(src) && !isturf(loc))
 		remove_pen()
 
 /obj/item/pda/verb/verb_remove_id()
