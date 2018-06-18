@@ -712,6 +712,15 @@ GLOBAL_LIST_EMPTY(PDAs)
 		else
 			remove_pen()
 
+/obj/item/pda/CtrlClick()
+	..()
+
+	if(issilicon(usr))
+		return
+
+	if(usr.canUseTopic(src))
+		remove_pen()
+
 /obj/item/pda/verb/verb_remove_id()
 	set category = "Object"
 	set name = "Eject ID"
