@@ -534,7 +534,7 @@
 "bR" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/melee/baton/cattleprod{
+/obj/item/melee/stunner/cattleprod{
 	desc = "On-the-fly rabies treatment.";
 	name = "cattle prod"
 	},
