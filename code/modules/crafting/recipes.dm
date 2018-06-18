@@ -66,7 +66,7 @@
 
 /datum/crafting_recipe/stunprod
 	name = "Stunprod"
-	result = /obj/item/melee/baton/cattleprod
+	result = /obj/item/melee/stunner/cattleprod
 	reqs = list(/obj/item/restraints/handcuffs/cable = 1,
 				/obj/item/stack/rods = 1,
 				/obj/item/assembly/igniter = 1)
@@ -76,7 +76,7 @@
 
 /datum/crafting_recipe/teleprod
 	name = "Teleprod"
-	result = /obj/item/melee/baton/cattleprod/teleprod
+	result = /obj/item/melee/stunner/cattleprod/teleprod
 	reqs = list(/obj/item/restraints/handcuffs/cable = 1,
 				/obj/item/stack/rods = 1,
 				/obj/item/assembly/igniter = 1,

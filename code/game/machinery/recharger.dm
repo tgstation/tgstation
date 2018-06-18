@@ -129,7 +129,7 @@
 				E.cell.emp_act(severity)
 
 		else if(istype(charging, /obj/item/melee/baton))
-			var/obj/item/melee/baton/B = charging
+			var/obj/item/melee/stunner/baton/B = charging
 			if(B.cell)
 				B.cell.charge = 0
 

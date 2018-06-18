@@ -204,7 +204,7 @@
 	new /obj/item/restraints/handcuffs(src)
 	new /obj/item/grenade/flashbang(src)
 	new /obj/item/assembly/flash/handheld(src)
-	new /obj/item/melee/baton/loaded(src)
+	new /obj/item/melee/stunner/baton/loaded(src)
 	update_icon()
 
 /obj/item/storage/belt/mining
@@ -343,7 +343,7 @@
 		/obj/item/reagent_containers/food/snacks,
 		/obj/item/reagent_containers/food/drinks
 		))
-	
+
 	var/amount = 5
 	var/rig_snacks
 	while(contents.len <= amount)
