@@ -445,12 +445,14 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	related_accounts_ip = ""
 	while(query_get_related_ip.NextRow())
 		related_accounts_ip += "[query_get_related_ip.item[1]], "
+	qdel(query_get_related_ip)
 	var/datum/DBQuery/query_get_related_cid = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE computerid = '[computer_id]' AND ckey != '[sql_ckey]'")
 	if(!query_get_related_cid.Execute())
 		return
 	related_accounts_cid = ""
 	while (query_get_related_cid.NextRow())
 		related_accounts_cid += "[query_get_related_cid.item[1]], "
+	qdel(query_get_related_cid)
 	var/admin_rank = "Player"
 	if (src.holder && src.holder.rank)
 		admin_rank = src.holder.rank.name
@@ -463,6 +465,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/new_player
 	var/datum/DBQuery/query_client_in_db = SSdbcore.NewQuery("SELECT 1 FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
 	if(!query_client_in_db.Execute())
+		qdel(query_client_in_db)
 		return
 	if(!query_client_in_db.NextRow())
 		if (CONFIG_GET(flag/panic_bunker) && !holder && !GLOB.deadmins[ckey])
@@ -476,6 +479,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				to_chat(src, "<span class='notice'>Sending you to [panic_name ? panic_name : panic_addr].</span>")
 				winset(src, null, "command=.options")
 				src << link("[panic_addr]?redirect=1")
+			qdel(query_client_in_db)
 			qdel(src)
 			return
 
@@ -483,12 +487,17 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		account_join_date = sanitizeSQL(findJoinDate())
 		var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] (`ckey`, `firstseen`, `firstseen_round_id`, `lastseen`, `lastseen_round_id`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`) VALUES ('[sql_ckey]', Now(), '[GLOB.round_id]', Now(), '[GLOB.round_id]', INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
 		if(!query_add_player.Execute())
+			qdel(query_client_in_db)
+			qdel(query_add_player)
 			return
+		qdel(query_add_player)
 		if(!account_join_date)
 			account_join_date = "Error"
 			account_age = -1
+	qdel(query_client_in_db)
 	var/datum/DBQuery/query_get_client_age = SSdbcore.NewQuery("SELECT firstseen, DATEDIFF(Now(),firstseen), accountjoindate, DATEDIFF(Now(),accountjoindate) FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
 	if(!query_get_client_age.Execute())
+		qdel(query_get_client_age)
 		return
 	if(query_get_client_age.NextRow())
 		player_join_date = query_get_client_age.item[1]
@@ -503,17 +512,23 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				else
 					var/datum/DBQuery/query_datediff = SSdbcore.NewQuery("SELECT DATEDIFF(Now(),'[account_join_date]')")
 					if(!query_datediff.Execute())
+						qdel(query_datediff)
 						return
 					if(query_datediff.NextRow())
 						account_age = text2num(query_datediff.item[1])
+					qdel(query_datediff)
+	qdel(query_get_client_age)
 	if(!new_player)
 		var/datum/DBQuery/query_log_player = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET lastseen = Now(), lastseen_round_id = '[GLOB.round_id]', ip = INET_ATON('[sql_ip]'), computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]', accountjoindate = [account_join_date ? "'[account_join_date]'" : "NULL"] WHERE ckey = '[sql_ckey]'")
 		if(!query_log_player.Execute())
+			qdel(query_log_player)
 			return
+		qdel(query_log_player)
 	if(!account_join_date)
 		account_join_date = "Error"
 	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')),'[world.port]','[GLOB.round_id]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
 	query_log_connection.Execute()
+	qdel(query_log_connection)
 	if(new_player)
 		player_age = -1
 	. = player_age
@@ -549,6 +564,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/lastcid
 	if (query_cidcheck.NextRow())
 		lastcid = query_cidcheck.item[1]
+	qdel(query_cidcheck)
 	var/oldcid = cidcheck[ckey]
 
 	if (oldcid)
@@ -622,16 +638,22 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	//check to see if we noted them in the last day.
 	var/datum/DBQuery/query_get_notes = SSdbcore.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[sql_system_ckey]' AND timestamp + INTERVAL 1 DAY < NOW() AND deleted = 0")
 	if(!query_get_notes.Execute())
+		qdel(query_get_notes)
 		return
 	if(query_get_notes.NextRow())
+		qdel(query_get_notes)
 		return
+	qdel(query_get_notes)
 	//regardless of above, make sure their last note is not from us, as no point in repeating the same note over and over.
 	query_get_notes = SSdbcore.NewQuery("SELECT adminckey FROM [format_table_name("messages")] WHERE targetckey = '[sql_ckey]' AND deleted = 0 ORDER BY timestamp DESC LIMIT 1")
 	if(!query_get_notes.Execute())
+		qdel(query_get_notes)
 		return
 	if(query_get_notes.NextRow())
 		if (query_get_notes.item[1] == system_ckey)
+			qdel(query_get_notes)
 			return
+	qdel(query_get_notes)
 	create_message("note", ckey, system_ckey, message, null, null, 0, 0)
 
 
@@ -773,6 +795,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if (isliving(mob))
 		var/mob/living/M = mob
 		M.update_damage_hud()
+	if (prefs.auto_fit_viewport)
+		fit_viewport()
 
 /client/proc/generate_clickcatcher()
 	if(!void)

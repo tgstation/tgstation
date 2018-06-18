@@ -146,7 +146,7 @@ GLOBAL_PROTECT(protected_ranks)
 					var/sql_exclude_flags = sanitizeSQL(R.exclude_rights)
 					var/sql_can_edit_flags = sanitizeSQL(R.can_edit_rights)
 					sql_ranks += list(list("rank" = "'[sql_rank]'", "flags" = "[sql_flags]", "exclude_flags" = "[sql_exclude_flags]", "can_edit_flags" = "[sql_can_edit_flags]"))
-				SSdbcore.MassInsert(format_table_name("admin_ranks"), sql_ranks, duplicate_key = TRUE)
+				SSdbcore.MassInsert(format_table_name("admin_ranks"), sql_ranks, duplicate_key = TRUE, blocking = TRUE)
 		else
 			var/datum/DBQuery/query_load_admin_ranks = SSdbcore.NewQuery("SELECT rank, flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")]")
 			if(!query_load_admin_ranks.Execute())
@@ -169,6 +169,7 @@ GLOBAL_PROTECT(protected_ranks)
 						if(!R)
 							continue
 						GLOB.admin_ranks += R
+			qdel(query_load_admin_ranks)
 	//load ranks from backup file
 	if(dbfail)
 		var/backup_file = file("data/admins_backup.json")
@@ -247,6 +248,7 @@ GLOBAL_PROTECT(protected_ranks)
 					skip = 1
 				if(!skip)
 					new /datum/admins(rank_names[admin_rank], admin_ckey)
+		qdel(query_load_admins)
 	//load admins from backup file
 	if(dbfail)
 		var/backup_file = file("data/admins_backup.json")

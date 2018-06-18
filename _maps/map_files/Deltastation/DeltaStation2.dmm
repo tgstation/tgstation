@@ -204,6 +204,7 @@
 	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
 	width = 3
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/space/basic,
 /area/space)
 "abv" = (
@@ -896,7 +897,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/engineering{
 	name = "Auxiliary Construction Storage";
-	req_access_txt = "10;32;47;48"
+	req_one_access_txt = "10;32;47;48"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -22725,6 +22726,7 @@
 	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
 	width = 3
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/space/basic,
 /area/space)
 "bbz" = (
@@ -100147,6 +100149,12 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/engine,
 /area/science/mixing)
+"oMw" = (
+/obj/docking_port/stationary/public_mining_dock{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
 "oNd" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -100478,6 +100486,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxins_mixing_output,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
+"xZM" = (
+/obj/structure/fans/tiny/invisible,
+/turf/open/space/basic,
+/area/space)
 "yiv" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
@@ -136773,7 +136785,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+xZM
 abE
 aaO
 aca
@@ -137287,7 +137299,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+xZM
 abG
 aaO
 acc
@@ -141399,7 +141411,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+xZM
 abE
 aaO
 aca
@@ -141913,7 +141925,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+xZM
 abG
 aaO
 acc
@@ -143469,7 +143481,7 @@ aeF
 aeF
 aeF
 aeF
-aeF
+oMw
 aeF
 aeF
 aeF
@@ -158676,9 +158688,9 @@ aaa
 ajr
 aad
 aKV
-aaa
+xZM
 bbv
-aaa
+xZM
 aKV
 aad
 aad

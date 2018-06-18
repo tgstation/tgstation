@@ -1,5 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "Pulling objects diagonally no longer causes them to flail about when changing directions."
-  - bugfix: "Riders are no longer left behind if you move while pulling something that has since been anchored."

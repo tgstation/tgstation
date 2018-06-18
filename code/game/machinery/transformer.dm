@@ -28,8 +28,7 @@
 /obj/machinery/transformer/examine(mob/user)
 	. = ..()
 	if(cooldown && (issilicon(user) || isobserver(user)))
-		var/seconds_remaining = (cooldown_timer - world.time) / 10
-		to_chat(user, "It will be ready in [max(0, seconds_remaining)] seconds.")
+		to_chat(user, "It will be ready in [DisplayTimeText(cooldown_timer - world.time)].")
 
 /obj/machinery/transformer/Destroy()
 	QDEL_NULL(countdown)

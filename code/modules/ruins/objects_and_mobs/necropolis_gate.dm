@@ -74,6 +74,7 @@
 	pixel_y = -32
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	opacity = TRUE
+	anchored = TRUE
 
 /obj/structure/opacity_blocker/singularity_pull()
 	return 0

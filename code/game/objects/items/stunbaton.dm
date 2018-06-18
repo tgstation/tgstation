@@ -3,9 +3,10 @@
 	desc = "you've been zapped by the zappy wappy! repost this in 14 github issues because you should not have this item!"
 	var/stunforce = 140
 	var/status = 0
-	var/obj/item/stock_parts/cell/high/cell
+	var/obj/item/stock_parts/cell/cell
 	var/hitcost = 1000
 	var/throw_hit_chance = 35
+	var/preload_cell_type //if not empty the baton starts with this type of cell
 
 /obj/item/melee/stunner/proc/deductcharge(chrgdeductamt)
 	if(cell)
@@ -27,6 +28,11 @@
 
 /obj/item/melee/stunner/Initialize()
 	. = ..()
+	if(preload_cell_type)
+		if(!ispath(preload_cell_type,/obj/item/stock_parts/cell))
+			log_world("### MAP WARNING, [src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
+		else
+			cell = new preload_cell_type(src)
 	update_icon()
 
 /obj/item/melee/stunner/throw_impact(atom/hit_atom)

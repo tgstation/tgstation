@@ -1,5 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - tweak: "Fire alarms now redden all the room's lights, and emit light themselves, rather than applying an area-wide overlay."
-  - bugfix: "Fire alarms no longer visually conflict with radiation storms."

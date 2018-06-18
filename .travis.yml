@@ -6,7 +6,7 @@ branches:
 env:
     global:
     - BYOND_MAJOR="512"
-    - BYOND_MINOR="1418"
+    - BYOND_MINOR="1427"
     - NODE_VERSION="4"
     - RUST_G_VERSION="0.3.0"
 matrix:
@@ -63,7 +63,7 @@ before_script:
 
 script:
   - tools/travis/check_filedirs.sh tgstation.dme
-  - tools/travis/build_tools.sh
-  - tools/travis/build_dependencies.sh
+  - tools/travis/build_tools.sh || travis_terminate
+  - tools/travis/build_dependencies.sh || travis_terminate
   - tools/travis/build_byond.sh
 

@@ -45,8 +45,6 @@
 		rating = M.rating
 	maxwater = tmp_capacity * 50 // Up to 300
 	maxnutri = tmp_capacity * 5 // Up to 30
-	waterlevel = maxwater
-	nutrilevel = 3
 
 /obj/machinery/hydroponics/Destroy()
 	if(myseed)
@@ -781,7 +779,7 @@
 	else if(istype(O, /obj/item/storage/bag/plants))
 		attack_hand(user)
 		for(var/obj/item/reagent_containers/food/snacks/grown/G in locate(user.x,user.y,user.z))
-			O.SendSignal(COMSIG_TRY_STORAGE_INSERT, G, user, TRUE)
+			SEND_SIGNAL(O, COMSIG_TRY_STORAGE_INSERT, G, user, TRUE)
 
 	else if(default_unfasten_wrench(user, O))
 		return

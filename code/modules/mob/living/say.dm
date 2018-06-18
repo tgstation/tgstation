@@ -307,16 +307,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	return 1
 
-/mob/living/proc/get_message_mode(message)
-	var/key = copytext(message, 1, 2)
-	if(key == "#")
-		return MODE_WHISPER
-	else if(key == ";")
-		return MODE_HEADSET
-	else if(length(message) > 2 && (key in GLOB.department_radio_prefixes))
-		var/key_symbol = lowertext(copytext(message, 2, 3))
-		return GLOB.department_radio_keys[key_symbol]
-
 /mob/living/proc/get_key(message)
 	var/key = copytext(message, 1, 2)
 	if(key in GLOB.department_radio_prefixes)
