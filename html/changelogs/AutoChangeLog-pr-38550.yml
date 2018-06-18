@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "It is no longer possible to repair cyborg headlamps even when their panel is closed."

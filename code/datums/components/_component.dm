@@ -3,7 +3,6 @@
 	var/dupe_mode = COMPONENT_DUPE_HIGHLANDER
 	var/dupe_type
 	var/list/signal_procs
-	var/report_signal_origin = FALSE
 	var/datum/parent
 
 /datum/component/New(datum/P, ...)
@@ -86,15 +85,14 @@
 		procs = list()
 		signal_procs = procs
 
+	if(!istype(proc_or_callback, /datum/callback)) //if it wasnt a callback before, it is now
+		proc_or_callback = CALLBACK(src, proc_or_callback)
+
 	var/list/sig_types = islist(sig_type_or_types) ? sig_type_or_types : list(sig_type_or_types)
 	for(var/sig_type in sig_types)
-		if(!override)
-			. = procs[sig_type]
-			if(.)
-				stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
+		if(!override && procs[sig_type])
+			stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
 
-		if(!istype(proc_or_callback, /datum/callback)) //if it wasnt a callback before, it is now
-			proc_or_callback = CALLBACK(src, proc_or_callback)
 		procs[sig_type] = proc_or_callback
 
 	enabled = TRUE
@@ -132,8 +130,6 @@
 		var/datum/callback/CB = C.signal_procs[sigtype]
 		if(!CB)
 			return NONE
-		if(initial(C.report_signal_origin))
-			arguments = list(sigtype) + arguments
 		return CB.InvokeAsync(arglist(arguments))
 	. = NONE
 	for(var/I in target)
@@ -143,10 +139,7 @@
 		var/datum/callback/CB = C.signal_procs[sigtype]
 		if(!CB)
 			continue
-		if(initial(C.report_signal_origin))
-			. |= CB.InvokeAsync(arglist(list(sigtype) + arguments))
-		else
-			. |= CB.InvokeAsync(arglist(arguments))
+		. |= CB.InvokeAsync(arglist(arguments))
 
 /datum/proc/GetComponent(c_type)
 	var/list/dc = datum_components
