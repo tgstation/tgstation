@@ -110,11 +110,13 @@
 	knife_y_offset = 13
 
 /obj/item/gun/ballistic/shotgun/boltaction/pump(mob/M)
-	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
+	playsound(M, 'sound/weapons/gun_slide_lock_5.ogg', 100, 1)
 	if(bolt_open)
 		pump_reload(M)
+		to_chat(M, "You close the bolt!")
 	else
 		pump_unload(M)
+		to_chat(M, "You open the bolt!")
 	bolt_open = !bolt_open
 	update_icon()	//I.E. fix the desc
 	return 1
