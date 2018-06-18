@@ -1,5 +1,7 @@
 #define SEND_SIGNAL(target, sigtype, arguments...) ( !target.datum_components ? NONE : target._SendSignal(sigtype, list(##arguments)) )
 
+#define SEND_GLOBAL_SIGNAL(sigtype, arguments...) ( !SSdcs.comp_lookup[sigtype] ? NONE : SSdcs._SendGlobalSignal(sigtype, list(##arguments)) )
+
 //shorthand
 #define GET_COMPONENT_FROM(varname, path, target) var##path/##varname = ##target.GetComponent(##path)
 #define GET_COMPONENT(varname, path) GET_COMPONENT_FROM(varname, path, src)
@@ -15,6 +17,11 @@
 
 // All signals. Format:
 // When the signal is called: (signal arguments)
+
+// global signals
+// These are signals which can be listened to by any component on any parent
+#define COMSIG_GLOB_NEW_Z "!new_z"								//from base of datum/controller/subsystem/mapping/proc/add_new_zlevel(): (list/args)
+#define COMSIG_GLOB_VAR_EDIT "!var_edit"						//called after a successful var edit somewhere in the world: (list/args)
 
 // /datum signals
 #define COMSIG_COMPONENT_ADDED "component_added"				//when a component is added to a datum: (/datum/component)
