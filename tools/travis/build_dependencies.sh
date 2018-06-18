@@ -25,8 +25,9 @@ if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then
     git checkout FETCH_HEAD
 
     export CXX=g++-7
+    export CC=gcc-7
     cd artifacts
-    cmake .. -DMARIA_INCLUDE_DIR=/usr/include -DMARIA_LIBRARY=/usr/lib/i386-linux-gnu/libmariadbclient.so
+    cmake ..
     make
     ln -s src/BSQL/libBSQL.so ~/.byond/bin/
 fi
