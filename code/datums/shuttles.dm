@@ -42,6 +42,9 @@
 		for(var/obj/structure/table/table in place)
 			table.AddComponent(/datum/component/magnetic_catch)
 
+		for(var/obj/structure/rack/rack in place)
+			rack.AddComponent(/datum/component/magnetic_catch)
+
 //Whatever special stuff you want
 /datum/map_template/shuttle/proc/on_bought()
 	return
