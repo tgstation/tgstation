@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(dcs)
 		. |= CB.InvokeAsync(arglist(arguments))
 
 /datum/controller/subsystem/dcs/proc/RegisterSignal(datum/component/comp, sigtype)
-	if(!length(comp_lookup[sigtype]))
+	if(!comp_lookup[sigtype])
 		comp_lookup[sigtype] = list()
 	
 	comp_lookup[sigtype][comp] = TRUE
@@ -30,3 +30,6 @@ SUBSYSTEM_DEF(dcs)
 				comp_lookup -= sigtype
 			if(2 to INFINITY)
 				comp_lookup[sigtype] -= comp
+
+/datum/controller/subsystem/dcs/Recover()
+	comp_lookup = SSdcs.comp_lookup

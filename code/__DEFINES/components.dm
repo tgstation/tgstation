@@ -20,8 +20,11 @@
 
 // global signals
 // These are signals which can be listened to by any component on any parent
+// GLOBAL SIGNALS MUST START WITH "!"
 #define COMSIG_GLOB_NEW_Z "!new_z"								//from base of datum/controller/subsystem/mapping/proc/add_new_zlevel(): (list/args)
 #define COMSIG_GLOB_VAR_EDIT "!var_edit"						//called after a successful var edit somewhere in the world: (list/args)
+
+//////////////////////////////////////////////////////////////////
 
 // /datum signals
 #define COMSIG_COMPONENT_ADDED "component_added"				//when a component is added to a datum: (/datum/component)
