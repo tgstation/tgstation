@@ -30,6 +30,11 @@ BSQL_DEL_PROC(/datum/BSQL_Operation)
 		return "Connection deleted!"
 	return world._BSQL_Internal_Call("GetError", connection.id, id)
 
+/datum/BSQL_Operation/GetErrorCode()
+	if(BSQL_IS_DELETED(connection))
+		return -2
+	return text2num(world._BSQL_Internal_Call("GetErrorCode", connection.id, id))
+
 /datum/BSQL_Operation/WaitForCompletion()
 	if(BSQL_IS_DELETED(connection))
 		return

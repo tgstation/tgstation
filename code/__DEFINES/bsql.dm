@@ -1,4 +1,4 @@
-//BSQL - DMAPI v1.1.0.0
+//BSQL - DMAPI v1.1.1.0
 
 //types of connections
 #define BSQL_CONNECTION_TYPE_MARIADB "MySql"
@@ -51,7 +51,7 @@ Starts an operation for a query
 */
 /datum/BSQL_Connection/proc/BeginQuery(query)
 	return
-	
+
 /*
 Checks if the operation is complete. This, in some cases must be called multiple times with false return before a result is present regardless of timespan. For best performance check it once per tick
 
@@ -72,6 +72,14 @@ Get the error message associated with an operation. Should not be used while IsC
  Returns: The error message, if any. null otherwise
 */
 /datum/BSQL_Operation/proc/GetError()
+	return
+
+/*
+Get the error code associated with an operation. Should not be used while IsComplete() returns FALSE
+
+ Returns: The error code, if any. null otherwise
+*/
+/datum/BSQL_Operation/proc/GetErrorCode()
 	return
 
 /*
