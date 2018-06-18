@@ -107,7 +107,7 @@
 /obj/machinery/disposal/proc/place_item_in_disposal(obj/item/I, mob/user)
 	I.forceMove(src)
 	I.dropped(user)
-	user.visible_message("[user.name] places \the [I] into \the [src].", "<span class='notice'>You place \the [I] into \the [src].</span>")
+	user.visible_message("[user] places \the [I] into \the [src].", "<span class='notice'>You place \the [I] into \the [src].</span>")
 
 //mouse drop another mob or self
 /obj/machinery/disposal/MouseDrop_T(mob/living/target, mob/living/user)
@@ -340,7 +340,7 @@
 			visible_message("<span class='notice'>[AM] lands in [src].</span>")
 			update_icon()
 		else
-			visible_message("<span class='notice'>[AM] bounces off of [src]'s rim!</span>")
+			visible_message("<span class='notice'>[AM] bounces off [src]'s rim!</span>")
 			return ..()
 	else
 		return ..()
