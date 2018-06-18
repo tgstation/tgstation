@@ -592,3 +592,10 @@
 	id = "pax"
 	results = list("pax" = 3)
 	required_reagents  = list("mindbreaker" = 1, "synaptizine" = 1, "water" = 1)
+	
+	
+/datum/chemical_reaction/holywater
+	name = "Holy Water"
+	id = "holywater"
+	results = list("holywater" = 3)
+	required_reagents = list("water" = 1, "mercury" = 1, "wine" = 1)
