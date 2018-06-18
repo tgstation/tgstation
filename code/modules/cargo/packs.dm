@@ -342,9 +342,9 @@
 	name = "Stun Batons Crate"
 	desc = "Arm the Civil Protection Forces with three stun batons. Batteries included. Requires Security access to open."
 	cost = 1000
-	contains = list(/obj/item/melee/baton/loaded,
-					/obj/item/melee/baton/loaded,
-					/obj/item/melee/baton/loaded)
+	contains = list(/obj/item/melee/stunner/baton/loaded,
+					/obj/item/melee/stunner/baton/loaded,
+					/obj/item/melee/stunner/baton/loaded)
 	crate_name = "stun baton crate"
 
 /datum/supply_pack/security/taser

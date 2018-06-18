@@ -327,7 +327,7 @@
 	icon_state = "0-4"
 	},
 /obj/structure/rack,
-/obj/item/melee/baton/cattleprod,
+/obj/item/melee/stunner/cattleprod,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel{
 	icon_state = "dark"

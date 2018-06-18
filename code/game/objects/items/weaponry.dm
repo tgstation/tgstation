@@ -253,7 +253,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		to_chat(user, "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>")
 
 	else if(istype(I, /obj/item/assembly/igniter) && !(I.item_flags & NODROP))
-		var/obj/item/melee/baton/cattleprod/P = new /obj/item/melee/baton/cattleprod
+		var/obj/item/melee/stunner/cattleprod/P = new /obj/item/melee/stunner/cattleprod
 
 		remove_item_from_storage(user)
 

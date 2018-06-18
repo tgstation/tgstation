@@ -42,7 +42,7 @@
 			to_chat(user, "<span class='warning'>You need to wield both paddles, and [S.defib] must be powered!</span>")
 			return FALSE
 	if(istype(tool, /obj/item/melee/baton))
-		var/obj/item/melee/baton/B = tool
+		var/obj/item/melee/stunner/baton/B = tool
 		if(!B.status)
 			to_chat(user, "<span class='warning'>[B] needs to be active!</span>")
 			return FALSE

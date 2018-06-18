@@ -130,12 +130,12 @@
 /turf/open/indestructible,
 /area/awaymission/vr/murderdome)
 "q" = (
-/obj/item/melee/baton/loaded,
-/obj/item/melee/baton/loaded,
-/obj/item/melee/baton/loaded,
-/obj/item/melee/baton/loaded,
-/obj/item/melee/baton/loaded,
-/obj/item/melee/baton/loaded,
+/obj/item/melee/stunner/baton/loaded,
+/obj/item/melee/stunner/baton/loaded,
+/obj/item/melee/stunner/baton/loaded,
+/obj/item/melee/stunner/baton/loaded,
+/obj/item/melee/stunner/baton/loaded,
+/obj/item/melee/stunner/baton/loaded,
 /obj/item/melee/transforming/energy/sword/saber,
 /obj/item/melee/transforming/energy/sword/saber,
 /obj/item/melee/transforming/energy/sword/saber,

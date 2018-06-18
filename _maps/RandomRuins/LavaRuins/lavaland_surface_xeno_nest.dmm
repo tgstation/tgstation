@@ -92,7 +92,7 @@
 /obj/item/clothing/mask/facehugger/impregnated,
 /obj/item/clothing/under/rank/security,
 /obj/item/clothing/suit/armor/vest,
-/obj/item/melee/baton/loaded,
+/obj/item/melee/stunner/baton/loaded,
 /obj/item/clothing/head/helmet,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)

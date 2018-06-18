@@ -511,7 +511,7 @@
 			return FALSE
 
 	if(istype(O, /obj/item/melee/baton))
-		var/obj/item/melee/baton/B = O
+		var/obj/item/melee/stunner/baton/B = O
 		if(B.cell)
 			if(B.cell.charge > 0 && B.status == 1)
 				flick("baton_active", src)

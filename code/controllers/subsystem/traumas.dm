@@ -66,7 +66,7 @@ SUBSYSTEM_DEF(traumas)
 												 /obj/item/clothing/mask/gas/clown_hat, /obj/item/instrument/bikehorn,
 												 /obj/item/pda/clown, /obj/item/grown/bananapeel)),
 
-					  "greytide"  = typecacheof(list(/obj/item/clothing/under/color/grey, /obj/item/melee/baton/cattleprod,
+					  "greytide"  = typecacheof(list(/obj/item/clothing/under/color/grey, /obj/item/melee/stunner/cattleprod,
 												 /obj/item/twohanded/spear, /obj/item/clothing/mask/gas)),
 
 					  "lizards"   = typecacheof(list(/obj/item/toy/plush/lizardplushie, /obj/item/reagent_containers/food/snacks/kebab/tail,
@@ -130,7 +130,7 @@ SUBSYSTEM_DEF(traumas)
 						/obj/structure/table/abductor, /obj/structure/table/optable/abductor, /obj/structure/closet/abductor, /obj/item/organ/heart/gland,
 						/obj/machinery/abductor, /obj/item/crowbar/abductor, /obj/item/screwdriver/abductor, /obj/item/weldingtool/abductor,
 						/obj/item/wirecutters/abductor, /obj/item/wrench/abductor, /obj/item/stack/sheet/mineral/abductor)),
-						
+
 						"birds" = typecacheof(list(/obj/item/clothing/mask/gas/plaguedoctor, /obj/item/reagent_containers/food/snacks/cracker,
 						/obj/item/clothing/suit/chickensuit, /obj/item/clothing/head/chicken,
 						/obj/item/clothing/suit/toggle/owlwings, /obj/item/clothing/under/owl, /obj/item/clothing/mask/gas/owl_mask,

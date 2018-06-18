@@ -148,7 +148,7 @@
 			F.crit_fail = 0
 			F.update_icon()
 		else if(istype(I, /obj/item/melee/baton))
-			var/obj/item/melee/baton/B = I
+			var/obj/item/melee/stunner/baton/B = I
 			if(B.cell)
 				B.cell.charge = B.cell.maxcharge
 		else if(istype(I, /obj/item/gun/energy))
@@ -328,7 +328,7 @@
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/restraints/handcuffs/cable/zipties,
-		/obj/item/melee/baton/loaded,
+		/obj/item/melee/stunner/baton/loaded,
 		/obj/item/gun/energy/disabler/cyborg,
 		/obj/item/clothing/mask/gas/sechailer/cyborg)
 	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
