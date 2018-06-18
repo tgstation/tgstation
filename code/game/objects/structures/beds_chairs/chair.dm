@@ -196,7 +196,6 @@
 	name = "shuttle seat"
 	desc = "A comfortable, secure seat. It has a more sturdy looking buckling system, for smoother flights."
 	icon_state = "shuttle_chair"
-	item_chair = null
 
 /obj/structure/chair/comfy/shuttle/GetArmrest()
 	return mutable_appearance('icons/obj/chairs.dmi', "shuttle_chair_armrest")
