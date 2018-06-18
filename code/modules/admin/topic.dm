@@ -1191,10 +1191,13 @@
 		var/message_id = sanitizeSQL("[href_list["messageedits"]]")
 		var/datum/DBQuery/query_get_message_edits = SSdbcore.NewQuery("SELECT edits FROM [format_table_name("messages")] WHERE id = '[message_id]'")
 		if(!query_get_message_edits.warn_execute())
+			qdel(query_get_message_edits)
 			return
 		if(query_get_message_edits.NextRow())
 			var/edit_log = query_get_message_edits.item[1]
-			usr << browse(edit_log,"window=noteedits")
+			if(!QDELETED(usr))
+				usr << browse(edit_log,"window=noteedits")
+		qdel(query_get_message_edits)
 
 	else if(href_list["newban"])
 		if(!check_rights(R_BAN))

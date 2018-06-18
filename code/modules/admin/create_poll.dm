@@ -36,7 +36,8 @@
 		return
 	endtime = sanitizeSQL(endtime)
 	var/datum/DBQuery/query_validate_time = SSdbcore.NewQuery("SELECT IF(STR_TO_DATE('[endtime]','%Y-%c-%d %T') > NOW(), STR_TO_DATE('[endtime]','%Y-%c-%d %T'), 0)")
-	if(!query_validate_time.warn_execute())
+	if(!query_validate_time.warn_execute() || QDELETED(usr) || !src)
+		qdel(query_validate_time)
 		return
 	if(query_validate_time.NextRow())
 		var/checktime = text2num(query_validate_time.item[1])
@@ -44,6 +45,7 @@
 			to_chat(src, "Datetime entered is improperly formatted or not later than current server time.")
 			return
 		endtime = query_validate_time.item[1]
+	qdel(query_validate_time)
 	var/adminonly
 	switch(alert("Admin only poll?",,"Yes","No","Cancel"))
 		if("Yes")
@@ -124,18 +126,24 @@
 					add_option = 0
 				else
 					return 0
+	var/m1 = "[key_name(usr)] has created a new server poll. Poll type: [polltype] - Admin Only: [adminonly ? "Yes" : "No"] - Question: [question]"
+	var/m2 = "[key_name_admin(usr)] has created a new server poll. Poll type: [polltype] - Admin Only: [adminonly ? "Yes" : "No"]<br>Question: [question]"
 	var/datum/DBQuery/query_polladd_question = SSdbcore.NewQuery("INSERT INTO [format_table_name("poll_question")] (polltype, starttime, endtime, question, adminonly, multiplechoiceoptions, createdby_ckey, createdby_ip, dontshow) VALUES ('[polltype]', '[starttime]', '[endtime]', '[question]', '[adminonly]', '[choice_amount]', '[sql_ckey]', INET_ATON('[address]'), '[dontshow]')")
 	if(!query_polladd_question.warn_execute())
+		qdel(query_polladd_question)
 		return
+	qdel(query_polladd_question)
 	if(polltype != POLLTYPE_TEXT)
 		var/pollid = 0
 		var/datum/DBQuery/query_get_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
 		if(!query_get_id.warn_execute())
+			qdel(query_get_id)
 			return
 		if(query_get_id.NextRow())
 			pollid = query_get_id.item[1]
+		qdel(query_get_id)
 		for(var/list/i in sql_option_list)
 			i |= list("pollid" = "'[pollid]'")
 		SSdbcore.MassInsert(format_table_name("poll_option"), sql_option_list, warn = 1)
-	log_admin("[key_name(usr)] has created a new server poll. Poll type: [polltype] - Admin Only: [adminonly ? "Yes" : "No"] - Question: [question]")
-	message_admins("[key_name_admin(usr)] has created a new server poll. Poll type: [polltype] - Admin Only: [adminonly ? "Yes" : "No"]<br>Question: [question]")
+	log_admin(m1)
+	message_admins(m2)

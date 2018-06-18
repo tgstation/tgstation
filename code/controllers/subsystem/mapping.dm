@@ -219,6 +219,7 @@ SUBSYSTEM_DEF(mapping)
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET map_name = '[config.map_name]' WHERE id = [GLOB.round_id]")
 		query_round_map_name.Execute()
+		qdel(query_round_map_name)
 
 #ifndef LOWMEMORYMODE
 	// TODO: remove this when the DB is prepared for the z-levels getting reordered
