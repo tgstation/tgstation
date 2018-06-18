@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "The gulag shuttle no longer moves instantly when returned via the claim console."
