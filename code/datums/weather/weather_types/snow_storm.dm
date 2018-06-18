@@ -1,10 +1,10 @@
 /datum/weather/snow_storm
 	name = "snow storm"
 	desc = "Harsh snowstorms roam the topside of this arctic planet, burying any area unfortunate enough to be in its path."
-	probability = 90
+	probability = 500
 
 	telegraph_message = "<span class='warning'>Drifting particles of snow begin to dust the surrounding area..</span>"
-	telegraph_duration = 300
+	telegraph_duration = 100
 	telegraph_overlay = "light_snow"
 
 	weather_message = "<span class='userdanger'><i>Harsh winds pick up as dense snow begins to fall from the sky! Seek shelter!</i></span>"
@@ -15,8 +15,8 @@
 	end_duration = 100
 	end_message = "<span class='boldannounce'>The snowfall dies down, it should be safe to go outside again.</span>"
 
-	area_type = /area/awaymission/snowdin/outside
-	target_trait = ZTRAIT_AWAY
+	area_type = /area/steppe
+	target_trait = ZTRAIT_CENTCOM
 
 	immunity_type = "snow"
 
@@ -24,5 +24,5 @@
 
 
 /datum/weather/snow_storm/weather_act(mob/living/L)
-	L.adjust_bodytemperature(-rand(5,15))
+	L.adjust_bodytemperature(-rand(5,10))
 
