@@ -120,7 +120,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/labor)
 "q" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -133,7 +133,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/labor)
 "s" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/machinery/flasher{
