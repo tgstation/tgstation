@@ -177,7 +177,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/giver_gases = giver.gases
 	//gas transfer
 	for(var/giver_id in giver_gases)
-		ASSERT_GAS(giver_id, gases)
+		ASSERT_GAS(giver_id, cached_gases)
 		cached_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
 
 	return 1
