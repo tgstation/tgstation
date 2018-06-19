@@ -181,19 +181,20 @@
 
 	add_fingerprint(user)
 
-	if((istype(I, /obj/item/weldingtool) || (user.has_trait(TRAIT_HANDY) && (istype(I, /obj/item/wrench)))) && user.a_intent == INTENT_HELP)
-		if(obj_integrity < max_integrity)
-			if(!I.tool_start_check(user, amount=0))
-				return
+	if(user.a_intent == INTENT_HELP)
+		if(istype(I, /obj/item/weldingtool) || (user.has_trait(TRAIT_HANDY) && (istype(I, /obj/item/wrench))))
+			if(obj_integrity < max_integrity)
+				if(!I.tool_start_check(user, amount=0))
+					return
 
-			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-			if(I.use_tool(src, user, 40, volume=50))
-				obj_integrity = max_integrity
-				update_nearby_icons()
-				to_chat(user, "<span class='notice'>You repair [src].</span>")
-		else
-			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
-		return
+				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+				if(I.use_tool(src, user, 40, volume=50))
+					obj_integrity = max_integrity
+					update_nearby_icons()
+					to_chat(user, "<span class='notice'>You repair [src].</span>")
+			else
+				to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
+			return
 
 	if(!(flags_1&NODECONSTRUCT_1))
 		if(istype(I, /obj/item/screwdriver))
