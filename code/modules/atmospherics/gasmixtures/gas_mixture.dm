@@ -373,7 +373,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/cached_gases = gases
 
 	for(var/id in cached_gases | sample_gases) // compare gases from either mixture
-		var/gas_moles = RETURN_GAS_MOLESE(id, cached_gases)
+		var/gas_moles = RETURN_GAS_MOLES(id, cached_gases)
 		var/sample_moles = RETURN_GAS_MOLES(id, sample_gases)
 		var/delta = abs(gas_moles - sample_moles)
 		if(delta > MINIMUM_MOLES_DELTA_TO_MOVE && \
