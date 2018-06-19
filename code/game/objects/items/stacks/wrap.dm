@@ -61,6 +61,7 @@
 	return 0
 
 /obj/item/stack/packageWrap/afterattack(obj/target, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(!istype(target))

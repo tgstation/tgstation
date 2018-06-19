@@ -383,6 +383,7 @@
 	M.lastattackerckey = user.ckey
 
 /obj/item/melee/blood_magic/afterattack(atom/target, mob/living/carbon/user, proximity)
+	. = ..()
 	if(invocation)
 		user.whisper(invocation, language = /datum/language/common)
 	if(health_cost)

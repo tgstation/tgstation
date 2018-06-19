@@ -34,6 +34,7 @@
 	var/one_use = TRUE
 
 /obj/item/upgradescroll/afterattack(obj/item/target, mob/user , proximity)
+	. = ..()
 	if(!proximity || !istype(target))
 		return
 

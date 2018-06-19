@@ -94,6 +94,7 @@
 		to_chat(user, "Timer set for [det_time] seconds.")
 
 /obj/item/grenade/plastic/afterattack(atom/movable/AM, mob/user, flag)
+	. = ..()
 	aim_dir = get_dir(user,AM)
 	if(!flag)
 		return
@@ -166,7 +167,6 @@
 	name = "C4"
 	desc = "Used to put holes in specific areas without too much extra hole. A saboteur's favorite."
 	gender = PLURAL
-	var/timer = 10
 	var/open_panel = 0
 	can_attach_mob = TRUE
 
@@ -187,7 +187,7 @@
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [name] at [ADMIN_COORDJMP(src)]",0,1)
 	message_admins("[key_name(user)] suicided with [name] at ([x],[y],[z])")
 	sleep(10)
-	explode(get_turf(user))
+	prime()
 	user.gib(1, 1)
 
 /obj/item/grenade/plastic/c4/attackby(obj/item/I, mob/user, params)
@@ -199,41 +199,7 @@
 	else
 		return ..()
 
-/obj/item/grenade/plastic/c4/attack_self(mob/user)
-	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
-	if(user.get_active_held_item() == src)
-		newtime = CLAMP(newtime, 10, 60000)
-		timer = newtime
-		to_chat(user, "Timer set for [timer] seconds.")
-
-/obj/item/grenade/plastic/c4/afterattack(atom/movable/AM, mob/user, flag)
-	if (!flag)
-		return
-	if(ismob(AM) && !can_attach_mob)
-		return
-	if(loc == AM)
-		return
-	if(AM.SendSignal(COMSIG_CONTAINS_STORAGE) && !AM.SendSignal(COMSIG_IS_STORAGE_LOCKED))
-		return
-
-	to_chat(user, "<span class='notice'>You start planting the bomb...</span>")
-
-	if(do_after(user, 30, target = AM))
-		if(!user.temporarilyRemoveItemFromInventory(src))
-			return
-		src.target = AM
-		moveToNullspace()
-
-		var/message = "[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_COORDJMP(target)] with [timer] second fuse"
-		GLOB.bombers += message
-		message_admins(message,0,1)
-		log_game("[key_name(user)] planted [name] on [target.name] at [COORD(target)] with [timer] second fuse")
-
-		target.add_overlay(plastic_overlay, TRUE)
-		to_chat(user, "<span class='notice'>You plant the bomb. Timer counting down from [timer].</span>")
-		addtimer(CALLBACK(src, .proc/explode), timer * 10)
-
-/obj/item/grenade/plastic/c4/proc/explode()
+/obj/item/grenade/plastic/c4/prime()
 	if(QDELETED(src))
 		return
 	var/turf/location

@@ -43,7 +43,7 @@
 				no_den_usage = 0
 		zap_self(user)
 	else
-		..()
+		. = ..()
 	update_icon()
 
 

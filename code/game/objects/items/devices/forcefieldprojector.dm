@@ -17,6 +17,7 @@
 	var/field_distance_limit = 7
 
 /obj/item/forcefield/afterattack(atom/target, mob/user, proximity_flag)
+	. = ..()
 	if(!check_allowed_items(target, 1))
 		return
 	if(istype(target, /obj/structure/projected_forcefield))

@@ -120,11 +120,6 @@
 
 	return 0
 
-
-/obj/item/reagent_containers/food/snacks/afterattack(obj/target, mob/user , proximity)
-	return
-
-
 /obj/item/reagent_containers/food/snacks/examine(mob/user)
 	..()
 	if(bitecount == 0)

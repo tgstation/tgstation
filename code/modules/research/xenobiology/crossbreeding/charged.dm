@@ -315,7 +315,7 @@ Charged extracts:
 	var/uses = 2
 
 /obj/item/slimepotion/spaceproof/afterattack(obj/item/clothing/C, mob/user, proximity)
-	..()
+	. = ..()
 	if(!uses)
 		qdel(src)
 		return
@@ -352,7 +352,7 @@ Charged extracts:
 	var/uses = 2
 
 /obj/item/slimepotion/lavaproof/afterattack(obj/item/C, mob/user, proximity)
-	..()
+	. = ..()
 	if(!uses)
 		qdel(src)
 		return ..()

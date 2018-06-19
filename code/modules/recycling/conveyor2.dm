@@ -348,6 +348,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		id = C.id
 
 /obj/item/conveyor_construct/afterattack(atom/A, mob/user, proximity)
+	. = ..()
 	if(!proximity || user.stat || !isfloorturf(A) || istype(A, /area/shuttle))
 		return
 	var/cdir = get_dir(A, user)
@@ -371,6 +372,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	id = "[rand()]" //this couldn't possibly go wrong
 
 /obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)
+	. = ..()
 	if(!proximity || user.stat || !isfloorturf(A) || istype(A, /area/shuttle))
 		return
 	var/found = 0

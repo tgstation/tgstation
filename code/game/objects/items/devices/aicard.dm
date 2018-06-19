@@ -17,7 +17,7 @@
 	return BRUTELOSS
 
 /obj/item/aicard/afterattack(atom/target, mob/user, proximity)
-	..()
+	. = ..()
 	if(!proximity || !target)
 		return
 	if(AI) //AI is on the card, implies user wants to upload it.

@@ -661,7 +661,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	to_chat(user, "<span class='info'>Message sent to [target_text]: \"[message]\"</span>")
 	// Reset the photo
 	photo = null
-	last_text = world.time 
+	last_text = world.time
 	if (everyone)
 		last_everyone = world.time
 
@@ -842,6 +842,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					user.show_message("<span class='notice'>No radiation detected.</span>")
 
 /obj/item/pda/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	switch(scanmode)

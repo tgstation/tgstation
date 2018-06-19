@@ -197,6 +197,7 @@ Borg Shaker
 					RG.add_reagent(reagent_ids[valueofi], 5)
 
 /obj/item/reagent_containers/borghypo/borgshaker/afterattack(obj/target, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 

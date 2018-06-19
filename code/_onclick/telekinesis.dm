@@ -114,6 +114,7 @@
 	update_icon()
 
 /obj/item/tk_grab/afterattack(atom/target, mob/living/carbon/user, proximity, params)//TODO: go over this
+	. = ..()
 	if(!target || !user)
 		return
 
