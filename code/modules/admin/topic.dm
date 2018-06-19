@@ -1060,7 +1060,7 @@
 			if(!check_if_greater_rights_than(M.client))
 				to_chat(usr, "<span class='danger'>Error: They have more rights than you do.</span>")
 				return
-			if(alert(usr, "Kick [key_name(M)]?", "CHATSHITGETBANGED", "Yes", "No") != "Yes")
+			if(alert(usr, "Kick [key_name(M)]?", "Confirm", "Yes", "No") != "Yes")
 				return
 			if(!M)
 				to_chat(usr, "<span class='danger'>Error: [M] no longer exists!</span>")
