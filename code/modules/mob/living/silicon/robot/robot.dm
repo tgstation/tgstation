@@ -180,6 +180,9 @@
 		mmi = null
 	if(connected_ai)
 		connected_ai.connected_robots -= src
+	if(istype(radio) && istype(radio.keyslot))
+		radio.keyslot.forceMove(T)
+		radio.keyslot = null
 	if(shell)
 		GLOB.available_ai_shells -= src
 	qdel(wires)
