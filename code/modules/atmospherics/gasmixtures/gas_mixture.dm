@@ -3,10 +3,7 @@ What are the archived variables for?
 	Calculations are done using the archived variables with the results merged into the regular variables.
 	This prevents race conditions that arise based on the order of tile processing.
 */
-#define MINIMUM_HEAT_CAPACITY	0.0003
-#define MINIMUM_MOLE_COUNT		0.01
-#define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
-															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
+
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
@@ -85,13 +82,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	if(!.)
 		. += HEAT_CAPACITY_VACUUM //we want vacuums in turfs to have the same heat capacity as space
 
-//prefer this in performance critical areas
-#define TOTAL_MOLES(cached_gases, out_var)\
-	out_var = 0;\
-	for(var/total_moles_id in cached_gases){\
-		out_var += cached_gases[total_moles_id][MOLES];\
-	}
-
 /datum/gas_mixture/proc/total_moles()
 	var/cached_gases = gases
 	TOTAL_MOLES(cached_gases, .)
@@ -148,9 +138,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/share(datum/gas_mixture/sharer)
 	//Performs air sharing calculations between two gas_mixtures assuming only 1 boundary length
 	//Returns: amount of gas exchanged (+ if sharer received)
-
-/datum/gas_mixture/proc/after_share(datum/gas_mixture/sharer)
-	//called on share's sharer to let it know it just got some gases
 
 /datum/gas_mixture/proc/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
 	//Performs temperature sharing calculations (via conduction) between two gas_mixtures assuming only 1 boundary length
@@ -352,7 +339,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	if(unique_gases.len) //if all gases were present in both mixtures, we know that no gases are 0
 		garbage_collect(cached_gases - sharer_gases) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
 		sharer.garbage_collect(sharer_gases - cached_gases) //the reverse is equally true
-	sharer.after_share(src, atmos_adjacent_turfs)
 	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/our_moles
 		TOTAL_MOLES(cached_gases,our_moles)
@@ -360,9 +346,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		TOTAL_MOLES(sharer_gases,their_moles)
 		var/delta_pressure = temperature_archived*(our_moles + moved_moles) - sharer.temperature_archived*(their_moles - moved_moles)
 		return delta_pressure * R_IDEAL_GAS_EQUATION / volume
-
-/datum/gas_mixture/after_share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
-	return
 
 /datum/gas_mixture/temperature_share(datum/gas_mixture/sharer, conduction_coefficient, sharer_temperature, sharer_heat_capacity)
 	//transfer of thermal energy (via conduction) between self and sharer
@@ -389,10 +372,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/cached_gases = gases
 
 	for(var/id in cached_gases | sample_gases) // compare gases from either mixture
-		var/gas_moles = cached_gases[id]
-		gas_moles = gas_moles ? gas_moles[MOLES] : 0
-		var/sample_moles = sample_gases[id]
-		sample_moles = sample_moles ? sample_moles[MOLES] : 0
+		var/gas_moles = RETURN_GAS_MOLES_CACHE(id, cached_gases)
+		var/sample_moles = RETURN_GAS_MOLES_CACHE(id, sample_gases)
 		var/delta = abs(gas_moles - sample_moles)
 		if(delta > MINIMUM_MOLES_DELTA_TO_MOVE && \
 			delta > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)

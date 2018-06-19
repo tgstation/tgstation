@@ -23,9 +23,6 @@
 	. = ..(sharer, 0)
 	garbage_collect()
 
-/datum/gas_mixture/immutable/after_share()
-	garbage_collect()
-
 /datum/gas_mixture/immutable/react()
 	return 0 //we're immutable.
 

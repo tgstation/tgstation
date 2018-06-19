@@ -8,39 +8,41 @@
 /turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 	return
 
+#define SUFFICIENT_HYDROCARBONS	(plasma > MINIMUM_MOLE_COUNT || tritium > MINIMUM_MOLE_COUNT)
+#define SUFFICIENT_OXYGEN		(oxygen > MINIMUM_MOLE_COUNT)	
 
 /turf/open/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	var/datum/gas_mixture/air_contents = return_air()
 	if(!air_contents)
-		return 0
+		return FALSE
 
-	var/oxy = air_contents.gases[/datum/gas/oxygen] ? air_contents.gases[/datum/gas/oxygen][MOLES] : 0
-	var/tox = air_contents.gases[/datum/gas/plasma] ? air_contents.gases[/datum/gas/plasma][MOLES] : 0
-	var/trit = air_contents.gases[/datum/gas/tritium] ? air_contents.gases[/datum/gas/tritium][MOLES] : 0
+	var/oxygen = RETURN_GAS_MOLES(/datum/gas/oxygen, air_contents)
+	var/plasma = RETURN_GAS_MOLES(/datum/gas/plasma, air_contents)
+	var/tritium = RETURN_GAS_MOLES(/datum/gas/tritium, air_contents)
 	if(active_hotspot)
 		if(soh)
-			if((tox > 0.5 || trit > 0.5) && oxy > 0.5)
+			if(SUFFICIENT_HYDROCARBONS && SUFFICIENT_OXYGEN)
 				if(active_hotspot.temperature < exposed_temperature)
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
 					active_hotspot.volume = exposed_volume
-		return 1
+		return TRUE
 
-	var/igniting = 0
+	var/igniting = FALSE
 
-	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (tox > 0.5 || trit > 0.5))
-		igniting = 1
+	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && SUFFICIENT_HYDROCARBONS)
+		igniting = TRUE
 
 	if(igniting)
-		if(oxy < 0.5)
-			return 0
+		if(!SUFFICIENT_OXYGEN)
+			return FALSE
 
 		active_hotspot = new /obj/effect/hotspot(src)
 		active_hotspot.temperature = exposed_temperature
 		active_hotspot.volume = exposed_volume
 
+		//remove just_spawned protection if no longer processing this cell
 		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
-			//remove just_spawned protection if no longer processing this cell
 		SSair.add_to_active(src, 0)
 	else	
 		var/datum/gas_mixture/heating = air_contents.remove_ratio(exposed_volume/air_contents.volume)
@@ -261,4 +263,7 @@
 	. = ..()
 	if(!isliving(loc))
 		return INITIALIZE_HINT_QDEL
+
+#undef SUFFICIENT_HYDROCARBONS
+#undef SUFFICIENT_OXYGEN
 #undef INSUFFICIENT
