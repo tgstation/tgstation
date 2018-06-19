@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(labor_sheet_values)
+
 /**********************Prisoners' Console**************************/
 
 /obj/machinery/mineral/labor_claim_console
@@ -19,6 +21,16 @@
 	Radio = new/obj/item/radio(src)
 	Radio.listening = FALSE
 	locate_stacking_machine()
+
+	if(!GLOB.labor_sheet_values.len)
+		var/sheet_list = list()
+		for(var/sheet_type in subtypesof(/obj/item/stack/sheet))
+			var/obj/item/stack/sheet/sheet = sheet_type
+			if(!initial(sheet.point_value))
+				continue
+			sheet_list[initial(sheet.name)] = initial(sheet.point_value)
+		for(var/sheet_name in sortList(sheet_list))
+			GLOB.labor_sheet_values += list(list("ore" = sheet_name, "value" = sheet_list[sheet_name]))
 
 /obj/machinery/mineral/labor_claim_console/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id/prisoner))
@@ -52,17 +64,10 @@
 	if(check_auth())
 		can_go_home = TRUE
 
-	var/list/ores = list()
 	if(stacking_machine)
 		data["unclaimed_points"] = stacking_machine.points
-		for(var/type in stacking_machine.ore_values)
-			var/obj/ore = type
-			var/list/O = list()
-			O["ore"] = initial(ore.name)
-			O["value"] = stacking_machine.ore_values[ore]
-			ores += list(O)
 
-	data["ores"] = ores
+	data["ores"] = GLOB.labor_sheet_values
 	data["can_go_home"] = can_go_home
 
 	return data
@@ -128,13 +133,10 @@
 
 
 /obj/machinery/mineral/stacking_machine/laborstacker
-	var/points = 0 //The unclaimed value of ore stacked.  Value for each ore loosely relative to its rarity.
-	var/list/ore_values = list(/obj/item/stack/sheet/glass = 1, /obj/item/stack/sheet/metal = 2, /obj/item/stack/sheet/rglass = 4, /obj/item/stack/sheet/mineral/gold = 20, /obj/item/stack/sheet/mineral/silver = 20, /obj/item/stack/sheet/mineral/uranium = 20, /obj/item/stack/sheet/mineral/titanium = 20, /obj/item/stack/sheet/mineral/plasma = 20, /obj/item/stack/sheet/plasteel = 23, /obj/item/stack/sheet/plasmaglass = 23, /obj/item/stack/sheet/mineral/diamond = 25, /obj/item/stack/sheet/bluespace_crystal = 30, /obj/item/stack/sheet/mineral/plastitanium = 45, /obj/item/stack/sheet/mineral/bananium = 50)
+	var/points = 0 //The unclaimed value of ore stacked.
 
 /obj/machinery/mineral/stacking_machine/laborstacker/process_sheet(obj/item/stack/sheet/inp)
-	for(var/ore in ore_values)
-		if(istype(inp, ore))
-			points += ore_values[ore] * inp.amount
+	points += inp.point_value * inp.amount
 	..()
 
 
