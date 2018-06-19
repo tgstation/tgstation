@@ -27,7 +27,7 @@ WORKDIR /tgstation
 
 COPY . .
 
-RUN mkdir data && mkdir /root/.byond/bin && apt-get install -y --no-install-recommends libssl1.0.0:i386
+RUN mkdir data && mkdir /root/.byond/bin
 
 VOLUME [ "/tgstation/config", "/tgstation/data" ]
 
