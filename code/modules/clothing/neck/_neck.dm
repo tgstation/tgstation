@@ -100,6 +100,11 @@
 	icon_state = "scarf"
 	color = "#4A4A4B" //Grey but it looks black
 
+/obj/item/clothing/neck/scarf/pink
+	name = "pink scarf"
+	icon_state = "scarf"
+	color = "#F699CD" //Pink
+
 /obj/item/clothing/neck/scarf/red
 	name = "red scarf"
 	icon_state = "scarf"
@@ -118,7 +123,7 @@
 /obj/item/clothing/neck/scarf/purple
 	name = "purple scarf"
 	icon_state = "scarf"
-	color = "#9557C5" //purple
+	color = "#9557C5" //Purple
 
 /obj/item/clothing/neck/scarf/yellow
 	name = "yellow scarf"
@@ -128,7 +133,7 @@
 /obj/item/clothing/neck/scarf/orange
 	name = "orange scarf"
 	icon_state = "scarf"
-	color = "#C67A4B" //orange
+	color = "#C67A4B" //Orange
 
 /obj/item/clothing/neck/scarf/cyan
 	name = "cyan scarf"

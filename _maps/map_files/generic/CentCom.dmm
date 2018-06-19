@@ -13477,7 +13477,7 @@
 /area/centcom/holding)
 "Nw" = (
 /obj/machinery/recharge_station,
-/turf/open/floor/plasteel/airless/white,
+/turf/open/floor/plasteel/white,
 /area/centcom/holding)
 "Ny" = (
 /obj/machinery/modular_computer/console/preset/research,
@@ -13554,7 +13554,7 @@
 	name = "Lock Control";
 	pixel_y = -28
 	},
-/turf/open/floor/plasteel/airless/white,
+/turf/open/floor/plasteel/white,
 /area/centcom/holding)
 "OG" = (
 /obj/structure/dresser,
@@ -13572,7 +13572,7 @@
 /area/centcom/holding)
 "Pa" = (
 /obj/machinery/washing_machine,
-/turf/open/floor/plasteel/airless/white,
+/turf/open/floor/plasteel/white,
 /area/centcom/holding)
 "Ph" = (
 /obj/structure/closet/crate/bin,
@@ -13670,7 +13670,7 @@
 /obj/structure/toilet{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless/white,
+/turf/open/floor/plasteel/white,
 /area/centcom/holding)
 "QL" = (
 /obj/structure/flora/ausbushes/fernybush,
@@ -13752,7 +13752,7 @@
 /obj/machinery/shower{
 	pixel_y = 12
 	},
-/turf/open/floor/plasteel/airless/white,
+/turf/open/floor/plasteel/white,
 /area/centcom/holding)
 "SG" = (
 /obj/structure/table,
@@ -13928,7 +13928,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/airless/white,
+/turf/open/floor/plasteel/white,
 /area/centcom/holding)
 "VF" = (
 /obj/structure/rack,
@@ -14172,7 +14172,7 @@
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
 "ZW" = (
-/turf/open/floor/plasteel/airless/white,
+/turf/open/floor/plasteel/white,
 /area/centcom/holding)
 "ZX" = (
 /obj/machinery/door/airlock/centcom{

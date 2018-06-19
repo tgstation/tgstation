@@ -206,7 +206,18 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	for(var/I in targets)
 		//Grab us a client if possible
-		var/client/C = grab_client(I)
+		var/client/C
+		if (ismob(I))
+			var/mob/M = I
+			if(M.client)
+				C = M.client
+		else if(istype(I, /client))
+			C = I
+		else if(istype(I, /datum/mind))
+			var/datum/mind/M = I
+			if(M.current && M.current.client)
+				C = M.current.client
+			
 
 		if (!C)
 			continue
@@ -224,15 +235,3 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
 		C << output(url_encode(url_encode(message)), "browseroutput:output")
-
-/proc/grab_client(target)
-	if(istype(target, /client))
-		return target
-	else if(ismob(target))
-		var/mob/M = target
-		if(M.client)
-			return M.client
-	else if(istype(target, /datum/mind))
-		var/datum/mind/M = target
-		if(M.current && M.current.client)
-			return M.current.client

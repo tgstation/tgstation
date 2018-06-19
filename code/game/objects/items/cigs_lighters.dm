@@ -321,6 +321,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	list_reagents = list("nicotine" = 15, "mushroomhallucinogen" = 35)
 	starts_lit = TRUE
 
+/obj/item/clothing/mask/cigarette/rollie/cannabis
+	list_reagents = list("space_drugs" = 15, "lipolicide" = 35)
+
+/obj/item/clothing/mask/cigarette/rollie/mindbreaker
+	list_reagents = list("mindbreaker" = 35, "lipolicide" = 15)	
+
 /obj/item/cigbutt/roach
 	name = "roach"
 	desc = "A manky old roach, or for non-stoners, a used rollup."
@@ -385,7 +391,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /////////////////
 /obj/item/clothing/mask/cigarette/pipe
 	name = "smoking pipe"
-	desc = "A pipe, for smoking. Probably made of meershaum or something."
+	desc = "A pipe, for smoking. Probably made of meerschaum or something."
 	icon_state = "pipeoff"
 	item_state = "pipeoff"
 	icon_on = "pipeon"  //Note - these are in masks.dmi

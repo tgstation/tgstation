@@ -35,6 +35,7 @@
 		            /obj/item/clothing/neck/tie/red = 1,
 		            /obj/item/clothing/neck/tie/black = 1,
 		            /obj/item/clothing/neck/tie/horrible = 1,
+		            /obj/item/clothing/neck/scarf/pink = 1,
 		            /obj/item/clothing/neck/scarf/red = 1,
 		            /obj/item/clothing/neck/scarf/green = 1,
 		            /obj/item/clothing/neck/scarf/darkblue = 1,
