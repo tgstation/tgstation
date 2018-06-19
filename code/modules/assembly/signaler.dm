@@ -187,6 +187,7 @@ Code:
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	var/anomaly_type = /obj/effect/anomaly
+	resistance_flags = FIRE_PROOF
 
 /obj/item/assembly/signaler/anomaly/receive_signal(datum/signal/signal)
 	if(!signal)
