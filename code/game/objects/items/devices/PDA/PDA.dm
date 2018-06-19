@@ -92,8 +92,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 	..()
 	if(!id && !inserted_item)
 		return
-	else
-		to_chat(user, "<span class='notice'>Alt-click to remove contents.</span>")
+
+	if(id)
+		to_chat(user, "<span class='notice'>Alt-click to remove the id.</span>")
+
+	if(inserted_item && (!isturf(loc)))
+		to_chat(user, "<span class='notice'>Ctrl-click to remove [inserted_item].</span>")
 
 /obj/item/pda/Initialize()
 	. = ..()
@@ -711,6 +715,15 @@ GLOBAL_LIST_EMPTY(PDAs)
 			remove_id()
 		else
 			remove_pen()
+
+/obj/item/pda/CtrlClick()
+	..()
+
+	if(issilicon(usr))
+		return
+
+	if(usr.canUseTopic(src) && !isturf(loc))
+		remove_pen()
 
 /obj/item/pda/verb/verb_remove_id()
 	set category = "Object"
