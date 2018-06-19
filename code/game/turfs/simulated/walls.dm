@@ -180,7 +180,8 @@
 	if((user.a_intent != INTENT_HELP) || !LAZYLEN(dent_decals))
 		return FALSE
 
-	if(istype(W, /obj/item/weldingtool))
+	var/mob/living/carbon/human/H = user
+	if(istype(W, /obj/item/weldingtool) || (H.has_trait(TRAIT_HANDY) && (istype(W, /obj/item/wrench))))
 		if(!W.tool_start_check(user, amount=0))
 			return FALSE
 

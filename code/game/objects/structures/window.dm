@@ -181,7 +181,7 @@
 
 	add_fingerprint(user)
 
-	if(istype(I, /obj/item/weldingtool) && user.a_intent == INTENT_HELP)
+	if((istype(I, /obj/item/weldingtool) || (user.has_trait(TRAIT_HANDY) && (istype(I, /obj/item/wrench)))) && user.a_intent == INTENT_HELP)
 		if(obj_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount=0))
 				return

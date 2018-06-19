@@ -48,6 +48,14 @@
 	lose_text = "<span class='danger'>You feel clumsy again.</span>"
 
 
+/datum/quirk/handy
+	name = "Handy"
+	desc = "You're great at repairing!"
+	value = 2
+	mob_trait = TRAIT_HANDY
+	gain_text = "<span class='notice'>You feel!</span>"
+	lose_text = "<span class='danger'>You feel.</span>"
+
 
 /datum/quirk/jolly
 	name = "Jolly"
