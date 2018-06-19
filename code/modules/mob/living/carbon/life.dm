@@ -462,10 +462,11 @@
 //MONKEYS WITH TOO MUCH CHOLOESTROL//
 /////////////////////////////////////
 
-/mob/living/carbon/proc/can_heartattack()
+/mob/living/carbon/proc/can_heartattack(obj/item/organ/heart/heart)
 	if(dna && dna.species && (NOBLOOD in dna.species.species_traits)) //not all carbons have species!
 		return FALSE
-	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+	if(!heart)
+		heart = getorganslot(ORGAN_SLOT_HEART)
 	if(!heart || heart.synthetic)
 		return FALSE
 	return TRUE

@@ -326,7 +326,15 @@
 		HM.on_life(src)
 
 /mob/living/carbon/human/proc/handle_heart()
-	if(!can_heartattack())
+	var/datum/species/S = dna.species
+	if(S && NOBLOOD in S.species_traits)
+		return
+	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+	if(!istype(heart))
+		adjustOxyLoss(8)
+		return
+
+	if(!can_heartattack(heart))
 		return
 
 	var/we_breath = !has_trait(TRAIT_NOBREATH, SPECIES_TRAIT)

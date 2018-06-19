@@ -237,22 +237,20 @@
 		OpenMenu(usr)
 		UpdateLinked()
 
-	check_access(obj/item/card/id/I, var/passing = 0)
-		if(istype(I, /obj/item/device/pda))
-			var/obj/item/device/pda/pda = I
-			I = pda.id
-		if(!istype(I) || !I.access) //not ID or no access
-			return 0
-
-		var/list/to_use = (passing ? req_passing_access : req_access)
-
-		if(length(to_use) <= 0)
-			return 1
-
-		for(var/req in to_use)
-			if(!(req in I.access)) //doesn't have this access
-				return 0
-		return 1
+	check_access_list(list/access_list)
+		. = ..()
+		if(.)
+			return .
+		if(islist(req_passing_access))
+			for(var/T in req_passing_access)
+				var/theaccess = T
+				if(istext(theaccess))
+					theaccess = text2num(theaccess)
+				if(!isnum(theaccess))
+					continue
+				if(theaccess in access_list)
+					return TRUE
+		return FALSE
 
 	attack_hand(var/mob/living/user)
 		if(..())
