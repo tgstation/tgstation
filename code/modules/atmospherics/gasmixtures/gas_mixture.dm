@@ -177,7 +177,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/giver_gases = giver.gases
 	//gas transfer
 	for(var/giver_id in giver_gases)
-		ASSERT_GAS(giver_id, src)
+		ASSERT_GAS(giver_id, gases)
 		cached_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
 
 	return 1
@@ -239,7 +239,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	temperature = sample.temperature
 	for(var/id in sample_gases)
-		ASSERT_GAS(id,src)
+		ASSERT_GAS(id, cached_gases)
 		cached_gases[id][MOLES] = sample_gases[id][MOLES]
 
 	//remove all gases not in the sample
@@ -298,7 +298,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	for(var/id in sharer_gases - cached_gases) // create gases not in our cache
 		ADD_GAS(id, gases)
 	for(var/id in cached_gases) // transfer gases
-		ASSERT_GAS(id, sharer)
+		ASSERT_GAS(id, sharer_gases)
 
 		var/gas = cached_gases[id]
 		var/sharergas = sharer_gases[id]

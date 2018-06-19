@@ -152,7 +152,7 @@
 		if(location && prob(10) && burned_fuel > TRITIUM_MINIMUM_RADIATION_ENERGY) //woah there let's not crash the server
 			radiation_pulse(location, energy_released/TRITIUM_BURN_RADIOACTIVITY_FACTOR)
 
-		ASSERT_GAS(/datum/gas/water_vapor, air) //oxygen+more-or-less hydrogen=H2O
+		ASSERT_GAS(/datum/gas/water_vapor, cached_gases) //oxygen+more-or-less hydrogen=H2O
 		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel/TRITIUM_BURN_OXY_FACTOR
 
 		cached_results["fire"] += burned_fuel
@@ -222,10 +222,10 @@
 			cached_gases[/datum/gas/plasma][MOLES] = QUANTIZE(cached_gases[/datum/gas/plasma][MOLES] - plasma_burn_rate)
 			cached_gases[/datum/gas/oxygen][MOLES] = QUANTIZE(cached_gases[/datum/gas/oxygen][MOLES] - (plasma_burn_rate * oxygen_burn_rate))
 			if (super_saturation)
-				ASSERT_GAS(/datum/gas/tritium,air)
+				ASSERT_GAS(/datum/gas/tritium,cached_gases)
 				cached_gases[/datum/gas/tritium][MOLES] += plasma_burn_rate
 			else
-				ASSERT_GAS(/datum/gas/carbon_dioxide,air)
+				ASSERT_GAS(/datum/gas/carbon_dioxide,cached_gases)
 				cached_gases[/datum/gas/carbon_dioxide][MOLES] += plasma_burn_rate
 
 			energy_released += FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
@@ -371,7 +371,7 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = min(temperature/(FIRE_MINIMUM_TEMPERATURE_TO_EXIST*100),cached_gases[/datum/gas/oxygen][MOLES],cached_gases[/datum/gas/nitrogen][MOLES])
 	var/energy_used = heat_efficency*NITRYL_FORMATION_ENERGY
-	ASSERT_GAS(/datum/gas/nitryl,air)
+	ASSERT_GAS(/datum/gas/nitryl,cached_gases)
 	if ((cached_gases[/datum/gas/oxygen][MOLES] - heat_efficency < 0 )|| (cached_gases[/datum/gas/nitrogen][MOLES] - heat_efficency < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	cached_gases[/datum/gas/oxygen][MOLES] -= heat_efficency
@@ -406,7 +406,7 @@
 	var/energy_released = 2*reaction_efficency*FIRE_CARBON_ENERGY_RELEASED
 	if ((cached_gases[/datum/gas/tritium][MOLES] - reaction_efficency < 0 )|| (cached_gases[/datum/gas/plasma][MOLES] - (2*reaction_efficency) < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
-	ASSERT_GAS(/datum/gas/bz,air)
+	ASSERT_GAS(/datum/gas/bz,cached_gases)
 	cached_gases[/datum/gas/bz][MOLES] += reaction_efficency
 	cached_gases[/datum/gas/tritium][MOLES] -= reaction_efficency
 	cached_gases[/datum/gas/plasma][MOLES]  -= 2*reaction_efficency
@@ -437,7 +437,7 @@
 	var/heat_scale = min(air.temperature/STIMULUM_HEAT_SCALE,cached_gases[/datum/gas/tritium][MOLES],cached_gases[/datum/gas/plasma][MOLES],cached_gases[/datum/gas/nitryl][MOLES])
 	var/stim_energy_change = heat_scale + STIMULUM_FIRST_RISE*(heat_scale**2) - STIMULUM_FIRST_DROP*(heat_scale**3) + STIMULUM_SECOND_RISE*(heat_scale**4) - STIMULUM_ABSOLUTE_DROP*(heat_scale**5)
 
-	ASSERT_GAS(/datum/gas/stimulum,air)
+	ASSERT_GAS(/datum/gas/stimulum,cached_gases)
 	if ((cached_gases[/datum/gas/tritium][MOLES] - heat_scale < 0 )|| (cached_gases[/datum/gas/plasma][MOLES] - heat_scale < 0) || (cached_gases[/datum/gas/nitryl][MOLES] - heat_scale < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	cached_gases[/datum/gas/stimulum][MOLES]+= heat_scale/10
