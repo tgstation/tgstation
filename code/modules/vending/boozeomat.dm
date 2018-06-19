@@ -38,6 +38,10 @@
 	req_access = list(ACCESS_BAR)
 	refill_canister = /obj/item/vending_refill/boozeomat
 
+/obj/machinery/vending/boozeomat/all_access
+	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one. This model appears to have no access restrictions."
+	req_access = null
+
 /obj/machinery/vending/boozeomat/pubby_maint //abandoned bar on Pubbystation
 	products = list(/obj/item/reagent_containers/food/drinks/bottle/whiskey = 1,
 			/obj/item/reagent_containers/food/drinks/bottle/absinthe = 1,

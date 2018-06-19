@@ -41731,9 +41731,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bLe" = (
-/obj/machinery/vending/autodrobe{
-	req_access_txt = "0"
-	},
+/obj/machinery/vending/autodrobe/all_access,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bLf" = (
@@ -53015,7 +53013,7 @@
 /turf/open/floor/plating/airless,
 /area/engine/atmos)
 "cjp" = (
-/obj/machinery/vending/boozeomat,
+/obj/machinery/vending/boozeomat/all_access,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "cjq" = (
