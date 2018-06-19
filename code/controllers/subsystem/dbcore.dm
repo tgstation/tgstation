@@ -230,9 +230,9 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	sqlrowlist = "	[sqlrowlist.Join(",\n	")]"
 	var/datum/DBQuery/Query = NewQuery("INSERT[delayed][ignore_errors] INTO [table]\n([columns.Join(", ")])\nVALUES\n[sqlrowlist]\n[duplicate_key]")
 	if (warn)
-		return Query.warn_execute()
+		. = Query.warn_execute()
 	else
-		return Query.Execute()
+		. = Query.Execute()
 	qdel(Query)
 
 
