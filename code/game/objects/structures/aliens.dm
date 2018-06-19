@@ -115,6 +115,7 @@
 	anchored = TRUE
 	density = FALSE
 	layer = TURF_LAYER
+	plane = FLOOR_PLANE
 	icon_state = "weeds"
 	max_integrity = 15
 	canSmoothWith = list(/obj/structure/alien/weeds, /turf/closed/wall)

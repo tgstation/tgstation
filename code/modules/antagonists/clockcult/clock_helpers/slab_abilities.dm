@@ -67,7 +67,7 @@
 	name = "replicant manacles"
 	desc = "Heavy manacles made out of freezing-cold metal. It looks like brass, but feels much more solid."
 	icon_state = "brass_manacles"
-	flags_1 = DROPDEL_1
+	item_flags = DROPDEL
 
 /obj/item/restraints/handcuffs/clockwork/dropped(mob/user)
 	user.visible_message("<span class='danger'>[user]'s [name] come apart at the seams!</span>", \

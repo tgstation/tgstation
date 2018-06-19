@@ -3,6 +3,7 @@
 	desc = "You probably shouldn't stick around to see if this is armed."
 	icon = 'icons/obj/machines/nuke.dmi'
 	icon_state = "nuclearbomb_base"
+	anchored = FALSE
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
@@ -15,6 +16,7 @@
 	var/numeric_input = ""
 	var/timing = FALSE
 	var/exploding = FALSE
+	var/exploded = FALSE
 	var/detonation_timer = null
 	var/r_code = "ADMIN"
 	var/yes_code = FALSE
@@ -254,7 +256,7 @@
 			first_status = "Set"
 		else
 			first_status = "Auth S1."
-	var/second_status = safety ? "Safe" : "Engaged"
+	var/second_status = exploded ? "Warhead triggered, thanks for flying Nanotrasen" : (safety ? "Safe" : "Engaged")
 	data["status1"] = first_status
 	data["status2"] = second_status
 	data["anchored"] = anchored
@@ -331,13 +333,13 @@
 					timer_set = CLAMP(N,minimum_timer_set,maximum_timer_set)
 				. = TRUE
 		if("safety")
-			if(auth && yes_code)
+			if(auth && yes_code && !exploded)
 				set_safety()
 		if("anchor")
 			if(auth && yes_code)
 				set_anchor()
 		if("toggle_timer")
-			if(auth && yes_code && !safety)
+			if(auth && yes_code && !safety && !exploded)
 				set_active()
 
 
@@ -369,11 +371,11 @@
 	if(timing)
 		previous_level = get_security_level()
 		bomb_set = TRUE
-		set_security_level("delta")
 		detonation_timer = world.time + (timer_set * 10)
 		for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
 			S.switch_mode_to(TRACK_INFILTRATOR)
 		countdown.start()
+		set_security_level("delta")
 	else
 		bomb_set = FALSE
 		detonation_timer = null
@@ -395,9 +397,9 @@
 		return
 	qdel(src)
 
-/obj/machinery/nuclearbomb/tesla_act(power, explosive)
+/obj/machinery/nuclearbomb/tesla_act(power, tesla_flags)
 	..()
-	if(explosive)
+	if(tesla_flags & TESLA_MACHINE_EXPLOSIVE)
 		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
 #define NUKERANGE 127
@@ -454,6 +456,71 @@
 		return CINEMATIC_SELFDESTRUCT
 	else
 		return CINEMATIC_SELFDESTRUCT_MISS
+
+/obj/machinery/nuclearbomb/beer
+	name = "Nanotrasen-brand nuclear fission explosive"
+	desc = "One of the more successful achievements of the Nanotrasen Corporate Warfare Division, their nuclear fission explosives are renowned for being cheap to produce and devastatingly effective. Signs explain that though this particular device has been decommissioned, every Nanotrasen station is equipped with an equivalent one, just in case. All Captains carefully guard the disk needed to detonate them - at least, the sign says they do. There seems to be a tap on the back."
+	var/obj/structure/reagent_dispensers/beerkeg/keg
+
+/obj/machinery/nuclearbomb/beer/Initialize()
+	. = ..()
+	keg = new(src)
+	QDEL_NULL(core)
+
+/obj/machinery/nuclearbomb/beer/examine(mob/user)
+	. = ..()
+	if(keg.reagents.total_volume)
+		to_chat(user, "<span class='notice'>It has [keg.reagents.total_volume] unit\s left.</span>")
+	else
+		to_chat(user, "<span class='danger'>It's empty.</span>")
+
+/obj/machinery/nuclearbomb/beer/attackby(obj/item/W, mob/user, params)
+	if(W.is_refillable())
+		W.afterattack(keg, user, TRUE) 	// redirect refillable containers to the keg, allowing them to be filled
+		return TRUE 										// pretend we handled the attack, too.
+	if(istype(W, /obj/item/nuke_core_container))
+		to_chat(user, "<span class='notice'>[src] has had its plutonium core removed as a part of being decommissioned.</span>")
+		return TRUE
+	return ..()
+
+/obj/machinery/nuclearbomb/beer/actually_explode()
+	var/turf/bomb_location = get_turf(src)
+	if(!bomb_location)
+		disarm()
+		return
+	if(is_station_level(bomb_location.z))
+		var/datum/round_event_control/E = locate(/datum/round_event_control/vent_clog/beer) in SSevents.control
+		if(E)
+			E.runEvent()
+		addtimer(CALLBACK(src, .proc/really_actually_explode), 110)
+	else
+		visible_message("<span class='notice'>[src] fizzes ominously.</span>")
+		addtimer(CALLBACK(src, .proc/fizzbuzz), 110)
+
+/obj/machinery/nuclearbomb/beer/proc/disarm()
+	bomb_set = FALSE
+	detonation_timer = null
+	exploding = FALSE
+	exploded = TRUE
+	set_security_level(previous_level)
+	for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
+		S.switch_mode_to(initial(S.mode))
+		S.alert = FALSE
+	countdown.stop()
+	update_icon()
+
+/obj/machinery/nuclearbomb/beer/proc/fizzbuzz()
+	var/datum/reagents/R = new/datum/reagents(1000)
+	R.my_atom = src
+	R.add_reagent("beer", 100)
+
+	var/datum/effect_system/foam_spread/foam = new
+	foam.set_up(200, get_turf(src), R)
+	foam.start()
+	disarm()
+
+/obj/machinery/nuclearbomb/beer/really_actually_explode()
+	disarm()
 
 /proc/KillEveryoneOnZLevel(z)
 	if(!z)

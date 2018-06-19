@@ -6,7 +6,6 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "robotics"
 	layer = 2.9
-	anchored = TRUE
 	density = TRUE
 
 	// The actual laptop/tablet

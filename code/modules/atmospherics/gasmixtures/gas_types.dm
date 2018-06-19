@@ -1,4 +1,5 @@
 GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)) //the main four gases, which were at one time hardcoded
+GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/pluoxium, /datum/gas/stimulum, /datum/gas/nitryl))) //unable to react amongst themselves
 
 /proc/meta_gas_list()
 	. = subtypesof(/datum/gas)
@@ -42,6 +43,7 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 	var/moles_visible = null
 	var/dangerous = FALSE //currently used by canisters
 	var/fusion_power = 0 //How much the gas accelerates a fusion reaction
+
 /datum/gas/oxygen
 	id = "o2"
 	specific_heat = 20
@@ -56,7 +58,7 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 	id = "co2"
 	specific_heat = 30
 	name = "Carbon Dioxide"
-	fusion_power = 2
+	fusion_power = 3
 
 /datum/gas/plasma
 	id = "plasma"
@@ -72,6 +74,7 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 	name = "Water Vapor"
 	gas_overlay = "water_vapor"
 	moles_visible = MOLES_GAS_VISIBLE
+	fusion_power = 4
 
 /datum/gas/hypernoblium
 	id = "nob"
@@ -88,7 +91,6 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 	gas_overlay = "nitrous_oxide"
 	moles_visible = 1
 	dangerous = TRUE
-	fusion_power = 2
 
 /datum/gas/nitryl
 	id = "no2"
@@ -97,7 +99,7 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 	gas_overlay = "nitryl"
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
-	fusion_power = 1.5
+	fusion_power = 10
 
 /datum/gas/tritium
 	id = "tritium"
@@ -106,13 +108,15 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 	gas_overlay = "tritium"
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
-	fusion_power = 2
+	fusion_power = 1
+
 /datum/gas/bz
 	id = "bz"
 	specific_heat = 20
 	name = "BZ"
 	dangerous = TRUE
-	fusion_power = 2
+	fusion_power = 15
+
 /datum/gas/stimulum
 	id = "stim"
 	specific_heat = 5
@@ -124,9 +128,11 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 	specific_heat = 80
 	name = "Pluoxium"
 	fusion_power = 10
+
 /obj/effect/overlay/gas
 	icon = 'icons/effects/tile_effects.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE  // should only appear in vis_contents, but to be safe
 	layer = FLY_LAYER
 	appearance_flags = TILE_BOUND
 

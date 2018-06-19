@@ -233,12 +233,6 @@
 	icon_state = "knight_red"
 	item_state = "knight_red"
 
-/obj/item/clothing/head/helmet/knight/templar
-	name = "crusader helmet"
-	desc = "Deus Vult."
-	icon_state = "knight_templar"
-	item_state = "knight_templar"
-
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"
 	desc = "An intimidating tribal helmet, it doesn't look very comfortable."

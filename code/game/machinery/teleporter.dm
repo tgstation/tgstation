@@ -2,7 +2,6 @@
 	name = "teleport"
 	icon = 'icons/obj/machines/teleporter.dmi'
 	density = TRUE
-	anchored = TRUE
 
 /obj/machinery/teleport/hub
 	name = "teleporter hub"

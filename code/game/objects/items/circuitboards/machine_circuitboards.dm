@@ -225,6 +225,23 @@
 							/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
 							/obj/machinery/vending/games = "\improper Good Clean Fun",
 							/obj/machinery/vending/autodrobe = "AutoDrobe",
+							/obj/machinery/vending/wardrobe/sec_wardrobe = "SecDrobe",
+							/obj/machinery/vending/wardrobe/medi_wardrobe = "MediDrobe",
+							/obj/machinery/vending/wardrobe/engi_wardrobe = "EngiDrobe",
+							/obj/machinery/vending/wardrobe/atmos_wardrobe = "AtmosDrobe",
+							/obj/machinery/vending/wardrobe/cargo_wardrobe = "CargoDrobe",
+							/obj/machinery/vending/wardrobe/robo_wardrobe = "RoboDrobe",
+							/obj/machinery/vending/wardrobe/science_wardrobe = "SciDrobe",
+							/obj/machinery/vending/wardrobe/hydro_wardrobe = "HyDrobe",
+							/obj/machinery/vending/wardrobe/curator_wardrobe = "CuraDrobe",
+							/obj/machinery/vending/wardrobe/bar_wardrobe = "BarDrobe",
+							/obj/machinery/vending/wardrobe/chef_wardrobe = "ChefDrobe",
+							/obj/machinery/vending/wardrobe/jani_wardrobe = "JaniDrobe",
+							/obj/machinery/vending/wardrobe/law_wardrobe = "LawDrobe",
+							/obj/machinery/vending/wardrobe/chap_wardrobe = "ChapDrobe",
+							/obj/machinery/vending/wardrobe/chem_wardrobe = "ChemDrobe",
+							/obj/machinery/vending/wardrobe/gene_wardrobe = "GeneDrobe",
+							/obj/machinery/vending/wardrobe/viro_wardrobe = "ViroDrobe",
 							/obj/machinery/vending/clothing = "ClothesMate",
 							/obj/machinery/vending/medical = "NanoMed Plus",
 							/obj/machinery/vending/wallmed = "NanoMed")
@@ -882,3 +899,25 @@
 		return
 	transmit = !transmit
 	to_chat(user, "<span class='notice'>You [transmit ? "enable" : "disable"] the board's automatic disposal transmission.</span>")
+
+/obj/item/circuitboard/machine/stacking_unit_console
+	name = "Stacking Machine Console (Machine Board)"
+	build_path = /obj/machinery/mineral/stacking_unit_console
+	req_components = list(
+		/obj/item/stack/sheet/glass = 2,
+		/obj/item/stack/cable_coil = 5)
+
+/obj/item/circuitboard/machine/stacking_machine
+	name = "Stacking Machine (Machine Board)"
+	build_path = /obj/machinery/mineral/stacking_machine
+	req_components = list(
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/matter_bin = 2)
+
+/obj/item/circuitboard/machine/generator
+	name = "Thermo-Electric Generator (Machine Board)"
+	build_path = /obj/machinery/power/generator
+
+/obj/item/circuitboard/machine/circulator
+	name = "Circulator/Heat Exchanger (Machine Board)"
+	build_path = /obj/machinery/atmospherics/components/binary/circulator

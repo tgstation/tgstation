@@ -100,12 +100,14 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			if(dirtype == PIPE_BENDABLE)
 				dirs += list("[NORTHWEST]" = "West to North", "[NORTHEAST]" = "North to East",
 							 "[SOUTHWEST]" = "South to West", "[SOUTHEAST]" = "East to South")
-		if(PIPE_TRINARY, PIPE_TRIN_M)
+		if(PIPE_TRINARY)
 			dirs = list("[NORTH]" = "West South East", "[EAST]" = "North West South",
 						"[SOUTH]" = "East North West", "[WEST]" = "South East North")
-			if(dirtype == PIPE_TRIN_M)
-				dirs += list("[SOUTHEAST]" = "West South East", "[NORTHEAST]" = "North West South",
-							 "[NORTHWEST]" = "East North West", "[SOUTHWEST]" = "South East North")
+		if(PIPE_TRIN_M)
+			dirs = list("[NORTH]" = "North East South", "[EAST]" = "East South West",
+						"[SOUTH]" = "South West North", "[WEST]" = "West North East",
+						"[SOUTHEAST]" = "West South East", "[NORTHEAST]" = "South East North",
+						"[NORTHWEST]" = "East North West", "[SOUTHWEST]" = "North West South")
 		if(PIPE_UNARY)
 			dirs = list("[NORTH]" = "North", "[EAST]" = "East", "[SOUTH]" = "South", "[WEST]" = "West")
 		if(PIPE_ONEDIR)

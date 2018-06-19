@@ -126,10 +126,12 @@
 		update_icon()
 		return
 
-	else if(istype(W, /obj/item/analyzer) && ptank)
-		atmosanalyzer_scan(ptank.air_contents, user)
 	else
 		return ..()
+
+/obj/item/flamethrower/analyzer_act(mob/living/user, obj/item/I)
+	if(ptank)
+		ptank.analyzer_act(user, I)
 
 
 /obj/item/flamethrower/attack_self(mob/user)

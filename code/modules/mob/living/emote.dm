@@ -58,6 +58,11 @@
 	message = "coughs!"
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE)
+	. = ..()
+	if(user.reagents.get_reagent("menthol") || user.reagents.get_reagent("peppermint_patty"))
+		return FALSE
+
 /datum/emote/living/dance
 	key = "dance"
 	key_third_person = "dances"
@@ -406,6 +411,8 @@
 /datum/emote/living/custom/run_emote(mob/user, params, type_override = null)
 	if(jobban_isbanned(user, "emote"))
 		to_chat(user, "You cannot send custom emotes (banned).")
+		return FALSE
+	else if(QDELETED(user))
 		return FALSE
 	else if(user.client && user.client.prefs.muted & MUTE_IC)
 		to_chat(user, "You cannot send IC messages (muted).")

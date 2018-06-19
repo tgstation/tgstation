@@ -39,7 +39,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "ag" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
@@ -47,7 +47,7 @@
 "ah" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -71,9 +71,7 @@
 	pixel_y = -24;
 	req_access = null
 	},
-/obj/structure/chair{
-	tag = "icon-chair (WEST)";
-	icon_state = "chair";
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -84,7 +82,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "an" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -415,9 +413,7 @@
 	pixel_y = -24;
 	req_access = null
 	},
-/obj/structure/chair{
-	tag = "icon-chair (WEST)";
-	icon_state = "chair";
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1193,7 +1189,7 @@
 	},
 /area/shuttle/pirate)
 "cI" = (
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	dir = 8
 	},
 /obj/structure/cable/yellow{
@@ -1552,8 +1548,6 @@
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/yellow/corner{
-	tag = "icon-yellowcorner (WEST)";
-	icon_state = "yellowcorner";
 	dir = 8
 	},
 /area/shuttle/pirate)

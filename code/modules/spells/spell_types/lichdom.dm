@@ -31,10 +31,10 @@
 
 		var/obj/item/marked_item
 
-		for(var/obj/item in hand_items)
+		for(var/obj/item/item in hand_items)
 			// I ensouled the nuke disk once. But it's probably a really
 			// mean tactic, so probably should discourage it.
-			if((item.flags_1 & ABSTRACT_1) || (item.flags_1 & NODROP_1) || item.SendSignal(COMSIG_ITEM_IMBUE_SOUL, user))
+			if((item.item_flags & ABSTRACT) || (item.item_flags & NODROP) || SEND_SIGNAL(item, COMSIG_ITEM_IMBUE_SOUL, user))
 				continue
 			marked_item = item
 			to_chat(M, "<span class='warning'>You begin to focus your very being into [item]...</span>")

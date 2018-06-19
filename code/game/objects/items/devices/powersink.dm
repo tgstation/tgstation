@@ -100,8 +100,8 @@
 				"[user] activates \the [src]!", \
 				"<span class='notice'>You activate \the [src].</span>",
 				"<span class='italics'>You hear a click.</span>")
-			message_admins("Power sink activated by [ADMIN_LOOKUPFLW(user)] at [ADMIN_COORDJMP(src)]")
-			log_game("Power sink activated by [key_name(user)] at [COORD(src)]")
+			message_admins("Power sink activated by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(src)]")
+			log_game("Power sink activated by [key_name(user)] at [AREACOORD(src)]")
 			set_mode(OPERATING)
 
 		if(OPERATING)

@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.cost]", "[SO.pack.name]"))
 		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]) has shipped.", INVESTIGATE_CARGO)
 		if(SO.pack.dangerous)
-			message_admins("\A [SO.pack.name] ordered by [key_name_admin(SO.orderer_ckey)] has shipped.")
+			message_admins("\A [SO.pack.name] ordered by [ADMIN_LOOKUPFLW(SO.orderer_ckey)] has shipped.")
 		purchases++
 
 	investigate_log("[purchases] orders in this shipment, worth [value] credits. [SSshuttle.points] credits left.", INVESTIGATE_CARGO)
@@ -114,17 +114,24 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		setupExports()
 
 	var/msg = ""
+	var/matched_bounty = FALSE
 	var/sold_atoms = ""
 
 	for(var/place in shuttle_areas)
 		var/area/shuttle/shuttle_area = place
 		for(var/atom/movable/AM in shuttle_area)
-			if(AM.anchored || iscameramob(AM))
+			if(iscameramob(AM))
 				continue
-			sold_atoms += export_item_and_contents(AM, contraband, emagged, dry_run = FALSE)
+			if(bounty_ship_item_and_contents(AM, dry_run = FALSE))
+				matched_bounty = TRUE
+			if(!AM.anchored)
+				sold_atoms += export_item_and_contents(AM, contraband, emagged, dry_run = FALSE)
 
 	if(sold_atoms)
 		sold_atoms += "."
+
+	if(matched_bounty)
+		msg += "Bounty items received. An update has been sent to all bounty consoles. "
 
 	for(var/a in GLOB.exports_list)
 		var/datum/export/E = a

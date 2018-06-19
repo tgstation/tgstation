@@ -75,10 +75,8 @@
 		if(!target.detonatable || prob(difficulty * 15) || (hidden_uplink))
 			U.show_message("<span class='danger'>An error flashes on your [src].</span>", 1)
 		else
-			var/turf/T = get_turf(target)
-			var/area/A = get_area(T)
-			message_admins("[!is_special_character(U) ? "Non-antag " : ""][key_name_admin(U)][ADMIN_FLW(U)] triggered a PDA explosion on [target.name] at [A] [ADMIN_COORDJMP(T)].")
-			var/message_log = "triggered a PDA explosion on [target.name] at at [A] [COORD(T)]."
+			message_admins("[!is_special_character(U) ? "Non-antag " : ""][ADMIN_LOOKUPFLW(U)] triggered a PDA explosion on [target.name] at [ADMIN_VERBOSEJMP(target)].")
+			var/message_log = "triggered a PDA explosion on [target.name] at at [AREACOORD(target)]."
 			U.log_message(message_log, INDIVIDUAL_ATTACK_LOG)
 			log_game("[key_name(U)] [message_log]")
 			log_attack("[key_name(U)] [message_log]")

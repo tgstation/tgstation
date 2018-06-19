@@ -5,7 +5,6 @@
 	name = "light switch"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
-	anchored = TRUE
 	desc = "Make dark."
 	var/on = TRUE
 	var/area/area = null
@@ -61,6 +60,8 @@
 		updateicon()
 
 /obj/machinery/light_switch/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
 	if(!(stat & (BROKEN|NOPOWER)))
 		power_change()
-	..()

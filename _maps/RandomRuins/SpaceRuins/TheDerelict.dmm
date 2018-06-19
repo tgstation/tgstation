@@ -328,7 +328,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/unpowered/no_grav)
 "aZ" = (
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	dir = 4
 	},
 /obj/structure/cable{
@@ -848,7 +848,6 @@
 "cQ" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
@@ -1560,7 +1559,6 @@
 "fg" = (
 /obj/structure/table,
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
@@ -2001,7 +1999,6 @@
 "gB" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
@@ -2169,7 +2166,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/arrival)
 "hj" = (
-/obj/structure/closet/coffin,
+/obj/structure/closet/crate/coffin,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict/medical/chapel)
 "hk" = (
@@ -2603,7 +2600,7 @@
 	dir = 4;
 	req_access_txt = "25"
 	},
-/obj/structure/closet/coffin,
+/obj/structure/closet/crate/coffin,
 /turf/open/floor/plating,
 /area/ruin/space/derelict/medical/chapel)
 "iL" = (
@@ -2855,7 +2852,6 @@
 /area/ruin/space/derelict/medical/chapel)
 "jz" = (
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
@@ -3130,7 +3126,6 @@
 "kr" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
@@ -3314,7 +3309,6 @@
 "la" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},

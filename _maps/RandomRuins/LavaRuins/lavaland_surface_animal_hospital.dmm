@@ -211,9 +211,7 @@
 	},
 /area/ruin/powered/animal_hospital)
 "aP" = (
-/turf/open/floor/plasteel/blue/side{
-	dir = 0
-	},
+/turf/open/floor/plasteel/blue/side,
 /area/ruin/powered/animal_hospital)
 "aQ" = (
 /turf/open/floor/plasteel/blue/corner{
@@ -721,9 +719,7 @@
 /area/ruin/powered/animal_hospital)
 "cw" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/blue/side{
-	dir = 0
-	},
+/turf/open/floor/plasteel/blue/side,
 /area/ruin/powered/animal_hospital)
 "cx" = (
 /obj/machinery/light{
@@ -782,9 +778,7 @@
 /area/ruin/powered/animal_hospital)
 "cH" = (
 /mob/living/simple_animal/bot/cleanbot,
-/turf/open/floor/plasteel/blue/side{
-	dir = 0
-	},
+/turf/open/floor/plasteel/blue/side,
 /area/ruin/powered/animal_hospital)
 "cI" = (
 /obj/structure/table/glass,

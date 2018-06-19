@@ -106,8 +106,11 @@
 
 
 /obj/structure/sign/barsign/emp_act(severity)
-    set_sign(new /datum/barsign/hiddensigns/empbarsign)
-    broken = 1
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	set_sign(new /datum/barsign/hiddensigns/empbarsign)
+	broken = 1
 
 
 

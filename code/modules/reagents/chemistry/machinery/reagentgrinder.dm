@@ -7,7 +7,6 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "juicer1"
 	layer = BELOW_OBJ_LAYER
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
@@ -82,7 +81,7 @@
 	if(panel_open) //Can't insert objects when its screwed open
 		return TRUE
 
-	if (istype(I, /obj/item/reagent_containers) && !(I.flags_1 & ABSTRACT_1) && I.is_open_container())
+	if (istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		if (!beaker)
 			if(!user.transferItemToLoc(I, src))
 				to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
@@ -102,7 +101,7 @@
 	//Fill machine with a bag!
 	if(istype(I, /obj/item/storage/bag))
 		var/list/inserted = list()
-		if(I.SendSignal(COMSIG_TRY_STORAGE_TAKE_TYPE, /obj/item/reagent_containers/food/snacks/grown, src, limit - length(holdingitems), null, null, user, inserted))
+		if(SEND_SIGNAL(I, COMSIG_TRY_STORAGE_TAKE_TYPE, /obj/item/reagent_containers/food/snacks/grown, src, limit - length(holdingitems), null, null, user, inserted))
 			for(var/i in inserted)
 				holdingitems[i] = TRUE
 			if(!I.contents.len)

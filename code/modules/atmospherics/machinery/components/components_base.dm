@@ -152,3 +152,10 @@ UI Stuff
 		return ..()
 	to_chat(user, "<span class='danger'>Access denied.</span>")
 	return UI_CLOSE
+
+/*
+Tool acts
+*/
+
+/obj/machinery/atmospherics/components/analyzer_act(mob/living/user, obj/item/I)
+	atmosanalyzer_scan(airs, user, src)

@@ -2,7 +2,6 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /obj/machinery/announcement_system
 	density = TRUE
-	anchored = TRUE
 	name = "\improper Automated Announcement System"
 	desc = "An automated announcement system that handles minor announcements over the radio."
 	icon = 'icons/obj/machines/telecomms.dmi'
@@ -169,9 +168,9 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	newhead = pick("OV#RL()D: \[UNKNOWN??\] DET*#CT)D!", "ER)#R - B*@ TEXT F*O(ND!", "AAS.exe is not responding. NanoOS is searching for a solution to the problem.")
 
 /obj/machinery/announcement_system/emp_act(severity)
-	if(!(stat & (NOPOWER|BROKEN)))
+	. = ..()
+	if(!(stat & (NOPOWER|BROKEN)) && !(. & EMP_PROTECT_SELF))
 		act_up()
-	..(severity)
 
 /obj/machinery/announcement_system/emag_act()
 	if(obj_flags & EMAGGED)

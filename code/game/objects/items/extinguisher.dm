@@ -18,11 +18,13 @@
 	container_type = AMOUNT_VISIBLE
 	var/max_water = 50
 	var/last_use = 1
+	var/chem = "water"
 	var/safety = TRUE
 	var/refilling = FALSE
+	var/tanktype = /obj/structure/reagent_dispensers/watertank
 	var/sprite_name = "fire_extinguisher"
 	var/power = 5 //Maximum distance launched water will travel
-	var/precision = 0 //By default, turfs picked from a spray are random, set to 1 to make it always have at least one water effect per row
+	var/precision = FALSE //By default, turfs picked from a spray are random, set to 1 to make it always have at least one water effect per row
 	var/cooling_power = 2 //Sets the cooling_temperature of the water reagent datum inside of the extinguisher when it is refilled
 
 /obj/item/extinguisher/mini
@@ -43,7 +45,19 @@
 /obj/item/extinguisher/New()
 	..()
 	create_reagents(max_water)
-	reagents.add_reagent("water", max_water)
+	reagents.add_reagent(chem, max_water)
+
+
+/obj/item/extinguisher/advanced
+	name = "advanced fire extinguisher"
+	desc = "Used to stop thermonuclear fires from spreading inside your engine."
+	icon_state = "foam_extinguisher0"
+	//item_state = "foam_extinguisher" needs sprite
+	dog_fashion = null
+	chem = "firefighting_foam"
+	tanktype = /obj/structure/reagent_dispensers/foamtank
+	sprite_name = "foam_extinguisher"
+	precision = TRUE
 
 /obj/item/extinguisher/suicide_act(mob/living/carbon/user)
 	if (!safety && (reagents.total_volume >= 1))
@@ -84,14 +98,14 @@
 		to_chat(user, "<span class='notice'>Alt-click to empty it.</span>")
 
 /obj/item/extinguisher/proc/AttemptRefill(atom/target, mob/user)
-	if(istype(target, /obj/structure/reagent_dispensers/watertank) && target.Adjacent(user))
+	if(istype(target, tanktype) && target.Adjacent(user))
 		var/safety_save = safety
 		safety = TRUE
 		if(reagents.total_volume == reagents.maximum_volume)
 			to_chat(user, "<span class='warning'>\The [src] is already full!</span>")
 			safety = safety_save
 			return 1
-		var/obj/structure/reagent_dispensers/watertank/W = target
+		var/obj/structure/reagent_dispensers/W = target //will it work?
 		var/transferred = W.reagents.trans_to(src, max_water)
 		if(transferred > 0)
 			to_chat(user, "<span class='notice'>\The [src] has been refilled by [transferred] units.</span>")

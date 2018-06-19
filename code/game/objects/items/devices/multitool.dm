@@ -142,20 +142,6 @@
 						detect_state = PROXIMITY_NEAR
 						break
 
-/obj/item/multitool/ai_detect/admin
-	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors. Has a strange tag that says 'Grief in Safety'." //What else should I say for a meme item?
-	track_delay = 5
-
-/obj/item/multitool/ai_detect/admin/multitool_detect()
-	var/turf/our_turf = get_turf(src)
-	for(var/mob/J in urange(rangewarning,our_turf))
-		if(GLOB.admin_datums[J.ckey])
-			detect_state = PROXIMITY_NEAR
-			var/turf/detect_turf = get_turf(J)
-			if(get_dist(our_turf, detect_turf) < rangealert)
-				detect_state = PROXIMITY_ON_SCREEN
-				break
-
 /obj/item/multitool/cyborg
 	name = "multitool"
 	desc = "Optimised and stripped-down version of a regular multitool."

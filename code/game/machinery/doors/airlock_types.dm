@@ -79,6 +79,20 @@
 	opacity = 0
 	glass = TRUE
 
+/obj/machinery/door/airlock/glass/incinerator
+	autoclose = FALSE
+	frequency = FREQ_AIRLOCK_CONTROL
+	heat_proof = TRUE
+	req_access = list(ACCESS_SYNDICATE)
+
+/obj/machinery/door/airlock/glass/incinerator/syndicatelava_interior
+	name = "Turbine Interior Airlock"
+	id_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_INTERIOR
+
+/obj/machinery/door/airlock/glass/incinerator/syndicatelava_exterior
+	name = "Turbine Exterior Airlock"
+	id_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_EXTERIOR
+
 /obj/machinery/door/airlock/command/glass
 	opacity = 0
 	glass = TRUE
@@ -106,6 +120,20 @@
 /obj/machinery/door/airlock/research/glass
 	opacity = 0
 	glass = TRUE
+
+/obj/machinery/door/airlock/research/glass/incinerator
+	autoclose = FALSE
+	frequency = FREQ_AIRLOCK_CONTROL
+	heat_proof = TRUE
+	req_access = list(ACCESS_TOX)
+
+/obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior
+	name = "Mixing Room Interior Airlock"
+	id_tag = INCINERATOR_TOXMIX_AIRLOCK_INTERIOR
+
+/obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior
+	name = "Mixing Room Exterior Airlock"
+	id_tag = INCINERATOR_TOXMIX_AIRLOCK_EXTERIOR
 
 /obj/machinery/door/airlock/mining/glass
 	opacity = 0
@@ -222,8 +250,8 @@
 
 /obj/machinery/door/airlock/plasma/attackby(obj/item/C, mob/user, params)
 	if(C.is_hot() > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma airlock ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]")
-		log_game("Plasma airlock ignited by [key_name(user)] in [COORD(src)]")
+		message_admins("Plasma airlock ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
+		log_game("Plasma airlock ignited by [key_name(user)] in [AREACOORD(src)]")
 		ignite(C.is_hot())
 	else
 		return ..()
@@ -286,6 +314,20 @@
 /obj/machinery/door/airlock/public/glass
 	opacity = 0
 	glass = TRUE
+
+/obj/machinery/door/airlock/public/glass/incinerator
+	autoclose = FALSE
+	frequency = FREQ_AIRLOCK_CONTROL
+	heat_proof = TRUE
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS)
+
+/obj/machinery/door/airlock/public/glass/incinerator/atmos_interior
+	name = "Turbine Interior Airlock"
+	id_tag = INCINERATOR_ATMOS_AIRLOCK_INTERIOR
+
+/obj/machinery/door/airlock/public/glass/incinerator/atmos_exterior
+	name = "Turbine Exterior Airlock"
+	id_tag = INCINERATOR_ATMOS_AIRLOCK_EXTERIOR
 
 //////////////////////////////////
 /*

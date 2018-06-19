@@ -11,7 +11,6 @@ Clown
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	antag_rep = 14
 
 	outfit = /datum/outfit/job/clown
 
@@ -45,6 +44,8 @@ Clown
 
 	box = /obj/item/storage/box/hug/survival
 
+	chameleon_extras = /obj/item/stamp/clown
+
 
 /datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -73,7 +74,6 @@ Mime
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	antag_rep = 14
 
 	outfit = /datum/outfit/job/mime
 
@@ -124,7 +124,6 @@ Curator
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	antag_rep = 14
 
 	outfit = /datum/outfit/job/curator
 
@@ -170,7 +169,6 @@ Lawyer
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	var/lawyers = 0 //Counts lawyer amount
-	antag_rep = 17
 
 	outfit = /datum/outfit/job/lawyer
 
@@ -189,6 +187,8 @@ Lawyer
 	l_hand = /obj/item/storage/briefcase/lawyer
 	l_pocket = /obj/item/laser_pointer
 	r_pocket = /obj/item/clothing/accessory/lawyers_badge
+
+	chameleon_extras = /obj/item/stamp/law
 
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

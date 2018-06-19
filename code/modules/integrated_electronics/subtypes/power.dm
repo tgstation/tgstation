@@ -28,8 +28,8 @@
 	extended_desc = "This circuit transmits 20 kJ of electricity every time the activator pin is pulsed. The input pin must be \
 	a reference to a machine to send electricity to. This can be a battery, or anything containing a battery. The machine can exist \
 	inside the assembly, or adjacent to it. The power is sourced from the assembly's power cell. If the target is outside of the assembly, \
-	some power is lost due to ineffiency.Warning!Don't stack more than 1 power transmittors.it becomes less efficient for every other \
-	transmission circuit in its own assembly and other nearby ones. "
+	some power is lost due to ineffiency. Warning! Don't stack more than 1 power transmitter, as it becomes less efficient for every other \
+	transmission circuit in its own assembly and other nearby ones."
 	w_class = WEIGHT_CLASS_BULKY
 	complexity = 32
 	power_draw_per_use = 2000

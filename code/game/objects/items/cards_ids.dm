@@ -59,8 +59,7 @@
 	item_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
-	flags_1 = NOBLUDGEON_1
-	item_flags = NO_MAT_REDEMPTION
+	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	var/prox_check = TRUE //If the emag requires you to be in range
 
 /obj/item/card/emag/bluespace
@@ -80,7 +79,7 @@
 	A.emag_act(user)
 
 /obj/item/card/emagfake
-	desc = "It's a card with a magnetic strip attached to some circuitry."
+	desc = "It's a card with a magnetic strip attached to some circuitry. Closer inspection shows that this card is a poorly made replica, with a \"DonkCo\" logo stamped on the back."
 	name = "cryptographic sequencer"
 	icon_state = "emag"
 	item_state = "card-id"

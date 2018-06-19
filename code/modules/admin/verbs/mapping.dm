@@ -105,11 +105,11 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 		for(var/obj/machinery/camera/C2 in CL)
 			if(C1 != C2)
 				if(C1.c_tag == C2.c_tag)
-					output += "<li><font color='red'>c_tag match for cameras at [ADMIN_COORDJMP(C1)] ([C1.loc.loc]) and [ADMIN_COORDJMP(C2)] ([C2.loc.loc]) - c_tag is [C1.c_tag]</font></li>"
+					output += "<li><font color='red'>c_tag match for cameras at [ADMIN_VERBOSEJMP(C1)] and [ADMIN_VERBOSEJMP(C2)] - c_tag is [C1.c_tag]</font></li>"
 				if(C1.loc == C2.loc && C1.dir == C2.dir && C1.pixel_x == C2.pixel_x && C1.pixel_y == C2.pixel_y)
-					output += "<li><font color='red'>FULLY overlapping cameras at [ADMIN_COORDJMP(C1)] ([C1.loc.loc]) Networks: [json_encode(C1.network)] and [json_encode(C2.network)]</font></li>"
+					output += "<li><font color='red'>FULLY overlapping cameras at [ADMIN_VERBOSEJMP(C1)] Networks: [json_encode(C1.network)] and [json_encode(C2.network)]</font></li>"
 				if(C1.loc == C2.loc)
-					output += "<li>Overlapping cameras at [ADMIN_COORDJMP(C1)] ([C1.loc.loc]) Networks: [json_encode(C1.network)] and [json_encode(C2.network)]</li>"
+					output += "<li>Overlapping cameras at [ADMIN_VERBOSEJMP(C1)] Networks: [json_encode(C1.network)] and [json_encode(C2.network)]</li>"
 		var/turf/T = get_step(C1,turn(C1.dir,180))
 		if(!T || !isturf(T) || !T.density )
 			if(!(locate(/obj/structure/grille) in T))
@@ -119,7 +119,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 						window_check = 1
 						break
 				if(!window_check)
-					output += "<li><font color='red'>Camera not connected to wall at [ADMIN_COORDJMP(C1)] ([C1.loc.loc]) Network: [json_encode(C1.network)]</font></li>"
+					output += "<li><font color='red'>Camera not connected to wall at [ADMIN_VERBOSEJMP(C1)] Network: [json_encode(C1.network)]</font></li>"
 
 	output += "</ul>"
 	usr << browse(output,"window=airreport;size=1000x500")
@@ -153,7 +153,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 
 	for(var/t in GLOB.active_turfs_startlist)
 		var/turf/T = t
-		dat += "[ADMIN_COORDJMP(T)]\n"
+		dat += "[ADMIN_VERBOSEJMP(T)]\n"
 		dat += "<br>"
 
 	usr << browse(dat, "window=at_list")

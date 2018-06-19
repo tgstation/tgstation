@@ -144,6 +144,7 @@
 			else
 				O.name = input
 				to_chat(user, "\The [oldname] has been successfully been renamed to \the [input].")
+				O.renamedByPlayer = TRUE
 
 		if(penchoice == "Change description")
 			var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)

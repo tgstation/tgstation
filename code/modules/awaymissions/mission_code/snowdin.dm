@@ -223,8 +223,9 @@
 					var/list/plasma_parts = list()//a list of the organic parts to be turned into plasma limbs
 					var/list/robo_parts = list()//keep a reference of robotic parts so we know if we can turn them into a plasmaman
 					var/mob/living/carbon/human/PP = L
-					if(istype(PP.dna.species, /datum/species/plasmaman || /datum/species/android || /datum/species/synth)) //ignore plasmamen/robotic species
-						return
+					var/S = PP.dna.species
+					if(istype(S, /datum/species/plasmaman) || istype(S, /datum/species/android) || istype(S, /datum/species/synth)) //ignore plasmamen/robotic species
+						continue
 
 					for(var/BP in PP.bodyparts)
 						var/obj/item/bodypart/NN = BP
@@ -529,7 +530,7 @@
 				/obj/item/gun/ballistic/automatic/c20r/unrestricted = 16,
 				/obj/item/gun/magic/wand/resurrection/inert = 15,
 				/obj/item/gun/magic/wand/resurrection = 10,
-				/obj/item/radio/uplink/old = 2,
+				/obj/item/uplink/old = 2,
 				/obj/item/book/granter/spell/charge = 12,
 				/obj/item/grenade/clusterbuster/spawner_manhacks = 15,
 				/obj/item/book/granter/spell/fireball = 10,
@@ -606,6 +607,15 @@
 	id = /obj/item/card/id/syndicate
 	implants = list(/obj/item/implant/exile)
 
+/datum/outfit/vr/snowtide
+	name = "Snowdin Outfit"
+	shoes = /obj/item/clothing/shoes/winterboots
+	suit = /obj/item/clothing/suit/hooded/wintercoat
+	back = /obj/item/storage/backpack
+	mask = /obj/item/clothing/mask/breath
+	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
+	internals_slot = SLOT_R_STORE
+
 /obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive/female
 	mob_gender = FEMALE
 
@@ -666,4 +676,5 @@
 /obj/effect/turf_decal/snowdin_station_sign/up/seven
 	icon_state = "AOPU7"
 
-
+/obj/effect/landmark/vr_spawn/snowdin
+	vr_outfit = /datum/outfit/vr/snowtide

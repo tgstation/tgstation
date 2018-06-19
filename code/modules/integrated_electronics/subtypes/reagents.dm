@@ -21,7 +21,7 @@
 	desc = "Unlike most electronics, creating smoke is completely intentional."
 	icon_state = "smoke"
 	extended_desc = "This smoke generator creates clouds of smoke on command. It can also hold liquids inside, which will go \
-	into the smoke clouds when activated. The reagents are consumed when smoke is made."
+	into the smoke clouds when activated. The reagents are consumed when the smoke is made."
 	ext_cooldown = 1
 	container_type = OPENCONTAINER
 	volume = 100
@@ -99,10 +99,10 @@
 
 /obj/item/integrated_circuit/reagent/injector
 	name = "integrated hypo-injector"
-	desc = "This scary looking thing is able to pump liquids into whatever it's pointed at."
+	desc = "This scary looking thing is able to pump liquids into, or suck liquids out of, whatever it's pointed at."
 	icon_state = "injector"
-	extended_desc = "This autoinjector can push reagents into another container or someone else outside of the machine. The target \
-	must be adjacent to the machine, and if it is a person, they cannot be wearing thick clothing. Negative given amount makes injector suck out reagents."
+	extended_desc = "This autoinjector can push up to 30 units of reagents into another container or someone else outside of the machine. The target \
+	must be adjacent to the machine, and if it is a person, they cannot be wearing thick clothing. Negative given amounts makes the injector suck out reagents instead."
 
 	container_type = OPENCONTAINER
 	volume = 30
@@ -252,7 +252,7 @@
 	icon_state = "reagent_pump"
 	extended_desc = "This is a pump which will move liquids from the source ref to the target ref. The third pin determines \
 	how much liquid is moved per pulse, between 0 and 50. The pump can move reagents to any open container inside the machine, or \
-	outside the machine if it is next to the machine."
+	outside the machine if it is adjacent to the machine."
 
 	complexity = 8
 	inputs = list("source" = IC_PINTYPE_REF, "target" = IC_PINTYPE_REF, "injection amount" = IC_PINTYPE_NUMBER)
@@ -346,7 +346,7 @@
 
 /obj/item/integrated_circuit/reagent/storage/cryo
 	name = "cryo reagent storage"
-	desc = "Stores liquid inside the device away from electrical components. It can store up to 60u. This will also suppress reactions."
+	desc = "Stores liquid inside the device away from electrical components. It can store up to 60u. This will also prevent reactions."
 	icon_state = "reagent_storage_cryo"
 	extended_desc = "This is effectively an internal cryo beaker."
 
@@ -359,7 +359,7 @@
 
 /obj/item/integrated_circuit/reagent/storage/grinder
 	name = "reagent grinder"
-	desc = "This is reagent grinder. It accepts a ref to something and refines it into reagents. It can store up to 100u."
+	desc = "This is a reagent grinder. It accepts a ref to something, and refines it into reagents. It can store up to 100u."
 	icon_state = "blender"
 	extended_desc = ""
 	inputs = list(
@@ -404,9 +404,9 @@
 	activate_pin(3)
 	return FALSE
 
-obj/item/integrated_circuit/reagent/storage/juicer
+/obj/item/integrated_circuit/reagent/storage/juicer
 	name = "reagent juicer"
-	desc = "This is reagent juicer. It accepts a ref to something and refines it into reagents. It can store up to 100u."
+	desc = "This is a reagent juicer. It accepts a ref to something and refines it into reagents. It can store up to 100u."
 	icon_state = "blender"
 	extended_desc = ""
 	inputs = list(
@@ -454,7 +454,7 @@ obj/item/integrated_circuit/reagent/storage/juicer
 	name = "reagent scanner"
 	desc = "Stores liquid inside the device away from electrical components. It can store up to 60u. On pulse this beaker will send list of contained reagents."
 	icon_state = "reagent_scan"
-	extended_desc = "Mostly useful for reagent filter."
+	extended_desc = "Mostly useful for filtering reagents."
 
 	complexity = 8
 	outputs = list(
@@ -482,12 +482,12 @@ obj/item/integrated_circuit/reagent/storage/juicer
 
 /obj/item/integrated_circuit/reagent/filter
 	name = "reagent filter"
-	desc = "Filtering liquids by list of desired or unwanted reagents."
+	desc = "Filters liquids by list of desired or unwanted reagents."
 	icon_state = "reagent_filter"
-	extended_desc = "This is a filter which will move liquids from the source to the target. \
-	It will move all reagents, except those in the unwanted list, given the fourth pin if amount value is positive, \
-	or it will move only desired reagents if amount is negative. The third pin determines \
-	how much reagent is moved per pulse, between 0 and 50. Amount is given for each separate reagent."
+	extended_desc = "This is a filter which will move liquids from the source to its target. \
+	If the amount in the fourth pin is positive, it will move all reagents except those in the unwanted list. \
+	If the amount in the fourth pin is negative, it will only move the reagents in the wanted list. \
+	The third pin determines how many reagents are moved per pulse, between 0 and 50. Amount is given for each separate reagent."
 
 	complexity = 8
 	inputs = list(

@@ -9,7 +9,11 @@
 	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
 
 /datum/quirk/blooddeficiency/on_process()
-	quirk_holder.blood_volume -= 0.275
+	var/mob/living/carbon/human/H = quirk_holder
+	if(NOBLOOD in H.dna.species.species_traits) //can't lose blood if your species doesn't have any
+		return
+	else 
+		quirk_holder.blood_volume -= 0.275
 
 
 
@@ -27,11 +31,11 @@
 
 /datum/quirk/family_heirloom
 	name = "Family Heirloom"
-	desc = "You are the current owner of an heirloom. passed down for generations. You have to keep it safe!"
+	desc = "You are the current owner of an heirloom, passed down for generations. You have to keep it safe!"
 	value = -1
 	mood_quirk = TRUE
 	var/obj/item/heirloom
-	var/where_text
+	var/where
 
 /datum/quirk/family_heirloom/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -58,31 +62,34 @@
 		/obj/item/dice/d20)
 	heirloom = new heirloom_type(get_turf(quirk_holder))
 	var/list/slots = list(
-		"in your backpack" = SLOT_IN_BACKPACK,
 		"in your left pocket" = SLOT_L_STORE,
-		"in your right pocket" = SLOT_R_STORE
+		"in your right pocket" = SLOT_R_STORE,
+		"in your backpack" = SLOT_IN_BACKPACK
 	)
-	var/where = H.equip_in_one_of_slots(heirloom, slots)
-	if(!where)
-		where = "at your feet"
-	else if(where == "in your backpack")
-		H.back.SendSignal(COMSIG_TRY_STORAGE_SHOW, H)
-	where_text = "<span class='boldnotice'>There is a precious family [heirloom.name] [where], passed down from generation to generation. Keep it safe!</span>"
+	where = H.equip_in_one_of_slots(heirloom, slots, FALSE) || "at your feet"
 
 /datum/quirk/family_heirloom/post_add()
-	to_chat(quirk_holder, where_text)
+	if(where == "in your backpack")
+		var/mob/living/carbon/human/H = quirk_holder
+		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
+
+	to_chat(quirk_holder, "<span class='boldnotice'>There is a precious family [heirloom.name] [where], passed down from generation to generation. Keep it safe!</span>")
 	var/list/family_name = splittext(quirk_holder.real_name, " ")
 	heirloom.name = "\improper [family_name[family_name.len]] family [heirloom.name]"
 
 /datum/quirk/family_heirloom/on_process()
 	if(heirloom in quirk_holder.GetAllContents())
-		quirk_holder.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "family_heirloom_missing")
-		quirk_holder.SendSignal(COMSIG_ADD_MOOD_EVENT, "family_heirloom", /datum/mood_event/family_heirloom)
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom_missing")
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "family_heirloom", /datum/mood_event/family_heirloom)
 	else
-		quirk_holder.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
-		quirk_holder.SendSignal(COMSIG_ADD_MOOD_EVENT, "family_heirloom_missing", /datum/mood_event/family_heirloom_missing)
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "family_heirloom_missing", /datum/mood_event/family_heirloom_missing)
 
+/datum/quirk/family_heirloom/clone_data()
+	return heirloom
 
+/datum/quirk/family_heirloom/on_clone(data)
+	heirloom = data
 
 /datum/quirk/heavy_sleeper
 	name = "Heavy Sleeper"
@@ -141,9 +148,9 @@
 		if(quirk_holder.m_intent == MOVE_INTENT_RUN)
 			to_chat(quirk_holder, "<span class='warning'>Easy, easy, take it slow... you're in the dark...</span>")
 			quirk_holder.toggle_move_intent()
-		quirk_holder.SendSignal(COMSIG_ADD_MOOD_EVENT, "nyctophobia", /datum/mood_event/nyctophobia)
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "nyctophobia", /datum/mood_event/nyctophobia)
 	else
-		quirk_holder.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
 
 
 

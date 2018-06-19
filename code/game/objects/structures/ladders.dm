@@ -23,13 +23,7 @@
 /obj/structure/ladder/Destroy(force)
 	if ((resistance_flags & INDESTRUCTIBLE) && !force)
 		return QDEL_HINT_LETMELIVE
-
-	if(up && up.down == src)
-		up.down = null
-		up.update_icon()
-	if(down && down.up == src)
-		down.up = null
-		down.update_icon()
+	disconnect()
 	return ..()
 
 /obj/structure/ladder/LateInitialize()
@@ -51,6 +45,15 @@
 			L.update_icon()
 
 	update_icon()
+
+/obj/structure/ladder/proc/disconnect()
+	if(up && up.down == src)
+		up.down = null
+		up.update_icon()
+	if(down && down.up == src)
+		down.up = null
+		down.update_icon()
+	up = down = null
 
 /obj/structure/ladder/update_icon()
 	if(up && down)
@@ -178,3 +181,32 @@
 				break  // break if both our connections are filled
 
 	update_icon()
+
+
+/obj/structure/ladder/unbreakable/binary
+	name = "mysterious ladder"
+	desc = "Where does it go?"
+	height = 0
+	id = "lavaland_binary"
+	var/area_to_place = /area/lavaland/surface/outdoors
+
+/obj/structure/ladder/unbreakable/binary/Initialize()
+	if(area_to_place)
+		var/turf/T = safepick(get_area_turfs(area_to_place))
+		if(T)
+			var/obj/structure/ladder/unbreakable/U = new (T)
+			U.id = id
+			U.height = height+1
+			for(var/turf/TT in range(2,U))
+				TT.TerraformTurf(/turf/open/indestructible/binary, /turf/open/indestructible/binary)
+	return ..()
+
+
+/obj/structure/ladder/unbreakable/binary/space
+	id = "space_binary"
+	area_to_place = /area/space
+
+
+/obj/structure/ladder/unbreakable/binary/unlinked //Crew gets to complete one
+	id = "unlinked_binary"
+	area_to_place = null

@@ -6,7 +6,6 @@
 	can_unwrench = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF //really helpful in building gas chambers for xenomorphs
 
-	var/on = FALSE
 	var/injecting = 0
 
 	var/volume_rate = 50
@@ -19,7 +18,7 @@
 	layer = GAS_SCRUBBER_LAYER
 
 	pipe_state = "injector"
-	
+
 /obj/machinery/atmospherics/components/unary/outlet_injector/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
@@ -75,7 +74,7 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/on
 	on = TRUE
-	
+
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X

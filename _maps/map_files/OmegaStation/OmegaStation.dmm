@@ -1505,9 +1505,7 @@
 /area/bridge)
 "acZ" = (
 /obj/structure/chair/comfy/brown{
-	color = "#c45c57";
-	dir = 4;
-	icon_state = "comfychair"
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -3352,9 +3350,7 @@
 /area/crew_quarters/heads/captain/private)
 "agQ" = (
 /obj/structure/chair/comfy/brown{
-	color = "#c45c57";
-	dir = 4;
-	icon_state = "comfychair"
+	dir = 4
 	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -4912,9 +4908,7 @@
 	},
 /area/hallway/primary/starboard/fore)
 "ajH" = (
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -4949,12 +4943,14 @@
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/storage)
 "ajM" = (
-/obj/structure/table/reinforced,
 /obj/machinery/requests_console{
 	department = "Cargo Office";
 	departmentType = 0;
 	name = "Cargo Office RC";
 	pixel_x = 32
+	},
+/obj/machinery/computer/bounty{
+	dir = 8
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 4
@@ -5622,7 +5618,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard/fore)
 "akL" = (
-/obj/structure/closet/wardrobe/cargotech,
+/obj/machinery/vending/wardrobe/cargo_wardrobe,
 /turf/open/floor/plasteel/brown{
 	dir = 8
 	},
@@ -5926,17 +5922,11 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "alt" = (
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the Supply department is.";
-	dir = 4;
-	icon_state = "direction_supply";
-	name = "supply department"
+/obj/structure/sign/directions/supply{
+	dir = 4
 	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the Command department is.";
+/obj/structure/sign/directions/command{
 	dir = 1;
-	icon_state = "direction_bridge";
-	name = "command department";
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/science{
@@ -6484,7 +6474,9 @@
 	},
 /area/hallway/primary/starboard/fore)
 "amv" = (
-/obj/structure/table/reinforced,
+/obj/machinery/computer/bounty{
+	dir = 4
+	},
 /turf/open/floor/plasteel/brown{
 	dir = 10
 	},
@@ -7073,11 +7065,8 @@
 /obj/structure/sign/directions/security{
 	dir = 8
 	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the Command department is.";
+/obj/structure/sign/directions/command{
 	dir = 1;
-	icon_state = "direction_bridge";
-	name = "command department";
 	pixel_y = 8
 	},
 /turf/closed/wall,
@@ -7640,7 +7629,6 @@
 	},
 /area/teleporter)
 "aoJ" = (
-/obj/machinery/droneDispenser,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -8684,11 +8672,11 @@
 	},
 /area/security/brig)
 "aqK" = (
-/obj/structure/closet/secure_closet/security/sec,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/vending/wardrobe/sec_wardrobe,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -9600,17 +9588,13 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "asJ" = (
-/obj/structure/closet/wardrobe/red,
-/obj/item/clothing/under/rank/security/grey,
-/obj/item/clothing/under/rank/security/grey,
-/obj/item/clothing/under/rank/security/grey,
-/obj/item/storage/backpack/satchel/sec,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_y = -32
 	},
+/obj/structure/closet/secure_closet/security/sec,
 /turf/open/floor/plasteel/vault/corner{
 	dir = 4
 	},
@@ -10019,7 +10003,6 @@
 /obj/structure/cable/white{
 	icon_state = "0-2"
 	},
-/obj/structure/closet/wardrobe/atmospherics_yellow,
 /obj/effect/turf_decal/bot,
 /obj/machinery/power/apc/highcap/ten_k{
 	areastring = "/area/engine/atmos";
@@ -10031,6 +10014,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/table/reinforced,
+/obj/item/clothing/gloves/color/black,
+/obj/item/clothing/gloves/color/black,
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
 /turf/open/floor/plasteel/caution{
 	dir = 4
 	},
@@ -10220,9 +10210,7 @@
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "atU" = (
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -10361,7 +10349,6 @@
 /turf/open/floor/plasteel/vault,
 /area/crew_quarters/bar/atrium)
 "aul" = (
-/obj/structure/closet/gmcloset,
 /obj/item/wrench,
 /obj/item/stack/sheet/glass{
 	amount = 30
@@ -10375,6 +10362,7 @@
 	name = "Station Intercom";
 	pixel_x = 26
 	},
+/obj/structure/closet,
 /turf/open/floor/plasteel/vault,
 /area/crew_quarters/bar/atrium)
 "aum" = (
@@ -11445,17 +11433,11 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "awK" = (
-/obj/structure/table/reinforced,
-/obj/item/clothing/gloves/color/black,
-/obj/item/clothing/suit/hazardvest,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/gloves/color/black,
-/obj/item/clothing/suit/hazardvest,
-/obj/item/clothing/mask/gas,
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/wardrobe/atmos_wardrobe,
 /turf/open/floor/plasteel/caution{
 	dir = 4
 	},
@@ -11478,9 +11460,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "awN" = (
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /obj/machinery/door/poddoor/preopen{
 	id = "atmoslock";
 	name = "Atmospherics Lockdown Blast door"
@@ -11600,17 +11580,8 @@
 	},
 /area/crew_quarters/bar/atrium)
 "axc" = (
-/obj/structure/closet/gmcloset,
-/obj/item/wrench,
-/obj/item/stack/sheet/glass{
-	amount = 30
-	},
-/obj/item/stack/sheet/metal{
-	amount = 30
-	},
-/obj/item/stack/cable_coil/random,
-/obj/item/stack/cable_coil/random,
 /obj/machinery/light,
+/obj/machinery/vending/wardrobe/bar_wardrobe,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar/atrium)
 "axd" = (
@@ -15139,6 +15110,9 @@
 	codes_txt = "patrol;next_patrol=9.4-EnteringDorms";
 	location = "9.3-Engi"
 	},
+/obj/structure/cable/white{
+	icon_state = "2-4"
+	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/break_room)
 "aFF" = (
@@ -15499,6 +15473,7 @@
 	name = "Engineering Foyer APC";
 	pixel_y = -26
 	},
+/obj/structure/cable/white,
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 8
 	},
@@ -16676,10 +16651,10 @@
 /area/hydroponics)
 "aIF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/closet/wardrobe/botanist,
 /obj/structure/sign/poster/random{
 	pixel_y = 32
 	},
+/obj/structure/closet/secure_closet/hydroponics,
 /turf/open/floor/plasteel/vault/side,
 /area/hydroponics)
 "aIG" = (
@@ -16797,9 +16772,9 @@
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/kitchen)
 "aIS" = (
-/obj/structure/closet/chefcloset,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/bot,
+/obj/machinery/vending/wardrobe/chef_wardrobe,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/kitchen)
 "aIT" = (
@@ -17435,9 +17410,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "aKj" = (
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -18273,7 +18246,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/closet/secure_closet/hydroponics,
+/obj/machinery/vending/wardrobe/hydro_wardrobe,
 /turf/open/floor/plasteel/greenblue/side{
 	dir = 10
 	},
@@ -18674,18 +18647,17 @@
 /turf/open/floor/plasteel,
 /area/janitor)
 "aNl" = (
-/obj/structure/closet/jcloset,
 /obj/machinery/light_switch{
 	pixel_y = -24
 	},
-/obj/item/flashlight,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/bot,
+/obj/structure/closet/l3closet/janitor,
 /turf/open/floor/plasteel,
 /area/janitor)
 "aNm" = (
-/obj/structure/closet/l3closet/janitor,
 /obj/effect/turf_decal/bot,
+/obj/machinery/vending/wardrobe/jani_wardrobe,
 /turf/open/floor/plasteel/vault/side{
 	dir = 8
 	},
@@ -18702,12 +18674,6 @@
 /area/hydroponics)
 "aNq" = (
 /obj/machinery/hydroponics/constructable,
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "Hydroponics APC";
-	areastring = "/area/hydroponics";
-	pixel_y = -26
-	},
 /obj/structure/cable/white,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -18986,10 +18952,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aOa" = (
-/obj/machinery/power/supermatter_crystal/shard/engine{
-	anchored = 1;
-	moveable = 0
-	},
+/obj/machinery/power/supermatter_crystal/shard/engine,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "aOb" = (
@@ -19105,11 +19068,8 @@
 	},
 /area/hallway/primary/central)
 "aOr" = (
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the Supply department is.";
-	dir = 4;
-	icon_state = "direction_supply";
-	name = "supply department"
+/obj/structure/sign/directions/supply{
+	dir = 4
 	},
 /obj/structure/sign/directions/science{
 	pixel_y = -8
@@ -20575,7 +20535,7 @@
 /obj/item/pen,
 /obj/machinery/door/window/southleft{
 	name = "Research Lab Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "rndlab1";
@@ -20932,7 +20892,6 @@
 /turf/closed/wall,
 /area/medical/medbay/zone3)
 "aSj" = (
-/obj/structure/closet/wardrobe/chemistry_white,
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -22
@@ -20945,6 +20904,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/structure/closet/secure_closet/medical1,
+/obj/item/storage/box/beakers,
+/obj/item/storage/box/pillbottles,
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
 "aSk" = (
@@ -21204,10 +21166,10 @@
 /turf/closed/wall/r_wall,
 /area/tcommsat/server)
 "aSP" = (
-/obj/structure/closet/wardrobe/engineering_yellow,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/machinery/vending/wardrobe/engi_wardrobe,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aSR" = (
@@ -21433,13 +21395,11 @@
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "aTq" = (
-/obj/structure/closet/secure_closet/medical1,
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/item/storage/box/pillbottles,
-/obj/item/storage/box/beakers,
+/obj/machinery/vending/wardrobe/chem_wardrobe,
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
 "aTr" = (
@@ -21528,7 +21488,7 @@
 /obj/machinery/door/window/southleft{
 	dir = 4;
 	name = "Research Lab Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "rndlab1";
@@ -22124,7 +22084,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
-/obj/structure/closet/crate/bin,
+/obj/machinery/libraryscanner,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -22848,9 +22808,13 @@
 /turf/open/space,
 /area/asteroid/nearstation)
 "aWA" = (
-/obj/machinery/libraryscanner,
 /obj/machinery/newscaster{
 	pixel_x = -32
+	},
+/obj/structure/table/wood,
+/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/light_switch{
+	pixel_y = -24
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -23118,28 +23082,9 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/asteroid/nearstation)
-"aXe" = (
-/obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement,
-/obj/machinery/light_switch{
-	pixel_y = -24
-	},
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -23
-	},
-/turf/open/floor/plasteel/dark,
-/area/library)
 "aXf" = (
-/obj/structure/table/wood,
-/obj/item/folder,
-/obj/item/pen/blue{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/pen/red,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/dark,
+/turf/closed/wall,
 /area/library)
 "aXg" = (
 /obj/structure/bookcase/random/nonfiction,
@@ -23157,6 +23102,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel/dark,
 /area/library)
 "aXj" = (
@@ -23450,19 +23396,18 @@
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "aXL" = (
-/obj/machinery/door/morgue{
-	name = "Curator's Study";
-	req_access_txt = "37"
+/obj/effect/landmark/start/librarian,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/vault{
-	dir = 8
+/turf/open/floor/wood{
+	icon_state = "wood-broken2"
 	},
 /area/library)
 "aXM" = (
-/obj/machinery/status_display,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/wall,
+/obj/machinery/vending/wardrobe/curator_wardrobe,
+/turf/open/floor/wood,
 /area/library)
 "aXN" = (
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -23517,12 +23462,11 @@
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aXP" = (
-/obj/structure/closet/wardrobe/white/medical,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
 	},
-/obj/item/storage/backpack/satchel/med,
 /obj/effect/turf_decal/bot,
+/obj/machinery/vending/wardrobe/medi_wardrobe,
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aXQ" = (
@@ -23757,9 +23701,6 @@
 /turf/open/floor/plasteel/whitepurple/corner,
 /area/science/research)
 "aYp" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21"
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 24
 	},
@@ -23768,6 +23709,7 @@
 	c_tag = "Research Division South";
 	dir = 8
 	},
+/obj/machinery/vending/wardrobe/science_wardrobe,
 /turf/open/floor/plasteel/whitepurple/corner,
 /area/science/research)
 "aYq" = (
@@ -23854,37 +23796,30 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "aYw" = (
-/obj/structure/destructible/cult/tome,
-/obj/item/book/codex_gigas,
 /obj/machinery/light/small{
-	dir = 1
+	dir = 8
 	},
-/obj/machinery/light_switch{
-	pixel_y = 24
-	},
+/obj/structure/table/wood,
+/obj/item/taperecorder,
 /turf/open/floor/wood{
 	icon_state = "wood-broken6"
 	},
 /area/library)
 "aYx" = (
-/obj/effect/landmark/start/librarian,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
+/obj/structure/chair/comfy/brown,
 /turf/open/floor/wood,
 /area/library)
 "aYy" = (
-/obj/structure/bookcase{
-	name = "Forbidden Knowledge"
-	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/rack{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "minibar";
+	name = "skeletal minibar"
+	},
+/obj/item/storage/fancy/candle_box,
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_x = 32
+	},
 /turf/open/floor/wood,
 /area/library)
 "aYz" = (
@@ -24244,15 +24179,15 @@
 /turf/closed/wall,
 /area/maintenance/port)
 "aZu" = (
-/obj/structure/table/wood,
-/obj/item/paper_bin,
-/obj/item/pen,
 /obj/machinery/status_display{
 	pixel_y = -32
 	},
 /obj/machinery/newscaster{
 	pixel_x = -32
 	},
+/obj/structure/table/wood,
+/obj/item/storage/photo_album,
+/obj/item/camera,
 /turf/open/floor/wood,
 /area/library)
 "aZv" = (
@@ -24265,22 +24200,21 @@
 	name = "Station Intercom";
 	pixel_y = -26
 	},
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
 	},
 /area/library)
 "aZw" = (
-/obj/structure/table/wood,
-/obj/item/taperecorder,
-/obj/item/camera,
 /obj/machinery/ai_status_display{
 	pixel_y = -32
 	},
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = 32
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
+	},
+/obj/structure/bookcase{
+	name = "Forbidden Knowledge"
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -25792,7 +25726,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/closet/crate/bin,
+/obj/machinery/vending/wardrobe/robo_wardrobe,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "bcz" = (
@@ -26197,7 +26131,6 @@
 /turf/closed/wall/rust,
 /area/science/robotics/lab)
 "bdt" = (
-/obj/structure/closet/wardrobe/robotics_black,
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Robotics Lab APC";
@@ -26209,6 +26142,7 @@
 	icon_state = "0-4"
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel/vault,
 /area/science/robotics/lab)
 "bdu" = (
@@ -26878,14 +26812,10 @@
 /turf/closed/wall,
 /area/medical/medbay/zone3)
 "beH" = (
-/obj/structure/closet/wardrobe/red,
 /obj/machinery/newscaster{
 	pixel_x = -32
 	},
-/obj/item/radio/intercom{
-	name = "Station Intercom";
-	pixel_y = -24
-	},
+/obj/machinery/vending/wardrobe/sec_wardrobe,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
@@ -26906,6 +26836,10 @@
 /obj/machinery/camera{
 	c_tag = "Security Checkpoint";
 	dir = 1
+	},
+/obj/item/radio/intercom{
+	name = "Station Intercom";
+	pixel_y = -24
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 6
@@ -27990,11 +27924,8 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bgX" = (
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the Supply department is.";
-	dir = 1;
-	icon_state = "direction_supply";
-	name = "supply department"
+/obj/structure/sign/directions/supply{
+	dir = 1
 	},
 /obj/structure/sign/directions/science{
 	dir = 1;
@@ -28451,7 +28382,6 @@
 	},
 /area/maintenance/starboard/aft)
 "bhZ" = (
-/obj/structure/closet/wardrobe/chaplain_black,
 /obj/machinery/light_switch{
 	pixel_y = 24
 	},
@@ -28462,6 +28392,7 @@
 	c_tag = "Chaplain's Quarters";
 	dir = 2
 	},
+/obj/machinery/vending/wardrobe/chap_wardrobe,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -31231,9 +31162,6 @@
 /obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
-"dWc" = (
-/turf/closed/mineral/random/labormineral,
-/area/space)
 "dYC" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -32161,6 +32089,10 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible,
 /turf/open/floor/plating/asteroid/airless,
 /area/asteroid/nearstation)
+"lGi" = (
+/obj/machinery/status_display,
+/turf/closed/wall,
+/area/library)
 "lIM" = (
 /turf/closed/wall/rust,
 /area/crew_quarters/lounge)
@@ -32189,6 +32121,14 @@
 /obj/machinery/light/small,
 /turf/open/floor/engine/air,
 /area/engine/atmos)
+"lWY" = (
+/obj/machinery/light_switch{
+	pixel_y = 24
+	},
+/obj/structure/destructible/cult/tome,
+/obj/item/book/codex_gigas,
+/turf/open/floor/wood,
+/area/library)
 "lXk" = (
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/delivery,
@@ -34348,8 +34288,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/vault/corner{
-	tag = "icon-vaultcorner (NORTH)";
-	icon_state = "vaultcorner";
 	dir = 1
 	},
 /area/ai_monitored/turret_protected/ai)
@@ -35128,17 +35066,11 @@
 /turf/closed/wall/r_wall/rust,
 /area/ai_monitored/nuke_storage)
 "sOF" = (
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the Supply department is.";
-	dir = 4;
-	icon_state = "direction_supply";
-	name = "supply department"
+/obj/structure/sign/directions/supply{
+	dir = 4
 	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the Command department is.";
+/obj/structure/sign/directions/command{
 	dir = 1;
-	icon_state = "direction_bridge";
-	name = "command department";
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/science{
@@ -35838,6 +35770,16 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"xre" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/morgue{
+	name = "Curator's Study";
+	req_access_txt = "37"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/library)
 "xrf" = (
 /obj/machinery/light{
 	dir = 8
@@ -69843,7 +69785,7 @@ aQW
 aQW
 aQW
 aQW
-aQW
+sJI
 aQW
 sJI
 aQW
@@ -70099,8 +70041,8 @@ aUc
 aUV
 aVN
 aWA
-aXe
 aQW
+lWY
 aYw
 aZu
 aQW
@@ -70356,7 +70298,7 @@ aUd
 sKd
 aVO
 aWB
-aVO
+xre
 aXL
 aYx
 aZv
@@ -70870,7 +70812,7 @@ aUf
 aUX
 aVQ
 aWD
-aVQ
+lGi
 aQW
 aQW
 aQW

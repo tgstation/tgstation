@@ -296,7 +296,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
 	H.remove_overlay(HAIR_LAYER)
-
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 	if(!HD) //Decapitated
 		return
@@ -834,7 +833,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(SLOT_L_STORE)
-			if(I.flags_1 & NODROP_1) //Pockets aren't visible, so you can't move NODROP_1 items into them.
+			if(I.item_flags & NODROP) //Pockets aren't visible, so you can't move NODROP_1 items into them.
 				return FALSE
 			if(H.l_store)
 				return FALSE
@@ -850,7 +849,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if( I.w_class <= WEIGHT_CLASS_SMALL || (I.slot_flags & ITEM_SLOT_POCKET) )
 				return TRUE
 		if(SLOT_R_STORE)
-			if(I.flags_1 & NODROP_1)
+			if(I.item_flags & NODROP)
 				return FALSE
 			if(H.r_store)
 				return FALSE
@@ -867,7 +866,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return TRUE
 			return FALSE
 		if(SLOT_S_STORE)
-			if(I.flags_1 & NODROP_1)
+			if(I.item_flags & NODROP)
 				return FALSE
 			if(H.s_store)
 				return FALSE
@@ -904,7 +903,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			return TRUE
 		if(SLOT_IN_BACKPACK)
 			if(H.back)
-				if(H.back.SendSignal(COMSIG_TRY_STORAGE_CAN_INSERT, I, H, TRUE))
+				if(SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_CAN_INSERT, I, H, TRUE))
 					return TRUE
 			return FALSE
 	return FALSE //Unsupported slot
@@ -952,7 +951,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 	else
-		if(H.overeatduration > 500)
+		if(H.overeatduration >= 100)
 			to_chat(H, "<span class='danger'>You suddenly feel blubbery!</span>")
 			H.add_trait(TRAIT_FAT, OBESITY)
 			H.update_inv_w_uniform()
@@ -1002,22 +1001,22 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	switch(H.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
-			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/fat)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/fat)
 			H.throw_alert("nutrition", /obj/screen/alert/fat)
 		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/wellfed)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/wellfed)
 			H.clear_alert("nutrition")
 		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/fed)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/fed)
 			H.clear_alert("nutrition")
 		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-			H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "nutrition")
+			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "nutrition")
 			H.clear_alert("nutrition")
 		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/hungry)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/hungry)
 			H.throw_alert("nutrition", /obj/screen/alert/hungry)
 		if(0 to NUTRITION_LEVEL_STARVING)
-			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/starving)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/starving)
 			H.throw_alert("nutrition", /obj/screen/alert/starving)
 
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
@@ -1075,8 +1074,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(H.movement_type & FLYING)
 		flight = 1
 
-	if(H.has_gravity())
-		gravity = TRUE
+	gravity = H.has_gravity()
 
 	if(!flightpack && gravity)	//Check for chemicals and innate speedups and slowdowns if we're moving using our body and not a flying suit
 		if(H.has_trait(TRAIT_GOTTAGOFAST))
@@ -1123,6 +1121,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				. += (health_deficiency / 75)
 			else
 				. += (health_deficiency / 25)
+		if(CONFIG_GET(flag/disable_human_mood))
+			var/hungry = (500 - H.nutrition) / 5 //So overeat would be 100 and default level would be 80
+			if((hungry >= 70) && !flight) //Being hungry will still allow you to use a flightsuit/wings.
+				. += hungry / 50
+
+		//Moving in high gravity is very slow (Flying too)
+		if(gravity > STANDARD_GRAVITY)
+			var/grav_force = min(gravity - STANDARD_GRAVITY,3)
+			. += 1 + grav_force
 
 		GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 		if(mood && !flight) //How can depression slow you down if you can just fly away from your problems?
@@ -1136,7 +1143,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		if(H.has_trait(TRAIT_FAT))
 			. += (1.5 - flight)
-		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !H.has_trait(TRAIT_RESISTCOLD))
 			. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
 	return .
 
@@ -1246,7 +1253,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
 		var/randomized_zone = ran_zone(user.zone_selected)
-		target.SendSignal(COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
+		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
 		var/obj/item/bodypart/affecting = target.get_bodypart(randomized_zone)
 		var/randn = rand(1, 100)
 		if(randn <= 25)
@@ -1255,7 +1262,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				"<span class='userdanger'>[user] has pushed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
 			target.apply_effect(40, EFFECT_KNOCKDOWN, target.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
 			target.forcesay(GLOB.hit_appends)
-			add_logs(user, target, "disarmed", " pushing them to the ground")
+			add_logs(user, target, "pushed over")
 			return
 
 		if(randn <= 60)
@@ -1278,7 +1285,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		playsound(target, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 		target.visible_message("<span class='danger'>[user] attempted to disarm [target]!</span>", \
 						"<span class='userdanger'>[user] attemped to disarm [target]!</span>", null, COMBAT_MESSAGE_RANGE)
-
+		add_logs(user, target, "attempted to disarm")
 
 
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
@@ -1507,9 +1514,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	// +/- 50 degrees from 310K is the 'safe' zone, where no damage is dealt.
 	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !H.has_trait(TRAIT_RESISTHEAT))
 		//Body temperature is too hot.
+		
+		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
+		
 		var/burn_damage
-		H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "cold")
-		H.SendSignal(COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
 		switch(H.bodytemperature)
 			if(BODYTEMP_HEAT_DAMAGE_LIMIT to 400)
 				H.throw_alert("temp", /obj/screen/alert/hot, 1)
@@ -1528,9 +1537,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.emote("scream")
 		H.apply_damage(burn_damage, BURN)
 
-	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(GLOB.mutations_list[COLDRES] in H.dna.mutations))
-		H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "hot")
-		H.SendSignal(COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
+	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !H.has_trait(TRAIT_RESISTCOLD))
+		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
 		switch(H.bodytemperature)
 			if(200 to BODYTEMP_COLD_DAMAGE_LIMIT)
 				H.throw_alert("temp", /obj/screen/alert/cold, 1)
@@ -1544,8 +1553,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	else
 		H.clear_alert("temp")
-		H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "cold")
-		H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "hot")
+		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
+		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
 
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = H.calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
@@ -1639,7 +1648,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.adjust_bodytemperature(11)
 		else
 			H.adjust_bodytemperature(BODYTEMP_HEATING_MAX + (H.fire_stacks * 12))
-			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
 
 /datum/species/proc/CanIgniteMob(mob/living/carbon/human/H)
 	if(H.has_trait(TRAIT_NOFIRE))

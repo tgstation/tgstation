@@ -527,3 +527,6 @@ ROUNDSTART_TRAITS
 
 ## Sets shift time to server time at roundstart. Overridden by RANDOMIZE_SHIFT_TIME ##
 #SHIFT_TIME_REALTIME
+
+## A cap on how many monkeys may be created via monkey cubes
+MONKEYCAP 64

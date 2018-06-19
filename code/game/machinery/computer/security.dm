@@ -457,7 +457,7 @@ What a mess.*/
 				temp += "<a href='?src=[REF(src)];choice=Clear Screen'>No</a>"
 
 			if("Purge All Records")
-				investigate_log("[usr.name] ([usr.key]) has purged all the security records.", INVESTIGATE_RECORDS)
+				investigate_log("[key_name(usr)] has purged all the security records.", INVESTIGATE_RECORDS)
 				for(var/datum/data/record/R in GLOB.data_core.security)
 					qdel(R)
 				GLOB.data_core.security.Cut()
@@ -653,6 +653,7 @@ What a mess.*/
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, station_time_timestamp())
 							GLOB.data_core.addMinorCrime(active1.fields["id"], crime)
+							investigate_log("New Minor Crime: <strong>[t1]</strong>: [t2] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 					if("mi_crim_delete")
 						if(istype(active1, /datum/data/record))
 							if(href_list["cdataid"])
@@ -667,6 +668,7 @@ What a mess.*/
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, station_time_timestamp())
 							GLOB.data_core.addMajorCrime(active1.fields["id"], crime)
+							investigate_log("New Major Crime: <strong>[t1]</strong>: [t2] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 					if("ma_crim_delete")
 						if(istype(active1, /datum/data/record))
 							if(href_list["cdataid"])
@@ -724,18 +726,18 @@ What a mess.*/
 									active2.fields["criminal"] = "Parolled"
 								if("released")
 									active2.fields["criminal"] = "Discharged"
-							investigate_log("[active1.fields["name"]] has been set from [old_field] to [active2.fields["criminal"]] by [usr.name] ([usr.key]).", INVESTIGATE_RECORDS)
+							investigate_log("[active1.fields["name"]] has been set from [old_field] to [active2.fields["criminal"]] by [key_name(usr)].", INVESTIGATE_RECORDS)
 							for(var/mob/living/carbon/human/H in GLOB.carbon_list)
 								H.sec_hud_set_security_status()
 					if("Delete Record (Security) Execute")
-						investigate_log("[usr.name] ([usr.key]) has deleted the security records for [active1.fields["name"]].", INVESTIGATE_RECORDS)
+						investigate_log("[key_name(usr)] has deleted the security records for [active1.fields["name"]].", INVESTIGATE_RECORDS)
 						if(active2)
 							qdel(active2)
 							active2 = null
 
 					if("Delete Record (ALL) Execute")
 						if(active1)
-							investigate_log("[usr.name] ([usr.key]) has deleted all records for [active1.fields["name"]].", INVESTIGATE_RECORDS)
+							investigate_log("[key_name(usr)] has deleted all records for [active1.fields["name"]].", INVESTIGATE_RECORDS)
 							for(var/datum/data/record/R in GLOB.data_core.medical)
 								if((R.fields["name"] == active1.fields["name"] || R.fields["id"] == active1.fields["id"]))
 									qdel(R)
@@ -783,8 +785,9 @@ What a mess.*/
 	printing = FALSE
 
 /obj/machinery/computer/secure_data/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
+	. = ..()
+
+	if(stat & (BROKEN|NOPOWER) || . & EMP_PROTECT_SELF)
 		return
 
 	for(var/datum/data/record/R in GLOB.data_core.security)
@@ -817,8 +820,6 @@ What a mess.*/
 			qdel(R)
 			continue
 
-	..(severity)
-
 /obj/machinery/computer/secure_data/proc/canUseSecurityRecordsConsole(mob/user, message1 = 0, record1, record2)
 	if(user)
 		if(authenticated)
@@ -831,18 +832,21 @@ What a mess.*/
 	return 0
 
 /obj/machinery/computer/secure_data/AltClick(mob/user)
-	if(user.canUseTopic(src) && scan)
+	if(user.canUseTopic(src))
 		eject_id(user)
 
 /obj/machinery/computer/secure_data/proc/eject_id(mob/user)
 	if(scan)
-		user.put_in_hands(scan)
+		scan.forceMove(drop_location())
+		if(!issilicon(user) && Adjacent(user))
+			user.put_in_hands(scan)
 		scan = null
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 	else //switching the ID with the one you're holding
-		var/obj/item/I = user.is_holding_item_of_type(/obj/item/card/id)
-		if(I)
-			if(!user.transferItemToLoc(I, src))
-				return
-			scan = I
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+		if(issilicon(user) || !Adjacent(user))
+			return
+		var/obj/item/card/id/held_id = user.is_holding_item_of_type(/obj/item/card/id)
+		if(QDELETED(held_id) || !user.transferItemToLoc(held_id, src))
+			return
+		scan = held_id
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)

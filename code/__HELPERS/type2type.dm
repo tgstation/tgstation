@@ -218,21 +218,6 @@
 		. = "NONE"
 	return .
 
-/proc/ui_style2icon(ui_style)
-	switch(ui_style)
-		if("Retro")
-			return 'icons/mob/screen_retro.dmi'
-		if("Plasmafire")
-			return 'icons/mob/screen_plasmafire.dmi'
-		if("Slimecore")
-			return 'icons/mob/screen_slimecore.dmi'
-		if("Operative")
-			return 'icons/mob/screen_operative.dmi'
-		if("Clockwork")
-			return 'icons/mob/screen_clockwork.dmi'
-		else
-			return 'icons/mob/screen_midnight.dmi'
-
 //colour formats
 /proc/rgb2hsl(red, green, blue)
 	red /= 255;green /= 255;blue /= 255;

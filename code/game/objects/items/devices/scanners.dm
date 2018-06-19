@@ -1,9 +1,11 @@
 
 /*
+
 CONTAINS:
 T-RAY
 HEALTH ANALYZER
 GAS ANALYZER
+SLIME SCANNER
 
 */
 /obj/item/t_scanner
@@ -66,7 +68,8 @@ GAS ANALYZER
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
-	flags_1 = CONDUCT_1 | NOBLUDGEON_1
+	flags_1 = CONDUCT_1
+	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 3
 	w_class = WEIGHT_CLASS_TINY
@@ -254,7 +257,32 @@ GAS ANALYZER
 	// Species and body temperature
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		to_chat(user, "<span class='info'>Species: [H.dna.species.name]</span>")
+		var/datum/species/S = H.dna.species
+		var/mutant = FALSE
+		if (H.dna.check_mutation(HULK))
+			mutant = TRUE
+		else if (S.mutantlungs != initial(S.mutantlungs))
+			mutant = TRUE
+		else if (S.mutant_brain != initial(S.mutant_brain))
+			mutant = TRUE
+		else if (S.mutant_heart != initial(S.mutant_heart))
+			mutant = TRUE
+		else if (S.mutanteyes != initial(S.mutanteyes))
+			mutant = TRUE
+		else if (S.mutantears != initial(S.mutantears))
+			mutant = TRUE
+		else if (S.mutanthands != initial(S.mutanthands))
+			mutant = TRUE
+		else if (S.mutanttongue != initial(S.mutanttongue))
+			mutant = TRUE
+		else if (S.mutanttail != initial(S.mutanttail))
+			mutant = TRUE
+		else if (S.mutantliver != initial(S.mutantliver))
+			mutant = TRUE
+		else if (S.mutantstomach != initial(S.mutantstomach))
+			mutant = TRUE
+
+		to_chat(user, "<span class='info'>Species: [S.name][mutant ? "-derived mutant" : ""]</span>")
 	to_chat(user, "<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>")
 
 	// Time of death
@@ -341,16 +369,18 @@ GAS ANALYZER
 	desc = "A hand-held environmental scanner which reports current gas levels. Alt-Click to use the built in barometer function."
 	name = "analyzer"
 	icon = 'icons/obj/device.dmi'
-	icon_state = "atmos"
+	icon_state = "analyzer"
 	item_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	flags_1 = CONDUCT_1 | NOBLUDGEON_1
+	flags_1 = CONDUCT_1
+	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
+	tool_behaviour = TOOL_ANALYZER
 	materials = list(MAT_METAL=30, MAT_GLASS=20)
 	grind_results = list("mercury" = 5, "iron" = 5, "silicon" = 5)
 	var/cooldown = FALSE
@@ -362,7 +392,6 @@ GAS ANALYZER
 	return BRUTELOSS
 
 /obj/item/analyzer/attack_self(mob/user)
-
 	add_fingerprint(user)
 
 	if (user.stat || user.eye_blind)
@@ -379,9 +408,9 @@ GAS ANALYZER
 
 	to_chat(user, "<span class='info'><B>Results:</B></span>")
 	if(abs(pressure - ONE_ATMOSPHERE) < 10)
-		to_chat(user, "<span class='info'>Pressure: [round(pressure,0.1)] kPa</span>")
+		to_chat(user, "<span class='info'>Pressure: [round(pressure, 0.01)] kPa</span>")
 	else
-		to_chat(user, "<span class='alert'>Pressure: [round(pressure,0.1)] kPa</span>")
+		to_chat(user, "<span class='alert'>Pressure: [round(pressure, 0.01)] kPa</span>")
 	if(total_moles)
 		var/list/env_gases = environment.gases
 
@@ -390,35 +419,35 @@ GAS ANALYZER
 		var/n2_concentration = env_gases[/datum/gas/nitrogen][MOLES]/total_moles
 		var/co2_concentration = env_gases[/datum/gas/carbon_dioxide][MOLES]/total_moles
 		var/plasma_concentration = env_gases[/datum/gas/plasma][MOLES]/total_moles
-		environment.garbage_collect()
 
 		if(abs(n2_concentration - N2STANDARD) < 20)
-			to_chat(user, "<span class='info'>Nitrogen: [round(n2_concentration*100, 0.01)] %</span>")
+			to_chat(user, "<span class='info'>Nitrogen: [round(n2_concentration*100, 0.01)] % ([round(env_gases[/datum/gas/nitrogen][MOLES], 0.01)] mol)</span>")
 		else
-			to_chat(user, "<span class='alert'>Nitrogen: [round(n2_concentration*100, 0.01)] %</span>")
+			to_chat(user, "<span class='alert'>Nitrogen: [round(n2_concentration*100, 0.01)] % ([round(env_gases[/datum/gas/nitrogen][MOLES], 0.01)] mol)</span>")
 
 		if(abs(o2_concentration - O2STANDARD) < 2)
-			to_chat(user, "<span class='info'>Oxygen: [round(o2_concentration*100, 0.01)] %</span>")
+			to_chat(user, "<span class='info'>Oxygen: [round(o2_concentration*100, 0.01)] % ([round(env_gases[/datum/gas/oxygen][MOLES], 0.01)] mol)</span>")
 		else
-			to_chat(user, "<span class='alert'>Oxygen: [round(o2_concentration*100, 0.01)] %</span>")
+			to_chat(user, "<span class='alert'>Oxygen: [round(o2_concentration*100, 0.01)] % ([round(env_gases[/datum/gas/oxygen][MOLES], 0.01)] mol)</span>")
 
 		if(co2_concentration > 0.01)
-			to_chat(user, "<span class='alert'>CO2: [round(co2_concentration*100, 0.01)] %</span>")
+			to_chat(user, "<span class='alert'>CO2: [round(co2_concentration*100, 0.01)] % ([round(env_gases[/datum/gas/carbon_dioxide][MOLES], 0.01)] mol)</span>")
 		else
-			to_chat(user, "<span class='info'>CO2: [round(co2_concentration*100, 0.01)] %</span>")
+			to_chat(user, "<span class='info'>CO2: [round(co2_concentration*100, 0.01)] % ([round(env_gases[/datum/gas/carbon_dioxide][MOLES], 0.01)] mol)</span>")
 
 		if(plasma_concentration > 0.005)
-			to_chat(user, "<span class='alert'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>")
+			to_chat(user, "<span class='alert'>Plasma: [round(plasma_concentration*100, 0.01)] % ([round(env_gases[/datum/gas/plasma][MOLES], 0.01)] mol)</span>")
 		else
-			to_chat(user, "<span class='info'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>")
+			to_chat(user, "<span class='info'>Plasma: [round(plasma_concentration*100, 0.01)] % ([round(env_gases[/datum/gas/plasma][MOLES], 0.01)] mol)</span>")
 
+		environment.garbage_collect()
 
 		for(var/id in env_gases)
 			if(id in GLOB.hardcoded_gases)
 				continue
 			var/gas_concentration = env_gases[id][MOLES]/total_moles
-			to_chat(user, "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
-		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C ([round(environment.temperature)]K)</span>")
+			to_chat(user, "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] % ([round(env_gases[id][MOLES], 0.01)] mol)</span>")
+		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C, 0.01)] &deg;C ([round(environment.temperature, 0.01)] K)</span>")
 
 /obj/item/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
 	..()
@@ -465,7 +494,6 @@ GAS ANALYZER
 		cooldown = TRUE
 		addtimer(CALLBACK(src,/obj/item/analyzer/proc/ping), cooldown_time)
 
-
 /obj/item/analyzer/proc/ping()
 	if(isliving(loc))
 		var/mob/living/L = loc
@@ -483,6 +511,42 @@ GAS ANALYZER
 		if(prob(50))
 			amount += inaccurate
 	return DisplayTimeText(max(1,amount))
+
+/proc/atmosanalyzer_scan(mixture, mob/living/user, atom/target = src)
+	var/icon = target
+	user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(src))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
+	to_chat(user, "<span class='boldnotice'>Results of analysis of [icon2html(icon, user)] [target].</span>")
+
+	var/list/airs = islist(mixture) ? mixture : list(mixture)
+	for(var/g in airs)
+		if(airs.len > 1) //not a unary gas mixture
+			to_chat(user, "<span class='boldnotice'>Node [airs.Find(g)]</span>")
+		var/datum/gas_mixture/air_contents = g
+
+		var/total_moles = air_contents.total_moles()
+		var/pressure = air_contents.return_pressure()
+		var/volume = air_contents.return_volume() //could just do mixture.volume... but safety, I guess?
+		var/temperature = air_contents.temperature
+
+		if(total_moles > 0)
+			to_chat(user, "<span class='notice'>Moles: [round(total_moles, 0.01)] mol</span>")
+			to_chat(user, "<span class='notice'>Volume: [volume] L</span>")
+			to_chat(user, "<span class='notice'>Pressure: [round(pressure,0.01)] kPa</span>")
+
+			var/list/cached_gases = air_contents.gases
+			for(var/id in cached_gases)
+				var/gas_concentration = cached_gases[id][MOLES]/total_moles
+				to_chat(user, "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] % ([round(cached_gases[id][MOLES], 0.01)] mol)</span>")
+			to_chat(user, "<span class='notice'>Temperature: [round(temperature - T0C,0.01)] &deg;C ([round(temperature, 0.01)] K)</span>")
+
+		else
+			if(airs.len > 1)
+				to_chat(user, "<span class='notice'>This node is empty!</span>")
+			else
+				to_chat(user, "<span class='notice'>[target] is empty!</span>")
+	return
+
+//slime scanner
 
 /obj/item/slime_scanner
 	name = "slime scanner"

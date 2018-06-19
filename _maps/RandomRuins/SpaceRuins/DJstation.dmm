@@ -74,7 +74,6 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},

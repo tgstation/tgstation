@@ -49,6 +49,13 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
+"fr" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	dir = 9;
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/caravan/pirate)
 "fL" = (
 /obj/machinery/computer/shuttle/caravan/pirate{
 	dir = 8
@@ -73,7 +80,9 @@
 /turf/open/floor/plasteel/red/side,
 /area/shuttle/caravan/pirate)
 "hh" = (
-/mob/living/simple_animal/hostile/pirate,
+/mob/living/simple_animal/hostile/pirate{
+	environment_smash = 0
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/caravan/pirate)
 "hI" = (
@@ -171,6 +180,13 @@
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 4
 	},
+/area/shuttle/caravan/pirate)
+"kI" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	dir = 10;
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/pirate)
 "kY" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -448,8 +464,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/closet/crate/secure/weapon,
-/obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
@@ -639,6 +653,12 @@
 /obj/machinery/atmospherics/components/unary/tank/air,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
+/area/shuttle/caravan/pirate)
+"Gr" = (
+/mob/living/simple_animal/hostile/pirate/ranged{
+	environment_smash = 0
+	},
+/turf/open/floor/plasteel/floorgrime,
 /area/shuttle/caravan/pirate)
 "GQ" = (
 /obj/machinery/light/small{
@@ -913,7 +933,7 @@ Jv
 "}
 (3,1,1) = {"
 Jv
-oL
+fr
 af
 qX
 yt
@@ -923,7 +943,7 @@ RK
 FM
 jh
 af
-oL
+kI
 Jv
 "}
 (4,1,1) = {"
@@ -980,7 +1000,7 @@ su
 Ag
 af
 jo
-su
+Gr
 sr
 af
 af

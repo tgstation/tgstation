@@ -6,21 +6,23 @@
 	icon_state = "console"
 	desc = "Controls a stacking machine... in theory."
 	density = FALSE
-	anchored = TRUE
-	var/obj/machinery/mineral/stacking_machine/machine = null
+	circuit = /obj/item/circuitboard/machine/stacking_unit_console
+	var/obj/machinery/mineral/stacking_machine/machine
 	var/machinedir = SOUTHEAST
-	speed_process = TRUE
 
 /obj/machinery/mineral/stacking_unit_console/Initialize()
 	. = ..()
 	machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
 	if (machine)
 		machine.CONSOLE = src
-	else
-		qdel(src)
 
 /obj/machinery/mineral/stacking_unit_console/ui_interact(mob/user)
 	. = ..()
+
+	if(!machine)
+		to_chat(user, "<span class='notice'>[src] is not linked to a machine!</span>")
+		return
+
 	var/obj/item/stack/sheet/s
 	var/dat
 
@@ -34,6 +36,13 @@
 	dat += text("<br>Stacking: [machine.stack_amt]<br><br>")
 
 	user << browse(dat, "window=console_stacking_machine")
+
+/obj/machinery/mineral/stacking_unit_console/multitool_act(mob/living/user, obj/item/I)
+	if(istype(I, /obj/item/multitool))
+		var/obj/item/multitool/M = I
+		M.buffer = src
+		to_chat(user, "<span class='notice'>You store linkage information in [I]'s buffer.</span>")
+		return TRUE
 
 /obj/machinery/mineral/stacking_unit_console/Topic(href, href_list)
 	if(..())
@@ -61,7 +70,7 @@
 	icon_state = "stacker"
 	desc = "A machine that automatically stacks acquired materials. Controlled by a nearby console."
 	density = TRUE
-	anchored = TRUE
+	circuit = /obj/item/circuitboard/machine/stacking_machine
 	var/obj/machinery/mineral/stacking_unit_console/CONSOLE
 	var/stk_types = list()
 	var/stk_amt   = list()
@@ -77,6 +86,18 @@
 /obj/machinery/mineral/stacking_machine/HasProximity(atom/movable/AM)
 	if(istype(AM, /obj/item/stack/sheet) && AM.loc == get_step(src, input_dir))
 		process_sheet(AM)
+
+/obj/machinery/mineral/stacking_machine/multitool_act(mob/living/user, obj/item/I)
+	if(istype(I, /obj/item/multitool))
+		var/obj/item/multitool/M = I
+		if(!istype(M.buffer, /obj/machinery/mineral/stacking_unit_console))
+			to_chat(user, "<span class='warning'>The [I] has no linkage data in its buffer.</span>")
+			return FALSE
+		else
+			CONSOLE = M.buffer
+			CONSOLE.machine = src
+			to_chat(user, "<span class='notice'>You link [src] to the console in [I]'s buffer.</span>")
+			return TRUE
 
 /obj/machinery/mineral/stacking_machine/proc/process_sheet(obj/item/stack/sheet/inp)
 	if(!(inp.type in stack_list)) //It's the first of this sheet added

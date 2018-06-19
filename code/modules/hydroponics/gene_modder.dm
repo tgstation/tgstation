@@ -4,7 +4,6 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "dnamod"
 	density = TRUE
-	anchored = TRUE
 	circuit = /obj/item/circuitboard/machine/plantgenes
 
 	var/obj/item/seeds/seed

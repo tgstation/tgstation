@@ -237,6 +237,16 @@ magboots would let you walk around normally on the floor. Barring those, you can
 or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "weightless"
 
+/obj/screen/alert/highgravity
+	name = "High Gravity"
+	desc = "You're getting crushed by high gravity, picking up items and movement will be slowed."
+	icon_state = "paralysis"
+
+/obj/screen/alert/veryhighgravity
+	name = "Crushing Gravity"
+	desc = "You're getting crushed by high gravity, picking up items and movement will be slowed. You'll also accumulate brute damage!"
+	icon_state = "paralysis"
+
 /obj/screen/alert/fire
 	name = "On Fire"
 	desc = "You're on fire. Stop, drop and roll to put the fire out or move to a vacuum area."
@@ -588,7 +598,6 @@ so as to remain in compliance with the most up-to-date laws."
 // Re-render all alerts - also called in /datum/hud/show_hud() because it's needed there
 /datum/hud/proc/reorganize_alerts()
 	var/list/alerts = mymob.alerts
-	var/icon_pref
 	if(!hud_shown)
 		for(var/i = 1, i <= alerts.len, i++)
 			mymob.client.screen -= alerts[alerts[i]]
@@ -596,9 +605,7 @@ so as to remain in compliance with the most up-to-date laws."
 	for(var/i = 1, i <= alerts.len, i++)
 		var/obj/screen/alert/alert = alerts[alerts[i]]
 		if(alert.icon_state == "template")
-			if(!icon_pref)
-				icon_pref = ui_style2icon(mymob.client.prefs.UI_style)
-			alert.icon = icon_pref
+			alert.icon = ui_style
 		switch(i)
 			if(1)
 				. = ui_alert1

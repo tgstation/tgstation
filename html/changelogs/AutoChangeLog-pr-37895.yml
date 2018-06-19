@@ -1,4 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - bugfix: "Mulligan didn't work on lizards and other mutants. Now it does."

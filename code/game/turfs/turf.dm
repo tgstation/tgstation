@@ -40,9 +40,9 @@
 	. = ..()
 
 /turf/Initialize()
-	if(initialized)
+	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	initialized = TRUE
+	flags_1 |= INITIALIZED_1
 
 	assemble_baseturfs()
 
@@ -92,7 +92,7 @@
 	SSair.remove_from_active(src)
 	visibilityChanged()
 	QDEL_LIST(blueprint_data)
-	initialized = FALSE
+	flags_1 &= ~INITIALIZED_1
 	requires_activation = FALSE
 	..()
 
@@ -245,19 +245,19 @@
 
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
-		if(O.level == 1 && O.initialized)
+		if(O.level == 1 && (O.flags_1 & INITIALIZED_1))
 			O.hide(src.intact)
 
 // override for space turfs, since they should never hide anything
 /turf/open/space/levelupdate()
 	for(var/obj/O in src)
-		if(O.level == 1 && O.initialized)
+		if(O.level == 1 && (O.flags_1 & INITIALIZED_1))
 			O.hide(0)
 
 // Removes all signs of lattice on the pos of the turf -Donkieyo
 /turf/proc/RemoveLattice()
 	var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-	if(L && L.initialized)
+	if(L && (L.flags_1 & INITIALIZED_1))
 		qdel(L)
 
 /turf/proc/phase_damage_creatures(damage,mob/U = null)//>Ninja Code. Hurts and knocks out creatures on this turf //NINJACODE
@@ -438,3 +438,27 @@
 
 /turf/AllowDrop()
 	return TRUE
+
+/turf/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
+	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
+	// If the vomit combined, apply toxicity and reagents to the old vomit
+	if (QDELETED(V))
+		V = locate() in src
+	// Make toxins vomit look different
+	if(toxvomit)
+		V.icon_state = "vomittox_[pick(1,4)]"
+	if(M.reagents)
+		clear_reagents_to_vomit_pool(M,V)
+
+/proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V)
+	M.reagents.trans_to(V, M.reagents.total_volume / 10)
+	for(var/datum/reagent/R in M.reagents.reagent_list)                //clears the stomach of anything that might be digested as food
+		if(istype(R, /datum/reagent/consumable))
+			var/datum/reagent/consumable/nutri_check = R
+			if(nutri_check.nutriment_factor >0)
+				M.reagents.remove_reagent(R.id,R.volume)
+
+//Whatever happens after high temperature fire dies out or thermite reaction works.
+//Should return new turf
+/turf/proc/Melt()
+	return ScrapeAway()

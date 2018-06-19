@@ -123,18 +123,18 @@
 	if(burn)
 		var/turf/T = get_turf(src)
 		if(Proj.firer)
-			message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(Proj.firer)] in [ADMIN_COORDJMP(T)]",0,1)
-			log_game("Plasma statue ignited by [key_name(Proj.firer)] in [COORD(T)]")
+			message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(Proj.firer)] in [ADMIN_VERBOSEJMP(T)]")
+			log_game("Plasma statue ignited by [key_name(Proj.firer)] in [AREACOORD(T)]")
 		else
-			message_admins("Plasma statue ignited by [Proj]. No known firer, in [ADMIN_COORDJMP(T)]",0,1)
-			log_game("Plasma statue ignited by [Proj] in [COORD(T)]. No known firer.")
+			message_admins("Plasma statue ignited by [Proj]. No known firer, in [ADMIN_VERBOSEJMP(T)]")
+			log_game("Plasma statue ignited by [Proj] in [AREACOORD(T)]. No known firer.")
 	..()
 
 /obj/structure/statue/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
 		var/turf/T = get_turf(src)
-		message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
-		log_game("Plasma statue ignited by [key_name(user)] in [COORD(T)]")
+		message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
+		log_game("Plasma statue ignited by [key_name(user)] in [AREACOORD(T)]")
 		ignite(W.is_hot())
 	else
 		return ..()

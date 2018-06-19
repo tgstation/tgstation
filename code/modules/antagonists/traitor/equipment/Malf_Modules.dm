@@ -319,7 +319,6 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	name = "doomsday device"
 	icon_state = "nuclearbomb_base"
 	desc = "A weapon which disintegrates all organic life in a large area."
-	anchored = TRUE
 	density = TRUE
 	verb_exclaim = "blares"
 	var/timing = FALSE

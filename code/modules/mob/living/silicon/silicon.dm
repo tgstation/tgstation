@@ -403,3 +403,9 @@
 
 /mob/living/silicon/is_literate()
 	return 1
+
+/mob/living/silicon/get_inactive_held_item()
+	return FALSE
+
+/mob/living/silicon/handle_high_gravity(gravity)
+	return

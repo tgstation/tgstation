@@ -202,21 +202,13 @@
 
 /obj/docking_port/stationary/transit
 	name = "In Transit"
-	var/list/turf/assigned_turfs = list()
+	var/datum/turf_reservation/reserved_area
 	var/area/shuttle/transit/assigned_area
 	var/obj/docking_port/mobile/owner
 
 /obj/docking_port/stationary/transit/Initialize()
 	. = ..()
 	SSshuttle.transit += src
-
-/obj/docking_port/stationary/transit/proc/dezone()
-	for(var/i in 1 to assigned_turfs.len)
-		var/turf/T = assigned_turfs[i]
-		if(istype(T, /turf/open/space/transit))
-			T.ChangeTurf(/turf/open/space)
-			T.assemble_baseturfs(initial(T.baseturfs))
-			T.flags_1 |= UNUSED_TRANSIT_TURF_1
 
 /obj/docking_port/stationary/transit/Destroy(force=FALSE)
 	if(force)
@@ -227,11 +219,10 @@
 			if(owner.assigned_transit == src)
 				owner.assigned_transit = null
 			owner = null
-		if(assigned_turfs)
-			dezone()
-			assigned_turfs.Cut()
-		assigned_turfs = null
-	. = ..()
+		if(!QDELETED(reserved_area))
+			qdel(reserved_area)
+		reserved_area = null
+	return ..()
 
 /obj/docking_port/mobile
 	name = "shuttle"
@@ -282,8 +273,9 @@
 		SSshuttle.mobile -= src
 		destination = null
 		previous = null
-		assigned_transit = null
+		QDEL_NULL(assigned_transit)		//don't need it where we're goin'!
 		shuttle_areas = null
+		remove_ripples()
 	. = ..()
 
 /obj/docking_port/mobile/Initialize(mapload)
@@ -432,7 +424,7 @@
 		underlying_area_type = current_dock.area_type
 
 	var/list/old_turfs = return_ordered_turfs(x, y, z, dir)
-	
+
 	var/area/underlying_area
 	for(var/i in GLOB.sortedAreas)
 		var/area/place = i
@@ -450,7 +442,7 @@
 		underlying_area.contents += oldT
 		oldT.change_area(old_area, underlying_area)
 		oldT.empty(FALSE)
-		
+
 		// Here we locate the bottomost shuttle boundary and remove all turfs above it
 		var/list/baseturf_cache = oldT.baseturfs
 		for(var/k in 1 to length(baseturf_cache))
@@ -463,12 +455,10 @@
 /obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1, animate_time)
 	var/list/turfs = ripple_area(S1)
 	for(var/t in turfs)
-		ripples += new /obj/effect/temp_visual/ripple(t, animate_time)
+		ripples += new /obj/effect/abstract/ripple(t, animate_time)
 
 /obj/docking_port/mobile/proc/remove_ripples()
-	for(var/R in ripples)
-		qdel(R)
-	ripples.Cut()
+	QDEL_LIST(ripples)
 
 /obj/docking_port/mobile/proc/ripple_area(obj/docking_port/stationary/S1)
 	var/list/L0 = return_ordered_turfs(x, y, z, dir)
@@ -478,13 +468,14 @@
 
 	for(var/i in 1 to L0.len)
 		var/turf/T0 = L0[i]
-		if(!T0 || !istype(T0.loc, area_type))
-			continue
 		var/turf/T1 = L1[i]
-		if(!T1)
-			continue
-		if(T0.type != T0.baseturfs)
-			ripple_turfs += T1
+		if(!T0 || !T1)
+			continue  // out of bounds
+		if(T0.type == T0.baseturfs)
+			continue  // indestructible
+		if(!istype(T0.loc, area_type) || istype(T0.loc, /area/shuttle/transit))
+			continue  // not part of the shuttle
+		ripple_turfs += T1
 
 	return ripple_turfs
 

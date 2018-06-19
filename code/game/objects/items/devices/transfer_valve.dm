@@ -52,7 +52,7 @@
 		A.toggle_secure()	//this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
 
 		GLOB.bombers += "[key_name(user)] attached a [item] to a transfer valve."
-		message_admins("[key_name_admin(user)] attached a [item] to a transfer valve.")
+		message_admins("[ADMIN_LOOKUPFLW(user)] attached a [item] to a transfer valve.")
 		log_game("[key_name(user)] attached a [item] to a transfer valve.")
 		attacher = user
 	return
@@ -184,41 +184,33 @@
 	if(!valve_open && tank_one && tank_two)
 		valve_open = TRUE
 		var/turf/bombturf = get_turf(src)
-		var/area/A = get_area(bombturf)
 
-		var/attachment = "no device"
+		var/attachment
 		if(attached_device)
 			if(istype(attached_device, /obj/item/assembly/signaler))
 				attachment = "<A HREF='?_src_=holder;[HrefToken()];secrets=list_signalers'>[attached_device]</A>"
 			else
 				attachment = attached_device
 
-		var/attacher_name = ""
-		if(!attacher)
-			attacher_name = "Unknown"
-		else
-			attacher_name = "[key_name_admin(attacher)]"
+		var/admin_attachment_message
+		var/attachment_message
+		if(attachment)
+			admin_attachment_message = " with [attachment] attached by [attacher ? ADMIN_LOOKUPFLW(attacher) : "Unknown"]"
+			attachment_message = " with [attachment] attached by [attacher ? key_name_admin(attacher) : "Unknown"]"
 
-		var/log_str1 = "Bomb valve opened in "
-		var/log_str2 = "with [attachment] attacher: [attacher_name]"
+		var/mob/bomber = get_mob_by_key(fingerprintslast)
+		var/admin_bomber_message
+		var/bomber_message
+		if(bomber)
+			admin_bomber_message = " - Last touched by: [ADMIN_LOOKUPFLW(bomber)]"
+			bomber_message = " - Last touched by: [key_name_admin(bomber)]"
 
-		var/log_attacher = ""
-		if(attacher)
-			log_attacher = "[ADMIN_QUE(attacher)] [ADMIN_FLW(attacher)]"
 
-		var/mob/mob = get_mob_by_key(src.fingerprintslast)
-		var/last_touch_info = ""
-		if(mob)
-			last_touch_info = "[ADMIN_QUE(mob)] [ADMIN_FLW(mob)]"
+		var/admin_bomb_message = "Bomb valve opened in [ADMIN_VERBOSEJMP(bombturf)][admin_attachment_message][admin_bomber_message]"
+		GLOB.bombers += admin_bomb_message
+		message_admins(admin_bomb_message, 0, 1)
+		log_game("Bomb valve opened in [AREACOORD(bombturf)][attachment_message][bomber_message]")
 
-		var/log_str3 = " Last touched by: [key_name_admin(mob)]"
-
-		var/bomb_message = "[log_str1] [A.name][ADMIN_JMP(bombturf)] [log_str2][log_attacher] [log_str3][last_touch_info]"
-
-		GLOB.bombers += bomb_message
-
-		message_admins(bomb_message, 0, 1)
-		log_game("[log_str1] [A.name][COORD(bombturf)] [log_str2] [log_str3]")
 		merge_gases()
 		for(var/i in 1 to 6)
 			addtimer(CALLBACK(src, .proc/update_icon), 20 + (i - 1) * 10)

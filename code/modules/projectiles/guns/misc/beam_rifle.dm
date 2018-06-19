@@ -195,6 +195,9 @@
 	return ..()
 
 /obj/item/gun/energy/beam_rifle/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chambered = null
 	recharge_newshot()
 

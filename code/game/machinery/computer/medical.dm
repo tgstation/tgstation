@@ -283,7 +283,7 @@
 				src.temp = "Are you sure you wish to delete all records?<br>\n\t<A href='?src=[REF(src)];temp=1;del_all2=1'>Yes</A><br>\n\t<A href='?src=[REF(src)];temp=1'>No</A><br>"
 
 			else if(href_list["del_all2"])
-				investigate_log("[usr.name] ([usr.key]) has deleted all medical records.", INVESTIGATE_RECORDS)
+				investigate_log("[key_name(usr)] has deleted all medical records.", INVESTIGATE_RECORDS)
 				GLOB.data_core.medical.Cut()
 				src.temp = "All records deleted."
 
@@ -449,7 +449,7 @@
 					src.temp = "Are you sure you wish to delete the record (Medical Portion Only)?<br>\n\t<A href='?src=[REF(src)];temp=1;del_r2=1'>Yes</A><br>\n\t<A href='?src=[REF(src)];temp=1'>No</A><br>"
 
 			else if(href_list["del_r2"])
-				investigate_log("[usr.name] ([usr.key]) has deleted the medical records for [active1.fields["name"]].", INVESTIGATE_RECORDS)
+				investigate_log("[key_name(usr)] has deleted the medical records for [active1.fields["name"]].", INVESTIGATE_RECORDS)
 				if(active2)
 					qdel(active2)
 					active2 = null
@@ -553,7 +553,8 @@
 	return
 
 /obj/machinery/computer/med_data/emp_act(severity)
-	if(!(stat & (BROKEN|NOPOWER)))
+	. = ..()
+	if(!(stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
 		for(var/datum/data/record/R in GLOB.data_core.medical)
 			if(prob(10/severity))
 				switch(rand(1,6))
@@ -577,7 +578,6 @@
 			else if(prob(1))
 				qdel(R)
 				continue
-	..()
 
 /obj/machinery/computer/med_data/proc/canUseMedicalRecordsConsole(mob/user, message = 1, record1, record2)
 	if(user)

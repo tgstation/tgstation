@@ -3,6 +3,9 @@
 	return FALSE
 
 /mob/living/silicon/pai/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	take_holo_damage(50/severity)
 	Knockdown(400/severity)
 	silent = max(30/severity, silent)

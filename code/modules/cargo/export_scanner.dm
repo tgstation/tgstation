@@ -1,12 +1,12 @@
 /obj/item/export_scanner
 	name = "export scanner"
-	desc = "A device used to check objects against Nanotrasen exports database."
+	desc = "A device used to check objects against Nanotrasen exports and bounty database."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "export_scanner"
 	item_state = "radio"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_SMALL
 	siemens_coefficient = 1
 	var/obj/machinery/computer/cargo/cargo_console = null
@@ -32,8 +32,9 @@
 		// Before you fix it:
 		// yes, checking manifests is a part of intended functionality.
 		var/price = export_item_and_contents(O, cargo_console.contraband, (cargo_console.obj_flags & EMAGGED), dry_run=TRUE)
-
 		if(price)
 			to_chat(user, "<span class='notice'>Scanned [O], value: <b>[price]</b> credits[O.contents.len ? " (contents included)" : ""].</span>")
 		else
 			to_chat(user, "<span class='warning'>Scanned [O], no export value.</span>")
+		if(bounty_ship_item_and_contents(O, dry_run=TRUE))
+			to_chat(user, "<span class='notice'>Scanned item is eligible for one or more bounties.</span>")

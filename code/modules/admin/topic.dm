@@ -445,6 +445,8 @@
 			if("Yes")
 				delmob = 1
 
+		log_admin("[key_name(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]</span>")
 		switch(href_list["simplemake"])
 			if("observer")
 				M.change_mob_type( /mob/dead/observer , null, null, delmob )
@@ -497,8 +499,6 @@
 				M.change_mob_type( /mob/living/simple_animal/hostile/construct/wraith , null, null, delmob )
 			if("shade")
 				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
-		log_admin("[key_name(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]")
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]</span>")
 
 
 	/////////////////////////////////////new ban stuff
@@ -1191,10 +1191,13 @@
 		var/message_id = sanitizeSQL("[href_list["messageedits"]]")
 		var/datum/DBQuery/query_get_message_edits = SSdbcore.NewQuery("SELECT edits FROM [format_table_name("messages")] WHERE id = '[message_id]'")
 		if(!query_get_message_edits.warn_execute())
+			qdel(query_get_message_edits)
 			return
 		if(query_get_message_edits.NextRow())
 			var/edit_log = query_get_message_edits.item[1]
-			usr << browse(edit_log,"window=noteedits")
+			if(!QDELETED(usr))
+				usr << browse(edit_log,"window=noteedits")
+		qdel(query_get_message_edits)
 
 	else if(href_list["newban"])
 		if(!check_rights(R_BAN))
@@ -1813,43 +1816,25 @@
 		usr.client.smite(H)
 
 	else if(href_list["CentComReply"])
-		var/mob/living/carbon/human/H = locate(href_list["CentComReply"]) in GLOB.mob_list
-		if(!istype(H))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human")
-			return
-		if(!istype(H.ears, /obj/item/radio/headset))
-			to_chat(usr, "The person you are trying to contact is not wearing a headset.")
+		if(!check_rights(R_ADMIN))
 			return
 
-		message_admins("[src.owner] has started answering [key_name(H)]'s CentCom request.")
-		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from CentCom", "")
-		if(!input)
-			message_admins("[src.owner] decided not to answer [key_name(H)]'s CentCom request.")
-			return
-
-		log_admin("[src.owner] replied to [key_name(H)]'s CentCom message with the message [input].")
-		message_admins("[src.owner] replied to [key_name(H)]'s CentCom message with: \"[input]\"")
-		to_chat(H, "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. [input].  Message ends.\"")
+		var/mob/M = locate(href_list["CentComReply"])
+		usr.client.admin_headset_message(M, "CentCom")
 
 	else if(href_list["SyndicateReply"])
-		var/mob/living/carbon/human/H = locate(href_list["SyndicateReply"])
-		if(!istype(H))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.")
-			return
-		if(!istype(H.ears, /obj/item/radio/headset))
-			to_chat(usr, "The person you are trying to contact is not wearing a headset.")
+		if(!check_rights(R_ADMIN))
 			return
 
-		message_admins("[src.owner] has started answering [key_name(H)]'s syndicate request.")
-		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", "")
-		if(!input)
-			message_admins("[src.owner] decided not to answer [key_name(H)]'s syndicate request.")
+		var/mob/M = locate(href_list["SyndicateReply"])
+		usr.client.admin_headset_message(M, "Syndicate")
+
+	else if(href_list["HeadsetMessage"])
+		if(!check_rights(R_ADMIN))
 			return
 
-		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
-		log_admin("[src.owner] replied to [key_name(H)]'s Syndicate message with the message [input].")
-		message_admins("[src.owner] replied to [key_name(H)]'s Syndicate message with: \"[input]\"")
-		to_chat(H, "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. [input].  Message ends.\"")
+		var/mob/M = locate(href_list["HeadsetMessage"])
+		usr.client.admin_headset_message(M)
 
 	else if(href_list["reject_custom_name"])
 		if(!check_rights(R_ADMIN))
@@ -1903,7 +1888,7 @@
 			to_chat(usr, "This can only be used on instances of type /mob.")
 			return
 
-		show_individual_logging_panel(M, href_list["log_type"])
+		show_individual_logging_panel(M, href_list["log_src"], href_list["log_type"])
 	else if(href_list["languagemenu"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -2012,10 +1997,9 @@
 		var/X = offset.len > 0 ? text2num(offset[1]) : 0
 		var/Y = offset.len > 1 ? text2num(offset[2]) : 0
 		var/Z = offset.len > 2 ? text2num(offset[3]) : 0
-		var/tmp_dir = href_list["object_dir"]
-		var/obj_dir = tmp_dir ? text2num(tmp_dir) : 2
-		if(!obj_dir || !(obj_dir in list(1,2,4,8,5,6,9,10)))
-			obj_dir = 2
+		var/obj_dir = text2num(href_list["object_dir"])
+		if(obj_dir && !(obj_dir in list(1,2,4,8,5,6,9,10)))
+			obj_dir = null
 		var/obj_name = sanitize(href_list["object_name"])
 
 
@@ -2058,9 +2042,10 @@
 							N.name = obj_name
 					else
 						var/atom/O = new path(target)
-						if(O)
-							O.admin_spawned = TRUE
-							O.setDir(obj_dir)
+						if(!QDELETED(O))
+							O.flags_1 |= ADMIN_SPAWNED_1
+							if(obj_dir)
+								O.setDir(obj_dir)
 							if(obj_name)
 								O.name = obj_name
 								if(ismob(O))

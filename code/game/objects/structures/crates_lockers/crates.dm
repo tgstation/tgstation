@@ -64,6 +64,15 @@
 	manifest = null
 	update_icon()
 
+/obj/structure/closet/crate/coffin
+	name = "coffin"
+	desc = "It's a burial receptacle for the dearly departed."
+	icon_state = "coffin"
+	resistance_flags = FLAMMABLE
+	max_integrity = 70 
+	material_drop = /obj/item/stack/sheet/mineral/wood
+	material_drop_amount = 5
+
 /obj/structure/closet/crate/internals
 	desc = "An internals crate."
 	name = "internals crate"

@@ -4,7 +4,7 @@
 	icon_state = "box_0"
 	density = TRUE
 	max_integrity = 250
-	var/obj/item/circuitboard/circuit = null
+	var/obj/item/circuitboard/machine/circuit = null
 	var/state = 1
 
 /obj/structure/frame/examine(user)
@@ -165,6 +165,13 @@
 				icon_state = "box_1"
 				return
 
+			if(istype(P, /obj/item/wrench) && !circuit.needs_anchored)
+				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
+				if(P.use_tool(src, user, 40, volume=75))
+					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
+					anchored = !anchored
+				return
+
 			if(istype(P, /obj/item/screwdriver))
 				var/component_check = 1
 				for(var/R in req_components)
@@ -212,7 +219,7 @@
 							req_components[path] -= used_amt
 						else
 							added_components[part] = path
-							if(replacer.SendSignal(COMSIG_TRY_STORAGE_TAKE, part, src))
+							if(SEND_SIGNAL(replacer, COMSIG_TRY_STORAGE_TAKE, part, src))
 								req_components[path]--
 
 				for(var/obj/item/part in added_components)

@@ -721,10 +721,11 @@
 	description = "Milk for cool kids."
 	color = "#7D4E29"
 	taste_description = "chocolate milk"
+
 /datum/reagent/consumable/menthol
 	name = "Menthol"
 	id = "menthol"
-	description = "Tastes naturally minty, and imparts a very mild numbing sensation."
+	description = "Alleviates coughing symptoms one might have."
 	color = "#80AF9C"
 	taste_description = "mint"
 	glass_icon_state = "glass_green"

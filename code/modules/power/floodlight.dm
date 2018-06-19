@@ -41,7 +41,6 @@
 	desc = "A pole with powerful mounted lights on it. Due to its high power draw, it must be powered by a direct connection to a wire node."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "floodlight"
-	anchored = TRUE
 	density = TRUE
 	max_integrity = 100
 	integrity_failure = 80
