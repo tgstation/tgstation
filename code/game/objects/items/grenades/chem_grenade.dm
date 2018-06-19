@@ -170,7 +170,7 @@
 	for(var/obj/exploded_beaker in beakers)
 		if(!exploded_beaker.reagents)
 			continue
-		reagent_string += "[exploded_beaker][beaker_number++] :" + pretty_string_from_reagent_list(exploded_beaker.reagents.reagent_list) + ";"
+		reagent_string += "[exploded_beaker] [beaker_number++] : " + pretty_string_from_reagent_list(exploded_beaker.reagents.reagent_list) + ";"
 	var/message = "[src] primed by [user] at [ADMIN_VERBOSEJMP(T)] contained [reagent_string]."
 	GLOB.bombers += message
 	message_admins(message)
