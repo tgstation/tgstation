@@ -1,0 +1,7 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - balance: "Circuit lab no longer starts with super batteries, they have been replaced with high batteries."
+  - balance: "Circuit labs now start with 20 sheets of metal instead of 50/100. Plenty of materials on the station you can gather."
+  - balance: "Circuit labs no longer have their own protolathe and autolathe. Science has their own lathes already."
+  - tweak: "There's no more entire library worth of equipment, they can go publish the books like the rest of the station, in the library. At least give the librarians something other to do than screaming about lizard porn on the radio."
