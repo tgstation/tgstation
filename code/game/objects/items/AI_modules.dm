@@ -193,7 +193,7 @@ AI MODULES
 
 /obj/item/aiModule/zeroth/oneHuman/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 	if(..())
-		return "[targetName], but the AI's existing law 0 cannot be overriden."
+		return "[targetName], but the AI's existing law 0 cannot be overridden."
 	return targetName
 
 

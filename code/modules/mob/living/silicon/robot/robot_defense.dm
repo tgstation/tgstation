@@ -44,7 +44,7 @@
 		damage = rand(20, 40)
 	else
 		damage = rand(5, 35)
-	damage = round(damage / 2) // borgs recieve half damage
+	damage = round(damage / 2) // borgs receive half damage
 	adjustBruteLoss(damage)
 	updatehealth()
 

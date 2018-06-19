@@ -178,7 +178,7 @@
 		if(!connected_holopad)
 			. = world.time < (call_start_time + HOLOPAD_MAX_DIAL_TIME)
 			if(!.)
-				calling_holopad.say("No answer recieved.")
+				calling_holopad.say("No answer received.")
 				calling_holopad.temp = ""
 
 	if(!.)

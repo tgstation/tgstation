@@ -8,7 +8,7 @@
 	. = ..()
 	upgradeEmpProof()
 
-// X-RAY
+// X-ray
 
 /obj/machinery/camera/xray
 	start_active = 1

@@ -151,7 +151,7 @@ feedback data can be recorded in 5 formats:
 			SSblackbox.record_feedback("text", "example", 1, "other text")
 	json: {"data":["sample text","other text"]}
 "amount"
-	used to record simple counts of data i.e. the number of ahelps recieved
+	used to record simple counts of data i.e. the number of ahelps received
 	further calls to the same key will add or subtract (if increment argument is a negative) from the saved amount
 	calls:	SSblackbox.record_feedback("amount", "example", 8)
 			SSblackbox.record_feedback("amount", "example", 2)

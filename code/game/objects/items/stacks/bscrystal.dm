@@ -45,7 +45,7 @@
 			blink_mob(hit_atom)
 		use(1)
 
-//Artifical bluespace crystal, doesn't give you much research.
+//Artificial bluespace crystal, doesn't give you much research.
 /obj/item/stack/ore/bluespace_crystal/artificial
 	name = "artificial bluespace crystal"
 	desc = "An artificially made bluespace crystal, it looks delicate."
