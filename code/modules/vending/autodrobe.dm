@@ -1,4 +1,4 @@
-/obj/machinery/vending/autodrobe
+/obj/machinery/vending/autodrobe //travis is a chumbis
 	name = "\improper AutoDrobe"
 	desc = "A vending machine for costumes."
 	icon_state = "theater"
