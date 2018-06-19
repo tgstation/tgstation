@@ -202,6 +202,45 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = new_name
 	playsound(user, 'sound/items/screwdriver2.ogg', 50, 1)
 
+/obj/item/claymore/highlander/supermatter // THIS IS THE BEST IDEA
+	name = "supermatter claymore"
+	var/obj/machinery/power/supermatter_crystal/shard
+
+/obj/item/claymore/highlander/supermatter/Initialize()
+	. = ..()
+	shard = new(src)
+	QDEL_NULL(shard.countdown)
+
+/obj/item/claymore/highlander/supermatter/afterattack(target, mob/user, proximity_flag)
+	..()
+	if(user && target == user)
+		user.dropItemToGround(src, TRUE)
+	if(proximity_flag)
+		consume_everything(target, user)
+
+/obj/item/claymore/highlander/supermatter/proc/consume_everything(target, mob/living/user)
+	if(isnull(target))
+		shard.Consume()
+	else if(!isturf(target))
+		if (isliving(target))
+			var/mob/living/M = target
+			if(!QDELETED(M) && iscarbon(M) && M.mind && M.mind.special_role == "highlander")
+				user.fully_heal() //STEAL THE LIFE OF OUR FALLEN FOES
+				add_notch(user)
+		shard.CollidedWith(target)
+	else
+		consume_turf(target)
+
+/obj/item/claymore/highlander/supermatter/proc/consume_turf(turf/T)
+	var/oldtype = T.type
+	var/turf/newT = T.ScrapeAway()
+	if(newT.type == oldtype)
+		return
+	playsound(T, 'sound/effects/supermatter.ogg', 50, 1)
+	T.visible_message("<span class='danger'>[T] smacks into [src] and rapidly flashes to ash.</span>",\
+	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
+	shard.Consume()
+
 /obj/item/katana
 	name = "katana"
 	desc = "Woefully underpowered in D20."

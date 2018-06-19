@@ -1,6 +1,6 @@
 /datum/antagonist/highlander
 	name = "highlander"
-	var/obj/item/claymore/highlander/sword
+	var/swordtype = /obj/item/claymore/highlander
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 
@@ -32,7 +32,8 @@
 	. = ..()
 
 /datum/antagonist/highlander/greet()
-	to_chat(owner, "<span class='boldannounce'>Your [sword.name] cries out for blood. Claim the lives of others, and your own will be restored!\n\
+	var/obj/item/claymore/highlander/sword = swordtype
+	to_chat(owner, "<span class='boldannounce'>Your [initial(sword.name)] cries out for blood. Claim the lives of others, and your own will be restored!\n\
 	Activate it in your hand, and it will lead to the nearest target. Attack the nuclear authentication disk with it, and you will store it.</span>")
 
 	owner.announce_objectives()
@@ -63,7 +64,7 @@
 	W.update_label(H.real_name)
 	H.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
-	sword = new(H)
+	var/obj/item/claymore/highlander/sword = new swordtype(H)
 	if(!GLOB.highlander)
 		sword.flags_1 |= ADMIN_SPAWNED_1 //To prevent announcing
 	sword.pickup(H) //For the stun shielding
@@ -75,3 +76,6 @@
 	antiwelder.desc = "You are unable to hold anything in this hand until you're the last one left!"
 	antiwelder.icon_state = "bloodhand_right"
 	H.put_in_hands(antiwelder)
+
+/datum/antagonist/highlander/supermatter
+	swordtype = /obj/item/claymore/highlander/supermatter

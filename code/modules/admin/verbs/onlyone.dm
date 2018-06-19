@@ -1,5 +1,5 @@
 GLOBAL_VAR_INIT(highlander, FALSE)
-/client/proc/only_one() //Gives everyone kilts, berets, claymores, and pinpointers, with the objective to hijack the emergency shuttle.
+/client/proc/only_one(super = FALSE) //Gives everyone kilts, berets, claymores, and pinpointers, with the objective to hijack the emergency shuttle.
 	if(!SSticker.HasRoundStarted())
 		alert("The game hasn't started yet!")
 		return
@@ -15,7 +15,7 @@ GLOBAL_VAR_INIT(highlander, FALSE)
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(H.stat == DEAD || !(H.client))
 			continue
-		H.make_scottish()
+		H.make_scottish(super)
 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used THERE CAN BE ONLY ONE!</span>")
 	log_admin("[key_name(usr)] used THERE CAN BE ONLY ONE.")
@@ -27,5 +27,8 @@ GLOBAL_VAR_INIT(highlander, FALSE)
 	log_admin("[key_name(usr)] used delayed THERE CAN BE ONLY ONE.")
 	addtimer(CALLBACK(src, .proc/only_one), 420)
 
-/mob/living/carbon/human/proc/make_scottish()
-	mind.add_antag_datum(/datum/antagonist/highlander)
+/mob/living/carbon/human/proc/make_scottish(super = FALSE)
+	if (super)
+		mind.add_antag_datum(/datum/antagonist/highlander/supermatter)
+	else
+		mind.add_antag_datum(/datum/antagonist/highlander)
