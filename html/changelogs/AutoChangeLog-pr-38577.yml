@@ -1,4 +1,0 @@
-author: "Irafas"
-delete-after: True
-changes: 
-  - rscadd: "Players can now ctrl-click the PDA to remove the item in its pen slot"
