@@ -264,7 +264,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	SSdbcore.active_queries -= src
 	return ..()
 
-/datum/DBQuery/vv_edit_var(var_name, var_value)
+/datum/DBQuery/CanProcCall(proc_name)
 	//fuck off kevinz
 	return FALSE
 
