@@ -256,11 +256,9 @@
 		out_var += cached_gases[total_moles_id][MOLES];\
 	}
 
-#define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };
+#define ASSERT_GAS(gas_id, cached_gases) if (!cached_gases[gas_id]) { ADD_GAS(gas_id, cached_gases) };
 
-#define RETURN_GAS_MOLES(gas_id, gas_mixture) (gas_mixture.gases[gas_id] ? gas_mixture.gases[gas_id][MOLES] : 0)
-
-#define RETURN_GAS_MOLES_CACHE(gas_id, gases) (gases[gas_id] ? gases[gas_id][MOLES] : 0) //used in cases where a cached gas list is used instead for performance reasons
+#define RETURN_GAS_MOLES(gas_id, cached_gases) (cached_gases[gas_id] ? cached_gases[gas_id][MOLES] : 0) 
 
 GLOBAL_LIST_INIT(pipe_paint_colors, list(
 		"amethyst" = rgb(130,43,255), //supplymain

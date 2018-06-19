@@ -16,9 +16,11 @@
 	if(!air_contents)
 		return FALSE
 
-	var/oxygen = RETURN_GAS_MOLES(/datum/gas/oxygen, air_contents)
-	var/plasma = RETURN_GAS_MOLES(/datum/gas/plasma, air_contents)
-	var/tritium = RETURN_GAS_MOLES(/datum/gas/tritium, air_contents)
+	var/cached_gases = air_contents.gases
+
+	var/oxygen = RETURN_GAS_MOLES(/datum/gas/oxygen, cached_gases)
+	var/plasma = RETURN_GAS_MOLES(/datum/gas/plasma, cached_gases)
+	var/tritium = RETURN_GAS_MOLES(/datum/gas/tritium, cached_gases)
 	if(active_hotspot)
 		if(soh)
 			if(SUFFICIENT_HYDROCARBONS && SUFFICIENT_OXYGEN)
@@ -47,7 +49,6 @@
 	else	
 		var/datum/gas_mixture/heating = air_contents.remove_ratio(exposed_volume/air_contents.volume)
 		heating.temperature = exposed_temperature
-		heating.react()
 		assume_air(heating)
 	return igniting
 

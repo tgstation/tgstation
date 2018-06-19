@@ -38,12 +38,13 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	//assert_gas(gas_id) - used to guarantee that the gas list for this id exists in gas_mixture.gases.
 	//Must be used before adding to a gas. May be used before reading from a gas.
 /datum/gas_mixture/proc/assert_gas(gas_id)
-	ASSERT_GAS(gas_id, src)
+	ASSERT_GAS(gas_id, gases)
 
 	//assert_gases(args) - shorthand for calling ASSERT_GAS() once for each gas type.
 /datum/gas_mixture/proc/assert_gases()
+	var/cached_gases = gases
 	for(var/id in args)
-		ASSERT_GAS(id, src)
+		ASSERT_GAS(id, cached_gases)
 
 	//add_gas(gas_id) - similar to assert_gas(), but does not check for an existing
 		//gas list for this id. This can clobber existing gases.
@@ -372,8 +373,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/cached_gases = gases
 
 	for(var/id in cached_gases | sample_gases) // compare gases from either mixture
-		var/gas_moles = RETURN_GAS_MOLES_CACHE(id, cached_gases)
-		var/sample_moles = RETURN_GAS_MOLES_CACHE(id, sample_gases)
+		var/gas_moles = RETURN_GAS_MOLESE(id, cached_gases)
+		var/sample_moles = RETURN_GAS_MOLES(id, sample_gases)
 		var/delta = abs(gas_moles - sample_moles)
 		if(delta > MINIMUM_MOLES_DELTA_TO_MOVE && \
 			delta > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)
