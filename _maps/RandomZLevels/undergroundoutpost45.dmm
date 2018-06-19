@@ -12600,7 +12600,7 @@
 /obj/effect/mapping_helpers/planet_z,
 /turf/open/space,
 /area/space/nearstation)
-"BE" = (
+"KE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
@@ -37931,7 +37931,7 @@ gz
 gz
 gz
 gz
-BE
+KE
 qP
 qh
 gz

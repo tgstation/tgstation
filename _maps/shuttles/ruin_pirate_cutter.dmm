@@ -43,18 +43,18 @@
 	dir = 5
 	},
 /area/shuttle/caravan/pirate)
+"eL" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	dir = 10;
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/caravan/pirate)
 "fh" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/shuttle/caravan/pirate)
-"fr" = (
-/obj/machinery/porta_turret/syndicate/pod{
-	dir = 9;
-	faction = list("pirate")
-	},
-/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/pirate)
 "fL" = (
 /obj/machinery/computer/shuttle/caravan/pirate{
@@ -180,13 +180,6 @@
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 4
 	},
-/area/shuttle/caravan/pirate)
-"kI" = (
-/obj/machinery/porta_turret/syndicate/pod{
-	dir = 10;
-	faction = list("pirate")
-	},
-/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/pirate)
 "kY" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -405,6 +398,12 @@
 	},
 /obj/item/reagent_containers/food/drinks/bottle/rum,
 /turf/open/floor/plasteel/dark,
+/area/shuttle/caravan/pirate)
+"tM" = (
+/mob/living/simple_animal/hostile/pirate/ranged{
+	environment_smash = 0
+	},
+/turf/open/floor/plasteel/floorgrime,
 /area/shuttle/caravan/pirate)
 "ul" = (
 /obj/structure/table,
@@ -654,12 +653,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
-"Gr" = (
-/mob/living/simple_animal/hostile/pirate/ranged{
-	environment_smash = 0
-	},
-/turf/open/floor/plasteel/floorgrime,
-/area/shuttle/caravan/pirate)
 "GQ" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -873,6 +866,13 @@
 /obj/item/melee/classic_baton,
 /turf/open/floor/plasteel/darkred/corner,
 /area/shuttle/caravan/pirate)
+"Yj" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	dir = 9;
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/caravan/pirate)
 "Yo" = (
 /obj/structure/table,
 /obj/item/storage/box/lethalshot,
@@ -933,7 +933,7 @@ Jv
 "}
 (3,1,1) = {"
 Jv
-fr
+Yj
 af
 qX
 yt
@@ -943,7 +943,7 @@ RK
 FM
 jh
 af
-kI
+eL
 Jv
 "}
 (4,1,1) = {"
@@ -1000,7 +1000,7 @@ su
 Ag
 af
 jo
-Gr
+tM
 sr
 af
 af

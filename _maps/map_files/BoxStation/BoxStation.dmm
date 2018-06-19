@@ -53304,12 +53304,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"doB" = (
-/obj/docking_port/stationary/public_mining_dock{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/construction/mining/aux_base)
 "dqu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
@@ -53319,18 +53313,6 @@
 	dir = 4
 	},
 /turf/closed/wall,
-/area/science/circuit)
-"dDB" = (
-/obj/structure/table/reinforced,
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/machinery/cell_charger{
-	pixel_y = 5
-	},
-/obj/item/stock_parts/cell/super,
-/obj/item/stock_parts/cell/super,
-/turf/open/floor/plasteel/white,
 /area/science/circuit)
 "dMZ" = (
 /obj/structure/sign/poster/official/random{
@@ -53485,6 +53467,18 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"hRa" = (
+/obj/structure/table/reinforced,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/cell_charger{
+	pixel_y = 5
+	},
+/obj/item/stock_parts/cell/super,
+/obj/item/stock_parts/cell/super,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
 "ijc" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal/fifty,
@@ -53692,6 +53686,12 @@
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
 /area/science/circuit)
+"lCi" = (
+/obj/docking_port/stationary/public_mining_dock{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
 "lMg" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -53702,7 +53702,7 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/science/circuit)
-"mvW" = (
+"mjr" = (
 /obj/machinery/vending/wardrobe/bar_wardrobe,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
@@ -53759,15 +53759,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"nJJ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/computer/bounty{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/office)
 "nRG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -53924,6 +53915,15 @@
 /obj/structure/chair/office/light,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"sWR" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/computer/bounty{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "sXy" = (
 /obj/machinery/door/airlock/external{
 	name = "Security External Airlock";
@@ -65297,7 +65297,7 @@ apN
 apN
 apN
 apN
-doB
+lCi
 apN
 apN
 apN
@@ -76904,7 +76904,7 @@ bnG
 bnz
 bpA
 bbR
-nJJ
+sWR
 jlm
 bud
 eyM
@@ -91271,7 +91271,7 @@ aGL
 aHM
 aJm
 aKz
-mvW
+mjr
 aND
 aJC
 aab
@@ -102881,7 +102881,7 @@ bOH
 dvO
 bQY
 vzp
-dDB
+hRa
 bUp
 mNi
 mRe

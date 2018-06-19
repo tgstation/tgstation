@@ -435,12 +435,6 @@
 /obj/machinery/light,
 /turf/open/floor/plating/beach/water,
 /area/ruin/powered/beach)
-"cO" = (
-/obj/effect/turf_decal/caution{
-	dir = 8
-	},
-/turf/open/floor/plasteel/asteroid,
-/area/ruin/powered/beach)
 "cR" = (
 /obj/structure/table/wood,
 /obj/item/tank/internals/oxygen,
@@ -454,11 +448,18 @@
 	},
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
-"eS" = (
-/obj/effect/turf_decal/caution{
-	dir = 4
-	},
-/turf/open/floor/plasteel/asteroid,
+"gg" = (
+/obj/structure/table,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/storage/box/beakers,
+/obj/item/storage/box/donkpockets,
+/turf/open/floor/plating,
+/area/ruin/powered/beach)
+"hY" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer,
+/turf/open/floor/wood,
 /area/ruin/powered/beach)
 "iw" = (
 /obj/machinery/light/small{
@@ -487,11 +488,18 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
-"og" = (
+"oK" = (
 /obj/effect/turf_decal/caution{
 	dir = 1
 	},
 /turf/open/floor/plasteel/asteroid,
+/area/ruin/powered/beach)
+"pg" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/shower{
+	dir = 4
+	},
+/turf/open/floor/pod/light,
 /area/ruin/powered/beach)
 "pI" = (
 /obj/machinery/door/airlock/hatch{
@@ -513,17 +521,21 @@
 	},
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
-"qh" = (
-/obj/effect/turf_decal/sand,
+"qT" = (
 /obj/machinery/shower{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
-"ux" = (
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer,
-/turf/open/floor/wood,
+"sy" = (
+/obj/effect/turf_decal/caution{
+	dir = 4
+	},
+/turf/open/floor/plasteel/asteroid,
+/area/ruin/powered/beach)
+"sO" = (
+/obj/machinery/jukebox/disco/indestructible,
+/turf/open/floor/light/colour_cycle,
 /area/ruin/powered/beach)
 "vl" = (
 /obj/structure/closet/athletic_mixed,
@@ -532,14 +544,21 @@
 "wY" = (
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
+"yp" = (
+/obj/item/reagent_containers/spray/spraytan,
+/turf/open/floor/plasteel/asteroid,
+/area/ruin/powered/beach)
 "zw" = (
 /obj/structure/closet/athletic_mixed,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
-"BI" = (
-/obj/machinery/jukebox/disco/indestructible,
-/turf/open/floor/light/colour_cycle,
+"Bl" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "Ec" = (
 /obj/machinery/door/airlock/sandstone{
@@ -547,6 +566,12 @@
 	},
 /obj/effect/turf_decal/sand,
 /turf/open/floor/pod/dark,
+/area/ruin/powered/beach)
+"Ga" = (
+/obj/effect/turf_decal/caution{
+	dir = 8
+	},
+/turf/open/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
 "Gc" = (
 /obj/effect/turf_decal/sand,
@@ -559,13 +584,12 @@
 /obj/effect/turf_decal/sand,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
-"LV" = (
-/obj/structure/table,
-/obj/item/storage/box/drinkingglasses,
-/obj/item/storage/box/drinkingglasses,
-/obj/item/storage/box/beakers,
-/obj/item/storage/box/donkpockets,
-/turf/open/floor/plating,
+"QS" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "TP" = (
 /obj/machinery/light{
@@ -575,32 +599,8 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered/beach)
-"TW" = (
-/obj/effect/turf_decal/sand,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plating/beach/sand,
-/area/ruin/powered/beach)
-"Uc" = (
-/obj/machinery/shower{
-	dir = 8
-	},
-/turf/open/floor/pod/light,
-/area/ruin/powered/beach)
-"UX" = (
-/obj/item/reagent_containers/spray/spraytan,
-/turf/open/floor/plasteel/asteroid,
-/area/ruin/powered/beach)
 "VO" = (
 /turf/open/floor/pod/dark,
-/area/ruin/powered/beach)
-"Wd" = (
-/obj/effect/turf_decal/sand,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "Xp" = (
 /obj/effect/turf_decal/sand,
@@ -659,7 +659,7 @@ bW
 vl
 iw
 wY
-qh
+pg
 wY
 Xp
 cR
@@ -754,9 +754,9 @@ ar
 cg
 ar
 ar
-TW
+Bl
 aA
-TW
+Bl
 ar
 ar
 cg
@@ -903,7 +903,7 @@ aa
 aa
 bW
 ae
-LV
+gg
 bW
 aB
 aK
@@ -912,7 +912,7 @@ aK
 aK
 aK
 aK
-UX
+yp
 aA
 ar
 ar
@@ -974,7 +974,7 @@ aC
 aP
 aW
 aK
-cO
+Ga
 aK
 aK
 aA
@@ -1005,8 +1005,8 @@ aD
 aC
 aQ
 aW
-og
-BI
+oK
+sO
 bl
 aK
 aA
@@ -1033,12 +1033,12 @@ bW
 ai
 at
 ax
-ux
+hY
 aC
 aP
 aW
 aK
-eS
+sy
 aK
 aK
 aA
@@ -1426,9 +1426,9 @@ ar
 ch
 ar
 ar
-Wd
+QS
 aA
-Wd
+QS
 ar
 ar
 cs
@@ -1523,7 +1523,7 @@ bW
 HC
 qa
 wY
-Uc
+qT
 Gc
 pU
 cR

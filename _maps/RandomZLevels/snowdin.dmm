@@ -12264,13 +12264,6 @@
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
-"FP" = (
-/turf/open/floor/plating/asteroid/snow/ice,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/turf/open/floor/plating/snowed/cavern,
-/area/awaymission/snowdin/cave/cavern)
 "FQ" = (
 /obj/effect/light_emitter{
 	name = "outdoor light";
@@ -12321,13 +12314,6 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plating/asteroid/snow/ice,
-/area/awaymission/snowdin/cave/cavern)
-"FX" = (
-/turf/open/floor/plating/asteroid/snow/ice,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "FY" = (
 /turf/open/floor/plating/asteroid/snow/ice,
@@ -14062,6 +14048,20 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
+"WK" = (
+/turf/open/floor/plating/asteroid/snow/ice,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/plating/snowed/cavern,
+/area/awaymission/snowdin/cave/cavern)
+"XO" = (
+/turf/open/floor/plating/asteroid/snow/ice,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/cavern,
+/area/awaymission/snowdin/cave/cavern)
 "Yn" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -14069,7 +14069,7 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/garage)
-"Zi" = (
+"Ys" = (
 /turf/open/floor/plasteel/elevatorshaft,
 /area/awaymission/snowdin/post/mining_dock)
 
@@ -62374,11 +62374,11 @@ IO
 wL
 wE
 JH
-Zi
-Zi
+Ys
+Ys
 Kt
-Zi
-Zi
+Ys
+Ys
 KX
 wE
 bh
@@ -62631,11 +62631,11 @@ IQ
 wL
 wE
 JH
-Zi
-Zi
-Zi
-Zi
-Zi
+Ys
+Ys
+Ys
+Ys
+Ys
 KX
 wE
 bh
@@ -62888,11 +62888,11 @@ wL
 wL
 wE
 JI
-Zi
-Zi
-Zi
-Zi
-Zi
+Ys
+Ys
+Ys
+Ys
+Ys
 KY
 wE
 bh
@@ -63145,11 +63145,11 @@ wL
 wL
 wE
 JH
-Zi
-Zi
-Zi
-Zi
-Zi
+Ys
+Ys
+Ys
+Ys
+Ys
 KX
 wE
 bh
@@ -63402,11 +63402,11 @@ wL
 wL
 wD
 JH
-Zi
-Zi
-Zi
-Zi
-Zi
+Ys
+Ys
+Ys
+Ys
+Ys
 KX
 wD
 bh
@@ -64161,7 +64161,7 @@ oZ
 oZ
 oZ
 FN
-FX
+XO
 Gk
 GN
 Hj
@@ -64674,7 +64674,7 @@ oZ
 oZ
 oZ
 oZ
-FP
+WK
 xW
 xW
 xW
@@ -65349,12 +65349,12 @@ eJ
 wE
 wV
 xg
-Zi
-Zi
-Zi
+Ys
+Ys
+Ys
 xP
-Zi
-Zi
+Ys
+Ys
 yz
 yR
 wD
@@ -65606,12 +65606,12 @@ eJ
 wD
 wW
 xg
-Zi
-Zi
-Zi
-Zi
-Zi
-Zi
+Ys
+Ys
+Ys
+Ys
+Ys
+Ys
 yA
 wM
 zm
@@ -65863,12 +65863,12 @@ wD
 wP
 wX
 xg
-Zi
-Zi
-Zi
-Zi
-Zi
-Zi
+Ys
+Ys
+Ys
+Ys
+Ys
+Ys
 yB
 xy
 zn
@@ -66121,11 +66121,11 @@ wP
 wW
 xh
 wW
-Zi
-Zi
-Zi
-Zi
-Zi
+Ys
+Ys
+Ys
+Ys
+Ys
 yB
 xy
 zn
@@ -66379,10 +66379,10 @@ wW
 xh
 wW
 wW
-Zi
-Zi
-Zi
-Zi
+Ys
+Ys
+Ys
+Ys
 yC
 yS
 zm
@@ -66637,9 +66637,9 @@ xi
 wW
 wW
 wW
-Zi
-Zi
-Zi
+Ys
+Ys
+Ys
 yD
 yT
 wE

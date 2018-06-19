@@ -31751,6 +31751,10 @@
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/aft)
+"iUq" = (
+/obj/machinery/status_display,
+/turf/closed/wall,
+/area/library)
 "iVw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -31816,6 +31820,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"jnK" = (
+/obj/machinery/light_switch{
+	pixel_y = 24
+	},
+/obj/structure/destructible/cult/tome,
+/obj/item/book/codex_gigas,
+/turf/open/floor/wood,
+/area/library)
 "jpv" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/machinery/light{
@@ -32089,10 +32101,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible,
 /turf/open/floor/plating/asteroid/airless,
 /area/asteroid/nearstation)
-"lGi" = (
-/obj/machinery/status_display,
-/turf/closed/wall,
-/area/library)
 "lIM" = (
 /turf/closed/wall/rust,
 /area/crew_quarters/lounge)
@@ -32121,14 +32129,6 @@
 /obj/machinery/light/small,
 /turf/open/floor/engine/air,
 /area/engine/atmos)
-"lWY" = (
-/obj/machinery/light_switch{
-	pixel_y = 24
-	},
-/obj/structure/destructible/cult/tome,
-/obj/item/book/codex_gigas,
-/turf/open/floor/wood,
-/area/library)
 "lXk" = (
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/delivery,
@@ -35319,6 +35319,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"tXd" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/morgue{
+	name = "Curator's Study";
+	req_access_txt = "37"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/library)
 "udT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/power/apc{
@@ -35770,16 +35780,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
-"xre" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/door/morgue{
-	name = "Curator's Study";
-	req_access_txt = "37"
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/library)
 "xrf" = (
 /obj/machinery/light{
 	dir = 8
@@ -70042,7 +70042,7 @@ aUV
 aVN
 aWA
 aQW
-lWY
+jnK
 aYw
 aZu
 aQW
@@ -70298,7 +70298,7 @@ aUd
 sKd
 aVO
 aWB
-xre
+tXd
 aXL
 aYx
 aZv
@@ -70812,7 +70812,7 @@ aUf
 aUX
 aVQ
 aWD
-lGi
+iUq
 aQW
 aQW
 aQW
