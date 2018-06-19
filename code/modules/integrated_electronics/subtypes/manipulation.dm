@@ -491,6 +491,8 @@
 	power_draw_per_use = 50
 
 /obj/item/integrated_circuit/manipulation/thrower/do_work()
+	if(A == assembly)
+		return
 	var/max_w_class = assembly.w_class
 	var/target_x_rel = round(get_pin_data(IC_INPUT, 1))
 	var/target_y_rel = round(get_pin_data(IC_INPUT, 2))
