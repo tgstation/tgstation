@@ -4,7 +4,7 @@
 	desc = "A label on the side of this potato reads \"Product of DonkCo Service Wing. Activate far away from populated areas. Device will only attach to sapient creatures.\" <span class='boldnotice'>You can attack anyone with it to force it on them instead of yourself!</span>"
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "potato"
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	force = 0
 	var/icon_off = "potato"
 	var/icon_on = "potato_active"
@@ -133,20 +133,20 @@
 		return
 	update_icon()
 	if(sticky)
-		flags_1 |= NODROP_1
+		item_flags |= NODROP
 	name = "primed [name]"
 	activation_time = timer + world.time
 	detonation_timerid = addtimer(CALLBACK(src, .proc/detonate), delay, TIMER_STOPPABLE)
 	START_PROCESSING(SSfastprocess, src)
 	var/turf/T = get_turf(src)
-	message_admins("[user? "[ADMIN_LOOKUPFLW(user)] has primed [src]" : "A [src] has been primed"] (Timer:[delay],Explosive:[detonate_explosion],Range:[detonate_dev_range]/[detonate_heavy_range]/[detonate_light_range]/[detonate_fire_range]) for detonation at [COORD(T)]([T.loc])")
-	log_game("[user? "[user] has primed [src]" : "A [src] has been primed"] ([detonate_dev_range]/[detonate_heavy_range]/[detonate_light_range]/[detonate_fire_range]) for detonation at [COORD(T)]([T.loc])")
+	message_admins("[user? "[ADMIN_LOOKUPFLW(user)] has primed [src]" : "A [src] has been primed"] (Timer:[delay],Explosive:[detonate_explosion],Range:[detonate_dev_range]/[detonate_heavy_range]/[detonate_light_range]/[detonate_fire_range]) for detonation at [ADMIN_VERBOSEJMP(T)]")
+	log_game("[user ? "[key_name(user)] has primed [src]" : "A [src] has been primed"] ([detonate_dev_range]/[detonate_heavy_range]/[detonate_light_range]/[detonate_fire_range]) for detonation at [AREACOORD(T)]")
 	active = TRUE
 
 /obj/item/hot_potato/proc/deactivate()
 	update_icon()
 	name = initial(name)
-	flags_1 &= ~NODROP_1
+	item_flags &= ~NODROP
 	deltimer(detonation_timerid)
 	STOP_PROCESSING(SSfastprocess, src)
 	detonation_timerid = null

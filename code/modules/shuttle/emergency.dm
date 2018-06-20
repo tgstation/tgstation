@@ -104,7 +104,7 @@
 
 	authorized += ID
 
-	message_admins("[ADMIN_LOOKUPFLW(user)] has authorized early shuttle launch", 0, 1)
+	message_admins("[ADMIN_LOOKUPFLW(user)] has authorized early shuttle launch")
 	log_game("[key_name(user)] has authorized early shuttle launch in [COORD(src)]")
 	// Now check if we're on our way
 	. = TRUE
@@ -143,12 +143,8 @@
 		return
 
 	var/time = TIME_LEFT
-	message_admins("[key_name_admin(user.client)] \
-	(<A HREF='?_src_=holder;[HrefToken()];adminmoreinfo=[REF(user)]'>?</A>) \
-	(<A HREF='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(user)]'>FLW</A>) \
-	has emagged the emergency shuttle [time] seconds before launch.", 0, 1)
-	log_game("[key_name(user)] has emagged the emergency shuttle in \
-		[COORD(src)] [time] seconds before launch.")
+	message_admins("[ADMIN_LOOKUPFLW(user.client)] has emagged the emergency shuttle [time] seconds before launch.")
+	log_game("[key_name(user)] has emagged the emergency shuttle in [COORD(src)] [time] seconds before launch.")
 	obj_flags |= EMAGGED
 	SSshuttle.emergency.movement_force = list("KNOCKDOWN" = 60, "THROW" = 20)//YOUR PUNY SEATBELTS can SAVE YOU NOW, MORTAL
 	var/datum/species/S = new
@@ -267,6 +263,14 @@
 
 	return has_people
 
+/obj/docking_port/mobile/emergency/proc/ShuttleDBStuff()
+	set waitfor = FALSE
+	if(!SSdbcore.Connect())
+		return
+	var/datum/DBQuery/query_round_shuttle_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET shuttle_name = '[name]' WHERE id = [GLOB.round_id]")
+	query_round_shuttle_name.Execute()
+	qdel(query_round_shuttle_name)
+
 /obj/docking_port/mobile/emergency/check()
 	if(!timer)
 		return
@@ -297,9 +301,7 @@
 				setTimer(SSshuttle.emergencyDockTime)
 				send2irc("Server", "The Emergency Shuttle has docked with the station.")
 				priority_announce("The Emergency Shuttle has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/ai/shuttledock.ogg', "Priority")
-				if(SSdbcore.Connect())
-					var/datum/DBQuery/query_round_shuttle_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET shuttle_name = '[name]' WHERE id = [GLOB.round_id]")
-					query_round_shuttle_name.Execute()
+				ShuttleDBStuff()
 
 
 		if(SHUTTLE_DOCKED)
@@ -536,13 +538,24 @@
 	new /obj/item/storage/toolbox/emergency(src)
 
 /obj/item/storage/pod/attackby(obj/item/W, mob/user, params)
-	return
+	if (can_interact(user))
+		return ..()
+
+/obj/item/storage/pod/attack_hand(mob/user)
+	if (can_interact(user))
+		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SHOW, user)
+	return TRUE
 
 /obj/item/storage/pod/MouseDrop(over_object, src_location, over_location)
+	if(can_interact(usr))
+		return ..()
+
+/obj/item/storage/pod/can_interact(mob/user)
+	if(!..())
+		return FALSE
 	if(GLOB.security_level == SEC_LEVEL_RED || GLOB.security_level == SEC_LEVEL_DELTA || unlocked)
-		. = ..()
-	else
-		to_chat(usr, "The storage unit will only unlock during a Red or Delta security alert.")
+		return TRUE
+	to_chat(user, "The storage unit will only unlock during a Red or Delta security alert.")
 
 /obj/docking_port/mobile/emergency/backup
 	name = "backup shuttle"

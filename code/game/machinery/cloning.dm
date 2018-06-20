@@ -9,7 +9,6 @@
 #define SPEAK(message) radio.talk_into(src, message, radio_channel, get_spans(), get_default_language())
 
 /obj/machinery/clonepod
-	anchored = TRUE
 	name = "cloning pod"
 	desc = "An electronically-lockable pod for growing organic tissue."
 	density = TRUE
@@ -134,7 +133,7 @@
 	clonemind = locate(mindref) in SSticker.minds
 	if(!istype(clonemind))	//not a mind
 		return FALSE
-	if(clonemind.current)
+	if(!QDELETED(clonemind.current))
 		if(clonemind.current.stat != DEAD)	//mind is associated with a non-dead body
 			return FALSE
 		if(clonemind.current.suiciding) // Mind is associated with a body that is suiciding.
@@ -204,7 +203,8 @@
 		H.faction |= factions
 
 		for(var/V in quirks)
-			new V(H)
+			var/datum/quirk/Q = new V(H)
+			Q.on_clone(quirks[V])
 
 		H.set_cloned_appearance()
 
@@ -402,12 +402,13 @@
 		go_out()
 
 /obj/machinery/clonepod/emp_act(severity)
-	var/mob/living/mob_occupant = occupant
-	if(mob_occupant && prob(100/(severity*efficiency)))
-		connected_message(Gibberish("EMP-caused Accidental Ejection", 0))
-		SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of [mob_occupant.real_name] prematurely." ,0))
-		go_out()
-	..()
+	. = ..()
+	if (!(. & EMP_PROTECT_SELF))
+		var/mob/living/mob_occupant = occupant
+		if(mob_occupant && prob(100/(severity*efficiency)))
+			connected_message(Gibberish("EMP-caused Accidental Ejection", 0))
+			SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of [mob_occupant.real_name] prematurely." ,0))
+			go_out()
 
 /obj/machinery/clonepod/ex_act(severity, target)
 	..()

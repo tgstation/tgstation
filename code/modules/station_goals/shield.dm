@@ -87,10 +87,11 @@
 	desc = ""
 	icon = 'icons/obj/machines/satellite.dmi'
 	icon_state = "sat_inactive"
-	var/mode = "NTPROBEV0.8"
-	var/active = FALSE
+	anchored = FALSE
 	density = TRUE
 	use_power = FALSE
+	var/mode = "NTPROBEV0.8"
+	var/active = FALSE
 	var/static/gid = 0
 	var/id = 0
 

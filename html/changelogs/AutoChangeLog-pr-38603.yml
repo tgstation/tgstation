@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "The public booze-o-mats and autodrobes on Box/Delta/Meta now have no access requirements, as previously intended."

@@ -38,7 +38,7 @@
 //type and all subtypes should always call Initialize in New()
 #define INITIALIZE_IMMEDIATE(X) ##X/New(loc, ...){\
     ..();\
-    if(!initialized) {\
+    if(!(flags_1 & INITIALIZED_1)) {\
         args[1] = TRUE;\
         SSatoms.InitAtom(src, args);\
     }\
@@ -82,6 +82,7 @@
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
 
+#define FIRE_PRIORITY_PING			10
 #define FIRE_PRIORITY_IDLE_NPC		10
 #define FIRE_PRIORITY_SERVER_MAINT	10
 #define FIRE_PRIORITY_RESEARCH		10
@@ -123,21 +124,19 @@
 
 #define COMPILE_OVERLAYS(A)\
 	if (TRUE) {\
-		var/list/oo = A.our_overlays;\
+		var/list/ad = A.add_overlays;\
+		var/list/rm = A.remove_overlays;\
 		var/list/po = A.priority_overlays;\
+		if(LAZYLEN(rm)){\
+			A.overlays -= rm;\
+			rm.Cut();\
+		}\
+		if(LAZYLEN(ad)){\
+			A.overlays |= ad;\
+			ad.Cut();\
+		}\
 		if(LAZYLEN(po)){\
-			if(LAZYLEN(oo)){\
-				A.overlays = oo + po;\
-			}\
-			else{\
-				A.overlays = po;\
-			}\
-		}\
-		else if(LAZYLEN(oo)){\
-			A.overlays = oo;\
-		}\
-		else{\
-			A.overlays.Cut();\
+			A.overlays |= po;\
 		}\
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
 	}

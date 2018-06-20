@@ -72,43 +72,44 @@
 		SSresearch.invalid_design_ids[id] = 1
 
 /proc/node_boost_error(id, message)
+	WARNING("Invalid boost information for node \[[id]\]: [message]")
 	SSresearch.invalid_node_boost[id] = message
 
 /proc/verify_techweb_nodes()
 	for(var/n in SSresearch.techweb_nodes)
 		var/datum/techweb_node/N = SSresearch.techweb_nodes[n]
 		if(!istype(N))
-			stack_trace("WARNING: Invalid research node with ID [n] detected and removed.")
+			WARNING("Invalid research node with ID [n] detected and removed.")
 			SSresearch.techweb_nodes -= n
 			research_node_id_error(n)
 		for(var/p in N.prereq_ids)
 			var/datum/techweb_node/P = SSresearch.techweb_nodes[p]
 			if(!istype(P))
-				stack_trace("WARNING: Invalid research prerequisite node with ID [p] detected in node [N.display_name]\[[N.id]\] removed.")
+				WARNING("Invalid research prerequisite node with ID [p] detected in node [N.display_name]\[[N.id]\] removed.")
 				N.prereq_ids  -= p
 				research_node_id_error(p)
 		for(var/d in N.design_ids)
 			var/datum/design/D = SSresearch.techweb_designs[d]
 			if(!istype(D))
-				stack_trace("WARNING: Invalid research design with ID [d] detected in node [N.display_name]\[[N.id]\] removed.")
+				WARNING("Invalid research design with ID [d] detected in node [N.display_name]\[[N.id]\] removed.")
 				N.designs -= d
 				design_id_error(d)
 		for(var/p in N.prerequisites)
 			var/datum/techweb_node/P = N.prerequisites[p]
 			if(!istype(P))
-				stack_trace("WARNING: Invalid research prerequisite node with ID [p] detected in node [N.display_name]\[[N.id]\] removed.")
+				WARNING("Invalid research prerequisite node with ID [p] detected in node [N.display_name]\[[N.id]\] removed.")
 				N.prerequisites -= p
 				research_node_id_error(p)
 		for(var/u in N.unlocks)
 			var/datum/techweb_node/U = N.unlocks[u]
 			if(!istype(U))
-				stack_trace("WARNING: Invalid research unlock node with ID [u] detected in node [N.display_name]\[[N.id]\] removed.")
+				WARNING("Invalid research unlock node with ID [u] detected in node [N.display_name]\[[N.id]\] removed.")
 				N.unlocks -= u
 				research_node_id_error(u)
 		for(var/d in N.designs)
 			var/datum/design/D = N.designs[d]
 			if(!istype(D))
-				stack_trace("WARNING: Invalid research design with ID [d] detected in node [N.display_name]\[[N.id]\] removed.")
+				WARNING("Invalid research design with ID [d] detected in node [N.display_name]\[[N.id]\] removed.")
 				N.designs -= d
 				design_id_error(d)
 		for(var/p in N.boost_item_paths)
@@ -116,15 +117,15 @@
 				N.boost_item_paths -= p
 				node_boost_error(N.id, "[p] is not a valid path.")
 			var/list/points = N.boost_item_paths[p]
-			if(!islist(points))
-				N.boost_item_paths -= p
-				node_boost_error(N.id, "No valid list.")
-			else
+			if(islist(points))
 				for(var/i in points)
 					if(!isnum(points[i]))
 						node_boost_error(N.id, "[points[i]] is not a valid number.")
 					else if(!SSresearch.point_types[i])
 						node_boost_error(N.id, "[i] is not a valid point type.")
+			else if(!isnull(points))
+				N.boost_item_paths -= p
+				node_boost_error(N.id, "No valid list.")
 		CHECK_TICK
 
 /proc/verify_techweb_designs()

@@ -440,7 +440,7 @@
 		if(B.get_amount() < 2)
 			to_chat(user, "<span class='warning'>You need at least two bronze sheets to build a bronze wall!</span>")
 			return 0
-		user.visible_message("<span class='notice'>[user] begins plating [src] with brozne...</span>", "<span class='notice'>You begin constructing a bronze wall...</span>")
+		user.visible_message("<span class='notice'>[user] begins plating [src] with bronze...</span>", "<span class='notice'>You begin constructing a bronze wall...</span>")
 		if(do_after(user, 50, target = src))
 			if(B.get_amount() < 2)
 				return

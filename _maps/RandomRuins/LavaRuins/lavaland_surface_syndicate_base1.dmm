@@ -100,6 +100,31 @@
 /obj/machinery/chem_dispenser/fullupgrade,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
+"aW" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/research,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"bb" = (
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white/side,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"bh" = (
+/obj/structure/table/reinforced,
+/obj/item/integrated_circuit_printer/upgraded,
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/plasteel/white/side,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
 "cA" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/chemistry,
@@ -1269,6 +1294,7 @@
 /obj/item/circuitboard/machine/processor,
 /obj/item/circuitboard/machine/gibber,
 /obj/item/circuitboard/machine/deep_fryer,
+/obj/item/circuitboard/machine/cell_charger,
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "ft" = (
@@ -3438,7 +3464,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/monitor,
+/obj/machinery/computer/monitor/secret,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/floorgrime,
@@ -4847,14 +4873,17 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "nv" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
+	dir = 1
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
@@ -5190,10 +5219,15 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "nY" = (
-/obj/machinery/light/small,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "nZ" = (
+/obj/machinery/light/small,
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -5508,6 +5542,50 @@
 /obj/structure/sign/departments/chemistry,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
+"pn" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"sJ" = (
+/obj/structure/grille,
+/obj/structure/window/plastitanium,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor{
+	id = "lavalandsyndi_circuits"
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"tZ" = (
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white/side,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"yC" = (
+/obj/structure/table/reinforced,
+/obj/item/integrated_circuit_printer/upgraded,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white/side,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"Al" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
 "EZ" = (
 /obj/machinery/door/airlock/external{
 	req_access_txt = "150"
@@ -5516,6 +5594,37 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
+"FK" = (
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/metal/fifty,
+/turf/open/floor/plasteel/white/side,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"Gj" = (
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/syndicate{
+	dir = 1;
+	name = "Circuit Lab APC";
+	pixel_y = 24
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"MP" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"Oa" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"Pa" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
 "St" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/external{
@@ -5526,6 +5635,71 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
+"UP" = (
+/obj/structure/table/reinforced,
+/obj/machinery/airalarm/syndicate{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/item/stock_parts/cell/high/plus{
+	pixel_x = 7;
+	pixel_y = -5
+	},
+/obj/item/stock_parts/cell/high/plus{
+	pixel_x = -8;
+	pixel_y = -3
+	},
+/obj/item/multitool{
+	pixel_x = -1;
+	pixel_y = -13
+	},
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"Wg" = (
+/obj/structure/table/reinforced,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -26
+	},
+/obj/item/stock_parts/cell/high/plus{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/obj/item/stock_parts/cell/high/plus{
+	pixel_x = -8;
+	pixel_y = -3
+	},
+/obj/item/multitool,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"Yr" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"Yu" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/button/door{
+	id = "lavalandsyndi_circuits";
+	name = "Circuitry Blast Door Control";
+	pixel_y = 26;
+	req_access_txt = "150"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"ZW" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/item/integrated_electronics/analyzer{
+	pixel_x = -12;
+	pixel_y = 4
+	},
+/turf/open/floor/plasteel/white/side,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
 
 (1,1,1) = {"
 aa
@@ -6647,10 +6821,10 @@ jy
 ns
 nV
 oo
-ox
-ab
-ab
-ab
+Pa
+Pa
+Pa
+Pa
 ab
 ab
 ab
@@ -6694,10 +6868,10 @@ jy
 nt
 nW
 oq
-mT
-ab
-ab
-ab
+Pa
+Wg
+bh
+sJ
 ab
 ab
 ab
@@ -6740,11 +6914,11 @@ jy
 jy
 nu
 nX
-om
-mT
-ab
-ab
-ab
+MP
+Pa
+Yu
+tZ
+sJ
 ab
 ab
 ab
@@ -6787,11 +6961,11 @@ jy
 mX
 nv
 nY
-mT
-mT
-ab
-ab
-ab
+aW
+pn
+Al
+FK
+sJ
 ab
 ab
 ab
@@ -6834,11 +7008,11 @@ mz
 mY
 nw
 nZ
-mT
-ab
-ab
-ab
-ab
+Pa
+Gj
+Oa
+ZW
+sJ
 ab
 ab
 ab
@@ -6881,11 +7055,11 @@ kQ
 kT
 nx
 kR
-kQ
-kQ
-ab
-ab
-ab
+Pa
+Pa
+Yr
+bb
+sJ
 ab
 ab
 ab
@@ -6929,10 +7103,10 @@ mZ
 ny
 oa
 or
-kQ
-ab
-ab
-ab
+Pa
+UP
+yC
+sJ
 ab
 ab
 ab
@@ -6976,10 +7150,10 @@ na
 nz
 ob
 os
-kQ
-ac
-ab
-ab
+Pa
+Pa
+Pa
+Pa
 ab
 ab
 ab

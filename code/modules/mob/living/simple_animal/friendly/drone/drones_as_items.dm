@@ -41,7 +41,7 @@
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/item/drone_shell/attack_ghost(mob/user)
-	if(jobban_isbanned(user,"drone"))
+	if(jobban_isbanned(user,"drone") || QDELETED(src) || QDELETED(user))
 		return
 	if(CONFIG_GET(flag/use_age_restriction_for_jobs))
 		if(!isnum(user.client.player_age)) //apparently what happens when there's no DB connected. just don't let anybody be a drone without admin intervention
@@ -60,6 +60,6 @@
 		var/hat_type = pick(possible_seasonal_hats)
 		var/obj/item/new_hat = new hat_type(D)
 		D.equip_to_slot_or_del(new_hat, SLOT_HEAD)
-	D.admin_spawned = admin_spawned
+	D.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 	D.key = user.key
 	qdel(src)

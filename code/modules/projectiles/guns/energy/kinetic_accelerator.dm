@@ -11,6 +11,7 @@
 	can_flashlight = 1
 	flight_x_offset = 15
 	flight_y_offset = 9
+	automatic_charge_overlays = FALSE
 	var/overheat_time = 16
 	var/holds_charge = FALSE
 	var/unique_frequency = FALSE // modified by KA modkits
@@ -21,8 +22,7 @@
 
 	var/max_mod_capacity = 100
 	var/list/modkits = list()
-
-	var/empty_state = "kineticgun_empty"
+	
 	var/recharge_timerid
 
 /obj/item/gun/energy/kinetic_accelerator/examine(mob/user)
@@ -145,9 +145,10 @@
 
 /obj/item/gun/energy/kinetic_accelerator/update_icon()
 	..()
-
-	if(empty_state && !can_shoot())
-		add_overlay(empty_state)
+	if(!can_shoot())
+		add_overlay("[icon_state]_empty")
+	else
+		cut_overlays()
 
 //Casing
 /obj/item/ammo_casing/energy/kinetic

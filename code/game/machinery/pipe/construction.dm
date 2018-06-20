@@ -38,7 +38,7 @@ Buildable meters
 
 /obj/item/pipe/ComponentInitialize()
 	//Flipping handled manually due to custom handling for trinary pipes
-	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE ,null,null, CALLBACK(src, .proc/fixdir))
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE)
 
 /obj/item/pipe/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from)
 	if(make_from)
@@ -98,7 +98,6 @@ Buildable meters
 
 /obj/item/pipe/proc/do_a_flip()
 	setDir(turn(dir, -180))
-	fixdir()
 
 /obj/item/pipe/trinary/flippable/do_a_flip()
 	setDir(turn(dir, flipped ? 45 : -45))
@@ -109,31 +108,30 @@ Buildable meters
 	..()
 	setDir(old_dir) //pipes changing direction when moved is just annoying and buggy
 
-//Helper to clean up dir
-/obj/item/pipe/proc/fixdir()
-	return
+// Convert dir of fitting into dir of built component
+/obj/item/pipe/proc/fixed_dir()
+	return dir
 
-/obj/item/pipe/binary/fixdir()
+/obj/item/pipe/binary/fixed_dir()
+	. = dir
 	if(dir == SOUTH)
-		setDir(NORTH)
+		. = NORTH
 	else if(dir == WEST)
-		setDir(EAST)
+		. = EAST
 
-/obj/item/pipe/trinary/flippable/fixdir()
+/obj/item/pipe/trinary/flippable/fixed_dir()
+	. = dir
 	if(dir in GLOB.diagonals)
-		setDir(turn(dir, 45))
+		. = turn(dir, 45)
 
 /obj/item/pipe/attack_self(mob/user)
 	setDir(turn(dir,-90))
-	fixdir()
 
 /obj/item/pipe/wrench_act(mob/living/user, obj/item/wrench/W)
 	if(!isturf(loc))
 		return TRUE
 
 	add_fingerprint(user)
-
-	fixdir()
 
 	var/obj/machinery/atmospherics/fakeA = pipe_type
 	var/flags = initial(fakeA.pipe_flags)
@@ -143,7 +141,7 @@ Buildable meters
 			return TRUE
 		if((M.piping_layer != piping_layer) && !((M.pipe_flags | flags) & PIPING_ALL_LAYER)) //don't continue if either pipe goes across all layers
 			continue
-		if(M.GetInitDirections() & SSair.get_init_dirs(pipe_type, dir))	// matches at least one direction on either type of pipe
+		if(M.GetInitDirections() & SSair.get_init_dirs(pipe_type, fixed_dir()))	// matches at least one direction on either type of pipe
 			to_chat(user, "<span class='warning'>There is already a pipe at that location!</span>")
 			return TRUE
 	// no conflicts found
@@ -162,11 +160,16 @@ Buildable meters
 	qdel(src)
 
 /obj/item/pipe/proc/build_pipe(obj/machinery/atmospherics/A)
-	A.setDir(dir)
+	A.setDir(fixed_dir())
 	A.SetInitDirections()
 
 	if(pipename)
 		A.name = pipename
+	if(A.on)
+		// Certain pre-mapped subtypes are on by default, we want to preserve
+		// every other aspect of these subtypes (name, pre-set filters, etc.)
+		// but they shouldn't turn on automatically when wrenched.
+		A.on = FALSE
 
 /obj/item/pipe/trinary/flippable/build_pipe(obj/machinery/atmospherics/components/trinary/T)
 	..()
@@ -193,7 +196,7 @@ Buildable meters
 	w_class = WEIGHT_CLASS_BULKY
 	var/piping_layer = PIPING_LAYER_DEFAULT
 
-obj/item/pipe_meter/wrench_act(mob/living/user, obj/item/wrench/W)
+/obj/item/pipe_meter/wrench_act(mob/living/user, obj/item/wrench/W)
 
 	var/obj/machinery/atmospherics/pipe/pipe
 	for(var/obj/machinery/atmospherics/pipe/P in loc)
@@ -208,7 +211,7 @@ obj/item/pipe_meter/wrench_act(mob/living/user, obj/item/wrench/W)
 	to_chat(user, "<span class='notice'>You fasten the meter to the pipe.</span>")
 	qdel(src)
 
-obj/item/pipe_meter/screwdriver_act(mob/living/user, obj/item/S)
+/obj/item/pipe_meter/screwdriver_act(mob/living/user, obj/item/S)
 	if(!isturf(loc))
 		to_chat(user, "<span class='warning'>You need to fasten it to the floor!</span>")
 		return TRUE

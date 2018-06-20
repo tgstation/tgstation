@@ -148,6 +148,9 @@
 	to_chat(brainmob, "<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>")
 
 /obj/item/mmi/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	if(!brainmob || iscyborg(loc))
 		return
 	else
@@ -159,7 +162,6 @@
 			if(3)
 				brainmob.emp_damage = min(brainmob.emp_damage + rand(0,10), 30)
 		brainmob.emote("alarm")
-	..()
 
 /obj/item/mmi/Destroy()
 	if(iscyborg(loc))

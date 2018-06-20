@@ -85,7 +85,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 /obj/item/mmi/posibrain/proc/activate(mob/user)
 	if(QDELETED(brainmob))
 		return
-	if(is_occupied() || jobban_isbanned(user,"posibrain"))
+	if(is_occupied() || jobban_isbanned(user,"posibrain") || QDELETED(brainmob) || QDELETED(src) || QDELETED(user))
 		return
 
 	var/posi_ask = alert("Become a [name]? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?","Yes","No")

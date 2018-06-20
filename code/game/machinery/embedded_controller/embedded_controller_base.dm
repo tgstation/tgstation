@@ -22,7 +22,6 @@
 
 	name = "embedded controller"
 	density = FALSE
-	anchored = TRUE
 
 	var/on = TRUE
 

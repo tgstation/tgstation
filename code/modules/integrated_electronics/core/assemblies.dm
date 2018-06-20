@@ -8,12 +8,13 @@
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/assemblies/electronic_setups.dmi'
 	icon_state = "setup_small"
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	materials = list()		// To be filled later
 	var/list/assembly_components = list()
+	var/list/ckeys_allowed_to_scan = list() // Players who built the circuit can scan it as a ghost.
 	var/max_components = IC_MAX_SIZE_BASE
 	var/max_complexity = IC_COMPLEXITY_BASE
-	var/opened = FALSE
+	var/opened = TRUE
 	var/obj/item/stock_parts/cell/battery // Internal cell which most circuits need to work.
 	var/cell_type = /obj/item/stock_parts/cell
 	var/can_charge = TRUE //Can it be charged in a recharger?
@@ -61,6 +62,9 @@
 		to_chat(user, "<span class='notice'>The anchoring bolts [anchored ? "are" : "can be"] <b>wrenched</b> in place and the maintainence panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>")
 	else
 		to_chat(user, "<span class='notice'>The maintainence panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>")
+
+	if(isobserver(user) && ckeys_allowed_to_scan[user.ckey])
+		to_chat(user, "You can <a href='?src=[REF(src)];ghostscan=1'>scan</a> this circuit.");
 
 /obj/item/electronic_assembly/proc/check_interactivity(mob/user)
 	return user.canUseTopic(src, BE_CLOSE)
@@ -181,6 +185,18 @@
 	if(..())
 		return 1
 
+	if(href_list["ghostscan"])
+		if(isobserver(usr) && ckeys_allowed_to_scan[usr.ckey])
+			if(assembly_components.len)
+				var/saved = "On circuit printers with cloning enabled, you may use the code below to clone the circuit:<br><br><code>[SScircuit.save_electronic_assembly(src)]</code>"
+				usr << browse(saved, "window=circuit_scan;size=500x600;border=1;can_resize=1;can_close=1;can_minimize=1")
+			else
+				to_chat(usr, "<span class='warning'>The circuit is empty!</span>")
+		return
+		
+	if(!check_interactivity(usr))
+		return
+
 	if(href_list["rename"])
 		rename(usr)
 
@@ -200,6 +216,8 @@
 			// Builtin components are not supposed to be removed or rearranged
 			if(!component.removable)
 				return
+
+			add_allowed_scanner(usr.ckey)
 
 			var/current_pos = assembly_components.Find(component)
 
@@ -263,6 +281,9 @@
 	if(src && input)
 		to_chat(M, "<span class='notice'>The machine now has a label reading '[input]'.</span>")
 		name = input
+
+/obj/item/electronic_assembly/proc/add_allowed_scanner(ckey)
+	ckeys_allowed_to_scan[ckey] = TRUE
 
 /obj/item/electronic_assembly/proc/can_move()
 	return FALSE
@@ -329,6 +350,7 @@
 
 	to_chat(user, "<span class='notice'>You slide [IC] inside [src].</span>")
 	playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+	add_allowed_scanner(user.ckey)
 
 	add_component(IC)
 	return TRUE
@@ -367,6 +389,7 @@
 		to_chat(user, "<span class='notice'>You pop \the [IC] out of the case, and slide it out.</span>")
 		playsound(src, 'sound/items/crowbar.ogg', 50, 1)
 		user.put_in_hands(IC)
+	add_allowed_scanner(user.ckey)
 
 	return TRUE
 
@@ -450,7 +473,8 @@
 	else
 		for(var/obj/item/integrated_circuit/input/S in assembly_components)
 			S.attackby_react(I,user,user.a_intent)
-		return ..()
+		if(user.a_intent != INTENT_HELP)
+			return ..()
 
 
 /obj/item/electronic_assembly/attack_self(mob/user)
@@ -489,9 +513,11 @@
 		choice.ask_for_input(user)
 
 /obj/item/electronic_assembly/emp_act(severity)
-	..()
-	for(var/i in 1 to contents.len)
-		var/atom/movable/AM = contents[i]
+	. = ..()
+	if(. & EMP_PROTECT_CONTENTS)
+		return
+	for(var/I in src)
+		var/atom/movable/AM = I
 		AM.emp_act(severity)
 
 // Returns true if power was successfully drawn.

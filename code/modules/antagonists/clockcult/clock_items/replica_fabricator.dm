@@ -8,7 +8,7 @@
 	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 5
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	var/speed_multiplier = 1 //The speed ratio the fabricator operates at
 	var/uses_power = TRUE
 	var/repairing = null //what we're currently repairing, if anything

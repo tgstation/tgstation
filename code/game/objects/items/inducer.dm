@@ -29,8 +29,8 @@
 	return cell
 
 /obj/item/inducer/emp_act(severity)
-	..()
-	if(cell)
+	. = ..()
+	if(cell && !(. & EMP_PROTECT_CONTENTS))
 		cell.emp_act(severity)
 
 /obj/item/inducer/attack_obj(obj/O, mob/living/carbon/user)
@@ -181,5 +181,3 @@
 /obj/item/inducer/sci/Initialize()
 	. = ..()
 	update_icon()
-
-

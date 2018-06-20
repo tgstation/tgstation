@@ -27,7 +27,6 @@ SUBSYSTEM_DEF(processing)
 		if (MC_TICK_CHECK)
 			return
 
-/datum/var/isprocessing = FALSE
 /datum/proc/process()
 	set waitfor = 0
 	STOP_PROCESSING(SSobj, src)

@@ -15,7 +15,6 @@
 	resistance_flags = FIRE_PROOF
 	heat_proof = TRUE
 	glass = TRUE
-	var/nextstate = null
 	sub_door = TRUE
 	explosion_block = 1
 	safe = FALSE
@@ -24,6 +23,7 @@
 	assemblytype = /obj/structure/firelock_frame
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 95, "acid" = 70)
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
+	var/nextstate = null
 	var/boltslocked = TRUE
 	var/list/affecting_areas
 
@@ -144,9 +144,7 @@
 	else
 		close()
 
-/obj/machinery/door/firedoor/interact(mob/user)
-	if(!issilicon(user))
-		return TRUE
+/obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)
 	if(welded || operating || stat & NOPOWER)
 		return TRUE
@@ -155,6 +153,9 @@
 	else
 		close()
 	return TRUE
+
+/obj/machinery/door/firedoor/attack_robot(mob/user)
+	return attack_ai(user)
 
 /obj/machinery/door/firedoor/attack_alien(mob/user)
 	add_fingerprint(user)

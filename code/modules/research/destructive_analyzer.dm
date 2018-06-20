@@ -75,7 +75,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 		use_power(250)
 		if(thing == loaded_item)
 			loaded_item = null
-		update_icon()
 		var/list/food = thing.GetDeconstructableContents()
 		for(var/obj/item/innerthing in food)
 			destroy_item(innerthing, TRUE)
@@ -86,10 +85,13 @@ Note: Must be placed within 3 tiles of the R&D Console
 		var/obj/item/stack/sheet/S = thing
 		if(S.amount > 1 && !innermode)
 			S.amount--
+			loaded_item = S
 		else
 			qdel(S)
 	else
 		qdel(thing)
+	if (!innermode)
+		update_icon()
 	return TRUE
 
 /obj/machinery/rnd/destructive_analyzer/proc/user_try_decon_id(id, mob/user)
@@ -100,9 +102,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 		var/datum/techweb_node/TN = get_techweb_node_by_id(id)
 		if(!istype(TN))
 			return FALSE
-		var/list/can_boost = techweb_item_boost_check(loaded_item)
-		if(isnull(can_boost[id]))
-			return FALSE
 		var/dpath = loaded_item.type
 		var/list/worths = TN.boost_item_paths[dpath]
 		var/list/differences = list()
@@ -112,7 +111,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			var/value = min(worths[i], TN.research_costs[i]) - used
 			if(value > 0)
 				differences[i] = value
-		if(!length(differences))
+		if(length(worths) && !length(differences))
 			return FALSE
 		var/choice = input("Are you sure you want to destroy [loaded_item] to [!length(worths) ? "reveal [TN.display_name]" : "boost [TN.display_name] by [json_encode(differences)] point\s"]?") in list("Proceed", "Cancel")
 		if(choice == "Cancel")

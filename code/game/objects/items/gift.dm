@@ -95,7 +95,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		var/list/gift_types_list = subtypesof(/obj/item)
 		for(var/V in gift_types_list)
 			var/obj/item/I = V
-			if((!initial(I.icon_state)) || (!initial(I.item_state)) || (initial(I.flags_1) & ABSTRACT_1))
+			if((!initial(I.icon_state)) || (!initial(I.item_state)) || (initial(I.item_flags) & ABSTRACT))
 				gift_types_list -= V
 				GLOB.possible_gifts = gift_types_list
 	var/gift_type = pick(GLOB.possible_gifts)

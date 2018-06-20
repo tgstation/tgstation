@@ -10,7 +10,6 @@
 	icon_state = "comm_server"
 	desc = "A machine used to store data and network statistics."
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 15
 	circuit = /obj/item/circuitboard/machine/telecomms/server

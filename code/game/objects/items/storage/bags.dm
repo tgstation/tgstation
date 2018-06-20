@@ -40,6 +40,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 
 	w_class = WEIGHT_CLASS_BULKY
+	var/insertable = TRUE
 
 /obj/item/storage/bag/trash/ComponentInitialize()
 	. = ..()
@@ -64,14 +65,16 @@
 	else icon_state = "[initial(icon_state)]3"
 
 /obj/item/storage/bag/trash/cyborg
+	insertable = FALSE
 
 /obj/item/storage/bag/trash/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	J.put_in_cart(src, user)
-	J.mybag=src
-	J.update_icon()
-
-/obj/item/storage/bag/trash/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	return
+	if(insertable)
+		J.put_in_cart(src, user)
+		J.mybag=src
+		J.update_icon()
+	else
+		to_chat(user, "<span class='warning'>You are unable to fit your [name] into the [J.name].</span>")
+		return
 
 /obj/item/storage/bag/trash/bluespace
 	name = "trash bag of holding"
@@ -84,6 +87,9 @@
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_combined_w_class = 60
 	STR.max_items = 60
+
+/obj/item/storage/bag/trash/bluespace/cyborg
+	insertable = FALSE
 
 // -----------------------------
 //        Mining Satchel
@@ -136,7 +142,7 @@
 			if (box)
 				user.transferItemToLoc(A, box)
 				show_message = TRUE
-			else if(SendSignal(COMSIG_TRY_STORAGE_INSERT, A, user, TRUE))
+			else if(SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, A, user, TRUE))
 				show_message = TRUE
 			else
 				if(!spam_protection)
@@ -310,7 +316,7 @@
 /obj/item/storage/bag/tray/update_icon()
 	cut_overlays()
 	for(var/obj/item/I in contents)
-		add_overlay(mutable_appearance(I.icon, I.icon_state))
+		add_overlay(new /mutable_appearance(I))
 
 /obj/item/storage/bag/tray/Entered()
 	. = ..()

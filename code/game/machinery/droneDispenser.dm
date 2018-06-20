@@ -8,7 +8,6 @@
 
 	icon = 'icons/obj/machines/droneDispenser.dmi'
 	icon_state = "on"
-	anchored = TRUE
 	density = TRUE
 
 	max_integrity = 250
@@ -174,7 +173,7 @@
 				use_power(power_used)
 
 			var/atom/A = new dispense_type(loc)
-			A.admin_spawned = admin_spawned
+			A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 
 			if(create_sound)
 				playsound(src, create_sound, 50, 1)

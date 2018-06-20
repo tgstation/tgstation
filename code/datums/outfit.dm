@@ -25,6 +25,7 @@
 	var/accessory = null
 
 	var/can_be_admin_equipped = TRUE // Set to FALSE if your outfit requires runtime parameters
+	var/list/chameleon_extras //extra types for chameleon outfit changes, mostly guns
 
 /datum/outfit/proc/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	//to be overriden for customization depending on client prefs,species etc
@@ -149,3 +150,9 @@
 	for(var/obj/item/I in H.held_items)
 		I.add_fingerprint(H,1)
 	return 1
+
+/datum/outfit/proc/get_chameleon_disguise_info()
+	var/list/types = list(uniform, suit, back, belt, gloves, shoes, head, mask, neck, ears, glasses, id, l_pocket, r_pocket, suit_store, r_hand, l_hand)
+	types += chameleon_extras
+	listclearnulls(types)
+	return types

@@ -129,10 +129,6 @@
 	if(initial(desc) != desc)
 		assembly_params["desc"] = desc
 
-	// Save panel status
-	if(opened)
-		assembly_params["opened"] = TRUE
-
 	// Save modified color
 	if(initial(detail_color) != detail_color)
 		assembly_params["detail_color"] = detail_color
@@ -146,7 +142,7 @@
 	// Validate name and color
 	if(assembly_params["name"] && !reject_bad_name(assembly_params["name"], TRUE))
 		return "Bad assembly name."
-	if(assembly_params["desc"] && !reject_bad_text(assembly_params["desc"], TRUE))
+	if(assembly_params["desc"] && !reject_bad_text(assembly_params["desc"]))
 		return "Bad assembly description."
 	if(assembly_params["detail_color"] && !(assembly_params["detail_color"] in color_whitelist))
 		return "Bad assembly color."
@@ -161,10 +157,6 @@
 	// Load modified description, if any.
 	if(assembly_params["desc"])
 		desc = assembly_params["desc"]
-
-	// Load panel status
-	if(assembly_params["opened"])
-		opened = TRUE
 
 	if(assembly_params["detail_color"])
 		detail_color = assembly_params["detail_color"]

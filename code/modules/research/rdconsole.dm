@@ -10,10 +10,8 @@ aren't already linked to another console. Any consoles it cannot link up with (e
 linked or there aren't any in range), you'll just not have access to that menu. In the settings menu, there are menu options that
 allow a player to attempt to re-sync with nearby consoles. You can also force it to disconnect from a specific console.
 
-The imprinting and construction menus do NOT require toxins access to access but all the other menus do. However, if you leave it
-on a menu, nothing is to stop the person from using the options on that menu (although they won't be able to change to a different
-one). You can also lock the console on the settings menu if you're feeling paranoid and you don't want anyone messing with it who
-doesn't have toxins access.
+The only thing that requires toxins access is locking and unlocking the console on the settings menu.
+Nothing else in the console has ID requirements.
 
 */
 /obj/machinery/computer/rdconsole
@@ -193,7 +191,7 @@ doesn't have toxins access.
 
 /obj/machinery/computer/rdconsole/emag_act(mob/user)
 	if(!(obj_flags & EMAGGED))
-		to_chat(user, "<span class='notice'>You disable the security protocols[locked? " and unlock the console.":""].</span>")
+		to_chat(user, "<span class='notice'>You disable the security protocols[locked? " and unlock the console":""].</span>")
 		playsound(src, "sparks", 75, 1)
 		obj_flags |= EMAGGED
 		locked = FALSE
@@ -863,7 +861,7 @@ doesn't have toxins access.
 		switch(ls["disconnect"])
 			if("destroy")
 				if(QDELETED(linked_destroy))
-					say("No Deconstructive Analyzer Linked!")
+					say("No Destructive Analyzer Linked!")
 					return
 				linked_destroy.linked_console = null
 				linked_destroy = null
@@ -889,9 +887,10 @@ doesn't have toxins access.
 		say("Ejecting Technology Disk")
 	if(ls["deconstruct"])
 		if(QDELETED(linked_destroy))
-			say("No Deconstructive Analyzer Linked!")
+			say("No Destructive Analyzer Linked!")
 			return
-		linked_destroy.user_try_decon_id(ls["deconstruct"], usr)
+		if(!linked_destroy.user_try_decon_id(ls["deconstruct"], usr))
+			say("Destructive analysis failed!")
 	//Protolathe Materials
 	if(ls["disposeP"])  //Causes the protolathe to dispose of a single reagent (all of it)
 		if(QDELETED(linked_lathe))
@@ -997,7 +996,7 @@ doesn't have toxins access.
 		screen = RDSCREEN_DESIGNDISK
 	if(ls["eject_item"]) //Eject the item inside the destructive analyzer.
 		if(QDELETED(linked_destroy))
-			say("No Deconstructive Analyzer Linked!")
+			say("No Destructive Analyzer Linked!")
 			return
 		if(linked_destroy.busy)
 			to_chat(usr, "<span class='danger'>The destructive analyzer is busy at the moment.</span>")

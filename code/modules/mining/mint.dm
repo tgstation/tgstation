@@ -6,7 +6,6 @@
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "coinpress0"
 	density = TRUE
-	anchored = TRUE
 	var/newCoins = 0   //how many coins the machine made in it's last load
 	var/processing = FALSE
 	var/chosen = MAT_METAL //which material will be used to make coins

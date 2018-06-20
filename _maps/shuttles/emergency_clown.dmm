@@ -18,7 +18,7 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "af" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/bluespace,
@@ -43,7 +43,7 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aj" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/bluespace,
@@ -53,7 +53,7 @@
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "al" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/bluespace,
@@ -71,7 +71,7 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "ao" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet{
@@ -154,11 +154,11 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aC" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aD" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/noslip,

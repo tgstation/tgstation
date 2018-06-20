@@ -21,6 +21,7 @@ Recurring extracts:
 	extract.desc = desc
 	extract.icon = icon
 	extract.icon_state = icon_state
+	extract.color = color
 	extract.recurring = TRUE
 	src.forceMove(extract)
 	START_PROCESSING(SSobj,src)

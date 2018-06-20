@@ -5,7 +5,8 @@
 	item_state = "plastic-explosive"
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
-	flags_1 = NOBLUDGEON_1 | NO_EMP_WIRES_1
+	item_flags = NOBLUDGEON
+	flags_1 = NONE
 	det_time = 10
 	display_timer = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -19,9 +20,13 @@
 	var/can_attach_mob = FALSE
 	var/full_damage_on_mobs = FALSE
 
-/obj/item/grenade/plastic/New()
+/obj/item/grenade/plastic/Initialize()
+	. = ..()
 	plastic_overlay = mutable_appearance(icon, "[item_state]2", HIGH_OBJ_LAYER)
-	..()
+
+/obj/item/grenade/plastic/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
 
 /obj/item/grenade/plastic/Destroy()
 	qdel(nadeassembly)
@@ -107,8 +112,8 @@
 			return
 		target = AM
 
-		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_COORDJMP(target)] with [det_time] second fuse",0,1)
-		log_game("[key_name(user)] planted [name] on [target.name] at [COORD(src)] with [det_time] second fuse")
+		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_VERBOSEJMP(target)] with [det_time] second fuse")
+		log_game("[key_name(user)] planted [name] on [target.name] at [AREACOORD(user)] with [det_time] second fuse")
 
 		moveToNullspace()	//Yep
 
@@ -144,8 +149,8 @@
 	M.say(message_say)
 
 /obj/item/grenade/plastic/suicide_act(mob/user)
-	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [src] at [ADMIN_COORDJMP(user)]",0,1)
-	log_game("[key_name(user)] suicided with [src] at [COORD(user)]")
+	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [src] at [ADMIN_VERBOSEJMP(user)]")
+	log_game("[key_name(user)] suicided with [src] at [AREACOORD(user)]")
 	user.visible_message("<span class='suicide'>[user] activates [src] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
 	shout_syndicate_crap(user)
 	explosion(user,0,2,0) //Cheap explosion imitation because putting prime() here causes runtimes
@@ -184,8 +189,8 @@
 	user.visible_message("<span class='suicide'>[user] activates the [src.name] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
 	shout_syndicate_crap(user)
 	target = user
-	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [name] at [ADMIN_COORDJMP(src)]",0,1)
-	message_admins("[key_name(user)] suicided with [name] at ([x],[y],[z])")
+	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [name] at [ADMIN_VERBOSEJMP(src)]")
+	log_game("[key_name(user)] suicided with [name] at [AREACOORD(user)]")
 	sleep(10)
 	explode(get_turf(user))
 	user.gib(1, 1)
@@ -213,7 +218,7 @@
 		return
 	if(loc == AM)
 		return
-	if(AM.SendSignal(COMSIG_CONTAINS_STORAGE) && !AM.SendSignal(COMSIG_IS_STORAGE_LOCKED))
+	if(SEND_SIGNAL(AM, COMSIG_CONTAINS_STORAGE) && !SEND_SIGNAL(AM, COMSIG_IS_STORAGE_LOCKED))
 		return
 
 	to_chat(user, "<span class='notice'>You start planting the bomb...</span>")
@@ -224,10 +229,10 @@
 		src.target = AM
 		moveToNullspace()
 
-		var/message = "[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_COORDJMP(target)] with [timer] second fuse"
+		var/message = "[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_VERBOSEJMP(target)] with [timer] second fuse"
 		GLOB.bombers += message
 		message_admins(message,0,1)
-		log_game("[key_name(user)] planted [name] on [target.name] at [COORD(target)] with [timer] second fuse")
+		log_game("[key_name(user)] planted [name] on [target.name] at [AREACOORD(target)] with [timer] second fuse")
 
 		target.add_overlay(plastic_overlay, TRUE)
 		to_chat(user, "<span class='notice'>You plant the bomb. Timer counting down from [timer].</span>")

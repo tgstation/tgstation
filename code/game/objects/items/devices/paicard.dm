@@ -22,7 +22,8 @@
 /obj/item/paicard/Destroy()
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
 	SSpai.pai_card_list -= src
-	QDEL_NULL(pai)
+	if (!QDELETED(pai))
+		QDEL_NULL(pai)
 	return ..()
 
 /obj/item/paicard/attack_self(mob/user)
@@ -90,7 +91,7 @@
 					to_chat(pai, "<span class='danger'>Byte by byte you lose your sense of self.</span>")
 					to_chat(pai, "<span class='userdanger'>Your mental faculties leave you.</span>")
 					to_chat(pai, "<span class='rose'>oblivion... </span>")
-					removePersonality()
+					qdel(pai)
 		if(href_list["wires"])
 			var/wire = text2num(href_list["wires"])
 			if(pai.radio)
@@ -122,11 +123,6 @@
 	playsound(loc, 'sound/effects/pai_boot.ogg', 50, 1, -1)
 	audible_message("\The [src] plays a cheerful startup noise!")
 
-/obj/item/paicard/proc/removePersonality()
-	QDEL_NULL(pai)
-	cut_overlays()
-	add_overlay("pai-off")
-
 /obj/item/paicard/proc/setEmotion(emotion)
 	if(pai)
 		src.cut_overlays()
@@ -156,7 +152,8 @@
 	visible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", "<span class='notice'>[src] bleeps electronically.</span>")
 
 /obj/item/paicard/emp_act(severity)
-	if(pai)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
+	if(pai && !pai.holoform)
 		pai.emp_act(severity)
-	..()
-

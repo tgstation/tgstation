@@ -15,7 +15,6 @@ Captain
 	minimal_player_age = 14
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
-	antag_rep = 20
 
 	outfit = /datum/outfit/job/captain
 
@@ -51,6 +50,8 @@ Captain
 	implants = list(/obj/item/implant/mindshield)
 	accessory = /obj/item/clothing/accessory/medal/gold/captain
 
+	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/captain)
+
 /*
 Head of Personnel
 */
@@ -70,7 +71,6 @@ Head of Personnel
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
 	exp_type_department = EXP_TYPE_SUPPLY
-	antag_rep = 20
 
 	outfit = /datum/outfit/job/hop
 
@@ -100,3 +100,5 @@ Head of Personnel
 	head = /obj/item/clothing/head/hopcap
 	backpack_contents = list(/obj/item/storage/box/ids=1,\
 		/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced = 1)
+
+	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/hop)

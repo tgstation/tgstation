@@ -2,7 +2,7 @@
 
 /area/mine
 	icon_state = "mining"
-	has_gravity = TRUE
+	has_gravity = STANDARD_GRAVITY
 
 /area/mine/explored
 	name = "Mine"
@@ -80,7 +80,7 @@
 
 /area/lavaland
 	icon_state = "mining"
-	has_gravity = TRUE
+	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 
 /area/lavaland/surface

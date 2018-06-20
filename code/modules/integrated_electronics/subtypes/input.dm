@@ -883,6 +883,7 @@
 			return FALSE
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
 	push_data()
+	to_chat(user, "<span class='notice'>You scan [A] with [assembly].</span>")
 	activate_pin(1)
 	return TRUE
 
@@ -915,6 +916,7 @@
 			return FALSE
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
 	push_data()
+	to_chat(user, "<span class='notice'>You scan [A] with [assembly].</span>")
 	activate_pin(1)
 	return TRUE
 
@@ -941,6 +943,7 @@
 		user.transferItemToLoc(A,drop_location())
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
 	push_data()
+	to_chat(user, "<span class='notice'>You let [assembly] scan [A].</span>")
 	activate_pin(1)
 	return TRUE
 
@@ -1161,3 +1164,44 @@
 	set_pin_data(IC_OUTPUT, 6, round(air_contents.return_volume(), 0.001))
 	push_data()
 	activate_pin(2)
+
+/obj/item/integrated_circuit/input/data_card_reader
+	name = "data card reader"
+	desc = "A circuit that can read from and write to data cards."
+	extended_desc = "Setting the \"write mode\" boolean to true will cause any data cards that are used on the assembly to replace\
+ their existing function and data strings with the given strings, if it is set to false then using a data card on the assembly will cause\
+ the function and data strings stored on the card to be written to the output pins."
+	icon_state = "card_reader"
+	complexity = 4
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	inputs = list(
+		"function" = IC_PINTYPE_STRING,
+		"data to store" = IC_PINTYPE_STRING,
+		"write mode" = IC_PINTYPE_BOOLEAN
+	)
+	outputs = list(
+		"function" = IC_PINTYPE_STRING,
+		"stored data" = IC_PINTYPE_STRING
+	)
+	activators = list(
+		"on write" = IC_PINTYPE_PULSE_OUT,
+		"on read" = IC_PINTYPE_PULSE_OUT
+	)
+
+/obj/item/integrated_circuit/input/data_card_reader/attackby_react(obj/item/I, mob/living/user, intent)
+	var/obj/item/card/data/card = I.GetCard()
+	var/write_mode = get_pin_data(IC_INPUT, 3)
+	if(card)
+		if(write_mode == TRUE)
+			card.function = get_pin_data(IC_INPUT, 1)
+			card.data = get_pin_data(IC_INPUT, 2)
+			push_data()
+			activate_pin(1)
+		else
+			set_pin_data(IC_OUTPUT, 1, card.function)
+			set_pin_data(IC_OUTPUT, 2, card.data)
+			push_data()
+			activate_pin(2)
+	else
+		return FALSE
+	return TRUE

@@ -3,7 +3,6 @@
 	desc = "A classic music player."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "jukebox"
-	anchored = TRUE
 	verb_say = "states"
 	density = TRUE
 	req_access = list(ACCESS_BAR)
@@ -376,8 +375,10 @@
 		sleep(speed)
 		for(var/i in 1 to speed)
 			M.setDir(pick(GLOB.cardinals))
+			// update resting manually to avoid chat spam
 			for(var/mob/living/carbon/NS in rangers)
-				NS.lay_down(TRUE)		//specifically excludes silicons to prevent pAI chat spam
+				NS.resting = !NS.resting
+				NS.update_canmove()
 		 time--
 
 /obj/machinery/jukebox/disco/proc/dance5(var/mob/living/M)

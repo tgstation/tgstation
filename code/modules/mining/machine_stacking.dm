@@ -6,7 +6,6 @@
 	icon_state = "console"
 	desc = "Controls a stacking machine... in theory."
 	density = FALSE
-	anchored = TRUE
 	circuit = /obj/item/circuitboard/machine/stacking_unit_console
 	var/obj/machinery/mineral/stacking_machine/machine
 	var/machinedir = SOUTHEAST
@@ -71,7 +70,6 @@
 	icon_state = "stacker"
 	desc = "A machine that automatically stacks acquired materials. Controlled by a nearby console."
 	density = TRUE
-	anchored = TRUE
 	circuit = /obj/item/circuitboard/machine/stacking_machine
 	var/obj/machinery/mineral/stacking_unit_console/CONSOLE
 	var/stk_types = list()

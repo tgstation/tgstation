@@ -193,6 +193,60 @@
 		R.module.basic_modules += S
 		R.module.add_module(S, FALSE, TRUE)
 
+/obj/item/borg/upgrade/tboh
+	name = "janitor cyborg trash bag of holding"
+	desc = "A trash bag of holding replace for the janiborgs standard trash bag."
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	module_type = /obj/item/robot_module/janitor
+
+/obj/item/borg/upgrade/tboh/action(mob/living/silicon/robot/R)
+	. = ..()
+	if(.)
+		for(var/obj/item/storage/bag/trash/cyborg/TB in R.module.modules)
+			R.module.remove_module(TB, TRUE)
+
+		var/obj/item/storage/bag/trash/bluespace/cyborg/B = new /obj/item/storage/bag/trash/bluespace/cyborg(R.module)
+		R.module.basic_modules += B
+		R.module.add_module(B, FALSE, TRUE)
+
+/obj/item/borg/upgrade/tboh/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		for(var/obj/item/storage/bag/trash/bluespace/cyborg/B in R.module.modules)
+			R.module.remove_module(B, TRUE)
+
+		var/obj/item/storage/bag/trash/cyborg/TB = new (R.module)
+		R.module.basic_modules += TB
+		R.module.add_module(TB, FALSE, TRUE)
+
+/obj/item/borg/upgrade/amop
+	name = "janitor cyborg advanced mop"
+	desc = "An advanced mop replacement from the janiborgs standard mop."
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	module_type = /obj/item/robot_module/janitor
+
+/obj/item/borg/upgrade/amop/action(mob/living/silicon/robot/R)
+	. = ..()
+	if(.)
+		for(var/obj/item/mop/cyborg/M in R.module.modules)
+			R.module.remove_module(M, TRUE)
+
+	var/obj/item/mop/advanced/cyborg/A = new /obj/item/mop/advanced/cyborg(R.module)
+	R.module.basic_modules += A
+	R.module.add_module(A, FALSE, TRUE)
+
+/obj/item/borg/upgrade/amop/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		for(var/obj/item/mop/advanced/cyborg/A in R.module.modules)
+			R.module.remove_module(A, TRUE)
+
+		var/obj/item/mop/cyborg/M = new (R.module)
+		R.module.basic_modules += M
+		R.module.add_module(M, FALSE, TRUE)
+
 /obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
 	desc = "Unlocks the hidden, deadlier functions of a cyborg."

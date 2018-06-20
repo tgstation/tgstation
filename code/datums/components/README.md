@@ -50,6 +50,9 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 1. `/datum/component/var/datum/parent` (protected, read-only)
     * The datum this component belongs to
     * Never `null` in child procs
+1.	`report_signal_origin` (protected, boolean)
+	* If `TRUE`, will invoke the callback when signalled with the signal type as the first argument.
+	* `FALSE` by default.
 
 ### Procs
 
@@ -61,6 +64,11 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Returns a reference to a component whose type MATCHES component_type if that component exists in the datum, null otherwise
 1. `GET_COMPONENT(varname, component_type)` OR `GET_COMPONENT_FROM(varname, component_type, src)`
     * Shorthand for `var/component_type/varname = src.GetComponent(component_type)`
+1. `SEND_SIGNAL(target, sigtype, ...)` (public, final)
+    * Use to send signals to target datum
+    * Extra arguments are to be specified in the signal definition
+    * Returns a bitflag with signal specific information assembled from all activated components
+    * Arguments are packaged in a list and handed off to _SendSignal()
 1. `/datum/proc/AddComponent(component_type(type), ...) -> datum/component`  (public, final)
     * Creates an instance of `component_type` in the datum and passes `...` to its `Initialize()` call
     * Sends the `COMSIG_COMPONENT_ADDED` signal to the datum
@@ -77,10 +85,9 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Properly transfers ownership of a component from one datum to another
     * Signals `COMSIG_COMPONENT_REMOVING` on the parent
     * Called on the datum you want to own the component with another datum's component
-1. `/datum/proc/SendSignal(signal, ...)` (public, final)
-    * Call to send a signal to the components of the target datum
-    * Extra arguments are to be specified in the signal definition
-    * Returns a bitflag with signal specific information assembled from all activated components
+1. `/datum/proc/_SendSignal(signal, list/arguments)` (private, final)
+    * Handles most of the actual signaling procedure
+    * Will runtime if used on datums with an empty component list
 1. `/datum/component/New(datum/parent, ...)` (private, final)
     * Runs internal setup for the component
     * Extra arguments are passed to `Initialize()`

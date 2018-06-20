@@ -238,7 +238,7 @@
 	player_mind.add_antag_datum(/datum/antagonist/morph)
 	to_chat(S, S.playstyle_string)
 	SEND_SOUND(S, sound('sound/magic/mutate.ogg'))
-	message_admins("[key_name_admin(S)] has been made into a morph by an event.")
+	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a morph by an event.")
 	log_game("[key_name(S)] was spawned as a morph by an event.")
 	spawned_mobs += S
 	return SUCCESSFUL_SPAWN

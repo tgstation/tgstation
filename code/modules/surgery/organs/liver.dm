@@ -27,10 +27,9 @@
 
 			if(filterToxins && !owner.has_trait(TRAIT_TOXINLOVER))
 				//handle liver toxin filtration
-				var/static/list/toxinstypecache = typecacheof(/datum/reagent/toxin)
 				for(var/I in C.reagents.reagent_list)
 					var/datum/reagent/pickedreagent = I
-					if(is_type_in_typecache(pickedreagent, toxinstypecache))
+					if(istype(pickedreagent, /datum/reagent/toxin))
 						var/thisamount = C.reagents.get_reagent_amount(initial(pickedreagent.id))
 						if (thisamount <= toxTolerance && thisamount)
 							C.reagents.remove_reagent(initial(pickedreagent.id), 1)
@@ -78,6 +77,9 @@
 	toxLethality = 0.008 //20% less damage than a normal liver
 
 /obj/item/organ/liver/cybernetic/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	switch(severity)
 		if(1)
 			damage+=100

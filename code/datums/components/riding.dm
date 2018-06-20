@@ -1,5 +1,6 @@
 /datum/component/riding
-	var/next_vehicle_move = 0 //used for move delays
+	var/last_vehicle_move = 0 //used for move delays
+	var/last_move_diagonal = FALSE
 	var/vehicle_move_delay = 2 //tick delay between movements, lower = faster, higher = slower
 	var/keytype
 
@@ -146,9 +147,9 @@
 		Unbuckle(user)
 		return
 
-	if(world.time < next_vehicle_move)
+	if(world.time < last_vehicle_move + ((last_move_diagonal? 2 : 1) * vehicle_move_delay))
 		return
-	next_vehicle_move = world.time + vehicle_move_delay
+	last_vehicle_move = world.time
 
 	if(keycheck(user))
 		var/turf/next = get_step(AM, direction)
@@ -161,7 +162,12 @@
 		if(!Process_Spacemove(direction) || !isturf(AM.loc))
 			return
 		step(AM, direction)
-
+		
+		if((direction & (direction - 1)) && (AM.loc == next))		//moved diagonally
+			last_move_diagonal = TRUE
+		else
+			last_move_diagonal = FALSE
+		
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
 	else
@@ -301,7 +307,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 = ABSTRACT_1 | DROPDEL_1 | NOBLUDGEON_1
+	item_flags = ABSTRACT | DROPDEL | NOBLUDGEON
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/mob/living/carbon/rider
 	var/mob/living/parent

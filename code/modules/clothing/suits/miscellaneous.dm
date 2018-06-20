@@ -222,7 +222,7 @@
 	desc = "Forced to live on your shameful acting as a fake Mexican, you and your poncho have grown inseparable. Literally."
 	icon_state = "ponchoshame"
 	item_state = "ponchoshame"
-	flags_1 = NODROP_1
+	item_flags = NODROP
 
 /obj/item/clothing/suit/whitedress
 	name = "white dress"

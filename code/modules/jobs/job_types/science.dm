@@ -17,7 +17,6 @@ Research Director
 	exp_type_department = EXP_TYPE_SCIENCE
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
-	antag_rep = 20
 
 	outfit = /datum/outfit/job/rd
 
@@ -49,6 +48,8 @@ Research Director
 	backpack = /obj/item/storage/backpack/science
 	satchel = /obj/item/storage/backpack/satchel/tox
 
+	chameleon_extras = /obj/item/stamp/rd
+
 /datum/outfit/job/rd/rig
 	name = "Research Director (Hardsuit)"
 
@@ -73,7 +74,7 @@ Scientist
 	selection_color = "#ffeeff"
 	exp_requirements = 60
 	exp_type = EXP_TYPE_CREW
-	antag_rep = 17
+
 
 	outfit = /datum/outfit/job/scientist
 
@@ -108,7 +109,6 @@ Roboticist
 	selection_color = "#ffeeff"
 	exp_requirements = 60
 	exp_type = EXP_TYPE_CREW
-	antag_rep = 17
 
 	outfit = /datum/outfit/job/roboticist
 

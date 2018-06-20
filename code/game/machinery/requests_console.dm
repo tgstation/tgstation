@@ -14,7 +14,6 @@ GLOBAL_LIST_EMPTY(allConsoles)
 /obj/machinery/requests_console
 	name = "requests console"
 	desc = "A console intended to send requests to different departments on the station."
-	anchored = TRUE
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "req_comp0"
 	var/department = "Unknown" //The list of all departments on the station (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
@@ -303,8 +302,8 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			message = L.treat_message(message)
 		minor_announce(message, "[department] Announcement:")
 		GLOB.news_network.SubmitArticle(message, department, "Station Announcements", null)
-		log_talk(usr,"[key_name(usr)] has made a station announcement: [message]",LOGSAY)
-		message_admins("[key_name_admin(usr)] has made a station announcement.")
+		log_talk(usr,"[key_name(usr)] has made a station announcement from [src] at [AREACOORD(usr)]: [message]",LOGSAY)
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has made a station announcement from [src] at [AREACOORD(usr)].")
 		announceAuth = FALSE
 		message = ""
 		screen = 0

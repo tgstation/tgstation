@@ -7,7 +7,6 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "rtg"
 	density = TRUE
-	anchored = TRUE
 	use_power = NO_POWER_USE
 	circuit = /obj/item/circuitboard/machine/rtg
 
@@ -83,8 +82,8 @@
 /obj/machinery/power/rtg/abductor/bullet_act(obj/item/projectile/Proj)
 	..()
 	if(!going_kaboom && istype(Proj) && !Proj.nodamage && ((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE)))
-		message_admins("[key_name_admin(Proj.firer)] triggered an Abductor Core explosion via projectile.")
-		log_game("[key_name(Proj.firer)] triggered an Abductor Core explosion via projectile.")
+		message_admins("[ADMIN_LOOKUPFLW(Proj.firer)] triggered an Abductor Core explosion at [AREACOORD(src)] via projectile.")
+		log_game("[key_name(Proj.firer)] triggered an Abductor Core explosion at [AREACOORD(src)] via projectile.")
 		overload()
 
 /obj/machinery/power/rtg/abductor/blob_act(obj/structure/blob/B)

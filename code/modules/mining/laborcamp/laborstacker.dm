@@ -6,7 +6,6 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
 	density = FALSE
-	anchored = TRUE
 	var/obj/machinery/mineral/stacking_machine/laborstacker/stacking_machine = null
 	var/machinedir = SOUTH
 	var/obj/item/card/id/prisoner/inserted_id
@@ -93,11 +92,11 @@
 			if(!alone_in_area(get_area(src), usr))
 				to_chat(usr, "<span class='warning'>Prisoners are only allowed to be released while alone.</span>")
 			else
-				switch(SSshuttle.moveShuttle("laborcamp","laborcamp_home"))
+				switch(SSshuttle.moveShuttle("laborcamp", "laborcamp_home", TRUE))
 					if(1)
-						to_chat(usr, "<span class='notice'>Shuttle not found</span>")
+						to_chat(usr, "<span class='notice'>Shuttle not found.</span>")
 					if(2)
-						to_chat(usr, "<span class='notice'>Shuttle already at station</span>")
+						to_chat(usr, "<span class='notice'>Shuttle already at station.</span>")
 					if(3)
 						to_chat(usr, "<span class='notice'>No permission to dock could be granted.</span>")
 					else
@@ -147,7 +146,6 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
 	density = FALSE
-	anchored = TRUE
 
 /obj/machinery/mineral/labor_points_checker/attack_hand(mob/user)
 	. = ..()

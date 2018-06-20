@@ -14,7 +14,7 @@
 /obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/U, user)
 	GET_COMPONENT(storage, /datum/component/storage)
 	if(storage)
-		if(U.SendSignal(COMSIG_CONTAINS_STORAGE))
+		if(SEND_SIGNAL(U, COMSIG_CONTAINS_STORAGE))
 			return FALSE
 		U.TakeComponent(storage)
 		detached_pockets = storage

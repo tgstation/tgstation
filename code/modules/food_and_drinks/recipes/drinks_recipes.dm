@@ -633,6 +633,13 @@
 	required_catalysts = list("enzyme" = 5)
 	mix_message = "The rice grains ferment into a clear, sweet-smelling liquid."
 
+/datum/chemical_reaction/peppermint_patty
+	name = "Peppermint Patty"
+	id = "peppermint_patty"
+	results = list("peppermint_patty" = 10)
+	required_reagents = list("hot_coco" = 6, "creme_de_cacao" = 1, "creme_de_menthe" = 1, "vodka" = 1, "menthol" = 1)
+	mix_message = "The coco turns mint green just as the strong scent hits your nose."
+
 /datum/chemical_reaction/alexander
 	name = "Alexander"
 	id = "alexander"

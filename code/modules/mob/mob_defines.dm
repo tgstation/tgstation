@@ -10,6 +10,7 @@
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
 	var/list/datum/action/actions = list()
+	var/list/datum/action/chameleon_item_actions
 	var/static/next_mob_id = 0
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
@@ -65,8 +66,6 @@
 	var/datum/hud/hud_used = null
 
 	var/research_scanner = 0 //For research scanner equipped mobs. Enable to show research data when examining.
-
-	var/list/mapobjs = list()
 
 	var/in_throw_mode = 0
 
