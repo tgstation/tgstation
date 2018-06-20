@@ -3,20 +3,20 @@
 	desc = "Stores and controls nanite cloud backups."
 	circuit = /obj/item/circuitboard/computer/nanite_cloud_controller
 	icon = 'icons/obj/machines/research.dmi'
-	icon_state = "nanite_chamber_control"
+	icon_state = "nanite_cloud_controller"
 	var/obj/item/disk/nanite_program/disk
 	var/current_view = 0 //0 is the main menu, any other number is the page of the backup with that ID
 
 /obj/machinery/computer/nanite_cloud_controller/Initialize()
 	. = ..()
 	SSnanites.cloud_storage |= src
-	
+
 /obj/machinery/computer/nanite_cloud_controller/Destroy()
 	SSnanites.cloud_storage -= src
 	SSnanites.check_hardware() //in case this is the last storage left
 	eject()
-	. = ..()	
-	
+	. = ..()
+
 /obj/machinery/computer/nanite_cloud_controller/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/disk/nanite_program))
 		var/obj/item/disk/nanite_program/N = I

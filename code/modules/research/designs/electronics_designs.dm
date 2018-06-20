@@ -23,6 +23,31 @@
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
+
+///////////////////////////////////
+//////////Nanite Devices///////////
+///////////////////////////////////
+/datum/design/nanite_remote
+	name = "Nanite Remote"
+	desc = "Allows for the construction of a nanite remote."
+	id = "nanite_remote"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 500, MAT_METAL = 500)
+	build_path = /obj/item/nanite_remote
+	category = list("Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/nanite_scanner
+	name = "Nanite Scanner"
+	desc = "Allows for the construction of a nanite scanner."
+	id = "nanite_scanner"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 500, MAT_METAL = 500)
+	build_path = /obj/item/nanite_scanner
+	category = list("Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+
 ////////////////////////////////////////
 //////////Disk Construction Disks///////
 ////////////////////////////////////////

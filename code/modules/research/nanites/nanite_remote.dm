@@ -11,6 +11,7 @@
 	req_access = list(ACCESS_ROBOTICS)
 	icon = 'icons/obj/device.dmi'
 	icon_state = "nanite_remote"
+	item_flags = NOBLUDGEON
 	var/locked = FALSE //Can be locked, so it can be given to users with a set code and mode
 	var/mode = REMOTE_MODE_OFF
 	var/list/saved_settings = list()
@@ -72,7 +73,7 @@
 			signal_relay(code, relay_code)
 
 /obj/item/nanite_remote/proc/signal_mob(mob/living/M, code)
-	M.SendSignal(COMSIG_NANITE_SIGNAL, code)
+	SEND_SIGNAL(M, COMSIG_NANITE_SIGNAL, code)
 
 /obj/item/nanite_remote/proc/signal_relay(code, relay_code)
 	for(var/datum/nanite_program/relay/N in SSnanites.nanite_relays)

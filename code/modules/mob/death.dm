@@ -10,5 +10,5 @@
 	return
 
 /mob/proc/death(gibbed)
-	SendSignal(COMSIG_MOB_DEATH, gibbed)
+	SEND_SIGNAL(src, COMSIG_MOB_DEATH, gibbed)
 	return

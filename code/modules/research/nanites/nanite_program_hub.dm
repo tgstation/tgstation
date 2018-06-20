@@ -2,7 +2,7 @@
 	name = "nanite program hub"
 	desc = "Compiles nanite programs from the techweb servers and downloads them into disks."
 	icon = 'icons/obj/machines/research.dmi'
-	icon_state = "nanite_programmer"
+	icon_state = "nanite_program_hub"
 	circuit = /obj/item/circuitboard/machine/nanite_program_hub
 	use_power = IDLE_POWER_USE
 	anchored = TRUE

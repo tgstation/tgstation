@@ -12,11 +12,11 @@
 		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 		if(do_teleport(user, get_turf(user), 50))//honk honk
-			user.SendSignal(COMSIG_LIVING_MINOR_SHOCK)
+			SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
 			user.Knockdown(stunforce*3)
 			deductcharge(hitcost)
 		else
-			user.SendSignal(COMSIG_LIVING_MINOR_SHOCK)
+			SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
 			user.Knockdown(stunforce*3)
 			deductcharge(hitcost/4)
 		return
@@ -25,7 +25,7 @@
 			if(!istype(M) && M.anchored)
 				return .
 			else
-				M.SendSignal(COMSIG_LIVING_MINOR_SHOCK)
+				SEND_SIGNAL(M, COMSIG_LIVING_MINOR_SHOCK)
 				do_teleport(M, get_turf(M), 15)
 
 /obj/item/melee/baton/cattleprod/attackby(obj/item/I, mob/user, params)//handles sticking a crystal onto a stunprod to make a teleprod

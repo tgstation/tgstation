@@ -612,7 +612,7 @@ SLIME SCANNER
 /obj/item/nanite_scanner
 	name = "nanite scanner"
 	icon = 'icons/obj/device.dmi'
-	icon_state = "health"
+	icon_state = "nanite_scanner"
 	item_state = "nanite_remote"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'

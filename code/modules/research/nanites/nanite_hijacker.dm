@@ -4,6 +4,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/device.dmi'
 	icon_state = "nanite_remote"
+	item_flags = NOBLUDGEON
 	var/obj/item/disk/nanite_program/disk
 	var/datum/nanite_program/program
 

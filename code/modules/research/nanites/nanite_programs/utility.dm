@@ -66,7 +66,7 @@
 		return
 	if(relay_code != extra_code)
 		return
-	host_mob.SendSignal(COMSIG_NANITE_SIGNAL, code)
+	SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, code)
 
 /datum/nanite_program/metabolic_synthesis
 	name = "Metabolic Synthesis"

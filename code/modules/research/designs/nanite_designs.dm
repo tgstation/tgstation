@@ -91,15 +91,15 @@
 
 /datum/design/nanites/purging
 	name = "Blood Purification"
-	desc = "The nanites purge toxins and dangerous chemicals from the host's bloodstream, while ignoring beneficial chemicals. \
-			The added processing power required to analyze the chemicals severely increases the nanite consumption rate."
+	desc = "The nanites purge toxins and chemicals from the host's bloodstream."
 	id = "purging_nanites"
 	program_type = /datum/nanite_program/purging
 	category = list("Medical Nanites")
 
 /datum/design/nanites/purging_advanced
 	name = "Selective Blood Purification"
-	desc = "The nanites purge toxins and chemicals from the host's bloodstream."
+	desc = "The nanites purge toxins and dangerous chemicals from the host's bloodstream, while ignoring beneficial chemicals. \
+			The added processing power required to analyze the chemicals severely increases the nanite consumption rate."
 	id = "purging_plus_nanites"
 	program_type = /datum/nanite_program/purging_advanced
 	category = list("Medical Nanites")

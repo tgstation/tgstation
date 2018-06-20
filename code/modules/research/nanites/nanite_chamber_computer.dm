@@ -4,8 +4,7 @@
 	var/obj/machinery/nanite_chamber/chamber
 	var/obj/item/disk/nanite_program/disk
 	circuit = /obj/item/circuitboard/computer/nanite_chamber_control
-	icon = 'icons/obj/machines/research.dmi'
-	icon_state = "nanite_chamber_control"
+	icon_screen = "nanite_chamber_control"
 
 /obj/machinery/computer/nanite_chamber_control/Initialize()
 	. = ..()

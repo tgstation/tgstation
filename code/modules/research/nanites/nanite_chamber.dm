@@ -128,17 +128,14 @@
 
 /obj/machinery/nanite_chamber/update_icon()
 	cut_overlays()
-	//no power or maintenance
-	if(stat & (NOPOWER|BROKEN))
-		icon_state = initial(icon_state)+ (state_open ? "_open" : "") + "_unpowered"
-		return
 
-	if(busy || locked)
-		add_overlay("red")
-		if(locked)
-			add_overlay("bolted")
-	else
-		add_overlay("green")
+	if(!(stat & (NOPOWER|BROKEN)))
+		if(busy || locked)
+			add_overlay("red")
+			if(locked)
+				add_overlay("bolted")
+		else
+			add_overlay("green")
 
 	//TODO make an overlay for the panel
 	if((stat & MAINT) || panel_open)
