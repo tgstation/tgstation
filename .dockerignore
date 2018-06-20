@@ -5,7 +5,14 @@ GPLv3.txt
 LICENSE
 README.md
 TGS3.json
-.git*
+.github
+.gitignore
+.gitattributes
+.git/hooks
+.git/info
+.git/modules
+.git/objects
+.git/refs
 .vs*
 tools
 cfg
