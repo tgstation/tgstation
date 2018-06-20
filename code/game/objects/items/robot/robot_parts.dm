@@ -21,6 +21,7 @@
 	var/lawsync = 1
 	var/aisync = 1
 	var/panel_locked = TRUE
+	var/partcheck = 0
 
 /obj/item/robot_suit/New()
 	..()
@@ -78,6 +79,50 @@
 			else
 				to_chat(user, "<span class='warning'>You need one sheet of metal to start building ED-209!</span>")
 				return
+	else if(istype(W, /obj/item/wrench))//Deconstucts empty borg shell. Flashes remain unbroken because they haven't been used yet
+		partcheck = 0
+		var/turf/T = get_turf(src)
+		src.forceMove(T)
+		if(l_leg)
+			partcheck = 1
+			src.l_leg.forceMove(T)
+			src.l_leg = null
+		if(r_leg)
+			partcheck = 1
+			src.r_leg.forceMove(T)
+			src.r_leg = null
+		if(chest)
+			if (src.chest.cell) //Sanity check.
+				src.chest.cell.forceMove(T)
+				src.chest.cell = null
+			partcheck = 1
+			src.chest.forceMove(T)
+			new /obj/item/stack/cable_coil(T, 1)
+			src.chest.wired = 0
+			src.chest = null
+		if(l_arm)
+			partcheck = 1
+			src.l_arm.forceMove(T)
+			src.l_arm = null
+		if(r_arm)
+			partcheck = 1
+			src.r_arm.forceMove(T)
+			src.r_arm = null
+		if(head)
+			partcheck = 1
+			src.head.forceMove(T)
+			src.head.flash1.forceMove(T)
+			src.head.flash1 = null
+			src.head.flash2.forceMove(T)
+			src.head.flash2 = null
+			src.head = null
+		src.updateicon()
+		if(partcheck > 0)
+			to_chat(user, "<span class='notice'>You disassemble the cyborg shell.</span>")
+			partcheck = 0
+			W.use_tool(src, user, 0, volume=50)//play wrench sound
+		else
+			to_chat(user, "<span class='notice'>There is nothing to remove from the endoskeleton.</span>")
 	else if(istype(W, /obj/item/bodypart/l_leg/robot))
 		if(src.l_leg)
 			return
