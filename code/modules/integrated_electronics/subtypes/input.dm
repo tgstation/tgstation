@@ -1131,7 +1131,7 @@
 			)
 	power_draw_per_use = 5
 
-/obj/item/integrated_circuit/atmospherics/atmospheric_analyzer/do_work()
+/obj/item/integrated_circuit/input/atmospheric_analyzer/do_work()
 	for(var/i=1 to 6)
 		set_pin_data(IC_OUTPUT, i, null)
 	var/atom/target = get_pin_data_as_type(IC_INPUT, 1, /atom)
