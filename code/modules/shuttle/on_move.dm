@@ -83,7 +83,6 @@ All ShuttleMove procs go here
 	air_update_turf(TRUE)
 	oldT.blocks_air = initial(oldT.blocks_air)
 	oldT.air_update_turf(TRUE)
-	return
 
 
 /////////////////////////////////////////////////////////////////////////////////////
