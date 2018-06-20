@@ -20,7 +20,7 @@
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "f" = (
-/turf/closed/mineral/volcanic,
+/turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors/unexplored)
 "g" = (
 /obj/item/clockwork/alloy_shards/medium/gear_bit,

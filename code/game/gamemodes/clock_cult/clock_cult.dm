@@ -178,7 +178,7 @@ Credit where due:
 /datum/game_mode/clockwork_cult/post_setup()
 	for(var/S in servants_to_serve)
 		var/datum/mind/servant = S
-		log_game("[servant.key] was made an initial servant of Ratvar")
+		log_game("[key_name(servant)] was made an initial servant of Ratvar")
 		var/mob/living/L = servant.current
 		var/turf/T = pick(GLOB.servant_spawns)
 		L.forceMove(T)

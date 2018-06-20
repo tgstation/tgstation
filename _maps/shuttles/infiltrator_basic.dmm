@@ -176,7 +176,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate/hallway)
 "aC" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4;
 	name = "tactical chair"
 	},
@@ -188,7 +188,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/hallway)
 "aE" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8;
 	name = "tactical chair"
 	},
@@ -206,7 +206,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate/eva)
 "aH" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4;
 	name = "tactical chair"
 	},
@@ -218,7 +218,7 @@
 	},
 /area/shuttle/syndicate/hallway)
 "aI" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8;
 	name = "tactical chair"
 	},
@@ -256,7 +256,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/eva)
 "aO" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4;
 	name = "tactical chair"
 	},
@@ -318,7 +318,7 @@
 	},
 /area/shuttle/syndicate/hallway)
 "aX" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4;
 	name = "tactical chair"
 	},

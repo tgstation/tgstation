@@ -1,5 +1,6 @@
 /datum/component/riding
 	var/last_vehicle_move = 0 //used for move delays
+	var/last_move_diagonal = FALSE
 	var/vehicle_move_delay = 2 //tick delay between movements, lower = faster, higher = slower
 	var/keytype
 
@@ -146,7 +147,7 @@
 		Unbuckle(user)
 		return
 
-	if(world.time < last_vehicle_move + vehicle_move_delay)
+	if(world.time < last_vehicle_move + ((last_move_diagonal? 2 : 1) * vehicle_move_delay))
 		return
 	last_vehicle_move = world.time
 
@@ -161,7 +162,12 @@
 		if(!Process_Spacemove(direction) || !isturf(AM.loc))
 			return
 		step(AM, direction)
-
+		
+		if((direction & (direction - 1)) && (AM.loc == next))		//moved diagonally
+			last_move_diagonal = TRUE
+		else
+			last_move_diagonal = FALSE
+		
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
 	else

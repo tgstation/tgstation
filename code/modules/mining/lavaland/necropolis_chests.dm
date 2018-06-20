@@ -372,6 +372,7 @@
 
 /obj/effect/warp_cube
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
 
 /obj/effect/warp_cube/ex_act(severity, target)
 	return
@@ -594,7 +595,7 @@
 	to_chat(user, "<span class='notice'>You unfold the ladder. It extends much farther than you were expecting.</span>")
 	var/last_ladder = null
 	for(var/i in 1 to world.maxz)
-		if(is_centcom_level(i) || is_transit_level(i) || is_reebe(i) || is_away_level(i))
+		if(is_centcom_level(i) || is_reserved_level(i) || is_reebe(i) || is_away_level(i))
 			continue
 		var/turf/T2 = locate(ladder_x, ladder_y, i)
 		last_ladder = new /obj/structure/ladder/unbreakable/jacob(T2, null, last_ladder)
@@ -1231,7 +1232,7 @@
 			INVOKE_ASYNC(src, .proc/prepare_icon_update)
 			beacon.icon_state = "hierophant_tele_off"
 			return
-		add_logs(user, beacon, "teleported self from ([source.x],[source.y],[source.z]) to")
+		add_logs(user, beacon, "teleported self from [AREACOORD(source)] to")
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, user)
 		for(var/t in RANGE_TURFS(1, T))
@@ -1278,7 +1279,7 @@
 		return
 	M.visible_message("<span class='hierophant_warning'>[M] fades in!</span>")
 	if(user != M)
-		add_logs(user, M, "teleported", null, "from ([source.x],[source.y],[source.z])")
+		add_logs(user, M, "teleported", null, "from [AREACOORD(source)]")
 
 /obj/item/hierophant_club/proc/cardinal_blasts(turf/T, mob/living/user) //fire cardinal cross blasts with a delay
 	if(!T)

@@ -180,7 +180,7 @@
 						break
 				if(component_check)
 					P.play_tool_sound(src)
-					var/obj/machinery/new_machine = new src.circuit.build_path(src.loc, 1)
+					var/obj/machinery/new_machine = new circuit.build_path(loc, 1)
 					new_machine.anchored = anchored
 					new_machine.on_construction()
 					for(var/obj/O in new_machine.component_parts)
@@ -219,7 +219,7 @@
 							req_components[path] -= used_amt
 						else
 							added_components[part] = path
-							if(replacer.SendSignal(COMSIG_TRY_STORAGE_TAKE, part, src))
+							if(SEND_SIGNAL(replacer, COMSIG_TRY_STORAGE_TAKE, part, src))
 								req_components[path]--
 
 				for(var/obj/item/part in added_components)

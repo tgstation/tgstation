@@ -359,7 +359,7 @@
 
 		to_chat(L, "<span class='italics'>You hear a voice in your head saying: </span><span class='abductor'>[message]</span>")
 		to_chat(user, "<span class='notice'>You send the message to your target.</span>")
-		log_talk(user,"[key_name(user)] sent an abductor mind message to [L]/[L.ckey]: '[message]'", LOGSAY)
+		log_talk(user,"[key_name(user)] sent an abductor mind message to [key_name(L)]: '[message]'", LOGSAY)
 
 
 /obj/item/firing_pin/abductor

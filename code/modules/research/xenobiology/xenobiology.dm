@@ -725,7 +725,11 @@
 	if(SM.sentience_type != animal_type)
 		to_chat(user, "<span class='warning'>You cannot transfer your consciousness to [SM].</span>" )
 		return ..()
-	if(jobban_isbanned(user, ROLE_ALIEN)) //ideally sentience and trasnference potions should be their own unique role.
+	var/jb = jobban_isbanned(user, ROLE_ALIEN)
+	if(QDELETED(src) || QDELETED(M) || QDELETED(user))
+		return
+
+	if(jb) //ideally sentience and trasnference potions should be their own unique role.
 		to_chat(user, "<span class='warning'>Your mind goes blank as you attempt to use the potion.</span>")
 		return
 

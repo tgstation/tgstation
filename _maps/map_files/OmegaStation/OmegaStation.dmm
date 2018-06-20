@@ -15110,6 +15110,9 @@
 	codes_txt = "patrol;next_patrol=9.4-EnteringDorms";
 	location = "9.3-Engi"
 	},
+/obj/structure/cable/white{
+	icon_state = "2-4"
+	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/break_room)
 "aFF" = (
@@ -15470,6 +15473,7 @@
 	name = "Engineering Foyer APC";
 	pixel_y = -26
 	},
+/obj/structure/cable/white,
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 8
 	},
@@ -18948,10 +18952,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aOa" = (
-/obj/machinery/power/supermatter_crystal/shard/engine{
-	anchored = 1;
-	moveable = 0
-	},
+/obj/machinery/power/supermatter_crystal/shard/engine,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "aOb" = (

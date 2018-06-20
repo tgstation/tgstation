@@ -1,4 +1,5 @@
 /datum/component/anti_magic
+	var/active = TRUE
 	var/magic = FALSE
 	var/holy = FALSE
 
@@ -7,7 +8,7 @@
 	holy = _holy
 
 /datum/component/anti_magic/proc/can_protect(_magic = TRUE, _holy = FALSE)
-	if(!enabled)
+	if(!active)
 		return FALSE
 	if((_magic && magic) || (_holy && holy))
 		return TRUE

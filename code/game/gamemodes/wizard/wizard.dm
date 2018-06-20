@@ -23,7 +23,7 @@
 	wizards += wizard
 	wizard.assigned_role = ROLE_WIZARD
 	wizard.special_role = ROLE_WIZARD
-	log_game("[wizard.key] (ckey) has been selected as a Wizard") //TODO: Move these to base antag datum
+	log_game("[key_name(wizard)] has been selected as a Wizard") //TODO: Move these to base antag datum
 	if(GLOB.wizardstart.len == 0)
 		to_chat(wizard.current, "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>")
 		return 0
