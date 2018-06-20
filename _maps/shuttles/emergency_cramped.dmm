@@ -17,7 +17,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "e" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
@@ -74,7 +74,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "n" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -109,7 +109,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "s" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
