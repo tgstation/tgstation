@@ -41,7 +41,8 @@ if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then
 
     cd artifacts
     export CXX=g++-7
-    cmake ..
+    ls /usr/include
+    cmake .. -DMARIA_INCLUDE_DIR=/usr/include
     make
     mv src/BSQL/libBSQL.so ../../
     ldd ../../libBSQL.so
