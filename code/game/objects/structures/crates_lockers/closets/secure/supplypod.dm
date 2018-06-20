@@ -104,7 +104,7 @@
 	light_range = 2
 	var/obj/effect/temp_visual/fallingPod
 
-/obj/effect/DPtarget/Initialize(mapload, var/SO, var/podID, var/target)
+/obj/effect/DPtarget/Initialize(mapload, var/SO, var/podID)
 	. = ..()
 	var/delayTime = 17			//We're forcefully adminspawned, make it faster
 	switch(podID)
@@ -132,6 +132,8 @@
 	else if(podID == POD_CENTCOM)
 		new /obj/structure/closet/supplypod/bluespacepod/centcompod(drop_location(), SO)//CentCom supplypods dont create explosions; instead they directly deal 40 fire damage to people on the turf
 		var/turf/T = get_turf(src)
+		playsound(T, "explosion", 80, 1)
+		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700, 50, 1)//same as fireball
 		for(var/mob/living/M in T.contents)
 			M.adjustFireLoss(40)
