@@ -37890,7 +37890,12 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/stack/sheet/metal/ten,
+/obj/item/stack/sheet/metal/fifty,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"bRb" = (
+/obj/structure/table/reinforced,
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "bRc" = (
@@ -53320,8 +53325,6 @@
 /obj/item/radio/intercom{
 	pixel_x = -30
 	},
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "eyM" = (
@@ -53360,8 +53363,7 @@
 /turf/closed/wall/r_wall,
 /area/science/mixing)
 "flc" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/fancy/donut_box,
+/obj/machinery/bookbinder,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "fnC" = (
@@ -53473,6 +53475,8 @@
 /obj/machinery/cell_charger{
 	pixel_y = 5
 	},
+/obj/item/stock_parts/cell/super,
+/obj/item/stock_parts/cell/super,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "ijc" = (
@@ -53537,6 +53541,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "jrE" = (
+/obj/machinery/rnd/production/protolathe/department/science,
 /obj/structure/sign/poster/official/random{
 	pixel_x = 32
 	},
@@ -53828,6 +53833,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"qpv" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/autolathe,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
 "quT" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
@@ -54031,7 +54043,6 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "vCb" = (
@@ -54046,6 +54057,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/libraryscanner,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "wkN" = (
@@ -54077,7 +54089,9 @@
 "wvX" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light,
-/obj/item/stack/sheet/metal/ten,
+/obj/item/stock_parts/cell/super,
+/obj/item/stock_parts/cell/super,
+/obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "wBd" = (
@@ -103893,16 +103907,16 @@ bMB
 bNA
 cOe
 bSl
-bUq
+bRb
 flc
 vPE
-bXs
+bUq
 bVt
 dfh
 jSO
 jgm
 oUh
-vPE
+qpv
 jrE
 saK
 bSl

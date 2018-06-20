@@ -24235,9 +24235,13 @@
 /area/science/explab)
 "blV" = (
 /obj/structure/table/reinforced,
+/obj/item/stack/sheet/metal/fifty{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/clothing/glasses/science,
 /obj/item/clothing/glasses/science,
-/obj/item/stack/sheet/metal/ten,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -24641,10 +24645,10 @@
 /obj/machinery/cell_charger{
 	pixel_y = 5
 	},
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/super,
+/obj/item/stock_parts/cell/super,
+/obj/item/stock_parts/cell/super,
+/obj/item/stock_parts/cell/super,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -24983,9 +24987,7 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "bnZ" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/machinery/rnd/production/techfab/department/science,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -48941,6 +48943,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
+"hOd" = (
+/obj/machinery/autolathe,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/science/explab)
 "hOx" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -96225,7 +96233,7 @@ bjx
 bjw
 qDJ
 vmG
-bnZ
+hOd
 pDP
 nBL
 bqs

@@ -75954,7 +75954,6 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/item/stack/sheet/metal/ten,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "eqG" = (
@@ -76016,6 +76015,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"gfh" = (
+/obj/machinery/libraryscanner,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "gnZ" = (
@@ -76099,6 +76102,13 @@
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"hfJ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/autolathe,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
 "hvt" = (
 /obj/structure/kitchenspike_frame,
 /obj/effect/decal/cleanable/blood/gibs/old,
@@ -76162,6 +76172,9 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/crew_quarters/fitness/recreation)
 "jyv" = (
+/obj/item/stock_parts/cell/super,
+/obj/item/stock_parts/cell/super,
+/obj/item/stack/sheet/metal/fifty,
 /obj/structure/table/reinforced,
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the RD's goons from the safety of your own office.";
@@ -76169,8 +76182,6 @@
 	network = list("rd");
 	pixel_y = 32
 	},
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "jyQ" = (
@@ -76466,6 +76477,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/stock_parts/cell/super,
 /obj/structure/table/reinforced,
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -76476,8 +76488,8 @@
 	network = list("rd");
 	pixel_y = 32
 	},
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/super,
+/obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "ohj" = (
@@ -76696,6 +76708,11 @@
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"sog" = (
+/obj/machinery/libraryscanner,
+/obj/machinery/bookbinder,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
 "sFv" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -76737,6 +76754,11 @@
 "sJW" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/engine/break_room)
+"tjH" = (
+/obj/structure/table/reinforced,
+/obj/machinery/computer/libraryconsole/bookmanagement,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
 "tsx" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -76835,9 +76857,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/machinery/rnd/production/protolathe/department/science,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "uYk" = (
@@ -113688,7 +113708,7 @@ cuZ
 fFM
 cud
 kxk
-cxO
+tjH
 cxO
 cxO
 dGH
@@ -114975,7 +114995,7 @@ mjJ
 krD
 eqq
 llb
-uTS
+hfJ
 cxO
 cxO
 krD
@@ -115234,7 +115254,7 @@ lsv
 txj
 eEe
 cxO
-cxO
+gfh
 krD
 aaa
 aaa
@@ -115491,7 +115511,7 @@ jyv
 ohj
 nnK
 cxO
-cxO
+sog
 krD
 aaa
 aaa
