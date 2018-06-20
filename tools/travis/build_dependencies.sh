@@ -51,5 +51,4 @@ if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then
     cmake .. -DMARIA_INCLUDE_DIR=$HOME/MariaDB/include
     make
     mv src/BSQL/libBSQL.so ../../
-    ldd ../../libBSQL.so
 fi
