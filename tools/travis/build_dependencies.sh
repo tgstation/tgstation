@@ -24,13 +24,25 @@ if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then
     git fetch --depth 1 origin $BSQL_VERSION
     git checkout FETCH_HEAD
 
+    if [ -f "$HOME/MariaDB/libmariadb.so.2" ] && [ -f "$HOME/MariaDB/libmariadb.so" ];
+    then
+        echo "Using cached MariaDB library."
+    else
+        echo "Setting up MariaDB."
+        rm -rf "$HOME/MariaDB"
+        mkdir -p "$HOME/MariaDB"
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/m/mariadb-client-lgpl/libmariadb2_2.0.0-1_i386.deb
+        dpkg -x libmariadb2_2.0.0-1_i386.deb /tmp/extract
+        rm libmariadb2_2.0.0-1_i386.deb
+        mv /tmp/extract/usr/lib/i386-linux-gnu/libmariadb.so.2 $HOME/MariaDB/
+        ln -s $HOME/MariaDB/libmariadb.so.2 $HOME/MariaDB/libmariadb.so
+        rm -rf /tmp/extract
+    fi
+
     cd artifacts
-    ls /usr/include
-    ls /usr/include/mysql
-    ls /usr/lib/i386-linux-gnu
     export CXX=g++-7
-    export CC=gcc-7
-    cmake .. -DMARIA_INCLUDE_DIR=/usr/include -DMARIA_LIBRARY=/usr/lib/i386-linux-gnu/libmariadbclient.so
-    make VERBOSE=1
-    ln -s src/BSQL/libBSQL.so ~/.byond/bin/
+    cmake ..
+    make
+    mv src/BSQL/libBSQL.so ../../
+    ldd ../../libBSQL.so
 fi
