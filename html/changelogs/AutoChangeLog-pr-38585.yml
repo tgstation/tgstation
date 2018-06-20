@@ -1,0 +1,4 @@
+author: "NewSta"
+delete-after: True
+changes: 
+  - tweak: "made it easier to see from the back whether someone is occupying the shuttle chair or not."

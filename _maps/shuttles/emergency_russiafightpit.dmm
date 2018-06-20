@@ -18,7 +18,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "af" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -43,7 +43,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aj" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -76,7 +76,7 @@
 	pixel_x = 6;
 	pixel_y = -24
 	},
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -91,7 +91,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aq" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ar" = (
@@ -102,7 +102,7 @@
 	pixel_y = -6;
 	req_access_txt = "19"
 	},
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /obj/machinery/button/door{
 	id = "bearsbearsbears";
 	name = "release bears";
@@ -131,7 +131,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "av" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aw" = (
@@ -204,7 +204,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "aJ" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -238,7 +238,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aP" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/brig,
@@ -315,7 +315,7 @@
 /turf/open/floor/engine,
 /area/shuttle/escape)
 "bc" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -327,7 +327,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -341,7 +341,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -350,13 +350,13 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bh" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -551,7 +551,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bO" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/machinery/light/small{

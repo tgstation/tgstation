@@ -8639,7 +8639,9 @@
 	dir = 4;
 	pixel_x = 28
 	},
-/obj/machinery/computer/rdconsole,
+/obj/machinery/computer/rdconsole{
+	dir = 8
+	},
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 4
 	},
@@ -9183,10 +9185,16 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ayG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -9195,6 +9203,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
+/obj/structure/disposalpipe/junction{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ayI" = (
@@ -9202,15 +9213,15 @@
 	codes_txt = "patrol;next_patrol=BrigS2";
 	location = "BrigP"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ayJ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/open/floor/plasteel,
-/area/hallway/primary/fore)
-"ayK" = (
 /obj/structure/disposalpipe/segment{
-	dir = 6
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
@@ -9736,6 +9747,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aAd" = (
@@ -9756,6 +9768,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aAf" = (
@@ -9773,7 +9786,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aAh" = (
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
@@ -12334,10 +12346,7 @@
 /turf/open/floor/plasteel/neutral/side,
 /area/storage/primary)
 "aGk" = (
-/obj/machinery/vending/boozeomat{
-	products = list(/obj/item/reagent_containers/food/drinks/bottle/rum = 1, /obj/item/reagent_containers/food/drinks/bottle/wine = 1, /obj/item/reagent_containers/food/drinks/ale = 1, /obj/item/reagent_containers/food/drinks/drinkingglass = 6, /obj/item/reagent_containers/food/drinks/ice = 1, /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 4);
-	req_access_txt = "20"
-	},
+/obj/machinery/vending/boozeomat/pubby_captain,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -23811,11 +23820,6 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -28
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Port Emergency Storage APC";
-	pixel_y = 24
-	},
 /turf/open/floor/plasteel/freezer,
 /area/storage/emergency/port)
 "bkY" = (
@@ -24231,13 +24235,9 @@
 /area/science/explab)
 "blV" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal/fifty{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/stack/sheet/metal/fifty,
 /obj/item/clothing/glasses/science,
 /obj/item/clothing/glasses/science,
+/obj/item/stack/sheet/metal/ten,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -24641,10 +24641,10 @@
 /obj/machinery/cell_charger{
 	pixel_y = 5
 	},
-/obj/item/stock_parts/cell/super,
-/obj/item/stock_parts/cell/super,
-/obj/item/stock_parts/cell/super,
-/obj/item/stock_parts/cell/super,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -24983,7 +24983,9 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "bnZ" = (
-/obj/machinery/rnd/production/protolathe/department/security,
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-10"
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -27466,6 +27468,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/machinery/disposal/bin,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bum" = (
@@ -28442,7 +28445,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bwV" = (
-/obj/machinery/disposal/bin,
 /turf/open/floor/plasteel/whiteyellow/corner,
 /area/medical/chemistry)
 "bwW" = (
@@ -31873,7 +31875,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/landmark/blobstart,
 /obj/item/melee/baton/cattleprod{
-	cell = new /obj/item/stock_parts/cell/high()
+	preload_cell_type = /obj/item/stock_parts/cell/high
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/exam_room)
@@ -46986,7 +46988,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cBk" = (
-/obj/machinery/vending/boozeomat/maint,
+/obj/machinery/vending/boozeomat/pubby_maint,
 /turf/closed/wall,
 /area/maintenance/department/crew_quarters/dorms)
 "cBl" = (
@@ -47638,7 +47640,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/research/glass{
-	name = "Research Pit"
+	name = "Research Pit";
+	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
@@ -48938,12 +48941,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
-"hOd" = (
-/obj/machinery/autolathe,
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/science/explab)
 "hOx" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -49149,6 +49146,9 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
+"iqc" = (
+/turf/open/floor/plasteel/stairs/right,
+/area/maintenance/department/crew_quarters/dorms)
 "itl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -52939,6 +52939,10 @@
 /obj/item/pen,
 /turf/open/floor/plasteel/dark,
 /area/science/explab)
+"tCP" = (
+/obj/docking_port/stationary/public_mining_dock,
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
 "tDn" = (
 /obj/item/wrench,
 /turf/open/floor/plating,
@@ -75107,7 +75111,7 @@ aux
 avs
 awI
 axF
-axG
+ayL
 aAd
 ebD
 aCf
@@ -76135,7 +76139,7 @@ aux
 avv
 awK
 axG
-axG
+ayL
 aAi
 aBd
 aCi
@@ -76392,7 +76396,7 @@ auA
 avw
 awJ
 axG
-axG
+ayL
 aAi
 aBd
 aCj
@@ -76906,7 +76910,7 @@ ajM
 ajM
 atB
 axI
-ayK
+ayL
 aAh
 aBf
 aCl
@@ -76921,7 +76925,7 @@ uoS
 rJZ
 uoS
 uoS
-uoS
+tCP
 xOC
 jAy
 rHA
@@ -91019,7 +91023,7 @@ aaa
 aaa
 aiS
 qPB
-gNv
+iqc
 ngp
 cBr
 cBs
@@ -96221,7 +96225,7 @@ bjx
 bjw
 qDJ
 vmG
-hOd
+bnZ
 pDP
 nBL
 bqs
@@ -103907,11 +103911,11 @@ aaa
 aaa
 aaa
 aaa
-aby
-aed
-aby
-aby
-aby
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -104164,11 +104168,11 @@ aaa
 aaa
 aaa
 aaa
-aby
 aaa
 aaa
 aaa
-abI
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -104421,11 +104425,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aby
+aed
+aby
+aby
+aby
 aaa
 aaa
 aaa
@@ -104678,11 +104682,11 @@ aaa
 aaa
 aaa
 aaa
+aby
 aaa
 aaa
 aaa
-aaa
-aaa
+abI
 aaa
 aaa
 aaa
@@ -104957,7 +104961,7 @@ aTC
 aTC
 aTC
 aaa
-mZE
+aby
 aaa
 bnd
 qYq
@@ -105213,8 +105217,8 @@ beU
 beU
 beU
 beU
-aaa
-mZE
+abI
+aby
 aaa
 bnd
 lGS
@@ -105470,7 +105474,7 @@ aTE
 aTE
 aTE
 aTE
-abI
+aaa
 aby
 aaa
 bkF
@@ -105728,7 +105732,7 @@ aaa
 aaa
 aaa
 aaa
-aby
+aed
 aaa
 bkF
 bkF

@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/list/old_baseturfs = baseturfs
 
 	var/list/transferring_comps = list()
-	SendSignal(COMSIG_TURF_CHANGE, path, new_baseturfs, flags, transferring_comps)
+	SEND_SIGNAL(src, COMSIG_TURF_CHANGE, path, new_baseturfs, flags, transferring_comps)
 	for(var/i in transferring_comps)
 		var/datum/component/comp = i
 		comp.RemoveComponent()

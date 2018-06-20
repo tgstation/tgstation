@@ -2,7 +2,6 @@
 	plane = FLOOR_PLANE
 	var/slowdown = 0 //negative for faster, positive for slower
 
-	var/mutable_appearance/wet_overlay
 	var/postdig_icon_change = FALSE
 	var/postdig_icon
 	var/list/archdrops
@@ -12,6 +11,8 @@
 	. = ..()
 	if(wet)
 		AddComponent(/datum/component/wet_floor, wet, INFINITY, 0, INFINITY, TRUE)
+	if(LAZYLEN(archdrops))
+		AddComponent(/datum/component/archaeology, archdrops)
 
 /turf/open/indestructible
 	name = "floor"
@@ -189,7 +190,7 @@
 	for(var/mob/living/simple_animal/slime/M in src)
 		M.apply_water()
 
-	SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	for(var/obj/effect/O in src)
 		if(is_cleanable(O))
 			qdel(O)
@@ -213,7 +214,7 @@
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
 			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
-		C.SendSignal(COMSIG_ADD_MOOD_EVENT, "slipped", /datum/mood_event/slipped)
+		SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "slipped", /datum/mood_event/slipped)
 		for(var/obj/item/I in C.held_items)
 			C.accident(I)
 
@@ -246,7 +247,7 @@
 	AddComponent(/datum/component/wet_floor, wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 
 /turf/open/proc/MakeDry(wet_setting = TURF_WET_WATER, immediate = FALSE, amount = INFINITY)
-	SendSignal(COMSIG_TURF_MAKE_DRY, wet_setting, immediate, amount)
+	SEND_SIGNAL(src, COMSIG_TURF_MAKE_DRY, wet_setting, immediate, amount)
 
 /turf/open/get_dumping_location()
 	return src

@@ -62,14 +62,14 @@
 		adjust_blurriness(-1)
 
 	if (getBrainLoss() >= 60 && !incapacitated(TRUE))
-		SendSignal(COMSIG_ADD_MOOD_EVENT, "brain_damage", /datum/mood_event/brain_damage)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "brain_damage", /datum/mood_event/brain_damage)
 		if(prob(3))
 			if(prob(25))
 				emote("drool")
 			else
 				say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
 	else
-		SendSignal(COMSIG_CLEAR_MOOD_EVENT, "brain_damage")
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "brain_damage")
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
 	if(!dna || !dna.species.handle_mutations_and_radiation(src))
@@ -293,7 +293,7 @@
 				visible_message("<span class='danger'>[I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>[I] falls out of your [BP.name]!</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
-					SendSignal(COMSIG_CLEAR_MOOD_EVENT, "embedded")
+					SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
 /mob/living/carbon/human/proc/handle_active_genes()
 	for(var/datum/mutation/human/HM in dna.mutations)

@@ -43,6 +43,13 @@
 	dir = 5
 	},
 /area/shuttle/caravan/pirate)
+"eL" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	dir = 10;
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/caravan/pirate)
 "fh" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -73,7 +80,9 @@
 /turf/open/floor/plasteel/red/side,
 /area/shuttle/caravan/pirate)
 "hh" = (
-/mob/living/simple_animal/hostile/pirate,
+/mob/living/simple_animal/hostile/pirate{
+	environment_smash = 0
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/caravan/pirate)
 "hI" = (
@@ -390,6 +399,12 @@
 /obj/item/reagent_containers/food/drinks/bottle/rum,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/pirate)
+"tM" = (
+/mob/living/simple_animal/hostile/pirate/ranged{
+	environment_smash = 0
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/shuttle/caravan/pirate)
 "ul" = (
 /obj/structure/table,
 /obj/item/retractor,
@@ -448,8 +463,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/closet/crate/secure/weapon,
-/obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
@@ -853,6 +866,13 @@
 /obj/item/melee/classic_baton,
 /turf/open/floor/plasteel/darkred/corner,
 /area/shuttle/caravan/pirate)
+"Yj" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	dir = 9;
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/caravan/pirate)
 "Yo" = (
 /obj/structure/table,
 /obj/item/storage/box/lethalshot,
@@ -913,7 +933,7 @@ Jv
 "}
 (3,1,1) = {"
 Jv
-oL
+Yj
 af
 qX
 yt
@@ -923,7 +943,7 @@ RK
 FM
 jh
 af
-oL
+eL
 Jv
 "}
 (4,1,1) = {"
@@ -980,7 +1000,7 @@ su
 Ag
 af
 jo
-su
+tM
 sr
 af
 af

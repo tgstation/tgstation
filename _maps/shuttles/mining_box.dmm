@@ -18,7 +18,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "f" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,

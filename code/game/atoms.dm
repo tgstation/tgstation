@@ -115,7 +115,7 @@
 	if(!T)
 		return FALSE
 
-	if(is_transit_level(T.z))
+	if(is_reserved_level(T.z))
 		for(var/A in SSshuttle.mobile)
 			var/obj/docking_port/mobile/M = A
 			if(M.launch_status == ENDGAME_TRANSIT)
@@ -154,7 +154,7 @@
 	return FALSE
 
 /atom/proc/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
-	SendSignal(COMSIG_ATOM_HULK_ATTACK, user)
+	SEND_SIGNAL(src, COMSIG_ATOM_HULK_ATTACK, user)
 	if(does_attack_animation)
 		user.changeNext_move(CLICK_CD_MELEE)
 		add_logs(user, src, "punched", "hulk powers")
@@ -223,13 +223,13 @@
 	return
 
 /atom/proc/emp_act(severity)
-	var/protection = SendSignal(COMSIG_ATOM_EMP_ACT, severity)
+	var/protection = SEND_SIGNAL(src, COMSIG_ATOM_EMP_ACT, severity)
 	if(!(protection & EMP_PROTECT_WIRES) && istype(wires))
 		wires.emp_pulse()
 	return protection // Pass the protection value collected here upwards
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
-	SendSignal(COMSIG_ATOM_BULLET_ACT, P, def_zone)
+	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, P, def_zone)
 	. = P.on_hit(src, 0, def_zone)
 
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
@@ -246,7 +246,7 @@
 	if(article)
 		. = "[article] [src]"
 		override[EXAMINE_POSITION_ARTICLE] = article
-	if(SendSignal(COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
 		. = override.Join("")
 
 /atom/proc/get_examine_string(mob/user, thats = FALSE)
@@ -278,7 +278,7 @@
 			else
 				to_chat(user, "<span class='danger'>It's empty.</span>")
 
-	SendSignal(COMSIG_PARENT_EXAMINE, user)
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
 
 /atom/proc/relaymove(mob/user)
 	if(buckle_message_cooldown <= world.time)
@@ -292,14 +292,14 @@
 /atom/proc/ex_act(severity, target)
 	set waitfor = FALSE
 	contents_explosion(severity, target)
-	SendSignal(COMSIG_ATOM_EX_ACT, severity, target)
+	SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)
 
 /atom/proc/blob_act(obj/structure/blob/B)
-	SendSignal(COMSIG_ATOM_BLOB_ACT, B)
+	SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, B)
 	return
 
 /atom/proc/fire_act(exposed_temperature, exposed_volume)
-	SendSignal(COMSIG_ATOM_FIRE_ACT, exposed_temperature, exposed_volume)
+	SEND_SIGNAL(src, COMSIG_ATOM_FIRE_ACT, exposed_temperature, exposed_volume)
 	return
 
 /atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
@@ -367,28 +367,28 @@
 	return
 
 /atom/proc/singularity_pull(obj/singularity/S, current_size)
-	SendSignal(COMSIG_ATOM_SING_PULL, S, current_size)
+	SEND_SIGNAL(src, COMSIG_ATOM_SING_PULL, S, current_size)
 
 /atom/proc/acid_act(acidpwr, acid_volume)
-	SendSignal(COMSIG_ATOM_ACID_ACT, acidpwr, acid_volume)
+	SEND_SIGNAL(src, COMSIG_ATOM_ACID_ACT, acidpwr, acid_volume)
 
 /atom/proc/emag_act()
-	SendSignal(COMSIG_ATOM_EMAG_ACT)
+	SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
 
 /atom/proc/rad_act(strength)
-	SendSignal(COMSIG_ATOM_RAD_ACT, strength)
+	SEND_SIGNAL(src, COMSIG_ATOM_RAD_ACT, strength)
 
 /atom/proc/narsie_act()
-	SendSignal(COMSIG_ATOM_NARSIE_ACT)
+	SEND_SIGNAL(src, COMSIG_ATOM_NARSIE_ACT)
 
 /atom/proc/ratvar_act()
-	SendSignal(COMSIG_ATOM_RATVAR_ACT)
+	SEND_SIGNAL(src, COMSIG_ATOM_RATVAR_ACT)
 
 /atom/proc/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	return FALSE
 
 /atom/proc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	SendSignal(COMSIG_ATOM_RCD_ACT, user, the_rcd, passed_mode)
+	SEND_SIGNAL(src, COMSIG_ATOM_RCD_ACT, user, the_rcd, passed_mode)
 	return FALSE
 
 /atom/proc/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
@@ -416,7 +416,7 @@
 
 //This proc is called on the location of an atom when the atom is Destroy()'d
 /atom/proc/handle_atom_del(atom/A)
-	SendSignal(COMSIG_ATOM_CONTENTS_DEL, A)
+	SEND_SIGNAL(src, COMSIG_ATOM_CONTENTS_DEL, A)
 
 //called when the turf the atom resides on is ChangeTurfed
 /atom/proc/HandleTurfChange(turf/T)
@@ -435,7 +435,7 @@
 
 //Hook for running code when a dir change occurs
 /atom/proc/setDir(newdir)
-	SendSignal(COMSIG_ATOM_DIR_CHANGE, dir, newdir)
+	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
 
 /atom/proc/mech_melee_attack(obj/mecha/M)
@@ -530,10 +530,10 @@
 	return L.AllowDrop() ? L : get_turf(L)
 
 /atom/Entered(atom/movable/AM, atom/oldLoc)
-	SendSignal(COMSIG_ATOM_ENTERED, AM, oldLoc)
+	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
 
 /atom/Exited(atom/movable/AM, atom/newLoc)
-	SendSignal(COMSIG_ATOM_EXITED, AM, newLoc)
+	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, AM, newLoc)
 
 /atom/proc/return_temperature()
 	return
