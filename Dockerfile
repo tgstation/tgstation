@@ -27,7 +27,7 @@ WORKDIR /tgstation
 
 COPY . .
 
-RUN mkdir data && mkdir /root/.byond/bin
+RUN mkdir data && mkdir -p /root/.byond/bin
 
 VOLUME [ "/tgstation/config", "/tgstation/data" ]
 
