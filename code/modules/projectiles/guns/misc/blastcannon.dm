@@ -14,7 +14,7 @@
 	var/hugbox = TRUE
 	var/max_power = INFINITY
 	var/reaction_volume_mod = 0
-	var/reaction_cycles = 3	//Very finnicky value, do not mess with without good reason.
+	var/reaction_cycles = 3				//How many times gases react() before calculation. Very finnicky value, do not mess with without good reason.
 	var/prereaction = TRUE
 
 	var/bombcheck = TRUE
@@ -69,6 +69,7 @@
 		return TRUE
 	return ..()
 
+//returns the third value of a bomb blast
 /obj/item/gun/blastcannon/proc/calculate_bomb()
 	if(!istype(bomb) || !istype(bomb.tank_one) || !istype(bomb.tank_two))
 		return 0
