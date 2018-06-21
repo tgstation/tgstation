@@ -119,7 +119,7 @@
 		if(istype(user.held_items[user.active_hand_index == 1 ? 2 : 1], /obj/item/stock_parts/cell))
 			if (src.chest.cell) //Sanity check.
 				src.chest.cell.forceMove(T)
-				src.chest.cell = user.held_items[user.active_hand_index == 1 ? 2 : 1]
+			src.chest.cell = user.held_items[user.active_hand_index == 1 ? 2 : 1]
 			if(!user.transferItemToLoc(user.held_items[user.active_hand_index == 1 ? 2 : 1], src.chest))
 				src.chest.cell = null
 				return
