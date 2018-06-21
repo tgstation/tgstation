@@ -367,7 +367,7 @@
 	var/atom/movable/acting_object = get_object()
 	var/turf/T = get_turf(acting_object)
 	var/obj/item/AM = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
-	if(AM)
+	if(!QDELETED(AM) && !istype(AM, /obj/item/electronic_assembly))
 		var/mode = get_pin_data(IC_INPUT, 2)
 		if(mode == 1)
 			if(check_target(AM))
