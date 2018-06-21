@@ -28,7 +28,6 @@ matrix:
       addons:
         apt:
           packages:
-            - libc6-i386
             - libstdc++6:i386
       cache:
         directories:
@@ -42,7 +41,6 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - libc6-i386
             - libstdc++6:i386
             - libssl-dev:i386
             - gcc-multilib
