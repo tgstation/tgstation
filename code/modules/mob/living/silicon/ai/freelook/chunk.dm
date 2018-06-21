@@ -126,9 +126,7 @@
 
 // Create a new camera chunk, since the chunks are made as they are needed.
 
-/datum/camerachunk/New(loc, x, y, z)
-
-	// 0xf = 15
+/datum/camerachunk/New(x, y, z)
 	x &= ~(CHUNK_SIZE - 1)
 	y &= ~(CHUNK_SIZE - 1)
 
