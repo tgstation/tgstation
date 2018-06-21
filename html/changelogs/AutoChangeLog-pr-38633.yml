@@ -1,0 +1,4 @@
+author: "ExcessiveUseOfCobblestone"
+delete-after: True
+changes: 
+  - spellcheck: "Plant disks with potency genes clarify the percent is for potency scaling and not relative to max volume on examine."
