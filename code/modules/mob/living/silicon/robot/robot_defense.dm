@@ -1,5 +1,12 @@
 /mob/living/silicon/robot/attackby(obj/item/I, mob/living/user)
 	if(hat_offset != INFINITY && user.a_intent == INTENT_HELP && is_type_in_typecache(I, equippable_hats))
+		if (I.type == /obj/item/clothing/mask/bandana || I.parent_type == /obj/item/clothing/mask/bandana)
+			if(I.flags_inv > 0)
+				to_chat(user, "<span class='warning'>Re-tie the bandana into a hat first.</span>")
+				return
+		else if (I.type == /obj/item/clothing/ears/headphones && I.item_state == "headphones_off")
+			to_chat(user, "<span class='warning'>[src] would probably appreciate you turning the headphones on first!</span>")
+			return
 		to_chat(user, "<span class='notice'>You begin to place [I] on [src]'s head...</span>")
 		to_chat(src, "<span class='notice'>[user] is placing [I] on your head...</span>")
 		if(do_after(user, 30, target = src))
