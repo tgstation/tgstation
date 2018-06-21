@@ -378,7 +378,11 @@ SUBSYSTEM_DEF(job)
 			RejectPlayer(player)
 	else if(player.client.prefs.joblessrole == RETURNTOLOBBY)
 		RejectPlayer(player)
-
+	else //Something gone wrong if we got here.
+		var/message = "DO: [player] fell through handling unassigned"
+		log_game(message)
+		message_admins(message)
+		RejectPlayer(player)
 //Gives the player the stuff he should have with his rank
 /datum/controller/subsystem/job/proc/EquipRank(mob/M, rank, joined_late = FALSE)
 	var/mob/dead/new_player/N
