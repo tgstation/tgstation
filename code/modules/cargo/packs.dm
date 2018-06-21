@@ -172,7 +172,7 @@
 
 /datum/supply_pack/emergency/radiation
 	name = "Radiation Protection Crate"
-	desc = "Survive the Nuclear Apocalypse and Supermatter Engine alike with two sets of Radiation suits. Each set contains a helmet, suit, and geiger counter. We'll even throw in a bottle of vodka and some glasses too, considering the life-expectancy of people who order this."
+	desc = "Survive the Nuclear Apocalypse and Supermatter Engine alike with two sets of Radiation suits. Each set contains a helmet, suit, and Geiger counter. We'll even throw in a bottle of vodka and some glasses too, considering the life-expectancy of people who order this."
 	cost = 1000
 	contains = list(/obj/item/clothing/head/radiation,
 					/obj/item/clothing/head/radiation,

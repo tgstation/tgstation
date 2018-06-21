@@ -209,7 +209,7 @@
 			user.visible_message("[user] wrenches the solar assembly into place.", "<span class='notice'>You wrench the solar assembly into place.</span>")
 			W.play_tool_sound(src, 75)
 		else
-			user.visible_message("[user] unwrenched the solar assembly from its place.", "<span class='notice'>You unwrench the solar assembly from its place.</span>")
+			user.visible_message("[user] unwrenches the solar assembly from its place.", "<span class='notice'>You unwrench the solar assembly from its place.</span>")
 			W.play_tool_sound(src, 75)
 		return 1
 

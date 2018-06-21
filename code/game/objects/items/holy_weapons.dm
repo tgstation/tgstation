@@ -307,7 +307,7 @@
 	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/nullrod/claymore/katana
-	name = "\proper Hanzo steel"
+	name = "\improper Hanzo steel"
 	desc = "Capable of cutting clean through a holy claymore."
 	icon_state = "katana"
 	item_state = "katana"

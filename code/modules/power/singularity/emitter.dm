@@ -305,7 +305,7 @@
 	locked = FALSE
 	obj_flags |= EMAGGED
 	if(user)
-		user.visible_message("[user.name] emagged [src].","<span class='notice'>You short out the lock.</span>")
+		user.visible_message("[user.name] emags [src].","<span class='notice'>You short out the lock.</span>")
 
 
 /obj/machinery/power/emitter/prototype

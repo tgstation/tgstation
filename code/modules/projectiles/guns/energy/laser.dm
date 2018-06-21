@@ -101,7 +101,7 @@
 	transform *= 1 + ((damage/7) * 0.2)//20% larger per tile
 
 /obj/item/gun/energy/xray
-	name = "X-ray laser gun"
+	name = "\improper X-ray laser gun"
 	desc = "A high-power laser gun capable of expelling concentrated X-ray blasts that pass through multiple soft targets and heavier materials."
 	icon_state = "xray"
 	item_state = null

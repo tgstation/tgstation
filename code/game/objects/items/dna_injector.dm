@@ -160,7 +160,7 @@
 
 /obj/item/dnainjector/antitour
 	name = "\improper DNA injector (Anti-Tour.)"
-	desc = "Will cure Tourret's."
+	desc = "Will cure Tourette's."
 	remove_mutations_static = list(TOURETTES)
 
 /obj/item/dnainjector/tourmut
