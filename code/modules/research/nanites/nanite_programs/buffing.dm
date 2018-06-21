@@ -24,7 +24,7 @@
 	trigger_cost = 25
 	trigger_cooldown = 900
 	rogue_types = list(/datum/nanite_program/toxic, /datum/nanite_program/nerve_decay)
-	
+
 /datum/nanite_program/triggered/adrenaline/trigger()
 	if(!..())
 		return
@@ -35,8 +35,8 @@
 	host_mob.adjustStaminaLoss(-75)
 	host_mob.lying = 0
 	host_mob.update_canmove()
-	host_mob.reagents.add_reagent("stimulants", 5)		
-		
+	host_mob.reagents.add_reagent("stimulants", 5)
+
 /datum/nanite_program/hardening
 	name = "Dermal Hardening"
 	desc = "The nanites form a mesh under the host's skin, protecting them from melee and bullet impacts."
@@ -121,7 +121,9 @@
 /datum/nanite_program/mindshield/enable_passive_effect()
 	..()
 	host_mob.add_trait(TRAIT_MINDSHIELD, "nanites")
+	host_mob.sec_hud_set_implants()
 
 /datum/nanite_program/mindshield/disable_passive_effect()
 	..()
 	host_mob.remove_trait(TRAIT_MINDSHIELD, "nanites")
+	host_mob.sec_hud_set_implants()

@@ -20,6 +20,7 @@
 	if(..())
 		if(!target.mind)
 			target.add_trait(TRAIT_MINDSHIELD, "implant")
+			target.sec_hud_set_implants()
 			return TRUE
 
 		if(target.mind.has_antag_datum(/datum/antagonist/brainwashed))
@@ -49,6 +50,7 @@
 		if(isliving(target))
 			var/mob/living/L = target
 			L.remove_trait(TRAIT_MINDSHIELD, "implant")
+			L.sec_hud_set_implants()
 		if(target.stat != DEAD && !silent)
 			to_chat(target, "<span class='boldnotice'>Your mind suddenly feels terribly vulnerable. You are no longer safe from brainwashing.</span>")
 		return 1
