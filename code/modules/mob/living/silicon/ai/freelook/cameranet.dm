@@ -26,7 +26,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 /datum/cameranet/New()
 	vis_contents = new /obj/effect/overlay/camera_static()
 	obscured = new('icons/effects/cameravis.dmi', vis_contents, null, BYOND_LIGHTING_LAYER + 0.1)
-	obscured.plane = BYOND_LIGHTING_PLANE + 0.1
+	obscured.plane = BYOND_LIGHTING_PLANE + 1
 
 // Checks if a chunk has been Generated in x, y, z.
 /datum/cameranet/proc/chunkGenerated(x, y, z)
