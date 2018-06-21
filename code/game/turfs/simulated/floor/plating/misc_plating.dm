@@ -47,8 +47,9 @@
 
 /turf/open/floor/plating/ashplanet/Initialize()
 	if(smooth)
-		pixel_y = -4
-		pixel_x = -4
+		var/matrix/M = new
+		M.Translate(-4, -4)
+		transform = M
 		icon = smooth_icon
 	. = ..()
 
