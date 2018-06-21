@@ -1,4 +1,0 @@
-author: "CitrusGender"
-delete-after: True
-changes: 
-  - bugfix: "Ruins air alarms will no longer be reported in the station tablets"
