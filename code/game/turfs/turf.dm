@@ -42,6 +42,9 @@
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
 
+	// by default, vis_contents is inherited from the turf that was here before
+	vis_contents.Cut()
+
 	assemble_baseturfs()
 
 	levelupdate()
@@ -323,6 +326,14 @@
 
 /turf/proc/visibilityChanged()
 	GLOB.cameranet.updateVisibility(src)
+	// The cameranet usually handles this for us, but if we've just been
+	// recreated we should make sure we have the cameranet vis_contents.
+	var/datum/camerachunk/C = GLOB.cameranet.chunkGenerated(x, y, z)
+	if(C)
+		if(C.obscuredTurfs[src])
+			vis_contents += GLOB.cameranet.vis_contents
+		else
+			vis_contents -= GLOB.cameranet.vis_contents
 
 /turf/proc/burn_tile()
 
