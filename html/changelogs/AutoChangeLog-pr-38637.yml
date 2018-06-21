@@ -1,0 +1,4 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - admin: "Create antags now checks for people being on station before applying."
