@@ -22,8 +22,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 /datum/cameranet/proc/chunkGenerated(x, y, z)
 	x &= ~(CHUNK_SIZE - 1)
 	y &= ~(CHUNK_SIZE - 1)
-	var/key = "[x],[y],[z]"
-	return (chunks[key])
+	return chunks["[x],[y],[z]"]
 
 // Returns the chunk in the x, y, z.
 // If there is no chunk, it creates a new chunk and returns that.
@@ -31,10 +30,9 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	x &= ~(CHUNK_SIZE - 1)
 	y &= ~(CHUNK_SIZE - 1)
 	var/key = "[x],[y],[z]"
-	if(!chunks[key])
-		chunks[key] = new /datum/camerachunk(null, x, y, z)
-
-	return chunks[key]
+	. = chunks[key]
+	if(!.)
+		chunks[key] = . = new /datum/camerachunk(x, y, z)
 
 // Updates what the aiEye can see. It is recommended you use this when the aiEye moves or it's location is set.
 
@@ -53,7 +51,6 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 		var/mob/camera/aiEye/eye = V
 		if(C)
 			chunks_pre_seen |= eye.visibleCameraChunks
-		// 0xf = 15
 		var/static_range = eye.static_visibility_range
 		var/x1 = max(0, eye.x - static_range) & ~(CHUNK_SIZE - 1)
 		var/y1 = max(0, eye.y - static_range) & ~(CHUNK_SIZE - 1)
@@ -105,10 +102,9 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	majorChunkChange(A, 2)
 
 /datum/cameranet/proc/updateChunk(x, y, z)
-	// 0xf = 15
-	if(!chunkGenerated(x, y, z))
+	var/datum/camerachunk/chunk = chunkGenerated(x, y, z)
+	if (!chunk)
 		return
-	var/datum/camerachunk/chunk = getCameraChunk(x, y, z)
 	chunk.hasChanged()
 
 // Removes a camera from a chunk.
@@ -135,7 +131,6 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 // If you want to update the chunks around an object, without adding/removing a camera, use choice 2.
 
 /datum/cameranet/proc/majorChunkChange(atom/c, choice)
-	// 0xf = 15
 	if(!c)
 		return
 
@@ -147,8 +142,8 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 		var/y2 = min(world.maxy, T.y + (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
 		for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 			for(var/y = y1; y <= y2; y += CHUNK_SIZE)
-				if(chunkGenerated(x, y, T.z))
-					var/datum/camerachunk/chunk = getCameraChunk(x, y, T.z)
+				var/datum/camerachunk/chunk = chunkGenerated(x, y, T.z)
+				if(chunk)
 					if(choice == 0)
 						// Remove the camera.
 						chunk.cameras -= c
@@ -160,14 +155,12 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 // Will check if a mob is on a viewable turf. Returns 1 if it is, otherwise returns 0.
 
 /datum/cameranet/proc/checkCameraVis(mob/living/target)
-
-	// 0xf = 15
 	var/turf/position = get_turf(target)
 	return checkTurfVis(position)
 
 
 /datum/cameranet/proc/checkTurfVis(turf/position)
-	var/datum/camerachunk/chunk = getCameraChunk(position.x, position.y, position.z)
+	var/datum/camerachunk/chunk = chunkGenerated(position.x, position.y, position.z)
 	if(chunk)
 		if(chunk.changed)
 			chunk.hasChanged(1) // Update now, no matter if it's visible or not.
