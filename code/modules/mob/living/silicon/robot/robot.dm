@@ -93,7 +93,7 @@
 	/obj/item/clothing/head/helmet/chaplain/witchunter_hat,
 	/obj/item/clothing/head/soft/, //All baseball caps
 	/obj/item/clothing/head/that, //top hat
-	/head/collectable/tophat, //Not sure where this one is found, but it looks the same so might as well include
+	/obj/item/clothing/head/collectable/tophat, //Not sure where this one is found, but it looks the same so might as well include
 	/obj/item/clothing/mask/bandana/, //All bandanas (which only work in hat mode and are invisible otherwise)
 	/obj/item/clothing/head/fedora,
 	/obj/item/clothing/head/beanie/, //All beanies
