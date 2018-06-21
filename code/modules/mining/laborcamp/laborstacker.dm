@@ -1,4 +1,4 @@
-GLOBAL_LIST_EMPTY(labor_sheet_values)
+GLOBAL_LIST(labor_sheet_values)
 
 /**********************Prisoners' Console**************************/
 
@@ -22,15 +22,17 @@ GLOBAL_LIST_EMPTY(labor_sheet_values)
 	Radio.listening = FALSE
 	locate_stacking_machine()
 
-	if(!GLOB.labor_sheet_values.len)
+	if(!GLOB.labor_sheet_values)
 		var/sheet_list = list()
 		for(var/sheet_type in subtypesof(/obj/item/stack/sheet))
 			var/obj/item/stack/sheet/sheet = sheet_type
-			if(!initial(sheet.point_value))
+			if(!initial(sheet.point_value) || (initial(sheet.merge_type) && initial(sheet.merge_type) != sheet_type)) //ignore no-value sheets and x/fifty subtypes
 				continue
-			sheet_list[initial(sheet.name)] = initial(sheet.point_value)
-		for(var/sheet_name in sortList(sheet_list))
-			GLOB.labor_sheet_values += list(list("ore" = sheet_name, "value" = sheet_list[sheet_name]))
+			sheet_list += list(list("ore" = initial(sheet.name), "value" = initial(sheet.point_value)))
+		GLOB.labor_sheet_values = sortList(sheet_list, /proc/cmp_sheet_list)
+
+/proc/cmp_sheet_list(list/a, list/b)
+	return a["value"] - b["value"]
 
 /obj/machinery/mineral/labor_claim_console/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id/prisoner))
