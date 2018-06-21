@@ -114,6 +114,16 @@
 		else
 			to_chat(user, "<span class='notice'>There is nothing to remove from the endoskeleton.</span>")
 		src.updateicon()
+	else if(istype(W, /obj/item/screwdriver))
+		var/turf/T = get_turf(src)
+		if(istype(user.held_items[user.active_hand_index == 1 ? 2 : 1], /obj/item/stock_parts/cell))
+			if (src.chest.cell) //Sanity check.
+				src.chest.cell.forceMove(T)
+				src.chest.cell = user.held_items[user.active_hand_index == 1 ? 2 : 1]
+			if(!user.transferItemToLoc(user.held_items[user.active_hand_index == 1 ? 2 : 1], src.chest))
+				src.chest.cell = null
+				return
+			to_chat(user, "<span class='notice'>You replace the power cell.</span>")
 	else if(istype(W, /obj/item/bodypart/l_leg/robot))
 		if(src.l_leg)
 			return
