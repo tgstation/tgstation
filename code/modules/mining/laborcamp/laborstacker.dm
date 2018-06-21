@@ -1,3 +1,5 @@
+GLOBAL_LIST(labor_sheet_values)
+
 /**********************Prisoners' Console**************************/
 
 /obj/machinery/mineral/labor_claim_console
@@ -19,6 +21,18 @@
 	Radio = new/obj/item/radio(src)
 	Radio.listening = FALSE
 	locate_stacking_machine()
+
+	if(!GLOB.labor_sheet_values)
+		var/sheet_list = list()
+		for(var/sheet_type in subtypesof(/obj/item/stack/sheet))
+			var/obj/item/stack/sheet/sheet = sheet_type
+			if(!initial(sheet.point_value) || (initial(sheet.merge_type) && initial(sheet.merge_type) != sheet_type)) //ignore no-value sheets and x/fifty subtypes
+				continue
+			sheet_list += list(list("ore" = initial(sheet.name), "value" = initial(sheet.point_value)))
+		GLOB.labor_sheet_values = sortList(sheet_list, /proc/cmp_sheet_list)
+
+/proc/cmp_sheet_list(list/a, list/b)
+	return a["value"] - b["value"]
 
 /obj/machinery/mineral/labor_claim_console/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id/prisoner))
@@ -52,16 +66,10 @@
 	if(check_auth())
 		can_go_home = TRUE
 
-	var/list/ores = list()
 	if(stacking_machine)
 		data["unclaimed_points"] = stacking_machine.points
-		for(var/ore in stacking_machine.ore_values)
-			var/list/O = list()
-			O["ore"] = ore
-			O["value"] = stacking_machine.ore_values[ore]
-			ores += list(O)
 
-	data["ores"] = ores
+	data["ores"] = GLOB.labor_sheet_values
 	data["can_go_home"] = can_go_home
 
 	return data
@@ -127,15 +135,10 @@
 
 
 /obj/machinery/mineral/stacking_machine/laborstacker
-	var/points = 0 //The unclaimed value of ore stacked.  Value for each ore loosely relative to its rarity.
-	var/list/ore_values = list("glass" = 1, "metal" = 2, "reinforced glass" = 4, "gold" = 20, "silver" = 20, "uranium" = 20, "titanium" = 20, "solid plasma" = 20, "plasteel" = 23, "plasma glass" = 23, "diamond" = 25, "bluespace polycrystal" = 30, "plastitanium" = 45, "bananium" = 50)
+	var/points = 0 //The unclaimed value of ore stacked.
 
 /obj/machinery/mineral/stacking_machine/laborstacker/process_sheet(obj/item/stack/sheet/inp)
-	if(istype(inp))
-		var/n = inp.name
-		var/a = inp.amount
-		if(n in ore_values)
-			points += ore_values[n] * a
+	points += inp.point_value * inp.amount
 	..()
 
 
