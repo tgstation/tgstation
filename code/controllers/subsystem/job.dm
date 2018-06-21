@@ -349,37 +349,40 @@ SUBSYSTEM_DEF(job)
 	// Hand out random jobs to the people who didn't get any in the last check
 	// Also makes sure that they got their preference correct
 	for(var/mob/dead/new_player/player in unassigned)
-		if(PopcapReached())
-			RejectPlayer(player)
-		else if(jobban_isbanned(player, SSjob.overflow_role) || QDELETED(player))
-			GiveRandomJob(player) //you get to roll for random before everyone else just to be sure you don't get overflow. you're so speshul
-
-	for(var/mob/dead/new_player/player in unassigned)
-		if(PopcapReached())
-			RejectPlayer(player)
-		else if(player.client.prefs.joblessrole == BERANDOMJOB)
-			GiveRandomJob(player)
+		HandleUnassigned(player)
 
 	Debug("DO, Standard Check end")
 
 	Debug("DO, Running AC2")
 
-	// For those who wanted to be assistant if their preferences were filled, here you go.
-	for(var/mob/dead/new_player/player in unassigned)
-		if(PopcapReached())
-			RejectPlayer(player)
-		if(player.client.prefs.joblessrole == BEOVERFLOW)
-			Debug("AC2 Assistant located, Player: [player]")
-			AssignRole(player, SSjob.overflow_role)
-		else // For those who don't want to play if their preference were filled, back you go.
-			RejectPlayer(player)
-
+	//Mop up people who can't leave.
 	for(var/mob/dead/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
 		if(!GiveRandomJob(player))
 			AssignRole(player, SSjob.overflow_role) //If everything is already filled, make them an assistant
 
 	return 1
 
+//We couldn't find a job from prefs for this guy.
+/datum/controller/subsystem/job/proc/HandleUnassigned(mob/dead/new_player/player)
+	if(PopcapReached())
+		RejectPlayer(player)
+	else if(player.client.prefs.joblessrole == BEOVERFLOW)
+		var/allowed_to_be_a_loser = jobban_isbanned(player, SSjob.overflow_role)
+		if(QDELETED(player))
+			RejectPlayer(player)
+		if(allowed_to_be_a_loser)
+			if(!AssignRole(player, SSjob.overflow_role))
+				RejectPlayer(player)
+	else if(player.client.prefs.joblessrole == BERANDOMJOB)
+		if(!GiveRandomJob(player))
+			RejectPlayer(player)
+	else if(player.client.prefs.joblessrole == RETURNTOLOBBY)
+		RejectPlayer(player)
+	else //Something gone wrong if we got here.
+		var/message = "DO: [player] fell through handling unassigned"
+		log_game(message)
+		message_admins(message)
+		RejectPlayer(player)
 //Gives the player the stuff he should have with his rank
 /datum/controller/subsystem/job/proc/EquipRank(mob/M, rank, joined_late = FALSE)
 	var/mob/dead/new_player/N
