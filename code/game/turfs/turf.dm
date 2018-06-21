@@ -19,8 +19,6 @@
 
 	flags_1 = CAN_BE_DIRTY_1
 
-	var/image/obscured	//camerachunks
-
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
 	var/explosion_level = 0	//for preventing explosion dodging
