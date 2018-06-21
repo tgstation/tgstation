@@ -27,5 +27,9 @@
 
 	var/do_after_speed = 1 //Speed mod for do_after. Lower is better. If temporarily adjusting, please only modify using *= and /=, so you don't interrupt other calculations.
 
+	var/punchdamagelow = 0     	//Adds to the minimal damage that an unarmed attack can do for that species
+	var/punchdamagehigh = 0    	//Adds to the maximum damage that an unarmed attack can do for that species
+	var/punchstunthreshold = 0 	//Adds to the minimum value that an unarmed attack will stun at (Preferably should have the same number as punchhigh, as it means the maximum damage a punch can do WILL stun)
+
 /datum/physiology/New()
 	armor = new

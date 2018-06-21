@@ -29,6 +29,27 @@
 
 
 
+/datum/quirk/buster
+	name = "Buster"
+	desc = "You have a history of fighting unarmed, allowing you to do more raw damage with your fists. You tend to weaken less often, however."
+	value = 3
+	gain_text = "<span class='notice'>Your fists feel more dangerous.</span>"
+	lose_text = "<span class='notice'>Your fists feel less dangerous.</span>"
+
+/datum/quirk/buster/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.physiology.punchdamagelow += 1
+	H.physiology.punchdamagehigh += 6
+	H.physiology.punchstunthreshold += 6
+
+/datum/quirk/buster/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.physiology.punchdamagelow -= 1
+	H.physiology.punchdamagehigh -= 6
+	H.physiology.punchstunthreshold -= 6
+
+
+
 /datum/quirk/drunkhealing
 	name = "Drunken Resilience"
 	desc = "Nothing like a good drink to make you feel on top of the world. Whenever you're drunk, you slowly recover from injuries."
@@ -37,6 +58,7 @@
 	gain_text = "<span class='notice'>You feel like a drink would do you good.</span>"
 	lose_text = "<span class='danger'>You no longer feel like drinking would ease your pain.</span>"
 	medical_record_text = "Patient has unusually efficient liver metabolism and can slowly regenerate wounds by drinking alcoholic beverages."
+
 
 
 /datum/quirk/freerunning
