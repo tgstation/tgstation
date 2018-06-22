@@ -46,7 +46,7 @@
 	if(stat & NOPOWER)
 		return
 	if(on)
-		if(beaker)
+		if(beaker && beaker.reagents.total_volume)
 			beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 			beaker.reagents.handle_reactions()
 

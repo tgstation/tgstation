@@ -396,7 +396,7 @@
 		if(equip_delay_self)
 			return
 
-	if(M.active_storage && M.active_storage.parent && M.active_storage.parent.SendSignal(COMSIG_TRY_STORAGE_INSERT, src,M))
+	if(M.active_storage && M.active_storage.parent && SEND_SIGNAL(M.active_storage.parent, COMSIG_TRY_STORAGE_INSERT, src,M))
 		return TRUE
 
 	var/list/obj/item/possible = list(M.get_inactive_held_item(), M.get_item_by_slot(SLOT_BELT), M.get_item_by_slot(SLOT_GENERC_DEXTROUS_STORAGE), M.get_item_by_slot(SLOT_BACK))
@@ -404,7 +404,7 @@
 		if(!i)
 			continue
 		var/obj/item/I = i
-		if(I.SendSignal(COMSIG_TRY_STORAGE_INSERT, src, M))
+		if(SEND_SIGNAL(I, COMSIG_TRY_STORAGE_INSERT, src, M))
 			return TRUE
 
 	to_chat(M, "<span class='warning'>You are unable to equip that!</span>")

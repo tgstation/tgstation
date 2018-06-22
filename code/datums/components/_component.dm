@@ -3,7 +3,6 @@
 	var/dupe_mode = COMPONENT_DUPE_HIGHLANDER
 	var/dupe_type
 	var/list/signal_procs
-	var/report_signal_origin = FALSE
 	var/datum/parent
 
 /datum/component/New(datum/P, ...)
@@ -57,8 +56,9 @@
 	if(!force)
 		_RemoveFromParent()
 	if(!silent)
-		P.SendSignal(COMSIG_COMPONENT_REMOVING, src)
+		SEND_SIGNAL(P, COMSIG_COMPONENT_REMOVING, src)
 	parent = null
+	SSdcs.UnregisterSignal(src, signal_procs)
 	LAZYCLEARLIST(signal_procs)
 	return ..()
 
@@ -86,18 +86,26 @@
 		procs = list()
 		signal_procs = procs
 
+	if(!istype(proc_or_callback, /datum/callback)) //if it wasnt a callback before, it is now
+		proc_or_callback = CALLBACK(src, proc_or_callback)
+
 	var/list/sig_types = islist(sig_type_or_types) ? sig_type_or_types : list(sig_type_or_types)
 	for(var/sig_type in sig_types)
-		if(!override)
-			. = procs[sig_type]
-			if(.)
-				stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
+		if(!override && procs[sig_type])
+			stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
 
-		if(!istype(proc_or_callback, /datum/callback)) //if it wasnt a callback before, it is now
-			proc_or_callback = CALLBACK(src, proc_or_callback)
+		if(sig_type[1] == "!")
+			SSdcs.RegisterSignal(src, sig_type)
+		
 		procs[sig_type] = proc_or_callback
 
 	enabled = TRUE
+
+/datum/component/proc/HasSignal(sig_type)
+	return signal_procs[sig_type] != null
+
+/datum/component/proc/UnregisterSignal(sig_type_or_types)
+	signal_procs -= sig_type_or_types
 
 /datum/component/proc/InheritComponent(datum/component/C, i_am_original)
 	return
@@ -117,12 +125,8 @@
 		current_type = type2parent(current_type)
 		. += current_type
 
-/datum/proc/SendSignal(sigtype, ...)
-	var/list/comps = datum_components
-	if(!comps)
-		return NONE
-	var/list/arguments = args.Copy(2)
-	var/target = comps[/datum/component]
+/datum/proc/_SendSignal(sigtype, list/arguments)
+	var/target = datum_components[/datum/component]
 	if(!length(target))
 		var/datum/component/C = target
 		if(!C.enabled)
@@ -130,8 +134,6 @@
 		var/datum/callback/CB = C.signal_procs[sigtype]
 		if(!CB)
 			return NONE
-		if(initial(C.report_signal_origin))
-			arguments = list(sigtype) + arguments
 		return CB.InvokeAsync(arglist(arguments))
 	. = NONE
 	for(var/I in target)
@@ -141,10 +143,7 @@
 		var/datum/callback/CB = C.signal_procs[sigtype]
 		if(!CB)
 			continue
-		if(initial(C.report_signal_origin))
-			. |= CB.InvokeAsync(arglist(list(sigtype) + arguments))
-		else
-			. |= CB.InvokeAsync(arglist(arguments))
+		. |= CB.InvokeAsync(arglist(arguments))
 
 /datum/proc/GetComponent(c_type)
 	var/list/dc = datum_components
@@ -225,7 +224,7 @@
 		new_comp = new nt(arglist(args)) // Dupes are allowed, act like normal
 
 	if(!old_comp && !QDELETED(new_comp)) // Nothing related to duplicate components happened and the new component is healthy
-		SendSignal(COMSIG_COMPONENT_ADDED, new_comp)
+		SEND_SIGNAL(src, COMSIG_COMPONENT_ADDED, new_comp)
 		return new_comp
 	return old_comp
 
@@ -240,7 +239,7 @@
 	var/datum/old_parent = parent
 	PreTransfer()
 	_RemoveFromParent()
-	old_parent.SendSignal(COMSIG_COMPONENT_REMOVING, src)
+	SEND_SIGNAL(old_parent, COMSIG_COMPONENT_REMOVING, src)
 
 /datum/proc/TakeComponent(datum/component/target)
 	if(!target)

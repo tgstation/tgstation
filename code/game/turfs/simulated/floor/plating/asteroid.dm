@@ -2,6 +2,7 @@
 /**********************Asteroid**************************/
 
 /turf/open/floor/plating/asteroid //floor piece
+	gender = PLURAL
 	name = "asteroid sand"
 	baseturfs = /turf/open/floor/plating/asteroid
 	icon = 'icons/turf/floors.dmi'
@@ -21,10 +22,6 @@
 	if(prob(floor_variance))
 		icon_state = "[environment_type][rand(0,12)]"
 
-	if(LAZYLEN(archdrops))
-		AddComponent(/datum/component/archaeology, archdrops)
-
-
 /turf/open/floor/plating/asteroid/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
 
@@ -42,7 +39,7 @@
 		return TRUE
 	if(istype(W, /obj/item/storage/bag/ore))
 		for(var/obj/item/stack/ore/O in src)
-			W.SendSignal(COMSIG_PARENT_ATTACKBY, O)
+			SEND_SIGNAL(W, COMSIG_PARENT_ATTACKBY, O)
 
 /turf/open/floor/plating/asteroid/singularity_act()
 	if(is_planet_level(z))
@@ -50,7 +47,7 @@
 	ScrapeAway()
 
 /turf/open/floor/plating/asteroid/ex_act(severity, target)
-	. = SendSignal(COMSIG_ATOM_EX_ACT, severity, target)
+	. = SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)
 	contents_explosion(severity, target)
 
 /turf/open/floor/plating/lavaland_baseturf
@@ -266,6 +263,7 @@
 
 
 /turf/open/floor/plating/asteroid/snow
+	gender = PLURAL
 	name = "snow"
 	desc = "Looks cold."
 	icon = 'icons/turf/snow.dmi'
@@ -292,7 +290,7 @@
 	return FALSE
 
 /turf/open/floor/plating/asteroid/snow/ice
-	name = "icey snow"
+	name = "icy snow"
 	desc = "Looks colder."
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
 	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120"

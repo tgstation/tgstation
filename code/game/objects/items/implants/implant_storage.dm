@@ -6,7 +6,7 @@
 	var/max_slot_stacking = 4
 
 /obj/item/implant/storage/activate()
-	SendSignal(COMSIG_TRY_STORAGE_SHOW, imp_in, TRUE)
+	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SHOW, imp_in, TRUE)
 
 /obj/item/implant/storage/removed(source, silent = FALSE, special = 0)
 	. = ..()

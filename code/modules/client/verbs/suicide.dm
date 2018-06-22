@@ -19,7 +19,7 @@
 				if(damagetype & SHAME)
 					adjustStaminaLoss(200)
 					suiciding = FALSE
-					SendSignal(COMSIG_ADD_MOOD_EVENT, "shameful_suicide", /datum/mood_event/shameful_suicide)
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "shameful_suicide", /datum/mood_event/shameful_suicide)
 					return
 
 				suicide_log()

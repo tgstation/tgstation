@@ -358,7 +358,7 @@
 		var/hasFound = FALSE //Have we found an extract to be added?
 		for(var/obj/item/slime_extract/S in P.contents)
 			if(S.effectmod == effectmod)
-				P.SendSignal(COMSIG_TRY_STORAGE_TAKE, S, get_turf(src), TRUE)
+				SEND_SIGNAL(P, COMSIG_TRY_STORAGE_TAKE, S, get_turf(src), TRUE)
 				qdel(S)
 				applied++
 				hasFound = TRUE

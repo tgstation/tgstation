@@ -306,7 +306,7 @@
 				else if(istype(O, /obj/item/seeds) && !istype(O, /obj/item/seeds/sample))
 					if(!TR.myseed)
 						if(istype(O, /obj/item/seeds/kudzu))
-							investigate_log("had Kudzu planted in it by [acting_object] at ([x],[y],[z])","kudzu")
+							investigate_log("had Kudzu planted in it by [acting_object] at [AREACOORD(src)]","kudzu")
 						acting_object.visible_message("<span class='notice'>[acting_object] plants [O].</span>")
 						TR.dead = 0
 						TR.myseed = O
@@ -367,7 +367,7 @@
 	var/atom/movable/acting_object = get_object()
 	var/turf/T = get_turf(acting_object)
 	var/obj/item/AM = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
-	if(AM)
+	if(!QDELETED(AM) && !istype(AM, /obj/item/electronic_assembly))
 		var/mode = get_pin_data(IC_INPUT, 2)
 		if(mode == 1)
 			if(check_target(AM))

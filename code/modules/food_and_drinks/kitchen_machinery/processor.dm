@@ -60,7 +60,7 @@
 		for(var/obj/item/reagent_containers/food/snacks/S in T.contents)
 			var/datum/food_processor_process/P = select_recipe(S)
 			if(P)
-				if(T.SendSignal(COMSIG_TRY_STORAGE_TAKE, S, src))
+				if(SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src))
 					loaded++
 
 		if(loaded)

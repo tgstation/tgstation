@@ -93,8 +93,8 @@
 					/obj/item/flashlight,
 					/obj/item/tank/internals/oxygen/red,
 					/obj/item/tank/internals/oxygen/red,
-					/obj/item/extinguisher,
-					/obj/item/extinguisher,
+					/obj/item/extinguisher/advanced,
+					/obj/item/extinguisher/advanced,
 					/obj/item/clothing/head/hardhat/red,
 					/obj/item/clothing/head/hardhat/red)
 	crate_name = "firefighting crate"
@@ -991,6 +991,14 @@
 	crate_name = "water tank crate"
 	crate_type = /obj/structure/closet/crate/large
 
+/datum/supply_pack/materials/foamtank
+	name = "Foam Tank Crate"
+	desc = "Contains plasmamen's bane."
+	cost = 1500
+	contains = list(/obj/structure/reagent_dispensers/foamtank)
+	crate_name = "foam tank crate"
+	crate_type = /obj/structure/closet/crate/large
+
 /datum/supply_pack/materials/hightank
 	name = "Large Water Tank Crate"
 	desc = "Contains a high-capacity water tank. Useful for botany or other service jobs."
@@ -1117,24 +1125,24 @@
 	desc = "Contains refills for medical vending machines."
 	cost = 2000
 	contains = list(/obj/item/vending_refill/medical,
-					/obj/item/vending_refill/medical,
-					/obj/item/vending_refill/medical)
+					/obj/item/vending_refill/wallmed)
 	crate_name = "medical vending crate"
 
 /datum/supply_pack/medical/virus
 	name = "Virus Crate"
-	desc = "Contains twelve different bottles, each filled with a different chemical compound, each useful for virology. Also includes seven beakers and syringes. Balled-up jeans not included. Requires CMO access to open."
+	desc = "Contains twelve different bottles, containing several viral samples for virology research. Also includes seven beakers and syringes. Balled-up jeans not included. Requires CMO access to open."
 	cost = 2500
 	access = ACCESS_CMO
 	contains = list(/obj/item/reagent_containers/glass/bottle/flu_virion,
 					/obj/item/reagent_containers/glass/bottle/cold,
-					/obj/item/reagent_containers/glass/bottle/epiglottis_virion,
-					/obj/item/reagent_containers/glass/bottle/liver_enhance_virion,
+					/obj/item/reagent_containers/glass/bottle/random_virus,
+					/obj/item/reagent_containers/glass/bottle/random_virus,
+					/obj/item/reagent_containers/glass/bottle/random_virus,
+					/obj/item/reagent_containers/glass/bottle/random_virus,
 					/obj/item/reagent_containers/glass/bottle/fake_gbs,
 					/obj/item/reagent_containers/glass/bottle/magnitis,
 					/obj/item/reagent_containers/glass/bottle/pierrot_throat,
 					/obj/item/reagent_containers/glass/bottle/brainrot,
-					/obj/item/reagent_containers/glass/bottle/hallucigen_virion,
 					/obj/item/reagent_containers/glass/bottle/anxiety,
 					/obj/item/reagent_containers/glass/bottle/beesease,
 					/obj/item/storage/box/syringes,
@@ -1350,53 +1358,41 @@
 
 /datum/supply_pack/service/vending/bartending
 	name = "Bartending Supply Crate"
-	desc = "Bring on the booze with six vending machine refills, as well as a free book containing the well-kept secrets to the bartending trade!"
+	desc = "Bring on the booze with vending machine refills, as well as a free book containing the well-kept secrets to the bartending trade!"
 	cost = 2000
 	contains = list(/obj/item/vending_refill/boozeomat,
-					/obj/item/vending_refill/boozeomat,
-					/obj/item/vending_refill/boozeomat,
-					/obj/item/vending_refill/coffee,
-					/obj/item/vending_refill/coffee,
 					/obj/item/vending_refill/coffee,
 					/obj/item/book/granter/action/drink_fling)
 	crate_name = "bartending supply crate"
 
 /datum/supply_pack/service/vending/cigarette
 	name = "Cigarette Supply Crate"
-	desc = "Don't believe the reports - smoke today! Contains cigarette vending machine refills."
+	desc = "Don't believe the reports - smoke today! Contains a cigarette vending machine refill."
 	cost = 1500
-	contains = list(/obj/item/vending_refill/cigarette,
-					/obj/item/vending_refill/cigarette,
-					/obj/item/vending_refill/cigarette)
+	contains = list(/obj/item/vending_refill/cigarette)
 	crate_name = "cigarette supply crate"
 	crate_type = /obj/structure/closet/crate
 
 /datum/supply_pack/service/vending/games
 	name = "Games Supply Crate"
-	desc = "Get your game on with these three game vending machine refills."
+	desc = "Get your game on with this game vending machine refill."
 	cost = 1000
-	contains = list(/obj/item/vending_refill/games,
-					/obj/item/vending_refill/games,
-					/obj/item/vending_refill/games)
+	contains = list(/obj/item/vending_refill/games)
 	crate_name = "games supply crate"
 	crate_type = /obj/structure/closet/crate
 
 /datum/supply_pack/service/vending/snack
 	name = "Snack Supply Crate"
-	desc = "Three vending machine refills of cavity-bringin' goodness! The number one dentist recommended order!"
+	desc = "One vending machine refill of cavity-bringin' goodness! The number one dentist recommended order!"
 	cost = 1500
-	contains = list(/obj/item/vending_refill/snack,
-					/obj/item/vending_refill/snack,
-					/obj/item/vending_refill/snack)
+	contains = list(/obj/item/vending_refill/snack)
 	crate_name = "snacks supply crate"
 
 /datum/supply_pack/service/vending/cola
 	name = "Softdrinks Supply Crate"
-	desc = "Got whacked by a toolbox, but you still have those pesky teeth? Get rid of those pearly whites with these three soda machine refills, today!"
+	desc = "Got whacked by a toolbox, but you still have those pesky teeth? Get rid of those pearly whites with this soda machine refill, today!"
 	cost = 1500
-	contains = list(/obj/item/vending_refill/cola,
-					/obj/item/vending_refill/cola,
-					/obj/item/vending_refill/cola)
+	contains = list(/obj/item/vending_refill/cola)
 	crate_name = "soft drinks supply crate"
 
 //////////////////////////////////////////////////////////////////////////////
@@ -1729,14 +1725,26 @@
 
 /datum/supply_pack/costumes_toys/randomised/contraband
 	name = "Contraband Crate"
-	desc = "Psst.. bud... want some contraband? I can get you a poster, some nice cigs, bling, even some ambrosia deus...you know, the good stuff. Just keep it away from the cops, kay?"
+	desc = "Psst.. bud... want some contraband? I can get you a poster, some nice cigs, dank, even some sponsored items...you know, the good stuff. Just keep it away from the cops, kay?"
 	contraband = TRUE
 	cost = 3000
-	num_contained = 5
+	num_contained = 7
 	contains = list(/obj/item/poster/random_contraband,
+					/obj/item/poster/random_contraband,
+					/obj/item/reagent_containers/food/snacks/grown/cannabis,
+					/obj/item/reagent_containers/food/snacks/grown/cannabis/rainbow,
+					/obj/item/reagent_containers/food/snacks/grown/cannabis/white,
+					/obj/item/storage/pill_bottle/zoom,
+					/obj/item/storage/pill_bottle/happy,
+					/obj/item/storage/pill_bottle/lsd,
+					/obj/item/storage/pill_bottle/aranesp,
+					/obj/item/storage/pill_bottle/stimulant,
+					/obj/item/toy/cards/deck/syndicate,				
+					/obj/item/reagent_containers/food/drinks/bottle/absinthe,
+					/obj/item/clothing/under/syndicate/tacticool,
+					/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
 					/obj/item/storage/fancy/cigarettes/cigpack_shadyjims,
-					/obj/item/storage/fancy/cigarettes/cigpack_midori,
-					/obj/item/seeds/ambrosia/deus,
+					/obj/item/clothing/mask/gas/syndicate,
 					/obj/item/clothing/neck/necklace/dope)
 	crate_name = "crate"
 
@@ -1928,10 +1936,9 @@
 
 /datum/supply_pack/costumes_toys/wardrobes/autodrobe
 	name = "Autodrobe Supply Crate"
-	desc = "Autodrobe missing your favorite dress? Solve that issue today with these two autodrobe refills."
+	desc = "Autodrobe missing your favorite dress? Solve that issue today with this autodrobe refill."
 	cost = 1500
-	contains = list(/obj/item/vending_refill/autodrobe,
-					/obj/item/vending_refill/autodrobe)
+	contains = list(/obj/item/vending_refill/autodrobe)
 	crate_name = "autodrobe supply crate"
 
 /datum/supply_pack/costumes_toys/wardrobes/cargo
