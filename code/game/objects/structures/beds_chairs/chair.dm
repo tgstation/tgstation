@@ -195,7 +195,7 @@
 /obj/structure/chair/shuttle
 	name = "shuttle seat"
 	desc = "A comfortable, secure seat. It has a more sturdy looking buckling system, for smoother flights."
-	icon_state = "shuttle_chair"
+	icon_state = "shuttle_chair" //thanks gannets!
 
 /obj/structure/chair/office
 	anchored = FALSE
