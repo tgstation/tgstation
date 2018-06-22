@@ -22,6 +22,10 @@
 	//Nanites without hosts are non-interactive through normal means
 	if(isliving(parent))
 		host_mob = parent
+
+		if(!(MOB_ORGANIC in host_mob.mob_biotypes) && !(MOB_UNDEAD in host_mob.mob_biotypes)) //Shouldn't happen, but this avoids HUD runtimes in case a silicon gets them somehow.
+			qdel(src)
+
 		host_mob.hud_set_nanite_indicator()
 		START_PROCESSING(SSprocessing, src)
 		RegisterSignal(COMSIG_ATOM_EMP_ACT, .proc/on_emp)
@@ -47,6 +51,8 @@
 	if(nanite_volume <= 0) //oops we ran out
 		qdel(src)
 	if(host_mob)
+		if(!(MOB_ORGANIC in host_mob.mob_biotypes) && !(MOB_UNDEAD in host_mob.mob_biotypes))
+			qdel(src) //bodytype no longer sustains nanites
 		adjust_nanites(regen_rate)
 		for(var/X in programs)
 			var/datum/nanite_program/NP = X

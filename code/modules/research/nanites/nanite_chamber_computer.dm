@@ -80,6 +80,12 @@
 		data["status_msg"] = "No occupant detected."
 		return data
 
+	var/mob/living/L = chamber.occupant
+
+	if(!(MOB_ORGANIC in L.mob_biotypes) && !(MOB_UNDEAD in L.mob_biotypes))
+		data["status_msg"] = "Occupant not compatible with nanites."
+		return data
+
 	if(chamber.busy)
 		data["status_msg"] = chamber.busy_message
 		return data
