@@ -91,7 +91,7 @@
 /obj/item/melee/sabre/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is trying to cut off all [user.p_their()] limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!</span>")
 	var/list/bodyparts = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	for(var/i = 1 to 4)
+	for(var/i in 1 to 4)
 		addtimer(CALLBACK(src, .proc/suicide_dismember, user, pick_n_take(bodyparts)), 10 * i)
 	addtimer(CALLBACK(src, .proc/manual_suicide, user), 50)
 	return MANUAL_SUICIDE
@@ -99,14 +99,14 @@
 /obj/item/melee/sabre/proc/suicide_dismember(mob/living/user, zone)
 	var/obj/item/bodypart/affecting = user.get_bodypart(zone)
 	if(affecting && affecting.dismemberable)
+		playsound(user, 'sound/weapons/rapierhit.ogg', 25, 1)
 		affecting.dismember(BRUTE)
 		user.adjustBruteLoss(20)
-	playsound(user, 'sound/weapons/rapierhit.ogg', 25, 1)
 
 /obj/item/melee/sabre/proc/manual_suicide(mob/living/user)
 	playsound(user, 'sound/weapons/rapierhit.ogg', 25, 1)
 	user.adjustBruteLoss(200)
-	user.death(0)
+	user.death(FALSE)
 
 /obj/item/melee/classic_baton
 	name = "police baton"
