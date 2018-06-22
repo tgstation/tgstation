@@ -252,7 +252,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(SHUTTLE_STRANDED)
 			to_chat(user, "The emergency shuttle has been disabled by CentCom.")
 			return
-
+	call_reason = ph2up(call_reason) // https://youtu.be/-Bu654lDuBk
 	call_reason = trim(html_encode(call_reason))
 
 	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH && seclevel2num(get_security_level()) > SEC_LEVEL_GREEN)

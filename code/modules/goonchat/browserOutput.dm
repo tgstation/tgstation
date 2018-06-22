@@ -203,6 +203,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	message = replacetext(message, "\proper", "")
 	message = replacetext(message, "\n", "<br>")
 	message = replacetext(message, "\t", "[GLOB.TAB][GLOB.TAB]")
+	message = up2ph(message)
 
 	for(var/I in targets)
 		//Grab us a client if possible
@@ -212,7 +213,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 			continue
 
 		//Send it to the old style output window.
-		SEND_TEXT(C, original_message)
+		SEND_TEXT(C, ph_to_pb(original_message))
 
 		if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
 			continue
