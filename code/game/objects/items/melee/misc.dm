@@ -102,6 +102,7 @@
 	var/obj/item/bodypart/affecting = user.get_bodypart(zone)
 	if(affecting && affecting.dismemberable)
 		affecting.dismember(BRUTE)
+		user.adjustBruteLoss(20)
 	playsound(user, 'sound/weapons/rapierhit.ogg', 25, 1)
 
 /obj/item/melee/sabre/proc/manual_suicide(mob/living/user)
