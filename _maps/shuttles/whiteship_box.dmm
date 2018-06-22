@@ -137,7 +137,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aJ" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
@@ -179,7 +179,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aS" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 4
 	},
 /obj/effect/decal/remains/human,
@@ -232,7 +232,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bd" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bf" = (

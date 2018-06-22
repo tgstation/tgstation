@@ -4,7 +4,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/assault_pod)
 "c" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -45,20 +45,20 @@
 /turf/open/floor/plating,
 /area/shuttle/assault_pod)
 "D" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/structure/chair/shuttle,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/assault_pod)
 "H" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/assault_pod)
 "L" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /obj/machinery/light,

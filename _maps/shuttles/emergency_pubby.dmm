@@ -222,7 +222,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aJ" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/structure/chair/shuttle,
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 9
 	},
@@ -235,7 +235,7 @@
 /turf/open/floor/plasteel/darkgreen/side,
 /area/shuttle/escape)
 "aL" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/structure/chair/shuttle,
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 5
 	},
@@ -253,7 +253,7 @@
 	},
 /area/shuttle/escape)
 "aO" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /obj/structure/window/reinforced,
@@ -262,14 +262,14 @@
 	},
 /area/shuttle/escape)
 "aP" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/darkpurple/side,
 /area/shuttle/escape)
 "aQ" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /obj/structure/window/reinforced,
@@ -283,7 +283,7 @@
 	},
 /area/shuttle/escape)
 "aS" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkpurple/side{
@@ -291,7 +291,7 @@
 	},
 /area/shuttle/escape)
 "aT" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/structure/chair/shuttle,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -300,7 +300,7 @@
 	},
 /area/shuttle/escape)
 "aU" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkpurple/side{
@@ -328,7 +328,7 @@
 /turf/open/floor/plasteel/cmo,
 /area/shuttle/escape)
 "aY" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /obj/machinery/light,
@@ -370,7 +370,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/shuttle/escape)
 "be" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/structure/chair/shuttle,
 /turf/open/floor/plasteel/cmo,
 /area/shuttle/escape)
 "bf" = (
@@ -424,7 +424,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bo" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/structure/chair/shuttle,
 /obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 2
@@ -432,7 +432,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bq" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -466,13 +466,13 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bw" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bx" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/brig,
@@ -518,7 +518,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bG" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /obj/machinery/light,
