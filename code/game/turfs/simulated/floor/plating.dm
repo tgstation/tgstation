@@ -89,6 +89,10 @@
 
 	return TRUE
 
+/turf/open/floor/plating/wrench_act(mob/living/user, obj/item/I)
+	if((broken || burnt) && user.has_trait(TRAIT_HANDY)) //only if it needs repairing, just in case
+		return welder_act(user, I)
+
 /turf/open/floor/plating/make_plating()
 	return
 

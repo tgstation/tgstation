@@ -48,6 +48,22 @@
 	lose_text = "<span class='danger'>You feel clumsy again.</span>"
 
 
+/datum/quirk/handy
+	name = "Handy"
+	desc = "You're the master of jury rigging! You can repair simple structures using your trusty old wrench instead of a welding tool."
+	value = 1
+	mob_trait = TRAIT_HANDY
+	gain_text = "<span class='notice'>You feel like you could repair anything with just a wrench!</span>"
+	lose_text = "<span class='danger'>You don't feel confident in your repairing skills.</span>"
+
+/datum/quirk/handy/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/wrench/wrench = new(get_turf(H))
+	H.put_in_hands(wrench)
+	H.equip_to_slot(wrench, SLOT_IN_BACKPACK)
+	H.regenerate_icons()
+	wrench.name = "well-worn wrench"
+	wrench.desc += " There's a tag on the side with [quirk_holder.real_name] written on it."
 
 /datum/quirk/jolly
 	name = "Jolly"

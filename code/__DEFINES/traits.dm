@@ -63,6 +63,7 @@
 #define TRAIT_POOR_AIM			"poor_aim"
 #define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
 #define	TRAIT_DRUNK_HEALING		"drunk_healing"
+#define	TRAIT_HANDY				"handy"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
