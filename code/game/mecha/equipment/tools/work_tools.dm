@@ -115,6 +115,7 @@
 			M.updatehealth()
 			target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury.</span>", \
 								"<span class='userdanger'>[chassis] destroys [target] in an unholy fury.</span>")
+
 			add_logs(chassis.occupant, M, "attacked", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
 		else if(chassis.occupant.a_intent == INTENT_DISARM)
 			target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off.</span>", \
