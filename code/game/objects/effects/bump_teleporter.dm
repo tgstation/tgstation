@@ -11,8 +11,8 @@
 
 	var/static/list/AllTeleporters
 
-/obj/effect/bump_teleporter/New()
-	..()
+/obj/effect/bump_teleporter/Initialize()
+	. = ..()
 	LAZYADD(AllTeleporters, src)
 
 /obj/effect/bump_teleporter/Destroy()
