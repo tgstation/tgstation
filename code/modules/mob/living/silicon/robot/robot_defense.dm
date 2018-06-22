@@ -4,7 +4,7 @@
 			if(I.flags_inv > 0)
 				to_chat(user, "<span class='warning'>Re-tie the bandana into a hat first.</span>")
 				return
-		else if (I.type == /obj/item/clothing/ears/headphones && I.item_state == "headphones_off")
+		else if (istype(I, /obj/item/clothing/ears/headphones) && I.item_state == "headphones_off")
 			to_chat(user, "<span class='warning'>[src] would probably appreciate you turning the headphones on first!</span>")
 			return
 		to_chat(user, "<span class='notice'>You begin to place [I] on [src]'s head...</span>")
