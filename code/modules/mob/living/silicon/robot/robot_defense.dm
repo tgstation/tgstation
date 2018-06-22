@@ -1,6 +1,6 @@
 /mob/living/silicon/robot/attackby(obj/item/I, mob/living/user)
 	if(hat_offset != INFINITY && user.a_intent == INTENT_HELP && is_type_in_typecache(I, equippable_hats))
-		if (I.type == /obj/item/clothing/mask/bandana || I.parent_type == /obj/item/clothing/mask/bandana)
+		if (istype(I, /obj/item/clothing/mask/bandana))
 			if(I.flags_inv > 0)
 				to_chat(user, "<span class='warning'>Re-tie the bandana into a hat first.</span>")
 				return
