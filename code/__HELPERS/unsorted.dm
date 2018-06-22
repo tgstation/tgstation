@@ -375,6 +375,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/client/C
 	var/key
 	var/ckey
+	var/fallback_name
 
 	if(!whom)
 		return "*null*"
@@ -402,6 +403,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 			M = mind.current
 			if(M.client)
 				C = M.client
+		else
+			fallback_name = mind.name
 	else
 		return "*invalid*"
 
@@ -432,6 +435,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 			. += "/([M.real_name])"
 		else if(M.name)
 			. += "/([M.name])"
+		else if(fallback_name)
+			. += "/([fallback_name])"
 
 	return .
 
