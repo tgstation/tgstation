@@ -394,6 +394,14 @@ Turf and target are separate in case you want to teleport some distance from a t
 		C = GLOB.directory[ckey]
 		if(C)
 			M = C.mob
+	else if(istype(whom,/datum/mind))
+		var/datum/mind/mind = whom
+		key = mind.key
+		ckey = ckey(key)
+		if(mind.current)
+			M = mind.current
+			if(M.client)
+				C = M.client
 	else
 		return "*invalid*"
 
