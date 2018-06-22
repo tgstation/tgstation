@@ -430,11 +430,12 @@ Turf and target are separate in case you want to teleport some distance from a t
 	else
 		. += "*no key*"
 
-	if(include_name && M)
-		if(M.real_name)
-			. += "/([M.real_name])"
-		else if(M.name)
-			. += "/([M.name])"
+	if(include_name)
+		if(M)
+			if(M.real_name)
+				. += "/([M.real_name])"
+			else if(M.name)
+				. += "/([M.name])"
 		else if(fallback_name)
 			. += "/([fallback_name])"
 
