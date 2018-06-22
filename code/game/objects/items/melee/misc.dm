@@ -89,7 +89,7 @@
 		playsound(B, 'sound/items/sheath.ogg', 25, 1)
 
 /obj/item/melee/sabre/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is trying to cut off all their limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] is trying to cut off all [user.p_their()] limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!</span>")
 	var/list/bodyparts = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	for(var/i = 1 to 4)
 		var/picked = pick(bodyparts)
