@@ -1,0 +1,6 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - rscadd: "Blast cannons have been fixed and are now available for purchase by traitorous scientists for a low low price of 14TC."
+  - rscadd: "Blast cannons take the explosive power of a TTV bomb and ejects a linear projectile that will apply what the bomb would do to a certain tile at that distance to that tile. However, this will not cause breaches, or gib mobs, unless the gods (admins) so will it.
+experimental: Blast cannons do not respect maxcap. (Unless the admins so will it.)"

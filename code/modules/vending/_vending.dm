@@ -1,7 +1,3 @@
-#define STANDARD_CHARGE 1
-#define CONTRABAND_CHARGE 2
-#define COIN_CHARGE 3
-
 /*
  * Vending machine types - Can be found under /code/modules/vending/
  */
@@ -21,7 +17,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 */
 
 /datum/data/vending_product
-	var/product_name = "generic"
+	name = "generic"
 	var/product_path = null
 	var/amount = 0
 	var/max_amount = 0
@@ -74,7 +70,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/dish_quants = list()  //used by the snack machine's custom compartment to count dishes.
 
 	var/obj/item/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
-	var/refill_count = 3		//The number of canisters the vending machine uses
 
 /obj/machinery/vending/Initialize()
 	var/build_inv = FALSE
@@ -84,9 +79,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	. = ..()
 	wires = new /datum/wires/vending(src)
 	if(build_inv) //non-constructable vending machine
-		build_inventory(products)
-		build_inventory(contraband, 1)
-		build_inventory(premium, 0, 1)
+		build_inventory(products, product_records)
+		build_inventory(contraband, hidden_records)
+		build_inventory(premium, coin_records)
 
 	slogan_list = splittext(product_slogans, ";")
 	// So not all machines speak at the exact same time.
@@ -102,17 +97,17 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	return ..()
 
 /obj/machinery/vending/RefreshParts()         //Better would be to make constructable child
-	if(component_parts)
-		product_records = list()
-		hidden_records = list()
-		coin_records = list()
-		build_inventory(products, start_empty = 1)
-		build_inventory(contraband, 1, start_empty = 1)
-		build_inventory(premium, 0, 1, start_empty = 1)
-		for(var/obj/item/vending_refill/VR in component_parts)
-			refill_inventory(VR, product_records, STANDARD_CHARGE)
-			refill_inventory(VR, coin_records, COIN_CHARGE)
-			refill_inventory(VR, hidden_records, CONTRABAND_CHARGE)
+	if(!component_parts)
+		return
+
+	product_records = list()
+	hidden_records = list()
+	coin_records = list()
+	build_inventory(products, product_records, start_empty = TRUE)
+	build_inventory(contraband, hidden_records, start_empty = TRUE)
+	build_inventory(premium, coin_records, start_empty = TRUE)
+	for(var/obj/item/vending_refill/VR in component_parts)
+		restock(VR)
 
 /obj/machinery/vending/deconstruct(disassembled = TRUE)
 	if(!refill_canister) //the non constructable vendors drop metal instead of a machine frame.
@@ -124,25 +119,33 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 /obj/machinery/vending/obj_break(damage_flag)
 	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
-		var/dump_amount = 0
-		for(var/datum/data/vending_product/R in product_records)
-			if(R.amount <= 0) //Try to use a record that actually has something to dump.
-				continue
-			var/dump_path = R.product_path
-			if(!dump_path)
-				continue
-
-			while(R.amount>0)
-				var/obj/O = new dump_path(loc)
-				step(O, pick(GLOB.alldirs)) 	//we only drop 20% of the total of each products and spread it
-				R.amount -= 5  			//around to not fill the turf with too many objects.
-				dump_amount++
-			if(dump_amount > 15) //so we don't drop too many items (e.g. ClothesMate)
-				break
 		stat |= BROKEN
 		icon_state = "[initial(icon_state)]-broken"
 
-/obj/machinery/vending/proc/build_inventory(list/productlist, hidden=0, req_coin=0, start_empty = null)
+		var/dump_amount = 0
+		var/found_anything = TRUE
+		while (found_anything)
+			found_anything = FALSE
+			for(var/record in shuffle(product_records))
+				var/datum/data/vending_product/R = record
+				if(R.amount <= 0) //Try to use a record that actually has something to dump.
+					continue
+				var/dump_path = R.product_path
+				if(!dump_path)
+					continue
+				R.amount--
+				// busting open a vendor will destroy some of the contents
+				if(found_anything && prob(80))
+					continue
+
+				var/obj/O = new dump_path(loc)
+				step(O, pick(GLOB.alldirs))
+				found_anything = TRUE
+				dump_amount++
+				if (dump_amount >= 16)
+					return
+
+/obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, start_empty = FALSE)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
 		if(isnull(amount))
@@ -150,47 +153,54 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 		var/atom/temp = typepath
 		var/datum/data/vending_product/R = new /datum/data/vending_product()
-		R.product_name = initial(temp.name)
+		R.name = initial(temp.name)
 		R.product_path = typepath
 		if(!start_empty)
 			R.amount = amount
 		R.max_amount = amount
-		R.display_color = pick("red","blue","green")
+		R.display_color = pick("#ff8080","#80ff80","#8080ff")
+		recordlist += R
 
-		if(hidden)
-			hidden_records += R
-		else if(req_coin)
-			coin_records += R
-		else
-			product_records += R
+/obj/machinery/vending/proc/restock(obj/item/vending_refill/canister)
+	if (!canister.products)
+		canister.products = products.Copy()
+	if (!canister.contraband)
+		canister.contraband = contraband.Copy()
+	if (!canister.premium)
+		canister.premium = premium.Copy()
+	. = 0
+	. += refill_inventory(canister.products, product_records)
+	. += refill_inventory(canister.contraband, hidden_records)
+	. += refill_inventory(canister.premium, coin_records)
 
-/obj/machinery/vending/proc/refill_inventory(obj/item/vending_refill/refill, datum/data/vending_product/machine, var/charge_type = STANDARD_CHARGE)
-	var/total = 0
-	var/to_restock = 0
+/obj/machinery/vending/proc/refill_inventory(list/productlist, list/recordlist)
+	. = 0
+	for(var/R in recordlist)
+		var/datum/data/vending_product/record = R
+		var/diff = min(record.max_amount - record.amount, productlist[record.product_path])
+		if (diff)
+			productlist[record.product_path] -= diff
+			record.amount += diff
+			. += diff
 
-	for(var/datum/data/vending_product/machine_content in machine)
-		if(machine_content.amount == 0 && refill.charges[charge_type] > 0)
-			machine_content.amount++
-			refill.charges[charge_type]--
-			total++
-		to_restock += machine_content.max_amount - machine_content.amount
-	if(to_restock <= refill.charges[charge_type])
-		for(var/datum/data/vending_product/machine_content in machine)
-			machine_content.amount = machine_content.max_amount
-		refill.charges[charge_type] -= to_restock
-		total += to_restock
-	else
-		var/tmp_charges = refill.charges[charge_type]
-		for(var/datum/data/vending_product/machine_content in machine)
-			if(refill.charges[charge_type] == 0)
-				break
-			var/restock = CEILING(((machine_content.max_amount - machine_content.amount)/to_restock)*tmp_charges, 1)
-			if(restock > refill.charges[charge_type])
-				restock = refill.charges[charge_type]
-			machine_content.amount += restock
-			refill.charges[charge_type] -= restock
-			total += restock
-	return total
+/obj/machinery/vending/proc/update_canister()
+	if (!component_parts)
+		return
+
+	var/obj/item/vending_refill/R = locate() in component_parts
+	if (!R)
+		CRASH("Constructible vending machine did not have a refill canister")
+		return
+
+	R.products = unbuild_inventory(product_records)
+	R.contraband = unbuild_inventory(hidden_records)
+	R.premium = unbuild_inventory(coin_records)
+
+/obj/machinery/vending/proc/unbuild_inventory(list/recordlist)
+	. = list()
+	for(var/R in recordlist)
+		var/datum/data/vending_product/record = R
+		.[record.product_path] += record.amount
 
 /obj/machinery/vending/crowbar_act(mob/living/user, obj/item/I)
 	if(!component_parts)
@@ -248,46 +258,52 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		bill = new S.type(src, 1)
 		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 		return
-	else if(istype(I, refill_canister) && refill_canister != null)
-		if(stat & (BROKEN|NOPOWER))
-			to_chat(user, "<span class='notice'>It does nothing.</span>")
-		else if(panel_open)
+	else if(refill_canister && istype(I, refill_canister))
+		if (!panel_open)
+			to_chat(user, "<span class='notice'>You should probably unscrew the service panel first.</span>")
+		else if (stat & (BROKEN|NOPOWER))
+			to_chat(user, "<span class='notice'>[src] does not respond.</span>")
+		else
 			//if the panel is open we attempt to refill the machine
 			var/obj/item/vending_refill/canister = I
-			if(canister.charges[STANDARD_CHARGE] == 0)
-				to_chat(user, "<span class='notice'>This [canister.name] is empty!</span>")
+			if(canister.get_part_rating() == 0)
+				to_chat(user, "<span class='notice'>[canister] is empty!</span>")
 			else
-				var/transfered = refill_inventory(canister,product_records,STANDARD_CHARGE)
-				transfered += refill_inventory(canister,coin_records,COIN_CHARGE)
-				transfered += refill_inventory(canister,hidden_records,CONTRABAND_CHARGE)
-				if(transfered)
-					to_chat(user, "<span class='notice'>You loaded [transfered] items in \the [name].</span>")
+				// instantiate canister if needed
+				var/transferred = restock(canister)
+				if(transferred)
+					to_chat(user, "<span class='notice'>You loaded [transferred] items in [src].</span>")
 				else
-					to_chat(user, "<span class='notice'>The [name] is fully stocked.</span>")
+					to_chat(user, "<span class='notice'>There's nothing to restock!</span>")
 			return
-		else
-			to_chat(user, "<span class='notice'>You should probably unscrew the service panel first.</span>")
 	else
 		return ..()
 
+/obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/W)
+	if(!istype(W))
+		return FALSE
+	if((flags_1 & NODECONSTRUCT_1) && !W.works_from_distance)
+		return FALSE
+	if(!component_parts || !refill_canister)
+		return FALSE
+
+	var/moved = 0
+	if(panel_open || W.works_from_distance)
+		if(W.works_from_distance)
+			display_parts(user)
+		for(var/I in W)
+			if(istype(I, refill_canister))
+				moved += restock(I)
+	else
+		display_parts(user)
+	if(moved)
+		to_chat(user, "[moved] items restocked.")
+		W.play_rped_sound()
+	return TRUE
+
 /obj/machinery/vending/on_deconstruction()
-	var/product_list = list(product_records, hidden_records, coin_records)
-	for(var/i=1, i<=3, i++)
-		for(var/datum/data/vending_product/machine_content in product_list[i])
-			while(machine_content.amount !=0)
-				var/safety = 0 //to avoid infinite loop
-				for(var/obj/item/vending_refill/VR in component_parts)
-					safety++
-					if(VR.charges[i] < VR.init_charges[i])
-						VR.charges[i]++
-						machine_content.amount--
-						if(!machine_content.amount)
-							break
-					else
-						safety--
-				if(safety <= 0) // all refill canisters are full
-					break
-	..()
+	update_canister()
+	. = ..()
 
 /obj/machinery/vending/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -323,7 +339,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 				dat += "<a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a> "
 			else
 				dat += "<span class='linkOff'>Sold out</span> "
-			dat += "<font color = '[R.display_color]'><b>[sanitize(R.product_name)]</b>:</font>"
+			dat += "<font color = '[R.display_color]'><b>[sanitize(R.name)]</b>:</font>"
 			dat += " <b>[R.amount]</b>"
 			dat += "</li>"
 		dat += "</ul>"
@@ -358,17 +374,11 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			to_chat(usr, "<span class='notice'>There is no money in this machine.</span>")
 			return
 		if(coin)
-			if(!usr.get_active_held_item())
-				usr.put_in_hands(coin)
-			else
-				coin.forceMove(get_turf(src))
+			usr.put_in_hands(coin)
 			to_chat(usr, "<span class='notice'>You remove [coin] from [src].</span>")
 			coin = null
 		if(bill)
-			if(!usr.get_active_held_item())
-				usr.put_in_hands(bill)
-			else
-				bill.forceMove(get_turf(src))
+			usr.put_in_hands(bill)
 			to_chat(usr, "<span class='notice'>You remove [bill] from [src].</span>")
 			bill = null
 
@@ -545,7 +555,3 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 /obj/machinery/vending/onTransitZ()
 	return
-
-#undef STANDARD_CHARGE
-#undef CONTRABAND_CHARGE
-#undef COIN_CHARGE

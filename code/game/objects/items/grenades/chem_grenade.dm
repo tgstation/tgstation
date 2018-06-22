@@ -165,15 +165,17 @@
 
 /obj/item/grenade/chem_grenade/log_grenade(mob/user, turf/T)
 	..()
+	var/reagent_string = ""
+	var/beaker_number = 1
 	for(var/obj/exploded_beaker in beakers)
 		if(!exploded_beaker.reagents)
 			continue
-		var/reagent_list = pretty_string_from_reagent_list(exploded_beaker.reagents)
-		var/message = "[src] primed by [user] at [ADMIN_VERBOSEJMP(T)] contained [reagent_list]."
-		GLOB.bombers += message
-		message_admins(message)
-		log_game("[src] primed by [user] at [AREACOORD(T)] contained [reagent_list].")
-		add_logs(user, src, "primed", addition = "[reagent_list] inside.")
+		reagent_string += "[exploded_beaker] [beaker_number++] : " + pretty_string_from_reagent_list(exploded_beaker.reagents.reagent_list) + ";"
+	var/message = "[src] primed by [user] at [ADMIN_VERBOSEJMP(T)] contained [reagent_string]."
+	GLOB.bombers += message
+	message_admins(message)
+	log_game("[src] primed by [user] at [AREACOORD(T)] contained [reagent_string].")
+	add_logs(user, src, "primed", addition = "[reagent_string] inside.")
 
 /obj/item/grenade/chem_grenade/prime()
 	if(stage != READY)

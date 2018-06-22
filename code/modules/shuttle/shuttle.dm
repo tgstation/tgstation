@@ -458,9 +458,7 @@
 		ripples += new /obj/effect/abstract/ripple(t, animate_time)
 
 /obj/docking_port/mobile/proc/remove_ripples()
-	for(var/R in ripples)
-		qdel(R)
-	ripples.Cut()
+	QDEL_LIST(ripples)
 
 /obj/docking_port/mobile/proc/ripple_area(obj/docking_port/stationary/S1)
 	var/list/L0 = return_ordered_turfs(x, y, z, dir)

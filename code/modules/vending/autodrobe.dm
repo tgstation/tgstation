@@ -122,8 +122,10 @@
 		           /obj/item/skub = 1)
 	refill_canister = /obj/item/vending_refill/autodrobe
 
+/obj/machinery/vending/autodrobe/all_access
+	desc = "A vending machine for costumes. This model appears to have no access restrictions."
+	req_access = null
+
 /obj/item/vending_refill/autodrobe
 	machine_name = "AutoDrobe"
 	icon_state = "refill_costume"
-	charges = list(32, 2, 3)// of 96 standard, 6 contraband, 9 premium
-	init_charges = list(32, 2, 3)

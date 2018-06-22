@@ -115,10 +115,10 @@
 		to_chat(M, "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>")
 	return
 
-/proc/pretty_string_from_reagent_list(var/list/reagent_list)
+/proc/pretty_string_from_reagent_list(list/reagent_list)
 	//Convert reagent list to a printable string for logging etc
-	var/result = "| "
+	var/list/rs = list()
 	for (var/datum/reagent/R in reagent_list)
-		result += "[R.name], [R.volume] | "
+		rs += "[R.name], [R.volume]"
 
-	return result
+	return rs.Join(" | ")
