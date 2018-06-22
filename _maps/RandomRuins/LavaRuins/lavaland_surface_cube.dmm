@@ -14,6 +14,7 @@
 /area/lavaland/surface/outdoors)
 "e" = (
 /obj/machinery/wish_granter,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 

@@ -15,7 +15,7 @@
 	facial_hair_color = hair_color
 	eye_color = random_eye_color()
 	if(!pref_species)
-		var/rando_race = pick(config.roundstart_races)
+		var/rando_race = pick(GLOB.roundstart_races)
 		pref_species = new rando_race()
 	features = random_features()
 	age = rand(AGE_MIN,AGE_MAX)
@@ -24,8 +24,8 @@
 	// Silicons only need a very basic preview since there is no customization for them.
 	if(job_engsec_high)
 		switch(job_engsec_high)
-			if(AI)
-				preview_icon = icon('icons/mob/AI.dmi', "AI", SOUTH)
+			if(AI_JF)
+				preview_icon = icon('icons/mob/ai.dmi', "AI", SOUTH)
 				preview_icon.Scale(64, 64)
 				return
 			if(CYBORG)
@@ -34,7 +34,7 @@
 				return
 
 	// Set up the dummy for its photoshoot
-	var/mob/living/carbon/human/dummy/mannequin = new()
+	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
 	copy_to(mannequin)
 
 	// Determine what job is marked as 'High' priority, and dress them up as such.
@@ -60,6 +60,7 @@
 	if(previewJob)
 		mannequin.job = previewJob.title
 		previewJob.equip(mannequin, TRUE)
+	COMPILE_OVERLAYS(mannequin)
 	CHECK_TICK
 	preview_icon = icon('icons/effects/effects.dmi', "nothing")
 	preview_icon.Scale(48+32, 16+32)
@@ -82,4 +83,4 @@
 	CHECK_TICK
 	preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2) // Scaling here to prevent blurring in the browser.
 	CHECK_TICK
-	qdel(mannequin)
+	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)

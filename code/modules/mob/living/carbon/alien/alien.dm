@@ -1,30 +1,22 @@
-#define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
-#define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
-#define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
-
-
 /mob/living/carbon/alien
 	name = "alien"
-	voice_name = "alien"
 	icon = 'icons/mob/alien.dmi'
 	gender = FEMALE //All xenos are girls!!
 	dna = null
-	faction = list("alien")
+	faction = list(ROLE_ALIEN)
 	ventcrawler = VENTCRAWLER_ALWAYS
-	languages_spoken = ALIEN
-	languages_understood = ALIEN
 	sight = SEE_MOBS
 	see_in_dark = 4
 	verb_say = "hisses"
+	initial_language_holder = /datum/language_holder/alien
 	bubble_icon = "alien"
-	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
-	var/nightvision = 1
+	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/xeno
 
-	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
+	var/obj/item/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/has_fine_manipulation = 0
 	var/move_delay_add = 0 // movement delay to add
 
-	status_flags = CANPARALYSE|CANPUSH
+	status_flags = CANUNCONSCIOUS|CANPUSH
 
 	var/heat_protection = 0.5
 	var/leaping = 0
@@ -41,16 +33,17 @@
 
 	create_internal_organs()
 
-	..()
+	. = ..()
 
 /mob/living/carbon/alien/create_internal_organs()
 	internal_organs += new /obj/item/organ/brain/alien
 	internal_organs += new /obj/item/organ/alien/hivenode
 	internal_organs += new /obj/item/organ/tongue/alien
 	internal_organs += new /obj/item/organ/eyes/night_vision/alien
+	internal_organs += new /obj/item/organ/ears
 	..()
 
-/mob/living/carbon/alien/assess_threat() // beepsky won't hunt aliums
+/mob/living/carbon/alien/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) // beepsky won't hunt aliums
 	return -10
 
 /mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment)
@@ -67,11 +60,11 @@
 			//Place is hotter than we are
 			var/thermal_protection = heat_protection //This returns a 0 - 1 value, which corresponds to the percentage of heat protection.
 			if(thermal_protection < 1)
-				bodytemperature += (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
+				adjust_bodytemperature((1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR))
 		else
-			bodytemperature += 1 * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
+			adjust_bodytemperature(1 * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR))
 
-	if(bodytemperature > 360.15)
+	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
 		//Body temperature is too hot.
 		throw_alert("alien_fire", /obj/screen/alert/alien_fire)
 		switch(bodytemperature)
@@ -110,11 +103,12 @@ Des: Gives the client of the alien an image on each infected mob.
 ----------------------------------------*/
 /mob/living/carbon/alien/proc/AddInfectionImages()
 	if (client)
-		for (var/mob/living/C in mob_list)
-			if(C.status_flags & XENO_HOST)
-				var/obj/item/organ/body_egg/alien_embryo/A = C.getorgan(/obj/item/organ/body_egg/alien_embryo)
+		for (var/i in GLOB.mob_living_list)
+			var/mob/living/L = i
+			if(L.has_trait(TRAIT_XENO_HOST))
+				var/obj/item/organ/body_egg/alien_embryo/A = L.getorgan(/obj/item/organ/body_egg/alien_embryo)
 				if(A)
-					var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")
+					var/I = image('icons/mob/alien.dmi', loc = L, icon_state = "infected[A.stage]")
 					client.images += I
 	return
 
@@ -146,10 +140,6 @@ Des: Removes all infected images from the alien.
 	if(mind)
 		mind.transfer_to(new_xeno)
 	qdel(src)
-
-#undef HEAT_DAMAGE_LEVEL_1
-#undef HEAT_DAMAGE_LEVEL_2
-#undef HEAT_DAMAGE_LEVEL_3
 
 /mob/living/carbon/alien/can_hold_items()
 	return has_fine_manipulation

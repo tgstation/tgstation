@@ -15,52 +15,44 @@ Chaplain
 
 	outfit = /datum/outfit/job/chaplain
 
-	access = list(access_morgue, access_chapel_office, access_crematorium, access_theatre)
-	minimal_access = list(access_morgue, access_chapel_office, access_crematorium, access_theatre)
+	access = list(ACCESS_MORGUE, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_THEATRE)
+	minimal_access = list(ACCESS_MORGUE, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_THEATRE)
 
-/datum/outfit/job/chaplain
-	name = "Chaplain"
-	jobtype = /datum/job/chaplain
-
-	belt = /obj/item/device/pda/chaplain
-	uniform = /obj/item/clothing/under/rank/chaplain
-	backpack_contents = list(/obj/item/device/camera/spooky = 1)
-	backpack = /obj/item/weapon/storage/backpack/cultpack
-	satchel = /obj/item/weapon/storage/backpack/cultpack
-
-
-/datum/outfit/job/chaplain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-
-	if(visualsOnly)
-		return
-
+/datum/job/chaplain/after_spawn(mob/living/H, mob/M)
 	if(H.mind)
 		H.mind.isholy = TRUE
 
-	var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible/booze(H)
+	var/obj/item/storage/book/bible/booze/B = new
 
-	if(SSreligion.Bible_deity_name)
-		B.deity_name = SSreligion.Bible_deity_name
-		B.name = SSreligion.Bible_name
-		B.icon_state = SSreligion.Bible_icon_state
-		B.item_state = SSreligion.Bible_item_state
-		to_chat(H, "There is already an established religion onboard the station. You are an acolyte of [SSreligion.Bible_deity_name]. Defer to the Chaplain.")
-		H.equip_to_slot_or_del(B, slot_in_backpack)
-		var/obj/item/weapon/nullrod/N = new(H)
-		H.equip_to_slot_or_del(N, slot_in_backpack)
+	if(SSreligion.religion)
+		B.deity_name = SSreligion.deity
+		B.name = SSreligion.bible_name
+		B.icon_state = SSreligion.bible_icon_state
+		B.item_state = SSreligion.bible_item_state
+		to_chat(H, "There is already an established religion onboard the station. You are an acolyte of [SSreligion.deity]. Defer to the Chaplain.")
+		H.equip_to_slot_or_del(B, SLOT_IN_BACKPACK)
+		var/nrt = SSreligion.holy_weapon_type || /obj/item/nullrod
+		var/obj/item/nullrod/N = new nrt(H)
+		H.put_in_hands(N)
 		return
 
 	var/new_religion = "Christianity"
-	if(H.client && H.client.prefs.custom_names["religion"])
-		new_religion = H.client.prefs.custom_names["religion"]
+	if(M.client && M.client.prefs.custom_names["religion"])
+		new_religion = M.client.prefs.custom_names["religion"]
+
+	var/new_deity = "Space Jesus"
+	if(M.client && M.client.prefs.custom_names["deity"])
+		new_deity = M.client.prefs.custom_names["deity"]
+
+	B.deity_name = new_deity
+
 
 	switch(lowertext(new_religion))
 		if("christianity")
 			B.name = pick("The Holy Bible","The Dead Sea Scrolls")
 		if("satanism")
 			B.name = "The Unholy Bible"
-		if("cthulu")
+		if("cthulhu")
 			B.name = "The Necronomicon"
 		if("islam")
 			B.name = "Quran"
@@ -76,19 +68,27 @@ Chaplain
 			B.name = "Guys Gone Wild"
 		if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks", "meme", "memes")
 			B.name = pick("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition")
-			H.setBrainLoss(100) // starts off retarded as fuck
+			H.adjustBrainLoss(100) // starts off retarded as fuck
 		if("science")
 			B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
 		else
 			B.name = "The Holy Book of [new_religion]"
-	feedback_set_details("religion_name","[new_religion]")
-	SSreligion.Bible_name = B.name
 
-	var/new_deity = "Space Jesus"
-	if(H.client && H.client.prefs.custom_names["deity"])
-		new_deity = H.client.prefs.custom_names["deity"]
-	B.deity_name = new_deity
+	SSreligion.religion = new_religion
+	SSreligion.bible_name = B.name
+	SSreligion.deity = B.deity_name
 
-	SSreligion.Bible_deity_name = B.deity_name
-	feedback_set_details("religion_deity","[new_deity]")
-	H.equip_to_slot_or_del(B, slot_in_backpack)
+	H.equip_to_slot_or_del(B, SLOT_IN_BACKPACK)
+
+	SSblackbox.record_feedback("text", "religion_name", 1, "[new_religion]", 1)
+	SSblackbox.record_feedback("text", "religion_deity", 1, "[new_deity]", 1)
+
+/datum/outfit/job/chaplain
+	name = "Chaplain"
+	jobtype = /datum/job/chaplain
+
+	belt = /obj/item/pda/chaplain
+	uniform = /obj/item/clothing/under/rank/chaplain
+	backpack_contents = list(/obj/item/camera/spooky = 1)
+	backpack = /obj/item/storage/backpack/cultpack
+	satchel = /obj/item/storage/backpack/cultpack

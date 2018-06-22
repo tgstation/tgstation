@@ -3,10 +3,10 @@
 	id = "angel"
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
-	mutant_bodyparts = list("tail_human", "ears", "wings")
+	mutant_bodyparts = list("wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "Angel")
 	use_skintones = 1
-	no_equip = list(slot_back)
+	no_equip = list(SLOT_BACK)
 	blacklisted = 1
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
@@ -15,13 +15,15 @@
 
 /datum/species/angel/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	..()
-	if(H.dna && H.dna.species &&((H.dna.features["wings"] != "Angel") && ("wings" in H.dna.species.mutant_bodyparts)))
+	if(H.dna && H.dna.species && (H.dna.features["wings"] != "Angel"))
+		if(!("wings" in H.dna.species.mutant_bodyparts))
+			H.dna.species.mutant_bodyparts |= "wings"
 		H.dna.features["wings"] = "Angel"
 		H.update_body()
-	if(ishuman(H)&& !fly)
+	if(ishuman(H) && !fly)
 		fly = new
 		fly.Grant(H)
-
+	H.add_trait(TRAIT_HOLY, SPECIES_TRAIT)
 
 /datum/species/angel/on_species_loss(mob/living/carbon/human/H)
 	if(fly)
@@ -29,9 +31,12 @@
 	if(H.movement_type & FLYING)
 		H.movement_type &= ~FLYING
 	ToggleFlight(H,0)
-	if(H.dna && H.dna.species &&((H.dna.features["wings"] != "None") && ("wings" in H.dna.species.mutant_bodyparts)))
+	if(H.dna && H.dna.species && (H.dna.features["wings"] == "Angel"))
+		if("wings" in H.dna.species.mutant_bodyparts)
+			H.dna.species.mutant_bodyparts -= "wings"
 		H.dna.features["wings"] = "None"
 		H.update_body()
+	H.remove_trait(TRAIT_HOLY, SPECIES_TRAIT)
 	..()
 
 /datum/species/angel/spec_life(mob/living/carbon/human/H)
@@ -47,7 +52,7 @@
 		return 0
 
 /datum/species/angel/proc/CanFly(mob/living/carbon/human/H)
-	if(H.stat || H.stunned || H.weakened)
+	if(H.stat || H.IsStun() || H.IsKnockdown())
 		return 0
 	if(H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception))))	//Jumpsuits have tail holes, so it makes sense they have wing holes too
 		to_chat(H, "Your suit blocks your wings from extending!")
@@ -65,7 +70,8 @@
 
 /datum/action/innate/flight
 	name = "Toggle Flight"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUNNED
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "flight"
 
 /datum/action/innate/flight/Activate()
@@ -125,15 +131,15 @@
 /datum/species/angel/proc/ToggleFlight(mob/living/carbon/human/H,flight)
 	if(flight && CanFly(H))
 		stunmod = 2
-		speedmod = -1
+		speedmod = -0.35
 		H.movement_type |= FLYING
-		override_float = 1
+		override_float = TRUE
 		H.pass_flags |= PASSTABLE
 		H.OpenWings()
 	else
 		stunmod = 1
 		speedmod = 0
 		H.movement_type &= ~FLYING
-		override_float = 0
+		override_float = FALSE
 		H.pass_flags &= ~PASSTABLE
 		H.CloseWings()

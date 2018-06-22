@@ -5,18 +5,14 @@
 	desc = "It's a gruesome pile of thick, sticky resin shaped like a nest."
 	icon = 'icons/obj/smooth_structures/alien/nest.dmi'
 	icon_state = "nest"
-	obj_integrity = 120
 	max_integrity = 120
 	smooth = SMOOTH_TRUE
-	can_be_unanchored = 0
+	can_be_unanchored = FALSE
 	canSmoothWith = null
 	buildstacktype = null
-	flags = NODECONSTRUCT
-	var/image/nest_overlay
-
-/obj/structure/bed/nest/New()
-	nest_overlay = image('icons/mob/alien.dmi', "nestoverlay", layer=LYING_MOB_LAYER)
-	return ..()
+	flags_1 = NODECONSTRUCT_1
+	bolts = FALSE
+	var/static/mutable_appearance/nest_overlay = mutable_appearance('icons/mob/alien.dmi', "nestoverlay", LYING_MOB_LAYER)
 
 /obj/structure/bed/nest/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
 	if(has_buckled_mobs())
@@ -71,23 +67,23 @@
 			"<span class='italics'>You hear squelching...</span>")
 
 /obj/structure/bed/nest/post_buckle_mob(mob/living/M)
-	if(M in buckled_mobs)
-		M.pixel_y = 0
-		M.pixel_x = initial(M.pixel_x) + 2
-		M.layer = BELOW_MOB_LAYER
-		add_overlay(nest_overlay)
-	else
-		M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
-		M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
-		M.layer = initial(M.layer)
-		cut_overlay(nest_overlay)
+	M.pixel_y = 0
+	M.pixel_x = initial(M.pixel_x) + 2
+	M.layer = BELOW_MOB_LAYER
+	add_overlay(nest_overlay)
+
+/obj/structure/bed/nest/post_unbuckle_mob(mob/living/M)
+	M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
+	M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
+	M.layer = initial(M.layer)
+	cut_overlay(nest_overlay)
 
 /obj/structure/bed/nest/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
 			playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 		if(BURN)
-			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/bed/nest/attack_alien(mob/living/carbon/alien/user)
 	if(user.a_intent != INTENT_HARM)

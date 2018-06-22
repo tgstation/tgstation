@@ -4,68 +4,54 @@
 	name = "mk-honk prototype shoes"
 	desc = "Lost prototype of advanced clown tech. Powered by bananium, these shoes leave a trail of chaos in their wake."
 	icon_state = "clown_prototype_off"
-	var/on = 0
-	var/datum/material_container/bananium
 	actions_types = list(/datum/action/item_action/toggle)
+	var/on = FALSE
+	var/always_noslip = FALSE
 
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/New()
-	..()
-	bananium = new/datum/material_container(src,list(MAT_BANANIUM),200000)
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize()
+	. = ..()
+	AddComponent(/datum/component/material_container, list(MAT_BANANIUM), 200000, TRUE, list(/obj/item/stack))
+	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 75)
+	if(always_noslip)
+		clothing_flags |= NOSLIP
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/step_action()
+	. = ..()
+	GET_COMPONENT(bananium, /datum/component/material_container)
 	if(on)
-		if(footstep > 1)//honks when its on
-			playsound(src, 'sound/items/bikehorn.ogg', 75, 1)
-			footstep = 0
-		else
-			footstep++
-
-		new/obj/item/weapon/grown/bananapeel/specialpeel(get_step(src,turn(usr.dir, 180))) //honk
-		bananium.use_amount_type(100, MAT_BANANIUM)
 		if(bananium.amount(MAT_BANANIUM) < 100)
 			on = !on
-			flags &= ~NOSLIP
+			if(!always_noslip)
+				clothing_flags &= ~NOSLIP
 			update_icon()
 			to_chat(loc, "<span class='warning'>You ran out of bananium!</span>")
-	else
-		..()
+		else
+			new /obj/item/grown/bananapeel/specialpeel(get_step(src,turn(usr.dir, 180))) //honk
+			bananium.use_amount_type(100, MAT_BANANIUM)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/attack_self(mob/user)
+	GET_COMPONENT(bananium, /datum/component/material_container)
 	var/sheet_amount = bananium.retrieve_all()
 	if(sheet_amount)
 		to_chat(user, "<span class='notice'>You retrieve [sheet_amount] sheets of bananium from the prototype shoes.</span>")
 	else
 		to_chat(user, "<span class='notice'>You cannot retrieve any bananium from the prototype shoes.</span>")
 
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/attackby(obj/item/O, mob/user, params)
-	if(!bananium.get_item_material_amount(O))
-		to_chat(user, "<span class='notice'>This item has no bananium!</span>")
-		return
-	if(!user.dropItemToGround(O))
-		to_chat(user, "<span class='notice'>You can't drop [O]!</span>")
-		return
-
-	var/bananium_amount = bananium.insert_item(O)
-	if(bananium_amount)
-		to_chat(user, "<span class='notice'>You insert [O] into the prototype shoes.</span>")
-		qdel(O)
-	else
-		to_chat(user, "<span class='notice'>You are unable to insert more bananium!</span>")
-
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/examine(mob/user)
 	..()
-	var/ban_amt = bananium.amount(MAT_BANANIUM)
-	to_chat(user, "<span class='notice'>The shoes are [on ? "enabled" : "disabled"]. There is [ban_amt ? ban_amt : "no"] bananium left.</span>")
+	to_chat(user, "<span class='notice'>The shoes are [on ? "enabled" : "disabled"].</span>")
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/ui_action_click(mob/user)
+	GET_COMPONENT(bananium, /datum/component/material_container)
 	if(bananium.amount(MAT_BANANIUM))
 		on = !on
 		update_icon()
 		to_chat(user, "<span class='notice'>You [on ? "activate" : "deactivate"] the prototype shoes.</span>")
-		if(on)
-			flags |= NOSLIP
-		else
-			flags &= ~NOSLIP
+		if(!always_noslip)
+			if(on)
+				clothing_flags |= NOSLIP
+			else
+				clothing_flags &= ~NOSLIP
 	else
 		to_chat(user, "<span class='warning'>You need bananium to turn the prototype shoes on!</span>")
 

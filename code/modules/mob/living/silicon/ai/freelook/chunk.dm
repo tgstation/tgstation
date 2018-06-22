@@ -12,31 +12,32 @@
 	var/list/cameras = list()
 	var/list/turfs = list()
 	var/list/seenby = list()
-	var/visible = 0
+	var/visible = FALSE
 	var/changed = 0
-	var/updating = 0
 	var/x = 0
 	var/y = 0
 	var/z = 0
 
 // Add an AI eye to the chunk, then update if changed.
 
-/datum/camerachunk/proc/add(mob/camera/aiEye/eye)
-	var/client/client = eye.GetViewerClient()
-	if(client)
-		client.images += obscured
+/datum/camerachunk/proc/add(mob/camera/aiEye/eye, add_images = TRUE)
+	if(add_images)
+		var/client/client = eye.GetViewerClient()
+		if(client)
+			client.images += obscured
 	eye.visibleCameraChunks += src
 	visible++
 	seenby += eye
-	if(changed && !updating)
+	if(changed)
 		update()
 
 // Remove an AI eye from the chunk, then update if changed.
 
-/datum/camerachunk/proc/remove(mob/camera/aiEye/eye)
-	var/client/client = eye.GetViewerClient()
-	if(client)
-		client.images -= obscured
+/datum/camerachunk/proc/remove(mob/camera/aiEye/eye, remove_images = TRUE)
+	if(remove_images)
+		var/client/client = eye.GetViewerClient()
+		if(client)
+			client.images -= obscured
 	eye.visibleCameraChunks -= src
 	seenby -= eye
 	if(visible > 0)
@@ -54,20 +55,13 @@
 
 /datum/camerachunk/proc/hasChanged(update_now = 0)
 	if(visible || update_now)
-		if(!updating)
-			updating = 1
-			spawn(UPDATE_BUFFER) // Batch large changes, such as many doors opening or closing at once
-				update()
-				updating = 0
+		addtimer(CALLBACK(src, .proc/update), UPDATE_BUFFER, TIMER_UNIQUE)
 	else
 		changed = 1
 
 // The actual updating. It gathers the visible turfs from cameras and puts them into the appropiate lists.
 
 /datum/camerachunk/proc/update()
-
-	set background = BACKGROUND_ENABLED
-
 	var/list/newVisibleTurfs = list()
 
 	for(var/camera in cameras)
@@ -114,8 +108,10 @@
 		var/turf/t = turf
 		if(obscuredTurfs[t])
 			if(!t.obscured)
-				t.obscured = image('icons/effects/cameravis.dmi', t, null, LIGHTING_LAYER+1)
-				t.obscured.plane = LIGHTING_PLANE+1
+				t.obscured = image('icons/effects/cameravis.dmi', t, null, BYOND_LIGHTING_LAYER+0.1)
+				t.obscured.pixel_x = -t.pixel_x
+				t.obscured.pixel_y = -t.pixel_y
+				t.obscured.plane = BYOND_LIGHTING_PLANE+0.1
 			obscured += t.obscured
 			for(var/eye in seenby)
 				var/mob/camera/aiEye/m = eye
@@ -169,8 +165,11 @@
 	for(var/turf in obscuredTurfs)
 		var/turf/t = turf
 		if(!t.obscured)
-			t.obscured = image('icons/effects/cameravis.dmi', t, null, LIGHTING_LAYER+1)
-			t.obscured.plane = LIGHTING_PLANE+1
+			t.obscured = image('icons/effects/cameravis.dmi', t, null, BYOND_LIGHTING_LAYER+0.1)
+			t.obscured.pixel_x = -t.pixel_x
+			t.obscured.pixel_y = -t.pixel_y
+			t.obscured.plane = BYOND_LIGHTING_PLANE+0.1
 		obscured += t.obscured
 
 #undef UPDATE_BUFFER
+#undef CHUNK_SIZE

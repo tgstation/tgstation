@@ -8,7 +8,7 @@
 
 /mob/living/carbon/alien/humanoid/drone/Initialize()
 	AddAbility(new/obj/effect/proc_holder/alien/evolve(null))
-	..()
+	. = ..()
 
 
 /mob/living/carbon/alien/humanoid/drone/create_internal_organs()

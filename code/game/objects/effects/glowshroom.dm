@@ -1,25 +1,23 @@
 //separate dm since hydro is getting bloated already
 
-var/list/blacklisted_glowshroom_turfs = typecacheof(list(
-	/turf/open/floor/plating/lava,
-	/turf/open/floor/plating/beach/water))
-
 /obj/structure/glowshroom
 	name = "glowshroom"
 	desc = "Mycena Bregprox, a species of mushroom that glows in the dark."
-	anchored = 1
+	anchored = TRUE
 	opacity = 0
-	density = 0
+	density = FALSE
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowshroom" //replaced in New
 	layer = ABOVE_NORMAL_TURF_LAYER
-	obj_integrity = 30
 	max_integrity = 30
 	var/delay = 1200
 	var/floor = 0
 	var/generation = 1
 	var/spreadIntoAdjacentChance = 60
 	var/obj/item/seeds/myseed = /obj/item/seeds/glowshroom
+	var/static/list/blacklisted_glowshroom_turfs = typecacheof(list(
+	/turf/open/lava,
+	/turf/open/floor/plating/beach/water))
 
 /obj/structure/glowshroom/glowcap
 	name = "glowcap"
@@ -60,9 +58,12 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 	delay = delay - myseed.production * 100 //So the delay goes DOWN with better stats instead of up. :I
 	obj_integrity = myseed.endurance
 	max_integrity = myseed.endurance
-	if(myseed.get_gene(/datum/plant_gene/trait/glow))
-		var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
-		set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
+	var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
+	if(ispath(G)) // Seeds were ported to initialize so their genes are still typepaths here, luckily their initializer is smart enough to handle us doing this
+		myseed.genes -= G
+		G = new G
+		myseed.genes += G
+	set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
 	setDir(CalcDir())
 	var/base_icon_state = initial(icon_state)
 	if(!floor)
@@ -77,7 +78,7 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 				pixel_x = -32
 		icon_state = "[base_icon_state][rand(1,3)]"
 	else //if on the floor, glowshroom on-floor sprite
-		icon_state = "[base_icon_state]f"
+		icon_state = base_icon_state
 
 	addtimer(CALLBACK(src, .proc/Spread), delay)
 
@@ -110,7 +111,7 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 			var/placeCount = 1
 			for(var/obj/structure/glowshroom/shroom in newLoc)
 				shroomCount++
-			for(var/wallDir in cardinal)
+			for(var/wallDir in GLOB.cardinals)
 				var/turf/isWall = get_step(newLoc,wallDir)
 				if(isWall.density)
 					placeCount++
@@ -131,7 +132,7 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 /obj/structure/glowshroom/proc/CalcDir(turf/location = loc)
 	var/direction = 16
 
-	for(var/wallDir in cardinal)
+	for(var/wallDir in GLOB.cardinals)
 		var/turf/newTurf = get_step(location,wallDir)
 		if(newTurf.density)
 			direction |= wallDir
@@ -162,7 +163,7 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 
 /obj/structure/glowshroom/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN && damage_amount)
-		playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/glowshroom/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)

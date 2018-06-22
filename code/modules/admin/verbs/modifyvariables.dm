@@ -1,15 +1,22 @@
-var/list/VVlocked = list("vars", "var_edited", "client", "virus", "viruses", "cuffed", "last_eaten", "unlock_content", "force_ending")
-var/list/VVicon_edit_lock = list("icon", "icon_state", "overlays", "underlays", "resize")
-var/list/VVckey_edit = list("key", "ckey")
-var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width", "bound_x", "bound_y")
+GLOBAL_LIST_INIT(VVlocked, list("vars", "datum_flags", "client", "virus", "viruses", "cuffed", "last_eaten", "unlock_content", "force_ending"))
+GLOBAL_PROTECT(VVlocked)
+GLOBAL_LIST_INIT(VVicon_edit_lock, list("icon", "icon_state", "overlays", "underlays", "resize"))
+GLOBAL_PROTECT(VVicon_edit_lock)
+GLOBAL_LIST_INIT(VVckey_edit, list("key", "ckey"))
+GLOBAL_PROTECT(VVckey_edit)
+GLOBAL_LIST_INIT(VVpixelmovement, list("step_x", "step_y", "bound_height", "bound_width", "bound_x", "bound_y"))
+GLOBAL_PROTECT(VVpixelmovement)
 
 
-/client/proc/vv_get_class(var/var_value)
+/client/proc/vv_get_class(var/var_name, var/var_value)
 	if(isnull(var_value))
 		. = VV_NULL
 
 	else if (isnum(var_value))
-		. = VV_NUM
+		if (var_name in GLOB.bitfields)
+			. = VV_BITFIELD
+		else
+			. = VV_NUM
 
 	else if (istext(var_value))
 		if (findtext(var_value, "\n"))
@@ -26,7 +33,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 	else if (isloc(var_value))
 		. = VV_ATOM_REFERENCE
 
-	else if (istype(var_value,/client))
+	else if (istype(var_value, /client))
 		. = VV_CLIENT
 
 	else if (istype(var_value, /datum))
@@ -40,7 +47,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 		else
 			. = VV_TYPE
 
-	else if (istype(var_value,/list))
+	else if (islist(var_value))
 		. = VV_LIST
 
 	else if (isfile(var_value))
@@ -48,7 +55,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 	else
 		. = VV_NULL
 
-/client/proc/vv_get_value(class, default_class, current_value, list/restricted_classes, list/extra_classes, list/classes)
+/client/proc/vv_get_value(class, default_class, current_value, list/restricted_classes, list/extra_classes, list/classes, var_name)
 	. = list("class" = class, "value" = null)
 	if (!class)
 		if (!classes)
@@ -105,6 +112,11 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 				.["class"] = null
 				return
 
+		if (VV_BITFIELD)
+			.["value"] = input_bitfield(usr, "Editing bitfield: [var_name]", var_name, current_value)
+			if (.["value"] == null)
+				.["class"] = null
+				return
 
 		if (VV_ATOM_TYPE)
 			.["value"] = pick_closest_path(FALSE)
@@ -176,7 +188,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 
 
 		if (VV_CLIENT)
-			.["value"] = input("Select reference:", "Reference", current_value) as null|anything in clients
+			.["value"] = input("Select reference:", "Reference", current_value) as null|anything in GLOB.clients
 			if (.["value"] == null)
 				.["class"] = null
 				return
@@ -209,7 +221,9 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 				.["class"] = null
 				return
 			.["type"] = type
-			.["value"] = new type()
+			var/atom/newguy = new type()
+			newguy.datum_flags |= DF_VAR_EDITED
+			.["value"] = newguy
 
 		if (VV_NEW_DATUM)
 			var/type = pick_closest_path(FALSE, get_fancy_list_of_datum_types())
@@ -217,7 +231,9 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 				.["class"] = null
 				return
 			.["type"] = type
-			.["value"] = new type()
+			var/datum/newguy = new type()
+			newguy.datum_flags |= DF_VAR_EDITED
+			.["value"] = newguy
 
 		if (VV_NEW_TYPE)
 			var/type = current_value
@@ -233,7 +249,10 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 				.["class"] = null
 				return
 			.["type"] = type
-			.["value"] = new type()
+			var/datum/newguy = new type()
+			if(istype(newguy))
+				newguy.datum_flags |= DF_VAR_EDITED
+			.["value"] = newguy
 
 
 		if (VV_NEW_LIST)
@@ -295,7 +314,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 		if (!lentext(shorttype))
 			shorttype = "/"
 
-		.["[D]([shorttype])\ref[D]#[i]"] = D
+		.["[D]([shorttype])[REF(D)]#[i]"] = D
 
 /client/proc/mod_list_add_ass(atom/O) //hehe
 
@@ -412,7 +431,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 	if (index == null)
 		return
 	var/assoc = 0
-	var/prompt = alert(src, "Do you want to edit the key or it's assigned value?", "Associated List", "Key", "Assigned Value", "Cancel")
+	var/prompt = alert(src, "Do you want to edit the key or its assigned value?", "Associated List", "Key", "Assigned Value", "Cancel")
 	if (prompt == "Cancel")
 		return
 	if (prompt == "Assigned Value")
@@ -425,32 +444,30 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 	else
 		variable = L[index]
 
-	default = vv_get_class(variable)
+	default = vv_get_class(objectvar, variable)
 
 	to_chat(src, "Variable appears to be <b>[uppertext(default)]</b>.")
 
-	to_chat(src, "Variable contains: [L[index]]")
+	to_chat(src, "Variable contains: [variable]")
 
 	if(default == VV_NUM)
 		var/dir_text = ""
-		if(dir < 0 && dir < 16)
-			if(dir & 1)
+		var/tdir = variable
+		if(tdir > 0 && tdir < 16)
+			if(tdir & 1)
 				dir_text += "NORTH"
-			if(dir & 2)
+			if(tdir & 2)
 				dir_text += "SOUTH"
-			if(dir & 4)
+			if(tdir & 4)
 				dir_text += "EAST"
-			if(dir & 8)
+			if(tdir & 8)
 				dir_text += "WEST"
 
 		if(dir_text)
 			to_chat(usr, "If a direction, direction is: [dir_text]")
 
-	var/original_var
-	if(assoc)
-		original_var = L[assoc_key]
-	else
-		original_var = L[index]
+	var/original_var = variable
+
 	if (O)
 		L = L.Copy()
 	var/class
@@ -525,18 +542,25 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 		if(!variable)
 			return
 
+	if(!O.can_vv_get(variable))
+		return
+
 	var_value = O.vars[variable]
 
-	if(variable in VVlocked)
+	if(variable in GLOB.VVlocked)
 		if(!check_rights(R_DEBUG))
 			return
-	if(variable in VVckey_edit)
+	if(variable in GLOB.VVckey_edit)
 		if(!check_rights(R_SPAWN|R_DEBUG))
 			return
-	if(variable in VVicon_edit_lock)
+	if(variable in GLOB.VVicon_edit_lock)
 		if(!check_rights(R_FUN|R_DEBUG))
 			return
-	if(variable in VVpixelmovement)
+	if(istype(O, /datum/armor))
+		var/prompt = alert(src, "Editing this var changes this value on potentially thousands of items that share the same combination of armor values. If you want to edit the armor of just one item, use the \"Modify armor values\" dropdown item", "DANGER", "ABORT ", "Continue", " ABORT")
+		if (prompt != "Continue")
+			return
+	if(variable in GLOB.VVpixelmovement)
 		if(!check_rights(R_DEBUG))
 			return
 		var/prompt = alert(src, "Editing this var may irreparably break tile gliding for the rest of the round. THIS CAN'T BE UNDONE", "DANGER", "ABORT ", "Continue", " ABORT")
@@ -544,7 +568,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 			return
 
 
-	var/default = vv_get_class(var_value)
+	var/default = vv_get_class(variable, var_value)
 
 	if(isnull(default))
 		to_chat(src, "Unable to determine variable type.")
@@ -555,14 +579,14 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 
 	if(default == VV_NUM)
 		var/dir_text = ""
-		if(dir < 0 && dir < 16)
-			if(dir & 1)
+		if(var_value > 0 && var_value < 16)
+			if(var_value & 1)
 				dir_text += "NORTH"
-			if(dir & 2)
+			if(var_value & 2)
 				dir_text += "SOUTH"
-			if(dir & 4)
+			if(var_value & 4)
 				dir_text += "EAST"
-			if(dir & 8)
+			if(var_value & 8)
 				dir_text += "WEST"
 
 		if(dir_text)
@@ -573,7 +597,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 			default = VV_MESSAGE
 		class = default
 
-	var/list/value = vv_get_value(class, default, var_value, extra_classes = list(VV_LIST))
+	var/list/value = vv_get_value(class, default, var_value, extra_classes = list(VV_LIST), var_name = variable)
 	class = value["class"]
 
 	if (!class)
@@ -587,7 +611,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 
 	switch(class)
 		if(VV_LIST)
-			if(!istype(var_value,/list))
+			if(!islist(var_value))
 				mod_list(list(), O, original_name, variable)
 
 			mod_list(var_value, O, original_name, variable)
@@ -605,6 +629,9 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 	if (O.vv_edit_var(variable, var_new) == FALSE)
 		to_chat(src, "Your edit was rejected by the object.")
 		return
-	log_world("### VarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]")
-	log_admin("[key_name(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
-	message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_VAR_EDIT, args)
+	log_world("### VarEdit by [key_name(src)]: [O.type] [variable]=[var_value] => [var_new]")
+	log_admin("[key_name(src)] modified [original_name]'s [variable] from [html_encode("[var_value]")] to [html_encode("[var_new]")]")
+	var/msg = "[key_name_admin(src)] modified [original_name]'s [variable] from [var_value] to [var_new]"
+	message_admins(msg)
+	admin_ticket_log(O, msg)

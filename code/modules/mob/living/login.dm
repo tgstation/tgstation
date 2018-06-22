@@ -5,13 +5,17 @@
 	mind.show_memory(src, 0)
 
 	//Round specific stuff
-	if(ticker && ticker.mode)
-		switch(ticker.mode.name)
+	if(SSticker.mode)
+		switch(SSticker.mode.name)
 			if("sandbox")
 				CanBuild()
 
 	update_damage_hud()
 	update_health_hud()
+
+	var/turf/T = get_turf(src)
+	if (isturf(T))
+		update_z(T.z)
 
 	//Vents
 	if(ventcrawler)

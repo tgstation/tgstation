@@ -5,14 +5,14 @@
 #define SSAIR_HIGHPRESSURE 5
 #define SSAIR_HOTSPOTS 6
 #define SSAIR_SUPERCONDUCTIVITY 7
-var/datum/controller/subsystem/air/SSair
 
-/datum/controller/subsystem/air
-	name = "Air"
-	init_order = -1
-	priority = 20
+SUBSYSTEM_DEF(air)
+	name = "Atmospherics"
+	init_order = INIT_ORDER_AIR
+	priority = FIRE_PRIORITY_AIR
 	wait = 5
 	flags = SS_BACKGROUND
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/cost_turfs = 0
 	var/cost_groups = 0
@@ -27,8 +27,10 @@ var/datum/controller/subsystem/air/SSair
 	var/list/hotspots = list()
 	var/list/networks = list()
 	var/list/obj/machinery/atmos_machinery = list()
+	var/list/pipe_init_dirs_cache = list()
 
-
+	//atmos singletons
+	var/list/gas_reactions = list()
 
 	//Special functions lists
 	var/list/turf/active_super_conductivity = list()
@@ -40,9 +42,6 @@ var/datum/controller/subsystem/air/SSair
 
 	var/map_loading = TRUE
 	var/list/queued_for_activation
-
-/datum/controller/subsystem/air/New()
-	NEW_SS_GLOBAL(SSair)
 
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
@@ -69,69 +68,70 @@ var/datum/controller/subsystem/air/SSair
 	setup_allturfs()
 	setup_atmos_machinery()
 	setup_pipenets()
+	gas_reactions = init_gas_reactions()
 	..()
 
 
 /datum/controller/subsystem/air/fire(resumed = 0)
-	var/timer = world.tick_usage
+	var/timer = TICK_USAGE_REAL
 
 	if(currentpart == SSAIR_PIPENETS || !resumed)
 		process_pipenets(resumed)
-		cost_pipenets = MC_AVERAGE(cost_pipenets, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_pipenets = MC_AVERAGE(cost_pipenets, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_ATMOSMACHINERY
 
 	if(currentpart == SSAIR_ATMOSMACHINERY)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_atmos_machinery(resumed)
-		cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_ACTIVETURFS
 
 	if(currentpart == SSAIR_ACTIVETURFS)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_active_turfs(resumed)
-		cost_turfs = MC_AVERAGE(cost_turfs, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_turfs = MC_AVERAGE(cost_turfs, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_EXCITEDGROUPS
 
 	if(currentpart == SSAIR_EXCITEDGROUPS)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_excited_groups(resumed)
-		cost_groups = MC_AVERAGE(cost_groups, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_groups = MC_AVERAGE(cost_groups, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_HIGHPRESSURE
 
 	if(currentpart == SSAIR_HIGHPRESSURE)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_high_pressure_delta(resumed)
-		cost_highpressure = MC_AVERAGE(cost_highpressure, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_highpressure = MC_AVERAGE(cost_highpressure, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_HOTSPOTS
 
 	if(currentpart == SSAIR_HOTSPOTS)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_hotspots(resumed)
-		cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_SUPERCONDUCTIVITY
 
 	if(currentpart == SSAIR_SUPERCONDUCTIVITY)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_super_conductivity(resumed)
-		cost_superconductivity = MC_AVERAGE(cost_superconductivity, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_superconductivity = MC_AVERAGE(cost_superconductivity, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -244,6 +244,9 @@ var/datum/controller/subsystem/air/SSair
 	active_turfs -= T
 	if(currentpart == SSAIR_ACTIVETURFS)
 		currentrun -= T
+	#ifdef VISUALIZE_ACTIVE_TURFS
+	T.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#00ff00")
+	#endif
 	if(istype(T))
 		T.excited = 0
 		if(T.excited_group)
@@ -251,13 +254,16 @@ var/datum/controller/subsystem/air/SSair
 
 /datum/controller/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)
 	if(istype(T) && T.air)
+		#ifdef VISUALIZE_ACTIVE_TURFS
+		T.add_atom_colour("#00ff00", TEMPORARY_COLOUR_PRIORITY)
+		#endif
 		T.excited = 1
 		active_turfs |= T
 		if(currentpart == SSAIR_ACTIVETURFS)
 			currentrun |= T
 		if(blockchanges && T.excited_group)
 			T.excited_group.garbage_collect()
-	else if(T.initialized)
+	else if(T.flags_1 & INITIALIZED_1)
 		for(var/turf/S in T.atmos_adjacent_turfs)
 			add_to_active(S)
 	else if(map_loading)
@@ -296,7 +302,7 @@ var/datum/controller/subsystem/air/SSair
 		var/timer = world.timeofday
 		warning("There are [starting_ats] active turfs at roundstart, this is a mapping error caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required)")
 		for(var/turf/T in active_turfs)
-			active_turfs_startlist += text("[T.x], [T.y], [T.z]\n")
+			GLOB.active_turfs_startlist += T
 
 		//now lets clear out these active turfs
 		var/list/turfs_to_check = active_turfs.Copy()
@@ -317,7 +323,7 @@ var/datum/controller/subsystem/air/SSair
 			EG.dismantle()
 			CHECK_TICK
 
-		var/msg = "HEY! LISTEN! [(world.timeofday - timer)/10] Seconds were wasted processing [starting_ats] turf(s) (connected to [ending_ats] other turfs) with atmos differences at round start."
+		var/msg = "HEY! LISTEN! [DisplayTimeText(world.timeofday - timer)] were wasted processing [starting_ats] turf(s) (connected to [ending_ats] other turfs) with atmos differences at round start."
 		to_chat(world, "<span class='boldannounce'>[msg]</span>")
 		warning(msg)
 
@@ -371,11 +377,21 @@ var/datum/controller/subsystem/air/SSair
 		AM.build_network()
 		CHECK_TICK
 
+/datum/controller/subsystem/air/proc/get_init_dirs(type, dir)
+	if(!pipe_init_dirs_cache[type])
+		pipe_init_dirs_cache[type] = list()
+
+	if(!pipe_init_dirs_cache[type]["[dir]"])
+		var/obj/machinery/atmospherics/temp = new type(null, FALSE, dir)
+		pipe_init_dirs_cache[type]["[dir]"] = temp.GetInitDirections()
+		qdel(temp)
+
+	return pipe_init_dirs_cache[type]["[dir]"]
 
 #undef SSAIR_PIPENETS
 #undef SSAIR_ATMOSMACHINERY
 #undef SSAIR_ACTIVETURFS
 #undef SSAIR_EXCITEDGROUPS
 #undef SSAIR_HIGHPRESSURE
-#undef SSAIR_HOTSPOT
+#undef SSAIR_HOTSPOTS
 #undef SSAIR_SUPERCONDUCTIVITY

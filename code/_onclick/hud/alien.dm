@@ -6,7 +6,7 @@
 	icon_state = "leap_off"
 
 /obj/screen/alien/leap/Click()
-	if(istype(usr, /mob/living/carbon/alien/humanoid/hunter))
+	if(isalienhunter(usr))
 		var/mob/living/carbon/alien/humanoid/hunter/AH = usr
 		AH.toggle_leap()
 
@@ -24,11 +24,10 @@
 	desc = "Allows you to sense the general direction of your Queen."
 	screen_loc = ui_alien_queen_finder
 
-
 /datum/hud/alien
-	ui_style_icon = 'icons/mob/screen_alien.dmi'
+	ui_style = 'icons/mob/screen_alien.dmi'
 
-/datum/hud/alien/New(mob/living/carbon/alien/humanoid/owner, ui_style = 'icons/mob/screen_alien.dmi')
+/datum/hud/alien/New(mob/living/carbon/alien/humanoid/owner)
 	..()
 
 	var/obj/screen/using
@@ -36,7 +35,7 @@
 //equippable shit
 
 //hands
-	build_hand_slots(ui_style)
+	build_hand_slots()
 
 //begin buttons
 
@@ -57,15 +56,14 @@
 	static_inventory += using
 	action_intent = using
 
-	if(istype(mymob, /mob/living/carbon/alien/humanoid/hunter))
+	if(isalienhunter(mymob))
 		var/mob/living/carbon/alien/humanoid/hunter/H = mymob
 		H.leap_icon = new /obj/screen/alien/leap()
 		H.leap_icon.screen_loc = ui_alien_storage_r
 		static_inventory += H.leap_icon
 
-	using = new/obj/screen/wheel/talk
-	using.screen_loc = ui_alien_talk_wheel
-	wheels += using
+	using = new/obj/screen/language_menu
+	using.screen_loc = ui_alien_language_menu
 	static_inventory += using
 
 	using = new /obj/screen/drop()
@@ -97,7 +95,7 @@
 	alien_plasma_display = new /obj/screen/alien/plasma_display()
 	infodisplay += alien_plasma_display
 
-	if(!istype(mymob, /mob/living/carbon/alien/humanoid/royal/queen))
+	if(!isalienqueen(mymob))
 		alien_queen_finder = new /obj/screen/alien/alien_queen_finder
 		infodisplay += alien_queen_finder
 

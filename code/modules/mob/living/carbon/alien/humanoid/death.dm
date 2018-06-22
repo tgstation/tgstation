@@ -13,7 +13,7 @@
 	if(stat == DEAD)
 		return
 
-	for(var/mob/living/carbon/C in living_mob_list)
+	for(var/mob/living/carbon/C in GLOB.alive_mob_list)
 		if(C == src) //Make sure not to proc it on ourselves.
 			continue
 		var/obj/item/organ/alien/hivenode/node = C.getorgan(/obj/item/organ/alien/hivenode)

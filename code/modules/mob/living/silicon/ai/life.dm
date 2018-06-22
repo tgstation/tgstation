@@ -50,7 +50,7 @@
 	var/turf/T = get_turf(src)
 	var/area/A = get_area(src)
 	switch(requires_power)
-		if(POWER_REQ_NONE)
+		if(NONE)
 			return FALSE
 		if(POWER_REQ_ALL)
 			return !T || !A || ((!A.power_equip || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
@@ -65,6 +65,7 @@
 	health = maxHealth - getOxyLoss() - getToxLoss() - getBruteLoss() - getFireLoss()
 	update_stat()
 	diag_hud_set_health()
+	disconnect_shell()
 
 /mob/living/silicon/ai/update_stat()
 	if(status_flags & GODMODE)
@@ -90,10 +91,12 @@
 
 	if(see_override)
 		see_invisible = see_override
+	sync_lighting_plane_alpha()
 
 
 /mob/living/silicon/ai/proc/start_RestorePowerRoutine()
 	to_chat(src, "Backup battery online. Scanners, camera, and radio interface offline. Beginning fault-detection.")
+	end_multicam()
 	sleep(50)
 	var/turf/T = get_turf(src)
 	var/area/AIarea = get_area(src)
@@ -119,11 +122,10 @@
 		T = get_turf(src)
 		AIarea = get_area(src)
 		if(AIarea)
-			for(var/area/A in AIarea.related)
-				for (var/obj/machinery/power/apc/APC in A)
-					if (!(APC.stat & BROKEN))
-						theAPC = APC
-						break
+			for (var/obj/machinery/power/apc/APC in AIarea)
+				if (!(APC.stat & BROKEN))
+					theAPC = APC
+					break
 		if (!theAPC)
 			switch(PRP)
 				if(1)
@@ -137,16 +139,19 @@
 				ai_restore_power()
 				return
 		switch(PRP)
-			if (1) to_chat(src, "APC located. Optimizing route to APC to avoid needless power waste.")
-			if (2) to_chat(src, "Best route identified. Hacking offline APC power port.")
-			if (3) to_chat(src, "Power port upload access confirmed. Loading control program into APC power port software.")
+			if (1)
+				to_chat(src, "APC located. Optimizing route to APC to avoid needless power waste.")
+			if (2)
+				to_chat(src, "Best route identified. Hacking offline APC power port.")
+			if (3)
+				to_chat(src, "Power port upload access confirmed. Loading control program into APC power port software.")
 			if (4)
 				to_chat(src, "Transfer complete. Forcing APC to execute program.")
 				sleep(50)
 				to_chat(src, "Receiving control information from APC.")
 				sleep(2)
 				apc_override = 1
-				theAPC.ui_interact(src, state = conscious_state)
+				theAPC.ui_interact(src, state = GLOB.conscious_state)
 				apc_override = 0
 				aiRestorePowerRoutine = POWER_RESTORATION_APC_FOUND
 		sleep(50)
@@ -163,6 +168,7 @@
 		update_sight()
 
 /mob/living/silicon/ai/proc/ai_lose_power()
+	disconnect_shell()
 	aiRestorePowerRoutine = POWER_RESTORATION_START
 	blind_eyes(1)
 	update_sight()

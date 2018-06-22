@@ -1,6 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `feedback` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `feedback`;
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -20,13 +17,9 @@ DROP TABLE IF EXISTS `admin`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `admin` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `ckey` varchar(32) NOT NULL,
-  `rank` varchar(32) NOT NULL DEFAULT 'Administrator',
-  `level` int(2) NOT NULL DEFAULT '0',
-  `flags` int(16) NOT NULL DEFAULT '0',
-  `email` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `rank` varchar(32) NOT NULL,
+  PRIMARY KEY (`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -40,9 +33,12 @@ DROP TABLE IF EXISTS `admin_log`;
 CREATE TABLE `admin_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `datetime` datetime NOT NULL,
+  `round_id` int(11) unsigned NOT NULL,
   `adminckey` varchar(32) NOT NULL,
-  `adminip` varchar(18) NOT NULL,
-  `log` text NOT NULL,
+  `adminip` int(10) unsigned NOT NULL,
+  `operation` enum('add admin','remove admin','change admin rank','add rank','remove rank','change rank flags') NOT NULL,
+  `target` varchar(32) NOT NULL,
+  `log` varchar(1000) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -55,11 +51,12 @@ DROP TABLE IF EXISTS `admin_ranks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `admin_ranks` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `rank` varchar(40) NOT NULL,
-  `flags` int(16) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+  `rank` varchar(32) NOT NULL,
+  `flags` smallint(5) unsigned NOT NULL,
+  `exclude_flags` smallint(5) unsigned NOT NULL,
+  `can_edit_flags` smallint(5) unsigned NOT NULL,
+  PRIMARY KEY (`rank`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,6 +71,7 @@ CREATE TABLE `ban` (
   `bantime` datetime NOT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
+  `round_id` int(11) NOT NULL,
   `bantype` enum('PERMABAN','TEMPBAN','JOB_PERMABAN','JOB_TEMPBAN','ADMIN_PERMABAN','ADMIN_TEMPBAN') NOT NULL,
   `reason` varchar(2048) NOT NULL,
   `job` varchar(32) DEFAULT NULL,
@@ -112,6 +110,7 @@ CREATE TABLE `connection_log` (
   `datetime` datetime DEFAULT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
+  `round_id` int(11) unsigned NOT NULL,
   `ckey` varchar(45) DEFAULT NULL,
   `ip` int(10) unsigned NOT NULL,
   `computerid` varchar(45) DEFAULT NULL,
@@ -129,10 +128,13 @@ DROP TABLE IF EXISTS `death`;
 CREATE TABLE `death` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pod` varchar(50) NOT NULL,
-  `coord` varchar(32) NOT NULL,
+  `x_coord` smallint(5) unsigned NOT NULL,
+  `y_coord` smallint(5) unsigned NOT NULL,
+  `z_coord` smallint(5) unsigned NOT NULL,
   `mapname` varchar(32) NOT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
+  `round_id` int(11) NOT NULL,
   `tod` datetime NOT NULL COMMENT 'Time of death',
   `job` varchar(32) NOT NULL,
   `special` varchar(32) DEFAULT NULL,
@@ -140,7 +142,6 @@ CREATE TABLE `death` (
   `byondkey` varchar(32) NOT NULL,
   `laname` varchar(96) DEFAULT NULL,
   `lakey` varchar(32) DEFAULT NULL,
-  `gender` enum('neuter','male','female','plural') NOT NULL,
   `bruteloss` smallint(5) unsigned NOT NULL,
   `brainloss` smallint(5) unsigned NOT NULL,
   `fireloss` smallint(5) unsigned NOT NULL,
@@ -148,6 +149,8 @@ CREATE TABLE `death` (
   `toxloss` smallint(5) unsigned NOT NULL,
   `cloneloss` smallint(5) unsigned NOT NULL,
   `staminaloss` smallint(5) unsigned NOT NULL,
+  `last_words` varchar(255) DEFAULT NULL,
+  `suicide` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -160,12 +163,13 @@ DROP TABLE IF EXISTS `feedback`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `feedback` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `time` datetime NOT NULL,
-  `round_id` int(8) NOT NULL,
-  `var_name` varchar(32) NOT NULL,
-  `var_value` int(16) DEFAULT NULL,
-  `details` text,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `datetime` datetime NOT NULL,
+  `round_id` int(11) unsigned NOT NULL,
+  `key_name` varchar(32) NOT NULL,
+  `key_type` enum('text', 'amount', 'tally', 'nested tally', 'associative') NOT NULL,
+  `version` tinyint(3) unsigned NOT NULL,
+  `json` json NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -200,6 +204,7 @@ CREATE TABLE `legacy_population` (
   `time` datetime NOT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
+  `round_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -220,6 +225,7 @@ CREATE TABLE `library` (
   `ckey` varchar(32) NOT NULL DEFAULT 'LEGACY',
   `datetime` datetime NOT NULL,
   `deleted` tinyint(1) unsigned DEFAULT NULL,
+  `round_id_created` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `deleted_idx` (`deleted`),
   KEY `idx_lib_id_del` (`id`,`deleted`),
@@ -243,13 +249,54 @@ CREATE TABLE `messages` (
   `text` varchar(2048) NOT NULL,
   `timestamp` datetime NOT NULL,
   `server` varchar(32) DEFAULT NULL,
+  `server_ip` int(10) unsigned NOT NULL,
+  `server_port` smallint(5) unsigned NOT NULL,
+  `round_id` int(11) unsigned NOT NULL,
   `secret` tinyint(1) unsigned NOT NULL,
   `lasteditor` varchar(32) DEFAULT NULL,
   `edits` text,
+  `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `idx_msg_ckey_time` (`targetckey`,`timestamp`),
-  KEY `idx_msg_type_ckeys_time` (`type`,`targetckey`,`adminckey`,`timestamp`),
-  KEY `idx_msg_type_ckey_time_odr` (`type`,`targetckey`,`timestamp`)
+  KEY `idx_msg_ckey_time` (`targetckey`,`timestamp`, `deleted`),
+  KEY `idx_msg_type_ckeys_time` (`type`,`targetckey`,`adminckey`,`timestamp`, `deleted`),
+  KEY `idx_msg_type_ckey_time_odr` (`type`,`targetckey`,`timestamp`, `deleted`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `role_time`
+--
+
+DROP TABLE IF EXISTS `role_time`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+
+CREATE TABLE `role_time`
+( `ckey` VARCHAR(32) NOT NULL ,
+ `job` VARCHAR(32) NOT NULL ,
+ `minutes` INT UNSIGNED NOT NULL,
+ PRIMARY KEY (`ckey`, `job`)
+ ) ENGINE = InnoDB;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `role_time`
+--
+
+DROP TABLE IF EXISTS `role_time_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+
+CREATE TABLE IF NOT EXISTS `role_time_log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ckey` varchar(32) NOT NULL,
+  `job` varchar(128) NOT NULL,
+  `delta` int(11) NOT NULL,
+  `datetime` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `ckey` (`ckey`),
+  KEY `job` (`job`),
+  KEY `datetime` (`datetime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -261,15 +308,17 @@ DROP TABLE IF EXISTS `player`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `player` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `ckey` varchar(32) NOT NULL,
   `firstseen` datetime NOT NULL,
+  `firstseen_round_id` int(11) unsigned NOT NULL,
   `lastseen` datetime NOT NULL,
+  `lastseen_round_id` int(11) unsigned NOT NULL,
   `ip` int(10) unsigned NOT NULL,
   `computerid` varchar(32) NOT NULL,
   `lastadminrank` varchar(32) NOT NULL DEFAULT 'Player',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `ckey` (`ckey`),
+  `accountjoindate` DATE DEFAULT NULL,
+  `flags` smallint(5) unsigned DEFAULT '0' NOT NULL,
+  PRIMARY KEY (`ckey`),
   KEY `idx_player_cid_ckey` (`computerid`,`ckey`),
   KEY `idx_player_ip_ckey` (`ip`,`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -286,12 +335,12 @@ CREATE TABLE `poll_option` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pollid` int(11) NOT NULL,
   `text` varchar(255) NOT NULL,
-  `percentagecalc` tinyint(1) NOT NULL DEFAULT '1',
   `minval` int(3) DEFAULT NULL,
   `maxval` int(3) DEFAULT NULL,
   `descmin` varchar(32) DEFAULT NULL,
   `descmid` varchar(32) DEFAULT NULL,
   `descmax` varchar(32) DEFAULT NULL,
+  `default_percentage_calc` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `idx_pop_pollid` (`pollid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -363,7 +412,54 @@ CREATE TABLE `poll_vote` (
   KEY `idx_pvote_optionid_ckey` (`optionid`,`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `round`
+--
+DROP TABLE IF EXISTS `round`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `round` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `initialize_datetime` DATETIME NOT NULL,
+  `start_datetime` DATETIME NULL,
+  `shutdown_datetime` DATETIME NULL,
+  `end_datetime` DATETIME NULL,
+  `server_ip` INT(10) UNSIGNED NOT NULL,
+  `server_port` SMALLINT(5) UNSIGNED NOT NULL,
+  `commit_hash` CHAR(40) NULL,
+  `game_mode` VARCHAR(32) NULL,
+  `game_mode_result` VARCHAR(64) NULL,
+  `end_state` VARCHAR(64) NULL,
+  `shuttle_name` VARCHAR(64) NULL,
+  `map_name` VARCHAR(32) NULL,
+  `station_name` VARCHAR(80) NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+--
+-- Table structure for table `schema_revision`
+--
+DROP TABLE IF EXISTS `schema_revision`;
+CREATE TABLE `schema_revision` (
+  `major` TINYINT(3) unsigned NOT NULL,
+  `minor` TINYINT(3) unsigned NOT NULL,
+  `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`major`, `minor`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DELIMITER $$
+CREATE TRIGGER `role_timeTlogupdate` AFTER UPDATE ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (NEW.CKEY, NEW.job, NEW.minutes-OLD.minutes);
+END
+$$
+CREATE TRIGGER `role_timeTloginsert` AFTER INSERT ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (NEW.ckey, NEW.job, NEW.minutes);
+END
+$$
+CREATE TRIGGER `role_timeTlogdelete` AFTER DELETE ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (OLD.ckey, OLD.job, 0-OLD.minutes);
+END
+$$
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

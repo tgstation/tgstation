@@ -1,3 +1,6 @@
+/datum/hud/larva
+	ui_style = 'icons/mob/screen_alien.dmi'
+
 /datum/hud/larva/New(mob/owner)
 	..()
 	var/obj/screen/using
@@ -18,9 +21,8 @@
 	pull_icon.screen_loc = ui_pull_resist
 	hotkeybuttons += pull_icon
 
-	using = new/obj/screen/wheel/talk
-	using.screen_loc = ui_alien_talk_wheel
-	wheels += using
+	using = new/obj/screen/language_menu
+	using.screen_loc = ui_alien_language_menu
 	static_inventory += using
 
 	zone_select = new /obj/screen/zone_sel/alien()

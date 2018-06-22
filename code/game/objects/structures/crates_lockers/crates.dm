@@ -13,13 +13,15 @@
 	climb_time = 10 //real fast, because let's be honest stepping into or onto a crate is easy
 	climb_stun = 0 //climbing onto crates isn't hard, guys
 	delivery_icon = "deliverycrate"
-	var/obj/item/weapon/paper/manifest/manifest
+	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
 
 /obj/structure/closet/crate/New()
 	..()
+	if(icon_state == "[initial(icon_state)]open")
+		opened = TRUE
 	update_icon()
 
-/obj/structure/closet/crate/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/structure/closet/crate/CanPass(atom/movable/mover, turf/target)
 	if(!istype(mover, /obj/structure/closet))
 		var/obj/structure/closet/crate/locatedcrate = locate(/obj/structure/closet/crate) in get_turf(mover)
 		if(locatedcrate) //you can walk on it like tables, if you're not in an open crate trying to move to a closed crate
@@ -37,10 +39,11 @@
 		add_overlay("manifest")
 
 /obj/structure/closet/crate/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(manifest)
 		tear_manifest(user)
-		return
-	..()
 
 /obj/structure/closet/crate/open(mob/living/user)
 	. = ..()
@@ -61,8 +64,17 @@
 	manifest = null
 	update_icon()
 
+/obj/structure/closet/crate/coffin
+	name = "coffin"
+	desc = "It's a burial receptacle for the dearly departed."
+	icon_state = "coffin"
+	resistance_flags = FLAMMABLE
+	max_integrity = 70 
+	material_drop = /obj/item/stack/sheet/mineral/wood
+	material_drop_amount = 5
+
 /obj/structure/closet/crate/internals
-	desc = "A internals crate."
+	desc = "An internals crate."
 	name = "internals crate"
 	icon_state = "o2crate"
 
@@ -85,24 +97,24 @@
 	name = "blood freezer"
 	desc = "A freezer containing packs of blood."
 
-/obj/structure/closet/crate/freezer/blood/New()
+/obj/structure/closet/crate/freezer/blood/PopulateContents()
 	. = ..()
-	new /obj/item/weapon/reagent_containers/blood/empty(src)
-	new /obj/item/weapon/reagent_containers/blood/empty(src)
-	new /obj/item/weapon/reagent_containers/blood/AMinus(src)
-	new /obj/item/weapon/reagent_containers/blood/BMinus(src)
-	new /obj/item/weapon/reagent_containers/blood/BPlus(src)
-	new /obj/item/weapon/reagent_containers/blood/OMinus(src)
-	new /obj/item/weapon/reagent_containers/blood/OPlus(src)
-	new /obj/item/weapon/reagent_containers/blood/lizard(src)
+	new /obj/item/reagent_containers/blood(src)
+	new /obj/item/reagent_containers/blood(src)
+	new /obj/item/reagent_containers/blood/AMinus(src)
+	new /obj/item/reagent_containers/blood/BMinus(src)
+	new /obj/item/reagent_containers/blood/BPlus(src)
+	new /obj/item/reagent_containers/blood/OMinus(src)
+	new /obj/item/reagent_containers/blood/OPlus(src)
+	new /obj/item/reagent_containers/blood/lizard(src)
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/reagent_containers/blood/random(src)
+		new /obj/item/reagent_containers/blood/random(src)
 
 /obj/structure/closet/crate/freezer/surplus_limbs
 	name = "surplus prosthetic limbs"
 	desc = "A crate containing an assortment of cheap prosthetic limbs."
 
-/obj/structure/closet/crate/freezer/surplus_limbs/New()
+/obj/structure/closet/crate/freezer/surplus_limbs/PopulateContents()
 	. = ..()
 	new /obj/item/bodypart/l_arm/robot/surplus(src)
 	new /obj/item/bodypart/l_arm/robot/surplus(src)
@@ -135,13 +147,42 @@
 	name = "\improper RCD crate"
 	icon_state = "engi_crate"
 
-/obj/structure/closet/crate/rcd/New()
+/obj/structure/closet/crate/rcd/PopulateContents()
 	..()
 	for(var/i in 1 to 4)
-		new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/rcd(src)
+		new /obj/item/rcd_ammo(src)
+	new /obj/item/construction/rcd(src)
 
 /obj/structure/closet/crate/science
 	name = "science crate"
 	desc = "A science crate."
 	icon_state = "scicrate"
+
+/obj/structure/closet/crate/solarpanel_small
+	name = "budget solar panel crate"
+	icon_state = "engi_e_crate"
+
+/obj/structure/closet/crate/solarpanel_small/PopulateContents()
+	..()
+	for(var/i in 1 to 13)
+		new /obj/item/solar_assembly(src)
+	new /obj/item/circuitboard/computer/solar_control(src)
+	new /obj/item/paper/guides/jobs/engi/solars(src)
+	new /obj/item/electronics/tracker(src)
+
+/obj/structure/closet/crate/goldcrate
+	name = "gold crate"
+
+/obj/structure/closet/crate/goldcrate/PopulateContents()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/stack/sheet/mineral/gold(src, 1, FALSE)
+	new /obj/item/storage/belt/champion(src)
+
+/obj/structure/closet/crate/silvercrate
+	name = "silver crate"
+
+/obj/structure/closet/crate/silvercrate/PopulateContents()
+	..()
+	for(var/i in 1 to 5)
+		new /obj/item/coin/silver(src)

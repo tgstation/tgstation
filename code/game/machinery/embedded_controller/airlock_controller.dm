@@ -7,19 +7,20 @@
 
 /datum/computer/file/embedded_program/airlock_controller
 	var/id_tag
-	var/exterior_door_tag
-	var/interior_door_tag
-	var/airpump_tag
-	var/sensor_tag
-	var/sanitize_external
+	var/exterior_door_tag //Burn chamber facing door
+	var/interior_door_tag //Station facing door
+	var/airpump_tag //See: dp_vent_pump.dm
+	var/sensor_tag //See: /obj/machinery/airlock_sensor
+	var/sanitize_external //Before the interior airlock opens, do we first drain all gases inside the chamber and then repressurize?
 
 	state = AIRLOCK_STATE_CLOSED
 	var/target_state = AIRLOCK_STATE_CLOSED
 	var/sensor_pressure = null
 
-/datum/computer/file/embedded_program/airlock_controller/receive_signal(datum/signal/signal, receive_method, receive_param)
+/datum/computer/file/embedded_program/airlock_controller/receive_signal(datum/signal/signal)
 	var/receive_tag = signal.data["tag"]
-	if(!receive_tag) return
+	if(!receive_tag)
+		return
 
 	if(receive_tag==sensor_tag)
 		if(signal.data["pressure"])
@@ -67,19 +68,17 @@
 						state = AIRLOCK_STATE_CLOSED
 						process_again = 1
 					else
-						var/datum/signal/signal = new
-						signal.data["tag"] = interior_door_tag
-						signal.data["command"] = "secure_close"
-						post_signal(signal)
+						post_signal(new /datum/signal(list(
+							"tag" = interior_door_tag,
+							"command" = "secure_close"
+						)))
 				else
 					if(memory["pump_status"] != "off")
-						var/datum/signal/signal = new
-						signal.data = list(
+						post_signal(new /datum/signal(list(
 							"tag" = airpump_tag,
 							"power" = 0,
-							"sigtype"="command"
-						)
-						post_signal(signal)
+							"sigtype" = "command"
+						)))
 
 			if(AIRLOCK_STATE_PRESSURIZE)
 				if(target_state < state)
@@ -88,16 +87,15 @@
 							state = AIRLOCK_STATE_INOPEN
 							process_again = 1
 						else
-							var/datum/signal/signal = new
-							signal.data["tag"] = interior_door_tag
-							signal.data["command"] = "secure_open"
-							post_signal(signal)
+							post_signal(new /datum/signal(list(
+								"tag" = interior_door_tag,
+								"command" = "secure_open"
+							)))
 					else
-						var/datum/signal/signal = new
-						signal.data = list(
+						var/datum/signal/signal = new(list(
 							"tag" = airpump_tag,
-							"sigtype"="command"
-						)
+							"sigtype" = "command"
+						))
 						if(memory["pump_status"] == "siphon")
 							signal.data["stabalize"] = 1
 						else if(memory["pump_status"] != "release")
@@ -113,29 +111,27 @@
 						state = AIRLOCK_STATE_DEPRESSURIZE
 						process_again = 1
 					else
-						var/datum/signal/signal = new
-						signal.data["tag"] = interior_door_tag
-						signal.data["command"] = "secure_close"
-						post_signal(signal)
+						post_signal(new /datum/signal(list(
+							"tag" = interior_door_tag,
+							"command" = "secure_close"
+						)))
 				else if(target_state < state)
 					if(memory["exterior_status"] == "closed")
 						state = AIRLOCK_STATE_PRESSURIZE
 						process_again = 1
 					else
-						var/datum/signal/signal = new
-						signal.data["tag"] = exterior_door_tag
-						signal.data["command"] = "secure_close"
-						post_signal(signal)
+						post_signal(new /datum/signal(list(
+							"tag" = exterior_door_tag,
+							"command" = "secure_close"
+						)))
 
 				else
 					if(memory["pump_status"] != "off")
-						var/datum/signal/signal = new
-						signal.data = list(
+						post_signal(new /datum/signal(list(
 							"tag" = airpump_tag,
 							"power" = 0,
-							"sigtype"="command"
-						)
-						post_signal(signal)
+							"sigtype" = "command"
+						)))
 
 			if(AIRLOCK_STATE_DEPRESSURIZE)
 				var/target_pressure = ONE_ATMOSPHERE*0.05
@@ -147,10 +143,10 @@
 						if(memory["exterior_status"] == "open")
 							state = AIRLOCK_STATE_OUTOPEN
 						else
-							var/datum/signal/signal = new
-							signal.data["tag"] = exterior_door_tag
-							signal.data["command"] = "secure_open"
-							post_signal(signal)
+							post_signal(new /datum/signal(list(
+								"tag" = exterior_door_tag,
+								"command" = "secure_open"
+							)))
 					else if(target_state < state)
 						state = AIRLOCK_STATE_CLOSED
 						process_again = 1
@@ -158,12 +154,10 @@
 					state = AIRLOCK_STATE_CLOSED
 					process_again = 1
 				else
-					var/datum/signal/signal = new
-					signal.transmission_method = 1 //radio signal
-					signal.data = list(
+					var/datum/signal/signal = new(list(
 						"tag" = airpump_tag,
-						"sigtype"="command"
-					)
+						"sigtype" = "command"
+					))
 					if(memory["pump_status"] == "release")
 						signal.data["purge"] = 1
 					else if(memory["pump_status"] != "siphon")
@@ -180,19 +174,17 @@
 							state = AIRLOCK_STATE_CLOSED
 							process_again = 1
 					else
-						var/datum/signal/signal = new
-						signal.data["tag"] = exterior_door_tag
-						signal.data["command"] = "secure_close"
-						post_signal(signal)
+						post_signal(new /datum/signal(list(
+							"tag" = exterior_door_tag,
+							"command" = "secure_close"
+						)))
 				else
 					if(memory["pump_status"] != "off")
-						var/datum/signal/signal = new
-						signal.data = list(
+						post_signal(new /datum/signal(list(
 							"tag" = airpump_tag,
 							"power" = 0,
-							"sigtype"="command"
-						)
-						post_signal(signal)
+							"sigtype" = "command"
+						)))
 
 	memory["sensor_pressure"] = sensor_pressure
 	memory["processing"] = state != target_state
@@ -206,9 +198,9 @@
 	icon_state = "airlock_control_standby"
 
 	name = "airlock console"
-	density = 0
+	density = FALSE
 
-	frequency = 1449
+	frequency = FREQ_AIRLOCK_CONTROL
 	power_channel = ENVIRON
 
 	// Setup parameters only
@@ -219,8 +211,35 @@
 	var/sensor_tag
 	var/sanitize_external
 
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix
+	name = "Incinerator Access Console"
+	airpump_tag = INCINERATOR_TOXMIX_DP_VENTPUMP
+	exterior_door_tag = INCINERATOR_TOXMIX_AIRLOCK_EXTERIOR
+	id_tag = INCINERATOR_TOXMIX_AIRLOCK_CONTROLLER
+	interior_door_tag = INCINERATOR_TOXMIX_AIRLOCK_INTERIOR
+	sanitize_external = TRUE
+	sensor_tag = INCINERATOR_TOXMIX_AIRLOCK_SENSOR
+
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_atmos
+	name = "Incinerator Access Console"
+	airpump_tag = INCINERATOR_ATMOS_DP_VENTPUMP
+	exterior_door_tag = INCINERATOR_ATMOS_AIRLOCK_EXTERIOR
+	id_tag = INCINERATOR_ATMOS_AIRLOCK_CONTROLLER
+	interior_door_tag = INCINERATOR_ATMOS_AIRLOCK_INTERIOR
+	sanitize_external = TRUE
+	sensor_tag = INCINERATOR_ATMOS_AIRLOCK_SENSOR
+
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_syndicatelava
+	name = "Incinerator Access Console"
+	airpump_tag = INCINERATOR_SYNDICATELAVA_DP_VENTPUMP
+	exterior_door_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_EXTERIOR
+	id_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_CONTROLLER
+	interior_door_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_INTERIOR
+	sanitize_external = TRUE
+	sensor_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_SENSOR
+
 /obj/machinery/embedded_controller/radio/airlock_controller/Initialize(mapload)
-	..()
+	. = ..()
 	if(!mapload)
 		return
 
@@ -264,21 +283,21 @@
 
 	switch(state)
 		if(AIRLOCK_STATE_INOPEN)
-			state_options = {"<A href='?src=\ref[src];command=cycle_closed'>Close Interior Airlock</A><BR>
-<A href='?src=\ref[src];command=cycle_exterior'>Cycle to Exterior Airlock</A><BR>"}
+			state_options = {"<A href='?src=[REF(src)];command=cycle_closed'>Close Interior Airlock</A><BR>
+<A href='?src=[REF(src)];command=cycle_exterior'>Cycle to Exterior Airlock</A><BR>"}
 			current_status = "Interior Airlock Open<BR><span class='good'>Chamber Pressurized</span>"
 		if(AIRLOCK_STATE_PRESSURIZE)
-			state_options = "<A href='?src=\ref[src];command=abort'>Abort Cycling</A><BR>"
+			state_options = "<A href='?src=[REF(src)];command=abort'>Abort Cycling</A><BR>"
 			current_status = "Cycling to Interior Airlock<BR><span class='average'>Chamber Pressurizing</span>"
 		if(AIRLOCK_STATE_CLOSED)
-			state_options = {"<A href='?src=\ref[src];command=cycle_interior'>Open Interior Airlock</A><BR>
-<A href='?src=\ref[src];command=cycle_exterior'>Open Exterior Airlock</A><BR>"}
+			state_options = {"<A href='?src=[REF(src)];command=cycle_interior'>Open Interior Airlock</A><BR>
+<A href='?src=[REF(src)];command=cycle_exterior'>Open Exterior Airlock</A><BR>"}
 		if(AIRLOCK_STATE_DEPRESSURIZE)
-			state_options = "<A href='?src=\ref[src];command=abort'>Abort Cycling</A><BR>"
+			state_options = "<A href='?src=[REF(src)];command=abort'>Abort Cycling</A><BR>"
 			current_status = "Cycling to Exterior Airlock<BR><span class='average'>Chamber Depressurizing</span>"
 		if(AIRLOCK_STATE_OUTOPEN)
-			state_options = {"<A href='?src=\ref[src];command=cycle_interior'>Cycle to Interior Airlock</A><BR>
-<A href='?src=\ref[src];command=cycle_closed'>Close Exterior Airlock</A><BR>"}
+			state_options = {"<A href='?src=[REF(src)];command=cycle_interior'>Cycle to Interior Airlock</A><BR>
+<A href='?src=[REF(src)];command=cycle_closed'>Close Exterior Airlock</A><BR>"}
 			current_status = "Exterior Airlock Open<BR><span class='bad'>Chamber Depressurized</span>"
 
 	var/output = {"<h3>Airlock Status</h3>
@@ -289,6 +308,7 @@
 <div class='line'><div class='statusLabel'>\> Control Pump:</div><div class='statusValue'>[pump_status]</div></div>
 <div class='line'><div class='statusLabel'>\> Interior Door:</div><div class='statusValue'>[interior_status]</div></div>
 <div class='line'><div class='statusLabel'>\> Exterior Door:</div><div class='statusValue'>[exterior_status]</div></div>
+<div class='clearBoth'></div>
 </div>
 [state_options]"}
 

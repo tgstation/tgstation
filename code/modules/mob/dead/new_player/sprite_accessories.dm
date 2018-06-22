@@ -56,7 +56,7 @@
 	var/gender_specific //Something that can be worn by either gender, but looks different on each
 	var/color_src = MUTCOLORS	//Currently only used by mutantparts so don't worry about hair and stuff. This is the source that this accessory will get its color from. Default is MUTCOLOR, but can also be HAIR, FACEHAIR, EYECOLOR and 0 if none.
 	var/hasinner		//Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
-	var/locked = 0		//Is this part locked from roundstart selection? Used for parts that apply effects
+	var/locked = FALSE		//Is this part locked from roundstart selection? Used for parts that apply effects
 	var/dimension_x = 32
 	var/dimension_y = 32
 	var/center = FALSE	//Should we center the sprite?
@@ -239,6 +239,10 @@
 /datum/sprite_accessory/hair/devillock
 	name = "Devil Lock"
 	icon_state = "hair_devilock"
+
+/datum/sprite_accessory/hair/drillhairextended
+	name = "Extended Drill Hair"
+	icon_state = "hair_drillhairextended"
 
 /datum/sprite_accessory/hair/dreadlocks
 	name = "Dreadlocks"
@@ -476,6 +480,10 @@
 	name = "Long Hair 2"
 	icon_state = "hair_long2"
 
+/datum/sprite_accessory/hair/long3
+	name = "Long Hair 3"
+	icon_state = "hair_long3"
+
 /datum/sprite_accessory/hair/pixie
 	name = "Pixie Cut"
 	icon_state = "hair_pixie"
@@ -499,6 +507,10 @@
 /datum/sprite_accessory/hair/sidecut
 	name = "Sidecut"
 	icon_state = "hair_sidecut"
+
+/datum/sprite_accessory/hair/largebun
+	name = "Large Bun"
+	icon_state = "hair_largebun"
 
 /////////////////////////////
 // Facial Hair Definitions //
@@ -764,6 +776,32 @@
 	name = "Ladies Commie"
 	icon_state = "female_commie"
 	gender = FEMALE
+
+/datum/sprite_accessory/underwear/swimsuit
+	name = "Ladies Black Swimsuit"
+	icon_state = "swim_black"
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/swimsuit_blue
+	name = "Ladies Blue Swimsuit"
+	icon_state = "swim_blue"
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/swimsuit_green
+	name = "Ladies Green Swimsuit"
+	icon_state = "swim_green"
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/swimsuit_purple
+	name = "Ladies Purple Swimsuit"
+	icon_state = "swim_purple"
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/swimsuit_red
+	name = "Ladies Red Swimsuit"
+	icon_state = "swim_red"
+	gender = FEMALE
+
 
 ////////////////////////////
 // Undershirt Definitions //
@@ -1036,7 +1074,15 @@
 	icon_state = "shirt_alien"
 	gender = NEUTER
 
+/datum/sprite_accessory/undershirt/sports_bra
+	name = "Sports Bra"
+	icon_state = "sports_bra"
+	gender = NEUTER
 
+/datum/sprite_accessory/undershirt/sports_bra2
+	name = "Alt Sports Bra"
+	icon_state = "sports_bra_alt"
+	gender = NEUTER
 
 ///////////////////////
 // Socks Definitions //
@@ -1381,3 +1427,80 @@
 
 /datum/sprite_accessory/legs/digitigrade_lizard
 	name = "Digitigrade Legs"
+
+/datum/sprite_accessory/caps
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+	color_src = HAIR
+
+/datum/sprite_accessory/caps/round
+	name = "Round"
+	icon_state = "round"
+
+/datum/sprite_accessory/moth_wings
+	icon = 'icons/mob/wings.dmi'
+	color_src = null
+
+/datum/sprite_accessory/moth_wings/plain
+	name = "Plain"
+	icon_state = "plain"
+
+/datum/sprite_accessory/moth_wings/monarch
+	name = "Monarch"
+	icon_state = "monarch"
+
+/datum/sprite_accessory/moth_wings/luna
+	name = "Luna"
+	icon_state = "luna"
+
+/datum/sprite_accessory/moth_wings/atlas
+	name = "Atlas"
+	icon_state = "atlas"
+
+/datum/sprite_accessory/moth_wings/reddish
+	name = "Reddish"
+	icon_state = "redish"
+
+/datum/sprite_accessory/moth_wings/royal
+	name = "Royal"
+	icon_state = "royal"
+
+/datum/sprite_accessory/moth_wings/gothic
+	name = "Gothic"
+	icon_state = "gothic"
+
+/datum/sprite_accessory/moth_wings/lovers
+	name = "Lovers"
+	icon_state = "lovers"
+
+/datum/sprite_accessory/moth_wings/whitefly
+	name = "White Fly"
+	icon_state = "whitefly"
+
+/datum/sprite_accessory/moth_wings/punished
+	name = "Burnt Off"
+	icon_state = "punished"
+	locked = TRUE
+
+/datum/sprite_accessory/moth_wings/firewatch
+	name = "Firewatch"
+	icon_state = "firewatch"
+
+/datum/sprite_accessory/moth_wings/deathhead
+	name = "Deathshead"
+	icon_state = "deathhead"
+
+/datum/sprite_accessory/moth_wings/poison
+	name = "Poison"
+	icon_state = "poison"
+
+/datum/sprite_accessory/moth_wings/ragged
+	name = "Ragged"
+	icon_state = "ragged"
+
+/datum/sprite_accessory/moth_wings/moonfly
+	name = "Moon Fly"
+	icon_state = "moonfly"
+
+/datum/sprite_accessory/moth_wings/snow
+	name = "Snow"
+	icon_state = "snow"

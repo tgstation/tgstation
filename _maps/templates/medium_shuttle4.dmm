@@ -1,159 +1,83 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
-/turf/open/space,
 /turf/closed/indestructible/oldshuttle/corner{
-	tag = "icon-corner (WEST)";
-	icon_state = "corner";
 	dir = 8
 	},
-/area/ruin/powered)
+/area/ruin/powered/shuttle/medium_4)
 "c" = (
 /turf/closed/indestructible/oldshuttle,
-/area/ruin/powered)
+/area/ruin/powered/shuttle/medium_4)
 "d" = (
-/obj/machinery/door/airlock/glass,
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
-/area/ruin/powered)
+/obj/machinery/door/airlock/public/glass,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered/shuttle/medium_4)
 "e" = (
-/turf/open/space,
 /turf/closed/indestructible/oldshuttle/corner,
-/area/ruin/powered)
+/area/ruin/powered/shuttle/medium_4)
 "f" = (
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
 /turf/closed/indestructible/oldshuttle/corner{
-	tag = "icon-corner (NORTH)";
-	icon_state = "corner";
 	dir = 1
 	},
-/area/ruin/powered)
+/area/ruin/powered/shuttle/medium_4)
 "g" = (
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
-/area/ruin/powered)
+/turf/open/floor/oldshuttle,
+/area/ruin/powered/shuttle/medium_4)
 "h" = (
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
 /turf/closed/indestructible/oldshuttle/corner{
-	tag = "icon-corner (EAST)";
-	icon_state = "corner";
 	dir = 4
 	},
-/area/ruin/powered)
+/area/ruin/powered/shuttle/medium_4)
 "i" = (
 /obj/structure/closet{
 	icon_state = "oldcloset"
 	},
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
-/area/ruin/powered)
+/turf/open/floor/oldshuttle,
+/area/ruin/powered/shuttle/medium_4)
 "j" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	tag = "icon-propulsion (NORTH)";
-	icon_state = "propulsion";
 	dir = 1
 	},
 /turf/open/space,
-/area/ruin/powered)
+/area/ruin/powered/shuttle/medium_4)
 "k" = (
 /turf/closed/indestructible/oldshuttle{
-	tag = "icon-orange";
 	icon_state = "orange"
 	},
-/area/ruin/powered)
+/area/ruin/powered/shuttle/medium_4)
 "l" = (
 /obj/structure/chair/old{
-	tag = "icon-chairold (NORTH)";
 	icon_state = "chairold";
 	dir = 1
 	},
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
-/area/ruin/powered)
-"m" = (
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
-/turf/closed/indestructible/oldshuttle/corner{
-	tag = "icon-corner (WEST)";
-	icon_state = "corner";
-	dir = 8
-	},
-/area/ruin/powered)
-"n" = (
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
-/turf/closed/indestructible/oldshuttle/corner,
-/area/ruin/powered)
-"o" = (
-/turf/open/space,
-/turf/closed/indestructible/oldshuttle/corner{
-	tag = "icon-corner (NORTH)";
-	icon_state = "corner";
-	dir = 1
-	},
-/area/ruin/powered)
-"p" = (
-/turf/open/space,
-/turf/closed/indestructible/oldshuttle/corner{
-	tag = "icon-corner (EAST)";
-	icon_state = "corner";
-	dir = 4
-	},
-/area/ruin/powered)
-"q" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/turf/closed/indestructible/oldshuttle/corner,
-/area/ruin/powered)
+/turf/open/floor/oldshuttle,
+/area/ruin/powered/shuttle/medium_4)
 "r" = (
 /obj/machinery/power/generator,
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
-/area/ruin/powered)
+/turf/open/floor/oldshuttle,
+/area/ruin/powered/shuttle/medium_4)
 "s" = (
 /obj/machinery/power/smes,
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
-/area/ruin/powered)
+/turf/open/floor/oldshuttle,
+/area/ruin/powered/shuttle/medium_4)
 "t" = (
 /obj/structure/shuttle/engine/propulsion/burst/left,
 /turf/open/space,
-/area/ruin/powered)
+/area/ruin/powered/shuttle/medium_4)
 "u" = (
 /obj/structure/shuttle/engine/propulsion/burst/right,
 /turf/open/space,
-/area/ruin/powered)
+/area/ruin/powered/shuttle/medium_4)
 "v" = (
 /obj/structure/shuttle/engine/propulsion/burst/right,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/powered)
+/area/ruin/powered/shuttle/medium_4)
 "w" = (
 /obj/structure/shuttle/engine/propulsion/burst,
 /turf/open/space,
-/area/ruin/powered)
+/area/ruin/powered/shuttle/medium_4)
 
 (1,1,1) = {"
 a
@@ -217,7 +141,7 @@ g
 g
 g
 g
-m
+b
 d
 k
 u
@@ -233,8 +157,8 @@ c
 g
 g
 g
-m
-o
+b
+f
 a
 a
 a
@@ -254,7 +178,7 @@ c
 c
 c
 c
-p
+h
 a
 "}
 (7,1,1) = {"
@@ -272,7 +196,7 @@ i
 c
 s
 c
-p
+h
 "}
 (8,1,1) = {"
 b
@@ -288,7 +212,7 @@ l
 l
 c
 g
-n
+e
 c
 "}
 (9,1,1) = {"
@@ -302,7 +226,7 @@ l
 l
 l
 l
-m
+b
 c
 g
 g
@@ -336,7 +260,7 @@ l
 l
 l
 l
-n
+e
 c
 g
 g
@@ -356,7 +280,7 @@ l
 l
 c
 g
-m
+b
 c
 "}
 (13,1,1) = {"
@@ -374,7 +298,7 @@ i
 c
 s
 c
-o
+f
 "}
 (14,1,1) = {"
 a
@@ -390,7 +314,7 @@ c
 c
 c
 c
-o
+f
 a
 "}
 (15,1,1) = {"
@@ -403,8 +327,8 @@ c
 g
 g
 g
-n
-p
+e
+h
 a
 a
 a
@@ -421,7 +345,7 @@ g
 g
 g
 g
-n
+e
 d
 k
 t
@@ -472,7 +396,7 @@ a
 a
 a
 a
-q
+e
 c
 k
 v

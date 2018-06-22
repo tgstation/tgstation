@@ -1,26 +1,24 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "c" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	tag = "icon-propulsion (NORTH)";
-	icon_state = "propulsion";
 	dir = 1
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "d" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Shuttle Airlock"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)
 "e" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)
 "f" = (
 /turf/open/floor/plasteel,
@@ -40,11 +38,11 @@
 	dir = 8
 	},
 /obj/structure/table/glass,
-/obj/item/weapon/gun/medbeam,
+/obj/item/gun/medbeam,
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "i" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "j" = (
@@ -57,19 +55,17 @@
 	},
 /obj/structure/table/glass,
 /obj/machinery/recharger,
-/obj/item/weapon/gun/energy/laser/retro,
+/obj/item/gun/energy/laser/retro,
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "k" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4;
-	icon_state = "propulsion";
-	tag = "icon-propulsion (WEST)"
+	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "l" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/plating/abductor,
@@ -79,13 +75,13 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "n" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "o" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Shuttle Airlock"
 	},
 /obj/docking_port/mobile{
@@ -96,13 +92,11 @@
 	id = "whiteship";
 	launch_status = 0;
 	name = "White Ship";
-	port_angle = 90;
+	port_direction = 4;
 	preferred_direction = 1;
-	roundstart_move = "whiteship_away";
-	timid = 1;
 	width = 9
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)
 "p" = (
 /obj/structure/window/reinforced{
@@ -110,13 +104,13 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/table/glass,
-/obj/item/weapon/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/suit/space/hardsuit/engine/elite,
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "q" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/plating/abductor,

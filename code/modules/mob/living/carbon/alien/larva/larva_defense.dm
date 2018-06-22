@@ -9,7 +9,7 @@
 			visible_message("<span class='danger'>[M] has kicked [src]!</span>", \
 					"<span class='userdanger'>[M] has kicked [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 			if ((stat != DEAD) && (damage > 4.9))
-				Paralyse(rand(5,10))
+				Unconscious(rand(100,200))
 
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 			apply_damage(damage, BRUTE, affecting)
@@ -25,7 +25,7 @@
 		new /datum/forced_movement(src, get_step_away(user,src, 30), 1)
 		return 1
 
-/mob/living/carbon/alien/larva/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
+/mob/living/carbon/alien/larva/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!no_effect && !visual_effect_icon)
 		visual_effect_icon = ATTACK_EFFECT_BITE
 	..()

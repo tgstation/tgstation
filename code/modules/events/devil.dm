@@ -6,6 +6,7 @@
 /datum/round_event/ghost_role/devil
 	var/success_spawn = 0
 	role_name = "devil"
+	fakeable = FALSE
 
 /datum/round_event/ghost_role/devil/kill()
 	if(!success_spawn && control)
@@ -14,13 +15,11 @@
 
 /datum/round_event/ghost_role/devil/spawn_role()
 	//selecting a spawn_loc
-	var/list/spawn_locs = latejoin
-	var/spawn_loc = pick(spawn_locs)
-	if(!spawn_loc)
+	if(!SSjob.latejoin_trackers.len)
 		return MAP_ERROR
 
 	//selecting a candidate player
-	var/list/candidates = get_candidates("devil", null, ROLE_DEVIL)
+	var/list/candidates = get_candidates(ROLE_DEVIL, null, ROLE_DEVIL)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
@@ -30,16 +29,12 @@
 	var/datum/mind/Mind = create_devil_mind(key)
 	Mind.active = 1
 
-	var/mob/living/carbon/human/devil = create_event_devil(spawn_loc)
+	var/mob/living/carbon/human/devil = create_event_devil()
 	Mind.transfer_to(devil)
-	ticker.mode.finalize_devil(Mind, FALSE)
-	ticker.mode.add_devil_objectives(src, 2)
-	Mind.announceDevilLaws()
-	Mind.announce_objectives()
-
+	add_devil(devil, ascendable = FALSE)
 
 	spawned_mobs += devil
-	message_admins("[key_name_admin(devil)] has been made into a devil by an event.")
+	message_admins("[ADMIN_LOOKUPFLW(devil)] has been made into a devil by an event.")
 	log_game("[key_name(devil)] was spawned as a devil by an event.")
 	var/datum/job/jobdatum = SSjob.GetJob("Assistant")
 	devil.job = jobdatum.title
@@ -49,6 +44,8 @@
 
 /proc/create_event_devil(spawn_loc)
 	var/mob/living/carbon/human/new_devil = new(spawn_loc)
+	if(!spawn_loc)
+		SSjob.SendToLateJoin(new_devil)
 	var/datum/preferences/A = new() //Randomize appearance for the devil.
 	A.copy_to(new_devil)
 	new_devil.dna.update_dna_identity()
@@ -56,7 +53,7 @@
 
 /proc/create_devil_mind(key)
 	var/datum/mind/Mind = new /datum/mind(key)
-	Mind.assigned_role = "devil"
-	Mind.special_role = "devil"
-	ticker.mode.devils |= Mind
+	Mind.assigned_role = ROLE_DEVIL
+	Mind.special_role = ROLE_DEVIL
+	SSticker.mode.devils |= Mind
 	return Mind

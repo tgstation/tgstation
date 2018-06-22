@@ -47,7 +47,7 @@ def stage3(profile_mode=False):
     try:
         while p.returncode is None:
             stdout = p.stdout.readline()
-            if "Initializations complete." in stdout:
+            if "Initializations complete" in stdout:
                 play("sound/misc/server-ready.ogg")
                 time_taken = time.time() - start_time
                 print("{} seconds taken to fully start".format(time_taken))

@@ -21,103 +21,112 @@
 			return "000"
 
 /proc/random_underwear(gender)
-	if(!underwear_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, underwear_list, underwear_m, underwear_f)
+	if(!GLOB.underwear_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, GLOB.underwear_list, GLOB.underwear_m, GLOB.underwear_f)
 	switch(gender)
 		if(MALE)
-			return pick(underwear_m)
+			return pick(GLOB.underwear_m)
 		if(FEMALE)
-			return pick(underwear_f)
+			return pick(GLOB.underwear_f)
 		else
-			return pick(underwear_list)
+			return pick(GLOB.underwear_list)
 
 /proc/random_undershirt(gender)
-	if(!undershirt_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, undershirt_list, undershirt_m, undershirt_f)
+	if(!GLOB.undershirt_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, GLOB.undershirt_list, GLOB.undershirt_m, GLOB.undershirt_f)
 	switch(gender)
 		if(MALE)
-			return pick(undershirt_m)
+			return pick(GLOB.undershirt_m)
 		if(FEMALE)
-			return pick(undershirt_f)
+			return pick(GLOB.undershirt_f)
 		else
-			return pick(undershirt_list)
+			return pick(GLOB.undershirt_list)
 
 /proc/random_socks()
-	if(!socks_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, socks_list)
-	return pick(socks_list)
+	if(!GLOB.socks_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, GLOB.socks_list)
+	return pick(GLOB.socks_list)
 
 /proc/random_features()
-	if(!tails_list_human.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, tails_list_human)
-	if(!tails_list_lizard.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, tails_list_lizard)
-	if(!snouts_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, snouts_list)
-	if(!horns_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/horns, horns_list)
-	if(!ears_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, horns_list)
-	if(!frills_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, frills_list)
-	if(!spines_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, spines_list)
-	if(!legs_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, legs_list)
-	if(!body_markings_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, body_markings_list)
-	if(!wings_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, wings_list)
+	if(!GLOB.tails_list_human.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, GLOB.tails_list_human)
+	if(!GLOB.tails_list_lizard.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, GLOB.tails_list_lizard)
+	if(!GLOB.snouts_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, GLOB.snouts_list)
+	if(!GLOB.horns_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/horns, GLOB.horns_list)
+	if(!GLOB.ears_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, GLOB.horns_list)
+	if(!GLOB.frills_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, GLOB.frills_list)
+	if(!GLOB.spines_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, GLOB.spines_list)
+	if(!GLOB.legs_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, GLOB.legs_list)
+	if(!GLOB.body_markings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, GLOB.body_markings_list)
+	if(!GLOB.wings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.wings_list)
+	if(!GLOB.moth_wings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
 
 	//For now we will always return none for tail_human and ears.
-	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(snouts_list), "horns" = pick(horns_list), "ears" = "None", "frills" = pick(frills_list), "spines" = pick(spines_list), "body_markings" = pick(body_markings_list), "legs" = "Normal Legs"))
+	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs", "caps" = pick(GLOB.caps_list), "moth_wings" = pick(GLOB.moth_wings_list)))
 
 /proc/random_hair_style(gender)
 	switch(gender)
 		if(MALE)
-			return pick(hair_styles_male_list)
+			return pick(GLOB.hair_styles_male_list)
 		if(FEMALE)
-			return pick(hair_styles_female_list)
+			return pick(GLOB.hair_styles_female_list)
 		else
-			return pick(hair_styles_list)
+			return pick(GLOB.hair_styles_list)
 
 /proc/random_facial_hair_style(gender)
 	switch(gender)
 		if(MALE)
-			return pick(facial_hair_styles_male_list)
+			return pick(GLOB.facial_hair_styles_male_list)
 		if(FEMALE)
-			return pick(facial_hair_styles_female_list)
+			return pick(GLOB.facial_hair_styles_female_list)
 		else
-			return pick(facial_hair_styles_list)
+			return pick(GLOB.facial_hair_styles_list)
 
 /proc/random_unique_name(gender, attempts_to_find_unique_name=10)
-	for(var/i=1, i<=attempts_to_find_unique_name, i++)
+	for(var/i in 1 to attempts_to_find_unique_name)
 		if(gender==FEMALE)
-			. = capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
+			. = capitalize(pick(GLOB.first_names_female)) + " " + capitalize(pick(GLOB.last_names))
 		else
-			. = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
+			. = capitalize(pick(GLOB.first_names_male)) + " " + capitalize(pick(GLOB.last_names))
 
-		if(i != attempts_to_find_unique_name && !findname(.))
+		if(!findname(.))
 			break
 
 /proc/random_unique_lizard_name(gender, attempts_to_find_unique_name=10)
-	for(var/i=1, i<=attempts_to_find_unique_name, i++)
+	for(var/i in 1 to attempts_to_find_unique_name)
 		. = capitalize(lizard_name(gender))
 
-		if(i != attempts_to_find_unique_name && !findname(.))
+		if(!findname(.))
 			break
 
 /proc/random_unique_plasmaman_name(attempts_to_find_unique_name=10)
-	for(var/i=1, i<=attempts_to_find_unique_name, i++)
+	for(var/i in 1 to attempts_to_find_unique_name)
 		. = capitalize(plasmaman_name())
 
-		if(i != attempts_to_find_unique_name && !findname(.))
+		if(!findname(.))
+			break
+
+/proc/random_unique_moth_name(attempts_to_find_unique_name=10)
+	for(var/i in 1 to attempts_to_find_unique_name)
+		. = capitalize(pick(GLOB.moth_first)) + " " + capitalize(pick(GLOB.moth_last))
+
+		if(!findname(.))
 			break
 
 /proc/random_skin_tone()
-	return pick(skin_tones)
+	return pick(GLOB.skin_tones)
 
-var/list/skin_tones = list(
+GLOBAL_LIST_INIT(skin_tones, list(
 	"albino",
 	"caucasian1",
 	"caucasian2",
@@ -130,10 +139,9 @@ var/list/skin_tones = list(
 	"indian",
 	"african1",
 	"african2"
-	)
+	))
 
-var/global/list/species_list[0]
-var/global/list/roundstart_species[0]
+GLOBAL_LIST_EMPTY(species_list)
 
 /proc/age2agedescription(age)
 	switch(age)
@@ -163,32 +171,58 @@ Proc for attack log creation, because really why not
 1 argument is the actor
 2 argument is the target of action
 3 is the description of action(like punched, throwed, or any other verb)
-4 should it make adminlog note or not
-5 is the tool with which the action was made(usually item)					5 and 6 are very similar(5 have "by " before it, that it) and are separated just to keep things in a bit more in order
-6 is additional information, anything that needs to be added
+4 is the tool with which the action was made(usually item)					4 and 5 are very similar(5 have "by " before it, that it) and are separated just to keep things in a bit more in order
+5 is additional information, anything that needs to be added
 */
 
 /proc/add_logs(mob/user, mob/target, what_done, object=null, addition=null)
 	var/turf/attack_location = get_turf(target)
 
-	var/is_mob_user = user && typecache_mob[user.type]
-	var/is_mob_target = target && typecache_mob[target.type]
+	var/is_mob_user = user && ismob(user)
+	var/is_mob_target = target && ismob(target)
 
 	var/mob/living/living_target
-
 
 	if(target && isliving(target))
 		living_target = target
 
+	var/hp =" "
+	if(living_target)
+		hp = " (NEWHP: [living_target.health]) "
+
+	var/starget = "NON-EXISTENT SUBJECT"
+	if(target)
+		if(is_mob_target && target.ckey)
+			starget = "[target.name]([target.ckey])"
+		else
+			starget = "[target.name]"
+
+	var/ssource = "NON-EXISTENT USER" //How!?
+	if(user)
+		if(is_mob_user && user.ckey)
+			ssource = "[user.name]([user.ckey])"
+		else
+			ssource = "[user.name]"
+
+	var/sobject = ""
+	if(object)
+		sobject = "[object]"
+		if(addition)
+			addition = " [addition]"
+
+	var/sattackloc = ""
+	if(attack_location)
+		sattackloc = "([attack_location.x],[attack_location.y],[attack_location.z])"
+
 	if(is_mob_user)
-		var/message = "<font color='red'>has [what_done] [target ? "[target.name][(is_mob_target && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][(living_target) ? " (NEWHP: [living_target.health])" : ""][(attack_location) ? "([attack_location.x],[attack_location.y],[attack_location.z])" : ""]</font>"
+		var/message = "<font color='red'>has [what_done] [starget][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]</font>"
 		user.log_message(message, INDIVIDUAL_ATTACK_LOG)
 
 	if(is_mob_target)
-		var/message = "<font color='orange'>has been [what_done] by [user ? "[user.name][(is_mob_user && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][(living_target) ? " (NEWHP: [living_target.health])" : ""][(attack_location) ? "([attack_location.x],[attack_location.y],[attack_location.z])" : ""]</font>"
+		var/message = "<font color='orange'>has been [what_done] by [ssource][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]</font>"
 		target.log_message(message, INDIVIDUAL_ATTACK_LOG)
 
-	log_attack("[user ? "[user.name][(is_mob_user && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] [what_done] [target ? "[target.name][(is_mob_target && target.ckey)? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][(living_target) ? " (NEWHP: [living_target.health])" : ""][(attack_location) ? "([attack_location.x],[attack_location.y],[attack_location.z])" : ""]")
+	log_attack("[ssource] [what_done] [starget][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]")
 
 
 /proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null)
@@ -211,10 +245,10 @@ Proc for attack log creation, because really why not
 	var/starttime = world.time
 	. = 1
 	while (world.time < endtime)
-		stoplag()
+		stoplag(1)
 		if (progress)
 			progbar.update(world.time - starttime)
-		if(!user || !target)
+		if(QDELETED(user) || QDELETED(target))
 			. = 0
 			break
 		if(uninterruptible)
@@ -231,11 +265,25 @@ Proc for attack log creation, because really why not
 		qdel(progbar)
 
 
-/proc/do_after(mob/user, delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null)
+//some additional checks as a callback for for do_afters that want to break on losing health or on the mob taking action
+/mob/proc/break_do_after_checks(list/checked_health, check_clicks)
+	if(check_clicks && next_move > world.time)
+		return FALSE
+	return TRUE
+
+//pass a list in the format list("health" = mob's health var) to check health during this
+/mob/living/break_do_after_checks(list/checked_health, check_clicks)
+	if(islist(checked_health))
+		if(health < checked_health["health"])
+			return FALSE
+		checked_health["health"] = health
+	return ..()
+
+/proc/do_after(mob/user, var/delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null)
 	if(!user)
 		return 0
 	var/atom/Tloc = null
-	if(target)
+	if(target && !isturf(target))
 		Tloc = target.loc
 
 	var/atom/Uloc = user.loc
@@ -250,6 +298,8 @@ Proc for attack log creation, because really why not
 	if(holding)
 		holdingnull = 0 //Users hand started holding something, check to see if it's still holding that
 
+	delay *= user.do_after_coefficent()
+
 	var/datum/progressbar/progbar
 	if (progress)
 		progbar = new(user, delay, target)
@@ -258,7 +308,7 @@ Proc for attack log creation, because really why not
 	var/starttime = world.time
 	. = 1
 	while (world.time < endtime)
-		stoplag()
+		stoplag(1)
 		if (progress)
 			progbar.update(world.time - starttime)
 
@@ -266,11 +316,11 @@ Proc for attack log creation, because really why not
 			drifting = 0
 			Uloc = user.loc
 
-		if(!user || user.stat || user.weakened || user.stunned  || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
+		if(QDELETED(user) || user.stat || user.IsKnockdown() || user.IsStun() || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
 
-		if(Tloc && (!target || Tloc != target.loc))
+		if(!QDELETED(Tloc) && (QDELETED(target) || Tloc != target.loc))
 			if((Uloc != Tloc || Tloc != user) && !drifting)
 				. = 0
 				break
@@ -287,6 +337,10 @@ Proc for attack log creation, because really why not
 				break
 	if (progress)
 		qdel(progbar)
+
+/mob/proc/do_after_coefficent() // This gets added to the delay on a do_after, default 1
+	. = 1
+	return
 
 /proc/do_after_mob(mob/user, var/list/targets, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks)
 	if(!user || !targets)
@@ -313,10 +367,10 @@ Proc for attack log creation, because really why not
 	. = 1
 	mainloop:
 		while(world.time < endtime)
-			sleep(1)
+			stoplag(1)
 			if(progress)
 				progbar.update(world.time - starttime)
-			if(!user || !targets)
+			if(QDELETED(user) || !targets)
 				. = 0
 				break
 			if(uninterruptible)
@@ -327,7 +381,7 @@ Proc for attack log creation, because really why not
 				user_loc = user.loc
 
 			for(var/atom/target in targets)
-				if((!drifting && user_loc != user.loc) || originalloc[target] != target.loc || user.get_active_held_item() != holding || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
+				if((!drifting && user_loc != user.loc) || QDELETED(target) || originalloc[target] != target.loc || user.get_active_held_item() != holding || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
 					. = 0
 					break mainloop
 	if(progbar)
@@ -340,14 +394,19 @@ Proc for attack log creation, because really why not
 		if(H.dna && istype(H.dna.species, species_datum))
 			. = TRUE
 
-/proc/spawn_atom_to_turf(spawn_type, target, amount, admin_spawn=FALSE)
+/proc/spawn_atom_to_turf(spawn_type, target, amount, admin_spawn=FALSE, list/extra_args)
 	var/turf/T = get_turf(target)
 	if(!T)
 		CRASH("attempt to spawn atom type: [spawn_type] in nullspace")
 
+	var/list/new_args = list(T)
+	if(extra_args)
+		new_args += extra_args
+
 	for(var/j in 1 to amount)
-		var/atom/X = new spawn_type(T)
-		X.admin_spawned = admin_spawn
+		var/atom/X = new spawn_type(arglist(new_args))
+		if (admin_spawn)
+			X.flags_1 |= ADMIN_SPAWNED_1
 
 /proc/spawn_and_random_walk(spawn_type, target, amount, walk_chance=100, max_walk=3, always_max_walk=FALSE, admin_spawn=FALSE)
 	var/turf/T = get_turf(target)
@@ -357,7 +416,8 @@ Proc for attack log creation, because really why not
 
 	for(var/j in 1 to amount)
 		var/atom/movable/X = new spawn_type(T)
-		X.admin_spawned = admin_spawn
+		if (admin_spawn)
+			X.flags_1 |= ADMIN_SPAWNED_1
 
 		if(always_max_walk || prob(walk_chance))
 			if(always_max_walk)
@@ -369,7 +429,7 @@ Proc for attack log creation, because really why not
 				step(X, pick(NORTH, SOUTH, EAST, WEST))
 
 /proc/deadchat_broadcast(message, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
-	for(var/mob/M in player_list)
+	for(var/mob/M in GLOB.player_list)
 		var/datum/preferences/prefs
 		if(M.client && M.client.prefs)
 			prefs = M.client.prefs
@@ -411,3 +471,60 @@ Proc for attack log creation, because really why not
 			to_chat(M, rendered_message)
 		else
 			to_chat(M, message)
+
+
+/proc/log_talk(mob/user,message,logtype)
+	var/turf/say_turf = get_turf(user)
+
+	var/sayloc = ""
+	if(say_turf)
+		sayloc = "([say_turf.x],[say_turf.y],[say_turf.z])"
+
+
+	var/logmessage = "[message] [sayloc]"
+
+	switch(logtype)
+
+		if(LOGDSAY)
+			log_dsay(logmessage)
+		if(LOGSAY)
+			log_say(logmessage)
+		if(LOGWHISPER)
+			log_whisper(logmessage)
+		if(LOGEMOTE)
+			log_emote(logmessage)
+		if(LOGPDA)
+			log_pda(logmessage)
+		if(LOGCHAT)
+			log_chat(logmessage)
+		if(LOGCOMMENT)
+			log_comment(logmessage)
+		if(LOGASAY)
+			log_adminsay(logmessage)
+		if(LOGOOC)
+			log_ooc(logmessage)
+		else
+			warning("Invalid speech logging type detected. [logtype]. Defaulting to say")
+			log_say(logmessage)
+
+//Used in chemical_mob_spawn. Generates a random mob based on a given gold_core_spawnable value.
+/proc/create_random_mob(spawn_location, mob_class = HOSTILE_SPAWN)
+	var/static/list/mob_spawn_meancritters = list() // list of possible hostile mobs
+	var/static/list/mob_spawn_nicecritters = list() // and possible friendly mobs
+
+	if(mob_spawn_meancritters.len <= 0 || mob_spawn_nicecritters.len <= 0)
+		for(var/T in typesof(/mob/living/simple_animal))
+			var/mob/living/simple_animal/SA = T
+			switch(initial(SA.gold_core_spawnable))
+				if(HOSTILE_SPAWN)
+					mob_spawn_meancritters += T
+				if(FRIENDLY_SPAWN)
+					mob_spawn_nicecritters += T
+
+	var/chosen
+	if(mob_class == FRIENDLY_SPAWN)
+		chosen = pick(mob_spawn_nicecritters)
+	else
+		chosen = pick(mob_spawn_meancritters)
+	var/mob/living/simple_animal/C = new chosen(spawn_location)
+	return C

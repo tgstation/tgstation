@@ -13,7 +13,7 @@
 	if(..())
 		return
 	var/mob/living/silicon/robot/R = usr
-	if(R.module.type != /obj/item/weapon/robot_module)
+	if(R.module.type != /obj/item/robot_module)
 		R.hud_used.toggle_show_robot_modules()
 		return 1
 	R.pick_module()
@@ -89,16 +89,15 @@
 	R.toggle_ionpulse()
 
 /datum/hud/robot
-	ui_style_icon = 'icons/mob/screen_cyborg.dmi'
+	ui_style = 'icons/mob/screen_cyborg.dmi'
 
-/datum/hud/robot/New(mob/owner, ui_style = 'icons/mob/screen_cyborg.dmi')
+/datum/hud/robot/New(mob/owner)
 	..()
 	var/mob/living/silicon/robot/mymobR = mymob
 	var/obj/screen/using
 
-	using = new/obj/screen/wheel/talk
-	using.screen_loc = ui_borg_talk_wheel
-	wheels += using
+	using = new/obj/screen/language_menu
+	using.screen_loc = ui_borg_language_menu
 	static_inventory += using
 
 //Radio
@@ -181,7 +180,8 @@
 
 
 /datum/hud/proc/toggle_show_robot_modules()
-	if(!iscyborg(mymob)) return
+	if(!iscyborg(mymob))
+		return
 
 	var/mob/living/silicon/robot/R = mymob
 
@@ -189,7 +189,8 @@
 	update_robot_modules_display()
 
 /datum/hud/proc/update_robot_modules_display(mob/viewer)
-	if(!iscyborg(mymob)) return
+	if(!iscyborg(mymob))
+		return
 
 	var/mob/living/silicon/robot/R = mymob
 
@@ -212,7 +213,7 @@
 		if(!R.robot_modules_background)
 			return
 
-		var/display_rows = Ceiling(length(R.module.get_inactive_modules()) / 8)
+		var/display_rows = CEILING(length(R.module.get_inactive_modules()) / 8, 1)
 		R.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
 		screenmob.client.screen += R.robot_modules_background
 

@@ -17,7 +17,8 @@
 	picked = TRUE //the appearence of syndrones is static, you don't get to change it.
 	health = 30
 	maxHealth = 120 //If you murder other drones and cannibalize them you can get much stronger
-	faction = list("syndicate")
+	initial_language_holder = /datum/language_holder/drone/syndicate
+	faction = list(ROLE_SYNDICATE)
 	speak_emote = list("hisses")
 	bubble_icon = "syndibot"
 	heavy_emp_damage = 10
@@ -25,14 +26,15 @@
 	"1. Interfere.\n"+\
 	"2. Kill.\n"+\
 	"3. Destroy."
-	default_storage = /obj/item/device/radio/uplink
+	default_storage = /obj/item/uplink
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
-	seeStatic = 0 //Our programming is superior.
 	hacked = TRUE
+	flavortext = null
 
 /mob/living/simple_animal/drone/syndrone/Initialize()
-	..()
-	internal_storage.hidden_uplink.telecrystals = 10
+	. = ..()
+	GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, internal_storage)
+	hidden_uplink.telecrystals = 10
 
 /mob/living/simple_animal/drone/syndrone/Login()
 	..()
@@ -41,19 +43,20 @@
 /mob/living/simple_animal/drone/syndrone/badass
 	name = "Badass Syndrone"
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
-	default_storage = /obj/item/device/radio/uplink/nuclear
+	default_storage = /obj/item/uplink/nuclear
 
 /mob/living/simple_animal/drone/syndrone/badass/Initialize()
-	..()
-	internal_storage.hidden_uplink.telecrystals = 30
-	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(src)
+	. = ..()
+	GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, internal_storage)
+	hidden_uplink.telecrystals = 30
+	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(src)
 	W.implant(src)
 
 /mob/living/simple_animal/drone/snowflake
 	default_hatmask = /obj/item/clothing/head/chameleon/drone
 
 /mob/living/simple_animal/drone/snowflake/Initialize()
-	..()
+	. = ..()
 	desc += " This drone appears to have a complex holoprojector built on its 'head'."
 
 /obj/item/drone_shell/syndrone
@@ -89,6 +92,15 @@
 	icon_living = icon_state
 	icon_dead = "[visualAppearence]_dead"
 
+/obj/item/drone_shell/dusty
+	name = "derelict drone shell"
+	desc = "A long-forgotten drone shell. It seems kind of... Space Russian."
+	drone_type = /mob/living/simple_animal/drone/derelict
+
+/mob/living/simple_animal/drone/derelict
+	name = "derelict drone"
+	default_hatmask = /obj/item/clothing/head/ushanka
+
 /mob/living/simple_animal/drone/cogscarab
 	name = "cogscarab"
 	desc = "A strange, drone-like machine. It constantly emits the hum of gears."
@@ -96,8 +108,6 @@
 	icon_living = "drone_clock"
 	icon_dead = "drone_clock_dead"
 	picked = TRUE
-	languages_spoken = RATVAR
-	languages_understood = HUMAN|RATVAR
 	pass_flags = PASSTABLE
 	health = 50
 	maxHealth = 50
@@ -109,22 +119,26 @@
 	speak_emote = list("clanks", "clinks", "clunks", "clangs")
 	verb_ask = "requests"
 	verb_exclaim = "proclaims"
+	verb_whisper = "imparts"
 	verb_yell = "harangues"
 	bubble_icon = "clock"
+	initial_language_holder = /datum/language_holder/clockmob
 	light_color = "#E42742"
 	heavy_emp_damage = 0
 	laws = "0. Purge all untruths and honor Ratvar."
-	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled
-	seeStatic = 0
+	default_storage = /obj/item/storage/toolbox/brass/prefilled
 	hacked = TRUE
 	visualAppearence = CLOCKDRONE
 	can_be_held = FALSE
+	flavortext = "<b><span class='nezbere'>You are a cogscarab,</span> a tiny building construct of Ratvar. While you're weak and can't recite scripture, \
+	you have a set of quick tools, as well as a replica fabricator that can create brass and convert objects.<br><br>Work with the servants of Ratvar \
+	to construct and maintain defenses at the City of Cogs. If there are no servants, use this time to experiment with base designs!"
 
-/mob/living/simple_animal/drone/cogscarab/ratvar //a subtype for spawning when ratvar is alive, has a slab that it can use and a normal proselytizer
-	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar
+/mob/living/simple_animal/drone/cogscarab/ratvar //a subtype for spawning when ratvar is alive, has a slab that it can use and a normal fabricator
+	default_storage = /obj/item/storage/toolbox/brass/prefilled/ratvar
 
-/mob/living/simple_animal/drone/cogscarab/admin //an admin-only subtype of cogscarab with a no-cost proselytizer and slab in its box
-	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar/admin
+/mob/living/simple_animal/drone/cogscarab/admin //an admin-only subtype of cogscarab with a no-cost fabricator and slab in its box
+	default_storage = /obj/item/storage/toolbox/brass/prefilled/ratvar/admin
 
 /mob/living/simple_animal/drone/cogscarab/Initialize()
 	. = ..()
@@ -132,16 +146,12 @@
 	qdel(access_card) //we don't have free access
 	access_card = null
 	verbs -= /mob/living/simple_animal/drone/verb/check_laws
-	verbs -= /mob/living/simple_animal/drone/verb/toggle_light
 	verbs -= /mob/living/simple_animal/drone/verb/drone_ping
 
 /mob/living/simple_animal/drone/cogscarab/Login()
 	..()
-	add_servant_of_ratvar(src, TRUE)
-	to_chat(src, "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, an inbuilt proselytizer that can convert brass \
-	to liquified alloy, a set of relatively fast tools, </b><span class='heavy_brass'>can communicate over the Hierophant Network with :b</span><b>, and are immune to extreme \
-	temperatures and pressures. \nYour goal is to serve the Justiciar and his servants by repairing and defending all they create. \
-	\nYou yourself are one of these servants, and will be able to utilize almost anything they can[ratvar_awakens ? "":", <i>excluding a clockwork slab</i>"].</b>")
+	add_servant_of_ratvar(src, TRUE, GLOB.servants_active)
+	to_chat(src,"<b>You yourself are one of these servants, and will be able to utilize almost anything they can[GLOB.ratvar_awakens ? "":", <i>excluding a clockwork slab</i>"].</b>") // this can't go with flavortext because i'm assuming it requires them to be ratvar'd
 
 /mob/living/simple_animal/drone/cogscarab/binarycheck()
 	return FALSE
@@ -154,7 +164,7 @@
 	..()
 
 /mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver) && stat == DEAD)
+	if(istype(I, /obj/item/screwdriver) && stat == DEAD)
 		try_reactivate(user)
 	else
 		..()
@@ -165,13 +175,11 @@
 	else
 		..()
 
-/mob/living/simple_animal/drone/cogscarab/can_use_guns(obj/item/weapon/gun/G)
-	if(!ratvar_awakens)
-		changeNext_move(CLICK_CD_RANGE*4) //about as much delay as an unupgraded kinetic accelerator
-	return TRUE
+/mob/living/simple_animal/drone/cogscarab/can_use_guns(obj/item/G)
+	return GLOB.ratvar_awakens
 
 /mob/living/simple_animal/drone/cogscarab/get_armor_effectiveness()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		return 1
 	return ..()
 
@@ -190,11 +198,46 @@
 /mob/living/simple_animal/drone/cogscarab/ratvar_act()
 	fully_heal(TRUE)
 
-/obj/item/drone_shell/dusty
-	name = "derelict drone shell"
-	desc = "A long-forgotten drone shell. It seems kind of... Space Russian."
-	drone_type = /mob/living/simple_animal/drone/derelict
+/mob/living/simple_animal/drone/cogscarab/update_icons()
+	if(stat != DEAD)
+		if(incapacitated())
+			icon_state = "[visualAppearence]_flipped"
+		else
+			icon_state = visualAppearence
+	else
+		icon_state = "[visualAppearence]_dead"
 
-/mob/living/simple_animal/drone/derelict
-	name = "derelict drone"
-	default_hatmask = /obj/item/clothing/head/ushanka
+/mob/living/simple_animal/drone/cogscarab/Stun(amount, updating = 1, ignore_canstun = 0)
+	. = ..()
+	if(.)
+		update_icons()
+
+/mob/living/simple_animal/drone/cogscarab/SetStun(amount, updating = 1, ignore_canstun = 0)
+	. = ..()
+	if(.)
+		update_icons()
+
+/mob/living/simple_animal/drone/cogscarab/AdjustStun(amount, updating = 1, ignore_canstun = 0)
+	. = ..()
+	if(.)
+		update_icons()
+
+/mob/living/simple_animal/drone/cogscarab/Knockdown(amount, updating = 1, ignore_canknockdown = 0)
+	. = ..()
+	if(.)
+		update_icons()
+
+/mob/living/simple_animal/drone/cogscarab/SetKnockdown(amount, updating = 1, ignore_canknockdown = 0)
+	. = ..()
+	if(.)
+		update_icons()
+
+/mob/living/simple_animal/drone/cogscarab/AdjustKnockdown(amount, updating = 1, ignore_canknockdown = 0)
+	. = ..()
+	if(.)
+		update_icons()
+
+/mob/living/simple_animal/drone/cogscarab/update_canmove()
+	. = ..()
+	if(.)
+		update_icons()

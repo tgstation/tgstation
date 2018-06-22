@@ -3,9 +3,12 @@
 	return FALSE
 
 /mob/living/silicon/pai/emp_act(severity)
-	take_holo_damage(severity * 25)
-	fullstun(severity * 10)
-	silent = max(severity * 15, silent)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	take_holo_damage(50/severity)
+	Knockdown(400/severity)
+	silent = max(30/severity, silent)
 	if(holoform)
 		fold_in(force = TRUE)
 	//Need more effects that aren't instadeath or permanent law corruption.
@@ -18,10 +21,10 @@
 			qdel(src)
 		if(2)
 			fold_in(force = 1)
-			fullstun(20)
+			Knockdown(400)
 		if(3)
 			fold_in(force = 1)
-			fullstun(10)
+			Knockdown(200)
 
 /mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user)
 	switch(user.a_intent)
@@ -36,7 +39,7 @@
 				spawn(10)
 					fold_in()
 					if(user.put_in_hands(card))
-						user.visible_message("<span class='notice'>[user] promptly scoops up their pAI's card.</span>")
+						user.visible_message("<span class='notice'>[user] promptly scoops up [user.p_their()] pAI's card.</span>")
 			else
 				visible_message("<span class='danger'>[user] stomps on [src]!.</span>")
 				take_holo_damage(2)
@@ -57,15 +60,12 @@
 	return FALSE //No we're not flammable
 
 /mob/living/silicon/pai/proc/take_holo_damage(amount)
-	emitterhealth = Clamp((emitterhealth - amount), -50, emittermaxhealth)
+	emitterhealth = CLAMP((emitterhealth - amount), -50, emittermaxhealth)
 	if(emitterhealth < 0)
 		fold_in(force = TRUE)
 	to_chat(src, "<span class='userdanger'>The impact degrades your holochassis!</span>")
 	hit_slowdown += amount
 	return amount
-
-/mob/living/silicon/pai/proc/fullstun(amount)
-	Weaken(amount)
 
 /mob/living/silicon/pai/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
 	return take_holo_damage(amount)
@@ -83,10 +83,10 @@
 	return FALSE
 
 /mob/living/silicon/pai/adjustStaminaLoss(amount)
-	take_holo_damage(amount/4)
+	take_holo_damage(amount & 0.25)
 
 /mob/living/silicon/pai/adjustBrainLoss(amount)
-	fullstun(amount/10)
+	Knockdown(amount * 0.2)
 
 /mob/living/silicon/pai/getBruteLoss()
 	return emittermaxhealth - emitterhealth

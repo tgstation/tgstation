@@ -19,12 +19,22 @@
         <ui-button icon='sign-out' style='{{excheck ? "selected" : null}}'
           action='excheck' params='{"id_tag": "{{id_tag}}", "val": {{checks}}}'>External</ui-button>
       </ui-section>
-      <ui-section label='Target Pressure'>
-        <ui-button icon='pencil' action='set_external_pressure'
-          params='{"id_tag": "{{id_tag}}"}'>{{Math.fixed(external)}}</ui-button>
-        <ui-button icon='refresh' state='{{extdefault ? "disabled" : null}}' action='reset_external_pressure'
-          params='{"id_tag": "{{id_tag}}"}'>Reset</ui-button>
-      </ui-section>
+      {{#if incheck}}
+        <ui-section label='Internal Target Pressure'>
+          <ui-button icon='pencil' action='set_internal_pressure'
+            params='{"id_tag": "{{id_tag}}"}'>{{Math.fixed(internal)}}</ui-button>
+          <ui-button icon='refresh' state='{{intdefault ? "disabled" : null}}' action='reset_internal_pressure'
+            params='{"id_tag": "{{id_tag}}"}'>Reset</ui-button>
+        </ui-section>
+      {{/if}}
+      {{#if excheck}}
+          <ui-section label='External Target Pressure'>
+            <ui-button icon='pencil' action='set_external_pressure'
+              params='{"id_tag": "{{id_tag}}"}'>{{Math.fixed(external)}}</ui-button>
+            <ui-button icon='refresh' state='{{extdefault ? "disabled" : null}}' action='reset_external_pressure'
+              params='{"id_tag": "{{id_tag}}"}'>Reset</ui-button>
+          </ui-section>
+      {{/if}}
     </ui-subdisplay>
   {{else}}
     <span class='bad'>Error: No vents connected.</span>

@@ -4,22 +4,26 @@
 	desc = "A plastic bag designed for the storage and transportation of cadavers."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag"
-	density = 0
+	density = FALSE
 	mob_storage_capacity = 2
 	open_sound = 'sound/items/zip.ogg'
 	close_sound = 'sound/items/zip.ogg'
 	integrity_failure = 0
 	material_drop = /obj/item/stack/sheet/cloth
 	delivery_icon = null //unwrappable
+	anchorable = FALSE
 	var/foldedbag_path = /obj/item/bodybag
 	var/tagged = 0 // so closet code knows to put the tag overlay back
 
 /obj/structure/closet/body_bag/attackby(obj/item/I, mob/user, params)
-	if (istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/toy/crayon))
+	if (istype(I, /obj/item/pen) || istype(I, /obj/item/toy/crayon))
+		if(!user.is_literate())
+			to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
+			return
 		var/t = stripped_input(user, "What would you like the label to be?", name, null, 53)
 		if(user.get_active_held_item() != I)
 			return
-		if(!in_range(src, user) && loc != user)
+		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(t)
 			name = "body bag - [t]"
@@ -28,7 +32,7 @@
 		else
 			name = "body bag"
 		return
-	else if(istype(I, /obj/item/weapon/wirecutters))
+	else if(istype(I, /obj/item/wirecutters))
 		to_chat(user, "<span class='notice'>You cut the tag off [src].</span>")
 		name = "body bag"
 		tagged = 0
@@ -41,12 +45,12 @@
 
 /obj/structure/closet/body_bag/close()
 	if(..())
-		density = 0
+		density = FALSE
 		return 1
 	return 0
 
 /obj/structure/closet/body_bag/MouseDrop(over_object, src_location, over_location)
-	..()
+	. = ..()
 	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
 		if(!ishuman(usr))
 			return 0
@@ -70,7 +74,7 @@
 	max_mob_size = MOB_SIZE_LARGE
 
 /obj/structure/closet/body_bag/bluespace/MouseDrop(over_object, src_location, over_location)
-	..()
+	. = ..()
 	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
 		if(!ishuman(usr))
 			return 0

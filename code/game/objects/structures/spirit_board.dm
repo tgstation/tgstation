@@ -3,8 +3,8 @@
 	desc = "A wooden board with letters etched into it, used in seances."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "spirit_board"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	var/virgin = 1
 	var/next_use = 0
 	var/planchette = "A"
@@ -15,14 +15,16 @@
 	..()
 
 /obj/structure/spirit_board/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	spirit_board_pick_letter(user)
 
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/structure/spirit_board/attack_ghost(mob/dead/observer/user)
 	spirit_board_pick_letter(user)
-
+	return ..()
 
 /obj/structure/spirit_board/proc/spirit_board_pick_letter(mob/M)
 	if(!spirit_board_checks(M))

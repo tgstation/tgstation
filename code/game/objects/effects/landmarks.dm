@@ -1,247 +1,222 @@
 /obj/effect/landmark
 	name = "landmark"
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "x2"
-	anchored = 1
+	anchored = TRUE
+	layer = MID_LANDMARK_LAYER
 	invisibility = INVISIBILITY_ABSTRACT
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/effect/landmark/New()
-	..()
-	tag = text("landmark*[]", name)
-	landmarks_list += src
+/obj/effect/landmark/singularity_act()
+	return
 
-	switch(name)			//some of these are probably obsolete
-		if("monkey")
-			monkeystart += loc
-			qdel(src)
-			return
-		if("start")
-			newplayer_start += loc
-			qdel(src)
-			return
-		if("wizard")
-			wizardstart += loc
-			qdel(src)
-			return
-		if("JoinLate")
-			latejoin += loc
-			qdel(src)
-			return
-		if("prisonwarp")
-			prisonwarp += loc
-			qdel(src)
-			return
-		if("Holding Facility")
-			holdingfacility += loc
-		if("tdome1")
-			tdome1	+= loc
-		if("tdome2")
-			tdome2 += loc
-		if("tdomeadmin")
-			tdomeadmin	+= loc
-		if("tdomeobserve")
-			tdomeobserve += loc
-		if("prisonsecuritywarp")
-			prisonsecuritywarp += loc
-			qdel(src)
-			return
-		if("blobstart")
-			blobstart += loc
-			qdel(src)
-			return
-		if("secequipment")
-			secequipment += loc
-			qdel(src)
-			return
-		if("Emergencyresponseteam")
-			emergencyresponseteamspawn += loc
-			qdel(src)
-			return
-		if("xeno_spawn")
-			xeno_spawn += loc
-			qdel(src)
-			return
-	return 1
+// Please stop bombing the Observer-Start landmark.
+/obj/effect/landmark/ex_act()
+	return
+
+/obj/effect/landmark/singularity_pull()
+	return
+
+INITIALIZE_IMMEDIATE(/obj/effect/landmark)
+
+/obj/effect/landmark/Initialize()
+	. = ..()
+	GLOB.landmarks_list += src
 
 /obj/effect/landmark/Destroy()
-	landmarks_list -= src
+	GLOB.landmarks_list -= src
 	return ..()
 
 /obj/effect/landmark/start
 	name = "start"
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/mob/landmarks.dmi'
 	icon_state = "x"
-	anchored = 1
+	anchored = TRUE
+	layer = MOB_LAYER
+	var/jobspawn_override = FALSE
+	var/delete_after_roundstart = TRUE
+	var/used = FALSE
+
+/obj/effect/landmark/start/proc/after_round_start()
+	if(delete_after_roundstart)
+		qdel(src)
 
 /obj/effect/landmark/start/New()
-	start_landmarks_list += src
+	GLOB.start_landmarks_list += src
+	if(jobspawn_override)
+		if(!GLOB.jobspawn_overrides[name])
+			GLOB.jobspawn_overrides[name] = list()
+		GLOB.jobspawn_overrides[name] += src
 	..()
-	if(name != initial(name))
+	if(name != "start")
 		tag = "start*[name]"
-	return 1
 
 /obj/effect/landmark/start/Destroy()
-	start_landmarks_list -= src
+	GLOB.start_landmarks_list -= src
+	if(jobspawn_override)
+		GLOB.jobspawn_overrides[name] -= src
 	return ..()
 
-//Costume spawner landmarks
+// START LANDMARKS FOLLOW. Don't change the names unless
+// you are refactoring shitty landmark code.
+/obj/effect/landmark/start/assistant
+	name = "Assistant"
+	icon_state = "Assistant"
 
-/obj/effect/landmark/costume/New() //costume spawner, selects a random subclass and disappears
+/obj/effect/landmark/start/assistant/override
+	jobspawn_override = TRUE
+	delete_after_roundstart = FALSE
 
-	var/list/options = typesof(/obj/effect/landmark/costume)
-	var/PICK= options[rand(1,options.len)]
-	new PICK(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/janitor
+	name = "Janitor"
+	icon_state = "Janitor"
 
-//SUBCLASSES.  Spawn a bunch of items and disappear likewise
-/obj/effect/landmark/costume/chicken/New()
-	new /obj/item/clothing/suit/chickensuit(src.loc)
-	new /obj/item/clothing/head/chicken(src.loc)
-	new /obj/item/weapon/reagent_containers/food/snacks/egg(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/cargo_technician
+	name = "Cargo Technician"
+	icon_state = "Cargo Technician"
 
-/obj/effect/landmark/costume/gladiator/New()
-	new /obj/item/clothing/under/gladiator(src.loc)
-	new /obj/item/clothing/head/helmet/gladiator(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/bartender
+	name = "Bartender"
+	icon_state = "Bartender"
 
-/obj/effect/landmark/costume/madscientist/New()
-	new /obj/item/clothing/under/gimmick/rank/captain/suit(src.loc)
-	new /obj/item/clothing/head/flatcap(src.loc)
-	new /obj/item/clothing/suit/toggle/labcoat/mad(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/clown
+	name = "Clown"
+	icon_state = "Clown"
 
-/obj/effect/landmark/costume/elpresidente/New()
-	new /obj/item/clothing/under/gimmick/rank/captain/suit(src.loc)
-	new /obj/item/clothing/head/flatcap(src.loc)
-	new /obj/item/clothing/mask/cigarette/cigar/havana(src.loc)
-	new /obj/item/clothing/shoes/jackboots(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/mime
+	name = "Mime"
+	icon_state = "Mime"
 
-/obj/effect/landmark/costume/nyangirl/New()
-	new /obj/item/clothing/under/schoolgirl(src.loc)
-	new /obj/item/clothing/head/kitty(src.loc)
-	new /obj/item/clothing/glasses/sunglasses/blindfold(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/quartermaster
+	name = "Quartermaster"
+	icon_state = "Quartermaster"
 
-/obj/effect/landmark/costume/maid/New()
-	new /obj/item/clothing/under/skirt/black(src.loc)
-	var/CHOICE = pick( /obj/item/clothing/head/beret , /obj/item/clothing/head/rabbitears )
-	new CHOICE(src.loc)
-	new /obj/item/clothing/glasses/sunglasses/blindfold(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/atmospheric_technician
+	name = "Atmospheric Technician"
+	icon_state = "Atmospheric Technician"
 
-/obj/effect/landmark/costume/butler/New()
-	new /obj/item/clothing/tie/waistcoat(src.loc)
-	new /obj/item/clothing/under/suit_jacket(src.loc)
-	new /obj/item/clothing/head/that(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/cook
+	name = "Cook"
+	icon_state = "Cook"
 
-/obj/effect/landmark/costume/highlander/New()
-	new /obj/item/clothing/under/kilt(src.loc)
-	new /obj/item/clothing/head/beret(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/shaft_miner
+	name = "Shaft Miner"
+	icon_state = "Shaft Miner"
 
-/obj/effect/landmark/costume/prig/New()
-	new /obj/item/clothing/tie/waistcoat(src.loc)
-	new /obj/item/clothing/glasses/monocle(src.loc)
-	var/CHOICE= pick( /obj/item/clothing/head/bowler, /obj/item/clothing/head/that)
-	new CHOICE(src.loc)
-	new /obj/item/clothing/shoes/sneakers/black(src.loc)
-	new /obj/item/weapon/cane(src.loc)
-	new /obj/item/clothing/under/sl_suit(src.loc)
-	new /obj/item/clothing/mask/fakemoustache(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/security_officer
+	name = "Security Officer"
+	icon_state = "Security Officer"
 
-/obj/effect/landmark/costume/plaguedoctor/New()
-	new /obj/item/clothing/suit/bio_suit/plaguedoctorsuit(src.loc)
-	new /obj/item/clothing/head/plaguedoctorhat(src.loc)
-	new /obj/item/clothing/mask/gas/plaguedoctor(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/botanist
+	name = "Botanist"
+	icon_state = "Botanist"
 
-/obj/effect/landmark/costume/nightowl/New()
-	new /obj/item/clothing/suit/toggle/owlwings(src.loc)
-	new /obj/item/clothing/under/owl(src.loc)
-	new /obj/item/clothing/mask/gas/owl_mask(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/head_of_security
+	name = "Head of Security"
+	icon_state = "Head of Security"
 
-/obj/effect/landmark/costume/thegriffin/New()
-	new /obj/item/clothing/suit/toggle/owlwings/griffinwings(src.loc)
-	new /obj/item/clothing/shoes/griffin(src.loc)
-	new /obj/item/clothing/under/griffin(src.loc)
-	new /obj/item/clothing/head/griffin(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/captain
+	name = "Captain"
+	icon_state = "Captain"
 
-/obj/effect/landmark/costume/waiter/New()
-	new /obj/item/clothing/under/waiter(src.loc)
-	var/CHOICE= pick( /obj/item/clothing/head/kitty, /obj/item/clothing/head/rabbitears)
-	new CHOICE(src.loc)
-	new /obj/item/clothing/suit/apron(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/detective
+	name = "Detective"
+	icon_state = "Detective"
 
-/obj/effect/landmark/costume/pirate/New()
-	new /obj/item/clothing/under/pirate(src.loc)
-	new /obj/item/clothing/suit/pirate(src.loc)
-	var/CHOICE = pick( /obj/item/clothing/head/pirate , /obj/item/clothing/head/bandana )
-	new CHOICE(src.loc)
-	new /obj/item/clothing/glasses/eyepatch(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/warden
+	name = "Warden"
+	icon_state = "Warden"
 
-/obj/effect/landmark/costume/commie/New()
-	new /obj/item/clothing/under/soviet(src.loc)
-	new /obj/item/clothing/head/ushanka(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/chief_engineer
+	name = "Chief Engineer"
+	icon_state = "Chief Engineer"
 
-/obj/effect/landmark/costume/imperium_monk/New()
-	new /obj/item/clothing/suit/imperium_monk(src.loc)
-	if (prob(25))
-		new /obj/item/clothing/mask/gas/cyborg(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/head_of_personnel
+	name = "Head of Personnel"
+	icon_state = "Head of Personnel"
 
-/obj/effect/landmark/costume/holiday_priest/New()
-	new /obj/item/clothing/suit/holidaypriest(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/librarian
+	name = "Curator"
+	icon_state = "Curator"
 
-/obj/effect/landmark/costume/marisawizard/fake/New()
-	new /obj/item/clothing/shoes/sandal/marisa(src.loc)
-	new /obj/item/clothing/head/wizard/marisa/fake(src.loc)
-	new/obj/item/clothing/suit/wizrobe/marisa/fake(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/lawyer
+	name = "Lawyer"
+	icon_state = "Lawyer"
 
-/obj/effect/landmark/costume/cutewitch/New()
-	new /obj/item/clothing/under/sundress(src.loc)
-	new /obj/item/clothing/head/witchwig(src.loc)
-	new /obj/item/weapon/staff/broom(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/station_engineer
+	name = "Station Engineer"
+	icon_state = "Station Engineer"
 
-/obj/effect/landmark/costume/fakewizard/New()
-	new /obj/item/clothing/shoes/sandal(src.loc)
-	new /obj/item/clothing/suit/wizrobe/fake(src.loc)
-	new /obj/item/clothing/head/wizard/fake(src.loc)
-	new /obj/item/weapon/staff/(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/medical_doctor
+	name = "Medical Doctor"
+	icon_state = "Medical Doctor"
 
-/obj/effect/landmark/costume/sexyclown/New()
-	new /obj/item/clothing/mask/gas/sexyclown(src.loc)
-	new /obj/item/clothing/under/rank/clown/sexy(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/scientist
+	name = "Scientist"
+	icon_state = "Scientist"
 
-/obj/effect/landmark/costume/sexymime/New()
-	new /obj/item/clothing/mask/gas/sexymime(src.loc)
-	new /obj/item/clothing/under/sexymime(src.loc)
-	qdel(src)
+/obj/effect/landmark/start/chemist
+	name = "Chemist"
+	icon_state = "Chemist"
+
+/obj/effect/landmark/start/roboticist
+	name = "Roboticist"
+	icon_state = "Roboticist"
+
+/obj/effect/landmark/start/research_director
+	name = "Research Director"
+	icon_state = "Research Director"
+
+/obj/effect/landmark/start/geneticist
+	name = "Geneticist"
+	icon_state = "Geneticist"
+
+/obj/effect/landmark/start/chief_medical_officer
+	name = "Chief Medical Officer"
+	icon_state = "Chief Medical Officer"
+
+/obj/effect/landmark/start/virologist
+	name = "Virologist"
+	icon_state = "Virologist"
+
+/obj/effect/landmark/start/chaplain
+	name = "Chaplain"
+	icon_state = "Chaplain"
+
+/obj/effect/landmark/start/cyborg
+	name = "Cyborg"
+	icon_state = "Cyborg"
+
+/obj/effect/landmark/start/ai
+	name = "AI"
+	icon_state = "AI"
+	delete_after_roundstart = FALSE
+	var/primary_ai = TRUE
+	var/latejoin_active = TRUE
+
+/obj/effect/landmark/start/ai/after_round_start()
+	if(latejoin_active && !used)
+		new /obj/structure/AIcore/latejoin_inactive(loc)
+	return ..()
+
+/obj/effect/landmark/start/ai/secondary
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "ai_spawn"
+	primary_ai = FALSE
+	latejoin_active = FALSE
 
 //Department Security spawns
 
 /obj/effect/landmark/start/depsec
 	name = "department_sec"
+	icon_state = "Security Officer"
 
 /obj/effect/landmark/start/depsec/New()
 	..()
-	department_security_spawns += src
+	GLOB.department_security_spawns += src
 
 /obj/effect/landmark/start/depsec/Destroy()
-	department_security_spawns -= src
+	GLOB.department_security_spawns -= src
 	return ..()
 
 /obj/effect/landmark/start/depsec/supply
@@ -256,32 +231,204 @@
 /obj/effect/landmark/start/depsec/science
 	name = "science_sec"
 
+/obj/effect/landmark/start/wizard
+	name = "wizard"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "wiznerd_spawn"
+
+/obj/effect/landmark/start/wizard/Initialize()
+	..()
+	GLOB.wizardstart += loc
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/start/nukeop
+	name = "nukeop"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "snukeop_spawn"
+
+/obj/effect/landmark/start/nukeop/Initialize()
+	..()
+	GLOB.nukeop_start += loc
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/start/nukeop_leader
+	name = "nukeop leader"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "snukeop_leader_spawn"
+
+/obj/effect/landmark/start/nukeop_leader/Initialize()
+	..()
+	GLOB.nukeop_leader_start += loc
+	return INITIALIZE_HINT_QDEL
+
+// Must be immediate because players will
+// join before SSatom initializes everything.
+INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
+
+/obj/effect/landmark/start/new_player
+	name = "New Player"
+
+/obj/effect/landmark/start/new_player/Initialize()
+	..()
+	GLOB.newplayer_start += loc
+	return INITIALIZE_HINT_QDEL
+
 /obj/effect/landmark/latejoin
 	name = "JoinLate"
+
+/obj/effect/landmark/latejoin/Initialize(mapload)
+	..()
+	SSjob.latejoin_trackers += loc
+	return INITIALIZE_HINT_QDEL
+
+// carp.
+/obj/effect/landmark/carpspawn
+	name = "carpspawn"
+	icon_state = "carp_spawn"
+
+// observer-start.
+/obj/effect/landmark/observer_start
+	name = "Observer-Start"
+	icon_state = "observer_start"
+
+// xenos.
+/obj/effect/landmark/xeno_spawn
+	name = "xeno_spawn"
+	icon_state = "xeno_spawn"
+
+/obj/effect/landmark/xeno_spawn/Initialize(mapload)
+	..()
+	GLOB.xeno_spawn += loc
+	return INITIALIZE_HINT_QDEL
+
+// blobs.
+/obj/effect/landmark/blobstart
+	name = "blobstart"
+	icon_state = "blob_start"
+
+/obj/effect/landmark/blobstart/Initialize(mapload)
+	..()
+	GLOB.blobstart += loc
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/secequipment
+	name = "secequipment"
+	icon_state = "secequipment"
+
+/obj/effect/landmark/secequipment/Initialize(mapload)
+	..()
+	GLOB.secequipment += loc
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/prisonwarp
+	name = "prisonwarp"
+	icon_state = "prisonwarp"
+
+/obj/effect/landmark/prisonwarp/Initialize(mapload)
+	..()
+	GLOB.prisonwarp += loc
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/ert_spawn
+	name = "Emergencyresponseteam"
+	icon_state = "ert_spawn"
+
+/obj/effect/landmark/ert_spawn/Initialize(mapload)
+	..()
+	GLOB.emergencyresponseteamspawn += loc
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/holding_facility
+	name = "Holding Facility"
+	icon_state = "holding_facility"
+
+/obj/effect/landmark/holding_facility/Initialize(mapload)
+	..()
+	GLOB.holdingfacility += loc
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/thunderdome/observe
+	name = "tdomeobserve"
+	icon_state = "tdome_observer"
+
+/obj/effect/landmark/thunderdome/observe/Initialize(mapload)
+	..()
+	GLOB.tdomeobserve += loc
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/thunderdome/one
+	name = "tdome1"
+	icon_state = "tdome_t1"
+
+/obj/effect/landmark/thunderdome/one/Initialize(mapload)
+	..()
+	GLOB.tdome1	+= loc
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/thunderdome/two
+	name = "tdome2"
+	icon_state = "tdome_t2"
+
+/obj/effect/landmark/thunderdome/two/Initialize(mapload)
+	..()
+	GLOB.tdome2 += loc
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/thunderdome/admin
+	name = "tdomeadmin"
+	icon_state = "tdome_admin"
+
+/obj/effect/landmark/thunderdome/admin/Initialize(mapload)
+	..()
+	GLOB.tdomeadmin += loc
+	return INITIALIZE_HINT_QDEL
+
+//Servant spawn locations
+/obj/effect/landmark/servant_of_ratvar
+	name = "servant of ratvar spawn"
+	icon_state = "clockwork_orange"
+	layer = MOB_LAYER
+
+/obj/effect/landmark/servant_of_ratvar/Initialize(mapload)
+	..()
+	GLOB.servant_spawns += loc
+	return INITIALIZE_HINT_QDEL
+
+//City of Cogs entrances
+/obj/effect/landmark/city_of_cogs
+	name = "city of cogs entrance"
+	icon_state = "city_of_cogs"
+
+/obj/effect/landmark/city_of_cogs/Initialize(mapload)
+	..()
+	GLOB.city_of_cogs_spawns += loc
+	return INITIALIZE_HINT_QDEL
 
 //generic event spawns
 /obj/effect/landmark/event_spawn
 	name = "generic event spawn"
-	icon_state = "x4"
+	icon_state = "generic_event"
+	layer = HIGH_LANDMARK_LAYER
+
 
 /obj/effect/landmark/event_spawn/New()
 	..()
-	generic_event_spawns += src
+	GLOB.generic_event_spawns += src
 
 /obj/effect/landmark/event_spawn/Destroy()
-	generic_event_spawns -= src
+	GLOB.generic_event_spawns -= src
 	return ..()
 
 /obj/effect/landmark/ruin
 	var/datum/map_template/ruin/ruin_template
 
 /obj/effect/landmark/ruin/New(loc, my_ruin_template)
-	name = "ruin_[ruin_landmarks.len + 1]"
+	name = "ruin_[GLOB.ruin_landmarks.len + 1]"
 	..(loc)
 	ruin_template = my_ruin_template
-	ruin_landmarks |= src
+	GLOB.ruin_landmarks |= src
 
 /obj/effect/landmark/ruin/Destroy()
-	ruin_landmarks -= src
+	GLOB.ruin_landmarks -= src
 	ruin_template = null
 	. = ..()

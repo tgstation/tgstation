@@ -5,14 +5,13 @@
 	name = "light switch"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
-	anchored = 1
-	var/on = 1
+	desc = "Make dark."
+	var/on = TRUE
 	var/area/area = null
 	var/otherarea = null
-	//	luminosity = 1
 
 /obj/machinery/light_switch/Initialize()
-	..()
+	. = ..()
 	area = get_area(src)
 
 	if(otherarea)
@@ -37,21 +36,16 @@
 	..()
 	to_chat(user, "It is [on? "on" : "off"].")
 
-
-/obj/machinery/light_switch/attack_paw(mob/user)
-	src.attack_hand(user)
-
-/obj/machinery/light_switch/attack_hand(mob/user)
-
+/obj/machinery/light_switch/interact(mob/user)
+	. = ..()
 	on = !on
 
-	for(var/area/A in area.related)
-		A.lightswitch = on
-		A.updateicon()
+	area.lightswitch = on
+	area.updateicon()
 
-		for(var/obj/machinery/light_switch/L in A)
-			L.on = on
-			L.updateicon()
+	for(var/obj/machinery/light_switch/L in area)
+		L.on = on
+		L.updateicon()
 
 	area.power_change()
 
@@ -66,6 +60,8 @@
 		updateicon()
 
 /obj/machinery/light_switch/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
 	if(!(stat & (BROKEN|NOPOWER)))
 		power_change()
-	..()

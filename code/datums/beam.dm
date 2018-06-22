@@ -29,7 +29,8 @@
 	icon = beam_icon
 	icon_state = beam_icon_state
 	beam_type = btype
-	addtimer(CALLBACK(src,.proc/End), time)
+	if(time < INFINITY)
+		addtimer(CALLBACK(src,.proc/End), time)
 
 /datum/beam/proc/Start()
 	Draw()
@@ -78,6 +79,7 @@
 /datum/beam/proc/Reset()
 	for(var/obj/effect/ebeam/B in elements)
 		qdel(B)
+	elements.Cut()
 
 /datum/beam/Destroy()
 	Reset()
@@ -97,9 +99,11 @@
 	var/length = round(sqrt((DX)**2+(DY)**2)) //hypotenuse of the triangle formed by target and origin's displacement
 
 	for(N in 0 to length-1 step 32)//-1 as we want < not <=, but we want the speed of X in Y to Z and step X
+		if(QDELETED(src) || finished)
+			break
 		var/obj/effect/ebeam/X = new beam_type(origin_oldloc)
 		X.owner = src
-		elements |= X
+		elements += X
 
 		//Assign icon, for main segments it's base_icon, for the end, it's icon+icon_state
 		//cropped by a transparent box of length-N pixel size
@@ -126,11 +130,11 @@
 		//Position the effect so the beam is one continous line
 		var/a
 		if(abs(Pixel_x)>32)
-			a = Pixel_x > 0 ? round(Pixel_x/32) : Ceiling(Pixel_x/32)
+			a = Pixel_x > 0 ? round(Pixel_x/32) : CEILING(Pixel_x/32, 1)
 			X.x += a
 			Pixel_x %= 32
 		if(abs(Pixel_y)>32)
-			a = Pixel_y > 0 ? round(Pixel_y/32) : Ceiling(Pixel_y/32)
+			a = Pixel_y > 0 ? round(Pixel_y/32) : CEILING(Pixel_y/32, 1)
 			X.y += a
 			Pixel_y %= 32
 
@@ -140,13 +144,18 @@
 	afterDraw()
 
 /obj/effect/ebeam
-	mouse_opacity = 0
-	anchored = 1
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
 	var/datum/beam/owner
 
 /obj/effect/ebeam/Destroy()
 	owner = null
 	return ..()
+
+/obj/effect/ebeam/singularity_pull()
+	return
+/obj/effect/ebeam/singularity_act()
+	return
 
 /atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam,beam_sleep_time = 3)
 	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,beam_sleep_time)

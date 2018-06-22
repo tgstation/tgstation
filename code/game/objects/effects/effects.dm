@@ -3,10 +3,8 @@
 //Effects are mostly temporary visual effects like sparks, smoke, as well as decals, etc...
 /obj/effect
 	icon = 'icons/effects/effects.dmi'
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-
-/obj/effect/attackby(obj/item/I, mob/living/user, params)
-	return
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	obj_flags = 0
 
 /obj/effect/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	return
@@ -20,7 +18,13 @@
 /obj/effect/mech_melee_attack(obj/mecha/M)
 	return 0
 
-/obj/effect/blob_act()
+/obj/effect/blob_act(obj/structure/blob/B)
+	return
+
+/obj/effect/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+	return 0
+
+/obj/effect/experience_pressure_difference()
 	return
 
 /obj/effect/ex_act(severity, target)
@@ -37,12 +41,24 @@
 				if(prob(25))
 					qdel(src)
 
-/obj/effect/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
-	return 0
-
-/obj/effect/experience_pressure_difference()
-	return
-
 /obj/effect/singularity_act()
 	qdel(src)
 	return 0
+
+/obj/effect/ConveyorMove()
+	return
+
+/obj/effect/abstract/ex_act(severity, target)
+	return
+
+/obj/effect/abstract/singularity_pull()
+	return
+
+/obj/effect/abstract/singularity_act()
+	return
+
+/obj/effect/dummy/singularity_pull()
+	return
+
+/obj/effect/dummy/singularity_act()
+	return

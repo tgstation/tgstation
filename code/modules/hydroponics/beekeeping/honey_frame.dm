@@ -7,6 +7,7 @@
 	var/honeycomb_capacity = 10 //10 Honeycomb per frame by default, researchable frames perhaps?
 
 
-/obj/item/honey_frame/New()
+/obj/item/honey_frame/Initialize()
+	. = ..()
 	pixel_x = rand(8,-8)
 	pixel_y = rand(8,-8)

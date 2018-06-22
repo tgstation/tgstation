@@ -1,5 +1,7 @@
 
-var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary/vent_pump, /obj/machinery/atmospherics/components/unary/vent_scrubber)
+GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
+	/obj/machinery/atmospherics/components/unary/vent_pump,
+	/obj/machinery/atmospherics/components/unary/vent_scrubber)))
 
 //VENTCRAWLING
 
@@ -32,7 +34,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 
 	if(!vent_found)
 		for(var/obj/machinery/atmospherics/machine in range(1,src))
-			if(is_type_in_list(machine, ventcrawl_machinery))
+			if(is_type_in_typecache(machine, GLOB.ventcrawl_machinery))
 				vent_found = machine
 
 			if(!vent_found.can_crawl_through())
@@ -43,7 +45,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 
 
 	if(vent_found)
-		var/datum/pipeline/vent_found_parent = vent_found.PARENT1
+		var/datum/pipeline/vent_found_parent = vent_found.parents[1]
 		if(vent_found_parent && (vent_found_parent.members.len || vent_found_parent.other_atmosmch))
 			visible_message("<span class='notice'>[src] begins climbing into the ventilation system...</span>" ,"<span class='notice'>You begin climbing into the ventilation system...</span>")
 

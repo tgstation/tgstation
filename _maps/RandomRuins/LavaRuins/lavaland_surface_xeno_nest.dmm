@@ -3,449 +3,118 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
-"c" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
-/obj/structure/alien/resin/wall,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "d" = (
 /obj/structure/alien/resin/wall,
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "e" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/alien/egg/burst,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "f" = (
 /obj/structure/alien/weeds,
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "g" = (
 /obj/structure/alien/weeds,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
-"h" = (
-/obj/structure/alien/weeds,
-/obj/structure/alien/resin/wall,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "i" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "j" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /mob/living/simple_animal/hostile/alien,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
-"k" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
-/obj/structure/alien/egg/burst,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "l" = (
 /obj/structure/alien/weeds/node,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
-"m" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
-/obj/structure/bed/nest,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
-"n" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
-/obj/structure/bed/nest,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "o" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
-/obj/item/weapon/gun/ballistic/automatic/pistol,
+/obj/item/clothing/mask/facehugger/impregnated,
+/obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
-"p" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
-"q" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "r" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "s" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/alien/egg,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "t" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
+/obj/structure/alien/weeds,
 /mob/living/simple_animal/hostile/alien/sentinel,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "u" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "v" = (
 /obj/structure/alien/weeds/node,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "w" = (
 /obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/blood/gibs,
+/obj/structure/bed/nest,
+/obj/structure/alien/resin/wall,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
-"x" = (
-/obj/structure/alien/weeds,
-/obj/structure/alien/egg/burst,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "y" = (
 /obj/structure/alien/weeds/node,
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "z" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/impregnated,
 /obj/item/clothing/under/rank/security,
 /obj/item/clothing/suit/armor/vest,
-/obj/item/weapon/melee/baton/loaded,
+/obj/item/melee/baton/loaded,
 /obj/item/clothing/head/helmet,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
-"A" = (
-/obj/structure/alien/weeds,
-/obj/structure/alien/egg,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "B" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/alien/egg/burst,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "C" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/egg/burst,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
-"D" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
-/obj/effect/decal/cleanable/blood/gibs,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "E" = (
 /obj/structure/alien/weeds,
 /mob/living/simple_animal/hostile/alien/drone{
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "F" = (
 /obj/structure/alien/weeds,
 /mob/living/simple_animal/hostile/alien/queen/large{
@@ -455,234 +124,79 @@
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "G" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
-/mob/living/simple_animal/hostile/alien/drone{
-	plants_off = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "H" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "I" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/decal/cleanable/blood,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/impregnated,
 /obj/item/clothing/under/syndicate,
 /obj/item/clothing/glasses/night,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
-"J" = (
-/obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/sentinel,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "K" = (
 /obj/structure/alien/weeds/node,
 /mob/living/simple_animal/hostile/alien,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "L" = (
 /obj/structure/alien/weeds/node,
 /mob/living/simple_animal/hostile/alien/drone{
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "M" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/item/weapon/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
 /obj/item/clothing/suit/space/syndicate/orange,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/helmet/space/syndicate/orange,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
-	item_state = "facehugger_impregnated";
-	stat = 2
-	},
+/obj/item/clothing/mask/facehugger/impregnated,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
-"N" = (
-/obj/structure/alien/weeds,
-/obj/structure/alien/resin/wall,
-/turf/template_noop,
-/area/template_noop)
+/area/ruin/unpowered/xenonest)
 "O" = (
 /obj/structure/alien/weeds/node,
 /turf/template_noop,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
-"P" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
-/obj/structure/alien/resin/wall,
-/turf/template_noop,
-/area/template_noop)
+/area/ruin/unpowered/xenonest)
 "Q" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
+/obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood,
 /mob/living/simple_animal/hostile/alien/drone{
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/unpowered/xenonest)
 "R" = (
 /obj/structure/alien/weeds,
 /turf/template_noop,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
-"S" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds2"
-	},
-/turf/template_noop,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
-"T" = (
-/obj/structure/alien/weeds/node,
-/obj/structure/alien/resin/wall,
-/turf/template_noop,
-/area/template_noop)
-"U" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
-/obj/structure/alien/resin/wall,
-/turf/template_noop,
-/area/template_noop)
-"V" = (
-/obj/structure/alien/weeds{
-	icon_state = "weeds1"
-	},
-/turf/template_noop,
-/area/template_noop)
+/area/ruin/unpowered/xenonest)
 
 (1,1,1) = {"
 a
 a
 a
-a
-a
-a
-c
-h
-b
-h
-a
-a
-a
+G
+G
+G
+G
+G
+G
+G
+G
+G
+G
 a
 a
 a
@@ -705,17 +219,17 @@ a
 a
 a
 a
-a
+G
 b
 b
-c
-A
-e
-c
 b
 b
-a
-a
+b
+b
+b
+b
+G
+G
 a
 a
 a
@@ -736,18 +250,18 @@ a
 (3,1,1) = {"
 a
 a
-a
-a
-h
+G
+G
+b
 g
 e
-k
-g
-s
-g
-c
+e
 b
-a
+g
+g
+b
+b
+G
 a
 a
 a
@@ -768,18 +282,18 @@ a
 (4,1,1) = {"
 a
 a
-a
-h
-c
-s
-p
-g
-s
 G
-q
+b
+b
+g
+g
+g
+g
+E
+g
 e
-c
-a
+b
+G
 a
 a
 a
@@ -800,18 +314,18 @@ a
 (5,1,1) = {"
 a
 a
-a
-c
-g
-p
-y
-m
-p
-q
-y
-g
+G
 b
-a
+g
+g
+y
+b
+b
+b
+y
+b
+b
+G
 a
 a
 a
@@ -832,18 +346,18 @@ a
 (6,1,1) = {"
 a
 a
-a
+G
 b
 g
-q
-m
-q
+g
+w
+g
 F
 u
 I
-H
-h
-a
+b
+b
+G
 a
 a
 a
@@ -864,18 +378,18 @@ a
 (7,1,1) = {"
 a
 a
-a
-h
+G
+b
 e
 t
 g
-p
-q
+g
+s
 H
 u
-q
-c
-a
+g
+b
+G
 a
 a
 a
@@ -896,18 +410,18 @@ a
 (8,1,1) = {"
 a
 a
-a
-c
-n
+G
+b
+i
 u
-p
-g
+b
+s
 l
-q
-J
-k
-h
-a
+s
+t
+e
+b
+G
 a
 a
 a
@@ -928,18 +442,18 @@ a
 (9,1,1) = {"
 a
 a
-a
+G
 b
 o
 v
-q
-p
-p
-q
-k
-p
-c
-a
+g
+b
+s
+g
+e
+b
+b
+G
 a
 a
 a
@@ -960,18 +474,18 @@ a
 (10,1,1) = {"
 a
 a
-a
-h
-p
-w
-c
-p
+G
+b
+g
+u
+b
+g
 g
 g
 y
-x
+e
 b
-a
+G
 a
 a
 a
@@ -992,49 +506,50 @@ a
 (11,1,1) = {"
 a
 a
+G
+b
+b
+g
+t
+g
+g
+t
+g
+g
+b
+G
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 a
 b
-c
-q
-g
-q
-g
-q
-q
-p
-c
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-c
-h
 b
-h
+b
+b
 a
 "}
 (12,1,1) = {"
 a
 a
-a
-a
-h
-x
-p
+G
+G
+b
+e
 g
-p
 g
-q
-p
-h
+g
+g
+g
+g
+b
+G
 a
 a
 a
@@ -1045,29 +560,28 @@ a
 a
 a
 a
-a
-h
+b
 b
 M
 i
-c
-h
+b
+b
 "}
 (13,1,1) = {"
 a
 a
 a
-a
-c
-h
-q
-p
-l
-q
+G
+b
+b
 g
-c
-c
-a
+g
+l
+g
+g
+b
+b
+G
 a
 a
 a
@@ -1078,26 +592,28 @@ a
 a
 a
 b
-h
-x
-D
+b
+e
+u
 Q
-q
-c
+g
+b
 "}
 (14,1,1) = {"
 a
 a
 a
-a
-a
-c
-h
-g
-q
-p
-h
+G
+G
 b
+b
+g
+g
+g
+b
+b
+G
+G
 a
 a
 a
@@ -1107,11 +623,9 @@ a
 a
 a
 a
-a
-a
-c
+b
 i
-q
+g
 l
 g
 e
@@ -1122,15 +636,15 @@ a
 a
 a
 a
-a
-a
-c
-c
+G
+G
 b
-c
-c
-a
-a
+b
+b
+b
+b
+G
+G
 a
 a
 a
@@ -1140,13 +654,13 @@ a
 a
 a
 b
-h
-c
-p
+b
+b
 g
-q
+g
+g
 i
-h
+b
 b
 "}
 (16,1,1) = {"
@@ -1155,11 +669,13 @@ a
 a
 a
 a
-a
-h
+G
+b
 l
 l
-h
+b
+G
+G
 a
 a
 a
@@ -1168,16 +684,14 @@ a
 a
 a
 a
-a
-a
-h
-h
-q
+b
+b
+g
 j
 g
 e
-h
-c
+b
+b
 b
 a
 "}
@@ -1188,27 +702,27 @@ a
 a
 a
 a
-c
+b
+E
 g
-p
 b
-h
-a
 b
-h
-c
-h
-c
+G
 b
-h
-h
-c
+b
+b
+b
+b
+b
+b
+b
+b
 g
-p
-h
-c
+g
 b
-h
+b
+b
+b
 a
 a
 a
@@ -1221,23 +735,23 @@ a
 a
 a
 b
-q
-q
-g
-c
-c
-h
-q
-g
-q
-p
 g
 g
-c
+E
+b
+b
 b
 g
-c
-h
+g
+g
+g
+g
+g
+b
+b
+g
+b
+b
 a
 a
 a
@@ -1252,22 +766,22 @@ a
 a
 a
 a
-h
-h
+b
+b
 g
 g
-p
-c
 g
-q
-p
+b
 g
-q
-p
+g
+g
+g
+g
+g
 l
-q
 g
-p
+g
+g
 b
 a
 a
@@ -1279,27 +793,27 @@ a
 "}
 (20,1,1) = {"
 b
-c
-h
+b
+b
 b
 a
 a
 a
 b
-c
-p
-l
-p
-q
+b
 g
-c
-h
-c
-h
-q
-p
-q
-h
+l
+g
+g
+g
+b
+b
+b
+b
+g
+g
+g
+b
 b
 a
 a
@@ -1310,28 +824,28 @@ a
 a
 "}
 (21,1,1) = {"
-c
+b
 e
 i
-h
-c
-h
 b
-h
-c
-q
-p
+b
+b
+b
+b
+b
 g
-p
-h
+g
+g
+g
+b
 b
 a
 a
 b
-c
+b
 g
-p
-c
+g
+b
 a
 a
 a
@@ -1347,23 +861,23 @@ f
 j
 g
 b
-c
-q
+b
 g
-p
 g
-q
-q
-c
+g
+g
+g
+g
+b
 b
 a
 a
 a
-h
-q
-q
+b
 g
-h
+g
+g
+b
 a
 a
 a
@@ -1376,25 +890,25 @@ a
 (23,1,1) = {"
 d
 g
-k
+e
 l
-q
 g
-p
-c
-h
-p
-c
-h
-c
-a
-a
-a
-a
-c
 g
-p
-c
+g
+b
+b
+g
+b
+b
+b
+a
+a
+a
+a
+b
+g
+g
+b
 b
 a
 a
@@ -1406,13 +920,13 @@ a
 a
 "}
 (24,1,1) = {"
-c
-c
+b
+b
 i
-m
+i
 b
-c
-h
+b
+b
 b
 b
 g
@@ -1423,10 +937,10 @@ a
 a
 a
 a
-c
-p
+b
 g
-c
+g
+b
 a
 a
 a
@@ -1439,17 +953,17 @@ a
 "}
 (25,1,1) = {"
 a
-h
-c
-c
-h
+b
+b
+b
+b
 a
 a
 a
-c
+b
 E
-c
-h
+b
+b
 a
 a
 a
@@ -1459,7 +973,7 @@ b
 g
 L
 b
-c
+b
 b
 a
 a
@@ -1467,7 +981,7 @@ a
 a
 a
 a
-c
+b
 "}
 (26,1,1) = {"
 a
@@ -1478,28 +992,28 @@ a
 a
 a
 a
-c
-p
+b
 g
-h
-a
-a
-a
-a
-a
-h
-q
-p
-q
 g
-c
-h
-c
+b
+a
+a
 a
 a
 a
 b
-h
+g
+g
+g
+g
+b
+b
+b
+a
+a
+a
+b
+b
 "}
 (27,1,1) = {"
 a
@@ -1509,27 +1023,27 @@ a
 a
 a
 b
-c
-h
-q
-q
-c
+b
+b
+g
+g
+b
 b
 a
 a
 a
 a
-c
-c
-g
-p
-p
-g
-q
 b
-c
-h
-c
+b
+g
+g
+g
+g
+g
+b
+b
+b
+b
 y
 g
 "}
@@ -1540,30 +1054,30 @@ a
 a
 a
 b
-h
+b
 B
 g
-q
+g
 l
-x
-h
+e
+b
 a
 a
 a
 b
-c
+b
 g
-q
-h
-c
 g
-p
-q
+b
+b
+g
+g
+g
 b
 O
 R
-p
-q
+g
+g
 "}
 (29,1,1) = {"
 a
@@ -1571,30 +1085,30 @@ a
 a
 a
 a
-c
+b
 z
 C
 j
 g
-x
-m
-c
-a
-a
-a
-h
-g
-p
-c
-h
+e
+i
 b
-c
+a
+a
+a
+b
+g
+g
+b
+b
+b
+b
 g
 l
 b
 O
-S
-p
+R
+g
 g
 "}
 (30,1,1) = {"
@@ -1603,31 +1117,31 @@ a
 a
 a
 a
-c
+b
 i
-D
-p
-n
-m
-c
+u
+g
+i
+i
+b
 b
 a
 a
 a
-c
-q
-h
-c
-a
-a
-h
-c
 b
-c
-c
+g
+b
+b
+a
+a
+b
+b
+b
+b
+b
 y
-q
-p
+g
+g
 "}
 (31,1,1) = {"
 a
@@ -1635,31 +1149,31 @@ a
 a
 a
 a
-h
 b
-c
+b
+b
 g
-c
-c
-h
-a
-a
-a
-a
 b
-p
-c
+b
 b
 a
 a
 a
 a
-a
-a
-a
-c
+b
 g
-q
+b
+b
+a
+a
+a
+a
+a
+a
+a
+b
+g
+g
 "}
 (32,1,1) = {"
 a
@@ -1669,19 +1183,19 @@ a
 a
 a
 a
-h
-p
-h
+b
+g
+b
 a
 a
 a
 a
 a
 a
-h
+b
 g
 g
-h
+b
 a
 a
 a
@@ -1689,8 +1203,8 @@ a
 a
 a
 a
-h
-p
+b
+g
 g
 "}
 (33,1,1) = {"
@@ -1702,27 +1216,27 @@ a
 a
 a
 b
-p
-c
+g
+b
 a
 a
 a
 a
 a
 a
-h
-c
+b
+b
 l
-c
+b
 a
 a
 a
 a
 a
 a
-c
-c
-q
+b
+b
+g
 a
 "}
 (34,1,1) = {"
@@ -1733,7 +1247,7 @@ a
 a
 a
 a
-h
+b
 l
 b
 a
@@ -1744,15 +1258,15 @@ a
 a
 a
 b
-p
-h
+g
+b
 a
 a
 a
 a
 a
 a
-c
+b
 a
 a
 a
@@ -1765,9 +1279,9 @@ a
 a
 a
 a
-c
-p
-h
+b
+g
+b
 a
 a
 a
@@ -1775,9 +1289,9 @@ a
 a
 a
 a
-c
-q
-c
+b
+g
+b
 a
 a
 a
@@ -1797,19 +1311,19 @@ a
 a
 a
 a
-h
+b
 g
-c
+b
 a
 a
 a
 a
 a
 a
-c
-h
+b
+b
 g
-h
+b
 a
 a
 a
@@ -1829,18 +1343,18 @@ a
 a
 a
 a
-c
-q
-h
+b
+g
+b
 a
 a
 a
 a
 a
 b
-h
+b
 g
-p
+g
 b
 a
 a
@@ -1861,19 +1375,19 @@ a
 a
 a
 b
-c
-p
-c
 b
-h
-c
-c
+g
 b
-c
-p
-q
-h
-c
+b
+b
+b
+b
+b
+b
+g
+g
+b
+b
 a
 a
 a
@@ -1892,18 +1406,18 @@ a
 a
 a
 b
-c
-q
+b
 g
-k
-h
-c
 g
-q
+e
+b
+b
+g
+g
 K
 g
-q
-c
+g
+b
 b
 a
 a
@@ -1923,19 +1437,19 @@ a
 a
 a
 a
-h
-m
-E
-p
-g
-q
-p
-p
 b
-c
-h
-c
-h
+i
+E
+g
+g
+g
+g
+g
+b
+b
+b
+b
+b
 a
 a
 a
@@ -1954,16 +1468,16 @@ a
 a
 a
 a
-c
-c
+b
+b
 e
-q
+g
 l
 g
-x
-c
-h
-c
+e
+b
+b
+b
 a
 a
 a
@@ -1986,13 +1500,13 @@ a
 a
 a
 a
-h
-x
-q
+b
+e
 g
-n
-m
-c
+g
+i
+i
+b
 b
 a
 a
@@ -2019,76 +1533,12 @@ a
 a
 a
 r
-c
-h
-c
 b
-h
-c
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-"}
-(44,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-"}
-(45,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+b
+b
+b
+b
+b
 a
 a
 a

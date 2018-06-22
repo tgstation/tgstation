@@ -1,19 +1,21 @@
-var/datum/controller/subsystem/parallax/SSparallax
-
-/datum/controller/subsystem/parallax
+SUBSYSTEM_DEF(parallax)
 	name = "Parallax"
 	wait = 2
-	flags = SS_POST_FIRE_TIMING | SS_FIRE_IN_LOBBY | SS_BACKGROUND | SS_NO_INIT
-	priority = 65
+	flags = SS_POST_FIRE_TIMING | SS_BACKGROUND
+	priority = FIRE_PRIORITY_PARALLAX
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun
+	var/planet_x_offset = 128
+	var/planet_y_offset = 128
 
-/datum/controller/subsystem/parallax/New()
-	NEW_SS_GLOBAL(SSparallax)
-	return ..()
+/datum/controller/subsystem/parallax/Initialize(timeofday)
+	. = ..()
+	planet_y_offset = rand(100, 160)
+	planet_x_offset = rand(100, 160)
 
 /datum/controller/subsystem/parallax/fire(resumed = 0)
 	if (!resumed)
-		src.currentrun = clients.Copy()
+		src.currentrun = GLOB.clients.Copy()
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
@@ -26,8 +28,8 @@ var/datum/controller/subsystem/parallax/SSparallax
 				return
 			continue
 		var/atom/movable/A = C.eye
-		if(!A)
-			return
+		if(!istype(A))
+			continue
 		for (A; isloc(A.loc) && !isturf(A.loc); A = A.loc);
 
 		if(A != C.movingmob)

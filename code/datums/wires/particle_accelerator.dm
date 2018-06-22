@@ -25,7 +25,7 @@
 		if(WIRE_INTERFACE)
 			C.interface_control = !C.interface_control
 		if(WIRE_LIMIT)
-			C.visible_message("\icon[C]<b>[C]</b> makes a large whirring noise.")
+			C.visible_message("[icon2html(C, viewers(holder))]<b>[C]</b> makes a large whirring noise.")
 
 /datum/wires/particle_accelerator/control_box/on_cut(wire, mend)
 	var/obj/machinery/particle_accelerator/control_box/C = holder
@@ -43,3 +43,6 @@
 			C.strength_upper_limit = (mend ? 2 : 3)
 			if(C.strength_upper_limit < C.strength)
 				C.remove_strength()
+
+/datum/wires/particle_accelerator/control_box/emp_pulse() // to prevent singulo from pulsing wires
+	return

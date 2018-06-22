@@ -31,7 +31,7 @@
 
 	var/turf/T = loc
 	if(istype(T))
-		if(istype(T, /turf/open/floor/plating/lava))
+		if(islava(T))
 			environment_temperature = 5000
 		else if(T.blocks_air)
 			environment_temperature = T.temperature
@@ -87,4 +87,4 @@
 		if(pipe_air.temperature > heat_limit + 1)
 			for(var/m in buckled_mobs)
 				var/mob/living/buckled_mob = m
-				buckled_mob.apply_damage(4 * log(pipe_air.temperature - heat_limit), BURN, "chest")
+				buckled_mob.apply_damage(4 * log(pipe_air.temperature - heat_limit), BURN, BODY_ZONE_CHEST)

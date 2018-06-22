@@ -1,62 +1,67 @@
-/obj/item/device/paicard
+/obj/item/paicard
 	name = "personal AI device"
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "pai"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	slot_flags = SLOT_BELT
-	origin_tech = "programming=2"
+	slot_flags = ITEM_SLOT_BELT
 	var/mob/living/silicon/pai/pai
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 
-/obj/item/device/paicard/New()
-	..()
-	pai_card_list += src
-	add_overlay("pai-off")
+/obj/item/paicard/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] is staring sadly at [src]! [user.p_they()] can't keep living without real human intimacy!</span>")
+	return OXYLOSS
 
-/obj/item/device/paicard/Destroy()
-	//Will stop people throwing friend pAIs into the singularity so they can respawn
-	pai_card_list -= src
-	if(!isnull(pai))
-		pai.death(0)
+/obj/item/paicard/Initialize()
+	SSpai.pai_card_list += src
+	add_overlay("pai-off")
 	return ..()
 
-/obj/item/device/paicard/attack_self(mob/user)
+/obj/item/paicard/Destroy()
+	//Will stop people throwing friend pAIs into the singularity so they can respawn
+	SSpai.pai_card_list -= src
+	if (!QDELETED(pai))
+		QDEL_NULL(pai)
+	return ..()
+
+/obj/item/paicard/attack_self(mob/user)
 	if (!in_range(src, user))
 		return
 	user.set_machine(src)
 	var/dat = "<TT><B>Personal AI Device</B><BR>"
-	if(pai && (!pai.master_dna || !pai.master))
-		dat += "<a href='byond://?src=\ref[src];setdna=1'>Imprint Master DNA</a><br>"
 	if(pai)
+		if(!pai.master_dna || !pai.master)
+			dat += "<a href='byond://?src=[REF(src)];setdna=1'>Imprint Master DNA</a><br>"
 		dat += "Installed Personality: [pai.name]<br>"
 		dat += "Prime directive: <br>[pai.laws.zeroth]<br>"
 		for(var/slaws in pai.laws.supplied)
 			dat += "Additional directives: <br>[slaws]<br>"
-		dat += "<a href='byond://?src=\ref[src];setlaws=1'>Configure Directives</a><br>"
+		dat += "<a href='byond://?src=[REF(src)];setlaws=1'>Configure Directives</a><br>"
 		dat += "<br>"
 		dat += "<h3>Device Settings</h3><br>"
 		if(pai.radio)
 			dat += "<b>Radio Uplink</b><br>"
-			dat += "Transmit: <A href='byond://?src=\ref[src];wires=[WIRE_TX]'>[(pai.radio.wires.is_cut(WIRE_TX)) ? "Disabled" : "Enabled"]</A><br>"
-			dat += "Receive: <A href='byond://?src=\ref[src];wires=[WIRE_RX]'>[(pai.radio.wires.is_cut(WIRE_RX)) ? "Disabled" : "Enabled"]</A><br>"
+			dat += "Transmit: <A href='byond://?src=[REF(src)];wires=[WIRE_TX]'>[(pai.radio.wires.is_cut(WIRE_TX)) ? "Disabled" : "Enabled"]</A><br>"
+			dat += "Receive: <A href='byond://?src=[REF(src)];wires=[WIRE_RX]'>[(pai.radio.wires.is_cut(WIRE_RX)) ? "Disabled" : "Enabled"]</A><br>"
 		else
 			dat += "<b>Radio Uplink</b><br>"
 			dat += "<font color=red><i>Radio firmware not loaded. Please install a pAI personality to load firmware.</i></font><br>"
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.real_name == pai.master || H.dna.unique_enzymes == pai.master_dna)
-				dat += "<A href='byond://?src=\ref[src];toggle_holo=1'>\[[pai.canholo? "Disable" : "Enable"] holomatrix projectors\]</a><br>"
-		dat += "<A href='byond://?src=\ref[src];wipe=1'>\[Wipe current pAI personality\]</a><br>"
+				dat += "<A href='byond://?src=[REF(src)];toggle_holo=1'>\[[pai.canholo? "Disable" : "Enable"] holomatrix projectors\]</a><br>"
+		dat += "<A href='byond://?src=[REF(src)];wipe=1'>\[Wipe current pAI personality\]</a><br>"
 	else
 		dat += "No personality installed.<br>"
 		dat += "Searching for a personality... Press view available personalities to notify potential candidates."
-		dat += "<A href='byond://?src=\ref[src];request=1'>\[View available personalities\]</a><br>"
+		dat += "<A href='byond://?src=[REF(src)];request=1'>\[View available personalities\]</a><br>"
 	user << browse(dat, "window=paicard")
 	onclose(user, "paicard")
 	return
 
-/obj/item/device/paicard/Topic(href, href_list)
+/obj/item/paicard/Topic(href, href_list)
 
 	if(!usr || usr.stat)
 		return
@@ -70,7 +75,7 @@
 		if(href_list["setdna"])
 			if(pai.master_dna)
 				return
-			if(!istype(usr, /mob/living/carbon))
+			if(!iscarbon(usr))
 				to_chat(usr, "<span class='warning'>You don't have any DNA, or your DNA is incompatible with this device!</span>")
 			else
 				var/mob/living/carbon/M = usr
@@ -86,7 +91,7 @@
 					to_chat(pai, "<span class='danger'>Byte by byte you lose your sense of self.</span>")
 					to_chat(pai, "<span class='userdanger'>Your mental faculties leave you.</span>")
 					to_chat(pai, "<span class='rose'>oblivion... </span>")
-					pai.death(0)
+					qdel(pai)
 		if(href_list["wires"])
 			var/wire = text2num(href_list["wires"])
 			if(pai.radio)
@@ -111,38 +116,44 @@
 //		WIRE_RECEIVE = 2
 //		WIRE_TRANSMIT = 4
 
-/obj/item/device/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
+/obj/item/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
 	src.pai = personality
 	src.add_overlay("pai-null")
 
 	playsound(loc, 'sound/effects/pai_boot.ogg', 50, 1, -1)
 	audible_message("\The [src] plays a cheerful startup noise!")
 
-/obj/item/device/paicard/proc/removePersonality()
-	src.pai = null
-	src.cut_overlays()
-	src.add_overlay("pai-off")
-
-/obj/item/device/paicard/proc/setEmotion(emotion)
+/obj/item/paicard/proc/setEmotion(emotion)
 	if(pai)
 		src.cut_overlays()
 		switch(emotion)
-			if(1) src.add_overlay("pai-happy")
-			if(2) src.add_overlay("pai-cat")
-			if(3) src.add_overlay("pai-extremely-happy")
-			if(4) src.add_overlay("pai-face")
-			if(5) src.add_overlay("pai-laugh")
-			if(6) src.add_overlay("pai-off")
-			if(7) src.add_overlay("pai-sad")
-			if(8) src.add_overlay("pai-angry")
-			if(9) src.add_overlay("pai-what")
-			if(10) src.add_overlay("pai-null")
+			if(1)
+				src.add_overlay("pai-happy")
+			if(2)
+				src.add_overlay("pai-cat")
+			if(3)
+				src.add_overlay("pai-extremely-happy")
+			if(4)
+				src.add_overlay("pai-face")
+			if(5)
+				src.add_overlay("pai-laugh")
+			if(6)
+				src.add_overlay("pai-off")
+			if(7)
+				src.add_overlay("pai-sad")
+			if(8)
+				src.add_overlay("pai-angry")
+			if(9)
+				src.add_overlay("pai-what")
+			if(10)
+				src.add_overlay("pai-null")
 
-/obj/item/device/paicard/proc/alertUpdate()
+/obj/item/paicard/proc/alertUpdate()
 	visible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", "<span class='notice'>[src] bleeps electronically.</span>")
 
-/obj/item/device/paicard/emp_act(severity)
-	if(pai)
+/obj/item/paicard/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
+	if(pai && !pai.holoform)
 		pai.emp_act(severity)
-	..()
-

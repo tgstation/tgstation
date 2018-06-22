@@ -3,24 +3,27 @@
 	desc = "A small wall mounted cabinet designed to hold a fire extinguisher."
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "extinguisher_closed"
-	anchored = 1
-	density = 0
-	obj_integrity = 200
+	anchored = TRUE
+	density = FALSE
 	max_integrity = 200
 	integrity_failure = 50
-	var/obj/item/weapon/extinguisher/stored_extinguisher
-	var/opened = 0
+	var/obj/item/extinguisher/stored_extinguisher
+	var/opened = FALSE
 
-/obj/structure/extinguisher_cabinet/New(loc, ndir, building)
-	..()
+/obj/structure/extinguisher_cabinet/Initialize(mapload, ndir, building)
+	. = ..()
 	if(building)
 		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -27 : 27)
 		pixel_y = (dir & 3)? (dir ==1 ? -30 : 30) : 0
-		opened = 1
+		opened = TRUE
 		icon_state = "extinguisher_empty"
 	else
-		stored_extinguisher = new /obj/item/weapon/extinguisher(src)
+		stored_extinguisher = new /obj/item/extinguisher(src)
+
+/obj/structure/extinguisher_cabinet/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to [opened ? "close":"open"] it.</span>")
 
 /obj/structure/extinguisher_cabinet/Destroy()
 	if(stored_extinguisher)
@@ -38,22 +41,21 @@
 		update_icon()
 
 /obj/structure/extinguisher_cabinet/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench) && !stored_extinguisher)
+	if(istype(I, /obj/item/wrench) && !stored_extinguisher)
 		to_chat(user, "<span class='notice'>You start unsecuring [name]...</span>")
-		playsound(loc, I.usesound, 50, 1)
-		if(do_after(user, 60*I.toolspeed, target = src))
-			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		I.play_tool_sound(src)
+		if(I.use_tool(src, user, 60))
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You unsecure [name].</span>")
 			deconstruct(TRUE)
 		return
 
 	if(iscyborg(user) || isalien(user))
 		return
-	if(istype(I, /obj/item/weapon/extinguisher))
+	if(istype(I, /obj/item/extinguisher))
 		if(!stored_extinguisher && opened)
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(I, src))
 				return
-			contents += I
 			stored_extinguisher = I
 			to_chat(user, "<span class='notice'>You place [I] in [src].</span>")
 			update_icon()
@@ -66,6 +68,9 @@
 
 
 /obj/structure/extinguisher_cabinet/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(iscyborg(user) || isalien(user))
 		return
 	if(stored_extinguisher)
@@ -93,10 +98,10 @@
 
 
 /obj/structure/extinguisher_cabinet/attack_paw(mob/user)
-	attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/extinguisher_cabinet/AltClick(mob/living/user)
-	if(user.incapacitated() || !Adjacent(user) || !istype(user))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	toggle_cabinet(user)
 
@@ -113,7 +118,7 @@
 		icon_state = "extinguisher_closed"
 		return
 	if(stored_extinguisher)
-		if(istype(stored_extinguisher, /obj/item/weapon/extinguisher/mini))
+		if(istype(stored_extinguisher, /obj/item/extinguisher/mini))
 			icon_state = "extinguisher_mini"
 		else
 			icon_state = "extinguisher_full"
@@ -121,7 +126,7 @@
 		icon_state = "extinguisher_empty"
 
 /obj/structure/extinguisher_cabinet/obj_break(damage_flag)
-	if(!broken && !(flags & NODECONSTRUCT))
+	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		broken = 1
 		opened = 1
 		if(stored_extinguisher)
@@ -131,7 +136,7 @@
 
 
 /obj/structure/extinguisher_cabinet/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
 			new /obj/item/wallframe/extinguisher_cabinet(loc)
 		else
@@ -144,6 +149,5 @@
 /obj/item/wallframe/extinguisher_cabinet
 	name = "extinguisher cabinet frame"
 	desc = "Used for building wall-mounted extinguisher cabinets."
-	icon = 'icons/obj/apc_repair.dmi'
-	icon_state = "extinguisher_frame"
+	icon_state = "extinguisher"
 	result_path = /obj/structure/extinguisher_cabinet

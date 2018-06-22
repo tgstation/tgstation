@@ -6,6 +6,7 @@
 	icon_living = "static"
 	icon_dead = "null"
 	gender = NEUTER
+	mob_biotypes = list()
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	a_intent = INTENT_HARM
@@ -27,11 +28,12 @@
 		death()
 
 
-/mob/living/simple_animal/hostile/illusion/proc/Copy_Parent(mob/living/original, life = 50, health = 100, damage = 0, replicate = 0 )
+/mob/living/simple_animal/hostile/illusion/proc/Copy_Parent(mob/living/original, life = 50, hp = 100, damage = 0, replicate = 0 )
 	appearance = original.appearance
 	parent_mob = original
 	setDir(original.dir)
 	life_span = world.time+life
+	health = hp
 	melee_damage_lower = damage
 	melee_damage_upper = damage
 	multiply_chance = replicate
@@ -48,8 +50,8 @@
 
 
 /mob/living/simple_animal/hostile/illusion/AttackingTarget()
-	..()
-	if(isliving(target) && prob(multiply_chance))
+	. = ..()
+	if(. && isliving(target) && prob(multiply_chance))
 		var/mob/living/L = target
 		if(L.stat == DEAD)
 			return
@@ -67,8 +69,8 @@
 	melee_damage_upper = 0
 	speed = -1
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 
 
 /mob/living/simple_animal/hostile/illusion/escape/AttackingTarget()
-	return
+	return FALSE

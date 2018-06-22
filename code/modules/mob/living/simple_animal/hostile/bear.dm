@@ -6,6 +6,7 @@
 	icon_living = "bear"
 	icon_dead = "bear_dead"
 	icon_gib = "bear_gib"
+	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	speak = list("RAWR!","Rawr!","GRR!","Growl!")
 	speak_emote = list("growls", "roars")
 	emote_hear = list("rawrs.","grumbles.","grawls.")
@@ -14,12 +15,13 @@
 	taunt_chance = 25
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear = 5, /obj/item/clothing/head/bearpelt = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/bear = 5, /obj/item/clothing/head/bearpelt = 1)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "hits"
 	maxHealth = 60
 	health = 60
+	spacewalk = TRUE
 	var/armored = FALSE
 
 	obj_damage = 60
@@ -35,7 +37,7 @@
 	maxbodytemp = 1500
 
 	faction = list("russian")
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/Hudson
@@ -49,6 +51,7 @@
 	icon_living = "snowbear"
 	icon_dead = "snowbear_dead"
 	desc = "It's a polar bear, in space, but not actually in space."
+	weather_immunities = list("snow")
 
 /mob/living/simple_animal/hostile/bear/russian
 	name = "combat bear"
@@ -57,7 +60,7 @@
 	icon_living = "combatbear"
 	icon_dead = "combatbear_dead"
 	faction = list("russian")
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear = 5, /obj/item/clothing/head/bearpelt = 1, /obj/item/bear_armor = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/bear = 5, /obj/item/clothing/head/bearpelt = 1, /obj/item/bear_armor = 1)
 	melee_damage_lower = 25
 	melee_damage_upper = 35
 	armour_penetration = 20
@@ -65,21 +68,16 @@
 	maxHealth = 120
 	armored = TRUE
 
-/mob/living/simple_animal/hostile/bear/Process_Spacemove(movement_dir = 0)
-	return 1	//No drifting in space for space bears!
-
 /mob/living/simple_animal/hostile/bear/update_icons()
 	..()
 	if(armored)
-		var/image/B = image(icon = 'icons/mob/animal.dmi', icon_state = "armor_bear")
-		if(B)
-			add_overlay(B)
+		add_overlay("armor_bear")
 
 /obj/item/bear_armor
 	name = "pile of bear armor"
 	desc = "A scattered pile of various shaped armor pieces fitted for a bear, some duct tape, and a nail filer. Crude instructions \
 		are written on the back of one of the plates in russian. This seems like an awful idea."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "bear_armor_upgrade"
 
 /obj/item/bear_armor/afterattack(atom/target, mob/user, proximity_flag)

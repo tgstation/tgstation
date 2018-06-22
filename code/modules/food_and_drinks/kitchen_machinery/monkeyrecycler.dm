@@ -4,35 +4,21 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
 	layer = BELOW_OBJ_LAYER
-	density = 1
-	anchored = 1
-	use_power = 1
+	density = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 50
+	circuit = /obj/item/circuitboard/machine/monkey_recycler
 	var/grinded = 0
 	var/required_grind = 5
 	var/cube_production = 1
 
-
-/obj/machinery/monkey_recycler/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/monkey_recycler(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/monkey_recycler
-	name = "Monkey Recycler (Machine Board)"
-	build_path = /obj/machinery/monkey_recycler
-	origin_tech = "programming=1;biotech=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1)
-
 /obj/machinery/monkey_recycler/RefreshParts()
 	var/req_grind = 5
 	var/cubes_made = 1
-	for(var/obj/item/weapon/stock_parts/manipulator/B in component_parts)
+	for(var/obj/item/stock_parts/manipulator/B in component_parts)
 		req_grind -= B.rating
-	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		cubes_made = M.rating
 	cube_production = cubes_made
 	required_grind = req_grind
@@ -40,9 +26,6 @@
 
 /obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
-		return
-
-	if(exchange_parts(user, O))
 		return
 
 	if(default_pry_open(O))
@@ -69,7 +52,7 @@
 /obj/machinery/monkey_recycler/proc/stuff_monkey_in(mob/living/carbon/monkey/target, mob/living/user)
 	if(!istype(target))
 		return
-	if(target.stat == 0)
+	if(target.stat == CONSCIOUS)
 		to_chat(user, "<span class='warning'>The monkey is struggling far too much to put it in the recycler.</span>")
 		return
 	if(target.buckled || target.has_buckled_mobs())
@@ -82,21 +65,16 @@
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	use_power(500)
 	grinded++
-	sleep(50)
-	pixel_x = initial(pixel_x) //return to its spot after shaking
-	to_chat(user, "<span class='notice'>The machine now has [grinded] monkey\s worth of material stored.</span>")
+	addtimer(VARSET_CALLBACK(src, pixel_x, initial(pixel_x)))
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, user, "<span class='notice'>The machine now has [grinded] monkey\s worth of material stored.</span>"))
 
-
-/obj/machinery/monkey_recycler/attack_hand(mob/user)
-	if (src.stat != 0) //NOPOWER etc
-		return
+/obj/machinery/monkey_recycler/interact(mob/user)
 	if(grinded >= required_grind)
 		to_chat(user, "<span class='notice'>The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube.</span>")
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 		grinded -= required_grind
 		for(var/i = 0, i < cube_production, i++)
-			new /obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
+			new /obj/item/reagent_containers/food/snacks/monkeycube(src.loc)
 		to_chat(user, "<span class='notice'>The machine's display flashes that it has [grinded] monkeys worth of material left.</span>")
 	else
 		to_chat(user, "<span class='danger'>The machine needs at least [required_grind] monkey(s) worth of material to produce a monkey cube. It only has [grinded].</span>")
-	return

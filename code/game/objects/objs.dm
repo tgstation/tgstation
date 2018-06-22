@@ -1,54 +1,83 @@
+
 /obj
-	languages_spoken = HUMAN
-	languages_understood = HUMAN
-	var/crit_fail = 0
+	var/crit_fail = FALSE
 	animate_movement = 2
 	var/throwforce = 0
-	var/in_use = 0 // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
+	var/obj_flags = CAN_BE_HIT
+	var/set_obj_flags // ONLY FOR MAPPING: Sets flags from a string list, handled in Initialize. Usage: set_obj_flags = "EMAGGED;!CAN_BE_HIT" to set EMAGGED and clear CAN_BE_HIT.
 
-	var/damtype = "brute"
+	var/damtype = BRUTE
 	var/force = 0
 
-	var/list/armor
-	var/obj_integrity = 500
+	var/datum/armor/armor
+	var/obj_integrity	//defaults to max_integrity
 	var/max_integrity = 500
 	var/integrity_failure = 0 //0 if we have no special broken behavior
 
-	var/resistance_flags = 0 // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
+	var/resistance_flags = NONE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
 
 	var/acid_level = 0 //how much acid is on that obj
 
-	var/being_shocked = 0
+	var/persistence_replacement //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
+	var/current_skin //Has the item been reskinned?
+	var/list/unique_reskin //List of options to reskin.
 
-	var/on_blueprints = FALSE //Are we visible on the station blueprints at roundstart?
-	var/force_blueprints = FALSE //forces the obj to be on the blueprints, regardless of when it was created.
+	// Access levels, used in modules\jobs\access.dm
+	var/list/req_access
+	var/req_access_txt = "0"
+	var/list/req_one_access
+	var/req_one_access_txt = "0"
+	
+	var/renamedByPlayer = FALSE //set when a player uses a pen on a renamable object
 
-	var/persistence_replacement = null //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
-	var/unique_rename = 0 // can you customize the description/name of the thing?
-
+/obj/vv_edit_var(vname, vval)
+	switch(vname)
+		if("obj_flags")
+			if ((obj_flags & DANGEROUS_POSSESSION) && !(vval & DANGEROUS_POSSESSION))
+				return FALSE
+		if("control_object")
+			var/obj/O = vval
+			if(istype(O) && (O.obj_flags & DANGEROUS_POSSESSION))
+				return FALSE
+	..()
 
 /obj/Initialize()
-	..()
-	if (!armor)
-		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
-	if(on_blueprints && isturf(loc))
+	. = ..()
+	if (islist(armor))
+		armor = getArmor(arglist(armor))
+	else if (!armor)
+		armor = getArmor()
+	else if (!istype(armor, /datum/armor))
+		stack_trace("Invalid type [armor.type] found in .armor during /obj Initialize()")
+
+	if(obj_integrity == null)
+		obj_integrity = max_integrity
+	if (set_obj_flags)
+		var/flagslist = splittext(set_obj_flags,";")
+		var/list/string_to_objflag = GLOB.bitfields["obj_flags"]
+		for (var/flag in flagslist)
+			if (findtext(flag,"!",1,2))
+				flag = copytext(flag,1-(length(flag))) // Get all but the initial !
+				obj_flags &= ~string_to_objflag[flag]
+			else
+				obj_flags |= string_to_objflag[flag]
+	if((obj_flags & ON_BLUEPRINTS) && isturf(loc))
 		var/turf/T = loc
-		if(force_blueprints)
-			T.add_blueprints(src)
-		else
-			T.add_blueprints_preround(src)
+		T.add_blueprints_preround(src)
+
 
 /obj/Destroy(force=FALSE)
-	if(!istype(src, /obj/machinery))
+	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	SStgui.close_uis(src)
 	. = ..()
 
 /obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	..()
-	if(HAS_SECONDARY_FLAG(src, FROZEN))
+	if(obj_flags & FROZEN)
 		visible_message("<span class='danger'>[src] shatters into a million pieces!</span>")
 		qdel(src)
+
 
 /obj/assume_air(datum/gas_mixture/giver)
 	if(loc)
@@ -82,18 +111,18 @@
 		return null
 
 /obj/proc/updateUsrDialog()
-	if(in_use)
+	if((obj_flags & IN_USE) && !(obj_flags & USES_TGUI))
 		var/is_in_use = 0
 		var/list/nearby = viewers(1, src)
 		for(var/mob/M in nearby)
 			if ((M.client && M.machine == src))
 				is_in_use = 1
-				src.attack_hand(M)
+				ui_interact(usr)
 		if(isAI(usr) || iscyborg(usr) || IsAdminGhost(usr))
 			if (!(usr in nearby))
 				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
 					is_in_use = 1
-					src.attack_ai(usr)
+					ui_interact(usr)
 
 		// check for TK users
 
@@ -103,28 +132,35 @@
 				if(usr.client && usr.machine==src)
 					if(H.dna.check_mutation(TK))
 						is_in_use = 1
-						src.attack_hand(usr)
-		in_use = is_in_use
+						ui_interact(usr)
+		if (is_in_use)
+			obj_flags |= IN_USE
+		else
+			obj_flags &= ~IN_USE
 
-/obj/proc/updateDialog()
+/obj/proc/updateDialog(update_viewers = TRUE,update_ais = TRUE)
 	// Check that people are actually using the machine. If not, don't update anymore.
-	if(in_use)
-		var/list/nearby = viewers(1, src)
-		var/is_in_use = 0
-		for(var/mob/M in nearby)
-			if ((M.client && M.machine == src))
-				is_in_use = 1
-				src.interact(M)
-		var/ai_in_use = AutoUpdateAI(src)
+	if(obj_flags & IN_USE)
+		var/is_in_use = FALSE
+		if(update_viewers)
+			for(var/mob/M in viewers(1, src))
+				if ((M.client && M.machine == src))
+					is_in_use = TRUE
+					src.interact(M)
+		var/ai_in_use = FALSE
+		if(update_ais)
+			ai_in_use = AutoUpdateAI(src)
 
-		if(!ai_in_use && !is_in_use)
-			in_use = 0
+		if(update_viewers && update_ais) //State change is sure only if we check both
+			if(!ai_in_use && !is_in_use)
+				obj_flags &= ~IN_USE
 
 
 /obj/attack_ghost(mob/user)
-	if(ui_interact(user) != -1)
+	. = ..()
+	if(.)
 		return
-	..()
+	ui_interact(user)
 
 /obj/proc/container_resist(mob/living/user)
 	return
@@ -146,7 +182,7 @@
 		unset_machine()
 	src.machine = O
 	if(istype(O))
-		O.in_use = 1
+		O.obj_flags |= IN_USE
 
 /obj/item/proc/updateSelfDialog()
 	var/mob/M = src.loc
@@ -156,24 +192,16 @@
 /obj/proc/hide(h)
 	return
 
-//If a mob logouts/logins in side of an object you can use this proc
-/obj/proc/on_log()
-	..()
-	if(isobj(loc))
-		var/obj/Loc=loc
-		Loc.on_log()
-
-
 /obj/singularity_pull(S, current_size)
+	..()
 	if(!anchored || current_size >= STAGE_FIVE)
 		step_towards(src,S)
 
 /obj/get_spans()
 	return ..() | SPAN_ROBOT
 
-/obj/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
-	var/turf/T = get_turf(src)
-	return T.storage_contents_dump_act(src_object, user)
+/obj/get_dumping_location(datum/component/storage/source,mob/user)
+	return get_turf(src)
 
 /obj/proc/CanAStarPass()
 	. = !density
@@ -181,14 +209,39 @@
 /obj/proc/check_uplink_validity()
 	return 1
 
-/obj/proc/on_mob_move(dir, mob)
+/obj/proc/intercept_user_move(dir, mob, newLoc, oldLoc)
 	return
 
 /obj/vv_get_dropdown()
 	. = ..()
-	.["Delete all of type"] = "?_src_=vars;delall=\ref[src]"
+	.["Delete all of type"] = "?_src_=vars;[HrefToken()];delall=[REF(src)]"
+	.["Osay"] = "?_src_=vars;[HrefToken()];osay[REF(src)]"
+	.["Modify armor values"] = "?_src_=vars;[HrefToken()];modarmor=[REF(src)]"
 
 /obj/examine(mob/user)
 	..()
-	if(unique_rename)
+	if(obj_flags & UNIQUE_RENAME)
 		to_chat(user, "<span class='notice'>Use a pen on it to rename it or change its description.</span>")
+	if(unique_reskin && !current_skin)
+		to_chat(user, "<span class='notice'>Alt-click it to reskin it.</span>")
+
+/obj/AltClick(mob/user)
+	. = ..()
+	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+		reskin_obj(user)
+
+/obj/proc/reskin_obj(mob/M)
+	if(!LAZYLEN(unique_reskin))
+		return
+	to_chat(M, "<b>Reskin options for [name]:</b>")
+	for(var/V in unique_reskin)
+		var/output = icon2html(src, M, unique_reskin[V])
+		to_chat(M, "[V]: <span class='reallybig'>[output]</span>")
+
+	var/choice = input(M,"Warning, you can only reskin [src] once!","Reskin Object") as null|anything in unique_reskin
+	if(!QDELETED(src) && choice && !current_skin && !M.incapacitated() && in_range(M,src))
+		if(!unique_reskin[choice])
+			return
+		current_skin = choice
+		icon_state = unique_reskin[choice]
+		to_chat(M, "[src] is now skinned as '[choice].'")

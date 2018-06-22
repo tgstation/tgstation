@@ -1,4 +1,4 @@
-var/global/list/uplinks = list()
+GLOBAL_LIST_EMPTY(uplinks)
 
 /**
  * Uplinks
@@ -7,60 +7,97 @@ var/global/list/uplinks = list()
  * Use whatever conditionals you want to check that the user has an uplink, and then call interact() on their uplink.
  * You might also want the uplink menu to open if active. Check if the uplink is 'active' and then interact() with it.
 **/
-/obj/item/device/uplink
-	name = "syndicate uplink"
-	desc = "There is something wrong if you're examining this."
+/datum/component/uplink
+	dupe_mode = COMPONENT_DUPE_UNIQUE
+	var/name = "syndicate uplink"
 	var/active = FALSE
 	var/lockable = TRUE
-	var/telecrystals = 20
-	var/selected_cat = null
+	var/locked = TRUE
+	var/allow_restricted = TRUE
+	var/telecrystals
+	var/selected_cat
 	var/owner = null
-	var/datum/game_mode/gamemode = null
-	var/spent_telecrystals = 0
-	var/purchase_log = ""
+	var/datum/game_mode/gamemode
+	var/datum/uplink_purchase_log/purchase_log
 	var/list/uplink_items
+	var/hidden_crystals = 0
 
-/obj/item/device/uplink/New()
-	..()
-	uplinks += src
-	uplink_items = get_uplink_items(gamemode)
+/datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20)
+	if(!isitem(parent))
+		return COMPONENT_INCOMPATIBLE
+	GLOB.uplinks += src
+	uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted)
+	RegisterSignal(COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
+	RegisterSignal(COMSIG_ITEM_ATTACK_SELF, .proc/interact)
+	owner = _owner
+	if(owner)
+		LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
+		if(GLOB.uplink_purchase_logs_by_key[owner])
+			purchase_log = GLOB.uplink_purchase_logs_by_key[owner]
+		else
+			purchase_log = new(owner, src)
+	lockable = _lockable
+	active = _enabled
+	gamemode = _gamemode
+	telecrystals = starting_tc
+	if(!lockable)
+		active = TRUE
+		locked = FALSE
 
-/obj/item/device/uplink/proc/set_gamemode(gamemode)
-	src.gamemode = gamemode
-	uplink_items = get_uplink_items(gamemode)
+/datum/component/uplink/InheritComponent(datum/component/uplink/U)
+	lockable |= U.lockable
+	active |= U.active
+	if(!gamemode)
+		gamemode = U.gamemode
+	telecrystals += U.telecrystals
+	if(purchase_log && U.purchase_log)
+		purchase_log.MergeWithAndDel(U.purchase_log)
 
-/obj/item/device/uplink/Destroy()
-	uplinks -= src
+/datum/component/uplink/Destroy()
+	GLOB.uplinks -= src
+	gamemode = null
 	return ..()
 
-/obj/item/device/uplink/attackby(obj/item/I, mob/user, params)
-	for(var/item in subtypesof(/datum/uplink_item))
-		var/datum/uplink_item/UI = item
-		var/path = null
-		if(initial(UI.refund_path))
-			path = initial(UI.refund_path)
-		else
-			path = initial(UI.item)
-		var/cost = 0
-		if(initial(UI.refund_amount))
-			cost = initial(UI.refund_amount)
-		else
-			cost = initial(UI.cost)
-		var/refundable = initial(UI.refundable)
-		if(I.type == path && refundable && I.check_uplink_validity())
-			telecrystals += cost
-			spent_telecrystals -= cost
-			to_chat(user, "<span class='notice'>[I] refunded.</span>")
-			qdel(I)
-			return
-	..()
+/datum/component/uplink/proc/LoadTC(mob/user, obj/item/stack/telecrystal/TC, silent = FALSE)
+	if(!silent)
+		to_chat(user, "<span class='notice'>You slot [TC] into [parent] and charge its internal uplink.</span>")
+	var/amt = TC.amount
+	telecrystals += amt
+	TC.use(amt)
 
-/obj/item/device/uplink/interact(mob/user)
+/datum/component/uplink/proc/set_gamemode(_gamemode)
+	gamemode = _gamemode
+	uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted)
+
+/datum/component/uplink/proc/OnAttackBy(obj/item/I, mob/user)
+	if(!active)
+		return	//no hitting everyone/everything just to try to slot tcs in!
+	if(istype(I, /obj/item/stack/telecrystal))
+		LoadTC(user, I)
+	for(var/category in uplink_items)
+		for(var/item in uplink_items[category])
+			var/datum/uplink_item/UI = uplink_items[category][item]
+			var/path = UI.refund_path || UI.item
+			var/cost = UI.refund_amount || UI.cost
+			if(I.type == path && UI.refundable && I.check_uplink_validity())
+				telecrystals += cost
+				purchase_log.total_spent -= cost
+				to_chat(user, "<span class='notice'>[I] refunded.</span>")
+				qdel(I)
+				return
+
+/datum/component/uplink/proc/interact(mob/user)
+	if(locked)
+		return
 	active = TRUE
-	ui_interact(user)
+	if(user)
+		ui_interact(user)
+	// an unlocked uplink blocks also opening the PDA or headset menu
+	return COMPONENT_NO_INTERACT
 
-/obj/item/device/uplink/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = inventory_state)
+/datum/component/uplink/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
+	active = TRUE
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "uplink", name, 450, 750, master_ui, state)
@@ -68,7 +105,7 @@ var/global/list/uplinks = list()
 		ui.set_style("syndicate")
 		ui.open()
 
-/obj/item/device/uplink/ui_data(mob/user)
+/datum/component/uplink/ui_data(mob/user)
 	if(!user.mind)
 		return
 	var/list/data = list()
@@ -100,8 +137,7 @@ var/global/list/uplinks = list()
 		data["categories"] += list(cat)
 	return data
 
-
-/obj/item/device/uplink/ui_act(action, params)
+/datum/component/uplink/ui_act(action, params)
 	if(!active)
 		return
 
@@ -115,42 +151,33 @@ var/global/list/uplinks = list()
 
 			if(item in buyable_items)
 				var/datum/uplink_item/I = buyable_items[item]
-				I.buy(usr, src)
+				MakePurchase(usr, I)
 				. = TRUE
 		if("lock")
 			active = FALSE
+			locked = TRUE
+			telecrystals += hidden_crystals
+			hidden_crystals = 0
 			SStgui.close_uis(src)
 		if("select")
 			selected_cat = params["category"]
-	return 1
+	return TRUE
 
+/datum/component/uplink/proc/MakePurchase(mob/user, datum/uplink_item/U)
+	if(!istype(U))
+		return
+	if (!user || user.incapacitated())
+		return
 
-/obj/item/device/uplink/ui_host()
-	return loc
+	if(telecrystals < U.cost || U.limited_stock == 0)
+		return
+	telecrystals -= U.cost
 
-// Refund certain items by hitting the uplink with it.
-/obj/item/device/radio/uplink/attackby(obj/item/I, mob/user, params)
-	return hidden_uplink.attackby(I, user, params)
+	U.purchase(user, src)
 
-// A collection of pre-set uplinks, for admin spawns.
-/obj/item/device/radio/uplink/New()
-	..()
-	icon_state = "radio"
-	hidden_uplink = new(src)
-	hidden_uplink.active = TRUE
-	hidden_uplink.lockable = FALSE
+	if(U.limited_stock > 0)
+		U.limited_stock -= 1
 
-/obj/item/device/radio/uplink/nuclear/New()
-	..()
-	hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
+	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(U.name)]", "[U.cost]"))
+	return TRUE
 
-/obj/item/device/multitool/uplink/New()
-	..()
-	hidden_uplink = new(src)
-	hidden_uplink.active = TRUE
-	hidden_uplink.lockable = FALSE
-
-/obj/item/weapon/pen/uplink/New()
-	..()
-	hidden_uplink = new(src)
-	traitor_unlock_degrees = 360

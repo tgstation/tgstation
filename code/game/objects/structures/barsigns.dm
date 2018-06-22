@@ -1,27 +1,22 @@
 /obj/structure/sign/barsign // All Signs are 64 by 32 pixels, they take two tiles
 	name = "Bar Sign"
-	desc = "A bar sign with no writing on it"
+	desc = "A bar sign with no writing on it."
 	icon = 'icons/obj/barsigns.dmi'
 	icon_state = "empty"
-	req_access = list(access_bar)
-	obj_integrity = 500
+	req_access = list(ACCESS_BAR)
 	max_integrity = 500
 	integrity_failure = 250
-	armor = list(melee = 20, bullet = 20, laser = 20, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	buildable_sign = 0
 	var/list/barsigns=list()
 	var/list/hiddensigns
-	var/emagged = 0
+	var/emagged = FALSE
 	var/state = 0
 	var/prev_sign = ""
-	var/panel_open = 0
+	var/panel_open = FALSE
 
-
-
-
-/obj/structure/sign/barsign/New()
-	..()
-
+/obj/structure/sign/barsign/Initialize()
+	. = ..()
 
 //filling the barsigns list
 	for(var/bartype in subtypesof(/datum/barsign))
@@ -29,11 +24,8 @@
 		if(!signinfo.hidden)
 			barsigns += signinfo
 
-
 //randomly assigning a sign
 	set_sign(pick(barsigns))
-
-
 
 /obj/structure/sign/barsign/proc/set_sign(datum/barsign/sign)
 	if(!istype(sign))
@@ -45,10 +37,8 @@
 	else
 		desc = "It displays \"[name]\"."
 
-
-
 /obj/structure/sign/barsign/obj_break(damage_flag)
-	if(!broken && !(flags & NODECONSTRUCT))
+	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		broken = 1
 
 /obj/structure/sign/barsign/deconstruct(disassembled = TRUE)
@@ -59,17 +49,18 @@
 /obj/structure/sign/barsign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+			playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/sign/barsign/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-
+	return attack_hand(user)
 
 /obj/structure/sign/barsign/attack_hand(mob/user)
-	if (!src.allowed(user))
+	. = ..()
+	if(.)
+		return
+	if(!allowed(user))
 		to_chat(user, "<span class='info'>Access denied.</span>")
 		return
 	if (broken)
@@ -77,31 +68,28 @@
 		return
 	pick_sign()
 
-
-
-
 /obj/structure/sign/barsign/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/screwdriver))
 		if(!allowed(user))
 			to_chat(user, "<span class='info'>Access denied.</span>")
 			return
 		if(!panel_open)
 			to_chat(user, "<span class='notice'>You open the maintenance panel.</span>")
 			set_sign(new /datum/barsign/hiddensigns/signoff)
-			panel_open = 1
+			panel_open = TRUE
 		else
 			to_chat(user, "<span class='notice'>You close the maintenance panel.</span>")
 			if(!broken && !emagged)
 				set_sign(pick(barsigns))
-			else if(emagged)
+			else if(obj_flags & EMAGGED)
 				set_sign(new /datum/barsign/hiddensigns/syndibarsign)
 			else
 				set_sign(new /datum/barsign/hiddensigns/empbarsign)
-			panel_open = 0
+			panel_open = FALSE
 
 	else if(istype(I, /obj/item/stack/cable_coil) && panel_open)
 		var/obj/item/stack/cable_coil/C = I
-		if(emagged) //Emagged, not broken by EMP
+		if(obj_flags & EMAGGED) //Emagged, not broken by EMP
 			to_chat(user, "<span class='warning'>Sign has been damaged beyond repair!</span>")
 			return
 		else if(!broken)
@@ -118,8 +106,11 @@
 
 
 /obj/structure/sign/barsign/emp_act(severity)
-    set_sign(new /datum/barsign/hiddensigns/empbarsign)
-    broken = 1
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	set_sign(new /datum/barsign/hiddensigns/empbarsign)
+	broken = 1
 
 
 
@@ -128,13 +119,11 @@
 	if(broken || emagged)
 		to_chat(user, "<span class='warning'>Nothing interesting happens!</span>")
 		return
+	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You emag the barsign. Takeover in progress...</span>")
-	sleep(100) //10 seconds
+	sleep(10 SECONDS)
 	set_sign(new /datum/barsign/hiddensigns/syndibarsign)
-	emagged = 1
-	req_access = list(access_syndicate)
-
-
+	req_access = list(ACCESS_SYNDICATE)
 
 
 /obj/structure/sign/barsign/proc/pick_sign()
@@ -299,6 +288,15 @@
 	icon = "thenet"
 	desc = "You just seem to get caught up in it for hours."
 
+/datum/barsign/maidcafe
+	name = "Maid Cafe"
+	icon = "maidcafe"
+	desc = "Welcome back, master!"
+
+/datum/barsign/the_lightbulb
+	name = "The Lightbulb"
+	icon = "the_lightbulb"
+	desc = "A cafe popular among moths and moffs. Once shut down for a week after the bartender used mothballs to protect her spare uniforms."
 
 /datum/barsign/hiddensigns
 	hidden = 1
@@ -326,4 +324,3 @@
 	name = "Bar Sign"
 	icon = "empty"
 	desc = "This sign doesn't seem to be on."
-

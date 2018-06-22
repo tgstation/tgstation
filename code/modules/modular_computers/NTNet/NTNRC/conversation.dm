@@ -1,5 +1,3 @@
-var/global/static/ntnrc_uid = 0
-
 /datum/ntnet_conversation
 	var/id = null
 	var/title = "Untitled Conversation"
@@ -7,26 +5,26 @@ var/global/static/ntnrc_uid = 0
 	var/list/messages = list()
 	var/list/clients = list()
 	var/password
+	var/static/ntnrc_uid = 0
 
 /datum/ntnet_conversation/New()
-	id = ntnrc_uid
-	ntnrc_uid++
-	if(ntnet_global)
-		ntnet_global.chat_channels.Add(src)
+	id = ntnrc_uid++
+	if(SSnetworks.station_network)
+		SSnetworks.station_network.chat_channels.Add(src)
 	..()
 
 /datum/ntnet_conversation/Destroy()
-	if(ntnet_global)
-		ntnet_global.chat_channels.Remove(src)
+	if(SSnetworks.station_network)
+		SSnetworks.station_network.chat_channels.Remove(src)
 	return ..()
 
 /datum/ntnet_conversation/proc/add_message(message, username)
-	message = "[worldtime2text()] [username]: [message]"
+	message = "[station_time_timestamp()] [username]: [message]"
 	messages.Add(message)
 	trim_message_list()
 
 /datum/ntnet_conversation/proc/add_status_message(message)
-	messages.Add("[worldtime2text()] -!- [message]")
+	messages.Add("[station_time_timestamp()] -!- [message]")
 	trim_message_list()
 
 /datum/ntnet_conversation/proc/trim_message_list()
@@ -64,7 +62,7 @@ var/global/static/ntnrc_uid = 0
 
 /datum/ntnet_conversation/proc/change_title(newtitle, datum/computer_file/program/chatclient/client)
 	if(operator != client)
-		return 0 // Not Authorised
+		return FALSE // Not Authorised
 
 	add_status_message("[client.username] has changed channel title from [title] to [newtitle]")
 	title = newtitle

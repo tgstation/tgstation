@@ -1,22 +1,28 @@
+/proc/show_air_status_to(turf/target, mob/user)
+	var/datum/gas_mixture/env = target.return_air()
+	var/list/env_gases = env.gases
+	var/burning = FALSE
+	if(isopenturf(target))
+		var/turf/open/T = target
+		if(T.active_hotspot)
+			burning = TRUE
+
+	var/list/lines = list("<span class='adminnotice'>[AREACOORD(target)]: [env.temperature] K ([env.temperature - T0C] C), [env.return_pressure()] kPa[(burning)?(", <font color='red'>burning</font>"):(null)]</span>")
+	for(var/id in env_gases)
+		var/gas = env_gases[id]
+		var/moles = gas[MOLES]
+		if (moles >= 0.00001)
+			lines += "[gas[GAS_META][META_GAS_NAME]]: [moles] mol"
+	to_chat(usr, lines.Join("\n"))
+
 /client/proc/air_status(turf/target)
 	set category = "Debug"
 	set name = "Display Air Status"
 
 	if(!isturf(target))
 		return
-
-	var/datum/gas_mixture/GM = target.return_air()
-	var/list/GM_gases
-	var/burning = 0
-	if(isopenturf(target))
-		var/turf/open/T = target
-		if(T.active_hotspot)
-			burning = 1
-
-	to_chat(usr, "<span class='adminnotice'>@[target.x],[target.y]: [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("\red BURNING"):(null)]</span>")
-	for(var/id in GM_gases)
-		to_chat(usr, "[GM_gases[id][GAS_META][META_GAS_NAME]]: [GM_gases[id][MOLES]]")
-	feedback_add_details("admin_verb","DAST") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	show_air_status_to(target, usr)
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Air Status") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/fix_next_move()
 	set category = "Debug"
@@ -43,27 +49,16 @@
 		log_admin("DEBUG: [key_name(M)]  next_move = [M.next_move]  lastDblClick = [M.next_click]  world.time = [world.time]")
 		M.next_move = 1
 		M.next_click = 0
-	message_admins("[key_name_admin(largest_move_mob)] had the largest move delay with [largest_move_time] frames / [largest_move_time/10] seconds!")
-	message_admins("[key_name_admin(largest_click_mob)] had the largest click delay with [largest_click_time] frames / [largest_click_time/10] seconds!")
+	message_admins("[ADMIN_LOOKUPFLW(largest_move_mob)] had the largest move delay with [largest_move_time] frames / [DisplayTimeText(largest_move_time)]!")
+	message_admins("[ADMIN_LOOKUPFLW(largest_click_mob)] had the largest click delay with [largest_click_time] frames / [DisplayTimeText(largest_click_time)]!")
 	message_admins("world.time = [world.time]")
-	feedback_add_details("admin_verb","UFE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Unfreeze Everyone") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/radio_report()
 	set category = "Debug"
 	set name = "Radio report"
 
-	var/filters = list(
-		"1" = "RADIO_TO_AIRALARM",
-		"2" = "RADIO_FROM_AIRALARM",
-		"3" = "RADIO_CHAT",
-		"4" = "RADIO_ATMOSIA",
-		"5" = "RADIO_NAVBEACONS",
-		"6" = "RADIO_AIRLOCK",
-		"7" = "RADIO_SECBOT",
-		"8" = "RADIO_MULEBOT",
-		"_default" = "NO_FILTER"
-		)
 	var/output = "<b>Radio Report</b><hr>"
 	for (var/fq in SSradio.frequencies)
 		output += "<b>Freq: [fq]</b><br>"
@@ -74,17 +69,18 @@
 		for (var/filter in fqs.devices)
 			var/list/f = fqs.devices[filter]
 			if (!f)
-				output += "&nbsp;&nbsp;[filters[filter]]: ERROR<br>"
+				output += "&nbsp;&nbsp;[filter]: ERROR<br>"
 				continue
-			output += "&nbsp;&nbsp;[filters[filter]]: [f.len]<br>"
+			output += "&nbsp;&nbsp;[filter]: [f.len]<br>"
 			for (var/device in f)
-				if (isobj(device))
-					output += "&nbsp;&nbsp;&nbsp;&nbsp;[device] ([device:x],[device:y],[device:z] in area [get_area(device:loc)])<br>"
+				if (istype(device, /atom))
+					var/atom/A = device
+					output += "&nbsp;&nbsp;&nbsp;&nbsp;[device] ([AREACOORD(A)])<br>"
 				else
 					output += "&nbsp;&nbsp;&nbsp;&nbsp;[device]<br>"
 
 	usr << browse(output,"window=radioreport")
-	feedback_add_details("admin_verb","RR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Radio Report") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/reload_admins()
 	set name = "Reload Admins"
@@ -98,5 +94,5 @@
 		return
 
 	load_admins()
-	feedback_add_details("admin_verb","RLDA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Reload All Admins") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	message_admins("[key_name_admin(usr)] manually reloaded admins")

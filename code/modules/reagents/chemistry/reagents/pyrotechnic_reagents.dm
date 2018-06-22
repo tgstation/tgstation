@@ -8,14 +8,8 @@
 	taste_description = "sweet tasting metal"
 
 /datum/reagent/thermite/reaction_turf(turf/T, reac_volume)
-	if(reac_volume >= 1 && iswallturf(T))
-		var/turf/closed/wall/Wall = T
-		if(istype(Wall, /turf/closed/wall/r_wall))
-			Wall.thermite = Wall.thermite+(reac_volume*2.5)
-		else
-			Wall.thermite = Wall.thermite+(reac_volume*10)
-		Wall.overlays = list()
-		Wall.add_overlay(image('icons/effects/effects.dmi',"thermite"))
+	if(reac_volume >= 1)
+		T.AddComponent(/datum/component/thermite, reac_volume)
 
 /datum/reagent/thermite/on_mob_life(mob/living/M)
 	M.adjustFireLoss(1, 0)
@@ -54,10 +48,10 @@
 	. = 1
 
 /datum/reagent/clf3/reaction_turf(turf/T, reac_volume)
-	if(istype(T, /turf/open/floor/plating))
+	if(isplatingturf(T))
 		var/turf/open/floor/plating/F = T
 		if(prob(10 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
-			F.ChangeTurf(F.baseturf)
+			F.ScrapeAway()
 	if(isfloorturf(T))
 		var/turf/open/floor/F = T
 		if(prob(reac_volume))
@@ -71,7 +65,7 @@
 	if(iswallturf(T))
 		var/turf/closed/wall/W = T
 		if(prob(reac_volume))
-			W.ChangeTurf(/turf/open/floor/plating)
+			W.ScrapeAway()
 
 /datum/reagent/clf3/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(istype(M))
@@ -105,6 +99,11 @@
 	color = "#000000"
 	metabolization_rate = 0.05
 	taste_description = "salt"
+
+/datum/reagent/blackpowder/on_mob_life(mob/living/M)
+	..()
+	if(isplasmaman(M))
+		M.hallucination += 5
 
 /datum/reagent/blackpowder/on_ex_act()
 	var/location = get_turf(holder.my_atom)
@@ -188,14 +187,7 @@
 /datum/reagent/cryostylane/on_mob_life(mob/living/M) //TODO: code freezing into an ice cube
 	if(M.reagents.has_reagent("oxygen"))
 		M.reagents.remove_reagent("oxygen", 0.5)
-		M.bodytemperature -= 15
-	..()
-
-/datum/reagent/cryostylane/on_tick()
-	if(holder.has_reagent("oxygen"))
-		holder.remove_reagent("oxygen", 1)
-		holder.chem_temp -= 10
-		holder.handle_reactions()
+		M.adjust_bodytemperature(-15)
 	..()
 
 /datum/reagent/cryostylane/reaction_turf(turf/T, reac_volume)
@@ -214,14 +206,7 @@
 /datum/reagent/pyrosium/on_mob_life(mob/living/M)
 	if(M.reagents.has_reagent("oxygen"))
 		M.reagents.remove_reagent("oxygen", 0.5)
-		M.bodytemperature += 15
-	..()
-
-/datum/reagent/pyrosium/on_tick()
-	if(holder.has_reagent("oxygen"))
-		holder.remove_reagent("oxygen", 1)
-		holder.chem_temp += 10
-		holder.handle_reactions()
+		M.adjust_bodytemperature(15)
 	..()
 
 /datum/reagent/teslium //Teslium. Causes periodic shocks, and makes shocks against the target much more effective.
@@ -240,4 +225,64 @@
 		shock_timer = 0
 		M.electrocute_act(rand(5,20), "Teslium in their body", 1, 1) //Override because it's caused from INSIDE of you
 		playsound(M, "sparks", 50, 1)
+	..()
+
+/datum/reagent/teslium/energized_jelly
+	name = "Energized Jelly"
+	id = "energized_jelly"
+	description = "Electrically-charged jelly. Boosts jellypeople's nervous system, but only shocks other lifeforms."
+	reagent_state = LIQUID
+	color = "#CAFF43"
+	taste_description = "jelly"
+
+/datum/reagent/teslium/energized_jelly/on_mob_life(mob/living/M)
+	if(isjellyperson(M))
+		shock_timer = 0 //immune to shocks
+		M.AdjustStun(-40, 0)
+		M.AdjustKnockdown(-40, 0)
+		M.AdjustUnconscious(-40, 0)
+		M.adjustStaminaLoss(-2, 0)
+		if(isluminescent(M))
+			var/mob/living/carbon/human/H = M
+			var/datum/species/jelly/luminescent/L = H.dna.species
+			L.extract_cooldown = max(0, L.extract_cooldown - 20)
+	..()
+
+/datum/reagent/firefighting_foam
+	name = "Firefighting Foam"
+	id = "firefighting_foam"
+	description = "A historical fire suppressant. Originally believed to simply displace oxygen to starve fires, it actually interferes with the combustion reaction itself. Vastly superior to the cheap water-based extinguishers found on NT vessels."
+	reagent_state = LIQUID
+	color = "#A6FAFF55"
+	taste_description = "the inside of a fire extinguisher"
+
+/datum/reagent/firefighting_foam/reaction_turf(turf/open/T, reac_volume)
+	if (!istype(T))
+		return
+
+	if(reac_volume >= 1)
+		var/obj/effect/particle_effect/foam/firefighting/F = (locate(/obj/effect/particle_effect/foam) in T)
+		if(!F)
+			F = new(T)
+		else if(istype(F))
+			F.lifetime = initial(F.lifetime) //reduce object churn a little bit when using smoke by keeping existing foam alive a bit longer
+
+	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
+	if(hotspot && !isspaceturf(T))
+		if(T.air)
+			var/datum/gas_mixture/G = T.air
+			if(G.temperature > T20C)
+				G.temperature = max(G.temperature/2,T20C)
+			G.react(src)
+			qdel(hotspot)
+
+/datum/reagent/firefighting_foam/reaction_obj(obj/O, reac_volume)
+	O.extinguish()
+
+/datum/reagent/firefighting_foam/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(!istype(M))
+		return
+	if(method in list(VAPOR, TOUCH))
+		M.adjust_fire_stacks(-reac_volume)
+		M.ExtinguishMob()
 	..()

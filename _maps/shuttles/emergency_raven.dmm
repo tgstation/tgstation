@@ -1,30 +1,26 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 9
 	},
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
+/turf/closed/wall/mineral/plastitanium/interior,
 /area/shuttle/escape)
 "ab" = (
 /obj/machinery/status_display,
 /turf/closed/wall/mineral/plastitanium/interior,
 /area/shuttle/escape)
 "ac" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/poddoor/shutters{
 	id = "shuttleshutters";
 	name = "blast shutters"
 	},
+/obj/structure/grille,
+/obj/structure/window/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ae" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
@@ -32,43 +28,44 @@
 /area/shuttle/escape)
 "af" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/escape)
 "ag" = (
 /obj/machinery/computer/med_data,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ah" = (
 /obj/machinery/computer/shuttle,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ai" = (
 /obj/machinery/computer/communications,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aj" = (
 /obj/machinery/computer/crew,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ak" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/restraints/handcuffs,
-/obj/item/device/assembly/flash,
+/obj/item/restraints/handcuffs,
+/obj/item/assembly/flash,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/escape)
 "al" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/escape)
 "am" = (
-/obj/machinery/computer/security,
-/turf/open/floor/plasteel/black,
+/obj/machinery/computer/security{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "an" = (
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTHWEST)";
 	dir = 9
 	},
 /area/shuttle/escape)
@@ -77,26 +74,26 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTH)";
 	dir = 1
 	},
 /area/shuttle/escape)
 "ap" = (
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTHEAST)";
 	dir = 5
 	},
 /area/shuttle/escape)
 "aq" = (
-/obj/machinery/computer/station_alert,
-/turf/open/floor/plasteel/black,
+/obj/machinery/computer/station_alert{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ar" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "as" = (
 /obj/structure/table/optable,
-/obj/item/weapon/surgical_drapes,
+/obj/item/surgical_drapes,
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/mask/surgical,
 /turf/open/floor/plasteel/darkpurple/side{
@@ -110,19 +107,21 @@
 	},
 /area/shuttle/escape)
 "au" = (
-/obj/machinery/computer/secure_data,
-/turf/open/floor/plasteel/black,
+/obj/machinery/computer/secure_data{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "av" = (
 /obj/structure/chair/office/dark{
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (SOUTHWEST)";
 	dir = 10
 	},
 /area/shuttle/escape)
 "aw" = (
+/obj/machinery/light,
 /turf/open/floor/plasteel/darkblue/side,
 /area/shuttle/escape)
 "ax" = (
@@ -138,36 +137,40 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (SOUTHEAST)";
 	dir = 6
 	},
 /area/shuttle/escape)
 "aA" = (
-/obj/machinery/computer/atmos_alert,
-/turf/open/floor/plasteel/black,
+/obj/machinery/computer/atmos_alert{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aB" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/scalpel,
-/obj/item/weapon/circular_saw,
-/obj/item/weapon/retractor,
-/obj/item/weapon/hemostat,
+/obj/item/scalpel,
+/obj/item/circular_saw,
+/obj/item/retractor,
+/obj/item/hemostat,
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 8
 	},
 /area/shuttle/escape)
 "aC" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aD" = (
 /obj/structure/chair/office/dark{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aE" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/defibrillator/loaded,
+/obj/item/defibrillator/loaded,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 4
 	},
@@ -178,7 +181,6 @@
 	req_access_txt = "19"
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (WEST)";
 	dir = 8
 	},
 /area/shuttle/escape)
@@ -188,7 +190,6 @@
 	req_access_txt = "19"
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (EAST)";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -216,8 +217,10 @@
 	id = "shuttleflash";
 	pixel_y = -23
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTH)";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -232,8 +235,10 @@
 	},
 /area/shuttle/escape)
 "aM" = (
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTH)";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -254,21 +259,21 @@
 	name = "Shuttle Security Bride Access";
 	req_access_txt = "2"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aQ" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Shuttle Bridge Access";
 	req_access_txt = "19"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aR" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Shuttle EVA";
 	req_access_txt = "19"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aS" = (
 /turf/open/floor/plasteel/darkpurple/side{
@@ -277,21 +282,21 @@
 /area/shuttle/escape)
 "aT" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/toxin,
-/obj/item/weapon/storage/firstaid/o2{
+/obj/item/storage/firstaid/o2{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/turf/open/floor/plasteel/black,
+/obj/item/storage/firstaid/toxin,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aU" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/brute{
+/obj/item/storage/firstaid/brute{
 	pixel_x = 3;
 	pixel_y = 4
 	},
-/turf/open/floor/plasteel/black,
+/obj/item/storage/firstaid/fire,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aV" = (
 /turf/open/floor/plasteel/darkpurple/side{
@@ -312,17 +317,6 @@
 	icon_state = "darkred"
 	},
 /area/shuttle/escape)
-"aY" = (
-/obj/machinery/flasher{
-	id = "shuttleflash";
-	pixel_x = -26;
-	pixel_y = 0;
-	pixel_x = 0
-	},
-/turf/open/floor/plasteel/darkgreen/side{
-	dir = 8
-	},
-/area/shuttle/escape)
 "aZ" = (
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 4
@@ -331,8 +325,7 @@
 "ba" = (
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 8;
-	icon_state = "darkyellow";
-	tag = "icon-darkyellow (NORTHEAST)"
+	icon_state = "darkyellow"
 	},
 /area/shuttle/escape)
 "bb" = (
@@ -356,19 +349,19 @@
 	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
 	name = "emergency lifejacket"
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
 /obj/item/clothing/mask/breath{
@@ -412,9 +405,10 @@
 	pixel_y = 9
 	},
 /obj/structure/closet/crate/internals,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/darkyellow/side{
-	tag = "icon-darkyellow (NORTHEAST)";
-	icon_state = "darkyellow";
 	dir = 5
 	},
 /area/shuttle/escape)
@@ -426,7 +420,7 @@
 	},
 /area/shuttle/escape)
 "bd" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/brig{
@@ -443,13 +437,12 @@
 "bf" = (
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 4;
-	icon_state = "darkyellow";
-	tag = "icon-darkyellow (NORTHEAST)"
+	icon_state = "darkyellow"
 	},
 /area/shuttle/escape)
 "bg" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid,
+/obj/item/storage/firstaid,
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 8
 	},
@@ -458,7 +451,7 @@
 /obj/structure/chair/office/dark{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bi" = (
 /obj/structure/bed/roller,
@@ -471,58 +464,56 @@
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 10;
-	icon_state = "darkyellow";
-	tag = "icon-darkyellow (SOUTHEAST)"
+	icon_state = "darkyellow"
 	},
 /area/shuttle/escape)
 "bk" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/plasteel/darkyellow/side{
-	tag = "icon-darkyellow (SOUTHEAST)";
-	icon_state = "darkyellow";
 	dir = 6
 	},
 /area/shuttle/escape)
 "bl" = (
-/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 6;
-	pixel_y = 0
+/obj/item/reagent_containers/glass/bottle/epinephrine{
+	pixel_x = 6
 	},
-/obj/item/weapon/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/charcoal{
 	pixel_x = -3
 	},
-/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/weapon/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/charcoal{
 	pixel_x = 6;
 	pixel_y = 8
 	},
-/obj/item/weapon/reagent_containers/syringe/epinephrine{
+/obj/item/reagent_containers/syringe/epinephrine{
 	pixel_x = 3;
 	pixel_y = -2
 	},
-/obj/item/weapon/reagent_containers/syringe/epinephrine{
+/obj/item/reagent_containers/syringe/epinephrine{
 	pixel_x = 4;
 	pixel_y = 1
 	},
-/obj/item/weapon/reagent_containers/syringe/epinephrine{
+/obj/item/reagent_containers/syringe/epinephrine{
 	pixel_x = -2;
 	pixel_y = 5
 	},
-/obj/item/weapon/reagent_containers/syringe/epinephrine{
+/obj/item/reagent_containers/syringe/epinephrine{
 	pixel_x = 2;
 	pixel_y = 8
 	},
 /obj/structure/table/reinforced,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 8
 	},
 /area/shuttle/escape)
 "bm" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkpurple/side{
@@ -559,14 +550,12 @@
 /area/shuttle/escape)
 "br" = (
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (NORTH)";
-	icon_state = "darkgreen";
 	dir = 1
 	},
 /area/shuttle/escape)
 "bs" = (
 /obj/machinery/door/airlock/hatch,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bt" = (
 /turf/open/floor/plasteel/darkpurple/side{
@@ -580,14 +569,10 @@
 /area/shuttle/escape)
 "bv" = (
 /obj/structure/chair/office/dark,
-/turf/open/floor/plasteel/black,
-/area/shuttle/escape)
-"bw" = (
-/obj/machinery/door/airlock/shuttle,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bx" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/brig{
@@ -607,12 +592,14 @@
 /area/shuttle/escape)
 "bB" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen/blue,
+/obj/item/paper_bin,
+/obj/item/pen/blue,
 /turf/open/floor/plasteel/darkpurple/side,
 /area/shuttle/escape)
 "bC" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/med_data{
+	dir = 1
+	},
 /turf/open/floor/plasteel/darkpurple/side,
 /area/shuttle/escape)
 "bD" = (
@@ -620,24 +607,21 @@
 	name = "Shuttle Brig";
 	req_access_txt = "2"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bE" = (
 /obj/docking_port/mobile/emergency{
 	dwidth = 14;
 	height = 18;
-	name = "Centcomm Raven Battlecruiser";
-	timid = 1;
+	name = "CentCom Raven Battlecruiser";
 	width = 32
 	},
 /obj/machinery/door/airlock/hatch,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bF" = (
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen";
-	tag = "icon-darkgreen (NORTH)"
+	dir = 9
 	},
 /area/shuttle/escape)
 "bG" = (
@@ -647,25 +631,23 @@
 /area/shuttle/escape)
 "bH" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/toolbox/mechanical{
-	pixel_x = 3;
-	pixel_y = -6
-	},
-/obj/item/weapon/storage/toolbox/emergency,
-/obj/item/weapon/storage/toolbox/electrical{
+/obj/item/storage/toolbox/electrical{
 	pixel_x = -2;
 	pixel_y = 5
 	},
+/obj/item/storage/toolbox/emergency,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 3;
+	pixel_y = -6
+	},
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen";
-	tag = "icon-darkgreen (NORTH)"
+	dir = 9
 	},
 /area/shuttle/escape)
 "bI" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/fire/firefighter,
-/obj/item/weapon/tank/internals/oxygen/red,
+/obj/item/tank/internals/oxygen/red,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/hardhat/red,
 /turf/open/floor/plasteel/darkgreen/side{
@@ -674,11 +656,11 @@
 /area/shuttle/escape)
 "bJ" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bK" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 8
 	},
@@ -686,20 +668,18 @@
 "bL" = (
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (NORTH)";
-	icon_state = "darkgreen";
 	dir = 1
 	},
 /area/shuttle/escape)
 "bM" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/dice/d20,
+/obj/item/dice/d20,
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 10
 	},
 /area/shuttle/escape)
 "bN" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkgreen/side,
@@ -734,19 +714,19 @@
 	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
 	name = "emergency lifejacket"
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
-/obj/item/weapon/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen/double{
 	pixel_x = 3
 	},
 /obj/item/clothing/mask/breath{
@@ -809,9 +789,7 @@
 "bT" = (
 /obj/machinery/recharge_station,
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen";
-	tag = "icon-darkgreen (NORTH)"
+	dir = 9
 	},
 /area/shuttle/escape)
 "bU" = (
@@ -821,17 +799,15 @@
 	},
 /area/shuttle/escape)
 "bV" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen";
-	tag = "icon-darkgreen (NORTH)"
+	dir = 9
 	},
 /area/shuttle/escape)
 "bW" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/darkgreen/side{
@@ -839,53 +815,51 @@
 	},
 /area/shuttle/escape)
 "bX" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bY" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bZ" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ca" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "cb" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (NORTH)";
-	icon_state = "darkgreen";
 	dir = 1
 	},
 /area/shuttle/escape)
 "cc" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkgreen/side,
 /area/shuttle/escape)
 "cd" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/darkgreen/side{
@@ -893,39 +867,27 @@
 	},
 /area/shuttle/escape)
 "ce" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 6
 	},
 /area/shuttle/escape)
-"cf" = (
-/obj/machinery/door/airlock/glass_titanium{
-	name = "Shuttle Engine Room"
-	},
-/turf/open/floor/plasteel/darkgreen/side{
-	dir = 8
-	},
-/area/shuttle/escape)
-"cg" = (
-/obj/machinery/door/airlock/glass_titanium{
-	name = "Shuttle Engine Room"
-	},
-/turf/open/floor/plasteel/darkgreen/side{
-	dir = 4
-	},
-/area/shuttle/escape)
 "ch" = (
 /obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen";
-	tag = "icon-darkgreen (NORTH)"
+	dir = 9
 	},
 /area/shuttle/escape)
 "ci" = (
 /obj/structure/reagent_dispensers/watertank,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 5
 	},
@@ -954,8 +916,7 @@
 /area/shuttle/escape)
 "cn" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 4
@@ -977,514 +938,107 @@
 "cq" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 4
 	},
 /area/shuttle/escape)
 "cr" = (
-/turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 5
 	},
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
+/turf/closed/wall/mineral/plastitanium/interior,
 /area/shuttle/escape)
 "cs" = (
 /turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"ct" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"cu" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"cv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"cw" = (
-/turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
-	dir = 5
-	},
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
-"cx" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
-"cy" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
 /area/shuttle/escape)
 "cz" = (
 /obj/machinery/button/door{
 	id = "shuttleshutters";
 	name = "Bridge Blast Shutters";
-	pixel_x = 0;
 	pixel_y = -26;
-	req_access_txt = "150";
-	pixel_x = 0
+	req_access_txt = "19"
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel/darkblue/side,
 /area/shuttle/escape)
-"cA" = (
-/obj/structure/grille,
-/obj/machinery/door/poddoor/shutters{
-	id = "shuttleshutters";
-	name = "blast shutters"
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"cB" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"cC" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"cD" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
-"cE" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"cF" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"cG" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"cH" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"cI" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
-"cJ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"cK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"cL" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"cM" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"cN" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"cO" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"cP" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"cQ" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"cR" = (
-/turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
-	dir = 5
-	},
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
-"cS" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"cT" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"cU" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"cV" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"cW" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"cX" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"cY" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"cZ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"da" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"db" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"dc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"dd" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"de" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"df" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dg" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dh" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"di" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dj" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dk" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"dl" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"dm" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dn" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"do" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dp" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"dr" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"ds" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"dt" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"du" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dv" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
-"dw" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dx" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dy" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dz" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dA" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dB" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"dC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"dD" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
-"dE" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dF" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"dG" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
-"dH" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dI" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dJ" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dK" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dL" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
-"dM" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dN" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dO" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dP" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dQ" = (
-/turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
-	dir = 5
-	},
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
-"dR" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dS" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dT" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dU" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dV" = (
-/turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
-	dir = 5
-	},
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
-"dW" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dX" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dY" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"dZ" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"ea" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"eb" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"ec" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"ed" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"ee" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"ef" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"eg" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"eh" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
 "ei" = (
-/turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 10
 	},
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
-"ej" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"ek" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"el" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"em" = (
 /turf/closed/wall/mineral/plastitanium/interior,
 /area/shuttle/escape)
 "en" = (
-/turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 6
 	},
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
-"eo" = (
 /turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"ep" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"eq" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"er" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"es" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
-"et" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"eu" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"ev" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
-"ew" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
-"ex" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"ey" = (
-/turf/closed/wall/mineral/plastitanium/interior,
-/area/shuttle/escape)
-"ez" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
-"eA" = (
-/turf/open/space,
-/obj/machinery/porta_turret/centcomm_shuttle{
-	dir = 5
-	},
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
 /area/shuttle/escape)
 "eB" = (
 /obj/machinery/flasher{
 	id = "shuttleflash";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
+	},
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 4
 	},
+/area/shuttle/escape)
+"eC" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkpurple/side{
+	dir = 4
+	},
+/area/shuttle/escape)
+"eD" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/brig{
+	dir = 8;
+	floor_tile = /obj/item/stack/tile/plasteel;
+	icon_state = "darkred"
+	},
+/area/shuttle/escape)
+"eE" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 1
+	},
+/area/shuttle/escape)
+"eF" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 8
+	},
+/area/shuttle/escape)
+"eH" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/darkgreen/side,
+/area/shuttle/escape)
+"eN" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 4
+	},
+/area/shuttle/escape)
+"eO" = (
+/obj/machinery/status_display,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/escape)
+"eP" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -1492,29 +1046,29 @@ aa
 cs
 ac
 ac
-cD
+cs
 ad
 aa
-cu
-cu
+bJ
+bJ
 cs
-cu
-cu
+bJ
+bJ
 bs
 cs
 bE
-cu
-cu
-cD
+bJ
+bJ
+cs
 ad
 aa
 bs
-cu
+bJ
 bs
 cs
-cu
+bJ
 cs
-cu
+bJ
 ei
 ad
 ad
@@ -1531,7 +1085,7 @@ cs
 ar
 aW
 bc
-bc
+eD
 bc
 bc
 bc
@@ -1541,17 +1095,17 @@ bK
 bM
 cs
 ad
-cu
+bJ
 bF
 be
 be
-be
+eF
 be
 be
 cd
-cu
+bJ
 ad
-cx
+cs
 ar
 co
 "}
@@ -1598,25 +1152,25 @@ ar
 aJ
 ar
 cs
-cu
-cu
-cu
-cu
+bJ
+bJ
+bJ
+bJ
 cs
-ar
-br
+eP
+eE
 aC
-bz
+eH
 ar
 bT
 bo
-br
+eE
 bZ
 ca
 aC
 bZ
 ca
-bz
+eH
 ab
 ch
 ar
@@ -1636,7 +1190,7 @@ be
 be
 be
 be
-be
+eF
 be
 bG
 aC
@@ -1700,25 +1254,25 @@ ar
 aM
 ar
 cs
-cu
-cu
-ab
+bJ
+bJ
+eO
 br
 bz
-bo
+eO
 cs
 bL
 bP
 ar
 bU
 bo
-br
+eE
 bZ
 ca
 aC
 bZ
 ca
-bz
+eH
 ab
 ci
 ar
@@ -1742,7 +1296,7 @@ bz
 cs
 bH
 bG
-bz
+eH
 cs
 cs
 cs
@@ -1771,7 +1325,7 @@ bb
 bf
 bk
 cs
-br
+eE
 bz
 cs
 bI
@@ -1779,7 +1333,7 @@ aZ
 bQ
 cs
 ad
-cu
+bJ
 bW
 aZ
 bq
@@ -1787,9 +1341,9 @@ aC
 by
 aZ
 ce
-cu
+bJ
 ad
-cy
+cs
 ar
 co
 "}
@@ -1797,8 +1351,8 @@ co
 cr
 cs
 ac
-cA
-cI
+ac
+cs
 ad
 cr
 cs
@@ -1808,19 +1362,19 @@ ar
 br
 bz
 ar
-cu
-cu
-cu
-cI
+bJ
+bJ
+bJ
+cs
 ad
 cr
-cu
-cs
+bJ
+eP
 br
 aC
 bz
-cs
-cu
+eP
+bJ
 en
 ad
 ad
@@ -1849,11 +1403,11 @@ ad
 ad
 ad
 ad
-cu
+bJ
 cb
 aC
 cc
-cu
+bJ
 ad
 ad
 ad
@@ -1864,15 +1418,15 @@ ad
 (12,1,1) = {"
 ad
 ad
-cx
 cs
-cu
 cs
-cu
-cu
-cu
+bJ
 cs
-bo
+bJ
+bJ
+bJ
+cs
+eO
 bt
 bA
 bo
@@ -1883,14 +1437,14 @@ ad
 aa
 cs
 cs
-cs
-br
+eP
+eE
 aC
-bz
+eH
+eP
 cs
 cs
 cs
-cD
 ad
 ad
 ad
@@ -1909,7 +1463,7 @@ bl
 bp
 bu
 bA
-cu
+bJ
 ad
 ad
 ad
@@ -1931,11 +1485,11 @@ ad
 "}
 (14,1,1) = {"
 ad
-cu
+bJ
 as
 aC
 aC
-cu
+bJ
 aT
 aC
 bh
@@ -1943,12 +1497,12 @@ bh
 aC
 bv
 bB
-cu
+bJ
 ad
 ad
 ad
 ad
-cu
+bJ
 br
 bX
 bX
@@ -1958,18 +1512,18 @@ bX
 bX
 bX
 bz
-cu
+bJ
 ad
 ad
 ad
 "}
 (15,1,1) = {"
 ad
-cu
+bJ
 at
 aD
 aC
-cu
+bJ
 aU
 aC
 aC
@@ -1977,12 +1531,12 @@ aC
 aC
 aC
 bC
-cu
+bJ
 ad
 ad
 ad
 ad
-cu
+bJ
 br
 bY
 bY
@@ -1992,7 +1546,7 @@ bY
 bY
 bY
 bz
-cu
+bJ
 ad
 ad
 ad
@@ -2004,14 +1558,14 @@ ar
 aE
 aI
 aO
-aV
+eC
 aV
 bi
 bm
 bi
 bm
 ar
-cI
+cs
 ad
 ad
 ad
@@ -2020,9 +1574,9 @@ cs
 bW
 aZ
 aZ
+eN
 aZ
-aZ
-aZ
+eN
 aZ
 aZ
 ce
@@ -2034,17 +1588,17 @@ ad
 (17,1,1) = {"
 ad
 ad
-cy
-cs
-cu
 cs
 cs
-cu
-cu
-cu
-cu
+bJ
 cs
-cI
+cs
+bJ
+bJ
+bJ
+bJ
+cs
+cs
 ad
 ad
 ad
@@ -2052,15 +1606,15 @@ ad
 ad
 cr
 cs
-cu
-cu
+bJ
+bJ
 ab
-cu
+bJ
 ab
-cu
-cu
+bJ
+bJ
 cs
-cI
+cs
 ad
 ad
 ad

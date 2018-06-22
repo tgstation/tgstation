@@ -10,10 +10,10 @@ FLOOR SAFES
 	desc = "A huge chunk of metal with a dial embedded in it. Fine print on the dial reads \"Scarborough Arms - 2 tumbler safe, guaranteed thermite resistant, explosion resistant, and assistant resistant.\""
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "safe"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	var/open = 0		//is the safe open?
+	var/open = FALSE		//is the safe open?
 	var/tumbler_1_pos	//the tumbler position- from 0 to 72
 	var/tumbler_1_open	//the tumbler position to open at- 0 to 72
 	var/tumbler_2_pos
@@ -21,6 +21,7 @@ FLOOR SAFES
 	var/dial = 0		//where is the dial pointing?
 	var/space = 0		//the combined w_class of everything in the safe
 	var/maxspace = 24	//the maximum combined w_class of stuff in the safe
+	var/explosion_count = 0	//Tough, but breakable
 
 
 /obj/structure/safe/New()
@@ -33,7 +34,7 @@ FLOOR SAFES
 
 
 /obj/structure/safe/Initialize(mapload)
-	..()
+	. = ..()
 
 	if(!mapload)
 		return
@@ -43,19 +44,22 @@ FLOOR SAFES
 			return
 		if(I.w_class + space <= maxspace)
 			space += I.w_class
-			I.loc = src
+			I.forceMove(src)
 
 
 /obj/structure/safe/proc/check_unlocked(mob/user, canhear)
+	if(explosion_count > 2)
+		return 1
 	if(user && canhear)
 		if(tumbler_1_pos == tumbler_1_open)
 			to_chat(user, "<span class='italics'>You hear a [pick("tonk", "krunk", "plunk")] from [src].</span>")
 		if(tumbler_2_pos == tumbler_2_open)
 			to_chat(user, "<span class='italics'>You hear a [pick("tink", "krink", "plink")] from [src].</span>")
 	if(tumbler_1_pos == tumbler_1_open && tumbler_2_pos == tumbler_2_open)
-		if(user) visible_message("<i><b>[pick("Spring", "Sprang", "Sproing", "Clunk", "Krunk")]!</b></i>")
-		return 1
-	return 0
+		if(user)
+			visible_message("<i><b>[pick("Spring", "Sprang", "Sproing", "Clunk", "Krunk")]!</b></i>")
+		return TRUE
+	return FALSE
 
 
 /obj/structure/safe/proc/decrement(num)
@@ -80,14 +84,17 @@ FLOOR SAFES
 
 
 /obj/structure/safe/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	user.set_machine(src)
 	var/dat = "<center>"
-	dat += "<a href='?src=\ref[src];open=1'>[open ? "Close" : "Open"] [src]</a> | <a href='?src=\ref[src];decrement=1'>-</a> [dial * 5] <a href='?src=\ref[src];increment=1'>+</a>"
+	dat += "<a href='?src=[REF(src)];open=1'>[open ? "Close" : "Open"] [src]</a> | <a href='?src=[REF(src)];decrement=1'>-</a> [dial] <a href='?src=[REF(src)];increment=1'>+</a>"
 	if(open)
 		dat += "<table>"
 		for(var/i = contents.len, i>=1, i--)
 			var/obj/item/P = contents[i]
-			dat += "<tr><td><a href='?src=\ref[src];retrieve=\ref[P]'>[P.name]</a></td></tr>"
+			dat += "<tr><td><a href='?src=[REF(src)];retrieve=[REF(P)]'>[P.name]</a></td></tr>"
 		dat += "</table></center>"
 	user << browse("<html><head><title>[name]</title></head><body>[dat]</body></html>", "window=safe;size=350x300")
 
@@ -97,9 +104,12 @@ FLOOR SAFES
 		return
 	var/mob/living/carbon/human/user = usr
 
-	var/canhear = 0
+	if(!user.canUseTopic(src))
+		return
+
+	var/canhear = FALSE
 	if(user.is_holding_item_of_type(/obj/item/clothing/neck/stethoscope))
-		canhear = 1
+		canhear = TRUE
 
 	if(href_list["open"])
 		if(check_unlocked())
@@ -147,6 +157,7 @@ FLOOR SAFES
 		if(open)
 			if(P && in_range(src, user))
 				user.put_in_hands(P)
+				space -= P.w_class
 				updateUsrDialog()
 
 
@@ -155,10 +166,9 @@ FLOOR SAFES
 		. = 1 //no afterattack
 		if(I.w_class + space <= maxspace)
 			space += I.w_class
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(I, src))
 				to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the safe!</span>")
 				return
-			I.forceMove(src)
 			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 			updateUsrDialog()
 			return
@@ -178,20 +188,28 @@ FLOOR SAFES
 	return
 
 /obj/structure/safe/ex_act(severity, target)
-	return
+	if(((severity == 2 && target == src) || severity == 1) && explosion_count < 3)
+		explosion_count++
+		switch(explosion_count)
+			if(1)
+				desc = initial(desc) + "\nIt looks a little banged up."
+			if(2)
+				desc = initial(desc) + "\nIt's pretty heavily damaged."
+			if(3)
+				desc = initial(desc) + "\nThe lock seems to be broken."
 
 
 //FLOOR SAFES
 /obj/structure/safe/floor
 	name = "floor safe"
 	icon_state = "floorsafe"
-	density = 0
+	density = FALSE
 	level = 1	//underfloor
 	layer = LOW_OBJ_LAYER
 
 
 /obj/structure/safe/floor/Initialize(mapload)
-	..()
+	. = ..()
 	if(mapload)
 		var/turf/T = loc
 		hide(T.intact)

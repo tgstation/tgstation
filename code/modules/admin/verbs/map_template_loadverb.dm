@@ -15,11 +15,13 @@
 
 	var/list/preview = list()
 	for(var/S in template.get_affected_turfs(T,centered = TRUE))
-		preview += image('icons/turf/overlays.dmi',S,"greenOverlay")
+		var/image/item = image('icons/turf/overlays.dmi',S,"greenOverlay")
+		item.plane = ABOVE_LIGHTING_PLANE
+		preview += item
 	usr.client.images += preview
 	if(alert(usr,"Confirm location.","Template Confirm","Yes","No") == "Yes")
 		if(template.load(T, centered = TRUE))
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has placed a map template ([template.name]) at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a></span>")
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has placed a map template ([template.name]) at [ADMIN_COORDJMP(T)]</span>")
 		else
 			to_chat(usr, "Failed to place map")
 	usr.client.images -= preview
@@ -34,8 +36,14 @@
 	if(copytext("[map]",-4) != ".dmm")
 		to_chat(usr, "Bad map file: [map]")
 		return
-
-	var/datum/map_template/M = new(map, "[map]")
+	var/datum/map_template/M
+	switch(alert(usr, "What kind of map is this?", "Map type", "Normal", "Shuttle", "Cancel"))
+		if("Normal")
+			M = new /datum/map_template(map, "[map]")
+		if("Shuttle")
+			M = new /datum/map_template/shuttle(map, "[map]")
+		else
+			return
 	if(M.preload_size(map))
 		to_chat(usr, "Map template '[map]' ready to place ([M.width]x[M.height])")
 		SSmapping.map_templates[M.name] = M

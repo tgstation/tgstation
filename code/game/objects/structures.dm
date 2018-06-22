@@ -1,44 +1,39 @@
 /obj/structure
 	icon = 'icons/obj/structures.dmi'
 	pressure_resistance = 8
-	obj_integrity = 300
 	max_integrity = 300
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 	var/climb_time = 20
-	var/climb_stun = 2
+	var/climb_stun = 20
 	var/climbable = FALSE
-	var/mob/structureclimber
+	var/mob/living/structureclimber
 	var/broken = 0 //similar to machinery's stat BROKEN
 
 /obj/structure/Initialize()
 	if (!armor)
-		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
-	..()
+		armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	. = ..()
 	if(smooth)
 		queue_smooth(src)
 		queue_smooth_neighbors(src)
 		icon_state = ""
-	if(ticker)
-		cameranet.updateVisibility(src)
+	GLOB.cameranet.updateVisibility(src)
 
 /obj/structure/Destroy()
-	if(ticker)
-		cameranet.updateVisibility(src)
+	GLOB.cameranet.updateVisibility(src)
 	if(smooth)
 		queue_smooth_neighbors(src)
 	return ..()
 
 /obj/structure/attack_hand(mob/user)
 	. = ..()
-	add_fingerprint(user)
+	if(.)
+		return
 	if(structureclimber && structureclimber != user)
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
-		structureclimber.Weaken(2)
-		structureclimber.visible_message("<span class='warning'>[structureclimber.name] has been knocked off the [src]", "You're knocked off the [src]!", "You see [structureclimber.name] get knocked off the [src]</span>")
-	interact(user)
-
-/obj/structure/interact(mob/user)
-	ui_interact(user)
+		structureclimber.Knockdown(40)
+		structureclimber.visible_message("<span class='warning'>[structureclimber] has been knocked off [src].", "You're knocked off [src]!", "You see [structureclimber] get knocked off [src].</span>")
 
 /obj/structure/ui_act(action, params)
 	..()
@@ -48,27 +43,26 @@
 	. = ..()
 	if(!climbable)
 		return
-	if(ismob(O) && user == O && iscarbon(user))
+	if(user == O && iscarbon(O))
 		if(user.canmove)
 			climb_structure(user)
 			return
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_held_item() != O))
+	if(!istype(O, /obj/item) || user.get_active_held_item() != O)
 		return
 	if(iscyborg(user))
 		return
-	if(!user.drop_item())
+	if(!user.dropItemToGround(O))
 		return
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
-	return
 
 /obj/structure/proc/do_climb(atom/movable/A)
 	if(climbable)
-		density = 0
+		density = FALSE
 		. = step(A,get_dir(A,src.loc))
-		density = 1
+		density = TRUE
 
-/obj/structure/proc/climb_structure(mob/user)
+/obj/structure/proc/climb_structure(mob/living/user)
 	src.add_fingerprint(user)
 	user.visible_message("<span class='warning'>[user] starts climbing onto [src].</span>", \
 								"<span class='notice'>You start climbing onto [src]...</span>")
@@ -77,6 +71,8 @@
 		adjusted_climb_time *= 2
 	if(isalien(user))
 		adjusted_climb_time *= 0.25 //aliens are terrifyingly fast
+	if(user.has_trait(TRAIT_FREERUNNING)) //do you have any idea how fast I am???
+		adjusted_climb_time *= 0.8
 	structureclimber = user
 	if(do_mob(user, user, adjusted_climb_time))
 		if(src.loc) //Checking if structure has been destroyed
@@ -84,7 +80,8 @@
 				user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
 									"<span class='notice'>You climb onto [src].</span>")
 				add_logs(user, src, "climbed onto")
-				user.Stun(climb_stun)
+				if(climb_stun)
+					user.Stun(climb_stun)
 				. = 1
 			else
 				to_chat(user, "<span class='warning'>You fail to climb onto [src].</span>")
@@ -96,7 +93,7 @@
 		if(resistance_flags & ON_FIRE)
 			to_chat(user, "<span class='warning'>It's on fire!</span>")
 		if(broken)
-			to_chat(user, "<span class='notice'>It looks broken.</span>")
+			to_chat(user, "<span class='notice'>It appears to be broken.</span>")
 		var/examine_status = examine_status(user)
 		if(examine_status)
 			to_chat(user, examine_status)
@@ -109,4 +106,5 @@
 		if(25 to 50)
 			return  "It appears heavily damaged."
 		if(0 to 25)
-			return  "<span class='warning'>It's falling apart!</span>"
+			if(!broken)
+				return  "<span class='warning'>It's falling apart!</span>"

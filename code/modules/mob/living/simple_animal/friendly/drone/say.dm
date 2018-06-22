@@ -3,37 +3,31 @@
 /////////////
 //Drone speach
 
-/mob/living/simple_animal/drone/handle_inherent_channels(message, message_mode)
-	if(message_mode == MODE_BINARY)
-		drone_chat(message)
-		return 1
-	else
-		..()
-
-
 /mob/living/simple_animal/drone/get_spans()
 	return ..() | SPAN_ROBOT
 
 
 
 //Base proc for anything to call
-/proc/_alert_drones(msg, dead_can_hear = 0, mob/living/faction_checked_mob, exact_faction_match)
-	for(var/W in mob_list)
-		var/mob/living/simple_animal/drone/M = W
-		if(istype(M) && M.stat != DEAD)
-			if(faction_checked_mob)
-				if(M.faction_check_mob(faction_checked_mob, exact_faction_match))
-					to_chat(M, msg)
-			else
-				to_chat(M, msg)
-		if(dead_can_hear && (M in dead_mob_list))
-			var/link = FOLLOW_LINK(M, src)
+/proc/_alert_drones(msg, dead_can_hear = 0, atom/source, mob/living/faction_checked_mob, exact_faction_match)
+	if (dead_can_hear && source)
+		for (var/mob/M in GLOB.dead_mob_list)
+			var/link = FOLLOW_LINK(M, source)
 			to_chat(M, "[link] [msg]")
+	for(var/i in GLOB.drones_list)
+		var/mob/living/simple_animal/drone/D = i
+		if(istype(D) && D.stat != DEAD)
+			if(faction_checked_mob)
+				if(D.faction_check_mob(faction_checked_mob, exact_faction_match))
+					to_chat(D, msg)
+			else
+				to_chat(D, msg)
+
 
 
 //Wrapper for drones to handle factions
 /mob/living/simple_animal/drone/proc/alert_drones(msg, dead_can_hear = FALSE)
-	_alert_drones(msg, dead_can_hear, src, TRUE)
+	_alert_drones(msg, dead_can_hear, src, src, TRUE)
 
 
 /mob/living/simple_animal/drone/proc/drone_chat(msg)

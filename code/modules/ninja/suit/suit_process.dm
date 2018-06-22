@@ -1,6 +1,4 @@
 /obj/item/clothing/suit/space/space_ninja/proc/ntick(mob/living/carbon/human/U = affecting)
-	set background = BACKGROUND_ENABLED
-
 	//Runs in the background while the suit is initialized.
 	//Requires charge or stealth to process.
 	spawn while(s_initialized)
@@ -12,7 +10,7 @@
 				s_coold--//Checks for ability s_cooldown first.
 
 			cell.charge -= s_cost//s_cost is the default energy cost each ntick, usually 5.
-			if(s_active)//If stealth is active.
+			if(stealth)//If stealth is active.
 				cell.charge -= s_acost
 
 		else
@@ -20,5 +18,3 @@
 			cancel_stealth()
 
 		sleep(10)//Checks every second.
-
-

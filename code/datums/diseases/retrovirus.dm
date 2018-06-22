@@ -2,19 +2,16 @@
 	name = "Retrovirus"
 	max_stages = 4
 	spread_text = "Contact"
-	spread_flags = CONTACT_GENERAL
+	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
 	cure_text = "Rest or an injection of mutadone"
 	cure_chance = 6
 	agent = ""
 	viable_mobtypes = list(/mob/living/carbon/human)
 	desc = "A DNA-altering retrovirus that scrambles the structural and unique enzymes of a host constantly."
-	severity = DANGEROUS
+	severity = DISEASE_SEVERITY_HARMFUL
 	permeability_mod = 0.4
 	stage_prob = 2
-	var/SE
-	var/UI
 	var/restcure = 0
-
 
 /datum/disease/dna_retrovirus/New()
 	..()
@@ -24,6 +21,10 @@
 	else
 		restcure = 1
 
+/datum/disease/dna_retrovirus/Copy()
+	var/datum/disease/dna_retrovirus/D = ..()
+	D.restcure = restcure
+	return D
 
 /datum/disease/dna_retrovirus/stage_act()
 	..()
@@ -52,7 +53,7 @@
 				to_chat(affected_mob, "You feel very strange.")
 			if (prob(4))
 				to_chat(affected_mob, "<span class='danger'>You feel a stabbing pain in your head!</span>")
-				affected_mob.Paralyse(2)
+				affected_mob.Unconscious(40)
 			if (prob(4))
 				to_chat(affected_mob, "<span class='danger'>Your stomach churns.</span>")
 		if(3)

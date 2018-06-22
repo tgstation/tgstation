@@ -5,28 +5,33 @@
 	return 0
 
 /mob/living/carbon/isloyal()
-	for(var/obj/item/weapon/implant/mindshield/L in implants)
-		return 1
+	for(var/obj/item/implant/mindshield/L in implants)
+		return TRUE
 
+/mob/proc/lowest_buckled_mob()
+	. = src
+	if(buckled && ismob(buckled))
+		var/mob/Buckled = buckled
+		. = Buckled.lowest_buckled_mob()
 
 /proc/check_zone(zone)
 	if(!zone)
-		return "chest"
+		return BODY_ZONE_CHEST
 	switch(zone)
-		if("eyes")
-			zone = "head"
-		if("mouth")
-			zone = "head"
-		if("l_hand")
-			zone = "l_arm"
-		if("r_hand")
-			zone = "r_arm"
-		if("l_foot")
-			zone = "l_leg"
-		if("r_foot")
-			zone = "r_leg"
-		if("groin")
-			zone = "chest"
+		if(BODY_ZONE_PRECISE_EYES)
+			zone = BODY_ZONE_HEAD
+		if(BODY_ZONE_PRECISE_MOUTH)
+			zone = BODY_ZONE_HEAD
+		if(BODY_ZONE_PRECISE_L_HAND)
+			zone = BODY_ZONE_L_ARM
+		if(BODY_ZONE_PRECISE_R_HAND)
+			zone = BODY_ZONE_R_ARM
+		if(BODY_ZONE_PRECISE_L_FOOT)
+			zone = BODY_ZONE_L_LEG
+		if(BODY_ZONE_PRECISE_R_FOOT)
+			zone = BODY_ZONE_R_LEG
+		if(BODY_ZONE_PRECISE_GROIN)
+			zone = BODY_ZONE_CHEST
 	return zone
 
 
@@ -40,22 +45,22 @@
 	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
 	switch(t)
 		if(1)
-			return "head"
+			return BODY_ZONE_HEAD
 		if(2)
-			return "chest"
+			return BODY_ZONE_CHEST
 		if(3 to 6)
-			return "l_arm"
+			return BODY_ZONE_L_ARM
 		if(7 to 10)
-			return "r_arm"
+			return BODY_ZONE_R_ARM
 		if(11 to 14)
-			return "l_leg"
+			return BODY_ZONE_L_LEG
 		if(15 to 18)
-			return "r_leg"
+			return BODY_ZONE_R_LEG
 
 	return zone
 
 /proc/above_neck(zone)
-	var/list/zones = list("head", "mouth", "eyes")
+	var/list/zones = list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES)
 	if(zones.Find(zone))
 		return 1
 	else
@@ -249,7 +254,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /proc/shake_camera(mob/M, duration, strength=1)
-	if(!M || !M.client || duration <= 0)
+	if(!M || !M.client || duration < 1)
 		return
 	var/client/C = M.client
 	var/oldx = C.pixel_x
@@ -269,22 +274,17 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /proc/findname(msg)
 	if(!istext(msg))
 		msg = "[msg]"
-	for(var/mob/M in mob_list)
+	for(var/i in GLOB.mob_list)
+		var/mob/M = i
 		if(M.real_name == msg)
 			return M
 	return 0
 
-var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace or "-"
-
 /mob/proc/first_name()
+	var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace or "-"
 	firstname.Find(real_name)
 	return firstname.match
 
-/mob/proc/abiotic(full_body = 0)
-	for(var/obj/item/I in held_items)
-		if(!(I.flags & NODROP))
-			return 1
-	return 0
 
 //change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
 /mob/verb/a_intent_change(input as text)
@@ -323,73 +323,70 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 /proc/is_blind(A)
 	if(ismob(A))
 		var/mob/B = A
-		return	B.eye_blind
-	return 0
+		return B.eye_blind
+	return FALSE
+
+/mob/proc/hallucinating()
+	return FALSE
 
 /proc/is_special_character(mob/M) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.
-	if(!ticker || !ticker.mode)
-		return 0
+	if(!SSticker.HasRoundStarted())
+		return FALSE
 	if(!istype(M))
-		return 0
+		return FALSE
 	if(issilicon(M))
 		if(iscyborg(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
-			var/mob/living/silicon/robot/R = M
-			if(R.mind && R.mind.special_role)
-				if(R.laws && R.laws.zeroth && R.syndicate)
-					if(R.connected_ai)
-						if(is_special_character(R.connected_ai) && R.connected_ai.laws && (R.connected_ai.laws.zeroth_borg == R.laws.zeroth || R.connected_ai.laws.zeroth == R.laws.zeroth))
-							return 0 //AI is the real traitor here, so the borg itself is not a traitor
-						return 1 //Slaved but also a traitor
-					return 1 //Unslaved, traitor
+			return FALSE
 		else if(isAI(M))
 			var/mob/living/silicon/ai/A = M
 			if(A.laws && A.laws.zeroth && A.mind && A.mind.special_role)
-				return 1
-		return 0
+				return TRUE
+		return FALSE
 	if(M.mind && M.mind.special_role)//If they have a mind and special role, they are some type of traitor or antagonist.
-		switch(ticker.mode.config_tag)
+		switch(SSticker.mode.config_tag)
 			if("revolution")
-				if((M.mind in ticker.mode.head_revolutionaries) || (M.mind in ticker.mode.revolutionaries))
+				if(is_revolutionary(M))
 					return 2
 			if("cult")
-				if(M.mind in ticker.mode.cult)
+				if(M.mind in SSticker.mode.cult)
 					return 2
 			if("nuclear")
-				if(M.mind in ticker.mode.syndicates)
+				if(M.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE))
 					return 2
 			if("changeling")
-				if(M.mind in ticker.mode.changelings)
+				if(M.mind.has_antag_datum(/datum/antagonist/changeling,TRUE))
 					return 2
 			if("wizard")
-				if(M.mind in ticker.mode.wizards)
+				if(iswizard(M))
 					return 2
 			if("apprentice")
-				if(M.mind in ticker.mode.apprentices)
+				if(M.mind in SSticker.mode.apprentices)
 					return 2
 			if("monkey")
-				if(M.viruses && (locate(/datum/disease/transformation/jungle_fever) in M.viruses))
-					return 2
-			if("abductor")
-				if(M.mind in ticker.mode.abductors)
-					return 2
-		return 1
-	return 0
+				if(isliving(M))
+					var/mob/living/L = M
+					if(L.diseases && (locate(/datum/disease/transformation/jungle_fever) in L.diseases))
+						return 2
+		return TRUE
+	if(M.mind && LAZYLEN(M.mind.antag_datums)) //they have an antag datum!
+		return TRUE
+	return FALSE
 
 /mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
 	return 1
 
-/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/image/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE) //Easy notification of ghosts.
-	if(SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
+/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/mutable_appearance/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE) //Easy notification of ghosts.
+	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
 		return
-	for(var/mob/dead/observer/O in player_list)
+	for(var/mob/dead/observer/O in GLOB.player_list)
 		if(O.client)
-			to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>")
+			to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]</span>")
 			if(ghost_sound)
-				O << sound(ghost_sound)
+				SEND_SOUND(O, sound(ghost_sound))
 			if(flashwindow)
 				window_flash(O.client)
 			if(source)
-				var/obj/screen/alert/notify_action/A = O.throw_alert("\ref[source]_notify_action", /obj/screen/alert/notify_action)
+				var/obj/screen/alert/notify_action/A = O.throw_alert("[REF(source)]_notify_action", /obj/screen/alert/notify_action)
 				if(A)
 					if(O.client.prefs && O.client.prefs.UI_style)
 						A.icon = ui_style2icon(O.client.prefs.UI_style)
@@ -397,17 +394,10 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 					A.action = action
 					A.target = source
 					if(!alert_overlay)
-						var/old_layer = source.layer
-						var/old_plane = source.plane
-						source.layer = FLOAT_LAYER
-						source.plane = FLOAT_PLANE
-						A.add_overlay(source)
-						source.layer = old_layer
-						source.plane = old_plane
-					else
-						alert_overlay.layer = FLOAT_LAYER
-						alert_overlay.plane = FLOAT_PLANE
-						A.add_overlay(alert_overlay)
+						alert_overlay = new(source)
+					alert_overlay.layer = FLOAT_LAYER
+					alert_overlay.plane = FLOAT_PLANE
+					A.add_overlay(alert_overlay)
 
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute_heal, burn_heal)
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
@@ -418,9 +408,10 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 		else
 			dam = 0
 		if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
-			if(affecting.heal_damage(brute_heal, burn_heal, 1, 0))
+			if(affecting.heal_damage(brute_heal, burn_heal, 0, TRUE, FALSE))
 				H.update_damage_overlays()
-			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].</span>")
+			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].", \
+			"<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].</span>")
 			return 1 //successful heal
 		else
 			to_chat(user, "<span class='warning'>[affecting] is already in good condition!</span>")
@@ -443,37 +434,29 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 	to_chat(M, "Control of your mob has been offered to dead players.")
 	if(usr)
 		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
-		message_admins("[key_name_admin(usr)] has offered control of ([key_name_admin(M)]) to ghosts")
+		message_admins("[key_name_admin(usr)] has offered control of ([ADMIN_LOOKUPFLW(M)]) to ghosts")
 	var/poll_message = "Do you want to play as [M.real_name]?"
 	if(M.mind && M.mind.assigned_role)
 		poll_message = "[poll_message] Job:[M.mind.assigned_role]."
 	if(M.mind && M.mind.special_role)
 		poll_message = "[poll_message] Status:[M.mind.special_role]."
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, "pAI", null, FALSE, 100, M)
-	var/mob/dead/observer/theghost = null
+	else if(M.mind)
+		var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
+		if(A)
+			poll_message = "[poll_message] Status:[A.name]."
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, ROLE_PAI, null, FALSE, 100, M)
 
-	if(candidates.len)
-		theghost = pick(candidates)
+	if(LAZYLEN(candidates))
+		var/mob/dead/observer/C = pick(candidates)
 		to_chat(M, "Your mob has been taken over by a ghost!")
-		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)])")
+		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(M)])")
 		M.ghostize(0)
-		M.key = theghost.key
+		M.key = C.key
 		return TRUE
 	else
 		to_chat(M, "There were no ghosts willing to take control.")
-		message_admins("No ghosts were willing to take control of [key_name_admin(M)])")
+		message_admins("No ghosts were willing to take control of [ADMIN_LOOKUPFLW(M)])")
 		return FALSE
-
-//toggles the talk wheel
-/mob/verb/toggle_talk_wheel()
-	set name = "talk-wheel"
-	set hidden = 1
-
-	if(isliving(src))
-		var/mob/living/L = src
-		if(L.hud_used)
-			for(var/obj/screen/wheel/talk/TW in L.hud_used.wheels)
-				TW.Click()
 
 /mob/proc/is_flying(mob/M = src)
 	if(M.movement_type & FLYING)
@@ -494,9 +477,18 @@ var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace o
 	if(!LAZYLEN(message) || !message_type)
 		return
 
+	if(client)
+		if(!islist(client.player_details.logging[message_type]))
+			client.player_details.logging[message_type] = list()
+
 	if(!islist(logging[message_type]))
 		logging[message_type] = list()
 
 	var/list/timestamped_message = list("[LAZYLEN(logging[message_type]) + 1]\[[time_stamp()]\] [key_name(src)]" = message)
 
 	logging[message_type] += timestamped_message
+	if(client)
+		client.player_details.logging[message_type] += timestamped_message
+
+/mob/proc/can_hear()
+	. = TRUE

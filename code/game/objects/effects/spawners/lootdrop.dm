@@ -1,50 +1,62 @@
 /obj/effect/spawner/lootdrop
-	icon = 'icons/mob/screen_gen.dmi'
-	icon_state = "x2"
-	color = "#00FF00"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "random_loot"
+	layer = OBJ_LAYER
 	var/lootcount = 1		//how many items will be spawned
-	var/lootdoubles = 1		//if the same item can be spawned twice
+	var/lootdoubles = TRUE	//if the same item can be spawned twice
 	var/list/loot			//a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
+	var/fan_out_items = FALSE //Whether the items should be distributed to offsets 0,1,-1,2,-2,3,-3.. This overrides pixel_x/y on the spawner itself
 
-/obj/effect/spawner/lootdrop/New()
+/obj/effect/spawner/lootdrop/Initialize(mapload)
+	..()
 	if(loot && loot.len)
-		for(var/i = lootcount, i > 0, i--)
-			if(!loot.len) break
+		var/turf/T = get_turf(src)
+		var/loot_spawned = 0
+		while((lootcount-loot_spawned) && loot.len)
 			var/lootspawn = pickweight(loot)
 			if(!lootdoubles)
 				loot.Remove(lootspawn)
 
 			if(lootspawn)
-				new lootspawn(get_turf(src))
-	qdel(src)
+				var/atom/movable/spawned_loot = new lootspawn(T)
+				if (!fan_out_items)
+					if (pixel_x != 0)
+						spawned_loot.pixel_x = pixel_x
+					if (pixel_y != 0)
+						spawned_loot.pixel_y = pixel_y
+				else
+					if (loot_spawned)
+						spawned_loot.pixel_x = spawned_loot.pixel_y = ((!(loot_spawned%2)*loot_spawned/2)*-1)+((loot_spawned%2)*(loot_spawned+1)/2*1)
+			loot_spawned++
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/spawner/lootdrop/armory_contraband
 	name = "armory contraband gun spawner"
-	lootdoubles = 0
+	lootdoubles = FALSE
 
 	loot = list(
-				/obj/item/weapon/gun/ballistic/automatic/pistol = 8,
-				/obj/item/weapon/gun/ballistic/shotgun/automatic/combat = 5,
-				/obj/item/weapon/gun/ballistic/revolver/mateba,
-				/obj/item/weapon/gun/ballistic/automatic/pistol/deagle
+				/obj/item/gun/ballistic/automatic/pistol = 8,
+				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
+				/obj/item/gun/ballistic/revolver/mateba,
+				/obj/item/gun/ballistic/automatic/pistol/deagle
 				)
 
 /obj/effect/spawner/lootdrop/gambling
 	name = "gambling valuables spawner"
 	loot = list(
-				/obj/item/weapon/gun/ballistic/revolver/russian = 5,
-				/obj/item/weapon/storage/box/syndie_kit/throwing_weapons = 1,
+				/obj/item/gun/ballistic/revolver/russian = 5,
+				/obj/item/storage/box/syndie_kit/throwing_weapons = 1,
 				/obj/item/toy/cards/deck/syndicate = 2
 				)
 
 /obj/effect/spawner/lootdrop/grille_or_trash
 	name = "maint grille or trash spawner"
 	loot = list(/obj/structure/grille = 5,
-			/obj/item/weapon/cigbutt = 1,
+			/obj/item/cigbutt = 1,
 			/obj/item/trash/cheesie = 1,
 			/obj/item/trash/candy = 1,
 			/obj/item/trash/chips = 1,
-			/obj/item/trash/deadmouse = 1,
+			/obj/item/reagent_containers/food/snacks/deadmouse = 1,
 			/obj/item/trash/pistachios = 1,
 			/obj/item/trash/plate = 1,
 			/obj/item/trash/popcorn = 1,
@@ -52,120 +64,46 @@
 			/obj/item/trash/sosjerky = 1,
 			/obj/item/trash/syndi_cakes = 1)
 
+/obj/effect/spawner/lootdrop/three_course_meal
+	name = "three course meal spawner"
+	lootcount = 3
+	lootdoubles = FALSE
+	var/soups = list(
+			/obj/item/reagent_containers/food/snacks/soup/beet,
+			/obj/item/reagent_containers/food/snacks/soup/sweetpotato,
+			/obj/item/reagent_containers/food/snacks/soup/stew,
+			/obj/item/reagent_containers/food/snacks/soup/hotchili,
+			/obj/item/reagent_containers/food/snacks/soup/nettle,
+			/obj/item/reagent_containers/food/snacks/soup/meatball)
+	var/salads = list(
+			/obj/item/reagent_containers/food/snacks/salad/herbsalad,
+			/obj/item/reagent_containers/food/snacks/salad/validsalad,
+			/obj/item/reagent_containers/food/snacks/salad/fruit,
+			/obj/item/reagent_containers/food/snacks/salad/jungle,
+			/obj/item/reagent_containers/food/snacks/salad/aesirsalad)
+	var/mains = list(
+			/obj/item/reagent_containers/food/snacks/bearsteak,
+			/obj/item/reagent_containers/food/snacks/enchiladas,
+			/obj/item/reagent_containers/food/snacks/stewedsoymeat,
+			/obj/item/reagent_containers/food/snacks/burger/bigbite,
+			/obj/item/reagent_containers/food/snacks/burger/superbite,
+			/obj/item/reagent_containers/food/snacks/burger/fivealarm)
+
+/obj/effect/spawner/lootdrop/three_course_meal/Initialize(mapload)
+	loot = list(pick(soups) = 1,pick(salads) = 1,pick(mains) = 1)
+	. = ..()
+
 /obj/effect/spawner/lootdrop/maintenance
 	name = "maintenance loot spawner"
+	// see code/_globalvars/lists/maintenance_loot.dm for loot table
 
-	//How to balance this table
-	//-------------------------
-	//The total added weight of all the entries should be (roughly) equal to the total number of lootdrops
-	//(take in account those that spawn more than one object!)
-	//
-	//While this is random, probabilities tells us that item distribution will have a tendency to look like
-	//the content of the weighted table that created them.
-	//The less lootdrops, the less even the distribution.
-	//
-	//If you want to give items a weight <1 you can multiply all the weights by 10
-	//
-	//the "" entry will spawn nothing, if you increase this value,
-	//ensure that you balance it with more spawn points
-
-	//table data:
-	//-----------
-	//aft maintenance: 		24 items, 18 spots 2 extra (28/08/2014)
-	//asmaint: 				16 items, 11 spots 0 extra (08/08/2014)
-	//asmaint2:			 	36 items, 26 spots 2 extra (28/08/2014)
-	//fpmaint:				5  items,  4 spots 0 extra (08/08/2014)
-	//fpmaint2:				12 items, 11 spots 2 extra (28/08/2014)
-	//fsmaint:				0  items,  0 spots 0 extra (08/08/2014)
-	//fsmaint2:				40 items, 27 spots 5 extra (28/08/2014)
-	//maintcentral:			2  items,  2 spots 0 extra (08/08/2014)
-	//port:					5  items,  5 spots 0 extra (08/08/2014)
-	loot = list(
-				/obj/item/bodybag = 1,
-				/obj/item/clothing/glasses/meson = 2,
-				/obj/item/clothing/glasses/sunglasses = 1,
-				/obj/item/clothing/gloves/color/fyellow = 1,
-				/obj/item/clothing/head/hardhat = 1,
-				/obj/item/clothing/head/hardhat/red = 1,
-				/obj/item/clothing/head/that{throwforce = 1;} = 1,
-				/obj/item/clothing/head/ushanka = 1,
-				/obj/item/clothing/head/welding = 1,
-				/obj/item/clothing/mask/gas = 15,
-				/obj/item/clothing/suit/hazardvest = 1,
-				/obj/item/clothing/under/rank/vice = 1,
-				/obj/item/device/assembly/prox_sensor = 4,
-				/obj/item/device/assembly/timer = 3,
-				/obj/item/device/flashlight = 4,
-				/obj/item/device/flashlight/pen = 1,
-				/obj/item/device/flashlight/glowstick/random = 4,
-				/obj/item/device/multitool = 2,
-				/obj/item/device/radio/off = 2,
-				/obj/item/device/t_scanner = 5,
-				/obj/item/weapon/airlock_painter = 1,
-				/obj/item/stack/cable_coil = 4,
-				/obj/item/stack/cable_coil{amount = 5} = 6,
-				/obj/item/stack/medical/bruise_pack = 1,
-				/obj/item/stack/rods{amount = 10} = 9,
-				/obj/item/stack/rods{amount = 23} = 1,
-				/obj/item/stack/rods{amount = 50} = 1,
-				/obj/item/stack/sheet/cardboard = 2,
-				/obj/item/stack/sheet/metal{amount = 20} = 1,
-				/obj/item/stack/sheet/mineral/plasma = 1,
-				/obj/item/stack/sheet/rglass = 1,
-				/obj/item/weapon/book/manual/wiki/engineering_construction = 1,
-				/obj/item/weapon/book/manual/wiki/engineering_hacking = 1,
-				/obj/item/clothing/head/cone = 1,
-				/obj/item/weapon/coin/silver = 1,
-				/obj/item/weapon/coin/twoheaded = 1,
-				/obj/item/weapon/poster/random_contraband = 1,
-				/obj/item/weapon/poster/random_official = 1,
-				/obj/item/weapon/crowbar = 1,
-				/obj/item/weapon/crowbar/red = 1,
-				/obj/item/weapon/extinguisher = 11,
-				//obj/item/weapon/gun/ballistic/revolver/russian = 1, //disabled until lootdrop is a proper world proc.
-				/obj/item/weapon/hand_labeler = 1,
-				/obj/item/weapon/paper/crumpled = 1,
-				/obj/item/weapon/pen = 1,
-				/obj/item/weapon/reagent_containers/spray/pestspray = 1,
-				/obj/item/weapon/reagent_containers/glass/rag = 3,
-				/obj/item/weapon/stock_parts/cell = 3,
-				/obj/item/weapon/storage/belt/utility = 2,
-				/obj/item/weapon/storage/box = 2,
-				/obj/item/weapon/storage/box/cups = 1,
-				/obj/item/weapon/storage/box/donkpockets = 1,
-				/obj/item/weapon/storage/box/lights/mixed = 3,
-				/obj/item/weapon/storage/box/hug/medical = 1,
-				/obj/item/weapon/storage/fancy/cigarettes/dromedaryco = 1,
-				/obj/item/weapon/storage/toolbox/mechanical = 1,
-				/obj/item/weapon/screwdriver = 3,
-				/obj/item/weapon/tank/internals/emergency_oxygen = 2,
-				/obj/item/weapon/vending_refill/cola = 1,
-				/obj/item/weapon/weldingtool = 3,
-				/obj/item/weapon/wirecutters = 1,
-				/obj/item/weapon/wrench = 4,
-				/obj/item/weapon/relic = 3,
-				/obj/item/weaponcrafting/reciever = 2,
-				/obj/item/clothing/head/cone = 2,
-				/obj/item/weapon/grenade/smokebomb = 2,
-				/obj/item/device/geiger_counter = 3,
-				/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange = 1,
-				/obj/item/device/radio/headset = 1,
-				/obj/item/device/assembly/infra = 1,
-				/obj/item/device/assembly/igniter = 2,
-				/obj/item/device/assembly/signaler = 2,
-				/obj/item/device/assembly/mousetrap = 2,
-				/obj/item/weapon/reagent_containers/syringe = 2,
-				/obj/item/clothing/gloves/color/random = 8,
-				/obj/item/clothing/shoes/laceup = 1,
-				/obj/item/weapon/storage/secure/briefcase = 3,
-				/obj/item/weapon/storage/toolbox/artistic = 2,
-				/obj/item/toy/eightball = 1,
-				"" = 3
-				)
+/obj/effect/spawner/lootdrop/maintenance/Initialize(mapload)
+	loot = GLOB.maintenance_loot
+	. = ..()
 
 /obj/effect/spawner/lootdrop/crate_spawner
 	name = "lootcrate spawner" //USE PROMO CODE "SELLOUT" FOR 20% OFF!
-	lootdoubles = 0
+	lootdoubles = FALSE
 
 	loot = list(
 				/obj/structure/closet/crate/secure/loot = 20,
@@ -175,10 +113,10 @@
 /obj/effect/spawner/lootdrop/organ_spawner
 	name = "organ spawner"
 	loot = list(
-		/obj/item/organ/heart/gland/bloody = 7,
-		/obj/item/organ/heart/gland/bodysnatch = 4,
+		/obj/item/organ/heart/gland/electric = 3,
+		/obj/item/organ/heart/gland/trauma = 4,
 		/obj/item/organ/heart/gland/egg = 7,
-		/obj/item/organ/heart/gland/emp = 3,
+		/obj/item/organ/heart/gland/chem = 5,
 		/obj/item/organ/heart/gland/mindshock = 5,
 		/obj/item/organ/heart/gland/plasma = 7,
 		/obj/item/organ/heart/gland/pop = 5,
@@ -186,7 +124,7 @@
 		/obj/item/organ/heart/gland/spiderman = 5,
 		/obj/item/organ/heart/gland/ventcrawling = 1,
 		/obj/item/organ/body_egg/alien_embryo = 1,
-		/obj/item/organ/hivelord_core = 2)
+		/obj/item/organ/regenerative_core = 2)
 	lootcount = 3
 
 /obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner
@@ -194,3 +132,189 @@
 	loot = list(
 		/obj/effect/decal/remains/xeno = 49,
 		/obj/effect/spawner/xeno_egg_delivery = 1)
+
+/obj/effect/spawner/lootdrop/costume
+	name = "random costume spawner"
+
+/obj/effect/spawner/lootdrop/costume/Initialize()
+	loot = list()
+	for(var/path in subtypesof(/obj/effect/spawner/bundle/costume))
+		loot[path] = TRUE
+	. = ..()
+
+// Minor lootdrops follow
+
+/obj/effect/spawner/lootdrop/minor/beret_or_rabbitears
+	name = "beret or rabbit ears spawner"
+	loot = list(
+		/obj/item/clothing/head/beret = 1,
+		/obj/item/clothing/head/rabbitears = 1)
+
+/obj/effect/spawner/lootdrop/minor/bowler_or_that
+	name = "bowler or top hat spawner"
+	loot = list(
+		/obj/item/clothing/head/bowler = 1,
+		/obj/item/clothing/head/that = 1)
+
+/obj/effect/spawner/lootdrop/minor/kittyears_or_rabbitears
+	name = "kitty ears or rabbit ears spawner"
+	loot = list(
+		/obj/item/clothing/head/kitty = 1,
+		/obj/item/clothing/head/rabbitears = 1)
+
+/obj/effect/spawner/lootdrop/minor/pirate_or_bandana
+	name = "pirate hat or bandana spawner"
+	loot = list(
+		/obj/item/clothing/head/pirate = 1,
+		/obj/item/clothing/head/bandana = 1)
+
+/obj/effect/spawner/lootdrop/minor/twentyfive_percent_cyborg_mask
+	name = "25% cyborg mask spawner"
+	loot = list(
+		/obj/item/clothing/mask/gas/cyborg = 25,
+		"" = 75)
+
+/obj/effect/spawner/lootdrop/aimodule_harmless // These shouldn't allow the AI to start butchering people
+	name = "harmless AI module spawner"
+	loot = list(
+				/obj/item/aiModule/core/full/asimov,
+				/obj/item/aiModule/core/full/asimovpp,
+				/obj/item/aiModule/core/full/hippocratic,
+				/obj/item/aiModule/core/full/paladin_devotion,
+				/obj/item/aiModule/core/full/paladin
+				)
+
+/obj/effect/spawner/lootdrop/aimodule_neutral // These shouldn't allow the AI to start butchering people without reason
+	name = "neutral AI module spawner"
+	loot = list(
+				/obj/item/aiModule/core/full/corp,
+				/obj/item/aiModule/core/full/maintain,
+				/obj/item/aiModule/core/full/drone,
+				/obj/item/aiModule/core/full/peacekeeper,
+				/obj/item/aiModule/core/full/reporter,
+				/obj/item/aiModule/core/full/robocop,
+				/obj/item/aiModule/core/full/liveandletlive,
+				/obj/item/aiModule/core/full/hulkamania
+				)
+
+/obj/effect/spawner/lootdrop/aimodule_harmful // These will get the shuttle called
+	name = "harmful AI module spawner"
+	loot = list(
+				/obj/item/aiModule/core/full/antimov,
+				/obj/item/aiModule/core/full/balance,
+				/obj/item/aiModule/core/full/tyrant,
+				/obj/item/aiModule/core/full/thermurderdynamic,
+				/obj/item/aiModule/core/full/damaged
+				)
+
+// Tech storage circuit board spawners
+// For these, make sure that lootcount equals the number of list items
+
+/obj/effect/spawner/lootdrop/techstorage
+	name = "generic circuit board spawner"
+	lootdoubles = FALSE
+	fan_out_items = TRUE
+
+/obj/effect/spawner/lootdrop/techstorage/service
+	name = "service circuit board spawner"
+	lootcount = 10
+	loot = list(
+				/obj/item/circuitboard/computer/arcade/battle,
+				/obj/item/circuitboard/computer/arcade/orion_trail,
+				/obj/item/circuitboard/machine/autolathe,
+				/obj/item/circuitboard/computer/mining,
+				/obj/item/circuitboard/machine/ore_redemption,
+				/obj/item/circuitboard/machine/mining_equipment_vendor,
+				/obj/item/circuitboard/machine/microwave,
+				/obj/item/circuitboard/machine/chem_dispenser/drinks,
+				/obj/item/circuitboard/machine/chem_dispenser/drinks/beer,
+				/obj/item/circuitboard/computer/slot_machine 
+				)
+
+/obj/effect/spawner/lootdrop/techstorage/rnd
+	name = "RnD circuit board spawner"
+	lootcount = 8
+	loot = list(
+				/obj/item/circuitboard/computer/aifixer,
+				/obj/item/circuitboard/machine/rdserver,
+				/obj/item/circuitboard/computer/pandemic, 
+				/obj/item/circuitboard/machine/mechfab,
+				/obj/item/circuitboard/machine/circuit_imprinter/department,
+				/obj/item/circuitboard/computer/teleporter,
+				/obj/item/circuitboard/machine/destructive_analyzer, 
+				/obj/item/circuitboard/computer/rdconsole
+				)
+				
+/obj/effect/spawner/lootdrop/techstorage/security
+	name = "security circuit board spawner"
+	lootcount = 3
+	loot = list(
+				/obj/item/circuitboard/computer/secure_data,
+				/obj/item/circuitboard/computer/security,
+				/obj/item/circuitboard/computer/prisoner
+				)
+				
+/obj/effect/spawner/lootdrop/techstorage/engineering
+	name = "engineering circuit board spawner"
+	lootcount = 3
+	loot = list(
+				/obj/item/circuitboard/computer/atmos_alert,
+				/obj/item/circuitboard/computer/stationalert, 
+				/obj/item/circuitboard/computer/powermonitor
+				)
+
+/obj/effect/spawner/lootdrop/techstorage/tcomms
+	name = "tcomms circuit board spawner"
+	lootcount = 9
+	loot = list(
+				/obj/item/circuitboard/computer/message_monitor,
+				/obj/item/circuitboard/machine/telecomms/broadcaster,
+				/obj/item/circuitboard/machine/telecomms/bus,
+				/obj/item/circuitboard/machine/telecomms/server,
+				/obj/item/circuitboard/machine/telecomms/receiver,
+				/obj/item/circuitboard/machine/telecomms/processor,
+				/obj/item/circuitboard/machine/announcement_system,
+				/obj/item/circuitboard/computer/comm_server,
+				/obj/item/circuitboard/computer/comm_monitor
+				)
+
+/obj/effect/spawner/lootdrop/techstorage/medical
+	name = "medical circuit board spawner"
+	lootcount = 8
+	loot = list(
+				/obj/item/circuitboard/computer/cloning,
+				/obj/item/circuitboard/machine/clonepod,
+				/obj/item/circuitboard/machine/chem_dispenser,
+				/obj/item/circuitboard/computer/scan_consolenew,
+				/obj/item/circuitboard/computer/med_data,
+				/obj/item/circuitboard/machine/smoke_machine,
+				/obj/item/circuitboard/machine/chem_master,
+				/obj/item/circuitboard/machine/clonescanner
+				)
+
+/obj/effect/spawner/lootdrop/techstorage/AI
+	name = "secure AI circuit board spawner"
+	lootcount = 3
+	loot = list(
+				/obj/item/circuitboard/computer/aiupload,
+				/obj/item/circuitboard/computer/borgupload,
+				/obj/item/circuitboard/aicore
+				)
+	
+/obj/effect/spawner/lootdrop/techstorage/command
+	name = "secure command circuit board spawner"
+	lootcount = 3
+	loot = list(
+				/obj/item/circuitboard/computer/crew,
+				/obj/item/circuitboard/computer/communications,
+				/obj/item/circuitboard/computer/card
+				)
+				
+/obj/effect/spawner/lootdrop/techstorage/RnD_secure
+	name = "secure RnD circuit board spawner"
+	lootcount = 3
+	loot = list(
+				/obj/item/circuitboard/computer/mecha_control,
+				/obj/item/circuitboard/computer/apc_control,
+				/obj/item/circuitboard/computer/robotics
+				)

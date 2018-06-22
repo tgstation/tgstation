@@ -11,6 +11,13 @@
   <ui-section label='Port'>
     <span class='{{data.portConnected ? "good" : "average"}}'>{{data.portConnected ? "Connected" : "Not Connected"}}</span>
   </ui-section>
+  {{#if data.isPrototype}} 
+  <ui-section label='Access'>
+      <ui-button icon='{{data.restricted ? "lock" : "unlock"}}'
+      style='{{"caution"}}'
+      action='restricted'>{{data.restricted ? "Restricted to Engineering" : "Public"}}</ui-button>
+  </ui-section>
+  {{/if}}
 </ui-display>
 <ui-display title='Valve'>
   <ui-section label='Release Pressure'>
@@ -30,8 +37,32 @@
     <ui-button icon='{{data.valveOpen ? "unlock" : "lock"}}'
       style='{{data.valveOpen ? data.hasHoldingTank ? "caution" : "danger" : null}}'
       action='valve'>{{data.valveOpen ? "Open" : "Closed"}}</ui-button>
-  </ui-section>
 </ui-display>
+{{#if data.isPrototype}}  
+<ui-display title='Valve Toggle Timer'>
+  {{^data.timing}}
+    <ui-section label='Adjust Timer'>
+      <ui-button icon='refresh' state='{{data.timer_is_not_default ? null : "disabled"}}'
+        action='timer' params='{"change": "reset"}'>Reset</ui-button>
+      <ui-button icon='minus' state='{{data.timer_is_not_min ? null : "disabled"}}'
+        action='timer' params='{"change": "decrease"}'>Decrease</ui-button>
+      <ui-button icon='pencil' state='{{"disabled"}}'
+	action='timer' params='{"change": "input"}'>Set</ui-button>
+      <ui-button icon='plus' state='{{data.timer_is_not_max ? null : "disabled"}}'
+        action='timer' params='{"change": "increase"}'>Increase</ui-button>
+    </ui-section>
+  {{/data.timing}}
+  <ui-section label='Timer'>
+     <ui-button icon='clock-o' style='{{data.timing ? "danger" : "caution"}}'
+      action='toggle_timer'> {{data.timing ? "On" : "Off"}}
+ </ui-button>
+ <ui-section label='Time until Valve Toggle'>
+ <span>{{data.timing ? data.time_left : data.timer_set}}</span>
+ </ui-section>
+ </ui-display>
+{{/if}}
+
+
 <ui-display title='Holding Tank' button>
   {{#partial button}}
     {{#if data.hasHoldingTank}}

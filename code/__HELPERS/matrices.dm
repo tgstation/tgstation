@@ -24,7 +24,6 @@
 		//doesn't have an object argument because this is "Stacking" with the animate call above
 		//3 billion% intentional
 
-
 //Dumps the matrix data in format a-f
 /matrix/proc/tolist()
 	. = list()

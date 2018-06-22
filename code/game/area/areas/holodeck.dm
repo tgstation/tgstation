@@ -2,7 +2,8 @@
 	name = "Holodeck"
 	icon_state = "Holodeck"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
-	flags = 0
+	flags_1 = 0
+	hidden = TRUE
 
 	var/obj/machinery/computer/holodeck/linked
 	var/restricted = 0 // if true, program goes on emag list
@@ -20,28 +21,28 @@
 	if(!linked)
 		return 0
 	var/area/A = get_area(linked)
-	ASSERT(!istype(A,/area/holodeck))
+	ASSERT(!istype(A, /area/holodeck))
 	return A.powered(chan)
 
 /area/holodeck/usage(var/chan)
 	if(!linked)
 		return 0
 	var/area/A = get_area(linked)
-	ASSERT(!istype(A,/area/holodeck))
+	ASSERT(!istype(A, /area/holodeck))
 	return A.usage(chan)
 
 /area/holodeck/addStaticPower(value, powerchannel)
 	if(!linked)
 		return
 	var/area/A = get_area(linked)
-	ASSERT(!istype(A,/area/holodeck))
+	ASSERT(!istype(A, /area/holodeck))
 	return A.addStaticPower(value,powerchannel)
 
 /area/holodeck/use_power(var/amount, var/chan)
 	if(!linked)
 		return 0
 	var/area/A = get_area(linked)
-	ASSERT(!istype(A,/area/holodeck))
+	ASSERT(!istype(A, /area/holodeck))
 	return A.use_power(amount,chan)
 
 
@@ -83,8 +84,8 @@
 /area/holodeck/rec_center/firingrange
 	name = "Holodeck - Firing Range"
 
-/area/holodeck/rec_center/rollercoaster
-	name = "Holodeck - Roller Coaster"
+/area/holodeck/rec_center/school
+	name = "Holodeck - Anime School"
 
 /area/holodeck/rec_center/chapelcourt
 	name = "Holodeck - Chapel Courtroom"
@@ -95,14 +96,13 @@
 /area/holodeck/rec_center/kobayashi
 	name = "Holodeck - Kobayashi Maru"
 
+/area/holodeck/rec_center/winterwonderland
+	name = "Holodeck - Winter Wonderland"
+
 // Bad programs
 
 /area/holodeck/rec_center/burn
 	name = "Holodeck - Atmospheric Burn Test"
-	restricted = 1
-
-/area/holodeck/rec_center/winterwonderland
-	name = "Holodeck - Winter Wonderland"
 	restricted = 1
 
 /area/holodeck/rec_center/wildlife

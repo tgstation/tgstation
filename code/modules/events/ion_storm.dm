@@ -1,6 +1,5 @@
 #define ION_RANDOM 0
 #define ION_ANNOUNCE 1
-#define ION_FILE "ion_laws.json"
 /datum/round_event_control/ion_storm
 	name = "Ion Storm"
 	typepath = /datum/round_event/ion_storm
@@ -25,23 +24,23 @@
 	shuffleLawsChance = 0
 	botEmagChance = 0
 
-/datum/round_event/ion_storm/announce()
-	if(announceEvent == ION_ANNOUNCE || (announceEvent == ION_RANDOM && prob(ionAnnounceChance)))
-		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", 'sound/AI/ionstorm.ogg')
+/datum/round_event/ion_storm/announce(fake)
+	if(announceEvent == ION_ANNOUNCE || (announceEvent == ION_RANDOM && prob(ionAnnounceChance)) || fake)
+		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", 'sound/ai/ionstorm.ogg')
 
 
 /datum/round_event/ion_storm/start()
 	//AI laws
-	for(var/mob/living/silicon/ai/M in living_mob_list)
+	for(var/mob/living/silicon/ai/M in GLOB.alive_mob_list)
 		M.laws_sanity_check()
-		if(M.stat != 2 && M.see_in_dark != 0)
+		if(M.stat != DEAD && M.see_in_dark != 0)
 			if(prob(replaceLawsetChance))
 				M.laws.pick_weighted_lawset()
 
 			if(prob(removeRandomLawChance))
 				M.remove_law(rand(1, M.laws.get_law_amount(list(LAW_INHERENT, LAW_SUPPLIED))))
 
-			var/message = generate_ion_law(ionMessage)
+			var/message = ionMessage || generate_ion_law()
 			if(message)
 				if(prob(removeDontImproveChance))
 					M.replace_random_law(message, list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
@@ -55,14 +54,11 @@
 			M.post_lawchange()
 
 	if(botEmagChance)
-		for(var/mob/living/simple_animal/bot/bot in living_mob_list)
+		for(var/mob/living/simple_animal/bot/bot in GLOB.alive_mob_list)
 			if(prob(botEmagChance))
 				bot.emag_act()
 
-/proc/generate_ion_law(ionMessage)
-	if(ionMessage)
-		return ionMessage
-
+/proc/generate_ion_law()
 	//Threats are generally bad things, silly or otherwise. Plural.
 	var/ionthreats = pick_list(ION_FILE, "ionthreats")
 	//Objects are anything that can be found on the station or elsewhere, plural.

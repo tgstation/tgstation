@@ -9,30 +9,27 @@
 	throw_speed = 3
 	throw_range = 7
 	max_amount = 60
-	origin_tech = "materials=1"
 	var/turf_type = null
 	var/mineralType = null
+	novariants = TRUE
 
-/obj/item/stack/tile/New(loc, amount)
-	..()
+/obj/item/stack/tile/Initialize(mapload, amount)
+	. = ..()
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3) //randomize a little
 
 /obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 
-	if (istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
-
+	if (istype(W, /obj/item/weldingtool))
 		if(get_amount() < 4)
 			to_chat(user, "<span class='warning'>You need at least four tiles to do this!</span>")
 			return
 
-		if(WT.is_hot() && !mineralType)
+		if(!mineralType)
 			to_chat(user, "<span class='warning'>You can not reform this!</span>")
 			return
 
-		if(WT.remove_fuel(0,user))
-
+		if(W.use_tool(src, user, 0, volume=40))
 			if(mineralType == "plasma")
 				atmos_spawn_air("plasma=5;TEMP=1000")
 				user.visible_message("<span class='warning'>[user.name] sets the plasma tiles on fire!</span>", \
@@ -73,7 +70,6 @@
 	singular_name = "grass floor tile"
 	desc = "A patch of grass like they use on space golf courses."
 	icon_state = "tile_grass"
-	origin_tech = "biotech=1"
 	turf_type = /turf/open/floor/grass
 	resistance_flags = FLAMMABLE
 
@@ -84,10 +80,16 @@
 	singular_name = "wood floor tile"
 	desc = "An easy to fit wood floor tile."
 	icon_state = "tile-wood"
-	origin_tech = "biotech=1"
 	turf_type = /turf/open/floor/wood
 	resistance_flags = FLAMMABLE
 
+//Basalt
+/obj/item/stack/tile/basalt
+	name = "basalt tile"
+	singular_name = "basalt floor tile"
+	desc = "Artificially made ashy soil themed on a hostile environment."
+	icon_state = "tile_basalt"
+	turf_type = /turf/open/floor/grass/fakebasalt
 
 //Carpets
 /obj/item/stack/tile/carpet
@@ -98,6 +100,13 @@
 	turf_type = /turf/open/floor/carpet
 	resistance_flags = FLAMMABLE
 
+/obj/item/stack/tile/carpet/black
+	name = "black carpet"
+	icon_state = "tile-carpet-black"
+	turf_type = /turf/open/floor/carpet/black
+
+/obj/item/stack/tile/carpet/black/fifty
+	amount = 50
 
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"
@@ -130,7 +139,6 @@
 	desc = "A high-traction floor tile. It feels rubbery in your hand."
 	icon_state = "tile_noslip"
 	turf_type = /turf/open/floor/noslip
-	origin_tech = "materials=3"
 	merge_type = /obj/item/stack/tile/noslip
 
 /obj/item/stack/tile/noslip/thirty
@@ -195,10 +203,10 @@
 	force = 6
 	materials = list(MAT_METAL=500)
 	throwforce = 10
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	turf_type = /turf/open/floor/plasteel
 	mineralType = "metal"
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/stack/tile/plasteel/cyborg

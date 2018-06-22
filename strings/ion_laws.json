@@ -343,7 +343,7 @@
         "CLOWNS",
         "MIMES",
         "CHAPLAINS",
-        "LIBRARIANS",
+        "CURATORS",
         "HEADS OF CREW",
         "CAPTAINS AND HEADS",
         "CYBORGS",
@@ -827,6 +827,7 @@
     ],
     "ionspecies": [
         "HUMAN BEINGS",
+        "CAT PEOPLE",
         "MONKEYS",
         "POD PEOPLE",
         "CYBORGS",

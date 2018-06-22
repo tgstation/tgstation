@@ -1,5 +1,4 @@
 /datum/objective/devil
-	dangerrating = 5
 
 /datum/objective/devil/soulquantity
 	explanation_text = "You shouldn't see this text.  Error:DEVIL1"
@@ -14,7 +13,9 @@
 
 /datum/objective/devil/soulquantity/check_completion()
 	var/count = 0
-	for(var/S in owner.devilinfo.soulsOwned)
+	var/datum/antagonist/devil/devilDatum = owner.has_antag_datum(/datum/antagonist/devil)
+	var/list/souls = devilDatum.soulsOwned
+	for(var/S in souls) //Just a sanity check.
 		var/datum/mind/L = S
 		if(L.soulOwner == owner)
 			count++
@@ -43,8 +44,6 @@
 			contractName = "of revival"
 		if(CONTRACT_KNOWLEDGE)
 			contractName = "for knowledge"
-		//if(CONTRACT_UNWILLING)	//Makes round unfun.
-		//	contractName = "against their will"
 	update_explanation_text()
 
 /datum/objective/devil/soulquality/update_explanation_text()
@@ -52,9 +51,11 @@
 
 /datum/objective/devil/soulquality/check_completion()
 	var/count = 0
-	for(var/S in owner.devilinfo.soulsOwned)
+	var/datum/antagonist/devil/devilDatum = owner.has_antag_datum(/datum/antagonist/devil)
+	var/list/souls = devilDatum.soulsOwned
+	for(var/S in souls)
 		var/datum/mind/L = S
-		if(L.soulOwner != L && L.damnation_type == contractType)
+		if(!L.owns_soul() && L.damnation_type == contractType)
 			count++
 	return count>=target_amount
 
@@ -68,8 +69,8 @@
 	explanation_text = "Ensure at least [target_amount] mortals are sintouched."
 
 /datum/objective/devil/sintouch/check_completion()
-	return target_amount>=ticker.mode.sintouched.len
-
+	var/list/touched = get_antag_minds(/datum/antagonist/sintouched)
+	return touched.len >= target_amount
 
 
 /datum/objective/devil/buy_target
@@ -91,16 +92,21 @@
 /datum/objective/devil/outsell/New()
 
 /datum/objective/devil/outsell/update_explanation_text()
-	explanation_text = "Purchase and retain control over more souls than [target.devilinfo.truename], known to mortals as [target.name], the [target.assigned_role]."
+	var/datum/antagonist/devil/opponent = target.has_antag_datum(/datum/antagonist/devil)
+	explanation_text = "Purchase and retain control over more souls than [opponent.truename], known to mortals as [target.name], the [target.assigned_role]."
 
 /datum/objective/devil/outsell/check_completion()
 	var/selfcount = 0
-	for(var/S in owner.devilinfo.soulsOwned)
+	var/datum/antagonist/devil/devilDatum = owner.has_antag_datum(/datum/antagonist/devil)
+	var/list/souls = devilDatum.soulsOwned
+	for(var/S in souls)
 		var/datum/mind/L = S
 		if(L.soulOwner == owner)
 			selfcount++
 	var/targetcount = 0
-	for(var/S in target.devilinfo.soulsOwned)
+	devilDatum = target.has_antag_datum(/datum/antagonist/devil)
+	souls = devilDatum.soulsOwned
+	for(var/S in souls)
 		var/datum/mind/L = S
 		if(L.soulOwner == target)
 			targetcount++

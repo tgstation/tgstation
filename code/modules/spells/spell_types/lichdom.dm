@@ -17,6 +17,7 @@
 	cooldown_min = 10
 	include_user = 1
 
+	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "skeleton"
 
 /obj/effect/proc_holder/spell/targeted/lichdom/cast(list/targets,mob/user = usr)
@@ -30,10 +31,10 @@
 
 		var/obj/item/marked_item
 
-		for(var/obj/item in hand_items)
+		for(var/obj/item/item in hand_items)
 			// I ensouled the nuke disk once. But it's probably a really
 			// mean tactic, so probably should discourage it.
-			if(ABSTRACT in item.flags || NODROP in item.flags || HAS_SECONDARY_FLAG(item, STATIONLOVING))
+			if((item.item_flags & ABSTRACT) || (item.item_flags & NODROP) || SEND_SIGNAL(item, COMSIG_ITEM_IMBUE_SOUL, user))
 				continue
 			marked_item = item
 			to_chat(M, "<span class='warning'>You begin to focus your very being into [item]...</span>")
@@ -62,9 +63,9 @@
 			H.dropItemToGround(H.w_uniform)
 			H.dropItemToGround(H.wear_suit)
 			H.dropItemToGround(H.head)
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(H), slot_wear_suit)
-			H.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(H), slot_head)
-			H.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(H), slot_w_uniform)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(H), SLOT_WEAR_SUIT)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(H), SLOT_HEAD)
+			H.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(H), SLOT_W_UNIFORM)
 
 		// you only get one phylactery.
 		M.mind.RemoveSpell(src)
@@ -85,23 +86,23 @@
 	var/static/active_phylacteries = 0
 
 /obj/item/phylactery/Initialize(mapload, datum/mind/newmind)
-	..()
+	. = ..()
 	mind = newmind
 	name = "phylactery of [mind.name]"
 
 	active_phylacteries++
-	poi_list |= src
+	GLOB.poi_list |= src
 	START_PROCESSING(SSobj, src)
 	set_light(lon_range)
-	if(initial(ticker.mode.round_ends_with_antag_death))
-		ticker.mode.round_ends_with_antag_death = FALSE
+	if(initial(SSticker.mode.round_ends_with_antag_death))
+		SSticker.mode.round_ends_with_antag_death = FALSE
 
 /obj/item/phylactery/Destroy(force=FALSE)
 	STOP_PROCESSING(SSobj, src)
 	active_phylacteries--
-	poi_list -= src
+	GLOB.poi_list -= src
 	if(!active_phylacteries)
-		ticker.mode.round_ends_with_antag_death = initial(ticker.mode.round_ends_with_antag_death)
+		SSticker.mode.round_ends_with_antag_death = initial(SSticker.mode.round_ends_with_antag_death)
 	. = ..()
 
 /obj/item/phylactery/process()
@@ -123,18 +124,18 @@
 	var/mob/old_body = mind.current
 	var/mob/living/carbon/human/lich = new(item_turf)
 
-	lich.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(lich), slot_shoes)
-	lich.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(lich), slot_w_uniform)
-	lich.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(lich), slot_wear_suit)
-	lich.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(lich), slot_head)
+	lich.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(lich), SLOT_SHOES)
+	lich.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(lich), SLOT_W_UNIFORM)
+	lich.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(lich), SLOT_WEAR_SUIT)
+	lich.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(lich), SLOT_HEAD)
 
 	lich.real_name = mind.name
 	mind.transfer_to(lich)
 	mind.grab_ghost(force=TRUE)
-	lich.hardset_dna(null,null,lich.real_name,null,/datum/species/skeleton)
-	to_chat(lich, "<span class='warning'>Your bones clatter and shutter as you are pulled back into this world!</span>")
+	lich.hardset_dna(null,null,lich.real_name,null, new /datum/species/skeleton)
+	to_chat(lich, "<span class='warning'>Your bones clatter and shudder as you are pulled back into this world!</span>")
 	var/turf/body_turf = get_turf(old_body)
-	lich.Weaken(10+10*resurrections)
+	lich.Knockdown(200 + 200*resurrections)
 	resurrections++
 	if(old_body && old_body.loc)
 		if(iscarbon(old_body))

@@ -3,9 +3,9 @@
 	weight = 0 //Badmin exclusive now because once it's expected its not funny
 	typepath = /datum/round_event/wizard/fake_explosion
 	max_occurrences = 1
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/fake_explosion/start()
-	for(var/mob/M in player_list)
-		M << 'sound/machines/Alarm.ogg'
-	addtimer(CALLBACK(ticker, /datum/controller/subsystem/ticker/.proc/station_explosion_cinematic, 1, "fake"), 100) //:o)
+	sound_to_playing_players('sound/machines/alarm.ogg')
+	sleep(100)
+	Cinematic(CINEMATIC_NUKE_FAKE,world)

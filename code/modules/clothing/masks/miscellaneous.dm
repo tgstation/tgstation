@@ -5,8 +5,8 @@
 	item_state = "blindfold"
 	flags_cover = MASKCOVERSMOUTH
 	w_class = WEIGHT_CLASS_SMALL
-	gas_transfer_coefficient = 0.90
-	put_on_delay = 20
+	gas_transfer_coefficient = 0.9
+	equip_delay_other = 20
 
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user)
 	if(iscarbon(user))
@@ -26,9 +26,9 @@
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_inv = HIDEFACE
 	visor_flags_cover = MASKCOVERSMOUTH
-	gas_transfer_coefficient = 0.90
+	gas_transfer_coefficient = 0.9
 	permeability_coefficient = 0.01
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 25, rad = 0, fire = 0, acid = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 25, "rad" = 0, "fire" = 0, "acid" = 0)
 	actions_types = list(/datum/action/item_action/adjust)
 
 /obj/item/clothing/mask/surgical/attack_self(mob/user)
@@ -39,6 +39,28 @@
 	desc = "Warning: moustache is fake."
 	icon_state = "fake-moustache"
 	flags_inv = HIDEFACE
+
+/obj/item/clothing/mask/fakemoustache/italian
+	name = "italian moustache"
+	desc = "Made from authentic Italian moustache hairs. Gives the wearer an irresistable urge to gesticulate wildly."
+
+/obj/item/clothing/mask/fakemoustache/italian/speechModification(M)
+	if(copytext(M, 1, 2) != "*")
+		M = " [M]"
+		var/list/italian_words = strings("italian_replacement.json", "italian")
+
+		for(var/key in italian_words)
+			var/value = italian_words[key]
+			if(islist(value))
+				value = pick(value)
+
+			M = replacetextEx(M, " [uppertext(key)]", " [uppertext(value)]")
+			M = replacetextEx(M, " [capitalize(key)]", " [capitalize(value)]")
+			M = replacetextEx(M, " [key]", " [value]")
+
+		if(prob(3))
+			M += pick(" Ravioli, ravioli, give me the formuoli!"," Mamma-mia!"," Mamma-mia! That's a spicy meat-ball!", " La la la la la funiculi funicula!")
+	return trim(M)
 
 /obj/item/clothing/mask/joy
 	name = "joy mask"
@@ -77,6 +99,41 @@
 	if(voicechange)
 		message = pick("Oink!","Squeeeeeeee!","Oink Oink!")
 	return message
+
+///frog mask - reeee!!
+/obj/item/clothing/mask/frog
+	name = "frog mask"
+	desc = "An ancient mask carved in the shape of a frog.<br> Sanity is like gravity, all it needs is a push."
+	icon_state = "frog"
+	item_state = "frog"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_SMALL
+	var/voicechange = TRUE
+
+/obj/item/clothing/mask/frog/attack_self(mob/user)
+	voicechange = !voicechange
+	to_chat(user, "<span class='notice'>You turn the voice box [voicechange ? "on" : "off"]!</span>")
+
+/obj/item/clothing/mask/frog/speechModification(message) //whenever you speak
+	if(voicechange)
+		if(prob(5)) //sometimes, the angry spirit finds others words to speak.
+			message = pick("HUUUUU!!","SMOOOOOKIN'!!","Hello my baby, hello my honey, hello my rag-time gal.", "Feels bad, man.", "GIT DIS GUY OFF ME!!" ,"SOMEBODY STOP ME!!", "NORMIES, GET OUT!!")
+		else
+			message = pick("Ree!!", "Reee!!","REEE!!","REEEEE!!") //but its usually just angry gibberish,
+	return message
+
+/obj/item/clothing/mask/frog/cursed
+	item_flags = NODROP //reee!!
+
+/obj/item/clothing/mask/frog/cursed/attack_self(mob/user)
+	return //no voicebox to alter.
+
+/obj/item/clothing/mask/frog/cursed/equipped(mob/user, slot)
+	var/mob/living/carbon/C = user
+	if(C.wear_mask == src)
+		to_chat(user, "<span class='warning'><B>[src] was cursed! Ree!!</B></span>")
+	return ..()
+
 
 /obj/item/clothing/mask/cowmask
 	name = "Cowface"
@@ -165,8 +222,8 @@
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
 	visor_flags_cover = MASKCOVERSMOUTH
-	slot_flags = SLOT_MASK
-	adjusted_flags = SLOT_HEAD
+	slot_flags = ITEM_SLOT_MASK
+	adjusted_flags = ITEM_SLOT_HEAD
 	icon_state = "bandbotany"
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
@@ -201,3 +258,17 @@
 	name = "skull bandana"
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
 	icon_state = "bandskull"
+
+/obj/item/clothing/mask/mummy
+	name = "mummy mask"
+	desc = "Ancient bandages."
+	icon_state = "mummy_mask"
+	item_state = "mummy_mask"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+
+/obj/item/clothing/mask/scarecrow
+	name = "sack mask"
+	desc = "A burlap sack with eyeholes."
+	icon_state = "scarecrow_sack"
+	item_state = "scarecrow_sack"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR

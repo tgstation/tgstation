@@ -43,21 +43,46 @@
 
 	var/outfit = null
 
+	var/exp_requirements = 0
+
+	var/exp_type = ""
+	var/exp_type_department = ""
+
+	//The amount of good boy points playing this role will earn you towards a higher chance to roll antagonist next round
+	//can be overriden by antag_rep.txt config
+	var/antag_rep = 10
+
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
-/datum/job/proc/after_spawn(mob/living/H, mob/M)
+/datum/job/proc/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
 	//do actions on H but send messages to M as the key may not have been transferred_yet
-
 
 /datum/job/proc/announce(mob/living/carbon/human/H)
 	if(head_announce)
 		announce_head(H, head_announce)
 
+/datum/job/proc/override_latejoin_spawn(mob/living/carbon/human/H)		//Return TRUE to force latejoining to not automatically place the person in latejoin shuttle/whatever.
+	return FALSE
+
+//Used for a special check of whether to allow a client to latejoin as this job.
+/datum/job/proc/special_check_latejoin(client/C)
+	return TRUE
+
+/datum/job/proc/GetAntagRep()
+	. = CONFIG_GET(keyed_number_list/antag_rep)[lowertext(title)]
+	if(. == null)
+		return antag_rep
 
 //Don't override this unless the job transforms into a non-human (Silicons do this for example)
-/datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE)
+/datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE)
 	if(!H)
-		return 0
+		return FALSE
+
+	if(CONFIG_GET(flag/enforce_human_authority) && (title in GLOB.command_positions))
+		if(H.dna.species.id != "human")
+			H.set_species(/datum/species/human)
+			H.rename_self("human", H.client)
+		purrbation_remove(H, silent=TRUE)
 
 	//Equip the rest of the gear
 	H.dna.species.before_equip_job(src, H, visualsOnly)
@@ -70,42 +95,36 @@
 	if(!visualsOnly && announce)
 		announce(H)
 
-	if(config.enforce_human_authority && (title in command_positions))
-		H.dna.features["tail_human"] = "None"
-		H.dna.features["ears"] = "None"
-		H.regenerate_icons()
-
 /datum/job/proc/get_access()
 	if(!config)	//Needed for robots.
 		return src.minimal_access.Copy()
 
 	. = list()
 
-	if(config.jobs_have_minimal_access)
+	if(CONFIG_GET(flag/jobs_have_minimal_access))
 		. = src.minimal_access.Copy()
 	else
 		. = src.access.Copy()
 
-	if(config.jobs_have_maint_access & EVERYONE_HAS_MAINT_ACCESS) //Config has global maint access set
-		. |= list(access_maint_tunnels)
+	if(CONFIG_GET(flag/everyone_has_maint_access)) //Config has global maint access set
+		. |= list(ACCESS_MAINT_TUNNELS)
 
 /datum/job/proc/announce_head(var/mob/living/carbon/human/H, var/channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
-	spawn(4) //to allow some initialization
-		if(H && announcement_systems.len)
-			var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
-			announcer.announce("NEWHEAD", H.real_name, H.job, channels)
+	if(H && GLOB.announcement_systems.len)
+		//timer because these should come after the captain announcement
+		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/addtimer, CALLBACK(pick(GLOB.announcement_systems), /obj/machinery/announcement_system/proc/announce, "NEWHEAD", H.real_name, H.job, channels), 1))
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/C)
 	if(available_in_days(C) == 0)
-		return 1	//Available in 0 days = available right now = player is old enough to play.
-	return 0
+		return TRUE	//Available in 0 days = available right now = player is old enough to play.
+	return FALSE
 
 
 /datum/job/proc/available_in_days(client/C)
 	if(!C)
 		return 0
-	if(!config.use_age_restriction_for_jobs)
+	if(!CONFIG_GET(flag/use_age_restriction_for_jobs))
 		return 0
 	if(!isnum(C.player_age))
 		return 0 //This is only a number if the db connection is established, otherwise it is text: "Requires database", meaning these restrictions cannot be enforced
@@ -115,7 +134,7 @@
 	return max(0, minimal_player_age - C.player_age)
 
 /datum/job/proc/config_check()
-	return 1
+	return TRUE
 
 /datum/job/proc/map_check()
 	return TRUE
@@ -127,39 +146,39 @@
 	var/jobtype = null
 
 	uniform = /obj/item/clothing/under/color/grey
-	id = /obj/item/weapon/card/id
-	ears = /obj/item/device/radio/headset
-	belt = /obj/item/device/pda
-	back = /obj/item/weapon/storage/backpack
+	id = /obj/item/card/id
+	ears = /obj/item/radio/headset
+	belt = /obj/item/pda
+	back = /obj/item/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
 
-	var/list/implants = null
+	var/backpack = /obj/item/storage/backpack
+	var/satchel  = /obj/item/storage/backpack/satchel
+	var/duffelbag = /obj/item/storage/backpack/duffelbag
+	var/box = /obj/item/storage/box/survival
 
-	var/backpack = /obj/item/weapon/storage/backpack
-	var/satchel  = /obj/item/weapon/storage/backpack/satchel
-	var/dufflebag = /obj/item/weapon/storage/backpack/dufflebag
-	var/box = /obj/item/weapon/storage/box/survival
-
-	var/pda_slot = slot_belt
+	var/pda_slot = SLOT_BELT
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	switch(H.backbag)
 		if(GBACKPACK)
-			back = /obj/item/weapon/storage/backpack //Grey backpack
+			back = /obj/item/storage/backpack //Grey backpack
 		if(GSATCHEL)
-			back = /obj/item/weapon/storage/backpack/satchel //Grey satchel
-		if(GDUFFLEBAG)
-			back = /obj/item/weapon/storage/backpack/dufflebag //Grey Dufflebag
+			back = /obj/item/storage/backpack/satchel //Grey satchel
+		if(GDUFFELBAG)
+			back = /obj/item/storage/backpack/duffelbag //Grey Duffel bag
 		if(LSATCHEL)
-			back = /obj/item/weapon/storage/backpack/satchel/leather //Leather Satchel
+			back = /obj/item/storage/backpack/satchel/leather //Leather Satchel
 		if(DSATCHEL)
 			back = satchel //Department satchel
-		if(DDUFFLEBAG)
-			back = dufflebag //Department dufflebag
+		if(DDUFFELBAG)
+			back = duffelbag //Department duffel bag
 		else
 			back = backpack //Department backpack
 
 	if(box)
+		if(!backpack_contents)
+			backpack_contents = list()
 		backpack_contents.Insert(1, box) // Box always takes a first slot in backpack
 		backpack_contents[box] = 1
 
@@ -171,21 +190,25 @@
 	if(!J)
 		J = SSjob.GetJob(H.job)
 
-	var/obj/item/weapon/card/id/C = H.wear_id
+	var/obj/item/card/id/C = H.wear_id
 	if(istype(C))
 		C.access = J.get_access()
+		shuffle_inplace(C.access) // Shuffle access list to make NTNet passkeys less predictable
 		C.registered_name = H.real_name
 		C.assignment = J.title
 		C.update_label()
 		H.sec_hud_set_ID()
 
-	var/obj/item/device/pda/PDA = H.get_item_by_slot(pda_slot)
+	var/obj/item/pda/PDA = H.get_item_by_slot(pda_slot)
 	if(istype(PDA))
 		PDA.owner = H.real_name
 		PDA.ownjob = J.title
 		PDA.update_label()
 
-	if(implants)
-		for(var/implant_type in implants)
-			var/obj/item/weapon/implant/I = new implant_type(H)
-			I.implant(H, null, silent=TRUE)
+/datum/outfit/job/get_chameleon_disguise_info()
+	var/list/types = ..()
+	types -= /obj/item/storage/backpack //otherwise this will override the actual backpacks
+	types += backpack
+	types += satchel
+	types += duffelbag
+	return types

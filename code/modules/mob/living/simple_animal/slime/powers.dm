@@ -7,6 +7,7 @@
 
 /datum/action/innate/slime
 	check_flags = AB_CHECK_CONSCIOUS
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 	var/needs_growth = NO_GROWTH_NEEDED
 
@@ -85,7 +86,7 @@
 	else
 		to_chat(src, "<span class='warning'><i>I have failed to latch onto the subject!</i></span>")
 
-/mob/living/simple_animal/slime/proc/Feedstop(silent=0, living=1)
+/mob/living/simple_animal/slime/proc/Feedstop(silent = FALSE, living=1)
 	if(buckled)
 		if(!living)
 			to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
@@ -165,13 +166,11 @@
 					step_away(M,src)
 				M.Friends = Friends.Copy()
 				babies += M
-				M.mutation_chance = Clamp(mutation_chance+(rand(5,-5)),0,100)
-				feedback_add_details("slime_babies_born","slimebirth_[replacetext(M.colour," ","_")]")
+				M.mutation_chance = CLAMP(mutation_chance+(rand(5,-5)),0,100)
+				SSblackbox.record_feedback("tally", "slime_babies_born", 1, M.colour)
 
 			var/mob/living/simple_animal/slime/new_slime = pick(babies)
 			new_slime.a_intent = INTENT_HARM
-			new_slime.languages_spoken = languages_spoken
-			new_slime.languages_understood = languages_understood
 			if(src.mind)
 				src.mind.transfer_to(new_slime)
 			else

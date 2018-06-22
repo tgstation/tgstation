@@ -4,7 +4,7 @@
   * Short-circuits the default state to only check physical distance.
  **/
 
-/var/global/datum/ui_state/physical/physical_state = new()
+GLOBAL_DATUM_INIT(physical_state, /datum/ui_state/physical, new)
 
 /datum/ui_state/physical/can_use_topic(src_object, mob/user)
 	. = user.shared_ui_interaction(src_object)

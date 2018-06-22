@@ -1,23 +1,25 @@
-/obj/item/device/flashlight
+/obj/item/flashlight
 	name = "flashlight"
 	desc = "A hand-held emergency light."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	item_state = "flashlight"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	flags_1 = CONDUCT_1
+	slot_flags = ITEM_SLOT_BELT
 	materials = list(MAT_METAL=50, MAT_GLASS=20)
 	actions_types = list(/datum/action/item_action/toggle_light)
-	var/on = 0
+	var/on = FALSE
 	var/brightness_on = 4 //range of light when on
-	var/flashlight_power //strength of the light when on. optional
+	var/flashlight_power = 1 //strength of the light when on
 
-/obj/item/device/flashlight/Initialize()
-	..()
+/obj/item/flashlight/Initialize()
+	. = ..()
 	update_brightness()
 
-/obj/item/device/flashlight/proc/update_brightness(mob/user = null)
+/obj/item/flashlight/proc/update_brightness(mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		if(flashlight_power)
@@ -28,7 +30,7 @@
 		icon_state = initial(icon_state)
 		set_light(0)
 
-/obj/item/device/flashlight/attack_self(mob/user)
+/obj/item/flashlight/attack_self(mob/user)
 	on = !on
 	update_brightness(user)
 	for(var/X in actions)
@@ -36,108 +38,196 @@
 		A.UpdateButtonIcon()
 	return 1
 
+/obj/item/flashlight/suicide_act(mob/living/carbon/human/user)
+	if (user.eye_blind)
+		user.visible_message("<span class='suicide'>[user]  is putting [src] close to [user.p_their()] eyes and turning it on ... but [user.p_theyre()] blind!</span>")
+		return SHAME
+	user.visible_message("<span class='suicide'>[user] is putting [src] close to [user.p_their()] eyes and turning it on! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (FIRELOSS)
 
-/obj/item/device/flashlight/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
+/obj/item/flashlight/attack(mob/living/carbon/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if(on && user.zone_selected == "eyes")
+	if(istype(M) && on && user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH))
 
-		if((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
+		if((user.has_trait(TRAIT_CLUMSY) || user.has_trait(TRAIT_DUMB)) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
 
 		if(!user.IsAdvancedToolUser())
 			to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 			return
 
-		var/mob/living/carbon/human/H = M	//mob has protective eyewear
-		if(ishuman(M) && ((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES)))
-			to_chat(user, "<span class='notice'>You're going to need to remove that [(H.head && H.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>")
+		if(!M.get_bodypart(BODY_ZONE_HEAD))
+			to_chat(user, "<span class='warning'>[M] doesn't have a head!</span>")
 			return
 
-		if(M == user)	//they're using it on themselves
-			if(M.flash_act(visual = 1))
-				M.visible_message("[M] directs [src] to [M.p_their()] eyes.", "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
-			else
-				M.visible_message("[M] directs [src] to [M.p_their()] eyes.", "<span class='notice'>You wave the light in front of your eyes.</span>")
-		else
-			user.visible_message("<span class='warning'>[user] directs [src] to [M]'s eyes.</span>", \
-								 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
-			var/mob/living/carbon/C = M
-			if(istype(C))
-				if(C.stat == DEAD || (C.disabilities & BLIND)) //mob is dead or fully blind
-					to_chat(user, "<span class='warning'>[C] pupils don't react to the light!</span>")
-				else if(C.dna.check_mutation(XRAY))	//mob has X-RAY vision
-					to_chat(user, "<span class='danger'>[C] pupils give an eerie glow!</span>")
-				else //they're okay!
-					if(C.flash_act(visual = 1))
-						to_chat(user, "<span class='notice'>[C]'s pupils narrow.</span>")
+		if(flashlight_power < 1)
+			to_chat(user, "<span class='warning'>\The [src] isn't bright enough to see anything!</span> ")
+			return
+
+		switch(user.zone_selected)
+			if(BODY_ZONE_PRECISE_EYES)
+				if((M.head && M.head.flags_cover & HEADCOVERSEYES) || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSEYES) || (M.glasses && M.glasses.flags_cover & GLASSESCOVERSEYES))
+					to_chat(user, "<span class='notice'>You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>")
+					return
+
+				var/obj/item/organ/eyes/E = M.getorganslot(ORGAN_SLOT_EYES)
+				if(!E)
+					to_chat(user, "<span class='danger'>[M] doesn't have any eyes!</span>")
+					return
+
+				if(M == user)	//they're using it on themselves
+					if(M.flash_act(visual = 1))
+						M.visible_message("[M] directs [src] to [M.p_their()] eyes.", "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
+					else
+						M.visible_message("[M] directs [src] to [M.p_their()] eyes.", "<span class='notice'>You wave the light in front of your eyes.</span>")
+				else
+					user.visible_message("<span class='warning'>[user] directs [src] to [M]'s eyes.</span>", \
+										 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
+					if(M.stat == DEAD || (M.has_trait(TRAIT_BLIND)) || !M.flash_act(visual = 1)) //mob is dead or fully blind
+						to_chat(user, "<span class='warning'>[M]'s pupils don't react to the light!</span>")
+					else if(M.dna && M.dna.check_mutation(XRAY))	//mob has X-RAY vision
+						to_chat(user, "<span class='danger'>[M]'s pupils give an eerie glow!</span>")
+					else //they're okay!
+						to_chat(user, "<span class='notice'>[M]'s pupils narrow.</span>")
+
+			if(BODY_ZONE_PRECISE_MOUTH)
+
+				if((M.head && M.head.flags_cover & HEADCOVERSMOUTH) || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
+					to_chat(user, "<span class='notice'>You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSMOUTH) ? "helmet" : "mask"] first.</span>")
+					return
+
+				var/their = M.p_their()
+
+				var/list/mouth_organs = new
+				for(var/obj/item/organ/O in M.internal_organs)
+					if(O.zone == BODY_ZONE_PRECISE_MOUTH)
+						mouth_organs.Add(O)
+				var/organ_list = ""
+				var/organ_count = LAZYLEN(mouth_organs)
+				if(organ_count)
+					for(var/I in 1 to organ_count)
+						if(I > 1)
+							if(I == mouth_organs.len)
+								organ_list += ", and "
+							else
+								organ_list += ", "
+						var/obj/item/organ/O = mouth_organs[I]
+						organ_list += (O.gender == "plural" ? O.name : "\an [O.name]")
+
+				var/pill_count = 0
+				for(var/datum/action/item_action/hands_free/activate_pill/AP in M.actions)
+					pill_count++
+
+				if(M == user)
+					var/can_use_mirror = FALSE
+					if(isturf(user.loc))
+						var/obj/structure/mirror/mirror = locate(/obj/structure/mirror, user.loc)
+						if(mirror)
+							switch(user.dir)
+								if(NORTH)
+									can_use_mirror = mirror.pixel_y > 0
+								if(SOUTH)
+									can_use_mirror = mirror.pixel_y < 0
+								if(EAST)
+									can_use_mirror = mirror.pixel_x > 0
+								if(WEST)
+									can_use_mirror = mirror.pixel_x < 0
+
+					M.visible_message("[M] directs [src] to [their] mouth.", \
+					"<span class='notice'>You point [src] into your mouth.</span>")
+					if(!can_use_mirror)
+						to_chat(user, "<span class='notice'>You can't see anything without a mirror.</span>")
+						return
+					if(organ_count)
+						to_chat(user, "<span class='notice'>Inside your mouth [organ_count > 1 ? "are" : "is"] [organ_list].</span>")
+					else
+						to_chat(user, "<span class='notice'>There's nothing inside your mouth.</span>")
+					if(pill_count)
+						to_chat(user, "<span class='notice'>You have [pill_count] implanted pill[pill_count > 1 ? "s" : ""].</span>")
+
+				else
+					user.visible_message("<span class='notice'>[user] directs [src] to [M]'s mouth.</span>",\
+										 "<span class='notice'>You direct [src] to [M]'s mouth.</span>")
+					if(organ_count)
+						to_chat(user, "<span class='notice'>Inside [their] mouth [organ_count > 1 ? "are" : "is"] [organ_list].</span>")
+					else
+						to_chat(user, "<span class='notice'>[M] doesn't have any organs in [their] mouth.</span>")
+					if(pill_count)
+						to_chat(user, "<span class='notice'>[M] has [pill_count] pill[pill_count > 1 ? "s" : ""] implanted in [their] teeth.</span>")
+
 	else
 		return ..()
 
-/obj/item/device/flashlight/pen
+/obj/item/flashlight/pen
 	name = "penlight"
 	desc = "A pen-sized light, used by medical staff. It can also be used to create a hologram to alert people of incoming medical assistance."
 	icon_state = "penlight"
 	item_state = ""
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	brightness_on = 2
 	var/holo_cooldown = 0
 
-/obj/item/device/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
 	if(!proximity_flag)
 		if(holo_cooldown > world.time)
 			to_chat(user, "<span class='warning'>[src] is not ready yet!</span>")
 			return
 		var/T = get_turf(target)
 		if(locate(/mob/living) in T)
-			new /obj/effect/overlay/temp/medical_holosign(T,user) //produce a holographic glow
+			new /obj/effect/temp_visual/medical_holosign(T,user) //produce a holographic glow
 			holo_cooldown = world.time + 100
 			return
 	..()
 
-/obj/effect/overlay/temp/medical_holosign
+/obj/effect/temp_visual/medical_holosign
 	name = "medical holosign"
 	desc = "A small holographic glow that indicates a medic is coming to treat a patient."
 	icon_state = "medi_holo"
 	duration = 30
 
-/obj/effect/overlay/temp/medical_holosign/New(loc, creator)
-	..()
+/obj/effect/temp_visual/medical_holosign/Initialize(mapload, creator)
+	. = ..()
 	playsound(loc, 'sound/machines/ping.ogg', 50, 0) //make some noise!
 	if(creator)
 		visible_message("<span class='danger'>[creator] created a medical hologram!</span>")
 
 
-/obj/item/device/flashlight/seclite
+/obj/item/flashlight/seclite
 	name = "seclite"
 	desc = "A robust flashlight used by security."
 	icon_state = "seclite"
 	item_state = "seclite"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	force = 9 // Not as good as a stun baton.
 	brightness_on = 5 // A little better than the standard flashlight.
 	hitsound = 'sound/weapons/genhit1.ogg'
 
 // the desk lamps are a bit special
-/obj/item/device/flashlight/lamp
+/obj/item/flashlight/lamp
 	name = "desk lamp"
 	desc = "A desk lamp with an adjustable mount."
 	icon_state = "lamp"
 	item_state = "lamp"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	force = 10
 	brightness_on = 5
 	w_class = WEIGHT_CLASS_BULKY
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	materials = list()
-	on = 1
+	on = TRUE
 
 
 // green-shaded desk lamp
-/obj/item/device/flashlight/lamp/green
+/obj/item/flashlight/lamp/green
 	desc = "A classic green-shaded desk lamp."
 	icon_state = "lampgreen"
 	item_state = "lampgreen"
 
 
 
-/obj/item/device/flashlight/lamp/verb/toggle_light()
+/obj/item/flashlight/lamp/verb/toggle_light()
 	set name = "Toggle light"
 	set category = "Object"
 	set src in oview(1)
@@ -146,7 +236,7 @@
 		attack_self(usr)
 
 //Bananalamp
-/obj/item/device/flashlight/lamp/bananalamp
+/obj/item/flashlight/lamp/bananalamp
 	name = "banana lamp"
 	desc = "Only a clown would think to make a ghetto banana-shaped lamp. Even has a goofy pullstring."
 	icon_state = "bananalamp"
@@ -154,7 +244,7 @@
 
 // FLARES
 
-/obj/item/device/flashlight/flare
+/obj/item/flashlight/flare
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
 	w_class = WEIGHT_CLASS_SMALL
@@ -167,12 +257,13 @@
 	var/produce_heat = 1500
 	heat = 1000
 	light_color = LIGHT_COLOR_FLARE
+	grind_results = list("sulfur" = 15)
 
-/obj/item/device/flashlight/flare/New()
+/obj/item/flashlight/flare/New()
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
 	..()
 
-/obj/item/device/flashlight/flare/process()
+/obj/item/flashlight/flare/process()
 	open_flame(heat)
 	fuel = max(fuel - 1, 0)
 	if(!fuel || !on)
@@ -181,15 +272,15 @@
 			icon_state = "[initial(icon_state)]-empty"
 		STOP_PROCESSING(SSobj, src)
 
-/obj/item/device/flashlight/flare/ignition_effect(atom/A, mob/user)
+/obj/item/flashlight/flare/ignition_effect(atom/A, mob/user)
 	if(fuel && on)
 		. = "<span class='notice'>[user] lights [A] with [src] like a real \
 			badass.</span>"
 	else
 		. = ""
 
-/obj/item/device/flashlight/flare/proc/turn_off()
-	on = 0
+/obj/item/flashlight/flare/proc/turn_off()
+	on = FALSE
 	force = initial(src.force)
 	damtype = initial(src.damtype)
 	if(ismob(loc))
@@ -198,14 +289,14 @@
 	else
 		update_brightness(null)
 
-/obj/item/device/flashlight/flare/update_brightness(mob/user = null)
+/obj/item/flashlight/flare/update_brightness(mob/user = null)
 	..()
 	if(on)
 		item_state = "[initial(item_state)]-on"
 	else
 		item_state = "[initial(item_state)]"
 
-/obj/item/device/flashlight/flare/attack_self(mob/user)
+/obj/item/flashlight/flare/attack_self(mob/user)
 
 	// Usual checks
 	if(!fuel)
@@ -223,28 +314,33 @@
 		damtype = "fire"
 		START_PROCESSING(SSobj, src)
 
-/obj/item/device/flashlight/flare/is_hot()
+/obj/item/flashlight/flare/is_hot()
 	return on * heat
 
-/obj/item/device/flashlight/flare/torch
+/obj/item/flashlight/flare/torch
 	name = "torch"
 	desc = "A torch fashioned from some leaves and a log."
 	w_class = WEIGHT_CLASS_BULKY
 	brightness_on = 4
 	icon_state = "torch"
 	item_state = "torch"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	light_color = LIGHT_COLOR_ORANGE
 	on_damage = 10
 	slot_flags = null
 
-/obj/item/device/flashlight/lantern
+/obj/item/flashlight/lantern
 	name = "lantern"
 	icon_state = "lantern"
 	item_state = "lantern"
+	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	desc = "A mining lantern."
 	brightness_on = 6			// luminosity when on
 
 
-/obj/item/device/flashlight/slime
+/obj/item/flashlight/slime
 	gender = PLURAL
 	name = "glowing slime extract"
 	desc = "Extract from a yellow slime. It emits a strong light when squeezed."
@@ -252,26 +348,25 @@
 	icon_state = "slime"
 	item_state = "slime"
 	w_class = WEIGHT_CLASS_SMALL
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	materials = list()
 	brightness_on = 6 //luminosity when on
 
-/obj/item/device/flashlight/emp
-	origin_tech = "magnets=3;syndicate=1"
+/obj/item/flashlight/emp
 	var/emp_max_charges = 4
 	var/emp_cur_charges = 4
 	var/charge_tick = 0
 
 
-/obj/item/device/flashlight/emp/New()
+/obj/item/flashlight/emp/New()
 	..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/device/flashlight/emp/Destroy()
+/obj/item/flashlight/emp/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/item/device/flashlight/emp/process()
+/obj/item/flashlight/emp/process()
 	charge_tick++
 	if(charge_tick < 10)
 		return FALSE
@@ -279,12 +374,12 @@
 	emp_cur_charges = min(emp_cur_charges+1, emp_max_charges)
 	return TRUE
 
-/obj/item/device/flashlight/emp/attack(mob/living/M, mob/living/user)
-	if(on && user.zone_selected == "eyes") // call original attack proc only if aiming at the eyes
+/obj/item/flashlight/emp/attack(mob/living/M, mob/living/user)
+	if(on && user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH)) // call original attack when examining organs
 		..()
 	return
 
-/obj/item/device/flashlight/emp/afterattack(atom/movable/A, mob/user, proximity)
+/obj/item/flashlight/emp/afterattack(atom/movable/A, mob/user, proximity)
 	if(!proximity)
 		return
 
@@ -299,60 +394,67 @@
 		else
 			A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].")
 		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.")
-		A.emp_act(1)
+		A.emp_act(EMP_HEAVY)
 	else
 		to_chat(user, "<span class='warning'>\The [src] needs time to recharge!</span>")
 	return
 
+/obj/item/flashlight/emp/debug //for testing emp_act()
+	name = "debug EMP flashlight"
+	emp_max_charges = 100
+	emp_cur_charges = 100
+
 // Glowsticks, in the uncomfortable range of similar to flares,
 // but not similar enough to make it worth a refactor
-/obj/item/device/flashlight/glowstick
-	name = "green glowstick"
+/obj/item/flashlight/glowstick
+	name = "glowstick"
 	desc = "A military-grade glowstick."
 	w_class = WEIGHT_CLASS_SMALL
 	brightness_on = 4
 	color = LIGHT_COLOR_GREEN
 	icon_state = "glowstick"
 	item_state = "glowstick"
+	grind_results = list("phenol" = 15, "hydrogen" = 10, "oxygen" = 5) //Meth-in-a-stick
 	var/fuel = 0
 
-/obj/item/device/flashlight/glowstick/Initialize()
+/obj/item/flashlight/glowstick/Initialize()
 	fuel = rand(1600, 2000)
 	light_color = color
-	..()
+	. = ..()
 
-/obj/item/device/flashlight/glowstick/Destroy()
+/obj/item/flashlight/glowstick/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/item/device/flashlight/glowstick/process()
+/obj/item/flashlight/glowstick/process()
 	fuel = max(fuel - 1, 0)
 	if(!fuel)
 		turn_off()
 		STOP_PROCESSING(SSobj, src)
 		update_icon()
 
-/obj/item/device/flashlight/glowstick/proc/turn_off()
-	on = 0
+/obj/item/flashlight/glowstick/proc/turn_off()
+	on = FALSE
 	update_icon()
 
-/obj/item/device/flashlight/glowstick/update_icon()
+/obj/item/flashlight/glowstick/update_icon()
 	item_state = "glowstick"
-	overlays.Cut()
+	cut_overlays()
 	if(!fuel)
 		icon_state = "glowstick-empty"
 		cut_overlays()
 		set_light(0)
 	else if(on)
-		var/image/I = image(icon,"glowstick-glow",color)
-		add_overlay(I)
+		var/mutable_appearance/glowstick_overlay = mutable_appearance(icon, "glowstick-glow")
+		glowstick_overlay.color = color
+		add_overlay(glowstick_overlay)
 		item_state = "glowstick-on"
 		set_light(brightness_on)
 	else
 		icon_state = "glowstick"
 		cut_overlays()
 
-/obj/item/device/flashlight/glowstick/attack_self(mob/user)
+/obj/item/flashlight/glowstick/attack_self(mob/user)
 	if(!fuel)
 		to_chat(user, "<span class='notice'>[src] is spent.</span>")
 		return
@@ -363,49 +465,76 @@
 	. = ..()
 	if(.)
 		user.visible_message("<span class='notice'>[user] cracks and shakes [src].</span>", "<span class='notice'>You crack and shake [src], turning it on!</span>")
+		activate()
+
+/obj/item/flashlight/glowstick/proc/activate()
+	if(!on)
+		on = TRUE
 		START_PROCESSING(SSobj, src)
 
-/obj/item/device/flashlight/glowstick/red
+/obj/item/flashlight/glowstick/red
 	name = "red glowstick"
 	color = LIGHT_COLOR_RED
 
-/obj/item/device/flashlight/glowstick/blue
+/obj/item/flashlight/glowstick/blue
 	name = "blue glowstick"
 	color = LIGHT_COLOR_BLUE
 
-/obj/item/device/flashlight/glowstick/cyan
+/obj/item/flashlight/glowstick/cyan
 	name = "cyan glowstick"
 	color = LIGHT_COLOR_CYAN
 
-/obj/item/device/flashlight/glowstick/orange
+/obj/item/flashlight/glowstick/orange
 	name = "orange glowstick"
 	color = LIGHT_COLOR_ORANGE
 
-/obj/item/device/flashlight/glowstick/yellow
+/obj/item/flashlight/glowstick/yellow
 	name = "yellow glowstick"
 	color = LIGHT_COLOR_YELLOW
 
-/obj/item/device/flashlight/glowstick/pink
+/obj/item/flashlight/glowstick/pink
 	name = "pink glowstick"
 	color = LIGHT_COLOR_PINK
 
-/obj/item/device/flashlight/glowstick/random
+/obj/item/flashlight/glowstick/random
 	name = "random colored glowstick"
+	icon_state = "random_glowstick"
+	color = null
 
-/obj/item/device/flashlight/glowstick/random/Initialize()
-	var/list/glowtypes = typesof(/obj/item/device/flashlight/glowstick)
-	glowtypes -= /obj/item/device/flashlight/glowstick/random
+/obj/item/flashlight/glowstick/random/Initialize()
+	..()
+	var/T = pick(typesof(/obj/item/flashlight/glowstick) - /obj/item/flashlight/glowstick/random)
+	new T(loc)
+	return INITIALIZE_HINT_QDEL
 
-	var/obj/item/device/flashlight/glowstick/glowtype = pick(glowtypes)
+/obj/item/flashlight/spotlight //invisible lighting source
+	name = "disco light"
+	desc = "Groovy..."
+	icon_state = null
+	light_color = null
+	brightness_on = 0
+	light_range = 0
+	light_power = 10
+	alpha = 0
+	layer = 0
+	on = TRUE
+	anchored = TRUE
+	var/range = null
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-	name = initial(glowtype.name)
-	color = initial(glowtype.color)
-	. = ..()
-
-/obj/item/device/flashlight/flashdark
+/obj/item/flashlight/flashdark
 	name = "flashdark"
 	desc = "A strange device manufactured with mysterious elements that somehow emits darkness. Or maybe it just sucks in light? Nobody knows for sure."
 	icon_state = "flashdark"
 	item_state = "flashdark"
 	brightness_on = 2.5
 	flashlight_power = -3
+
+/obj/item/flashlight/eyelight
+	name = "eyelight"
+	desc = "This shouldn't exist outside of someone's head, how are you seeing this?"
+	brightness_on = 15
+	flashlight_power = 1
+	flags_1 = CONDUCT_1 
+	item_flags = DROPDEL
+	actions_types = list()

@@ -1,3 +1,5 @@
+<link rel='ractive' href='./scrubbing_types.ract' name='filters'>
+
 <ui-notice>
   <span>The regulator {{data.holding ? "is" : "is not"}} connected to a tank.</span>
 </ui-notice>
@@ -34,4 +36,9 @@
 			<span class='average'>No Holding Tank</span>
 		</ui-section>
 	{{/if}}
+</ui-display>
+<ui-display title='Filters'>
+  {{#with data}}
+    <filters/>
+  {{/with}}
 </ui-display>

@@ -2,13 +2,14 @@
 
 /mob/living/simple_animal/hostile/statue
 	name = "statue" // matches the name of the statue with the flesh-to-stone spell
-	desc = "An incredibly lifelike marble carving. Its eyes seems to follow you.." // same as an ordinary statue with the added "eye following you" description
+	desc = "An incredibly lifelike marble carving. Its eyes seem to follow you.." // same as an ordinary statue with the added "eye following you" description
 	icon = 'icons/obj/statue.dmi'
 	icon_state = "human_male"
 	icon_living = "human_male"
 	icon_dead = "human_male"
 	gender = NEUTER
 	a_intent = INTENT_HARM
+	mob_biotypes = list(MOB_INORGANIC, MOB_HUMANOID)
 
 	response_help = "touches"
 	response_disarm = "pushes"
@@ -35,31 +36,28 @@
 	hud_possible = list(ANTAG_HUD)
 
 	see_in_dark = 13
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	vision_range = 12
 	aggro_vision_range = 12
-	idle_vision_range = 12
 
 	search_objects = 1 // So that it can see through walls
 
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
-	anchored = 1
+	anchored = TRUE
 
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null
-	gold_core_spawnable = 1
+
 
 
 // No movement while seen code.
 
 /mob/living/simple_animal/hostile/statue/Initialize(mapload, var/mob/living/creator)
-	..()
+	. = ..()
 	// Give spells
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(src)
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/blindness(src)
 	mob_spell_list += new /obj/effect/proc_holder/spell/targeted/night_vision(src)
-
-	// Give nightvision
-	see_invisible = SEE_INVISIBLE_NOLIGHTING
 
 	// Set creator
 	if(creator)
@@ -93,11 +91,11 @@
 	if(can_be_seen(get_turf(loc)))
 		if(client)
 			to_chat(src, "<span class='warning'>You cannot attack, there are eyes on you!</span>")
-			return
+		return FALSE
 	else
-		..()
+		return ..()
 
-/mob/living/simple_animal/hostile/statue/DestroySurroundings()
+/mob/living/simple_animal/hostile/statue/DestroyPathToTarget()
 	if(!can_be_seen(get_turf(loc)))
 		..()
 
@@ -187,7 +185,7 @@
 	range = 10
 
 /obj/effect/proc_holder/spell/aoe_turf/blindness/cast(list/targets,mob/user = usr)
-	for(var/mob/living/L in living_mob_list)
+	for(var/mob/living/L in GLOB.alive_mob_list)
 		var/turf/T = get_turf(L.loc)
 		if(T && T in targets)
 			L.blind_eyes(4)
@@ -205,15 +203,22 @@
 	range = -1
 	include_user = 1
 
-/obj/effect/proc_holder/spell/targeted/night_vision/cast(list/targets,mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/night_vision/cast(list/targets, mob/user = usr)
 	for(var/mob/living/target in targets)
-		if(!iscarbon(target)) //Carbons should be toggling their vision via organ, this spell is used as a power for simple mobs
-			if(target.see_invisible == SEE_INVISIBLE_LIVING)
-				target.see_invisible = SEE_INVISIBLE_NOLIGHTING
-				name = "Toggle Nightvision \[ON]"
-			else
-				target.see_invisible = SEE_INVISIBLE_LIVING
+		switch(target.lighting_alpha)
+			if (LIGHTING_PLANE_ALPHA_VISIBLE)
+				target.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+				name = "Toggle Nightvision \[More]"
+			if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
+				target.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+				name = "Toggle Nightvision \[Full]"
+			if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
+				target.lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 				name = "Toggle Nightvision \[OFF]"
+			else
+				target.lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+				name = "Toggle Nightvision \[ON]"
+		target.update_sight()
 
 /mob/living/simple_animal/hostile/statue/sentience_act()
 	faction -= "neutral"

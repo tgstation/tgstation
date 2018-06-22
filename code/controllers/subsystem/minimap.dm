@@ -1,20 +1,19 @@
-var/datum/controller/subsystem/minimap/SSminimap
-
-/datum/controller/subsystem/minimap
+SUBSYSTEM_DEF(minimap)
 	name = "Minimap"
-	init_order = -2
+	init_order = INIT_ORDER_MINIMAP
 	flags = SS_NO_FIRE
 	var/const/MINIMAP_SIZE = 2048
 	var/const/TILE_SIZE = 8
 
-	var/list/z_levels = list(ZLEVEL_STATION)
-
-/datum/controller/subsystem/minimap/New()
-	NEW_SS_GLOBAL(SSminimap)
+	var/list/z_levels
 
 /datum/controller/subsystem/minimap/Initialize(timeofday)
-	var/hash = md5(SSmapping.config.GetFullMapPath())
-	if(config.generate_minimaps)
+	z_levels = SSmapping.levels_by_trait(ZTRAIT_STATION)
+	var/list/hashlist = list()
+	for (var/file in SSmapping.config.GetFullMapPaths())
+		hashlist += md5(file2text(file))
+	var/hash = hashlist.Join("\n")
+	if(CONFIG_GET(flag/generate_minimaps))
 		if(hash == trim(file2text(hash_path())))
 			for(var/z in z_levels)	//We have these files cached, let's register them
 				register_asset("minimap_[z].png", fcopy_rsc(map_path(z)))
@@ -66,7 +65,7 @@ var/datum/controller/subsystem/minimap/SSminimap
 	for(var/z in z_levels)
 		send_asset(client, "minimap_[z].png")
 
-/datum/controller/subsystem/minimap/proc/generate(z = 1, x1 = 1, y1 = 1, x2 = world.maxx, y2 = world.maxy)
+/datum/controller/subsystem/minimap/proc/generate(z, x1 = 1, y1 = 1, x2 = world.maxx, y2 = world.maxy)
 	// Load the background.
 	var/icon/minimap = new /icon('icons/minimap.dmi')
 	// Scale it up to our target size.

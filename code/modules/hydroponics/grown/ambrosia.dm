@@ -1,12 +1,14 @@
 // Ambrosia - base type
-/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia
+/obj/item/reagent_containers/food/snacks/grown/ambrosia
 	seed = /obj/item/seeds/ambrosia
 	name = "ambrosia branch"
 	desc = "This is a plant."
 	icon_state = "ambrosiavulgaris"
-	slot_flags = SLOT_HEAD
+	slot_flags = ITEM_SLOT_HEAD
 	filling_color = "#008000"
 	bitesize_mod = 2
+	foodtype = VEGETABLES
+	tastes = list("ambrosia" = 1)
 
 // Ambrosia Vulgaris
 /obj/item/seeds/ambrosia
@@ -15,7 +17,7 @@
 	icon_state = "seed-ambrosiavulgaris"
 	species = "ambrosiavulgaris"
 	plantname = "Ambrosia Vulgaris"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris
+	product = /obj/item/reagent_containers/food/snacks/grown/ambrosia/vulgaris
 	lifespan = 60
 	endurance = 25
 	yield = 6
@@ -25,11 +27,10 @@
 	mutatelist = list(/obj/item/seeds/ambrosia/deus)
 	reagents_add = list("space_drugs" = 0.15, "bicaridine" = 0.1, "kelotane" = 0.1, "vitamin" = 0.04, "nutriment" = 0.05, "toxin" = 0.1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris
+/obj/item/reagent_containers/food/snacks/grown/ambrosia/vulgaris
 	seed = /obj/item/seeds/ambrosia
 	name = "ambrosia vulgaris branch"
 	desc = "This is a plant containing various healing chemicals."
-	origin_tech = "biotech=2"
 
 // Ambrosia Deus
 /obj/item/seeds/ambrosia/deus
@@ -38,18 +39,17 @@
 	icon_state = "seed-ambrosiadeus"
 	species = "ambrosiadeus"
 	plantname = "Ambrosia Deus"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus
+	product = /obj/item/reagent_containers/food/snacks/grown/ambrosia/deus
 	mutatelist = list(/obj/item/seeds/ambrosia/gaia)
 	reagents_add = list("omnizine" = 0.15, "synaptizine" = 0.15, "space_drugs" = 0.1, "vitamin" = 0.04, "nutriment" = 0.05)
 	rarity = 40
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus
+/obj/item/reagent_containers/food/snacks/grown/ambrosia/deus
 	seed = /obj/item/seeds/ambrosia/deus
 	name = "ambrosia deus branch"
 	desc = "Eating this makes you feel immortal!"
 	icon_state = "ambrosiadeus"
 	filling_color = "#008B8B"
-	origin_tech = "biotech=4;materials=3"
 
 //Ambrosia Gaia
 /obj/item/seeds/ambrosia/gaia
@@ -58,19 +58,18 @@
 	icon_state = "seed-ambrosia_gaia"
 	species = "ambrosia_gaia"
 	plantname = "Ambrosia Gaia"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/gaia
-	mutatelist = list()
+	product = /obj/item/reagent_containers/food/snacks/grown/ambrosia/gaia
+	mutatelist = list(/obj/item/seeds/ambrosia/deus)
 	reagents_add = list("earthsblood" = 0.05, "nutriment" = 0.06, "vitamin" = 0.05)
 	rarity = 30 //These are some pretty good plants right here
 	genes = list()
 	weed_rate = 4
 	weed_chance = 100
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/gaia
+/obj/item/reagent_containers/food/snacks/grown/ambrosia/gaia
 	name = "ambrosia gaia branch"
 	desc = "Eating this <i>makes</i> you immortal."
 	icon_state = "ambrosia_gaia"
 	filling_color = rgb(255, 175, 0)
-	origin_tech = "biotech=6;materials=5"
 	light_range = 3
 	seed = /obj/item/seeds/ambrosia/gaia

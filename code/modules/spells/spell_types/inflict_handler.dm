@@ -1,10 +1,10 @@
 /obj/effect/proc_holder/spell/targeted/inflict_handler
 	name = "Inflict Handler"
-	desc = "This spell blinds and/or destroys/damages/heals and/or weakens/stuns the target."
+	desc = "This spell blinds and/or destroys/damages/heals and/or knockdowns/stuns the target."
 
-	var/amt_weakened = 0
-	var/amt_paralysis = 0
-	var/amt_stunned = 0
+	var/amt_knockdown = 0
+	var/amt_unconscious = 0
+	var/amt_stun = 0
 
 	//set to negatives for healing
 	var/amt_dam_fire = 0
@@ -19,10 +19,14 @@
 
 	var/summon_type = null //this will put an obj at the target's location
 
-/obj/effect/proc_holder/spell/targeted/inflict_handler/cast(list/targets,mob/user = usr)
+	var/check_anti_magic = TRUE
+	var/check_holy = FALSE
 
+/obj/effect/proc_holder/spell/targeted/inflict_handler/cast(list/targets,mob/user = usr)
 	for(var/mob/living/target in targets)
 		playsound(target,sound, 50,1)
+		if(target.anti_magic_check(check_anti_magic, check_holy))
+			return
 		switch(destroys)
 			if("gib")
 				target.gib()
@@ -37,9 +41,9 @@
 		target.adjustToxLoss(amt_dam_tox)
 		target.adjustOxyLoss(amt_dam_oxy)
 		//disabling
-		target.Weaken(amt_weakened)
-		target.Paralyse(amt_paralysis)
-		target.Stun(amt_stunned)
+		target.Knockdown(amt_knockdown)
+		target.Unconscious(amt_unconscious)
+		target.Stun(amt_stun)
 
 		target.blind_eyes(amt_eye_blind)
 		target.blur_eyes(amt_eye_blurry)

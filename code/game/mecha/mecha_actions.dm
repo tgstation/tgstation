@@ -21,11 +21,13 @@
 
 
 /datum/action/innate/mecha
-	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUN | AB_CHECK_CONSCIOUS
+	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
 	var/obj/mecha/chassis
 
 /datum/action/innate/mecha/Grant(mob/living/L, obj/mecha/M)
-	chassis = M
+	if(M)
+		chassis = M
 	..()
 
 /datum/action/innate/mecha/Destroy()
@@ -136,7 +138,7 @@
 	chassis.toggle_strafe()
 
 /obj/mecha/AltClick(mob/living/user)
-	if(user == occupant)
+	if((user == occupant) && user.canUseTopic(src))
 		toggle_strafe()
 
 /obj/mecha/proc/toggle_strafe()
@@ -201,13 +203,13 @@
 		chassis.leg_overload_mode = 1
 		chassis.bumpsmash = 1
 		chassis.step_in = min(1, round(chassis.step_in/2))
-		chassis.step_energy_drain = chassis.step_energy_drain*chassis.leg_overload_coeff
+		chassis.step_energy_drain = max(chassis.overload_step_energy_drain_min,chassis.step_energy_drain*chassis.leg_overload_coeff)
 		chassis.occupant_message("<span class='danger'>You enable leg actuators overload.</span>")
 	else
 		chassis.leg_overload_mode = 0
 		chassis.bumpsmash = 0
 		chassis.step_in = initial(chassis.step_in)
-		chassis.step_energy_drain = initial(chassis.step_energy_drain)
+		chassis.step_energy_drain = chassis.normal_step_energy_drain
 		chassis.occupant_message("<span class='notice'>You disable leg actuators overload.</span>")
 	UpdateButtonIcon()
 
@@ -240,9 +242,9 @@
 		chassis.occupant_message("<font color='[chassis.zoom_mode?"blue":"red"]'>Zoom mode [chassis.zoom_mode?"en":"dis"]abled.</font>")
 		if(chassis.zoom_mode)
 			owner.client.change_view(12)
-			owner << sound('sound/mecha/imag_enh.ogg',volume=50)
+			SEND_SOUND(owner, sound('sound/mecha/imag_enh.ogg',volume=50))
 		else
-			owner.client.change_view(world.view) //world.view - default mob view size
+			owner.client.change_view(CONFIG_GET(string/default_view)) //world.view - default mob view size
 		UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_switch_damtype

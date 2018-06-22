@@ -12,10 +12,12 @@
 	var/destination_x
 	var/destination_y
 
-	var/global/datum/gas_mixture/space/space_gas = new
+	var/global/datum/gas_mixture/immutable/space/space_gas = new
 	plane = PLANE_SPACE
+	layer = SPACE_LAYER
 	light_power = 0.25
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	bullet_bounce_sound = null
 
 
 /turf/open/space/basic/New()	//Do not convert to Initialize
@@ -26,9 +28,9 @@
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
 
-	if(initialized)
+	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	initialized = TRUE
+	flags_1 |= INITIALIZED_1
 
 	var/area/A = loc
 	if(!IS_DYNAMIC_LIGHTING(src) && IS_DYNAMIC_LIGHTING(A))
@@ -43,6 +45,11 @@
 	if (opacity)
 		has_opaque_atom = TRUE
 
+	ComponentInitialize()
+
+	return INITIALIZE_HINT_NORMAL
+
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /turf/open/space/attack_ghost(mob/dead/observer/user)
 	if(destination_z)
 		var/turf/T = locate(destination_x, destination_y, destination_z)
@@ -64,7 +71,7 @@
 	return
 
 /turf/open/space/proc/update_starlight()
-	if(config.starlight)
+	if(CONFIG_GET(flag/starlight))
 		for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 			if(isspaceturf(t))
 				//let's NOT update this that much pls
@@ -74,13 +81,19 @@
 		set_light(0)
 
 /turf/open/space/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
-/turf/open/space/attackby(obj/item/C, mob/user, params, area/area_restriction)
+/turf/open/space/proc/CanBuildHere()
+	return TRUE
+
+/turf/open/space/handle_slip()
+	return
+
+/turf/open/space/attackby(obj/item/C, mob/user, params)
 	..()
+	if(!CanBuildHere())
+		return
 	if(istype(C, /obj/item/stack/rods))
-		if(istype(area_restriction) && !istype(get_area(src), area_restriction))
-			return
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		var/obj/structure/lattice/catwalk/W = locate(/obj/structure/lattice/catwalk, src)
@@ -90,14 +103,14 @@
 		if(L)
 			if(R.use(1))
 				to_chat(user, "<span class='notice'>You construct a catwalk.</span>")
-				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+				playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 				new/obj/structure/lattice/catwalk(src)
 			else
 				to_chat(user, "<span class='warning'>You need two rods to build a catwalk!</span>")
 			return
 		if(R.use(1))
 			to_chat(user, "<span class='notice'>You construct a lattice.</span>")
-			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+			playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 			ReplaceWithLattice()
 		else
 			to_chat(user, "<span class='warning'>You need one rod to build a lattice.</span>")
@@ -108,9 +121,9 @@
 			var/obj/item/stack/tile/plasteel/S = C
 			if(S.use(1))
 				qdel(L)
-				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+				playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You build a floor.</span>")
-				ChangeTurf(/turf/open/floor/plating)
+				PlaceOnTop(/turf/open/floor/plating)
 			else
 				to_chat(user, "<span class='warning'>You need one floor tile to build a floor!</span>")
 		else
@@ -121,59 +134,38 @@
 	if ((!(A) || src != A.loc))
 		return
 
-	if(destination_z)
-		A.x = destination_x
-		A.y = destination_y
-		A.z = destination_z
+	if(destination_z && destination_x && destination_y)
+		var/tx = destination_x
+		var/ty = destination_y
+		var/turf/DT = locate(tx, ty, destination_z)
+		var/itercount = 0
+		while(DT.density || istype(DT.loc,/area/shuttle)) // Extend towards the center of the map, trying to look for a better place to arrive
+			if (itercount++ >= 100)
+				log_game("SPACE Z-TRANSIT ERROR: Could not not find a safe place to land [A] within 100 iterations.")
+				break
+			if (tx < 128)
+				tx++
+			else
+				tx--
+			if (ty < 128)
+				ty++
+			else
+				ty--
+			DT = locate(tx, ty, destination_z)
 
-		if(isliving(A))
-			var/mob/living/L = A
-			if(L.pulling)
-				var/turf/T = get_step(L.loc,turn(A.dir, 180))
-				L.pulling.loc = T
+		var/atom/movable/AM = A.pulling
+		A.forceMove(DT)
+		if(AM)
+			var/turf/T = get_step(A.loc,turn(A.dir, 180))
+			AM.forceMove(T)
+			A.start_pulling(AM)
 
 		//now we're on the new z_level, proceed the space drifting
 		stoplag()//Let a diagonal move finish, if necessary
 		A.newtonian_move(A.inertia_dir)
 
-/turf/open/space/proc/Sandbox_Spacemove(atom/movable/A)
-	var/cur_x
-	var/cur_y
-	var/next_x = src.x
-	var/next_y = src.y
-	var/target_z
-	var/list/y_arr
-	var/list/cur_pos = src.get_global_map_pos()
-	if(!cur_pos)
-		return
-	cur_x = cur_pos["x"]
-	cur_y = cur_pos["y"]
 
-	if(src.x <= 1)
-		next_x = (--cur_x||global_map.len)
-		y_arr = global_map[next_x]
-		target_z = y_arr[cur_y]
-		next_x = world.maxx - 2
-	else if (src.x >= world.maxx)
-		next_x = (++cur_x > global_map.len ? 1 : cur_x)
-		y_arr = global_map[next_x]
-		target_z = y_arr[cur_y]
-		next_x = 3
-	else if (src.y <= 1)
-		y_arr = global_map[cur_x]
-		next_y = (--cur_y||y_arr.len)
-		target_z = y_arr[next_y]
-		next_y = world.maxy - 2
-	else if (src.y >= world.maxy)
-		y_arr = global_map[cur_x]
-		next_y = (++cur_y > y_arr.len ? 1 : cur_y)
-		target_z = y_arr[next_y]
-		next_y = 3
-
-	var/turf/T = locate(next_x, next_y, target_z)
-	A.Move(T)
-
-/turf/open/space/handle_slip()
+/turf/open/space/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
 
 /turf/open/space/singularity_act()
@@ -192,17 +184,39 @@
 /turf/open/space/acid_act(acidpwr, acid_volume)
 	return 0
 
+/turf/open/space/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = 'icons/turf/space.dmi'
+	underlay_appearance.icon_state = SPACE_ICON_STATE
+	underlay_appearance.plane = PLANE_SPACE
+	return TRUE
 
-/turf/open/space/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+
+/turf/open/space/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	if(!CanBuildHere())
+		return FALSE
+
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
-			return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 2)
+			var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
+			if(L)
+				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 1)
+			else
+				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
 	return FALSE
 
-/turf/open/space/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+/turf/open/space/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a floor.</span>")
-			ChangeTurf(/turf/open/floor/plating)
+			PlaceOnTop(/turf/open/floor/plating)
 			return TRUE
 	return FALSE
+
+/turf/open/space/ReplaceWithLattice()
+	var/dest_x = destination_x
+	var/dest_y = destination_y
+	var/dest_z = destination_z
+	..()
+	destination_x = dest_x
+	destination_y = dest_y
+	destination_z = dest_z

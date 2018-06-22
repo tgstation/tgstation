@@ -1,4 +1,4 @@
-/datum/hud/monkey/New(mob/living/carbon/monkey/owner, ui_style = 'icons/mob/screen_midnight.dmi')
+/datum/hud/monkey/New(mob/living/carbon/monkey/owner)
 	..()
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
@@ -15,9 +15,8 @@
 	using.screen_loc = ui_movi
 	static_inventory += using
 
-	using = new/obj/screen/wheel/talk
+	using = new/obj/screen/language_menu
 	using.icon = ui_style
-	wheels += using
 	static_inventory += using
 
 	using = new /obj/screen/drop()
@@ -25,7 +24,7 @@
 	using.screen_loc = ui_drop_throw
 	static_inventory += using
 
-	build_hand_slots(ui_style)
+	build_hand_slots()
 
 	using = new /obj/screen/swap_hand()
 	using.icon = ui_style
@@ -45,7 +44,7 @@
 	inv_box.icon_state = "mask"
 //	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_monkey_mask
-	inv_box.slot_id = slot_wear_mask
+	inv_box.slot_id = SLOT_WEAR_MASK
 	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
@@ -54,7 +53,7 @@
 	inv_box.icon_state = "neck"
 //	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_monkey_neck
-	inv_box.slot_id = slot_neck
+	inv_box.slot_id = SLOT_NECK
 	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
@@ -63,16 +62,15 @@
 	inv_box.icon_state = "head"
 //	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_monkey_head
-	inv_box.slot_id = slot_head
+	inv_box.slot_id = SLOT_HEAD
 	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "back"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
-	inv_box.icon_full = "template_small"
-	inv_box.screen_loc = ui_back
-	inv_box.slot_id = slot_back
+	inv_box.screen_loc = ui_monkey_back
+	inv_box.slot_id = SLOT_BACK
 	static_inventory += inv_box
 
 	throw_icon = new /obj/screen/throw_catch()
@@ -124,7 +122,7 @@
 
 	if(hud_shown)
 		if(M.back)
-			M.back.screen_loc = ui_back
+			M.back.screen_loc = ui_monkey_back
 			M.client.screen += M.back
 		if(M.wear_mask)
 			M.wear_mask.screen_loc = ui_monkey_mask
@@ -154,4 +152,4 @@
 
 /mob/living/carbon/monkey/create_mob_hud()
 	if(client && !hud_used)
-		hud_used = new /datum/hud/monkey(src, ui_style2icon(client.prefs.UI_style))
+		hud_used = new /datum/hud/monkey(src)

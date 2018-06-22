@@ -6,7 +6,7 @@
 /datum/round_event/meteor_wave/major_dust
 	wave_name = "space dust"
 
-/datum/round_event/meteor_wave/major_dust/announce()
+/datum/round_event/meteor_wave/major_dust/announce(fake)
 	var/reason = pick(
 		"The station is passing through a debris cloud, expect minor damage \
 		to external fittings and fixtures.",

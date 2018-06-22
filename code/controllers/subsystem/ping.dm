@@ -1,33 +1,33 @@
-#define PING_BUFFER_TIME 25
-
-var/datum/controller/subsystem/ping/SSping
-
-/datum/controller/subsystem/ping
+SUBSYSTEM_DEF(ping)
 	name = "Ping"
-	wait = 6
-	flags = SS_NO_INIT|SS_POST_FIRE_TIMING|SS_FIRE_IN_LOBBY
-	priority = 10
-	var/list/currentrun
+	priority = FIRE_PRIORITY_PING
+	wait = 3 SECONDS
+	flags = SS_NO_INIT
+	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
-/datum/controller/subsystem/ping/New()
-	NEW_SS_GLOBAL(SSping)
+	var/list/currentrun = list()
 
-/datum/controller/subsystem/ping/fire(resumed = FALSE)
+/datum/controller/subsystem/ping/stat_entry()
+	..("P:[GLOB.clients.len]")
+
+
+/datum/controller/subsystem/ping/fire(resumed = 0)
 	if (!resumed)
-		src.currentrun = clients.Copy()
+		src.currentrun = GLOB.clients.Copy()
 
+	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
-	while (length(currentrun))
+
+	while (currentrun.len)
 		var/client/C = currentrun[currentrun.len]
 		currentrun.len--
-		if (!C || world.time - C.connection_time < PING_BUFFER_TIME || C.inactivity >= (wait-1))
+
+		if (!C || !C.chatOutput || !C.chatOutput.loaded)
 			if (MC_TICK_CHECK)
 				return
 			continue
-		winset(C, null, "command=.update_ping+[world.time+world.tick_lag*world.tick_usage/100]")
-		if (MC_TICK_CHECK) //one day, when ss13 has 1000 people per server, you guys are gonna be glad I added this tick check
+
+		// softPang isn't handled anywhere but it'll always reset the opts.lastPang.
+		C.chatOutput.ehjax_send(data = C.is_afk(29) ? "softPang" : "pang")
+		if (MC_TICK_CHECK)
 			return
-
-	currentrun = null
-
-#undef PING_BUFFER_TIME

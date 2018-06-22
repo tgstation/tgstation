@@ -1,20 +1,28 @@
 /obj/item/clothing/under/color
 	desc = "A standard issue colored jumpsuit. Variety is the spice of life!"
 
-/obj/item/clothing/under/color/random/New()
+/obj/item/clothing/under/color/random
+	icon_state = "random_jumpsuit"
+
+/obj/item/clothing/under/color/random/Initialize()
 	..()
-	var/obj/item/clothing/under/color/C = pick(subtypesof(/obj/item/clothing/under/color) - /obj/item/clothing/under/color/random)
-	name = initial(C.name)
-	icon_state = initial(C.icon_state)
-	item_state = initial(C.item_state)
-	item_color = initial(C.item_color)
+	var/obj/item/clothing/under/color/C = pick(subtypesof(/obj/item/clothing/under/color) - /obj/item/clothing/under/color/random - /obj/item/clothing/under/color/grey/glorf - /obj/item/clothing/under/color/black/ghost)
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		H.equip_to_slot_or_del(new C(H), SLOT_W_UNIFORM) //or else you end up with naked assistants running around everywhere...
+	else
+		new C(loc)
+	return INITIALIZE_HINT_QDEL
 
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
 	icon_state = "black"
 	item_state = "bl_suit"
 	item_color = "black"
-	resistance_flags = 0
+	resistance_flags = NONE
+
+/obj/item/clothing/under/color/black/ghost
+	item_flags = NODROP | DROPDEL
 
 /obj/item/clothing/under/color/grey
 	name = "grey jumpsuit"
@@ -27,8 +35,8 @@
 	name = "ancient jumpsuit"
 	desc = "A terribly ragged and frayed grey jumpsuit. It looks like it hasn't been washed in over a decade."
 
-/obj/item/clothing/under/color/grey/glorf/hit_reaction(mob/living/carbon/human/owner)
-	owner.forcesay(hit_appends)
+/obj/item/clothing/under/color/grey/glorf/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	owner.forcesay(GLOB.hit_appends)
 	return 0
 
 /obj/item/clothing/under/color/blue
@@ -123,4 +131,4 @@
 	icon_state = "rainbow"
 	item_state = "rainbow"
 	item_color = "rainbow"
-	can_adjust = 0
+	can_adjust = FALSE
