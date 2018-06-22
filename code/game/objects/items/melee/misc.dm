@@ -88,6 +88,27 @@
 	if(istype(B))
 		playsound(B, 'sound/items/sheath.ogg', 25, 1)
 
+/obj/item/melee/sabre/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is trying to cut off all their limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!</span>")
+	var/list/bodyparts = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	for(var/i = 1 to 4)
+		var/picked = pick(bodyparts)
+		bodyparts.Remove(picked)
+		addtimer(CALLBACK(src, .proc/suicide_dismember, user, picked), 10 * i)
+	addtimer(CALLBACK(src, .proc/manual_suicide, user), 50)
+	return MANUAL_SUICIDE
+
+/obj/item/melee/sabre/proc/suicide_dismember(mob/living/user, zone)
+	var/obj/item/bodypart/affecting = user.get_bodypart(zone)
+	if(affecting && affecting.dismemberable)
+		affecting.dismember(BRUTE)
+	playsound(user, 'sound/weapons/rapierhit.ogg', 25, 1)
+
+/obj/item/melee/sabre/proc/manual_suicide(mob/living/user)
+	playsound(user, 'sound/weapons/rapierhit.ogg', 25, 1)
+	user.adjustBruteLoss(200)
+	user.death(0)
+
 /obj/item/melee/classic_baton
 	name = "police baton"
 	desc = "A wooden truncheon for beating criminal scum."
