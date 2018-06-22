@@ -541,6 +541,19 @@
 	beakers += B1
 	beakers += B2
 
+/obj/item/grenade/chem_grenade/mechfire/Initialize()
+	. = ..()
+	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
+
+
+	B1.reagents.add_reagent("clf3", 50)
+
+	B2.reagents.add_reagent("clf3", 50)
+
+	beakers += B1
+	beakers += B2
+
 /obj/item/grenade/chem_grenade/bioterrorfoam
 	name = "Bio terror foam grenade"
 	desc = "Tiger Cooperative chemical foam grenade. Causes temporary irration, blindness, confusion, mutism, and mutations to carbon based life forms. Contains additional spore toxin."
