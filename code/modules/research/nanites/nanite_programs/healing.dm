@@ -3,7 +3,7 @@
 /datum/nanite_program/regenerative
 	name = "Accelerated Regeneration"
 	desc = "The nanites boost the host's natural regeneration, increasing their healing speed."
-	use_rate = 1.5
+	use_rate = 2.5
 	rogue_types = list(/datum/nanite_program/necrotic)
 
 /datum/nanite_program/regenerative/check_conditions()
@@ -32,7 +32,7 @@
 /datum/nanite_program/temperature
 	name = "Temperature Adjustment"
 	desc = "The nanites adjust the host's internal temperature to an ideal level."
-	use_rate = 2.5
+	use_rate = 3.5
 	rogue_types = list(/datum/nanite_program/pyro,/datum/nanite_program/cryo)
 
 /datum/nanite_program/temperature/check_conditions()
@@ -158,7 +158,7 @@
 	name = "Bio-Reconstruction"
 	desc = "The nanites manually repair and replace organic cells, acting much faster than normal regeneration. \
 			However, this program cannot detect the difference between harmed and unharmed, causing it to consume nanites even if it has no effect."
-	use_rate = 4.5
+	use_rate = 5.5
 	rogue_types = list(/datum/nanite_program/suffocating, /datum/nanite_program/necrotic)
 
 /datum/nanite_program/regenerative_advanced/active_effect()

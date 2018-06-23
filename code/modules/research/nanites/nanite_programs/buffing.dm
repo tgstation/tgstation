@@ -22,7 +22,7 @@
 	name = "Adrenaline Burst"
 	desc = "The nanites cause a burst of adrenaline when triggered, waking the host from stuns and temporarily increasing their speed."
 	trigger_cost = 25
-	trigger_cooldown = 900
+	trigger_cooldown = 1200
 	rogue_types = list(/datum/nanite_program/toxic, /datum/nanite_program/nerve_decay)
 
 /datum/nanite_program/triggered/adrenaline/trigger()
@@ -35,7 +35,7 @@
 	host_mob.adjustStaminaLoss(-75)
 	host_mob.lying = 0
 	host_mob.update_canmove()
-	host_mob.reagents.add_reagent("stimulants", 5)
+	host_mob.reagents.add_reagent("stimulants", 1.5)
 
 /datum/nanite_program/hardening
 	name = "Dermal Hardening"
