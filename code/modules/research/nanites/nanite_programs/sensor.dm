@@ -33,6 +33,38 @@
 		spent = FALSE
 		return FALSE
 
+/datum/nanite_program/sensor/health_high
+	name = "High Health Sensor"
+	desc = "The nanites receive a signal when the host's health is above 75%."
+	var/spent = FALSE
+
+/datum/nanite_program/sensor/health_high/check_event()
+	var/health_percent = host_mob.health / host_mob.maxHealth * 100
+	if(health_percent > 75)
+		if(!spent)
+			spent = TRUE
+			return TRUE
+		return FALSE
+	else
+		spent = FALSE
+		return FALSE
+
+/datum/nanite_program/sensor/health_low
+	name = "Low Health Sensor"
+	desc = "The nanites receive a signal when the the host's health is below 25%."
+	var/spent = FALSE
+
+/datum/nanite_program/sensor/health_low/check_event()
+	var/health_percent = host_mob.health / host_mob.maxHealth * 100
+	if(health_percent < 25)
+		if(!spent)
+			spent = TRUE
+			return TRUE
+		return FALSE
+	else
+		spent = FALSE
+		return FALSE
+
 /datum/nanite_program/sensor/crit
 	name = "Critical Health Sensor"
 	desc = "The nanites receive a signal when the host first reaches critical health."

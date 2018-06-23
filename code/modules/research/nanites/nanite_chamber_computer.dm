@@ -102,9 +102,10 @@
 		data["safety_threshold"] = nanites.safety_threshold
 		data["cloud_id"] = nanites.cloud_id
 		var/list/mob_programs = list()
-		for(var/datum/nanite_program/P in nanites.programs)
+		var/id = 1
+		for(var/X in nanites.programs)
+			var/datum/nanite_program/P = X
 			var/list/mob_program = list()
-			var/id = 1
 			mob_program["name"] = P.name
 			mob_program["desc"] = P.desc
 			mob_program["id"] = id

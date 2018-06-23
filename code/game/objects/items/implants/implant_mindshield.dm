@@ -42,6 +42,7 @@
 			else
 				to_chat(target, "<span class='notice'>You feel a sense of peace and security. You are now protected from brainwashing.</span>")
 		target.add_trait(TRAIT_MINDSHIELD, "implant")
+		target.sec_hud_set_implants()
 		return TRUE
 	return FALSE
 

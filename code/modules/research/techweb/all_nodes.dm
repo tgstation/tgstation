@@ -867,7 +867,8 @@
 	display_name = "Biological Nanite Programming"
 	description = "Nanite programs that require complex biological interaction."
 	prereq_ids = list("nanite_base","biotech")
-	design_ids = list("regenerative_nanites", "bloodheal_nanites", "suffocating_nanites", "coagulating_nanites", "toxic_nanites", "skindecay_nanites","sensor_healthy_nanites","sensor_crit_nanites","sensor_death_nanites")
+	design_ids = list("regenerative_nanites", "bloodheal_nanites", "suffocating_nanites", "coagulating_nanites", "toxic_nanites", "skindecay_nanites",\
+					"sensor_healthy_nanites","sensor_crit_nanites","sensor_death_nanites", "sensor_high_health_nanites", "sensor_low_health_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 

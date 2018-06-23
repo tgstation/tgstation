@@ -346,6 +346,20 @@
 	program_type = /datum/nanite_program/sensor/healthy
 	category = list("Sensor Nanites")
 
+/datum/design/nanites/sensor_high_health
+	name = "Nanite Volume Sensor - HIGH"
+	desc = "The nanites receive a signal when the nanite supply is over 75%."
+	id = "sensor_high_health_nanites"
+	program_type = /datum/nanite_program/sensor/health_high
+	category = list("Sensor Nanites")
+
+/datum/design/nanites/sensor_low_health
+	name = "Nanite Volume Sensor - LOW"
+	desc = "The nanites receive a signal when the nanite supply is below 25%."
+	id = "sensor_low_health_nanites"
+	program_type = /datum/nanite_program/sensor/health_low
+	category = list("Sensor Nanites")
+
 /datum/design/nanites/sensor_crit
 	name = "Critical Health Sensor"
 	desc = "The nanites receive a signal when the host first reaches critical health."
