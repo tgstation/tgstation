@@ -12,17 +12,38 @@
 	announceWhen	= 1
 
 
+/datum/round_event/anomaly/proc/findEventArea()
+	//Places that shouldn't explode
+	var/static/list/safe_area_types = typecacheof(list(
+	/area/ai_monitored/turret_protected/ai,
+	/area/ai_monitored/turret_protected/ai_upload,
+	/area/engine,
+	/area/solar,
+	/area/holodeck,
+	/area/shuttle)
+	)
+
+	//Subtypes from the above that actually should explode.
+	var/static/list/unsafe_area_subtypes = typecacheof(/area/engine/break_room)
+
+	var/static/list/allowed_areas
+	if(!allowed_areas)
+		allowed_areas = list()
+		for(var/areatype in GLOB.the_station_areas)
+			if(safe_area_types[areatype] && !unsafe_area_subtypes[areatype])
+				continue
+			else
+				allowed_areas[areatype] = TRUE
+
+	return safepick(typecache_filter_list(GLOB.sortedAreas,allowed_areas))
+
 /datum/round_event/anomaly/setup(loop=0)
-	var/safety_loop = loop + 1
-	if(safety_loop > 50)
-		kill()
-		end()
 	impact_area = findEventArea()
 	if(!impact_area)
-		setup(safety_loop)
+		CRASH("No valid areas for anomaly found.")
 	var/list/turf_test = get_area_turfs(impact_area)
 	if(!turf_test.len)
-		setup(safety_loop)
+		CRASH("Anomaly : No valid turfs found for [impact_area] - [impact_area.type]")
 
 /datum/round_event/anomaly/announce(fake)
 	priority_announce("Localized energetic flux wave detected on long range scanners. Expected location of impact: [impact_area.name].", "Anomaly Alert")
@@ -31,3 +52,4 @@
 	var/turf/T = safepick(get_area_turfs(impact_area))
 	if(T)
 		newAnomaly = new /obj/effect/anomaly/flux(T)
+

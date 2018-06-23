@@ -93,25 +93,6 @@ SUBSYSTEM_DEF(events)
 	else if(. == EVENT_READY)
 		E.runEvent(TRUE)
 
-/datum/round_event/proc/findEventArea() //Here's a nice proc to use to find an area for your event to land in!
-	var/list/safe_areas = list(
-	/area/ai_monitored/turret_protected/ai,
-	/area/ai_monitored/turret_protected/ai_upload,
-	/area/engine,
-	/area/solar,
-	/area/holodeck,
-	/area/shuttle
-	)
-
-	//These are needed because /area/engine has to be removed from the list, but we still want these areas to get fucked up.
-	var/list/danger_areas = list(
-	/area/engine/break_room,
-	/area/crew_quarters/heads/chief)
-
-	//Need to locate() as it's just a list of paths.
-	return locate(pick((GLOB.the_station_areas - safe_areas) + danger_areas)) in GLOB.sortedAreas
-
-
 //allows a client to trigger an event
 //aka Badmin Central
 // > Not in modules/admin
