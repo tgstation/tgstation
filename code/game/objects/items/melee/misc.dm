@@ -88,25 +88,49 @@
 	if(istype(B))
 		playsound(B, 'sound/items/sheath.ogg', 25, 1)
 
-/obj/item/melee/sabre/suicide_act(mob/user)
+/obj/item/melee/sabre/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is trying to cut off all [user.p_their()] limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!</span>")
-	var/list/bodyparts = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	for(var/i in 1 to 4)
-		addtimer(CALLBACK(src, .proc/suicide_dismember, user, pick_n_take(bodyparts)), 10 * i)
-	addtimer(CALLBACK(src, .proc/manual_suicide, user), 50)
+	var/i = 0
+	var/originally_nodropped = item_flags & NODROP
+	item_flags |= NODROP
+	if(iscarbon(user))
+		var/mob/living/carbon/Cuser = user
+		var/obj/item/bodypart/holding_bodypart = Cuser.get_holding_bodypart_of_item(src)
+		var/list/limbs_to_dismember
+		var/list/arms = list()
+		var/list/legs = list()
+		var/obj/item/bodypart/bodypart
+
+		for(bodypart in Cuser.bodyparts)
+			if(bodypart == holding_bodypart)
+				continue
+			if(bodypart.body_part & ARMS)
+				arms += bodypart
+			else if (bodypart.body_part & LEGS)
+				legs += bodypart
+
+		limbs_to_dismember = arms + legs
+		if(holding_bodypart)
+			limbs_to_dismember += holding_bodypart
+
+		for(bodypart in limbs_to_dismember)
+			i++
+			addtimer(CALLBACK(src, .proc/suicide_dismember, user, bodypart), 10 * i)
+	addtimer(CALLBACK(src, .proc/manual_suicide, user, originally_nodropped), 10 * i)
 	return MANUAL_SUICIDE
 
-/obj/item/melee/sabre/proc/suicide_dismember(mob/living/user, zone)
-	var/obj/item/bodypart/affecting = user.get_bodypart(zone)
-	if(affecting && affecting.dismemberable)
+/obj/item/melee/sabre/proc/suicide_dismember(mob/living/user, obj/item/bodypart/affecting)
+	if(!QDELETED(affecting) && affecting.dismemberable && affecting.owner == user && !QDELETED(user))
 		playsound(user, hitsound, 25, 1)
 		affecting.dismember(BRUTE)
 		user.adjustBruteLoss(20)
 
-/obj/item/melee/sabre/proc/manual_suicide(mob/living/user)
-	playsound(user, hitsound, 25, 1)
-	user.adjustBruteLoss(200)
-	user.death(FALSE)
+/obj/item/melee/sabre/proc/manual_suicide(mob/living/user, originally_nodropped)
+	if(!QDELETED(user))
+		user.adjustBruteLoss(200)
+		user.death(FALSE)
+	if(!originally_nodropped)
+		item_flags &= ~NODROP
 
 /obj/item/melee/classic_baton
 	name = "police baton"
