@@ -37,7 +37,7 @@
 
 	return safepick(typecache_filter_list(GLOB.sortedAreas,allowed_areas))
 
-/datum/round_event/anomaly/setup(loop=0)
+/datum/round_event/anomaly/setup()
 	impact_area = findEventArea()
 	if(!impact_area)
 		CRASH("No valid areas for anomaly found.")
