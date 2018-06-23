@@ -88,6 +88,18 @@
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill
 	ME.attach(src)
 
+/obj/mecha/working/ripley/deathripley/proper
+	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE. FOR REAL"
+	name = "\proper DEATH-RIPLEY"
+
+/obj/mecha/working/ripley/deathripley/proper/Initialize()
+	. = ..()
+	for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
+		E.detach()
+		qdel(E)
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/proper
+	ME.attach(src)
+
 /obj/mecha/working/ripley/mining
 	desc = "An old, dusty mining Ripley."
 	name = "\improper APLU \"Miner\""
