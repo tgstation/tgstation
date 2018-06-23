@@ -102,7 +102,8 @@
 
 /datum/mutation/human/tourettes/on_life(mob/living/carbon/human/owner)
 	if(prob(10) && owner.stat == CONSCIOUS)
-		owner.Stun(10)
+		if(!IsStun(owner))
+			owner.Stun(200)
 		switch(rand(1, 3))
 			if(1)
 				owner.emote("twitch")
