@@ -33,7 +33,7 @@
 	name = "Temperature Adjustment"
 	desc = "The nanites adjust the host's internal temperature to an ideal level."
 	use_rate = 3.5
-	rogue_types = list(/datum/nanite_program/pyro,/datum/nanite_program/cryo)
+	rogue_types = list(/datum/nanite_program/skin_decay)
 
 /datum/nanite_program/temperature/check_conditions()
 	if(host_mob.bodytemperature > (BODYTEMP_NORMAL - 30) && host_mob.bodytemperature < (BODYTEMP_NORMAL + 30))
