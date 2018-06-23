@@ -487,7 +487,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
-	to_chat(usr, "<span class='notice'>Please keep rule 10 in mind, losing is part of the game. your character will frequently die, sometimes without even a possibility of avoiding it. No matter how good or prepared you are, sometimes you just lose. Adminhelp is not intended to be a 'I got outrobusted button' it's intended for genuine issues that require admin assistance.</span>")
+	to_chat(usr, config.policies["adminhelpnotification"])
 
 	//handle muting and automuting
 	if(prefs.muted & MUTE_ADMINHELP)
