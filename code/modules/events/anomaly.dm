@@ -13,27 +13,22 @@
 
 
 /datum/round_event/anomaly/proc/findEventArea()
-	//Places that shouldn't explode
-	var/static/list/safe_area_types = typecacheof(list(
-	/area/ai_monitored/turret_protected/ai,
-	/area/ai_monitored/turret_protected/ai_upload,
-	/area/engine,
-	/area/solar,
-	/area/holodeck,
-	/area/shuttle)
-	)
-
-	//Subtypes from the above that actually should explode.
-	var/static/list/unsafe_area_subtypes = typecacheof(/area/engine/break_room)
-
 	var/static/list/allowed_areas
 	if(!allowed_areas)
-		allowed_areas = list()
-		for(var/areatype in GLOB.the_station_areas)
-			if(safe_area_types[areatype] && !unsafe_area_subtypes[areatype])
-				continue
-			else
-				allowed_areas[areatype] = TRUE
+		//Places that shouldn't explode
+		var/list/safe_area_types = typecacheof(list(
+		/area/ai_monitored/turret_protected/ai,
+		/area/ai_monitored/turret_protected/ai_upload,
+		/area/engine,
+		/area/solar,
+		/area/holodeck,
+		/area/shuttle)
+		)
+
+		//Subtypes from the above that actually should explode.
+		var/list/unsafe_area_subtypes = typecacheof(list(/area/engine/break_room))
+		
+		allowed_areas = make_associative(GLOB.the_station_areas) - safe_area_types + unsafe_area_subtypes
 
 	return safepick(typecache_filter_list(GLOB.sortedAreas,allowed_areas))
 
@@ -52,4 +47,3 @@
 	var/turf/T = safepick(get_area_turfs(impact_area))
 	if(T)
 		newAnomaly = new /obj/effect/anomaly/flux(T)
-
