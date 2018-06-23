@@ -892,23 +892,26 @@ $(function() {
 	});
 
 	$('#saveLog').click(function(e) {
+		// Requires IE 10+ to issue download commands. Just opening a popup
+		// window will cause Ctrl+S to save a blank page, ignoring innerHTML.
+		if (!window.Blob) {
+			output('<span class="big red">This function is only supported on IE 10+. Upgrade if possible.</span>', 'internal');
+			return;
+		}
+
 		$.ajax({
 			type: 'GET',
 			url: 'browserOutput.css',
 			success: function(styleData) {
-				var win;
+				var blob = new Blob(['<head><title>Chat Log</title><style>', styleData, '</style></head><body>', $messages.html(), '</body>']);
 
-				try {
-					win = window.open('', 'Chat Log', 'toolbar=no, location=no, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=yes, width=780, height=600, top=' + (screen.height/2 - 635/2) + ', left=' + (screen.width/2 - 780/2));
-				} catch (e) {
-					return;
-				}
+				var fname = 'SS13 Chat Log';
+				var date = new Date(), month = date.getMonth(), day = date.getDay(), hours = date.getHours(), mins = date.getMinutes(), secs = date.getSeconds();
+				fname += ' ' + date.getFullYear() + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
+				fname += ' ' + (hours < 10 ? '0' : '') + hours + (mins < 10 ? '0' : '') + mins + (secs < 10 ? '0' : '') + secs;
+				fname += '.html';
 
-				if (win) {
-					win.document.head.innerHTML = '<title>Chat Log</title>';
-					win.document.head.innerHTML += '<style>' + styleData + '</style>';
-					win.document.body.innerHTML = $messages.html();
-				}
+				window.navigator.msSaveBlob(blob, fname);
 			}
 		});
 	});
