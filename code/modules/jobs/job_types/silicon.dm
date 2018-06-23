@@ -85,4 +85,4 @@ Cyborg
 	return H.Robotize(FALSE, latejoin)
 
 /datum/job/cyborg/after_spawn(mob/living/silicon/robot/R, mob/M)
-		R.rename_self("cyborg", M.client)
+	R.rename_self("cyborg", M.client)
