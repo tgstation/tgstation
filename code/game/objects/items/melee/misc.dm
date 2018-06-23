@@ -112,11 +112,12 @@
 		limbs_to_dismember = arms + legs
 		if(holding_bodypart)
 			limbs_to_dismember += holding_bodypart
-
+		
+		var/speedbase = abs((4 SECONDS) / limbs_to_dismember.len)
 		for(bodypart in limbs_to_dismember)
 			i++
-			addtimer(CALLBACK(src, .proc/suicide_dismember, user, bodypart), 10 * i)
-	addtimer(CALLBACK(src, .proc/manual_suicide, user, originally_nodropped), 10 * i)
+			addtimer(CALLBACK(src, .proc/suicide_dismember, user, bodypart), speedbase * i)
+	addtimer(CALLBACK(src, .proc/manual_suicide, user, originally_nodropped), (5 SECONDS) * i)
 	return MANUAL_SUICIDE
 
 /obj/item/melee/sabre/proc/suicide_dismember(mob/living/user, obj/item/bodypart/affecting)
