@@ -99,12 +99,12 @@
 /obj/item/melee/sabre/proc/suicide_dismember(mob/living/user, zone)
 	var/obj/item/bodypart/affecting = user.get_bodypart(zone)
 	if(affecting && affecting.dismemberable)
-		playsound(user, 'sound/weapons/rapierhit.ogg', 25, 1)
+		playsound(user, hitsound, 25, 1)
 		affecting.dismember(BRUTE)
 		user.adjustBruteLoss(20)
 
 /obj/item/melee/sabre/proc/manual_suicide(mob/living/user)
-	playsound(user, 'sound/weapons/rapierhit.ogg', 25, 1)
+	playsound(user, hitsound, 25, 1)
 	user.adjustBruteLoss(200)
 	user.death(FALSE)
 
