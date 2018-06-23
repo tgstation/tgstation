@@ -102,7 +102,7 @@
 
 /datum/mutation/human/tourettes/on_life(mob/living/carbon/human/owner)
 	if(prob(10) && owner.stat == CONSCIOUS)
-		if(!IsStun(owner))
+		if(!owner.IsStun())
 			owner.Stun(200)
 		switch(rand(1, 3))
 			if(1)
