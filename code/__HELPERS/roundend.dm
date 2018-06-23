@@ -206,18 +206,17 @@
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(!A.owner)
 			continue
-		if(A.name in total_antagonists)	//If the role exists already, add the name to it
-			total_antagonists[A.name] += ", [key_name(A.owner)]"
-		else
-			total_antagonists.Add(A.name) //If the role doesnt exist in the list, create it and add the mob
-			total_antagonists[A.name] += ": [key_name(A.owner)]"
+		if(!(A.name in total_antagonists))
+			total_antagonists[A.name] = list()
+		total_antagonists[A.name] += "[key_name(A.owner)]"
 
 	CHECK_TICK
 
 	//Now print them all into the log!
 	log_game("Antagonists at round end were...")
-	for(var/i in total_antagonists)
-		log_game("[i]s[total_antagonists[i]].")
+	for(var/antag_name in total_antagonists)
+		var/list/L = total_antagonists[antag_name]
+		log_game("[antag_name]s :[L.Join(", ")].")
 
 	CHECK_TICK
 	SSdbcore.SetRoundEnd()
