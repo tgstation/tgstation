@@ -487,6 +487,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
+	to_chat(usr, config.policies["adminhelpnotification"])
 
 	//handle muting and automuting
 	if(prefs.muted & MUTE_ADMINHELP)
