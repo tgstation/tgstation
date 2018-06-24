@@ -642,7 +642,7 @@ SLIME SCANNER
 	to_chat(user, "<span class='info'>================</span>")
 	to_chat(user, "<span class='info'>Saturation: [nanites.nanite_volume]/[nanites.max_nanites]</span>")
 	to_chat(user, "<span class='info'>Safety Threshold: [nanites.safety_threshold]</span>")
-	to_chat(user, "<span class='info'>Cloud ID: [nanites.cloud_id ? "Disabled" : nanites.cloud_id]</span>")
+	to_chat(user, "<span class='info'>Cloud ID: [nanites.cloud_id ? nanites.cloud_id : "Disabled"]</span>")
 	to_chat(user, "<span class='info'>================</span>")
 	to_chat(user, "<span class='info'>Program List:</span>")
 	if(nanites.stealth)

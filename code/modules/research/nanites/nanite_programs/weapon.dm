@@ -54,7 +54,7 @@
 //TODO make it defuse if triggered again
 
 /datum/nanite_program/triggered/heart_stop
-	name = "Heart-Stopping Nanites"
+	name = "Heart-Stopper"
 	desc = "Stops the host's heart when triggered; restarts it if triggered again."
 	trigger_cost = 12
 	trigger_cooldown = 10
@@ -70,8 +70,8 @@
 			if(heart.beating)
 				heart.Stop()
 			else
-				heart.Restart()	
-	
+				heart.Restart()
+
 /datum/nanite_program/triggered/emp
 	name = "Electromagnetic Resonance"
 	desc = "The nanites cause an elctromagnetic pulse around the host when triggered. Will corrupt other nanite programs!"
@@ -82,8 +82,8 @@
 /datum/nanite_program/triggered/emp/trigger()
 	if(!..())
 		return
-	empulse(host_mob, 1, 2)	
-	
+	empulse(host_mob, 1, 2)
+
 /datum/nanite_program/pyro/active_effect()
 	host_mob.fire_stacks += 1
 	host_mob.IgniteMob()

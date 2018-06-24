@@ -274,7 +274,7 @@
 	category = list("Weaponized Nanites")
 
 /datum/design/nanites/heart_stop
-	name = "Heart-Stopping Nanites"
+	name = "Heart-Stopper"
 	desc = "Stops the host's heart when triggered; restarts it if triggered again."
 	id = "heartstop_nanites"
 	program_type = /datum/nanite_program/triggered/heart_stop

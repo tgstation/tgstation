@@ -15,7 +15,7 @@
 	var/program_flags = NONE
 	var/passive_enabled = FALSE //If the nanites have an on/off-style effect, it's tracked by this var
 
-	var/list/rogue_types = list(/datum/nanite_program) //What this can turn into if it glitches.
+	var/list/rogue_types = list(/datum/nanite_program/glitch) //What this can turn into if it glitches.
 	//As a rule of thumb, these should be:
 	//A: simpler
 	//B: negative
