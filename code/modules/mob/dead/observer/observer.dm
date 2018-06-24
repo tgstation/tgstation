@@ -310,7 +310,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			src << "You can't move around here!"
 			var/area/old_area = get_area(loc)
 			if(!allowed_area(new_area))
-				loc = pick(latejoin)
+				var/obj/effect/landmark/observer_start/O = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
+				forceMove(O.loc)
 			else
 				return
 		forceMove(NewLoc)
@@ -393,7 +394,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!L || !L.len)
 		to_chat(usr, "No area available.")
 
-	if(!allowed_area(new_area))
+	if(!allowed_area(thearea))
 		usr << "This area does not allow ghosts!"
 		return
 	usr.forceMove(pick(L))
