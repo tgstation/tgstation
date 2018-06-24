@@ -48,6 +48,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/show_line_profiling,
 	/client/proc/create_mapping_job_icons,
 	/client/proc/debug_z_levels,
+	/client/proc/clear_mapping_helpers
 ))
 
 /obj/effect/debugging/mapfix_marker
@@ -295,6 +296,18 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	for(var/x_number in 1 to 4)
 		final.Insert(icon('icons/mob/screen_gen.dmi', "x[x_number == 1 ? "" : x_number]"), "x[x_number == 1 ? "" : x_number]")
 	fcopy(final, "icons/mob/landmarks.dmi")
+
+/client/proc/clear_mapping_helpers()
+	set name = "Clear inactive mapping helpers"
+	set category = "Mapping"
+
+	var/msg = "[key_name_admin(usr)] cleared inactive mapping helpers."
+	log_admin(msg)
+	message_admins(msg)
+
+	for(var/i in GLOB.inactive_mapping_helpers)
+		qdel(i)
+	GLOB.inactive_mapping_helpers.Cut()
 
 /client/proc/debug_z_levels()
 	set name = "Debug Z-Levels"
