@@ -36,17 +36,11 @@
 		clothing_flags |= visor_flags
 		flags_inv |= visor_flags_inv
 		flags_cover |= visor_flags_cover
-		if(src.type == /obj/item/clothing/mask/bandana || src.parent_type == /obj/item/clothing/mask/bandana)
-			to_chat(user, "<span class='notice'>You re-tie the bandana into a mask.</span>")
-		else
-			to_chat(user, "<span class='notice'>You push \the [src] back into place.</span>")
+		to_chat(user, "<span class='notice'>You push \the [src] back into place.</span>")
 		slot_flags = initial(slot_flags)
 	else
 		icon_state += "_up"
-		if(src.type == /obj/item/clothing/mask/bandana || src.parent_type == /obj/item/clothing/mask/bandana)
-			to_chat(user, "<span class='notice'>You re-tie the bandana into a cap.</span>")
-		else
-			to_chat(user, "<span class='notice'>You push \the [src] out of the way.</span>")
+		to_chat(user, "<span class='notice'>You push \the [src] out of the way.</span>")
 		gas_transfer_coefficient = null
 		permeability_coefficient = null
 		clothing_flags &= ~visor_flags
