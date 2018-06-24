@@ -328,11 +328,6 @@ function output(message, flag) {
 		}
 	}
 
-	// Linkify fallback for old IE
-	if (message.length && typeof Node === 'undefined') {
-		message = linkify_fallback(message);
-	}
-
 	opts.messageCount++;
 
 	//Pop the top message off if history limit reached
@@ -386,9 +381,14 @@ function output(message, flag) {
 		$messages[0].appendChild(entry);
 		$(entry).find("img.icon").error(iconError);
 
-		// Linkify for modern IE versions
-		if (typeof Node !== 'undefined') {
-			var to_linkify = $(entry).find(".linkify");
+		var to_linkify = $(entry).find(".linkify");
+		if (typeof Node === 'undefined') {
+			// Linkify fallback for old IE
+			for(var i = 0; i < to_linkify.length; ++i) {
+				to_linkify[i].innerHTML = linkify_fallback(to_linkify[i].innerHTML);
+			}
+		} else {
+			// Linkify for modern IE versions
 			for(var i = 0; i < to_linkify.length; ++i) {
 				linkify_node(to_linkify[i]);
 			}
