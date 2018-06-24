@@ -85,5 +85,4 @@ Cyborg
 	return H.Robotize(FALSE, latejoin)
 
 /datum/job/cyborg/after_spawn(mob/living/silicon/robot/R, mob/M)
-	if(CONFIG_GET(flag/rename_cyborg))	//name can't be set in robot/New without the client
-		R.rename_self("cyborg", M.client)
+	R.rename_self("cyborg", M.client)
