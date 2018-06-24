@@ -309,7 +309,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(!allowed_area(new_area))
 			src << "You can't move around here!"
 			var/area/old_area = get_area(loc)
-			if(!allowed_area(new_area))
+			if(!allowed_area(old_area))
 				var/obj/effect/landmark/observer_start/O = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
 				forceMove(O.loc)
 			else
