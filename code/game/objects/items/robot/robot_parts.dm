@@ -80,48 +80,48 @@
 				return
 	else if(istype(W, /obj/item/wrench)) //Deconstucts empty borg shell. Flashes remain unbroken because they haven't been used yet
 		var/turf/T = get_turf(src)
-		src.forceMove(T)
+		forceMove(T)
 		if(l_leg || r_leg || chest || l_arm || r_arm || head)
 			if(W.use_tool(src, user, 5, volume=50))
 				if(l_leg)
-					src.l_leg.forceMove(T)
-					src.l_leg = null
+					l_leg.forceMove(T)
+					l_leg = null
 				if(r_leg)
-					src.r_leg.forceMove(T)
-					src.r_leg = null
+					r_leg.forceMove(T)
+					r_leg = null
 				if(chest)
-					if (src.chest.cell) //Sanity check.
-						src.chest.cell.forceMove(T)
-						src.chest.cell = null
-					src.chest.forceMove(T)
+					if (chest.cell) //Sanity check.
+						chest.cell.forceMove(T)
+						chest.cell = null
+					chest.forceMove(T)
 					new /obj/item/stack/cable_coil(T, 1)
-					src.chest.wired = 0
-					src.chest = null
+					chest.wired = 0
+					chest = null
 				if(l_arm)
-					src.l_arm.forceMove(T)
-					src.l_arm = null
+					l_arm.forceMove(T)
+					l_arm = null
 				if(r_arm)
-					src.r_arm.forceMove(T)
-					src.r_arm = null
+					r_arm.forceMove(T)
+					r_arm = null
 				if(head)
-					src.head.forceMove(T)
-					src.head.flash1.forceMove(T)
-					src.head.flash1 = null
-					src.head.flash2.forceMove(T)
-					src.head.flash2 = null
-					src.head = null
+					head.forceMove(T)
+					head.flash1.forceMove(T)
+					head.flash1 = null
+					head.flash2.forceMove(T)
+					head.flash2 = null
+					head = null
 				to_chat(user, "<span class='notice'>You disassemble the cyborg shell.</span>")
 		else
 			to_chat(user, "<span class='notice'>There is nothing to remove from the endoskeleton.</span>")
-		src.updateicon()
+		updateicon()
 	else if(istype(W, /obj/item/screwdriver))
 		var/turf/T = get_turf(src)
 		if(istype(user.held_items[user.active_hand_index == 1 ? 2 : 1], /obj/item/stock_parts/cell))
-			if (src.chest.cell) //Sanity check.
-				src.chest.cell.forceMove(T)
-			src.chest.cell = user.held_items[user.active_hand_index == 1 ? 2 : 1]
+			if (chest.cell) //Sanity check.
+				chest.cell.forceMove(T)
+			chest.cell = user.held_items[user.active_hand_index == 1 ? 2 : 1]
 			if(!user.transferItemToLoc(user.held_items[user.active_hand_index == 1 ? 2 : 1], src.chest))
-				src.chest.cell = null
+				chest.cell = null
 				return
 			to_chat(user, "<span class='notice'>You replace the power cell.</span>")
 	else if(istype(W, /obj/item/bodypart/l_leg/robot))
