@@ -1,0 +1,5 @@
+author: "CitrusGender"
+delete-after: True
+changes: 
+  - bugfix: "Fixed cyborgs not getting their names at round start"
+  - bugfix: "Fixed cyborgs and A.I.s being able to bypass appearance bans"
