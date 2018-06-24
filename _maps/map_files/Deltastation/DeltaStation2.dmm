@@ -204,6 +204,7 @@
 	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
 	width = 3
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/space/basic,
 /area/space)
 "abv" = (
@@ -896,7 +897,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/engineering{
 	name = "Auxiliary Construction Storage";
-	req_access_txt = "10;32;47;48"
+	req_one_access_txt = "10;32;47;48"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -9052,11 +9053,9 @@
 /turf/open/floor/plasteel/redblue,
 /area/maintenance/port/fore)
 "ayW" = (
-/obj/machinery/vending/autodrobe{
-	req_access_txt = "0"
-	},
 /obj/machinery/light/small,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/autodrobe/all_access,
 /turf/open/floor/plasteel/redblue/redside{
 	dir = 8
 	},
@@ -22725,6 +22724,7 @@
 	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
 	width = 3
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/space/basic,
 /area/space)
 "bbz" = (
@@ -63600,9 +63600,7 @@
 	},
 /area/crew_quarters/locker)
 "cGO" = (
-/obj/machinery/vending/autodrobe{
-	req_access_txt = "0"
-	},
+/obj/machinery/vending/autodrobe/all_access,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -77162,19 +77160,17 @@
 /area/science/research/abandoned)
 "djp" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/glass/fifty,
+/obj/machinery/cell_charger,
 /turf/open/floor/plasteel/white/side,
 /area/science/circuit)
 "djq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/rnd/production/protolathe/department/science,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/plasteel/white/side,
 /area/science/circuit)
 "djr" = (
-/obj/machinery/autolathe,
 /turf/open/floor/plasteel/white/side,
 /area/science/circuit)
 "djs" = (
@@ -78540,12 +78536,11 @@
 /area/crew_quarters/abandoned_gambling_den)
 "dmr" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stock_parts/cell/super,
-/obj/item/stock_parts/cell/super,
 /obj/structure/sign/departments/science{
 	pixel_x = -32
 	},
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -79280,7 +79275,8 @@
 	pixel_x = -26
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -80847,8 +80843,6 @@
 	pixel_y = -32
 	},
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/super,
-/obj/item/stock_parts/cell/super,
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -80882,16 +80876,16 @@
 	},
 /area/science/circuit)
 "drD" = (
-/obj/machinery/vending/assist,
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
 /area/science/circuit)
 "drE" = (
-/obj/machinery/bookbinder,
 /obj/structure/sign/poster/official/build{
 	pixel_y = -32
 	},
+/obj/structure/table/reinforced,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -80900,11 +80894,11 @@
 /obj/machinery/light_switch{
 	pixel_x = 36
 	},
-/obj/machinery/libraryscanner,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/machinery/vending/assist,
 /turf/open/floor/plasteel/white/corner{
 	dir = 1
 	},
@@ -85667,14 +85661,12 @@
 /turf/open/floor/wood,
 /area/crew_quarters/abandoned_gambling_den)
 "dBR" = (
-/obj/machinery/vending/boozeomat{
-	req_access_txt = "0"
-	},
 /obj/machinery/light/small,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = -32
 	},
+/obj/machinery/vending/boozeomat/all_access,
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dBS" = (
@@ -99715,7 +99707,7 @@
 "gUH" = (
 /obj/machinery/light,
 /obj/structure/table/reinforced,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/item/stack/sheet/metal/ten,
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -100147,6 +100139,12 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/engine,
 /area/science/mixing)
+"oMw" = (
+/obj/docking_port/stationary/public_mining_dock{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
 "oNd" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -100478,6 +100476,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxins_mixing_output,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
+"xZM" = (
+/obj/structure/fans/tiny/invisible,
+/turf/open/space/basic,
+/area/space)
 "yiv" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
@@ -136773,7 +136775,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+xZM
 abE
 aaO
 aca
@@ -137287,7 +137289,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+xZM
 abG
 aaO
 acc
@@ -141399,7 +141401,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+xZM
 abE
 aaO
 aca
@@ -141913,7 +141915,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+xZM
 abG
 aaO
 acc
@@ -143469,7 +143471,7 @@ aeF
 aeF
 aeF
 aeF
-aeF
+oMw
 aeF
 aeF
 aeF
@@ -158676,9 +158678,9 @@ aaa
 ajr
 aad
 aKV
-aaa
+xZM
 bbv
-aaa
+xZM
 aKV
 aad
 aad

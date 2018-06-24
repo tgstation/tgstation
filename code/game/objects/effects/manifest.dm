@@ -3,8 +3,9 @@
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "x"
 
-/obj/effect/manifest/New()
-	src.invisibility = INVISIBILITY_ABSTRACT
+/obj/effect/manifest/Initialize()
+	. = ..()
+	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/effect/manifest/proc/manifest()
 	var/dat = "<B>Crew Manifest</B>:<BR>"

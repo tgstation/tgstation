@@ -363,7 +363,7 @@
 
 /turf/open/floor/plasteel/goonplaque
 	icon_state = "plaque"
-	name = "Commemorative Plaque"
+	name = "commemorative plaque"
 	desc = "\"This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding."
 
 /turf/open/floor/plasteel/cult/narsie_act()

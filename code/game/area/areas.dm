@@ -409,8 +409,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /area/Entered(atom/movable/M)
 	set waitfor = FALSE
-	SendSignal(COMSIG_AREA_ENTERED, M)
-	M.SendSignal(COMSIG_ENTER_AREA, src) //The atom that enters the area
+	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, M)
+	SEND_SIGNAL(M, COMSIG_ENTER_AREA, src) //The atom that enters the area
 	if(!isliving(M))
 		return
 
@@ -435,8 +435,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
 
 /area/Exited(atom/movable/M)
-	SendSignal(COMSIG_AREA_EXITED, M)
-	M.SendSignal(COMSIG_EXIT_AREA, src) //The atom that exits the area
+	SEND_SIGNAL(src, COMSIG_AREA_EXITED, M)
+	SEND_SIGNAL(M, COMSIG_EXIT_AREA, src) //The atom that exits the area
 
 /client/proc/ResetAmbiencePlayed()
 	played = FALSE

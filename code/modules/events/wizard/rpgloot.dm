@@ -16,7 +16,7 @@
 			GET_COMPONENT_FROM(STR, /datum/component/storage, S)
 			if(prob(upgrade_scroll_chance) && S.contents.len < STR.max_items && !S.invisibility)
 				var/obj/item/upgradescroll/scroll = new
-				S.SendSignal(COMSIG_TRY_STORAGE_INSERT, scroll, null, TRUE, TRUE)
+				SEND_SIGNAL(S, COMSIG_TRY_STORAGE_INSERT, scroll, null, TRUE, TRUE)
 				upgrade_scroll_chance = max(0,upgrade_scroll_chance-100)
 			upgrade_scroll_chance += 25
 

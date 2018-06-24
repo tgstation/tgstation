@@ -75,7 +75,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/is_banned(mob/M)
 	if(!M)
 		return FALSE
-	. = (jobban_isbanned(M, ROLE_SYNDICATE) || (job_rank && jobban_isbanned(M,job_rank)))
+	. = (jobban_isbanned(M, ROLE_SYNDICATE) || QDELETED(M) || (job_rank && (jobban_isbanned(M,job_rank) || QDELETED(M))))
 
 /datum/antagonist/proc/replace_banned_player()
 	set waitfor = FALSE
@@ -110,12 +110,12 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/give_antag_moodies()
 	if(!antag_moodlet)
 		return
-	owner.current.SendSignal(COMSIG_ADD_MOOD_EVENT, "antag_moodlet", antag_moodlet)
+	SEND_SIGNAL(owner.current, COMSIG_ADD_MOOD_EVENT, "antag_moodlet", antag_moodlet)
 
 /datum/antagonist/proc/clear_antag_moodies()
 	if(!antag_moodlet)
 		return
-	owner.current.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "antag_moodlet")
+	SEND_SIGNAL(owner.current, COMSIG_CLEAR_MOOD_EVENT, "antag_moodlet")
 
 //Returns the team antagonist belongs to if any.
 /datum/antagonist/proc/get_team()

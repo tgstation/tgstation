@@ -4,5 +4,8 @@
     "map_file": "runtimestation.dmm",
     "minetype": null,
     "space_ruin_levels": 0,
-    "space_empty_levels": 0
+    "space_empty_levels": 0,
+	"shuttles": {
+	    "cargo": "cargo_delta"
+    }
 }

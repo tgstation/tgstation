@@ -34913,7 +34913,7 @@
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "bJP" = (
-/obj/machinery/vending/boozeomat,
+/obj/machinery/vending/boozeomat/all_access,
 /turf/open/floor/plasteel/bar,
 /area/maintenance/port/aft)
 "bJQ" = (
@@ -37890,12 +37890,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/stack/sheet/metal/fifty,
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
-"bRb" = (
-/obj/structure/table/reinforced,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/item/stack/sheet/metal/ten,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "bRc" = (
@@ -53325,6 +53320,8 @@
 /obj/item/radio/intercom{
 	pixel_x = -30
 	},
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "eyM" = (
@@ -53363,7 +53360,8 @@
 /turf/closed/wall/r_wall,
 /area/science/mixing)
 "flc" = (
-/obj/machinery/bookbinder,
+/obj/structure/table/reinforced,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "fnC" = (
@@ -53475,8 +53473,6 @@
 /obj/machinery/cell_charger{
 	pixel_y = 5
 	},
-/obj/item/stock_parts/cell/super,
-/obj/item/stock_parts/cell/super,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "ijc" = (
@@ -53541,7 +53537,6 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "jrE" = (
-/obj/machinery/rnd/production/protolathe/department/science,
 /obj/structure/sign/poster/official/random{
 	pixel_x = 32
 	},
@@ -53686,6 +53681,12 @@
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
 /area/science/circuit)
+"lCi" = (
+/obj/docking_port/stationary/public_mining_dock{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
 "lMg" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -53826,13 +53827,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/science/circuit)
-"qpv" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/machinery/autolathe,
-/turf/open/floor/plasteel/white,
 /area/science/circuit)
 "quT" = (
 /obj/structure/lattice,
@@ -54037,6 +54031,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "vCb" = (
@@ -54051,7 +54046,6 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/libraryscanner,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "wkN" = (
@@ -54083,9 +54077,7 @@
 "wvX" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light,
-/obj/item/stock_parts/cell/super,
-/obj/item/stock_parts/cell/super,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/ten,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "wBd" = (
@@ -65291,7 +65283,7 @@ apN
 apN
 apN
 apN
-apN
+lCi
 apN
 apN
 apN
@@ -103901,16 +103893,16 @@ bMB
 bNA
 cOe
 bSl
-bRb
+bUq
 flc
 vPE
-bUq
+bXs
 bVt
 dfh
 jSO
 jgm
 oUh
-qpv
+vPE
 jrE
 saK
 bSl

@@ -71,7 +71,7 @@
 /datum/quirk/family_heirloom/post_add()
 	if(where == "in your backpack")
 		var/mob/living/carbon/human/H = quirk_holder
-		H.back.SendSignal(COMSIG_TRY_STORAGE_SHOW, H)
+		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
 	to_chat(quirk_holder, "<span class='boldnotice'>There is a precious family [heirloom.name] [where], passed down from generation to generation. Keep it safe!</span>")
 	var/list/family_name = splittext(quirk_holder.real_name, " ")
@@ -79,11 +79,11 @@
 
 /datum/quirk/family_heirloom/on_process()
 	if(heirloom in quirk_holder.GetAllContents())
-		quirk_holder.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "family_heirloom_missing")
-		quirk_holder.SendSignal(COMSIG_ADD_MOOD_EVENT, "family_heirloom", /datum/mood_event/family_heirloom)
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom_missing")
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "family_heirloom", /datum/mood_event/family_heirloom)
 	else
-		quirk_holder.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
-		quirk_holder.SendSignal(COMSIG_ADD_MOOD_EVENT, "family_heirloom_missing", /datum/mood_event/family_heirloom_missing)
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "family_heirloom_missing", /datum/mood_event/family_heirloom_missing)
 
 /datum/quirk/family_heirloom/clone_data()
 	return heirloom
@@ -148,9 +148,9 @@
 		if(quirk_holder.m_intent == MOVE_INTENT_RUN)
 			to_chat(quirk_holder, "<span class='warning'>Easy, easy, take it slow... you're in the dark...</span>")
 			quirk_holder.toggle_move_intent()
-		quirk_holder.SendSignal(COMSIG_ADD_MOOD_EVENT, "nyctophobia", /datum/mood_event/nyctophobia)
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "nyctophobia", /datum/mood_event/nyctophobia)
 	else
-		quirk_holder.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
 
 
 

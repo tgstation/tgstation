@@ -14,9 +14,9 @@
 	var/displayed_text
 	var/atom/attached_to
 
-/obj/effect/countdown/New(atom/A)
+/obj/effect/countdown/Initialize()
 	. = ..()
-	attach(A)
+	attach(loc)
 
 /obj/effect/countdown/examine(mob/user)
 	. = ..()

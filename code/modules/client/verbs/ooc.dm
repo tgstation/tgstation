@@ -22,6 +22,8 @@
 	if(jobban_isbanned(src.mob, "OOC"))
 		to_chat(src, "<span class='danger'>You have been banned from OOC.</span>")
 		return
+	if(QDELETED(src))
+		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	var/raw_msg = msg

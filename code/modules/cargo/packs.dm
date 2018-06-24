@@ -93,8 +93,8 @@
 					/obj/item/flashlight,
 					/obj/item/tank/internals/oxygen/red,
 					/obj/item/tank/internals/oxygen/red,
-					/obj/item/extinguisher,
-					/obj/item/extinguisher,
+					/obj/item/extinguisher/advanced,
+					/obj/item/extinguisher/advanced,
 					/obj/item/clothing/head/hardhat/red,
 					/obj/item/clothing/head/hardhat/red)
 	crate_name = "firefighting crate"
@@ -928,6 +928,14 @@
 	crate_name = "water tank crate"
 	crate_type = /obj/structure/closet/crate/large
 
+/datum/supply_pack/materials/foamtank
+	name = "Foam Tank Crate"
+	desc = "Contains plasmamen's bane."
+	cost = 1500
+	contains = list(/obj/structure/reagent_dispensers/foamtank)
+	crate_name = "foam tank crate"
+	crate_type = /obj/structure/closet/crate/large
+
 /datum/supply_pack/materials/hightank
 	name = "Large Water Tank Crate"
 	desc = "Contains a high-capacity water tank. Useful for botany or other service jobs."
@@ -1059,18 +1067,19 @@
 
 /datum/supply_pack/medical/virus
 	name = "Virus Crate"
-	desc = "Contains twelve different bottles, each filled with a different chemical compound, each useful for virology. Also includes seven beakers and syringes. Balled-up jeans not included. Requires CMO access to open."
+	desc = "Contains twelve different bottles, containing several viral samples for virology research. Also includes seven beakers and syringes. Balled-up jeans not included. Requires CMO access to open."
 	cost = 2500
 	access = ACCESS_CMO
 	contains = list(/obj/item/reagent_containers/glass/bottle/flu_virion,
 					/obj/item/reagent_containers/glass/bottle/cold,
-					/obj/item/reagent_containers/glass/bottle/epiglottis_virion,
-					/obj/item/reagent_containers/glass/bottle/liver_enhance_virion,
+					/obj/item/reagent_containers/glass/bottle/random_virus,
+					/obj/item/reagent_containers/glass/bottle/random_virus,
+					/obj/item/reagent_containers/glass/bottle/random_virus,
+					/obj/item/reagent_containers/glass/bottle/random_virus,
 					/obj/item/reagent_containers/glass/bottle/fake_gbs,
 					/obj/item/reagent_containers/glass/bottle/magnitis,
 					/obj/item/reagent_containers/glass/bottle/pierrot_throat,
 					/obj/item/reagent_containers/glass/bottle/brainrot,
-					/obj/item/reagent_containers/glass/bottle/hallucigen_virion,
 					/obj/item/reagent_containers/glass/bottle/anxiety,
 					/obj/item/reagent_containers/glass/bottle/beesease,
 					/obj/item/storage/box/syringes,
@@ -1295,7 +1304,7 @@
 
 /datum/supply_pack/service/vending/cigarette
 	name = "Cigarette Supply Crate"
-	desc = "Don't believe the reports - smoke today! Contains cigarette vending machine refills."
+	desc = "Don't believe the reports - smoke today! Contains a cigarette vending machine refill."
 	cost = 1500
 	contains = list(/obj/item/vending_refill/cigarette)
 	crate_name = "cigarette supply crate"
@@ -1303,7 +1312,7 @@
 
 /datum/supply_pack/service/vending/games
 	name = "Games Supply Crate"
-	desc = "Get your game on with these three game vending machine refills."
+	desc = "Get your game on with this game vending machine refill."
 	cost = 1000
 	contains = list(/obj/item/vending_refill/games)
 	crate_name = "games supply crate"
@@ -1653,14 +1662,26 @@
 
 /datum/supply_pack/costumes_toys/randomised/contraband
 	name = "Contraband Crate"
-	desc = "Psst.. bud... want some contraband? I can get you a poster, some nice cigs, bling, even some ambrosia deus...you know, the good stuff. Just keep it away from the cops, kay?"
+	desc = "Psst.. bud... want some contraband? I can get you a poster, some nice cigs, dank, even some sponsored items...you know, the good stuff. Just keep it away from the cops, kay?"
 	contraband = TRUE
 	cost = 3000
-	num_contained = 5
+	num_contained = 7
 	contains = list(/obj/item/poster/random_contraband,
+					/obj/item/poster/random_contraband,
+					/obj/item/reagent_containers/food/snacks/grown/cannabis,
+					/obj/item/reagent_containers/food/snacks/grown/cannabis/rainbow,
+					/obj/item/reagent_containers/food/snacks/grown/cannabis/white,
+					/obj/item/storage/pill_bottle/zoom,
+					/obj/item/storage/pill_bottle/happy,
+					/obj/item/storage/pill_bottle/lsd,
+					/obj/item/storage/pill_bottle/aranesp,
+					/obj/item/storage/pill_bottle/stimulant,
+					/obj/item/toy/cards/deck/syndicate,				
+					/obj/item/reagent_containers/food/drinks/bottle/absinthe,
+					/obj/item/clothing/under/syndicate/tacticool,
+					/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
 					/obj/item/storage/fancy/cigarettes/cigpack_shadyjims,
-					/obj/item/storage/fancy/cigarettes/cigpack_midori,
-					/obj/item/seeds/ambrosia/deus,
+					/obj/item/clothing/mask/gas/syndicate,
 					/obj/item/clothing/neck/necklace/dope)
 	crate_name = "crate"
 

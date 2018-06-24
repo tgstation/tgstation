@@ -171,6 +171,8 @@
 
 		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in L
 		target = L[desc]
+		var/turf/T = get_turf(target)
+		log_game("[key_name(user)] has set the teleporter target to [target] at [AREACOORD(T)]")
 
 	else
 		var/list/S = power_station.linked_stations
@@ -185,6 +187,8 @@
 		var/obj/machinery/teleport/station/target_station = L[desc]
 		if(!target_station || !target_station.teleporter_hub)
 			return
+		var/turf/T = get_turf(target_station)
+		log_game("[key_name(user)] has set the teleporter target to [target_station] at [AREACOORD(T)]")
 		target = target_station.teleporter_hub
 		target_station.linked_stations |= power_station
 		target_station.stat &= ~NOPOWER
