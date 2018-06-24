@@ -114,7 +114,7 @@
 		else
 			to_chat(user, "<span class='notice'>There is nothing to remove from the endoskeleton.</span>")
 		updateicon()
-	else if(istype(W, /obj/item/screwdriver))
+	else if(istype(W, /obj/item/screwdriver)) //Swaps the power cell if you're holding a new one in your other hand.
 		var/turf/T = get_turf(src)
 		if(istype(user.held_items[user.active_hand_index == 1 ? 2 : 1], /obj/item/stock_parts/cell))
 			if (chest.cell) //Sanity check.
