@@ -124,6 +124,8 @@
 /datum/component/nanites/proc/on_emp(severity)
 	nanite_volume *= (rand(0.60, 0.90))		//Lose 10-40% of nanites
 	adjust_nanites(-(rand(5, 50)))		//Lose 5-50 flat nanite volume
+	if(prob(40/severity))
+		cloud_id = 0
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_emp(severity)
