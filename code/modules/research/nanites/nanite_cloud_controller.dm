@@ -5,15 +5,11 @@
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "nanite_cloud_controller"
 	var/obj/item/disk/nanite_program/disk
+	var/list/datum/nanite_cloud_backup/cloud_backups = list()
 	var/current_view = 0 //0 is the main menu, any other number is the page of the backup with that ID
 
-/obj/machinery/computer/nanite_cloud_controller/Initialize()
-	. = ..()
-	SSnanites.cloud_storage |= src
-
 /obj/machinery/computer/nanite_cloud_controller/Destroy()
-	SSnanites.cloud_storage -= src
-	SSnanites.check_hardware() //in case this is the last storage left
+	QDEL_LIST(cloud_backups) //rip backups
 	eject()
 	. = ..()
 
@@ -35,6 +31,22 @@
 		disk.forceMove(drop_location())
 	disk = null
 
+/obj/machinery/computer/nanite_cloud_controller/proc/get_backup(cloud_id)
+	for(var/I in cloud_backups)
+		var/datum/nanite_cloud_backup/backup = I
+		if(backup.cloud_id == cloud_id)
+			return backup	
+	
+/obj/machinery/computer/nanite_cloud_controller/proc/generate_backup(cloud_id, mob/user)
+	if(SSnanites.get_cloud_backup(cloud_id, TRUE))
+		to_chat(user, "<span class='warning'>Cloud ID already registered.</span>")
+		return
+		
+	var/datum/nanite_cloud_backup/backup = new(storage)
+	var/datum/component/nanites/cloud_copy = new(new_backup)
+	backup.cloud_id = cloud_id
+	investigate_log("[key_name(user)] created a new nanite cloud backup with id #[cloud_id]", INVESTIGATE_NANITES)
+	
 /obj/machinery/computer/nanite_cloud_controller/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -124,24 +136,42 @@
 			var/cloud_id = input("Choose a cloud ID (1-100):", name, null) as null|num
 			if(!isnull(cloud_id))
 				cloud_id = CLAMP(round(cloud_id, 1),1,100)
-				SSnanites.generate_cloud_backup(cloud_id)
-				investigate_log("[key_name(usr)] created a new nanite cloud backup with id #[cloud_id]", INVESTIGATE_NANITES)
+				generate_backup(cloud_id, usr)	
 			. = TRUE
 		if("delete_backup")
-			SSnanites.delete_cloud_backup(current_view)
-			investigate_log("[key_name(usr)] deleted the nanite cloud backup #[current_view]", INVESTIGATE_NANITES)
+			var/nanite_cloud_backup/backup = get_backup(current_view)
+			if(backup)
+				qdel(backup)
+				investigate_log("[key_name(usr)] deleted the nanite cloud backup #[current_view]", INVESTIGATE_NANITES)
 			. = TRUE
 		if("upload_program")
 			if(disk && disk.program)
-				var/datum/component/nanites/cloud/backup = SSnanites.get_cloud_backup(current_view)
+				var/datum/component/nanites/cloud/backup = get_backup(current_view)
 				if(backup)
-					backup.add_program(disk.program.copy())
+					var/datum/component/nanites/nanites = backup.nanites
+					nanites.add_program(disk.program.copy())
 					investigate_log("[key_name(usr)] uploaded program [disk.program.name] to cloud #[current_view]", INVESTIGATE_NANITES)
 			. = TRUE
 		if("remove_program")
-			var/datum/component/nanites/cloud/backup = SSnanites.get_cloud_backup(current_view)
+			var/nanite_cloud_backup/backup = get_backup(current_view)
 			if(backup)
-				var/datum/nanite_program/P = backup.programs[text2num(params["program_id"])]
+				var/datum/component/nanites/nanites = backup.nanites
+				var/datum/nanite_program/P = nanites.programs[text2num(params["program_id"])]
 				investigate_log("[key_name(usr)] deleted program [P.name] from cloud #[current_view]", INVESTIGATE_NANITES)
 				qdel(P)
 			. = TRUE
+			
+/datum/nanite_cloud_backup
+	var/cloud_id = 0
+	var/datum/component/nanites/backup
+	var/obj/machinery/computer/nanite_cloud_controller/storage
+	
+/datum/nanite_cloud_backup/New(obj/machinery/computer/nanite_cloud_controller/_storage)
+	storage = _storage
+	storage.cloud_backups += src
+	SSnanites.cloud_backups += src
+	
+/datum/nanite_cloud_backup/Destroy()
+	storage.cloud_backups -= src
+	SSnanites.cloud_backups -= src
+	. = ..()

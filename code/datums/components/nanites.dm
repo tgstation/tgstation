@@ -92,9 +92,11 @@
 /datum/component/nanites/proc/cloud_sync()
 	if(!cloud_id)
 		return
-	var/datum/component/nanites/cloud/cloud_copy = SSnanites.get_cloud_backup(cloud_id)
-	if(cloud_copy)
-		sync(cloud_copy)
+	var/datum/nanite_cloud_backup/backup = SSnanites.get_cloud_backup(cloud_id)
+	if(backup)
+		var/datum/component/nanites/cloud_copy = backup.nanites
+		if(cloud_copy)
+			sync(cloud_copy)
 
 /datum/component/nanites/proc/add_program(datum/nanite_program/new_program, datum/nanite_program/source_program)
 	for(var/X in programs)
@@ -150,7 +152,3 @@
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.receive_signal(code, source)
-
-//Nanite components used for cloud storage
-/datum/component/nanites/cloud
-	dupe_mode = COMPONENT_DUPE_ALLOWED
