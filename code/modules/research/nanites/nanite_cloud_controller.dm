@@ -87,12 +87,12 @@
 	if(current_view)
 		var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 		if(backup)
-			var/datum/component/nanites/cloud_backup = backup.nanites
+			var/datum/component/nanites/nanites = backup.nanites
 			data["cloud_backup"] = TRUE
 			var/list/cloud_programs = list()
-			for(var/datum/nanite_program/P in cloud_backup.programs)
+			var/id = 1
+			for(var/datum/nanite_program/P in nanites.programs)
 				var/list/cloud_program = list()
-				var/id = 1
 				cloud_program["name"] = P.name
 				cloud_program["desc"] = P.desc
 				cloud_program["id"] = id
@@ -115,13 +115,13 @@
 				cloud_programs += list(cloud_program)
 			data["cloud_programs"] = cloud_programs
 	else
-		var/list/cloud_backups = list()
+		var/list/backup_list = list()
 		for(var/X in cloud_backups)
 			var/datum/nanite_cloud_backup/backup = X
 			var/list/cloud_backup = list()
 			cloud_backup["cloud_id"] = backup.cloud_id
-			cloud_backups += list(cloud_backup)
-		data["cloud_backups"] = cloud_backups
+			backup_list += list(cloud_backup)
+		data["cloud_backups"] = backup_list
 	return data
 
 /obj/machinery/computer/nanite_cloud_controller/ui_act(action, params)
