@@ -215,7 +215,7 @@
 		return FALSE
 	if((world.time - C.timeofdeath) < 1800) //too late
 		return FALSE
-	if(C.getBruteLoss() > 180) || (C.getFireLoss() > 180)) //too damaged
+	if((C.getBruteLoss() > 180) || (C.getFireLoss() > 180)) //too damaged
 		return FALSE
 	if(!C.getorgan(/obj/item/organ/heart)) //what are we even shocking
 		return FALSE
