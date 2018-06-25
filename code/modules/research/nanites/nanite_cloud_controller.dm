@@ -42,8 +42,8 @@
 		to_chat(user, "<span class='warning'>Cloud ID already registered.</span>")
 		return
 		
-	var/datum/nanite_cloud_backup/backup = new(storage)
-	var/datum/component/nanites/cloud_copy = new(new_backup)
+	var/datum/nanite_cloud_backup/backup = new(src)
+	var/datum/component/nanites/cloud_copy = new(backup)
 	backup.cloud_id = cloud_id
 	investigate_log("[key_name(user)] created a new nanite cloud backup with id #[cloud_id]", INVESTIGATE_NANITES)
 	
@@ -164,7 +164,7 @@
 			
 /datum/nanite_cloud_backup
 	var/cloud_id = 0
-	var/datum/component/nanites/backup
+	var/datum/component/nanites/nanites
 	var/obj/machinery/computer/nanite_cloud_controller/storage
 	
 /datum/nanite_cloud_backup/New(obj/machinery/computer/nanite_cloud_controller/_storage)
