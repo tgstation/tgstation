@@ -1,7 +1,3 @@
-//Nanites, robotics' own chemistry lab and virology lite.
-//Pattern nanites act as reagent effects, which draw upon idle nanites to fuel themselves.
-//If someone wants to benefit from a nanite shot, they need to be full of idle nanites first!
-
 /datum/component/nanites
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
