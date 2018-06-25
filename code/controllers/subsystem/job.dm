@@ -367,10 +367,10 @@ SUBSYSTEM_DEF(job)
 	if(PopcapReached())
 		RejectPlayer(player)
 	else if(player.client.prefs.joblessrole == BEOVERFLOW)
-		var/allowed_to_be_a_loser = jobban_isbanned(player, SSjob.overflow_role)
-		if(QDELETED(player))
+		var/allowed_to_be_a_loser = !jobban_isbanned(player, SSjob.overflow_role)
+		if(QDELETED(player) || !allowed_to_be_a_loser)
 			RejectPlayer(player)
-		if(allowed_to_be_a_loser)
+		else 
 			if(!AssignRole(player, SSjob.overflow_role))
 				RejectPlayer(player)
 	else if(player.client.prefs.joblessrole == BERANDOMJOB)
@@ -442,7 +442,7 @@ SUBSYSTEM_DEF(job)
 			to_chat(M, "<FONT color='blue'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>")
 
 	if(job && H)
-		job.after_spawn(H, M, joined_late)
+		job.after_spawn(H, M, joined_late) // note: this happens before the mob has a key! M will always have a client, H might not.
 
 	return H
 

@@ -521,7 +521,7 @@
 		sleep(20)
 		var/global/list/curses
 		if(!curses)
-			curses = list("A fuel technician just slit his own throat and begged for death. The shuttle will be delayed by three minutes.",
+			curses = list("A fuel technician just slit his own throat and begged for death.",
 			"The shuttle's navigation programming was replaced by a file containing just two words: IT COMES.",
 			"The shuttle's custodian was found washing the windows with their own blood.",
 			"A shuttle engineer began screaming 'DEATH IS NOT THE END' and ripped out wires until an arc flash seared off her flesh.",
