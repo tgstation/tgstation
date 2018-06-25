@@ -124,20 +124,24 @@
 			var/cloud_id = input("Choose a cloud ID (1-100):", name, null) as null|num
 			if(!isnull(cloud_id))
 				cloud_id = CLAMP(round(cloud_id, 1),1,100)
-			SSnanites.generate_cloud_backup(cloud_id)
+				SSnanites.generate_cloud_backup(cloud_id)
+				investigate_log("[key_name(usr)] created a new nanite cloud backup with id #[cloud_id]", INVESTIGATE_NANITES)
 			. = TRUE
 		if("delete_backup")
 			SSnanites.delete_cloud_backup(current_view)
+			investigate_log("[key_name(usr)] deleted the nanite cloud backup #[cloud_id]", INVESTIGATE_NANITES)
 			. = TRUE
 		if("upload_program")
 			if(disk && disk.program)
 				var/datum/component/nanites/cloud/backup = SSnanites.get_cloud_backup(current_view)
 				if(backup)
 					backup.add_program(disk.program.copy())
+					investigate_log("[key_name(usr)] uploaded program [disk.program.name] to cloud #[current_view]", INVESTIGATE_NANITES)
 			. = TRUE
 		if("remove_program")
 			var/datum/component/nanites/cloud/backup = SSnanites.get_cloud_backup(current_view)
 			if(backup)
 				var/datum/nanite_program/P = backup.programs[text2num(params["program_id"])]
+				investigate_log("[key_name(usr)] deleted program [P.name] from cloud #[current_view]", INVESTIGATE_NANITES)
 				qdel(P)
 			. = TRUE

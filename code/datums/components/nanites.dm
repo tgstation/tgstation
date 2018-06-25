@@ -146,12 +146,12 @@
 		var/datum/nanite_program/NP = X
 		NP.on_death(gibbed)
 
-/datum/component/nanites/proc/receive_signal(code)
+/datum/component/nanites/proc/receive_signal(code, source = "an unidentified source")
 	if(!host_mob) //dormant
 		return
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
-		NP.receive_signal(code)
+		NP.receive_signal(code, source)
 
 //Nanite components used for cloud storage
 /datum/component/nanites/cloud

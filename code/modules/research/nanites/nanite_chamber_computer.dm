@@ -151,22 +151,26 @@
 			var/threshold = input("Set safety threshold (0-500):", name, null) as null|num
 			if(!isnull(threshold))
 				chamber.set_safety(CLAMP(round(threshold, 1),0,500))
+				investigate_log("[key_name(chamber.occupant)]'s nanites' safety threshold was set to [threshold] by [key_name(usr)].", INVESTIGATE_NANITES)
 			. = TRUE
 		if("set_cloud")
 			var/cloud_id = input("Set cloud ID (1-100, 0 to disable):", name, null) as null|num
 			if(!isnull(cloud_id))
 				chamber.set_cloud(CLAMP(round(cloud_id, 1),0,100))
+				investigate_log("[key_name(chamber.occupant)]'s nanites' cloud id was set to [cloud_id] by [key_name(usr)].", INVESTIGATE_NANITES)
 			. = TRUE
 		if("connect_chamber")
 			find_chamber()
 			. = TRUE
 		if("nanite_injection")
 			chamber.inject_nanites()
+			investigate_log("[key_name(chamber.occupant)] was injected with nanites by [key_name(usr)] using a nanite chamber.", INVESTIGATE_NANITES)
 			. = TRUE
 		if("add_program")
 			if(!disk || !chamber || !chamber.occupant)
 				return
 			chamber.install_program(disk.program)
+			investigate_log("Program of type [disk.program.type] was installed into [key_name(chamber.occupant)]'s nanites with a nanite chamber by [key_name(usr)].", INVESTIGATE_NANITES)
 			. = TRUE
 		if("remove_program")
 			if(!chamber || !chamber.occupant)
@@ -175,4 +179,5 @@
 			if(nanites)
 				var/datum/nanite_program/P = nanites.programs[text2num(params["program_id"])]
 				chamber.uninstall_program(P)
+				investigate_log("Program of type [P.type] was uninstalled from [key_name(chamber.occupant)]'s nanites with a nanite chamber by [key_name(usr)].", INVESTIGATE_NANITES)
 			. = TRUE

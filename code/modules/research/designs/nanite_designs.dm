@@ -131,6 +131,13 @@
 	id = "repairing_nanites"
 	program_type = /datum/nanite_program/repairing
 	category = list("Medical Nanites")
+	
+/datum/design/nanites/defib
+	name = "Defibrillation"
+	desc = "The nanites, when triggered, send a defibrillating shock to the host's heart."
+	id = "defib_nanites"
+	program_type = /datum/nanite_program/triggered/defib
+	category = list("Medical Nanites")	
 
 
 ////////////////////AUGMENTATION NANITES//////////////////////////////////////

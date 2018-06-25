@@ -12,7 +12,7 @@
 	return FALSE
 
 /datum/nanite_program/sensor/proc/send_code()
-	SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, extra_code)
+	SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, extra_code, "a [name] program")
 
 /datum/nanite_program/sensor/active_effect()
 	if(extra_code && check_event())

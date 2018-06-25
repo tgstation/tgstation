@@ -59,14 +59,14 @@
 	..()
 	SSnanites.nanite_relays -= src
 
-/datum/nanite_program/relay/proc/relay_signal(code, relay_code)
+/datum/nanite_program/relay/proc/relay_signal(code, relay_code, source)
 	if(!activated)
 		return
 	if(!host_mob)
 		return
 	if(relay_code != extra_code)
 		return
-	SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, code)
+	SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, code, source)
 
 /datum/nanite_program/metabolic_synthesis
 	name = "Metabolic Synthesis"
@@ -131,4 +131,5 @@
 			infectee.AddComponent(/datum/component/nanites, 10)
 			GET_COMPONENT_FROM(target_nanites, /datum/component/nanites, infectee)
 			if(target_nanites)
+				investigate_log("[key_name(infectee)] was infected by spreading nanites by [key_name(host_mob)]", INVESTIGATE_NANITES)
 				target_nanites.sync(nanites)
