@@ -450,6 +450,7 @@
 #include "code\datums\traits\good.dm"
 #include "code\datums\traits\negative.dm"
 #include "code\datums\traits\neutral.dm"
+#include "code\datums\traits\unlock.dm"
 #include "code\datums\weather\weather.dm"
 #include "code\datums\weather\weather_types\acid_rain.dm"
 #include "code\datums\weather\weather_types\ash_storm.dm"

@@ -11,6 +11,7 @@
 	var/mood_quirk = FALSE //if true, this quirk affects mood and is unavailable if moodlets are disabled
 	var/mob_trait //if applicable, apply and remove this mob trait
 	var/mob/living/quirk_holder
+	var/unlock    //bitflag for the flag needed for the quirk to be unlocked
 
 /datum/quirk/New(mob/living/quirk_mob, spawn_effects)
 	..()
@@ -93,6 +94,58 @@
 	for(var/V in roundstart_quirks)
 		var/datum/quirk/T = V
 		T.transfer_mob(to_mob)
+
+/client/proc/grant_quirk(_quirk, cause, silent = FALSE)
+	if(!_quirk)
+		return
+	var/BF
+	var/datum/quirk/Q = null
+	if(isdatum(_quirk))
+		Q = _quirk
+	else
+		for(var/V in SSquirks.quirks)
+			Q = SSquirks.quirks[V]
+			if(Q.unlock == _quirk)
+				BF = _quirk //Could also just Q.unlock, either is fine
+				break
+		if(!Q)
+			CRASH("Unlock quirk bitflag not recognized in client/proc/grant_quirk")
+			return
+
+	if(!prefs || prefs.unlocked_quirks & BF)
+		return
+	prefs.unlocked_quirks += BF
+//	if(!silent)
+//		to_chat(usr,"<font color=#d800ff'><b>You were granted [Q.name][cause ?  ", due to [cause]." : "."] You are now able to select \
+		this quirk at roundstart.")
+//	log_admin("[ckey] was granted [Q.name][cause ?  "by [cause]." : "."]")
+
+/client/proc/take_quirk(_quirk, reason) //should be admin only, so excuse the weird returns
+	if(!_quirk)
+		return "param1= the quirks unlock bitflag or quirkdatum as integer or ref, param2=reason to take away their loved ones"
+	if(!reason)
+		return "at least give a reason to take away their life's achievements you butt"
+	var/datum/quirk/Q = null
+	var/BF
+	if(isdatum(_quirk))
+		Q = _quirk
+	else
+		for(var/V in SSquirks.quirks)
+			Q = SSquirks.quirks[V]
+			if(Q.unlock == _quirk)
+				BF = _quirk
+				break
+		if(!Q)
+			CRASH("Unlock-quirk bitflag, [_quirk], not recognized in client/proc/take_quirk. Leave a mans' quirk alone!")
+			return ":("
+	if(prefs.unlocked_quirks & BF)
+		prefs.unlocked_quirks -= BF
+		to_chat(usr,"<span class='warning'>The quirk [Q.name] was taken away from you. Reason: [reason].")
+		return "Succes! You fucking monster."
+	else
+		return "You can't take what they don't have."
+
+
 
 /*
 

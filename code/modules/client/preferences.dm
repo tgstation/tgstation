@@ -82,6 +82,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/neutral_quirks = list()
 	var/list/all_quirks = list()
 	var/list/character_quirks = list()
+	var/unlocked_quirks = 0 //bitfield
 
 		//Jobs, uses bitflags
 	var/job_civilian_high = 0
@@ -910,6 +911,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					has_quirk = FALSE
 				else
 					quirk_cost *= -1 //invert it back, since we'd be regaining this amount
+			if(T.unlock)
+				if(!(T.unlock & unlocked_quirks))
+					break
 			if(quirk_cost > 0)
 				quirk_cost = "+[quirk_cost]"
 			var/font_color = "#AAAAFF"
@@ -918,6 +922,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(quirk_conflict)
 				dat += "<font color='[font_color]'>[quirk_name]</font> - [initial(T.desc)] \
 				<font color='red'><b>LOCKED: [lock_reason]</b></font><br>"
+			if(T.unlock)
+				font_color = "#d800ff"
 			else
 				if(has_quirk)
 					dat += "<b><font color='[font_color]'>[quirk_name]</font></b> - [initial(T.desc)] \
