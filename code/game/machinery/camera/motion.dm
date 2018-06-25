@@ -10,6 +10,8 @@
 	if(!isMotion())
 		. = PROCESS_KILL
 		return
+	if(stat & EMPED)
+		return
 	if (detectTime > 0)
 		var/elapsed = world.time - detectTime
 		if (elapsed > alarm_delay)
