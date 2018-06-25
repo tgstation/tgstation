@@ -290,11 +290,9 @@
 		to_chat(user, "<span class='userdanger'>[src]'s contents spill all over you!</span>")
 		reagents.reaction(user, TOUCH)
 		reagents.clear_reagents()
-	else if (slot == SLOT_HEAD)
+	if (slot == SLOT_HEAD)
 		container_type = NONE
-	else if(slot == SLOT_L_STORE || slot ==SLOT_R_STORE)
-		container_type = OPENCONTAINER
-
+		
 /obj/item/reagent_containers/glass/bucket/dropped(mob/user)
 	..()
 	container_type = OPENCONTAINER
