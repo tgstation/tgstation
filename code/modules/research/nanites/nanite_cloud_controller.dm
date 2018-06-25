@@ -35,18 +35,19 @@
 	for(var/I in cloud_backups)
 		var/datum/nanite_cloud_backup/backup = I
 		if(backup.cloud_id == cloud_id)
-			return backup	
-	
+			return backup
+
 /obj/machinery/computer/nanite_cloud_controller/proc/generate_backup(cloud_id, mob/user)
 	if(SSnanites.get_cloud_backup(cloud_id, TRUE))
 		to_chat(user, "<span class='warning'>Cloud ID already registered.</span>")
 		return
-		
+
 	var/datum/nanite_cloud_backup/backup = new(src)
 	var/datum/component/nanites/cloud_copy = new(backup)
 	backup.cloud_id = cloud_id
+	backup.nanites = cloud_copy
 	investigate_log("[key_name(user)] created a new nanite cloud backup with id #[cloud_id]", INVESTIGATE_NANITES)
-	
+
 /obj/machinery/computer/nanite_cloud_controller/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -137,41 +138,41 @@
 			var/cloud_id = input("Choose a cloud ID (1-100):", name, null) as null|num
 			if(!isnull(cloud_id))
 				cloud_id = CLAMP(round(cloud_id, 1),1,100)
-				generate_backup(cloud_id, usr)	
+				generate_backup(cloud_id, usr)
 			. = TRUE
 		if("delete_backup")
-			var/nanite_cloud_backup/backup = get_backup(current_view)
+			var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 			if(backup)
 				qdel(backup)
 				investigate_log("[key_name(usr)] deleted the nanite cloud backup #[current_view]", INVESTIGATE_NANITES)
 			. = TRUE
 		if("upload_program")
 			if(disk && disk.program)
-				var/datum/component/nanites/cloud/backup = get_backup(current_view)
+				var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 				if(backup)
 					var/datum/component/nanites/nanites = backup.nanites
 					nanites.add_program(disk.program.copy())
 					investigate_log("[key_name(usr)] uploaded program [disk.program.name] to cloud #[current_view]", INVESTIGATE_NANITES)
 			. = TRUE
 		if("remove_program")
-			var/nanite_cloud_backup/backup = get_backup(current_view)
+			var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 			if(backup)
 				var/datum/component/nanites/nanites = backup.nanites
 				var/datum/nanite_program/P = nanites.programs[text2num(params["program_id"])]
 				investigate_log("[key_name(usr)] deleted program [P.name] from cloud #[current_view]", INVESTIGATE_NANITES)
 				qdel(P)
 			. = TRUE
-			
+
 /datum/nanite_cloud_backup
 	var/cloud_id = 0
 	var/datum/component/nanites/nanites
 	var/obj/machinery/computer/nanite_cloud_controller/storage
-	
+
 /datum/nanite_cloud_backup/New(obj/machinery/computer/nanite_cloud_controller/_storage)
 	storage = _storage
 	storage.cloud_backups += src
 	SSnanites.cloud_backups += src
-	
+
 /datum/nanite_cloud_backup/Destroy()
 	storage.cloud_backups -= src
 	SSnanites.cloud_backups -= src
