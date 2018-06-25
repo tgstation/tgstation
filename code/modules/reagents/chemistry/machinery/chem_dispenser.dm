@@ -467,14 +467,14 @@
 		"creme_de_menthe",
 		"creme_de_cacao",
 		"triple_sec",
-		"sake",
-		"fernet"
+		"sake"
 	)
 	emagged_reagents = list(
 		"ethanol",
 		"iron",
 		"minttoxin",
-		"atomicbomb"
+		"atomicbomb",
+		"fernet"
 	)
 
 
