@@ -684,7 +684,6 @@
 #include "code\game\objects\effects\forcefields.dm"
 #include "code\game\objects\effects\glowshroom.dm"
 #include "code\game\objects\effects\landmarks.dm"
-#include "code\game\objects\effects\manifest.dm"
 #include "code\game\objects\effects\mines.dm"
 #include "code\game\objects\effects\misc.dm"
 #include "code\game\objects\effects\overlays.dm"
