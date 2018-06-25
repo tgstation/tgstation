@@ -290,6 +290,11 @@
 		to_chat(user, "<span class='userdanger'>[src]'s contents spill all over you!</span>")
 		reagents.reaction(user, TOUCH)
 		reagents.clear_reagents()
+		container_type = NONE
+
+/obj/item/reagent_containers/glass/bucket/dropped(mob/user)
+	..()
+	container_type = OPENCONTAINER
 
 /obj/item/reagent_containers/glass/bucket/equip_to_best_slot(var/mob/M)
 	if(reagents.total_volume) //If there is water in a bucket, don't quick equip it to the head
