@@ -848,8 +848,8 @@
 	id = "nanite_roam"
 	display_name = "Roaming Nanite Programming"
 	description = "Nanite programs that require nanites to act independently, roam or seek targets."
-	prereq_ids = list("nanite_base","adv_robotics","stealth_nanites")
-	design_ids = list("purging_nanites", "necrotic_nanites", "metabolic_nanites")
+	prereq_ids = list("nanite_base","adv_robotics")
+	design_ids = list("purging_nanites", "necrotic_nanites", "metabolic_nanites", "stealth_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 4000
 
