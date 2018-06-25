@@ -62,6 +62,54 @@
 				return 1
 	return 0
 
+/obj/item/robot_suit/wrench_act(mob/living/user, obj/item/I) //Deconstucts empty borg shell. Flashes remain unbroken because they haven't been used yet
+	var/turf/T = get_turf(src)
+	forceMove(T)
+	if(l_leg || r_leg || chest || l_arm || r_arm || head)
+		if(I.use_tool(src, user, 5, volume=50))
+			if(l_leg)
+				l_leg.forceMove(T)
+				l_leg = null
+			if(r_leg)
+				r_leg.forceMove(T)
+				r_leg = null
+			if(chest)
+				if (chest.cell) //Sanity check.
+					chest.cell.forceMove(T)
+					chest.cell = null
+				chest.forceMove(T)
+				new /obj/item/stack/cable_coil(T, 1)
+				chest.wired = 0
+				chest = null
+			if(l_arm)
+				l_arm.forceMove(T)
+				l_arm = null
+			if(r_arm)
+				r_arm.forceMove(T)
+				r_arm = null
+			if(head)
+				head.forceMove(T)
+				head.flash1.forceMove(T)
+				head.flash1 = null
+				head.flash2.forceMove(T)
+				head.flash2 = null
+				head = null
+			to_chat(user, "<span class='notice'>You disassemble the cyborg shell.</span>")
+	else
+		to_chat(user, "<span class='notice'>There is nothing to remove from the endoskeleton.</span>")
+	updateicon()
+
+obj/item/robot_suit/screwdriver_act(mob/living/user, obj/item/I) //Swaps the power cell if you're holding a new one in your other hand.
+	var/turf/T = get_turf(src)
+	if(istype(user.held_items[user.active_hand_index == 1 ? 2 : 1], /obj/item/stock_parts/cell))
+		if (chest.cell) //Sanity check.
+			chest.cell.forceMove(T)
+		chest.cell = user.held_items[user.active_hand_index == 1 ? 2 : 1]
+		if(!user.transferItemToLoc(user.held_items[user.active_hand_index == 1 ? 2 : 1], src.chest))
+			chest.cell = null
+			return
+		to_chat(user, "<span class='notice'>You replace the power cell.</span>")
+
 /obj/item/robot_suit/attackby(obj/item/W, mob/user, params)
 
 	if(istype(W, /obj/item/stack/sheet/metal))
@@ -78,52 +126,6 @@
 			else
 				to_chat(user, "<span class='warning'>You need one sheet of metal to start building ED-209!</span>")
 				return
-	else if(istype(W, /obj/item/wrench)) //Deconstucts empty borg shell. Flashes remain unbroken because they haven't been used yet
-		var/turf/T = get_turf(src)
-		forceMove(T)
-		if(l_leg || r_leg || chest || l_arm || r_arm || head)
-			if(W.use_tool(src, user, 5, volume=50))
-				if(l_leg)
-					l_leg.forceMove(T)
-					l_leg = null
-				if(r_leg)
-					r_leg.forceMove(T)
-					r_leg = null
-				if(chest)
-					if (chest.cell) //Sanity check.
-						chest.cell.forceMove(T)
-						chest.cell = null
-					chest.forceMove(T)
-					new /obj/item/stack/cable_coil(T, 1)
-					chest.wired = 0
-					chest = null
-				if(l_arm)
-					l_arm.forceMove(T)
-					l_arm = null
-				if(r_arm)
-					r_arm.forceMove(T)
-					r_arm = null
-				if(head)
-					head.forceMove(T)
-					head.flash1.forceMove(T)
-					head.flash1 = null
-					head.flash2.forceMove(T)
-					head.flash2 = null
-					head = null
-				to_chat(user, "<span class='notice'>You disassemble the cyborg shell.</span>")
-		else
-			to_chat(user, "<span class='notice'>There is nothing to remove from the endoskeleton.</span>")
-		updateicon()
-	else if(istype(W, /obj/item/screwdriver)) //Swaps the power cell if you're holding a new one in your other hand.
-		var/turf/T = get_turf(src)
-		if(istype(user.held_items[user.active_hand_index == 1 ? 2 : 1], /obj/item/stock_parts/cell))
-			if (chest.cell) //Sanity check.
-				chest.cell.forceMove(T)
-			chest.cell = user.held_items[user.active_hand_index == 1 ? 2 : 1]
-			if(!user.transferItemToLoc(user.held_items[user.active_hand_index == 1 ? 2 : 1], src.chest))
-				chest.cell = null
-				return
-			to_chat(user, "<span class='notice'>You replace the power cell.</span>")
 	else if(istype(W, /obj/item/bodypart/l_leg/robot))
 		if(src.l_leg)
 			return
