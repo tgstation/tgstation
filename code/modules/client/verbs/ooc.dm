@@ -232,7 +232,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 
 	var/motd = global.config.motd
 	if(motd)
-		to_chat(src, "<div class=\"motd\">[motd]</div>")
+		to_chat(src, "<div class=\"motd\">[motd]</div>", handle_whitespace=FALSE)
 	else
 		to_chat(src, "<span class='notice'>The Message of the Day has not been set.</span>")
 
