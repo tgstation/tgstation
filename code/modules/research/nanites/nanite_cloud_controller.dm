@@ -129,7 +129,7 @@
 			. = TRUE
 		if("delete_backup")
 			SSnanites.delete_cloud_backup(current_view)
-			investigate_log("[key_name(usr)] deleted the nanite cloud backup #[cloud_id]", INVESTIGATE_NANITES)
+			investigate_log("[key_name(usr)] deleted the nanite cloud backup #[current_view]", INVESTIGATE_NANITES)
 			. = TRUE
 		if("upload_program")
 			if(disk && disk.program)

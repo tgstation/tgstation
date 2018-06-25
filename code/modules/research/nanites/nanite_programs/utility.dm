@@ -131,5 +131,5 @@
 			infectee.AddComponent(/datum/component/nanites, 10)
 			GET_COMPONENT_FROM(target_nanites, /datum/component/nanites, infectee)
 			if(target_nanites)
-				investigate_log("[key_name(infectee)] was infected by spreading nanites by [key_name(host_mob)]", INVESTIGATE_NANITES)
+				infectee.investigate_log("[key_name(infectee)] was infected by spreading nanites by [key_name(host_mob)]", INVESTIGATE_NANITES)
 				target_nanites.sync(nanites)

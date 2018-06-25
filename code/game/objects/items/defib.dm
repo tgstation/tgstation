@@ -597,7 +597,7 @@
 					H.revive()
 					H.emote("gasp")
 					H.Jitter(100)
-					SEND_SIGNAL(C, COMSIG_LIVING_MINOR_SHOCK)
+					SEND_SIGNAL(H, COMSIG_LIVING_MINOR_SHOCK)
 					if(tplus > tloss)
 						H.adjustBrainLoss( max(0, min(99, ((tlimit - tplus) / tlimit * 100))), 150)
 					add_logs(user, H, "revived", defib)
