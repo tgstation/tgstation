@@ -84,8 +84,9 @@
 
 	data["current_view"] = current_view
 	if(current_view)
-		var/datum/component/nanites/cloud/cloud_backup = SSnanites.get_cloud_backup(current_view)
-		if(cloud_backup)
+		var/datum/nanite_cloud_backup/backup = get_backup(current_view)
+		if(backup)
+			var/datum/component/nanites/cloud_backup = backup.nanites
 			data["cloud_backup"] = TRUE
 			var/list/cloud_programs = list()
 			for(var/datum/nanite_program/P in cloud_backup.programs)
@@ -114,8 +115,8 @@
 			data["cloud_programs"] = cloud_programs
 	else
 		var/list/cloud_backups = list()
-		for(var/X in SSnanites.cloud_backups)
-			var/datum/component/nanites/cloud/backup = X
+		for(var/X in cloud_backups)
+			var/datum/nanite_cloud_backup/backup = X
 			var/list/cloud_backup = list()
 			cloud_backup["cloud_id"] = backup.cloud_id
 			cloud_backups += list(cloud_backup)
