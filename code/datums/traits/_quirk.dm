@@ -105,7 +105,7 @@
 	else
 		for(var/V in SSquirks.quirks)
 			Q = SSquirks.quirks[V]
-			if(Q.unlock == _quirk)
+			if(initial(Q.unlock) == _quirk)
 				BF = _quirk //Could also just Q.unlock, either is fine
 				break
 		if(!Q)
@@ -115,10 +115,10 @@
 	if(!prefs || prefs.unlocked_quirks & BF)
 		return
 	prefs.unlocked_quirks += BF
-//	if(!silent)
-//		to_chat(usr,"<font color=#d800ff'><b>You were granted [Q.name][cause ?  ", due to [cause]." : "."] You are now able to select \
+	if(!silent)
+		to_chat(usr,"<font color=#d800ff'><b>You were granted [initial(Q.name)][cause ?  ", due to [cause]." : "."] You are now able to select \
 		this quirk at roundstart.")
-//	log_admin("[ckey] was granted [Q.name][cause ?  "by [cause]." : "."]")
+	log_admin("[ckey] was granted [initial(Q.name)][cause ?  "by [cause]." : "."]")
 
 /client/proc/take_quirk(_quirk, reason) //should be admin only, so excuse the weird returns
 	if(!_quirk)
@@ -132,7 +132,7 @@
 	else
 		for(var/V in SSquirks.quirks)
 			Q = SSquirks.quirks[V]
-			if(Q.unlock == _quirk)
+			if(initial(Q.unlock) == _quirk)
 				BF = _quirk
 				break
 		if(!Q)
@@ -140,7 +140,8 @@
 			return ":("
 	if(prefs.unlocked_quirks & BF)
 		prefs.unlocked_quirks -= BF
-		to_chat(usr,"<span class='warning'>The quirk [Q.name] was taken away from you. Reason: [reason].")
+		to_chat(usr,"<span class='warning'>The quirk [initial(Q.name)] was taken away from you. Reason: [reason].")
+		log_admin("[ckey]'s [initial(Q.name)] was taken away. Reason: [reason]" )
 		return "Succes! You fucking monster."
 	else
 		return "You can't take what they don't have."
