@@ -1,0 +1,4 @@
+author: "nichlas0010"
+delete-after: True
+changes: 
+  - bugfix: "You should now receive your destroy AI objectives properly during IAA"
