@@ -915,24 +915,24 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(initial(T.unlock))
 				to_chat(world,"1-[initial(T.unlock)]-[unlocked_quirks]")
 				if(!(unlocked_quirks & initial(T.unlock)))
+					to_chat(world,"2")
 					break
 			if(quirk_cost > 0)
 				quirk_cost = "+[quirk_cost]"
 			var/font_color = "#AAAAFF"
 			if(initial(T.value) != 0)
 				font_color = initial(T.value) > 0 ? "#AAFFAA" : "#FFAAAA"
+			if(initial(T.unlock))
+				font_color = "#d800ff"
 			if(quirk_conflict)
 				dat += "<font color='[font_color]'>[quirk_name]</font> - [initial(T.desc)] \
 				<font color='red'><b>LOCKED: [lock_reason]</b></font><br>"
-			if(initial(T.unlock))
-				font_color = "#d800ff"
+			if(has_quirk)
+				dat += "<b><font color='[font_color]'>[quirk_name]</font></b> - [initial(T.desc)] \
+				<a href='?_src_=prefs;preference=trait;task=update;trait=[quirk_name]'>[has_quirk ? "Lose" : "Take"] ([quirk_cost] pts.)</a><br>"
 			else
-				if(has_quirk)
-					dat += "<b><font color='[font_color]'>[quirk_name]</font></b> - [initial(T.desc)] \
-					<a href='?_src_=prefs;preference=trait;task=update;trait=[quirk_name]'>[has_quirk ? "Lose" : "Take"] ([quirk_cost] pts.)</a><br>"
-				else
-					dat += "<font color='[font_color]'>[quirk_name]</font> - [initial(T.desc)] \
-					<a href='?_src_=prefs;preference=trait;task=update;trait=[quirk_name]'>[has_quirk ? "Lose" : "Take"] ([quirk_cost] pts.)</a><br>"
+				dat += "<font color='[font_color]'>[quirk_name]</font> - [initial(T.desc)] \
+				<a href='?_src_=prefs;preference=trait;task=update;trait=[quirk_name]'>[has_quirk ? "Lose" : "Take"] ([quirk_cost] pts.)</a><br>"
 		dat += "<br><center><a href='?_src_=prefs;preference=trait;task=reset'>Reset Traits</a></center>"
 
 	user << browse(null, "window=preferences")
