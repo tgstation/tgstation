@@ -1,0 +1,8 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "Camera networks, monitor screens and telescreens have been standardized."
+  - tweak: "Motion-sensitive cameras now show a message when they trigger the alarm."
+  - bugfix: "The Box/Meta auxillary base camera now works."
+  - bugfix: "Bomb test site cameras now emit light, as intended."
+  - bugfix: "Meta: Replaced the RD telescreen in the CE office with the correct one."
