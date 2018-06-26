@@ -101,7 +101,7 @@
 /datum/component/nanites/proc/add_program(datum/nanite_program/new_program, datum/nanite_program/source_program)
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
-		if(NP.type == new_program.type)
+		if(NP.unique && NP.type == new_program.type)
 			qdel(NP)
 	if(source_program)
 		source_program.copy_programming(new_program)

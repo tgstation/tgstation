@@ -56,12 +56,15 @@
 		data["kill_code"] = program.kill_code
 		data["trigger_code"] = program.trigger_code
 		data["timer_type"] = program.get_timer_type_text()
-	
-		data["has_extra_code"] = program.has_extra_code
-		data["extra_code"] = program.extra_code
-		data["extra_code_name"] = program.extra_code_name
-		data["extra_code_min"] = program.extra_code_min
-		data["extra_code_max"] = program.extra_code_max
+		
+		var/list/extra_settings = list()
+		for(var/X in program.extra_settings)
+			var/list/setting = list()
+			setting["name"] = X
+			setting["value"] = program.get_extra_setting(X)
+			extra_settings += list(setting)
+		data["extra_settings"] = extra_settings
+
 	return data
 
 /obj/machinery/nanite_programmer/ui_act(action, params)
@@ -94,11 +97,8 @@
 				if("trigger")
 					program.trigger_code = CLAMP(round(new_code, 1),0,9999)
 			. = TRUE
-		if("set_extra_code")
-			var/new_code = input("Set [program.extra_code_name] ([program.extra_code_min]-[program.extra_code_max]):", name, null) as null|num
-			if(isnull(new_code))
-				return
-			program.set_extra_code(new_code)
+		if("set_extra_setting")
+			program.set_extra_setting(usr, params["target_setting"])
 			. = TRUE
 		if("set_activation_delay")
 			var/delay = input("Set activation delay in seconds (0-1800):", name, program.activation_delay) as null|num

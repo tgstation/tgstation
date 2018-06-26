@@ -6,7 +6,7 @@
 	var/mob/living/host_mob
 
 	var/use_rate = 0 			//Amount of nanites used while active
-
+	var/unique = TRUE			//If there can be more than one copy in the same nanites
 	var/can_trigger = FALSE		//If the nanites have a trigger function (used for the programming UI)
 	var/trigger_cost = 0		//Amount of nanites required to trigger
 	var/trigger_cooldown = 50	//Deciseconds required between each trigger activation
@@ -38,6 +38,8 @@
 	var/kill_code 			= 0		//Code that permanently removes the program [1-9999]
 	var/trigger_code 		= 0 	//Code that triggers the program (if available) [1-9999]
 
+	var/list/extra_settings = list()
+	
 	//Potential extra code, for programs with extra customization
 	var/has_extra_code = FALSE
 	var/extra_code = 0
@@ -91,6 +93,12 @@
 /datum/nanite_program/proc/set_extra_code(code)
 	extra_code = CLAMP(round(code, 1),extra_code_min, extra_code_max)
 
+/datum/nanite_program/proc/set_extra_setting(user, setting)
+	return
+	
+/datum/nanite_program/proc/get_extra_setting(setting)
+	return
+	
 /datum/nanite_program/proc/on_add(datum/component/nanites/_nanites)
 	nanites = _nanites
 	if(nanites.host_mob)
@@ -146,7 +154,7 @@
 	else
 		if(passive_enabled)
 			disable_passive_effect()
-
+			
 //If false, disables active and passive effects, but doesn't consume nanites
 //Can be used to avoid consuming nanites for nothing
 /datum/nanite_program/proc/check_conditions()
