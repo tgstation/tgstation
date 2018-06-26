@@ -8,43 +8,39 @@
 	anchored = TRUE
 	layer = ABOVE_MOB_LAYER
 	CanAtmosPass = ATMOS_PASS_NO
-	var/state = PLASTIC_FLAPS_NORMAL
 
 /obj/structure/plasticflaps/opaque
 	opacity = TRUE
 
 /obj/structure/plasticflaps/examine(mob/user)
 	. = ..()
-	switch(state)
-		if(PLASTIC_FLAPS_NORMAL)
-			to_chat(user, "<span class='notice'>[src] are <b>screwed</b> to the floor.</span>")
-		if(PLASTIC_FLAPS_DETACHED)
-			to_chat(user, "<span class='notice'>[src] are no longer <i>screwed</i> to the floor, and the flaps can be <b>cut</b> apart.</span>")
+	if(anchored)
+		to_chat(user, "<span class='notice'>[src] are <b>screwed</b> to the floor.</span>")
+	else
+		to_chat(user, "<span class='notice'>[src] are no longer <i>screwed</i> to the floor, and the flaps can be <b>cut</b> apart.</span>")
 
 /obj/structure/plasticflaps/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/screwdriver))
-		if(state == PLASTIC_FLAPS_NORMAL)
+		if(anchored)
 			user.visible_message("<span class='warning'>[user] unscrews [src] from the floor.</span>", "<span class='notice'>You start to unscrew [src] from the floor...</span>", "You hear rustling noises.")
 			if(W.use_tool(src, user, 100, volume=100))
-				if(state != PLASTIC_FLAPS_NORMAL)
+				if(!anchored)
 					return
-				state = PLASTIC_FLAPS_DETACHED
 				anchored = FALSE
 				to_chat(user, "<span class='notice'>You unscrew [src] from the floor.</span>")
-		else if(state == PLASTIC_FLAPS_DETACHED)
+		else if(!anchored)
 			user.visible_message("<span class='warning'>[user] screws [src] to the floor.</span>", "<span class='notice'>You start to screw [src] to the floor...</span>", "You hear rustling noises.")
 			if(W.use_tool(src, user, 40, volume=100))
-				if(state != PLASTIC_FLAPS_DETACHED)
+				if(anchored)
 					return
-				state = PLASTIC_FLAPS_NORMAL
 				anchored = TRUE
 				to_chat(user, "<span class='notice'>You screw [src] from the floor.</span>")
 	else if(istype(W, /obj/item/wirecutters))
-		if(state == PLASTIC_FLAPS_DETACHED)
+		if(!anchored)
 			user.visible_message("<span class='warning'>[user] cuts apart [src].</span>", "<span class='notice'>You start to cut apart [src].</span>", "You hear cutting.")
 			if(W.use_tool(src, user, 50, volume=100))
-				if(state != PLASTIC_FLAPS_DETACHED)
+				if(anchored)
 					return
 				to_chat(user, "<span class='notice'>You cut apart [src].</span>")
 				var/obj/item/stack/sheet/plastic/five/P = new(loc)
