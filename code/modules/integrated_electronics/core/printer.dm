@@ -36,12 +36,12 @@
 	AddComponent(/datum/component/material_container, list(MAT_METAL), MINERAL_MATERIAL_AMOUNT * 25, TRUE, list(/obj/item/stack, /obj/item/integrated_circuit, /obj/item/electronic_assembly))
 
 /obj/item/integrated_circuit_printer/proc/print_program(user)
-	if (!cloning)
+	if(!cloning)
 		return
 	visible_message("<span class='notice'>[src] has finished printing its assembly!</span>")
 	playsound(src, 'sound/items/poster_being_created.ogg', 50, TRUE)
 	var/obj/item/electronic_assembly/assembly = SScircuit.load_electronic_assembly(get_turf(src), program)
-	assembly.creator = key_name("usr")
+	assembly.creator = key_name(user)
 	assembly.investigate_log("was printed by [assembly.creator].", INVESTIGATE_CIRCUIT)
 	cloning = FALSE
 
@@ -265,6 +265,7 @@
 				else if(fast_clone)
 					var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 					if(debug || materials.use_amount_type(program["metal_cost"], MAT_METAL))
+						cloning = TRUE
 						print_program(usr)
 					else
 						to_chat(usr, "<span class='warning'>You need [program["metal_cost"]] metal to build that!</span>")
