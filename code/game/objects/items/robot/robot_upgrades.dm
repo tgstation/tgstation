@@ -599,8 +599,8 @@
 			R.module.remove_module(PP, TRUE)
 
 /obj/item/borg/upgrade/transform
-	name = "borg module picker"
-	desc = "Allows you to set a specific borg module."
+	name = "borg module picker (Standard)"
+	desc = "Allows you to to turn a cyborg into a standard cyborg."
 	icon_state = "cyborg_upgrade3"
 	var/obj/item/robot_module/new_module = /obj/item/robot_module/standard
 
