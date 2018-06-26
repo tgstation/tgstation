@@ -81,8 +81,7 @@
 	var/real_clamp = FALSE
 	dam_force = 0
 
-/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/proper
-	name = "\proper KILL CLAMP"
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/real
 	desc = "They won't know what clamped them! This time for real!"
 	energy_drain = 10
 	dam_force = 20
@@ -133,19 +132,22 @@
 			if(real_clamp)
 				var/mob/living/carbon/C = target
 				var/play_sound = FALSE
+				var/limbs_gone = ""
 				var/obj/item/bodypart/affected = C.get_bodypart(BODY_ZONE_L_ARM)
 				if(affected != null)
 					affected.dismember(damtype)
 					play_sound = TRUE
+					limbs_gone = ", [affected]"
 				affected = C.get_bodypart(BODY_ZONE_R_ARM)
 				if(affected != null)
 					affected.dismember(damtype)
 					play_sound = TRUE
+					limbs_gone = "[limbs_gone], [affected]"
 				if(play_sound)
-					playsound(get_turf(src), get_dismember_sound(), 80, 1)
+					playsound(get_turf(src), get_dismember_sound(), 80, TRUE)
 					target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off.</span>", \
 								   "<span class='userdanger'>[chassis] rips [target]'s arms off.</span>")
-					add_logs(chassis.occupant, M, "attacked", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
+					add_logs(chassis.occupant, M, "dismembered of[limbs_gone],", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
 			else
 				target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off.</span>", \
 								   "<span class='userdanger'>[chassis] rips [target]'s arms off.</span>")
