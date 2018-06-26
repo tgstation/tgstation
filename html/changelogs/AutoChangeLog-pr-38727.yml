@@ -1,0 +1,4 @@
+author: "Irafas"
+delete-after: True
+changes: 
+  - bugfix: "Bucket helmets cannot have reagents transferred into them until after they are removed"
