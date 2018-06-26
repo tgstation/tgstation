@@ -913,9 +913,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				else
 					quirk_cost *= -1 //invert it back, since we'd be regaining this amount
 			if(initial(T.unlock))
-				to_chat(world,"1-[initial(T.unlock)]-[unlocked_quirks]")
 				if(!(unlocked_quirks & initial(T.unlock)))
-					to_chat(world,"2")
 					break
 			if(quirk_cost > 0)
 				quirk_cost = "+[quirk_cost]"
