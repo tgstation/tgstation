@@ -244,7 +244,7 @@ SUBSYSTEM_DEF(ticker)
 
 	if(!GLOB.Debug2)
 		if(!can_continue)
-			log_game("[mode.name] failed pre_setup, cause: [mode.setup_error]"])
+			log_game("[mode.name] failed pre_setup, cause: [mode.setup_error]")
 			qdel(mode)
 			mode = null
 			to_chat(world, "<B>Error setting up [GLOB.master_mode].</B> Reverting to pre-game lobby.")
