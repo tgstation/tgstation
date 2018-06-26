@@ -905,7 +905,7 @@
 	display_name = "Weaponized Nanite Programming"
 	description = "Nanite programs that harness the full destructive power of nanites."
 	prereq_ids = list("nanite_harmonic", "syndicate_basic")
-	design_ids = list("explosive_nanites","pyro_nanites","meltdown_nanites","viral_nanites","mindcontrol_nanites")
+	design_ids = list("explosive_nanites","pyro_nanites","meltdown_nanites","viral_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 	export_price = 12500
 
@@ -914,7 +914,7 @@
 	display_name = "Hazard Nanite Programs"
 	description = "Nanite programs with extremely dangerous effects, whose production is universally banned."
 	prereq_ids = list("nanite_harmonic", "alientech")
-	design_ids = list("spreading_nanites")
+	design_ids = list("spreading_nanites","mindcontrol_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	export_price = 10000
 
