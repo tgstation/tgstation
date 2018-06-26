@@ -64,6 +64,8 @@
 #define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
 #define	TRAIT_DRUNK_HEALING		"drunk_healing"
 
+#define TRAIT_DEATH             "death"
+
 // common trait sources
 #define TRAIT_GENERIC "generic"
 #define EYE_DAMAGE "eye_damage"
@@ -85,3 +87,7 @@
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
 #define EYES_COVERED "eyes_covered"
+
+// bitflags for unlockable traits, should be fine with 24 slots
+#define UNLOCK_DEATH 1
+
