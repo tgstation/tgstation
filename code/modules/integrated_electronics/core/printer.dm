@@ -35,7 +35,7 @@
 	. = ..()
 	AddComponent(/datum/component/material_container, list(MAT_METAL), MINERAL_MATERIAL_AMOUNT * 25, TRUE, list(/obj/item/stack, /obj/item/integrated_circuit, /obj/item/electronic_assembly))
 
-/obj/item/integrated_circuit_printer/proc/print_program(user)
+/obj/item/integrated_circuit_printer/proc/print_program(mob/user)
 	if(!cloning)
 		return
 	visible_message("<span class='notice'>[src] has finished printing its assembly!</span>")
