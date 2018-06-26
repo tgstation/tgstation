@@ -116,14 +116,15 @@
 
 /datum/nanite_program/cryo/active_effect()
 	host_mob.adjust_bodytemperature(-rand(15,25), 50)
-	
+
 /datum/nanite_program/mind_control
 	name = "Mind Control"
 	desc = "The nanites imprint an absolute directive onto the host's brain while they're active."
 	use_rate = 5
 	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
-	
+
 	extra_settings = list("Directive")
+	var/cooldown = 0 //avoids spam
 	var/directive = "..."
 
 /datum/nanite_program/mind_control/set_extra_setting(user, setting)
@@ -132,18 +133,24 @@
 		if(!new_directive)
 			return
 		directive = new_directive
-		
+
 /datum/nanite_program/mind_control/get_extra_setting(setting)
 	if(setting == "Directive")
 		return directive
-	
+
+/datum/nanite_program/mind_control/copy_extra_settings_to(datum/nanite_program/mind_control/target)
+	target.directive = directive
+
 /datum/nanite_program/mind_control/enable_passive_effect()
+	if(world.time < cooldown)
+		return
 	..()
 	brainwash(host_mob, directive)
-	log_game("A mind control nanite program brainwashed [key_name(target)] with the objective '[directive]'.")
+	log_game("A mind control nanite program brainwashed [key_name(host_mob)] with the objective '[directive]'.")
 
 /datum/nanite_program/mind_control/disable_passive_effect()
 	..()
-	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/brainwashed))
-		target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
-	log_game("[key_name(target)] is no longer brainwashed by nanites.")
+	if(host_mob.mind && host_mob.mind.has_antag_datum(/datum/antagonist/brainwashed))
+		host_mob.mind.remove_antag_datum(/datum/antagonist/brainwashed)
+	log_game("[key_name(host_mob)] is no longer brainwashed by nanites.")
+	cooldown = world.time + 450

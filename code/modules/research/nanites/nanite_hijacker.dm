@@ -82,9 +82,11 @@
 	return data
 
 /obj/item/nanite_hijacker/ui_act(action, params)
+	if(..())
+		return
 	switch(action)
 		if("eject")
-			eject()
+			eject(usr)
 			. = TRUE
 		if("toggle_active")
 			program.activated = !program.activated //we don't use the activation procs since we aren't in a mob
@@ -95,23 +97,22 @@
 			var/new_code = input("Set code (0000-9999):", name, null) as null|num
 			if(!isnull(new_code))
 				new_code = CLAMP(round(new_code, 1),0,9999)
+			else
+				return
 
 			var/target_code = params["target_code"]
 			switch(target_code)
 				if("activation")
-					program.activation_code = new_code
+					program.activation_code = CLAMP(round(new_code, 1),0,9999)
 				if("deactivation")
-					program.deactivation_code = new_code
+					program.deactivation_code = CLAMP(round(new_code, 1),0,9999)
 				if("kill")
-					program.kill_code = new_code
+					program.kill_code = CLAMP(round(new_code, 1),0,9999)
 				if("trigger")
-					program.trigger_code = new_code
+					program.trigger_code = CLAMP(round(new_code, 1),0,9999)
 			. = TRUE
-		if("set_extra_code")
-			var/new_code = input("Set [program.extra_code_name] ([program.extra_code_min]-[program.extra_code_max]):", name, null) as null|num
-			if(isnull(new_code))
-				return
-			program.set_extra_code(new_code)
+		if("set_extra_setting")
+			program.set_extra_setting(usr, params["target_setting"])
 			. = TRUE
 		if("set_activation_delay")
 			var/delay = input("Set activation delay in seconds (0-1800):", name, program.activation_delay) as null|num
@@ -124,7 +125,8 @@
 		if("set_timer")
 			var/timer = input("Set timer in seconds (10-3600):", name, program.timer) as null|num
 			if(!isnull(timer))
-				timer = CLAMP(round(timer, 1),10,3600)
+				if(!timer == 0)
+					timer = CLAMP(round(timer, 1),10,3600)
 				program.timer = timer
 			. = TRUE
 		if("set_timer_type")

@@ -76,8 +76,8 @@
 	var/list/programs_to_add = source.programs.Copy()
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
-		for(var/Y in source.programs)
-			var/datum/nanite_program/SNP = X
+		for(var/Y in programs_to_add)
+			var/datum/nanite_program/SNP = Y
 			if(NP.type == SNP.type)
 				programs_to_remove -= NP
 				programs_to_add -= SNP

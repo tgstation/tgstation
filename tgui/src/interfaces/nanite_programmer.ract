@@ -34,9 +34,15 @@
       {{#if data.can_trigger}}
         Trigger Code: {{data.trigger_code}} <ui-button icon='pencil' action='set_code' params='{"target_code": "trigger"}'>Set</ui-button><br>
       {{/if}}
-      {{#each data.extra_settings}}
-        {{name}}: {{value}} <ui-button icon='pencil' action='set_extra_setting' params='{"target_setting": {{name}}'>Set</ui-button><br>
-      {{/if}}
     </ui-section>
+
+    {{#if data.has_extra_settings}}
+    {{/if}}
+        <ui-section label='Special'>
+        {{#each data.extra_settings}}
+          {{name}}: {{value}} <ui-button icon='pencil' action='set_extra_setting' params='{"target_setting": "{{name}}"}'>Set</ui-button><br>
+        {{/each}}
+      </ui-section>
+
   {{/if}}
 {{/if}}

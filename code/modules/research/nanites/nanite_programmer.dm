@@ -56,7 +56,7 @@
 		data["kill_code"] = program.kill_code
 		data["trigger_code"] = program.trigger_code
 		data["timer_type"] = program.get_timer_type_text()
-		
+
 		var/list/extra_settings = list()
 		for(var/X in program.extra_settings)
 			var/list/setting = list()
@@ -64,6 +64,8 @@
 			setting["value"] = program.get_extra_setting(X)
 			extra_settings += list(setting)
 		data["extra_settings"] = extra_settings
+		if(LAZYLEN(extra_settings))
+			data["has_extra_settings"] = TRUE
 
 	return data
 

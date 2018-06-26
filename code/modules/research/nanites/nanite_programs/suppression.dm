@@ -13,7 +13,7 @@
 	to_chat(host_mob, "<span class='warning'>You start to feel very sleepy...</span>")
 	host_mob.drowsyness += 20
 	addtimer(CALLBACK(host_mob, /mob/living.proc/Sleeping, 200), rand(60,200))
-	
+
 /datum/nanite_program/paralyzing
 	name = "Paralysis"
 	desc = "The nanites actively suppress nervous pulses, effectively paralyzing the host."
@@ -47,8 +47,8 @@
 	if(!..())
 		return
 	playsound(host_mob, "sparks", 75, 1, -1)
-	host_mob.Knockdown(80)	
-	
+	host_mob.Knockdown(80)
+
 /datum/nanite_program/pacifying
 	name = "Pacification"
 	desc = "The nanites suppress the aggression center of the brain, preventing the host from causing direct harm to others."
@@ -62,7 +62,7 @@
 /datum/nanite_program/pacifying/disable_passive_effect()
 	..()
 	host_mob.remove_trait(TRAIT_PACIFISM, "nanites")
-	
+
 /datum/nanite_program/blinding
 	name = "Blindness"
 	desc = "The nanites suppress the host's ocular nerves, blinding them while they're active."
@@ -76,7 +76,7 @@
 /datum/nanite_program/blinding/disable_passive_effect()
 	..()
 	host_mob.remove_trait(TRAIT_BLIND, "nanites")
-	
+
 /datum/nanite_program/mute
 	name = "Mute"
 	desc = "The nanites suppress the host's speech, making them mute while they're active."
@@ -113,20 +113,23 @@
 	trigger_cost = 3
 	trigger_cooldown = 20
 	rogue_types = list(/datum/nanite_program/brain_misfire, /datum/nanite_program/brain_decay)
-	
+
 	extra_settings = list("Sentence")
 	var/sentence = ""
-	
+
 /datum/nanite_program/triggered/speech/set_extra_setting(user, setting)
 	if(setting == "Sentence")
 		var/new_sentence = stripped_input(user, "Choose the sentence that the host will be forced to say.", "Sentence", sentence, MAX_MESSAGE_LEN)
 		if(!new_sentence)
 			return
 		sentence = new_sentence
-		
+
 /datum/nanite_program/triggered/speech/get_extra_setting(setting)
 	if(setting == "Sentence")
 		return sentence
+
+/datum/nanite_program/triggered/speech/copy_extra_settings_to(datum/nanite_program/triggered/speech/target)
+	target.sentence = sentence
 
 /datum/nanite_program/triggered/speech/trigger()
 	if(!..())

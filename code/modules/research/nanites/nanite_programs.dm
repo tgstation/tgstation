@@ -39,7 +39,7 @@
 	var/trigger_code 		= 0 	//Code that triggers the program (if available) [1-9999]
 
 	var/list/extra_settings = list()
-	
+
 	//Potential extra code, for programs with extra customization
 	var/has_extra_code = FALSE
 	var/extra_code = 0
@@ -74,7 +74,7 @@
 	new_program.deactivation_code = deactivation_code
 	new_program.kill_code = kill_code
 	new_program.trigger_code = trigger_code
-	new_program.set_extra_code(extra_code)
+	copy_extra_settings_to(new_program)
 
 	return new_program
 
@@ -88,17 +88,17 @@
 	target.deactivation_code = deactivation_code
 	target.kill_code = kill_code
 	target.trigger_code = trigger_code
-	target.set_extra_code(extra_code)
-
-/datum/nanite_program/proc/set_extra_code(code)
-	extra_code = CLAMP(round(code, 1),extra_code_min, extra_code_max)
+	copy_extra_settings_to(target)
 
 /datum/nanite_program/proc/set_extra_setting(user, setting)
 	return
-	
+
 /datum/nanite_program/proc/get_extra_setting(setting)
 	return
-	
+
+/datum/nanite_program/proc/copy_extra_settings_to(datum/nanite_program/target)
+	return
+
 /datum/nanite_program/proc/on_add(datum/component/nanites/_nanites)
 	nanites = _nanites
 	if(nanites.host_mob)
@@ -154,7 +154,7 @@
 	else
 		if(passive_enabled)
 			disable_passive_effect()
-			
+
 //If false, disables active and passive effects, but doesn't consume nanites
 //Can be used to avoid consuming nanites for nothing
 /datum/nanite_program/proc/check_conditions()

@@ -2415,6 +2415,7 @@
 #include "code\modules\research\nanites\nanite_programs.dm"
 #include "code\modules\research\nanites\nanite_remote.dm"
 #include "code\modules\research\nanites\program_disks.dm"
+#include "code\modules\research\nanites\public_chamber.dm"
 #include "code\modules\research\nanites\nanite_programs\buffing.dm"
 #include "code\modules\research\nanites\nanite_programs\healing.dm"
 #include "code\modules\research\nanites\nanite_programs\rogue.dm"

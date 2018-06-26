@@ -21,8 +21,8 @@
 /obj/machinery/public_nanite_chamber/Initialize()
 	. = ..()
 	var/obj/item/circuitboard/machine/public_nanite_chamber/board = circuit
-	cloud_id = board.cloud_id	
-	
+	cloud_id = board.cloud_id
+
 /obj/machinery/public_nanite_chamber/proc/set_busy(status, working_icon)
 	busy = status
 	busy_icon_state = working_icon
@@ -45,13 +45,16 @@
 	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "[initial(icon_state)]_falling"),60)
 	addtimer(CALLBACK(src, .proc/complete_injection, locked_state),80)
 
-/obj/machinery/nanite_chamber/proc/complete_injection(locked_state)
+/obj/machinery/public_nanite_chamber/proc/complete_injection(locked_state)
 	//TODO MACHINE DING
 	locked = locked_state
 	set_busy(FALSE)
 	if(!occupant)
 		return
 	occupant.AddComponent(/datum/component/nanites, 75)
+	GET_COMPONENT_FROM(nanites, /datum/component/nanites, occupant)
+	if(nanites)
+		nanites.cloud_id = cloud_id
 
 /obj/machinery/public_nanite_chamber/update_icon()
 	cut_overlays()
@@ -123,9 +126,9 @@
 		return FALSE
 
 	..(user)
-	
+
 	. = TRUE
-	
+
 	if(occupant)
 		var/mob/living/L = occupant
 		GET_COMPONENT_FROM(nanites, /datum/component/nanites, L)
