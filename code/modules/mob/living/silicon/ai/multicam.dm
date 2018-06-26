@@ -88,10 +88,6 @@
 	icon_state = "room_background"
 	flags_1 = NOJAUNT_1
 
-/turf/open/ai_visible/Initialize()
-	. = ..()
-	obscured = image(null, src, null)
-
 /area/ai_multicam_room
 	name = "ai_multicam_room"
 	icon_state = "ai_camera_room"

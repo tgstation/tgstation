@@ -24,6 +24,17 @@ SUBSYSTEM_DEF(blackbox)
 
 //poll population
 /datum/controller/subsystem/blackbox/fire()
+	set waitfor = FALSE	//for population query
+
+	CheckPlayerCount()
+
+	if(CONFIG_GET(flag/use_exp_tracking))
+		if((triggertime < 0) || (world.time > (triggertime +3000)))	//subsystem fires once at roundstart then once every 10 minutes. a 5 min check skips the first fire. The <0 is midnight rollover check
+			update_exp(10,FALSE)
+
+/datum/controller/subsystem/blackbox/proc/CheckPlayerCount()
+	set waitfor = FALSE
+
 	if(!SSdbcore.Connect())
 		return
 	var/playercount = 0
@@ -33,11 +44,7 @@ SUBSYSTEM_DEF(blackbox)
 	var/admincount = GLOB.admins.len
 	var/datum/DBQuery/query_record_playercount = SSdbcore.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port, round_id) VALUES ([playercount], [admincount], '[SQLtime()]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', '[GLOB.round_id]')")
 	query_record_playercount.Execute()
-
-	if(CONFIG_GET(flag/use_exp_tracking))
-		if((triggertime < 0) || (world.time > (triggertime +3000)))	//subsystem fires once at roundstart then once every 10 minutes. a 5 min check skips the first fire. The <0 is midnight rollover check
-			update_exp(10,FALSE)
-
+	qdel(query_record_playercount)
 
 /datum/controller/subsystem/blackbox/Recover()
 	feedback = SSblackbox.feedback
@@ -255,6 +262,7 @@ Versioning
 	key_type = new_key_type
 
 /datum/controller/subsystem/blackbox/proc/ReportDeath(mob/living/L)
+	set waitfor = FALSE
 	if(sealed)
 		return
 	if(!L || !L.key || !L.mind)
@@ -267,28 +275,50 @@ Versioning
 		first_death["area"] = "[AREACOORD(L)]"
 		first_death["damage"] = "<font color='#FF5555'>[L.getBruteLoss()]</font>/<font color='orange'>[L.getFireLoss()]</font>/<font color='lightgreen'>[L.getToxLoss()]</font>/<font color='lightblue'>[L.getOxyLoss()]</font>/<font color='pink'>[L.getCloneLoss()]</font>"
 		first_death["last_words"] = L.last_words
+	var/sqlname = L.real_name
+	var/sqlkey = L.ckey
+	var/sqljob = L.mind.assigned_role
+	var/sqlspecial = L.mind.special_role
+	var/sqlpod = get_area_name(L, TRUE)
+	var/laname = L.lastattacker
+	var/lakey = L.lastattackerckey
+	var/sqlbrute = L.getBruteLoss()
+	var/sqlfire = L.getFireLoss()
+	var/sqlbrain = L.getBrainLoss()
+	var/sqloxy = L.getOxyLoss()
+	var/sqltox = L.getToxLoss()
+	var/sqlclone = L.getCloneLoss()
+	var/sqlstamina = L.getStaminaLoss()
+	var/x_coord = L.x
+	var/y_coord = L.y
+	var/z_coord = L.z
+	var/last_words = L.last_words
+	var/suicide = L.suiciding
+	var/map = SSmapping.config.map_name
+
 	if(!SSdbcore.Connect())
 		return
-	var/area/placeofdeath = get_area(L)
-	var/sqlname = sanitizeSQL(L.real_name)
-	var/sqlkey = sanitizeSQL(L.ckey)
-	var/sqljob = sanitizeSQL(L.mind.assigned_role)
-	var/sqlspecial = sanitizeSQL(L.mind.special_role)
-	var/sqlpod = sanitizeSQL(placeofdeath.name)
-	var/laname = sanitizeSQL(L.lastattacker)
-	var/lakey = sanitizeSQL(L.lastattackerckey)
-	var/sqlbrute = sanitizeSQL(L.getBruteLoss())
-	var/sqlfire = sanitizeSQL(L.getFireLoss())
-	var/sqlbrain = sanitizeSQL(L.getBrainLoss())
-	var/sqloxy = sanitizeSQL(L.getOxyLoss())
-	var/sqltox = sanitizeSQL(L.getToxLoss())
-	var/sqlclone = sanitizeSQL(L.getCloneLoss())
-	var/sqlstamina = sanitizeSQL(L.getStaminaLoss())
-	var/x_coord = sanitizeSQL(L.x)
-	var/y_coord = sanitizeSQL(L.y)
-	var/z_coord = sanitizeSQL(L.z)
-	var/last_words = sanitizeSQL(L.last_words)
-	var/suicide = sanitizeSQL(L.suiciding)
-	var/map = sanitizeSQL(SSmapping.config.map_name)
+	
+	sqlname = sanitizeSQL(sqlname)
+	sqlkey = sanitizeSQL(sqlkey)
+	sqljob = sanitizeSQL(sqljob)
+	sqlspecial = sanitizeSQL(sqlspecial)
+	sqlpod = sanitizeSQL(sqlpod)
+	laname = sanitizeSQL(laname)
+	lakey = sanitizeSQL(lakey)
+	sqlbrute = sanitizeSQL(sqlbrute)
+	sqlfire = sanitizeSQL(sqlfire)
+	sqlbrain = sanitizeSQL(sqlbrain)
+	sqloxy = sanitizeSQL(sqloxy)
+	sqltox = sanitizeSQL(sqltox)
+	sqlclone = sanitizeSQL(sqlclone)
+	sqlstamina = sanitizeSQL(sqlstamina)
+	x_coord = sanitizeSQL(x_coord)
+	y_coord = sanitizeSQL(y_coord)
+	z_coord = sanitizeSQL(z_coord)
+	last_words = sanitizeSQL(last_words)
+	suicide = sanitizeSQL(suicide)
+	map = sanitizeSQL(map)
 	var/datum/DBQuery/query_report_death = SSdbcore.NewQuery("INSERT INTO [format_table_name("death")] (pod, x_coord, y_coord, z_coord, mapname, server_ip, server_port, round_id, tod, job, special, name, byondkey, laname, lakey, bruteloss, fireloss, brainloss, oxyloss, toxloss, cloneloss, staminaloss, last_words, suicide) VALUES ('[sqlpod]', '[x_coord]', '[y_coord]', '[z_coord]', '[map]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', [GLOB.round_id], '[SQLtime()]', '[sqljob]', '[sqlspecial]', '[sqlname]', '[sqlkey]', '[laname]', '[lakey]', [sqlbrute], [sqlfire], [sqlbrain], [sqloxy], [sqltox], [sqlclone], [sqlstamina], '[last_words]', [suicide])")
 	query_report_death.Execute()
+	qdel(query_report_death)

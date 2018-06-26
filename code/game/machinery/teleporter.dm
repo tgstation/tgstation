@@ -69,6 +69,7 @@
 		if(do_teleport(M, com.target))
 			use_power(5000)
 			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
+				log_game("[M] ([key_name(M)]) was turned into a fly person")
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
 					if(human.dna && human.dna.species.id == "human")

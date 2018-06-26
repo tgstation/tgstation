@@ -22,8 +22,8 @@
 	anchored = TRUE
 	light_range = 1
 
-/obj/effect/particle_effect/sparks/New()
-	..()
+/obj/effect/particle_effect/sparks/Initialize()
+	. = ..()
 	flick("sparks", src) // replay the animation
 	playsound(src.loc, "sparks", 100, 1)
 	var/turf/T = loc

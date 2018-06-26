@@ -13,8 +13,8 @@
 	icon_state="b_beam"
 	var/atom/BeamSource
 
-/obj/effect/overlay/beam/New()
-	..()
+/obj/effect/overlay/beam/Initialize()
+	. = ..()
 	QDEL_IN(src, 10)
 
 /obj/effect/overlay/palmtree_r

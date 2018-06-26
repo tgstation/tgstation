@@ -1,0 +1,4 @@
+author: "MadmanMartian"
+delete-after: True
+changes: 
+  - bugfix: "Cameras that are EMPed no longer sound an alarm"
