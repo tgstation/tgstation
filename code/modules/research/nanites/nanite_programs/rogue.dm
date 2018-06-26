@@ -6,6 +6,7 @@
 	name = "Glitch"
 	desc = "A heavy software corruption that causes nanites to gradually break down."
 	use_rate = 1.5
+	unique = FALSE
 	rogue_types = list()
 
 //Generic body-affecting programs will decay into this
@@ -13,6 +14,7 @@
 	name = "Necrosis"
 	desc = "The nanites attack internal tissues indiscriminately, causing widespread damage."
 	use_rate = 0.75
+	unique = FALSE
 	rogue_types = list(/datum/nanite_program/glitch)
 
 /datum/nanite_program/necrotic/active_effect()
@@ -23,6 +25,7 @@
 	name = "Toxin Buildup"
 	desc = "The nanites cause a slow but constant toxin buildup inside the host."
 	use_rate = 0.25
+	unique = FALSE
 	rogue_types = list(/datum/nanite_program/glitch)
 
 /datum/nanite_program/toxic/active_effect()
@@ -33,6 +36,7 @@
 	name = "Hypoxemia"
 	desc = "The nanites prevent the host's blood from absorbing oxygen efficiently."
 	use_rate = 0.75
+	unique = FALSE
 	rogue_types = list(/datum/nanite_program/glitch)
 
 /datum/nanite_program/suffocating/active_effect()
@@ -43,6 +47,7 @@
 	name = "Neuro-Necrosis"
 	desc = "The nanites seek and attack brain cells, causing extensive neural damage to the host."
 	use_rate = 0.75
+	unique = FALSE
 	rogue_types = list(/datum/nanite_program/necrotic)
 
 /datum/nanite_program/brain_decay/active_effect()
@@ -55,6 +60,7 @@
 	name = "Brain Misfire"
 	desc = "The nanites interfere with neural pathways, causing minor psychological disturbances."
 	use_rate = 0.50
+	unique = FALSE
 	rogue_types = list(/datum/nanite_program/brain_decay)
 
 /datum/nanite_program/brain_misfire/active_effect()
@@ -74,6 +80,7 @@
 	name = "Dermalysis"
 	desc = "The nanites attack skin cells, causing irritation, rashes, and minor damage."
 	use_rate = 0.25
+	unique = FALSE
 	rogue_types = list(/datum/nanite_program/necrotic)
 
 /datum/nanite_program/skin_decay/active_effect()
@@ -91,6 +98,7 @@
 	name = "Nerve Decay"
 	desc = "The nanites attack the host's nerves, causing lack of coordination and short bursts of paralysis."
 	use_rate = 1
+	unique = FALSE
 	rogue_types = list(/datum/nanite_program/necrotic)
 
 /datum/nanite_program/nerve_decay/active_effect()
