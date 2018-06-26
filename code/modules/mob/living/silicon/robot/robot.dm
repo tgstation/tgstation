@@ -98,7 +98,8 @@
 	/obj/item/clothing/head/fedora,
 	/obj/item/clothing/head/beanie/, //All beanies
 	/obj/item/clothing/ears/headphones,
-	/obj/item/clothing/head/helmet/skull)
+	/obj/item/clothing/head/helmet/skull,
+	/obj/item/clothing/head/crown/fancy)
 
 	can_buckle = TRUE
 	buckle_lying = FALSE
