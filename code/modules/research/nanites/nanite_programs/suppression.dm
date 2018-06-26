@@ -91,3 +91,31 @@
 /datum/nanite_program/fake_death/disable_passive_effect()
 	..()
 	host_mob.cure_fakedeath("nanites")
+
+/datum/nanite_program/triggered/speech
+	name = "Forced Speech"
+	desc = "The nanites force the host to say a pre-programmed sentence when triggered."
+	unique = FALSE
+	trigger_cost = 3
+	trigger_cooldown = 20
+	rogue_types = list(/datum/nanite_program/brain_misfire, /datum/nanite_program/brain_decay)
+	
+	extra_settings = list("Sentence")
+	var/sentence = ""
+	
+/datum/nanite_program/triggered/speech/set_extra_setting(user, setting)
+	if(setting == "Sentence")
+		var/new_sentence = stripped_input(user, "Choose the sentence that the host will be forced to say.", "Sentence", sentence, MAX_MESSAGE_LEN)
+		if(!new_sentence)
+			return
+		sentence = new_sentence
+		
+/datum/nanite_program/triggered/speech/get_extra_setting(setting)
+	if(setting == "Sentence")
+		return sentence
+
+/datum/nanite_program/triggered/speech/trigger()
+	if(!..())
+		return
+	to_chat(host_mob, "<span class='warning'>You feel compelled to speak...</span>")
+	host_mob.say(sentence)

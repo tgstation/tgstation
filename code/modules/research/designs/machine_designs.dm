@@ -297,6 +297,14 @@
 	build_path = /obj/item/circuitboard/machine/nanite_chamber
 	category = list("Research Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	
+/datum/design/board/public_nanite_chamber
+	name = "Machine Design (Public Nanite Chamber Board)"
+	desc = "The circuit board for a Public Nanite Chamber."
+	id = "public_nanite_chamber"
+	build_path = /obj/item/circuitboard/machine/public_nanite_chamber
+	category = list("Research Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/nanite_programmer
 	name = "Machine Design (Nanite Programmer Board)"
