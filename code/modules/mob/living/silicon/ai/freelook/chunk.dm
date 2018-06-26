@@ -28,11 +28,15 @@
 
 /datum/camerachunk/proc/remove(mob/camera/aiEye/eye)
 	eye.visibleCameraChunks -= src
+	seenby -= eye
 	if(!eye.visibleCameraChunks.len)
 		var/client/client = eye.GetViewerClient()
 		if(client)
-			client.images -= GLOB.cameranet.obscured
-	seenby -= eye
+			switch(eye.use_static)
+				if(USE_STATIC_TRANSPARENT)
+					client.images -= GLOB.cameranet.obscured_transparent
+				if(USE_STATIC_OPAQUE)
+					client.images -= GLOB.cameranet.obscured
 
 // Called when a chunk has changed. I.E: A wall was deleted.
 

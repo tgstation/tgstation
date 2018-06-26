@@ -192,6 +192,8 @@
 	var/datum/camerachunk/chunk = GLOB.cameranet.chunkGenerated(our_turf.x, our_turf.y, our_turf.z)
 	if(chunk && chunk.seenby.len)
 		for(var/mob/camera/aiEye/A in chunk.seenby)
+			if(!A.ai_detector_visible)
+				continue
 			var/turf/detect_turf = get_turf(A)
 			if(get_dist(our_turf, detect_turf) < rangealert)
 				detect_state = PROXIMITY_ON_SCREEN
@@ -203,7 +205,7 @@
 /mob/camera/aiEye/remote/ai_detector
 	name = "AI detector eye"
 	ai_detector_visible = FALSE
-	use_static = TRUE
+	use_static = USE_STATIC_TRANSPARENT
 	visible_icon = FALSE
 
 /datum/action/item_action/toggle_multitool

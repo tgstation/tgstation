@@ -109,7 +109,7 @@
 	if(!eyeobj.eye_initialized)
 		var/camera_location
 		var/turf/myturf = get_turf(src)
-		if(eyeobj.use_static)
+		if(eyeobj.use_static != USE_STATIC_NONE)
 			if((!z_lock.len || (myturf.z in z_lock)) && GLOB.cameranet.checkTurfVis(myturf))
 				camera_location = myturf
 			else
@@ -182,16 +182,14 @@
 
 /mob/camera/aiEye/remote/setLoc(T)
 	if(eye_user)
-		if(!isturf(eye_user.loc))
-			return
 		T = get_turf(T)
 		if (T)
 			forceMove(T)
 		else
 			moveToNullspace()
 		update_ai_detect_hud()
-		if(use_static)
-			GLOB.cameranet.visibility(src, GetViewerClient())
+		if(use_static != USE_STATIC_NONE)
+			GLOB.cameranet.visibility(src, GetViewerClient(), null, use_static)
 		if(visible_icon)
 			if(eye_user.client)
 				eye_user.client.images -= user_image
