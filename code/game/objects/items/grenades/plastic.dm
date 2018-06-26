@@ -218,7 +218,7 @@
 		return
 	if(loc == AM)
 		return
-	if(AM.SendSignal(COMSIG_CONTAINS_STORAGE) && !AM.SendSignal(COMSIG_IS_STORAGE_LOCKED))
+	if(SEND_SIGNAL(AM, COMSIG_CONTAINS_STORAGE) && !SEND_SIGNAL(AM, COMSIG_IS_STORAGE_LOCKED))
 		return
 
 	to_chat(user, "<span class='notice'>You start planting the bomb...</span>")

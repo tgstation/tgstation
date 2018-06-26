@@ -30,8 +30,8 @@
 			set_opacity(0) //if we were blocking view, we aren't now because we're fading out
 		stoplag()
 
-/obj/effect/particle_effect/smoke/New()
-	..()
+/obj/effect/particle_effect/smoke/Initialize()
+	. = ..()
 	create_reagents(500)
 	START_PROCESSING(SSobj, src)
 
@@ -289,7 +289,7 @@
 			if(M)
 				more = "[ADMIN_LOOKUPFLW(M)] "
 			message_admins("Smoke: ([whereLink])[contained]. Key: [more ? more : carry.my_atom.fingerprintslast].")
-			log_game("A chemical smoke reaction has taken place in ([where])[contained]. Last associated key is [carry.my_atom.fingerprintslast].")
+			log_game("A chemical smoke reaction has taken place in ([where])[contained]. Last touched by [carry.my_atom.fingerprintslast].")
 		else
 			message_admins("Smoke: ([whereLink])[contained]. No associated key.")
 			log_game("A chemical smoke reaction has taken place in ([where])[contained]. No associated key.")

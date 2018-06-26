@@ -97,7 +97,8 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 
 	for(var/message in messageQueue)
-		to_chat(owner, message)
+		// whitespace has already been handled by the original to_chat
+		to_chat(owner, message, handle_whitespace=FALSE)
 
 	messageQueue = null
 	sendClientData()
@@ -175,7 +176,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 //Global chat procs
 
-/proc/to_chat(target, message)
+/proc/to_chat(target, message, handle_whitespace=TRUE)
 	if(!target)
 		return
 
@@ -201,12 +202,24 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	//Some macros remain in the string even after parsing and fuck up the eventual output
 	message = replacetext(message, "\improper", "")
 	message = replacetext(message, "\proper", "")
-	message = replacetext(message, "\n", "<br>")
-	message = replacetext(message, "\t", "[GLOB.TAB][GLOB.TAB]")
+	if(handle_whitespace)
+		message = replacetext(message, "\n", "<br>")
+		message = replacetext(message, "\t", "[GLOB.TAB][GLOB.TAB]")
 
 	for(var/I in targets)
 		//Grab us a client if possible
-		var/client/C = grab_client(I)
+		var/client/C
+		if (ismob(I))
+			var/mob/M = I
+			if(M.client)
+				C = M.client
+		else if(istype(I, /client))
+			C = I
+		else if(istype(I, /datum/mind))
+			var/datum/mind/M = I
+			if(M.current && M.current.client)
+				C = M.current.client
+			
 
 		if (!C)
 			continue
@@ -224,15 +237,3 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
 		C << output(url_encode(url_encode(message)), "browseroutput:output")
-
-/proc/grab_client(target)
-	if(istype(target, /client))
-		return target
-	else if(ismob(target))
-		var/mob/M = target
-		if(M.client)
-			return M.client
-	else if(istype(target, /datum/mind))
-		var/datum/mind/M = target
-		if(M.current && M.current.client)
-			return M.current.client

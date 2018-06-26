@@ -26,8 +26,6 @@
 
 /obj/item/vending_refill/wardrobe/sec_wardrobe
 	machine_name = "SecDrobe"
-	charges = list(10, 0, 3)
-	init_charges = list(10, 0, 3)
 
 /obj/machinery/vending/wardrobe/medi_wardrobe
 	name = "\improper MediDrobe"
@@ -56,8 +54,6 @@
 
 /obj/item/vending_refill/wardrobe/medi_wardrobe
 	machine_name = "MediDrobe"
-	charges = list(10, 0, 0)
-	init_charges = list(10, 0, 0)
 
 /obj/machinery/vending/wardrobe/engi_wardrobe
 	name = "EngiDrobe"
@@ -78,8 +74,6 @@
 
 /obj/item/vending_refill/wardrobe/engi_wardrobe
 	machine_name = "EngiDrobe"
-	charges = list(7, 0, 0)
-	init_charges = list(7, 0, 0)
 
 /obj/machinery/vending/wardrobe/atmos_wardrobe
 	name = "AtmosDrobe"
@@ -98,8 +92,6 @@
 
 /obj/item/vending_refill/wardrobe/atmos_wardrobe
 	machine_name = "AtmosDrobe"
-	charges = list(5, 0, 0)
-	init_charges = list(5, 0, 0)
 
 /obj/machinery/vending/wardrobe/cargo_wardrobe
 	name = "CargoDrobe"
@@ -117,8 +109,6 @@
 
 /obj/item/vending_refill/wardrobe/cargo_wardrobe
 	machine_name = "CargoDrobe"
-	charges = list(5, 0, 0)
-	init_charges = list(5, 0, 0)
 
 /obj/machinery/vending/wardrobe/robo_wardrobe
 	name = "RoboDrobe"
@@ -137,8 +127,6 @@
 
 /obj/item/vending_refill/wardrobe/robo_wardrobe
 	machine_name = "RoboDrobe"
-	charges = list(4, 0, 0)
-	init_charges = list(4, 0, 0)
 
 /obj/machinery/vending/wardrobe/science_wardrobe
 	name = "SciDrobe"
@@ -159,8 +147,6 @@
 
 /obj/item/vending_refill/wardrobe/science_wardrobe
 	machine_name = "SciDrobe"
-	charges = list(8, 0, 0)
-	init_charges = list(8, 0, 0)
 
 /obj/machinery/vending/wardrobe/hydro_wardrobe
 	name = "Hydrobe"
@@ -179,8 +165,6 @@
 
 /obj/item/vending_refill/wardrobe/hydro_wardrobe
 	machine_name = "HyDrobe"
-	charges = list(6, 0, 0)
-	init_charges = list(6, 0, 0)
 
 /obj/machinery/vending/wardrobe/curator_wardrobe
 	name = "CuraDrobe"
@@ -198,8 +182,6 @@
 
 /obj/item/vending_refill/wardrobe/curator_wardrobe
 	machine_name = "CuraDrobe"
-	charges = list(3, 0, 0)
-	init_charges = list(3, 0, 0)
 
 /obj/machinery/vending/wardrobe/bar_wardrobe
 	name = "BarDrobe"
@@ -227,8 +209,6 @@
 
 /obj/item/vending_refill/wardrobe/bar_wardrobe
 	machine_name = "BarDrobe"
-	charges = list(8, 0, 0)
-	init_charges = list(8, 0, 0)
 
 /obj/machinery/vending/wardrobe/chef_wardrobe
 	name = "ChefDrobe"
@@ -251,8 +231,6 @@
 
 /obj/item/vending_refill/wardrobe/chef_wardrobe
 	machine_name = "ChefDrobe"
-	charges = list(6, 0, 0)
-	init_charges = list(6, 0, 0)
 
 /obj/machinery/vending/wardrobe/jani_wardrobe
 	name = "JaniDrobe"
@@ -279,8 +257,6 @@
 
 /obj/item/vending_refill/wardrobe/jani_wardrobe
 	machine_name = "JaniDrobe"
-	charges = list(7, 0, 0)
-	init_charges = list(7, 0, 0)
 
 /obj/machinery/vending/wardrobe/law_wardrobe
 	name = "LawDrobe"
@@ -303,8 +279,6 @@
 
 /obj/item/vending_refill/wardrobe/law_wardrobe
 	machine_name = "LawDrobe"
-	charges = list(5, 0, 0)
-	init_charges = list(5, 0, 0)
 
 /obj/machinery/vending/wardrobe/chap_wardrobe
 	name = "ChapDrobe"
@@ -325,8 +299,6 @@
 
 /obj/item/vending_refill/wardrobe/chap_wardrobe
 	machine_name = "ChapDrobe"
-	charges = list(6, 0, 0)
-	init_charges = list(6, 0, 0)
 
 /obj/machinery/vending/wardrobe/chem_wardrobe
 	name = "ChemDrobe"
@@ -344,8 +316,6 @@
 
 /obj/item/vending_refill/wardrobe/chem_wardrobe
 	machine_name = "ChemDrobe"
-	charges = list(4, 0, 0)
-	init_charges = list(4, 0, 0)
 
 /obj/machinery/vending/wardrobe/gene_wardrobe
 	name = "GeneDrobe"
@@ -362,8 +332,6 @@
 
 /obj/item/vending_refill/wardrobe/gene_wardrobe
 	machine_name = "GeneDrobe"
-	charges = list(4, 0, 0)
-	init_charges = list(4, 0, 0)
 
 /obj/machinery/vending/wardrobe/viro_wardrobe
 	name = "ViroDrobe"
@@ -381,5 +349,3 @@
 
 /obj/item/vending_refill/wardrobe/viro_wardrobe
 	machine_name = "ViroDrobe"
-	charges = list(4, 0, 0)
-	init_charges = list(4, 0, 0)

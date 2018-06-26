@@ -201,7 +201,8 @@ GLOBAL_LIST_EMPTY(explosions)
 				items += A.GetAllContents()
 			for(var/O in items)
 				var/atom/A = O
-				A.ex_act(dist)
+				if(!QDELETED(A))
+					A.ex_act(dist)
 
 		if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 			new /obj/effect/hotspot(T) //Mostly for ambience!

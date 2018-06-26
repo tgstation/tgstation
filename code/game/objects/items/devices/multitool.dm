@@ -187,21 +187,18 @@
 			detect_state = PROXIMITY_ON_SCREEN
 			break
 
-	if(!detect_state && GLOB.cameranet.chunkGenerated(our_turf.x, our_turf.y, our_turf.z))
-		var/datum/camerachunk/chunk = GLOB.cameranet.getCameraChunk(our_turf.x, our_turf.y, our_turf.z)
-		if(chunk)
-			if(chunk.seenby.len)
-				for(var/V in chunk.seenby)
-					var/mob/camera/aiEye/A = V
-					if(!A.ai_detector_visible)
-						continue
-					var/turf/detect_turf = get_turf(A)
-					if(get_dist(our_turf, detect_turf) < rangealert)
-						detect_state = PROXIMITY_ON_SCREEN
-						break
-					if(get_dist(our_turf, detect_turf) < rangewarning)
-						detect_state = PROXIMITY_NEAR
-						break
+	if(detect_state)
+		return
+	var/datum/camerachunk/chunk = GLOB.cameranet.chunkGenerated(our_turf.x, our_turf.y, our_turf.z)
+	if(chunk && chunk.seenby.len)
+		for(var/mob/camera/aiEye/A in chunk.seenby)
+			var/turf/detect_turf = get_turf(A)
+			if(get_dist(our_turf, detect_turf) < rangealert)
+				detect_state = PROXIMITY_ON_SCREEN
+				break
+			if(get_dist(our_turf, detect_turf) < rangewarning)
+				detect_state = PROXIMITY_NEAR
+				break
 
 /mob/camera/aiEye/remote/ai_detector
 	name = "AI detector eye"

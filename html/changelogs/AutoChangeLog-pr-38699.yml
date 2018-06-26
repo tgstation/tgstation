@@ -1,0 +1,4 @@
+author: "Irafas"
+delete-after: True
+changes: 
+  - bugfix: "Hardsuit helmets now protect the wearer from pepperspray"

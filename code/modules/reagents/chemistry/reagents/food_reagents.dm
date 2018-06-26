@@ -283,10 +283,10 @@
 		if(ishuman(victim))
 			var/mob/living/carbon/human/H = victim
 			if( H.head )
-				if ( H.head.flags_cover & MASKCOVERSEYES )
+				if ( H.head.flags_cover & HEADCOVERSEYES )
 					eyes_covered = 1
 					safe_thing = H.head
-				if ( H.head.flags_cover & MASKCOVERSMOUTH )
+				if ( H.head.flags_cover & HEADCOVERSMOUTH )
 					mouth_covered = 1
 					safe_thing = H.head
 			if(H.glasses)
