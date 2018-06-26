@@ -195,7 +195,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/safety = 0
 
 	var/banned = jobban_isbanned(src, "appearance")
-	
+
 	while(loop && safety < 5)
 		if(C && C.prefs.custom_names[role] && !safety && !banned)
 			newname = C.prefs.custom_names[role]
@@ -209,10 +209,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 					newname = pick(GLOB.mime_names)
 				if("ai")
 					newname = pick(GLOB.ai_names)
-				if("deity")
-					newname = pick(GLOB.clown_names|GLOB.ai_names|GLOB.mime_names) //pick any old name
 				else
-					return
+					return FALSE
 
 		for(var/mob/living/M in GLOB.player_list)
 			if(M == src)
@@ -226,6 +224,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	if(newname)
 		fully_replace_character_name(oldname,newname)
+		return TRUE
+	return FALSE
 
 
 //Picks a string of symbols to display as the law number for hacked or ion laws

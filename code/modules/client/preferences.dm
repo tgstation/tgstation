@@ -1341,7 +1341,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>")
 
 				if("cyborg_name")
-					var/new_cyborg_name = reject_bad_name( input(user, "Choose your character's cyborg name:", "Character Preference")  as text|null, 1 )
+					var/raw_name = input(user, "Choose your character's cyborg name (Leave empty to use default naming scheme):", "Character Preference")  as text|null
+					var/new_cyborg_name
+					if(!raw_name)
+						new_cyborg_name = DEFAULT_CYBORG_NAME
+					else
+						new_cyborg_name = reject_bad_name(raw_name,1 )
 					if(new_cyborg_name)
 						custom_names["cyborg"] = new_cyborg_name
 					else
