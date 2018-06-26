@@ -423,10 +423,11 @@
 /datum/design/healthanalyzer
 	name = "Health Analyzer"
 	id = "healthanalyzer"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 50)
 	build_path = /obj/item/healthanalyzer
 	category = list("initial", "Medical")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/pillbottle
 	name = "Pill Bottle"

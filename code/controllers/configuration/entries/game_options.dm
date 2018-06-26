@@ -170,8 +170,6 @@
 	config_entry_value = -1
 	min_val = -1
 
-/datum/config_entry/flag/rename_cyborg
-
 /datum/config_entry/flag/ooc_during_round
 
 /datum/config_entry/flag/emojis

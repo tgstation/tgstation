@@ -555,6 +555,9 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/action/innate/ai/ranged/overload_machine/proc/detonate_machine(obj/machinery/M)
 	if(M && !QDELETED(M))
+		var/turf/T = get_turf(M)
+		message_admins("[ADMIN_LOOKUPFLW(usr)] overloaded [M.name] at [ADMIN_VERBOSEJMP(T)].")
+		log_game("[key_name(usr)] overloaded [M.name] at [AREACOORD(T)].")
 		explosion(get_turf(M), 0, 2, 3, 0)
 		if(M) //to check if the explosion killed it before we try to delete it
 			qdel(M)

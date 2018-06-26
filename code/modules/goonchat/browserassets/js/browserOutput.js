@@ -95,8 +95,53 @@ if (typeof String.prototype.trim !== 'function') {
 	};
 }
 
+// Linkify the contents of a node, within its parent.
+function linkify(parent, insertBefore, text) {
+	var start = 0;
+	var match;
+	var regex = /(?:(?:https?:\/\/)|(?:www\.))(?:[^ ]*?\.[^ ]*?)+[-A-Za-z0-9+&@#\/%?=~_|$!:,.;()]+/ig;
+	while ((match = regex.exec(text)) !== null) {
+		// add the unmatched text
+		parent.insertBefore(document.createTextNode(text.substring(start, match.index)), insertBefore);
+
+		var href = match[0];
+		if (!/^https?:\/\//i.test(match[0])) {
+			href = "http://" + match[0];
+		}
+
+		// add the link
+		var link = document.createElement("a");
+		link.href = href;
+		link.textContent = match[0];
+		parent.insertBefore(link, insertBefore);
+
+		start = regex.lastIndex;
+	}
+	if (start !== 0) {
+		// add the remaining text and remove the original text node
+		parent.insertBefore(document.createTextNode(text.substring(start)), insertBefore);
+		parent.removeChild(insertBefore);
+	}
+}
+
+// Recursively linkify the children of a given node.
+function linkify_node(node) {
+	var children = node.childNodes;
+	// work backwards to avoid the risk of looping forever on our own output
+	for (var i = children.length - 1; i >= 0; --i) {
+		var child = children[i];
+		if (child.nodeType == Node.TEXT_NODE) {
+			// text is to be linkified
+			linkify(node, child, child.textContent);
+		} else if (child.nodeName != "A" && child.nodeName != "a") {
+			// do not linkify existing links
+			linkify_node(child);
+		}
+	}
+}
+
 //Shit fucking piece of crap that doesn't work god fuckin damn it
-function linkify(text) {
+function linkify_fallback(text) {
 	var rex = /((?:<a|<iframe|<img)(?:.*?(?:src="|href=").*?))?(?:(?:https?:\/\/)|(?:www\.))+(?:[^ ]*?\.[^ ]*?)+[-A-Za-z0-9+&@#\/%?=~_|$!:,.;]+/ig;
 	return text.replace(rex, function ($0, $1) {
 		if(/^https?:\/\/.+/i.test($0)) {
@@ -283,11 +328,6 @@ function output(message, flag) {
 		}
 	}
 
-	//Url stuff
-	if (message.length && flag != 'preventLink') {
-		message = linkify(message);
-	}
-
 	opts.messageCount++;
 
 	//Pop the top message off if history limit reached
@@ -340,6 +380,20 @@ function output(message, flag) {
 		$last_message = trimmed_message;
 		$messages[0].appendChild(entry);
 		$(entry).find("img.icon").error(iconError);
+
+		var to_linkify = $(entry).find(".linkify");
+		if (typeof Node === 'undefined') {
+			// Linkify fallback for old IE
+			for(var i = 0; i < to_linkify.length; ++i) {
+				to_linkify[i].innerHTML = linkify_fallback(to_linkify[i].innerHTML);
+			}
+		} else {
+			// Linkify for modern IE versions
+			for(var i = 0; i < to_linkify.length; ++i) {
+				linkify_node(to_linkify[i]);
+			}
+		}
+
 		//Actually do the snap
 		//Stuff we can do after the message shows can go here, in the interests of responsiveness
 		if (opts.highlightTerms && opts.highlightTerms.length > 0) {
@@ -892,23 +946,26 @@ $(function() {
 	});
 
 	$('#saveLog').click(function(e) {
+		// Requires IE 10+ to issue download commands. Just opening a popup
+		// window will cause Ctrl+S to save a blank page, ignoring innerHTML.
+		if (!window.Blob) {
+			output('<span class="big red">This function is only supported on IE 10+. Upgrade if possible.</span>', 'internal');
+			return;
+		}
+
 		$.ajax({
 			type: 'GET',
 			url: 'browserOutput.css',
 			success: function(styleData) {
-				var win;
+				var blob = new Blob(['<head><title>Chat Log</title><style>', styleData, '</style></head><body>', $messages.html(), '</body>']);
 
-				try {
-					win = window.open('', 'Chat Log', 'toolbar=no, location=no, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=yes, width=780, height=600, top=' + (screen.height/2 - 635/2) + ', left=' + (screen.width/2 - 780/2));
-				} catch (e) {
-					return;
-				}
+				var fname = 'SS13 Chat Log';
+				var date = new Date(), month = date.getMonth(), day = date.getDay(), hours = date.getHours(), mins = date.getMinutes(), secs = date.getSeconds();
+				fname += ' ' + date.getFullYear() + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
+				fname += ' ' + (hours < 10 ? '0' : '') + hours + (mins < 10 ? '0' : '') + mins + (secs < 10 ? '0' : '') + secs;
+				fname += '.html';
 
-				if (win) {
-					win.document.head.innerHTML = '<title>Chat Log</title>';
-					win.document.head.innerHTML += '<style>' + styleData + '</style>';
-					win.document.body.innerHTML = $messages.html();
-				}
+				window.navigator.msSaveBlob(blob, fname);
 			}
 		});
 	});

@@ -124,7 +124,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				continue
 			if(bounty_ship_item_and_contents(AM, dry_run = FALSE))
 				matched_bounty = TRUE
-			if(!AM.anchored)
+			if(!AM.anchored || istype(AM, /obj/mecha))
 				sold_atoms += export_item_and_contents(AM, contraband, emagged, dry_run = FALSE)
 
 	if(sold_atoms)

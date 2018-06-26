@@ -101,7 +101,7 @@
 	text_gain_indication = "<span class='danger'>You twitch.</span>"
 
 /datum/mutation/human/tourettes/on_life(mob/living/carbon/human/owner)
-	if(prob(10) && owner.stat == CONSCIOUS)
+	if(prob(10) && owner.stat == CONSCIOUS && !owner.IsStun())
 		owner.Stun(200)
 		switch(rand(1, 3))
 			if(1)

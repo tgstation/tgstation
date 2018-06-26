@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "Deaths in the CTF arena are no longer announced to deadchat."

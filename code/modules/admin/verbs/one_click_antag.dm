@@ -57,7 +57,7 @@
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
-		if(isReadytoRumble(applicant, ROLE_TRAITOR, FALSE))
+		if(isReadytoRumble(applicant, ROLE_TRAITOR))
 			if(temp.age_check(applicant.client))
 				if(!(applicant.job in temp.restricted_jobs))
 					candidates += applicant

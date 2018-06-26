@@ -29,6 +29,7 @@
 	var/movement_type = GROUND		//Incase you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc.
 	var/atom/movable/pulling
 	var/grab_state = 0
+	var/throwforce = 0
 
 /atom/movable/vv_edit_var(var_name, var_value)
 	var/static/list/banned_edits = list("step_x", "step_y", "step_size")
