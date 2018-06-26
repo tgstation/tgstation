@@ -288,10 +288,17 @@
 	category = list("Weaponized Nanites")
 
 /datum/design/nanites/explosive
-	name = "Explosive Nanites"
+	name = "Chain Detonation"
 	desc = "Blows up all the nanites inside the host in a chain reaction when triggered."
 	id = "explosive_nanites"
 	program_type = /datum/nanite_program/triggered/explosive
+	category = list("Weaponized Nanites")
+	
+/datum/design/nanites/mind_control
+	name = "Mind Control"
+	desc = "The nanites imprint an absolute directive onto the host's brain while they're active."
+	id = "mindcontrol_nanites"
+	program_type = /datum/nanite_program/mind_control
 	category = list("Weaponized Nanites")
 
 ////////////////////SUPPRESSION NANITES//////////////////////////////////////
@@ -343,6 +350,13 @@
 	desc = "The nanites suppress the host's ocular nerves, blinding them while they're active."
 	id = "blinding_nanites"
 	program_type = /datum/nanite_program/blinding
+	category = list("Suppression Nanites")
+	
+/datum/design/nanites/mute
+	name = "Mute"
+	desc = "The nanites suppress the host's speech, making them mute while they're active."
+	id = "mute_nanites"
+	program_type = /datum/nanite_program/mute
 	category = list("Suppression Nanites")
 	
 /datum/design/nanites/speech

@@ -76,6 +76,20 @@
 /datum/nanite_program/blinding/disable_passive_effect()
 	..()
 	host_mob.remove_trait(TRAIT_BLIND, "nanites")
+	
+/datum/nanite_program/mute
+	name = "Mute"
+	desc = "The nanites suppress the host's speech, making them mute while they're active."
+	use_rate = 0.75
+	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
+
+/datum/nanite_program/mute/enable_passive_effect()
+	..()
+	host_mob.add_trait(TRAIT_MUTE, "nanites")
+
+/datum/nanite_program/mute/disable_passive_effect()
+	..()
+	host_mob.remove_trait(TRAIT_MUTE, "nanites")
 
 /datum/nanite_program/fake_death
 	name = "Death Simulation"
