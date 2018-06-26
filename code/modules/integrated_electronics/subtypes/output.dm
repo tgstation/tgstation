@@ -234,8 +234,9 @@
 	text = get_pin_data(IC_INPUT, 1)
 	if(!isnull(text))
 		var/atom/movable/A = get_object()
-		A.say(sanitize(text))
-
+		var/sanitized_text = sanitize(text)
+		A.say(sanitized_text)
+		log_say("[assembly] [REF(assembly)] : [sanitized_text]")
 
 /obj/item/integrated_circuit/output/video_camera
 	name = "video camera circuit"
