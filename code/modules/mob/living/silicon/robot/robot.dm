@@ -232,7 +232,7 @@
 	if(custom_name)
 		changed_name = custom_name
 	if(changed_name == "" && client)
-		rename_self(src, client)
+		apply_pref_name("cyborg", client)
 		return //built in camera handled in proc
 	if(!changed_name)
 		changed_name = get_standard_name()
