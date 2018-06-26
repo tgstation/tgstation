@@ -286,13 +286,13 @@
 
 /obj/item/reagent_containers/glass/bucket/equipped(mob/user, slot)
 	..()
-	if(slot == SLOT_HEAD && reagents.total_volume)
-		to_chat(user, "<span class='userdanger'>[src]'s contents spill all over you!</span>")
-		reagents.reaction(user, TOUCH)
-		reagents.clear_reagents()
 	if (slot == SLOT_HEAD)
+		if(reagents.total_volume)
+			to_chat(user, "<span class='userdanger'>[src]'s contents spill all over you!</span>")
+			reagents.reaction(user, TOUCH)
+			reagents.clear_reagents()
 		container_type = NONE
-		
+
 /obj/item/reagent_containers/glass/bucket/dropped(mob/user)
 	..()
 	container_type = OPENCONTAINER
