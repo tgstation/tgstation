@@ -902,7 +902,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			for(var/_V in all_quirks)
 				if(_V == quirk_name)
 					has_quirk = TRUE
-			to_chat(world,"0-[V]")
 			if(initial(T.mood_quirk) && CONFIG_GET(flag/disable_human_mood))
 				lock_reason = "Mood is disabled."
 				quirk_conflict = TRUE
