@@ -131,6 +131,10 @@
 /proc/log_query_debug(text)
 	WRITE_LOG(GLOB.query_debug_log, "SQL: [text]")
 
+/proc/log_job_debug(text)
+	if (CONFIG_GET(flag/log_job_debug))
+		WRITE_LOG(GLOB.world_job_debug_log, "JOB: [text]")
+
 /* Log to both DD and the logfile. */
 /proc/log_world(text)
 	WRITE_LOG(GLOB.world_runtime_log, text)
