@@ -69,7 +69,7 @@
 	else
 		to_chat(user, "<span class='notice'>The maintainence panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>")
 
-	if(isobserver(user) && ckeys_allowed_to_scan[user.ckey])
+	if((isobserver(user) && ckeys_allowed_to_scan[user.ckey]) || IsAdminGhost(user))
 		to_chat(user, "You can <a href='?src=[REF(src)];ghostscan=1'>scan</a> this circuit.");
 
 /obj/item/electronic_assembly/proc/check_interactivity(mob/user)
@@ -192,7 +192,7 @@
 		return 1
 
 	if(href_list["ghostscan"])
-		if(isobserver(usr) && ckeys_allowed_to_scan[usr.ckey])
+		if((isobserver(usr) && ckeys_allowed_to_scan[usr.ckey]) || IsAdminGhost(usr))
 			if(assembly_components.len)
 				var/saved = "On circuit printers with cloning enabled, you may use the code below to clone the circuit:<br><br><code>[SScircuit.save_electronic_assembly(src)]</code>"
 				usr << browse(saved, "window=circuit_scan;size=500x600;border=1;can_resize=1;can_close=1;can_minimize=1")
