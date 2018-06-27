@@ -46,6 +46,8 @@
 	for(var/mob/M in nearby_things)
 		var/obj/O = assembly ? assembly : src
 		to_chat(M, "<span class='notice'>[icon2html(O.icon, world, O.icon_state)] [stuff_to_display]</span>")
+	if(assembly)
+		assembly.investigate_log("displayed \"[html_encode(stuff_to_display)]\" with [type].", INVESTIGATE_CIRCUIT)
 
 /obj/item/integrated_circuit/output/screen/large
 	name = "large screen"
@@ -58,6 +60,8 @@
 	..()
 	var/obj/O = assembly ? get_turf(assembly) : loc
 	O.visible_message("<span class='notice'>[icon2html(O.icon, world, O.icon_state)]  [stuff_to_display]</span>")
+	if(assembly)
+		assembly.investigate_log("displayed \"[html_encode(stuff_to_display)]\" with [type].", INVESTIGATE_CIRCUIT)
 
 /obj/item/integrated_circuit/output/light
 	name = "light"
