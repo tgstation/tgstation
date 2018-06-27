@@ -99,16 +99,21 @@
 		to_chat(user, "<span class='notice'>There is nothing to remove from the endoskeleton.</span>")
 	updateicon()
 
-obj/item/robot_suit/screwdriver_act(mob/living/user, obj/item/I) //Swaps the power cell if you're holding a new one in your other hand.
-	var/turf/T = get_turf(src)
-	if(istype(user.held_items[user.active_hand_index == 1 ? 2 : 1], /obj/item/stock_parts/cell))
-		if (chest.cell) //Sanity check.
-			chest.cell.forceMove(T)
-		chest.cell = user.held_items[user.active_hand_index == 1 ? 2 : 1]
-		if(!user.transferItemToLoc(user.held_items[user.active_hand_index == 1 ? 2 : 1], src.chest))
-			chest.cell = null
-			return
-		to_chat(user, "<span class='notice'>You replace the power cell.</span>")
+/obj/item/robot_suit/screwdriver_act(mob/living/user, obj/item/I) //Swaps the power cell if you're holding a new one in your other hand.
+	var/obj/item/stock_parts/cell/temp_cell = user.is_holding_item_of_type(/obj/item/stock_parts/cell)
+	if(QDELETED(temp_cell))
+		return
+	if(QDELETED(chest.cell))
+		to_chat(user, "<span class='notice'>There doesn't seem to unscrew from [src].</span>")
+		return
+	if(!user.transferItemToLoc(temp_cell, chest))
+		to_chat(user, "<span class='warning'>[temp_cell] is stuck to your hand, you can't put it in [src]!</span>")
+		return
+	if(!user.put_in_hands(chest.cell))
+		chest.cell.forceMove(drop_location())
+	chest.cell = temp_cell
+	to_chat(user, "<span class='notice'>You replace [src]'s power cell.</span>")
+	return TRUE
 
 /obj/item/robot_suit/attackby(obj/item/W, mob/user, params)
 
