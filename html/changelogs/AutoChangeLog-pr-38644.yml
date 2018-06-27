@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - refactor: "AI static now uses visual contents and should perform better in theory."

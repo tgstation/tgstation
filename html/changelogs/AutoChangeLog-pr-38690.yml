@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - rscadd: "R&D deconstructors can now destroy things regardless of if there's a point value or material"
