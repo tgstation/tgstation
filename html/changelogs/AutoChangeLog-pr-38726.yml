@@ -1,0 +1,5 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - bugfix: "Branca Menta won't make you starve and then kill you"
+  - tweak: "Fernet has been moved to contraband"
