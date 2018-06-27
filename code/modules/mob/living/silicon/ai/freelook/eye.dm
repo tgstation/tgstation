@@ -50,7 +50,9 @@
 /mob/camera/aiEye/proc/RemoveImages()
 	var/client/C = GetViewerClient()
 	if(C && use_static)
-		C.images -= GLOB.cameranet.obscured
+		for(var/V in visibleCameraChunks)
+			var/datum/camerachunk/c = V
+			C.images -= c.obscured
 
 /mob/camera/aiEye/Destroy()
 	if(ai)
