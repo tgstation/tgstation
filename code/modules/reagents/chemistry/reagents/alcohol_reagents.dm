@@ -88,6 +88,15 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of beer"
 	glass_desc = "A freezing pint of beer."
 
+/datum/reagent/consumable/ethanol/beer/light
+	name = "Light Beer"
+	id = "light_beer"
+	description = "An alcoholic beverage brewed since ancient times on Old Earth. This variety has reduced calorie and alcohol content."
+	boozepwr = 5 //Space Europeans hate it
+	taste_description = "dish water"
+	glass_name = "glass of light beer"
+	glass_desc = "A freezing pint of watery light beer."
+
 /datum/reagent/consumable/ethanol/beer/green
 	name = "Green Beer"
 	id = "greenbeer"
