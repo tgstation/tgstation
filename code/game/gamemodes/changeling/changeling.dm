@@ -52,6 +52,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 			changeling.restricted_roles = restricted_jobs
 		return 1
 	else
+		setup_error = "Not enough changeling candidates"
 		return 0
 
 /datum/game_mode/changeling/post_setup()
