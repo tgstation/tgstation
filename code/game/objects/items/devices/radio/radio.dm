@@ -47,6 +47,7 @@
 	return BRUTELOSS
 
 /obj/item/radio/proc/set_frequency(new_frequency)
+	SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, args)
 	remove_radio(src, frequency)
 	frequency = add_radio(src, new_frequency)
 
@@ -159,13 +160,7 @@
 				tune = tune * 10
 				. = TRUE
 			if(.)
-				frequency = sanitize_frequency(tune, freerange)
-				set_frequency(frequency)
-				GET_COMPONENT(hidden_uplink, /datum/component/uplink)
-				if(hidden_uplink && (frequency == traitor_frequency))
-					hidden_uplink.locked = FALSE
-					hidden_uplink.interact(usr)
-					ui.close()
+				set_frequency(sanitize_frequency(tune, freerange))
 		if("listen")
 			listening = !listening
 			. = TRUE

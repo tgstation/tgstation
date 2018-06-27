@@ -211,14 +211,14 @@
 	},
 /area/shuttle/arrival)
 "u" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "v" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,

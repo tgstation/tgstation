@@ -19,8 +19,6 @@
 
 	flags_1 = CAN_BE_DIRTY_1
 
-	var/image/obscured	//camerachunks
-
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
 	var/explosion_level = 0	//for preventing explosion dodging
@@ -43,6 +41,9 @@
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
+
+	// by default, vis_contents is inherited from the turf that was here before
+	vis_contents.Cut()
 
 	assemble_baseturfs()
 
@@ -325,6 +326,14 @@
 
 /turf/proc/visibilityChanged()
 	GLOB.cameranet.updateVisibility(src)
+	// The cameranet usually handles this for us, but if we've just been
+	// recreated we should make sure we have the cameranet vis_contents.
+	var/datum/camerachunk/C = GLOB.cameranet.chunkGenerated(x, y, z)
+	if(C)
+		if(C.obscuredTurfs[src])
+			vis_contents += GLOB.cameranet.vis_contents
+		else
+			vis_contents -= GLOB.cameranet.vis_contents
 
 /turf/proc/burn_tile()
 

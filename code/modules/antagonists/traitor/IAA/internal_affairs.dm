@@ -207,6 +207,7 @@
 			destroy_objective.owner = owner
 			destroy_objective.target = target_mind
 			destroy_objective.update_explanation_text()
+			add_objective(destroy_objective)
 		else
 			var/datum/objective/assassinate/internal/kill_objective = new
 			kill_objective.owner = owner

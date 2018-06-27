@@ -126,7 +126,12 @@ Note: Must be placed within 3 tiles of the R&D Console
 		var/list/point_value = techweb_item_point_check(loaded_item)
 		if(linked_console.stored_research.deconstructed_items[loaded_item.type])
 			point_value = list()
-		var/choice = input("Are you sure you want to destroy [loaded_item] for [length(point_value) ? "[json_encode(point_value)] points" : "material reclamation"]?") in list("Proceed", "Cancel")
+		var/user_mode_string = ""
+		if(length(point_value))
+			user_mode_string = " for [json_encode(point_value)] points"
+		else if(loaded_item.materials.len)
+			user_mode_string = " for material reclamation"
+		var/choice = input("Are you sure you want to destroy [loaded_item][user_mode_string]?") in list("Proceed", "Cancel")
 		if(choice == "Cancel")
 			return FALSE
 		if(QDELETED(loaded_item) || QDELETED(linked_console) || !user.Adjacent(linked_console) || QDELETED(src))

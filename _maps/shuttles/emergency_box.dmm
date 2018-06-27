@@ -18,7 +18,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ag" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -44,7 +44,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "am" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -53,7 +53,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ao" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -71,7 +71,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ar" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet{
@@ -113,7 +113,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aA" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aB" = (
@@ -179,17 +179,17 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aJ" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aK" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aL" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
@@ -224,7 +224,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aS" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -233,7 +233,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aT" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -242,7 +242,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aU" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
