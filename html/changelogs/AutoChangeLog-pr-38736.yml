@@ -1,4 +1,0 @@
-author: "Nichlas0010"
-delete-after: True
-changes: 
-  - bugfix: "Mothpeople no longer push objects to move in 0-grav, if they can fly"
