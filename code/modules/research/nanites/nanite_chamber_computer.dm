@@ -68,7 +68,7 @@
 			disk_data["timer_type"] = P.get_timer_type_text()
 
 			var/list/extra_settings = list()
-			for(var/X in P.extra_settings)
+			for(var/E in P.extra_settings)
 				var/list/setting = list()
 				setting["name"] = X
 				setting["value"] = P.get_extra_setting(X)
@@ -128,10 +128,10 @@
 				mob_program["timer"] = P.timer
 				mob_program["timer_type"] = P.get_timer_type_text()
 				var/list/extra_settings = list()
-				for(var/X in P.extra_settings)
+				for(var/Y in P.extra_settings)
 					var/list/setting = list()
-					setting["name"] = X
-					setting["value"] = P.get_extra_setting(X)
+					setting["name"] = Y
+					setting["value"] = P.get_extra_setting(Y)
 					extra_settings += list(setting)
 				mob_program["extra_settings"] = extra_settings
 				if(LAZYLEN(extra_settings))
@@ -142,9 +142,6 @@
 				mob_program["deactivation_code"] = P.deactivation_code
 				mob_program["kill_code"] = P.kill_code
 				mob_program["trigger_code"] = P.trigger_code
-				mob_program["has_extra_code"] = P.has_extra_code
-				mob_program["extra_code"] = P.extra_code
-				mob_program["extra_code_name"] = P.extra_code_name
 			id++
 			mob_programs += list(mob_program)
 		data["mob_programs"] = mob_programs

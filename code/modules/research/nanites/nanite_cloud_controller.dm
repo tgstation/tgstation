@@ -114,9 +114,15 @@
 				cloud_program["deactivation_code"] = P.deactivation_code
 				cloud_program["kill_code"] = P.kill_code
 				cloud_program["trigger_code"] = P.trigger_code
-				cloud_program["has_extra_code"] = P.has_extra_code
-				cloud_program["extra_code"] = P.extra_code
-				cloud_program["extra_code_name"] = P.extra_code_name
+				var/list/extra_settings = list()
+				for(var/X in P.extra_settings)
+					var/list/setting = list()
+					setting["name"] = X
+					setting["value"] = P.get_extra_setting(X)
+					extra_settings += list(setting)
+				cloud_program["extra_settings"] = extra_settings
+				if(LAZYLEN(extra_settings))
+					cloud_program["has_extra_settings"] = TRUE
 				id++
 				cloud_programs += list(cloud_program)
 			data["cloud_programs"] = cloud_programs
