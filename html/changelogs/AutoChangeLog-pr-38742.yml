@@ -1,0 +1,6 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - bugfix: "Fixes more href exploits in circuits"
+  - refactor: "Printing premade assemblies is no longer shitcode, time remaining had to go for this."
+  - admin: "Filled holes in the logging of circuits"
