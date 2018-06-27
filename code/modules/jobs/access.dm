@@ -62,6 +62,8 @@
 	return check_access_list(I ? I.GetAccess() : null)
 
 /obj/proc/check_nanite_access(mob/living/L)
+	if(QDELETED(L))
+		return FALSE
 	GET_COMPONENT_FROM(nanites, /datum/component/nanites, L)
 	if(!nanites)
 		return FALSE
