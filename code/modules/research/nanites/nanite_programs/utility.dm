@@ -44,13 +44,24 @@
 	name = "Relay"
 	desc = "The nanites receive and relay long-range nanite signals."
 	rogue_types = list(/datum/nanite_program/toxic)
+	
+	extra_settings = list("Relay Channel")
+	var/relay_channel = 1
 
-	has_extra_code = TRUE
-	extra_code = 1
-	extra_code_name = "Relay Channel"
-	extra_code_min = 1
-	extra_code_max = 9999
+/datum/nanite_program/relay/set_extra_setting(user, setting)
+	if(setting == "Relay Channel")
+		var/new_channel = input(user, "Set the relay channel (1-9999):", name, null) as null|num
+		if(isnull(new_channel))
+			return
+		relay_channel = CLAMP(round(new_channel, 1), 1, 9999)
 
+/datum/nanite_program/relay/get_extra_setting(setting)
+	if(setting == "Relay Channel")
+		return relay_channel
+
+/datum/nanite_program/relay/copy_extra_settings_to(datum/nanite_program/relay/target)
+	target.relay_channel = relay_channel	
+	
 /datum/nanite_program/relay/enable_passive_effect()
 	..()
 	SSnanites.nanite_relays |= src

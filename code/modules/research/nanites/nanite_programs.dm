@@ -38,14 +38,12 @@
 	var/kill_code 			= 0		//Code that permanently removes the program [1-9999]
 	var/trigger_code 		= 0 	//Code that triggers the program (if available) [1-9999]
 
+	//Extra settings
+	//Must be listed in text form, with the same title they'll be displayed in the programmer UI
+	//Changing these values is handled by set_extra_setting()
+	//Viewing these values is handled by get_extra_setting()
+	//Copying these values is handled by copy_extra_settings_to()
 	var/list/extra_settings = list()
-
-	//Potential extra code, for programs with extra customization
-	var/has_extra_code = FALSE
-	var/extra_code = 0
-	var/extra_code_name = "Extra Code"
-	var/extra_code_min = 0
-	var/extra_code_max = 0
 
 /datum/nanite_program/triggered
 	use_rate = 0
