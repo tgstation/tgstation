@@ -97,9 +97,6 @@
 								{{#if trigger_code}}
 									<ui-section label='Trigger Code'>{{trigger_code}}</ui-section>
 								{{/if}}
-								{{#if has_extra_code}}
-									<ui-section label='{{extra_code_name}}'>{{extra_code}}</ui-section>
-								{{/if}}
 							{{/if}}
 						{{/if}}
 					{{/if}}
