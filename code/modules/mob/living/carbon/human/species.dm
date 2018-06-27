@@ -1637,7 +1637,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		for(var/X in burning_items)
 			var/obj/item/I = X
-			if(!(I.resistance_flags & FIRE_PROOF))
+			if(!(I.resistance_flags & FIRE_PROOF) && !QDELETED(I))
 				I.take_damage(H.fire_stacks, BURN, "fire", 0)
 
 		var/thermal_protection = H.get_thermal_protection()
