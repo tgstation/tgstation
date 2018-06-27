@@ -78,9 +78,15 @@
 			disk_data["trigger_code"] = P.trigger_code
 			disk_data["timer_type"] = P.get_timer_type_text()
 
-			disk_data["has_extra_code"] = P.has_extra_code
-			disk_data["extra_code"] = P.extra_code
-			disk_data["extra_code_name"] = P.extra_code_name
+			var/list/extra_settings = list()
+			for(var/X in P.extra_settings)
+				var/list/setting = list()
+				setting["name"] = X
+				setting["value"] = P.get_extra_setting(X)
+				extra_settings += list(setting)
+			disk_data["extra_settings"] = extra_settings
+			if(LAZYLEN(extra_settings))
+				disk_data["has_extra_settings"] = TRUE
 		data["disk"] = disk_data
 
 	data["current_view"] = current_view

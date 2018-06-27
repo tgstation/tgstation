@@ -25,10 +25,10 @@
 
 /datum/nanite_program/sensor/proc/send_code()
 	if(activated)
-		SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, extra_code, "a [name] program")
+		SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, sent_code, "a [name] program")
 
 /datum/nanite_program/sensor/active_effect()
-	if(extra_code && check_event())
+	if(sent_code && check_event())
 		send_code()
 
 /datum/nanite_program/sensor/repeat

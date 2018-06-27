@@ -67,9 +67,15 @@
 			disk_data["trigger_code"] = P.trigger_code
 			disk_data["timer_type"] = P.get_timer_type_text()
 
-			disk_data["has_extra_code"] = P.has_extra_code
-			disk_data["extra_code"] = P.extra_code
-			disk_data["extra_code_name"] = P.extra_code_name
+			var/list/extra_settings = list()
+			for(var/X in P.extra_settings)
+				var/list/setting = list()
+				setting["name"] = X
+				setting["value"] = P.get_extra_setting(X)
+				extra_settings += list(setting)
+			disk_data["extra_settings"] = extra_settings
+			if(LAZYLEN(extra_settings))
+				disk_data["has_extra_settings"] = TRUE
 		data["disk"] = disk_data
 
 	if(!chamber)
@@ -121,6 +127,15 @@
 				mob_program["activation_delay"] = P.activation_delay
 				mob_program["timer"] = P.timer
 				mob_program["timer_type"] = P.get_timer_type_text()
+				var/list/extra_settings = list()
+				for(var/X in P.extra_settings)
+					var/list/setting = list()
+					setting["name"] = X
+					setting["value"] = P.get_extra_setting(X)
+					extra_settings += list(setting)
+				mob_program["extra_settings"] = extra_settings
+				if(LAZYLEN(extra_settings))
+					mob_program["has_extra_settings"] = TRUE
 
 			if(chamber.scan_level >= 4)
 				mob_program["activation_code"] = P.activation_code

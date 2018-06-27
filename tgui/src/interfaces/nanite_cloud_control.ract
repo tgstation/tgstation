@@ -26,8 +26,10 @@
 				{{#if data.disk.trigger_code}}
 					<ui-section label='Trigger Code'>{{data.disk.trigger_code}}</ui-section>
 				{{/if}}
-				{{#if data.disk.has_extra_code}}
-					<ui-section label='{{data.disk.extra_code_name}}'>{{data.disk.extra_code}}</ui-section>
+				{{#if data.disk.has_extra_settings}}
+					{{#each data.disk.extra_settings}}
+					  <ui-section label='{{name}}'>{{value}}</ui-section>
+					{{/each}}
 				{{/if}}
 			</ui-section>
 		{{else}}

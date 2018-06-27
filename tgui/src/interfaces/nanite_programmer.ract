@@ -37,12 +37,12 @@
     </ui-section>
 
     {{#if data.has_extra_settings}}
-    {{/if}}
-        <ui-section label='Special'>
+       <ui-section label='Special'>
         {{#each data.extra_settings}}
           {{name}}: {{value}} <ui-button icon='pencil' action='set_extra_setting' params='{"target_setting": "{{name}}"}'>Set</ui-button><br>
         {{/each}}
       </ui-section>
+	 {{/if}}
 
   {{/if}}
 {{/if}}

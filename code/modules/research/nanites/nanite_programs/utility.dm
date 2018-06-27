@@ -75,7 +75,7 @@
 		return
 	if(!host_mob)
 		return
-	if(relay_code != extra_code)
+	if(relay_code != relay_channel)
 		return
 	SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, code, source)
 

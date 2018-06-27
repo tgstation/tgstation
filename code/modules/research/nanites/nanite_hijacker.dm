@@ -74,11 +74,16 @@
 		data["trigger_code"] = program.trigger_code
 		data["timer_type"] = program.get_timer_type_text()
 
-		data["has_extra_code"] = program.has_extra_code
-		data["extra_code"] = program.extra_code
-		data["extra_code_name"] = program.extra_code_name
-		data["extra_code_min"] = program.extra_code_min
-		data["extra_code_max"] = program.extra_code_max
+		var/list/extra_settings = list()
+		for(var/X in program.extra_settings)
+			var/list/setting = list()
+			setting["name"] = X
+			setting["value"] = program.get_extra_setting(X)
+			extra_settings += list(setting)
+		data["extra_settings"] = extra_settings
+		if(LAZYLEN(extra_settings))
+			data["has_extra_settings"] = TRUE
+
 	return data
 
 /obj/item/nanite_hijacker/ui_act(action, params)
