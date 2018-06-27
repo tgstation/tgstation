@@ -37,6 +37,7 @@
 		activate(reagents.total_volume)
 
 /obj/item/implant/chem/activate(cause)
+	. = ..()
 	if(!cause || !imp_in)
 		return 0
 	var/mob/living/carbon/R = imp_in
