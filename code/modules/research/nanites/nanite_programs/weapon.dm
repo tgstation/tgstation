@@ -120,7 +120,7 @@
 /datum/nanite_program/mind_control
 	name = "Mind Control"
 	desc = "The nanites imprint an absolute directive onto the host's brain while they're active."
-	use_rate = 5
+	use_rate = 3
 	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
 
 	extra_settings = list("Directive")
