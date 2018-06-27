@@ -68,7 +68,7 @@
 			disk_data["timer_type"] = P.get_timer_type_text()
 
 			var/list/extra_settings = list()
-			for(var/E in P.extra_settings)
+			for(var/X in P.extra_settings)
 				var/list/setting = list()
 				setting["name"] = X
 				setting["value"] = P.get_extra_setting(X)
