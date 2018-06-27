@@ -15,6 +15,7 @@
 #define INVESTIGATE_RADIATION		"radiation"
 #define INVESTIGATE_EXONET			"exonet"
 #define INVESTIGATE_NANITES			"nanites"
+#define INVESTIGATE_CIRCUIT			"circuit"
 
 //Individual logging defines
 #define INDIVIDUAL_ATTACK_LOG		"Attack log"
