@@ -1457,7 +1457,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("lobby_music")
 					toggles ^= SOUND_LOBBY
-					if((toggles & SOUND_LOBBY) && user.client)
+					if((toggles & SOUND_LOBBY) && user.client && isnewplayer(user))
 						user.client.playtitlemusic()
 					else
 						user.stop_sound_channel(CHANNEL_LOBBYMUSIC)
