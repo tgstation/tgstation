@@ -78,6 +78,7 @@
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"
 #define CHANGELING_DRAIN "drain"
+#define CHANGELING_GRAPPLE "grapple"
 #define CHANGELING_HIVEMIND_MUTE "ling_mute"
 #define ABYSSAL_GAZE_BLIND "abyssal_gaze"
 #define HIGHLANDER "highlander"

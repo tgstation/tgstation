@@ -19,7 +19,9 @@
 	var/datum/changelingprofile/first_prof = null
 	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 0
+	var/absorbedchangelings = 0 //how many changelings we succed
 	var/trueabsorbs = 0//dna gained using absorb, not dna sting
+	var/lesserling = FALSE //changelings created by horrorform, cannot buy some things in the store.
 	var/chem_charges = 20
 	var/chem_storage = 75
 	var/chem_recharge_rate = 1
@@ -54,7 +56,7 @@
 		honorific = "Ms."
 	else
 		honorific = "Mr."
-	if(GLOB.possible_changeling_IDs.len)
+	if(GLOB.possible_changeling_IDs.len && !lesserling) //remind me to add lesserling check, we don't want converts to immediately steal all the names creating a division of real names and numerals
 		changelingID = pick(GLOB.possible_changeling_IDs)
 		GLOB.possible_changeling_IDs -= changelingID
 		changelingID = "[honorific] [changelingID]"
@@ -73,7 +75,8 @@
 	if(give_objectives)
 		if(team_mode)
 			forge_team_objectives()
-		forge_objectives()
+		else
+			forge_objectives()
 	remove_clownmut()
 	. = ..()
 
@@ -338,9 +341,11 @@
 
 
 /datum/antagonist/changeling/greet()
-	if (you_are_greet)
-		to_chat(owner.current, "<span class='boldannounce'>You are [changelingID], a changeling! You have absorbed and taken the form of a human.</span>")
-	to_chat(owner.current, "<span class='boldannounce'>Use say \":g message\" to communicate with your fellow changelings.</span>")
+	if(you_are_greet)
+		if(!lesserling)
+			to_chat(owner.current, "<span class='boldannounce'>You are [changelingID], a changeling! You have absorbed and taken the form of a human.</span>")
+		else
+			to_chat(owner.current, "<span class='boldannounce'>Reality has been torn away and your mind goes blank as a new force takes over. You are [changelingID], a lesser changeling!</span>")
 	to_chat(owner.current, "<b>You must complete the following tasks:</b>")
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE)
 
@@ -458,6 +463,16 @@
 	hud.leave_hud(owner.current)
 	set_antag_hud(owner.current, null)
 
+/datum/antagonist/changeling/lesser/proc/forge_lesserling_objectives() //problem: doesn't know what current is. runtimes.
+	//OBJECTIVES - for lesserlings, the only need to make sure the horror form escapes alive.
+	var/datum/objective/protect/new_objective = new /datum/objective/protect
+	new_objective.owner = owner
+	new_objective.target = master
+	new_objective.explanation_text = "Protect the horrorform." //[master.current.real_name]
+	owner.objectives += new_objective
+	objectives += new_objective
+
+
 /datum/antagonist/changeling/admin_add(datum/mind/new_owner,mob/admin)
 	. = ..()
 	to_chat(new_owner.current, "<span class='boldannounce'>Our powers have awoken. A flash of memory returns to us...we are [changelingID], a changeling!</span>")
@@ -521,6 +536,19 @@
 	give_objectives = FALSE
 	show_in_roundend = FALSE //These are here for admin tracking purposes only
 	you_are_greet = FALSE
+
+/datum/antagonist/changeling/lesser //created by horror form assimilate.
+	name = "Assimilated Victim"
+	show_in_roundend = FALSE
+	lesserling = TRUE
+	var/datum/mind/master
+
+/datum/antagonist/changeling/lesser/on_gain()
+	generate_name()
+	create_actions()
+	reset_powers()
+	create_initial_profile()
+	forge_lesserling_objectives()
 
 /datum/antagonist/changeling/roundend_report()
 	var/list/parts = list()

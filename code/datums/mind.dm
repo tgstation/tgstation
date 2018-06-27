@@ -459,7 +459,7 @@
 						else
 							target_antag = target
 
-		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "custom")
+		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "horrorform", "custom")
 		if (!new_obj_type)
 			return
 
@@ -560,6 +560,10 @@
 						new_objective.explanation_text = "Absorb [target_number] compatible genomes."
 				new_objective.owner = src
 				new_objective.target_amount = target_number
+
+			if ("horrorform")
+				new_objective = new /datum/objective/horrorform
+				new_objective.owner = src
 
 			if ("custom")
 				var/expl = stripped_input(usr, "Custom objective:", "Objective", objective ? objective.explanation_text : "")

@@ -84,6 +84,7 @@
 /obj/structure/alien/resin/wall/BlockSuperconductivity()
 	return 1
 
+
 /obj/structure/alien/resin/membrane
 	name = "resin membrane"
 	desc = "Resin just thin enough to let light pass through."

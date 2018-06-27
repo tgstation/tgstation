@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/changeling/sting
 	name = "Tiny Prick"
 	desc = "Stabby stabby."
+	lesserling_blacklisted = TRUE
 	var/sting_icon = null
 
 /obj/effect/proc_holder/changeling/sting/Click()

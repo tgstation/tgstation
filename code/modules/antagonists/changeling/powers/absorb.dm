@@ -91,6 +91,12 @@
 		var/datum/antagonist/changeling/target_ling = target.mind.has_antag_datum(/datum/antagonist/changeling)
 		if(target_ling)//If the target was a changeling, suck out their extra juice and objective points!
 			to_chat(user, "<span class='boldnotice'>[target] was one of us. We have absorbed their power.</span>")
+			var/datum/antagonist/changeling/lessling1 = target.mind.has_antag_datum(/datum/antagonist/changeling/xenobio)
+			var/datum/antagonist/changeling/lessling2 = target.mind.has_antag_datum(/datum/antagonist/changeling/lesser)
+			if(!(lessling1 || lessling2))
+				changeling.absorbedchangelings++
+			else
+				to_chat(user, "<span class='notice'>[target] was not a true changeling, and as such cannot be counted towards horrorform.</span>")
 			target_ling.remove_changeling_powers()
 			changeling.geneticpoints += round(target_ling.geneticpoints/2)
 			target_ling.geneticpoints = 0

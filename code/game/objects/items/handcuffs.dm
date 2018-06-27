@@ -37,6 +37,8 @@
 	materials = list(MAT_METAL=500)
 	breakouttime = 600 //Deciseconds = 60s = 1 minute
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	var/cufficon = 'icons/mob/mob.dmi'
+	var/cuffsprite = "handcuff1"
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	var/trashtype = null //for disposable cuffs
 
@@ -88,12 +90,17 @@
 	else if(dispense)
 		cuffs = new type()
 
+	oncuff(target)
+
 	cuffs.forceMove(target)
 	target.handcuffed = cuffs
 
 	target.update_handcuffed()
 	if(trashtype && !dispense)
 		qdel(src)
+	return
+
+/obj/item/restraints/handcuffs/proc/oncuff(mob/living/carbon/target)
 	return
 
 /obj/item/restraints/handcuffs/sinew
