@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////
 //SS13 Optimized Map loader
 //////////////////////////////////////////////////////////////
-
+#define SPACE_KEY "space"
 //global datum that will preload variables on atoms instanciation
 GLOBAL_VAR_INIT(use_preloader, FALSE)
 GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
@@ -27,7 +27,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 		// /^[\s\n]+|[\s\n]+$/
 	var/static/regex/trimRegex = new/regex("^\[\\s\n]+|\[\\s\n]+$", "g")
 	#ifdef TESTING
-	var/static/turfsSkipped
+	var/turfsSkipped
 	#endif
 
 /**
@@ -43,7 +43,6 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 /datum/maploader/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, lower_crop_x as num,  lower_crop_y as num, upper_crop_x as num, upper_crop_y as num, placeOnTop as num)
 	//How I wish for RAII
 	Master.StartLoadingMap()
-	space_key = null
 	#ifdef TESTING
 	turfsSkipped = 0
 	#endif
@@ -141,9 +140,11 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 
 	var/datum/parsed_map/parsed = new(tfile, x_offset, y_offset, z_offset, x_lower, x_upper, y_lower, y_upper, measureOnly, dmmRegex, cropMap)
 
-	var/list/grid_models
+	var/list/modelCache
+	var/space_key
 	if(!measureOnly)
-		grid_models = build_cache(parsed)
+		modelCache = build_cache(parsed, no_changeturf)
+		space_key = grid_models[SPACE_KEY]
 
 	for(var/I in parsed.gridSets)
 		var/datum/grid_set/gset = I
@@ -206,10 +207,9 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 			T.AfterChange(CHANGETURF_IGNORE_AIR)
 	return parsed
 
-/datum/maploader/proc/build_cache(datum/parsed_map/parsed)
+/datum/maploader/proc/build_cache(datum/parsed_map/parsed, no_changeturf)
 	. = list()
 	var/list/grid_models = parsed.grid_models
-	var/space_key
 	for(var/model_key in grid_models)
 		var/model = grid_models[model_key]
 		var/list/members = list() //will contain all members (paths) in model (in our example : /turf/unsimulated/wall and /area/mine/explored)
@@ -219,11 +219,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 		//Constructing members and corresponding variables lists
 		////////////////////////////////////////////////////////
 
-		var/list/members = list()
-		var/list/members_attributes = list()
-		var/index
-
-
+		var/index = 1
 		var/old_position = 1
 		var/dpos
 
@@ -270,8 +266,16 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 		// 5. and the members are world.turf and world.area
 		// Basically, if we find an entry like this: "XXX" = (/turf/default, /area/default)
 		// We can skip calling this proc every time we see XXX
-		if(no_changeturf && !space_key && members.len == 2 && members_attributes.len == 2 && length(members_attributes[1]) == 0 && length(members_attributes[2]) == 0 && (world.area in members) && (world.turf in members))
-			space_key = model_key
+		if(no_changeturf 
+			&& !.[SPACE_KEY] 
+			&& members.len == 2 
+			&& members_attributes.len == 2 
+			&& length(members_attributes[1]) == 0 
+			&& length(members_attributes[2]) == 0 
+			&& (world.area in members) 
+			&& (world.turf in members))
+
+			.[SPACE_KEY] = model_key
 			continue
 
 
