@@ -92,8 +92,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 	..()
 	if(!id && !inserted_item)
 		return
-	else
-		to_chat(user, "<span class='notice'>Alt-click to remove contents.</span>")
+
+	if(id)
+		to_chat(user, "<span class='notice'>Alt-click to remove the id.</span>")
+
+	if(inserted_item && (!isturf(loc)))
+		to_chat(user, "<span class='notice'>Ctrl-click to remove [inserted_item].</span>")
 
 /obj/item/pda/Initialize()
 	. = ..()
@@ -171,12 +175,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return attack_self(M)
 	return ..()
 
-/obj/item/pda/attack_self(mob/user)
+/obj/item/pda/interact(mob/user)
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
-	. = ..()
+	..()
 
 	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/simple/pda)
 	assets.send(user)
@@ -515,16 +519,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("Ringtone")
 				var/t = input(U, "Please enter new ringtone", name, ttone) as text
 				if(in_range(src, U) && loc == U && t)
-					GET_COMPONENT(hidden_uplink, /datum/component/uplink)
-					if(hidden_uplink && (trim(lowertext(t)) == trim(lowertext(lock_code))))
-						hidden_uplink.locked = FALSE
-						hidden_uplink.interact(U)
-						to_chat(U, "The PDA softly beeps.")
+					if(SEND_SIGNAL(src, COMSIG_PDA_CHANGE_RINGTONE, U, t) & COMPONENT_STOP_RINGTONE_CHANGE)
 						U << browse(null, "window=pda")
-						src.mode = 0
+						return
 					else
-						t = copytext(sanitize(t), 1, 20)
-						ttone = t
+						ttone = copytext(sanitize(t), 1, 20)
 				else
 					U << browse(null, "window=pda")
 					return
@@ -711,6 +710,15 @@ GLOBAL_LIST_EMPTY(PDAs)
 			remove_id()
 		else
 			remove_pen()
+
+/obj/item/pda/CtrlClick()
+	..()
+
+	if(issilicon(usr))
+		return
+
+	if(usr.canUseTopic(src) && !isturf(loc))
+		remove_pen()
 
 /obj/item/pda/verb/verb_remove_id()
 	set category = "Object"

@@ -22,6 +22,8 @@ GLOBAL_VAR(world_manifest_log)
 GLOBAL_PROTECT(world_manifest_log)
 GLOBAL_VAR(query_debug_log)
 GLOBAL_PROTECT(query_debug_log)
+GLOBAL_VAR(world_job_debug_log)
+GLOBAL_PROTECT(world_job_debug_log)
 
 GLOBAL_LIST_EMPTY(bombers)
 GLOBAL_PROTECT(bombers)
@@ -40,7 +42,5 @@ GLOBAL_LIST_EMPTY(OOClog)
 GLOBAL_PROTECT(OOClog)
 GLOBAL_LIST_EMPTY(adminlog)
 GLOBAL_PROTECT(adminlog)
-
-GLOBAL_LIST_EMPTY(individual_log_list) // Logs each mob individual logs, a global so it doesn't get lost on cloning/changing mobs
 
 GLOBAL_LIST_EMPTY(active_turfs_startlist)

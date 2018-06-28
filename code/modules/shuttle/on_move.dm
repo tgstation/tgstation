@@ -331,6 +331,21 @@ All ShuttleMove procs go here
 	if(. & MOVE_AREA)
 		. |= MOVE_CONTENTS
 
+/obj/structure/ladder/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
+	. = ..()
+	if (!(resistance_flags & INDESTRUCTIBLE))
+		disconnect()
+
+/obj/structure/ladder/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+	. = ..()
+	if (!(resistance_flags & INDESTRUCTIBLE))
+		LateInitialize()
+
+/obj/structure/ladder/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
+	if (resistance_flags & INDESTRUCTIBLE)
+		// simply don't be moved
+		return FALSE
+	return ..()
 
 /************************************Misc move procs************************************/
 

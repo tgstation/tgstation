@@ -3,6 +3,7 @@
 $include game_options.txt
 $include dbconfig.txt
 $include comms.txt
+$include antag_rep.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
@@ -116,6 +117,9 @@ LOG_LAW
 
 ## log crew manifest to seperate file
 LOG_MANIFEST
+
+## log job divide debugging information
+#LOG_JOB_DEBUG
 
 ## log all world.Topic() calls
 # LOG_WORLD_TOPIC

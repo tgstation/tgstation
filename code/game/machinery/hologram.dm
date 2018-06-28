@@ -666,7 +666,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/effect/overlay/holo_pad_hologram/Destroy()
 	Impersonation = null
-	if(HC)
+	if(!QDELETED(HC))
 		HC.Disconnect(HC.calling_holopad)
 	return ..()
 

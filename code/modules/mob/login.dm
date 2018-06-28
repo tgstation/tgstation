@@ -39,6 +39,7 @@
 		AA.onNewMob(src)
 
 	update_client_colour()
+	update_mouse_pointer()
 	if(client)
 		client.click_intercept = null
 
@@ -48,7 +49,4 @@
 			for(var/datum/action/A in client.player_details.player_actions)
 				A.Grant(src)
 
-	if(!GLOB.individual_log_list[ckey])
-		GLOB.individual_log_list[ckey] = logging
-	else
-		logging = GLOB.individual_log_list[ckey]
+	log_message("Client [key_name(src)] has taken ownership of mob [src]", INDIVIDUAL_OWNERSHIP_LOG)

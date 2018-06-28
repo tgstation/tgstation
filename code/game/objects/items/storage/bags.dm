@@ -142,7 +142,7 @@
 			if (box)
 				user.transferItemToLoc(A, box)
 				show_message = TRUE
-			else if(SendSignal(COMSIG_TRY_STORAGE_INSERT, A, user, TRUE))
+			else if(SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, A, user, TRUE))
 				show_message = TRUE
 			else
 				if(!spam_protection)
@@ -316,7 +316,7 @@
 /obj/item/storage/bag/tray/update_icon()
 	cut_overlays()
 	for(var/obj/item/I in contents)
-		add_overlay(mutable_appearance(I.icon, I.icon_state))
+		add_overlay(new /mutable_appearance(I))
 
 /obj/item/storage/bag/tray/Entered()
 	. = ..()

@@ -143,8 +143,10 @@ GLOBAL_PROTECT(exp_to_update)
 		L.update_exp_list(mins,ann)
 
 /datum/controller/subsystem/blackbox/proc/update_exp_db()
-	SSdbcore.MassInsert(format_table_name("role_time"), GLOB.exp_to_update, "ON DUPLICATE KEY UPDATE minutes = minutes + VALUES(minutes)")
-	LAZYCLEARLIST(GLOB.exp_to_update)
+	set waitfor = FALSE
+	var/list/old_minutes = GLOB.exp_to_update
+	GLOB.exp_to_update = null
+	SSdbcore.MassInsert(format_table_name("role_time"), old_minutes, "ON DUPLICATE KEY UPDATE minutes = minutes + VALUES(minutes)")
 
 //resets a client's exp to what was in the db.
 /client/proc/set_exp_from_db()
@@ -154,10 +156,12 @@ GLOBAL_PROTECT(exp_to_update)
 		return -1
 	var/datum/DBQuery/exp_read = SSdbcore.NewQuery("SELECT job, minutes FROM [format_table_name("role_time")] WHERE ckey = '[sanitizeSQL(ckey)]'")
 	if(!exp_read.Execute())
+		qdel(exp_read)
 		return -1
 	var/list/play_records = list()
 	while(exp_read.NextRow())
 		play_records[exp_read.item[1]] = text2num(exp_read.item[2])
+	qdel(exp_read)
 
 	for(var/rtype in SSjob.name_occupations)
 		if(!play_records[rtype])
@@ -186,7 +190,9 @@ GLOBAL_PROTECT(exp_to_update)
 	var/datum/DBQuery/flag_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET flags = '[prefs.db_flags]' WHERE ckey='[sanitizeSQL(ckey)]'")
 
 	if(!flag_update.Execute())
+		qdel(flag_update)
 		return -1
+	qdel(flag_update)
 
 
 /client/proc/update_exp_list(minutes, announce_changes = FALSE)
@@ -264,10 +270,12 @@ GLOBAL_PROTECT(exp_to_update)
 	var/datum/DBQuery/flags_read = SSdbcore.NewQuery("SELECT flags FROM [format_table_name("player")] WHERE ckey='[ckey]'")
 
 	if(!flags_read.Execute())
+		qdel(flags_read)
 		return FALSE
 
 	if(flags_read.NextRow())
 		prefs.db_flags = text2num(flags_read.item[1])
 	else if(isnull(prefs.db_flags))
 		prefs.db_flags = 0	//This PROBABLY won't happen, but better safe than sorry.
+	qdel(flags_read)
 	return TRUE

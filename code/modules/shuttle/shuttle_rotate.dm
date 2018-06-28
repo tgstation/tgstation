@@ -25,7 +25,7 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 			pixel_x = oldPY
 			pixel_y = (oldPX*(-1))
 
-	SendSignal(COMSIG_ATOM_ROTATE, rotation, params)
+	SEND_SIGNAL(src, COMSIG_ATOM_ROTATE, rotation, params)
 
 /************************************Turf rotate procs************************************/
 

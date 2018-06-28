@@ -129,7 +129,7 @@
 			if (contents.len>=max_n_of_items)
 				to_chat(user, "<span class='warning'>[src] is full, you can't put anything in!</span>")
 				return 1
-			if(T.SendSignal(COMSIG_TRY_STORAGE_TAKE, S, src))
+			if(SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src))
 				loaded++
 
 		if(loaded)

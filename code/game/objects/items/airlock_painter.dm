@@ -16,8 +16,8 @@
 
 	var/obj/item/toner/ink = null
 
-/obj/item/airlock_painter/New()
-	..()
+/obj/item/airlock_painter/Initialize()
+	. = ..()
 	ink = new /obj/item/toner(src)
 
 //This proc doesn't just check if the painter can be used, but also uses it.

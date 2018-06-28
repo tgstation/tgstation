@@ -26,7 +26,7 @@
 		return FALSE//Cooldown check
 	var/turf/location = get_turf(loc)
 	if(location)
-		location.hotspot_expose(1000,1000)
+		location.hotspot_expose(700,10)
 	sparks.start()
 	return TRUE
 

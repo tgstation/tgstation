@@ -204,6 +204,7 @@
 	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
 	width = 3
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/space/basic,
 /area/space)
 "abv" = (
@@ -896,7 +897,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/engineering{
 	name = "Auxiliary Construction Storage";
-	req_access_txt = "10;32;47;48"
+	req_one_access_txt = "10;32;47;48"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -9052,11 +9053,9 @@
 /turf/open/floor/plasteel/redblue,
 /area/maintenance/port/fore)
 "ayW" = (
-/obj/machinery/vending/autodrobe{
-	req_access_txt = "0"
-	},
 /obj/machinery/light/small,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/autodrobe/all_access,
 /turf/open/floor/plasteel/redblue/redside{
 	dir = 8
 	},
@@ -15401,9 +15400,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/airlock_sensor{
-	id_tag = "incinerator_airlock_sensor";
-	master_tag = "incinerator_airlock_control";
+/obj/machinery/airlock_sensor/incinerator_atmos{
 	pixel_y = 24
 	},
 /turf/open/floor/engine,
@@ -15960,10 +15957,7 @@
 	},
 /area/security/execution/education)
 "aNO" = (
-/obj/machinery/door/poddoor{
-	id = "turbinevent";
-	name = "Turbine Vent"
-	},
+/obj/machinery/door/poddoor/incinerator_atmos_main,
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "aNP" = (
@@ -15997,9 +15991,7 @@
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "aNR" = (
-/obj/machinery/igniter{
-	id = "Incinerator"
-	},
+/obj/machinery/igniter/incinerator_atmos,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -16011,14 +16003,7 @@
 /area/maintenance/disposal/incinerator)
 "aNS" = (
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/public/glass{
-	autoclose = 0;
-	frequency = 1449;
-	heat_proof = 1;
-	id_tag = "incinerator_airlock_exterior";
-	name = "Incinerator Exterior Airlock";
-	req_access_txt = "12"
-	},
+/obj/machinery/door/airlock/public/glass/incinerator/atmos_exterior,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -16033,23 +16018,14 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume{
-	dir = 2;
-	frequency = 1449;
-	id = "incinerator_airlock_pump"
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_atmos{
+	dir = 2
 	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "aNU" = (
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/public/glass{
-	autoclose = 0;
-	frequency = 1449;
-	heat_proof = 1;
-	id_tag = "incinerator_airlock_interior";
-	name = "Incinerator Interior Airlock";
-	req_access_txt = "12"
-	},
+/obj/machinery/door/airlock/public/glass/incinerator/atmos_interior,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -16057,16 +16033,8 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	airpump_tag = "incinerator_airlock_pump";
-	exterior_door_tag = "incinerator_airlock_exterior";
-	id_tag = "incinerator_airlock_control";
-	interior_door_tag = "incinerator_airlock_interior";
-	name = "Incinerator Access Console";
-	pixel_y = 27;
-	req_access_txt = "12";
-	sanitize_external = 1;
-	sensor_tag = "incinerator_airlock_sensor"
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_atmos{
+	pixel_y = 27
 	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
@@ -16735,24 +16703,17 @@
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "aPA" = (
-/obj/machinery/button/ignition{
-	id = "Incinerator";
+/obj/machinery/button/ignition/incinerator/atmos{
 	pixel_x = 8;
 	pixel_y = -36
 	},
-/obj/machinery/button/door{
-	id = "turbinevent";
-	name = "Turbine Vent Control";
+/obj/machinery/button/door/incinerator_vent_atmos_main{
 	pixel_x = -8;
-	pixel_y = -36;
-	req_access_txt = "12"
+	pixel_y = -36
 	},
-/obj/machinery/button/door{
-	id = "auxincineratorvent";
-	name = "Auxiliary Vent Control";
+/obj/machinery/button/door/incinerator_vent_atmos_aux{
 	pixel_x = -8;
-	pixel_y = -24;
-	req_access_txt = "12"
+	pixel_y = -24
 	},
 /obj/machinery/computer/turbine_computer{
 	dir = 1;
@@ -17622,10 +17583,7 @@
 /turf/open/floor/plating/airless,
 /area/maintenance/disposal/incinerator)
 "aRo" = (
-/obj/machinery/door/poddoor{
-	id = "auxincineratorvent";
-	name = "Incineration Chamber Vent"
-	},
+/obj/machinery/door/poddoor/incinerator_atmos_aux,
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "aRp" = (
@@ -19262,9 +19220,6 @@
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/qm)
 "aUs" = (
-/obj/machinery/computer/security/mining{
-	dir = 8
-	},
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
@@ -19272,6 +19227,9 @@
 	c_tag = "Cargo - Quartermaster's Quarters";
 	dir = 8;
 	name = "cargo camera"
+	},
+/obj/machinery/computer/security/qm{
+	dir = 8
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 4
@@ -22766,6 +22724,7 @@
 	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
 	width = 3
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/space/basic,
 /area/space)
 "bbz" = (
@@ -28881,14 +28840,11 @@
 	},
 /area/security/execution/transfer)
 "bpg" = (
-/obj/machinery/computer/security{
-	name = "Labor Camp Monitoring";
-	network = list("labor")
-	},
 /obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_y = 26
 	},
+/obj/machinery/computer/security/labor,
 /turf/open/floor/plasteel/red,
 /area/security/execution/transfer)
 "bph" = (
@@ -30156,11 +30112,11 @@
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/hos)
 "brC" = (
-/obj/machinery/computer/security{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/machinery/computer/security/hos{
+	dir = 1
 	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/hos)
@@ -32439,7 +32395,7 @@
 /obj/machinery/camera/motion{
 	c_tag = "AI Chamber - Fore";
 	name = "motion-sensitive ai camera";
-	network = list("ai")
+	network = list("aichamber")
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/dark,
@@ -32893,7 +32849,8 @@
 "bxe" = (
 /obj/machinery/camera/motion{
 	c_tag = "Vault";
-	dir = 4
+	dir = 4;
+	network = list("vault")
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -40887,7 +40844,7 @@
 	c_tag = "Telecomms - Monitoring";
 	dir = 2;
 	name = "telecomms camera";
-	network = list("ss13","tcomm")
+	network = list("ss13","tcomms")
 	},
 /turf/open/floor/plasteel/grimy,
 /area/tcommsat/computer)
@@ -41371,7 +41328,7 @@
 	c_tag = "AI Chamber - Aft";
 	dir = 1;
 	name = "motion-sensitive ai camera";
-	network = list("ai")
+	network = list("aichamber")
 	},
 /turf/open/floor/plasteel/vault,
 /area/ai_monitored/turret_protected/ai)
@@ -45760,12 +45717,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the AI's satellite.";
-	dir = 4;
-	name = "Research Monitor";
-	network = list("minisat");
-	pixel_y = 2
+/obj/machinery/computer/security/telescreen/minisat{
+	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -45806,12 +45759,8 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the Engine.";
+/obj/machinery/computer/security/telescreen/ce{
 	dir = 4;
-	layer = 4;
-	name = "Engine Monitor";
-	network = list("engine");
 	pixel_x = -30
 	},
 /mob/living/simple_animal/parrot/Poly,
@@ -49085,6 +49034,10 @@
 /obj/item/stack/packageWrap,
 /obj/item/hand_labeler,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/computer/security/telescreen/vault{
+	dir = 8;
+	pixel_x = 26
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "ccD" = (
@@ -49095,7 +49048,7 @@
 	c_tag = "Telecomms - Chamber Port";
 	dir = 4;
 	name = "telecomms camera";
-	network = list("ss13","tcomm")
+	network = list("ss13","tcomms")
 	},
 /turf/open/floor/plasteel/vault/telecomms{
 	dir = 8
@@ -49539,7 +49492,7 @@
 /obj/machinery/camera/motion{
 	c_tag = "AI - Upload";
 	name = "motion-sensitive ai camera";
-	network = list("minisat")
+	network = list("aiupload")
 	},
 /turf/open/floor/plasteel/vault,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -50982,7 +50935,7 @@
 	c_tag = "Telecomms - Chamber Starboard";
 	dir = 8;
 	name = "telecomms camera";
-	network = list("ss13","tcomm")
+	network = list("ss13","tcomms")
 	},
 /turf/open/floor/plasteel/vault/telecomms{
 	dir = 8
@@ -52638,7 +52591,7 @@
 /obj/machinery/camera/motion{
 	c_tag = "Bridge - Captain's Emergency Escape";
 	dir = 4;
-	name = "command camera"
+	name = "motion-sensitive command camera"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -54764,7 +54717,7 @@
 	c_tag = "Telecomms - Cooling Room";
 	dir = 8;
 	name = "telecomms camera";
-	network = list("ss13","tcomm")
+	network = list("ss13","tcomms")
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -63641,9 +63594,7 @@
 	},
 /area/crew_quarters/locker)
 "cGO" = (
-/obj/machinery/vending/autodrobe{
-	req_access_txt = "0"
-	},
+/obj/machinery/vending/autodrobe/all_access,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -67933,6 +67884,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Storage";
+	network = list("ss13", "medbay");
 	dir = 4;
 	name = "medbay camera"
 	},
@@ -71851,6 +71803,7 @@
 /obj/machinery/light,
 /obj/machinery/camera{
 	c_tag = "Medbay - Waiting Room";
+	network = list("ss13", "medbay");
 	dir = 1;
 	name = "medbay camera"
 	},
@@ -71990,6 +71943,7 @@
 "cYc" = (
 /obj/machinery/camera{
 	c_tag = "Medbay - Break Room";
+	network = list("ss13", "medbay");
 	dir = 2;
 	name = "medbay camera"
 	},
@@ -72556,7 +72510,7 @@
 /obj/item/pen,
 /obj/machinery/door/window/southleft{
 	name = "Research Lab Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "rndlab1";
@@ -72667,6 +72621,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
 	c_tag = "Medbay - Fore Port";
+	network = list("ss13", "medbay");
 	dir = 8;
 	name = "medbay camera"
 	},
@@ -72748,6 +72703,7 @@
 /obj/item/stack/medical/ointment,
 /obj/machinery/camera{
 	c_tag = "Medbay - Sleepers";
+	network = list("ss13", "medbay");
 	dir = 2;
 	name = "medbay camera"
 	},
@@ -75516,9 +75472,9 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Chemistry";
+	network = list("ss13", "medbay");
 	dir = 8;
-	name = "medbay camera";
-	network = list("ss13","medbay")
+	name = "medbay camera"
 	},
 /turf/open/floor/plasteel/whiteyellow/corner,
 /area/medical/chemistry)
@@ -76089,7 +76045,7 @@
 /obj/machinery/door/window/southleft{
 	dir = 4;
 	name = "Research Lab Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/machinery/door/window/westleft,
 /obj/effect/turf_decal/delivery,
@@ -76347,6 +76303,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Center";
+	network = list("ss13", "medbay");
 	dir = 2;
 	name = "medbay camera"
 	},
@@ -76754,7 +76711,7 @@
 /obj/machinery/door/window/southleft{
 	dir = 8;
 	name = "Research Lab Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "rndlab2";
@@ -77203,19 +77160,17 @@
 /area/science/research/abandoned)
 "djp" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/glass/fifty,
+/obj/machinery/cell_charger,
 /turf/open/floor/plasteel/white/side,
 /area/science/circuit)
 "djq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/rnd/production/protolathe/department/science,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/plasteel/white/side,
 /area/science/circuit)
 "djr" = (
-/obj/machinery/autolathe,
 /turf/open/floor/plasteel/white/side,
 /area/science/circuit)
 "djs" = (
@@ -77739,6 +77694,7 @@
 /obj/machinery/light,
 /obj/machinery/camera{
 	c_tag = "Medbay - Port";
+	network = list("ss13", "medbay");
 	dir = 1;
 	name = "medbay camera"
 	},
@@ -77837,6 +77793,7 @@
 /obj/machinery/light,
 /obj/machinery/camera{
 	c_tag = "Medbay - Starboard";
+	network = list("ss13", "medbay");
 	dir = 1;
 	name = "medbay camera"
 	},
@@ -78581,12 +78538,11 @@
 /area/crew_quarters/abandoned_gambling_den)
 "dmr" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stock_parts/cell/super,
-/obj/item/stock_parts/cell/super,
 /obj/structure/sign/departments/science{
 	pixel_x = -32
 	},
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -79321,7 +79277,8 @@
 	pixel_x = -26
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -80888,8 +80845,6 @@
 	pixel_y = -32
 	},
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/super,
-/obj/item/stock_parts/cell/super,
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -80923,16 +80878,16 @@
 	},
 /area/science/circuit)
 "drD" = (
-/obj/machinery/vending/assist,
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
 /area/science/circuit)
 "drE" = (
-/obj/machinery/bookbinder,
 /obj/structure/sign/poster/official/build{
 	pixel_y = -32
 	},
+/obj/structure/table/reinforced,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -80941,11 +80896,11 @@
 /obj/machinery/light_switch{
 	pixel_x = 36
 	},
-/obj/machinery/libraryscanner,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/machinery/vending/assist,
 /turf/open/floor/plasteel/white/corner{
 	dir = 1
 	},
@@ -81289,6 +81244,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Cloning Lab";
+	network = list("ss13", "medbay");
 	dir = 1;
 	name = "medbay camera"
 	},
@@ -81348,6 +81304,7 @@
 /obj/item/clothing/neck/stethoscope,
 /obj/machinery/camera{
 	c_tag = "Medbay - Cryogenics";
+	network = list("ss13", "medbay");
 	dir = 1;
 	name = "medbay camera"
 	},
@@ -81814,6 +81771,7 @@
 /obj/machinery/iv_drip,
 /obj/machinery/camera{
 	c_tag = "Medbay - Recovery Room";
+	network = list("ss13", "medbay");
 	dir = 8;
 	name = "medbay camera"
 	},
@@ -82923,7 +82881,6 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
-/obj/structure/window/spawner/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -83211,6 +83168,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Genetics Lab";
+	network = list("ss13", "medbay");
 	dir = 4;
 	name = "medbay camera"
 	},
@@ -83693,6 +83651,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/pump{
+	name = "Lil Pump"
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dxQ" = (
@@ -83839,6 +83800,7 @@
 /obj/item/storage/box/disks,
 /obj/machinery/camera{
 	c_tag = "Medbay - Genetics Desk";
+	network = list("ss13", "medbay");
 	dir = 4;
 	name = "medbay camera"
 	},
@@ -84146,6 +84108,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Surgery";
+	network = list("ss13", "medbay");
 	dir = 1;
 	name = "medbay camera"
 	},
@@ -84469,7 +84432,6 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister,
-/obj/structure/window/spawner,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -84741,6 +84703,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
 	c_tag = "Medbay - Aft Port";
+	network = list("ss13", "medbay");
 	dir = 8;
 	name = "medbay camera"
 	},
@@ -84799,6 +84762,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Chief Medical Officer's Office";
+	network = list("ss13", "medbay");
 	dir = 8;
 	name = "medbay camera"
 	},
@@ -84989,7 +84953,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/window/spawner,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dAD" = (
@@ -85708,14 +85671,12 @@
 /turf/open/floor/wood,
 /area/crew_quarters/abandoned_gambling_den)
 "dBR" = (
-/obj/machinery/vending/boozeomat{
-	req_access_txt = "0"
-	},
 /obj/machinery/light/small,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = -32
 	},
+/obj/machinery/vending/boozeomat/all_access,
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dBS" = (
@@ -85786,6 +85747,9 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
+	},
+/obj/item/radio/intercom{
+	pixel_x = -26
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -86019,8 +85983,9 @@
 /obj/structure/table/glass,
 /obj/item/clipboard,
 /obj/item/toy/figure/cmo,
-/obj/machinery/status_display{
-	pixel_x = -32
+/obj/machinery/computer/security/telescreen/cmo{
+	dir = 4;
+	pixel_x = -30
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
@@ -86067,6 +86032,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Aft Starboard";
+	network = list("ss13", "medbay");
 	dir = 4;
 	name = "medbay camera"
 	},
@@ -86384,7 +86350,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/window/spawner/north,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dDt" = (
@@ -86891,6 +86856,7 @@
 /obj/structure/sign/poster/official/science{
 	pixel_x = 32
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dEv" = (
@@ -87473,6 +87439,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dFM" = (
@@ -88091,15 +88058,11 @@
 /area/science/test_area)
 "dGY" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the testing site.";
-	dir = 4;
-	layer = 4;
-	name = "Testing Site Telescreen";
-	network = list("toxins")
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/computer/security/telescreen/toxins{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -89099,6 +89062,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
 	c_tag = "Medbay - Morgue";
+	network = list("ss13", "medbay");
 	dir = 1;
 	name = "medbay camera"
 	},
@@ -89210,6 +89174,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Chief Medical Officer's Quarters";
+	network = list("ss13", "medbay");
 	dir = 1;
 	name = "medbay camera"
 	},
@@ -90407,17 +90372,8 @@
 /obj/item/target,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/camera{
-	active_power_usage = 0;
-	c_tag = "Bomb Test Site";
-	desc = "A specially-reinforced camera with a long lasting battery, used to monitor the bomb testing site.";
-	dir = 4;
-	invuln = 1;
-	light = null;
-	name = "hardened testing camera";
-	network = list("toxins");
-	start_active = 1;
-	use_power = 0
+/obj/machinery/camera/preset/toxins{
+	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/science/test_area)
@@ -92510,6 +92466,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
 	c_tag = "Virology - Containment Lock";
+	network = list("ss13", "medbay");
 	dir = 8;
 	name = "virology camera"
 	},
@@ -92689,11 +92646,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
-"dQF" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
 /area/maintenance/port/aft)
 "dQG" = (
 /obj/structure/table,
@@ -93027,6 +92979,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Virology - Break Room";
+	network = list("ss13", "medbay");
 	dir = 8;
 	name = "virology camera"
 	},
@@ -94733,6 +94686,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Virology - Lab";
+	network = list("ss13", "medbay");
 	name = "virology camera"
 	},
 /obj/effect/turf_decal/bot,
@@ -94752,6 +94706,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
 	c_tag = "Virology - Hallway";
+	network = list("ss13", "medbay");
 	dir = 8;
 	name = "virology camera"
 	},
@@ -96455,6 +96410,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Virology - Cells";
+	network = list("ss13", "medbay");
 	dir = 8;
 	name = "virology camera"
 	},
@@ -99678,14 +99634,7 @@
 	},
 /area/science/mixing)
 "fpQ" = (
-/obj/machinery/door/airlock/research/glass{
-	autoclose = 0;
-	frequency = 1449;
-	heat_proof = 1;
-	id_tag = "tox_airlock_interior";
-	name = "Mixing Room Interior Airlock";
-	req_access_txt = "8"
-	},
+/obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/engine,
 /area/science/mixing)
@@ -99713,9 +99662,7 @@
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1
 	},
-/obj/machinery/airlock_sensor{
-	id_tag = "tox_airlock_sensor";
-	master_tag = "tox_airlock_control";
+/obj/machinery/airlock_sensor/incinerator_toxmix{
 	pixel_x = -24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -99766,7 +99713,7 @@
 "gUH" = (
 /obj/machinery/light,
 /obj/structure/table/reinforced,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/item/stack/sheet/metal/ten,
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -99950,17 +99897,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/button/ignition{
-	id = "herrington_memorial_toxigniter";
+/obj/machinery/button/ignition/incinerator/toxmix{
 	pixel_x = -6;
 	pixel_y = 30
 	},
-/obj/machinery/button/door{
-	id = "mixvent";
+/obj/machinery/button/door/incinerator_vent_toxmix{
 	pixel_x = 8;
-	pixel_y = 30;
-	req_one_access = null;
-	req_one_access_txt = "8"
+	pixel_y = 30
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
@@ -100047,7 +99990,7 @@
 /obj/machinery/autolathe,
 /obj/machinery/door/window/southleft{
 	name = "Research Lab Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -100065,10 +100008,8 @@
 	},
 /area/science/mixing)
 "lyU" = (
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume{
-	dir = 8;
-	frequency = 1449;
-	id = "tox_airlock_pump"
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_toxmix{
+	dir = 8
 	},
 /turf/open/floor/engine,
 /area/science/mixing)
@@ -100143,14 +100084,8 @@
 /area/science/circuit)
 "mkm" = (
 /obj/machinery/atmospherics/components/binary/valve,
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	airpump_tag = "tox_airlock_pump";
-	exterior_door_tag = "tox_airlock_exterior";
-	id_tag = "tox_airlock_control";
-	interior_door_tag = "tox_airlock_interior";
-	pixel_y = 26;
-	sanitize_external = 1;
-	sensor_tag = "tox_airlock_sensor"
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
+	pixel_y = 26
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
@@ -100206,18 +100141,16 @@
 	},
 /area/science/mixing)
 "oIE" = (
-/obj/machinery/door/airlock/research/glass{
-	autoclose = 0;
-	frequency = 1449;
-	heat_proof = 1;
-	id_tag = "tox_airlock_exterior";
-	name = "Mixing Room Exterior Airlock";
-	req_one_access = "8";
-	req_one_access_txt = "0"
-	},
+/obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior,
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/engine,
 /area/science/mixing)
+"oMw" = (
+/obj/docking_port/stationary/public_mining_dock{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
 "oNd" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -100254,9 +100187,7 @@
 	},
 /area/science/research)
 "oYI" = (
-/obj/machinery/igniter{
-	id = "herrington_memorial_toxigniter"
-	},
+/obj/machinery/igniter/incinerator_toxmix,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
 "oZC" = (
@@ -100359,9 +100290,7 @@
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
 "svv" = (
-/obj/machinery/door/poddoor{
-	id = "mixvent"
-	},
+/obj/machinery/door/poddoor/incinerator_toxmix,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
 "tmi" = (
@@ -100553,6 +100482,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxins_mixing_output,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
+"xZM" = (
+/obj/structure/fans/tiny/invisible,
+/turf/open/space/basic,
+/area/space)
 "yiv" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
@@ -134174,7 +134107,7 @@ dNC
 dNC
 dOT
 dPM
-dQF
+dOb
 dRE
 dSC
 dTA
@@ -136848,7 +136781,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+xZM
 abE
 aaO
 aca
@@ -137362,7 +137295,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+xZM
 abG
 aaO
 acc
@@ -141474,7 +141407,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+xZM
 abE
 aaO
 aca
@@ -141988,7 +141921,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+xZM
 abG
 aaO
 acc
@@ -143544,7 +143477,7 @@ aeF
 aeF
 aeF
 aeF
-aeF
+oMw
 aeF
 aeF
 aeF
@@ -158751,9 +158684,9 @@ aaa
 ajr
 aad
 aKV
-aaa
+xZM
 bbv
-aaa
+xZM
 aKV
 aad
 aad

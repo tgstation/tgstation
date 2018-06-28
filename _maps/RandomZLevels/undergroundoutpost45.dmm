@@ -7778,10 +7778,7 @@
 	dir = 2;
 	id = "UO45_air_in"
 	},
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/awaymission/undergroundoutpost45/engineering)
 "pG" = (
 /obj/structure/cable{
@@ -12603,6 +12600,15 @@
 /obj/effect/mapping_helpers/planet_z,
 /turf/open/space,
 /area/space/nearstation)
+"KE" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/circuit{
+	name = "Server Base";
+	initial_gas_mix = "n2=500,TEMP=80"
+	},
+/area/awaymission/undergroundoutpost45/research)
 
 (1,1,1) = {"
 aa
@@ -37925,7 +37931,7 @@ gz
 gz
 gz
 gz
-qh
+KE
 qP
 qh
 gz

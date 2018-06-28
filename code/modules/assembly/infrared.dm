@@ -33,6 +33,7 @@
 
 /obj/item/assembly/infra/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(listener)
 	QDEL_LIST(beams)
 	. = ..()
 
@@ -166,7 +167,9 @@
 	listener = newloc.AddComponent(/datum/component/redirect, COMSIG_ATOM_EXITED, CALLBACK(src, .proc/check_exit))
 
 /obj/item/assembly/infra/proc/check_exit(atom/movable/offender)
-	if(offender == src)
+	if(QDELETED(src))
+		return
+	if(offender == src || istype(offender,/obj/effect/beam/i_beam))
 		return
 	if (offender && isitem(offender))
 		var/obj/item/I = offender

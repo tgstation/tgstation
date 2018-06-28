@@ -42,7 +42,7 @@
 	if(!istype(H))
 		return
 
-	for(var/obj/item/I in H.get_equipped_items())
+	for(var/obj/item/I in H.get_equipped_items(TRUE))
 		qdel(I)
 	for(var/obj/item/I in H.held_items)
 		qdel(I)

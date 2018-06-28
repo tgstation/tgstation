@@ -93,7 +93,7 @@
 	b_o.pixel_x = -7
 	return b_o
 
-obj/machinery/chem_dispenser/proc/work_animation()
+/obj/machinery/chem_dispenser/proc/work_animation()
 	if(working_state)
 		flick(working_state,src)
 
@@ -467,14 +467,14 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		"creme_de_menthe",
 		"creme_de_cacao",
 		"triple_sec",
-		"sake",
-		"fernet"
+		"sake"
 	)
 	emagged_reagents = list(
 		"ethanol",
 		"iron",
 		"minttoxin",
-		"atomicbomb"
+		"atomicbomb",
+		"fernet"
 	)
 
 
@@ -504,7 +504,7 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		"diethylamine")
 
 /obj/machinery/chem_dispenser/fullupgrade //fully upgraded stock parts
-	
+
 /obj/machinery/chem_dispenser/fullupgrade/Initialize()
 	. = ..()
 	component_parts = list()

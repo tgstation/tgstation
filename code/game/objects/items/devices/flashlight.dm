@@ -399,6 +399,11 @@
 		to_chat(user, "<span class='warning'>\The [src] needs time to recharge!</span>")
 	return
 
+/obj/item/flashlight/emp/debug //for testing emp_act()
+	name = "debug EMP flashlight"
+	emp_max_charges = 100
+	emp_cur_charges = 100
+
 // Glowsticks, in the uncomfortable range of similar to flares,
 // but not similar enough to make it worth a refactor
 /obj/item/flashlight/glowstick

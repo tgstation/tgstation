@@ -45,7 +45,7 @@ SUBSYSTEM_DEF(machines)
 		else
 			processing -= thing
 			if (!QDELETED(thing))
-				thing.isprocessing = FALSE
+				thing.datum_flags &= ~DF_ISPROCESSING
 		if (MC_TICK_CHECK)
 			return
 
