@@ -20,6 +20,7 @@
 			eject(user)
 		if(user.transferItemToLoc(N, src))
 			to_chat(user, "<span class='notice'>You insert [N] into [src]</span>")
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			disk = N
 	else
 		..()
@@ -149,12 +150,14 @@
 		if("create_backup")
 			var/cloud_id = input("Choose a cloud ID (1-100):", name, null) as null|num
 			if(!isnull(cloud_id))
+				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 				cloud_id = CLAMP(round(cloud_id, 1),1,100)
 				generate_backup(cloud_id, usr)
 			. = TRUE
 		if("delete_backup")
 			var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 			if(backup)
+				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 				qdel(backup)
 				investigate_log("[key_name(usr)] deleted the nanite cloud backup #[current_view]", INVESTIGATE_NANITES)
 			. = TRUE
@@ -162,6 +165,7 @@
 			if(disk && disk.program)
 				var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 				if(backup)
+					playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 					var/datum/component/nanites/nanites = backup.nanites
 					nanites.add_program(disk.program.copy())
 					investigate_log("[key_name(usr)] uploaded program [disk.program.name] to cloud #[current_view]", INVESTIGATE_NANITES)
@@ -169,6 +173,7 @@
 		if("remove_program")
 			var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 			if(backup)
+				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 				var/datum/component/nanites/nanites = backup.nanites
 				var/datum/nanite_program/P = nanites.programs[text2num(params["program_id"])]
 				investigate_log("[key_name(usr)] deleted program [P.name] from cloud #[current_view]", INVESTIGATE_NANITES)
