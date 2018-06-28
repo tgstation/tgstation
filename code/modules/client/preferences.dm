@@ -127,7 +127,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	parent = C
 	custom_names["human"] = random_unique_name()
 	custom_names["ai"] = pick(GLOB.ai_names)
-	custom_names["cyborg"] = pick(GLOB.ai_names)
+	custom_names["cyborg"] = DEFAULT_CYBORG_NAME
 	custom_names["clown"] = pick(GLOB.clown_names)
 	custom_names["mime"] = pick(GLOB.mime_names)
 	UI_style = GLOB.available_ui_styles[1]
