@@ -1,4 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - refactor: "Unused and broken OOC metadata code has been killed."
