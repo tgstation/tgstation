@@ -123,7 +123,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		else
 			L.fully_heal()
 
-		for(var/V in GLOB.sortedAreas)
+		for(var/V in GLOB.the_station_areas)
 			var/area/A = V
 			if(!A.blob_allowed)
 				continue
