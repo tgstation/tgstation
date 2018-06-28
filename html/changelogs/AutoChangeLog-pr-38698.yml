@@ -1,0 +1,5 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - rscadd: "You can now build clown borgs with a little bit of bananium and research. Praise be the honkmother."
+  - rscadd: "New upgrade module has been added so making loot/tech web borg modules has become easier for admins/mappers/coders."
