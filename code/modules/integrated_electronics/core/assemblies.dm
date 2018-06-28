@@ -10,6 +10,7 @@
 	icon_state = "setup_small"
 	item_flags = NOBLUDGEON
 	materials = list()		// To be filled later
+	datum_flags = DF_USE_TAG
 	var/list/assembly_components = list()
 	var/list/ckeys_allowed_to_scan = list() // Players who built the circuit can scan it as a ghost.
 	var/max_components = IC_MAX_SIZE_BASE
@@ -30,6 +31,8 @@
 	var/combat_circuits = 0 //number of combat cicuits in the assembly, used for diagnostic hud
 	var/long_range_circuits = 0 //number of long range cicuits in the assembly, used for diagnostic hud
 	var/prefered_hud_icon = "hudstat"		// Used by the AR circuit to change the hud icon.
+	var/creator // circuit creator if any
+	var/static/next_assembly_id = 0
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD, DIAG_CIRCUIT_HUD) //diagnostic hud overlays
 	max_integrity = 50
 	pass_flags = 0
@@ -55,6 +58,9 @@
 		COLOR_ASSEMBLY_BLUE,
 		COLOR_ASSEMBLY_PURPLE
 		)
+
+/obj/item/electronic_assembly/GenerateTag()
+    tag = "assembly_[next_assembly_id++]"
 
 /obj/item/electronic_assembly/examine(mob/user)
 	. = ..()
@@ -351,6 +357,7 @@
 	to_chat(user, "<span class='notice'>You slide [IC] inside [src].</span>")
 	playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 	add_allowed_scanner(user.ckey)
+	investigate_log("had [IC]([IC.type]) inserted by [key_name(user)].", INVESTIGATE_CIRCUIT)
 
 	add_component(IC)
 	return TRUE
@@ -390,6 +397,7 @@
 		playsound(src, 'sound/items/crowbar.ogg', 50, 1)
 		user.put_in_hands(IC)
 	add_allowed_scanner(user.ckey)
+	investigate_log("had [IC]([IC.type]) removed by [key_name(user)].", INVESTIGATE_CIRCUIT)
 
 	return TRUE
 

@@ -78,7 +78,8 @@
 /area/shuttle/auxillary_base)
 "X" = (
 /obj/machinery/camera{
-	dir = 1
+	dir = 1;
+	network = list("auxbase")
 	},
 /obj/structure/mining_shuttle_beacon,
 /turf/open/floor/plating,

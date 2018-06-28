@@ -912,11 +912,3 @@
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/stock_parts/matter_bin = 2)
-
-/obj/item/circuitboard/machine/generator
-	name = "Thermo-Electric Generator (Machine Board)"
-	build_path = /obj/machinery/power/generator
-
-/obj/item/circuitboard/machine/circulator
-	name = "Circulator/Heat Exchanger (Machine Board)"
-	build_path = /obj/machinery/atmospherics/components/binary/circulator

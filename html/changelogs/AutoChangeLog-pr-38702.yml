@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - code_imp: "Removed unused effect object that could be used to spawn a list of humans"
