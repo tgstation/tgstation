@@ -112,10 +112,3 @@
 	target.death(0)
 	target.Drain()
 	return TRUE
-
-
-
-//Absorbs the target DNA.
-//datum/changeling/proc/absorb_dna(mob/living/carbon/T, mob/user)
-
-//datum/changeling/proc/store_dna(datum/dna/new_dna, mob/user)
