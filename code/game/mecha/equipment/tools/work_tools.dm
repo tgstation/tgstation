@@ -78,8 +78,8 @@
 	name = "\improper KILL CLAMP"
 	desc = "They won't know what clamped them!"
 	energy_drain = 0
-	var/real_clamp = FALSE
 	dam_force = 0
+	var/real_clamp = FALSE
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/real
 	desc = "They won't know what clamped them! This time for real!"
@@ -144,7 +144,7 @@
 					play_sound = TRUE
 					limbs_gone = "[limbs_gone], [affected]"
 				if(play_sound)
-					playsound(get_turf(src), get_dismember_sound(), 80, TRUE)
+					playsound(src, get_dismember_sound(), 80, TRUE)
 					target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off.</span>", \
 								   "<span class='userdanger'>[chassis] rips [target]'s arms off.</span>")
 					add_logs(chassis.occupant, M, "dismembered of[limbs_gone],", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")

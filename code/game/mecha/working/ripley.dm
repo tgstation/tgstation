@@ -96,6 +96,7 @@
 	for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
 		E.detach()
 		qdel(E)
+	equipment.Cut()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/real
 	ME.attach(src)
 
