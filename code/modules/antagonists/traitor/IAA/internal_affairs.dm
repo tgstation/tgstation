@@ -44,6 +44,7 @@
 	tick_interval = PINPOINTER_PING_TIME
 	alert_type = /obj/screen/alert/status_effect/agent_pinpointer
 	var/minimum_range = PINPOINTER_MINIMUM_RANGE
+	var/range_fuzz_factor = PINPOINTER_EXTRA_RANDOM_RANGE
 	var/mob/scan_target = null
 
 /obj/screen/alert/status_effect/agent_pinpointer
@@ -61,7 +62,7 @@
 	if(here.z != there.z)
 		linked_alert.icon_state = "pinonnull"
 		return
-	if(get_dist_euclidian(here,there)<=minimum_range + rand(0, PINPOINTER_EXTRA_RANDOM_RANGE))
+	if(get_dist_euclidian(here,there)<=minimum_range + rand(0, range_fuzz_factor))
 		linked_alert.icon_state = "pinondirect"
 	else
 		linked_alert.setDir(get_dir(here, there))
@@ -228,7 +229,7 @@
 
 /datum/antagonist/traitor/internal_affairs/forge_traitor_objectives()
 	forge_iaa_objectives()
-	
+
 	var/objtype = traitor_kind == TRAITOR_HUMAN ? /datum/objective/escape : /datum/objective/survive
 	var/datum/objective/escape_objective = new objtype
 	escape_objective.owner = owner

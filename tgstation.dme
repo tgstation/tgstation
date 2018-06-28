@@ -1144,6 +1144,7 @@
 #include "code\modules\antagonists\changeling\powers\mimic_voice.dm"
 #include "code\modules\antagonists\changeling\powers\mutations.dm"
 #include "code\modules\antagonists\changeling\powers\panacea.dm"
+#include "code\modules\antagonists\changeling\powers\pheromone_receptors.dm"
 #include "code\modules\antagonists\changeling\powers\regenerate.dm"
 #include "code\modules\antagonists\changeling\powers\revive.dm"
 #include "code\modules\antagonists\changeling\powers\shriek.dm"
