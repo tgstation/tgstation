@@ -1,0 +1,5 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - admin: "Admins can now scan circuits if they have admin AI interaction enabled."
+  - admin: "some more circuit logging"
