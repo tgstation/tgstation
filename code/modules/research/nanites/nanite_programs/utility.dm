@@ -4,12 +4,76 @@
 	desc = "The nanites constantly send encrypted signals attempting to forcefully copy their own programming into other nanite clusters."
 	use_rate = 0.5
 	rogue_types = list(/datum/nanite_program/toxic)
+	extra_settings = list("Program Overwrite","Cloud Overwrite")
+	
+	var/sync_programs = TRUE
+	var/sync_overwrite = FALSE
+	var/overwrite_cloud = FALSE
+	var/set_cloud = 0
+
+/datum/nanite_program/viral/set_extra_setting(user, setting)
+	if(setting == "Program Overwrite")
+		var/overwrite_type = input("Choose what to do with the target's programs", name) as null|anything in list("Overwrite","Add To","Ignore")
+		if(!overwrite_type)
+			return
+		switch(overwrite_type)
+			if("Ignore") //Do not affect programs (if you only want to set the cloud ID)
+				sync_programs = FALSE
+				sync_overwrite = FALSE
+			if("Add To") //Add to existing programs (so the target does not notice theirs are missing)
+				sync_programs = TRUE
+				sync_overwrite = FALSE
+			if("Overwrite") //Replace target's programs with the source
+				sync_programs = TRUE
+				sync_overwrite = TRUE
+	if(setting == "Cloud Overwrite")
+		var/overwrite_type = input("Choose what to do with the target's Cloud ID", name) as null|anything in list("Overwrite","Disable","Keep")
+		if(!overwrite_type)
+			return
+		switch(overwrite_type)
+			if("Keep") //Don't change the cloud ID
+				overwrite_cloud = FALSE
+				set_cloud = 0
+			if("Disable") //Set the cloud ID to disabled
+				overwrite_cloud = TRUE
+				set_cloud = 0
+			if("Overwrite") //Set the cloud ID to what we choose
+				var/new_cloud = input(user, "Choose the Cloud ID to set on infected nanites (1-100)", name, null) as null|num
+				if(isnull(new_cloud))
+					return
+				overwrite_cloud = TRUE
+				set_cloud = CLAMP(round(new_code, 1), 1, 100)
+
+/datum/nanite_program/viral/get_extra_setting(setting)
+	if(setting == "Program Overwrite")
+		if(!sync_programs)
+			return "Ignore"
+		else if(sync_overwrite)
+			return "Overwrite"
+		else
+			return "Add To"
+	if(setting == "Cloud Overwrite")
+		if(!overwrite_cloud)
+			return "None"
+		else if(set_cloud == 0)
+			return "Disable"
+		else
+			return set_cloud
+
+/datum/nanite_program/viral/copy_extra_settings_to(datum/nanite_program/viral/target)
+	target.overwrite_cloud = overwrite_cloud
+	target.set_cloud = set_cloud
+	target.sync_programs = sync_programs
+	target.sync_overwrite = sync_overwrite
 
 /datum/nanite_program/viral/active_effect()
 	for(var/mob/M in orange(host_mob, 5))
 		GET_COMPONENT_FROM(target_nanites, /datum/component/nanites, M)
 		if(target_nanites && prob(5))
-			target_nanites.sync(nanites, FALSE) //won't delete non-affected programs
+			if(sync_programs)
+				target_nanites.sync(nanites, sync_overwrite) //won't delete non-affected programs
+			if(overwrite_cloud)
+				target_nanites.cloud_id = set_cloud
 
 /datum/nanite_program/monitoring
 	name = "Monitoring"
