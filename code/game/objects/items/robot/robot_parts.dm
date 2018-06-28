@@ -101,9 +101,9 @@
 
 /obj/item/robot_suit/screwdriver_act(mob/living/user, obj/item/I) //Swaps the power cell if you're holding a new one in your other hand.
 	var/obj/item/stock_parts/cell/temp_cell = user.is_holding_item_of_type(/obj/item/stock_parts/cell)
-	if(QDELETED(temp_cell))
+	if(!temp_cell)
 		return
-	if(QDELETED(chest.cell))
+	if(!chest.cell)
 		to_chat(user, "<span class='notice'>There doesn't seem to unscrew from [src].</span>")
 		return
 	if(!user.transferItemToLoc(temp_cell, chest))
