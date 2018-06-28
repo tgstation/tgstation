@@ -1683,7 +1683,7 @@
 	},
 /obj/machinery/power/apc{
 	dir = 4;
-	name = "Starboard Bow Maintenace APC";
+	name = "Starboard Bow Maintenance APC";
 	areastring = "/area/maintenance/starboard/fore";
 	pixel_x = 26
 	},
@@ -2113,7 +2113,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Fore Maintenace APC";
+	name = "Fore Maintenance APC";
 	areastring = "/area/maintenance/fore";
 	pixel_x = -26;
 	pixel_y = 3
@@ -16219,7 +16219,7 @@
 /area/hydroponics)
 "aHO" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Hydroponic's Maintenance";
+	name = "Hydroponics Maintenance";
 	req_access_txt = "35"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,

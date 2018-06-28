@@ -49,7 +49,7 @@
 	var/exp_type_department = ""
 
 	//The amount of good boy points playing this role will earn you towards a higher chance to roll antagonist next round
-	//can be overriden by antag_rep.txt config
+	//can be overridden by antag_rep.txt config
 	var/antag_rep = 10
 
 //Only override this proc

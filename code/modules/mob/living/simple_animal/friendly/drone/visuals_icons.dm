@@ -105,7 +105,7 @@
 
 /mob/living/simple_animal/drone/proc/pickVisualAppearence()
 	picked = FALSE
-	var/appearence = input("Choose your appearence!", "Appearence", "Maintenance Drone") in list("Maintenance Drone", "Repair Drone", "Scout Drone")
+	var/appearence = input("Choose your appearance!", "Appearance", "Maintenance Drone") in list("Maintenance Drone", "Repair Drone", "Scout Drone")
 	switch(appearence)
 		if("Maintenance Drone")
 			visualAppearence = MAINTDRONE

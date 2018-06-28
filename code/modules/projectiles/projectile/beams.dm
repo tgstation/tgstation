@@ -51,7 +51,7 @@
 	damage = 5
 
 /obj/item/projectile/beam/xray
-	name = "xray beam"
+	name = "\improper X-ray beam"
 	icon_state = "xray"
 	damage = 15
 	irradiate = 30

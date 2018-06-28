@@ -6036,8 +6036,7 @@
 /obj/machinery/door/window/westleft{
 	base_state = "right";
 	dir = 2;
-	icon_state = "right";
-	name = "windoor"
+	icon_state = "right"
 	},
 /obj/item/book/manual/wiki/engineering_hacking,
 /obj/item/tape/random,
