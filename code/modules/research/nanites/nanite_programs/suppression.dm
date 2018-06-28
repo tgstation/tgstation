@@ -16,12 +16,12 @@
 
 /datum/nanite_program/paralyzing
 	name = "Paralysis"
-	desc = "The nanites actively suppress nervous pulses, effectively paralyzing the host."
+	desc = "The nanites force muscle contraction, effectively paralyzing the host."
 	use_rate = 3
 	rogue_types = list(/datum/nanite_program/nerve_decay)
 
 /datum/nanite_program/paralyzing/active_effect()
-	host_mob.Knockdown(30)
+	host_mob.Stun(40)
 
 /datum/nanite_program/triggered/shocking
 	name = "Electric Shock"
