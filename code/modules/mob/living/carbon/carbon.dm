@@ -83,11 +83,18 @@
 		mode() // Activate held item
 
 /mob/living/carbon/attackby(obj/item/I, mob/user, params)
-	if(lying && surgeries.len)
-		if(user != src && user.a_intent == INTENT_HELP)
+	var/be_nice = FALSE
+	if(lying && user.a_intent == INTENT_HELP)
+
+		if((I.sharpness || istype(I, TOOL_SCREWDRIVER) || istype(I, /obj/item/coin)) && can_operate(src))//sorry for the snowflake, kids! At least the istype() check won't proc if the item is sharp to start with
+			attempt_initiate_surgery(I, src, user)
+			be_nice = TRUE
+		if(surgeries.len && user != src)
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user))
 					return 1
+	if(be_nice)//so that if we don't stab them after starting a surgery that can't be started with a sharp tool
+		return 1
 	return ..()
 
 /mob/living/carbon/throw_impact(atom/hit_atom, throwingdatum)
@@ -439,6 +446,9 @@
 
 /mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE)
 	if(has_trait(TRAIT_NOHUNGER))
+		return 1
+
+	if(!has_mouth())
 		return 1
 
 	if(nutrition < 100 && !blood)
@@ -869,3 +879,8 @@
 
 /mob/living/carbon/can_resist()
 	return bodyparts.len > 2 && ..()
+
+/mob/living/carbon/has_mouth()
+	for(var/obj/item/bodypart/head/head in bodyparts)
+		if(head.mouth)
+			return TRUE

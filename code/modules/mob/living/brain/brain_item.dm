@@ -283,3 +283,88 @@
 	var/list/traumas = get_traumas_type(resilience = resilience)
 	for(var/X in traumas)
 		qdel(X)
+
+////////////////////////////////////IPC BRAIN FUCKERY////////////////////////////////////////
+/obj/item/organ/brain/mmi_holder
+	zone = BODY_ZONE_CHEST
+	status = ORGAN_ROBOTIC
+	remove_on_qdel = FALSE
+	var/obj/item/mmi/stored_mmi
+
+/obj/item/organ/brain/mmi_holder/Destroy()
+	QDEL_NULL(stored_mmi)
+	return ..()
+
+/obj/item/organ/brain/mmi_holder/Insert(mob/living/carbon/C, special = 0, no_id_transfer = FALSE)
+	owner = C
+	C.internal_organs |= src
+	C.internal_organs_slot[slot] = src
+	loc = null
+	//the above bits are copypaste from organ/proc/Insert, because I couldn't go through the parent here.
+
+	if(stored_mmi.brainmob)
+		if(C.key)
+			C.ghostize()
+		var/mob/living/brain/B = stored_mmi.brainmob
+		if(stored_mmi.brainmob.mind)
+			B.mind.transfer_to(C)
+		else
+			C.key = B.key
+
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		if(H.has_trait(TRAIT_REVIVESBYHEALING))
+			if(H.health > 0 && !H.hellbound)
+				H.revive(0)
+
+	update_from_mmi()
+
+/obj/item/organ/brain/mmi_holder/Remove(var/mob/living/user, special = 0)
+	if(!special)
+		if(stored_mmi)
+			. = stored_mmi
+			if(owner.mind)
+				owner.mind.transfer_to(stored_mmi.brainmob)
+			stored_mmi.loc = owner.loc
+			if(stored_mmi.brainmob)
+				var/mob/living/brain/B = stored_mmi.brainmob
+				spawn(0)
+					if(B)
+						B.stat = 0
+			stored_mmi = null
+
+	..()
+	spawn(0)//so it can properly keep surgery going
+		qdel(src)
+
+/obj/item/organ/brain/mmi_holder/proc/update_from_mmi()
+	if(!stored_mmi)
+		return
+	name = stored_mmi.name
+	desc = stored_mmi.desc
+	icon = stored_mmi.icon
+	icon_state = stored_mmi.icon_state
+
+/obj/item/organ/brain/mmi_holder/posibrain/New(var/obj/item/mmi/MMI)
+	. = ..()
+	if(MMI)
+		stored_mmi = MMI
+		MMI.forceMove(src)
+	else
+		stored_mmi = new /obj/item/mmi/posibrain/ipc(src)
+	spawn(5)
+		if(owner && stored_mmi)
+			stored_mmi.name = "Positronic Brain ([owner.real_name])"
+			stored_mmi.brainmob.real_name = owner.real_name
+			stored_mmi.brainmob.name = stored_mmi.brainmob.real_name
+			stored_mmi.icon_state = "posibrain-occupied"
+			update_from_mmi()
+
+/obj/item/organ/brain/mmi_holder/emp_act(severity)
+	switch(severity)
+		if(1)
+			owner.adjustBrainLoss(75)
+			to_chat(owner, "<span class='warning'>Alert: Posibrain heavily damaged.</span>")
+		if(2)
+			owner.adjustBrainLoss(25)
+			to_chat(owner, "<span class='warning'>Alert: Posibrain damaged.</span>")

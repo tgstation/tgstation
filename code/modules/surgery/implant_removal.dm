@@ -3,6 +3,7 @@
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/extract_implant, /datum/surgery_step/close)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST)
+	bodypart_types = BODYPART_ORGANIC
 
 
 //extract implant
@@ -44,13 +45,14 @@
 		to_chat(user, "<span class='warning'>You can't find anything in [target]'s [target_zone]!</span>")
 	return 1
 
-/datum/surgery/implant_removal/mechanic
-	name = "implant removal"
-	requires_bodypart_type = BODYPART_ROBOTIC
+/datum/surgery/implant_removal/robotic
+	name = "robotic implant removal"
+	bodypart_types = BODYPART_ROBOTIC
 	steps = list(
-		/datum/surgery_step/mechanic_open,
-		/datum/surgery_step/open_hatch,
-		/datum/surgery_step/mechanic_unwrench,
+		/datum/surgery_step/unscrew,
+		/datum/surgery_step/pry_off,
+		/datum/surgery_step/unwrench,
 		/datum/surgery_step/extract_implant,
-		/datum/surgery_step/mechanic_wrench,
-		/datum/surgery_step/mechanic_close)
+		/datum/surgery_step/wrench,
+		/datum/surgery_step/close_cover,
+		/datum/surgery_step/screw_cover)

@@ -226,6 +226,10 @@
 
 #define SHADOW_SPECIES_LIGHT_THRESHOLD 0.2
 
+//Taste defines
+#define NO_TASTE_SENSITIVITY -1
+#define DEFAULT_TASTE_SENSITIVITY 15
+
 // Offsets defines
 
 #define OFFSET_UNIFORM "uniform"

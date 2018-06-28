@@ -13,6 +13,10 @@
 	if(!M.lying && !isslime(M))	//if they're prone or a slime
 		return
 
+	if((affecting.status == ORGAN_ROBOTIC && !istype(I, /obj/item/screwdriver)) && (affecting.status == ORGAN_ORGANIC && !I.sharpness))
+	//if it's a robotic organ and you're not using a screwdriver OR an organic organ and you're not using something sharp.
+		return
+
 	var/datum/surgery/current_surgery
 
 	for(var/datum/surgery/S in M.surgeries)
@@ -29,7 +33,7 @@
 			if(affecting)
 				if(!S.requires_bodypart)
 					continue
-				if(S.requires_bodypart_type && affecting.status != S.requires_bodypart_type)
+				if(S.bodypart_types && affecting.status != S.bodypart_types)
 					continue
 				if(S.requires_real_bodypart && affecting.is_pseudopart)
 					continue
@@ -56,7 +60,7 @@
 			if(affecting)
 				if(!S.requires_bodypart)
 					return
-				if(S.requires_bodypart_type && affecting.status != S.requires_bodypart_type)
+				if(S.bodypart_types && affecting.status != S.bodypart_types)
 					return
 			else if(C && S.requires_bodypart)
 				return
@@ -87,7 +91,7 @@
 	else if(S.can_cancel)
 		var/close_tool_type = /obj/item/cautery
 		var/obj/item/close_tool = user.get_inactive_held_item()
-		var/is_robotic = S.requires_bodypart_type == BODYPART_ROBOTIC
+		var/is_robotic = S.bodypart_types == BODYPART_ROBOTIC
 		if(is_robotic)
 			close_tool_type = /obj/item/screwdriver
 		if(istype(close_tool, close_tool_type) || iscyborg(user))
@@ -98,17 +102,14 @@
 		else
 			to_chat(user, "<span class='warning'>You need to hold a [is_robotic ? "screwdriver" : "cautery"] in your inactive hand to stop [M]'s surgery!</span>")
 
-/proc/get_location_modifier(mob/M)
+/proc/can_operate(mob/M)
 	var/turf/T = get_turf(M)
 	if(locate(/obj/structure/table/optable, T))
-		return 1
+		return TRUE
 	else if(locate(/obj/structure/table, T))
-		return 0.8
+		return TRUE
 	else if(locate(/obj/structure/bed, T))
-		return 0.7
-	else
-		return 0.5
-
+		return TRUE
 
 /proc/get_location_accessible(mob/M, location)
 	var/covered_locations = 0	//based on body_parts_covered

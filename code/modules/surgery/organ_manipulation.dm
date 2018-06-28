@@ -2,7 +2,7 @@
 	name = "organ manipulation"
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
-	requires_real_bodypart = 1
+	bodypart_types = BODYPART_ORGANIC
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
@@ -38,35 +38,26 @@
 		/datum/surgery_step/close
 		)
 
-/datum/surgery/organ_manipulation/mechanic
-	name = "prosthesis organ manipulation"
-	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
-	requires_bodypart_type = BODYPART_ROBOTIC
+/datum/surgery/organ_manipulation/robotic
+	name = "robotic bodypart organ manipulation"
+	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
+	bodypart_types = BODYPART_ROBOTIC
 	steps = list(
-		/datum/surgery_step/mechanic_open,
-		/datum/surgery_step/open_hatch,
-		/datum/surgery_step/mechanic_unwrench,
+		/datum/surgery_step/unscrew,
+		/datum/surgery_step/pry_off,
+		/datum/surgery_step/unwrench,
 		/datum/surgery_step/prepare_electronics,
 		/datum/surgery_step/manipulate_organs,
-		/datum/surgery_step/mechanic_wrench,
-		/datum/surgery_step/mechanic_close
-		)
-
-/datum/surgery/organ_manipulation/mechanic/soft
-	possible_locs = list(BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
-	steps = list(
-		/datum/surgery_step/mechanic_open,
-		/datum/surgery_step/open_hatch,
-		/datum/surgery_step/prepare_electronics,
-		/datum/surgery_step/manipulate_organs,
-		/datum/surgery_step/mechanic_close
+		/datum/surgery_step/wrench,
+		/datum/surgery_step/close_cover,
+		/datum/surgery_step/screw_cover
 		)
 
 /datum/surgery_step/manipulate_organs
 	time = 64
 	name = "manipulate organs"
 	repeatable = 1
-	implements = list(/obj/item/organ = 100, /obj/item/reagent_containers/food/snacks/organ = 0, /obj/item/organ_storage = 100)
+	implements = list(/obj/item/organ = 100, /obj/item/reagent_containers/food/snacks/organ = 0, /obj/item/organ_storage = 100, /obj/item/mmi = 100)
 	var/implements_extract = list(/obj/item/hemostat = 100, TOOL_CROWBAR = 55)
 	var/current_type
 	var/obj/item/organ/I = null
@@ -86,6 +77,31 @@
 			to_chat(user, "<span class='notice'>You cannot put [I] into [target]'s [parse_zone(target_zone)]!</span>")
 			return -1
 		tool = I
+	if(istype(tool, /obj/item/mmi))//this whole thing is only used for robotic surgery in organ_mani_robotic.dm :*
+		current_type = "posibrain"
+		var/obj/item/bodypart/affected = target.get_bodypart(check_zone(target_zone))
+		if(!affected)
+			return -1
+		if(affected.status != ORGAN_ROBOTIC)
+			to_chat(user, "<span class='notice'>You can't put [tool] into a meat enclosure!</span>")
+			return -1
+		if(!isipc(target))
+			to_chat(user, "<span class='notice'>[target] does not have the proper connectors to interface with [tool].</span>")
+			return -1
+		if(target_zone != "chest")
+			to_chat(user, "<span class='notice'>You have to install [tool] in [target]'s chest!</span>")
+		if(target.internal_organs_slot["brain"])
+			to_chat(user, "<span class='notice'>[target] already has a brain! You'd rather not find out what would happen with two in there.</span>")
+			return -1
+		var/obj/item/mmi/P = tool
+		if(!istype(P))
+			return -1
+		if(!P.brainmob || !P.brainmob.client)
+			to_chat(user, "<span class='notice'>[tool] has no life in it, this would be pointless!</span>")
+			return -1
+		user.visible_message("<span class='notice'>[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)].</span>",
+			"<span class='notice'>You begin to insert [tool] into [target]'s [parse_zone(target_zone)]...</span>")
+
 	if(isorgan(tool))
 		current_type = "insert"
 		I = tool
@@ -93,7 +109,7 @@
 			to_chat(user, "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")
 			return -1
 
-		user.visible_message("[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)].",
+		user.visible_message("<span class='notice'>[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)].</span>",
 			"<span class='notice'>You begin to insert [tool] into [target]'s [parse_zone(target_zone)]...</span>")
 
 	else if(implement_type in implements_extract)
@@ -123,7 +139,21 @@
 		return -1
 
 /datum/surgery_step/manipulate_organs/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(current_type == "insert")
+	if(current_type == "posibrain")
+		if(istype(tool, /obj/item/organ_storage))
+			tool.icon_state = "evidenceobj"
+			tool.desc = "A container for holding body parts."
+			tool.cut_overlays()
+			tool = tool.contents[1]
+
+		user.temporarilyRemoveItemFromInventory(tool)
+		spawn(1)
+			I = new /obj/item/organ/brain/mmi_holder/posibrain(tool)
+			I.Insert(target)
+			user.visible_message("<span class='notice'>[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!</span>",
+				"<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>")
+
+	else if(current_type == "insert")
 		if(istype(tool, /obj/item/organ_storage))
 			I = tool.contents[1]
 			tool.icon_state = initial(tool.icon_state)
@@ -135,7 +165,7 @@
 		user.temporarilyRemoveItemFromInventory(I, TRUE)
 		I.Insert(target)
 		user.visible_message("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!",
-			"<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>")
+		"<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>")
 
 	else if(current_type == "extract")
 		if(I && I.owner == target)
@@ -148,3 +178,9 @@
 			user.visible_message("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!",
 				"<span class='notice'>You can't extract anything from [target]'s [parse_zone(target_zone)]!</span>")
 	return 0
+
+/datum/surgery_step/manipulate_organs/robotic
+	time = 64
+	name = "manipulate robotic organs"
+	implements = list(/obj/item/organ = 100, /obj/item/reagent_containers/food/snacks/organ = 0, /obj/item/organ_storage = 100, /obj/item/mmi = 100)
+	implements_extract = list(TOOL_MULTITOOL = 100, /obj/item/assembly/igniter = 55, /obj/item/lighter = 20)

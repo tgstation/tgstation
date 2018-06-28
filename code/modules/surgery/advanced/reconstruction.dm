@@ -17,7 +17,7 @@
 
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST)
-	requires_bodypart_type = 0
+	bodypart_types = 0
 
 /datum/surgery_step/reconstruct
 	name = "repair body"

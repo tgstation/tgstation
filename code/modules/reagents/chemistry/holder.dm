@@ -265,6 +265,24 @@
 			continue
 		if(!C)
 			C = R.holder.my_atom
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			//Check if this mob's species is set and can process this type of reagent
+			var/can_process = FALSE
+			//If we somehow avoided getting a species or reagent_tag set, we'll assume we aren't meant to process ANY reagents (CODERS: SET YOUR SPECIES AND TAG!)
+			for(var/bio_type in R.applicable_biotypes)
+				if(bio_type in H.mob_biotypes)
+					can_process = TRUE
+					break
+			//If handle_reagents returns 0, it's doing the reagent removal on its own
+			var/species_handled = !(H.dna.species.handle_reagents(H, R))
+			can_process = can_process && !species_handled
+			//If the mob can't process it, remove the reagent at it's normal rate without doing any addictions, overdoses, or on_mob_life() for the reagent
+			if(!can_process)
+				if(!species_handled)
+					R.holder.remove_reagent(R.id, R.metabolization_rate)
+				continue
+		//If you got this far, that means we can process whatever reagent this iteration is for. Handle things normally from here.
 		if(C && R)
 			if(C.reagent_check(R) != 1)
 				if(can_overdose)
@@ -493,6 +511,14 @@
 		del_reagent(R.id)
 	return 0
 
+/datum/reagents/proc/reaction_check(mob/living/M, datum/reagent/R)
+	var/can_process = FALSE
+	for(var/bio_type in R.applicable_biotypes)
+		if(bio_type in M.mob_biotypes)
+			can_process = TRUE
+			break
+	return can_process
+
 /datum/reagents/proc/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1)
 	var/react_type
 	if(isliving(A))
@@ -511,6 +537,9 @@
 		var/datum/reagent/R = reagent
 		switch(react_type)
 			if("LIVING")
+				var/check = reaction_check(A, R)
+				if(!check)
+					continue
 				var/touch_protection = 0
 				if(method == VAPOR)
 					var/mob/living/L = A

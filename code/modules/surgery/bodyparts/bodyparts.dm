@@ -24,6 +24,7 @@
 	var/list/embedded_objects = list()
 	var/held_index = 0 //are we a hand? if so, which one!
 	var/is_pseudopart = FALSE //For limbs that don't really exist, eg chainsaws
+	var/render_like_organic = FALSE // TRUE is for when you want a BODYPART_ROBOTIC to pretend to be a BODYPART_ORGANIC.
 
 	//Coloring and proper item icon update
 	var/skin_tone = ""
@@ -73,16 +74,19 @@
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if(C.has_trait(TRAIT_LIMBATTACHMENT))
-			if(!H.get_bodypart(body_zone) && !animal_origin)
-				if(H == user)
-					H.visible_message("<span class='warning'>[H] jams [src] into [H.p_their()] empty socket!</span>",\
-					"<span class='notice'>You force [src] into your empty socket, and it locks into place!</span>")
-				else
-					H.visible_message("<span class='warning'>[user] jams [src] into [H]'s empty socket!</span>",\
-					"<span class='notice'>[user] forces [src] into your empty socket, and it locks into place!</span>")
-				user.temporarilyRemoveItemFromInventory(src, TRUE)
-				attach_limb(C)
-				return
+			if(((src.status == BODYPART_ORGANIC) && (!(ROBOTIC_LIMBS in H.dna.species.species_traits))) || (src.status == BODYPART_ROBOTIC)) // Robots can't integrate flesh sticks.
+				if(!H.get_bodypart(body_zone) && !animal_origin)
+					if(H == user)
+						H.visible_message("<span class='notice'>[H] is attempting to re-attach [src]...</span>")
+						do_mob(user, H, 60)
+						H.visible_message("<span class='warning'>[H] jams [src] into [H.p_their()] empty socket!</span>",\
+						"<span class='notice'>You force [src] into your empty socket, and it locks into place!</span>")
+					else
+						H.visible_message("<span class='warning'>[user] jams [src] into [H]'s empty socket!</span>",\
+						"<span class='notice'>[user] forces [src] into your empty socket, and it locks into place!</span>")
+					user.temporarilyRemoveItemFromInventory(src, TRUE)
+					attach_limb(C)
+					return
 	..()
 
 /obj/item/bodypart/attackby(obj/item/W, mob/user, params)
@@ -177,6 +181,10 @@
 	stamina_dam = max(stamina_dam - stamina, 0)
 	if(owner && updating_health)
 		owner.updatehealth()
+	if(owner.has_trait(TRAIT_REVIVESBYHEALING))
+		if(owner.health > 0 && !owner.hellbound)
+			owner.revive(0)
+			owner.cure_husk(0) // If it has REVIVESBYHEALING, it probably can't be cloned. No husk cure.
 	return update_bodypart_damage_state()
 
 
@@ -335,7 +343,7 @@
 	if((body_zone != BODY_ZONE_HEAD && body_zone != BODY_ZONE_CHEST))
 		should_draw_gender = FALSE
 
-	if(is_organic_limb())
+	if(status == BODYPART_ORGANIC || (status == BODYPART_ROBOTIC && render_like_organic == TRUE)) // So IPC augments can be colorful without disrupting normal BODYPART_ROBOTIC render code.
 		if(should_draw_greyscale)
 			limb.icon = 'icons/mob/human_parts_greyscale.dmi'
 			if(should_draw_gender)

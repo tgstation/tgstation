@@ -12,6 +12,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 	false_report_weight = 10
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_species = list("ipc")
 	required_players = 15
 	required_enemies = 1
 	recommended_enemies = 4

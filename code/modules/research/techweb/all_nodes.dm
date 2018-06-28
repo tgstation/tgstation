@@ -237,6 +237,15 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
+/datum/techweb_node/ipc_components
+	id = "ipc_components"
+	display_name = "IPC Components"
+	description = "The study of what makes Integrated Positron Chassis tick, and possible integration of their internal components into other beings."
+	prereq_ids = list("posibrain")
+	design_ids = list("robotic_liver", "robotic_eyes", "robotic_tongue", "robotic_stomach", "robotic_ears", "power_cord")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000 //Why does this even exist anymore lol you can't export research anymore.
+
 /datum/techweb_node/cyborg
 	id = "cyborg"
 	display_name = "Cyborg Construction"
