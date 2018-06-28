@@ -19,6 +19,8 @@
 
 /datum/nanite_program/necrotic/active_effect()
 	host_mob.adjustBruteLoss(0.75, TRUE)
+	if(prob(1))
+		to_chat(host_mob, "<span class='warning'>You feel a mild ache from somewhere inside you.</span>")
 
 //Programs that don't directly interact with the body will decay into this
 /datum/nanite_program/toxic
@@ -30,6 +32,8 @@
 
 /datum/nanite_program/toxic/active_effect()
 	host_mob.adjustToxLoss(0.5)
+	if(prob(1))
+		to_chat(host_mob, "<span class='warning'>You feel a bit sick.</span>")
 
 //Generic blood-affecting programs will decay into this
 /datum/nanite_program/suffocating
@@ -41,6 +45,8 @@
 
 /datum/nanite_program/suffocating/active_effect()
 	host_mob.adjustOxyLoss(3, 0)
+	if(prob(1))
+		to_chat(host_mob, "<span class='warning'>You feel short of breath.</span>")
 
 //Generic brain-affecting programs will decay into this
 /datum/nanite_program/brain_decay

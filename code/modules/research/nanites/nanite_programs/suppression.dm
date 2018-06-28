@@ -22,6 +22,14 @@
 
 /datum/nanite_program/paralyzing/active_effect()
 	host_mob.Stun(40)
+	
+/datum/nanite_program/paralyzing/enable_passive_effect()
+	..()
+	to_chat(host_mob, "<span class='warning'>Your muscles seize! You can't move!</span>")
+
+/datum/nanite_program/paralyzing/disable_passive_effect()
+	..()
+	to_chat(host_mob, "<span class='notice'>Your muscles relax, and you can move again.</span>")
 
 /datum/nanite_program/triggered/shocking
 	name = "Electric Shock"
@@ -71,11 +79,11 @@
 
 /datum/nanite_program/blinding/enable_passive_effect()
 	..()
-	host_mob.add_trait(TRAIT_BLIND, "nanites")
+	host_mob.become_blind("nanites")
 
 /datum/nanite_program/blinding/disable_passive_effect()
 	..()
-	host_mob.remove_trait(TRAIT_BLIND, "nanites")
+	host_mob.cure_blind("nanites")
 
 /datum/nanite_program/mute
 	name = "Mute"
