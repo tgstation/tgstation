@@ -124,7 +124,7 @@
 	job = "AI"
 
 	create_eye()
-	rename_self("ai")
+	apply_pref_name("ai")
 
 	holo_icon = getHologramIcon(icon('icons/mob/ai.dmi',"default"))
 
