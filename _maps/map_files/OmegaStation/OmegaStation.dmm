@@ -17845,6 +17845,7 @@
 /obj/item/seeds/wheat,
 /obj/item/reagent_containers/food/snacks/grown/tomato,
 /obj/effect/turf_decal/bot,
+/obj/item/paper/guides/jobs/hydroponics,
 /turf/open/floor/plasteel/vault/side{
 	dir = 1
 	},
@@ -17862,6 +17863,7 @@
 	},
 /obj/item/seeds/tower,
 /obj/effect/turf_decal/bot,
+/obj/item/book/manual/hydroponics_pod_people,
 /turf/open/floor/plasteel/vault/side{
 	dir = 1
 	},
@@ -30953,6 +30955,11 @@
 	},
 /turf/open/floor/plating/airless,
 /area/maintenance/disposal/incinerator)
+"coR" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/smartfridge/disks,
+/turf/open/floor/plasteel/neutral,
+/area/hydroponics)
 "csX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -32220,13 +32227,6 @@
 	},
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
-"mJQ" = (
-/obj/structure/table/glass,
-/obj/effect/turf_decal/delivery,
-/obj/item/book/manual/hydroponics_pod_people,
-/obj/item/paper/guides/jobs/hydroponics,
-/turf/open/floor/plasteel/neutral,
-/area/hydroponics)
 "mQi" = (
 /turf/closed/wall/rust,
 /area/maintenance/starboard/central)
@@ -74140,7 +74140,7 @@ bxN
 sIB
 cfz
 ewT
-mJQ
+aKX
 lyp
 bIJ
 aOj
@@ -74397,7 +74397,7 @@ arY
 aHM
 aIG
 aJP
-aKX
+aKW
 aMk
 aNr
 aHM
@@ -74654,7 +74654,7 @@ aGG
 aHM
 aIH
 aJP
-aKW
+coR
 aMk
 aNr
 aOh
