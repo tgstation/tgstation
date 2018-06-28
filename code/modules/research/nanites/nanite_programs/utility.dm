@@ -42,7 +42,7 @@
 				if(isnull(new_cloud))
 					return
 				overwrite_cloud = TRUE
-				set_cloud = CLAMP(round(new_code, 1), 1, 100)
+				set_cloud = CLAMP(round(new_cloud, 1), 1, 100)
 
 /datum/nanite_program/viral/get_extra_setting(setting)
 	if(setting == "Program Overwrite")
