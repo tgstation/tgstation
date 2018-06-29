@@ -46,7 +46,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
         * `null` means exact match on `type` (default)
         * Any other type means that and all subtypes
 1. `/datum/component/var/list/signal_procs` (private)
-    * Associated lazy list of signals -> `/datum/callback`s that will be run when the parent datum recieves that signal
+    * Associated lazy list of signals -> `/datum/callback`s that will be run when the parent datum receives that signal
 1. `/datum/component/var/datum/parent` (protected, read-only)
     * The datum this component belongs to
     * Never `null` in child procs
@@ -79,7 +79,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 1. `/datum/proc/LoadComponent(component_type(type), ...) -> datum/component` (public, final)
     * Equivalent to calling `GetComponent(component_type)` where, if the result would be `null`, returns `AddComponent(component_type, ...)` instead
 1. `/datum/proc/ComponentActivated(datum/component/C)` (abstract, async)
-    * Called on a component's `parent` after a signal recieved causes it to activate. `src` is the parameter
+    * Called on a component's `parent` after a signal received causes it to activate. `src` is the parameter
     * Will only be called if a component's callback returns `TRUE`
 1. `/datum/proc/TakeComponent(datum/component/C)` (public, final)
     * Properly transfers ownership of a component from one datum to another
@@ -94,7 +94,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 1. `/datum/component/Initialize(...)` (abstract, no-sleep)
     * Called by `New()` with the same argments excluding `parent`
     * Component does not exist in `parent`'s `datum_components` list yet, although `parent` is set and may be used
-    * Signals will not be recieved while this function is running
+    * Signals will not be received while this function is running
     * Component may be deleted after this function completes without being attached
     * Do not call `qdel(src)` from this function
 1. `/datum/component/Destroy(force(bool), silent(bool))` (virtual, no-sleep)
@@ -118,7 +118,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 1. `/datum/component/proc/RegisterSignal(signal(string/list of strings), proc_ref(type), override(boolean))` (protected, final) (Consider removing for performance gainz)
     * If signal is a list it will be as if RegisterSignal was called for each of the entries with the same following arguments
     * Makes a component listen for the specified `signal` on it's `parent` datum.
-    * When that signal is recieved `proc_ref` will be called on the component, along with associated arguments
+    * When that signal is received `proc_ref` will be called on the component, along with associated arguments
     * Example proc ref: `.proc/OnEvent`
     * If a previous registration is overwritten by the call, a runtime occurs. Setting `override` to TRUE prevents this
     * These callbacks run asyncronously

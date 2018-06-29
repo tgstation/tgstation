@@ -358,7 +358,7 @@ GLOBAL_LIST_EMPTY(explosions)
 			heavy = 5
 			light = 7
 		if("Custom Bomb")
-			dev = input("Devestation range (Tiles):") as num
+			dev = input("Devastation range (Tiles):") as num
 			heavy = input("Heavy impact range (Tiles):") as num
 			light = input("Light impact range (Tiles):") as num
 

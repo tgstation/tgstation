@@ -38,7 +38,7 @@
 	return ..()
 
 /obj/item/shield/riot/roman
-	name = "roman shield"
+	name = "\improper Roman shield"
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
 	icon_state = "roman_shield"
 	item_state = "roman_shield"

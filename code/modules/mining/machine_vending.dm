@@ -127,7 +127,7 @@
 				flick(icon_deny, src)
 				return
 			if(prize.cost > inserted_id.mining_points)
-				to_chat(usr, "<span class='warning'>Error: Insufficent points for [prize.equipment_name]!</span>")
+				to_chat(usr, "<span class='warning'>Error: Insufficient points for [prize.equipment_name]!</span>")
 				flick(icon_deny, src)
 			else
 				inserted_id.mining_points -= prize.cost

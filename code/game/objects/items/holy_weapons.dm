@@ -307,7 +307,7 @@
 	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/nullrod/claymore/katana
-	name = "hanzo steel"
+	name = "\improper Hanzo steel"
 	desc = "Capable of cutting clean through a holy claymore."
 	icon_state = "katana"
 	item_state = "katana"
@@ -449,7 +449,6 @@
 	name = "possessed chainsaw sword"
 	desc = "Suffer not a heretic to live."
 	slot_flags = ITEM_SLOT_BELT
-	force = 30
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 

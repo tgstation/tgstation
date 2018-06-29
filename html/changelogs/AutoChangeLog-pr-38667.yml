@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - server: "Logs and admin messages will now appear when you are using deprecated config settings and advise on upgrades"

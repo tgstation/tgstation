@@ -613,7 +613,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 //this is a mob verb instead of atom for performance reasons
 //see /mob/verb/examinate() in mob.dm for more info
-//overriden here and in /mob/living for different point span classes and sanity checks
+//overridden here and in /mob/living for different point span classes and sanity checks
 /mob/dead/observer/pointed(atom/A as mob|obj|turf in view())
 	if(!..())
 		return 0

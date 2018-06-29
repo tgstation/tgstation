@@ -446,21 +446,6 @@
 /mob/living/proc/update_damage_overlays()
 	return
 
-/mob/living/proc/Examine_OOC()
-	set name = "Examine Meta-Info (OOC)"
-	set category = "OOC"
-	set src in view()
-
-	if(CONFIG_GET(flag/allow_metadata))
-		if(client)
-			to_chat(src, "[src]'s Metainfo:<br>[client.prefs.metadata]")
-		else
-			to_chat(src, "[src] does not have any stored information!")
-	else
-		to_chat(src, "OOC Metadata is not supported by this server!")
-
-	return
-
 /mob/living/Move(atom/newloc, direct)
 	if (buckled && buckled.loc != newloc) //not updating position
 		if (!buckled.anchored)

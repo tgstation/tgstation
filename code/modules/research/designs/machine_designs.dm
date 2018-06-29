@@ -332,7 +332,7 @@
 
 /datum/design/board/processor
 	name = "Machine Design (Food/Slime Processor Board)"
-	desc = "The circuit board for a processing unit. Screwdrive the circuit to switch between food (default) or slime processing."
+	desc = "The circuit board for a processing unit. Screwdriver the circuit to switch between food (default) or slime processing."
 	id = "processor"
 	build_path = /obj/item/circuitboard/machine/processor
 	category = list ("Misc. Machinery")
