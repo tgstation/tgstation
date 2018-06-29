@@ -597,7 +597,7 @@
 
 /obj/item/clothing/suit/ghost_sheet
 	name = "ghost sheet"
-	desc = "Spooky."
+	desc = "The hands float by themselves, so it's extra spooky."
 	icon_state = "ghost_sheet"
 	item_state = "ghost_sheet_item"
 	w_class = WEIGHT_CLASS_TINY
