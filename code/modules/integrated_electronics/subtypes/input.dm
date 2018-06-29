@@ -79,7 +79,7 @@
 /obj/item/integrated_circuit/input/colorpad
 	name = "color pad"
 	desc = "This small color pad allows someone to input a hexadecimal color into the system."
-	icon_state = "textpad"
+	icon_state = "colorpad"
 	complexity = 2
 	can_be_asked_input = 1
 	inputs = list()
