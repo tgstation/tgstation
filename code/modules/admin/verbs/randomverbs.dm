@@ -1356,7 +1356,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 					alert("ERROR: Incorrect / improper path given.")
 					return
 			//send the pod
-			if(istype(target, /mob/living/carbon))
+			if(iscarbon(target))
 				target.Stun(10)//takes 0.53 seconds for CentCom pod to land
 			new /obj/effect/DPtarget(get_turf(target), delivery, POD_CENTCOM)
 
