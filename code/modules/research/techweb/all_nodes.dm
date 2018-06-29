@@ -840,7 +840,7 @@
 	prereq_ids = list("datatheory","robotics")
 	design_ids = list("nanite_disk","nanite_remote","nanite_scanner",\
 						"nanite_chamber","public_nanite_chamber","nanite_chamber_control","nanite_programmer","nanite_program_hub","nanite_cloud_control",\
-						"relay_nanites", "monitoring_nanites", "access_nanites", "glitch_nanites", "repairing_nanites","sensor_high_nanites","sensor_low_nanites")
+						"relay_nanites", "monitoring_nanites", "access_nanites", "repairing_nanites","sensor_high_nanites","sensor_low_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -849,7 +849,7 @@
 	display_name = "Roaming Nanite Programming"
 	description = "Nanite programs that require nanites to act independently, roam or seek targets."
 	prereq_ids = list("nanite_base","adv_robotics")
-	design_ids = list("purging_nanites", "necrotic_nanites", "metabolic_nanites", "stealth_nanites")
+	design_ids = list("purging_nanites", "metabolic_nanites", "stealth_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 4000
 
@@ -867,7 +867,7 @@
 	display_name = "Biological Nanite Programming"
 	description = "Nanite programs that require complex biological interaction."
 	prereq_ids = list("nanite_base","biotech")
-	design_ids = list("regenerative_nanites", "bloodheal_nanites", "suffocating_nanites", "coagulating_nanites", "toxic_nanites", "skindecay_nanites",\
+	design_ids = list("regenerative_nanites", "bloodheal_nanites", "coagulating_nanites",\
 					"sensor_crit_nanites","sensor_death_nanites", "sensor_high_health_nanites", "sensor_low_health_nanites","sensor_high_brute_nanites", "sensor_low_brute_nanites",\
 					"sensor_high_burn_nanites", "sensor_low_burn_nanites","sensor_high_tox_nanites", "sensor_low_tox_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
@@ -878,7 +878,7 @@
 	display_name = "Neural Nanite Programming"
 	description = "Nanite programs affecting nerves and brain matter."
 	prereq_ids = list("nanite_bio")
-	design_ids = list("nervous_nanites", "brainheal_nanites", "braindecay_nanites", "brainmisfire_nanites", "paralyzing_nanites", "stun_nanites", "nervedecay_nanites")
+	design_ids = list("nervous_nanites", "brainheal_nanites", "paralyzing_nanites", "stun_nanites", "nervedecay_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
