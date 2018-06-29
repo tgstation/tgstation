@@ -675,7 +675,7 @@
 	display_name = "Basic Exosuit Equipment"
 	description = "Various tools fit for basic mech units"
 	prereq_ids = list("mecha")
-	design_ids = list("mech_drill", "mech_mscanner", "mech_extinguisher", "mech_cable_layer")
+	design_ids = list("mech_drill", "mech_mscanner", "mech_extinguisher", "mech_cable_layer", "mech_PKA")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
