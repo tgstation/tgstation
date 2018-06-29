@@ -36,7 +36,7 @@
 
 /obj/item/dice //depreciated d6, use /obj/item/dice/d6 if you actually want a d6
 	name = "die"
-	desc = "A die with six sides. Basic and servicable."
+	desc = "A die with six sides. Basic and serviceable."
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "d6"
 	w_class = WEIGHT_CLASS_TINY
@@ -111,7 +111,7 @@
 
 /obj/item/dice/d00
 	name = "d00"
-	desc = "A die with ten sides. Works better for d100 rolls than a golfball."
+	desc = "A die with ten sides. Works better for d100 rolls than a golf ball."
 	icon_state = "d00"
 	sides = 10
 
@@ -123,7 +123,7 @@
 
 /obj/item/dice/d20
 	name = "d20"
-	desc = "A die with twenty sides. The prefered die to throw at the GM."
+	desc = "A die with twenty sides. The preferred die to throw at the GM."
 	icon_state = "d20"
 	sides = 20
 

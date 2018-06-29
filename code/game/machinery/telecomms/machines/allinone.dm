@@ -6,7 +6,7 @@
 /obj/machinery/telecomms/allinone
 	name = "telecommunications mainframe"
 	icon_state = "comm_server"
-	desc = "A compact machine used for portable subspace telecommuniations processing."
+	desc = "A compact machine used for portable subspace telecommunications processing."
 	density = TRUE
 	use_power = NO_POWER_USE
 	idle_power_usage = 0

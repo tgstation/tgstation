@@ -106,13 +106,13 @@
 	if(slot == SLOT_WEAR_SUIT && !is_servant_of_ratvar(user))
 		if(!iscultist(user))
 			to_chat(user, "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>")
-			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off [user.p_their()] body!</span>", "<span class='warning'>The curiass flickers off your body, leaving only nausea!</span>")
+			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off [user.p_their()] body!</span>", "<span class='warning'>The cuirass flickers off your body, leaving only nausea!</span>")
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.vomit(20)
 		else
 			to_chat(user, "<span class='heavy_brass'>\"I think this armor is too hot for you to handle.\"</span>")
-			to_chat(user, "<span class='userdanger'>The curiass emits a burst of flame as you scramble to get it off!</span>")
+			to_chat(user, "<span class='userdanger'>The cuirass emits a burst of flame as you scramble to get it off!</span>")
 			user.emote("scream")
 			user.apply_damage(15, BURN, BODY_ZONE_CHEST)
 			user.adjust_fire_stacks(2)

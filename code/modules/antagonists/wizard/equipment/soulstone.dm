@@ -9,7 +9,7 @@
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefact's power."
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
-	var/usability = 0
+	var/usability = FALSE
 
 	var/old_shard = FALSE
 	var/spent = FALSE
@@ -23,7 +23,7 @@
 			whatever spark it once held long extinguished."
 
 /obj/item/soulstone/anybody
-	usability = 1
+	usability = TRUE
 
 /obj/item/soulstone/anybody/chaplain
 	name = "mysterious old shard"
@@ -63,8 +63,9 @@
 	if(!ishuman(M))//If target is not a human.
 		return ..()
 	if(iscultist(M))
-		to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your bretheren's soul.\"</span>")
-		return
+		if(iscultist(user))
+			to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your bretheren's soul.\"</span>")
+			return
 	add_logs(user, M, "captured [M.name]'s soul", src)
 	transfer_soul("VICTIM", M, user)
 
@@ -82,7 +83,7 @@
 /obj/item/soulstone/proc/release_shades(mob/user)
 	for(var/mob/living/simple_animal/shade/A in src)
 		A.status_flags &= ~GODMODE
-		A.canmove = 1
+		A.canmove = TRUE
 		A.forceMove(get_turf(user))
 		A.cancel_camera()
 		icon_state = "soulstone"
@@ -128,15 +129,15 @@
 	switch(choice)
 		if("FORCE")
 			if(!iscarbon(target))		//TODO: Add sacrifice stoning for non-organics, just because you have no body doesnt mean you dont have a soul
-				return 0
+				return FALSE
 			if(contents.len)
-				return 0
+				return FALSE
 			var/mob/living/carbon/T = target
 			if(T.client != null)
 				for(var/obj/item/W in T)
 					T.dropItemToGround(W)
 				init_shade(T, user)
-				return 1
+				return TRUE
 			else
 				to_chat(user, "<span class='userdanger'>Capture failed!</span>: The soul has already fled its mortal frame. You attempt to bring it back...")
 				return getCultGhost(T,user)
@@ -149,7 +150,7 @@
 					to_chat(user, "<span class='cult'><b>\"This soul is mine.</b></span> <span class='cultlarge'>SACRIFICE THEM!\"</span>")
 				else
 					to_chat(user, "<span class='danger'>The soulstone seems to reject this soul.</span>")
-				return 0
+				return FALSE
 			if(contents.len)
 				to_chat(user, "<span class='userdanger'>Capture failed!</span>: The soulstone is full! Free an existing soul to make room.")
 			else
@@ -172,7 +173,7 @@
 			else
 				T.forceMove(src) //put shade in stone
 				T.status_flags |= GODMODE
-				T.canmove = 0
+				T.canmove = FALSE
 				T.health = T.maxHealth
 				icon_state = "soulstone2"
 				name = "soulstone: Shade of [T.real_name]"
@@ -239,7 +240,7 @@
 	T.dust_animation()
 	var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade(src)
 	S.status_flags |= GODMODE //So they won't die inside the stone somehow
-	S.canmove = 0//Can't move out of the soul stone
+	S.canmove = FALSE//Can't move out of the soul stone
 	S.name = "Shade of [T.real_name]"
 	S.real_name = "Shade of [T.real_name]"
 	S.key = T.key
@@ -272,15 +273,15 @@
 		if(consenting_candidates.len)
 			chosen_ghost = pick(consenting_candidates)
 	if(!T)
-		return 0
+		return FALSE
 	if(!chosen_ghost)
 		to_chat(U, "<span class='danger'>There were no spirits willing to become a shade.</span>")
-		return 0
+		return FALSE
 	if(contents.len) //If they used the soulstone on someone else in the meantime
-		return 0
+		return FALSE
 	T.ckey = chosen_ghost.ckey
 	for(var/obj/item/W in T)
 		T.dropItemToGround(W)
 	init_shade(T, U)
 	qdel(T)
-	return 1
+	return TRUE

@@ -27,7 +27,7 @@
 	return
 
 /turf/open/indestructible/sound
-	name = "squeeky floor"
+	name = "squeaky floor"
 	var/sound
 
 /turf/open/indestructible/sound/Entered(var/mob/AM)

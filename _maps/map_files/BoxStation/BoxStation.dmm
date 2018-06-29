@@ -27865,7 +27865,7 @@
 /area/maintenance/starboard)
 "btr" = (
 /obj/machinery/camera{
-	c_tag = "Cargo Recieving Dock";
+	c_tag = "Cargo Receiving Dock";
 	dir = 4
 	},
 /obj/machinery/button/door{

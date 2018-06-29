@@ -319,13 +319,13 @@
 		icon_state = "[initial(icon_state)]"
 
 /obj/item/storage/fancy/cigarettes/cigars/cohiba
-	name = "\improper cohiba robusto cigar case"
+	name = "\improper Cohiba Robusto cigar case"
 	desc = "A case of imported Cohiba cigars, renowned for their strong flavor."
 	icon_state = "cohibacase"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/cohiba
 
 /obj/item/storage/fancy/cigarettes/cigars/havana
-	name = "\improper premium havanian cigar case"
+	name = "\improper premium Havanian cigar case"
 	desc = "A case of classy Havanian cigars."
 	icon_state = "cohibacase"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/havana

@@ -34,7 +34,7 @@ AI
 			H.forceMove(lateJoinCore.loc)
 			qdel(lateJoinCore)
 	var/mob/living/silicon/ai/AI = H
-	AI.rename_self("ai", M.client)			//If this runtimes oh well jobcode is fucked.
+	AI.apply_pref_name("ai", M.client)			//If this runtimes oh well jobcode is fucked.
 
 	//we may have been created after our borg
 	if(SSticker.current_state == GAME_STATE_SETTING_UP)
@@ -85,4 +85,4 @@ Cyborg
 	return H.Robotize(FALSE, latejoin)
 
 /datum/job/cyborg/after_spawn(mob/living/silicon/robot/R, mob/M)
-	R.rename_self("cyborg", M.client)
+	R.apply_pref_name("cyborg", M.client)
