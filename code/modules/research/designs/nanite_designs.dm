@@ -272,6 +272,13 @@
 	id = "poison_nanites"
 	program_type = /datum/nanite_program/poison
 	category = list("Weaponized Nanites")
+	
+/datum/design/nanites/memory_leak
+	name = "Memory Leak"
+	desc = "This program invades the memory space used by other programs, causing frequent corruptions and errors."
+	id = "memleak_nanites"
+	program_type = /datum/nanite_program/memory_leak
+	category = list("Weaponized Nanites")
 
 /datum/design/nanites/aggressive_replication
 	name = "Aggressive Replication"

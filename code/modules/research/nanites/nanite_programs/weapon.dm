@@ -28,7 +28,20 @@
 		to_chat(host_mob, "<span class='warning'>You feel nauseous.</span>")
 		if(iscarbon(host_mob))
 			var/mob/living/carbon/C = host_mob
-			C.vomit(20)	
+			C.vomit(20)
+			
+/datum/nanite_program/memory_leak
+	name = "Memory Leak"
+	desc = "This program invades the memory space used by other programs, causing frequent corruptions and errors."
+	use_rate = 0
+	rogue_types = list(/datum/nanite_program/toxic)
+
+/datum/nanite_program/memory_leak/active_effect()
+	if(prob(6))
+		var/datum/nanite_program/target = pick(nanites.programs)
+		if(target == src)
+			return
+		target.software_error()
 				
 /datum/nanite_program/aggressive_replication
 	name = "Aggressive Replication"
