@@ -1,6 +1,35 @@
 //Programs specifically engineered to cause harm to either the user or its surroundings (as opposed to ones that only do it due to broken programming)
 //Very dangerous!
 
+/datum/nanite_program/flesh_eating
+	name = "Cellular Breakdown"
+	desc = "The nanites destroy cellular structures in the host's body, causing brute damage."
+	use_rate = 1.5
+	rogue_types = list(/datum/nanite_program/necrosis)
+
+/datum/nanite_program/flesh_eating/active_effect()
+	if(iscarbon(host_mob))
+		var/mob/living/carbon/C = host_mob
+		C.take_bodypart_damage(1, 0, 0)
+	else
+		host_mob.adjustBruteLoss(1, TRUE)
+	if(prob(3))
+		to_chat(host_mob, "<span class='warning'>You feel a stab of pain from somewhere inside you.</span>")
+		
+/datum/nanite_program/poison
+	name = "Poisoning"
+	desc = "The nanites deliver poisonous chemicals to the host's internal organs, causing toxin damage and vomiting."
+	use_rate = 1.5
+	rogue_types = list(/datum/nanite_program/toxic)
+
+/datum/nanite_program/poison/active_effect()
+	host_mob.adjustToxLoss(1)
+	if(prob(2))
+		to_chat(host_mob, "<span class='warning'>You feel nauseous.</span>")
+		if(iscarbon(host_mob))
+			var/mob/living/carbon/C = host_mob
+			host_mob.vomit(20)	
+				
 /datum/nanite_program/aggressive_replication
 	name = "Aggressive Replication"
 	desc = "Nanites will consume organic matter to improve their replication rate, damaging the host."

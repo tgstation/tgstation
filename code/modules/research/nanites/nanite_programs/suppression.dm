@@ -144,3 +144,132 @@
 		return
 	to_chat(host_mob, "<span class='warning'>You feel compelled to speak...</span>")
 	host_mob.say(sentence)
+	
+/datum/nanite_program/triggered/hallucination
+	name = "Hallucination"
+	desc = "The nanites make the host hallucinate something when triggered."
+	trigger_cost = 4
+	trigger_cooldown = 80
+	rogue_types = list(/datum/nanite_program/brain_misfire)
+	
+	var/extra_settings = list("Hallucination Type")
+	var/hal_type
+	var/hal_details
+
+/datum/nanite_program/triggered/hallucination/trigger()
+	if(!..())
+		return
+	if(!iscarbon(host_mob))
+		return
+	var/mob/living/carbon/C = host_mob
+	if(!hal_type)
+		C.hallucination += 15
+	else
+		switch(hal_type)
+			if("Message")
+				new /datum/hallucination/chat(C, TRUE, null, hal_details)
+			if("Battle")
+				new /datum/hallucination/battle(C, TRUE, hal_details)
+			if("Sound")
+				new /datum/hallucination/sounds(C, TRUE, hal_details)
+			if("Weird Sound")
+				new /datum/hallucination/weird_sounds(C, TRUE, hal_details)
+			if("Station Message")
+				new /datum/hallucination/stationmessage(C, TRUE, hal_details)
+			if("Health")
+				new /datum/hallucination/hudscrew(C, TRUE, hal_details)
+			if("Alert")
+				new /datum/hallucination/fake_alert(C, TRUE, hal_details)
+			if("Fire")
+				new /datum/hallucination/fire(C, TRUE)
+			if("Shock")
+				new /datum/hallucination/shock(C, TRUE)
+			if("Plasma Flood")
+				new /datum/hallucination/fake_flood(C, TRUE)
+
+/datum/nanite_program/triggered/hallucination/set_extra_setting(user, setting)
+	if(setting == "Hallucination Type")
+		var/list/possible_hallucinations = list("Random","Message","Battle","Sound","Weird Sound","Station Message","Health","Alert","Fire","Shock","Plasma Flood")
+		var/hal_choice = input("Choose the hallucination type", name) as null|anything in possible_hallucinations
+		if(!hal_choice)
+			return
+		switch(hal_choice)
+			if("Random")
+				hal_type = null
+				hal_details = null
+			if("Message")
+				hal_type = "Message"
+				var/hal_chat = stripped_input(user, "Choose the message the host will hear, or leave empty for random messages.", "Message", hal_details, MAX_MESSAGE_LEN)
+				if(hal_chat)
+					hal_details = hal_chat
+			if("Battle")
+				hal_type = "Battle"
+				var/sound_list = list("random","laser","disabler","esword","gun","stunprod","harmbaton","bomb")
+				var/hal_choice = input("Choose the hallucination battle type", name) as null|anything in sound_list
+				if(!hal_choice || hal_choice == "random")
+					hal_details = null
+				else
+					hal_details = hal_choice
+			if("Sound")
+				hal_type = "Sound"
+				var/sound_list = list("random","airlock","airlock pry","console","explosion","far explosion","mech","glass","alarm","beepsky","mech","wall decon","door hack")
+				var/hal_choice = input("Choose the hallucination sound", name) as null|anything in sound_list
+				if(!hal_choice || hal_choice == "random")
+					hal_details = null
+				else
+					hal_details = hal_choice
+			if("Weird Sound")
+				hal_type = "Weird Sound"
+				var/sound_list = list("random","phone","hallelujah","highlander","laughter","hyperspace","game over","creepy","tesla")
+				var/hal_choice = input("Choose the hallucination sound", name) as null|anything in sound_list
+				if(!hal_choice || hal_choice == "random")
+					hal_details = null
+				else
+					hal_details = hal_choice
+			if("Station Message")
+				hal_type = "Station Message"
+				var/msg_list = list("random","ratvar","shuttle dock","blob alert","malf ai","meteors","supermatter")
+				var/hal_choice = input("Choose the hallucination station message", name) as null|anything in msg_list
+				if(!hal_choice || hal_choice == "random")
+					hal_details = null
+				else
+					hal_details = hal_choice
+			if("Health")
+				hal_type = "Health"
+				var/health_list = list("random","critical","dead","healthy")
+				var/hal_choice = input("Choose the health status", name) as null|anything in health_list
+				if(!hal_choice || hal_choice == "random")
+					hal_details = null
+				else
+					switch(hal_choice)
+						if("critical")
+							hal_details = SCREWYHUD_CRIT
+						if("dead")
+							hal_details = SCREWYHUD_DEAD
+						if("healthy")
+							hal_details = SCREWYHUD_HEALTHY
+			if("Alert")
+				hal_type = "Alert"
+				var/alert_list = list("random","not_enough_oxy","not_enough_tox","not_enough_co2","too_much_oxy","too_much_co2","too_much_tox","newlaw","nutrition","charge","gravity","fire","locked","hacked","temphot","tempcold","pressure")
+				var/hal_choice = input("Choose the alert", name) as null|anything in alert_list
+				if(!hal_choice || hal_choice == "random")
+					hal_details = null
+				else
+					hal_details = hal_choice
+			if("Fire")
+				hal_type = "Fire"
+			if("Shock")
+				hal_type = "Shock"
+			if("Plasma Flood")
+				hal_type = "Plasma Flood"
+
+/datum/nanite_program/triggered/hallucination/get_extra_setting(setting)
+	if(setting == "Hallucination Type")
+		if(!hal_type)
+			return "Random"
+		else
+			return hal_type
+
+/datum/nanite_program/triggered/hallucination/copy_extra_settings_to(datum/nanite_program/triggered/hallucination/target)
+	target.hal_type = hal_type
+	target.hal_details = hal_details	

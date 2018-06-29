@@ -257,7 +257,21 @@
 	program_type = /datum/nanite_program/brain_decay
 	category = list("Defective Nanites")
 
-////////////////////WEAPONIZED NANITES//////////////////////////////////////
+////////////////////WEAPONIZED NANITES/////////////////////////////////////
+
+/datum/design/nanites/flesh_eating
+	name = "Cellular Breakdown"
+	desc = "The nanites destroy cellular structures in the host's body, causing brute damage."
+	id = "flesheating_nanites"
+	program_type = /datum/nanite_program/flesh_eating
+	category = list("Weaponized Nanites")
+	
+/datum/design/nanites/poison
+	name = "Poisoning"
+	desc = "The nanites deliver poisonous chemicals to the host's internal organs, causing toxin damage and vomiting."
+	id = "poison_nanites"
+	program_type = /datum/nanite_program/poison
+	category = list("Weaponized Nanites")
 
 /datum/design/nanites/aggressive_replication
 	name = "Aggressive Replication"
@@ -372,6 +386,13 @@
 	desc = "The nanites force the host to say a pre-programmed sentence when triggered."
 	id = "speech_nanites"
 	program_type = /datum/nanite_program/triggered/speech
+	category = list("Suppression Nanites")
+	
+/datum/design/nanites/hallucination
+	name = "Hallucination"
+	desc = "The nanites make the host see and hear things that aren't real."
+	id = "hallucination_nanites"
+	program_type = /datum/nanite_program/triggered/hallucination
 	category = list("Suppression Nanites")
 
 ////////////////////SENSOR NANITES//////////////////////////////////////

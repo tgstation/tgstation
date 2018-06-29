@@ -867,7 +867,7 @@
 	display_name = "Biological Nanite Programming"
 	description = "Nanite programs that require complex biological interaction."
 	prereq_ids = list("nanite_base","biotech")
-	design_ids = list("regenerative_nanites", "bloodheal_nanites", "coagulating_nanites",\
+	design_ids = list("regenerative_nanites", "bloodheal_nanites", "coagulating_nanites","poison_nanites","flesheating_nanites"\
 					"sensor_crit_nanites","sensor_death_nanites", "sensor_high_health_nanites", "sensor_low_health_nanites","sensor_high_brute_nanites", "sensor_low_brute_nanites",\
 					"sensor_high_burn_nanites", "sensor_low_burn_nanites","sensor_high_tox_nanites", "sensor_low_tox_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
@@ -887,7 +887,7 @@
 	display_name = "Synaptic Nanite Programming"
 	description = "Nanite programs affecting mind and thoughts."
 	prereq_ids = list("nanite_neural","neural_programming")
-	design_ids = list("mindshield_nanites", "pacifying_nanites", "blinding_nanites", "sleep_nanites", "mute_nanites", "speech_nanites")
+	design_ids = list("mindshield_nanites", "pacifying_nanites", "blinding_nanites", "sleep_nanites", "mute_nanites", "speech_nanites","hallucination_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 

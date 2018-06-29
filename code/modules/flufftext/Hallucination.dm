@@ -771,13 +771,13 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	..()
 	var/turf/source = random_far_turf()
 	if(!sound_type)
-		sound_type = pick("airlock","airlock_pry","console","explosion","far_explosion","mech","glass","alarm","beepsky","mech","wall_decon","door_hack","tesla")
+		sound_type = pick("airlock","airlock pry","console","explosion","far explosion","mech","glass","alarm","beepsky","mech","wall decon","door hack")
 	feedback_details += "Type: [sound_type]"
 	//Strange audio
 	switch(sound_type)
 		if("airlock")
 			target.playsound_local(source,'sound/machines/airlock.ogg', 30, 1)
-		if("airlock_pry")
+		if("airlock pry")
 			target.playsound_local(source,'sound/machines/airlock_alien_prying.ogg', 100, 1)
 			sleep(50)
 			target.playsound_local(source, 'sound/machines/airlockforced.ogg', 30, 1)
@@ -788,7 +788,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 				target.playsound_local(source,'sound/effects/explosion1.ogg', 50, 1)
 			else
 				target.playsound_local(source, 'sound/effects/explosion2.ogg', 50, 1)
-		if("far_explosion")
+		if("far explosion")
 			target.playsound_local(source, 'sound/effects/explosionfar.ogg', 50, 1)
 		if("glass")
 			target.playsound_local(source, pick('sound/effects/glassbr1.ogg','sound/effects/glassbr2.ogg','sound/effects/glassbr3.ogg'), 50, 1)
@@ -807,14 +807,14 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 					mech_dir = pick(GLOB.cardinals)
 				sleep(10)
 		//Deconstructing a wall
-		if("wall_decon")
+		if("wall decon")
 			target.playsound_local(source, 'sound/items/welder.ogg', 50, 1)
 			sleep(105)
 			target.playsound_local(source, 'sound/items/welder2.ogg', 50, 1)
 			sleep(15)
 			target.playsound_local(source, 'sound/items/ratchet.ogg', 50, 1)
 		//Hacking a door
-		if("door_hack")
+		if("door hack")
 			target.playsound_local(source, 'sound/items/screwdriver.ogg', 50, 1)
 			sleep(rand(40,80))
 			target.playsound_local(source, 'sound/machines/airlockforced.ogg', 30, 1)
@@ -827,7 +827,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	..()
 	var/turf/source = random_far_turf()
 	if(!sound_type)
-		sound_type = pick("phone","hallelujah","highlander","hyperspace","game_over","creepy","tesla")
+		sound_type = pick("phone","hallelujah","highlander","laughter","hyperspace","game over","creepy","tesla")
 	feedback_details += "Type: [sound_type]"
 	//Strange audio
 	switch(sound_type)
@@ -845,7 +845,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			target.playsound_local(source, 'sound/effects/pray_chaplain.ogg', 50)
 		if("highlander")
 			target.playsound_local(null, 'sound/misc/highlander.ogg', 50)
-		if("game_over")
+		if("game over")
 			target.playsound_local(source, 'sound/misc/compiler-failure.ogg', 50)
 		if("laughter")
 			if(prob(50))
@@ -870,7 +870,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	set waitfor = FALSE
 	..()
 	if(!message)
-		message = pick("ratvar","shuttle_dock","blob_alert","malf_ai","meteors","supermatter")
+		message = pick("ratvar","shuttle dock","blob alert","malf ai","meteors","supermatter")
 	feedback_details += "Type: [message]"
 	switch(message)
 		if("blob_alert")
@@ -900,11 +900,14 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 /datum/hallucination/hudscrew
 
-/datum/hallucination/hudscrew/New(mob/living/carbon/C, forced = TRUE)
+/datum/hallucination/hudscrew/New(mob/living/carbon/C, forced = TRUE, screwyhud_type)
 	set waitfor = FALSE
 	..()
 	//Screwy HUD
-	target.set_screwyhud(pick(SCREWYHUD_CRIT,SCREWYHUD_DEAD,SCREWYHUD_HEALTHY))
+	var/chosen_screwyhud = screwyhud_type
+	if(!chosen_screwyhud)
+		chosen_screwyhud = pick(SCREWYHUD_CRIT,SCREWYHUD_DEAD,SCREWYHUD_HEALTHY)
+	target.set_screwyhud(chosen_screwyhud)
 	feedback_details += "Type: [target.hal_screwyhud]"
 	sleep(rand(100,250))
 	target.set_screwyhud(SCREWYHUD_NONE)
