@@ -430,3 +430,19 @@
 			var/atom/movable/AM = hit_atom
 			AM.safe_throw_at(get_edge_target_turf(AM,get_dir(src, AM)), 7, 2)
 		qdel(src)
+
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/kinetic_accelerator_cannon
+	name = "kinetic accelerator cannon"
+	desc = "A mech-mounted proto-kinetic accelerator. Fires a trio of kinetic rounds."
+	icon_state = "mecha_PKA"
+	energy_drain = 100
+	equip_cooldown = 20
+	projectile = /obj/item/projectile/kinetic
+	projectiles_per_shot = 3
+	projectile_delay = 0.5 SECONDS
+	fire_sound = 'sound/weapons/kenetic_accel.ogg'
+
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/kinetic_accelerator_cannon/can_attach(var/obj/mecha/M)
+	if(M.equipment.len<M.max_equip && istype(M, /obj/mecha/working/ripley))
+		return TRUE
+	return FALSE
