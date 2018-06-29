@@ -5,7 +5,7 @@
 	name = "Cellular Breakdown"
 	desc = "The nanites destroy cellular structures in the host's body, causing brute damage."
 	use_rate = 1.5
-	rogue_types = list(/datum/nanite_program/necrosis)
+	rogue_types = list(/datum/nanite_program/necrotic)
 
 /datum/nanite_program/flesh_eating/active_effect()
 	if(iscarbon(host_mob))
@@ -28,7 +28,7 @@
 		to_chat(host_mob, "<span class='warning'>You feel nauseous.</span>")
 		if(iscarbon(host_mob))
 			var/mob/living/carbon/C = host_mob
-			host_mob.vomit(20)	
+			C.vomit(20)	
 				
 /datum/nanite_program/aggressive_replication
 	name = "Aggressive Replication"

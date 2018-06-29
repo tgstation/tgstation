@@ -152,7 +152,7 @@
 	trigger_cooldown = 80
 	rogue_types = list(/datum/nanite_program/brain_misfire)
 	
-	var/extra_settings = list("Hallucination Type")
+	extra_settings = list("Hallucination Type")
 	var/hal_type
 	var/hal_details
 
@@ -190,10 +190,10 @@
 /datum/nanite_program/triggered/hallucination/set_extra_setting(user, setting)
 	if(setting == "Hallucination Type")
 		var/list/possible_hallucinations = list("Random","Message","Battle","Sound","Weird Sound","Station Message","Health","Alert","Fire","Shock","Plasma Flood")
-		var/hal_choice = input("Choose the hallucination type", name) as null|anything in possible_hallucinations
-		if(!hal_choice)
+		var/hal_type_choice = input("Choose the hallucination type", name) as null|anything in possible_hallucinations
+		if(!hal_type_choice)
 			return
-		switch(hal_choice)
+		switch(hal_type_choice)
 			if("Random")
 				hal_type = null
 				hal_details = null
