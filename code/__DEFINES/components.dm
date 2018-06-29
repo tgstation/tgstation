@@ -172,7 +172,7 @@
 #define COMSIG_CLEAR_MOOD_EVENT "clear_mood" //Called when you clear a mood event from anywhere in the code.
 
 //NTnet
-#define COMSIG_COMPONENT_NTNET_RECIEVE "ntnet_recieve"			//called on an object by its NTNET connection component on recieve. (sending_id(number), sending_netname(text), data(datum/netdata))
+#define COMSIG_COMPONENT_NTNET_RECEIVE "ntnet_receive"			//called on an object by its NTNET connection component on receive. (sending_id(number), sending_netname(text), data(datum/netdata))
 
 //Nanites
 #define COMSIG_NANITE_SIGNAL "nanite_signal"					//Called when sending a nanite signal to a mob. (code(1-9999))

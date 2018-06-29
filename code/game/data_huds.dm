@@ -248,7 +248,7 @@
 				if("Incarcerated")
 					holder.icon_state = "hudincarcerated"
 					return
-				if("Parolled")
+				if("Paroled")
 					holder.icon_state = "hudparolled"
 					return
 				if("Discharged")

@@ -386,7 +386,7 @@
 							R = find_record("name", perpname, GLOB.data_core.security)
 							if(R)
 								if(href_list["status"])
-									var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged", "Cancel")
+									var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Paroled", "Discharged", "Cancel")
 									if(setcriminal != "Cancel")
 										if(R)
 											if(H.canUseHUD())
@@ -589,7 +589,7 @@
 					threatcount += 5
 				if("Incarcerated")
 					threatcount += 2
-				if("Parolled")
+				if("Paroled")
 					threatcount += 2
 
 	//Check for dresscode violations

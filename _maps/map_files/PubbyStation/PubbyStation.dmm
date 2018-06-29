@@ -46884,7 +46884,7 @@
 /area/library)
 "cAu" = (
 /obj/structure/table/wood,
-/obj/item/clothing/head/pharoah,
+/obj/item/clothing/head/pharaoh,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/vault{
 	dir = 5

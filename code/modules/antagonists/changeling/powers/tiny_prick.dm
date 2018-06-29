@@ -134,7 +134,7 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/false_armblade/sting_action(mob/user, mob/target)
-	add_logs(user, target, "stung", object="falso armblade sting")
+	add_logs(user, target, "stung", object="false armblade sting")
 
 	var/obj/item/held = target.get_active_held_item()
 	if(held && !target.dropItemToGround(held))

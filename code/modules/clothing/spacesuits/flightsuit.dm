@@ -302,7 +302,7 @@
 	if(suit && !suit.deployedshoes && (brake || stabilizer))
 		brake = FALSE
 		stabilizer = FALSE
-		usermessage("Warning: Sensor data is not being recieved from flight shoes. Stabilizers and airbrake modules deactivated!", "boldwarning")
+		usermessage("Warning: Sensor data is not being received from flight shoes. Stabilizers and airbrake modules deactivated!", "boldwarning")
 
 
 /obj/item/flightpack/process()

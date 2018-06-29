@@ -89,7 +89,7 @@
 	icon_state = "awaycontent22"
 
 /area/awaymission/snowdin/post/broken_shuttle
-	name = "Snowdin Outpost - Broken Transist Shuttle"
+	name = "Snowdin Outpost - Broken Transit Shuttle"
 	icon_state = "awaycontent20"
 	requires_power = FALSE
 
@@ -264,7 +264,7 @@
 
 /obj/item/paper/crumpled/ruins/snowdin/foreshadowing
 	name = "scribbled note"
-	info = {"Somnethings gone VERY wrong here. Jouslen has been mumbling about some weird shit in his cabin during the night and he seems always tired when we're working. I tried to confront him about it and he blew up on me,
+	info = {"Something's gone VERY wrong here. Jouslen has been mumbling about some weird shit in his cabin during the night and he seems always tired when we're working. I tried to confront him about it and he blew up on me,
 	 telling me to mind my own business. I reported him to the officer, said he'd look into it. We only got another 2 months here before we're pulled for another assignment, so this shit can't go any quicker.."}
 
 /obj/item/paper/crumpled/ruins/snowdin/misc1
@@ -284,58 +284,58 @@
 
 /obj/item/paper/fluff/awaymissions/snowdin/research_feed
 	name = "Research Feed"
-	info = {"<i>A page full of graphs and other detailed infomation on the seismic activity of the surrounding area.</i>"}
+	info = {"<i>A page full of graphs and other detailed information on the seismic activity of the surrounding area.</i>"}
 
 //profile of each of the old crewmembers for the outpost
 
 /obj/item/paper/fluff/awaymissions/snowdin/profile/overseer
 	name = "Personnel Record AOP#01"
-	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Caleb Reed<br><b>Age:</b>38<br><b>Gender:</b>Male<br><b>On-Site Profession:</b>Outpost Overseer<br><br><center><b>Infomation</b></center><br><center>Caleb Reed lead several expeditions
+	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Caleb Reed<br><b>Age:</b>38<br><b>Gender:</b>Male<br><b>On-Site Profession:</b>Outpost Overseer<br><br><center><b>Information</b></center><br><center>Caleb Reed lead several expeditions
 	 among uncharted planets in search of plasma for Nanotrasen, scouring from hot savanas to freezing arctics. Track record is fairly clean with only incidient including the loss of two researchers during the
 	 expedition of <b>_______</b>, where mis-used of explosive ordinance for tunneling causes a cave-in."}
 
 /obj/item/paper/fluff/awaymissions/snowdin/profile/sec1
 	name = "Personnel Record AOP#02"
-	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>James Reed<br><b>Age:</b>43<br><b>Gender:</b>Male<br><b>On-Site Profession:</b>Outpost Security<br><br><center><b>Infomation</b></center><br><center>James Reed has been a part
+	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>James Reed<br><b>Age:</b>43<br><b>Gender:</b>Male<br><b>On-Site Profession:</b>Outpost Security<br><br><center><b>Information</b></center><br><center>James Reed has been a part
 	 of Nanotrasen's security force for over 20 years, first joining in 22XX. A clean record and unwavering loyalty to the corperation through numerous deployments to various sites makes him a valuable asset to Natotrasen
 	  when it comes to keeping the peace while prioritizing Nanotrasen privacy matters. "}
 
 /obj/item/paper/fluff/awaymissions/snowdin/profile/hydro1
 	name = "Personnel Record AOP#03"
-	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Katherine Esterdeen<br><b>Age:</b>27<br><b>Gender:</b>Female<br><b>On-Site Profession:</b>Outpost Botanist<br><br><center><b>Infomation</b></center><br><center>Katherine Esterdeen is a recent
+	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Katherine Esterdeen<br><b>Age:</b>27<br><b>Gender:</b>Female<br><b>On-Site Profession:</b>Outpost Botanist<br><br><center><b>Information</b></center><br><center>Katherine Esterdeen is a recent
 	 graduate with a major in Botany and a PH.D in Ecology. Having a clean record and eager to work, Esterdeen seems to be the right fit for maintaining plants in the middle of nowhere."}
 
 /obj/item/paper/fluff/awaymissions/snowdin/profile/engi1
 	name = "Personnel Record AOP#04"
-	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Rachel Migro<br><b>Age:</b>35<br><b>Gender:</b>Female<br><b>On-Site Profession:</b>Outpost Engineer<br><br><center><b>Infomation</b></center><br><center>Recently certified to be a full-time Journeyman, Rachel has
+	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Rachel Migro<br><b>Age:</b>35<br><b>Gender:</b>Female<br><b>On-Site Profession:</b>Outpost Engineer<br><br><center><b>Information</b></center><br><center>Recently certified to be a full-time Journeyman, Rachel has
 		been assigned various construction projects in the past 5 years. Competent and has no past infractions, should be of little concern."}
 
 /obj/item/paper/fluff/awaymissions/snowdin/profile/research1
 	name = "Personnel Record AOP#05"
-	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Jacob Ullman<br><b>Age:</b>27<br><b>Gender:</b>Male<br><b>On-Site Profession:</b>Outpost Researcher<br><br><center><b>Infomation</b></center><br><center>"}
+	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Jacob Ullman<br><b>Age:</b>27<br><b>Gender:</b>Male<br><b>On-Site Profession:</b>Outpost Researcher<br><br><center><b>Information</b></center><br><center>"}
 
 /obj/item/paper/fluff/awaymissions/snowdin/profile/research2
 	name = "Personnel Record AOP#06"
-	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Elizabeth Queef<br><b>Age:</b>28<br><b>Gender:</b>Female<br><b>On-Site Profession:</b>Outpost Researcher<br><br><center><b>Infomation</b></center><br><center>"}
+	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Elizabeth Queef<br><b>Age:</b>28<br><b>Gender:</b>Female<br><b>On-Site Profession:</b>Outpost Researcher<br><br><center><b>Information</b></center><br><center>"}
 
 /obj/item/paper/fluff/awaymissions/snowdin/profile/research3
 	name = "Personnel Record AOP#07"
-	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Jouslen McGee<br><b>Age:</b>38<br><b>Gender:</b>Male<br><b>On-Site Profession:</b>Outpost Researcher<br><br><center><b>Infomation</b></center><br><center>"}
+	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Jouslen McGee<br><b>Age:</b>38<br><b>Gender:</b>Male<br><b>On-Site Profession:</b>Outpost Researcher<br><br><center><b>Information</b></center><br><center>"}
 
 /obj/item/paper/fluff/awaymissions/snowdin/secnotice
 	name = "Security Notice"
-	info = {"YOu have been assigned to this Arctic Post with intention of protecting Nanotrasen assets and ensuring vital infomation is kept secure while the stationed crew obeys protocal. The picked
+	info = {"YOu have been assigned to this Arctic Post with intention of protecting Nanotrasen assets and ensuring vital information is kept secure while the stationed crew obeys protocol. The picked
 		staff for this post have been pre-screened with no prior incidients on record, but incase of an issue you have been given a single holding cell and instructions to contact Central to terminate the
 		offending crewmember."}
 
 /obj/item/paper/fluff/awaymissions/snowdin/mining
 	name = "Assignment Notice"
-	info = {"This cold-ass planet is the new-age equivilant of striking gold. Huge deposits of plasma and literal streams of plasma run through the caverns under all this ice and we're here to mine it all.\
+	info = {"This cold-ass planet is the new-age equivalent of striking gold. Huge deposits of plasma and literal streams of plasma run through the caverns under all this ice and we're here to mine it all.\
 	 Nanotrasen pays by the pound, so get minin' boys!"}
 
 /obj/item/paper/crumpled/ruins/snowdin/lootstructures
 	name = "scribbled note"
-	info = {"There's some ruins scattered along the cavern, their walls seem to be made of some sort of super-condensned mixture of ice and snow. We've already barricaded up the ones we've found so far,
+	info = {"There's some ruins scattered along the cavern, their walls seem to be made of some sort of super-condensed mixture of ice and snow. We've already barricaded up the ones we've found so far,
 	 since we keep hearing some strange noises from inside. Besides, what sort of fool would wrecklessly run into ancient ruins full of monsters for some old gear, anyway?"}
 
 /obj/item/paper/crumpled/ruins/snowdin/shovel
@@ -389,7 +389,7 @@
 	DELAY 30
 	SAY Nanotrasen is pleased to have you working in one of the many top-of-the-line research posts within the $%@!! sector!
 	DELAY 30
-	SAY Further job assignment infomation can be found at your local security post! Have a secure day!
+	SAY Further job assignment information can be found at your local security post! Have a secure day!
 	DELAY 20;"}
 
 /obj/item/disk/holodisk/snowdin/overrun
@@ -559,7 +559,7 @@
 
 /obj/item/clothing/under/syndicate/coldres
 	name = "insulated tactical turtleneck"
-	desc = "A non-descript and slightly suspicious-looking turtleneck with digital camouflage cargo pants. The interior has been padded with special insulation for both warmth and protection."
+	desc = "A nondescript and slightly suspicious-looking turtleneck with digital camouflage cargo pants. The interior has been padded with special insulation for both warmth and protection."
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 0,"energy" = 5, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 25, "acid" = 25)
 	cold_protection = CHEST|GROIN|ARMS|LEGS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT

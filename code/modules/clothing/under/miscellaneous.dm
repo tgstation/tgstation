@@ -38,7 +38,7 @@
 	can_adjust = FALSE
 
 /obj/item/clothing/under/roman
-	name = "roman armor"
+	name = "\improper Roman armor"
 	desc = "Ancient Roman armor. Made of metallic and leather straps."
 	icon_state = "roman"
 	item_color = "roman"
@@ -667,7 +667,7 @@
 	icon = 'icons/obj/device.dmi'
 
 /obj/item/clothing/under/rank/security/navyblue/russian
-	name = "russian officer's uniform"
+	name = "\improper Russian officer's uniform"
 	desc = "The latest in fashionable russian outfits."
 	icon_state = "hostanclothes"
 	item_state = "hostanclothes"

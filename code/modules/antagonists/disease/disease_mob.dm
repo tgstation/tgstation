@@ -310,7 +310,7 @@ the new instance inside the host to be updated to the template's stats.
 			Resistance: [DT.totalResistance()]<br>\
 			Stealth: [DT.totalStealth()]<br>\
 			Stage Speed: [DT.totalStageSpeed()]<br>\
-			Transmittability: [DT.totalTransmittable()]<hr>\
+			Transmissibility: [DT.totalTransmittable()]<hr>\
 			Cure: [DT.cure_text]"
 		dat += "<hr><h1>Adaptations</h1>\
 			Points: [points] / [total_points]\

@@ -744,7 +744,7 @@
 	data.standard_format_data(message, text, key)
 	ntnet_send(data)
 
-/obj/item/integrated_circuit/input/ntnet_recieve(datum/netdata/data)
+/obj/item/integrated_circuit/input/ntnet_receive(datum/netdata/data)
 	set_pin_data(IC_OUTPUT, 1, data.sender_id)
 	set_pin_data(IC_OUTPUT, 2, data.data["data"])
 	set_pin_data(IC_OUTPUT, 3, data.data["data_secondary"])
@@ -755,7 +755,7 @@
 	activate_pin(2)
 
 /obj/item/integrated_circuit/input/ntnet_advanced
-	name = "Low level NTNet transreciever"
+	name = "Low level NTNet transreceiver"
 	desc = "Enables the sending and receiving of messages over NTNet via packet data protocol. Allows advanced control of message contents and signalling. Must use associative lists. Outputs associative list. Has a slower transmission rate than normal NTNet circuits, due to increased data processing complexity."
 	extended_desc = "Data can be sent or received using the second pin on each side, \
 	with additonal data reserved for the third pin. When a message is received, the second activation pin \
@@ -768,7 +768,7 @@
 		"target NTNet addresses"= IC_PINTYPE_STRING,
 		"data"					= IC_PINTYPE_LIST,
 		)
-	outputs = list("recieved data" = IC_PINTYPE_LIST, "is_broadcast" = IC_PINTYPE_BOOLEAN)
+	outputs = list("received data" = IC_PINTYPE_LIST, "is_broadcast" = IC_PINTYPE_BOOLEAN)
 	activators = list("send data" = IC_PINTYPE_PULSE_IN, "on data received" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	action_flags = IC_ACTION_LONG_RANGE
@@ -792,7 +792,7 @@
 	data.data = message
 	ntnet_send(data)
 
-/obj/item/integrated_circuit/input/ntnet_advanced/ntnet_recieve(datum/netdata/data)
+/obj/item/integrated_circuit/input/ntnet_advanced/ntnet_receive(datum/netdata/data)
 	set_pin_data(IC_OUTPUT, 1, data.data)
 	set_pin_data(IC_OUTPUT, 2, data.broadcast)
 	push_data()
