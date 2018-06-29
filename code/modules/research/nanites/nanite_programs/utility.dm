@@ -208,3 +208,20 @@
 			if(target_nanites)
 				infectee.investigate_log("[key_name(infectee)] was infected by spreading nanites by [key_name(host_mob)]", INVESTIGATE_NANITES)
 				target_nanites.sync(nanites)
+				
+/datum/nanite_program/mitosis
+	name = "Mitosis"
+	desc = "The nanites gain the ability to self-replicate, using bluespace to power the process, instead of drawing from a template. This rapidly speeds up the replication rate,\
+			but it causes occasional software errors due to faulty copies. Not compatible with cloud sync."
+	use_rate = 0
+	rogue_types = list(/datum/nanite_program/toxic)
+
+/datum/nanite_program/mitosis/active_effect()
+	if(nanites.cloud_id)
+		return
+	var/rep_rate = round(nanites.nanite_volume / 50, 1) //0.5 per 50 nanite volume
+	rep_rate *= 0.5
+	nanites.adjust_nanites(rep_rate)
+	if(prob(rep_rate))
+		var/datum/nanite_program/fault = pick(nanites.programs)
+		fault.software_error()
