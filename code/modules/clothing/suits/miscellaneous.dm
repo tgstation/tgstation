@@ -600,5 +600,6 @@
 	desc = "Spooky."
 	icon_state = "ghost_sheet"
 	item_state = "ghost_sheet_item"
+	w_class = WEIGHT_CLASS_TINY
 	flags_inv = HIDEGLOVES|HIDEMASK|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	alternate_worn_layer = ABOVE_BODY_FRONT_LAYER
