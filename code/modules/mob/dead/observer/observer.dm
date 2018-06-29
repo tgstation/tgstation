@@ -292,12 +292,28 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	ghostize(0)
 
+/mob/dead/observer/proc/allowed_area(var/area/A)
+	if(client && client.holder)
+		return TRUE
+	if(A.no_observers)
+		return FALSE
+	return TRUE
+
 /mob/dead/observer/Move(NewLoc, direct)
 	if(updatedir)
 		setDir(direct)//only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
 	var/oldloc = loc
 
 	if(NewLoc)
+		var/area/new_area = get_area(NewLoc)
+		if(!allowed_area(new_area))
+			src << "You can't move around here!"
+			var/area/old_area = get_area(loc)
+			if(!allowed_area(old_area))
+				var/obj/effect/landmark/observer_start/O = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
+				forceMove(O.loc)
+			else
+				return
 		forceMove(NewLoc)
 		update_parallax_contents()
 	else
@@ -378,6 +394,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!L || !L.len)
 		to_chat(usr, "No area available.")
 
+	if(!allowed_area(thearea))
+		usr << "This area does not allow ghosts!"
+		return
 	usr.forceMove(pick(L))
 	update_parallax_contents()
 
