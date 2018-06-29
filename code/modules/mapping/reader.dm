@@ -266,13 +266,13 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 		// 5. and the members are world.turf and world.area
 		// Basically, if we find an entry like this: "XXX" = (/turf/default, /area/default)
 		// We can skip calling this proc every time we see XXX
-		if(no_changeturf 
-			&& !.[SPACE_KEY] 
-			&& members.len == 2 
-			&& members_attributes.len == 2 
-			&& length(members_attributes[1]) == 0 
-			&& length(members_attributes[2]) == 0 
-			&& (world.area in members) 
+		if(no_changeturf
+			&& !(.[SPACE_KEY])
+			&& members.len == 2
+			&& members_attributes.len == 2
+			&& length(members_attributes[1]) == 0
+			&& length(members_attributes[2]) == 0
+			&& (world.area in members)
 			&& (world.turf in members))
 
 			.[SPACE_KEY] = model_key
