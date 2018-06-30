@@ -12,20 +12,13 @@
 		commit = revinfo.commit
 		originmastercommit = revinfo.origin_commit
 	else
-		var/list/logs = world.file2list(".git/logs/HEAD")
-		if(logs.len)
-			logs = splittext(logs[logs.len - 1], " ")
-			date = unix2date(text2num(logs[5]))
-			commit = logs[2]
+		commit = rustg_git_revparse("HEAD")
+		if(commit)
+			date = rustg_git_commit_date(commit)
 			log_world("[commit]: [date]")
 		else
 			log_world("Unable to read git logs, revision information not available")
-			originmastercommit = commit = "Unknown"
-			date = unix2date(world.timeofday)
-			return
-		logs = world.file2list(".git/logs/refs/remotes/origin/master")
-		if(logs.len)
-			originmastercommit = splittext(logs[logs.len - 1], " ")[2]
+		originmastercommit = rustg_git_rev_parse("origin/master")
 
 	if(testmerge.len)
 		log_world(commit)
