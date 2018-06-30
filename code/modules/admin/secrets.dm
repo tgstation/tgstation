@@ -64,6 +64,7 @@
 			<A href='?src=[REF(src)];[HrefToken()];secrets=blackout'>Break all lights</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=whiteout'>Fix all lights</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=verbose_speech'>Toggle Verbose Speech</A><BR>
 			<BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=flipmovement'>Flip client movement directions</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=randommovement'>Randomize client movement directions</A><BR>
@@ -427,6 +428,13 @@
 			message_admins("[key_name_admin(usr)] fixed all lights")
 			for(var/obj/machinery/light/L in GLOB.machines)
 				L.fix()
+
+		if("verbose_speech")
+			if(!check_rights(R_FUN))
+				return
+			GLOB.verbose_speech = !GLOB.verbose_speech
+			message_admins("<span class='danger'>[key_name_admin(usr)] toggled Verbose Speech [GLOB.verbose_speech ? "ON" : "OFF"]</span>", 1)
+			log_admin("[key_name_admin(usr)] toggled Verbose Speech [GLOB.verbose_speech ? "ON" : "OFF"]")
 
 		if("floorlava")
 			SSweather.run_weather(/datum/weather/floor_is_lava)

@@ -17,4 +17,7 @@ GLOBAL_LIST_EMPTY(powernets)
 
 GLOBAL_VAR_INIT(bsa_unlock, FALSE)	//BSA unlocked by head ID swipes
 
+GLOBAL_VAR_INIT(verbose_speech, FALSE) // VOCAL CORD PARASITES
+
 GLOBAL_LIST_EMPTY(player_details)	// ckey -> /datum/player_details
+
