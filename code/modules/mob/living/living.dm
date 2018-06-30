@@ -1139,7 +1139,7 @@
 		if("eye_blurry")
 			set_blurriness(var_value)
 		if("maxHealth")
-			if (var_value <= 0)
+			if (!isnum(var_value) || var_value <= 0)
 				return FALSE
 			updatehealth()
 		if("resize")
