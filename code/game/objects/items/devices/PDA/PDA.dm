@@ -593,7 +593,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return
 
 	if (id)
-		usr.put_in_hands(inserted_item)
+		usr.put_in_hands(id)
 		to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
 		id = null
 		update_icon()
