@@ -215,7 +215,7 @@
 		var/obj/item/mmi/M = W
 		if(check_completion())
 			if(!chest.cell)
-				to_chat(user, "<span class='warning'>The shell still needs a power cell!</span>")
+				to_chat(user, "<span class='warning'>The endoskeleton still needs a power cell!</span>")
 				return
 			if(!isturf(loc))
 				to_chat(user, "<span class='warning'>You can't put [M] in, the frame has to be standing on the ground to be perfectly precise!</span>")
