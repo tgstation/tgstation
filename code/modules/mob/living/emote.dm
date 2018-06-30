@@ -255,6 +255,8 @@
 	message = "pouts."
 	emote_type = EMOTE_AUDIBLE
 
+#define MOTH_SCREAM_DELAY 5 SECONDS
+
 /datum/emote/living/scream
 	key = "scream"
 	key_third_person = "screams"
@@ -262,12 +264,16 @@
 	message_mime = "acts out a scream!"
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/scream/run_emote(mob/user, params)
+/datum/emote/living/scream/run_emote(mob/living/user, params)
 	. = ..()
 
 	if(. && ishuman(user))
 		if(is_species(user, /datum/species/moth))
-			playsound(user.loc, 'sound/voice/scream_moth.ogg', 25, 1, 1)
+			if(world.time - user.last_scream > MOTH_SCREAM_DELAY)
+				playsound(user.loc, 'sound/voice/scream_moth.ogg', 25, 1, 1)
+				user.last_scream = world.time
+
+#undef MOTH_SCREAM_DELAY
 
 /datum/emote/living/scowl
 	key = "scowl"
