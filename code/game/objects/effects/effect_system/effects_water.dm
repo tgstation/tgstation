@@ -7,8 +7,8 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 
-/obj/effect/particle_effect/water/New()
-	..()
+/obj/effect/particle_effect/water/Initialize()
+	. = ..()
 	QDEL_IN(src, 70)
 
 /obj/effect/particle_effect/water/Move(turf/newloc)
@@ -45,8 +45,8 @@ steam.start() -- spawns the effect
 	icon_state = "extinguish"
 	density = FALSE
 
-/obj/effect/particle_effect/steam/New()
-	..()
+/obj/effect/particle_effect/steam/Initialize()
+	. = ..()
 	QDEL_IN(src, 20)
 
 /datum/effect_system/steam_spread

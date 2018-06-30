@@ -192,7 +192,7 @@
 /obj/machinery/door/airlock/check_access_ntnet(datum/netdata/data)
 	return !requiresID() || ..()
 
-/obj/machinery/door/airlock/ntnet_recieve(datum/netdata/data)
+/obj/machinery/door/airlock/ntnet_receive(datum/netdata/data)
 	// Check if the airlock is powered and can accept control packets.
 	if(!hasPower() || !canAIControl())
 		return
@@ -201,7 +201,7 @@
 	if(!check_access_ntnet(data))
 		return
 
-	// Handle recieved packet.
+	// Handle received packet.
 	var/command = lowertext(data.data["data"])
 	var/command_value = lowertext(data.data["data_secondary"])
 	switch(command)
@@ -1509,7 +1509,7 @@
 			else if (safe)
 				safe = FALSE
 			else
-				to_chat(usr, "Firmware reports safeties already overriden.")
+				to_chat(usr, "Firmware reports safeties already overridden.")
 			. = TRUE
 		if("speed-on")
 			if(wires.is_cut(WIRE_TIMING))

@@ -597,3 +597,20 @@
 		var/obj/item/pinpointer/crew/PP = locate() in R.module
 		if (PP)
 			R.module.remove_module(PP, TRUE)
+
+/obj/item/borg/upgrade/transform
+	name = "borg module picker (Standard)"
+	desc = "Allows you to to turn a cyborg into a standard cyborg."
+	icon_state = "cyborg_upgrade3"
+	var/obj/item/robot_module/new_module = /obj/item/robot_module/standard
+
+/obj/item/borg/upgrade/transform/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		R.module.transform_to(new_module)
+
+/obj/item/borg/upgrade/transform/clown
+	name = "borg module picker (Clown)"
+	desc = "Allows you to to turn a cyborg into a clown, honk."
+	icon_state = "cyborg_upgrade3"
+	new_module = /obj/item/robot_module/clown

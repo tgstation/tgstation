@@ -86,7 +86,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/labor)
 "o" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 8
 	},
 /obj/machinery/flasher{

@@ -47,7 +47,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
 "g" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral,
@@ -116,7 +116,7 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/mining)
 "n" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -126,7 +126,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
 "o" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -139,7 +139,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
 "p" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,

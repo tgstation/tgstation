@@ -186,7 +186,7 @@
 
 			//Always log attemped injections for admins
 			var/contained = reagents.log_list()
-			add_logs(src, L, "attemped to inject", addition="which had [contained]")
+			add_logs(src, L, "attempted to inject", addition="which had [contained]")
 			L.visible_message("<span class='danger'>[acting_object] is trying to inject [L]!</span>", \
 								"<span class='userdanger'>[acting_object] is trying to inject you!</span>")
 			busy = TRUE

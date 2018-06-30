@@ -40,6 +40,7 @@
 		antag_candidates -= carrier
 
 	if(!carriers.len)
+		setup_error = "No monkey candidates"
 		return FALSE
 	return TRUE
 

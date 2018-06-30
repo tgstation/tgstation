@@ -329,7 +329,7 @@
 							src.active2.fields["mi_dis_d"] = t1
 					if("ma_dis")
 						if(active2)
-							var/t1 = stripped_input("Please input major diabilities list:", "Med. records", src.active2.fields["ma_dis"], null)
+							var/t1 = stripped_input("Please input major disabilities list:", "Med. records", src.active2.fields["ma_dis"], null)
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["ma_dis"] = t1

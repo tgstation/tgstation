@@ -10,6 +10,8 @@
 	if(!isMotion())
 		. = PROCESS_KILL
 		return
+	if(stat & EMPED)
+		return
 	if (detectTime > 0)
 		var/elapsed = world.time - detectTime
 		if (elapsed > alarm_delay)
@@ -63,6 +65,7 @@
 	for (var/mob/living/silicon/aiPlayer in GLOB.player_list)
 		if (status)
 			aiPlayer.triggerAlarm("Motion", get_area(src), list(src), src)
+			visible_message("<span class='warning'>A red light flashes on the [src]!</span>")
 	detectTime = -1
 	return TRUE
 

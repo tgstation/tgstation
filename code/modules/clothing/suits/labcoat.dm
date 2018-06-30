@@ -17,13 +17,13 @@
 	item_state = "labcoat_cmo"
 
 /obj/item/clothing/suit/toggle/labcoat/emt
-	name = "EMT's jacket"
+	name = "\improper EMT's jacket"
 	desc = "A dark blue jacket with reflective strips for emergency medical technicians."
 	icon_state = "labcoat_emt"
 	item_state = "labcoat_cmo"
 
 /obj/item/clothing/suit/toggle/labcoat/mad
-	name = "\improper The Mad's labcoat"
+	name = "\proper The Mad's labcoat"
 	desc = "It makes you look capable of konking someone on the noggin and shooting them into space."
 	icon_state = "labgreen"
 	item_state = "labgreen"

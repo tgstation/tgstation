@@ -207,6 +207,7 @@
 			destroy_objective.owner = owner
 			destroy_objective.target = target_mind
 			destroy_objective.update_explanation_text()
+			add_objective(destroy_objective)
 		else
 			var/datum/objective/assassinate/internal/kill_objective = new
 			kill_objective.owner = owner
@@ -227,14 +228,14 @@
 
 /datum/antagonist/traitor/internal_affairs/forge_traitor_objectives()
 	forge_iaa_objectives()
-	
+
 	var/objtype = traitor_kind == TRAITOR_HUMAN ? /datum/objective/escape : /datum/objective/survive
 	var/datum/objective/escape_objective = new objtype
 	escape_objective.owner = owner
 	add_objective(escape_objective)
 
 /datum/antagonist/traitor/internal_affairs/proc/greet_iaa()
-	var/crime = pick("distribution of contraband" , "unauthorized erotic action on duty", "embezzlement", "piloting under the influence", "dereliction of duty", "syndicate collaboration", "mutiny", "multiple homicides", "corporate espionage", "recieving bribes", "malpractice", "worship of prohbited life forms", "possession of profane texts", "murder", "arson", "insulting their manager", "grand theft", "conspiracy", "attempting to unionize", "vandalism", "gross incompetence")
+	var/crime = pick("distribution of contraband" , "unauthorized erotic action on duty", "embezzlement", "piloting under the influence", "dereliction of duty", "syndicate collaboration", "mutiny", "multiple homicides", "corporate espionage", "receiving bribes", "malpractice", "worship of prohibited life forms", "possession of profane texts", "murder", "arson", "insulting their manager", "grand theft", "conspiracy", "attempting to unionize", "vandalism", "gross incompetence")
 
 	to_chat(owner.current, "<span class='userdanger'>You are the [special_role].</span>")
 	if(syndicate)

@@ -334,7 +334,7 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/head/helmet/space/hardsuit/cult
-	name = "nar-sien hardened helmet"
+	name = "\improper Nar-Sien hardened helmet"
 	desc = "A heavily-armored helmet worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
 	icon_state = "cult_helmet"
 	item_state = "cult_helmet"
@@ -343,7 +343,7 @@
 	actions_types = list()
 
 /obj/item/clothing/suit/space/hardsuit/cult
-	name = "nar-sien hardened armor"
+	name = "\improper Nar-Sien hardened armor"
 	icon_state = "cult_armor"
 	item_state = "cult_armor"
 	desc = "A heavily-armored exosuit worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
@@ -521,7 +521,7 @@
 		sleep(20)
 		var/global/list/curses
 		if(!curses)
-			curses = list("A fuel technician just slit his own throat and begged for death. The shuttle will be delayed by three minutes.",
+			curses = list("A fuel technician just slit his own throat and begged for death.",
 			"The shuttle's navigation programming was replaced by a file containing just two words: IT COMES.",
 			"The shuttle's custodian was found washing the windows with their own blood.",
 			"A shuttle engineer began screaming 'DEATH IS NOT THE END' and ripped out wires until an arc flash seared off her flesh.",

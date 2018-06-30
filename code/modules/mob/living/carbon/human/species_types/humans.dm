@@ -23,11 +23,6 @@
 		H.endTailWag()
 	. = ..()
 
-/datum/species/human/space_move(mob/living/carbon/human/H)
-	var/obj/item/flightpack/F = H.get_flightpack()
-	if(istype(F) && (F.flight) && F.allow_thrust(0.01, src))
-		return TRUE
-
 /datum/species/human/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	if(H.dna.features["ears"] == "Cat")
 		mutantears = /obj/item/organ/ears/cat

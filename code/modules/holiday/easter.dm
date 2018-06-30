@@ -147,7 +147,7 @@
 	desc = "The Cross represents the Assistants that died for your sins."
 	icon_state = "hotcrossbun"
 
-/datum/crafting_recipe/food/food/hotcrossbun
+/datum/crafting_recipe/food/hotcrossbun
 	name = "Hot-Cross Bun"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1,
@@ -171,7 +171,7 @@
 	icon_state = "briochecake_slice"
 	filling_color = "#FFD700"
 
-/datum/crafting_recipe/food/food/briochecake
+/datum/crafting_recipe/food/briochecake
 	name = "Brioche cake"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1,

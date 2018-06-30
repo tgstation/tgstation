@@ -88,7 +88,7 @@
 
 /datum/gas_reaction/nobliumsupression
 	priority = INFINITY
-	name = "Hyper-Noblium Reaction Supression"
+	name = "Hyper-Noblium Reaction Suppression"
 	id = "nobstop"
 
 /datum/gas_reaction/nobliumsupression/init_reqs()
@@ -497,10 +497,4 @@
 #undef STIMULUM_SECOND_RISE
 #undef STIMULUM_ABSOLUTE_DROP
 #undef REACTION_OPPRESSION_THRESHOLD
-#undef PLASMA_BINDING_ENERGY
-#undef MAX_CATALYST_EFFICENCY
-#undef PLASMA_FUSED_COEFFICENT
-#undef CATALYST_COEFFICENT
-#undef FUSION_PURITY_THRESHOLD
-#undef FUSION_HEAT_DROPOFF
 #undef NOBLIUM_FORMATION_ENERGY

@@ -3,7 +3,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_1)
 "G" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /obj/machinery/status_display{
@@ -32,7 +32,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pod_1)
 "U" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /obj/item/radio/intercom{

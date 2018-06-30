@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "Fire extinguishers on the emergency shuttle are no longer unclickable once removed from their cabinets."

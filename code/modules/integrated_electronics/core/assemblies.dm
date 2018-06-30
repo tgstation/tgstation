@@ -10,6 +10,7 @@
 	icon_state = "setup_small"
 	item_flags = NOBLUDGEON
 	materials = list()		// To be filled later
+	datum_flags = DF_USE_TAG
 	var/list/assembly_components = list()
 	var/list/ckeys_allowed_to_scan = list() // Players who built the circuit can scan it as a ghost.
 	var/max_components = IC_MAX_SIZE_BASE
@@ -30,6 +31,8 @@
 	var/combat_circuits = 0 //number of combat cicuits in the assembly, used for diagnostic hud
 	var/long_range_circuits = 0 //number of long range cicuits in the assembly, used for diagnostic hud
 	var/prefered_hud_icon = "hudstat"		// Used by the AR circuit to change the hud icon.
+	var/creator // circuit creator if any
+	var/static/next_assembly_id = 0
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD, DIAG_CIRCUIT_HUD) //diagnostic hud overlays
 	max_integrity = 50
 	pass_flags = 0
@@ -56,14 +59,17 @@
 		COLOR_ASSEMBLY_PURPLE
 		)
 
+/obj/item/electronic_assembly/GenerateTag()
+    tag = "assembly_[next_assembly_id++]"
+
 /obj/item/electronic_assembly/examine(mob/user)
 	. = ..()
 	if(can_anchor)
-		to_chat(user, "<span class='notice'>The anchoring bolts [anchored ? "are" : "can be"] <b>wrenched</b> in place and the maintainence panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>")
+		to_chat(user, "<span class='notice'>The anchoring bolts [anchored ? "are" : "can be"] <b>wrenched</b> in place and the maintenance panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>")
 	else
-		to_chat(user, "<span class='notice'>The maintainence panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>")
+		to_chat(user, "<span class='notice'>The maintenance panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>")
 
-	if(isobserver(user) && ckeys_allowed_to_scan[user.ckey])
+	if((isobserver(user) && ckeys_allowed_to_scan[user.ckey]) || IsAdminGhost(user))
 		to_chat(user, "You can <a href='?src=[REF(src)];ghostscan=1'>scan</a> this circuit.");
 
 /obj/item/electronic_assembly/proc/check_interactivity(mob/user)
@@ -186,14 +192,14 @@
 		return 1
 
 	if(href_list["ghostscan"])
-		if(isobserver(usr) && ckeys_allowed_to_scan[usr.ckey])
+		if((isobserver(usr) && ckeys_allowed_to_scan[usr.ckey]) || IsAdminGhost(usr))
 			if(assembly_components.len)
 				var/saved = "On circuit printers with cloning enabled, you may use the code below to clone the circuit:<br><br><code>[SScircuit.save_electronic_assembly(src)]</code>"
 				usr << browse(saved, "window=circuit_scan;size=500x600;border=1;can_resize=1;can_close=1;can_minimize=1")
 			else
 				to_chat(usr, "<span class='warning'>The circuit is empty!</span>")
 		return
-		
+
 	if(!check_interactivity(usr))
 		return
 
@@ -351,6 +357,7 @@
 	to_chat(user, "<span class='notice'>You slide [IC] inside [src].</span>")
 	playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 	add_allowed_scanner(user.ckey)
+	investigate_log("had [IC]([IC.type]) inserted by [key_name(user)].", INVESTIGATE_CIRCUIT)
 
 	add_component(IC)
 	return TRUE
@@ -390,6 +397,7 @@
 		playsound(src, 'sound/items/crowbar.ogg', 50, 1)
 		user.put_in_hands(IC)
 	add_allowed_scanner(user.ckey)
+	investigate_log("had [IC]([IC.type]) removed by [key_name(user)].", INVESTIGATE_CIRCUIT)
 
 	return TRUE
 

@@ -24,7 +24,7 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/transport)
 "h" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -36,7 +36,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "j" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "k" = (
@@ -64,7 +64,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "q" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
