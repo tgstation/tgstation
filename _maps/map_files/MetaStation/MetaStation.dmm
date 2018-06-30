@@ -49814,7 +49814,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/smartfridge/disks,
+/obj/machinery/smartfridge/disks{
+	pixel_y = 2
+	},
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "ccA" = (
@@ -71360,10 +71363,13 @@
 /turf/open/floor/circuit/killroom,
 /area/science/xenobiology)
 "dbE" = (
-/obj/machinery/plantgenes,
+/obj/machinery/plantgenes{
+	pixel_y = 6
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "dbF" = (
