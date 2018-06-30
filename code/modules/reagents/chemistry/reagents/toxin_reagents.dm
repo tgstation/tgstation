@@ -529,15 +529,15 @@
 		var/picked_option = rand(1,3)
 		switch(picked_option)
 			if(1)
-				M.Knockdown(60, 0)
+				C.Knockdown(60, 0)
 				. = TRUE
 			if(2)
-				M.losebreath += 10
-				M.adjustOxyLoss(rand(5,25), 0)
+				C.losebreath += 10
+				C.adjustOxyLoss(rand(5,25), 0)
 				. = TRUE
 			if(3)
 				if(!C.undergoing_cardiac_arrest() && C.can_heartattack())
-					H.set_heartattack(TRUE)
+					C.set_heartattack(TRUE)
 					if(C.stat == CONSCIOUS)
 						C.visible_message("<span class='userdanger'>[C] clutches at [C.p_their()] chest as if [C.p_their()] heart stopped!</span>")
 				else
@@ -654,7 +654,7 @@
 	.=..()
 	if(current_cycle >=11 && prob(min(50,current_cycle)))
 		C.vomit(10, prob(10), prob(50), rand(0,4), TRUE, prob(30))
-		for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
+		for(var/datum/reagent/toxin/R in C.reagents.reagent_list)
 			if(R != src)
 				C.reagents.remove_reagent(R.id,1)
 
