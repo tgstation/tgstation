@@ -65,6 +65,7 @@
 			<A href='?src=[REF(src)];[HrefToken()];secrets=blackout'>Break all lights</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=whiteout'>Fix all lights</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=waddling'>Toggle Waddling</A><BR>
 			<BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=flipmovement'>Flip client movement directions</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=randommovement'>Randomize client movement directions</A><BR>
@@ -442,6 +443,13 @@
 
 		if("floorlava")
 			SSweather.run_weather(/datum/weather/floor_is_lava)
+
+		if("waddling")
+			if(!check_rights(R_FUN))
+				return
+			GLOB.waddling = !GLOB.waddling
+			message_admins("<span class='danger'>[key_name_admin(usr)] toggled waddling [GLOB.waddling ? "ON" : "OFF"]</span>", 1)
+			log_admin("[key_name_admin(usr)] toggled waddling [GLOB.waddling ? "ON" : "OFF"]")
 
 		if("virus")
 			if(!check_rights(R_FUN))
