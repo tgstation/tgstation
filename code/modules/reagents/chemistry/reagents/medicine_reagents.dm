@@ -1194,16 +1194,12 @@
 	color = "#F5F5F5"
 	self_consuming = TRUE
 
-/datum/reagent/medicine/corazone/on_mob_add(mob/M)
+/datum/reagent/medicine/corazone/on_mob_add(mob/living/M)
 	..()
-	if(isliving(M))
-		var/mob/living/L = M
-		L.add_trait(TRAIT_STABLEHEART, id)
+	M.add_trait(TRAIT_STABLEHEART, id)
 
-/datum/reagent/medicine/corazone/on_mob_delete(mob/M)
-	if(isliving(M))
-		var/mob/living/L = M
-		L.remove_trait(TRAIT_STABLEHEART, id)
+/datum/reagent/medicine/corazone/on_mob_delete(mob/living/M)
+	M.remove_trait(TRAIT_STABLEHEART, id)
 	..()
 
 /datum/reagent/medicine/muscle_stimulant
