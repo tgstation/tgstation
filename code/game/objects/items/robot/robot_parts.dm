@@ -79,7 +79,7 @@
 					chest.cell = null
 				chest.forceMove(T)
 				new /obj/item/stack/cable_coil(T, 1)
-				chest.wired = 0
+				chest.wired = FALSE
 				chest = null
 			if(l_arm)
 				l_arm.forceMove(T)
@@ -99,21 +99,37 @@
 		to_chat(user, "<span class='notice'>There is nothing to remove from the endoskeleton.</span>")
 	updateicon()
 
-/obj/item/robot_suit/screwdriver_act(mob/living/user, obj/item/I) //Swaps the power cell if you're holding a new one in your other hand.
-	var/obj/item/stock_parts/cell/temp_cell = user.is_holding_item_of_type(/obj/item/stock_parts/cell)
-	if(!temp_cell)
-		return
-	if(!chest.cell)
-		to_chat(user, "<span class='notice'>There doesn't seem to unscrew from [src].</span>")
-		return
-	if(!user.transferItemToLoc(temp_cell, chest))
-		to_chat(user, "<span class='warning'>[temp_cell] is stuck to your hand, you can't put it in [src]!</span>")
-		return
-	if(!user.put_in_hands(chest.cell))
-		chest.cell.forceMove(drop_location())
-	chest.cell = temp_cell
-	to_chat(user, "<span class='notice'>You replace [src]'s power cell.</span>")
-	return TRUE
+/obj/item/robot_suit/screwdriver_act(mob/living/user, obj/item/I) //Removes the current power cell, or swaps it if you're holding a new one.
+	if(!chest.cell) //If no cell is in the shell
+		if(!user.is_holding_item_of_type(/obj/item/stock_parts/cell)) //And we're also not holding a cell
+			to_chat(user, "<span class='notice'>There doesn't seem to be a power cell to remove from [src].</span>")
+			return
+		else //But we are holding a cell
+			chest.cell = user.held_items[user.active_hand_index == 1 ? 2 : 1]
+			if(!user.transferItemToLoc(user.held_items[user.active_hand_index == 1 ? 2 : 1], src.chest))
+				chest.cell = null
+				to_chat(user, "<span class='warning'>[user.held_items[user.active_hand_index == 1 ? 2 : 1]] is stuck to your hand, you can't put it in [src]!</span>")
+				return
+			to_chat(user, "<span class='notice'>You insert [chest.cell].</span>")
+			return
+	else //If a cell exists in the shell
+		var/obj/item/stock_parts/cell/temp_cell = user.is_holding_item_of_type(/obj/item/stock_parts/cell)
+		if(!temp_cell) //But we're not holding a cell
+			put_in_hand_or_drop(user, chest.cell)
+			to_chat(user, "<span class='notice'>You remove [chest.cell] from [src].</span>")
+			chest.cell = null
+			return
+		else //And we are holding a cell
+			if(!user.transferItemToLoc(temp_cell, chest)) //But we can't insert for some reason
+				put_in_hand_or_drop(user, chest.cell)
+				chest.cell = null
+				to_chat(user, "<span class='warning'>[temp_cell] is stuck to your hand, you can't put it in [src]!</span>")
+				return
+			else //And we put it in
+				put_in_hand_or_drop(user, chest.cell)
+				to_chat(user, "<span class='notice'>You replace [src]'s [chest.cell.name] with [temp_cell].</span>")
+				chest.cell = temp_cell
+				return TRUE
 
 /obj/item/robot_suit/attackby(obj/item/W, mob/user, params)
 
