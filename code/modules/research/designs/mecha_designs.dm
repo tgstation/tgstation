@@ -386,3 +386,13 @@
 	construction_time = 250
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam
 	category = list("Exosuit Equipment")
+
+/datum/design/mech_PKA
+	name = "Exosuit Weapon (PKA \"Tri-barrel\" Mounted Kinetic Accelerator Cannon)"
+	desc = "A mounted kinetic accelerator cannon for mining mechs. Fires a trio of scattered kinetic projectiles."
+	id = "mech_PKA"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/kinetic_accelerator_cannon
+	materials = list(MAT_METAL=10000)
+	construction_time = 100
+	category = list("Exosuit Equipment")
