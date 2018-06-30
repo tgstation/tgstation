@@ -1139,6 +1139,8 @@
 		if("eye_blurry")
 			set_blurriness(var_value)
 		if("maxHealth")
+			if (var_value <= 0)
+				return FALSE
 			updatehealth()
 		if("resize")
 			update_transform()
