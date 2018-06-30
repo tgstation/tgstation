@@ -263,10 +263,11 @@
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/scream/run_emote(mob/user, params)
-	if(ishuman(user))
+	. = ..()
+
+	if(. && ishuman(user))
 		if(is_species(user, /datum/species/moth))
 			playsound(user.loc, 'sound/voice/scream_moth.ogg', 25, 1, 1)
-	..()
 
 /datum/emote/living/scowl
 	key = "scowl"
