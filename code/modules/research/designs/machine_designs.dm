@@ -10,6 +10,22 @@
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/board/circulator
+	name = "Machine Design (Circulator Board)"
+	desc = "The circuit board for a circulator."
+	id = "circulator"
+	build_path = /obj/machinery/atmospherics/components/binary/circulator
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/board/teg
+	name = "Machine Design (TEG Board)"
+	desc = "The circuit board for a TEG."
+	id = "teg"
+	build_path = /obj/machinery/power/generator
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/board/announcement_system
 	name = "Machine Design (Automated Announcement System Board)"
 	desc = "The circuit board for an automated announcement system."
