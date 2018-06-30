@@ -38,7 +38,7 @@ The holder (reagents datum) is the datum that holds a list of all reagents curre
 			If the specified amount is greater than what is available, it will use
 			the amount of the reagent that is available. If no reagent exists, returns null.
 
-		metabolize(var/mob/M)
+		metabolize(var/mob/living/carbon/C)
 			This proc is called by the mobs life proc. It simply calls on_mob_life for
 			all contained reagents. You shouldnt have to use this one directly.
 
