@@ -99,6 +99,12 @@
 		to_chat(user, "<span class='notice'>There is nothing to remove from the endoskeleton.</span>")
 	updateicon()
 
+/obj/item/robot_suit/proc/put_in_hand_or_drop(mob/living/user, obj/item/I) //normal put_in_hands() drops the item ontop of the player, this drops it at the suit's loc
+	if(!user.put_in_hands(I))
+		I.forceMove(drop_location())
+		return FALSE
+	return TRUE
+
 /obj/item/robot_suit/screwdriver_act(mob/living/user, obj/item/I) //Removes the current power cell, or swaps it if you're holding a new one.
 	if(!chest.cell) //If no cell is in the shell
 		if(!user.is_holding_item_of_type(/obj/item/stock_parts/cell)) //And we're also not holding a cell
