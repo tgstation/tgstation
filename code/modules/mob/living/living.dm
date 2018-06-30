@@ -1129,3 +1129,15 @@
 			update_transform()
 		if("lighting_alpha")
 			sync_lighting_plane_alpha()
+
+/mob/living/proc/waddle() //adds waddling, really important
+	if(incapacitated() || lying)
+		return
+	animate(src, pixel_z = 4, time = 0)
+	animate(pixel_z = 0, transform = turn(matrix(), pick(-12, 0, 12)), time=2)
+	animate(pixel_z = 0, transform = matrix(), time = 0)
+
+/mob/living/Move(NewLoc, direct) // and a way for waddling to trigger
+	. = ..()
+	if(GLOB.waddling)
+		waddle()
