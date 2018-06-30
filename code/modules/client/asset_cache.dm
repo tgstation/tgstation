@@ -225,7 +225,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 	var/res_name = "spritesheet_[name].css"
 	var/fname = "data/spritesheets/[res_name]"
-	call("rust_g", "file_write")(generate_css(), fname)
+	text2file(generate_css(), fname)
 	register_asset(res_name, file(fname))
 
 	for(var/size_id in sizes)
@@ -249,7 +249,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		// save flattened version
 		var/fname = "data/spritesheets/[name]_[size_id].png"
 		fcopy(size[SPRSZ_ICON], fname)
-		var/error = call("rust_g", "dmi_strip_metadata")(fname)
+		var/error = rustg_dmi_strip_metadata(fname)
 		if(length(error))
 			stack_trace("Failed to strip [name]_[size_id].png: [error]")
 		size[SPRSZ_STRIPPED] = icon(fname)
