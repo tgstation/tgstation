@@ -144,7 +144,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 	var/space_key
 	if(!measureOnly)
 		modelCache = build_cache(parsed, no_changeturf)
-		space_key = grid_models[SPACE_KEY]
+		space_key = parsed.grid_models[SPACE_KEY]
 
 	for(var/I in parsed.gridSets)
 		var/datum/grid_set/gset = I
