@@ -57,7 +57,7 @@
 	return
 
 // Called when this reagent is first added to a mob
-/datum/reagent/proc/on_mob_add(mob/M)
+/datum/reagent/proc/on_mob_add(mob/living/M)
 	return
 
 // Called when this reagent is removed while inside a mob

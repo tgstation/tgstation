@@ -163,16 +163,12 @@
 	toxpwr = 0.5
 	taste_description = "death"
 
-/datum/reagent/toxin/zombiepowder/on_mob_add(mob/M)
+/datum/reagent/toxin/zombiepowder/on_mob_add(mob/living/L)
 	..()
-	if(isliving(M))
-		var/mob/living/L = M
-		L.fakedeath(id)
+	L.fakedeath(id)
 
-/datum/reagent/toxin/zombiepowder/on_mob_delete(mob/M)
-	if(isliving(M))
-		var/mob/living/L = M
-		L.cure_fakedeath(id)
+/datum/reagent/toxin/zombiepowder/on_mob_delete(mob/living/L)
+	L.cure_fakedeath(id)
 	..()
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/carbon/M)

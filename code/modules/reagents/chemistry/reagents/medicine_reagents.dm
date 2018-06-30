@@ -547,16 +547,12 @@
 	overdose_threshold = 45
 	addiction_threshold = 30
 
-/datum/reagent/medicine/ephedrine/on_mob_add(mob/M)
+/datum/reagent/medicine/ephedrine/on_mob_add(mob/living/L)
 	..()
-	if(isliving(M))
-		var/mob/living/L = M
-		L.add_trait(TRAIT_GOTTAGOFAST, id)
+	L.add_trait(TRAIT_GOTTAGOFAST, id)
 
-/datum/reagent/medicine/ephedrine/on_mob_delete(mob/M)
-	if(isliving(M))
-		var/mob/living/L = M
-		L.remove_trait(TRAIT_GOTTAGOFAST, id)
+/datum/reagent/medicine/ephedrine/on_mob_delete(mob/living/L)
+	L.remove_trait(TRAIT_GOTTAGOFAST, id)
 	..()
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/M)
@@ -627,16 +623,12 @@
 	overdose_threshold = 30
 	addiction_threshold = 25
 
-/datum/reagent/medicine/morphine/on_mob_add(mob/M)
+/datum/reagent/medicine/morphine/on_mob_add(mob/living/L)
 	..()
-	if(isliving(M))
-		var/mob/living/L = M
-		L.add_trait(TRAIT_IGNORESLOWDOWN, id)
+	L.add_trait(TRAIT_IGNORESLOWDOWN, id)
 
-/datum/reagent/medicine/morphine/on_mob_delete(mob/M)
-	if(isliving(M))
-		var/mob/living/L = M
-		L.remove_trait(TRAIT_IGNORESLOWDOWN, id)
+/datum/reagent/medicine/morphine/on_mob_delete(mob/living/L)
+	L.remove_trait(TRAIT_IGNORESLOWDOWN, id)
 	..()
 
 /datum/reagent/medicine/morphine/on_mob_life(mob/living/M)
@@ -878,16 +870,12 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
 
-/datum/reagent/medicine/stimulants/on_mob_add(mob/M)
+/datum/reagent/medicine/stimulants/on_mob_add(mob/living/L)
 	..()
-	if(isliving(M))
-		var/mob/living/L = M
-		L.add_trait(TRAIT_GOTTAGOFAST, id)
+	L.add_trait(TRAIT_GOTTAGOFAST, id)
 
-/datum/reagent/medicine/stimulants/on_mob_delete(mob/M)
-	if(isliving(M))
-		var/mob/living/L = M
-		L.remove_trait(TRAIT_GOTTAGOFAST, id)
+/datum/reagent/medicine/stimulants/on_mob_delete(mob/living/L)
+	L.remove_trait(TRAIT_GOTTAGOFAST, id)
 	..()
 
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/M)
@@ -1168,19 +1156,15 @@
 	color = "#C8A5DC"
 	metabolization_rate = 1
 
-/datum/reagent/medicine/changelinghaste/on_mob_add(mob/M)
+/datum/reagent/medicine/changelinghaste/on_mob_add(mob/living/L)
 	..()
-	if(isliving(M))
-		var/mob/living/L = M
-		L.add_trait(TRAIT_GOTTAGOREALLYFAST, id)
+	L.add_trait(TRAIT_GOTTAGOREALLYFAST, id)
 
-/datum/reagent/medicine/changelinghaste/on_mob_delete(mob/M)
-	if(isliving(M))
-		var/mob/living/L = M
-		L.remove_trait(TRAIT_GOTTAGOREALLYFAST, id)
+/datum/reagent/medicine/changelinghaste/on_mob_delete(mob/living/L)
+	L.remove_trait(TRAIT_GOTTAGOREALLYFAST, id)
 	..()
 
-/datum/reagent/medicine/changelinghaste/on_mob_life(mob/living/M as mob)
+/datum/reagent/medicine/changelinghaste/on_mob_life(mob/living/M)
 	M.adjustToxLoss(2, 0)
 	. = 1
 	..()
@@ -1273,4 +1257,3 @@
 			M.adjustStaminaLoss(1.5*REM, 0)
 	..()
 	. = 1
-

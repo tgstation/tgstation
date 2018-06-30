@@ -165,16 +165,12 @@
 	addiction_threshold = 10
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 
-/datum/reagent/drug/methamphetamine/on_mob_add(mob/M)
+/datum/reagent/drug/methamphetamine/on_mob_add(mob/living/L)
 	..()
-	if(isliving(M))
-		var/mob/living/L = M
-		L.add_trait(TRAIT_GOTTAGOREALLYFAST, id)
+	L.add_trait(TRAIT_GOTTAGOREALLYFAST, id)
 
-/datum/reagent/drug/methamphetamine/on_mob_delete(mob/M)
-	if(isliving(M))
-		var/mob/living/L = M
-		L.remove_trait(TRAIT_GOTTAGOREALLYFAST, id)
+/datum/reagent/drug/methamphetamine/on_mob_delete(mob/living/L)
+	L.remove_trait(TRAIT_GOTTAGOREALLYFAST, id)
 	..()
 
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/M)
@@ -252,24 +248,20 @@
 	taste_description = "salt" // because they're bathsalts?
 	var/datum/brain_trauma/special/psychotic_brawling/bath_salts/rage
 
-/datum/reagent/drug/bath_salts/on_mob_add(mob/M)
+/datum/reagent/drug/bath_salts/on_mob_add(mob/living/L)
 	..()
-	if(isliving(M))
-		var/mob/living/L = M
-		L.add_trait(TRAIT_STUNIMMUNE, id)
-		L.add_trait(TRAIT_SLEEPIMMUNE, id)
-		if(iscarbon(L))
-			var/mob/living/carbon/C = L
-			rage = new()
-			C.gain_trauma(rage, TRAUMA_RESILIENCE_ABSOLUTE)
+	L.add_trait(TRAIT_STUNIMMUNE, id)
+	L.add_trait(TRAIT_SLEEPIMMUNE, id)
+	if(iscarbon(L))
+		var/mob/living/carbon/C = L
+		rage = new()
+		C.gain_trauma(rage, TRAUMA_RESILIENCE_ABSOLUTE)
 
-/datum/reagent/drug/bath_salts/on_mob_delete(mob/M)
-	if(isliving(M))
-		var/mob/living/L = M
-		L.remove_trait(TRAIT_STUNIMMUNE, id)
-		L.remove_trait(TRAIT_SLEEPIMMUNE, id)
-		if(rage)
-			QDEL_NULL(rage)
+/datum/reagent/drug/bath_salts/on_mob_delete(mob/living/L)
+	L.remove_trait(TRAIT_STUNIMMUNE, id)
+	L.remove_trait(TRAIT_SLEEPIMMUNE, id)
+	if(rage)
+		QDEL_NULL(rage)
 	..()
 
 /datum/reagent/drug/bath_salts/on_mob_life(mob/living/M)
