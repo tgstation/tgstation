@@ -1,3 +1,24 @@
+GLOBAL_LIST_INIT(precache_speech_sounds, list('sound/voice/speech/female1.ogg',
+												'sound/voice/speech/female2.ogg',
+												'sound/voice/speech/female3.ogg',
+												'sound/voice/speech/female4.ogg',
+												'sound/voice/speech/female5.ogg',
+												'sound/voice/speech/male1.ogg',
+												'sound/voice/speech/male2.ogg',
+												'sound/voice/speech/male3.ogg',
+												'sound/voice/speech/male4.ogg',
+												'sound/voice/speech/male5.ogg',
+												'sound/voice/speech/neuter1.ogg',
+												'sound/voice/speech/neuter2.ogg',
+												'sound/voice/speech/neuter3.ogg',
+												'sound/voice/speech/neuter4.ogg',
+												'sound/voice/speech/neuter5.ogg',
+												'sound/voice/speech/plural1.ogg',
+												'sound/voice/speech/plural2.ogg',
+												'sound/voice/speech/plural3.ogg',
+												'sound/voice/speech/plural4.ogg',
+												'sound/voice/speech/plural5.ogg'))
+
 /mob/living/carbon/human/say_mod(input, message_mode)
 	verb_say = dna.species.say_mod
 	if(slurring)
@@ -7,6 +28,12 @@
 
 /mob/living/carbon/human/treat_message(message)
 	message = dna.species.handle_speech(message,src)
+
+	if(GLOB.verbose_speech)
+		var/list/temp_message = splittext(message, " ") //List each word in the message. We use this for determining speech words and stupid honk disease stuff.
+		var/speechwords = min(round(temp_message.len), 5)
+		playsound(loc, "sound/voice/speech/[gender][speechwords].ogg", vol = 75, vary = 0, extrarange = 3, falloff = 1)
+
 	if(diseases.len)
 		for(var/datum/disease/pierrot_throat/D in diseases)
 			var/list/temp_message = splittext(message, " ") //List each word in the message
