@@ -1,0 +1,5 @@
+author: "TerraGS"
+delete-after: True
+changes: 
+  - imageadd: "New icon for plastic flaps that actually looks airtight."
+  - code_imp: "Update to plastic flaps code to use tool procs rather than attackby and removed two pointless states."
