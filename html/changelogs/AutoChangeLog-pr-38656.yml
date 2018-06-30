@@ -1,0 +1,7 @@
+author: "Dennok"
+delete-after: True
+changes: 
+  - bugfix: "Deconstructable TEG now propertly connects to pipes."
+  - bugfix: "Fix of inverted TEG sprite of slow turbine turning.
+add:Now you can flip circulator and make TEG of your dream.
+add:Add TEG and circulator to \"Advanced Power Manipulation\" techweb node."
