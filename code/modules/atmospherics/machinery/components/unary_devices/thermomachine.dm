@@ -98,14 +98,11 @@
 	build_network()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/attackby(obj/item/I, mob/user, params)
-	if(on)
-		return
-
-	if(anchored)
+	if(anchored && !on)
 		if(default_deconstruction_screwdriver(user, icon_state_open, initial(icon_state), I))
 			return
 
-	if(panel_open)
+	if(panel_open && I.tool_behaviour == TOOL_WRENCH)
 		default_unfasten_wrench(user, I, 50)
 		return
 
