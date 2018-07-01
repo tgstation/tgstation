@@ -463,18 +463,23 @@
 /////////////////////////////////////
 
 /mob/living/carbon/proc/can_heartattack()
-	if(dna && dna.species && (NOBLOOD in dna.species.species_traits)) //not all carbons have species!
+	if(!needs_heart())
 		return FALSE
 	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(!heart || heart.synthetic)
 		return FALSE
 	return TRUE
 
-/mob/living/carbon/proc/undergoing_cardiac_arrest()
-	if(!can_heartattack())
+/mob/living/carbon/proc/needs_heart()
+	if(dna && dna.species && (NOBLOOD in dna.species.species_traits)) //not all carbons have species!
 		return FALSE
+	return TRUE
+
+/mob/living/carbon/proc/undergoing_cardiac_arrest()
 	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(istype(heart) && (heart.beating || has_trait(TRAIT_STABLEHEART))
+		return FALSE
+	else if(!needs_heart())
 		return FALSE
 	return TRUE
 
