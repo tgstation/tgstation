@@ -3,11 +3,6 @@
 	icon_state= "bolter"
 	damage = 50
 
-/obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = FALSE)
-	..()
-	explosion(target, -1, 0, 2)
-	return TRUE
-
 /obj/item/projectile/bullet/a84mm
 	name ="anti-armour rocket"
 	desc = "USE A WEEL GUN"

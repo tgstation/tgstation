@@ -122,7 +122,7 @@
 	var/hugbox = TRUE
 	range = 150
 
-/obj/item/projectile/blastwave/Initialize(mapload, _h, _m, _l)
+/obj/item/projectile/blastwave/Initialize(mapload, datum/projectile_generator/source, _h, _m, _l)
 	heavyr = _h
 	mediumr = _m
 	lightr = _l

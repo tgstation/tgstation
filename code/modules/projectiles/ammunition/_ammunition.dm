@@ -21,15 +21,26 @@
 	var/heavy_metal = TRUE
 	var/harmful = TRUE //pacifism check for boolet, set to FALSE if bullet is non-lethal
 
+	var/use_projectile_generator = FALSE				//default behavior
+	var/datum/projectile_generator/generator = /datum/projectile_generator
 
 /obj/item/ammo_casing/Initialize()
 	. = ..()
+	setup_generator()
 	if(projectile_type)
-		BB = new projectile_type(src)
+		newshot()
 	pixel_x = rand(-10, 10)
 	pixel_y = rand(-10, 10)
 	setDir(pick(GLOB.alldirs))
 	update_icon()
+
+/obj/item/ammo_casing/Destroy()
+	QDEL_NULL(generator)
+
+/obj/item/ammo_casing/proc/setup_generator()
+	if(use_projectile_generator && ispath(generator))
+		generator = new generator
+	return generator
 
 /obj/item/ammo_casing/update_icon()
 	..()
@@ -39,7 +50,10 @@
 //proc to magically refill a casing with a new projectile
 /obj/item/ammo_casing/proc/newshot() //For energy weapons, syringe gun, shotgun shells and wands (!).
 	if(!BB)
-		BB = new projectile_type(src, src)
+		if(!use_projectile_generator)
+			BB = new projectile_type(src)
+		else
+			BB = generator.generate_projectile(projectile_type, src)
 
 /obj/item/ammo_casing/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/ammo_box))
