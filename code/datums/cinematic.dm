@@ -195,11 +195,17 @@ GLOBAL_LIST_EMPTY(cinematics)
 	cleanup_time = 100
 
 /datum/cinematic/fake/content()
+	var/ooc_toggled = FALSE
+	if(GLOB.ooc_allowed)
+		ooc_toggled = TRUE
+		toggle_ooc(FALSE)
 	flick("intro_nuke",screen)
 	sleep(35)
 	cinematic_sound(sound('sound/items/bikehorn.ogg'))
 	flick("summary_selfdes",screen) //???
 	special()
+	if(ooc_toggled)
+		toggle_ooc(TRUE)
 
 /datum/cinematic/no_core
 	id = CINEMATIC_NUKE_NO_CORE
