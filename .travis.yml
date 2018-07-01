@@ -24,10 +24,6 @@ matrix:
     - env:
       - BUILD_TESTING=true
       - BUILD_TOOLS=false
-      addons:
-        apt:
-          packages:
-            - libstdc++6:i386
       cache:
         directories:
           - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
@@ -38,7 +34,6 @@ matrix:
         mariadb: '10.2'
         apt:
           packages:
-            - libstdc++6:i386
             - libssl-dev:i386
             - gcc-multilib
       cache:
