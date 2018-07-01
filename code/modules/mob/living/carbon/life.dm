@@ -474,7 +474,7 @@
 	if(!can_heartattack())
 		return FALSE
 	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
-	if(istype(heart) && heart.beating)
+	if(istype(heart) && (heart.beating || has_trait(TRAIT_STABLEHEART))
 		return FALSE
 	return TRUE
 
