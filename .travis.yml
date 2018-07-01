@@ -40,7 +40,6 @@ matrix:
           packages:
             - libstdc++6:i386
             - libssl-dev:i386
-            - gcc-multilib
       cache:
         directories:
           - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
