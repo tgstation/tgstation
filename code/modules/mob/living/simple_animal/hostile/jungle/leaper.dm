@@ -67,7 +67,6 @@
 	desc = "A small pool of sludge, containing trace amounts of leaper venom."
 	icon = 'icons/effects/tomatodecal.dmi'
 	icon_state = "tomato_floor1"
-	beauty = -200
 
 /obj/structure/leaper_bubble
 	name = "leaper bubble"

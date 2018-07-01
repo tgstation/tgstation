@@ -84,7 +84,7 @@
 	var/L = getorganslot(ORGAN_SLOT_LUNGS)
 
 	if(!L)
-		if(health >= HEALTH_THRESHOLD_CRIT)
+		if(health >= HEALTH_THRESHOLD_CRIT + crit_modifier())
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS + 1)
 		else if(!has_trait(TRAIT_NOCRITDAMAGE))
 			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
