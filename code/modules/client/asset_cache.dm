@@ -587,7 +587,11 @@ GLOBAL_LIST_EMPTY(asset_datums)
 			if (machine)
 				item = machine
 		var/icon_file = initial(item.icon)
-		var/icon/I = icon(icon_file, initial(item.icon_state), SOUTH)
+		var/icon_state = initial(item.icon_state)
+		if (!(icon_state in icon_states(icon_file)))
+			WARNING("design [D] with icon '[icon_file]' missing state '[icon_state]'")
+			continue
+		var/icon/I = icon(icon_file, icon_state, SOUTH)
 
 		// computers (and snowflakes) get their screen and keyboard sprites
 		if (ispath(item, /obj/machinery/computer) || ispath(item, /obj/machinery/power/solar_control))

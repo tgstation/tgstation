@@ -6,7 +6,7 @@
 /obj/machinery/atmospherics/components/binary/circulator
 	name = "circulator/heat exchanger"
 	desc = "A gas circulator pump and heat exchanger."
-	icon_state = "circ-off"
+	icon_state = "circ-off-0"
 
 	var/active = FALSE
 
