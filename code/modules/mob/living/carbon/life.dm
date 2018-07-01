@@ -477,7 +477,7 @@
 
 /mob/living/carbon/proc/undergoing_cardiac_arrest()
 	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
-	if(istype(heart) && (heart.beating || has_trait(TRAIT_STABLEHEART))
+	if(istype(heart) && (heart.beating || has_trait(TRAIT_STABLEHEART)))
 		return FALSE
 	else if(!needs_heart())
 		return FALSE
