@@ -59,6 +59,24 @@
 		if(src.rotation_flags & ROTATION_COUNTERCLOCKWISE)
 			AM.verbs += /atom/movable/proc/simple_rotate_counterclockwise
 
+/datum/component/simple_rotation/proc/remove_verbs()
+	if(parent)
+		var/atom/movable/AM = parent
+		AM.verbs -= /atom/movable/proc/simple_rotate_flip
+		AM.verbs -= /atom/movable/proc/simple_rotate_clockwise
+		AM.verbs -= /atom/movable/proc/simple_rotate_counterclockwise
+
+/datum/component/simple_rotation/Destroy()
+	remove_verbs()
+	QDEL_NULL(can_user_rotate)
+	QDEL_NULL(can_be_rotated)
+	QDEL_NULL(after_rotation)
+	. = ..()
+
+/datum/component/simple_rotation/RemoveComponent()
+	remove_verbs()
+	. = ..()
+
 /datum/component/simple_rotation/proc/ExamineMessage(mob/user)
 	if(rotation_flags & ROTATION_ALTCLICK)
 		to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
