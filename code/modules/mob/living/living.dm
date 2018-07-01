@@ -1115,6 +1115,9 @@
 
 /mob/living/vv_edit_var(var_name, var_value)
 	switch(var_name)
+		if ("maxHealth")
+			if (!isnum(var_value) || var_value <= 0)
+				return FALSE
 		if("stat")
 			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
 				GLOB.dead_mob_list -= src
@@ -1139,8 +1142,6 @@
 		if("eye_blurry")
 			set_blurriness(var_value)
 		if("maxHealth")
-			if (!isnum(var_value) || var_value <= 0)
-				return FALSE
 			updatehealth()
 		if("resize")
 			update_transform()
