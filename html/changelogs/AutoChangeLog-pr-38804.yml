@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes: 
+  - rscadd: "Added a colour picker component for use with circuits."
