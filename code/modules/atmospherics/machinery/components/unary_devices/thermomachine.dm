@@ -25,6 +25,18 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/on_construction()
 	..(dir,dir)
 
+/obj/machinery/atmospherics/components/unary/thermomachine/examine(mob/user)
+	..()
+	if(!panel_open)
+		to_chat(user, "<span class='notice'>The panel is <b>screwed</b> in place.</span>")
+		return
+
+	if(anchored)
+		to_chat(user, "<span class='notice'>It looks <b>bolted</b> to the floor.</span>")
+	else
+		to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
+		to_chat(user, "<span class='notice'>It looks like it could be <b>bolted</b> down.</span>")
+
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	var/B
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
@@ -70,33 +82,55 @@
 	..()
 	update_icon()
 
-/obj/machinery/atmospherics/components/unary/thermomachine/attackby(obj/item/I, mob/user, params)
-	if(!on)
-		if(default_deconstruction_screwdriver(user, icon_state_open, initial(icon_state), I))
-			return
-	if(default_change_direction_wrench(user, I))
-		return
-	if(default_deconstruction_crowbar(I))
-		return
-	return ..()
-
-/obj/machinery/atmospherics/components/unary/thermomachine/default_change_direction_wrench(mob/user, obj/item/I)
-	if(!..())
-		return FALSE
-	SetInitDirections()
+/obj/machinery/atmospherics/components/unary/thermomachine/proc/disconnect_machine()
 	var/obj/machinery/atmospherics/node = nodes[1]
 	if(node)
 		node.disconnect(src)
 		nodes[1] = null
 	nullifyPipenet(parents[1])
 
+/obj/machinery/atmospherics/components/unary/thermomachine/proc/reconnect_machine()
 	atmosinit()
-	node = nodes[1]
+	var/obj/machinery/atmospherics/node = nodes[1]
 	if(node)
 		node.atmosinit()
 		node.addMember(src)
 	build_network()
-	return TRUE
+
+/obj/machinery/atmospherics/components/unary/thermomachine/attackby(obj/item/I, mob/user, params)
+	if(on)
+		return
+
+	if(anchored)
+		if(default_deconstruction_screwdriver(user, icon_state_open, initial(icon_state), I))
+			return
+
+	if(panel_open)
+		default_unfasten_wrench(user, I, 50)
+		return
+
+	if(default_deconstruction_crowbar(I)) //Has its own panel_open check.
+		return
+	return ..()
+
+/obj/machinery/atmospherics/components/unary/thermomachine/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
+	var/unanchoring = anchored
+	if(..() != SUCCESSFUL_UNFASTEN)
+		return
+
+	if(unanchoring)
+		disconnect_machine()
+	else
+		reconnect_machine()
+
+/obj/machinery/atmospherics/components/unary/thermomachine/AltClick(mob/living/user)
+	if(anchored)
+		return
+
+	setDir(turn(dir,-90))
+	to_chat(user, "<span class='notice'>You rotate [src].</span>")
+
+	SetInitDirections()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_status(mob/user)
 	if(interactive)
