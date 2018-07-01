@@ -12,6 +12,7 @@ Captain
 	supervisors = "Nanotrasen officials and Space law"
 	selection_color = "#ccccff"
 	req_admin_notify = 1
+	req_space_law = 1
 	minimal_player_age = 14
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
@@ -67,6 +68,7 @@ Head of Personnel
 	supervisors = "the captain"
 	selection_color = "#ddddff"
 	req_admin_notify = 1
+	req_space_law = 1
 	minimal_player_age = 10
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
@@ -91,7 +93,6 @@ Head of Personnel
 /datum/outfit/job/hop
 	name = "Head of Personnel"
 	jobtype = /datum/job/hop
-
 	id = /obj/item/card/id/silver
 	belt = /obj/item/pda/heads/hop
 	ears = /obj/item/radio/headset/heads/hop

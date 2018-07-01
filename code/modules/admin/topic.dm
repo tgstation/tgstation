@@ -603,7 +603,7 @@
 					return
 				if(M.client)
 					jobban_buildcache(M.client)
-				ban_unban_log_save("[key_name(usr)] appearance banned [key_name(M)]. reason: [reason]")
+				ban_unban_log_save("TYPE: Appearance|DATE: [time2text(world.realtime,"DD-MMM-YYYY hh:mm")]|BANNER: [key_name(usr)]|BANNEE: [key_name(M)]|REASON: [reason];;")
 				log_admin_private("[key_name(usr)] appearance banned [key_name(M)]. \nReason: [reason]")
 				create_message("note", M.ckey, null, "Appearance banned - [reason]", null, null, 0, 0)
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] appearance banned [key_name_admin(M)].</span>")
@@ -985,7 +985,7 @@
 							return
 						if(M.client)
 							jobban_buildcache(M.client)
-						ban_unban_log_save("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes. reason: [reason]")
+						ban_unban_log_save("TYPE: Jobban|DATE: [time2text(world.realtime,"DD-MMM-YYYY hh:mm")]|BANNER: [key_name(usr)]|BANNEE: [key_name(M)]|JOB: [job]|TIME: [mins]|REASON: [reason];;")
 						log_admin_private("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes.")
 						if(!msg)
 							msg = job
@@ -1008,7 +1008,7 @@
 								return
 							if(M.client)
 								jobban_buildcache(M.client)
-							ban_unban_log_save("[key_name(usr)] perma-jobbanned [key_name(M)] from [job]. reason: [reason]")
+							ban_unban_log_save("TYPE: Perma-Jobban|DATE: [time2text(world.realtime,"DD-MMM-YYYY hh:mm")]|BANNER: [key_name(usr)]|BANNEE: [key_name(M)]|JOB: [job]|REASON: [reason];;")
 							log_admin_private("[key_name(usr)] perma-banned [key_name(M)] from [job]")
 							if(!msg)
 								msg = job
@@ -1230,7 +1230,7 @@
 					to_chat(usr, "<span class='danger'>Failed to apply ban.</span>")
 					return
 				AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
-				ban_unban_log_save("[key_name(usr)] has banned [key_name(M)]. - Reason: [reason] - This will be removed in [mins] minutes.")
+				ban_unban_log_save("TYPE: Ban|DATE: [time2text(world.realtime,"DD-MMM-YYYY hh:mm")]|BANNER: [key_name(usr)]|BANNEE: [key_name(M)]|TIME: [mins]|REASON: [reason];;")
 				to_chat(M, "<span class='boldannounce'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>")
 				to_chat(M, "<span class='danger'>This is a temporary ban, it will be removed in [mins] minutes. The round ID is [GLOB.round_id].</span>")
 				var/bran = CONFIG_GET(string/banappeals)
@@ -1266,7 +1266,7 @@
 				if(!DB_ban_record(BANTYPE_PERMA, M, -1, reason))
 					to_chat(usr, "<span class='danger'>Failed to apply ban.</span>")
 					return
-				ban_unban_log_save("[key_name(usr)] has permabanned [key_name(M)]. - Reason: [reason] - This is a permanent ban.")
+				ban_unban_log_save("TYPE: Permaban|DATE: [time2text(world.realtime,"DD-MMM-YYYY hh:mm")]|BANNER: [key_name(usr)]|BANNEE: [key_name(M)]|REASON: [reason];;")
 				log_admin_private("[key_name(usr)] has banned [key_name(M)].\nReason: [reason]\nThis is a permanent ban.")
 				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis is a permanent ban.</span>"
 				message_admins(msg)

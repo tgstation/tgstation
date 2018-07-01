@@ -362,7 +362,7 @@ SUBSYSTEM_DEF(job)
 		var/allowed_to_be_a_loser = !jobban_isbanned(player, SSjob.overflow_role)
 		if(QDELETED(player) || !allowed_to_be_a_loser)
 			RejectPlayer(player)
-		else 
+		else
 			if(!AssignRole(player, SSjob.overflow_role))
 				RejectPlayer(player)
 	else if(player.client.prefs.joblessrole == BERANDOMJOB)
@@ -431,6 +431,8 @@ SUBSYSTEM_DEF(job)
 		to_chat(M, "<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>")
 		if(job.req_admin_notify)
 			to_chat(M, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
+		if(job.req_space_law)
+			to_chat(M, "<b>You are playing a job that must follow Space Law.</b>")
 		if(CONFIG_GET(number/minimal_access_threshold))
 			to_chat(M, "<FONT color='blue'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>")
 
