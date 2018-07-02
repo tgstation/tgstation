@@ -73,7 +73,7 @@
 		to_chat(user, "You can <a href='?src=[REF(src)];ghostscan=1'>scan</a> this circuit.");
 
 /obj/item/electronic_assembly/proc/check_interactivity(mob/user)
-	return user.canUseTopic(src, BE_CLOSE)
+	return istype(user, /mob/living/carbon) && user.canUseTopic(src, BE_CLOSE)
 
 /obj/item/electronic_assembly/Collide(atom/AM)
 	collw = AM
