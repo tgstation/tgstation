@@ -1,0 +1,6 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - code_imp: "Fixed the signatures of several reagent procs, removing useless checks"
+  - tweak: "drunkenness is now handled at the carbon level, allowing monkeys to experience ethanol"
+  - balance: "initropidil also works on carbon level, allowing syndicate operatives using the poison kit to achieve the silent assassin rating against monkeys"
