@@ -153,6 +153,17 @@
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY "human_melee_unarmed_attackby"		//from mob/living/carbon/human/UnarmedAttack(): (mob/living/carbon/human/attacker)
 #define COMSIG_HUMAN_DISARM_HIT	"human_disarm_hit"	//Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
 
+// /datum/projectile_generator AND /obj/item/projectile signals
+#define COMSIG_PROJECTILE_RANGE "projectile_range"								//Directly signalled from /obj/item/projectile/Range(): (obj/item/projectile/P)
+#define COMSIG_PROJECTILE_ON_RANGE "projectile_on_range"						//Directly signalled from /obj/item/projectile/on_range(): (obj/item/projectile/P)
+#define COMSIG_PROJECTILE_PREHIT "projectile_prehit"							//Directly signalled from /obj/item/projectile/prehit(): (obj/item/projectile/P, atom/target)
+	#define PROJECTILE_NO_PREHIT 1
+#define COMSIG_PROJECTILE_REGISTER "projectile_new"								//from datum/projectile_generator/register_projectile(): (obj/item/projectile/P)
+#define COMSIG_PROJECTILE_UNREGISTER "projectile_delete"						//from datum/projectile_generator/deregister_projectile(): (obj/item/projectile/P)
+#define COMSIG_PROJECTILE_FIRE "projectile_fire"								//Directly signalled from /obj/item/projectile/fire(): (obj/item/projectile/P, angle, atom/direct_target)
+#define COMSIG_PROJECTILE_COLLIDE "projectile_collide"							//Directly signalled from /obj/item/projectile/Collide(): (obj/item/projectile/P, atom/A, successful_collision, datum/point/cached_position)
+#define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"							//Directly signalled from /obj/item/projectile/on_hit(): (obj/item/projectile/P, atom/A, blocked)
+
 /*******Component Specific Signals*******/
 //Janitor
 #define COMSIG_TURF_IS_WET "check_turf_wet"							//(): Returns bitflags of wet values.

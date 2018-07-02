@@ -14,6 +14,8 @@
 	hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
 
+	var/datum/projectile_generator/source			//if any
+
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
@@ -90,17 +92,26 @@
 	var/impact_effect_type //what type of impact effect to show when hitting something
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
 
-/obj/item/projectile/Initialize()
+/obj/item/projectile/Initialize(mapload, datum/projectile_generator/source)
 	. = ..()
+	if(source)
+		source.register_projectile(src)
+		source = source
 	permutated = list()
 	decayedRange = range
 
 /obj/item/projectile/proc/Range()
+	if(source)
+		SEND_SIGNAL(source, COMSIG_PROJECTILE_RANGE, src)
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_RANGE, src)
 	range--
 	if(range <= 0 && loc)
 		on_range()
 
 /obj/item/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
+	if(source)
+		SEND_SIGNAL(source, COMSIG_PROJECTILE_ON_RANGE, src)
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_ON_RANGE, src)
 	qdel(src)
 
 //to get the correct limb (if any) for the projectile hit message
@@ -115,9 +126,12 @@
 		return BODY_ZONE_CHEST
 
 /obj/item/projectile/proc/prehit(atom/target)
+	if(source)
+		if((SEND_SIGNAL(source, COMSIG_PROJECTILE_PREHIT, src, target) | SEND_SIGNAL(src, COMSIG_PROJECTILE_PREHIT, src, target)) & PROJECTILE_NO_PREHIT)
+			return FALSE
 	return TRUE
 
-/obj/item/projectile/proc/on_hit(atom/target, blocked = FALSE)
+/obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
 	var/turf/target_loca = get_turf(target)
 
 	var/hitx
@@ -128,6 +142,10 @@
 	else
 		hitx = target.pixel_x + rand(-8, 8)
 		hity = target.pixel_y + rand(-8, 8)
+
+	if(source)			//and here we trust whatever we hit to call on_hit properly!
+		SEND_SIGNAL(source, COMSIG_PROJECTILE_ON_HIT, src, target, blocked)
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_ON_HIT, src, target, blocked)
 
 	if(!nodamage && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_loca) && prob(75))
 		var/turf/closed/wall/W = target_loca
@@ -200,6 +218,12 @@
 
 /obj/item/projectile/Collide(atom/A)
 	var/datum/point/pcache = trajectory.copy_to()
+	. = OnCollide(A, pcache)
+	if(source)
+		SEND_SIGNAL(source, COMSIG_PROJECTILE_COLLIDE, src, A, ., pcache)
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_COLLIDE, src, A, ., pcache)
+
+/obj/item/projectile/proc/OnCollide(atom/A, datum/point/pcache)
 	if(check_ricochet(A) && check_ricochet_flag(A) && ricochets < ricochets_max)
 		ricochets++
 		if(A.handle_ricochet(src))
@@ -354,6 +378,9 @@
 	trajectory = new(starting.x, starting.y, starting.z, pixel_x, pixel_y, Angle, pixel_speed)
 	last_projectile_move = world.time
 	fired = TRUE
+	if(source)
+		SEND_SIGNAL(source, COMSIG_PROJECTILE_FIRE, src, angle, direct_target)
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_FIRE, src, angle, direct_target)
 	if(hitscan)
 		process_hitscan()
 	if(!(datum_flags & DF_ISPROCESSING))
@@ -543,6 +570,9 @@
 	STOP_PROCESSING(SSprojectiles, src)
 	cleanup_beam_segments()
 	qdel(trajectory)
+	if(source)
+		source.deregister_projectile(src)
+		source = null
 	return ..()
 
 /obj/item/projectile/proc/cleanup_beam_segments()

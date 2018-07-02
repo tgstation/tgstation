@@ -283,10 +283,10 @@
 	range = 8
 	hitsound = 'sound/weapons/thudswoosh.ogg'
 	var/chain
-	var/obj/item/ammo_casing/magic/tentacle/source //the item that shot it
+	var/obj/item/ammo_casing/magic/tentacle/tentacle_source //the item that shot it
 
 /obj/item/projectile/tentacle/Initialize()
-	source = loc
+	tentacle_source = loc
 	. = ..()
 
 /obj/item/projectile/tentacle/fire(setAngle)
@@ -316,7 +316,7 @@
 
 /obj/item/projectile/tentacle/on_hit(atom/target, blocked = FALSE)
 	var/mob/living/carbon/human/H = firer
-	H.dropItemToGround(source.gun, TRUE) //Unequip thus delete the tentacle on hit
+	H.dropItemToGround(tentacle_source.gun, TRUE) //Unequip thus delete the tentacle on hit
 	if(blocked >= 100)
 		return 0
 	if(isitem(target))
@@ -368,7 +368,7 @@
 
 /obj/item/projectile/tentacle/Destroy()
 	qdel(chain)
-	source = null
+	tentacle_source = null
 	return ..()
 
 
