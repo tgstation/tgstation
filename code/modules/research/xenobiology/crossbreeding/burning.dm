@@ -155,7 +155,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/sepia/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] shapes itself into a camera!</span>")
-	new /obj/item/device/camera/timefreeze(get_turf(user))
+	new /obj/item/camera/timefreeze(get_turf(user))
 	..()
 
 /obj/item/slimecross/burning/cerulean
@@ -256,7 +256,7 @@ Burning extracts:
 	var/mob/living/L = user
 	if(!istype(L))
 		return
-	user.visible_message("<span class='danger'>[src] absorbs [user], transforming them into a slime!</span>")
+	user.visible_message("<span class='danger'>[src] absorbs [user], transforming [user.p_them()] into a slime!</span>")
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/slimeform/S = new()
 	S.remove_on_restore = TRUE
 	user.mind.AddSpell(S)
@@ -290,13 +290,13 @@ Burning extracts:
 
 //Misc. things added
 
-/obj/item/device/camera/timefreeze
+/obj/item/camera/timefreeze
 	name = "sepia-tinted camera"
 	desc = "They say a picture is like a moment stopped in time."
 	pictures_left = 1
 	pictures_max = 1
 
-/obj/item/device/camera/timefreeze/afterattack(atom/target, mob/user, flag)
+/obj/item/camera/timefreeze/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || !isturf(target.loc))
 		return
 	new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
@@ -386,13 +386,13 @@ Burning extracts:
 	item_state = "adamshield"
 	w_class = WEIGHT_CLASS_HUGE
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	block_chance = 75
 	throw_range = 1 //How far do you think you're gonna throw a solid crystalline shield...?
 	throw_speed = 2
 	force = 15 //Heavy, but hard to wield.
 	attack_verb = list("bashed","pounded","slammed")
-	flags_2 = SLOWS_WHILE_IN_HAND_2
+	item_flags = SLOWS_WHILE_IN_HAND
 
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/slimeform

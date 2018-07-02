@@ -225,7 +225,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] secures the power cell.", "<span class='notice'>You secure the power cell.</span>")
 			else
-				user.visible_message("[user] prys the power cell from [parent].", "<span class='notice'>You pry the power cell from [parent].</span>")
+				user.visible_message("[user] pries the power cell from [parent].", "<span class='notice'>You pry the power cell from [parent].</span>")
 		if(11)
 			if(diff==FORWARD)
 				user.visible_message("[user] installs the internal armor layer to [parent].", "<span class='notice'>You install the internal armor layer to [parent].</span>")
@@ -364,6 +364,7 @@
 		//13
 		list(
 			"key" = /obj/item/stock_parts/capacitor,
+			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "Advanced scanner module is secured."
 		),
@@ -520,7 +521,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] secures the power cell.", "<span class='notice'>You secure the power cell.</span>")
 			else
-				user.visible_message("[user] prys the power cell from [parent].", "<span class='notice'>You pry the power cell from [parent].</span>")
+				user.visible_message("[user] pries the power cell from [parent].", "<span class='notice'>You pry the power cell from [parent].</span>")
 		if(17)
 			if(diff==FORWARD)
 				user.visible_message("[user] installs the internal armor layer to [parent].", "<span class='notice'>You install the internal armor layer to [parent].</span>")
@@ -746,7 +747,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] secures the power cell.", "<span class='notice'>You secure the power cell.</span>")
 			else
-				user.visible_message("[user] prys the power cell from [parent].", "<span class='notice'>You pry the power cell from [parent].</span>")
+				user.visible_message("[user] pries the power cell from [parent].", "<span class='notice'>You pry the power cell from [parent].</span>")
 		if(11)
 			if(diff==FORWARD)
 				user.visible_message("[user] installs the internal armor layer to [parent].", "<span class='notice'>You install the internal armor layer to [parent].</span>")
@@ -1163,7 +1164,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] secures the power cell.", "<span class='notice'>You secure the power cell.</span>")
 			else
-				user.visible_message("[user] prys the power cell from [parent].", "<span class='notice'>You pry the power cell from [parent].</span>")
+				user.visible_message("[user] pries the power cell from [parent].", "<span class='notice'>You pry the power cell from [parent].</span>")
 		if(17)
 			if(diff==FORWARD)
 				user.visible_message("[user] installs the internal armor layer to [parent].", "<span class='notice'>You install the internal armor layer to [parent].</span>")
@@ -1408,7 +1409,7 @@
 
 		//26
 		list(
-			"key" = /obj/item/device/assembly/signaler/anomaly,
+			"key" = /obj/item/assembly/signaler/anomaly,
 			"action" = ITEM_DELETE,
 			"back_key" = TOOL_WELDER,
 			"desc" = "Anomaly core socket is open.",
@@ -1514,7 +1515,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] secures the power cell.", "<span class='notice'>You secure the power cell.</span>")
 			else
-				user.visible_message("[user] prys the power cell from [parent].", "<span class='notice'>You pry the power cell from [parent].</span>")
+				user.visible_message("[user] pries the power cell from [parent].", "<span class='notice'>You pry the power cell from [parent].</span>")
 		if(20)
 			if(diff==FORWARD)
 				user.visible_message("[user] installs the phase armor layer to [parent].", "<span class='notice'>You install the phase armor layer to [parent].</span>")
@@ -1738,7 +1739,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] secures the power cell.", "<span class='notice'>You secure the power cell.</span>")
 			else
-				user.visible_message("[user] prys the power cell from [parent].", "<span class='notice'>You pry the power cell from [parent].</span>")
+				user.visible_message("[user] pries the power cell from [parent].", "<span class='notice'>You pry the power cell from [parent].</span>")
 		if(11)
 			if(diff==FORWARD)
 				user.visible_message("[user] installs the internal armor layer to [parent].", "<span class='notice'>You install the internal armor layer to [parent].</span>")

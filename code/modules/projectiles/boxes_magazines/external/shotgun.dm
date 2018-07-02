@@ -1,8 +1,8 @@
 /obj/item/ammo_box/magazine/m12g
-	name = "shotgun magazine (12g taser slugs)"
+	name = "shotgun magazine (12g buckshot slugs)"
 	desc = "A drum magazine."
-	icon_state = "m12gs"
-	ammo_type = /obj/item/ammo_casing/shotgun/stunslug
+	icon_state = "m12gb"
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 	caliber = "shotgun"
 	max_ammo = 8
 
@@ -10,14 +10,14 @@
 	..()
 	icon_state = "[initial(icon_state)]-[CEILING(ammo_count(0)/8, 1)*8]"
 
-/obj/item/ammo_box/magazine/m12g/buckshot
-	name = "shotgun magazine (12g buckshot slugs)"
-	icon_state = "m12gb"
-	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
+/obj/item/ammo_box/magazine/m12g/stun
+	name = "shotgun magazine (12g taser slugs)"
+	icon_state = "m12gs"
+	ammo_type = /obj/item/ammo_casing/shotgun/stunslug
 
 /obj/item/ammo_box/magazine/m12g/slug
 	name = "shotgun magazine (12g slugs)"
-	icon_state = "m12gb"
+	icon_state = "m12gb"    //this may need an unique sprite
 	ammo_type = /obj/item/ammo_casing/shotgun
 
 /obj/item/ammo_box/magazine/m12g/dragon

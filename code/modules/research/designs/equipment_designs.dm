@@ -14,7 +14,7 @@
 	desc = "An advanced back-worn system that has dual ion engines powerful enough to grant a humanoid flight. Contains an internal self-recharging high-current capacitor for short, powerful boosts."
 	id = "flightpack"
 	build_type = PROTOLATHE
-	build_path = /obj/item/device/flightpack
+	build_path = /obj/item/flightpack
 	materials = list(MAT_METAL=16000, MAT_GLASS = 8000, MAT_DIAMOND = 4000, MAT_GOLD = 12000, MAT_SILVER = 12000, MAT_URANIUM = 20000, MAT_PLASMA = 16000, MAT_TITANIUM = 16000)	//This expensive enough for you?
 	construction_time = 250
 	category = list("Misc")

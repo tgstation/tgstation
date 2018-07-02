@@ -1,5 +1,5 @@
 ////Deactivated swarmer shell////
-/obj/item/device/deactivated_swarmer
+/obj/item/deactivated_swarmer
 	name = "deactivated swarmer"
 	desc = "A shell of swarmer that was completely powered down. It can no longer activate itself."
 	icon = 'icons/mob/swarmer.dmi'
@@ -45,7 +45,7 @@
 		user.visible_message("<span class='warning'>[usr.name] deactivates [src].</span>",
 			"<span class='notice'>After some fiddling, you find a way to disable [src]'s power source.</span>",
 			"<span class='italics'>You hear clicking.</span>")
-		new /obj/item/device/deactivated_swarmer(get_turf(src))
+		new /obj/item/deactivated_swarmer(get_turf(src))
 		qdel(src)
 	else
 		..()
@@ -60,6 +60,7 @@
 	speak_emote = list("tones")
 	initial_language_holder = /datum/language_holder/swarmer
 	bubble_icon = "swarmer"
+	mob_biotypes = list(MOB_ROBOTIC)
 	health = 40
 	maxHealth = 40
 	status_flags = CANPUSH
@@ -127,6 +128,9 @@
 	return ..() | SPAN_ROBOT
 
 /mob/living/simple_animal/hostile/swarmer/emp_act()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	if(health > 1)
 		adjustHealth(health-1)
 	else
@@ -301,10 +305,6 @@
 	to_chat(S, "<span class='warning'>This device's destruction would result in the extermination of everything in the area. Aborting.</span>")
 	return FALSE
 
-/obj/machinery/dominator/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>This device is attempting to corrupt our entire network; attempting to interact with it is too risky. Aborting.</span>")
-	return FALSE
-
 /obj/effect/rune/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	to_chat(S, "<span class='warning'>Searching... sensor malfunction! Target lost. Aborting.</span>")
 	return FALSE
@@ -373,6 +373,10 @@
 	to_chat(S, "<span class='warning'>Attempting to dismantle this machine would result in an immediate counterattack. Aborting.</span>")
 	return FALSE
 
+/obj/machinery/porta_turret_cover/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>Attempting to dismantle this machine would result in an immediate counterattack. Aborting.</span>")
+	return FALSE
+
 /mob/living/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	S.DisperseTarget(src)
 	return TRUE
@@ -398,11 +402,15 @@
 			to_chat(S, "<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>")
 			return FALSE
 
-/obj/item/device/deactivated_swarmer/IntegrateAmount()
+/obj/item/deactivated_swarmer/IntegrateAmount()
 	return 50
 
 /obj/machinery/hydroponics/soil/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	to_chat(S, "<span class='warning'>This object does not contain enough materials to work with.</span>")
+	return FALSE
+
+/obj/machinery/field/generator/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>Destroying this object would cause a catastrophic chain reaction. Aborting.</span>")
 	return FALSE
 
 ////END CTRL CLICK FOR SWARMERS////
@@ -496,10 +504,10 @@
 	D.pixel_z = target.pixel_z
 	if(do_mob(src, target, 100))
 		to_chat(src, "<span class='info'>Dismantling complete.</span>")
-		var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(target.loc)
-		M.amount = 5
+		var/atom/Tsec = target.drop_location()
+		new /obj/item/stack/sheet/metal(Tsec, 5)
 		for(var/obj/item/I in target.component_parts)
-			I.forceMove(M.drop_location())
+			I.forceMove(Tsec)
 		var/obj/effect/temp_visual/swarmer/disintegration/N = new /obj/effect/temp_visual/swarmer/disintegration(get_turf(target))
 		N.pixel_x = target.pixel_x
 		N.pixel_y = target.pixel_y
@@ -508,7 +516,7 @@
 		if(istype(target, /obj/machinery/computer))
 			var/obj/machinery/computer/C = target
 			if(C.circuit)
-				C.circuit.forceMove(M.drop_location())
+				C.circuit.forceMove(Tsec)
 		qdel(target)
 
 
@@ -557,6 +565,9 @@
 			playsound(src, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/swarmer/emp_act()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	qdel(src)
 
 /obj/structure/swarmer/trap

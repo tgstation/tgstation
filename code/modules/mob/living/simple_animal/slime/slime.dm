@@ -224,8 +224,10 @@
 	return 0
 
 /mob/living/simple_animal/slime/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	powerlevel = 0 // oh no, the power!
-	..()
 
 /mob/living/simple_animal/slime/MouseDrop(atom/movable/A as mob|obj)
 	if(isliving(A) && A != src && usr == src)
@@ -356,7 +358,7 @@
 		var/hasFound = FALSE //Have we found an extract to be added?
 		for(var/obj/item/slime_extract/S in P.contents)
 			if(S.effectmod == effectmod)
-				P.remove_from_storage(S, get_turf(src))
+				SEND_SIGNAL(P, COMSIG_TRY_STORAGE_TAKE, S, get_turf(src), TRUE)
 				qdel(S)
 				applied++
 				hasFound = TRUE

@@ -85,7 +85,9 @@
 	return answer
 
 /obj/item/mecha_parts/mecha_tracking/emp_act()
-	qdel(src)
+	. = ..()
+	if(!(. & EMP_PROTECT_SELF))
+		qdel(src)
 
 /obj/item/mecha_parts/mecha_tracking/Destroy()
 	if(ismecha(loc))

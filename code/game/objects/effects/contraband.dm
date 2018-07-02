@@ -31,7 +31,7 @@
 	poster_structure = null
 	. = ..()
 
-// These icon_states may be overriden, but are for mapper's convinence
+// These icon_states may be overridden, but are for mapper's convinence
 /obj/item/poster/random_contraband
 	name = "random contraband poster"
 	poster_type = /obj/structure/sign/poster/contraband/random
@@ -127,7 +127,7 @@
 
 	// Deny placing posters on currently-diagonal walls, although the wall may change in the future.
 	if (smooth & SMOOTH_DIAGONAL)
-		for (var/O in our_overlays)
+		for (var/O in overlays)
 			var/image/I = O
 			if (copytext(I.icon_state, 1, 3) == "d-")
 				return
@@ -547,7 +547,7 @@
 
 /obj/structure/sign/poster/official/anniversary_vintage_reprint
 	name = "50th Anniversary Vintage Reprint"
-	desc = "A reprint of a poster from 2505, commemorating the 50th Aniversery of Nanoposters Manufacturing, a subsidary of Nanotrasen."
+	desc = "A reprint of a poster from 2505, commemorating the 50th Anniversary of Nanoposters Manufacturing, a subsidiary of Nanotrasen."
 	icon_state = "poster26_legit"
 
 /obj/structure/sign/poster/official/fruit_bowl

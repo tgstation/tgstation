@@ -5,7 +5,7 @@
 	var/date
 
 /datum/getrev/New()
-	testmerge = SERVER_TOOLS_PR_LIST
+	testmerge = world.TgsTestMerges()
 	log_world("Running /tg/ revision:")
 	var/list/logs = world.file2list(".git/logs/HEAD")
 	if(logs)
@@ -21,9 +21,10 @@
 		log_world(commit)
 		for(var/line in testmerge)
 			if(line)
-				var/tmcommit = testmerge[line]["commit"]
-				log_world("Test merge active of PR #[line] commit [tmcommit]")
-				SSblackbox.record_feedback("nested tally", "testmerged_prs", 1, list("[line]", "[tmcommit]"))
+				var/datum/tgs_revision_information/test_merge/tm = line
+				var/tmcommit = tm.commit
+				log_world("Test merge active of PR #[tm.number] commit [tmcommit]")
+				SSblackbox.record_feedback("nested tally", "testmerged_prs", 1, list("[tm.number]", "[tmcommit]"))
 		if(originmastercommit)
 			log_world("Based off origin/master commit [originmastercommit]")
 	else if(originmastercommit)
@@ -34,11 +35,12 @@
 		return ""
 	. = header ? "The following pull requests are currently test merged:<br>" : ""
 	for(var/line in testmerge)
-		var/cm = testmerge[line]["commit"]
-		var/details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["author"]) + " at commit " + html_encode(copytext(cm, 1, min(length(cm), 7)))
+		var/datum/tgs_revision_information/test_merge/tm = line
+		var/cm = tm.pull_request_commit
+		var/details = ": '" + html_encode(tm.title) + "' by " + html_encode(tm.author) + " at commit " + html_encode(copytext(cm, 1, min(length(cm), 11)))
 		if(details && findtext(details, "\[s\]") && (!usr || !usr.client.holder))
 			continue
-		. += "<a href=\"[CONFIG_GET(string/githuburl)]/pull/[line]\">#[line][details]</a><br>"
+		. += "<a href=\"[CONFIG_GET(string/githuburl)]/pull/[tm.number]\">#[tm.number][details]</a><br>"
 
 /client/verb/showrevinfo()
 	set category = "OOC"
@@ -54,13 +56,12 @@
 			to_chat(src, GLOB.revdata.GetTestMergeInfo())
 			prefix = "Based off origin/master commit: "
 		var/pc = GLOB.revdata.originmastercommit
-		to_chat(src, "[prefix]<a href=\"[CONFIG_GET(string/githuburl)]/commit/[pc]\">[copytext(pc, 1, min(length(pc), 7))]</a>")
+		to_chat(src, "[prefix]<a href=\"[CONFIG_GET(string/githuburl)]/commit/[pc]\">[copytext(pc, 1, min(length(pc), 11))]</a>")
 	else
 		to_chat(src, "Master revision unknown")
 	to_chat(src, "Revision: [GLOB.revdata.commit]")
-	if(SERVER_TOOLS_PRESENT)
-		to_chat(src, "Server tools version: [SERVER_TOOLS_VERSION]")
-		to_chat(src, "Server tools API version: [SERVER_TOOLS_API_VERSION]")
+	if(world.TgsAvailable())
+		to_chat(src, "Server tools version: [world.TgsVersion()]")
 	to_chat(src, "<b>Current Informational Settings:</b>")
 	to_chat(src, "Protect Authority Roles From Traitor: [CONFIG_GET(flag/protect_roles_from_antagonist)]")
 	to_chat(src, "Protect Assistant Role From Traitor: [CONFIG_GET(flag/protect_assistant_from_antagonist)]")

@@ -54,7 +54,6 @@
 
 
 /obj/structure/reflector/setDir(new_dir)
-	setAngle(dir_map_to_angle(new_dir))
 	return ..(NORTH)
 
 /obj/structure/reflector/proc/dir_map_to_angle(dir)
@@ -196,11 +195,10 @@
 	anchored = TRUE
 
 /obj/structure/reflector/single/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
-	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, P.Angle)
-	var/norm_inc = WRAP(incidence, -90, 90)
-	var/new_angle = WRAP(rotation_angle + norm_inc, 180, -180)
-	if(ISINRANGE_EX(norm_inc, -90, 90))
+	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, (P.Angle + 180))
+	if(abs(incidence) > 90 && abs(incidence) < 270)
 		return FALSE
+	var/new_angle = SIMPLIFY_DEGREES(rotation_angle + incidence)
 	P.setAngle(new_angle)
 	return ..()
 
@@ -223,11 +221,8 @@
 	anchored = TRUE
 
 /obj/structure/reflector/double/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
-	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, P.Angle)
-	var/norm_inc = WRAP(incidence, -90, 90)
-	var/new_angle = WRAP(rotation_angle + norm_inc, 180, -180)
-	if(ISINRANGE_EX(norm_inc, -90, 90))
-		new_angle += 180
+	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, (P.Angle + 180))
+	var/new_angle = SIMPLIFY_DEGREES(rotation_angle + incidence)
 	P.setAngle(new_angle)
 	return ..()
 

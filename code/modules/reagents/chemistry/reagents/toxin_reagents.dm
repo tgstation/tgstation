@@ -50,7 +50,7 @@
 
 /datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/M)
 	if(istype(M))
-		M.apply_effect(5,IRRADIATE,0)
+		M.apply_effect(5,EFFECT_IRRADIATE,0)
 	return ..()
 
 /datum/reagent/toxin/plasma
@@ -58,6 +58,7 @@
 	id = "plasma"
 	description = "Plasma in its liquid form."
 	taste_description = "bitterness"
+	specific_heat = SPECIFIC_HEAT_PLASMA
 	taste_mult = 1.5
 	color = "#8228A0"
 	toxpwr = 3
@@ -188,7 +189,7 @@
 	taste_description = "sourness"
 
 /datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/M)
-	M.hallucination += 10
+	M.hallucination += 5
 	return ..()
 
 /datum/reagent/toxin/plantbgone
@@ -231,12 +232,10 @@
 	toxpwr = 1
 
 /datum/reagent/toxin/pestkiller/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method == VAPOR)
-		if(iscarbon(M))
-			var/mob/living/carbon/C = M
-			if(!C.wear_mask) // If not wearing a mask
-				var/damage = min(round(0.4*reac_volume, 0.1),10)
-				C.adjustToxLoss(damage)
+	..()
+	if(MOB_BUG in M.mob_biotypes)
+		var/damage = min(round(0.4*reac_volume, 0.1),10)
+		M.adjustToxLoss(damage)
 
 /datum/reagent/toxin/spore
 	name = "Spore Toxin"
@@ -628,16 +627,16 @@
 /datum/reagent/toxin/lipolicide
 	name = "Lipolicide"
 	id = "lipolicide"
-	description = "A powerful toxin that will destroy fat cells, massively reducing body weight in a short time. More deadly to those without nutriment in their body."
+	description = "A powerful toxin that will destroy fat cells, massively reducing body weight in a short time. Deadly to those without nutriment in their body."
 	taste_description = "mothballs"
 	reagent_state = LIQUID
 	color = "#F0FFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	toxpwr = 0.5
+	toxpwr = 0
 
 /datum/reagent/toxin/lipolicide/on_mob_life(mob/living/M)
 	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
-		M.adjustToxLoss(0.5*REM, 0)
+		M.adjustToxLoss(1*REM, 0)
 	M.nutrition = max(M.nutrition - 3, 0) // making the chef more valuable, one meme trap at a time
 	M.overeatduration = 0
 	return ..()
@@ -730,7 +729,7 @@
 /datum/reagent/toxin/rotatium/on_mob_life(mob/living/M)
 	if(M.hud_used)
 		if(current_cycle >= 20 && current_cycle%20 == 0)
-			var/list/screens = list(M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
+			var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
 			var/rotation = min(round(current_cycle/20), 89) // By this point the player is probably puking and quitting anyway
 			for(var/whole_screen in screens)
 				animate(whole_screen, transform = matrix(rotation, MATRIX_ROTATE), time = 5, easing = QUAD_EASING, loop = -1)
@@ -739,7 +738,7 @@
 
 /datum/reagent/toxin/rotatium/on_mob_delete(mob/living/M)
 	if(M && M.hud_used)
-		var/list/screens = list(M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
+		var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
 		for(var/whole_screen in screens)
 			animate(whole_screen, transform = matrix(), time = 5, easing = QUAD_EASING)
 	..()
@@ -757,7 +756,7 @@
 /datum/reagent/toxin/skewium/on_mob_life(mob/living/M)
 	if(M.hud_used)
 		if(current_cycle >= 5 && current_cycle % 3 == 0)
-			var/list/screens = list(M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
+			var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
 			var/matrix/skew = matrix()
 			var/intensity = 8
 			skew.set_skew(rand(-intensity,intensity), rand(-intensity,intensity))
@@ -774,7 +773,7 @@
 
 /datum/reagent/toxin/skewium/on_mob_delete(mob/living/M)
 	if(M && M.hud_used)
-		var/list/screens = list(M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
+		var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
 		for(var/whole_screen in screens)
 			animate(whole_screen, transform = matrix(), time = 5, easing = QUAD_EASING)
 	..()
@@ -845,39 +844,6 @@
 /datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/M)
 	M.adjustFireLoss(current_cycle/10, 0)
 	. = 1
-	..()
-
-/datum/reagent/toxin/peaceborg/confuse
-	name = "Dizzying Solution"
-	id = "dizzysolution"
-	description = "Makes the target off balance and dizzy"
-	toxpwr = 0
-	metabolization_rate = 1.5 * REAGENTS_METABOLISM
-	taste_description = "dizziness"
-
-/datum/reagent/toxin/peaceborg/confuse/on_mob_life(mob/living/M)
-	if(M.confused < 6)
-		M.confused = CLAMP(M.confused + 3, 0, 5)
-	if(M.dizziness < 6)
-		M.dizziness = CLAMP(M.dizziness + 3, 0, 5)
-	if(prob(20))
-		to_chat(M, "You feel confused and disorientated.")
-	..()
-
-/datum/reagent/toxin/peaceborg/tire
-	name = "Tiring Solution"
-	id = "tiresolution"
-	description = "An extremely weak stamina-toxin that tires out the target. Completely harmless."
-	toxpwr = 0
-	metabolization_rate = 1.5 * REAGENTS_METABOLISM
-	taste_description = "tiredness"
-
-/datum/reagent/toxin/peaceborg/tire/on_mob_life(mob/living/M)
-	var/healthcomp = (100 - M.health)	//DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
-	if(M.getStaminaLoss() < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
-		M.adjustStaminaLoss(10)
-	if(prob(30))
-		to_chat(M, "You should sit down and take a rest...")
 	..()
 
 /datum/reagent/toxin/delayed

@@ -22,10 +22,10 @@
 
 		if(!marked_item) //linking item to the spell
 			message = "<span class='notice'>"
-			for(var/obj/item in hand_items)
-				if(item.flags_1 & ABSTRACT_1)
+			for(var/obj/item/item in hand_items)
+				if(item.item_flags & ABSTRACT)
 					continue
-				if(item.flags_1 & NODROP_1)
+				if(item.item_flags & NODROP)
 					message += "Though it feels redundant, "
 				marked_item = 		item
 				message += "You mark [item] for recall.</span>"
@@ -83,7 +83,7 @@
 									to_chat(C, "<span class='warning'>The [item_to_retrieve] that was embedded in your [L] has mysteriously vanished. How fortunate!</span>")
 									if(!C.has_embedded_objects())
 										C.clear_alert("embeddedobject")
-										C.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "embedded")
+										SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 									break
 
 					else

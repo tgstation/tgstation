@@ -98,6 +98,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/metal
 	grind_results = list("iron" = 20)
+	point_value = 2
 
 /obj/item/stack/sheet/metal/ratvar_act()
 	new /obj/item/stack/tile/brass(loc, amount)
@@ -113,6 +114,9 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 /obj/item/stack/sheet/metal/twenty
 	amount = 20
 
+/obj/item/stack/sheet/metal/ten
+	amount = 10
+
 /obj/item/stack/sheet/metal/five
 	amount = 5
 
@@ -126,7 +130,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	return ..()
 
 /obj/item/stack/sheet/metal/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins whacking themselves over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] begins whacking [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
 /*
@@ -155,6 +159,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/plasteel
 	grind_results = list("iron" = 20, "plasma" = 20)
+	point_value = 23
 
 /obj/item/stack/sheet/plasteel/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.plasteel_recipes
@@ -179,7 +184,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("winged wooden chair", /obj/structure/chair/wood/wings, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("wooden barricade", /obj/structure/barricade/wooden, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("coffin", /obj/structure/closet/coffin, 5, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("coffin", /obj/structure/closet/crate/coffin, 5, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("book case", /obj/structure/bookcase, 4, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("drying rack", /obj/machinery/smartfridge/drying_rack, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("dog bed", /obj/structure/bed/dogbed, 10, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
@@ -341,6 +346,11 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 	if(!iscultist(user))
 		to_chat(user, "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>")
 		return
+	var/turf/T = get_turf(user) //we may have moved. adjust as needed...
+	var/area/A = get_area(user)
+	if((!is_station_level(T.z) && !is_mining_level(T.z)) || (A && !A.blob_allowed))
+		to_chat(user, "<span class='warning'>The veil is not weak enough here.</span>")
+		return FALSE
 	return ..()
 
 /obj/item/stack/sheet/runed_metal/Initialize(mapload, new_amount, merge = TRUE)

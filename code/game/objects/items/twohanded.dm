@@ -41,7 +41,7 @@
 	else //something wrong
 		name = "[initial(name)]"
 	update_icon()
-	if(user.get_item_by_slot(slot_back) == src)
+	if(user.get_item_by_slot(SLOT_BACK) == src)
 		user.update_inv_back()
 	else
 		user.update_inv_hands()
@@ -121,7 +121,7 @@
 	name = "offhand"
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 = ABSTRACT_1
+	item_flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/item/twohanded/offhand/Destroy()
@@ -191,7 +191,7 @@
 			return
 		qdel(O)
 		return
-	if(slot == slot_hands)
+	if(slot == SLOT_HANDS)
 		wield(user)
 	else
 		unwield(user)
@@ -224,7 +224,7 @@
 	force = 5
 	throwforce = 15
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	force_unwielded = 5
 	force_wielded = 24
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
@@ -236,7 +236,7 @@
 
 /obj/item/twohanded/fireaxe/Initialize()
 	. = ..()
-	AddComponent(/datum/component/butchering, 100, 80, hitsound) //axes are not known for being precision butchering tools
+	AddComponent(/datum/component/butchering, 100, 80, 0 , hitsound) //axes are not known for being precision butchering tools
 
 /obj/item/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
@@ -338,7 +338,7 @@
 		icon_state = "dualsaber[item_color][wielded]"
 	else
 		icon_state = "dualsaber0"
-	SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /obj/item/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
@@ -417,9 +417,9 @@
 	var/in_mouth = ""
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		if(C.wear_mask == src)
-			in_mouth = ", barely missing their nose"
-	. = "<span class='warning'>[user] swings [user.p_their()] [src][in_mouth]. [user.p_they()] light[user.p_s()] [A] in the process.</span>"
+		if(C.wear_mask)
+			in_mouth = ", barely missing [user.p_their()] nose"
+	. = "<span class='warning'>[user] swings [user.p_their()] [name][in_mouth]. [user.p_they(TRUE)] light[user.p_s()] [user.p_their()] [A.name] in the process.</span>"
 	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 	add_fingerprint(user)
 	// Light your candles while spinning around the room
@@ -438,7 +438,7 @@
 	possible_colors = list("purple")
 
 /obj/item/twohanded/dualsaber/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
+	if(istype(W, /obj/item/multitool))
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user, "<span class='warning'>2XRNBW_ENGAGE</span>")
@@ -458,7 +458,7 @@
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	force = 10
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	force_unwielded = 10
 	force_wielded = 18
 	throwforce = 20
@@ -744,7 +744,7 @@
 	sharpness = IS_SHARP
 	attack_verb = list("cut", "sliced", "diced")
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/twohanded/vibro_weapon/Initialize()
@@ -791,7 +791,7 @@
 	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
 	force = 11
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	force_unwielded = 11
 	force_wielded = 20					//I have no idea how to balance
 	throwforce = 22

@@ -10,7 +10,7 @@
 	var/list/arguments = args.Copy(2)
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
 		qdel(src, TRUE, TRUE)
-		CRASH("Incompatible [type] assigned to a [P]!")
+		CRASH("Incompatible [type] assigned to a [P.type]!")
 
 	_JoinParent(P)
 
@@ -56,8 +56,9 @@
 	if(!force)
 		_RemoveFromParent()
 	if(!silent)
-		P.SendSignal(COMSIG_COMPONENT_REMOVING, src)
+		SEND_SIGNAL(P, COMSIG_COMPONENT_REMOVING, src)
 	parent = null
+	SSdcs.UnregisterSignal(src, signal_procs)
 	LAZYCLEARLIST(signal_procs)
 	return ..()
 
@@ -85,34 +86,37 @@
 		procs = list()
 		signal_procs = procs
 
+	if(!istype(proc_or_callback, /datum/callback)) //if it wasnt a callback before, it is now
+		proc_or_callback = CALLBACK(src, proc_or_callback)
+
 	var/list/sig_types = islist(sig_type_or_types) ? sig_type_or_types : list(sig_type_or_types)
 	for(var/sig_type in sig_types)
-		if(!override)
-			. = procs[sig_type]
-			if(.)
-				stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
+		if(!override && procs[sig_type])
+			stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
 
-		if(!istype(proc_or_callback, /datum/callback)) //if it wasnt a callback before, it is now
-			proc_or_callback = CALLBACK(src, proc_or_callback)
+		if(sig_type[1] == "!")
+			SSdcs.RegisterSignal(src, sig_type)
+		
 		procs[sig_type] = proc_or_callback
 
 	enabled = TRUE
 
+/datum/component/proc/HasSignal(sig_type)
+	return signal_procs[sig_type] != null
+
+/datum/component/proc/UnregisterSignal(sig_type_or_types)
+	signal_procs -= sig_type_or_types
+
 /datum/component/proc/InheritComponent(datum/component/C, i_am_original)
 	return
 
-/datum/component/proc/OnTransfer(datum/new_parent)
+/datum/component/proc/PreTransfer()
+	return
+
+/datum/component/proc/PostTransfer()
 	return
 
 /datum/component/proc/_GetInverseTypeList(our_type = type)
-	#if DM_VERSION >= 513
-	#warning 512 is definitely stable now, remove the old code
-	#endif
-
-	#if DM_VERSION < 512
-	//remove this when we use 512 full time
-	set invisibility = 101
-	#endif
 	//we can do this one simple trick
 	var/current_type = parent_type
 	. = list(our_type, current_type)
@@ -121,12 +125,8 @@
 		current_type = type2parent(current_type)
 		. += current_type
 
-/datum/proc/SendSignal(sigtype, ...)
-	var/list/comps = datum_components
-	if(!comps)
-		return NONE
-	var/list/arguments = args.Copy(2)
-	var/target = comps[/datum/component]
+/datum/proc/_SendSignal(sigtype, list/arguments)
+	var/target = datum_components[/datum/component]
 	if(!length(target))
 		var/datum/component/C = target
 		if(!C.enabled)
@@ -224,7 +224,7 @@
 		new_comp = new nt(arglist(args)) // Dupes are allowed, act like normal
 
 	if(!old_comp && !QDELETED(new_comp)) // Nothing related to duplicate components happened and the new component is healthy
-		SendSignal(COMSIG_COMPONENT_ADDED, new_comp)
+		SEND_SIGNAL(src, COMSIG_COMPONENT_ADDED, new_comp)
 		return new_comp
 	return old_comp
 
@@ -233,21 +233,26 @@
 	if(!.)
 		return AddComponent(arglist(args))
 
-/datum/proc/TakeComponent(datum/component/C)
-	if(!C)
+/datum/component/proc/RemoveComponent()
+	if(!parent)
 		return
-	var/datum/helicopter = C.parent
-	if(helicopter == src)
-		//if we're taking to the same thing no need for anything
+	var/datum/old_parent = parent
+	PreTransfer()
+	_RemoveFromParent()
+	SEND_SIGNAL(old_parent, COMSIG_COMPONENT_REMOVING, src)
+
+/datum/proc/TakeComponent(datum/component/target)
+	if(!target)
 		return
-	if(C.OnTransfer(src) == COMPONENT_INCOMPATIBLE)
-		qdel(C)
-		return
-	C._RemoveFromParent()
-	helicopter.SendSignal(COMSIG_COMPONENT_REMOVING, C)
-	C.parent = src
-	if(C == AddComponent(C))
-		C._JoinParent()
+	if(target.parent)
+		target.RemoveComponent()
+	target.parent = src
+	if(target.PostTransfer() == COMPONENT_INCOMPATIBLE)
+		var/c_type = target.type
+		qdel(target)
+		CRASH("Incompatible [c_type] transfer attempt to a [type]!")
+	if(target == AddComponent(target))
+		target._JoinParent()
 
 /datum/proc/TransferComponents(datum/target)
 	var/list/dc = datum_components

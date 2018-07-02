@@ -18,7 +18,7 @@
 		return
 	to_chat(user, "<span class='notice'>You attempt to sacrifice [L] by invoking the sacrificial ritual.</span>")
 	L.gib()
-	message_admins("[key_name_admin(user)] has sacrificed [key_name_admin(L)] on the sacrifical altar.")
+	message_admins("[ADMIN_LOOKUPFLW(user)] has sacrificed [key_name_admin(L)] on the sacrificial altar at [AREACOORD(src)].")
 
 /obj/structure/healingfountain
 	name = "healing fountain"

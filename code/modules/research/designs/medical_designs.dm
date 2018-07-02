@@ -9,7 +9,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
 	construction_time = 75
-	build_path = /obj/item/device/mmi
+	build_path = /obj/item/mmi
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
@@ -20,7 +20,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 1700, MAT_GLASS = 1350, MAT_GOLD = 500) //Gold, because SWAG.
 	construction_time = 75
-	build_path = /obj/item/device/mmi/posibrain
+	build_path = /obj/item/mmi/posibrain
 	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
@@ -118,7 +118,7 @@
 	id = "plasmarefiller" //Why did this have no plasmatech
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_PLASMA = 1000)
-	build_path = /obj/item/device/extinguisher_refill
+	build_path = /obj/item/extinguisher_refill
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
@@ -200,7 +200,17 @@
 	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
+	
+/datum/design/healthanalyzer_advanced
+	name = "advanced health analyzer"
+	desc = "A hand-held body scanner able to distinguish vital signs of the subject with high accuracy."
+	id = "healthanalyzer_advanced"
+	build_path = /obj/item/healthanalyzer/advanced
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500, MAT_SILVER = 2000, MAT_GOLD = 1500)
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
 /////////////////////////////////////////
@@ -283,7 +293,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/cyberimp_xray
-	name = "X-Ray Eyes"
+	name = "X-ray Eyes"
 	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
 	id = "ci-xray"
 	build_type = PROTOLATHE | MECHFAB

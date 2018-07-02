@@ -37,20 +37,20 @@
 	else
 		..()
 
-/obj/item/reagent_containers/food/snacks/proc/On_Consume()
-	if(!usr)
+/obj/item/reagent_containers/food/snacks/proc/On_Consume(mob/living/eater)
+	if(!eater)
 		return
 	if(!reagents.total_volume)
-		var/obj/item/trash_item = generate_trash(usr)
+		var/obj/item/trash_item = generate_trash(eater)
 		qdel(src)
-		usr.put_in_hands(trash_item)
+		eater.put_in_hands(trash_item)
 
 
 /obj/item/reagent_containers/food/snacks/attack_self(mob/user)
 	return
 
 
-/obj/item/reagent_containers/food/snacks/attack(mob/living/M, mob/user, def_zone)
+/obj/item/reagent_containers/food/snacks/attack(mob/living/M, mob/living/user, def_zone)
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 	if(!eatverb)
@@ -72,15 +72,15 @@
 				to_chat(M, "<span class='notice'>You don't feel like eating any more junk food at the moment.</span>")
 				return 0
 			else if(fullness <= 50)
-				to_chat(M, "<span class='notice'>You hungrily [eatverb] some of \the [src] and gobble it down!</span>")
+				user.visible_message("<span class='notice'>[user] hungrily takes a [eatverb] from \the [src], gobbling it down!</span>", "<span class='notice'>You hungrily take a [eatverb] from \the [src], gobbling it down!</span>")
 			else if(fullness > 50 && fullness < 150)
-				to_chat(M, "<span class='notice'>You hungrily begin to [eatverb] \the [src].</span>")
+				user.visible_message("<span class='notice'>[user] hungrily takes a [eatverb] from \the [src].</span>", "<span class='notice'>You hungrily take a [eatverb] from \the [src].</span>")
 			else if(fullness > 150 && fullness < 500)
-				to_chat(M, "<span class='notice'>You [eatverb] \the [src].</span>")
+				user.visible_message("<span class='notice'>[user] takes a [eatverb] from \the [src].</span>", "<span class='notice'>You take a [eatverb] from \the [src].</span>")		
 			else if(fullness > 500 && fullness < 600)
-				to_chat(M, "<span class='notice'>You unwillingly [eatverb] a bit of \the [src].</span>")
+				user.visible_message("<span class='notice'>[user] unwillingly takes a [eatverb] of a bit of \the [src].</span>", "<span class='notice'>You unwillingly take a [eatverb] of a bit of \the [src].</span>")
 			else if(fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
-				to_chat(M, "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>")
+				user.visible_message("<span class='warning'>[user] cannot force any more of \the [src] to go down [user.p_their()] throat!</span>", "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>")	
 				return 0
 			if(M.has_trait(TRAIT_VORACIOUS))
 				M.changeNext_move(CLICK_CD_MELEE * 0.5) //nom nom nom
@@ -109,11 +109,12 @@
 				M.satiety -= junkiness
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			if(reagents.total_volume)
+				SEND_SIGNAL(src, COMSIG_FOOD_EATEN, M, user)
 				var/fraction = min(bitesize / reagents.total_volume, 1)
 				reagents.reaction(M, INGEST, fraction)
 				reagents.trans_to(M, bitesize)
 				bitecount++
-				On_Consume()
+				On_Consume(M)
 				checkLiked(fraction, M)
 				return 1
 

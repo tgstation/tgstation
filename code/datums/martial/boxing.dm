@@ -39,7 +39,7 @@
 		if((D.stat != DEAD) && prob(knockout_prob))
 			D.visible_message("<span class='danger'>[A] has knocked [D] out with a haymaker!</span>", \
 								"<span class='userdanger'>[A] has knocked [D] out with a haymaker!</span>")
-			D.apply_effect(200,KNOCKDOWN,armor_block)
+			D.apply_effect(200,EFFECT_KNOCKDOWN,armor_block)
 			D.SetSleeping(100)
 			D.forcesay(GLOB.hit_appends)
 			add_logs(A, D, "knocked out (boxing) ")
@@ -53,7 +53,7 @@
 /obj/item/clothing/gloves/boxing/equipped(mob/user, slot)
 	if(!ishuman(user))
 		return
-	if(slot == slot_gloves)
+	if(slot == SLOT_GLOVES)
 		var/mob/living/carbon/human/H = user
 		style.teach(H,1)
 	return
@@ -62,6 +62,6 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	if(H.get_item_by_slot(slot_gloves) == src)
+	if(H.get_item_by_slot(SLOT_GLOVES) == src)
 		style.remove(H)
 	return

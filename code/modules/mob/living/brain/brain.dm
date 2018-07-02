@@ -1,5 +1,5 @@
 /mob/living/brain
-	var/obj/item/device/mmi/container = null
+	var/obj/item/mmi/container = null
 	var/timeofhostdeath = 0
 	var/emp_damage = 0//Handles a type of MMI damage
 	var/datum/dna/stored/stored_dna // dna var for brain. Used to store dna, brain dna is not considered like actual dna, brain.has_dna() returns FALSE.
@@ -66,8 +66,8 @@
 
 /mob/living/brain/ClickOn(atom/A, params)
 	..()
-	if(istype(loc, /obj/item/device/mmi))
-		var/obj/item/device/mmi/MMI = loc
+	if(istype(loc, /obj/item/mmi))
+		var/obj/item/mmi/MMI = loc
 		var/obj/mecha/M = MMI.mecha
 		if((src == MMI.brainmob) && istype(M))
 			return M.click_action(A,src,params)
@@ -80,7 +80,7 @@
 		B.forceMove(destination)
 	else if (istype(destination, /obj/item/organ/brain))
 		doMove(destination)
-	else if (istype(destination, /obj/item/device/mmi))
+	else if (istype(destination, /obj/item/mmi))
 		doMove(destination)
 	else
 		CRASH("Brainmob without a container [src] attempted to move to [destination].")

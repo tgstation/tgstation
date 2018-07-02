@@ -63,7 +63,7 @@ Doesn't work on other aliens/AI.*/
 	var/obj/machinery/atmospherics/components/unary/atmos_thing = locate() in user.loc
 	if(atmos_thing)
 		var/rusure = alert(user, "Laying eggs and shaping resin here would block access to [atmos_thing]. Do you want to continue?", "Blocking Atmospheric Component", "Yes", "No")
-		if(rusure != "No")
+		if(rusure != "Yes")
 			return FALSE
 	return TRUE
 
@@ -97,7 +97,7 @@ Doesn't work on other aliens/AI.*/
 		return 0
 	var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
 	if(msg)
-		log_talk(user,"AlienWhisper: [key_name(user)]->[M.key] : [msg]",LOGSAY)
+		log_talk(user,"AlienWhisper: [key_name(user)]->[key_name(M)] : [msg]",LOGSAY)
 		to_chat(M, "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]")
 		to_chat(user, "<span class='noticealien'>You said: \"[msg]\" to [M]</span>")
 		for(var/ded in GLOB.dead_mob_list)
@@ -159,7 +159,7 @@ Doesn't work on other aliens/AI.*/
 
 			return 0
 	else
-		to_chat(src, "<span class='noticealien'>Target is too far away.</span>")
+		to_chat(src, "<span class='noticealien'>[target] is too far away.</span>")
 		return 0
 
 

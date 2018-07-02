@@ -56,10 +56,10 @@
 
 	if (top_atom)
 		LAZYREMOVE(top_atom.light_sources, src)
-	
+
 	if (needs_update)
 		GLOB.lighting_update_lights -= src
-	
+
 	. = ..()
 
 // Yes this doesn't align correctly on anything other than 4 width tabs.
@@ -116,7 +116,6 @@
 	. = LUM_FALLOFF(C, pixel_turf);          \
 	. *= light_power;                        \
 	var/OLD = effect_str[C];                 \
-                                             \
 	effect_str[C] = .;                       \
                                              \
 	C.update_lumcount                        \
@@ -125,7 +124,6 @@
 		(. * lum_g) - (OLD * applied_lum_g), \
 		(. * lum_b) - (OLD * applied_lum_b)  \
 	);
-
 
 #define REMOVE_CORNER(C)                     \
 	. = -effect_str[C];                      \
@@ -167,8 +165,9 @@
 
 /datum/light_source/proc/update_corners()
 	var/update = FALSE
+	var/atom/source_atom = src.source_atom
 
-	if (!source_atom || QDELETED(source_atom))
+	if (QDELETED(source_atom))
 		qdel(src)
 		return
 

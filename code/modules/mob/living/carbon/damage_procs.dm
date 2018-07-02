@@ -217,7 +217,7 @@
 //Some sources of brain damage shouldn't be deadly
 /mob/living/carbon/adjustBrainLoss(amount, maximum = BRAIN_DAMAGE_DEATH)
 	if(status_flags & GODMODE)
-		return 0
+		return FALSE
 	var/prev_brainloss = getBrainLoss()
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 	if(!B)
@@ -227,20 +227,20 @@
 		return
 	var/brainloss = getBrainLoss()
 	if(brainloss > BRAIN_DAMAGE_MILD)
-		if(prob((amount * 2) + (brainloss - BRAIN_DAMAGE_MILD - (20 * LAZYLEN(get_traumas())) / 5))) //1 damage|50 brain damage = 4% chance
+		if(prob(amount * ((2 * (100 + brainloss - BRAIN_DAMAGE_MILD)) / 100))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 2%
 			gain_trauma_type(BRAIN_TRAUMA_MILD)
 	if(brainloss > BRAIN_DAMAGE_SEVERE)
-		if(prob(amount + (brainloss - BRAIN_DAMAGE_SEVERE - (20 * LAZYLEN(get_traumas())) / 15))) //1 damage|150 brain damage = 3% chance
+		if(prob(amount * ((2 * (100 + brainloss - BRAIN_DAMAGE_SEVERE)) / 100))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 2%
 			if(prob(20))
 				gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
 			else
 				gain_trauma_type(BRAIN_TRAUMA_SEVERE)
 
-	if(prev_brainloss < 40 && brainloss >= 40)
+	if(prev_brainloss < BRAIN_DAMAGE_MILD && brainloss >= BRAIN_DAMAGE_MILD)
 		to_chat(src, "<span class='warning'>You feel lightheaded.</span>")
-	else if(prev_brainloss < 120 && brainloss >= 120)
+	else if(prev_brainloss < BRAIN_DAMAGE_SEVERE && brainloss >= BRAIN_DAMAGE_SEVERE)
 		to_chat(src, "<span class='warning'>You feel less in control of your thoughts.</span>")
-	else if(prev_brainloss < 180 && brainloss >= 180)
+	else if(prev_brainloss < (BRAIN_DAMAGE_DEATH - 20) && brainloss >= (BRAIN_DAMAGE_DEATH - 20))
 		to_chat(src, "<span class='warning'>You can feel your mind flickering on and off...</span>")
 
 /mob/living/carbon/setBrainLoss(amount)

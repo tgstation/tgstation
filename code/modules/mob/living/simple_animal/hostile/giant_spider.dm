@@ -22,6 +22,7 @@
 	icon_state = "guard"
 	icon_living = "guard"
 	icon_dead = "guard_dead"
+	mob_biotypes = list(MOB_ORGANIC, MOB_BUG)
 	speak_emote = list("chitters")
 	emote_hear = list("chitters")
 	speak_chance = 5
@@ -207,7 +208,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
-	poison_type = "frost_oil"
+	poison_type = "frostoil"
 	color = rgb(114,228,250)
 	gold_core_spawnable = NO_SPAWN
 
@@ -216,7 +217,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
-	poison_type = "frost_oil"
+	poison_type = "frostoil"
 	color = rgb(114,228,250)
 	gold_core_spawnable = NO_SPAWN
 
@@ -225,7 +226,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
-	poison_type = "frost_oil"
+	poison_type = "frostoil"
 	color = rgb(114,228,250)
 	gold_core_spawnable = NO_SPAWN
 
@@ -345,9 +346,9 @@
 	button_icon_state = "lay_web"
 
 /datum/action/innate/spider/lay_web/Activate()
-	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
+	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider))
 		return
-	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/S = owner
+	var/mob/living/simple_animal/hostile/poison/giant_spider/S = owner
 
 	if(!isturf(S.loc))
 		return

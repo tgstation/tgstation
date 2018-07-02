@@ -144,25 +144,25 @@
 	switch (transmission_method)
 		if (TRANSMISSION_SUBSPACE)
 			// Reaches any radios on the levels
-			for(var/obj/item/device/radio/R in GLOB.all_radios["[frequency]"])
+			for(var/obj/item/radio/R in GLOB.all_radios["[frequency]"])
 				if(R.can_receive(frequency, levels))
 					radios += R
 
 			// Syndicate radios can hear all well-known radio channels
 			if (num2text(frequency) in GLOB.reverseradiochannels)
-				for(var/obj/item/device/radio/R in GLOB.all_radios["[FREQ_SYNDICATE]"])
+				for(var/obj/item/radio/R in GLOB.all_radios["[FREQ_SYNDICATE]"])
 					if(R.can_receive(FREQ_SYNDICATE, list(R.z)))
 						radios |= R
 
 		if (TRANSMISSION_RADIO)
 			// Only radios not currently in subspace mode
-			for(var/obj/item/device/radio/R in GLOB.all_radios["[frequency]"])
+			for(var/obj/item/radio/R in GLOB.all_radios["[frequency]"])
 				if(!R.subspace_transmission && R.can_receive(frequency, levels))
 					radios += R
 
 		if (TRANSMISSION_SUPERSPACE)
 			// Only radios which are independent
-			for(var/obj/item/device/radio/R in GLOB.all_radios["[frequency]"])
+			for(var/obj/item/radio/R in GLOB.all_radios["[frequency]"])
 				if(R.independent && R.can_receive(frequency, levels))
 					radios += R
 

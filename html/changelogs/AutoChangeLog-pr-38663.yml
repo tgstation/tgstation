@@ -1,0 +1,4 @@
+author: "Irafas"
+delete-after: True
+changes: 
+  - rscadd: "Admin spawnable Death Ripley that comes with a version of the Death Clamp that actually inflicts damage and rips arms off."

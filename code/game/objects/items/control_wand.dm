@@ -43,13 +43,13 @@
 
 	switch(mode)
 		if(WAND_OPEN)
-			data.plaintext_data = "open"
+			data.data["data"] = "open"
 		if(WAND_BOLT)
-			data.plaintext_data = "bolt"
+			data.data["data"] = "bolt"
 		if(WAND_EMERGENCY)
-			data.plaintext_data = "emergency"
+			data.data["data"] = "emergency"
 
-	data.plaintext_data_secondary = "toggle"
+	data.data["data_secondary"] = "toggle"
 	data.passkey = access_list
 
 	ntnet_send(data)

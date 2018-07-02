@@ -7,6 +7,7 @@
 	gender = NEUTER
 	pass_flags = PASSTABLE
 	ventcrawler = VENTCRAWLER_NUDE
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
 	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/monkey
 	gib_type = /obj/effect/decal/cleanable/blood/gibs
@@ -32,9 +33,10 @@
 	. = ..()
 
 	if (cubespawned)
-		if (LAZYLEN(SSmobs.cubemonkeys) > SSmobs.cubemonkeycap)
+		var/cap = CONFIG_GET(number/monkeycap)
+		if (LAZYLEN(SSmobs.cubemonkeys) > cap)
 			if (spawner)
-				to_chat(spawner, "<span class='warning'>Bluespace harmonics prevent the spawning of more than [SSmobs.cubemonkeycap] monkeys on the station at one time!</span>")
+				to_chat(spawner, "<span class='warning'>Bluespace harmonics prevent the spawning of more than [cap] monkeys on the station at one time!</span>")
 			return INITIALIZE_HINT_QDEL
 		SSmobs.cubemonkeys += src
 
@@ -133,9 +135,11 @@
 
 	//Check for weapons
 	if( (judgement_criteria & JUDGE_WEAPONCHECK) && weaponcheck )
-		for(var/obj/item/I in held_items)
+		for(var/obj/item/I in held_items) //if they're holding a gun
 			if(weaponcheck.Invoke(I))
 				threatcount += 4
+		if(weaponcheck.Invoke(back)) //if a weapon is present in the back slot
+			threatcount += 4 //trigger look_for_perp() since they're nonhuman and very likely hostile
 
 	//mindshield implants imply trustworthyness
 	if(isloyal())
@@ -167,5 +171,5 @@
 	. = ..()
 	if(prob(10))
 		var/obj/item/clothing/head/helmet/justice/escape/helmet = new(src)
-		equip_to_slot_or_del(helmet,slot_head)
+		equip_to_slot_or_del(helmet,SLOT_HEAD)
 		helmet.attack_self(src) // todo encapsulate toggle

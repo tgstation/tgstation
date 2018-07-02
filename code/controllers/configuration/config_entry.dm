@@ -1,5 +1,3 @@
-#undef CURRENT_RESIDENT_FILE
-
 #define LIST_MODE_NUM 0
 #define LIST_MODE_TEXT 1
 #define LIST_MODE_FLAG 2
@@ -8,9 +6,11 @@
 	var/name	//read-only, this is determined by the last portion of the derived entry type
 	var/config_entry_value
 	var/default	//read-only, just set value directly
-	
+
 	var/resident_file	//the file which this was loaded from, if any
 	var/modified = FALSE	//set to TRUE if the default has been overridden by a config entry
+
+	var/deprecated_by	//the /datum/config_entry type that supercedes this one
 
 	var/protection = NONE
 	var/abstract_type = /datum/config_entry	//do not instantiate if type matches this
@@ -19,7 +19,7 @@
 
 /datum/config_entry/New()
 	if(type == abstract_type)
-		CRASH("Abstract config entry [type] instatiated!")	
+		CRASH("Abstract config entry [type] instatiated!")
 	name = lowertext(type2top(type))
 	if(islist(config_entry_value))
 		var/list/L = config_entry_value
@@ -86,6 +86,9 @@
 
 /datum/config_entry/proc/ValidateListEntry(key_name, key_value)
 	return TRUE
+
+/datum/config_entry/proc/DeprecationUpdate(value)
+	return
 
 /datum/config_entry/string
 	config_entry_value = ""

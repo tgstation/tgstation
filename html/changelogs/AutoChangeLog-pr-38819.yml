@@ -1,0 +1,6 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "Pubbystation: Fixed the QM camera console's direction."
+  - code_imp: "Pubbystation: Used the correct aux bomb camera subtype and replaced loose tech storage boards with spawners, as is done in the rest of the map."
+  - tweak: "Tesla balls no longer blow up disposal outlets/delivery chutes and cameras."

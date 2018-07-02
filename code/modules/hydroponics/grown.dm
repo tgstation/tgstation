@@ -60,7 +60,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/attackby(obj/item/O, mob/user, params)
 	..()
-	if (istype(O, /obj/item/device/plant_analyzer))
+	if (istype(O, /obj/item/plant_analyzer))
 		var/msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.\n"
 		if(seed)
 			msg += seed.get_analyzer_text()
@@ -125,13 +125,6 @@
 			for(var/datum/plant_gene/trait/T in seed.genes)
 				T.on_consume(src, usr)
 	..()
-
-/obj/item/reagent_containers/food/snacks/grown/Crossed(atom/movable/AM)
-	if(seed)
-		for(var/datum/plant_gene/trait/T in seed.genes)
-			T.on_cross(src, AM)
-	..()
-
 
 /obj/item/reagent_containers/food/snacks/grown/generate_trash(atom/location)
 	if(trash && ispath(trash, /obj/item/grown))

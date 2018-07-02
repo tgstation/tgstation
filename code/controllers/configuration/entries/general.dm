@@ -55,6 +55,8 @@
 
 /datum/config_entry/flag/log_manifest	// log crew manifest to seperate file
 
+/datum/config_entry/flag/log_job_debug	// log roundstart divide occupations debug information to a file
+
 /datum/config_entry/flag/allow_admin_ooccolor	// Allows admins with relevant permissions to have their own ooc colour
 
 /datum/config_entry/flag/allow_vote_restart	// allow votes to restart
@@ -129,6 +131,9 @@
 /datum/config_entry/flag/enable_localhost_rank	//Gives the !localhost! rank to any client connecting from 127.0.0.1 or ::1
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/flag/load_legacy_ranks_only	//Loads admin ranks only from legacy admin_ranks.txt, while enabled ranks are mirrored to the database
+	protection = CONFIG_ENTRY_LOCKED
+
 /datum/config_entry/string/hostedby
 
 /datum/config_entry/flag/norespawn
@@ -173,6 +178,10 @@
 
 /datum/config_entry/string/githuburl
 	config_entry_value = "https://www.github.com/tgstation/-tg-station"
+
+/datum/config_entry/string/roundstatsurl
+
+/datum/config_entry/string/gamelogurl
 
 /datum/config_entry/number/githubrepoid
 	config_entry_value = null
@@ -339,6 +348,14 @@
 
 /datum/config_entry/number/second_topic_limit
 	config_entry_value = null
+	min_val = 0
+
+/datum/config_entry/number/minute_click_limit
+	config_entry_value = 400
+	min_val = 0
+
+/datum/config_entry/number/second_click_limit
+	config_entry_value = 15
 	min_val = 0
 
 /datum/config_entry/number/error_cooldown	// The "cooldown" time for each occurrence of a unique error

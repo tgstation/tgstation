@@ -4,7 +4,6 @@
 	desc = "Very useful for filtering gasses."
 	density = FALSE
 	can_unwrench = TRUE
-	var/on = FALSE
 	var/target_pressure = ONE_ATMOSPHERE
 	var/filter_type = null
 	var/frequency = 0
@@ -13,9 +12,29 @@
 	construction_type = /obj/item/pipe/trinary/flippable
 	pipe_state = "filter"
 
+/obj/machinery/atmospherics/components/trinary/filter/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/trinary/filter/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
+
 /obj/machinery/atmospherics/components/trinary/filter/flipped
 	icon_state = "filter_off_f"
 	flipped = TRUE
+
+/obj/machinery/atmospherics/components/trinary/filter/flipped/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/trinary/filter/flipped/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 // These two filter types have critical_machine flagged to on and thus causes the area they are in to be exempt from the Grid Check event.
 
@@ -31,12 +50,49 @@
 	if(frequency)
 		radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
 
-/obj/machinery/atmospherics/components/trinary/filter/New()
-	..()
-
 /obj/machinery/atmospherics/components/trinary/filter/Destroy()
 	SSradio.remove_object(src,frequency)
 	return ..()
+
+/obj/machinery/atmospherics/components/trinary/filter/atmos //Used for atmos waste loops
+	on = TRUE
+	icon_state = "filter_on"
+
+/obj/machinery/atmospherics/components/trinary/filter/atmos/n2
+	name = "nitrogen filter"
+	filter_type = "n2"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/o2
+	name = "oxygen filter"
+	filter_type = "o2"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/co2
+	name = "carbon dioxide filter"
+	filter_type = "co2"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/n2o
+	name = "nitrous oxide filter"
+	filter_type = "n2o"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/plasma
+	name = "plasma filter"
+	filter_type = "plasma"
+
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped //This feels wrong, I know
+	icon_state = "filter_on_f"
+	flipped = TRUE
+
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/n2
+	name = "nitrogen filter"
+	filter_type = "n2"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/o2
+	name = "oxygen filter"
+	filter_type = "o2"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2
+	name = "carbon dioxide filter"
+	filter_type = "co2"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/n2o
+	name = "nitrous oxide filter"
+	filter_type = "n2o"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/plasma
+	name = "plasma filter"
+	filter_type = "plasma"
 
 /obj/machinery/atmospherics/components/trinary/filter/update_icon()
 	cut_overlays()

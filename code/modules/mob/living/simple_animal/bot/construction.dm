@@ -275,7 +275,7 @@
 	icon_state = "firstaid_arm"
 	created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
 	var/skin = null //Same as medbot, set to tox or ointment for the respective kits.
-	var/healthanalyzer = /obj/item/device/healthanalyzer
+	var/healthanalyzer = /obj/item/healthanalyzer
 	var/firstaid = /obj/item/storage/firstaid
 
 /obj/item/bot_assembly/medbot/Initialize()
@@ -314,7 +314,7 @@
 	..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
-			if(istype(W, /obj/item/device/healthanalyzer))
+			if(istype(W, /obj/item/healthanalyzer))
 				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
 				healthanalyzer = W.type
@@ -392,7 +392,7 @@
 					build_step++
 
 			else if(istype(I, /obj/item/screwdriver)) //deconstruct
-				new /obj/item/device/assembly/signaler(Tsec)
+				new /obj/item/assembly/signaler(Tsec)
 				new /obj/item/clothing/head/helmet/sec(Tsec)
 				to_chat(user, "<span class='notice'>You disconnect the signaler from the helmet.</span>")
 				qdel(src)
@@ -426,7 +426,7 @@
 
 			else if(istype(I, /obj/item/screwdriver)) //deconstruct
 				cut_overlay("hs_eye")
-				new /obj/item/device/assembly/prox_sensor(Tsec)
+				new /obj/item/assembly/prox_sensor(Tsec)
 				to_chat(user, "<span class='notice'>You detach the proximity sensor from [src].</span>")
 				build_step--
 

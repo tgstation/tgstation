@@ -510,11 +510,11 @@
 /obj/structure/spacevine/proc/spread()
 	var/direction = pick(GLOB.cardinals)
 	var/turf/stepturf = get_step(src,direction)
-	for(var/datum/spacevine_mutation/SM in mutations)
-		SM.on_spread(src, stepturf)
-		stepturf = get_step(src,direction) //in case turf changes, to make sure no runtimes happen
-	if(!locate(/obj/structure/spacevine, stepturf))
-		if(stepturf.Enter(src))
+	if (!isspaceturf(stepturf) && stepturf.Enter(src))
+		for(var/datum/spacevine_mutation/SM in mutations)
+			SM.on_spread(src, stepturf)
+			stepturf = get_step(src,direction) //in case turf changes, to make sure no runtimes happen
+		if(!locate(/obj/structure/spacevine, stepturf))
 			if(master)
 				master.spawn_spacevine_piece(stepturf, src)
 

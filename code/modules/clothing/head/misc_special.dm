@@ -131,7 +131,7 @@
 	dog_fashion = /datum/dog_fashion/head/kitty
 
 /obj/item/clothing/head/kitty/equipped(mob/living/carbon/human/user, slot)
-	if(ishuman(user) && slot == slot_head)
+	if(ishuman(user) && slot == SLOT_HEAD)
 		update_icon(user)
 		user.update_inv_head() //Color might have been changed by update_icon.
 	..()
@@ -169,7 +169,7 @@
 
 /obj/item/clothing/head/cardborg/equipped(mob/living/user, slot)
 	..()
-	if(ishuman(user) && slot == slot_head)
+	if(ishuman(user) && slot == SLOT_HEAD)
 		var/mob/living/carbon/human/H = user
 		if(istype(H.wear_suit, /obj/item/clothing/suit/cardborg))
 			var/obj/item/clothing/suit/cardborg/CB = H.wear_suit
@@ -240,7 +240,7 @@
 
 /obj/item/clothing/head/foilhat/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if(slot == slot_head)
+	if(slot == SLOT_HEAD)
 		if(paranoia)
 			QDEL_NULL(paranoia)
 		paranoia = new()

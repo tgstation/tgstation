@@ -1,4 +1,4 @@
-/obj/item/device/electropack
+/obj/item/electropack
 	name = "electropack"
 	desc = "Dance my monkeys! DANCE!!!"
 	icon = 'icons/obj/radio.dmi'
@@ -7,7 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
 	materials = list(MAT_METAL=10000, MAT_GLASS=2500)
 	var/on = TRUE
@@ -15,20 +15,20 @@
 	var/frequency = FREQ_ELECTROPACK
 	var/shock_cooldown = 0
 
-/obj/item/device/electropack/suicide_act(mob/user)
+/obj/item/electropack/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] hooks [user.p_them()]self to the electropack and spams the trigger! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
-/obj/item/device/electropack/Initialize()
+/obj/item/electropack/Initialize()
 	. = ..()
 	SSradio.add_object(src, frequency, RADIO_SIGNALER)
 
-/obj/item/device/electropack/Destroy()
+/obj/item/electropack/Destroy()
 	SSradio.remove_object(src, frequency)
 	return ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/device/electropack/attack_hand(mob/user)
+/obj/item/electropack/attack_hand(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.back)
@@ -36,7 +36,7 @@
 			return
 	return ..()
 
-/obj/item/device/electropack/attackby(obj/item/W, mob/user, params)
+/obj/item/electropack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/clothing/head/helmet))
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
 		A.icon = 'icons/obj/assemblies.dmi'
@@ -53,12 +53,12 @@
 
 		user.put_in_hands(A)
 		A.add_fingerprint(user)
-		if(src.flags_1 & NODROP_1)
-			A.flags_1 |= NODROP_1
+		if(item_flags & NODROP)
+			A.item_flags |= NODROP
 	else
 		return ..()
 
-/obj/item/device/electropack/Topic(href, href_list)
+/obj/item/electropack/Topic(href, href_list)
 	//..()
 	var/mob/living/carbon/C = usr
 	if(usr.stat || usr.restrained() || C.back == src)
@@ -98,7 +98,7 @@
 		return
 	return
 
-/obj/item/device/electropack/receive_signal(datum/signal/signal)
+/obj/item/electropack/receive_signal(datum/signal/signal)
 	if(!signal || signal.data["code"] != code)
 		return
 
@@ -122,7 +122,7 @@
 		master.receive_signal()
 	return
 
-/obj/item/device/electropack/attack_self(mob/user)
+/obj/item/electropack/attack_self(mob/user)
 
 	if(!ishuman(user))
 		return

@@ -47,7 +47,7 @@
 /obj/item/clothing/mask/fakemoustache/italian/speechModification(M)
 	if(copytext(M, 1, 2) != "*")
 		M = " [M]"
-		var/list/italian_words = strings("word_replacement.json", "italian")
+		var/list/italian_words = strings("italian_replacement.json", "italian")
 
 		for(var/key in italian_words)
 			var/value = italian_words[key]
@@ -101,7 +101,7 @@
 	return message
 
 ///frog mask - reeee!!
-obj/item/clothing/mask/frog
+/obj/item/clothing/mask/frog
 	name = "frog mask"
 	desc = "An ancient mask carved in the shape of a frog.<br> Sanity is like gravity, all it needs is a push."
 	icon_state = "frog"
@@ -122,8 +122,8 @@ obj/item/clothing/mask/frog
 			message = pick("Ree!!", "Reee!!","REEE!!","REEEEE!!") //but its usually just angry gibberish,
 	return message
 
-obj/item/clothing/mask/frog/cursed
-	flags_1 = NODROP_1 //reee!!
+/obj/item/clothing/mask/frog/cursed
+	item_flags = NODROP //reee!!
 
 /obj/item/clothing/mask/frog/cursed/attack_self(mob/user)
 	return //no voicebox to alter.
@@ -222,8 +222,8 @@ obj/item/clothing/mask/frog/cursed
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
 	visor_flags_cover = MASKCOVERSMOUTH
-	slot_flags = SLOT_MASK
-	adjusted_flags = SLOT_HEAD
+	slot_flags = ITEM_SLOT_MASK
+	adjusted_flags = ITEM_SLOT_HEAD
 	icon_state = "bandbotany"
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)

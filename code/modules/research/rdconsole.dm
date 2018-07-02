@@ -10,10 +10,8 @@ aren't already linked to another console. Any consoles it cannot link up with (e
 linked or there aren't any in range), you'll just not have access to that menu. In the settings menu, there are menu options that
 allow a player to attempt to re-sync with nearby consoles. You can also force it to disconnect from a specific console.
 
-The imprinting and construction menus do NOT require toxins access to access but all the other menus do. However, if you leave it
-on a menu, nothing is to stop the person from using the options on that menu (although they won't be able to change to a different
-one). You can also lock the console on the settings menu if you're feeling paranoid and you don't want anyone messing with it who
-doesn't have toxins access.
+The only thing that requires toxins access is locking and unlocking the console on the settings menu.
+Nothing else in the console has ID requirements.
 
 */
 /obj/machinery/computer/rdconsole
@@ -50,6 +48,7 @@ doesn't have toxins access.
 	var/research_control = TRUE
 
 /obj/machinery/computer/rdconsole/production
+	circuit = /obj/item/circuitboard/computer/rdconsole/production
 	research_control = FALSE
 
 /proc/CallMaterialName(ID)
@@ -149,13 +148,13 @@ doesn't have toxins access.
 	if(!istype(TN))
 		say("Node unlock failed: Unknown error.")
 		return FALSE
-	var/price = TN.get_price(stored_research)
-	if(stored_research.research_points >= price)
-		investigate_log("[key_name(user)] researched [id]([price]) on techweb id [stored_research.id].", INVESTIGATE_RESEARCH)
+	var/list/price = TN.get_price(stored_research)
+	if(stored_research.can_afford(price))
+		investigate_log("[key_name(user)] researched [id]([json_encode(price)]) on techweb id [stored_research.id].", INVESTIGATE_RESEARCH)
 		if(stored_research == SSresearch.science_tech)
-			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = TN.display_name, "price" = "[price]", "time" = SQLtime()))
+			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = TN.display_name, "price" = "[json_encode(price)]", "time" = SQLtime()))
 		if(stored_research.research_node(SSresearch.techweb_nodes[id]))
-			say("Sucessfully researched [TN.display_name].")
+			say("Successfully researched [TN.display_name].")
 			var/logname = "Unknown"
 			if(isAI(user))
 				logname = "AI: [user.name]"
@@ -170,7 +169,7 @@ doesn't have toxins access.
 					var/obj/item/card/id/ID = I.GetID()
 					if(istype(ID))
 						logname = "User: [ID.registered_name]"
-			stored_research.research_logs += "[logname] researched node id [id] for [price] points."
+			stored_research.research_logs += "[logname] researched node id [id] with cost [json_encode(price)]."
 			return TRUE
 		else
 			say("Failed to research node: Internal database error!")
@@ -192,9 +191,10 @@ doesn't have toxins access.
 
 /obj/machinery/computer/rdconsole/emag_act(mob/user)
 	if(!(obj_flags & EMAGGED))
-		to_chat(user, "<span class='notice'>You disable the security protocols</span>")
+		to_chat(user, "<span class='notice'>You disable the security protocols[locked? " and unlock the console":""].</span>")
 		playsound(src, "sparks", 75, 1)
 		obj_flags |= EMAGGED
+		locked = FALSE
 	return ..()
 
 /obj/machinery/computer/rdconsole/proc/list_categories(list/categories, menu_num as num)
@@ -217,8 +217,10 @@ doesn't have toxins access.
 
 /obj/machinery/computer/rdconsole/proc/ui_header()
 	var/list/l = list()
+	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	l += "[sheet.css_tag()][RDSCREEN_NOBREAK]"
 	l += "<div class='statusDisplay'><b>[stored_research.organization] Research and Development Network</b>"
-	l += "Available points: [round(stored_research.research_points)] (+[round(stored_research.last_bitcoins * 60)] / minute)"
+	l += "Available points: <BR>[techweb_point_display_rdconsole(stored_research.research_points, stored_research.last_bitcoins)]"
 	l += "Security protocols: [obj_flags & EMAGGED ? "<font color='red'>Disabled</font>" : "<font color='green'>Enabled</font>"]"
 	l += "<a href='?src=[REF(src)];switch_screen=[RDSCREEN_MENU]'>Main Menu</a> | <a href='?src=[REF(src)];switch_screen=[back]'>Back</a></div>[RDSCREEN_NOBREAK]"
 	l += "[ui_mode == 1? "<span class='linkOn'>Normal View</span>" : "<a href='?src=[REF(src)];ui_mode=1'>Normal View</a>"] | [ui_mode == 2? "<span class='linkOn'>Expert View</span>" : "<a href='?src=[REF(src)];ui_mode=2'>Expert View</a>"] | [ui_mode == 3? "<span class='linkOn'>List View</span>" : "<a href='?src=[REF(src)];ui_mode=3'>List View</a>"]"
@@ -549,14 +551,14 @@ doesn't have toxins access.
 		var/list/boostable_nodes = techweb_item_boost_check(linked_destroy.loaded_item)
 		for(var/id in boostable_nodes)
 			anything = TRUE
-			var/worth = boostable_nodes[id]
+			var/list/worth = boostable_nodes[id]
 			var/datum/techweb_node/N = get_techweb_node_by_id(id)
 
 			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
 			if (stored_research.researched_nodes[N.id])  // already researched
 				l += "<span class='linkOff'>[N.display_name]</span>"
 				l += "This node has already been researched."
-			else if (worth == 0)  // reveal only
+			else if(!length(worth))  // reveal only
 				if (stored_research.hidden_nodes[N.id])
 					l += "<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]</A>"
 					l += "This node will be revealed."
@@ -564,31 +566,37 @@ doesn't have toxins access.
 					l += "<span class='linkOff'>[N.display_name]</span>"
 					l += "This node has already been revealed."
 			else  // boost by the difference
-				var/difference = min(worth, N.research_cost) - stored_research.boosted_nodes[N.id]
-				if (difference > 0)
+				var/list/differences = list()
+				var/list/already_boosted = stored_research.boosted_nodes[N.id]
+				for(var/i in worth)
+					var/already_boosted_amount = already_boosted? stored_research.boosted_nodes[N.id][i] : 0
+					var/amt = min(worth[i], N.research_costs[i]) - already_boosted_amount
+					if(amt > 0)
+						differences[i] = amt
+				if (length(differences))
 					l += "<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]</A>"
-					l += "This node will be boosted by [difference] points."
+					l += "This node will be boosted with the following:<BR>[techweb_point_display_generic(differences)]"
 				else
 					l += "<span class='linkOff'>[N.display_name]</span>"
 					l += "This node has already been boosted.</span>"
 			l += "</div>[RDSCREEN_NOBREAK]"
 
 		// point deconstruction and material reclamation use the same ID to prevent accidentally missing the points
-		var/point_value = techweb_item_point_check(linked_destroy.loaded_item)
-		if(point_value)
+		var/list/point_values = techweb_item_point_check(linked_destroy.loaded_item)
+		if(point_values)
 			anything = TRUE
 			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
 			if (stored_research.deconstructed_items[linked_destroy.loaded_item.type])
 				l += "<span class='linkOff'>Point Deconstruction</span>"
-				l += "This item's [point_value] point\s have already been claimed."
+				l += "This item's points have already been claimed."
 			else
 				l += "<A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_RECLAMATION_ID]'>Point Deconstruction</A>"
-				l += "This item is worth [point_value] point\s!"
+				l += "This item is worth: <BR>[techweb_point_display_generic(point_values)]!"
 			l += "</div>[RDSCREEN_NOBREAK]"
 
-		var/list/materials = linked_destroy.loaded_item.materials
-		if (materials.len)
-			l += "<div class='statusDisplay'><A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_RECLAMATION_ID]'>Material Reclamation</A>"
+		if(!(linked_destroy.loaded_item.resistance_flags & INDESTRUCTIBLE))
+			var/list/materials = linked_destroy.loaded_item.materials
+			l += "<div class='statusDisplay'><A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_RECLAMATION_ID]'>[materials.len? "Material Reclamation" : "Destroy Item"]</A>"
 			for (var/M in materials)
 				l += "* [CallMaterialName(M)] x [materials[M]]"
 			l += "</div>[RDSCREEN_NOBREAK]"
@@ -636,7 +644,7 @@ doesn't have toxins access.
 		l += "<div><h3>Available for Research:</h3>"
 		for(var/datum/techweb_node/N in avail)
 			var/not_unlocked = (stored_research.available_nodes[N.id] && !stored_research.researched_nodes[N.id])
-			var/has_points = (stored_research.research_points >= N.get_price(stored_research))
+			var/has_points = (stored_research.can_afford(N.get_price(stored_research)))
 			var/research_href = not_unlocked? (has_points? "<A href='?src=[REF(src)];research_node=[N.id]'>Research</A>" : "<span class='linkOff bad'>Not Enough Points</span>") : null
 			l += "<A href='?src=[REF(src)];view_node=[N.id];back_screen=[screen]'>[N.display_name]</A>[research_href]"
 		l += "</div><div><h3>Locked Nodes:</h3>"
@@ -655,7 +663,6 @@ doesn't have toxins access.
 	var/list/l = list()
 	if (stored_research.hidden_nodes[node.id])
 		return l
-	var/price = node.get_price(stored_research)
 	var/display_name = node.display_name
 	if (selflink)
 		display_name = "<A href='?src=[REF(src)];view_node=[node.id];back_screen=[screen]'>[display_name]</A>"
@@ -666,12 +673,12 @@ doesn't have toxins access.
 		if(stored_research.researched_nodes[node.id])
 			l += "<span class='linkOff'>Researched</span>"
 		else if(stored_research.available_nodes[node.id])
-			if(stored_research.research_points >= price)
-				l += "<A href='?src=[REF(src)];research_node=[node.id]'>[price]</A>"
+			if(stored_research.can_afford(node.get_price(stored_research)))
+				l += "<BR><A href='?src=[REF(src)];research_node=[node.id]'>[node.price_display(stored_research)]</A>"
 			else
-				l += "<span class='linkOff'>[price]</span>"  // gray - too expensive
+				l += "<BR><span class='linkOff'>[node.price_display(stored_research)]</span>"  // gray - too expensive
 		else
-			l += "<span class='linkOff bad'>[price]</span>"  // red - missing prereqs
+			l += "<BR><span class='linkOff bad'>[node.price_display(stored_research)]</span>"  // red - missing prereqs
 		if(ui_mode == RDCONSOLE_UI_MODE_NORMAL)
 			l += "[node.description]"
 			for(var/i in node.designs)
@@ -815,6 +822,9 @@ doesn't have toxins access.
 	if(ls["ui_mode"])
 		ui_mode = text2num(ls["ui_mode"])
 	if(ls["lock_console"])
+		if(obj_flags & EMAGGED)
+			to_chat(usr, "<span class='boldwarning'>Security protocol error: Unable to lock.</span>")
+			return
 		if(allowed(usr))
 			lock_console(usr)
 		else
@@ -851,7 +861,7 @@ doesn't have toxins access.
 		switch(ls["disconnect"])
 			if("destroy")
 				if(QDELETED(linked_destroy))
-					say("No Deconstructive Analyzer Linked!")
+					say("No Destructive Analyzer Linked!")
 					return
 				linked_destroy.linked_console = null
 				linked_destroy = null
@@ -877,9 +887,10 @@ doesn't have toxins access.
 		say("Ejecting Technology Disk")
 	if(ls["deconstruct"])
 		if(QDELETED(linked_destroy))
-			say("No Deconstructive Analyzer Linked!")
+			say("No Destructive Analyzer Linked!")
 			return
-		linked_destroy.user_try_decon_id(ls["deconstruct"], usr)
+		if(!linked_destroy.user_try_decon_id(ls["deconstruct"], usr))
+			say("Destructive analysis failed!")
 	//Protolathe Materials
 	if(ls["disposeP"])  //Causes the protolathe to dispose of a single reagent (all of it)
 		if(QDELETED(linked_lathe))
@@ -985,7 +996,7 @@ doesn't have toxins access.
 		screen = RDSCREEN_DESIGNDISK
 	if(ls["eject_item"]) //Eject the item inside the destructive analyzer.
 		if(QDELETED(linked_destroy))
-			say("No Deconstructive Analyzer Linked!")
+			say("No Destructive Analyzer Linked!")
 			return
 		if(linked_destroy.busy)
 			to_chat(usr, "<span class='danger'>The destructive analyzer is busy at the moment.</span>")

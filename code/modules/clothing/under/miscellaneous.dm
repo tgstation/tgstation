@@ -38,7 +38,7 @@
 	can_adjust = FALSE
 
 /obj/item/clothing/under/roman
-	name = "roman armor"
+	name = "\improper Roman armor"
 	desc = "Ancient Roman armor. Made of metallic and leather straps."
 	icon_state = "roman"
 	item_color = "roman"
@@ -388,7 +388,7 @@
 
 /obj/item/clothing/under/kilt/highlander
 	desc = "You're the only one worthy of this kilt."
-	flags_1 = NODROP_1
+	item_flags = NODROP
 
 /obj/item/clothing/under/sexymime
 	name = "sexy mime outfit"
@@ -641,14 +641,14 @@
 				return
 			next_extinguish = world.time + extinguish_cooldown
 			extinguishes_left--
-			H.visible_message("<span class='warning'>[H]'s suit automatically extinguishes them!</span>","<span class='warning'>Your suit automatically extinguishes you.</span>")
+			H.visible_message("<span class='warning'>[H]'s suit automatically extinguishes [H.p_them()]!</span>","<span class='warning'>Your suit automatically extinguishes you.</span>")
 			H.ExtinguishMob()
 			new /obj/effect/particle_effect/water(get_turf(H))
 	return 0
 
 /obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
 	..()
-	if (istype(E, /obj/item/device/extinguisher_refill))
+	if (istype(E, /obj/item/extinguisher_refill))
 		if (extinguishes_left == 5)
 			to_chat(user, "<span class='notice'>The inbuilt extinguisher is full.</span>")
 			return
@@ -660,13 +660,14 @@
 		return
 	return
 
-/obj/item/device/extinguisher_refill
+/obj/item/extinguisher_refill
 	name = "envirosuit extinguisher cartridge"
 	desc = "A cartridge loaded with a compressed extinguisher mix, used to refill the automatic extinguisher on plasma envirosuits."
 	icon_state = "plasmarefill"
+	icon = 'icons/obj/device.dmi'
 
 /obj/item/clothing/under/rank/security/navyblue/russian
-	name = "russian officer's uniform"
+	name = "\improper Russian officer's uniform"
 	desc = "The latest in fashionable russian outfits."
 	icon_state = "hostanclothes"
 	item_state = "hostanclothes"

@@ -52,7 +52,7 @@
 	icon_state = "charger_wire"
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/computer_hardware/recharger/wired/can_install(obj/item/device/modular_computer/M, mob/living/user = null)
+/obj/item/computer_hardware/recharger/wired/can_install(obj/item/modular_computer/M, mob/living/user = null)
 	if(ismachinery(M.physical) && M.physical.anchored)
 		return ..()
 	to_chat(user, "<span class='warning'>\The [src] is incompatible with portable computers!</span>")

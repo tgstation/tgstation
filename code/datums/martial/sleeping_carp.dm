@@ -156,30 +156,12 @@
 	to_chat(usr, "<span class='notice'>Head Kick</span>: Disarm Harm Harm. Decent damage, forces opponent to drop item in hand.")
 	to_chat(usr, "<span class='notice'>Elbow Drop</span>: Harm Disarm Harm Disarm Harm. Opponent must be on the ground. Deals huge damage, instantly kills anyone in critical condition.")
 
-/obj/item/sleeping_carp_scroll
-	name = "mysterious scroll"
-	desc = "A scroll filled with strange markings. It seems to be drawings of some sort of martial art."
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "scroll2"
-
-/obj/item/sleeping_carp_scroll/attack_self(mob/living/carbon/human/user)
-	if(!istype(user) || !user)
-		return
-	var/message = "<span class='sciradio'>You have learned the ancient martial art of the Sleeping Carp! Your hand-to-hand combat has become much more effective, and you are now able to deflect any projectiles \
-	directed toward you. However, you are also unable to use any ranged weaponry. You can learn more about your newfound art by using the Recall Teachings verb in the Sleeping Carp tab.</span>"
-	to_chat(user, message)
-	var/datum/martial_art/the_sleeping_carp/theSleepingCarp = new(null)
-	theSleepingCarp.teach(user)
-	qdel(src)
-	visible_message("<span class='warning'>[src] lights up in fire and quickly burns to ash.</span>")
-	new /obj/effect/decal/cleanable/ash(user.drop_location())
-
 /obj/item/twohanded/bostaff
 	name = "bo staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts. Can be wielded to both kill and incapacitate."
 	force = 10
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	force_unwielded = 10
 	force_wielded = 24
 	throwforce = 20
@@ -237,7 +219,7 @@
 		if(H.staminaloss && !H.IsSleeping())
 			var/total_health = (H.health - H.staminaloss)
 			if(total_health <= HEALTH_THRESHOLD_CRIT && !H.stat)
-				H.visible_message("<span class='warning'>[user] delivers a heavy hit to [H]'s head, knocking them out cold!</span>", \
+				H.visible_message("<span class='warning'>[user] delivers a heavy hit to [H]'s head, knocking [H.p_them()] out cold!</span>", \
 									   "<span class='userdanger'>[user] knocks you unconscious!</span>")
 				H.SetSleeping(600)
 				H.adjustBrainLoss(15, 150)

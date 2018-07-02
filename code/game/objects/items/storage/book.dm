@@ -5,10 +5,14 @@
 	icon_state ="book"
 	throw_speed = 2
 	throw_range = 5
-	storage_slots = 1
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FLAMMABLE
 	var/title = "book"
+
+/obj/item/storage/book/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 1
 
 /obj/item/storage/book/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
@@ -70,7 +74,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		if(B.icon_state == "honk1" || B.icon_state == "honk2")
 			var/mob/living/carbon/human/H = usr
 			H.dna.add_mutation(CLOWNMUT)
-			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), slot_wear_mask)
+			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), SLOT_WEAR_MASK)
 
 		SSreligion.bible_icon_state = B.icon_state
 		SSreligion.bible_item_state = B.item_state
@@ -96,7 +100,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		H.visible_message("<span class='notice'>[user] heals [H] with the power of [deity_name]!</span>")
 		to_chat(H, "<span class='boldnotice'>May the power of [deity_name] compel you to be healed!</span>")
 		playsound(src.loc, "punch", 25, 1, -1)
-		H.SendSignal(COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return 1
 
 /obj/item/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
@@ -173,7 +177,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
 		if(do_after(user, 40, target = sword))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
-			for(var/obj/item/device/soulstone/SS in sword.contents)
+			for(var/obj/item/soulstone/SS in sword.contents)
 				SS.usability = TRUE
 				for(var/mob/living/simple_animal/shade/EX in SS)
 					SSticker.mode.remove_cultist(EX.mind, 1, 0)
@@ -204,8 +208,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	name = "Syndicate Tome"
 	attack_verb = list("attacked", "burned", "blessed", "damned", "scorched")
 	var/uses = 1
-
-
 
 /obj/item/storage/book/bible/syndicate/attack_self(mob/living/carbon/human/H)
 	if (uses)

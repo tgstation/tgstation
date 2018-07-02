@@ -89,7 +89,7 @@
 		if(!cell_connectors)
 			to_chat(user, "<span class='warning'>This [name] can't support a power cell!</span>")
 			return
-		if(W.flags_1 & NODROP_1)
+		if(W.item_flags & NODROP)
 			to_chat(user, "<span class='warning'>[W] is stuck to your hand!</span>")
 			return
 		user.dropItemToGround(W)
@@ -187,7 +187,6 @@
 	var/base_state = "tube"		// base description and icon_state
 	icon_state = "tube"
 	desc = "A lighting fixture."
-	anchored = TRUE
 	layer = WALL_OBJ_LAYER
 	max_integrity = 100
 	use_power = ACTIVE_POWER_USE
@@ -297,7 +296,8 @@
 	cut_overlays()
 	switch(status)		// set icon_states
 		if(LIGHT_OK)
-			if(emergency_mode)
+			var/area/A = get_area(src)
+			if(emergency_mode || (A && A.fire))
 				icon_state = "[base_state]_emergency"
 			else
 				icon_state = "[base_state]"
@@ -320,9 +320,16 @@
 			on = FALSE
 	emergency_mode = FALSE
 	if(on)
-		var/BR = nightshift_enabled? nightshift_brightness : brightness
-		var/PO = nightshift_enabled? nightshift_light_power : bulb_power
-		var/CO = nightshift_enabled? nightshift_light_color : bulb_colour
+		var/BR = brightness
+		var/PO = bulb_power
+		var/CO = bulb_colour
+		var/area/A = get_area(src)
+		if (A && A.fire)
+			CO = bulb_emergency_colour
+		else if (nightshift_enabled)
+			BR = nightshift_brightness
+			PO = nightshift_light_power
+			CO = nightshift_light_color
 		var/matching = light && BR == light.light_range && PO == light.light_power && CO == light.light_color
 		if(!matching)
 			switchcount++
@@ -397,8 +404,8 @@
 /obj/machinery/light/attackby(obj/item/W, mob/living/user, params)
 
 	//Light replacer code
-	if(istype(W, /obj/item/device/lightreplacer))
-		var/obj/item/device/lightreplacer/LR = W
+	if(istype(W, /obj/item/lightreplacer))
+		var/obj/item/lightreplacer/LR = W
 		LR.ReplaceLight(src, user)
 
 	// attempt to insert light
@@ -662,10 +669,12 @@
 	on = TRUE
 	update()
 
-/obj/machinery/light/tesla_act(power, explosive = FALSE)
-	if(explosive)
-		explosion(src.loc,0,0,0,flame_range = 5, adminlog = 0)
-	qdel(src)
+/obj/machinery/light/tesla_act(power, tesla_flags)
+	if(tesla_flags & TESLA_MACHINE_EXPLOSIVE)
+		explosion(src,0,0,0,flame_range = 5, adminlog = 0)
+		qdel(src)
+	else
+		return ..()
 
 // called when area power state changes
 /obj/machinery/light/power_change()
@@ -791,7 +800,7 @@
 
 /obj/item/light/proc/shatter()
 	if(status == LIGHT_OK || status == LIGHT_BURNED)
-		visible_message("<span class='danger'>[name] shatters.</span>","<span class='italics'>You hear a small glass object shatter.</span>")
+		visible_message("<span class='danger'>[src] shatters.</span>","<span class='italics'>You hear a small glass object shatter.</span>")
 		status = LIGHT_BROKEN
 		force = 5
 		playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)

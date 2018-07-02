@@ -92,6 +92,7 @@ Class Procs:
 	pressure_resistance = 15
 	max_integrity = 200
 
+	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 
 	var/stat = 0
@@ -129,6 +130,7 @@ Class Procs:
 	else
 		START_PROCESSING(SSfastprocess, src)
 	power_change()
+	AddComponent(/datum/component/redirect, list(COMSIG_ENTER_AREA), CALLBACK(src, .proc/power_change))
 
 	if (occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
@@ -152,10 +154,10 @@ Class Procs:
 	return PROCESS_KILL
 
 /obj/machinery/emp_act(severity)
-	if(use_power && !stat)
+	. = ..()
+	if(use_power && !stat && !(. & EMP_PROTECT_SELF))
 		use_power(7500/severity)
 		new /obj/effect/temp_visual/emp(loc)
-	..()
 
 /obj/machinery/proc/open_machine(drop = TRUE)
 	state_open = TRUE
@@ -179,7 +181,7 @@ Class Procs:
 	density = TRUE
 	if(!target)
 		for(var/am in loc)
-			if(!is_type_in_typecache(am, (occupant_typecache || GLOB.typecache_living)))
+			if (!(occupant_typecache ? is_type_in_typecache(am, occupant_typecache) : isliving(am)))
 				continue
 			var/atom/movable/AM = am
 			if(AM.has_buckled_mobs())
@@ -412,12 +414,12 @@ Class Procs:
 								var/obj/item/stack/SN = new SB.merge_type(null,used_amt)
 								component_parts += SN
 							else
-								W.remove_from_storage(B, src)
-								component_parts += B
-								B.moveToNullspace()
-							W.handle_item_insertion(A, 1)
+								if(SEND_SIGNAL(W, COMSIG_TRY_STORAGE_TAKE, B, src))
+									component_parts += B
+									B.moveToNullspace()
+							SEND_SIGNAL(W, COMSIG_TRY_STORAGE_INSERT, A, null, null, TRUE)
 							component_parts -= A
-							to_chat(user, "<span class='notice'>[A.name] replaced with [B.name].</span>")
+							to_chat(user, "<span class='notice'>[capitalize(A.name)] replaced with [B.name].</span>")
 							shouldplaysound = 1 //Only play the sound when parts are actually replaced!
 							break
 			RefreshParts()
@@ -462,15 +464,14 @@ Class Procs:
 /obj/machinery/proc/can_be_overridden()
 	. = 1
 
-
-/obj/machinery/tesla_act(power, explosive = FALSE)
+/obj/machinery/tesla_act(power, tesla_flags, shocked_objects)
 	..()
-	if(prob(85) && explosive)
-		explosion(src.loc, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
-	else if(prob(50))
-		emp_act(EMP_LIGHT)
-	else
-		ex_act(EXPLODE_HEAVY)
+	if(prob(85) && (tesla_flags & TESLA_MACHINE_EXPLOSIVE))
+		explosion(src, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
+	if(tesla_flags & TESLA_OBJ_DAMAGE)
+		take_damage(power/2000, BURN, "energy")
+		if(prob(40))
+			emp_act(EMP_LIGHT)
 
 /obj/machinery/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
@@ -480,15 +481,7 @@ Class Procs:
 /obj/machinery/proc/adjust_item_drop_location(atom/movable/AM)	// Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
 	var/md5 = md5(AM.name)										// Oh, and it's deterministic too. A specific item will always drop from the same slot.
 	for (var/i in 1 to 32)
-		#if DM_VERSION >= 513
-		#warning 512 is definitely stable now, remove the old code
-		#endif
-
-		#if DM_VERSION >= 512
 		. += hex2num(md5[i])
-		#else
-		. += hex2num(copytext(md5,i,i+1))
-		#endif
 	. = . % 9
 	AM.pixel_x = -8 + ((.%3)*8)
 	AM.pixel_y = -8 + (round( . / 3)*8)

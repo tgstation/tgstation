@@ -10,14 +10,15 @@
 	var/breakthings = TRUE
 
 /obj/item/projectile/bullet/p50/on_hit(atom/target, blocked = 0)
-	if((blocked != 100) && (!ismob(target) && breakthings))
-		target.ex_act(rand(1,2))
+	if(isobj(target) && (blocked != 100) && breakthings)
+		var/obj/O = target
+		O.take_damage(80, BRUTE, "bullet", FALSE)
 	return ..()
 
 /obj/item/projectile/bullet/p50/soporific
 	name =".50 soporific bullet"
 	armour_penetration = 0
-	nodamage = TRUE
+	damage = 0
 	dismemberment = 0
 	knockdown = 0
 	breakthings = FALSE

@@ -22,6 +22,9 @@
 	return 0
 
 /mob/living/silicon/ai/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	disconnect_shell()
 	if (prob(30))
 		switch(pick(1,2))
@@ -29,7 +32,6 @@
 				view_core()
 			if(2)
 				SSshuttle.requestEvac(src,"ALERT: Energy surge detected in AI core! Station integrity may be compromised! Initiati--%m091#ar-BZZT")
-	..()
 
 /mob/living/silicon/ai/ex_act(severity, target)
 	switch(severity)

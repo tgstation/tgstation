@@ -31,17 +31,6 @@
 
 	var/list/dent_decals
 
-	var/static/list/dent_decal_list = list(
-	WALL_DENT_HIT = list(
-	mutable_appearance('icons/effects/effects.dmi', "impact1", BULLET_HOLE_LAYER),
-	mutable_appearance('icons/effects/effects.dmi', "impact2", BULLET_HOLE_LAYER),
-	mutable_appearance('icons/effects/effects.dmi', "impact3", BULLET_HOLE_LAYER)
-	),
-	WALL_DENT_SHOT = list(
-	mutable_appearance('icons/effects/effects.dmi', "bullet_hole", BULLET_HOLE_LAYER)
-	)
-	)
-
 /turf/closed/wall/examine(mob/user)
 	..()
 	deconstruction_hints(user)
@@ -56,13 +45,10 @@
 	var/turf/p_turf = get_turf(P)
 	var/face_direction = get_dir(src, p_turf)
 	var/face_angle = dir2angle(face_direction)
-	var/incidence_s = WRAP(GET_ANGLE_OF_INCIDENCE(face_angle, P.Angle), -90, 90)
-	var/new_angle = face_angle + incidence_s
-	var/new_angle_s = new_angle
-	while(new_angle_s > 180)	// Translate to regular projectile degrees
-		new_angle_s -= 360
-	while(new_angle_s < -180)
-		new_angle_s += 360
+	var/incidence_s = GET_ANGLE_OF_INCIDENCE(face_angle, (P.Angle + 180))
+	if(abs(incidence_s) > 90 && abs(incidence_s) < 270)
+		return FALSE
+	var/new_angle_s = SIMPLIFY_DEGREES(face_angle + incidence_s)
 	P.setAngle(new_angle_s)
 	return TRUE
 
@@ -199,11 +185,11 @@
 			return FALSE
 
 		to_chat(user, "<span class='notice'>You begin fixing dents on the wall...</span>")
-		if(W.use_tool(src, user, slicing_duration, volume=100))
+		if(W.use_tool(src, user, 0, volume=100))
 			if(iswallturf(src) && LAZYLEN(dent_decals))
 				to_chat(user, "<span class='notice'>You fix some dents on the wall.</span>")
 				cut_overlay(dent_decals)
-				LAZYCLEARLIST(dent_decals)
+				dent_decals.Cut()
 			return TRUE
 
 	return FALSE
@@ -220,8 +206,8 @@
 		place_poster(W,user)
 		return TRUE
 	//wall mounted IC assembly stuff
-	else if(istype(W, /obj/item/device/electronic_assembly/wallmount))
-		var/obj/item/device/electronic_assembly/wallmount/A = W
+	else if(istype(W, /obj/item/electronic_assembly/wallmount))
+		var/obj/item/electronic_assembly/wallmount/A = W
 		A.mount_assembly(src, user)
 		return TRUE
 
@@ -302,12 +288,22 @@
 	if(LAZYLEN(dent_decals) >= MAX_DENT_DECALS)
 		return
 
-	var/mutable_appearance/decal = pick(dent_decal_list[denttype])
+	var/mutable_appearance/decal = mutable_appearance('icons/effects/effects.dmi', "", BULLET_HOLE_LAYER)
+	switch(denttype)
+		if(WALL_DENT_SHOT)
+			decal.icon_state = "bullet_hole"
+		if(WALL_DENT_HIT)
+			decal.icon_state = "impact[rand(1, 3)]"
+
 	decal.pixel_x = x
 	decal.pixel_y = y
 
-	cut_overlay(dent_decals)
-	LAZYADD(dent_decals, decal)
+	if(LAZYLEN(dent_decals))
+		cut_overlay(dent_decals)
+		dent_decals += decal
+	else
+		dent_decals = list(decal)
+
 	add_overlay(dent_decals)
 
 #undef MAX_DENT_DECALS

@@ -17,7 +17,6 @@ GLOBAL_LIST_INIT(admin_verbs_default, world.AVerbsDefault())
 	/client/proc/reestablish_db_connection, /*reattempt a connection to the database*/
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
-	/client/proc/cmd_admin_ticket_panel,
 	/client/proc/stop_sounds
 	)
 GLOBAL_PROTECT(admin_verbs_admin)
@@ -38,14 +37,14 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/datum/admins/proc/set_admin_notice, /*announcement all clients see when joining the server.*/
 	/client/proc/admin_ghost,			/*allows us to ghost/reenter body at will*/
 	/client/proc/toggle_view_range,		/*changes how far we can see*/
-	/datum/admins/proc/view_txt_log,	/*shows the server log (world_game_log) for today*/
-	/datum/admins/proc/view_atk_log,	/*shows the server combat-log, doesn't do anything presently*/
+	/client/proc/getserverlogs,		/*for accessing server logs*/
+	/client/proc/getcurrentlogs,		/*for accessing server logs for the current round*/
 	/client/proc/cmd_admin_subtle_message,	/*send an message to somebody as a 'voice in their head'*/
+	/client/proc/cmd_admin_headset_message,	/*send an message to somebody through their headset as CentCom*/
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_admin_check_contents,	/*displays the contents of an instance*/
 	/client/proc/check_antagonists,		/*shows all antags*/
 	/datum/admins/proc/access_news_network,	/*allows access of newscasters*/
-	/client/proc/getserverlog,			/*allows us to fetch server logs (world_game_log) for other days*/
 	/client/proc/jumptocoord,			/*we ghost and jump to a coordinate*/
 	/client/proc/Getmob,				/*teleports a mob to our location*/
 	/client/proc/Getkey,				/*teleports a mob with a certain ckey to our location*/
@@ -62,14 +61,14 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/client/proc/cmd_admin_create_centcom_report,
 	/client/proc/cmd_change_command_name,
 	/client/proc/cmd_admin_check_player_exp, /* shows players by playtime */
-	/client/proc/toggle_antag_hud, 	/*toggle display of the admin antag hud*/
 	/client/proc/toggle_combo_hud, // toggle display of the combination pizza antag and taco sci/med/eng hud
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
 	/client/proc/open_shuttle_manipulator, /* Opens shuttle manipulator UI */
 	/client/proc/deadchat,
 	/client/proc/toggleprayers,
 	/client/proc/toggleadminhelpsound,
-	/client/proc/respawn_character
+	/client/proc/respawn_character,
+	/datum/admins/proc/open_borgopanel
 	)
 GLOBAL_PROTECT(admin_verbs_ban)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/DB_ban_panel, /client/proc/stickybanpanel))
@@ -92,11 +91,13 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/forceEvent,
 	/client/proc/admin_change_sec_level,
 	/client/proc/toggle_nuke,
+	/client/proc/run_weather,
 	/client/proc/mass_zombie_infection,
 	/client/proc/mass_zombie_cure,
 	/client/proc/polymorph_all,
 	/client/proc/show_tip,
-	/client/proc/smite
+	/client/proc/smite,
+	/client/proc/admin_away
 	))
 GLOBAL_PROTECT(admin_verbs_spawn)
 GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /datum/admins/proc/spawn_cargo, /datum/admins/proc/spawn_objasmob, /client/proc/respawn_character))
@@ -179,9 +180,8 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/datum/admins/proc/set_admin_notice,
 	/client/proc/admin_ghost,
 	/client/proc/toggle_view_range,
-	/datum/admins/proc/view_txt_log,
-	/datum/admins/proc/view_atk_log,
 	/client/proc/cmd_admin_subtle_message,
+	/client/proc/cmd_admin_headset_message,	
 	/client/proc/cmd_admin_check_contents,
 	/datum/admins/proc/access_news_network,
 	/client/proc/admin_call_shuttle,
@@ -229,7 +229,6 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/admin_change_sec_level,
 	/client/proc/toggle_nuke,
 	/client/proc/cmd_display_del_log,
-	/client/proc/toggle_antag_hud,
 	/client/proc/toggle_combo_hud,
 	/client/proc/debug_huds
 	))
@@ -284,21 +283,8 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		/client/proc/play_web_sound,
 		GLOB.admin_verbs_spawn,
 		/*Debug verbs added by "show debug verbs"*/
-		/client/proc/Cell,
-		/client/proc/camera_view,
-		/client/proc/sec_camera_report,
-		/client/proc/intercom_view,
-		/client/proc/air_status,
-		/client/proc/atmosscan,
-		/client/proc/powerdebug,
-		/client/proc/count_objects_on_z_level,
-		/client/proc/count_objects_all,
-		/client/proc/cmd_assume_direct_control,
-		/client/proc/startSinglo,
-		/client/proc/set_server_fps,
-		/client/proc/cmd_admin_grantfullaccess,
-		/client/proc/cmd_admin_areatest_all,
-		/client/proc/cmd_admin_areatest_station,
+		GLOB.admin_verbs_debug_mapping,
+		/client/proc/disable_debug_verbs,
 		/client/proc/readmin
 		)
 
@@ -364,7 +350,6 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		if(body && !body.key)
 			body.key = "@[key]"	//Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin Ghost") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 
 /client/proc/invisimin()
 	set name = "Invisimin"
@@ -609,12 +594,14 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	if(!message)
 		return
 	O.say(message)
-	log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z] say \"[message]\"")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. say \"[message]\"</span>")
+	log_admin("[key_name(usr)] made [O] at [AREACOORD(O)] say \"[message]\"")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [O] at [AREACOORD(O)]. say \"[message]\"</span>")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Object Say") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"
 	set category = "Special Verbs"
+	if (!(holder.rank.rights & R_BUILDMODE))
+		return
 	if(src.mob)
 		togglebuildmode(src.mob)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Build Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -634,7 +621,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		return
 
 	if(has_antag_hud())
-		toggle_antag_hud()
+		toggle_combo_hud()
 
 	holder.deactivate()
 
@@ -699,7 +686,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 						if (tile)
 							var/mob/living/carbon/human/hooman = new(tile)
 							hooman.equipOutfit(pick(subtypesof(/datum/outfit)))
-							testing("Spawned test mob at [tile.x],[tile.y],[tile.z]")
+							testing("Spawned test mob at [COORD(tile)]")
 			while (!area && --j > 0)
 
 /client/proc/toggle_AI_interact()

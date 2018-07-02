@@ -1,11 +1,11 @@
 
 ////////////////////////////////
 /proc/message_admins(msg)
-	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
+	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message linkify\">[msg]</span></span>"
 	to_chat(GLOB.admins, msg)
 
 /proc/relay_msg_admins(msg)
-	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message\">[msg]</span></span>"
+	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message linkify\">[msg]</span></span>"
 	to_chat(GLOB.admins, msg)
 
 
@@ -19,8 +19,7 @@
 	if(!check_rights())
 		return
 
-	if(!isobserver(usr))
-		log_game("[key_name(usr)] checked the player panel while in game.")
+	log_admin("[key_name(usr)] checked the individual player panel for [key_name(M)][isobserver(usr)?"":" while in game"].")
 
 	if(!M)
 		to_chat(usr, "You seem to be selecting a mob that doesn't exist anymore.")
@@ -30,7 +29,7 @@
 	body += "<body>Options panel for <b>[M]</b>"
 	if(M.client)
 		body += " played by <b>[M.client]</b> "
-		body += "\[<A href='?_src_=holder;[HrefToken()];editrights=rank;ckey=[M.ckey]'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
+		body += "\[<A href='?_src_=holder;[HrefToken()];editrights=[(GLOB.admin_datums[M.client.ckey] || GLOB.deadmins[M.client.ckey]) ? "rank" : "add"];ckey=[M.ckey]'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
 		if(CONFIG_GET(flag/use_exp_tracking))
 			body += "\[<A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(M)]'>" + M.client.get_exp_living() + "</a>\]"
 
@@ -59,10 +58,18 @@
 		body += "<a href='?_src_=holder;[HrefToken()];traitor=[REF(M)]'>TP</a> - "
 	else
 		body += "<a href='?_src_=holder;[HrefToken()];initmind=[REF(M)]'>Init Mind</a> - "
+	if (iscyborg(M))
+		body += "<a href='?_src_=holder;[HrefToken()];borgpanel=[REF(M)]'>BP</a> - "
 	body += "<a href='?priv_msg=[M.ckey]'>PM</a> - "
 	body += "<a href='?_src_=holder;[HrefToken()];subtlemessage=[REF(M)]'>SM</a> - "
+	if (ishuman(M) && M.mind)
+		body += "<a href='?_src_=holder;[HrefToken()];HeadsetMessage=[REF(M)]'>HM</a> - "
 	body += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(M)]'>FLW</a> - "
-	body += "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)]'>LOGS</a>\] <br>"
+	//Default to client logs if available
+	var/source = LOGSRC_MOB
+	if(M.client)
+		source = LOGSRC_CLIENT
+	body += "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_src=[source]'>LOGS</a>\] <br>"
 
 	body += "<b>Mob type</b> = [M.type]<br><br>"
 
@@ -70,14 +77,19 @@
 	body += "<A href='?_src_=holder;[HrefToken()];newban=[REF(M)]'>Ban</A> | "
 	body += "<A href='?_src_=holder;[HrefToken()];jobban2=[REF(M)]'>Jobban</A> | "
 	body += "<A href='?_src_=holder;[HrefToken()];appearanceban=[REF(M)]'>Identity Ban</A> | "
+	var/rm = REF(M)
 	if(jobban_isbanned(M, "OOC"))
-		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=OOC;jobban4=[REF(M)]'><font color=red>OOCBan</font></A> | "
+		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=OOC;jobban4=[rm]'><font color=red>OOCBan</font></A> | "
 	else
-		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=OOC;jobban4=[REF(M)]'>OOCBan</A> | "
+		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=OOC;jobban4=[rm]'>OOCBan</A> | "
+	if(QDELETED(M) || QDELETED(usr))
+		return
 	if(jobban_isbanned(M, "emote"))
-		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=emote;jobban4=[REF(M)]'><font color=red>EmoteBan</font></A> | "
+		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=emote;jobban4=[rm]'><font color=red>EmoteBan</font></A> | "
 	else
-		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=emote;jobban4=[REF(M)]'>Emoteban</A> | "
+		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=emote;jobban4=[rm]'>Emoteban</A> | "
+	if(QDELETED(M) || QDELETED(usr))
+		return
 
 	body += "<A href='?_src_=holder;[HrefToken()];showmessageckey=[M.ckey]'>Notes | Messages | Watchlist</A> | "
 	if(M.client)
@@ -431,7 +443,7 @@
 		return
 
 	var/list/options = list("Regular Restart", "Hard Restart (No Delay/Feeback Reason)", "Hardest Restart (No actions, just reboot)")
-	if(SERVER_TOOLS_PRESENT)
+	if(world.TgsAvailable())
 		options += "Server Restart (Kill and restart DD)";
 
 	var/rebootconfirm
@@ -456,7 +468,7 @@
 					world.Reboot(fast_track = TRUE)
 				if("Server Restart (Kill and restart DD)")
 					to_chat(world, "Server restart - [init_by]")
-					SERVER_TOOLS_REBOOT_BYOND
+					world.TgsEndProcess()
 
 /datum/admins/proc/end_round()
 	set category = "Server"
@@ -642,9 +654,9 @@
 		T.ChangeTurf(chosen)
 	else
 		var/atom/A = new chosen(usr.loc)
-		A.admin_spawned = TRUE
+		A.flags_1 |= ADMIN_SPAWNED_1
 
-	log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
+	log_admin("[key_name(usr)] spawned [chosen] at [AREACOORD(usr)]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/spawn_cargo(object as text)
@@ -662,7 +674,7 @@
 	S.admin_spawned = TRUE
 	S.generate(get_turf(usr))
 
-	log_admin("[key_name(usr)] spawned cargo pack [chosen] at ([usr.x],[usr.y],[usr.z])")
+	log_admin("[key_name(usr)] spawned cargo pack [chosen] at [AREACOORD(usr)]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Cargo") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -718,7 +730,7 @@
 			to_chat(usr, "<b>AI [key_name(S, usr)]'s laws:</b>")
 		else if(iscyborg(S))
 			var/mob/living/silicon/robot/R = S
-			to_chat(usr, "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [R.connected_ai])":"(Independent)"]: laws:</b>")
+			to_chat(usr, "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [key_name(R.connected_ai)])":"(Independent)"]: laws:</b>")
 		else if (ispAI(S))
 			to_chat(usr, "<b>pAI [key_name(S, usr)]'s laws:</b>")
 		else
@@ -768,11 +780,7 @@
 		var/J_totPos = html_encode(job.total_positions)
 		dat += "<tr><td>[J_title]:</td> <td>[J_opPos]/[job.total_positions < 0 ? " (unlimited)" : J_totPos]"
 
-		if(job.title == "AI" || job.title == "Cyborg")
-			dat += " </td><td>(Cannot Late Join)</td>"
-			continue
-		else
-			dat += "</td>"
+		dat += "</td>"
 		dat += "<td>"
 		if(job.total_positions >= 0)
 			dat += "<A href='?src=[REF(src)];[HrefToken()];customjobslot=[job.title]'>Custom</A> | "

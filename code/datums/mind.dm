@@ -41,14 +41,10 @@
 	var/special_role
 	var/list/restricted_roles = list()
 
-	var/datum/job/assigned_job
-
 	var/list/datum/objective/objectives = list()
 
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
 
-	var/datum/faction/faction 			//associated faction
-	var/datum/changeling/changeling		//changeling holder
 	var/linglink
 	var/datum/martial_art/martial_art
 	var/static/default_martial_art = new/datum/martial_art
@@ -111,7 +107,7 @@
 	if(current)
 		current.transfer_observers_to(new_character)	//transfer anyone observing the old character to the new one
 	current = new_character								//associate ourself with our new body
-	new_character.mind = src							//and associate our new body with ourself		
+	new_character.mind = src							//and associate our new body with ourself
 	for(var/a in antag_datums)	//Makes sure all antag datums effects are applied in the new body
 		var/datum/antagonist/A = a
 		A.on_body_transfer(old_current, current)
@@ -195,9 +191,7 @@
 		special_role = null
 
 /datum/mind/proc/remove_traitor()
-	if(src in SSticker.mode.traitors)
-		remove_antag_datum(/datum/antagonist/traitor)
-	SSticker.mode.update_traitor_icons_removed(src)
+	remove_antag_datum(/datum/antagonist/traitor)
 
 /datum/mind/proc/remove_brother()
 	if(src in SSticker.mode.brothers)
@@ -230,12 +224,12 @@
 /datum/mind/proc/remove_antag_equip()
 	var/list/Mob_Contents = current.get_contents()
 	for(var/obj/item/I in Mob_Contents)
-		if(istype(I, /obj/item/device/pda))
-			var/obj/item/device/pda/P = I
+		if(istype(I, /obj/item/pda))
+			var/obj/item/pda/P = I
 			P.lock_code = ""
 
-		else if(istype(I, /obj/item/device/radio))
-			var/obj/item/device/radio/R = I
+		else if(istype(I, /obj/item/radio))
+			var/obj/item/radio/R = I
 			R.traitor_frequency = 0
 
 /datum/mind/proc/remove_all_antag() //For the Lazy amongst us.
@@ -245,7 +239,6 @@
 	remove_wizard()
 	remove_cultist()
 	remove_rev()
-	SSticker.mode.update_traitor_icons_removed(src)
 	SSticker.mode.update_cult_icons_removed(src)
 
 /datum/mind/proc/equip_traitor(employer = "The Syndicate", silent = FALSE, datum/antagonist/uplink_owner)
@@ -257,8 +250,8 @@
 	. = TRUE
 
 	var/list/all_contents = traitor_mob.GetAllContents()
-	var/obj/item/device/pda/PDA = locate() in all_contents
-	var/obj/item/device/radio/R = locate() in all_contents
+	var/obj/item/pda/PDA = locate() in all_contents
+	var/obj/item/radio/R = locate() in all_contents
 	var/obj/item/pen/P
 
 	if (PDA) // Prioritize PDA pen, otherwise the pocket protector pens will be chosen, which causes numerous ahelps about missing uplink
@@ -304,7 +297,7 @@
 	else
 		uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key)
 		var/unlock_note
-		
+
 		if(uplink_loc == R)
 			R.traitor_frequency = sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
 
@@ -324,7 +317,7 @@
 			if(!silent)
 				to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [P.traitor_unlock_degrees] from its starting position to unlock its hidden features.")
 			unlock_note = "<B>Uplink Degrees:</B> [P.traitor_unlock_degrees] ([P.name])."
-		
+
 		if(uplink_owner)
 			uplink_owner.antag_memory += unlock_note + "<br>"
 		else
@@ -358,7 +351,7 @@
 
 	if(creator.mind.special_role)
 		message_admins("[ADMIN_LOOKUPFLW(current)] has been created by [ADMIN_LOOKUPFLW(creator)], an antagonist.")
-		to_chat(current, "<span class='userdanger'>Despite your creators current allegiances, your true master remains [creator.real_name]. If their loyalities change, so do yours. This will never change unless your creator's body is destroyed.</span>")
+		to_chat(current, "<span class='userdanger'>Despite your creators current allegiances, your true master remains [creator.real_name]. If their loyalties change, so do yours. This will never change unless your creator's body is destroyed.</span>")
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)
 	if(!recipient)
@@ -608,7 +601,7 @@
 			return
 		objective.completed = !objective.completed
 		log_admin("[key_name(usr)] toggled the win state for [current]'s objective: [objective.explanation_text]")
-    
+
 	else if (href_list["silicon"])
 		switch(href_list["silicon"])
 			if("unemag")
@@ -682,7 +675,7 @@
 	if(!(has_antag_datum(/datum/antagonist/traitor)))
 		add_antag_datum(/datum/antagonist/traitor)
 
-/datum/mind/proc/make_Changling()
+/datum/mind/proc/make_Changeling()
 	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
 	if(!C)
 		C = add_antag_datum(/datum/antagonist/changeling)
@@ -701,7 +694,7 @@
 		SSticker.mode.add_cultist(src,FALSE,equip=TRUE)
 		special_role = ROLE_CULTIST
 		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy your world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
-		to_chat(current, "<font color=\"purple\"><b><i>Assist your new bretheren in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
+		to_chat(current, "<font color=\"purple\"><b><i>Assist your new brethren in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
 
 /datum/mind/proc/make_Rev()
 	var/datum/antagonist/rev/head/head = new()
@@ -773,6 +766,13 @@
 	. = G
 	if(G)
 		G.reenter_corpse()
+
+
+/datum/mind/proc/has_objective(objective_type)
+	for(var/datum/antagonist/A in antag_datums)
+		for(var/O in A.objectives)
+			if(istype(O,objective_type))
+				return TRUE
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)

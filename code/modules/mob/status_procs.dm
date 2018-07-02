@@ -59,7 +59,10 @@
 
 /////////////////////////////////// SLEEPING ////////////////////////////////////
 
-/mob/living/proc/IsSleeping() //If we're asleep
+/mob/proc/IsSleeping() //non-living mobs shouldn't be sleeping either
+	return FALSE
+
+/mob/living/IsSleeping() //If we're asleep
 	return has_status_effect(STATUS_EFFECT_SLEEPING)
 
 /mob/living/proc/AmountSleeping() //How many deciseconds remain in our sleep
@@ -243,8 +246,3 @@
 /mob/proc/adjust_bodytemperature(amount,min_temp=0,max_temp=INFINITY)
 	if(bodytemperature > min_temp && bodytemperature < max_temp)
 		bodytemperature = CLAMP(bodytemperature + amount,min_temp,max_temp)
-
-
-
-
-

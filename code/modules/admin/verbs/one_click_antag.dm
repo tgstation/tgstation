@@ -57,7 +57,7 @@
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
-		if(isReadytoRumble(applicant, ROLE_TRAITOR, FALSE))
+		if(isReadytoRumble(applicant, ROLE_TRAITOR))
 			if(temp.age_check(applicant.client))
 				if(!(applicant.job in temp.restricted_jobs))
 					candidates += applicant
@@ -76,7 +76,7 @@
 	return 0
 
 
-/datum/admins/proc/makeChanglings()
+/datum/admins/proc/makeChangelings()
 
 	var/datum/game_mode/changeling/temp = new
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
@@ -95,11 +95,11 @@
 					candidates += applicant
 
 	if(candidates.len)
-		var/numChanglings = min(candidates.len, 3)
+		var/numChangelings = min(candidates.len, 3)
 
-		for(var/i = 0, i<numChanglings, i++)
+		for(var/i = 0, i<numChangelings, i++)
 			H = pick(candidates)
-			H.mind.make_Changling()
+			H.mind.make_Changeling()
 			candidates.Remove(H)
 
 		return 1
@@ -290,7 +290,7 @@
 
 
 /datum/admins/proc/equipAntagOnDummy(mob/living/carbon/human/dummy/mannequin, datum/antagonist/antag)
-	for(var/I in mannequin.get_equipped_items())
+	for(var/I in mannequin.get_equipped_items(TRUE))
 		qdel(I)
 	if (ispath(antag, /datum/antagonist/ert))
 		var/datum/antagonist/ert/ert = antag

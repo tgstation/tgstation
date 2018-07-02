@@ -148,10 +148,10 @@
 	icon_state = "goldrevolver"
 	fire_sound = 'sound/weapons/resonator_blast.ogg'
 	recoil = 8
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/ballistic/revolver/nagant
-	name = "nagant revolver"
+	name = "\improper Nagant revolver"
 	desc = "An old model of revolver that originated in Russia. Able to be suppressed. Uses 7.62x38mmR ammo."
 	icon_state = "nagant"
 	can_suppress = TRUE
@@ -163,7 +163,7 @@
 // You can spin the chamber to randomize the position of the bullet.
 
 /obj/item/gun/ballistic/revolver/russian
-	name = "\improper russian revolver"
+	name = "\improper Russian revolver"
 	desc = "A Russian-made revolver for drinking games. Uses .357 ammo, and has a mechanism requiring you to spin the chamber before each trigger pull."
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = FALSE
@@ -233,12 +233,12 @@
 	user.visible_message("<span class='danger'>[user.name] fires [src] at [user.p_their()] head!</span>", "<span class='userdanger'>You fire [src] at your head!</span>", "<span class='italics'>You hear a gunshot!</span>")
 
 /obj/item/gun/ballistic/revolver/russian/soul
-	name = "cursed russian revolver"
+	name = "cursed Russian revolver"
 	desc = "To play with this revolver requires wagering your very soul."
 
 /obj/item/gun/ballistic/revolver/russian/soul/shoot_self(mob/living/user)
 	..()
-	var/obj/item/device/soulstone/anybody/SS = new /obj/item/device/soulstone/anybody(get_turf(src))
+	var/obj/item/soulstone/anybody/SS = new /obj/item/soulstone/anybody(get_turf(src))
 	if(!SS.transfer_soul("FORCE", user)) //Something went wrong
 		qdel(SS)
 		return
@@ -257,7 +257,7 @@
 	weapon_weight = WEAPON_MEDIUM
 	force = 10
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual
 	sawn_desc = "Omar's coming!"
 	obj_flags = UNIQUE_RENAME
@@ -314,7 +314,7 @@
 	if(istype(A, /obj/item/stack/cable_coil) && !sawn_off)
 		var/obj/item/stack/cable_coil/C = A
 		if(C.use(10))
-			slot_flags = SLOT_BACK
+			slot_flags = ITEM_SLOT_BACK
 			to_chat(user, "<span class='notice'>You tie the lengths of cable to the shotgun, making a sling.</span>")
 			slung = TRUE
 			update_icon()
@@ -340,7 +340,7 @@
 	item_state = "gun"
 	w_class = WEIGHT_CLASS_NORMAL
 	sawn_off = TRUE
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 
 
 /obj/item/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.

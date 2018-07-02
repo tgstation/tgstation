@@ -4,7 +4,7 @@
 	uniform = /obj/item/clothing/under/rank/centcom_officer
 	shoes = /obj/item/clothing/shoes/combat/swat
 	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/device/radio/headset/headset_cent/alt
+	ears = /obj/item/radio/headset/headset_cent/alt
 
 /datum/outfit/ert/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -13,7 +13,7 @@
 	var/obj/item/implant/mindshield/L = new/obj/item/implant/mindshield(H)
 	L.implant(H, null, 1)
 
-	var/obj/item/device/radio/R = H.ears
+	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_CENTCOM)
 	R.freqlock = TRUE
 
@@ -40,8 +40,8 @@
 
 	if(visualsOnly)
 		return
-	var/obj/item/device/radio/R = H.ears
-	R.keyslot = new /obj/item/device/encryptionkey/heads/captain
+	var/obj/item/radio/R = H.ears
+	R.keyslot = new /obj/item/encryptionkey/heads/captain
 	R.recalculateChannels()
 
 /datum/outfit/ert/commander/alert
@@ -74,8 +74,8 @@
 	if(visualsOnly)
 		return
 
-	var/obj/item/device/radio/R = H.ears
-	R.keyslot = new /obj/item/device/encryptionkey/heads/hos
+	var/obj/item/radio/R = H.ears
+	R.keyslot = new /obj/item/encryptionkey/heads/hos
 	R.recalculateChannels()
 
 /datum/outfit/ert/security/alert
@@ -110,8 +110,8 @@
 	if(visualsOnly)
 		return
 
-	var/obj/item/device/radio/R = H.ears
-	R.keyslot = new /obj/item/device/encryptionkey/heads/cmo
+	var/obj/item/radio/R = H.ears
+	R.keyslot = new /obj/item/encryptionkey/heads/cmo
 	R.recalculateChannels()
 
 /datum/outfit/ert/medic/alert
@@ -146,8 +146,8 @@
 	if(visualsOnly)
 		return
 
-	var/obj/item/device/radio/R = H.ears
-	R.keyslot = new /obj/item/device/encryptionkey/heads/ce
+	var/obj/item/radio/R = H.ears
+	R.keyslot = new /obj/item/encryptionkey/heads/ce
 	R.recalculateChannels()
 
 /datum/outfit/ert/engineer/alert
@@ -166,12 +166,12 @@
 	uniform = /obj/item/clothing/under/rank/centcom_officer
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	gloves = /obj/item/clothing/gloves/color/black
-	ears = /obj/item/device/radio/headset/headset_cent
+	ears = /obj/item/radio/headset/headset_cent
 	glasses = /obj/item/clothing/glasses/sunglasses
 	belt = /obj/item/gun/energy/e_gun
 	l_pocket = /obj/item/pen
 	back = /obj/item/storage/backpack/satchel
-	r_pocket = /obj/item/device/pda/heads
+	r_pocket = /obj/item/pda/heads
 	l_hand = /obj/item/clipboard
 	id = /obj/item/card/id
 
@@ -179,7 +179,7 @@
 	if(visualsOnly)
 		return
 
-	var/obj/item/device/pda/heads/pda = H.r_store
+	var/obj/item/pda/heads/pda = H.r_store
 	pda.owner = H.real_name
 	pda.ownjob = "CentCom Official"
 	pda.update_label()
@@ -231,8 +231,8 @@
 	if(visualsOnly)
 		return
 
-	var/obj/item/device/radio/R = H.ears
-	R.keyslot = new /obj/item/device/encryptionkey/heads/hop
+	var/obj/item/radio/R = H.ears
+	R.keyslot = new /obj/item/encryptionkey/heads/hop
 	R.recalculateChannels()
 
 /datum/outfit/ert/chaplain

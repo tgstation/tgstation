@@ -7,7 +7,7 @@
 
 /datum/reagent/drug/on_mob_delete(mob/living/M)
 	if(trippy)
-		M.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "[id]_high")
+		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[id]_high")
 
 /datum/reagent/drug/space_drugs
 	name = "Space drugs"
@@ -28,7 +28,7 @@
 
 /datum/reagent/drug/space_drugs/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You start tripping hard!</span>")
-	M.SendSignal(COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/drugs/overdose, name)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/drugs/overdose, name)
 
 /datum/reagent/drug/space_drugs/overdose_process(mob/living/M)
 	if(M.hallucination < volume && prob(20))
@@ -49,22 +49,13 @@
 	if(prob(1))
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		to_chat(M, "<span class='notice'>[smoke_message]</span>")
-	M.SendSignal(COMSIG_ADD_MOOD_EVENT, "smoked", /datum/mood_event/drugs/smoked, name)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smoked", /datum/mood_event/drugs/smoked, name)
 	M.AdjustStun(-20, 0)
 	M.AdjustKnockdown(-20, 0)
 	M.AdjustUnconscious(-20, 0)
 	M.adjustStaminaLoss(-0.5*REM, 0)
 	..()
 	. = 1
-
-/datum/reagent/drug/menthol
-	name = "Menthol"
-	id = "menthol"
-	description = "Tastes naturally minty, and imparts a very mild numbing sensation."
-	taste_description = "mint"
-	reagent_state = LIQUID
-	color = "#80AF9C"
-	trippy = FALSE
 
 /datum/reagent/drug/crank
 	name = "Crank"
@@ -287,7 +278,7 @@
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	M.adjustStaminaLoss(-5, 0)
 	M.adjustBrainLoss(4)
-	M.hallucination += 10
+	M.hallucination += 5
 	if(M.canmove && !ismovableatom(M.loc))
 		step(M, pick(GLOB.cardinals))
 		step(M, pick(GLOB.cardinals))
@@ -295,7 +286,7 @@
 	. = 1
 
 /datum/reagent/drug/bath_salts/overdose_process(mob/living/M)
-	M.hallucination += 10
+	M.hallucination += 5
 	if(M.canmove && !ismovableatom(M.loc))
 		for(var/i in 1 to 8)
 			step(M, pick(GLOB.cardinals))
@@ -341,7 +332,7 @@
 	..()
 
 /datum/reagent/drug/bath_salts/addiction_act_stage4(mob/living/carbon/human/M)
-	M.hallucination += 40
+	M.hallucination += 30
 	if(M.canmove && !ismovableatom(M.loc))
 		for(var/i = 0, i < 16, i++)
 			step(M, pick(GLOB.cardinals))

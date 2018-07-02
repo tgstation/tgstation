@@ -1,9 +1,10 @@
-/obj/item/device/integrated_electronics/detailer
+/obj/item/integrated_electronics/detailer
 	name = "assembly detailer"
 	desc = "A combination autopainter and flash anodizer designed to give electronic assemblies a colorful, wear-resistant finish."
 	icon = 'icons/obj/assemblies/electronic_tools.dmi'
 	icon_state = "detailer"
-	flags_1 = CONDUCT_1 | NOBLUDGEON_1
+	flags_1 = CONDUCT_1
+	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_SMALL
 	var/data_to_write = null
 	var/accepting_refs = FALSE
@@ -27,17 +28,17 @@
 		"purple" = COLOR_ASSEMBLY_PURPLE
 		)
 
-/obj/item/device/integrated_electronics/detailer/Initialize()
+/obj/item/integrated_electronics/detailer/Initialize()
 	.=..()
 	update_icon()
 
-/obj/item/device/integrated_electronics/detailer/update_icon()
+/obj/item/integrated_electronics/detailer/update_icon()
 	cut_overlays()
 	var/mutable_appearance/detail_overlay = mutable_appearance('icons/obj/assemblies/electronic_tools.dmi', "detailer-color")
 	detail_overlay.color = detail_color
 	add_overlay(detail_overlay)
 
-/obj/item/device/integrated_electronics/detailer/attack_self(mob/user)
+/obj/item/integrated_electronics/detailer/attack_self(mob/user)
 	var/color_choice = input(user, "Select color.", "Assembly Detailer") as null|anything in color_list
 	if(!color_list[color_choice])
 		return

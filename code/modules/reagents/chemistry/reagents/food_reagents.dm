@@ -283,10 +283,10 @@
 		if(ishuman(victim))
 			var/mob/living/carbon/human/H = victim
 			if( H.head )
-				if ( H.head.flags_cover & MASKCOVERSEYES )
+				if ( H.head.flags_cover & HEADCOVERSEYES )
 					eyes_covered = 1
 					safe_thing = H.head
-				if ( H.head.flags_cover & MASKCOVERSMOUTH )
+				if ( H.head.flags_cover & HEADCOVERSMOUTH )
 					mouth_covered = 1
 					safe_thing = H.head
 			if(H.glasses)
@@ -438,7 +438,7 @@
 	if(hotspot)
 		var/datum/gas_mixture/lowertemp = T.remove_air(T.air.total_moles())
 		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
-		lowertemp.react()
+		lowertemp.react(src)
 		T.assume_air(lowertemp)
 		qdel(hotspot)
 
@@ -556,7 +556,7 @@
 /datum/reagent/consumable/honey
 	name = "honey"
 	id = "honey"
-	description = "Sweet sweet honey, decays into sugar and has natural healing properties."
+	description = "Sweet sweet honey that decays into sugar. Has antibacterial and natural healing properties."
 	color = "#d3a308"
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	metabolization_rate = 1 * REAGENTS_METABOLISM
@@ -570,6 +570,14 @@
 		M.adjustOxyLoss(-1*REM, 0)
 		M.adjustToxLoss(-1*REM, 0)
 	..()
+
+/datum/reagent/consumable/honey/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+  if(iscarbon(M) && (method in list(TOUCH, VAPOR, PATCH)))
+    var/mob/living/carbon/C = M
+    for(var/s in C.surgeries)
+      var/datum/surgery/S = s 
+      S.success_multiplier = max(0.6, S.success_multiplier) // +60% success probability on each step, compared to bacchus' blessing's ~46%
+  ..()
 
 /datum/reagent/consumable/mayonnaise
 	name = "Mayonnaise"
@@ -624,7 +632,7 @@
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	color = "#664330" // rgb: 102, 67, 48
 
-/datum/reagent/consumable/nutriment/on_mob_life(mob/living/M)
+/datum/reagent/consumable/nutriment/stabilized/on_mob_life(mob/living/M)
 	if(M.nutrition > NUTRITION_LEVEL_FULL - 25)
 		M.nutrition -= 3*nutriment_factor
 	..()

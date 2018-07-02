@@ -4,8 +4,9 @@
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
-	species_traits = list(SPECIES_INORGANIC,NOBLOOD,NOTRANSSTING)
+	species_traits = list(NOBLOOD,NOTRANSSTING)
 	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_NOHUNGER)
+	inherent_biotypes = list(MOB_INORGANIC, MOB_HUMANOID)
 	mutantlungs = /obj/item/organ/lungs/plasmaman
 	mutanttongue = /obj/item/organ/tongue/bone/plasmaman
 	mutantliver = /obj/item/organ/liver/plasmaman
@@ -23,7 +24,12 @@
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
-	var/atmos_sealed = (H.wear_suit && (H.wear_suit.flags_1 & STOPSPRESSUREDMAGE_1)) && (H.head && (H.head.flags_1 & STOPSPRESSUREDMAGE_1))
+	var/atmos_sealed = FALSE
+	if (H.wear_suit && H.head && istype(H.wear_suit, /obj/item/clothing) && istype(H.head, /obj/item/clothing))
+		var/obj/item/clothing/CS = H.wear_suit
+		var/obj/item/clothing/CH = H.head
+		if (CS.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
+			atmos_sealed = TRUE
 	if((!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman)) && !atmos_sealed)
 		if(environment)
 			if(environment.total_moles())

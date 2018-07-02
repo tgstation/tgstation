@@ -1,13 +1,3 @@
-#define HUMAN_MAX_OXYLOSS 3
-#define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30)
-#define HEAT_GAS_DAMAGE_LEVEL_1 2
-#define HEAT_GAS_DAMAGE_LEVEL_2 4
-#define HEAT_GAS_DAMAGE_LEVEL_3 8
-
-#define COLD_GAS_DAMAGE_LEVEL_1 0.5
-#define COLD_GAS_DAMAGE_LEVEL_2 1.5
-#define COLD_GAS_DAMAGE_LEVEL_3 3
-
 /obj/item/organ/lungs
 	name = "lungs"
 	icon_state = "lungs"
@@ -246,13 +236,13 @@
 
 		var/bz_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/bz][MOLES])
 		if(bz_pp > BZ_trip_balls_min)
-			H.hallucination += 20
+			H.hallucination += 10
 			H.reagents.add_reagent("bz_metabolites",5)
 			if(prob(33))
 				H.adjustBrainLoss(3, 150)
 
 		else if(bz_pp > 0.01)
-			H.hallucination += 5//Removed at 2 per tick so this will slowly build up
+			H.hallucination += 5
 			H.reagents.add_reagent("bz_metabolites",1)
 
 
@@ -356,6 +346,9 @@
 	synthetic = TRUE
 
 /obj/item/organ/lungs/cybernetic/emp_act()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	owner.losebreath = 20
 
 
@@ -369,13 +362,3 @@
 	cold_level_1_threshold = 200
 	cold_level_2_threshold = 140
 	cold_level_3_threshold = 100
-
-#undef HUMAN_MAX_OXYLOSS
-#undef HUMAN_CRIT_MAX_OXYLOSS
-#undef HEAT_GAS_DAMAGE_LEVEL_1
-#undef HEAT_GAS_DAMAGE_LEVEL_2
-#undef HEAT_GAS_DAMAGE_LEVEL_3
-
-#undef COLD_GAS_DAMAGE_LEVEL_1
-#undef COLD_GAS_DAMAGE_LEVEL_2
-#undef COLD_GAS_DAMAGE_LEVEL_3

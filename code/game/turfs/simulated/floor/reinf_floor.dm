@@ -37,7 +37,7 @@
 		if(!istype(src, /turf/open/floor/engine))
 			return TRUE
 		new /obj/item/stack/rods(src, 2)
-		ChangeTurf(/turf/open/floor/plating)
+		ScrapeAway()
 	return TRUE
 
 /turf/open/floor/engine/acid_act(acidpwr, acid_volume)
@@ -55,14 +55,18 @@
 	switch(severity)
 		if(1)
 			if(prob(80))
-				ReplaceWithLattice()
+				if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
+					ScrapeAway()
+					ReplaceWithLattice()
+				else
+					ScrapeAway(2)
 			else if(prob(50))
-				ScrapeAway()
+				ScrapeAway(2)
 			else
-				make_plating(1)
+				ScrapeAway()
 		if(2)
 			if(prob(50))
-				make_plating(1)
+				ScrapeAway()
 
 /turf/open/floor/engine/singularity_pull(S, current_size)
 	..()
@@ -86,11 +90,12 @@
 //air filled floors; used in atmos pressure chambers
 
 /turf/open/floor/engine/n2o
-	name = "n2o floor"
+	article = "an"
+	name = "\improper N2O floor"
 	initial_gas_mix = "n2o=6000;TEMP=293.15"
 
 /turf/open/floor/engine/co2
-	name = "co2 floor"
+	name = "\improper CO2 floor"
 	initial_gas_mix = "co2=50000;TEMP=293.15"
 
 /turf/open/floor/engine/plasma
@@ -98,11 +103,12 @@
 	initial_gas_mix = "plasma=70000;TEMP=293.15"
 
 /turf/open/floor/engine/o2
-	name = "o2 floor"
+	name = "\improper O2 floor"
 	initial_gas_mix = "o2=100000;TEMP=293.15"
 
 /turf/open/floor/engine/n2
-	name = "n2 floor"
+	article = "an"
+	name = "\improper N2 floor"
 	initial_gas_mix = "n2=100000;TEMP=293.15"
 
 /turf/open/floor/engine/air
@@ -113,9 +119,8 @@
 
 /turf/open/floor/engine/cult
 	name = "engraved floor"
-	desc = "The air hangs heavy over this sinister flooring."
+	desc = "The air smells strangely over this sinister flooring."
 	icon_state = "plating"
-	CanAtmosPass = ATMOS_PASS_NO
 	floor_tile = null
 	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearance
 

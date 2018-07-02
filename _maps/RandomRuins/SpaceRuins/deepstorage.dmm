@@ -49,9 +49,8 @@
 /area/ruin/space/has_grav/deepstorage/crusher)
 "an" = (
 /obj/machinery/conveyor{
-	dir = 1;
-	id = "bunkerrecycle";
-	movedir = 2
+	dir = 2;
+	id = "bunkerrecycle"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
@@ -194,7 +193,7 @@
 /obj/item/storage/box/zipties,
 /obj/item/switchblade,
 /obj/effect/turf_decal/delivery,
-/obj/item/device/gps{
+/obj/item/gps{
 	gpstag = "DEEP"
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -283,15 +282,15 @@
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "aR" = (
 /obj/structure/closet/cardboard,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight,
+/obj/item/flashlight,
+/obj/item/flashlight,
 /obj/item/shovel,
 /obj/item/pickaxe/drill,
 /obj/item/pickaxe/drill,
@@ -301,12 +300,12 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "aS" = (
 /obj/structure/closet/cardboard,
-/obj/item/device/flashlight/lantern,
-/obj/item/device/flashlight/lantern,
-/obj/item/device/flashlight/lantern,
-/obj/item/device/tape/random,
-/obj/item/device/tape/random,
-/obj/item/device/tape/random,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/tape/random,
+/obj/item/tape/random,
+/obj/item/tape/random,
 /obj/item/storage/box/rxglasses,
 /obj/item/extinguisher,
 /obj/item/extinguisher,
@@ -1163,8 +1162,8 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "db" = (
 /obj/structure/table,
-/obj/item/device/healthanalyzer,
-/obj/item/device/healthanalyzer,
+/obj/item/healthanalyzer,
+/obj/item/healthanalyzer,
 /obj/item/stack/medical/gauze,
 /obj/item/stack/medical/gauze,
 /turf/open/floor/plasteel/dark,
@@ -1476,11 +1475,11 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "dP" = (
 /obj/structure/table,
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = -4
 	},
-/obj/item/device/radio,
-/obj/item/device/radio{
+/obj/item/radio,
+/obj/item/radio{
 	pixel_x = 4
 	},
 /obj/machinery/airalarm{
@@ -1669,7 +1668,7 @@
 /area/ruin/space/has_grav/deepstorage/dorm)
 "ej" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -1972,18 +1971,18 @@
 "eP" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/drone,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight,
+/obj/item/flashlight,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare{
 	pixel_y = 6
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_y = 6
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_y = 6
 	},
 /turf/open/floor/plasteel/dark,
@@ -2245,12 +2244,8 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/power)
 "fy" = (
-/obj/machinery/atmospherics/components/trinary/mixer{
-	dir = 1;
-	icon_state = "mixer_off";
-	node1_concentration = 0.2;
-	node2_concentration = 0.8;
-	on = 1
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/inverse{
+	dir = 1
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2276,9 +2271,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "fC" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	dir = 8;
-	frequency = 1441;
 	id_tag = "o2_out_bunker";
 	name = "oxygen out"
 	},
@@ -2323,7 +2317,6 @@
 "fJ" = (
 /obj/machinery/computer/atmos_control/tank{
 	dir = 8;
-	frequency = 1441;
 	input_tag = "o2_in_bunker";
 	name = "Oxygen Supply Control";
 	output_tag = "o2_out_bunker";
@@ -2338,7 +2331,6 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "fL" = (
 /obj/machinery/air_sensor{
-	frequency = 1441;
 	id_tag = "o2_sensor_bunker"
 	},
 /turf/open/floor/plating/airless,
@@ -2460,10 +2452,8 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/power)
 "ga" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	filter_type = "o2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/o2{
+	dir = 1
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2482,9 +2472,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "gd" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 8;
-	frequency = 1441;
 	id = "n2_in_bunker"
 	},
 /turf/open/floor/plating/airless,
@@ -2607,9 +2596,8 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/power)
 "gv" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	dir = 8;
-	frequency = 1441;
 	id_tag = "n2_out_bunker";
 	name = "nitrogen out"
 	},
@@ -2666,7 +2654,6 @@
 "gC" = (
 /obj/machinery/computer/atmos_control/tank{
 	dir = 8;
-	frequency = 1441;
 	input_tag = "n2_in_bunker";
 	name = "Nitrogen Supply Control";
 	output_tag = "n2_out_bunker";
@@ -2676,7 +2663,6 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "gD" = (
 /obj/machinery/air_sensor{
-	frequency = 1441;
 	id_tag = "n2_sensor_bunker"
 	},
 /turf/open/floor/plating/airless,
@@ -2747,17 +2733,14 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/power)
 "gO" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	filter_type = "n2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/n2{
+	dir = 1
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/power)
 "gP" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 8;
-	frequency = 1441;
 	id = "o2_in_bunker"
 	},
 /turf/open/floor/plating/airless,
@@ -3001,6 +2984,20 @@
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/power)
+"rz" = (
+/obj/machinery/conveyor{
+	dir = 6;
+	id = "bunkerrecycle"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/crusher)
+"Bb" = (
+/obj/machinery/conveyor{
+	dir = 10;
+	id = "bunkerrecycle"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/crusher)
 
 (1,1,1) = {"
 aa
@@ -4626,9 +4623,9 @@ ab
 ab
 ab
 ag
+rz
 an
-an
-an
+Bb
 aQ
 bh
 bB

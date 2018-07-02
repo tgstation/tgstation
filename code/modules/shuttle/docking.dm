@@ -14,25 +14,11 @@
 
 	var/obj/docking_port/stationary/old_dock = get_docked()
 
-	// The turf that gets placed under where the shuttle moved from
-	var/underlying_turf_type = SHUTTLE_DEFAULT_TURF_TYPE
-
-	// The baseturf that the gets assigned to the turf_type above
-	var/underlying_baseturf_type = SHUTTLE_DEFAULT_BASETURF_TYPE
-
 	// The area that gets placed under where the shuttle moved from
 	var/underlying_area_type = SHUTTLE_DEFAULT_UNDERLYING_AREA
 
-	// The baseturf cache is a typecache of what counts as a baseturf to be left behind
-	var/list/baseturf_cache
-	
 	if(old_dock) //Dock overwrites
-		underlying_turf_type = old_dock.turf_type
-		underlying_baseturf_type = old_dock.baseturf_type
 		underlying_area_type = old_dock.area_type
-		baseturf_cache = old_dock.baseturf_cache
-	else
-		baseturf_cache = typecacheof(underlying_baseturf_type)
 
 	/**************************************************************************************************************
 		Both lists are associative with a turf:bitflag structure. (new_turfs bitflag space unused currently)
@@ -46,7 +32,12 @@
 
 	// The underlying old area is the area assumed to be under the shuttle's starting location
 	// If it no longer/has never existed it will be created
-	var/area/underlying_old_area = locate(underlying_area_type) in GLOB.sortedAreas
+	var/area/underlying_old_area
+	for(var/i in GLOB.sortedAreas) // Locate grabs subtypes and we want a particular type
+		var/area/place = i
+		if(place.type == underlying_area_type)
+			underlying_old_area = place
+			break
 	if(!underlying_old_area)
 		underlying_old_area = new underlying_area_type(null)
 
@@ -65,7 +56,7 @@
 
 	remove_ripples()
 
-	. = preflight_check(old_turfs, new_turfs, areas_to_move, rotation, underlying_turf_type, baseturf_cache)
+	. = preflight_check(old_turfs, new_turfs, areas_to_move, rotation)
 	if(.)
 		return
 
@@ -92,7 +83,7 @@
 
 	CHECK_TICK
 
-	cleanup_runway(new_dock, old_turfs, new_turfs, areas_to_move, moved_atoms, rotation, movement_direction, underlying_old_area, underlying_turf_type, underlying_baseturf_type)
+	cleanup_runway(new_dock, old_turfs, new_turfs, areas_to_move, moved_atoms, rotation, movement_direction, underlying_old_area)
 
 	CHECK_TICK
 
@@ -113,10 +104,8 @@
 	list/new_turfs,
 	list/areas_to_move,
 	rotation,
-	underlying_turf_type,
-	baseturf_cache,
 	)
-	
+
 	for(var/i in 1 to old_turfs.len)
 		CHECK_TICK
 		var/turf/oldT = old_turfs[i]
@@ -137,8 +126,8 @@
 				continue
 			move_mode = moving_atom.beforeShuttleMove(newT, rotation, move_mode, src)						//atoms
 
-		move_mode = oldT.fromShuttleMove(newT, underlying_turf_type, baseturf_cache, move_mode)				//turfs
-		move_mode = newT.toShuttleMove(oldT, move_mode , src)												//turfs
+		move_mode = oldT.fromShuttleMove(newT, move_mode)													//turfs
+		move_mode = newT.toShuttleMove(oldT, move_mode, src)												//turfs
 
 		if(move_mode & MOVE_AREA)
 			areas_to_move[old_area] = TRUE
@@ -183,10 +172,8 @@
 	rotation,
 	movement_direction,
 	area/underlying_old_area,
-	underlying_turf_type,
-	underlying_baseturf_type,
 	)
-	
+
 	underlying_old_area.afterShuttleMove()
 
 	// Parallax handling
@@ -205,7 +192,7 @@
 			continue
 		var/turf/oldT = old_turfs[i]
 		var/turf/newT = new_turfs[i]
-		newT.afterShuttleMove(oldT, underlying_turf_type, underlying_baseturf_type, rotation)				//turfs
+		newT.afterShuttleMove(oldT, rotation)																//turfs
 
 	for(var/i in 1 to moved_atoms.len)
 		CHECK_TICK

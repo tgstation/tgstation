@@ -126,12 +126,11 @@
 		settableTemperatureMedian + settableTemperatureRange)
 
 /obj/machinery/space_heater/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
+	. = ..()
+	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_CONTENTS)
 		return
 	if(cell)
 		cell.emp_act(severity)
-	..(severity)
 
 /obj/machinery/space_heater/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
@@ -156,7 +155,7 @@
 		update_icon()
 		if(panel_open)
 			interact(user)
-	else if(exchange_parts(user, I) || default_deconstruction_crowbar(I))
+	else if(default_deconstruction_crowbar(I))
 		return
 	else
 		return ..()

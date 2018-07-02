@@ -1,4 +1,4 @@
-#define MAX_THROWING_DIST 512 // 2 z-levels on default width
+#define MAX_THROWING_DIST 1280 // 5 z-levels on default width
 #define MAX_TICKS_TO_MAKE_UP 3 //how many missed ticks will we attempt to make up for this run.
 
 SUBSYSTEM_DEF(throwing)
@@ -107,7 +107,7 @@ SUBSYSTEM_DEF(throwing)
 			return
 
 		dist_travelled++
-
+		
 		if (dist_travelled > MAX_THROWING_DIST)
 			finalize()
 			return

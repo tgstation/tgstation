@@ -73,7 +73,7 @@
 // For really fat machines.
 /obj/item/integrated_circuit/passive/power/relay/large
 	name = "large tesla power relay"
-	desc = "A seemingly enigmatic device which connects to nearby APCs wirelessly and draws power from them, now in industiral size!"
+	desc = "A seemingly enigmatic device which connects to nearby APCs wirelessly and draws power from them, now in industrial size!"
 	w_class = WEIGHT_CLASS_BULKY
 	extended_desc = "The siphon drains 2 kW of power from an APC in the same room as it as long as it has charge remaining. It will always drain \
  	from the 'equipment' power channel."
@@ -89,12 +89,12 @@
 	desc = "Produces electricity from chemicals."
 	icon_state = "chemical_cell"
 	extended_desc = "This is effectively an internal beaker. It will consume and produce power from plasma, slime jelly, welding fuel, carbon,\
-	 ethanol, nutriments, and blood in order of decreasing efficiency. It will consume fuel only if the battery can take more energy."
+	 ethanol, nutriment, and blood in order of decreasing efficiency. It will consume fuel only if the battery can take more energy."
 	container_type = OPENCONTAINER
 	complexity = 4
 	inputs = list()
 	outputs = list("volume used" = IC_PINTYPE_NUMBER, "self reference" = IC_PINTYPE_REF)
-	activators = list()
+	activators = list("push ref" = IC_PINTYPE_PULSE_IN)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	var/volume = 60
 	var/list/fuel = list("plasma" = 50000, "welding_fuel" = 15000, "carbon" = 10000, "ethanol" = 10000, "nutriment" = 8000)
@@ -125,7 +125,7 @@
 				if(lfwb)
 					if(B && B.data["cloneable"])
 						var/mob/M = B.data["donor"]
-						if(M && M.stat != DEAD && M.client)
+						if(M && (M.stat != DEAD) && (M.client))
 							bp = 500000
 				if((assembly.battery.maxcharge-assembly.battery.charge) / GLOB.CELLRATE > bp)
 					if(reagents.remove_reagent("blood", 1))
@@ -134,3 +134,7 @@
 				if((assembly.battery.maxcharge-assembly.battery.charge) / GLOB.CELLRATE > fuel[I])
 					if(reagents.remove_reagent(I, 1))
 						assembly.give_power(fuel[I]*multi)
+
+/obj/item/integrated_circuit/passive/power/chemical_cell/do_work()
+	set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
+	push_data()

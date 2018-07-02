@@ -6,7 +6,7 @@
 	var/chained = 0
 
 	body_parts_covered = FEET
-	slot_flags = SLOT_FEET
+	slot_flags = ITEM_SLOT_FEET
 
 	permeability_coefficient = 0.5
 	slowdown = SHOES_SLOWDOWN

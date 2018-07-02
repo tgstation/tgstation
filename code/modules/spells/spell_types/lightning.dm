@@ -52,7 +52,7 @@
 	Snd=sound(null, repeat = 0, wait = 1, channel = Snd.channel) //byond, why you suck?
 	playsound(get_turf(user),Snd,50,0)// Sorry MrPerson, but the other ways just didn't do it the way i needed to work, this is the only way.
 	if(get_dist(user,target)>range)
-		to_chat(user, "<span class='notice'>They are too far away!</span>")
+		to_chat(user, "<span class='notice'>[target.p_theyre(TRUE)] too far away!</span>")
 		Reset(user)
 		return
 

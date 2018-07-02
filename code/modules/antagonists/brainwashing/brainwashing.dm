@@ -36,10 +36,6 @@
 	owner.objectives |= objectives
 	. = ..()
 
-/datum/antagonist/brainwashed/on_removal()
-	owner.objectives -= objectives
-	. = ..()
-
 /datum/antagonist/brainwashed/greet()
 	to_chat(owner, "<span class='warning'>Your mind reels as it begins focusing on a single purpose...</span>")
 	to_chat(owner, "<big><span class='warning'><b>Follow the Directives, at any cost!</b></span></big>")

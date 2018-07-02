@@ -92,7 +92,7 @@ Difficulty: Very Hard
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Initialize()
 	. = ..()
-	internal = new/obj/item/device/gps/internal/colossus(src)
+	internal = new/obj/item/gps/internal/colossus(src)
 
 /obj/effect/temp_visual/at_shield
 	name = "anti-toolbox field"
@@ -143,6 +143,7 @@ Difficulty: Very Hard
 	INVOKE_ASYNC(src, .proc/spiral_shoot, TRUE)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = FALSE, counter_start = 8)
+	var/turf/start_turf = get_step(src, pick(GLOB.alldirs))
 	var/counter = counter_start
 	for(var/i in 1 to 80)
 		if(negative)
@@ -153,7 +154,7 @@ Difficulty: Very Hard
 			counter = 1
 		if(counter < 1)
 			counter = 16
-		shoot_projectile(null, counter * 22.5)
+		shoot_projectile(start_turf, counter * 22.5)
 		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, 1)
 		sleep(1)
 
@@ -184,7 +185,7 @@ Difficulty: Very Hard
 		angle_to_target = set_angle
 	var/static/list/colossus_shotgun_shot_angles = list(12.5, 7.5, 2.5, -2.5, -7.5, -12.5)
 	for(var/i in colossus_shotgun_shot_angles)
-		shoot_projectile(null, angle_to_target + i)
+		shoot_projectile(target_turf, angle_to_target + i)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/dir_shots(list/dirs)
 	if(!islist(dirs))
@@ -219,7 +220,7 @@ Difficulty: Very Hard
 		target.ex_act(EXPLODE_HEAVY)
 
 
-/obj/item/device/gps/internal/colossus
+/obj/item/gps/internal/colossus
 	icon_state = null
 	gpstag = "Angelic Signal"
 	desc = "Get in the fucking robot."
@@ -354,6 +355,7 @@ Difficulty: Very Hard
 	light_range = 8
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	use_power = NO_POWER_USE
+	anchored = FALSE
 	density = TRUE
 	flags_1 = HEAR_1
 	var/activation_method
@@ -670,7 +672,7 @@ Difficulty: Very Hard
 		for(var/i in T)
 			if(isitem(i) && !is_type_in_typecache(i, banned_items_typecache))
 				var/obj/item/W = i
-				if(!W.admin_spawned && !(W.flags_2 & HOLOGRAM_2) && !(W.flags_1 & ABSTRACT_1))
+				if(!(W.flags_1 & ADMIN_SPAWNED_1) && !(W.flags_1 & HOLOGRAM_1) && !(W.item_flags & ABSTRACT))
 					L += W
 		if(L.len)
 			var/obj/item/CHOSEN = pick(L)
@@ -784,5 +786,3 @@ Difficulty: Very Hard
 #undef ACTIVATE_MOB_BUMP
 #undef ACTIVATE_WEAPON
 #undef ACTIVATE_MAGIC
-
-#undef MEDAL_PREFIX

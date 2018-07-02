@@ -6,6 +6,7 @@
 	a_intent = INTENT_HARM
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
+	mob_biotypes = list(MOB_ORGANIC, MOB_EPIC)
 	obj_damage = 400
 	light_range = 3
 	faction = list("mining", "boss")
@@ -24,23 +25,12 @@
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
-	environment_target_typecache = list(
-	/obj/machinery/door/window,
-	/obj/structure/window,
-	/obj/structure/closet,
-	/obj/structure/table,
-	/obj/structure/grille,
-	/obj/structure/girder,
-	/obj/structure/rack,
-	/obj/structure/barricade,
-	/obj/machinery/field,
-	/obj/machinery/power/emitter)
 	var/list/crusher_loot
 	var/medal_type
 	var/score_type = BOSS_SCORE
 	var/elimination = 0
 	var/anger_modifier = 0
-	var/obj/item/device/gps/internal
+	var/obj/item/gps/internal
 	var/recovery_time = 0
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
@@ -60,7 +50,7 @@
 		if(C && crusher_loot && C.total_damage >= maxHealth * 0.6)
 			spawn_crusher_loot()
 			crusher_kill = TRUE
-		if(!admin_spawned)
+		if(!(flags_1 & ADMIN_SPAWNED_1))
 			var/tab = "megafauna_kills"
 			if(crusher_kill)
 				tab = "megafauna_kills_crusher"
@@ -121,7 +111,7 @@
 	recovery_time = world.time + buffer_time
 
 /mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusher_kill)
-	if(!medal_type || admin_spawned || !SSmedals.hub_enabled) //Don't award medals if the medal type isn't set
+	if(!medal_type || (flags_1 & ADMIN_SPAWNED_1) || !SSmedals.hub_enabled) //Don't award medals if the medal type isn't set
 		return FALSE
 
 	for(var/mob/living/L in view(7,src))

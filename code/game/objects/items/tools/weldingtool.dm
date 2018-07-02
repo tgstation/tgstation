@@ -8,7 +8,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	force = 3
 	throwforce = 5
 	hitsound = "swing_hit"
@@ -28,6 +28,7 @@
 	var/change_icons = 1
 	var/can_off_process = 0
 	var/light_intensity = 2 //how powerful the emitted light is when used.
+	var/progress_flash_divisor = 10
 	var/burned_fuel_for = 0	//when fuel was last removed
 	heat = 3800
 	tool_behaviour = TOOL_WELDER
@@ -128,20 +129,20 @@
 	if(isOn())
 		use(1)
 		var/turf/location = get_turf(user)
-		location.hotspot_expose(700, 50, 1)
+		location.hotspot_expose(550, 10, 1)
 		if(get_fuel() <= 0)
 			set_light(0)
 
 		if(isliving(O))
 			var/mob/living/L = O
 			if(L.IgniteMob())
-				message_admins("[key_name_admin(user)] set [key_name_admin(L)] on fire")
-				log_game("[key_name(user)] set [key_name(L)] on fire")
+				message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(L)] on fire with [src] at [AREACOORD(user)]")
+				log_game("[key_name(user)] set [key_name(L)] on fire with [src] at [AREACOORD(user)]")
 
 
 /obj/item/weldingtool/attack_self(mob/user)
 	if(src.reagents.has_reagent("plasma"))
-		message_admins("[key_name_admin(user)] activated a rigged welder.")
+		message_admins("[ADMIN_LOOKUPFLW(user)] activated a rigged welder at [AREACOORD(user)].")
 		explode()
 	switched_on(user)
 	if(welding)
@@ -233,6 +234,16 @@
 	. = tool_use_check(user, amount)
 	if(. && user)
 		user.flash_act(light_intensity)
+
+// Flash the user during welding progress
+/obj/item/weldingtool/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
+	. = ..()
+	if(. && user)
+		if (progress_flash_divisor == 0)
+			user.flash_act(min(light_intensity,1))
+			progress_flash_divisor = initial(progress_flash_divisor)
+		else
+			progress_flash_divisor--
 
 // If welding tool ran out of fuel during a construction task, construction fails.
 /obj/item/weldingtool/tool_use_check(mob/living/user, amount)

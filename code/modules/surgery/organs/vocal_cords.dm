@@ -488,7 +488,7 @@
 				L.lay_down() //aka get up
 			L.SetStun(0)
 			L.SetKnockdown(0)
-			L.SetUnconscious(0) //i said get up i don't care if you're being tazed
+			L.SetUnconscious(0) //i said get up i don't care if you're being tased
 
 	//SIT
 	else if((findtext(message, sit_words)))
@@ -569,7 +569,7 @@
 		cooldown = COOLDOWN_NONE
 
 	if(message_admins)
-		message_admins("[key_name_admin(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
+		message_admins("[ADMIN_LOOKUPFLW(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
 	log_game("[key_name(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
 	SSblackbox.record_feedback("tally", "voice_of_god", 1, log_message)
 

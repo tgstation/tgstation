@@ -50,7 +50,7 @@
 			M.visible_message("<span class='danger'>[M] repairs \the <b>[src]</b>.</span>", \
 				"<span class='cult'>You repair <b>[src]</b>, leaving [p_they()] at <b>[round(obj_integrity * 100 / max_integrity)]%</b> stability.</span>")
 		else
-			to_chat(M, "<span class='cult'>You cannot repair [src], as [p_they()] [p_are()] undamaged!</span>")
+			to_chat(M, "<span class='cult'>You cannot repair [src], as [p_theyre()] undamaged!</span>")
 	else
 		..()
 
@@ -129,7 +129,7 @@
 	if(cooldowntime > world.time)
 		to_chat(user, "<span class='cult italic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
-	var/choice 
+	var/choice
 	if(user.mind.has_antag_datum(/datum/antagonist/cult/master))
 		choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Bastard Sword")
 	else
@@ -258,10 +258,10 @@
 		if("Zealot's Blindfold")
 			pickedtype += /obj/item/clothing/glasses/hud/health/night/cultblind
 		if("Shuttle Curse")
-			pickedtype += /obj/item/device/shuttle_curse
+			pickedtype += /obj/item/shuttle_curse
 		if("Veil Walker Set")
-			pickedtype += /obj/item/device/cult_shift
-			pickedtype += /obj/item/device/flashlight/flare/culttorch
+			pickedtype += /obj/item/cult_shift
+			pickedtype += /obj/item/flashlight/flare/culttorch
 	if(src && !QDELETED(src) && anchored && pickedtype.len && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		for(var/N in pickedtype)

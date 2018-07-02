@@ -204,8 +204,8 @@
 		desc = sawn_desc
 		w_class = WEIGHT_CLASS_NORMAL
 		item_state = "gun"
-		slot_flags &= ~SLOT_BACK	//you can't sling it on your back
-		slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
+		slot_flags &= ~ITEM_SLOT_BACK	//you can't sling it on your back
+		slot_flags |= ITEM_SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 		sawn_off = TRUE
 		update_icon()
 		return 1

@@ -3,6 +3,7 @@
 	name = "ClothesMate" //renamed to make the slogan rhyme
 	desc = "A vending machine for clothing."
 	icon_state = "clothes"
+	icon_deny = "clothes-deny"
 	product_slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this free swag!;Why leave style up to fate? Use the ClothesMate!"
 	vend_reply = "Thank you for using the ClothesMate!"
 	products = list(/obj/item/clothing/head/that = 2,
@@ -34,6 +35,7 @@
 		            /obj/item/clothing/neck/tie/red = 1,
 		            /obj/item/clothing/neck/tie/black = 1,
 		            /obj/item/clothing/neck/tie/horrible = 1,
+		            /obj/item/clothing/neck/scarf/pink = 1,
 		            /obj/item/clothing/neck/scarf/red = 1,
 		            /obj/item/clothing/neck/scarf/green = 1,
 		            /obj/item/clothing/neck/scarf/darkblue = 1,
@@ -117,5 +119,3 @@
 /obj/item/vending_refill/clothing
 	machine_name = "ClothesMate"
 	icon_state = "refill_clothes"
-	charges = list(37, 4, 4)// of 111 standard, 12 contraband, 10 premium(?)
-	init_charges = list(37, 4, 4)

@@ -5,6 +5,7 @@
 	icon_state = "piratemelee"
 	icon_living = "piratemelee"
 	icon_dead = "piratemelee_dead"
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	speak_chance = 0
 	turns_per_move = 5
 	response_help = "pushes"

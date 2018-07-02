@@ -1,3 +1,6 @@
+/datum/hud/larva
+	ui_style = 'icons/mob/screen_alien.dmi'
+
 /datum/hud/larva/New(mob/owner)
 	..()
 	var/obj/screen/using

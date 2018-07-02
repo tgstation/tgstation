@@ -27,6 +27,7 @@
 	return dat
 
 /obj/item/implant/explosive/activate(cause)
+	. = ..()
 	if(!cause || !imp_in || active)
 		return 0
 	if(cause == "action_button" && !popup)
@@ -41,8 +42,7 @@
 	to_chat(imp_in, "<span class='notice'>You activate your [name].</span>")
 	active = TRUE
 	var/turf/boomturf = get_turf(imp_in)
-	var/area/A = get_area(boomturf)
-	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [A.name] [ADMIN_JMP(boomturf)], with cause of [cause].")
+	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [ADMIN_VERBOSEJMP(boomturf)], with cause of [cause].")
 //If the delay is short, just blow up already jeez
 	if(delay <= 7)
 		explosion(src,heavy,medium,weak,weak, flame_range = weak)

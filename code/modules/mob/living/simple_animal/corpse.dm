@@ -21,7 +21,7 @@
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/device/radio/headset
+	ears = /obj/item/radio/headset
 	mask = /obj/item/clothing/mask/gas
 	head = /obj/item/clothing/head/helmet/swat
 	back = /obj/item/storage/backpack
@@ -41,7 +41,7 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/device/radio/headset
+	ears = /obj/item/radio/headset
 	mask = /obj/item/clothing/mask/gas/syndicate
 	back = /obj/item/tank/jetpack/oxygen
 	r_pocket = /obj/item/tank/internals/emergency_oxygen
@@ -61,7 +61,7 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/device/radio/headset
+	ears = /obj/item/radio/headset
 	mask = /obj/item/clothing/mask/gas/syndicate
 	back = /obj/item/tank/jetpack/oxygen/harness
 	id = /obj/item/card/id/syndicate
@@ -132,7 +132,7 @@
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/device/radio/headset
+	ears = /obj/item/radio/headset
 	head = /obj/item/clothing/head/helmet/alt
 	mask = /obj/item/clothing/mask/balaclava
 
@@ -146,7 +146,7 @@
 	uniform = /obj/item/clothing/under/rank/security/navyblue/russian
 	suit = /obj/item/clothing/suit/security/officer/russian
 	shoes = /obj/item/clothing/shoes/combat
-	ears = /obj/item/device/radio/headset
+	ears = /obj/item/radio/headset
 	head = /obj/item/clothing/head/ushanka
 
 
@@ -179,7 +179,7 @@
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/device/radio/headset
+	ears = /obj/item/radio/headset
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/storage/backpack/security
@@ -200,7 +200,7 @@
 	suit = /obj/item/clothing/suit/apron/surgical
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	gloves = /obj/item/clothing/gloves/color/latex/nitrile
-	ears = /obj/item/device/radio/headset
+	ears = /obj/item/radio/headset
 	back = /obj/item/storage/backpack/satchel/med
 	id = /obj/item/card/id
 	glasses = /obj/item/clothing/glasses/hud/health

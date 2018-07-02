@@ -13,7 +13,7 @@ Contents:
 
 /obj/item/clothing/suit/space/space_ninja
 	name = "ninja suit"
-	desc = "A unique, vaccum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
+	desc = "A unique, vacuum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
 	icon_state = "s-ninja"
 	item_state = "s-ninja_suit"
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/stock_parts/cell)
@@ -48,7 +48,7 @@ Contents:
 	var/s_maxamount = 20//Maximum number of smoke bombs.
 
 		//Support function variables.
-	var/s_active = 0//Stealth off.
+	var/stealth = FALSE//Stealth off.
 	var/s_busy = FALSE//Is the suit busy with a process? Like AI hacking. Used for safety functions.
 
 		//Ability function variables.
@@ -111,15 +111,15 @@ Contents:
 		to_chat(H, "<span class='userdanger'>ERROR</span>: 110223 UNABLE TO LOCATE HAND GEAR\nABORTING...")
 		return FALSE
 	affecting = H
-	flags_1 |= NODROP_1 //colons make me go all |=
+	item_flags |= NODROP //colons make me go all |=
 	slowdown = 0
 	n_hood = H.head
-	n_hood.flags_1 |= NODROP_1
+	n_hood.item_flags |= NODROP
 	n_shoes = H.shoes
-	n_shoes.flags_1 |= NODROP_1
+	n_shoes.item_flags |= NODROP
 	n_shoes.slowdown--
 	n_gloves = H.gloves
-	n_gloves.flags_1 |= NODROP_1
+	n_gloves.item_flags |= NODROP
 	return TRUE
 
 /obj/item/clothing/suit/space/space_ninja/proc/lockIcons(mob/living/carbon/human/H)
@@ -131,18 +131,18 @@ Contents:
 //This proc allows the suit to be taken off.
 /obj/item/clothing/suit/space/space_ninja/proc/unlock_suit()
 	affecting = null
-	flags_1 &= ~NODROP_1
+	item_flags &= ~NODROP
 	slowdown = 1
 	icon_state = "s-ninja"
 	if(n_hood)//Should be attached, might not be attached.
-		n_hood.flags_1 &= ~NODROP_1
+		n_hood.item_flags &= ~NODROP
 	if(n_shoes)
-		n_shoes.flags_1 &= ~NODROP_1
+		n_shoes.item_flags &= ~NODROP
 		n_shoes.slowdown++
 	if(n_gloves)
 		n_gloves.icon_state = "s-ninja"
 		n_gloves.item_state = "s-ninja"
-		n_gloves.flags_1 &= ~NODROP_1
+		n_gloves.item_flags &= ~NODROP
 		n_gloves.candrain=0
 		n_gloves.draining=0
 
@@ -152,7 +152,7 @@ Contents:
 	if(s_initialized)
 		if(user == affecting)
 			to_chat(user, "All systems operational. Current energy capacity: <B>[DisplayEnergy(cell.charge)]</B>.")
-			to_chat(user, "The CLOAK-tech device is <B>[s_active?"active":"inactive"]</B>.")
+			to_chat(user, "The CLOAK-tech device is <B>[stealth?"active":"inactive"]</B>.")
 			to_chat(user, "There are <B>[s_bombs]</B> smoke bomb\s remaining.")
 			to_chat(user, "There are <B>[a_boost]</B> adrenaline booster\s remaining.")
 

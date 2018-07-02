@@ -6,7 +6,6 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
 	density = TRUE
-	anchored = TRUE
 	var/integrated = FALSE
 	var/max_dist = 150
 	verb_say = "states coldly"
@@ -119,7 +118,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 		say("Explosion not large enough for research calculations.")
 		return
 	linked_techweb.max_bomb_value = adjusted
-	linked_techweb.research_points += point_gain
+	linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, point_gain)
 	say("Gained [point_gain] points from explosion dataset.")
 
 /obj/machinery/doppler_array/research/science/Initialize()

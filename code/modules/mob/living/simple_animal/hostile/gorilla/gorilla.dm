@@ -9,6 +9,7 @@
 	icon_state = "crawling"
 	icon_living = "crawling"
 	icon_dead = "dead"
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	speak_chance = 80
 	maxHealth = 220
 	health = 220
@@ -26,6 +27,7 @@
 	attacktext = "pummels"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	dextrous = TRUE
+	held_items = list(null, null)
 	possible_a_intents = list(INTENT_HELP, INTENT_GRAB, INTENT_DISARM, INTENT_HARM)
 	faction = list("jungle")
 	robust_searching = TRUE

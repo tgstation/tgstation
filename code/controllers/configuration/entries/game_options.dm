@@ -134,7 +134,7 @@
 
 /datum/config_entry/flag/no_summon_events	//Allowed
 
-/datum/config_entry/flag/no_intercept_report	//Whether or not to send a communications intercept report roundstart. This may be overriden by gamemodes.
+/datum/config_entry/flag/no_intercept_report	//Whether or not to send a communications intercept report roundstart. This may be overridden by gamemodes.
 
 /datum/config_entry/number/arrivals_shuttle_dock_window	//Time from when a player late joins on the arrivals shuttle to when the shuttle docks on the station
 	config_entry_value = 55
@@ -170,8 +170,6 @@
 	config_entry_value = -1
 	min_val = -1
 
-/datum/config_entry/flag/rename_cyborg
-
 /datum/config_entry/flag/ooc_during_round
 
 /datum/config_entry/flag/emojis
@@ -199,7 +197,9 @@
 /datum/config_entry/number/slime_delay
 /datum/config_entry/number/animal_delay
 
-/datum/config_entry/number/gateway_delay	//How long the gateway takes before it activates. Default is half an hour.
+/datum/config_entry/flag/roundstart_away	//Will random away mission be loaded.
+
+/datum/config_entry/number/gateway_delay	//How long the gateway takes before it activates. Default is half an hour. Only matters if roundstart_away is enabled.
 	config_entry_value = 18000
 	min_val = 0
 
@@ -224,9 +224,12 @@
 /datum/config_entry/keyed_number_list/law_weight
 	splitter = ","
 
-/datum/config_entry/number/assistant_cap
+/datum/config_entry/number/overflow_cap
 	config_entry_value = -1
 	min_val = -1
+
+/datum/config_entry/string/overflow_job
+	config_entry_value = "Assistant"
 
 /datum/config_entry/flag/starlight
 /datum/config_entry/flag/grey_assistants
@@ -282,3 +285,9 @@
 /datum/config_entry/flag/randomize_shift_time
 
 /datum/config_entry/flag/shift_time_realtime
+
+/datum/config_entry/keyed_number_list/antag_rep
+
+/datum/config_entry/number/monkeycap
+	config_entry_value = 64
+	min_val = 0

@@ -118,8 +118,8 @@
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
 		return
 
-	if(client && hud_used && hud_used.inv_slots[slot_wear_mask])
-		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_wear_mask]
+	if(client && hud_used && hud_used.inv_slots[SLOT_WEAR_MASK])
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_WEAR_MASK]
 		inv.update_icon()
 
 	if(wear_mask)
@@ -132,8 +132,8 @@
 /mob/living/carbon/update_inv_neck()
 	remove_overlay(NECK_LAYER)
 
-	if(client && hud_used && hud_used.inv_slots[slot_neck])
-		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_neck]
+	if(client && hud_used && hud_used.inv_slots[SLOT_NECK])
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_NECK]
 		inv.update_icon()
 
 	if(wear_neck)
@@ -146,8 +146,8 @@
 /mob/living/carbon/update_inv_back()
 	remove_overlay(BACK_LAYER)
 
-	if(client && hud_used && hud_used.inv_slots[slot_back])
-		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_back]
+	if(client && hud_used && hud_used.inv_slots[SLOT_BACK])
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_BACK]
 		inv.update_icon()
 
 	if(back)
@@ -162,8 +162,8 @@
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
 		return
 
-	if(client && hud_used && hud_used.inv_slots[slot_back])
-		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_head]
+	if(client && hud_used && hud_used.inv_slots[SLOT_BACK])
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_HEAD]
 		inv.update_icon()
 
 	if(head)

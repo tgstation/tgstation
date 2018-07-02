@@ -3,8 +3,7 @@
 
 /datum/component/decal/blood/Initialize(_icon, _icon_state, _dir, _cleanable=CLEAN_STRENGTH_BLOOD, _color, _layer=ABOVE_OBJ_LAYER)
 	if(!isitem(parent))
-		. = COMPONENT_INCOMPATIBLE
-		CRASH("Warning: Blood decal attempted to be added to non-item of type [parent.type]")
+		return COMPONENT_INCOMPATIBLE
 	. = ..()
 	RegisterSignal(COMSIG_ATOM_GET_EXAMINE_NAME, .proc/get_examine_name)
 

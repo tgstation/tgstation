@@ -78,7 +78,7 @@
 				if (childname == "[child.type]")
 					var/list/tree = splittext(childname, "/")
 					childname = tree[tree.len]
-				.[child.type] = "parent=[url_encode(type)];name=[url_encode(childname)]"
+				.[child.type] = "parent=[url_encode(type)];name=[childname]"
 				. += childlist
 
 	for (var/thing in verblist)
@@ -92,7 +92,7 @@
 			entry["command"] = copytext(verbpath.name,2)
 		else
 			entry["command"] = replacetext(verbpath.name, " ", "-")
-		
+
 		.[verbpath] = HandleVerb(arglist(list(entry, verbpath) + args))
 
 /world/proc/LoadVerbs(verb_type)

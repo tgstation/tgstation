@@ -23,7 +23,7 @@
 		CH.cavity_item = null
 
 	if(tr_flags & TR_KEEPITEMS)
-		var/Itemlist = get_equipped_items()
+		var/Itemlist = get_equipped_items(TRUE)
 		Itemlist += held_items
 		for(var/obj/item/W in Itemlist)
 			dropItemToGround(W)
@@ -173,7 +173,7 @@
 
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
-		var/Itemlist = get_equipped_items()
+		var/Itemlist = get_equipped_items(TRUE)
 		Itemlist += held_items
 		for(var/obj/item/W in Itemlist)
 			dropItemToGround(W, TRUE)
@@ -379,8 +379,7 @@
 	else if(transfer_after)
 		R.key = key
 
-	if (CONFIG_GET(flag/rename_cyborg))
-		R.rename_self("cyborg")
+	R.apply_pref_name("cyborg")
 
 	if(R.mmi)
 		R.mmi.name = "Man-Machine Interface: [real_name]"
@@ -493,7 +492,7 @@
 
 	SSblackbox.record_feedback("amount", "gorillas_created", 1)
 
-	var/Itemlist = get_equipped_items()
+	var/Itemlist = get_equipped_items(TRUE)
 	Itemlist += held_items
 	for(var/obj/item/W in Itemlist)
 		dropItemToGround(W, TRUE)

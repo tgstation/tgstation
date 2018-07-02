@@ -75,12 +75,7 @@ Industrial extracts:
 /obj/item/slimecross/industrial/metal
 	colour = "metal"
 	plasmarequired = 3
-	itempath = /obj/item/stack/sheet/metal
-
-/obj/item/slimecross/industrial/metal/do_after_spawn(obj/item/spawned)
-	var/obj/item/stack/sheet/metal/M = spawned
-	if(istype(M))
-		M.amount = 10
+	itempath = /obj/item/stack/sheet/metal/ten
 
 /obj/item/slimecross/industrial/yellow
 	colour = "yellow"
@@ -124,7 +119,7 @@ Industrial extracts:
 /obj/item/slimecross/industrial/sepia
 	colour = "sepia"
 	plasmarequired = 2
-	itempath = /obj/item/device/camera
+	itempath = /obj/item/camera
 
 /obj/item/slimecross/industrial/cerulean
 	colour = "cerulean"

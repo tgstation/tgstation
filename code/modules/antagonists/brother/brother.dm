@@ -26,7 +26,6 @@
 
 /datum/antagonist/brother/on_removal()
 	SSticker.mode.brothers -= owner
-	owner.objectives -= objectives
 	if(owner.current)
 		to_chat(owner.current,"<span class='userdanger'>You are no longer the [special_role]!</span>")
 	owner.special_role = null
@@ -49,7 +48,7 @@
 		else if(i != brothers.len)
 			brother_text += ", "
 	to_chat(owner.current, "<B><font size=3 color=red>You are the [owner.special_role] of [brother_text].</font></B>")
-	to_chat(owner.current, "The Syndicate only accepts those that have proven themself. Prove yourself and prove your [team.member_name]s by completing your objectives together!")
+	to_chat(owner.current, "The Syndicate only accepts those that have proven themselves. Prove yourself and prove your [team.member_name]s by completing your objectives together!")
 	owner.announce_objectives()
 	give_meeting_area()
 

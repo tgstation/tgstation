@@ -59,11 +59,11 @@
 
 /datum/design/light_replacer
 	name = "Light Replacer"
-	desc = "A device to automatically replace lights. Refill with working lightbulbs."
+	desc = "A device to automatically replace lights. Refill with working light bulbs."
 	id = "light_replacer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_SILVER = 150, MAT_GLASS = 3000)
-	build_path = /obj/item/device/lightreplacer
+	build_path = /obj/item/lightreplacer
 	category = list("Power Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 

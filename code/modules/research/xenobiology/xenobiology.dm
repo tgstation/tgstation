@@ -570,7 +570,7 @@
 /obj/item/slime_extract/sepia/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			var/obj/item/device/camera/O = new(null, 1)
+			var/obj/item/camera/O = new(null, 1)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, 1)
@@ -679,7 +679,7 @@
 		SM.sentience_act()
 		to_chat(SM, "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>")
 		to_chat(SM, "<span class='userdanger'>You are grateful to be self aware and owe [user.real_name] a great debt. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>")
-		if(SM.flags_2 & HOLOGRAM_2) //Check to see if it's a holodeck creature
+		if(SM.flags_1 & HOLOGRAM_1) //Check to see if it's a holodeck creature
 			to_chat(SM, "<span class='userdanger'>You also become depressingly aware that you are not a real creature, but instead a holoform. Your existence is limited to the parameters of the holodeck.</span>")
 		to_chat(user, "<span class='notice'>[SM] accepts [src] and suddenly becomes attentive and aware. It worked!</span>")
 		SM.copy_known_languages_from(user, FALSE)
@@ -702,7 +702,7 @@
 	imp.implant(SM, user)
 
 	SM.access_card = new /obj/item/card/id/syndicate(SM)
-	SM.access_card.flags_1 |= NODROP_1
+	SM.access_card.item_flags |= NODROP
 
 /obj/item/slimepotion/transference
 	name = "consciousness transference potion"
@@ -725,7 +725,11 @@
 	if(SM.sentience_type != animal_type)
 		to_chat(user, "<span class='warning'>You cannot transfer your consciousness to [SM].</span>" )
 		return ..()
-	if(jobban_isbanned(user, ROLE_ALIEN)) //ideally sentience and trasnference potions should be their own unique role.
+	var/jb = jobban_isbanned(user, ROLE_ALIEN)
+	if(QDELETED(src) || QDELETED(M) || QDELETED(user))
+		return
+
+	if(jb) //ideally sentience and trasnference potions should be their own unique role.
 		to_chat(user, "<span class='warning'>Your mind goes blank as you attempt to use the potion.</span>")
 		return
 
@@ -909,7 +913,7 @@
 
 /obj/item/slimepotion/slime/slimeradio
 	name = "bluespace radio potion"
-	desc = "A strange chemical that grants those who ingest it the ability to broadcast and recieve subscape radio waves."
+	desc = "A strange chemical that grants those who ingest it the ability to broadcast and receive subscape radio waves."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potgrey"
 

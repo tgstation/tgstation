@@ -34,7 +34,7 @@
 
 	var/list/status_traits = list()
 
-	var/list/roundstart_traits = list()
+	var/list/roundstart_quirks = list()
 
 	var/list/surgeries = list()	//a list of surgery datums. generally empty, they're added when the player wants them.
 
@@ -53,8 +53,8 @@
 	var/limb_destroyer = 0 //1 Sets AI behavior that allows mobs to target and dismember limbs with their basic attack.
 
 	var/mob_size = MOB_SIZE_HUMAN
+	var/list/mob_biotypes = list(MOB_ORGANIC)
 	var/metabolism_efficiency = 1 //more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
-	var/list/image/staticOverlays = list()
 	var/has_limbs = 0 //does the mob have distinct limbs?(arms,legs, chest,head)
 
 	var/list/pipes_shown = list()

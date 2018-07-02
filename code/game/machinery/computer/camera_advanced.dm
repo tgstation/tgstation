@@ -159,7 +159,7 @@
 
 /mob/camera/aiEye/remote/update_remote_sight(mob/living/user)
 	user.see_invisible = SEE_INVISIBLE_LIVING //can't see ghosts through cameras
-	user.sight = 0
+	user.sight = SEE_TURFS | SEE_BLACKNESS
 	user.see_in_dark = 2
 	return 1
 
@@ -190,7 +190,7 @@
 		else
 			moveToNullspace()
 		if(use_static)
-			GLOB.cameranet.visibility(src)
+			GLOB.cameranet.visibility(src, GetViewerClient())
 		if(visible_icon)
 			if(eye_user.client)
 				eye_user.client.images -= user_image

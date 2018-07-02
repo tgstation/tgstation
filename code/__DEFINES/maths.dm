@@ -3,11 +3,8 @@
 // (
 
 #define NUM_E 2.71828183
-#define NUM_SQRT2 1.41421356
 
-#define PI						3.1415
-#define SPEED_OF_LIGHT			3e8		//not exact but hey!
-#define SPEED_OF_LIGHT_SQ		9e+16
+#define PI						3.1416
 #define INFINITY				1e31	//closer then enough
 
 #define SHORT_REAL_LIMIT 16777216

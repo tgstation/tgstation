@@ -31,7 +31,7 @@
 /datum/bioware/threaded_veins
 	name = "Threaded Veins"
 	desc = "The circulatory system is woven into a mesh, severely reducing the amount of blood lost from wounds."
-	mod_type = "circulation"
+	mod_type = BIOWARE_CIRCULATION
 
 /datum/bioware/threaded_veins/on_gain()
 	..()

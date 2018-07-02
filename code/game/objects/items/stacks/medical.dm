@@ -105,7 +105,7 @@
 /obj/item/stack/medical/bruise_pack
 	name = "bruise pack"
 	singular_name = "bruise pack"
-	desc = "A theraputic gel pack and bandages designed to treat blunt-force trauma."
+	desc = "A therapeutic gel pack and bandages designed to treat blunt-force trauma."
 	icon_state = "brutepack"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -126,6 +126,18 @@
 	stop_bleeding = 1800
 	self_delay = 20
 	max_amount = 12
+
+/obj/item/stack/medical/gauze/wirecutter_act(mob/living/user, obj/item/I)
+	if(get_amount() < 2)
+		to_chat(user, "<span class='warning'>You need at least two gauze to do this!</span>")
+		return
+	new /obj/item/stack/sheet/cloth(user.drop_location())
+	user.visible_message("[user] cuts [src] into pieces of cloth with [I].", \
+				 "<span class='notice'>You cut [src] into pieces of cloth with [I].</span>", \
+				 "<span class='italics'>You hear cutting.</span>")
+	var/obj/item/stack/medical/gauze/R = src
+	src = null
+	R.use(2)
 
 /obj/item/stack/medical/gauze/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins tightening \the [src] around [user.p_their()] neck! It looks like [user.p_they()] forgot how to use medical supplies!</span>")
@@ -155,5 +167,5 @@
 	grind_results = list("silver_sulfadiazine" = 10)
 
 /obj/item/stack/medical/ointment/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] is squeezing \the [src] into [user.p_their()] mouth! Don't they know that stuff is toxic?</span>")
+	user.visible_message("<span class='suicide'>[user] is squeezing \the [src] into [user.p_their()] mouth! [user.p_do(TRUE)]n't [user.p_they()] know that stuff is toxic?</span>")
 	return TOXLOSS

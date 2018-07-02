@@ -2,7 +2,6 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /obj/machinery/announcement_system
 	density = TRUE
-	anchored = TRUE
 	name = "\improper Automated Announcement System"
 	desc = "An automated announcement system that handles minor announcements over the radio."
 	icon = 'icons/obj/machines/telecomms.dmi'
@@ -17,7 +16,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 	circuit = /obj/item/circuitboard/machine/announcement_system
 
-	var/obj/item/device/radio/headset/radio
+	var/obj/item/radio/headset/radio
 	var/arrival = "%PERSON has signed up as %RANK"
 	var/arrivalToggle = 1
 	var/newhead = "%PERSON, %RANK, is the department head."
@@ -30,7 +29,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 /obj/machinery/announcement_system/Initialize()
 	. = ..()
 	GLOB.announcement_systems += src
-	radio = new /obj/item/device/radio/headset/ai(src)
+	radio = new /obj/item/radio/headset/ai(src)
 	update_icon()
 
 /obj/machinery/announcement_system/update_icon()
@@ -67,7 +66,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		update_icon()
 	else if(default_deconstruction_crowbar(P))
 		return
-	else if(istype(P, /obj/item/device/multitool) && panel_open && (stat & BROKEN))
+	else if(istype(P, /obj/item/multitool) && panel_open && (stat & BROKEN))
 		to_chat(user, "<span class='notice'>You reset [src]'s firmware.</span>")
 		stat &= ~BROKEN
 		update_icon()
@@ -169,9 +168,9 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	newhead = pick("OV#RL()D: \[UNKNOWN??\] DET*#CT)D!", "ER)#R - B*@ TEXT F*O(ND!", "AAS.exe is not responding. NanoOS is searching for a solution to the problem.")
 
 /obj/machinery/announcement_system/emp_act(severity)
-	if(!(stat & (NOPOWER|BROKEN)))
+	. = ..()
+	if(!(stat & (NOPOWER|BROKEN)) && !(. & EMP_PROTECT_SELF))
 		act_up()
-	..(severity)
 
 /obj/machinery/announcement_system/emag_act()
 	if(obj_flags & EMAGGED)

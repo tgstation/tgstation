@@ -294,7 +294,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aP" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/glass/bottle/liver_enhance_virion,
+/obj/item/reagent_containers/glass/bottle/random_virus,
 /obj/item/reagent_containers/dropper,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
@@ -394,7 +394,7 @@
 "aY" = (
 /obj/structure/table/reinforced,
 /obj/item/gun/energy/temperature{
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 	},
 /turf/open/floor/plasteel{
 	icon_state = "dark"

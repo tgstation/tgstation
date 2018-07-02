@@ -9,18 +9,13 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	GLOB.total_runtimes++
 	
 	if(!istype(E)) //Something threw an unusual exception
-		log_world("\[[time_stamp()]] Uncaught exception: [E]")
+		log_world("uncaught runtime error: [E]")
 		return ..()
 	
 	//this is snowflake because of a byond bug (ID:2306577), do not attempt to call non-builtin procs in this if
 	if(copytext(E.name,1,32) == "Maximum recursion level reached")
-		var/list/split = splittext(E.desc, "\n")
-		for (var/i in 1 to split.len)
-			if (split[i] != "")
-				split[i] = "\[[time2text(world.timeofday,"hh:mm:ss")]\][split[i]]"
-		E.desc = jointext(split, "\n")
 		//log to world while intentionally triggering the byond bug.
-		log_world("\[[time2text(world.timeofday,"hh:mm:ss")]\]runtime error: [E.name]\n[E.desc]")
+		log_world("runtime error: [E.name]\n[E.desc]")
 		//if we got to here without silently ending, the byond bug has been fixed.
 		log_world("The bug with recursion runtimes has been fixed. Please remove the snowflake check from world/Error in [__FILE__]:[__LINE__]")
 		return //this will never happen.
@@ -130,20 +125,8 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		GLOB.current_test.Fail("[main_line]\n[desclines.Join("\n")]")
 #endif
 
-/* This logs the runtime in the old format */
 
-	E.name = "\n\[[time2text(world.timeofday,"hh:mm:ss")]\][E.name]"
-
-	//Original
-	//
-	var/list/split = splittext(E.desc, "\n")
-	for (var/i in 1 to split.len)
-		if (split[i] != "")
-			split[i] = "\[[time2text(world.timeofday,"hh:mm:ss")]\][split[i]]"
-	E.desc = jointext(split, "\n")
-	world.log = GLOB.world_runtime_log
-	..(E)
-
-	world.log = null
+	// This writes the regular format (unwrapping newlines and inserting timestamps as needed).
+	log_runtime("runtime error: [E.name]\n[E.desc]")
 
 #endif

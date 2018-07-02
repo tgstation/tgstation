@@ -22,7 +22,7 @@
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
 
-	radio_key = /obj/item/device/encryptionkey/headset_cargo
+	radio_key = /obj/item/encryptionkey/headset_cargo
 	radio_channel = "Supply"
 
 	bot_type = MULE_BOT
@@ -60,6 +60,10 @@
 	mulebot_count += 1
 	set_id(suffix || id || "#[mulebot_count]")
 	suffix = null
+
+/mob/living/simple_animal/bot/mulebot/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/ntnet_interface)
 
 /mob/living/simple_animal/bot/mulebot/Destroy()
 	unload(0)
@@ -683,18 +687,18 @@
 				calc_path()
 
 /mob/living/simple_animal/bot/mulebot/emp_act(severity)
-	if(cell)
+	. = ..()
+	if(cell && !(. & EMP_PROTECT_CONTENTS))
 		cell.emp_act(severity)
 	if(load)
 		load.emp_act(severity)
-	..()
 
 
 /mob/living/simple_animal/bot/mulebot/explode()
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/atom/Tsec = drop_location()
 
-	new /obj/item/device/assembly/prox_sensor(Tsec)
+	new /obj/item/assembly/prox_sensor(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/cable_coil/cut(Tsec)
@@ -725,7 +729,7 @@
 	else
 		..()
 
-/mob/living/simple_animal/bot/mulebot/insertpai(mob/user, obj/item/device/paicard/card)
+/mob/living/simple_animal/bot/mulebot/insertpai(mob/user, obj/item/paicard/card)
 	if(..())
 		visible_message("[src] safeties are locked on.")
 

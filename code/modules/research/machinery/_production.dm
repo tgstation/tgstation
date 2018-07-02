@@ -2,7 +2,7 @@
 	name = "technology fabricator"
 	desc = "Makes researched and prototype items with materials and energy."
 	container_type = OPENCONTAINER
-
+	layer = BELOW_OBJ_LAYER
 	var/consoleless_interface = FALSE			//Whether it can be used without a console.
 	var/efficiency_coeff = 1				//Materials needed / coeff = actual.
 	var/list/categories = list()
@@ -24,7 +24,7 @@
 	create_reagents(0)
 	materials = AddComponent(/datum/component/material_container,
 		list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE, MAT_PLASTIC), 0,
-		FALSE, list(/obj/item/stack), CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
+		TRUE, list(/obj/item/stack), CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
 	materials.precise_insertion = TRUE
 	RefreshParts()
 	matching_designs = list()
@@ -50,7 +50,7 @@
 /obj/machinery/rnd/production/attack_hand(mob/user)
 	interact(user)									//remove this snowflake shit when the refactor of storage components or some other pr that unsnowflakes attack_hand on machinery is in
 
-/obj/machinery/rnd/production/interact(mob/user)
+/obj/machinery/rnd/production/ui_interact(mob/user)
 	if(!consoleless_interface)
 		return ..()
 	user.set_machine(src)

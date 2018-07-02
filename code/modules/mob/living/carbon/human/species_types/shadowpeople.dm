@@ -9,7 +9,7 @@
 	blacklisted = 1
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
-	species_traits = list(SPECIES_ORGANIC,NOBLOOD,NOEYES)
+	species_traits = list(NOBLOOD,NOEYES)
 	inherent_traits = list(TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_NOBREATH)
 
 	dangerous_existence = 1
@@ -37,7 +37,7 @@
 	limbs_id = "shadow"
 	burnmod = 1.5
 	blacklisted = TRUE
-	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store)
+	no_equip = list(SLOT_WEAR_MASK, SLOT_WEAR_SUIT, SLOT_GLOVES, SLOT_SHOES, SLOT_W_UNIFORM, SLOT_S_STORE)
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NO_DNA_COPY,NOTRANSSTING,NOEYES)
 	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_NOBREATH,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOHUNGER)
 	mutanteyes = /obj/item/organ/eyes/night_vision/nightmare
@@ -82,7 +82,7 @@
 	..()
 	if(M.dna.species.id != "nightmare")
 		M.set_species(/datum/species/shadow/nightmare)
-		visible_message("<span class='warning'>[M] thrashes as [src] takes root in their body!</span>")
+		visible_message("<span class='warning'>[M] thrashes as [src] takes root in [M.p_their()] body!</span>")
 	var/obj/effect/proc_holder/spell/targeted/shadowwalk/SW = new
 	M.AddSpell(SW)
 	shadowwalk = SW
@@ -107,7 +107,7 @@
 /obj/item/organ/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
 		return ..()
-	user.visible_message("<span class='warning'>[user] raises [src] to their mouth and tears into it with their teeth!</span>", \
+	user.visible_message("<span class='warning'>[user] raises [src] to [user.p_their()] mouth and tears into it with [user.p_their()] teeth!</span>", \
 						 "<span class='danger'>[src] feels unnaturally cold in your hands. You raise [src] your mouth and devour it!</span>")
 	playsound(user, 'sound/magic/demon_consume.ogg', 50, 1)
 
@@ -157,7 +157,7 @@
 			Insert(old_owner, HEART_SPECIAL_SHADOWIFY)
 			to_chat(owner, "<span class='userdanger'>You feel the shadows invade your skin, leaping into the center of your chest! You're alive!</span>")
 			SEND_SOUND(owner, sound('sound/effects/ghost.ogg'))
-		owner.visible_message("<span class='warning'>[owner] staggers to their feet!</span>")
+		owner.visible_message("<span class='warning'>[owner] staggers to [owner.p_their()] feet!</span>")
 		playsound(owner, 'sound/hallucinations/far_noise.ogg', 50, 1)
 		respawn_progress = 0
 
@@ -171,7 +171,7 @@
 	armour_penetration = 35
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
-	flags_1 = ABSTRACT_1 | NODROP_1 | DROPDEL_1
+	item_flags = ABSTRACT | NODROP | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = IS_SHARP
 
@@ -203,8 +203,8 @@
 			disintegrate(I)
 
 /obj/item/light_eater/proc/disintegrate(obj/item/O)
-	if(istype(O, /obj/item/device/pda))
-		var/obj/item/device/pda/PDA = O
+	if(istype(O, /obj/item/pda))
+		var/obj/item/pda/PDA = O
 		PDA.set_light(0)
 		PDA.fon = FALSE
 		PDA.f_lum = 0

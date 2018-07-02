@@ -49,7 +49,7 @@
 				var/atom/I = L.anti_magic_check(check_antimagic, check_holy)
 				if(I)
 					if(isitem(I))
-						L.visible_message("<span class='warning'>[L]'s [I.name] [resist_string], protecting them from [src]'s effects!</span>", \
+						L.visible_message("<span class='warning'>[L]'s [I.name] [resist_string], protecting [L.p_them()] from [src]'s effects!</span>", \
 						"<span class='userdanger'>Your [I.name] [resist_string], protecting you!</span>")
 					return
 				sigil_effects(L)

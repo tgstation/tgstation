@@ -2,7 +2,7 @@
 //Clusterbang
 ////////////////////
 /obj/item/grenade/clusterbuster
-	desc = "Use of this weapon may constiute a war crime in your area, consult your local captain."
+	desc = "Use of this weapon may constitute a war crime in your area, consult your local captain."
 	name = "clusterbang"
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "clusterbang"
@@ -54,7 +54,9 @@
 		max_spawned = base.max_spawned
 	icon_state = "[base_state]_active"
 	active = TRUE
-	walk_away(src,loc,rand(1,4))
+	var/steps = rand(1,4)
+	for(var/i in 1 to steps)
+		step_away(src,loc)
 	addtimer(CALLBACK(src, .proc/prime), rand(15,60))
 
 /obj/item/grenade/clusterbuster/segment/prime()
@@ -76,7 +78,9 @@
 		if(istype(P))
 			P.active = TRUE
 			addtimer(CALLBACK(P, /obj/item/grenade/proc/prime), rand(15,60))
-		walk_away(P,loc,rand(1,4))
+		var/steps = rand(1,4)
+		for(var/i in 1 to steps)
+			step_away(src,loc)
 
 /obj/effect/payload_spawner/random_slime
 	var/volatile = FALSE
@@ -86,17 +90,16 @@
 
 /obj/item/slime_extract/proc/activate_slime()
 	var/list/slime_chems = src.activate_reagents
-	for(var/i in 1 to slime_chems.len)
-		if(!QDELETED(src))
-			var/chem = pick_n_take(slime_chems)
-			var/amount = 5
-			if(chem == "lesser plasma") //In the rare case we get another rainbow.
-				chem = "plasma"
-				amount = 4
-			if(chem == "holy water and uranium")
-				chem = "uranium"
-				reagents.add_reagent("holywater")
-			reagents.add_reagent(chem,amount) //Add them in random order so we get all effects
+	if(!QDELETED(src))
+		var/chem = pick(slime_chems)
+		var/amount = 5
+		if(chem == "lesser plasma") //In the rare case we get another rainbow.
+			chem = "plasma"
+			amount = 4
+		if(chem == "holy water and uranium")
+			chem = "uranium"
+			reagents.add_reagent("holywater")
+		reagents.add_reagent(chem,amount)
 
 /obj/effect/payload_spawner/random_slime/spawn_payload(type, numspawned)
 	for(var/loop = numspawned ,loop > 0, loop--)
@@ -104,7 +107,9 @@
 		var/obj/item/slime_extract/P = new chosen(loc)
 		if(volatile)
 			addtimer(CALLBACK(P, /obj/item/slime_extract/proc/activate_slime), rand(15,60))
-		walk_away(P,loc,rand(1,4))
+		var/steps = rand(1,4)
+		for(var/i in 1 to steps)
+			step_away(src,loc)
 
 //////////////////////////////////
 //Custom payload clusterbusters

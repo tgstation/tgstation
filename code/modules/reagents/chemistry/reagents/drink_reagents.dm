@@ -407,7 +407,7 @@
 /datum/reagent/consumable/nuka_cola/on_mob_life(mob/living/M)
 	M.Jitter(20)
 	M.set_drugginess(30)
-	M.dizziness +=5
+	M.dizziness +=1.5
 	M.drowsyness = 0
 	M.AdjustSleeping(-40, FALSE)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
@@ -721,3 +721,22 @@
 	description = "Milk for cool kids."
 	color = "#7D4E29"
 	taste_description = "chocolate milk"
+
+/datum/reagent/consumable/menthol
+	name = "Menthol"
+	id = "menthol"
+	description = "Alleviates coughing symptoms one might have."
+	color = "#80AF9C"
+	taste_description = "mint"
+	glass_icon_state = "glass_green"
+	glass_name = "glass of menthol"
+	glass_desc = "Tastes naturally minty, and imparts a very mild numbing sensation."
+
+/datum/reagent/consumable/grenadine
+	name = "Grenadine"
+	id = "grenadine"
+	description = "Not cherry flavored!"
+	color = "#EA1D26"
+	taste_description = "sweet pomegranates"
+	glass_name = "glass of grenadine"
+	glass_desc = "Delicious flavored syrup."

@@ -115,4 +115,4 @@
 			S.no_cost = TRUE
 		if(seasonal_hat && seasonal_hat != "none")
 			var/obj/item/hat = new seasonal_hat(construct)
-			construct.equip_to_slot_or_del(hat, slot_head)
+			construct.equip_to_slot_or_del(hat, SLOT_HEAD)

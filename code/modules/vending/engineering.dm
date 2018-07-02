@@ -4,7 +4,7 @@
 	desc = "Everything you need for do-it-yourself station repair."
 	icon_state = "engi"
 	icon_deny = "engi-deny"
-	req_access_txt = "11"
+	req_access = list(ACCESS_ENGINE_EQUIP)
 	products = list(/obj/item/clothing/under/rank/chief_engineer = 4,
 		            /obj/item/clothing/under/rank/engineer = 4,
 		            /obj/item/clothing/shoes/sneakers/orange = 4,
@@ -15,9 +15,9 @@
 					/obj/item/screwdriver = 12,
 					/obj/item/crowbar = 12,
 					/obj/item/wirecutters = 12,
-					/obj/item/device/multitool = 12,
+					/obj/item/multitool = 12,
 					/obj/item/wrench = 12,
-					/obj/item/device/t_scanner = 12,
+					/obj/item/t_scanner = 12,
 					/obj/item/stock_parts/cell = 8,
 					/obj/item/weldingtool = 8,
 					/obj/item/clothing/head/welding = 8,

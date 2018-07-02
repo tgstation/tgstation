@@ -9,7 +9,7 @@
 #define RADIATION_DURATION_MAX 30
 #define RADIATION_ACCURACY_MULTIPLIER 3			//larger is less accurate
 
-#define RADIATION_IRRADIATION_MULTIPLIER 1		//multiplier for how much radiation a test subject recieves
+#define RADIATION_IRRADIATION_MULTIPLIER 1		//multiplier for how much radiation a test subject receives
 
 #define SCANNER_ACTION_SE 1
 #define SCANNER_ACTION_UI 2
@@ -33,7 +33,6 @@
 	var/obj/machinery/dna_scannernew/connected = null
 	var/obj/item/disk/data/diskette = null
 	var/list/delayed_action = null
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 400

@@ -66,7 +66,7 @@
 		pixel_y = -32
 		for (var/ball in orbiting_balls)
 			var/range = rand(1, CLAMP(orbiting_balls.len, 3, 7))
-			tesla_zap(ball, range, TESLA_MINI_POWER/7*range, TRUE)
+			tesla_zap(ball, range, TESLA_MINI_POWER/7*range)
 	else
 		energy = 0 // ensure we dont have miniballs of miniballs
 
@@ -159,7 +159,7 @@
 	var/mob/living/carbon/C = A
 	C.dust()
 
-/proc/tesla_zap(atom/source, zap_range = 3, power, explosive = FALSE, stun_mobs = TRUE)
+/proc/tesla_zap(atom/source, zap_range = 3, power, tesla_flags = TESLA_DEFAULT_FLAGS, list/shocked_targets)
 	. = source.dir
 	if(power < 1000)
 		return
@@ -186,6 +186,9 @@
 										/obj/structure/particle_accelerator/end_cap,
 										/obj/machinery/field/containment,
 										/obj/structure/disposalpipe,
+										/obj/structure/disposaloutlet,
+										/obj/machinery/disposal/deliveryChute,
+										/obj/machinery/camera,
 										/obj/structure/sign,
 										/obj/machinery/gateway,
 										/obj/structure/lattice,
@@ -193,6 +196,9 @@
 										/obj/machinery/the_singularitygen/tesla))
 
 	for(var/A in typecache_filter_multi_list_exclusion(oview(source, zap_range+2), things_to_shock, blacklisted_tesla_types))
+		if(!(tesla_flags & TESLA_ALLOW_DUPLICATES) && LAZYACCESS(shocked_targets, A))
+			continue
+
 		if(istype(A, /obj/machinery/power/tesla_coil))
 			var/dist = get_dist(source, A)
 			var/obj/machinery/power/tesla_coil/C = A
@@ -221,7 +227,7 @@
 		else if(isliving(A))
 			var/dist = get_dist(source, A)
 			var/mob/living/L = A
-			if(dist <= zap_range && (dist < closest_dist || !closest_mob) && L.stat != DEAD && !(L.flags_2 & TESLA_IGNORE_2))
+			if(dist <= zap_range && (dist < closest_dist || !closest_mob) && L.stat != DEAD && !(L.flags_1 & TESLA_IGNORE_1))
 				closest_mob = L
 				closest_atom = A
 				closest_dist = dist
@@ -263,33 +269,35 @@
 	if(closest_atom)
 		//common stuff
 		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", time=5, maxdistance = INFINITY)
+		if(!(tesla_flags & TESLA_ALLOW_DUPLICATES))
+			LAZYSET(shocked_targets, closest_atom, TRUE)
 		var/zapdir = get_dir(source, closest_atom)
 		if(zapdir)
 			. = zapdir
 
 	//per type stuff:
 	if(closest_tesla_coil)
-		closest_tesla_coil.tesla_act(power, explosive, stun_mobs)
+		closest_tesla_coil.tesla_act(power, tesla_flags, shocked_targets)
 
 	else if(closest_grounding_rod)
-		closest_grounding_rod.tesla_act(power, explosive, stun_mobs)
+		closest_grounding_rod.tesla_act(power, tesla_flags, shocked_targets)
 
 	else if(closest_mob)
-		var/shock_damage = CLAMP(round(power/400), 10, 90) + rand(-5, 5)
-		closest_mob.electrocute_act(shock_damage, source, 1, tesla_shock = 1, stun = stun_mobs)
+		var/shock_damage = (tesla_flags & TESLA_MOB_DAMAGE)? (min(round(power/600), 90) + rand(-5, 5)) : 0
+		closest_mob.electrocute_act(shock_damage, source, 1, tesla_shock = 1, stun = (tesla_flags & TESLA_MOB_STUN))
 		if(issilicon(closest_mob))
 			var/mob/living/silicon/S = closest_mob
-			if(stun_mobs)
+			if((tesla_flags & TESLA_MOB_STUN) && (tesla_flags & TESLA_MOB_DAMAGE))
 				S.emp_act(EMP_LIGHT)
-			tesla_zap(S, 7, power / 1.5, explosive, stun_mobs) // metallic folks bounce it further
+			tesla_zap(S, 7, power / 1.5, tesla_flags, shocked_targets) // metallic folks bounce it further
 		else
-			tesla_zap(closest_mob, 5, power / 1.5, explosive, stun_mobs)
+			tesla_zap(closest_mob, 5, power / 1.5, tesla_flags, shocked_targets)
 
 	else if(closest_machine)
-		closest_machine.tesla_act(power, explosive, stun_mobs)
+		closest_machine.tesla_act(power, tesla_flags, shocked_targets)
 
 	else if(closest_blob)
-		closest_blob.tesla_act(power, explosive, stun_mobs)
+		closest_blob.tesla_act(power, tesla_flags, shocked_targets)
 
 	else if(closest_structure)
-		closest_structure.tesla_act(power, explosive, stun_mobs)
+		closest_structure.tesla_act(power, tesla_flags, shocked_targets)

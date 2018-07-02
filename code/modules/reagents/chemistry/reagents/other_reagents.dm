@@ -41,7 +41,8 @@
 
 /datum/reagent/blood/on_merge(list/mix_data)
 	if(data && mix_data)
-		data["cloneable"] = 0 //On mix, consider the genetic sampling unviable for pod cloning, or else we won't know who's even getting cloned, etc
+		if(data["blood_DNA"] != mix_data["blood_DNA"])
+			data["cloneable"] = 0 //On mix, consider the genetic sampling unviable for pod cloning if the DNA sample doesn't match.
 		if(data["viruses"] || mix_data["viruses"])
 
 			var/list/mix1 = data["viruses"]
@@ -135,7 +136,7 @@
 	var/CT = cooling_temperature
 
 	if(reac_volume >= 5)
-		T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = min(reac_volume*1.5 SECONDS, 60 SECONDS))
+		T.MakeSlippery(TURF_WET_WATER, 10 SECONDS, min(reac_volume*1.5 SECONDS, 60 SECONDS))
 
 	for(var/mob/living/simple_animal/slime/M in T)
 		M.apply_water()
@@ -145,7 +146,7 @@
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
-			G.react()
+			G.react(src)
 			qdel(hotspot)
 	var/obj/effect/acid/A = (locate(/obj/effect/acid) in T)
 	if(A)
@@ -170,8 +171,7 @@
 
 	else if(istype(O, /obj/item/stack/sheet/hairlesshide))
 		var/obj/item/stack/sheet/hairlesshide/HH = O
-		var/obj/item/stack/sheet/wetleather/WL = new(get_turf(HH))
-		WL.amount = HH.amount
+		new /obj/item/stack/sheet/wetleather(get_turf(HH), HH.amount)
 		qdel(HH)
 
 /*
@@ -586,7 +586,7 @@
 	..()
 	if(!istype(H))
 		return
-	if(!H.dna || !H.dna.species || !(H.dna.species.species_traits & SPECIES_ORGANIC))
+	if(!H.dna || !H.dna.species || !(MOB_ORGANIC in H.mob_biotypes))
 		return
 
 	if(isjellyperson(H))
@@ -848,7 +848,7 @@
 	taste_description = "the colour blue and regret"
 
 /datum/reagent/radium/on_mob_life(mob/living/M)
-	M.apply_effect(2*REM/M.metabolism_efficiency,IRRADIATE,0)
+	M.apply_effect(2*REM/M.metabolism_efficiency,EFFECT_IRRADIATE,0)
 	..()
 
 /datum/reagent/radium/reaction_turf(turf/T, reac_volume)
@@ -931,7 +931,7 @@
 	taste_description = "the inside of a reactor"
 
 /datum/reagent/uranium/on_mob_life(mob/living/M)
-	M.apply_effect(1/M.metabolism_efficiency,IRRADIATE,0)
+	M.apply_effect(1/M.metabolism_efficiency,EFFECT_IRRADIATE,0)
 	..()
 
 /datum/reagent/uranium/reaction_turf(turf/T, reac_volume)
@@ -960,8 +960,11 @@
 		to_chat(M, "<span class='warning'>You feel unstable...</span>")
 		M.Jitter(2)
 		current_cycle = 1
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/do_teleport, M, get_turf(M), 5, null, null, null, 'sound/effects/phasein.ogg'), 30)
+		addtimer(CALLBACK(M, /mob/living/proc/bluespace_shuffle), 30)
 	..()
+
+/mob/living/proc/bluespace_shuffle()
+	do_teleport(src, get_turf(src), 5, asoundin = 'sound/effects/phasein.ogg')
 
 /datum/reagent/aluminium
 	name = "Aluminium"
@@ -1015,12 +1018,12 @@
 	else
 		if(O)
 			O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			O.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+			SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /datum/reagent/space_cleaner/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 1)
 		T.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		T.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		SEND_SIGNAL(T, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 		for(var/obj/effect/decal/cleanable/C in T)
 			qdel(C)
 
@@ -1038,26 +1041,26 @@
 					H.lip_style = null
 					H.update_body()
 			for(var/obj/item/I in C.held_items)
-				I.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+				SEND_SIGNAL(I, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 			if(C.wear_mask)
-				if(C.wear_mask.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
+				if(SEND_SIGNAL(C.wear_mask, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
 					C.update_inv_wear_mask()
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = C
 				if(H.head)
-					if(H.head.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
+					if(SEND_SIGNAL(H.head, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
 						H.update_inv_head()
 				if(H.wear_suit)
-					if(H.wear_suit.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
+					if(SEND_SIGNAL(H.wear_suit, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
 						H.update_inv_wear_suit()
 				else if(H.w_uniform)
-					if(H.w_uniform.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
+					if(SEND_SIGNAL(H.w_uniform, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
 						H.update_inv_w_uniform()
 				if(H.shoes)
-					if(H.shoes.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
+					if(SEND_SIGNAL(H.shoes, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
 						H.update_inv_shoes()
 				H.wash_cream()
-			M.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+			SEND_SIGNAL(M, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /datum/reagent/space_cleaner/ez_clean
 	name = "EZ Clean"
@@ -1471,7 +1474,7 @@
 /datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
 	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
 		var/turf/open/floor/F = T
-		F.ChangeTurf(/turf/open/floor/carpet)
+		F.PlaceOnTop(/turf/open/floor/carpet)
 	..()
 	return
 
@@ -1816,12 +1819,6 @@
 		L.remove_trait(TRAIT_PACIFISM, id)
 	..()
 
-/datum/reagent/pax/borg
-	name = "synth-pax"
-	id = "synthpax"
-	description = "A colorless liquid that suppresses violence on the subjects. Cheaper to synthetize, but wears out faster than normal Pax."
-	metabolization_rate = 1.5 * REAGENTS_METABOLISM
-
 /datum/reagent/bz_metabolites
 	name = "BZ metabolites"
 	id = "bz_metabolites"
@@ -1844,3 +1841,40 @@
 		if(changeling)
 			changeling.chem_charges = max(changeling.chem_charges-2, 0)
 	return ..()
+
+/datum/reagent/pax/peaceborg
+	name = "synth-pax"
+	id = "synthpax"
+	description = "A colorless liquid that suppresses violence on the subjects. Cheaper to synthetize, but wears out faster than normal Pax."
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+
+/datum/reagent/peaceborg/confuse
+	name = "Dizzying Solution"
+	id = "dizzysolution"
+	description = "Makes the target off balance and dizzy"
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	taste_description = "dizziness"
+
+/datum/reagent/peaceborg/confuse/on_mob_life(mob/living/M)
+	if(M.confused < 6)
+		M.confused = CLAMP(M.confused + 3, 0, 5)
+	if(M.dizziness < 6)
+		M.dizziness = CLAMP(M.dizziness + 3, 0, 5)
+	if(prob(20))
+		to_chat(M, "You feel confused and disorientated.")
+	..()
+
+/datum/reagent/peaceborg/tire
+	name = "Tiring Solution"
+	id = "tiresolution"
+	description = "An extremely weak stamina-toxin that tires out the target. Completely harmless."
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	taste_description = "tiredness"
+
+/datum/reagent/peaceborg/tire/on_mob_life(mob/living/M)
+	var/healthcomp = (100 - M.health)	//DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
+	if(M.getStaminaLoss() < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
+		M.adjustStaminaLoss(10)
+	if(prob(30))
+		to_chat(M, "You should sit down and take a rest...")
+	..()

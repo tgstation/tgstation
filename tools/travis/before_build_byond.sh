@@ -6,7 +6,7 @@ if [ "$BUILD_TOOLS" = true ]; then
   exit 0
 fi;
 echo "Combining maps for building"
-if [ "$DM_MAPFILE" = "loadallmaps" ]; then
+if [ $BUILD_TESTING = true ]; then
     python tools/travis/template_dm_generator.py
 fi;
 

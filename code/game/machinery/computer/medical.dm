@@ -34,11 +34,11 @@
 	else
 		return ..()
 
-/obj/machinery/computer/med_data/interact(mob/user)
+/obj/machinery/computer/med_data/ui_interact(mob/user)
 	. = ..()
 	var/dat
-	if(src.temp)
-		dat = text("<TT>[src.temp]</TT><BR><BR><A href='?src=[REF(src)];temp=1'>Clear Screen</A>")
+	if(temp)
+		dat = text("<TT>[temp]</TT><BR><BR><A href='?src=[REF(src)];temp=1'>Clear Screen</A>")
 	else
 		dat = text("Confirm Identity: <A href='?src=[REF(src)];scan=1'>[]</A><HR>", (src.scan ? text("[]", src.scan.name) : "----------"))
 		if(src.authenticated)
@@ -283,7 +283,7 @@
 				src.temp = "Are you sure you wish to delete all records?<br>\n\t<A href='?src=[REF(src)];temp=1;del_all2=1'>Yes</A><br>\n\t<A href='?src=[REF(src)];temp=1'>No</A><br>"
 
 			else if(href_list["del_all2"])
-				investigate_log("[usr.name] ([usr.key]) has deleted all medical records.", INVESTIGATE_RECORDS)
+				investigate_log("[key_name(usr)] has deleted all medical records.", INVESTIGATE_RECORDS)
 				GLOB.data_core.medical.Cut()
 				src.temp = "All records deleted."
 
@@ -329,7 +329,7 @@
 							src.active2.fields["mi_dis_d"] = t1
 					if("ma_dis")
 						if(active2)
-							var/t1 = stripped_input("Please input major diabilities list:", "Med. records", src.active2.fields["ma_dis"], null)
+							var/t1 = stripped_input("Please input major disabilities list:", "Med. records", src.active2.fields["ma_dis"], null)
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["ma_dis"] = t1
@@ -449,7 +449,7 @@
 					src.temp = "Are you sure you wish to delete the record (Medical Portion Only)?<br>\n\t<A href='?src=[REF(src)];temp=1;del_r2=1'>Yes</A><br>\n\t<A href='?src=[REF(src)];temp=1'>No</A><br>"
 
 			else if(href_list["del_r2"])
-				investigate_log("[usr.name] ([usr.key]) has deleted the medical records for [active1.fields["name"]].", INVESTIGATE_RECORDS)
+				investigate_log("[key_name(usr)] has deleted the medical records for [active1.fields["name"]].", INVESTIGATE_RECORDS)
 				if(active2)
 					qdel(active2)
 					active2 = null
@@ -553,7 +553,8 @@
 	return
 
 /obj/machinery/computer/med_data/emp_act(severity)
-	if(!(stat & (BROKEN|NOPOWER)))
+	. = ..()
+	if(!(stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
 		for(var/datum/data/record/R in GLOB.data_core.medical)
 			if(prob(10/severity))
 				switch(rand(1,6))
@@ -577,7 +578,6 @@
 			else if(prob(1))
 				qdel(R)
 				continue
-	..()
 
 /obj/machinery/computer/med_data/proc/canUseMedicalRecordsConsole(mob/user, message = 1, record1, record2)
 	if(user)

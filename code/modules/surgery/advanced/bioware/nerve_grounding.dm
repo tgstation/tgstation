@@ -31,7 +31,7 @@
 /datum/bioware/grounded_nerves
 	name = "Grounded Nerves"
 	desc = "Nerves form a safe path for electricity to traverse, protecting the body from electric shocks."
-	mod_type = "nerves"
+	mod_type = BIOWARE_NERVES
 	var/prev_coeff
 
 /datum/bioware/grounded_nerves/on_gain()

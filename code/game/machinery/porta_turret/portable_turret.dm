@@ -8,7 +8,6 @@
 	name = "turret"
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turretCover"
-	anchored = TRUE
 	layer = OBJ_LAYER
 	invisibility = INVISIBILITY_OBSERVER	//the turret is invisible if it's inside its cover
 	density = TRUE
@@ -20,9 +19,6 @@
 	power_channel = EQUIP	//drains power from the EQUIPMENT channel
 
 	var/base_icon_state = "standard"
-
-	var/emp_vunerable = 1 // Can be empd
-
 	var/scan_range = 7
 	var/atom/base = null //for turrets inside other objects
 
@@ -34,7 +30,7 @@
 	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 
 	var/locked = TRUE			//if the turret's behaviour control access is locked
-	var/controllock = 0		//if the turret responds to control panels
+	var/controllock = FALSE		//if the turret responds to control panels
 
 	var/installation = /obj/item/gun/energy/e_gun/turret		//the type of weapon installed by default
 	var/obj/item/gun/stored_gun = null
@@ -182,7 +178,7 @@
 				dat += "Assume direct control : <a href='?src=[REF(src)];operation=manual'>Manual Control</a><br>"
 		else
 			dat += "Warning! Remote control protocol enabled.<br>"
-			
+
 
 	var/datum/browser/popup = new(user, "autosec", "Automatic Portable Turret Installation", 300, 300)
 	popup.set_content(dat)
@@ -224,9 +220,11 @@
 /obj/machinery/porta_turret/power_change()
 	if(!anchored)
 		update_icon()
+		remove_control()
 		return
 	if(stat & BROKEN)
 		update_icon()
+		remove_control()
 	else
 		if( powered() )
 			stat &= ~NOPOWER
@@ -234,6 +232,7 @@
 		else
 			spawn(rand(0, 15))
 				stat |= NOPOWER
+				remove_control()
 				update_icon()
 
 
@@ -251,7 +250,7 @@
 					if(prob(50))
 						new /obj/item/stack/sheet/metal(loc, rand(1,4))
 					if(prob(50))
-						new /obj/item/device/assembly/prox_sensor(loc)
+						new /obj/item/assembly/prox_sensor(loc)
 				else
 					to_chat(user, "<span class='notice'>You remove the turret but did not manage to salvage anything.</span>")
 				qdel(src)
@@ -272,7 +271,7 @@
 		else if(anchored)
 			anchored = FALSE
 			to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
-			update_icon()
+			power_change()
 			invisibility = 0
 			qdel(cover) //deletes the cover, and the turret instance itself becomes its own cover.
 
@@ -283,8 +282,8 @@
 			to_chat(user, "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>")
 		else
 			to_chat(user, "<span class='notice'>Access denied.</span>")
-	else if(istype(I, /obj/item/device/multitool) && !locked)
-		var/obj/item/device/multitool/M = I
+	else if(istype(I, /obj/item/multitool) && !locked)
+		var/obj/item/multitool/M = I
 		M.buffer = src
 		to_chat(user, "<span class='notice'>You add [src] to multitool buffer.</span>")
 	else
@@ -296,7 +295,7 @@
 	to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
 	visible_message("[src] hums oddly...")
 	obj_flags |= EMAGGED
-	controllock = 1
+	controllock = TRUE
 	on = FALSE //turns off the turret temporarily
 	update_icon()
 	sleep(60) //6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
@@ -304,7 +303,10 @@
 
 
 /obj/machinery/porta_turret/emp_act(severity)
-	if(on && emp_vunerable)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
+	if(on)
 		//if the turret is on, the EMP no matter how severe disables the turret for a while
 		//and scrambles its settings, with a slight chance of having an emag effect
 		check_records = pick(0, 1)
@@ -312,12 +314,12 @@
 		auth_weapons = pick(0, 1)
 		stun_all = pick(0, 0, 0, 0, 1)	//stun_all is a pretty big deal, so it's least likely to get turned on
 
-		on=0
+		on = FALSE
+		remove_control()
+
 		spawn(rand(60,600))
 			if(!on)
-				on=1
-
-	..()
+				on = TRUE
 
 /obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()
@@ -337,7 +339,7 @@
 /obj/machinery/porta_turret/obj_break(damage_flag)
 	if(!(flags_1 & NODECONSTRUCT_1) && !(stat & BROKEN))
 		stat |= BROKEN	//enables the BROKEN bit
-		update_icon()
+		power_change()
 		invisibility = 0
 		spark_system.start()	//creates some sparks because they look cool
 		qdel(cover)	//deletes the cover - no need on keeping it there!
@@ -354,27 +356,12 @@
 				cover = new /obj/machinery/porta_turret_cover(loc)	//if the turret has no cover and is anchored, give it a cover
 				cover.parent_turret = src	//assign the cover its parent_turret, which would be this (src)
 
-	if(stat & (NOPOWER|BROKEN))
-		if(!always_up)
-			//if the turret has no power or is broken, make the turret pop down if it hasn't already
-			popDown()
+	if(!on || (stat & (NOPOWER|BROKEN)) || manual_control)
 		return
 
-	if(!on)
-		if(!always_up)
-			//if the turret is off, make it pop down
-			popDown()
-		return
-
-	if(manual_control)
-		return
 	var/list/targets = list()
-	var/static/things_to_scan = typecacheof(list(/mob/living, /obj/mecha))
-
-	for(var/A in typecache_filter_list(view(scan_range, base), things_to_scan))
-		var/atom/AA = A
-
-		if(AA.invisibility > SEE_INVISIBLE_LIVING)
+	for(var/mob/A in view(scan_range, base))
+		if(A.invisibility > SEE_INVISIBLE_LIVING)
 			continue
 
 		if(check_anomalies)//if it's set to check for simple animals
@@ -413,17 +400,17 @@
 			else if(check_anomalies) //non humans who are not simple animals (xenos etc)
 				if(!in_faction(C))
 					targets += C
+	for(var/A in GLOB.mechas_list)
+		if((get_dist(A, base) < scan_range) && can_see(base, A, scan_range))
+			var/obj/mecha/Mech = A
+			if(Mech.occupant && !in_faction(Mech.occupant)) //If there is a user and they're not in our faction
+				if(assess_perp(Mech.occupant) >= 4)
+					targets += Mech
 
-		if(ismecha(A))
-			var/obj/mecha/M = A
-			//If there is a user and they're not in our faction
-			if(M.occupant && !in_faction(M.occupant))
-				if(assess_perp(M.occupant) >= 4)
-					targets += M
-
-	if(!tryToShootAt(targets))
-		if(!always_up)
-			popDown() // no valid targets, close the cover
+	if(targets.len)
+		tryToShootAt(targets)
+	else if(!always_up)
+		popDown() // no valid targets, close the cover
 
 /obj/machinery/porta_turret/proc/tryToShootAt(list/atom/movable/targets)
 	while(targets.len > 0)
@@ -572,6 +559,8 @@
 	if(controllock)
 		return
 	src.on = on
+	if(!on)
+		popDown()
 	src.mode = mode
 	power_change()
 
@@ -596,10 +585,10 @@
 	var/obj/machinery/porta_turret/P = target
 	if(!istype(P))
 		return
-	P.remove_control(owner)
+	P.remove_control(FALSE)
 
 /obj/machinery/porta_turret/proc/give_control(mob/A)
-	if(manual_control)
+	if(manual_control || !can_interact(A))
 		return FALSE
 	remote_controller = A
 	if(!quit_action)
@@ -615,10 +604,12 @@
 	popUp()
 	return TRUE
 
-/obj/machinery/porta_turret/proc/remove_control()
+/obj/machinery/porta_turret/proc/remove_control(warning_message = TRUE)
 	if(!manual_control)
 		return FALSE
 	if(remote_controller)
+		if(warning_message)
+			to_chat(remote_controller, "<span class='warning'>Your uplink to [src] has been severed!</span>")
 		quit_action.Remove(remote_controller)
 		toggle_action.Remove(remote_controller)
 		remote_controller.click_intercept = null
@@ -630,6 +621,9 @@
 
 /obj/machinery/porta_turret/proc/InterceptClickOn(mob/living/caller, params, atom/A)
 	if(!manual_control)
+		return FALSE
+	if(!can_interact(caller))
+		remove_control()
 		return FALSE
 	add_logs(caller,A,"fired with manual turret control at")
 	target(A)
@@ -649,8 +643,11 @@
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
 	faction = list(ROLE_SYNDICATE)
-	emp_vunerable = 0
 	desc = "A ballistic machine gun auto-turret."
+
+/obj/machinery/porta_turret/syndicate/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/porta_turret/syndicate/energy
 	icon_state = "standard_stun"
@@ -726,8 +723,11 @@
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
 	faction = list("neutral","silicon","turret")
-	emp_vunerable = 0
 	mode = TURRET_LETHAL
+
+/obj/machinery/porta_turret/centcom_shuttle/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/porta_turret/centcom_shuttle/assess_perp(mob/living/carbon/human/perp)
 	return 0
@@ -753,7 +753,6 @@
 	desc = "Used to control a room's automated defenses."
 	icon = 'icons/obj/machines/turret_control.dmi'
 	icon_state = "control_standby"
-	anchored = TRUE
 	density = FALSE
 	var/enabled = 1
 	var/lethal = 0
@@ -798,8 +797,8 @@
 	if(stat & BROKEN)
 		return
 
-	if (istype(I, /obj/item/device/multitool))
-		var/obj/item/device/multitool/M = I
+	if (istype(I, /obj/item/multitool))
+		var/obj/item/multitool/M = I
 		if(M.buffer && istype(M.buffer, /obj/machinery/porta_turret))
 			turrets |= M.buffer
 			to_chat(user, "You link \the [M.buffer] with \the [src]")

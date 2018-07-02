@@ -1,7 +1,7 @@
 /obj/machinery/door/poddoor/shutters
 	gender = PLURAL
 	name = "shutters"
-	desc = "Heavy duty metal shutters that opens mechanically."
+	desc = "Heavy duty metal shutters that open mechanically."
 	icon = 'icons/obj/doors/shutters.dmi'
 	layer = SHUTTER_LAYER
 	closingLayer = SHUTTER_LAYER

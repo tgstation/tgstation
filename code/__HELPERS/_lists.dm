@@ -10,12 +10,12 @@
  */
 
 #define LAZYINITLIST(L) if (!L) L = list()
-#define UNSETEMPTY(L) if (L && !L.len) L = null
-#define LAZYREMOVE(L, I) if(L) { L -= I; if(!L.len) { L = null; } }
+#define UNSETEMPTY(L) if (L && !length(L)) L = null
+#define LAZYREMOVE(L, I) if(L) { L -= I; if(!length(L)) { L = null; } }
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
 #define LAZYOR(L, I) if(!L) { L = list(); } L |= I;
 #define LAZYFIND(L, V) L ? L.Find(V) : 0
-#define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= L.len ? L[I] : null) : L[I]) : null)
+#define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
 #define LAZYLEN(L) length(L)
 #define LAZYCLEARLIST(L) if(L) L.Cut()
@@ -73,14 +73,7 @@
 	return FALSE
 
 //Checks for specific types in specifically structured (Assoc "type" = TRUE) lists ('typecaches')
-/proc/is_type_in_typecache(atom/A, list/L)
-	if(!LAZYLEN(L) || !A)
-
-		return FALSE
-	if(ispath(A))
-		. = L[A]
-	else
-		. = L[A.type]
+#define is_type_in_typecache(A, L) (A && length(L) && L[(ispath(A) ? A : A:type)])
 
 //Checks for a string in a list
 /proc/is_string_in_list(string, list/L)
@@ -494,6 +487,11 @@
 	. = list()
 	for(var/key in key_list)
 		. |= key_list[key]
+
+/proc/make_associative(list/flat_list)
+	. = list()
+	for(var/thing in flat_list)
+		.[thing] = TRUE
 
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((islist(L) && length(L)) ? pick(L) : default)

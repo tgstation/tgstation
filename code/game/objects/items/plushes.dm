@@ -141,8 +141,8 @@
 		user.visible_message("<span class='warning'>[user] slides [grenade] into [src].</span>", \
 		"<span class='danger'>You slide [I] into [src].</span>")
 		grenade = I
-		var/turf/T = get_turf(user)
-		log_game("[key_name(user)] added a grenade ([I.name]) to [src] at [COORD(T)].")
+		var/turf/grenade_turf = get_turf(src)
+		log_game("[key_name(user)] added a grenade ([I.name]) to [src] at [AREACOORD(grenade_turf)].")
 		return
 	if(istype(I, /obj/item/toy/plush))
 		love(I, user)
@@ -510,3 +510,13 @@
 	attack_verb = list("blorbled", "slimed", "absorbed")
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE	//given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
+
+/obj/item/toy/plush/awakenedplushie
+	name = "awakened plushie"
+	desc = "An ancient plushie that has grown enlightened to the true nature of reality."
+	icon_state = "plushie_awake"
+	item_state = "plushie_awake"
+
+/obj/item/toy/plush/awakenedplushie/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/edit_complainer)

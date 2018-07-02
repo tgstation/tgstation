@@ -15,8 +15,7 @@
 
 /datum/component/forensics/Initialize(new_fingerprints, new_hiddenprints, new_blood_DNA, new_fibers)
 	if(!isatom(parent))
-		. = COMPONENT_INCOMPATIBLE
-		CRASH("Forensics datum applied incorrectly to non-atom of type [parent.type]!")
+		return COMPONENT_INCOMPATIBLE
 	fingerprints = new_fingerprints
 	hiddenprints = new_hiddenprints
 	blood_DNA = new_blood_DNA

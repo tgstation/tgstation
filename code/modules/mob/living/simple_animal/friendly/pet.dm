@@ -1,6 +1,7 @@
 /mob/living/simple_animal/pet
 	icon = 'icons/mob/pets.dmi'
 	mob_size = MOB_SIZE_SMALL
+	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	var/obj/item/clothing/neck/petcollar/pcollar
 	var/collar_type
 	var/unique_pet = FALSE

@@ -6,14 +6,12 @@
 	var/icon_state_on = "cold_on"
 	var/icon_state_open = "cold_off"
 	density = TRUE
-	anchored = TRUE
 	max_integrity = 300
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 30)
 	layer = OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/thermomachine
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 
-	var/on = FALSE
 	var/min_temperature = 0
 	var/max_temperature = 0
 	var/target_temperature = T20C
@@ -79,8 +77,6 @@
 	if(default_change_direction_wrench(user, I))
 		return
 	if(default_deconstruction_crowbar(I))
-		return
-	if(exchange_parts(user, I))
 		return
 	return ..()
 
@@ -164,28 +160,41 @@
 	icon_state_on = "freezer_1"
 	icon_state_open = "freezer-o"
 	max_temperature = T20C
-	min_temperature = 170
+	min_temperature = 170 //actual minimum temperature is defined by RefreshParts()
 	circuit = /obj/item/circuitboard/machine/thermomachine/freezer
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
+	on = TRUE
+	icon_state = "freezer_1"
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/Initialize()
+	. = ..()
+	if(target_temperature == initial(target_temperature))
+		target_temperature = min_temperature
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/RefreshParts()
 	..()
 	var/L
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		L += M.rating
-	min_temperature = max(T0C - (initial(min_temperature) + L * 15), TCMB)
+	min_temperature = max(T0C - (initial(min_temperature) + L * 15), TCMB) //73.15K with T1 stock parts
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater
 	name = "heater"
 	icon_state = "heater"
 	icon_state_on = "heater_1"
 	icon_state_open = "heater-o"
-	max_temperature = 140
+	max_temperature = 140 //actual maximum temperature is defined by RefreshParts()
 	min_temperature = T20C
 	circuit = /obj/item/circuitboard/machine/thermomachine/heater
+
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/on
+	on = TRUE
+	icon_state = "heater_1"
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/RefreshParts()
 	..()
 	var/L
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		L += M.rating
-	max_temperature = T20C + (initial(max_temperature) * L)
+	max_temperature = T20C + (initial(max_temperature) * L) //573.15K with T1 stock parts

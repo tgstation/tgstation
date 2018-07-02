@@ -5,7 +5,6 @@
 	icon_state = "mw"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
@@ -49,8 +48,6 @@
 		if(default_deconstruction_screwdriver(user, "mw-o", "mw", O))
 			return
 		if(default_unfasten_wrench(user, O))
-			return
-		if(exchange_parts(user, O))
 			return
 
 	if(default_deconstruction_crowbar(O))
@@ -132,8 +129,8 @@
 			if (contents.len>=max_n_of_items)
 				to_chat(user, "<span class='warning'>[src] is full, you can't put anything in!</span>")
 				return 1
-			T.remove_from_storage(S, src)
-			loaded++
+			if(SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src))
+				loaded++
 
 		if(loaded)
 			to_chat(user, "<span class='notice'>You insert [loaded] items into [src].</span>")
@@ -165,6 +162,7 @@
 ********************/
 
 /obj/machinery/microwave/ui_interact(mob/user) // The microwave Menu
+	. = ..()
 	if(panel_open || !anchored)
 		return
 	var/dat = "<div class='statusDisplay'>"

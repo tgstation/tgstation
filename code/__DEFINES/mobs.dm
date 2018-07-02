@@ -35,6 +35,18 @@
 #define BLOODCRAWL 1
 #define BLOODCRAWL_EAT 2
 
+//Mob bio-types
+#define MOB_ORGANIC 	"organic"
+#define MOB_INORGANIC 	"inorganic"
+#define MOB_ROBOTIC 	"robotic"
+#define MOB_UNDEAD		"undead"
+#define MOB_HUMANOID 	"humanoid"
+#define MOB_BUG 		"bug"
+#define MOB_BEAST		"beast"
+#define MOB_EPIC		"epic" //megafauna
+#define MOB_REPTILE		"reptile"
+#define MOB_SPIRIT		"spirit"
+
 //Organ defines for carbon mobs
 #define ORGAN_ORGANIC   1
 #define ORGAN_ROBOTIC   2
@@ -50,6 +62,27 @@
 #define LARVA_BODYPART "larva"
 #define DEVIL_BODYPART "devil"
 /*see __DEFINES/inventory.dm for bodypart bitflag defines*/
+
+// Health/damage defines for carbon mobs
+#define HUMAN_MAX_OXYLOSS 3
+#define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30)
+
+#define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
+#define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
+#define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
+
+#define COLD_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when your body temperature just passes the 260.15k safety point
+#define COLD_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 200K point
+#define COLD_DAMAGE_LEVEL_3 3 //Amount of damage applied when your body temperature passes the 120K point
+
+//Note that gas heat damage is only applied once every FOUR ticks.
+#define HEAT_GAS_DAMAGE_LEVEL_1 2 //Amount of damage applied when the current breath's temperature just passes the 360.15k safety point
+#define HEAT_GAS_DAMAGE_LEVEL_2 4 //Amount of damage applied when the current breath's temperature passes the 400K point
+#define HEAT_GAS_DAMAGE_LEVEL_3 8 //Amount of damage applied when the current breath's temperature passes the 1000K point
+
+#define COLD_GAS_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when the current breath's temperature just passes the 260.15k safety point
+#define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
+#define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
 //Brain Damage defines
 #define BRAIN_DAMAGE_MILD 20
@@ -162,15 +195,15 @@
 #define AI_Z_OFF	4
 
 //determines if a mob can smash through it
-#define ENVIRONMENT_SMASH_NONE 0
-#define ENVIRONMENT_SMASH_STRUCTURES 1 //crates, lockers, ect
-#define ENVIRONMENT_SMASH_WALLS 2   //walls
-#define ENVIRONMENT_SMASH_RWALLS 4  //rwalls
+#define ENVIRONMENT_SMASH_NONE			0
+#define ENVIRONMENT_SMASH_STRUCTURES	(1<<0) 	//crates, lockers, ect
+#define ENVIRONMENT_SMASH_WALLS			(1<<1)  //walls
+#define ENVIRONMENT_SMASH_RWALLS		(1<<2)	//rwalls
 
-#define NO_SLIP_WHEN_WALKING 1
-#define SLIDE 2
-#define GALOSHES_DONT_HELP 4
-#define SLIDE_ICE 8
+#define NO_SLIP_WHEN_WALKING	(1<<0)
+#define SLIDE					(1<<1)
+#define GALOSHES_DONT_HELP		(1<<2)
+#define SLIDE_ICE				(1<<3)
 
 #define MAX_CHICKENS 50
 
@@ -182,12 +215,12 @@
 #define INCORPOREAL_MOVE_JAUNT 3 // is blocked by holy water/salt
 
 //Secbot and ED209 judgement criteria bitflag values
-#define JUDGE_EMAGGED 1
-#define JUDGE_IDCHECK 2
-#define JUDGE_WEAPONCHECK 4
-#define JUDGE_RECORDCHECK 8
+#define JUDGE_EMAGGED		(1<<0)
+#define JUDGE_IDCHECK		(1<<1)
+#define JUDGE_WEAPONCHECK	(1<<2)
+#define JUDGE_RECORDCHECK	(1<<3)
 //ED209's ignore monkeys
-#define JUDGE_IGNOREMONKEYS 16
+#define JUDGE_IGNOREMONKEYS	(1<<4)
 
 #define MEGAFAUNA_DEFAULT_RECOVERY_TIME 5
 
@@ -225,7 +258,7 @@
 
 // Roundstart trait system
 
-#define MAX_TRAITS 6 //The maximum amount of traits one character can have at roundstart
+#define MAX_QUIRKS 6 //The maximum amount of quirks one character can have at roundstart
 
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY	5

@@ -28,7 +28,7 @@
 		return
 
 	if(!(target in oview(range)))
-		to_chat(user, "<span class='notice'>They are too far away!</span>")
+		to_chat(user, "<span class='notice'>[target.p_theyre(TRUE)] too far away!</span>")
 		return
 
 	if(target.anti_magic_check())
@@ -44,13 +44,13 @@
 
 	var/choice = masks[randM]
 	var/obj/item/clothing/mask/magichead = new choice
-	magichead.flags_1 |= NODROP_1
+	magichead.item_flags |= NODROP
 	magichead.flags_inv = null
 	target.visible_message("<span class='danger'>[target]'s face bursts into flames, and a barnyard animal's head takes its place!</span>", \
 						   "<span class='danger'>Your face burns up, and shortly after the fire you realise you have the face of a barnyard animal!</span>")
 	if(!target.dropItemToGround(target.wear_mask))
 		qdel(target.wear_mask)
-	target.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)
+	target.equip_to_slot_if_possible(magichead, SLOT_WEAR_MASK, 1, 1)
 	playsound(get_turf(target), mSounds[randM], 50, 1)
 
 	target.flash_act()

@@ -1,4 +1,4 @@
-/obj/item/device/radio
+/obj/item/radio
 	icon = 'icons/obj/radio.dmi'
 	name = "station bounced radio"
 	icon_state = "walkietalkie"
@@ -7,8 +7,7 @@
 	dog_fashion = /datum/dog_fashion/back
 
 	flags_1 = CONDUCT_1 | HEAR_1
-	flags_2 = NO_EMP_WIRES_2
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	throw_speed = 3
 	throw_range = 7
 	w_class = WEIGHT_CLASS_SMALL
@@ -33,7 +32,7 @@
 	var/command = FALSE  // If true, use_command can be toggled at will.
 
 	// Encryption key handling
-	var/obj/item/device/encryptionkey/keyslot
+	var/obj/item/encryptionkey/keyslot
 	var/translate_binary = FALSE  // If true, can hear the special binary channel.
 	var/independent = FALSE  // If true, can say/hear on the special CentCom channel.
 	var/syndie = FALSE  // If true, hears all well-known channels automatically, and can say/hear on the Syndicate channel.
@@ -43,15 +42,16 @@
 	var/const/FREQ_LISTENING = 1
 	//FREQ_BROADCASTING = 2
 
-/obj/item/device/radio/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] starts bouncing [src] off their head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+/obj/item/radio/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] starts bouncing [src] off [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
-/obj/item/device/radio/proc/set_frequency(new_frequency)
+/obj/item/radio/proc/set_frequency(new_frequency)
+	SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, args)
 	remove_radio(src, frequency)
 	frequency = add_radio(src, new_frequency)
 
-/obj/item/device/radio/proc/recalculateChannels()
+/obj/item/radio/proc/recalculateChannels()
 	channels = list()
 	translate_binary = FALSE
 	syndie = FALSE
@@ -72,19 +72,19 @@
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
-/obj/item/device/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
+/obj/item/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
 	qdel(keyslot)
-	keyslot = new /obj/item/device/encryptionkey/syndicate
+	keyslot = new /obj/item/encryptionkey/syndicate
 	syndie = 1
 	recalculateChannels()
 
-/obj/item/device/radio/Destroy()
+/obj/item/radio/Destroy()
 	remove_radio_all(src) //Just to be sure
 	QDEL_NULL(wires)
 	QDEL_NULL(keyslot)
 	return ..()
 
-/obj/item/device/radio/Initialize()
+/obj/item/radio/Initialize()
 	wires = new /datum/wires/radio(src)
 	if(prison_radio)
 		wires.cut(WIRE_TX) // OH GOD WHY
@@ -96,15 +96,18 @@
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
-/obj/item/device/radio/interact(mob/user)
-	if (..())
-		return
+/obj/item/radio/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
+
+/obj/item/radio/interact(mob/user)
 	if(unscrewed && !isAI(user))
 		wires.interact(user)
+		add_fingerprint(user)
 	else
-		ui_interact(user)
+		..()
 
-/obj/item/device/radio/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+/obj/item/radio/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -112,7 +115,7 @@
 		ui = new(user, src, ui_key, "radio", name, 370, 220 + channels.len * 22, master_ui, state)
 		ui.open()
 
-/obj/item/device/radio/ui_data(mob/user)
+/obj/item/radio/ui_data(mob/user)
 	var/list/data = list()
 
 	data["broadcasting"] = broadcasting
@@ -128,11 +131,11 @@
 	data["useCommand"] = use_command
 	data["subspace"] = subspace_transmission
 	data["subspaceSwitchable"] = subspace_switchable
-	data["headset"] = istype(src, /obj/item/device/radio/headset)
+	data["headset"] = istype(src, /obj/item/radio/headset)
 
 	return data
 
-/obj/item/device/radio/ui_act(action, params, datum/tgui/ui)
+/obj/item/radio/ui_act(action, params, datum/tgui/ui)
 	if(..())
 		return
 	switch(action)
@@ -157,13 +160,7 @@
 				tune = tune * 10
 				. = TRUE
 			if(.)
-				frequency = sanitize_frequency(tune, freerange)
-				set_frequency(frequency)
-				GET_COMPONENT(hidden_uplink, /datum/component/uplink)
-				if(hidden_uplink && (frequency == traitor_frequency))
-					hidden_uplink.locked = FALSE
-					hidden_uplink.interact(usr)
-					ui.close()
+				set_frequency(sanitize_frequency(tune, freerange))
 		if("listen")
 			listening = !listening
 			. = TRUE
@@ -191,7 +188,7 @@
 					recalculateChannels()
 				. = TRUE
 
-/obj/item/device/radio/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language)
+/obj/item/radio/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language)
 	if(!spans)
 		spans = M.get_spans()
 	if(!language)
@@ -199,7 +196,7 @@
 	INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans.Copy(), language)
 	return ITALICS | REDUCE_RANGE
 
-/obj/item/device/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans, datum/language/language)
+/obj/item/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans, datum/language/language)
 	if(!on)
 		return // the device has to be on
 	if(!M || !message)
@@ -236,7 +233,7 @@
 
 	// Nearby active jammers severely gibberish the message
 	var/turf/position = get_turf(src)
-	for(var/obj/item/device/jammer/jammer in GLOB.active_jammers)
+	for(var/obj/item/jammer/jammer in GLOB.active_jammers)
 		var/turf/jammer_turf = get_turf(jammer)
 		if(position.z == jammer_turf.z && (get_dist(position, jammer_turf) < jammer.range))
 			message = Gibberish(message,100)
@@ -267,7 +264,7 @@
 	// was never received, send a mundane broadcast (no headsets).
 	addtimer(CALLBACK(src, .proc/backup_transmission, signal), 20)
 
-/obj/item/device/radio/proc/backup_transmission(datum/signal/subspace/vocal/signal)
+/obj/item/radio/proc/backup_transmission(datum/signal/subspace/vocal/signal)
 	var/turf/T = get_turf(src)
 	if (signal.data["done"] && (T.z in signal.levels))
 		return
@@ -278,7 +275,7 @@
 	signal.levels = list(T.z)
 	signal.broadcast()
 
-/obj/item/device/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range)
 		return
 
@@ -297,7 +294,7 @@
 	talk_into(speaker, raw_message, , spans, language=message_language)
 
 // Checks if this radio can receive on the given frequency.
-/obj/item/device/radio/proc/can_receive(freq, level)
+/obj/item/radio/proc/can_receive(freq, level)
 	// deny checks
 	if (!on || !listening || wires.is_cut(WIRE_RX))
 		return FALSE
@@ -321,14 +318,14 @@
 	return FALSE
 
 
-/obj/item/device/radio/examine(mob/user)
+/obj/item/radio/examine(mob/user)
 	..()
 	if (unscrewed)
 		to_chat(user, "<span class='notice'>It can be attached and modified.</span>")
 	else
 		to_chat(user, "<span class='notice'>It cannot be modified or attached.</span>")
 
-/obj/item/device/radio/attackby(obj/item/W, mob/user, params)
+/obj/item/radio/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/screwdriver))
 		unscrewed = !unscrewed
@@ -339,7 +336,10 @@
 	else
 		return ..()
 
-/obj/item/device/radio/emp_act(severity)
+/obj/item/radio/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
 	emped++ //There's been an EMP; better count it
 	var/curremp = emped //Remember which EMP this was
 	if (listening && ismob(loc))	// if the radio is turned on and on someone's person they notice
@@ -352,33 +352,31 @@
 	spawn(200)
 		if(emped == curremp) //Don't fix it if it's been EMP'd again
 			emped = 0
-			if (!istype(src, /obj/item/device/radio/intercom)) // intercoms will turn back on on their own
+			if (!istype(src, /obj/item/radio/intercom)) // intercoms will turn back on on their own
 				on = TRUE
-	..()
 
 ///////////////////////////////
 //////////Borg Radios//////////
 ///////////////////////////////
 //Giving borgs their own radio to have some more room to work with -Sieve
 
-/obj/item/device/radio/borg
+/obj/item/radio/borg
 	name = "cyborg radio"
 	subspace_switchable = TRUE
 	dog_fashion = null
-	flags_2 = NO_EMP_WIRES_2
 
-/obj/item/device/radio/borg/Initialize(mapload)
+/obj/item/radio/borg/Initialize(mapload)
 	. = ..()
 
-/obj/item/device/radio/borg/syndicate
+/obj/item/radio/borg/syndicate
 	syndie = 1
-	keyslot = new /obj/item/device/encryptionkey/syndicate
+	keyslot = new /obj/item/encryptionkey/syndicate
 
-/obj/item/device/radio/borg/syndicate/Initialize()
+/obj/item/radio/borg/syndicate/Initialize()
 	. = ..()
 	set_frequency(FREQ_SYNDICATE)
 
-/obj/item/device/radio/borg/attackby(obj/item/W, mob/user, params)
+/obj/item/radio/borg/attackby(obj/item/W, mob/user, params)
 
 	if(istype(W, /obj/item/screwdriver))
 		if(keyslot)
@@ -399,7 +397,7 @@
 		else
 			to_chat(user, "<span class='warning'>This radio doesn't have any encryption keys!</span>")
 
-	else if(istype(W, /obj/item/device/encryptionkey/))
+	else if(istype(W, /obj/item/encryptionkey/))
 		if(keyslot)
 			to_chat(user, "<span class='warning'>The radio can't hold another key!</span>")
 			return
@@ -412,6 +410,6 @@
 		recalculateChannels()
 
 
-/obj/item/device/radio/off	// Station bounced radios, their only difference is spawning with the speakers off, this was made to help the lag.
+/obj/item/radio/off	// Station bounced radios, their only difference is spawning with the speakers off, this was made to help the lag.
 	listening = 0			// And it's nice to have a subtype too for future features.
 	dog_fashion = /datum/dog_fashion/back

@@ -10,9 +10,10 @@
 
 
 
-/obj/item/device/multitool
+/obj/item/multitool
 	name = "multitool"
 	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors."
+	icon = 'icons/obj/device.dmi'
 	icon_state = "multitool"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -31,11 +32,11 @@
 	var/datum/integrated_io/selected_io = null  //functional for integrated circuits.
 	var/mode = 0
 
-/obj/item/device/multitool/suicide_act(mob/living/carbon/user)
+/obj/item/multitool/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!</span>")
 	return OXYLOSS//theres a reason it wasnt recommended by doctors
 
-/obj/item/device/multitool/attack_self(mob/user)
+/obj/item/multitool/attack_self(mob/user)
 	if(selected_io)
 		selected_io = null
 		to_chat(user, "<span class='notice'>You clear the wired connection from the multitool.</span>")
@@ -43,13 +44,13 @@
 		..()
 	update_icon()
 
-/obj/item/device/multitool/update_icon()
+/obj/item/multitool/update_icon()
 	if(selected_io)
 		icon_state = "multitool_red"
 	else
 		icon_state = "multitool"
 
-/obj/item/device/multitool/proc/wire(var/datum/integrated_io/io, mob/user)
+/obj/item/multitool/proc/wire(var/datum/integrated_io/io, mob/user)
 	if(!io.holder.assembly)
 		to_chat(user, "<span class='warning'>\The [io.holder] needs to be secured inside an assembly first.</span>")
 		return
@@ -59,7 +60,7 @@
 			to_chat(user, "<span class='warning'>Wiring \the [selected_io.holder]'s [selected_io.name] into itself is rather pointless.</span>")
 			return
 		if(io.io_type != selected_io.io_type)
-			to_chat(user, "<span class='warning'>Those two types of channels are incompatable.  The first is a [selected_io.io_type], \
+			to_chat(user, "<span class='warning'>Those two types of channels are incompatible.  The first is a [selected_io.io_type], \
 			while the second is a [io.io_type].</span>")
 			return
 		if(io.holder.assembly && io.holder.assembly != selected_io.holder.assembly)
@@ -78,7 +79,7 @@
 	update_icon()
 
 
-/obj/item/device/multitool/proc/unwire(var/datum/integrated_io/io1, var/datum/integrated_io/io2, mob/user)
+/obj/item/multitool/proc/unwire(var/datum/integrated_io/io1, var/datum/integrated_io/io2, mob/user)
 	if(!io1.linked.len || !io2.linked.len)
 		to_chat(user, "<span class='warning'>There is nothing connected to the data channel.</span>")
 		return
@@ -98,22 +99,22 @@
 // Syndicate device disguised as a multitool; it will turn red when an AI camera is nearby.
 
 
-/obj/item/device/multitool/ai_detect
+/obj/item/multitool/ai_detect
 	var/track_cooldown = 0
 	var/track_delay = 10 //How often it checks for proximity
 	var/detect_state = PROXIMITY_NONE
 	var/rangealert = 8	//Glows red when inside
 	var/rangewarning = 20 //Glows yellow when inside
 
-/obj/item/device/multitool/ai_detect/New()
+/obj/item/multitool/ai_detect/New()
 	..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/device/multitool/ai_detect/Destroy()
+/obj/item/multitool/ai_detect/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/device/multitool/ai_detect/process()
+/obj/item/multitool/ai_detect/process()
 	if(track_cooldown > world.time)
 		return
 	detect_state = PROXIMITY_NONE
@@ -121,46 +122,32 @@
 	icon_state = "[initial(icon_state)][detect_state]"
 	track_cooldown = world.time + track_delay
 
-/obj/item/device/multitool/ai_detect/proc/multitool_detect()
+/obj/item/multitool/ai_detect/proc/multitool_detect()
 	var/turf/our_turf = get_turf(src)
 	for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
 		if(AI.cameraFollow == src)
 			detect_state = PROXIMITY_ON_SCREEN
 			break
 
-	if(!detect_state && GLOB.cameranet.chunkGenerated(our_turf.x, our_turf.y, our_turf.z))
-		var/datum/camerachunk/chunk = GLOB.cameranet.getCameraChunk(our_turf.x, our_turf.y, our_turf.z)
-		if(chunk)
-			if(chunk.seenby.len)
-				for(var/mob/camera/aiEye/A in chunk.seenby)
-					var/turf/detect_turf = get_turf(A)
-					if(get_dist(our_turf, detect_turf) < rangealert)
-						detect_state = PROXIMITY_ON_SCREEN
-						break
-					if(get_dist(our_turf, detect_turf) < rangewarning)
-						detect_state = PROXIMITY_NEAR
-						break
-
-/obj/item/device/multitool/ai_detect/admin
-	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors. Has a strange tag that says 'Grief in Safety'." //What else should I say for a meme item?
-	track_delay = 5
-
-/obj/item/device/multitool/ai_detect/admin/multitool_detect()
-	var/turf/our_turf = get_turf(src)
-	for(var/mob/J in urange(rangewarning,our_turf))
-		if(GLOB.admin_datums[J.ckey])
-			detect_state = PROXIMITY_NEAR
-			var/turf/detect_turf = get_turf(J)
+	if(detect_state)
+		return
+	var/datum/camerachunk/chunk = GLOB.cameranet.chunkGenerated(our_turf.x, our_turf.y, our_turf.z)
+	if(chunk && chunk.seenby.len)
+		for(var/mob/camera/aiEye/A in chunk.seenby)
+			var/turf/detect_turf = get_turf(A)
 			if(get_dist(our_turf, detect_turf) < rangealert)
 				detect_state = PROXIMITY_ON_SCREEN
 				break
+			if(get_dist(our_turf, detect_turf) < rangewarning)
+				detect_state = PROXIMITY_NEAR
+				break
 
-/obj/item/device/multitool/cyborg
+/obj/item/multitool/cyborg
 	name = "multitool"
 	desc = "Optimised and stripped-down version of a regular multitool."
 	toolspeed = 0.5
 
-/obj/item/device/multitool/abductor
+/obj/item/multitool/abductor
 	name = "alien multitool"
 	desc = "An omni-technological interface."
 	icon = 'icons/obj/abductor.dmi'

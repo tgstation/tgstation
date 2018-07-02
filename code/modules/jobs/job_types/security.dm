@@ -23,7 +23,6 @@ Head of Security
 	exp_requirements = 300
 	exp_type = EXP_TYPE_CREW
 	exp_type_department = EXP_TYPE_SECURITY
-	antag_rep = 20
 
 	outfit = /datum/outfit/job/hos
 
@@ -41,8 +40,8 @@ Head of Security
 	jobtype = /datum/job/hos
 
 	id = /obj/item/card/id/silver
-	belt = /obj/item/device/pda/heads/hos
-	ears = /obj/item/device/radio/headset/heads/hos/alt
+	belt = /obj/item/pda/heads/hos
+	ears = /obj/item/radio/headset/heads/hos/alt
 	uniform = /obj/item/clothing/under/rank/head_of_security
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/hos/trenchcoat
@@ -50,7 +49,7 @@ Head of Security
 	head = /obj/item/clothing/head/HoS/beret
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	suit_store = /obj/item/gun/energy/e_gun
-	r_pocket = /obj/item/device/assembly/flash/handheld
+	r_pocket = /obj/item/assembly/flash/handheld
 	l_pocket = /obj/item/restraints/handcuffs
 	backpack_contents = list(/obj/item/melee/baton/loaded=1)
 
@@ -60,6 +59,8 @@ Head of Security
 	box = /obj/item/storage/box/security
 
 	implants = list(/obj/item/implant/mindshield)
+
+	chameleon_extras = list(/obj/item/gun/energy/e_gun/hos, /obj/item/stamp/hos)
 
 /*
 Warden
@@ -77,7 +78,6 @@ Warden
 	minimal_player_age = 7
 	exp_requirements = 300
 	exp_type = EXP_TYPE_CREW
-	antag_rep = 20
 
 	outfit = /datum/outfit/job/warden
 
@@ -93,15 +93,15 @@ Warden
 	name = "Warden"
 	jobtype = /datum/job/warden
 
-	belt = /obj/item/device/pda/warden
-	ears = /obj/item/device/radio/headset/headset_sec/alt
+	belt = /obj/item/pda/warden
+	ears = /obj/item/radio/headset/headset_sec/alt
 	uniform = /obj/item/clothing/under/rank/warden
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/vest/warden/alt
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/warden
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	r_pocket = /obj/item/device/assembly/flash/handheld
+	r_pocket = /obj/item/assembly/flash/handheld
 	l_pocket = /obj/item/restraints/handcuffs
 	suit_store = /obj/item/gun/energy/e_gun/advtaser
 	backpack_contents = list(/obj/item/melee/baton/loaded=1)
@@ -113,6 +113,7 @@ Warden
 
 	implants = list(/obj/item/implant/mindshield)
 
+	chameleon_extras = /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 
 /*
 Detective
@@ -130,7 +131,6 @@ Detective
 	minimal_player_age = 7
 	exp_requirements = 300
 	exp_type = EXP_TYPE_CREW
-	antag_rep = 20
 
 	outfit = /datum/outfit/job/detective
 
@@ -141,8 +141,8 @@ Detective
 	name = "Detective"
 	jobtype = /datum/job/detective
 
-	belt = /obj/item/device/pda/detective
-	ears = /obj/item/device/radio/headset/headset_sec/alt
+	belt = /obj/item/pda/detective
+	ears = /obj/item/radio/headset/headset_sec/alt
 	uniform = /obj/item/clothing/under/rank/det
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/det_suit
@@ -151,11 +151,13 @@ Detective
 	l_pocket = /obj/item/toy/crayon/white
 	r_pocket = /obj/item/lighter
 	backpack_contents = list(/obj/item/storage/box/evidence=1,\
-		/obj/item/device/detective_scanner=1,\
+		/obj/item/detective_scanner=1,\
 		/obj/item/melee/classic_baton=1)
 	mask = /obj/item/clothing/mask/cigarette
 
 	implants = list(/obj/item/implant/mindshield)
+
+	chameleon_extras = list(/obj/item/gun/ballistic/revolver/detective, /obj/item/clothing/glasses/sunglasses)
 
 /datum/outfit/job/detective/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -181,7 +183,6 @@ Security Officer
 	minimal_player_age = 7
 	exp_requirements = 300
 	exp_type = EXP_TYPE_CREW
-	antag_rep = 20
 
 	outfit = /datum/outfit/job/security
 
@@ -214,25 +215,25 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 	var/spawn_point = null
 	switch(department)
 		if(SEC_DEPT_SUPPLY)
-			ears = /obj/item/device/radio/headset/headset_sec/alt/department/supply
+			ears = /obj/item/radio/headset/headset_sec/alt/department/supply
 			dep_access = list(ACCESS_MAILSORTING, ACCESS_MINING, ACCESS_MINING_STATION)
 			destination = /area/security/checkpoint/supply
 			spawn_point = locate(/obj/effect/landmark/start/depsec/supply) in GLOB.department_security_spawns
 			accessory = /obj/item/clothing/accessory/armband/cargo
 		if(SEC_DEPT_ENGINEERING)
-			ears = /obj/item/device/radio/headset/headset_sec/alt/department/engi
+			ears = /obj/item/radio/headset/headset_sec/alt/department/engi
 			dep_access = list(ACCESS_CONSTRUCTION, ACCESS_ENGINE)
 			destination = /area/security/checkpoint/engineering
 			spawn_point = locate(/obj/effect/landmark/start/depsec/engineering) in GLOB.department_security_spawns
 			accessory = /obj/item/clothing/accessory/armband/engine
 		if(SEC_DEPT_MEDICAL)
-			ears = /obj/item/device/radio/headset/headset_sec/alt/department/med
+			ears = /obj/item/radio/headset/headset_sec/alt/department/med
 			dep_access = list(ACCESS_MEDICAL)
 			destination = /area/security/checkpoint/medical
 			spawn_point = locate(/obj/effect/landmark/start/depsec/medical) in GLOB.department_security_spawns
 			accessory =  /obj/item/clothing/accessory/armband/medblue
 		if(SEC_DEPT_SCIENCE)
-			ears = /obj/item/device/radio/headset/headset_sec/alt/department/sci
+			ears = /obj/item/radio/headset/headset_sec/alt/department/sci
 			dep_access = list(ACCESS_RESEARCH)
 			destination = /area/security/checkpoint/science
 			spawn_point = locate(/obj/effect/landmark/start/depsec/science) in GLOB.department_security_spawns
@@ -244,7 +245,7 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 	if(ears)
 		if(H.ears)
 			qdel(H.ears)
-		H.equip_to_slot_or_del(new ears(H),slot_ears)
+		H.equip_to_slot_or_del(new ears(H),SLOT_EARS)
 
 	var/obj/item/card/id/W = H.wear_id
 	W.access |= dep_access
@@ -278,15 +279,15 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 	name = "Security Officer"
 	jobtype = /datum/job/officer
 
-	belt = /obj/item/device/pda/security
-	ears = /obj/item/device/radio/headset/headset_sec/alt
+	belt = /obj/item/pda/security
+	ears = /obj/item/radio/headset/headset_sec/alt
 	uniform = /obj/item/clothing/under/rank/security
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/helmet/sec
 	suit = /obj/item/clothing/suit/armor/vest/alt
 	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/restraints/handcuffs
-	r_pocket = /obj/item/device/assembly/flash/handheld
+	r_pocket = /obj/item/assembly/flash/handheld
 	suit_store = /obj/item/gun/energy/e_gun/advtaser
 	backpack_contents = list(/obj/item/melee/baton/loaded=1)
 
@@ -297,25 +298,28 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 
 	implants = list(/obj/item/implant/mindshield)
 
+	chameleon_extras = list(/obj/item/gun/energy/e_gun/advtaser, /obj/item/clothing/glasses/hud/security/sunglasses, /obj/item/clothing/head/helmet)
+	//The helmet is necessary because /obj/item/clothing/head/helmet/sec is overwritten in the chameleon list by the standard helmet, which has the same name and icon state
 
-/obj/item/device/radio/headset/headset_sec/alt/department/Initialize()
+
+/obj/item/radio/headset/headset_sec/alt/department/Initialize()
 	. = ..()
 	wires = new/datum/wires/radio(src)
 	secure_radio_connections = new
 	recalculateChannels()
 
-/obj/item/device/radio/headset/headset_sec/alt/department/engi
-	keyslot = new /obj/item/device/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/device/encryptionkey/headset_eng
+/obj/item/radio/headset/headset_sec/alt/department/engi
+	keyslot = new /obj/item/encryptionkey/headset_sec
+	keyslot2 = new /obj/item/encryptionkey/headset_eng
 
-/obj/item/device/radio/headset/headset_sec/alt/department/supply
-	keyslot = new /obj/item/device/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/device/encryptionkey/headset_cargo
+/obj/item/radio/headset/headset_sec/alt/department/supply
+	keyslot = new /obj/item/encryptionkey/headset_sec
+	keyslot2 = new /obj/item/encryptionkey/headset_cargo
 
-/obj/item/device/radio/headset/headset_sec/alt/department/med
-	keyslot = new /obj/item/device/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/device/encryptionkey/headset_med
+/obj/item/radio/headset/headset_sec/alt/department/med
+	keyslot = new /obj/item/encryptionkey/headset_sec
+	keyslot2 = new /obj/item/encryptionkey/headset_med
 
-/obj/item/device/radio/headset/headset_sec/alt/department/sci
-	keyslot = new /obj/item/device/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/device/encryptionkey/headset_sci
+/obj/item/radio/headset/headset_sec/alt/department/sci
+	keyslot = new /obj/item/encryptionkey/headset_sec
+	keyslot2 = new /obj/item/encryptionkey/headset_sci

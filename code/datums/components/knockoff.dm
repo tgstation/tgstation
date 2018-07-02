@@ -7,8 +7,7 @@
 
 /datum/component/knockoff/Initialize(knockoff_chance,zone_override,slots_knockoffable)
 	if(!isitem(parent))
-		. = COMPONENT_INCOMPATIBLE
-		CRASH("Knockoff component misuse")
+		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(COMSIG_ITEM_EQUIPPED,.proc/OnEquipped)
 	RegisterSignal(COMSIG_ITEM_DROPPED,.proc/OnDropped)
 

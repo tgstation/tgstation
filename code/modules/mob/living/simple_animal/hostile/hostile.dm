@@ -14,17 +14,6 @@
 	var/list/emote_taunt = list()
 	var/taunt_chance = 0
 
-//typecache of things this mob will attack in DestroyPathToTarget() if it has environment_smash
-	var/list/environment_target_typecache = list(
-	/obj/machinery/door/window,
-	/obj/structure/window,
-	/obj/structure/closet,
-	/obj/structure/table,
-	/obj/structure/grille,
-	/obj/structure/girder,
-	/obj/structure/rack,
-	/obj/structure/barricade) //turned into a typecache in New()
-
 	var/ranged_message = "fires" //Fluff text for ranged mobs
 	var/ranged_cooldown = 0 //What the current cooldown on ranged attacks is, generally world.time + ranged_cooldown_time
 	var/ranged_cooldown_time = 30 //How long, in deciseconds, the cooldown of ranged attacks is
@@ -57,7 +46,6 @@
 
 	if(!targets_from)
 		targets_from = src
-	environment_target_typecache = typecacheof(environment_target_typecache)
 	wanted_objects = typecacheof(wanted_objects)
 
 
@@ -105,7 +93,7 @@
 	if(!search_objects)
 		. = hearers(vision_range, targets_from) - src //Remove self, so we don't suicide
 
-		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha, /obj/structure/destructible/clockwork/ocular_warden,/obj/item/device/electronic_assembly))
+		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha, /obj/structure/destructible/clockwork/ocular_warden,/obj/item/electronic_assembly))
 
 		for(var/HM in typecache_filter_list(range(vision_range, targets_from), hostile_machines))
 			if(can_see(targets_from, HM, vision_range))
@@ -200,7 +188,7 @@
 
 		if(istype(the_target, /obj/machinery/porta_turret))
 			var/obj/machinery/porta_turret/P = the_target
-			if(P.faction in faction)
+			if(P.in_faction(src)) //Don't attack if the turret is in the same faction
 				return FALSE
 			if(P.has_cover &&!P.raised) //Don't attack invincible turrets
 				return FALSE
@@ -208,8 +196,8 @@
 				return FALSE
 			return TRUE
 
-		if(istype(the_target, /obj/item/device/electronic_assembly))
-			var/obj/item/device/electronic_assembly/O = the_target
+		if(istype(the_target, /obj/item/electronic_assembly))
+			var/obj/item/electronic_assembly/O = the_target
 			if(O.combat_circuits)
 				return TRUE
 
@@ -384,10 +372,9 @@
 	if(T.Adjacent(targets_from))
 		if(CanSmashTurfs(T))
 			T.attack_animal(src)
-		for(var/a in T)
-			var/atom/A = a
-			if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
-				A.attack_animal(src)
+		for(var/obj/O in T)
+			if(O.density && environment_smash >= ENVIRONMENT_SMASH_STRUCTURES && !O.IsObscured())
+				O.attack_animal(src)
 				return
 
 

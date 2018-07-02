@@ -142,6 +142,9 @@
 		setDir(dir_in)
 
 /obj/mecha/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
 	if(get_charge())
 		use_power((cell.charge/3)/(severity*2))
 		take_damage(30 / severity, BURN, "energy", 1)
@@ -155,7 +158,7 @@
 
 /obj/mecha/attackby(obj/item/W as obj, mob/user as mob, params)
 
-	if(istype(W, /obj/item/device/mmi))
+	if(istype(W, /obj/item/mmi))
 		if(mmi_move_inside(W,user))
 			to_chat(user, "[src]-[W] interface initialized successfully.")
 		else
@@ -180,7 +183,7 @@
 				if(istype(W, /obj/item/card/id))
 					id_card = W
 				else
-					var/obj/item/device/pda/pda = W
+					var/obj/item/pda/pda = W
 					id_card = pda.id
 				output_maintenance_dialog(id_card, user)
 				return
@@ -322,7 +325,7 @@
 			if(L)
 				L.ratvar_act()
 
-/obj/mecha/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
+/obj/mecha/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!no_effect)
 		if(selected)
 			used_item = selected
@@ -333,4 +336,3 @@
 			else if(damtype == TOX)
 				visual_effect_icon = ATTACK_EFFECT_MECHTOXIN
 	..()
-

@@ -4,7 +4,6 @@
 	icon = 'icons/obj/atmospherics/pipes/meter.dmi'
 	icon_state = "meterX"
 	layer = GAS_PUMP_LAYER
-	anchored = TRUE
 	power_channel = ENVIRON
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
@@ -15,6 +14,17 @@
 	var/atom/target
 	var/id_tag
 	var/target_layer = PIPING_LAYER_DEFAULT
+
+/obj/machinery/meter/atmos
+	frequency = FREQ_ATMOS_STORAGE
+
+/obj/machinery/meter/atmos/atmos_waste_loop
+	name = "waste loop gas flow meter"
+	id_tag = ATMOS_GAS_MONITOR_LOOP_ATMOS_WASTE
+
+/obj/machinery/meter/atmos/distro_loop
+	name = "distribution loop gas flow meter"
+	id_tag = ATMOS_GAS_MONITOR_LOOP_DISTRIBUTION
 
 /obj/machinery/meter/Destroy()
 	SSair.atmos_machinery -= src

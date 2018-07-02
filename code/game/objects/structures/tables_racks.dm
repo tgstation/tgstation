@@ -101,7 +101,8 @@
 
 /obj/structure/table/proc/tableplace(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(src.loc)
-	pushed_mob.lay_down()
+	pushed_mob.resting = TRUE
+	pushed_mob.update_canmove()
 	pushed_mob.visible_message("<span class='notice'>[user] places [pushed_mob] onto [src].</span>", \
 								"<span class='notice'>[user] places [pushed_mob] onto [src].</span>")
 	add_logs(user, pushed_mob, "placed")
@@ -115,7 +116,7 @@
 	if(!ishuman(pushed_mob))
 		return
 	var/mob/living/carbon/human/H = pushed_mob
-	H.SendSignal(COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
+	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
 
 /obj/structure/table/attackby(obj/item/I, mob/user, params)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -135,16 +136,12 @@
 	if(istype(I, /obj/item/storage/bag/tray))
 		var/obj/item/storage/bag/tray/T = I
 		if(T.contents.len > 0) // If the tray isn't empty
-			var/list/obj/item/oldContents = T.contents.Copy()
-			T.quick_empty()
-			for(var/obj/item/C in oldContents)
-				C.forceMove(drop_location())
-
+			SEND_SIGNAL(I, COMSIG_TRY_STORAGE_QUICK_EMPTY, drop_location())
 			user.visible_message("[user] empties [I] on [src].")
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
-	if(user.a_intent != INTENT_HARM && !(I.flags_1 & ABSTRACT_1))
+	if(user.a_intent != INTENT_HARM && !(I.item_flags & ABSTRACT))
 		if(user.transferItemToLoc(I, drop_location()))
 			var/list/click_params = params2list(params)
 			//Center the icon where the user clicked.
@@ -384,7 +381,7 @@
 	obj_integrity = max_integrity
 
 /obj/structure/table/bronze
-	name = "brass table"
+	name = "bronze table"
 	desc = "A solid table made out of bronze."
 	icon = 'icons/obj/smooth_structures/brass_table.dmi'
 	icon_state = "brass_table"

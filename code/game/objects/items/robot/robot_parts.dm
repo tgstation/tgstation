@@ -6,7 +6,7 @@
 /obj/item/robot_suit
 	name = "cyborg endoskeleton"
 	desc = "A complex metal backbone with standard limb sockets and pseudomuscle anchors."
-	icon =  'icons/obj/robot_parts.dmi'
+	icon = 'icons/mob/augmentation/augments.dmi'
 	icon_state = "robo_suit"
 	var/obj/item/bodypart/l_arm/robot/l_arm = null
 	var/obj/item/bodypart/r_arm/robot/r_arm = null
@@ -152,14 +152,14 @@
 		else
 			to_chat(user, "<span class='warning'>You need to attach a flash to it first!</span>")
 
-	else if (istype(W, /obj/item/device/multitool))
+	else if (istype(W, /obj/item/multitool))
 		if(check_completion())
 			Interact(user)
 		else
 			to_chat(user, "<span class='warning'>The endoskeleton must be assembled before debugging can begin!</span>")
 
-	else if(istype(W, /obj/item/device/mmi))
-		var/obj/item/device/mmi/M = W
+	else if(istype(W, /obj/item/mmi))
+		var/obj/item/mmi/M = W
 		if(check_completion())
 			if(!isturf(loc))
 				to_chat(user, "<span class='warning'>You can't put [M] in, the frame has to be standing on the ground to be perfectly precise!</span>")
@@ -181,8 +181,9 @@
 				to_chat(user, "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>")
 				return
 
-			if(jobban_isbanned(BM, "Cyborg"))
-				to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
+			if(jobban_isbanned(BM, "Cyborg") || QDELETED(src) || QDELETED(BM) || QDELETED(user) || QDELETED(M) || !Adjacent(user))
+				if(!QDELETED(M))
+					to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
 				return
 
 			if(!user.temporarilyRemoveItemFromInventory(W))
@@ -304,7 +305,7 @@
 
 	var/mob/living/living_user = usr
 	var/obj/item/item_in_hand = living_user.get_active_held_item()
-	if(!istype(item_in_hand, /obj/item/device/multitool))
+	if(!istype(item_in_hand, /obj/item/multitool))
 		to_chat(living_user, "<span class='warning'>You need a multitool!</span>")
 		return
 

@@ -91,7 +91,7 @@
 	return ..()
 
 /obj/effect/mob_spawn/human/exile/special(mob/living/new_spawn)
-	new_spawn.real_name = "Wish Granter's Victim ([rand(0,999)])"
+	new_spawn.real_name = "Wish Granter's Victim ([rand(1,999)])"
 	var/wish = rand(1,4)
 	switch(wish)
 		if(1)
@@ -170,7 +170,7 @@
 			return
 		if(QDELETED(src) || uses <= 0)
 			return
-		log_game("[user.ckey] golem-swapped into [src]")
+		log_game("[key_name(user)] golem-swapped into [src]")
 		user.visible_message("<span class='notice'>A faint light leaves [user], moving to [src] and animating it!</span>","<span class='notice'>You leave your old body behind, and transfer into [src]!</span>")
 		show_flavour = FALSE
 		create(ckey = user.ckey,name = user.real_name)
@@ -314,7 +314,7 @@
 	name = "Hotel Staff"
 	uniform = /obj/item/clothing/under/assistantformal
 	shoes = /obj/item/clothing/shoes/laceup
-	r_pocket = /obj/item/device/radio/off
+	r_pocket = /obj/item/radio/off
 	back = /obj/item/storage/backpack
 	implants = list(/obj/item/implant/mindshield)
 
@@ -358,7 +358,7 @@
 /obj/effect/mob_spawn/human/demonic_friend/Initialize(mapload, datum/mind/owner_mind, obj/effect/proc_holder/spell/targeted/summon_friend/summoning_spell)
 	. = ..()
 	owner = owner_mind
-	flavour_text = "<span class='big bold'>You have been given a reprieve from your eternity of torment, to be [owner.name]'s friend for their short mortal coil.</span><b> Be aware that if you do not live up to [owner.name]'s expectations, they can send you back to hell with a single thought.  [owner.name]'s death will also return you to hell.</b>"
+	flavour_text = "<span class='big bold'>You have been given a reprieve from your eternity of torment, to be [owner.name]'s friend for [owner.p_their()] short mortal coil.</span><b> Be aware that if you do not live up to [owner.name]'s expectations, they can send you back to hell with a single thought.  [owner.name]'s death will also return you to hell.</b>"
 	var/area/A = get_area(src)
 	if(!mapload && A)
 		notify_ghosts("\A friendship shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
@@ -387,7 +387,7 @@
 	name = "Demonic Friend"
 	uniform = /obj/item/clothing/under/assistantformal
 	shoes = /obj/item/clothing/shoes/laceup
-	r_pocket = /obj/item/device/radio/off
+	r_pocket = /obj/item/radio/off
 	back = /obj/item/storage/backpack
 	implants = list(/obj/item/implant/mindshield) //No revolutionaries, he's MY friend.
 	id = /obj/item/card/id
@@ -406,7 +406,7 @@
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/device/radio/headset/syndicate/alt
+	ears = /obj/item/radio/headset/syndicate/alt
 	back = /obj/item/storage/backpack
 	implants = list(/obj/item/implant/weapons_auth)
 	id = /obj/item/card/id/syndicate
@@ -476,13 +476,13 @@
 	random = TRUE
 	mob_species = /datum/species/human
 	flavour_text = "<span class='big bold'>You are a security officer working for Nanotrasen,</span><b> stationed onboard a state of the art research station. You vaguely recall rushing into a \
-	cryogenics pod due to an oncoming radiation storm. The last thing you remember is the station's Artifical Program telling you that you would only be asleep for eight hours. As you open \
+	cryogenics pod due to an oncoming radiation storm. The last thing you remember is the station's Artificial Program telling you that you would only be asleep for eight hours. As you open \
 	your eyes, everything seems rusted and broken, a dark feeling sweels in your gut as you climb out of your pod.</b>"
 	uniform = /obj/item/clothing/under/rank/security
 	shoes = /obj/item/clothing/shoes/jackboots
 	id = /obj/item/card/id/away/old/sec
 	r_pocket = /obj/item/restraints/handcuffs
-	l_pocket = /obj/item/device/assembly/flash/handheld
+	l_pocket = /obj/item/assembly/flash/handheld
 	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldsec/Destroy()
@@ -500,7 +500,7 @@
 	random = TRUE
 	mob_species = /datum/species/human
 	flavour_text = "<span class='big bold'>You are an engineer working for Nanotrasen,</span><b> stationed onboard a state of the art research station. You vaguely recall rushing into a \
-	cryogenics pod due to an oncoming radiation storm. The last thing you remember is the station's Artifical Program telling you that you would only be asleep for eight hours. As you open \
+	cryogenics pod due to an oncoming radiation storm. The last thing you remember is the station's Artificial Program telling you that you would only be asleep for eight hours. As you open \
 	your eyes, everything seems rusted and broken, a dark feeling sweels in your gut as you climb out of your pod.</b>"
 	uniform = /obj/item/clothing/under/rank/engineer
 	shoes = /obj/item/clothing/shoes/workboots
@@ -524,7 +524,7 @@
 	random = TRUE
 	mob_species = /datum/species/human
 	flavour_text = "<span class='big bold'>You are a scientist working for Nanotrasen,</span><b> stationed onboard a state of the art research station. You vaguely recall rushing into a \
-	cryogenics pod due to an oncoming radiation storm. The last thing you remember is the station's Artifical Program telling you that you would only be asleep for eight hours. As you open \
+	cryogenics pod due to an oncoming radiation storm. The last thing you remember is the station's Artificial Program telling you that you would only be asleep for eight hours. As you open \
 	your eyes, everything seems rusted and broken, a dark feeling sweels in your gut as you climb out of your pod.</b>"
 	uniform = /obj/item/clothing/under/rank/scientist
 	shoes = /obj/item/clothing/shoes/laceup

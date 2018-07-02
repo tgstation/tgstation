@@ -29,8 +29,12 @@
 	return TRUE
 
 /obj/effect/proc_holder/changeling/revive/can_be_used_by(mob/living/user)
-	if((user.stat != DEAD) && !(user.has_trait(TRAIT_FAKEDEATH)))
+	. = ..()
+	if(!.)
+		return
+
+	if(user.has_trait(CHANGELING_DRAIN) || ((user.stat != DEAD) && !(user.has_trait(TRAIT_FAKEDEATH))))
 		var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 		changeling.purchasedpowers -= src
-		return 0
-	. = ..()
+		return FALSE
+

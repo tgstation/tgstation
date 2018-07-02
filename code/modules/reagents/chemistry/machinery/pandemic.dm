@@ -5,7 +5,6 @@
 	name = "PanD.E.M.I.C 2200"
 	desc = "Used to work with viruses."
 	density = TRUE
-	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
 	circuit = /obj/item/circuitboard/computer/pandemic
@@ -122,9 +121,9 @@
 
 	icon_state = "mixer[(beaker) ? "1" : "0"][powered() ? "" : "_nopower"]"
 	if(wait)
-		cut_overlays()
-	else
 		add_overlay("waitlight")
+	else
+		cut_overlays()
 
 /obj/machinery/computer/pandemic/proc/eject_beaker()
 	if(beaker)
@@ -229,7 +228,7 @@
 
 
 /obj/machinery/computer/pandemic/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers) && !(I.flags_1 & ABSTRACT_1) && I.is_open_container())
+	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		. = TRUE //no afterattack
 		if(stat & (NOPOWER|BROKEN))
 			return

@@ -18,8 +18,11 @@
 /mob/living/carbon/human/bee_friendly()
 	if(dna && dna.species && dna.species.id == "pod") //bees pollinate plants, duh.
 		return 1
-	if((wear_suit && (wear_suit.flags_1 & THICKMATERIAL_1)) && (head && (head.flags_1 & THICKMATERIAL_1)))
-		return 1
+	if (wear_suit && head && istype(wear_suit, /obj/item/clothing) && istype(head, /obj/item/clothing))
+		var/obj/item/clothing/CS = wear_suit
+		var/obj/item/clothing/CH = head
+		if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)
+			return 1
 	return 0
 
 
@@ -260,3 +263,6 @@
 		if(HF.loc == src)
 			HF.forceMove(drop_location())
 	qdel(src)
+
+/obj/structure/beebox/unwrenched
+		anchored = FALSE

@@ -6,7 +6,7 @@
 	anchored = TRUE
 	var/popped = FALSE
 
-/obj/effect/fun_balloon/New()
+/obj/effect/fun_balloon/Initialize()
 	. = ..()
 	SSobj.processing |= src
 
@@ -35,10 +35,11 @@
 /obj/effect/fun_balloon/attack_ghost(mob/user)
 	if(!user.client || !user.client.holder || popped)
 		return
-	switch(alert("Pop [src]?","Fun Balloon","Yes","No"))
-		if("Yes")
-			effect()
-			pop()
+	var/confirmation = alert("Pop [src]?","Fun Balloon","Yes","No")
+	if(confirmation == "Yes" && !popped)
+		popped = TRUE
+		effect()
+		pop()
 
 /obj/effect/fun_balloon/sentience
 	name = "sentience fun balloon"
@@ -118,21 +119,13 @@
 
 /obj/effect/forcefield/arena_shuttle
 	name = "portal"
+	timeleft = 0
 	var/list/warp_points
 
 /obj/effect/forcefield/arena_shuttle/Initialize()
 	. = ..()
-	warp_points = get_area_turfs(/area/shuttle/escape)
-	for(var/thing in warp_points)
-		CHECK_TICK
-		var/turf/T = thing
-		if(istype(T.loc, /area/shuttle/escape/backup))
-			warp_points -= T
-			continue
-		for(var/atom/movable/TAM in T)
-			if(TAM.density && TAM.anchored)
-				warp_points -= T
-				break
+	for(var/obj/effect/landmark/shuttle_arena_safe/exit in GLOB.landmarks_list)
+		warp_points += exit
 
 /obj/effect/forcefield/arena_shuttle/CollidedWith(atom/movable/AM)
 	if(!isliving(AM))
@@ -142,7 +135,7 @@
 	if(L.pulling && istype(L.pulling, /obj/item/bodypart/head))
 		to_chat(L, "Your offering is accepted. You may pass.")
 		qdel(L.pulling)
-		var/turf/LA = pick(warp_points)
+		var/turf/LA = get_turf(pick(warp_points))
 		L.forceMove(LA)
 		L.hallucination = 0
 		to_chat(L, "<span class='reallybig redtext'>The battle is won. Your bloodlust subsides.</span>")
@@ -162,6 +155,7 @@
 
 /obj/effect/forcefield/arena_shuttle_entrance
 	name = "portal"
+	timeleft = 0
 	var/list/warp_points = list()
 
 /obj/effect/forcefield/arena_shuttle_entrance/CollidedWith(atom/movable/AM)
@@ -183,5 +177,5 @@
 
 /area/shuttle_arena
 	name = "arena"
-	has_gravity = TRUE
+	has_gravity = STANDARD_GRAVITY
 	requires_power = FALSE

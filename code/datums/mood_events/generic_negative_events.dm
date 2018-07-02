@@ -105,6 +105,14 @@
   mood_change = -3
   timeout = 3000
 
+/datum/mood_event/nyctophobia
+	description = "<span class='warning'>It sure is dark around here...</span>\n"
+	mood_change = -3
+
+/datum/mood_event/family_heirloom_missing
+	description = "<span class='warning'>I'm missing my family heirloom...</span>\n"
+	mood_change = -4
+
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/cloned_corpse
 	description = "<span class='boldwarning'>I recently saw my own corpse...</span>\n"

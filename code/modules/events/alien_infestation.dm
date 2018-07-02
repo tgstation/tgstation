@@ -65,7 +65,7 @@
 
 		spawncount--
 		successSpawn = TRUE
-		message_admins("[key_name_admin(new_xeno)] has been made into an alien by an event.")
+		message_admins("[ADMIN_LOOKUPFLW(new_xeno)] has been made into an alien by an event.")
 		log_game("[key_name(new_xeno)] was spawned as an alien by an event.")
 		spawned_mobs += new_xeno
 

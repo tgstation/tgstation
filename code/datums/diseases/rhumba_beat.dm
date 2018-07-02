@@ -9,7 +9,6 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	permeability_mod = 1
 	severity = DISEASE_SEVERITY_BIOHAZARD
-	process_dead = TRUE
 
 /datum/disease/rhumba_beat/stage_act()
 	..()

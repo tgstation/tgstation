@@ -27,7 +27,7 @@
 	if(update)
 		update = FALSE
 		reconcile_air()
-	update = air.react()
+	update = air.react(src)
 
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/base)
 	var/volume = 0
@@ -60,7 +60,7 @@
 									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z])")
 									pipenetwarnings -= 1
 									if(pipenetwarnings == 0)
-										warning("build_pipeline(): further messages about pipenets will be supressed")
+										warning("build_pipeline(): further messages about pipenets will be suppressed")
 							members += item
 							possible_expansions += item
 
@@ -105,6 +105,8 @@
 		addMachineryMember(A)
 
 /datum/pipeline/proc/merge(datum/pipeline/E)
+	if(E == src)
+		return
 	air.volume += E.air.volume
 	members.Add(E.members)
 	for(var/obj/machinery/atmospherics/pipe/S in E.members)
@@ -127,6 +129,9 @@
 
 /obj/machinery/atmospherics/components/addMember(obj/machinery/atmospherics/A)
 	var/datum/pipeline/P = returnPipenet(A)
+	if(!P)
+		CRASH("null.addMember() called by [type] on [COORD(src)]")
+		return
 	P.addMember(A, src)
 
 
@@ -217,7 +222,7 @@
 			continue
 		GL += P.return_air()
 		for(var/obj/machinery/atmospherics/components/binary/valve/V in P.other_atmosmch)
-			if(V.open)
+			if(V.on)
 				PL |= V.parents[1]
 				PL |= V.parents[2]
 		for(var/obj/machinery/atmospherics/components/unary/portables_connector/C in P.other_atmosmch)

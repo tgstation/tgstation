@@ -70,6 +70,7 @@
 	begin_month = DECEMBER
 	end_day = 2
 	end_month = JANUARY
+	drone_hat = /obj/item/clothing/head/festive
 
 /datum/holiday/new_year/getStationPrefix()
 	return pick("Party","New","Hangover","Resolution")
@@ -78,6 +79,7 @@
 	name = "Groundhog Day"
 	begin_day = 2
 	begin_month = FEBRUARY
+	drone_hat = /obj/item/clothing/head/helmet/space/chronos
 
 /datum/holiday/valentines
 	name = VALENTINES
@@ -92,6 +94,7 @@
 	name = "Birthday of Space Station 13"
 	begin_day = 16
 	begin_month = FEBRUARY
+	drone_hat = /obj/item/clothing/head/festive
 
 /datum/holiday/birthday/greet()
 	var/game_age = text2num(time2text(world.timeofday, "YY")) - 3
@@ -153,7 +156,7 @@
 	begin_month = APRIL
 
 /datum/holiday/april_fools/celebrate()
-	SSjob.overflow_role = "Clown"
+	SSjob.set_overflow_role("Clown")
 	SSticker.login_music = 'sound/ambience/clown.ogg'
 	for(var/mob/dead/new_player/P in GLOB.mob_list)
 		if(P.client)
@@ -202,6 +205,7 @@
 	name = "UFO Day"
 	begin_day = 2
 	begin_month = JULY
+	drone_hat = /obj/item/clothing/mask/facehugger/dead 
 
 /datum/holiday/UFO/getStationPrefix() //Is such a thing even possible?
 	return pick("Ayy","Truth","Tsoukalos","Mulder") //Yes it is!
@@ -272,11 +276,13 @@
 	name = "Smiling Day"
 	begin_day = 7
 	begin_month = OCTOBER
+	drone_hat = /obj/item/clothing/head/papersack/smiley
 
 /datum/holiday/boss
 	name = "Boss' Day"
 	begin_day = 16
 	begin_month = OCTOBER
+	drone_hat = /obj/item/clothing/head/that
 
 /datum/holiday/halloween
 	name = HALLOWEEN
@@ -305,6 +311,7 @@
 	name = "Flowers Day"
 	begin_day = 19
 	begin_month = NOVEMBER
+	drone_hat = /obj/item/reagent_containers/food/snacks/grown/moonflower
 
 /datum/holiday/hello
 	name = "Saying-'Hello' Day"
@@ -312,7 +319,7 @@
 	begin_month = NOVEMBER
 
 /datum/holiday/hello/greet()
-	return "[pick(list("Aloha", "Bonjour", "Hello", "Hi", "Greetings", "Salutations", "Bienvenidos", "Hola", "Howdy"))]! " + ..()
+	return "[pick(list("Aloha", "Bonjour", "Hello", "Hi", "Greetings", "Salutations", "Bienvenidos", "Hola", "Howdy", "Ni hao", "Guten Tag", "Konnichiwa", "G'day cunt"))]! " + ..()
 
 /datum/holiday/human_rights
 	name = "Human-Rights Day"
@@ -323,6 +330,7 @@
 	name = "Monkey Day"
 	begin_day = 14
 	begin_month = DECEMBER
+	drone_hat = /obj/item/clothing/mask/gas/monkeymask
 
 /datum/holiday/thanksgiving
 	name = "Thanksgiving in the United States"

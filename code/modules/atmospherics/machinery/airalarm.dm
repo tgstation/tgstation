@@ -61,7 +61,6 @@
 	desc = "A machine that monitors atmosphere levels. Goes off if the area is dangerous."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm0"
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 4
 	active_power_usage = 8
@@ -86,19 +85,19 @@
 
 	var/list/TLV = list( // Breathable air.
 		"pressure"					= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
-		"temperature"				= new/datum/tlv(T0C, T0C+10, T0C+40, T0C+66), // K
+		"temperature"				= new/datum/tlv(T0C, T0C+10, T0C+40, T0C+66),
 		/datum/gas/oxygen			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
-		/datum/gas/nitrogen			= new/datum/tlv(-1, -1, 1000, 1000), // Partial pressure, kpa
-		/datum/gas/carbon_dioxide	= new/datum/tlv(-1, -1, 5, 10), // Partial pressure, kpa
-		/datum/gas/plasma			= new/datum/tlv/dangerous, // Partial pressure, kpa
-		/datum/gas/nitrous_oxide	= new/datum/tlv/dangerous, // Partial pressure, kpa
+		/datum/gas/nitrogen			= new/datum/tlv(-1, -1, 1000, 1000),
+		/datum/gas/carbon_dioxide	= new/datum/tlv(-1, -1, 5, 10),
+		/datum/gas/plasma			= new/datum/tlv/dangerous,
+		/datum/gas/nitrous_oxide	= new/datum/tlv/dangerous,
 		/datum/gas/bz				= new/datum/tlv/dangerous,
-		/datum/gas/hypernoblium		= new/datum/tlv/dangerous,
+		/datum/gas/hypernoblium		= new/datum/tlv(-1, -1, 1000, 1000), // Hyper-Noblium is inert and nontoxic
 		/datum/gas/water_vapor		= new/datum/tlv/dangerous,
 		/datum/gas/tritium			= new/datum/tlv/dangerous,
-		/datum/gas/stimulum			= new/datum/tlv/dangerous,
+		/datum/gas/stimulum			= new/datum/tlv(-1, -1, 1000, 1000), // Stimulum has only positive effects
 		/datum/gas/nitryl			= new/datum/tlv/dangerous,
-		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 135, 140) // Partial pressure, kpa
+		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000) // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
 	)
 
 /obj/machinery/airalarm/server // No checks here.
@@ -122,19 +121,19 @@
 /obj/machinery/airalarm/kitchen_cold_room // Copypasta: to check temperatures.
 	TLV = list(
 		"pressure"					= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
-		"temperature"				= new/datum/tlv(200,210,273.15,283.15), // K
+		"temperature"				= new/datum/tlv(T0C-73.15, T0C-63.15, T0C, T0C+10),
 		/datum/gas/oxygen			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
-		/datum/gas/nitrogen			= new/datum/tlv(-1, -1, 1000, 1000), // Partial pressure, kpa
-		/datum/gas/carbon_dioxide	= new/datum/tlv(-1, -1, 5, 10), // Partial pressure, kpa
-		/datum/gas/plasma			= new/datum/tlv/dangerous, // Partial pressure, kpa
-		/datum/gas/nitrous_oxide	= new/datum/tlv/dangerous, // Partial pressure, kpa
+		/datum/gas/nitrogen			= new/datum/tlv(-1, -1, 1000, 1000),
+		/datum/gas/carbon_dioxide	= new/datum/tlv(-1, -1, 5, 10),
+		/datum/gas/plasma			= new/datum/tlv/dangerous,
+		/datum/gas/nitrous_oxide	= new/datum/tlv/dangerous,
 		/datum/gas/bz				= new/datum/tlv/dangerous,
-		/datum/gas/hypernoblium		= new/datum/tlv/dangerous,
+		/datum/gas/hypernoblium		= new/datum/tlv(-1, -1, 1000, 1000), // Hyper-Noblium is inert and nontoxic
 		/datum/gas/water_vapor		= new/datum/tlv/dangerous,
 		/datum/gas/tritium			= new/datum/tlv/dangerous,
-		/datum/gas/stimulum			= new/datum/tlv/dangerous,
+		/datum/gas/stimulum			= new/datum/tlv(-1, -1, 1000, 1000), // Stimulum has only positive effects
 		/datum/gas/nitryl			= new/datum/tlv/dangerous,
-		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 135, 140) // Partial pressure, kpa
+		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000) // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
 	)
 
 /obj/machinery/airalarm/unlocked
@@ -152,6 +151,9 @@
 	locked = FALSE
 	req_access = null
 	req_one_access = null
+
+/obj/machinery/airalarm/syndicate //general syndicate access
+	req_access = list(ACCESS_SYNDICATE)
 
 //all air alarms in area are connected via magic
 /area
@@ -643,10 +645,9 @@
 	var/area/A = get_area(src)
 
 	var/new_area_danger_level = 0
-	for(var/area/R in A.related)
-		for(var/obj/machinery/airalarm/AA in R)
-			if (!(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
-				new_area_danger_level = max(new_area_danger_level,AA.danger_level)
+	for(var/obj/machinery/airalarm/AA in A)
+		if (!(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
+			new_area_danger_level = max(new_area_danger_level,AA.danger_level)
 	if(A.atmosalert(new_area_danger_level,src)) //if area was in normal state or if area was in alert state
 		post_alert(new_area_danger_level)
 
@@ -668,7 +669,7 @@
 				to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
 				update_icon()
 				return
-			else if(istype(W, /obj/item/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
+			else if(istype(W, /obj/item/card/id) || istype(W, /obj/item/pda))// trying to unlock the interface with an ID card
 				togglelock(user)
 			else if(panel_open && is_wire_tool(W))
 				wires.interact(user)
@@ -716,8 +717,8 @@
 					qdel(W)
 				return
 
-			if(istype(W, /obj/item/device/electroadaptive_pseudocircuit))
-				var/obj/item/device/electroadaptive_pseudocircuit/P = W
+			if(istype(W, /obj/item/electroadaptive_pseudocircuit))
+				var/obj/item/electroadaptive_pseudocircuit/P = W
 				if(!P.adapt_circuit(user, 25))
 					return
 				user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
