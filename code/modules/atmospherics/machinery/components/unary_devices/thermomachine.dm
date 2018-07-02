@@ -21,6 +21,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/Initialize()
 	. = ..()
 	initialize_directions = dir
+	update_icon()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/on_construction()
 	..(dir,dir)
@@ -87,7 +88,8 @@
 	if(node)
 		node.disconnect(src)
 		nodes[1] = null
-	nullifyPipenet(parents[1])
+	if(parents[1])
+		nullifyPipenet(parents[1])
 
 /obj/machinery/atmospherics/components/unary/thermomachine/proc/reconnect_machine()
 	atmosinit()
@@ -113,6 +115,11 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/wrench_act(mob/living/user, obj/item/I)
 	if(!panel_open)
 		return
+
+	for(var/obj/machinery/atmospherics/M in loc)
+		if(M != src)
+			to_chat(user, "<span class='warning'>There is already a pipe at that location!</span>")
+			return
 
 	default_unfasten_wrench(user, I, 50)
 
@@ -204,10 +211,6 @@
 	min_temperature = 170 //actual minimum temperature is defined by RefreshParts()
 	circuit = /obj/item/circuitboard/machine/thermomachine/freezer
 
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
-	on = TRUE
-	icon_state = "freezer_1"
-
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/Initialize()
 	. = ..()
 	if(target_temperature == initial(target_temperature))
@@ -229,13 +232,15 @@
 	min_temperature = T20C
 	circuit = /obj/item/circuitboard/machine/thermomachine/heater
 
-/obj/machinery/atmospherics/components/unary/thermomachine/heater/on
-	on = TRUE
-	icon_state = "heater_1"
-
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/RefreshParts()
 	..()
 	var/L
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		L += M.rating
 	max_temperature = T20C + (initial(max_temperature) * L) //573.15K with T1 stock parts
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
+	on = TRUE
+
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/on
+	on = TRUE
