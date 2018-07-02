@@ -112,9 +112,9 @@
 
 /obj/item/areaeditor/blueprints/proc/get_images(turf/T, viewsize)
 	. = list()
-	for(var/turf/T in range(viewsize, T))
-		if(T.blueprint_data)
-			. += T.blueprint_data
+	for(var/turf/TT in range(viewsize, T))
+		if(TT.blueprint_data)
+			. += TT.blueprint_data
 
 /obj/item/areaeditor/blueprints/proc/set_viewer(mob/user, message = "")
 	if(user && user.client)
