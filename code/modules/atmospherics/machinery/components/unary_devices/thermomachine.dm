@@ -3,6 +3,7 @@
 	desc = "Heats or cools gas in connected pipes."
 	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
 	icon_state = "freezer"
+	var/icon_state_off = "cold_off"
 	var/icon_state_on = "cold_on"
 	var/icon_state_open = "cold_off"
 	density = TRUE
@@ -21,7 +22,6 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/Initialize()
 	. = ..()
 	initialize_directions = dir
-	update_icon()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/on_construction()
 	..(dir,dir)
@@ -50,7 +50,7 @@
 	else if(on && is_operational())
 		icon_state = icon_state_on
 	else
-		icon_state = initial(icon_state)
+		icon_state = icon_state_off
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_icon_nopipes()
 	cut_overlays()
@@ -110,7 +110,7 @@
 	if(!anchored || on)
 		return
 
-	default_deconstruction_screwdriver(user, icon_state_open, initial(icon_state), I)
+	default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, I)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/wrench_act(mob/living/user, obj/item/I)
 	if(!panel_open)
@@ -205,6 +205,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer
 	name = "freezer"
 	icon_state = "freezer"
+	icon_state_off = "freezer"
 	icon_state_on = "freezer_1"
 	icon_state_open = "freezer-o"
 	max_temperature = T20C
@@ -226,6 +227,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/heater
 	name = "heater"
 	icon_state = "heater"
+	icon_state_off = "heater"
 	icon_state_on = "heater_1"
 	icon_state_open = "heater-o"
 	max_temperature = 140 //actual maximum temperature is defined by RefreshParts()
@@ -241,6 +243,8 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
 	on = TRUE
+	icon_state = "freezer_1"
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/on
 	on = TRUE
+	icon_state = "heater_1"
