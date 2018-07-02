@@ -38,8 +38,7 @@
 
 /obj/machinery/door/window/Destroy()
 	density = FALSE
-	for(var/I in debris)
-		qdel(I)
+	QDEL_LIST(debris)
 	if(obj_integrity == 0)
 		playsound(src, "shatter", 70, 1)
 	electronics = null
