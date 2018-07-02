@@ -253,7 +253,7 @@
 		M.emote("deathgasp")
 	if(A.properties["stealth"] >= 2)
 		M.fakedeath("regenerative_coma")
-	else if(intentionalsleep = FALSE)
+	else if(intentionalsleep == FALSE)
 		M.AdjustSleeping(600, FALSE)
 	M.update_stat()
 	M.update_canmove()
@@ -264,7 +264,7 @@
 		return
 	active_coma = FALSE
 	M.cure_fakedeath("regenerative_coma")
-	if(intentionalsleep = FALSE)
+	if(intentionalsleep == FALSE)
 		M.SetSleeping(0)
 	intentionalsleep = FALSE
 	M.update_stat()
