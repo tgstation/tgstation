@@ -116,6 +116,25 @@
 
 /obj/machinery/power/apc/highcap/fifteen_k
 	cell_type = /obj/item/stock_parts/cell/high/plus
+	
+/obj/machinery/power/apc/auto_name
+	auto_name = 1
+	
+/obj/machinery/power/apc/auto_name/directional/north
+	dir = 1
+	pixel_y = 24
+
+/obj/machinery/power/apc/auto_name/directional/south
+	dir = 2
+	pixel_y = -23
+
+/obj/machinery/power/apc/auto_name/directional/east
+	dir = 4
+	pixel_x = 24
+	
+/obj/machinery/power/apc/auto_name/directional/west
+	dir = 8
+	pixel_y = -25
 
 /obj/machinery/power/apc/get_cell()
 	return cell
