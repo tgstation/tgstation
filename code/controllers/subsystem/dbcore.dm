@@ -47,7 +47,7 @@ SUBSYSTEM_DEF(dbcore)
 	for(var/I in active_queries)
 		var/datum/DBQuery/Q = I
 		if(world.time - Q.last_activity_time > (5 MINUTES))
-			message_admins("Found undeleted query, please check the server logs and notify coders.")
+			message_admins("Found undeleted query, please check the server logs and notify cyberboss.")
 			log_sql("Undeleted query: \"[Q.sql]\" LA: [Q.last_activity] LAT: [Q.last_activity_time]")
 			qdel(Q)
 		if(MC_TICK_CHECK)
