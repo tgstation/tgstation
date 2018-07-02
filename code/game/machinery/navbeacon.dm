@@ -45,8 +45,9 @@
 /obj/machinery/navbeacon/onTransitZ(old_z, new_z)
 	if (GLOB.navbeacons["[old_z]"])
 		GLOB.navbeacons["[old_z]"] -= src
+	if (GLOB.navbeacons["[new_z]"])
+		GLOB.navbeacons["[new_z]"] += src
 	..()
-	qdel(src) // Should probably commit sudoku since moving these across Z-levels makes no sense
 
 // set the transponder codes assoc list from codes_txt
 /obj/machinery/navbeacon/proc/set_codes()

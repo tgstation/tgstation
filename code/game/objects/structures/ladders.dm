@@ -204,30 +204,27 @@
 		active = TRUE
 
 /obj/structure/ladder/unbreakable/binary/proc/getTargetTurf()
-	return safepick(get_area_turfs(area_to_place))
-
-/obj/structure/ladder/unbreakable/binary/space
-	id = "space_binary"
-	area_to_place = /area/space
-
-/obj/structure/ladder/unbreakable/binary/space/getTargetTurf()
-	var/list/L = get_area_turfs(area_to_place)
-	while (L.len && !.)
-		var/I = rand(1, L.len)
-		var/turf/T = L[I]
-		if (is_centcom_level(T.z)) // These ladders don't lead to centcom.
-			L.Cut(I,I+1)
+	var/list/turfList = get_area_turfs(area_to_place)
+	while (turfList.len && !.)
+		var/i = rand(1, turfList.len)
+		var/turf/potentialTurf = turfList[i]
+		if (is_centcom_level(potentialTurf.z)) // These ladders don't lead to centcom.
+			turfList.Cut(i,i+1)
 			continue
-		if(!T.density)			// Or inside dense turfs.
+		if(!istype(potentialTurf, /turf/open/lava) && !potentialTurf.density)			// Or inside dense turfs or lava
 			var/clear = TRUE
-			for(var/obj/O in T) // Let's not place these on dense objects either. Might be funny though.
+			for(var/obj/O in potentialTurf) // Let's not place these on dense objects either. Might be funny though.
 				if(O.density)
 					clear = FALSE
 					break
 			if(clear)
-				. = T
+				. = potentialTurf
 		if (!.)
-			L.Cut(I,I+1)
+			turfList.Cut(i,i+1)
+
+/obj/structure/ladder/unbreakable/binary/space
+	id = "space_binary"
+	area_to_place = /area/space
 
 /obj/structure/ladder/unbreakable/binary/unlinked //Crew gets to complete one
 	id = "unlinked_binary"
