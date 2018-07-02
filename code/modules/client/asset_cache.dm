@@ -589,7 +589,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		var/icon_file = initial(item.icon)
 		var/icon_state = initial(item.icon_state)
 		if (!(icon_state in icon_states(icon_file)))
-			WARNING("design [D] with icon '[icon_file]' missing state '[icon_state]'")
+			warning("design [D] with icon '[icon_file]' missing state '[icon_state]'")
 			continue
 		var/icon/I = icon(icon_file, icon_state, SOUTH)
 
