@@ -10,7 +10,7 @@
 		for(var/item in ockick)
 			if(findtext(message, item))
 				to_chat(usr, "<span class='danger'>You may be breaking character, this is an automated message, so I may be wrong, but don't do it if you are.</span>")
-				message_admins("Possible ock ick (Possible ock ick (<a href='?priv_msg=\"+ckey+\"'>[usr]</a>): \'[message]\'")
+				message_admins("Possible ock ick: [usr] [ADMIN_JMP(src)]: \'[message]\'")
 
 
 
@@ -24,7 +24,7 @@
 	for(var/item in ockick)
 		if(findtext(message, item))
 			to_chat(usr, "<span class='danger'>You may be breaking character, this is an automated message, so I may be wrong, but don't do it if you are.</span>")
-			message_admins("Possible ock ick (Possible ock ick (<a href='?priv_msg=\"+ckey+\"'>[usr]</a>): \'[message]\'")
+			message_admins("Possible ock ick: [usr] [ADMIN_JMP(src)]: \'[message]\'")
 
 
 /mob/proc/whisper(message, datum/language/language=null)
@@ -44,7 +44,7 @@
 	for(var/item in ockick)
 		if(findtext(message, item))
 			to_chat(usr, "<span class='danger'>You may be breaking character, this is an automated message, so I may be wrong, but don't do it if you are.</span>")
-			message_admins("Possible ock ick (<a href='?priv_msg=\"+ckey+\"'>[usr]</a>): \'[message]\'")
+			message_admins("Possible ock ick: [usr] [ADMIN_JMP(src)]: \'[message]\'")
 
 /mob/proc/say_dead(var/message)
 	var/name = real_name

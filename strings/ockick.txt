@@ -1,6 +1,19 @@
-admin
-reddit
-4chan
-round
-adminhelp
-ahelp
+#List of words checked for in speech, add a space after all of them
+#and a space before some that only break character alone
+
+admin 
+reddit 
+4chan 
+round 
+adminhelp 
+ahelp 
+ock 
+ick 
+lmao 
+lol 
+xd 
+ick-ock 
+ ban 
+ permaban 
+
+
