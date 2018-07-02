@@ -7,6 +7,11 @@
 		return
 	if(message)
 		say(message)
+		for(var/item in ockick)
+			if(findtext(message, item))
+				to_chat(usr, "<span class='danger'>You may be breaking character, this is an automated message, so I may be wrong, but don't do it if you are.</span>")
+				message_admins("Possible ock ick (Possible ock ick (<a href='?priv_msg=\"+ckey+\"'>[usr]</a>): \'[message]\'")
+
 
 
 /mob/verb/whisper_verb(message as text)
@@ -16,6 +21,11 @@
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 	whisper(message)
+	for(var/item in ockick)
+		if(findtext(message, item))
+			to_chat(usr, "<span class='danger'>You may be breaking character, this is an automated message, so I may be wrong, but don't do it if you are.</span>")
+			message_admins("Possible ock ick (Possible ock ick (<a href='?priv_msg=\"+ckey+\"'>[usr]</a>): \'[message]\'")
+
 
 /mob/proc/whisper(message, datum/language/language=null)
 	say(message, language) //only living mobs actually whisper, everything else just talks
@@ -31,6 +41,10 @@
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	usr.emote("me",1,message)
+	for(var/item in ockick)
+		if(findtext(message, item))
+			to_chat(usr, "<span class='danger'>You may be breaking character, this is an automated message, so I may be wrong, but don't do it if you are.</span>")
+			message_admins("Possible ock ick (<a href='?priv_msg=\"+ckey+\"'>[usr]</a>): \'[message]\'")
 
 /mob/proc/say_dead(var/message)
 	var/name = real_name
@@ -47,7 +61,7 @@
 	if(jb)
 		to_chat(src, "<span class='danger'>You have been banned from deadchat.</span>")
 		return
-	
+
 
 
 	if (src.client)

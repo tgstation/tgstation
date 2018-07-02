@@ -35,3 +35,4 @@ changes:
   - rscadd: "Ported Babbe"
   - soundadd: "Ported oldbase noises"
   - tweak: "Armory security improved"
+  - rscadd: "Added ock in ick filter, it's non aggressive."
