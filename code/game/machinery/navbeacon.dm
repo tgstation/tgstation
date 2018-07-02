@@ -37,9 +37,16 @@
 		GLOB.deliverybeacontags += location
 
 /obj/machinery/navbeacon/Destroy()
-	GLOB.navbeacons["[z]"] -= src //Remove from beacon list, if in one.
+	if (GLOB.navbeacons["[z]"])
+		GLOB.navbeacons["[z]"] -= src //Remove from beacon list, if in one.
 	GLOB.deliverybeacons -= src
 	return ..()
+
+/obj/machinery/navbeacon/onTransitZ(old_z, new_z)
+	if (GLOB.navbeacons["[old_z]"])
+		GLOB.navbeacons["[old_z]"] -= src
+	..()
+	qdel(src) // Should probably commit sudoku since moving these across Z-levels makes no sense
 
 // set the transponder codes assoc list from codes_txt
 /obj/machinery/navbeacon/proc/set_codes()
