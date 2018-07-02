@@ -253,14 +253,13 @@
 		M.fakedeath("regenerative_coma")
 	M.update_stat()
 	M.update_canmove()
-	addtimer(CALLBACK(src, .proc/uncoma, M, A), 300)
+	addtimer(CALLBACK(src, .proc/uncoma, M), 300)
 
-/datum/symptom/heal/coma/proc/uncoma(mob/living/M, A)
+/datum/symptom/heal/coma/proc/uncoma(mob/living/M)
 	if(!active_coma)
 		return
 	active_coma = FALSE
-	if(A.properties["stealth"] >= 2)
-		M.cure_fakedeath("regenerative_coma")
+	M.cure_fakedeath("regenerative_coma")
 	M.update_stat()
 	M.update_canmove()
 
