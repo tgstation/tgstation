@@ -3,9 +3,9 @@
 	desc = "Heats or cools gas in connected pipes."
 	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
 	icon_state = "freezer"
-	var/icon_state_off = "cold_off"
-	var/icon_state_on = "cold_on"
-	var/icon_state_open = "cold_off"
+	var/icon_state_off = "freezer"
+	var/icon_state_on = "freezer_1"
+	var/icon_state_open = "freezer-o"
 	density = TRUE
 	max_integrity = 300
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 30)
