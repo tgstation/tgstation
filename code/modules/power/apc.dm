@@ -134,7 +134,7 @@
 	
 /obj/machinery/power/apc/auto_name/directional/west
 	dir = 8
-	pixel_y = -25
+	pixel_x = -25
 
 /obj/machinery/power/apc/get_cell()
 	return cell
