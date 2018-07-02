@@ -34,7 +34,7 @@ GLOBAL_LIST_EMPTY(cinematics)
 	var/obj/screen/cinematic/screen
 	var/datum/callback/special_callback //For special effects synced with animation (explosions after the countdown etc)
 	var/cleanup_time = 300 //How long for the final screen to remain
-	var/stop_ooc = FALSE //Turns off ooc when played globally.
+	var/stop_ooc = TRUE //Turns off ooc when played globally.
 
 /datum/cinematic/New()
 	GLOB.cinematics += src
@@ -205,7 +205,6 @@ GLOBAL_LIST_EMPTY(cinematics)
 /datum/cinematic/fake
 	id = CINEMATIC_NUKE_FAKE
 	cleanup_time = 100
-	stop_ooc = TRUE
 
 /datum/cinematic/fake/content()
 	flick("intro_nuke",screen)
