@@ -98,17 +98,27 @@
 	build_network()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/attackby(obj/item/I, mob/user, params)
-	if(anchored && !on)
-		if(default_deconstruction_screwdriver(user, icon_state_open, initial(icon_state), I))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER || I.tool_behaviour == TOOL_WRENCH || I.tool_behaviour == TOOL_CROWBAR)
+		if(user.a_intent != INTENT_HARM)
 			return
 
-	if(panel_open && I.tool_behaviour == TOOL_WRENCH)
-		default_unfasten_wrench(user, I, 50)
+	return ..()
+
+/obj/machinery/atmospherics/components/unary/thermomachine/screwdriver_act(mob/living/user, obj/item/I)
+	if(!anchored || on)
 		return
 
-	if(default_deconstruction_crowbar(I)) //Has its own panel_open check.
+	default_deconstruction_screwdriver(user, icon_state_open, initial(icon_state), I)
+
+/obj/machinery/atmospherics/components/unary/thermomachine/wrench_act(mob/living/user, obj/item/I)
+	if(!panel_open)
 		return
-	return ..()
+
+	default_unfasten_wrench(user, I, 50)
+
+/obj/machinery/atmospherics/components/unary/thermomachine/crowbar_act(mob/living/user, obj/item/I)
+	default_deconstruction_crowbar(I)
+
 
 /obj/machinery/atmospherics/components/unary/thermomachine/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
 	var/unanchoring = anchored
