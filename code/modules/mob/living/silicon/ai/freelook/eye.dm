@@ -35,21 +35,19 @@
 		return
 	hud.remove_from_hud(src)
 
-	var/static/mutable_appearance/MA
-	if(!MA)
-		MA = new /mutable_appearance()
-		MA.icon = 'icons/effects/alphacolors.dmi'
-		MA.icon_state = ""
-		MA.alpha = 100
-		MA.layer = ABOVE_ALL_MOB_LAYER
-		MA.plane = GAME_PLANE
-	MA.color = ai_detector_color
+	var/static/list/vis_contents_objects = list()
+	var/obj/effect/overlay/ai_detect_hud/hud_obj = vis_contents_objects[ai_detector_color]
+	if(!hud_obj)
+		hud_obj = new /obj/effect/overlay/ai_detect_hud()
+		hud_obj.color = ai_detector_color
+		vis_contents_objects[ai_detector_color] = hud_obj
+
 	var/list/new_images = list()
 	var/list/turfs = get_visible_turfs()
 	for(var/T in turfs)
 		var/image/I = (old_images.len > new_images.len) ? old_images[new_images.len + 1] : image(null, T)
 		I.loc = T
-		I.appearance = MA
+		I.vis_contents += hud_obj
 		new_images += I
 	for(var/i in (new_images.len + 1) to old_images.len)
 		qdel(old_images[i])
@@ -183,3 +181,12 @@
 /mob/camera/aiEye/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(relay_speech && speaker && ai && !radio_freq && speaker != ai && near_camera(speaker))
 		ai.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
+
+/obj/effect/overlay/ai_detect_hud
+	name = ""
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	icon = 'icons/effects/alphacolors.dmi'
+	icon_state = ""
+	alpha = 100
+	layer = ABOVE_ALL_MOB_LAYER
+	plane = GAME_PLANE
