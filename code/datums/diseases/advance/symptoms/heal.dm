@@ -244,21 +244,23 @@
 	else if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma)
 		to_chat(M, "<span class='warning'>You feel yourself slip into a regenerative coma...</span>")
 		active_coma = TRUE
-		addtimer(CALLBACK(src, .proc/coma, M), 60)
+		addtimer(CALLBACK(src, .proc/coma, M, A), 60)
 
-/datum/symptom/heal/coma/proc/coma(mob/living/M)
+/datum/symptom/heal/coma/proc/coma(mob/living/M, datum/disease/advance/A)
 	if(deathgasp)
 		M.emote("deathgasp")
-	M.fakedeath("regenerative_coma")
+	if(A.properties["stealth"] >= 2)
+		M.fakedeath("regenerative_coma")
 	M.update_stat()
 	M.update_canmove()
-	addtimer(CALLBACK(src, .proc/uncoma, M), 300)
+	addtimer(CALLBACK(src, .proc/uncoma, M, A), 300)
 
-/datum/symptom/heal/coma/proc/uncoma(mob/living/M)
+/datum/symptom/heal/coma/proc/uncoma(mob/living/M, A)
 	if(!active_coma)
 		return
 	active_coma = FALSE
-	M.cure_fakedeath("regenerative_coma")
+	if(A.properties["stealth"] >= 2)
+		M.cure_fakedeath("regenerative_coma")
 	M.update_stat()
 	M.update_canmove()
 
