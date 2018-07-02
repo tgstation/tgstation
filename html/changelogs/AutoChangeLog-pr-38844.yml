@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "Printing the TEG and circulator boards no longer prints the completed machinery instead."

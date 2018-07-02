@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "A single wired glass tile no longer creates unlimited light floor tiles."

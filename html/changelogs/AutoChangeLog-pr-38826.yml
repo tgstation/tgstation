@@ -1,4 +1,0 @@
-author: "AnturK"
-delete-after: True
-changes: 
-  - bugfix: "non-player monkeys won't fight when stunned."
