@@ -88,6 +88,7 @@
 	icon_state = "heater"
 	desc = "Directs energy into compressed particles in order to power engines."
 	engine_power = 0 // todo make these into 2x1 parts
+	CanAtmosPass = ATMOS_PASS_NO
 
 /obj/structure/shuttle/engine/platform
 	name = "engine platform"
