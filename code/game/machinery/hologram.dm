@@ -479,6 +479,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			continue
 		if(another.validate_location(T))
 			unset_holo(holo_owner)
+			if(another.masters && another.masters[holo_owner])
+				another.clear_holo(holo_owner)
 			another.set_holo(holo_owner, h)
 			return TRUE
 	return FALSE
