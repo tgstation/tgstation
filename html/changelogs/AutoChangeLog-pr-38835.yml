@@ -1,0 +1,6 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "Backpack water tanks now work properly when wielded by drones."
+  - bugfix: "Backpack water tank nozzles can no longer be placed inside bags of holding and chem dispensers."
+  - bugfix: "Moving items between your hands no longer causes them to cross the floor (squeaking, lava burning)."
