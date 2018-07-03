@@ -151,7 +151,7 @@
 	prereq_ids = list("practical_bluespace", "high_efficiency")
 	design_ids = list("bluespace_matter_bin", "femto_mani", "triphasic_scanning", "tele_station", "tele_hub", "quantumpad", "launchpad", "launchpad_console",
 	"teleconsole", "bluespace_crystal", "bluespace_pod", "wormholeprojector")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	export_price = 5000
 
 /datum/techweb_node/adv_bluespace_bags
@@ -160,7 +160,7 @@
 	description = "Deeper understanding of how bags works"
 	prereq_ids = list("adv_bluespace")
 	design_ids = list("bag_holding")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 5000
 
 /datum/techweb_node/practical_bluespace
@@ -197,7 +197,7 @@
 	display_name = "Advanced Plasma Research"
 	description = "Research on how to fully exploit the power of plasma."
 	prereq_ids = list("basic_plasma")
-	design_ids = list("mech_plasma_cutter", "power_turbine", "power_turbine_console", "power_compressor", "circulator", "teg")
+	design_ids = list("power_turbine", "power_turbine_console", "power_compressor", "circulator", "teg")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -282,7 +282,7 @@
 	design_ids = list("aifixer", "aicore", "safeguard_module", "onehuman_module", "protectstation_module", "quarantine_module", "oxygen_module", "freeform_module",
 	"reset_module", "purge_module", "remove_module", "freeformcore_module", "asimov_module", "paladin_module", "tyrant_module", "corporate_module",
 	"default_module", "borg_ai_control", "mecha_tracking_ai_control", "aiupload", "intellicard")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 5000
 
 /////////////////////////EMP tech/////////////////////////
@@ -688,7 +688,16 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
-/datum/techweb_node/mech_modules
+/datum/techweb_node/mining_mech_tools
+	id = "mining_mech_tools"
+	display_name = "Advanced Mining Exosuit Equipment"
+	description = "Tools for high efficiency mining"
+	prereq_ids = list("basic_mining", "mech_tools")
+	design_ids = list("mech_plasma_cutter", "mech_diamond_drill")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/adv_mech_modules
 	id = "adv_mecha_modules"
 	display_name = "Advanced Exosuit Modules"
 	description = "Advanced mech tools"
@@ -820,15 +829,6 @@
 	description = "An advanced piece of mech weaponry"
 	prereq_ids = list("mecha", "ballistic_weapons")
 	design_ids = list("mech_lmg")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	export_price = 5000
-
-/datum/techweb_node/mech_diamond_drill
-	id = "mech_diamond_drill"
-	display_name =  "Exosuit Diamond Drill"
-	description = "A diamond drill fit for a large exosuit"
-	prereq_ids = list("mecha", "adv_mining")
-	design_ids = list("mech_diamond_drill")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
