@@ -1,5 +1,0 @@
-author: "Zxaber"
-delete-after: True
-changes: 
-  - tweak: "Empty cyborg shells can now be disassembled with a wrench."
-  - tweak: "Using a screwdriver on an empty shell will now remove the cell, or swap it if you're holding a cell in your other hand."
