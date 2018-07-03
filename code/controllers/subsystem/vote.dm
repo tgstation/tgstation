@@ -15,6 +15,7 @@ SUBSYSTEM_DEF(vote)
 	var/list/voted = list()
 	var/list/voting = list()
 	var/list/generated_actions = list()
+	var/list/map_config_cache
 
 /datum/controller/subsystem/vote/fire()	//called by master_controller
 	if(mode)
@@ -22,9 +23,7 @@ SUBSYSTEM_DEF(vote)
 
 		if(time_remaining < 0)
 			result()
-			for(var/client/C in voting)
-				C << browse(null, "window=vote;can_close=0")
-			reset()
+			reset(TRUE)
 		else
 			var/datum/browser/client_popup
 			for(var/client/C in voting)
@@ -34,7 +33,10 @@ SUBSYSTEM_DEF(vote)
 				client_popup.open(0)
 
 
-/datum/controller/subsystem/vote/proc/reset()
+/datum/controller/subsystem/vote/proc/reset(close_windows = FALSE)
+	if(close_windows)
+		for(var/client/C in voting)
+			C << browse(null, "window=vote;can_close=0")
 	initiator = null
 	time_remaining = 0
 	mode = null
@@ -71,6 +73,7 @@ SUBSYSTEM_DEF(vote)
 					choices[GLOB.master_mode] += non_voters.len
 					if(choices[GLOB.master_mode] >= greatest_votes)
 						greatest_votes = choices[GLOB.master_mode]
+
 	//get all options with that many votes and return them in a list
 	. = list()
 	if(greatest_votes)
@@ -123,6 +126,10 @@ SUBSYSTEM_DEF(vote)
 						restart = 1
 					else
 						GLOB.master_mode = .
+			if("maprotate")
+				CONFIG_SET(flag/allow_map_voting, FALSE)	//only once
+				SSmapping.changemap(map_config_cache[.], TRUE, TRUE)
+
 	if(restart)
 		var/active_admins = 0
 		for(var/client/C in GLOB.admins)
@@ -148,7 +155,7 @@ SUBSYSTEM_DEF(vote)
 				return vote
 	return 0
 
-/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
+/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, override_started_time = FALSE)
 	if(!mode)
 		if(started_time)
 			var/next_allowed_time = (started_time + CONFIG_GET(number/vote_delay))
@@ -161,7 +168,7 @@ SUBSYSTEM_DEF(vote)
 			if(GLOB.admin_datums[ckey])
 				admin = TRUE
 
-			if(next_allowed_time > world.time && !admin)
+			if(next_allowed_time > world.time && !admin && !override_started_time)
 				to_chat(usr, "<span class='warning'>A vote was initiated recently, you must wait [DisplayTimeText(next_allowed_time-world.time)] before a new vote can be started!</span>")
 				return 0
 
@@ -171,6 +178,34 @@ SUBSYSTEM_DEF(vote)
 				choices.Add("Restart Round","Continue Playing")
 			if("gamemode")
 				choices.Add(config.votable_modes)
+			if("maprotate")
+				var/verbose = FALSE
+				var/players = GLOB.clients.len
+				question = "Next map"
+				map_config_cache = list()
+				do
+					var/enabled_verbose = FALSE
+					for(var/M in global.config.maplist)
+						var/datum/map_config/VM = global.config.maplist[M]
+						if (VM.config_min_users > 0 && players < VM.config_min_users)
+							continue
+						if (VM.config_max_users > 0 && players > VM.config_max_users)
+							continue	
+						if (VM.voteweight <= 0)
+							continue
+						var/map_name = verbose ? VM.config_filename : VM.map_name
+						if(!verbose && (map_name in choices))
+							//some meme is being cheeky, enable verbose mode
+							verbose = TRUE
+							enabled_verbose = TRUE
+							choices.Cut()
+							map_config_cache.Cut()
+							break
+						if(SSmapping.config.map_path == VM.map_path && SSmapping.config.map_file == VM.map_file)
+							map_name = "[map_name] (current)"
+						choices += map_name
+						map_config_cache[map_name] = VM
+				while(enabled_verbose)
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
