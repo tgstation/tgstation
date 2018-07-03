@@ -26,7 +26,7 @@
 	create_reagents(mopcap)
 
 
-/obj/item/mop/proc/clean(turf/A)
+/obj/item/mop/proc/clean(turf/A, mob/user)
 	var/cleaned = FALSE
 	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1) || reagents.has_reagent("vodka", 1) || reagents.has_reagent("cleaner", 1))
 		SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
@@ -36,9 +36,9 @@
 				qdel(O)
 	if(cleaned)
 		SSresearch.station_tech.add_points_all(CLEAN_TILE_REWARD)
+		to_chat(user, "<span class='notice'>Your [src] flashes a message that it has gained useful information from eradicating the mess on the floor. Good work.</span>")
 	reagents.reaction(A, TOUCH, 10)	//Needed for proper floor wetting.
 	reagents.remove_any(1)			//reaction() doesn't use up the reagents
-
 
 /obj/item/mop/afterattack(atom/A, mob/user, proximity)
 	if(!proximity)
@@ -58,7 +58,7 @@
 
 		if(do_after(user, src.mopspeed, target = T))
 			to_chat(user, "<span class='notice'>You finish mopping.</span>")
-			clean(T)
+			clean(T, user)
 
 
 /obj/effect/attackby(obj/item/I, mob/user, params)
