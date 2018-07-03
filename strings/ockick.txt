@@ -3,15 +3,15 @@
 
 admin 
 reddit 
-4chan 
-round 
-adminhelp 
-ahelp 
+4chan
+ round 
+adminhelp
+ahelp
 ock 
 ick 
-lmao 
-lol 
-xd 
+lmao
+lol
+xd
 ick-ock 
  ban 
  permaban 
