@@ -185,6 +185,12 @@
 /datum/config_entry/string/githuburl
 	config_entry_value = "https://www.github.com/tgstation/-tg-station"
 
+/datum/config_entry/string/donatecolor
+	config_entry_value = "rgba(214, 214, 0, 1)"
+
+/datum/config_entry/string/diamonddonatecolor
+	config_entry_value = "rgba(0, 214, 193, 1)"
+
 /datum/config_entry/string/roundstatsurl
 
 /datum/config_entry/string/gamelogurl

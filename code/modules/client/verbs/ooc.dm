@@ -56,7 +56,11 @@
 
 	var/keyname = key
 	if(prefs.unlock_content)
-		if(prefs.toggles & MEMBER_PUBLIC)
+		if(lowertext(key) in diamonddonators)
+			keyname = "<font color='[CONFIG_GET(string/diamonddonatecolor)]'><span class='ooc'>[icon2html('icons/donator_image/diamond.dmi', world)][key]</font>"
+		else if(lowertext(key) in donators)
+			keyname = "<font color='[CONFIG_GET(string/donatecolor)]'><span class='ooc'>[icon2html('icons/donator_image/donator.dmi', world, "blag")][key]</font>"
+		else if(prefs.toggles & MEMBER_PUBLIC)
 			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : GLOB.normal_ooc_colour]'>[icon2html('icons/member_content.dmi', world, "blag")][keyname]</font>"
 	//The linkify span classes and linkify=TRUE below make ooc text get clickable chat href links if you pass in something resembling a url
 	for(var/client/C in GLOB.clients)
