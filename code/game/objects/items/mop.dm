@@ -18,6 +18,7 @@
 	var/mopcount = 0
 	var/mopcap = 5
 	var/mopspeed = 30
+	var/stored_points = 0
 	force_string = "robust... against germs"
 	var/insertable = TRUE
 
@@ -35,10 +36,20 @@
 				cleaned = TRUE
 				qdel(O)
 	if(cleaned && user && user.mind && user.mind.assigned_role == "Janitor")
-		SSresearch.station_tech.add_points_all(CLEAN_TILE_REWARD)
+		stored_points += CLEAN_TILE_REWARD
 		to_chat(user, "<span class='notice'>Your [src] flashes a message that it has gained useful information from eradicating the mess on the floor. Good work.</span>")
 	reagents.reaction(A, TOUCH, 10)	//Needed for proper floor wetting.
 	reagents.remove_any(1)			//reaction() doesn't use up the reagents
+
+/obj/item/mop/pre_attack(atom/target, mob/user, params)
+	if(istype(target, /obj/machinery/computer/rdconsole))
+		var/obj/machinery/computer/rdconsole/RDC = target
+		if(stored_points)
+			RDC.stored_research.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, stored_points)
+			to_chat(user, "<span class='boldnotice'>You upload [stored_points] points to [RDC]'s research storage.</span>")
+			stored_points = 0
+	else
+		return ..()
 
 /obj/item/mop/afterattack(atom/A, mob/user, proximity)
 	if(!proximity)
