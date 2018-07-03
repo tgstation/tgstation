@@ -34,7 +34,7 @@
 			if(is_cleanable(O))
 				cleaned = TRUE
 				qdel(O)
-	if(cleaned)
+	if(cleaned && user && user.mind && user.mind.assigned_role == "Janitor")
 		SSresearch.station_tech.add_points_all(CLEAN_TILE_REWARD)
 		to_chat(user, "<span class='notice'>Your [src] flashes a message that it has gained useful information from eradicating the mess on the floor. Good work.</span>")
 	reagents.reaction(A, TOUCH, 10)	//Needed for proper floor wetting.
