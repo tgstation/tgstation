@@ -196,6 +196,11 @@
 		return TRUE
 
 /obj/structure/window/screwdriver_act(mob/living/user, obj/item/I)
+	if(!can_be_reached(user))
+		return TRUE
+
+	add_fingerprint(user)
+
 	if(!(flags_1&NODECONSTRUCT_1))
 		if(reinf)
 			if(state == WINDOW_SCREWED_TO_FRAME || state == WINDOW_IN_FRAME)
@@ -219,6 +224,11 @@
 		return TRUE
 
 /obj/structure/window/crowbar_act(mob/living/user, obj/item/I)
+	if(!can_be_reached(user))
+		return TRUE
+
+	add_fingerprint(user)
+
 	if(reinf && (state == WINDOW_OUT_OF_FRAME || state == WINDOW_IN_FRAME))
 		to_chat(user, "<span class='notice'>You begin to lever the window [state == WINDOW_OUT_OF_FRAME ? "into":"out of"] the frame...</span>")
 		if(I.use_tool(src, user, decon_speed, volume=75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
@@ -227,6 +237,11 @@
 		return TRUE
 
 /obj/structure/window/wrench_act(mob/living/user, obj/item/I)
+	if(!can_be_reached(user))
+		return TRUE
+
+	add_fingerprint(user)
+
 	if(!anchored)
 		to_chat(user, "<span class='notice'> You begin to disassemble [src]...</span>")
 		if(I.use_tool(src, user, decon_speed, volume=75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
