@@ -1,12 +1,12 @@
 //See also controllers/globals.dm
 
-//Creates a global initializer with a given InitValue expression
+//Creates a global initializer with a given InitValue expression, do not use
 #define GLOBAL_MANAGED(X, InitValue)\
 /datum/controller/global_vars/proc/InitGlobal##X(){\
     ##X = ##InitValue;\
     gvars_datum_init_order += #X;\
 }
-//Creates an empty global initializer
+//Creates an empty global initializer, do not use
 #define GLOBAL_UNMANAGED(X) /datum/controller/global_vars/proc/InitGlobal##X() { return; }
 
 //Prevents a given global from being VV'd
@@ -26,7 +26,7 @@
 //Standard typed BYOND global, do not use
 #define GLOBAL_REAL(X, Typepath) var/global##Typepath/##X
 
-//Defines a global var on the controller
+//Defines a global var on the controller, do not use
 #define GLOBAL_RAW(X) /datum/controller/global_vars/var/global##X
 
 //Create an untyped global with an initializer expression
