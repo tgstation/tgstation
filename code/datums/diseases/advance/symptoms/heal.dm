@@ -220,6 +220,7 @@
 	passive_message = "<span class='notice'>The pain from your wounds makes you feel oddly sleepy...</span>"
 	var/deathgasp = FALSE
 	var/active_coma = FALSE //to prevent multiple coma procs
+	var/intentionalsleep = FALSE
 	threshold_desc = "<b>Stealth 2:</b> Host appears to die when falling into a coma.<br>\
 					  <b>Stage Speed 7:</b> Increases healing speed."
 
@@ -241,15 +242,19 @@
 		return power * 0.5
 	else if(M.IsSleeping())
 		return power * 0.25
+		intentionalsleep = TRUE
 	else if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma)
 		to_chat(M, "<span class='warning'>You feel yourself slip into a regenerative coma...</span>")
 		active_coma = TRUE
-		addtimer(CALLBACK(src, .proc/coma, M), 60)
+		addtimer(CALLBACK(src, .proc/coma, M, A), 60)
 
-/datum/symptom/heal/coma/proc/coma(mob/living/M)
+/datum/symptom/heal/coma/proc/coma(mob/living/M, datum/disease/advance/A)
 	if(deathgasp)
 		M.emote("deathgasp")
-	M.fakedeath("regenerative_coma")
+	if(A.properties["stealth"] >= 2)
+		M.fakedeath("regenerative_coma")
+	else if(intentionalsleep == FALSE)
+		M.AdjustSleeping(600, FALSE)
 	M.update_stat()
 	M.update_canmove()
 	addtimer(CALLBACK(src, .proc/uncoma, M), 300)
@@ -259,6 +264,9 @@
 		return
 	active_coma = FALSE
 	M.cure_fakedeath("regenerative_coma")
+	if(intentionalsleep == FALSE)
+		M.SetSleeping(0)
+	intentionalsleep = FALSE
 	M.update_stat()
 	M.update_canmove()
 
