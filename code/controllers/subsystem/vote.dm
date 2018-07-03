@@ -190,8 +190,6 @@ SUBSYSTEM_DEF(vote)
 						if (VM.config_min_users > 0 && players < VM.config_min_users)
 							continue
 						if (VM.config_max_users > 0 && players > VM.config_max_users)
-							continue	
-						if (VM.voteweight <= 0)
 							continue
 						var/map_name = verbose ? VM.config_filename : VM.map_name
 						if(!verbose && (map_name in choices))
