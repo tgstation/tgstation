@@ -602,4 +602,4 @@
 	item_state = "ghost_sheet_item"
 	w_class = WEIGHT_CLASS_TINY
 	flags_inv = HIDEGLOVES|HIDEMASK|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	alternate_worn_layer = 6	//I think this should be right? Same layer as head items, so hats will display over it I think.
+	alternate_worn_layer = UNDER_HEAD_LAYER
