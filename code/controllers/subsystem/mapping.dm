@@ -264,7 +264,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		SSvote.initiate_vote("maprotate", "[name] subsystem", TRUE)
 		return
 	//random rotate
-	var/pickedmap = pickweight(global.config.maplist)
+	var/pickedmap = safepick(global.config.maplist)
 	if (!pickedmap)
 		return
 	var/datum/map_config/VM = global.config.maplist[pickedmap]
