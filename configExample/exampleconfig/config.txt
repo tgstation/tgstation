@@ -211,6 +211,12 @@ CHECK_RANDOMIZER
 ## forum address
 # FORUMURL http://tgstation13.org/phpBB/index.php
 
+## donate address
+# DONATEURL https://patreon.com/user?u=10639001
+
+## discord address
+# DISCORDURL https://discord.gg/caumcMV
+
 ## Wiki address
 # WIKIURL http://www.tgstation13.org/wiki
 
