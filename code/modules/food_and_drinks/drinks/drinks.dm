@@ -250,6 +250,11 @@
 	list_reagents = list("beer" = 30)
 	foodtype = GRAIN | ALCOHOL
 
+/obj/item/reagent_containers/food/drinks/beer/light
+	name = "Carp Lite"
+	desc = "Brewed with \"Pure Ice Asteroid Spring Water\"."
+	list_reagents = list("light_beer" = 30)
+
 /obj/item/reagent_containers/food/drinks/ale
 	name = "Magm-Ale"
 	desc = "A true dorf's drink of choice."

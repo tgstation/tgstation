@@ -195,7 +195,7 @@
 	playsound(get_turf(src), projectile_sound, 50, TRUE)
 	if(prob(35))
 		sparks.start()
-	P.firer = user? user : src
+	P.firer = user ? user : src
 	if(last_projectile_params)
 		P.p_x = last_projectile_params[2]
 		P.p_y = last_projectile_params[3]
@@ -210,7 +210,6 @@
 		else
 			fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
 			shot_number = 0
-	P.fire()
 	return P
 
 /obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user, silent)

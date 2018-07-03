@@ -292,6 +292,7 @@
 				var/obj/item/I = i
 				I.forceMove(drop_location())
 				transfer_fingerprints_to(I)
+				debris -= I
 	qdel(src)
 	update_nearby_icons()
 
