@@ -64,7 +64,6 @@
 
 /obj/item/robot_suit/wrench_act(mob/living/user, obj/item/I) //Deconstucts empty borg shell. Flashes remain unbroken because they haven't been used yet
 	var/turf/T = get_turf(src)
-	forceMove(T)
 	if(l_leg || r_leg || chest || l_arm || r_arm || head)
 		if(I.use_tool(src, user, 5, volume=50))
 			if(l_leg)
@@ -105,37 +104,33 @@
 		return FALSE
 	return TRUE
 
-/obj/item/robot_suit/screwdriver_act(mob/living/user, obj/item/I) //Removes the current power cell, or swaps it if you're holding a new one.
-	if(!chest.cell) //If no cell is in the shell
-		if(!user.is_holding_item_of_type(/obj/item/stock_parts/cell)) //And we're also not holding a cell
-			to_chat(user, "<span class='notice'>There doesn't seem to be a power cell to remove from [src].</span>")
-			return
-		else //But we are holding a cell
-			chest.cell = user.held_items[user.active_hand_index == 1 ? 2 : 1]
-			if(!user.transferItemToLoc(user.held_items[user.active_hand_index == 1 ? 2 : 1], src.chest))
-				chest.cell = null
-				to_chat(user, "<span class='warning'>[user.held_items[user.active_hand_index == 1 ? 2 : 1]] is stuck to your hand, you can't put it in [src]!</span>")
-				return
-			to_chat(user, "<span class='notice'>You insert [chest.cell].</span>")
-			return
-	else //If a cell exists in the shell
-		var/obj/item/stock_parts/cell/temp_cell = user.is_holding_item_of_type(/obj/item/stock_parts/cell)
-		if(!temp_cell) //But we're not holding a cell
-			put_in_hand_or_drop(user, chest.cell)
+/obj/item/robot_suit/screwdriver_act(mob/living/user, obj/item/I) //Swaps the power cell if you're holding a new one in your other hand.
+	if(!chest) //can't remove a cell if there's no chest to remove it from.
+		to_chat(user, "<span class='notice'>[src] has no attached torso.</span>")
+		return
+
+	var/obj/item/stock_parts/cell/temp_cell = user.is_holding_item_of_type(/obj/item/stock_parts/cell)
+	var/swap_failed
+	if(!temp_cell) //if we're not holding a cell
+		swap_failed = TRUE
+	else if(!user.transferItemToLoc(temp_cell, chest))
+		swap_failed = TRUE
+		to_chat(user, "<span class='warning'>[temp_cell] is stuck to your hand, you can't put it in [src]!</span>")
+
+	if(chest.cell) //drop the chest's current cell no matter what.
+		put_in_hand_or_drop(user, chest.cell)
+
+	if(swap_failed) //we didn't transfer any new items.
+		if(chest.cell) //old cell ejected, nothing inserted.
 			to_chat(user, "<span class='notice'>You remove [chest.cell] from [src].</span>")
 			chest.cell = null
-			return
-		else //And we are holding a cell
-			if(!user.transferItemToLoc(temp_cell, chest)) //But we can't insert for some reason
-				put_in_hand_or_drop(user, chest.cell)
-				chest.cell = null
-				to_chat(user, "<span class='warning'>[temp_cell] is stuck to your hand, you can't put it in [src]!</span>")
-				return
-			else //And we put it in
-				put_in_hand_or_drop(user, chest.cell)
-				to_chat(user, "<span class='notice'>You replace [src]'s [chest.cell.name] with [temp_cell].</span>")
-				chest.cell = temp_cell
-				return TRUE
+		else
+			to_chat(user, "<span class='notice'>The power cell slot in [src]'s torso is empty.</span>")
+		return
+
+	to_chat(user, "<span class='notice'>You [chest.cell ? "replace [src]'s [chest.cell.name] with [temp_cell]" : "insert [temp_cell] into [src]"].</span>")
+	chest.cell = temp_cell
+	return TRUE
 
 /obj/item/robot_suit/attackby(obj/item/W, mob/user, params)
 
