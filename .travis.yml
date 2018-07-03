@@ -42,6 +42,7 @@ matrix:
             - libssl-dev:i386
             - gcc-multilib
       cache:
+        cargo
         directories:
           - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
           - $HOME/libmariadb
