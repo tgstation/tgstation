@@ -453,7 +453,7 @@
 		if(machine && in_range(src, usr))
 			show_inv(machine)
 
-	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		if(href_list["item"])
 			var/slot = text2num(href_list["item"])
 			var/hand_index = text2num(href_list["hand_index"])
@@ -746,7 +746,7 @@
 	return 0
 
 //Can the mob use Topic to interact with machines
-/mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+/mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE)
 	return
 
 /mob/proc/faction_check_mob(mob/target, exact_match)

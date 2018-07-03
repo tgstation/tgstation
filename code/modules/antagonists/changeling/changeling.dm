@@ -12,6 +12,7 @@
 	var/you_are_greet = TRUE
 	var/give_objectives = TRUE
 	var/team_mode = FALSE //Should assign team objectives ?
+	var/competitive_objectives = FALSE //Should we assign objectives in competition with others?
 
 	//Changeling Stuff
 
@@ -371,7 +372,8 @@
 		if(!CTO.escape_objective_compatible)
 			escape_objective_possible = FALSE
 			break
-	var/changeling_objective = rand(1,3)
+
+	var/changeling_objective = competitive_objectives ? rand(1,3) : 1
 	switch(changeling_objective)
 		if(1)
 			var/datum/objective/absorb/absorb_objective = new
