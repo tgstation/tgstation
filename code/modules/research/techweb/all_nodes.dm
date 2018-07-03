@@ -682,7 +682,7 @@
 /datum/techweb_node/med_mech_tools
 	id = "med_mech_tools"
 	display_name = "Medical Exosuit Equipment"
-	description = "Tools for high level mech suits"
+	description = "Tools for medical mech suits"
 	prereq_ids = list("adv_biotech", "mech_tools")
 	design_ids = list("mech_sleeper", "mech_syringe_gun", "mech_medi_beam")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
@@ -708,7 +708,7 @@
 	
 /datum/techweb_node/mech_power
 	id = "mech_power"
-	display_name = "Mech Power Modules"
+	display_name = "Power Exosuit Modules"
 	description = "Better generators for mechs"
 	prereq_ids = list("mech_tools", "bluespace_power")
 	design_ids = list("mech_energy_relay", "mech_generator_nuclear")
