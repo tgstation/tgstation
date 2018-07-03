@@ -1,8 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - tweak: "Shuttle throwing also applies to loose objects on shuttles now."
-  - tweak: "Closets on shuttles start anchored."
-  - tweak: "The throw distance of shuttle throws is marginally random, potentialy 10% further or shorter"
-  - rscadd: "Tables and racks on shuttles have been installed with inertia dampeners."
-  - bugfix: "Some very thin barriers didn't stop mobs from being thrown by the shuttle under certain circumstances, this has been fixed."
