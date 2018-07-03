@@ -46,7 +46,8 @@
 		var/obj/machinery/computer/rdconsole/RDC = target
 		if(stored_points)
 			RDC.stored_research.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, stored_points)
-			to_chat(user, "<span class='boldnotice'>You upload [stored_points] points to [RDC]'s research storage.</span>")
+			user.visible_message("<span class='notice'>[user] passes [src] over [RDC], wirelessly transmitting its stored information \
+			into [RDC].</span>", "<span class='boldnotice'>You upload [stored_points] points to [RDC]'s research storage.</span>")
 			stored_points = 0
 	else
 		return ..()
