@@ -181,10 +181,11 @@ SUBSYSTEM_DEF(vote)
 			if("maprotate")
 				var/verbose = FALSE
 				var/players = GLOB.clients.len
+				var/enabled_verbose
 				question = "Next map"
 				map_config_cache = list()
 				do
-					var/enabled_verbose = FALSE
+					enabled_verbose = FALSE
 					for(var/M in global.config.maplist)
 						var/datum/map_config/VM = global.config.maplist[M]
 						if (VM.config_min_users > 0 && players < VM.config_min_users)
