@@ -120,21 +120,17 @@
 /obj/machinery/power/apc/auto_name
 	auto_name = 1
 	
-/obj/machinery/power/apc/auto_name/directional/north
+/obj/machinery/power/apc/auto_name/north
 	dir = 1
-	pixel_y = 24
 
-/obj/machinery/power/apc/auto_name/directional/south
+/obj/machinery/power/apc/auto_name/south
 	dir = 2
-	pixel_y = -23
 
-/obj/machinery/power/apc/auto_name/directional/east
+/obj/machinery/power/apc/auto_name/east
 	dir = 4
-	pixel_x = 24
 	
-/obj/machinery/power/apc/auto_name/directional/west
+/obj/machinery/power/apc/auto_name/west
 	dir = 8
-	pixel_x = -25
 
 /obj/machinery/power/apc/get_cell()
 	return cell
