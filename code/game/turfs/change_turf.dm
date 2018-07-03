@@ -40,9 +40,14 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 /turf/open/copyTurf(turf/T, copy_air = FALSE)
 	. = ..()
-	if (copy_air && istype(T, /turf/open))
-		var/turf/open/openTurf = T
-		openTurf.air.copy_from(air)
+	if (isopenturf(T))
+		GET_COMPONENT(slip, /datum/component/wet_floor)
+		if(slip)
+			var/datum/component/wet_floor/WF = T.AddComponent(/datum/component/wet_floor)
+			WF.InheritComponent(slip)
+		if (copy_air)
+			var/turf/open/openTurf = T
+			openTurf.air.copy_from(air)
 
 //wrapper for ChangeTurf()s that you want to prevent/affect without overriding ChangeTurf() itself
 /turf/proc/TerraformTurf(path, new_baseturf, flags)
