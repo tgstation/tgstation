@@ -7,8 +7,8 @@
 	var/obj/item/gun/energy/gravity_gun/gun
 
 /obj/item/ammo_casing/energy/gravityrepulse/Initialize(mapload, obj/item/gun/energy/gravity_gun/G)
-	. = ..()
 	gun = G
+	. = ..()
 
 /obj/item/ammo_casing/energy/gravityattract
 	projectile_type = /obj/item/projectile/gravityattract
@@ -20,8 +20,8 @@
 
 
 /obj/item/ammo_casing/energy/gravityattract/Initialize(mapload, obj/item/gun/energy/gravity_gun/G)
-	. = ..()
 	gun = G
+	. = ..()
 
 /obj/item/ammo_casing/energy/gravitychaos
 	projectile_type = /obj/item/projectile/gravitychaos
@@ -32,5 +32,5 @@
 	var/obj/item/gun/energy/gravity_gun/gun
 
 /obj/item/ammo_casing/energy/gravitychaos/Initialize(mapload, obj/item/gun/energy/gravity_gun/G)
-	. = ..()
 	gun = G
+	. = ..()
