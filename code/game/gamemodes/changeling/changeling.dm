@@ -73,12 +73,6 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 		log_game("[key_name(changeling)] has been selected as a changeling")
 		var/datum/antagonist/changeling/new_antag = new()
 		new_antag.team_mode = TRUE
-
-		if(changelings.len >= 2)
-			new_antag.competitive_objectives = TRUE
-		else
-			new_antag.competitive_objectives = FALSE
-
 		changeling.add_antag_datum(new_antag)
 	..()
 
