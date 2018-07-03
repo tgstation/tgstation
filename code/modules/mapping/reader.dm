@@ -144,7 +144,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 	var/space_key
 	if(!measureOnly)
 		modelCache = build_cache(parsed, no_changeturf)
-		space_key = parsed.grid_models[SPACE_KEY]
+		space_key = modelCache[SPACE_KEY]
 
 	for(var/I in parsed.gridSets)
 		var/datum/grid_set/gset = I
@@ -184,7 +184,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 							if(!no_afterchange || (model_key != space_key))
 								var/list/cache = modelCache[model_key]
 								if(!cache)
-									CRASH("Undefined model key in DMM.")
+									CRASH("Undefined model key in DMM: [model_key]")
 								build_coordinate(cache, gset.xcrd, gset.ycrd, gset.zcrd, no_afterchange, placeOnTop)
 							#ifdef TESTING
 							else
@@ -279,7 +279,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 			continue
 
 
-		.[model] = list(members, members_attributes)
+		.[model_key] = list(members, members_attributes)
 
 /datum/maploader/proc/build_coordinate(list/model, xcrd as num, ycrd as num, zcrd as num, no_changeturf as num, placeOnTop as num)
 	var/index
