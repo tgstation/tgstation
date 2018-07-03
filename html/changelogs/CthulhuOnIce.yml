@@ -1,3 +1,6 @@
 author: CthulhuOnIce
-changes: []
+changes: 
+  - rscadd: "Added donator config and features"
+  - rscadd: "Added a bunch of vending machines in the hallway cause why not"
+  - tweak: "Switched vacant office and detective office's places"
 delete-after: false
