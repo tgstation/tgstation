@@ -23,6 +23,8 @@
 					M.visible_message("<span class='danger'>The bluespace collapse crushes the air towards it, pulling [M] towards the ground...</span>")
 					M.Knockdown(5, TRUE, TRUE)		//Overrides stun absorbs.
 			T.TerraformTurf(/turf/open/chasm/magic, /turf/open/chasm/magic)
+		for (var/obj/structure/ladder/unbreakable/binary/ladder in GLOB.ladders)
+			ladder.ActivateAlmonds()
 		message_admins("[ADMIN_LOOKUPFLW(user)] detonated a bag of holding at [ADMIN_VERBOSEJMP(loccheck)].")
 		log_game("[key_name(user)] detonated a bag of holding at [AREACOORD(loccheck)].")
 		qdel(A)
