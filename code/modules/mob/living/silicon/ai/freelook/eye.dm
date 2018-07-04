@@ -96,8 +96,11 @@
 
 // Return to the Core.
 /mob/living/silicon/ai/proc/view_core()
-
-	current = null
+	if(istype(current,/obj/machinery/holopad))
+		var/obj/machinery/holopad/H = current
+		H.clear_holo(src)
+	else
+		current = null
 	cameraFollow = null
 	unset_machine()
 

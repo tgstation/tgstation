@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(throwing)
 		var/atom/movable/AM = currentrun[currentrun.len]
 		var/datum/thrownthing/TT = currentrun[AM]
 		currentrun.len--
-		if (!AM || !TT)
+		if (QDELETED(AM) || QDELETED(TT))
 			processing -= AM
 			if (MC_TICK_CHECK)
 				return
@@ -60,6 +60,15 @@ SUBSYSTEM_DEF(throwing)
 	var/paused = FALSE
 	var/delayed_time = 0
 	var/last_move = 0
+
+/datum/thrownthing/Destroy()
+	SSthrowing.processing -= thrownthing
+	thrownthing.throwing = null
+	thrownthing = null
+	target = null
+	thrower = null
+	callback = null
+	return ..()
 
 /datum/thrownthing/proc/tick()
 	var/atom/movable/AM = thrownthing
@@ -113,15 +122,15 @@ SUBSYSTEM_DEF(throwing)
 			return
 
 /datum/thrownthing/proc/finalize(hit = FALSE, target=null)
-	set waitfor = 0
-	SSthrowing.processing -= thrownthing
+	set waitfor = FALSE
 	//done throwing, either because it hit something or it finished moving
-	thrownthing.throwing = null
+	if(!thrownthing)
+		return
 	if (!hit)
 		for (var/thing in get_turf(thrownthing)) //looking for our target on the turf we land on.
 			var/atom/A = thing
 			if (A == target)
-				hit = 1
+				hit = TRUE
 				thrownthing.throw_impact(A, src)
 				break
 		if (!hit)
@@ -135,6 +144,8 @@ SUBSYSTEM_DEF(throwing)
 
 	if (callback)
 		callback.Invoke()
+
+	qdel(src)
 
 /datum/thrownthing/proc/hit_atom(atom/A)
 	finalize(hit=TRUE, target=A)

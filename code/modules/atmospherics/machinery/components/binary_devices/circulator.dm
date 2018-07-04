@@ -1,7 +1,7 @@
 //node2, air2, network2 correspond to input
 //node1, air1, network1 correspond to output
-#define CIRCULATOR_COLD 0
-#define CIRCULATOR_HOT 1
+#define CIRCULATOR_HOT 0
+#define CIRCULATOR_COLD 1
 
 /obj/machinery/atmospherics/components/binary/circulator
 	name = "circulator/heat exchanger"

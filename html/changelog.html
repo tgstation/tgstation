@@ -63,12 +63,27 @@
 			<h3 class="author">Denton updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="tweak">Engine heaters no longer let gases pass through them.</li>
+				<li class="tweak">The Cerestation escape shuttle is now available for purchase!</li>
+			</ul>
+			<h3 class="author">Frozenguy5 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixes nitryl gas not applying its effects.</li>
+			</ul>
+			<h3 class="author">MrDoomBringer updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">SupplyPod smites work properly once again.</li>
 			</ul>
 			<h3 class="author">Naksu updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="code_imp">Fixed the signatures of several reagent procs, removing useless checks</li>
 				<li class="tweak">drunkenness is now handled at the carbon level, allowing monkeys to experience ethanol</li>
 				<li class="balance">initropidil also works on carbon level, allowing syndicate operatives using the poison kit to achieve the silent assassin rating against monkeys</li>
+				<li class="tweak">The ladders in the tear in the fabric of reality no longer spawn their endpoints when the area is loaded, but only when the tear is made accessible via a BoH bomb.</li>
+				<li class="tweak">CentCom is no longer accessible via the space ladder in the tear.</li>
+				<li class="tweak">The lavaland endpoint can no longer spawn completely surrounded by lava, unless it spawns on an island</li>
+				<li class="code_imp">ChangeTurf can now conditionally inherit the air of the turf it is replacing, via the CHANGETURF_INHERIT_AIR flag.</li>
+				<li class="bugfix">when ladder endpoints are created, the binary turfs that are created inherit the air of the turfs they are replacing. This means the lavaland ladder endpoint will have the lavaland airmix, instead of a vacuum.</li>
+				<li class="code_imp">navigation beacons are now properly deregistered from their Z-level list and re-registered on the correct one if moved across Z-levels by an effect such as teleportation or a BoH-induced chasm.</li>
 			</ul>
 			<h3 class="author">Nirnael updated:</h3>
 			<ul class="changes bgimages16">
@@ -80,6 +95,19 @@
 				<li class="bugfix">Backpack water tank nozzles can no longer be placed inside bags of holding and chem dispensers.</li>
 				<li class="bugfix">Moving items between your hands no longer causes them to cross the floor (squeaking, lava burning).</li>
 				<li class="bugfix">Scrambled research console icons have been fixed, and will be prevented in the future.</li>
+			</ul>
+			<h3 class="author">Zxaber updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Empty cyborg shells can now be disassembled with a wrench.</li>
+				<li class="tweak">Using a screwdriver on an empty shell will now remove the cell, or swap it if you're holding a cell in your other hand.</li>
+			</ul>
+			<h3 class="author">ninjanomnom updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Shuttle throwing also applies to loose objects on shuttles now.</li>
+				<li class="tweak">Closets on shuttles start anchored.</li>
+				<li class="tweak">The throw distance of shuttle throws is marginally random, potentialy 10% further or shorter</li>
+				<li class="rscadd">Tables and racks on shuttles have been installed with inertia dampeners.</li>
+				<li class="bugfix">Some very thin barriers didn't stop mobs from being thrown by the shuttle under certain circumstances, this has been fixed.</li>
 			</ul>
 
 			<h2 class="date">02 July 2018</h2>
