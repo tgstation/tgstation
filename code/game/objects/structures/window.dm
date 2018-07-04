@@ -187,13 +187,16 @@
 				return TRUE
 
 			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-			if(I.use_tool(src, user, 40, volume=50))
+			if(I.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/is_max_integrity, obj_integrity)))
 				obj_integrity = max_integrity
 				update_nearby_icons()
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
+			return TRUE
 		else
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return TRUE
+	else
+		return FALSE
 
 /obj/structure/window/screwdriver_act(mob/living/user, obj/item/I)
 	if(!can_be_reached(user))
@@ -208,12 +211,14 @@
 				if(I.use_tool(src, user, decon_speed, volume=75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 					state = (state == WINDOW_IN_FRAME ? WINDOW_SCREWED_TO_FRAME : WINDOW_IN_FRAME)
 					to_chat(user, "<span class='notice'>You [state == WINDOW_IN_FRAME ? "unfasten the window from":"fasten the window to"] the frame.</span>")
+				return TRUE
 			else if(state == WINDOW_OUT_OF_FRAME)
 				to_chat(user, "<span class='notice'>You begin to [anchored ? "unscrew the frame from":"screw the frame to"] the floor...</span>")
 				if(I.use_tool(src, user, decon_speed, volume=75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 					anchored = !anchored
 					update_nearby_icons()
 					to_chat(user, "<span class='notice'>You [anchored ? "fasten the frame to":"unfasten the frame from"] the floor.</span>")
+				return TRUE
 		else //if we're not reinforced, we don't need to check or update state
 			to_chat(user, "<span class='notice'>You begin to [anchored ? "unscrew the window from":"screw the window to"] the floor...</span>")
 			if(I.use_tool(src, user, decon_speed, volume=75, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
@@ -221,7 +226,9 @@
 				air_update_turf(TRUE)
 				update_nearby_icons()
 				to_chat(user, "<span class='notice'>You [anchored ? "fasten the window to":"unfasten the window from"] the floor.</span>")
-		return TRUE
+			return TRUE
+	else
+		return FALSE
 
 /obj/structure/window/crowbar_act(mob/living/user, obj/item/I)
 	if(!can_be_reached(user))
@@ -235,6 +242,8 @@
 			state = (state == WINDOW_OUT_OF_FRAME ? WINDOW_IN_FRAME : WINDOW_OUT_OF_FRAME)
 			to_chat(user, "<span class='notice'>You pry the window [state == WINDOW_IN_FRAME ? "into":"out of"] the frame.</span>")
 		return TRUE
+	else
+		return FALSE
 
 /obj/structure/window/wrench_act(mob/living/user, obj/item/I)
 	if(!can_be_reached(user))
@@ -250,6 +259,12 @@
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You successfully disassemble [src].</span>")
 			qdel(src)
+		return TRUE
+	else
+		return FALSE
+
+/obj/structure/window/proc/is_max_integrity(obj_integrity)
+	if(obj_integrity == max_integrity)
 		return TRUE
 
 /obj/structure/window/proc/check_state(checked_state)
