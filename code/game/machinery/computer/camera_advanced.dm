@@ -174,9 +174,9 @@
 			C.images -= user_image
 
 /mob/camera/aiEye/remote/Destroy()
-	eye_user = null
 	origin = null
-	return ..()
+	. = ..()
+	eye_user = null
 
 /mob/camera/aiEye/remote/GetViewerClient()
 	if(eye_user)
