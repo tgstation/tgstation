@@ -45,10 +45,10 @@
 		default_rotation_direction = ROTATION_CLOCKWISE
 
 	if(src.rotation_flags & ROTATION_ALTCLICK)
-		RegisterSignal(COMSIG_CLICK_ALT, .proc/HandRot)
-		RegisterSignal(COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
+		RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/HandRot)
+		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
 	if(src.rotation_flags & ROTATION_WRENCH)
-		RegisterSignal(COMSIG_PARENT_ATTACKBY, .proc/WrenchRot)
+		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/WrenchRot)
 
 	if(src.rotation_flags & ROTATION_VERBS)
 		var/atom/movable/AM = parent
