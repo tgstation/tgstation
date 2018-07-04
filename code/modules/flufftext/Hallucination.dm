@@ -873,7 +873,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		message = pick("ratvar","shuttle dock","blob alert","malf ai","meteors","supermatter")
 	feedback_details += "Type: [message]"
 	switch(message)
-		if("blob_alert")
+		if("blob alert")
 			to_chat(target, "<h1 class='alert'>Biohazard Alert</h1>")
 			to_chat(target, "<br><br><span class='alert'>Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.</span><br><br>")
 			SEND_SOUND(target, 'sound/ai/outbreak5.ogg')
@@ -882,11 +882,11 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			target.playsound_local(target, 'sound/effects/clockcult_gateway_disrupted.ogg', 50, FALSE, pressure_affected = FALSE)
 			sleep(27)
 			target.playsound_local(target, 'sound/effects/explosion_distant.ogg', 50, FALSE, pressure_affected = FALSE)
-		if("shuttle_dock")
+		if("shuttle dock")
 			to_chat(target, "<h1 class='alert'>Priority Announcement</h1>")
 			to_chat(target, "<br><br><span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span><br><br>")
 			SEND_SOUND(target, 'sound/ai/shuttledock.ogg')
-		if("malf_ai") //AI is doomsdaying!
+		if("malf ai") //AI is doomsdaying!
 			to_chat(target, "<h1 class='alert'>Anomaly Alert</h1>")
 			to_chat(target, "<br><br><span class='alert'>Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.</span><br><br>")
 			SEND_SOUND(target, 'sound/ai/aimalf.ogg')
