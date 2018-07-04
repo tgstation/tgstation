@@ -160,8 +160,8 @@ window "infowindow"
 		is-pane = true
 	elem "button2"
 		type = BUTTON
-		pos = 519,5
-		size = 68x20
+		pos = 545,5
+		size = 75x20
 		anchor1 = 81,0
 		anchor2 = 97,0
 		background-color = #ffff80
@@ -170,8 +170,8 @@ window "infowindow"
 		command = "donate"
 	elem "button1"
 		type = BUTTON
-		pos = 451,5
-		size = 68x20
+		pos = 470,5
+		size = 75x20
 		anchor1 = 81,0
 		anchor2 = 97,0
 		background-color = #8080ff
@@ -191,8 +191,8 @@ window "infowindow"
 		is-vert = false
 	elem "changelog"
 		type = BUTTON
-		pos = 40,5
-		size = 68x20
+		pos = 20,5
+		size = 75x20
 		anchor1 = 3,0
 		anchor2 = 19,0
 		background-color = none
@@ -201,8 +201,8 @@ window "infowindow"
 		command = "changelog"
 	elem "rules"
 		type = BUTTON
-		pos = 108,5
-		size = 68x20
+		pos = 95,5
+		size = 75x20
 		anchor1 = 19,0
 		anchor2 = 34,0
 		background-color = none
@@ -211,8 +211,8 @@ window "infowindow"
 		command = "rules"
 	elem "wiki"
 		type = BUTTON
-		pos = 177,5
-		size = 68x20
+		pos = 170,5
+		size = 75x20
 		anchor1 = 34,0
 		anchor2 = 50,0
 		background-color = none
@@ -222,7 +222,7 @@ window "infowindow"
 	elem "forum"
 		type = BUTTON
 		pos = 245,5
-		size = 68x20
+		size = 75x20
 		anchor1 = 50,0
 		anchor2 = 66,0
 		background-color = none
@@ -231,8 +231,8 @@ window "infowindow"
 		command = "forum"
 	elem "github"
 		type = BUTTON
-		pos = 313,5
-		size = 68x20
+		pos = 320,5
+		size = 75x20
 		anchor1 = 66,0
 		anchor2 = 81,0
 		background-color = none
@@ -241,8 +241,8 @@ window "infowindow"
 		command = "github"
 	elem "report-issue"
 		type = BUTTON
-		pos = 382,5
-		size = 68x20
+		pos = 395,5
+		size = 75x20
 		anchor1 = 81,0
 		anchor2 = 97,0
 		background-color = none
