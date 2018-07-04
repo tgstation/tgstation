@@ -144,7 +144,7 @@
 
 /obj/item/clothing/suit/toggle/owlwings/Initialize()
 	. = ..()
-	allowed = GLOB.security_vest_allowed
+	allowed = GLOB.security_vest_allowed //intended -Kor
 
 /obj/item/clothing/suit/toggle/owlwings/griffinwings
 	name = "griffon cloak"
