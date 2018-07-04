@@ -29,6 +29,7 @@
 		RegisterSignal(COMSIG_MOB_DEATH, .proc/on_death)
 		RegisterSignal(COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_shock)
 		RegisterSignal(COMSIG_LIVING_MINOR_SHOCK, .proc/on_minor_shock)
+		RegisterSignal(COMSIG_MOVABLE_HEAR, .proc/on_hear)
 		RegisterSignal(COMSIG_NANITE_SIGNAL, .proc/receive_signal)
 		if(cloud_id)
 			cloud_sync()
@@ -148,6 +149,11 @@
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_death(gibbed)
+		
+/datum/component/nanites/proc/on_hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	for(var/X in programs)
+		var/datum/nanite_program/NP = X
+		NP.on_hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
 
 /datum/component/nanites/proc/receive_signal(code, source = "an unidentified source")
 	if(!host_mob) //dormant

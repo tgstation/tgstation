@@ -535,3 +535,57 @@
 	else
 		spent = FALSE
 		return FALSE
+		
+/datum/nanite_program/sensor/voice
+	name = "Voice Sensor"
+	desc = "Sends a signal when the nanites hear a determined word or sentence."
+	extra_settings = list("Sent Code","Sentence","Inclusive Mode")
+	var/spent = FALSE
+	var/sentence = ""
+	var/inclusive = TRUE
+
+/datum/nanite_program/sensor/voice/set_extra_setting(user, setting)
+	if(setting == "Sent Code")
+		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
+		if(isnull(new_code))
+			return
+		sent_code = CLAMP(round(new_code, 1), 1, 9999)
+	if(setting == "Sentence")
+		var/new_sentence = stripped_input(user, "Choose the sentence that triggers the sensor.", "Sentence", sentence, MAX_MESSAGE_LEN)
+		if(!new_sentence)
+			return
+		sentence = new_sentence
+	if(setting == "Inclusive Mode")
+		var/new_inclusive = input("Should the sensor detect the sentence if contained within another sentence?", name) as null|anything in list("Inclusive","Exclusive")
+		if(!new_inclusive)
+			return
+		inclusive = (new_inclusive == "Inclusive")
+
+/datum/nanite_program/sensor/voice/get_extra_setting(setting)
+	if(setting == "Sent Code")
+		return sent_code
+	if(setting == "Sentence")
+		return sentence
+	if(setting == "Inclusive Mode")
+		if(inclusive)
+			return "Inclusive"
+		else
+			return "Exclusive"
+
+/datum/nanite_program/sensor/voice/copy_extra_settings_to(datum/nanite_program/sensor/voice/target)
+	target.sent_code = sent_code
+	target.sentence = sentence
+	target.inclusive = inclusive
+
+/datum/nanite_program/sensor/voice/on_hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	if(!sentence)
+		return
+	//To make it not case sensitive
+	var/low_message = lowertext(raw_message)
+	var/low_sentence = lowertext(sentence)
+	if(inclusive)
+		if(findtext(low_message, low_sentence))
+			send_code()
+	else
+		if(low_message == low_sentence)
+			send_code()

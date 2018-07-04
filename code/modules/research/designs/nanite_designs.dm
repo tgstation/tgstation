@@ -50,6 +50,20 @@
 	id = "relay_nanites"
 	program_type = /datum/nanite_program/relay
 	category = list("Utility Nanites")
+	
+/datum/design/nanites/repeater
+	name = "Signal Repeater"
+	desc = "When triggered, sends another signal to the nanites, optionally with a delay."
+	id = "repeater_nanites"
+	program_type = /datum/nanite_program/sensor/repeat
+	category = list("Utility Nanites")
+	
+/datum/design/nanites/relay_repeater
+	name = "Relay Signal Repeater"
+	desc = "When triggered, sends another signal to a relay channel, optionally with a delay."
+	id = "relay_repeater_nanites"
+	program_type = /datum/nanite_program/sensor/relay_repeat
+	category = list("Utility Nanites")
 
 /datum/design/nanites/emp
 	name = "Electromagnetic Resonance"
@@ -472,6 +486,13 @@
 	desc = "The nanites receive a signal when they detect the host is dead."
 	id = "sensor_death_nanites"
 	program_type = /datum/nanite_program/sensor/death
+	category = list("Sensor Nanites")
+	
+/datum/design/nanites/sensor_voice
+	name = "Voice Sensor"
+	desc = "Sends a signal when the nanites hear a determined word or sentence."
+	id = "sensor_voice_nanites"
+	program_type = /datum/nanite_program/sensor/voice
 	category = list("Sensor Nanites")
 
 /datum/design/nanites/sensor_high_nanites

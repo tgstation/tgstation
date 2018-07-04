@@ -840,16 +840,16 @@
 	prereq_ids = list("datatheory","robotics")
 	design_ids = list("nanite_disk","nanite_remote","nanite_scanner",\
 						"nanite_chamber","public_nanite_chamber","nanite_chamber_control","nanite_programmer","nanite_program_hub","nanite_cloud_control",\
-						"relay_nanites", "monitoring_nanites", "access_nanites", "repairing_nanites","sensor_high_nanites","sensor_low_nanites")
+						"relay_nanites", "monitoring_nanites", "access_nanites", "repairing_nanites","sensor_high_nanites","sensor_low_nanites", "repeater_nanites", "relay_repeater_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
 /datum/techweb_node/nanite_smart
 	id = "nanite_smart"
 	display_name = "Smart Nanite Programming"
-	description = "Nanite programs that require nanites to act independently, roam or seek targets."
+	description = "Nanite programs that require nanites to perform complex actions, act independently, roam or seek targets."
 	prereq_ids = list("nanite_base","adv_robotics")
-	design_ids = list("purging_nanites", "metabolic_nanites", "stealth_nanites", "memleak_nanites")
+	design_ids = list("purging_nanites", "metabolic_nanites", "stealth_nanites", "memleak_nanites","sensor_voice_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 4000
 
@@ -901,9 +901,9 @@
 	export_price = 8000
 
 /datum/techweb_node/nanite_combat
-	id = "nanite_combat"
-	display_name = "Weaponized Nanite Programming"
-	description = "Nanite programs that harness the full destructive power of nanites."
+	id = "nanite_military"
+	display_name = "Military Nanite Programming"
+	description = "Nanite programs that perform military-grade functions."
 	prereq_ids = list("nanite_harmonic", "syndicate_basic")
 	design_ids = list("explosive_nanites","pyro_nanites","meltdown_nanites","viral_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
@@ -916,7 +916,7 @@
 	prereq_ids = list("nanite_harmonic", "alientech")
 	design_ids = list("spreading_nanites","mindcontrol_nanites","mitosis_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
-	export_price = 10000
+	export_price = 15000
 
 ////////////////////////Alien technology////////////////////////
 /datum/techweb_node/alientech //AYYYYYYYYLMAOO tech
