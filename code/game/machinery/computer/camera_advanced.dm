@@ -54,6 +54,9 @@
 		var/datum/action/A = V
 		A.Remove(user)
 	actions.Cut()
+	for(var/V in eyeobj.visibleCameraChunks)
+		var/datum/camerachunk/C = V
+		C.remove(eyeobj)
 	if(user.client)
 		user.reset_perspective(null)
 		eyeobj.RemoveImages()
