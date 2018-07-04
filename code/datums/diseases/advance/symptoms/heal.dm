@@ -263,7 +263,7 @@
 	M.update_canmove()
 
 /datum/symptom/heal/coma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
-	var/heal_amt = 4 * actual_power
+	var/heal_amt = 3 * actual_power
 
 	var/list/parts = M.get_damaged_bodyparts(1,1)
 
