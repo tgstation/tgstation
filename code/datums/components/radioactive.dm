@@ -19,10 +19,10 @@
 	can_contaminate = _can_contaminate
 
 	if(istype(parent, /atom)) 
-		RegisterSignal(COMSIG_PARENT_EXAMINE, .proc/rad_examine)
+		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/rad_examine)
 		if(istype(parent, /obj/item))
-			RegisterSignal(COMSIG_ITEM_ATTACK, .proc/rad_attack)
-			RegisterSignal(COMSIG_ITEM_ATTACK_OBJ, .proc/rad_attack)
+			RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/rad_attack)
+			RegisterSignal(parent, COMSIG_ITEM_ATTACK_OBJ, .proc/rad_attack)
 	else
 		CRASH("Something that wasn't an atom was given /datum/component/radioactive")
 		return

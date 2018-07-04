@@ -12,11 +12,11 @@
 	cleanable = _cleanable
 
 	if(_dir) // If no dir is assigned at start then it follows the atom's dir
-		RegisterSignal(COMSIG_ATOM_DIR_CHANGE, .proc/rotate_react)
+		RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/rotate_react)
 	if(_cleanable)
-		RegisterSignal(COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react)
+		RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react)
 	if(_description)
-		RegisterSignal(COMSIG_PARENT_EXAMINE, .proc/examine)
+		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
 	apply()
 
 /datum/component/decal/Destroy()
