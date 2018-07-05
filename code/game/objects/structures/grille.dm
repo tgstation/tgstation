@@ -79,7 +79,7 @@
 		new /obj/structure/grille/ratvar(src.loc)
 	qdel(src)
 
-/obj/structure/grille/CollidedWith(atom/movable/AM)
+/obj/structure/grille/Bumped(atom/movable/AM)
 	if(!ismob(AM))
 		return
 	var/mob/M = AM

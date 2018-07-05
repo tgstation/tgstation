@@ -75,7 +75,7 @@
 /obj/item/electronic_assembly/proc/check_interactivity(mob/user)
 	return user.canUseTopic(src, BE_CLOSE)
 
-/obj/item/electronic_assembly/Collide(atom/AM)
+/obj/item/electronic_assembly/Bump(atom/AM)
 	collw = AM
 	.=..()
 	if((istype(collw, /obj/machinery/door/airlock) ||  istype(collw, /obj/machinery/door/window)) && (!isnull(access_card)))
