@@ -462,13 +462,6 @@
 /obj/structure/window/plasma/reinforced/unanchored
 	anchored = FALSE
 
-/obj/structure/window/plasma/reinforced/unanchored/CanAtmosPass(turf/T)
-	if(!anchored || !density)
-		warning("canAtmosPass: anchored is [anchored], density is [density], returning TRUE")
-		return TRUE
-	warning("canAtmosPass: FULLTILE_WINDOW_DIR is [FULLTILE_WINDOW_DIR], dir is [dir], first term is [(FULLTILE_WINDOW_DIR == dir)], get_dir is [get_dir(loc, T)], second term is [(dir == get_dir(loc, T))]")
-	return !(FULLTILE_WINDOW_DIR == dir || dir == get_dir(loc, T))
-
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
 	icon_state = "twindow"
