@@ -1,44 +1,26 @@
 /datum/component/anti_magic
-	var/active = TRUE
 	var/magic = FALSE
 	var/holy = FALSE
 
 /datum/component/anti_magic/Initialize(_magic = FALSE, _holy = FALSE)
+	if(isitem(parent))
+		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
+	else if(ismob(parent))
+		RegisterSignal(parent, COMSIG_MOB_RECEIVE_MAGIC, .proc/can_protect)
+	else
+		return COMPONENT_INCOMPATIBLE
+
 	magic = _magic
 	holy = _holy
 
-/datum/component/anti_magic/proc/can_protect(_magic = TRUE, _holy = FALSE)
-	if(!active)
-		return FALSE
+/datum/component/anti_magic/proc/on_equip(mob/equipper, slot)
+	RegisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC, .proc/can_protect, TRUE)
+
+/datum/component/anti_magic/proc/on_drop(mob/user)
+	UnregisterSignal(user, COMSIG_MOB_RECEIVE_MAGIC)
+
+/datum/component/anti_magic/proc/can_protect(_magic, _holy, list/protection_sources)
 	if((_magic && magic) || (_holy && holy))
-		return TRUE
-	return FALSE
-
-/mob/proc/anti_magic_check(magic = TRUE, holy = FALSE)
-	if(!magic && !holy)
-		return
-	var/list/obj/item/item_list = list()
-	item_list |= held_items
-	for(var/obj/O in item_list)
-		GET_COMPONENT_FROM(anti_magic, /datum/component/anti_magic, O)
-		if(!anti_magic)
-			continue
-		if(anti_magic.can_protect(magic, holy))
-			return O
-
-/mob/living/anti_magic_check(magic = TRUE, holy = FALSE)
-	if(!magic && !holy)
-		return
-
-	if((magic && has_trait(TRAIT_ANTIMAGIC)) || (holy && has_trait(TRAIT_HOLY)))
-		return src
-
-	var/list/obj/item/item_list = list()
-	item_list |= get_equipped_items(TRUE)
-	item_list |= held_items
-	for(var/obj/O in item_list)
-		GET_COMPONENT_FROM(anti_magic, /datum/component/anti_magic, O)
-		if(!anti_magic)
-			continue
-		if(anti_magic.can_protect(magic, holy))
-			return O
+		protection_sources += parent
+		return COMPONENT_BLOCK_MAGIC
