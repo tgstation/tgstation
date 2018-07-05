@@ -25,12 +25,12 @@
 
 		host_mob.hud_set_nanite_indicator()
 		START_PROCESSING(SSprocessing, src)
-		RegisterSignal(COMSIG_ATOM_EMP_ACT, .proc/on_emp)
-		RegisterSignal(COMSIG_MOB_DEATH, .proc/on_death)
-		RegisterSignal(COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_shock)
-		RegisterSignal(COMSIG_LIVING_MINOR_SHOCK, .proc/on_minor_shock)
-		RegisterSignal(COMSIG_MOVABLE_HEAR, .proc/on_hear)
-		RegisterSignal(COMSIG_NANITE_SIGNAL, .proc/receive_signal)
+		RegisterSignal(host_mob, COMSIG_ATOM_EMP_ACT, .proc/on_emp)
+		RegisterSignal(host_mob, COMSIG_MOB_DEATH, .proc/on_death)
+		RegisterSignal(host_mob, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_shock)
+		RegisterSignal(host_mob, COMSIG_LIVING_MINOR_SHOCK, .proc/on_minor_shock)
+		RegisterSignal(host_mob, COMSIG_MOVABLE_HEAR, .proc/on_hear)
+		RegisterSignal(host_mob, COMSIG_NANITE_SIGNAL, .proc/receive_signal)
 		if(cloud_id)
 			cloud_sync()
 
