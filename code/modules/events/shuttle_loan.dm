@@ -97,7 +97,6 @@
 
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate/melee)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate/melee)
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate/ranged)
 				if(prob(75))
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate/ranged)
 				if(prob(50))
