@@ -175,6 +175,11 @@
 	if(has_trait(TRAIT_XENO_HOST))
 		holder.icon_state = "hudxeno"
 	else if(stat == DEAD || (has_trait(TRAIT_FAKEDEATH)))
+		if(tod)
+			var/tdelta = round(world.time - timeofdeath)
+			if(tdelta < (DEFIB_TIME_LIMIT * 10))
+				holder.icon_state = "huddefib"
+				return
 		holder.icon_state = "huddead"
 	else
 		switch(virus_threat)
