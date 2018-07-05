@@ -992,7 +992,7 @@
 	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/materials/foamtank
-	name = "Foam Tank Crate"
+	name = "Firefighting Foam Tank Crate"
 	desc = "Contains a tank of firefighting foam. Also known as \"plasmaman's bane\"."
 	cost = 1500
 	contains = list(/obj/structure/reagent_dispensers/foamtank)
