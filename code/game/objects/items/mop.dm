@@ -37,9 +37,9 @@
 				qdel(O)
 	if(cleaned && user && user.mind && user.mind.assigned_role == "Janitor")
 		stored_points += CLEAN_TILE_REWARD
-		to_chat(user, "<span class='notice'>Your [src] flashes a message that it has gained useful information from eradicating the mess on the floor. Good work.</span>")
 	reagents.reaction(A, TOUCH, 10)	//Needed for proper floor wetting.
 	reagents.remove_any(1)			//reaction() doesn't use up the reagents
+	return cleaned
 
 /obj/item/mop/pre_attack(atom/target, mob/user, params)
 	if(istype(target, /obj/machinery/computer/rdconsole))
@@ -69,8 +69,8 @@
 		user.visible_message("[user] begins to clean \the [T] with [src].", "<span class='notice'>You begin to clean \the [T] with [src]...</span>")
 
 		if(do_after(user, src.mopspeed, target = T))
-			to_chat(user, "<span class='notice'>You finish mopping.</span>")
-			clean(T, user)
+			var/got_points = clean(T, user)
+			to_chat(user, "<span class='notice'>You finish mopping.[got_points?" [src] flashes that it has gathered and stored useful research data from your efforts.":""]</span>")
 
 
 /obj/effect/attackby(obj/item/I, mob/user, params)
