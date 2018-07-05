@@ -110,6 +110,7 @@
 				return  "<span class='warning'>It's falling apart!</span>"
 
 /obj/structure/proc/setAnchored(anchorvalue)
+	SEND_SIGNAL(src, COMSIG_STRUCTURE_SETANCHORED, anchorvalue)
 	anchored = anchorvalue
 
 /obj/structure/vv_edit_var(var_name, var_value)
