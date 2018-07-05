@@ -23,4 +23,4 @@
 
 /datum/component/wearertargeting/Destroy()
 	QDEL_NULL(callback) //is likely to ourselves.
-	. = ..()
+	return ..()
