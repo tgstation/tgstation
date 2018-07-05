@@ -49,6 +49,7 @@ Difficulty: Very Hard
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
 	deathmessage = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
+	var/using_voice = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/L)
 	visible_message("<span class='colossus'>[src] disintegrates [L]!</span>")
@@ -108,6 +109,15 @@ Difficulty: Very Hard
 	. = ..()
 	target = new_target
 	INVOKE_ASYNC(src, /atom/movable/proc/orbit, target, 0, FALSE, 0, 0, FALSE, TRUE)
+
+/mob/living/simple_animal/hostile/megafauna/colossus/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
+	if(!using_voice) //to prevent infinite loops when voice of god calls say()
+		using_voice = TRUE
+		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 50, 1, 5)
+		voice_of_god(message, src, list("colossus","yell"), 1, FALSE, FALSE, language)
+	else
+		using_voice = FALSE
+		return ..()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/bullet_act(obj/item/projectile/P)
 	if(!stat)

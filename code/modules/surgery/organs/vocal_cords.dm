@@ -119,11 +119,18 @@
 ///////////VOICE OF GOD///////////////
 //////////////////////////////////////
 
-/proc/voice_of_god(message, mob/living/user, list/span_list, base_multiplier = 1, include_speaker = FALSE, message_admins = TRUE)
+/proc/voice_of_god(message, mob/living/user, list/span_list, base_multiplier = 1, include_speaker = FALSE, message_admins = TRUE, datum/language/_language = null)
 	var/cooldown = 0
+	message = uppertext(message)
 
-	if(!user || !user.can_speak() || user.stat)
+	if(!user || user.stat)
 		return 0 //no cooldown
+
+	if(!_language)
+		_language = user.get_default_language()
+
+	if(!user.say(message, spans = span_list, sanitize = FALSE, language = _language))
+		return 0
 
 	var/log_message = uppertext(message)
 	if(!span_list || !span_list.len)
@@ -133,8 +140,6 @@
 			span_list = list("ratvar")
 		else
 			span_list = list()
-
-	user.say(message, spans = span_list, sanitize = FALSE)
 
 	message = lowertext(message)
 	var/mob/living/list/listeners = list()
