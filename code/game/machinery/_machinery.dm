@@ -222,6 +222,8 @@ Class Procs:
 		return FALSE
 	else if(silicon && !(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON))
 		return FALSE
+	if(!silicon && !Adjacent(user))
+		return FALSE
 	return TRUE
 
 ////////////////////////////////////////////////////////////////////////////////////////////
