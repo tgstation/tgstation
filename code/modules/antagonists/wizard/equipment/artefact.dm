@@ -291,7 +291,6 @@
 				spawn(100)
 					user.reset_perspective(null)
 					user.unset_machine()
-				GiveHint(target,user)
 			if(BODY_ZONE_R_LEG,BODY_ZONE_L_LEG)
 				to_chat(user, "<span class='notice'>You move the doll's legs around.</span>")
 				var/turf/T = get_step(target,pick(GLOB.cardinals))
