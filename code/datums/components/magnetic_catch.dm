@@ -2,10 +2,10 @@
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	if(ismovableatom(parent))
-		RegisterSignal(COMSIG_MOVABLE_UNCROSS, .proc/uncross_react)
+		RegisterSignal(parent, COMSIG_MOVABLE_UNCROSS, .proc/uncross_react)
 	else
-		RegisterSignal(COMSIG_ATOM_EXIT, .proc/exit_react)
-	RegisterSignal(COMSIG_PARENT_EXAMINE, .proc/examine)
+		RegisterSignal(parent, COMSIG_ATOM_EXIT, .proc/exit_react)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
 
 /datum/component/magnetic_catch/proc/uncross_react(atom/movable/thing)
 	if(!thing.throwing || thing.throwing.thrower)

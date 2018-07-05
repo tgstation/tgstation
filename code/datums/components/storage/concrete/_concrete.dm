@@ -14,8 +14,8 @@
 
 /datum/component/storage/concrete/Initialize()
 	. = ..()
-	RegisterSignal(COMSIG_ATOM_CONTENTS_DEL, .proc/on_contents_del)
-	RegisterSignal(COMSIG_OBJ_DECONSTRUCT, .proc/on_deconstruct)
+	RegisterSignal(parent, COMSIG_ATOM_CONTENTS_DEL, .proc/on_contents_del)
+	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, .proc/on_deconstruct)
 
 /datum/component/storage/concrete/Destroy()
 	var/atom/real_location = real_location()
