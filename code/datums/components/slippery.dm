@@ -7,7 +7,7 @@
 	intensity = max(_intensity, 0)
 	lube_flags = _lube_flags
 	callback = _callback
-	RegisterSignal(list(COMSIG_MOVABLE_CROSSED, COMSIG_ATOM_ENTERED), .proc/Slip)
+	RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED, COMSIG_ATOM_ENTERED), .proc/Slip)
 
 /datum/component/slippery/proc/Slip(atom/movable/AM)
 	var/mob/victim = AM

@@ -871,6 +871,13 @@
 
 	apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), EFFECT_IRRADIATE, blocked)
 
+/mob/living/anti_magic_check(magic = TRUE, holy = FALSE)
+	. = ..()
+	if(.)
+		return
+	if((magic && has_trait(TRAIT_ANTIMAGIC)) || (holy && has_trait(TRAIT_HOLY)))
+		return src
+
 /mob/living/proc/fakefireextinguish()
 	return
 
