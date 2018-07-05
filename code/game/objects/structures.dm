@@ -108,3 +108,13 @@
 		if(0 to 25)
 			if(!broken)
 				return  "<span class='warning'>It's falling apart!</span>"
+
+/obj/structure/proc/setAnchored(anchorvalue)
+	anchored = anchorvalue
+
+/obj/structure/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if("anchored")
+			setAnchored(var_value)
+			return TRUE
+	return ..()
