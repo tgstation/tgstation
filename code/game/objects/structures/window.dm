@@ -187,7 +187,7 @@
 				return TRUE
 
 			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-			if(I.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/is_max_integrity, obj_integrity)))
+			if(I.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/not_max_integrity, obj_integrity)))
 				obj_integrity = max_integrity
 				update_nearby_icons()
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
@@ -263,8 +263,8 @@
 	else
 		return FALSE
 
-/obj/structure/window/proc/is_max_integrity(obj_integrity)
-	if(obj_integrity == max_integrity)
+/obj/structure/window/proc/not_max_integrity(obj_integrity)
+	if(obj_integrity != max_integrity)
 		return TRUE
 
 /obj/structure/window/proc/check_state(checked_state)
