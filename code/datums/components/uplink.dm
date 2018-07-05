@@ -70,6 +70,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 /datum/component/uplink/Destroy()
 	GLOB.uplinks -= src
 	gamemode = null
+	purchase_log = null
 	return ..()
 
 /datum/component/uplink/proc/LoadTC(mob/user, obj/item/stack/telecrystal/TC, silent = FALSE)
