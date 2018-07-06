@@ -1,0 +1,4 @@
+author: "MacHac"
+delete-after: True
+changes: 
+  - bugfix: "Bedsheets once again properly influence the dreams of those who sleep under them."
