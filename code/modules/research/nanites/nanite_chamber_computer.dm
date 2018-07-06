@@ -101,8 +101,8 @@
 	data["locked"] = chamber.locked
 	data["occupant_name"] = chamber.occupant.name
 
-	GET_COMPONENT_FROM(nanites, /datum/component/nanites, chamber.occupant)
-	if(nanites)
+	var/datum/component/nanites/nanites = SEND_SIGNAL(chamber.occupant, COMSIG_GET_NANITES)
+	if(istype(nanites))
 		data["has_nanites"] = TRUE
 		data["nanite_volume"] = nanites.nanite_volume
 		data["regen_rate"] = nanites.regen_rate

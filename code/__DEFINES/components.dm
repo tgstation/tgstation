@@ -106,6 +106,7 @@
 
 // /mob signals
 #define COMSIG_MOB_DEATH "mob_death"							//from base of mob/death(): (gibbed)
+#define COMSIG_MOB_ALLOWED "mob_allowed"						//from base of obj/allowed(mob/M): (/obj) returns bool, if TRUE the mob has id access to the obj
 
 // /mob/living signals
 #define COMSIG_LIVING_RESIST "living_resist"					//from base of mob/living/resist() (/mob/living)
@@ -163,6 +164,10 @@
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY "human_melee_unarmed_attackby"		//from mob/living/carbon/human/UnarmedAttack(): (mob/living/carbon/human/attacker)
 #define COMSIG_HUMAN_DISARM_HIT	"human_disarm_hit"	//Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
 
+// /datum/species signals
+#define COMSIG_SPECIES_GAIN "species_gain"						//from datum/species/on_species_gain(): (datum/species/new_species, datum/species/old_species)
+#define COMSIG_SPECIES_LOSS "species_loss"						//from datum/species/on_species_loss(): (datum/species/lost_species)
+
 /*******Component Specific Signals*******/
 //Janitor
 #define COMSIG_TURF_IS_WET "check_turf_wet"							//(): Returns bitflags of wet values.
@@ -180,8 +185,14 @@
 #define COMSIG_COMPONENT_NTNET_RECEIVE "ntnet_receive"			//called on an object by its NTNET connection component on receive. (sending_id(number), sending_netname(text), data(datum/netdata))
 
 //Nanites
-#define COMSIG_NANITE_SIGNAL "nanite_signal"					//Called when sending a nanite signal to a mob. (code(1-9999))
-
+#define COMSIG_GET_NANITES	"get_nanites"						//() - returns nanite component.
+#define COMSIG_NANITE_SET_VARS "nanite_set_vars"				//(_nanite_volume, _max_nanites, _safety_threshold, _cloud_id, _regen_rate)
+#define COMSIG_NANITE_SIGNAL "nanite_signal"					//(code(1-9999)) Called when sending a nanite signal to a mob. 
+#define COMSIG_NANITE_ADD_PROGRAM "nanite_add_program"			//(datum/nanite_program/new_program, datum/nanite_program/source_program) Called when adding a program to a nanite component 
+	#define COMPONENT_PROGRAM_INSTALLED		1					//Installation successful
+	#define COMPONENT_PROGRAM_NOT_INSTALLED		2				//Installation failed, but there are still nanites
+#define COMSIG_NANITE_SYNC "nanite_sync"						//(datum/component/nanites, full_overwrite, copy_activation) Called to sync the target's nanites to a given nanite component 	
+	
 // /datum/component/storage signals
 #define COMSIG_CONTAINS_STORAGE "is_storage"						//() - returns bool.
 #define COMSIG_TRY_STORAGE_INSERT "storage_try_insert"				//(obj/item/inserting, mob/user, silent, force) - returns bool

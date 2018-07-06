@@ -51,10 +51,7 @@
 	set_busy(FALSE)
 	if(!occupant)
 		return
-	occupant.AddComponent(/datum/component/nanites, 75)
-	GET_COMPONENT_FROM(nanites, /datum/component/nanites, occupant)
-	if(nanites)
-		nanites.cloud_id = cloud_id
+	occupant.AddComponent(/datum/component/nanites, 75, cloud_id)
 
 /obj/machinery/public_nanite_chamber/update_icon()
 	cut_overlays()

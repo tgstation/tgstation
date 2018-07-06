@@ -13,29 +13,40 @@
 
 	var/stealth = FALSE //if TRUE, does not appear on HUDs and health scans, and does not display the program list on nanite scans
 
-/datum/component/nanites/Initialize(amount)
+/datum/component/nanites/Initialize(amount = 100, cloud = 0)
 	nanite_volume = amount
-
+	cloud_id = cloud
+	
+	RegisterSignal(parent, COMSIG_GET_NANITES, .proc/get_nanites)
+	RegisterSignal(parent, COMSIG_NANITE_SET_VARS, .proc/set_vars)
+	RegisterSignal(parent, COMSIG_NANITE_ADD_PROGRAM, .proc/add_program)
+	RegisterSignal(parent, COMSIG_NANITE_SYNC, .proc/sync)
+	
 	//Nanites without hosts are non-interactive through normal means
 	if(isliving(parent))
 		host_mob = parent
 
 		if(!(MOB_ORGANIC in host_mob.mob_biotypes) && !(MOB_UNDEAD in host_mob.mob_biotypes)) //Shouldn't happen, but this avoids HUD runtimes in case a silicon gets them somehow.
-			qdel(src)
+			return COMPONENT_INCOMPATIBLE
 
 		host_mob.hud_set_nanite_indicator()
-		START_PROCESSING(SSprocessing, src)
+		START_PROCESSING(SSnanites, src)
 		RegisterSignal(host_mob, COMSIG_ATOM_EMP_ACT, .proc/on_emp)
 		RegisterSignal(host_mob, COMSIG_MOB_DEATH, .proc/on_death)
+		RegisterSignal(host_mob, COMSIG_MOB_ALLOWED, .proc/check_access)
 		RegisterSignal(host_mob, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_shock)
 		RegisterSignal(host_mob, COMSIG_LIVING_MINOR_SHOCK, .proc/on_minor_shock)
 		RegisterSignal(host_mob, COMSIG_MOVABLE_HEAR, .proc/on_hear)
+		RegisterSignal(host_mob, COMSIG_SPECIES_GAIN, .proc/check_viable_biotype)
+		
 		RegisterSignal(host_mob, COMSIG_NANITE_SIGNAL, .proc/receive_signal)
 		if(cloud_id)
 			cloud_sync()
+	else if(!istype(parent, /datum/nanite_cloud_backup))
+		return COMPONENT_INCOMPATIBLE
 
 /datum/component/nanites/Destroy()
-	STOP_PROCESSING(SSprocessing, src)
+	STOP_PROCESSING(SSnanites, src)
 	for(var/X in programs)
 		qdel(X)
 	if(host_mob)
@@ -49,8 +60,6 @@
 	if(nanite_volume <= 0) //oops we ran out
 		qdel(src)
 	if(host_mob)
-		if(!(MOB_ORGANIC in host_mob.mob_biotypes) && !(MOB_UNDEAD in host_mob.mob_biotypes))
-			qdel(src) //bodytype no longer sustains nanites
 		adjust_nanites(regen_rate)
 		for(var/X in programs)
 			var/datum/nanite_program/NP = X
@@ -67,6 +76,7 @@
 	new_nanites.max_nanites = max_nanites
 	new_nanites.regen_rate = regen_rate
 	new_nanites.safety_threshold = safety_threshold
+	new_nanites.cloud_id = cloud_id
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		new_nanites.add_program(NP.copy())
@@ -106,15 +116,14 @@
 		if(NP.unique && NP.type == new_program.type)
 			qdel(NP)
 	if(programs.len >= max_programs)
-		return
+		return COMPONENT_PROGRAM_NOT_INSTALLED
 	if(source_program)
 		source_program.copy_programming(new_program)
 	programs += new_program
 	new_program.on_add(src)
+	return COMPONENT_PROGRAM_INSTALLED
 
 /datum/component/nanites/proc/consume_nanites(amount, force = FALSE)
-	if(!host_mob) //dormant
-		return FALSE
 	if(!force && safety_threshold && (nanite_volume - amount < safety_threshold))
 		return FALSE
 	adjust_nanites(-amount)
@@ -156,8 +165,33 @@
 		NP.on_hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
 
 /datum/component/nanites/proc/receive_signal(code, source = "an unidentified source")
-	if(!host_mob) //dormant
-		return
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.receive_signal(code, source)
+		
+/datum/component/nanites/proc/check_viable_biotype()		
+	if(!(MOB_ORGANIC in host_mob.mob_biotypes) && !(MOB_UNDEAD in host_mob.mob_biotypes))
+		qdel(src) //bodytype no longer sustains nanites
+		
+/datum/component/nanites/proc/check_access(obj/O)
+	for(var/datum/nanite_program/triggered/access/access_program in programs)
+		if(access_program.activated)
+			return O.check_access_list(access_program.access)
+		else
+			return FALSE
+	return FALSE
+		
+/datum/component/nanites/proc/set_vars(_nanite_volume, _max_nanites, _safety_threshold, _cloud_id, _regen_rate)
+	if(_max_nanites)
+		max_nanites = _max_nanites
+	if(_nanite_volume)
+		nanite_volume = CLAMP(_nanite_volume, 0, max_nanites)
+	if(_safety_threshold)
+		safety_threshold = _safety_threshold
+	if(_cloud_id)
+		cloud_id = _cloud_id
+	if(_regen_rate)
+		regen_rate = _regen_rate
+	
+/datum/component/nanites/proc/get_nanites()
+	return src

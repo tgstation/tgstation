@@ -68,10 +68,9 @@
 
 /datum/nanite_program/viral/active_effect()
 	for(var/mob/M in orange(host_mob, 5))
-		GET_COMPONENT_FROM(target_nanites, /datum/component/nanites, M)
-		if(target_nanites && prob(5))
+		if(prob(5))
 			if(sync_programs)
-				target_nanites.sync(nanites, sync_overwrite) //won't delete non-affected programs
+				SEND_SIGNAL(M, COMSIG_NANITE_SYNC, nanites, sync_overwrite)
 			if(overwrite_cloud)
 				target_nanites.cloud_id = set_cloud
 
@@ -204,10 +203,8 @@
 		if(prob(infectee.get_permeability_protection() * 100))
 			//this will potentially take over existing nanites!
 			infectee.AddComponent(/datum/component/nanites, 10)
-			GET_COMPONENT_FROM(target_nanites, /datum/component/nanites, infectee)
-			if(target_nanites)
-				infectee.investigate_log("[key_name(infectee)] was infected by spreading nanites by [key_name(host_mob)]", INVESTIGATE_NANITES)
-				target_nanites.sync(nanites)
+			SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
+			infectee.investigate_log("[key_name(infectee)] was infected by spreading nanites by [key_name(host_mob)]", INVESTIGATE_NANITES)
 				
 /datum/nanite_program/mitosis
 	name = "Mitosis"

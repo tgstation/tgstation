@@ -97,9 +97,8 @@
 	set_busy(FALSE)
 	if(!occupant)
 		return
-	GET_COMPONENT_FROM(nanites, /datum/component/nanites, occupant)
-	if(nanites)
-		nanites.add_program(NP.copy())
+	
+	SEND_SIGNAL(occupant, COMSIG_NANITE_ADD_PROGRAM, NP.copy())
 
 /obj/machinery/nanite_chamber/proc/uninstall_program(datum/nanite_program/NP)
 	if(stat & (NOPOWER|BROKEN))

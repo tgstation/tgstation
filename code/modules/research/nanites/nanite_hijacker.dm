@@ -39,12 +39,14 @@
 	if(!disk || !disk.program)
 		return
 	if(isliving(target))
-		GET_COMPONENT_FROM(nanites, /datum/component/nanites, target)
-		if(nanites)
-			to_chat(user, "<span class='notice'>You insert the currently loaded program into [target]'s nanites.</span>")
-			nanites.add_program(program.copy())
-		else
-			to_chat(user, "<span class='notice'>No nanites detected.</span>")
+		var/success = SEND_SIGNAL(target, COMSIG_NANITE_ADD_PROGRAM, program.copy())
+		switch(success)
+			if(NONE)
+				to_chat(user, "<span class='notice'>You don't detect any nanites in [target].</span>")
+			if(COMPONENT_PROGRAM_INSTALLED)
+				to_chat(user, "<span class='notice'>You insert the currently loaded program into [target]'s nanites.</span>")
+			if(COMPONENT_PROGRAM_NOT_INSTALLED)
+				to_chat(user, "<span class='warning'>You try to insert the currently loaded program into [target]'s nanites, but the installation fails.</span>")
 
 //Same UI as the nanite programmer, as it pretty much does the same
 /obj/item/nanite_hijacker/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)

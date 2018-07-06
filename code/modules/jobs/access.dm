@@ -11,7 +11,7 @@
 	if(IsAdminGhost(M))
 		//Access can't stop the abuse
 		return TRUE
-	else if(check_nanite_access(M))
+	else if(SEND_SIGNAL(M, COMSIG_MOB_ALLOWED, src))
 		return TRUE
 	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -60,19 +60,6 @@
 // Check if an item has access to this object
 /obj/proc/check_access(obj/item/I)
 	return check_access_list(I ? I.GetAccess() : null)
-
-/obj/proc/check_nanite_access(mob/living/L)
-	if(QDELETED(L))
-		return FALSE
-	GET_COMPONENT_FROM(nanites, /datum/component/nanites, L)
-	if(!nanites)
-		return FALSE
-	for(var/datum/nanite_program/triggered/access/access_program in nanites.programs)
-		if(access_program.activated)
-			return check_access_list(access_program.access)
-		else
-			return FALSE
-	return FALSE
 
 /obj/proc/check_access_list(list/access_list)
 	gen_access()
