@@ -50,9 +50,7 @@
 /mob/camera/aiEye/proc/RemoveImages()
 	var/client/C = GetViewerClient()
 	if(C && use_static)
-		for(var/V in visibleCameraChunks)
-			var/datum/camerachunk/c = V
-			C.images -= c.obscured
+		C.images -= GLOB.cameranet.obscured
 
 /mob/camera/aiEye/Destroy()
 	if(ai)
@@ -98,8 +96,11 @@
 
 // Return to the Core.
 /mob/living/silicon/ai/proc/view_core()
-
-	current = null
+	if(istype(current,/obj/machinery/holopad))
+		var/obj/machinery/holopad/H = current
+		H.clear_holo(src)
+	else
+		current = null
 	cameraFollow = null
 	unset_machine()
 

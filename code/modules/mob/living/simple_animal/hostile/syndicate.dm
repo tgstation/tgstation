@@ -118,6 +118,10 @@
 	projectilesound = 'sound/weapons/gunshot_smg.ogg'
 	loot = list(/obj/effect/gibspawner/human)
 
+/mob/living/simple_animal/hostile/syndicate/ranged/pilot
+	name = "Syndicate Salvage Pilot"	
+	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
+
 /mob/living/simple_animal/hostile/syndicate/ranged/space
 	icon_state = "syndicaterangedspace"
 	icon_living = "syndicaterangedspace"

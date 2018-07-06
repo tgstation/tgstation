@@ -1,19 +1,20 @@
 /obj/structure/fireaxecabinet
 	name = "fire axe cabinet"
 	desc = "There is a small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if."
-	var/obj/item/twohanded/fireaxe/fireaxe = new/obj/item/twohanded/fireaxe
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "fireaxe"
 	anchored = TRUE
 	density = FALSE
 	armor = list("melee" = 50, "bullet" = 20, "laser" = 0, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 50)
-	var/locked = TRUE
-	var/open = FALSE
 	max_integrity = 150
 	integrity_failure = 50
+	var/locked = TRUE
+	var/open = FALSE
+	var/obj/item/twohanded/fireaxe/fireaxe
 
 /obj/structure/fireaxecabinet/Initialize()
 	. = ..()
+	fireaxe = new
 	update_icon()
 
 /obj/structure/fireaxecabinet/Destroy()

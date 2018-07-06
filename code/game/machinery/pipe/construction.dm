@@ -196,7 +196,7 @@ Buildable meters
 	w_class = WEIGHT_CLASS_BULKY
 	var/piping_layer = PIPING_LAYER_DEFAULT
 
-obj/item/pipe_meter/wrench_act(mob/living/user, obj/item/wrench/W)
+/obj/item/pipe_meter/wrench_act(mob/living/user, obj/item/wrench/W)
 
 	var/obj/machinery/atmospherics/pipe/pipe
 	for(var/obj/machinery/atmospherics/pipe/P in loc)
@@ -211,7 +211,7 @@ obj/item/pipe_meter/wrench_act(mob/living/user, obj/item/wrench/W)
 	to_chat(user, "<span class='notice'>You fasten the meter to the pipe.</span>")
 	qdel(src)
 
-obj/item/pipe_meter/screwdriver_act(mob/living/user, obj/item/S)
+/obj/item/pipe_meter/screwdriver_act(mob/living/user, obj/item/S)
 	if(!isturf(loc))
 		to_chat(user, "<span class='warning'>You need to fasten it to the floor!</span>")
 		return TRUE

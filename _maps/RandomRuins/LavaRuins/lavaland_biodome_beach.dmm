@@ -10,6 +10,7 @@
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/stack/cable_coil,
+/obj/item/storage/box/lights/mixed,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "af" = (
@@ -18,6 +19,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/item/clothing/glasses/sunglasses/big,
+/obj/item/clothing/glasses/sunglasses/big,
+/obj/item/clothing/glasses/sunglasses/big,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "ag" = (
@@ -25,7 +29,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "ah" = (
-/obj/machinery/power/smes,
+/obj/effect/mob_spawn/human/bartender/alive,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "ai" = (
@@ -94,11 +98,15 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "av" = (
-/obj/machinery/door/airlock/hatch,
+/obj/machinery/door/airlock/sandstone{
+	name = "Lavatory"
+	},
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "aw" = (
-/obj/machinery/door/airlock/sandstone,
+/obj/machinery/door/airlock/sandstone{
+	name = "Bar Storage"
+	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "ax" = (
@@ -106,8 +114,10 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "ay" = (
-/obj/machinery/door/airlock/hatch,
 /obj/effect/turf_decal/sand,
+/obj/machinery/door/airlock/sandstone{
+	name = "Restroom"
+	},
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "az" = (
@@ -130,13 +140,10 @@
 /area/ruin/powered/beach)
 "aD" = (
 /obj/structure/table,
-/obj/item/storage/box/drinkingglasses,
-/obj/item/storage/box/drinkingglasses,
-/obj/item/reagent_containers/food/drinks/shaker,
-/obj/item/storage/box/beakers,
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/chem_dispenser/drinks,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "aE" = (
@@ -151,18 +158,15 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
-"aG" = (
-/obj/structure/table,
-/obj/item/book/manual/barman_recipes,
-/obj/item/reagent_containers/glass/rag,
-/turf/open/floor/wood,
-/area/ruin/powered/beach)
 "aH" = (
 /obj/structure/table,
-/obj/item/storage/box/donkpockets,
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/book/manual/barman_recipes,
+/obj/item/book/granter/action/drink_fling,
+/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/glass/rag,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "aI" = (
@@ -183,18 +187,12 @@
 "aK" = (
 /turf/open/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
-"aL" = (
-/obj/effect/mob_spawn/human/bartender/alive{
-	name = "beach bum sleeper"
-	},
-/turf/open/floor/wood,
-/area/ruin/powered/beach)
 "aM" = (
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "aN" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/vending/cigarette/beach,
 /turf/open/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
 "aO" = (
@@ -228,11 +226,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "aV" = (
-/obj/effect/mob_spawn/human/beach/alive{
-	flavour_text = "<span class='big bold'>You're, like, totally a dudebro, bruh.</span><b> Ch'yea. You came here, like, on spring break, hopin' to pick up some bangin' hot chicks, y'knaw?</b>";
-	l_pocket = /obj/item/reagent_containers/food/snacks/pizzaslice/dank;
-	uniform = /obj/item/clothing/under/pants/youngfolksjeans
-	},
+/obj/effect/mob_spawn/human/beach/alive,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "aW" = (
@@ -259,7 +253,9 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bc" = (
-/obj/machinery/door/airlock/sandstone,
+/obj/machinery/door/airlock/sandstone{
+	name = "Bar Access"
+	},
 /obj/effect/turf_decal/sand,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
@@ -279,21 +275,8 @@
 /obj/structure/sign/barsign,
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
-"bj" = (
-/obj/structure/chair/wood/normal{
-	dir = 4
-	},
-/turf/open/floor/plasteel/asteroid,
-/area/ruin/powered/beach)
-"bk" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/pastatomato,
-/turf/open/floor/plasteel/asteroid,
-/area/ruin/powered/beach)
 "bl" = (
-/obj/structure/chair/wood/normal{
-	dir = 8
-	},
+/obj/effect/turf_decal/caution,
 /turf/open/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
 "bx" = (
@@ -348,13 +331,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/effect/mob_spawn/human/beach/alive{
-	flavour_text = "<span class='big bold'>You're a spunky lifeguard!</span><b> It's up to you to make sure nobody drowns or gets eaten by sharks and stuff.</b>";
-	id = /obj/item/card/id;
-	id_access = "Medical Doctor";
-	id_job = "Lifeguard";
-	mob_gender = "female"
-	},
+/obj/effect/mob_spawn/human/beach/alive/lifeguard,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "bJ" = (
@@ -466,8 +443,23 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
 "dw" = (
-/obj/machinery/door/airlock/sandstone,
+/obj/machinery/door/airlock/sandstone{
+	name = "Beach Access"
+	},
 /turf/open/floor/pod/dark,
+/area/ruin/powered/beach)
+"gg" = (
+/obj/structure/table,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/storage/box/beakers,
+/obj/item/storage/box/donkpockets,
+/turf/open/floor/plating,
+/area/ruin/powered/beach)
+"hY" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer,
+/turf/open/floor/wood,
 /area/ruin/powered/beach)
 "iw" = (
 /obj/machinery/light/small{
@@ -496,8 +488,23 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
+"oK" = (
+/obj/effect/turf_decal/caution{
+	dir = 1
+	},
+/turf/open/floor/plasteel/asteroid,
+/area/ruin/powered/beach)
+"pg" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/shower{
+	dir = 4
+	},
+/turf/open/floor/pod/light,
+/area/ruin/powered/beach)
 "pI" = (
-/obj/machinery/door/airlock/hatch,
+/obj/machinery/door/airlock/hatch{
+	name = "Lava Beach Club"
+	},
 /obj/structure/fans/tiny,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
@@ -514,6 +521,22 @@
 	},
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
+"qT" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/turf/open/floor/pod/light,
+/area/ruin/powered/beach)
+"sy" = (
+/obj/effect/turf_decal/caution{
+	dir = 4
+	},
+/turf/open/floor/plasteel/asteroid,
+/area/ruin/powered/beach)
+"sO" = (
+/obj/machinery/jukebox/disco/indestructible,
+/turf/open/floor/light/colour_cycle,
+/area/ruin/powered/beach)
 "vl" = (
 /obj/structure/closet/athletic_mixed,
 /turf/open/floor/pod/dark,
@@ -521,15 +544,34 @@
 "wY" = (
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
+"yp" = (
+/obj/item/reagent_containers/spray/spraytan,
+/turf/open/floor/plasteel/asteroid,
+/area/ruin/powered/beach)
 "zw" = (
 /obj/structure/closet/athletic_mixed,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
+"Bl" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plating/beach/sand,
+/area/ruin/powered/beach)
 "Ec" = (
-/obj/machinery/door/airlock/sandstone,
+/obj/machinery/door/airlock/sandstone{
+	name = "Beach Access"
+	},
 /obj/effect/turf_decal/sand,
 /turf/open/floor/pod/dark,
+/area/ruin/powered/beach)
+"Ga" = (
+/obj/effect/turf_decal/caution{
+	dir = 8
+	},
+/turf/open/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
 "Gc" = (
 /obj/effect/turf_decal/sand,
@@ -541,6 +583,13 @@
 /obj/item/clothing/shoes/sandal,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/pod/dark,
+/area/ruin/powered/beach)
+"QS" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "TP" = (
 /obj/machinery/light{
@@ -610,7 +659,7 @@ bW
 vl
 iw
 wY
-Gc
+pg
 wY
 Xp
 cR
@@ -705,9 +754,9 @@ ar
 cg
 ar
 ar
+Bl
 aA
-aA
-aA
+Bl
 ar
 ar
 cg
@@ -854,7 +903,7 @@ aa
 aa
 bW
 ae
-as
+gg
 bW
 aB
 aK
@@ -863,7 +912,7 @@ aK
 aK
 aK
 aK
-aK
+yp
 aA
 ar
 ar
@@ -894,7 +943,7 @@ aj
 aB
 aK
 aK
-bj
+aK
 aK
 aA
 ar
@@ -925,8 +974,8 @@ aC
 aP
 aW
 aK
+Ga
 aK
-bk
 aK
 aA
 ar
@@ -956,8 +1005,8 @@ aD
 aC
 aQ
 aW
-aK
-aK
+oK
+sO
 bl
 aK
 aA
@@ -984,12 +1033,12 @@ bW
 ai
 at
 ax
-aE
-aL
+hY
+aC
 aP
 aW
 aK
-aK
+sy
 aK
 aK
 aA
@@ -1048,7 +1097,7 @@ bW
 ak
 au
 aj
-aG
+aE
 aC
 aj
 aj
@@ -1307,7 +1356,7 @@ ap
 ar
 ar
 aU
-ar
+bE
 ar
 ar
 bz
@@ -1371,15 +1420,15 @@ ap
 ar
 ar
 aq
-ar
+aV
 be
 ar
 ch
 ar
 ar
+QS
 aA
-aA
-aA
+QS
 ar
 ar
 cs
@@ -1474,7 +1523,7 @@ bW
 HC
 qa
 wY
-wY
+qT
 Gc
 pU
 cR

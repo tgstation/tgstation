@@ -9,7 +9,7 @@
 
 #define is_reebe(z) SSmapping.level_trait(z, ZTRAIT_REEBE)
 
-#define is_transit_level(z) SSmapping.level_trait(z, ZTRAIT_TRANSIT)
+#define is_reserved_level(z) SSmapping.level_trait(z, ZTRAIT_RESERVED)
 
 #define is_away_level(z) SSmapping.level_trait(z, ZTRAIT_AWAY)
 

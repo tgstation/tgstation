@@ -725,7 +725,11 @@
 	if(SM.sentience_type != animal_type)
 		to_chat(user, "<span class='warning'>You cannot transfer your consciousness to [SM].</span>" )
 		return ..()
-	if(jobban_isbanned(user, ROLE_ALIEN)) //ideally sentience and trasnference potions should be their own unique role.
+	var/jb = jobban_isbanned(user, ROLE_ALIEN)
+	if(QDELETED(src) || QDELETED(M) || QDELETED(user))
+		return
+
+	if(jb) //ideally sentience and trasnference potions should be their own unique role.
 		to_chat(user, "<span class='warning'>Your mind goes blank as you attempt to use the potion.</span>")
 		return
 
@@ -909,7 +913,7 @@
 
 /obj/item/slimepotion/slime/slimeradio
 	name = "bluespace radio potion"
-	desc = "A strange chemical that grants those who ingest it the ability to broadcast and recieve subscape radio waves."
+	desc = "A strange chemical that grants those who ingest it the ability to broadcast and receive subscape radio waves."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potgrey"
 

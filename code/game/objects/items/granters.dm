@@ -32,7 +32,7 @@
 
 /obj/item/book/granter/action
 	var/granted_action
-	var/actionname = "catching bugs" //might not seem needed but this makes it so you can safely name aciton buttons toggle this or that without it fucking up the granter, also caps
+	var/actionname = "catching bugs" //might not seem needed but this makes it so you can safely name action buttons toggle this or that without it fucking up the granter, also caps
 
 /obj/item/book/granter/action/attack_self(mob/user)
 	. = ..()
@@ -73,7 +73,7 @@
 
 /datum/action/innate/drink_fling
 	name = "Drink Flinging"
-	desc = "Toggles your ability to satifyingly throw glasses without spilling them."
+	desc = "Toggles your ability to satisfyingly throw glasses without spilling them."
 	button_icon_state = "drinkfling_off"
 	check_flags = 0
 
@@ -151,7 +151,7 @@
 	spellname = "sacred flame"
 	icon_state ="booksacredflame"
 	desc = "Become one with the flames that burn within... and invite others to do so as well."
-	remarks = list("Well, it's one way to stop an attacker...", "I'm gonna need some good gear to stop myself from burning to death...", "Keep a fire extingusher handy, got it...", "I think I just burned my hand...", "Apply flame directly to chest for proper ignition...", "No pain, no gain...", "One with the flame...")
+	remarks = list("Well, it's one way to stop an attacker...", "I'm gonna need some good gear to stop myself from burning to death...", "Keep a fire extinguisher handy, got it...", "I think I just burned my hand...", "Apply flame directly to chest for proper ignition...", "No pain, no gain...", "One with the flame...")
 
 /obj/item/book/granter/spell/smoke
 	spell = /obj/effect/proc_holder/spell/targeted/smoke
@@ -222,7 +222,7 @@
 	spellname = "forcewall"
 	icon_state ="bookforcewall"
 	desc = "This book has a dedication to mimes everywhere inside the front cover."
-	remarks = list("I can go through the wall! Neat.", "Why are there so many mime references...?", "This would cause much grief in a hallway...", "This is some suprisingly strong magic to create a wall nobody can pass through...", "Why the dumb stance? It's just a flick of the hand...", "Why are the pages so hard to turn, is this even paper?", "I can't mo Oh, i'm fine...")
+	remarks = list("I can go through the wall! Neat.", "Why are there so many mime references...?", "This would cause much grief in a hallway...", "This is some surprisingly strong magic to create a wall nobody can pass through...", "Why the dumb stance? It's just a flick of the hand...", "Why are the pages so hard to turn, is this even paper?", "I can't mo Oh, i'm fine...")
 
 /obj/item/book/granter/spell/forcewall/recoil(mob/living/user)
 	..()

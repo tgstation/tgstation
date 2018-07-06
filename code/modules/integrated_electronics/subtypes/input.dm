@@ -76,6 +76,25 @@
 		push_data()
 		activate_pin(1)
 
+/obj/item/integrated_circuit/input/colorpad
+	name = "color pad"
+	desc = "This small color pad allows someone to input a hexadecimal color into the system."
+	icon_state = "colorpad"
+	complexity = 2
+	can_be_asked_input = 1
+	inputs = list()
+	outputs = list("color entered" = IC_PINTYPE_STRING)
+	activators = list("on entered" = IC_PINTYPE_PULSE_IN)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	power_draw_per_use = 4
+
+/obj/item/integrated_circuit/input/colorpad/ask_for_input(mob/user)
+	var/new_color = input(user, "Enter a color, please.", "Color", "#ffffff") as color|null
+	if(new_color && user.IsAdvancedToolUser())
+		set_pin_data(IC_OUTPUT, 1, new_color)
+		push_data()
+		activate_pin(1)
+
 /obj/item/integrated_circuit/input/med_scanner
 	name = "integrated medical analyser"
 	desc = "A very small version of the common medical analyser. This allows the machine to know how healthy someone is."
@@ -744,7 +763,7 @@
 	data.standard_format_data(message, text, key)
 	ntnet_send(data)
 
-/obj/item/integrated_circuit/input/ntnet_recieve(datum/netdata/data)
+/obj/item/integrated_circuit/input/ntnet_receive(datum/netdata/data)
 	set_pin_data(IC_OUTPUT, 1, data.sender_id)
 	set_pin_data(IC_OUTPUT, 2, data.data["data"])
 	set_pin_data(IC_OUTPUT, 3, data.data["data_secondary"])
@@ -755,7 +774,7 @@
 	activate_pin(2)
 
 /obj/item/integrated_circuit/input/ntnet_advanced
-	name = "Low level NTNet transreciever"
+	name = "Low level NTNet transreceiver"
 	desc = "Enables the sending and receiving of messages over NTNet via packet data protocol. Allows advanced control of message contents and signalling. Must use associative lists. Outputs associative list. Has a slower transmission rate than normal NTNet circuits, due to increased data processing complexity."
 	extended_desc = "Data can be sent or received using the second pin on each side, \
 	with additonal data reserved for the third pin. When a message is received, the second activation pin \
@@ -768,7 +787,7 @@
 		"target NTNet addresses"= IC_PINTYPE_STRING,
 		"data"					= IC_PINTYPE_LIST,
 		)
-	outputs = list("recieved data" = IC_PINTYPE_LIST, "is_broadcast" = IC_PINTYPE_BOOLEAN)
+	outputs = list("received data" = IC_PINTYPE_LIST, "is_broadcast" = IC_PINTYPE_BOOLEAN)
 	activators = list("send data" = IC_PINTYPE_PULSE_IN, "on data received" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	action_flags = IC_ACTION_LONG_RANGE
@@ -792,7 +811,7 @@
 	data.data = message
 	ntnet_send(data)
 
-/obj/item/integrated_circuit/input/ntnet_advanced/ntnet_recieve(datum/netdata/data)
+/obj/item/integrated_circuit/input/ntnet_advanced/ntnet_receive(datum/netdata/data)
 	set_pin_data(IC_OUTPUT, 1, data.data)
 	set_pin_data(IC_OUTPUT, 2, data.broadcast)
 	push_data()
@@ -1104,3 +1123,104 @@
 	else
 		activate_pin(3)
 
+/obj/item/integrated_circuit/input/atmospheric_analyzer
+	name = "atmospheric analyzer"
+	desc = "A miniaturized analyzer which can scan anything that contains gases. Leave target as NULL to scan the air around the assembly."
+	extended_desc = "The nth element of gas amounts is the number of moles of the \
+					nth gas in gas list. \
+					Pressure is in kPa, temperature is in Kelvin. \
+					Due to programming limitations, scanning an object that does \
+					not contain a gas will return the air around it instead."
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	inputs = list(
+			"target" = IC_PINTYPE_REF
+			)
+	outputs = list(
+			"gas list" = IC_PINTYPE_LIST,
+			"gas amounts" = IC_PINTYPE_LIST,
+			"total moles" = IC_PINTYPE_NUMBER,
+			"pressure" = IC_PINTYPE_NUMBER,
+			"temperature" = IC_PINTYPE_NUMBER,
+			"volume" = IC_PINTYPE_NUMBER
+			)
+	activators = list(
+			"scan" = IC_PINTYPE_PULSE_IN,
+			"on success" = IC_PINTYPE_PULSE_OUT,
+			"on failure" = IC_PINTYPE_PULSE_OUT
+			)
+	power_draw_per_use = 5
+
+/obj/item/integrated_circuit/input/atmospheric_analyzer/do_work()
+	for(var/i=1 to 6)
+		set_pin_data(IC_OUTPUT, i, null)
+	var/atom/target = get_pin_data_as_type(IC_INPUT, 1, /atom)
+	var/atom/movable/acting_object = get_object()
+	if(!target)
+		target = acting_object.loc
+	if(!target.Adjacent(acting_object))
+		activate_pin(3)
+		return
+
+	var/datum/gas_mixture/air_contents = target.return_air()
+	if(!air_contents)
+		activate_pin(3)
+		return
+
+	var/list/gases = air_contents.gases
+	var/list/gas_names = list()
+	var/list/gas_amounts = list()
+	for(var/id in gases)
+		var/name = gases[id][GAS_META][META_GAS_NAME]
+		var/amt = round(gases[id][MOLES], 0.001)
+		gas_names.Add(name)
+		gas_amounts.Add(amt)
+
+	set_pin_data(IC_OUTPUT, 1, gas_names)
+	set_pin_data(IC_OUTPUT, 2, gas_amounts)
+	set_pin_data(IC_OUTPUT, 3, round(air_contents.total_moles(), 0.001))
+	set_pin_data(IC_OUTPUT, 4, round(air_contents.return_pressure(), 0.001))
+	set_pin_data(IC_OUTPUT, 5, round(air_contents.temperature, 0.001))
+	set_pin_data(IC_OUTPUT, 6, round(air_contents.return_volume(), 0.001))
+	push_data()
+	activate_pin(2)
+
+/obj/item/integrated_circuit/input/data_card_reader
+	name = "data card reader"
+	desc = "A circuit that can read from and write to data cards."
+	extended_desc = "Setting the \"write mode\" boolean to true will cause any data cards that are used on the assembly to replace\
+ their existing function and data strings with the given strings, if it is set to false then using a data card on the assembly will cause\
+ the function and data strings stored on the card to be written to the output pins."
+	icon_state = "card_reader"
+	complexity = 4
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	inputs = list(
+		"function" = IC_PINTYPE_STRING,
+		"data to store" = IC_PINTYPE_STRING,
+		"write mode" = IC_PINTYPE_BOOLEAN
+	)
+	outputs = list(
+		"function" = IC_PINTYPE_STRING,
+		"stored data" = IC_PINTYPE_STRING
+	)
+	activators = list(
+		"on write" = IC_PINTYPE_PULSE_OUT,
+		"on read" = IC_PINTYPE_PULSE_OUT
+	)
+
+/obj/item/integrated_circuit/input/data_card_reader/attackby_react(obj/item/I, mob/living/user, intent)
+	var/obj/item/card/data/card = I.GetCard()
+	var/write_mode = get_pin_data(IC_INPUT, 3)
+	if(card)
+		if(write_mode == TRUE)
+			card.function = get_pin_data(IC_INPUT, 1)
+			card.data = get_pin_data(IC_INPUT, 2)
+			push_data()
+			activate_pin(1)
+		else
+			set_pin_data(IC_OUTPUT, 1, card.function)
+			set_pin_data(IC_OUTPUT, 2, card.data)
+			push_data()
+			activate_pin(2)
+	else
+		return FALSE
+	return TRUE

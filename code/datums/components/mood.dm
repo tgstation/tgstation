@@ -14,9 +14,9 @@
 	START_PROCESSING(SSmood, src)
 	owner = parent
 	soundloop = new(list(owner), FALSE, TRUE)
-	RegisterSignal(COMSIG_ADD_MOOD_EVENT, .proc/add_event)
-	RegisterSignal(COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
-	RegisterSignal(COMSIG_ENTER_AREA, .proc/update_beauty)
+	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
+	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
+	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/update_beauty)
 
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
