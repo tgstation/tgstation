@@ -342,7 +342,7 @@
 #include "code\datums\components\signal_redirect.dm"
 #include "code\datums\components\slippery.dm"
 #include "code\datums\components\spooky.dm"
-#include "code\datums\components\squeek.dm"
+#include "code\datums\components\squeak.dm"
 #include "code\datums\components\stationloving.dm"
 #include "code\datums\components\swarming.dm"
 #include "code\datums\components\thermite.dm"
