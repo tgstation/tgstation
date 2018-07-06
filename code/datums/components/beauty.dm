@@ -5,8 +5,8 @@
 	if(!ismovableatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	beauty = beautyamount
-	RegisterSignal(COMSIG_ENTER_AREA, .proc/enter_area)
-	RegisterSignal(COMSIG_EXIT_AREA, .proc/exit_area)
+	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/enter_area)
+	RegisterSignal(parent, COMSIG_EXIT_AREA, .proc/exit_area)
 	var/area/A = get_area(parent)
 	if(!A || A.outdoors)
 		return
