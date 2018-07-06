@@ -1,4 +1,0 @@
-author: "Jegub"
-delete-after: True
-changes: 
-  - imageadd: "Glowcaps now have their own sprite."
