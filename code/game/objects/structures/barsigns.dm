@@ -298,6 +298,13 @@
 	icon = "the_lightbulb"
 	desc = "A cafe popular among moths and moffs. Once shut down for a week after the bartender used mothballs to protect her spare uniforms."
 
+
+/datum/barsign/erpzone
+	name = "Erp Zone"
+	icon = "erpzone"
+	desc = "BeeStation's choice cafe!"
+
+
 /datum/barsign/hiddensigns
 	hidden = 1
 
