@@ -305,6 +305,11 @@
 	desc = "BeeStation's choice cafe!"
 
 
+/datum/barsign/thehive
+	name = "The Hive"
+	icon = "thehive"
+	desc = "Where you can get the best honey in space!"
+
 /datum/barsign/hiddensigns
 	hidden = 1
 
