@@ -28,7 +28,6 @@
 	. = ..()
 	if(!is_miniball)
 		set_light(10, 7, "#EEEEFF")
-	
 
 /obj/singularity/energy_ball/ex_act(severity, target)
 	return
