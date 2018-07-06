@@ -192,6 +192,11 @@
 /obj/structure/chair/comfy/lime
 	color = rgb(255,251,0)
 
+/obj/structure/chair/shuttle
+	name = "shuttle seat"
+	desc = "A comfortable, secure seat. It has a more sturdy looking buckling system, for smoother flights."
+	icon_state = "shuttle_chair" //thanks gannets!
+
 /obj/structure/chair/office
 	anchored = FALSE
 	buildstackamount = 5
@@ -409,10 +414,3 @@
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
-
-/obj/structure/chair/shuttle
-	name = "shuttle seat"
-	desc = "A comfortable, secure seat. It has a more sturdy looking buckling system, for smoother flights."
-	icon = 'goon/icons/obj/chairs.dmi'
-	icon_state = "shuttle_chair" //thanks gannets!
-
