@@ -58,10 +58,7 @@
 
 /obj/effect/decal/cleanable/blood/gibs/Crossed(mob/living/L)
 	if(istype(L) && has_gravity(loc))
-		if(L.has_trait(TRAIT_LIGHT_STEP))
-			playsound(loc, 'sound/effects/gib_step.ogg', 20, 1)
-		else
-			playsound(loc, 'sound/effects/gib_step.ogg', 50, 1)
+		playsound(loc, 'sound/effects/gib_step.ogg', L.has_trait(TRAIT_LIGHT_STEP) ? 20 : 50, 1)
 	. = ..()
 
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(list/directions)
