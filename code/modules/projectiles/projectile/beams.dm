@@ -90,7 +90,7 @@
 
 /obj/item/projectile/beam/pulse/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(isturf(target) || istype(target, /obj/structure/))
+	if (!QDELETED(target) && (isturf(target) || istype(target, /obj/structure/)))
 		target.ex_act(EXPLODE_HEAVY)
 
 /obj/item/projectile/beam/pulse/shotgun
