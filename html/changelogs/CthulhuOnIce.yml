@@ -1,3 +1,4 @@
 author: CthulhuOnIce
-changes: []
+changes: 
+  - rscadd: "Added cluwnes and cluwnifier to player panel"
 delete-after: false
