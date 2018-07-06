@@ -113,3 +113,12 @@
 	id = "mimesbane"
 	results = list("mimesbane" = 3)
 	required_reagents = list("radium" = 1, "mutetoxin" = 1, "nothing" = 1)
+
+
+
+/datum/chemical_reaction/deet
+	name = "Deet"
+	id = "deet"
+	results = list("deet" = 30)
+	required_reagents = list("carbon" = 15, "hydrogen" = 15, "oxygen" = 5)
+

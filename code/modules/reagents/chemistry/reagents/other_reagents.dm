@@ -1829,3 +1829,4 @@
 	if(prob(30))
 		to_chat(M, "You should sit down and take a rest...")
 	..()
+
