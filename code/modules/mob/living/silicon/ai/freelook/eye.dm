@@ -111,7 +111,8 @@
 	if(ai_detector_visible)
 		var/datum/atom_hud/ai_detector/hud = GLOB.huds[DATA_HUD_AI_DETECT]
 		hud.remove_from_hud(src)
-		QDEL_LIST(hud_list[AI_DETECT_HUD])
+		var/list/L = hud_list[AI_DETECT_HUD]
+		QDEL_LIST(L)
 	return ..()
 
 /atom/proc/move_camera_by_click()

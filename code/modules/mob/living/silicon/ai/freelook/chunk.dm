@@ -89,12 +89,12 @@
 
 	for(var/turf in visAdded)
 		var/turf/t = turf
-		t.vis_contents -= GLOB.cameranet.vis_contents
+		t.vis_contents -= GLOB.cameranet.vis_contents_objects
 
 	for(var/turf in visRemoved)
 		var/turf/t = turf
 		if(obscuredTurfs[t] && !istype(t, /turf/open/ai_visible))
-			t.vis_contents += GLOB.cameranet.vis_contents
+			t.vis_contents += GLOB.cameranet.vis_contents_objects
 
 	changed = 0
 
@@ -136,7 +136,7 @@
 
 	for(var/turf in obscuredTurfs)
 		var/turf/t = turf
-		t.vis_contents += GLOB.cameranet.vis_contents
+		t.vis_contents += GLOB.cameranet.vis_contents_objects
 
 #undef UPDATE_BUFFER
 #undef CHUNK_SIZE

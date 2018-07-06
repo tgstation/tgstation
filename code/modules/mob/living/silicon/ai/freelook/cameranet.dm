@@ -19,7 +19,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	var/obj/effect/statclick/statclick
 
 	// The objects used in vis_contents of obscured turfs
-	var/list/vis_contents
+	var/list/vis_contents_objects
 	var/obj/effect/overlay/camera_static/vis_contents_opaque
 	var/obj/effect/overlay/camera_static/vis_contents_transparent
 	// The image given to the effect in vis_contents on AI clients
@@ -29,7 +29,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 /datum/cameranet/New()
 	vis_contents_opaque = new /obj/effect/overlay/camera_static()
 	vis_contents_transparent = new /obj/effect/overlay/camera_static/transparent()
-	vis_contents = list(vis_contents_opaque, vis_contents_transparent)
+	vis_contents_objects = list(vis_contents_opaque, vis_contents_transparent)
 
 	obscured = new('icons/effects/cameravis.dmi', vis_contents_opaque, null, CAMERA_STATIC_LAYER)
 	obscured.plane = CAMERA_STATIC_PLANE
