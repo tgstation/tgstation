@@ -192,15 +192,19 @@
 /obj/structure/chair/comfy/lime
 	color = rgb(255,251,0)
 
-/obj/structure/chair/shuttle
+/obj/structure/chair/comfy/shuttle
 	name = "shuttle seat"
 	desc = "A comfortable, secure seat. It has a more sturdy looking buckling system, for smoother flights."
 	icon_state = "shuttle_chair"
+
+/obj/structure/chair/comfy/shuttle/GetArmrest()
+	return mutable_appearance('icons/obj/chairs.dmi', "shuttle_chair_armrest")
 
 /obj/structure/chair/office
 	anchored = FALSE
 	buildstackamount = 5
 	item_chair = null
+
 
 /obj/structure/chair/office/Moved()
 	. = ..()
