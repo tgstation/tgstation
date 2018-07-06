@@ -6,7 +6,7 @@
 	var/obj/item/gun/energy/gravity_gun/gun
 
 /obj/item/ammo_casing/energy/gravity/Initialize(mapload)
-	if(istype(loc,/obj/item/gun/energy/gravity_gun)
+	if(istype(loc,/obj/item/gun/energy/gravity_gun))
 		gun = loc
 	. = ..()
 
