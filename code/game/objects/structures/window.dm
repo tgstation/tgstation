@@ -269,6 +269,11 @@
 	if(obj_integrity != max_integrity)
 		return TRUE
 
+/obj/structure/window/setAnchored(anchorvalue)
+	..()
+	air_update_turf(TRUE)
+	update_nearby_icons()
+
 /obj/structure/window/proc/check_state(checked_state)
 	if(state == checked_state)
 		return TRUE

@@ -55,6 +55,142 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">06 July 2018</h2>
+			<h3 class="author">Denton updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="spellcheck">Improved supply shuttle messages and firefighting foam descs.</li>
+				<li class="bugfix">Supply shuttles will no longer spill containers on docking.</li>
+			</ul>
+			<h3 class="author">Jared-Fogle updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="imageadd">Medical HUDs will now show an icon if the body has died recently enough to be defibbed</li>
+			</ul>
+			<h3 class="author">Jegub updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="imageadd">Glowcaps now have their own sprite.</li>
+			</ul>
+			<h3 class="author">MacHac updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Bedsheets once again properly influence the dreams of those who sleep under them.</li>
+			</ul>
+
+			<h2 class="date">05 July 2018</h2>
+			<h3 class="author">Cyberboss updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Setting "default" in maps.txt now will load that map as the first fallback when a next_map.json is missing</li>
+			</ul>
+			<h3 class="author">Jared-Fogle updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed the "Remove IV Container" verb on IV drips from showing every nearby mob</li>
+			</ul>
+			<h3 class="author">Naksu updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">shuttles now move the air along with their occupants, instead of magicking up new air.</li>
+			</ul>
+			<h3 class="author">deathride58 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Lone nuclear operatives now spawn as often as originally intended when the disk is immobile. Secure that fuckin' disk.</li>
+			</ul>
+
+			<h2 class="date">03 July 2018</h2>
+			<h3 class="author">Dax Dupont updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">BoH detonations now gib the user.</li>
+			</ul>
+			<h3 class="author">Denton updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Engine heaters no longer let gases pass through them.</li>
+				<li class="tweak">The Cerestation escape shuttle is now available for purchase!</li>
+			</ul>
+			<h3 class="author">Frozenguy5 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixes nitryl gas not applying its effects.</li>
+			</ul>
+			<h3 class="author">MrDoomBringer updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">SupplyPod smites work properly once again.</li>
+			</ul>
+			<h3 class="author">Naksu updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="code_imp">Fixed the signatures of several reagent procs, removing useless checks</li>
+				<li class="tweak">drunkenness is now handled at the carbon level, allowing monkeys to experience ethanol</li>
+				<li class="balance">initropidil also works on carbon level, allowing syndicate operatives using the poison kit to achieve the silent assassin rating against monkeys</li>
+				<li class="tweak">The ladders in the tear in the fabric of reality no longer spawn their endpoints when the area is loaded, but only when the tear is made accessible via a BoH bomb.</li>
+				<li class="tweak">CentCom is no longer accessible via the space ladder in the tear.</li>
+				<li class="tweak">The lavaland endpoint can no longer spawn completely surrounded by lava, unless it spawns on an island</li>
+				<li class="code_imp">ChangeTurf can now conditionally inherit the air of the turf it is replacing, via the CHANGETURF_INHERIT_AIR flag.</li>
+				<li class="bugfix">when ladder endpoints are created, the binary turfs that are created inherit the air of the turfs they are replacing. This means the lavaland ladder endpoint will have the lavaland airmix, instead of a vacuum.</li>
+				<li class="code_imp">navigation beacons are now properly deregistered from their Z-level list and re-registered on the correct one if moved across Z-levels by an effect such as teleportation or a BoH-induced chasm.</li>
+			</ul>
+			<h3 class="author">Nirnael updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="refactor">Removed an unnecessary volume_pump check</li>
+			</ul>
+			<h3 class="author">SpaceManiac updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Backpack water tanks now work properly when wielded by drones.</li>
+				<li class="bugfix">Backpack water tank nozzles can no longer be placed inside bags of holding and chem dispensers.</li>
+				<li class="bugfix">Moving items between your hands no longer causes them to cross the floor (squeaking, lava burning).</li>
+				<li class="bugfix">Scrambled research console icons have been fixed, and will be prevented in the future.</li>
+			</ul>
+			<h3 class="author">Zxaber updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Empty cyborg shells can now be disassembled with a wrench.</li>
+				<li class="tweak">Using a screwdriver on an empty shell will now remove the cell, or swap it if you're holding a cell in your other hand.</li>
+			</ul>
+			<h3 class="author">ninjanomnom updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Shuttle throwing also applies to loose objects on shuttles now.</li>
+				<li class="tweak">Closets on shuttles start anchored.</li>
+				<li class="tweak">The throw distance of shuttle throws is marginally random, potentialy 10% further or shorter</li>
+				<li class="rscadd">Tables and racks on shuttles have been installed with inertia dampeners.</li>
+				<li class="bugfix">Some very thin barriers didn't stop mobs from being thrown by the shuttle under certain circumstances, this has been fixed.</li>
+			</ul>
+
+			<h2 class="date">02 July 2018</h2>
+			<h3 class="author">AnturK updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">non-player monkeys won't fight when stunned.</li>
+			</ul>
+			<h3 class="author">Denton updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Pubbystation: Fixed the QM camera console's direction.</li>
+				<li class="code_imp">Pubbystation: Used the correct aux bomb camera subtype and replaced loose tech storage boards with spawners, as is done in the rest of the map.</li>
+				<li class="tweak">Tesla balls no longer blow up disposal outlets/delivery chutes and cameras.</li>
+			</ul>
+			<h3 class="author">Irafas updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Admin spawnable Death Ripley that comes with a version of the Death Clamp that actually inflicts damage and rips arms off.</li>
+			</ul>
+			<h3 class="author">Naksu updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="admin">maxHealth is now guarded against invalid values when varediting</li>
+			</ul>
+			<h3 class="author">SpaceManiac updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">A single wired glass tile no longer creates unlimited light floor tiles.</li>
+				<li class="bugfix">Printing the TEG and circulator boards no longer prints the completed machinery instead.</li>
+			</ul>
+			<h3 class="author">XDTM updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Nutriment Pump implants no longer require replacing the stomach.</li>
+			</ul>
+
+			<h2 class="date">01 July 2018</h2>
+			<h3 class="author">Denton updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">To comply with space OSHA regulations, all toasters (disk compartmentalizers) have been put on tables.</li>
+				<li class="rscadd">Added a disk compartmentalizer to the seed vault Lavaland ruin.</li>
+			</ul>
+			<h3 class="author">Nichlas0010 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Changelings can now greentext the extract more genomes objective.</li>
+			</ul>
+			<h3 class="author">Thunder12345 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added a colour picker component for use with circuits.</li>
+			</ul>
+
 			<h2 class="date">30 June 2018</h2>
 			<h3 class="author">Dennok updated:</h3>
 			<ul class="changes bgimages16">
@@ -1344,183 +1480,6 @@
 			<h3 class="author">deathride58 updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="rscadd">If the nuke disk stays still for long enough, the lone operative event will enter the random event rotation. The longer the nuke disk stays still, the more likely the lone operative event will trigger.</li>
-			</ul>
-
-			<h2 class="date">04 May 2018</h2>
-			<h3 class="author">Cobby (Stolen from GrayRachnid) updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">The processor has now been generalized techweb-wise into the "food/slime processor".</li>
-				<li class="rscadd">The processor can now be made by Science.</li>
-			</ul>
-			<h3 class="author">Dax Dupont updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">After successful lobbying by the Space Ancap Federation ammo is no longer free. Material redemption cost is now determined by the amount of bullets left.</li>
-				<li class="balance">.38 ammo is now cheaper to produce.</li>
-				<li class="balance">Casings now give a little bit of metal. mostly for immersion sake.</li>
-			</ul>
-			<h3 class="author">Denton updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Runtimestation's RnD machinery is now up to date.</li>
-			</ul>
-			<h3 class="author">Fox McCloud updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixes recycler not recycling bluespace and plastic objects</li>
-				<li class="bugfix">Fixes objects with material components always showing their materials on examine</li>
-			</ul>
-			<h3 class="author">Garen updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Removes unintentional pins from the constant circuit.</li>
-			</ul>
-			<h3 class="author">Hyacinth updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Grenadine is now available in the bar!</li>
-				<li class="tweak">Tequila sunrises now require grenadine to make!</li>
-			</ul>
-			<h3 class="author">Mickyan updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Our suppliers assure us that Midori Tabako cigarettes will actually contain tobacco from now on.</li>
-			</ul>
-			<h3 class="author">Naksu updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="code_imp">APC code is slightly less shit.</li>
-				<li class="tweak">APC cells can be removed with a crowbar</li>
-			</ul>
-			<h3 class="author">Onule! updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Plasmaman liver and stomach crystals!</li>
-			</ul>
-			<h3 class="author">Poetic_Iron updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="spellcheck">Fixed 'Tequila Sunrise' naming from 'tequila Sunrise'.</li>
-			</ul>
-			<h3 class="author">SpaceManiac updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="code_imp">The commit hashes shown in Show Server Revision are now long enough to autolink when copied into issue reports.</li>
-			</ul>
-			<h3 class="author">Spellbooks Take 2 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="imageadd">Magical Spellbooks are now animated.</li>
-			</ul>
-			<h3 class="author">Tlaltecuhtli updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">medbeams heal tox and oxy slighty</li>
-			</ul>
-			<h3 class="author">pigeonsk updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscdel">After an internal audit and review Nanotrasen has decided that stock financing at the station-level makes no logistical nor managerial sense. Stations, and their cargo departments, may no longer play the stock market.</li>
-			</ul>
-
-			<h2 class="date">01 May 2018</h2>
-			<h3 class="author">BuffEngineering updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Nanotrasen has graciously connected the port bow solar's SMES to the main grid.</li>
-			</ul>
-			<h3 class="author">Denton updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">You can now craft and disassemble HUDsunglasses! Check out the clothing section of the crafting menu.</li>
-				<li class="tweak">Cargo packs have been reorganized to shrink the big engineering, food&livestock and misc categories.</li>
-			</ul>
-			<h3 class="author">NewSta updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added 5 new drinks: Alexander, Between the Sheets, Kamikaze, Mojito and Sidecar.</li>
-				<li class="rscadd">Added Menthol and Sake to the drink dispensers.</li>
-			</ul>
-			<h3 class="author">Ordonis, Denton updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">OH YEAH BROTHER! The H.O.G.A.N. AI module has a chance to spawn at the AI upload.</li>
-			</ul>
-			<h3 class="author">SpaceManiac updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">The button in the mech interface to terminate maintenace protocol no longer reads "Initiate maintenace protocol".</li>
-				<li class="bugfix">Boxes now fit inside storage implants again.</li>
-			</ul>
-			<h3 class="author">XDTM updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Small, constant ticks of brain damage are now less likely to cause traumas.</li>
-			</ul>
-			<h3 class="author">deathride58 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed the intergalactic stock market crash. The speculation/performance modifier has been removed completely.</li>
-			</ul>
-
-			<h2 class="date">30 April 2018</h2>
-			<h3 class="author">Dax Dupont updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Adds a cooldown to PDA send to all messages.</li>
-				<li class="bugfix">Last sent message cooldown actually works now.</li>
-				<li class="tweak">More reagents in the clogged vents event.</li>
-			</ul>
-			<h3 class="author">Denton updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added more holoprojectors to techwebs (security, engineering and atmos).</li>
-			</ul>
-			<h3 class="author">Erwgd updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Limb growers can now create limbs for flypeople and mothmen.</li>
-			</ul>
-			<h3 class="author">Evsey9 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Integrated Circuit weapon mechanisms now work only when outside of any containers and hands, due to reports of severe injury caused by activating them while still holding them.</li>
-			</ul>
-			<h3 class="author">Garen updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="imageadd">added inhands for teleprods.</li>
-			</ul>
-			<h3 class="author">JJRcop updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Integrated circuits can no longer throw themselves.</li>
-			</ul>
-			<h3 class="author">Jalleo updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">a certain exploit that can occur in regards to creating certain items in a particular manner</li>
-				<li class="tweak">readds emitter field generator and rad collector wrenching times. Someone override it when adding the wrench_act.</li>
-			</ul>
-			<h3 class="author">Mickyan updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">You can now see how well fed you are by self-inspecting.</li>
-			</ul>
-			<h3 class="author">Naksu updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="code_imp">More flags have been moved to their appropriate places</li>
-				<li class="code_imp">HEALS_EARS_2 is removed in favor of the earhealing component</li>
-				<li class="code_imp">wearertargeting component is available to subtype for components that want to target the wearer of an item rather than the item itself</li>
-			</ul>
-			<h3 class="author">ShizCalev updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Glass stacks will now properly delete when exploded.</li>
-				<li class="bugfix">Fixed attacking someone with a bikehorn not triggering the correct mood event.</li>
-			</ul>
-			<h3 class="author">YakumoChen updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Nanotrasen has once again shipped BZ to its nearby stations. Check your local Xenobiology lab for your shipment.</li>
-				<li class="tweak">Nanotrasen would like to remind you that BZ is meant for keeping slimes from moving or getting hungry. It is not for human use and may lead to hallucinations. Always practice workplace safety when handling dangerous gasses!</li>
-			</ul>
-			<h3 class="author">george99g updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Committing suicide will now stop you from being cloned via prescans.</li>
-			</ul>
-			<h3 class="author">iksyp updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">pacifists can now use .50BMG Soporific Rounds</li>
-			</ul>
-			<h3 class="author">ninjanomnom updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Caravan ambush shuttles have been templated to fit the new system and can fly again.</li>
-			</ul>
-			<h3 class="author">pigeonsk updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Large stacks of plastitanium now display properly</li>
-				<li class="rscadd">You can now get traditional sake and get a first-hand taste of a superior culture. Have I told you about my katana and my trip to-</li>
-			</ul>
-
-			<h2 class="date">29 April 2018</h2>
-			<h3 class="author">Naksu updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Wearing a bucket no longer connects your head to the vacuum of space</li>
-			</ul>
-			<h3 class="author">oranges updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscdel">Pet collars can no longer be equipped on humans</li>
 			</ul>
 		</div>
 

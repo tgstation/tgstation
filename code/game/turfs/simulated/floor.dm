@@ -55,6 +55,7 @@
 		return
 	if(target == src)
 		ScrapeAway()
+		return
 	if(target != null)
 		severity = 3
 

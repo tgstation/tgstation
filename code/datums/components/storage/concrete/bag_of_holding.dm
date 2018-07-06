@@ -14,6 +14,7 @@
 		to_chat(user, "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>")
 		qdel(W)
 		playsound(loccheck,'sound/effects/supermatter.ogg', 200, 1)
+		user.gib(TRUE, TRUE, TRUE)
 		for(var/turf/T in range(6,loccheck))
 			if(istype(T, /turf/open/space/transit))
 				continue
@@ -22,6 +23,8 @@
 					M.visible_message("<span class='danger'>The bluespace collapse crushes the air towards it, pulling [M] towards the ground...</span>")
 					M.Knockdown(5, TRUE, TRUE)		//Overrides stun absorbs.
 			T.TerraformTurf(/turf/open/chasm/magic, /turf/open/chasm/magic)
+		for (var/obj/structure/ladder/unbreakable/binary/ladder in GLOB.ladders)
+			ladder.ActivateAlmonds()
 		message_admins("[ADMIN_LOOKUPFLW(user)] detonated a bag of holding at [ADMIN_VERBOSEJMP(loccheck)].")
 		log_game("[key_name(user)] detonated a bag of holding at [AREACOORD(loccheck)].")
 		qdel(A)

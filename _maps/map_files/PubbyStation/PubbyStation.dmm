@@ -10695,7 +10695,8 @@
 	pixel_y = 32
 	},
 /obj/machinery/disposal/deliveryChute{
-	name = "Crate Disposal Chute"
+	name = "Crate Disposal Chute";
+	pixel_y = 6
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -22064,7 +22065,9 @@
 	name = "Station Intercom (General)";
 	pixel_y = -35
 	},
-/obj/machinery/computer/security/qm,
+/obj/machinery/computer/security/qm{
+	dir = 8
+	},
 /turf/open/floor/plasteel/brown{
 	dir = 6
 	},
@@ -34800,7 +34803,7 @@
 "bLX" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/airlock/atmos/glass{
+/obj/machinery/door/airlock/atmos{
 	name = "Atmospherics";
 	req_access_txt = "24"
 	},
@@ -38964,46 +38967,21 @@
 /area/crew_quarters/heads/chief)
 "bWs" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/robotics{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/circuitboard/computer/mecha_control{
-	pixel_x = 1;
-	pixel_y = -1
-	},
+/obj/effect/spawner/lootdrop/techstorage/RnD_secure,
 /turf/open/floor/plasteel/darkred,
 /area/storage/tech)
 "bWt" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/crew{
-	pixel_x = -1;
-	pixel_y = 1
-	},
-/obj/item/circuitboard/computer/card{
-	pixel_x = 2;
-	pixel_y = -2
-	},
-/obj/item/circuitboard/computer/communications{
-	pixel_x = 5;
-	pixel_y = -5
-	},
 /obj/machinery/camera{
 	c_tag = "Secure Tech Storage";
 	dir = 1
 	},
+/obj/effect/spawner/lootdrop/techstorage/command,
 /turf/open/floor/plasteel/darkred,
 /area/storage/tech)
 "bWu" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/borgupload{
-	pixel_x = -1;
-	pixel_y = 1
-	},
-/obj/item/circuitboard/computer/aiupload{
-	pixel_x = 2;
-	pixel_y = -2
-	},
+/obj/effect/spawner/lootdrop/techstorage/AI,
 /turf/open/floor/plasteel/darkred,
 /area/storage/tech)
 "bWv" = (
@@ -41272,9 +41250,7 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 30
 	},
-/obj/item/gps{
-	gpstag = "ENG0"
-	},
+/obj/item/gps/engineering,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "ccS" = (
@@ -44056,16 +44032,9 @@
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cnp" = (
-/obj/machinery/camera{
-	active_power_usage = 0;
+/obj/machinery/camera/preset/toxins{
 	c_tag = "Bomb Testing Asteroid Aft";
-	desc = "A specially-reinforced camera with a long lasting battery, used to monitor the bomb testing site. An external light is attached to the top.";
-	dir = 1;
-	invuln = 1;
-	luminosity = 3;
-	name = "Hardened Bomb-Test Camera";
-	network = list("ss13","rd","toxins");
-	use_power = 0
+	dir = 1
 	},
 /turf/open/floor/plating/asteroid/airless,
 /area/asteroid/nearstation/bomb_site)
