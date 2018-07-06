@@ -76,6 +76,11 @@
 	if(T.y+height > world.maxy)
 		return
 
+	//Remove affected turfs from active air processing.
+	if(SSair.initialized)
+		for(var/turf/AF in get_affected_turfs(T,centered))
+			SSair.remove_from_active(AF)
+
 	var/list/bounds = maploader.load_map(file(mappath), T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE)
 	if(!bounds)
 		return
