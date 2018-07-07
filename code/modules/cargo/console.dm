@@ -5,9 +5,9 @@
 	circuit = /obj/item/circuitboard/computer/cargo
 	var/requestonly = FALSE
 	var/contraband = FALSE
-	var/safety_warning = "For safety reasons the automated supply shuttle \
-		cannot transport live organisms, classified nuclear weaponry or \
-		homing beacons."
+	var/safety_warning = "For safety reasons, the automated supply shuttle \
+		cannot transport live organisms, human remains, classified nuclear weaponry \
+		or homing beacons."
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
 
 	light_color = "#E2853D"//orange
@@ -121,7 +121,7 @@
 					SSshuttle.supply.obj_flags = (SSshuttle.supply.obj_flags & ~EMAGGED)
 				SSshuttle.supply.contraband = contraband
 				SSshuttle.moveShuttle("supply", "supply_away", TRUE)
-				say("The supply shuttle has departed.")
+				say("The supply shuttle is departing.")
 				investigate_log("[key_name(usr)] sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
 				investigate_log("[key_name(usr)] called the supply shuttle.", INVESTIGATE_CARGO)

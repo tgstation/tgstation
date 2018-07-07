@@ -2,16 +2,16 @@
 
 // EMP
 /obj/machinery/camera/emp_proof
-	start_active = 1
+	start_active = TRUE
 
 /obj/machinery/camera/emp_proof/Initialize()
 	. = ..()
 	upgradeEmpProof()
 
-// X-RAY
+// X-ray
 
 /obj/machinery/camera/xray
-	start_active = 1
+	start_active = TRUE
 	icon_state = "xraycam" // Thanks to Krutchen for the icons.
 
 /obj/machinery/camera/xray/Initialize()
@@ -20,7 +20,7 @@
 
 // MOTION
 /obj/machinery/camera/motion
-	start_active = 1
+	start_active = TRUE
 	name = "motion-sensitive security camera"
 
 /obj/machinery/camera/motion/Initialize()
@@ -29,7 +29,7 @@
 
 // ALL UPGRADES
 /obj/machinery/camera/all
-	start_active = 1
+	start_active = TRUE
 
 /obj/machinery/camera/all/Initialize()
 	. = ..()

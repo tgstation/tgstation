@@ -62,7 +62,7 @@
 	return dpdir & (~turn(H.dir, 180))
 
 // transfer the holder through this pipe segment
-// overriden for special behaviour
+// overridden for special behaviour
 /obj/structure/disposalpipe/proc/transfer(obj/structure/disposalholder/H)
 	return transfer_to_dir(H, nextdir(H))
 

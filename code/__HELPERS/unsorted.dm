@@ -186,7 +186,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return 1
 
 //Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
-/mob/proc/rename_self(role, client/C)
+/mob/proc/apply_pref_name(role, client/C)
 	if(!C)
 		C = client
 	var/oldname = real_name
@@ -194,8 +194,10 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/loop = 1
 	var/safety = 0
 
+	var/banned = jobban_isbanned(src, "appearance")
+
 	while(loop && safety < 5)
-		if(C && C.prefs.custom_names[role] && !safety)
+		if(C && C.prefs.custom_names[role] && !safety && !banned)
 			newname = C.prefs.custom_names[role]
 		else
 			switch(role)
@@ -207,10 +209,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 					newname = pick(GLOB.mime_names)
 				if("ai")
 					newname = pick(GLOB.ai_names)
-				if("deity")
-					newname = pick(GLOB.clown_names|GLOB.ai_names|GLOB.mime_names) //pick any old name
 				else
-					return
+					return FALSE
 
 		for(var/mob/living/M in GLOB.player_list)
 			if(M == src)
@@ -224,6 +224,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	if(newname)
 		fully_replace_character_name(oldname,newname)
+		return TRUE
+	return FALSE
 
 
 //Picks a string of symbols to display as the law number for hacked or ion laws
@@ -899,7 +901,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 /proc/check_target_facings(mob/living/initator, mob/living/target)
 	/*This can be used to add additional effects on interactions between mobs depending on how the mobs are facing each other, such as adding a crit damage to blows to the back of a guy's head.
 	Given how click code currently works (Nov '13), the initiating mob will be facing the target mob most of the time
-	That said, this proc should not be used if the change facing proc of the click code is overriden at the same time*/
+	That said, this proc should not be used if the change facing proc of the click code is overridden at the same time*/
 	if(!ismob(target) || target.lying)
 	//Make sure we are not doing this for things that can't have a logical direction to the players given that the target would be on their side
 		return FALSE

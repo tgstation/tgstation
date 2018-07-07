@@ -446,21 +446,6 @@
 /mob/living/proc/update_damage_overlays()
 	return
 
-/mob/living/proc/Examine_OOC()
-	set name = "Examine Meta-Info (OOC)"
-	set category = "OOC"
-	set src in view()
-
-	if(CONFIG_GET(flag/allow_metadata))
-		if(client)
-			to_chat(src, "[src]'s Metainfo:<br>[client.prefs.metadata]")
-		else
-			to_chat(src, "[src] does not have any stored information!")
-	else
-		to_chat(src, "OOC Metadata is not supported by this server!")
-
-	return
-
 /mob/living/Move(atom/newloc, direct)
 	if (buckled && buckled.loc != newloc) //not updating position
 		if (!buckled.anchored)
@@ -884,6 +869,13 @@
 
 	apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), EFFECT_IRRADIATE, blocked)
 
+/mob/living/anti_magic_check(magic = TRUE, holy = FALSE)
+	. = ..()
+	if(.)
+		return
+	if((magic && has_trait(TRAIT_ANTIMAGIC)) || (holy && has_trait(TRAIT_HOLY)))
+		return src
+
 /mob/living/proc/fakefireextinguish()
 	return
 
@@ -1115,6 +1107,9 @@
 
 /mob/living/vv_edit_var(var_name, var_value)
 	switch(var_name)
+		if ("maxHealth")
+			if (!isnum(var_value) || var_value <= 0)
+				return FALSE
 		if("stat")
 			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
 				GLOB.dead_mob_list -= src

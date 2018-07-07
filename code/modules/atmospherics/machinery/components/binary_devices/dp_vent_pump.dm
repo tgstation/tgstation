@@ -227,7 +227,7 @@ Acts like a normal vent, but has an input AND output.
 		pressure_checks &= ~1
 		pump_direction = 0
 
-	if("stabalize" in signal.data)
+	if("stabilize" in signal.data)
 		pressure_checks |= 1
 		pump_direction = 1
 

@@ -147,7 +147,7 @@
 
 
 // DNA-keyed pin.
-// When you want to keep your toys for youself.
+// When you want to keep your toys for yourself.
 /obj/item/firing_pin/dna
 	name = "DNA-keyed firing pin"
 	desc = "This is a DNA-locked firing pin which only authorizes one user. Attempt to fire once to DNA-link."

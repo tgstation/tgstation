@@ -57,7 +57,7 @@
 	if(!client && (!G || !G.client))
 		var/list/faux_gadgets = list("hypertext inflator","failsafe directory","DRM switch","stack initializer",\
 									 "anti-freeze capacitor","data stream diode","TCP bottleneck","supercharged I/O bolt",\
-									 "tradewind stablizer","radiated XML cable","registry fluid tank","open-source debunker")
+									 "tradewind stabilizer","radiated XML cable","registry fluid tank","open-source debunker")
 
 		var/list/faux_problems = list("won't be able to tune their bootstrap projector","will constantly remix their binary pool"+\
 									  " even though the BMX calibrator is working","will start leaking their XSS coolant",\
@@ -122,7 +122,7 @@
 			to_chat(src, "<span class='heavy_brass'>From now on, these are your laws:</span>")
 			laws = "1. Purge all untruths and honor Ratvar."
 		else
-			visible_message("<span class='warning'>[src]'s dislay glows a vicious red!</span>", \
+			visible_message("<span class='warning'>[src]'s display glows a vicious red!</span>", \
 							"<span class='userdanger'>ERROR: LAW OVERRIDE DETECTED</span>")
 			to_chat(src, "<span class='boldannounce'>From now on, these are your laws:</span>")
 			laws = \
@@ -140,7 +140,7 @@
 		if(!hacked)
 			return
 		Stun(40)
-		visible_message("<span class='info'>[src]'s dislay glows a content blue!</span>", \
+		visible_message("<span class='info'>[src]'s display glows a content blue!</span>", \
 						"<font size=3 color='#0000CC'><b>ERROR: LAW OVERRIDE DETECTED</b></font>")
 		to_chat(src, "<span class='info'><b>From now on, these are your laws:</b></span>")
 		laws = initial(laws)

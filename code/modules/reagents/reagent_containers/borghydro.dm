@@ -180,7 +180,7 @@ Borg Shaker
 	recharge_time = 3
 	accepts_reagent_upgrades = FALSE
 
-	reagent_ids = list("beer", "orangejuice", "grenadine", "limejuice", "tomatojuice", "cola", "tonic", "sodawater", "ice", "cream", "whiskey", "vodka", "rum", "gin", "tequila", "vermouth", "wine", "kahlua", "cognac", "ale", "fernet", "milk", "coffee", "banana", "lemonjuice")
+	reagent_ids = list("beer", "orangejuice", "grenadine", "limejuice", "tomatojuice", "cola", "tonic", "sodawater", "ice", "cream", "whiskey", "vodka", "rum", "gin", "tequila", "vermouth", "wine", "kahlua", "cognac", "ale", "milk", "coffee", "banana", "lemonjuice")
 
 /obj/item/reagent_containers/borghypo/borgshaker/attack(mob/M, mob/user)
 	return //Can't inject stuff with a shaker, can we? //not with that attitude
@@ -235,7 +235,7 @@ Borg Shaker
 	recharge_time = 3
 	accepts_reagent_upgrades = FALSE
 
-	reagent_ids = list("fakebeer")
+	reagent_ids = list("fakebeer", "fernet")
 
 /obj/item/reagent_containers/borghypo/peace
 	name = "Peace Hypospray"

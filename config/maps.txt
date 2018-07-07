@@ -1,5 +1,4 @@
 This file contains a list of maps for use in map rotation.
-This feature requires you are running a Windows OS (or can other wise run .bat files) and that you are using the tgstation-server toolset in tools/
 #Lines starting with # are ignored.
 Lines not inside map blocks are also ignored
 Duplicated entries use the latter one.
