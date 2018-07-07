@@ -1,0 +1,4 @@
+author: "Spaceinaba"
+delete-after: True
+changes: 
+  - tweak: "Digitigrade legs no longer revert to normal on compatible outfits."
