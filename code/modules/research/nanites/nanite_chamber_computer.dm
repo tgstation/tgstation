@@ -194,9 +194,9 @@
 			if(!chamber || !chamber.occupant)
 				return
 			playsound(src, 'sound/machines/terminal_prompt.ogg', 25, 0)
-			GET_COMPONENT_FROM(nanites, /datum/component/nanites, chamber.occupant)
-			if(nanites)
-				var/datum/nanite_program/P = nanites.programs[text2num(params["program_id"])]
+			var/list/datum/nanite_program/programs = SEND_SIGNAL(chamber.occupant, COMSIG_NANITE_GET_PROGRAMS)
+			if(LAZYLEN(programs))
+				var/datum/nanite_program/P = programs[text2num(params["program_id"])]
 				chamber.uninstall_program(P)
 				investigate_log("Program of type [P.type] was uninstalled from [key_name(chamber.occupant)]'s nanites with a nanite chamber by [key_name(usr)].", INVESTIGATE_NANITES)
 			. = TRUE
