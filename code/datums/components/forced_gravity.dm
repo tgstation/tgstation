@@ -2,7 +2,7 @@
 	var/gravity
 	var/ignore_space = FALSE	//If forced gravity should also work on space turfs
 
-/datum/component/forced_gravity/Initialize(forced_value = TRUE)
+/datum/component/forced_gravity/Initialize(forced_value = 1)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(COMSIG_ATOM_HAS_GRAVITY, .proc/gravity_check)
