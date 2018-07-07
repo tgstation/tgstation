@@ -101,7 +101,8 @@
 	data["locked"] = chamber.locked
 	data["occupant_name"] = chamber.occupant.name
 
-	var/list/nanite_data = SEND_SIGNAL(chamber.occupant, COMSIG_NANITE_GET_DATA)
+	var/list/nanite_data = list()
+	SEND_SIGNAL(src, COMSIG_NANITE_GET_DATA, nanite_data)
 	if(LAZYLEN(nanite_data))
 		data["has_nanites"] = TRUE
 		data["nanite_volume"] = nanite_data["nanite_volume"]

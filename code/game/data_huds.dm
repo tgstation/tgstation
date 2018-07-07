@@ -278,7 +278,8 @@
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = null
-	var/list/nanite_data = SEND_SIGNAL(src, COMSIG_NANITE_GET_DATA)
+	var/list/nanite_data = list()
+	SEND_SIGNAL(src, COMSIG_NANITE_GET_DATA, nanite_data)
 	if(LAZYLEN(nanite_data))
 		if(nanite_data["stealth"])
 			return

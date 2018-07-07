@@ -190,7 +190,7 @@
 #define COMSIG_COMPONENT_NTNET_RECEIVE "ntnet_receive"			//called on an object by its NTNET connection component on receive. (sending_id(number), sending_netname(text), data(datum/netdata))
 
 //Nanites
-#define COMSIG_NANITE_GET_DATA	"nanite_get_data"				//() - returns assoc list with most nanite vars
+#define COMSIG_NANITE_GET_DATA	"nanite_get_data"				//(list/nanite_data) - fills the input list with nanite vars
 #define COMSIG_NANITE_GET_PROGRAMS	"nanite_get_programs"		//() - returns program list
 #define COMSIG_NANITE_SET_VOLUME "nanite_set_volume"			//(amount) Sets current nanite volume to the given amount
 #define COMSIG_NANITE_ADJUST_VOLUME "nanite_adjust"				//(amount) Adjusts nanite volume by the given amount

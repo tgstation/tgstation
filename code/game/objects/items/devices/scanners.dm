@@ -328,7 +328,8 @@ SLIME SCANNER
 		if(cyberimp_detect)
 			to_chat(user, "<span class='notice'>Detected cybernetic modifications:</span>")
 			to_chat(user, "<span class='notice'>[cyberimp_detect]</span>")
-	var/list/nanite_data = SEND_SIGNAL(M, COMSIG_NANITE_GET_DATA)
+	var/list/nanite_data = list()
+	SEND_SIGNAL(src, COMSIG_NANITE_GET_DATA, nanite_data)
 	if(LAZYLEN(nanite_data) && !nanite_data["stealth"])
 		to_chat(user, "<span class='notice'><b>Nanites Detected</b></span>")
 		to_chat(user, "<span class='notice'>Saturation: [nanite_data["nanite_volume"]]/[nanite_data["max_nanites"]]</span>")
@@ -634,7 +635,8 @@ SLIME SCANNER
 	add_fingerprint(user)
 
 /proc/nanite_scan(mob/user, mob/living/M)
-	var/list/nanite_data = SEND_SIGNAL(M, COMSIG_NANITE_GET_DATA)
+	var/list/nanite_data = list()
+	SEND_SIGNAL(src, COMSIG_NANITE_GET_DATA, nanite_data)
 	if(!LAZYLEN(nanite_data))
 		to_chat(user, "<span class='info'>No nanites detected in the subject.</span>")
 		return
