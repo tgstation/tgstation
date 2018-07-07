@@ -159,6 +159,7 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = IS_SHARP
 	var/can_drop = FALSE
+	var/fake = FALSE
 
 /obj/item/melee/arm_blade/Initialize(mapload,silent,synthetic)
 	. = ..()
@@ -169,6 +170,7 @@
 	AddComponent(/datum/component/butchering, 60, 80)
 
 /obj/item/melee/arm_blade/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(istype(target, /obj/structure/table))
