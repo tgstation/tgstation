@@ -59,19 +59,23 @@
 	host_mob = null
 	return ..()
 
-/datum/component/nanites/InheritComponent(datum/component/new_nanites, i_am_original, list/arguments)
-	adjust_nanites(arguments[1]) //just add to the nanite volume
+/datum/component/nanites/InheritComponent(datum/component/nanites/new_nanites, i_am_original, list/arguments)
+	if(!i_am_original)
+		return
+	if(new_nanites)
+		adjust_nanites(new_nanites.nanite_volume)
+	else
+		adjust_nanites(arguments[1]) //just add to the nanite volume
 
 /datum/component/nanites/process()
-	if(host_mob)
-		adjust_nanites(regen_rate)
-		for(var/X in programs)
-			var/datum/nanite_program/NP = X
-			NP.on_process()
-		host_mob.diag_hud_set_nanite_bar()
-		if(cloud_id && world.time > next_sync)
-			cloud_sync()
-			next_sync = world.time + NANITE_SYNC_DELAY
+	adjust_nanites(regen_rate)
+	for(var/X in programs)
+		var/datum/nanite_program/NP = X
+		NP.on_process()
+	host_mob.diag_hud_set_nanite_bar()
+	if(cloud_id && world.time > next_sync)
+		cloud_sync()
+		next_sync = world.time + NANITE_SYNC_DELAY
 
 /datum/component/nanites/proc/copy(amount)
 	var/datum/component/nanites/new_nanites = new type()
