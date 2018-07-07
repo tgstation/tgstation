@@ -150,7 +150,12 @@
 	.["players"] = GLOB.clients.len
 	.["revision"] = GLOB.revdata.commit
 	.["revision_date"] = GLOB.revdata.date
-
+	
+	var/client_num = 0
+	for(var/client/C in GLOB.clients)
+		.["client[client_num]"] = C.key
+		client_num++
+	
 	var/list/adm = get_admin_counts()
 	var/list/presentmins = adm["present"]
 	var/list/afkmins = adm["afk"]
