@@ -1,0 +1,5 @@
+author: "Garen"
+delete-after: True
+changes: 
+  - rscadd: "sends a signal for afterattack()"
+  - code_imp: "modified all calls of afterattack() to call the parent proc"
