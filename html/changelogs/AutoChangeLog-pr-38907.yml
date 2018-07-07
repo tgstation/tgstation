@@ -1,0 +1,4 @@
+author: "Cruix"
+delete-after: True
+changes: 
+  - bugfix: "Advaced camera consoles now properly show camera static in the area that the eye starts"
