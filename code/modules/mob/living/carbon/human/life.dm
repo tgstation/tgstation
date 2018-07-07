@@ -44,11 +44,16 @@
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
-	if (wear_suit && head && istype(wear_suit, /obj/item/clothing) && istype(head, /obj/item/clothing))
-		var/obj/item/clothing/CS = wear_suit
+	if (head && istype(head, /obj/item/clothing))
 		var/obj/item/clothing/CH = head
-		if (CS.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
-			return ONE_ATMOSPHERE
+		if(wear_suit && istype(wear_suit, /obj/item/clothing))
+			var/obj/item/clothing/CS = wear_suit
+			if (CS.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
+				return ONE_ATMOSPHERE
+		else if(w_uniform && istype(w_uniform, /obj/item/clothing))
+			var/obj/item/clothing/CU = w_uniform
+			if(CU.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
+				return ONE_ATMOSPHERE
 	return pressure
 
 
