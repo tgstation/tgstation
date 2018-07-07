@@ -460,7 +460,7 @@
 	name = "Pest Killer"
 	id = "pestkiller"
 	results = list("pestkiller" = 5)
-	required_reagents = list("toxin" = 1, "ethanol" = 4)
+	required_reagents = list("oil" = 1, "deet" = 4)
 
 /datum/chemical_reaction/drying_agent
 	name = "Drying agent"
