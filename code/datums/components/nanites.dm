@@ -202,7 +202,7 @@
 /datum/component/nanites/proc/set_regen(amount)
 	regen_rate = amount
 
-/datum/component/nanites/proc/get_data(nanite_data)
+/datum/component/nanites/proc/get_data(list/nanite_data)
 	nanite_data["nanite_volume"] = nanite_volume
 	nanite_data["max_nanites"] = max_nanites
 	nanite_data["cloud_id"] = cloud_id
@@ -210,5 +210,5 @@
 	nanite_data["safety_threshold"] = safety_threshold
 	nanite_data["stealth"] = stealth
 
-/datum/component/nanites/proc/get_programs()
-	return programs
+/datum/component/nanites/proc/get_programs(list/nanite_programs)
+	nanite_programs = programs

@@ -191,7 +191,7 @@
 
 //Nanites
 #define COMSIG_NANITE_GET_DATA	"nanite_get_data"				//(list/nanite_data) - fills the input list with nanite vars
-#define COMSIG_NANITE_GET_PROGRAMS	"nanite_get_programs"		//() - returns program list
+#define COMSIG_NANITE_GET_PROGRAMS	"nanite_get_programs"		//(list/nanite_programs) - makes the input list a copy the nanites' program list
 #define COMSIG_NANITE_SET_VOLUME "nanite_set_volume"			//(amount) Sets current nanite volume to the given amount
 #define COMSIG_NANITE_ADJUST_VOLUME "nanite_adjust"				//(amount) Adjusts nanite volume by the given amount
 #define COMSIG_NANITE_SET_MAX_VOLUME "nanite_set_max_volume"	//(amount) Sets maximum nanite volume to the given amount

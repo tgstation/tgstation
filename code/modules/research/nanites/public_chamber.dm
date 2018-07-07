@@ -129,7 +129,7 @@
 	if(occupant)
 		var/mob/living/L = occupant
 		var/list/nanite_data = list()
-		SEND_SIGNAL(src, COMSIG_NANITE_GET_DATA, nanite_data)
+		SEND_SIGNAL(L, COMSIG_NANITE_GET_DATA, nanite_data)
 		if(!LAZYLEN(nanite_data) || nanite_data["cloud_id"] == cloud_id) //can be used to switch cloud id
 			return
 		if((MOB_ORGANIC in L.mob_biotypes) || (MOB_UNDEAD in L.mob_biotypes))

@@ -102,14 +102,15 @@
 	data["occupant_name"] = chamber.occupant.name
 
 	var/list/nanite_data = list()
-	SEND_SIGNAL(src, COMSIG_NANITE_GET_DATA, nanite_data)
+	SEND_SIGNAL(L, COMSIG_NANITE_GET_DATA, nanite_data)
 	if(LAZYLEN(nanite_data))
 		data["has_nanites"] = TRUE
 		data["nanite_volume"] = nanite_data["nanite_volume"]
 		data["regen_rate"] = nanite_data["regen_rate"]
 		data["safety_threshold"] = nanite_data["safety_threshold"]
 		data["cloud_id"] = nanite_data["cloud_id"]
-		var/list/nanite_programs = SEND_SIGNAL(chamber.occupant, COMSIG_NANITE_GET_PROGRAMS)
+		var/list/nanite_programs = list()
+		SEND_SIGNAL(L, COMSIG_NANITE_GET_PROGRAMS, nanite_programs)
 		var/list/mob_programs = list()
 		var/id = 1
 		for(var/X in nanite_programs)
@@ -195,9 +196,10 @@
 			if(!chamber || !chamber.occupant)
 				return
 			playsound(src, 'sound/machines/terminal_prompt.ogg', 25, 0)
-			var/list/datum/nanite_program/programs = SEND_SIGNAL(chamber.occupant, COMSIG_NANITE_GET_PROGRAMS)
-			if(LAZYLEN(programs))
-				var/datum/nanite_program/P = programs[text2num(params["program_id"])]
+			var/list/nanite_programs = list()
+			SEND_SIGNAL(chamber.occupant, COMSIG_NANITE_GET_PROGRAMS, nanite_programs)
+			if(LAZYLEN(nanite_programs))
+				var/datum/nanite_program/P = nanite_programs[text2num(params["program_id"])]
 				chamber.uninstall_program(P)
 				investigate_log("Program of type [P.type] was uninstalled from [key_name(chamber.occupant)]'s nanites with a nanite chamber by [key_name(usr)].", INVESTIGATE_NANITES)
 			. = TRUE
