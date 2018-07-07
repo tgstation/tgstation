@@ -91,8 +91,9 @@
 		to_chat(user, "<span class='userdanger'>You have a really bad feeling about [src]!</span>")
 
 /obj/item/hot_potato/afterattack(atom/target, mob/user, adjacent, params)
+	. = ..()
 	if(!adjacent || !ismob(target))
-		return ..()
+		return
 	force_onto(target, user)
 
 /obj/item/hot_potato/proc/force_onto(mob/living/victim, mob/user)

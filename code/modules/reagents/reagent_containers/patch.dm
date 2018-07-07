@@ -9,9 +9,7 @@
 	apply_type = PATCH
 	apply_method = "apply"
 	self_delay = 30		// three seconds
-
-/obj/item/reagent_containers/pill/patch/afterattack(obj/target, mob/user , proximity)
-	return // thanks inheritance again
+	dissolvable = FALSE
 
 /obj/item/reagent_containers/pill/patch/attack(mob/living/L, mob/user)
 	if(ishuman(L))

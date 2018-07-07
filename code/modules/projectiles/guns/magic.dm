@@ -31,7 +31,7 @@
 			return
 		else
 			no_den_usage = 0
-	..()
+	. = ..()
 
 /obj/item/gun/magic/can_shoot()
 	return charges

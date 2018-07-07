@@ -62,7 +62,7 @@
 			return
 
 		if(anchored)
-			anchored = FALSE
+			setAnchored(FALSE)
 			to_chat(user, "<span class='notice'>You unscrew the beacon from the floor.</span>")
 			disconnect_from_network()
 			return
@@ -70,7 +70,7 @@
 			if(!connect_to_network())
 				to_chat(user, "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>")
 				return
-			anchored = TRUE
+			setAnchored(TRUE)
 			to_chat(user, "<span class='notice'>You screw the beacon to the floor and attach the cable.</span>")
 			return
 	else

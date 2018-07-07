@@ -59,6 +59,7 @@
 	scanning = 0
 
 /obj/item/detective_scanner/afterattack(atom/A, mob/user, params)
+	. = ..()
 	scan(A, user)
 	return FALSE
 

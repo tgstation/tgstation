@@ -198,6 +198,7 @@
 	icon_state = "evidenceobj"
 
 /obj/item/organ_storage/afterattack(obj/item/I, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(contents.len)

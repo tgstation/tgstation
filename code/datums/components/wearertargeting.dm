@@ -20,3 +20,7 @@
 
 /datum/component/wearertargeting/proc/on_drop(mob/user)
 	UnregisterSignal(user, signals)
+
+/datum/component/wearertargeting/Destroy()
+	QDEL_NULL(callback) //is likely to ourselves.
+	return ..()
