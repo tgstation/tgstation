@@ -60,8 +60,6 @@
 	return ..()
 
 /datum/component/nanites/InheritComponent(datum/component/nanites/new_nanites, i_am_original, list/arguments)
-	if(!i_am_original)
-		return
 	if(new_nanites)
 		adjust_nanites(new_nanites.nanite_volume)
 	else
