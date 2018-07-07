@@ -804,6 +804,7 @@
 
 
 /obj/item/blood_beam/afterattack(atom/A, mob/living/user, flag, params)
+	. = ..()
 	if(firing || charging)
 		return
 	var/C = user.client

@@ -229,6 +229,7 @@
 		icon_state = "supermatter_tongs"
 
 /obj/item/hemostat/supermatter/afterattack(atom/O, mob/user, proximity)
+	. = ..()
 	if(!sliver)
 		return
 	if(ismovableatom(O) && O != sliver)
