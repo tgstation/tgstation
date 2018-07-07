@@ -374,6 +374,7 @@
 		. = TRUE
 
 /mob/living/carbon/crit_modifier()
+	. = ..()
 	GET_COMPONENT(mood, /datum/component/mood)
 	if(mood)
 		if(mood.sanity >= SANITY_UNSTABLE)

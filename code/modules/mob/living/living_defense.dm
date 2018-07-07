@@ -62,8 +62,8 @@
 				return 0
 
 /mob/living/proc/crit_modifier()
-	return 0
-	
+	return HEALTH_THRESHOLD_CRIT
+
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE)
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
