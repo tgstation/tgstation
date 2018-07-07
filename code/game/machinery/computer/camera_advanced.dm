@@ -54,6 +54,9 @@
 		var/datum/action/A = V
 		A.Remove(user)
 	actions.Cut()
+	for(var/V in eyeobj.visibleCameraChunks)
+		var/datum/camerachunk/C = V
+		C.remove(eyeobj)
 	if(user.client)
 		user.reset_perspective(null)
 		eyeobj.RemoveImages()
@@ -171,9 +174,9 @@
 			C.images -= user_image
 
 /mob/camera/aiEye/remote/Destroy()
-	eye_user = null
 	origin = null
-	return ..()
+	. = ..()
+	eye_user = null
 
 /mob/camera/aiEye/remote/GetViewerClient()
 	if(eye_user)

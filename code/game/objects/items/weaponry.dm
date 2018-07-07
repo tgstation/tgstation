@@ -575,6 +575,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
+	. = ..()
 	if(proximity_flag)
 		if(is_type_in_typecache(target, strong_against))
 			new /obj/effect/decal/cleanable/insectguts(target.drop_location())

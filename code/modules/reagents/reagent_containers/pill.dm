@@ -13,6 +13,7 @@
 	var/apply_method = "swallow"
 	var/roundstart = 0
 	var/self_delay = 0 //pills are instant, this is because patches inheret their aplication from pills
+	var/dissolvable = TRUE
 
 /obj/item/reagent_containers/pill/Initialize()
 	. = ..()
@@ -55,22 +56,24 @@
 
 
 /obj/item/reagent_containers/pill/afterattack(obj/target, mob/user , proximity)
+	. = ..()
 	if(!proximity)
 		return
-	if(target.is_refillable())
-		if(target.is_drainable() && !target.reagents.total_volume)
-			to_chat(user, "<span class='warning'>[target] is empty! There's nothing to dissolve [src] in.</span>")
-			return
+	if(!dissolvable || !target.is_refillable())
+		return
+	if(target.is_drainable() && !target.reagents.total_volume)
+		to_chat(user, "<span class='warning'>[target] is empty! There's nothing to dissolve [src] in.</span>")
+		return
 
-		if(target.reagents.holder_full())
-			to_chat(user, "<span class='warning'>[target] is full.</span>")
-			return
+	if(target.reagents.holder_full())
+		to_chat(user, "<span class='warning'>[target] is full.</span>")
+		return
 
-		to_chat(user, "<span class='notice'>You dissolve [src] in [target].</span>")
-		for(var/mob/O in viewers(2, user))	//viewers is necessary here because of the small radius
-			to_chat(O, "<span class='warning'>[user] slips something into [target]!</span>")
-		reagents.trans_to(target, reagents.total_volume)
-		qdel(src)
+	to_chat(user, "<span class='notice'>You dissolve [src] in [target].</span>")
+	for(var/mob/O in viewers(2, user))	//viewers is necessary here because of the small radius
+		to_chat(O, "<span class='warning'>[user] slips something into [target]!</span>")
+	reagents.trans_to(target, reagents.total_volume)
+	qdel(src)
 
 /obj/item/reagent_containers/pill/tox
 	name = "toxins pill"

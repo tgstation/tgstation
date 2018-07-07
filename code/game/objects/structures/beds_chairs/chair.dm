@@ -307,7 +307,7 @@
 	return 0
 
 /obj/item/chair/afterattack(atom/target, mob/living/carbon/user, proximity)
-	..()
+	. = ..()
 	if(!proximity)
 		return
 	if(prob(break_chance))

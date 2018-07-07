@@ -24,6 +24,7 @@
 	return (OXYLOSS)
 
 /obj/item/reagent_containers/glass/rag/afterattack(atom/A as obj|turf|area, mob/user,proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(iscarbon(A) && A.reagents && reagents.total_volume)

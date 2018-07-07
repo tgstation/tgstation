@@ -270,6 +270,7 @@
 	icon = 'icons/obj/module.dmi'
 
 /obj/item/mine_bot_upgrade/afterattack(mob/living/simple_animal/hostile/mining_drone/M, mob/user, proximity)
+	. = ..()
 	if(!istype(M) || !proximity)
 		return
 	upgrade_bot(M, user)

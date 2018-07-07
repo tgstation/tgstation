@@ -549,8 +549,6 @@
 	dwidth = 15;
 	height = 20;
 	name = "Cere emergency shuttle";
-	port_direction = 4;
-	preferred_direction = 2;
 	width = 42
 	},
 /turf/open/floor/plating,

@@ -24,10 +24,10 @@
 	if(use_delay_override)
 		use_delay = use_delay_override
 
-	RegisterSignal(list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_BLOB_ACT, COMSIG_ATOM_HULK_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_MOVABLE_COLLIDE, COMSIG_MOVABLE_IMPACT, COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ), .proc/play_squeak)
-	RegisterSignal(COMSIG_MOVABLE_CROSSED, .proc/play_squeak_turf)
-	RegisterSignal(COMSIG_ITEM_ATTACK_SELF, .proc/use_squeak)
-	RegisterSignal(COMSIG_SHOES_STEP_ACTION, .proc/step_squeak)
+	RegisterSignal(parent, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_BLOB_ACT, COMSIG_ATOM_HULK_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_MOVABLE_COLLIDE, COMSIG_MOVABLE_IMPACT, COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ), .proc/play_squeak)
+	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/play_squeak_turf)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/use_squeak)
+	RegisterSignal(parent, COMSIG_SHOES_STEP_ACTION, .proc/step_squeak)
 
 /datum/component/squeak/proc/play_squeak()
 	if(prob(squeak_chance))

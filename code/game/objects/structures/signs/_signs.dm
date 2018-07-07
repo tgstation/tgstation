@@ -103,6 +103,7 @@
 	var/sign_path = /obj/structure/sign/basic //the type of sign that will be created when placed on a turf
 
 /obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	if(isturf(target) && proximity)
 		var/turf/T = target
 		user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
@@ -111,8 +112,6 @@
 		var/obj/structure/sign/S = new sign_path(T)
 		S.setDir(dir)
 		qdel(src)
-	else
-		return ..()
 
 /obj/item/sign_backing/Move(atom/new_loc, direct = 0)
 	// pulling, throwing, or conveying a sign backing does not rotate it

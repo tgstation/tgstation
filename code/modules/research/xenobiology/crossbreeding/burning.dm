@@ -300,7 +300,7 @@ Burning extracts:
 	if(!on || !pictures_left || !isturf(target.loc))
 		return
 	new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
-	..()
+	. = ..()
 	var/text = "The camera fades away"
 	if(disk)
 		text += ", leaving the disk behind!"

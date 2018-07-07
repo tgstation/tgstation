@@ -835,6 +835,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					user.show_message("<span class='notice'>No radiation detected.</span>")
 
 /obj/item/pda/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	switch(scanmode)
