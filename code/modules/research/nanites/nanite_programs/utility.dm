@@ -5,7 +5,7 @@
 	use_rate = 0.5
 	rogue_types = list(/datum/nanite_program/toxic)
 	extra_settings = list("Program Overwrite","Cloud Overwrite")
-	
+
 	var/sync_programs = TRUE
 	var/sync_overwrite = FALSE
 	var/overwrite_cloud = FALSE
@@ -72,7 +72,7 @@
 			if(sync_programs)
 				SEND_SIGNAL(M, COMSIG_NANITE_SYNC, nanites, sync_overwrite)
 			if(overwrite_cloud)
-				target_nanites.cloud_id = set_cloud
+				SEND_SIGNAL(M, COMSIG_NANITE_SET_CLOUD, set_cloud)
 
 /datum/nanite_program/monitoring
 	name = "Monitoring"
@@ -107,7 +107,7 @@
 	name = "Relay"
 	desc = "The nanites receive and relay long-range nanite signals."
 	rogue_types = list(/datum/nanite_program/toxic)
-	
+
 	extra_settings = list("Relay Channel")
 	var/relay_channel = 1
 
@@ -123,8 +123,8 @@
 		return relay_channel
 
 /datum/nanite_program/relay/copy_extra_settings_to(datum/nanite_program/relay/target)
-	target.relay_channel = relay_channel	
-	
+	target.relay_channel = relay_channel
+
 /datum/nanite_program/relay/enable_passive_effect()
 	..()
 	SSnanites.nanite_relays |= src
@@ -205,7 +205,7 @@
 			infectee.AddComponent(/datum/component/nanites, 10)
 			SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
 			infectee.investigate_log("[key_name(infectee)] was infected by spreading nanites by [key_name(host_mob)]", INVESTIGATE_NANITES)
-				
+
 /datum/nanite_program/mitosis
 	name = "Mitosis"
 	desc = "The nanites gain the ability to self-replicate, using bluespace to power the process, instead of drawing from a template. This rapidly speeds up the replication rate,\

@@ -16,12 +16,18 @@
 /datum/component/nanites/Initialize(amount = 100, cloud = 0)
 	nanite_volume = amount
 	cloud_id = cloud
-	
-	RegisterSignal(parent, COMSIG_GET_NANITES, .proc/get_nanites)
-	RegisterSignal(parent, COMSIG_NANITE_SET_VARS, .proc/set_vars)
+
+	RegisterSignal(parent, COMSIG_NANITE_GET_DATA, .proc/get_data)
+	RegisterSignal(parent, COMSIG_NANITE_GET_PROGRAMS, .proc/get_programs)
+	RegisterSignal(parent, COMSIG_NANITE_SET_VOLUME, .proc/set_volume)
+	RegisterSignal(parent, COMSIG_NANITE_ADJUST_VOLUME, .proc/adjust_nanites)
+	RegisterSignal(parent, COMSIG_NANITE_SET_MAX_VOLUME, .proc/set_max_volume)
+	RegisterSignal(parent, COMSIG_NANITE_SET_CLOUD, .proc/set_cloud)
+	RegisterSignal(parent, COMSIG_NANITE_SET_SAFETY, .proc/set_safety)
+	RegisterSignal(parent, COMSIG_NANITE_SET_REGEN, .proc/set_regen)
 	RegisterSignal(parent, COMSIG_NANITE_ADD_PROGRAM, .proc/add_program)
 	RegisterSignal(parent, COMSIG_NANITE_SYNC, .proc/sync)
-	
+
 	//Nanites without hosts are non-interactive through normal means
 	if(isliving(parent))
 		host_mob = parent
@@ -38,7 +44,7 @@
 		RegisterSignal(host_mob, COMSIG_LIVING_MINOR_SHOCK, .proc/on_minor_shock)
 		RegisterSignal(host_mob, COMSIG_MOVABLE_HEAR, .proc/on_hear)
 		RegisterSignal(host_mob, COMSIG_SPECIES_GAIN, .proc/check_viable_biotype)
-		
+
 		RegisterSignal(host_mob, COMSIG_NANITE_SIGNAL, .proc/receive_signal)
 		if(cloud_id)
 			cloud_sync()
@@ -158,7 +164,7 @@
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_death(gibbed)
-		
+
 /datum/component/nanites/proc/on_hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
@@ -168,11 +174,11 @@
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.receive_signal(code, source)
-		
-/datum/component/nanites/proc/check_viable_biotype()		
+
+/datum/component/nanites/proc/check_viable_biotype()
 	if(!(MOB_ORGANIC in host_mob.mob_biotypes) && !(MOB_UNDEAD in host_mob.mob_biotypes))
 		qdel(src) //bodytype no longer sustains nanites
-		
+
 /datum/component/nanites/proc/check_access(obj/O)
 	for(var/datum/nanite_program/triggered/access/access_program in programs)
 		if(access_program.activated)
@@ -180,18 +186,31 @@
 		else
 			return FALSE
 	return FALSE
-		
-/datum/component/nanites/proc/set_vars(_nanite_volume, _max_nanites, _safety_threshold, _cloud_id, _regen_rate)
-	if(_max_nanites)
-		max_nanites = _max_nanites
-	if(_nanite_volume)
-		nanite_volume = CLAMP(_nanite_volume, 0, max_nanites)
-	if(_safety_threshold)
-		safety_threshold = _safety_threshold
-	if(_cloud_id)
-		cloud_id = _cloud_id
-	if(_regen_rate)
-		regen_rate = _regen_rate
-	
-/datum/component/nanites/proc/get_nanites()
-	return src
+
+/datum/component/nanites/proc/set_volume(amount)
+	nanite_volume = CLAMP(amount, 0, max_nanites)
+
+/datum/component/nanites/proc/set_max_volume(amount)
+	max_nanites = max(1, max_nanites)
+
+/datum/component/nanites/proc/set_cloud(amount)
+	cloud_id = CLAMP(amount, 0, 100)
+
+/datum/component/nanites/proc/set_safety(amount)
+	safety_threshold = CLAMP(amount, 0, max_nanites)
+
+/datum/component/nanites/proc/set_regen(amount)
+	regen_rate = amount
+
+/datum/component/nanites/proc/get_data()
+	var/list/nanite_data = list()
+	nanite_data["nanite_volume"] = nanite_volume
+	nanite_data["max_nanites"] = max_nanites
+	nanite_data["cloud_id"] = cloud_id
+	nanite_data["regen_rate"] = regen_rate
+	nanite_data["safety_threshold"] = safety_threshold
+	nanite_data["stealth"] = stealth
+	return nanite_data
+
+/datum/component/nanites/proc/get_programs()
+	return programs

@@ -273,11 +273,11 @@
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = null
-	GET_COMPONENT(nanites, /datum/component/nanites)
-	if(nanites)
-		if(nanites.stealth)
+	var/list/nanite_data = SEND_SIGNAL(src, COMSIG_NANITE_GET_DATA)
+	if(LAZYLEN(nanite_data))
+		if(nanite_data["stealth"])
 			return
-		var/nanite_percent = (nanites.nanite_volume / nanites.max_nanites) * 100
+		var/nanite_percent = (nanite_data["nanite_volume"] / nanite_data["max_nanites"]) * 100
 		switch(nanite_percent)
 			if(0 to 10)
 				holder.icon_state = "nanites10"

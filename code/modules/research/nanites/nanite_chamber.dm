@@ -34,18 +34,12 @@
 /obj/machinery/nanite_chamber/proc/set_safety(threshold)
 	if(!occupant)
 		return
-	GET_COMPONENT_FROM(nanites, /datum/component/nanites, occupant)
-	if(!nanites)
-		return
-	nanites.safety_threshold = threshold
+	SEND_SIGNAL(occupant, COMSIG_NANITE_SET_SAFETY, threshold)
 
 /obj/machinery/nanite_chamber/proc/set_cloud(cloud_id)
 	if(!occupant)
 		return
-	GET_COMPONENT_FROM(nanites, /datum/component/nanites, occupant)
-	if(!nanites)
-		return
-	nanites.cloud_id = cloud_id
+	SEND_SIGNAL(occupant, COMSIG_NANITE_SET_CLOUD, cloud_id)
 
 /obj/machinery/nanite_chamber/proc/inject_nanites()
 	if(stat & (NOPOWER|BROKEN))
@@ -97,7 +91,7 @@
 	set_busy(FALSE)
 	if(!occupant)
 		return
-	
+
 	SEND_SIGNAL(occupant, COMSIG_NANITE_ADD_PROGRAM, NP.copy())
 
 /obj/machinery/nanite_chamber/proc/uninstall_program(datum/nanite_program/NP)

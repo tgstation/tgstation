@@ -101,16 +101,17 @@
 	data["locked"] = chamber.locked
 	data["occupant_name"] = chamber.occupant.name
 
-	var/datum/component/nanites/nanites = SEND_SIGNAL(chamber.occupant, COMSIG_GET_NANITES)
-	if(istype(nanites))
+	var/list/nanite_data = SEND_SIGNAL(chamber.occupant, COMSIG_NANITE_GET_DATA)
+	if(LAZYLEN(nanite_data))
 		data["has_nanites"] = TRUE
-		data["nanite_volume"] = nanites.nanite_volume
-		data["regen_rate"] = nanites.regen_rate
-		data["safety_threshold"] = nanites.safety_threshold
-		data["cloud_id"] = nanites.cloud_id
+		data["nanite_volume"] = nanite_data["nanite_volume"]
+		data["regen_rate"] = nanite_data["regen_rate"]
+		data["safety_threshold"] = nanite_data["safety_threshold"]
+		data["cloud_id"] = nanite_data["cloud_id"]
+		var/list/nanite_programs = SEND_SIGNAL(chamber.occupant, COMSIG_NANITE_GET_PROGRAMS)
 		var/list/mob_programs = list()
 		var/id = 1
-		for(var/X in nanites.programs)
+		for(var/X in nanite_programs)
 			var/datum/nanite_program/P = X
 			var/list/mob_program = list()
 			mob_program["name"] = P.name
