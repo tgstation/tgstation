@@ -53,18 +53,16 @@
 
 /datum/component/nanites/Destroy()
 	STOP_PROCESSING(SSnanites, src)
-	for(var/X in programs)
-		qdel(X)
+	QDEL_LIST(programs)
 	if(host_mob)
 		host_mob.hud_set_nanite_indicator()
+	host_mob = null
 	return ..()
 
 /datum/component/nanites/InheritComponent(datum/component/new_nanites, i_am_original, list/arguments)
 	adjust_nanites(arguments[1]) //just add to the nanite volume
 
 /datum/component/nanites/process()
-	if(nanite_volume <= 0) //oops we ran out
-		qdel(src)
 	if(host_mob)
 		adjust_nanites(regen_rate)
 		for(var/X in programs)
@@ -137,6 +135,8 @@
 
 /datum/component/nanites/proc/adjust_nanites(amount)
 	nanite_volume = CLAMP(nanite_volume + amount, 0, max_nanites)
+	if(nanite_volume <= 0) //oops we ran out
+		qdel(src)
 
 /datum/component/nanites/proc/on_emp(severity)
 	nanite_volume *= (rand(0.60, 0.90))		//Lose 10-40% of nanites
