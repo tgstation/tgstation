@@ -1749,3 +1749,43 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		M.adjustStaminaLoss(35)
 		. = TRUE
 	..()
+
+/datum/reagent/consumable/ethanol/fruit_wine
+	name = "generic fruit wine"
+	id = "fruit_wine"
+	description = "A wine made from grown plants. Unremarkable, outside of its alcohol content."
+	color = "#FFFFFF"
+	boozepwr = 35
+	taste_description = "bad coding"
+	can_synth = FALSE
+	var/fruit_species = "null"
+
+/datum/reagent/consumable/ethanol/fruit_wine/on_new(list/data)
+	name = data["name"]
+	description = data["desc"]
+	color = data["color"]
+	boozepwr = data["boozepwr"]
+	taste_description = data["taste"]
+	fruit_species = data["species"]
+	glass_name = "glass of [name]"
+	glass_desc = description
+
+/datum/reagent/consumable/ethanol/fruit_wine/on_merge(list/data, amount)
+	var/total_amount = amount
+	if(data["species"] == fruit_species)
+		return //Properly merged.
+	volume -= total_amount
+	var/present = FALSE
+	for(var/datum/reagent/consumable/ethanol/fruit_wine/wine in holder.reagent_list)
+		if(wine.fruit_species == data["species"])
+			present = TRUE
+			wine.volume += total_amount //Sanity checking done before on_merge is even called. Convenient!
+			break
+	if(!present)
+		var/datum/reagent/consumable/ethanol/fruit_wine/wine = new(data)
+		wine.volume = total_amount
+		holder.reagent_list += wine
+		wine.holder = holder
+		wine.data = data
+		wine.on_new(data)
+	holder.update_total()

@@ -152,6 +152,7 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	seed = /obj/item/seeds/lavaland/polypore
+	wine_power = 20
 
 /obj/item/reagent_containers/food/snacks/grown/ash_flora/Initialize()
 	. = ..()
@@ -167,7 +168,7 @@
 	list_reagents = list("nutriment" = 3, "vitfro" = 2, "nicotine" = 2)
 	icon_state = "mushroom_leaf"
 	seed = /obj/item/seeds/lavaland/porcini
-
+	wine_power = 40
 
 /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_cap
 	name = "mushroom cap"
@@ -175,7 +176,7 @@
 	list_reagents = list("mindbreaker" = 2, "entpoly" = 4, "mushroomhallucinogen" = 2)
 	icon_state = "mushroom_cap"
 	seed = /obj/item/seeds/lavaland/inocybe
-
+	wine_power = 70
 
 /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_stem
 	name = "mushroom stem"
@@ -184,6 +185,7 @@
 	icon_state = "mushroom_stem"
 	light_range = 1
 	seed = /obj/item/seeds/lavaland/ember
+	wine_power = 60
 
 /obj/item/reagent_containers/food/snacks/grown/ash_flora/cactus_fruit
 	name = "cactus fruit"
@@ -191,6 +193,7 @@
 	desc = "A cactus fruit covered in a thick, reddish skin. And some ash."
 	icon_state = "cactus_fruit"
 	seed = /obj/item/seeds/lavaland/cactus
+	wine_power = 50
 
 /obj/item/reagent_containers/glass/bowl/mushroom_bowl
 	name = "mushroom bowl"
