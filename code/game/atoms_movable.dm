@@ -159,6 +159,8 @@
 			continue
 		var/atom/movable/thing = i
 		if(!thing.Uncross(src, newloc))
+			if(thing.flags_1 & ON_BORDER_1)
+				Bump(thing)
 			return
 
 	if(!newloc.Enter(src))
