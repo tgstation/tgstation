@@ -213,4 +213,4 @@
 	nanite_data["stealth"] = stealth
 
 /datum/component/nanites/proc/get_programs(list/nanite_programs)
-	nanite_programs = programs
+	nanite_programs |= programs
