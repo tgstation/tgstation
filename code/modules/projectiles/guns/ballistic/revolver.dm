@@ -191,7 +191,6 @@
 	..()
 
 /obj/item/gun/ballistic/revolver/russian/afterattack(atom/target, mob/living/user, flag, params)
-	. = ..()
 	if(flag)
 		if(!(target in user.contents) && ismob(target))
 			if(user.a_intent == INTENT_HARM) // Flogging action
@@ -228,6 +227,8 @@
 
 		user.visible_message("<span class='danger'>*click*</span>")
 		playsound(src, "gun_dry_fire", 30, 1)
+
+	. = ..()
 
 /obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = BODY_ZONE_HEAD)
 	user.apply_damage(300, BRUTE, affecting)
