@@ -12,6 +12,7 @@
 #define POLL_IGNORE_ASHWALKER "ashwalker"
 #define POLL_IGNORE_GOLEM "golem"
 #define POLL_IGNORE_SWARMER "swarmer"
+#define POLL_IGNORE_DRONE "drone"
 
 GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_SENTIENCE_POTION = "Sentience potion",

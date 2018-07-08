@@ -31,11 +31,11 @@ datum/notificationpanel/ui_data(mob/user)
 	. = list()
 	.["ignore"] = list()
 	for(var/key in GLOB.poll_ignore_desc)
-		.["ignore"] += list(
+		.["ignore"] += list(list(
 			"key" = key,
 			"enabled" = (user.ckey in GLOB.poll_ignore[key]),
 			"desc" = GLOB.poll_ignore_desc[key]
-			)
+			))
 
 
 /datum/notificationpanel/ui_act(action, params)
