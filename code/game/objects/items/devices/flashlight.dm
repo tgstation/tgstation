@@ -85,7 +85,7 @@
 										 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
 					if(M.stat == DEAD || (M.has_trait(TRAIT_BLIND)) || !M.flash_act(visual = 1)) //mob is dead or fully blind
 						to_chat(user, "<span class='warning'>[M]'s pupils don't react to the light!</span>")
-					else if(M.dna && M.dna.check_mutation(XRAY))	//mob has X-ray vision
+					else if(M.dna && M.dna.check_mutation(XRAY))	//mob has X-RAY vision
 						to_chat(user, "<span class='danger'>[M]'s pupils give an eerie glow!</span>")
 					else //they're okay!
 						to_chat(user, "<span class='notice'>[M]'s pupils narrow.</span>")
@@ -168,7 +168,6 @@
 	var/holo_cooldown = 0
 
 /obj/item/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
 	if(!proximity_flag)
 		if(holo_cooldown > world.time)
 			to_chat(user, "<span class='warning'>[src] is not ready yet!</span>")
@@ -178,6 +177,7 @@
 			new /obj/effect/temp_visual/medical_holosign(T,user) //produce a holographic glow
 			holo_cooldown = world.time + 100
 			return
+	..()
 
 /obj/effect/temp_visual/medical_holosign
 	name = "medical holosign"
@@ -380,7 +380,6 @@
 	return
 
 /obj/item/flashlight/emp/afterattack(atom/movable/A, mob/user, proximity)
-	. = ..()
 	if(!proximity)
 		return
 
@@ -536,6 +535,6 @@
 	desc = "This shouldn't exist outside of someone's head, how are you seeing this?"
 	brightness_on = 15
 	flashlight_power = 1
-	flags_1 = CONDUCT_1
+	flags_1 = CONDUCT_1 
 	item_flags = DROPDEL
 	actions_types = list()

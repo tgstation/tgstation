@@ -12,7 +12,7 @@
 	probability = _probability
 	flags = _flags
 
-	RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED), .proc/Crossed)
+	RegisterSignal(list(COMSIG_MOVABLE_CROSSED), .proc/Crossed)
 
 /datum/component/caltrop/proc/Crossed(atom/movable/AM)
 	var/atom/A = parent

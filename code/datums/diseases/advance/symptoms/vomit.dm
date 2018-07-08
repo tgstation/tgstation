@@ -6,7 +6,7 @@ Vomiting
 	Very Very Noticable.
 	Decreases resistance.
 	Doesn't increase stage speed.
-	Little transmissibility.
+	Little transmittable.
 	Medium Level.
 
 Bonus

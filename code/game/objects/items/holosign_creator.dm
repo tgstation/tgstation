@@ -19,7 +19,6 @@
 	var/holocreator_busy = FALSE //to prevent placing multiple holo barriers at once
 
 /obj/item/holosign_creator/afterattack(atom/target, mob/user, flag)
-	. = ..()
 	if(flag)
 		if(!check_allowed_items(target, 1))
 			return

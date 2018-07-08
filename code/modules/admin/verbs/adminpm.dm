@@ -167,7 +167,7 @@
 				to_chat(recipient, replymsg)
 				to_chat(src, "<font color='blue'>PM to-<b>Admins</b>: <span class='linkify'>[msg]</span></font>")
 
-			//play the receiving admin the adminhelp sound (if they have them enabled)
+			//play the recieving admin the adminhelp sound (if they have them enabled)
 			if(recipient.prefs.toggles & SOUND_ADMINHELP)
 				SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
 

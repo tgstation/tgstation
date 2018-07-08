@@ -88,7 +88,7 @@
 
 /datum/gas_reaction/nobliumsupression
 	priority = INFINITY
-	name = "Hyper-Noblium Reaction Suppression"
+	name = "Hyper-Noblium Reaction Supression"
 	id = "nobstop"
 
 /datum/gas_reaction/nobliumsupression/init_reqs()

@@ -35,7 +35,6 @@
 
 
 /obj/item/mop/afterattack(atom/A, mob/user, proximity)
-	. = ..()
 	if(!proximity)
 		return
 

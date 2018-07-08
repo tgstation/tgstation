@@ -19,7 +19,6 @@
 		to_chat(user, "It has [remaining_uses] uses left.")
 
 /obj/item/soapstone/afterattack(atom/target, mob/user, proximity)
-	. = ..()
 	var/turf/T = get_turf(target)
 	if(!proximity)
 		return

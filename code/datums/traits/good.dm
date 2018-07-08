@@ -23,10 +23,9 @@
 		mood.mood_modifier = 0.8
 
 /datum/quirk/apathetic/remove()
-	if(quirk_holder)
-		GET_COMPONENT_FROM(mood, /datum/component/mood, quirk_holder)
-		if(mood)
-			mood.mood_modifier = 1 //Change this once/if species get their own mood modifiers.
+	GET_COMPONENT_FROM(mood, /datum/component/mood, quirk_holder)
+	if(mood)
+		mood.mood_modifier = 1 //Change this once/if species get their own mood modifiers.
 
 
 

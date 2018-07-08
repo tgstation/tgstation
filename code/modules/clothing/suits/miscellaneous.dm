@@ -311,7 +311,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/suit/security/officer/russian
-	name = "\improper Russian officer's jacket"
+	name = "russian officer's jacket"
 	desc = "This jacket is for those special occasions when a russian officer isn't required to wear their armor."
 	icon_state = "officertanjacket"
 	item_state = "officertanjacket"
@@ -594,12 +594,3 @@
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_cuirass_old"
 	armor = list("melee" = 5, "bullet" = 0, "laser" = -5, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
-
-/obj/item/clothing/suit/ghost_sheet
-	name = "ghost sheet"
-	desc = "The hands float by themselves, so it's extra spooky."
-	icon_state = "ghost_sheet"
-	item_state = "ghost_sheet_item"
-	w_class = WEIGHT_CLASS_TINY
-	flags_inv = HIDEGLOVES|HIDEMASK|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	alternate_worn_layer = UNDER_HEAD_LAYER

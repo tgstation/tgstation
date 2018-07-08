@@ -6,7 +6,7 @@ Sneezing
 	Very Noticable.
 	Increases resistance.
 	Doesn't increase stage speed.
-	Very transmissible.
+	Very transmittable.
 	Low Level.
 
 Bonus

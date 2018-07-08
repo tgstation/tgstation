@@ -6036,7 +6036,8 @@
 /obj/machinery/door/window/westleft{
 	base_state = "right";
 	dir = 2;
-	icon_state = "right"
+	icon_state = "right";
+	name = "windoor"
 	},
 /obj/item/book/manual/wiki/engineering_hacking,
 /obj/item/tape/random,
@@ -45996,6 +45997,9 @@
 	sortType = 20
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -49811,10 +49815,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/smartfridge/disks{
-	pixel_y = 2
-	},
-/obj/structure/table,
+/obj/machinery/smartfridge/disks,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "ccA" = (
@@ -71360,13 +71361,10 @@
 /turf/open/floor/circuit/killroom,
 /area/science/xenobiology)
 "dbE" = (
-/obj/machinery/plantgenes{
-	pixel_y = 6
-	},
+/obj/machinery/plantgenes,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "dbF" = (

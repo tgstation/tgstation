@@ -485,8 +485,6 @@ SUBSYSTEM_DEF(timer)
 					if (hash_timer.flags & TIMER_STOPPABLE)
 						. = hash_timer.id
 					return
-	else if(flags & TIMER_OVERRIDE)
-		stack_trace("TIMER_OVERRIDE used without TIMER_UNIQUE")
 
 
 	var/timeToRun = world.time + wait

@@ -190,7 +190,6 @@
 
 
 /obj/item/abductor/gizmo/afterattack(atom/target, mob/living/user, flag, params)
-	. = ..()
 	if(flag)
 		return
 	if(!ScientistCheck(user))
@@ -252,7 +251,6 @@
 	radio_off(M, user)
 
 /obj/item/abductor/silencer/afterattack(atom/target, mob/living/user, flag, params)
-	. = ..()
 	if(flag)
 		return
 	if(!AbductorCheck(user))
@@ -305,7 +303,6 @@
 	to_chat(user, "<span class='notice'>You switch the device to [mode==MIND_DEVICE_MESSAGE? "TRANSMISSION": "COMMAND"] MODE</span>")
 
 /obj/item/abductor/mind_device/afterattack(atom/target, mob/living/user, flag, params)
-	. = ..()
 	if(!ScientistCheck(user))
 		return
 

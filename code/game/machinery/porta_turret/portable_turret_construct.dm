@@ -26,7 +26,7 @@
 			if(istype(I, /obj/item/wrench) && !anchored)
 				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You secure the external bolts.</span>")
-				setAnchored(TRUE)
+				anchored = TRUE
 				build_step = PTURRET_BOLTED
 				return
 
@@ -51,7 +51,7 @@
 			else if(istype(I, /obj/item/wrench))
 				I.play_tool_sound(src, 75)
 				to_chat(user, "<span class='notice'>You unfasten the external bolts.</span>")
-				setAnchored(FALSE)
+				anchored = FALSE
 				build_step = PTURRET_UNSECURED
 				return
 

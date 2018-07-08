@@ -14,44 +14,45 @@
 	resistance_flags = FIRE_PROOF
 
 	var/obj/item/noz
+	var/on = FALSE
 	var/volume = 500
 
-/obj/item/watertank/Initialize()
-	. = ..()
+/obj/item/watertank/New()
+	..()
 	create_reagents(volume)
 	noz = make_noz()
 
-/obj/item/watertank/ui_action_click(mob/user)
-	toggle_mister(user)
+/obj/item/watertank/ui_action_click()
+	toggle_mister()
 
 /obj/item/watertank/item_action_slot_check(slot, mob/user)
 	if(slot == user.getBackSlot())
 		return 1
 
-/obj/item/watertank/proc/toggle_mister(mob/living/user)
-	if(!istype(user))
+/obj/item/watertank/verb/toggle_mister()
+	set name = "Toggle Mister"
+	set category = "Object"
+	if (usr.get_item_by_slot(usr.getBackSlot()) != src)
+		to_chat(usr, "<span class='warning'>The watertank must be worn properly to use!</span>")
 		return
-	if(user.get_item_by_slot(user.getBackSlot()) != src)
-		to_chat(user, "<span class='warning'>The watertank must be worn properly to use!</span>")
+	if(usr.incapacitated())
 		return
-	if(user.incapacitated())
-		return
+	on = !on
 
-	if(QDELETED(noz))
-		noz = make_noz()
-	if(noz in src)
+	var/mob/living/carbon/human/user = usr
+	if(on)
+		if(noz == null)
+			noz = make_noz()
+
 		//Detach the nozzle into the user's hands
 		if(!user.put_in_hands(noz))
+			on = FALSE
 			to_chat(user, "<span class='warning'>You need a free hand to hold the mister!</span>")
 			return
 	else
 		//Remove from their hands and put back "into" the tank
 		remove_noz()
-
-/obj/item/watertank/verb/toggle_mister_verb()
-	set name = "Toggle Mister"
-	set category = "Object"
-	toggle_mister(usr)
+	return
 
 /obj/item/watertank/proc/make_noz()
 	return new /obj/item/reagent_containers/spray/mister(src)
@@ -65,17 +66,19 @@
 	if(ismob(noz.loc))
 		var/mob/M = noz.loc
 		M.temporarilyRemoveItemFromInventory(noz, TRUE)
-	noz.forceMove(src)
+	return
 
 /obj/item/watertank/Destroy()
-	QDEL_NULL(noz)
+	if (on)
+		qdel(noz)
 	return ..()
 
 /obj/item/watertank/attack_hand(mob/user)
-	if (user.get_item_by_slot(user.getBackSlot()) == src)
-		toggle_mister(user)
-	else
-		return ..()
+	. = ..()
+	if(.)
+		return
+	if(loc == user)
+		ui_action_click()
 
 /obj/item/watertank/MouseDrop(obj/over_object)
 	var/mob/M = loc
@@ -111,28 +114,40 @@
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
-	item_flags = NOBLUDGEON | ABSTRACT  // don't put in storage
+	item_flags = NOBLUDGEON
 	container_type = OPENCONTAINER
 	slot_flags = 0
 
 	var/obj/item/watertank/tank
 
-/obj/item/reagent_containers/spray/mister/Initialize()
-	. = ..()
-	tank = loc
-	if(!istype(tank))
-		return INITIALIZE_HINT_QDEL
-	reagents = tank.reagents	//This mister is really just a proxy for the tank's reagents
+/obj/item/reagent_containers/spray/mister/New(parent_tank)
+	..()
+	if(check_tank_exists(parent_tank, src))
+		tank = parent_tank
+		reagents = tank.reagents	//This mister is really just a proxy for the tank's reagents
+		forceMove(tank)
+	return
+
+/obj/item/reagent_containers/spray/mister/dropped(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>The mister snaps back onto the watertank.</span>")
+	tank.on = 0
+	forceMove(tank)
 
 /obj/item/reagent_containers/spray/mister/attack_self()
 	return
 
-/obj/item/reagent_containers/spray/mister/doMove(atom/destination)
-	if(destination && (destination != tank.loc || !ismob(destination)))
-		if (loc != tank)
-			to_chat(tank.loc, "<span class='notice'>The mister snaps back onto the watertank.</span>")
-		destination = tank
+/proc/check_tank_exists(parent_tank, mob/living/carbon/human/M, obj/O)
+	if (!parent_tank || !istype(parent_tank, /obj/item/watertank))	//To avoid weird issues from admin spawns
+		qdel(O)
+		return 0
+	else
+		return 1
+
+/obj/item/reagent_containers/spray/mister/Move()
 	..()
+	if(loc != tank.loc)
+		forceMove(tank.loc)
 
 /obj/item/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
 	if(target.loc == loc) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it
@@ -146,8 +161,8 @@
 	icon_state = "waterbackpackjani"
 	item_state = "waterbackpackjani"
 
-/obj/item/watertank/janitor/Initialize()
-	. = ..()
+/obj/item/watertank/janitor/New()
+	..()
 	reagents.add_reagent("cleaner", 500)
 
 /obj/item/reagent_containers/spray/mister/janitor
@@ -182,8 +197,8 @@
 	volume = 200
 	slowdown = 0
 
-/obj/item/watertank/atmos/Initialize()
-	. = ..()
+/obj/item/watertank/atmos/New()
+	..()
 	reagents.add_reagent("water", 200)
 
 /obj/item/watertank/atmos/make_noz()
@@ -211,27 +226,25 @@
 	precision = 1
 	cooling_power = 5
 	w_class = WEIGHT_CLASS_HUGE
-	item_flags = ABSTRACT  // don't put in storage
 	var/obj/item/watertank/tank
 	var/nozzle_mode = 0
 	var/metal_synthesis_cooldown = 0
 	var/resin_cooldown = 0
 
-/obj/item/extinguisher/mini/nozzle/Initialize()
-	. = ..()
-	tank = loc
-	if (!istype(tank))
-		return INITIALIZE_HINT_QDEL
-	reagents = tank.reagents
-	max_water = tank.volume
-
-
-/obj/item/extinguisher/mini/nozzle/doMove(atom/destination)
-	if(destination && (destination != tank.loc || !ismob(destination)))
-		if(loc != tank)
-			to_chat(tank.loc, "<span class='notice'>The nozzle snaps back onto the tank!</span>")
-		destination = tank
+/obj/item/extinguisher/mini/nozzle/New(parent_tank)
 	..()
+	if(check_tank_exists(parent_tank, src))
+		tank = parent_tank
+		reagents = tank.reagents
+		max_water = tank.volume
+		forceMove(tank)
+
+
+/obj/item/extinguisher/mini/nozzle/Move()
+	..()
+	if(loc != tank.loc)
+		forceMove(tank)
+	return
 
 /obj/item/extinguisher/mini/nozzle/attack_self(mob/user)
 	switch(nozzle_mode)
@@ -251,6 +264,12 @@
 			to_chat(user, "Swapped to water extinguisher")
 			return
 	return
+
+/obj/item/extinguisher/mini/nozzle/dropped(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>The nozzle snaps back onto the tank!</span>")
+	tank.on = 0
+	forceMove(tank)
 
 /obj/item/extinguisher/mini/nozzle/afterattack(atom/target, mob/user)
 	if(nozzle_mode == EXTINGUISHER)
@@ -434,8 +453,8 @@
 	volume = 2000
 	slowdown = 0
 
-/obj/item/watertank/op/Initialize()
-	. = ..()
+/obj/item/watertank/op/New()
+	..()
 	reagents.add_reagent("mutagen",350)
 	reagents.add_reagent("napalm",125)
 	reagents.add_reagent("welding_fuel",125)

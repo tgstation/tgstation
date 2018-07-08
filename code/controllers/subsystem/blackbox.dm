@@ -20,7 +20,6 @@ SUBSYSTEM_DEF(blackbox)
 	record_feedback("amount", "random_seed", Master.random_seed)
 	record_feedback("amount", "dm_version", DM_VERSION)
 	record_feedback("amount", "byond_version", world.byond_version)
-	record_feedback("amount", "byond_build", world.byond_build)
 	. = ..()
 
 //poll population
@@ -152,7 +151,7 @@ feedback data can be recorded in 5 formats:
 			SSblackbox.record_feedback("text", "example", 1, "other text")
 	json: {"data":["sample text","other text"]}
 "amount"
-	used to record simple counts of data i.e. the number of ahelps received
+	used to record simple counts of data i.e. the number of ahelps recieved
 	further calls to the same key will add or subtract (if increment argument is a negative) from the saved amount
 	calls:	SSblackbox.record_feedback("amount", "example", 8)
 			SSblackbox.record_feedback("amount", "example", 2)

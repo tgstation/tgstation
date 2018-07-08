@@ -91,7 +91,6 @@
 	return
 
 /obj/item/card/emag/afterattack(atom/target, mob/user, proximity)
-	. = ..()
 	var/atom/A = target
 	if(!proximity && prox_check)
 		return

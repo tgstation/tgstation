@@ -4,7 +4,7 @@
 /datum/component/cleaning/Initialize()
 	if(!ismovableatom(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED), .proc/Clean)
+	RegisterSignal(list(COMSIG_MOVABLE_MOVED), .proc/Clean)
 
 /datum/component/cleaning/proc/Clean()
 	var/atom/movable/AM = parent

@@ -258,7 +258,8 @@
 	desc = "This mycelium -powers- into mushrooms!"
 	icon_state = "mycelium-glowcap"
 	species = "glowcap"
-	icon_harvest = "glowcap-harvest"
+	icon_grow = "glowshroom-grow"
+	icon_dead = "glowshroom-dead"
 	plantname = "Glowcaps"
 	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
 	genes = list(/datum/plant_gene/trait/glow/red, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/plant_type/fungal_metabolism)

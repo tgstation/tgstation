@@ -459,7 +459,6 @@
 		viewpichelper(Ainfo)
 
 /obj/item/camera/afterattack(atom/target, mob/user, flag)
-	. = ..()
 	if(!on || !pictures_left || !isturf(target.loc))
 		return
 	if (disk)

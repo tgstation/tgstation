@@ -33,7 +33,7 @@ BONUS
 
 	var/mob/living/M = A.affected_mob
 	if(prob(base_message_chance))
-		to_chat(M, "<span class='warning'>[pick("Your scalp itches.", "Your skin feels flaky.")]</span>")
+		to_chat(M, "<span class='warning'>[pick("Your scalp itches.", "Your skin feels flakey.")]</span>")
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		switch(A.stage)

@@ -334,7 +334,7 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/head/helmet/space/hardsuit/cult
-	name = "\improper Nar-Sien hardened helmet"
+	name = "nar-sien hardened helmet"
 	desc = "A heavily-armored helmet worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
 	icon_state = "cult_helmet"
 	item_state = "cult_helmet"
@@ -343,7 +343,7 @@
 	actions_types = list()
 
 /obj/item/clothing/suit/space/hardsuit/cult
-	name = "\improper Nar-Sien hardened armor"
+	name = "nar-sien hardened armor"
 	icon_state = "cult_armor"
 	item_state = "cult_armor"
 	desc = "A heavily-armored exosuit worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
@@ -804,7 +804,6 @@
 
 
 /obj/item/blood_beam/afterattack(atom/A, mob/living/user, flag, params)
-	. = ..()
 	if(firing || charging)
 		return
 	var/C = user.client

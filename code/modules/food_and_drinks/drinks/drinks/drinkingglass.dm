@@ -115,7 +115,6 @@
 	..()
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/afterattack(obj/target, mob/user, proximity)
-	. = ..()
 	if((!proximity) || !check_allowed_items(target,target_self=1))
 		return
 
@@ -125,4 +124,5 @@
 		reagents.reaction(target, TOUCH)
 		reagents.clear_reagents()
 		return
+	..()
 

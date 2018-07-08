@@ -415,7 +415,7 @@
 	else if (docile)
 		newmood = ":3"
 	else if (Target)
-		newmood = "mischievous"
+		newmood = "mischevous"
 
 	if (!newmood)
 		if (Discipline && prob(25))

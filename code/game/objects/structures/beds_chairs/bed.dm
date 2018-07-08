@@ -127,7 +127,6 @@
 	deploy_roller(user, user.loc)
 
 /obj/item/roller/afterattack(obj/target, mob/user , proximity)
-	. = ..()
 	if(!proximity)
 		return
 	if(isopenturf(target))

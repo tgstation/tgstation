@@ -172,7 +172,6 @@
 	update_icon()
 
 /obj/item/borg/charger/afterattack(obj/item/target, mob/living/silicon/robot/user, proximity_flag)
-	. = ..()
 	if(!proximity_flag || !iscyborg(user))
 		return
 	if(mode == "draw")
@@ -195,7 +194,7 @@
 
 				M.use_power(200)
 
-			to_chat(user, "<span class='notice'>You stop charging yourself.</span>")
+			to_chat(user, "<span class='notice'>You stop charging youself.</span>")
 
 		else if(is_type_in_list(target, charge_items))
 			var/obj/item/stock_parts/cell/cell = target
@@ -234,7 +233,7 @@
 					break
 				target.update_icon()
 
-			to_chat(user, "<span class='notice'>You stop charging yourself.</span>")
+			to_chat(user, "<span class='notice'>You stop charging youself.</span>")
 
 	else if(is_type_in_list(target, charge_items))
 		var/obj/item/stock_parts/cell/cell = target
@@ -449,7 +448,6 @@
 	check_amount()
 
 /obj/item/borg/lollipop/afterattack(atom/target, mob/living/user, proximity, click_params)
-	. = ..()
 	check_amount()
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
@@ -695,7 +693,7 @@
 
 
 /obj/item/borg/sight/xray
-	name = "\proper X-ray vision"
+	name = "\proper x-ray vision"
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "securearea"
 	sight_mode = BORGXRAY

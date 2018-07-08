@@ -67,7 +67,6 @@
 	return TRUE
 
 /obj/item/grown/nettle/afterattack(atom/A as mob|obj, mob/user,proximity)
-	. = ..()
 	if(!proximity)
 		return
 	if(force > 0)

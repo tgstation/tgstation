@@ -45,12 +45,12 @@
 			return
 
 		if(!parent_turret.anchored)
-			parent_turret.setAnchored(TRUE)
+			parent_turret.anchored = TRUE
 			to_chat(user, "<span class='notice'>You secure the exterior bolts on the turret.</span>")
 			parent_turret.invisibility = 0
 			parent_turret.update_icon()
 		else
-			parent_turret.setAnchored(FALSE)
+			parent_turret.anchored = FALSE
 			to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
 			parent_turret.invisibility = INVISIBILITY_MAXIMUM
 			parent_turret.update_icon()

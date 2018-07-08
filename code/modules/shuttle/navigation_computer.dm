@@ -31,9 +31,6 @@
 	if(jammed)
 		to_chat(user, "<span class='warning'>The Syndicate is jamming the console!</span>")
 		return
-	if(!shuttle_port)
-		to_chat(user,"<span class='warning'>Warning: Shuttle connection severed!</span>")
-		return
 	return ..()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/GrantActions(mob/living/user)
@@ -249,7 +246,7 @@
 
 /mob/camera/aiEye/remote/shuttle_docker
 	visible_icon = FALSE
-	use_static = USE_STATIC_NONE
+	use_static = FALSE
 	var/list/placement_images = list()
 	var/list/placed_images = list()
 

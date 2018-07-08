@@ -13,7 +13,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/machinery/clonepod,
 		/obj/effect/mob_spawn,
 		/obj/effect/hierophant,
-		/obj/structure/receiving_pad,
+		/obj/structure/recieving_pad,
 		/obj/effect/clockwork/spatial_gateway,
 		/obj/structure/destructible/clockwork/powered/clockwork_obelisk,
 		/obj/item/warp_cube,
@@ -35,7 +35,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	width = 12
 	dwidth = 5
 	height = 7
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
 
 	// When TRUE, these vars allow exporting emagged/contraband items, and add some special interactions to existing exports.
 	var/contraband = FALSE

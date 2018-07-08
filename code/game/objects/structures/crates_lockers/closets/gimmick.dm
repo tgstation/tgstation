@@ -17,7 +17,7 @@
 	icon_state = "syndicate"
 
 /obj/structure/closet/gimmick/russian
-	name = "\improper Russian surplus closet"
+	name = "russian surplus closet"
 	desc = "It's a storage unit for Russian standard-issue surplus."
 
 /obj/structure/closet/gimmick/russian/PopulateContents()

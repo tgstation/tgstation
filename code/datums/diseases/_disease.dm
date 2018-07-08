@@ -42,8 +42,10 @@
 
 //add this disease if the host does not already have too many
 /datum/disease/proc/try_infect(var/mob/living/infectee, make_copy = TRUE)
-	infect(infectee, make_copy)
-	return TRUE
+	if(infectee.diseases.len < DISEASE_LIMIT)
+		infect(infectee, make_copy)
+		return TRUE
+	return FALSE
 
 //add the disease with no checks
 /datum/disease/proc/infect(var/mob/living/infectee, make_copy = TRUE)

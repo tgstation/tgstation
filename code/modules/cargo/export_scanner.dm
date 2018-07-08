@@ -17,7 +17,6 @@
 		to_chat(user, "<span class='notice'>[src] is not currently linked to a cargo console.</span>")
 
 /obj/item/export_scanner/afterattack(obj/O, mob/user, proximity)
-	. = ..()
 	if(!istype(O) || !proximity)
 		return
 

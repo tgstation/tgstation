@@ -45,6 +45,9 @@
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 
+/obj/item/reagent_containers/afterattack(obj/target, mob/user , flag)
+	return
+
 /obj/item/reagent_containers/proc/canconsume(mob/eater, mob/user)
 	if(!iscarbon(eater))
 		return 0

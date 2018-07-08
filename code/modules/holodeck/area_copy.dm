@@ -1,8 +1,5 @@
 //Vars that will not be copied when using /DuplicateObject
-GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
-	"tag", "datum_components", "area", "type", "loc", "locs", "vars", "parent", "parent_type", "verbs", "ckey", "key",
-	"power_supply", "contents", "reagents", "stat", "x", "y", "z", "group", "atmos_adjacent_turfs", "comp_lookup"
-	))
+GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag", "datum_components", "area","type","loc","locs","vars", "parent","parent_type", "verbs","ckey","key","power_supply","contents","reagents","stat","x","y","z","group","atmos_adjacent_turfs"))
 
 /proc/DuplicateObject(atom/original, perfectcopy = TRUE, sameloc = FALSE, atom/newloc = null, nerf = FALSE, holoitem=FALSE)
 	if(!original)

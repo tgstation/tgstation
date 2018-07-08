@@ -96,7 +96,7 @@
 
 //Tourettes causes you to randomly stand in place and shout.
 /datum/mutation/human/tourettes
-	name = "Tourette's Syndrome"
+	name = "Tourettes Syndrome"
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You twitch.</span>"
 

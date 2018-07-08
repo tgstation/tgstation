@@ -27901,16 +27901,13 @@
 	pixel_x = 26;
 	pixel_y = 8
 	},
-/obj/machinery/plantgenes{
-	pixel_y = 6
-	},
+/obj/machinery/plantgenes,
 /obj/machinery/camera{
 	c_tag = "Hydroponics";
 	dir = 8;
 	name = "service camera"
 	},
 /obj/effect/turf_decal/delivery,
-/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bnn" = (
@@ -28551,10 +28548,7 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "boC" = (
-/obj/machinery/smartfridge/disks{
-	pixel_y = 2
-	},
-/obj/structure/table,
+/obj/machinery/smartfridge/disks,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "boD" = (
@@ -67890,7 +67884,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Storage";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 4;
 	name = "medbay camera"
 	},
@@ -71809,7 +71803,7 @@
 /obj/machinery/light,
 /obj/machinery/camera{
 	c_tag = "Medbay - Waiting Room";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 1;
 	name = "medbay camera"
 	},
@@ -71949,7 +71943,7 @@
 "cYc" = (
 /obj/machinery/camera{
 	c_tag = "Medbay - Break Room";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 2;
 	name = "medbay camera"
 	},
@@ -72627,7 +72621,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
 	c_tag = "Medbay - Fore Port";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 8;
 	name = "medbay camera"
 	},
@@ -72709,7 +72703,7 @@
 /obj/item/stack/medical/ointment,
 /obj/machinery/camera{
 	c_tag = "Medbay - Sleepers";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 2;
 	name = "medbay camera"
 	},
@@ -75478,7 +75472,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Chemistry";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 8;
 	name = "medbay camera"
 	},
@@ -76309,7 +76303,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Center";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 2;
 	name = "medbay camera"
 	},
@@ -77700,7 +77694,7 @@
 /obj/machinery/light,
 /obj/machinery/camera{
 	c_tag = "Medbay - Port";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 1;
 	name = "medbay camera"
 	},
@@ -77799,7 +77793,7 @@
 /obj/machinery/light,
 /obj/machinery/camera{
 	c_tag = "Medbay - Starboard";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 1;
 	name = "medbay camera"
 	},
@@ -81250,7 +81244,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Cloning Lab";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 1;
 	name = "medbay camera"
 	},
@@ -81310,7 +81304,7 @@
 /obj/item/clothing/neck/stethoscope,
 /obj/machinery/camera{
 	c_tag = "Medbay - Cryogenics";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 1;
 	name = "medbay camera"
 	},
@@ -81777,7 +81771,7 @@
 /obj/machinery/iv_drip,
 /obj/machinery/camera{
 	c_tag = "Medbay - Recovery Room";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 8;
 	name = "medbay camera"
 	},
@@ -83174,7 +83168,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Genetics Lab";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 4;
 	name = "medbay camera"
 	},
@@ -83806,7 +83800,7 @@
 /obj/item/storage/box/disks,
 /obj/machinery/camera{
 	c_tag = "Medbay - Genetics Desk";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 4;
 	name = "medbay camera"
 	},
@@ -84114,7 +84108,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Surgery";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 1;
 	name = "medbay camera"
 	},
@@ -84709,7 +84703,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
 	c_tag = "Medbay - Aft Port";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 8;
 	name = "medbay camera"
 	},
@@ -84768,7 +84762,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Chief Medical Officer's Office";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 8;
 	name = "medbay camera"
 	},
@@ -86038,7 +86032,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Aft Starboard";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 4;
 	name = "medbay camera"
 	},
@@ -89068,7 +89062,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
 	c_tag = "Medbay - Morgue";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 1;
 	name = "medbay camera"
 	},
@@ -89180,7 +89174,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Chief Medical Officer's Quarters";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 1;
 	name = "medbay camera"
 	},
@@ -92472,7 +92466,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
 	c_tag = "Virology - Containment Lock";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 8;
 	name = "virology camera"
 	},
@@ -92985,7 +92979,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Virology - Break Room";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 8;
 	name = "virology camera"
 	},
@@ -94692,7 +94686,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Virology - Lab";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	name = "virology camera"
 	},
 /obj/effect/turf_decal/bot,
@@ -94712,7 +94706,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
 	c_tag = "Virology - Hallway";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 8;
 	name = "virology camera"
 	},
@@ -96416,7 +96410,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Virology - Cells";
-	network = list("ss13","medbay");
+	network = list("ss13", "medbay");
 	dir = 8;
 	name = "virology camera"
 	},

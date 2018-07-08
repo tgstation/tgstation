@@ -66,10 +66,10 @@
 		if(istype(O, /obj/item/wrench))
 			if(!anchored && !isinspace())
 				to_chat(user,"<span class='notice'>You secure [src] to the floor.</span>")
-				setAnchored(TRUE)
+				anchored = TRUE
 			else if(anchored)
 				to_chat(user,"<span class='notice'>You unsecure and disconnect [src].</span>")
-				setAnchored(FALSE)
+				anchored = FALSE
 			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			return
 	return ..()

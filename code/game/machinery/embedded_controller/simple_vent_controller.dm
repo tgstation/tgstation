@@ -15,7 +15,7 @@
 			post_signal(new /datum/signal(list(
 				"tag" = airpump_tag,
 				"sigtype" = "command",
-				"stabilize" = 1,
+				"stabalize" = 1,
 				"power" = 1
 			)))
 

@@ -5,13 +5,13 @@
 	max_ammo = 6
 
 /obj/item/ammo_box/magazine/internal/cylinder/rev762
-	name = "\improper Nagant revolver cylinder"
+	name = "nagant revolver cylinder"
 	ammo_type = /obj/item/ammo_casing/n762
 	caliber = "n762"
 	max_ammo = 7
 
 /obj/item/ammo_box/magazine/internal/cylinder/rus357
-	name = "\improper Russian revolver cylinder"
+	name = "russian revolver cylinder"
 	ammo_type = /obj/item/ammo_casing/a357
 	caliber = "357"
 	max_ammo = 6

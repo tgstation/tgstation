@@ -379,7 +379,7 @@
 	else if(transfer_after)
 		R.key = key
 
-	R.apply_pref_name("cyborg")
+	R.rename_self("cyborg")
 
 	if(R.mmi)
 		R.mmi.name = "Man-Machine Interface: [real_name]"

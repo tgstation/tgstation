@@ -8,8 +8,8 @@
 /datum/component/knockoff/Initialize(knockoff_chance,zone_override,slots_knockoffable)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED,.proc/OnEquipped)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED,.proc/OnDropped)
+	RegisterSignal(COMSIG_ITEM_EQUIPPED,.proc/OnEquipped)
+	RegisterSignal(COMSIG_ITEM_DROPPED,.proc/OnDropped)
 
 	src.knockoff_chance = knockoff_chance
 	
@@ -37,9 +37,16 @@
 	if(!istype(H))
 		return
 	if(slots_knockoffable && !(slot in slots_knockoffable))
-		UnregisterSignal(H, COMSIG_HUMAN_DISARM_HIT)
+		if(disarm_redirect)
+			QDEL_NULL(disarm_redirect)
 		return
-	RegisterSignal(H, COMSIG_HUMAN_DISARM_HIT, .proc/Knockoff, TRUE)
+	if(!disarm_redirect)
+		disarm_redirect = H.AddComponent(/datum/component/redirect,list(COMSIG_HUMAN_DISARM_HIT),CALLBACK(src,.proc/Knockoff))
 
 /datum/component/knockoff/proc/OnDropped(mob/living/M)
-	UnregisterSignal(M, COMSIG_HUMAN_DISARM_HIT)
+	if(disarm_redirect)
+		QDEL_NULL(disarm_redirect)
+	
+/datum/component/knockoff/Destroy()
+	QDEL_NULL(disarm_redirect)
+	. = ..()

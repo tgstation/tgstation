@@ -48,7 +48,6 @@
 	return
 
 /obj/item/reagent_containers/syringe/afterattack(atom/target, mob/user , proximity)
-	. = ..()
 	if(busy)
 		return
 	if(!proximity)

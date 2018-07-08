@@ -26,14 +26,11 @@
 	var/req_access_txt = "0"
 	var/list/req_one_access
 	var/req_one_access_txt = "0"
-
+	
 	var/renamedByPlayer = FALSE //set when a player uses a pen on a renamable object
 
 /obj/vv_edit_var(vname, vval)
 	switch(vname)
-		if("anchored")
-			setAnchored(vval)
-			return TRUE
 		if("obj_flags")
 			if ((obj_flags & DANGEROUS_POSSESSION) && !(vval & DANGEROUS_POSSESSION))
 				return FALSE
@@ -73,10 +70,6 @@
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	SStgui.close_uis(src)
 	. = ..()
-
-/obj/proc/setAnchored(anchorvalue)
-	SEND_SIGNAL(src, COMSIG_OBJ_SETANCHORED, anchorvalue)
-	anchored = anchorvalue
 
 /obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	..()
@@ -118,16 +111,16 @@
 
 /obj/proc/updateUsrDialog()
 	if((obj_flags & IN_USE) && !(obj_flags & USES_TGUI))
-		var/is_in_use = FALSE
+		var/is_in_use = 0
 		var/list/nearby = viewers(1, src)
 		for(var/mob/M in nearby)
 			if ((M.client && M.machine == src))
-				is_in_use = TRUE
-				ui_interact(M)
+				is_in_use = 1
+				ui_interact(usr)
 		if(isAI(usr) || iscyborg(usr) || IsAdminGhost(usr))
 			if (!(usr in nearby))
 				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
-					is_in_use = TRUE
+					is_in_use = 1
 					ui_interact(usr)
 
 		// check for TK users
@@ -137,7 +130,7 @@
 			if(!(usr in nearby))
 				if(usr.client && usr.machine==src)
 					if(H.dna.check_mutation(TK))
-						is_in_use = TRUE
+						is_in_use = 1
 						ui_interact(usr)
 		if (is_in_use)
 			obj_flags |= IN_USE

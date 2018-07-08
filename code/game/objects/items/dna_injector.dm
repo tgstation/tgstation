@@ -98,12 +98,12 @@
 	add_mutations_static = list(HULK)
 
 /obj/item/dnainjector/xraymut
-	name = "\improper DNA injector (X-ray)"
+	name = "\improper DNA injector (Xray)"
 	desc = "Finally you can see what the Captain does."
 	add_mutations_static = list(XRAY)
 
 /obj/item/dnainjector/antixray
-	name = "\improper DNA injector (Anti-X-ray)"
+	name = "\improper DNA injector (Anti-Xray)"
 	desc = "It will make you see harder."
 	remove_mutations_static = list(XRAY)
 
@@ -160,7 +160,7 @@
 
 /obj/item/dnainjector/antitour
 	name = "\improper DNA injector (Anti-Tour.)"
-	desc = "Will cure Tourette's."
+	desc = "Will cure tourrets."
 	remove_mutations_static = list(TOURETTES)
 
 /obj/item/dnainjector/tourmut

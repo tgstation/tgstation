@@ -9,7 +9,6 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/evidencebag/afterattack(obj/item/I, mob/user,proximity)
-	. = ..()
 	if(!proximity || loc == I)
 		return
 	evidencebagEquip(I, user)

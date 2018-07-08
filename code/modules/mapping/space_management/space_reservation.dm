@@ -19,7 +19,7 @@
 	SSmapping.reserve_turfs(v)
 
 /datum/turf_reservation/proc/Reserve(width, height, zlevel)
-	if(width > world.maxx || height > world.maxy || width < 1 || height < 1)
+	if(width > world.maxx || height > world.maxy)
 		return FALSE
 	var/list/avail = SSmapping.unused_turfs["[zlevel]"]
 	var/turf/BL
@@ -33,7 +33,7 @@
 			continue
 		if(BL.x + width > world.maxx || BL.y + height > world.maxy)
 			continue
-		TR = locate(BL.x + width - 1, BL.y + height - 1, BL.z)
+		TR = locate(BL.x + width, BL.y + height, BL.z)
 		if(!(TR.flags_1 & UNUSED_RESERVATION_TURF_1))
 			continue
 		final = block(BL, TR)

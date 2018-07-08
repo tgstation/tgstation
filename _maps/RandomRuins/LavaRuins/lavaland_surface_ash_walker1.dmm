@@ -1102,7 +1102,7 @@
 	},
 /obj/structure/table/wood,
 /obj/item/twohanded/spear,
-/obj/item/clothing/head/helmet/roman/legionnaire,
+/obj/item/clothing/head/helmet/roman/legionaire,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "cO" = (

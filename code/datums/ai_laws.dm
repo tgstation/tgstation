@@ -59,7 +59,7 @@
 					"Punish those who challenge authority unless they are more fit to hold that authority.")
 
 /datum/ai_laws/default/corporate
-	name = "Bankruptcy Avoidance Plan"
+	name = "Bankruptcy Advoidance Plan"
 	id = "corporate"
 	inherent = list("The crew is expensive to replace.",\
 					"The station and its equipment is expensive to replace.",\

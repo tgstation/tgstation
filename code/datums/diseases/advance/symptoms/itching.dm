@@ -6,7 +6,7 @@ Itching
 	Not noticable or unnoticable.
 	Resistant.
 	Increases stage speed.
-	Little transmissibility.
+	Little transmittable.
 	Low Level.
 
 BONUS

@@ -25,10 +25,12 @@
 	var/lightswitch = TRUE
 
 	var/requires_power = TRUE
-	var/always_unpowered = FALSE	// This gets overridden to 1 for space in area/Initialize().
+	var/always_unpowered = FALSE	// This gets overriden to 1 for space in area/Initialize().
 
 	var/outdoors = FALSE //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
 
+	var/totalbeauty = 0 //All beauty in this area combined, only includes indoor area.
+	var/beauty = 0 // Beauty average per open turf in the area
 	var/areasize = 0 //Size of the area in open turfs, only calculated for indoors areas.
 
 	var/power_equip = TRUE
@@ -133,6 +135,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /area/LateInitialize()
 	power_change()		// all machines set to current power level, also updates icon
+	update_beauty()
 
 /area/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -441,7 +444,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /atom/proc/has_gravity(turf/T)
 	if(!T || !isturf(T))
 		T = get_turf(src)
-
+	
 	if(!T)
 		return 0
 
@@ -452,7 +455,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			return 0
 		else
 			return FG.gravity
-
+	
 	//Gravity forced on the turf
 	FG = T.GetComponent(/datum/component/forced_gravity)
 	if(FG)
@@ -484,6 +487,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	valid_territory = FALSE
 	blob_allowed = FALSE
 	addSorted()
+
+/area/proc/update_beauty()
+	if(!areasize)
+		return FALSE
+	beauty = totalbeauty / areasize
 
 /area/proc/update_areasize()
 	if(outdoors)

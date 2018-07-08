@@ -241,7 +241,6 @@
 	return jointext(out,"")
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
-	. = ..()
 	if(!proximity || !check_allowed_items(target))
 		return
 

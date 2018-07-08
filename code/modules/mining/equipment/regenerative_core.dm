@@ -7,7 +7,6 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/hivelordstabilizer/afterattack(obj/item/organ/M, mob/user)
-	. = ..()
 	var/obj/item/organ/regenerative_core/C = M
 	if(!istype(C, /obj/item/organ/regenerative_core))
 		to_chat(user, "<span class='warning'>The stabilizer only works on certain types of monster organs, generally regenerative in nature.</span>")
@@ -63,11 +62,10 @@
 
 /obj/item/organ/regenerative_core/on_life()
 	..()
-	if(owner.health < owner.crit_modifier())
+	if(owner.health < HEALTH_THRESHOLD_CRIT)
 		ui_action_click()
 
 /obj/item/organ/regenerative_core/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
 	if(proximity_flag && ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(inert)
@@ -85,6 +83,7 @@
 				SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "self"))
 			H.revive(full_heal = 1)
 			qdel(src)
+	..()
 
 /obj/item/organ/regenerative_core/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	. = ..()

@@ -193,7 +193,7 @@
 
 //Base ballistic weapon type
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic
-	name = "general ballistic weapon"
+	name = "general ballisic weapon"
 	fire_sound = 'sound/weapons/gunshot.ogg'
 	var/projectiles
 	var/projectile_energy_cost

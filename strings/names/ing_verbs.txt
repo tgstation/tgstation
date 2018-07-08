@@ -922,7 +922,7 @@ wrestling
 wriggling
 wringing
 writing
-X-raying
+x-raying
 yawning
 yelling
 zipping

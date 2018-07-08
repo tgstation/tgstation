@@ -124,7 +124,7 @@
 	job = "AI"
 
 	create_eye()
-	apply_pref_name("ai")
+	rename_self("ai")
 
 	holo_icon = getHologramIcon(icon('icons/mob/ai.dmi',"default"))
 
@@ -823,7 +823,7 @@
 		//apc_override is needed here because AIs use their own APC when depowered
 		return (GLOB.cameranet && GLOB.cameranet.checkTurfVis(get_turf_pixel(A))) || apc_override
 	//AI is carded/shunted
-	//view(src) returns nothing for carded/shunted AIs and they have X-ray vision so just use get_dist
+	//view(src) returns nothing for carded/shunted AIs and they have x-ray vision so just use get_dist
 	var/list/viewscale = getviewsize(client.view)
 	return get_dist(src, A) <= max(viewscale[1]*0.5,viewscale[2]*0.5)
 
@@ -1003,7 +1003,7 @@
 		target_ai = src //cheat! just give... ourselves as the spawned AI, because that's technically correct
 
 /mob/living/silicon/ai/proc/camera_visibility(mob/camera/aiEye/moved_eye)
-	GLOB.cameranet.visibility(moved_eye, client, all_eyes, USE_STATIC_OPAQUE)
+	GLOB.cameranet.visibility(moved_eye, client, all_eyes)
 
 /mob/living/silicon/ai/forceMove(atom/destination)
 	. = ..()
