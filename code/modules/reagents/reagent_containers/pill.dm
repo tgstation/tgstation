@@ -13,6 +13,7 @@
 	var/apply_method = "swallow"
 	var/roundstart = 0
 	var/self_delay = 0 //pills are instant, this is because patches inheret their aplication from pills
+	var/eat_only = FALSE
 
 /obj/item/reagent_containers/pill/Initialize()
 	. = ..()
@@ -55,7 +56,7 @@
 
 
 /obj/item/reagent_containers/pill/afterattack(obj/target, mob/user , proximity)
-	if(!proximity)
+	if(!proximity || eat_only)
 		return
 	if(target.is_refillable())
 		if(target.is_drainable() && !target.reagents.total_volume)
@@ -71,6 +72,10 @@
 			to_chat(O, "<span class='warning'>[user] slips something into [target]!</span>")
 		reagents.trans_to(target, reagents.total_volume)
 		qdel(src)
+
+/obj/item/reagent_containers/pill/on_grind()
+	if(eat_only)
+		return -1
 
 /obj/item/reagent_containers/pill/tox
 	name = "toxins pill"
@@ -181,7 +186,9 @@
 /obj/item/reagent_containers/pill/floorpill
 	name = "floorpill"
 	desc = "Your feeling is telling you no, but..."
+	eat_only = TRUE
 
 /obj/item/reagent_containers/pill/floorpill/Initialize()
-	list_reagents = list(get_random_id() = rand(20,50))
+	list_reagents = list(get_random_reagent_id() = rand(20,50))
 	..()
+
