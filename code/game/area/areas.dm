@@ -29,8 +29,6 @@
 
 	var/outdoors = FALSE //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
 
-	var/totalbeauty = 0 //All beauty in this area combined, only includes indoor area.
-	var/beauty = 0 // Beauty average per open turf in the area
 	var/areasize = 0 //Size of the area in open turfs, only calculated for indoors areas.
 
 	var/power_equip = TRUE
@@ -135,7 +133,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /area/LateInitialize()
 	power_change()		// all machines set to current power level, also updates icon
-	update_beauty()
 
 /area/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -487,11 +484,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	valid_territory = FALSE
 	blob_allowed = FALSE
 	addSorted()
-
-/area/proc/update_beauty()
-	if(!areasize)
-		return FALSE
-	beauty = totalbeauty / areasize
 
 /area/proc/update_areasize()
 	if(outdoors)
