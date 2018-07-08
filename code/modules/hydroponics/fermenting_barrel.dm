@@ -9,7 +9,7 @@
 	var/open = FALSE
 	pressure_resistance = 2 * ONE_ATMOSPHERE
 	max_integrity = 300
-	var/list/ferment_times = list()
+	var/speed_mod = 1 //How fast it distills. Defaults to 100% (1.0). Lower is better.
 
 /obj/structure/fermenting_barrel/Initialize()
 	create_reagents(500) //Half of a beer keg, since it can be refilled.
@@ -23,47 +23,28 @@
 	. = ..()
 	to_chat(user, "<span class='notice'>It is currently [open?"open, letting you pour liquids in.":"closed, letting you draw liquids from the tap."]</span>")
 
-/obj/structure/fermenting_barrel/process()
-	if(contents.len == 0)
-		STOP_PROCESSING(SSobj,src)
+/obj/structure/fermenting_barrel/proc/makeWine(obj/item/reagent_containers/food/snacks/grown/fruit)
+	if(fruit.reagents)
+		fruit.reagents.trans_to(src, fruit.reagents.total_volume)
+	var/amount = fruit.seed.potency / 2
+	if(fruit.distill_reagent)
+		reagents.add_reagent(fruit.distill_reagent, amount)
+		qdel(fruit)
+		playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 		return
-
-	for(var/obj/item/reagent_containers/food/snacks/grown/fruit in contents)
-		if(ferment_times["[REF(fruit)]"])
-			ferment_times["[REF(fruit)]"]--
+	else
+		var/data = list()
+		data["names"] = list("[initial(fruit.name)]" = 1)
+		data["color"] = fruit.filling_color
+		data["boozepwr"] = fruit.wine_power
+		if(fruit.wine_flavor)
+			data["tastes"] = list(fruit.wine_flavor = 1)
 		else
-			ferment_times -= "[REF(fruit)]"
-			if(fruit.reagents)
-				fruit.reagents.trans_to(src, fruit.reagents.total_volume)
-			var/amount = fruit.seed.potency / 2
-			if(fruit.distill_reagent)
-				reagents.add_reagent(fruit.distill_reagent, amount)
-				qdel(fruit)
-				return
-			else
-				var/data = list()
-				data["name"] = "[initial(fruit.name)] wine"
-				data["color"] = fruit.filling_color
-				data["boozepwr"] = fruit.wine_power
-				data["taste"] = fruit.tastes[1]
-				if(fruit.wine_flavor)
-					data["taste"] = fruit.wine_flavor
-				var/power_desc = "flavorful"
-				if(data["boozepwr"] >= 15)
-					power_desc = "mild"
-				if(data["boozepwr"] >= 30)
-					power_desc = "rich"
-				if(data["boozepwr"] >= 60)
-					power_desc = "strong"
-				if(data["boozepwr"] >= 80)
-					power_desc = "very strong"
-				if(data["boozepwr"] >= 120) //Should really only happen with strange plants...
-					power_desc = "suicidally strong"
-				data["desc"] = "A [power_desc] wine made from [initial(fruit.name)][fruit.gender==PLURAL?"":"s"]."
-				data["species"] = fruit.seed.species
-				reagents.add_reagent("fruit_wine", amount, data)
-				qdel(fruit)
-				return
+			data["tastes"] = list(fruit.tastes[1] = 1)
+		reagents.add_reagent("fruit_wine", amount, data)
+		qdel(fruit)
+		playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
+		return
 
 /obj/structure/fermenting_barrel/attackby(obj/item/I, mob/user, params)
 	var/obj/item/reagent_containers/food/snacks/grown/fruit = I
@@ -75,8 +56,7 @@
 			to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
 			return
 		to_chat(user, "<span class='notice'>You place [I] into [src] to start the fermentation process.</span>")
-		ferment_times["[REF(I)]"] = rand(30,60)
-		START_PROCESSING(SSobj,src)
+		addtimer(CALLBACK(src, .proc/makeWine, fruit), rand(80, 120) * speedmod)
 	else
 		return ..()
 

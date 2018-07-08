@@ -89,7 +89,7 @@
 	slot_flags = ITEM_SLOT_HEAD
 	filling_color = "#E6E6FA"
 	bitesize_mod = 3
-	distill_reagent = "absinthe"
+	distill_reagent = "vermouth"
 
 // Sunflower
 /obj/item/seeds/sunflower
@@ -152,7 +152,7 @@
 	slot_flags = ITEM_SLOT_HEAD
 	filling_color = "#E6E6FA"
 	bitesize_mod = 2
-	wine_power = 60
+	distill_reagent = "absinthe" //It's made from flowers.
 
 // Novaflower
 /obj/item/seeds/sunflower/novaflower

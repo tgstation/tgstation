@@ -1751,41 +1751,112 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	..()
 
 /datum/reagent/consumable/ethanol/fruit_wine
-	name = "generic fruit wine"
+	name = "Fruit Wine"
 	id = "fruit_wine"
-	description = "A wine made from grown plants. Unremarkable, outside of its alcohol content."
+	description = "A wine made from grown plants."
 	color = "#FFFFFF"
 	boozepwr = 35
 	taste_description = "bad coding"
+	var/list/names = list("null fruit" = 1) //Names of the fruits used. Associative list where name is key, value is the percentage of that fruit.
+	var/list/tastes = list("bad coding" = 1) //List of tastes. See above.
 	can_synth = FALSE
-	var/fruit_species = "null"
 
 /datum/reagent/consumable/ethanol/fruit_wine/on_new(list/data)
-	name = data["name"]
-	description = data["desc"]
-	color = data["color"]
-	boozepwr = data["boozepwr"]
-	taste_description = data["taste"]
-	fruit_species = data["species"]
-	glass_name = "glass of [name]"
-	glass_desc = description
+	generate_data_info(data)
 
 /datum/reagent/consumable/ethanol/fruit_wine/on_merge(list/data, amount)
-	var/total_amount = amount
-	if(data["species"] == fruit_species)
-		return //Properly merged.
-	volume -= total_amount
-	var/present = FALSE
-	for(var/datum/reagent/consumable/ethanol/fruit_wine/wine in holder.reagent_list)
-		if(wine.fruit_species == data["species"])
-			present = TRUE
-			wine.volume += total_amount //Sanity checking done before on_merge is even called. Convenient!
+	var/diff = (amount/volume)
+	if(diff < 1)
+		color = BlendRGB(color, data["color"], diff/2) //The percentage difference over two, so that they take average if equal.
+	else
+		color = BlendRGB(color, data["color"], (1/diff)/2) //Adjust so it's always blending properly.
+	var/oldvolume = volume-amount
+
+	var/list/cachednames = data["names"]
+	for(var/name in names | cachednames)
+		names[name] = ((names[name] * oldvolume) + (cachednames[name] * amount)) / volume
+
+	var/list/cachedtastes = data["tastes"]
+	for(var/taste in tastes | cachedtastes)
+		tastes[taste] = ((tastes[taste] * oldvolume) + (cachedtastes[taste] * amount)) / volume
+
+	boozepwr *= oldvolume
+	var/newzepwr = data["boozepwr"] * amount
+	boozepwr += newzepwr
+	boozepwr /= volume //Blending boozepwr to volume.
+	generate_data_info(data)
+
+/datum/reagent/consumable/ethanol/fruit_wine/proc/generate_data_info(list/data)
+	var/minimum_percent = .15 //Percentages measured between 0 and 1.
+	var/list/primary_tastes = list()
+	var/list/secondary_tastes = list()
+	glass_name = "glass of [name]"
+	glass_desc = description
+	for(var/taste in tastes)
+		if(tastes[taste] < minimum_percent)
+			continue
+		if(tastes[taste] >= minimum_percent*2)
+			primary_tastes += taste
+		else if(tastes[taste] >= minimum_percent)
+			secondary_tastes += taste
+
+	var/minimum_name_percent = 35
+	name = ""
+	var/highest = 0
+	var/highest_name = ""
+	var/named = FALSE
+	for(var/fruit_name in names)
+		if(names[fruit_name] > highest)
+			highest = names[fruit_name]
+			highest_name = fruit_name
+		if(names[fruit_name] >= minimum_name_percent)
+			name += "[fruit_name] "
+			named = TRUE
+	if(named)
+		name += "wine"
+	else
+		name = "mixed [highest_name] wine"
+
+	alcohol_description = "sweet"
+	if(boozepwr > 120)
+		alcohol_description = "suicidally strong"
+	else if(boozepwr > 90)
+		alcohol_description = "rather strong"
+	else if(boozepwr > 70)
+		alcohol_description = "strong"
+	else if(boozepwr > 40)
+		alcohol_description = "rich"
+	else if(boozepwr > 20)
+		alcohol_description = "mild"
+	description = "A [alcohol_description] wine brewed mainly from [highest_name]."
+
+	var/flavor = ""
+	if(!primary_tastes.len)
+		primary_tastes = list("[alcohol_description] alcohol")
+	if(primary_tastes.len == 1)
+		flavor += primary_tastes[1]
+	if(primary_tastes.len == 2)
+		flavor += primary_tastes[1] + " and " + primary_tastes[2]
+	for(var/i in 1 to primary_tastes.len)
+		flavor += primary_tastes[i]
+		if(i == primary_tastes.len)
 			break
-	if(!present)
-		var/datum/reagent/consumable/ethanol/fruit_wine/wine = new(data)
-		wine.volume = total_amount
-		holder.reagent_list += wine
-		wine.holder = holder
-		wine.data = data
-		wine.on_new(data)
-	holder.update_total()
+		if(i == primary_tastes.len - 1)
+			flavor += ", and "
+		else
+			flavor += ", "
+	if(secondary_tastes.len)
+		flavor += ", with a hint of "
+		if(secondary_tastes.len == 1)
+			flavor += secondary_tastes[1]
+		if(secondary_tastes.len == 2)
+			flavor += secondary_tastes[1] + " and " + secondary_tastes[2]
+		for(var/i in 1 to secondary_tastes.len)
+			flavor += secondary_tastes[i]
+			if(i == secondary_tastes.len)
+				break
+			if(i == secondary_tastes.len - 1)
+				flavor += ", and "
+			else
+				flavor += ", "
+	taste_description = flavor
