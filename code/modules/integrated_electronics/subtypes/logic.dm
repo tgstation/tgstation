@@ -211,6 +211,10 @@
 /obj/item/integrated_circuit/logic/binary/greater_than_or_equal/do_compare(var/datum/integrated_io/A, var/datum/integrated_io/B)
 	if(comparable(A, B))
 		return A.data >= B.data
+		
+/obj/item/integrated_circuit/logic/binary/greater_than_or_equal/old //for backwards compatibility
+    name = "greater_than or equal gate"
+	spawn_flags = 0
 
 /obj/item/integrated_circuit/logic/unary/not
 	name = "not gate"
