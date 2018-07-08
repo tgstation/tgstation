@@ -300,17 +300,9 @@
 		HM.on_life(src)
 
 /mob/living/carbon/human/proc/handle_heart()
-	if(!can_heartattack())
-		return
-
 	var/we_breath = !has_trait(TRAIT_NOBREATH, SPECIES_TRAIT)
 
-
 	if(!undergoing_cardiac_arrest())
-		return
-
-	// Cardiac arrest, unless heart is stabilized
-	if(has_trait(TRAIT_STABLEHEART))
 		return
 
 	if(we_breath)
