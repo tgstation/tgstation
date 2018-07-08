@@ -17,7 +17,8 @@
 	nanite_volume = amount
 	cloud_id = cloud
 
-	RegisterSignal(parent, COMSIG_NANITE_GET_DATA, .proc/get_data)
+	RegisterSignal(parent, COMSIG_HAS_NANITES, .proc/confirm_nanites)
+	RegisterSignal(parent, COMSIG_NANITE_UI_DATA, .proc/nanite_ui_data)
 	RegisterSignal(parent, COMSIG_NANITE_GET_PROGRAMS, .proc/get_programs)
 	RegisterSignal(parent, COMSIG_NANITE_SET_VOLUME, .proc/set_volume)
 	RegisterSignal(parent, COMSIG_NANITE_ADJUST_VOLUME, .proc/adjust_nanites)
@@ -26,6 +27,7 @@
 	RegisterSignal(parent, COMSIG_NANITE_SET_SAFETY, .proc/set_safety)
 	RegisterSignal(parent, COMSIG_NANITE_SET_REGEN, .proc/set_regen)
 	RegisterSignal(parent, COMSIG_NANITE_ADD_PROGRAM, .proc/add_program)
+	RegisterSignal(parent, COMSIG_NANITE_SCAN, .proc/nanite_scan)
 	RegisterSignal(parent, COMSIG_NANITE_SYNC, .proc/sync)
 
 	//Nanites without hosts are non-interactive through normal means
@@ -53,6 +55,7 @@
 
 /datum/component/nanites/Destroy()
 	STOP_PROCESSING(SSnanites, src)
+	set_nanite_bar(TRUE)
 	QDEL_LIST(programs)
 	if(host_mob)
 		host_mob.hud_set_nanite_indicator()
@@ -70,7 +73,7 @@
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_process()
-	host_mob.diag_hud_set_nanite_bar()
+	set_nanite_bar()
 	if(cloud_id && world.time > next_sync)
 		cloud_sync()
 		next_sync = world.time + NANITE_SYNC_DELAY
@@ -140,6 +143,36 @@
 	if(nanite_volume <= 0) //oops we ran out
 		qdel(src)
 
+/datum/component/nanites/proc/set_nanite_bar(remove = FALSE)
+	var/image/holder = host_mob.hud_list[DIAG_NANITE_FULL_HUD]
+	var/icon/I = icon(host_mob.icon, host_mob.icon_state, host_mob.dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	holder.icon_state = null
+	if(remove || stealth)
+		return //bye icon
+	var/nanite_percent = (nanite_volume / max_nanites) * 100
+	switch(nanite_percent)
+		if(0 to 10)
+			holder.icon_state = "nanites10"
+		if(10 to 20)
+			holder.icon_state = "nanites20"
+		if(20 to 30)
+			holder.icon_state = "nanites30"
+		if(30 to 40)
+			holder.icon_state = "nanites40"
+		if(40 to 50)
+			holder.icon_state = "nanites50"
+		if(50 to 60)
+			holder.icon_state = "nanites60"
+		if(60 to 70)
+			holder.icon_state = "nanites70"
+		if(70 to 80)
+			holder.icon_state = "nanites80"
+		if(80 to 90)
+			holder.icon_state = "nanites90"
+		if(90 to 100)
+			holder.icon_state = "nanites100"
+
 /datum/component/nanites/proc/on_emp(severity)
 	nanite_volume *= (rand(0.60, 0.90))		//Lose 10-40% of nanites
 	adjust_nanites(-(rand(5, 50)))		//Lose 5-50 flat nanite volume
@@ -204,6 +237,9 @@
 /datum/component/nanites/proc/set_regen(amount)
 	regen_rate = amount
 
+/datum/component/nanites/proc/confirm_nanites()
+	return TRUE //yup i exist
+
 /datum/component/nanites/proc/get_data(list/nanite_data)
 	nanite_data["nanite_volume"] = nanite_volume
 	nanite_data["max_nanites"] = max_nanites
@@ -214,3 +250,70 @@
 
 /datum/component/nanites/proc/get_programs(list/nanite_programs)
 	nanite_programs |= programs
+
+/datum/component/nanites/proc/nanite_scan(mob/user, full_scan)
+	if(!full_scan)
+		if(!stealth)
+			to_chat(user, "<span class='notice'><b>Nanites Detected</b></span>")
+			to_chat(user, "<span class='notice'>Saturation: [nanite_volume]/[max_nanites]</span>")
+			return TRUE
+	else
+		to_chat(user, "<span class='info'>NANITES DETECTED</span>")
+		to_chat(user, "<span class='info'>================</span>")
+		to_chat(user, "<span class='info'>Saturation: [nanite_volume]/[max_nanites]</span>")
+		to_chat(user, "<span class='info'>Safety Threshold: [safety_threshold]</span>")
+		to_chat(user, "<span class='info'>Cloud ID: [cloud_id ? cloud_id : "Disabled"]</span>")
+		to_chat(user, "<span class='info'>================</span>")
+		to_chat(user, "<span class='info'>Program List:</span>")
+		if(stealth)
+			to_chat(user, "<span class='alert'>%#$ENCRYPTED&^@</span>")
+		else
+			for(var/X in programs)
+				var/datum/nanite_program/NP = X
+				to_chat(user, "<span class='info'><b>[NP.name]</b> | [NP.activated ? "Active" : "Inactive"]</span>")
+		return TRUE
+
+/datum/component/nanites/proc/nanite_ui_data(list/data, scan_level)
+	data["has_nanites"] = TRUE
+	data["nanite_volume"] = nanite_volume
+	data["regen_rate"] = regen_rate
+	data["safety_threshold"] = safety_threshold
+	data["cloud_id"] = cloud_id
+	var/list/mob_programs = list()
+	var/id = 1
+	for(var/X in programs)
+		var/datum/nanite_program/P = X
+		var/list/mob_program = list()
+		mob_program["name"] = P.name
+		mob_program["desc"] = P.desc
+		mob_program["id"] = id
+
+		if(scan_level >= 2)
+			mob_program["activated"] = P.activated
+			mob_program["use_rate"] = P.use_rate
+			mob_program["can_trigger"] = P.can_trigger
+			mob_program["trigger_cost"] = P.trigger_cost
+			mob_program["trigger_cooldown"] = P.trigger_cooldown / 10
+
+		if(scan_level >= 3)
+			mob_program["activation_delay"] = P.activation_delay
+			mob_program["timer"] = P.timer
+			mob_program["timer_type"] = P.get_timer_type_text()
+			var/list/extra_settings = list()
+			for(var/Y in P.extra_settings)
+				var/list/setting = list()
+				setting["name"] = Y
+				setting["value"] = P.get_extra_setting(Y)
+				extra_settings += list(setting)
+			mob_program["extra_settings"] = extra_settings
+			if(LAZYLEN(extra_settings))
+				mob_program["has_extra_settings"] = TRUE
+
+		if(scan_level >= 4)
+			mob_program["activation_code"] = P.activation_code
+			mob_program["deactivation_code"] = P.deactivation_code
+			mob_program["kill_code"] = P.kill_code
+			mob_program["trigger_code"] = P.trigger_code
+		id++
+		mob_programs += list(mob_program)
+	data["mob_programs"] = mob_programs

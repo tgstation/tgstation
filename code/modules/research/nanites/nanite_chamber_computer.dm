@@ -101,54 +101,7 @@
 	data["locked"] = chamber.locked
 	data["occupant_name"] = chamber.occupant.name
 
-	var/list/nanite_data = list()
-	SEND_SIGNAL(L, COMSIG_NANITE_GET_DATA, nanite_data)
-	if(LAZYLEN(nanite_data))
-		data["has_nanites"] = TRUE
-		data["nanite_volume"] = nanite_data["nanite_volume"]
-		data["regen_rate"] = nanite_data["regen_rate"]
-		data["safety_threshold"] = nanite_data["safety_threshold"]
-		data["cloud_id"] = nanite_data["cloud_id"]
-		var/list/nanite_programs = list()
-		SEND_SIGNAL(L, COMSIG_NANITE_GET_PROGRAMS, nanite_programs)
-		var/list/mob_programs = list()
-		var/id = 1
-		for(var/X in nanite_programs)
-			var/datum/nanite_program/P = X
-			var/list/mob_program = list()
-			mob_program["name"] = P.name
-			mob_program["desc"] = P.desc
-			mob_program["id"] = id
-
-			if(chamber.scan_level >= 2)
-				mob_program["activated"] = P.activated
-				mob_program["use_rate"] = P.use_rate
-				mob_program["can_trigger"] = P.can_trigger
-				mob_program["trigger_cost"] = P.trigger_cost
-				mob_program["trigger_cooldown"] = P.trigger_cooldown / 10
-
-			if(chamber.scan_level >= 3)
-				mob_program["activation_delay"] = P.activation_delay
-				mob_program["timer"] = P.timer
-				mob_program["timer_type"] = P.get_timer_type_text()
-				var/list/extra_settings = list()
-				for(var/Y in P.extra_settings)
-					var/list/setting = list()
-					setting["name"] = Y
-					setting["value"] = P.get_extra_setting(Y)
-					extra_settings += list(setting)
-				mob_program["extra_settings"] = extra_settings
-				if(LAZYLEN(extra_settings))
-					mob_program["has_extra_settings"] = TRUE
-
-			if(chamber.scan_level >= 4)
-				mob_program["activation_code"] = P.activation_code
-				mob_program["deactivation_code"] = P.deactivation_code
-				mob_program["kill_code"] = P.kill_code
-				mob_program["trigger_code"] = P.trigger_code
-			id++
-			mob_programs += list(mob_program)
-		data["mob_programs"] = mob_programs
+	SEND_SIGNAL(L, COMSIG_NANITE_UI_DATA, data, chamber.scan_level)
 
 	return data
 

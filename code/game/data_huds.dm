@@ -273,39 +273,6 @@
 	if(src in SSnanites.nanite_monitored_mobs)
 		holder.icon_state = "nanite_ping"
 
-/mob/living/proc/diag_hud_set_nanite_bar()
-	var/image/holder = hud_list[DIAG_NANITE_FULL_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
-	holder.icon_state = null
-	var/list/nanite_data = list()
-	SEND_SIGNAL(src, COMSIG_NANITE_GET_DATA, nanite_data)
-	if(LAZYLEN(nanite_data))
-		if(nanite_data["stealth"])
-			return
-		var/nanite_percent = (nanite_data["nanite_volume"] / nanite_data["max_nanites"]) * 100
-		switch(nanite_percent)
-			if(0 to 10)
-				holder.icon_state = "nanites10"
-			if(10 to 20)
-				holder.icon_state = "nanites20"
-			if(20 to 30)
-				holder.icon_state = "nanites30"
-			if(30 to 40)
-				holder.icon_state = "nanites40"
-			if(40 to 50)
-				holder.icon_state = "nanites50"
-			if(50 to 60)
-				holder.icon_state = "nanites60"
-			if(60 to 70)
-				holder.icon_state = "nanites70"
-			if(70 to 80)
-				holder.icon_state = "nanites80"
-			if(80 to 90)
-				holder.icon_state = "nanites90"
-			if(90 to 100)
-				holder.icon_state = "nanites100"
-
 //For Diag health and cell bars!
 /proc/RoundDiagBar(value)
 	switch(value * 100)

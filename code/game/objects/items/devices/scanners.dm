@@ -328,11 +328,7 @@ SLIME SCANNER
 		if(cyberimp_detect)
 			to_chat(user, "<span class='notice'>Detected cybernetic modifications:</span>")
 			to_chat(user, "<span class='notice'>[cyberimp_detect]</span>")
-	var/list/nanite_data = list()
-	SEND_SIGNAL(M, COMSIG_NANITE_GET_DATA, nanite_data)
-	if(LAZYLEN(nanite_data) && !nanite_data["stealth"])
-		to_chat(user, "<span class='notice'><b>Nanites Detected</b></span>")
-		to_chat(user, "<span class='notice'>Saturation: [nanite_data["nanite_volume"]]/[nanite_data["max_nanites"]]</span>")
+	SEND_SIGNAL(M, COMSIG_NANITE_SCAN, user, FALSE)
 
 /proc/chemscan(mob/living/user, mob/living/M)
 	if(istype(M))
@@ -630,28 +626,8 @@ SLIME SCANNER
 /obj/item/nanite_scanner/attack(mob/living/M, mob/living/carbon/human/user)
 	user.visible_message("<span class='notice'>[user] has analyzed [M]'s nanites.</span>")
 
-	nanite_scan(user, M)
-
 	add_fingerprint(user)
 
-/proc/nanite_scan(mob/user, mob/living/M)
-	var/list/nanite_data = list()
-	SEND_SIGNAL(M, COMSIG_NANITE_GET_DATA, nanite_data)
-	if(!LAZYLEN(nanite_data))
+	var/response = SEND_SIGNAL(M, COMSIG_NANITE_SCAN, user, TRUE)
+	if(!response)
 		to_chat(user, "<span class='info'>No nanites detected in the subject.</span>")
-		return
-	to_chat(user, "<span class='info'>NANITES DETECTED</span>")
-	to_chat(user, "<span class='info'>================</span>")
-	to_chat(user, "<span class='info'>Saturation: [nanite_data["nanite_volume"]]/[nanite_data["max_nanites"]]</span>")
-	to_chat(user, "<span class='info'>Safety Threshold: [nanite_data["safety_threshold"]]</span>")
-	to_chat(user, "<span class='info'>Cloud ID: [nanite_data["cloud_id"] ? nanite_data["cloud_id"] : "Disabled"]</span>")
-	to_chat(user, "<span class='info'>================</span>")
-	to_chat(user, "<span class='info'>Program List:</span>")
-	if(nanite_data["stealth"])
-		to_chat(user, "<span class='alert'>%#$ENCRYPTED&^@</span>")
-	else
-		var/list/nanite_programs = list()
-		SEND_SIGNAL(M, COMSIG_NANITE_GET_PROGRAMS, nanite_programs)
-		for(var/X in nanite_programs)
-			var/datum/nanite_program/NP = X
-			to_chat(user, "<span class='info'><b>[NP.name]</b> | [NP.activated ? "Active" : "Inactive"]</span>")
