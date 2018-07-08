@@ -1,5 +1,0 @@
-author: "Floyd"
-delete-after: True
-changes: 
-  - rscdel: "removed beauty / dirtyness"
-  - balance: "Mood no longer gives you hallucinations, instead makes you go into crit sooner"
