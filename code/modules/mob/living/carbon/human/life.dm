@@ -42,20 +42,18 @@
 	if(stat != DEAD)
 		return 1
 
-
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
-	if (head && istype(head, /obj/item/clothing))
+	if (head, istype(head, /obj/item/clothing))
 		var/obj/item/clothing/CH = head
-		if(wear_suit && istype(wear_suit, /obj/item/clothing))
+		if(wear_suit, istype(wear_suit, /obj/item/clothing))
 			var/obj/item/clothing/CS = wear_suit
 			if (CS.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
 				return ONE_ATMOSPHERE
-		else if(w_uniform && istype(w_uniform, /obj/item/clothing))
+		if(w_uniform, istype(w_uniform, /obj/item/clothing))
 			var/obj/item/clothing/CU = w_uniform
 			if(CU.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
 				return ONE_ATMOSPHERE
 	return pressure
-
 
 /mob/living/carbon/human/handle_traits()
 	if(eye_blind)			//blindness, heals slowly over time
