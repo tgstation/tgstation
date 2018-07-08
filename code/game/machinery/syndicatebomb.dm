@@ -119,14 +119,14 @@
 			else
 				to_chat(user, "<span class='notice'>You firmly wrench the bomb to the floor.</span>")
 				I.play_tool_sound(src)
-				anchored = TRUE
+				setAnchored(TRUE)
 				if(active)
 					to_chat(user, "<span class='notice'>The bolts lock in place.</span>")
 		else
 			if(!active)
 				to_chat(user, "<span class='notice'>You wrench the bomb from the floor.</span>")
 				I.play_tool_sound(src)
-				anchored = FALSE
+				setAnchored(FALSE)
 			else
 				to_chat(user, "<span class='warning'>The bolts are locked down!</span>")
 
@@ -509,7 +509,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/timer = 0
 	var/detonated =	0
-	var/existant =	0
+	var/existent =	0
 
 /obj/item/syndicatedetonator/attack_self(mob/user)
 	if(timer < world.time)
@@ -517,9 +517,9 @@
 			if(B.active)
 				B.detonation_timer = world.time + BUTTON_DELAY
 				detonated++
-			existant++
+			existent++
 		playsound(user, 'sound/machines/click.ogg', 20, 1)
-		to_chat(user, "<span class='notice'>[existant] found, [detonated] triggered.</span>")
+		to_chat(user, "<span class='notice'>[existent] found, [detonated] triggered.</span>")
 		if(detonated)
 			var/turf/T = get_turf(src)
 			detonated--
@@ -528,7 +528,7 @@
 			message_admins(log_str)
 			log_game("[key_name(user)] has remotely detonated [detonated ? "syndicate bombs" : "a syndicate bomb"] using a [name] at [AREACOORD(T)]")
 		detonated =	0
-		existant =	0
+		existent =	0
 		timer = world.time + BUTTON_COOLDOWN
 
 

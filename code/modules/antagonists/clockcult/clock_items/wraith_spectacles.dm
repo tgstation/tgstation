@@ -1,4 +1,4 @@
-//Wraith spectacles: Grants x-ray and night vision at the eventual cost of the wearer's sight if worn too long. Nar-Sian cultists are instantly blinded.
+//Wraith spectacles: Grants X-ray and night vision at the eventual cost of the wearer's sight if worn too long. Nar-Sian cultists are instantly blinded.
 /obj/item/clothing/glasses/wraith_spectacles
 	name = "antique spectacles"
 	desc = "Unnerving glasses with opaque yellow lenses."

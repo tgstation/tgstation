@@ -614,7 +614,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		absorbedcount += changeling.absorbedcount
 
 	for(var/datum/antagonist/changeling/changeling2 in GLOB.antagonists)
-		if(!changeling2.owner || !changeling2.stored_profiles || changeling2.absorbedcount < absorbedcount)
+		if(!changeling2.owner || changeling2.owner == owner || !changeling2.stored_profiles || changeling2.absorbedcount < absorbedcount)
 			continue
 		return FALSE
 	return TRUE

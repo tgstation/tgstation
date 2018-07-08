@@ -8020,10 +8020,7 @@
 	external_pressure_bound = 120;
 	name = "server vent"
 	},
-/turf/open/floor/circuit{
-	name = "Server Base";
-	initial_gas_mix = "n2=500,TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/server,
 /area/awaymission/undergroundoutpost45/research)
 "qi" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -8391,10 +8388,7 @@
 /obj/machinery/rnd/server{
 	req_access = null
 	},
-/turf/open/floor/circuit{
-	name = "Server Base";
-	initial_gas_mix = "n2=500,TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/server,
 /area/awaymission/undergroundoutpost45/research)
 "qQ" = (
 /obj/machinery/atmospherics/pipe/manifold{
@@ -12604,10 +12598,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/open/floor/circuit{
-	name = "Server Base";
-	initial_gas_mix = "n2=500,TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/server,
 /area/awaymission/undergroundoutpost45/research)
 
 (1,1,1) = {"

@@ -21,7 +21,7 @@
 	blood_DNA = new_blood_DNA
 	fibers = new_fibers
 	check_blood()
-	RegisterSignal(COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_act)
+	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_act)
 
 /datum/component/forensics/proc/wipe_fingerprints()
 	fingerprints = null

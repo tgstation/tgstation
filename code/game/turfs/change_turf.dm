@@ -38,6 +38,17 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		T.setDir(dir)
 	return T
 
+/turf/open/copyTurf(turf/T, copy_air = FALSE)
+	. = ..()
+	if (isopenturf(T))
+		GET_COMPONENT(slip, /datum/component/wet_floor)
+		if(slip)
+			var/datum/component/wet_floor/WF = T.AddComponent(/datum/component/wet_floor)
+			WF.InheritComponent(slip)
+		if (copy_air)
+			var/turf/open/openTurf = T
+			openTurf.air.copy_from(air)
+
 //wrapper for ChangeTurf()s that you want to prevent/affect without overriding ChangeTurf() itself
 /turf/proc/TerraformTurf(path, new_baseturf, flags)
 	return ChangeTurf(path, new_baseturf, flags)
@@ -113,6 +124,23 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			S.update_starlight()
 
 	return W
+
+/turf/open/ChangeTurf(path, list/new_baseturfs, flags)
+	if ((flags & CHANGETURF_INHERIT_AIR) && ispath(path, /turf/open))
+		SSair.remove_from_active(src)
+		var/stashed_air = air
+		air = null // so that it doesn't get deleted
+		. = ..()
+		if (!. || . == src) // changeturf failed or didn't do anything
+			air = stashed_air
+			return
+		var/turf/open/newTurf = .
+		if (!istype(newTurf.air, /datum/gas_mixture/immutable/space))
+			QDEL_NULL(newTurf.air)
+			newTurf.air = stashed_air
+		SSair.add_to_active(newTurf)
+	else
+		return ..()
 
 // Take off the top layer turf and replace it with the next baseturf down
 /turf/proc/ScrapeAway(amount=1, flags)
@@ -210,7 +238,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 // Copy an existing turf and put it on top
 // Returns the new turf
-/turf/proc/CopyOnTop(turf/copytarget, ignore_bottom=1, depth=INFINITY)
+/turf/proc/CopyOnTop(turf/copytarget, ignore_bottom=1, depth=INFINITY, copy_air = FALSE)
 	var/list/new_baseturfs = list()
 	new_baseturfs += baseturfs
 	new_baseturfs += type
@@ -227,7 +255,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			target_baseturfs -= new_baseturfs & GLOB.blacklisted_automated_baseturfs
 			new_baseturfs += target_baseturfs
 
-	var/turf/newT = copytarget.copyTurf(src)
+	var/turf/newT = copytarget.copyTurf(src, copy_air)
 	newT.baseturfs = new_baseturfs
 	return newT
 
@@ -251,7 +279,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 /turf/open/AfterChange(flags)
 	..()
 	RemoveLattice()
-	if(!(flags & CHANGETURF_IGNORE_AIR))
+	if(!(flags & (CHANGETURF_IGNORE_AIR | CHANGETURF_INHERIT_AIR)))
 		Assimilate_Air()
 
 //////Assimilate Air//////

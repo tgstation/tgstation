@@ -16,7 +16,6 @@
 					/obj/item/reagent_containers/food/drinks/bottle/absinthe = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/grappa = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/sake = 5,
-					/obj/item/reagent_containers/food/drinks/bottle/fernet = 5,
 					/obj/item/reagent_containers/food/drinks/ale = 6,
 					/obj/item/reagent_containers/food/drinks/bottle/orangejuice = 4,
 					/obj/item/reagent_containers/food/drinks/bottle/tomatojuice = 4,
@@ -32,7 +31,8 @@
 					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 12,
 					/obj/item/reagent_containers/food/drinks/flask = 3,
 					/obj/item/reagent_containers/food/drinks/beer = 6)
-	contraband = list(/obj/item/reagent_containers/food/drinks/mug/tea = 12)
+	contraband = list(/obj/item/reagent_containers/food/drinks/mug/tea = 12,
+					  /obj/item/reagent_containers/food/drinks/bottle/fernet = 5)
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
 	req_access = list(ACCESS_BAR)
@@ -55,11 +55,11 @@
 	req_access = null
 
 /obj/machinery/vending/boozeomat/pubby_captain //Captain's quarters on Pubbystation
-	products = list(/obj/item/reagent_containers/food/drinks/bottle/rum = 1, 
-					/obj/item/reagent_containers/food/drinks/bottle/wine = 1, 
-					/obj/item/reagent_containers/food/drinks/ale = 1, 
-					/obj/item/reagent_containers/food/drinks/drinkingglass = 6, 
-					/obj/item/reagent_containers/food/drinks/ice = 1, 
+	products = list(/obj/item/reagent_containers/food/drinks/bottle/rum = 1,
+					/obj/item/reagent_containers/food/drinks/bottle/wine = 1,
+					/obj/item/reagent_containers/food/drinks/ale = 1,
+					/obj/item/reagent_containers/food/drinks/drinkingglass = 6,
+					/obj/item/reagent_containers/food/drinks/ice = 1,
 					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 4);
 	req_access = list(ACCESS_CAPTAIN)
 

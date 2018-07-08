@@ -54,6 +54,7 @@
 		return
 
 	var/list/refs = list()
+	var/where_used = FALSE
 	for(var/list/query_tree in querys)
 		var/list/from_objs = list()
 		var/list/select_types = list()
@@ -82,6 +83,7 @@
 		objs_all = objs.len
 
 		if("where" in query_tree)
+			where_used = TRUE
 			var/objs_temp = objs
 			objs = list()
 			for(var/datum/d in objs_temp)
@@ -119,7 +121,7 @@
 	var/end_time = REALTIMEOFDAY
 	end_time -= start_time
 	return list("<span class='admin'>SDQL query results: [query_text]</span>",\
-		"<span class='admin'>SDQL query completed: [objs_all] objects selected by path, and [objs_eligible] objects executed on after WHERE filtering if applicable.</span>",\
+		"<span class='admin'>SDQL query completed: [objs_all] objects selected by path, and [where_used ? objs_eligible : objs_all] objects executed on after WHERE filtering if applicable.</span>",\
 		"<span class='admin'>SDQL query took [DisplayTimeText(end_time)] to complete.</span>") + refs
 
 /proc/SDQL_qdel_datum(datum/d)

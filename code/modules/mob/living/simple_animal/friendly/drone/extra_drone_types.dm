@@ -3,7 +3,7 @@
 ////////////////////
 //Drones with custom laws
 //Drones with custom shells
-//Drones with overriden procs
+//Drones with overridden procs
 //Drones with camogear for hat related memes
 //Drone type for use with polymorph (no preloaded items, random appearance)
 

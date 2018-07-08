@@ -1,4 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - admin: "Malf AI machine overloads now are logged/admin messaged."

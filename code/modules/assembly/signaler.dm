@@ -24,7 +24,7 @@
 	return MANUAL_SUICIDE
 
 /obj/item/assembly/signaler/proc/manual_suicide(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user]'s \the [src] recieves a signal, killing [user.p_them()] instantly!</span>")
+	user.visible_message("<span class='suicide'>[user]'s \the [src] receives a signal, killing [user.p_them()] instantly!</span>")
 	user.adjustOxyLoss(200)//it sends an electrical pulse to their heart, killing them. or something.
 	user.death(0)
 
@@ -158,21 +158,21 @@ Code:
 // Embedded signaller used in grenade construction.
 // It's necessary because the signaler doens't have an off state.
 // Generated during grenade construction.  -Sayu
-/obj/item/assembly/signaler/reciever
+/obj/item/assembly/signaler/receiver
 	var/on = FALSE
 
-/obj/item/assembly/signaler/reciever/proc/toggle_safety()
+/obj/item/assembly/signaler/receiver/proc/toggle_safety()
 	on = !on
 
-/obj/item/assembly/signaler/reciever/activate()
+/obj/item/assembly/signaler/receiver/activate()
 	toggle_safety()
 	return TRUE
 
-/obj/item/assembly/signaler/reciever/examine(mob/user)
+/obj/item/assembly/signaler/receiver/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>The radio receiver is [on?"on":"off"].</span>")
 
-/obj/item/assembly/signaler/reciever/receive_signal(datum/signal/signal)
+/obj/item/assembly/signaler/receiver/receive_signal(datum/signal/signal)
 	if(!on)
 		return
 	return ..(signal)

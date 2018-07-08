@@ -28,11 +28,11 @@
 	var/list/chameleon_extras //extra types for chameleon outfit changes, mostly guns
 
 /datum/outfit/proc/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	//to be overriden for customization depending on client prefs,species etc
+	//to be overridden for customization depending on client prefs,species etc
 	return
 
 /datum/outfit/proc/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	//to be overriden for toggling internals, id binding, access etc
+	//to be overridden for toggling internals, id binding, access etc
 	return
 
 /datum/outfit/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)

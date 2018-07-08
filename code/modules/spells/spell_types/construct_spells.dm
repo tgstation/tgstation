@@ -220,7 +220,7 @@
 
 /obj/effect/proc_holder/spell/targeted/dominate
 	name = "Dominate"
-	desc = "This spell dominates the mind of a lesser creature, causing it to see you as an ally."
+	desc = "This spell dominates the mind of a lesser creature to the will of Nar'sie, allying it only to her direct followers."
 
 	charge_max = 600
 	range = 7
