@@ -1,0 +1,4 @@
+author: "Cruix"
+delete-after: True
+changes: 
+  - rscadd: "AI detection multitools can now be toggled to provide a HUD that shows the exact viewports of AI eyes, and the location of nearby camera blind spots."
