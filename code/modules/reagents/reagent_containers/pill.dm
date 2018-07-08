@@ -75,10 +75,6 @@
 	reagents.trans_to(target, reagents.total_volume)
 	qdel(src)
 
-/obj/item/reagent_containers/pill/on_grind()
-	if(eat_only)
-		return -1
-
 /obj/item/reagent_containers/pill/tox
 	name = "toxins pill"
 	desc = "Highly toxic."
