@@ -377,6 +377,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(!L || !L.len)
 		to_chat(usr, "No area available.")
+		return
 
 	usr.forceMove(pick(L))
 	update_parallax_contents()
