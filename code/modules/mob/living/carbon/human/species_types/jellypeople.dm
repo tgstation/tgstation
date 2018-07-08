@@ -662,6 +662,8 @@
 
 /datum/action/innate/project_thought/Activate()
 	var/mob/living/carbon/human/H = owner
+	if(H.stat == DEAD)
+		return
 	if(!is_species(H, /datum/species/jelly/stargazer))
 		return
 	CHECK_DNA_AND_SPECIES(H)

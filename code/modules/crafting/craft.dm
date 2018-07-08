@@ -183,7 +183,7 @@
 
 	After its done loop over deletion list and delete all the shit that wasnt taken by parts loop
 
-	del_reqs return the list of parts resulting object will recieve as argument of CheckParts proc, on the atom level it will add them all to the contents, on all other levels it calls ..() and does whatever is needed afterwards but from contents list already
+	del_reqs return the list of parts resulting object will receive as argument of CheckParts proc, on the atom level it will add them all to the contents, on all other levels it calls ..() and does whatever is needed afterwards but from contents list already
 */
 
 /datum/personal_crafting/proc/del_reqs(datum/crafting_recipe/R, mob/user)

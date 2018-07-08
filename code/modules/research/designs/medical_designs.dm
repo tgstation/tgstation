@@ -293,7 +293,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/cyberimp_xray
-	name = "X-Ray Eyes"
+	name = "X-ray Eyes"
 	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
 	id = "ci-xray"
 	build_type = PROTOLATHE | MECHFAB

@@ -211,7 +211,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		WRITE_FILE(S["features["mcolor"]"]	, "#FFF")
 
 	//Character
-	S["OOC_Notes"]			>> metadata
 	S["real_name"]			>> real_name
 	S["name_is_always_random"] >> be_random_name
 	S["body_is_always_random"] >> be_random_body
@@ -275,7 +274,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		update_character(needs_update, S)		//needs_update == savefile_version if we need an update (positive integer)
 
 	//Sanitize
-	metadata		= sanitize_text(metadata, initial(metadata))
 	real_name		= reject_bad_name(real_name)
 	if(!features["mcolor"] || features["mcolor"] == "#000")
 		features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
@@ -343,7 +341,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["version"]			, SAVEFILE_VERSION_MAX)	//load_character will sanitize any bad data, so assume up-to-date.)
 
 	//Character
-	WRITE_FILE(S["OOC_Notes"]			, metadata)
 	WRITE_FILE(S["real_name"]			, real_name)
 	WRITE_FILE(S["name_is_always_random"] , be_random_name)
 	WRITE_FILE(S["body_is_always_random"] , be_random_body)

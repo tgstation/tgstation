@@ -76,8 +76,9 @@
 		damaged = TRUE
 		if(console)
 			console.say("Alert, hull breach detected!")
-		var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
-		announcer.announce("ARRIVALS_BROKEN", channels = list())
+		var/obj/machinery/announcement_system/announcer = safepick(GLOB.announcement_systems)
+		if(!QDELETED(announcer))
+			announcer.announce("ARRIVALS_BROKEN", channels = list())
 		if(mode != SHUTTLE_CALL)
 			sound_played = FALSE
 			mode = SHUTTLE_IDLE

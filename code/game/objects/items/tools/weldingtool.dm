@@ -120,6 +120,7 @@
 
 
 /obj/item/weldingtool/afterattack(atom/O, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(!status && O.is_refillable())

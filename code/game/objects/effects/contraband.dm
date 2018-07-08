@@ -31,7 +31,7 @@
 	poster_structure = null
 	. = ..()
 
-// These icon_states may be overriden, but are for mapper's convinence
+// These icon_states may be overridden, but are for mapper's convinence
 /obj/item/poster/random_contraband
 	name = "random contraband poster"
 	poster_type = /obj/structure/sign/poster/contraband/random
@@ -60,7 +60,6 @@
 
 /obj/structure/sign/poster/Initialize()
 	. = ..()
-	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 75), 0)
 	if(random_basetype)
 		randomise(random_basetype)
 	if(!ruined)
@@ -547,7 +546,7 @@
 
 /obj/structure/sign/poster/official/anniversary_vintage_reprint
 	name = "50th Anniversary Vintage Reprint"
-	desc = "A reprint of a poster from 2505, commemorating the 50th Aniversery of Nanoposters Manufacturing, a subsidary of Nanotrasen."
+	desc = "A reprint of a poster from 2505, commemorating the 50th Anniversary of Nanoposters Manufacturing, a subsidiary of Nanotrasen."
 	icon_state = "poster26_legit"
 
 /obj/structure/sign/poster/official/fruit_bowl

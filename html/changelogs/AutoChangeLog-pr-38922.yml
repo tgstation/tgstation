@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - rscadd: "Gibs squelch when walked over"

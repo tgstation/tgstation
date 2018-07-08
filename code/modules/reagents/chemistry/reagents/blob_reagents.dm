@@ -199,11 +199,9 @@
 		M.reagents.add_reagent("spore", 0.2*reac_volume)
 	M.apply_damage(0.7*reac_volume, TOX)
 
-/datum/reagent/blob/regenerative_materia/on_mob_life(mob/living/M)
-	M.adjustToxLoss(1*REM)
-	if(iscarbon(M))
-		var/mob/living/carbon/N = M
-		N.hal_screwyhud = SCREWYHUD_HEALTHY //fully healed, honest
+/datum/reagent/blob/regenerative_materia/on_mob_life(mob/living/carbon/C)
+	C.adjustToxLoss(1*REM)
+	C.hal_screwyhud = SCREWYHUD_HEALTHY //fully healed, honest
 	..()
 
 /datum/reagent/blob/regenerative_materia/on_mob_delete(mob/living/M)
@@ -346,7 +344,7 @@
 		M.reagents.add_reagent("cryogenic_poison", 0.3*reac_volume)
 	M.apply_damage(0.2*reac_volume, BRUTE)
 
-/datum/reagent/blob/cryogenic_poison/on_mob_life(mob/living/M)
+/datum/reagent/blob/cryogenic_poison/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(0.3*REM, 0)
 	M.adjustFireLoss(0.3*REM, 0)
 	M.adjustToxLoss(0.3*REM, 0)

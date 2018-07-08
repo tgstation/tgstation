@@ -14504,7 +14504,10 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/plantgenes,
+/obj/machinery/plantgenes{
+	pixel_y = 6
+	},
+/obj/structure/table,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aKM" = (
@@ -23897,7 +23900,7 @@
 "bkb" = (
 /obj/machinery/camera{
 	c_tag = "Medbay Morgue";
-	network = list("ss13", "medbay");
+	network = list("ss13","medbay");
 	dir = 8
 	},
 /obj/machinery/airalarm{
@@ -24424,7 +24427,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/camera{
 	c_tag = "Medbay Foyer";
-	network = list("ss13", "medbay");
+	network = list("ss13","medbay");
 	dir = 8
 	},
 /obj/machinery/cell_charger,
@@ -26815,7 +26818,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay West";
-	network = list("ss13", "medbay");
+	network = list("ss13","medbay");
 	dir = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -27500,7 +27503,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay East";
-	network = list("ss13", "medbay");
+	network = list("ss13","medbay");
 	dir = 8;
 	pixel_y = -22
 	},
@@ -27865,7 +27868,7 @@
 /area/maintenance/starboard)
 "btr" = (
 /obj/machinery/camera{
-	c_tag = "Cargo Recieving Dock";
+	c_tag = "Cargo Receiving Dock";
 	dir = 4
 	},
 /obj/machinery/button/door{
@@ -28829,8 +28832,7 @@
 /obj/machinery/camera{
 	c_tag = "Genetics Research";
 	dir = 1;
-	network = list("ss13", "medbay");
-	
+	network = list("ss13","medbay")
 	},
 /obj/machinery/firealarm{
 	dir = 1;
@@ -28864,7 +28866,7 @@
 "bvB" = (
 /obj/machinery/camera{
 	c_tag = "Genetics Access";
-	network = list("ss13", "medbay");
+	network = list("ss13","medbay");
 	dir = 8;
 	pixel_y = -22
 	},
@@ -29223,7 +29225,7 @@
 /obj/structure/chair,
 /obj/machinery/camera{
 	c_tag = "Surgery Observation";
-	network = list("ss13", "medbay")
+	network = list("ss13","medbay")
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
@@ -29308,7 +29310,7 @@
 /obj/structure/table/glass,
 /obj/machinery/camera{
 	c_tag = "Medbay Cryogenics";
-	network = list("ss13", "medbay");
+	network = list("ss13","medbay");
 	dir = 2
 	},
 /obj/item/reagent_containers/glass/beaker/cryoxadone,
@@ -29327,7 +29329,7 @@
 "bwL" = (
 /obj/machinery/camera{
 	c_tag = "Genetics Cloning";
-	network = list("ss13", "medbay");
+	network = list("ss13","medbay");
 	dir = 4
 	},
 /obj/structure/table,
@@ -30889,7 +30891,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay Treatment Center";
-	network = list("ss13", "medbay");
+	network = list("ss13","medbay");
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -31922,7 +31924,7 @@
 /obj/structure/closet/secure_closet/medical3,
 /obj/machinery/camera{
 	c_tag = "Medbay Storage";
-	network = list("ss13", "medbay");
+	network = list("ss13","medbay");
 	dir = 2
 	},
 /turf/open/floor/plasteel/white,
@@ -32005,7 +32007,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay South";
-	network = list("ss13", "medbay");
+	network = list("ss13","medbay");
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
@@ -32298,7 +32300,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay Recovery Room";
-	network = list("ss13", "medbay");
+	network = list("ss13","medbay");
 	dir = 8
 	},
 /obj/machinery/iv_drip,
@@ -32540,7 +32542,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Chief Medical Office";
-	network = list("ss13", "medbay");
+	network = list("ss13","medbay");
 	dir = 8;
 	pixel_y = -22
 	},
@@ -34086,7 +34088,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Surgery Operating";
-	network = list("ss13", "medbay");
+	network = list("ss13","medbay");
 	dir = 1;
 	pixel_x = 22
 	},
@@ -34409,7 +34411,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Virology Break Room";
-	network = list("ss13", "medbay")
+	network = list("ss13","medbay")
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -36706,7 +36708,7 @@
 /obj/structure/closet/emcloset,
 /obj/machinery/camera{
 	c_tag = "Virology Airlock";
-	network = list("ss13", "medbay");
+	network = list("ss13","medbay");
 	dir = 2
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -38652,7 +38654,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Virology Module";
-	network = list("ss13", "medbay")
+	network = list("ss13","medbay")
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -53343,7 +53345,10 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "fGf" = (
-/obj/machinery/smartfridge/disks,
+/obj/machinery/smartfridge/disks{
+	pixel_y = 2
+	},
+/obj/structure/table,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "fKl" = (

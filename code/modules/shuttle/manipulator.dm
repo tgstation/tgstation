@@ -224,7 +224,11 @@
 	if(existing_shuttle)
 		existing_shuttle.jumpToNullSpace()
 
+	var/list/force_memory = preview_shuttle.movement_force
+	preview_shuttle.movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
 	preview_shuttle.initiate_docking(D)
+	preview_shuttle.movement_force = force_memory
+	
 	. = preview_shuttle
 
 	// Shuttle state involves a mode and a timer based on world.time, so

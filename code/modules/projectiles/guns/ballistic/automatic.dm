@@ -104,7 +104,7 @@
 	update_icon()
 
 /obj/item/gun/ballistic/automatic/c20r/afterattack()
-	..()
+	. = ..()
 	empty_alarm()
 	return
 
@@ -167,7 +167,7 @@
 	if(select == 2)
 		underbarrel.afterattack(target, user, flag, params)
 	else
-		..()
+		. = ..()
 		return
 /obj/item/gun/ballistic/automatic/m90/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/ammo_casing))
@@ -264,7 +264,7 @@
 	icon_state = "bulldog[chambered ? "" : "-e"]"
 
 /obj/item/gun/ballistic/automatic/shotgun/bulldog/afterattack()
-	..()
+	. = ..()
 	empty_alarm()
 	return
 
@@ -317,7 +317,7 @@
 	if(cover_open)
 		to_chat(user, "<span class='warning'>[src]'s cover is open! Close it before firing!</span>")
 	else
-		..()
+		. = ..()
 		update_icon()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE

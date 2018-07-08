@@ -9,7 +9,6 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	obj_flags = UNIQUE_RENAME
 	var/gpstag = "COM0"
 	var/emped = FALSE
-	var/turf/locked_location
 	var/tracking = TRUE
 	var/updating = TRUE //Automatic updating of GPS list. Can be set to manual by user.
 	var/global_mode = TRUE //If disabled, only GPS signals of the same Z level are shown
@@ -35,7 +34,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	emped = TRUE
 	cut_overlay("working")
 	add_overlay("emp")
-	addtimer(CALLBACK(src, .proc/reboot), 300, TIMER_OVERRIDE) //if a new EMP happens, remove the old timer so it doesn't reactivate early
+	addtimer(CALLBACK(src, .proc/reboot), 300, TIMER_UNIQUE|TIMER_OVERRIDE) //if a new EMP happens, remove the old timer so it doesn't reactivate early
 	SStgui.close_uis(src) //Close the UI control if it is open.
 
 /obj/item/gps/proc/reboot()

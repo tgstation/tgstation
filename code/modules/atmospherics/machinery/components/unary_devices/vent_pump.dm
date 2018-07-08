@@ -341,7 +341,7 @@
 		pressure_checks &= ~EXT_BOUND
 		pump_direction = SIPHONING
 
-	if("stabalize" in signal.data)
+	if("stabilize" in signal.data)
 		pressure_checks |= EXT_BOUND
 		pump_direction = RELEASING
 
@@ -399,7 +399,7 @@
 			user.visible_message("[user] welds the vent shut.", "<span class='notice'>You weld the vent shut.</span>", "<span class='italics'>You hear welding.</span>")
 			welded = TRUE
 		else
-			user.visible_message("[user] unwelds the vent.", "<span class='notice'>You unweld the vent.</span>", "<span class='italics'>You hear welding.</span>")
+			user.visible_message("[user] unwelded the vent.", "<span class='notice'>You unweld the vent.</span>", "<span class='italics'>You hear welding.</span>")
 			welded = FALSE
 		update_icon()
 		pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)

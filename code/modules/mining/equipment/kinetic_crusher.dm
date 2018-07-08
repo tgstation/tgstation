@@ -72,6 +72,7 @@
 		C.total_damage += target_health - target.health //we did some damage, but let's not assume how much we did
 
 /obj/item/twohanded/required/kinetic_crusher/afterattack(atom/target, mob/living/user, proximity_flag, clickparams)
+	. = ..()
 	if(!proximity_flag && charged)//Mark a target, or mine a tile.
 		var/turf/proj_turf = user.loc
 		if(!isturf(proj_turf))
@@ -378,7 +379,7 @@
 
 /obj/item/crusher_trophy/blaster_tubes/on_mark_detonation(mob/living/target, mob/living/user)
 	deadly_shot = TRUE
-	addtimer(CALLBACK(src, .proc/reset_deadly_shot), 300, TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, .proc/reset_deadly_shot), 300, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /obj/item/crusher_trophy/blaster_tubes/proc/reset_deadly_shot()
 	deadly_shot = FALSE

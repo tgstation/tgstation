@@ -6,21 +6,17 @@
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
 	var/datum/mood_event/list/mood_events = list()
 	var/mob/living/owner
-	var/datum/looping_sound/reverse_bear_trap/slow/soundloop //Insanity ticking
 
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 	START_PROCESSING(SSmood, src)
 	owner = parent
-	soundloop = new(list(owner), FALSE, TRUE)
 	RegisterSignal(COMSIG_ADD_MOOD_EVENT, .proc/add_event)
 	RegisterSignal(COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
-	RegisterSignal(COMSIG_ENTER_AREA, .proc/update_beauty)
 
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
-	QDEL_NULL(soundloop)
 	return ..()
 
 /datum/component/mood/proc/print_mood()
@@ -115,20 +111,12 @@
 		if(SANITY_INSANE to SANITY_CRAZY)
 			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 3)
 			update_mood_icon()
-			if(prob(7))
-				owner.playsound_local(null, pick(CREEPY_SOUNDS), 40, 1)
-			soundloop.start()
 		if(SANITY_INSANE to SANITY_UNSTABLE)
 			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 2)
-			if(prob(3))
-				owner.playsound_local(null, pick(CREEPY_SOUNDS), 20, 1)
-			soundloop.stop()
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
 			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 1)
-			soundloop.stop()
 		if(SANITY_DISTURBED to INFINITY)
 			owner.clear_fullscreen("depression")
-			soundloop.stop()
 
 	switch(mood_level)
 		if(1)
@@ -158,10 +146,6 @@
 		if(prob(0.05))
 			add_event("jolly", /datum/mood_event/jolly)
 			clear_event("depression")
-
-	var/area/A = get_area(owner)
-	if(A)
-		update_beauty(A)
 
 /datum/component/mood/proc/DecreaseSanity(amount, limit = 0)
 	if(sanity < limit) //This might make KevinZ stop fucking pinging me.
@@ -199,23 +183,3 @@
 	mood_events -= category
 	qdel(event)
 	update_mood()
-
-/datum/component/mood/proc/update_beauty(area/A)
-	if(A.outdoors) //if we're outside, we don't care.
-		clear_event("area_beauty")
-		return FALSE
-	switch(A.beauty)
-		if(-INFINITY to BEAUTY_LEVEL_HORRID)
-			add_event("area_beauty", /datum/mood_event/horridroom)
-		if(BEAUTY_LEVEL_HORRID to BEAUTY_LEVEL_BAD)
-			add_event("area_beauty", /datum/mood_event/badroom)
-		if(BEAUTY_LEVEL_BAD to BEAUTY_LEVEL_MEH)
-			add_event("area_beauty", /datum/mood_event/mehroom)
-		if(BEAUTY_LEVEL_MEH to BEAUTY_LEVEL_DECENT)
-			clear_event("area_beauty")
-		if(BEAUTY_LEVEL_DECENT to BEAUTY_LEVEL_GOOD)
-			add_event("area_beauty", /datum/mood_event/decentroom)
-		if(BEAUTY_LEVEL_GOOD to BEAUTY_LEVEL_GREAT)
-			add_event("area_beauty", /datum/mood_event/goodroom)
-		if(BEAUTY_LEVEL_GREAT to INFINITY)
-			add_event("area_beauty", /datum/mood_event/greatroom)

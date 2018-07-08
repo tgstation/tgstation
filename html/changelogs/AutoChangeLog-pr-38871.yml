@@ -1,0 +1,5 @@
+author: "Gwolfski"
+delete-after: True
+changes: 
+  - rscadd: "autoname APC"
+  - rscadd: "directional autoname APC's"
