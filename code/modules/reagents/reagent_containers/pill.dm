@@ -13,7 +13,7 @@
 	var/apply_method = "swallow"
 	var/roundstart = 0
 	var/self_delay = 0 //pills are instant, this is because patches inheret their aplication from pills
-	var/eat_only = FALSE
+	var/dissolvable = FALSE
 
 /obj/item/reagent_containers/pill/Initialize()
 	. = ..()
@@ -186,9 +186,11 @@
 /obj/item/reagent_containers/pill/floorpill
 	name = "floorpill"
 	desc = "Your feeling is telling you no, but..."
-	eat_only = TRUE
+	dissolvable = FALSE
 
 /obj/item/reagent_containers/pill/floorpill/Initialize()
 	list_reagents = list(get_random_reagent_id() = rand(20,50))
 	..()
 
+/obj/item/reagent_containers/pill/floorpill/on_grind()
+	return -1
