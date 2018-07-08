@@ -49,7 +49,7 @@
 	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "cluwne"
 	icon_living = "cluwne"
-	icon_dead = "cluwe_dead"
+	icon_dead = "cluwne_dead"
 	icon_gib = "clown_gib"
 	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	turns_per_move = 5
