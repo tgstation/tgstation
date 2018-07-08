@@ -1787,7 +1787,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	generate_data_info(data)
 
 /datum/reagent/consumable/ethanol/fruit_wine/proc/generate_data_info(list/data)
-	var/minimum_percent = .15 //Percentages measured between 0 and 1.
+	var/minimum_percent = 0.15 //Percentages measured between 0 and 1.
 	var/list/primary_tastes = list()
 	var/list/secondary_tastes = list()
 	glass_name = "glass of [name]"
@@ -1817,7 +1817,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	else
 		name = "mixed [highest_name] wine"
 
-	alcohol_description = "sweet"
+	var/alcohol_description = "sweet"
 	if(boozepwr > 120)
 		alcohol_description = "suicidally strong"
 	else if(boozepwr > 90)

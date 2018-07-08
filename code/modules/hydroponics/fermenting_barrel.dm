@@ -12,11 +12,7 @@
 	var/speed_mod = 1 //How fast it distills. Defaults to 100% (1.0). Lower is better.
 
 /obj/structure/fermenting_barrel/Initialize()
-	create_reagents(500) //Half of a beer keg, since it can be refilled.
-	. = ..()
-
-/obj/structure/fermenting_barrel/Destroy()
-	QDEL_LIST(ferment_times)
+	create_reagents(300) //Bluespace beakers, but without the portability or efficiency in circuits.
 	. = ..()
 
 /obj/structure/fermenting_barrel/examine(mob/user)
@@ -26,7 +22,7 @@
 /obj/structure/fermenting_barrel/proc/makeWine(obj/item/reagent_containers/food/snacks/grown/fruit)
 	if(fruit.reagents)
 		fruit.reagents.trans_to(src, fruit.reagents.total_volume)
-	var/amount = fruit.seed.potency / 2
+	var/amount = fruit.seed.potency / 4
 	if(fruit.distill_reagent)
 		reagents.add_reagent(fruit.distill_reagent, amount)
 		qdel(fruit)
@@ -56,7 +52,7 @@
 			to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
 			return
 		to_chat(user, "<span class='notice'>You place [I] into [src] to start the fermentation process.</span>")
-		addtimer(CALLBACK(src, .proc/makeWine, fruit), rand(80, 120) * speedmod)
+		addtimer(CALLBACK(src, .proc/makeWine, fruit), rand(80, 120) * speed_mod)
 	else
 		return ..()
 
