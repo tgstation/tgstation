@@ -206,6 +206,9 @@ SUBSYSTEM_DEF(timer)
 
 	for (var/i in spent)
 		var/datum/timedevent/qtimer = i
+		if(QDELETED(qtimer))
+			bucket_count++
+			continue
 		if(!(qtimer.flags & TIMER_LOOP))
 			qdel(qtimer)
 		else
