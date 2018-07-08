@@ -43,6 +43,7 @@ matrix:
             - gcc-multilib
       cache:
         directories:
+          - $HOME/.cargo
           - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
           - $HOME/libmariadb
           - $HOME/.rustup
