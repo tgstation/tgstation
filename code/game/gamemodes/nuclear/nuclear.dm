@@ -2,7 +2,7 @@
 	name = "nuclear emergency"
 	config_tag = "nuclear"
 	false_report_weight = 10
-	required_players = 20 // 20 players - 3 players to be the nuke ops = 17 players remaining
+	required_players = 15 // 15 players - 3 players to be the nuke ops = 12 players remaining
 	required_enemies = 2
 	recommended_enemies = 5
 	antag_flag = ROLE_OPERATIVE

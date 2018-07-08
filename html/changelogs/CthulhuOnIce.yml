@@ -1,3 +1,6 @@
 author: CthulhuOnIce
-changes: []
+changes: 
+  - tweak: "More gamemodes on fewer pop"
+  - bugfix: "Fixed cluwnes"
+  - tweak: "Added a new sillytip."
 delete-after: false

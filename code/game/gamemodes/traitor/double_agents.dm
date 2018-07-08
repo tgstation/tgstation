@@ -6,7 +6,7 @@
 	name = "Internal Affairs"
 	config_tag = "internal_affairs"
 	false_report_weight = 10
-	required_players = 25
+	required_players = 20
 	required_enemies = 5
 	recommended_enemies = 8
 	reroll_friendly = 0
@@ -28,7 +28,7 @@
 		i++
 		if(i + 1 > pre_traitors.len)
 			i = 0
-		target_list[traitor] = pre_traitors[i+1]	
+		target_list[traitor] = pre_traitors[i+1]
 	..()
 
 

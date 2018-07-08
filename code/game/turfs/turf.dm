@@ -331,9 +331,9 @@
 	var/datum/camerachunk/C = GLOB.cameranet.chunkGenerated(x, y, z)
 	if(C)
 		if(C.obscuredTurfs[src])
-			vis_contents += GLOB.cameranet.vis_contents
+			vis_contents += GLOB.cameranet.vis_contents_objects
 		else
-			vis_contents -= GLOB.cameranet.vis_contents
+			vis_contents -= GLOB.cameranet.vis_contents_objects
 
 /turf/proc/burn_tile()
 

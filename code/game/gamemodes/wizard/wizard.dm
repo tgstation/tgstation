@@ -7,7 +7,7 @@
 	config_tag = "wizard"
 	antag_flag = ROLE_WIZARD
 	false_report_weight = 10
-	required_players = 20
+	required_players = 15
 	required_enemies = 1
 	recommended_enemies = 1
 	enemy_minimum_age = 14
