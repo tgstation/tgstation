@@ -477,7 +477,7 @@
 	if(get_dist(src,A) >= 4)
 		occupant_message("The object is too far away.")
 		return 0
-	if(!A.reagents || ismob(A))
+	if(!A.reagents || ismob(A) || istype(A,/obj/item/reagent_containers/pill/floorpill)) //using an istype like this is bad, but adding a variable to every atom for one object is probably worse
 		occupant_message("<span class=\"alert\">No reagent info gained from [A].</span>")
 		return 0
 	occupant_message("Analyzing reagents...")
