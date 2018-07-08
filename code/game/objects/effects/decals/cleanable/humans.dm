@@ -55,6 +55,11 @@
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return
 
+/obj/effect/decal/cleanable/blood/gibs/Crossed(mob/living/L)
+	if(istype(L) && has_gravity(loc))
+		playsound(loc, 'sound/effects/gib_step.ogg', L.has_trait(TRAIT_LIGHT_STEP) ? 20 : 50, 1)
+	. = ..()
+
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(list/directions)
 	set waitfor = 0
 	var/direction = pick(directions)
