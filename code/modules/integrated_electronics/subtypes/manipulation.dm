@@ -367,12 +367,12 @@
 	var/atom/movable/acting_object = get_object()
 	var/turf/T = get_turf(acting_object)
 	var/obj/item/AM = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
-	if(!QDELETED(AM) && !istype(AM, /obj/item/electronic_assembly))
+	if(!QDELETED(AM) && !istype(AM, /obj/item/electronic_assembly) && !istype(AM, /obj/item/transfer_valve) && !istype(AM, /obj/item/twohanded) && !istype(assembly.loc, /obj/item/implant/storage))
 		var/mode = get_pin_data(IC_INPUT, 2)
 		if(mode == 1)
 			if(check_target(AM))
 				var/weightcheck = FALSE
-				if (AM.w_class < max_w_class)
+				if (AM.w_class <= max_w_class)
 					weightcheck = TRUE
 				else
 					weightcheck = FALSE
@@ -496,7 +496,10 @@
 	var/target_y_rel = round(get_pin_data(IC_INPUT, 2))
 	var/obj/item/A = get_pin_data_as_type(IC_INPUT, 3, /obj/item)
 
-	if(!A || A.anchored || A.throwing || A == assembly)
+	if(!A || A.anchored || A.throwing || A == assembly || istype(A, /obj/item/twohanded) || istype(A, /obj/item/transfer_valve))
+		return
+
+	if (istype(assembly.loc, /obj/item/implant/storage)) //Prevents the more abusive form of chestgun.
 		return
 
 	if(max_w_class && (A.w_class > max_w_class))
@@ -527,6 +530,7 @@
 	var/range = round(CLAMP(sqrt(target_x_rel*target_x_rel+target_y_rel*target_y_rel),0,8),1)
 
 	assembly.visible_message("<span class='danger'>[assembly] has thrown [A]!</span>")
+	log_attack("[assembly] [REF(assembly)] has thrown [A].")
 	A.forceMove(drop_location())
 	A.throw_at(locate(x_abs, y_abs, T.z), range, 3)
 

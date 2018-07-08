@@ -11,10 +11,6 @@
 	anchored = TRUE
 	var/deconstruction_state = SHOWCASE_CONSTRUCTED
 
-/obj/structure/showcase/Initialize()
-	. = ..()
-	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 750), 0)
-
 /obj/structure/showcase/fakeid
 	name = "\improper CentCom identification console"
 	desc = "You can use this to change ID's."

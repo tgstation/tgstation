@@ -36,6 +36,7 @@
 		to_chat(user, "<span class='warning'>You can't use [src] while inside something!</span>")
 
 /obj/item/chameleon/afterattack(atom/target, mob/user , proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(!check_sprite(target))

@@ -656,7 +656,7 @@
 
 /datum/design/receiver
 	name = "Modular Receiver"
-	id = "reciever"
+	id = "receiver"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 15000)
 	build_path = /obj/item/weaponcrafting/receiver

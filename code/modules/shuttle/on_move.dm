@@ -53,7 +53,7 @@ All ShuttleMove procs go here
 	if(!shuttle_boundary)
 		CRASH("A turf queued to move via shuttle somehow had no skipover in baseturfs. [src]([type]):[loc]")
 	var/depth = baseturfs.len - shuttle_boundary + 1
-	newT.CopyOnTop(src, 1, depth)
+	newT.CopyOnTop(src, 1, depth, TRUE)
 	//Air stuff
 	newT.blocks_air = TRUE
 	newT.air_update_turf(TRUE)
@@ -78,6 +78,13 @@ All ShuttleMove procs go here
 
 	return TRUE
 
+/turf/proc/lateShuttleMove(turf/oldT)
+	blocks_air = initial(blocks_air)
+	air_update_turf(TRUE)
+	oldT.blocks_air = initial(oldT.blocks_air)
+	oldT.air_update_turf(TRUE)
+
+
 /////////////////////////////////////////////////////////////////////////////////////
 
 // Called on every atom in shuttle turf contents before anything has been moved
@@ -91,9 +98,8 @@ All ShuttleMove procs go here
 	if(newT == oldT) // In case of in place shuttle rotation shenanigans.
 		return
 
-	if(locs && locs.len > 1) // This is for multi tile objects
-		if(loc != oldT)
-			return
+	if(loc != oldT) // This is for multi tile objects
+		return
 
 	loc = newT
 
@@ -111,11 +117,21 @@ All ShuttleMove procs go here
 	if(rotation)
 		shuttleRotate(rotation)
 
-
-
 	update_parallax_contents()
 
 	return TRUE
+
+/atom/movable/proc/lateShuttleMove(turf/oldT, list/movement_force, move_dir)
+	if(!movement_force || anchored)
+		return
+	var/throw_force = movement_force["THROW"]
+	if(!throw_force)
+		return
+	var/turf/target = get_edge_target_turf(src, move_dir)
+	var/range = throw_force * 10
+	range = CEILING(rand(range-(range*0.1), range+(range*0.1)), 10)/10
+	var/speed = range/5
+	throw_at(target, range, speed)
 
 /////////////////////////////////////////////////////////////////////////////////////
 
@@ -148,6 +164,9 @@ All ShuttleMove procs go here
 /area/proc/afterShuttleMove(new_parallax_dir)
 	parallax_movedir = new_parallax_dir
 	return TRUE
+
+/area/proc/lateShuttleMove()
+	return
 
 /************************************Turf move procs************************************/
 
@@ -288,17 +307,16 @@ All ShuttleMove procs go here
 			shake_force *= 0.25
 		shake_camera(src, shake_force, 1)
 
-/mob/living/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/mob/living/lateShuttleMove(turf/oldT, list/movement_force, move_dir)
+	if(buckled)
+		return
+
 	. = ..()
-	if(movement_force && !buckled)
-		if(movement_force["THROW"])
-			var/throw_dir = move_dir
-			var/turf/target = get_edge_target_turf(src, throw_dir)
-			var/range = movement_force["THROW"]
-			var/speed = range/5
-			src.throw_at(target, range, speed)
-		if(movement_force["KNOCKDOWN"])
-			Knockdown(movement_force["KNOCKDOWN"])
+
+	var/knockdown = movement_force["KNOCKDOWN"]
+	if(knockdown)
+		Knockdown(knockdown)
+
 
 /mob/living/simple_animal/hostile/megafauna/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
 	. = ..()

@@ -63,7 +63,7 @@
 /obj/structure/AIcore/latejoin_inactive/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/multitool))
 		active = !active
-		to_chat(user, "You [active? "activate" : "deactivate"] [src]'s transimtters.")
+		to_chat(user, "You [active? "activate" : "deactivate"] [src]'s transmitters.")
 		return
 	return ..()
 

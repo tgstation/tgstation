@@ -9,7 +9,7 @@
 	cure_chance = 20
 	agent = "Avian Vengence"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	desc = "Subject is possesed by the vengeful spirit of a parrot. Call the priest."
+	desc = "Subject is possessed by the vengeful spirit of a parrot. Call the priest."
 	severity = DISEASE_SEVERITY_MEDIUM
 	infectable_biotypes = list(MOB_ORGANIC, MOB_UNDEAD, MOB_INORGANIC, MOB_ROBOTIC)
 	bypasses_immunity = TRUE //2spook
