@@ -115,7 +115,7 @@
 			return null
 	else
 		return
-	. += "/pictures/[n].png"
+	. += "/[n].png"
 
 //BE VERY CAREFUL WITH THIS PROC, TO AVOID DUPLICATION.
 /datum/picture/proc/log_to_file()
