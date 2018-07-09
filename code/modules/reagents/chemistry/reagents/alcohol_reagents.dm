@@ -1806,20 +1806,16 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 	var/minimum_name_percent = 0.35
 	name = ""
-	var/highest = 0
-	var/highest_name = ""
+	var/list/names_in_order = sortTim(names, /proc/cmp_numeric_dsc, TRUE)
 	var/named = FALSE
 	for(var/fruit_name in names)
-		if(names[fruit_name] > highest)
-			highest = names[fruit_name]
-			highest_name = fruit_name
 		if(names[fruit_name] >= minimum_name_percent)
 			name += "[fruit_name] "
 			named = TRUE
 	if(named)
 		name += "wine"
 	else
-		name = "mixed [highest_name] wine"
+		name = "mixed [names_in_order[1]] wine"
 
 	var/alcohol_description = "sweet"
 	if(boozepwr > 120)
@@ -1832,39 +1828,24 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		alcohol_description = "rich"
 	else if(boozepwr > 20)
 		alcohol_description = "mild"
-	description = "A [alcohol_description] wine brewed mainly from [highest_name]."
+
+	var/list/fruits = list()
+	if(names_in_order.len <= 3)
+		fruits = names_in_order
+	else
+		for(var/i in 1 to 3)
+			fruits += names_in_order[i]
+		fruits += "other plants"
+	var/fruit_list = english_list(fruits)
+	description = "A [alcohol_description] wine brewed from [fruit_list]."
 
 	var/flavor = ""
 	if(!primary_tastes.len)
 		primary_tastes = list("[alcohol_description] alcohol")
-	if(primary_tastes.len == 1)
-		flavor += primary_tastes[1]
-	else if(primary_tastes.len == 2)
-		flavor += primary_tastes[1] + " and " + primary_tastes[2]
-	else
-		for(var/i in 1 to primary_tastes.len)
-			flavor += primary_tastes[i]
-			if(i == primary_tastes.len)
-				break
-			if(i == primary_tastes.len - 1)
-				flavor += ", and "
-			else
-				flavor += ", "
+	flavor += english_list(primary_tastes)
 	if(secondary_tastes.len)
 		flavor += ", with a hint of "
-		if(secondary_tastes.len == 1)
-			flavor += secondary_tastes[1]
-		else if(secondary_tastes.len == 2)
-			flavor += secondary_tastes[1] + " and " + secondary_tastes[2]
-		else
-			for(var/i in 1 to secondary_tastes.len)
-				flavor += secondary_tastes[i]
-				if(i == secondary_tastes.len)
-					break
-				if(i == secondary_tastes.len - 1)
-					flavor += ", and "
-				else
-					flavor += ", "
+		flavor += english_list(secondary_tastes)
 	taste_description = flavor
 	if(holder.my_atom)
 		holder.my_atom.on_reagent_change()
