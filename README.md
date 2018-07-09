@@ -1,21 +1,16 @@
-## /tg/station codebase
+## BeeStation codebase
 
-[![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation) [![Krihelimeter](https://www.krihelinator.xyz/badge/tgstation/tgstation)](https://www.krihelinator.xyz)  
-[![Percentage of issues still open](https://isitmaintained.com/badge/open/tgstation/tgstation.svg)](https://isitmaintained.com/project/tgstation/tgstation "Percentage of issues still open") [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/tgstation/tgstation.svg)](https://isitmaintained.com/project/tgstation/tgstation "Average time to resolve an issue") ![Coverage](https://img.shields.io/badge/coverage---2%25-red.svg)  
 [![forthebadge](https://forthebadge.com/images/badges/built-with-resentment.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/contains-technical-debt.svg)](https://forthebadge.com) [![forinfinityandbyond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a)
 
-**Website:** https://www.tgstation13.org
-**Code:** https://github.com/tgstation/tgstation
-**Wiki** https://tgstation13.org/wiki/Main_Page
-**IRC:** irc://irc.rizon.net/coderbus or if you dont have an IRC client, you can click  [here](https://kiwiirc.com/client/irc.rizon.net:6667/?&theme=cli#coderbus)
+**Website:** https://www.beestation13.com
+**Code:** https://github.com/beestation/beestation
+**Wiki** https://beestation.beeskee.com/wiki
 
  
 ## DOWNLOADING
 
-There are a number of ways to download the source code. Some are described here, an alternative all-inclusive guide is also located at https://www.tgstation13.org/wiki/Downloading_the_source_code
-
 Option 1:
-Follow this: https://www.tgstation13.org/wiki/Setting_up_git
+Follow this: https://www.beestation13.org/wiki/Setting_up_git
 
 Option 2: Download the source code as a zip by clicking the ZIP button in the
 code tab of https://github.com/tgstation/tgstation
