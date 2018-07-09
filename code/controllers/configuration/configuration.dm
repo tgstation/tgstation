@@ -84,6 +84,7 @@
 	var/list/lines = world.file2list("[directory]/[filename]")
 	var/list/_entries = entries
 	for(var/L in lines)
+		L = trim(L)
 		if(!L)
 			continue
 		

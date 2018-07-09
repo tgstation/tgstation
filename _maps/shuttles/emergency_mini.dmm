@@ -40,7 +40,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "h" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/brig,
@@ -49,7 +49,7 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "j" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/brig,
@@ -68,7 +68,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "m" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -116,25 +116,25 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "v" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "w" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "x" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "y" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/machinery/light{
@@ -149,7 +149,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "A" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/machinery/light{
@@ -171,7 +171,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "C" = (
-/obj/structure/chair/shuttle,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "D" = (
@@ -218,7 +218,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "K" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -231,7 +231,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "M" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -261,7 +261,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "R" = (
-/obj/structure/chair/shuttle,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "S" = (
