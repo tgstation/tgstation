@@ -764,9 +764,9 @@
 		if(head)
 			head_clothes = head
 		if(head_clothes)
-			torn_items |= head_clothes
+			torn_items += head_clothes
 		else if(ears)
-			torn_items |= ears
+			torn_items += ears
 
 	//CHEST//
 	if(!def_zone || def_zone == BODY_ZONE_CHEST)
@@ -776,7 +776,7 @@
 		if(wear_suit)
 			chest_clothes = wear_suit
 		if(chest_clothes)
-			torn_items |= chest_clothes
+			torn_items += chest_clothes
 
 	//ARMS & HANDS//
 	if(!def_zone || def_zone == BODY_ZONE_L_ARM || def_zone == BODY_ZONE_R_ARM)
