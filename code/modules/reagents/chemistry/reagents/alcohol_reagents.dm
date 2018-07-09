@@ -1762,6 +1762,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	can_synth = FALSE
 
 /datum/reagent/consumable/ethanol/fruit_wine/on_new(list/data)
+	names = data["names"]
+	tastes = data["tastes"]
+	boozepwr = data["boozepwr"]
+	color = data["color"]
 	generate_data_info(data)
 
 /datum/reagent/consumable/ethanol/fruit_wine/on_merge(list/data, amount)
@@ -1800,7 +1804,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		else if(tastes[taste] >= minimum_percent)
 			secondary_tastes += taste
 
-	var/minimum_name_percent = 35
+	var/minimum_name_percent = 0.35
 	name = ""
 	var/highest = 0
 	var/highest_name = ""
@@ -1835,28 +1839,32 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		primary_tastes = list("[alcohol_description] alcohol")
 	if(primary_tastes.len == 1)
 		flavor += primary_tastes[1]
-	if(primary_tastes.len == 2)
+	else if(primary_tastes.len == 2)
 		flavor += primary_tastes[1] + " and " + primary_tastes[2]
-	for(var/i in 1 to primary_tastes.len)
-		flavor += primary_tastes[i]
-		if(i == primary_tastes.len)
-			break
-		if(i == primary_tastes.len - 1)
-			flavor += ", and "
-		else
-			flavor += ", "
+	else
+		for(var/i in 1 to primary_tastes.len)
+			flavor += primary_tastes[i]
+			if(i == primary_tastes.len)
+				break
+			if(i == primary_tastes.len - 1)
+				flavor += ", and "
+			else
+				flavor += ", "
 	if(secondary_tastes.len)
 		flavor += ", with a hint of "
 		if(secondary_tastes.len == 1)
 			flavor += secondary_tastes[1]
-		if(secondary_tastes.len == 2)
+		else if(secondary_tastes.len == 2)
 			flavor += secondary_tastes[1] + " and " + secondary_tastes[2]
-		for(var/i in 1 to secondary_tastes.len)
-			flavor += secondary_tastes[i]
-			if(i == secondary_tastes.len)
-				break
-			if(i == secondary_tastes.len - 1)
-				flavor += ", and "
-			else
-				flavor += ", "
+		else
+			for(var/i in 1 to secondary_tastes.len)
+				flavor += secondary_tastes[i]
+				if(i == secondary_tastes.len)
+					break
+				if(i == secondary_tastes.len - 1)
+					flavor += ", and "
+				else
+					flavor += ", "
 	taste_description = flavor
+	if(holder.my_atom)
+		holder.my_atom.on_reagent_change()
