@@ -445,26 +445,22 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!T)
 		return 0
 
-	//Gravity forced on the atom
-	var/datum/component/forced_gravity/FG = GetComponent(/datum/component/forced_gravity)
-	if(FG)
-		if(!FG.ignore_space && isspaceturf(T))
-			return 0
-		else
-			return FG.gravity
+	var/list/forced_gravity = list()
+	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, T, forced_gravity)
+	if(!forced_gravity.len)
+		SEND_SIGNAL(T, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
+	if(forced_gravity.len)
+		var/max_grav
+		for(var/i in forced_gravity)
+			max_grav = max(max_grav, i)
+		if(max_grav)
+			return max_grav
 
-	//Gravity forced on the turf
-	FG = T.GetComponent(/datum/component/forced_gravity)
-	if(FG)
-		if(!FG.ignore_space && isspaceturf(T))
-			return 0
-		else
-			return FG.gravity
-
-	var/area/A = get_area(T)
 	if(isspaceturf(T)) // Turf never has gravity
 		return 0
-	else if(A.has_gravity) // Areas which always has gravity
+
+	var/area/A = get_area(T)
+	if(A.has_gravity) // Areas which always has gravity
 		return A.has_gravity
 	else
 		// There's a gravity generator on our z level
