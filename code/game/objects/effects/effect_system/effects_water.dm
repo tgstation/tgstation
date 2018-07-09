@@ -19,7 +19,7 @@
 		return 0
 	.=..()
 
-/obj/effect/particle_effect/water/Collide(atom/A)
+/obj/effect/particle_effect/water/Bump(atom/A)
 	if(reagents)
 		reagents.reaction(A)
 	return ..()

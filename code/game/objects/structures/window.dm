@@ -138,7 +138,7 @@
 		return FALSE
 	return 1
 
-/obj/structure/window/CheckExit(atom/movable/O as mob|obj, target)
+/obj/structure/window/CheckExit(atom/movable/O, turf/target)
 	if(istype(O) && (O.pass_flags & PASSGLASS))
 		return 1
 	if(get_dir(O.loc, target) == dir)

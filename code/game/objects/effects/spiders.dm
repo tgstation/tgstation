@@ -120,7 +120,7 @@
 /obj/structure/spider/spiderling/tarantula
 	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/tarantula
 
-/obj/structure/spider/spiderling/Collide(atom/user)
+/obj/structure/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
 		forceMove(user.loc)
 	else
