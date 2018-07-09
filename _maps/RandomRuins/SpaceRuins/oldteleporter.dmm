@@ -5,7 +5,7 @@
 "b" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/ruin/space/oldteleporter)
+/area/space/nearstation)
 "c" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/oldteleporter)
@@ -63,7 +63,6 @@
 /area/ruin/space/oldteleporter)
 "n" = (
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},

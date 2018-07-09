@@ -14,6 +14,18 @@
 /datum/mutation/human/cold_resistance/get_visual_indicator(mob/living/carbon/human/owner)
 	return visual_indicators[1]
 
+/datum/mutation/human/cold_resistance/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	owner.add_trait(TRAIT_RESISTCOLD, "cold_resistance")
+	owner.add_trait(TRAIT_RESISTLOWPRESSURE, "cold_resistance")
+
+/datum/mutation/human/cold_resistance/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	owner.remove_trait(TRAIT_RESISTCOLD, "cold_resistance")
+	owner.remove_trait(TRAIT_RESISTLOWPRESSURE, "cold_resistance")
+
 /datum/mutation/human/cold_resistance/on_life(mob/living/carbon/human/owner)
 	if(owner.getFireLoss())
 		if(prob(1))

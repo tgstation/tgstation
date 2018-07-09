@@ -40,7 +40,7 @@
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in GLOB.machines)
 		if(QDELETED(temp_vent))
 			continue
-		if((temp_vent.loc.z in GLOB.station_z_levels) && !temp_vent.welded)
+		if(is_station_level(temp_vent.loc.z) && !temp_vent.welded)
 			var/datum/pipeline/temp_vent_parent = temp_vent.parents[1]
 			//Stops Aliens getting stuck in small networks.
 			//See: Security, Virology
@@ -51,7 +51,7 @@
 		message_admins("An event attempted to spawn an alien but no suitable vents were found. Shutting down.")
 		return MAP_ERROR
 
-	var/list/candidates = get_candidates("alien", null, ROLE_ALIEN)
+	var/list/candidates = get_candidates(ROLE_ALIEN, null, ROLE_ALIEN)
 
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
@@ -65,7 +65,7 @@
 
 		spawncount--
 		successSpawn = TRUE
-		message_admins("[key_name_admin(new_xeno)] has been made into an alien by an event.")
+		message_admins("[ADMIN_LOOKUPFLW(new_xeno)] has been made into an alien by an event.")
 		log_game("[key_name(new_xeno)] was spawned as an alien by an event.")
 		spawned_mobs += new_xeno
 

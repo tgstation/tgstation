@@ -32,8 +32,9 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /datum/round_event/immovable_rod/start()
 	var/datum/round_event_control/immovable_rod/C = control
 	var/startside = pick(GLOB.cardinals)
-	var/turf/startT = spaceDebrisStartLoc(startside, ZLEVEL_STATION_PRIMARY)
-	var/turf/endT = spaceDebrisFinishLoc(startside, ZLEVEL_STATION_PRIMARY)
+	var/z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
+	var/turf/startT = spaceDebrisStartLoc(startside, z)
+	var/turf/endT = spaceDebrisFinishLoc(startside, z)
 	new /obj/effect/immovablerod(startT, endT, C.special_target)
 
 /obj/effect/immovablerod
@@ -60,7 +61,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			enter_link="<a href=?src=[REF(src)];orbit=1>(Click to orbit)</a>",
 			source=src, action=NOTIFY_ORBIT)
 	GLOB.poi_list += src
-	
+
 	var/special_target_valid = FALSE
 	if(special_target)
 		var/turf/T = get_turf(special_target)

@@ -2,7 +2,7 @@
 	name = "necklace"
 	icon = 'icons/obj/clothing/neck.dmi'
 	body_parts_covered = NECK
-	slot_flags = SLOT_NECK
+	slot_flags = ITEM_SLOT_NECK
 	strip_delay = 40
 	equip_delay_other = 40
 
@@ -12,7 +12,7 @@
 		if(body_parts_covered & HEAD)
 			if(damaged_clothes)
 				. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
-			if(blood_DNA)
+			IF_HAS_BLOOD_DNA(src)
 				. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
 
 /obj/item/clothing/neck/tie
@@ -51,6 +51,10 @@
 	icon_state = "stethoscope"
 	item_color = "stethoscope"
 
+/obj/item/clothing/neck/stethoscope/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] puts \the [src] to [user.p_their()] chest! It looks like [user.p_they()] wont hear much!</span>")
+	return OXYLOSS
+
 /obj/item/clothing/neck/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
 	if(ishuman(M) && isliving(user))
 		if(user.a_intent == INTENT_HELP)
@@ -62,7 +66,7 @@
 			var/obj/item/organ/heart/heart = M.getorganslot(ORGAN_SLOT_HEART)
 			var/obj/item/organ/lungs/lungs = M.getorganslot(ORGAN_SLOT_LUNGS)
 
-			if(!(M.stat == DEAD || (M.status_flags&FAKEDEATH)))
+			if(!(M.stat == DEAD || (M.has_trait(TRAIT_FAKEDEATH))))
 				if(heart && istype(heart))
 					heart_strength = "<span class='danger'>an unstable</span>"
 					if(heart.beating)
@@ -75,7 +79,7 @@
 			if(M.stat == DEAD && heart && world.time - M.timeofdeath < DEFIB_TIME_LIMIT * 10)
 				heart_strength = "<span class='boldannounce'>a faint, fluttery</span>"
 
-			var/diagnosis = (body_part == "chest" ? "You hear [heart_strength] pulse and [lung_strength] respiration." : "You faintly hear [heart_strength] pulse.")
+			var/diagnosis = (body_part == BODY_ZONE_CHEST ? "You hear [heart_strength] pulse and [lung_strength] respiration." : "You faintly hear [heart_strength] pulse.")
 			user.visible_message("[user] places [src] against [M]'s [body_part] and listens attentively.", "<span class='notice'>You place [src] against [M]'s [body_part]. [diagnosis]</span>")
 			return
 	return ..(M,user)
@@ -96,6 +100,11 @@
 	icon_state = "scarf"
 	color = "#4A4A4B" //Grey but it looks black
 
+/obj/item/clothing/neck/scarf/pink
+	name = "pink scarf"
+	icon_state = "scarf"
+	color = "#F699CD" //Pink
+
 /obj/item/clothing/neck/scarf/red
 	name = "red scarf"
 	icon_state = "scarf"
@@ -114,7 +123,7 @@
 /obj/item/clothing/neck/scarf/purple
 	name = "purple scarf"
 	icon_state = "scarf"
-	color = "#9557C5" //purple
+	color = "#9557C5" //Purple
 
 /obj/item/clothing/neck/scarf/yellow
 	name = "yellow scarf"
@@ -124,7 +133,7 @@
 /obj/item/clothing/neck/scarf/orange
 	name = "orange scarf"
 	icon_state = "scarf"
-	color = "#C67A4B" //orange
+	color = "#C67A4B" //Orange
 
 /obj/item/clothing/neck/scarf/cyan
 	name = "cyan scarf"

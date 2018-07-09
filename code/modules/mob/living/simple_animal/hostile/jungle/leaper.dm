@@ -10,6 +10,7 @@
 	icon_state = "leaper"
 	icon_living = "leaper"
 	icon_dead = "leaper_dead"
+	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	maxHealth = 300
 	health = 300
 	ranged = TRUE
@@ -109,7 +110,7 @@
 	taste_description = "french cuisine"
 	taste_mult = 1.3
 
-/datum/reagent/toxin/leaper_venom/on_mob_life(mob/living/M)
+/datum/reagent/toxin/leaper_venom/on_mob_life(mob/living/carbon/M)
 	if(volume >= 10)
 		M.adjustToxLoss(5, 0)
 	..()

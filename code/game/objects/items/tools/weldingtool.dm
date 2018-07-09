@@ -8,17 +8,17 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	force = 3
 	throwforce = 5
 	hitsound = "swing_hit"
-	usesound = 'sound/items/welder.ogg'
+	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
 	var/acti_sound = 'sound/items/welderactivate.ogg'
 	var/deac_sound = 'sound/items/welderdeactivate.ogg'
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
 	resistance_flags = FIRE_PROOF
 
 	materials = list(MAT_METAL=70, MAT_GLASS=30)
@@ -28,8 +28,10 @@
 	var/change_icons = 1
 	var/can_off_process = 0
 	var/light_intensity = 2 //how powerful the emitted light is when used.
+	var/progress_flash_divisor = 10
 	var/burned_fuel_for = 0	//when fuel was last removed
 	heat = 3800
+	tool_behaviour = TOOL_WELDER
 	toolspeed = 1
 
 /obj/item/weldingtool/Initialize()
@@ -72,7 +74,7 @@
 			damtype = "fire"
 			++burned_fuel_for
 			if(burned_fuel_for >= WELDER_FUEL_BURN_INTERVAL)
-				remove_fuel(1)
+				use(1)
 			update_icon()
 
 	//This is to start fires. process() is only called if the welder is on.
@@ -106,10 +108,10 @@
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 
 	if(affecting && affecting.status == BODYPART_ROBOTIC && user.a_intent != INTENT_HARM)
-		if(src.remove_fuel(1))
-			playsound(loc, usesound, 50, 1)
+		if(src.use_tool(H, user, 0, volume=50, amount=1))
 			if(user == H)
-				user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the dents on [H]'s [affecting.name].</span>")
+				user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>",
+					"<span class='notice'>You start fixing some of the dents on [H]'s [affecting.name].</span>")
 				if(!do_mob(user, H, 50))
 					return
 			item_heal_robotic(H, user, 15, 0)
@@ -118,29 +120,30 @@
 
 
 /obj/item/weldingtool/afterattack(atom/O, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(!status && O.is_refillable())
 		reagents.trans_to(O, reagents.total_volume)
 		to_chat(user, "<span class='notice'>You empty [src]'s fuel tank into [O].</span>")
 		update_icon()
-	if(welding)
-		remove_fuel(1)
+	if(isOn())
+		use(1)
 		var/turf/location = get_turf(user)
-		location.hotspot_expose(700, 50, 1)
+		location.hotspot_expose(550, 10, 1)
 		if(get_fuel() <= 0)
 			set_light(0)
 
 		if(isliving(O))
 			var/mob/living/L = O
 			if(L.IgniteMob())
-				message_admins("[key_name_admin(user)] set [key_name_admin(L)] on fire")
-				log_game("[key_name(user)] set [key_name(L)] on fire")
+				message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(L)] on fire with [src] at [AREACOORD(user)]")
+				log_game("[key_name(user)] set [key_name(L)] on fire with [src] at [AREACOORD(user)]")
 
 
 /obj/item/weldingtool/attack_self(mob/user)
 	if(src.reagents.has_reagent("plasma"))
-		message_admins("[key_name_admin(user)] activated a rigged welder.")
+		message_admins("[ADMIN_LOOKUPFLW(user)] activated a rigged welder at [AREACOORD(user)].")
 		explode()
 	switched_on(user)
 	if(welding)
@@ -149,26 +152,23 @@
 	update_icon()
 
 
-//Returns the amount of fuel in the welder
+// Returns the amount of fuel in the welder
 /obj/item/weldingtool/proc/get_fuel()
 	return reagents.get_reagent_amount("welding_fuel")
 
 
-//Removes fuel from the welding tool. If a mob is passed, it will try to flash the mob's eyes. This should probably be renamed to use()
-/obj/item/weldingtool/proc/remove_fuel(amount = 1, mob/living/M = null)
-	if(!welding || !check_fuel())
-		return 0
-	if(amount)
+// Uses fuel from the welding tool.
+/obj/item/weldingtool/use(used = 0)
+	if(!isOn() || !check_fuel())
+		return FALSE
+
+	if(used)
 		burned_fuel_for = 0
-	if(get_fuel() >= amount)
-		reagents.remove_reagent("welding_fuel", amount)
+	if(get_fuel() >= used)
+		reagents.remove_reagent("welding_fuel", used)
 		check_fuel()
-		if(M)
-			M.flash_act(light_intensity)
 		return TRUE
 	else
-		if(M)
-			to_chat(M, "<span class='warning'>You need more welding fuel to complete this task!</span>")
 		return FALSE
 
 
@@ -230,6 +230,34 @@
 /obj/item/weldingtool/proc/isOn()
 	return welding
 
+// When welding is about to start, run a normal tool_use_check, then flash a mob if it succeeds.
+/obj/item/weldingtool/tool_start_check(mob/living/user, amount=0)
+	. = tool_use_check(user, amount)
+	if(. && user)
+		user.flash_act(light_intensity)
+
+// Flash the user during welding progress
+/obj/item/weldingtool/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
+	. = ..()
+	if(. && user)
+		if (progress_flash_divisor == 0)
+			user.flash_act(min(light_intensity,1))
+			progress_flash_divisor = initial(progress_flash_divisor)
+		else
+			progress_flash_divisor--
+
+// If welding tool ran out of fuel during a construction task, construction fails.
+/obj/item/weldingtool/tool_use_check(mob/living/user, amount)
+	if(!isOn() || !check_fuel())
+		to_chat(user, "<span class='warning'>[src] has to be on to complete this task!</span>")
+		return FALSE
+
+	if(get_fuel() >= amount)
+		return TRUE
+	else
+		to_chat(user, "<span class='warning'>You need more welding fuel to complete this task!</span>")
+		return FALSE
+
 
 /obj/item/weldingtool/proc/flamethrower_screwdriver(obj/item/I, mob/user)
 	if(welding)
@@ -259,10 +287,10 @@
 			to_chat(user, "<span class='warning'>You need one rod to start building a flamethrower!</span>")
 
 /obj/item/weldingtool/ignition_effect(atom/A, mob/user)
-	if(welding && remove_fuel(1, user))
-		. = "<span class='notice'>[user] casually lights [A] with [src], what a badass.</span>"
+	if(use_tool(A, user, 0, amount=1))
+		return "<span class='notice'>[user] casually lights [A] with [src], what a badass.</span>"
 	else
-		. = ""
+		return ""
 
 /obj/item/weldingtool/largetank
 	name = "industrial welding tool"

@@ -107,7 +107,7 @@
 	if(receiver && receiver.current)
 		if(ishuman(receiver.current))
 			var/mob/living/carbon/human/H = receiver.current
-			var/list/slots = list("backpack" = slot_in_backpack)
+			var/list/slots = list("backpack" = SLOT_IN_BACKPACK)
 			for(var/eq_path in special_equipment)
 				var/obj/O = new eq_path
 				H.equip_in_one_of_slots(O, slots)
@@ -154,7 +154,7 @@
 	if(!target || !considered_alive(target) || considered_afk(target))
 		return TRUE
 	var/turf/T = get_turf(target.current)
-	return T && !(T.z in GLOB.station_z_levels)
+	return T && !is_station_level(T.z)
 
 /datum/objective/mutiny/update_explanation_text()
 	..()
@@ -214,8 +214,9 @@
 		explanation_text = "Free Objective"
 
 /datum/objective/protect//The opposite of killing a dude.
-	var/target_role_type=0
 	martyr_compatible = 1
+	var/target_role_type = 0
+	var/human_check = TRUE
 
 /datum/objective/protect/find_target_by_role(role, role_type=0, invert=0)
 	if(!invert)
@@ -224,7 +225,7 @@
 	return target
 
 /datum/objective/protect/check_completion()
-	return !target || considered_alive(target)
+	return !target || considered_alive(target, enforce_human = human_check)
 
 /datum/objective/protect/update_explanation_text()
 	..()
@@ -232,6 +233,9 @@
 		explanation_text = "Protect [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
 	else
 		explanation_text = "Free Objective"
+
+/datum/objective/protect/nonhuman
+	human_check = FALSE
 
 /datum/objective/hijack
 	explanation_text = "Hijack the shuttle to ensure no loyalist Nanotrasen crew escape alive and out of custody."
@@ -268,7 +272,7 @@
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return TRUE
 	for(var/mob/living/player in GLOB.player_list)
-		if(get_area(player) in SSshuttle.emergency.shuttle_areas && player.mind && player.stat != DEAD && ishuman(player))
+		if((get_area(player) in SSshuttle.emergency.shuttle_areas) && player.mind && player.stat != DEAD && ishuman(player))
 			var/mob/living/carbon/human/H = player
 			if(H.dna.species.id != "human")
 				return FALSE
@@ -524,7 +528,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 			var/list/otherwise = M.GetAllContents()
 			for(var/obj/item/disk/tech_disk/TD in otherwise)
 				TD.stored_research.copy_research_to(checking)
-	return checking.researched_nodes.len >= target
+	return checking.researched_nodes.len >= target_amount
 
 /datum/objective/capture
 
@@ -562,6 +566,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	return captured_amount >= target_amount
 
 
+//Changeling Objectives
+
 /datum/objective/absorb
 
 /datum/objective/absorb/proc/gen_amount_goal(lowbound = 4, highbound = 6)
@@ -593,7 +599,47 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		absorbedcount += changeling.absorbedcount
 	return absorbedcount >= target_amount
 
+/datum/objective/absorb_most
+	explanation_text = "Extract more compatible genomes than any other Changeling."
 
+/datum/objective/absorb_most/check_completion()
+	var/list/datum/mind/owners = get_owners()
+	var/absorbedcount = 0
+	for(var/datum/mind/M in owners)
+		if(!M)
+			continue
+		var/datum/antagonist/changeling/changeling = M.has_antag_datum(/datum/antagonist/changeling)
+		if(!changeling || !changeling.stored_profiles)
+			continue
+		absorbedcount += changeling.absorbedcount
+
+	for(var/datum/antagonist/changeling/changeling2 in GLOB.antagonists)
+		if(!changeling2.owner || changeling2.owner == owner || !changeling2.stored_profiles || changeling2.absorbedcount < absorbedcount)
+			continue
+		return FALSE
+	return TRUE
+
+/datum/objective/absorb_changeling
+	explanation_text = "Absorb another Changeling."
+
+/datum/objective/absorb_changeling/check_completion()
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(!M)
+			continue
+		var/datum/antagonist/changeling/changeling = M.has_antag_datum(/datum/antagonist/changeling)
+		if(!changeling)
+			continue
+		var/total_genetic_points = changeling.geneticpoints
+
+		for(var/obj/effect/proc_holder/changeling/p in changeling.purchasedpowers)
+			total_genetic_points += p.dna_cost
+
+		if(total_genetic_points > initial(changeling.geneticpoints))
+			return TRUE
+	return FALSE
+
+//End Changeling Objectives
 
 /datum/objective/destroy
 	martyr_compatible = 1
@@ -634,7 +680,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/steal_five_of_type/summon_magic
 	explanation_text = "Steal at least five magical artefacts!"
-	wanted_items = list(/obj/item/spellbook, /obj/item/gun/magic, /obj/item/clothing/suit/space/hardsuit/wizard, /obj/item/scrying, /obj/item/antag_spawner/contract, /obj/item/device/necromantic_stone)
+	wanted_items = list(/obj/item/spellbook, /obj/item/gun/magic, /obj/item/clothing/suit/space/hardsuit/wizard, /obj/item/scrying, /obj/item/antag_spawner/contract, /obj/item/necromantic_stone)
 
 /datum/objective/steal_five_of_type/check_completion()
 	var/list/datum/mind/owners = get_owners()
@@ -659,16 +705,31 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	var/min_lings = 3 //Minimum amount of lings for this team objective to be possible
 	var/escape_objective_compatible = FALSE
 
+/datum/objective/changeling_team_objective/proc/prepare()
+	return FALSE
 
 //Impersonate department
 //Picks as many people as it can from a department (Security,Engineer,Medical,Science)
 //and tasks the lings with killing and replacing them
 /datum/objective/changeling_team_objective/impersonate_department
-	explanation_text = "Ensure X derpartment are killed, impersonated, and replaced by Changelings"
+	explanation_text = "Ensure X department are killed, impersonated, and replaced by Changelings"
 	var/command_staff_only = FALSE //if this is true, it picks command staff instead
 	var/list/department_minds = list()
 	var/list/department_real_names = list()
 	var/department_string = ""
+
+
+/datum/objective/changeling_team_objective/impersonate_department/prepare()
+	var/result = FALSE
+	if(command_staff_only)
+		result = get_heads()
+	else
+		result = get_department_staff()
+	if(result)
+		update_explanation_text()
+		return TRUE
+	else
+		return FALSE
 
 
 /datum/objective/changeling_team_objective/impersonate_department/proc/get_department_staff()
@@ -687,7 +748,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		if("Chief Medical Officer")
 			department_string = "medical"
 
-	var/list/lings = get_antagonists(/datum/antagonist/changeling,TRUE)
+	var/list/lings = get_antag_minds(/datum/antagonist/changeling,TRUE)
 	var/ling_count = lings.len
 
 	for(var/datum/mind/M in SSticker.minds)
@@ -703,9 +764,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 	if(!department_minds.len)
 		log_game("[type] has failed to find department staff, and has removed itself. the round will continue normally")
-		owner.objectives -= src
-		qdel(src)
-		return
+		return FALSE
+	return TRUE
 
 
 /datum/objective/changeling_team_objective/impersonate_department/proc/get_heads()
@@ -715,7 +775,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	//Needed heads is between min_lings and the maximum possible amount of command roles
 	//So at the time of writing, rand(3,6), it's also capped by the amount of lings there are
 	//Because you can't fill 6 head roles with 3 lings
-	var/list/lings = get_antagonists(/datum/antagonist/changeling,TRUE)
+	var/list/lings = get_antag_minds(/datum/antagonist/changeling,TRUE)
 	var/needed_heads = rand(min_lings,GLOB.command_positions.len)
 	needed_heads = min(lings.len,needed_heads)
 
@@ -732,19 +792,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 	if(!department_minds.len)
 		log_game("[type] has failed to find department heads, and has removed itself. the round will continue normally")
-		owner.objectives -= src
-		qdel(src)
-		return
-
-
-/datum/objective/changeling_team_objective/impersonate_department/New(var/text)
-	..()
-	if(command_staff_only)
-		get_heads()
-	else
-		get_department_staff()
-
-	update_explanation_text()
+		return FALSE
+	return TRUE
 
 
 /datum/objective/changeling_team_objective/impersonate_department/update_explanation_text()
@@ -792,7 +841,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	//Check each staff member has been replaced, by cross referencing changeling minds, changeling current dna, the staff minds and their original DNA names
 	var/success = 0
 	changelings:
-		for(var/datum/mind/changeling in get_antagonists(/datum/antagonist/changeling,TRUE))
+		for(var/datum/mind/changeling in get_antag_minds(/datum/antagonist/changeling,TRUE))
 			if(success >= department_minds.len) //We did it, stop here!
 				return TRUE
 			if(ishuman(changeling.current))
@@ -809,10 +858,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		return TRUE
 	return FALSE
 
-
-
-
-//A subtype of impersonate_derpartment
+//A subtype of impersonate_department
 //This subtype always picks as many command staff as it can (HoS,HoP,Cap,CE,CMO,RD)
 //and tasks the lings with killing and replacing them
 /datum/objective/changeling_team_objective/impersonate_department/impersonate_heads

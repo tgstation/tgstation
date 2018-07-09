@@ -7,15 +7,16 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "juicer1"
 	layer = BELOW_OBJ_LAYER
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
+	circuit = /obj/item/circuitboard/machine/reagentgrinder
 	pass_flags = PASSTABLE
 	resistance_flags = ACID_PROOF
 	var/operating = FALSE
 	var/obj/item/reagent_containers/beaker = null
 	var/limit = 10
+	var/speed = 1
 	var/list/holdingitems
 
 /obj/machinery/reagentgrinder/Initialize()
@@ -24,14 +25,26 @@
 	beaker = new /obj/item/reagent_containers/glass/beaker/large(src)
 	beaker.desc += " May contain blended dust. Don't breathe this in!"
 
-/obj/machinery/reagentgrinder/Destroy()
+/obj/machinery/reagentgrinder/constructed/Initialize()
+	. = ..()
+	holdingitems = list()
 	QDEL_NULL(beaker)
+	update_icon()
+
+/obj/machinery/reagentgrinder/Destroy()
+	if(beaker)
+		beaker.forceMove(drop_location())
 	drop_all_items()
 	return ..()
 
 /obj/machinery/reagentgrinder/contents_explosion(severity, target)
 	if(beaker)
 		beaker.ex_act(severity, target)
+
+/obj/machinery/reagentgrinder/RefreshParts()
+	speed = 1
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
+		speed = M.rating
 
 /obj/machinery/reagentgrinder/handle_atom_del(atom/A)
 	. = ..()
@@ -48,10 +61,6 @@
 		AM.forceMove(drop_location())
 	holdingitems = list()
 
-/obj/machinery/reagentgrinder/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal (drop_location(), 3)
-	qdel(src)
-
 /obj/machinery/reagentgrinder/update_icon()
 	if(beaker)
 		icon_state = "juicer1"
@@ -59,10 +68,20 @@
 		icon_state = "juicer0"
 
 /obj/machinery/reagentgrinder/attackby(obj/item/I, mob/user, params)
+	//You can only screw open empty grinder
+	if(!beaker && !length(holdingitems) && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
+		return
+
+	if(default_deconstruction_crowbar(I))
+		return
+
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if (istype(I, /obj/item/reagent_containers) && I.is_open_container())
+	if(panel_open) //Can't insert objects when its screwed open
+		return TRUE
+
+	if (istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		if (!beaker)
 			if(!user.transferItemToLoc(I, src))
 				to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
@@ -81,16 +100,14 @@
 
 	//Fill machine with a bag!
 	if(istype(I, /obj/item/storage/bag))
-		var/obj/item/storage/bag/B = I
-		for (var/obj/item/reagent_containers/food/snacks/grown/G in B.contents)
-			B.remove_from_storage(G, src)
-			holdingitems[G] = TRUE
-			if(length(holdingitems) >= limit) //Sanity checking so the blender doesn't overfill
+		var/list/inserted = list()
+		if(SEND_SIGNAL(I, COMSIG_TRY_STORAGE_TAKE_TYPE, /obj/item/reagent_containers/food/snacks/grown, src, limit - length(holdingitems), null, null, user, inserted))
+			for(var/i in inserted)
+				holdingitems[i] = TRUE
+			if(!I.contents.len)
+				to_chat(user, "<span class='notice'>You empty [I] into [src].</span>")
+			else
 				to_chat(user, "<span class='notice'>You fill [src] to the brim.</span>")
-				break
-
-		if(!I.contents.len)
-			to_chat(user, "<span class='notice'>You empty [I] into [src].</span>")
 
 		updateUsrDialog()
 		return TRUE
@@ -111,17 +128,8 @@
 		updateUsrDialog()
 		return FALSE
 
-/obj/machinery/reagentgrinder/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/reagentgrinder/attack_ai(mob/user)
-	return FALSE
-
-/obj/machinery/reagentgrinder/attack_hand(mob/user)
-	user.set_machine(src)
-	interact(user)
-
-/obj/machinery/reagentgrinder/interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave
+/obj/machinery/reagentgrinder/ui_interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave
+	. = ..()
 	var/is_chamber_empty = FALSE
 	var/is_beaker_ready = FALSE
 	var/processing_chamber = ""
@@ -168,7 +176,7 @@
 
 	var/datum/browser/popup = new(user, "reagentgrinder", "All-In-One Grinder")
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open(1)
 	return
 
@@ -201,6 +209,8 @@
 	if(!beaker)
 		return
 	beaker.forceMove(drop_location())
+	if(Adjacent(user) && !issilicon(user))
+		user.put_in_hands(beaker)
 	beaker = null
 	update_icon()
 	updateUsrDialog()
@@ -229,7 +239,7 @@
 	pixel_x = old_px
 
 /obj/machinery/reagentgrinder/proc/operate_for(time, silent = FALSE, juicing = FALSE)
-	shake_for(time)
+	shake_for(time / speed)
 	updateUsrDialog()
 	operating = TRUE
 	if(!silent)
@@ -237,7 +247,7 @@
 			playsound(src, 'sound/machines/blender.ogg', 50, 1)
 		else
 			playsound(src, 'sound/machines/juicer.ogg', 20, 1)
-	addtimer(CALLBACK(src, .proc/stop_operating), time)
+	addtimer(CALLBACK(src, .proc/stop_operating), time / speed)
 
 /obj/machinery/reagentgrinder/proc/stop_operating()
 	operating = FALSE

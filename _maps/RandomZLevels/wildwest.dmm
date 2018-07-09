@@ -31,13 +31,6 @@
 	icon_state = "cult"
 	},
 /area/awaymission/wildwest/vault)
-"ai" = (
-/turf/closed/indestructible{
-	desc = "The patterns engraved on the wall seem to shift as you try to focus on them. You feel sick.";
-	icon = 'icons/turf/walls/cult_wall.dmi';
-	icon_state = "cult"
-	},
-/area/awaymission/wildwest/vault)
 "aj" = (
 /turf/open/floor/plating{
 	icon_state = "cultdamage3"
@@ -145,9 +138,8 @@
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/vault)
 "aF" = (
-/obj/machinery/door/airlock/vault{
-	locked = 1
-	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/vault,
 /turf/open/floor/engine/cult,
 /area/awaymission/wildwest/vaultdoors)
 "aG" = (
@@ -160,9 +152,8 @@
 /turf/closed/mineral/gold,
 /area/awaymission/wildwest/mines)
 "aJ" = (
-/obj/machinery/door/airlock/vault{
-	locked = 1
-	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/vault,
 /turf/open/floor/engine/cult,
 /area/awaymission/wildwest/vault)
 "aK" = (
@@ -561,9 +552,6 @@
 /obj/machinery/door/window,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
-"cc" = (
-/turf/closed/wall/mineral/sandstone,
-/area/awaymission/wildwest/mines)
 "cd" = (
 /obj/effect/mob_spawn/human/cook{
 	mob_name = "Chef"
@@ -712,7 +700,7 @@
 "cD" = (
 /obj/structure/table/wood,
 /obj/item/clothing/gloves/color/yellow,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cE" = (
@@ -933,9 +921,6 @@
 	},
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
-"dl" = (
-/turf/closed/wall/mineral/sandstone,
-/area/awaymission/wildwest/mines)
 "dm" = (
 /obj/structure/mineral_door/wood{
 	icon_state = "wood"
@@ -1091,8 +1076,7 @@
 /area/awaymission/wildwest/mines)
 "dO" = (
 /obj/structure/chair/comfy/beige{
-	dir = 1;
-	icon_state = "comfychair"
+	dir = 1
 	},
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
@@ -1155,6 +1139,7 @@
 /area/awaymission/wildwest/gov)
 "dU" = (
 /obj/machinery/door/airlock/sandstone,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
@@ -1345,16 +1330,8 @@
 	icon_state = "ironsand4"
 	},
 /area/awaymission/wildwest/gov)
-"ez" = (
-/obj/machinery/mineral/input,
-/turf/open/floor/plasteel,
-/area/awaymission/wildwest/refine)
 "eA" = (
 /obj/machinery/mineral/mint,
-/turf/open/floor/plasteel,
-/area/awaymission/wildwest/refine)
-"eB" = (
-/obj/machinery/mineral/output,
 /turf/open/floor/plasteel,
 /area/awaymission/wildwest/refine)
 "eC" = (
@@ -1405,7 +1382,7 @@
 	},
 /area/awaymission/wildwest/gov)
 "eJ" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall/r_wall,
 /area/awaymission/wildwest/refine)
 "eK" = (
@@ -1543,6 +1520,9 @@
 /area/awaymission/wildwest/gov)
 "fd" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/wildwest/refine)
 "fe" = (
@@ -1922,6 +1902,9 @@
 /area/awaymission/wildwest/mines)
 "gi" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
 "gj" = (
@@ -2096,21 +2079,9 @@
 "gJ" = (
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/wildwest/refine)
-"gK" = (
-/turf/closed/wall/mineral/titanium,
-/area/awaymission/wildwest/refine)
 "gL" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/open/floor/mineral/titanium/yellow,
-/area/awaymission/wildwest/refine)
-"gM" = (
-/turf/closed/wall/mineral/titanium,
-/area/awaymission/wildwest/refine)
-"gN" = (
-/turf/closed/wall/mineral/titanium,
-/area/awaymission/wildwest/refine)
-"gO" = (
-/turf/closed/wall/mineral/titanium,
 /area/awaymission/wildwest/refine)
 "gP" = (
 /obj/structure/chair,
@@ -2119,17 +2090,8 @@
 "gQ" = (
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wildwest/refine)
-"gR" = (
-/turf/closed/wall/mineral/titanium,
-/area/awaymission/wildwest/refine)
 "gS" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/awaymission/wildwest/refine)
-"gT" = (
-/turf/closed/wall/mineral/titanium,
-/area/awaymission/wildwest/refine)
-"gU" = (
-/turf/closed/wall/mineral/titanium,
 /area/awaymission/wildwest/refine)
 "gV" = (
 /obj/effect/landmark/awaystart,
@@ -2160,6 +2122,41 @@
 	icon_state = "ironsand1"
 	},
 /area/awaymission/wildwest/mines)
+"pD" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plasteel,
+/area/awaymission/wildwest/refine)
+"Gh" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/awaymission/wildwest/gov)
+"Kh" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/wildwest/refine)
+"RN" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/wildwest/refine)
+"Ua" = (
+/obj/machinery/door/airlock/sandstone,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating/ironsand{
+	icon_state = "ironsand1"
+	},
+/area/awaymission/wildwest/gov)
 
 (1,1,1) = {"
 aa
@@ -21348,7 +21345,7 @@ eN
 eg
 ex
 eg
-dU
+Ua
 fL
 fL
 fL
@@ -21605,7 +21602,7 @@ eh
 fc
 eh
 es
-dU
+Ua
 fL
 fL
 fL
@@ -22574,7 +22571,7 @@ ab
 ah
 ac
 ah
-ai
+ah
 ac
 ac
 ac
@@ -23408,7 +23405,7 @@ bv
 fM
 fW
 gb
-gi
+Gh
 go
 fW
 fW
@@ -28027,7 +28024,7 @@ et
 et
 eJ
 eR
-fd
+RN
 fj
 fo
 fA
@@ -28794,7 +28791,7 @@ aG
 aG
 aG
 et
-ez
+eu
 eu
 eu
 eu
@@ -29067,10 +29064,10 @@ eu
 eu
 eu
 eu
-fd
+pD
 eu
 eu
-fd
+Kh
 gL
 gQ
 gQ
@@ -29308,7 +29305,7 @@ aW
 aW
 aW
 et
-eB
+eu
 eu
 eu
 eu

@@ -6,7 +6,6 @@
 	can_unwrench = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF //really helpful in building gas chambers for xenomorphs
 
-	var/on = FALSE
 	var/injecting = 0
 
 	var/volume_rate = 50
@@ -20,12 +19,71 @@
 
 	pipe_state = "injector"
 
+/obj/machinery/atmospherics/components/unary/outlet_injector/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
+
 /obj/machinery/atmospherics/components/unary/outlet_injector/Destroy()
 	SSradio.remove_object(src,frequency)
 	return ..()
 
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos
+	frequency = FREQ_ATMOS_STORAGE
+	on = TRUE
+	volume_rate = 200
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste
+	name = "atmos waste outlet injector"
+	id =  ATMOS_GAS_MONITOR_WASTE_ATMOS
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste
+	name = "engine outlet injector"
+	id = ATMOS_GAS_MONITOR_WASTE_ENGINE
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxin_input
+	name = "plasma tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_TOX
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/oxygen_input
+	name = "oxygen tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_O2
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrogen_input
+	name = "nitrogen tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_N2
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/mix_input
+	name = "mix tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_MIX
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrous_input
+	name = "nitrous oxide tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_N2O
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/air_input
+	name = "air mix tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_AIR
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/carbon_input
+	name = "carbon dioxide tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_CO2
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/incinerator_input
+	name = "incinerator chamber input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_INCINERATOR
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxins_mixing_input
+	name = "toxins mixing input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_TOXINS_LAB
+
 /obj/machinery/atmospherics/components/unary/outlet_injector/on
 	on = TRUE
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/update_icon_nopipes()
 	cut_overlays()

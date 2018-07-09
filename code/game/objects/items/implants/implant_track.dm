@@ -15,7 +15,7 @@
 	imp_type = /obj/item/implant/tracking
 
 /obj/item/implanter/tracking/gps
-	imp_type = /obj/item/device/gps/mining/internal
+	imp_type = /obj/item/gps/mining/internal
 
 /obj/item/implant/tracking/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>

@@ -7,11 +7,11 @@
 
 /datum/computer/file/embedded_program/airlock_controller
 	var/id_tag
-	var/exterior_door_tag
-	var/interior_door_tag
-	var/airpump_tag
-	var/sensor_tag
-	var/sanitize_external
+	var/exterior_door_tag //Burn chamber facing door
+	var/interior_door_tag //Station facing door
+	var/airpump_tag //See: dp_vent_pump.dm
+	var/sensor_tag //See: /obj/machinery/airlock_sensor
+	var/sanitize_external //Before the interior airlock opens, do we first drain all gases inside the chamber and then repressurize?
 
 	state = AIRLOCK_STATE_CLOSED
 	var/target_state = AIRLOCK_STATE_CLOSED
@@ -97,7 +97,7 @@
 							"sigtype" = "command"
 						))
 						if(memory["pump_status"] == "siphon")
-							signal.data["stabalize"] = 1
+							signal.data["stabilize"] = 1
 						else if(memory["pump_status"] != "release")
 							signal.data["power"] = 1
 						post_signal(signal)
@@ -211,6 +211,33 @@
 	var/sensor_tag
 	var/sanitize_external
 
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix
+	name = "Incinerator Access Console"
+	airpump_tag = INCINERATOR_TOXMIX_DP_VENTPUMP
+	exterior_door_tag = INCINERATOR_TOXMIX_AIRLOCK_EXTERIOR
+	id_tag = INCINERATOR_TOXMIX_AIRLOCK_CONTROLLER
+	interior_door_tag = INCINERATOR_TOXMIX_AIRLOCK_INTERIOR
+	sanitize_external = TRUE
+	sensor_tag = INCINERATOR_TOXMIX_AIRLOCK_SENSOR
+
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_atmos
+	name = "Incinerator Access Console"
+	airpump_tag = INCINERATOR_ATMOS_DP_VENTPUMP
+	exterior_door_tag = INCINERATOR_ATMOS_AIRLOCK_EXTERIOR
+	id_tag = INCINERATOR_ATMOS_AIRLOCK_CONTROLLER
+	interior_door_tag = INCINERATOR_ATMOS_AIRLOCK_INTERIOR
+	sanitize_external = TRUE
+	sensor_tag = INCINERATOR_ATMOS_AIRLOCK_SENSOR
+
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_syndicatelava
+	name = "Incinerator Access Console"
+	airpump_tag = INCINERATOR_SYNDICATELAVA_DP_VENTPUMP
+	exterior_door_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_EXTERIOR
+	id_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_CONTROLLER
+	interior_door_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_INTERIOR
+	sanitize_external = TRUE
+	sensor_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_SENSOR
+
 /obj/machinery/embedded_controller/radio/airlock_controller/Initialize(mapload)
 	. = ..()
 	if(!mapload)
@@ -281,6 +308,7 @@
 <div class='line'><div class='statusLabel'>\> Control Pump:</div><div class='statusValue'>[pump_status]</div></div>
 <div class='line'><div class='statusLabel'>\> Interior Door:</div><div class='statusValue'>[interior_status]</div></div>
 <div class='line'><div class='statusLabel'>\> Exterior Door:</div><div class='statusValue'>[exterior_status]</div></div>
+<div class='clearBoth'></div>
 </div>
 [state_options]"}
 

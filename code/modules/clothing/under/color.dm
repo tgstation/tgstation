@@ -4,13 +4,15 @@
 /obj/item/clothing/under/color/random
 	icon_state = "random_jumpsuit"
 
-/obj/item/clothing/under/color/random/New()
+/obj/item/clothing/under/color/random/Initialize()
 	..()
-	var/obj/item/clothing/under/color/C = pick(subtypesof(/obj/item/clothing/under/color) - /obj/item/clothing/under/color/random)
-	name = initial(C.name)
-	icon_state = initial(C.icon_state)
-	item_state = initial(C.item_state)
-	item_color = initial(C.item_color)
+	var/obj/item/clothing/under/color/C = pick(subtypesof(/obj/item/clothing/under/color) - /obj/item/clothing/under/color/random - /obj/item/clothing/under/color/grey/glorf - /obj/item/clothing/under/color/black/ghost)
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		H.equip_to_slot_or_del(new C(H), SLOT_W_UNIFORM) //or else you end up with naked assistants running around everywhere...
+	else
+		new C(loc)
+	return INITIALIZE_HINT_QDEL
 
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
@@ -20,7 +22,7 @@
 	resistance_flags = NONE
 
 /obj/item/clothing/under/color/black/ghost
-	flags_1 = NODROP_1|DROPDEL_1
+	item_flags = NODROP | DROPDEL
 
 /obj/item/clothing/under/color/grey
 	name = "grey jumpsuit"

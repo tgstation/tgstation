@@ -303,6 +303,7 @@ SUBSYSTEM_DEF(timer)
 	var/datum/timedevent/prev
 
 /datum/timedevent/New(datum/callback/callBack, timeToRun, flags, hash)
+	var/static/nextid = 1
 	id = TIMER_ID_NULL
 	src.callBack = callBack
 	src.timeToRun = timeToRun
@@ -313,7 +314,11 @@ SUBSYSTEM_DEF(timer)
 		SStimer.hashes[hash] = src
 
 	if (flags & TIMER_STOPPABLE)
-		id = GUID()
+		id = num2text(nextid, 100)
+		if (nextid >= SHORT_REAL_LIMIT)
+			nextid += min(1, 2**round(nextid/SHORT_REAL_LIMIT))
+		else
+			nextid++
 		SStimer.timer_id_dict[id] = src
 
 	name = "Timer: [id] (\ref[src]), TTR: [timeToRun], Flags: [jointext(bitfield2list(flags, list("TIMER_UNIQUE", "TIMER_OVERRIDE", "TIMER_CLIENT_TIME", "TIMER_STOPPABLE", "TIMER_NO_HASH_WAIT")), ", ")], callBack: \ref[callBack], callBack.object: [callBack.object]\ref[callBack.object]([getcallingtype()]), callBack.delegate:[callBack.delegate]([callBack.arguments ? callBack.arguments.Join(", ") : ""])"
@@ -321,7 +326,7 @@ SUBSYSTEM_DEF(timer)
 	if ((timeToRun < world.time || timeToRun < SStimer.head_offset) && !(flags & TIMER_CLIENT_TIME))
 		CRASH("Invalid timer state: Timer created that would require a backtrack to run (addtimer would never let this happen): [SStimer.get_timer_debug_string(src)]")
 
-	if (callBack.object != GLOBAL_PROC)
+	if (callBack.object != GLOBAL_PROC && !QDESTROYING(callBack.object))
 		LAZYADD(callBack.object.active_timers, src)
 
 
@@ -447,13 +452,12 @@ SUBSYSTEM_DEF(timer)
 		CRASH("addtimer called without a callback")
 
 	if (wait < 0)
-		stack_trace("Addtimer called with a negitive wait. Converting to 0")
+		stack_trace("addtimer called with a negative wait. Converting to [world.tick_lag]")
 
-	//alot of things add short timers on themselves in their destroy, we ignore those cases
-	if (wait >= 1 && callback && callback.object && callback.object != GLOBAL_PROC && QDELETED(callback.object))
-		stack_trace("Add timer called with a callback assigned to a qdeleted object")
+	if (callback.object != GLOBAL_PROC && QDELETED(callback.object) && !QDESTROYING(callback.object))
+		stack_trace("addtimer called with a callback assigned to a qdeleted object. In the future such timers will not be supported and may refuse to run or run with a 0 wait")
 
-	wait = max(wait, 0)
+	wait = max(CEILING(wait, world.tick_lag), world.tick_lag)
 
 	if(wait >= INFINITY)
 		CRASH("Attempted to create timer with INFINITY delay")
@@ -481,6 +485,8 @@ SUBSYSTEM_DEF(timer)
 					if (hash_timer.flags & TIMER_STOPPABLE)
 						. = hash_timer.id
 					return
+	else if(flags & TIMER_OVERRIDE)
+		stack_trace("TIMER_OVERRIDE used without TIMER_UNIQUE")
 
 
 	var/timeToRun = world.time + wait

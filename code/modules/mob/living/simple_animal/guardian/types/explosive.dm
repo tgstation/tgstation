@@ -33,10 +33,10 @@
 /mob/living/simple_animal/hostile/guardian/bomb/AltClickOn(atom/movable/A)
 	if(!istype(A))
 		return
-	if(src.loc == summoner)
+	if(loc == summoner)
 		to_chat(src, "<span class='danger'><B>You must be manifested to create bombs!</span></B>")
 		return
-	if(isobj(A))
+	if(isobj(A) && Adjacent(A))
 		if(bomb_cooldown <= world.time && !stat)
 			var/obj/guardian_bomb/B = new /obj/guardian_bomb(get_turf(A))
 			to_chat(src, "<span class='danger'><B>Success! Bomb armed!</span></B>")
@@ -88,6 +88,7 @@
 /obj/guardian_bomb/attackby(mob/living/user)
 	detonate(user)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/guardian_bomb/attack_hand(mob/living/user)
 	detonate(user)
 

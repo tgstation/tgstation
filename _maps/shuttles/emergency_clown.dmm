@@ -18,7 +18,7 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "af" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /turf/open/floor/bluespace,
@@ -43,7 +43,7 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aj" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
 	dir = 8
 	},
 /turf/open/floor/bluespace,
@@ -53,7 +53,7 @@
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "al" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
 	dir = 4
 	},
 /turf/open/floor/bluespace,
@@ -71,7 +71,7 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "ao" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet{
@@ -80,7 +80,7 @@
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "ap" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -29
 	},
@@ -100,8 +100,7 @@
 /area/shuttle/escape)
 "as" = (
 /obj/machinery/door/airlock/public/glass{
-	name = "Emergency Shuttle Premium Lounge";
-	req_access_txt = "0"
+	name = "Emergency Shuttle Premium Lounge"
 	},
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
@@ -144,8 +143,7 @@
 /area/shuttle/escape)
 "aA" = (
 /obj/machinery/door/airlock/public/glass{
-	name = "Emergency Shuttle Greentext";
-	req_access_txt = "0"
+	name = "Emergency Shuttle Greentext"
 	},
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
@@ -156,18 +154,18 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aC" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aD" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
 	dir = 4
 	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aE" = (
 /obj/structure/table,
-/obj/item/device/multitool/ai_detect,
+/obj/item/multitool/ai_detect,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aF" = (
@@ -191,8 +189,7 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	name = "Snappop(tm)!";
-	timid = 1
+	name = "Snappop(tm)!"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)

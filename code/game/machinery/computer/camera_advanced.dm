@@ -4,10 +4,10 @@
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
 	var/list/z_lock = list() // Lock use to these z levels
-	var/station_lock_override = FALSE
+	var/lock_override = NONE
 	var/mob/camera/aiEye/remote/eyeobj
 	var/mob/living/current_user = null
-	var/list/networks = list("SS13")
+	var/list/networks = list("ss13")
 	var/datum/action/innate/camera_off/off_action = new
 	var/datum/action/innate/camera_jump/jump_action = new
 	var/list/actions = list()
@@ -16,8 +16,18 @@
 
 /obj/machinery/computer/camera_advanced/Initialize()
 	. = ..()
-	if(station_lock_override)
-		z_lock = GLOB.station_z_levels.Copy()
+	for(var/i in networks)
+		networks -= i
+		networks += lowertext(i)
+	if(lock_override)
+		if(lock_override & CAMERA_LOCK_STATION)
+			z_lock |= SSmapping.levels_by_trait(ZTRAIT_STATION)
+		if(lock_override & CAMERA_LOCK_MINING)
+			z_lock |= SSmapping.levels_by_trait(ZTRAIT_MINING)
+		if(lock_override & CAMERA_LOCK_CENTCOM)
+			z_lock |= SSmapping.levels_by_trait(ZTRAIT_CENTCOM)
+		if(lock_override & CAMERA_LOCK_REEBE)
+			z_lock |= SSmapping.levels_by_trait(ZTRAIT_REEBE)
 
 /obj/machinery/computer/camera_advanced/syndie
 	icon_keyboard = "syndie_key"
@@ -44,9 +54,13 @@
 		var/datum/action/A = V
 		A.Remove(user)
 	actions.Cut()
+	for(var/V in eyeobj.visibleCameraChunks)
+		var/datum/camerachunk/C = V
+		C.remove(eyeobj)
 	if(user.client)
 		user.reset_perspective(null)
-		eyeobj.RemoveImages()
+		if(eyeobj.visible_icon && user.client)
+			user.client.images -= eyeobj.user_image
 	eyeobj.eye_user = null
 	user.remote_control = null
 
@@ -70,25 +84,47 @@
 	if(M == current_user)
 		remove_eye_control(M)
 
+/obj/machinery/computer/camera_advanced/proc/can_use(mob/living/user)
+	return TRUE
+
+/obj/machinery/computer/camera_advanced/abductor/can_use(mob/user)
+	if(!isabductor(user))
+		return FALSE
+	return ..()
+
 /obj/machinery/computer/camera_advanced/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(current_user)
 		to_chat(user, "The console is already in use!")
 		return
-	if(..())
-		return
 	var/mob/living/L = user
 
+	if(!can_use(user))
+		return
 	if(!eyeobj)
 		CreateEye()
 
 	if(!eyeobj.eye_initialized)
 		var/camera_location
-		for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
-			if(!C.can_use() || z_lock.len && !(C.z in z_lock))
-				continue
-			if(C.network & networks)
-				camera_location = get_turf(C)
-				break
+		var/turf/myturf = get_turf(src)
+		if(eyeobj.use_static != USE_STATIC_NONE)
+			if((!z_lock.len || (myturf.z in z_lock)) && GLOB.cameranet.checkTurfVis(myturf))
+				camera_location = myturf
+			else
+				for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
+					if(!C.can_use() || z_lock.len && !(C.z in z_lock))
+						continue
+					var/list/network_overlap = networks & C.network
+					if(network_overlap.len)
+						camera_location = get_turf(C)
+						break
+		else
+			camera_location = myturf
+			if(z_lock.len && !(myturf.z in z_lock))
+				camera_location = locate(round(world.maxx/2), round(world.maxy/2), z_lock[1])
+
 		if(camera_location)
 			eyeobj.eye_initialized = TRUE
 			give_eye_control(L)
@@ -105,7 +141,6 @@
 /obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 	return //AIs would need to disable their own camera procs to use the console safely. Bugs happen otherwise.
 
-
 /obj/machinery/computer/camera_advanced/proc/give_eye_control(mob/user)
 	GrantActions(user)
 	current_user = user
@@ -117,6 +152,7 @@
 
 /mob/camera/aiEye/remote
 	name = "Inactive Camera Eye"
+	ai_detector_visible = FALSE
 	var/sprint = 10
 	var/cooldown = 0
 	var/acceleration = 1
@@ -128,21 +164,16 @@
 
 /mob/camera/aiEye/remote/update_remote_sight(mob/living/user)
 	user.see_invisible = SEE_INVISIBLE_LIVING //can't see ghosts through cameras
-	user.sight = 0
+	user.sight = SEE_TURFS | SEE_BLACKNESS
 	user.see_in_dark = 2
 	return 1
 
-/mob/camera/aiEye/remote/RemoveImages()
-	..()
-	if(visible_icon)
-		var/client/C = GetViewerClient()
-		if(C)
-			C.images -= user_image
-
 /mob/camera/aiEye/remote/Destroy()
-	eye_user = null
+	if(origin && eye_user)
+		origin.remove_eye_control(eye_user)
 	origin = null
-	return ..()
+	. = ..()
+	eye_user = null
 
 /mob/camera/aiEye/remote/GetViewerClient()
 	if(eye_user)
@@ -151,15 +182,14 @@
 
 /mob/camera/aiEye/remote/setLoc(T)
 	if(eye_user)
-		if(!isturf(eye_user.loc))
-			return
 		T = get_turf(T)
 		if (T)
 			forceMove(T)
 		else
 			moveToNullspace()
-		if(use_static)
-			GLOB.cameranet.visibility(src)
+		update_ai_detect_hud()
+		if(use_static != USE_STATIC_NONE)
+			GLOB.cameranet.visibility(src, GetViewerClient(), null, use_static)
 		if(visible_icon)
 			if(eye_user.client)
 				eye_user.client.images -= user_image
@@ -243,7 +273,7 @@
 	name = "ratvarian camera observer"
 	desc = "A console used to snoop on the station's goings-on. A jet of steam occasionally whooshes out from slats on its sides."
 	use_power = FALSE
-	networks = list("SS13", "MiniSat") //:eye:
+	networks = list("ss13", "minisat") //:eye:
 	var/datum/action/innate/servant_warp/warp_action = new
 
 /obj/machinery/computer/camera_advanced/ratvar/Initialize()
@@ -268,31 +298,38 @@
 		warp_action.target = src
 		actions += warp_action
 
-/obj/machinery/computer/camera_advanced/ratvar/attack_hand(mob/living/user)
+/obj/machinery/computer/camera_advanced/ratvar/can_use(mob/living/user)
 	if(!is_servant_of_ratvar(user))
 		to_chat(user, "<span class='warning'>[src]'s keys are in a language foreign to you, and you don't understand anything on its screen.</span>")
+		return
+	if(clockwork_ark_active())
+		to_chat(user, "<span class='warning'>The Ark is active, and [src] has shut down.</span>")
 		return
 	. = ..()
 
 /datum/action/innate/servant_warp
 	name = "Warp"
-	desc = "Warps to the tile you're viewing. You can use the Abscond scripture to return."
+	desc = "Warps to the tile you're viewing. You can use the Abscond scripture to return. Clicking this button again cancels the warp."
 	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
 	button_icon_state = "warp_down"
 	background_icon_state = "bg_clock"
 	buttontooltipstyle = "clockcult"
+	var/cancel = FALSE //if TRUE, an active warp will be canceled
 	var/obj/effect/temp_visual/ratvar/warp_marker/warping
 
 /datum/action/innate/servant_warp/Activate()
-	if(QDELETED(target) || !(ishuman(owner) || iscyborg(owner)) || !owner.canUseTopic(target) || warping)
+	if(QDELETED(target) || !(ishuman(owner) || iscyborg(owner)) || !owner.canUseTopic(target))
 		return
 	if(!GLOB.servants_active) //No leaving unless there's servants from the get-go
+		return
+	if(warping)
+		cancel = TRUE
 		return
 	var/mob/living/carbon/human/user = owner
 	var/mob/camera/aiEye/remote/remote_eye = user.remote_control
 	var/obj/machinery/computer/camera_advanced/ratvar/R  = target
 	var/turf/T = get_turf(remote_eye)
-	if(user.z != ZLEVEL_CITYOFCOGS || !(T.z in GLOB.station_z_levels))
+	if(!is_reebe(user.z) || !is_station_level(T.z))
 		return
 	if(isclosedturf(T))
 		to_chat(user, "<span class='sevtug_small'>You can't teleport into a wall.</span>")
@@ -313,10 +350,17 @@
 	do_sparks(5, TRUE, T)
 	warping = new(T)
 	user.visible_message("<span class='warning'>[user]'s [target.name] flares!</span>", "<span class='bold sevtug_small'>You begin warping to [AR]...</span>")
-	if(!do_after(user, 50, target = warping))
+	button_icon_state = "warp_cancel"
+	owner.update_action_buttons()
+	if(!do_after(user, 50, target = warping, extra_checks = CALLBACK(src, .proc/is_canceled)))
 		to_chat(user, "<span class='bold sevtug_small'>Warp interrupted.</span>")
 		QDEL_NULL(warping)
+		button_icon_state = "warp_down"
+		owner.update_action_buttons()
+		cancel = FALSE
 		return
+	button_icon_state = "warp_down"
+	owner.update_action_buttons()
 	T.visible_message("<span class='warning'>[user] warps in!</span>")
 	playsound(user, 'sound/magic/magic_missile.ogg', 50, TRUE)
 	playsound(T, 'sound/magic/magic_missile.ogg', 50, TRUE)
@@ -325,3 +369,6 @@
 	flash_color(user, flash_color = "#AF0AAF", flash_time = 5)
 	R.remove_eye_control(user)
 	QDEL_NULL(warping)
+
+/datum/action/innate/servant_warp/proc/is_canceled()
+	return !cancel

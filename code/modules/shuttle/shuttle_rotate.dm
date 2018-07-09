@@ -25,7 +25,7 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 			pixel_x = oldPY
 			pixel_y = (oldPX*(-1))
 
-	SendSignal(COMSIG_ATOM_ROTATE, rotation, params)
+	SEND_SIGNAL(src, COMSIG_ATOM_ROTATE, rotation, params)
 
 /************************************Turf rotate procs************************************/
 
@@ -105,3 +105,9 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 /obj/machinery/gravity_generator/shuttleRotate(rotation, params)
 	params = NONE
 	return ..()
+
+/obj/machinery/door/airlock/shuttleRotate(rotation, params)
+	. = ..()
+	if(cyclelinkeddir)
+		cyclelinkeddir = angle2dir(rotation+dir2angle(cyclelinkeddir))
+		cyclelinkairlock()

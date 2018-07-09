@@ -75,3 +75,4 @@
 	icon_state = "evilkreb"
 	icon_living = "evilkreb"
 	icon_dead = "evilkreb_dead"
+	gold_core_spawnable = NO_SPAWN

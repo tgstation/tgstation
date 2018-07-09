@@ -14,7 +14,7 @@
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = 0
-	needs_permit = 0
+	item_flags = NONE
 
 /obj/item/gun/energy/laser/retro
 	name ="retro laser gun"
@@ -66,7 +66,7 @@
 	item_state = "shotgun"
 	desc = "A combat shotgun gutted and refitted with an internal laser system. Can switch between taser and scattered disabler shots."
 	shaded_charge = 0
-	pin = /obj/item/device/firing_pin/implant/mindshield
+	pin = /obj/item/firing_pin/implant/mindshield
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter/disabler, /obj/item/ammo_casing/energy/electrode)
 
 ///Laser Cannon
@@ -79,7 +79,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	flags_1 =  CONDUCT_1
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/accelerator)
 	pin = null
 	ammo_x_offset = 3
@@ -101,8 +101,8 @@
 	transform *= 1 + ((damage/7) * 0.2)//20% larger per tile
 
 /obj/item/gun/energy/xray
-	name = "x-ray laser gun"
-	desc = "A high-power laser gun capable of expelling concentrated x-ray blasts that pass through multiple soft targets and heavier materials."
+	name = "\improper X-ray laser gun"
+	desc = "A high-power laser gun capable of expelling concentrated X-ray blasts that pass through multiple soft targets and heavier materials."
 	icon_state = "xray"
 	item_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)
@@ -116,19 +116,25 @@
 	icon_state = "bluetag"
 	desc = "A retro laser gun modified to fire harmless blue beams of light. Sound effects included!"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag)
-	clumsy_check = 0
-	needs_permit = 0
-	pin = /obj/item/device/firing_pin/tag/blue
+	item_flags = NONE
+	clumsy_check = FALSE
+	pin = /obj/item/firing_pin/tag/blue
 	ammo_x_offset = 2
-	selfcharge = 1
+	selfcharge = TRUE
+
+/obj/item/gun/energy/laser/bluetag/hitscan
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag/hitscan)
 
 /obj/item/gun/energy/laser/redtag
 	name = "laser tag gun"
 	icon_state = "redtag"
 	desc = "A retro laser gun modified to fire harmless beams red of light. Sound effects included!"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag)
-	clumsy_check = 0
-	needs_permit = 0
-	pin = /obj/item/device/firing_pin/tag/red
+	item_flags = NONE
+	clumsy_check = FALSE
+	pin = /obj/item/firing_pin/tag/red
 	ammo_x_offset = 2
-	selfcharge = 1
+	selfcharge = TRUE
+
+/obj/item/gun/energy/laser/redtag/hitscan
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan)

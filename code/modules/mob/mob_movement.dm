@@ -89,17 +89,17 @@
 		move_delay = world.time
 	var/oldloc = mob.loc
 
-	if(mob.confused)
+	if(L.confused)
 		var/newdir = 0
-		if(mob.confused > 40)
+		if(L.confused > 40)
 			newdir = pick(GLOB.alldirs)
-		else if(prob(mob.confused * 1.5))
+		else if(prob(L.confused * 1.5))
 			newdir = angle2dir(dir2angle(direct) + pick(90, -90))
-		else if(prob(mob.confused * 3))
+		else if(prob(L.confused * 3))
 			newdir = angle2dir(dir2angle(direct) + pick(45, -45))
 		if(newdir)
 			direct = newdir
-			n = get_step(mob, direct)
+			n = get_step(L, direct)
 
 	. = ..()
 
@@ -111,24 +111,12 @@
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
 
-	if(LAZYLEN(mob.user_movement_hooks))
-		for(var/obj/O in mob.user_movement_hooks)
-			O.intercept_user_move(direct, mob, n, oldloc)
+	for(var/obj/O in mob.user_movement_hooks)
+		O.intercept_user_move(direct, mob, n, oldloc)
 
 	var/atom/movable/P = mob.pulling
 	if(P && !ismob(P) && P.density)
 		mob.dir = turn(mob.dir, 180)
-
-/mob/Moved(oldLoc, dir, Forced = FALSE)
-	. = ..()
-	for(var/obj/O in contents)
-		O.on_mob_move(dir, src, oldLoc, Forced)
-
-/mob/setDir(newDir)
-	. = ..()
-	for(var/obj/O in contents)
-		O.on_mob_turn(newDir, src)
-
 
 ///Process_Grab()
 ///Called by client/Move()
@@ -212,9 +200,13 @@
 						R.stun(20)
 					return
 				if(stepTurf.flags_1 & NOJAUNT_1)
-					to_chat(L, "<span class='warning'>Holy energies block your path.</span>")
-				else
-					L.loc = get_step(L, direct)
+					to_chat(L, "<span class='warning'>Some strange aura is blocking the way.</span>")
+					return
+				if (locate(/obj/effect/blessing, stepTurf))
+					to_chat(L, "<span class='warning'>Holy energies block your path!</span>")
+					return
+
+				L.loc = get_step(L, direct)
 			L.setDir(direct)
 	return TRUE
 
@@ -266,24 +258,6 @@
 /mob/proc/mob_negates_gravity()
 	return FALSE
 
-//moves the mob/object we're pulling
-/mob/proc/Move_Pulled(atom/A)
-	if(!pulling)
-		return
-	if(pulling.anchored || !pulling.Adjacent(src))
-		stop_pulling()
-		return
-	if(isliving(pulling))
-		var/mob/living/L = pulling
-		if(L.buckled && L.buckled.buckle_prevents_pull) //if they're buckled to something that disallows pulling, prevent it
-			stop_pulling()
-			return
-	if(A == loc && pulling.density)
-		return
-	if(!Process_Spacemove(get_dir(pulling.loc, A)))
-		return
-	step(pulling, get_dir(pulling.loc, A))
-
 
 /mob/proc/slip(s_amount, w_amount, obj/O, lube)
 	return
@@ -308,12 +282,12 @@
 
 	var/next_in_line
 	switch(mob.zone_selected)
-		if("head")
-			next_in_line = "eyes"
-		if("eyes")
-			next_in_line = "mouth"
+		if(BODY_ZONE_HEAD)
+			next_in_line = BODY_ZONE_PRECISE_EYES
+		if(BODY_ZONE_PRECISE_EYES)
+			next_in_line = BODY_ZONE_PRECISE_MOUTH
 		else
-			next_in_line = "head"
+			next_in_line = BODY_ZONE_HEAD
 
 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone(next_in_line, mob)
@@ -326,7 +300,7 @@
 		return
 
 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
-	selector.set_selected_zone("r_arm", mob)
+	selector.set_selected_zone(BODY_ZONE_R_ARM, mob)
 
 /client/verb/body_chest()
 	set name = "body-chest"
@@ -336,7 +310,7 @@
 		return
 
 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
-	selector.set_selected_zone("chest", mob)
+	selector.set_selected_zone(BODY_ZONE_CHEST, mob)
 
 /client/verb/body_l_arm()
 	set name = "body-l-arm"
@@ -346,7 +320,7 @@
 		return
 
 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
-	selector.set_selected_zone("l_arm", mob)
+	selector.set_selected_zone(BODY_ZONE_L_ARM, mob)
 
 /client/verb/body_r_leg()
 	set name = "body-r-leg"
@@ -356,7 +330,7 @@
 		return
 
 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
-	selector.set_selected_zone("r_leg", mob)
+	selector.set_selected_zone(BODY_ZONE_R_LEG, mob)
 
 /client/verb/body_groin()
 	set name = "body-groin"
@@ -366,7 +340,7 @@
 		return
 
 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
-	selector.set_selected_zone("groin", mob)
+	selector.set_selected_zone(BODY_ZONE_PRECISE_GROIN, mob)
 
 /client/verb/body_l_leg()
 	set name = "body-l-leg"
@@ -376,7 +350,7 @@
 		return
 
 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
-	selector.set_selected_zone("l_leg", mob)
+	selector.set_selected_zone(BODY_ZONE_L_LEG, mob)
 
 /client/verb/toggle_walk_run()
 	set name = "toggle-walk-run"

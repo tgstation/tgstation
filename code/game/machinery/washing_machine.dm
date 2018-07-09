@@ -4,13 +4,16 @@
 	icon = 'icons/obj/machines/washing_machine.dmi'
 	icon_state = "wm_1_0"
 	density = TRUE
-	anchored = TRUE
 	state_open = TRUE
 	var/busy = FALSE
 	var/bloody_mess = 0
 	var/has_corgi = 0
 	var/obj/item/color_source
 	var/max_wash_capacity = 5
+
+/obj/machinery/washing_machine/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT), CALLBACK(src, .proc/clean_blood))
 
 /obj/machinery/washing_machine/examine(mob/user)
 	..()
@@ -36,20 +39,17 @@
 
 	busy = TRUE
 	update_icon()
-	sleep(200)
-	wash_cycle()
+	addtimer(CALLBACK(src, .proc/wash_cycle), 200)
 
-/obj/machinery/washing_machine/clean_blood()
-	..()
+/obj/machinery/washing_machine/proc/clean_blood()
 	if(!busy)
-		bloody_mess = 0
+		bloody_mess = FALSE
 		update_icon()
-
 
 /obj/machinery/washing_machine/proc/wash_cycle()
 	for(var/X in contents)
 		var/atom/movable/AM = X
-		AM.clean_blood()
+		SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 		AM.machine_wash(src)
 
 	busy = FALSE
@@ -64,8 +64,7 @@
 	return
 
 /obj/item/stack/sheet/hairlesshide/machine_wash(obj/machinery/washing_machine/WM)
-	var/obj/item/stack/sheet/wetleather/WL = new(loc)
-	WL.amount = amount
+	new /obj/item/stack/sheet/wetleather(drop_location(), amount)
 	qdel(src)
 
 /obj/item/clothing/suit/hooded/ian_costume/machine_wash(obj/machinery/washing_machine/WM)
@@ -219,6 +218,9 @@
 		return ..()
 
 /obj/machinery/washing_machine/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(busy)
 		to_chat(user, "<span class='warning'>[src] is busy.</span>")
 		return

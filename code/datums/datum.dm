@@ -1,14 +1,18 @@
 /datum
-    var/gc_destroyed //Time when this object was destroyed.
-    var/list/active_timers  //for SStimer
-    var/list/datum_components //for /datum/components
-    var/ui_screen = "home"  //for tgui
-    var/use_tag = FALSE
-    var/datum/weakref/weak_reference
+	var/gc_destroyed //Time when this object was destroyed.
+	var/list/active_timers  //for SStimer
+	var/list/datum_components //for /datum/components
+	var/list/comp_lookup //for /datum/components
+	var/datum_flags = NONE
+	var/datum/weakref/weak_reference
 
 #ifdef TESTING
-    var/running_find_references
-    var/last_find_references = 0
+	var/running_find_references
+	var/last_find_references = 0
+#endif
+
+#ifdef DATUMVAR_DEBUGGING_MODE
+	var/list/cached_vars
 #endif
 
 // Default implementation of clean-up code.
@@ -38,10 +42,44 @@
 			qdel(C, FALSE, TRUE)
 		dc.Cut()
 
-	var/list/focusers = src.focusers
-	if(focusers)
-		for(var/i in 1 to focusers.len)
-			var/mob/M = focusers[i]
-			M.set_focus(M)
+	var/list/lookup = comp_lookup
+	if(lookup)
+		for(var/sig in lookup)
+			var/list/comps = lookup[sig]
+			if(length(comps))
+				for(var/i in comps)
+					var/datum/component/comp = i
+					comp.UnregisterSignal(src, sig)
+			else
+				var/datum/component/comp = comps
+				comp.UnregisterSignal(src, sig)
+		comp_lookup = lookup = null
 
 	return QDEL_HINT_QUEUE
+
+#ifdef DATUMVAR_DEBUGGING_MODE
+/datum/proc/save_vars()
+	cached_vars = list()
+	for(var/i in vars)
+		if(i == "cached_vars")
+			continue
+		cached_vars[i] = vars[i]
+
+/datum/proc/check_changed_vars()
+	. = list()
+	for(var/i in vars)
+		if(i == "cached_vars")
+			continue
+		if(cached_vars[i] != vars[i])
+			.[i] = list(cached_vars[i], vars[i])
+
+/datum/proc/txt_changed_vars()
+	var/list/l = check_changed_vars()
+	var/t = "[src]([REF(src)]) changed vars:"
+	for(var/i in l)
+		t += "\"[i]\" \[[l[i][1]]\] --> \[[l[i][2]]\] "
+	t += "."
+
+/datum/proc/to_chat_check_changed_vars(target = world)
+	to_chat(target, txt_changed_vars())
+#endif

@@ -9,7 +9,23 @@
 /proc/gameTimestamp(format = "hh:mm:ss", wtime=null)
 	if(!wtime)
 		wtime = world.time
-	return time2text(wtime - GLOB.timezoneOffset + SSticker.gametime_offset - SSticker.round_start_time, format)
+	return time2text(wtime - GLOB.timezoneOffset, format)
+
+/proc/station_time(display_only = FALSE)
+	return ((((world.time - SSticker.round_start_time) * SSticker.station_time_rate_multiplier) + SSticker.gametime_offset) % 864000) - (display_only? GLOB.timezoneOffset : 0)
+
+/proc/station_time_timestamp(format = "hh:mm:ss")
+	return time2text(station_time(TRUE), format)
+
+/proc/station_time_debug(force_set)
+	if(isnum(force_set))
+		SSticker.gametime_offset = force_set
+		return
+	SSticker.gametime_offset = rand(0, 864000)		//hours in day * minutes in hour * seconds in minute * deciseconds in second
+	if(prob(50))
+		SSticker.gametime_offset = FLOOR(SSticker.gametime_offset, 3600)
+	else
+		SSticker.gametime_offset = CEILING(SSticker.gametime_offset, 3600)
 
 /* Returns 1 if it is the selected month and day */
 /proc/isDay(month, day)
@@ -19,11 +35,9 @@
 		if(month == MM && day == DD)
 			return 1
 
-//returns timestamp in a sql and ISO 8601 friendly format
+//returns timestamp in a sql and a not-quite-compliant ISO 8601 friendly format
 /proc/SQLtime(timevar)
-	if(!timevar)
-		timevar = world.realtime
-	return time2text(timevar, "YYYY-MM-DD hh:mm:ss")
+	return time2text(timevar || world.timeofday, "YYYY-MM-DD hh:mm:ss")
 
 
 GLOBAL_VAR_INIT(midnight_rollovers, 0)
@@ -49,8 +63,8 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 
 //Takes a value of time in deciseconds.
 //Returns a text value of that number in hours, minutes, or seconds.
-/proc/DisplayTimeText(time_value)
-	var/second = time_value*0.1
+/proc/DisplayTimeText(time_value, truncate = FALSE)
+	var/second = (time_value)*0.1
 	var/second_adjusted = null
 	var/second_rounded = FALSE
 	var/minute = null
@@ -77,7 +91,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 					second = " and [round(second, 0.1)] seconds"
 		else
 			if(second_adjusted == 1 && second >= 1)
-				second = "1 second"
+				second = "[truncate ? "second" : "1 second"]"
 			else if(second > 1)
 				second = "[second_adjusted] seconds"
 			else
@@ -107,7 +121,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 			else if((day || hour) && !second)
 				minute = " and 1 minute"
 			else
-				minute = "1 minute"
+				minute = "[truncate ? "minute" : "1 minute"]"
 	else
 		minute = null
 
@@ -130,7 +144,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 			else if(day && (!minute || !second))
 				hour = " and 1 hour"
 			else
-				hour = "1 hour"
+				hour = "[truncate ? "hour" : "1 hour"]"
 	else
 		hour = null
 
@@ -139,6 +153,6 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 	if(day > 1)
 		day = "[day] days"
 	else
-		day = "1 day"
+		day = "[truncate ? "day" : "1 day"]"
 
 	return "[day][hour][minute][second]"

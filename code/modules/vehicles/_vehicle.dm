@@ -24,6 +24,7 @@
 	var/list/autogrant_actions_passenger	//plain list of typepaths
 	var/list/autogrant_actions_controller	//assoc list "[bitflag]" = list(typepaths)
 	var/list/mob/occupant_actions			//assoc list mob = list(type = action datum assigned to mob)
+	var/obj/vehicle/trailer
 
 /obj/vehicle/Initialize(mapload)
 	. = ..()
@@ -86,8 +87,8 @@
 	if(!istype(M))
 		return FALSE
 	remove_control_flags(M, ALL)
-	occupants -= M
 	remove_passenger_actions(M)
+	occupants -= M
 	cleanup_actions_for_mob(M)
 	after_remove_occupant(M)
 	return TRUE
@@ -111,7 +112,14 @@
 	if(lastmove + movedelay > world.time)
 		return FALSE
 	lastmove = world.time
-	return step(src, direction)
+	if(trailer)
+		var/dir_to_move = get_dir(trailer.loc, loc)
+		var/did_move = step(src, direction)
+		if(did_move)
+			step(trailer, dir_to_move)
+		return did_move
+	else
+		return step(src, direction)
 
 /obj/vehicle/proc/add_control_flags(mob/controller, flags)
 	if(!istype(controller) || !flags)
@@ -138,3 +146,8 @@
 			for(var/m in occupants)
 				M.CollidedWith(m)
 
+/obj/vehicle/Move(newloc, dir)
+	. = ..()
+	if(trailer && .)
+		var/dir_to_move = get_dir(trailer.loc, newloc)
+		step(trailer, dir_to_move)

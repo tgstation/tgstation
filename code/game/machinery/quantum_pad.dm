@@ -3,11 +3,10 @@
 	desc = "A bluespace quantum-linked telepad used for teleporting objects to other quantum pads."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "qpad-idle"
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 5000
-	unique_rename = 1
+	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/quantumpad
 	var/teleport_cooldown = 400 //30 seconds base due to base parts
 	var/teleport_speed = 50
@@ -15,17 +14,17 @@
 	var/teleporting = 0 //if it's in the process of teleporting
 	var/power_efficiency = 1
 	var/obj/machinery/quantumpad/linked_pad
-	
+
 	//mapping
 	var/static/list/mapped_quantum_pads = list()
 	var/map_pad_id = "" as text //what's my name
 	var/map_pad_link_id = "" as text //who's my friend
-	
+
 /obj/machinery/quantumpad/Initialize()
 	. = ..()
 	if(map_pad_id)
 		mapped_quantum_pads[map_pad_id] = src
-		
+
 /obj/machinery/quantumpad/Destroy()
 	mapped_quantum_pads -= map_pad_id
 	return ..()
@@ -48,31 +47,24 @@
 		return
 
 	if(panel_open)
-		if(istype(I, /obj/item/device/multitool))
-			var/obj/item/device/multitool/M = I
+		if(istype(I, /obj/item/multitool))
+			var/obj/item/multitool/M = I
 			M.buffer = src
 			to_chat(user, "<span class='notice'>You save the data in [I]'s buffer.</span>")
 			return 1
-	else if(istype(I, /obj/item/device/multitool))
-		var/obj/item/device/multitool/M = I
+	else if(istype(I, /obj/item/multitool))
+		var/obj/item/multitool/M = I
 		if(istype(M.buffer, /obj/machinery/quantumpad))
 			linked_pad = M.buffer
 			to_chat(user, "<span class='notice'>You link [src] to the one in [I]'s buffer.</span>")
 			return 1
-
-	if(exchange_parts(user, I))
-		return
 
 	if(default_deconstruction_crowbar(I))
 		return
 
 	return ..()
 
-/obj/machinery/quantumpad/attack_hand(mob/user)
-	if(panel_open)
-		to_chat(user, "<span class='warning'>The panel must be closed before operating this machine!</span>")
-		return
-
+/obj/machinery/quantumpad/interact(mob/user)
 	if(!linked_pad || QDELETED(linked_pad))
 		if(!map_pad_link_id || !initMappedLink())
 			to_chat(user, "<span class='warning'>There is no linked pad!</span>")
@@ -93,7 +85,7 @@
 	if(linked_pad.stat & NOPOWER)
 		to_chat(user, "<span class='warning'>Linked pad is not responding to ping.</span>")
 		return
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	doteleport(user)
 
 /obj/machinery/quantumpad/proc/sparks()
@@ -102,6 +94,9 @@
 	s.start()
 
 /obj/machinery/quantumpad/attack_ghost(mob/dead/observer/ghost)
+	. = ..()
+	if(.)
+		return
 	if(!linked_pad && map_pad_link_id)
 		initMappedLink()
 	if(linked_pad)

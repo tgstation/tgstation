@@ -16,15 +16,19 @@
 
 	area_type = /area
 	protected_areas = list(/area/space)
-	target_z = ZLEVEL_STATION_PRIMARY
+	target_trait = ZTRAIT_STATION
 
 	overlay_layer = ABOVE_OPEN_TURF_LAYER //Covers floors only
 	immunity_type = "lava"
-	
+
 
 /datum/weather/floor_is_lava/weather_act(mob/living/L)
-	for(var/obj/structure/O in L.loc)			
-		if(O.density || (L in O.buckled_mobs && istype(O, /obj/structure/bed)))
+	if(issilicon(L))
+		return
+	if(istype(L.buckled, /obj/structure/bed))
+		return
+	for(var/obj/structure/O in L.loc)
+		if(O.density)
 			return
 	if(L.loc.density)
 		return

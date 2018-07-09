@@ -54,7 +54,6 @@
 
 
 /obj/structure/reflector/setDir(new_dir)
-	setAngle(dir_map_to_angle(new_dir))
 	return ..(NORTH)
 
 /obj/structure/reflector/proc/dir_map_to_angle(dir)
@@ -72,6 +71,8 @@
 
 /obj/structure/reflector/proc/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
 	P.ignore_source_check = TRUE
+	P.range = P.decayedRange
+	P.decayedRange = max(P.decayedRange--, 0)
 	return -1
 
 /obj/structure/reflector/attackby(obj/item/W, mob/user, params)
@@ -81,7 +82,7 @@
 	if(istype(W, /obj/item/screwdriver))
 		can_rotate = !can_rotate
 		to_chat(user, "<span class='notice'>You [can_rotate ? "unlock" : "lock"] [src]'s rotation.</span>")
-		playsound(src, W.usesound, 50, 1)
+		W.play_tool_sound(src)
 		return
 
 	if(istype(W, /obj/item/wrench))
@@ -89,47 +90,46 @@
 			to_chat(user, "<span class='warning'>Unweld [src] from the floor first!</span>")
 			return
 		user.visible_message("[user] starts to dismantle [src].", "<span class='notice'>You start to dismantle [src]...</span>")
-		if(do_after(user, 80*W.toolspeed, target = src))
-			playsound(src, W.usesound, 50, 1)
+		if(W.use_tool(src, user, 80, volume=50))
 			to_chat(user, "<span class='notice'>You dismantle [src].</span>")
 			new framebuildstacktype(drop_location(), framebuildstackamount)
 			if(buildstackamount)
 				new buildstacktype(drop_location(), buildstackamount)
 			qdel(src)
 	else if(istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = W
-
 		if(obj_integrity < max_integrity)
-			if(WT.remove_fuel(0,user))
-				user.visible_message("[user] starts to repair [src].",
-									"<span class='notice'>You begin repairing [src]...</span>",
-									"<span class='italics'>You hear welding.</span>")
-				playsound(src, W.usesound, 40, 1)
-				if(do_after(user,40*WT.toolspeed, target = src))
-					obj_integrity = max_integrity
-					user.visible_message("[user] has repaired [src].", \
-										"<span class='notice'>You finish repairing [src].</span>")
+			if(!W.tool_start_check(user, amount=0))
+				return
+
+			user.visible_message("[user] starts to repair [src].",
+								"<span class='notice'>You begin repairing [src]...</span>",
+								"<span class='italics'>You hear welding.</span>")
+			if(W.use_tool(src, user, 40, volume=40))
+				obj_integrity = max_integrity
+				user.visible_message("[user] has repaired [src].", \
+									"<span class='notice'>You finish repairing [src].</span>")
 
 		else if(!anchored)
-			if (WT.remove_fuel(0,user))
-				playsound(src, W.usesound, 50, 1)
-				user.visible_message("[user] starts to weld [src] to the floor.",
-									"<span class='notice'>You start to weld [src] to the floor...</span>",
-									"<span class='italics'>You hear welding.</span>")
-				if (do_after(user,20*W.toolspeed, target = src))
-					if(!WT.isOn())
-						return
-					anchored = TRUE
-					to_chat(user, "<span class='notice'>You weld [src] to the floor.</span>")
+			if(!W.tool_start_check(user, amount=0))
+				return
+
+			user.visible_message("[user] starts to weld [src] to the floor.",
+								"<span class='notice'>You start to weld [src] to the floor...</span>",
+								"<span class='italics'>You hear welding.</span>")
+			if (W.use_tool(src, user, 20, volume=50))
+				setAnchored(TRUE)
+				to_chat(user, "<span class='notice'>You weld [src] to the floor.</span>")
 		else
-			if (WT.remove_fuel(0,user))
-				playsound(src, W.usesound, 50, 1)
-				user.visible_message("[user] starts to cut [src] free from the floor.", "<span class='notice'>You start to cut [src] free from the floor...</span>", "<span class='italics'>You hear welding.</span>")
-				if (do_after(user,20*W.toolspeed, target = src))
-					if(!WT.isOn())
-						return
-					anchored = FALSE
-					to_chat(user, "<span class='notice'>You cut [src] free from the floor.</span>")
+			if(!W.tool_start_check(user, amount=0))
+				return
+
+			user.visible_message("[user] starts to cut [src] free from the floor.",
+								"<span class='notice'>You start to cut [src] free from the floor...</span>",
+								"<span class='italics'>You hear welding.</span>")
+			if (W.use_tool(src, user, 20, volume=50))
+				setAnchored(FALSE)
+				to_chat(user, "<span class='notice'>You cut [src] free from the floor.</span>")
+
 	//Finishing the frame
 	else if(istype(W, /obj/item/stack/sheet))
 		if(finished)
@@ -161,16 +161,14 @@
 		to_chat(user, "<span class='warning'>The rotation is locked!</span>")
 		return FALSE
 	var/new_angle = input(user, "Input a new angle for primary reflection face.", "Reflector Angle", rotation_angle) as null|num
-	if(!user.canUseTopic(src, be_close=TRUE))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	if(!isnull(new_angle))
 		setAngle(SIMPLIFY_DEGREES(new_angle))
 	return TRUE
 
 /obj/structure/reflector/AltClick(mob/user)
-	if(!user.canUseTopic(src, be_close=TRUE))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	else if(finished)
 		rotate(user)
@@ -197,12 +195,11 @@
 	anchored = TRUE
 
 /obj/structure/reflector/single/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
-	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, P.Angle)
-	var/norm_inc = WRAP(incidence, -90, 90)
-	var/new_angle = WRAP(rotation_angle + norm_inc, 180, -180)
-	if(ISINRANGE_EX(norm_inc, -90, 90))
+	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, (P.Angle + 180))
+	if(abs(incidence) > 90 && abs(incidence) < 270)
 		return FALSE
-	P.Angle = new_angle
+	var/new_angle = SIMPLIFY_DEGREES(rotation_angle + incidence)
+	P.setAngle(new_angle)
 	return ..()
 
 //DOUBLE
@@ -224,12 +221,9 @@
 	anchored = TRUE
 
 /obj/structure/reflector/double/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
-	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, P.Angle)
-	var/norm_inc = WRAP(incidence, -90, 90)
-	var/new_angle = WRAP(rotation_angle + norm_inc, 180, -180)
-	if(ISINRANGE_EX(norm_inc, -90, 90))
-		new_angle += 180
-	P.Angle = new_angle
+	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, (P.Angle + 180))
+	var/new_angle = SIMPLIFY_DEGREES(rotation_angle + incidence)
+	P.setAngle(new_angle)
 	return ..()
 
 //BOX
@@ -251,7 +245,7 @@
 	anchored = TRUE
 
 /obj/structure/reflector/box/auto_reflect(obj/item/projectile/P)
-	P.Angle = rotation_angle
+	P.setAngle(rotation_angle)
 	return ..()
 
 /obj/structure/reflector/ex_act()

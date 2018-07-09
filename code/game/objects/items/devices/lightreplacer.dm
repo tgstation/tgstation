@@ -38,10 +38,10 @@
 #define LIGHT_BURNED 3
 
 
-/obj/item/device/lightreplacer
+/obj/item/lightreplacer
 
 	name = "light replacer"
-	desc = "A device to automatically replace lights. Refill with broken or working lightbulbs, or sheets of glass."
+	desc = "A device to automatically replace lights. Refill with broken or working light bulbs, or sheets of glass."
 
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "lightreplacer0"
@@ -50,7 +50,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	force = 8
 
 	var/max_uses = 20
@@ -67,16 +67,16 @@
 	// when we get this many shards, we get a free bulb.
 	var/shards_required = 4
 
-/obj/item/device/lightreplacer/New()
+/obj/item/lightreplacer/New()
 	uses = max_uses / 2
 	failmsg = "The [name]'s refill light blinks red."
 	..()
 
-/obj/item/device/lightreplacer/examine(mob/user)
+/obj/item/lightreplacer/examine(mob/user)
 	..()
 	to_chat(user, status_string())
 
-/obj/item/device/lightreplacer/attackby(obj/item/W, mob/user, params)
+/obj/item/lightreplacer/attackby(obj/item/W, mob/user, params)
 
 	if(istype(W, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = W
@@ -148,30 +148,30 @@
 
 		to_chat(user, "<span class='notice'>You fill \the [src] with lights from \the [S]. " + status_string() + "</span>")
 
-/obj/item/device/lightreplacer/emag_act()
-	if(emagged)
+/obj/item/lightreplacer/emag_act()
+	if(obj_flags & EMAGGED)
 		return
 	Emag()
 
-/obj/item/device/lightreplacer/attack_self(mob/user)
+/obj/item/lightreplacer/attack_self(mob/user)
 	to_chat(user, status_string())
 
-/obj/item/device/lightreplacer/update_icon()
-	icon_state = "lightreplacer[emagged]"
+/obj/item/lightreplacer/update_icon()
+	icon_state = "lightreplacer[(obj_flags & EMAGGED ? 1 : 0)]"
 
-/obj/item/device/lightreplacer/proc/status_string()
+/obj/item/lightreplacer/proc/status_string()
 	return "It has [uses] light\s remaining (plus [bulb_shards] fragment\s)."
 
-/obj/item/device/lightreplacer/proc/Use(mob/user)
+/obj/item/lightreplacer/proc/Use(mob/user)
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 	AddUses(-1)
 	return 1
 
 // Negative numbers will subtract
-/obj/item/device/lightreplacer/proc/AddUses(amount = 1)
+/obj/item/lightreplacer/proc/AddUses(amount = 1)
 	uses = CLAMP(uses + amount, 0, max_uses)
 
-/obj/item/device/lightreplacer/proc/AddShards(amount = 1, user)
+/obj/item/lightreplacer/proc/AddShards(amount = 1, user)
 	bulb_shards += amount
 	var/new_bulbs = round(bulb_shards / shards_required)
 	if(new_bulbs > 0)
@@ -182,13 +182,13 @@
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	return new_bulbs
 
-/obj/item/device/lightreplacer/proc/Charge(var/mob/user)
+/obj/item/lightreplacer/proc/Charge(var/mob/user)
 	charge += 1
 	if(charge > 3)
 		AddUses(1)
 		charge = 1
 
-/obj/item/device/lightreplacer/proc/ReplaceLight(obj/machinery/light/target, mob/living/U)
+/obj/item/lightreplacer/proc/ReplaceLight(obj/machinery/light/target, mob/living/U)
 
 	if(target.status != LIGHT_OK)
 		if(CanUse(U))
@@ -205,7 +205,7 @@
 
 			target.status = L2.status
 			target.switchcount = L2.switchcount
-			target.rigged = emagged
+			target.rigged = (obj_flags & EMAGGED ? 1 : 0)
 			target.brightness = L2.brightness
 			target.on = target.has_power()
 			target.update()
@@ -222,23 +222,24 @@
 		to_chat(U, "<span class='warning'>There is a working [target.fitting] already inserted!</span>")
 		return
 
-/obj/item/device/lightreplacer/proc/Emag()
-	emagged = !emagged
+/obj/item/lightreplacer/proc/Emag()
+	obj_flags ^= EMAGGED
 	playsound(src.loc, "sparks", 100, 1)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		name = "shortcircuited [initial(name)]"
 	else
 		name = initial(name)
 	update_icon()
 
-/obj/item/device/lightreplacer/proc/CanUse(mob/living/user)
+/obj/item/lightreplacer/proc/CanUse(mob/living/user)
 	src.add_fingerprint(user)
 	if(uses > 0)
 		return 1
 	else
 		return 0
 
-/obj/item/device/lightreplacer/afterattack(atom/T, mob/U, proximity)
+/obj/item/lightreplacer/afterattack(atom/T, mob/U, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(!isturf(T))
@@ -255,12 +256,12 @@
 	if(!used)
 		to_chat(U, failmsg)
 
-/obj/item/device/lightreplacer/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
+/obj/item/lightreplacer/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	J.put_in_cart(src, user)
 	J.myreplacer = src
 	J.update_icon()
 
-/obj/item/device/lightreplacer/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
+/obj/item/lightreplacer/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	return
 
 #undef LIGHT_OK

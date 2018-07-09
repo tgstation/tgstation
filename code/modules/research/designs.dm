@@ -19,14 +19,14 @@ The currently supporting non-reagent materials. All material amounts are set as 
 
 Don't add new keyword/IDs if they are made from an existing one (such as rods which are made from metal). Only add raw materials.
 
-Design Guidlines
+Design Guidelines
 - When adding new designs, check rdreadme.dm to see what kind of things have already been made and where new stuff is needed.
 - A single sheet of anything is 2000 units of material. Materials besides metal/glass require help from other jobs (mining for
 other types of metals and chemistry for reagents).
 - Add the AUTOLATHE tag to
 */
 
-//DESIGNS ARE GLOBAL. DO NOT CREATE OR DESTROY THEM AT RUNTIME OUTSIDE OF INIT, JUST REFERENCE THEM TO WHATEVER YOU'RE DOING!
+//DESIGNS ARE GLOBAL. DO NOT CREATE OR DESTROY THEM AT RUNTIME OUTSIDE OF INIT, JUST REFERENCE THEM TO WHATEVER YOU'RE DOING! //why are you yelling?
 
 /datum/design						//Datum for object designs, used in construction
 	var/name = "Name"					//Name of the created object.
@@ -51,40 +51,9 @@ other types of metals and chemistry for reagents).
 	return ..()
 
 /datum/design/proc/icon_html(client/user)
-	if (!icon_cache)
-		// construct the icon and slap it into the resource cache
-		var/atom/item = build_path
-		if (!ispath(item, /atom))
-			// biogenerator outputs to beakers by default
-			if (build_type & BIOGENERATOR)
-				item = /obj/item/reagent_containers/glass/beaker/large
-			else
-				return  // shouldn't happen, but just in case
-
-		// circuit boards become their resulting machines or computers
-		if (ispath(item, /obj/item/circuitboard))
-			var/obj/item/circuitboard/C = item
-			var/machine = initial(C.build_path)
-			if (machine)
-				item = machine
-		var/icon_file = initial(item.icon)
-		var/icon/I = icon(icon_file, initial(item.icon_state), SOUTH)
-
-		// computers (and snowflakes) get their screen and keyboard sprites
-		if (ispath(item, /obj/machinery/computer) || ispath(item, /obj/machinery/power/solar_control))
-			var/obj/machinery/computer/C = item
-			var/screen = initial(C.icon_screen)
-			var/keyboard = initial(C.icon_keyboard)
-			if (screen)
-				I.Blend(icon(icon_file, screen, SOUTH), ICON_OVERLAY)
-			if (keyboard)
-				I.Blend(icon(icon_file, keyboard, SOUTH), ICON_OVERLAY)
-
-		// based on icon2html
-		icon_cache = "[generate_asset_name(I)].png"
-		register_asset(icon_cache, I)
-	send_asset(user, icon_cache, FALSE)
-	return "<img class='icon' src=\"[url_encode(icon_cache)]\">"
+	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	sheet.send(user)
+	return sheet.icon_tag(id)
 
 ////////////////////////////////////////
 //Disks for transporting design datums//

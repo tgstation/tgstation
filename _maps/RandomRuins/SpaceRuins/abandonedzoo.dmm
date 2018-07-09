@@ -267,7 +267,7 @@
 	dir = 4
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aL" = (
 /turf/open/floor/plasteel{
 	icon_state = "dark"
@@ -294,7 +294,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aP" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/glass/bottle/liver_enhance_virion,
+/obj/item/reagent_containers/glass/bottle/random_virus,
 /obj/item/reagent_containers/dropper,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
@@ -305,7 +305,7 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aR" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -315,12 +315,11 @@
 	},
 /area/ruin/space/has_grav/abandonedzoo)
 "aS" = (
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/unlocked{
 	dir = 8;
 	environ = 0;
 	equipment = 0;
 	lighting = 0;
-	locked = 0;
 	name = "Worn-out APC";
 	pixel_x = -24
 	},
@@ -395,7 +394,7 @@
 "aY" = (
 /obj/structure/table/reinforced,
 /obj/item/gun/energy/temperature{
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 	},
 /turf/open/floor/plasteel{
 	icon_state = "dark"
@@ -546,7 +545,7 @@
 	},
 /area/ruin/space/has_grav/abandonedzoo)
 "bq" = (
-/obj/item/stack/cable_coil/cut,
+/obj/item/stack/cable_coil/cut/red,
 /obj/item/stack/tile/plasteel{
 	pixel_x = 3;
 	pixel_y = -4
@@ -652,6 +651,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bG" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel/darkgreen,
 /area/ruin/space/has_grav/abandonedzoo)
 "bH" = (
@@ -698,7 +698,7 @@
 "bP" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bQ" = (
 /obj/machinery/shieldwallgen{
 	active = 2;
@@ -748,9 +748,18 @@
 "bX" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
+"lo" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkgreen,
+/area/ruin/space/has_grav/abandonedzoo)
+"KN" = (
+/turf/template_noop,
+/area/space/nearstation)
 
 (1,1,1) = {"
-aa
 ab
 ag
 ag
@@ -772,7 +781,6 @@ ab
 aa
 "}
 (2,1,1) = {"
-aa
 ac
 ah
 ai
@@ -794,7 +802,6 @@ ac
 aa
 "}
 (3,1,1) = {"
-aa
 ac
 ah
 ap
@@ -816,7 +823,6 @@ ac
 aa
 "}
 (4,1,1) = {"
-aa
 ac
 ai
 ah
@@ -838,7 +844,6 @@ ac
 aa
 "}
 (5,1,1) = {"
-aa
 ac
 aj
 ai
@@ -860,7 +865,6 @@ ac
 aa
 "}
 (6,1,1) = {"
-aa
 ad
 ak
 ak
@@ -885,7 +889,6 @@ aa
 aa
 aa
 aa
-aa
 at
 at
 aF
@@ -904,7 +907,6 @@ bR
 aa
 "}
 (8,1,1) = {"
-aa
 aa
 aa
 aa
@@ -929,7 +931,6 @@ aa
 aa
 aa
 aa
-aa
 ag
 ay
 aH
@@ -943,12 +944,11 @@ aH
 ay
 bG
 bL
-bG
+lo
 aa
 aa
 "}
 (10,1,1) = {"
-aa
 aa
 aa
 aa
@@ -965,12 +965,11 @@ bq
 ay
 bG
 bM
-bG
+lo
 aa
 aa
 "}
 (11,1,1) = {"
-aa
 aa
 aa
 aa
@@ -995,7 +994,6 @@ aa
 aa
 aa
 aa
-aa
 at
 at
 aF
@@ -1014,7 +1012,6 @@ aa
 aa
 "}
 (13,1,1) = {"
-aa
 ae
 ak
 ak
@@ -1036,7 +1033,6 @@ bS
 aa
 "}
 (14,1,1) = {"
-aa
 ac
 al
 an
@@ -1058,7 +1054,6 @@ ac
 aa
 "}
 (15,1,1) = {"
-aa
 ac
 am
 am
@@ -1080,7 +1075,6 @@ bT
 aa
 "}
 (16,1,1) = {"
-aa
 ac
 an
 aq
@@ -1102,7 +1096,6 @@ bU
 bW
 "}
 (17,1,1) = {"
-aa
 ac
 ao
 an
@@ -1124,7 +1117,6 @@ bP
 aa
 "}
 (18,1,1) = {"
-aa
 af
 ak
 ak
@@ -1142,7 +1134,7 @@ ag
 ag
 bN
 bP
-aa
+KN
 aa
 "}
 (19,1,1) = {"
@@ -1163,29 +1155,6 @@ aa
 aa
 aa
 aa
-aa
 bV
-aa
-"}
-(20,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 "}

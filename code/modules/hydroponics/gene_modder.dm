@@ -4,7 +4,6 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "dnamod"
 	density = TRUE
-	anchored = TRUE
 	circuit = /obj/item/circuitboard/machine/plantgenes
 
 	var/obj/item/seeds/seed
@@ -45,7 +44,7 @@
 		min_wrate = FLOOR(10-wratemod,1) // 7,5,2,0	Clamps at 0 and 10	You want this low
 		min_wchance = 67-(ML.rating*16) // 48,35,19,3 	Clamps at 0 and 67	You want this low
 	for(var/obj/item/circuitboard/machine/plantgenes/vaultcheck in component_parts)
-		if(istype(vaultcheck, /obj/item/circuitboard/machine/plantgenes/vault)) // DUMB BOTANY TUTS
+		if(istype(vaultcheck, /obj/item/circuitboard/machine/plantgenes/vault)) // TRAIT_DUMB BOTANY TUTS
 			max_potency = 100
 			max_yield = 10
 			min_production = 1
@@ -69,8 +68,6 @@
 	if(default_deconstruction_screwdriver(user, "dnamod", "dnamod", I))
 		update_icon()
 		return
-	if(exchange_parts(user, I))
-		return
 	if(default_deconstruction_crowbar(I))
 		return
 	if(iscyborg(user))
@@ -87,25 +84,20 @@
 			interact(user)
 		return
 	else if(istype(I, /obj/item/disk/plantgene))
-		if(disk)
-			to_chat(user, "<span class='warning'>A data disk is already loaded into the machine!</span>")
-		else
-			if(!user.transferItemToLoc(I, src))
-				return
-			disk = I
-			to_chat(user, "<span class='notice'>You add [I] to the machine.</span>")
-			interact(user)
+		if (operation)
+			to_chat(user, "<span class='notice'>Please complete current operation.</span>")
+			return
+		eject_disk()
+		if(!user.transferItemToLoc(I, src))
+			return
+		disk = I
+		to_chat(user, "<span class='notice'>You add [I] to the machine.</span>")
+		interact(user)
 	else
 		..()
 
-
-/obj/machinery/plantgenes/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/plantgenes/interact(mob/user)
-	user.set_machine(src)
+/obj/machinery/plantgenes/ui_interact(mob/user)
+	. = ..()
 	if(!user)
 		return
 
@@ -274,18 +266,13 @@
 				to_chat(usr, "<span class='notice'>You add [I] to the machine.</span>")
 		update_icon()
 	else if(href_list["eject_disk"] && !operation)
-		if (disk)
-			disk.forceMove(drop_location())
-			disk.verb_pickup()
-			disk = null
-			update_genes()
-		else
-			var/obj/item/I = usr.get_active_held_item()
-			if(istype(I, /obj/item/disk/plantgene))
-				if(!usr.transferItemToLoc(I, src))
-					return
-				disk = I
-				to_chat(usr, "<span class='notice'>You add [I] to the machine.</span>")
+		var/obj/item/I = usr.get_active_held_item()
+		eject_disk()
+		if(istype(I, /obj/item/disk/plantgene))
+			if(!usr.transferItemToLoc(I, src))
+				return
+			disk = I
+			to_chat(usr, "<span class='notice'>You add [I] to the machine.</span>")
 	else if(href_list["op"] == "insert" && disk && disk.gene && seed)
 		if(!operation) // Wait for confirmation
 			operation = "insert"
@@ -373,6 +360,16 @@
 	update_genes()
 	update_icon()
 
+/obj/machinery/plantgenes/proc/eject_disk()
+	if (disk && !operation)
+		if(Adjacent(usr) && !issilicon(usr))
+			if (!usr.put_in_hands(disk))
+				disk.forceMove(drop_location())
+		else
+			disk.forceMove(drop_location())
+		disk = null
+		update_genes()
+
 /obj/machinery/plantgenes/proc/update_genes()
 	core_genes = list()
 	reagent_genes = list()
@@ -420,7 +417,7 @@
 	materials = list(MAT_METAL=30, MAT_GLASS=10)
 	var/datum/plant_gene/gene
 	var/read_only = 0 //Well, it's still a floppy disk
-	unique_rename = 1
+	obj_flags = UNIQUE_RENAME
 
 /obj/item/disk/plantgene/Initialize()
 	. = ..()
@@ -430,7 +427,7 @@
 
 /obj/item/disk/plantgene/proc/update_name()
 	if(gene)
-		name = "[gene.get_name()] (Plant Data Disk)"
+		name = "[gene.get_name()] (plant data disk)"
 	else
 		name = "plant data disk"
 
@@ -440,4 +437,6 @@
 
 /obj/item/disk/plantgene/examine(mob/user)
 	..()
+	if(gene && (istype(gene, /datum/plant_gene/core/potency)))
+		to_chat(user,"<span class='notice'>Percent is relative to potency, not maximum volume of the plant.</span>")
 	to_chat(user, "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"].")

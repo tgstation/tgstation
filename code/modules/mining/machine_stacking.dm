@@ -6,20 +6,22 @@
 	icon_state = "console"
 	desc = "Controls a stacking machine... in theory."
 	density = FALSE
-	anchored = TRUE
-	var/obj/machinery/mineral/stacking_machine/machine = null
+	circuit = /obj/item/circuitboard/machine/stacking_unit_console
+	var/obj/machinery/mineral/stacking_machine/machine
 	var/machinedir = SOUTHEAST
-	speed_process = TRUE
 
 /obj/machinery/mineral/stacking_unit_console/Initialize()
 	. = ..()
 	machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
 	if (machine)
 		machine.CONSOLE = src
-	else
-		qdel(src)
 
-/obj/machinery/mineral/stacking_unit_console/attack_hand(mob/user)
+/obj/machinery/mineral/stacking_unit_console/ui_interact(mob/user)
+	. = ..()
+
+	if(!machine)
+		to_chat(user, "<span class='notice'>[src] is not linked to a machine!</span>")
+		return
 
 	var/obj/item/stack/sheet/s
 	var/dat
@@ -35,7 +37,12 @@
 
 	user << browse(dat, "window=console_stacking_machine")
 
-	return
+/obj/machinery/mineral/stacking_unit_console/multitool_act(mob/living/user, obj/item/I)
+	if(istype(I, /obj/item/multitool))
+		var/obj/item/multitool/M = I
+		M.buffer = src
+		to_chat(user, "<span class='notice'>You store linkage information in [I]'s buffer.</span>")
+		return TRUE
 
 /obj/machinery/mineral/stacking_unit_console/Topic(href, href_list)
 	if(..())
@@ -46,8 +53,7 @@
 		if(!(text2path(href_list["release"]) in machine.stack_list))
 			return //someone tried to spawn materials by spoofing hrefs
 		var/obj/item/stack/sheet/inp = machine.stack_list[text2path(href_list["release"])]
-		var/obj/item/stack/sheet/out = new inp.type()
-		out.amount = inp.amount
+		var/obj/item/stack/sheet/out = new inp.type(null, inp.amount)
 		inp.amount = 0
 		machine.unload_mineral(out)
 
@@ -64,7 +70,7 @@
 	icon_state = "stacker"
 	desc = "A machine that automatically stacks acquired materials. Controlled by a nearby console."
 	density = TRUE
-	anchored = TRUE
+	circuit = /obj/item/circuitboard/machine/stacking_machine
 	var/obj/machinery/mineral/stacking_unit_console/CONSOLE
 	var/stk_types = list()
 	var/stk_amt   = list()
@@ -81,16 +87,26 @@
 	if(istype(AM, /obj/item/stack/sheet) && AM.loc == get_step(src, input_dir))
 		process_sheet(AM)
 
+/obj/machinery/mineral/stacking_machine/multitool_act(mob/living/user, obj/item/I)
+	if(istype(I, /obj/item/multitool))
+		var/obj/item/multitool/M = I
+		if(!istype(M.buffer, /obj/machinery/mineral/stacking_unit_console))
+			to_chat(user, "<span class='warning'>The [I] has no linkage data in its buffer.</span>")
+			return FALSE
+		else
+			CONSOLE = M.buffer
+			CONSOLE.machine = src
+			to_chat(user, "<span class='notice'>You link [src] to the console in [I]'s buffer.</span>")
+			return TRUE
+
 /obj/machinery/mineral/stacking_machine/proc/process_sheet(obj/item/stack/sheet/inp)
 	if(!(inp.type in stack_list)) //It's the first of this sheet added
-		var/obj/item/stack/sheet/s = new inp.type(src,0)
-		s.amount = 0
+		var/obj/item/stack/sheet/s = new inp.type(src, 0)
 		stack_list[inp.type] = s
 	var/obj/item/stack/sheet/storage = stack_list[inp.type]
 	storage.amount += inp.amount //Stack the sheets
-	qdel(inp) //Let the old sheet garbage collect
 	while(storage.amount > stack_amt) //Get rid of excessive stackage
-		var/obj/item/stack/sheet/out = new inp.type()
-		out.amount = stack_amt
+		var/obj/item/stack/sheet/out = new inp.type(null, stack_amt)
 		unload_mineral(out)
 		storage.amount -= stack_amt
+	qdel(inp) //Let the old sheet garbage collect

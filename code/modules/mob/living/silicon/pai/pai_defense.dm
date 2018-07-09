@@ -3,6 +3,9 @@
 	return FALSE
 
 /mob/living/silicon/pai/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	take_holo_damage(50/severity)
 	Knockdown(400/severity)
 	silent = max(30/severity, silent)
@@ -36,7 +39,7 @@
 				spawn(10)
 					fold_in()
 					if(user.put_in_hands(card))
-						user.visible_message("<span class='notice'>[user] promptly scoops up their pAI's card.</span>")
+						user.visible_message("<span class='notice'>[user] promptly scoops up [user.p_their()] pAI's card.</span>")
 			else
 				visible_message("<span class='danger'>[user] stomps on [src]!.</span>")
 				take_holo_damage(2)

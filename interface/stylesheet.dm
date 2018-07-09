@@ -81,6 +81,7 @@ h1.alert, h2.alert		{color: #000000;}
 .unconscious			{color: #0000ff;	font-weight: bold;}
 .suicide				{color: #ff5050;	font-style: italic;}
 .green					{color: #03ff39;}
+.nicegreen					{color: #14a833;}
 .shadowling				{color: #3b2769;}
 .cult					{color: #960000;}
 .cultlarge				{color: #960000; font-weight: bold; font-size: 3;}

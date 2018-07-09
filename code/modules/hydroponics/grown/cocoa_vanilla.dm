@@ -25,7 +25,8 @@
 	icon_state = "cocoapod"
 	filling_color = "#FFD700"
 	bitesize_mod = 2
-	foodtype = VEGETABLES
+	foodtype = FRUIT
+	tastes = list("cocoa" = 1)
 
 // Vanilla Pod
 /obj/item/seeds/cocoapod/vanillapod
@@ -45,4 +46,5 @@
 	desc = "Fattening... Mmmmm... vanilla."
 	icon_state = "vanillapod"
 	filling_color = "#FFD700"
-	foodtype = VEGETABLES
+	foodtype = FRUIT
+	tastes = list("vanilla" = 1)

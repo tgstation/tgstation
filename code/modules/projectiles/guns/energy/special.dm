@@ -6,7 +6,7 @@
 	can_flashlight = 1
 	w_class = WEIGHT_CLASS_HUGE
 	flags_1 =  CONDUCT_1
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 	ammo_x_offset = 3
 	flight_x_offset = 17
@@ -20,7 +20,7 @@
 	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
 	icon_state = "ioncarbine"
 	w_class = WEIGHT_CLASS_NORMAL
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	pin = null
 	ammo_x_offset = 2
 	flight_x_offset = 18
@@ -89,13 +89,12 @@
 	suppressed = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	weapon_weight = WEAPON_LIGHT
-	unique_rename = 0
+	obj_flags = 0
 	overheat_time = 20
 	holds_charge = TRUE
 	unique_frequency = TRUE
 	can_flashlight = 0
 	max_mod_capacity = 0
-	empty_state = null
 
 /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
 	name = "candy corn crossbow"
@@ -125,26 +124,43 @@
 	force = 12
 	sharpness = IS_SHARP
 	can_charge = 0
+
 	heat = 3800
-	toolspeed = 0.7 //plasmacutters can be used as welders for a few things, and are faster than standard welders
+	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
+	tool_behaviour = TOOL_WELDER
+	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
+
+/obj/item/gun/energy/plasmacutter/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 25, 105, 0, 'sound/weapons/plasma_cutter.ogg')
 
 /obj/item/gun/energy/plasmacutter/examine(mob/user)
 	..()
 	if(cell)
 		to_chat(user, "<span class='notice'>[src] is [round(cell.percent())]% charged.</span>")
 
-/obj/item/gun/energy/plasmacutter/attackby(obj/item/A, mob/user)
-	if(istype(A, /obj/item/stack/sheet/mineral/plasma))
-		var/obj/item/stack/sheet/S = A
-		S.use(1)
+/obj/item/gun/energy/plasmacutter/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/stack/sheet/mineral/plasma))
+		I.use(1)
 		cell.give(1000)
-		to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
-	else if(istype(A, /obj/item/ore/plasma))
-		qdel(A)
+		to_chat(user, "<span class='notice'>You insert [I] in [src], recharging it.</span>")
+	else if(istype(I, /obj/item/stack/ore/plasma))
+		I.use(1)
 		cell.give(500)
-		to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
+		to_chat(user, "<span class='notice'>You insert [I] in [src], recharging it.</span>")
 	else
 		..()
+
+// Tool procs, in case plasma cutter is used as welder
+/obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount)
+	if(cell.charge >= amount * 100)
+		return TRUE
+
+	to_chat(user, "<span class='warning'>You need more charge to complete this task!</span>")
+	return FALSE
+
+/obj/item/gun/energy/plasmacutter/use(amount)
+	return cell.use(amount * 100)
 
 /obj/item/gun/energy/plasmacutter/update_icon()
 	return
@@ -167,7 +183,16 @@
 /obj/item/gun/energy/wormhole_projector/update_icon()
 	icon_state = "[initial(icon_state)][select]"
 	item_state = icon_state
-	return
+
+/obj/item/gun/energy/wormhole_projector/update_ammo_types()
+	. = ..()
+	for(var/i in 1 to ammo_type.len)
+		var/obj/item/ammo_casing/energy/wormhole/W = ammo_type[i]
+		if(istype(W))
+			W.gun = src
+			var/obj/item/projectile/beam/wormhole/WH = W.BB
+			if(istype(WH))
+				WH.gun = src
 
 /obj/item/gun/energy/wormhole_projector/process_chamber()
 	..()
@@ -241,7 +266,7 @@
 /obj/item/gun/energy/temperature/security
 	name = "security temperature gun"
 	desc = "A weapon that can only be used to its full potential by the truly robust."
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/laser/instakill
 	name = "instakill rifle"

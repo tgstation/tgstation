@@ -4,7 +4,7 @@
 	icon_state = "chronohelmet"
 	item_state = "chronohelmet"
 	slowdown = 1
-	armor = list(melee = 60, bullet = 60, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90, fire = 100, acid = 100)
+	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 30, "bio" = 90, "rad" = 90, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/obj/item/clothing/suit/space/chronos/suit = null
 
@@ -24,7 +24,7 @@
 	icon_state = "chronosuit"
 	item_state = "chronosuit"
 	actions_types = list(/datum/action/item_action/toggle)
-	armor = list(melee = 60, bullet = 60, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90, fire = 100, acid = 1000)
+	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 30, "bio" = 90, "rad" = 90, "fire" = 100, "acid" = 1000)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/list/chronosafe_items = list(/obj/item/chrono_eraser, /obj/item/gun/energy/chrono_gun)
 	var/list/hands_nodrop = list()
@@ -67,6 +67,9 @@
 	return ..()
 
 /obj/item/clothing/suit/space/chronos/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	var/mob/living/carbon/human/user = src.loc
 	switch(severity)
 		if(1)
@@ -95,7 +98,7 @@
 		teleporting = 0
 		for(var/obj/item/I in user.held_items)
 			if(I in hands_nodrop)
-				I.flags_1 &= ~NODROP_1
+				I.item_flags &= ~NODROP
 		if(camera)
 			camera.remove_target_ui()
 			camera.forceMove(user)
@@ -115,7 +118,7 @@
 
 		teleport_now.UpdateButtonIcon()
 
-		var/list/nonsafe_slots = list(slot_belt, slot_back)
+		var/list/nonsafe_slots = list(SLOT_BELT, SLOT_BACK)
 		var/list/exposed = list()
 		for(var/slot in nonsafe_slots)
 			var/obj/item/slot_item = user.get_item_by_slot(slot)
@@ -130,9 +133,9 @@
 
 		hands_nodrop = list()
 		for(var/obj/item/I in user.held_items)
-			if(!(I.flags_1 & NODROP_1))
+			if(!(I.item_flags & NODROP))
 				hands_nodrop += I
-				I.flags_1 |= NODROP_1
+				I.item_flags |= NODROP
 		user.animate_movement = NO_STEPS
 		user.changeNext_move(8 + phase_in_ds)
 		user.notransform = 1
@@ -191,9 +194,9 @@
 			if(user.head && istype(user.head, /obj/item/clothing/head/helmet/space/chronos))
 				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Mounting /dev/helm")
 				helmet = user.head
-				helmet.flags_1 |= NODROP_1
+				helmet.item_flags |= NODROP
 				helmet.suit = src
-				src.flags_1 |= NODROP_1
+				src.item_flags |= NODROP
 				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Starting brainwave scanner")
 				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Starting ui display driver")
 				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Initializing chronowalk4-view")
@@ -207,12 +210,12 @@
 		cooldown = world.time + cooldowntime
 		activating = 0
 
-/obj/item/clothing/suit/space/chronos/proc/deactivate(force = 0, silent = 0)
+/obj/item/clothing/suit/space/chronos/proc/deactivate(force = 0, silent = FALSE)
 	if(activated && (!teleporting || force))
 		activating = 1
 		var/mob/living/carbon/human/user = src.loc
 		var/hard_landing = teleporting && force
-		src.flags_1 &= ~NODROP_1
+		item_flags &= ~NODROP
 		cooldown = world.time + cooldowntime * 1.5
 		activated = 0
 		activating = 0
@@ -233,7 +236,7 @@
 						to_chat(user, "\[ <span style='color: #ff5500;'>ok</span> \] Unmounting /dev/helmet")
 					to_chat(user, "logout")
 		if(helmet)
-			helmet.flags_1 &= ~NODROP_1
+			helmet.item_flags &= ~NODROP
 			helmet.suit = null
 			helmet = null
 		if(camera)

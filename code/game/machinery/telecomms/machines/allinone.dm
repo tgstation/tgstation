@@ -6,12 +6,15 @@
 /obj/machinery/telecomms/allinone
 	name = "telecommunications mainframe"
 	icon_state = "comm_server"
-	desc = "A compact machine used for portable subspace telecommuniations processing."
+	desc = "A compact machine used for portable subspace telecommunications processing."
 	density = TRUE
-	anchored = TRUE
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	var/intercept = FALSE  // If true, only works on the Syndicate frequency.
+
+/obj/machinery/telecomms/allinone/indestructable
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	flags_1 = NODECONSTRUCT_1
 
 /obj/machinery/telecomms/allinone/Initialize()
 	..()
@@ -21,10 +24,15 @@
 /obj/machinery/telecomms/allinone/receive_signal(datum/signal/subspace/signal)
 	if(!istype(signal) || signal.transmission_method != TRANSMISSION_SUBSPACE)  // receives on subspace only
 		return
-	if(!on || !(z in signal.levels) || !is_freq_listening(signal))  // has to be on to receive messages
+	if(!on || !is_freq_listening(signal))  // has to be on to receive messages
+		return
+	if (!intercept && !(z in signal.levels) && !(0 in signal.levels))  // has to be syndicate or on the right level
 		return
 
 	// Decompress the signal and mark it done
+	if (intercept)
+		signal.levels += 0  // Signal is broadcast to agents anywhere
+
 	signal.data["compression"] = 0
 	signal.mark_done()
 	if(signal.data["slow"] > 0)
@@ -32,5 +40,5 @@
 	signal.broadcast()
 
 /obj/machinery/telecomms/allinone/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/device/multitool))
-		attack_hand(user)
+	if(istype(P, /obj/item/multitool))
+		return attack_hand(user)

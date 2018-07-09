@@ -7,9 +7,12 @@ SUBSYSTEM_DEF(input)
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 
 	var/list/macro_sets
+	var/list/movement_keys
 
 /datum/controller/subsystem/input/Initialize()
 	setup_default_macro_sets()
+
+	setup_default_movement_keys()
 
 	initialized = TRUE
 
@@ -58,7 +61,7 @@ SUBSYSTEM_DEF(input)
 		"North", "East", "South", "West",
 		"Northeast", "Southeast", "Northwest", "Southwest",
 		"Insert", "Delete", "Ctrl", "Alt",
-		"F1", "F2", "F5", "F6", "F7", "F8", "F12",
+		"F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12",
 		)
 
 	for(var/i in 1 to oldmode_keys.len)
@@ -88,6 +91,15 @@ SUBSYSTEM_DEF(input)
 		old_default["Ctrl+[key]+UP"] = "\"KeyUp [override]\""
 
 	macro_sets = default_macro_sets
+
+// For initially setting up or resetting to default the movement keys
+/datum/controller/subsystem/input/proc/setup_default_movement_keys()
+	var/static/list/default_movement_keys = list(
+		"W" = NORTH, "A" = WEST, "S" = SOUTH, "D" = EAST,				// WASD
+		"North" = NORTH, "West" = WEST, "South" = SOUTH, "East" = EAST,	// Arrow keys & Numpad
+		)
+
+	movement_keys = default_movement_keys.Copy()
 
 // Badmins just wanna have fun ♪
 /datum/controller/subsystem/input/proc/refresh_client_macro_sets()

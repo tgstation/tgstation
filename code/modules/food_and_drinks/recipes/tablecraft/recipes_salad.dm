@@ -94,33 +94,3 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/salad/citrusdelight
 	subcategory = CAT_SALAD
-
-/datum/crafting_recipe/food/ricepork
-	name = "Rice and pork"
-	reqs = list(
-		/obj/item/reagent_containers/food/snacks/salad/boiledrice = 1,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet = 2
-	)
-	result = /obj/item/reagent_containers/food/snacks/salad/ricepork
-	subcategory = CAT_SALAD
-
-/datum/crafting_recipe/food/eggbowl
-	name = "Egg bowl"
-	reqs = list(
-		/obj/item/reagent_containers/food/snacks/salad/boiledrice = 1,
-		/obj/item/reagent_containers/food/snacks/boiledegg = 1,
-		/obj/item/reagent_containers/food/snacks/grown/carrot = 1,
-		/obj/item/reagent_containers/food/snacks/grown/corn = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/salad/eggbowl
-	subcategory = CAT_SALAD
-
-/datum/crafting_recipe/food/ricepudding
-	name = "Rice pudding"
-	reqs = list(
-		/datum/reagent/consumable/milk = 5,
-		/datum/reagent/consumable/sugar = 5,
-		/obj/item/reagent_containers/food/snacks/salad/boiledrice = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/salad/ricepudding
-	subcategory = CAT_SALAD

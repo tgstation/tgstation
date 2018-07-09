@@ -15,15 +15,15 @@
 
 //Only a maximum of one action and one intent should be active at any given time.
 //Actions
-#define PARROT_PERCH 1		//Sitting/sleeping, not moving
-#define PARROT_SWOOP 2		//Moving towards or away from a target
-#define PARROT_WANDER 4		//Moving without a specific target in mind
+#define PARROT_PERCH	(1<<0)	//Sitting/sleeping, not moving
+#define PARROT_SWOOP	(1<<1)	//Moving towards or away from a target
+#define PARROT_WANDER	(1<<2)	//Moving without a specific target in mind
 
 //Intents
-#define PARROT_STEAL 8		//Flying towards a target to steal it/from it
-#define PARROT_ATTACK 16	//Flying towards a target to attack it
-#define PARROT_RETURN 32	//Flying towards its perch
-#define PARROT_FLEE 64		//Flying away from its attacker
+#define PARROT_STEAL	(1<<3)	//Flying towards a target to steal it/from it
+#define PARROT_ATTACK	(1<<4)	//Flying towards a target to attack it
+#define PARROT_RETURN	(1<<5)	//Flying towards its perch
+#define PARROT_FLEE		(1<<6)	//Flying away from its attacker
 
 
 /mob/living/simple_animal/parrot
@@ -65,7 +65,7 @@
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created
 	var/parrot_sleep_max = 25 //The time the parrot sits while perched before looking around. Mosly a way to avoid the parrot's AI in life() being run every single tick.
 	var/parrot_sleep_dur = 25 //Same as above, this is the var that physically counts down
-	var/parrot_dam_zone = list("chest", "head", "l_arm", "l_leg", "r_arm", "r_leg") //For humans, select a bodypart to attack
+	var/parrot_dam_zone = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_ARM, BODY_ZONE_R_LEG) //For humans, select a bodypart to attack
 
 	var/parrot_speed = 5 //"Delay in world ticks between movement." according to byond. Yeah, that's BS but it does directly affect movement. Higher number = slower.
 	var/parrot_lastmove = null //Updates/Stores position of the parrot while it's moving
@@ -77,7 +77,7 @@
 	var/list/available_channels = list()
 
 	//Headset for Poly to yell at engineers :)
-	var/obj/item/device/radio/headset/ears = null
+	var/obj/item/radio/headset/ears = null
 
 	//The thing the parrot is currently interested in. This gets used for items the parrot wants to pick up, mobs it wants to steal from,
 	//mobs it wants to attack or mobs that have attacked it
@@ -101,11 +101,11 @@
 /mob/living/simple_animal/parrot/Initialize()
 	. = ..()
 	if(!ears)
-		var/headset = pick(/obj/item/device/radio/headset/headset_sec, \
-						/obj/item/device/radio/headset/headset_eng, \
-						/obj/item/device/radio/headset/headset_med, \
-						/obj/item/device/radio/headset/headset_sci, \
-						/obj/item/device/radio/headset/headset_cargo)
+		var/headset = pick(/obj/item/radio/headset/headset_sec, \
+						/obj/item/radio/headset/headset_eng, \
+						/obj/item/radio/headset/headset_med, \
+						/obj/item/radio/headset/headset_sci, \
+						/obj/item/radio/headset/headset_cargo)
 		ears = new headset(src)
 
 	parrot_sleep_dur = parrot_sleep_max //In case someone decides to change the max without changing the duration var
@@ -236,11 +236,11 @@
 						if(!item_to_add)
 							return
 
-						if( !istype(item_to_add,  /obj/item/device/radio/headset) )
+						if( !istype(item_to_add,  /obj/item/radio/headset) )
 							to_chat(usr, "<span class='warning'>This object won't fit!</span>")
 							return
 
-						var/obj/item/device/radio/headset/headset_to_add = item_to_add
+						var/obj/item/radio/headset/headset_to_add = item_to_add
 
 						if(!usr.transferItemToLoc(headset_to_add, src))
 							return
@@ -299,10 +299,10 @@
 	return
 
 /mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/monkey/M)
-	attack_hand(M)
+	return attack_hand(M)
 
 /mob/living/simple_animal/parrot/attack_alien(mob/living/carbon/alien/M)
-	attack_hand(M)
+	return attack_hand(M)
 
 //Simple animals
 /mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/M)
@@ -366,10 +366,14 @@
 	..()
 
 	//Sprite update for when a parrot gets pulled
-	if(pulledby && stat == CONSCIOUS)
+	if(pulledby && !stat && parrot_state != PARROT_WANDER)
+		if(buckled)
+			buckled.unbuckle_mob(src, TRUE)
+			buckled = null
 		icon_state = icon_living
-		if(!client)
-			parrot_state = PARROT_WANDER
+		parrot_state = PARROT_WANDER
+		pixel_x = initial(pixel_x)
+		pixel_y = initial(pixel_y)
 		return
 
 
@@ -801,10 +805,18 @@
 				if(istype(AM, perch_path))
 					src.forceMove(AM.loc)
 					icon_state = icon_sit
+					parrot_state = PARROT_PERCH
 					return
 	to_chat(src, "<span class='warning'>There is no perch nearby to sit on!</span>")
 	return
 
+/mob/living/simple_animal/parrot/Moved(oldLoc, dir)
+	. = ..()
+	if(. && !stat && client && parrot_state == PARROT_PERCH)
+		parrot_state = PARROT_WANDER
+		icon_state = icon_living
+		pixel_x = initial(pixel_x)
+		pixel_y = initial(pixel_y)
 
 /mob/living/simple_animal/parrot/proc/perch_mob_player()
 	set name = "Sit on Human's Shoulder"
@@ -814,7 +826,7 @@
 	if(stat || !client)
 		return
 
-	if(icon_state == icon_living)
+	if(!buckled)
 		for(var/mob/living/carbon/human/H in view(src,1))
 			if(H.has_buckled_mobs() && H.buckled_mobs.len >= H.max_buckled_mobs) //Already has a parrot, or is being eaten by a slime
 				continue
@@ -826,7 +838,7 @@
 		parrot_state = PARROT_WANDER
 		if(buckled)
 			to_chat(src, "<span class='notice'>You are no longer sitting on [buckled]'s shoulder.</span>")
-			buckled.unbuckle_mob(src,force=1)
+			buckled.unbuckle_mob(src, TRUE)
 		buckled = null
 		pixel_x = initial(pixel_x)
 		pixel_y = initial(pixel_y)
@@ -837,12 +849,12 @@
 	if(!H)
 		return
 	forceMove(get_turf(H))
-	H.buckle_mob(src, force=1)
-	pixel_y = 9
-	pixel_x = pick(-8,8) //pick left or right shoulder
-	icon_state = icon_sit
-	parrot_state = PARROT_PERCH
-	to_chat(src, "<span class='notice'>You sit on [H]'s shoulder.</span>")
+	if(H.buckle_mob(src, TRUE))
+		pixel_y = 9
+		pixel_x = pick(-8,8) //pick left or right shoulder
+		icon_state = icon_sit
+		parrot_state = PARROT_PERCH
+		to_chat(src, "<span class='notice'>You sit on [H]'s shoulder.</span>")
 
 
 /mob/living/simple_animal/parrot/proc/toggle_mode()
@@ -853,13 +865,13 @@
 	if(stat || !client)
 		return
 
-	if(melee_damage_upper)
+	if(a_intent != INTENT_HELP)
 		melee_damage_upper = 0
 		a_intent = INTENT_HELP
 	else
 		melee_damage_upper = parrot_damage_upper
 		a_intent = INTENT_HARM
-	to_chat(src, "You will now [a_intent] others...")
+	to_chat(src, "You will now [a_intent] others.")
 	return
 
 /*
@@ -877,7 +889,7 @@
 	var/longest_deathstreak = 0
 
 /mob/living/simple_animal/parrot/Poly/Initialize()
-	ears = new /obj/item/device/radio/headset/headset_eng(src)
+	ears = new /obj/item/radio/headset/headset_eng(src)
 	available_channels = list(":e")
 	Read_Memory()
 	if(rounds_survived == longest_survival)

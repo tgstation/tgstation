@@ -2,19 +2,19 @@
 	name = "eye surgery"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/fix_eyes, /datum/surgery_step/close)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	possible_locs = list("eyes")
+	possible_locs = list(BODY_ZONE_PRECISE_EYES)
 	requires_bodypart_type = 0
 
 //fix eyes
 /datum/surgery_step/fix_eyes
 	name = "fix eyes"
-	implements = list(/obj/item/hemostat = 100, /obj/item/screwdriver = 45, /obj/item/pen = 25)
+	implements = list(/obj/item/hemostat = 100, TOOL_SCREWDRIVER = 45, /obj/item/pen = 25)
 	time = 64
 
 /datum/surgery/eye_surgery/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/eyes/E = target.getorganslot(ORGAN_SLOT_EYES)
 	if(!E)
-		to_chat(user, "It's hard to do surgery on someone's eyes when they don't have any.")
+		to_chat(user, "It's hard to do surgery on someone's eyes when [target.p_they()] [target.p_do()]n't have any.")
 		return FALSE
 	return TRUE
 

@@ -9,7 +9,7 @@
 #define RADIATION_DURATION_MAX 30
 #define RADIATION_ACCURACY_MULTIPLIER 3			//larger is less accurate
 
-#define RADIATION_IRRADIATION_MULTIPLIER 1		//multiplier for how much radiation a test subject recieves
+#define RADIATION_IRRADIATION_MULTIPLIER 1		//multiplier for how much radiation a test subject receives
 
 #define SCANNER_ACTION_SE 1
 #define SCANNER_ACTION_UI 2
@@ -33,7 +33,6 @@
 	var/obj/machinery/dna_scannernew/connected = null
 	var/obj/item/disk/data/diskette = null
 	var/list/delayed_action = null
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 400
@@ -60,12 +59,8 @@
 			break
 	injectorready = world.time + INJECTOR_TIMEOUT
 
-/obj/machinery/computer/scan_consolenew/attack_hand(mob/user)
-	if(..())
-		return
-	ShowInterface(user)
-
-/obj/machinery/computer/scan_consolenew/proc/ShowInterface(mob/user, last_change)
+/obj/machinery/computer/scan_consolenew/ui_interact(mob/user, last_change)
+	. = ..()
 	if(!user)
 		return
 	var/datum/browser/popup = new(user, "scannernew", "DNA Modifier Console", 800, 630) // Set up the popup browser window
@@ -81,7 +76,7 @@
 	if(connected && connected.is_operational())
 		if(connected.occupant)	//set occupant_status message
 			viable_occupant = connected.occupant
-			if(viable_occupant.has_dna() && (!(RADIMMUNE in viable_occupant.dna.species.species_traits)) && (!(viable_occupant.has_disability(NOCLONE)) || (connected.scan_level == 3))) //occupant is viable for dna modification
+			if(viable_occupant.has_dna() && !viable_occupant.has_trait(TRAIT_RADIMMUNE) && !viable_occupant.has_trait(TRAIT_NOCLONE) || (connected.scan_level == 3)) //occupant is viable for dna modification
 				occupant_status += "[viable_occupant.name] => "
 				switch(viable_occupant.stat)
 					if(CONSCIOUS)
@@ -108,9 +103,9 @@
 		else
 			scanner_status = "Closed"
 			if(connected.locked)
-				scanner_status += " <span class='bad'>(Locked)</span>"
+				scanner_status += "<span class='bad'>(Locked)</span>"
 			else
-				scanner_status += " <span class='good'>(Unlocked)</span>"
+				scanner_status += "<span class='good'>(Unlocked)</span>"
 
 
 	else
@@ -143,27 +138,27 @@
 	status += "<div class='line'><div class='statusLabel'>Pulse Duration:</div><div class='statusValue'>[radduration]</div></div>"
 	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Accuracy:</div><div class='statusValue'>[chance_to_hit]</div></div>"
 	status += "<br></div>" // Close statusDisplay div
-	var/list/buttons = list("<a href='?src=[REF(src)];'>Scan</a> ")
+	var/list/buttons = list("<a href='?src=[REF(src)];'>Scan</a>")
 	if(connected)
-		buttons += " <a href='?src=[REF(src)];task=toggleopen;'>[connected.state_open ? "Close" : "Open"] Scanner</a> "
+		buttons += "<a href='?src=[REF(src)];task=toggleopen;'>[connected.state_open ? "Close" : "Open"] Scanner</a>"
 		if (connected.state_open)
-			buttons += "<span class='linkOff'>[connected.locked ? "Unlock" : "Lock"] Scanner</span> "
+			buttons += "<span class='linkOff'>[connected.locked ? "Unlock" : "Lock"] Scanner</span>"
 		else
-			buttons += "<a href='?src=[REF(src)];task=togglelock;'>[connected.locked ? "Unlock" : "Lock"] Scanner</a> "
+			buttons += "<a href='?src=[REF(src)];task=togglelock;'>[connected.locked ? "Unlock" : "Lock"] Scanner</a>"
 	else
-		buttons += "<span class='linkOff'>Open Scanner</span> <span class='linkOff'>Lock Scanner</span> "
+		buttons += "<span class='linkOff'>Open Scanner</span> <span class='linkOff'>Lock Scanner</span>"
 	if(viable_occupant)
-		buttons += "<a href='?src=[REF(src)];task=rejuv'>Inject Rejuvenators</a> "
+		buttons += "<a href='?src=[REF(src)];task=rejuv'>Inject Rejuvenators</a>"
 	else
-		buttons += "<span class='linkOff'>Inject Rejuvenators</span> "
+		buttons += "<span class='linkOff'>Inject Rejuvenators</span>"
 	if(diskette)
-		buttons += "<a href='?src=[REF(src)];task=ejectdisk'>Eject Disk</a> "
+		buttons += "<a href='?src=[REF(src)];task=ejectdisk'>Eject Disk</a>"
 	else
-		buttons += "<span class='linkOff'>Eject Disk</span> "
+		buttons += "<span class='linkOff'>Eject Disk</span>"
 	if(current_screen == "buffer")
-		buttons += "<a href='?src=[REF(src)];task=screen;text=mainmenu;'>Radiation Emitter Menu</a> "
+		buttons += "<a href='?src=[REF(src)];task=screen;text=mainmenu;'>Radiation Emitter Menu</a>"
 	else
-		buttons += "<a href='?src=[REF(src)];task=screen;text=buffer;'>Buffer Menu</a> "
+		buttons += "<a href='?src=[REF(src)];task=screen;text=buffer;'>Buffer Menu</a>"
 
 	switch(current_screen)
 		if("working")
@@ -182,15 +177,15 @@
 					if( !buffer_slot || !buffer_slot.len || !buffer_slot["name"] || !((buffer_slot["UI"] && buffer_slot["UE"]) || buffer_slot["SE"]) )
 						temp_html += "<br>\tNo Data"
 						if(viable_occupant)
-							temp_html += "<br><a href='?src=[REF(src)];task=setbuffer;num=[i];'>Save to Buffer</a> "
+							temp_html += "<br><a href='?src=[REF(src)];task=setbuffer;num=[i];'>Save to Buffer</a>"
 						else
-							temp_html += "<br><span class='linkOff'>Save to Buffer</span> "
-						temp_html += "<span class='linkOff'>Clear Buffer</span> "
+							temp_html += "<br><span class='linkOff'>Save to Buffer</span>"
+						temp_html += "<span class='linkOff'>Clear Buffer</span>"
 						if(diskette)
-							temp_html += "<a href='?src=[REF(src)];task=loaddisk;num=[i];'>Load from Disk</a> "
+							temp_html += "<a href='?src=[REF(src)];task=loaddisk;num=[i];'>Load from Disk</a>"
 						else
-							temp_html += "<span class='linkOff'>Load from Disk</span> "
-						temp_html += "<span class='linkOff'>Save to Disk</span> "
+							temp_html += "<span class='linkOff'>Load from Disk</span>"
+						temp_html += "<span class='linkOff'>Save to Disk</span>"
 					else
 						var/ui = buffer_slot["UI"]
 						var/se = buffer_slot["SE"]
@@ -204,10 +199,10 @@
 							temp_html += "<br>\tBlood Type: [blood_type]"
 							temp_html += "<br>\tUE: [ue] "
 							if(viable_occupant)
-								temp_html += "<a href='?src=[REF(src)];task=transferbuffer;num=[i];text=ue'>Occupant</a> "
+								temp_html += "<a href='?src=[REF(src)];task=transferbuffer;num=[i];text=ue'>Occupant</a>"
 							else
 								temp_html += "<span class='linkOff'>Occupant</span>"
-							temp_html += "<a href='?src=[REF(src)];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_UE]'>Occupant:Delayed</a> "
+							temp_html += "<a href='?src=[REF(src)];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_UE]'>Occupant:Delayed</a>"
 							if(injectorready < world.time)
 								temp_html += "<a href='?src=[REF(src)];task=injector;num=[i];text=ue'>Injector</a>"
 							else
@@ -218,10 +213,10 @@
 						if(ui)
 							temp_html += "<br>\tUI: [ui] "
 							if(viable_occupant)
-								temp_html += "<a href='?src=[REF(src)];task=transferbuffer;num=[i];text=ui'>Occupant</a> "
+								temp_html += "<a href='?src=[REF(src)];task=transferbuffer;num=[i];text=ui'>Occupant</a>"
 							else
 								temp_html += "<span class='linkOff'>Occupant</span>"
-							temp_html += "<a href='?src=[REF(src)];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_UI]'>Occupant:Delayed</a> "
+							temp_html += "<a href='?src=[REF(src)];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_UI]'>Occupant:Delayed</a>"
 							if(injectorready < world.time)
 								temp_html += "<a href='?src=[REF(src)];task=injector;num=[i];text=ui'>Injector</a>"
 							else
@@ -231,10 +226,10 @@
 						if(ue && name && blood_type && ui)
 							temp_html += "<br>\tUI+UE: [ui]/[ue] "
 							if(viable_occupant)
-								temp_html += "<a href='?src=[REF(src)];task=transferbuffer;num=[i];text=mixed'>Occupant</a> "
+								temp_html += "<a href='?src=[REF(src)];task=transferbuffer;num=[i];text=mixed'>Occupant</a>"
 							else
 								temp_html += "<span class='linkOff'>Occupant</span>"
-							temp_html += "<a href='?src=[REF(src)];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_MIXED]'>Occupant:Delayed</a> "
+							temp_html += "<a href='?src=[REF(src)];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_MIXED]'>Occupant:Delayed</a>"
 							if(injectorready < world.time)
 								temp_html += "<a href='?src=[REF(src)];task=injector;num=[i];text=mixed'>UI+UE Injector</a>"
 							else
@@ -242,10 +237,10 @@
 						if(se)
 							temp_html += "<br>\tSE: [se] "
 							if(viable_occupant)
-								temp_html += "<a href='?src=[REF(src)];task=transferbuffer;num=[i];text=se'>Occupant</a> "
+								temp_html += "<a href='?src=[REF(src)];task=transferbuffer;num=[i];text=se'>Occupant</a>"
 							else
-								temp_html += "<span class='linkOff'>Occupant</span> "
-							temp_html += "<a href='?src=[REF(src)];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_SE]'>Occupant:Delayed</a> "
+								temp_html += "<span class='linkOff'>Occupant</span>"
+							temp_html += "<a href='?src=[REF(src)];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_SE]'>Occupant:Delayed</a>"
 							if(injectorready < world.time )
 								temp_html += "<a href='?src=[REF(src)];task=injector;num=[i];text=se'>Injector</a>"
 							else
@@ -253,18 +248,18 @@
 						else
 							temp_html += "<br>\tSE: No Data"
 						if(viable_occupant)
-							temp_html += "<br><a href='?src=[REF(src)];task=setbuffer;num=[i];'>Save to Buffer</a> "
+							temp_html += "<br><a href='?src=[REF(src)];task=setbuffer;num=[i];'>Save to Buffer</a>"
 						else
-							temp_html += "<br><span class='linkOff'>Save to Buffer</span> "
-						temp_html += "<a href='?src=[REF(src)];task=clearbuffer;num=[i];'>Clear Buffer</a> "
+							temp_html += "<br><span class='linkOff'>Save to Buffer</span>"
+						temp_html += "<a href='?src=[REF(src)];task=clearbuffer;num=[i];'>Clear Buffer</a>"
 						if(diskette)
-							temp_html += "<a href='?src=[REF(src)];task=loaddisk;num=[i];'>Load from Disk</a> "
+							temp_html += "<a href='?src=[REF(src)];task=loaddisk;num=[i];'>Load from Disk</a>"
 						else
-							temp_html += "<span class='linkOff'>Load from Disk</span> "
+							temp_html += "<span class='linkOff'>Load from Disk</span>"
 						if(diskette && !diskette.read_only)
-							temp_html += "<a href='?src=[REF(src)];task=savedisk;num=[i];'>Save to Disk</a> "
+							temp_html += "<a href='?src=[REF(src)];task=savedisk;num=[i];'>Save to Disk</a>"
 						else
-							temp_html += "<span class='linkOff'>Save to Disk</span> "
+							temp_html += "<span class='linkOff'>Save to Disk</span>"
 		else
 			temp_html += status
 			temp_html += buttons
@@ -461,7 +456,7 @@
 				connected.locked = TRUE
 
 				current_screen = "working"
-				ShowInterface(usr)
+				ui_interact(usr)
 
 				sleep(radduration*10)
 				current_screen = "mainmenu"
@@ -507,7 +502,7 @@
 				if(connected)
 					connected.locked = locked_state
 
-	ShowInterface(usr,last_change)
+	ui_interact(usr,last_change)
 
 /obj/machinery/computer/scan_consolenew/proc/scramble(input,rs,rd)
 	var/length = length(input)
@@ -528,7 +523,7 @@
 	var/mob/living/carbon/viable_occupant = null
 	if(connected)
 		viable_occupant = connected.occupant
-		if(!istype(viable_occupant) || !viable_occupant.dna || (viable_occupant.has_disability(NOCLONE)))
+		if(!istype(viable_occupant) || !viable_occupant.dna || viable_occupant.has_trait(TRAIT_RADIMMUNE) || viable_occupant.has_trait(TRAIT_NOCLONE))
 			viable_occupant = null
 	return viable_occupant
 

@@ -34,7 +34,7 @@
 
 /datum/emote/slime/mood/sneaky
 	key = "moodsneaky"
-	mood = "mischevous"
+	mood = "mischievous"
 
 /datum/emote/slime/mood/smile
 	key = "moodsmile"

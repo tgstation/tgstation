@@ -7,7 +7,6 @@
 	dat +={"
 			<B>General Secrets</B><BR>
 			<BR>
-			<A href='?src=[REF(src)];[HrefToken()];secrets=list_job_debug'>Show Job Debug</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=admin_log'>Admin Log</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=show_admins'>Show Admin List</A><BR>
 			<BR>
@@ -31,6 +30,7 @@
 			<A href='?src=[REF(src)];[HrefToken()];secrets=tdomereset'>Reset Thunderdome to default state</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=set_name'>Rename Station Name</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=reset_name'>Reset Station Name</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=night_shift_set'>Set Night Shift Mode</A><BR>
 			<BR>
 			<B>Shuttles</B><BR>
 			<BR>
@@ -64,6 +64,11 @@
 			<A href='?src=[REF(src)];[HrefToken()];secrets=blackout'>Break all lights</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=whiteout'>Fix all lights</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
+			<BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=flipmovement'>Flip client movement directions</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=randommovement'>Randomize client movement directions</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=custommovement'>Set each movement direction manually</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=resetmovement'>Reset movement directions to default</A><BR>
 			<BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=changebombcap'>Change bomb cap</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=masspurrbation'>Mass Purrbation</A><BR>
@@ -100,17 +105,6 @@
 			if(!GLOB.admin_log.len)
 				dat += "No-one has done anything this round!"
 			usr << browse(dat, "window=admin_log")
-
-		if("list_job_debug")
-			var/dat = "<B>Job Debug info.</B><HR>"
-			for(var/line in SSjob.job_debug)
-				dat += "[line]<BR>"
-			dat+= "*******<BR><BR>"
-			for(var/datum/job/job in SSjob.occupations)
-				if(!job)
-					continue
-				dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
-			usr << browse(dat, "window=jobdebug;size=600x500")
 
 		if("show_admins")
 			var/dat = "<B>Current admins:</B><HR>"
@@ -159,6 +153,23 @@
 			log_admin("[key_name(usr)] renamed the station to \"[new_name]\".")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] renamed the station to: [new_name].</span>")
 			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
+		if("night_shift_set")
+			if(!check_rights(R_ADMIN))
+				return
+			var/val = alert(usr, "What do you want to set night shift to? This will override the automatic system until set to automatic again.", "Night Shift", "On", "Off", "Automatic")
+			switch(val)
+				if("Automatic")
+					if(CONFIG_GET(flag/enable_night_shifts))
+						SSnightshift.can_fire = TRUE
+						SSnightshift.fire()
+					else
+						SSnightshift.update_nightshift(FALSE, TRUE)
+				if("On")
+					SSnightshift.can_fire = FALSE
+					SSnightshift.update_nightshift(TRUE, TRUE)
+				if("Off")
+					SSnightshift.can_fire = FALSE
+					SSnightshift.update_nightshift(FALSE, TRUE)
 
 		if("reset_name")
 			if(!check_rights(R_ADMIN))
@@ -339,7 +350,7 @@
 					continue
 				if(is_special_character(H))
 					continue
-				var/datum/antagonist/traitor/human/T = new(H.mind)
+				var/datum/antagonist/traitor/T = new()
 				T.give_objectives = FALSE
 				var/datum/objective/new_objective = new
 				new_objective.owner = H
@@ -387,8 +398,10 @@
 
 				if(H.dna.species.id == "human")
 					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
-						H.dna.features["tail_human"] = "Cat"
-						H.dna.features["ears"] = "Cat"
+						var/obj/item/organ/ears/cat/ears = new
+						var/obj/item/organ/tail/cat/tail = new
+						ears.Insert(H, drop_if_replaced=FALSE)
+						tail.Insert(H, drop_if_replaced=FALSE)
 					var/list/honorifics = list("[MALE]" = list("kun"), "[FEMALE]" = list("chan","tan"), "[NEUTER]" = list("san")) //John Robust -> Robust-kun
 					var/list/names = splittext(H.real_name," ")
 					var/forename = names.len > 1 ? names[2] : names[1]
@@ -400,10 +413,10 @@
 						var/obj/item/clothing/under/schoolgirl/I = new seifuku
 						var/olduniform = H.w_uniform
 						H.temporarilyRemoveItemFromInventory(H.w_uniform, TRUE, FALSE)
-						H.equip_to_slot_or_del(I, slot_w_uniform)
+						H.equip_to_slot_or_del(I, SLOT_W_UNIFORM)
 						qdel(olduniform)
 						if(droptype == "Yes")
-							I.flags_1 |= NODROP_1
+							I.item_flags |= NODROP
 				else
 					to_chat(H, "You're not kawaii enough for this.")
 
@@ -416,7 +429,7 @@
 				L.fix()
 
 		if("floorlava")
-			SSweather.run_weather("the floor is lava")
+			SSweather.run_weather(/datum/weather/floor_is_lava)
 
 		if("virus")
 			if(!check_rights(R_FUN))
@@ -447,7 +460,7 @@
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Egalitarian Station"))
 			for(var/obj/machinery/door/airlock/W in GLOB.machines)
-				if((W.z in GLOB.station_z_levels) && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
+				if(is_station_level(W.z) && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
 					W.req_access = list()
 			message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
 			priority_announce("CentCom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, 'sound/ai/commandreport.ogg')
@@ -463,7 +476,7 @@
 				if("All Antags!")
 					survivor_probability = 100
 
-			rightandwrong(0, usr, survivor_probability)
+			rightandwrong(SUMMON_GUNS, usr, survivor_probability)
 
 		if("magic")
 			if(!check_rights(R_FUN))
@@ -476,7 +489,7 @@
 				if("All Antags!")
 					survivor_probability = 100
 
-			rightandwrong(1, usr, survivor_probability)
+			rightandwrong(SUMMON_MAGIC, usr, survivor_probability)
 
 		if("events")
 			if(!check_rights(R_FUN))
@@ -564,6 +577,60 @@
 			message_admins("[key_name_admin(usr)] has removed everyone from \
 				purrbation.")
 			log_admin("[key_name(usr)] has removed everyone from purrbation.")
+
+		if("flipmovement")
+			if(!check_rights(R_FUN))
+				return
+			if(alert("Flip all movement controls?","Confirm","Yes","Cancel") == "Cancel")
+				return
+			var/list/movement_keys = SSinput.movement_keys
+			for(var/i in 1 to movement_keys.len)
+				var/key = movement_keys[i]
+				movement_keys[key] = turn(movement_keys[key], 180)
+			message_admins("[key_name_admin(usr)] has flipped all movement directions.")
+			log_admin("[key_name(usr)] has flipped all movement directions.")
+
+		if("randommovement")
+			if(!check_rights(R_FUN))
+				return
+			if(alert("Randomize all movement controls?","Confirm","Yes","Cancel") == "Cancel")
+				return
+			var/list/movement_keys = SSinput.movement_keys
+			for(var/i in 1 to movement_keys.len)
+				var/key = movement_keys[i]
+				movement_keys[key] = turn(movement_keys[key], 45 * rand(1, 8))
+			message_admins("[key_name_admin(usr)] has randomized all movement directions.")
+			log_admin("[key_name(usr)] has randomized all movement directions.")
+
+		if("custommovement")
+			if(!check_rights(R_FUN))
+				return
+			if(alert("Are you sure you want to change every movement key?","Confirm","Yes","Cancel") == "Cancel")
+				return
+			var/list/movement_keys = SSinput.movement_keys
+			var/list/new_movement = list()
+			for(var/i in 1 to movement_keys.len)
+				var/key = movement_keys[i]
+
+				var/msg = "Please input the new movement direction when the user presses [key]. Ex. northeast"
+				var/title = "New direction for [key]"
+				var/new_direction = text2dir(input(usr, msg, title) as text|null)
+				if(!new_direction)
+					new_direction = movement_keys[key]
+
+				new_movement[key] = new_direction
+			SSinput.movement_keys = new_movement
+			message_admins("[key_name_admin(usr)] has configured all movement directions.")
+			log_admin("[key_name(usr)] has configured all movement directions.")
+
+		if("resetmovement")
+			if(!check_rights(R_FUN))
+				return
+			if(alert("Are you sure you want to reset movement keys to default?","Confirm","Yes","Cancel") == "Cancel")
+				return
+			SSinput.setup_default_movement_keys()
+			message_admins("[key_name_admin(usr)] has reset all movement keys.")
+			log_admin("[key_name(usr)] has reset all movement keys.")
 
 	if(E)
 		E.processing = FALSE

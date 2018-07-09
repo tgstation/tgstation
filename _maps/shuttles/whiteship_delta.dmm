@@ -12,8 +12,8 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned)
 "ad" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/titanium{
-	cyclelinkeddir = 2;
 	name = "External Airlock"
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -47,7 +47,7 @@
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/abandoned)
 "ah" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned)
 "ai" = (
@@ -102,8 +102,10 @@
 	},
 /area/shuttle/abandoned)
 "an" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /obj/machinery/door/airlock/titanium{
-	cyclelinkeddir = 1;
 	glass = 1;
 	name = "Internal Airlock"
 	},
@@ -165,11 +167,11 @@
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/storage/toolbox/emergency,
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_x = -6;
 	pixel_y = -2
 	},
@@ -201,7 +203,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/door/airlock/glass_maintenance{
+/obj/machinery/door/airlock/maintenance/glass{
 	name = "Maintenance"
 	},
 /turf/open/floor/plasteel,
@@ -241,7 +243,7 @@
 /area/shuttle/abandoned)
 "az" = (
 /obj/structure/sink/kitchen{
-	pixel_z = 30
+	pixel_y = 30
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -252,7 +254,7 @@
 	},
 /area/shuttle/abandoned)
 "aA" = (
-/obj/machinery/door/airlock/glass_maintenance{
+/obj/machinery/door/airlock/maintenance/glass{
 	name = "Maintenance"
 	},
 /turf/open/floor/plasteel,
@@ -270,7 +272,7 @@
 	},
 /obj/item/grenade/chem_grenade/metalfoam,
 /obj/item/relic,
-/obj/item/device/t_scanner,
+/obj/item/t_scanner,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 3;
 	name = "3maintenance loot spawner"
@@ -450,7 +452,7 @@
 /obj/item/clothing/suit/apron,
 /obj/item/shovel/spade,
 /obj/item/cultivator,
-/obj/item/device/plant_analyzer,
+/obj/item/plant_analyzer,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -649,7 +651,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/item/device/gps{
+/obj/item/gps{
 	gpstag = "ITVSAC";
 	pixel_x = -1;
 	pixel_y = 2
@@ -701,8 +703,7 @@
 /area/shuttle/abandoned)
 "bp" = (
 /obj/structure/urinal{
-	pixel_x = 30;
-	pixel_y = 0
+	pixel_x = 30
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -892,7 +893,7 @@
 	},
 /area/shuttle/abandoned)
 "bI" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "bJ" = (
@@ -954,8 +955,10 @@
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "bP" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /obj/machinery/door/airlock/titanium{
-	cyclelinkeddir = 4;
 	glass = 1;
 	name = "Internal Airlock"
 	},
@@ -968,8 +971,10 @@
 	},
 /area/shuttle/abandoned)
 "bQ" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /obj/machinery/door/airlock/titanium{
-	cyclelinkeddir = 8;
 	name = "External Airlock"
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -983,7 +988,6 @@
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	pixel_x = -28;
-	req_access_txt = "0";
 	use_power = 0
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -1014,10 +1018,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/door/airlock/glass_medical{
-	id_tag = null;
-	name = "Infirmary";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/medical/glass{
+	name = "Infirmary"
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
@@ -1085,7 +1087,7 @@
 /turf/open/floor/plasteel/whiteblue/side,
 /area/shuttle/abandoned)
 "cc" = (
-/obj/structure/sign/bluecross_2,
+/obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cd" = (
@@ -1098,7 +1100,7 @@
 	},
 /area/shuttle/abandoned)
 "ce" = (
-/obj/structure/sign/engineering,
+/obj/structure/sign/departments/engineering,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cf" = (
@@ -1295,7 +1297,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/door/airlock/glass_engineering{
+/obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Storage"
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -1431,7 +1433,7 @@
 /turf/open/floor/plasteel/whitepurple/corner,
 /area/shuttle/abandoned)
 "cL" = (
-/obj/structure/sign/science,
+/obj/structure/sign/departments/science,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cM" = (
@@ -1501,8 +1503,10 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "cS" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /obj/machinery/door/airlock/titanium{
-	cyclelinkeddir = 8;
 	name = "External Airlock"
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -1519,8 +1523,6 @@
 	name = "White-Ship";
 	port_direction = 8;
 	preferred_direction = 8;
-	roundstart_move = "whiteship_away";
-	timid = 1;
 	width = 32
 	},
 /turf/open/floor/plasteel/neutral,
@@ -1614,7 +1616,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "Bridge";
 	welded = 1
 	},
@@ -1652,7 +1654,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/item/device/megaphone,
+/obj/item/megaphone,
 /turf/open/floor/plasteel/blue/corner{
 	dir = 4
 	},
@@ -1686,7 +1688,7 @@
 	name = "dust"
 	},
 /obj/structure/table,
-/obj/item/device/camera,
+/obj/item/camera,
 /turf/open/floor/plasteel/blue/side{
 	dir = 5
 	},
@@ -1813,7 +1815,7 @@
 	name = "dust"
 	},
 /obj/structure/table,
-/obj/item/device/pda/clear,
+/obj/item/pda/clear,
 /turf/open/floor/plasteel/blue/side,
 /area/shuttle/abandoned)
 "dv" = (
@@ -1832,7 +1834,7 @@
 	name = "dust"
 	},
 /obj/structure/table,
-/obj/item/device/radio,
+/obj/item/radio,
 /turf/open/floor/plasteel/blue/side,
 /area/shuttle/abandoned)
 "dx" = (

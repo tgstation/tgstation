@@ -17,10 +17,8 @@
 	req_access = list(ACCESS_TCOMSAT)
 	circuit = /obj/item/circuitboard/computer/comm_server
 
-/obj/machinery/computer/telecomms/server/attack_hand(mob/user)
-	if(..())
-		return
-	user.set_machine(src)
+/obj/machinery/computer/telecomms/server/ui_interact(mob/user)
+	. = ..()
 	var/dat = "<TITLE>Telecommunication Server Monitor</TITLE><center><b>Telecommunications Server Monitor</b></center>"
 
 	switch(screen)
@@ -122,7 +120,7 @@
 						dat += "<u><font color = #18743E>Data type</font color></u>: Audio File<br>"
 						dat += "<u><font color = #18743E>Source</font color></u>: <i>Unidentifiable</i><br>"
 						dat += "<u><font color = #18743E>Class</font color></u>: [race]<br>"
-						dat += "<u><font color = #18743E>Contents</font color></u>: <i>Unintelligble</i><br>"
+						dat += "<u><font color = #18743E>Contents</font color></u>: <i>Unintelligible</i><br>"
 
 					dat += "</li><br>"
 
@@ -187,7 +185,7 @@
 
 	if(href_list["delete"])
 
-		if(!src.allowed(usr) && !emagged)
+		if(!src.allowed(usr) && !(obj_flags & EMAGGED))
 			to_chat(usr, "<span class='danger'>ACCESS DENIED.</span>")
 			return
 

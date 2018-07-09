@@ -11,6 +11,7 @@
 	deploy_bodybag(user, user.loc)
 
 /obj/item/bodybag/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	if(proximity)
 		if(isopenturf(target))
 			deploy_bodybag(user, target)
@@ -30,7 +31,7 @@
 		user.forceMove(R)
 		playsound(src, 'sound/items/zip.ogg', 15, 1, -3)
 		return (OXYLOSS)
-	..()	
+	..()
 
 // Bluespace bodybag
 
@@ -41,7 +42,7 @@
 	icon_state = "bluebodybag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/bluespace
 	w_class = WEIGHT_CLASS_SMALL
-	flags_2 = NO_MAT_REDEMPTION_2
+	item_flags = NO_MAT_REDEMPTION
 
 
 /obj/item/bodybag/bluespace/examine(mob/user)

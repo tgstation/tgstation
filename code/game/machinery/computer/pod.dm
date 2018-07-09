@@ -39,12 +39,13 @@
 		if(M.id == id)
 			M.close()
 
-/obj/machinery/computer/pod/attack_hand(mob/user)
-	if(..())
+/obj/machinery/computer/pod/ui_interact(mob/user)
+	. = ..()
+	if(!allowed(user))
+		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 
 	var/dat = ""
-	user.set_machine(src)
 	if(connected)
 		var/d2
 		if(timing)	//door controls do not need timers.
@@ -68,7 +69,6 @@
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
-
 
 /obj/machinery/computer/pod/process()
 	if(!..())
@@ -115,7 +115,6 @@
 					M.drive()
 		updateUsrDialog()
 
-
 /obj/machinery/computer/pod/old
 	name = "\improper DoorMex control console"
 	title = "Door Controls"
@@ -123,21 +122,12 @@
 	icon_screen = "library"
 	icon_keyboard = null
 
-
 /obj/machinery/computer/pod/old/syndicate
 	name = "\improper ProComp Executive IIc"
 	desc = "The Syndicate operate on a tight budget. Operates external airlocks."
 	title = "External Airlock Controls"
 	req_access = list(ACCESS_SYNDICATE)
 
-/obj/machinery/computer/pod/old/syndicate/attack_hand(mob/user)
-	if(!allowed(user))
-		to_chat(user, "<span class='notice'>Access denied.</span>")
-		return
-	else
-		..()
-
-
 /obj/machinery/computer/pod/old/swf
 	name = "\improper Magix System IV"
-	desc = "An arcane artifact that holds much magic. Running E-Knock 2.2: Sorceror's Edition."
+	desc = "An arcane artifact that holds much magic. Running E-Knock 2.2: Sorcerer's Edition."

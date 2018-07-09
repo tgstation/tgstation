@@ -60,17 +60,18 @@
 		user.remote_control = null
 
 	if(!QDELETED(eye))
-		if(user_good && user.client)
-			for(var/datum/camerachunk/chunk in eye.visibleCameraChunks)
-				chunk.remove(eye)
-		qdel(eye)
-	eye = null
+		QDEL_NULL(eye)
+
+	if(connected_holopad && !QDELETED(hologram))
+		hologram = null
+		connected_holopad.clear_holo(user)
 
 	user = null
 
-	if(hologram)
+	//Hologram survived holopad destro
+	if(!QDELETED(hologram))
 		hologram.HC = null
-		hologram = null
+		QDEL_NULL(hologram)
 
 	for(var/I in dialed_holopads)
 		var/obj/machinery/holopad/H = I
@@ -93,9 +94,10 @@
 /datum/holocall/proc/Disconnect(obj/machinery/holopad/H)
 	testing("Holocall disconnect")
 	if(H == connected_holopad)
-		calling_holopad.say("[usr] disconnected.")
+		var/area/A = get_area(connected_holopad)
+		calling_holopad.say("[A] holopad disconnected.")
 	else if(H == calling_holopad && connected_holopad)
-		connected_holopad.say("[usr] disconnected.")
+		connected_holopad.say("[user] disconnected.")
 
 	ConnectionFailure(H, TRUE)
 
@@ -157,6 +159,7 @@
 	eye.setLoc(H.loc)
 
 	hangup = new(eye, src)
+	hangup.Grant(user)
 
 //Checks the validity of a holocall and qdels itself if it's not. Returns TRUE if valid, FALSE otherwise
 /datum/holocall/proc/Check()
@@ -174,7 +177,7 @@
 		if(!connected_holopad)
 			. = world.time < (call_start_time + HOLOPAD_MAX_DIAL_TIME)
 			if(!.)
-				calling_holopad.say("No answer recieved.")
+				calling_holopad.say("No answer received.")
 				calling_holopad.temp = ""
 
 	if(!.)
@@ -202,10 +205,18 @@
 	var/list/entries = list()
 	var/language = /datum/language/common //Initial language, can be changed by HOLORECORD_LANGUAGE entries
 
+/datum/holorecord/proc/set_caller_image(mob/user)
+	var/olddir = user.dir
+	user.setDir(SOUTH)
+	caller_image = image(user)
+	user.setDir(olddir)
+
 /obj/item/disk/holodisk
 	name = "holorecord disk"
 	desc = "Stores recorder holocalls."
 	icon_state = "holodisk"
+	obj_flags = UNIQUE_RENAME
+	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
 	var/datum/holorecord/record
 	//Preset variables
 	var/preset_image_type
@@ -219,6 +230,22 @@
 /obj/item/disk/holodisk/Destroy()
 	QDEL_NULL(record)
 	return ..()
+
+/obj/item/disk/holodisk/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/disk/holodisk))
+		var/obj/item/disk/holodisk/holodiskOriginal = W
+		if (holodiskOriginal.record)
+			if (!record)
+				record = new
+			record.caller_name = holodiskOriginal.record.caller_name
+			record.caller_image = holodiskOriginal.record.caller_image
+			record.entries = holodiskOriginal.record.entries.Copy()
+			record.language = holodiskOriginal.record.language
+			to_chat(user, "You copy the record from [holodiskOriginal] to [src] by connecting the ports!")
+			name = holodiskOriginal.name
+		else
+			to_chat(user, "[holodiskOriginal] has no record on it!")
+	..()
 
 /obj/item/disk/holodisk/proc/build_record()
 	record = new
@@ -279,7 +306,7 @@
 			mannequin.equipOutfit(outfit_type,TRUE)
 		mannequin.setDir(SOUTH)
 		COMPILE_OVERLAYS(mannequin)
-		. = getFlatIcon(mannequin)
+		. = image(mannequin)
 		unset_busy_human_dummy("HOLODISK_PRESET")
 
 /obj/item/disk/holodisk/example
@@ -306,9 +333,20 @@
 /datum/preset_holoimage/engineer
 	outfit_type = /datum/outfit/job/engineer/gloved/rig
 
+/datum/preset_holoimage/researcher
+	outfit_type = /datum/outfit/job/scientist
+
+/datum/preset_holoimage/captain
+	outfit_type = /datum/outfit/job/captain
+
+/datum/preset_holoimage/nanotrasenprivatesecurity
+	outfit_type = /datum/outfit/nanotrasensoldiercorpse2
+
 /datum/preset_holoimage/gorilla
 	nonhuman_mobtype = /mob/living/simple_animal/hostile/gorilla
 
+/datum/preset_holoimage/corgi
+	nonhuman_mobtype = /mob/living/simple_animal/pet/dog/corgi
+
 /datum/preset_holoimage/clown
 	outfit_type = /datum/outfit/job/clown
-

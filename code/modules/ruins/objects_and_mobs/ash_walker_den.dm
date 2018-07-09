@@ -13,7 +13,7 @@
 	var/meat_counter = 6
 
 /mob/living/simple_animal/hostile/spawner/lavaland/ash_walker/death()
-	new /obj/item/device/assembly/signaler/anomaly (get_step(loc, pick(GLOB.alldirs)))
+	new /obj/item/assembly/signaler/anomaly (get_step(loc, pick(GLOB.alldirs)))
 	return ..()
 
 /mob/living/simple_animal/hostile/spawner/lavaland/ash_walker/Life()

@@ -28,7 +28,7 @@
 		return
 	for(var/V in mother.map)
 		var/turf/T = V
-		T.empty(deleteturfs? null : T.type, ignore_typecache = ignore_typecache, forceop = TRUE)
+		T.empty(deleteturfs? null : T.type, null, ignore_typecache, CHANGETURF_FORCEOP)
 
 /datum/mapGeneratorModule/bottomLayer/massdelete/no_delete_mobs/New()
 	..()

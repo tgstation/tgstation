@@ -3,6 +3,7 @@
 //They cannot be cured with chemicals, and require brain surgery to solve.
 
 /datum/brain_trauma/severe
+	resilience = TRAUMA_RESILIENCE_SURGERY
 
 /datum/brain_trauma/severe/mute
 	name = "Mutism"
@@ -12,11 +13,11 @@
 	lose_text = "<span class='notice'>You suddenly remember how to speak.</span>"
 
 /datum/brain_trauma/severe/mute/on_gain()
-	owner.add_disability(MUTE, TRAUMA_DISABILITY)
+	owner.add_trait(TRAIT_MUTE, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/mute/on_lose()
-	owner.remove_disability(MUTE, TRAUMA_DISABILITY)
+	owner.remove_trait(TRAIT_MUTE, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/aphasia
@@ -50,11 +51,11 @@
 	lose_text = "<span class='notice'>Your vision returns.</span>"
 
 /datum/brain_trauma/severe/blindness/on_gain()
-	owner.become_blind(TRAUMA_DISABILITY)
+	owner.become_blind(TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/blindness/on_lose()
-	owner.cure_blind(TRAUMA_DISABILITY)
+	owner.cure_blind(TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/paralysis
@@ -120,7 +121,7 @@
 		stress -= 4
 
 /datum/brain_trauma/severe/monophobia/proc/check_alone()
-	if(owner.has_disability(BLIND))
+	if(owner.has_trait(TRAIT_BLIND))
 		return TRUE
 	for(var/mob/M in oview(owner, 7))
 		if(!isliving(M)) //ghosts ain't people
@@ -159,7 +160,7 @@
 				to_chat(owner, "<span class='warning'>You feel really lonely...</span>")
 			else
 				to_chat(owner, "<span class='warning'>You're going mad with loneliness!</span>")
-				owner.hallucination += 20
+				owner.hallucination += 30
 
 		if(5)
 			if(!high_stress)
@@ -182,11 +183,11 @@
 	lose_text = "<span class='notice'>You feel in control of your hands again.</span>"
 
 /datum/brain_trauma/severe/discoordination/on_gain()
-	owner.add_disability(MONKEYLIKE, TRAUMA_DISABILITY)
+	owner.add_trait(TRAIT_MONKEYLIKE, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/discoordination/on_lose()
-	owner.remove_disability(MONKEYLIKE, TRAUMA_DISABILITY)
+	owner.remove_trait(TRAIT_MONKEYLIKE, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/pacifism
@@ -197,9 +198,9 @@
 	lose_text = "<span class='notice'>You no longer feel compelled to not harm.</span>"
 
 /datum/brain_trauma/severe/pacifism/on_gain()
-	owner.add_disability(PACIFISM, TRAUMA_DISABILITY)
+	owner.add_trait(TRAIT_PACIFISM, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/pacifism/on_lose()
-	owner.remove_disability(PACIFISM, TRAUMA_DISABILITY)
+	owner.remove_trait(TRAIT_PACIFISM, TRAUMA_TRAIT)
 	..()

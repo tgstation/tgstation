@@ -3,6 +3,7 @@
 	real_name = "Construct"
 	desc = ""
 	gender = NEUTER
+	mob_biotypes = list(MOB_INORGANIC)
 	speak_emote = list("hisses")
 	response_help  = "thinks better of touching"
 	response_disarm = "flails at"
@@ -37,12 +38,28 @@
 	var/seeking = FALSE
 	var/can_repair_constructs = FALSE
 	var/can_repair_self = FALSE
+	var/runetype
 
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
 	update_health_hud()
+	var/spellnum = 1
 	for(var/spell in construct_spells)
-		AddSpell(new spell(null))
+		var/the_spell = new spell(null)
+		AddSpell(the_spell)
+		var/obj/effect/proc_holder/spell/S = mob_spell_list[spellnum]
+		var/pos = 2+spellnum*31
+		if(construct_spells.len >= 4)
+			pos -= 31*(construct_spells.len - 4)
+		S.action.button.screen_loc = "6:[pos],4:-2"
+		S.action.button.moved = "6:[pos],4:-2"
+		spellnum++
+	if(runetype)
+		var/datum/action/innate/cult/create_rune/CR = new runetype(src)
+		CR.Grant(src)
+		var/pos = 2+spellnum*31
+		CR.button.screen_loc = "6:[pos],4:-2"
+		CR.button.moved = "6:[pos],4:-2"
 
 /mob/living/simple_animal/hostile/construct/Login()
 	..()
@@ -104,22 +121,24 @@
 	desc = "A massive, armored construct built to spearhead attacks and soak up enemy fire."
 	icon_state = "behemoth"
 	icon_living = "behemoth"
-	maxHealth = 250
-	health = 250
+	maxHealth = 200
+	health = 200
 	response_harm = "harmlessly punches"
 	harm_intent_damage = 0
 	obj_damage = 90
-	melee_damage_lower = 30
-	melee_damage_upper = 30
+	melee_damage_lower = 25
+	melee_damage_upper = 25
 	attacktext = "smashes their armored gauntlet into"
-	speed = 3
+	speed = 2.5
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attack_sound = 'sound/weapons/punch3.ogg'
 	status_flags = 0
 	mob_size = MOB_SIZE_LARGE
-	force_threshold = 11
-	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
-	playstyle_string = "<span class='big bold'>You are a Juggernaut.</span><b> Though slow, your shell can withstand extreme punishment, \
+	force_threshold = 10
+	construct_spells = list(/obj/effect/proc_holder/spell/targeted/forcewall/cult,
+							/obj/effect/proc_holder/spell/dumbfire/juggernaut)
+	runetype = /datum/action/innate/cult/create_rune/wall
+	playstyle_string = "<b>You are a Juggernaut. Though slow, your shell can withstand heavy punishment, \
 						create shield walls, rip apart enemies and walls alike, and even deflect energy weapons.</b>"
 
 /mob/living/simple_animal/hostile/construct/armored/hostile //actually hostile, will move around, hit things
@@ -128,7 +147,7 @@
 
 /mob/living/simple_animal/hostile/construct/armored/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
-		var/reflectchance = 80 - round(P.damage/3)
+		var/reflectchance = 60 - round(P.damage/3)
 		if(prob(reflectchance))
 			apply_damage(P.damage * 0.5, P.damage_type)
 			visible_message("<span class='danger'>The [P.name] is reflected by [src]'s armored shell!</span>", \
@@ -146,6 +165,10 @@
 				P.firer = src
 				P.yo = new_y - curloc.y
 				P.xo = new_x - curloc.x
+				var/new_angle_s = P.Angle + rand(120,240)
+				while(new_angle_s > 180)	// Translate to regular projectile degrees
+					new_angle_s -= 360
+				P.setAngle(new_angle_s)
 
 			return -1 // complete projectile permutation
 
@@ -160,15 +183,17 @@
 	desc = "A wicked, clawed shell constructed to assassinate enemies and sow chaos behind enemy lines."
 	icon_state = "floating"
 	icon_living = "floating"
-	maxHealth = 75
-	health = 75
-	melee_damage_lower = 25
-	melee_damage_upper = 25
+	maxHealth = 65
+	health = 65
+	melee_damage_lower = 20
+	melee_damage_upper = 20
 	retreat_distance = 2 //AI wraiths will move in and out of combat
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
-	playstyle_string = "<span class='big bold'>You are a Wraith.</span><b> Though relatively fragile, you are fast, deadly, can phase through walls, and your attacks will lower the cooldown on phasing.</b>"
+	runetype = /datum/action/innate/cult/create_rune/tele
+	playstyle_string = "<b>You are a Wraith. Though relatively fragile, you are fast, deadly, can phase through walls, and your attacks will lower the cooldown on phasing.</b>"
+
 	var/attack_refund = 10 //1 second per attack
 	var/crit_refund = 50 //5 seconds when putting a target into critical
 	var/kill_refund = 250 //full refund on kills
@@ -222,7 +247,9 @@
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
 							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
-	playstyle_string = "<span class='big bold'>You are an Artificer.</span><b> You are incredibly weak and fragile, but you are able to construct fortifications, \
+	runetype = /datum/action/innate/cult/create_rune/revive
+	playstyle_string = "<b>You are an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, \
+
 						use magic missile, repair allied constructs, shades, and yourself (by clicking on them), \
 						<i>and, most important of all,</i> create new constructs by producing soulstones to capture souls, \
 						and shells to place those soulstones into.</b>"
@@ -287,17 +314,17 @@
 	desc = "A long, thin construct built to herald Nar-Sie's rise. It'll be all over soon."
 	icon_state = "chosen"
 	icon_living = "chosen"
-	maxHealth = 60
-	health = 60
+	maxHealth = 40
+	health = 40
 	sight = SEE_MOBS
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	attacktext = "butchers"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/area_conversion,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
-	playstyle_string = "<span class='big bold'>You are a Harvester.</span><b> You are incapable of directly killing humans, but your attacks will remove their limbs: \
-						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth. Your form and any you are pulling can pass through runed walls effortlessly.</b>"
+							/obj/effect/proc_holder/spell/targeted/forcewall/cult)
+	playstyle_string = "<B>You are a Harvester. You are incapable of directly killing humans, but your attacks will remove their limbs: \
+						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth. Your form and any you are pulling can pass through runed walls effortlessly.</B>"
 	can_repair_constructs = TRUE
 
 
@@ -315,6 +342,8 @@
 /mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
+		if(C.has_trait(TRAIT_NODISMEMBER))
+			return ..()		//ATTACK!
 		var/list/parts = list()
 		var/undismembermerable_limbs = 0
 		for(var/X in C.bodyparts)
@@ -367,7 +396,7 @@
 
 	if(summon_objective.check_completion())
 		the_construct.master = C.cult_team.blood_target
-	
+
 	if(!the_construct.master)
 		to_chat(the_construct, "<span class='cult italic'>You have no master to seek!</span>")
 		the_construct.seeking = FALSE
@@ -408,7 +437,8 @@
 	else
 		if(LAZYLEN(GLOB.cult_narsie.souls_needed))
 			the_construct.master = pick(GLOB.cult_narsie.souls_needed)
-			to_chat(the_construct, "<span class='cult italic'>You are now tracking your prey, [the_construct.master] - harvest them!</span>")
+			var/mob/living/real_target = the_construct.master //We can typecast this way because Narsie only allows /mob/living into the souls list
+			to_chat(the_construct, "<span class='cult italic'>You are now tracking your prey, [real_target.real_name] - harvest [real_target.p_them()]!</span>")
 		else
 			to_chat(the_construct, "<span class='cult italic'>Nar'Sie has completed her harvest!</span>")
 			return

@@ -46,9 +46,9 @@
 				survivor_list += "<span class='neutraltext'>[player.real_name] survived but is stranded without any hope of rescue.</span>"
 
 	if(survivors)
-		return "<span class='header'>The following survived the meteor storm:</span><br>[survivor_list.Join("<br>")]"
+		return "<div class='panel greenborder'><span class='header'>The following survived the meteor storm:</span><br>[survivor_list.Join("<br>")]</div>"
 	else
-		return "<span class='redtext big'>Nobody survived the meteor storm!</span>"
+		return "<div class='panel redborder'><span class='redtext big'>Nobody survived the meteor storm!</span></div>"
 
 /datum/game_mode/meteor/set_round_result()
 	..()

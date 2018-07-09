@@ -1,8 +1,8 @@
-GLOBAL_VAR_INIT(security_level, 0)
-//0 = code green
-//1 = code blue
-//2 = code red
-//3 = code delta
+GLOBAL_VAR_INIT(security_level, SEC_LEVEL_GREEN)
+//SEC_LEVEL_GREEN = code green
+//SEC_LEVEL_BLUE = code blue
+//SEC_LEVEL_RED = code red
+//SEC_LEVEL_DELTA = code delta
 
 //config.alert_desc_blue_downto
 
@@ -29,7 +29,7 @@ GLOBAL_VAR_INIT(security_level, 0)
 						SSshuttle.emergency.modTimer(2)
 				GLOB.security_level = SEC_LEVEL_GREEN
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
-					if(FA.z in GLOB.station_z_levels)
+					if(is_station_level(FA.z))
 						FA.update_icon()
 			if(SEC_LEVEL_BLUE)
 				if(GLOB.security_level < SEC_LEVEL_BLUE)
@@ -42,7 +42,7 @@ GLOBAL_VAR_INIT(security_level, 0)
 						SSshuttle.emergency.modTimer(2)
 				GLOB.security_level = SEC_LEVEL_BLUE
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
-					if(FA.z in GLOB.station_z_levels)
+					if(is_station_level(FA.z))
 						FA.update_icon()
 			if(SEC_LEVEL_RED)
 				if(GLOB.security_level < SEC_LEVEL_RED)
@@ -57,7 +57,7 @@ GLOBAL_VAR_INIT(security_level, 0)
 				GLOB.security_level = SEC_LEVEL_RED
 
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
-					if(FA.z in GLOB.station_z_levels)
+					if(is_station_level(FA.z))
 						FA.update_icon()
 				for(var/obj/machinery/computer/shuttle/pod/pod in GLOB.machines)
 					pod.admin_controlled = 0
@@ -70,11 +70,17 @@ GLOBAL_VAR_INIT(security_level, 0)
 						SSshuttle.emergency.modTimer(0.5)
 				GLOB.security_level = SEC_LEVEL_DELTA
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
-					if(FA.z in GLOB.station_z_levels)
+					if(is_station_level(FA.z))
 						FA.update_icon()
 				for(var/obj/machinery/computer/shuttle/pod/pod in GLOB.machines)
 					pod.admin_controlled = 0
+		if(level >= SEC_LEVEL_RED)
+			for(var/obj/machinery/door/D in GLOB.machines)
+				if(D.red_alert_access)
+					D.visible_message("<span class='notice'>[D] whirrs as it automatically lifts access requirements!</span>")
+					playsound(D, 'sound/machines/boltsup.ogg', 50, TRUE)
 		SSblackbox.record_feedback("tally", "security_level_changes", 1, get_security_level())
+		SSnightshift.check_nightshift()
 	else
 		return
 

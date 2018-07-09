@@ -8,7 +8,6 @@
 
 	icon = 'icons/obj/machines/droneDispenser.dmi'
 	icon_state = "on"
-	anchored = TRUE
 	density = TRUE
 
 	max_integrity = 250
@@ -51,7 +50,7 @@
 
 /obj/machinery/droneDispenser/Initialize()
 	. = ..()
-	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, TRUE)
+	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, TRUE, list(/obj/item/stack))
 	materials.insert_amount(starting_amount)
 	materials.precise_insertion = TRUE
 	using_materials = list(MAT_METAL=metal_cost, MAT_GLASS=glass_cost)
@@ -174,7 +173,7 @@
 				use_power(power_used)
 
 			var/atom/A = new dispense_type(loc)
-			A.admin_spawned = admin_spawned
+			A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 
 			if(create_sound)
 				playsound(src, create_sound, 50, 1)
@@ -210,35 +209,26 @@
 	else
 		icon_state = icon_on
 
-/obj/machinery/droneDispenser/attackby(obj/item/O, mob/living/user)
-	if(istype(O, /obj/item/crowbar))
+/obj/machinery/droneDispenser/attackby(obj/item/I, mob/living/user)
+	if(istype(I, /obj/item/crowbar))
 		GET_COMPONENT(materials, /datum/component/material_container)
 		materials.retrieve_all()
-		playsound(loc, O.usesound, 50, 1)
+		I.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>You retrieve the materials from [src].</span>")
 
-	else if(istype(O, /obj/item/weldingtool))
+	else if(istype(I, /obj/item/weldingtool))
 		if(!(stat & BROKEN))
 			to_chat(user, "<span class='warning'>[src] doesn't need repairs.</span>")
 			return
 
-		var/obj/item/weldingtool/WT = O
-
-		if(!WT.isOn())
+		if(!I.tool_start_check(user, amount=1))
 			return
 
-		if(WT.get_fuel() < 1)
-			to_chat(user, "<span class='warning'>You need more fuel to complete this task!</span>")
-			return
-
-		playsound(src, WT.usesound, 50, 1)
 		user.visible_message(
-			"<span class='notice'>[user] begins patching up [src] with [WT].</span>",
+			"<span class='notice'>[user] begins patching up [src] with [I].</span>",
 			"<span class='notice'>You begin restoring the damage to [src]...</span>")
 
-		if(!do_after(user, 40*O.toolspeed, target = src))
-			return
-		if(!src || !WT.remove_fuel(1, user))
+		if(!I.use_tool(src, user, 40, volume=50, amount=1))
 			return
 
 		user.visible_message(

@@ -1,5 +1,5 @@
 /datum/wires/radio
-	holder_type = /obj/item/device/radio
+	holder_type = /obj/item/radio
 	proper_name = "Radio"
 
 /datum/wires/radio/New(atom/holder)
@@ -10,11 +10,11 @@
 	..()
 
 /datum/wires/radio/interactable(mob/user)
-	var/obj/item/device/radio/R = holder
+	var/obj/item/radio/R = holder
 	return R.unscrewed
 
 /datum/wires/radio/on_pulse(index)
-	var/obj/item/device/radio/R = holder
+	var/obj/item/radio/R = holder
 	switch(index)
 		if(WIRE_SIGNAL)
 			R.listening = !R.listening

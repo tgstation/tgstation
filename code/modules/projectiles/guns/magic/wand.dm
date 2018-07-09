@@ -43,7 +43,7 @@
 				no_den_usage = 0
 		zap_self(user)
 	else
-		..()
+		. = ..()
 	update_icon()
 
 
@@ -95,6 +95,10 @@
 	to_chat(user, "<span class='notice'>You feel great!</span>")
 	charges--
 	..()
+
+/obj/item/gun/magic/wand/resurrection/debug //for testing
+	name = "debug wand of healing"
+	max_charges = 500
 
 /////////////////////////////////////
 //WAND OF POLYMORPH

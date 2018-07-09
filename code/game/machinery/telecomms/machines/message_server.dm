@@ -11,11 +11,10 @@
 	icon_state = "blackbox"
 	name = "Blackbox Recorder"
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
-	armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
+	armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
 
 
 // The message server itself.
@@ -25,7 +24,6 @@
 	name = "Messaging Server"
 	desc = "A machine that attempts to gather the secret knowledge of the universe."
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
@@ -43,6 +41,12 @@
 	if (!decryptkey)
 		decryptkey = GenerateKey()
 	pda_msgs += new /datum/data_pda_msg("System Administrator", "system", "This is an automated message. The messaging system is functioning correctly.")
+
+/obj/machinery/telecomms/message_server/Destroy()
+	for(var/obj/machinery/computer/message_monitor/monitor in GLOB.telecomms_list)
+		if(monitor.linkedServer && monitor.linkedServer == src)
+			monitor.linkedServer = null
+	. = ..()
 
 /obj/machinery/telecomms/message_server/proc/GenerateKey()
 	var/newKey
@@ -62,8 +66,9 @@
 		return
 
 	// log the signal
-	pda_msgs += new /datum/data_pda_msg(signal.format_target(), "[signal.data["name"]] ([signal.data["job"]])", signal.data["message"], signal.data["photo"])
-	signal.data -= "reject"  // only gets through if it's logged
+	var/datum/data_pda_msg/M = new(signal.format_target(), "[signal.data["name"]] ([signal.data["job"]])", signal.data["message"], signal.data["photo"])
+	pda_msgs += M
+	signal.logged = M
 
 	// pass it along to either the hub or the broadcaster
 	if(!relay_information(signal, /obj/machinery/telecomms/hub))
@@ -78,22 +83,17 @@
 		icon_state = "server-on"
 
 
-// Repath for maps
-/obj/machinery/message_server
-	parent_type = /obj/machinery/telecomms/message_server
-
-
 // PDA signal datum
 /datum/signal/subspace/pda
 	frequency = FREQ_COMMON
 	server_type = /obj/machinery/telecomms/message_server
+	var/datum/data_pda_msg/logged
 
 /datum/signal/subspace/pda/New(source, data)
 	src.source = source
 	src.data = data
 	var/turf/T = get_turf(source)
 	levels = list(T.z)
-	data["reject"] = TRUE  // set to FALSE if a messaging server logs it
 
 /datum/signal/subspace/pda/copy()
 	var/datum/signal/subspace/pda/copy = new(source, data.Copy())
@@ -107,25 +107,16 @@
 	return data["targets"][1]
 
 /datum/signal/subspace/pda/proc/format_message()
-	if (data["photo"])
-		return "[data["message"]] <a href='byond://?src=[REF(src)];photo=1'>(Photo)</a>"
-	return data["message"]
+	if (logged && data["photo"])
+		return "\"[data["message"]]\" (<a href='byond://?src=[REF(logged)];photo=1'>Photo</a>)"
+	return "\"[data["message"]]\""
 
 /datum/signal/subspace/pda/broadcast()
-	for (var/obj/item/device/pda/P in GLOB.PDAs)
+	if (!logged)  // Can only go through if a message server logs it
+		return
+	for (var/obj/item/pda/P in GLOB.PDAs)
 		if ("[P.owner] ([P.ownjob])" in data["targets"])
 			P.receive_message(src)
-
-/datum/signal/subspace/pda/Topic(href, href_list)
-	..()
-	if (href_list["photo"])
-		var/mob/M = usr
-		M << browse_rsc(data["photo"], "pda_photo.png")
-		M << browse("<html><head><title>PDA Photo</title></head>" \
-		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
-		+ "<img src='pda_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />" \
-		+ "</body></html>", "window=pdaphoto;size=192x192")
-		onclose(M, "pdaphoto")
 
 
 // Log datums stored by the message server.
@@ -144,11 +135,6 @@
 		message = param_message
 	if(param_photo)
 		photo = param_photo
-
-/datum/data_pda_msg/proc/get_photo_ref()
-	if(photo)
-		return "<a href='byond://?src=[REF(src)];photo=1'>(Photo)</a>"
-	return ""
 
 /datum/data_pda_msg/Topic(href,href_list)
 	..()

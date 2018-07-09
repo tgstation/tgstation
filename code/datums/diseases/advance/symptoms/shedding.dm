@@ -4,7 +4,7 @@ Alopecia
 
 	Not Noticeable.
 	Increases resistance slightly.
-	Reduces stage speed slightly.
+	Increases stage speed.
 	Transmittable.
 	Intense Level.
 
@@ -19,8 +19,8 @@ BONUS
 	desc = "The virus causes rapid shedding of head and body hair."
 	stealth = 0
 	resistance = 1
-	stage_speed = -1
-	transmittable = 3
+	stage_speed = 2
+	transmittable = 2
 	level = 4
 	severity = 1
 	base_message_chance = 50
@@ -33,7 +33,7 @@ BONUS
 
 	var/mob/living/M = A.affected_mob
 	if(prob(base_message_chance))
-		to_chat(M, "<span class='warning'>[pick("Your scalp itches.", "Your skin feels flakey.")]</span>")
+		to_chat(M, "<span class='warning'>[pick("Your scalp itches.", "Your skin feels flaky.")]</span>")
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		switch(A.stage)

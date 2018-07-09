@@ -120,8 +120,12 @@
 	require_comms_key = TRUE
 
 /datum/world_topic/namecheck/Run(list/input)
-	var/datum/server_tools_command/namecheck/NC = new
-	return NC.Run(input["sender"], input["namecheck"])
+	//Oh this is a hack, someone refactor the functionality out of the chat command PLS
+	var/datum/tgs_chat_command/namecheck/NC = new
+	var/datum/tgs_chat_user/user = new
+	user.friendly_name = input["sender"]
+	user.mention = user.friendly_name
+	return NC.Run(user, input["namecheck"])
 
 /datum/world_topic/adminwho
 	keyword = "adminwho"
@@ -164,9 +168,16 @@
 	.["security_level"] = get_security_level()
 	.["round_duration"] = SSticker ? round((world.time-SSticker.round_start_time)/10) : 0
 	// Amount of world's ticks in seconds, useful for calculating round duration
+	
+	//Time dilation stats.
+	.["time_dilation_current"] = SStime_track.time_dilation_current
+	.["time_dilation_avg"] = SStime_track.time_dilation_avg
+	.["time_dilation_avg_slow"] = SStime_track.time_dilation_avg_slow
+	.["time_dilation_avg_fast"] = SStime_track.time_dilation_avg_fast
 
 	if(SSshuttle && SSshuttle.emergency)
 		.["shuttle_mode"] = SSshuttle.emergency.mode
 		// Shuttle status, see /__DEFINES/stat.dm
 		.["shuttle_timer"] = SSshuttle.emergency.timeLeft()
 		// Shuttle timer, in seconds
+	

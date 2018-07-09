@@ -15,7 +15,6 @@
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/apple/gold)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
-	juice_results = list("applejuice" = 0)
 
 /obj/item/reagent_containers/food/snacks/grown/apple
 	seed = /obj/item/seeds/apple
@@ -25,17 +24,8 @@
 	filling_color = "#FF4500"
 	bitesize = 100 // Always eat the apple in one bite
 	foodtype = FRUIT
-
-// Posioned Apple
-/obj/item/seeds/apple/poisoned
-	product = /obj/item/reagent_containers/food/snacks/grown/apple/poisoned
-	mutatelist = list()
-	reagents_add = list("zombiepowder" = 0.5, "vitamin" = 0.04, "nutriment" = 0.1)
-	rarity = 50 // Source of cyanide, and hard (almost impossible) to obtain normally.
-
-/obj/item/reagent_containers/food/snacks/grown/apple/poisoned
-	seed = /obj/item/seeds/apple/poisoned
-	foodtype = FRUIT | TOXIC
+	juice_results = list("applejuice" = 0)
+	tastes = list("apple" = 1)
 
 // Gold Apple
 /obj/item/seeds/apple/gold

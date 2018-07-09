@@ -20,11 +20,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	"t" = "Syndicate",
 	"y" = "CentCom",
 
-	// Species
-	"b" = "binary",
-	"g" = "changeling",
-	"a" = "alientalk",
-
 	// Admin
 	"p" = "admin",
 	"d" = "deadmin",
@@ -55,11 +50,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	"å" = "Syndicate",
 	"í" = "CentCom",
 
-	// Species
-	"è" = "binary",
-	"ï" = "changeling",
-	"ô" = "alientalk",
-
 	// Admin
 	"ç" = "admin",
 	"â" = "deadmin",
@@ -68,6 +58,29 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	"ù" = "AI Private",
 	"÷" = "cords"
 ))
+
+/mob/living/proc/Ellipsis(original_msg, chance = 50, keep_words)
+    if(chance <= 0)
+        return "..."
+    if(chance >= 100)
+        return original_msg
+
+    var/list
+        words = splittext(original_msg," ")
+        new_words = list()
+
+    var/new_msg = ""
+
+    for(var/w in words)
+        if(prob(chance))
+            new_words += "..."
+            if(!keep_words)
+                continue
+        new_words += w
+
+    new_msg = jointext(new_words," ")
+
+    return new_msg
 
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE)
 	var/static/list/crit_allowed_modes = list(MODE_WHISPER = TRUE, MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
@@ -81,13 +94,14 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(!message || message == "")
 		return
 
+	var/datum/saymode/saymode = SSradio.saymodes[talk_key]
 	var/message_mode = get_message_mode(message)
 	var/original_message = message
 	var/in_critical = InCritical()
 
 	if(one_character_prefix[message_mode])
 		message = copytext(message, 2)
-	else if(message_mode)
+	else if(message_mode || saymode)
 		message = copytext(message, 3)
 	if(findtext(message, " ", 1, 2))
 		message = copytext(message, 2)
@@ -134,9 +148,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	// Detection of language needs to be before inherent channels, because
 	// AIs use inherent channels for the holopad. Most inherent channels
 	// ignore the language argument however.
-  
-	var/datum/saymode/SM = SSradio.saymodes[talk_key]
-	if(SM && !SM.handle_message(src, message, language))
+
+	if(saymode && !saymode.handle_message(src, message, language))
 		return
 
 	if(!can_speak_vocal(message))
@@ -210,7 +223,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/deaf_type
 	if(speaker != src)
 		if(!radio_freq) //These checks have to be seperate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
-			deaf_message = "<span class='name'>[speaker]</span> [speaker.verb_say] something but you cannot hear them."
+			deaf_message = "<span class='name'>[speaker]</span> [speaker.verb_say] something but you cannot hear [speaker.p_them()]."
 			deaf_type = 1
 	else
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
@@ -283,7 +296,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return 1
 
 /mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
-	if(has_disability(MUTE))
+	if(has_trait(TRAIT_MUTE))
 		return 0
 
 	if(is_muzzled())
@@ -293,21 +306,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return 0
 
 	return 1
-
-/mob/living/proc/check_emote(message)
-	if(copytext(message, 1, 2) == "*")
-		emote(copytext(message, 2))
-		return 1
-
-/mob/living/proc/get_message_mode(message)
-	var/key = copytext(message, 1, 2)
-	if(key == "#")
-		return MODE_WHISPER
-	else if(key == ";")
-		return MODE_HEADSET
-	else if(length(message) > 2 && (key in GLOB.department_radio_prefixes))
-		var/key_symbol = lowertext(copytext(message, 2, 3))
-		return GLOB.department_radio_keys[key_symbol]
 
 /mob/living/proc/get_key(message)
 	var/key = copytext(message, 1, 2)
@@ -341,6 +339,15 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return message
 
 /mob/living/proc/radio(message, message_mode, list/spans, language)
+	var/obj/item/implant/radio/imp = locate() in src
+	if(imp && imp.radio.on)
+		if(message_mode == MODE_HEADSET)
+			imp.radio.talk_into(src, message, , spans, language)
+			return ITALICS | REDUCE_RANGE
+		if(message_mode == MODE_DEPARTMENT || message_mode in GLOB.radiochannels)
+			imp.radio.talk_into(src, message, message_mode, spans, language)
+			return ITALICS | REDUCE_RANGE
+
 	switch(message_mode)
 		if(MODE_WHISPER)
 			return ITALICS
@@ -356,12 +363,13 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 				return ITALICS | REDUCE_RANGE
 
 		if(MODE_INTERCOM)
-			for (var/obj/item/device/radio/intercom/I in view(1, null))
+			for (var/obj/item/radio/intercom/I in view(1, null))
 				I.talk_into(src, message, , spans, language)
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_BINARY)
 			return ITALICS | REDUCE_RANGE //Does not return 0 since this is only reached by humans, not borgs or AIs.
+
 	return 0
 
 /mob/living/say_mod(input, message_mode)

@@ -32,7 +32,6 @@
 /obj/machinery/porta_turret/syndicate/vehicle_turret
 	name = "mounted turret"
 	scan_range = 7
-	emp_vunerable = 1
 	density = FALSE
 
 /obj/vehicle/ridden/atv/turret/Initialize()

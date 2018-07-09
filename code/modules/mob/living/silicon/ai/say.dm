@@ -45,10 +45,10 @@
 		var/turf/padturf = get_turf(T)
 		var/padloc
 		if(padturf)
-			padloc = COORD(padturf)
+			padloc = AREACOORD(padturf)
 		else
 			padloc = "(UNKNOWN)"
-		log_talk(src,"HOLOPAD [padloc]: [key_name(src)] : [message]", LOGSAY)
+		log_talk(src,"HOLOPAD in [padloc]: [key_name(src)] : [message]", LOGSAY)
 		send_speech(message, 7, T, "robot", get_spans(), language)
 		to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>")
 	else
@@ -67,11 +67,16 @@
 	if(incapacitated())
 		return
 
-	var/dat = "Here is a list of words you can type into the 'Announcement' button to create sentences to vocally announce to everyone on the same level at you.<BR> \
-	<UL><LI>You can also click on the word to preview it.</LI>\
-	<LI>You can only say 30 words for every announcement.</LI>\
-	<LI>Do not use punctuation as you would normally, if you want a pause you can use the full stop and comma characters by separating them with spaces, like so: 'Alpha . Test , Bravo'.</LI></UL>\
-	<font class='bad'>WARNING:</font><BR>Misuse of the announcement system will get you job banned.<HR>"
+	var/dat = {"
+	<font class='bad'>WARNING:</font> Misuse of the announcement system will get you job banned.<BR><BR>
+	Here is a list of words you can type into the 'Announcement' button to create sentences to vocally announce to everyone on the same level at you.<BR>
+	<UL><LI>You can also click on the word to PREVIEW it.</LI>
+	<LI>You can only say 30 words for every announcement.</LI>
+	<LI>Do not use punctuation as you would normally, if you want a pause you can use the full stop and comma characters by separating them with spaces, like so: 'Alpha . Test , Bravo'.</LI>
+	<LI>Numbers are in word format, e.g. eight, sixty, etc </LI>
+	<LI>Sound effects begin with an 's' before the actual word, e.g. scensor</LI>
+	<LI>Use Ctrl+F to see if a word exists in the list.</LI></UL><HR>
+	"}
 
 	var/index = 0
 	for(var/word in GLOB.vox_sounds)
@@ -154,6 +159,7 @@
 		return 1
 	return 0
 
+#undef VOX_DELAY
 #endif
 
 /mob/living/silicon/ai/could_speak_in_language(datum/language/dt)

@@ -9,12 +9,12 @@
 	item_state = "defibunit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	force = 5
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
 	actions_types = list(/datum/action/item_action/toggle_paddles)
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 
 	var/on = FALSE //if the paddles are equipped (1) or on the defib (0)
 	var/safety = TRUE //if you can zap people with the defibs on harm mode
@@ -46,11 +46,11 @@
 	update_charge()
 
 /obj/item/defibrillator/proc/update_power()
-	if(cell)
-		if(cell.charge < paddles.revivecost)
+	if(!QDELETED(cell))
+		if(QDELETED(paddles) || cell.charge < paddles.revivecost)
 			powered = FALSE
 		else
-			powered = 1
+			powered = TRUE
 	else
 		powered = FALSE
 
@@ -67,7 +67,7 @@
 
 /obj/item/defibrillator/proc/update_charge()
 	if(powered) //so it doesn't show charge if it's unpowered
-		if(cell)
+		if(!QDELETED(cell))
 			var/ratio = cell.charge / cell.maxcharge
 			ratio = CEILING(ratio*4, 1) * 25
 			add_overlay("[initial(icon_state)]-charge[ratio]")
@@ -80,23 +80,27 @@
 /obj/item/defibrillator/ui_action_click()
 	toggle_paddles()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/defibrillator/attack_hand(mob/user)
 	if(loc == user)
-		if(slot_flags == SLOT_BACK)
-			if(user.get_item_by_slot(slot_back) == src)
+		if(slot_flags == ITEM_SLOT_BACK)
+			if(user.get_item_by_slot(SLOT_BACK) == src)
 				ui_action_click()
 			else
 				to_chat(user, "<span class='warning'>Put the defibrillator on your back first!</span>")
 
-		else if(slot_flags == SLOT_BELT)
-			if(user.get_item_by_slot(slot_belt) == src)
+		else if(slot_flags == ITEM_SLOT_BELT)
+			if(user.get_item_by_slot(SLOT_BELT) == src)
 				ui_action_click()
 			else
 				to_chat(user, "<span class='warning'>Strap the defibrillator's belt on first!</span>")
 		return
-	..()
+	else if(istype(loc, /obj/machinery/defibrillator_mount))
+		ui_action_click() //checks for this are handled in defibrillator.mount.dm
+	return ..()
 
 /obj/item/defibrillator/MouseDrop(obj/over_object)
+	. = ..()
 	if(ismob(loc))
 		var/mob/M = loc
 		if(!M.incapacitated() && istype(over_object, /obj/screen/inventory/hand))
@@ -140,8 +144,11 @@
 		to_chat(user, "<span class='notice'>You silently enable [src]'s safety protocols with the cryptographic sequencer.</span>")
 
 /obj/item/defibrillator/emp_act(severity)
-	if(cell)
+	. = ..()
+	if(cell && !(. & EMP_PROTECT_CONTENTS))
 		deductcharge(1000 / severity)
+	if (. & EMP_PROTECT_SELF)
+		return
 	if(safety)
 		safety = FALSE
 		visible_message("<span class='notice'>[src] beeps: Safety protocols disabled!</span>")
@@ -151,14 +158,13 @@
 		visible_message("<span class='notice'>[src] beeps: Safety protocols enabled!</span>")
 		playsound(src, 'sound/machines/defib_saftyOn.ogg', 50, 0)
 	update_icon()
-	..()
 
 /obj/item/defibrillator/proc/toggle_paddles()
 	set name = "Toggle Paddles"
 	set category = "Object"
 	on = !on
 
-	var/mob/living/carbon/human/user = usr
+	var/mob/living/carbon/user = usr
 	if(on)
 		//Detach the paddles into the user's hands
 		if(!usr.put_in_hands(paddles))
@@ -166,7 +172,6 @@
 			to_chat(user, "<span class='warning'>You need a free hand to hold the paddles!</span>")
 			update_icon()
 			return
-		paddles.forceMove(user)
 	else
 		//Remove from their hands and back onto the defib unit
 		paddles.unwield()
@@ -182,7 +187,7 @@
 
 /obj/item/defibrillator/equipped(mob/user, slot)
 	..()
-	if((slot_flags == SLOT_BACK && slot != slot_back) || (slot_flags == SLOT_BELT && slot != slot_belt))
+	if((slot_flags == ITEM_SLOT_BACK && slot != SLOT_BACK) || (slot_flags == ITEM_SLOT_BELT && slot != SLOT_BELT))
 		remove_paddles(user)
 		update_icon()
 
@@ -200,6 +205,7 @@
 	if(on)
 		var/M = get(paddles, /mob)
 		remove_paddles(M)
+	QDEL_NULL(paddles)
 	. = ..()
 	update_icon()
 
@@ -234,7 +240,7 @@
 	icon_state = "defibcompact"
 	item_state = "defibcompact"
 	w_class = WEIGHT_CLASS_NORMAL
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/defibrillator/compact/item_action_slot_check(slot, mob/user)
 	if(slot == user.getBeltSlot())
@@ -271,8 +277,11 @@
 	name = "defibrillator paddles"
 	desc = "A pair of plastic-gripped paddles with flat metal surfaces that are used to deliver powerful electric shocks."
 	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "defibpaddles"
-	item_state = "defibpaddles"
+	icon_state = "defibpaddles0"
+	item_state = "defibpaddles0"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+
 	force = 0
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
@@ -285,6 +294,32 @@
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
 	var/grab_ghost = FALSE
 	var/tlimit = DEFIB_TIME_LIMIT * 10
+
+	var/datum/component/mobhook
+
+/obj/item/twohanded/shockpaddles/equipped(mob/user, slot)
+	. = ..()
+	if(req_defib)
+		if (mobhook && mobhook.parent != user)
+			QDEL_NULL(mobhook)
+		if (!mobhook)
+			mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(src, .proc/check_range))
+
+/obj/item/twohanded/shockpaddles/Moved()
+	. = ..()
+	check_range()
+
+/obj/item/twohanded/shockpaddles/proc/check_range()
+	if(!req_defib)
+		return
+	if(!in_range(src,defib))
+		var/mob/living/L = loc
+		if(istype(L))
+			to_chat(L, "<span class='warning'>[defib]'s paddles overextend and come out of your hands!</span>")
+			L.temporarilyRemoveItemFromInventory(src,TRUE)
+		else
+			visible_message("<span class='notice'>[src] snap back into [defib].</span>")
+			snap_back()
 
 /obj/item/twohanded/shockpaddles/proc/recharge(var/time)
 	if(req_defib || !time)
@@ -311,6 +346,9 @@
 	item_state = "defibpaddles[wielded]"
 	if(cooldown)
 		icon_state = "defibpaddles[wielded]_cooldown"
+	if(iscarbon(loc))
+		var/mob/living/carbon/C = loc
+		C.update_inv_hands()
 
 /obj/item/twohanded/shockpaddles/suicide_act(mob/user)
 	user.visible_message("<span class='danger'>[user] is putting the live paddles on [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -322,17 +360,24 @@
 /obj/item/twohanded/shockpaddles/dropped(mob/user)
 	if(!req_defib)
 		return ..()
+	if (mobhook)
+		QDEL_NULL(mobhook)
 	if(user)
 		var/obj/item/twohanded/offhand/O = user.get_inactive_held_item()
 		if(istype(O))
 			O.unwield()
 		to_chat(user, "<span class='notice'>The paddles snap back into the main unit.</span>")
-		defib.on = 0
-		forceMove(defib)
-		defib.update_icon()
+		snap_back()
 	return unwield(user)
 
-/obj/item/twohanded/shockpaddles/proc/check_defib_exists(mainunit, mob/living/carbon/human/M, obj/O)
+/obj/item/twohanded/shockpaddles/proc/snap_back()
+	if(!defib)
+		return
+	defib.on = FALSE
+	forceMove(defib)
+	defib.update_icon()
+
+/obj/item/twohanded/shockpaddles/proc/check_defib_exists(mainunit, mob/living/carbon/M, obj/O)
 	if(!req_defib)
 		return TRUE //If it doesn't need a defib, just say it exists
 	if (!mainunit || !istype(mainunit, /obj/item/defibrillator))	//To avoid weird issues from admin spawns
@@ -366,16 +411,16 @@
 		do_disarm(M, user)
 		return
 
-	if(!ishuman(M))
+	if(!iscarbon(M))
 		if(req_defib)
 			to_chat(user, "<span class='warning'>The instructions on [defib] don't mention how to revive that...</span>")
 		else
 			to_chat(user, "<span class='warning'>You aren't sure how to revive that...</span>")
 		return
-	var/mob/living/carbon/human/H = M
+	var/mob/living/carbon/H = M
 
 
-	if(user.zone_selected != "chest")
+	if(user.zone_selected != BODY_ZONE_CHEST)
 		to_chat(user, "<span class='warning'>You need to target your patient's chest with [src]!</span>")
 		return
 
@@ -391,15 +436,15 @@
 
 	do_help(H, user)
 
-/obj/item/twohanded/shockpaddles/proc/can_defib(mob/living/carbon/human/H)
+/obj/item/twohanded/shockpaddles/proc/can_defib(mob/living/carbon/H)
 	var/obj/item/organ/brain/BR = H.getorgan(/obj/item/organ/brain)
-	return	(!H.suiciding && !(H.has_disability(NOCLONE)) && !H.hellbound && ((world.time - H.timeofdeath) < tlimit) && (H.getBruteLoss() < 180) && (H.getFireLoss() < 180) && H.getorgan(/obj/item/organ/heart) && BR && !BR.damaged_brain)
+	return	(!H.suiciding && !(H.has_trait(TRAIT_NOCLONE)) && !H.hellbound && ((world.time - H.timeofdeath) < tlimit) && (H.getBruteLoss() < 180) && (H.getFireLoss() < 180) && H.getorgan(/obj/item/organ/heart) && BR && !BR.damaged_brain)
 
 /obj/item/twohanded/shockpaddles/proc/shock_touching(dmg, mob/H)
 	if(isliving(H.pulledby))		//CLEAR!
 		var/mob/living/M = H.pulledby
 		if(M.electrocute_act(30, src))
-			M.visible_message("<span class='danger'>[M] is electrocuted by their contact with [H]!</span>")
+			M.visible_message("<span class='danger'>[M] is electrocuted by [M.p_their()] contact with [H]!</span>")
 			M.emote("scream")
 
 /obj/item/twohanded/shockpaddles/proc/do_disarm(mob/living/M, mob/living/user)
@@ -426,7 +471,7 @@
 	else
 		recharge(60)
 
-/obj/item/twohanded/shockpaddles/proc/do_harm(mob/living/carbon/human/H, mob/living/user)
+/obj/item/twohanded/shockpaddles/proc/do_harm(mob/living/carbon/H, mob/living/user)
 	if(req_defib && defib.safety)
 		return
 	if(!req_defib && !combat)
@@ -462,10 +507,10 @@
 			shock_touching(45, H)
 			if(H.can_heartattack() && !H.undergoing_cardiac_arrest())
 				if(!H.stat)
-					H.visible_message("<span class='warning'>[H] thrashes wildly, clutching at their chest!</span>",
+					H.visible_message("<span class='warning'>[H] thrashes wildly, clutching at [H.p_their()] chest!</span>",
 						"<span class='userdanger'>You feel a horrible agony in your chest!</span>")
 				H.set_heartattack(TRUE)
-			H.apply_damage(50, BURN, "chest")
+			H.apply_damage(50, BURN, BODY_ZONE_CHEST)
 			add_logs(user, H, "overloaded the heart of", defib)
 			H.Knockdown(100)
 			H.Jitter(100)
@@ -481,7 +526,7 @@
 	busy = FALSE
 	update_icon()
 
-/obj/item/twohanded/shockpaddles/proc/do_help(mob/living/carbon/human/H, mob/living/user)
+/obj/item/twohanded/shockpaddles/proc/do_help(mob/living/carbon/H, mob/living/user)
 	user.visible_message("<span class='warning'>[user] begins to place [src] on [H]'s chest.</span>", "<span class='warning'>You begin to place [src] on [H]'s chest...</span>")
 	busy = TRUE
 	update_icon()
@@ -514,7 +559,7 @@
 				shock_touching(30, H)
 				var/failed
 
-				if (H.suiciding || (H.has_disability(NOCLONE)))
+				if (H.suiciding || (H.has_trait(TRAIT_NOCLONE)))
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>"
 				else if (H.hellbound)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's soul appears to be on another plane of existence.  Further attempts futile.</span>"
@@ -583,8 +628,6 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
-	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	req_defib = FALSE
 
 /obj/item/twohanded/shockpaddles/cyborg/attack(mob/M, mob/user)
@@ -606,8 +649,6 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
-	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	req_defib = FALSE
 
 #undef HALFWAYCRITDEATH

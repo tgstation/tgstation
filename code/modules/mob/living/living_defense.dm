@@ -61,12 +61,16 @@
 		else
 				return 0
 
+/mob/living/proc/crit_modifier()
+	return HEALTH_THRESHOLD_CRIT
+
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE)
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
-		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geared towards the chest
+		var/zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
 		var/volume = I.get_volume_by_throwforce_and_or_w_class()
+		SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, zone)
 		dtype = I.damtype
 
 		if (I.throwforce > 0) //If the weapon's throwforce is greater than zero...
@@ -132,11 +136,11 @@
 		user.start_pulling(src, supress_message)
 		return
 
-	if(!(status_flags & CANPUSH))
+	if(!(status_flags & CANPUSH) || has_trait(TRAIT_PUSHIMMUNE))
 		to_chat(user, "<span class='warning'>[src] can't be grabbed more aggressively!</span>")
 		return FALSE
 
-	if(user.has_disability(PACIFISM))
+	if(user.has_trait(TRAIT_PACIFISM))
 		to_chat(user, "<span class='notice'>You don't want to risk hurting [src]!</span>")
 		return FALSE
 
@@ -193,7 +197,7 @@
 			M.Feedstop()
 		return // can't attack while eating!
 
-	if(has_disability(PACIFISM))
+	if(has_trait(TRAIT_PACIFISM))
 		to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 		return FALSE
 
@@ -210,7 +214,7 @@
 		M.visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>")
 		return FALSE
 	else
-		if(M.has_disability(PACIFISM))
+		if(M.has_trait(TRAIT_PACIFISM))
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 			return FALSE
 
@@ -229,7 +233,7 @@
 		return FALSE
 
 	if (M.a_intent == INTENT_HARM)
-		if(M.has_disability(PACIFISM))
+		if(M.has_trait(TRAIT_PACIFISM))
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 			return FALSE
 
@@ -255,7 +259,7 @@
 			return FALSE
 
 		else
-			if(L.has_disability(PACIFISM))
+			if(L.has_trait(TRAIT_PACIFISM))
 				to_chat(L, "<span class='notice'>You don't want to hurt anyone!</span>")
 				return
 
@@ -280,7 +284,7 @@
 			grabbedby(M)
 			return FALSE
 		if("harm")
-			if(M.has_disability(PACIFISM))
+			if(M.has_trait(TRAIT_PACIFISM))
 				to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 				return FALSE
 			M.do_attack_animation(src)
@@ -301,7 +305,9 @@
 	return 1
 
 /mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	if(tesla_shock && (flags_2 & TESLA_IGNORE_2))
+	if(tesla_shock && (flags_1 & TESLA_IGNORE_1))
+		return FALSE
+	if(has_trait(TRAIT_SHOCKIMMUNE))
 		return FALSE
 	if(shock_damage > 0)
 		if(!illusion)
@@ -314,10 +320,11 @@
 		return shock_damage
 
 /mob/living/emp_act(severity)
-	var/list/L = src.get_contents()
-	for(var/obj/O in L)
+	. = ..()
+	if(. & EMP_PROTECT_CONTENTS)
+		return
+	for(var/obj/O in contents)
 		O.emp_act(severity)
-	..()
 
 /mob/living/singularity_act()
 	var/gain = 20
@@ -326,7 +333,7 @@
 	return(gain)
 
 /mob/living/narsie_act()
-	if(status_flags & GODMODE)
+	if(status_flags & GODMODE || QDELETED(src))
 		return
 
 	if(is_servant_of_ratvar(src) && !stat)
@@ -370,10 +377,11 @@
 
 //called when the mob receives a bright flash
 /mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
-	if(get_eye_protection() < intensity && (override_blindness_check || !(has_disability(BLIND))))
+	if(get_eye_protection() < intensity && (override_blindness_check || !(has_trait(TRAIT_BLIND))))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
-		return 1
+		return TRUE
+	return FALSE
 
 //called when the mob receives a loud bang
 /mob/living/proc/soundbang_act()
@@ -384,9 +392,7 @@
 	return
 
 
-/mob/living/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
-	if(A != src)
-		end_pixel_y = get_standard_pixel_y_offset(lying)
+/mob/living/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!used_item)
 		used_item = get_active_held_item()
 	..()

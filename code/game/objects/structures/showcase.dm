@@ -18,7 +18,7 @@
 	icon_state = "computer"
 
 /obj/structure/showcase/fakeid/Initialize()
-	..()
+	. = ..()
 	add_overlay("id")
 	add_overlay("id_key")
 
@@ -29,7 +29,7 @@
 	icon_state = "computer"
 
 /obj/structure/showcase/fakesec/Initialize()
-	..()
+	. = ..()
 	add_overlay("security")
 	add_overlay("security_key")
 
@@ -112,18 +112,17 @@
 	if(istype(W, /obj/item/screwdriver) && !anchored)
 		if(deconstruction_state == SHOWCASE_SCREWDRIVERED)
 			to_chat(user, "<span class='notice'>You screw the screws back into the showcase.</span>")
-			playsound(loc, W.usesound, 100, 1)
+			W.play_tool_sound(src, 100)
 			deconstruction_state = SHOWCASE_CONSTRUCTED
 		else if (deconstruction_state == SHOWCASE_CONSTRUCTED)
 			to_chat(user, "<span class='notice'>You unscrew the screws.</span>")
-			playsound(loc, W.usesound, 100, 1)
+			W.play_tool_sound(src, 100)
 			deconstruction_state = SHOWCASE_SCREWDRIVERED
 
 	if(istype(W, /obj/item/crowbar) && deconstruction_state == SHOWCASE_SCREWDRIVERED)
-		if(do_after(user, 20*W.toolspeed, target = src))
-			playsound(loc, W.usesound, 100, 1)
+		if(W.use_tool(src, user, 20, volume=100))
 			to_chat(user, "<span class='notice'>You start to crowbar the showcase apart...</span>")
-			new /obj/item/stack/sheet/metal (get_turf(src), 4)
+			new /obj/item/stack/sheet/metal(drop_location(), 4)
 			qdel(src)
 
 	if(deconstruction_state == SHOWCASE_CONSTRUCTED && default_unfasten_wrench(user, W))

@@ -1,10 +1,4 @@
 /mob/living/silicon/ai/proc/get_camera_list()
-
-	track.cameras.Cut()
-
-	if(src.stat == DEAD)
-		return
-
 	var/list/L = list()
 	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
 		L.Add(C)
@@ -18,28 +12,22 @@
 		if (tempnetwork.len)
 			T[text("[][]", C.c_tag, (C.can_use() ? null : " (Deactivated)"))] = C
 
-	track.cameras = T
 	return T
 
-
-/mob/living/silicon/ai/proc/ai_camera_list(camera)
-	if (!camera)
-		return 0
-
-	var/obj/machinery/camera/C = track.cameras[camera]
-	src.eyeobj.setLoc(C)
-
-	return
+/mob/living/silicon/ai/proc/show_camera_list()
+	var/list/cameras = get_camera_list()
+	var/camera = input(src, "Choose which camera you want to view", "Cameras") as null|anything in cameras
+	switchCamera(cameras[camera])
 
 /datum/trackable
+	var/initialized = FALSE
 	var/list/names = list()
 	var/list/namecounts = list()
 	var/list/humans = list()
 	var/list/others = list()
-	var/list/cameras = list()
 
 /mob/living/silicon/ai/proc/trackable_mobs()
-
+	track.initialized = TRUE
 	track.names.Cut()
 	track.namecounts.Cut()
 	track.humans.Cut()
@@ -75,6 +63,9 @@
 
 	if(!target_name)
 		return
+
+	if(!track.initialized)
+		trackable_mobs()
 
 	var/mob/target = (isnull(track.humans[target_name]) ? track.others[target_name] : track.humans[target_name])
 
@@ -131,25 +122,21 @@
 
 /proc/near_camera(mob/living/M)
 	if (!isturf(M.loc))
-		return 0
+		return FALSE
 	if(issilicon(M))
 		var/mob/living/silicon/S = M
-		if((!QDELETED(S.builtInCamera) || !S.builtInCamera.can_use()) && !GLOB.cameranet.checkCameraVis(M))
-			return 0
+		if((QDELETED(S.builtInCamera) || !S.builtInCamera.can_use()) && !GLOB.cameranet.checkCameraVis(M))
+			return FALSE
 	else if(!GLOB.cameranet.checkCameraVis(M))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
 		return
-	if (!src.can_use())
+	if (!can_use())
 		return
-	user.eyeobj.setLoc(get_turf(src))
-
-
-/mob/living/silicon/ai/attack_ai(mob/user)
-	ai_camera_list()
+	user.switchCamera(src)
 
 /proc/camera_sort(list/L)
 	var/obj/machinery/camera/a
@@ -159,10 +146,6 @@
 		for (var/j = 1 to i - 1)
 			a = L[j]
 			b = L[j + 1]
-			if (a.c_tag_order != b.c_tag_order)
-				if (a.c_tag_order > b.c_tag_order)
-					L.Swap(j, j + 1)
-			else
-				if (sorttext(a.c_tag, b.c_tag) < 0)
-					L.Swap(j, j + 1)
+			if (sorttext(a.c_tag, b.c_tag) < 0)
+				L.Swap(j, j + 1)
 	return L

@@ -4,6 +4,7 @@ SUBSYSTEM_DEF(garbage)
 	wait = 2 SECONDS
 	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND|SS_NO_INIT
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
+	init_order = INIT_ORDER_GARBAGE
 
 	var/list/collection_timeout = list(0, 2 MINUTES, 10 SECONDS)	// deciseconds to wait before moving something up in the queue to the next level
 
@@ -23,6 +24,10 @@ SUBSYSTEM_DEF(garbage)
 
 	//Queue
 	var/list/queues
+
+	#ifdef TESTING
+	var/list/reference_find_on_fail = list()
+	#endif
 
 
 /datum/controller/subsystem/garbage/PreInit()
@@ -151,6 +156,9 @@ SUBSYSTEM_DEF(garbage)
 			++gcedlasttick
 			++totalgcs
 			pass_counts[level]++
+			#ifdef TESTING
+			reference_find_on_fail -= refID		//It's deleted we don't care anymore.
+			#endif
 			if (MC_TICK_CHECK)
 				break
 			continue
@@ -159,8 +167,14 @@ SUBSYSTEM_DEF(garbage)
 		fail_counts[level]++
 		switch (level)
 			if (GC_QUEUE_CHECK)
+				#ifdef TESTING
+				if(reference_find_on_fail[refID])
+					D.find_references()
 				#ifdef GC_FAILURE_HARD_LOOKUP
-				D.find_references()
+				else
+					D.find_references()
+				#endif
+				reference_find_on_fail -= refID
 				#endif
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
@@ -260,6 +274,11 @@ SUBSYSTEM_DEF(garbage)
 /datum/qdel_item/New(mytype)
 	name = "[mytype]"
 
+#ifdef TESTING
+/proc/qdel_and_find_ref_if_fail(datum/D, force = FALSE)
+	SSgarbage.reference_find_on_fail[REF(D)] = TRUE
+	qdel(D, force)
+#endif
 
 // Should be treated as a replacement for the 'del' keyword.
 // Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
@@ -274,11 +293,13 @@ SUBSYSTEM_DEF(garbage)
 
 
 	if(isnull(D.gc_destroyed))
-		D.SendSignal(COMSIG_PARENT_QDELETED)
+		if (SEND_SIGNAL(D, COMSIG_PARENT_PREQDELETED, force)) // Give the components a chance to prevent their parent from being deleted
+			return
 		D.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
 		var/start_time = world.time
 		var/start_tick = world.tick_usage
 		var/hint = D.Destroy(arglist(args.Copy(2))) // Let our friend know they're about to get fucked up.
+		SEND_SIGNAL(D, COMSIG_PARENT_QDELETED, force, hint) // Let the (remaining) components know about the result of Destroy
 		if(world.time != start_time)
 			I.slept_destroy++
 		else
@@ -317,6 +338,11 @@ SUBSYSTEM_DEF(garbage)
 				#ifdef TESTING
 				D.find_references()
 				#endif
+			if (QDEL_HINT_IFFAIL_FINDREFERENCE)
+				SSgarbage.PreQueue(D)
+				#ifdef TESTING
+				SSgarbage.reference_find_on_fail[REF(D)] = TRUE
+				#endif
 			else
 				#ifdef TESTING
 				if(!I.no_hint)
@@ -332,7 +358,6 @@ SUBSYSTEM_DEF(garbage)
 /datum/verb/find_refs()
 	set category = "Debug"
 	set name = "Find References"
-	set background = 1
 	set src in world
 
 	find_references(FALSE)
@@ -385,12 +410,18 @@ SUBSYSTEM_DEF(garbage)
 /datum/verb/qdel_then_find_references()
 	set category = "Debug"
 	set name = "qdel() then Find References"
-	set background = 1
 	set src in world
 
-	qdel(src)
+	qdel(src, TRUE)		//Force.
 	if(!running_find_references)
 		find_references(TRUE)
+
+/datum/verb/qdel_then_if_fail_find_references()
+	set category = "Debug"
+	set name = "qdel() then Find References if GC failure"
+	set src in world
+
+	qdel_and_find_ref_if_fail(src, TRUE)
 
 /datum/proc/DoSearchVar(X, Xname, recursive_limit = 64)
 	if(usr && usr.client && !usr.client.running_find_references)

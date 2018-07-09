@@ -12,7 +12,7 @@ Doesn't work on other aliens/AI.*/
 	var/plasma_cost = 0
 	var/check_turf = FALSE
 	has_action = TRUE
-	datum/action/spell_action/alien/action
+	base_action = /datum/action/spell_action/alien
 	action_icon = 'icons/mob/actions/actions_xeno.dmi'
 	action_icon_state = "spell_default"
 	action_background_icon_state = "bg_alien"
@@ -44,26 +44,26 @@ Doesn't work on other aliens/AI.*/
 	if(plasma_cost > 0)
 		return "[plasma_cost]"
 
-/obj/effect/proc_holder/alien/proc/cost_check(check_turf=0,mob/living/carbon/user,silent = 0)
+/obj/effect/proc_holder/alien/proc/cost_check(check_turf = FALSE, mob/living/carbon/user, silent = FALSE)
 	if(user.stat)
 		if(!silent)
 			to_chat(user, "<span class='noticealien'>You must be conscious to do this.</span>")
-		return 0
+		return FALSE
 	if(user.getPlasma() < plasma_cost)
 		if(!silent)
 			to_chat(user, "<span class='noticealien'>Not enough plasma stored.</span>")
-		return 0
+		return FALSE
 	if(check_turf && (!isturf(user.loc) || isspaceturf(user.loc)))
 		if(!silent)
 			to_chat(user, "<span class='noticealien'>Bad place for a garden!</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/effect/proc_holder/alien/proc/check_vent_block(mob/living/user)
 	var/obj/machinery/atmospherics/components/unary/atmos_thing = locate() in user.loc
 	if(atmos_thing)
 		var/rusure = alert(user, "Laying eggs and shaping resin here would block access to [atmos_thing]. Do you want to continue?", "Blocking Atmospheric Component", "Yes", "No")
-		if(rusure != "No")
+		if(rusure != "Yes")
 			return FALSE
 	return TRUE
 
@@ -71,7 +71,7 @@ Doesn't work on other aliens/AI.*/
 	name = "Plant Weeds"
 	desc = "Plants some alien weeds."
 	plasma_cost = 50
-	check_turf = 1
+	check_turf = TRUE
 	action_icon_state = "alien_plant"
 
 /obj/effect/proc_holder/alien/plant/fire(mob/living/carbon/user)
@@ -97,7 +97,7 @@ Doesn't work on other aliens/AI.*/
 		return 0
 	var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
 	if(msg)
-		log_talk(user,"AlienWhisper: [key_name(user)]->[M.key] : [msg]",LOGSAY)
+		log_talk(user,"AlienWhisper: [key_name(user)]->[key_name(M)] : [msg]",LOGSAY)
 		to_chat(M, "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]")
 		to_chat(user, "<span class='noticealien'>You said: \"[msg]\" to [M]</span>")
 		for(var/ded in GLOB.dead_mob_list)
@@ -159,7 +159,7 @@ Doesn't work on other aliens/AI.*/
 
 			return 0
 	else
-		to_chat(src, "<span class='noticealien'>Target is too far away.</span>")
+		to_chat(src, "<span class='noticealien'>[target] is too far away.</span>")
 		return 0
 
 
@@ -171,7 +171,7 @@ Doesn't work on other aliens/AI.*/
 		return corrode(O,user)
 
 /mob/living/carbon/proc/corrosive_acid(O as obj|turf in oview(1)) // right click menu verb ugh
-	set name = "Corrossive Acid"
+	set name = "Corrosive Acid"
 
 	if(!iscarbon(usr))
 		return
