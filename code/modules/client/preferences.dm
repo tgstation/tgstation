@@ -45,7 +45,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/ghost_hud = 1
 	var/inquisitive_ghost = 1
 	var/allow_midround_antag = 1
-	var/preferred_map = null
 	var/pda_style = MONO
 	var/pda_color = "#808000"
 
@@ -511,24 +510,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<b>Ambient Occlusion:</b> <a href='?_src_=prefs;preference=ambientocclusion'>[ambientocclusion ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Fit Viewport:</b> <a href='?_src_=prefs;preference=auto_fit_viewport'>[auto_fit_viewport ? "Auto" : "Manual"]</a><br>"
-
-			if (CONFIG_GET(flag/maprotation))
-				var/p_map = preferred_map
-				if (!p_map)
-					p_map = "Default"
-					if (config.defaultmap)
-						p_map += " ([config.defaultmap.map_name])"
-				else
-					if (p_map in config.maplist)
-						var/datum/map_config/VM = config.maplist[p_map]
-						if (!VM)
-							p_map += " (No longer exists)"
-						else
-							p_map = VM.map_name
-					else
-						p_map += " (No longer exists)"
-				if(CONFIG_GET(flag/allow_map_voting))
-					dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a><br>"
 
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
@@ -1358,22 +1339,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/department = input(user, "Choose your prefered security department:", "Security Departments") as null|anything in GLOB.security_depts_prefs
 					if(department)
 						prefered_security_department = department
-
-				if ("preferred_map")
-					var/maplist = list()
-					var/default = "Default"
-					if (config.defaultmap)
-						default += " ([config.defaultmap.map_name])"
-					for (var/M in config.maplist)
-						var/datum/map_config/VM = config.maplist[M]
-						var/friendlyname = "[VM.map_name] "
-						if (VM.voteweight <= 0)
-							friendlyname += " (disabled)"
-						maplist[friendlyname] = VM.map_name
-					maplist[default] = null
-					var/pickedmap = input(user, "Choose your preferred map. This will be used to help weight random map selection.", "Character Preference")  as null|anything in maplist
-					if (pickedmap)
-						preferred_map = maplist[pickedmap]
 
 				if ("clientfps")
 					var/desiredfps = input(user, "Choose your desired fps. (0 = synced with server tick rate (currently:[world.fps]))", "Character Preference", clientfps)  as null|num
