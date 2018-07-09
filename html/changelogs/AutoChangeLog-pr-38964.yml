@@ -1,0 +1,4 @@
+author: "subject217"
+delete-after: True
+changes: 
+  - tweak: "The L6 SAW now has a small amount of spread. It is still accurate within visual range, but it's not as effective at longer ranges."
