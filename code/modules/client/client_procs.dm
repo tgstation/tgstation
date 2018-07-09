@@ -210,7 +210,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if(fexists(roundend_report_file()))
 		verbs += /client/proc/show_previous_roundend_report
 
-	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[byond_version]")
+	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[byond_version].[byond_build ? byond_build : "xxx"]")
 	var/alert_mob_dupe_login = FALSE
 	if(CONFIG_GET(flag/log_access))
 		for(var/I in GLOB.clients)
