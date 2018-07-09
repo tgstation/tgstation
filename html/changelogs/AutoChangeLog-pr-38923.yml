@@ -1,0 +1,4 @@
+author: "Nabski"
+delete-after: True
+changes: 
+  - imageadd: "Crabs have a movement state sprite"
