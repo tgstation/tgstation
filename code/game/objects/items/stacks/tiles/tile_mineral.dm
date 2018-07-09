@@ -71,9 +71,9 @@
 	materials = list(MAT_TITANIUM=500)
 
 /obj/item/stack/tile/mineral/plastitanium
-	name = "plas-titanium tile"
-	singular_name = "plas-titanium floor tile"
-	desc = "A tile made of plas-titanium, used for very evil shuttles."
+	name = "plastitanium tile"
+	singular_name = "plastitanium floor tile"
+	desc = "A tile made of plastitanium, used for very evil shuttles."
 	icon_state = "tile_darkshuttle"
 	turf_type = /turf/open/floor/mineral/plastitanium
 	mineralType = "plastitanium"

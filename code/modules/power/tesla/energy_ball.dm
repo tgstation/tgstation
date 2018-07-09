@@ -24,8 +24,8 @@
 	var/energy_to_lower = -20
 
 /obj/singularity/energy_ball/Initialize(mapload, starting_energy = 50, is_miniball = FALSE)
-	. = ..()
 	miniball = is_miniball
+	. = ..()
 	if(!is_miniball)
 		set_light(10, 7, "#EEEEFF")
 
@@ -186,6 +186,9 @@
 										/obj/structure/particle_accelerator/end_cap,
 										/obj/machinery/field/containment,
 										/obj/structure/disposalpipe,
+										/obj/structure/disposaloutlet,
+										/obj/machinery/disposal/deliveryChute,
+										/obj/machinery/camera,
 										/obj/structure/sign,
 										/obj/machinery/gateway,
 										/obj/structure/lattice,

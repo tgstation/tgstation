@@ -88,7 +88,7 @@
 
 /datum/gas_reaction/nobliumsupression
 	priority = INFINITY
-	name = "Hyper-Noblium Reaction Supression"
+	name = "Hyper-Noblium Reaction Suppression"
 	id = "nobstop"
 
 /datum/gas_reaction/nobliumsupression/init_reqs()
@@ -402,13 +402,13 @@
 	var/pressure = air.return_pressure()
 
 	var/old_heat_capacity = air.heat_capacity()
-	var/reaction_efficency = min(1/((pressure/(0.1*ONE_ATMOSPHERE))*(max(cached_gases[/datum/gas/plasma][MOLES]/cached_gases[/datum/gas/tritium][MOLES],1))),cached_gases[/datum/gas/tritium][MOLES],cached_gases[/datum/gas/plasma][MOLES]/2)
+	var/reaction_efficency = min(1/((pressure/(0.1*ONE_ATMOSPHERE))*(max(cached_gases[/datum/gas/plasma][MOLES]/cached_gases[/datum/gas/nitrous_oxide][MOLES],1))),cached_gases[/datum/gas/nitrous_oxide][MOLES],cached_gases[/datum/gas/plasma][MOLES]/2)
 	var/energy_released = 2*reaction_efficency*FIRE_CARBON_ENERGY_RELEASED
-	if ((cached_gases[/datum/gas/tritium][MOLES] - reaction_efficency < 0 )|| (cached_gases[/datum/gas/plasma][MOLES] - (2*reaction_efficency) < 0)) //Shouldn't produce gas from nothing.
+	if ((cached_gases[/datum/gas/nitrous_oxide][MOLES] - reaction_efficency < 0 )|| (cached_gases[/datum/gas/plasma][MOLES] - (2*reaction_efficency) < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	ASSERT_GAS(/datum/gas/bz,air)
 	cached_gases[/datum/gas/bz][MOLES] += reaction_efficency
-	cached_gases[/datum/gas/tritium][MOLES] -= reaction_efficency
+	cached_gases[/datum/gas/nitrous_oxide][MOLES] -= reaction_efficency
 	cached_gases[/datum/gas/plasma][MOLES]  -= 2*reaction_efficency
 
 
@@ -422,6 +422,7 @@
 	priority = 5
 	name = "Stimulum formation"
 	id = "stimformation"
+
 /datum/gas_reaction/stimformation/init_reqs()
 	min_requirements = list(
 		/datum/gas/tritium = 30,
@@ -496,10 +497,4 @@
 #undef STIMULUM_SECOND_RISE
 #undef STIMULUM_ABSOLUTE_DROP
 #undef REACTION_OPPRESSION_THRESHOLD
-#undef PLASMA_BINDING_ENERGY
-#undef MAX_CATALYST_EFFICENCY
-#undef PLASMA_FUSED_COEFFICENT
-#undef CATALYST_COEFFICENT
-#undef FUSION_PURITY_THRESHOLD
-#undef FUSION_HEAT_DROPOFF
 #undef NOBLIUM_FORMATION_ENERGY

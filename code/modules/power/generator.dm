@@ -199,6 +199,7 @@
 	I.play_tool_sound(src)
 	if(!anchored)
 		kill_circs()
+	connect_to_network()
 	to_chat(user, "<span class='notice'>You [anchored?"secure":"unsecure"] [src].</span>")
 	return TRUE
 

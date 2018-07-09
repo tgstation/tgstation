@@ -187,8 +187,7 @@
 	debris += new /obj/item/shard
 
 /obj/structure/table/glass/Destroy()
-	for(var/i in debris)
-		qdel(i)
+	QDEL_LIST(debris)
 	. = ..()
 
 /obj/structure/table/glass/Crossed(atom/movable/AM)

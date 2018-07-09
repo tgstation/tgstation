@@ -45,6 +45,7 @@
 		antag_candidates.Remove(devil)
 
 	if(devils.len < required_enemies)
+		setup_error = "Not enough devil candidates"
 		return 0
 	return 1
 

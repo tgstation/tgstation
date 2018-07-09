@@ -47,17 +47,17 @@
 	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/circuit/killroom
-	name = "killroom Floor"
+	name = "killroom floor"
 	initial_gas_mix = "n2=500;TEMP=80"
 
 /turf/open/floor/circuit/telecomms
 	initial_gas_mix = "n2=100;TEMP=80"
 
 /turf/open/floor/circuit/telecomms/mainframe
-	name = "mainframe Base"
+	name = "mainframe base"
 
 /turf/open/floor/circuit/telecomms/server
-	name = "server Base"
+	name = "server base"
 
 /turf/open/floor/circuit/green
 	icon_state = "gcircuit"
@@ -81,7 +81,7 @@
 	initial_gas_mix = "n2=100;TEMP=80"
 
 /turf/open/floor/circuit/green/telecomms/mainframe
-	name = "mainframe Base"
+	name = "mainframe base"
 
 /turf/open/floor/circuit/red
 	icon_state = "rcircuit"

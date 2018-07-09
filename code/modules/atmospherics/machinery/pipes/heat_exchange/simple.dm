@@ -5,13 +5,13 @@
 	desc = "A one meter section of heat-exchanging pipe."
 
 	dir = SOUTH
-	initialize_directions_he = SOUTH|NORTH
+	initialize_directions = SOUTH|NORTH
 
 	device_type = BINARY
 
 	construction_type = /obj/item/pipe/binary/bendable
 	pipe_state = "he"
-	
+
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
@@ -24,12 +24,12 @@
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/SetInitDirections()
 	if(dir in GLOB.diagonals)
-		initialize_directions_he = dir
+		initialize_directions = dir
 	switch(dir)
 		if(NORTH,SOUTH)
-			initialize_directions_he = SOUTH|NORTH
+			initialize_directions = SOUTH|NORTH
 		if(EAST,WEST)
-			initialize_directions_he = WEST|EAST
+			initialize_directions = WEST|EAST
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/proc/normalize_dir()
 	if(dir==SOUTH)

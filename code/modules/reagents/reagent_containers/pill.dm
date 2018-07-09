@@ -13,6 +13,7 @@
 	var/apply_method = "swallow"
 	var/roundstart = 0
 	var/self_delay = 0 //pills are instant, this is because patches inheret their aplication from pills
+	var/dissolvable = TRUE
 
 /obj/item/reagent_containers/pill/Initialize()
 	. = ..()
@@ -55,22 +56,24 @@
 
 
 /obj/item/reagent_containers/pill/afterattack(obj/target, mob/user , proximity)
+	. = ..()
 	if(!proximity)
 		return
-	if(target.is_refillable())
-		if(target.is_drainable() && !target.reagents.total_volume)
-			to_chat(user, "<span class='warning'>[target] is empty! There's nothing to dissolve [src] in.</span>")
-			return
+	if(!dissolvable || !target.is_refillable())
+		return
+	if(target.is_drainable() && !target.reagents.total_volume)
+		to_chat(user, "<span class='warning'>[target] is empty! There's nothing to dissolve [src] in.</span>")
+		return
 
-		if(target.reagents.holder_full())
-			to_chat(user, "<span class='warning'>[target] is full.</span>")
-			return
+	if(target.reagents.holder_full())
+		to_chat(user, "<span class='warning'>[target] is full.</span>")
+		return
 
-		to_chat(user, "<span class='notice'>You dissolve [src] in [target].</span>")
-		for(var/mob/O in viewers(2, user))	//viewers is necessary here because of the small radius
-			to_chat(O, "<span class='warning'>[user] slips something into [target]!</span>")
-		reagents.trans_to(target, reagents.total_volume)
-		qdel(src)
+	to_chat(user, "<span class='notice'>You dissolve [src] in [target].</span>")
+	for(var/mob/O in viewers(2, user))	//viewers is necessary here because of the small radius
+		to_chat(O, "<span class='warning'>[user] slips something into [target]!</span>")
+	reagents.trans_to(target, reagents.total_volume)
+	qdel(src)
 
 /obj/item/reagent_containers/pill/tox
 	name = "toxins pill"
@@ -151,10 +154,32 @@
 	icon_state = "pill18"
 	list_reagents = list("insulin" = 50)
 	roundstart = 1
-
+///////////////////////////////////////// this pill is used only in a legion mob drop 
 /obj/item/reagent_containers/pill/shadowtoxin
 	name = "black pill"
 	desc = "I wouldn't eat this if I were you."
 	icon_state = "pill9"
 	color = "#454545"
 	list_reagents = list("shadowmutationtoxin" = 1)
+//////////////////////////////////////// drugs
+/obj/item/reagent_containers/pill/zoom
+	name = "zoom pill"
+	list_reagents = list("synaptizine" = 10, "nicotine" = 10, "methamphetamine" = 1)
+
+
+/obj/item/reagent_containers/pill/happy
+	name = "happy pill"
+	list_reagents = list("sugar" = 10, "space_drugs" = 10)
+
+
+/obj/item/reagent_containers/pill/lsd
+	name = "hallucinogen pill"
+	list_reagents = list("mushroomhallucinogen" = 15, "mindbreaker" = 15)
+
+
+/obj/item/reagent_containers/pill/aranesp
+	name = "speedy pill"
+	list_reagents = list("aranesp" = 10)
+
+
+

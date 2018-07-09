@@ -34,6 +34,16 @@
 		if(length(place.baseturfs) < 2) // Some snowflake shuttle shit
 			continue
 		place.baseturfs.Insert(3, /turf/baseturf_skipover/shuttle)
+		
+		for(var/obj/structure/closet/closet in place)
+			if(closet.anchorable)
+				closet.anchored = TRUE
+
+		for(var/obj/structure/table/table in place)
+			table.AddComponent(/datum/component/magnetic_catch)
+
+		for(var/obj/structure/rack/rack in place)
+			rack.AddComponent(/datum/component/magnetic_catch)
 
 //Whatever special stuff you want
 /datum/map_template/shuttle/proc/on_bought()
@@ -156,7 +166,7 @@
 	suffix = "discoinferno"
 	name = "Disco Inferno"
 	description = "The glorious results of centuries of plasma research done by Nanotrasen employees. This is the reason why you are here. Get on and dance like you're on fire, burn baby burn!"
-	admin_notes = "Flaming hot."
+	admin_notes = "Flaming hot. The main area has a dance machine as well as plasma floor tiles that will be ignited by players every single time."
 	credit_cost = 10000
 
 /datum/map_template/shuttle/emergency/arena
@@ -201,7 +211,7 @@
 	Probably best if you don't rifle around in whatever equipment they were transporting. I hope you're friendly with your coworkers, because there is very little space in this thing.\n\
 	\n\
 	Contains contraband armory guns, maintenance loot, and abandoned crates!"
-	admin_notes = "Due to origin as a solo piloted secure vessel, has an active GPS onboard labeled STV5."
+	admin_notes = "Due to origin as a solo piloted secure vessel, has an active GPS onboard labeled STV5. Has roughly as much space as Hi Daniel, except with explosive crates."
 
 /datum/map_template/shuttle/emergency/meta
 	suffix = "meta"
@@ -240,7 +250,9 @@
 	suffix = "cere"
 	name = "Cere Station Emergency Shuttle"
 	description = "The large, beefed-up version of the box-standard shuttle. Includes an expanded brig, fully stocked medbay, enhanced cargo storage with mech chargers, \
-		an engine room stocked with various supplies, and a crew capacity of 80+ to top it all off. Live large, live Cere."
+	an engine room stocked with various supplies, and a crew capacity of 80+ to top it all off. Live large, live Cere."
+	admin_notes = "Seriously big, even larger than the Delta shuttle."
+	credit_cost = 10000
 
 /datum/map_template/shuttle/emergency/supermatter
 	suffix = "supermatter"
@@ -260,6 +272,7 @@
 	name = "Oh, Hi Daniel"
 	description = "How was space work today? Oh, pretty good. We got a new space station and the company will make a lot of money. What space station? I cannot tell you; it's space confidential. \
 	Aw, come space on. Why not? No, I can't. Anyway, how is your space roleplay life?"
+	admin_notes = "Tiny, with a single airlock and wooden walls. What could go wrong?"
 	credit_cost = -5000
 
 /datum/map_template/shuttle/emergency/goon
@@ -350,7 +363,7 @@
 	suffix = "raven"
 	name = "CentCom Raven Battlecruiser"
 	description = "The CentCom Raven Battlecruiser is currently docked at the CentCom ship bay awaiting a mission, this Battlecruiser has been reassigned as an emergency escape shuttle for currently unknown reasons. The CentCom Raven Battlecruiser should comfortably fit a medium to large crew size crew and is complete with all required facitlities including a top of the range CentCom Medical Bay."
-	admin_notes = "The long way home"
+	admin_notes = "Comes with turrets that will target any simplemob."
 	credit_cost = 12500
 
 /datum/map_template/shuttle/arrival/box
