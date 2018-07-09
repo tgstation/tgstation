@@ -1,0 +1,4 @@
+author: "Ausops"
+delete-after: True
+changes: 
+  - imageadd: "New shuttle chair sprites."
