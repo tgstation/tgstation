@@ -79,7 +79,7 @@
 			if(!A.secondsElectrified)
 				A.set_electrified(30)
 				if(usr)
-					LAZYADD(A.shockedby, text("\[[time_stamp()]\][usr](ckey:[usr.ckey])"))
+					LAZYADD(A.shockedby, text("\[[time_stamp()]\][usr](key:[usr.key])"))
 				add_logs(usr, A, "electrified")
 		if(WIRE_SAFETY)
 			A.safe = !A.safe
@@ -134,7 +134,7 @@
 				if(A.secondsElectrified != -1)
 					A.set_electrified(-1)
 					if(usr)
-						LAZYADD(A.shockedby, text("\[[time_stamp()]\][usr](ckey:[usr.ckey])"))
+						LAZYADD(A.shockedby, text("\[[time_stamp()]\][usr](key:[usr.key])"))
 					add_logs(usr, A, "electrified")
 		if(WIRE_SAFETY) // Cut to disable safeties, mend to re-enable.
 			A.safe = mend

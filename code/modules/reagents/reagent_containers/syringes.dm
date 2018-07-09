@@ -142,7 +142,7 @@
 				if(L != user)
 					add_logs(user, L, "injected", src, addition="which had [contained]")
 				else
-					log_attack("<font color='red'>[user.name] ([user.ckey]) injected [L.name] ([L.ckey]) with [src.name], which had [contained] (INTENT: [uppertext(user.a_intent)])</font>")
+					log_attack("<font color='red'>[key_name(user)] injected [key_name(L)] with [src.name], which had [contained] (INTENT: [uppertext(user.a_intent)])</font>")
 					L.log_message("<font color='orange'>Injected themselves ([contained]) with [src.name].</font>", INDIVIDUAL_ATTACK_LOG)
 
 			var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)

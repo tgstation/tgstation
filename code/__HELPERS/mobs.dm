@@ -192,15 +192,15 @@ Proc for attack log creation, because really why not
 
 	var/starget = "NON-EXISTENT SUBJECT"
 	if(target)
-		if(is_mob_target && target.ckey)
-			starget = "[target.name]([target.ckey])"
+		if(is_mob_target && target.key)
+			starget = "[target.name]([target.key])"
 		else
 			starget = "[target.name]"
 
 	var/ssource = "NON-EXISTENT USER" //How!?
 	if(user)
-		if(is_mob_user && user.ckey)
-			ssource = "[user.name]([user.ckey])"
+		if(is_mob_user && user.key)
+			ssource = "[user.name]([user.key])"
 		else
 			ssource = "[user.name]"
 
