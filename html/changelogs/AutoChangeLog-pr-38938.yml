@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - code_imp: "The very back-end of movement got some significant reshuffling in preparation for some future refactors. Bugs are expected."
