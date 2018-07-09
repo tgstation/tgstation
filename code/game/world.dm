@@ -75,7 +75,6 @@ GLOBAL_PROTECT(security_mode)
 
 /world/proc/SetupLogs()
 	var/override_dir = params[OVERRIDE_LOG_DIRECTORY_PARAMETER]
-	var/
 	if(!override_dir)
 		var/realtime = world.realtime
 		var/texttime = time2text(realtime, "YYYY/MM/DD")
