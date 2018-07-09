@@ -120,7 +120,7 @@
 /obj/structure/spider/spiderling/tarantula
 	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/tarantula
 
-/obj/structure/spider/spiderling/Collide(atom/user)
+/obj/structure/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
 		forceMove(user.loc)
 	else
@@ -199,7 +199,7 @@
 			S.directive = directive
 			if(player_spiders)
 				S.playable_spider = TRUE
-				notify_ghosts("Spider [S.name] can be controlled", null, enter_link="<a href=?src=[REF(S)];activate=1>(Click to play)</a>", source=S, action=NOTIFY_ATTACK)
+				notify_ghosts("Spider [S.name] can be controlled", null, enter_link="<a href=?src=[REF(S)];activate=1>(Click to play)</a>", source=S, action=NOTIFY_ATTACK, ignore_key = POLL_IGNORE_SPIDER)
 			qdel(src)
 
 

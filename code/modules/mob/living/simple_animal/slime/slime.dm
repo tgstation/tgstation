@@ -162,7 +162,7 @@
 		config_slime_delay = CONFIG_GET(number/slime_delay)
 	. += config_slime_delay
 
-/mob/living/simple_animal/slime/ObjCollide(obj/O)
+/mob/living/simple_animal/slime/ObjBump(obj/O)
 	if(!client && powerlevel > 0)
 		var/probab = 10
 		switch(powerlevel)

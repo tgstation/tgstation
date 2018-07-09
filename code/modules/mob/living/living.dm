@@ -38,31 +38,31 @@
 /mob/living/proc/OpenCraftingMenu()
 	return
 
-//Generic Collide(). Override MobCollide() and ObjCollide() instead of this.
-/mob/living/Collide(atom/A)
+//Generic Bump(). Override MobBump() and ObjBump() instead of this.
+/mob/living/Bump(atom/A)
 	if(..()) //we are thrown onto something
 		return
 	if (buckled || now_pushing)
 		return
 	if(ismob(A))
 		var/mob/M = A
-		if(MobCollide(M))
+		if(MobBump(M))
 			return
 	if(isobj(A))
 		var/obj/O = A
-		if(ObjCollide(O))
+		if(ObjBump(O))
 			return
 	if(ismovableatom(A))
 		var/atom/movable/AM = A
 		if(PushAM(AM))
 			return
 
-/mob/living/CollidedWith(atom/movable/AM)
+/mob/living/Bumped(atom/movable/AM)
 	..()
 	last_bumped = world.time
 
 //Called when we bump onto a mob
-/mob/living/proc/MobCollide(mob/M)
+/mob/living/proc/MobBump(mob/M)
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	spreadFire(M)
 
@@ -151,7 +151,7 @@
 				return 1
 
 //Called when we bump onto an obj
-/mob/living/proc/ObjCollide(obj/O)
+/mob/living/proc/ObjBump(obj/O)
 	return
 
 //Called when we want to push an atom/movable
@@ -914,7 +914,7 @@
 		ExtinguishMob()
 
 //Share fire evenly between the two mobs
-//Called in MobCollide() and Crossed()
+//Called in MobBump() and Crossed()
 /mob/living/proc/spreadFire(mob/living/L)
 	if(!istype(L))
 		return

@@ -28,7 +28,7 @@
 	addtimer(CALLBACK(src, .proc/move), 1)
 
 
-/obj/effect/accelerated_particle/Collide(atom/A)
+/obj/effect/accelerated_particle/Bump(atom/A)
 	if(A)
 		if(isliving(A))
 			toxmob(A)
