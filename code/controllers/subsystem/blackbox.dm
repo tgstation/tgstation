@@ -11,6 +11,7 @@ SUBSYSTEM_DEF(blackbox)
 	var/sealed = FALSE	//time to stop tracking stats?
 	var/list/versions = list("antagonists" = 3,
 							"admin_secrets_fun_used" = 2,
+							"explosion" = 2,
 							"time_dilation_current" = 3,
 							"science_techweb_unlock" = 2,
 							"round_end_stats" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
