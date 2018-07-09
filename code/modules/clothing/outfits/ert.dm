@@ -198,7 +198,8 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal
 	backpack_contents = list(/obj/item/storage/box/engineer=1,
 		/obj/item/clothing/mask/gas/sechailer=1,
-		/obj/item/gun/energy/e_gun=1)
+		/obj/item/gun/energy/e_gun=1,
+		/obj/item/sharpener/inquisition_commander=1)
 
 /datum/outfit/ert/security/inquisitor
 	name = "Inquisition Security"

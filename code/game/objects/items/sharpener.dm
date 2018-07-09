@@ -56,3 +56,8 @@
 	max = 200
 	prefix = "super-sharpened"
 	requires_sharpness = 0
+
+/obj/item/sharpener/inquisition_commander
+	name = "blessed whetstone"
+	increment = 12
+	max = 30
