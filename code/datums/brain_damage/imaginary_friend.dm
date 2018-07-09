@@ -20,6 +20,10 @@
 		return
 	if(!friend.client && friend_initialized)
 		addtimer(CALLBACK(src, .proc/reroll_friend), 600)
+		
+/datum/brain_trauma/special/imaginary_friend/on_death()
+	..()
+	qdel(src) //friend goes down with the ship
 
 /datum/brain_trauma/special/imaginary_friend/on_lose()
 	..()
@@ -75,6 +79,7 @@
 	name = real_name
 	trauma = _trauma
 	owner = trauma.owner
+	copy_known_languages_from(owner, TRUE)
 	human_image = get_flat_human_icon(null, pick(SSjob.occupations))
 
 /mob/camera/imaginary_friend/proc/Show()
@@ -123,6 +128,9 @@
 			return
 
 	friend_talk(message)
+	
+/mob/camera/imaginary_friend/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
+	to_chat(src, compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode))
 
 /mob/camera/imaginary_friend/proc/friend_talk(message)
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
