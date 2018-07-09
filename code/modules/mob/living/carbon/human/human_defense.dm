@@ -764,9 +764,9 @@
 		if(head)
 			head_clothes = head
 		if(head_clothes)
-			torn_items += head_clothes
+			torn_items |= head_clothes
 		else if(ears)
-			torn_items += ears
+			torn_items |= ears
 
 	//CHEST//
 	if(!def_zone || def_zone == BODY_ZONE_CHEST)
@@ -776,7 +776,7 @@
 		if(wear_suit)
 			chest_clothes = wear_suit
 		if(chest_clothes)
-			torn_items += chest_clothes
+			torn_items |= chest_clothes
 
 	//ARMS & HANDS//
 	if(!def_zone || def_zone == BODY_ZONE_L_ARM || def_zone == BODY_ZONE_R_ARM)
@@ -788,7 +788,7 @@
 		if(wear_suit && ((wear_suit.body_parts_covered & HANDS) || (wear_suit.body_parts_covered & ARMS)))
 			arm_clothes = wear_suit
 		if(arm_clothes)
-			torn_items += arm_clothes
+			torn_items |= arm_clothes
 
 	//LEGS & FEET//
 	if(!def_zone || def_zone == BODY_ZONE_L_LEG || def_zone == BODY_ZONE_R_LEG)
@@ -800,7 +800,7 @@
 		if(wear_suit && ((wear_suit.body_parts_covered & FEET) || (wear_suit.body_parts_covered & LEGS)))
 			leg_clothes = wear_suit
 		if(leg_clothes)
-			torn_items += leg_clothes
+			torn_items |= leg_clothes
 
 	for(var/obj/item/I in torn_items)
 		I.take_damage(damage_amount, damage_type, damage_flag, 0)
