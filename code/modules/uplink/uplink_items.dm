@@ -1136,7 +1136,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 20
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/device_tools/shield
+/datum/uplink_item/device_tools/bananashield
 	name = "Bananium Energy Shield"
 	desc = "A clown's most powerful defensive weapon, this personal shield provides near immunity to ranged energy attacks \
 		by bouncing them back at the ones who fired them. It can also be thrown to bounce off of people, slipping them, \
