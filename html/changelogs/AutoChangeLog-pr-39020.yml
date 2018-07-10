@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Chaplains are once again unable to acquire the inquisition ERT commander's sword, as intended. The sword has been restored to its former glory"
