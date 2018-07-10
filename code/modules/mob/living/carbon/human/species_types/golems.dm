@@ -693,7 +693,7 @@
 	punchstunthreshold = 7
 	punchdamagehigh = 8 // not as heavy as stone
 	prefix = "Cloth"
-	special_names = list("Fiber", "Bale")
+	special_names = null
 
 /datum/species/golem/cloth/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
