@@ -183,7 +183,7 @@
 
 /obj/item/reagent_containers/pill/floorpill
 	name = "floorpill"
-	desc = "A strange pill found in the depts of maintenance"
+	desc = "A strange pill found in the depths of maintenance"
 	icon_state = "pill21"
 	var/static/list/names = list("maintenance pill","floorpill","mystery pill","suspicious pill","strange pill")
 	var/static/list/descs = list("Your feeling is telling you no, but...","Drugs are expensive, you can't afford not to eat any pills that you find."\
