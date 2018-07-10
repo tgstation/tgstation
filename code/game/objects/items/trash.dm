@@ -6,34 +6,47 @@
 	desc = "This is rubbish."
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
+	var/step_sound = null
+
+/obj/item/trash/Crossed(mob/living/L)
+	if(istype(L) && has_gravity(loc))
+		playsound(src, step_sound, L.has_trait(TRAIT_LIGHT_STEP) ? 20 : 50, 1)
+	return ..()
 
 /obj/item/trash/raisins
 	name = "\improper 4no raisins"
 	icon_state= "4no_raisins"
+	step_sound = 'sound/effects/trash_step1.ogg'
 
 /obj/item/trash/candy
 	name = "candy"
 	icon_state= "candy"
+	step_sound = 'sound/effects/trash_step2.ogg'
 
 /obj/item/trash/cheesie
 	name = "cheesie honkers"
 	icon_state = "cheesie_honkers"
+	step_sound = 'sound/effects/trash_step3.ogg'
 
 /obj/item/trash/chips
 	name = "chips"
 	icon_state = "chips"
+	step_sound = 'sound/effects/trash_step1.ogg'
 
 /obj/item/trash/popcorn
 	name = "popcorn"
 	icon_state = "popcorn"
+	step_sound = 'sound/effects/trash_step2.ogg'
 
 /obj/item/trash/sosjerky
 	name = "\improper Scaredy's Private Reserve Beef Jerky"
 	icon_state = "sosjerky"
+	step_sound = 'sound/effects/trash_step3.ogg'
 
 /obj/item/trash/syndi_cakes
 	name = "syndi-cakes"
 	icon_state = "syndi_cakes"
+	step_sound = 'sound/effects/trash_step1.ogg'
 
 /obj/item/trash/waffles
 	name = "waffles tray"
@@ -47,10 +60,12 @@
 /obj/item/trash/pistachios
 	name = "pistachios pack"
 	icon_state = "pistachios_pack"
+	step_sound = 'sound/effects/trash_step2.ogg'
 
 /obj/item/trash/semki
 	name = "semki pack"
 	icon_state = "semki_pack"
+	step_sound = 'sound/effects/trash_step3.ogg'
 
 /obj/item/trash/tray
 	name = "tray"

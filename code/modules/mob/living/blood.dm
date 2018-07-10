@@ -97,8 +97,14 @@
 		if(isturf(src.loc)) //Blood loss still happens in locker, floor stays clean
 			if(amt >= 10)
 				add_splatter_floor(src.loc)
+				playsound(src, 'sound/effects/blood_puddle_splash.ogg', 30, 1)
 			else
 				add_splatter_floor(src.loc, 1)
+				playsound(src, pick('sound/effects/blood_drip1.ogg','sound/effects/blood_drip2.ogg','sound/effects/blood_drip3.ogg'), 40, 1)
+
+				var/obj/effect/decal/cleanable/blood/splatter/B = locate() in src.loc
+				if(B)
+					playsound(src, 'sound/effects/blood_drip_puddle.ogg', 90, 1)
 
 /mob/living/carbon/human/bleed(amt)
 	amt *= physiology.bleed_mod
