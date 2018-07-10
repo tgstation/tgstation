@@ -248,22 +248,18 @@
 	if(isAI(user))
 		user.ai_statuschange()
 
-/obj/machinery/ai_status_display/process()
-	if(stat & NOPOWER)
-		cut_overlays()
-		return
-
-	update()
-
 /obj/machinery/ai_status_display/emp_act(severity)
 	. = ..()
 	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
 	set_picture("ai_bsod")
 
-/obj/machinery/ai_status_display/proc/update()
+/obj/machinery/ai_status_display/power_change()
+	. = ..()
+	update()
 
-	if(mode==0) //Blank
+/obj/machinery/ai_status_display/proc/update()
+	if(mode==0 || stat & NOPOWER) //Blank
 		cut_overlays()
 		return
 

@@ -63,13 +63,13 @@
 
 /obj/item/organ/zombie_infection/proc/zombify()
 	timer_id = null
-
+	
+	if(!converts_living && owner.stat != DEAD)
+		return
+	
 	if(!iszombie(owner))
 		old_species = owner.dna.species.type
 		owner.set_species(/datum/species/zombie/infectious)
-
-	if(!converts_living && owner.stat != DEAD)
-		return
 
 	var/stand_up = (owner.stat == DEAD) || (owner.stat == UNCONSCIOUS)
 

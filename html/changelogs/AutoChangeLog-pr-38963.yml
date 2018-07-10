@@ -1,0 +1,4 @@
+author: "Supermichael777"
+delete-after: True
+changes: 
+  - bugfix: "Changelings are no longer prevented from entering stasis by another form of fake death."
