@@ -76,7 +76,7 @@ SUBSYSTEM_DEF(dbcore)
 	var/address = CONFIG_GET(string/address)
 	var/port = CONFIG_GET(number/port)
 
-	connection = new /datum/BSQL_Connection(BSQL_CONNECTION_TYPE_MARIADB)
+	connection = new /datum/BSQL_Connection(BSQL_CONNECTION_TYPE_MARIADB, CONFIG_GET(number/async_query_timeout), CONFIG_GET(number/blocking_query_timeout))
 	var/error
 	if(QDELETED(connection))
 		connection = null
@@ -294,15 +294,13 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 		return FALSE
 
 	var/start_time
-	var/timeout
+	var/timed_out
 	if(!async)
-		timeout = CONFIG_GET(number/query_debug_log_timeout)
-	if(timeout)
 		start_time = REALTIMEOFDAY
 	Close()
 	query = connection.BeginQuery(sql)
 	if(!async)
-		query.WaitForCompletion()
+		timed_out = !query.WaitForCompletion()
 	else
 		in_progress = TRUE
 		UNTIL(query.IsComplete())
@@ -313,16 +311,15 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	. = !error
 	if(!. && log_error)
 		log_sql("[error] | Query used: [sql]")
-	if(timeout)
-		if((REALTIMEOFDAY - start_time) > timeout)
-			log_query_debug("Query execution started at [start_time]")
-			log_query_debug("Query execution ended at [REALTIMEOFDAY]")
-			log_query_debug("Possible slow query timeout detected.")
-			log_query_debug("Query used: [sql]")
-			slow_query_check()
+	if(!async && timed_out)
+		log_query_debug("Query execution started at [start_time]")
+		log_query_debug("Query execution ended at [REALTIMEOFDAY]")
+		log_query_debug("Slow query timeout detected.")
+		log_query_debug("Query used: [sql]")
+		slow_query_check()
 
 /datum/DBQuery/proc/slow_query_check()
-	message_admins("HEY! A database query may have timed out. Did the server just hang? <a href='?_src_=holder;[HrefToken()];slowquery=yes'>\[YES\]</a>|<a href='?_src_=holder;[HrefToken()];slowquery=no'>\[NO\]</a>")
+	message_admins("HEY! A database query timed out. Did the server just hang? <a href='?_src_=holder;[HrefToken()];slowquery=yes'>\[YES\]</a>|<a href='?_src_=holder;[HrefToken()];slowquery=no'>\[NO\]</a>")
 
 /datum/DBQuery/proc/NextRow(async)
 	Activity("NextRow")
