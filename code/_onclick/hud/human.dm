@@ -273,6 +273,10 @@
 	throw_icon.icon = ui_style
 	throw_icon.screen_loc = ui_drop_throw
 	hotkeybuttons += throw_icon
+	
+	rest_icon = new /obj/screen/rest()
+	rest_icon.icon = ui_style
+	rest_icon.screen_loc = ui_rest
 
 	internals = new /obj/screen/internals()
 	infodisplay += internals
