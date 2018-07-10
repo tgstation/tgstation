@@ -29,29 +29,7 @@ FROM dm_base as build
 
 COPY . .
 
-RUN DreamMaker -max_errors 0 tgstation.dme
-
-WORKDIR /deploy
-
-RUN mkdir -p \
-    .git/logs \
-    _maps \
-    config \
-    icons/minimaps \
-    sound/chatter \
-    sound/voice/complionator \
-    sound/instruments \
-    strings \
-    && cp /tgstation/tgstation.dmb /tgstation/tgstation.rsc ./ \
-    && cp -r /tgstation/.git/logs/* .git/logs/ \
-    && cp -r /tgstation/_maps/* _maps/ \
-    && cp -r /tgstation/config/* config/ \
-    && cp /tgstation/icons/default_title.dmi icons/ \
-    && cp -r /tgstation/icons/minimaps/* icons/minimaps/ \
-    && cp -r /tgstation/sound/chatter/* sound/chatter/ \
-    && cp -r /tgstation/sound/voice/complionator/* sound/voice/complionator/ \
-    && cp -r /tgstation/sound/instruments/* sound/instruments/ \
-    && cp -r /tgstation/strings/* strings/
+RUN DreamMaker -max_errors 0 tgstation.dme && tools/deploy.sh /deploy
 
 FROM dm_base
 
