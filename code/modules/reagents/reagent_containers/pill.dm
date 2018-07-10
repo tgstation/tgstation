@@ -186,10 +186,11 @@
 /obj/item/reagent_containers/pill/floorpill
 	name = "floorpill"
 	desc = "Your feeling is telling you no, but..."
-	var/list/names = list("floorpill","suspicious pill","mysterious pill","maintenance pill")
+	dissolvable = FALSE
 
 /obj/item/reagent_containers/pill/floorpill/Initialize()
 	list_reagents = list(get_random_reagent_id() = rand(20,50))
-	name = pick(names)
-	. = ..()
+	..()
 
+/obj/item/reagent_containers/pill/floorpill/on_grind()
+	return -1
