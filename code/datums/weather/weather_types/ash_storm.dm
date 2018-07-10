@@ -76,7 +76,7 @@
 
 /datum/weather/ash_storm/proc/is_ash_immune(atom/L)
 	while (L && !isturf(L))
-		if(ismecha(L)) //Mechs are immune
+		if(ismecha(L) || istype(L, /mob/living/brain)) //Mechs and brains are immune
 			return TRUE
 		if(ishuman(L)) //Are you immune?
 			var/mob/living/carbon/human/H = L
