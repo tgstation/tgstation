@@ -5,6 +5,6 @@ cache:
 build_script:
   - ps: tools/appveyor/build.ps1
   - tools/deploy.sh deploy
-  - ps: [System.IO.Compression.ZipFile]::CreateFromDirectory("deploy", "deploy.zip") 
+  - ps: [System.IO.Compression.ZipFile]::CreateFromDirectory('deploy', 'deploy.zip') 
 artifacts:
   - path: deploy.zip
