@@ -351,7 +351,7 @@
 	if(isliving(usr))
 		var/mob/living/L = usr
 		L.resist()
-		
+
 /obj/screen/rest
 	name = "rest"
 	icon = 'icons/mob/screen_midnight.dmi'
@@ -369,10 +369,10 @@
 		return
 	var/mob/living/L = mymob
 	if(!L.resting)
-		icon_state = "rest"
+		icon_state = "act_rest"
 	else
-		icon_state = "rest0"		
-		
+		icon_state = "act_rest0"
+
 /obj/screen/storage
 	name = "storage"
 	icon_state = "block"

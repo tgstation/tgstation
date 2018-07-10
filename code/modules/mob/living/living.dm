@@ -341,11 +341,13 @@
 	if(!resting)
 		resting = TRUE
 		to_chat(src, "<span class='notice'>You are now resting.</span>")
+		update_rest_hud_icon()
 		update_canmove()
 	else
-		if(do_after(src, 15, target = src))
+		if(do_after(src, 10, target = src))
 			to_chat(src, "<span class='notice'>You get up.</span>")
 			resting = FALSE
+			update_rest_hud_icon()
 			update_canmove()
 		else
 			to_chat(src, "<span class='notice'>You fail to get up.</span>")

@@ -351,7 +351,7 @@
 	if(hud_used)
 		if(hud_used.pull_icon)
 			hud_used.pull_icon.update_icon(src)
-			
+
 /mob/proc/update_rest_hud_icon()
 	if(hud_used)
 		if(hud_used.rest_icon)
