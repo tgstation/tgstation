@@ -5,7 +5,7 @@ cache:
   - C:\byond\ -> tools/appveyor/build.ps1
 build_script:
   - ps: tools/appveyor/build.ps1
-  - ps: "sh tools/deploy.sh $env:APPVEYOR_BUILD_FOLDER + '/deploy'" 
+  - ps: "$deployPath = $env:APPVEYOR_BUILD_FOLDER + '/deploy'; sh tools/deploy.sh $deployPath" 
   - ps: "[System.IO.Compression.ZipFile]::CreateFromDirectory($env:APPVEYOR_BUILD_FOLDER + '/deploy', $env:APPVEYOR_BUILD_FOLDER + '/deploy.zip')"
 artifacts:
   - path: deploy.zip
