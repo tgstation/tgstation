@@ -3,8 +3,10 @@
 GLOBAL_VAR(security_mode)
 GLOBAL_VAR(restart_counter)
 GLOBAL_PROTECT(security_mode)
+//WIP Character breaking filter
 //var/list/ockick = world.file2list('strings/ockick.txt')
 var/list/donators = world.file2list("config/donators.txt")
+var/list/hubmsgs = world.file2list("strings/hub.txt")
 var/list/diamonddonators = world.file2list("config/diamonddonators.txt")
 
 //This happens after the Master subsystem new(s) (it's a global datum)
@@ -272,6 +274,7 @@ var/list/diamonddonators = world.file2list("config/diamonddonators.txt")
 		features += "hosted by <b>[hostedby]</b>"
 
 	if (features)
+		features += "\n"+pick(hubmsgs)
 		s += ": [jointext(features, ", ")]"
 
 	status = s
