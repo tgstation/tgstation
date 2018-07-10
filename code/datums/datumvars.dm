@@ -998,6 +998,27 @@
 			manipulate_organs(C)
 			href_list["datumrefresh"] = href_list["editorgans"]
 
+		else if(href_list["givemartialart"])
+			if(!check_rights(NONE))
+				return
+
+			var/mob/living/carbon/C = locate(href_list["givemartialart"]) in GLOB.mob_list
+			if(!istype(C))
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
+				return
+
+			var/list/arts = subtypesof(/datum/martial_art)
+			var/result = input(usr, "Choose the martial art to teach","JUDO CHOP") as null|anything in arts
+			if(!usr)
+				return
+			if(QDELETED(C))
+				to_chat(usr, "Mob doesn't exist anymore")
+				return
+
+			if(result)
+				var/datum/martial_art/M = new result
+				M.teach(C)
+
 		else if(href_list["givetrauma"])
 			if(!check_rights(NONE))
 				return
