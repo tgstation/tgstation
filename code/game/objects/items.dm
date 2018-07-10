@@ -290,13 +290,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(throwing)
 		throwing.finalize(FALSE)
 	if(loc == user)
-		if(!allow_attack_hand_drop(user) || !user.dropItemToGround(src))
+		if(!allow_attack_hand_drop(user) || !user.temporarilyRemoveItemFromInventory(src))
 			return
 
 	pickup(user)
 	add_fingerprint(user)
 	if(!user.put_in_active_hand(src))
-		dropped(user)
+		user.dropItemToGround(src)
 
 /obj/item/proc/allow_attack_hand_drop(mob/user)
 	return TRUE
@@ -312,13 +312,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(throwing)
 		throwing.finalize(FALSE)
 	if(loc == user)
-		if(!user.dropItemToGround(src))
+		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 
 	pickup(user)
 	add_fingerprint(user)
 	if(!user.put_in_active_hand(src))
-		dropped(user)
+		user.dropItemToGround(src)
 
 /obj/item/attack_alien(mob/user)
 	var/mob/living/carbon/alien/A = user

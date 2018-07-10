@@ -30,8 +30,8 @@
 			set_opacity(0) //if we were blocking view, we aren't now because we're fading out
 		stoplag()
 
-/obj/effect/particle_effect/smoke/New()
-	..()
+/obj/effect/particle_effect/smoke/Initialize()
+	. = ..()
 	create_reagents(500)
 	START_PROCESSING(SSobj, src)
 

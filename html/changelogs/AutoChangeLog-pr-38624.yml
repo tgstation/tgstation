@@ -1,4 +1,0 @@
-author: "CitrusGender"
-delete-after: True
-changes: 
-  - bugfix: "added a clamp so you can't set a negative multiplier to create materials and create more than 50 items."

@@ -49,7 +49,11 @@ SUBSYSTEM_DEF(mapping)
 	if(initialized)
 		return
 	if(config.defaulted)
-		to_chat(world, "<span class='boldannounce'>Unable to load next map config, defaulting to Box Station</span>")
+		var/old_config = config
+		config = global.config.defaultmap
+		if(!config || config.defaulted)
+			to_chat(world, "<span class='boldannounce'>Unable to load next or default map config, defaulting to Box Station</span>")
+			config = old_config
 	loader = new
 	loadWorld()
 	repopulate_sorted_areas()
@@ -90,7 +94,6 @@ SUBSYSTEM_DEF(mapping)
 	// Set up Z-level transitions.
 	setup_map_transitions()
 	generate_station_area_list()
-	QDEL_NULL(loader)
 	initialize_reserved_level()
 	..()
 

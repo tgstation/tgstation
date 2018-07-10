@@ -100,7 +100,7 @@
 	light_color = LIGHT_COLOR_PURPLE
 	attacktext = "slashes"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
-	deathmessage = "collapses into a pile of bones, their suit dissovling among the plasma!"
+	deathmessage = "collapses into a pile of bones, their suit dissolving among the plasma!"
 	loot = list(/obj/effect/decal/remains/plasma)
 
 /mob/living/simple_animal/hostile/skeleton/plasmaminer/jackhammer

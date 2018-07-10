@@ -6,7 +6,7 @@
 	anchored = TRUE
 	var/popped = FALSE
 
-/obj/effect/fun_balloon/New()
+/obj/effect/fun_balloon/Initialize()
 	. = ..()
 	SSobj.processing |= src
 
@@ -127,7 +127,7 @@
 	for(var/obj/effect/landmark/shuttle_arena_safe/exit in GLOB.landmarks_list)
 		warp_points += exit
 
-/obj/effect/forcefield/arena_shuttle/CollidedWith(atom/movable/AM)
+/obj/effect/forcefield/arena_shuttle/Bumped(atom/movable/AM)
 	if(!isliving(AM))
 		return
 
@@ -158,7 +158,7 @@
 	timeleft = 0
 	var/list/warp_points = list()
 
-/obj/effect/forcefield/arena_shuttle_entrance/CollidedWith(atom/movable/AM)
+/obj/effect/forcefield/arena_shuttle_entrance/Bumped(atom/movable/AM)
 	if(!isliving(AM))
 		return
 

@@ -196,7 +196,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/dangerous/smg
 	name = "C-20r Submachine Gun"
 	desc = "A fully-loaded Scarborough Arms bullpup submachine gun. The C-20r fires .45 rounds with a \
-			20-round magazine and is compatible with suppressors."
+			24-round magazine and is compatible with suppressors."
 	item = /obj/item/gun/ballistic/automatic/c20r
 	cost = 10
 	surplus = 40
@@ -496,7 +496,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/ammo/smg
 	name = ".45 SMG Magazine"
-	desc = "An additional 20-round .45 magazine suitable for use with the C-20r submachine gun. \
+	desc = "An additional 24-round .45 magazine suitable for use with the C-20r submachine gun. \
 			These bullets pack a lot of punch that can knock most targets down, but do limited overall damage."
 	item = /obj/item/ammo_box/magazine/smgm45
 	cost = 3
@@ -790,7 +790,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Combat Banana Shoes"
 	desc = "While making the wearer immune to most slipping attacks like regular combat clown shoes, these shoes \
 		can generate a large number of synthetic banana peels as the wearer walks, slipping up would-be pursuers. They also \
-		squeek significantly louder."
+		squeak significantly louder."
 	item = /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat
 	cost = 6
 	surplus = 0
@@ -1002,8 +1002,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/device_tools/ai_detector
 	name = "Artificial Intelligence Detector"
-	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it or its \
-			holder. Knowing when an artificial intelligence is watching you is useful for knowing when to maintain cover."
+	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it, and can be \
+			activated to display their exact viewing location and nearby security camera blind spots. Knowing when \
+			an artificial intelligence is watching you is useful for knowing when to maintain cover, and finding nearby \
+			blind spots can help you identify escape routes."
 	item = /obj/item/multitool/ai_detect
 	cost = 1
 
@@ -1134,7 +1136,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 20
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/device_tools/shield
+/datum/uplink_item/device_tools/bananashield
 	name = "Bananium Energy Shield"
 	desc = "A clown's most powerful defensive weapon, this personal shield provides near immunity to ranged energy attacks \
 		by bouncing them back at the ones who fired them. It can also be thrown to bounce off of people, slipping them, \
@@ -1269,7 +1271,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 8
 
 /datum/uplink_item/cyber_implants/xray
-	name = "X-Ray Vision Implant"
+	name = "X-ray Vision Implant"
 	desc = "These cybernetic eyes will give you X-ray vision. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/xray_eyes
 	cost = 10
@@ -1411,6 +1413,16 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 5 //you need two for full damage, so total of 10 for maximum damage
 	limited_stock = 2 //you can't use more than two!
 	restricted_roles = list("Shaft Miner")
+
+/datum/uplink_item/role_restricted/blastcannon
+	name = "Blast Cannon"
+	desc = "A highly specialized weapon, the Blast Cannon is actually relatively simple. It contains an attachment for a tank transfer valve mounted to an angled pipe specially constructed \
+			withstand extreme pressure and temperatures, and has a mechanical trigger for triggering the transfer valve. Essentially, it turns the explosive force of a bomb into a narrow-angle \
+			blast wave \"projectile\". Aspiring scientists may find this highly useful, as forcing the pressure shockwave into a narrow angle seems to be able to bypass whatever quirk of physics \
+			disallows explosive ranges above a certain distance, allowing for the device to use the theoretical yield of a transfer valve bomb, instead of the factual yield."
+	item = /obj/item/gun/blastcannon
+	cost = 14							//High cost because of the potential for extreme damage in the hands of a skilled scientist.
+	restricted_roles = list("Research Director", "Scientist")
 
 /datum/uplink_item/device_tools/clown_bomb
 	name = "Clown Bomb"

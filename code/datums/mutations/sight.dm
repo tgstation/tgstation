@@ -32,7 +32,7 @@
 	owner.cure_blind(GENETIC_MUTATION)
 
 
-//X-Ray Vision lets you see through walls.
+//X-ray Vision lets you see through walls.
 /datum/mutation/human/x_ray
 	name = "X Ray Vision"
 	quality = POSITIVE

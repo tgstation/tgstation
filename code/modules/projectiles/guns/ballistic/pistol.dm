@@ -27,7 +27,7 @@
 	can_suppress = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/deagle
-	name = "desert eagle"
+	name = "\improper Desert Eagle"
 	desc = "A robust .50 AE handgun."
 	icon_state = "deagle"
 	force = 14
@@ -44,7 +44,7 @@
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/gold
-	desc = "A gold plated desert eagle folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
+	desc = "A gold plated Desert Eagle folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
 	icon_state = "deagleg"
 	item_state = "deagleg"
 
@@ -55,7 +55,7 @@
 
 /obj/item/gun/ballistic/automatic/pistol/APS
 	name = "stechkin APS pistol"
-	desc = "The original russian version of a widely used Syndicate sidearm. Uses 9mm ammo."
+	desc = "The original Russian version of a widely used Syndicate sidearm. Uses 9mm ammo."
 	icon_state = "aps"
 	w_class = WEIGHT_CLASS_SMALL
 	mag_type = /obj/item/ammo_box/magazine/pistolm9mm

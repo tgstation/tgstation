@@ -1,6 +1,10 @@
-FROM i386/ubuntu:xenial as build
+FROM tgstation/byond:512.1427 as base
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+FROM base as rustg
+
+WORKDIR /rust_g
+
+RUN apt-get update && apt-get install -y \
     git \
     ca-certificates \
     libc6-dev
@@ -25,7 +29,7 @@ RUN git fetch --depth 1 origin $RUST_G_VERSION \
     && git checkout FETCH_HEAD \
     && cargo build --release
 
-FROM build as bsql
+FROM base as bsql
 
 WORKDIR /bsql
 
@@ -57,31 +61,55 @@ RUN ln -s /usr/include/mariadb /usr/include/mysql \
     && cmake .. \
     && make
 
-FROM tgstation/byond:512.1427
-
-EXPOSE 1337
+FROM base as dm_base
 
 WORKDIR /tgstation
 
-#becuase we built BSQL using the test toolchain we need it here as well
-RUN apt-get install -y --no-install-recommends software-properties-common \
-    && add-apt-repository ppa:ubuntu-toolchain-r/test \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends libstdc++6:i386 \
-    && apt-get purge -y software-properties-common \
-    && apt-get autoremove -y \
-    && rm -rf /var/lib/apt/lists/*
+FROM dm_base as build
 
 COPY . .
 
-RUN mkdir data && mkdir -p /root/.byond/bin && DreamMaker -max_errors 0 tgstation.dme
+RUN DreamMaker -max_errors 0 tgstation.dme
 
-VOLUME [ "/tgstation/config", "/tgstation/data" ]
+WORKDIR /deploy
 
-COPY --from=rust_g /rust_g/target/release/librust_g.so /root/.byond/bin/rust_g
-COPY --from=bsql /bsql/artifacts/src/BSQL/libBSQL.so /tgstation/
+RUN mkdir -p \
+    .git/logs \
+    _maps \
+    config \
+    icons/minimaps \
+    sound/chatter \
+    sound/voice/complionator \
+    sound/instruments \
+    strings \
+    && cp /tgstation/tgstation.dmb /tgstation/tgstation.rsc ./ \
+    && cp -r /tgstation/.git/logs/* .git/logs/ \
+    && cp -r /tgstation/_maps/* _maps/ \
+    && cp -r /tgstation/config/* config/ \
+    && cp /tgstation/icons/default_title.dmi icons/ \
+    && cp -r /tgstation/icons/minimaps/* icons/minimaps/ \
+    && cp -r /tgstation/sound/chatter/* sound/chatter/ \
+    && cp -r /tgstation/sound/voice/complionator/* sound/voice/complionator/ \
+    && cp -r /tgstation/sound/instruments/* sound/instruments/ \
+    && cp -r /tgstation/strings/* strings/
+
+FROM dm_base
+
+EXPOSE 1337
+
+RUN apt-get update && apt-get install -y \
+    mariadb-client \
+    libssl1.0.0 \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /root/.byond/bin
+
+COPY --from=rustg /rust_g/target/release/librust_g.so /root/.byond/bin/rust_g
+COPY --from=bsql /bsql/artifacts/src/BSQL/libBSQL.so ./
+COPY --from=build /deploy ./
 
 #bsql fexists memes
 RUN ln -s /tgstation/libBSQL.so /root/.byond/bin/libBSQL.so
+
+VOLUME [ "/tgstation/config", "/tgstation/data" ]
 
 ENTRYPOINT [ "DreamDaemon", "tgstation.dmb", "-port", "1337", "-trusted", "-close", "-verbose" ]

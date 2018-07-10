@@ -16,6 +16,7 @@ Regenerative extracts:
 
 
 /obj/item/slimecross/regenerative/afterattack(atom/target,mob/user,prox)
+	. = ..()
 	if(!prox || !isliving(target))
 		return
 	var/mob/living/H = target

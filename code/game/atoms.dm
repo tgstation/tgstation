@@ -191,10 +191,8 @@
 /atom/proc/check_eye(mob/user)
 	return
 
-
-/atom/proc/CollidedWith(atom/movable/AM)
+/atom/proc/Bumped(atom/movable/AM)
 	set waitfor = FALSE
-	return
 
 // Convenience procs to see if a container is open for chemistry handling
 /atom/proc/is_open_container()
@@ -531,6 +529,11 @@
 
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
+
+/atom/Exit(atom/movable/AM, atom/newLoc)
+	. = ..()
+	if(SEND_SIGNAL(src, COMSIG_ATOM_EXIT, AM, newLoc) & COMPONENT_ATOM_BLOCK_EXIT)
+		return FALSE
 
 /atom/Exited(atom/movable/AM, atom/newLoc)
 	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, AM, newLoc)

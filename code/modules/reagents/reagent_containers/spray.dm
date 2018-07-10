@@ -24,6 +24,7 @@
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 
 /obj/item/reagent_containers/spray/afterattack(atom/A, mob/user)
+	. = ..()
 	if(istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart) || istype(A, /obj/machinery/hydroponics))
 		return
 
@@ -195,7 +196,7 @@
 /obj/item/reagent_containers/spray/pepper/afterattack(atom/A as mob|obj, mob/user)
 	if (A.loc == user)
 		return
-	..()
+	. = ..()
 
 //water flower
 /obj/item/reagent_containers/spray/waterflower
@@ -273,7 +274,7 @@
 	// Make it so the bioterror spray doesn't spray yourself when you click your inventory items
 	if (A.loc == user)
 		return
-	..()
+	. = ..()
 
 /obj/item/reagent_containers/spray/chemsprayer/spray(atom/A)
 	var/direction = get_dir(src, A)

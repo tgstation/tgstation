@@ -90,7 +90,16 @@
 	/obj/item/clothing/head/wizard,
 	/obj/item/clothing/head/nursehat,
 	/obj/item/clothing/head/sombrero,
-	/obj/item/clothing/head/helmet/chaplain/witchunter_hat)
+	/obj/item/clothing/head/helmet/chaplain/witchunter_hat,
+	/obj/item/clothing/head/soft/, //All baseball caps
+	/obj/item/clothing/head/that, //top hat
+	/obj/item/clothing/head/collectable/tophat, //Not sure where this one is found, but it looks the same so might as well include
+	/obj/item/clothing/mask/bandana/, //All bandanas (which only work in hat mode)
+	/obj/item/clothing/head/fedora,
+	/obj/item/clothing/head/beanie/, //All beanies
+	/obj/item/clothing/ears/headphones,
+	/obj/item/clothing/head/helmet/skull,
+	/obj/item/clothing/head/crown/fancy)
 
 	can_buckle = TRUE
 	buckle_lying = FALSE
@@ -162,8 +171,8 @@
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
+	var/atom/T = drop_location()//To hopefully prevent run time errors.
 	if(mmi && mind)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
-		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)
 			mmi.forceMove(T)
 		if(mmi.brainmob)
@@ -182,6 +191,10 @@
 		connected_ai.connected_robots -= src
 	if(shell)
 		GLOB.available_ai_shells -= src
+	else
+		if(T && istype(radio) && istype(radio.keyslot))
+			radio.keyslot.forceMove(T)
+			radio.keyslot = null
 	qdel(wires)
 	qdel(module)
 	qdel(eye_lights)
@@ -221,14 +234,17 @@
 	module.transform_to(modulelist[input_module])
 
 
-/mob/living/silicon/robot/proc/updatename()
+/mob/living/silicon/robot/proc/updatename(client/C)
 	if(shell)
 		return
+	if(!C)
+		C = client
 	var/changed_name = ""
 	if(custom_name)
 		changed_name = custom_name
-	if(changed_name == "" && client)
-		changed_name = client.prefs.custom_names["cyborg"]
+	if(changed_name == "" && C && C.prefs.custom_names["cyborg"] != DEFAULT_CYBORG_NAME)
+		if(apply_pref_name("cyborg", C))
+			return //built in camera handled in proc
 	if(!changed_name)
 		changed_name = get_standard_name()
 

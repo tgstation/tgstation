@@ -34,6 +34,7 @@
 	var/one_use = TRUE
 
 /obj/item/upgradescroll/afterattack(obj/item/target, mob/user , proximity)
+	. = ..()
 	if(!proximity || !istype(target))
 		return
 
@@ -77,7 +78,7 @@
 	attached = null
 
 /datum/rpg_loot/proc/randomise()
-	var/static/list/prefixespositive = list("greater", "major", "blessed", "superior", "enpowered", "honed", "true", "glorious", "robust")
+	var/static/list/prefixespositive = list("greater", "major", "blessed", "superior", "empowered", "honed", "true", "glorious", "robust")
 	var/static/list/prefixesnegative = list("lesser", "minor", "blighted", "inferior", "enfeebled", "rusted", "unsteady", "tragic", "gimped")
 	var/static/list/suffixes = list("orc slaying", "elf slaying", "corgi slaying", "strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma", "the forest", "the hills", "the plains", "the sea", "the sun", "the moon", "the void", "the world", "the fool", "many secrets", "many tales", "many colors", "rending", "sundering", "the night", "the day")
 

@@ -49,6 +49,7 @@ matrix:
             - libmariadbclient-dev:i386
       cache:
         directories:
+          - $HOME/.cargo
           - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
           - $HOME/MariaDB
           - $HOME/.rustup

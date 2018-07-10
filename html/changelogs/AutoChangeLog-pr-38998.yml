@@ -1,0 +1,5 @@
+author: "Wjohnston & ninjanomnom"
+delete-after: True
+changes: 
+  - imageadd: "Engine heaters and engines have had a minor touch up so they don't meld with the floor quite so much."
+  - tweak: "Engine heaters don't block air anymore."

@@ -1,7 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - tweak: "One canister is now suitable to fully stock a vending machine. Relevant cargo packs have been updated."
-  - bugfix: "Deconstructing and reconstructing a vending machine no longer creates items from thin air."
-  - bugfix: "Using a part replacer on a vending machine no longer empties its inventory."
-  - rscadd: "Bluespace RPEDs can now be used to refill vending machines."
