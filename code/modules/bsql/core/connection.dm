@@ -4,12 +4,17 @@
 
 BSQL_PROTECT_DATUM(/datum/BSQL_Connection)
 
-/datum/BSQL_Connection/New(connection_type)
+/datum/BSQL_Connection/New(connection_type, asyncTimeout, blockingTimeout)
+	if(asyncTimeout == null)
+		asyncTimeout = BSQL_DEFAULT_TIMEOUT
+	if(blockingTimeout == null)
+		blockingTimeout = asyncTimeout
+
 	src.connection_type = connection_type
 
 	world._BSQL_InitCheck(src)
 
-	var/error = world._BSQL_Internal_Call("CreateConnection", connection_type)
+	var/error = world._BSQL_Internal_Call("CreateConnection", connection_type, "[asyncTimeout]", "[blockingTimeout]")
 	if(error)
 		BSQL_ERROR(error)
 		return
