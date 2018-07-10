@@ -1797,12 +1797,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of [name]"
 	glass_desc = description
 	for(var/taste in tastes)
-		if(tastes[taste] < minimum_percent)
-			continue
-		if(tastes[taste] >= minimum_percent*2)
-			primary_tastes += taste
-		else if(tastes[taste] >= minimum_percent)
-			secondary_tastes += taste
+		switch(tastes[taste])
+			if(-INFINITY to minimum_percent)
+				continue
+			if(minimum_percent*2 to INFINITY)
+				primary_tastes += taste
+			if(minimum_percent to minimum_percent*2)
+				secondary_tastes += taste
 
 	var/minimum_name_percent = 0.35
 	name = ""
@@ -1817,17 +1818,22 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	else
 		name = "mixed [names_in_order[1]] wine"
 
-	var/alcohol_description = "sweet"
-	if(boozepwr > 120)
-		alcohol_description = "suicidally strong"
-	else if(boozepwr > 90)
-		alcohol_description = "rather strong"
-	else if(boozepwr > 70)
-		alcohol_description = "strong"
-	else if(boozepwr > 40)
-		alcohol_description = "rich"
-	else if(boozepwr > 20)
-		alcohol_description = "mild"
+	var/alcohol_description
+	switch(boozepwr)
+		if(120 to INFINITY)
+			alcohol_description = "suicidally strong"
+		if(90 to 120)
+			alcohol_description = "rather strong"
+		if(70 to 90)
+			alcohol_description = "strong"
+		if(40 to 70)
+			alcohol_description = "rich"
+		if(20 to 40)
+			alcohol_description = "mild"
+		if(0 to 20)
+			alcohol_description = "sweet"
+		else
+			alcohol_description = "watery" //How the hell did you get negative boozepwr?
 
 	var/list/fruits = list()
 	if(names_in_order.len <= 3)
