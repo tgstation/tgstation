@@ -53232,6 +53232,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
+/obj/machinery/nuclearbomb/beer,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "uLF" = (
