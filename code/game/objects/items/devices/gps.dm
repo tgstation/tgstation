@@ -9,7 +9,6 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	obj_flags = UNIQUE_RENAME
 	var/gpstag = "COM0"
 	var/emped = FALSE
-	var/turf/locked_location
 	var/tracking = TRUE
 	var/updating = TRUE //Automatic updating of GPS list. Can be set to manual by user.
 	var/global_mode = TRUE //If disabled, only GPS signals of the same Z level are shown

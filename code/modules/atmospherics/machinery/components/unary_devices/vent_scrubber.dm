@@ -301,6 +301,11 @@
 	if(. && on && is_operational())
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
+		
+/obj/machinery/atmospherics/components/unary/vent_scrubber/examine(mob/user)
+	..()
+	if(welded)
+		to_chat(user, "It seems welded shut.")
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_crawl_through()
 	return !welded

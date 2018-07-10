@@ -56,7 +56,7 @@
 	name = "combustion chamber vent"
 	id = INCINERATOR_SYNDICATELAVA_AUXVENT
 
-/obj/machinery/door/poddoor/CollidedWith(atom/movable/AM)
+/obj/machinery/door/poddoor/Bumped(atom/movable/AM)
 	if(density)
 		return 0
 	else

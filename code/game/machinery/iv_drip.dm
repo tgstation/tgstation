@@ -167,7 +167,7 @@
 	else
 		toggle_mode()
 
-/obj/machinery/iv_drip/verb/eject_beaker(mob/user)
+/obj/machinery/iv_drip/verb/eject_beaker()
 	set category = "Object"
 	set name = "Remove IV Container"
 	set src in view(1)

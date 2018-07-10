@@ -26,19 +26,19 @@ GLOBAL_LIST_EMPTY(uplinks)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
-	RegisterSignal(COMSIG_ITEM_ATTACK_SELF, .proc/interact)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/interact)
 	if(istype(parent, /obj/item/implant))
-		RegisterSignal(COMSIG_IMPLANT_ACTIVATED, .proc/implant_activation)
-		RegisterSignal(COMSIG_IMPLANT_IMPLANTING, .proc/implanting)
-		RegisterSignal(COMSIG_IMPLANT_OTHER, .proc/old_implant)
-		RegisterSignal(COMSIG_IMPLANT_EXISTING_UPLINK, .proc/new_implant)
+		RegisterSignal(parent, COMSIG_IMPLANT_ACTIVATED, .proc/implant_activation)
+		RegisterSignal(parent, COMSIG_IMPLANT_IMPLANTING, .proc/implanting)
+		RegisterSignal(parent, COMSIG_IMPLANT_OTHER, .proc/old_implant)
+		RegisterSignal(parent, COMSIG_IMPLANT_EXISTING_UPLINK, .proc/new_implant)
 	else if(istype(parent, /obj/item/pda))
-		RegisterSignal(COMSIG_PDA_CHANGE_RINGTONE, .proc/new_ringtone)
+		RegisterSignal(parent, COMSIG_PDA_CHANGE_RINGTONE, .proc/new_ringtone)
 	else if(istype(parent, /obj/item/radio))
-		RegisterSignal(COMSIG_RADIO_NEW_FREQUENCY, .proc/new_frequency)
+		RegisterSignal(parent, COMSIG_RADIO_NEW_FREQUENCY, .proc/new_frequency)
 	else if(istype(parent, /obj/item/pen))
-		RegisterSignal(COMSIG_PEN_ROTATED, .proc/pen_rotation)
+		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
 
 	GLOB.uplinks += src
 	uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted)
@@ -70,6 +70,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 /datum/component/uplink/Destroy()
 	GLOB.uplinks -= src
 	gamemode = null
+	purchase_log = null
 	return ..()
 
 /datum/component/uplink/proc/LoadTC(mob/user, obj/item/stack/telecrystal/TC, silent = FALSE)

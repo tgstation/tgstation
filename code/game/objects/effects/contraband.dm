@@ -60,7 +60,6 @@
 
 /obj/structure/sign/poster/Initialize()
 	. = ..()
-	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 75), 0)
 	if(random_basetype)
 		randomise(random_basetype)
 	if(!ruined)

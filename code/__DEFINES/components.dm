@@ -1,6 +1,6 @@
-#define SEND_SIGNAL(target, sigtype, arguments...) ( !target.datum_components ? NONE : target._SendSignal(sigtype, list(##arguments)) )
+#define SEND_SIGNAL(target, sigtype, arguments...) ( !target.comp_lookup || !target.comp_lookup[sigtype] ? NONE : target._SendSignal(sigtype, list(##arguments)) )
 
-#define SEND_GLOBAL_SIGNAL(sigtype, arguments...) ( !SSdcs.comp_lookup[sigtype] ? NONE : SSdcs._SendGlobalSignal(sigtype, list(##arguments)) )
+#define SEND_GLOBAL_SIGNAL(sigtype, arguments...) ( SEND_SIGNAL(SSdcs, sigtype, ##arguments) )
 
 //shorthand
 #define GET_COMPONENT_FROM(varname, path, target) var##path/##varname = ##target.GetComponent(##path)
@@ -20,7 +20,7 @@
 
 // global signals
 // These are signals which can be listened to by any component on any parent
-// GLOBAL SIGNALS MUST START WITH "!"
+// start global signals with "!", this used to be necessary but now it's just a formatting choice
 #define COMSIG_GLOB_NEW_Z "!new_z"								//from base of datum/controller/subsystem/mapping/proc/add_new_zlevel(): (list/args)
 #define COMSIG_GLOB_VAR_EDIT "!var_edit"						//called after a successful var edit somewhere in the world: (list/args)
 
@@ -44,6 +44,8 @@
 	//End positions
 	#define COMPONENT_EXNAME_CHANGED 1
 #define COMSIG_ATOM_ENTERED "atom_entered"                      //from base of atom/Entered(): (atom/movable/entering, /atom)
+#define COMSIG_ATOM_EXIT "atom_exit"							//from base of atom/Exit(): (/atom/movable/exiting, /atom/newloc)
+	#define COMPONENT_ATOM_BLOCK_EXIT 1
 #define COMSIG_ATOM_EXITED "atom_exited"						//from base of atom/Exited(): (atom/movable/exiting, atom/newloc)
 #define COMSIG_ATOM_EX_ACT "atom_ex_act"						//from base of atom/ex_act(): (severity, target)
 #define COMSIG_ATOM_EMP_ACT "atom_emp_act"						//from base of atom/emp_act(): (severity)
@@ -61,6 +63,7 @@
 #define COMSIG_ATOM_ROTATE "atom_rotate"						//from base of atom/shuttleRotate(): (rotation, params)
 #define COMSIG_ATOM_DIR_CHANGE "atom_dir_change"				//from base of atom/setDir(): (old_dir, new_dir)
 #define COMSIG_ATOM_CONTENTS_DEL "atom_contents_del"			//from base of atom/handle_atom_del(): (atom/deleted)
+#define COMSIG_ATOM_HAS_GRAVITY "atom_has_gravity"				//from base of atom/has_gravity(): (turf/location, list/forced_gravities)
 /////////////////
 #define COMSIG_ATOM_ATTACK_GHOST "atom_attack_ghost"			//from base of atom/attack_ghost(): (mob/dead/observer/ghost)
 #define COMSIG_ATOM_ATTACK_HAND "atom_attack_hand"				//from base of atom/attack_hand(): (mob/user)
@@ -86,18 +89,26 @@
 
 // /turf signals
 #define COMSIG_TURF_CHANGE "turf_change"						//from base of turf/ChangeTurf(): (path, list/new_baseturfs, flags, list/transferring_comps)
+#define COMSIG_TURF_HAS_GRAVITY "turf_has_gravity"				//from base of atom/has_gravity(): (atom/asker, list/forced_gravities)
 
 // /atom/movable signals
 #define COMSIG_MOVABLE_MOVED "movable_moved"					//from base of atom/movable/Moved(): (/atom, dir)
+#define COMSIG_MOVABLE_CROSS "movable_cross"					//from base of atom/movable/Cross(): (/atom/movable)
 #define COMSIG_MOVABLE_CROSSED "movable_crossed"                //from base of atom/movable/Crossed(): (/atom/movable)
+#define COMSIG_MOVABLE_UNCROSS "movable_uncross"				//from base of atom/movable/Uncross(): (/atom/movable)
+	#define COMPONENT_MOVABLE_BLOCK_UNCROSS 1
 #define COMSIG_MOVABLE_UNCROSSED "movable_uncrossed"            //from base of atom/movable/Uncrossed(): (/atom/movable)
-#define COMSIG_MOVABLE_COLLIDE "movable_collide"				//from base of atom/movable/Collide(): (/atom)
+#define COMSIG_MOVABLE_BUMP "movable_bump"						//from base of atom/movable/Bump(): (/atom)
 #define COMSIG_MOVABLE_IMPACT "movable_impact"					//from base of atom/movable/throw_impact(): (/atom/hit_atom, /datum/thrownthing/throwingdatum)
 #define COMSIG_MOVABLE_IMPACT_ZONE "item_impact_zone"				//from base of mob/living/hitby(): (mob/living/target, hit_zone)
 #define COMSIG_MOVABLE_BUCKLE "buckle"								//from base of atom/movable/buckle_mob(): (mob, force)
 #define COMSIG_MOVABLE_UNBUCKLE "unbuckle"							//from base of atom/movable/unbuckle_mob(): (mob, force)
 #define COMSIG_MOVABLE_THROW "movable_throw"					//from base of atom/movable/throw_at(): (datum/thrownthing, spin)
 #define COMSIG_MOVABLE_Z_CHANGED "movable_ztransit" //from base of atom/movable/onTransitZ(): (old_z, new_z)
+
+// /mob Signals
+#define COMSIG_MOB_RECEIVE_MAGIC "mob_receive_magic"			//from base of mob/anti_magic_check(): (magic, holy, protection_sources)
+	#define COMPONENT_BLOCK_MAGIC 1
 
 // /mob/living signals
 #define COMSIG_LIVING_RESIST "living_resist"					//from base of mob/living/resist() (/mob/living)
@@ -109,6 +120,7 @@
 
 // /obj signals
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"				//from base of obj/deconstruct(): (disassembled)
+#define COMSIG_OBJ_SETANCHORED "obj_setanchored"				//called in /obj/structure/setAnchored(): (value)
 
 // /obj/item signals
 #define COMSIG_ITEM_ATTACK "item_attack"						//from base of obj/item/attack(): (/mob/living/target, /mob/living/user)
@@ -118,8 +130,9 @@
 	#define COMPONENT_NO_ATTACK_OBJ 1
 #define COMSIG_ITEM_PRE_ATTACK "item_pre_attack"				//from base of obj/item/pre_attack(): (atom/target, mob/user, params)
 	#define COMPONENT_NO_ATTACK 1
+#define COMSIG_ITEM_AFTERATTACK "item_afterattack"				//from base of obj/item/afterattack(): (atom/target, mob/user, params)
 #define COMSIG_ITEM_EQUIPPED "item_equip"						//from base of obj/item/equipped(): (/mob/equipper, slot)
-#define COMSIG_ITEM_DROPPED "item_drop"
+#define COMSIG_ITEM_DROPPED "item_drop"							//from base of obj/item/dropped(): (mob/user)
 #define COMSIG_ITEM_PICKUP "item_pickup"						//from base of obj/item/pickup(): (/mob/taker)
 #define COMSIG_ITEM_ATTACK_ZONE "item_attack_zone"				//from base of mob/living/carbon/attacked_by(): (mob/living/carbon/target, mob/living/user, hit_zone)
 #define COMSIG_ITEM_IMBUE_SOUL "item_imbue_soul" //return a truthy value to prevent ensouling, checked in /obj/effect/proc_holder/spell/targeted/lichdom/cast(): (mob/user)
@@ -147,6 +160,7 @@
 
 // /obj/item/pen signals
 #define COMSIG_PEN_ROTATED "pen_rotated"						//called after rotation in /obj/item/pen/attack_self(): (rotation, mob/living/carbon/user)
+
 
 // /mob/living/carbon/human signals
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"			//from mob/living/carbon/human/UnarmedAttack(): (atom/target)

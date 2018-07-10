@@ -40,7 +40,7 @@
 	. = ..()
 	move_update_air(T)
 
-/obj/structure/mineral_door/CollidedWith(atom/movable/AM)
+/obj/structure/mineral_door/Bumped(atom/movable/AM)
 	..()
 	if(!state)
 		return TryToSwitchState(AM)

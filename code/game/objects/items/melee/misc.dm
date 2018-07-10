@@ -281,11 +281,11 @@
 			consume_turf(T)
 
 /obj/item/melee/supermatter_sword/afterattack(target, mob/user, proximity_flag)
+	. = ..()
 	if(user && target == user)
 		user.dropItemToGround(src)
 	if(proximity_flag)
 		consume_everything(target)
-	..()
 
 /obj/item/melee/supermatter_sword/throw_impact(target)
 	..()
@@ -317,13 +317,13 @@
 /obj/item/melee/supermatter_sword/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!</span>")
 	user.dropItemToGround(src, TRUE)
-	shard.CollidedWith(user)
+	shard.Bumped(user)
 
 /obj/item/melee/supermatter_sword/proc/consume_everything(target)
 	if(isnull(target))
 		shard.Consume()
 	else if(!isturf(target))
-		shard.CollidedWith(target)
+		shard.Bumped(target)
 	else
 		consume_turf(target)
 
@@ -355,11 +355,11 @@
 	hitsound = 'sound/weapons/chainhit.ogg'
 
 /obj/item/melee/curator_whip/afterattack(target, mob/user, proximity_flag)
+	. = ..()
 	if(ishuman(target) && proximity_flag)
 		var/mob/living/carbon/human/H = target
 		H.drop_all_held_items()
 		H.visible_message("<span class='danger'>[user] disarms [H]!</span>", "<span class='userdanger'>[user] disarmed you!</span>")
-	..()
 
 /obj/item/melee/roastingstick
 	name = "advanced roasting stick"
@@ -441,6 +441,7 @@
 		update_icon()
 
 /obj/item/melee/roastingstick/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	if (!on)
 		return
 	if (is_type_in_typecache(target, ovens))

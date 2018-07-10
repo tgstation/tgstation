@@ -225,7 +225,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 	var/res_name = "spritesheet_[name].css"
 	var/fname = "data/spritesheets/[res_name]"
-	call("rust_g", "file_write")(generate_css(), fname)
+	text2file(generate_css(), fname)
 	register_asset(res_name, file(fname))
 
 	for(var/size_id in sizes)
@@ -249,7 +249,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		// save flattened version
 		var/fname = "data/spritesheets/[name]_[size_id].png"
 		fcopy(size[SPRSZ_ICON], fname)
-		var/error = call("rust_g", "dmi_strip_metadata")(fname)
+		var/error = rustg_dmi_strip_metadata(fname)
 		if(length(error))
 			stack_trace("Failed to strip [name]_[size_id].png: [error]")
 		size[SPRSZ_STRIPPED] = icon(fname)
@@ -587,7 +587,11 @@ GLOBAL_LIST_EMPTY(asset_datums)
 			if (machine)
 				item = machine
 		var/icon_file = initial(item.icon)
-		var/icon/I = icon(icon_file, initial(item.icon_state), SOUTH)
+		var/icon_state = initial(item.icon_state)
+		if (!(icon_state in icon_states(icon_file)))
+			warning("design [D] with icon '[icon_file]' missing state '[icon_state]'")
+			continue
+		var/icon/I = icon(icon_file, icon_state, SOUTH)
 
 		// computers (and snowflakes) get their screen and keyboard sprites
 		if (ispath(item, /obj/machinery/computer) || ispath(item, /obj/machinery/power/solar_control))

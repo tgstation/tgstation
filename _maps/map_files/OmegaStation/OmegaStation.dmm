@@ -30957,7 +30957,10 @@
 /area/maintenance/disposal/incinerator)
 "coR" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/smartfridge/disks,
+/obj/machinery/smartfridge/disks{
+	pixel_y = 2
+	},
+/obj/structure/table/glass,
 /turf/open/floor/plasteel/neutral,
 /area/hydroponics)
 "csX" = (
@@ -35409,8 +35412,11 @@
 	},
 /area/hallway/primary/starboard)
 "uuj" = (
-/obj/machinery/plantgenes,
+/obj/machinery/plantgenes{
+	pixel_y = 6
+	},
 /obj/effect/turf_decal/bot,
+/obj/structure/table/glass,
 /turf/open/floor/plasteel/neutral,
 /area/hydroponics)
 "uuJ" = (

@@ -38,7 +38,7 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "ak" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/brig,
@@ -47,7 +47,7 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "am" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/brig,
@@ -92,7 +92,7 @@
 	pixel_x = -24;
 	pixel_y = -6
 	},
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/brig,
@@ -102,11 +102,11 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "av" = (
-/obj/structure/chair/shuttle,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aw" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
@@ -182,13 +182,13 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aI" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aJ" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -352,7 +352,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bm" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -365,7 +365,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bo" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/machinery/light/small{
