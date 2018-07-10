@@ -1002,7 +1002,7 @@
 			if(!check_rights(NONE))
 				return
 
-			var/mob/living/carbon/C = locate(href_list["givemartialart"]) in GLOB.mob_list
+			var/mob/living/carbon/C = locate(href_list["givemartialart"]) in GLOB.carbon_list
 			if(!istype(C))
 				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
 				return
