@@ -71,7 +71,7 @@
 		pass(N)	//suppress unused warning
 		if(N.bomb_set) //snaaaaaaaaaake! It's not over yet!
 			return FALSE	//its a static var btw
-	. = ..()
+	return ..()
 
 /datum/game_mode/nuclear/set_round_result()
 	..()
