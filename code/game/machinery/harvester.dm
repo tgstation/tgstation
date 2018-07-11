@@ -17,6 +17,8 @@
 
 /obj/machinery/harvester/Initialize()
 	. = ..()
+	if(prob(5))
+		name = "auto-autopsy"
 
 /obj/machinery/harvester/RefreshParts()
 	interval = 0
@@ -64,12 +66,10 @@
 				say("Subject may not have abiotic items on.")
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
 				return
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		if(H.dna && H.dna.species && !(MOB_ORGANIC in H.dna.species.inherent_biotypes))
-			say("Subject is not organic.")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
-			return
+	if(!(MOB_ORGANIC in C.mob_biotypes))
+		say("Subject is not organic.")
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
+		return
 	if(!allow_living && (C.stat != DEAD && !C.has_trait(TRAIT_FAKEDEATH)))     //I mean, the machines scanners arent advanced enough to tell you're alive
 		say("Subject is still alive.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
@@ -106,7 +106,6 @@
 			BP.drop_organs()
 		else
 			for(var/obj/item/organ/O in BP.dismember())
-				to_chat(world,"[BP.name]-[O.name]")
 				O.forceMove(locate(x+1,y,z)) //Some organs, like chest ones, are different so we need to manually move them
 		operation_order.Remove(BP)
 		break
@@ -139,7 +138,7 @@
 /obj/machinery/harvester/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
-	obj_flags ^= EMAGGED
+	obj_flags |= EMAGGED
 	allow_living = TRUE
 	to_chat(user, "<span class='warning'>You overload \the [src]'s lifesign scanners.</span>")
 
