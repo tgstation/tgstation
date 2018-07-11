@@ -1,4 +1,0 @@
-author: "Irafas"
-delete-after: True
-changes: 
-  - bugfix: "non-silicons can no longer use machines without standing next to them."
