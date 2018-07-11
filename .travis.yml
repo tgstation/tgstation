@@ -9,7 +9,7 @@ env:
     - BYOND_MINOR="1427"
     - NODE_VERSION="4"
     - RUST_G_VERSION="0.3.0"
-    - BSQL_VERSION="v1.2.1.1"
+    - BSQL_VERSION="v1.3.0.0"
 matrix:
   include:
     - env:
