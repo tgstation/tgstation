@@ -6,9 +6,9 @@
 	density = TRUE
 	anchored = FALSE
 	container_type = DRAINABLE | AMOUNT_VISIBLE
-	var/open = FALSE
 	pressure_resistance = 2 * ONE_ATMOSPHERE
 	max_integrity = 300
+	var/open = FALSE
 	var/speed_multiplier = 1 //How fast it distills. Defaults to 100% (1.0). Lower is better.
 
 /obj/structure/fermenting_barrel/Initialize()
@@ -25,9 +25,6 @@
 	var/amount = fruit.seed.potency / 4
 	if(fruit.distill_reagent)
 		reagents.add_reagent(fruit.distill_reagent, amount)
-		qdel(fruit)
-		playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
-		return
 	else
 		var/data = list()
 		data["names"] = list("[initial(fruit.name)]" = 1)
@@ -38,9 +35,8 @@
 		else
 			data["tastes"] = list(fruit.tastes[1] = 1)
 		reagents.add_reagent("fruit_wine", amount, data)
-		qdel(fruit)
-		playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
-		return
+	qdel(fruit)
+	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 
 /obj/structure/fermenting_barrel/attackby(obj/item/I, mob/user, params)
 	var/obj/item/reagent_containers/food/snacks/grown/fruit = I
@@ -62,10 +58,15 @@
 	if(open)
 		container_type = REFILLABLE | AMOUNT_VISIBLE
 		to_chat(user, "<span class='notice'>You open [src], letting you fill it.</span>")
-		icon_state = "barrel_open"
 	else
 		container_type = DRAINABLE | AMOUNT_VISIBLE
 		to_chat(user, "<span class='notice'>You close [src], letting you draw from its tap.</span>")
+	update_icon()
+
+/obj/structure/fermenting_barrel/update_icon()
+	if(open)
+		icon_state = "barrel_open"
+	else
 		icon_state = "barrel"
 
 /datum/crafting_recipe/fermenting_barrel

@@ -1757,9 +1757,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#FFFFFF"
 	boozepwr = 35
 	taste_description = "bad coding"
+	can_synth = FALSE
 	var/list/names = list("null fruit" = 1) //Names of the fruits used. Associative list where name is key, value is the percentage of that fruit.
 	var/list/tastes = list("bad coding" = 1) //List of tastes. See above.
-	can_synth = FALSE
 
 /datum/reagent/consumable/ethanol/fruit_wine/on_new(list/data)
 	names = data["names"]
