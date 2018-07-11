@@ -121,7 +121,7 @@
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		if(magazine.ammo_count())
-			playsound(src, "sound/weapons/gun_magazine_remove_full.ogg", 70, 1)
+			playsound(src, 'sound/weapons/gun_magazine_remove_full.ogg', 70, 1)
 		else
 			playsound(src, "gun_remove_empty_magazine", 70, 1)
 		magazine = null

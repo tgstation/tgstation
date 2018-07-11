@@ -53663,6 +53663,10 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/science/circuit)
+"mdr" = (
+/obj/machinery/nuclearbomb/beer,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "mjr" = (
 /obj/machinery/vending/wardrobe/bar_wardrobe,
 /turf/open/floor/wood,
@@ -98154,7 +98158,7 @@ anf
 anf
 apE
 anf
-anf
+mdr
 aCE
 aDZ
 aFu
