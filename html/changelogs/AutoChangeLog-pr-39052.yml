@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Added a Rest button to the HUD. It allows the user to lie down or get back on their feet."
-  - balance: "Getting back up now takes a second, to avoid people matrix-ing bullets."

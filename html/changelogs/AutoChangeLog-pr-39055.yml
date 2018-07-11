@@ -1,5 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Porta turret rotation on shuttles visually would not turn, this has been dealt with."
-  - bugfix: "Decals weren't rotating properly after the recent signal refactor, a couple new procs for dealing with the signals on the parent object have been added to deal with this."
