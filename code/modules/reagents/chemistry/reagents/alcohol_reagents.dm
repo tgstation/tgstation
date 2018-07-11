@@ -1798,8 +1798,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = description
 	for(var/taste in tastes)
 		switch(tastes[taste])
-			if(-INFINITY to minimum_percent)
-				continue
 			if(minimum_percent*2 to INFINITY)
 				primary_tastes += taste
 			if(minimum_percent to minimum_percent*2)
