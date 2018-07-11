@@ -78,18 +78,6 @@
 		cloud_sync()
 		next_sync = world.time + NANITE_SYNC_DELAY
 
-/datum/component/nanites/proc/copy(amount)
-	var/datum/component/nanites/new_nanites = new type()
-
-	new_nanites.nanite_volume = amount
-	new_nanites.max_nanites = max_nanites
-	new_nanites.regen_rate = regen_rate
-	new_nanites.safety_threshold = safety_threshold
-	new_nanites.cloud_id = cloud_id
-	for(var/X in programs)
-		var/datum/nanite_program/NP = X
-		new_nanites.add_program(NP.copy())
-
 //Syncs the nanite component to another, making it so programs are the same with the same programming (except activation status)
 /datum/component/nanites/proc/sync(datum/component/nanites/source, full_overwrite = TRUE, copy_activation = FALSE)
 	var/list/programs_to_remove = programs.Copy()
