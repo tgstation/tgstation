@@ -211,8 +211,7 @@ GLOBAL_PROTECT(protected_ranks)
 	GLOB.protected_admins.Cut()
 	GLOB.deadmins.Cut()
 	var/list/backup_file_json = load_admin_ranks(dbfail, no_update)
-	if(backup_file_json == null)
-		dbfail = FALSE
+	dbfail = backup_file_json != null
 	//Clear profile access
 	for(var/A in world.GetConfig("admin"))
 		world.SetConfig("APP/admin", A, null)
