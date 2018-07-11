@@ -125,8 +125,8 @@
 		else
 			return TRUE
 	else
-		if(O.loc.SendSignal(COMSIG_CONTAINS_STORAGE))
-			return O.loc.SendSignal(COMSIG_TRY_STORAGE_TAKE, O, src)
+		if(SEND_SIGNAL(O.loc, COMSIG_CONTAINS_STORAGE))
+			return SEND_SIGNAL(O.loc, COMSIG_TRY_STORAGE_TAKE, O, src)
 		else
 			O.forceMove(src)
 			return TRUE
@@ -415,6 +415,7 @@
 /obj/machinery/smartfridge/disks
 	name = "disk compartmentalizer"
 	desc = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
+	icon_state = "disktoaster"
 
 /obj/machinery/smartfridge/disks/accept_check(obj/item/O)
 	if(istype(O, /obj/item/disk/))

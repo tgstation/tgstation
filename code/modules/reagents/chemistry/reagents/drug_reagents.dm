@@ -7,7 +7,7 @@
 
 /datum/reagent/drug/on_mob_delete(mob/living/M)
 	if(trippy)
-		M.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "[id]_high")
+		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[id]_high")
 
 /datum/reagent/drug/space_drugs
 	name = "Space drugs"
@@ -16,7 +16,7 @@
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 30
 
-/datum/reagent/drug/space_drugs/on_mob_life(mob/living/M)
+/datum/reagent/drug/space_drugs/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(15)
 	if(isturf(M.loc) && !isspaceturf(M.loc))
 		if(M.canmove)
@@ -28,7 +28,7 @@
 
 /datum/reagent/drug/space_drugs/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You start tripping hard!</span>")
-	M.SendSignal(COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/drugs/overdose, name)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/drugs/overdose, name)
 
 /datum/reagent/drug/space_drugs/overdose_process(mob/living/M)
 	if(M.hallucination < volume && prob(20))
@@ -45,11 +45,11 @@
 	taste_description = "smoke"
 	trippy = FALSE
 
-/datum/reagent/drug/nicotine/on_mob_life(mob/living/M)
+/datum/reagent/drug/nicotine/on_mob_life(mob/living/carbon/M)
 	if(prob(1))
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		to_chat(M, "<span class='notice'>[smoke_message]</span>")
-	M.SendSignal(COMSIG_ADD_MOOD_EVENT, "smoked", /datum/mood_event/drugs/smoked, name)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smoked", /datum/mood_event/drugs/smoked, name)
 	M.AdjustStun(-20, 0)
 	M.AdjustKnockdown(-20, 0)
 	M.AdjustUnconscious(-20, 0)
@@ -66,7 +66,7 @@
 	overdose_threshold = 20
 	addiction_threshold = 10
 
-/datum/reagent/drug/crank/on_mob_life(mob/living/M)
+/datum/reagent/drug/crank/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
 		var/high_message = pick("You feel jittery.", "You feel like you gotta go fast.", "You feel like you need to step it up.")
 		to_chat(M, "<span class='notice'>[high_message]</span>")
@@ -114,7 +114,7 @@
 	addiction_threshold = 15
 
 
-/datum/reagent/drug/krokodil/on_mob_life(mob/living/M)
+/datum/reagent/drug/krokodil/on_mob_life(mob/living/carbon/M)
 	var/high_message = pick("You feel calm.", "You feel collected.", "You feel like you need to relax.")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
@@ -165,19 +165,15 @@
 	addiction_threshold = 10
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 
-/datum/reagent/drug/methamphetamine/on_mob_add(mob/M)
+/datum/reagent/drug/methamphetamine/on_mob_add(mob/living/L)
 	..()
-	if(isliving(M))
-		var/mob/living/L = M
-		L.add_trait(TRAIT_GOTTAGOREALLYFAST, id)
+	L.add_trait(TRAIT_GOTTAGOREALLYFAST, id)
 
-/datum/reagent/drug/methamphetamine/on_mob_delete(mob/M)
-	if(isliving(M))
-		var/mob/living/L = M
-		L.remove_trait(TRAIT_GOTTAGOREALLYFAST, id)
+/datum/reagent/drug/methamphetamine/on_mob_delete(mob/living/L)
+	L.remove_trait(TRAIT_GOTTAGOREALLYFAST, id)
 	..()
 
-/datum/reagent/drug/methamphetamine/on_mob_life(mob/living/M)
+/datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/M)
 	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
@@ -252,27 +248,23 @@
 	taste_description = "salt" // because they're bathsalts?
 	var/datum/brain_trauma/special/psychotic_brawling/bath_salts/rage
 
-/datum/reagent/drug/bath_salts/on_mob_add(mob/M)
+/datum/reagent/drug/bath_salts/on_mob_add(mob/living/L)
 	..()
-	if(isliving(M))
-		var/mob/living/L = M
-		L.add_trait(TRAIT_STUNIMMUNE, id)
-		L.add_trait(TRAIT_SLEEPIMMUNE, id)
-		if(iscarbon(L))
-			var/mob/living/carbon/C = L
-			rage = new()
-			C.gain_trauma(rage, TRAUMA_RESILIENCE_ABSOLUTE)
+	L.add_trait(TRAIT_STUNIMMUNE, id)
+	L.add_trait(TRAIT_SLEEPIMMUNE, id)
+	if(iscarbon(L))
+		var/mob/living/carbon/C = L
+		rage = new()
+		C.gain_trauma(rage, TRAUMA_RESILIENCE_ABSOLUTE)
 
-/datum/reagent/drug/bath_salts/on_mob_delete(mob/M)
-	if(isliving(M))
-		var/mob/living/L = M
-		L.remove_trait(TRAIT_STUNIMMUNE, id)
-		L.remove_trait(TRAIT_SLEEPIMMUNE, id)
-		if(rage)
-			QDEL_NULL(rage)
+/datum/reagent/drug/bath_salts/on_mob_delete(mob/living/L)
+	L.remove_trait(TRAIT_STUNIMMUNE, id)
+	L.remove_trait(TRAIT_SLEEPIMMUNE, id)
+	if(rage)
+		QDEL_NULL(rage)
 	..()
 
-/datum/reagent/drug/bath_salts/on_mob_life(mob/living/M)
+/datum/reagent/drug/bath_salts/on_mob_life(mob/living/carbon/M)
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
@@ -352,7 +344,7 @@
 	reagent_state = LIQUID
 	color = "#78FFF0"
 
-/datum/reagent/drug/aranesp/on_mob_life(mob/living/M)
+/datum/reagent/drug/aranesp/on_mob_life(mob/living/carbon/M)
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")

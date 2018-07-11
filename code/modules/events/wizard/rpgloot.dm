@@ -16,7 +16,7 @@
 			GET_COMPONENT_FROM(STR, /datum/component/storage, S)
 			if(prob(upgrade_scroll_chance) && S.contents.len < STR.max_items && !S.invisibility)
 				var/obj/item/upgradescroll/scroll = new
-				S.SendSignal(COMSIG_TRY_STORAGE_INSERT, scroll, null, TRUE, TRUE)
+				SEND_SIGNAL(S, COMSIG_TRY_STORAGE_INSERT, scroll, null, TRUE, TRUE)
 				upgrade_scroll_chance = max(0,upgrade_scroll_chance-100)
 			upgrade_scroll_chance += 25
 
@@ -34,12 +34,13 @@
 	var/one_use = TRUE
 
 /obj/item/upgradescroll/afterattack(obj/item/target, mob/user , proximity)
+	. = ..()
 	if(!proximity || !istype(target))
 		return
 
 	var/datum/rpg_loot/rpg_loot_datum = target.rpg_loot
 	if(!istype(rpg_loot_datum))
-		rpg_loot_datum = new /datum/rpg_loot(target)
+		target.rpg_loot = rpg_loot_datum = new /datum/rpg_loot(target)
 
 	var/quality = rpg_loot_datum.quality
 
@@ -77,7 +78,7 @@
 	attached = null
 
 /datum/rpg_loot/proc/randomise()
-	var/static/list/prefixespositive = list("greater", "major", "blessed", "superior", "enpowered", "honed", "true", "glorious", "robust")
+	var/static/list/prefixespositive = list("greater", "major", "blessed", "superior", "empowered", "honed", "true", "glorious", "robust")
 	var/static/list/prefixesnegative = list("lesser", "minor", "blighted", "inferior", "enfeebled", "rusted", "unsteady", "tragic", "gimped")
 	var/static/list/suffixes = list("orc slaying", "elf slaying", "corgi slaying", "strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma", "the forest", "the hills", "the plains", "the sea", "the sun", "the moon", "the void", "the world", "the fool", "many secrets", "many tales", "many colors", "rending", "sundering", "the night", "the day")
 

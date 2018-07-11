@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Gas overlays left over in some turf changes should no longer stick around where they shouldn't."

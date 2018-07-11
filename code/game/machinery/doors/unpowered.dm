@@ -1,6 +1,6 @@
 /obj/machinery/door/unpowered
 
-/obj/machinery/door/unpowered/CollidedWith(atom/movable/AM)
+/obj/machinery/door/unpowered/Bumped(atom/movable/AM)
 	if(src.locked)
 		return
 	..()

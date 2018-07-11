@@ -67,38 +67,38 @@
 	closer = new(null, src)
 	orient2hud()
 
-	RegisterSignal(COMSIG_CONTAINS_STORAGE, .proc/on_check)
-	RegisterSignal(COMSIG_IS_STORAGE_LOCKED, .proc/check_locked)
-	RegisterSignal(COMSIG_TRY_STORAGE_SHOW, .proc/signal_show_attempt)
-	RegisterSignal(COMSIG_TRY_STORAGE_INSERT, .proc/signal_insertion_attempt)
-	RegisterSignal(COMSIG_TRY_STORAGE_CAN_INSERT, .proc/signal_can_insert)
-	RegisterSignal(COMSIG_TRY_STORAGE_TAKE_TYPE, .proc/signal_take_type)
-	RegisterSignal(COMSIG_TRY_STORAGE_FILL_TYPE, .proc/signal_fill_type)
-	RegisterSignal(COMSIG_TRY_STORAGE_SET_LOCKSTATE, .proc/set_locked)
-	RegisterSignal(COMSIG_TRY_STORAGE_TAKE, .proc/signal_take_obj)
-	RegisterSignal(COMSIG_TRY_STORAGE_QUICK_EMPTY, .proc/signal_quick_empty)
-	RegisterSignal(COMSIG_TRY_STORAGE_HIDE_FROM, .proc/signal_hide_attempt)
-	RegisterSignal(COMSIG_TRY_STORAGE_HIDE_ALL, .proc/close_all)
-	RegisterSignal(COMSIG_TRY_STORAGE_RETURN_INVENTORY, .proc/signal_return_inv)
+	RegisterSignal(parent, COMSIG_CONTAINS_STORAGE, .proc/on_check)
+	RegisterSignal(parent, COMSIG_IS_STORAGE_LOCKED, .proc/check_locked)
+	RegisterSignal(parent, COMSIG_TRY_STORAGE_SHOW, .proc/signal_show_attempt)
+	RegisterSignal(parent, COMSIG_TRY_STORAGE_INSERT, .proc/signal_insertion_attempt)
+	RegisterSignal(parent, COMSIG_TRY_STORAGE_CAN_INSERT, .proc/signal_can_insert)
+	RegisterSignal(parent, COMSIG_TRY_STORAGE_TAKE_TYPE, .proc/signal_take_type)
+	RegisterSignal(parent, COMSIG_TRY_STORAGE_FILL_TYPE, .proc/signal_fill_type)
+	RegisterSignal(parent, COMSIG_TRY_STORAGE_SET_LOCKSTATE, .proc/set_locked)
+	RegisterSignal(parent, COMSIG_TRY_STORAGE_TAKE, .proc/signal_take_obj)
+	RegisterSignal(parent, COMSIG_TRY_STORAGE_QUICK_EMPTY, .proc/signal_quick_empty)
+	RegisterSignal(parent, COMSIG_TRY_STORAGE_HIDE_FROM, .proc/signal_hide_attempt)
+	RegisterSignal(parent, COMSIG_TRY_STORAGE_HIDE_ALL, .proc/close_all)
+	RegisterSignal(parent, COMSIG_TRY_STORAGE_RETURN_INVENTORY, .proc/signal_return_inv)
 
-	RegisterSignal(COMSIG_PARENT_ATTACKBY, .proc/attackby)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby)
 
-	RegisterSignal(COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
-	RegisterSignal(COMSIG_ATOM_ATTACK_PAW, .proc/on_attack_hand)
-	RegisterSignal(COMSIG_ATOM_EMP_ACT, .proc/emp_act)
-	RegisterSignal(COMSIG_ATOM_ATTACK_GHOST, .proc/show_to_ghost)
-	RegisterSignal(COMSIG_ATOM_ENTERED, .proc/refresh_mob_views)
-	RegisterSignal(COMSIG_ATOM_EXITED, .proc/_remove_and_refresh)
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_PAW, .proc/on_attack_hand)
+	RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, .proc/emp_act)
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_GHOST, .proc/show_to_ghost)
+	RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/refresh_mob_views)
+	RegisterSignal(parent, COMSIG_ATOM_EXITED, .proc/_remove_and_refresh)
 
-	RegisterSignal(COMSIG_ITEM_PRE_ATTACK, .proc/preattack_intercept)
-	RegisterSignal(COMSIG_ITEM_ATTACK_SELF, .proc/attack_self)
-	RegisterSignal(COMSIG_ITEM_PICKUP, .proc/signal_on_pickup)
+	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/preattack_intercept)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/attack_self)
+	RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/signal_on_pickup)
 
-	RegisterSignal(COMSIG_MOVABLE_THROW, .proc/close_all)
+	RegisterSignal(parent, COMSIG_MOVABLE_THROW, .proc/close_all)
 
-	RegisterSignal(COMSIG_CLICK_ALT, .proc/on_alt_click)
-	RegisterSignal(COMSIG_MOUSEDROP_ONTO, .proc/mousedrop_onto)
-	RegisterSignal(COMSIG_MOUSEDROPPED_ONTO, .proc/mousedrop_recieve)
+	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/on_alt_click)
+	RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, .proc/mousedrop_onto)
+	RegisterSignal(parent, COMSIG_MOUSEDROPPED_ONTO, .proc/mousedrop_receive)
 
 	update_actions()
 
@@ -151,7 +151,7 @@
 		quick_empty(M)
 
 /datum/component/storage/proc/preattack_intercept(obj/O, mob/M, params)
-	if(!isitem(O) || !click_gather || O.SendSignal(COMSIG_CONTAINS_STORAGE))
+	if(!isitem(O) || !click_gather || SEND_SIGNAL(O, COMSIG_CONTAINS_STORAGE))
 		return FALSE
 	. = COMPONENT_NO_ATTACK
 	if(locked)
@@ -468,7 +468,7 @@
 	if(recursive)
 		for(var/i in ret.Copy())
 			var/atom/A = i
-			A.SendSignal(COMSIG_TRY_STORAGE_RETURN_INVENTORY, ret, TRUE)
+			SEND_SIGNAL(A, COMSIG_TRY_STORAGE_RETURN_INVENTORY, ret, TRUE)
 	return ret
 
 /datum/component/storage/proc/contents()			//ONLY USE IF YOU NEED TO COPY CONTENTS OF REAL LOCATION, COPYING IS NOT AS FAST AS DIRECT ACCESS!
@@ -519,13 +519,13 @@
 	if(force || M.CanReach(parent, view_only = TRUE))
 		show_to(M)
 
-/datum/component/storage/proc/mousedrop_recieve(atom/movable/O, mob/M)
+/datum/component/storage/proc/mousedrop_receive(atom/movable/O, mob/M)
 	if(isitem(O))
 		var/obj/item/I = O
 		if(iscarbon(M) || isdrone(M))
 			var/mob/living/L = M
 			if(!L.incapacitated() && I == L.get_active_held_item())
-				if(!I.SendSignal(COMSIG_CONTAINS_STORAGE) && can_be_inserted(I, FALSE))	//If it has storage it should be trying to dump, not insert.
+				if(!SEND_SIGNAL(I, COMSIG_CONTAINS_STORAGE) && can_be_inserted(I, FALSE))	//If it has storage it should be trying to dump, not insert.
 					handle_item_insertion(I, FALSE, L)
 
 //This proc return 1 if the item can be picked up and 0 if it can't.

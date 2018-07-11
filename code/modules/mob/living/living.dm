@@ -38,31 +38,31 @@
 /mob/living/proc/OpenCraftingMenu()
 	return
 
-//Generic Collide(). Override MobCollide() and ObjCollide() instead of this.
-/mob/living/Collide(atom/A)
+//Generic Bump(). Override MobBump() and ObjBump() instead of this.
+/mob/living/Bump(atom/A)
 	if(..()) //we are thrown onto something
 		return
 	if (buckled || now_pushing)
 		return
 	if(ismob(A))
 		var/mob/M = A
-		if(MobCollide(M))
+		if(MobBump(M))
 			return
 	if(isobj(A))
 		var/obj/O = A
-		if(ObjCollide(O))
+		if(ObjBump(O))
 			return
 	if(ismovableatom(A))
 		var/atom/movable/AM = A
 		if(PushAM(AM))
 			return
 
-/mob/living/CollidedWith(atom/movable/AM)
+/mob/living/Bumped(atom/movable/AM)
 	..()
 	last_bumped = world.time
 
 //Called when we bump onto a mob
-/mob/living/proc/MobCollide(mob/M)
+/mob/living/proc/MobBump(mob/M)
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	spreadFire(M)
 
@@ -151,7 +151,7 @@
 				return 1
 
 //Called when we bump onto an obj
-/mob/living/proc/ObjCollide(obj/O)
+/mob/living/proc/ObjBump(obj/O)
 	return
 
 //Called when we want to push an atom/movable
@@ -281,7 +281,7 @@
 		return TRUE
 
 /mob/living/proc/InCritical()
-	return (health <= HEALTH_THRESHOLD_CRIT && (stat == SOFT_CRIT || stat == UNCONSCIOUS))
+	return (health <= crit_modifier() && (stat == SOFT_CRIT || stat == UNCONSCIOUS))
 
 /mob/living/proc/InFullCritical()
 	return (health <= HEALTH_THRESHOLD_FULLCRIT && stat == UNCONSCIOUS)
@@ -348,7 +348,7 @@
 	ret |= contents						//add our contents
 	for(var/i in ret.Copy())			//iterate storage objects
 		var/atom/A = i
-		A.SendSignal(COMSIG_TRY_STORAGE_RETURN_INVENTORY, ret)
+		SEND_SIGNAL(A, COMSIG_TRY_STORAGE_RETURN_INVENTORY, ret)
 	for(var/obj/item/folder/F in ret.Copy())		//very snowflakey-ly iterate folders
 		ret |= F.contents
 	return ret
@@ -444,21 +444,6 @@
 		return 0
 
 /mob/living/proc/update_damage_overlays()
-	return
-
-/mob/living/proc/Examine_OOC()
-	set name = "Examine Meta-Info (OOC)"
-	set category = "OOC"
-	set src in view()
-
-	if(CONFIG_GET(flag/allow_metadata))
-		if(client)
-			to_chat(src, "[src]'s Metainfo:<br>[client.prefs.metadata]")
-		else
-			to_chat(src, "[src] does not have any stored information!")
-	else
-		to_chat(src, "OOC Metadata is not supported by this server!")
-
 	return
 
 /mob/living/Move(atom/newloc, direct)
@@ -584,7 +569,7 @@
 		return
 	changeNext_move(CLICK_CD_RESIST)
 
-	SendSignal(COMSIG_LIVING_RESIST, src)
+	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
 	//resisting grabs (as if it helps anyone...)
 	if(!restrained(ignore_grab = 1) && pulledby)
 		visible_message("<span class='danger'>[src] resists against [pulledby]'s grip!</span>")
@@ -812,7 +797,7 @@
 	var/stam = getStaminaLoss()
 	if(stam)
 		var/total_health = (health - stam)
-		if(total_health <= HEALTH_THRESHOLD_CRIT && !stat)
+		if(total_health <= crit_modifier() && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			Knockdown(100)
 			setStaminaLoss(health - 2, FALSE, FALSE)
@@ -884,6 +869,13 @@
 
 	apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), EFFECT_IRRADIATE, blocked)
 
+/mob/living/anti_magic_check(magic = TRUE, holy = FALSE)
+	. = ..()
+	if(.)
+		return
+	if((magic && has_trait(TRAIT_ANTIMAGIC)) || (holy && has_trait(TRAIT_HOLY)))
+		return src
+
 /mob/living/proc/fakefireextinguish()
 	return
 
@@ -901,7 +893,7 @@
 		new/obj/effect/dummy/fire(src)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
-		SendSignal(COMSIG_LIVING_IGNITED,src)
+		SEND_SIGNAL(src, COMSIG_LIVING_IGNITED,src)
 		return TRUE
 	return FALSE
 
@@ -912,8 +904,8 @@
 		for(var/obj/effect/dummy/fire/F in src)
 			qdel(F)
 		clear_alert("fire")
-		SendSignal(COMSIG_CLEAR_MOOD_EVENT, "on_fire")
-		SendSignal(COMSIG_LIVING_EXTINGUISHED, src)
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
+		SEND_SIGNAL(src, COMSIG_LIVING_EXTINGUISHED, src)
 		update_fire()
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
@@ -922,7 +914,7 @@
 		ExtinguishMob()
 
 //Share fire evenly between the two mobs
-//Called in MobCollide() and Crossed()
+//Called in MobBump() and Crossed()
 /mob/living/proc/spreadFire(mob/living/L)
 	if(!istype(L))
 		return
@@ -1115,6 +1107,9 @@
 
 /mob/living/vv_edit_var(var_name, var_value)
 	switch(var_name)
+		if ("maxHealth")
+			if (!isnum(var_value) || var_value <= 0)
+				return FALSE
 		if("stat")
 			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
 				GLOB.dead_mob_list -= src

@@ -14,7 +14,7 @@
 /obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/U, user)
 	GET_COMPONENT(storage, /datum/component/storage)
 	if(storage)
-		if(U.SendSignal(COMSIG_CONTAINS_STORAGE))
+		if(SEND_SIGNAL(U, COMSIG_CONTAINS_STORAGE))
 			return FALSE
 		U.TakeComponent(storage)
 		detached_pockets = storage
@@ -28,10 +28,10 @@
 		pixel_y -= 8
 	U.add_overlay(src)
 
-	if (islist(U.armor)) 										// This proc can run before /obj/Initialize has run for U and src,
+	if (islist(U.armor) || isnull(U.armor)) 										// This proc can run before /obj/Initialize has run for U and src,
 		U.armor = getArmor(arglist(U.armor))	// we have to check that the armor list has been transformed into a datum before we try to call a proc on it
 																					// This is safe to do as /obj/Initialize only handles setting up the datum if actually needed.
-	if (islist(armor))
+	if (islist(armor) || isnull(armor))
 		armor = getArmor(arglist(armor))
 
 	U.armor = U.armor.attachArmor(armor)

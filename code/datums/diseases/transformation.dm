@@ -50,7 +50,10 @@
 		if(stage5)
 			to_chat(affected_mob, pick(stage5))
 		if(jobban_isbanned(affected_mob, new_form))
-			affected_mob.death(1)
+			if(!QDELETED(affected_mob))
+				affected_mob.death(1)
+			return
+		if(QDELETED(affected_mob))
 			return
 		if(affected_mob.notransform)
 			return
@@ -90,9 +93,9 @@
 	agent = "Kongey Vibrion M-909"
 	new_form = /mob/living/carbon/monkey
 
-	stage1	= null
-	stage2	= null
-	stage3	= null
+	stage1	= list()
+	stage2	= list()
+	stage3	= list()
 	stage4	= list("<span class='warning'>Your back hurts.</span>", "<span class='warning'>You breathe through your mouth.</span>",
 					"<span class='warning'>You have a craving for bananas.</span>", "<span class='warning'>Your mind feels clouded.</span>")
 	stage5	= list("<span class='warning'>You feel like monkeying around.</span>")
@@ -143,7 +146,7 @@
 	desc = "This disease, actually acute nanomachine infection, converts the victim into a cyborg."
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	visibility_flags = 0
-	stage1	= null
+	stage1	= list()
 	stage2	= list("Your joints feel stiff.", "<span class='danger'>Beep...boop..</span>")
 	stage3	= list("<span class='danger'>Your joints feel very stiff.</span>", "Your skin feels loose.", "<span class='danger'>You can feel something move...inside.</span>")
 	stage4	= list("<span class='danger'>Your skin feels very loose.</span>", "<span class='danger'>You can feel... something...inside you.</span>")
@@ -175,7 +178,7 @@
 	desc = "This disease changes the victim into a xenomorph."
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	visibility_flags = 0
-	stage1	= null
+	stage1	= list()
 	stage2	= list("Your throat feels scratchy.", "<span class='danger'>Kill...</span>")
 	stage3	= list("<span class='danger'>Your throat feels very scratchy.</span>", "Your skin feels tight.", "<span class='danger'>You can feel something move...inside.</span>")
 	stage4	= list("<span class='danger'>Your skin feels very tight.</span>", "<span class='danger'>Your blood boils!</span>", "<span class='danger'>You can feel... something...inside you.</span>")

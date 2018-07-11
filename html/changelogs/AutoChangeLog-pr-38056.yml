@@ -1,5 +1,0 @@
-author: "Nichlas0010"
-delete-after: True
-changes: 
-  - tweak: "The TEG and its circulator can now be deconstructed and rotated!"
-  - tweak: "The TEG and its circulator now supports circulators in all directions, rather than just west/east!"

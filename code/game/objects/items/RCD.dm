@@ -373,6 +373,7 @@ RLD
 		return FALSE
 
 /obj/item/construction/rcd/afterattack(atom/A, mob/user, proximity)
+	. = ..()
 	if(!prox_check(proximity))
 		return
 	rcd_create(A, user)
@@ -479,6 +480,7 @@ RLD
 	has_ammobar = FALSE
 
 /obj/item/construction/rcd/arcd/afterattack(atom/A, mob/user)
+	. = ..()
 	if(!range_check(A,user))
 		return
 	if(target_check(A,user))
@@ -549,6 +551,7 @@ RLD
 
 
 /obj/item/construction/rld/afterattack(atom/A, mob/user)
+	. = ..()
 	if(!range_check(A,user))
 		return
 	var/turf/start = get_turf(src)

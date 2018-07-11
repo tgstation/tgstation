@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aA" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/machinery/turretid{
@@ -18,9 +18,8 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
-/mob/living/simple_animal/hostile/syndicate{
-	environment_smash = 0;
-	name = "Syndicate Salvage Pilot"
+/mob/living/simple_animal/hostile/syndicate/ranged/pilot{
+	environment_smash = 0
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate1)

@@ -215,7 +215,7 @@
 	var/cooldown = 0
 	var/base_cooldown = 1200
 
-/datum/action/innate/cult/master/cultmark/New()
+/datum/action/innate/cult/master/cultmark/New(Target)
 	CM = new()
 	CM.attached_action = src
 	..()
@@ -299,7 +299,7 @@
 	name = "Mark a Blood Target for the Cult"
 	desc = "Marks a target for the entire cult to track."
 
-/datum/action/innate/cult/master/cultmark/IsAvailable()
+/datum/action/innate/cult/master/cultmark/ghost/IsAvailable()
 	if(istype(owner, /mob/dead/observer) && iscultist(owner.mind.current))
 		return TRUE
 	else

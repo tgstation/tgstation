@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - bugfix: "Romerol tumors no longer zombify you if you're alive when the revive timer counts down."

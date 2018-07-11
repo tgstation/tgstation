@@ -8,8 +8,8 @@
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	var/timeleft = 300 //Set to 0 for permanent forcefields (ugh)
 
-/obj/effect/forcefield/New()
-	..()
+/obj/effect/forcefield/Initialize()
+	. = ..()
 	if(timeleft)
 		QDEL_IN(src, timeleft)
 

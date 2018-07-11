@@ -10,6 +10,7 @@
 
 
 /obj/item/malf_upgrade/afterattack(mob/living/silicon/ai/AI, mob/user)
+	. = ..()
 	if(!istype(AI))
 		return
 	if(AI.malf_picker)
@@ -30,6 +31,7 @@
 	icon_state = "datadisk3"
 
 /obj/item/surveillance_upgrade/afterattack(mob/living/silicon/ai/AI, mob/user)
+	. = ..()
 	if(!istype(AI))
 		return
 	if(AI.eyeobj)

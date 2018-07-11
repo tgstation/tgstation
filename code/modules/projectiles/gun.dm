@@ -130,6 +130,9 @@
 			O.emp_act(severity)
 
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
+	. = ..()
+	if(!target)
+		return
 	if(firing_burst)
 		return
 	if(flag) //It's adjacent, is the user, or is on the user's person

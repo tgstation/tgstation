@@ -109,7 +109,7 @@
 				M.satiety -= junkiness
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			if(reagents.total_volume)
-				SendSignal(COMSIG_FOOD_EATEN, M, user)
+				SEND_SIGNAL(src, COMSIG_FOOD_EATEN, M, user)
 				var/fraction = min(bitesize / reagents.total_volume, 1)
 				reagents.reaction(M, INGEST, fraction)
 				reagents.trans_to(M, bitesize)
@@ -119,11 +119,6 @@
 				return 1
 
 	return 0
-
-
-/obj/item/reagent_containers/food/snacks/afterattack(obj/target, mob/user , proximity)
-	return
-
 
 /obj/item/reagent_containers/food/snacks/examine(mob/user)
 	..()

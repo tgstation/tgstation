@@ -393,7 +393,7 @@ Possible to do for anyone motivated enough:
 		Hologram.copy_known_languages_from(user,replace = TRUE)
 		Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 		Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
-		Hologram.anchored = TRUE//So space wind cannot drag it.
+		Hologram.setAnchored(TRUE)//So space wind cannot drag it.
 		Hologram.name = "[user.name] (Hologram)"//If someone decides to right click.
 		Hologram.set_light(2)	//hologram lighting
 		move_hologram()
@@ -479,6 +479,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			continue
 		if(another.validate_location(T))
 			unset_holo(holo_owner)
+			if(another.masters && another.masters[holo_owner])
+				another.clear_holo(holo_owner)
 			another.set_holo(holo_owner, h)
 			return TRUE
 	return FALSE
@@ -549,7 +551,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	holder.selected_default_language = record.language
 	Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 	Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
-	Hologram.anchored = TRUE//So space wind cannot drag it.
+	Hologram.setAnchored(TRUE)//So space wind cannot drag it.
 	Hologram.name = "[record.caller_name] (Hologram)"//If someone decides to right click.
 	Hologram.set_light(2)	//hologram lighting
 	visible_message("<span class='notice'>A holographic image of [record.caller_name] flickers to life before your eyes!</span>")

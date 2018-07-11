@@ -81,7 +81,7 @@
 
 /obj/item/clothing/suit/wizrobe/yellow
 	name = "yellow wizard robe"
-	desc = "A magnificant yellow gem-lined robe that seems to radiate power."
+	desc = "A magnificent yellow gem-lined robe that seems to radiate power."
 	icon_state = "yellowwizard"
 	item_state = "yellowwizrobe"
 
@@ -219,7 +219,7 @@
 	icon_state = "electricity2"
 
 /obj/item/wizard_armour_charge/afterattack(obj/item/clothing/suit/space/hardsuit/shielded/wizard/W, mob/user)
-	..()
+	. = ..()
 	if(!istype(W))
 		to_chat(user, "<span class='warning'>The rune can only be used on battlemage armour!</span>")
 		return

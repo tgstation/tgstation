@@ -1,4 +1,0 @@
-author: "Cruix"
-delete-after: True
-changes: 
-  - bugfix: "Item attack animations can no longer be seen over darkness or camera static."

@@ -88,7 +88,7 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate3)
 "hF" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -104,7 +104,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/caravan/syndicate3)
 "ka" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /obj/machinery/light/small{
@@ -169,7 +169,7 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate3)
 "rV" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -185,7 +185,7 @@
 	},
 /area/shuttle/caravan/syndicate3)
 "sn" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
 /area/shuttle/caravan/syndicate3)
@@ -247,7 +247,7 @@
 /turf/open/floor/plasteel/darkred/side,
 /area/shuttle/caravan/syndicate3)
 "Cm" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /obj/machinery/firealarm{
@@ -278,7 +278,7 @@
 	},
 /area/shuttle/caravan/syndicate3)
 "EO" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /obj/machinery/airalarm/syndicate{
 	pixel_y = 24
 	},
@@ -319,9 +319,8 @@
 /obj/structure/chair/office/dark{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/syndicate{
-	environment_smash = 0;
-	name = "Syndicate Salvage Pilot"
+/mob/living/simple_animal/hostile/syndicate/ranged/pilot{
+	environment_smash = 0
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/syndicate3)

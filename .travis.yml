@@ -9,7 +9,7 @@ env:
     - BYOND_MINOR="1427"
     - NODE_VERSION="4"
     - RUST_G_VERSION="0.3.0"
-    - BSQL_VERSION="v1.2.0.0"
+    - BSQL_VERSION="v1.2.1.1"
 matrix:
   include:
     - env:
@@ -28,7 +28,6 @@ matrix:
       addons:
         apt:
           packages:
-            - libc6-i386
             - libstdc++6:i386
       cache:
         directories:
@@ -42,7 +41,6 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - libc6-i386
             - libstdc++6:i386
             - libssl-dev:i386
             - gcc-multilib
@@ -51,8 +49,9 @@ matrix:
             - libmariadbclient-dev:i386
       cache:
         directories:
+          - $HOME/.cargo
           - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
-          - $HOME/libmariadb
+          - $HOME/MariaDB
           - $HOME/.rustup
           - $HOME/.cargo
 
@@ -69,7 +68,7 @@ before_script:
 
 script:
   - tools/travis/check_filedirs.sh tgstation.dme
-  - tools/travis/build_tools.sh
-  - tools/travis/build_dependencies.sh
+  - tools/travis/build_tools.sh || travis_terminate 1
+  - tools/travis/build_dependencies.sh || travis_terminate 1
   - tools/travis/build_byond.sh
 

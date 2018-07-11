@@ -1,8 +1,10 @@
-//BSQL - DMAPI v1.1.0.0
+//BSQL - DMAPI v1.2.0.0
 
 //types of connections
 #define BSQL_CONNECTION_TYPE_MARIADB "MySql"
 #define BSQL_CONNECTION_TYPE_SQLSERVER "SqlServer"
+
+#define BSQL_DEFAULT_TIMEOUT 5
 
 //Call this before rebooting or shutting down your world to clean up gracefully. This invalidates all active connection and operation datums
 /world/proc/BSQL_Shutdown()
@@ -18,8 +20,10 @@ Called whenever a library call is made with verbose information, override and do
 /*
 Create a new database connection, does not perform the actual connect
   connection_type: The BSQL connection_type to use
+  asyncTimeout: The timeout to use for normal operations, 0 for infinite, defaults to BSQL_DEFAULT_TIMEOUT
+  blockingTimeout: The timeout to use for blocking operations, must be less than or equal to asyncTimeout, 0 for infinite, defaults to asyncTimeout
 */
-/datum/BSQL_Connection/New(connection_type)
+/datum/BSQL_Connection/New(connection_type, asyncTimeout, blockingTimeout)
 	return ..()
 
 /*
@@ -51,7 +55,7 @@ Starts an operation for a query
 */
 /datum/BSQL_Connection/proc/BeginQuery(query)
 	return
-	
+
 /*
 Checks if the operation is complete. This, in some cases must be called multiple times with false return before a result is present regardless of timespan. For best performance check it once per tick
 
@@ -61,7 +65,9 @@ Checks if the operation is complete. This, in some cases must be called multiple
 	return
 
 /*
-Blocks the entire game until the given operation completes. IsComplete should not be checked after calling this to avoid potential side effects
+Blocks the entire game until the given operation completes. IsComplete should not be checked after calling this to avoid potential side effects.
+
+Returns: TRUE on success, FALSE if the operation wait time exceeded the connection's blockingTimeout setting
 */
 /datum/BSQL_Operation/proc/WaitForCompletion()
 	return
@@ -72,6 +78,14 @@ Get the error message associated with an operation. Should not be used while IsC
  Returns: The error message, if any. null otherwise
 */
 /datum/BSQL_Operation/proc/GetError()
+	return
+
+/*
+Get the error code associated with an operation. Should not be used while IsComplete() returns FALSE
+
+ Returns: The error code, if any. null otherwise
+*/
+/datum/BSQL_Operation/proc/GetErrorCode()
 	return
 
 /*

@@ -151,7 +151,7 @@
 		return
 	var/obj/item/clothing/mask/cigarette/W = locate(/obj/item/clothing/mask/cigarette) in contents
 	if(W && contents.len > 0)
-		SendSignal(COMSIG_TRY_STORAGE_TAKE, W, user)
+		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, user)
 		user.put_in_hands(W)
 		contents -= W
 		to_chat(user, "<span class='notice'>You take \a [W] out of the pack.</span>")
@@ -190,7 +190,7 @@
 	if(cig)
 		if(M == user && contents.len > 0 && !user.wear_mask)
 			var/obj/item/clothing/mask/cigarette/W = cig
-			SendSignal(COMSIG_TRY_STORAGE_TAKE, W, M)
+			SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, M)
 			M.equip_to_slot_if_possible(W, SLOT_WEAR_MASK)
 			contents -= W
 			to_chat(user, "<span class='notice'>You take \a [W] out of the pack.</span>")
@@ -253,6 +253,18 @@
 	icon_state = "slime"
 	spawn_type = /obj/item/clothing/mask/cigarette/xeno
 
+/obj/item/storage/fancy/cigarettes/cigpack_cannabis
+	name = "\improper Freak Brothers' Special packet"
+	desc = "A label on the packaging reads, \"Endorsed by Phineas, Freddy and Franklin.\""
+	icon_state = "midori"
+	spawn_type = /obj/item/clothing/mask/cigarette/rollie/cannabis
+
+/obj/item/storage/fancy/cigarettes/cigpack_mindbreaker
+	name = "\improper Leary's Delight packet"
+	desc = "Banned in over 36 galaxies."
+	icon_state = "shadyjim"
+	spawn_type = /obj/item/clothing/mask/cigarette/rollie/mindbreaker
+
 /obj/item/storage/fancy/rollingpapers
 	name = "rolling paper pack"
 	desc = "A pack of Nanotrasen brand rolling papers."
@@ -307,13 +319,13 @@
 		icon_state = "[initial(icon_state)]"
 
 /obj/item/storage/fancy/cigarettes/cigars/cohiba
-	name = "\improper cohiba robusto cigar case"
+	name = "\improper Cohiba Robusto cigar case"
 	desc = "A case of imported Cohiba cigars, renowned for their strong flavor."
 	icon_state = "cohibacase"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/cohiba
 
 /obj/item/storage/fancy/cigarettes/cigars/havana
-	name = "\improper premium havanian cigar case"
+	name = "\improper premium Havanian cigar case"
 	desc = "A case of classy Havanian cigars."
 	icon_state = "cohibacase"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/havana
