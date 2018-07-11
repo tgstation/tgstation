@@ -75,20 +75,14 @@
 	sound_wi.stop()
 
 /datum/weather/ash_storm/proc/is_ash_immune(atom/L)
-	while (L && !isturf(L))
-		if(ismecha(L)) //Mechs are immune
-			return TRUE
-		if(ishuman(L)) //Are you immune?
-			var/mob/living/carbon/human/H = L
-			var/thermal_protection = H.get_thermal_protection()
-			if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
-				return TRUE
-		if(isliving(L))// if we're a non immune mob inside an immune mob we have to reconsider if that mob is immune to protect ourselves
-			var/mob/living/the_mob = L
-			if("ash" in the_mob.weather_immunities)
-				return TRUE
-		L = L.loc //Check parent items immunities (recurses up to the turf)
-	return FALSE //RIP you
+    while(L && !isturf(L))
+        if(isliving(L))
+            if(!can_weather_act(L)) //you're immune to ash-storms, harry!
+                return TRUE
+        if(ismecha(L))
+            return TRUE
+        L = L.loc // Pushing_Upwards.wav
+    return FALSE
 
 /datum/weather/ash_storm/weather_act(mob/living/L)
 	if(is_ash_immune(L))
