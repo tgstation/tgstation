@@ -24,19 +24,9 @@ You can of course, as always, ask for help at [#coderbus](irc://irc.rizon.net/co
 
 ## Meet the Team
 
-**Design Lead**
+**Headcoders**
 
-The Design Lead has the final say on what gameplay changes get into and out of the game. He or she has full veto power on any feature or balance additions, changes, or removals, and establishes a general, personally-preferred direction for the game.
-
-**Headcoder**
-
-The Headcoder is responsible for controlling, adding, and removing maintainers from the project. In addition to filling the role of a normal maintainer, they have sole authority on who becomes a maintainer, as well as who remains a maintainer and who does not.
-
-**Art Director**
-
-The Art Director controls sprites and aesthetic that get into the game. While sprites for brand-new additions are generally accepted regardless of quality, modified current art assets fall to the Art Director, who can decide whether or not a sprite tweak is both merited and a suitable replacement.
-
-They also control the general "perspective" of the game - how sprites should generally look, especially the angle from which they're viewed. An example of this is the [3/4 perspective](http://static.tvtropes.org/pmwiki/pub/images/kakarikovillage.gif), which is a bird's eye view from above the object being viewed.
+The Headcoders are responsible for controlling, adding, and removing maintainers from the project. In addition to filling the role of a normal maintainer, they have authority on who becomes a maintainer, as well as who remains a maintainer and who does not.
 
 **Maintainers**
 
