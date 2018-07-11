@@ -222,6 +222,9 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	else
 		return Query.Execute(async)
 
+/world/proc/BSQL_Debug(message)
+	log_world("BSQL_DEBUG: [message]")
+
 /datum/DBQuery
 	var/sql // The sql query being executed.
 	var/list/item  //list of data values populated by NextRow()
