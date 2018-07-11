@@ -1,0 +1,6 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "Plasma and wooden golems no longer need to breathe, same as all other golems."
+  - spellcheck: "Fixed wrong or incomplete golem spawn info texts."
+  - tweak: "Added more random golem names."
