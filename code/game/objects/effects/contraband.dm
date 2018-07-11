@@ -594,4 +594,9 @@
 	desc = "This informational poster teaches the viewer what carbon dioxide is."
 	icon_state = "poster35_legit"
 
+/obj/structure/sign/poster/official/termina
+	name = "Termina"
+	desc = "Termina is the biggest military contractor in known space."
+	icon_state = "poster36_legit"
+
 #undef PLACE_SPEED
