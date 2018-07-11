@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - bugfix: "Automatic emotes no longer spam you saying that you can't perform them while unconscious."
