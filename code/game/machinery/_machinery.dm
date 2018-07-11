@@ -227,7 +227,7 @@ Class Procs:
 			return FALSE
 		if(!Adjacent(user))
 			var/mob/living/carbon/H = user
-			if(istype(H) && H.has_dna() && !H.dna.check_mutation(TK))
+			if(!(istype(H) && H.has_dna() && H.dna.check_mutation(TK)))
 				return FALSE
 	return TRUE
 
