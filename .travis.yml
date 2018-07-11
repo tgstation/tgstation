@@ -47,7 +47,6 @@ matrix:
           - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
           - $HOME/libmariadb
           - $HOME/.rustup
-          - $HOME/.cargo
 
 install:
   - tools/travis/install_build_tools.sh
