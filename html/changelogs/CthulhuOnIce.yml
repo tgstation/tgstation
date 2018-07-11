@@ -1,6 +1,8 @@
 author: CthulhuOnIce
 changes: 
   - tweak: "More gamemodes on fewer pop"
-  - bugfix: "Fixed cluwnes"
+  - bugfix: "continuing work on cluwnes."
   - tweak: "Added a new sillytip."
+  - rscadd: "Added new hub messages, to say hello to the ss13 community."
+  - bugfix: "Actually fixed space wiki manuals, finally"
 delete-after: false
