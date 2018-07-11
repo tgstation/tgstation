@@ -29,8 +29,6 @@
 
 	var/outdoors = FALSE //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
 
-	var/totalbeauty = 0 //All beauty in this area combined, only includes indoor area.
-	var/beauty = 0 // Beauty average per open turf in the area
 	var/areasize = 0 //Size of the area in open turfs, only calculated for indoors areas.
 
 	var/power_equip = TRUE
@@ -135,7 +133,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /area/LateInitialize()
 	power_change()		// all machines set to current power level, also updates icon
-	update_beauty()
 
 /area/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -448,26 +445,22 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!T)
 		return 0
 
-	//Gravity forced on the atom
-	var/datum/component/forced_gravity/FG = GetComponent(/datum/component/forced_gravity)
-	if(FG)
-		if(!FG.ignore_space && isspaceturf(T))
-			return 0
-		else
-			return FG.gravity
+	var/list/forced_gravity = list()
+	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, T, forced_gravity)
+	if(!forced_gravity.len)
+		SEND_SIGNAL(T, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
+	if(forced_gravity.len)
+		var/max_grav
+		for(var/i in forced_gravity)
+			max_grav = max(max_grav, i)
+		if(max_grav)
+			return max_grav
 
-	//Gravity forced on the turf
-	FG = T.GetComponent(/datum/component/forced_gravity)
-	if(FG)
-		if(!FG.ignore_space && isspaceturf(T))
-			return 0
-		else
-			return FG.gravity
-
-	var/area/A = get_area(T)
 	if(isspaceturf(T)) // Turf never has gravity
 		return 0
-	else if(A.has_gravity) // Areas which always has gravity
+
+	var/area/A = get_area(T)
+	if(A.has_gravity) // Areas which always has gravity
 		return A.has_gravity
 	else
 		// There's a gravity generator on our z level
@@ -487,11 +480,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	valid_territory = FALSE
 	blob_allowed = FALSE
 	addSorted()
-
-/area/proc/update_beauty()
-	if(!areasize)
-		return FALSE
-	beauty = totalbeauty / areasize
 
 /area/proc/update_areasize()
 	if(outdoors)
