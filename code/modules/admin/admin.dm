@@ -157,7 +157,6 @@
 
 			body += "<br><br>"
 			body += "<b>Rudimentary transformation:</b><font size=2><br>These transformations only create a new mob type and copy stuff over. They do not take into account MMIs and similar mob-specific things. The buttons in 'Transformations' are preferred, when possible.</font><br>"
-			body += "<A href='?_src_=holder;[HrefToken()];simplemake=cluwne;mob=[REF(M)]'>Cluwne</A> | "
 			body += "<A href='?_src_=holder;[HrefToken()];simplemake=observer;mob=[REF(M)]'>Observer</A> | "
 			body += "\[ Alien: <A href='?_src_=holder;[HrefToken()];simplemake=drone;mob=[REF(M)]'>Drone</A>, "
 			body += "<A href='?_src_=holder;[HrefToken()];simplemake=/mob/living/simple_animal/hostile/retaliate/cluwne;mob=[REF(M)]'>Hunter</A>, "

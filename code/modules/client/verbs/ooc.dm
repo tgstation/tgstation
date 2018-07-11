@@ -56,9 +56,9 @@
 
 	var/keyname = key
 	if(prefs.unlock_content)
-		if(lowertext(key) in diamonddonators)
+		if(key in diamonddonators)
 			keyname = "<font color='[CONFIG_GET(string/diamonddonatecolor)]'><span class='ooc'>[icon2html('icons/donator_image/diamond.dmi', world)][key]</font>"
-		else if(lowertext(key) in donators)
+		else if(key in donators)
 			keyname = "<font color='[CONFIG_GET(string/donatecolor)]'><span class='ooc'>[icon2html('icons/donator_image/donator.dmi', world, "blag")][key]</font>"
 		else if(prefs.toggles & MEMBER_PUBLIC)
 			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : GLOB.normal_ooc_colour]'>[icon2html('icons/member_content.dmi', world, "blag")][keyname]</font>"
