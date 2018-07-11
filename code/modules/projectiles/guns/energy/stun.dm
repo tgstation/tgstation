@@ -43,3 +43,12 @@
 	desc = "An integrated disabler that draws from a cyborg's power cell. This weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	can_charge = 0
 	use_cyborg_cell = 1
+
+/obj/item/gun/energy/disabler/revolver
+	name = "disabler revolver"
+	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse. This one has a weaker power supply and focusing lens."
+	icon_state = "stunrevolver"
+	item_state = null
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler/revolver)
+	ammo_x_offset = 3
+
