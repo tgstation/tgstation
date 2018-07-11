@@ -105,6 +105,10 @@
 	update_areas()
 
 /datum/weather/proc/can_weather_act(mob/living/L) //Can this weather impact a mob?
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.get_thermal_protection() >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
+			return FALSE
 	var/turf/mob_turf = get_turf(L)
 	if(mob_turf && !(mob_turf.z in impacted_z_levels))
 		return
