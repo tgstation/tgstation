@@ -120,5 +120,5 @@
 	name = "Deet"
 	id = "deet"
 	results = list("deet" = 30)
-	required_reagents = list("carbon" = 15, "hydrogen" = 15, "oxygen" = 5)
+	required_reagents = list("carbon" = 3, "hydrogen" = 3, "oxygen" = 1)
 
