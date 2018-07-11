@@ -1,0 +1,5 @@
+author: "fludd12"
+delete-after: True
+changes: 
+  - rscadd: "You can now craft wooden barrels with 30 pieces of wood! They can hold up to 300u of reagents."
+  - rscadd: "Putting hydroponics-grown plants into the barrel lets you ferment them for alcohol! Some give bar drinks, while others simply give plain fruit wine."
