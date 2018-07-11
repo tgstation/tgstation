@@ -175,8 +175,11 @@
 				shuttle_spawns.Add(/obj/item/pizzabox/meat)
 				shuttle_spawns.Add(/obj/item/pizzabox/meat)
 				shuttle_spawns.Add(/obj/item/pizzabox/vegetable)
-				if(prob(10))
-					shuttle_spawns.Add(/obj/item/pizzabox/bomb)
+				if(prob(20))
+					if(prob(50))
+						shuttle_spawns.Add(/obj/item/pizzabox/bomb)
+					else
+						shuttle_spawns.Add(/obj/item/pizzabox/margherita/robo)
 				else
 					shuttle_spawns.Add(/obj/item/pizzabox/margherita)
 
