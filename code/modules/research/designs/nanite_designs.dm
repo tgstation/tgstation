@@ -432,60 +432,18 @@
 
 ////////////////////SENSOR NANITES//////////////////////////////////////
 
-/datum/design/nanites/sensor_high_health
-	name = "Health Sensor \[Above\]"
-	desc = "The nanites receive a signal when the host's health is above a certain percentage."
-	id = "sensor_high_health_nanites"
-	program_type = /datum/nanite_program/sensor/health_high
+/datum/design/nanites/sensor_health
+	name = "Health Sensor"
+	desc = "The nanites receive a signal when the host's health is above/below a certain percentage."
+	id = "sensor_health_nanites"
+	program_type = /datum/nanite_program/sensor/health
 	category = list("Sensor Nanites")
 
-/datum/design/nanites/sensor_low_health
-	name = "Health Sensor \[Below\]"
-	desc = "The nanites receive a signal when the host's health is below a certain percentage."
-	id = "sensor_low_health_nanites"
-	program_type = /datum/nanite_program/sensor/health_low
-	category = list("Sensor Nanites")
-
-/datum/design/nanites/sensor_high_brute
-	name = "Brute Sensor \[Above\]"
-	desc = "The nanites receive a signal when the host's brute damage is above a certain value."
-	id = "sensor_high_brute_nanites"
-	program_type = /datum/nanite_program/sensor/brute_high
-	category = list("Sensor Nanites")
-
-/datum/design/nanites/sensor_low_brute
-	name = "Brute Volume Sensor \[Below\]"
-	desc = "The nanites receive a signal when the host's brute damage is below a certain value."
-	id = "sensor_low_brute_nanites"
-	program_type = /datum/nanite_program/sensor/brute_low
-	category = list("Sensor Nanites")
-
-/datum/design/nanites/sensor_high_burn
-	name = "Burn Sensor \[Above\]"
-	desc = "The nanites receive a signal when the host's burn damage is above a certain value."
-	id = "sensor_high_burn_nanites"
-	program_type = /datum/nanite_program/sensor/burn_high
-	category = list("Sensor Nanites")
-
-/datum/design/nanites/sensor_low_burn
-	name = "Burn Volume Sensor \[Below\]"
-	desc = "The nanites receive a signal when the host's burn damage is below a certain value."
-	id = "sensor_low_burn_nanites"
-	program_type = /datum/nanite_program/sensor/burn_low
-	category = list("Sensor Nanites")
-
-/datum/design/nanites/sensor_high_tox
-	name = "Toxin Sensor \[Above\]"
-	desc = "The nanites receive a signal when the host's toxin damage is above a certain value."
-	id = "sensor_high_tox_nanites"
-	program_type = /datum/nanite_program/sensor/tox_high
-	category = list("Sensor Nanites")
-
-/datum/design/nanites/sensor_low_tox
-	name = "Toxin Volume Sensor \[Below\]"
-	desc = "The nanites receive a signal when the host's toxin damage is below a certain value."
-	id = "sensor_low_tox_nanites"
-	program_type = /datum/nanite_program/sensor/tox_low
+/datum/design/nanites/sensor_damage
+	name = "Damage Sensor"
+	desc = "The nanites receive a signal when a host's specific damage type is above/below a target value."
+	id = "sensor_damage_nanites"
+	program_type = /datum/nanite_program/sensor/damage
 	category = list("Sensor Nanites")
 
 /datum/design/nanites/sensor_crit
@@ -509,16 +467,9 @@
 	program_type = /datum/nanite_program/sensor/voice
 	category = list("Sensor Nanites")
 
-/datum/design/nanites/sensor_high_nanites
-	name = "Nanite Volume Sensor \[Above\]"
-	desc = "The nanites receive a signal when the nanite supply is above a certain percentage."
-	id = "sensor_high_nanites"
-	program_type = /datum/nanite_program/sensor/nanites_high
-	category = list("Sensor Nanites")
-
-/datum/design/nanites/sensor_low_nanites
-	name = "Nanite Volume Sensor \[Below\]"
-	desc = "The nanites receive a signal when the nanite supply is below a certain percentage."
-	id = "sensor_low_nanites"
-	program_type = /datum/nanite_program/sensor/nanites_low
+/datum/design/nanites/sensor__nanite_volume
+	name = "Nanite Volume Sensor"
+	desc = "The nanites receive a signal when the nanite supply is above/below a certain percentage."
+	id = "sensor_nanite_volume"
+	program_type = /datum/nanite_program/sensor/nanite_volume
 	category = list("Sensor Nanites")

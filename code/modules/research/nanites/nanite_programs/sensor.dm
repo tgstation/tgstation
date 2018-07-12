@@ -119,14 +119,15 @@
 		for(var/datum/nanite_program/relay/N in SSnanites.nanite_relays)
 			N.relay_signal(sent_code, relay_channel, "a [name] program")
 
-/datum/nanite_program/sensor/health_high
-	name = "Health Sensor \[Above\]"
-	desc = "The nanites receive a signal when the host's health is equal or above a target percentage."
-	extra_settings = list("Sent Code","Health Percent")
+/datum/nanite_program/sensor/health
+	name = "Health Sensor"
+	desc = "The nanites receive a signal when the host's health is above/below a target percentage."
+	extra_settings = list("Sent Code","Health Percent","Direction")
 	var/spent = FALSE
-	var/percent = 75
+	var/percent = 50
+	var/direction = "Above"
 
-/datum/nanite_program/sensor/health_high/set_extra_setting(user, setting)
+/datum/nanite_program/sensor/health/set_extra_setting(user, setting)
 	if(setting == "Sent Code")
 		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
 		if(isnull(new_code))
@@ -137,60 +138,36 @@
 		if(isnull(new_percent))
 			return
 		percent = CLAMP(round(new_percent, 1), -99, 100)
+	if(setting == "Direction")
+		if(direction == "Above")
+			direction = "Below"
+		else
+			direction = "Above"
 
-/datum/nanite_program/sensor/health_high/get_extra_setting(setting)
+/datum/nanite_program/sensor/health/get_extra_setting(setting)
 	if(setting == "Sent Code")
 		return sent_code
 	if(setting == "Health Percent")
 		return "[percent]%"
+	if(setting == "Direction")
+		return direction
 
-/datum/nanite_program/sensor/health_high/copy_extra_settings_to(datum/nanite_program/sensor/health_high/target)
+/datum/nanite_program/sensor/health/copy_extra_settings_to(datum/nanite_program/sensor/health/target)
 	target.sent_code = sent_code
 	target.percent = percent
+	target.direction = direction
 
-/datum/nanite_program/sensor/health_high/check_event()
+/datum/nanite_program/sensor/health/check_event()
 	var/health_percent = host_mob.health / host_mob.maxHealth * 100
-	if(health_percent >= percent)
-		if(!spent)
-			spent = TRUE
-			return TRUE
-		return FALSE
+	var/detected = FALSE
+	if(direction == "Above")
+		if(health_percent >= percent)
+			detected = TRUE
 	else
-		spent = FALSE
-		return FALSE
+		if(health_percent < percent)
+			detected = TRUE
 
-/datum/nanite_program/sensor/health_low
-	name = "Health Sensor \[Below\]"
-	desc = "The nanites receive a signal when the the host's health is below a target percentage."
-	extra_settings = list("Sent Code","Health Percent")
-	var/spent = FALSE
-	var/percent = 25
-
-/datum/nanite_program/sensor/health_low/set_extra_setting(user, setting)
-	if(setting == "Sent Code")
-		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
-		if(isnull(new_code))
-			return
-		sent_code = CLAMP(round(new_code, 1), 1, 9999)
-	if(setting == "Health Percent")
-		var/new_percent = input(user, "Set the health percentage:", name, null) as null|num
-		if(isnull(new_percent))
-			return
-		percent = CLAMP(round(new_percent, 1), -99, 100)
-
-/datum/nanite_program/sensor/health_low/get_extra_setting(setting)
-	if(setting == "Sent Code")
-		return sent_code
-	if(setting == "Health Percent")
-		return "[percent]%"
-
-/datum/nanite_program/sensor/health_low/copy_extra_settings_to(datum/nanite_program/sensor/health_low/target)
-	target.sent_code = sent_code
-	target.percent = percent
-
-/datum/nanite_program/sensor/health_low/check_event()
-	var/health_percent = host_mob.health / host_mob.maxHealth * 100
-	if(health_percent < percent)
+	if(detected)
 		if(!spent)
 			spent = TRUE
 			return TRUE
@@ -222,14 +199,15 @@
 /datum/nanite_program/sensor/death/on_death()
 	send_code()
 
-/datum/nanite_program/sensor/nanites_low
-	name = "Nanite Volume Sensor \[Below\]"
-	desc = "The nanites receive a signal when the nanite supply is below a certain percentage."
-	extra_settings = list("Sent Code","Nanite Percent")
+/datum/nanite_program/sensor/nanite_volume
+	name = "Nanite Volume Sensor"
+	desc = "The nanites receive a signal when the nanite supply is above/below a certain percentage."
+	extra_settings = list("Sent Code","Nanite Percent","Direction")
 	var/spent = FALSE
-	var/percent = 25
+	var/percent = 50
+	var/direction = "Above"
 
-/datum/nanite_program/sensor/nanites_low/set_extra_setting(user, setting)
+/datum/nanite_program/sensor/nanite_volume/set_extra_setting(user, setting)
 	if(setting == "Sent Code")
 		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
 		if(isnull(new_code))
@@ -240,20 +218,37 @@
 		if(isnull(new_percent))
 			return
 		percent = CLAMP(round(new_percent, 1), 1, 100)
+	if(setting == "Direction")
+		if(direction == "Above")
+			direction = "Below"
+		else
+			direction = "Above"
 
-/datum/nanite_program/sensor/nanites_low/get_extra_setting(setting)
+/datum/nanite_program/sensor/nanite_volume/get_extra_setting(setting)
 	if(setting == "Sent Code")
 		return sent_code
 	if(setting == "Nanite Percent")
 		return "[percent]%"
+	if(setting == "Direction")
+		return direction
 
-/datum/nanite_program/sensor/nanites_low/copy_extra_settings_to(datum/nanite_program/sensor/nanites_low/target)
+/datum/nanite_program/sensor/nanite_volume/copy_extra_settings_to(datum/nanite_program/sensor/nanite_volume/target)
 	target.sent_code = sent_code
 	target.percent = percent
+	target.direction = direction
 
-/datum/nanite_program/sensor/nanites_low/check_event()
+/datum/nanite_program/sensor/nanite_volume/check_event()
 	var/nanite_percent = (nanites.nanite_volume - nanites.safety_threshold)/(nanites.max_nanites - nanites.safety_threshold)*100
-	if(nanite_percent <= percent)
+	var/detected = FALSE
+
+	if(direction == "Above")
+		if(nanite_percent >= percent)
+			detected = TRUE
+	else
+		if(nanite_percent < percent)
+			detected = TRUE
+
+	if(detected)
 		if(!spent)
 			spent = TRUE
 			return TRUE
@@ -262,38 +257,77 @@
 		spent = FALSE
 		return FALSE
 
-/datum/nanite_program/sensor/nanites_high
-	name = "Nanite Volume Sensor \[Above\]"
-	desc = "The nanites receive a signal when the nanite supply is above a certain percentage."
-	extra_settings = list("Sent Code","Nanite Percent")
+/datum/nanite_program/sensor/damage
+	name = "Damage Sensor"
+	desc = "The nanites receive a signal when a host's specific damage type is above/below a target value."
+	extra_settings = list("Sent Code","Damage Type","Damage","Direction")
 	var/spent = FALSE
-	var/percent = 75
+	var/damage_type = "Brute"
+	var/damage = 50
+	var/direction = "Above"
 
-/datum/nanite_program/sensor/nanites_high/set_extra_setting(user, setting)
+/datum/nanite_program/sensor/damage/set_extra_setting(user, setting)
 	if(setting == "Sent Code")
 		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
 		if(isnull(new_code))
 			return
 		sent_code = CLAMP(round(new_code, 1), 1, 9999)
-	if(setting == "Nanite Percent")
-		var/new_percent = input(user, "Set the nanite percentage:", name, null) as null|num
-		if(isnull(new_percent))
+	if(setting == "Damage")
+		var/new_damage = input(user, "Set the damage threshold:", name, null) as null|num
+		if(isnull(new_damage))
 			return
-		percent = CLAMP(round(new_percent, 1), 1, 100)
+		damage = CLAMP(round(new_damage, 1), 0, 500)
+	if(setting == "Damage Type")
+		var/list/damage_types = list("Brute","Burn","Toxin","Oxygen","Cellular")
+		var/new_damage_type = input("Choose the damage type", name) as null|anything in damage_types
+		if(!new_damage_type)
+			return
+		damage_type = new_damage_type
+	if(setting == "Direction")
+		if(direction == "Above")
+			direction = "Below"
+		else
+			direction = "Above"
 
-/datum/nanite_program/sensor/nanites_high/get_extra_setting(setting)
+/datum/nanite_program/sensor/damage/get_extra_setting(setting)
 	if(setting == "Sent Code")
 		return sent_code
-	if(setting == "Nanite Percent")
-		return "[percent]%"
+	if(setting == "Damage")
+		return damage
+	if(setting == "Damage Type")
+		return damage_type
+	if(setting == "Direction")
+		return direction
 
-/datum/nanite_program/sensor/nanites_high/copy_extra_settings_to(datum/nanite_program/sensor/nanites_high/target)
+/datum/nanite_program/sensor/damage/copy_extra_settings_to(datum/nanite_program/sensor/damage/target)
 	target.sent_code = sent_code
-	target.percent = percent
+	target.damage = damage
+	target.damage_type = damage_type
+	target.direction = direction
 
-/datum/nanite_program/sensor/nanites_high/check_event()
-	var/nanite_percent = (nanites.nanite_volume - nanites.safety_threshold)/(nanites.max_nanites - nanites.safety_threshold)*100
-	if(nanite_percent >= percent)
+/datum/nanite_program/sensor/damage/check_event()
+	var/reached_threshold = FALSE
+	var/check_above = (direction == "Above")
+	var/damage_amt = 0
+	switch(damage_type)
+		if("Brute")
+			damage_amt = host_mob.getBruteLoss()
+		if("Burn")
+			damage_amt = host_mob.getFireLoss()
+		if("Toxin")
+			damage_amt = host_mob.getToxLoss()
+		if("Oxygen")
+			damage_amt = host_mob.getOxyLoss()
+		if("Cellular")
+			damage_amt = host_mob.getCloneLoss()
+
+	if(damage_amt >= damage)
+		if(check_above)
+			reached_threshold = TRUE
+	else if(!check_above)
+		reached_threshold = TRUE
+
+	if(reached_threshold)
 		if(!spent)
 			spent = TRUE
 			return TRUE
@@ -302,240 +336,6 @@
 		spent = FALSE
 		return FALSE
 
-/datum/nanite_program/sensor/brute_high
-	name = "Brute Sensor \[Above\]"
-	desc = "The nanites receive a signal when the host's brute damage is equal or above a target value."
-	extra_settings = list("Sent Code","Brute Damage")
-	var/spent = FALSE
-	var/brute = 50
-
-/datum/nanite_program/sensor/brute_high/set_extra_setting(user, setting)
-	if(setting == "Sent Code")
-		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
-		if(isnull(new_code))
-			return
-		sent_code = CLAMP(round(new_code, 1), 1, 9999)
-	if(setting == "Brute Damage")
-		var/new_brute = input(user, "Set the brute threshold:", name, null) as null|num
-		if(isnull(new_brute))
-			return
-		brute = CLAMP(round(new_brute, 1), 0, 500)
-
-/datum/nanite_program/sensor/brute_high/get_extra_setting(setting)
-	if(setting == "Sent Code")
-		return sent_code
-	if(setting == "Brute Damage")
-		return brute
-
-/datum/nanite_program/sensor/brute_high/copy_extra_settings_to(datum/nanite_program/sensor/brute_high/target)
-	target.sent_code = sent_code
-	target.brute = brute
-
-/datum/nanite_program/sensor/brute_high/check_event()
-	if(host_mob.getBruteLoss() >= brute)
-		if(!spent)
-			spent = TRUE
-			return TRUE
-		return FALSE
-	else
-		spent = FALSE
-		return FALSE
-
-/datum/nanite_program/sensor/brute_low
-	name = "Brute Sensor \[Below\]"
-	desc = "The nanites receive a signal when the the host's brute damage is below a target value."
-	extra_settings = list("Sent Code","Brute Damage")
-	var/spent = FALSE
-	var/brute = 50
-
-/datum/nanite_program/sensor/brute_low/set_extra_setting(user, setting)
-	if(setting == "Sent Code")
-		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
-		if(isnull(new_code))
-			return
-		sent_code = CLAMP(round(new_code, 1), 1, 9999)
-	if(setting == "Brute Damage")
-		var/new_brute = input(user, "Set the brute threshold:", name, null) as null|num
-		if(isnull(new_brute))
-			return
-		brute = CLAMP(round(new_brute, 1), 0, 500)
-
-/datum/nanite_program/sensor/brute_low/get_extra_setting(setting)
-	if(setting == "Sent Code")
-		return sent_code
-	if(setting == "Brute Damage")
-		return brute
-
-/datum/nanite_program/sensor/brute_low/copy_extra_settings_to(datum/nanite_program/sensor/brute_low/target)
-	target.sent_code = sent_code
-	target.brute = brute
-
-/datum/nanite_program/sensor/brute_low/check_event()
-	if(host_mob.getBruteLoss() < brute)
-		if(!spent)
-			spent = TRUE
-			return TRUE
-		return FALSE
-	else
-		spent = FALSE
-		return FALSE
-
-/datum/nanite_program/sensor/burn_high
-	name = "Burn Sensor \[Above\]"
-	desc = "The nanites receive a signal when the host's burn damage is equal or above a target value."
-	extra_settings = list("Sent Code","Burn Damage")
-	var/spent = FALSE
-	var/burn = 50
-
-/datum/nanite_program/sensor/burn_high/set_extra_setting(user, setting)
-	if(setting == "Sent Code")
-		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
-		if(isnull(new_code))
-			return
-		sent_code = CLAMP(round(new_code, 1), 1, 9999)
-	if(setting == "Burn Damage")
-		var/new_burn = input(user, "Set the burn threshold:", name, null) as null|num
-		if(isnull(new_burn))
-			return
-		burn = CLAMP(round(new_burn, 1), 0, 500)
-
-/datum/nanite_program/sensor/burn_high/get_extra_setting(setting)
-	if(setting == "Sent Code")
-		return sent_code
-	if(setting == "Burn Damage")
-		return burn
-
-/datum/nanite_program/sensor/burn_high/copy_extra_settings_to(datum/nanite_program/sensor/burn_high/target)
-	target.sent_code = sent_code
-	target.burn = burn
-
-/datum/nanite_program/sensor/burn_high/check_event()
-	if(host_mob.getFireLoss() >= burn)
-		if(!spent)
-			spent = TRUE
-			return TRUE
-		return FALSE
-	else
-		spent = FALSE
-		return FALSE
-
-/datum/nanite_program/sensor/burn_low
-	name = "Burn Sensor \[Below\]"
-	desc = "The nanites receive a signal when the the host's burn damage is below a target value."
-	extra_settings = list("Sent Code","Burn Damage")
-	var/spent = FALSE
-	var/burn = 50
-
-/datum/nanite_program/sensor/burn_low/set_extra_setting(user, setting)
-	if(setting == "Sent Code")
-		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
-		if(isnull(new_code))
-			return
-		sent_code = CLAMP(round(new_code, 1), 1, 9999)
-	if(setting == "Burn Damage")
-		var/new_burn = input(user, "Set the burn threshold:", name, null) as null|num
-		if(isnull(new_burn))
-			return
-		burn = CLAMP(round(new_burn, 1), 0, 500)
-
-/datum/nanite_program/sensor/burn_low/get_extra_setting(setting)
-	if(setting == "Sent Code")
-		return sent_code
-	if(setting == "Burn Damage")
-		return burn
-
-/datum/nanite_program/sensor/burn_low/copy_extra_settings_to(datum/nanite_program/sensor/burn_low/target)
-	target.sent_code = sent_code
-	target.burn = burn
-
-/datum/nanite_program/sensor/burn_low/check_event()
-	if(host_mob.getFireLoss() < burn)
-		if(!spent)
-			spent = TRUE
-			return TRUE
-		return FALSE
-	else
-		spent = FALSE
-		return FALSE
-
-/datum/nanite_program/sensor/tox_high
-	name = "Toxin Sensor \[Above\]"
-	desc = "The nanites receive a signal when the host's toxin damage is equal or above a target value."
-	extra_settings = list("Sent Code","Toxin Damage")
-	var/spent = FALSE
-	var/toxin = 50
-
-/datum/nanite_program/sensor/tox_high/set_extra_setting(user, setting)
-	if(setting == "Sent Code")
-		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
-		if(isnull(new_code))
-			return
-		sent_code = CLAMP(round(new_code, 1), 1, 9999)
-	if(setting == "Toxin Damage")
-		var/new_toxin = input(user, "Set the toxin threshold:", name, null) as null|num
-		if(isnull(new_toxin))
-			return
-		toxin = CLAMP(round(new_toxin, 1), 0, 500)
-
-/datum/nanite_program/sensor/tox_high/get_extra_setting(setting)
-	if(setting == "Sent Code")
-		return sent_code
-	if(setting == "Toxin Damage")
-		return toxin
-
-/datum/nanite_program/sensor/tox_high/copy_extra_settings_to(datum/nanite_program/sensor/tox_high/target)
-	target.sent_code = sent_code
-	target.toxin = toxin
-
-/datum/nanite_program/sensor/tox_high/check_event()
-	if(host_mob.getToxLoss() >= toxin)
-		if(!spent)
-			spent = TRUE
-			return TRUE
-		return FALSE
-	else
-		spent = FALSE
-		return FALSE
-
-/datum/nanite_program/sensor/tox_low
-	name = "Toxin Sensor \[Below\]"
-	desc = "The nanites receive a signal when the the host's toxin damage is below a target value."
-	extra_settings = list("Sent Code","Toxin Damage")
-	var/spent = FALSE
-	var/toxin = 50
-
-/datum/nanite_program/sensor/tox_low/set_extra_setting(user, setting)
-	if(setting == "Sent Code")
-		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
-		if(isnull(new_code))
-			return
-		sent_code = CLAMP(round(new_code, 1), 1, 9999)
-	if(setting == "Toxin Damage")
-		var/new_toxin = input(user, "Set the toxin threshold:", name, null) as null|num
-		if(isnull(new_toxin))
-			return
-		toxin = CLAMP(round(new_toxin, 1), 0, 500)
-
-/datum/nanite_program/sensor/tox_low/get_extra_setting(setting)
-	if(setting == "Sent Code")
-		return sent_code
-	if(setting == "Toxin Damage")
-		return toxin
-
-/datum/nanite_program/sensor/tox_low/copy_extra_settings_to(datum/nanite_program/sensor/tox_low/target)
-	target.sent_code = sent_code
-	target.toxin = toxin
-
-/datum/nanite_program/sensor/tox_low/check_event()
-	if(host_mob.getToxLoss() < toxin)
-		if(!spent)
-			spent = TRUE
-			return TRUE
-		return FALSE
-	else
-		spent = FALSE
-		return FALSE
-		
 /datum/nanite_program/sensor/voice
 	name = "Voice Sensor"
 	desc = "Sends a signal when the nanites hear a determined word or sentence."
