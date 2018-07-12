@@ -4,7 +4,7 @@
 /datum/unit_test/reagent_checker
 
 /datum/unit_test/reagent_checker/Run()
-	locs = block(run_loc_bottom_left, run_loc_top_right)
+	var/locs = block(run_loc_bottom_left, run_loc_top_right)
 	build_chemical_reactions_list()
 	build_chemical_reagent_list()
 	var/list/reactions
