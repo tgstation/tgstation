@@ -13,8 +13,10 @@
 #
 #This script requires an internet connection to function
 #Sometimes byond.com fails to return the page for a valid ckey, this can be a temporary problem and may be resolved by rerunning the script
-#To make the script only iterate on ckeys that failed to parse, use the --onlynull optional argument
-#You can also instead have the script replace a missing key with ckey the --useckey optional argument
+#You can have the script use the existing ckey instead if the key is unable to be parsed with the --useckey optional argument
+#To make the script only iterate on rows that failed to parse a ckey and have a null byond_key column, use the --onlynull optional argument
+#To make the script only iterate on rows that have a matching ckey and byond_key column, use the --onlyckeymatch optional argument
+#The --onlynull and --onlyckeymatch arguments are mutually exclusive, the script can't be run with both of them enabled
 #
 #It's safe to run this script with your game server(s) active.
 
@@ -36,18 +38,24 @@ parser.add_argument("password", help="MySQL login password")
 parser.add_argument("database", help="Database name")
 parser.add_argument("playertable", help="Name of the player table (remember a prefix if you use one)")
 parser.add_argument("--useckey", help="Use the player's ckey for their key if unable to contact or parse their member page", action="store_true")
-parser.add_argument("--onlynull", help="Only try to update rows if their byond_key column is null", action="store_true")
+group = parser.add_mutually_exclusive_group()
+group.add_argument("--onlynull", help="Only try to update rows if their byond_key column is null, mutually exclusive with --onlyckeymatch", action="store_true")
+group.add_argument("--onlyckeymatch", help="Only try to update rows that have matching ckey and byond_key columns from the --useckey argument, mutually exclusive with --onlynull", action="store_true")
 args = parser.parse_args()
-only_null = ""
+where = ""
 if args.onlynull:
-    only_null = " WHERE byond_key IS NULL"
+    where = " WHERE byond_key IS NULL"
+if args.onlyckeymatch:
+    where = " WHERE byond_key = ckey"
 db=MySQLdb.connect(host=args.address, user=args.username, passwd=args.password, db=args.database)
 cursor=db.cursor()
 player_table = args.playertable
-cursor.execute("SELECT ckey FROM {0}{1}".format(player_table, only_null))
+cursor.execute("SELECT ckey FROM {0}{1}".format(player_table, where))
 ckey_list = cursor.fetchall()
 failed_ckeys = []
 start_time = datetime.now()
+success = 0
+fail = 0
 print("Beginning script at {0}".format(start_time.strftime("%Y-%m-%d %H:%M:%S")))
 if not ckey_list:
     print("Query returned no rows")
@@ -58,7 +66,9 @@ for current_ckey in ckey_list:
     match = re.search("\tkey = \"(.+)\"", data)
     if match:
         key = match.group(1)
+        success += 1
     else:
+        fail += 1
         failed_ckeys.append(current_ckey[0])
         msg = "Failed to parse a key for {0}".format(current_ckey[0])
         if args.useckey:
@@ -78,4 +88,5 @@ if failed_ckeys:
     else:
         print("The following ckeys failed to parse a key and were skipped:")
     print("\n".join(failed_ckeys))
+    print("Keys successfully parsed: {0}    Keys failed parsing: {1}".format(success, fail))
 cursor.close()
