@@ -246,6 +246,8 @@
 				continue
 			if(istype(AM,/obj/structure/table))
 				continue
+			if(istype(AM,/obj/structure/window) && !istype(AM,/obj/structure/window/fulltile))
+				continue
 			if(AM.density)
 				to_chat(usr, "<span class='warning'>Theres a [AM.name] here. You cant make a [R.title] here!</span>")
 				return FALSE
