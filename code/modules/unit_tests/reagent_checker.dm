@@ -30,6 +30,7 @@
 					test_beaker = new /obj/item/reagent_containers/glass/beaker/bluespace(pick(locs))
 					test_beaker.reagents.maximum_volume = TEST_BEAKER_SIZE
 				var/datum/chemical_reaction/finebros = RE
+				log_world("Testing reaction [finebros.name]")
 				finebros.required_container = null
 				finebros.required_other = 0
 				test_beaker.reagents.set_reacting(FALSE)
