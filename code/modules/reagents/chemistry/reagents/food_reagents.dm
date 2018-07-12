@@ -19,6 +19,10 @@
 	M.nutrition += nutriment_factor
 	holder.remove_reagent(src.id, metabolization_rate)
 
+/datum/reagent/consumable/reaction_mob(mob/living/carbon/M, method)
+	if(method == INGEST && reagent_state == LIQUID)
+		M.thirst += nutriment_factor * DRINK_THIRST_FACTOR
+
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"
 	id = "nutriment"
@@ -336,6 +340,7 @@
 /datum/reagent/consumable/sodiumchloride/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!istype(M))
 		return
+	M.thirst -= 0.04
 	if(M.has_bane(BANE_SALT))
 		M.mind.disrupt_spells(-200)
 
@@ -575,7 +580,7 @@
   if(iscarbon(M) && (method in list(TOUCH, VAPOR, PATCH)))
     var/mob/living/carbon/C = M
     for(var/s in C.surgeries)
-      var/datum/surgery/S = s 
+      var/datum/surgery/S = s
       S.success_multiplier = max(0.6, S.success_multiplier) // +60% success probability on each step, compared to bacchus' blessing's ~46%
   ..()
 

@@ -182,6 +182,21 @@
 	desc = "ABSOLUTELY DISGUSTIN'"
 	icon_state = "gross3"
 
+/obj/screen/alert/overhydrated
+	name = "Overhydrated"
+	desc = "You drank way too much!"
+	icon_state = "overhydrated"
+
+/obj/screen/alert/thirsty
+	name = "Thirsty"
+	desc = "You're kind of thirsty."
+	icon_state = "thirsty"
+
+/obj/screen/alert/dehydrated
+	name = "Dehydrated"
+	desc = "You need a drink, bad."
+	icon_state = "dehydrated"
+
 /obj/screen/alert/hot
 	name = "Too Hot"
 	desc = "You're flaming hot! Get somewhere cooler and take off any insulating clothing like a fire suit."

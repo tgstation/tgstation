@@ -151,6 +151,13 @@
 	emote_type = EMOTE_AUDIBLE
 	stat_allowed = UNCONSCIOUS
 
+/datum/emote/living/pant
+	key = "pant"
+	key_third_person = "pants"
+	message = "pants!"
+	emote_type = EMOTE_AUDIBLE
+	stat_allowed = UNCONSCIOUS
+
 /datum/emote/living/giggle
 	key = "giggle"
 	key_third_person = "giggles"

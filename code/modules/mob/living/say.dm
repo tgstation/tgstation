@@ -334,6 +334,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(cultslurring)
 		message = cultslur(message)
 
+	if(thirst <= THIRST_LEVEL_DEHYDRATED)
+		message = thirstymessage(message)
+
 	message = capitalize(message)
 
 	return message
