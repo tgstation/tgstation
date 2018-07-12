@@ -249,9 +249,7 @@
 			if(istype(AM,/obj/structure/window))
 				var/obj/structure/window/W = AM
 				var/obj/structure/window/O = new R.result_type
-				if(istype(O,/obj/structure/window) && O.fulltile)
-					//Do nuthin and move on
-				else if(!W.fulltile)
+				if(!W.fulltile && !(istype(O,/obj/structure/window) && O.fulltile))
 					continue
 			if(AM.density)
 				to_chat(usr, "<span class='warning'>Theres a [AM.name] here. You cant make a [R.title] here!</span>")
