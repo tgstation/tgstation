@@ -746,7 +746,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 //trying to insert or remove an id
 /obj/item/pda/proc/id_check(mob/user, obj/item/card/id/I)
 	if(!I)
-		if(id && user.Adjacent(src))
+		if(id && src in usr.contents)
 			remove_id()
 			return TRUE
 		else
