@@ -106,19 +106,19 @@
 		l[i] = amount
 	modify_point_list(l)
 
-/datum/techweb/proc/copy_research_to(datum/techweb/reciever, unlock_hidden = TRUE)				//Adds any missing research to theirs.
+/datum/techweb/proc/copy_research_to(datum/techweb/receiver, unlock_hidden = TRUE)				//Adds any missing research to theirs.
 	for(var/i in researched_nodes)
 		CHECK_TICK
-		reciever.research_node_id(i, TRUE, FALSE)
+		receiver.research_node_id(i, TRUE, FALSE)
 	for(var/i in researched_designs)
 		CHECK_TICK
-		reciever.add_design_by_id(i)
+		receiver.add_design_by_id(i)
 	if(unlock_hidden)
-		for(var/i in reciever.hidden_nodes)
+		for(var/i in receiver.hidden_nodes)
 			CHECK_TICK
 			if(!hidden_nodes[i])
-				reciever.hidden_nodes -= i		//We can see it so let them see it too.
-	reciever.recalculate_nodes()
+				receiver.hidden_nodes -= i		//We can see it so let them see it too.
+	receiver.recalculate_nodes()
 
 /datum/techweb/proc/copy()
 	var/datum/techweb/returned = new()

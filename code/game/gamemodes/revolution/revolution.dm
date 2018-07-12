@@ -58,6 +58,7 @@
 		lenin.restricted_roles = restricted_jobs
 
 	if(headrev_candidates.len < required_enemies)
+		setup_error = "Not enough headrev candidates"
 		return FALSE
 
 	return TRUE

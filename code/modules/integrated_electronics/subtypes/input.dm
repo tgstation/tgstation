@@ -76,6 +76,25 @@
 		push_data()
 		activate_pin(1)
 
+/obj/item/integrated_circuit/input/colorpad
+	name = "color pad"
+	desc = "This small color pad allows someone to input a hexadecimal color into the system."
+	icon_state = "colorpad"
+	complexity = 2
+	can_be_asked_input = 1
+	inputs = list()
+	outputs = list("color entered" = IC_PINTYPE_STRING)
+	activators = list("on entered" = IC_PINTYPE_PULSE_IN)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	power_draw_per_use = 4
+
+/obj/item/integrated_circuit/input/colorpad/ask_for_input(mob/user)
+	var/new_color = input(user, "Enter a color, please.", "Color", "#ffffff") as color|null
+	if(new_color && user.IsAdvancedToolUser())
+		set_pin_data(IC_OUTPUT, 1, new_color)
+		push_data()
+		activate_pin(1)
+
 /obj/item/integrated_circuit/input/med_scanner
 	name = "integrated medical analyser"
 	desc = "A very small version of the common medical analyser. This allows the machine to know how healthy someone is."
@@ -744,7 +763,7 @@
 	data.standard_format_data(message, text, key)
 	ntnet_send(data)
 
-/obj/item/integrated_circuit/input/ntnet_recieve(datum/netdata/data)
+/obj/item/integrated_circuit/input/ntnet_receive(datum/netdata/data)
 	set_pin_data(IC_OUTPUT, 1, data.sender_id)
 	set_pin_data(IC_OUTPUT, 2, data.data["data"])
 	set_pin_data(IC_OUTPUT, 3, data.data["data_secondary"])
@@ -755,7 +774,7 @@
 	activate_pin(2)
 
 /obj/item/integrated_circuit/input/ntnet_advanced
-	name = "Low level NTNet transreciever"
+	name = "Low level NTNet transreceiver"
 	desc = "Enables the sending and receiving of messages over NTNet via packet data protocol. Allows advanced control of message contents and signalling. Must use associative lists. Outputs associative list. Has a slower transmission rate than normal NTNet circuits, due to increased data processing complexity."
 	extended_desc = "Data can be sent or received using the second pin on each side, \
 	with additonal data reserved for the third pin. When a message is received, the second activation pin \
@@ -768,7 +787,7 @@
 		"target NTNet addresses"= IC_PINTYPE_STRING,
 		"data"					= IC_PINTYPE_LIST,
 		)
-	outputs = list("recieved data" = IC_PINTYPE_LIST, "is_broadcast" = IC_PINTYPE_BOOLEAN)
+	outputs = list("received data" = IC_PINTYPE_LIST, "is_broadcast" = IC_PINTYPE_BOOLEAN)
 	activators = list("send data" = IC_PINTYPE_PULSE_IN, "on data received" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	action_flags = IC_ACTION_LONG_RANGE
@@ -792,7 +811,7 @@
 	data.data = message
 	ntnet_send(data)
 
-/obj/item/integrated_circuit/input/ntnet_advanced/ntnet_recieve(datum/netdata/data)
+/obj/item/integrated_circuit/input/ntnet_advanced/ntnet_receive(datum/netdata/data)
 	set_pin_data(IC_OUTPUT, 1, data.data)
 	set_pin_data(IC_OUTPUT, 2, data.broadcast)
 	push_data()

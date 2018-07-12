@@ -228,7 +228,7 @@
 			target_candidates += player.mind
 
 	if(target_candidates.len == 0)
-		message_admins("Cult Sacrifice: Could not find unconvertable target, checking for convertable target.")
+		message_admins("Cult Sacrifice: Could not find unconvertible target, checking for convertible target.")
 		for(var/mob/living/carbon/human/player in GLOB.player_list)
 			if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/cult) && player.stat != DEAD)
 				target_candidates += player.mind
@@ -248,7 +248,7 @@
 
 		objectives += sac_objective
 	else
-		message_admins("Cult Sacrifice: Could not find unconvertable or convertable target. WELP!")
+		message_admins("Cult Sacrifice: Could not find unconvertible or convertible target. WELP!")
 
 
 	//SUMMON OBJECTIVE

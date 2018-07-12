@@ -532,7 +532,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		if(!is_station_level(AA.z))
 			continue
 		AA.obj_flags |= EMAGGED
-	to_chat(owner, "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode.</span>")
+	to_chat(owner, "<span class='notice'>All air alarm safeties on the station have been overridden. Air alarms may now use the Flood environmental mode.</span>")
 	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
 
 
@@ -555,6 +555,9 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/action/innate/ai/ranged/overload_machine/proc/detonate_machine(obj/machinery/M)
 	if(M && !QDELETED(M))
+		var/turf/T = get_turf(M)
+		message_admins("[ADMIN_LOOKUPFLW(usr)] overloaded [M.name] at [ADMIN_VERBOSEJMP(T)].")
+		log_game("[key_name(usr)] overloaded [M.name] at [AREACOORD(T)].")
 		explosion(get_turf(M), 0, 2, 3, 0)
 		if(M) //to check if the explosion killed it before we try to delete it
 			qdel(M)
@@ -622,7 +625,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		to_chat(ranged_ability_user, "<span class='warning'>You can only animate machines!</span>")
 		return
 	if(!target.can_be_overridden() || is_type_in_typecache(target, GLOB.blacklisted_malf_machines))
-		to_chat(ranged_ability_user, "<span class='warning'>That machine can't be overriden!</span>")
+		to_chat(ranged_ability_user, "<span class='warning'>That machine can't be overridden!</span>")
 		return
 	ranged_ability_user.playsound_local(ranged_ability_user, 'sound/misc/interference.ogg', 50, 0)
 	attached_action.adjust_uses(-1)
@@ -803,7 +806,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		desc = "[initial(desc)] There are [uses] reactivations remaining."
 
 
-//Upgrade Camera Network: EMP-proofs all cameras, in addition to giving them x-ray vision.
+//Upgrade Camera Network: EMP-proofs all cameras, in addition to giving them X-ray vision.
 /datum/AI_Module/large/upgrade_cameras
 	module_name = "Upgrade Camera Network"
 	mod_pick_name = "upgradecam"

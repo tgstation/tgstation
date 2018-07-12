@@ -8,8 +8,8 @@
 	offset_x = rand(-max_x, max_x)
 	offset_y = rand(-max_y, max_y)
 
-	RegisterSignal(COMSIG_MOVABLE_CROSSED, .proc/join_swarm)
-	RegisterSignal(COMSIG_MOVABLE_UNCROSSED, .proc/leave_swarm)
+	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/join_swarm)
+	RegisterSignal(parent, COMSIG_MOVABLE_UNCROSSED, .proc/leave_swarm)
 
 /datum/component/swarming/proc/join_swarm(atom/movable/AM)
 	GET_COMPONENT_FROM(other_swarm, /datum/component/swarming, AM)

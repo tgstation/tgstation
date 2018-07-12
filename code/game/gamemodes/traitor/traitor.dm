@@ -56,7 +56,13 @@
 		log_game("[key_name(traitor)] has been selected as a [traitor_name]")
 		antag_candidates.Remove(traitor)
 
-	return !traitors_required || pre_traitors.len > 0
+	var/enough_tators = !traitors_required || pre_traitors.len > 0
+
+	if(!enough_tators)
+		setup_error = "Not enough traitor candidates"
+		return FALSE
+	else
+		return TRUE
 
 
 /datum/game_mode/traitor/post_setup()

@@ -53,6 +53,7 @@
 			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 
 /obj/item/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
+	. = ..()
 	if((!proximity) || !check_allowed_items(target,target_self=1))
 		return
 
@@ -286,10 +287,16 @@
 
 /obj/item/reagent_containers/glass/bucket/equipped(mob/user, slot)
 	..()
-	if(slot == SLOT_HEAD && reagents.total_volume)
-		to_chat(user, "<span class='userdanger'>[src]'s contents spill all over you!</span>")
-		reagents.reaction(user, TOUCH)
-		reagents.clear_reagents()
+	if (slot == SLOT_HEAD)
+		if(reagents.total_volume)
+			to_chat(user, "<span class='userdanger'>[src]'s contents spill all over you!</span>")
+			reagents.reaction(user, TOUCH)
+			reagents.clear_reagents()
+		container_type = NONE
+
+/obj/item/reagent_containers/glass/bucket/dropped(mob/user)
+	. = ..()
+	container_type = initial(container_type)
 
 /obj/item/reagent_containers/glass/bucket/equip_to_best_slot(var/mob/M)
 	if(reagents.total_volume) //If there is water in a bucket, don't quick equip it to the head

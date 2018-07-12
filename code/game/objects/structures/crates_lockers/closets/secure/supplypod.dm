@@ -32,7 +32,7 @@
 	desc = "A Nanotrasen Bluespace drop pod, this one has been marked with Central Command's designations. Teleports back to Centcom after delivery."
 	icon_state = "centcompod"
 
-/obj/structure/closet/supplypod/Initialize(mapload, var/SO)
+/obj/structure/closet/supplypod/Initialize(mapload, SO)
 	. = ..()
 	if(istype(SO, /datum/supply_order))
 		SupplyOrder = SO//uses Supply Order passed from expressconsole into BDPtarget
@@ -84,7 +84,7 @@
 	randomdir = FALSE
 	icon_state = "supplypod_falling"
 
-/obj/effect/temp_visual/DPfall/Initialize(var/dropLocation, var/podID)
+/obj/effect/temp_visual/DPfall/Initialize(dropLocation, podID)
 	if (podID == POD_STANDARD)
 		icon_state = "supplypod_falling"
 		name = "Supply Drop Pod"
@@ -104,7 +104,7 @@
 	light_range = 2
 	var/obj/effect/temp_visual/fallingPod
 
-/obj/effect/DPtarget/Initialize(mapload, var/SO, var/podID, var/target)
+/obj/effect/DPtarget/Initialize(mapload, SO, podID)
 	. = ..()
 	var/delayTime = 17			//We're forcefully adminspawned, make it faster
 	switch(podID)
@@ -117,12 +117,12 @@
 
 	addtimer(CALLBACK(src, .proc/beginLaunch, SO, podID), delayTime)//standard pods take 3 seconds to come in, bluespace pods take 1.5
 
-/obj/effect/DPtarget/proc/beginLaunch(var/SO, var/podID)
+/obj/effect/DPtarget/proc/beginLaunch(SO, podID)
 	fallingPod = new /obj/effect/temp_visual/DPfall(drop_location(), podID)
 	animate(fallingPod, pixel_z = 0, time = 3, easing = LINEAR_EASING)//make and animate a falling pod
 	addtimer(CALLBACK(src, .proc/endLaunch, SO, podID), 3, TIMER_CLIENT_TIME)//fall 0.3seconds
 
-/obj/effect/DPtarget/proc/endLaunch(var/SO, var/podID)
+/obj/effect/DPtarget/proc/endLaunch(SO, podID)
 	if(podID == POD_STANDARD)
 		new /obj/structure/closet/supplypod(drop_location(), SO)//pod is created
 		explosion(src,0,0,2, flame_range = 3) //less advanced equipment than bluespace pod, so larger explosion when landing
@@ -132,6 +132,8 @@
 	else if(podID == POD_CENTCOM)
 		new /obj/structure/closet/supplypod/bluespacepod/centcompod(drop_location(), SO)//CentCom supplypods dont create explosions; instead they directly deal 40 fire damage to people on the turf
 		var/turf/T = get_turf(src)
+		playsound(src, "explosion", 80, 1)
+		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700, 50, 1)//same as fireball
 		for(var/mob/living/M in T.contents)
 			M.adjustFireLoss(40)

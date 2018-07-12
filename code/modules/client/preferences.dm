@@ -102,9 +102,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	// 0 = character settings, 1 = game preferences
 	var/current_tab = 0
 
-		// OOC Metadata:
-	var/metadata = ""
-
 	var/unlock_content = 0
 
 	var/list/ignoring = list()
@@ -127,7 +124,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	parent = C
 	custom_names["human"] = random_unique_name()
 	custom_names["ai"] = pick(GLOB.ai_names)
-	custom_names["cyborg"] = pick(GLOB.ai_names)
+	custom_names["cyborg"] = DEFAULT_CYBORG_NAME
 	custom_names["clown"] = pick(GLOB.clown_names)
 	custom_names["mime"] = pick(GLOB.mime_names)
 	UI_style = GLOB.available_ui_styles[1]
@@ -578,9 +575,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if(unlock_content || check_rights_for(user.client, R_ADMIN))
 					dat += "<b>OOC Color:</b> <span style='border: 1px solid #161616; background-color: [ooccolor ? ooccolor : GLOB.normal_ooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
-
-			if(CONFIG_GET(flag/allow_metadata))
-				dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'>Edit </a><br>"
 
 			dat += "</td>"
 
@@ -1116,16 +1110,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_age)
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
-				if("metadata")
-					var/new_metadata = input(user, "Enter any information you'd like others to see, such as Roleplay-preferences:", "Game Preference" , metadata)  as message|null
-					if(new_metadata)
-						metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
-
 				if("hair")
 					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference","#"+hair_color) as color|null
 					if(new_hair)
 						hair_color = sanitize_hexcolor(new_hair)
-
 
 				if("hair_style")
 					var/new_hair_style
@@ -1341,7 +1329,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>")
 
 				if("cyborg_name")
-					var/new_cyborg_name = reject_bad_name( input(user, "Choose your character's cyborg name:", "Character Preference")  as text|null, 1 )
+					var/raw_name = input(user, "Choose your character's cyborg name (Leave empty to use default naming scheme):", "Character Preference")  as text|null
+					var/new_cyborg_name
+					if(!raw_name)
+						new_cyborg_name = DEFAULT_CYBORG_NAME
+					else
+						new_cyborg_name = reject_bad_name(raw_name,1 )
 					if(new_cyborg_name)
 						custom_names["cyborg"] = new_cyborg_name
 					else
@@ -1457,7 +1450,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("lobby_music")
 					toggles ^= SOUND_LOBBY
-					if((toggles & SOUND_LOBBY) && user.client)
+					if((toggles & SOUND_LOBBY) && user.client && isnewplayer(user))
 						user.client.playtitlemusic()
 					else
 						user.stop_sound_channel(CHANNEL_LOBBYMUSIC)

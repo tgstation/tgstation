@@ -129,7 +129,7 @@
 		return computer.get_header_data()
 	return list()
 
-// This is performed on program startup. May be overriden to add extra logic. Remember to include ..() call. Return 1 on success, 0 on failure.
+// This is performed on program startup. May be overridden to add extra logic. Remember to include ..() call. Return 1 on success, 0 on failure.
 // When implementing new program based device, use this to run the program.
 /datum/computer_file/program/proc/run_program(mob/living/user)
 	if(can_run(user, 1))

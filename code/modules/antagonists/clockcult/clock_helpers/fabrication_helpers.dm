@@ -254,8 +254,8 @@
 	var/list/repair_values = list()
 	if(!fabricator.fabricator_repair_checks(repair_values, src, user))
 		return
-	user.visible_message("<span class='notice'>[user]'s [fabricator.name] starts coverin[src == user ? "g [user.p_them()]" : "g [src]"] in glowing orange energy...</span>", \
-	"<span class='alloy'>You start repairin[src == user ? "g yourself" : "g [src]"]...</span>")
+	user.visible_message("<span class='notice'>[user]'s [fabricator.name] starts covering [src == user ? "[user.p_them()]" : "[src]"] in glowing orange energy...</span>", \
+	"<span class='alloy'>You start repairing [src == user ? "yourself" : "[src]"]...</span>")
 	fabricator.repairing = src
 	while(fabricator && user && src)
 		if(!do_after(user, repair_values["healing_for_cycle"] * fabricator.speed_multiplier, target = src, \
@@ -283,7 +283,7 @@
 	if(health == maxHealth) //if we're at maximum health, replace the turf under us
 		return FALSE
 	else if(fabricator_heal(user, fabricator) && user)
-		user.visible_message("<span class='notice'>[user]'s [fabricator.name] stops coverin[src == user ? "g [user.p_them()]" : "g [src]"] with glowing orange energy.</span>", \
+		user.visible_message("<span class='notice'>[user]'s [fabricator.name] stops covering [src == user ? "[user.p_them()]" : "[src]"] with glowing orange energy.</span>", \
 		"<span class='alloy'>You finish repairin[src == user ? "g yourself. You are":"g [src]. [p_theyre(TRUE)]"] now at <b>[abs(HEALTH_THRESHOLD_DEAD - health)]/[abs(HEALTH_THRESHOLD_DEAD - maxHealth)]</b> health.</span>")
 
 //Same with clockwork mobs.
@@ -292,7 +292,7 @@
 	if(health == maxHealth) //if we're at maximum health, replace the turf under us
 		return FALSE
 	else if(fabricator_heal(user, fabricator) && user)
-		user.visible_message("<span class='notice'>[user]'s [fabricator.name] stops coverin[src == user ? "g [user.p_them()]" : "g [src]"] with glowing orange energy.</span>", \
+		user.visible_message("<span class='notice'>[user]'s [fabricator.name] stops covering [src == user ? "[user.p_them()]" : "[src]"] with glowing orange energy.</span>", \
 		"<span class='alloy'>You finish repairin[src == user ? "g yourself. You are":"g [src]. [p_theyre(TRUE)]"] now at <b>[health]/[maxHealth]</b> health.</span>")
 
 //Cogscarabs get special interaction because they're drones and have innate self-heals/revives.
@@ -304,13 +304,13 @@
 	if(health == maxHealth)
 		return FALSE
 	else if(!(flags_1 & GODMODE))
-		user.visible_message("<span class='notice'>[user]'s [fabricator.name] starts coverin[src == user ? "g [user.p_them()]" : "g [src]"] in glowing orange energy...</span>", \
-		"<span class='alloy'>You start repairin[src == user ? "g yourself" : "g [src]"]...</span>")
+		user.visible_message("<span class='notice'>[user]'s [fabricator.name] starts covering [src == user ? "[user.p_them()]" : "[src]"] in glowing orange energy...</span>", \
+		"<span class='alloy'>You start repairing [src == user ? "yourself" : "[src]"]...</span>")
 		fabricator.repairing = src
 		if(do_after(user, (maxHealth - health)*2, target=src))
 			adjustHealth(-maxHealth)
-			user.visible_message("<span class='notice'>[user]'s [fabricator.name] stops coverin[src == user ? "g [user.p_them()]" : "g [src]"] with glowing orange energy.</span>", \
-			"<span class='alloy'>You finish repairin[src == user ? "g yourself" : "g [src]"].</span>")
+			user.visible_message("<span class='notice'>[user]'s [fabricator.name] stops covering [src == user ? "[user.p_them()]" : "[src]"] with glowing orange energy.</span>", \
+			"<span class='alloy'>You finish repairing [src == user ? "yourself" : "[src]"].</span>")
 		if(fabricator)
 			fabricator.repairing = null
 

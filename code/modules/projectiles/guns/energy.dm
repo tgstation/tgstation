@@ -130,6 +130,8 @@
 	return
 
 /obj/item/gun/energy/update_icon(force_update)
+	if(QDELETED(src))
+		return
 	..()
 	if(!automatic_charge_overlays)
 		return

@@ -24,7 +24,7 @@
 	var/category_text = "NO CATEGORY THIS IS A BUG"	// To show up on circuit printer, and perhaps other places.
 	var/removable = TRUE 			// Determines if a circuit is removable from the assembly.
 	var/displayed_name = ""
-
+	
 /*
 	Integrated circuits are essentially modular machines.  Each circuit has a specific function, and combining them inside Electronic Assemblies allows
 a creative player the means to solve many problems.  Circuits are held inside an electronic assembly, and are wired using special tools.

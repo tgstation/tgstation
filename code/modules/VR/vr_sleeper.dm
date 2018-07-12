@@ -144,7 +144,7 @@
 	data["isoccupant"] = (user == occupant)
 	return data
 
-/obj/machinery/vr_sleeper/proc/get_vr_spawnpoint() //proc so it can be overriden for team games or something
+/obj/machinery/vr_sleeper/proc/get_vr_spawnpoint() //proc so it can be overridden for team games or something
 	return safepick(GLOB.vr_spawnpoints[vr_category])
 
 /obj/machinery/vr_sleeper/proc/build_spawnpoints() // used to rebuild the list for admins if need be

@@ -28,7 +28,7 @@
 	if(findtext(raw_message,password))
 		open()
 
-/obj/machinery/door/password/CollidedWith(atom/movable/AM)
+/obj/machinery/door/password/Bumped(atom/movable/AM)
 	return !density && ..()
 
 /obj/machinery/door/password/try_to_activate_door(mob/user)

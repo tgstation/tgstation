@@ -37,9 +37,17 @@
 		GLOB.deliverybeacontags += location
 
 /obj/machinery/navbeacon/Destroy()
-	GLOB.navbeacons["[z]"] -= src //Remove from beacon list, if in one.
+	if (GLOB.navbeacons["[z]"])
+		GLOB.navbeacons["[z]"] -= src //Remove from beacon list, if in one.
 	GLOB.deliverybeacons -= src
 	return ..()
+
+/obj/machinery/navbeacon/onTransitZ(old_z, new_z)
+	if (GLOB.navbeacons["[old_z]"])
+		GLOB.navbeacons["[old_z]"] -= src
+	if (GLOB.navbeacons["[new_z]"])
+		GLOB.navbeacons["[new_z]"] += src
+	..()
 
 // set the transponder codes assoc list from codes_txt
 /obj/machinery/navbeacon/proc/set_codes()
