@@ -1,3 +1,5 @@
+#define CLEAN_TILE_REWARD 50
+
 /obj/item/mop
 	desc = "The world of janitalia wouldn't be complete without a mop."
 	name = "mop"
@@ -16,6 +18,7 @@
 	var/mopcount = 0
 	var/mopcap = 5
 	var/mopspeed = 30
+	var/stored_points = 0
 	force_string = "robust... against germs"
 	var/insertable = TRUE
 
@@ -24,15 +27,30 @@
 	create_reagents(mopcap)
 
 
-/obj/item/mop/proc/clean(turf/A)
+/obj/item/mop/proc/clean(turf/A, mob/user)
+	var/cleaned = FALSE
 	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1) || reagents.has_reagent("vodka", 1) || reagents.has_reagent("cleaner", 1))
 		SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
 		for(var/obj/effect/O in A)
 			if(is_cleanable(O))
+				cleaned = TRUE
 				qdel(O)
+	if(cleaned && user && user.mind && user.mind.assigned_role == "Janitor")
+		stored_points += CLEAN_TILE_REWARD
 	reagents.reaction(A, TOUCH, 10)	//Needed for proper floor wetting.
 	reagents.remove_any(1)			//reaction() doesn't use up the reagents
+	return cleaned
 
+/obj/item/mop/pre_attack(atom/target, mob/user, params)
+	if(istype(target, /obj/machinery/computer/rdconsole))
+		var/obj/machinery/computer/rdconsole/RDC = target
+		if(stored_points)
+			RDC.stored_research.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, stored_points)
+			user.visible_message("<span class='notice'>[user] passes [src] over [RDC], wirelessly transmitting its stored information \
+			into [RDC].</span>", "<span class='boldnotice'>You upload [stored_points] points to [RDC]'s research storage.</span>")
+			stored_points = 0
+	else
+		return ..()
 
 /obj/item/mop/afterattack(atom/A, mob/user, proximity)
 	. = ..()
@@ -52,8 +70,8 @@
 		user.visible_message("[user] begins to clean \the [T] with [src].", "<span class='notice'>You begin to clean \the [T] with [src]...</span>")
 
 		if(do_after(user, src.mopspeed, target = T))
-			to_chat(user, "<span class='notice'>You finish mopping.</span>")
-			clean(T)
+			var/got_points = clean(T, user)
+			to_chat(user, "<span class='notice'>You finish mopping.[got_points?" [src] flashes that it has gathered and stored useful research data from your efforts.":""]</span>")
 
 
 /obj/effect/attackby(obj/item/I, mob/user, params)
@@ -120,3 +138,5 @@
 
 /obj/item/mop/advanced/cyborg
 	insertable = FALSE
+
+#undef CLEAN_TILE_REWARD
