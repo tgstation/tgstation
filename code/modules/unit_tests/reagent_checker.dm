@@ -26,6 +26,9 @@
 			var/obj/item/reagent_containers/glass/beaker/bluespace/test_beaker = new /obj/item/reagent_containers/glass/beaker/bluespace(pick(locs))
 			test_beaker.reagents.maximum_volume = TEST_BEAKER_SIZE
 			for(var/RE in reactions)
+				if(!test_beaker) // for the explosive stuff
+					test_beaker = new /obj/item/reagent_containers/glass/beaker/bluespace(pick(locs))
+					test_beaker.reagents.maximum_volume = TEST_BEAKER_SIZE
 				var/datum/chemical_reaction/finebros = RE
 				finebros.required_container = null
 				finebros.required_other = 0
