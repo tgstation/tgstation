@@ -1,6 +1,5 @@
 author: CthulhuOnIce
 changes: 
-  - tweak: "More gamemodes on fewer pop"
-  - bugfix: "Fixed cluwnes"
-  - tweak: "Added a new sillytip."
+  - bugfix: "Fixed vacant office maint door."
+  - bugfix: "Took engineer's guns away, gave one to CE."
 delete-after: false

@@ -19,9 +19,12 @@
 	if(ismovableatom(parent))
 		RegisterSignal(parent, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_IMPACT), .proc/play_squeak)
 		RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/play_squeak_turf)
+		RegisterSignal(parent, COMSIG_MOVABLE_DISPOSING, .proc/disposing_react)
 		if(isitem(parent))
-			RegisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ), .proc/play_squeak)
+			RegisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT), .proc/play_squeak)
 			RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/use_squeak)
+			RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+			RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 			if(istype(parent, /obj/item/clothing/shoes))
 				RegisterSignal(parent, COMSIG_SHOES_STEP_ACTION, .proc/step_squeak)
 
@@ -57,4 +60,20 @@
 /datum/component/squeak/proc/use_squeak()
 	if(last_use + use_delay < world.time)
 		last_use = world.time
+		play_squeak()
+
+/datum/component/squeak/proc/on_equip(mob/equipper, slot)
+	RegisterSignal(equipper, COMSIG_MOVABLE_DISPOSING, .proc/disposing_react, TRUE)
+
+/datum/component/squeak/proc/on_drop(mob/user)
+	UnregisterSignal(user, COMSIG_MOVABLE_DISPOSING)
+
+// Disposal pipes related shit
+/datum/component/squeak/proc/disposing_react(obj/structure/disposalholder/holder, obj/machinery/disposal/source)
+	//We don't need to worry about unregistering this signal as it will happen for us automaticaly when the holder is qdeleted
+	RegisterSignal(holder, COMSIG_ATOM_DIR_CHANGE, .proc/holder_dir_change)
+
+/datum/component/squeak/proc/holder_dir_change(old_dir, new_dir)
+	//If the dir changes it means we're going through a bend in the pipes, let's pretend we bumped the wall
+	if(old_dir != new_dir)
 		play_squeak()

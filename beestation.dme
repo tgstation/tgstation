@@ -1596,6 +1596,7 @@
 #include "code\modules\holodeck\mobs.dm"
 #include "code\modules\holodeck\turfs.dm"
 #include "code\modules\hydroponics\biogenerator.dm"
+#include "code\modules\hydroponics\fermenting_barrel.dm"
 #include "code\modules\hydroponics\gene_modder.dm"
 #include "code\modules\hydroponics\grown.dm"
 #include "code\modules\hydroponics\growninedible.dm"

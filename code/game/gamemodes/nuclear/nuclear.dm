@@ -64,17 +64,14 @@
 			return FALSE
 	return TRUE
 
-/datum/game_mode/nuclear/check_finished() //to be called by SSticker
-	if(replacementmode && round_converted == 2)
-		return replacementmode.check_finished()
-	if((SSshuttle.emergency.mode == SHUTTLE_ENDGAME) || station_was_nuked)
-		return TRUE
+/datum/game_mode/nuclear/check_finished()
+	//Keep the round going if ops are dead but bomb is ticking.
 	if(nuke_team.operatives_dead())
 		var/obj/machinery/nuclearbomb/N
 		pass(N)	//suppress unused warning
 		if(N.bomb_set) //snaaaaaaaaaake! It's not over yet!
 			return FALSE	//its a static var btw
-	..()
+	return ..()
 
 /datum/game_mode/nuclear/set_round_result()
 	..()
