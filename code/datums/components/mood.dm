@@ -170,7 +170,7 @@
 	if(sanity > maximum)
 		DecreaseSanity(0.5) //Removes some sanity to go back to our current limit.
 	else
-		sanity = min(limit, sanity + amount)
+		sanity = min(maximum, sanity + amount)
 		if(sanity > SANITY_CRAZY)
 			if(sanity > SANITY_UNSTABLE)
 				insanity_effect = 0
