@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "Zealot's blindfolds now properly prevent non-cultists from using them."
-  - bugfix: "Cultist legion corpses now wear the correct type of zealot's blindfold."
