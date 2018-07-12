@@ -634,7 +634,7 @@
 	required_container = /obj/item/slime_extract/rainbow
 
 /datum/chemical_reaction/slime/slimebomb/on_reaction(datum/reagents/holder, created_volume)
-	var/obj/item/grenade/clusterbuster/slime/volatile/S = new (get_turf(holder.my_atom)
+	var/obj/item/grenade/clusterbuster/slime/volatile/S = new (get_turf(holder.my_atom))
 	S.visible_message("<span class='danger'>Infused with slime jelly, the core begins to expand uncontrollably!</span>")
 	S.icon_state = "[S.base_state]_active"
 	S.active = TRUE
