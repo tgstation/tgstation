@@ -1137,6 +1137,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if((hungry >= 70) && !flight) //Being hungry will still allow you to use a flightsuit/wings.
 				. += hungry / 50
 
+		if(H.thirst <= THIRST_LEVEL_DEHYDRATED)
+			. += 1
+
 		//Moving in high gravity is very slow (Flying too)
 		if(gravity > STANDARD_GRAVITY)
 			var/grav_force = min(gravity - STANDARD_GRAVITY,3)
