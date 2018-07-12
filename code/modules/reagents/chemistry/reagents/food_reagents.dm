@@ -21,7 +21,7 @@
 
 /datum/reagent/consumable/reaction_mob(mob/living/carbon/M, method)
 	if(method == INGEST && reagent_state == LIQUID)
-		M.thirst += nutriment_factor * DRINK_THIRST_FACTOR
+		M.thirst += min(0.5, nutriment_factor) * DRINK_THIRST_FACTOR
 
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"
