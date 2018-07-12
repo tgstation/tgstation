@@ -22,7 +22,7 @@
 
 /datum/nanite_program/paralyzing/active_effect()
 	host_mob.Stun(40)
-	
+
 /datum/nanite_program/paralyzing/enable_passive_effect()
 	..()
 	to_chat(host_mob, "<span class='warning'>Your muscles seize! You can't move!</span>")
@@ -130,6 +130,8 @@
 		var/new_sentence = stripped_input(user, "Choose the sentence that the host will be forced to say.", "Sentence", sentence, MAX_MESSAGE_LEN)
 		if(!new_sentence)
 			return
+		if(copytext(message, 1, 2) == "*") //emotes are abusable, like surrender
+			return
 		sentence = new_sentence
 
 /datum/nanite_program/triggered/speech/get_extra_setting(setting)
@@ -142,16 +144,18 @@
 /datum/nanite_program/triggered/speech/trigger()
 	if(!..())
 		return
+	if(host_mob.stat == DEAD)
+		return
 	to_chat(host_mob, "<span class='warning'>You feel compelled to speak...</span>")
 	host_mob.say(sentence)
-	
+
 /datum/nanite_program/triggered/hallucination
 	name = "Hallucination"
 	desc = "The nanites make the host hallucinate something when triggered."
 	trigger_cost = 4
 	trigger_cooldown = 80
 	rogue_types = list(/datum/nanite_program/brain_misfire)
-	
+
 	extra_settings = list("Hallucination Type")
 	var/hal_type
 	var/hal_details
@@ -272,4 +276,4 @@
 
 /datum/nanite_program/triggered/hallucination/copy_extra_settings_to(datum/nanite_program/triggered/hallucination/target)
 	target.hal_type = hal_type
-	target.hal_details = hal_details	
+	target.hal_details = hal_details
