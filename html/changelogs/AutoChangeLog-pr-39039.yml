@@ -1,4 +1,0 @@
-author: "AnturK"
-delete-after: True
-changes: 
-  - bugfix: "Nuclear rounds will now end properly on nukeop deaths if there are no other antags present."

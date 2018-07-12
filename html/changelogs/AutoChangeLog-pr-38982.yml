@@ -1,7 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - rscadd: "A new shuttle loan event has been added. Hope you like bees!"
-  - tweak: "The pizza delivery shuttle loan event now has some of each flavor and no longer pays the station for accepting it."
-  - balance: "Syndicate shuttle infiltrators now carry suppressed pistols."
-  - spellcheck: "Added a missing period to spent bullet casing and pizza shutte loan text."
