@@ -44,7 +44,7 @@
 				if(SLEEP_AFTER_MIX)
 					sleep(20)
 				for(var/key in finebros.results)
-					if(test_beaker.reagents.has_reagent(key, finebros.results[key])
+					if(test_beaker.reagents.has_reagent(key, finebros.results[key]))
 						continue
 					else
 						Fail("Chemical Recipe [finebros.name] did not produce or didn't produce enough of [key]!")
