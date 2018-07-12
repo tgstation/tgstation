@@ -744,10 +744,6 @@
 	pixel_y = 2
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/gun/ballistic/automatic/l6_saw/unrestricted{
-	pixel_x = 2;
-	pixel_y = -2
-	},
 /turf/open/floor/pod/light,
 /area/shuttle/pirate/vault)
 "bO" = (
@@ -960,15 +956,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/grenade/plastic/x4{
-	pixel_x = 11
-	},
-/obj/item/grenade/plastic/x4{
-	pixel_x = 11
-	},
-/obj/item/grenade/plastic/x4{
-	pixel_x = 11
-	},
 /turf/open/floor/pod/light,
 /area/shuttle/pirate/vault)
 "ci" = (
@@ -1790,14 +1777,6 @@
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
-"Ny" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/turf/open/floor/plasteel/floorgrime,
-/area/shuttle/pirate)
 
 (1,1,1) = {"
 aa
@@ -1890,7 +1869,7 @@ aj
 aj
 bu
 bI
-Ny
+bu
 aj
 cq
 cA
