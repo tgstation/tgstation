@@ -323,6 +323,9 @@
 
 	new /obj/effect/temp_visual/point(A,invisibility)
 
+	for(var/atom/on_tile in A.contents + A)
+		SEND_SIGNAL(on_tile, COMSIG_ATOM_POINTED_AT, src)
+
 	return 1
 
 /mob/proc/can_resist()
