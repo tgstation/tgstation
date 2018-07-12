@@ -4,6 +4,7 @@
 /datum/unit_test/reagent_checker
 
 /datum/unit_test/reagent_checker/Run()
+	locs = block(run_loc_bottom_left, run_loc_top_right)
 	build_chemical_reactions_list()
 	build_chemical_reagent_list()
 	var/list/reactions
@@ -22,7 +23,7 @@
 				if(recipes_do_conflict(r1, r2))
 					Fail("Chemical recipe conflict between [r1.type] and [r2.type]")
 		if(!fail_reasons) // again
-			var/obj/item/reagent_containers/glass/beaker/bluespace/test_beaker = new /obj/item/reagent_containers/glass/beaker/bluespace
+			var/obj/item/reagent_containers/glass/beaker/bluespace/test_beaker = new /obj/item/reagent_containers/glass/beaker/bluespace(pick(locs))
 			test_beaker.reagents.maximum_volume = TEST_BEAKER_SIZE
 			for(var/RE in reactions)
 				var/datum/chemical_reaction/finebros = RE
