@@ -708,7 +708,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		H.losebreath = 0
 
 		var/takes_crit_damage = (!H.has_trait(TRAIT_NOCRITDAMAGE))
-		if((H.health < H.crit_modifier()) && takes_crit_damage)
+		if((H.health < H.crit_threshold) && takes_crit_damage)
 			H.adjustBruteLoss(1)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
