@@ -223,6 +223,15 @@
 
 	return returntext
 
+/proc/thirstymessage(message)
+	var/length = length(message)
+	var/new_message = ""
+
+	for(var/n = 1, n <= length, n++)
+		var/chance = prob(THIRST_STUTTER_RATE)
+		new_message += chance ? "-" : copytext(message, n, n + 1)
+
+	return new_message
 
 /proc/ninjaspeak(n) //NINJACODE
 /*

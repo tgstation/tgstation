@@ -311,8 +311,16 @@
 	// Tissues die without blood circulation
 	adjustBruteLoss(2)
 
-
-
+/mob/living/carbon/human/handle_thirst()
+	..()
+	if(thirst >= THIRST_LEVEL_OVERHYDRATED)
+		if(prob(5) && w_uniform)
+			Stun(4 SECONDS)
+			visible_message("[src] pees [p_their()] pants!")
+			playsound(src, 'sound/effects/splat.ogg', 50, 1)
+			for(var/mob/M in viewers(src, 7))
+				if(ishuman(M) && M != src)
+					M.emote("laugh")
 
 #undef THERMAL_PROTECTION_HEAD
 #undef THERMAL_PROTECTION_CHEST

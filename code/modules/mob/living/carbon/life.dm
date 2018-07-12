@@ -13,6 +13,7 @@
 
 	if(..()) //not dead
 		handle_blood()
+		handle_thirst()
 
 	if(stat != DEAD)
 		handle_brain_damage()
@@ -242,6 +243,13 @@
 
 /mob/living/carbon/proc/handle_blood()
 	return
+
+/mob/living/carbon/proc/handle_thirst()
+	thirst -= THIRST_LOSS_PER_LIFE
+
+	if(thirst <= THIRST_LEVEL_DEHYDRATED)
+		if(prob(10))
+			emote("pant")
 
 /mob/living/carbon/proc/handle_organs()
 	for(var/V in internal_organs)

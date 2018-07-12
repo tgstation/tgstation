@@ -1006,7 +1006,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/wellfed)
 			H.clear_alert("nutrition")
-		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+		if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/fed)
 			H.clear_alert("nutrition")
 		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
@@ -1018,6 +1018,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(0 to NUTRITION_LEVEL_STARVING)
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/starving)
 			H.throw_alert("nutrition", /obj/screen/alert/starving)
+
+	//Thristy
+	switch(H.thirst)
+		if(THIRST_LEVEL_OVERHYDRATED to INFINITY)
+			H.throw_alert("thirsty", /obj/screen/alert/overhydrated)
+		if(THIRST_LEVEL_GOOD to THIRST_LEVEL_OVERHYDRATED)
+			H.clear_alert("thirsty")
+		if(THIRST_LEVEL_THIRSTY to THIRST_LEVEL_GOOD)
+			H.throw_alert("thirsty", /obj/screen/alert/thirsty)
+		if(0 to THIRST_LEVEL_DEHYDRATED)
+			H.throw_alert("thirsty", /obj/screen/alert/dehydrated)
 
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
 	return 0
@@ -1125,6 +1136,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			var/hungry = (500 - H.nutrition) / 5 //So overeat would be 100 and default level would be 80
 			if((hungry >= 70) && !flight) //Being hungry will still allow you to use a flightsuit/wings.
 				. += hungry / 50
+
+		if(H.thirst <= THIRST_LEVEL_DEHYDRATED)
+			. += 1
 
 		//Moving in high gravity is very slow (Flying too)
 		if(gravity > STANDARD_GRAVITY)
