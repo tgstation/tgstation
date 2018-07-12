@@ -98,22 +98,26 @@
 /obj/item/nanite_remote/ui_act(action, params)
 	if(..())
 		return
-	if(locked)
-		return
 	switch(action)
 		if("set_code")
+			if(locked)
+				return
 			var/new_code = input("Set code (0000-9999):", name, code) as null|num
 			if(!isnull(new_code))
 				new_code = CLAMP(round(new_code, 1),0,9999)
 				code = new_code
 			. = TRUE
 		if("set_relay_code")
+			if(locked)
+				return
 			var/new_code = input("Set relay code (0000-9999):", name, code) as null|num
 			if(!isnull(new_code))
 				new_code = CLAMP(round(new_code, 1),0,9999)
 				relay_code = new_code
 			. = TRUE
 		if("save")
+			if(locked)
+				return
 			var/code_name = stripped_input(usr, "Set the setting name", "Set Name", null , 15)
 			if(!code_name)
 				return
@@ -140,6 +144,8 @@
 				relay_code = setting["relay_code"]
 			. = TRUE
 		if("remove_save")
+			if(locked)
+				return
 			var/code_id = params["save_id"]
 			for(var/list/setting in saved_settings)
 				if(setting["id"] == text2num(code_id))
@@ -147,6 +153,8 @@
 					break
 			. = TRUE
 		if("select_mode")
+			if(locked)
+				return
 			mode = params["mode"]
 			. = TRUE
 		if("lock")
