@@ -101,6 +101,7 @@
 			if(disk.program)
 				qdel(disk.program)
 			disk.program = new downloaded.program_type
+			disk.name = "[initial(disk.name)] \[[disk.program.name]\]"
 			playsound(src, 'sound/machines/terminal_prompt.ogg', 25, 0)
 			. = TRUE
 		if("set_category")
@@ -114,4 +115,5 @@
 			if(disk && disk.program)
 				qdel(disk.program)
 				disk.program = null
+				disk.name = initial(disk.name)
 			. = TRUE
