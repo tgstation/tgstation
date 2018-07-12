@@ -58,7 +58,7 @@
 		sleep(20)
 	close()
 
-/obj/machinery/door/window/CollidedWith(atom/movable/AM)
+/obj/machinery/door/window/Bumped(atom/movable/AM)
 	if( operating || !src.density )
 		return
 	if (!( ismob(AM) ))
@@ -246,7 +246,7 @@
 							if("rightsecure")
 								WA.facing = "r"
 								WA.secure = TRUE
-						WA.anchored = TRUE
+						WA.setAnchored(TRUE)
 						WA.state= "02"
 						WA.setDir(src.dir)
 						WA.ini_dir = src.dir

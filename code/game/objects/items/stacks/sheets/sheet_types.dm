@@ -404,6 +404,7 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	turf_type = /turf/open/floor/clockwork
 	novariants = FALSE
 	grind_results = list("iron" = 5, "teslium" = 15)
+	merge_type = /obj/item/stack/tile/brass
 
 /obj/item/stack/tile/brass/narsie_act()
 	new /obj/item/stack/sheet/runed_metal(loc, amount)
@@ -453,6 +454,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	turf_type = /turf/open/floor/bronze
 	novariants = FALSE
 	grind_results = list("iron" = 5, "copper" = 3) //we have no "tin" reagent so this is the closest thing
+	merge_type = /obj/item/stack/tile/bronze
 
 /obj/item/stack/tile/bronze/attack_self(mob/living/user)
 	if(is_servant_of_ratvar(user)) //still lets them build with it, just gives a message
@@ -505,6 +507,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	throw_speed = 1
 	throw_range = 3
 	grind_results = list("carbon" = 10)
+	merge_type = /obj/item/stack/sheet/bone
 
 GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = TRUE, on_floor = TRUE, time = 40), \
@@ -544,6 +547,7 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	item_state = "sheet-paper"
 	merge_type = /obj/item/stack/sheet/paperframes
 	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/sheet/paperframes
 
 /obj/item/stack/sheet/paperframes/Initialize()
 	recipes = GLOB.paperframe_recipes

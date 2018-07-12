@@ -208,7 +208,7 @@
 	beam_index = pcache
 	beam_segments[beam_index] = null
 
-/obj/item/projectile/Collide(atom/A)
+/obj/item/projectile/Bump(atom/A)
 	var/datum/point/pcache = trajectory.copy_to()
 	if(check_ricochet(A) && check_ricochet_flag(A) && ricochets < ricochets_max)
 		ricochets++
@@ -429,7 +429,7 @@
 			continue
 		if(safety-- <= 0)
 			if(loc)
-				Collide(loc)
+				Bump(loc)
 			if(!QDELETED(src))
 				qdel(src)
 			return	//Kill!
@@ -470,7 +470,7 @@
 			step_towards(src, T)
 			hitscan_last = loc
 		if(can_hit_target(original, permutated))
-			Collide(original)
+			Bump(original)
 	if(!hitscanning && !forcemoved)
 		pixel_x = trajectory.return_px() - trajectory.mpx * trajectory_multiplier * SSprojectiles.global_iterations_per_move
 		pixel_y = trajectory.return_py() - trajectory.mpy * trajectory_multiplier * SSprojectiles.global_iterations_per_move
@@ -564,7 +564,7 @@
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
 	..()
 	if(isliving(AM) && (AM.density || AM == original) && !(src.pass_flags & PASSMOB))
-		Collide(AM)
+		Bump(AM)
 
 /obj/item/projectile/Destroy()
 	if(hitscan)

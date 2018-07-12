@@ -33,7 +33,7 @@
 	QDEL_NULL(fake_icon)
 	return ..()
 
-/obj/item/projectile/hallucination/Collide(atom/A)
+/obj/item/projectile/hallucination/Bump(atom/A)
 	if(!ismob(A))
 		if(hal_hitsound_wall)
 			hal_target.playsound_local(loc, hal_hitsound_wall, 40, 1)

@@ -40,7 +40,7 @@
 /obj/effect/clockwork/city_of_cogs_rift/attack_hand(atom/movable/AM)
 	beckon(AM)
 
-/obj/effect/clockwork/city_of_cogs_rift/CollidedWith(atom/movable/AM)
+/obj/effect/clockwork/city_of_cogs_rift/Bumped(atom/movable/AM)
 	if(!QDELETED(AM))
 		if(isliving(AM))
 			var/mob/living/L = AM

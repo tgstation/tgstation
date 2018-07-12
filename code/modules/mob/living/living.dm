@@ -38,31 +38,31 @@
 /mob/living/proc/OpenCraftingMenu()
 	return
 
-//Generic Collide(). Override MobCollide() and ObjCollide() instead of this.
-/mob/living/Collide(atom/A)
+//Generic Bump(). Override MobBump() and ObjBump() instead of this.
+/mob/living/Bump(atom/A)
 	if(..()) //we are thrown onto something
 		return
 	if (buckled || now_pushing)
 		return
 	if(ismob(A))
 		var/mob/M = A
-		if(MobCollide(M))
+		if(MobBump(M))
 			return
 	if(isobj(A))
 		var/obj/O = A
-		if(ObjCollide(O))
+		if(ObjBump(O))
 			return
 	if(ismovableatom(A))
 		var/atom/movable/AM = A
 		if(PushAM(AM))
 			return
 
-/mob/living/CollidedWith(atom/movable/AM)
+/mob/living/Bumped(atom/movable/AM)
 	..()
 	last_bumped = world.time
 
 //Called when we bump onto a mob
-/mob/living/proc/MobCollide(mob/M)
+/mob/living/proc/MobBump(mob/M)
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	spreadFire(M)
 
@@ -151,7 +151,7 @@
 				return 1
 
 //Called when we bump onto an obj
-/mob/living/proc/ObjCollide(obj/O)
+/mob/living/proc/ObjBump(obj/O)
 	return
 
 //Called when we want to push an atom/movable
@@ -281,7 +281,7 @@
 		return TRUE
 
 /mob/living/proc/InCritical()
-	return (health <= HEALTH_THRESHOLD_CRIT && (stat == SOFT_CRIT || stat == UNCONSCIOUS))
+	return (health <= crit_modifier() && (stat == SOFT_CRIT || stat == UNCONSCIOUS))
 
 /mob/living/proc/InFullCritical()
 	return (health <= HEALTH_THRESHOLD_FULLCRIT && stat == UNCONSCIOUS)
@@ -338,9 +338,19 @@
 	set name = "Rest"
 	set category = "IC"
 
-	resting = !resting
-	to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
-	update_canmove()
+	if(!resting)
+		resting = TRUE
+		to_chat(src, "<span class='notice'>You are now resting.</span>")
+		update_rest_hud_icon()
+		update_canmove()
+	else
+		if(do_after(src, 10, target = src))
+			to_chat(src, "<span class='notice'>You get up.</span>")
+			resting = FALSE
+			update_rest_hud_icon()
+			update_canmove()
+		else
+			to_chat(src, "<span class='notice'>You fail to get up.</span>")
 
 //Recursive function to find everything a mob is holding. Really shitty proc tbh.
 /mob/living/get_contents()
@@ -797,7 +807,7 @@
 	var/stam = getStaminaLoss()
 	if(stam)
 		var/total_health = (health - stam)
-		if(total_health <= HEALTH_THRESHOLD_CRIT && !stat)
+		if(total_health <= crit_modifier() && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			Knockdown(100)
 			setStaminaLoss(health - 2, FALSE, FALSE)
@@ -914,7 +924,7 @@
 		ExtinguishMob()
 
 //Share fire evenly between the two mobs
-//Called in MobCollide() and Crossed()
+//Called in MobBump() and Crossed()
 /mob/living/proc/spreadFire(mob/living/L)
 	if(!istype(L))
 		return

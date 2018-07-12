@@ -218,10 +218,17 @@ Class Procs:
 	if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN))
 		if(!silicon || !(interaction_flags_machine & INTERACT_MACHINE_OPEN_SILICON))
 			return FALSE
-	if(!silicon && (interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON))
-		return FALSE
-	else if(silicon && !(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON))
-		return FALSE
+
+	if(silicon)
+		if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON))
+			return FALSE
+	else
+		if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON)
+			return FALSE
+		if(!Adjacent(user))
+			var/mob/living/carbon/H = user
+			if(!(istype(H) && H.has_dna() && H.dna.check_mutation(TK)))
+				return FALSE
 	return TRUE
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -311,7 +318,7 @@ Class Procs:
 /obj/machinery/proc/spawn_frame(disassembled)
 	var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
 	. = M
-	M.anchored = anchored
+	M.setAnchored(anchored)
 	if(!disassembled)
 		M.obj_integrity = M.max_integrity * 0.5 //the frame is already half broken
 	transfer_fingerprints_to(M)
@@ -372,7 +379,7 @@ Class Procs:
 		//as long as we're the same anchored state and we're either on a floor or are anchored, toggle our anchored state
 		if(I.use_tool(src, user, time, extra_checks = CALLBACK(src, .proc/unfasten_wrench_check, prev_anchored, user)))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
-			anchored = !anchored
+			setAnchored(!anchored)
 			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			return SUCCESSFUL_UNFASTEN
 		return FAILED_UNFASTEN

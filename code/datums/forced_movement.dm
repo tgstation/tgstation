@@ -82,7 +82,7 @@
 
 	. = . && (vic.loc != tar.loc)
 
-/mob/Collide(atom/A)
+/mob/Bump(atom/A)
 	. = ..()
 	if(force_moving && force_moving.allow_climbing && isstructure(A))
 		var/obj/structure/S = A

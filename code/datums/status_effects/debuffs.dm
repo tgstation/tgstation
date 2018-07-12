@@ -72,7 +72,7 @@
 	if(prob(20))
 		if(carbon_owner)
 			carbon_owner.handle_dreams()
-		if(prob(10) && owner.health > HEALTH_THRESHOLD_CRIT)
+		if(prob(10) && owner.health > owner.crit_modifier())
 			owner.emote("snore")
 
 /obj/screen/alert/status_effect/asleep

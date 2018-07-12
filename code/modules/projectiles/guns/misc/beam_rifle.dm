@@ -535,7 +535,7 @@
 	if(!QDELETED(target))
 		handle_impact(target)
 
-/obj/item/projectile/beam/beam_rifle/Collide(atom/target)
+/obj/item/projectile/beam/beam_rifle/Bump(atom/target)
 	if(check_pierce(target))
 		permutated += target
 		trajectory_ignore_forcemove = TRUE

@@ -120,6 +120,7 @@
 		return 0
 
 /obj/item/extinguisher/afterattack(atom/target, mob/user , flag)
+	. = ..()
 	// Make it so the extinguisher doesn't spray yourself when you click your inventory items
 	if (target.loc == user)
 		return
@@ -200,9 +201,6 @@
 					if(W.loc == my_target)
 						break
 					sleep(2)
-
-	else
-		return ..()
 
 /obj/item/extinguisher/AltClick(mob/user)
 	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))

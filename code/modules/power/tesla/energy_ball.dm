@@ -24,8 +24,8 @@
 	var/energy_to_lower = -20
 
 /obj/singularity/energy_ball/Initialize(mapload, starting_energy = 50, is_miniball = FALSE)
-	. = ..()
 	miniball = is_miniball
+	. = ..()
 	if(!is_miniball)
 		set_light(10, 7, "#EEEEFF")
 
@@ -123,10 +123,10 @@
 	EB.orbit(src, orbitsize, pick(FALSE, TRUE), rand(10, 25), pick(3, 4, 5, 6, 36))
 
 
-/obj/singularity/energy_ball/Collide(atom/A)
+/obj/singularity/energy_ball/Bump(atom/A)
 	dust_mobs(A)
 
-/obj/singularity/energy_ball/CollidedWith(atom/movable/AM)
+/obj/singularity/energy_ball/Bumped(atom/movable/AM)
 	dust_mobs(AM)
 
 /obj/singularity/energy_ball/orbit(obj/singularity/energy_ball/target)
