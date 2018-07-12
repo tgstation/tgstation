@@ -167,10 +167,10 @@
 				insanity_effect = MINOR_INSANITY_PEN
 
 /datum/component/mood/proc/IncreaseSanity(amount)
-	if(sanity > SANITY_GREAT)
+	if(sanity > SANITY_NEUTRAL)
 		DecreaseSanity(0.5) //Removes some sanity to go back to our current limit.
 	else
-		sanity = min(SANITY_GREAT, sanity + amount)
+		sanity = min(SANITY_NEUTRAL, sanity + amount)
 		if(sanity > SANITY_CRAZY)
 			if(sanity > SANITY_UNSTABLE)
 				insanity_effect = 0
