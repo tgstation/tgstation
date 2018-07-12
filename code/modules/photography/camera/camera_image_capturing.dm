@@ -29,11 +29,9 @@ GLOBAL_VAR_INIT(debug_camera, FALSE)
 				atoms += newTclone
 				for(var/i in T.contents)
 					var/atom/A = i
-					var/obj/effect/appearance_clone/Aclone = new /obj/effect/appearance_clone(newT, A)
+					var/obj/effect/appearance_clone/Aclone
 					if(!A.invisibility || (see_ghosts && isobserver(A)))
-						atoms += Aclone
-					else
-						qdel(Aclone)
+						atoms += (Aclone = new /obj/effect/appearance_clone(newT, A))
 			skip_normal = TRUE
 			wipe_atoms = TRUE
 
