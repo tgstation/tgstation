@@ -149,6 +149,38 @@
 	to_chat(host_mob, "<span class='warning'>You feel compelled to speak...</span>")
 	host_mob.say(sentence)
 
+/datum/nanite_program/triggered/voice
+	name = "Skull Echo"
+	desc = "The nanites echo a synthesized message inside the host's skull."
+	unique = FALSE
+	trigger_cost = 1
+	trigger_cooldown = 20
+	rogue_types = list(/datum/nanite_program/brain_misfire, /datum/nanite_program/brain_decay)
+
+	extra_settings = list("Message")
+	var/message = ""
+
+/datum/nanite_program/triggered/voice/set_extra_setting(user, setting)
+	if(setting == "Message")
+		var/new_message = stripped_input(user, "Choose the message sent to the host.", "Message", message, MAX_MESSAGE_LEN)
+		if(!new_message)
+			return
+		message = new_message
+
+/datum/nanite_program/triggered/voice/get_extra_setting(setting)
+	if(setting == "Message")
+		return message
+
+/datum/nanite_program/triggered/voice/copy_extra_settings_to(datum/nanite_program/triggered/speech/target)
+	target.message = message
+
+/datum/nanite_program/triggered/voice/trigger()
+	if(!..())
+		return
+	if(host_mob.stat == DEAD)
+		return
+	to_chat(host_mob, "<i>You hear a strange, robotic voice in your head...</i> \"<span class='robot'>[message]</span>\"")
+
 /datum/nanite_program/triggered/hallucination
 	name = "Hallucination"
 	desc = "The nanites make the host hallucinate something when triggered."

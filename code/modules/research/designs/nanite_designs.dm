@@ -50,14 +50,14 @@
 	id = "relay_nanites"
 	program_type = /datum/nanite_program/relay
 	category = list("Utility Nanites")
-	
+
 /datum/design/nanites/repeater
 	name = "Signal Repeater"
 	desc = "When triggered, sends another signal to the nanites, optionally with a delay."
 	id = "repeater_nanites"
 	program_type = /datum/nanite_program/sensor/repeat
 	category = list("Utility Nanites")
-	
+
 /datum/design/nanites/relay_repeater
 	name = "Relay Signal Repeater"
 	desc = "When triggered, sends another signal to a relay channel, optionally with a delay."
@@ -79,7 +79,7 @@
 	id = "spreading_nanites"
 	program_type = /datum/nanite_program/spreading
 	category = list("Utility Nanites")
-	
+
 /datum/design/nanites/mitosis
 	name = "Mitosis"
 	desc = "The nanites gain the ability to self-replicate, using bluespace to power the process, instead of drawing from a template. This rapidly speeds up the replication rate,\
@@ -153,13 +153,13 @@
 	id = "repairing_nanites"
 	program_type = /datum/nanite_program/repairing
 	category = list("Medical Nanites")
-	
+
 /datum/design/nanites/defib
 	name = "Defibrillation"
 	desc = "The nanites, when triggered, send a defibrillating shock to the host's heart."
 	id = "defib_nanites"
 	program_type = /datum/nanite_program/triggered/defib
-	category = list("Medical Nanites")	
+	category = list("Medical Nanites")
 
 
 ////////////////////AUGMENTATION NANITES//////////////////////////////////////
@@ -279,14 +279,14 @@
 	id = "flesheating_nanites"
 	program_type = /datum/nanite_program/flesh_eating
 	category = list("Weaponized Nanites")
-	
+
 /datum/design/nanites/poison
 	name = "Poisoning"
 	desc = "The nanites deliver poisonous chemicals to the host's internal organs, causing toxin damage and vomiting."
 	id = "poison_nanites"
 	program_type = /datum/nanite_program/poison
 	category = list("Weaponized Nanites")
-	
+
 /datum/design/nanites/memory_leak
 	name = "Memory Leak"
 	desc = "This program invades the memory space used by other programs, causing frequent corruptions and errors."
@@ -336,7 +336,7 @@
 	id = "explosive_nanites"
 	program_type = /datum/nanite_program/triggered/explosive
 	category = list("Weaponized Nanites")
-	
+
 /datum/design/nanites/mind_control
 	name = "Mind Control"
 	desc = "The nanites imprint an absolute directive onto the host's brain while they're active."
@@ -394,21 +394,28 @@
 	id = "blinding_nanites"
 	program_type = /datum/nanite_program/blinding
 	category = list("Suppression Nanites")
-	
+
 /datum/design/nanites/mute
 	name = "Mute"
 	desc = "The nanites suppress the host's speech, making them mute while they're active."
 	id = "mute_nanites"
 	program_type = /datum/nanite_program/mute
 	category = list("Suppression Nanites")
-	
+
+/datum/design/nanites/voice
+	name = "Skull Echo"
+	desc = "The nanites echo a synthesized message inside the host's skull."
+	id = "voice_nanites"
+	program_type = /datum/nanite_program/triggered/voice
+	category = list("Suppression Nanites")
+
 /datum/design/nanites/speech
 	name = "Forced Speech"
 	desc = "The nanites force the host to say a pre-programmed sentence when triggered."
 	id = "speech_nanites"
 	program_type = /datum/nanite_program/triggered/speech
 	category = list("Suppression Nanites")
-	
+
 /datum/design/nanites/hallucination
 	name = "Hallucination"
 	desc = "The nanites make the host see and hear things that aren't real."
@@ -431,7 +438,7 @@
 	id = "sensor_low_health_nanites"
 	program_type = /datum/nanite_program/sensor/health_low
 	category = list("Sensor Nanites")
-	
+
 /datum/design/nanites/sensor_high_brute
 	name = "Brute Sensor \[Above\]"
 	desc = "The nanites receive a signal when the host's brute damage is above a certain value."
@@ -445,7 +452,7 @@
 	id = "sensor_low_brute_nanites"
 	program_type = /datum/nanite_program/sensor/brute_low
 	category = list("Sensor Nanites")
-	
+
 /datum/design/nanites/sensor_high_burn
 	name = "Burn Sensor \[Above\]"
 	desc = "The nanites receive a signal when the host's burn damage is above a certain value."
@@ -459,7 +466,7 @@
 	id = "sensor_low_burn_nanites"
 	program_type = /datum/nanite_program/sensor/burn_low
 	category = list("Sensor Nanites")
-	
+
 /datum/design/nanites/sensor_high_tox
 	name = "Toxin Sensor \[Above\]"
 	desc = "The nanites receive a signal when the host's toxin damage is above a certain value."
@@ -487,7 +494,7 @@
 	id = "sensor_death_nanites"
 	program_type = /datum/nanite_program/sensor/death
 	category = list("Sensor Nanites")
-	
+
 /datum/design/nanites/sensor_voice
 	name = "Voice Sensor"
 	desc = "Sends a signal when the nanites hear a determined word or sentence."
