@@ -1097,13 +1097,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			. -= 2
 		else if(istype(T) && T.allow_thrust(0.01, H))
 			. -= 2
-		else if(flightpack && F.allow_thrust(0.01, src))
-			. -= 2
 
 	if(flightpack && F.boost)
 		. -= F.boost_speed
 	else if(flightpack && F.brake)
-		. += 2
+		. += 1
 
 	if(!ignoreslow && !flightpack && gravity)
 		if(H.wear_suit)
