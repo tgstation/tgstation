@@ -40,5 +40,5 @@
 
 /obj/item/projectile/bullet/incendiary/mm195x129
 	name = "1.95x129mm incendiary bullet"
-	damage = 15
+	damage = 20
 	fire_stacks = 3
