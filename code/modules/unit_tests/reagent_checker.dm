@@ -1,5 +1,5 @@
 #define TEST_BEAKER_SIZE 6969
-#define SLEEP_AFTER_MIX 1
+#define SLEEP_AFTER_MIX 0
 
 /datum/unit_test/reagent_checker
 
