@@ -144,7 +144,7 @@
 			IncreaseSanity(0.4, 125)
 
 	if(insanity_effect != holdmyinsanityeffect) //we've changed since switch
-		crit_threshold -= (holdmyinsanityeffect - insanity_effect) // subtracting negative difference (aka you gained insanity_effect) is same as adding to crit_threshold
+		owner.crit_threshold -= (holdmyinsanityeffect - insanity_effect) // subtracting negative difference (aka you gained insanity_effect) is same as adding to crit_threshold
 
 	if(owner.has_trait(TRAIT_DEPRESSION))
 		if(prob(0.05))
