@@ -742,7 +742,9 @@
 				wear_suit.add_fingerprint(M)
 			else if(w_uniform)
 				w_uniform.add_fingerprint(M)
-
+		else if(check_zone(M.zone_selected) == "head" && dna.features["ears"] == "Cat")
+			M.visible_message("<span class='notice'>[M] scratches [src]'s ears to make [p_them()] feel better!</span>", \
+						"<span class='notice'>You scratch [src]'s ears to make [p_them()] feel better!</span>")	
 			..()
 
 
