@@ -171,7 +171,7 @@
 	if(setting == "Message")
 		return message
 
-/datum/nanite_program/triggered/voice/copy_extra_settings_to(datum/nanite_program/triggered/speech/target)
+/datum/nanite_program/triggered/voice/copy_extra_settings_to(datum/nanite_program/triggered/voice/target)
 	target.message = message
 
 /datum/nanite_program/triggered/voice/trigger()
@@ -186,8 +186,8 @@
 	desc = "The nanites make the host hallucinate something when triggered."
 	trigger_cost = 4
 	trigger_cooldown = 80
+	unique = FALSE
 	rogue_types = list(/datum/nanite_program/brain_misfire)
-
 	extra_settings = list("Hallucination Type")
 	var/hal_type
 	var/hal_details

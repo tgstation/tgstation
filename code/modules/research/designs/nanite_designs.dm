@@ -30,6 +30,13 @@
 	program_type = /datum/nanite_program/monitoring
 	category = list("Utility Nanites")
 
+/datum/design/nanites/self_scan
+	name = "Host Scan"
+	desc = "The nanites display a detailed readout of a body scan to the host."
+	id = "selfscan_nanites"
+	program_type = /datum/nanite_program/triggered/self_scan
+	category = list("Utility Nanites")
+
 /datum/design/nanites/stealth
 	name = "Stealth"
 	desc = "The nanites hide their activity and programming from superficial scans."

@@ -89,6 +89,45 @@
 	SSnanites.nanite_monitored_mobs -= host_mob
 	host_mob.hud_set_nanite_indicator()
 
+/datum/nanite_program/triggered/self_scan
+	name = "Host Scan"
+	desc = "The nanites display a detailed readout of a body scan to the host."
+	unique = FALSE
+	trigger_cost = 3
+	trigger_cooldown = 50
+	rogue_types = list(/datum/nanite_program/toxic)
+
+	extra_settings = list("Scan Type")
+	var/scan_type = "Medical"
+
+/datum/nanite_program/triggered/self_scan/set_extra_setting(user, setting)
+	if(setting == "Scan Type")
+		var/list/scan_types = list("Medical","Chemical","Nanite")
+		var/new_scan_type = input("Choose the scan type", name) as null|anything in scan_types
+		if(!new_scan_type)
+			return
+		scan_type = new_scan_type
+
+/datum/nanite_program/triggered/self_scan/get_extra_setting(setting)
+	if(setting == "Scan Type")
+		return scan_type
+
+/datum/nanite_program/triggered/self_scan/copy_extra_settings_to(datum/nanite_program/triggered/self_scan/target)
+	target.scan_type = scan_type
+
+/datum/nanite_program/triggered/self_scan/trigger()
+	if(!..())
+		return
+	if(host_mob.stat == DEAD)
+		return
+	switch(scan_type)
+		if("Medical")
+			healthscan(host_mob, host_mob)
+		if("Chemical")
+			chemscan(host_mob, host_mob)
+		if("Nanite")
+			SEND_SIGNAL(host_mob, COMSIG_NANITE_SCAN, host_mob, TRUE)
+
 /datum/nanite_program/stealth
 	name = "Stealth"
 	desc = "The nanites hide their activity and programming from superficial scans."
