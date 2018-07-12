@@ -17,10 +17,6 @@
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	power_change()
-	if(!QDELETED(C))
-		qdel(circuit)
-		circuit = C
-		C.moveToNullspace()
 
 /obj/machinery/computer/Destroy()
 	QDEL_NULL(circuit)

@@ -180,7 +180,7 @@
 						break
 				if(component_check)
 					P.play_tool_sound(src)
-					var/obj/machinery/new_machine = new circuit.build_path(loc, 1)
+					var/obj/machinery/new_machine = new circuit.build_path(loc, circuit)
 					new_machine.setAnchored(anchored)
 					new_machine.on_construction()
 					for(var/obj/O in new_machine.component_parts)
@@ -189,7 +189,6 @@
 					for(var/obj/O in src)
 						O.moveToNullspace()
 						new_machine.component_parts += O
-					circuit.moveToNullspace()
 					new_machine.RefreshParts()
 					qdel(src)
 				return
