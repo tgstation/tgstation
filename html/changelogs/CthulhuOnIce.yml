@@ -1,3 +1,5 @@
 author: CthulhuOnIce
-changes: []
+changes: 
+  - bugfix: "Fixed vacant office maint door."
+  - bugfix: "Took engineer's guns away, gave one to CE."
 delete-after: false
