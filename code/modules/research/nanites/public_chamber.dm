@@ -56,7 +56,10 @@
 /obj/machinery/public_nanite_chamber/update_icon()
 	cut_overlays()
 
-	if(!(stat & (NOPOWER|BROKEN)))
+	if((stat & MAINT) || panel_open)
+		add_overlay("maint")
+
+	else if(!(stat & (NOPOWER|BROKEN)))
 		if(busy || locked)
 			add_overlay("red")
 			if(locked)
@@ -64,10 +67,7 @@
 		else
 			add_overlay("green")
 
-	//TODO make an overlay for the panel
-	if((stat & MAINT) || panel_open)
-		icon_state = initial(icon_state)+ (state_open ? "_open" : "") + "_maintenance"
-		return
+
 
 	//running and someone in there
 	if(occupant)
