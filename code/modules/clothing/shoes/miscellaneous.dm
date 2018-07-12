@@ -312,3 +312,14 @@
 		set_light(0)
 		lightCycle = 0
 		active = FALSE
+
+/obj/item/clothing/shoes/sneakers/white/damndaniel
+	name = "white vans"
+	desc = "Damn daniel those shoes"
+
+/obj/item/clothing/shoes/sneakers/white/damndaniel/Initialize()
+	. = ..()
+	AddComponent(/datum/component/redirect, list(COMSIG_ATOM_POINTED_AT), CALLBACK(src, .proc/damn_daniel))
+
+/obj/item/clothing/shoes/sneakers/white/damndaniel/proc/damn_daniel(mob/M)
+	addtimer(CALLBACK(M, /atom/movable/.proc/say, "DAMN DANIEL!"), 10)
