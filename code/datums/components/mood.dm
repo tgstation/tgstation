@@ -155,22 +155,22 @@
 			add_event("jolly", /datum/mood_event/jolly)
 			clear_event("depression")
 
-/datum/component/mood/proc/DecreaseSanity(amount, minimum = 0)
-	if(sanity < minimum) //This might make KevinZ stop fucking pinging me.
+/datum/component/mood/proc/DecreaseSanity(amount)
+	if(sanity < SANITY_INSANE) //This might make KevinZ stop fucking pinging me.
 		IncreaseSanity(0.5)
 	else
-		sanity = max(0, sanity - amount)
+		sanity = max(SANITY_INSANE, sanity - amount)
 		if(sanity < SANITY_UNSTABLE)
 			if(sanity < SANITY_CRAZY)
 				insanity_effect = MAJOR_INSANITY_PEN
 			else
 				insanity_effect = MINOR_INSANITY_PEN
 
-/datum/component/mood/proc/IncreaseSanity(amount, maximum = 99)
-	if(sanity > maximum)
+/datum/component/mood/proc/IncreaseSanity(amount)
+	if(sanity > SANITY_GREAT)
 		DecreaseSanity(0.5) //Removes some sanity to go back to our current limit.
 	else
-		sanity = min(maximum, sanity + amount)
+		sanity = min(SANITY_GREAT, sanity + amount)
 		if(sanity > SANITY_CRAZY)
 			if(sanity > SANITY_UNSTABLE)
 				insanity_effect = 0
