@@ -201,3 +201,6 @@
 	mood_events -= category
 	qdel(event)
 	update_mood()
+
+#undef MINOR_INSANITY_PEN
+#undef MAJOR_INSANITY_PEN
