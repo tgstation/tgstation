@@ -191,7 +191,8 @@
 
 /obj/item/reagent_containers/pill/floorpill/Initialize()
 	list_reagents = list(get_random_reagent_id() = rand(10,50))
+	. = ..()
 	name = pick(names)
 	if(prob(20))
 		desc = pick(descs)
-	. = ..()
+	
