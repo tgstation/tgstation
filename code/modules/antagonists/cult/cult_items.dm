@@ -462,7 +462,7 @@
 	item_state = "blindfold"
 	flash_protect = 1
 
-/obj/item/clothing/glasses/night/cultblind/equipped(mob/living/user, slot)
+/obj/item/clothing/glasses/hud/health/night/cultblind/equipped(mob/living/user, slot)
 	..()
 	if(!iscultist(user))
 		to_chat(user, "<span class='cultlarge'>\"You want to be blind, do you?\"</span>")
