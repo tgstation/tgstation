@@ -353,7 +353,7 @@
 /area/holodeck/rec_center/lounge)
 "bf" = (
 /obj/structure/table/wood,
-/obj/item/book/manual/barman_recipes,
+/obj/item/book/manual/wiki/barman_recipes,
 /obj/item/clothing/mask/cigarette/pipe,
 /turf/open/floor/holofloor/carpet,
 /area/holodeck/rec_center/lounge)
@@ -12069,7 +12069,7 @@
 /area/tdome/tdomeobserve)
 "Iq" = (
 /obj/structure/table/wood,
-/obj/item/book/manual/barman_recipes,
+/obj/item/book/manual/wiki/barman_recipes,
 /obj/item/reagent_containers/food/drinks/shaker,
 /obj/item/reagent_containers/glass/rag,
 /obj/machinery/newscaster{
@@ -14245,7 +14245,7 @@
 "YJ" = (
 /obj/item/reagent_containers/food/condiment/enzyme,
 /obj/item/reagent_containers/food/drinks/shaker,
-/obj/item/book/manual/barman_recipes,
+/obj/item/book/manual/wiki/barman_recipes,
 /obj/item/book/granter/action/drink_fling,
 /obj/structure/closet/crate,
 /turf/open/floor/plasteel/cafeteria,

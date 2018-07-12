@@ -35211,7 +35211,7 @@
 	receive_ore_updates = 1
 	},
 /obj/structure/table,
-/obj/item/book/manual/barman_recipes{
+/obj/item/book/manual/wiki/barman_recipes{
 	pixel_y = 5
 	},
 /obj/item/reagent_containers/food/drinks/shaker,
@@ -54633,7 +54633,7 @@
 "cmU" = (
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
-/obj/item/book/manual/experimentor,
+/obj/item/book/manual/wiki/experimentor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
@@ -61123,7 +61123,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
 "czX" = (
-/obj/item/book/manual/medical_cloning{
+/obj/item/book/manual/wiki/medical_cloning{
 	pixel_y = 6
 	},
 /obj/item/paper,
@@ -62665,7 +62665,7 @@
 	pixel_y = 32
 	},
 /obj/structure/rack,
-/obj/item/book/manual/robotics_cyborgs{
+/obj/item/book/manual/wiki/robotics_cyborgs{
 	pixel_x = 2;
 	pixel_y = 5
 	},
