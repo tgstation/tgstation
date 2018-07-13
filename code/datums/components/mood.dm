@@ -10,6 +10,7 @@
 	var/datum/mood_event/list/mood_events = list()
 	var/mob/living/owner
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
+	var/holdmyinsanityeffect = 0 //before we edit our sanity lets take a look
 
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
@@ -121,17 +122,16 @@
 			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 1)
 		if(SANITY_DISTURBED to INFINITY)
 			owner.clear_fullscreen("depression")
-	var/holdmyinsanityeffect = insanity_effect //before we edit our sanity lets take a look
 
 	switch(mood_level)
 		if(1)
-			DecreaseSanity(0.2, 0)
+			DecreaseSanity(0.2)
 		if(2)
-			DecreaseSanity(0.125, 25)
+			DecreaseSanity(0.125, SANITY_CRAZY)
 		if(3)
-			DecreaseSanity(0.075, 50)
+			DecreaseSanity(0.075, SANITY_UNSTABLE)
 		if(4)
-			DecreaseSanity(0.025, 75)
+			DecreaseSanity(0.025, SANITY_DISTURBED)
 		if(5)
 			IncreaseSanity(0.1)
 		if(6)
@@ -139,12 +139,15 @@
 		if(7)
 			IncreaseSanity(0.20)
 		if(8)
-			IncreaseSanity(0.25, 125)
+			IncreaseSanity(0.25, SANITY_GREAT)
 		if(9)
-			IncreaseSanity(0.4, 125)
+			IncreaseSanity(0.4, SANITY_GREAT)
 
-	if(insanity_effect != holdmyinsanityeffect) //we've changed since switch
-		owner.crit_threshold -= (holdmyinsanityeffect - insanity_effect) // subtracting negative difference (aka you gained insanity_effect) is same as adding to crit_threshold
+	if(insanity_effect != holdmyinsanityeffect)
+		if(insanity_effect > holdmyinsanityeffect)
+			owner.crit_threshold += (insanity_effect - holdmyinsanityeffect)
+		else
+			owner.crit_threshold -= (holdmyinsanityeffect - insanity_effect)
 
 	if(owner.has_trait(TRAIT_DEPRESSION))
 		if(prob(0.05))
@@ -155,22 +158,24 @@
 			add_event("jolly", /datum/mood_event/jolly)
 			clear_event("depression")
 
-/datum/component/mood/proc/DecreaseSanity(amount)
-	if(sanity < SANITY_INSANE) //This might make KevinZ stop fucking pinging me.
+	holdmyinsanityeffect = insanity_effect
+
+/datum/component/mood/proc/DecreaseSanity(amount, minimum = SANITY_INSANE)
+	if(sanity < minimum) //This might make KevinZ stop fucking pinging me.
 		IncreaseSanity(0.5)
 	else
-		sanity = max(SANITY_INSANE, sanity - amount)
+		sanity = max(minimum, sanity - amount)
 		if(sanity < SANITY_UNSTABLE)
 			if(sanity < SANITY_CRAZY)
-				insanity_effect = MAJOR_INSANITY_PEN
+				insanity_effect = (MAJOR_INSANITY_PEN)
 			else
-				insanity_effect = MINOR_INSANITY_PEN
+				insanity_effect = (MINOR_INSANITY_PEN)
 
-/datum/component/mood/proc/IncreaseSanity(amount)
-	if(sanity > SANITY_NEUTRAL)
+/datum/component/mood/proc/IncreaseSanity(amount, maximum = SANITY_NEUTRAL)
+	if(sanity > maximum)
 		DecreaseSanity(0.5) //Removes some sanity to go back to our current limit.
 	else
-		sanity = min(SANITY_NEUTRAL, sanity + amount)
+		sanity = min(maximum, sanity + amount)
 		if(sanity > SANITY_CRAZY)
 			if(sanity > SANITY_UNSTABLE)
 				insanity_effect = 0
