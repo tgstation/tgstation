@@ -116,6 +116,23 @@
 	empulse(location, round(created_volume / 12), round(created_volume / 7), 1)
 	holder.clear_reagents()
 
+
+/datum/chemical_reaction/beesplosion
+	name = "Bee Explosion"
+	id = "beesplosion"
+	required_reagents = list("honey" = 1, "strange_reagent" = 1, "mutagen" = 1)
+	
+/datum/chemical_reaction/beesplosion/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	if(created_volume) < 10)
+		//nothing
+	else
+		//bzzz sound
+		var bee = created_volume/10
+		for(counter = 0; counter < bee; counter++)
+			new /mob/living/simple_animal/hostile/poison/bees/toxin(location)
+		
+
 /datum/chemical_reaction/stabilizing_agent
 	name = "stabilizing_agent"
 	id = "stabilizing_agent"
