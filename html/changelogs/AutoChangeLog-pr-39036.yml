@@ -1,0 +1,4 @@
+author: "Zxaber"
+delete-after: True
+changes: 
+  - bugfix: "MMI units inside cyborgs are no longer affected by ash storms."
