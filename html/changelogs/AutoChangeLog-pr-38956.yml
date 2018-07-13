@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Objects on tables that are thrown by shuttle movement should no longer do a silly spin"
