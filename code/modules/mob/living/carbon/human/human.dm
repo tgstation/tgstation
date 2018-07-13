@@ -208,7 +208,7 @@
 
 
 /mob/living/carbon/human/Topic(href, href_list)
-	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		if(href_list["embedded_object"])
 			var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
 			if(!L)
@@ -720,7 +720,7 @@
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")
 	cut_overlay(MA)
 
-/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE)
 	if(incapacitated() || lying )
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
