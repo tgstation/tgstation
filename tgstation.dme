@@ -1746,6 +1746,7 @@
 #include "code\modules\mining\fulton.dm"
 #include "code\modules\mining\machine_processing.dm"
 #include "code\modules\mining\machine_redemption.dm"
+#include "code\modules\mining\machine_silo.dm"
 #include "code\modules\mining\machine_stacking.dm"
 #include "code\modules\mining\machine_unloading.dm"
 #include "code\modules\mining\machine_vending.dm"

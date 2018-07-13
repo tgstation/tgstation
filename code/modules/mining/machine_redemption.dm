@@ -24,13 +24,25 @@
 	var/list/ore_buffer = list()
 	var/datum/techweb/stored_research
 	var/obj/item/disk/design_disk/inserted_disk
+	var/obj/machinery/ore_silo/silo
 
-/obj/machinery/mineral/ore_redemption/Initialize()
+/obj/machinery/mineral/ore_redemption/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),INFINITY, FALSE, list(/obj/item/stack))
 	stored_research = new /datum/techweb/specialized/autounlocking/smelter
 
+	if (mapload)
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/mineral/ore_redemption/LateInitialize()
+	..()
+	silo = GLOB.ore_silo_default
+	if (silo)
+		silo.orms += src
+
 /obj/machinery/mineral/ore_redemption/Destroy()
+	if (silo)
+		silo.orms -= src
+
 	QDEL_NULL(stored_research)
 	return ..()
 
@@ -49,13 +61,15 @@
 	sheet_per_ore = sheet_per_ore_temp
 
 /obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/stack/ore/O)
+	if (!silo)
+		return
 
 	ore_buffer -= O
 
 	if(O && O.refined_type)
 		points += O.points * point_upgrade * O.amount
 
-	GET_COMPONENT(materials, /datum/component/material_container)
+	GET_COMPONENT_FROM(materials, /datum/component/material_container, silo)
 	var/material_amount = materials.get_item_material_amount(O)
 
 	if(!material_amount)
@@ -69,12 +83,12 @@
 		qdel(O)
 
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/D)
-	if(D.make_reagents.len)
+	if(!silo || D.make_reagents.len)
 		return FALSE
 
 	var/build_amount = 0
 
-	GET_COMPONENT(materials, /datum/component/material_container)
+	GET_COMPONENT_FROM(materials, /datum/component/material_container, silo)
 	for(var/mat_id in D.materials)
 		var/M = D.materials[mat_id]
 		var/datum/material/redemption_mat = materials.materials[mat_id]
@@ -102,7 +116,7 @@
 		smelt_ore(ore)
 
 /obj/machinery/mineral/ore_redemption/proc/send_console_message()
-	if(!is_station_level(z))
+	if(!silo || !is_station_level(z))
 		return
 	message_sent = TRUE
 	var/area/A = get_area(src)
@@ -110,7 +124,7 @@
 
 	var/has_minerals = FALSE
 
-	GET_COMPONENT(materials, /datum/component/material_container)
+	GET_COMPONENT_FROM(materials, /datum/component/material_container, silo)
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = materials.materials[mat_id]
 		var/mineral_amount = M.amount / MINERAL_MATERIAL_AMOUNT
@@ -126,7 +140,7 @@
 			D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
 
 /obj/machinery/mineral/ore_redemption/process()
-	if(panel_open || !powered())
+	if(!silo || panel_open || !powered())
 		return
 	var/atom/input = get_step(src, input_dir)
 	var/obj/structure/ore_box/OB = locate() in input
@@ -147,10 +161,6 @@
 		send_console_message()
 
 /obj/machinery/mineral/ore_redemption/attackby(obj/item/W, mob/user, params)
-	GET_COMPONENT(materials, /datum/component/material_container)
-	if(default_pry_open(W))
-		materials.retrieve_all()
-		return
 	if(default_unfasten_wrench(user, W))
 		return
 	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
@@ -182,11 +192,6 @@
 			return TRUE
 	return ..()
 
-/obj/machinery/mineral/ore_redemption/on_deconstruction()
-	GET_COMPONENT(materials, /datum/component/material_container)
-	materials.retrieve_all()
-	..()
-
 /obj/machinery/mineral/ore_redemption/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -201,16 +206,18 @@
 		data["claimedPoints"] = inserted_id.mining_points
 
 	data["materials"] = list()
-	GET_COMPONENT(materials, /datum/component/material_container)
-	for(var/mat_id in materials.materials)
-		var/datum/material/M = materials.materials[mat_id]
-		var/sheet_amount = M.amount ? M.amount / MINERAL_MATERIAL_AMOUNT : "0"
-		data["materials"] += list(list("name" = M.name, "id" = M.id, "amount" = sheet_amount, "value" = ore_values[M.id] * point_upgrade))
+	if (silo)
+		GET_COMPONENT_FROM(materials, /datum/component/material_container, silo)
+		for(var/mat_id in materials.materials)
+			var/datum/material/M = materials.materials[mat_id]
+			var/sheet_amount = M.amount ? M.amount / MINERAL_MATERIAL_AMOUNT : "0"
+			data["materials"] += list(list("name" = M.name, "id" = M.id, "amount" = sheet_amount, "value" = ore_values[M.id] * point_upgrade))
 
-	data["alloys"] = list()
-	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = stored_research.researched_designs[v]
-		data["alloys"] += list(list("name" = D.name, "id" = D.id, "amount" = can_smelt_alloy(D)))
+		data["alloys"] = list()
+		for(var/v in stored_research.researched_designs)
+			var/datum/design/D = stored_research.researched_designs[v]
+			data["alloys"] += list(list("name" = D.name, "id" = D.id, "amount" = can_smelt_alloy(D)))
+
 	data["diskDesigns"] = list()
 	if(inserted_disk)
 		data["hasDisk"] = TRUE
@@ -225,7 +232,7 @@
 /obj/machinery/mineral/ore_redemption/ui_act(action, params)
 	if(..())
 		return
-	GET_COMPONENT(materials, /datum/component/material_container)
+	GET_COMPONENT_FROM(materials, /datum/component/material_container, silo)
 	switch(action)
 		if("Eject")
 			if(!inserted_id)
