@@ -562,11 +562,10 @@
 					viable_occupant.dna.blood_type = buffer_slot["blood_type"]
 
 /obj/machinery/computer/scan_consolenew/proc/on_scanner_close()
-	to_chat(connected.occupant, "<span class='notice'>[src] activates!</span>")
-	if(delayed_action)
+	if(delayed_action && connected)
+		to_chat(connected.occupant, "<span class='notice'>[src] activates!</span>")
 		apply_buffer(delayed_action["action"],delayed_action["buffer"])
 		delayed_action = null //or make it stick + reset button ?
-	return
 
 /////////////////////////// DNA MACHINES
 #undef INJECTOR_TIMEOUT

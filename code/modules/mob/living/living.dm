@@ -338,9 +338,19 @@
 	set name = "Rest"
 	set category = "IC"
 
-	resting = !resting
-	to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
-	update_canmove()
+	if(!resting)
+		resting = TRUE
+		to_chat(src, "<span class='notice'>You are now resting.</span>")
+		update_rest_hud_icon()
+		update_canmove()
+	else
+		if(do_after(src, 10, target = src))
+			to_chat(src, "<span class='notice'>You get up.</span>")
+			resting = FALSE
+			update_rest_hud_icon()
+			update_canmove()
+		else
+			to_chat(src, "<span class='notice'>You fail to get up.</span>")
 
 //Recursive function to find everything a mob is holding. Really shitty proc tbh.
 /mob/living/get_contents()

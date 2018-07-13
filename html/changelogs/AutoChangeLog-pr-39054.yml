@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a bug where golem shells couldn't be completed by certain brass/sandstone/titanium stacks."

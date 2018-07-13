@@ -295,6 +295,8 @@
 					/obj/item/clothing/head/nun_hood = 1,
 					/obj/item/clothing/suit/holidaypriest = 1,
 					/obj/item/storage/fancy/candle_box = 2)
+	contraband = list(/obj/item/toy/plush/plushvar = 1,
+					/obj/item/toy/plush/narplush = 1)				
 	refill_canister = /obj/item/vending_refill/wardrobe/chap_wardrobe
 
 /obj/item/vending_refill/wardrobe/chap_wardrobe
