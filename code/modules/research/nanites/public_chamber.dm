@@ -18,7 +18,7 @@
 	var/busy_icon_state
 	var/message_cooldown = 0
 
-/obj/machinery/public_nanite_chamber/Initialize(mapload, obj/item/circuitboard/C)
+/obj/machinery/public_nanite_chamber/Initialize()
 	. = ..()
 	var/obj/item/circuitboard/machine/public_nanite_chamber/board = circuit
 	cloud_id = board.cloud_id
