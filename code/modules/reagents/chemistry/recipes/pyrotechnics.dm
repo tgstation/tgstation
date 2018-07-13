@@ -121,17 +121,24 @@
 	name = "Bee Explosion"
 	id = "beesplosion"
 	required_reagents = list("honey" = 1, "strange_reagent" = 1, "radium" = 1)
-	
+
 /datum/chemical_reaction/beesplosion/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	if(created_volume < 10)
 		playsound(location,'sound/effects/sparks1.ogg', 100, 1)
 	else
-		playsound(location,'sound/creatures/bee.ogg', 100, 1)
-		var/bee = round(created_volume/10)
-		for(var/counter in 1 to bee)
-			new /mob/living/simple_animal/hostile/poison/bees/toxin(location)
-		
+		var/list/beeagents = list()
+		for(var/X in holder.reagent_list)
+			var/datum/reagent/R = X
+			if(R.id in required_reagents)
+				continue
+			beeagents += R
+		var/bee_amount = round(created_volume/10)
+		for(var/i in 1 to bee_amount)
+			var/mob/living/simple_animal/hostile/poison/bees/new_bee = new(location)
+			if(LAZYLEN(beeagents))
+				new_bee.assign_reagent(pick(beeagents))
+
 
 /datum/chemical_reaction/stabilizing_agent
 	name = "stabilizing_agent"
