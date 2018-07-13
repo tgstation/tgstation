@@ -115,16 +115,13 @@ Class Procs:
 
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
 
-/obj/machinery/Initialize(mapload, obj/item/circuitboard/C)
+/obj/machinery/Initialize()
 	if(!armor)
 		armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
 	. = ..()
 	GLOB.machines += src
-
-	if(C)
-		circuit = C
-		C.moveToNullspace()
-	else if(ispath(circuit, /obj/item/circuitboard))
+	
+	if(ispath(circuit, /obj/item/circuitboard))
 		circuit = new circuit
 		circuit.apply_default_parts(src)
 
@@ -148,6 +145,9 @@ Class Procs:
 	return ..()
 
 /obj/machinery/proc/locate_machinery()
+	return
+	
+/obj/machinery/proc/check_circuit()
 	return
 
 /obj/machinery/process()//If you dont use process or power why are you here
