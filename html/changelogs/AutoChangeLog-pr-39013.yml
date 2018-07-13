@@ -1,0 +1,5 @@
+author: "Arithmetics plus"
+delete-after: True
+changes: 
+  - rscadd: "Min circuit"
+  - rscadd: "Max circuit"
