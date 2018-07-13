@@ -572,13 +572,15 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	return TRUE
 
 /mob/living/carbon/proc/needs_heart()
+	if(has_trait(TRAIT_STABLEHEART))
+		return FALSE
 	if(dna && dna.species && (NOBLOOD in dna.species.species_traits)) //not all carbons have species!
 		return FALSE
 	return TRUE
 
 /mob/living/carbon/proc/undergoing_cardiac_arrest()
 	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
-	if(istype(heart) && (heart.beating || has_trait(TRAIT_STABLEHEART)))
+	if(istype(heart) && heart.beating)
 		return FALSE
 	else if(!needs_heart())
 		return FALSE
