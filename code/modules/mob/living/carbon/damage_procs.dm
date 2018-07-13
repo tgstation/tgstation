@@ -166,9 +166,9 @@
 
 		update |= picked.heal_damage(brute, burn, stamina, only_robotic, only_organic, FALSE)
 
-		brute -= (brute_was - picked.brute_dam)
-		burn -= (burn_was - picked.burn_dam)
-		stamina -= (stamina_was - picked.stamina_dam)
+		brute = round(brute - (brute_was - picked.brute_dam), 0.01)
+		burn = round(burn - (burn_was - picked.burn_dam), 0.01)
+		stamina = round(stamina - (stamina_was - picked.stamina_dam), 0.01)
 
 		parts -= picked
 	if(updating_health)
@@ -197,9 +197,9 @@
 
 		update |= picked.receive_damage(brute_per_part, burn_per_part, stamina_per_part, FALSE)
 
-		brute	-= (picked.brute_dam - brute_was)
-		burn	-= (picked.burn_dam - burn_was)
-		stamina -= (picked.stamina_dam - stamina_was)
+		brute	= round(brute - (picked.brute_dam - brute_was), 0.01)
+		burn	= round(burn - (picked.burn_dam - burn_was), 0.01)
+		stamina = round(stamina - (picked.stamina_dam - stamina_was), 0.01)
 
 		parts -= picked
 	if(updating_health)
@@ -248,4 +248,3 @@
 	if(B)
 		var/adjusted_amount = amount - B.get_brain_damage()
 		B.adjust_brain_damage(adjusted_amount, null)
-
