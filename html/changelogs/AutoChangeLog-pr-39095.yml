@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - bugfix: "deep-frying no longer turns certain objects like limbs invisible"
