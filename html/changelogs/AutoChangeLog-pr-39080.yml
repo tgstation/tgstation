@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "Machine frames no longer explode when struck by tesla arcs."
