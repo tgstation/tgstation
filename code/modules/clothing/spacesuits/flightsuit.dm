@@ -520,7 +520,8 @@
 		usermessage("DISENGAGING FLIGHT ENGINES.")
 		wearer.visible_message("<font color='blue' size='2'>[wearer] drops to the ground as [wearer.p_their()] flight engines cut out!</font>")
 		wearer.movement_type &= ~FLYING
-		wearer.pass_flags &= ~flight_passflags
+		if(!wearer.dna.check_mutation(DWARFISM))
+			wearer.pass_flags &= ~flight_passflags
 		flight = FALSE
 		update_slowdown()
 		update_icon()
