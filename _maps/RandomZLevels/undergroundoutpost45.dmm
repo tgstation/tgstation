@@ -3662,7 +3662,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "io" = (
 /obj/structure/table,
-/obj/item/book/manual/barman_recipes,
+/obj/item/book/manual/wiki/barman_recipes,
 /obj/item/reagent_containers/food/drinks/shaker,
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
