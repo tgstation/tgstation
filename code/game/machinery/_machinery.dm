@@ -146,9 +146,6 @@ Class Procs:
 
 /obj/machinery/proc/locate_machinery()
 	return
-	
-/obj/machinery/proc/check_circuit()
-	return
 
 /obj/machinery/process()//If you dont use process or power why are you here
 	return PROCESS_KILL
