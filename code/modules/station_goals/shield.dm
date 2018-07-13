@@ -4,6 +4,7 @@
 /datum/station_goal/station_shield
 	name = "Station Shield"
 	var/coverage_goal = 500
+	var/template_id = "goal_shield"
 
 /datum/station_goal/station_shield/get_report()
 	return {"The station is located in a zone full of space debris.
@@ -18,8 +19,16 @@
 	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shield_sat]
 	P.special_enabled = TRUE
 
-	P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shield_sat_control]
-	P.special_enabled = TRUE
+	message_admins("spawngoalactivate")
+	var/turf/T = pick(GLOB.goal_spawn)
+	message_admins(world, "Turf loc [T.x], [T.y], [T.z]")
+	var/datum/map_template/goal/template
+	template = SSmapping.goal_templates[template_id]
+
+	message_admins("[ADMIN_LOOKUPFLW(usr)] has activated the station goal [ADMIN_VERBOSEJMP(T)]")
+	template.load(T, centered = TRUE)
+	qdel(src)
+
 
 /datum/station_goal/station_shield/check_completion()
 	if(..())

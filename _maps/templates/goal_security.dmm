@@ -1,0 +1,55 @@
+"a" = (/obj/machinery/power/apc{areastring = "/area/security/nuke_storage"; dir = 1; name = "Station Goal APC"; pixel_y = 25},/obj/structure/cable/yellow{icon_state = "0-2"},/obj/structure/rack{icon = 'icons/obj/stationobjs.dmi'; icon_state = "minibar_right"; name = "skeletal minibar"},/obj/item/circuitboard/computer/bsa_control,/turf/open/floor/plasteel/darkred/corner{dir = 8},/area/station_goal)
+"b" = (/turf/open/space,/area/space/nearstation)
+"c" = (/obj/structure/lattice,/turf/open/space,/area/space/nearstation)
+"d" = (/turf/closed/wall,/area/station_goal)
+"e" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plasteel/darkred,/area/station_goal)
+"f" = (/turf/open/space/basic,/area/space/nearstation)
+"g" = (/obj/item/circuitboard/machine/bsa/back,/obj/structure/rack{icon = 'icons/obj/stationobjs.dmi'; icon_state = "minibar_left"; name = "skeletal minibar"},/turf/open/floor/plasteel/darkred/corner,/area/station_goal)
+"h" = (/turf/open/floor/plasteel/darkred,/area/station_goal)
+"i" = (/turf/open/floor/plasteel/darkred/side,/area/station_goal)
+"j" = (/obj/structure/rack{icon = 'icons/obj/stationobjs.dmi'; icon_state = "minibar_right"; name = "skeletal minibar"},/obj/item/circuitboard/machine/bsa/middle,/turf/open/floor/plasteel/darkred/side,/area/station_goal)
+"k" = (/turf/open/floor/plasteel/darkred/side{dir = 4},/area/station_goal)
+"l" = (/turf/open/floor/plasteel/darkred/side{dir = 8},/area/station_goal)
+"m" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 6},/turf/open/floor/plasteel/darkred,/area/station_goal)
+"n" = (/obj/structure/cable/yellow{icon_state = "1-2"},/turf/open/floor/plasteel/darkred/side{dir = 8},/area/station_goal)
+"o" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/effect/mapping_helpers/airlock/cyclelink_helper,/obj/machinery/door/airlock/security/glass{id_tag = "outerbrig"; name = "BSA Hardware"; req_access_txt = "63"},/turf/open/floor/plasteel/darkred,/area/station_goal)
+"p" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/closed/wall,/area/station_goal)
+"q" = (/obj/structure/rack{icon = 'icons/obj/stationobjs.dmi'; icon_state = "minibar_left"; name = "skeletal minibar"},/obj/item/circuitboard/machine/bsa/front,/turf/open/floor/plasteel/darkred/side,/area/station_goal)
+"r" = (/obj/structure/cable/yellow{icon_state = "1-2"},/turf/closed/wall,/area/station_goal)
+"s" = (/obj/machinery/camera{c_tag = "Captain's Office - Emergency Escape"; dir = 4},/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 4},/obj/machinery/light{dir = 8},/turf/open/floor/plasteel/darkred/corner{dir = 4},/area/station_goal)
+"t" = (/obj/structure/cable/yellow{icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/door/firedoor,/obj/effect/mapping_helpers/airlock/cyclelink_helper{dir = 1},/obj/machinery/door/airlock/security/glass{id_tag = "outerbrig"; name = "BSA Goal"; req_access_txt = "63"},/turf/open/floor/plasteel/darkred,/area/station_goal)
+"u" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/obj/item/storage/box/trackimp,/obj/structure/rack,/turf/open/floor/plasteel/darkred/side{dir = 1},/area/station_goal)
+"v" = (/obj/structure/cable/yellow{icon_state = "1-2"},/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 8},/obj/machinery/light{dir = 4},/turf/open/floor/plasteel/darkred/corner{dir = 1},/area/station_goal)
+"w" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plasteel/darkred/corner{dir = 8},/area/station_goal)
+"x" = (/obj/effect/spawner/structure/window,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/floor/plasteel/darkred,/area/station_goal)
+"y" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/item/storage/box/trackimp,/obj/structure/rack,/turf/open/floor/plasteel/darkred/side{dir = 1},/area/station_goal)
+"z" = (/obj/effect/spawner/structure/window,/turf/open/floor/plasteel/darkred,/area/station_goal)
+"A" = (/turf/open/floor/plasteel/darkred/corner,/area/station_goal)
+"C" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/open/floor/plasteel/dark,/area/station_goal)
+"D" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/door/window/brigdoor/security/cell{icon_state = "leftsecure"; dir = 8},/turf/open/floor/plasteel/darkred/side{dir = 9},/area/station_goal)
+"E" = (/obj/structure/cable/yellow{icon_state = "1-2"},/turf/open/floor/plasteel/darkred/corner{dir = 8},/area/station_goal)
+"F" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plasteel/darkred/corner{dir = 4},/area/station_goal)
+"G" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plasteel/darkred/corner{dir = 1},/area/station_goal)
+"H" = (/obj/machinery/door/window/brigdoor/security/cell{icon_state = "leftsecure"; dir = 4},/turf/open/floor/plasteel/darkred/side{dir = 5},/area/station_goal)
+"I" = (/obj/structure/bed,/obj/item/bedsheet/red,/turf/open/floor/plasteel/darkred/corner{dir = 4},/area/station_goal)
+"J" = (/obj/structure/cable/yellow{icon_state = "2-4"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/open/floor/plasteel/dark,/area/station_goal)
+"K" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/window/reinforced/spawner/west,/turf/open/floor/plasteel/darkred/side{dir = 10},/area/station_goal)
+"L" = (/obj/structure/cable/yellow{icon_state = "4-8"},/obj/structure/window/reinforced/spawner/east,/turf/open/floor/plasteel/darkred/side{dir = 6},/area/station_goal)
+"M" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plasteel/darkred/corner,/area/station_goal)
+"N" = (/obj/effect/spawner/structure/window,/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plasteel/darkred/corner,/area/station_goal)
+"O" = (/obj/effect/spawner/structure/window,/turf/open/floor/plasteel/darkred/corner,/area/station_goal)
+"P" = (/obj/effect/spawner/structure/window,/turf/open/floor/plasteel/darkred/corner{dir = 8},/area/station_goal)
+"Q" = (/obj/effect/spawner/structure/window,/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plasteel/darkred/corner{dir = 8},/area/station_goal)
+"R" = (/obj/structure/cable/yellow{icon_state = "1-8"},/obj/item/bedsheet/red,/obj/structure/bed,/turf/open/floor/plasteel/darkred/corner{dir = 1},/area/station_goal)
+
+(1,1,1) = {"
+ffbcccbbb
+fddededdb
+fdgjiqadb
+cdklhkndc
+bdsumyvdb
+bddpodrdb
+cwADCHEFc
+bGIKJLRMb
+NwOxtzPMQ
+"}
