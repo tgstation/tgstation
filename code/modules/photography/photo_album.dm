@@ -33,7 +33,7 @@
 		var/obj/item/photo/P = i
 		if(!istype(P.picture))
 			continue
-		. += P.picture.id
+		. |= P.picture.id
 
 /obj/item/storage/photo_album/proc/populate_from_id_list(list/ids)
 	for(var/i in ids)

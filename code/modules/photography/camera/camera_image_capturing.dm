@@ -3,10 +3,17 @@
 /obj/effect/appearance_clone/New(loc, atom/A)			//Intentionally not Initialize().
 	. = ..()
 	appearance = A.appearance
+	if(ismovableatom(A))
+		var/atom/movable/AM = A
+		step_x = AM.step_x
+		step_y = AM.step_y
 
 GLOBAL_VAR_INIT(debug_camera, FALSE)
 /proc/SDC(value)
 	GLOB.debug_camera = value
+
+/proc/debug_icon(thing)
+	to_chat(world, "DEBUG: [icon2html(getFlatIcon(thing))]")
 
 /obj/item/camera/proc/camera_get_icon(list/turfs, turf/center, psize_x = 96, psize_y = 96, datum/turf_reservation/clone_area, size_x, size_y, total_x, total_y)
 	var/list/atoms = list()
@@ -45,6 +52,8 @@ GLOBAL_VAR_INIT(debug_camera, FALSE)
 						continue
 				atoms += A
 			CHECK_TICK
+
+	to_chat(world, "DEBUG: [__LINE__] atoms.len [atoms.len]")
 
 	var/icon/res = icon('icons/effects/96x96.dmi', "")
 	res.Scale(psize_x, psize_y)
