@@ -124,7 +124,7 @@
 	
 /datum/chemical_reaction/beesplosion/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
-	if(created_volume) < 10)
+	if(created_volume < 10)
 		playsound(location,'sound/effects/sparks1.ogg', 100, 1)
 	else
 		playsound(location,'sound/creatures/bee.ogg', 100, 1)
