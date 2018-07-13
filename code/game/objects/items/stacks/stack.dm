@@ -232,7 +232,7 @@
 		return FALSE
 	var/turf/T = get_turf(usr)
 	var/obj/structure/window/M = new R.result_type
-	if(R.window_checks && !valid_window_location(T, M.fulltile? FULLTILE_WINDOW_DIR : usr.dir))
+	if(R.window_checks && !valid_window_location(T, M.fulltile ? FULLTILE_WINDOW_DIR : usr.dir))
 		qdel(M)
 		to_chat(usr, "<span class='warning'>The [R.title] won't fit here!</span>")
 		return FALSE
