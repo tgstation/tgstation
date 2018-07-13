@@ -29,8 +29,7 @@
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
 	. = ..()
 	stored_research = new /datum/techweb/specialized/autounlocking/smelter
-
-	if (mapload)
+	if (mapload && is_station_level(z))
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/mineral/ore_redemption/LateInitialize()
@@ -42,7 +41,8 @@
 /obj/machinery/mineral/ore_redemption/Destroy()
 	if (silo)
 		silo.orms -= src
-
+		silo.updateUsrDialog()
+		silo = null
 	QDEL_NULL(stored_research)
 	return ..()
 
@@ -181,9 +181,6 @@
 		return
 
 	if(istype(W, /obj/item/multitool) && panel_open)
-		input_dir = turn(input_dir, -90)
-		output_dir = turn(output_dir, -90)
-		to_chat(user, "<span class='notice'>You change [src]'s I/O settings, setting the input to [dir2text(input_dir)] and the output to [dir2text(output_dir)].</span>")
 		return
 
 	if(istype(W, /obj/item/disk/design_disk))
@@ -191,6 +188,21 @@
 			inserted_disk = W
 			return TRUE
 	return ..()
+
+/obj/machinery/mineral/ore_redemption/multitool_act(mob/living/user, obj/item/multitool/I)
+	if (panel_open)
+		input_dir = turn(input_dir, -90)
+		output_dir = turn(output_dir, -90)
+		to_chat(user, "<span class='notice'>You change [src]'s I/O settings, setting the input to [dir2text(input_dir)] and the output to [dir2text(output_dir)].</span>")
+		return TRUE
+	else if (istype(I) && !QDELETED(I.buffer) && istype(I.buffer, /obj/machinery/ore_silo))
+		if (silo)
+			silo.orms -= src
+		silo = I.buffer
+		silo.orms += src
+		silo.updateUsrDialog()
+		to_chat(user, "<span class='notice'>You connect [src] to [silo] from the multitool's buffer.</span>")
+		return TRUE
 
 /obj/machinery/mineral/ore_redemption/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)

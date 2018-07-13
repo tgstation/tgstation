@@ -30,7 +30,11 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		if (orm.silo == src)
 			orm.silo = null
 
-	// TODO: unlink lathes
+	for(var/L in lathes)
+		var/obj/machinery/rnd/production/lathe = L
+		if (lathe.silo == src)
+			lathe.silo = null
+			lathe.materials = null
 
 	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.retrieve_all()
@@ -39,7 +43,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 /obj/machinery/ore_silo/ui_interact(mob/user)
 	user.set_machine(src)
-	var/datum/browser/popup = new(user, "ore_silo", 460, 550)
+	var/datum/browser/popup = new(user, "ore_silo", null, 560, 550)
 	popup.set_content(generate_ui())
 	popup.open()
 
@@ -64,3 +68,33 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		ui += "Nothing!"
 	ui += "</div>"
 	return ui.Join()
+
+/obj/machinery/ore_silo/Topic(href, href_list)
+	if(..())
+		return
+	add_fingerprint(usr)
+	usr.set_machine(src)
+
+	if(href_list["remove_orm"])
+		var/obj/machinery/mineral/ore_redemption/orm = locate(href_list["remove_orm"])
+		if (istype(orm))
+			orms -= orm
+			if (orm.silo == src)
+				orm.silo = null
+			updateUsrDialog()
+			return TRUE
+	else if(href_list["remove_lathe"])
+		var/obj/machinery/rnd/production/lathe = locate(href_list["remove_lathe"])
+		if (istype(lathe))
+			lathes -= lathe
+			if (lathe.silo == src)
+				lathe.silo = null
+				lathe.materials = null
+			updateUsrDialog()
+			return TRUE
+
+/obj/machinery/ore_silo/multitool_act(mob/living/user, obj/item/multitool/I)
+	if (istype(I))
+		to_chat(user, "<span class='notice'>You log [src] in the multitool's buffer.</span>")
+		I.buffer = src
+		return TRUE

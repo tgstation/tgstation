@@ -6,6 +6,7 @@
 	var/consoleless_interface = FALSE			//Whether it can be used without a console.
 	var/efficiency_coeff = 1				//Materials needed / coeff = actual.
 	var/list/categories = list()
+	var/obj/machinery/ore_silo/silo  // where to send/retrieve materials
 	var/datum/component/material_container/materials			//Store for hyper speed!
 	var/allowed_department_flags = ALL
 	var/production_animation				//What's flick()'d on print.
@@ -19,19 +20,24 @@
 	var/screen = RESEARCH_FABRICATOR_SCREEN_MAIN
 	var/selected_category
 
-/obj/machinery/rnd/production/Initialize()
+/obj/machinery/rnd/production/Initialize(mapload)
 	. = ..()
 	create_reagents(0)
-	materials = AddComponent(/datum/component/material_container,
-		list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE, MAT_PLASTIC), 0,
-		TRUE, list(/obj/item/stack), CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
-	materials.precise_insertion = TRUE
 	RefreshParts()
 	matching_designs = list()
 	cached_designs = list()
 	stored_research = new
 	host_research = SSresearch.science_tech
 	update_research()
+	if (mapload && is_station_level(z))
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/rnd/production/LateInitialize()
+	..()
+	silo = GLOB.ore_silo_default
+	if (silo)
+		silo.lathes += src
+		materials = silo.GetComponent(/datum/component/material_container)
 
 /obj/machinery/rnd/production/proc/update_research()
 	host_research.copy_research_to(stored_research, TRUE)
@@ -47,8 +53,16 @@
 /obj/machinery/rnd/production/RefreshParts()
 	calculate_efficiency()
 
-/obj/machinery/rnd/production/attack_hand(mob/user)
-	interact(user)									//remove this snowflake shit when the refactor of storage components or some other pr that unsnowflakes attack_hand on machinery is in
+/obj/machinery/rnd/production/multitool_act(mob/living/user, obj/item/multitool/I)
+	if (istype(I) && !QDELETED(I.buffer) && istype(I.buffer, /obj/machinery/ore_silo))
+		if (silo)
+			silo.lathes -= src
+		silo = I.buffer
+		silo.lathes += src
+		silo.updateUsrDialog()
+		materials = silo.GetComponent(/datum/component/material_container)
+		to_chat(user, "<span class='notice'>You connect [src] to [silo] from the multitool's buffer.</span>")
+		return TRUE
 
 /obj/machinery/rnd/production/ui_interact(mob/user)
 	if(!consoleless_interface)
@@ -59,6 +73,11 @@
 	popup.open()
 
 /obj/machinery/rnd/production/Destroy()
+	if (silo)
+		silo.lathes -= screen
+		silo.updateUsrDialog()
+		silo = null
+		materials = null
 	QDEL_NULL(stored_research)
 	return ..()
 
