@@ -120,7 +120,7 @@
 /datum/chemical_reaction/beesplosion
 	name = "Bee Explosion"
 	id = "beesplosion"
-	required_reagents = list("honey" = 1, "strange_reagent" = 1, "mutagen" = 1)
+	required_reagents = list("honey" = 1, "strange_reagent" = 1, "radium" = 1)
 	
 /datum/chemical_reaction/beesplosion/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
