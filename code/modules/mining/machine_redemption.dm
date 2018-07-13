@@ -180,9 +180,6 @@
 			interact(user)
 		return
 
-	if(istype(W, /obj/item/multitool) && panel_open)
-		return
-
 	if(istype(W, /obj/item/disk/design_disk))
 		if(user.transferItemToLoc(W, src))
 			inserted_disk = W

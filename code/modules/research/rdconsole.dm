@@ -268,7 +268,10 @@ Nothing else in the console has ID requirements.
 /obj/machinery/computer/rdconsole/proc/ui_protolathe_header()
 	var/list/l = list()
 	l += "<div class='statusDisplay'><A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE]'>Protolathe Menu</A>"
-	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE_MATERIALS]'><B>Material Amount:</B> [linked_lathe.materials.total_amount] / [linked_lathe.materials.max_amount]</A>"
+	if(linked_lathe.materials)
+		l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE_MATERIALS]'><B>Material Amount:</B> [linked_lathe.materials.total_amount] / [linked_lathe.materials.max_amount]</A>"
+	else
+		l += "<font color='red'>No material storage connected!</font>"
 	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE_CHEMICALS]'><B>Chemical volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]</A></div>"
 	return l
 
@@ -364,6 +367,9 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/proc/ui_protolathe_materials()		//Legacy code
 	RDSCREEN_UI_LATHE_CHECK
+	if (!linked_lathe.materials)
+		screen = RDSCREEN_PROTOLATHE
+		return ui_protolathe()
 	var/list/l = list()
 	l += ui_protolathe_header()
 	l += "<div class='statusDisplay'><h3>Material Storage:</h3>"
@@ -392,7 +398,10 @@ Nothing else in the console has ID requirements.
 /obj/machinery/computer/rdconsole/proc/ui_circuit_header()		//Legacy Code
 	var/list/l = list()
 	l += "<div class='statusDisplay'><A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER]'>Circuit Imprinter Menu</A>"
-	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER_MATERIALS]'><B>Material Amount:</B> [linked_imprinter.materials.total_amount] / [linked_imprinter.materials.max_amount]</A>"
+	if (linked_imprinter.materials)
+		l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER_MATERIALS]'><B>Material Amount:</B> [linked_imprinter.materials.total_amount] / [linked_imprinter.materials.max_amount]</A>"
+	else
+		l += "<font color='red'>No material storage connected!</font>"
 	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER_CHEMICALS]'><B>Chemical volume:</B> [linked_imprinter.reagents.total_volume] / [linked_imprinter.reagents.maximum_volume]</A></div>"
 	return l
 
@@ -485,6 +494,9 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/proc/ui_circuit_materials()	//Legacy code!
 	RDSCREEN_UI_IMPRINTER_CHECK
+	if (!linked_imprinter.materials)
+		screen = RDSCREEN_IMPRINTER
+		return ui_circuit()
 	var/list/l = list()
 	l += ui_circuit_header()
 	l += "<h3><div class='statusDisplay'>Material Storage:</h3>"
@@ -906,6 +918,9 @@ Nothing else in the console has ID requirements.
 		if(QDELETED(linked_lathe))
 			say("No Protolathe Linked!")
 			return
+		if(!linked_lathe.materials)
+			say("No material storage linked to protolathe!")
+			return
 		linked_lathe.materials.retrieve_sheets(text2num(ls["eject_amt"]), ls["ejectsheet"])
 	//Circuit Imprinter Materials
 	if(ls["disposeI"])  //Causes the circuit imprinter to dispose of a single reagent (all of it)
@@ -921,6 +936,9 @@ Nothing else in the console has ID requirements.
 	if(ls["imprinter_ejectsheet"]) //Causes the imprinter to eject a sheet of material
 		if(QDELETED(linked_imprinter))
 			say("No Circuit Imprinter Linked!")
+			return
+		if(!linked_imprinter.materials)
+			say("No material storage linked to circuit imprinter!")
 			return
 		linked_imprinter.materials.retrieve_sheets(text2num(ls["eject_amt"]), ls["imprinter_ejectsheet"])
 	if(ls["disk_slot"])

@@ -88,10 +88,6 @@
 		for(var/obj/item/reagent_containers/glass/G in component_parts)
 			reagents.maximum_volume += G.volume
 			G.reagents.trans_to(src, G.reagents.total_volume)
-	if(materials)
-		materials.max_amount = 0
-		for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-			materials.max_amount += M.rating * 75000
 	var/total_rating = 0
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		total_rating += M.rating
@@ -102,7 +98,6 @@
 /obj/machinery/rnd/production/on_deconstruction()
 	for(var/obj/item/reagent_containers/glass/G in component_parts)
 		reagents.trans_to(G, G.reagents.maximum_volume)
-	materials.retrieve_all()
 	return ..()
 
 /obj/machinery/rnd/production/proc/do_print(path, amount, list/matlist, notify_admins)
@@ -116,6 +111,8 @@
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
 
 /obj/machinery/rnd/production/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
+	if (!materials)  // no connected silo
+		return 0
 	var/list/all_materials = being_built.reagents_list + being_built.materials
 
 	var/A = materials.amount(M)
@@ -139,6 +136,9 @@
 		return FALSE
 	if(D.build_type && !(D.build_type & allowed_buildtypes))
 		say("This machine does not have the necessary manipulation systems for this design. Please contact Nanotrasen Support!")
+		return FALSE
+	if(!materials)
+		say("No connection to material storage!")
 		return FALSE
 	var/power = 1000
 	amount = CLAMP(amount, 1, 50)
@@ -200,13 +200,19 @@
 	var/list/l = list()
 	l += "<div class='statusDisplay'><b>[host_research.organization] [department_tag] Department Lathe</b>"
 	l += "Security protocols: [(obj_flags & EMAGGED)? "<font color='red'>Disabled</font>" : "<font color='green'>Enabled</font>"]"
-	l += "<A href='?src=[REF(src)];switch_screen=[RESEARCH_FABRICATOR_SCREEN_MATERIALS]'><B>Material Amount:</B> [materials.total_amount] / [materials.max_amount]</A>"
+	if (materials)
+		l += "<A href='?src=[REF(src)];switch_screen=[RESEARCH_FABRICATOR_SCREEN_MATERIALS]'><B>Material Amount:</B> [materials.total_amount] / [materials.max_amount]</A>"
+	else
+		l += "<font color='red'>No material storage connected!</font>"
 	l += "<A href='?src=[REF(src)];switch_screen=[RESEARCH_FABRICATOR_SCREEN_CHEMICALS]'><B>Chemical volume:</B> [reagents.total_volume] / [reagents.maximum_volume]</A>"
 	l += "<a href='?src=[REF(src)];sync_research=1'>Synchronize Research</a>"
 	l += "<a href='?src=[REF(src)];switch_screen=[RESEARCH_FABRICATOR_SCREEN_MAIN]'>Main Screen</a></div>[RDSCREEN_NOBREAK]"
 	return l
 
 /obj/machinery/rnd/production/proc/ui_screen_materials()
+	if (!materials)
+		screen = RESEARCH_FABRICATOR_SCREEN_MAIN
+		return ui_screen_main()
 	var/list/l = list()
 	l += "<div class='statusDisplay'><h3>Material Storage:</h3>"
 	for(var/mat_id in materials.materials)
@@ -299,7 +305,7 @@
 		reagents.del_reagent(ls["dispose"])
 	if(ls["disposeall"]) //Causes the protolathe to dispose of all it's reagents.
 		reagents.clear_reagents()
-	if(ls["ejectsheet"]) //Causes the protolathe to eject a sheet of material
+	if(ls["ejectsheet"] && materials) //Causes the protolathe to eject a sheet of material
 		materials.retrieve_sheets(text2num(ls["eject_amt"]), ls["ejectsheet"])
 	updateUsrDialog()
 
