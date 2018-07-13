@@ -1,0 +1,5 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "Most static ingame manuals have been replaced with ones that open relevant wiki articles.
+remove: Deleted the \"Particle Accelerator User's Guide\" manual, since it's included in the Singulo/Tesla one."
