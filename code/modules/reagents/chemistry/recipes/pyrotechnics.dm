@@ -128,8 +128,8 @@
 		playsound(location,'sound/effects/sparks1.ogg', 100, 1)
 	else
 		playsound(location,'sound/creatures/bee.ogg', 100, 1)
-		var/bee = created_volume/10
-		for(var/counter = 0; counter < bee; counter++)
+		var/bee = round(created_volume/10)
+		for(var/counter in 1 to bee)
 			new /mob/living/simple_animal/hostile/poison/bees/toxin(location)
 		
 
