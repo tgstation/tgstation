@@ -26348,7 +26348,7 @@
 	name = "Shutters Control";
 	pixel_x = 26;
 	pixel_y = 4;
-	req_access_txt = "5; 33"
+	req_one_access_txt = "5;33"
 	},
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 5
