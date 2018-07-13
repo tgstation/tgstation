@@ -150,7 +150,7 @@
 	description = "Deeper understanding of how the Bluespace dimension works"
 	prereq_ids = list("practical_bluespace", "high_efficiency")
 	design_ids = list("bluespace_matter_bin", "femto_mani", "triphasic_scanning", "tele_station", "tele_hub", "quantumpad", "launchpad", "launchpad_console",
-	"teleconsole", "bag_holding", "bluespace_crystal", "wormholeprojector", "bluespace_pod", "locator")
+	"teleconsole", "bag_holding", "bluespace_crystal", "wormholeprojector", "bluespace_pod")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 15000)
 	export_price = 5000
 
@@ -415,7 +415,7 @@
 	display_name = "Subdermal Implants"
 	description = "Electronic implants buried beneath the skin."
 	prereq_ids = list("biotech")
-	design_ids = list("implanter", "implantcase", "implant_chem", "implant_tracking")
+	design_ids = list("implanter", "implantcase", "implant_chem", "implant_tracking", "locator")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
