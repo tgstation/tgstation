@@ -125,10 +125,10 @@
 /datum/chemical_reaction/beesplosion/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	if(created_volume) < 10)
-		//nothing
+		playsound(location,'sound/effects/sparks1.ogg', 100, 1)
 	else
-		//bzzz sound
-		var bee = created_volume/10
+		playsound(location,'sound/creatures/bee.ogg', 100, 1)
+		var/bee = created_volume/10
 		for(counter = 0; counter < bee; counter++)
 			new /mob/living/simple_animal/hostile/poison/bees/toxin(location)
 		
