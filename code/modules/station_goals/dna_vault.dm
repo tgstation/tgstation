@@ -16,6 +16,7 @@
 	var/animal_count
 	var/human_count
 	var/plant_count
+	var/template_id = "goal_dna_vault"
 
 /datum/station_goal/dna_vault/New()
 	..()
@@ -49,6 +50,9 @@
 
 	P = SSshuttle.supply_packs[/datum/supply_pack/engineering/dna_probes]
 	P.special_enabled = TRUE
+
+	spawngoal()
+
 
 /datum/station_goal/dna_vault/check_completion()
 	if(..())

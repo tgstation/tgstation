@@ -17,6 +17,7 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
+	var/list/goal_templates = list()
 
 	var/list/areas_in_z = list()
 
@@ -153,6 +154,7 @@ SUBSYSTEM_DEF(mapping)
 	lava_ruins_templates = SSmapping.lava_ruins_templates
 	shuttle_templates = SSmapping.shuttle_templates
 	shelter_templates = SSmapping.shelter_templates
+	goal_templates = SSmapping.goal_templates
 	unused_turfs = SSmapping.unused_turfs
 	turf_reservations = SSmapping.turf_reservations
 	used_turfs = SSmapping.used_turfs
@@ -324,6 +326,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	preloadRuinTemplates()
 	preloadShuttleTemplates()
 	preloadShelterTemplates()
+	preloadGoalTemplates()
 
 /datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
 	// Still supporting bans by filename
@@ -372,6 +375,16 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 		shelter_templates[S.shelter_id] = S
 		map_templates[S.shelter_id] = S
+
+/datum/controller/subsystem/mapping/proc/preloadGoalTemplates()
+	for(var/item in subtypesof(/datum/map_template/goal))
+		var/datum/map_template/goal/goal_type = item
+		if(!(initial(goal_type.mappath)))
+			continue
+		var/datum/map_template/goal/S = new goal_type()
+
+		goal_templates[S.goal_id] = S
+		map_templates[S.goal_id] = S
 
 //Manual loading of away missions.
 /client/proc/admin_away()

@@ -444,7 +444,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /atom/proc/has_gravity(turf/T)
 	if(!T || !isturf(T))
 		T = get_turf(src)
-	
+
 	if(!T)
 		return 0
 
@@ -455,7 +455,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			return 0
 		else
 			return FG.gravity
-	
+
 	//Gravity forced on the turf
 	FG = T.GetComponent(/datum/component/forced_gravity)
 	if(FG)

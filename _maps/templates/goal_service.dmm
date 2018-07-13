@@ -1,0 +1,41 @@
+"a" = (/turf/closed/wall,/area/station_goal)
+"b" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plasteel,/area/station_goal)
+"c" = (/obj/machinery/airalarm{pixel_y = 23},/turf/open/floor/plasteel/freezer,/area/station_goal)
+"d" = (/obj/machinery/dna_vault,/turf/open/floor/plasteel/freezer,/area/station_goal)
+"e" = (/turf/open/space,/area/space/nearstation)
+"f" = (/turf/open/floor/plasteel/freezer,/area/station_goal)
+"g" = (/obj/structure/window/spawner/west,/turf/open/water,/area/station_goal)
+"h" = (/obj/machinery/power/apc{areastring = "/area/security/nuke_storage"; dir = 1; name = "Station Goal APC"; pixel_y = 25},/obj/structure/cable/yellow{icon_state = "0-2"},/turf/open/floor/grass/snow,/area/station_goal)
+"i" = (/obj/structure/window/spawner/west,/mob/living/simple_animal/pet/penguin/emperor,/turf/open/floor/grass/snow,/area/station_goal)
+"j" = (/obj/structure/cable/yellow{icon_state = "1-2"},/turf/open/floor/grass/snow,/area/station_goal)
+"k" = (/obj/machinery/camera{c_tag = "Captain's Office - Emergency Escape"; dir = 4},/obj/machinery/light{dir = 8},/turf/open/floor/plasteel/freezer,/area/station_goal)
+"l" = (/obj/machinery/atmospherics/components/unary/vent_pump/on,/turf/open/floor/plasteel/freezer,/area/station_goal)
+"m" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 6},/turf/open/floor/plasteel/freezer,/area/station_goal)
+"n" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/structure/window/spawner/west,/obj/structure/window/spawner,/turf/open/floor/grass/snow,/area/station_goal)
+"o" = (/obj/structure/cable/yellow{icon_state = "1-2"},/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 8},/obj/machinery/light{dir = 4},/turf/open/floor/grass/snow,/area/station_goal)
+"p" = (/obj/structure/table/glass,/obj/item/dna_probe,/turf/open/floor/plasteel/freezer,/area/station_goal)
+"q" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/floor/plasteel/freezer,/area/station_goal)
+"r" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/open/floor/plasteel/freezer,/area/station_goal)
+"s" = (/obj/machinery/door/airlock/glass_large,/turf/open/floor/plasteel/freezer,/area/station_goal)
+"t" = (/obj/structure/cable/yellow{icon_state = "1-2"},/turf/open/floor/plasteel/freezer,/area/station_goal)
+"u" = (/obj/structure/window/spawner/west,/obj/structure/window/spawner/north,/turf/open/floor/grass,/area/station_goal)
+"v" = (/obj/structure/cable/yellow{icon_state = "1-2"},/mob/living/simple_animal/hostile/poison/bees,/turf/open/floor/grass,/area/station_goal)
+"w" = (/obj/structure/cable/yellow{icon_state = "2-4"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/open/floor/plasteel/freezer,/area/station_goal)
+"x" = (/obj/structure/cable/yellow{icon_state = "4-8"},/obj/structure/window/spawner/west,/mob/living/simple_animal/hostile/poison/bees/queen,/turf/open/floor/grass,/area/station_goal)
+"y" = (/obj/structure/cable/yellow{icon_state = "1-8"},/mob/living/simple_animal/hostile/poison/bees,/turf/open/floor/grass,/area/station_goal)
+"z" = (/obj/structure/lattice,/turf/open/space,/area/space/nearstation)
+"A" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/door/airlock/freezer,/turf/open/floor/plasteel,/area/station_goal)
+"B" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/structure/cable/yellow{icon_state = "1-2"},/obj/effect/spawner/structure/window,/turf/open/floor/plasteel/freezer,/area/station_goal)
+"D" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plasteel/darkblue/side{dir = 4},/area/station_goal)
+
+(1,1,1) = {"
+eeezzzeee
+eaabbbaae
+eacdfghae
+zbfffijbz
+eaklmnoae
+eapqrstae
+zbpqruvbz
+eapqwxyae
+DaaABaaab
+"}

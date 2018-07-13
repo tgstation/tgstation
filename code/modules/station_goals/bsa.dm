@@ -4,6 +4,7 @@
 // Requires high level stock parts
 /datum/station_goal/bluespace_cannon
 	name = "Bluespace Artillery"
+	var/template_id = "goal_bsa"
 
 /datum/station_goal/bluespace_cannon/get_report()
 	return {"Our military presence is inadequate in your sector.
@@ -16,6 +17,8 @@
 	//Unlock BSA parts
 	var/datum/supply_pack/engineering/bsa/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/bsa]
 	P.special_enabled = TRUE
+	//load map
+	spawngoal()
 
 /datum/station_goal/bluespace_cannon/check_completion()
 	if(..())

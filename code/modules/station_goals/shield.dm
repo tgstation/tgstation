@@ -4,6 +4,7 @@
 /datum/station_goal/station_shield
 	name = "Station Shield"
 	var/coverage_goal = 500
+	var/template_id = "goal_shield"
 
 /datum/station_goal/station_shield/get_report()
 	return {"The station is located in a zone full of space debris.
@@ -20,6 +21,8 @@
 
 	P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shield_sat_control]
 	P.special_enabled = TRUE
+
+	spawngoal()
 
 /datum/station_goal/station_shield/check_completion()
 	if(..())
