@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes: 
-  - bugfix: "Fixes an href exploit that lets you grab ID’s out of PDA right from another person"
