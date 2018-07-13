@@ -215,7 +215,7 @@ SUBSYSTEM_DEF(timer)
 			qtimer.spent = 0
 			qtimer.bucketEject()
 			if(qtimer.flags & TIMER_CLIENT_TIME)
-				qtimer.timeToRun = REALTIMEOFDAY
+				qtimer.timeToRun = REALTIMEOFDAY + qtimer.wait
 			else
 				qtimer.timeToRun = world.time + qtimer.wait
 			qtimer.bucketJoin()
