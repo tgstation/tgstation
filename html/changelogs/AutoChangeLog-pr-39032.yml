@@ -1,0 +1,5 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - balance: "(Real) Zombies no longer die from normal means. They will instead go into crit indefinitely and regenerate until they get back up again. To kill a zombie permanently you either need to remove the tumor, cut off their head, gib them, or use more elaborate methods like a wand of death or driving them to suicide."
+  - balance: "Slowed down zombie regeneration overall, since putting them in crit now no longer disables them for a full minute in average."
