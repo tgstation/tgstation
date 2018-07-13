@@ -129,7 +129,7 @@
 	else
 		playsound(location,'sound/creatures/bee.ogg', 100, 1)
 		var/bee = created_volume/10
-		for(counter = 0; counter < bee; counter++)
+		for(var/counter = 0; counter < bee; counter++)
 			new /mob/living/simple_animal/hostile/poison/bees/toxin(location)
 		
 
