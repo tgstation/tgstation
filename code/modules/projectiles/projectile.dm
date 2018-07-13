@@ -406,7 +406,7 @@
 		if(NAMEOF(src, Angle))
 			setAngle(var_value)
 		else
-			return ..()
+			return TRUE
 
 /obj/item/projectile/proc/set_pixel_speed(new_speed)
 	if(trajectory)
