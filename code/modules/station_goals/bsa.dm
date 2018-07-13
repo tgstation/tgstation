@@ -18,11 +18,7 @@
 	var/datum/supply_pack/engineering/bsa/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/bsa]
 	P.special_enabled = TRUE
 	//load map
-	var/turf/T = pick(GLOB.goal_spawn)
-	var/datum/map_template/goal/template
-	template = SSmapping.goal_templates[template_id]
-	template.load(T, centered = TRUE)
-	qdel(src)
+	spawngoal()
 
 /datum/station_goal/bluespace_cannon/check_completion()
 	if(..())

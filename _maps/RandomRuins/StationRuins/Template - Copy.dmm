@@ -1,0 +1,37 @@
+"a" = (/obj/machinery/airalarm{pixel_y = 23},/turf/open/floor/plasteel/darkblue/corner,/area/ruin/unpowered/no_grav)
+"b" = (/turf/open/floor/plasteel/darkblue/side,/area/ruin/unpowered/no_grav)
+"c" = (/obj/machinery/power/apc{dir = 1; name = "Vault APC"; areastring = "/area/security/nuke_storage"; pixel_y = 25},/obj/structure/cable/yellow{icon_state = "0-2"},/turf/open/floor/plasteel/darkblue/corner{dir = 8},/area/ruin/unpowered/no_grav)
+"d" = (/obj/effect/spawner/structure/window,/turf/open/floor/plasteel/darkblue,/area/ruin/unpowered/no_grav)
+"e" = (/turf/open/space,/area/space/nearstation)
+"f" = (/obj/machinery/camera{c_tag = "Captain's Office - Emergency Escape"; dir = 4},/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 4},/obj/machinery/light{dir = 8},/turf/open/floor/plasteel/darkblue/side{dir = 4},/area/ruin/unpowered/no_grav)
+"g" = (/turf/open/floor/plasteel/darkblue/side{dir = 9},/area/ruin/unpowered/no_grav)
+"h" = (/turf/open/floor/plasteel/darkblue/side{dir = 1},/area/ruin/unpowered/no_grav)
+"i" = (/turf/open/floor/plasteel/darkblue/side{dir = 5},/area/ruin/unpowered/no_grav)
+"j" = (/obj/structure/cable/yellow{icon_state = "1-2"},/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 8},/obj/machinery/light{dir = 4},/turf/open/floor/plasteel/darkblue/side{dir = 8},/area/ruin/unpowered/no_grav)
+"k" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 6},/turf/open/floor/plasteel/darkblue,/area/ruin/unpowered/no_grav)
+"l" = (/obj/structure/cable/yellow{icon_state = "4-8"},/turf/open/floor/plasteel/darkblue/side{dir = 4},/area/ruin/unpowered/no_grav)
+"m" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/turf/open/floor/plasteel/darkblue/side{dir = 8},/area/ruin/unpowered/no_grav)
+"n" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/open/floor/plasteel/darkblue/side{dir = 4},/area/ruin/unpowered/no_grav)
+"o" = (/obj/structure/cable/yellow{icon_state = "1-8"},/turf/open/floor/plasteel/darkblue/side{dir = 8},/area/ruin/unpowered/no_grav)
+"p" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/floor/plasteel/darkblue/side{dir = 8},/area/ruin/unpowered/no_grav)
+"q" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/open/floor/plasteel/darkblue,/area/ruin/unpowered/no_grav)
+"r" = (/turf/open/floor/plasteel/darkblue/side{dir = 4},/area/ruin/unpowered/no_grav)
+"s" = (/obj/structure/cable/yellow{icon_state = "1-2"},/turf/open/floor/plasteel/darkblue/side{dir = 8},/area/ruin/unpowered/no_grav)
+"t" = (/obj/structure/cable/yellow{icon_state = "2-4"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/open/floor/plasteel/darkblue,/area/ruin/unpowered/no_grav)
+"x" = (/turf/closed/wall,/area/ruin/unpowered/no_grav)
+"y" = (/obj/structure/cable/yellow{icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/door/airlock/engineering,/turf/open/floor/plasteel/darkblue,/area/ruin/unpowered/no_grav)
+"z" = (/obj/structure/lattice,/turf/open/space,/area/space/nearstation)
+"A" = (/obj/effect/spawner/structure/window,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/floor/plasteel/darkblue/side{dir = 8},/area/ruin/unpowered/no_grav)
+"B" = (/obj/effect/spawner/structure/window,/turf/open/floor/plasteel/darkblue/side{dir = 4},/area/ruin/unpowered/no_grav)
+
+(1,1,1) = {"
+eeezzzeee
+exxdddxxe
+exabbbcxe
+zdrghisdz
+exfmknjxe
+exrpqrsxe
+zdrpqrsdz
+exrptloxe
+dxxAyBxxd
+"}

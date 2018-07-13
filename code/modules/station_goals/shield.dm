@@ -25,6 +25,8 @@
 	qdel(src)
 
 
+	spawngoal()
+
 /datum/station_goal/station_shield/check_completion()
 	if(..())
 		return TRUE

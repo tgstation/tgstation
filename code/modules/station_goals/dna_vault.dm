@@ -57,6 +57,9 @@
 	qdel(src)
 
 
+	spawngoal()
+
+
 /datum/station_goal/dna_vault/check_completion()
 	if(..())
 		return TRUE

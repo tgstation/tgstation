@@ -21,6 +21,9 @@
 
 /datum/station_goal/proc/on_report()
 	//Additional unlocks/changes go here
+
+	mappath = "_maps/templates/goal_engineering.dmm"
+	spawngoal()
 	return
 
 /datum/station_goal/proc/get_report()
@@ -34,6 +37,20 @@
 		return "<li>[name] :  <span class='greentext'>Completed!</span></li>"
 	else
 		return "<li>[name] : <span class='redtext'>Failed!</span></li>"
+
+
+/datum/station_goal/proc/spawngoal()
+
+	var/turf/T = pick(GLOB.goal_spawn)
+	message_admins(world, "Turf loc [T.x], [T.y], [T.z]")
+	var/datum/map_template/goal/template
+	var/template_id = "shelter_alpha"
+	template = SSmapping.goal_templates[template_id]
+
+	message_admins("[ADMIN_LOOKUPFLW(usr)] has activated the station goal [ADMIN_VERBOSEJMP(T)]")
+	template.load(T, centered = TRUE)
+	qdel(src)
+
 
 /datum/station_goal/Destroy()
 	SSticker.mode.station_goals -= src
@@ -73,6 +90,49 @@
 	goal_id = "goal_shield"
 	mappath = "_maps/templates/goal_engineering.dmm"
 
+/obj/machinery/goal_loader
+	name = "Special Project Bluespace Receiver"
+	desc = "Once charged, this machine will teleport all bulk materials required to begin a special station goal."
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "grinder"
+	density = TRUE
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 5
+	var/template_id = "shelter_alpha"
+	var/datum/map_template/goal/template
+
+/obj/machinery/goal_loader/Destroy()
+	template = null
+	. = ..()
+
+/obj/machinery/goal_loader/interact(mob/user)
+
+	var/turf/T = pick(GLOB.goal_spawn)
+	to_chat(world, "Turf loc [T.x], [T.y], [T.z]")
+	var/datum/map_template/goal/template
+	var/template_id = "shelter_alpha"
+	template = SSmapping.goal_templates[template_id]
+
+	message_admins("[ADMIN_LOOKUPFLW(usr)] has activated the station goal [ADMIN_VERBOSEJMP(T)]")
+	template.load(T, centered = TRUE)
+	loc.visible_message("<span class='warning'>\The [src] begins to shake. Stand back!</span>")
+	new /obj/effect/particle_effect/smoke(get_turf(src))
+	qdel(src)
+
+
+/*
+/obj/machinery/goal_loader/interact(mob/user)
+	template = SSmapping.goal_templates[template_id]
+	loc.visible_message("<span class='warning'>\The [src] begins to shake. Stand back!</span>")
+	sleep(10)
+	var/turf/deploy_location = get_turf(src)
+	var/turf/T = deploy_location
+	message_admins("[ADMIN_LOOKUPFLW(usr)] has activated the station goal [ADMIN_VERBOSEJMP(T)]")
+	log_admin("[key_name(usr)] has activated the station goal at [AREACOORD(T)]")
+	template.load(deploy_location, centered = TRUE)
+	new /obj/effect/particle_effect/smoke(get_turf(src))
+	qdel(src)
+*/
 /*
 //Crew has to create alien intelligence detector
 // Requires a lot of minerals
