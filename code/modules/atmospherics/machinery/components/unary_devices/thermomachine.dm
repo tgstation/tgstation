@@ -3,8 +3,9 @@
 	desc = "Heats or cools gas in connected pipes."
 	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
 	icon_state = "freezer"
-	var/icon_state_on = "cold_on"
-	var/icon_state_open = "cold_off"
+	var/icon_state_off = "freezer"
+	var/icon_state_on = "freezer_1"
+	var/icon_state_open = "freezer-o"
 	density = TRUE
 	max_integrity = 300
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 30)
@@ -25,6 +26,18 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/on_construction()
 	..(dir,dir)
 
+/obj/machinery/atmospherics/components/unary/thermomachine/examine(mob/user)
+	..()
+	if(!panel_open)
+		to_chat(user, "<span class='notice'>The panel is <b>screwed</b> in place.</span>")
+		return
+
+	if(anchored)
+		to_chat(user, "<span class='notice'>It looks <b>bolted</b> to the floor.</span>")
+	else
+		to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
+		to_chat(user, "<span class='notice'>It looks like it could be <b>bolted</b> down.</span>")
+
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	var/B
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
@@ -37,7 +50,7 @@
 	else if(on && is_operational())
 		icon_state = icon_state_on
 	else
-		icon_state = initial(icon_state)
+		icon_state = icon_state_off
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_icon_nopipes()
 	cut_overlays()
@@ -70,33 +83,68 @@
 	..()
 	update_icon()
 
-/obj/machinery/atmospherics/components/unary/thermomachine/attackby(obj/item/I, mob/user, params)
-	if(!on)
-		if(default_deconstruction_screwdriver(user, icon_state_open, initial(icon_state), I))
-			return
-	if(default_change_direction_wrench(user, I))
-		return
-	if(default_deconstruction_crowbar(I))
-		return
-	return ..()
-
-/obj/machinery/atmospherics/components/unary/thermomachine/default_change_direction_wrench(mob/user, obj/item/I)
-	if(!..())
-		return FALSE
-	SetInitDirections()
+/obj/machinery/atmospherics/components/unary/thermomachine/proc/disconnect_machine()
 	var/obj/machinery/atmospherics/node = nodes[1]
 	if(node)
 		node.disconnect(src)
 		nodes[1] = null
-	nullifyPipenet(parents[1])
+	if(parents[1])
+		nullifyPipenet(parents[1])
 
+/obj/machinery/atmospherics/components/unary/thermomachine/proc/reconnect_machine()
 	atmosinit()
-	node = nodes[1]
+	var/obj/machinery/atmospherics/node = nodes[1]
 	if(node)
 		node.atmosinit()
 		node.addMember(src)
 	build_network()
-	return TRUE
+
+/obj/machinery/atmospherics/components/unary/thermomachine/attackby(obj/item/I, mob/user, params)
+	if(I.tool_behaviour == TOOL_SCREWDRIVER || I.tool_behaviour == TOOL_WRENCH || I.tool_behaviour == TOOL_CROWBAR)
+		if(user.a_intent != INTENT_HARM)
+			return
+
+	return ..()
+
+/obj/machinery/atmospherics/components/unary/thermomachine/screwdriver_act(mob/living/user, obj/item/I)
+	if(!anchored || on)
+		return
+
+	default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, I)
+
+/obj/machinery/atmospherics/components/unary/thermomachine/wrench_act(mob/living/user, obj/item/I)
+	if(!panel_open)
+		return
+
+	for(var/obj/machinery/atmospherics/M in loc)
+		if(M != src)
+			to_chat(user, "<span class='warning'>There is already a pipe at that location!</span>")
+			return
+
+	default_unfasten_wrench(user, I, 50)
+
+/obj/machinery/atmospherics/components/unary/thermomachine/crowbar_act(mob/living/user, obj/item/I)
+	default_deconstruction_crowbar(I)
+
+
+/obj/machinery/atmospherics/components/unary/thermomachine/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
+	var/unanchoring = anchored
+	if(..() != SUCCESSFUL_UNFASTEN)
+		return
+
+	if(unanchoring)
+		disconnect_machine()
+	else
+		reconnect_machine()
+
+/obj/machinery/atmospherics/components/unary/thermomachine/AltClick(mob/living/user)
+	if(anchored)
+		return
+
+	setDir(turn(dir,-90))
+	to_chat(user, "<span class='notice'>You rotate [src].</span>")
+
+	SetInitDirections()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_status(mob/user)
 	if(interactive)
@@ -157,15 +205,12 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer
 	name = "freezer"
 	icon_state = "freezer"
+	icon_state_off = "freezer"
 	icon_state_on = "freezer_1"
 	icon_state_open = "freezer-o"
 	max_temperature = T20C
 	min_temperature = 170 //actual minimum temperature is defined by RefreshParts()
 	circuit = /obj/item/circuitboard/machine/thermomachine/freezer
-
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
-	on = TRUE
-	icon_state = "freezer_1"
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/Initialize()
 	. = ..()
@@ -182,15 +227,12 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/heater
 	name = "heater"
 	icon_state = "heater"
+	icon_state_off = "heater"
 	icon_state_on = "heater_1"
 	icon_state_open = "heater-o"
 	max_temperature = 140 //actual maximum temperature is defined by RefreshParts()
 	min_temperature = T20C
 	circuit = /obj/item/circuitboard/machine/thermomachine/heater
-
-/obj/machinery/atmospherics/components/unary/thermomachine/heater/on
-	on = TRUE
-	icon_state = "heater_1"
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/RefreshParts()
 	..()
@@ -198,3 +240,11 @@
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		L += M.rating
 	max_temperature = T20C + (initial(max_temperature) * L) //573.15K with T1 stock parts
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
+	on = TRUE
+	icon_state = "freezer_1"
+
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/on
+	on = TRUE
+	icon_state = "heater_1"

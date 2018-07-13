@@ -50,12 +50,19 @@
 			beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 			beaker.reagents.handle_reactions()
 
-/obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", I))
-		return
+/obj/machinery/chem_heater/screwdriver_act(mob/living/user, obj/item/I)
+	default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", I)
 
-	if(default_deconstruction_crowbar(I))
-		return
+/obj/machinery/chem_heater/wrench_act(mob/living/user, obj/item/I)
+	default_unfasten_wrench(user, I)
+
+/obj/machinery/chem_heater/crowbar_act(mob/living/user, obj/item/I)
+	default_deconstruction_crowbar(I)
+
+/obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)
+	if(I.tool_behaviour == TOOL_SCREWDRIVER || I.tool_behaviour == TOOL_WRENCH || I.tool_behaviour == TOOL_CROWBAR)
+		if(user.a_intent != INTENT_HARM)
+			return
 
 	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		. = 1 //no afterattack
