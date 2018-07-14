@@ -22,7 +22,7 @@
 
 /datum/controller/configuration/proc/Load(_directory)
 	if(_directory)
-		src.directory = _directory
+		directory = _directory
 	if(entries)
 		CRASH("[THIS_PROC_TYPE_WEIRD] called more than once!")
 	InitEntries()
