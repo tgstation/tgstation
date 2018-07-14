@@ -1,6 +1,7 @@
 /atom/movable
 	layer = OBJ_LAYER
 	var/last_move = null
+	var/last_move_time = 0
 	var/anchored = FALSE
 	var/datum/thrownthing/throwing = null
 	var/throw_speed = 2 //How many tiles to move per ds when being thrown. Float values are fully supported
@@ -151,7 +152,7 @@
 	if(!direct)
 		direct = get_dir(src, newloc)
 	setDir(direct)
-	
+
 	if(!loc.Exit(src))
 		return
 	for(var/i in loc)

@@ -174,28 +174,38 @@
 
 /datum/config_entry/flag/emojis
 
-/datum/config_entry/number/run_delay	//Used for modifying movement speed for mobs.
-	var/static/value_cache = 0
+/datum/config_entry/number/movedelay	//Used for modifying movement speed for mobs.
+	var/mob_affected_type = /mob
 
-/datum/config_entry/number/run_delay/ValidateAndSet()
+/datum/config_entry/number/movedelay/ValidateAndSet()
 	. = ..()
 	if(.)
-		value_cache = config_entry_value
+		for(var/i in GLOB.mob_list)
+			var/mob/M = i
+			if(istype(M, mob_affected_type))
+				M.update_config_movespeed()
 
-/datum/config_entry/number/walk_delay
-	var/static/value_cache = 0
+/datum/config_entry/number/movedelay/run_delay
 
-/datum/config_entry/number/walk_delay/ValidateAndSet()
-	. = ..()
-	if(.)
-		value_cache = config_entry_value
+/datum/config_entry/number/movedelay/walk_delay
 
-/datum/config_entry/number/human_delay	//Mob specific modifiers. NOTE: These will affect different mob types in different ways
-/datum/config_entry/number/robot_delay
-/datum/config_entry/number/monkey_delay
-/datum/config_entry/number/alien_delay
-/datum/config_entry/number/slime_delay
-/datum/config_entry/number/animal_delay
+/datum/config_entry/number/movedelay/human_delay	//Mob specific modifiers. NOTE: These will affect different mob types in different ways
+	mob_affected_type = /mob/living/carbon/human
+
+/datum/config_entry/number/movedelay/robot_delay
+	mob_affected_type = /mob/living/silicon/robot
+
+/datum/config_entry/number/movedelay/monkey_delay
+	mob_affected_type = /mob/living/carbon/monkey
+
+/datum/config_entry/number/movedelay/alien_delay
+	mob_affected_type = /mob/living/carbon/alien
+
+/datum/config_entry/number/movedelay/slime_delay
+	mob_affected_type = /mob/living/simple_animal/slime
+
+/datum/config_entry/number/movedelay/animal_delay
+	mob_affected_type = /mob/living/simple_animal
 
 /datum/config_entry/flag/roundstart_away	//Will random away mission be loaded.
 

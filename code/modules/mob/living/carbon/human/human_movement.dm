@@ -1,9 +1,24 @@
-/mob/living/carbon/human/movement_delay()
-	. = 0
-	var/static/config_human_delay
+/mob/living/carbon/human/get_movespeed_modifiers()
+	var/list/considering = ..()
+	. = considering
+	if(has_trait(TRAIT_IGNORESLOWDOWN))
+		. = null
+		for(var/id in .)
+			var/list/data = .[id]
+			if(data[MOVESPEED_DATA_INDEX_FLAGS] & IGNORE_NOSLOW)
+				.[id] = data
+
+/mob/living/carbon/human/update_config_movespeed()
+	var/static/datum/config_entry/number/config_human_delay
 	if(isnull(config_human_delay))
-		config_human_delay = CONFIG_GET(number/human_delay)
-	. += ..() + config_human_delay + dna.species.movement_delay(src)
+		config_human_delay = CONFIG_GET_DATUM(number/movedelay/human_delay)
+	add_movespeed_modifier(MOVESPEED_ID_HUMAN_CONFIG_SPEEDMOD, FALSE, 100, override = TRUE, legacy_slowdown = config_human_delay.config_entry_value)
+	return ..()
+
+/mob/living/carbon/human/movement_delay()
+	. = ..()
+	if(dna && dna.species)
+		. += dna.species.movement_delay(src)
 
 /mob/living/carbon/human/slip(knockdown_amount, obj/O, lube)
 	if(has_trait(TRAIT_NOSLIPALL))

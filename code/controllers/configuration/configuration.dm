@@ -89,7 +89,7 @@
 		L = trim(L)
 		if(!L)
 			continue
-		
+
 		var/firstchar = copytext(L, 1, 2)
 		if(firstchar == "#")
 			continue
@@ -110,7 +110,7 @@
 
 		if(!entry)
 			continue
-		
+
 		if(entry == "$include")
 			if(!value)
 				log_config("Warning: Invalid $include directive: [value]")
@@ -118,7 +118,7 @@
 				LoadEntries(value, stack)
 				++.
 			continue
-		
+
 		var/datum/config_entry/E = _entries[entry]
 		if(!E)
 			log_config("Unknown setting in configuration: '[entry]'")
@@ -140,19 +140,19 @@
 				E = new_ver
 			else
 				warning("[new_ver.type] is deprecated but gave no proper return for DeprecationUpdate()")
-			
+
 		var/validated = E.ValidateAndSet(value)
 		if(!validated)
 			log_config("Failed to validate setting \"[value]\" for [entry]")
-		else 
+		else
 			if(E.modified && !E.dupes_allowed)
 				log_config("Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
 
 		E.resident_file = filename
-		
+
 		if(validated)
 			E.modified = TRUE
-	
+
 	++.
 
 /datum/controller/configuration/can_vv_get(var_name)
@@ -179,6 +179,19 @@
 	if(!E)
 		CRASH("Missing config entry for [entry_type]!")
 	return E.config_entry_value
+
+/datum/controller/configuration/proc/ReturnEntry(entry_type)
+	if(IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Get" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
+		log_admin_private("Config access of [entry_type] attempted by [key_name(usr)]")
+		return
+	var/datum/config_entry/E = entry_type
+	var/entry_is_abstract = initial(E.abstract_type) == entry_type
+	if(entry_is_abstract)
+		CRASH("Tried to retrieve an abstract config_entry: [entry_type]")
+	E = entries_by_type[entry_type]
+	if(!E)
+		CRASH("Missing config entry for [entry_type]!")
+	return E
 
 /datum/controller/configuration/proc/Set(entry_type, new_val)
 	if(IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Set" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")

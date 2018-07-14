@@ -40,6 +40,8 @@
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
 	AddAbility(new/obj/effect/proc_holder/alien/royal/queen/promote())
 	smallsprite.Grant(src)
+
+	add_movespeed_modifier(MOVESPEED_ID_ALIEN_QUEEN_SPEEDMOD, TRUE, 100, legacy_slowdown = 3)
 	..()
 
 /mob/living/carbon/alien/humanoid/royal/queen/create_internal_organs()
@@ -49,10 +51,6 @@
 	internal_organs += new /obj/item/organ/alien/neurotoxin
 	internal_organs += new /obj/item/organ/alien/eggsac
 	..()
-
-/mob/living/carbon/alien/humanoid/royal/queen/movement_delay()
-	. = ..()
-	. += 3
 
 //Queen verbs
 /obj/effect/proc_holder/alien/lay_egg

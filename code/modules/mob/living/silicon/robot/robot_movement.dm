@@ -3,12 +3,12 @@
 		return 1
 	return ..()
 
-/mob/living/silicon/robot/movement_delay()
-	. = ..()
-	var/static/config_robot_delay
-	if(isnull(config_robot_delay))
-		config_robot_delay = CONFIG_GET(number/robot_delay)
-	. += speed + config_robot_delay
+/mob/living/carbon/human/update_config_movespeed()
+	var/static/datum/config_entry/number/movedelay/robot_delay/config_robot_delay
+	if(!istype(config_robot_delay))
+		config_robot_delay = CONFIG_GET_DATUM(number/movedelay/robot_delay)
+	add_movespeed_modifier(MOVESPEED_ID_ROBOT_CONFIG_SPEEDMOD, FALSE, 100, override = TRUE, legacy_slowdown = config_robot_delay.config_entry_value)
+	return ..()
 
 /mob/living/silicon/robot/mob_negates_gravity()
 	return magpulse

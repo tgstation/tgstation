@@ -15,8 +15,6 @@
 	bodyparts = list(/obj/item/bodypart/chest/monkey, /obj/item/bodypart/head/monkey, /obj/item/bodypart/l_arm/monkey,
 					 /obj/item/bodypart/r_arm/monkey, /obj/item/bodypart/r_leg/monkey, /obj/item/bodypart/l_leg/monkey)
 
-
-
 /mob/living/carbon/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
@@ -27,7 +25,6 @@
 
 	//initialize limbs
 	create_bodyparts()
-
 	create_internal_organs()
 
 	. = ..()
@@ -59,26 +56,38 @@
 	internal_organs += new /obj/item/organ/stomach
 	..()
 
-/mob/living/carbon/monkey/movement_delay()
-	if(reagents)
-		if(reagents.has_reagent("morphine"))
-			return -1
+/mob/living/carbon/monkey/update_config_movespeed()
+	var/static/datum/config_entry/number/movedelay/config_monkey_delay
+	if(isnull(config_monkey_delay))
+		config_monkey_delay = CONFIG_GET_DATUM(number/movedelay/monkey_delay)
+	add_movespeed_modifier(MOVESPEED_ID_MONKEY_CONFIG_SPEEDMOD, FALSE, 100, override = TRUE, legacy_slowdown = config_monkey_delay.config_entry_value)
+	return ..()
 
-		if(reagents.has_reagent("nuka_cola"))
-			return -1
-
+/mob/living/carbon/monkey/on_reagent_change()
 	. = ..()
+	remove_movespeed_modifier(MOVESPEED_ID_MONKEY_REAGENT_SPEEDMOD, TRUE)
+	var/amount
+	if(reagents.has_reagent("morphine")) // morphine slows slimes down
+		amount = -1
+	if(reagents.has_reagent("nuka_cola")) // Frostoil also makes them move VEEERRYYYYY slow
+		amount = -1
+	if(amount)
+		add_movespeed_modifier(MOVESPEED_ID_MONKEY_REAGENT_SPEEDMOD, TRUE, 100, override = TRUE, legacy_slowdown = amount)
+
+/mob/living/carbon/monkey/updatehealth()
+	. = ..()
+	var/slow = 0
 	var/health_deficiency = (100 - health)
 	if(health_deficiency >= 45)
-		. += (health_deficiency / 25)
+		slow += (health_deficiency / 25)
+	add_movespeed_modifier(MOVESPEED_ID_MONKEY_HEALTH_SPEEDMOD, TRUE, 100, override = TRUE, legacy_slowdown = slow)
 
+/mob/living/carbon/monkey/adjust_bodytemperature(amount)
+	. = ..(amount)
+	var/slow = 0
 	if (bodytemperature < 283.222)
-		. += (283.222 - bodytemperature) / 10 * 1.75
-
-	var/static/config_monkey_delay
-	if(isnull(config_monkey_delay))
-		config_monkey_delay = CONFIG_GET(number/monkey_delay)
-	. += config_monkey_delay
+		slow += (283.222 - bodytemperature) / 10 * 1.75
+	add_movespeed_modifier(MOVESPEED_ID_MONKEY_TEMPERATURE_SPEEDMOD, TRUE, 100, override = TRUE, legacy_slowdown = amount)
 
 /mob/living/carbon/monkey/Stat()
 	..()

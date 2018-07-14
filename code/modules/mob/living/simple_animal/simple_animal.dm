@@ -276,14 +276,28 @@
 		act = "me"
 	..(act, m_type, message)
 
+/mob/living/simple_animal/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, speed))
+		set_varspeed(var_value)
+		return TRUE
+	else
+		return ..()
 
+/mob/living/simple_animal/proc/set_varspeed(var_value)
+	speed = var_value
+	update_simplemob_varspeed()
 
-/mob/living/simple_animal/movement_delay()
-	var/static/config_animal_delay
-	if(isnull(config_animal_delay))
-		config_animal_delay = CONFIG_GET(number/animal_delay)
-	. += config_animal_delay
-	return ..() + speed + config_animal_delay
+/mob/living/simple_animal/proc/update_simplemob_varspeed()
+	if(speed == 0)
+		remove_movespeed_modifier(MOVESPEED_ID_SIMPLEMOB_VARSPEED, TRUE)
+	add_movespeed_modifier(MOVESPEED_ID_SIMPLEMOB_VARSPEED, TRUE, 100, legacy_slowdown = speed, override = TRUE)
+
+/mob/living/simple_animal/update_config_movespeed(resort)
+	var/static/datum/config_entry/number/movedelay/config_animal_delay
+	if(!istype(config_animal_delay))
+		config_animal_delay = CONFIG_GET_DATUM(number/movedelay/animal_delay)
+	add_movespeed_modifier(MOVESPEED_ID_SIMPLEMOB_CONFIG_SPEEDMOD, FALSE, 100, legacy_slowdown = config_animal_delay.config_entry_value, override = TRUE)
+	return ..()
 
 /mob/living/simple_animal/Stat()
 	..()
