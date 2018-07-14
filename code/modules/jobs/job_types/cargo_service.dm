@@ -78,7 +78,7 @@ Shaft Miner
 	minimal_access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
 
 /datum/outfit/job/miner
-	name = "Shaft Miner (Lavaland)"
+	name = "Shaft Miner"
 	jobtype = /datum/job/mining
 
 	belt = /obj/item/pda/shaftminer
@@ -101,13 +101,8 @@ Shaft Miner
 
 	chameleon_extras = /obj/item/gun/energy/kinetic_accelerator
 
-/datum/outfit/job/miner/asteroid
-	name = "Shaft Miner (Asteroid)"
-	uniform = /obj/item/clothing/under/rank/miner
-	shoes = /obj/item/clothing/shoes/workboots
-
 /datum/outfit/job/miner/equipped
-	name = "Shaft Miner (Lavaland + Equipment)"
+	name = "Shaft Miner (Equipment)"
 	suit = /obj/item/clothing/suit/hooded/explorer
 	mask = /obj/item/clothing/mask/gas/explorer
 	glasses = /obj/item/clothing/glasses/meson
@@ -130,13 +125,9 @@ Shaft Miner
 		S.ToggleHood()
 
 /datum/outfit/job/miner/equipped/asteroid
-	name = "Shaft Miner (Asteroid + Equipment)"
-	uniform = /obj/item/clothing/under/rank/miner
-	shoes = /obj/item/clothing/shoes/workboots
+	name = "Shaft Miner (Equipment + Hardsuit)"
 	suit = /obj/item/clothing/suit/space/hardsuit/mining
 	mask = /obj/item/clothing/mask/breath
-
-
 
 /*
 Bartender
