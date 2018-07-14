@@ -41,6 +41,26 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 	return ..()
 
+/obj/machinery/ore_silo/proc/silo_log(obj/machinery/M, message, list/mats=null, multiplier=1)
+	var/list/msg = list("([station_time_timestamp()]) <b>[M]</b> in [get_area(M)]<br>[message]<br>")
+	var/sep = ""
+	for(var/key in mats)
+		var/val = mats[key] * multiplier
+		msg += sep
+		sep = ", "
+		msg += "[val > 0 ? "+" : ""][val] [copytext(key, 2)]"
+
+	var/list/logs = GLOB.silo_access_logs[REF(src)]
+	if(!logs)
+		GLOB.silo_access_logs[REF(src)] = logs = list()
+	logs.Insert(1, msg.Join())
+	updateUsrDialog()
+
+	animate(src, icon_state = "bin_partial", time = 2)
+	animate(icon_state = "bin_full", time = 1)
+	animate(icon_state = "bin_partial", time = 2)
+	animate(icon_state = "bin")
+
 /obj/machinery/ore_silo/ui_interact(mob/user)
 	user.set_machine(src)
 	var/datum/browser/popup = new(user, "ore_silo", null, 560, 550)
@@ -50,13 +70,13 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 /obj/machinery/ore_silo/proc/generate_ui()
 	GET_COMPONENT(materials, /datum/component/material_container)
 	var/list/ui = list("<head><title>Ore Silo</title></head><body><div class='statusDisplay'><h2>Stored Material:</h2>")
-	var/mats = FALSE
+	var/any = FALSE
 	for(var/M in materials.materials)
 		var/datum/material/mat = materials.materials[M]
 		if (mat.amount)
 			ui += "<b>[mat.name]</b>: [mat.amount] units<br>"
-			mats = TRUE
-	if(!mats)
+			any = TRUE
+	if(!any)
 		ui += "Nothing!"
 
 	ui += "</div><div class='statusDisplay'><h2>Connected Machines:</h2>"
@@ -66,7 +86,16 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		ui += "<a href='?src=[REF(src)];remove_lathe=[REF(L)]'>Remove</a> <b>\The [L]</b> in [get_area(L)]<br>"
 	if(orms.len == 0 && lathes.len == 0)
 		ui += "Nothing!"
-	ui += "</div>"
+
+	ui += "</div><div class='statusDisplay'><h2>Access Logs:</h2><ol>"
+	any = FALSE
+	for(var/M in GLOB.silo_access_logs[REF(src)])
+		ui += "<li>[M]</li>"
+		any = TRUE
+	if (!any)
+		ui += "<li>Nothing!</li>"
+
+	ui += "</ol></div>"
 	return ui.Join()
 
 /obj/machinery/ore_silo/Topic(href, href_list)

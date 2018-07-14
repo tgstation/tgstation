@@ -25,6 +25,7 @@
 	var/datum/techweb/stored_research
 	var/obj/item/disk/design_disk/inserted_disk
 	var/obj/machinery/ore_silo/silo
+	var/list/deposit_buffer = list()
 
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
 	. = ..()
@@ -79,6 +80,9 @@
 		unload_mineral(O)
 
 	else
+		var/mats = O.materials & materials.materials
+		for(var/key in mats)
+			deposit_buffer[key] += mats[key] * O.amount
 		materials.insert_item(O, sheet_per_ore) //insert it
 		qdel(O)
 
@@ -119,6 +123,11 @@
 	if(!silo || !is_station_level(z))
 		return
 	message_sent = TRUE
+
+	if(deposit_buffer.len)
+		silo.silo_log(src, "smelted delivery[inserted_id ? " by [inserted_id.registered_name]" : ""]", deposit_buffer)
+		deposit_buffer.Cut()
+
 	var/area/A = get_area(src)
 	var/msg = "Now available in [A]:<br>"
 

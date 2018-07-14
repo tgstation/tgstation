@@ -918,10 +918,11 @@ Nothing else in the console has ID requirements.
 		if(QDELETED(linked_lathe))
 			say("No Protolathe Linked!")
 			return
-		if(!linked_lathe.materials)
+		if(!linked_lathe.materials || !linked_lathe.silo)
 			say("No material storage linked to protolathe!")
 			return
-		linked_lathe.materials.retrieve_sheets(text2num(ls["eject_amt"]), ls["ejectsheet"])
+		var/count = linked_lathe.materials.retrieve_sheets(text2num(ls["eject_amt"]), ls["ejectsheet"])
+		linked_lathe.silo.silo_log(linked_lathe, "ejected [count]x sheets", list(ls["ejectsheet"] = -count * MINERAL_MATERIAL_AMOUNT))
 	//Circuit Imprinter Materials
 	if(ls["disposeI"])  //Causes the circuit imprinter to dispose of a single reagent (all of it)
 		if(QDELETED(linked_imprinter))
@@ -937,10 +938,11 @@ Nothing else in the console has ID requirements.
 		if(QDELETED(linked_imprinter))
 			say("No Circuit Imprinter Linked!")
 			return
-		if(!linked_imprinter.materials)
+		if(!linked_imprinter.materials || !linked_lathe.silo)
 			say("No material storage linked to circuit imprinter!")
 			return
-		linked_imprinter.materials.retrieve_sheets(text2num(ls["eject_amt"]), ls["imprinter_ejectsheet"])
+		var/count = linked_imprinter.materials.retrieve_sheets(text2num(ls["eject_amt"]), ls["imprinter_ejectsheet"])
+		linked_imprinter.silo.silo_log(linked_imprinter, "ejected [count]x sheets", list(ls["imprinter_ejectsheet"] = -count * MINERAL_MATERIAL_AMOUNT))
 	if(ls["disk_slot"])
 		disk_slot_selected = text2num(ls["disk_slot"])
 	if(ls["research_node"])

@@ -137,7 +137,7 @@
 	if(D.build_type && !(D.build_type & allowed_buildtypes))
 		say("This machine does not have the necessary manipulation systems for this design. Please contact Nanotrasen Support!")
 		return FALSE
-	if(!materials)
+	if(!materials || !silo)
 		say("No connection to material storage!")
 		return FALSE
 	var/power = 1000
@@ -157,6 +157,7 @@
 			say("Not enough reagents to complete prototype[amount > 1? "s" : ""].")
 			return FALSE
 	materials.use_amount(efficient_mats, amount)
+	silo.silo_log(src, "built [amount]x [D.name]", efficient_mats, -amount)
 	for(var/R in D.reagents_list)
 		reagents.remove_reagent(R, D.reagents_list[R]*amount/efficiency_coeff)
 	busy = TRUE
@@ -305,8 +306,9 @@
 		reagents.del_reagent(ls["dispose"])
 	if(ls["disposeall"]) //Causes the protolathe to dispose of all it's reagents.
 		reagents.clear_reagents()
-	if(ls["ejectsheet"] && materials) //Causes the protolathe to eject a sheet of material
-		materials.retrieve_sheets(text2num(ls["eject_amt"]), ls["ejectsheet"])
+	if(ls["ejectsheet"] && materials && silo) //Causes the protolathe to eject a sheet of material
+		var/count = materials.retrieve_sheets(text2num(ls["eject_amt"]), ls["ejectsheet"])
+		silo.silo_log(src, "ejected [count]x sheets", list(ls["ejectsheet"] = -count * MINERAL_MATERIAL_AMOUNT))
 	updateUsrDialog()
 
 /obj/machinery/rnd/production/proc/ui_screen_main()
