@@ -4,6 +4,7 @@
 
 	var/list/accesses = list()
 	var/one_access = 0
+	var/unres_sides = 0 //unrestricted sides, or sides of the airlock that will open reguardless of access
 
 /obj/item/electronics/airlock/examine(mob/user)
 	..()
@@ -19,6 +20,7 @@
 /obj/item/electronics/airlock/ui_data()
 	var/list/data = list()
 	var/list/regions = list()
+	var/unres_direction = 0
 
 	for(var/i in 1 to 7)
 		var/list/region = list()
@@ -34,6 +36,7 @@
 		regions[++regions.len] = region
 	data["regions"] = regions
 	data["oneAccess"] = one_access
+	data["unres_direction"] = unres_sides
 
 	return data
 
@@ -54,4 +57,8 @@
 				accesses += access
 			else
 				accesses -= access
+			. = TRUE
+		if("direc_set")
+			var/unres_direction = text2num(params["unres_direction"])
+			unres_sides = unres_sides ^ unres_direction //XOR, toggles only the bit that was clicked
 			. = TRUE
