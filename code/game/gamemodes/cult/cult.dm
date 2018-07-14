@@ -79,10 +79,13 @@
 		cultists_to_cult += cultist
 		cultist.special_role = ROLE_CULTIST
 		cultist.restricted_roles = restricted_jobs
-		log_game("[cultist.key] (ckey) has been selected as a cultist")
+		log_game("[key_name(cultist)] has been selected as a cultist")
 
-
-	return (cultists_to_cult.len>=required_enemies)
+	if(cultists_to_cult.len>=required_enemies)
+		return TRUE
+	else
+		setup_error = "Not enough cultist candidates"
+		return FALSE
 
 
 /datum/game_mode/cult/post_setup()
@@ -94,10 +97,9 @@
 				main_cult = C.cult_team
 	..()
 
-
 /datum/game_mode/proc/add_cultist(datum/mind/cult_mind, stun , equip = FALSE) //BASE
 	if (!istype(cult_mind))
-		return 0
+		return FALSE
 
 	var/datum/antagonist/cult/new_cultist = new()
 	new_cultist.give_equipment = equip
@@ -105,7 +107,7 @@
 	if(cult_mind.add_antag_datum(new_cultist))
 		if(stun)
 			cult_mind.current.Unconscious(100)
-		return 1
+		return TRUE
 
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, silent, stun)
 	if(cult_mind.current)

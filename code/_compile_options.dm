@@ -1,7 +1,11 @@
 //#define TESTING				//By using the testing("message") proc you can create debug-feedback for people with this
 								//uncommented, but not visible in the release version)
 
+//#define DATUMVAR_DEBUGGING_MODE	//Enables the ability to cache datum vars and retrieve later for debugging which vars changed.
+
 #ifdef TESTING
+#define DATUMVAR_DEBUGGING_MODE
+
 //#define GC_FAILURE_HARD_LOOKUP	//makes paths that fail to GC call find_references before del'ing.
 									//implies FIND_REF_NO_CHECK_TICK
 
@@ -14,7 +18,7 @@
 //#define UNIT_TESTS			//Enables unit tests via TEST_RUN_PARAMETER
 
 #ifndef PRELOAD_RSC				//set to:
-#define PRELOAD_RSC	0			//	0 to allow using external resources or on-demand behaviour;
+#define PRELOAD_RSC	2			//	0 to allow using external resources or on-demand behaviour;
 #endif							//	1 to use the default behaviour;
 								//	2 for preloading absolutely everything;
 
@@ -23,11 +27,11 @@
 #endif
 
 //Update this whenever you need to take advantage of more recent byond features
-#define MIN_COMPILER_VERSION 511
+#define MIN_COMPILER_VERSION 512
 #if DM_VERSION < MIN_COMPILER_VERSION
 //Don't forget to update this part
-#error Your version of BYOND is too out-of-date to compile this project. Go to byond.com/download and update.
-#error You need version 511 or higher
+#error Your version of BYOND is too out-of-date to compile this project. Go to https://secure.byond.com/download and update.
+#error You need version 512 or higher
 #endif
 
 //Additional code for the above flags.

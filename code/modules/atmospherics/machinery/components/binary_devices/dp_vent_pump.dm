@@ -20,7 +20,6 @@ Acts like a normal vent, but has an input AND output.
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
-	var/on = FALSE
 	var/pump_direction = 1 //0 = siphoning, 1 = releasing
 
 	var/external_pressure_bound = ONE_ATMOSPHERE
@@ -32,9 +31,29 @@ Acts like a normal vent, but has an input AND output.
 	//INPUT_MIN: Do not pass input_pressure_min
 	//OUTPUT_MAX: Do not pass output_pressure_max
 
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
+
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/on
 	on = TRUE
 	icon_state = "dpvent_map_on"
+
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/on/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/on/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/Destroy()
 	SSradio.remove_object(src, frequency)
@@ -43,9 +62,41 @@ Acts like a normal vent, but has an input AND output.
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume
 	name = "large dual-port air vent"
 
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_toxmix
+	id = INCINERATOR_TOXMIX_DP_VENTPUMP
+	frequency = FREQ_AIRLOCK_CONTROL
+
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_atmos
+	id = INCINERATOR_ATMOS_DP_VENTPUMP
+	frequency = FREQ_AIRLOCK_CONTROL
+
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_syndicatelava
+	id = INCINERATOR_SYNDICATELAVA_DP_VENTPUMP
+	frequency = FREQ_AIRLOCK_CONTROL
+
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
+
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/on
 	on = TRUE
 	icon_state = "dpvent_map_on"
+
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/on/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/on/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/New()
 	..()
@@ -176,7 +227,7 @@ Acts like a normal vent, but has an input AND output.
 		pressure_checks &= ~1
 		pump_direction = 0
 
-	if("stabalize" in signal.data)
+	if("stabilize" in signal.data)
 		pressure_checks |= 1
 		pump_direction = 1
 

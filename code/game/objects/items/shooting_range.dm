@@ -32,9 +32,11 @@
 	return TRUE
 
 /obj/item/target/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(pinnedLoc)
 		pinnedLoc.removeTarget(user)
-	..()
 
 /obj/item/target/syndicate
 	icon_state = "target_s"

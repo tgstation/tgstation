@@ -4,7 +4,6 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "experiment-open"
 	density = FALSE
-	anchored = TRUE
 	state_open = TRUE
 	var/points = 0
 	var/credits = 0
@@ -23,7 +22,8 @@
 	close_machine(target)
 
 /obj/machinery/abductor/experiment/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	experimentUI(user)

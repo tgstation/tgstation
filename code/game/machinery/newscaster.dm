@@ -202,7 +202,6 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/c_locked=0
 	var/datum/newscaster/feed_channel/viewing_channel = null
 	var/allow_comments = 1
-	anchored = TRUE
 
 /obj/machinery/newscaster/security_unit
 	name = "security newscaster"
@@ -263,12 +262,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 	. = ..()
 	update_icon()
 
-/obj/machinery/newscaster/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/newscaster/attack_hand(mob/user)
-	if(stat & (NOPOWER|BROKEN))
-		return
+/obj/machinery/newscaster/ui_interact(mob/user)
+	. = ..()
 	if(ishuman(user) || issilicon(user))
 		var/mob/living/human_or_robot_user = user
 		var/dat
@@ -802,7 +797,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		var/list/nametemp = list()
 		var/find
 		var/datum/picture/selection
-		var/obj/item/device/camera/siliconcam/targetcam = null
+		var/obj/item/camera/siliconcam/targetcam = null
 		if(isAI(user))
 			var/mob/living/silicon/ai/R = user
 			targetcam = R.aicamera
@@ -834,8 +829,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		if(human_user.wear_id)
-			if(istype(human_user.wear_id, /obj/item/device/pda))
-				var/obj/item/device/pda/P = human_user.wear_id
+			if(istype(human_user.wear_id, /obj/item/pda))
+				var/obj/item/pda/P = human_user.wear_id
 				if(P.id)
 					scanned_user = "[P.id.registered_name] ([P.id.assignment])"
 				else
@@ -869,14 +864,17 @@ GLOBAL_LIST_EMPTY(allCasters)
 	NEWSPAPER.creationTime = GLOB.news_network.lastAction
 	paper_remaining--
 
+
+/obj/machinery/newscaster/proc/remove_alert()
+	alert = FALSE
+	update_icon()
+
 /obj/machinery/newscaster/proc/newsAlert(channel)
 	if(channel)
 		say("Breaking news from [channel]!")
-		alert ++
+		alert = TRUE
 		update_icon()
-		spawn(alert_delay)
-			alert --
-			update_icon()
+		addtimer(CALLBACK(src,.proc/remove_alert),alert_delay,TIMER_UNIQUE|TIMER_OVERRIDE)
 		playsound(loc, 'sound/machines/twobeep.ogg', 75, 1)
 	else
 		say("Attention! Wanted issue distributed!")

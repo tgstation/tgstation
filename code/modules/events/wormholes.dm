@@ -50,7 +50,7 @@
 	mech_sized = TRUE
 
 /obj/effect/portal/wormhole/teleport(atom/movable/M)
-	if(istype(M, /obj/effect))	//sparks don't teleport
+	if(iseffect(M))	//sparks don't teleport
 		return
 	if(M.anchored)
 		if(!(ismecha(M) && mech_sized))

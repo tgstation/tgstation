@@ -387,7 +387,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 				return H.reagents.has_reagent("holy water")
 			return 0
 		if(BANISH_COFFIN)
-			return (body && istype(body.loc, /obj/structure/closet/coffin))
+			return (body && istype(body.loc, /obj/structure/closet/crate/coffin))
 		if(BANISH_FORMALDYHIDE)
 			if(iscarbon(body))
 				var/mob/living/carbon/H = body
@@ -456,10 +456,10 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 			return -1
 		currentMob.change_mob_type( /mob/living/carbon/human, targetturf, null, 1)
 		var/mob/living/carbon/human/H = owner.current
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/black(H), slot_w_uniform)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), slot_shoes)
-		H.equip_to_slot_or_del(new /obj/item/storage/briefcase(H), slot_hands)
-		H.equip_to_slot_or_del(new /obj/item/pen(H), slot_l_store)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/black(H), SLOT_W_UNIFORM)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), SLOT_SHOES)
+		H.equip_to_slot_or_del(new /obj/item/storage/briefcase(H), SLOT_HANDS)
+		H.equip_to_slot_or_del(new /obj/item/pen(H), SLOT_L_STORE)
 		if(SOULVALUE >= BLOOD_THRESHOLD)
 			H.set_species(/datum/species/lizard, 1)
 			H.underwear = "Nude"
@@ -550,18 +550,6 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	parts += printplayer(owner)
 	parts += printdevilinfo()
 	parts += printobjectives(owner)
-	return parts.Join("<br>")
-
-/datum/antagonist/devil/roundend_report_footer()
-	//sintouched go here for now as a hack , TODO proper antag datum for these
-	var/list/parts = list()
-	if(SSticker.mode.sintouched.len)
-		parts += "<span class='header'>The sintouched were:</span>"
-		var/list/sintouchedUnique = uniqueList(SSticker.mode.sintouched)
-		for(var/S in sintouchedUnique)
-			var/datum/mind/sintouched_mind = S
-			parts += printplayer(sintouched_mind)
-			parts += printobjectives(sintouched_mind)
 	return parts.Join("<br>")
 
 //A simple super light weight datum for the codex gigas.

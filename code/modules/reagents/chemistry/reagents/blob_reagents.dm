@@ -3,7 +3,7 @@
 	name = "Unknown"
 	description = "shouldn't exist and you should adminhelp immediately."
 	color = "#FFFFFF"
-	taste_description = "slime and errors"
+	taste_description = "bad code and slime"
 	var/complementary_color = "#000000" //a color that's complementary to the normal blob color
 	var/shortdesc = null //just damage and on_mob effects, doesn't include special, blob-tile only effects
 	var/effectdesc = null //any long, blob-tile specific effects
@@ -51,6 +51,7 @@
 	description = "will do medium brute damage and occasionally expand again when expanding."
 	shortdesc = "will do medium brute damage."
 	effectdesc = "will also expand when attacked with burn damage, but takes more brute damage."
+	taste_description = "duplication"
 	analyzerdescdamage = "Does medium brute damage."
 	analyzerdesceffect = "Expands when attacked with burn damage, will occasionally expand again when expanding, and is fragile to brute damage."
 	color = "#7B5A57"
@@ -80,6 +81,7 @@
 	id = "networked_fibers"
 	description = "will do high brute and burn damage and will generate resources quicker, but can only expand manually."
 	shortdesc = "will do high brute and burn damage."
+	taste_description = "efficiency"
 	effectdesc = "will move your core when manually expanding near it."
 	analyzerdescdamage = "Does high brute and burn damage."
 	analyzerdesceffect = "Is highly mobile and generates resources rapidly."
@@ -113,6 +115,7 @@
 	id = "shifting_fragments"
 	description = "will do medium brute damage."
 	effectdesc = "will also cause blob parts to shift away when attacked."
+	taste_description = "something other-dimensional"
 	analyzerdescdamage = "Does medium brute damage."
 	analyzerdesceffect = "When attacked, may shift away from the attacker."
 	color = "#C8963C"
@@ -146,6 +149,7 @@
 	id = "blazing_oil"
 	description = "will do medium burn damage and set targets on fire."
 	effectdesc = "will also release bursts of flame when burnt, but takes damage from water."
+	taste_description = "burning oil"
 	analyzerdescdamage = "Does medium burn damage and sets targets on fire."
 	analyzerdesceffect = "Releases fire when burnt, but takes damage from water and other extinguishing liquids."
 	color = "#B68D00"
@@ -182,6 +186,7 @@
 	id = "regenerative_materia"
 	description = "will do toxin damage and cause targets to believe they are fully healed."
 	analyzerdescdamage = "Does toxin damage and injects a toxin that causes the target to believe they are fully healed."
+	taste_description = "heaven"
 	color = "#C8A5DC"
 	complementary_color = "#CD7794"
 	message_living = ", and you feel <i>alive</i>"
@@ -194,11 +199,9 @@
 		M.reagents.add_reagent("spore", 0.2*reac_volume)
 	M.apply_damage(0.7*reac_volume, TOX)
 
-/datum/reagent/blob/regenerative_materia/on_mob_life(mob/living/M)
-	M.adjustToxLoss(1*REM)
-	if(iscarbon(M))
-		var/mob/living/carbon/N = M
-		N.hal_screwyhud = SCREWYHUD_HEALTHY //fully healed, honest
+/datum/reagent/blob/regenerative_materia/on_mob_life(mob/living/carbon/C)
+	C.adjustToxLoss(1*REM)
+	C.hal_screwyhud = SCREWYHUD_HEALTHY //fully healed, honest
 	..()
 
 /datum/reagent/blob/regenerative_materia/on_mob_delete(mob/living/M)
@@ -213,6 +216,7 @@
 	id = "zombifying_pods"
 	description = "will do very low toxin damage and harvest sleeping targets for additional resources and a blob zombie."
 	effectdesc = "will also produce fragile spores when killed and on expanding."
+	taste_description = "fungi"
 	shortdesc = "will do very low toxin damage and harvest sleeping targets for additional resources(for your overmind) and a blob zombie."
 	analyzerdescdamage = "Does very low toxin damage and kills unconscious humans, turning them into blob zombies."
 	analyzerdesceffect = "Produces spores when expanding and when killed."
@@ -255,6 +259,7 @@
 	name = "Energized Jelly"
 	id = "energized_jelly"
 	description = "will cause low stamina and high oxygen damage, and cause targets to be unable to breathe."
+	taste_description = "gelatin"
 	effectdesc = "will also conduct electricity, but takes damage from EMPs."
 	analyzerdescdamage = "Does low stamina damage, high oxygen damage, and prevents targets from breathing."
 	analyzerdesceffect = "Is immune to electricity and will easily conduct it, but is weak to EMPs."
@@ -286,6 +291,7 @@
 	name = "Explosive Lattice"
 	id = "explosive_lattice"
 	description = "will do brute damage in an area around targets."
+	taste_description = "the bomb"
 	effectdesc = "will also resist explosions, but takes increased damage from fire and other energy sources."
 	analyzerdescdamage = "Does medium brute damage and causes damage to everyone near its targets."
 	analyzerdesceffect = "Is highly resistant to explosions, but takes increased damage from fire and other energy sources."
@@ -324,6 +330,7 @@
 	description = "will inject targets with a freezing poison that does high damage over time."
 	analyzerdescdamage = "Injects targets with a freezing poison that will gradually solidify the target's internal organs."
 	color = "#8BA6E9"
+	taste_description = "brain freeze"
 	complementary_color = "#7D6EB4"
 	blobbernaut_message = "injects"
 	message = "The blob stabs you"
@@ -337,7 +344,7 @@
 		M.reagents.add_reagent("cryogenic_poison", 0.3*reac_volume)
 	M.apply_damage(0.2*reac_volume, BRUTE)
 
-/datum/reagent/blob/cryogenic_poison/on_mob_life(mob/living/M)
+/datum/reagent/blob/cryogenic_poison/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(0.3*REM, 0)
 	M.adjustFireLoss(0.3*REM, 0)
 	M.adjustToxLoss(0.3*REM, 0)
@@ -349,6 +356,7 @@
 	name = "Electromagnetic Web"
 	id = "electromagnetic_web"
 	description = "will do high burn damage and EMP targets."
+	taste_description = "pop rocks"
 	effectdesc = "will also take massively increased damage and release an EMP when killed."
 	analyzerdescdamage = "Does low burn damage and EMPs targets."
 	analyzerdesceffect = "Is fragile to all types of damage, but takes massive damage from brute. In addition, releases a small EMP when killed."
@@ -386,6 +394,7 @@
 	id = "synchronous_mesh"
 	description = "will do massively increased brute damage for each blob near the target."
 	effectdesc = "will also spread damage between each blob near the attacked blob."
+	taste_description = "toxic mold"
 	analyzerdescdamage = "Does brute damage, increasing for each blob near the target."
 	analyzerdesceffect = "When attacked, spreads damage between all blobs near the attacked blob."
 	color = "#65ADA2"
@@ -420,6 +429,7 @@
 	name = "Reactive Spines"
 	id = "reactive_spines"
 	description = "will do medium brute damage through armor and bio resistance."
+	taste_description = "rock"
 	effectdesc = "will also react when attacked with brute damage, attacking all near the attacked blob."
 	analyzerdescdamage = "Does medium brute damage, ignoring armor and bio resistance."
 	analyzerdesceffect = "When attacked with brute damage, will lash out, attacking everything near it."
@@ -447,6 +457,7 @@
 	id = "pressurized_slime"
 	description = "will do low brute, oxygen, and stamina damage, and wet tiles under targets."
 	effectdesc = "will also wet tiles near blobs that are attacked or killed."
+	taste_description = "a sponge"
 	analyzerdescdamage = "Does low brute damage, low oxygen damage, drains stamina, and wets tiles under targets, extinguishing them."
 	analyzerdesceffect = "When attacked or killed, wets nearby tiles, extinguishing anything on them."
 	color = "#AAAABB"
@@ -459,7 +470,7 @@
 	reac_volume = ..()
 	var/turf/open/T = get_turf(M)
 	if(istype(T) && prob(reac_volume))
-		T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
+		T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 		M.adjust_fire_stacks(-(reac_volume / 10))
 		M.ExtinguishMob()
 	M.apply_damage(0.4*reac_volume, BRUTE)
@@ -481,7 +492,7 @@
 /datum/reagent/blob/pressurized_slime/proc/extinguisharea(obj/structure/blob/B, probchance)
 	for(var/turf/open/T in range(1, B))
 		if(prob(probchance))
-			T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
+			T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 			for(var/obj/O in T)
 				O.extinguish()
 			for(var/mob/living/L in T)

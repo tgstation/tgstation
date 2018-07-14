@@ -24,7 +24,6 @@
 	var/state = 0
 	var/list/allowed_books = list(/obj/item/book, /obj/item/spellbook, /obj/item/storage/book) //Things allowed in the bookcase
 
-
 /obj/structure/bookcase/examine(mob/user)
 	..()
 	if(!anchored)
@@ -39,7 +38,6 @@
 		if(2)
 			to_chat(user, "<span class='notice'>There's a <b>small crack</b> visible on the shelf.</span>")
 
-
 /obj/structure/bookcase/Initialize(mapload)
 	. = ..()
 	if(!mapload)
@@ -51,7 +49,6 @@
 		if(istype(I, /obj/item/book))
 			I.forceMove(src)
 	update_icon()
-
 
 /obj/structure/bookcase/attackby(obj/item/I, mob/user, params)
 	switch(state)
@@ -81,15 +78,15 @@
 				state = 0
 
 		if(2)
+			GET_COMPONENT_FROM(STR, /datum/component/storage, I)
 			if(is_type_in_list(I, allowed_books))
 				if(!user.transferItemToLoc(I, src))
 					return
 				update_icon()
-			else if(istype(I, /obj/item/storage/bag/books))
-				var/obj/item/storage/bag/books/B = I
-				for(var/obj/item/T in B.contents)
+			else if(STR)
+				for(var/obj/item/T in I.contents)
 					if(istype(T, /obj/item/book) || istype(T, /obj/item/spellbook))
-						B.remove_from_storage(T, src)
+						STR.remove_from_storage(T, src)
 				to_chat(user, "<span class='notice'>You empty \the [I] into \the [src].</span>")
 				update_icon()
 			else if(istype(I, /obj/item/pen))
@@ -117,6 +114,9 @@
 
 
 /obj/structure/bookcase/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(contents.len)
 		var/obj/item/book/choice = input("Which book would you like to remove from the shelf?") as null|obj in contents
 		if(choice)
@@ -149,7 +149,7 @@
 
 /obj/structure/bookcase/manuals/medical/Initialize()
 	. = ..()
-	new /obj/item/book/manual/medical_cloning(src)
+	new /obj/item/book/manual/wiki/medical_cloning(src)
 	update_icon()
 
 
@@ -159,11 +159,10 @@
 /obj/structure/bookcase/manuals/engineering/Initialize()
 	. = ..()
 	new /obj/item/book/manual/wiki/engineering_construction(src)
-	new /obj/item/book/manual/engineering_particle_accelerator(src)
 	new /obj/item/book/manual/wiki/engineering_hacking(src)
 	new /obj/item/book/manual/wiki/engineering_guide(src)
-	new /obj/item/book/manual/engineering_singularity_safety(src)
-	new /obj/item/book/manual/robotics_cyborgs(src)
+	new /obj/item/book/manual/wiki/engineering_singulo_tesla(src)
+	new /obj/item/book/manual/wiki/robotics_cyborgs(src)
 	update_icon()
 
 
@@ -172,7 +171,7 @@
 
 /obj/structure/bookcase/manuals/research_and_development/Initialize()
 	. = ..()
-	new /obj/item/book/manual/research_and_development(src)
+	new /obj/item/book/manual/wiki/research_and_development(src)
 	update_icon()
 
 
@@ -206,9 +205,7 @@
 	if(dat)
 		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		user.visible_message("[user] opens a book titled \"[title]\" and begins reading intently.")
-		GET_COMPONENT_FROM(mood, /datum/component/mood, user)
-		if(mood)
-			mood.add_event("book_nerd", /datum/mood_event/book_nerd)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
 		onclose(user, "book")
 	else
 		to_chat(user, "<span class='notice'>This book is completely blank!</span>")

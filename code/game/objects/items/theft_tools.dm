@@ -34,7 +34,7 @@
 		cooldown = world.time
 		flick(pulseicon, src)
 		radiation_pulse(src, 400, 2)
-		
+
 /obj/item/nuke_core/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is rubbing [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (TOXLOSS)
@@ -229,6 +229,7 @@
 		icon_state = "supermatter_tongs"
 
 /obj/item/hemostat/supermatter/afterattack(atom/O, mob/user, proximity)
+	. = ..()
 	if(!sliver)
 		return
 	if(ismovableatom(O) && O != sliver)

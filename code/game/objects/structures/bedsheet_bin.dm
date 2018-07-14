@@ -10,7 +10,7 @@ LINEN BINS
 	icon = 'icons/obj/bedsheets.dmi'
 	icon_state = "sheetwhite"
 	item_state = "bedsheet"
-	slot_flags = SLOT_NECK
+	slot_flags = ITEM_SLOT_NECK
 	layer = MOB_LAYER
 	throwforce = 0
 	throw_speed = 1
@@ -298,12 +298,13 @@ LINEN BINS
 		to_chat(user, "<span class='notice'>You hide [I] among the sheets.</span>")
 
 
-
 /obj/structure/bedsheetbin/attack_paw(mob/user)
 	return attack_hand(user)
 
-
 /obj/structure/bedsheetbin/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(user.lying)
 		return
 	if(amount >= 1)

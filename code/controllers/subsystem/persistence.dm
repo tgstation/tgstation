@@ -171,7 +171,7 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/SetUpTrophies(list/trophy_items)
 	for(var/A in GLOB.trophy_cases)
 		var/obj/structure/displaycase/trophy/T = A
-		if (T.showpiece) 
+		if (T.showpiece)
 			continue
 		T.added_roundstart = TRUE
 
@@ -212,7 +212,7 @@ SUBSYSTEM_DEF(persistence)
 			continue
 		var/list/savable_obj = list()
 		for(var/obj/O in F)
-			if(is_type_in_typecache(O, satchel_blacklist) || O.admin_spawned)
+			if(is_type_in_typecache(O, satchel_blacklist) || (O.flags_1 & ADMIN_SPAWNED_1))
 				continue
 			if(O.persistence_replacement)
 				savable_obj += O.persistence_replacement
@@ -251,9 +251,20 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/CollectTrophies()
 	var/json_file = file("data/npc_saves/TrophyItems.json")
 	var/list/file_data = list()
-	file_data["data"] = saved_trophies
+	file_data["data"] = remove_duplicate_trophies(saved_trophies)
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
+
+/datum/controller/subsystem/persistence/proc/remove_duplicate_trophies(list/trophies)
+	var/list/ukeys = list()
+	. = list()
+	for(var/trophy in trophies)
+		var/tkey = "[trophy["path"]]-[trophy["message"]]"
+		if(ukeys[tkey])
+			continue
+		else
+			. += list(trophy)
+			ukeys[tkey] = TRUE
 
 /datum/controller/subsystem/persistence/proc/SaveTrophy(obj/structure/displaycase/trophy/T)
 	if(!T.added_roundstart && T.showpiece)
@@ -275,7 +286,7 @@ SUBSYSTEM_DEF(persistence)
 
 /datum/controller/subsystem/persistence/proc/CollectAntagReputation()
 	var/ANTAG_REP_MAXIMUM = CONFIG_GET(number/antag_rep_maximum)
-	
+
 	for(var/p_ckey in antag_rep_change)
 //		var/start = antag_rep[p_ckey]
 		antag_rep[p_ckey] = max(0, min(antag_rep[p_ckey]+antag_rep_change[p_ckey], ANTAG_REP_MAXIMUM))

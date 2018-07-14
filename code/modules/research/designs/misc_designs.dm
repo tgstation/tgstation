@@ -241,7 +241,7 @@
 	name = "Alien Multitool"
 	desc = "An advanced multitool obtained through Abductor technology."
 	id = "alien_multitool"
-	build_path = /obj/item/device/multitool/abductor
+	build_path = /obj/item/multitool/abductor
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 5000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
 	category = list("Equipment")
@@ -266,6 +266,16 @@
 	build_path = /obj/item/melee/roastingstick
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/locator
+	name = "Bluespace locator"
+	desc = "Used to track portable teleportation beacons and targets with embedded tracking implants."
+	id = "locator"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL=1000, MAT_GLASS=500, MAT_SILVER = 500)
+	build_path = /obj/item/locator
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
@@ -311,6 +321,36 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/holosignsec
+	name = "Security Holobarrier Projector"
+	desc = "A holographic projector that creates holographic security barriers."
+	id = "holosignsec"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_GOLD = 1000, MAT_SILVER = 1000)
+	build_path = /obj/item/holosign_creator/security
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/holosignengi
+	name = "Engineering Holobarrier Projector"
+	desc = "A holographic projector that creates holographic engineering barriers."
+	id = "holosignengi"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_GOLD = 1000, MAT_SILVER = 1000)
+	build_path = /obj/item/holosign_creator/engineering
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/holosignatmos
+	name = "ATMOS Holofan Projector"
+	desc = "A holographic projector that creates holographic barriers that prevent changes in atmospheric conditions."
+	id = "holosignatmos"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_GOLD = 1000, MAT_SILVER = 1000)
+	build_path = /obj/item/holosign_creator/atmos
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
 /////////////////////////////////////////
 ////////////Tools//////////////
 /////////////////////////////////////////
@@ -322,5 +362,29 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_PLASMA = 1500, MAT_URANIUM = 200)
 	build_path = /obj/item/weldingtool/experimental
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/anomaly_neutralizer
+	name = "Anomaly Neutralizer"
+	desc = "An advanced tool capable of instantly neutralizing anomalies, designed to capture the fleeting aberrations created by the engine."
+	id = "anomaly_neutralizer"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GOLD = 2000, MAT_PLASMA = 5000, MAT_URANIUM = 2000)
+	build_path = /obj/item/anomaly_neutralizer
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/////////////////////////////////////////
+////////////Armour//////////////
+/////////////////////////////////////////
+
+/datum/design/reactive_armour
+	name = "Reactive Armour Shell"
+	desc = "An experimental suit of armour capable of utilizing an implanted anomaly core to protect the user."
+	id = "reactive_armour"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 10000, MAT_DIAMOND = 5000, MAT_URANIUM = 8000, MAT_SILVER = 4500, MAT_GOLD = 5000)
+	build_path = /obj/item/reactive_armour_shell
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING

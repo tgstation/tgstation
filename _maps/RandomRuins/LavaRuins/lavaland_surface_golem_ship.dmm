@@ -15,8 +15,8 @@
 /obj/item/pickaxe,
 /obj/item/storage/bag/ore,
 /obj/item/storage/bag/ore,
-/obj/item/device/mining_scanner,
-/obj/item/device/flashlight/lantern,
+/obj/item/mining_scanner,
+/obj/item/flashlight/lantern,
 /obj/item/card/id/mining,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
@@ -28,8 +28,8 @@
 /obj/item/pickaxe,
 /obj/item/storage/bag/ore,
 /obj/item/storage/bag/ore,
-/obj/item/device/mining_scanner,
-/obj/item/device/flashlight/lantern,
+/obj/item/mining_scanner,
+/obj/item/flashlight/lantern,
 /obj/item/card/id/mining,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
@@ -118,7 +118,7 @@
 	pixel_x = 5;
 	pixel_y = 9
 	},
-/obj/item/book/manual/research_and_development{
+/obj/item/book/manual/wiki/research_and_development{
 	name = "Sacred Text of the Liberator";
 	pixel_x = -4;
 	pixel_y = 3

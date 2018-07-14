@@ -34,6 +34,7 @@ GLOBAL_LIST_EMPTY(cinematics)
 	var/obj/screen/cinematic/screen
 	var/datum/callback/special_callback //For special effects synced with animation (explosions after the countdown etc)
 	var/cleanup_time = 300 //How long for the final screen to remain
+	var/stop_ooc = TRUE //Turns off ooc when played globally.
 
 /datum/cinematic/New()
 	GLOB.cinematics += src
@@ -51,13 +52,19 @@ GLOBAL_LIST_EMPTY(cinematics)
 	for(var/A in GLOB.cinematics)
 		var/datum/cinematic/C = A
 		if(C == src)
-			continue 
+			continue
 		if(C.is_global || !is_global)
 			return //Can't play two global or local cinematics at the same time
 
 	//Close all open windows if global
 	if(is_global)
 		SStgui.close_all_uis()
+
+	//Pause OOC
+	var/ooc_toggled = FALSE
+	if(is_global && stop_ooc && GLOB.ooc_allowed)
+		ooc_toggled = TRUE
+		toggle_ooc(FALSE)
 
 
 	for(var/mob/M in GLOB.mob_list)
@@ -73,9 +80,14 @@ GLOBAL_LIST_EMPTY(cinematics)
 			if(is_global)
 				M.notransform = TRUE
 				locked += M
-	
+
 	//Actually play it
 	content()
+	
+	//Restore OOC
+	if(ooc_toggled)
+		toggle_ooc(TRUE)
+	
 	//Cleanup
 	sleep(cleanup_time)
 	qdel(src)
@@ -168,6 +180,17 @@ GLOBAL_LIST_EMPTY(cinematics)
 	sleep(70)
 	special()
 
+/datum/cinematic/cult_nuke
+	id = CINEMATIC_CULT_NUKE
+
+/datum/cinematic/cult_nuke/content()
+	flick("intro_nuke",screen)
+	sleep(35)
+	flick("station_explode_fade_red",screen)
+	cinematic_sound(sound('sound/effects/explosion_distant.ogg'))
+	special()
+	screen.icon_state = "summary_cult"
+
 /datum/cinematic/nuke_annihilation
 	id = CINEMATIC_ANNIHILATION
 
@@ -207,6 +230,17 @@ GLOBAL_LIST_EMPTY(cinematics)
 
 /datum/cinematic/nuke_far/content()
 	cinematic_sound(sound('sound/effects/explosion_distant.ogg'))
+	special()
+
+/datum/cinematic/clownop
+	id = CINEMATIC_NUKE_CLOWNOP
+	cleanup_time = 100
+
+/datum/cinematic/clownop/content()
+	flick("intro_nuke",screen)
+	sleep(35)
+	cinematic_sound(sound('sound/items/airhorn.ogg'))
+	flick("summary_selfdes",screen) //???
 	special()
 
 /* Intended usage.

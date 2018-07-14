@@ -2,7 +2,7 @@
 	name = "heart"
 	desc = "I feel bad for the heartless bastard who lost this."
 	icon_state = "heart-on"
-	zone = "chest"
+	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_HEART
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 	var/beating = 1
@@ -54,11 +54,11 @@
 		var/sound/fastbeat = sound('sound/health/fastbeat.ogg', repeat = TRUE)
 		var/mob/living/carbon/H = owner
 
-		if(H.health <= HEALTH_THRESHOLD_CRIT && beat != BEAT_SLOW)
+		if(H.health <= H.crit_modifier() && beat != BEAT_SLOW)
 			beat = BEAT_SLOW
 			H.playsound_local(get_turf(H), slowbeat,40,0, channel = CHANNEL_HEARTBEAT)
 			to_chat(owner, "<span class = 'notice'>You feel your heart slow down...</span>")
-		if(beat == BEAT_SLOW && H.health > HEALTH_THRESHOLD_CRIT)
+		if(beat == BEAT_SLOW && H.health > H.crit_modifier())
 			H.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
 
@@ -152,6 +152,9 @@
 	synthetic = TRUE
 
 /obj/item/organ/heart/cybernetic/emp_act()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	Stop()
 
 /obj/item/organ/heart/freedom

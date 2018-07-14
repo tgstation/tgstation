@@ -1,6 +1,7 @@
 //Dogs.
 
 /mob/living/simple_animal/pet/dog
+	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	response_help  = "pets"
 	response_disarm = "bops"
 	response_harm   = "kicks"
@@ -85,7 +86,7 @@
 	var/armorval = 0
 
 	if(def_zone)
-		if(def_zone == "head")
+		if(def_zone == BODY_ZONE_HEAD)
 			if(inventory_head)
 				armorval = inventory_head.armor.getRating(type)
 		else
@@ -139,7 +140,7 @@
 			return
 		var/remove_from = href_list["remove_inv"]
 		switch(remove_from)
-			if("head")
+			if(BODY_ZONE_HEAD)
 				if(inventory_head)
 					inventory_head.forceMove(drop_location())
 					inventory_head = null
@@ -168,7 +169,7 @@
 		var/add_to = href_list["add_inv"]
 
 		switch(add_to)
-			if("head")
+			if(BODY_ZONE_HEAD)
 				place_on_head(usr.get_active_held_item(),usr)
 
 			if("back")
@@ -231,9 +232,7 @@
 		return
 	if(!item_to_add)
 		user.visible_message("[user] pets [src].","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
-		GET_COMPONENT_FROM(mood, /datum/component/mood, user)
-		if(mood)
-			mood.add_event("pet_corgi", /datum/mood_event/pet_corgi)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "pet_corgi", /datum/mood_event/pet_corgi)
 		return
 
 	if(user && !user.temporarilyRemoveItemFromInventory(item_to_add))
@@ -559,7 +558,7 @@
 	name = "Lisa"
 	real_name = "Lisa"
 	gender = FEMALE
-	desc = "It's a corgi with a cute pink bow."
+	desc = "She's tearing you apart."
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
 	icon_state = "lisa"
@@ -616,9 +615,7 @@
 			if(M && stat != DEAD) // Added check to see if this mob (the dog) is dead to fix issue 2454
 				new /obj/effect/temp_visual/heart(loc)
 				emote("me", 1, "yaps happily!")
-				GET_COMPONENT_FROM(mood, /datum/component/mood, M)
-				if(mood)
-					mood.add_event("pet_corgi", /datum/mood_event/pet_corgi)
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "pet_corgi", /datum/mood_event/pet_corgi)
 		else
 			if(M && stat != DEAD) // Same check here, even though emote checks it as well (poor form to check it only in the help case)
 				emote("me", 1, "growls!")

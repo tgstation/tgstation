@@ -35,7 +35,7 @@
 	get_ghost()
 
 /datum/brain_trauma/special/imaginary_friend/proc/make_friend()
-	friend = new(get_turf(src), src)
+	friend = new(get_turf(owner), src)
 
 /datum/brain_trauma/special/imaginary_friend/proc/get_ghost()
 	set waitfor = FALSE
@@ -66,6 +66,7 @@
 	to_chat(src, "<span class='notice'><b>You are the imaginary friend of [owner]!</b></span>")
 	to_chat(src, "<span class='notice'>You are absolutely loyal to your friend, no matter what.</span>")
 	to_chat(src, "<span class='notice'>You cannot directly influence the world around you, but you can see what [owner] cannot.</span>")
+	Show()
 
 /mob/camera/imaginary_friend/Initialize(mapload, _trauma)
 	. = ..()
@@ -75,7 +76,6 @@
 	trauma = _trauma
 	owner = trauma.owner
 	human_image = get_flat_human_icon(null, pick(SSjob.occupations))
-	Show()
 
 /mob/camera/imaginary_friend/proc/Show()
 	if(!client) //nobody home

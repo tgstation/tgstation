@@ -1,4 +1,5 @@
 /obj/item/disk/surgery/revival
+	name = "Revival Surgery Disk"
 	desc = "The disk provides instructions on how to bring a corpse back to life."
 	surgeries = list(/datum/surgery/advanced/revival)
 
@@ -13,7 +14,7 @@
 				/datum/surgery_step/close)
 
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	possible_locs = list("head")
+	possible_locs = list(BODY_ZONE_HEAD)
 	requires_bodypart_type = 0
 
 /datum/surgery/advanced/revival/can_start(mob/user, mob/living/carbon/target)

@@ -22,7 +22,7 @@
 	can_flashlight = 0 // Can't attach or detach the flashlight, and override it's icon update
 
 /obj/item/gun/energy/e_gun/mini/Initialize()
-	gun_light = new /obj/item/device/flashlight/seclite(src)
+	gun_light = new /obj/item/flashlight/seclite(src)
 	return ..()
 
 /obj/item/gun/energy/e_gun/mini/update_icon()
@@ -127,7 +127,9 @@
 				to_chat(M, "<span class='userdanger'>Your [name]'s reactor overloads!</span>")
 
 /obj/item/gun/energy/e_gun/nuclear/emp_act(severity)
-	..()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	fail_chance = min(fail_chance + round(15/severity), 100)
 
 /obj/item/gun/energy/e_gun/nuclear/update_icon()

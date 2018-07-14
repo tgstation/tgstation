@@ -6,14 +6,23 @@
 	. += ..() + config_human_delay + dna.species.movement_delay(src)
 
 /mob/living/carbon/human/slip(knockdown_amount, obj/O, lube)
-	if(isobj(shoes) && (shoes.flags_1&NOSLIP_1) && !(lube&GALOSHES_DONT_HELP))
+	if(has_trait(TRAIT_NOSLIPALL))
 		return 0
+	if (!(lube&GALOSHES_DONT_HELP))
+		if(has_trait(TRAIT_NOSLIPWATER))
+			return 0
+		if(shoes && istype(shoes, /obj/item/clothing))
+			var/obj/item/clothing/CS = shoes
+			if (CS.clothing_flags & NOSLIP)
+				return 0
 	return ..()
 
 /mob/living/carbon/human/experience_pressure_difference()
 	playsound(src, 'sound/effects/space_wind.ogg', 50, 1)
-	if(shoes && shoes.flags_1&NOSLIP_1)
-		return 0
+	if(shoes && istype(shoes, /obj/item/clothing))
+		var/obj/item/clothing/S = shoes
+		if (S.clothing_flags & NOSLIP)
+			return 0
 	return ..()
 
 /mob/living/carbon/human/mob_has_gravity()
@@ -58,6 +67,6 @@
 				S.step_action()
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.
-	if(..())
-		return 1
-	return dna.species.space_move(src)
+	if(dna.species.space_move(src))
+		return TRUE
+	return ..()

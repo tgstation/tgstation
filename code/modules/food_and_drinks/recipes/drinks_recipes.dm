@@ -139,10 +139,10 @@
 	required_reagents = list("tequila" = 2, "kahlua" = 1)
 
 /datum/chemical_reaction/tequila_sunrise
-	name = "tequila Sunrise"
+	name = "Tequila Sunrise"
 	id = "tequilasunrise"
-	results = list("tequilasunrise" = 3)
-	required_reagents = list("tequila" = 2, "orangejuice" = 1)
+	results = list("tequilasunrise" = 5)
+	required_reagents = list("tequila" = 2, "orangejuice" = 2, "grenadine" = 1)
 
 /datum/chemical_reaction/toxins_special
 	name = "Toxins Special"
@@ -603,3 +603,88 @@
 	results = list("squirt_cider" = 1)
 	required_reagents = list("water" = 1, "tomatojuice" = 1, "nutriment" = 1)
 	mix_message = "The mix swirls and turns a bright red that reminds you of an apple's skin."
+
+/datum/chemical_reaction/fringe_weaver
+	name = "Fringe Weaver"
+	id = "fringe_weaver"
+	results = list("fringe_weaver" = 10)
+	required_reagents = list("ethanol" = 9, "sugar" = 1) //9 karmotrine, 1 adelhyde
+	mix_message = "The mix turns a pleasant cream color and foams up."
+
+/datum/chemical_reaction/sugar_rush
+	name = "Sugar Rush"
+	id = "sugar_rush"
+	results = list("sugar_rush" = 4)
+	required_reagents = list("sugar" = 2, "lemonjuice" = 1, "wine" = 1) //2 adelhyde (sweet), 1 powdered delta (sour), 1 karmotrine (alcohol)
+	mix_message = "The mixture bubbles and brightens into a girly pink."
+
+/datum/chemical_reaction/crevice_spike
+	name = "Crevice Spike"
+	id = "crevice_spike"
+	results = list("crevice_spike" = 6)
+	required_reagents = list("limejuice" = 2, "capsaicin" = 4) //2 powdered delta (sour), 4 flanergide (spicy)
+	mix_message = "The mixture stings your eyes as it settles."
+
+/datum/chemical_reaction/sake
+	name = "sake"
+	id = "sake"
+	results = list("sake" = 10)
+	required_reagents = list("rice" = 10)
+	required_catalysts = list("enzyme" = 5)
+	mix_message = "The rice grains ferment into a clear, sweet-smelling liquid."
+
+/datum/chemical_reaction/peppermint_patty
+	name = "Peppermint Patty"
+	id = "peppermint_patty"
+	results = list("peppermint_patty" = 10)
+	required_reagents = list("hot_coco" = 6, "creme_de_cacao" = 1, "creme_de_menthe" = 1, "vodka" = 1, "menthol" = 1)
+	mix_message = "The coco turns mint green just as the strong scent hits your nose."
+
+/datum/chemical_reaction/alexander
+	name = "Alexander"
+	id = "alexander"
+	results = list("alexander" = 3)
+	required_reagents = list("cognac" = 1, "creme_de_cacao" = 1, "cream" = 1)
+
+/datum/chemical_reaction/sidecar
+	name = "Sidecar"
+	id = "sidecar"
+	results = list("sidecar" = 4)
+	required_reagents = list("cognac" = 2, "triple_sec" = 1, "lemonjuice" = 1)
+
+/datum/chemical_reaction/between_the_sheets
+	name = "Between the Sheets"
+	id = "between_the_sheets"
+	results = list("between_the_sheets" = 5)
+	required_reagents = list("rum" = 1, "sidecar" = 4)
+
+/datum/chemical_reaction/kamikaze
+	name = "Kamikaze"
+	id = "kamikaze"
+	results = list("kamikaze" = 3)
+	required_reagents = list("vodka" = 1, "triple_sec" = 1, "limejuice" = 1)
+
+/datum/chemical_reaction/mojito
+	name = "Mojito"
+	id = "mojito"
+	results = list("mojito" = 5)
+	required_reagents = list("rum" = 1, "sugar" = 1, "limejuice" = 1, "sodawater" = 1, "menthol" = 1)
+
+/datum/chemical_reaction/fernet_cola
+	name = "Fernet Cola"
+	id = "fernet_cola"
+	results = list("fernet_cola" = 2)
+	required_reagents = list("fernet" = 1, "cola" = 1)
+
+
+/datum/chemical_reaction/fanciulli
+	name = "Fanciulli"
+	id = "fanciulli"
+	results = list("fanciulli" = 2)
+	required_reagents = list("manhattan" = 1, "fernet" = 1)
+
+/datum/chemical_reaction/branca_menta
+	name = "Branca Menta"
+	id = "branca_menta"
+	results = list("branca_menta" = 3)
+	required_reagents = list("fernet" = 1, "creme_de_menthe" = 1, "ice" = 1)

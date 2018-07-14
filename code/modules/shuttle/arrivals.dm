@@ -76,8 +76,9 @@
 		damaged = TRUE
 		if(console)
 			console.say("Alert, hull breach detected!")
-		var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
-		announcer.announce("ARRIVALS_BROKEN", channels = list())
+		var/obj/machinery/announcement_system/announcer = safepick(GLOB.announcement_systems)
+		if(!QDELETED(announcer))
+			announcer.announce("ARRIVALS_BROKEN", channels = list())
 		if(mode != SHUTTLE_CALL)
 			sound_played = FALSE
 			mode = SHUTTLE_IDLE
@@ -108,10 +109,14 @@
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/PersonCheck()
-	for(var/M in (GLOB.alive_mob_list & GLOB.player_list))
-		var/mob/living/L = M
-		if((get_area(M) in areas) && L.stat != DEAD)
-			return TRUE
+	for(var/V in GLOB.player_list)
+		var/mob/M = V
+		if((get_area(M) in areas) && M.stat != DEAD)
+			if(!iscameramob(M))
+				return TRUE
+			var/mob/camera/C = M
+			if(C.move_on_shuttle)
+				return TRUE
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/NukeDiskCheck()

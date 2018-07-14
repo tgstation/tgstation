@@ -10,7 +10,7 @@
 	var/mob/living/carbon/owner = null
 	var/mob/living/carbon/original_owner = null
 	var/status = BODYPART_ORGANIC
-	var/body_zone //"chest", "l_arm", etc , used for def_zone
+	var/body_zone //BODY_ZONE_CHEST, BODY_ZONE_L_ARM, etc , used for def_zone
 	var/aux_zone // used for hands
 	var/aux_layer
 	var/body_part = null //bitflag used to check which clothes cover this bodypart
@@ -19,6 +19,7 @@
 	var/burnstate = 0
 	var/brute_dam = 0
 	var/burn_dam = 0
+	var/stamina_dam = 0
 	var/max_damage = 0
 	var/list/embedded_objects = list()
 	var/held_index = 0 //are we a hand? if so, which one!
@@ -42,6 +43,15 @@
 
 	var/species_flags_list = list()
 	var/dmg_overlay_type //the type of damage overlay (if any) to use when this bodypart is bruised/burned.
+
+	//Damage messages used by help_shake_act()
+	var/light_brute_msg = "bruised"
+	var/medium_brute_msg = "battered"
+	var/heavy_brute_msg = "mangled"
+
+	var/light_burn_msg = "numb"
+	var/medium_burn_msg = "blistered"
+	var/heavy_burn_msg = "peeling away"
 
 /obj/item/bodypart/examine(mob/user)
 	..()
@@ -107,52 +117,54 @@
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
-/obj/item/bodypart/proc/receive_damage(brute, burn, updating_health = 1)
+/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE)
 	if(owner && (owner.status_flags & GODMODE))
-		return 0	//godmode
+		return FALSE	//godmode
 	var/dmg_mlt = CONFIG_GET(number/damage_multiplier)
 	brute = max(brute * dmg_mlt, 0)
 	burn = max(burn * dmg_mlt, 0)
-
-
+	stamina = max(stamina * dmg_mlt, 0)
 	if(status == BODYPART_ROBOTIC) //This makes robolimbs not damageable by chems and makes it stronger
 		brute = max(0, brute - 5)
 		burn = max(0, burn - 4)
+		//No stamina scaling.. for now..
+
+	if(!brute && !burn && !stamina)
+		return FALSE
 
 	switch(animal_origin)
 		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn
 			burn *= 2
 
 	var/can_inflict = max_damage - (brute_dam + burn_dam)
-	if(!can_inflict)
-		return 0
+	if(can_inflict <= 0)
+		return FALSE
 
-	if((brute + burn) < can_inflict)
-		brute_dam	+= brute
-		burn_dam	+= burn
-	else
-		if(brute > 0)
-			if(burn > 0)
-				brute	= round( (brute/(brute+burn)) * can_inflict, 1 )
-				burn	= can_inflict - brute	//gets whatever damage is left over
-				brute_dam	+= brute
-				burn_dam	+= burn
-			else
-				brute_dam	+= can_inflict
-		else
-			if(burn > 0)
-				burn_dam	+= can_inflict
-			else
-				return 0
+	var/total_damage = brute + burn
+
+	if(total_damage > can_inflict)
+		var/excess = total_damage - can_inflict
+		brute = brute * (excess / total_damage)
+		burn = burn * (excess / total_damage)
+
+	brute_dam += brute
+	burn_dam += burn
+
+	//We've dealt the physical damages, if there's room lets apply the stamina damage.
+	var/current_damage = brute_dam + burn_dam + stamina_dam		//This time around, count stamina loss too.
+	var/available_damage = max_damage - current_damage
+	stamina_dam += CLAMP(stamina, 0, available_damage)
+
 	if(owner && updating_health)
 		owner.updatehealth()
+		if(stamina)
+			owner.update_stamina()
 	return update_bodypart_damage_state()
-
 
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
 //Cannot remove negative damage (i.e. apply damage)
-/obj/item/bodypart/proc/heal_damage(brute, burn, only_robotic = 0, only_organic = 1, updating_health = 1)
+/obj/item/bodypart/proc/heal_damage(brute, burn, stamina, only_robotic = FALSE, only_organic = TRUE, updating_health = TRUE)
 
 	if(only_robotic && status != BODYPART_ROBOTIC) //This makes organic limbs not heal when the proc is in Robotic mode.
 		return
@@ -162,6 +174,7 @@
 
 	brute_dam	= max(brute_dam - brute, 0)
 	burn_dam	= max(burn_dam - burn, 0)
+	stamina_dam = max(stamina_dam - stamina, 0)
 	if(owner && updating_health)
 		owner.updatehealth()
 	return update_bodypart_damage_state()
@@ -180,8 +193,8 @@
 	if((tbrute != brutestate) || (tburn != burnstate))
 		brutestate = tbrute
 		burnstate = tburn
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 
@@ -206,6 +219,9 @@
 		owner.update_hair()
 		owner.update_damage_overlays()
 
+/obj/item/bodypart/proc/is_organic_limb()
+	return (status == BODYPART_ORGANIC)
+
 //we inform the bodypart of the changes that happened to the owner, or give it the informations from a source mob.
 /obj/item/bodypart/proc/update_limb(dropping_limb, mob/living/carbon/source)
 	var/mob/living/carbon/C
@@ -214,17 +230,17 @@
 		if(!original_owner)
 			original_owner = source
 	else if(original_owner && owner != original_owner) //Foreign limb
-		no_update = 1
+		no_update = TRUE
 	else
 		C = owner
-		no_update = 0
+		no_update = FALSE
 
-	if(C.has_trait(TRAIT_HUSK))
+	if(C.has_trait(TRAIT_HUSK) && is_organic_limb())
 		species_id = "husk" //overrides species_id
 		dmg_overlay_type = "" //no damage overlay shown when husked
 		should_draw_gender = FALSE
 		should_draw_greyscale = FALSE
-		no_update = 1
+		no_update = TRUE
 
 	if(no_update)
 		return
@@ -269,7 +285,7 @@
 		dmg_overlay_type = "robotic"
 
 	if(dropping_limb)
-		no_update = 1 //when attached, the limb won't be affected by the appearance changes of its mob owner.
+		no_update = TRUE //when attached, the limb won't be affected by the appearance changes of its mob owner.
 
 //to update the bodypart's icon when not attached to a mob
 /obj/item/bodypart/proc/update_icon_dropped()
@@ -303,7 +319,7 @@
 	. += limb
 
 	if(animal_origin)
-		if(status == BODYPART_ORGANIC)
+		if(is_organic_limb())
 			limb.icon = 'icons/mob/animal_parts.dmi'
 			if(species_id == "husk")
 				limb.icon_state = "[animal_origin]_husk_[body_zone]"
@@ -316,10 +332,10 @@
 
 	var/icon_gender = (body_gender == FEMALE) ? "f" : "m" //gender of the icon, if applicable
 
-	if((body_zone != "head" && body_zone != "chest"))
+	if((body_zone != BODY_ZONE_HEAD && body_zone != BODY_ZONE_CHEST))
 		should_draw_gender = FALSE
 
-	if(status == BODYPART_ORGANIC)
+	if(is_organic_limb())
 		if(should_draw_greyscale)
 			limb.icon = 'icons/mob/human_parts_greyscale.dmi'
 			if(should_draw_gender)
@@ -344,6 +360,9 @@
 			limb.icon_state = "[body_zone]_[icon_gender]"
 		else
 			limb.icon_state = "[body_zone]"
+		if(aux_zone)
+			aux = image(limb.icon, "[aux_zone]", -aux_layer, image_dir)
+			. += aux
 		return
 
 
@@ -359,11 +378,11 @@
 	qdel(src)
 
 /obj/item/bodypart/chest
-	name = "chest"
+	name = BODY_ZONE_CHEST
 	desc = "It's impolite to stare at a person's chest."
 	icon_state = "default_human_chest"
 	max_damage = 200
-	body_zone = "chest"
+	body_zone = BODY_ZONE_CHEST
 	body_part = CHEST
 	px_x = 0
 	px_y = 0
@@ -413,9 +432,9 @@
 	icon_state = "default_human_l_arm"
 	attack_verb = list("slapped", "punched")
 	max_damage = 50
-	body_zone ="l_arm"
+	body_zone =BODY_ZONE_L_ARM
 	body_part = ARM_LEFT
-	aux_zone = "l_hand"
+	aux_zone = BODY_ZONE_PRECISE_L_HAND
 	aux_layer = HANDS_PART_LAYER
 	held_index = 1
 	px_x = -6
@@ -449,9 +468,9 @@
 	icon_state = "default_human_r_arm"
 	attack_verb = list("slapped", "punched")
 	max_damage = 50
-	body_zone = "r_arm"
+	body_zone = BODY_ZONE_R_ARM
 	body_part = ARM_RIGHT
-	aux_zone = "r_hand"
+	aux_zone = BODY_ZONE_PRECISE_R_HAND
 	aux_layer = HANDS_PART_LAYER
 	held_index = 2
 	px_x = 6
@@ -485,7 +504,7 @@
 	icon_state = "default_human_l_leg"
 	attack_verb = list("kicked", "stomped")
 	max_damage = 50
-	body_zone = "l_leg"
+	body_zone = BODY_ZONE_L_LEG
 	body_part = LEG_LEFT
 	px_x = -2
 	px_y = 12
@@ -523,7 +542,7 @@
 	icon_state = "default_human_r_leg"
 	attack_verb = list("kicked", "stomped")
 	max_damage = 50
-	body_zone = "r_leg"
+	body_zone = BODY_ZONE_R_LEG
 	body_part = LEG_RIGHT
 	px_x = 2
 	px_y = 12

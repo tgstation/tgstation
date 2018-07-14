@@ -106,6 +106,8 @@
 				return
 			if(!new_goal)
 				new_goal = default_goal
+			if (new_goal > 1000)
+				to_chat(usr, "The entered amount of points is too large. Points have instead been set to the maximum allowed amount.")
 			id.goal = CLAMP(new_goal, 0, 1000) //maximum 1000 points
 		if("toggle_open")
 			if(teleporter.locked)
@@ -138,14 +140,22 @@
 	return locate(/obj/structure/gulag_beacon)
 
 /obj/machinery/computer/gulag_teleporter_computer/proc/teleport(mob/user)
-	log_game("[user]([user.ckey] teleported [prisoner]([prisoner.ckey]) to the Labor Camp ([beacon.x], [beacon.y], [beacon.z]) for [id.goal] points.")
+	if(!id) //incase the ID was removed after the transfer timer was set.
+		say("Warning: Unable to transfer prisoner without a valid Prisoner ID inserted!")
+		return
+	var/id_goal_not_set
+	if(!id.goal)
+		id_goal_not_set = TRUE
+		id.goal = default_goal
+		say("[id]'s ID card goal defaulting to [id.goal] points.")
+	log_game("[key_name(user)] teleported [key_name(prisoner)] to the Labor Camp [COORD(beacon)] for [id_goal_not_set ? "default goal of ":""][id.goal] points.")
 	teleporter.handle_prisoner(id, temporary_record)
-	playsound(loc, 'sound/weapons/emitter.ogg', 50, 1)
+	playsound(src, 'sound/weapons/emitter.ogg', 50, 1)
 	prisoner.forceMove(get_turf(beacon))
 	prisoner.Knockdown(40) // small travel dizziness
 	to_chat(prisoner, "<span class='warning'>The teleportation makes you a little dizzy.</span>")
-	new /obj/effect/particle_effect/sparks(prisoner.loc)
-	playsound(src.loc, "sparks", 50, 1)
+	new /obj/effect/particle_effect/sparks(get_turf(prisoner))
+	playsound(src, "sparks", 50, 1)
 	if(teleporter.locked)
 		teleporter.locked = FALSE
 	teleporter.toggle_open()

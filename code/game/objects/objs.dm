@@ -2,7 +2,6 @@
 /obj
 	var/crit_fail = FALSE
 	animate_movement = 2
-	var/throwforce = 0
 	var/obj_flags = CAN_BE_HIT
 	var/set_obj_flags // ONLY FOR MAPPING: Sets flags from a string list, handled in Initialize. Usage: set_obj_flags = "EMAGGED;!CAN_BE_HIT" to set EMAGGED and clear CAN_BE_HIT.
 
@@ -28,9 +27,13 @@
 	var/list/req_one_access
 	var/req_one_access_txt = "0"
 
+	var/renamedByPlayer = FALSE //set when a player uses a pen on a renamable object
 
 /obj/vv_edit_var(vname, vval)
 	switch(vname)
+		if("anchored")
+			setAnchored(vval)
+			return TRUE
 		if("obj_flags")
 			if ((obj_flags & DANGEROUS_POSSESSION) && !(vval & DANGEROUS_POSSESSION))
 				return FALSE
@@ -71,9 +74,13 @@
 	SStgui.close_uis(src)
 	. = ..()
 
+/obj/proc/setAnchored(anchorvalue)
+	SEND_SIGNAL(src, COMSIG_OBJ_SETANCHORED, anchorvalue)
+	anchored = anchorvalue
+
 /obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	..()
-	if(flags_2 & FROZEN_2)
+	if(obj_flags & FROZEN)
 		visible_message("<span class='danger'>[src] shatters into a million pieces!</span>")
 		qdel(src)
 
@@ -110,18 +117,18 @@
 		return null
 
 /obj/proc/updateUsrDialog()
-	if(obj_flags & IN_USE)
-		var/is_in_use = 0
+	if((obj_flags & IN_USE) && !(obj_flags & USES_TGUI))
+		var/is_in_use = FALSE
 		var/list/nearby = viewers(1, src)
 		for(var/mob/M in nearby)
 			if ((M.client && M.machine == src))
-				is_in_use = 1
-				src.attack_hand(M)
+				is_in_use = TRUE
+				ui_interact(M)
 		if(isAI(usr) || iscyborg(usr) || IsAdminGhost(usr))
 			if (!(usr in nearby))
 				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
-					is_in_use = 1
-					src.attack_ai(usr)
+					is_in_use = TRUE
+					ui_interact(usr)
 
 		// check for TK users
 
@@ -130,32 +137,36 @@
 			if(!(usr in nearby))
 				if(usr.client && usr.machine==src)
 					if(H.dna.check_mutation(TK))
-						is_in_use = 1
-						src.attack_hand(usr)
+						is_in_use = TRUE
+						ui_interact(usr)
 		if (is_in_use)
 			obj_flags |= IN_USE
 		else
 			obj_flags &= ~IN_USE
 
-/obj/proc/updateDialog()
+/obj/proc/updateDialog(update_viewers = TRUE,update_ais = TRUE)
 	// Check that people are actually using the machine. If not, don't update anymore.
 	if(obj_flags & IN_USE)
-		var/list/nearby = viewers(1, src)
-		var/is_in_use = 0
-		for(var/mob/M in nearby)
-			if ((M.client && M.machine == src))
-				is_in_use = 1
-				src.interact(M)
-		var/ai_in_use = AutoUpdateAI(src)
+		var/is_in_use = FALSE
+		if(update_viewers)
+			for(var/mob/M in viewers(1, src))
+				if ((M.client && M.machine == src))
+					is_in_use = TRUE
+					src.interact(M)
+		var/ai_in_use = FALSE
+		if(update_ais)
+			ai_in_use = AutoUpdateAI(src)
 
-		if(!ai_in_use && !is_in_use)
-			obj_flags &= ~IN_USE
+		if(update_viewers && update_ais) //State change is sure only if we check both
+			if(!ai_in_use && !is_in_use)
+				obj_flags &= ~IN_USE
 
 
 /obj/attack_ghost(mob/user)
-	if(ui_interact(user) != -1)
+	. = ..()
+	if(.)
 		return
-	..()
+	ui_interact(user)
 
 /obj/proc/container_resist(mob/living/user)
 	return
@@ -195,10 +206,7 @@
 /obj/get_spans()
 	return ..() | SPAN_ROBOT
 
-/obj/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
-	return
-
-/obj/get_dumping_location(obj/item/storage/source,mob/user)
+/obj/get_dumping_location(datum/component/storage/source,mob/user)
 	return get_turf(src)
 
 /obj/proc/CanAStarPass()

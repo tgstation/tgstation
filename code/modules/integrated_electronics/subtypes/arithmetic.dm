@@ -94,7 +94,7 @@
 
 /obj/item/integrated_circuit/arithmetic/division
 	name = "division circuit"
-	desc = "This circuit can divide numbers, just don't think about trying to divide by zero!"
+	desc = "This circuit can divide numbers. Don't even think about trying to divide by zero!"
 	extended_desc = "The order that the calculation goes is;<br>\
 	result = ((((A / B) / C) / D) ... ) and so on, until all pins have been divided. \
 	Null pins, and pins containing 0, are ignored. Pin A <b>must</b> be a number or the circuit will not function."
@@ -142,8 +142,8 @@
 
 /obj/item/integrated_circuit/arithmetic/sign
 	name = "sign circuit"
-	desc = "This will say if a number is positive, negative, or zero."
-	extended_desc = "Will output 1, -1, or 0, depending on if A is a postive number, a negative number, or zero, respectively."
+	desc = "This circuit can tell if a number is positive, negative, or zero."
+	extended_desc = "Will output 1, -1, or 0, depending on if A is a positive number, a negative number, or zero, respectively."
 	icon_state = "sign"
 	inputs = list("A" = IC_PINTYPE_NUMBER)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
@@ -212,8 +212,8 @@
 
 /obj/item/integrated_circuit/arithmetic/average
 	name = "average circuit"
-	desc = "This circuit is of average quality, however it will compute the average for numbers you give it."
-	extended_desc = "Note that null pins are ignored, where as a pin containing 0 is included in the averaging calculation."
+	desc = "This circuit is of average quality. It will compute the average of the numbers you give it."
+	extended_desc = "Note that null pins are ignored, whereas a pin containing 0 is included in the averaging calculation."
 	icon_state = "average"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
@@ -241,8 +241,12 @@
 	inputs = list()
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
+/obj/item/integrated_circuit/arithmetic/pi/Initialize()
+	. = ..()
+	desc = "Not recommended for cooking. Outputs '[PI]' when it receives a pulse."
+
 /obj/item/integrated_circuit/arithmetic/pi/do_work()
-	set_pin_data(IC_OUTPUT, 1, 3.14159)
+	set_pin_data(IC_OUTPUT, 1, PI)
 	push_data()
 	activate_pin(2)
 
@@ -272,7 +276,7 @@
 
 /obj/item/integrated_circuit/arithmetic/square_root
 	name = "square root circuit"
-	desc = "This outputs the square root of a number you input."
+	desc = "This outputs the square root of the number you input."
 	icon_state = "square_root"
 	inputs = list("A" = IC_PINTYPE_NUMBER)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
@@ -307,3 +311,33 @@
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
 	activate_pin(2)
+
+// -Max- //
+/obj/item/integrated_circuit/arithmetic/max
+	name = "max circuit"
+	desc = "This circuit sends out the highest number."
+	extended_desc = "The highest number is put out. Null is ignored."
+	icon_state = "addition"
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	var/min_comparision = FALSE
+
+/obj/item/integrated_circuit/arithmetic/max/do_work()
+	var/result
+	for(var/k in 1 to inputs.len)
+		var/I = get_pin_data(IC_INPUT, k)
+		if(!isnum(I))
+			continue
+		if(!isnum(result) || (!min_comparision && I > result) || (min_comparision && I < result))
+			result = I
+	if(!isnum(result))
+		result = 0
+	set_pin_data(IC_OUTPUT, 1, result)
+	push_data()
+	activate_pin(2)
+
+// -Min- //
+/obj/item/integrated_circuit/arithmetic/max/min
+	name = "min circuit"
+	desc = "This circuit sends out the smallest number."
+	extended_desc = "The smallest number is put out. Null is ignored. In case no number is found, 0 is given out."
+	min_comparision = TRUE

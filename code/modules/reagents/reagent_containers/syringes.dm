@@ -36,8 +36,9 @@
 	mode = !mode
 	update_icon()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/reagent_containers/syringe/attack_hand()
-	..()
+	. = ..()
 	update_icon()
 
 /obj/item/reagent_containers/syringe/attack_paw(mob/user)
@@ -47,6 +48,7 @@
 	return
 
 /obj/item/reagent_containers/syringe/afterattack(atom/target, mob/user , proximity)
+	. = ..()
 	if(busy)
 		return
 	if(!proximity)

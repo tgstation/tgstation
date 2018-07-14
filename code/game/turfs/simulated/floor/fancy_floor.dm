@@ -67,6 +67,7 @@
 	floor_tile = /obj/item/stack/tile/grass
 	broken_states = list("sand")
 	flags_1 = NONE
+	bullet_bounce_sound = null
 	var/ore_type = /obj/item/stack/ore/glass
 	var/turfverb = "uproot"
 
@@ -84,6 +85,7 @@
 		return
 
 /turf/open/floor/grass/snow
+	gender = PLURAL
 	name = "snow"
 	icon = 'icons/turf/snow.dmi'
 	desc = "Looks cold."
@@ -93,6 +95,7 @@
 	floor_tile = null
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	slowdown = 2
+	bullet_sizzle = TRUE
 
 /turf/open/floor/grass/snow/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
@@ -101,6 +104,7 @@
 	return
 
 /turf/open/floor/grass/snow/basalt //By your powers combined, I am captain planet
+	gender = NEUTER
 	name = "volcanic floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"
@@ -142,6 +146,7 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/turf/open/floor/carpet)
 	flags_1 = NONE
+	bullet_bounce_sound = null
 
 /turf/open/floor/carpet/examine(mob/user)
 	..()

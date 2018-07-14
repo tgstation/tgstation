@@ -59,7 +59,7 @@
 	return FALSE
 
 
-/obj/item/device/dna_probe
+/obj/item/dna_probe
 	name = "DNA Sampler"
 	desc = "Can be used to take chemical and genetic samples of pretty much anything."
 	icon = 'icons/obj/syringe.dmi'
@@ -67,18 +67,18 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "hypo"
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	var/list/animals = list()
 	var/list/plants = list()
 	var/list/dna = list()
 
-/obj/item/device/dna_probe/proc/clear_data()
+/obj/item/dna_probe/proc/clear_data()
 	animals = list()
 	plants = list()
 	dna = list()
 
-/obj/item/device/dna_probe/afterattack(atom/target, mob/user, proximity)
-	..()
+/obj/item/dna_probe/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	if(!proximity || !target)
 		return
 	//tray plants
@@ -223,8 +223,8 @@
 
 
 /obj/machinery/dna_vault/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/dna_probe))
-		var/obj/item/device/dna_probe/P = I
+	if(istype(I, /obj/item/dna_probe))
+		var/obj/item/dna_probe/P = I
 		var/uploaded = 0
 		for(var/plant in P.plants)
 			if(!plants[plant])

@@ -81,13 +81,14 @@
 		else
 			to_chat(user, "<span class='holoparasite'>[src] glows with a strange <font color=\"[spawner.namedatum.colour]\">light</font>, and you don't touch it.</span>")
 
-/obj/guardian_bomb/Collide(atom/A)
+/obj/guardian_bomb/Bump(atom/A)
 	detonate(A)
 	..()
 
 /obj/guardian_bomb/attackby(mob/living/user)
 	detonate(user)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/guardian_bomb/attack_hand(mob/living/user)
 	detonate(user)
 

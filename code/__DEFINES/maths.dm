@@ -3,11 +3,8 @@
 // (
 
 #define NUM_E 2.71828183
-#define NUM_SQRT2 1.41421356
 
-#define PI						3.1415
-#define SPEED_OF_LIGHT			3e8		//not exact but hey!
-#define SPEED_OF_LIGHT_SQ		9e+16
+#define PI						3.1416
 #define INFINITY				1e31	//closer then enough
 
 #define SHORT_REAL_LIMIT 16777216
@@ -116,6 +113,20 @@
 
 #define GET_ANGLE_OF_INCIDENCE(face, input) (MODULUS((face) - (input), 360))
 
+//Finds the shortest angle that angle A has to change to get to angle B. Aka, whether to move clock or counterclockwise.
+/proc/closer_angle_difference(a, b)
+	if(!isnum(a) || !isnum(b))
+		return
+	a = SIMPLIFY_DEGREES(a)
+	b = SIMPLIFY_DEGREES(b)
+	var/inc = b - a
+	if(inc < 0)
+		inc += 360
+	var/dec = a - b
+	if(dec < 0)
+		dec += 360
+	. = inc > dec? -dec : inc
+
 //A logarithm that converts an integer to a number scaled between 0 and 1.
 //Currently, this is used for hydroponics-produce sprite transforming, but could be useful for other transform functions.
 #define TRANSFORM_USING_VARIABLE(input, max) ( sin((90*(input))/(max))**2 )
@@ -145,22 +156,6 @@
 		gaussian_next = R2 * working
 	return (mean + stddev * R1)
 #undef ACCURACY
-
-/proc/mouse_angle_from_client(client/client)
-	var/list/mouse_control = params2list(client.mouseParams)
-	if(mouse_control["screen-loc"] && client)
-		var/list/screen_loc_params = splittext(mouse_control["screen-loc"], ",")
-		var/list/screen_loc_X = splittext(screen_loc_params[1],":")
-		var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
-		var/x = (text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32)
-		var/y = (text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32)
-		var/list/screenview = getviewsize(client.view)
-		var/screenviewX = screenview[1] * world.icon_size
-		var/screenviewY = screenview[2] * world.icon_size
-		var/ox = round(screenviewX/2) - client.pixel_x //"origin" x
-		var/oy = round(screenviewY/2) - client.pixel_y //"origin" y
-		var/angle = SIMPLIFY_DEGREES(ATAN2(y - oy, x - ox))
-		return angle
 
 /proc/get_turf_in_angle(angle, turf/starting, increments)
 	var/pixel_x = 0

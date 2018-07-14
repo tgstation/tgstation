@@ -456,7 +456,7 @@
 /area/awaymission/BMPship/Aft)
 "bP" = (
 /obj/structure/closet/crate,
-/obj/item/device/analyzer,
+/obj/item/analyzer,
 /obj/item/stack/spacecash/c10,
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -905,7 +905,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/BMPship/Aft)
 "dq" = (
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/engine,
 /area/awaymission/BMPship/Aft)
 "dr" = (
@@ -1803,7 +1803,7 @@
 /turf/closed/mineral/random,
 /area/awaymission/BMPship)
 "gc" = (
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},

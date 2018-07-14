@@ -136,7 +136,7 @@
 			if(prob(30))
 				do_sparks(2, 1, T)
 			T.ex_act(EXPLODE_LIGHT)
-			T.hotspot_expose(1000,500,1)
+			T.hotspot_expose(700,25,1)
 
 	if(!(obj_flags & EMAGGED))
 		for(var/item in spawned)
@@ -162,8 +162,10 @@
 	nerf(!(obj_flags & EMAGGED))
 
 /obj/machinery/computer/holodeck/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	emergency_shutdown()
-	return ..()
 
 /obj/machinery/computer/holodeck/ex_act(severity, target)
 	emergency_shutdown()

@@ -1,3 +1,6 @@
+/datum/proc/CanProcCall(procname)
+	return TRUE
+
 /datum/proc/can_vv_get(var_name)
 	return TRUE
 
@@ -93,7 +96,7 @@
 		else
 			atomsnowflake += "<a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=name'><b>[D]</b></a>"
 			if(A.dir)
-				atomsnowflake += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=[refid];rotatedir=right'>>></a></font>"
+				atomsnowflake += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
 	else
 		atomsnowflake += "<b>[D]</b>"
 
@@ -995,6 +998,33 @@
 			manipulate_organs(C)
 			href_list["datumrefresh"] = href_list["editorgans"]
 
+		else if(href_list["givemartialart"])
+			if(!check_rights(NONE))
+				return
+
+			var/mob/living/carbon/C = locate(href_list["givemartialart"]) in GLOB.carbon_list
+			if(!istype(C))
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
+				return
+
+			var/list/artpaths = subtypesof(/datum/martial_art)
+			var/list/artnames = list()
+			for(var/i in artpaths)
+				var/datum/martial_art/M = i
+				artnames[initial(M.name)] = M
+
+			var/result = input(usr, "Choose the martial art to teach","JUDO CHOP") as null|anything in artnames
+			if(!usr)
+				return
+			if(QDELETED(C))
+				to_chat(usr, "Mob doesn't exist anymore")
+				return
+
+			if(result)
+				var/chosenart = artnames[result]
+				var/datum/martial_art/MA = new chosenart
+				MA.teach(C)
+
 		else if(href_list["givetrauma"])
 			if(!check_rights(NONE))
 				return
@@ -1026,7 +1056,7 @@
 				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
 				return
 
-			C.cure_all_traumas(TRUE, TRAUMA_RESILIENCE_ABSOLUTE)
+			C.cure_all_traumas(TRAUMA_RESILIENCE_ABSOLUTE)
 
 			href_list["datumrefresh"] = href_list["curetraumas"]
 
@@ -1178,9 +1208,9 @@
 			var/edit_action = input(usr, "What would you like to do?","Modify Body Part") as null|anything in list("add","remove", "augment")
 			if(!edit_action)
 				return
-			var/list/limb_list = list("head", "l_arm", "r_arm", "l_leg", "r_leg")
+			var/list/limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 			if(edit_action == "augment")
-				limb_list += "chest"
+				limb_list += BODY_ZONE_CHEST
 			var/result = input(usr, "Please choose which body part to [edit_action]","[capitalize(edit_action)] Body Part") as null|anything in limb_list
 
 			if(!C)

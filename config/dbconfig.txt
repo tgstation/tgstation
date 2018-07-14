@@ -18,7 +18,7 @@ FEEDBACK_DATABASE feedback
 ## Prefix to be added to the name of every table, older databases will require this be set to erro_
 ## Note, this does not change the table names in the database, you will have to do that yourself.
 ##IE:
-##	FEEDBACK_TABLEPREFIX 
+##	FEEDBACK_TABLEPREFIX
 ##	FEEDBACK_TABLEPREFIX SS13_
 ## Remove "SS13_" if you are using the standard schema file.
 FEEDBACK_TABLEPREFIX SS13_
@@ -28,3 +28,7 @@ FEEDBACK_LOGIN username
 
 ## Password used to access the database.
 FEEDBACK_PASSWORD password
+
+## Time in deciseconds for a query to execute before alerting a for possible slow query timeout.
+## While enabled queries and their execution times are logged if they exceed this value.
+#QUERY_DEBUG_LOG_TIMEOUT 70

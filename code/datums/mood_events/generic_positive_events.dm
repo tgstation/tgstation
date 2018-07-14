@@ -37,11 +37,6 @@
 	description = "<span class='nicegreen'>What a lovely day.</span>\n"
 	mood_change = 3
 
-/datum/mood_event/happytable
-	description = "<span class='nicegreen'>They want to play on the table!</span>\n"
-	mood_change = 2
-	timeout = 1200
-
 /datum/mood_event/jolly
 	description = "<span class='nicegreen'>I feel happy for no particular reason.</span>\n"
 	mood_change = 6
@@ -62,10 +57,6 @@
 	mood_change = 40 //maybe being a cultist isnt that bad after all
 	hidden = TRUE
 
-/datum/mood_event/niceroom
-	description = "<span class='nicegreen'>This room looks really pretty!</span>\n"
-	mood_change = 4
-
-/datum/mood_event/greatroom
-	description = "<span class='nicegreen'>This room is beautiful!</span>\n"
-	mood_change = 7
+/datum/mood_event/family_heirloom
+	description = "<span class='nicegreen'>My family heirloom is safe with me.</span>\n"
+	mood_change = 1

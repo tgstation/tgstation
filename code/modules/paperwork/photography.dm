@@ -11,7 +11,7 @@
 /*
  * Film
  */
-/obj/item/device/camera_film
+/obj/item/camera_film
 	name = "film cartridge"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	desc = "A camera film cartridge. Insert it into a camera to reload it."
@@ -110,13 +110,17 @@
 	item_state = "briefcase"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
-	can_hold = list(/obj/item/photo)
 	resistance_flags = FLAMMABLE
+
+/obj/item/storage/photo_album/Initialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.can_hold = typecacheof(list(/obj/item/photo))
 
 /*
  * Camera
  */
-/obj/item/device/camera
+/obj/item/camera
 	name = "camera"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	desc = "A polaroid camera."
@@ -126,7 +130,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	materials = list(MAT_METAL = 50, MAT_GLASS = 150)
 	var/pictures_max = 10
 	var/pictures_left = 10
@@ -137,9 +141,9 @@
 	var/obj/item/disk/holodisk/disk
 
 
-/obj/item/device/camera/CheckParts(list/parts_list)
+/obj/item/camera/CheckParts(list/parts_list)
 	..()
-	var/obj/item/device/camera/C = locate(/obj/item/device/camera) in contents
+	var/obj/item/camera/C = locate(/obj/item/camera) in contents
 	if(C)
 		pictures_max = C.pictures_max
 		pictures_left = C.pictures_left
@@ -147,29 +151,29 @@
 		qdel(C)
 
 
-/obj/item/device/camera/spooky
+/obj/item/camera/spooky
 	name = "camera obscura"
 	desc = "A polaroid camera, some say it can see ghosts!"
 	see_ghosts = 1
 
-/obj/item/device/camera/detective
+/obj/item/camera/detective
 	name = "Detective's camera"
 	desc = "A polaroid camera with extra capacity for crime investigations."
 	pictures_max = 30
 	pictures_left = 30
 
 
-/obj/item/device/camera/siliconcam //camera AI can take pictures with
+/obj/item/camera/siliconcam //camera AI can take pictures with
 	name = "silicon photo camera"
 	var/in_camera_mode = 0
 
-/obj/item/device/camera/siliconcam/ai_camera //camera AI can take pictures with
+/obj/item/camera/siliconcam/ai_camera //camera AI can take pictures with
 	name = "AI photo camera"
 
-/obj/item/device/camera/siliconcam/robot_camera //camera cyborgs can take pictures with.. needs it's own because of verb CATEGORY >.>
+/obj/item/camera/siliconcam/robot_camera //camera cyborgs can take pictures with.. needs it's own because of verb CATEGORY >.>
 	name = "Cyborg photo camera"
 
-/obj/item/device/camera/siliconcam/robot_camera/verb/borgprinting()
+/obj/item/camera/siliconcam/robot_camera/verb/borgprinting()
 	set category ="Robot Commands"
 	set name = "Print Image"
 	set src in usr
@@ -178,12 +182,12 @@
 		return //won't work if dead
 	borgprint()
 
-/obj/item/device/camera/attack(mob/living/carbon/human/M, mob/user)
+/obj/item/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
 
 
-/obj/item/device/camera/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/camera_film))
+/obj/item/camera/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/camera_film))
 		if(pictures_left)
 			to_chat(user, "<span class='notice'>[src] still has some film in it!</span>")
 			return
@@ -205,19 +209,19 @@
 		return TRUE //no afterattack
 	..()
 
-/obj/item/device/camera/attack_self(mob/user)
+/obj/item/camera/attack_self(mob/user)
 	if(!disk)
 		return
 	to_chat(user, "<span class='notice'>You eject [disk] out the back of [src].</span>")
 	user.put_in_hands(disk)
 	disk = null
 
-/obj/item/device/camera/examine(mob/user)
+/obj/item/camera/examine(mob/user)
 	..()
 	to_chat(user, "It has [pictures_left] photo\s left.")
 
 
-/obj/item/device/camera/proc/camera_get_icon(list/turfs, turf/center)
+/obj/item/camera/proc/camera_get_icon(list/turfs, turf/center)
 	var/list/atoms = list()
 	for(var/turf/T in turfs)
 		atoms.Add(T)
@@ -262,7 +266,7 @@
 	return res
 
 
-/obj/item/device/camera/proc/camera_get_mobs(turf/the_turf)
+/obj/item/camera/proc/camera_get_mobs(turf/the_turf)
 	var/mob_detail
 	for(var/mob/M in the_turf)
 		if(M.invisibility)
@@ -284,7 +288,7 @@
 
 			for(var/obj/item/I in L.held_items)
 				if(!holding)
-					holding += "[L.p_they(TRUE)] [L.p_are()] holding \a [I]"
+					holding += "[L.p_theyre(TRUE)] holding \a [I]"
 				else
 					holding += " and \a [I]"
 			holding = holding.Join()
@@ -298,7 +302,7 @@
 	return mob_detail
 
 
-/obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
+/obj/item/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
 	var/mobs = ""
 	var/isAi = isAI(user)
 	var/list/seen
@@ -331,7 +335,7 @@
 
 
 
-/obj/item/device/camera/proc/printpicture(mob/user, icon/temp, mobs, flag) //Normal camera proc for creating photos
+/obj/item/camera/proc/printpicture(mob/user, icon/temp, mobs, flag) //Normal camera proc for creating photos
 	var/obj/item/photo/P = new/obj/item/photo(get_turf(src))
 	if(in_range(src, user)) //needed because of TK
 		user.put_in_hands(P)
@@ -350,7 +354,7 @@
 		blueprints = 0
 
 
-/obj/item/device/camera/proc/aipicture(mob/user, icon/temp, mobs, isAi) //instead of printing a picture like a regular camera would, we do this instead for the AI
+/obj/item/camera/proc/aipicture(mob/user, icon/temp, mobs, isAi) //instead of printing a picture like a regular camera would, we do this instead for the AI
 
 	var/icon/small_img = icon(temp)
 	var/icon/ic = icon('icons/obj/items_and_weapons.dmi',"photo")
@@ -379,7 +383,7 @@
 	var/list/fields = list()
 
 
-/obj/item/device/camera/proc/injectaialbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject) //stores image information to a list similar to that of the datacore
+/obj/item/camera/proc/injectaialbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject) //stores image information to a list similar to that of the datacore
 	var/numberer = 1
 	for(var/datum/picture in src.aipictures)
 		numberer++
@@ -395,7 +399,7 @@
 	aipictures += P
 	to_chat(usr, "<span class='unconscious'>Image recorded</span>") //feedback to the AI player that the picture was taken
 
-/obj/item/device/camera/proc/injectmasteralbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject) //stores image information to a list similar to that of the datacore
+/obj/item/camera/proc/injectmasteralbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject) //stores image information to a list similar to that of the datacore
 	var/numberer = 1
 	var/mob/living/silicon/robot/C = src.loc
 	if(C.connected_ai)
@@ -415,7 +419,7 @@
 	else
 		injectaialbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject)
 
-/obj/item/device/camera/siliconcam/proc/selectpicture(obj/item/device/camera/siliconcam/targetloc)
+/obj/item/camera/siliconcam/proc/selectpicture(obj/item/camera/siliconcam/targetloc)
 	var/list/nametemp = list()
 	var/find
 	if(targetloc.aipictures.len == 0)
@@ -428,7 +432,7 @@
 		if(q.fields["name"] == find)
 			return q
 
-/obj/item/device/camera/siliconcam/proc/viewpichelper(obj/item/device/camera/siliconcam/targetloc)
+/obj/item/camera/siliconcam/proc/viewpichelper(obj/item/camera/siliconcam/targetloc)
 	var/obj/item/photo/P = new/obj/item/photo()
 	var/datum/picture/selection = selectpicture(targetloc)
 	if(selection)
@@ -440,10 +444,10 @@
 		to_chat(usr, P.desc)
 	qdel(P)    //so 10 thousand picture items are not left in memory should an AI take them and then view them all
 
-/obj/item/device/camera/siliconcam/proc/viewpictures(user)
+/obj/item/camera/siliconcam/proc/viewpictures(user)
 	if(iscyborg(user)) // Cyborg
 		var/mob/living/silicon/robot/C = src.loc
-		var/obj/item/device/camera/siliconcam/Cinfo
+		var/obj/item/camera/siliconcam/Cinfo
 		if(C.connected_ai)
 			Cinfo = C.connected_ai.aicamera
 			viewpichelper(Cinfo)
@@ -454,7 +458,8 @@
 		var/Ainfo = src
 		viewpichelper(Ainfo)
 
-/obj/item/device/camera/afterattack(atom/target, mob/user, flag)
+/obj/item/camera/afterattack(atom/target, mob/user, flag)
+	. = ..()
 	if(!on || !pictures_left || !isturf(target.loc))
 		return
 	if (disk)
@@ -466,7 +471,7 @@
 			var/mob/M = target
 			disk.record.caller_name = M.name
 			disk.record.set_caller_image(M)
-		else 
+		else
 			return
 	else
 		captureimage(target, user, flag)
@@ -479,31 +484,31 @@
 	on = FALSE
 	addtimer(CALLBACK(src, .proc/cooldown), 64)
 
-/obj/item/device/camera/proc/cooldown()
+/obj/item/camera/proc/cooldown()
 	set waitfor = FALSE
 	icon_state = "camera"
 	on = TRUE
 
-/obj/item/device/camera/siliconcam/proc/toggle_camera_mode()
+/obj/item/camera/siliconcam/proc/toggle_camera_mode()
 	if(in_camera_mode)
 		camera_mode_off()
 	else
 		camera_mode_on()
 
-/obj/item/device/camera/siliconcam/proc/camera_mode_off()
+/obj/item/camera/siliconcam/proc/camera_mode_off()
 	src.in_camera_mode = 0
 	to_chat(usr, "<B>Camera Mode deactivated</B>")
 
-/obj/item/device/camera/siliconcam/proc/camera_mode_on()
+/obj/item/camera/siliconcam/proc/camera_mode_on()
 	src.in_camera_mode = 1
 	to_chat(usr, "<B>Camera Mode activated</B>")
 
-/obj/item/device/camera/siliconcam/robot_camera/proc/borgprint()
+/obj/item/camera/siliconcam/robot_camera/proc/borgprint()
 	var/list/nametemp = list()
 	var/find
 	var/datum/picture/selection
 	var/mob/living/silicon/robot/C = src.loc
-	var/obj/item/device/camera/siliconcam/targetcam = null
+	var/obj/item/camera/siliconcam/targetcam = null
 	if(C.toner < 20)
 		to_chat(usr, "Insufficent toner to print image.")
 		return
@@ -552,6 +557,7 @@
 			to_chat(user, "<span class=notice>\The [src] already contains a photo.</span>")
 	..()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/wallframe/picture/attack_hand(mob/user)
 	if(user.get_inactive_held_item() != src)
 		..()
@@ -562,6 +568,7 @@
 		to_chat(user, "<span class='notice'>You carefully remove the photo from \the [src].</span>")
 		displayed = null
 		update_icon()
+	return ..()
 
 /obj/item/wallframe/picture/attack_self(mob/user)
 	user.examinate(src)
@@ -631,6 +638,9 @@
 	..()
 
 /obj/structure/sign/picture_frame/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(framed)
 		framed.show(user)
 

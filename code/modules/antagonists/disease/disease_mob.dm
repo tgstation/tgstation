@@ -6,8 +6,8 @@ the new instance inside the host to be updated to the template's stats.
 */
 
 /mob/camera/disease
-	name = ""
-	real_name = ""
+	name = "Sentient Disease"
+	real_name = "Sentient Disease"
 	desc = ""
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "marker"
@@ -81,7 +81,7 @@ the new instance inside the host to be updated to the template's stats.
 /mob/camera/disease/Login()
 	..()
 	if(freemove)
-		to_chat(src, "<span class='warning'>You have [round((freemove_end - world.time)/10)] seconds to select your first host. Click on a human to select your host.</span>")
+		to_chat(src, "<span class='warning'>You have [DisplayTimeText(freemove_end - world.time)] to select your first host. Click on a human to select your host.</span>")
 
 
 /mob/camera/disease/Stat()
@@ -225,7 +225,6 @@ the new instance inside the host to be updated to the template's stats.
 		disease_instances -= V
 		hosts -= V.affected_mob
 	else
-		points -= 1
 		to_chat(src, "<span class='notice'>One of your hosts, <b>[V.affected_mob.real_name]</b>, has been purged of your infection.</span>")
 
 		var/datum/atom_hud/my_hud = GLOB.huds[DATA_HUD_SENTIENT_DISEASE]
@@ -286,7 +285,7 @@ the new instance inside the host to be updated to the template's stats.
 		..()
 
 /mob/camera/disease/proc/adapt_cooldown()
-	to_chat(src, "<span class='notice'>You have altered your genetic structure. You will be unable to adapt again for [adaptation_cooldown/10] seconds.</span>")
+	to_chat(src, "<span class='notice'>You have altered your genetic structure. You will be unable to adapt again for [DisplayTimeText(adaptation_cooldown)].</span>")
 	next_adaptation_time = world.time + adaptation_cooldown
 	addtimer(CALLBACK(src, .proc/notify_adapt_ready), adaptation_cooldown)
 
@@ -311,7 +310,7 @@ the new instance inside the host to be updated to the template's stats.
 			Resistance: [DT.totalResistance()]<br>\
 			Stealth: [DT.totalStealth()]<br>\
 			Stage Speed: [DT.totalStageSpeed()]<br>\
-			Transmittability: [DT.totalTransmittable()]<hr>\
+			Transmissibility: [DT.totalTransmittable()]<hr>\
 			Cure: [DT.cure_text]"
 		dat += "<hr><h1>Adaptations</h1>\
 			Points: [points] / [total_points]\

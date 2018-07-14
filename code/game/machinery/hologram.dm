@@ -32,8 +32,8 @@ Possible to do for anyone motivated enough:
 	desc = "It's a floor-mounted device for projecting holographic images."
 	icon_state = "holopad0"
 	layer = LOW_OBJ_LAYER
+	plane = FLOOR_PLANE
 	flags_1 = HEAR_1
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
@@ -66,7 +66,7 @@ Possible to do for anyone motivated enough:
 	flags_1 = NODECONSTRUCT_1
 	on_network = FALSE
 	var/proximity_range = 1
-	
+
 /obj/machinery/holopad/tutorial/Initialize(mapload)
 	. = ..()
 	if(proximity_range)
@@ -86,7 +86,7 @@ Possible to do for anyone motivated enough:
 		replay_stop()
 	else if(disk && disk.record)
 		replay_start()
-	
+
 /obj/machinery/holopad/tutorial/HasProximity(atom/movable/AM)
 	if (!isliving(AM))
 		return
@@ -146,9 +146,6 @@ Possible to do for anyone motivated enough:
 	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", P))
 		return
 
-	if(exchange_parts(user, P))
-		return
-
 	if(default_pry_open(P))
 		return
 
@@ -172,7 +169,8 @@ Possible to do for anyone motivated enough:
 	return ..()
 
 
-/obj/machinery/holopad/interact(mob/living/carbon/human/user) //Carn: Hologram requests.
+/obj/machinery/holopad/ui_interact(mob/living/carbon/human/user) //Carn: Hologram requests.
+	. = ..()
 	if(!istype(user))
 		return
 
@@ -348,21 +346,8 @@ Possible to do for anyone motivated enough:
 			if(!istype(AI))
 				AI = null
 
-			if(!QDELETED(master) && !master.incapacitated() && master.client && (!AI || AI.eyeobj))//If there is an AI attached, it's not incapacitated, it has a client, and the client eye is centered on the projector.
-				if(is_operational())//If the  machine has power.
-					if(AI)	//ais are range based
-						if(get_dist(AI.eyeobj, src) <= holo_range)
-							continue
-						else
-							var/obj/machinery/holopad/pad_close = get_closest_atom(/obj/machinery/holopad, holopads, AI.eyeobj)
-							if(get_dist(pad_close, AI.eyeobj) <= holo_range)
-								var/obj/effect/overlay/holo_pad_hologram/h = masters[master]
-								unset_holo(master)
-								pad_close.set_holo(master, h)
-								continue
-					else
-						continue
-			clear_holo(master)//If not, we want to get rid of the hologram.
+			if(!is_operational() || !validate_user(master))
+				clear_holo(master)
 
 	if(outgoing_call)
 		outgoing_call.Check()
@@ -408,7 +393,7 @@ Possible to do for anyone motivated enough:
 		Hologram.copy_known_languages_from(user,replace = TRUE)
 		Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 		Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
-		Hologram.anchored = TRUE//So space wind cannot drag it.
+		Hologram.setAnchored(TRUE)//So space wind cannot drag it.
 		Hologram.name = "[user.name] (Hologram)"//If someone decides to right click.
 		Hologram.set_light(2)	//hologram lighting
 		move_hologram()
@@ -483,16 +468,50 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	SetLightsAndPower()
 	return TRUE
 
+//Try to transfer hologram to another pad that can project on T
+/obj/machinery/holopad/proc/transfer_to_nearby_pad(turf/T,mob/holo_owner)
+	var/obj/effect/overlay/holo_pad_hologram/h = masters[holo_owner]
+	if(!h || h.HC) //Holocalls can't change source.
+		return FALSE
+	for(var/pad in holopads)
+		var/obj/machinery/holopad/another = pad
+		if(another == src)
+			continue
+		if(another.validate_location(T))
+			unset_holo(holo_owner)
+			if(another.masters && another.masters[holo_owner])
+				another.clear_holo(holo_owner)
+			another.set_holo(holo_owner, h)
+			return TRUE
+	return FALSE
+
+/obj/machinery/holopad/proc/validate_user(mob/living/user)
+	if(QDELETED(user) || user.incapacitated() || !user.client)
+		return FALSE
+	return TRUE
+
+//Can we display holos there
+//Area check instead of line of sight check because this is a called a lot if AI wants to move around.
+/obj/machinery/holopad/proc/validate_location(turf/T,check_los = FALSE)
+	if(T.z == z && get_dist(T, src) <= holo_range && T.loc == get_area(src))
+		return TRUE
+	else
+		return FALSE
+
 /obj/machinery/holopad/proc/move_hologram(mob/living/user, turf/new_turf)
 	if(LAZYLEN(masters) && masters[user])
-		var/area/holo_area = get_area(src)
-		if(new_turf.loc in holo_area.related)
-			var/obj/effect/overlay/holo_pad_hologram/holo = masters[user]
-			step_to(holo, new_turf)
-			holo.forceMove(new_turf)
-			update_holoray(user, new_turf)
-		else
-			clear_holo(user)
+		var/obj/effect/overlay/holo_pad_hologram/holo = masters[user]
+		var/transfered = FALSE
+		if(!validate_location(new_turf))
+			if(!transfer_to_nearby_pad(new_turf,user))
+				clear_holo(user)
+				return FALSE
+			else
+				transfered = TRUE
+		//All is good.
+		holo.forceMove(new_turf)
+		if(!transfered)
+			update_holoray(user,new_turf)
 	return TRUE
 
 
@@ -532,7 +551,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	holder.selected_default_language = record.language
 	Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 	Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
-	Hologram.anchored = TRUE//So space wind cannot drag it.
+	Hologram.setAnchored(TRUE)//So space wind cannot drag it.
 	Hologram.name = "[record.caller_name] (Hologram)"//If someone decides to right click.
 	Hologram.set_light(2)	//hologram lighting
 	visible_message("<span class='notice'>A holographic image of [record.caller_name] flickers to life before your eyes!</span>")
@@ -649,7 +668,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/effect/overlay/holo_pad_hologram/Destroy()
 	Impersonation = null
-	if(HC)
+	if(!QDELETED(HC))
 		HC.Disconnect(HC.calling_holopad)
 	return ..()
 

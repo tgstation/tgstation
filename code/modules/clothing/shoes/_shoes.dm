@@ -6,7 +6,7 @@
 	var/chained = 0
 
 	body_parts_covered = FEET
-	slot_flags = SLOT_FEET
+	slot_flags = ITEM_SLOT_FEET
 
 	permeability_coefficient = 0.5
 	slowdown = SHOES_SLOWDOWN
@@ -22,8 +22,8 @@
 /obj/item/clothing/shoes/suicide_act(mob/living/carbon/user)
 	if(rand(2)>1)
 		user.visible_message("<span class='suicide'>[user] begins tying \the [src] up waaay too tightly! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-		var/obj/item/bodypart/l_leg = user.get_bodypart("l_leg")
-		var/obj/item/bodypart/r_leg = user.get_bodypart("r_leg")
+		var/obj/item/bodypart/l_leg = user.get_bodypart(BODY_ZONE_L_LEG)
+		var/obj/item/bodypart/r_leg = user.get_bodypart(BODY_ZONE_R_LEG)
 		if(l_leg)
 			l_leg.dismember()
 			playsound(user,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)

@@ -49,7 +49,7 @@
 
 /datum/mood_event/depression
 	description = "<span class='warning'>I feel sad for no particular reason.</span>\n"
-	mood_change = -6
+	mood_change = -9
 	timeout = 1200
 
 /datum/mood_event/shameful_suicide //suicide_acts that return SHAME, like sord
@@ -64,7 +64,7 @@
 
 /datum/mood_event/noshoes
 	 description = "<span class='warning'>I am a disgrace to comedy everywhere!</span>\n"
-	 mood_change = -3
+	 mood_change = -5
 
 /datum/mood_event/tased
 	description = "<span class='warning'>There's no \"z\" in \"taser\". It's in the zap.</span>\n"
@@ -73,18 +73,27 @@
 
 /datum/mood_event/embedded
 	description = "<span class='boldwarning'>Pull it out!</span>\n"
-	mood_change = -6
+	mood_change = -7
 
 /datum/mood_event/table
 	description = "<span class='warning'>Someone threw me on a table!</span>\n"
 	mood_change = -2
 	timeout = 1200
 
+/datum/mood_event/table/add_effects()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		if(iscatperson(H))
+			H.startTailWag()
+			addtimer(CALLBACK(H, /mob/living/carbon/human.proc/endTailWag), 30)
+			description =  "<span class='nicegreen'>They want to play on the table!</span>\n"
+			mood_change = 2
+
 /datum/mood_event/brain_damage
   mood_change = -3
 
 /datum/mood_event/brain_damage/add_effects()
-  var/damage_message = pick_list_replacements("brain_damage_lines.json", "brain_damage")
+  var/damage_message = pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage")
   description = "<span class='warning'>Hurr durr... [damage_message]</span>\n"
 
 /datum/mood_event/hulk //Entire duration of having the hulk mutation
@@ -96,14 +105,13 @@
   mood_change = -3
   timeout = 3000
 
-
-/datum/mood_event/grossroom
-	description = "<span class='warning'>This room is kind of dirty...</span>\n"
+/datum/mood_event/nyctophobia
+	description = "<span class='warning'>It sure is dark around here...</span>\n"
 	mood_change = -3
 
-/datum/mood_event/disgustingroom
-	description = "<span class='warning'>This room is disgusting!</span>\n"
-	mood_change = -5
+/datum/mood_event/family_heirloom_missing
+	description = "<span class='warning'>I'm missing my family heirloom...</span>\n"
+	mood_change = -4
 
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/cloned_corpse

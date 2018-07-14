@@ -13,11 +13,10 @@
 
 /datum/component/construction/Initialize()
 	if(!isatom(parent))
-		. = COMPONENT_INCOMPATIBLE
-		CRASH("A construction component was applied incorrectly to non-atom: [parent.type].")
+		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(COMSIG_PARENT_EXAMINE, .proc/examine)
-	RegisterSignal(COMSIG_PARENT_ATTACKBY,.proc/action)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY,.proc/action)
 	update_parent(index)
 
 /datum/component/construction/proc/examine(mob/user)

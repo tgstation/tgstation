@@ -35,6 +35,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	layer = MOB_LAYER
 	var/jobspawn_override = FALSE
 	var/delete_after_roundstart = TRUE
+	var/used = FALSE
+
+/obj/effect/landmark/start/proc/after_round_start()
+	if(delete_after_roundstart)
+		qdel(src)
 
 /obj/effect/landmark/start/New()
 	GLOB.start_landmarks_list += src
@@ -187,12 +192,18 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "AI"
 	delete_after_roundstart = FALSE
 	var/primary_ai = TRUE
+	var/latejoin_active = TRUE
+
+/obj/effect/landmark/start/ai/after_round_start()
+	if(latejoin_active && !used)
+		new /obj/structure/AIcore/latejoin_inactive(loc)
+	return ..()
 
 /obj/effect/landmark/start/ai/secondary
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "ai_spawn"
 	primary_ai = FALSE
-
+	latejoin_active = FALSE
 
 //Department Security spawns
 

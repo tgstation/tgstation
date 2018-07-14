@@ -6,7 +6,7 @@
 	name = "Shuttle"
 	requires_power = FALSE
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-	has_gravity = TRUE
+	has_gravity = STANDARD_GRAVITY
 	always_unpowered = FALSE
 	valid_territory = FALSE
 	icon_state = "shuttle"
@@ -15,6 +15,13 @@
 	if(!canSmoothWithAreas)
 		canSmoothWithAreas = type
 	. = ..()
+
+/area/shuttle/PlaceOnTopReact(list/new_baseturfs, turf/fake_turf_type, flags)
+	. = ..()
+	if(length(new_baseturfs) > 1 || fake_turf_type)
+		return // More complicated larger changes indicate this isn't a player
+	if(ispath(new_baseturfs[1], /turf/open/floor/plating))
+		new_baseturfs.Insert(1, /turf/baseturf_skipover/shuttle)
 
 ////////////////////////////Multi-area shuttles////////////////////////////
 
@@ -60,6 +67,7 @@
 /area/shuttle/transit
 	name = "Hyperspace"
 	desc = "Weeeeee"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /area/shuttle/custom
 	name = "Custom player shuttle"

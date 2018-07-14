@@ -8,7 +8,7 @@
 	icon_state = "bullet"
 	density = FALSE
 	anchored = TRUE
-	flags_1 = ABSTRACT_1
+	item_flags = ABSTRACT
 	pass_flags = PASSTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	hitsound = 'sound/weapons/pierce.ogg'
@@ -36,7 +36,7 @@
 	var/trajectory_ignore_forcemove = FALSE	//instructs forceMove to NOT reset our trajectory to the new location!
 
 	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
-	var/pixel_speed = 33	//pixels per move - DO NOT FUCK WITH THIS UNLESS YOU ABSOLUTELY KNOW WHAT YOU ARE DOING OR UNEXPECTED THINGS /WILL/ HAPPEN!
+	var/pixel_speed = 32	//pixels per move - DO NOT FUCK WITH THIS UNLESS YOU ABSOLUTELY KNOW WHAT YOU ARE DOING OR UNEXPECTED THINGS /WILL/ HAPPEN!
 	var/Angle = 0
 	var/original_angle = 0		//Angle at firing
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
@@ -46,8 +46,6 @@
 	var/ricochets_max = 2
 	var/ricochet_chance = 30
 
-	var/colliding = FALSE	//pause processing..
-
 	//Hitscan
 	var/hitscan = FALSE		//Whether this is hitscan. If it is, speed is basically ignored.
 	var/list/beam_segments	//assoc list of datum/point or datum/point/vector, start = end. Used for hitscan effect generation.
@@ -56,6 +54,15 @@
 	var/tracer_type
 	var/muzzle_type
 	var/impact_type
+
+	//Homing
+	var/homing = FALSE
+	var/atom/homing_target
+	var/homing_turn_speed = 10		//Angle per tick.
+	var/homing_inaccuracy_min = 0		//in pixels for these. offsets are set once when setting target.
+	var/homing_inaccuracy_max = 0
+	var/homing_offset_x = 0
+	var/homing_offset_y = 0
 
 	var/ignore_source_check = FALSE
 
@@ -105,7 +112,7 @@
 	if(get_bodypart(hit_zone))
 		return hit_zone
 	else //when a limb is missing the damage is actually passed to the chest
-		return "chest"
+		return BODY_ZONE_CHEST
 
 /obj/item/projectile/proc/prehit(atom/target)
 	return TRUE
@@ -191,8 +198,7 @@
 	beam_index = pcache
 	beam_segments[beam_index] = null
 
-/obj/item/projectile/Collide(atom/A)
-	colliding = TRUE
+/obj/item/projectile/Bump(atom/A)
 	var/datum/point/pcache = trajectory.copy_to()
 	if(check_ricochet(A) && check_ricochet_flag(A) && ricochets < ricochets_max)
 		ricochets++
@@ -208,7 +214,6 @@
 			trajectory_ignore_forcemove = TRUE
 			forceMove(get_turf(A))
 			trajectory_ignore_forcemove = FALSE
-			colliding = FALSE
 			return FALSE
 
 	var/distance = get_dist(get_turf(A), starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
@@ -227,7 +232,6 @@
 			trajectory_ignore_forcemove = TRUE
 			forceMove(target_turf)
 			trajectory_ignore_forcemove = FALSE
-		colliding = FALSE
 		return FALSE
 
 	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
@@ -237,17 +241,14 @@
 		trajectory_ignore_forcemove = FALSE
 		if(A)
 			permutated.Add(A)
-		colliding = FALSE
 		return FALSE
 	else
 		var/atom/alt = select_target(A)
 		if(alt)
 			if(!prehit(alt))
-				colliding = FALSE
 				return FALSE
 			alt.bullet_act(src, def_zone)
 	qdel(src)
-	colliding = FALSE
 	return TRUE
 
 /obj/item/projectile/proc/select_target(atom/A)				//Selects another target from a wall if we hit a wall.
@@ -324,7 +325,7 @@
 /obj/item/projectile/proc/fire(angle, atom/direct_target)
 	//If no angle needs to resolve it from xo/yo!
 	if(!log_override && firer && original)
-		add_logs(firer, original, "fired at", src, " [get_area(src)]")
+		add_logs(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
 	if(direct_target)
 		if(prehit(direct_target))
 			direct_target.bullet_act(src, def_zone)
@@ -350,12 +351,12 @@
 	trajectory_ignore_forcemove = TRUE
 	forceMove(starting)
 	trajectory_ignore_forcemove = FALSE
-	trajectory = new(starting.x, starting.y, starting.z, 0, 0, Angle, pixel_speed)
+	trajectory = new(starting.x, starting.y, starting.z, pixel_x, pixel_y, Angle, pixel_speed)
 	last_projectile_move = world.time
 	fired = TRUE
 	if(hitscan)
 		process_hitscan()
-	if(!isprocessing)
+	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)
 	pixel_move(1)	//move it now!
 
@@ -417,6 +418,8 @@
 		var/matrix/M = new
 		M.Turn(Angle)
 		transform = M
+	if(homing)
+		process_homing()
 	trajectory.increment(trajectory_multiplier)
 	var/turf/T = trajectory.return_turf()
 	if(!istype(T))
@@ -442,13 +445,35 @@
 	if(isturf(loc))
 		hitscan_last = loc
 	if(can_hit_target(original, permutated))
-		Collide(original)
+		Bump(original)
 	Range()
+
+/obj/item/projectile/proc/process_homing()			//may need speeding up in the future performance wise.
+	if(!homing_target)
+		return FALSE
+	var/datum/point/PT = RETURN_PRECISE_POINT(homing_target)
+	PT.x += CLAMP(homing_offset_x, 1, world.maxx)
+	PT.y += CLAMP(homing_offset_y, 1, world.maxy)
+	var/angle = closer_angle_difference(Angle, angle_between_points(RETURN_PRECISE_POINT(src), PT))
+	setAngle(Angle + CLAMP(angle, -homing_turn_speed, homing_turn_speed))
+
+/obj/item/projectile/proc/set_homing_target(atom/A)
+	if(!A || (!isturf(A) && !isturf(A.loc)))
+		return FALSE
+	homing = TRUE
+	homing_target = A
+	homing_offset_x = rand(homing_inaccuracy_min, homing_inaccuracy_max)
+	homing_offset_y = rand(homing_inaccuracy_min, homing_inaccuracy_max)
+	if(prob(50))
+		homing_offset_x = -homing_offset_x
+	if(prob(50))
+		homing_offset_y = -homing_offset_y
 
 //Returns true if the target atom is on our current turf and above the right layer
 /obj/item/projectile/proc/can_hit_target(atom/target, var/list/passthrough)
 	return (target && ((target.layer >= PROJECTILE_HIT_THRESHHOLD_LAYER) || ismob(target)) && (loc == get_turf(target)) && (!(target in passthrough)))
 
+//Spread is FORCED!
 /obj/item/projectile/proc/preparePixelProjectile(atom/target, atom/source, params, spread = 0)
 	var/turf/curloc = get_turf(source)
 	var/turf/targloc = get_turf(target)
@@ -460,21 +485,18 @@
 	if(targloc || !params)
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
-		setAngle(Get_Angle(src, targloc))
+		setAngle(Get_Angle(src, targloc) + spread)
 
 	if(isliving(source) && params)
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, params)
 		p_x = calculated[2]
 		p_y = calculated[3]
 
-		if(spread)
-			setAngle(calculated[1] + spread)
-		else
-			setAngle(calculated[1])
+		setAngle(calculated[1] + spread)
 	else if(targloc)
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
-		setAngle(Get_Angle(src, targloc))
+		setAngle(Get_Angle(src, targloc) + spread)
 	else
 		stack_trace("WARNING: Projectile [type] fired without either mouse parameters, or a target atom to aim at!")
 		qdel(src)
@@ -513,7 +535,7 @@
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
 	..()
 	if(isliving(AM) && (AM.density || AM == original) && !(src.pass_flags & PASSMOB))
-		Collide(AM)
+		Bump(AM)
 
 /obj/item/projectile/Destroy()
 	if(hitscan)

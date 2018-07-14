@@ -38,7 +38,7 @@
 			HM.force_lose(M)
 		for(var/datum/mutation/human/HM in add_mutations)
 			if(HM.name == RACEMUT)
-				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
+				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
 				log_msg += " (MONKEY)"
 			HM.force_give(M)
 		if(fields)
@@ -98,12 +98,12 @@
 	add_mutations_static = list(HULK)
 
 /obj/item/dnainjector/xraymut
-	name = "\improper DNA injector (Xray)"
+	name = "\improper DNA injector (X-ray)"
 	desc = "Finally you can see what the Captain does."
 	add_mutations_static = list(XRAY)
 
 /obj/item/dnainjector/antixray
-	name = "\improper DNA injector (Anti-Xray)"
+	name = "\improper DNA injector (Anti-X-ray)"
 	desc = "It will make you see harder."
 	remove_mutations_static = list(XRAY)
 
@@ -160,7 +160,7 @@
 
 /obj/item/dnainjector/antitour
 	name = "\improper DNA injector (Anti-Tour.)"
-	desc = "Will cure tourrets."
+	desc = "Will cure Tourette's."
 	remove_mutations_static = list(TOURETTES)
 
 /obj/item/dnainjector/tourmut
@@ -328,7 +328,7 @@
 			if((HM in M.dna.mutations) && !(M.dna.temporary_mutations[HM.name]))
 				continue //Skip permanent mutations we already have.
 			if(HM.name == RACEMUT && ishuman(M))
-				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
+				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
 				log_msg += " (MONKEY)"
 				M = HM.force_give(M)
 			else

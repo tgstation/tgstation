@@ -4,6 +4,7 @@
 	pressure_resistance = 25
 	can_buckle = TRUE
 	buckle_lying = FALSE
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	//Hair colour and style
 	var/hair_color = "000"
 	var/hair_style = "Bald"
@@ -43,7 +44,6 @@
 
 	var/name_override //For temporary visible name changes
 
-	var/drunkenness = 0 //Overall drunkenness - check handle_alcohol() in life.dm for effects
 	var/datum/personal_crafting/handcrafting
 	var/datum/physiology/physiology
 

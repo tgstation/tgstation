@@ -15,7 +15,8 @@ RLD
 	opacity = 0
 	density = FALSE
 	anchored = FALSE
-	flags_1 = CONDUCT_1 | NOBLUDGEON_1
+	flags_1 = CONDUCT_1
+	item_flags = NOBLUDGEON
 	force = 0
 	throwforce = 10
 	throw_speed = 3
@@ -129,7 +130,7 @@ RLD
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	max_matter = 160
-	flags_2 = NO_MAT_REDEMPTION_2
+	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
 	var/mode = 1
 	var/ranged = FALSE
@@ -372,6 +373,7 @@ RLD
 		return FALSE
 
 /obj/item/construction/rcd/afterattack(atom/A, mob/user, proximity)
+	. = ..()
 	if(!prox_check(proximity))
 		return
 	rcd_create(A, user)
@@ -478,6 +480,7 @@ RLD
 	has_ammobar = FALSE
 
 /obj/item/construction/rcd/arcd/afterattack(atom/A, mob/user)
+	. = ..()
 	if(!range_check(A,user))
 		return
 	if(target_check(A,user))
@@ -548,6 +551,7 @@ RLD
 
 
 /obj/item/construction/rld/afterattack(atom/A, mob/user)
+	. = ..()
 	if(!range_check(A,user))
 		return
 	var/turf/start = get_turf(src)
@@ -636,7 +640,7 @@ RLD
 			if(useResource(launchcost, user))
 				activate()
 				to_chat(user, "<span class='notice'>You fire a glowstick!</span>")
-				var/obj/item/device/flashlight/glowstick/G  = new /obj/item/device/flashlight/glowstick(start)
+				var/obj/item/flashlight/glowstick/G  = new /obj/item/flashlight/glowstick(start)
 				G.color = color_choice
 				G.light_color = G.color
 				G.throw_at(A, 9, 3, user)

@@ -3,6 +3,7 @@
 
 	var/directory = "config"
 
+	var/warned_deprecated_configs = FALSE
 	var/hiding_entries_by_type = TRUE	//Set for readability, admins can set this to FALSE if they want to debug it
 	var/list/entries
 	var/list/entries_by_type
@@ -19,16 +20,21 @@
 
 	var/motd
 
-/datum/controller/configuration/proc/Load()
+/datum/controller/configuration/proc/Load(directory)
+	if(directory)
+		src.directory = directory
 	if(entries)
 		CRASH("[THIS_PROC_TYPE_WEIRD] called more than once!")
 	InitEntries()
 	LoadModes()
 	if(fexists("[directory]/config.txt") && LoadEntries("config.txt") <= 1)
-		log_config("No $include directives found in config.txt! Loading legacy game_options/dbconfig/comms files...")
-		LoadEntries("game_options.txt")
-		LoadEntries("dbconfig.txt")
-		LoadEntries("comms.txt")
+		var/list/legacy_configs = list("game_options.txt", "dbconfig.txt", "comms.txt")
+		for(var/I in legacy_configs)
+			if(fexists("[directory]/[I]"))
+				log_config("No $include directives found in config.txt! Loading legacy [legacy_configs.Join("/")] files...")
+				for(var/J in legacy_configs)
+					LoadEntries(J)
+				break
 	loadmaplist(CONFIG_MAPS_FILE)
 	LoadMOTD()
 
@@ -80,6 +86,7 @@
 	var/list/lines = world.file2list("[directory]/[filename]")
 	var/list/_entries = entries
 	for(var/L in lines)
+		L = trim(L)
 		if(!L)
 			continue
 		
@@ -120,11 +127,26 @@
 		if(lockthis)
 			E.protection |= CONFIG_ENTRY_LOCKED
 
+		if(E.deprecated_by)
+			var/datum/config_entry/new_ver = entries_by_type[E.deprecated_by]
+			var/new_value = E.DeprecationUpdate(value)
+			var/good_update = istext(new_value)
+			log_config("Entry [entry] is deprecated and will be removed soon. Migrate to [new_ver.name]![good_update ? " Suggested new value is: [new_value]" : ""]")
+			if(!warned_deprecated_configs)
+				addtimer(CALLBACK(GLOBAL_PROC, /proc/message_admins, "This server is using deprecated configuration settings. Please check the logs and update accordingly."), 0)
+				warned_deprecated_configs = TRUE
+			if(good_update)
+				value = new_value
+				E = new_ver
+			else
+				warning("[new_ver.type] is deprecated but gave no proper return for DeprecationUpdate()")
+			
 		var/validated = E.ValidateAndSet(value)
 		if(!validated)
 			log_config("Failed to validate setting \"[value]\" for [entry]")
-		else if(E.modified && !E.dupes_allowed)
-			log_config("Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
+		else 
+			if(E.modified && !E.dupes_allowed)
+				log_config("Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
 
 		E.resident_file = filename
 		
@@ -165,7 +187,7 @@
 	var/datum/config_entry/E = entry_type
 	var/entry_is_abstract = initial(E.abstract_type) == entry_type
 	if(entry_is_abstract)
-		CRASH("Tried to retrieve an abstract config_entry: [entry_type]")
+		CRASH("Tried to set an abstract config_entry: [entry_type]")
 	E = entries_by_type[entry_type]
 	if(!E)
 		CRASH("Missing config entry for [entry_type]!")
@@ -258,7 +280,7 @@
 			if ("disabled")
 				currentmap = null
 			else
-				WRITE_FILE(GLOB.config_error_log, "Unknown command in map vote config: '[command]'")
+				log_config("Unknown command in map vote config: '[command]'")
 
 
 /datum/controller/configuration/proc/pick_mode(mode_name)

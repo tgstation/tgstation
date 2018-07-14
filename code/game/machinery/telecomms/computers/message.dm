@@ -28,7 +28,7 @@
 	var/optioncount = 7
 	// Custom Message Properties
 	var/customsender = "System Administrator"
-	var/obj/item/device/pda/customrecepient = null
+	var/obj/item/pda/customrecepient = null
 	var/customjob		= "Admin"
 	var/custommessage 	= "This is a test, please ignore."
 
@@ -77,9 +77,8 @@
 	GLOB.telecomms_list -= src
 	. = ..()
 
-/obj/machinery/computer/message_monitor/attack_hand(mob/living/user)
-	if(..())
-		return
+/obj/machinery/computer/message_monitor/ui_interact(mob/living/user)
+	. = ..()
 	//If the computer is being hacked or is emagged, display the reboot message.
 	if(hacking || (obj_flags & EMAGGED))
 		message = rebootmsg
@@ -236,7 +235,6 @@
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
-	return
 
 /obj/machinery/computer/message_monitor/proc/BruteForce(mob/user)
 	if(isnull(linkedServer))
@@ -390,7 +388,7 @@
 					//Select Receiver
 					if("Recepient")
 						//Get out list of viable PDAs
-						var/list/obj/item/device/pda/sendPDAs = get_viewable_pdas()
+						var/list/obj/item/pda/sendPDAs = get_viewable_pdas()
 						if(GLOB.PDAs && GLOB.PDAs.len > 0)
 							customrecepient = input(usr, "Select a PDA from the list.") as null|anything in sortNames(sendPDAs)
 						else

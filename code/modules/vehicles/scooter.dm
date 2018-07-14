@@ -63,7 +63,7 @@
 		density = FALSE
 	return ..()
 
-/obj/vehicle/ridden/scooter/skateboard/Collide(atom/A)
+/obj/vehicle/ridden/scooter/skateboard/Bump(atom/A)
 	. = ..()
 	if(A.density && has_buckled_mobs())
 		var/mob/living/H = buckled_mobs[1]
@@ -72,7 +72,7 @@
 		H.throw_at(throw_target, 4, 3)
 		H.Knockdown(100)
 		H.adjustStaminaLoss(40)
-		var/head_slot = H.get_item_by_slot(slot_head)
+		var/head_slot = H.get_item_by_slot(SLOT_HEAD)
 		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
 			H.adjustBrainLoss(3)
 			H.updatehealth()
@@ -80,6 +80,7 @@
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 
 /obj/vehicle/ridden/scooter/skateboard/MouseDrop(atom/over_object)
+	. = ..()
 	var/mob/living/carbon/M = usr
 	if(!istype(M) || M.incapacitated() || !Adjacent(M))
 		return
@@ -146,6 +147,9 @@
 		qdel(src)
 	return TRUE
 
+/obj/vehicle/ridden/scooter/skateboard/wrench_act(mob/living/user, obj/item/I)
+	return
+
 //Wheelys
 /obj/vehicle/ridden/scooter/wheelys
 	name = "Wheely-Heels"
@@ -172,7 +176,7 @@
 	to_chat(M, "<span class='notice'>You pop out the Wheely-Heel's wheels.</span>")
 	return ..()
 
-/obj/vehicle/ridden/scooter/wheelys/Collide(atom/A)
+/obj/vehicle/ridden/scooter/wheelys/Bump(atom/A)
 	. = ..()
 	if(A.density && has_buckled_mobs())
 		var/mob/living/H = buckled_mobs[1]
@@ -181,7 +185,7 @@
 		H.throw_at(throw_target, 4, 3)
 		H.Knockdown(30)
 		H.adjustStaminaLoss(10)
-		var/head_slot = H.get_item_by_slot(slot_head)
+		var/head_slot = H.get_item_by_slot(SLOT_HEAD)
 		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
 			H.adjustBrainLoss(1)
 			H.updatehealth()

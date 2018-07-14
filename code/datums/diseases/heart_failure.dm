@@ -34,7 +34,7 @@
 					to_chat(H, "<span class='warning'>You feel dizzy.</span>")
 					H.confused += 6
 				if(prob(3))
-					to_chat(H, "<span class='warning'>You feel [pick("full", "nauseous", "sweaty", "weak", "tired", "short on breath", "uneasy")].</span>")
+					to_chat(H, "<span class='warning'>You feel [pick("full", "nauseated", "sweaty", "weak", "tired", "short on breath", "uneasy")].</span>")
 			if(3 to 4)
 				if(!sound)
 					H.playsound_local(H, 'sound/health/slowbeat.ogg',40,0, channel = CHANNEL_HEARTBEAT)

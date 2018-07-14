@@ -5,10 +5,11 @@
 	desc = "An energy field."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
-	anchored = TRUE
 	density = FALSE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	use_power = NO_POWER_USE
+	interaction_flags_atom = NONE
+	interaction_flags_machine = NONE
 	light_range = 4
 	layer = ABOVE_OBJ_LAYER
 	var/obj/machinery/field/generator/FG1 = null
@@ -19,6 +20,7 @@
 	FG2.fields -= src
 	return ..()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/machinery/field/containment/attack_hand(mob/user)
 	if(get_dist(src, user) > 1)
 		return FALSE
@@ -85,7 +87,7 @@
 /obj/machinery/field
 	var/hasShocked = FALSE //Used to add a delay between shocks. In some cases this used to crash servers by spawning hundreds of sparks every second.
 
-/obj/machinery/field/CollidedWith(atom/movable/mover)
+/obj/machinery/field/Bumped(atom/movable/mover)
 	if(hasShocked)
 		return
 	if(isliving(mover))

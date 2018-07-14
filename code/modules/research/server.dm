@@ -41,10 +41,12 @@
 		working = TRUE
 
 /obj/machinery/rnd/server/emp_act()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	stat |= EMPED
 	addtimer(CALLBACK(src, .proc/unemp), 600)
 	refresh_working()
-	return ..()
 
 /obj/machinery/rnd/server/proc/unemp()
 	stat &= ~EMPED
@@ -79,13 +81,6 @@
 
 				env.merge(removed)
 				air_update_turf()
-
-/obj/machinery/rnd/server/attack_hand(mob/user as mob) // I guess only exists to stop ninjas or hell does it even work I dunno.  See also ninja gloves.
-	if (disabled)
-		return
-	if (shocked)
-		shock(user,50)
-	return
 
 /proc/fix_noid_research_servers()
 	var/list/no_id_servers = list()
@@ -138,10 +133,8 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/rdservercontrol/attack_hand(mob/user)
-	if(..())
-		return
-	user.set_machine(src)
+/obj/machinery/computer/rdservercontrol/ui_interact(mob/user)
+	. = ..()
 	var/dat = ""
 
 	switch(screen)
@@ -149,8 +142,7 @@
 			dat += "Connected Servers:<BR><BR>"
 
 			for(var/obj/machinery/rnd/server/S in GLOB.machines)
-				dat += "[S.name] || "
-				dat += "<BR>"
+				dat += "[S.name]<BR>"
 
 		//Mining status here
 

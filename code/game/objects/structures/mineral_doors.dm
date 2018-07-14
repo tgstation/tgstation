@@ -40,7 +40,7 @@
 	. = ..()
 	move_update_air(T)
 
-/obj/structure/mineral_door/CollidedWith(atom/movable/AM)
+/obj/structure/mineral_door/Bumped(atom/movable/AM)
 	..()
 	if(!state)
 		return TryToSwitchState(AM)
@@ -53,9 +53,12 @@
 			return TryToSwitchState(user)
 
 /obj/structure/mineral_door/attack_paw(mob/user)
-	return TryToSwitchState(user)
+	return attack_hand(user)
 
 /obj/structure/mineral_door/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	return TryToSwitchState(user)
 
 /obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target)
@@ -131,7 +134,7 @@
 			to_chat(user, "<span class='notice'>You finish digging.</span>")
 			deconstruct(TRUE)
 	else if(user.a_intent != INTENT_HARM)
-		attack_hand(user)
+		return attack_hand(user)
 	else
 		return ..()
 
@@ -201,8 +204,8 @@
 /obj/structure/mineral_door/transparent/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.is_hot())
 		var/turf/T = get_turf(src)
-		message_admins("Plasma mineral door ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
-		log_game("Plasma mineral door ignited by [key_name(user)] in [COORD(T)]")
+		message_admins("Plasma mineral door ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
+		log_game("Plasma mineral door ignited by [key_name(user)] in [AREACOORD(T)]")
 		TemperatureAct()
 	else
 		return ..()

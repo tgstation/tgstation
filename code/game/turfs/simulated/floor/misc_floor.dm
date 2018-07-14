@@ -47,17 +47,17 @@
 	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/circuit/killroom
-	name = "Killroom Floor"
+	name = "killroom floor"
 	initial_gas_mix = "n2=500;TEMP=80"
 
 /turf/open/floor/circuit/telecomms
 	initial_gas_mix = "n2=100;TEMP=80"
 
 /turf/open/floor/circuit/telecomms/mainframe
-	name = "Mainframe Base"
+	name = "mainframe base"
 
 /turf/open/floor/circuit/telecomms/server
-	name = "Server Base"
+	name = "server base"
 
 /turf/open/floor/circuit/green
 	icon_state = "gcircuit"
@@ -81,7 +81,7 @@
 	initial_gas_mix = "n2=100;TEMP=80"
 
 /turf/open/floor/circuit/green/telecomms/mainframe
-	name = "Mainframe Base"
+	name = "mainframe base"
 
 /turf/open/floor/circuit/red
 	icon_state = "rcircuit"
@@ -129,7 +129,7 @@
 	burnt_states = list("noslip-scorched1","noslip-scorched2")
 	slowdown = -0.3
 
-/turf/open/floor/noslip/MakeSlippery()
+/turf/open/floor/noslip/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
 
 /turf/open/floor/oldshuttle
@@ -243,7 +243,7 @@
 
 
 /turf/open/floor/bronze
-	name = "clockwork floor"
+	name = "bronze floor"
 	desc = "Some heavy bronze tiles."
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "clockwork_floor"

@@ -2,7 +2,7 @@
 	name = "mushroom"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
-
+	wine_power = 40
 
 // Reishi
 /obj/item/seeds/reishi
@@ -56,7 +56,6 @@
 	icon_state = "amanita"
 	filling_color = "#FF0000"
 
-
 // Destroying Angel
 /obj/item/seeds/angel
 	name = "pack of destroying angel mycelium"
@@ -83,7 +82,7 @@
 	desc = "<I>Amanita Virosa</I>: Deadly poisonous basidiomycete fungus filled with alpha amatoxins."
 	icon_state = "angel"
 	filling_color = "#C0C0C0"
-
+	wine_power = 60
 
 // Liberty Cap
 /obj/item/seeds/liberty
@@ -108,7 +107,7 @@
 	desc = "<I>Psilocybe Semilanceata</I>: Liberate yourself!"
 	icon_state = "libertycap"
 	filling_color = "#DAA520"
-
+	wine_power = 80
 
 // Plump Helmet
 /obj/item/seeds/plump
@@ -134,7 +133,7 @@
 	desc = "<I>Plumus Hellmus</I>: Plump, soft and s-so inviting~"
 	icon_state = "plumphelmet"
 	filling_color = "#9370DB"
-
+	distill_reagent = "manlydorf"
 
 // Walking Mushroom
 /obj/item/seeds/plump/walkingmushroom
@@ -159,6 +158,7 @@
 	desc = "<I>Plumus Locomotus</I>: The beginning of the great walk."
 	icon_state = "walkingmushroom"
 	filling_color = "#9370DB"
+	can_distill = FALSE
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user)
 	if(isspaceturf(user.loc))
@@ -228,6 +228,7 @@
 	icon_state = "glowshroom"
 	filling_color = "#00FA9A"
 	var/effect_path = /obj/structure/glowshroom
+	wine_power = 50
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user)
 	if(isspaceturf(user.loc))
@@ -258,8 +259,7 @@
 	desc = "This mycelium -powers- into mushrooms!"
 	icon_state = "mycelium-glowcap"
 	species = "glowcap"
-	icon_grow = "glowshroom-grow"
-	icon_dead = "glowshroom-dead"
+	icon_harvest = "glowcap-harvest"
 	plantname = "Glowcaps"
 	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
 	genes = list(/datum/plant_gene/trait/glow/red, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/plant_type/fungal_metabolism)
@@ -299,11 +299,12 @@
 	icon_state = "shadowshroom"
 	effect_path = /obj/structure/glowshroom/shadowshroom
 	tastes = list("shadow" = 1, "mushroom" = 1)
+	wine_power = 60
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom/shadowshroom/attack_self(mob/user)
 	. = ..()
 	if(.)
-		investigate_log("was planted by [key_name(user)] at [COORD(user)]", INVESTIGATE_BOTANY)
+		investigate_log("was planted by [key_name(user)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
 
 //// LAVALAND MUSHROOMS ////
 

@@ -1,6 +1,6 @@
 /obj/item/integrated_circuit/input/card_reader
-	name = "card reader"
-	desc = "A circuit that can read registred name, assignment and a PassKey string from an ID card."
+	name = "ID card reader" //To differentiate it from the data card reader
+	desc = "A circuit that can read the registred name, assignment, and PassKey string from an ID card."
 	icon_state = "card_reader"
 
 	complexity = 4
@@ -14,10 +14,17 @@
 		"on read" = IC_PINTYPE_PULSE_OUT
 	)
 
+/obj/item/integrated_circuit/input/card_reader/old
+	name = "card reader"
+	spawn_flags = 0
+
 /obj/item/integrated_circuit/input/card_reader/attackby_react(obj/item/I, mob/living/user, intent)
 	var/obj/item/card/id/card = I.GetID()
 	var/list/access = I.GetAccess()
 	var/passkey = strtohex(XorEncrypt(json_encode(access), SScircuit.cipherkey))
+
+	if(assembly)
+		assembly.access_card.access = access
 
 	if(card) // An ID card.
 		set_pin_data(IC_OUTPUT, 1, card.registered_name)

@@ -152,21 +152,22 @@
 			var/robot = pick(200;/mob/living/silicon/robot,
 							/mob/living/silicon/robot/modules/syndicate,
 							/mob/living/silicon/robot/modules/syndicate/medical,
-							200;/mob/living/simple_animal/drone/polymorphed)				
+							200;/mob/living/simple_animal/drone/polymorphed)
 			new_mob = new robot(M.loc)
 			if(issilicon(new_mob))
 				new_mob.gender = M.gender
 				new_mob.invisibility = 0
 				new_mob.job = "Cyborg"
 				var/mob/living/silicon/robot/Robot = new_mob
+				Robot.lawupdate = FALSE
+				Robot.connected_ai = null
 				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
 				Robot.clear_inherent_laws(0)
-				Robot.clear_zeroth_law(0, 0)
-				Robot.connected_ai = null
-		
+				Robot.clear_zeroth_law(0)
+
 		if("slime")
 			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
-			
+
 		if("xeno")
 			var/Xe
 			if(M.ckey)
@@ -174,7 +175,7 @@
 			else
 				Xe = pick(/mob/living/carbon/alien/humanoid/hunter,/mob/living/simple_animal/hostile/alien/sentinel)
 			new_mob = new Xe(M.loc)
-			
+
 		if("animal")
 			var/path = pick(/mob/living/simple_animal/hostile/carp,
 							/mob/living/simple_animal/hostile/bear,
@@ -230,8 +231,6 @@
 	if(!new_mob)
 		return
 	new_mob.grant_language(/datum/language/common)
-	new_mob.flags_2 |= OMNITONGUE_2
-	new_mob.logging = M.logging
 
 	// Some forms can still wear some items
 	for(var/obj/item/W in contents)
@@ -325,6 +324,7 @@
 	nodamage = 0
 	armour_penetration = 0
 	flag = "magic"
+	hitsound = 'sound/weapons/barragespellhit.ogg'
 
 /obj/item/projectile/magic/arcane_barrage/on_hit(target)
 	if(ismob(target))
@@ -345,7 +345,7 @@
 	if(proxdet)
 		for(var/mob/living/L in range(1, get_turf(src)))
 			if(L.stat != DEAD && L != firer && !L.anti_magic_check())
-				return Collide(L)
+				return Bump(L)
 	..()
 
 /obj/item/projectile/magic/aoe/lightning
@@ -359,7 +359,7 @@
 
 	var/tesla_power = 20000
 	var/tesla_range = 15
-	var/tesla_boom = FALSE
+	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_MOB_STUN | TESLA_OBJ_DAMAGE
 	var/chain
 	var/mob/living/caster
 
@@ -376,7 +376,7 @@
 			visible_message("<span class='warning'>[src] fizzles on contact with [target]!</span>")
 			qdel(src)
 			return
-	tesla_zap(src, tesla_range, tesla_power, tesla_boom)
+	tesla_zap(src, tesla_range, tesla_power, tesla_flags)
 	qdel(src)
 
 /obj/item/projectile/magic/aoe/lightning/Destroy()

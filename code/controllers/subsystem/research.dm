@@ -14,12 +14,15 @@ SUBSYSTEM_DEF(research)
 	var/list/techweb_categories = list()		//category name = list(node.id = node)
 	var/list/techweb_designs = list()			//associative id = node datum
 	var/list/techweb_nodes_starting = list()	//associative id = node datum
-	var/list/techweb_boost_items = list()		//associative double-layer path = list(id = point_discount)
+	var/list/techweb_boost_items = list()		//associative double-layer path = list(id = list(point_type = point_discount))
 	var/list/techweb_nodes_hidden = list()		//Nodes that should be hidden by default.
-	var/list/techweb_point_items = list()		//path = value
+	var/list/techweb_point_items = list(		//path = list(point type = value)
+	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	)
 	var/list/errored_datums = list()
+	var/list/point_types = list()				//typecache style type = TRUE list
 	//----------------------------------------------
-	var/single_server_income = 54.3
+	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = 54.3)
 	var/multiserver_calculation = FALSE
 	var/last_income = 0
 	//^^^^^^^^ ALL OF THESE ARE PER SECOND! ^^^^^^^^
@@ -29,6 +32,7 @@ SUBSYSTEM_DEF(research)
 	//Around 450000 points max???
 
 /datum/controller/subsystem/research/Initialize()
+	point_types = TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES
 	initialize_all_techweb_designs()
 	initialize_all_techweb_nodes()
 	science_tech = new /datum/techweb/science
@@ -40,20 +44,24 @@ SUBSYSTEM_DEF(research)
 	handle_research_income()
 
 /datum/controller/subsystem/research/proc/handle_research_income()
-	var/bitcoins = 0
+	var/list/bitcoins = list()
 	if(multiserver_calculation)
 		var/eff = calculate_server_coefficient()
 		for(var/obj/machinery/rnd/server/miner in servers)
-			bitcoins += (miner.mine() * eff)	//SLAVE AWAY, SLAVE.
+			var/list/result = (miner.mine())	//SLAVE AWAY, SLAVE.
+			for(var/i in result)
+				result[i] *= eff
+				bitcoins[i] = bitcoins[i]? bitcoins[i] + result[i] : result[i]
 	else
 		for(var/obj/machinery/rnd/server/miner in servers)
 			if(miner.working)
-				bitcoins = single_server_income
+				bitcoins = single_server_income.Copy()
 				break			//Just need one to work.
 	var/income_time_difference = world.time - last_income
 	science_tech.last_bitcoins = bitcoins  // Doesn't take tick drift into account
-	bitcoins *= income_time_difference / 10
-	science_tech.research_points += bitcoins
+	for(var/i in bitcoins)
+		bitcoins[i] *= income_time_difference / 10
+	science_tech.add_point_list(bitcoins)
 	last_income = world.time
 
 /datum/controller/subsystem/research/proc/calculate_server_coefficient()	//Diminishing returns.

@@ -8,10 +8,15 @@
 	var/list/hit_sounds = list('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg',\
 	'sound/weapons/punch1.ogg', 'sound/weapons/punch2.ogg', 'sound/weapons/punch3.ogg', 'sound/weapons/punch4.ogg')
 
-/obj/structure/punching_bag/attack_hand(mob/living/user)
+/obj/structure/punching_bag/attack_hand(mob/user as mob)
+	. = ..()
+	if(.)
+		return
 	flick("[icon_state]2", src)
-	playsound(src.loc, pick(src.hit_sounds), 25, 1, -1)
-	user.apply_status_effect(STATUS_EFFECT_EXERCISED)
+	playsound(loc, pick(hit_sounds), 25, 1, -1)
+	if(isliving(user))
+		var/mob/living/L = user
+		L.apply_status_effect(STATUS_EFFECT_EXERCISED)
 
 /obj/structure/stacklifter
 	name = "Weight Machine"
@@ -22,6 +27,9 @@
 	anchored = TRUE
 
 /obj/structure/stacklifter/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(obj_flags & IN_USE)
 		to_chat(user, "It's already in use - wait a bit.")
 		return
@@ -61,6 +69,9 @@
 	anchored = TRUE
 
 /obj/structure/weightlifter/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(obj_flags & IN_USE)
 		to_chat(user, "It's already in use - wait a bit.")
 		return

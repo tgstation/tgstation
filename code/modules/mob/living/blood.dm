@@ -20,6 +20,8 @@
 		//Blood regeneration if there is some space
 		if(blood_volume < BLOOD_VOLUME_NORMAL)
 			blood_volume += 0.1 // regenerate blood VERY slowly
+			if(blood_volume < BLOOD_VOLUME_OKAY)
+				adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.02, 1))
 
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood()
@@ -66,8 +68,9 @@
 				if(prob(15))
 					Unconscious(rand(20,60))
 					to_chat(src, "<span class='warning'>You feel extremely [word].</span>")
-			if(0 to BLOOD_VOLUME_SURVIVE)
-				death()
+			if(-INFINITY to BLOOD_VOLUME_SURVIVE)
+				if(!has_trait(TRAIT_NODEATH))
+					death()
 
 		var/temp_bleed = 0
 		//Bleeding out
@@ -191,10 +194,10 @@
 		blood_data["real_name"] = real_name
 		blood_data["features"] = dna.features
 		blood_data["factions"] = faction
-		blood_data["traits"] = list()
-		for(var/V in roundstart_traits)
-			var/datum/trait/T = V
-			blood_data["traits"] += T.type
+		blood_data["quirks"] = list()
+		for(var/V in roundstart_quirks)
+			var/datum/quirk/T = V
+			blood_data["quirks"] += T.type
 		return blood_data
 
 //get the id of the substance this mob use as blood.

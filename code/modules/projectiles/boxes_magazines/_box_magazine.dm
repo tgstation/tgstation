@@ -2,14 +2,13 @@
 /obj/item/ammo_box
 	name = "ammo box (null_reference_exception)"
 	desc = "A box of ammo."
-	icon_state = "357"
 	icon = 'icons/obj/ammo.dmi'
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	item_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	materials = list(MAT_METAL=30000)
+	materials = list(MAT_METAL = 30000)
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
@@ -21,9 +20,19 @@
 	var/caliber
 	var/multiload = 1
 	var/start_empty = 0
+	var/list/bullet_cost
+	var/list/base_cost// override this one as well if you override bullet_cost
 
 /obj/item/ammo_box/Initialize()
 	. = ..()
+	if (!bullet_cost)
+		for (var/material in materials)
+			var/material_amount = materials[material]
+			LAZYSET(base_cost, material, (material_amount * 0.10))
+
+			material_amount *= 0.90 // 10% for the container
+			material_amount /= max_ammo
+			LAZYSET(bullet_cost, material, material_amount)
 	if(!start_empty)
 		for(var/i = 1, i <= max_ammo, i++)
 			stored_ammo += new ammo_type(src)
@@ -109,6 +118,10 @@
 		if(2)
 			icon_state = "[initial(icon_state)]-[stored_ammo.len ? "[max_ammo]" : "0"]"
 	desc = "[initial(desc)] There are [stored_ammo.len] shell\s left!"
+	for (var/material in bullet_cost)
+		var/material_amount = bullet_cost[material]
+		material_amount = (material_amount*stored_ammo.len) + base_cost[material]
+		materials[material] = material_amount
 
 //Behavior for magazines
 /obj/item/ammo_box/magazine/proc/ammo_count()
@@ -119,3 +132,7 @@
 	for(var/obj/item/ammo in stored_ammo)
 		ammo.forceMove(turf_mag)
 		stored_ammo -= ammo
+
+/obj/item/ammo_box/magazine/handle_atom_del(atom/A)
+	stored_ammo -= A
+	update_icon()

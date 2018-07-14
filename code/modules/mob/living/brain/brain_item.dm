@@ -5,7 +5,7 @@
 	throw_speed = 3
 	throw_range = 5
 	layer = ABOVE_MOB_LAYER
-	zone = "head"
+	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_BRAIN
 	vital = TRUE
 	attack_verb = list("attacked", "slapped", "whacked")
@@ -112,17 +112,17 @@
 
 	add_fingerprint(user)
 
-	if(user.zone_selected != "head")
+	if(user.zone_selected != BODY_ZONE_HEAD)
 		return ..()
 
 	if((C.head && (C.head.flags_cover & HEADCOVERSEYES)) || (C.wear_mask && (C.wear_mask.flags_cover & MASKCOVERSEYES)) || (C.glasses && (C.glasses.flags_1 & GLASSESCOVERSEYES)))
-		to_chat(user, "<span class='warning'>You're going to need to remove their head cover first!</span>")
+		to_chat(user, "<span class='warning'>You're going to need to remove [C.p_their()] head cover first!</span>")
 		return
 
 //since these people will be dead M != usr
 
 	if(!C.getorgan(/obj/item/organ/brain))
-		if(!C.get_bodypart("head") || !user.temporarilyRemoveItemFromInventory(src))
+		if(!C.get_bodypart(BODY_ZONE_HEAD) || !user.temporarilyRemoveItemFromInventory(src))
 			return
 		var/msg = "[C] has [src] inserted into [C.p_their()] head by [user]."
 		if(C == user)
@@ -144,7 +144,7 @@
 /obj/item/organ/brain/proc/get_brain_damage()
 	var/brain_damage_threshold = max_integrity * BRAIN_DAMAGE_INTEGRITY_MULTIPLIER
 	var/offset_integrity = obj_integrity - (max_integrity - brain_damage_threshold)
-	. = (1 - (offset_integrity / brain_damage_threshold)) * BRAIN_DAMAGE_DEATH
+	. = round((1 - (offset_integrity / brain_damage_threshold)) * BRAIN_DAMAGE_DEATH,0.1)
 
 /obj/item/organ/brain/proc/adjust_brain_damage(amount, maximum)
 	var/adjusted_amount
@@ -157,7 +157,7 @@
 	else
 		adjusted_amount = amount
 
-	adjusted_amount *= BRAIN_DAMAGE_INTEGRITY_MULTIPLIER
+	adjusted_amount = round(adjusted_amount * BRAIN_DAMAGE_INTEGRITY_MULTIPLIER,0.1)
 	if(adjusted_amount)
 		if(adjusted_amount >= 0.1)
 			take_damage(adjusted_amount)
@@ -167,8 +167,8 @@
 
 /obj/item/organ/brain/Destroy() //copypasted from MMIs.
 	if(brainmob)
-		qdel(brainmob)
-		brainmob = null
+		QDEL_NULL(brainmob)
+	QDEL_LIST(traumas)
 	return ..()
 
 /obj/item/organ/brain/alien
@@ -179,11 +179,18 @@
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 
-/obj/item/organ/brain/proc/has_trauma_type(brain_trauma_type, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
+/obj/item/organ/brain/proc/has_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
 	for(var/X in traumas)
 		var/datum/brain_trauma/BT = X
 		if(istype(BT, brain_trauma_type) && (BT.resilience <= resilience))
 			return BT
+
+/obj/item/organ/brain/proc/get_traumas_type(brain_trauma_type = /datum/brain_trauma, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
+	. = list()
+	for(var/X in traumas)
+		var/datum/brain_trauma/BT = X
+		if(istype(BT, brain_trauma_type) && (BT.resilience <= resilience))
+			. += BT
 
 /obj/item/organ/brain/proc/can_gain_trauma(datum/brain_trauma/trauma, resilience)
 	if(!ispath(trauma))
@@ -218,20 +225,39 @@
 		return FALSE
 	return TRUE
 
-//Add a specific trauma
-/obj/item/organ/brain/proc/gain_trauma(datum/brain_trauma/trauma, resilience, list/arguments)
+//Proc to use when directly adding a trauma to the brain, so extra args can be given
+/obj/item/organ/brain/proc/gain_trauma(datum/brain_trauma/trauma, resilience, ...)
+	var/list/arguments = list()
+	if(args.len > 2)
+		arguments = args.Copy(3)
+	. = brain_gain_trauma(trauma, resilience, arguments)
+
+//Direct trauma gaining proc. Necessary to assign a trauma to its brain. Avoid using directly.
+/obj/item/organ/brain/proc/brain_gain_trauma(datum/brain_trauma/trauma, resilience, list/arguments)
 	if(!can_gain_trauma(trauma, resilience))
 		return
-	var/trauma_type
+
+	var/datum/brain_trauma/actual_trauma
 	if(ispath(trauma))
-		trauma_type = trauma
-		SSblackbox.record_feedback("tally", "traumas", 1, trauma_type)
-		traumas += new trauma_type(arglist(list(src, resilience) + arguments))
+		if(!LAZYLEN(arguments))
+			actual_trauma = new trauma() //arglist with an empty list runtimes for some reason
+		else
+			actual_trauma = new trauma(arglist(arguments))
 	else
-		SSblackbox.record_feedback("tally", "traumas", 1, trauma.type)
-		traumas += trauma
-		if(resilience)
-			trauma.resilience = resilience
+		actual_trauma = trauma
+
+	if(actual_trauma.brain) //we don't accept used traumas here
+		WARNING("gain_trauma was given an already active trauma.")
+		return
+
+	traumas += actual_trauma
+	actual_trauma.brain = src
+	if(owner)
+		actual_trauma.owner = owner
+		actual_trauma.on_gain()
+	if(resilience)
+		actual_trauma.resilience = resilience
+	SSblackbox.record_feedback("tally", "traumas", 1, actual_trauma.type)
 
 //Add a random trauma of a certain subtype
 /obj/item/organ/brain/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience)
@@ -245,17 +271,15 @@
 		return
 
 	var/trauma_type = pick(possible_traumas)
-	SSblackbox.record_feedback("tally", "traumas", 1, trauma_type)
-	traumas += new trauma_type(src, resilience)
+	gain_trauma(trauma_type, resilience)
 
 //Cure a random trauma of a certain resilience level
-/obj/item/organ/brain/proc/cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
-	var/datum/brain_trauma/trauma = has_trauma_type(resilience)
-	if(trauma)
-		qdel(trauma)
+/obj/item/organ/brain/proc/cure_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience = TRAUMA_RESILIENCE_BASIC)
+	var/list/traumas = get_traumas_type(brain_trauma_type, resilience)
+	if(LAZYLEN(traumas))
+		qdel(pick(traumas))
 
 /obj/item/organ/brain/proc/cure_all_traumas(resilience = TRAUMA_RESILIENCE_BASIC)
+	var/list/traumas = get_traumas_type(resilience = resilience)
 	for(var/X in traumas)
-		var/datum/brain_trauma/trauma = X
-		if(trauma.resilience <= resilience)
-			qdel(trauma)
+		qdel(X)

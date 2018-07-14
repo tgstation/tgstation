@@ -1,6 +1,11 @@
 /datum/ntnet
 	var/network_id = "Network"
-	var/connected_interfaces_by_id = list()		//id = datum/component/ntnet_interface
+	var/list/connected_interfaces_by_id = list()		//id = datum/component/ntnet_interface
+	var/list/services_by_path = list()					//type = datum/ntnet_service
+	var/list/services_by_id = list()					//id = datum/ntnet_service
+
+	var/list/autoinit_service_paths = list()			//typepaths
+
 
 	var/list/relays = list()
 	var/list/logs = list()
@@ -32,7 +37,18 @@
 		stack_trace("Network [type] with ID [network_id] failed to register and has been deleted.")
 		qdel(src)
 
+/datum/ntnet/Destroy()
+	for(var/i in connected_interfaces_by_id)
+		var/datum/component/ntnet_interface/I = i
+		I.unregister_connection(src)
+	for(var/i in services_by_id)
+		var/datum/ntnet_service/S = i
+		S.disconnect(src, TRUE)
+	return ..()
+
 /datum/ntnet/proc/interface_connect(datum/component/ntnet_interface/I)
+	if(connected_interfaces_by_id[I.hardware_id])
+		return FALSE
 	connected_interfaces_by_id[I.hardware_id] = I
 	return TRUE
 
@@ -43,15 +59,68 @@
 /datum/ntnet/proc/find_interface_id(id)
 	return connected_interfaces_by_id[id]
 
+/datum/ntnet/proc/find_service_id(id)
+	return services_by_id[id]
+
+/datum/ntnet/proc/find_service_path(path)
+	return services_by_path[path]
+
+/datum/ntnet/proc/register_service(datum/ntnet_service/S)
+	if(!istype(S))
+		return FALSE
+	if(services_by_path[S.type] || services_by_id[S.id])
+		return FALSE
+	services_by_path[S.type] = S
+	services_by_id[S.id] = S
+	return TRUE
+
+/datum/ntnet/proc/unregister_service(datum/ntnet_service/S)
+	if(!istype(S))
+		return FALSE
+	services_by_path -= S.type
+	services_by_id -= S.id
+	return TRUE
+
+/datum/ntnet/proc/create_service(type)
+	var/datum/ntnet_service/S = new type
+	if(!istype(S))
+		return FALSE
+	. = S.connect(src)
+	if(!.)
+		qdel(S)
+
+/datum/ntnet/proc/destroy_service(type)
+	var/datum/ntnet_service/S = find_service_path(type)
+	if(!istype(S))
+		return FALSE
+	. = S.disconnect(src)
+	if(.)
+		qdel(src)
+
 /datum/ntnet/proc/process_data_transmit(datum/component/ntnet_interface/sender, datum/netdata/data)
-	data.network_id = src
-	log_data_transfer(data)
 	if(!check_relay_operation())
 		return FALSE
-	for(var/i in data.recipient_ids)
-		var/datum/component/ntnet_interface/reciever = find_interface_id(i)
-		if(reciever)
-			reciever.__network_recieve(data)
+	data.network_id = src
+	log_data_transfer(data)
+	var/list/datum/component/ntnet_interface/receiving = list()
+	if((length(data.recipient_ids == 1) && data.recipient_ids[1] == NETWORK_BROADCAST_ID) || data.recipient_ids == NETWORK_BROADCAST_ID)
+		data.broadcast = TRUE
+		for(var/i in connected_interfaces_by_id)
+			receiving |= connected_interfaces_by_id[i]
+	else
+		for(var/i in data.recipient_ids)
+			var/datum/component/ntnet_interface/receiver = find_interface_id(i)
+			receiving |= receiver
+
+	for(var/i in receiving)
+		var/datum/component/ntnet_interface/receiver = i
+		if(receiver)
+			receiver.__network_receive(data)
+
+	for(var/i in services_by_id)
+		var/datum/ntnet_service/serv = services_by_id[i]
+		serv.ntnet_intercept(data, src, sender)
+
 	return TRUE
 
 /datum/ntnet/proc/check_relay_operation(zlevel)	//can be expanded later but right now it's true/false.

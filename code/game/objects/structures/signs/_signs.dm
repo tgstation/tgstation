@@ -39,6 +39,7 @@
 			var/obj/item/sign_backing/SB = new (get_turf(user))
 			SB.icon_state = icon_state
 			SB.sign_path = type
+			SB.setDir(dir)
 			qdel(src)
 		return
 	else if(istype(I, /obj/item/pen) && buildable_sign)
@@ -102,15 +103,25 @@
 	var/sign_path = /obj/structure/sign/basic //the type of sign that will be created when placed on a turf
 
 /obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	if(isturf(target) && proximity)
 		var/turf/T = target
 		user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
 							 "<span class='notice'>You attach the sign to [T].</span>")
 		playsound(T, 'sound/items/deconstruct.ogg', 50, 1)
-		new sign_path(T)
+		var/obj/structure/sign/S = new sign_path(T)
+		S.setDir(dir)
 		qdel(src)
-	else
-		return ..()
+
+/obj/item/sign_backing/Move(atom/new_loc, direct = 0)
+	// pulling, throwing, or conveying a sign backing does not rotate it
+	var/old_dir = dir
+	. = ..()
+	setDir(old_dir)
+
+/obj/item/sign_backing/attack_self(mob/user)
+	. = ..()
+	setDir(turn(dir, 90))
 
 /obj/structure/sign/nanotrasen
 	name = "\improper Nanotrasen Logo"

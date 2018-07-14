@@ -26,6 +26,7 @@
 	filling_color = "#FF0000"
 	bitesize_mod = 2
 	foodtype = FRUIT
+	wine_power = 20
 
 // Ice Chili
 /obj/item/seeds/chili/ice
@@ -50,6 +51,7 @@
 	filling_color = "#0000CD"
 	bitesize_mod = 2
 	foodtype = FRUIT
+	wine_power = 30
 
 // Ghost Chili
 /obj/item/seeds/chili/ghost
@@ -76,9 +78,12 @@
 	filling_color = "#F8F8FF"
 	bitesize_mod = 4
 	foodtype = FRUIT
+	wine_power = 50
 
 /obj/item/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user)
-	..()
+	. = ..()
+	if(.)
+		return
 	if( ismob(loc) )
 		held_mob = loc
 		START_PROCESSING(SSobj, src)

@@ -2,7 +2,7 @@
 	name = "necklace"
 	icon = 'icons/obj/clothing/neck.dmi'
 	body_parts_covered = NECK
-	slot_flags = SLOT_NECK
+	slot_flags = ITEM_SLOT_NECK
 	strip_delay = 40
 	equip_delay_other = 40
 
@@ -79,7 +79,7 @@
 			if(M.stat == DEAD && heart && world.time - M.timeofdeath < DEFIB_TIME_LIMIT * 10)
 				heart_strength = "<span class='boldannounce'>a faint, fluttery</span>"
 
-			var/diagnosis = (body_part == "chest" ? "You hear [heart_strength] pulse and [lung_strength] respiration." : "You faintly hear [heart_strength] pulse.")
+			var/diagnosis = (body_part == BODY_ZONE_CHEST ? "You hear [heart_strength] pulse and [lung_strength] respiration." : "You faintly hear [heart_strength] pulse.")
 			user.visible_message("[user] places [src] against [M]'s [body_part] and listens attentively.", "<span class='notice'>You place [src] against [M]'s [body_part]. [diagnosis]</span>")
 			return
 	return ..(M,user)
@@ -100,6 +100,11 @@
 	icon_state = "scarf"
 	color = "#4A4A4B" //Grey but it looks black
 
+/obj/item/clothing/neck/scarf/pink
+	name = "pink scarf"
+	icon_state = "scarf"
+	color = "#F699CD" //Pink
+
 /obj/item/clothing/neck/scarf/red
 	name = "red scarf"
 	icon_state = "scarf"
@@ -118,7 +123,7 @@
 /obj/item/clothing/neck/scarf/purple
 	name = "purple scarf"
 	icon_state = "scarf"
-	color = "#9557C5" //purple
+	color = "#9557C5" //Purple
 
 /obj/item/clothing/neck/scarf/yellow
 	name = "yellow scarf"
@@ -128,7 +133,7 @@
 /obj/item/clothing/neck/scarf/orange
 	name = "orange scarf"
 	icon_state = "scarf"
-	color = "#C67A4B" //orange
+	color = "#C67A4B" //Orange
 
 /obj/item/clothing/neck/scarf/cyan
 	name = "cyan scarf"

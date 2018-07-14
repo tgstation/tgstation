@@ -24,7 +24,7 @@
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "g" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel/whiteblue,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
@@ -225,7 +225,7 @@
 "R" = (
 /obj/structure/table/glass,
 /obj/item/storage/firstaid/regular,
-/obj/item/device/healthanalyzer{
+/obj/item/healthanalyzer{
 	desc = "A prototype hand-held body scanner able to distinguish vital signs of the subject.";
 	name = "prototype health analyzer"
 	},

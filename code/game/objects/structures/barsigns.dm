@@ -54,21 +54,19 @@
 			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/sign/barsign/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-
+	return attack_hand(user)
 
 /obj/structure/sign/barsign/attack_hand(mob/user)
-	if (!src.allowed(user))
+	. = ..()
+	if(.)
+		return
+	if(!allowed(user))
 		to_chat(user, "<span class='info'>Access denied.</span>")
 		return
 	if (broken)
 		to_chat(user, "<span class ='danger'>The controls seem unresponsive.</span>")
 		return
 	pick_sign()
-
-
-
 
 /obj/structure/sign/barsign/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/screwdriver))
@@ -108,8 +106,11 @@
 
 
 /obj/structure/sign/barsign/emp_act(severity)
-    set_sign(new /datum/barsign/hiddensigns/empbarsign)
-    broken = 1
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	set_sign(new /datum/barsign/hiddensigns/empbarsign)
+	broken = 1
 
 
 

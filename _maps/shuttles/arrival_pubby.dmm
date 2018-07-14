@@ -85,7 +85,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "o" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -126,7 +126,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "u" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -29
 	},

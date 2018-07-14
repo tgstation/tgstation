@@ -50,7 +50,7 @@
 "ak" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs,
-/obj/item/device/assembly/flash,
+/obj/item/assembly/flash,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/escape)
 "al" = (
@@ -420,7 +420,7 @@
 	},
 /area/shuttle/escape)
 "bd" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/brig{
@@ -572,7 +572,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bx" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/brig{
@@ -621,8 +621,7 @@
 /area/shuttle/escape)
 "bF" = (
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen"
+	dir = 9
 	},
 /area/shuttle/escape)
 "bG" = (
@@ -642,8 +641,7 @@
 	pixel_y = -6
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen"
+	dir = 9
 	},
 /area/shuttle/escape)
 "bI" = (
@@ -662,7 +660,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bK" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 8
 	},
@@ -681,7 +679,7 @@
 	},
 /area/shuttle/escape)
 "bN" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkgreen/side,
@@ -791,8 +789,7 @@
 "bT" = (
 /obj/machinery/recharge_station,
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen"
+	dir = 9
 	},
 /area/shuttle/escape)
 "bU" = (
@@ -806,8 +803,7 @@
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen"
+	dir = 9
 	},
 /area/shuttle/escape)
 "bW" = (
@@ -819,7 +815,7 @@
 	},
 /area/shuttle/escape)
 "bX" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -828,7 +824,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bY" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -837,27 +833,27 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bZ" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ca" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "cb" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 1
 	},
 /area/shuttle/escape)
 "cc" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkgreen/side,
@@ -884,8 +880,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen"
+	dir = 9
 	},
 /area/shuttle/escape)
 "ci" = (

@@ -27,7 +27,7 @@
 			to_chat(user, "<span class='notice'>The support lines have been <i>unscrewed</i>, and the metal cover is <b>welded</b> firmly in place.</span>")
 		if(CUT_COVER)
 			to_chat(user, "<span class='notice'>The metal cover has been <i>sliced through</i>, and is <b>connected loosely</b> to the girder.</span>")
-		if(BOLTS)
+		if(ANCHOR_BOLTS)
 			to_chat(user, "<span class='notice'>The outer cover has been <i>pried away</i>, and the bolts anchoring the support rods are <b>wrenched</b> in place.</span>")
 		if(SUPPORT_RODS)
 			to_chat(user, "<span class='notice'>The bolts anchoring the support rods have been <i>loosened</i>, but are still <b>welded</b> firmly to the girder.</span>")
@@ -120,7 +120,7 @@
 				if(W.use_tool(src, user, 100, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != CUT_COVER)
 						return 1
-					d_state = BOLTS
+					d_state = ANCHOR_BOLTS
 					update_icon()
 					to_chat(user, "<span class='notice'>You pry off the cover.</span>")
 				return 1
@@ -137,11 +137,11 @@
 					to_chat(user, "<span class='notice'>The metal cover has been welded securely to the frame.</span>")
 				return 1
 
-		if(BOLTS)
+		if(ANCHOR_BOLTS)
 			if(istype(W, /obj/item/wrench))
 				to_chat(user, "<span class='notice'>You start loosening the anchoring bolts which secure the support rods to their frame...</span>")
 				if(W.use_tool(src, user, 40, volume=100))
-					if(!istype(src, /turf/closed/wall/r_wall) || d_state != BOLTS)
+					if(!istype(src, /turf/closed/wall/r_wall) || d_state != ANCHOR_BOLTS)
 						return 1
 					d_state = SUPPORT_RODS
 					update_icon()
@@ -151,7 +151,7 @@
 			if(istype(W, /obj/item/crowbar))
 				to_chat(user, "<span class='notice'>You start to pry the cover back into place...</span>")
 				if(W.use_tool(src, user, 20, volume=100))
-					if(!istype(src, /turf/closed/wall/r_wall) || d_state != BOLTS)
+					if(!istype(src, /turf/closed/wall/r_wall) || d_state != ANCHOR_BOLTS)
 						return 1
 					d_state = CUT_COVER
 					update_icon()
@@ -177,7 +177,7 @@
 				if(W.use_tool(src, user, 40))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SUPPORT_RODS)
 						return 1
-					d_state = BOLTS
+					d_state = ANCHOR_BOLTS
 					update_icon()
 					to_chat(user, "<span class='notice'>You tighten the bolts anchoring the support rods.</span>")
 				return 1

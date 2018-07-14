@@ -5,13 +5,15 @@
 	icon_state = "syndbeacon"
 
 	use_power = NO_POWER_USE
-	anchored = TRUE
 	density = TRUE
 
 	var/charges = 1
 	var/insisting = 0
 
 /obj/machinery/wish_granter/attack_hand(mob/living/carbon/user)
+	. = ..()
+	if(.)
+		return
 	if(charges <= 0)
 		to_chat(user, "The Wish Granter lies silent.")
 		return

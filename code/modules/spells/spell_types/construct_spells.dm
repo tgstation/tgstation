@@ -91,14 +91,14 @@
 	action_icon_state = "summonsoulstone"
 	action_background_icon_state = "bg_demon"
 
-	summon_type = list(/obj/item/device/soulstone)
+	summon_type = list(/obj/item/soulstone)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/cult
 	cult_req = 1
 	charge_max = 3600
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult
-	summon_type = list(/obj/item/device/soulstone/anybody)
+	summon_type = list(/obj/item/soulstone/anybody)
 
 /obj/effect/proc_holder/spell/targeted/forcewall/cult
 	name = "Shield"
@@ -220,7 +220,7 @@
 
 /obj/effect/proc_holder/spell/targeted/dominate
 	name = "Dominate"
-	desc = "This spell dominates the mind of a lesser creature, causing it to see you as an ally."
+	desc = "This spell dominates the mind of a lesser creature to the will of Nar'sie, allying it only to her direct followers."
 
 	charge_max = 600
 	range = 7

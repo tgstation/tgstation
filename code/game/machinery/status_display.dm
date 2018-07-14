@@ -15,7 +15,6 @@
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
 	name = "status display"
-	anchored = TRUE
 	density = FALSE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
@@ -63,11 +62,10 @@
 	update()
 
 /obj/machinery/status_display/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
+	. = ..()
+	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
 	set_picture("ai_bsod")
-	..(severity)
 
 // set what is displayed
 
@@ -228,7 +226,6 @@
 	desc = "A small screen which the AI can use to present itself."
 	icon_state = "frame"
 	name = "\improper AI display"
-	anchored = TRUE
 	density = FALSE
 
 	var/mode = 0	// 0 = Blank
@@ -251,23 +248,18 @@
 	if(isAI(user))
 		user.ai_statuschange()
 
-/obj/machinery/ai_status_display/process()
-	if(stat & NOPOWER)
-		cut_overlays()
-		return
-
-	update()
-
 /obj/machinery/ai_status_display/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
+	. = ..()
+	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
 	set_picture("ai_bsod")
-	..(severity)
+
+/obj/machinery/ai_status_display/power_change()
+	. = ..()
+	update()
 
 /obj/machinery/ai_status_display/proc/update()
-
-	if(mode==0) //Blank
+	if(mode==0 || stat & NOPOWER) //Blank
 		cut_overlays()
 		return
 
@@ -317,7 +309,7 @@
 	add_overlay(picture_state)
 
 #undef CHARS_PER_LINE
-#undef FOND_SIZE
+#undef FONT_SIZE
 #undef FONT_COLOR
 #undef FONT_STYLE
 #undef SCROLL_SPEED

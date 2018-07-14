@@ -8,94 +8,102 @@
 
 /obj/item/clothing/glasses/changeling
 	name = "flesh"
-	flags_1 = NODROP_1
+	item_flags = NODROP
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/glasses/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
-	..()
+	. = ..()
 
 /obj/item/clothing/under/changeling
 	name = "flesh"
-	flags_1 = NODROP_1
+	item_flags = NODROP
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/under/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
-	..()
+	. = ..()
 
 /obj/item/clothing/suit/changeling
 	name = "flesh"
-	flags_1 = NODROP_1
+	item_flags = NODROP
 	allowed = list(/obj/item/changeling)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/suit/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
-	..()
+	. = ..()
 
 /obj/item/clothing/head/changeling
 	name = "flesh"
-	flags_1 = NODROP_1
+	item_flags = NODROP
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/head/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
-	..()
+	. = ..()
 
 /obj/item/clothing/shoes/changeling
 	name = "flesh"
-	flags_1 = NODROP_1
+	item_flags = NODROP
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/shoes/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
-	..()
+	. = ..()
 
 /obj/item/clothing/gloves/changeling
 	name = "flesh"
-	flags_1 = NODROP_1
+	item_flags = NODROP
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/gloves/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
-	..()
+	. = ..()
 
 /obj/item/clothing/mask/changeling
 	name = "flesh"
-	flags_1 = NODROP_1
+	item_flags = NODROP
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
-	..()
+	. = ..()
 
 /obj/item/changeling
 	name = "flesh"
-	flags_1 = NODROP_1
+	item_flags = NODROP
 	slot_flags = ALL
 	allowed = list(/obj/item/changeling)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
-	..()
+	. = ..()
 
 //Change our DNA to that of somebody we've absorbed.
 /obj/effect/proc_holder/changeling/transform/sting_action(mob/living/carbon/human/user)

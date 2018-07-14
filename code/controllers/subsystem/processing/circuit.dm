@@ -15,7 +15,7 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 	var/cost_multiplier = MINERAL_MATERIAL_AMOUNT / 10 // Each circuit cost unit is 200cm3
 
 /datum/controller/subsystem/processing/circuit/Initialize(start_timeofday)
-	SScircuit.cipherkey = random_string(2000+rand(0,10), GLOB.alphabet)
+	SScircuit.cipherkey = uppertext(random_string(2000+rand(0,10), GLOB.alphabet))
 	circuits_init()
 	return ..()
 
@@ -36,33 +36,50 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 		var/list/category_list = circuit_fabricator_recipe_list[category]
 		category_list += IC // Populating the fabricator categories
 
-	for(var/path in typesof(/obj/item/device/electronic_assembly))
-		var/obj/item/device/electronic_assembly/A = path
+	for(var/path in typesof(/obj/item/electronic_assembly))
+		var/obj/item/electronic_assembly/A = path
 		var/name = initial(A.name)
 		all_assemblies[name] = path
 		cached_assemblies[A] = new path
 
 
 	circuit_fabricator_recipe_list["Assemblies"] = list(
-		/obj/item/device/electronic_assembly/default,
-		/obj/item/device/electronic_assembly/calc,
-		/obj/item/device/electronic_assembly/clam,
-		/obj/item/device/electronic_assembly/simple,
-		/obj/item/device/electronic_assembly/medium/default,
-		/obj/item/device/electronic_assembly/medium/box,
-		/obj/item/device/electronic_assembly/medium/clam,
-		/obj/item/device/electronic_assembly/medium/medical,
-		/obj/item/device/electronic_assembly/large/default,
-		/obj/item/device/electronic_assembly/large/scope,
-		/obj/item/device/electronic_assembly/large/terminal,
-		/obj/item/device/electronic_assembly/large/arm,
-		/obj/item/device/electronic_assembly/drone/default,
-		/obj/item/device/electronic_assembly/drone/arms
+		/obj/item/electronic_assembly/default,
+		/obj/item/electronic_assembly/calc,
+		/obj/item/electronic_assembly/clam,
+		/obj/item/electronic_assembly/simple,
+		/obj/item/electronic_assembly/hook,
+		/obj/item/electronic_assembly/pda,
+		/obj/item/electronic_assembly/medium/default,
+		/obj/item/electronic_assembly/medium/box,
+		/obj/item/electronic_assembly/medium/clam,
+		/obj/item/electronic_assembly/medium/medical,
+		/obj/item/electronic_assembly/medium/gun,
+		/obj/item/electronic_assembly/medium/radio,
+		/obj/item/electronic_assembly/large/default,
+		/obj/item/electronic_assembly/large/scope,
+		/obj/item/electronic_assembly/large/terminal,
+		/obj/item/electronic_assembly/large/arm,
+		/obj/item/electronic_assembly/large/tall,
+		/obj/item/electronic_assembly/large/industrial,
+		/obj/item/electronic_assembly/drone/default,
+		/obj/item/electronic_assembly/drone/arms,
+		/obj/item/electronic_assembly/drone/secbot,
+		/obj/item/electronic_assembly/drone/medbot,
+		/obj/item/electronic_assembly/drone/genbot,
+		/obj/item/electronic_assembly/drone/android,
+		/obj/item/electronic_assembly/wallmount/light,
+		/obj/item/electronic_assembly/wallmount,
+		/obj/item/electronic_assembly/wallmount/heavy
 		///obj/item/weapon/implant/integrated_circuit
 		)
 
 	circuit_fabricator_recipe_list["Tools"] = list(
-		/obj/item/device/integrated_electronics/wirer,
-		/obj/item/device/integrated_electronics/debugger,
-		/obj/item/device/integrated_electronics/analyzer
+		/obj/item/integrated_electronics/wirer,
+		/obj/item/integrated_electronics/debugger,
+		/obj/item/integrated_electronics/analyzer,
+		/obj/item/integrated_electronics/detailer,
+		/obj/item/card/data,
+		/obj/item/card/data/full_color,
+		/obj/item/card/data/disk
 		)

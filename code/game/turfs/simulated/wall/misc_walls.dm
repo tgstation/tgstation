@@ -158,6 +158,7 @@
 	canSmoothWith = null
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal
+	bullet_sizzle = TRUE
 
 /turf/closed/wall/rust
 	name = "rusted wall"

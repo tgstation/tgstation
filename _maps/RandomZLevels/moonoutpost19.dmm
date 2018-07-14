@@ -454,11 +454,11 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/device/radio/off{
+/obj/item/radio/off{
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/device/radio/off{
+/obj/item/radio/off{
 	pixel_x = 2
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -713,7 +713,7 @@
 	pixel_y = -1
 	},
 /obj/item/clothing/gloves/color/yellow,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -728,7 +728,7 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/computer/monitor,
+/obj/machinery/computer/monitor/secret,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -1568,7 +1568,7 @@
 /obj/structure/closet/crate,
 /obj/item/storage/bag/ore,
 /obj/structure/alien/weeds,
-/obj/item/device/mining_scanner,
+/obj/item/mining_scanner,
 /obj/item/shovel,
 /obj/item/pickaxe,
 /turf/open/floor/plating{
@@ -1775,14 +1775,14 @@
 	dir = 8;
 	icon_state = "ltrails_1"
 	},
-/obj/item/device/mining_scanner,
+/obj/item/mining_scanner,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/main)
 "dH" = (
-/obj/item/device/flashlight/lantern{
+/obj/item/flashlight/lantern{
 	icon_state = "lantern-on";
 	on = 1
 	},
@@ -2707,12 +2707,10 @@
 /turf/open/floor/engine,
 /area/awaymission/moonoutpost19/research)
 "fJ" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector{
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	desc = "Has a valve and pump attached to it. This one has been applied with an acid-proof coating.";
 	dir = 8;
-	icon_state = "on";
-	name = "Acid-Proof Air Injector";
-	on = 1
+	name = "Acid-Proof Air Injector"
 	},
 /obj/structure/alien/weeds,
 /turf/open/floor/engine,
@@ -2820,7 +2818,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "fU" = (
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
@@ -3020,9 +3018,9 @@
 /area/awaymission/moonoutpost19/research)
 "gq" = (
 /obj/structure/table,
-/obj/item/device/mmi,
-/obj/item/device/mmi,
-/obj/item/device/mmi,
+/obj/item/mmi,
+/obj/item/mmi,
+/obj/item/mmi,
 /obj/structure/alien/weeds,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -3098,7 +3096,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/high,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -3126,7 +3124,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gA" = (
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -3245,7 +3243,7 @@
 	pixel_y = 9
 	},
 /obj/item/pen,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -3661,11 +3659,11 @@
 	empty = 1;
 	name = "First-Aid (empty)"
 	},
-/obj/item/device/healthanalyzer{
+/obj/item/healthanalyzer{
 	pixel_x = 6;
 	pixel_y = -5
 	},
-/obj/item/device/assembly/prox_sensor{
+/obj/item/assembly/prox_sensor{
 	pixel_x = -5;
 	pixel_y = -2
 	},
@@ -3952,7 +3950,7 @@
 /area/awaymission/moonoutpost19/research)
 "ic" = (
 /obj/structure/rack,
-/obj/item/device/paicard{
+/obj/item/paicard{
 	pixel_x = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -3973,7 +3971,6 @@
 /area/awaymission/moonoutpost19/research)
 "ie" = (
 /obj/machinery/door/airlock/medical{
-	id_tag = "";
 	name = "Research Division";
 	req_access_txt = "201"
 	},
@@ -4283,8 +4280,8 @@
 /area/awaymission/moonoutpost19/research)
 "iJ" = (
 /obj/structure/table,
-/obj/item/device/radio/off,
-/obj/item/device/laser_pointer,
+/obj/item/radio/off,
+/obj/item/laser_pointer,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -4312,7 +4309,7 @@
 "iM" = (
 /obj/structure/table,
 /obj/item/storage/secure/briefcase,
-/obj/item/device/taperecorder{
+/obj/item/taperecorder{
 	pixel_x = -3
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -4457,7 +4454,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "jc" = (
 /obj/structure/table,
-/obj/item/book/manual/detective,
+/obj/item/book/manual/wiki/detective,
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -4775,7 +4772,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "jP" = (
 /obj/structure/table,
-/obj/item/book/manual/barman_recipes{
+/obj/item/book/manual/wiki/barman_recipes{
 	pixel_y = 5
 	},
 /obj/item/reagent_containers/food/drinks/shaker,
@@ -5348,7 +5345,6 @@
 "kW" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel/blue/side{
-	dir = 0;
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -5358,9 +5354,8 @@
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/plasteel/blue/side{
-	dir = 0;
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -5372,14 +5367,12 @@
 	maxcharge = 15000
 	},
 /turf/open/floor/plasteel/blue/side{
-	dir = 0;
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kZ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/blue/side{
-	dir = 0;
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
@@ -5742,7 +5735,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "lX" = (
 /obj/structure/table,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/moonoutpost19/arrivals)
 "lZ" = (
@@ -6776,7 +6769,6 @@
 /area/awaymission/moonoutpost19/arrivals)
 "Mm" = (
 /obj/machinery/door/airlock/medical{
-	id_tag = "";
 	name = "Research Division";
 	req_access_txt = "201"
 	},

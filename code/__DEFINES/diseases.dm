@@ -3,21 +3,21 @@
 #define VIRUS_SYMPTOM_LIMIT	6
 
 //Visibility Flags
-#define HIDDEN_SCANNER	1
-#define HIDDEN_PANDEMIC	2
+#define HIDDEN_SCANNER	(1<<0)
+#define HIDDEN_PANDEMIC	(1<<1)
 
 //Disease Flags
-#define CURABLE		1
-#define CAN_CARRY	2
-#define CAN_RESIST	4
+#define CURABLE		(1<<0)
+#define CAN_CARRY	(1<<1)
+#define CAN_RESIST	(1<<2)
 
 //Spread Flags
-#define DISEASE_SPREAD_SPECIAL 1
-#define DISEASE_SPREAD_NON_CONTAGIOUS 2
-#define DISEASE_SPREAD_BLOOD 4
-#define DISEASE_SPREAD_CONTACT_FLUIDS 8
-#define DISEASE_SPREAD_CONTACT_SKIN 16
-#define DISEASE_SPREAD_AIRBORNE 32
+#define DISEASE_SPREAD_SPECIAL			(1<<0)
+#define DISEASE_SPREAD_NON_CONTAGIOUS	(1<<1)
+#define DISEASE_SPREAD_BLOOD			(1<<2)
+#define DISEASE_SPREAD_CONTACT_FLUIDS	(1<<3)
+#define DISEASE_SPREAD_CONTACT_SKIN 	(1<<4)
+#define DISEASE_SPREAD_AIRBORNE			(1<<5)
 
 //Severity Defines
 #define DISEASE_SEVERITY_POSITIVE	"Positive"  //Diseases that buff, heal, or at least do nothing at all

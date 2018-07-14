@@ -10,6 +10,7 @@
 # and will override any duplicate entries in the database.									  #
 ###############################################################################################
 Optimumtact = Host
+CitrusGender = Game Master
 NewSta = Game Master
 Expletives = Game Master
 kingofkosmos = Game Master
@@ -132,3 +133,8 @@ excessiveuseofcobby = Game Master
 Plizzard = Game Master
 octareenroon91 = Game Master
 Serpentarium = Game Master
+Averagejoe82 = Game Master
+The Dreamweaver = Game Master
+88Naoki = Game Master
+Naksuasdf = Game Master
+MrDoomBringer = Game Master

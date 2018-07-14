@@ -1,4 +1,4 @@
-/obj/item/device/paicard
+/obj/item/paicard
 	name = "personal AI device"
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "pai"
@@ -6,26 +6,27 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	var/mob/living/silicon/pai/pai
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 
-/obj/item/device/paicard/suicide_act(mob/living/user)
+/obj/item/paicard/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is staring sadly at [src]! [user.p_they()] can't keep living without real human intimacy!</span>")
 	return OXYLOSS
 
-/obj/item/device/paicard/Initialize()
+/obj/item/paicard/Initialize()
 	SSpai.pai_card_list += src
 	add_overlay("pai-off")
 	return ..()
 
-/obj/item/device/paicard/Destroy()
+/obj/item/paicard/Destroy()
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
 	SSpai.pai_card_list -= src
-	QDEL_NULL(pai)
+	if (!QDELETED(pai))
+		QDEL_NULL(pai)
 	return ..()
 
-/obj/item/device/paicard/attack_self(mob/user)
+/obj/item/paicard/attack_self(mob/user)
 	if (!in_range(src, user))
 		return
 	user.set_machine(src)
@@ -60,7 +61,7 @@
 	onclose(user, "paicard")
 	return
 
-/obj/item/device/paicard/Topic(href, href_list)
+/obj/item/paicard/Topic(href, href_list)
 
 	if(!usr || usr.stat)
 		return
@@ -90,7 +91,7 @@
 					to_chat(pai, "<span class='danger'>Byte by byte you lose your sense of self.</span>")
 					to_chat(pai, "<span class='userdanger'>Your mental faculties leave you.</span>")
 					to_chat(pai, "<span class='rose'>oblivion... </span>")
-					removePersonality()
+					qdel(pai)
 		if(href_list["wires"])
 			var/wire = text2num(href_list["wires"])
 			if(pai.radio)
@@ -115,19 +116,14 @@
 //		WIRE_RECEIVE = 2
 //		WIRE_TRANSMIT = 4
 
-/obj/item/device/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
+/obj/item/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
 	src.pai = personality
 	src.add_overlay("pai-null")
 
 	playsound(loc, 'sound/effects/pai_boot.ogg', 50, 1, -1)
 	audible_message("\The [src] plays a cheerful startup noise!")
 
-/obj/item/device/paicard/proc/removePersonality()
-	QDEL_NULL(pai)
-	cut_overlays()
-	add_overlay("pai-off")
-
-/obj/item/device/paicard/proc/setEmotion(emotion)
+/obj/item/paicard/proc/setEmotion(emotion)
 	if(pai)
 		src.cut_overlays()
 		switch(emotion)
@@ -152,11 +148,12 @@
 			if(10)
 				src.add_overlay("pai-null")
 
-/obj/item/device/paicard/proc/alertUpdate()
+/obj/item/paicard/proc/alertUpdate()
 	visible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", "<span class='notice'>[src] bleeps electronically.</span>")
 
-/obj/item/device/paicard/emp_act(severity)
-	if(pai)
+/obj/item/paicard/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
+	if(pai && !pai.holoform)
 		pai.emp_act(severity)
-	..()
-

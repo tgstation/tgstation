@@ -227,7 +227,7 @@
 	},
 /obj/structure/closet/crate/medical,
 /obj/item/clothing/neck/stethoscope,
-/obj/item/device/healthanalyzer,
+/obj/item/healthanalyzer,
 /obj/item/reagent_containers/blood/OMinus,
 /obj/item/reagent_containers/blood/OMinus,
 /obj/machinery/power/apc{
@@ -755,7 +755,7 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "ca" = (
 /obj/structure/table/reinforced,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cb" = (
@@ -990,7 +990,7 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cH" = (
 /obj/item/crowbar/red,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cI" = (
@@ -1095,7 +1095,7 @@
 /area/ruin/space/has_grav/onehalf/hallway)
 "cY" = (
 /obj/structure/table/reinforced,
-/obj/item/device/flashlight,
+/obj/item/flashlight,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cZ" = (

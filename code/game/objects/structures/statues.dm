@@ -10,6 +10,10 @@
 	var/material_drop_type = /obj/item/stack/sheet/metal
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
+
+/obj/structure/statue/Initialize()
+	. = ..()
+
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -30,6 +34,9 @@
 	return ..()
 
 /obj/structure/statue/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
 	user.visible_message("[user] rubs some dust off from the [name]'s surface.", \
@@ -69,17 +76,17 @@
 	radiate()
 	return ..()
 
-/obj/structure/statue/uranium/CollidedWith(atom/movable/AM)
+/obj/structure/statue/uranium/Bumped(atom/movable/AM)
 	radiate()
 	..()
 
 /obj/structure/statue/uranium/attack_hand(mob/user)
 	radiate()
-	..()
+	. = ..()
 
 /obj/structure/statue/uranium/attack_paw(mob/user)
 	radiate()
-	..()
+	. = ..()
 
 /obj/structure/statue/uranium/proc/radiate()
 	if(!active)
@@ -115,18 +122,18 @@
 	if(burn)
 		var/turf/T = get_turf(src)
 		if(Proj.firer)
-			message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(Proj.firer)] in [ADMIN_COORDJMP(T)]",0,1)
-			log_game("Plasma statue ignited by [key_name(Proj.firer)] in [COORD(T)]")
+			message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(Proj.firer)] in [ADMIN_VERBOSEJMP(T)]")
+			log_game("Plasma statue ignited by [key_name(Proj.firer)] in [AREACOORD(T)]")
 		else
-			message_admins("Plasma statue ignited by [Proj]. No known firer, in [ADMIN_COORDJMP(T)]",0,1)
-			log_game("Plasma statue ignited by [Proj] in [COORD(T)]. No known firer.")
+			message_admins("Plasma statue ignited by [Proj]. No known firer, in [ADMIN_VERBOSEJMP(T)]")
+			log_game("Plasma statue ignited by [Proj] in [AREACOORD(T)]. No known firer.")
 	..()
 
 /obj/structure/statue/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
 		var/turf/T = get_turf(src)
-		message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
-		log_game("Plasma statue ignited by [key_name(user)] in [COORD(T)]")
+		message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
+		log_game("Plasma statue ignited by [key_name(user)] in [AREACOORD(T)]")
 		ignite(W.is_hot())
 	else
 		return ..()
@@ -224,7 +231,7 @@
 	name = "statue of a clown"
 	icon_state = "clown"
 
-/obj/structure/statue/bananium/CollidedWith(atom/movable/AM)
+/obj/structure/statue/bananium/Bumped(atom/movable/AM)
 	honk()
 	..()
 
@@ -234,7 +241,7 @@
 
 /obj/structure/statue/bananium/attack_hand(mob/user)
 	honk()
-	..()
+	. = ..()
 
 /obj/structure/statue/bananium/attack_paw(mob/user)
 	honk()

@@ -1,4 +1,5 @@
 /obj/item/disk/surgery/vein_threading
+	name = "Vein Threading Surgery Disk"
 	desc = "The disk provides instructions on how to modify the circulatory system to greatly slow down bleeding."
 	surgeries = list(/datum/surgery/advanced/bioware/vein_threading)
 
@@ -11,7 +12,7 @@
 				/datum/surgery_step/incise,
 				/datum/surgery_step/thread_veins,
 				/datum/surgery_step/close)
-	possible_locs = list("chest")
+	possible_locs = list(BODY_ZONE_CHEST)
 	bioware_target = BIOWARE_CIRCULATION
 
 /datum/surgery_step/thread_veins
@@ -30,7 +31,7 @@
 /datum/bioware/threaded_veins
 	name = "Threaded Veins"
 	desc = "The circulatory system is woven into a mesh, severely reducing the amount of blood lost from wounds."
-	mod_type = "circulation"
+	mod_type = BIOWARE_CIRCULATION
 
 /datum/bioware/threaded_veins/on_gain()
 	..()

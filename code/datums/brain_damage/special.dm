@@ -15,7 +15,7 @@
 	if(prob(4))
 		if(prob(33) && (owner.IsStun() || owner.IsKnockdown() || owner.IsUnconscious()))
 			speak("unstun", TRUE)
-		else if(prob(60) && owner.health <= HEALTH_THRESHOLD_CRIT)
+		else if(prob(60) && owner.health <= owner.crit_modifier())
 			speak("heal", TRUE)
 		else if(prob(30) && owner.a_intent == INTENT_HARM)
 			speak("aggressive")
@@ -95,6 +95,7 @@
 	. = ..()
 	QDEL_IN(src, 300)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/hallucination/simple/bluespace_stream/attack_hand(mob/user)
 	if(user != seer || !linked_to)
 		return

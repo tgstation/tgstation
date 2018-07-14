@@ -9,7 +9,6 @@
 	icon = 'icons/obj/machines/shuttle_manipulator.dmi'
 	icon_state = "holograph_on"
 
-	anchored = TRUE
 	density = TRUE
 
 	// UI state variables
@@ -156,8 +155,7 @@
 				if(M.id == params["id"] && M.timer && M.timeLeft() >= 50)
 					M.setTimer(50)
 					. = TRUE
-					message_admins("[key_name_admin(usr)] fast travelled \
-						[M]")
+					message_admins("[key_name_admin(usr)] fast travelled [M]")
 					log_admin("[key_name(usr)] fast travelled [M]")
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[M.name]")
 					break
@@ -182,10 +180,8 @@
 				var/obj/docking_port/mobile/mdp = action_load(S)
 				if(mdp)
 					user.forceMove(get_turf(mdp))
-					message_admins("[key_name_admin(usr)] loaded [mdp] \
-						with the shuttle manipulator.")
-					log_admin("[key_name(usr)] loaded [mdp] with the \
-						shuttle manipulator.</span>")
+					message_admins("[key_name_admin(usr)] loaded [mdp] with the shuttle manipulator.")
+					log_admin("[key_name(usr)] loaded [mdp] with the shuttle manipulator.</span>")
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
 
 	update_icon()
@@ -228,7 +224,11 @@
 	if(existing_shuttle)
 		existing_shuttle.jumpToNullSpace()
 
+	var/list/force_memory = preview_shuttle.movement_force
+	preview_shuttle.movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
 	preview_shuttle.initiate_docking(D)
+	preview_shuttle.movement_force = force_memory
+	
 	. = preview_shuttle
 
 	// Shuttle state involves a mode and a timer based on world.time, so
@@ -271,8 +271,7 @@
 					// The shuttle template we loaded isn't "timid" which means
 					// it's already registered with the shuttles subsystem.
 					// This is a bad thing.
-					var/m = "Template [S] is non-timid! Unloading."
-					WARNING(m)
+					stack_trace("Template [S] is non-timid! Unloading.")
 					M.jumpToNullSpace()
 					return
 				else
@@ -280,7 +279,7 @@
 			if(istype(P, /obj/docking_port/stationary))
 				log_world("Map warning: Shuttle Template [S.mappath] has a stationary docking port.")
 	if(!found)
-		var/msg = "load_template(): Shuttle Template [S.mappath] has no	mobile docking port. Aborting import."
+		var/msg = "load_template(): Shuttle Template [S.mappath] has no mobile docking port. Aborting import."
 		for(var/T in affected)
 			var/turf/T0 = T
 			T0.empty()

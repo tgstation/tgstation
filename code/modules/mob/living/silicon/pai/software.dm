@@ -170,7 +170,8 @@
 
 			if(href_list["send"])
 				signaler.send_activation()
-				audible_message("[icon2html(src, world)] *beep* *beep*")
+				audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*")
+				playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 
 			if(href_list["freq"])
 				var/new_frequency = (signaler.frequency + text2num(href_list["freq"]))
@@ -208,7 +209,7 @@
 					pda.silent = !pda.silent
 				else if(href_list["target"])
 					if(silent)
-						return alert("Communications circuits remain unitialized.")
+						return alert("Communications circuits remain uninitialized.")
 
 					var/target = locate(href_list["target"])
 					pda.create_message(src, target)
@@ -251,8 +252,7 @@
 					med.remove_hud_from(src)
 		if("translator")
 			if(href_list["toggle"])
-				if(!(flags_2 & OMNITONGUE_2))
-					grant_all_languages(TRUE)
+				grant_all_languages(TRUE)
 					// this is PERMAMENT.
 		if("doorjack")
 			if(href_list["jack"])
@@ -311,8 +311,8 @@
 		if(s == "medical HUD")
 			dat += "<a href='byond://?src=[REF(src)];software=medicalhud;sub=0'>Medical Analysis Suite</a>[(medHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "universal translator")
-			var/translator_on = (flags_2 & OMNITONGUE_2)
-			dat += "<a href='byond://?src=[REF(src)];software=translator;sub=0'>Universal Translator</a>[translator_on ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
+			var/datum/language_holder/H = get_language_holder()
+			dat += "<a href='byond://?src=[REF(src)];software=translator;sub=0'>Universal Translator</a>[H.omnitongue ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "projection array")
 			dat += "<a href='byond://?src=[REF(src)];software=projectionarray;sub=0'>Projection Array</a> <br>"
 		if(s == "camera jack")
@@ -383,7 +383,7 @@
 		else
 			to_chat(P, "<b>DNA does not match stored Master DNA.</b>")
 	else
-		to_chat(P, "[M] does not seem like [M.p_they()] [M.p_are()] going to provide a DNA sample willingly.")
+		to_chat(P, "[M] does not seem like [M.p_theyre()] going to provide a DNA sample willingly.")
 
 // -=-=-=-= Software =-=-=-=-=- //
 
@@ -463,10 +463,10 @@
 
 // Universal Translator
 /mob/living/silicon/pai/proc/softwareTranslator()
-	var/translator_on = (flags_2 & OMNITONGUE_2)
+	var/datum/language_holder/H = get_language_holder()
 	. = {"<h3>Universal Translator</h3><br>
 				When enabled, this device will permamently be able to speak and understand all known forms of communication.<br><br>
-				The device is currently [translator_on ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>[translator_on ? "" : "<a href='byond://?src=[REF(src)];software=translator;sub=0;toggle=1'>Activate Translation Module</a><br>"]"}
+				The device is currently [H.omnitongue ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>[H.omnitongue ? "" : "<a href='byond://?src=[REF(src)];software=translator;sub=0;toggle=1'>Activate Translation Module</a><br>"]"}
 	return .
 
 // Security HUD
@@ -612,7 +612,7 @@
 	[(pda.silent) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br><br>"}
 	dat += "<ul>"
 	if(!pda.toff)
-		for (var/obj/item/device/pda/P in sortNames(get_viewable_pdas()))
+		for (var/obj/item/pda/P in sortNames(get_viewable_pdas()))
 			if (P == pda)
 				continue
 			dat += "<li><a href='byond://?src=[REF(src)];software=pdamessage;target=[REF(P)]'>[P]</a>"

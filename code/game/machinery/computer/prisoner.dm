@@ -15,10 +15,8 @@
 
 	light_color = LIGHT_COLOR_RED
 
-/obj/machinery/computer/prisoner/attack_hand(mob/user)
-	if(..())
-		return
-	user.set_machine(src)
+/obj/machinery/computer/prisoner/ui_interact(mob/user)
+	. = ..()
 	var/dat = ""
 	if(screen == 0)
 		dat += "<HR><A href='?src=[REF(src)];lock=1'>Unlock Console</A>"

@@ -11,7 +11,6 @@
 	activators = list("load data" = IC_PINTYPE_PULSE_IN)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 10
-	cooldown_per_use = 10
 	var/eol = "&lt;br&gt;"
 	var/stuff_to_display = null
 
@@ -47,17 +46,26 @@
 	for(var/mob/M in nearby_things)
 		var/obj/O = assembly ? assembly : src
 		to_chat(M, "<span class='notice'>[icon2html(O.icon, world, O.icon_state)] [stuff_to_display]</span>")
+	if(assembly)
+		assembly.investigate_log("displayed \"[html_encode(stuff_to_display)]\" with [type].", INVESTIGATE_CIRCUIT)
+	else
+		investigate_log("displayed \"[html_encode(stuff_to_display)]\" as [type].", INVESTIGATE_CIRCUIT)
 
 /obj/item/integrated_circuit/output/screen/large
 	name = "large screen"
 	desc = "Takes any data type as an input and displays it to the user upon examining, and to all nearby beings when pulsed."
 	icon_state = "screen_large"
 	power_draw_per_use = 40
+	cooldown_per_use = 10
 
 /obj/item/integrated_circuit/output/screen/large/do_work()
 	..()
-	var/obj/O = assembly ? loc : assembly
+	var/obj/O = assembly ? get_turf(assembly) : loc
 	O.visible_message("<span class='notice'>[icon2html(O.icon, world, O.icon_state)]  [stuff_to_display]</span>")
+	if(assembly)
+		assembly.investigate_log("displayed \"[html_encode(stuff_to_display)]\" with [type].", INVESTIGATE_CIRCUIT)
+	else
+		investigate_log("displayed \"[html_encode(stuff_to_display)]\" as [type].", INVESTIGATE_CIRCUIT)
 
 /obj/item/integrated_circuit/output/light
 	name = "light"
@@ -92,7 +100,7 @@
 
 /obj/item/integrated_circuit/output/light/advanced
 	name = "advanced light"
-	desc = "A light that takes a hexadecimal color value and a brightness value, and can be toggled on/off with a pulse."
+	desc = "A light that takes a hexadecimal color value and a brightness value, and can be toggled on/off by pulsing it."
 	icon_state = "light_adv"
 	complexity = 8
 	inputs = list(
@@ -151,6 +159,10 @@
 			return
 		vol = CLAMP(vol ,0 , 100)
 		playsound(get_turf(src), selected_sound, vol, freq, -1)
+		if(assembly)
+			assembly.investigate_log("played a sound ([selected_sound]) with [type].", INVESTIGATE_CIRCUIT)
+		else
+			investigate_log("played a sound ([selected_sound]) as [type].", INVESTIGATE_CIRCUIT)
 
 /obj/item/integrated_circuit/output/sound/on_data_written()
 	power_draw_per_use =  get_pin_data(IC_INPUT, 2) * 15
@@ -222,7 +234,7 @@
 	desc = "Takes any string as an input and will make the device say the string when pulsed."
 	extended_desc = "This unit is more advanced than the plain speaker circuit, able to transpose any valid text to speech."
 	icon_state = "speaker"
-	ext_cooldown = 2
+	cooldown_per_use = 10
 	complexity = 12
 	inputs = list("text" = IC_PINTYPE_STRING)
 	outputs = list()
@@ -234,8 +246,12 @@
 	text = get_pin_data(IC_INPUT, 1)
 	if(!isnull(text))
 		var/atom/movable/A = get_object()
-		A.say(sanitize(text))
-
+		var/sanitized_text = sanitize(text)
+		A.say(sanitized_text)
+		if (assembly)
+			log_say("[assembly] [REF(assembly)] : [sanitized_text]")
+		else 
+			log_say("[name] ([type]) : [sanitized_text]")
 
 /obj/item/integrated_circuit/output/video_camera
 	name = "video camera circuit"
@@ -345,10 +361,14 @@
 /obj/item/integrated_circuit/output/diagnostic_hud
 	name = "AR interface"
 	desc = "Takes an icon name as an input, and will update the status hud when data is written to it."
-	extended_desc = "Takes an icon name as an input, and will update the status hud when data is written to it, this means it can change the icon and have the icon stay that way even if the circuit is removed. The acceptable inputs are 'alert' and 'move'. Any input other than that will return the icon to its default state. The danger warning and offline status will appear over any input from this circuit."
+	extended_desc = "Takes an icon name as an input, and will update the status hud when data is written to it, this means it can change the icon and have the icon stay that way even if the circuit is removed. The acceptable inputs are 'alert', 'move', 'working', 'patrol', 'called', and 'heart'. Any input other than that will return the icon to its default state."
 	var/list/icons = list(
 		"alert" = "hudalert",
-		"move" = "hudmove"
+		"move" = "hudmove",
+		"working" = "hudworkingleft",
+		"patrol" = "hudpatrolleft",
+		"called" = "hudcalledleft",
+		"heart" = "hudsentientleft"
 		)
 	complexity = 1
 	icon_state = "led"

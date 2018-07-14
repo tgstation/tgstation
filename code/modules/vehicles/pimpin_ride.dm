@@ -63,8 +63,9 @@
 		add_overlay("cart_buffer")
 
 /obj/vehicle/ridden/janicart/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 	else if(mybag)
 		mybag.forceMove(get_turf(user))
 		user.put_in_hands(mybag)

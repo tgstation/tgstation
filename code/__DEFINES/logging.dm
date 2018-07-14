@@ -14,10 +14,14 @@
 #define INVESTIGATE_HALLUCINATIONS	"hallucinations"
 #define INVESTIGATE_RADIATION		"radiation"
 #define INVESTIGATE_EXONET			"exonet"
+#define INVESTIGATE_CIRCUIT			"circuit"
 
 //Individual logging defines
 #define INDIVIDUAL_ATTACK_LOG		"Attack log"
 #define INDIVIDUAL_SAY_LOG			"Say log"
 #define INDIVIDUAL_EMOTE_LOG		"Emote log"
 #define INDIVIDUAL_OOC_LOG			"OOC log"
+#define INDIVIDUAL_OWNERSHIP_LOG	"Ownership log"
 #define INDIVIDUAL_SHOW_ALL_LOG		"All logs"
+#define LOGSRC_CLIENT "Client"
+#define LOGSRC_MOB "Mob"

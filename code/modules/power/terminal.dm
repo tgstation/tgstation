@@ -8,9 +8,8 @@
 	icon_state = "term"
 	desc = "It's an underfloor wiring terminal for power equipment."
 	level = 1
-	var/obj/machinery/power/master = null
-	anchored = TRUE
 	layer = WIRE_TERMINAL_LAYER //a bit above wires
+	var/obj/machinery/power/master = null
 
 
 /obj/machinery/power/terminal/Initialize()
