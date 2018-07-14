@@ -4,7 +4,7 @@
 
 	var/list/accesses = list()
 	var/one_access = 0
-	var/unres_sides = 0 //unrestricted sides, or sides of the airlock that will open reguardless of access
+	var/unres_sides = 0 //unrestricted sides, or sides of the airlock that will open regardless of access
 
 /obj/item/electronics/airlock/examine(mob/user)
 	..()
