@@ -64,6 +64,11 @@
 		to_chat(user, "<span class='notice'>You connect [src] to [silo] from the multitool's buffer.</span>")
 		return TRUE
 
+/obj/machinery/rnd/production/attackby(obj/item/W, mob/user, params)
+	if (silo && istype(W, /obj/item/stack))
+		return silo.remote_attackby(src, user, W)
+	return ..()
+
 /obj/machinery/rnd/production/ui_interact(mob/user)
 	if(!consoleless_interface)
 		return ..()
@@ -306,10 +311,18 @@
 		reagents.del_reagent(ls["dispose"])
 	if(ls["disposeall"]) //Causes the protolathe to dispose of all it's reagents.
 		reagents.clear_reagents()
-	if(ls["ejectsheet"] && materials && silo) //Causes the protolathe to eject a sheet of material
-		var/count = materials.retrieve_sheets(text2num(ls["eject_amt"]), ls["ejectsheet"])
-		silo.silo_log(src, "ejected [count]x sheets", list(ls["ejectsheet"] = -count * MINERAL_MATERIAL_AMOUNT))
+	if(ls["ejectsheet"]) //Causes the protolathe to eject a sheet of material
+		eject_sheets(ls["ejectsheet"], ls["eject_amt"])
 	updateUsrDialog()
+
+/obj/machinery/rnd/production/proc/eject_sheets(eject_sheet, eject_amt)
+	if (!materials || !silo)
+		return 0
+	var/count = materials.retrieve_sheets(text2num(eject_amt), eject_sheet, drop_location())
+	var/list/matlist = list()
+	matlist[eject_sheet] = -count * MINERAL_MATERIAL_AMOUNT
+	silo.silo_log(src, "ejected [count]x sheets", matlist)
+	return count
 
 /obj/machinery/rnd/production/proc/ui_screen_main()
 	var/list/l = list()

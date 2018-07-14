@@ -193,6 +193,9 @@
 		if(user.transferItemToLoc(W, src))
 			inserted_disk = W
 			return TRUE
+	if(silo)
+		if(silo.remote_attackby(src, user, W))
+			return TRUE
 	return ..()
 
 /obj/machinery/mineral/ore_redemption/multitool_act(mob/living/user, obj/item/multitool/I)

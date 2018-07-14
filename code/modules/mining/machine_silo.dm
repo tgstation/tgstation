@@ -3,7 +3,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 /obj/machinery/ore_silo
 	name = "ore silo"
-	desc = ""
+	desc = "An all-in-one bluespace storage and transmission system for the station's mineral distribution needs."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "bin"
 	density = TRUE
@@ -17,7 +17,10 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),
 		INFINITY,
 		FALSE,
-		list(/obj/item/stack))
+		list(/obj/item/stack),
+		null,
+		null,
+		TRUE)
 	if (!GLOB.ore_silo_default && mapload && is_station_level(z))
 		GLOB.ore_silo_default = src
 
@@ -42,7 +45,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	return ..()
 
 /obj/machinery/ore_silo/proc/silo_log(obj/machinery/M, message, list/mats=null, multiplier=1)
-	var/list/msg = list("([station_time_timestamp()]) <b>[M]</b> in [get_area(M)]<br>[message]<br>")
+	var/list/msg = list("([station_time_timestamp()]) <b>\The [M]</b> in [get_area(M)]<br>[message]<br>")
 	var/sep = ""
 	for(var/key in mats)
 		var/val = mats[key] * multiplier
@@ -60,6 +63,31 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	animate(icon_state = "bin_full", time = 1)
 	animate(icon_state = "bin_partial", time = 2)
 	animate(icon_state = "bin")
+
+/obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/user, obj/item/stack/I)
+	GET_COMPONENT(materials, /datum/component/material_container)
+	// stolen from /datum/component/material_container/proc/OnAttackBy
+	if(user.a_intent != INTENT_HELP)
+		return
+	if(I.item_flags & ABSTRACT)
+		return
+	if(!istype(I) || (I.flags_1 & HOLOGRAM_1) || (I.item_flags & NO_MAT_REDEMPTION))
+		to_chat(user, "<span class='warning'>[M] won't accept [I]!</span>")
+		return
+	var/item_mats = I.materials & materials.materials
+	if(!length(item_mats))
+		to_chat(user, "<span class='warning'>[I] does not contain sufficient materials to be accepted by [M].</span>")
+		return
+	// assumes unlimited space...
+	var/amount = I.amount
+	materials.user_insert(I, user)
+	silo_log(M, "deposited [amount]x sheets", item_mats, amount)
+	return TRUE
+
+/obj/machinery/ore_silo/attackby(obj/item/W, mob/user, params)
+	if (istype(W, /obj/item/stack))
+		return remote_attackby(src, user, W)
+	return ..()
 
 /obj/machinery/ore_silo/ui_interact(mob/user)
 	user.set_machine(src)
