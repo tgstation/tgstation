@@ -60,9 +60,6 @@ SUBSYSTEM_DEF(dbcore)
 		return FALSE
 	return ..()
 
-/world/BSQL_Debug(message)
-	log_sql("BSQL_DEBUG: [message]")
-
 /datum/controller/subsystem/dbcore/proc/Connect()
 	if(IsConnected())
 		return TRUE
