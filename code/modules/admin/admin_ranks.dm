@@ -74,7 +74,7 @@ GLOBAL_PROTECT(protected_ranks)
 		if("varedit")
 			flag = R_VAREDIT
 		if("everything","host","all")
-			flag = ALL
+			flag = R_EVERYTHING
 		if("sound","sounds")
 			flag = R_SOUNDS
 		if("spawn","create")

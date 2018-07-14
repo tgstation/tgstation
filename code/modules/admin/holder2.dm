@@ -137,7 +137,7 @@ GLOBAL_PROTECT(href_token)
 /datum/admins/proc/check_if_greater_rights_than_holder(datum/admins/other)
 	if(!other)
 		return 1 //they have no rights
-	if(rank.rights == 65535)
+	if(rank.rights == R_EVERYTHING)
 		return 1 //we have all the rights
 	if(src == other)
 		return 1 //you always have more rights than yourself
