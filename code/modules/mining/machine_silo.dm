@@ -64,7 +64,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 /obj/machinery/ore_silo/ui_interact(mob/user)
 	user.set_machine(src)
-	var/datum/browser/popup = new(user, "ore_silo", null, 560, 550)
+	var/datum/browser/popup = new(user, "ore_silo", null, 600, 550)
 	popup.set_content(generate_ui())
 	popup.open()
 
@@ -74,8 +74,17 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	var/any = FALSE
 	for(var/M in materials.materials)
 		var/datum/material/mat = materials.materials[M]
-		if (mat.amount)
-			ui += "<b>[mat.name]</b>: [round(mat.amount) / MINERAL_MATERIAL_AMOUNT] sheets<br>"
+		var/sheets = round(mat.amount) / MINERAL_MATERIAL_AMOUNT
+		if (sheets)
+			if (sheets >= 1)
+				ui += "<a href='?src=[REF(src)];ejectsheet=[mat.id];eject_amt=1'>Eject</a>"
+			else
+				ui += "<span class='linkOff'>Eject</span>"
+			if (sheets >= 20)
+				ui += "<a href='?src=[REF(src)];ejectsheet=[mat.id];eject_amt=20'>20x</a>"
+			else
+				ui += "<span class='linkOff'>20x</span>"
+			ui += "<b>[mat.name]</b>: [sheets] sheets<br>"
 			any = TRUE
 	if(!any)
 		ui += "Nothing!"
@@ -123,6 +132,14 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	else if(href_list["hold0"])
 		holds -= href_list["hold0"]
 		updateUsrDialog()
+		return TRUE
+	else if(href_list["ejectsheet"])
+		var/eject_sheet = href_list["ejectsheet"]
+		GET_COMPONENT(materials, /datum/component/material_container)
+		var/count = materials.retrieve_sheets(text2num(href_list["eject_amt"]), eject_sheet, drop_location())
+		var/list/matlist = list()
+		matlist[eject_sheet] = MINERAL_MATERIAL_AMOUNT
+		silo_log(src, "ejected", -count, "sheets", matlist)
 		return TRUE
 
 /obj/machinery/ore_silo/multitool_act(mob/living/user, obj/item/multitool/I)
