@@ -10,6 +10,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 	var/list/lathes = list()
 	var/list/orms = list()
+	var/list/holds = list()
 
 /obj/machinery/ore_silo/Initialize(mapload)
 	. = ..()
@@ -89,9 +90,13 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 	ui += "</div><div class='statusDisplay'><h2>Connected Machines:</h2>"
 	for(var/O in orms)
-		ui += "<a href='?src=[REF(src)];remove_orm=[REF(O)]'>Remove</a> <b>\The [O]</b> in [get_area(O)]<br>"
+		var/hold_key = "[get_area(O)]/orm"
+		var/msg = holds[hold_key] ? "Allow" : "Hold"
+		ui += "<a href='?src=[REF(src)];remove_orm=[REF(O)]'>Remove</a><a href='?src=[REF(src)];hold[!holds[hold_key]]=[url_encode(hold_key)]'>[msg]</a> <b>\The [O]</b> in [get_area(O)]<br>"
 	for(var/L in lathes)
-		ui += "<a href='?src=[REF(src)];remove_lathe=[REF(L)]'>Remove</a> <b>\The [L]</b> in [get_area(L)]<br>"
+		var/hold_key = "[get_area(L)]/lathe"
+		var/msg = holds[hold_key] ? "Allow" : "Hold"
+		ui += "<a href='?src=[REF(src)];remove_lathe=[REF(L)]'>Remove</a><a href='?src=[REF(src)];hold[!holds[hold_key]]=[url_encode(hold_key)]'>[msg]</a> <b>\The [L]</b> in [get_area(L)]<br>"
 	if(orms.len == 0 && lathes.len == 0)
 		ui += "Nothing!"
 
@@ -130,12 +135,26 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 				lathe.materials = null
 			updateUsrDialog()
 			return TRUE
+	else if(href_list["hold1"])
+		holds[href_list["hold1"]] = TRUE
+		updateUsrDialog()
+		return TRUE
+	else if(href_list["hold0"])
+		holds -= href_list["hold0"]
+		updateUsrDialog()
+		return TRUE
 
 /obj/machinery/ore_silo/multitool_act(mob/living/user, obj/item/multitool/I)
 	if (istype(I))
 		to_chat(user, "<span class='notice'>You log [src] in the multitool's buffer.</span>")
 		I.buffer = src
 		return TRUE
+
+/obj/machinery/ore_silo/proc/on_hold(obj/machinery/M)
+	var/category = "lathe"
+	if(istype(M, /obj/machinery/mineral/ore_redemption))
+		category = "orm"
+	return holds["[get_area(M)]/[category]"]
 
 /obj/machinery/ore_silo/proc/silo_log(obj/machinery/M, action, amount, noun, list/mats)
 	if (!length(mats))

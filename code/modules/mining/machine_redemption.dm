@@ -251,6 +251,8 @@
 /obj/machinery/mineral/ore_redemption/ui_act(action, params)
 	if(..())
 		return
+	if(!silo)
+		return
 	GET_COMPONENT_FROM(materials, /datum/component/material_container, silo)
 	switch(action)
 		if("Eject")
@@ -274,8 +276,11 @@
 				points = 0
 			return TRUE
 		if("Release")
-
-			if(check_access(inserted_id) || allowed(usr)) //Check the ID inside, otherwise check the user
+			if(silo.on_hold(src))
+				to_chat(usr, "<span class='warning'>Mineral access is on hold, please contact the quartermaster.</span>")
+			else if(!check_access(inserted_id) && !allowed(usr)) //Check the ID inside, otherwise check the user
+				to_chat(usr, "<span class='warning'>Required access not found.</span>")
+			else
 				var/mat_id = params["id"]
 				if(!materials.materials[mat_id])
 					return
@@ -296,9 +301,6 @@
 				var/list/mats = list()
 				mats[mat_id] = MINERAL_MATERIAL_AMOUNT
 				silo.silo_log(src, "released", -count, "sheets", mats)
-
-			else
-				to_chat(usr, "<span class='warning'>Required access not found.</span>")
 			return TRUE
 		if("diskInsert")
 			var/obj/item/disk/design_disk/disk = usr.get_active_held_item()
@@ -320,6 +322,9 @@
 				stored_research.add_design(inserted_disk.blueprints[n])
 			return TRUE
 		if("Smelt")
+			if(silo.on_hold(src))
+				to_chat(usr, "<span class='warning'>Mineral access is on hold, please contact the quartermaster.</span>")
+				return
 			var/alloy_id = params["id"]
 			var/datum/design/alloy = stored_research.isDesignResearchedID(alloy_id)
 			if((check_access(inserted_id) || allowed(usr)) && alloy)

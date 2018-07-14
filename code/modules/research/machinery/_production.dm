@@ -145,6 +145,9 @@
 	if(!materials || !silo)
 		say("No connection to material storage!")
 		return FALSE
+	if(silo.on_hold(src))
+		say("Mineral access is on hold, please contact the quartermaster.")
+		return FALSE
 	var/power = 1000
 	amount = CLAMP(amount, 1, 50)
 	for(var/M in D.materials)
@@ -317,6 +320,9 @@
 
 /obj/machinery/rnd/production/proc/eject_sheets(eject_sheet, eject_amt)
 	if (!materials || !silo)
+		return 0
+	if (silo.on_hold(src))
+		say("Mineral access is on hold, please contact the quartermaster.")
 		return 0
 	var/count = materials.retrieve_sheets(text2num(eject_amt), eject_sheet, drop_location())
 	var/list/matlist = list()
