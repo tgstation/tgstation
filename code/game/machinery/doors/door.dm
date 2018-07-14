@@ -34,6 +34,7 @@
 	var/real_explosion_block	//ignore this, just use explosion_block
 	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
 	var/poddoor = FALSE
+	var/unres_sides = 0 //Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
 
 /obj/machinery/door/examine(mob/user)
 	..()
@@ -103,7 +104,7 @@
 				if(world.time - mecha.occupant.last_bumped <= 10)
 					return
 				mecha.occupant.last_bumped = world.time
-			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access)))
+			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access) || unrestricted_side(AM)))
 				open()
 			else
 				do_animate("deny")
@@ -128,7 +129,7 @@
 		user = null
 
 	if(density && !(obj_flags & EMAGGED))
-		if(allowed(user))
+		if(allowed(user) || unrestricted_side(user))
 			open()
 		else
 			do_animate("deny")
@@ -151,7 +152,7 @@
 		return
 	if(!requiresID())
 		user = null //so allowed(user) always succeeds
-	if(allowed(user))
+	if(allowed(user) || unrestricted_side(user))
 		if(density)
 			open()
 		else
@@ -164,6 +165,17 @@
 	if(emergency)
 		return TRUE
 	return ..()
+
+/obj/machinery/door/proc/unrestricted_side(mob/M) //Allows for specific sides of airlocks to be unrestrected (IE, can exit maint freely, but need access to enter)
+	if(unres_sides & 1 && M.y > y) //1 is North
+		return TRUE
+	if(unres_sides & 2 && M.x > x) //2 is East
+		return TRUE
+	if(unres_sides & 4 && M.y < y) //4 is South
+		return TRUE
+	if(unres_sides & 8 && M.x < x) //8 is West
+		return TRUE
+	return FALSE
 
 /obj/machinery/door/proc/try_to_weld(obj/item/weldingtool/W, mob/user)
 	return
