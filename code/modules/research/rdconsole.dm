@@ -285,7 +285,6 @@ Nothing else in the console has ID requirements.
 	var/list/l = list()
 	l += ui_protolathe_header()
 	l += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3>"
-	var/coeff = linked_lathe.efficiency_coeff
 	for(var/v in stored_research.researched_designs)
 		var/datum/design/D = stored_research.researched_designs[v]
 		if(!(selected_category in D.category)|| !(D.build_type & PROTOLATHE))
@@ -294,11 +293,13 @@ Nothing else in the console has ID requirements.
 			continue
 		var/temp_material
 		var/c = 50
-		var/t
+		var/coeff = linked_lathe.efficiency_coeff
+		if(!linked_lathe.efficient_with(D.build_path))
+			coeff = 1
 
 		var/all_materials = D.materials + D.reagents_list
 		for(var/M in all_materials)
-			t = linked_lathe.check_mat(D, M)
+			var/t = linked_lathe.check_mat(D, M)
 			temp_material += " | "
 			if (t < 1)
 				temp_material += "<span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
@@ -340,16 +341,17 @@ Nothing else in the console has ID requirements.
 	RDSCREEN_UI_LATHE_CHECK
 	var/list/l = list()
 	l += ui_protolathe_header()
-	var/coeff = linked_lathe.efficiency_coeff
 	for(var/datum/design/D in matching_designs)
 		if(!(isnull(linked_lathe.allowed_department_flags) || (D.departmental_flags & linked_lathe.allowed_department_flags)))
 			continue
 		var/temp_material
 		var/c = 50
-		var/t
 		var/all_materials = D.materials + D.reagents_list
+		var/coeff = linked_lathe.efficiency_coeff
+		if(!linked_lathe.efficient_with(D.build_path))
+			coeff = 1
 		for(var/M in all_materials)
-			t = linked_lathe.check_mat(D, M)
+			var/t = linked_lathe.check_mat(D, M)
 			temp_material += " | "
 			if (t < 1)
 				temp_material += "<span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
@@ -433,7 +435,6 @@ Nothing else in the console has ID requirements.
 	l += ui_circuit_header()
 	l += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3>"
 
-	var/coeff = linked_imprinter.efficiency_coeff
 	for(var/v in stored_research.researched_designs)
 		var/datum/design/D = stored_research.researched_designs[v]
 		if(!(selected_category in D.category) || !(D.build_type & IMPRINTER))
@@ -444,6 +445,9 @@ Nothing else in the console has ID requirements.
 		var/check_materials = TRUE
 
 		var/all_materials = D.materials + D.reagents_list
+		var/coeff = linked_imprinter.efficiency_coeff
+		if(!linked_imprinter.efficient_with(D.build_path))
+			coeff = 1
 
 		for(var/M in all_materials)
 			temp_materials += " | "
@@ -465,13 +469,15 @@ Nothing else in the console has ID requirements.
 	l += ui_circuit_header()
 	l += "<div class='statusDisplay'><h3>Search results:</h3>"
 
-	var/coeff = linked_imprinter.efficiency_coeff
 	for(var/datum/design/D in matching_designs)
 		if(!(isnull(linked_imprinter.allowed_department_flags) || (D.departmental_flags & linked_imprinter.allowed_department_flags)))
 			continue
 		var/temp_materials
 		var/check_materials = TRUE
 		var/all_materials = D.materials + D.reagents_list
+		var/coeff = linked_imprinter.efficiency_coeff
+		if(!linked_imprinter.efficient_with(D.build_path))
+			coeff = 1
 		for(var/M in all_materials)
 			temp_materials += " | "
 			if (!linked_imprinter.check_mat(D, M))

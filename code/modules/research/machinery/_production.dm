@@ -111,7 +111,7 @@
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [amount] of [path] at a [src]([type]).")
 	for(var/i in 1 to amount)
 		var/obj/item/I = new path(get_turf(src))
-		if(!istype(I, /obj/item/stack/sheet) && !istype(I, /obj/item/stack/ore/bluespace_crystal))
+		if(efficient_with(I.type))
 			I.materials = matlist.Copy()
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
 
@@ -124,7 +124,13 @@
 	if(!A)
 		A = reagents.get_reagent_amount(M)
 
-	return round(A / max(1, (all_materials[M]/efficiency_coeff)))
+	// these types don't have their .materials set in do_print, so don't allow
+	// them to be constructed efficiently
+	var/ef = efficient_with(being_built.build_path) ? efficiency_coeff : 1
+	return round(A / max(1, all_materials[M] / ef))
+
+/obj/machinery/rnd/production/proc/efficient_with(path)
+	return !ispath(path, /obj/item/stack/sheet) && !ispath(path, /obj/item/stack/ore/bluespace_crystal)
 
 /obj/machinery/rnd/production/proc/user_try_print_id(id, amount)
 	if((!istype(linked_console) && requires_console) || !id)
@@ -154,20 +160,21 @@
 		power += round(D.materials[M] * amount / 35)
 	power = min(3000, power)
 	use_power(power)
+	var/coeff = efficient_with(D.build_path) ? efficiency_coeff : 1
 	var/list/efficient_mats = list()
 	for(var/MAT in D.materials)
-		efficient_mats[MAT] = D.materials[MAT]/efficiency_coeff
+		efficient_mats[MAT] = D.materials[MAT]/coeff
 	if(!materials.has_materials(efficient_mats, amount))
 		say("Not enough materials to complete prototype[amount > 1? "s" : ""].")
 		return FALSE
 	for(var/R in D.reagents_list)
-		if(!reagents.has_reagent(R, D.reagents_list[R]*amount/efficiency_coeff))
+		if(!reagents.has_reagent(R, D.reagents_list[R]*amount/coeff))
 			say("Not enough reagents to complete prototype[amount > 1? "s" : ""].")
 			return FALSE
 	materials.use_amount(efficient_mats, amount)
 	silo.silo_log(src, "built", -amount, "[D.name]", efficient_mats)
 	for(var/R in D.reagents_list)
-		reagents.remove_reagent(R, D.reagents_list[R]*amount/efficiency_coeff)
+		reagents.remove_reagent(R, D.reagents_list[R]*amount/coeff)
 	busy = TRUE
 	if(production_animation)
 		flick(production_animation, src)
@@ -264,6 +271,8 @@
 		return
 	if(!coeff)
 		coeff = efficiency_coeff
+	if(!efficient_with(D.build_path))
+		coeff = 1
 	var/list/l = list()
 	var/temp_material
 	var/c = 50
