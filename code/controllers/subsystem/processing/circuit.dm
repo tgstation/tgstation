@@ -89,3 +89,4 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 		/obj/item/card/data/full_color,
 		/obj/item/card/data/disk
 		)
+		
