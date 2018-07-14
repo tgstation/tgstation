@@ -20,9 +20,9 @@
 
 	var/motd
 
-/datum/controller/configuration/proc/Load(directory)
-	if(directory)
-		src.directory = directory
+/datum/controller/configuration/proc/Load(_directory)
+	if(_directory)
+		directory = _directory
 	if(entries)
 		CRASH("[THIS_PROC_TYPE_WEIRD] called more than once!")
 	InitEntries()
