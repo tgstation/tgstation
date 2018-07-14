@@ -197,6 +197,11 @@ Nothing else in the console has ID requirements.
 		locked = FALSE
 	return ..()
 
+/obj/machinery/computer/rdconsole/multitool_act(mob/user, obj/item/multitool/I)
+	var/lathe = linked_lathe && linked_lathe.multitool_act(user, I)
+	var/print = linked_imprinter && linked_imprinter.multitool_act(user, I)
+	return lathe || print
+
 /obj/machinery/computer/rdconsole/proc/list_categories(list/categories, menu_num as num)
 	if(!categories)
 		return

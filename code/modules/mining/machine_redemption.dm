@@ -125,7 +125,7 @@
 	message_sent = TRUE
 
 	if(deposit_buffer.len)
-		silo.silo_log(src, "smelted delivery[inserted_id ? " by [inserted_id.registered_name]" : ""]", deposit_buffer)
+		silo.silo_log(src, "smelted delivery[inserted_id && inserted_id.registered_name ? " by [inserted_id.registered_name]" : ""]", deposit_buffer)
 		deposit_buffer.Cut()
 
 	var/area/A = get_area(src)
