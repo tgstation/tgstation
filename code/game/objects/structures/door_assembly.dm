@@ -248,6 +248,7 @@
 					door.name = created_name
 				else
 					door.name = base_name
+				door.unres_sides = electronics.unres_sides
 				door.previous_airlock = previous_assembly
 				electronics.forceMove(door)
 				qdel(src)
