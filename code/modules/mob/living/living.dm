@@ -807,7 +807,7 @@
 	var/stam = getStaminaLoss()
 	if(stam)
 		var/total_health = (health - stam)
-		if(total_health <= crit_modifier() && !stat)
+		if(total_health <= crit_modifier() && !stat && !IsKnockdown())
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			Knockdown(100)
 			setStaminaLoss(health - 2, FALSE, FALSE)
