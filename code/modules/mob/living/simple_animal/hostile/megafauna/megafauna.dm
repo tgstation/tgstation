@@ -68,8 +68,8 @@
 	else
 		..()
 
-/mob/living/simple_animal/hostile/megafauna/dust()
-	if(health > 0)
+/mob/living/simple_animal/hostile/megafauna/dust(just_ash, drop_items, force)
+	if(!force && health > 0)
 		return
 	else
 		..()
