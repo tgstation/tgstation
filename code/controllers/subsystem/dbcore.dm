@@ -256,12 +256,15 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	var/datum/BSQL_Connection/connection
 	var/datum/BSQL_Operation/Query/query
 
+/world/BSQL_Debug(message)
+	log_sql("BSQL_DEBUG: [message]")
 
 /datum/DBQuery/New(sql_query, datum/BSQL_Connection/connection)
 	SSdbcore.active_queries[src] = TRUE
 	Activity("Created")
 	item = list()
 	src.connection = connection
+	sql = sql_query
 
 /datum/DBQuery/Destroy()
 	Close()
