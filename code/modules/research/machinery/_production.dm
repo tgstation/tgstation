@@ -162,7 +162,7 @@
 			say("Not enough reagents to complete prototype[amount > 1? "s" : ""].")
 			return FALSE
 	materials.use_amount(efficient_mats, amount)
-	silo.silo_log(src, "built [amount]x [D.name]", efficient_mats, -amount)
+	silo.silo_log(src, "built", -amount, "[D.name]", efficient_mats)
 	for(var/R in D.reagents_list)
 		reagents.remove_reagent(R, D.reagents_list[R]*amount/efficiency_coeff)
 	busy = TRUE
@@ -320,8 +320,8 @@
 		return 0
 	var/count = materials.retrieve_sheets(text2num(eject_amt), eject_sheet, drop_location())
 	var/list/matlist = list()
-	matlist[eject_sheet] = -count * MINERAL_MATERIAL_AMOUNT
-	silo.silo_log(src, "ejected [count]x sheets", matlist)
+	matlist[eject_sheet] = MINERAL_MATERIAL_AMOUNT
+	silo.silo_log(src, "ejected", -count, "sheets", matlist)
 	return count
 
 /obj/machinery/rnd/production/proc/ui_screen_main()

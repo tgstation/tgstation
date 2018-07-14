@@ -66,7 +66,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			storage.insert_amount(can_insert, material)
 			. += can_insert
 		if(linked_console.linked_lathe.silo)
-			linked_console.linked_lathe.silo.silo_log(src, "reclaimed [thing.name]", thing.materials)
+			linked_console.linked_lathe.silo.silo_log(src, "reclaimed", 1, "[thing.name]", thing.materials)
 
 /obj/machinery/rnd/destructive_analyzer/proc/destroy_item(obj/item/thing, innermode = FALSE)
 	if(QDELETED(thing) || QDELETED(src) || QDELETED(linked_console))

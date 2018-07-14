@@ -44,26 +44,6 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 	return ..()
 
-/obj/machinery/ore_silo/proc/silo_log(obj/machinery/M, message, list/mats=null, multiplier=1)
-	var/list/msg = list("([station_time_timestamp()]) <b>\The [M]</b> in [get_area(M)]<br>[message]<br>")
-	var/sep = ""
-	for(var/key in mats)
-		var/val = mats[key] * multiplier
-		msg += sep
-		sep = ", "
-		msg += "[val > 0 ? "+" : ""][val] [copytext(key, 2)]"
-
-	var/list/logs = GLOB.silo_access_logs[REF(src)]
-	if(!logs)
-		GLOB.silo_access_logs[REF(src)] = logs = list()
-	logs.Insert(1, msg.Join())
-	updateUsrDialog()
-
-	animate(src, icon_state = "bin_partial", time = 2)
-	animate(icon_state = "bin_full", time = 1)
-	animate(icon_state = "bin_partial", time = 2)
-	animate(icon_state = "bin")
-
 /obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/user, obj/item/stack/I)
 	GET_COMPONENT(materials, /datum/component/material_container)
 	// stolen from /datum/component/material_container/proc/OnAttackBy
@@ -81,7 +61,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	// assumes unlimited space...
 	var/amount = I.amount
 	materials.user_insert(I, user)
-	silo_log(M, "deposited [amount]x sheets", item_mats, amount)
+	silo_log(M, "deposited", amount, "sheets", item_mats)
 	return TRUE
 
 /obj/machinery/ore_silo/attackby(obj/item/W, mob/user, params)
@@ -102,7 +82,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	for(var/M in materials.materials)
 		var/datum/material/mat = materials.materials[M]
 		if (mat.amount)
-			ui += "<b>[mat.name]</b>: [mat.amount] units<br>"
+			ui += "<b>[mat.name]</b>: [round(mat.amount) / MINERAL_MATERIAL_AMOUNT] sheets<br>"
 			any = TRUE
 	if(!any)
 		ui += "Nothing!"
@@ -118,7 +98,8 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	ui += "</div><div class='statusDisplay'><h2>Access Logs:</h2><ol>"
 	any = FALSE
 	for(var/M in GLOB.silo_access_logs[REF(src)])
-		ui += "<li>[M]</li>"
+		var/datum/ore_silo_log/entry = M
+		ui += "<li>[entry.formatted]</li>"
 		any = TRUE
 	if (!any)
 		ui += "<li>Nothing!</li>"
@@ -155,3 +136,69 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		to_chat(user, "<span class='notice'>You log [src] in the multitool's buffer.</span>")
 		I.buffer = src
 		return TRUE
+
+/obj/machinery/ore_silo/proc/silo_log(obj/machinery/M, action, amount, noun, list/mats)
+	if (!length(mats))
+		return
+	var/datum/ore_silo_log/entry = new(M, action, amount, noun, mats)
+
+	var/list/logs = GLOB.silo_access_logs[REF(src)]
+	if(!LAZYLEN(logs))
+		GLOB.silo_access_logs[REF(src)] = logs = list(entry)
+	else if(!logs[1].merge(entry))
+		logs.Insert(1, entry)
+
+	updateUsrDialog()
+	animate(src, icon_state = "bin_partial", time = 2)
+	animate(icon_state = "bin_full", time = 1)
+	animate(icon_state = "bin_partial", time = 2)
+	animate(icon_state = "bin")
+
+/datum/ore_silo_log
+	var/name  // for VV
+	var/formatted  // for display
+
+	var/timestamp
+	var/machine_name
+	var/area_name
+	var/action
+	var/noun
+	var/amount
+	var/list/materials
+
+/datum/ore_silo_log/New(obj/machinery/M, _action, _amount, _noun, list/mats=list())
+	timestamp = station_time_timestamp()
+	machine_name = "\The [M]"
+	area_name = "[get_area(M)]"
+	action = _action
+	noun = _noun
+	amount = _amount
+	materials = mats.Copy()
+	for(var/each in materials)
+		materials[each] *= abs(_amount)
+	format()
+
+/datum/ore_silo_log/proc/merge(datum/ore_silo_log/other)
+	if (other == src || action != other.action || noun != other.noun)
+		return FALSE
+	if (machine_name != other.machine_name || area_name != other.area_name)
+		return FALSE
+
+	timestamp = other.timestamp
+	amount += other.amount
+	for(var/each in other.materials)
+		materials[each] += other.materials[each]
+	format()
+	return TRUE
+
+/datum/ore_silo_log/proc/format()
+	name = "[machine_name]: [action] [amount]x [noun]"
+
+	var/list/msg = list("([timestamp]) <b>[machine_name]</b> in [area_name]<br>[action] [abs(amount)]x [noun]<br>")
+	var/sep = ""
+	for(var/key in materials)
+		var/val = round(materials[key]) / MINERAL_MATERIAL_AMOUNT
+		msg += sep
+		sep = ", "
+		msg += "[amount < 0 ? "-" : "+"][val] [copytext(key, 2)]"
+	formatted = msg.Join()

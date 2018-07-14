@@ -459,7 +459,8 @@ Code:
 			if (GLOB.ore_silo_default)
 				var/i = 0
 				for(var/M in GLOB.silo_access_logs[REF(GLOB.ore_silo_default)])
-					menu += "[M]<br><br>"
+					var/datum/ore_silo_log/entry = M
+					menu += "[entry.formatted]<br><br>"
 					if (++i >= 30)
 						menu += "(... older logs not shown ...)"
 						break

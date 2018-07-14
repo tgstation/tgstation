@@ -25,7 +25,6 @@
 	var/datum/techweb/stored_research
 	var/obj/item/disk/design_disk/inserted_disk
 	var/obj/machinery/ore_silo/silo
-	var/list/deposit_buffer = list()
 
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
 	. = ..()
@@ -81,9 +80,12 @@
 
 	else
 		var/mats = O.materials & materials.materials
-		for(var/key in mats)
-			deposit_buffer[key] += mats[key] * O.amount
+		var/amount = O.amount
+		var/id = inserted_id && inserted_id.registered_name
+		if (id)
+			id = " (ID: [id])"
 		materials.insert_item(O, sheet_per_ore) //insert it
+		silo.silo_log(src, "smelted", amount, "ores[id]", mats)
 		qdel(O)
 
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/D)
@@ -123,10 +125,6 @@
 	if(!silo || !is_station_level(z))
 		return
 	message_sent = TRUE
-
-	if(deposit_buffer.len)
-		silo.silo_log(src, "smelted delivery[inserted_id && inserted_id.registered_name ? " by [inserted_id.registered_name]" : ""]", deposit_buffer)
-		deposit_buffer.Cut()
 
 	var/area/A = get_area(src)
 	var/msg = "Now available in [A]:<br>"
@@ -294,7 +292,10 @@
 					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
 
 				var/sheets_to_remove = round(min(desired,50,stored_amount))
-				materials.retrieve_sheets(sheets_to_remove, mat_id, get_step(src, output_dir))
+				var/count = materials.retrieve_sheets(sheets_to_remove, mat_id, get_step(src, output_dir))
+				var/list/mats = list()
+				mats[mat_id] = MINERAL_MATERIAL_AMOUNT
+				silo.silo_log(src, "released", -count, "sheets", mats)
 
 			else
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
@@ -330,6 +331,7 @@
 					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
 				var/amount = round(min(desired,50,smelt_amount))
 				materials.use_amount(alloy.materials, amount)
+				silo.silo_log(src, "released", -amount, "sheets", alloy.materials)
 				var/output
 				if(ispath(alloy.build_path, /obj/item/stack/sheet))
 					output = new alloy.build_path(src, amount)
