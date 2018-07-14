@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - balance: "stamina damage is no longer softcapped by the unconsciousness trigger lowering stamina damage a little bit"
