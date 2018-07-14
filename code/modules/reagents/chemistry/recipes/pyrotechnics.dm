@@ -127,6 +127,7 @@
 	if(created_volume < 10)
 		playsound(location,'sound/effects/sparks1.ogg', 100, 1)
 	else
+		playsound(location,'sound/creatures/bee.ogg', 100, 1)
 		var/list/beeagents = list()
 		for(var/X in holder.reagent_list)
 			var/datum/reagent/R = X
