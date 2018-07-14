@@ -440,6 +440,8 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define OVERRIDE_LOG_DIRECTORY_PARAMETER "log-directory"
 //Prevent the master controller from starting automatically, overrides TEST_RUN_PARAMETER
 #define NO_INIT_PARAMETER "no-init"
+//Force the config directory to be something other than "config"
+#define OVERRIDE_CONFIG_DIRECTORY_PARAMETER "config-directory"
 
 #define EGG_LAYING_MESSAGES list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
 
