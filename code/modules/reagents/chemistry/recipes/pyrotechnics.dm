@@ -124,7 +124,7 @@
 
 /datum/chemical_reaction/beesplosion/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
-	if(created_volume < 10)
+	if(created_volume < 5)
 		playsound(location,'sound/effects/sparks1.ogg', 100, 1)
 	else
 		playsound(location,'sound/creatures/bee.ogg', 100, 1)
@@ -134,7 +134,7 @@
 			if(R.id in required_reagents)
 				continue
 			beeagents += R
-		var/bee_amount = round(created_volume/10)
+		var/bee_amount = round(created_volume/5)
 		for(var/i in 1 to bee_amount)
 			var/mob/living/simple_animal/hostile/poison/bees/new_bee = new(location)
 			if(LAZYLEN(beeagents))
