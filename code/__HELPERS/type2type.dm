@@ -145,9 +145,7 @@
 
 /proc/angle2dir_cardinal(angle)
 	switch(angle)
-		if(316 to 360)
-			return NORTH
-		if(0 to 45)
+		if(316 to 360, 0 to 45)
 			return NORTH
 		if(46 to 135)
 			return EAST
