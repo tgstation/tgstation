@@ -43,3 +43,5 @@
 	config_entry_value = 5
 	min_val = 0
 	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/flag/bsql_debug

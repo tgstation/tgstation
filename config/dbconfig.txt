@@ -37,3 +37,6 @@ ASYNC_QUERY_TIMEOUT 10
 ## Set to 0 for infinite
 ## Must be less than or equal to ASYNC_QUERY_TIMEOUT
 BLOCKING_QUERY_TIMEOUT 5
+
+## Uncomment to enable verbose BSQL communication logs
+#BSQL_DEBUG
