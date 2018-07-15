@@ -144,14 +144,14 @@
 			return NORTH
 
 /proc/angle2dir_cardinal(angle)
-	switch(angle)
-		if(316 to 360, 0 to 45)
+	switch(round(angle, 0.1))
+		if(315.5 to 360, 0 to 45.5)
 			return NORTH
-		if(46 to 135)
+		if(45.6 to 135.5)
 			return EAST
-		if(136 to 225)
+		if(135.6 to 225.5)
 			return SOUTH
-		if(226 to 315)
+		if(225.6 to 315.5)
 			return WEST
 
 //returns the north-zero clockwise angle in degrees, given a direction
