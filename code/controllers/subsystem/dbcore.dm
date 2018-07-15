@@ -352,3 +352,13 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 /datum/DBQuery/proc/Close()
 	item.Cut()
 	QDEL_NULL(query)
+
+/world/BSQL_Debug(message)
+	if(!CONFIG_GET(flag/bsql_debug))
+		return
+
+	//strip sensitive stuff
+	if(findtext(message, ": CreateConnection("))
+		message = "CreateConnection CENSORED"
+	
+	log_sql("BSQL_DEBUG: [message]")
