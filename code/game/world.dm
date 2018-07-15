@@ -274,7 +274,7 @@ var/list/diamonddonators = world.file2list("config/diamonddonators.txt")
 		features += "hosted by <b>[hostedby]</b>"
 
 	if (features)
-		features += "<b>"+pick(hubmsgs)+"</b>"
+		features += "<i>"+pick(hubmsgs)+"</i>"
 		s += ": [jointext(features, ", ")]"
 
 	status = s
