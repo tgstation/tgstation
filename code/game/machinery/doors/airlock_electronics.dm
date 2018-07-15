@@ -59,5 +59,5 @@
 			. = TRUE
 		if("direc_set")
 			var/unres_direction = text2num(params["unres_direction"])
-			unres_sides = unres_sides ^ unres_direction //XOR, toggles only the bit that was clicked
+			unres_sides ^= unres_direction //XOR, toggles only the bit that was clicked
 			. = TRUE
