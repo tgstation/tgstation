@@ -523,7 +523,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An additional 30-round 5.56 magazine; sutable for use with the M-90gl carbine. \
 			These bullets don't have the punch to knock most targets down, but dish out higher overall damage."
 	item = /obj/item/ammo_box/magazine/m556
-	cost = 5
+	cost = 4
 	include_modes = list(/datum/game_mode/nuclear)
 	
 /datum/uplink_item/ammo/a40mm
