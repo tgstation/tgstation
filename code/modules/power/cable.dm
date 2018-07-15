@@ -1,7 +1,7 @@
 GLOBAL_LIST_INIT(cable_colors, list(
 	"yellow" = "#ffff00",
 	"green" = "#00aa00",
-	"blue" = "#1919c8",
+	"blue" = "#18558c",
 	"pink" = "#ff3cc8",
 	"orange" = "#ff8000",
 	"cyan" = "#00ffff",
@@ -60,7 +60,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/structure/cable/blue
 	cable_color = "blue"
-	color = "#1919c8"
+	color = "#18558c"
 
 /obj/structure/cable/pink
 	cable_color = "pink"
@@ -754,7 +754,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 /obj/item/stack/cable_coil/blue
 	item_color = "blue"
-	color = "#1919c8"
+	color = "#18558c"
 
 /obj/item/stack/cable_coil/green
 	item_color = "green"
@@ -805,7 +805,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 /obj/item/stack/cable_coil/cut/blue
 	item_color = "blue"
-	color = "#1919c8"
+	color = "#18558c"
 
 /obj/item/stack/cable_coil/cut/green
 	item_color = "green"
