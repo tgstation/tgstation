@@ -5,6 +5,14 @@
 /obj/machinery/mineral
 	var/input_dir = NORTH
 	var/output_dir = SOUTH
+	var/obj/machinery/ore_silo/silo  // Used by ORM and stacking machines
+
+/obj/machinery/mineral/LateInitialize()
+	// Called only if Initialize returns the appropriate hint
+	..()
+	silo = GLOB.ore_silo_default
+	if (silo)
+		silo.orms += src
 
 /obj/machinery/mineral/proc/unload_mineral(atom/movable/S)
 	S.forceMove(drop_location())

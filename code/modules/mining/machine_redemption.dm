@@ -24,19 +24,12 @@
 	var/list/ore_buffer = list()
 	var/datum/techweb/stored_research
 	var/obj/item/disk/design_disk/inserted_disk
-	var/obj/machinery/ore_silo/silo
 
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
 	. = ..()
 	stored_research = new /datum/techweb/specialized/autounlocking/smelter
 	if (mapload && is_station_level(z))
 		return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/mineral/ore_redemption/LateInitialize()
-	..()
-	silo = GLOB.ore_silo_default
-	if (silo)
-		silo.orms += src
 
 /obj/machinery/mineral/ore_redemption/Destroy()
 	if (silo)

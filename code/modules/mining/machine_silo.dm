@@ -30,7 +30,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		GLOB.ore_silo_default = null
 
 	for(var/O in orms)
-		var/obj/machinery/mineral/ore_redemption/orm = O
+		var/obj/machinery/mineral/orm = O
 		if (orm.silo == src)
 			orm.silo = null
 
@@ -119,7 +119,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	usr.set_machine(src)
 
 	if(href_list["remove_orm"])
-		var/obj/machinery/mineral/ore_redemption/orm = locate(href_list["remove_orm"])
+		var/obj/machinery/mineral/orm = locate(href_list["remove_orm"])
 		if (istype(orm))
 			orms -= orm
 			if (orm.silo == src)
@@ -152,7 +152,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 /obj/machinery/ore_silo/proc/on_hold(obj/machinery/M)
 	var/category = "lathe"
-	if(istype(M, /obj/machinery/mineral/ore_redemption))
+	if(istype(M, /obj/machinery/mineral))
 		category = "orm"
 	return holds["[get_area(M)]/[category]"]
 

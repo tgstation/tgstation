@@ -71,42 +71,62 @@
 	desc = "A machine that automatically stacks acquired materials. Controlled by a nearby console."
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/stacking_machine
+	input_dir = EAST
+	output_dir = WEST
 	var/obj/machinery/mineral/stacking_unit_console/CONSOLE
 	var/stk_types = list()
 	var/stk_amt   = list()
 	var/stack_list[0] //Key: Type.  Value: Instance of type.
-	var/stack_amt = 50; //ammount to stack before releassing
-	input_dir = EAST
-	output_dir = WEST
+	var/stack_amt = 50 //amount to stack before releassing
 
-/obj/machinery/mineral/stacking_machine/Initialize()
+/obj/machinery/mineral/stacking_machine/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 1)
+	if(mapload && is_station_level(z))
+		return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/mineral/stacking_machine/HasProximity(atom/movable/AM)
 	if(istype(AM, /obj/item/stack/sheet) && AM.loc == get_step(src, input_dir))
 		process_sheet(AM)
 
-/obj/machinery/mineral/stacking_machine/multitool_act(mob/living/user, obj/item/I)
-	if(istype(I, /obj/item/multitool))
-		var/obj/item/multitool/M = I
-		if(!istype(M.buffer, /obj/machinery/mineral/stacking_unit_console))
-			to_chat(user, "<span class='warning'>The [I] has no linkage data in its buffer.</span>")
-			return FALSE
-		else
+/obj/machinery/mineral/stacking_machine/multitool_act(mob/living/user, obj/item/multitool/M)
+	if(istype(M))
+		if(istype(M.buffer, /obj/machinery/mineral/stacking_unit_console))
 			CONSOLE = M.buffer
 			CONSOLE.machine = src
-			to_chat(user, "<span class='notice'>You link [src] to the console in [I]'s buffer.</span>")
+			to_chat(user, "<span class='notice'>You link [src] to the console in [M]'s buffer.</span>")
 			return TRUE
+		else if(!QDELETED(M.buffer) && istype(M.buffer, /obj/machinery/ore_silo))
+			if (silo)
+				silo.orms -= src
+			silo = M.buffer
+			silo.orms += src
+			silo.updateUsrDialog()
+			to_chat(user, "<span class='notice'>You connect [src] to [silo] from the multitool's buffer.</span>")
+			return TRUE
+		else
+			to_chat(user, "<span class='warning'>The [M] has no linkage data in its buffer.</span>")
+			return FALSE
 
 /obj/machinery/mineral/stacking_machine/proc/process_sheet(obj/item/stack/sheet/inp)
-	if(!(inp.type in stack_list)) //It's the first of this sheet added
-		var/obj/item/stack/sheet/s = new inp.type(src, 0)
-		stack_list[inp.type] = s
-	var/obj/item/stack/sheet/storage = stack_list[inp.type]
+	var/key = inp.merge_type
+	var/obj/item/stack/sheet/storage = stack_list[key]
+	if(!storage) //It's the first of this sheet added
+		stack_list[key] = storage = new inp.type(src, 0)
 	storage.amount += inp.amount //Stack the sheets
-	while(storage.amount > stack_amt) //Get rid of excessive stackage
+	qdel(inp)
+
+	if(silo && !silo.on_hold(src)) //Dump the sheets to the silo
+		GET_COMPONENT_FROM(materials, /datum/component/material_container, silo)
+		var/matlist = storage.materials & materials.materials
+		if (length(matlist))
+			var/inserted = materials.insert_stack(storage)
+			silo.silo_log(src, "collected", inserted, "sheets", matlist)
+			if (QDELETED(storage))
+				stack_list -= key
+			return
+
+	while(storage.amount >= stack_amt) //Get rid of excessive stackage
 		var/obj/item/stack/sheet/out = new inp.type(null, stack_amt)
 		unload_mineral(out)
 		storage.amount -= stack_amt
-	qdel(inp) //Let the old sheet garbage collect
