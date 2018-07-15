@@ -599,4 +599,9 @@
 	desc = "Termina is the biggest military contractor in known space."
 	icon_state = "poster36_legit"
 
+/obj/structure/sign/poster/official/weaboo
+	name = "Weeaboo Poster"
+	desc = "I'm mostly likely hanging in a weaboo's quarters."
+	icon_state = "poster37_legit"
+
 #undef PLACE_SPEED
