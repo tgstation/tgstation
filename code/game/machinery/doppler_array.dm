@@ -49,7 +49,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 /obj/machinery/doppler_array/proc/sense_explosion(turf/epicenter,devastation_range,heavy_impact_range,light_impact_range,
 												  took,orig_dev_range,orig_heavy_range,orig_light_range)
 	if(stat & NOPOWER)
-		return
+		return FALSE
 	var/turf/zone = get_turf(src)
 
 	if(zone.z != epicenter.z)
@@ -80,6 +80,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	else
 		for(var/message in messages)
 			say(message)
+	return TRUE
 
 /obj/machinery/doppler_array/power_change()
 	if(stat & BROKEN)
