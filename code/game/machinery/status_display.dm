@@ -58,8 +58,8 @@
 /obj/machinery/status_display/process()
 	if(stat & NOPOWER)
 		remove_display()
-		return
-	update()
+		return PROCESS_KILL
+	return update()
 
 /obj/machinery/status_display/emp_act(severity)
 	. = ..()
@@ -72,17 +72,18 @@
 /obj/machinery/status_display/proc/update()
 	if(friendc && mode!=4) //Makes all status displays except supply shuttle timer display the eye -- Urist
 		set_picture("ai_friend")
-		return
-
+		return PROCESS_KILL
+	if (supply_display)
+		mode = 4
 	switch(mode)
 		if(0)				//blank
 			remove_display()
+			return PROCESS_KILL
 		if(1)				//emergency shuttle timer
-			display_shuttle_status()
+			. = display_shuttle_status()
 		if(2)				//custom messages
 			var/line1
 			var/line2
-
 			if(!index1)
 				line1 = message1
 			else
@@ -101,6 +102,10 @@
 				if(index2 > message2_len)
 					index2 -= message2_len
 			update_display(line1, line2)
+			if (!index1 && !index2)
+				return PROCESS_KILL
+		if(3)
+			return PROCESS_KILL
 		if(4)				// supply shuttle timer
 			var/line1
 			var/line2
@@ -113,10 +118,11 @@
 				line2 = SSshuttle.supply.getTimerStr()
 				if(lentext(line2) > CHARS_PER_LINE)
 					line2 = "Error"
-
 			update_display(line1, line2)
 		if(5)
-			display_shuttle_status()
+			. = display_shuttle_status()
+	if (. != PROCESS_KILL)
+		START_PROCESSING(SSmachines, src)
 
 /obj/machinery/status_display/examine(mob/user)
 	. = ..()
@@ -203,6 +209,7 @@
 		update_display(line1, line2)
 	else
 		remove_display()
+		return PROCESS_KILL
 
 
 /obj/machinery/status_display/receive_signal(datum/signal/signal)
@@ -220,6 +227,9 @@
 		if("alert")
 			mode = 3
 			set_picture(signal.data["picture_state"])
+		if("friendcomputer")
+			friendc = !friendc
+	update()
 
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'
