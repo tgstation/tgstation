@@ -169,17 +169,7 @@
 	return ..()
 
 /obj/machinery/door/proc/unrestricted_side(mob/M) //Allows for specific side of airlocks to be unrestrected (IE, can exit maint freely, but need access to enter)
-	while(!istype(M.loc, /turf)) //If user is in an object (like a mech), we need to use the object's X and Y.
-		M = M.loc
-	if(unres_sides & 1 && M.y == y + 1) //1 is North
-		return TRUE
-	if(unres_sides & 2 && M.x == x + 1) //2 is East
-		return TRUE
-	if(unres_sides & 4 && M.y == y - 1) //4 is South
-		return TRUE
-	if(unres_sides & 8 && M.x == x - 1) //8 is West
-		return TRUE
-	return FALSE
+	return get_dir(src, M) & unres_sides
 
 /obj/machinery/door/proc/try_to_weld(obj/item/weldingtool/W, mob/user)
 	return
