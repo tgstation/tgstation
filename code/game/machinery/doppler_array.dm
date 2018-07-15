@@ -53,15 +53,15 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	var/turf/zone = get_turf(src)
 
 	if(zone.z != epicenter.z)
-		return
+		return FALSE
 
 	var/distance = get_dist(epicenter, zone)
 	var/direct = get_dir(zone, epicenter)
 
 	if(distance > max_dist)
-		return
+		return FALSE
 	if(!(direct & dir) && !integrated)
-		return
+		return FALSE
 
 
 	var/list/messages = list("Explosive disturbance detected.", \
@@ -75,7 +75,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	if(integrated)
 		var/obj/item/clothing/head/helmet/space/hardsuit/helm = loc
 		if(!helm || !istype(helm, /obj/item/clothing/head/helmet/space/hardsuit))
-			return
+			return FALSE
 		helm.display_visor_message("Explosion detected! Epicenter: [devastation_range], Outer: [heavy_impact_range], Shock: [light_impact_range]")
 	else
 		for(var/message in messages)
@@ -106,9 +106,11 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 
 /obj/machinery/doppler_array/research/sense_explosion(turf/epicenter, dev, heavy, light, time, orig_dev, orig_heavy, orig_light)	//probably needs a way to ignore admin explosives later on
 	. = ..()
+	if(!.)
+		return FALSE
 	if(!istype(linked_techweb))
 		say("Warning: No linked research system!")
-		return
+		return 
 	var/adjusted = orig_light - 10
 	if(adjusted <= 0)
 		say("Explosion not large enough for research calculations.")
