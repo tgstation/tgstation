@@ -47,7 +47,7 @@ RUN git init \
     && git remote add origin https://github.com/tgstation/BSQL 
 
 #TODO: find a way to read these from .travis.yml or a common source eventually
-ENV BSQL_VERSION=v1.3.0.0
+ENV BSQL_VERSION=v1.3.0.2
 
 RUN git fetch --depth 1 origin $BSQL_VERSION \
     && git checkout FETCH_HEAD
