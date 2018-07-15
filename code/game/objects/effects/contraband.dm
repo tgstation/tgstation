@@ -604,4 +604,9 @@
 	desc = "I'm mostly likely hanging in a weaboo's quarters."
 	icon_state = "poster37_legit"
 
+/obj/structure/sign/poster/official/luna
+	name = "Luna Poster"
+	desc = "The Luna Station is the most modern and advanced space station design. It was invented by a man of the name Luna Lee."
+	icon_state = "poster38_legit"
+
 #undef PLACE_SPEED
