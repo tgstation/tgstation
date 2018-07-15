@@ -61693,9 +61693,6 @@
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
 "cBl" = (
-/obj/machinery/power/apc/auto_name/south{
-	pixel_y = -26
-	},
 /obj/structure/table,
 /obj/item/folder/white{
 	pixel_x = 4;
