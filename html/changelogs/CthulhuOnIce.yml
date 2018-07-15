@@ -4,4 +4,5 @@ changes:
   - bugfix: "Took engineer's guns away, gave one to CE."
   - tweak: "Captain no longer has a revolver, he has krav maga."
   - tweak: "Hub messages are italicized and not bolded."
+  - rscadd: "Ported LOOC from citadel."
 delete-after: false

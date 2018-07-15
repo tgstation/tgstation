@@ -82,6 +82,10 @@
 	if (CONFIG_GET(flag/log_ooc))
 		WRITE_LOG(GLOB.world_game_log, "OOC: [text]")
 
+/proc/log_looc(text)
+	if (CONFIG_GET(flag/log_ooc))
+		WRITE_LOG(GLOB.world_game_log, "LOOC: [text]")
+
 /proc/log_whisper(text)
 	if (CONFIG_GET(flag/log_whisper))
 		WRITE_LOG(GLOB.world_game_log, "WHISPER: [text]")

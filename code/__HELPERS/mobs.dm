@@ -504,6 +504,7 @@ Proc for attack log creation, because really why not
 			log_adminsay(logmessage)
 		if(LOGOOC)
 			log_ooc(logmessage)
+			log_looc(logmessage) //CITADEL EDIT, logging LOOC because why not
 		else
 			warning("Invalid speech logging type detected. [logtype]. Defaulting to say")
 			log_say(logmessage)
