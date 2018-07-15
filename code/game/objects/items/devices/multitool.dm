@@ -26,7 +26,6 @@
 	throw_speed = 3
 	materials = list(MAT_METAL=50, MAT_GLASS=20)
 	var/obj/machinery/buffer // simple machine buffer for device linkage
-	hitsound = 'sound/weapons/tap.ogg'
 	toolspeed = 1
 	tool_behaviour = TOOL_MULTITOOL
 	usesound = 'sound/weapons/empty.ogg'

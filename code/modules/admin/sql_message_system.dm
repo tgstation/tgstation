@@ -81,8 +81,8 @@
 	var/type
 	var/target_key
 	var/text
-	var/kn = key_name(usr)
-	var/kna = key_name_admin(usr)
+	var/user_key_name = key_name(usr)
+	var/user_name_admin = key_name_admin(usr)
 	var/datum/DBQuery/query_find_del_message = SSdbcore.NewQuery("SELECT type, (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), text FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
 	if(!query_find_del_message.warn_execute())
 		qdel(query_find_del_message)
@@ -98,8 +98,10 @@
 		return
 	qdel(query_del_message)
 	if(logged)
-		log_admin_private("[kn] has deleted a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for" : " made by"] [target_key]: [text]")
-		message_admins("[kna] has deleted a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for" : " made by"] [target_key]:<br>[text]")
+		var/m1 = "[user_key_name] has deleted a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for" : " made by"] [target_ckey]: [text]"
+		var/m2 = "[user_name_admin] has deleted a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for" : " made by"] [target_ckey]:<br>[text]"
+		log_admin_private(m1)
+		message_admins(m2)
 		if(browse)
 			browse_messages("[type]")
 		else

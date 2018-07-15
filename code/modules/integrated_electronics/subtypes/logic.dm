@@ -203,7 +203,7 @@
 		return A.data > B.data
 
 /obj/item/integrated_circuit/logic/binary/greater_than_or_equal
-	name = "greater_than or equal gate"
+	name = "greater than or equal gate"
 	desc = "This will output TRUE if the first input is greater than, or equal to the second input."
 	icon_state = "greater_than_or_equal"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH

@@ -147,7 +147,7 @@ Difficulty: Hard
 	Goto(target, move_to_delay, minimum_distance)
 
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/Collide(atom/A)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
 	if(charging)
 		if(isturf(A) || isobj(A) && A.density)
 			A.ex_act(EXPLODE_HEAVY)

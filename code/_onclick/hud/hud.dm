@@ -38,6 +38,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/obj/screen/action_intent
 	var/obj/screen/zone_select
 	var/obj/screen/pull_icon
+	var/obj/screen/rest_icon
 	var/obj/screen/throw_icon
 	var/obj/screen/module_store_icon
 

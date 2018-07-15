@@ -45,7 +45,7 @@
 	else
 		icon_state = initial(icon_state)
 
-/obj/machinery/transformer/CollidedWith(atom/movable/AM)
+/obj/machinery/transformer/Bumped(atom/movable/AM)
 	if(cooldown == 1)
 		return
 

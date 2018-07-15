@@ -123,10 +123,10 @@
 	EB.orbit(src, orbitsize, pick(FALSE, TRUE), rand(10, 25), pick(3, 4, 5, 6, 36))
 
 
-/obj/singularity/energy_ball/Collide(atom/A)
+/obj/singularity/energy_ball/Bump(atom/A)
 	dust_mobs(A)
 
-/obj/singularity/energy_ball/CollidedWith(atom/movable/AM)
+/obj/singularity/energy_ball/Bumped(atom/movable/AM)
 	dust_mobs(AM)
 
 /obj/singularity/energy_ball/orbit(obj/singularity/energy_ball/target)
@@ -193,7 +193,8 @@
 										/obj/machinery/gateway,
 										/obj/structure/lattice,
 										/obj/structure/grille,
-										/obj/machinery/the_singularitygen/tesla))
+										/obj/machinery/the_singularitygen/tesla,
+										/obj/structure/frame/machine))
 
 	for(var/A in typecache_filter_multi_list_exclusion(oview(source, zap_range+2), things_to_shock, blacklisted_tesla_types))
 		if(!(tesla_flags & TESLA_ALLOW_DUPLICATES) && LAZYACCESS(shocked_targets, A))
