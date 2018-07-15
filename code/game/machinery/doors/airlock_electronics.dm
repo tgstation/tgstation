@@ -20,7 +20,6 @@
 /obj/item/electronics/airlock/ui_data()
 	var/list/data = list()
 	var/list/regions = list()
-	var/unres_direction = 0
 
 	for(var/i in 1 to 7)
 		var/list/region = list()
