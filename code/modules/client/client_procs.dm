@@ -152,9 +152,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 GLOBAL_LIST_EMPTY(external_rsc_urls)
 #endif
 
-/client/vv_edit_var(var_name, var_value)
-	return var_name != NAMEOF(src, holder) && ..()
-
 /client/New(TopicData)
 	var/tdata = TopicData //save this for later use
 	chatOutput = new /datum/chatOutput(src)
