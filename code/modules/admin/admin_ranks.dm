@@ -136,7 +136,7 @@ GLOBAL_PROTECT(protected_ranks)
 			R.process_keyword(copytext(line, prev, next), previous_rights)
 			prev = next
 		previous_rights = R.rights
-	if(!CONFIG_GET(flag/admin_legacy_system) && !dbfail)
+	if(!CONFIG_GET(flag/admin_legacy_system) || dbfail)
 		if(CONFIG_GET(flag/load_legacy_ranks_only))
 			if(!no_update)
 				var/list/sql_ranks = list()
@@ -230,7 +230,7 @@ GLOBAL_PROTECT(protected_ranks)
 		if(!ckey || !rank)
 			continue
 		new /datum/admins(rank_names[rank], ckey, 0, 1)
-	if(!CONFIG_GET(flag/admin_legacy_system) && !dbfail)
+	if(!CONFIG_GET(flag/admin_legacy_system) || dbfail)
 		var/datum/DBQuery/query_load_admins = SSdbcore.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")] ORDER BY rank")
 		if(!query_load_admins.Execute())
 			message_admins("Error loading admins from database. Loading from backup.")
