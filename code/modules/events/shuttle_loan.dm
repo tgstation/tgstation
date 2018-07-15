@@ -178,16 +178,10 @@
 					var/decal = pick(/obj/effect/decal/cleanable/flour, /obj/effect/decal/cleanable/robot_debris, /obj/effect/decal/cleanable/oil)
 					new decal(pick_n_take(empty_shuttle_turfs))
 			if(PIZZA_DELIVERY)
-				shuttle_spawns.Add(/obj/item/pizzabox/margherita)
-				shuttle_spawns.Add(/obj/item/pizzabox/mushroom)
-				shuttle_spawns.Add(/obj/item/pizzabox/meat)
-				shuttle_spawns.Add(/obj/item/pizzabox/pineapple)
-				shuttle_spawns.Add(/obj/item/pizzabox/vegetable)
-				if(prob(10))
-					shuttle_spawns.Add(/obj/item/pizzabox/bomb)
-				else
-					shuttle_spawns.Add(/obj/item/pizzabox/margherita)
-			
+				var/naughtypizza = list(/obj/item/pizzabox/bomb,/obj/item/pizzabox/margherita/robo) //oh look another blaklist, for pizza nonetheless!
+				var/nicepizza = list(/obj/item/pizzabox/margherita, /obj/item/pizzabox/meat, /obj/item/pizzabox/vegetable, /obj/item/pizzabox/mushroom)
+				for(var/i in 1 to 6)
+					shuttle_spawns.Add(pick(prob(5) ? naughtypizza : nicepizza))
 			if(ITS_HIP_TO)
 				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/organic/hydroponics/beekeeping_fullkit]
 				pack.generate(pick_n_take(empty_shuttle_turfs))

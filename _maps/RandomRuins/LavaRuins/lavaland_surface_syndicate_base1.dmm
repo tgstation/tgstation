@@ -3902,7 +3902,7 @@
 	pixel_x = 2;
 	pixel_y = 6
 	},
-/obj/item/book/manual/barman_recipes,
+/obj/item/book/manual/wiki/barman_recipes,
 /obj/item/reagent_containers/food/drinks/shaker,
 /turf/open/floor/wood,
 /area/ruin/unpowered/syndicate_lava_base/bar)
