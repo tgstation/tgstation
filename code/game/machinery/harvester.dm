@@ -61,7 +61,10 @@
 		return
 	var/mob/living/carbon/C = occupant
 	if(!allow_clothing)
-		for(var/obj/item/I in C.held_items + C.get_equipped_items())
+		for(var/A in C.held_items + C.get_equipped_items())
+			if(!isitem(A))
+				continue
+			var/obj/item/I = A
 			if(!(I.item_flags & NODROP))
 				say("Subject may not have abiotic items on.")
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
@@ -70,7 +73,7 @@
 		say("Subject is not organic.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
 		return
-	if(!allow_living && (C.stat != DEAD && !C.has_trait(TRAIT_FAKEDEATH)))     //I mean, the machines scanners arent advanced enough to tell you're alive
+	if(!allow_living && !(C.stat == DEAD || C.has_trait(TRAIT_FAKEDEATH)))     //I mean, the machines scanners arent advanced enough to tell you're alive
 		say("Subject is still alive.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
 		return
@@ -81,8 +84,8 @@
 		return
 	var/mob/living/carbon/C = occupant
 	operation_order = list() //we're pretty much inverting C.bodyparts here, since we want chest and head last, wich are otherwise the first to go
-	for(var/i = 0 to LAZYLEN(C.bodyparts)-1) //minus one, because arrays start at 1, and otherwise we'd have the index of 6-6=0=runtime
-		operation_order += C.bodyparts[LAZYLEN(C.bodyparts)-i]
+	for(var/i in LAZYLEN(C.bodyparts) to 1 step -1)
+		operation_order += C.bodyparts[i]
 	harvesting = TRUE
 	visible_message("<span class='notice'>The [name] begins warming up!</span>")
 	update_icon(TRUE)
@@ -92,21 +95,32 @@
 	update_icon()
 	if(!harvesting || state_open || !powered(EQUIP) || !occupant || !iscarbon(occupant))
 		return
-	playsound(src, 'sound/machines/juicer.ogg', 50, 1)
+	playsound(src, 'sound/machines/juicer.ogg', 20, 1)
 	var/mob/living/carbon/C = occupant
 	if(!LAZYLEN(operation_order)) //The list is empty, so we're done here
-		C.gib()
 		end_harvesting()
 		return
+	var/turf/target
+	for(var/adir in list(EAST,NORTH,SOUTH,WEST))
+		to_chat(world,"[adir]")
+		var/turf/T = get_step(src,adir)
+		if(!T)
+			continue
+		if(istype(T, /turf/closed))
+			continue
+		target = T
+		break
+	if(!target)
+		target = get_turf(src)
 	for(var/obj/item/bodypart/BP in operation_order) //first we do non-essential limbs
 		BP.drop_limb()
 		C.emote("scream")
 		if(BP.body_zone != "chest")
-			BP.forceMove(locate(x+1,y,z))    //Move the limbs right next to it, except chest, that's a weird one
+			BP.forceMove(target)    //Move the limbs right next to it, except chest, that's a weird one
 			BP.drop_organs()
 		else
 			for(var/obj/item/organ/O in BP.dismember())
-				O.forceMove(locate(x+1,y,z)) //Some organs, like chest ones, are different so we need to manually move them
+				O.forceMove(target) //Some organs, like chest ones, are different so we need to manually move them
 		operation_order.Remove(BP)
 		break
 	use_power(5000)
@@ -118,21 +132,22 @@
 	say("Subject has been succesfuly harvested.")
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, 0)
 
-/obj/machinery/harvester/attackby(obj/item/I, mob/user, params)
+/obj/machinery/harvester/screwdriver_act(mob/living/user, obj/item/I)
 	if(!state_open && !occupant)
 		if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
 			return
+
+/obj/machinery/harvester/crowbar_act(mob/living/user, obj/item/I)
 	if(default_pry_open(I))
 		return
 	if(default_deconstruction_crowbar(I))
 		return
-	return ..()
 
 /obj/machinery/harvester/default_pry_open(obj/item/I) //wew
 	. = !(state_open || panel_open || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR //We removed is_operational() here
 	if(.)
 		I.play_tool_sound(src, 50)
-		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
+		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open [src].</span>")
 		open_machine()
 
 /obj/machinery/harvester/emag_act(mob/user)
@@ -140,7 +155,7 @@
 		return
 	obj_flags |= EMAGGED
 	allow_living = TRUE
-	to_chat(user, "<span class='warning'>You overload \the [src]'s lifesign scanners.</span>")
+	to_chat(user, "<span class='warning'>You overload [src]'s lifesign scanners.</span>")
 
 /obj/machinery/harvester/container_resist(mob/living/user)
 	if(!harvesting)
@@ -148,7 +163,7 @@
 			"<span class='notice'>You climb out of [src]!</span>")
 		open_machine()
 	else
-		to_chat(user,"<span class='warning'>The [name] is active and can't be opened!</span>") //rip
+		to_chat(user,"<span class='warning'>[src] is active and can't be opened!</span>") //rip
 
 /obj/machinery/harvester/Exited(atom/movable/user)
 	if (!state_open && user == occupant)
