@@ -170,8 +170,6 @@
 		else
 			HTML += "<s>\[[initial(O.name)]\]</s>: [initial(O.desc)]<br>"
 
-	user << browse(HTML, "window=integrated_printer;size=600x500;border=1;can_resize=1;can_close=1;can_minimize=1")
-
 	popup.set_content(HTML)
 	popup.open()
 
