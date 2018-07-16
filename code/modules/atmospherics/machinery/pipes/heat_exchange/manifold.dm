@@ -6,13 +6,13 @@
 	desc = "A manifold composed of regular pipes."
 
 	dir = SOUTH
-	initialize_directions_he = EAST|NORTH|WEST
+	initialize_directions = EAST|NORTH|WEST
 
 	device_type = TRINARY
 
 	construction_type = /obj/item/pipe/trinary
 	pipe_state = "he_manifold"
-	
+
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
@@ -26,13 +26,13 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/SetInitDirections()
 	switch(dir)
 		if(NORTH)
-			initialize_directions_he = EAST|SOUTH|WEST
+			initialize_directions = EAST|SOUTH|WEST
 		if(SOUTH)
-			initialize_directions_he = WEST|NORTH|EAST
+			initialize_directions = WEST|NORTH|EAST
 		if(EAST)
-			initialize_directions_he = SOUTH|WEST|NORTH
+			initialize_directions = SOUTH|WEST|NORTH
 		if(WEST)
-			initialize_directions_he = NORTH|EAST|SOUTH
+			initialize_directions = NORTH|EAST|SOUTH
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/update_icon()
 	var/invis = invisibility ? "-f" : ""
@@ -53,13 +53,13 @@
 	name = "4-way pipe manifold"
 	desc = "A manifold composed of heat-exchanging pipes."
 
-	initialize_directions_he = NORTH|SOUTH|EAST|WEST
+	initialize_directions = NORTH|SOUTH|EAST|WEST
 
 	device_type = QUATERNARY
 
 	construction_type = /obj/item/pipe/quaternary
 	pipe_state = "he_manifold4w"
-	
+
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
@@ -71,7 +71,7 @@
 	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/SetInitDirections()
-	initialize_directions_he = initial(initialize_directions_he)
+	initialize_directions = initial(initialize_directions)
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/update_icon()
 	var/invis = invisibility ? "-f" : ""

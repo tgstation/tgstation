@@ -62,6 +62,7 @@ RSF
 	// Change mode
 
 /obj/item/rsf/afterattack(atom/A, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if (!(istype(A, /obj/structure/table) || isfloorturf(A)))
@@ -159,6 +160,7 @@ RSF
 		matter++
 
 /obj/item/cookiesynth/afterattack(atom/A, mob/user, proximity)
+	. = ..()
 	if(cooldown > world.time)
 		return
 	if(!proximity)

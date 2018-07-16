@@ -40,6 +40,10 @@
 	add_overlay(hologram_projection)
 	add_overlay(hologram_ship)
 
+/obj/machinery/shuttle_manipulator/can_interact(mob/user)
+	// Only admins can use this, but they can use it from anywhere
+	return user.client && check_rights_for(user.client, R_ADMIN)
+
 /obj/machinery/shuttle_manipulator/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.admin_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -224,7 +228,11 @@
 	if(existing_shuttle)
 		existing_shuttle.jumpToNullSpace()
 
+	var/list/force_memory = preview_shuttle.movement_force
+	preview_shuttle.movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
 	preview_shuttle.initiate_docking(D)
+	preview_shuttle.movement_force = force_memory
+	
 	. = preview_shuttle
 
 	// Shuttle state involves a mode and a timer based on world.time, so

@@ -73,7 +73,7 @@
 	return A.totalStealth() == stat_value
 
 /datum/bounty/virus/transmit
-	stat_name = "transmittable"
+	stat_name = "transmissible"
 
 /datum/bounty/virus/transmit/accepts_virus(V)
 	var/datum/disease/advance/A = V

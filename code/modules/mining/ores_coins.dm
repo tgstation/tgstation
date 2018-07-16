@@ -337,7 +337,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/index = sideslist.Find(coinflip)
 	message_admins("coinflip landed on [coinflip] which is [index] in sideslist")
 	if (index==2)//tails
-		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] promply falls over, dead!</span>")
+		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] promptly falls over, dead!</span>")
 		user.adjustOxyLoss(200)
 		user.death(0)
 	else

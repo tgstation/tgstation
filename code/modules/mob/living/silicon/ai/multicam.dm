@@ -88,10 +88,6 @@
 	icon_state = "room_background"
 	flags_1 = NOJAUNT_1
 
-/turf/open/ai_visible/Initialize()
-	. = ..()
-	obscured = image(null, src, null)
-
 /area/ai_multicam_room
 	name = "ai_multicam_room"
 	icon_state = "ai_camera_room"
@@ -128,6 +124,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	var/list/cameras_telegraphed = list()
 	var/telegraph_cameras = TRUE
 	var/telegraph_range = 7
+	ai_detector_color = COLOR_ORANGE
 
 /mob/camera/aiEye/pic_in_pic/GetViewerClient()
 	if(screen && screen.ai)
@@ -143,6 +140,10 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	else
 		GLOB.cameranet.visibility(src)
 	update_camera_telegraphing()
+	update_ai_detect_hud()
+
+/mob/camera/aiEye/pic_in_pic/get_visible_turfs()
+	return screen ? screen.get_visible_turfs() : list()
 
 /mob/camera/aiEye/pic_in_pic/proc/update_camera_telegraphing()
 	if(!telegraph_cameras)

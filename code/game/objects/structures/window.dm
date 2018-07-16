@@ -138,7 +138,7 @@
 		return FALSE
 	return 1
 
-/obj/structure/window/CheckExit(atom/movable/O as mob|obj, target)
+/obj/structure/window/CheckExit(atom/movable/O, turf/target)
 	if(istype(O) && (O.pass_flags & PASSGLASS))
 		return 1
 	if(get_dir(O.loc, target) == dir)
@@ -207,15 +207,12 @@
 				else if(state == WINDOW_OUT_OF_FRAME)
 					to_chat(user, "<span class='notice'>You begin to [anchored ? "unscrew the frame from":"screw the frame to"] the floor...</span>")
 					if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
-						anchored = !anchored
-						update_nearby_icons()
+						setAnchored(!anchored)
 						to_chat(user, "<span class='notice'>You [anchored ? "fasten the frame to":"unfasten the frame from"] the floor.</span>")
 			else //if we're not reinforced, we don't need to check or update state
 				to_chat(user, "<span class='notice'>You begin to [anchored ? "unscrew the window from":"screw the window to"] the floor...</span>")
 				if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
-					anchored = !anchored
-					air_update_turf(TRUE)
-					update_nearby_icons()
+					setAnchored(!anchored)
 					to_chat(user, "<span class='notice'>You [anchored ? "fasten the window to":"unfasten the window from"] the floor.</span>")
 			return
 
@@ -239,6 +236,11 @@
 				qdel(src)
 			return
 	return ..()
+
+/obj/structure/window/setAnchored(anchorvalue)
+	..()
+	air_update_turf(TRUE)
+	update_nearby_icons()
 
 /obj/structure/window/proc/check_state(checked_state)
 	if(state == checked_state)
@@ -292,6 +294,7 @@
 				var/obj/item/I = i
 				I.forceMove(drop_location())
 				transfer_fingerprints_to(I)
+				debris -= I
 	qdel(src)
 	update_nearby_icons()
 
@@ -438,7 +441,7 @@
 
 /obj/structure/window/plasma/reinforced
 	name = "reinforced plasma window"
-	desc = "A window made out of a plasma-silicate alloy and a rod matrice. It looks hopelessly tough to break and is most likely nigh fireproof."
+	desc = "A window made out of a plasma-silicate alloy and a rod matrix. It looks hopelessly tough to break and is most likely nigh fireproof."
 	icon_state = "plasmarwindow"
 	reinf = TRUE
 	heat_resistance = 50000

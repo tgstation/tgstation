@@ -31,7 +31,7 @@
 
 /obj/item/melee/synthetic_arm_blade
 	name = "synthetic arm blade"
-	desc = "A grotesque blade that on closer inspection seems made of synthentic flesh, it still feels like it would hurt very badly as a weapon."
+	desc = "A grotesque blade that on closer inspection seems made of synthetic flesh, it still feels like it would hurt very badly as a weapon."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
@@ -87,6 +87,51 @@
 	var/obj/item/storage/belt/sabre/B = S
 	if(istype(B))
 		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+
+/obj/item/melee/sabre/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] is trying to cut off all [user.p_their()] limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!</span>")
+	var/i = 0
+	var/originally_nodropped = item_flags & NODROP
+	item_flags |= NODROP
+	if(iscarbon(user))
+		var/mob/living/carbon/Cuser = user
+		var/obj/item/bodypart/holding_bodypart = Cuser.get_holding_bodypart_of_item(src)
+		var/list/limbs_to_dismember
+		var/list/arms = list()
+		var/list/legs = list()
+		var/obj/item/bodypart/bodypart
+
+		for(bodypart in Cuser.bodyparts)
+			if(bodypart == holding_bodypart)
+				continue
+			if(bodypart.body_part & ARMS)
+				arms += bodypart
+			else if (bodypart.body_part & LEGS)
+				legs += bodypart
+
+		limbs_to_dismember = arms + legs
+		if(holding_bodypart)
+			limbs_to_dismember += holding_bodypart
+		
+		var/speedbase = abs((4 SECONDS) / limbs_to_dismember.len)
+		for(bodypart in limbs_to_dismember)
+			i++
+			addtimer(CALLBACK(src, .proc/suicide_dismember, user, bodypart), speedbase * i)
+	addtimer(CALLBACK(src, .proc/manual_suicide, user, originally_nodropped), (5 SECONDS) * i)
+	return MANUAL_SUICIDE
+
+/obj/item/melee/sabre/proc/suicide_dismember(mob/living/user, obj/item/bodypart/affecting)
+	if(!QDELETED(affecting) && affecting.dismemberable && affecting.owner == user && !QDELETED(user))
+		playsound(user, hitsound, 25, 1)
+		affecting.dismember(BRUTE)
+		user.adjustBruteLoss(20)
+
+/obj/item/melee/sabre/proc/manual_suicide(mob/living/user, originally_nodropped)
+	if(!QDELETED(user))
+		user.adjustBruteLoss(200)
+		user.death(FALSE)
+	if(!originally_nodropped)
+		item_flags &= ~NODROP
 
 /obj/item/melee/classic_baton
 	name = "police baton"
@@ -236,11 +281,11 @@
 			consume_turf(T)
 
 /obj/item/melee/supermatter_sword/afterattack(target, mob/user, proximity_flag)
+	. = ..()
 	if(user && target == user)
 		user.dropItemToGround(src)
 	if(proximity_flag)
 		consume_everything(target)
-	..()
 
 /obj/item/melee/supermatter_sword/throw_impact(target)
 	..()
@@ -272,13 +317,13 @@
 /obj/item/melee/supermatter_sword/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!</span>")
 	user.dropItemToGround(src, TRUE)
-	shard.CollidedWith(user)
+	shard.Bumped(user)
 
 /obj/item/melee/supermatter_sword/proc/consume_everything(target)
 	if(isnull(target))
 		shard.Consume()
 	else if(!isturf(target))
-		shard.CollidedWith(target)
+		shard.Bumped(target)
 	else
 		consume_turf(target)
 
@@ -310,11 +355,11 @@
 	hitsound = 'sound/weapons/chainhit.ogg'
 
 /obj/item/melee/curator_whip/afterattack(target, mob/user, proximity_flag)
+	. = ..()
 	if(ishuman(target) && proximity_flag)
 		var/mob/living/carbon/human/H = target
 		H.drop_all_held_items()
 		H.visible_message("<span class='danger'>[user] disarms [H]!</span>", "<span class='userdanger'>[user] disarmed you!</span>")
-	..()
 
 /obj/item/melee/roastingstick
 	name = "advanced roasting stick"
@@ -396,6 +441,7 @@
 		update_icon()
 
 /obj/item/melee/roastingstick/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	if (!on)
 		return
 	if (is_type_in_typecache(target, ovens))

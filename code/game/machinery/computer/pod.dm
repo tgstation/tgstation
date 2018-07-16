@@ -130,4 +130,4 @@
 
 /obj/machinery/computer/pod/old/swf
 	name = "\improper Magix System IV"
-	desc = "An arcane artifact that holds much magic. Running E-Knock 2.2: Sorceror's Edition."
+	desc = "An arcane artifact that holds much magic. Running E-Knock 2.2: Sorcerer's Edition."

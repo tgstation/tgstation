@@ -60,7 +60,7 @@
 /turf/open/floor/plasteel/brown/telecomms
 	initial_gas_mix = "n2=100;TEMP=80"
 /turf/open/floor/plasteel/brown/telecomms/mainframe
-	name = "mainframe Floor"
+	name = "mainframe floor"
 /turf/open/floor/plasteel/brown/corner
 	icon_state = "browncorner"
 
@@ -349,9 +349,9 @@
 /turf/open/floor/plasteel/vault/telecomms
 	initial_gas_mix = "n2=100;TEMP=80"
 /turf/open/floor/plasteel/vault/telecomms/mainframe
-	name = "mainframe Floor"
+	name = "mainframe floor"
 /turf/open/floor/plasteel/vault/killroom
-	name = "killroom Floor"
+	name = "killroom floor"
 	initial_gas_mix = "n2=500;TEMP=80"
 
 /turf/open/floor/plasteel/cult

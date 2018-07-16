@@ -62,7 +62,7 @@
 	for(var/i in GLOB.cardinals)
 		D.set_vehicle_dir_layer(i, BELOW_MOB_LAYER)
 
-/obj/vehicle/ridden/space/speedwagon/Collide(atom/movable/A)
+/obj/vehicle/ridden/space/speedwagon/Bump(atom/movable/A)
 	. = ..()
 	if(A.density && has_buckled_mobs())
 		var/atom/throw_target = get_edge_target_turf(A, dir)
@@ -85,4 +85,4 @@
 	if(has_buckled_mobs())
 		for(var/atom/A in range(2, src))
 			if(!(A in buckled_mobs))
-				Collide(A)
+				Bump(A)

@@ -188,10 +188,14 @@ Difficulty: Medium
 			"<span class='notice'>You hold [src] skyward, dispelling the storm!</span>")
 			playsound(user, 'sound/magic/staff_change.ogg', 200, 0)
 			A.wind_down()
+			log_game("[user] ([key_name(user)]) has dispelled a storm at [AREACOORD(user_turf)]")
 			return
 	else
 		A = new storm_type(list(user_turf.z))
 		A.name = "staff storm"
+		log_game("[user] ([key_name(user)]) has summoned [A] at [AREACOORD(user_turf)]")
+		if (is_special_character(user))
+			message_admins("[A] has been summoned in [ADMIN_VERBOSEJMP(user_turf)] by [user] ([key_name_admin(user)], a non-antagonist")
 		A.area_type = user_area.type
 		A.telegraph_duration = 100
 		A.end_duration = 100
