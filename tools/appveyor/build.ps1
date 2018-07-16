@@ -1,7 +1,7 @@
 if(!(Test-Path -Path "C:/byond")){
     bash tools/appveyor/download_byond.sh
     [System.IO.Compression.ZipFile]::ExtractToDirectory("C:/byond.zip", "C:/")
-    C:/Remove-Item byond.zip
+    Remove-Item C:/byond.zip
 }
 
 Set-Location $env:APPVEYOR_BUILD_FOLDER
