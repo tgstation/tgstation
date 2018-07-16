@@ -21,6 +21,7 @@
 		return ..()
 
 /obj/item/stack/telecrystal/afterattack(obj/item/I, mob/user, proximity)
+	. = ..()
 	if(istype(I, /obj/item/cartridge/virus/frame))
 		var/obj/item/cartridge/virus/frame/cart = I
 		if(!cart.charges)
@@ -29,8 +30,6 @@
 		cart.telecrystals += amount
 		use(amount)
 		to_chat(user, "<span class='notice'>You slot [src] into [cart].  The next time it's used, it will also give telecrystals.</span>")
-	else
-		return ..()
 
 /obj/item/stack/telecrystal/five
 	amount = 5

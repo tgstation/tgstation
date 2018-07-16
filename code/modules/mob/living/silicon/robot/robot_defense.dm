@@ -1,5 +1,8 @@
 /mob/living/silicon/robot/attackby(obj/item/I, mob/living/user)
 	if(hat_offset != INFINITY && user.a_intent == INTENT_HELP && is_type_in_typecache(I, equippable_hats))
+		if(!(I.slot_flags & ITEM_SLOT_HEAD))
+			to_chat(user, "<span class='warning'>You can't quite fit [I] onto [src]'s head.</span>")
+			return
 		to_chat(user, "<span class='notice'>You begin to place [I] on [src]'s head...</span>")
 		to_chat(src, "<span class='notice'>[user] is placing [I] on your head...</span>")
 		if(do_after(user, 30, target = src))
@@ -44,7 +47,7 @@
 		damage = rand(20, 40)
 	else
 		damage = rand(5, 35)
-	damage = round(damage / 2) // borgs recieve half damage
+	damage = round(damage / 2) // borgs receive half damage
 	adjustBruteLoss(damage)
 	updatehealth()
 

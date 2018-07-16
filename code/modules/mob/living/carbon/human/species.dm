@@ -708,7 +708,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		H.losebreath = 0
 
 		var/takes_crit_damage = (!H.has_trait(TRAIT_NOCRITDAMAGE))
-		if((H.health < HEALTH_THRESHOLD_CRIT) && takes_crit_damage)
+		if((H.health < H.crit_modifier()) && takes_crit_damage)
 			H.adjustBruteLoss(1)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
@@ -1097,13 +1097,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			. -= 2
 		else if(istype(T) && T.allow_thrust(0.01, H))
 			. -= 2
-		else if(flightpack && F.allow_thrust(0.01, src))
-			. -= 2
 
 	if(flightpack && F.boost)
 		. -= F.boost_speed
 	else if(flightpack && F.brake)
-		. += 2
+		. += 1
 
 	if(!ignoreslow && !flightpack && gravity)
 		if(H.wear_suit)
@@ -1514,10 +1512,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	// +/- 50 degrees from 310K is the 'safe' zone, where no damage is dealt.
 	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !H.has_trait(TRAIT_RESISTHEAT))
 		//Body temperature is too hot.
-		
+
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
-		
+
 		var/burn_damage
 		switch(H.bodytemperature)
 			if(BODYTEMP_HEAT_DAMAGE_LIMIT to 400)
@@ -1622,7 +1620,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(H.wear_suit && ((H.wear_suit.body_parts_covered & HANDS) || (H.wear_suit.body_parts_covered & ARMS)))
 			arm_clothes = H.wear_suit
 		if(arm_clothes)
-			burning_items += arm_clothes
+			burning_items |= arm_clothes
 
 		//LEGS & FEET//
 		var/obj/item/clothing/leg_clothes = null
@@ -1633,7 +1631,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(H.wear_suit && ((H.wear_suit.body_parts_covered & FEET) || (H.wear_suit.body_parts_covered & LEGS)))
 			leg_clothes = H.wear_suit
 		if(leg_clothes)
-			burning_items += leg_clothes
+			burning_items |= leg_clothes
 
 		for(var/X in burning_items)
 			var/obj/item/I = X

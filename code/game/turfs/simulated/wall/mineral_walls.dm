@@ -80,7 +80,7 @@
 	radiate()
 	..()
 
-/turf/closed/wall/mineral/uranium/CollidedWith(atom/movable/AM)
+/turf/closed/wall/mineral/uranium/Bumped(atom/movable/AM)
 	radiate()
 	..()
 

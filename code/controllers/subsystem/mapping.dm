@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/z_list
 	var/datum/space_level/transit
 	var/datum/space_level/empty_space
-	var/dmm_suite/loader
+	var/datum/maploader/loader
 
 /datum/controller/subsystem/mapping/PreInit()
 	if(!config)
@@ -49,7 +49,11 @@ SUBSYSTEM_DEF(mapping)
 	if(initialized)
 		return
 	if(config.defaulted)
-		to_chat(world, "<span class='boldannounce'>Unable to load next map config, defaulting to Box Station</span>")
+		var/old_config = config
+		config = global.config.defaultmap
+		if(!config || config.defaulted)
+			to_chat(world, "<span class='boldannounce'>Unable to load next or default map config, defaulting to Box Station</span>")
+			config = old_config
 	loader = new
 	loadWorld()
 	repopulate_sorted_areas()
@@ -90,7 +94,6 @@ SUBSYSTEM_DEF(mapping)
 	// Set up Z-level transitions.
 	setup_map_transitions()
 	generate_station_area_list()
-	QDEL_NULL(loader)
 	initialize_reserved_level()
 	..()
 
@@ -175,7 +178,8 @@ SUBSYSTEM_DEF(mapping)
 	var/total_z = 0
 	for (var/file in files)
 		var/full_path = "_maps/[path]/[file]"
-		var/bounds = loader.load_map(file(full_path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
+		var/datum/parsed_map/pm = loader.load_map(file(full_path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
+		var/bounds = pm?.bounds
 		files[file] = total_z  // save the start Z of this file
 		total_z += bounds[MAP_MAXZ] - bounds[MAP_MINZ] + 1
 
@@ -199,7 +203,8 @@ SUBSYSTEM_DEF(mapping)
 	// load the maps
 	for (var/file in files)
 		var/full_path = "_maps/[path]/[file]"
-		if(!loader.load_map(file(full_path), 0, 0, start_z + files[file], no_changeturf = TRUE))
+		var/datum/parsed_map/parsed = loader.load_map(file(full_path), 0, 0, start_z + files[file], no_changeturf = TRUE)
+		if(!parsed?.bounds)
 			errorList |= full_path
 	if(!silent)
 		INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")

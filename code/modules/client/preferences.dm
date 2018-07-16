@@ -70,7 +70,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain")
 
-	var/list/custom_names = list("human", "clown", "mime", "ai", "cyborg", "religion", "deity")
+	var/list/custom_names = list()
 	var/prefered_security_department = SEC_DEPT_RANDOM
 
 		//Mob preview
@@ -102,9 +102,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	// 0 = character settings, 1 = game preferences
 	var/current_tab = 0
 
-		// OOC Metadata:
-	var/metadata = ""
-
 	var/unlock_content = 0
 
 	var/list/ignoring = list()
@@ -125,11 +122,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/New(client/C)
 	parent = C
-	custom_names["human"] = random_unique_name()
-	custom_names["ai"] = pick(GLOB.ai_names)
-	custom_names["cyborg"] = pick(GLOB.ai_names)
-	custom_names["clown"] = pick(GLOB.clown_names)
-	custom_names["mime"] = pick(GLOB.mime_names)
+
+	for(var/custom_name_id in GLOB.preferences_custom_names)
+		custom_names[custom_name_id] = get_default_name(custom_name_id)
+	
 	UI_style = GLOB.available_ui_styles[1]
 	if(istype(C))
 		if(!IsGuestKey(C.key))
@@ -211,17 +207,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a><BR>"
 
 			dat += "<b>Special Names:</b><BR>"
-			dat += "<a href ='?_src_=prefs;preference=human_name;task=input'><b>Backup Human Name:</b> [custom_names["human"]]</a> "
+			var/old_group
+			for(var/custom_name_id in GLOB.preferences_custom_names)
+				var/namedata = GLOB.preferences_custom_names[custom_name_id]
+				if(!old_group)
+					old_group = namedata["group"]
+				else if(old_group != namedata["group"])
+					old_group = namedata["group"]
+					dat += "<br>"
+				dat += "<a href ='?_src_=prefs;preference=[custom_name_id];task=input'><b>[namedata["pref_name"]]:</b> [custom_names[custom_name_id]]</a> "
 			dat += "<br>"
-			dat += "<a href ='?_src_=prefs;preference=clown_name;task=input'><b>Clown:</b> [custom_names["clown"]]</a> "
-			dat += "<a href ='?_src_=prefs;preference=mime_name;task=input'><b>Mime:</b> [custom_names["mime"]]</a>"
-			dat += "<br>"
-			dat += "<a href ='?_src_=prefs;preference=ai_name;task=input'><b>AI:</b> [custom_names["ai"]]</a> "
-			dat += "<a href ='?_src_=prefs;preference=cyborg_name;task=input'><b>Cyborg:</b> [custom_names["cyborg"]]</a>"
-			dat += "<br>"
-			dat += "<a href ='?_src_=prefs;preference=religion_name;task=input'><b>Chaplain religion:</b> [custom_names["religion"]] </a>"
-			dat += "<a href ='?_src_=prefs;preference=deity_name;task=input'><b>Chaplain deity:</b> [custom_names["deity"]]</a><BR>"
-
 			dat += "<b>Custom job preferences:</b><BR>"
 			dat += "<a href='?_src_=prefs;preference=sec_dept;task=input'><b>Prefered security department:</b> [prefered_security_department]</a><BR></td>"
 
@@ -578,9 +573,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if(unlock_content || check_rights_for(user.client, R_ADMIN))
 					dat += "<b>OOC Color:</b> <span style='border: 1px solid #161616; background-color: [ooccolor ? ooccolor : GLOB.normal_ooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
-
-			if(CONFIG_GET(flag/allow_metadata))
-				dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'>Edit </a><br>"
 
 			dat += "</td>"
 
@@ -1072,6 +1064,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					random_character()
 
 		if("input")
+
+			if(href_list["preference"] in GLOB.preferences_custom_names)
+				ask_for_custom_name(user,href_list["preference"])
+
+
 			switch(href_list["preference"])
 				if("ghostform")
 					if(unlock_content)
@@ -1116,16 +1113,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_age)
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
-				if("metadata")
-					var/new_metadata = input(user, "Enter any information you'd like others to see, such as Roleplay-preferences:", "Game Preference" , metadata)  as message|null
-					if(new_metadata)
-						metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
-
 				if("hair")
 					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference","#"+hair_color) as color|null
 					if(new_hair)
 						hair_color = sanitize_hexcolor(new_hair)
-
 
 				if("hair_style")
 					var/new_hair_style
@@ -1312,55 +1303,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_loc)
 						uplink_spawn_loc = new_loc
 
-				if("human_name")
-					var/new_human_name = reject_bad_name( input(user, "Choose your character's backup human name, used in the event you are assigned a command role as another species:", "Character Preference")  as text|null )
-					if(new_human_name)
-						custom_names["human"] = new_human_name
-					else
-						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
-
-				if("clown_name")
-					var/new_clown_name = reject_bad_name( input(user, "Choose your character's clown name:", "Character Preference")  as text|null )
-					if(new_clown_name)
-						custom_names["clown"] = new_clown_name
-					else
-						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
-
-				if("mime_name")
-					var/new_mime_name = reject_bad_name( input(user, "Choose your character's mime name:", "Character Preference")  as text|null )
-					if(new_mime_name)
-						custom_names["mime"] = new_mime_name
-					else
-						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
-
-				if("ai_name")
-					var/new_ai_name = reject_bad_name( input(user, "Choose your character's AI name:", "Character Preference")  as text|null, 1 )
-					if(new_ai_name)
-						custom_names["ai"] = new_ai_name
-					else
-						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>")
-
-				if("cyborg_name")
-					var/new_cyborg_name = reject_bad_name( input(user, "Choose your character's cyborg name:", "Character Preference")  as text|null, 1 )
-					if(new_cyborg_name)
-						custom_names["cyborg"] = new_cyborg_name
-					else
-						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>")
-
-				if("religion_name")
-					var/new_religion_name = reject_bad_name( input(user, "Choose your character's religion:", "Character Preference")  as text|null )
-					if(new_religion_name)
-						custom_names["religion"] = new_religion_name
-					else
-						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
-
-				if("deity_name")
-					var/new_deity_name = reject_bad_name( input(user, "Choose your character's deity:", "Character Preference")  as text|null )
-					if(new_deity_name)
-						custom_names["deity"] = new_deity_name
-					else
-						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
-
 				if("sec_dept")
 					var/department = input(user, "Choose your prefered security department:", "Security Departments") as null|anything in GLOB.security_depts_prefs
 					if(department)
@@ -1457,7 +1399,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("lobby_music")
 					toggles ^= SOUND_LOBBY
-					if((toggles & SOUND_LOBBY) && user.client)
+					if((toggles & SOUND_LOBBY) && user.client && isnewplayer(user))
 						user.client.playtitlemusic()
 					else
 						user.stop_sound_channel(CHANNEL_LOBBYMUSIC)
@@ -1579,3 +1521,36 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.update_body()
 		character.update_hair()
 		character.update_body_parts()
+
+/datum/preferences/proc/get_default_name(name_id)
+	switch(name_id)
+		if("human")
+			return random_unique_name()
+		if("ai")
+			return pick(GLOB.ai_names)
+		if("cyborg")
+			return DEFAULT_CYBORG_NAME
+		if("clown")
+			return pick(GLOB.clown_names)
+		if("mime")
+			return pick(GLOB.mime_names)
+	return random_unique_name()
+
+/datum/preferences/proc/ask_for_custom_name(mob/user,name_id)
+	var/namedata = GLOB.preferences_custom_names[name_id]
+	if(!namedata)
+		return
+	
+	var/raw_name = input(user, "Choose your character's [namedata["qdesc"]]:","Character Preference") as text|null
+	if(!raw_name)
+		if(namedata["allow_null"])
+			custom_names[name_id] = get_default_name(name_id)
+		else
+			return
+	else
+		var/sanitized_name = reject_bad_name(raw_name,namedata["allow_numbers"])
+		if(!sanitized_name)
+			to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z,[namedata["allow_numbers"] ? ",0-9," : ""] -, ' and .</font>")
+			return
+		else
+			custom_names[name_id] = sanitized_name

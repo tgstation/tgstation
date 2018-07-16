@@ -10,10 +10,10 @@
 	taste_mult = 1.2
 	var/toxpwr = 1.5
 
-/datum/reagent/toxin/on_mob_life(mob/living/M)
+/datum/reagent/toxin/on_mob_life(mob/living/carbon/M)
 	if(toxpwr)
 		M.adjustToxLoss(toxpwr*REM, 0)
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/toxin/amatoxin
@@ -48,9 +48,8 @@
 		M.domutcheck()
 	..()
 
-/datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/M)
-	if(istype(M))
-		M.apply_effect(5,EFFECT_IRRADIATE,0)
+/datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/C)
+	C.apply_effect(5,EFFECT_IRRADIATE,0)
 	return ..()
 
 /datum/reagent/toxin/plasma
@@ -63,12 +62,10 @@
 	color = "#8228A0"
 	toxpwr = 3
 
-/datum/reagent/toxin/plasma/on_mob_life(mob/living/M)
+/datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent("epinephrine"))
 		holder.remove_reagent("epinephrine", 2*REM)
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		C.adjustPlasma(20)
+	C.adjustPlasma(20)
 	return ..()
 
 /datum/reagent/toxin/plasma/reaction_obj(obj/O, reac_volume)
@@ -84,8 +81,6 @@
 	return
 
 /datum/reagent/toxin/plasma/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
-	if(!isliving(M))
-		return
 	if(method == TOUCH || method == VAPOR)
 		M.adjust_fire_stacks(reac_volume / 5)
 		return
@@ -99,19 +94,17 @@
 	toxpwr = 0
 	taste_description = "acid"
 
-/datum/reagent/toxin/lexorin/on_mob_life(mob/living/M)
+/datum/reagent/toxin/lexorin/on_mob_life(mob/living/carbon/C)
 	. = TRUE
 
-	if(M.has_trait(TRAIT_NOBREATH))
+	if(C.has_trait(TRAIT_NOBREATH))
 		. = FALSE
 
 	if(.)
-		M.adjustOxyLoss(5, 0)
-		if(iscarbon(M))
-			var/mob/living/carbon/C = M
-			C.losebreath += 2
+		C.adjustOxyLoss(5, 0)
+		C.losebreath += 2
 		if(prob(20))
-			M.emote("gasp")
+			C.emote("gasp")
 	..()
 
 /datum/reagent/toxin/slimejelly
@@ -123,7 +116,7 @@
 	taste_description = "slime"
 	taste_mult = 1.3
 
-/datum/reagent/toxin/slimejelly/on_mob_life(mob/living/M)
+/datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/M)
 	if(prob(10))
 		to_chat(M, "<span class='danger'>Your insides are burning!</span>")
 		M.adjustToxLoss(rand(20,60)*REM, 0)
@@ -141,7 +134,7 @@
 	toxpwr = 0
 	taste_description = "mint"
 
-/datum/reagent/toxin/minttoxin/on_mob_life(mob/living/M)
+/datum/reagent/toxin/minttoxin/on_mob_life(mob/living/carbon/M)
 	if(M.has_trait(TRAIT_FAT))
 		M.gib()
 	return ..()
@@ -163,16 +156,12 @@
 	toxpwr = 0.5
 	taste_description = "death"
 
-/datum/reagent/toxin/zombiepowder/on_mob_add(mob/M)
+/datum/reagent/toxin/zombiepowder/on_mob_add(mob/living/L)
 	..()
-	if(isliving(M))
-		var/mob/living/L = M
-		L.fakedeath(id)
+	L.fakedeath(id)
 
-/datum/reagent/toxin/zombiepowder/on_mob_delete(mob/M)
-	if(isliving(M))
-		var/mob/living/L = M
-		L.cure_fakedeath(id)
+/datum/reagent/toxin/zombiepowder/on_mob_delete(mob/living/L)
+	L.cure_fakedeath(id)
 	..()
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/carbon/M)
@@ -188,7 +177,7 @@
 	toxpwr = 0
 	taste_description = "sourness"
 
-/datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/M)
+/datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/M)
 	M.hallucination += 5
 	return ..()
 
@@ -244,12 +233,10 @@
 	color = "#9ACD32"
 	toxpwr = 1
 
-/datum/reagent/toxin/spore/on_mob_life(mob/living/M)
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		C.damageoverlaytemp = 60
-		C.update_damage_hud()
-	M.blur_eyes(3)
+/datum/reagent/toxin/spore/on_mob_life(mob/living/carbon/C)
+	C.damageoverlaytemp = 60
+	C.update_damage_hud()
+	C.blur_eyes(3)
 	return ..()
 
 /datum/reagent/toxin/spore_burning
@@ -260,7 +247,7 @@
 	toxpwr = 0.5
 	taste_description = "burning"
 
-/datum/reagent/toxin/spore_burning/on_mob_life(mob/living/M)
+/datum/reagent/toxin/spore_burning/on_mob_life(mob/living/carbon/M)
 	M.adjust_fire_stacks(2)
 	M.IgniteMob()
 	return ..()
@@ -274,7 +261,7 @@
 	toxpwr = 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
-/datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/M)
+/datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/carbon/M)
 	switch(current_cycle)
 		if(1 to 10)
 			M.confused += 2
@@ -297,7 +284,7 @@
 	toxpwr = 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
-/datum/reagent/toxin/chloralhydratedelayed/on_mob_life(mob/living/M)
+/datum/reagent/toxin/chloralhydratedelayed/on_mob_life(mob/living/carbon/M)
 	switch(current_cycle)
 		if(10 to 20)
 			M.confused += 1
@@ -317,7 +304,7 @@
 	glass_name = "glass of beer"
 	glass_desc = "A freezing pint of beer."
 
-/datum/reagent/toxin/fakebeer/on_mob_life(mob/living/M)
+/datum/reagent/toxin/fakebeer/on_mob_life(mob/living/carbon/M)
 	switch(current_cycle)
 		if(1 to 50)
 			M.Sleeping(40, 0)
@@ -377,7 +364,7 @@
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/polonium/on_mob_life(mob/living/M)
+/datum/reagent/toxin/polonium/on_mob_life(mob/living/carbon/M)
 	M.radiation += 4
 	..()
 
@@ -391,7 +378,7 @@
 	overdose_threshold = 30
 	toxpwr = 0
 
-/datum/reagent/toxin/histamine/on_mob_life(mob/living/M)
+/datum/reagent/toxin/histamine/on_mob_life(mob/living/carbon/M)
 	if(prob(50))
 		switch(pick(1, 2, 3, 4))
 			if(1)
@@ -424,7 +411,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 1
 
-/datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/M)
+/datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
 		holder.add_reagent("histamine", pick(5,15))
 		holder.remove_reagent("formaldehyde", 1.2)
@@ -440,7 +427,7 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/venom/on_mob_life(mob/living/M)
+/datum/reagent/toxin/venom/on_mob_life(mob/living/carbon/M)
 	toxpwr = 0.2*volume
 	M.adjustBruteLoss((0.3*volume)*REM, 0)
 	. = 1
@@ -459,14 +446,14 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/fentanyl/on_mob_life(mob/living/M)
+/datum/reagent/toxin/fentanyl/on_mob_life(mob/living/carbon/M)
 	M.adjustBrainLoss(3*REM, 150)
-	. = 1
 	if(M.toxloss <= 60)
 		M.adjustToxLoss(1*REM, 0)
 	if(current_cycle >= 18)
 		M.Sleeping(40, 0)
 	..()
+	return TRUE
 
 /datum/reagent/toxin/cyanide
 	name = "Cyanide"
@@ -477,7 +464,7 @@
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 1.25
 
-/datum/reagent/toxin/cyanide/on_mob_life(mob/living/M)
+/datum/reagent/toxin/cyanide/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
 		M.losebreath += 1
 	if(prob(8))
@@ -509,7 +496,7 @@
 	if(method == TOUCH || method == VAPOR)
 		M.reagents.add_reagent("itching_powder", reac_volume)
 
-/datum/reagent/toxin/itching_powder/on_mob_life(mob/living/M)
+/datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/M)
 	if(prob(15))
 		to_chat(M, "You scratch at your head.")
 		M.adjustBruteLoss(0.2*REM, 0)
@@ -537,28 +524,26 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 2.5
 
-/datum/reagent/toxin/initropidril/on_mob_life(mob/living/M)
+/datum/reagent/toxin/initropidril/on_mob_life(mob/living/carbon/C)
 	if(prob(25))
 		var/picked_option = rand(1,3)
 		switch(picked_option)
 			if(1)
-				M.Knockdown(60, 0)
-				. = 1
+				C.Knockdown(60, 0)
+				. = TRUE
 			if(2)
-				M.losebreath += 10
-				M.adjustOxyLoss(rand(5,25), 0)
-				. = 1
+				C.losebreath += 10
+				C.adjustOxyLoss(rand(5,25), 0)
+				. = TRUE
 			if(3)
-				if(ishuman(M))
-					var/mob/living/carbon/human/H = M
-					if(!H.undergoing_cardiac_arrest() && H.can_heartattack())
-						H.set_heartattack(TRUE)
-						if(H.stat == CONSCIOUS)
-							H.visible_message("<span class='userdanger'>[H] clutches at [H.p_their()] chest as if [H.p_their()] heart stopped!</span>")
-					else
-						H.losebreath += 10
-						H.adjustOxyLoss(rand(5,25), 0)
-						. = 1
+				if(!C.undergoing_cardiac_arrest() && C.can_heartattack())
+					C.set_heartattack(TRUE)
+					if(C.stat == CONSCIOUS)
+						C.visible_message("<span class='userdanger'>[C] clutches at [C.p_their()] chest as if [C.p_their()] heart stopped!</span>")
+				else
+					C.losebreath += 10
+					C.adjustOxyLoss(rand(5,25), 0)
+					. = TRUE
 	return ..() || .
 
 /datum/reagent/toxin/pancuronium
@@ -571,10 +556,10 @@
 	toxpwr = 0
 	taste_mult = 0 // undetectable, I guess?
 
-/datum/reagent/toxin/pancuronium/on_mob_life(mob/living/M)
+/datum/reagent/toxin/pancuronium/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 10)
 		M.Stun(40, 0)
-		. = 1
+		. = TRUE
 	if(prob(20))
 		M.losebreath += 4
 	..()
@@ -588,12 +573,12 @@
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/M)
+/datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 10)
 		M.Sleeping(40, 0)
 	M.adjustStaminaLoss(10*REM, 0)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/toxin/sulfonal
 	name = "Sulfonal"
@@ -604,7 +589,7 @@
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 0.5
 
-/datum/reagent/toxin/sulfonal/on_mob_life(mob/living/M)
+/datum/reagent/toxin/sulfonal/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 22)
 		M.Sleeping(40, 0)
 	return ..()
@@ -634,7 +619,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/lipolicide/on_mob_life(mob/living/M)
+/datum/reagent/toxin/lipolicide/on_mob_life(mob/living/carbon/M)
 	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
 		M.adjustToxLoss(1*REM, 0)
 	M.nutrition = max(M.nutrition - 3, 0) // making the chef more valuable, one meme trap at a time
@@ -650,7 +635,7 @@
 	metabolization_rate = 0.06 * REAGENTS_METABOLISM
 	toxpwr = 1.75
 
-/datum/reagent/toxin/coniine/on_mob_life(mob/living/M)
+/datum/reagent/toxin/coniine/on_mob_life(mob/living/carbon/M)
 	M.losebreath += 5
 	return ..()
 
@@ -665,22 +650,20 @@
 	toxpwr = 0
 	taste_description = "vomit"
 
-/datum/reagent/toxin/spewium/on_mob_life(mob/living/M)
+/datum/reagent/toxin/spewium/on_mob_life(mob/living/carbon/C)
 	.=..()
-	if(current_cycle >=11 && prob(min(50,current_cycle)) && ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.vomit(10, prob(10), prob(50), rand(0,4), TRUE, prob(30))
-		for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
+	if(current_cycle >=11 && prob(min(50,current_cycle)))
+		C.vomit(10, prob(10), prob(50), rand(0,4), TRUE, prob(30))
+		for(var/datum/reagent/toxin/R in C.reagents.reagent_list)
 			if(R != src)
-				H.reagents.remove_reagent(R.id,1)
+				C.reagents.remove_reagent(R.id,1)
 
-/datum/reagent/toxin/spewium/overdose_process(mob/living/M)
+/datum/reagent/toxin/spewium/overdose_process(mob/living/carbon/C)
 	. = ..()
-	if(current_cycle >=33 && prob(15) && ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.spew_organ()
-		H.vomit(0, TRUE, TRUE, 4)
-		to_chat(H, "<span class='userdanger'>You feel something lumpy come up as you vomit.</span>")
+	if(current_cycle >=33 && prob(15))
+		C.spew_organ()
+		C.vomit(0, TRUE, TRUE, 4)
+		to_chat(C, "<span class='userdanger'>You feel something lumpy come up as you vomit.</span>")
 
 /datum/reagent/toxin/curare
 	name = "Curare"
@@ -691,7 +674,7 @@
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 1
 
-/datum/reagent/toxin/curare/on_mob_life(mob/living/M)
+/datum/reagent/toxin/curare/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 11)
 		M.Knockdown(60, 0)
 	M.adjustOxyLoss(1*REM, 0)
@@ -707,7 +690,7 @@
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/heparin/on_mob_life(mob/living/M)
+/datum/reagent/toxin/heparin/on_mob_life(mob/living/carbon/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.bleed_rate = min(H.bleed_rate + 2, 8)
@@ -726,7 +709,7 @@
 	toxpwr = 0.5
 	taste_description = "spinning"
 
-/datum/reagent/toxin/rotatium/on_mob_life(mob/living/M)
+/datum/reagent/toxin/rotatium/on_mob_life(mob/living/carbon/M)
 	if(M.hud_used)
 		if(current_cycle >= 20 && current_cycle%20 == 0)
 			var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
@@ -753,7 +736,7 @@
 	toxpwr = 0.25
 	taste_description = "skewing"
 
-/datum/reagent/toxin/skewium/on_mob_life(mob/living/M)
+/datum/reagent/toxin/skewium/on_mob_life(mob/living/carbon/M)
 	if(M.hud_used)
 		if(current_cycle >= 5 && current_cycle % 3 == 0)
 			var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
@@ -788,7 +771,7 @@
 	metabolization_rate = 0.08 * REAGENTS_METABOLISM
 	toxpwr = 0.15
 
-/datum/reagent/toxin/anacea/on_mob_life(mob/living/M)
+/datum/reagent/toxin/anacea/on_mob_life(mob/living/carbon/M)
 	var/remove_amt = 5
 	if(holder.has_reagent("calomel") || holder.has_reagent("pen_acid"))
 		remove_amt = 0.5
@@ -841,7 +824,7 @@
 	toxpwr = 2
 	acidpwr = 42.0
 
-/datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/M)
+/datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/carbon/M)
 	M.adjustFireLoss(current_cycle/10, 0)
 	. = 1
 	..()
@@ -857,7 +840,7 @@
 	var/actual_toxpwr = 5
 	var/delay = 30
 
-/datum/reagent/toxin/delayed/on_mob_life(mob/living/M)
+/datum/reagent/toxin/delayed/on_mob_life(mob/living/carbon/M)
 	if(current_cycle > delay)
 		holder.remove_reagent(id, actual_metaboliztion_rate * M.metabolism_efficiency)
 		M.adjustToxLoss(actual_toxpwr*REM, 0)

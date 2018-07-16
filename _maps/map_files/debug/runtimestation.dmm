@@ -417,6 +417,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/announcement_system,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "bh" = (
@@ -487,6 +488,9 @@
 	dir = 10
 	},
 /obj/machinery/light,
+/obj/machinery/telecomms/allinone{
+	network = "tcommsat"
+	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "br" = (

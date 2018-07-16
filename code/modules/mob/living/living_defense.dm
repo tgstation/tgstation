@@ -61,6 +61,9 @@
 		else
 				return 0
 
+/mob/living/proc/crit_modifier()
+	return HEALTH_THRESHOLD_CRIT
+
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE)
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
@@ -330,7 +333,7 @@
 	return(gain)
 
 /mob/living/narsie_act()
-	if(status_flags & GODMODE)
+	if(status_flags & GODMODE || QDELETED(src))
 		return
 
 	if(is_servant_of_ratvar(src) && !stat)

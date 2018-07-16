@@ -334,7 +334,7 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/head/helmet/space/hardsuit/cult
-	name = "nar-sien hardened helmet"
+	name = "\improper Nar-Sien hardened helmet"
 	desc = "A heavily-armored helmet worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
 	icon_state = "cult_helmet"
 	item_state = "cult_helmet"
@@ -343,7 +343,7 @@
 	actions_types = list()
 
 /obj/item/clothing/suit/space/hardsuit/cult
-	name = "nar-sien hardened armor"
+	name = "\improper Nar-Sien hardened armor"
 	icon_state = "cult_armor"
 	item_state = "cult_armor"
 	desc = "A heavily-armored exosuit worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
@@ -462,7 +462,7 @@
 	item_state = "blindfold"
 	flash_protect = 1
 
-/obj/item/clothing/glasses/night/cultblind/equipped(mob/living/user, slot)
+/obj/item/clothing/glasses/hud/health/night/cultblind/equipped(mob/living/user, slot)
 	..()
 	if(!iscultist(user))
 		to_chat(user, "<span class='cultlarge'>\"You want to be blind, do you?\"</span>")
@@ -770,7 +770,7 @@
 	damage_type = BRUTE
 	impact_effect_type = /obj/effect/temp_visual/dir_setting/bloodsplatter
 
-/obj/item/projectile/magic/arcane_barrage/blood/Collide(atom/target)
+/obj/item/projectile/magic/arcane_barrage/blood/Bump(atom/target)
 	var/turf/T = get_turf(target)
 	playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
 	if(iscultist(target))
@@ -804,6 +804,7 @@
 
 
 /obj/item/blood_beam/afterattack(atom/A, mob/living/user, flag, params)
+	. = ..()
 	if(firing || charging)
 		return
 	var/C = user.client

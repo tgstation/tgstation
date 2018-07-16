@@ -11,6 +11,7 @@ SUBSYSTEM_DEF(blackbox)
 	var/sealed = FALSE	//time to stop tracking stats?
 	var/list/versions = list("antagonists" = 3,
 							"admin_secrets_fun_used" = 2,
+							"explosion" = 2,
 							"time_dilation_current" = 3,
 							"science_techweb_unlock" = 2,
 							"round_end_stats" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
@@ -20,6 +21,7 @@ SUBSYSTEM_DEF(blackbox)
 	record_feedback("amount", "random_seed", Master.random_seed)
 	record_feedback("amount", "dm_version", DM_VERSION)
 	record_feedback("amount", "byond_version", world.byond_version)
+	record_feedback("amount", "byond_build", world.byond_build)
 	. = ..()
 
 //poll population
@@ -66,14 +68,22 @@ SUBSYSTEM_DEF(blackbox)
 			return FALSE
 	return ..()
 
-/datum/controller/subsystem/blackbox/Shutdown()
-	sealed = FALSE
+//Recorded on subsystem shutdown
+/datum/controller/subsystem/blackbox/proc/FinalFeedback()
 	record_feedback("tally", "ahelp_stats", GLOB.ahelp_tickets.active_tickets.len, "unresolved")
 	for (var/obj/machinery/telecomms/message_server/MS in GLOB.telecomms_list)
 		if (MS.pda_msgs.len)
 			record_feedback("tally", "radio_usage", MS.pda_msgs.len, "PDA")
 		if (MS.rc_msgs.len)
 			record_feedback("tally", "radio_usage", MS.rc_msgs.len, "request console")
+
+	for(var/player_key in GLOB.player_details)
+		var/datum/player_details/PD = GLOB.player_details[player_key]
+		record_feedback("tally", "client_byond_version", 1, PD.byond_version)
+
+/datum/controller/subsystem/blackbox/Shutdown()
+	sealed = FALSE
+	FinalFeedback()
 
 	if (!SSdbcore.Connect())
 		return
@@ -151,7 +161,7 @@ feedback data can be recorded in 5 formats:
 			SSblackbox.record_feedback("text", "example", 1, "other text")
 	json: {"data":["sample text","other text"]}
 "amount"
-	used to record simple counts of data i.e. the number of ahelps recieved
+	used to record simple counts of data i.e. the number of ahelps received
 	further calls to the same key will add or subtract (if increment argument is a negative) from the saved amount
 	calls:	SSblackbox.record_feedback("amount", "example", 8)
 			SSblackbox.record_feedback("amount", "example", 2)
@@ -320,5 +330,6 @@ Versioning
 	suicide = sanitizeSQL(suicide)
 	map = sanitizeSQL(map)
 	var/datum/DBQuery/query_report_death = SSdbcore.NewQuery("INSERT INTO [format_table_name("death")] (pod, x_coord, y_coord, z_coord, mapname, server_ip, server_port, round_id, tod, job, special, name, byondkey, laname, lakey, bruteloss, fireloss, brainloss, oxyloss, toxloss, cloneloss, staminaloss, last_words, suicide) VALUES ('[sqlpod]', '[x_coord]', '[y_coord]', '[z_coord]', '[map]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', [GLOB.round_id], '[SQLtime()]', '[sqljob]', '[sqlspecial]', '[sqlname]', '[sqlkey]', '[laname]', '[lakey]', [sqlbrute], [sqlfire], [sqlbrain], [sqloxy], [sqltox], [sqlclone], [sqlstamina], '[last_words]', [suicide])")
-	query_report_death.Execute()
-	qdel(query_report_death)
+	if(query_report_death)
+		query_report_death.Execute()
+		qdel(query_report_death)

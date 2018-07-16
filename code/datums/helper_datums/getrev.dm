@@ -13,6 +13,11 @@
 		date = unix2date(text2num(logs[5]))
 		commit = logs[2]
 		log_world("[commit]: [date]")
+	else
+		log_world("Unable to read git logs, revision information not available")
+		originmastercommit = commit = "Unknown"
+		date = unix2date(world.timeofday)
+		return
 	logs = world.file2list(".git/logs/refs/remotes/origin/master")
 	if(logs.len)
 		originmastercommit = splittext(logs[logs.len - 1], " ")[2]

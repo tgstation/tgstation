@@ -137,7 +137,7 @@
 		active_apc = APC
 	if(href_list["name_filter"])
 		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
-		var/new_filter = stripped_input(usr, "What name are you looking for?", name) as null|text
+		var/new_filter = stripped_input(usr, "What name are you looking for?", name)
 		if(!src || !usr || !usr.canUseTopic(src) || stat || QDELETED(src))
 			return
 		log_activity("changed name filter to \"[new_filter]\"")

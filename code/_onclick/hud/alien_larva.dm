@@ -18,7 +18,7 @@
 	pull_icon = new /obj/screen/pull()
 	pull_icon.icon = 'icons/mob/screen_alien.dmi'
 	pull_icon.update_icon(mymob)
-	pull_icon.screen_loc = ui_pull_resist
+	pull_icon.screen_loc = ui_above_movement
 	hotkeybuttons += pull_icon
 
 	using = new/obj/screen/language_menu

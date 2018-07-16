@@ -119,7 +119,7 @@
 	return
 
 
-/obj/effect/clockwork/spatial_gateway/CollidedWith(atom/movable/AM)
+/obj/effect/clockwork/spatial_gateway/Bumped(atom/movable/AM)
 	..()
 	if(!QDELETED(AM))
 		pass_through_gateway(AM, FALSE)

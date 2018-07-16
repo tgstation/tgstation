@@ -307,7 +307,7 @@
 //same as above
 //note: ghosts can point, this is intended
 //visible_message will handle invisibility properly
-//overriden here and in /mob/dead/observer for different point span classes and sanity checks
+//overridden here and in /mob/dead/observer for different point span classes and sanity checks
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
 	set name = "Point To"
 	set category = "Object"
@@ -351,6 +351,11 @@
 	if(hud_used)
 		if(hud_used.pull_icon)
 			hud_used.pull_icon.update_icon(src)
+
+/mob/proc/update_rest_hud_icon()
+	if(hud_used)
+		if(hud_used.rest_icon)
+			hud_used.rest_icon.update_icon(src)
 
 /mob/verb/mode()
 	set name = "Activate Held Object"
@@ -679,6 +684,16 @@
 		if(istype(S, spell))
 			mob_spell_list -= S
 			qdel(S)
+
+/mob/proc/anti_magic_check(magic = TRUE, holy = FALSE)
+	if(!magic && !holy)
+		return
+	var/list/protection_sources = list()
+	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, magic, holy, protection_sources) & COMPONENT_BLOCK_MAGIC)
+		if(protection_sources.len)
+			return pick(protection_sources)
+		else
+			return src
 
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)

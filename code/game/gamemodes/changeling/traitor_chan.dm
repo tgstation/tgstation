@@ -72,7 +72,7 @@
 			if(!jobban_isbanned(character, ROLE_CHANGELING) && !QDELETED(character) && !jobban_isbanned(character, ROLE_SYNDICATE) && !QDELETED(character))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
-						character.mind.make_Changling()
+						character.mind.make_Changeling()
 						changelings += character.mind
 	if(QDELETED(character))
 		return
