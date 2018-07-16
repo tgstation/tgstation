@@ -1553,7 +1553,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/badass/random
 	name = "Random Item"
 	desc = "Picking this will purchase a random item. Useful if you have some TC to spare or if you haven't decided on a strategy yet."
-	item = /obj/item/sord
+	item = /obj/item/toy/syndicateballoon
 	cost = 0
 	cant_discount = TRUE
 
