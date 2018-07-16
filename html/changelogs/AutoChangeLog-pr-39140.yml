@@ -1,5 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - rscadd: "Integrated circuit clocks now come in 3 flavors: Nanotrasen time (round time), Station time (station time), and Bluespace time (server time, therefore not affected by lag/time dilation)"
-  - rscadd: "Integrated circuit clocks now also output a raw value for deciseconds, allowing for interesting timer constructions."
