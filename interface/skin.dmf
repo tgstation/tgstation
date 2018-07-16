@@ -54,7 +54,6 @@ window "mainwindow"
 		size = 640x440
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
 		icon = 'icons\\ss13_64.png'
@@ -66,7 +65,6 @@ window "mainwindow"
 		size = 634x417
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = none
 		saved-params = "splitter"
 		left = "mapwindow"
 		right = "infowindow"
@@ -88,7 +86,6 @@ window "mainwindow"
 		size = 40x20
 		anchor1 = 100,100
 		anchor2 = none
-		background-color = none
 		border = line
 		saved-params = "is-checked"
 		text = "Chat"
@@ -101,7 +98,6 @@ window "mainwindow"
 		size = 40x20
 		anchor1 = 100,100
 		anchor2 = none
-		background-color = none
 		border = line
 		saved-params = "is-checked"
 		text = "OOC"
@@ -114,7 +110,6 @@ window "mainwindow"
 		size = 40x20
 		anchor1 = 100,100
 		anchor2 = none
-		background-color = none
 		border = line
 		saved-params = "is-checked"
 		text = "Me"
@@ -127,7 +122,6 @@ window "mainwindow"
 		size = 200x200
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		is-visible = false
 		saved-params = ""
 	elem "tooltip"
@@ -136,7 +130,6 @@ window "mainwindow"
 		size = 999x999
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		is-visible = false
 		saved-params = ""
 
@@ -169,6 +162,7 @@ window "infowindow"
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
+		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "button2"
@@ -178,9 +172,11 @@ window "infowindow"
 		anchor1 = 81,0
 		anchor2 = 97,0
 		background-color = #ffff80
+		border = line
 		saved-params = "is-checked"
 		text = "Donate"
 		command = "donate"
+		is-flat = true
 	elem "button1"
 		type = BUTTON
 		pos = 470,5
@@ -188,15 +184,18 @@ window "infowindow"
 		anchor1 = 81,0
 		anchor2 = 97,0
 		background-color = #8080ff
+		border = line
 		saved-params = "is-checked"
 		text = "Discord"
 		command = "discord"
+		is-flat = true
 	elem "info"
 		type = CHILD
 		pos = 0,30
 		size = 640x445
 		anchor1 = 0,0
 		anchor2 = 100,100
+		background-color = none
 		saved-params = "splitter"
 		left = "statwindow"
 		right = "outputwindow"
@@ -207,54 +206,72 @@ window "infowindow"
 		size = 75x20
 		anchor1 = 3,0
 		anchor2 = 19,0
+		background-color = none
+		border = line
 		saved-params = "is-checked"
 		text = "Changelog"
 		command = "changelog"
+		is-flat = true
 	elem "rules"
 		type = BUTTON
 		pos = 95,5
 		size = 75x20
 		anchor1 = 19,0
 		anchor2 = 34,0
+		background-color = none
+		border = line
 		saved-params = "is-checked"
 		text = "Rules"
 		command = "rules"
+		is-flat = true
 	elem "wiki"
 		type = BUTTON
 		pos = 170,5
 		size = 75x20
 		anchor1 = 34,0
 		anchor2 = 50,0
+		background-color = none
+		border = line
 		saved-params = "is-checked"
 		text = "Wiki"
 		command = "wiki"
+		is-flat = true
 	elem "forum"
 		type = BUTTON
 		pos = 245,5
 		size = 75x20
 		anchor1 = 50,0
 		anchor2 = 66,0
+		background-color = none
+		border = line
 		saved-params = "is-checked"
 		text = "Forum"
 		command = "forum"
+		is-flat = true
 	elem "github"
 		type = BUTTON
 		pos = 320,5
 		size = 75x20
 		anchor1 = 66,0
 		anchor2 = 81,0
+		background-color = none
+		border = line
 		saved-params = "is-checked"
 		text = "Github"
 		command = "github"
+		is-flat = true
 	elem "report-issue"
 		type = BUTTON
 		pos = 395,5
 		size = 75x20
 		anchor1 = 81,0
 		anchor2 = 97,0
+		background-color = none
+		border = line
 		saved-params = "is-checked"
 		text = "Report Issue"
 		command = "report-issue"
+		is-flat = true
 
 window "outputwindow"
 	elem "outputwindow"
