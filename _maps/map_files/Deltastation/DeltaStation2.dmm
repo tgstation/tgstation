@@ -100299,6 +100299,12 @@
 /obj/machinery/door/poddoor/incinerator_toxmix,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
+"tgZ" = (
+/obj/machinery/ore_silo,
+/turf/open/floor/plasteel/vault{
+	dir = 1
+	},
+/area/security/nuke_storage)
 "tmi" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -146372,7 +146378,7 @@ bvT
 bxi
 byz
 bxi
-bvP
+tgZ
 but
 aad
 bHq
