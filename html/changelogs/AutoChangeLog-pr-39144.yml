@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "Added a storage room to Metastation engineering that both engineers and atmos techs can access."

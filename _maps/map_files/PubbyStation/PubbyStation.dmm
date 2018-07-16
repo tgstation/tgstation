@@ -19179,7 +19179,7 @@
 /area/crew_quarters/bar)
 "aYf" = (
 /obj/structure/table/reinforced,
-/obj/item/book/manual/barman_recipes,
+/obj/item/book/manual/wiki/barman_recipes,
 /obj/item/reagent_containers/glass/rag,
 /turf/open/floor/plasteel/darkred/side{
 	dir = 1
@@ -24218,7 +24218,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/book/manual/experimentor,
+/obj/item/book/manual/wiki/experimentor,
 /turf/open/floor/engine,
 /area/science/explab)
 "blT" = (
@@ -25817,7 +25817,7 @@
 /area/hallway/primary/aft)
 "bqg" = (
 /obj/structure/table,
-/obj/item/book/manual/robotics_cyborgs{
+/obj/item/book/manual/wiki/robotics_cyborgs{
 	pixel_x = 2;
 	pixel_y = 5
 	},
@@ -27354,7 +27354,7 @@
 /area/medical/genetics)
 "btX" = (
 /obj/structure/table,
-/obj/item/book/manual/medical_cloning{
+/obj/item/book/manual/wiki/medical_cloning{
 	pixel_y = 6
 	},
 /obj/structure/disposalpipe/segment,
@@ -28477,7 +28477,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -24
 	},
-/obj/item/book/manual/research_and_development,
+/obj/item/book/manual/wiki/research_and_development,
 /obj/item/disk/tech_disk,
 /obj/item/disk/design_disk,
 /turf/open/floor/plasteel/dark,
@@ -40770,15 +40770,11 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cbg" = (
-/obj/item/book/manual/engineering_singularity_safety{
+/obj/item/book/manual/wiki/engineering_singulo_tesla{
 	pixel_x = 3;
 	pixel_y = 3
 	},
 /obj/item/book/manual/wiki/engineering_guide,
-/obj/item/book/manual/engineering_particle_accelerator{
-	pixel_x = -3;
-	pixel_y = -3
-	},
 /obj/structure/table/glass,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
