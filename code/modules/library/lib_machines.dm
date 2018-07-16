@@ -50,7 +50,7 @@
 				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td>SS<sup>13</sup>BN</td></tr>"
 
 				var/datum/DBQuery/query_library_list_books = SSdbcore.NewQuery(SQLquery)
-				if(!query_library_list_books.Execute())
+				if(!query_library_list_books.Execute(async = TRUE))
 					dat += "<font color=red><b>ERROR</b>: Unable to retrieve book listings. Please contact your system administrator for assistance.</font><BR>"
 				else
 					while(query_library_list_books.NextRow())
@@ -140,7 +140,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		return
 	GLOB.cachedbooks = list()
 	var/datum/DBQuery/query_library_cache = SSdbcore.NewQuery("SELECT id, author, title, category FROM [format_table_name("library")] WHERE isnull(deleted)")
-	if(!query_library_cache.Execute())
+	if(!query_library_cache.Execute(async = TRUE))
 		qdel(query_library_cache)
 		return
 	while(query_library_cache.NextRow())
@@ -424,7 +424,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 						var/sqlcategory = sanitizeSQL(upload_category)
 						var/msg = "[key_name(usr)] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs"
 						var/datum/DBQuery/query_library_upload = SSdbcore.NewQuery("INSERT INTO [format_table_name("library")] (author, title, content, category, ckey, datetime, round_id_created) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[usr.ckey]', Now(), '[GLOB.round_id]')")
-						if(!query_library_upload.Execute())
+						if(!query_library_upload.Execute(async = TRUE))
 							qdel(query_library_upload)
 							alert("Database error encountered uploading to Archive")
 							return
@@ -462,7 +462,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		else
 			cooldown = world.time + PRINTER_COOLDOWN
 			var/datum/DBQuery/query_library_print = SSdbcore.NewQuery("SELECT * FROM [format_table_name("library")] WHERE id=[sqlid] AND isnull(deleted)")
-			if(!query_library_print.Execute())
+			if(!query_library_print.Execute(async = TRUE))
 				qdel(query_library_print)
 				say("PRINTER ERROR! Failed to print document (0x0000000F)")
 				return

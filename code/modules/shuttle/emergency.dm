@@ -268,7 +268,7 @@
 	if(!SSdbcore.Connect())
 		return
 	var/datum/DBQuery/query_round_shuttle_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET shuttle_name = '[name]' WHERE id = [GLOB.round_id]")
-	query_round_shuttle_name.Execute()
+	query_round_shuttle_name.Execute(async = TRUE)
 	qdel(query_round_shuttle_name)
 
 /obj/docking_port/mobile/emergency/check()

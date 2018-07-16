@@ -409,7 +409,7 @@
 		notetext = note.group[2]
 		var/admin_ckey = note.group[3]
 		var/datum/DBQuery/query_convert_time = SSdbcore.NewQuery("SELECT ADDTIME(STR_TO_DATE('[timestamp]','%d-%b-%Y'), '0')")
-		if(!query_convert_time.Execute())
+		if(!query_convert_time.Execute(async = TRUE))
 			qdel(query_convert_time)
 			return
 		if(query_convert_time.NextRow())

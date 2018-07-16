@@ -83,6 +83,10 @@
 		report = !CONFIG_GET(flag/no_intercept_report)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
 
+	if(report)
+		addtimer(CALLBACK(src, .proc/send_intercept, 0), rand(waittime_l, waittime_h))
+	generate_station_goals()
+
 	if(SSdbcore.Connect())
 		var/sql
 		if(SSticker.mode)
@@ -93,11 +97,9 @@
 			sql += "commit_hash = '[GLOB.revdata.originmastercommit]'"
 		if(sql)
 			var/datum/DBQuery/query_round_game_mode = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET [sql] WHERE id = [GLOB.round_id]")
-			query_round_game_mode.Execute()
+			query_round_game_mode.Execute(async = TRUE)
 			qdel(query_round_game_mode)
-	if(report)
-		addtimer(CALLBACK(src, .proc/send_intercept, 0), rand(waittime_l, waittime_h))
-	generate_station_goals()
+
 	gamemode_ready = TRUE
 	return 1
 
