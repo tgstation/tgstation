@@ -243,8 +243,11 @@
 		for(var/v in stored_research.researched_designs)
 			var/datum/design/D = stored_research.researched_designs[v]
 			data["alloys"] += list(list("name" = D.name, "id" = D.id, "amount" = can_smelt_alloy(D)))
-	else
-		data["alloys"] = list(list("name" = "No ore silo connection available!"))
+	if (!standalone)
+		if (!silo)
+			data["disconnected"] = "no ore silo connection is available"
+		else if (silo.on_hold(src))
+			data["disconnected"] = "mineral withdrawal is on hold"
 
 	data["diskDesigns"] = list()
 	if(inserted_disk)
