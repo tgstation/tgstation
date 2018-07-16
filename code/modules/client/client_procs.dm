@@ -446,13 +446,13 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		return
 	var/sql_ckey = sanitizeSQL(src.ckey)
 	var/datum/DBQuery/query_get_related_ip = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON('[address]') AND ckey != '[sql_ckey]'")
-	query_get_related_ip.Execute()
+	query_get_related_ip.Execute(async = TRUE)
 	related_accounts_ip = ""
 	while(query_get_related_ip.NextRow())
 		related_accounts_ip += "[query_get_related_ip.item[1]], "
 	qdel(query_get_related_ip)
 	var/datum/DBQuery/query_get_related_cid = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE computerid = '[computer_id]' AND ckey != '[sql_ckey]'")
-	if(!query_get_related_cid.Execute())
+	if(!query_get_related_cid.Execute(async = TRUE))
 		return
 	related_accounts_cid = ""
 	while (query_get_related_cid.NextRow())
@@ -469,7 +469,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/sql_admin_rank = sanitizeSQL(admin_rank)
 	var/new_player
 	var/datum/DBQuery/query_client_in_db = SSdbcore.NewQuery("SELECT 1 FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
-	if(!query_client_in_db.Execute())
+	if(!query_client_in_db.Execute(async = TRUE))
 		qdel(query_client_in_db)
 		return
 	if(!query_client_in_db.NextRow())
@@ -491,7 +491,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		new_player = 1
 		account_join_date = sanitizeSQL(findJoinDate())
 		var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] (`ckey`, `firstseen`, `firstseen_round_id`, `lastseen`, `lastseen_round_id`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`) VALUES ('[sql_ckey]', Now(), '[GLOB.round_id]', Now(), '[GLOB.round_id]', INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
-		if(!query_add_player.Execute())
+		if(!query_add_player.Execute(async = TRUE))
 			qdel(query_client_in_db)
 			qdel(query_add_player)
 			return
@@ -501,7 +501,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			account_age = -1
 	qdel(query_client_in_db)
 	var/datum/DBQuery/query_get_client_age = SSdbcore.NewQuery("SELECT firstseen, DATEDIFF(Now(),firstseen), accountjoindate, DATEDIFF(Now(),accountjoindate) FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
-	if(!query_get_client_age.Execute())
+	if(!query_get_client_age.Execute(async = TRUE))
 		qdel(query_get_client_age)
 		return
 	if(query_get_client_age.NextRow())
@@ -516,7 +516,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 					account_age = -1
 				else
 					var/datum/DBQuery/query_datediff = SSdbcore.NewQuery("SELECT DATEDIFF(Now(),'[account_join_date]')")
-					if(!query_datediff.Execute())
+					if(!query_datediff.Execute(async = TRUE))
 						qdel(query_datediff)
 						return
 					if(query_datediff.NextRow())
@@ -525,14 +525,14 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	qdel(query_get_client_age)
 	if(!new_player)
 		var/datum/DBQuery/query_log_player = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET lastseen = Now(), lastseen_round_id = '[GLOB.round_id]', ip = INET_ATON('[sql_ip]'), computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]', accountjoindate = [account_join_date ? "'[account_join_date]'" : "NULL"] WHERE ckey = '[sql_ckey]'")
-		if(!query_log_player.Execute())
+		if(!query_log_player.Execute(async = TRUE))
 			qdel(query_log_player)
 			return
 		qdel(query_log_player)
 	if(!account_join_date)
 		account_join_date = "Error"
 	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')),'[world.port]','[GLOB.round_id]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
-	query_log_connection.Execute()
+	query_log_connection.Execute(async = TRUE)
 	qdel(query_log_connection)
 	if(new_player)
 		player_age = -1
@@ -564,7 +564,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/static/cidcheck_spoofckeys = list()
 	var/sql_ckey = sanitizeSQL(ckey)
 	var/datum/DBQuery/query_cidcheck = SSdbcore.NewQuery("SELECT computerid FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
-	query_cidcheck.Execute()
+	query_cidcheck.Execute(async = TRUE)
 
 	var/lastcid
 	if (query_cidcheck.NextRow())
@@ -642,7 +642,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/sql_ckey = sanitizeSQL(ckey)
 	//check to see if we noted them in the last day.
 	var/datum/DBQuery/query_get_notes = SSdbcore.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[sql_system_ckey]' AND timestamp + INTERVAL 1 DAY < NOW() AND deleted = 0")
-	if(!query_get_notes.Execute())
+	if(!query_get_notes.Execute(async = TRUE))
 		qdel(query_get_notes)
 		return
 	if(query_get_notes.NextRow())
@@ -651,7 +651,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	qdel(query_get_notes)
 	//regardless of above, make sure their last note is not from us, as no point in repeating the same note over and over.
 	query_get_notes = SSdbcore.NewQuery("SELECT adminckey FROM [format_table_name("messages")] WHERE targetckey = '[sql_ckey]' AND deleted = 0 ORDER BY timestamp DESC LIMIT 1")
-	if(!query_get_notes.Execute())
+	if(!query_get_notes.Execute(async = TRUE))
 		qdel(query_get_notes)
 		return
 	if(query_get_notes.NextRow())

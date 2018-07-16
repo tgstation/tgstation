@@ -523,7 +523,7 @@
 	else if(load_admins(TRUE)) //returns true if there was a database failure and the backup was loaded from
 		return
 	var/datum/DBQuery/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] p INNER JOIN [format_table_name("admin")] a ON p.ckey = a.ckey SET p.lastadminrank = a.rank")
-	query_admin_rank_update.Execute()
+	query_admin_rank_update.Execute(async = TRUE)
 	qdel(query_admin_rank_update)
 
 	//json format backup file generation stored per server

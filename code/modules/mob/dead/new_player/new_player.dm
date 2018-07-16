@@ -55,7 +55,7 @@
 				isadmin = 1
 			var/datum/DBQuery/query_get_new_polls = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[ckey]\")")
 			var/rs = REF(src)
-			if(query_get_new_polls.Execute())
+			if(query_get_new_polls.Execute(async = TRUE))
 				var/newpoll = 0
 				if(query_get_new_polls.NextRow())
 					newpoll = 1
