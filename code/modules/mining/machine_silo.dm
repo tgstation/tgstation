@@ -30,23 +30,28 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		GLOB.ore_silo_default = null
 
 	for(var/O in orms)
-		var/obj/machinery/mineral/mach = O
-		if (mach.silo == src)
-			mach.silo = null
-			var/obj/machinery/mineral/ore_redemption/orm = O
-			if (istype(orm))  // ugh
-				orm.materials = null
-
+		_disconnect(O)
 	for(var/L in lathes)
-		var/obj/machinery/rnd/production/lathe = L
-		if (lathe.silo == src)
-			lathe.silo = null
-			lathe.materials = null
+		_disconnect(L)
 
 	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.retrieve_all()
 
 	return ..()
+
+/obj/machinery/ore_silo/proc/_disconnect(obj/machinery/M)
+	if (istype(M, /obj/machinery/mineral))
+		var/obj/machinery/mineral/mach = M
+		if (mach.silo == src)
+			mach.silo = null
+			if (istype(M, /obj/machinery/mineral/ore_redemption))
+				var/obj/machinery/mineral/ore_redemption/orm = M
+				orm.materials = null
+	else if (istype(M, /obj/machinery/rnd/production))
+		var/obj/machinery/rnd/production/lathe = M
+		if (lathe.silo == src)
+			lathe.silo = null
+			lathe.materials = null
 
 /obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/user, obj/item/stack/I)
 	GET_COMPONENT(materials, /datum/component/material_container)
@@ -127,17 +132,14 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		var/obj/machinery/mineral/orm = locate(href_list["remove_orm"])
 		if (istype(orm))
 			orms -= orm
-			if (orm.silo == src)
-				orm.silo = null
+			_disconnect(orm)
 			updateUsrDialog()
 			return TRUE
 	else if(href_list["remove_lathe"])
 		var/obj/machinery/rnd/production/lathe = locate(href_list["remove_lathe"])
 		if (istype(lathe))
 			lathes -= lathe
-			if (lathe.silo == src)
-				lathe.silo = null
-				lathe.materials = null
+			_disconnect(lathe)
 			updateUsrDialog()
 			return TRUE
 	else if(href_list["hold1"])
