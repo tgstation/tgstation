@@ -4,27 +4,27 @@ set -e
 #If this is the build tools step, we do not bother to install/build byond
 if [ "$BUILD_TOOLS" = true ]; then
   exit 0
-fi;
+fi
+
 echo "Combining maps for building"
 if [ $BUILD_TESTING = true ]; then
     python tools/travis/template_dm_generator.py
-fi;
+fi
 
-if [ -d "$HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin" ];
+source dependencies.sh
+
+if [ -d "$HOME/BYOND/byond/bin" ] && [ $(< "$HOME/BYOND/version.txt") -eq "$BYOND_MAJOR.$BYOND_MINOR" ];
 then
   echo "Using cached directory."
-  exit 0
 else
   echo "Setting up BYOND."
-  mkdir -p "$HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}"
-  cd "$HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}"
+  mkdir -p "$HOME/BYOND"
+  rm -rf "$HOME/BYOND/*"
+  cd "$HOME/BYOND"
   curl "http://www.byond.com/download/build/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip
   unzip byond.zip
   cd byond
   make here
+  echo "$BYOND_MAJOR.$BYOND_MINOR" > "$HOME/BYOND/version.txt"
   cd ~/
-  exit 0
 fi
-
-#some variable not set correctly, panic
-exit 1

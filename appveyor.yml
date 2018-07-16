@@ -2,7 +2,7 @@ version: '{build}'
 skip_branch_with_pr: true
 shallow_clone: true
 cache:
-  - C:\byond\ -> tools/appveyor/build.ps1
+  - C:\byond\ -> dependencies.sh
 build_script:
   - ps: tools/appveyor/build.ps1
   - ps: "$deployPath = $env:APPVEYOR_BUILD_FOLDER + '/deploy'; sh tools/deploy.sh $deployPath" 
