@@ -170,6 +170,7 @@
 			var/desired = 0
 
 			if(!allow_ai_retrieve && isAI(usr))
+				to_chat(usr, "<span class='warning'>[src] does not seem to be configured to respect your authority!</span>")
 				return
 
 			if (params["amount"])
