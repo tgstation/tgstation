@@ -13,7 +13,9 @@ fi
 
 source dependencies.sh
 
-if [ -d "$HOME/BYOND/byond/bin" ] && [ $(< "$HOME/BYOND/version.txt") -eq "$BYOND_MAJOR.$BYOND_MINOR" ];
+versionpath = "$HOME/BYOND/version.txt"
+
+if [ -d "$HOME/BYOND/byond/bin" ] && grep -Fxq "${BYOND_MAJOR}.${BYOND_MINOR}" $HOME/BYOND/version.txt;
 then
   echo "Using cached directory."
 else
