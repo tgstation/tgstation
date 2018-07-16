@@ -138,4 +138,5 @@ The Dreamweaver = Game Master
 88Naoki = Game Master
 Naksuasdf = Game Master
 MrDoomBringer = Game Master
+shizcalev = Game Master
 Solar Marine = Game Master
