@@ -78,7 +78,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /root/.byond/bin
 
-COPY --from=rustg /rust_g/target/release/librust_g.so /root/.byond/bin/rust_g
+COPY --from=rust_g /rust_g/target/release/librust_g.so /root/.byond/bin/rust_g
 COPY --from=bsql /bsql/artifacts/src/BSQL/libBSQL.so ./
 COPY --from=build /deploy ./
 
