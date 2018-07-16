@@ -109,6 +109,9 @@
 	interact(user)
 
 /obj/item/integrated_circuit_printer/interact(mob/user)
+	if(!(in_range(src, user) || issilicon(user)))
+		return
+
 	if(isnull(current_category))
 		current_category = SScircuit.circuit_fabricator_recipe_list[1]
 
@@ -116,9 +119,6 @@
 
 	//Preparing the browser
 	var/datum/browser/popup = new(user, "printernew", "Integrated Circuit Printer", 800, 630) // Set up the popup browser window
-	if(!(in_range(src, user) || issilicon(user)))
-		popup.close()
-		return
 
 	var/HTML = "<center><h2>Integrated Circuit Printer</h2></center><br>"
 	if(debug)
