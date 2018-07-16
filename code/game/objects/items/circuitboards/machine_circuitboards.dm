@@ -713,7 +713,6 @@
 	name = "Circuit Imprinter (Machine Board)"
 	build_path = /obj/machinery/rnd/production/circuit_imprinter
 	req_components = list(
-		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/reagent_containers/glass/beaker = 2)
 
@@ -745,7 +744,6 @@
 	name = "Protolathe (Machine Board)"
 	build_path = /obj/machinery/rnd/production/protolathe
 	req_components = list(
-		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/reagent_containers/glass/beaker = 2)
 
@@ -781,7 +779,6 @@
 	name = "\improper Techfab (Machine Board)"
 	build_path = /obj/machinery/rnd/production/techfab
 	req_components = list(
-		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/reagent_containers/glass/beaker = 2)
 
