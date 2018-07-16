@@ -30,9 +30,12 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		GLOB.ore_silo_default = null
 
 	for(var/O in orms)
-		var/obj/machinery/mineral/orm = O
-		if (orm.silo == src)
-			orm.silo = null
+		var/obj/machinery/mineral/mach = O
+		if (mach.silo == src)
+			mach.silo = null
+			var/obj/machinery/mineral/ore_redemption/orm = O
+			if (istype(orm))  // ugh
+				orm.materials = null
 
 	for(var/L in lathes)
 		var/obj/machinery/rnd/production/lathe = L

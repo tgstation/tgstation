@@ -478,6 +478,10 @@
 		/obj/item/assembly/igniter = 1)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/ore_redemption/standalone
+	name = "Ore Redemption - Standalone (Machine Board)"
+	build_path = /obj/machinery/mineral/ore_redemption/standalone
+
 /obj/item/circuitboard/machine/mining_equipment_vendor
 	name = "Mining Equipment Vendor (Machine Board)"
 	build_path = /obj/machinery/mineral/equipment_vendor
