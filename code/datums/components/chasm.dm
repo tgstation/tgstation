@@ -91,6 +91,8 @@
 		return
 	falling_atoms[AM] = (falling_atoms[AM] || 0) + 1
 	var/turf/T = target_turf
+	if (ismob(AM))
+		playsound (AM,'sound/effects/fall.ogg', 100)
 
 	if(T)
 		// send to the turf below
