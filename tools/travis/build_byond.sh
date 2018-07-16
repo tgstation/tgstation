@@ -41,7 +41,7 @@ if [ "$BUILD_TOOLS" = false ]; then
 		exit 1
 	fi;
 
-    source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
+    source $HOME/BYOND/byond/bin/byondsetup
 	if [ "$BUILD_TESTING" = true ]; then
 		tools/travis/dm.sh -DTRAVISBUILDING -DTRAVISTESTING -DALL_MAPS tgstation.dme
 	else
