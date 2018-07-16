@@ -89,14 +89,16 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		ui += "Nothing!"
 
 	ui += "</div><div class='statusDisplay'><h2>Connected Machines:</h2>"
-	for(var/O in orms)
+	for(var/orm in orms)
+		var/obj/machinery/mineral/O = orm
 		var/hold_key = "[get_area(O)]/orm"
 		var/msg = holds[hold_key] ? "Allow" : "Hold"
-		ui += "<a href='?src=[REF(src)];remove_orm=[REF(O)]'>Remove</a><a href='?src=[REF(src)];hold[!holds[hold_key]]=[url_encode(hold_key)]'>[msg]</a> <b>\The [O]</b> in [get_area(O)]<br>"
-	for(var/L in lathes)
+		ui += "<a href='?src=[REF(src)];remove_orm=[REF(O)]'>Remove</a><a href='?src=[REF(src)];hold[!holds[hold_key]]=[url_encode(hold_key)]'>[msg]</a> <b>[O.name]</b> in [get_area_name(O, TRUE)]<br>"
+	for(var/lathe in lathes)
+		var/obj/machinery/rnd/production/L = lathe
 		var/hold_key = "[get_area(L)]/lathe"
 		var/msg = holds[hold_key] ? "Allow" : "Hold"
-		ui += "<a href='?src=[REF(src)];remove_lathe=[REF(L)]'>Remove</a><a href='?src=[REF(src)];hold[!holds[hold_key]]=[url_encode(hold_key)]'>[msg]</a> <b>\The [L]</b> in [get_area(L)]<br>"
+		ui += "<a href='?src=[REF(src)];remove_lathe=[REF(L)]'>Remove</a><a href='?src=[REF(src)];hold[!holds[hold_key]]=[url_encode(hold_key)]'>[msg]</a> <b>[L.name]</b> in [get_area_name(L, TRUE)]<br>"
 	if(orms.len == 0 && lathes.len == 0)
 		ui += "Nothing!"
 
@@ -187,11 +189,11 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 /datum/ore_silo_log/New(obj/machinery/M, _action, _amount, _noun, list/mats=list())
 	timestamp = station_time_timestamp()
-	machine_name = "\The [M]"
-	area_name = "[get_area(M)]"
+	machine_name = M.name
+	area_name = get_area_name(M, TRUE)
 	action = _action
-	noun = _noun
 	amount = _amount
+	noun = _noun
 	materials = mats.Copy()
 	for(var/each in materials)
 		materials[each] *= abs(_amount)
