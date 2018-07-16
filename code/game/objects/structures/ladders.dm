@@ -182,30 +182,49 @@
 
 	update_icon()
 
-
 /obj/structure/ladder/unbreakable/binary
 	name = "mysterious ladder"
 	desc = "Where does it go?"
 	height = 0
 	id = "lavaland_binary"
 	var/area_to_place = /area/lavaland/surface/outdoors
+	var/active = FALSE
 
-/obj/structure/ladder/unbreakable/binary/Initialize()
-	if(area_to_place)
-		var/turf/T = safepick(get_area_turfs(area_to_place))
+/obj/structure/ladder/unbreakable/binary/proc/ActivateAlmonds()
+	if(area_to_place && !active)
+		var/turf/T = getTargetTurf()
 		if(T)
 			var/obj/structure/ladder/unbreakable/U = new (T)
 			U.id = id
 			U.height = height+1
+			LateInitialize() // LateInit both of these to build the links. It's fine.
+			U.LateInitialize()
 			for(var/turf/TT in range(2,U))
-				TT.TerraformTurf(/turf/open/indestructible/binary, /turf/open/indestructible/binary)
-	return ..()
+				TT.TerraformTurf(/turf/open/indestructible/binary, /turf/open/indestructible/binary, CHANGETURF_INHERIT_AIR)
+		active = TRUE
 
+/obj/structure/ladder/unbreakable/binary/proc/getTargetTurf()
+	var/list/turfList = get_area_turfs(area_to_place)
+	while (turfList.len && !.)
+		var/i = rand(1, turfList.len)
+		var/turf/potentialTurf = turfList[i]
+		if (is_centcom_level(potentialTurf.z)) // These ladders don't lead to centcom.
+			turfList.Cut(i,i+1)
+			continue
+		if(!istype(potentialTurf, /turf/open/lava) && !potentialTurf.density)			// Or inside dense turfs or lava
+			var/clear = TRUE
+			for(var/obj/O in potentialTurf) // Let's not place these on dense objects either. Might be funny though.
+				if(O.density)
+					clear = FALSE
+					break
+			if(clear)
+				. = potentialTurf
+		if (!.)
+			turfList.Cut(i,i+1)
 
 /obj/structure/ladder/unbreakable/binary/space
 	id = "space_binary"
 	area_to_place = /area/space
-
 
 /obj/structure/ladder/unbreakable/binary/unlinked //Crew gets to complete one
 	id = "unlinked_binary"

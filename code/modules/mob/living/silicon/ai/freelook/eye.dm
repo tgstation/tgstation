@@ -7,28 +7,81 @@
 	name = "Inactive AI Eye"
 
 	invisibility = INVISIBILITY_MAXIMUM
+	hud_possible = list(ANTAG_HUD, AI_DETECT_HUD = HUD_LIST_LIST)
 	var/list/visibleCameraChunks = list()
 	var/mob/living/silicon/ai/ai = null
 	var/relay_speech = FALSE
-	var/use_static = TRUE
+	var/use_static = USE_STATIC_OPAQUE
 	var/static_visibility_range = 16
+	var/ai_detector_visible = TRUE
+	var/ai_detector_color = COLOR_RED
+
+/mob/camera/aiEye/Initialize()
+	. = ..()
+	GLOB.aiEyes += src
+	update_ai_detect_hud()
+	setLoc(loc, TRUE)
+
+/mob/camera/aiEye/proc/update_ai_detect_hud()
+	var/datum/atom_hud/ai_detector/hud = GLOB.huds[DATA_HUD_AI_DETECT]
+	var/list/old_images = hud_list[AI_DETECT_HUD]
+	if(!ai_detector_visible)
+		hud.remove_from_hud(src)
+		QDEL_LIST(old_images)
+		return
+
+	if(!hud.hudusers.len)
+		//no one is watching, do not bother updating anything
+		return
+	hud.remove_from_hud(src)
+
+	var/static/list/vis_contents_objects = list()
+	var/obj/effect/overlay/ai_detect_hud/hud_obj = vis_contents_objects[ai_detector_color]
+	if(!hud_obj)
+		hud_obj = new /obj/effect/overlay/ai_detect_hud()
+		hud_obj.color = ai_detector_color
+		vis_contents_objects[ai_detector_color] = hud_obj
+
+	var/list/new_images = list()
+	var/list/turfs = get_visible_turfs()
+	for(var/T in turfs)
+		var/image/I = (old_images.len > new_images.len) ? old_images[new_images.len + 1] : image(null, T)
+		I.loc = T
+		I.vis_contents += hud_obj
+		new_images += I
+	for(var/i in (new_images.len + 1) to old_images.len)
+		qdel(old_images[i])
+	hud_list[AI_DETECT_HUD] = new_images
+	hud.add_to_hud(src)
+
+/mob/camera/aiEye/proc/get_visible_turfs()
+	if(!isturf(loc))
+		return list()
+	var/client/C = GetViewerClient()
+	var/view = C ? getviewsize(C.view) : getviewsize(world.view)
+	var/turf/lowerleft = locate(max(1, x - (view[1] - 1)/2), max(1, y - (view[2] - 1)/2), z)
+	var/turf/upperright = locate(min(world.maxx, lowerleft.x + (view[1] - 1)), min(world.maxy, lowerleft.y + (view[2] - 1)), lowerleft.z)
+	return block(lowerleft, upperright)
 
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
 
-/mob/camera/aiEye/proc/setLoc(T)
+/mob/camera/aiEye/proc/setLoc(T, force_update = FALSE)
 	if(ai)
 		if(!isturf(ai.loc))
 			return
 		T = get_turf(T)
+		if(!force_update && (T == get_turf(src)) )
+			return //we are already here!
 		if (T)
 			forceMove(T)
 		else
-			moveToNullspace() // ????
-		if(use_static)
+			moveToNullspace()
+		if(use_static != USE_STATIC_NONE)
 			ai.camera_visibility(src)
 		if(ai.client && !ai.multicam_on)
 			ai.client.eye = src
+		update_ai_detect_hud()
 		update_parallax_contents()
 		//Holopad
 		if(istype(ai.current, /obj/machinery/holopad))
@@ -47,11 +100,6 @@
 		return ai.client
 	return null
 
-/mob/camera/aiEye/proc/RemoveImages()
-	var/client/C = GetViewerClient()
-	if(C && use_static)
-		C.images -= GLOB.cameranet.obscured
-
 /mob/camera/aiEye/Destroy()
 	if(ai)
 		ai.all_eyes -= src
@@ -59,6 +107,12 @@
 	for(var/V in visibleCameraChunks)
 		var/datum/camerachunk/c = V
 		c.remove(src)
+	GLOB.aiEyes -= src
+	if(ai_detector_visible)
+		var/datum/atom_hud/ai_detector/hud = GLOB.huds[DATA_HUD_AI_DETECT]
+		hud.remove_from_hud(src)
+		var/list/L = hud_list[AI_DETECT_HUD]
+		QDEL_LIST(L)
 	return ..()
 
 /atom/proc/move_camera_by_click()
@@ -96,8 +150,11 @@
 
 // Return to the Core.
 /mob/living/silicon/ai/proc/view_core()
-
-	current = null
+	if(istype(current,/obj/machinery/holopad))
+		var/obj/machinery/holopad/H = current
+		H.clear_holo(src)
+	else
+		current = null
 	cameraFollow = null
 	unset_machine()
 
@@ -128,3 +185,12 @@
 /mob/camera/aiEye/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(relay_speech && speaker && ai && !radio_freq && speaker != ai && near_camera(speaker))
 		ai.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
+
+/obj/effect/overlay/ai_detect_hud
+	name = ""
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	icon = 'icons/effects/alphacolors.dmi'
+	icon_state = ""
+	alpha = 100
+	layer = ABOVE_ALL_MOB_LAYER
+	plane = GAME_PLANE

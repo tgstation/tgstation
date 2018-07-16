@@ -67,7 +67,7 @@
 	affecting_areas.Cut()
 	return ..()
 
-/obj/machinery/door/firedoor/CollidedWith(atom/movable/AM)
+/obj/machinery/door/firedoor/Bumped(atom/movable/AM)
 	if(panel_open || operating)
 		return
 	if(!density)

@@ -656,7 +656,7 @@
 		var/they_breathe = !C.has_trait(TRAIT_NOBREATH)
 		var/they_lung = C.getorganslot(ORGAN_SLOT_LUNGS)
 
-		if(C.health > HEALTH_THRESHOLD_CRIT)
+		if(C.health > C.crit_modifier())
 			return
 
 		src.visible_message("[src] performs CPR on [C.name]!", "<span class='notice'>You perform CPR on [C.name].</span>")
@@ -832,7 +832,7 @@
 		return 1
 	..()
 
-/mob/living/carbon/human/Collide(atom/A)
+/mob/living/carbon/human/Bump(atom/A)
 	..()
 	var/crashdir = get_dir(src, A)
 	var/obj/item/flightpack/FP = get_flightpack()

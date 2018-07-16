@@ -78,6 +78,14 @@
 	name = "\improper KILL CLAMP"
 	desc = "They won't know what clamped them!"
 	energy_drain = 0
+	dam_force = 0
+	var/real_clamp = FALSE
+
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/real
+	desc = "They won't know what clamped them! This time for real!"
+	energy_drain = 10
+	dam_force = 20
+	real_clamp = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/action(atom/target)
 	if(!action_checks(target))
@@ -108,11 +116,41 @@
 		if(M.stat == DEAD)
 			return
 		if(chassis.occupant.a_intent == INTENT_HARM)
-			target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury.</span>", \
-								"<span class='userdanger'>[chassis] destroys [target] in an unholy fury.</span>")
-		if(chassis.occupant.a_intent == INTENT_DISARM)
-			target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off.</span>", \
-								"<span class='userdanger'>[chassis] rips [target]'s arms off.</span>")
+			if(real_clamp)
+				M.take_overall_damage(dam_force)
+				if(!M)
+					return
+				M.adjustOxyLoss(round(dam_force/2))
+				M.updatehealth()
+				target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury.</span>", \
+									"<span class='userdanger'>[chassis] destroys [target] in an unholy fury.</span>")
+				add_logs(chassis.occupant, M, "attacked", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
+			else
+				target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury.</span>", \
+									"<span class='userdanger'>[chassis] destroys [target] in an unholy fury.</span>")
+		else if(chassis.occupant.a_intent == INTENT_DISARM)
+			if(real_clamp)
+				var/mob/living/carbon/C = target
+				var/play_sound = FALSE
+				var/limbs_gone = ""
+				var/obj/item/bodypart/affected = C.get_bodypart(BODY_ZONE_L_ARM)
+				if(affected != null)
+					affected.dismember(damtype)
+					play_sound = TRUE
+					limbs_gone = ", [affected]"
+				affected = C.get_bodypart(BODY_ZONE_R_ARM)
+				if(affected != null)
+					affected.dismember(damtype)
+					play_sound = TRUE
+					limbs_gone = "[limbs_gone], [affected]"
+				if(play_sound)
+					playsound(src, get_dismember_sound(), 80, TRUE)
+					target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off.</span>", \
+								   "<span class='userdanger'>[chassis] rips [target]'s arms off.</span>")
+					add_logs(chassis.occupant, M, "dismembered of[limbs_gone],", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
+			else
+				target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off.</span>", \
+								   "<span class='userdanger'>[chassis] rips [target]'s arms off.</span>")
 		else
 			step_away(M,chassis)
 			target.visible_message("[chassis] tosses [target] like a piece of paper.")

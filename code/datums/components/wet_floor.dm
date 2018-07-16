@@ -26,8 +26,8 @@
 	if(!isopenturf(parent))
 		return COMPONENT_INCOMPATIBLE
 	add_wet(strength, duration_minimum, duration_add, duration_maximum)
-	RegisterSignal(COMSIG_TURF_IS_WET, .proc/is_wet)
-	RegisterSignal(COMSIG_TURF_MAKE_DRY, .proc/dry)
+	RegisterSignal(parent, COMSIG_TURF_IS_WET, .proc/is_wet)
+	RegisterSignal(parent, COMSIG_TURF_MAKE_DRY, .proc/dry)
 	permanent = _permanent
 	if(!permanent)
 		START_PROCESSING(SSwet_floors, src)

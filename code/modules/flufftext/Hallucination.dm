@@ -625,7 +625,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	qdel(src)
 
 /obj/effect/hallucination/fake_door_lock
-	layer = CLOSED_DOOR_LAYER + 1 //for Collide priority
+	layer = CLOSED_DOOR_LAYER + 1 //for Bump priority
 	var/image/bolt_light
 	var/obj/machinery/door/airlock/airlock
 

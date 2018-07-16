@@ -13,7 +13,6 @@
 
 /obj/structure/statue/Initialize()
 	. = ..()
-	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 1250), 0)
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
@@ -77,7 +76,7 @@
 	radiate()
 	return ..()
 
-/obj/structure/statue/uranium/CollidedWith(atom/movable/AM)
+/obj/structure/statue/uranium/Bumped(atom/movable/AM)
 	radiate()
 	..()
 
@@ -232,7 +231,7 @@
 	name = "statue of a clown"
 	icon_state = "clown"
 
-/obj/structure/statue/bananium/CollidedWith(atom/movable/AM)
+/obj/structure/statue/bananium/Bumped(atom/movable/AM)
 	honk()
 	..()
 

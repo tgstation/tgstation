@@ -19,6 +19,7 @@
 		gun = newloc
 
 /obj/item/firing_pin/afterattack(atom/target, mob/user, proximity_flag)
+	. = ..()
 	if(proximity_flag)
 		if(istype(target, /obj/item/gun))
 			var/obj/item/gun/G = target
@@ -156,7 +157,7 @@
 	var/unique_enzymes = null
 
 /obj/item/firing_pin/dna/afterattack(atom/target, mob/user, proximity_flag)
-	..()
+	. = ..()
 	if(proximity_flag && iscarbon(target))
 		var/mob/living/carbon/M = target
 		if(M.dna && M.dna.unique_enzymes)

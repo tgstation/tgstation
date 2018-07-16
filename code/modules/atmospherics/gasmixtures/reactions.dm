@@ -302,7 +302,7 @@
 		if (location) //It's going to happen regardless of whether you want it to or not
 			radiation_pulse(location, radiation_power * 2)
 			explosion(location,0,0,10,power_ratio,TRUE,TRUE)//A decent explosion with a huge shockwave. People WILL know you're doing fusion.
-			playsound(location, "sound/effects/supermatter.ogg", FUSION_VOLUME_SUPER, 0)
+			playsound(location, 'sound/effects/supermatter.ogg', FUSION_VOLUME_SUPER, 0)
 
 	else if (power_ratio > FUSION_HIGH_TIER) //power ratio 20-50; High tier. Fuses into one big atom which then turns to tritium instantly. Very dangerous, but super cool.
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_HIGH * (power_ratio / FUSION_ENERGY_DIVISOR_HIGH)
@@ -313,9 +313,9 @@
 			if(prob(power_ratio)) //You really don't want this to happen.
 				radiation_pulse(location, radiation_power)
 				explosion(location,0,0,3,power_ratio * 0.5,TRUE,TRUE)//A tiny explosion with a large shockwave. People will know you're doing fusion.
-				playsound(location, "sound/effects/supermatter.ogg", FUSION_VOLUME_HIGH, 0)
+				playsound(location, 'sound/effects/supermatter.ogg', FUSION_VOLUME_HIGH, 0)
 			else
-				playsound(location, "sound/effects/phasein.ogg", FUSION_VOLUME_HIGH, 0)
+				playsound(location, 'sound/effects/phasein.ogg', FUSION_VOLUME_HIGH, 0)
 
 	else if (power_ratio > FUSION_MID_TIER) //power_ratio 5 to 20; Mediation is overpowered, fusion reaction starts to break down.
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_MID * (power_ratio / FUSION_ENERGY_DIVISOR_MID)
@@ -327,9 +327,9 @@
 		if (location)
 			if(prob(power_ratio * FUSION_MID_TIER_RAD_PROB_FACTOR)) //Still weak, but don't stand next to it unprotected
 				radiation_pulse(location, radiation_power * 0.5)
-				playsound(location, "sound/effects/supermatter.ogg", FUSION_VOLUME_MID, 0)
+				playsound(location, 'sound/effects/supermatter.ogg', FUSION_VOLUME_MID, 0)
 			else
-				playsound(location, "sound/effects/phasein.ogg", FUSION_VOLUME_MID, 0)
+				playsound(location, 'sound/effects/phasein.ogg', FUSION_VOLUME_MID, 0)
 
 	else //power ratio 0 to 5; Gas power is overpowered. Fusion isn't nearly as powerful.
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_LOW * (power_ratio / FUSION_ENERGY_DIVISOR_LOW)
@@ -341,9 +341,9 @@
 		if (location)
 			if(prob(power_ratio * FUSION_LOW_TIER_RAD_PROB_FACTOR)) //Weak, but still something to look out for
 				radiation_pulse(location, radiation_power * 0.25)
-				playsound(location, "sound/effects/supermatter.ogg", FUSION_VOLUME_LOW, 0)
+				playsound(location, 'sound/effects/supermatter.ogg', FUSION_VOLUME_LOW, 0)
 			else
-				playsound(location, "sound/effects/phasein.ogg", FUSION_VOLUME_LOW, 0)
+				playsound(location, 'sound/effects/phasein.ogg', FUSION_VOLUME_LOW, 0)
 
 	if(reaction_energy > 0)
 		var/new_heat_capacity = air.heat_capacity()
