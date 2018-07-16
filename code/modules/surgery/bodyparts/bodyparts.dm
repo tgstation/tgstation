@@ -121,9 +121,9 @@
 	if(owner && (owner.status_flags & GODMODE))
 		return FALSE	//godmode
 	var/dmg_mlt = CONFIG_GET(number/damage_multiplier)
-	brute = max(brute * dmg_mlt, 0)
-	burn = max(burn * dmg_mlt, 0)
-	stamina = max(stamina * dmg_mlt, 0)
+	brute = round(max(brute * dmg_mlt, 0),DAMAGE_PRECISION)
+	burn = round(max(burn * dmg_mlt, 0),DAMAGE_PRECISION)
+	stamina = round(max(stamina * dmg_mlt, 0),DAMAGE_PRECISION)
 	if(status == BODYPART_ROBOTIC) //This makes robolimbs not damageable by chems and makes it stronger
 		brute = max(0, brute - 5)
 		burn = max(0, burn - 4)
@@ -144,8 +144,8 @@
 
 	if(total_damage > can_inflict)
 		var/excess = total_damage - can_inflict
-		brute = brute * (excess / total_damage)
-		burn = burn * (excess / total_damage)
+		brute = round(brute * (excess / total_damage),DAMAGE_PRECISION)
+		burn = round(burn * (excess / total_damage),DAMAGE_PRECISION)
 
 	brute_dam += brute
 	burn_dam += burn
@@ -172,9 +172,9 @@
 	if(only_organic && status != BODYPART_ORGANIC) //This makes robolimbs not healable by chems.
 		return
 
-	brute_dam	= max(brute_dam - brute, 0)
-	burn_dam	= max(burn_dam - burn, 0)
-	stamina_dam = max(stamina_dam - stamina, 0)
+	brute_dam	= round(max(brute_dam - brute, 0), DAMAGE_PRECISION)
+	burn_dam	= round(max(burn_dam - burn, 0), DAMAGE_PRECISION)
+	stamina_dam = round(max(stamina_dam - stamina, 0), DAMAGE_PRECISION)
 	if(owner && updating_health)
 		owner.updatehealth()
 	return update_bodypart_damage_state()

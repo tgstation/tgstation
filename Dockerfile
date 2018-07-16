@@ -6,12 +6,20 @@ WORKDIR /rust_g
 
 RUN apt-get update && apt-get install -y \
     git \
-    libssl-dev \
     ca-certificates \
+    libc6-dev
+
+FROM build as rust_g
+
+WORKDIR /rust_g
+
+RUN apt-get install -y --no-install-recommends \
+    libssl-dev \
     rustc \
     cargo \
-    pkg-config \
-    && git init \
+    pkg-config
+
+RUN git init \
     && git remote add origin https://github.com/tgstation/rust-g
 
 #TODO: find a way to read these from .travis.yml or a common source eventually
@@ -20,6 +28,38 @@ ENV RUST_G_VERSION=0.3.0
 RUN git fetch --depth 1 origin $RUST_G_VERSION \
     && git checkout FETCH_HEAD \
     && cargo build --release
+
+FROM base as bsql
+
+WORKDIR /bsql
+
+RUN apt-get install -y --no-install-recommends software-properties-common \
+    && add-apt-repository ppa:ubuntu-toolchain-r/test \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+    cmake \
+    make \
+    g++-7 \
+    libstdc++6 \
+    libmariadb-client-lgpl-dev
+
+RUN git init \
+    && git remote add origin https://github.com/tgstation/BSQL 
+
+#TODO: find a way to read these from .travis.yml or a common source eventually
+ENV BSQL_VERSION=v1.3.0.2
+
+RUN git fetch --depth 1 origin $BSQL_VERSION \
+    && git checkout FETCH_HEAD
+
+WORKDIR /bsql/artifacts
+
+ENV CC=gcc-7 CXX=g++-7
+
+RUN ln -s /usr/include/mariadb /usr/include/mysql \
+    && ln -s /usr/lib/i386-linux-gnu /root/MariaDB \
+    && cmake .. \
+    && make
 
 FROM base as dm_base
 
@@ -42,7 +82,11 @@ RUN apt-get update && apt-get install -y \
     && mkdir -p /root/.byond/bin
 
 COPY --from=rustg /rust_g/target/release/librust_g.so /root/.byond/bin/rust_g
+COPY --from=bsql /bsql/artifacts/src/BSQL/libBSQL.so ./
 COPY --from=build /deploy ./
+
+#bsql fexists memes
+RUN ln -s /tgstation/libBSQL.so /root/.byond/bin/libBSQL.so
 
 VOLUME [ "/tgstation/config", "/tgstation/data" ]
 

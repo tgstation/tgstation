@@ -1097,13 +1097,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			. -= 2
 		else if(istype(T) && T.allow_thrust(0.01, H))
 			. -= 2
-		else if(flightpack && F.allow_thrust(0.01, src))
-			. -= 2
 
 	if(flightpack && F.boost)
 		. -= F.boost_speed
 	else if(flightpack && F.brake)
-		. += 2
+		. += 1
 
 	if(!ignoreslow && !flightpack && gravity)
 		if(H.wear_suit)
@@ -1622,7 +1620,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(H.wear_suit && ((H.wear_suit.body_parts_covered & HANDS) || (H.wear_suit.body_parts_covered & ARMS)))
 			arm_clothes = H.wear_suit
 		if(arm_clothes)
-			burning_items += arm_clothes
+			burning_items |= arm_clothes
 
 		//LEGS & FEET//
 		var/obj/item/clothing/leg_clothes = null
@@ -1633,7 +1631,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(H.wear_suit && ((H.wear_suit.body_parts_covered & FEET) || (H.wear_suit.body_parts_covered & LEGS)))
 			leg_clothes = H.wear_suit
 		if(leg_clothes)
-			burning_items += leg_clothes
+			burning_items |= leg_clothes
 
 		for(var/X in burning_items)
 			var/obj/item/I = X
