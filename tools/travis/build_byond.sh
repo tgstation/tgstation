@@ -57,8 +57,8 @@ if [ "$BUILD_TOOLS" = false ]; then
 		if [ -f $HOME/libmariadb ]; then
 			#travis likes to interpret the cache command as it being a file for some reason
 			rm $HOME/libmariadb
-			mkdir $HOME/libmariadb
 		fi
+		mkdir -p $HOME/libmariadb
 		if [ ! -f $HOME/libmariadb/libmariadb.so ]; then
 			wget http://www.byond.com/download/db/mariadb_client-2.0.0-linux.tgz
 			tar -xvf mariadb_client-2.0.0-linux.tgz
