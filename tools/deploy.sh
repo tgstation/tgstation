@@ -31,9 +31,6 @@ cp -r strings/* $1/strings/
 
 #this regrettably doesn't work with windows find
 #find $1/_maps -name "*.dm" -type f -delete
-rm $1/_maps/*.dm
-rm $1/_maps/map_files/OmegaStation/job_changes.dm
-rm $1/_maps/map_files/PubbyStation/job_changes.dm
 
 #dlls
 cp rust_g.* $1/
