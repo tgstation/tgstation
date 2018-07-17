@@ -25,9 +25,7 @@
 	var/max_time = 40
 	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
 		max_time -= L.rating
-	if(max_time <= 0)
-		max_time = 1 //ungodly, but whatever
-	interval = max_time
+	interval = max(max_time,1)
 
 /obj/machinery/harvester/update_icon(warming_up)
 	if(warming_up)
@@ -41,6 +39,8 @@
 		icon_state = initial(icon_state)
 
 /obj/machinery/harvester/open_machine(drop = TRUE)
+	if(panel_open)
+		return
 	. = ..()
 	harvesting = FALSE
 
@@ -83,9 +83,7 @@
 	if(!occupant || !iscarbon(occupant))
 		return
 	var/mob/living/carbon/C = occupant
-	operation_order = list() //we're pretty much inverting C.bodyparts here, since we want chest and head last, wich are otherwise the first to go
-	for(var/i in LAZYLEN(C.bodyparts) to 1 step -1)
-		operation_order += C.bodyparts[i]
+	operation_order = reverseList(C.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
 	harvesting = TRUE
 	visible_message("<span class='notice'>The [name] begins warming up!</span>")
 	update_icon(TRUE)
@@ -102,7 +100,6 @@
 		return
 	var/turf/target
 	for(var/adir in list(EAST,NORTH,SOUTH,WEST))
-		to_chat(world,"[adir]")
 		var/turf/T = get_step(src,adir)
 		if(!T)
 			continue
