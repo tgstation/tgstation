@@ -1,0 +1,7 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - balance: "Limbs no longer need to have full damage to be dismemberable, although more damage means higher dismemberment chance."
+  - balance: "Damaging limbs now only counts as 75% for the mob's total health. Bleeding still applies normally."
+  - rscadd: "Limbs that reach max damage will now be disabled until they are healed to half health."
+  - rscadd: "Disabled limbs work similarly to missing limbs, but they can still be used to wear items or handcuffs."
