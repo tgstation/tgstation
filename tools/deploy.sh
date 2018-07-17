@@ -33,5 +33,5 @@ cp -r strings/* $1/strings/
 #find $1/_maps -name "*.dm" -type f -delete
 
 #dlls
-cp rust_g.* $1/
+cp rust_g* $1/
 cp *BSQL.* $1/
