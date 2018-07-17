@@ -134,7 +134,7 @@
 			if(R.id in required_reagents)
 				continue
 			beeagents += R
-		var/bee_amount = round(created_volume/5)
+		var/bee_amount = round(created_volume * 0.2)
 		for(var/i in 1 to bee_amount)
 			var/mob/living/simple_animal/hostile/poison/bees/new_bee = new(location)
 			if(LAZYLEN(beeagents))
