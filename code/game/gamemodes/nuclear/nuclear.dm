@@ -30,9 +30,10 @@
 			pre_nukeops += new_op
 			new_op.assigned_role = "Nuclear Operative"
 			new_op.special_role = "Nuclear Operative"
-			log_game("[new_op.key] (ckey) has been selected as a nuclear operative")
+			log_game("[key_name(new_op)] has been selected as a nuclear operative")
 		return TRUE
 	else
+		setup_error = "Not enough nuke op candidates"
 		return FALSE
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -63,17 +64,14 @@
 			return FALSE
 	return TRUE
 
-/datum/game_mode/nuclear/check_finished() //to be called by SSticker
-	if(replacementmode && round_converted == 2)
-		return replacementmode.check_finished()
-	if((SSshuttle.emergency.mode == SHUTTLE_ENDGAME) || station_was_nuked)
-		return TRUE
+/datum/game_mode/nuclear/check_finished()
+	//Keep the round going if ops are dead but bomb is ticking.
 	if(nuke_team.operatives_dead())
 		var/obj/machinery/nuclearbomb/N
 		pass(N)	//suppress unused warning
 		if(N.bomb_set) //snaaaaaaaaaake! It's not over yet!
 			return FALSE	//its a static var btw
-	..()
+	return ..()
 
 /datum/game_mode/nuclear/set_round_result()
 	..()
@@ -134,7 +132,7 @@
 
 	var/tc = 25
 	var/command_radio = FALSE
-	var/uplink_type = /obj/item/radio/uplink/nuclear
+	var/uplink_type = /obj/item/uplink/nuclear
 
 
 /datum/outfit/syndicate/leader
@@ -154,7 +152,7 @@
 		R.command = TRUE
 
 	if(tc)
-		var/obj/item/radio/uplink/U = new uplink_type(H, H.key, tc)
+		var/obj/item/U = new uplink_type(H, H.key, tc)
 		H.equip_to_slot_or_del(U, SLOT_IN_BACKPACK)
 
 	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(H)

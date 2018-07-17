@@ -268,7 +268,7 @@
 		verb_say = pick(speak_emote)
 	. = ..()
 
-/mob/living/simple_animal/emote(act, m_type=1, message = null)
+/mob/living/simple_animal/emote(act, m_type=1, message = null, intentional = FALSE)
 	if(stat)
 		return
 	if(act == "scream")
@@ -308,7 +308,7 @@
 			emote("deathgasp")
 	if(del_on_death)
 		..()
-		//Prevent infinite loops if the mob Destroy() is overriden in such
+		//Prevent infinite loops if the mob Destroy() is overridden in such
 		//a manner as to cause a call to death() again
 		del_on_death = FALSE
 		qdel(src)

@@ -118,6 +118,15 @@
 	projectilesound = 'sound/weapons/gunshot_smg.ogg'
 	loot = list(/obj/effect/gibspawner/human)
 
+/mob/living/simple_animal/hostile/syndicate/ranged/pilot //caravan ambush ruin
+	name = "Syndicate Salvage Pilot"	
+	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
+
+/mob/living/simple_animal/hostile/syndicate/ranged/infiltrator //shuttle loan event
+	rapid = FALSE
+	projectilesound = 'sound/weapons/gunshot_silenced.ogg'
+	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
+
 /mob/living/simple_animal/hostile/syndicate/ranged/space
 	icon_state = "syndicaterangedspace"
 	icon_living = "syndicaterangedspace"
@@ -138,7 +147,7 @@
 	name = "Syndicate Stormtrooper"
 	maxHealth = 200
 	health = 200
-	casingtype = /obj/item/ammo_casing/shotgun/tengauge
+	casingtype = /obj/item/ammo_casing/shotgun/buckshot //buckshot (up to 72.5 brute) fired in a three-round burst
 	projectilesound = 'sound/weapons/gunshot.ogg'
 	loot = list(/obj/effect/gibspawner/human)
 

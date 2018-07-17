@@ -118,6 +118,9 @@ LOG_LAW
 ## log crew manifest to seperate file
 LOG_MANIFEST
 
+## log job divide debugging information
+#LOG_JOB_DEBUG
+
 ## log all world.Topic() calls
 # LOG_WORLD_TOPIC
 
@@ -139,9 +142,6 @@ ALLOW_ADMIN_OOCCOLOR
 
 ## Job slot open/close by identification consoles delay in seconds
 ID_CONSOLE_JOBSLOT_DELAY 30
-
-## If metadata is supported
-ALLOW_METADATA
 
 ## allow players to initiate a restart vote
 #ALLOW_VOTE_RESTART
@@ -254,7 +254,7 @@ CHECK_RANDOMIZER
 ## Uncomment this to forbid admins from possessing the singularity.
 #FORBID_SINGULO_POSSESSION
 
-## Uncomment to show a popup 'reply to' window to every non-admin that recieves an adminPM.
+## Uncomment to show a popup 'reply to' window to every non-admin that receives an adminPM.
 ## The intention is to make adminPMs more visible. (although I fnd popups annoying so this defaults to off)
 #POPUP_ADMIN_PM
 

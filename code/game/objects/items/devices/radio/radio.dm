@@ -47,6 +47,7 @@
 	return BRUTELOSS
 
 /obj/item/radio/proc/set_frequency(new_frequency)
+	SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, args)
 	remove_radio(src, frequency)
 	frequency = add_radio(src, new_frequency)
 
@@ -100,12 +101,11 @@
 	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
 
 /obj/item/radio/interact(mob/user)
-	if (..())
-		return
 	if(unscrewed && !isAI(user))
 		wires.interact(user)
+		add_fingerprint(user)
 	else
-		ui_interact(user)
+		..()
 
 /obj/item/radio/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
@@ -160,13 +160,7 @@
 				tune = tune * 10
 				. = TRUE
 			if(.)
-				frequency = sanitize_frequency(tune, freerange)
-				set_frequency(frequency)
-				GET_COMPONENT(hidden_uplink, /datum/component/uplink)
-				if(hidden_uplink && (frequency == traitor_frequency))
-					hidden_uplink.locked = FALSE
-					hidden_uplink.interact(usr)
-					ui.close()
+				set_frequency(sanitize_frequency(tune, freerange))
 		if("listen")
 			listening = !listening
 			. = TRUE

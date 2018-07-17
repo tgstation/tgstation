@@ -296,7 +296,8 @@
 	cut_overlays()
 	switch(status)		// set icon_states
 		if(LIGHT_OK)
-			if(emergency_mode)
+			var/area/A = get_area(src)
+			if(emergency_mode || (A && A.fire))
 				icon_state = "[base_state]_emergency"
 			else
 				icon_state = "[base_state]"
@@ -319,9 +320,16 @@
 			on = FALSE
 	emergency_mode = FALSE
 	if(on)
-		var/BR = nightshift_enabled? nightshift_brightness : brightness
-		var/PO = nightshift_enabled? nightshift_light_power : bulb_power
-		var/CO = nightshift_enabled? nightshift_light_color : bulb_colour
+		var/BR = brightness
+		var/PO = bulb_power
+		var/CO = bulb_colour
+		var/area/A = get_area(src)
+		if (A && A.fire)
+			CO = bulb_emergency_colour
+		else if (nightshift_enabled)
+			BR = nightshift_brightness
+			PO = nightshift_light_power
+			CO = nightshift_light_color
 		var/matching = light && BR == light.light_range && PO == light.light_power && CO == light.light_color
 		if(!matching)
 			switchcount++
@@ -337,6 +345,7 @@
 	else if(has_emergency_power(LIGHT_EMERGENCY_POWER_USE) && !turned_off())
 		use_power = IDLE_POWER_USE
 		emergency_mode = TRUE
+		START_PROCESSING(SSmachines, src)
 	else
 		use_power = IDLE_POWER_USE
 		set_light(0)
@@ -353,7 +362,11 @@
 
 
 /obj/machinery/light/process()
-	if(has_power() && cell)
+	if (!cell)
+		return PROCESS_KILL
+	if(has_power())
+		if (cell.charge == cell.maxcharge)
+			return PROCESS_KILL
 		cell.charge = min(cell.maxcharge, cell.charge + LIGHT_EMERGENCY_POWER_USE) //Recharge emergency power automatically while not using it
 	if(emergency_mode && !use_emergency_power(LIGHT_EMERGENCY_POWER_USE))
 		update(FALSE) //Disables emergency mode and sets the color to normal

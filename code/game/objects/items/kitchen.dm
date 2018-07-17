@@ -137,7 +137,7 @@
 	icon_state = "bone_dagger"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	desc = "A sharpened bone. The bare mimimum in survival."
+	desc = "A sharpened bone. The bare minimum in survival."
 	force = 15
 	throwforce = 15
 	materials = list()

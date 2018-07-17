@@ -599,7 +599,7 @@
 	if(!client)
 		return
 
-	if(health <= HEALTH_THRESHOLD_CRIT)
+	if(health <= crit_modifier())
 		var/severity = 0
 		switch(health)
 			if(-20 to -10)
@@ -728,7 +728,7 @@
 			stat = UNCONSCIOUS
 			blind_eyes(1)
 		else
-			if(health <= HEALTH_THRESHOLD_CRIT && !has_trait(TRAIT_NOSOFTCRIT))
+			if(health <= crit_modifier() && !has_trait(TRAIT_NOSOFTCRIT))
 				stat = SOFT_CRIT
 			else
 				stat = CONSCIOUS
@@ -744,10 +744,10 @@
 		drop_all_held_items()
 		stop_pulling()
 		throw_alert("handcuffed", /obj/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
-		SendSignal(COMSIG_ADD_MOOD_EVENT, "handcuffed", /datum/mood_event/handcuffed)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "handcuffed", /datum/mood_event/handcuffed)
 	else
 		clear_alert("handcuffed")
-		SendSignal(COMSIG_CLEAR_MOOD_EVENT, "handcuffed")
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "handcuffed")
 	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
 	update_inv_handcuffed()
 	update_hud_handcuffed()
@@ -864,6 +864,7 @@
 	.["Modify bodypart"] = "?_src_=vars;[HrefToken()];editbodypart=[REF(src)]"
 	.["Modify organs"] = "?_src_=vars;[HrefToken()];editorgans=[REF(src)]"
 	.["Hallucinate"] = "?_src_=vars;[HrefToken()];hallucinate=[REF(src)]"
+	.["Give martial arts"] = "?_src_=vars;[HrefToken()];givemartialart=[REF(src)]"
 	.["Give brain trauma"] = "?_src_=vars;[HrefToken()];givetrauma=[REF(src)]"
 	.["Cure brain traumas"] = "?_src_=vars;[HrefToken()];curetraumas=[REF(src)]"
 

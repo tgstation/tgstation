@@ -64,16 +64,21 @@
 /obj/item/organ/zombie_infection/proc/zombify()
 	timer_id = null
 
+	if(!converts_living && owner.stat != DEAD)
+		return
+	
 	if(!iszombie(owner))
 		old_species = owner.dna.species.type
 		owner.set_species(/datum/species/zombie/infectious)
 
-	if(!converts_living && owner.stat != DEAD)
-		return
-
 	var/stand_up = (owner.stat == DEAD) || (owner.stat == UNCONSCIOUS)
 
-	if(!owner.revive(full_heal = TRUE))
+	//Fully heal the zombie's damage the first time they rise
+	owner.setToxLoss(0, 0)
+	owner.setOxyLoss(0, 0)
+	owner.heal_overall_damage(INFINITY, INFINITY, INFINITY, FALSE, FALSE, TRUE)
+	
+	if(!owner.revive())
 		return
 
 	owner.grab_ghost()

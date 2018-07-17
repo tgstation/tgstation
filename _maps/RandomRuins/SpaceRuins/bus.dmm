@@ -334,6 +334,16 @@
 /obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
+"XA" = (
+/obj/structure/fluff/bus/passable/seat{
+	icon_state = "backseat"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/toy/plush/awakenedplushie,
+/turf/open/floor/plasteel/airless/dark{
+	icon_state = "bus"
+	},
+/area/ruin/unpowered/no_grav)
 
 (1,1,1) = {"
 aa
@@ -484,7 +494,7 @@ ab
 ae
 ad
 aj
-am
+XA
 az
 aK
 ad

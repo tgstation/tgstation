@@ -310,7 +310,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		var/obj/item/conveyor_switch_construct/C = new/obj/item/conveyor_switch_construct(src.loc)
 		C.id = id
 		transfer_fingerprints_to(C)
-		to_chat(user, "<span class='notice'>You deattach the conveyor switch.</span>")
+		to_chat(user, "<span class='notice'>You detach the conveyor switch.</span>")
 		qdel(src)
 
 /obj/machinery/conveyor_switch/oneway
@@ -343,6 +343,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		id = C.id
 
 /obj/item/conveyor_construct/afterattack(atom/A, mob/user, proximity)
+	. = ..()
 	if(!proximity || user.stat || !isfloorturf(A) || istype(A, /area/shuttle))
 		return
 	var/cdir = get_dir(A, user)
@@ -366,6 +367,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	id = "[rand()]" //this couldn't possibly go wrong
 
 /obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)
+	. = ..()
 	if(!proximity || user.stat || !isfloorturf(A) || istype(A, /area/shuttle))
 		return
 	var/found = 0

@@ -453,7 +453,7 @@
 		..()
 		flush()
 
-/obj/machinery/disposal/deliveryChute/CollidedWith(atom/movable/AM) //Go straight into the chute
+/obj/machinery/disposal/deliveryChute/Bumped(atom/movable/AM) //Go straight into the chute
 	if(!AM.CanEnterDisposals())
 		return
 	switch(dir)

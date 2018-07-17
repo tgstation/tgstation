@@ -258,7 +258,8 @@
 
 /datum/team/nuclear/proc/syndies_escaped()
 	var/obj/docking_port/mobile/S = SSshuttle.getShuttle("syndicate")
-	return S && (is_centcom_level(S.z) || is_transit_level(S.z))
+	var/obj/docking_port/stationary/transit/T = locate() in S.loc
+	return S && (is_centcom_level(S.z) || T)
 
 /datum/team/nuclear/proc/get_result()
 	var/evacuation = SSshuttle.emergency.mode == SHUTTLE_ENDGAME
@@ -277,7 +278,7 @@
 		return NUKE_RESULT_WRONG_STATION
 	else if (!disk_rescued && !station_was_nuked && nuke_off_station && syndies_didnt_escape)
 		return NUKE_RESULT_WRONG_STATION_DEAD
-	else if ((disk_rescued || evacuation) && operatives_dead())
+	else if ((disk_rescued && evacuation) && operatives_dead())
 		return NUKE_RESULT_CREW_WIN_SYNDIES_DEAD
 	else if (disk_rescued)
 		return NUKE_RESULT_CREW_WIN

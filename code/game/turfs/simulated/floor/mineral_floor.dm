@@ -118,7 +118,7 @@
 	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/mineral/plastitanium/brig
-	name = "Brig floor"
+	name = "brig floor"
 
 //BANANIUM
 
@@ -133,7 +133,7 @@
 	.=..()
 	if(!.)
 		if(istype(L))
-			squeek()
+			squeak()
 
 /turf/open/floor/mineral/bananium/attackby(obj/item/W, mob/user, params)
 	.=..()
@@ -155,7 +155,7 @@
 		playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
 		spam_flag = world.time + 20
 
-/turf/open/floor/mineral/bananium/proc/squeek()
+/turf/open/floor/mineral/bananium/proc/squeak()
 	if(spam_flag < world.time)
 		playsound(src, "clownstep", 50, 1)
 		spam_flag = world.time + 10
@@ -174,6 +174,7 @@
 //URANIUM
 
 /turf/open/floor/mineral/uranium
+	article = "a"
 	name = "uranium floor"
 	icon_state = "uranium"
 	floor_tile = /obj/item/stack/tile/mineral/uranium

@@ -293,6 +293,10 @@
 	set name = "Examine"
 	set category = "IC"
 
+	if(isturf(A) && !(sight & SEE_TURFS) && !(A in view(client ? client.view : world.view, src)))
+		// shift-click catcher may issue examinate() calls for out-of-sight turfs
+		return
+
 	if(is_blind(src))
 		to_chat(src, "<span class='notice'>Something is there but you can't see it.</span>")
 		return
@@ -303,7 +307,7 @@
 //same as above
 //note: ghosts can point, this is intended
 //visible_message will handle invisibility properly
-//overriden here and in /mob/dead/observer for different point span classes and sanity checks
+//overridden here and in /mob/dead/observer for different point span classes and sanity checks
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
 	set name = "Point To"
 	set category = "Object"
@@ -347,6 +351,11 @@
 	if(hud_used)
 		if(hud_used.pull_icon)
 			hud_used.pull_icon.update_icon(src)
+
+/mob/proc/update_rest_hud_icon()
+	if(hud_used)
+		if(hud_used.rest_icon)
+			hud_used.rest_icon.update_icon(src)
 
 /mob/verb/mode()
 	set name = "Activate Held Object"
@@ -395,22 +404,22 @@
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
 		return
 
-	log_game("[usr.name]/[usr.key] used abandon mob.")
+	log_game("[key_name(usr)] used abandon mob.")
 
 	to_chat(usr, "<span class='boldnotice'>Please roleplay correctly!</span>")
 
 	if(!client)
-		log_game("[usr.key] AM failed due to disconnect.")
+		log_game("[key_name(usr)] AM failed due to disconnect.")
 		return
 	client.screen.Cut()
 	client.screen += client.void
 	if(!client)
-		log_game("[usr.key] AM failed due to disconnect.")
+		log_game("[key_name(usr)] AM failed due to disconnect.")
 		return
 
 	var/mob/dead/new_player/M = new /mob/dead/new_player()
 	if(!client)
-		log_game("[usr.key] AM failed due to disconnect.")
+		log_game("[key_name(usr)] AM failed due to disconnect.")
 		qdel(M)
 		return
 
@@ -675,6 +684,16 @@
 		if(istype(S, spell))
 			mob_spell_list -= S
 			qdel(S)
+
+/mob/proc/anti_magic_check(magic = TRUE, holy = FALSE)
+	if(!magic && !holy)
+		return
+	var/list/protection_sources = list()
+	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, magic, holy, protection_sources) & COMPONENT_BLOCK_MAGIC)
+		if(protection_sources.len)
+			return pick(protection_sources)
+		else
+			return src
 
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)

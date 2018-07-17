@@ -79,10 +79,13 @@
 		cultists_to_cult += cultist
 		cultist.special_role = ROLE_CULTIST
 		cultist.restricted_roles = restricted_jobs
-		log_game("[cultist.key] (ckey) has been selected as a cultist")
+		log_game("[key_name(cultist)] has been selected as a cultist")
 
-
-	return (cultists_to_cult.len>=required_enemies)
+	if(cultists_to_cult.len>=required_enemies)
+		return TRUE
+	else
+		setup_error = "Not enough cultist candidates"
+		return FALSE
 
 
 /datum/game_mode/cult/post_setup()

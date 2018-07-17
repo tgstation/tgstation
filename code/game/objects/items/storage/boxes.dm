@@ -535,7 +535,7 @@
 	STR.max_items = 8
 
 /obj/item/storage/box/snappops/PopulateContents()
-	SendSignal(COMSIG_TRY_STORAGE_FILL_TYPE, /obj/item/toy/snappop)
+	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_FILL_TYPE, /obj/item/toy/snappop)
 
 /obj/item/storage/box/matches
 	name = "matchbox"
@@ -553,7 +553,7 @@
 	STR.can_hold = typecacheof(list(/obj/item/match))
 
 /obj/item/storage/box/matches/PopulateContents()
-	SendSignal(COMSIG_TRY_STORAGE_FILL_TYPE, /obj/item/match)
+	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_FILL_TYPE, /obj/item/match)
 
 /obj/item/storage/box/matches/attackby(obj/item/match/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/match))
@@ -644,7 +644,7 @@
 	user.visible_message("<span class='notice'>[user] hugs \the [src].</span>","<span class='notice'>You hug \the [src].</span>")
 
 /////clown box & honkbot assembly
-obj/item/storage/box/clown
+/obj/item/storage/box/clown
 	name = "clown box"
 	desc = "A colorful cardboard box for the clown"
 	illustration = "clown"

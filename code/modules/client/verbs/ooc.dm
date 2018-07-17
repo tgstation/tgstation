@@ -22,6 +22,8 @@
 	if(jobban_isbanned(src.mob, "OOC"))
 		to_chat(src, "<span class='danger'>You have been banned from OOC.</span>")
 		return
+	if(QDELETED(src))
+		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	var/raw_msg = msg
@@ -56,18 +58,19 @@
 	if(prefs.unlock_content)
 		if(prefs.toggles & MEMBER_PUBLIC)
 			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : GLOB.normal_ooc_colour]'>[icon2html('icons/member_content.dmi', world, "blag")][keyname]</font>"
+	//The linkify span classes and linkify=TRUE below make ooc text get clickable chat href links if you pass in something resembling a url
 	for(var/client/C in GLOB.clients)
 		if(C.prefs.chat_toggles & CHAT_OOC)
 			if(holder)
 				if(!holder.fakekey || C.holder)
 					if(check_rights_for(src, R_ADMIN))
-						to_chat(C, "<span class='adminooc'>[CONFIG_GET(flag/allow_admin_ooccolor) && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span></font>")
+						to_chat(C, "<span class='adminooc'>[CONFIG_GET(flag/allow_admin_ooccolor) && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]</span></span></font>")
 					else
-						to_chat(C, "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>")
+						to_chat(C, "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]</span></span>")
 				else
-					to_chat(C, "<font color='[GLOB.normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>")
+					to_chat(C, "<font color='[GLOB.normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message linkify'>[msg]</span></span></font>")
 			else if(!(key in C.prefs.ignoring))
-				to_chat(C, "<font color='[GLOB.normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>")
+				to_chat(C, "<font color='[GLOB.normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></span></font>")
 
 /proc/toggle_ooc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
@@ -230,7 +233,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 
 	var/motd = global.config.motd
 	if(motd)
-		to_chat(src, "<div class=\"motd\">[motd]</div>")
+		to_chat(src, "<div class=\"motd\">[motd]</div>", handle_whitespace=FALSE)
 	else
 		to_chat(src, "<span class='notice'>The Message of the Day has not been set.</span>")
 
@@ -298,3 +301,49 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	set desc = "View the last round end report you've seen"
 
 	SSticker.show_roundend_report(src, TRUE)
+
+/client/verb/fit_viewport()
+	set name = "Fit Viewport"
+	set category = "OOC"
+	set desc = "Fit the width of the map window to match the viewport"
+
+	// Fetch aspect ratio
+	var/view_size = getviewsize(view)
+	var/aspect_ratio = view_size[1] / view_size[2]
+
+	// Calculate desired pixel width using window size and aspect ratio
+	var/sizes = params2list(winget(src, "mainwindow.split;mapwindow", "size"))
+	var/map_size = splittext(sizes["mapwindow.size"], "x")
+	var/height = text2num(map_size[2])
+	var/desired_width = round(height * aspect_ratio)
+	if (text2num(map_size[1]) == desired_width)
+		// Nothing to do
+		return
+
+	var/split_size = splittext(sizes["mainwindow.split.size"], "x")
+	var/split_width = text2num(split_size[1])
+
+	// Calculate and apply a best estimate
+	// +4 pixels are for the width of the splitter's handle
+	var/pct = 100 * (desired_width + 4) / split_width
+	winset(src, "mainwindow.split", "splitter=[pct]")
+
+	// Apply an ever-lowering offset until we finish or fail
+	var/delta
+	for(var/safety in 1 to 10)
+		var/after_size = winget(src, "mapwindow", "size")
+		map_size = splittext(after_size, "x")
+		var/got_width = text2num(map_size[1])
+
+		if (got_width == desired_width)
+			// success
+			return
+		else if (isnull(delta))
+			// calculate a probable delta value based on the difference
+			delta = 100 * (desired_width - got_width) / split_width
+		else if ((delta > 0 && got_width > desired_width) || (delta < 0 && got_width < desired_width))
+			// if we overshot, halve the delta and reverse direction
+			delta = -delta/2
+
+		pct += delta
+		winset(src, "mainwindow.split", "splitter=[pct]")

@@ -52,7 +52,7 @@
 /obj/item/pinpointer/nuke/proc/switch_mode_to(new_mode)
 	if(isliving(loc))
 		var/mob/living/L = loc
-		to_chat(L, "<span class='userdanger'>Your [name] beeps as it reconfigures its tracking algorithms.</span>")
+		to_chat(L, "<span class='userdanger'>Your [name] beeps as it reconfigures it's tracking algorithms.</span>")
 		playsound(L, 'sound/machines/triple_beep.ogg', 50, 1)
 	mode = new_mode
 	scan_for_target()

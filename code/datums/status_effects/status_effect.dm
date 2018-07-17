@@ -13,19 +13,8 @@
 	var/alert_type = /obj/screen/alert/status_effect //the alert thrown by the status effect, contains name and description
 	var/obj/screen/alert/status_effect/linked_alert = null //the alert itself, if it exists
 
-	var/listening = FALSE //Whether or not the status effect listens to mob interaction, using the status_effect_listener. Don't touch!
-
 /datum/status_effect/New(list/arguments)
 	on_creation(arglist(arguments))
-
-/datum/status_effect/proc/RegisterEffectSignal(sig_type_or_types, proc_or_callback)
-	if(!owner)
-		CRASH("[src] attempted to apply a status effect listener before it had an owner.")
-	GET_COMPONENT_FROM(listener, /datum/component/status_effect_listener, owner)
-	if(!listener)
-		listener = owner.AddComponent(/datum/component/status_effect_listener)
-	listener.RegisterEffectSignal(src,sig_type_or_types, proc_or_callback)
-	listening = TRUE
 
 /datum/status_effect/proc/on_creation(mob/living/new_owner, ...)
 	if(new_owner)
@@ -51,10 +40,6 @@
 		owner.clear_alert(id)
 		LAZYREMOVE(owner.status_effects, src)
 		on_remove()
-		if(listening)
-			GET_COMPONENT_FROM(listener, /datum/component/status_effect_listener, owner)
-			if(listener)
-				listener.ClearSignalRegister(src)
 		owner = null
 	return ..()
 
@@ -71,7 +56,6 @@
 /datum/status_effect/proc/on_apply() //Called whenever the buff is applied; returning FALSE will cause it to autoremove itself.
 	return TRUE
 /datum/status_effect/proc/tick() //Called every tick.
-/datum/status_effect/proc/receiveSignal(var/sigtype) //Called when a listener recieves a signal, if the effect is listening.
 /datum/status_effect/proc/on_remove() //Called whenever the buff expires or is removed; do note that at the point this is called, it is out of the owner's status_effects but owner is not yet null
 /datum/status_effect/proc/be_replaced() //Called instead of on_remove when a status effect is replaced by itself or when a status effect with on_remove_on_mob_delete = FALSE has its mob deleted
 	owner.clear_alert(id)

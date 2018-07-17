@@ -9,7 +9,7 @@
 #define RADIATION_DURATION_MAX 30
 #define RADIATION_ACCURACY_MULTIPLIER 3			//larger is less accurate
 
-#define RADIATION_IRRADIATION_MULTIPLIER 1		//multiplier for how much radiation a test subject recieves
+#define RADIATION_IRRADIATION_MULTIPLIER 1		//multiplier for how much radiation a test subject receives
 
 #define SCANNER_ACTION_SE 1
 #define SCANNER_ACTION_UI 2
@@ -562,11 +562,10 @@
 					viable_occupant.dna.blood_type = buffer_slot["blood_type"]
 
 /obj/machinery/computer/scan_consolenew/proc/on_scanner_close()
-	to_chat(connected.occupant, "<span class='notice'>[src] activates!</span>")
-	if(delayed_action)
+	if(delayed_action && connected)
+		to_chat(connected.occupant, "<span class='notice'>[src] activates!</span>")
 		apply_buffer(delayed_action["action"],delayed_action["buffer"])
 		delayed_action = null //or make it stick + reset button ?
-	return
 
 /////////////////////////// DNA MACHINES
 #undef INJECTOR_TIMEOUT

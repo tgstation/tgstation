@@ -42,7 +42,7 @@
 	var/last_message = 0
 	var/add_req_access = 1
 	var/maint_access = 0
-	var/dna_lock//dna-locking the mech
+	var/dna_lock //dna-locking the mech
 	var/list/proc_res = list() //stores proc owners, like proc_res["functionname"] = owner reference
 	var/datum/effect_system/spark_spread/spark_system = new
 	var/lights = FALSE
@@ -568,7 +568,7 @@
 		playsound(src,stepsound,40,1)
 	return result
 
-/obj/mecha/Collide(var/atom/obstacle)
+/obj/mecha/Bump(var/atom/obstacle)
 	if(phasing && get_charge() >= phasing_energy_drain && !throwing)
 		spawn()
 			if(can_move)

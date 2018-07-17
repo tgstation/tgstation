@@ -58,7 +58,7 @@
 
 /datum/design/integrated_printer
 	name = "Integrated circuit printer"
-	desc = "This machine provides all neccesary things for circuitry."
+	desc = "This machine provides all necessary things for circuitry."
 	id = "icprinter"
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 5000, MAT_METAL = 10000)

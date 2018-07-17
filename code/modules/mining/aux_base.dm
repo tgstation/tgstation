@@ -224,7 +224,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		if(BAD_ZLEVEL)
 			to_chat(user, "<span class='warning'>This uplink can only be used in a designed mining zone.</span>")
 		if(BAD_AREA)
-			to_chat(user, "<span class='warning'>Unable to acquire a targeting lock. Find an area clear of stuctures or entirely within one.</span>")
+			to_chat(user, "<span class='warning'>Unable to acquire a targeting lock. Find an area clear of structures or entirely within one.</span>")
 		if(BAD_COORDS)
 			to_chat(user, "<span class='warning'>Location is too close to the edge of the station's scanning range. Move several paces away and try again.</span>")
 		if(BAD_TURF)
@@ -253,13 +253,14 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 			place.ScrapeAway()
 	return ..()
 
-obj/docking_port/stationary/public_mining_dock
+/obj/docking_port/stationary/public_mining_dock
 	name = "public mining base dock"
 	id = "disabled" //The Aux Base has to leave before this can be used as a dock.
 	//Should be checked on the map to ensure it matchs the mining shuttle dimensions.
 	dwidth = 3
 	width = 7
 	height = 5
+	area_type = /area/construction/mining/aux_base
 
 /obj/structure/mining_shuttle_beacon
 	name = "mining shuttle beacon"
@@ -322,7 +323,7 @@ obj/docking_port/stationary/public_mining_dock
 
 			break
 	if(!Mport)
-		to_chat(user, "<span class='warning'>This station is not equipped with an approprite mining shuttle. Please contact Nanotrasen Support.</span>")
+		to_chat(user, "<span class='warning'>This station is not equipped with an appropriate mining shuttle. Please contact Nanotrasen Support.</span>")
 		return
 
 	var/obj/docking_port/mobile/mining_shuttle

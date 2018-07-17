@@ -144,6 +144,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return ..()
 
 /obj/item/clothing/mask/cigarette/afterattack(obj/item/reagent_containers/glass/glass, mob/user, proximity)
+	. = ..()
 	if(!proximity || lit) //can't dip if cigarette is lit (it will heat the reagents in the glass instead)
 		return
 	if(istype(glass))	//you can dip cigarettes into beakers
@@ -321,6 +322,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	list_reagents = list("nicotine" = 15, "mushroomhallucinogen" = 35)
 	starts_lit = TRUE
 
+/obj/item/clothing/mask/cigarette/rollie/cannabis
+	list_reagents = list("space_drugs" = 15, "lipolicide" = 35)
+
+/obj/item/clothing/mask/cigarette/rollie/mindbreaker
+	list_reagents = list("mindbreaker" = 35, "lipolicide" = 15)	
+
 /obj/item/cigbutt/roach
 	name = "roach"
 	desc = "A manky old roach, or for non-stoners, a used rollup."
@@ -385,7 +392,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /////////////////
 /obj/item/clothing/mask/cigarette/pipe
 	name = "smoking pipe"
-	desc = "A pipe, for smoking. Probably made of meershaum or something."
+	desc = "A pipe, for smoking. Probably made of meerschaum or something."
 	icon_state = "pipeoff"
 	item_state = "pipeoff"
 	icon_on = "pipeon"  //Note - these are in masks.dmi
@@ -569,7 +576,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					var/hitzone = user.held_index_to_dir(user.active_hand_index) == "r" ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND
 					user.apply_damage(5, BURN, hitzone)
 					user.visible_message("<span class='warning'>After a few attempts, [user] manages to light [src] - however, [user.p_they()] burn [user.p_their()] finger in the process.</span>", "<span class='warning'>You burn yourself while lighting the lighter!</span>")
-					user.SendSignal(COMSIG_ADD_MOOD_EVENT, "burnt_thumb", /datum/mood_event/burnt_thumb)
+					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "burnt_thumb", /datum/mood_event/burnt_thumb)
 
 		else
 			set_lit(FALSE)
@@ -675,6 +682,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/rollingpaper/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(istype(target, /obj/item/reagent_containers/food/snacks/grown))
@@ -690,8 +698,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			R.desc = "Dried [target.name] rolled up in a thin piece of paper."
 		else
 			to_chat(user, "<span class='warning'>You need to dry this first!</span>")
-	else
-		..()
 
 ///////////////
 //VAPE NATION//

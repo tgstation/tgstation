@@ -20,12 +20,22 @@
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		recharge_coeff = C.rating
 
+/obj/machinery/recharger/proc/setCharging(new_charging)
+	charging = new_charging
+	if (new_charging)
+		START_PROCESSING(SSmachines, src)
+		use_power = ACTIVE_POWER_USE
+		update_icon(scan = TRUE)
+	else
+		use_power = IDLE_POWER_USE
+		update_icon()
+
 /obj/machinery/recharger/attackby(obj/item/G, mob/user, params)
 	if(istype(G, /obj/item/wrench))
 		if(charging)
 			to_chat(user, "<span class='notice'>Remove the charging item first!</span>")
 			return
-		anchored = !anchored
+		setAnchored(!anchored)
 		power_change()
 		to_chat(user, "<span class='notice'>You [anchored ? "attached" : "detached"] [src].</span>")
 		G.play_tool_sound(src)
@@ -52,9 +62,8 @@
 
 			if(!user.transferItemToLoc(G, src))
 				return 1
-			charging = G
-			use_power = ACTIVE_POWER_USE
-			update_icon(scan = TRUE)
+			setCharging(G)
+
 		else
 			to_chat(user, "<span class='notice'>[src] isn't connected to anything!</span>")
 		return 1
@@ -79,21 +88,17 @@
 		charging.update_icon()
 		charging.forceMove(drop_location())
 		user.put_in_hands(charging)
-		charging = null
-		use_power = IDLE_POWER_USE
-		update_icon()
+		setCharging(null)
 
 /obj/machinery/recharger/attack_tk(mob/user)
 	if(charging)
 		charging.update_icon()
 		charging.forceMove(drop_location())
-		charging = null
-		use_power = IDLE_POWER_USE
-		update_icon()
+		setCharging(null)
 
 /obj/machinery/recharger/process()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
-		return
+		return PROCESS_KILL
 
 	var/using_power = 0
 	if(charging)
@@ -113,6 +118,8 @@
 				using_power = 1
 			update_icon(using_power)
 			return
+	else
+		return PROCESS_KILL
 
 /obj/machinery/recharger/power_change()
 	..()

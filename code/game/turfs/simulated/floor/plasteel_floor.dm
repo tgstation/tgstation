@@ -26,11 +26,11 @@
 /turf/open/floor/plasteel/dark/telecomms
 	initial_gas_mix = "n2=100;TEMP=80"
 /turf/open/floor/plasteel/dark/telecomms/mainframe
-	name = "Mainframe Floor"
+	name = "mainframe floor"
 /turf/open/floor/plasteel/dark/telecomms/server
-	name = "Server Base"
+	name = "server base"
 /turf/open/floor/plasteel/dark/telecomms/server/walkway
-	name = "Server Walkway"
+	name = "server walkway"
 /turf/open/floor/plasteel/airless/dark
 	icon_state = "darkfull"
 /turf/open/floor/plasteel/dark/side
@@ -60,7 +60,7 @@
 /turf/open/floor/plasteel/brown/telecomms
 	initial_gas_mix = "n2=100;TEMP=80"
 /turf/open/floor/plasteel/brown/telecomms/mainframe
-	name = "Mainframe Floor"
+	name = "mainframe floor"
 /turf/open/floor/plasteel/brown/corner
 	icon_state = "browncorner"
 
@@ -349,9 +349,9 @@
 /turf/open/floor/plasteel/vault/telecomms
 	initial_gas_mix = "n2=100;TEMP=80"
 /turf/open/floor/plasteel/vault/telecomms/mainframe
-	name = "Mainframe Floor"
+	name = "mainframe floor"
 /turf/open/floor/plasteel/vault/killroom
-	name = "Killroom Floor"
+	name = "killroom floor"
 	initial_gas_mix = "n2=500;TEMP=80"
 
 /turf/open/floor/plasteel/cult
@@ -363,7 +363,7 @@
 
 /turf/open/floor/plasteel/goonplaque
 	icon_state = "plaque"
-	name = "Commemorative Plaque"
+	name = "commemorative plaque"
 	desc = "\"This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding."
 
 /turf/open/floor/plasteel/cult/narsie_act()

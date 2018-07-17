@@ -236,7 +236,7 @@
 		P.fold_out()
 
 /datum/action/innate/pai/chassis
-	name = "Holochassis Appearence Composite"
+	name = "Holochassis Appearance Composite"
 	button_icon_state = "pai_chassis"
 	background_icon_state = "bg_tech"
 

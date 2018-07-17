@@ -118,7 +118,7 @@
 	return clashing
 
 
-/obj/singularity/narsie/Collide(atom/A)
+/obj/singularity/narsie/Bump(atom/A)
 	var/turf/T = get_turf(A)
 	if(T == loc)
 		T = get_step(A, A.dir) //please don't slam into a window like a bird, nar-sie

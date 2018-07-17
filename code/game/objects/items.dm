@@ -285,18 +285,18 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 
 	//If the item is in a storage item, take it out
-	loc.SendSignal(COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
+	SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
 
 	if(throwing)
 		throwing.finalize(FALSE)
 	if(loc == user)
-		if(!allow_attack_hand_drop(user) || !user.dropItemToGround(src))
+		if(!allow_attack_hand_drop(user) || !user.temporarilyRemoveItemFromInventory(src))
 			return
 
 	pickup(user)
 	add_fingerprint(user)
 	if(!user.put_in_active_hand(src))
-		dropped(user)
+		user.dropItemToGround(src)
 
 /obj/item/proc/allow_attack_hand_drop(mob/user)
 	return TRUE
@@ -307,18 +307,18 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(anchored)
 		return
 
-	loc.SendSignal(COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
+	SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
 
 	if(throwing)
 		throwing.finalize(FALSE)
 	if(loc == user)
-		if(!user.dropItemToGround(src))
+		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 
 	pickup(user)
 	add_fingerprint(user)
 	if(!user.put_in_active_hand(src))
-		dropped(user)
+		user.dropItemToGround(src)
 
 /obj/item/attack_alien(mob/user)
 	var/mob/living/carbon/alien/A = user
@@ -346,6 +346,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
 /obj/item/proc/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	SEND_SIGNAL(src, COMSIG_ITEM_HIT_REACT, args)
 	if(prob(final_block_chance))
 		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 		return 1
@@ -361,11 +362,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(item_flags & DROPDEL)
 		qdel(src)
 	item_flags &= ~IN_INVENTORY
-	SendSignal(COMSIG_ITEM_DROPPED,user)
+	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
-	SendSignal(COMSIG_ITEM_PICKUP, user)
+	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
 	item_flags |= IN_INVENTORY
 
 // called when "found" in pockets and storage items. Returns 1 if the search should end.
@@ -378,7 +379,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
-	SendSignal(COMSIG_ITEM_EQUIPPED, user, slot)
+	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	for(var/X in actions)
 		var/datum/action/A = X
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
@@ -473,7 +474,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		M.take_bodypart_damage(7)
 
-	M.SendSignal(COMSIG_ADD_MOOD_EVENT, "eye_stab", /datum/mood_event/eye_stab)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "eye_stab", /datum/mood_event/eye_stab)
 
 	add_logs(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
@@ -509,7 +510,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/throw_impact(atom/A, datum/thrownthing/throwingdatum)
 	if(A && !QDELETED(A))
-		SendSignal(COMSIG_MOVABLE_IMPACT, A, throwingdatum)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, A, throwingdatum)
 		if(is_hot() && isliving(A))
 			var/mob/living/L = A
 			L.IgniteMob()
@@ -533,8 +534,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/storage
 	if(!newLoc)
 		return FALSE
-	if(loc.SendSignal(COMSIG_CONTAINS_STORAGE))
-		return loc.SendSignal(COMSIG_TRY_STORAGE_TAKE, src, newLoc, TRUE)
+	if(SEND_SIGNAL(loc, COMSIG_CONTAINS_STORAGE))
+		return SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, newLoc, TRUE)
 	return FALSE
 
 /obj/item/proc/get_belt_overlay() //Returns the icon used for overlaying the object on a belt

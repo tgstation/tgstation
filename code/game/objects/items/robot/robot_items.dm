@@ -172,6 +172,7 @@
 	update_icon()
 
 /obj/item/borg/charger/afterattack(obj/item/target, mob/living/silicon/robot/user, proximity_flag)
+	. = ..()
 	if(!proximity_flag || !iscyborg(user))
 		return
 	if(mode == "draw")
@@ -194,7 +195,7 @@
 
 				M.use_power(200)
 
-			to_chat(user, "<span class='notice'>You stop charging youself.</span>")
+			to_chat(user, "<span class='notice'>You stop charging yourself.</span>")
 
 		else if(is_type_in_list(target, charge_items))
 			var/obj/item/stock_parts/cell/cell = target
@@ -233,7 +234,7 @@
 					break
 				target.update_icon()
 
-			to_chat(user, "<span class='notice'>You stop charging youself.</span>")
+			to_chat(user, "<span class='notice'>You stop charging yourself.</span>")
 
 	else if(is_type_in_list(target, charge_items))
 		var/obj/item/stock_parts/cell/cell = target
@@ -312,7 +313,7 @@
 		audible_message("<font color='red' size='7'>HUMAN HARM</font>")
 		playsound(get_turf(src), 'sound/ai/harmalarm.ogg', 70, 3)
 		cooldown = world.time + 200
-		log_game("[user.ckey]([user]) used a Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
+		log_game("[key_name(user)] used a Cyborg Harm Alarm in [AREACOORD(user)]")
 		if(iscyborg(user))
 			var/mob/living/silicon/robot/R = user
 			to_chat(R.connected_ai, "<br><span class='notice'>NOTICE - Peacekeeping 'HARM ALARM' used by: [user]</span><br>")
@@ -335,7 +336,7 @@
 					C.Jitter(25)
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		cooldown = world.time + 600
-		log_game("[user.ckey]([user]) used an emagged Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
+		log_game("[key_name(user)] used an emagged Cyborg Harm Alarm in [AREACOORD(user)]")
 
 #define DISPENSE_LOLLIPOP_MODE 1
 #define THROW_LOLLIPOP_MODE 2
@@ -448,6 +449,7 @@
 	check_amount()
 
 /obj/item/borg/lollipop/afterattack(atom/target, mob/living/user, proximity, click_params)
+	. = ..()
 	check_amount()
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
@@ -693,7 +695,7 @@
 
 
 /obj/item/borg/sight/xray
-	name = "\proper x-ray vision"
+	name = "\proper X-ray vision"
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "securearea"
 	sight_mode = BORGXRAY

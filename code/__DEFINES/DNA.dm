@@ -96,6 +96,7 @@
 #define ORGAN_SLOT_RIGHT_ARM_AUG "r_arm_device"
 #define ORGAN_SLOT_LEFT_ARM_AUG "l_arm_device"
 #define ORGAN_SLOT_STOMACH "stomach"
+#define ORGAN_SLOT_STOMACH_AID "stomach_aid"
 #define ORGAN_SLOT_BREATHING_TUBE "breathing_tube"
 #define ORGAN_SLOT_EARS "ears"
 #define ORGAN_SLOT_EYES "eye_sight"

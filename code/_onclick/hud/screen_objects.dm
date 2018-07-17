@@ -352,6 +352,27 @@
 		var/mob/living/L = usr
 		L.resist()
 
+/obj/screen/rest
+	name = "rest"
+	icon = 'icons/mob/screen_midnight.dmi'
+	icon_state = "act_rest"
+	layer = HUD_LAYER
+	plane = HUD_PLANE
+
+/obj/screen/rest/Click()
+	if(isliving(usr))
+		var/mob/living/L = usr
+		L.lay_down()
+
+/obj/screen/rest/update_icon(mob/mymob)
+	if(!isliving(mymob))
+		return
+	var/mob/living/L = mymob
+	if(!L.resting)
+		icon_state = "act_rest"
+	else
+		icon_state = "act_rest0"
+
 /obj/screen/storage
 	name = "storage"
 	icon_state = "block"

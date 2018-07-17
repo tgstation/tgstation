@@ -29,6 +29,7 @@
 	var/movement_type = GROUND		//Incase you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc.
 	var/atom/movable/pulling
 	var/grab_state = 0
+	var/throwforce = 0
 
 /atom/movable/vv_edit_var(var_name, var_value)
 	var/static/list/banned_edits = list("step_x", "step_y", "step_size")
@@ -138,10 +139,56 @@
 			stop_pulling()
 			return
 
+////////////////////////////////////////
+// Here's where we rewrite how byond handles movement except slightly different
+// To be removed on step_ conversion
+// All this work to prevent a second bump
+/atom/movable/Move(atom/newloc, direct=0)
+	. = FALSE
+	if(!newloc || newloc == loc)
+		return
 
+	if(!direct)
+		direct = get_dir(src, newloc)
+	setDir(direct)
+	
+	if(!loc.Exit(src))
+		return
+	for(var/i in loc)
+		if(i == src)
+			continue
+		var/atom/movable/thing = i
+		if(!thing.Uncross(src, newloc))
+			if(thing.flags_1 & ON_BORDER_1)
+				Bump(thing)
+			return
 
+	if(!newloc.Enter(src))
+		return
 
-/atom/movable/Move(atom/newloc, direct = 0)
+	// Past this is the point of no return
+	var/atom/oldloc = loc
+	loc = newloc
+	. = TRUE
+	oldloc.Exited(src, newloc)
+
+	for(var/i in loc)
+		if(i == src) // Multi tile objects
+			continue
+		var/atom/movable/thing = i
+		thing.Uncrossed(src)
+
+	newloc.Entered(src, oldloc)
+
+	for(var/i in loc)
+		if(i == src) // Multi tile objects
+			continue
+		var/atom/movable/thing = i
+		thing.Crossed(src)
+//
+////////////////////////////////////////
+
+/atom/movable/Move(atom/newloc, direct)
 	var/atom/movable/pullee = pulling
 	var/turf/T = loc
 	if(pulling)
@@ -162,7 +209,7 @@
 			moving_diagonally = FIRST_DIAG_STEP
 			var/first_step_dir
 			// The `&& moving_diagonally` checks are so that a forceMove taking
-			// place due to a Crossed, Collided, etc. call will interrupt
+			// place due to a Crossed, Bumped, etc. call will interrupt
 			// the second half of the diagonal movement, or the second attempt
 			// at a first half if step() fails because we hit something.
 			if (direct & NORTH)
@@ -221,14 +268,15 @@
 	if(. && pulling && pulling == pullee) //we were pulling a thing and didn't lose it during our move.
 		if(pulling.anchored)
 			stop_pulling()
-			return
-		var/pull_dir = get_dir(src, pulling)
-		if(get_dist(src, pulling) > 1 || ((pull_dir - 1) & pull_dir)) //puller and pullee more than one tile away or in diagonal position
-			pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
-			if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
-				stop_pulling()
-		if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
-			pulledby.stop_pulling()
+		else
+			var/pull_dir = get_dir(src, pulling)
+			//puller and pullee more than one tile away or in diagonal position
+			if(get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir)))
+				pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
+				if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
+					stop_pulling()
+			if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
+				pulledby.stop_pulling()
 
 
 	last_move = direct
@@ -238,7 +286,7 @@
 
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir, Forced = FALSE)
-	SendSignal(COMSIG_MOVABLE_MOVED, OldLoc, Dir, Forced)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir, Forced)
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
@@ -271,28 +319,38 @@
 	if(pulledby)
 		pulledby.stop_pulling()
 
+// Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.
+// You probably want CanPass()
+/atom/movable/Cross(atom/movable/AM)
+	. = TRUE
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSS, AM)
+	return CanPass(AM, AM.loc, TRUE)
 
-// Previously known as HasEntered()
-// This is automatically called when something enters your square
 //oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
 /atom/movable/Crossed(atom/movable/AM, oldloc)
-	SendSignal(COMSIG_MOVABLE_CROSSED, AM)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
+
+/atom/movable/Uncross(atom/movable/AM, atom/newloc)
+	. = ..()
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_UNCROSS, AM) & COMPONENT_MOVABLE_BLOCK_UNCROSS)
+		return FALSE
+	if(isturf(newloc) && !CheckExit(AM, newloc))
+		return FALSE
 
 /atom/movable/Uncrossed(atom/movable/AM)
-	SendSignal(COMSIG_MOVABLE_UNCROSSED, AM)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_UNCROSSED, AM)
 
-//This is tg's equivalent to the byond bump, it used to be called bump with a second arg
-//to differentiate it, naturally everyone forgot about this immediately and so some things
-//would bump twice, so now it's called Collide
-/atom/movable/proc/Collide(atom/A)
-	SendSignal(COMSIG_MOVABLE_COLLIDE, A)
-	if(A)
-		if(throwing)
-			throwing.hit_atom(A)
-			. = TRUE
-			if(!A || QDELETED(A))
-				return
-		A.CollidedWith(src)
+/atom/movable/Bump(atom/A)
+	if(!A)
+		CRASH("Bump was called with no argument.")
+	SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, A)
+	. = ..()
+	if(!QDELETED(throwing))
+		throwing.hit_atom(A)
+		. = TRUE
+		if(QDELETED(A))
+			return
+	A.Bumped(src)
 
 /atom/movable/proc/forceMove(atom/destination)
 	. = FALSE
@@ -352,7 +410,7 @@
 		loc = null
 
 /atom/movable/proc/onTransitZ(old_z,new_z)
-	SendSignal(COMSIG_MOVABLE_Z_CHANGED, old_z, new_z)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_Z_CHANGED, old_z, new_z)
 	for (var/item in src) // Notify contents of Z-transition. This can be overridden IF we know the items contents do not care.
 		var/atom/movable/AM = item
 		AM.onTransitZ(old_z,new_z)
@@ -395,7 +453,7 @@
 
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	set waitfor = 0
-	SendSignal(COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
 	return hit_atom.hitby(src)
 
 /atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked)
@@ -409,6 +467,9 @@
 /atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback) //If this returns FALSE then callback will not be called.
 	. = FALSE
 	if (!target || speed <= 0)
+		return
+
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_THROW, args) & COMPONENT_CANCEL_THROW)
 		return
 
 	if (pulledby)
@@ -480,7 +541,7 @@
 	if(spin)
 		SpinAnimation(5, 1)
 
-	SendSignal(COMSIG_MOVABLE_THROW, TT, spin)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_THROW, TT, spin)
 	SSthrowing.processing[src] = TT
 	if (SSthrowing.state == SS_PAUSED && length(SSthrowing.currentrun))
 		SSthrowing.currentrun[src] = TT
@@ -563,6 +624,7 @@
 		I = image('icons/effects/effects.dmi', A, visual_effect_icon, A.layer + 0.1)
 	else if(used_item)
 		I = image(icon = used_item, loc = A, layer = A.layer + 0.1)
+		I.plane = GAME_PLANE
 
 		// Scale the icon.
 		I.transform *= 0.75

@@ -149,7 +149,7 @@
 
 /obj/structure/bookcase/manuals/medical/Initialize()
 	. = ..()
-	new /obj/item/book/manual/medical_cloning(src)
+	new /obj/item/book/manual/wiki/medical_cloning(src)
 	update_icon()
 
 
@@ -159,11 +159,10 @@
 /obj/structure/bookcase/manuals/engineering/Initialize()
 	. = ..()
 	new /obj/item/book/manual/wiki/engineering_construction(src)
-	new /obj/item/book/manual/engineering_particle_accelerator(src)
 	new /obj/item/book/manual/wiki/engineering_hacking(src)
 	new /obj/item/book/manual/wiki/engineering_guide(src)
-	new /obj/item/book/manual/engineering_singularity_safety(src)
-	new /obj/item/book/manual/robotics_cyborgs(src)
+	new /obj/item/book/manual/wiki/engineering_singulo_tesla(src)
+	new /obj/item/book/manual/wiki/robotics_cyborgs(src)
 	update_icon()
 
 
@@ -172,7 +171,7 @@
 
 /obj/structure/bookcase/manuals/research_and_development/Initialize()
 	. = ..()
-	new /obj/item/book/manual/research_and_development(src)
+	new /obj/item/book/manual/wiki/research_and_development(src)
 	update_icon()
 
 
@@ -206,7 +205,7 @@
 	if(dat)
 		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		user.visible_message("[user] opens a book titled \"[title]\" and begins reading intently.")
-		user.SendSignal(COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
 		onclose(user, "book")
 	else
 		to_chat(user, "<span class='notice'>This book is completely blank!</span>")

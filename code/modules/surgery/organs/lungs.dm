@@ -64,7 +64,7 @@
 	if(!breath || (breath.total_moles() == 0))
 		if(H.reagents.has_reagent(crit_stabilizing_reagent))
 			return
-		if(H.health >= HEALTH_THRESHOLD_CRIT)
+		if(H.health >= H.crit_modifier())
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 		else if(!H.has_trait(TRAIT_NOCRITDAMAGE))
 			H.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
@@ -111,7 +111,7 @@
 			H.throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 		else
 			H.failed_last_breath = FALSE
-			if(H.health >= HEALTH_THRESHOLD_CRIT)
+			if(H.health >= H.crit_modifier())
 				H.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/oxygen][MOLES]
 			H.clear_alert("not_enough_oxy")
@@ -139,7 +139,7 @@
 			H.throw_alert("nitro", /obj/screen/alert/not_enough_nitro)
 		else
 			H.failed_last_breath = FALSE
-			if(H.health >= HEALTH_THRESHOLD_CRIT)
+			if(H.health >= H.crit_modifier())
 				H.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/nitrogen][MOLES]
 			H.clear_alert("nitro")
@@ -176,7 +176,7 @@
 			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
 		else
 			H.failed_last_breath = FALSE
-			if(H.health >= HEALTH_THRESHOLD_CRIT)
+			if(H.health >= H.crit_modifier())
 				H.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/carbon_dioxide][MOLES]
 			H.clear_alert("not_enough_co2")
@@ -206,7 +206,7 @@
 			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
 		else
 			H.failed_last_breath = FALSE
-			if(H.health >= HEALTH_THRESHOLD_CRIT)
+			if(H.health >= H.crit_modifier())
 				H.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/plasma][MOLES]
 			H.clear_alert("not_enough_tox")
@@ -267,7 +267,7 @@
 			H.adjustFireLoss(nitryl_pp/4)
 		gas_breathed = breath_gases[/datum/gas/nitryl][MOLES]
 		if (gas_breathed > gas_stimulation_min)
-			H.reagents.add_reagent("nitryl_gas",1)
+			H.reagents.add_reagent("no2",1)
 
 		breath_gases[/datum/gas/nitryl][MOLES]-=gas_breathed
 	// Stimulum

@@ -74,12 +74,20 @@
 		ckey = ckey(banckey)
 		computerid = bancid
 		ip = banip
+	
+	var/had_banned_mob = banned_mob != null
+	var/client/banned_client = banned_mob?.client
+	var/banned_mob_guest_key = had_banned_mob && IsGuestKey(banned_mob.key)
+	banned_mob = null
 
 	var/datum/DBQuery/query_add_ban_get_ckey = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
 	if(!query_add_ban_get_ckey.warn_execute())
+		qdel(query_add_ban_get_ckey)
 		return
-	if(!query_add_ban_get_ckey.NextRow())
-		if(!banned_mob || (banned_mob && !IsGuestKey(banned_mob.key)))
+	var/seen_before = query_add_ban_get_ckey.NextRow()
+	qdel(query_add_ban_get_ckey)
+	if(!seen_before)
+		if(!had_banned_mob || (had_banned_mob && !banned_mob_guest_key))
 			if(alert(usr, "[ckey] has not been seen before, are you sure you want to create a ban for them?", "Unknown ckey", "Yes", "No", "Cancel") != "Yes")
 				return
 
@@ -116,6 +124,7 @@
 	if(maxadminbancheck)
 		var/datum/DBQuery/query_check_adminban_amt = SSdbcore.NewQuery("SELECT count(id) AS num FROM [format_table_name("ban")] WHERE (a_ckey = '[a_ckey]') AND (bantype = 'ADMIN_PERMABAN'  OR (bantype = 'ADMIN_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
 		if(!query_check_adminban_amt.warn_execute())
+			qdel(query_check_adminban_amt)
 			return
 		if(query_check_adminban_amt.NextRow())
 			var/adm_bans = text2num(query_check_adminban_amt.item[1])
@@ -124,7 +133,9 @@
 				max_bans = MAX_ADMIN_BANS_PER_HEADMIN
 			if(adm_bans >= max_bans)
 				to_chat(usr, "<span class='danger'>You already logged [max_bans] admin ban(s) or more. Do not abuse this function!</span>")
+				qdel(query_check_adminban_amt)
 				return
+		qdel(query_check_adminban_amt)
 	if(!computerid)
 		computerid = "0"
 	if(!ip)
@@ -132,7 +143,9 @@
 	var/sql = "INSERT INTO [format_table_name("ban")] (`bantime`,`server_ip`,`server_port`,`round_id`,`bantype`,`reason`,`job`,`duration`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', '[GLOB.round_id]', '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', INET_ATON('[ip]'), '[a_ckey]', '[a_computerid]', INET_ATON('[a_ip]'), '[who]', '[adminwho]')"
 	var/datum/DBQuery/query_add_ban = SSdbcore.NewQuery(sql)
 	if(!query_add_ban.warn_execute())
+		qdel(query_add_ban)
 		return
+	qdel(query_add_ban)
 	to_chat(usr, "<span class='adminnotice'>Ban saved to database.</span>")
 	var/msg = "[key_name_admin(usr)] has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database."
 	message_admins(msg,1)
@@ -144,8 +157,8 @@
 	if(kickbannedckey)
 		if(AH)
 			AH.Resolve()	//with prejudice
-		if(banned_mob && banned_mob.client && banned_mob.client.ckey == banckey)
-			qdel(banned_mob.client)
+		if(banned_client && banned_client.ckey == banckey)
+			qdel(banned_client)
 	return 1
 
 /datum/admins/proc/DB_ban_unban(ckey, bantype, job = "")
@@ -204,10 +217,12 @@
 
 	var/datum/DBQuery/query_unban_get_id = SSdbcore.NewQuery(sql)
 	if(!query_unban_get_id.warn_execute())
+		qdel(query_unban_get_id)
 		return
 	while(query_unban_get_id.NextRow())
 		ban_id = query_unban_get_id.item[1]
 		ban_number++;
+	qdel(query_unban_get_id)
 
 	if(ban_number == 0)
 		to_chat(usr, "<span class='danger'>Database update failed due to no bans fitting the search criteria. If this is not a legacy ban you should contact the database admin.</span>")
@@ -236,6 +251,7 @@
 
 	var/datum/DBQuery/query_edit_ban_get_details = SSdbcore.NewQuery("SELECT ckey, duration, reason FROM [format_table_name("ban")] WHERE id = [banid]")
 	if(!query_edit_ban_get_details.warn_execute())
+		qdel(query_edit_ban_get_details)
 		return
 
 	var/eckey = usr.ckey	//Editing admin ckey
@@ -249,7 +265,9 @@
 		reason = query_edit_ban_get_details.item[3]
 	else
 		to_chat(usr, "Invalid ban id. Contact the database admin")
+		qdel(query_edit_ban_get_details)
 		return
+	qdel(query_edit_ban_get_details)
 
 	reason = sanitizeSQL(reason)
 	var/value
@@ -265,7 +283,9 @@
 
 			var/datum/DBQuery/query_edit_ban_reason = SSdbcore.NewQuery("UPDATE [format_table_name("ban")] SET reason = '[value]', edits = CONCAT(edits,'- [eckey] changed ban reason from <cite><b>\\\"[reason]\\\"</b></cite> to <cite><b>\\\"[value]\\\"</b></cite><BR>') WHERE id = [banid]")
 			if(!query_edit_ban_reason.warn_execute())
+				qdel(query_edit_ban_reason)
 				return
+			qdel(query_edit_ban_reason)
 			message_admins("[key_name_admin(usr)] has edited a ban for [pckey]'s reason from [reason] to [value]")
 		if("duration")
 			if(!value)
@@ -276,7 +296,9 @@
 
 			var/datum/DBQuery/query_edit_ban_duration = SSdbcore.NewQuery("UPDATE [format_table_name("ban")] SET duration = [value], edits = CONCAT(edits,'- [eckey] changed ban duration from [duration] to [value]<br>'), expiration_time = DATE_ADD(bantime, INTERVAL [value] MINUTE) WHERE id = [banid]")
 			if(!query_edit_ban_duration.warn_execute())
+				qdel(query_edit_ban_duration)
 				return
+			qdel(query_edit_ban_duration)
 			message_admins("[key_name_admin(usr)] has edited a ban for [pckey]'s duration from [duration] to [value]")
 		if("unban")
 			if(alert("Unban [pckey]?", "Unban?", "Yes", "No") == "Yes")
@@ -304,10 +326,12 @@
 	var/pckey
 	var/datum/DBQuery/query_unban_get_ckey = SSdbcore.NewQuery(sql)
 	if(!query_unban_get_ckey.warn_execute())
+		qdel(query_unban_get_ckey)
 		return
 	while(query_unban_get_ckey.NextRow())
 		pckey = query_unban_get_ckey.item[1]
 		ban_number++;
+	qdel(query_unban_get_ckey)
 
 	if(ban_number == 0)
 		to_chat(usr, "<span class='danger'>Database update failed due to a ban id not being present in the database.</span>")
@@ -327,7 +351,9 @@
 	var/sql_update = "UPDATE [format_table_name("ban")] SET unbanned = 1, unbanned_datetime = Now(), unbanned_ckey = '[unban_ckey]', unbanned_computerid = '[unban_computerid]', unbanned_ip = INET_ATON('[unban_ip]') WHERE id = [id]"
 	var/datum/DBQuery/query_unban = SSdbcore.NewQuery(sql_update)
 	if(!query_unban.warn_execute())
+		qdel(query_unban)
 		return
+	qdel(query_unban)
 	message_admins("[key_name_admin(usr)] has lifted [pckey]'s ban.")
 
 /client/proc/DB_ban_panel()
@@ -422,9 +448,11 @@
 		page = text2num(page)
 		var/datum/DBQuery/query_count_bans = SSdbcore.NewQuery("SELECT COUNT(id) FROM [format_table_name("ban")] WHERE [search]")
 		if(!query_count_bans.warn_execute())
+			qdel(query_count_bans)
 			return
 		if(query_count_bans.NextRow())
 			bancount = text2num(query_count_bans.item[1])
+		qdel(query_count_bans)
 		if(bancount > bansperpage)
 			output += "<br><b>Page: </b>"
 			while(bancount > 0)
@@ -448,6 +476,7 @@
 		var/limit = " LIMIT [bansperpage * page], [bansperpage]"
 		var/datum/DBQuery/query_search_bans = SSdbcore.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits, round_id FROM [format_table_name("ban")] WHERE [search] ORDER BY bantime DESC[limit]")
 		if(!query_search_bans.warn_execute())
+			qdel(query_search_bans)
 			return
 
 		while(query_search_bans.NextRow())
@@ -511,7 +540,7 @@
 			output += "<tr>"
 			output += "<td colspan='5' bgcolor='white'>&nbsp</td>"
 			output += "</tr>"
-
+		qdel(query_search_bans)
 		output += "</table></div>"
 
 	usr << browse(output,"window=lookupbans;size=900x500")

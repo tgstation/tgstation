@@ -4,10 +4,10 @@
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/tgstation/tgstation.svg)](https://isitmaintained.com/project/tgstation/tgstation "Percentage of issues still open") [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/tgstation/tgstation.svg)](https://isitmaintained.com/project/tgstation/tgstation "Average time to resolve an issue") ![Coverage](https://img.shields.io/badge/coverage---2%25-red.svg)  
 [![forthebadge](https://forthebadge.com/images/badges/built-with-resentment.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/contains-technical-debt.svg)](https://forthebadge.com) [![forinfinityandbyond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a)
 
-**Website:** https://www.tgstation13.org <BR>
-**Code:** https://github.com/tgstation/tgstation <BR>
-**Wiki** https://tgstation13.org/wiki/Main_Page <BR>
-**IRC:** irc://irc.rizon.net/coderbus or if you dont have an IRC client, you can click  [here](https://kiwiirc.com/client/irc.rizon.net:6667/?&theme=cli#coderbus).<BR>
+**Website:** https://www.tgstation13.org
+**Code:** https://github.com/tgstation/tgstation
+**Wiki** https://tgstation13.org/wiki/Main_Page
+**IRC:** irc://irc.rizon.net/coderbus or if you dont have an IRC client, you can click  [here](https://kiwiirc.com/client/irc.rizon.net:6667/?&theme=cli#coderbus)
 
  
 ## DOWNLOADING
@@ -23,6 +23,12 @@ code tab of https://github.com/tgstation/tgstation
 hassle if you want to make any changes at all, so it's not recommended.)
 
 Option 3: Download a pre-compiled nightly at https://tgstation13.download/nightlies/ (same caveats as option 2)
+
+Option 4: Use our docker image that tracks the master branch (See commits for build status. Again, same caveats as option 2)
+
+```
+docker run -d -p <your port>:1337 -v /path/to/your/config:/tgstation/config -v /path/to/your/data:/tgstation/data tgstation/tgstation <dream daemon options i.e. -public or -params>
+```
 
 ## INSTALLATION
 

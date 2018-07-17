@@ -127,7 +127,7 @@
 				flick(icon_deny, src)
 				return
 			if(prize.cost > inserted_id.mining_points)
-				to_chat(usr, "<span class='warning'>Error: Insufficent points for [prize.equipment_name]!</span>")
+				to_chat(usr, "<span class='warning'>Error: Insufficient points for [prize.equipment_name]!</span>")
 				flick(icon_deny, src)
 			else
 				inserted_id.mining_points -= prize.cost
@@ -171,8 +171,6 @@
 		if("Survival Capsule and Explorer's Webbing")
 			new /obj/item/storage/belt/mining/vendor(drop_location)
 		if("Resonator Kit")
-			new /obj/item/storage/belt/mining/alt(drop_location)
-			new /obj/item/t_scanner/adv_mining_scanner(drop_location)
 			new /obj/item/extinguisher/mini(drop_location)
 			new /obj/item/resonator(drop_location)
 		if("Minebot Kit")
@@ -185,8 +183,6 @@
 			new /obj/item/fulton_core(drop_location)
 			new /obj/item/stack/marker_beacon/thirty(drop_location)
 		if("Crusher Kit")
-			new /obj/item/storage/belt/mining/alt(drop_location)
-			new /obj/item/t_scanner/adv_mining_scanner(drop_location)
 			new /obj/item/extinguisher/mini(drop_location)
 			new /obj/item/twohanded/required/kinetic_crusher(drop_location)
 		if("Mining Conscription Kit")
@@ -238,7 +234,7 @@
 /obj/item/card/mining_point_card
 	name = "mining points card"
 	desc = "A small card preloaded with mining points. Swipe your ID card over it to transfer the points, then discard."
-	icon_state = "data"
+	icon_state = "data_1"
 	var/points = 500
 
 /obj/item/card/mining_point_card/attackby(obj/item/I, mob/user, params)
@@ -260,9 +256,10 @@
 /obj/item/card/mining_access_card
 	name = "mining access card"
 	desc = "A small card, that when used on any ID, will add mining access."
-	icon_state = "data"
+	icon_state = "data_1"
 
 /obj/item/card/mining_access_card/afterattack(atom/movable/AM, mob/user, proximity)
+	. = ..()
 	if(istype(AM, /obj/item/card/id) && proximity)
 		var/obj/item/card/id/I = AM
 		I.access |=	ACCESS_MINING
@@ -271,7 +268,6 @@
 		I.access |= ACCESS_CARGO
 		to_chat(user, "You upgrade [I] with mining access.")
 		qdel(src)
-	..()
 
 /obj/item/storage/backpack/duffelbag/mining_conscript
 	name = "mining conscription kit"

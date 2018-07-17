@@ -190,6 +190,7 @@
 
 
 /obj/item/abductor/gizmo/afterattack(atom/target, mob/living/user, flag, params)
+	. = ..()
 	if(flag)
 		return
 	if(!ScientistCheck(user))
@@ -251,6 +252,7 @@
 	radio_off(M, user)
 
 /obj/item/abductor/silencer/afterattack(atom/target, mob/living/user, flag, params)
+	. = ..()
 	if(flag)
 		return
 	if(!AbductorCheck(user))
@@ -303,6 +305,7 @@
 	to_chat(user, "<span class='notice'>You switch the device to [mode==MIND_DEVICE_MESSAGE? "TRANSMISSION": "COMMAND"] MODE</span>")
 
 /obj/item/abductor/mind_device/afterattack(atom/target, mob/living/user, flag, params)
+	. = ..()
 	if(!ScientistCheck(user))
 		return
 
@@ -359,7 +362,7 @@
 
 		to_chat(L, "<span class='italics'>You hear a voice in your head saying: </span><span class='abductor'>[message]</span>")
 		to_chat(user, "<span class='notice'>You send the message to your target.</span>")
-		log_talk(user,"[key_name(user)] sent an abductor mind message to [L]/[L.ckey]: '[message]'", LOGSAY)
+		log_talk(user,"[key_name(user)] sent an abductor mind message to [key_name(L)]: '[message]'", LOGSAY)
 
 
 /obj/item/firing_pin/abductor

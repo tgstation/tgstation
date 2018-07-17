@@ -24,6 +24,7 @@
 	return (OXYLOSS)
 
 /obj/item/reagent_containers/glass/rag/afterattack(atom/A as obj|turf|area, mob/user,proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(iscarbon(A) && A.reagents && reagents.total_volume)
@@ -46,5 +47,5 @@
 		user.visible_message("[user] starts to wipe down [A] with [src]!", "<span class='notice'>You start to wipe down [A] with [src]...</span>")
 		if(do_after(user,30, target = A))
 			user.visible_message("[user] finishes wiping off [A]!", "<span class='notice'>You finish wiping off [A].</span>")
-			A.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
+			SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
 	return
