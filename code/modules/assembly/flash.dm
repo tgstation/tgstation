@@ -142,7 +142,7 @@
 		add_logs(user, R, "flashed", src)
 		update_icon(1)
 		R.Knockdown(rand(80,120))
-		var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
+		var/diff = 5 * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
 		R.confused += min(5, diff)
 		R.flash_act(affect_silicon = 1)
 		user.visible_message("<span class='disarm'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
