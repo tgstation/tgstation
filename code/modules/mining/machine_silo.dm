@@ -129,14 +129,14 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	usr.set_machine(src)
 
 	if(href_list["remove_orm"])
-		var/obj/machinery/mineral/orm = locate(href_list["remove_orm"])
+		var/obj/machinery/mineral/orm = locate(href_list["remove_orm"]) in orms
 		if (istype(orm))
 			orms -= orm
 			_disconnect(orm)
 			updateUsrDialog()
 			return TRUE
 	else if(href_list["remove_lathe"])
-		var/obj/machinery/rnd/production/lathe = locate(href_list["remove_lathe"])
+		var/obj/machinery/rnd/production/lathe = locate(href_list["remove_lathe"]) in lathes
 		if (istype(lathe))
 			lathes -= lathe
 			_disconnect(lathe)
