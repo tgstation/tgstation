@@ -1,3 +1,4 @@
+#define CONFUSION_STACK_MAX_MULTIPLIER 2
 /obj/item/assembly/flash
 	name = "flash"
 	desc = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production."
@@ -109,7 +110,8 @@
 	if(targeted)
 		if(M.flash_act(1, 1))
 			if(M.confused < power)
-				M.confused = power
+				var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
+				M.confused += min(power, diff)
 			if(user)
 				terrible_conversion_proc(M, user)
 				visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
@@ -126,8 +128,8 @@
 			to_chat(M, "<span class='danger'>[src] fails to blind you!</span>")
 	else
 		if(M.flash_act())
-			if(M.confused < power)
-				M.confused = power
+			var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
+			M.confused += min(power, diff)
 
 /obj/item/assembly/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
@@ -140,8 +142,8 @@
 		add_logs(user, R, "flashed", src)
 		update_icon(1)
 		R.Knockdown(rand(80,120))
-		if(R.confused < 5)
-			R.confused = 5
+		var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
+		R.confused += min(5, diff)
 		R.flash_act(affect_silicon = 1)
 		user.visible_message("<span class='disarm'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
 		return TRUE
