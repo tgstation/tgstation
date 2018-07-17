@@ -17,7 +17,7 @@
 
 /obj/machinery/harvester/Initialize()
 	. = ..()
-	if(prob(5))
+	if(prob(1))
 		name = "auto-autopsy"
 
 /obj/machinery/harvester/RefreshParts()
