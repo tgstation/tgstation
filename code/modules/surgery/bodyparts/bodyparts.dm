@@ -28,7 +28,7 @@
 	var/burn_dam = 0
 	var/stamina_dam = 0
 	var/max_damage = 0
-	
+
 	var/brute_reduction = 0 //Subtracted to brute damage taken
 	var/burn_reduction = 0	//Subtracted to burn damage taken
 
@@ -139,10 +139,10 @@
 		return FALSE
 
 	switch(animal_origin)
-		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn
+		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn //nothing can burn with so much snowflake code around
 			burn *= 2
 
-	var/can_inflict = max_damage - (brute_dam + burn_dam)
+	var/can_inflict = max_damage - get_damage()
 	if(can_inflict <= 0)
 		return FALSE
 
@@ -157,7 +157,7 @@
 	burn_dam += burn
 
 	//We've dealt the physical damages, if there's room lets apply the stamina damage.
-	var/current_damage = brute_dam + burn_dam + stamina_dam		//This time around, count stamina loss too.
+	var/current_damage = get_damage(TRUE)		//This time around, count stamina loss too.
 	var/available_damage = max_damage - current_damage
 	stamina_dam += CLAMP(stamina, 0, available_damage)
 
@@ -189,17 +189,20 @@
 
 
 //Returns total damage...kinda pointless really
-/obj/item/bodypart/proc/get_damage()
-	return brute_dam + burn_dam
+/obj/item/bodypart/proc/get_damage(include_stamina = FALSE)
+	var/total = brute_dam + burn_dam
+	if(include_stamina)
+		total += stamina_dam
+	return total
 
 
 //Checks disabled status thresholds
 /obj/item/bodypart/proc/check_disabled()
 	if(!can_dismember() || owner.has_trait(TRAIT_NODISMEMBER))
 		return
-	if(!disabled && (get_damage() >= max_damage))
+	if(!disabled && (get_damage(TRUE) >= max_damage))
 		set_disabled(TRUE)
-	else if(disabled && (get_damage() <= (max_damage * 0.5)))
+	else if(disabled && (get_damage(TRUE) <= (max_damage * 0.5)))
 		set_disabled(FALSE)
 
 /obj/item/bodypart/proc/set_disabled(new_disabled = TRUE)

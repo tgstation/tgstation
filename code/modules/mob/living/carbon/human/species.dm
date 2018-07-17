@@ -1346,7 +1346,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	//dismemberment
 	var/probability = I.get_dismemberment_chance(affecting)
-	if(prob(probability) || (H.has_trait(TRAIT_EASYDISMEMBER) && prob(2*probability)))
+	if(prob(probability) || (H.has_trait(TRAIT_EASYDISMEMBER) && prob(probability))) //try twice
 		if(affecting.dismember(I.damtype))
 			I.add_mob_blood(H)
 			playsound(get_turf(H), I.get_dismember_sound(), 80, 1)
