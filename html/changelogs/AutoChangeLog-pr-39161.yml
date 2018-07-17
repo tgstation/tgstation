@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Mech equipment can be detached again. This probably also fixes any other uncaught bugs relating to objects moving out of other objects."
