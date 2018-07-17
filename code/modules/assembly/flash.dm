@@ -108,7 +108,8 @@
 		to_chat(M, "<span class='disarm'>[src] emits a blinding light!</span>")
 	if(targeted)
 		if(M.flash_act(1, 1))
-			M.confused += power
+			if(M.confused <= power*2)
+				M.confused += power
 			if(user)
 				terrible_conversion_proc(M, user)
 				visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
