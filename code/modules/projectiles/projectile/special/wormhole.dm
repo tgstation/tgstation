@@ -9,6 +9,7 @@
 	tracer_type = /obj/effect/projectile/tracer/wormhole
 	impact_type = /obj/effect/projectile/impact/wormhole
 	muzzle_type = /obj/effect/projectile/muzzle/wormhole
+	hitscan = TRUE
 
 /obj/item/projectile/beam/wormhole/orange
 	name = "orange bluespace beam"
