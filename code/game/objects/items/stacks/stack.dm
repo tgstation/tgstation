@@ -231,12 +231,11 @@
 			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
 		return FALSE
 	var/turf/T = get_turf(usr)
-	var/obj/structure/window/M = new R.result_type
-	if(R.window_checks && !valid_window_location(T, M.fulltile ? FULLTILE_WINDOW_DIR : usr.dir))
-		qdel(M)
+
+	var/obj/D = R.result_type
+	if(R.window_checks && !valid_window_location(T, initial(D.dir) == FULLTILE_WINDOW_DIR ? FULLTILE_WINDOW_DIR : usr.dir))
 		to_chat(usr, "<span class='warning'>The [R.title] won't fit here!</span>")
 		return FALSE
-	qdel(M)
 	if(R.one_per_turf && (locate(R.result_type) in T))
 		to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
 		return FALSE
