@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - admin: "Plasma decontamination can now be triggered via events"
