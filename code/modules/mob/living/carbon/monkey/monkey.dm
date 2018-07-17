@@ -67,9 +67,9 @@
 	. = ..()
 	remove_movespeed_modifier(MOVESPEED_ID_MONKEY_REAGENT_SPEEDMOD, TRUE)
 	var/amount
-	if(reagents.has_reagent("morphine")) // morphine slows slimes down
+	if(reagents.has_reagent("morphine"))
 		amount = -1
-	if(reagents.has_reagent("nuka_cola")) // Frostoil also makes them move VEEERRYYYYY slow
+	if(reagents.has_reagent("nuka_cola"))
 		amount = -1
 	if(amount)
 		add_movespeed_modifier(MOVESPEED_ID_MONKEY_REAGENT_SPEEDMOD, TRUE, 100, override = TRUE, legacy_slowdown = amount)
@@ -83,7 +83,7 @@
 	add_movespeed_modifier(MOVESPEED_ID_MONKEY_HEALTH_SPEEDMOD, TRUE, 100, override = TRUE, legacy_slowdown = slow)
 
 /mob/living/carbon/monkey/adjust_bodytemperature(amount)
-	. = ..(amount)
+	. = ..()
 	var/slow = 0
 	if (bodytemperature < 283.222)
 		slow += (283.222 - bodytemperature) / 10 * 1.75

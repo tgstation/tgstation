@@ -42,19 +42,6 @@
 		var/list/data = movespeed_modification[id]
 		. += data[MOVESPEED_DATA_INDEX_LEGACY_SLOWDOWN]
 	cached_legacy_slowdown = .
-	/*		Pixel movement stuff.
-	. = CONFIG_GET(number/mob_base_pixel_speed)
-	if(isnull(.))
-		. = 32
-	for(var/id in get_movespeed_modifiers())
-		var/list/data = movespeed_modification[id]
-		var/legacy_slowdown = data[MOVESPEED_DATA_INDEX_LEGACY_SLOWDOWN]
-		if(legacy_slowdown > 0)
-			. /= (legacy_slowdown + 1)
-		else if(legacy_slowdown > 0)
-			. *= ((-legacy_slowdown) + 1)
-	cached_movespeed = .
-	*/
 
 /mob/proc/get_movespeed_modifiers()
 	return movespeed_modification

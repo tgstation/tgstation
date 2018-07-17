@@ -11,8 +11,8 @@
 	..()
 
 /mob/living/carbon/alien/humanoid/hunter/Initialize()
-	add_movespeed_modifier(MOVESPEED_ID_ALIEN_HUNTER_SPEEDMOD, TRUE, 100, legacy_slowdown = -1)
-	. += ..()
+	add_movespeed_modifier(MOVESPEED_ID_ALIEN_HUNTER_SPEEDMOD, FALSE, 100, legacy_slowdown = -1)
+	return ..()
 
 //Hunter verbs
 
