@@ -172,11 +172,11 @@ GLOBAL_PROTECT(protected_ranks)
 			qdel(query_load_admin_ranks)
 	//load ranks from backup file
 	if(dbfail)
-		var/backup_file = file("data/admins_backup.json")
-		if(!fexists(backup_file))
+		var/backup_file = file2text("data/admins_backup.json")
+		if(backup_file == null)
 			log_world("Unable to locate admins backup file.")
-			return
-		var/list/json = json_decode(file2text(backup_file))
+			return FALSE
+		var/list/json = json_decode(backup_file)
 		for(var/J in json["ranks"])
 			for(var/datum/admin_rank/R in GLOB.admin_ranks)
 				if(R.name == "[J]") //this rank was already loaded from txt override
@@ -185,7 +185,7 @@ GLOBAL_PROTECT(protected_ranks)
 			if(!R)
 				continue
 			GLOB.admin_ranks += R
-		return 1
+		return json
 	#ifdef TESTING
 	var/msg = "Permission Sets Built:\n"
 	for(var/datum/admin_rank/R in GLOB.admin_ranks)
@@ -210,7 +210,8 @@ GLOBAL_PROTECT(protected_ranks)
 	GLOB.admins.Cut()
 	GLOB.protected_admins.Cut()
 	GLOB.deadmins.Cut()
-	dbfail = load_admin_ranks(dbfail, no_update)
+	var/list/backup_file_json = load_admin_ranks(dbfail, no_update)
+	dbfail = backup_file_json != null
 	//Clear profile access
 	for(var/A in world.GetConfig("admin"))
 		world.SetConfig("APP/admin", A, null)
@@ -251,16 +252,20 @@ GLOBAL_PROTECT(protected_ranks)
 		qdel(query_load_admins)
 	//load admins from backup file
 	if(dbfail)
-		var/backup_file = file("data/admins_backup.json")
-		if(!fexists(backup_file))
-			log_world("Unable to locate admins backup file.")
-			return
-		var/list/json = json_decode(file2text(backup_file))
-		for(var/J in json["admins"])
+		if(!backup_file_json)
+			if(backup_file_json != null)
+				//already tried
+				return
+			var/backup_file = file2text("data/admins_backup.json")
+			if(backup_file == null)
+				log_world("Unable to locate admins backup file.")
+				return
+			backup_file_json = json_decode(backup_file)
+		for(var/J in backup_file_json["admins"])
 			for(var/A in GLOB.admin_datums + GLOB.deadmins)
 				if(A == "[J]") //this admin was already loaded from txt override
 					continue
-			new /datum/admins(rank_names[ckeyEx(json["admins"]["[J]"])], ckey("[J]"))
+			new /datum/admins(rank_names[ckeyEx(backup_file_json["admins"]["[J]"])], ckey("[J]"))
 	#ifdef TESTING
 	var/msg = "Admins Built:\n"
 	for(var/ckey in GLOB.admin_datums)
