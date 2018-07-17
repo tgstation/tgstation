@@ -11553,7 +11553,7 @@
 /area/crew_quarters/bar/atrium)
 "awZ" = (
 /obj/structure/table/wood,
-/obj/item/book/manual/barman_recipes,
+/obj/item/book/manual/wiki/barman_recipes,
 /obj/item/reagent_containers/food/drinks/shaker,
 /obj/item/reagent_containers/glass/rag,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -20254,7 +20254,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/book/manual/detective,
+/obj/item/book/manual/wiki/detective,
 /obj/item/camera/detective,
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -24559,7 +24559,7 @@
 /area/science/robotics/lab)
 "bad" = (
 /obj/structure/rack,
-/obj/item/book/manual/robotics_cyborgs,
+/obj/item/book/manual/wiki/robotics_cyborgs,
 /obj/item/storage/belt/utility/full,
 /obj/item/circuitboard/mecha/ripley/main,
 /obj/item/circuitboard/mecha/ripley/peripherals,
