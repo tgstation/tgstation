@@ -49,3 +49,6 @@
 
 /obj/effect/projectile/tracer/tracer/aiming
 	icon_state = "pixelbeam_greyscale"
+
+/obj/effect/projectile/tracer/wormhole
+	icon_state = "wormhole_g"
