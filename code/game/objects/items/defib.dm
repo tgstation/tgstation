@@ -293,7 +293,8 @@
 	var/req_defib = TRUE
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
 	var/grab_ghost = FALSE
-	var/tlimit = DEFIB_TIME_LIMIT * 10
+	var/tlimit = DEFIB_TIME_LIMIT * 10 //handled in the heart, but we keep it here for stuff like braindamage
+
 
 	var/datum/component/mobhook
 
@@ -438,7 +439,8 @@
 
 /obj/item/twohanded/shockpaddles/proc/can_defib(mob/living/carbon/H)
 	var/obj/item/organ/brain/BR = H.getorgan(/obj/item/organ/brain)
-	return	(!H.suiciding && !(H.has_trait(TRAIT_NOCLONE)) && !H.hellbound && ((world.time - H.timeofdeath) < tlimit) && (H.getBruteLoss() < 180) && (H.getFireLoss() < 180) && H.getorgan(/obj/item/organ/heart) && BR && !BR.damaged_brain)
+	var/obj/item/organ/heart/O = H.getorgan(/obj/item/organ/heart)
+	return	(!H.suiciding && !(H.has_trait(TRAIT_NOCLONE)) && !H.hellbound && O && O.canDefib() && (H.getBruteLoss() < 180) && (H.getFireLoss() < 180) && BR && !BR.damaged_brain)
 
 /obj/item/twohanded/shockpaddles/proc/shock_touching(dmg, mob/H)
 	if(isliving(H.pulledby))		//CLEAR!
@@ -558,14 +560,14 @@
 				total_burn	= H.getFireLoss()
 				shock_touching(30, H)
 				var/failed
-
+				var/obj/item/organ/heart/O = H.getorgan(/obj/item/organ/heart)
 				if (H.suiciding || (H.has_trait(TRAIT_NOCLONE)))
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>"
 				else if (H.hellbound)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's soul appears to be on another plane of existence.  Further attempts futile.</span>"
-				else if (tplus > tlimit)
+				else if (O && !O.canDefib())
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Body has decayed for too long. Further attempts futile.</span>"
-				else if (!H.getorgan(/obj/item/organ/heart))
+				else if (!O)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's heart is missing.</span>"
 				else if(total_burn >= 180 || total_brute >= 180)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Severe tissue damage makes recovery of patient impossible via defibrillator. Further attempts futile.</span>"

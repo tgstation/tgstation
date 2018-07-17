@@ -9,6 +9,9 @@
 	var/icon_base = "heart"
 	attack_verb = list("beat", "thumped")
 	var/beat = BEAT_NONE//is this mob having a heatbeat sound played? if so, which?
+	var/decay = DEFIB_TIME_LIMIT * 10 //apparently the define doesnt do this already, so 10* we go...
+	var/decay_time
+
 
 /obj/item/organ/heart/update_icon()
 	if(beating)
@@ -20,6 +23,31 @@
 	..()
 	if(!special)
 		addtimer(CALLBACK(src, .proc/stop_if_unowned), 120)
+		startDecaying()
+
+/obj/item/organ/heart/proc/startDecaying()
+	if(!decay || (owner && owner.stat != DEAD))
+		return
+	START_PROCESSING(SSobj, src)
+
+/obj/item/organ/heart/process()
+	if(owner.stat != DEAD)
+		decay_time = initial(decay_time)
+		stopDecaying(TRUE)
+		return
+	decay_time += 2 SECONDS
+	if(decay_time >= decay)
+		stopDecaying()
+
+/obj/item/organ/heart/proc/stopDecaying(undecay)
+	if(undecay)
+		decay_time = 0
+	STOP_PROCESSING(SSprocessing, src)
+
+/obj/item/organ/heart/proc/canDefib(undecay)
+	if(!decay)
+		return TRUE
+	return (decay_time < decay)
 
 /obj/item/organ/heart/proc/stop_if_unowned()
 	if(!owner)
@@ -39,9 +67,10 @@
 	return 1
 
 /obj/item/organ/heart/proc/Restart()
-	beating = 1
-	update_icon()
-	return 1
+	if(canDefib())
+		beating = 1
+		update_icon()
+		return 1
 
 /obj/item/organ/heart/prepare_eat()
 	var/obj/S = ..()
@@ -76,6 +105,7 @@
 	icon_state = "cursedheart-off"
 	icon_base = "cursedheart"
 	actions_types = list(/datum/action/item_action/organ_action/cursed_heart)
+	decay = 0
 	var/last_pump = 0
 	var/add_colour = TRUE //So we're not constantly recreating colour datums
 	var/pump_delay = 30 //you can pump 1 second early, for lag, but no more (otherwise you could spam heal)
@@ -150,6 +180,7 @@
 	desc = "An electronic device designed to mimic the functions of an organic human heart. Offers no benefit over an organic heart other than being easy to make."
 	icon_state = "heart-c"
 	synthetic = TRUE
+	decay = 0
 
 /obj/item/organ/heart/cybernetic/emp_act()
 	. = ..()
@@ -161,6 +192,7 @@
 	name = "heart of freedom"
 	desc = "This heart pumps with the passion to give... something freedom."
 	synthetic = TRUE //the power of freedom prevents heart attacks
+	decay = 0 //the power of freedom also prevents the heart from decaying
 	var/min_next_adrenaline = 0
 
 /obj/item/organ/heart/freedom/on_life()
