@@ -119,9 +119,8 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(min(gridSet.ycrd, world.maxy), y_lower, y_upper))
 
 			var/maxx = gridSet.xcrdStart
-			if(measureOnly)
-				for(var/line in gridLines)
-					maxx = max(maxx, gridSet.xcrdStart + length(line) / key_len - 1)
+			if(gridLines.len) //Not an empty map
+				maxx = max(maxx, gridSet.xcrdStart + length(gridLines[1]) / key_len - 1)
 
 			bounds[MAP_MAXX] = CLAMP(max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx), x_lower, x_upper)
 		CHECK_TICK
