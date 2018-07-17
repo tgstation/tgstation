@@ -4,7 +4,7 @@
 
 
 /mob/living/carbon/human/canBeHandcuffed()
-	if(get_num_arms() >= 2)
+	if(get_num_arms(FALSE) >= 2)
 		return TRUE
 	else
 		return FALSE

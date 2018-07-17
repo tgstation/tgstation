@@ -31,6 +31,11 @@
 	var/lip_style = null
 	var/lip_color = "white"
 
+/obj/item/bodypart/head/can_dismember(obj/item/I)
+	if(!(owner.stat == DEAD))
+		return FALSE
+	return ..()
+
 /obj/item/bodypart/head/drop_organs(mob/user)
 	var/turf/T = get_turf(src)
 	if(status != BODYPART_ROBOTIC)
