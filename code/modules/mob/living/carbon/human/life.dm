@@ -311,8 +311,6 @@
 	// Tissues die without blood circulation
 	adjustBruteLoss(2)
 
-/mob/living/carbon/human/var/last_seen_nearby_food = 0
-
 /mob/living/carbon/human/proc/handle_nearby_food()
 	if(!client) return
 	if(world.time - last_eaten < 30 SECONDS) return //30 seconds after eating food you start getting hungry from seeing food again
