@@ -25,5 +25,4 @@
 	new/obj/item/stack/light_w(user.loc)
 	if(amount <= 0)
 		qdel(src)
-	else
-		return TRUE
+	return TRUE
