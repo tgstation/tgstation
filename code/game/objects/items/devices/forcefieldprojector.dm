@@ -93,6 +93,8 @@
 	playsound(src,'sound/weapons/resonator_blast.ogg',25,1)
 	generator.current_fields -= src
 	generator = null
+	density = FALSE
+	air_update_turf(TRUE)
 	return ..()
 
 /obj/structure/projected_forcefield/CanPass(atom/movable/mover, turf/target)

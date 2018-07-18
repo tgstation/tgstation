@@ -64,8 +64,8 @@
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
 
-/obj/structure/alien/resin/New(location)
-	..()
+/obj/structure/alien/resin/Initialize(mapload)
+	. = ..()
 	air_update_turf(1)
 
 /obj/structure/alien/resin/Move()
