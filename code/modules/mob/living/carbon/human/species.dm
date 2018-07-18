@@ -1517,19 +1517,21 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
 
 		var/burn_damage
-		switch(H.bodytemperature)
-			if(BODYTEMP_HEAT_DAMAGE_LIMIT to 400)
-				H.throw_alert("temp", /obj/screen/alert/hot, 1)
-				burn_damage = HEAT_DAMAGE_LEVEL_1
-			if(400 to 460)
-				H.throw_alert("temp", /obj/screen/alert/hot, 2)
-				burn_damage = HEAT_DAMAGE_LEVEL_2
+		if (H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+			if (H.on_fire)
+				burn_damage = log(1.7,H.bodytemperature)-5
+				warning("body_temperature is [H.bodytemperature] and we're on fire, damage is [burn_damage]")
 			else
-				H.throw_alert("temp", /obj/screen/alert/hot, 3)
-				if(H.on_fire)
-					burn_damage = HEAT_DAMAGE_LEVEL_3
+				burn_damage = log(2,H.bodytemperature)-5
+				warning("body_temperature is [H.bodytemperature] and we're not on fire, damage is [burn_damage]")
+		if (burn_damage)
+			switch(burn_damage)
+				if(0 to 2)
+					H.throw_alert("temp", /obj/screen/alert/hot, 1)
+				if(2 to 4)
+					H.throw_alert("temp", /obj/screen/alert/hot, 2)
 				else
-					burn_damage = HEAT_DAMAGE_LEVEL_2
+					H.throw_alert("temp", /obj/screen/alert/hot, 3)
 		burn_damage = burn_damage * heatmod * H.physiology.heat_mod
 		if (H.stat < UNCONSCIOUS && (prob(burn_damage) * 10) / 4) //40% for level 3 damage on humans
 			H.emote("scream")
