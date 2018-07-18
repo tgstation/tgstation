@@ -1,4 +1,0 @@
-author: "Irafas"
-delete-after: True
-changes: 
-  - bugfix: "players can construct while standing on top of a directional window. (machine frames, computer frames, etc)"

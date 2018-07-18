@@ -1,6 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a few bugs with imaginary friends, including them not being able to hear anyone or surviving past the owner's death."
-  - rscadd: "Imaginary friends can now move into the owner's head."
-  - rscadd: "Imaginary friends can now choose to become invisible to the owner at will."

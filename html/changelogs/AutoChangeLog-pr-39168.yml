@@ -1,4 +1,0 @@
-author: "Tlaltecuhtli"
-delete-after: True
-changes: 
-  - tweak: "putting a cell and other not intended actions dont open the  circuit window"
