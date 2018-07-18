@@ -224,16 +224,20 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		if (!C)
 			continue
 
-		//Send it to the old style output window.
-		SEND_TEXT(C, original_message)
+		if(SSticker.current_state != GAME_STATE_STARTUP)
+			SSchat.queue_message(C, original_message, oldchat=TRUE)
+			SSchat.queue_message(C, message)
+		else
+			//Send it to the old style output window.
+			SEND_TEXT(C, original_message)
 
-		if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
-			continue
+			if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
+				continue
 
-		if(!C.chatOutput.loaded)
-			//Client still loading, put their messages in a queue
-			C.chatOutput.messageQueue += message
-			continue
+			if(!C.chatOutput.loaded)
+				//Client still loading, put their messages in a queue
+				C.chatOutput.messageQueue += message
+				continue
 
-		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
-		C << output(url_encode(url_encode(message)), "browseroutput:output")
+			// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
+			C << output(url_encode(url_encode(message)), "browseroutput:output")
