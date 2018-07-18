@@ -1,6 +1,3 @@
-/mob/living
-	var/crit_threshold = HEALTH_THRESHOLD_CRIT
-
 /mob/living/Initialize()
 	. = ..()
 	if(unique_name)
