@@ -22691,6 +22691,13 @@
 /area/medical/chemistry)
 "bhd" = (
 /obj/machinery/chem_master,
+/obj/machinery/button/door{
+	id = "chemistry_shutters";
+	name = "Chemistry shutters";
+	pixel_x = 24;
+	pixel_y = -6;
+	req_one_access_txt = "5; 33"
+	},
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 5
 	},
@@ -25002,8 +25009,38 @@
 	dir = 4;
 	pixel_x = -22
 	},
-/obj/item/stack/cable_coil/random,
-/obj/item/stack/cable_coil/random,
+/obj/item/assembly/igniter{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/assembly/igniter{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/assembly/igniter{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/assembly/igniter{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/assembly/timer{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/assembly/timer{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/assembly/timer{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/assembly/timer{
+	pixel_x = 3;
+	pixel_y = -3
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bmG" = (
@@ -25118,7 +25155,9 @@
 /area/hallway/primary/central)
 "bmT" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bmU" = (
@@ -25389,17 +25428,7 @@
 /area/quartermaster/office)
 "bnC" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/white,
-/area/medical/chemistry)
-"bnD" = (
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/table,
-/obj/item/book/manual/wiki/chemistry,
-/obj/item/book/manual/wiki/chemistry{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bnE" = (
@@ -25607,17 +25636,19 @@
 /area/crew_quarters/heads/captain)
 "bob" = (
 /obj/structure/table/glass,
-/obj/item/grenade/chem_grenade,
-/obj/item/grenade/chem_grenade,
-/obj/item/grenade/chem_grenade,
-/obj/item/grenade/chem_grenade,
 /obj/item/screwdriver{
-	pixel_x = -2;
-	pixel_y = 6
+	pixel_x = 2;
+	pixel_y = 18
 	},
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/stack/cable_coil/random,
+/obj/item/stack/cable_coil/random,
+/obj/item/grenade/chem_grenade,
+/obj/item/grenade/chem_grenade,
+/obj/item/grenade/chem_grenade,
+/obj/item/grenade/chem_grenade,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "boc" = (
@@ -26296,6 +26327,7 @@
 	req_access_txt = "33"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "bpG" = (
@@ -26351,9 +26383,8 @@
 /area/medical/genetics)
 "bpM" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plating,
+/obj/machinery/smartfridge/chemistry,
+/turf/closed/wall,
 /area/medical/chemistry)
 "bpN" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -26793,9 +26824,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 1
 	},
@@ -26805,7 +26834,9 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 1
 	},
@@ -53668,6 +53699,12 @@
 /obj/machinery/nuclearbomb/beer,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"miq" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/chemistry)
 "mjr" = (
 /obj/machinery/vending/wardrobe/bar_wardrobe,
 /turf/open/floor/wood,
@@ -88447,7 +88484,7 @@ bgP
 bjL
 bkL
 bmT
-bnD
+bjL
 bpM
 bqT
 bFD
@@ -88703,7 +88740,7 @@ bip
 bjO
 bip
 bmG
-bip
+miq
 bnC
 bpF
 bqS
