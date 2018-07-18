@@ -23226,6 +23226,10 @@
 	req_access_txt = "33"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/preopen{
+	id = "chemistry_shutters";
+	name = "Chemistry shutters"
+	},
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "bis" = (
@@ -24389,6 +24393,10 @@
 	req_access_txt = "33"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/preopen{
+	id = "chemistry_shutters";
+	name = "Chemistry shutters"
+	},
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "bli" = (
@@ -25379,13 +25387,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
-"bnB" = (
-/obj/structure/closet/wardrobe/chemistry_white,
-/obj/machinery/light_switch{
-	pixel_x = -23
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/chemistry)
 "bnC" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel/white,
@@ -25632,7 +25633,7 @@
 "bod" = (
 /obj/structure/table,
 /obj/item/folder/white,
-/obj/item/radio/headset/headset_med,
+/obj/item/pen,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "boe" = (
@@ -46232,6 +46233,7 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
+/obj/structure/closet/wardrobe/engineering_yellow,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 9
 	},
@@ -52118,7 +52120,6 @@
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "cGt" = (
-/obj/structure/closet/wardrobe/engineering_yellow,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -54018,6 +54019,22 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"vRy" = (
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/obj/effect/landmark/start/chemist,
+/obj/machinery/button/door{
+	id = "chemistry_shutters";
+	name = "Chemistry shutters";
+	pixel_x = 24;
+	pixel_y = -28;
+	req_one_access_txt = "5; 33"
+	},
+/turf/open/floor/plasteel/whiteyellow/side{
+	dir = 4
+	},
+/area/medical/chemistry)
 "wkN" = (
 /turf/closed/wall,
 /area/science/circuit)
@@ -54056,6 +54073,14 @@
 	},
 /turf/closed/wall,
 /area/hallway/secondary/service)
+"wCA" = (
+/obj/machinery/light_switch{
+	pixel_x = -23
+	},
+/obj/structure/closet/secure_closet/chemical,
+/obj/item/radio/headset/headset_med,
+/turf/open/floor/plasteel/white,
+/area/medical/chemistry)
 "wHz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -87902,13 +87927,13 @@ bcq
 bcq
 bcq
 bfF
-bha
+wCA
 bio
 bgF
 blf
 bmF
 bob
-bnB
+bha
 bfF
 bqR
 brX
@@ -88933,7 +88958,7 @@ bfF
 bhd
 bis
 bjR
-bis
+vRy
 bmI
 bod
 bpt
