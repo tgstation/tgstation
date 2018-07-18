@@ -1518,9 +1518,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		var/burn_damage
 		if (H.on_fire)
-			burn_damage = log(1.7,(H.bodytemperature-BODYTEMP_NORMAL)-5
+			burn_damage = log(1.7,(H.bodytemperature-BODYTEMP_NORMAL))-5
 		else
-			burn_damage = log(2,H.bodytemperature-BODYTEMP_NORMAL)-5
+			burn_damage = log(2,(H.bodytemperature-BODYTEMP_NORMAL))-5
 		if (burn_damage)
 			switch(burn_damage)
 				if(0 to 2)
