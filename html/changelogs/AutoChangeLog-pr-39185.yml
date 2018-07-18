@@ -1,0 +1,4 @@
+author: "WJohnston"
+delete-after: True
+changes: 
+  - rscdel: "Removed the extra syndie headset from the syndicate listening post space ruin so people stumbling on the ruin won't be able to ruin your channel's security as often."
