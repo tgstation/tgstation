@@ -11,15 +11,16 @@
 
 /mob/living/proc/update_move_intent_slowdown()
 	var/mod = 0
-	var/static/datum/config_entry/number/movedelay/run_delay/config_run_delay
-	var/static/datum/config_entry/number/movedelay/walk_delay/config_walk_delay
-	if(!istype(config_run_delay) || !istype(config_walk_delay))
-		config_run_delay = CONFIG_GET_DATUM(number/movedelay/run_delay)
-		config_walk_delay = CONFIG_GET_DATUM(number/movedelay/walk_delay)
-	if(m_intent == MOVE_INTENT_WALK)
-		mod = config_walk_delay.config_entry_value
-	else
-		mod = config_run_delay.config_entry_value
+	var/static/datum/config_entry/keyed_number_list/multiplicative_movespeed/config_entry
+	if(!istype(config_entry))
+		config_entry = CONFIG_GET_DATUM(keyed_number_list/multiplicative_movespeed)
+	if(islist(config_entry.config_entry_value))
+		if(m_intent == MOVE_INTENT_WALK)
+			mod = config_entry.config_entry_value["walk"]
+		else
+			mod = config_entry.config_entry_value["run"]
+	if(!isnum(mod))
+		mod = 1
 	add_movespeed_modifier(MOVESPEED_ID_MOB_WALK_RUN_CONFIG_SPEED, TRUE, 100, override = TRUE, legacy_slowdown = mod)
 
 /mob/living/proc/update_turf_movespeed(turf/open/T)

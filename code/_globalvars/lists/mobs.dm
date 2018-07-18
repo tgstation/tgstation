@@ -34,3 +34,22 @@ GLOBAL_LIST_EMPTY(all_languages)
 GLOBAL_LIST_EMPTY(sentient_disease_instances)
 
 GLOBAL_LIST_EMPTY(latejoin_ai_cores)
+
+GLOBAL_LIST_EMPTY(mob_config_movespeed_type_lookup)
+
+/proc/initialize_mob_movespeed_type_lookup()
+	var/list/mob_typecache = typecacheof(/mob)
+	for(var/i in mob_typecache)
+		mob_typecache[i] = null
+	for(var/i in typecacheof(/mob/living/carbon/monkey))
+		mob_typecache[i] = "monkey"
+	for(var/i in typecacheof(/mob/living/carbon/human))
+		mob_typecache[i] = "human"
+	for(var/i in typecacheof(/mob/living/carbon/alien))
+		mob_typecache[i] = "alien"
+	for(var/i in typecacheof(/mob/living/simple_animal))
+		mob_typecache[i] = "animal"
+	for(var/i in typecacheof(/mob/living/simple_animal/slime))
+		mob_typecache[i] = "slime"
+	for(var/i in typecacheof(/mob/living/silicon/robot))
+		mob_typecache[i] = "robot"

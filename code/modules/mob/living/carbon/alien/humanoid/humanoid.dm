@@ -26,10 +26,7 @@
 	. = ..()
 
 /mob/living/carbon/alien/humanoid/update_config_movespeed()
-	var/static/datum/config_entry/number/movedelay/alien_delay/config_alien_delay
-	if(QDELETED(config_alien_delay))
-		config_alien_delay = CONFIG_GET_DATUM(number/movedelay/alien_delay)
-	add_movespeed_modifier(MOVESPEED_ID_ALIEN_CONFIG_SPEEDMOD, FALSE, 100, override = TRUE, legacy_slowdown = config_alien_delay.config_entry_value)
+	add_movespeed_modifier(MOVESPEED_ID_ALIEN_CONFIG_SPEEDMOD, FALSE, 100, override = TRUE, legacy_slowdown = get_config_multiplicative_speed())
 	return ..()
 
 /mob/living/carbon/alien/humanoid/restrained(ignore_grab)

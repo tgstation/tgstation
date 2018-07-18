@@ -34,6 +34,15 @@
 
 /mob/proc/update_config_movespeed()
 
+/mob/proc/get_config_multiplicative_speed()
+	var/static/datum/config_entry/keyed_number_list/multiplicative_movespeed/config_entry
+	if(!istype(config_entry))
+		config_entry = CONFIG_GET_DATUM(keyed_number_list/multiplicative_movespeed)
+	var/id_lookup = GLOB.mob_config_movespeed_type_lookup[type]
+	if(isnull(id_lookup) || !islist(config_entry.config_entry_value))
+		return
+	return config_entry.config_entry_value[id_lookup]
+
 /mob/proc/update_movespeed(resort = TRUE)
 	if(resort)
 		sort_movespeed_modlist()

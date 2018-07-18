@@ -174,38 +174,60 @@
 
 /datum/config_entry/flag/emojis
 
-/datum/config_entry/number/movedelay	//Used for modifying movement speed for mobs.
-	var/mob_affected_type = /mob
+/datum/config_entry/keyed_number_list
+	var/static/list/allowed_ids = list("run", "walk", "human", "robot", "monkey", "alien", "slime", "animal")		//UPDATE MOBS MOVESPEED TYPECACHE IF THIS CHANGES! _globalvars/lists/mobs.dm
 
-/datum/config_entry/number/movedelay/ValidateAndSet()
+/datum/config_entry/keyed_number_list/multiplicative_movespeed/ValidateListEntry(key, value)
+	if(!(key in allowed_ids))
+		return FALSE
+	return ..()
+
+/datum/config_entry/keyed_number_list/multiplicative_movespeed/ValidateAndSet()
 	. = ..()
 	if(.)
-		for(var/i in GLOB.mob_list)
-			var/mob/M = i
-			if(istype(M, mob_affected_type))
-				M.update_config_movespeed()
+		update_mobs()
+
+/datum/config_entry/keyed_number_list/multiplicative_movespeed/proc/update_mobs()
+	for(var/i in GLOB.mob_list)
+		var/mob/M = i
+		M.update_config_movespeed()
+
+//DEPRECATED-------------------------------
+/datum/config_entry/number/movedelay	//Used for modifying movement speed for mobs.
+	var/mob_affected_id
+	deprecated_by = /datum/config_entry/keyed_number_list/multiplicative_movespeed
+
+/datum/config_entry/number/movedelay/DeprecationUpdate(value)
+	if(!isnum(value))
+		value = text2num(value)
+		if(!isnum(value))
+			return
+	return "[mob_affected_id] [value]"
 
 /datum/config_entry/number/movedelay/run_delay
+	mob_affected_id = "run"
 
 /datum/config_entry/number/movedelay/walk_delay
+	mob_affected_id = "walk"
 
 /datum/config_entry/number/movedelay/human_delay	//Mob specific modifiers. NOTE: These will affect different mob types in different ways
-	mob_affected_type = /mob/living/carbon/human
+	mob_affected_id = "human"
 
 /datum/config_entry/number/movedelay/robot_delay
-	mob_affected_type = /mob/living/silicon/robot
+	mob_affected_id = "robot"
 
 /datum/config_entry/number/movedelay/monkey_delay
-	mob_affected_type = /mob/living/carbon/monkey
+	mob_affected_id = "monkey"
 
 /datum/config_entry/number/movedelay/alien_delay
-	mob_affected_type = /mob/living/carbon/alien
+	mob_affected_id = "alien"
 
 /datum/config_entry/number/movedelay/slime_delay
-	mob_affected_type = /mob/living/simple_animal/slime
+	mob_affected_id = "slime"
 
 /datum/config_entry/number/movedelay/animal_delay
-	mob_affected_type = /mob/living/simple_animal
+	mob_affected_id = "animal"
+//END DEPRECATED------------------------------
 
 /datum/config_entry/flag/roundstart_away	//Will random away mission be loaded.
 

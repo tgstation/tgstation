@@ -34,16 +34,16 @@ EMOJIS
 ## To speed things up make the number negative, to slow things down, make the number positive.
 
 ## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied.
-RUN_DELAY 1
-WALK_DELAY 4
+MULTIPLICATIVE_MOVESPEED RUN 1
+MULTIPLICATIVE_MOVESPEED WALK 4
 
 ## The variables below affect the movement of specific mob types.
-HUMAN_DELAY 0
-ROBOT_DELAY 0
-MONKEY_DELAY 0
-ALIEN_DELAY 0
-SLIME_DELAY 0
-ANIMAL_DELAY 1
+MULTIPLICATIVE_MOVESPEED HUMAN 0
+MULTIPLICATIVE_MOVESPEED ROBOT 0
+MULTIPLICATIVE_MOVESPEED MONKEY 0
+MULTIPLICATIVE_MOVESPEED ALIEN 0
+MULTIPLICATIVE_MOVESPEED SLIME 0
+MULTIPLICATIVE_MOVESPEED ANIMAL 1
 
 
 ## NAMES ###

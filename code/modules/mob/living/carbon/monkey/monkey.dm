@@ -57,10 +57,7 @@
 	..()
 
 /mob/living/carbon/monkey/update_config_movespeed()
-	var/static/datum/config_entry/number/movedelay/config_monkey_delay
-	if(isnull(config_monkey_delay))
-		config_monkey_delay = CONFIG_GET_DATUM(number/movedelay/monkey_delay)
-	add_movespeed_modifier(MOVESPEED_ID_MONKEY_CONFIG_SPEEDMOD, FALSE, 100, override = TRUE, legacy_slowdown = config_monkey_delay.config_entry_value)
+	add_movespeed_modifier(MOVESPEED_ID_MONKEY_CONFIG_SPEEDMOD, FALSE, 100, override = TRUE, legacy_slowdown = get_config_multiplicative_speed())
 	return ..()
 
 /mob/living/carbon/monkey/on_reagent_change()

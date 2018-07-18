@@ -167,10 +167,7 @@
 		add_movespeed_modifier(MOVESPEED_ID_SLIME_TEMPMOD, TRUE, 100, override = TRUE, legacy_slowdown = mod)
 
 /mob/living/simple_animal/slime/update_config_movespeed()
-	var/static/datum/config_entry/number/movedelay/config_slime_delay
-	if(!istype(config_slime_delay))
-		config_slime_delay = CONFIG_GET_DATUM(number/movedelay/slime_delay)
-	add_movespeed_modifier(MOVESPEED_ID_SLIME_CONFIG_SPEEDMOD, FALSE, 100, override = TRUE, legacy_slowdown = config_slime_delay.config_entry_value)
+	add_movespeed_modifier(MOVESPEED_ID_SLIME_CONFIG_SPEEDMOD, FALSE, 100, override = TRUE, legacy_slowdown = get_config_multiplicative_speed())
 	. = ..()
 
 /mob/living/simple_animal/slime/ObjBump(obj/O)

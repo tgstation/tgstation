@@ -293,10 +293,7 @@
 	add_movespeed_modifier(MOVESPEED_ID_SIMPLEMOB_VARSPEED, TRUE, 100, legacy_slowdown = speed, override = TRUE)
 
 /mob/living/simple_animal/update_config_movespeed(resort)
-	var/static/datum/config_entry/number/movedelay/config_animal_delay
-	if(!istype(config_animal_delay))
-		config_animal_delay = CONFIG_GET_DATUM(number/movedelay/animal_delay)
-	add_movespeed_modifier(MOVESPEED_ID_SIMPLEMOB_CONFIG_SPEEDMOD, FALSE, 100, legacy_slowdown = config_animal_delay.config_entry_value, override = TRUE)
+	add_movespeed_modifier(MOVESPEED_ID_SIMPLEMOB_CONFIG_SPEEDMOD, FALSE, 100, legacy_slowdown = get_config_multiplicative_speed(), override = TRUE)
 	return ..()
 
 /mob/living/simple_animal/Stat()
