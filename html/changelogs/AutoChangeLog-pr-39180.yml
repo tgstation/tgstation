@@ -1,7 +1,0 @@
-author: "MrStonedOne"
-delete-after: True
-changes: 
-  - bugfix: "synchronizing admin ranks with the database now lags the server less"
-  - bugfix: "saving stats now lags the server less"
-  - bugfix: "jobexp updating now lags the server less"
-  - bugfix: "poll creation now lags the server less."
