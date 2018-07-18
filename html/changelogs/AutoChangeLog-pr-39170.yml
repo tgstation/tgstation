@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "RCDs can now also be loaded with reinforced glass and reinforced plasma glass sheets."

@@ -275,7 +275,6 @@
 	dir = 8
 	},
 /obj/item/multitool,
-/obj/item/radio/headset/syndicate/alt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/listeningstation)
