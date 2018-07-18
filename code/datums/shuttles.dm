@@ -446,8 +446,8 @@
 	suffix = "syndicate_dropship"
 	name = "Syndicate Dropship"
 
-/datum/map_template/shuttle/ruin/syndicate_fighter_1
-	suffix = "syndicate_fighter_1"
+/datum/map_template/shuttle/ruin/syndicate_fighter_shiv
+	suffix = "syndicate_fighter_shiv"
 	name = "Syndicate Fighter"
 
 /datum/map_template/shuttle/snowdin/mining

@@ -1236,7 +1236,7 @@
 	height = 5;
 	id = "caravansyndicate1_ambush";
 	name = "Trade Route";
-	roundstart_template = /datum/map_template/shuttle/ruin/syndicate_fighter_1;
+	roundstart_template = /datum/map_template/shuttle/ruin/syndicate_fighter_shiv;
 	width = 9
 	},
 /turf/template_noop,
