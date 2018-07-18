@@ -115,6 +115,14 @@ GLOBAL_LIST_EMPTY(bounties_list)
 		try_add_bounty(new subtype)
 
 	for(var/i = 0; i < 2; ++i)
+		if(prob(50))
+			var/list/subtype = pick(subtypesof(/datum/bounty/item/slime))
+			try_add_bounty(new subtype)
+		else
+			var/list/subtype = pick(subtypesof(/datum/bounty/item/science))
+			try_add_bounty(new subtype)
+
+	for(var/i = 0; i < 2; ++i)
 		var/list/subtype = pick(subtypesof(/datum/bounty/item/chef))
 		try_add_bounty(new subtype)
 
