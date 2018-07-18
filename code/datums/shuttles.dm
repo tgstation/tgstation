@@ -450,10 +450,6 @@
 	suffix = "syndicate_fighter_1"
 	name = "Syndicate Fighter"
 
-/datum/map_template/shuttle/ruin/syndicate_fighter_2
-	suffix = "syndicate_fighter_2"
-	name = "Syndicate Fighter"
-
 /datum/map_template/shuttle/snowdin/mining
 	suffix = "mining"
 	name = "Snowdin Mining Elevator"
