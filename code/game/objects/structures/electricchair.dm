@@ -18,6 +18,7 @@
 	part.master = null
 	part = null
 	qdel(src)
+	return TRUE
 
 /obj/structure/chair/e_chair/proc/shock()
 	if(last_time + 50 > world.time)
