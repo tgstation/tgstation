@@ -70,5 +70,5 @@
 	to_chat(user, "<span class='notice'>You fried the consoles ID checking system.</span>")
 
 /obj/machinery/computer/shuttle/proc/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
-	if(port && (shuttleId = initial(shuttleId) || override))
+	if(port && (shuttleId == initial(shuttleId) || override))
 		shuttleId = port.id
