@@ -338,7 +338,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "HM" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /mob/living/simple_animal/hostile/syndicate/ranged/pilot{
@@ -347,9 +347,6 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/syndicate3)
 "Ij" = (
-/obj/structure/chair/office/dark{
-	dir = 4
-	},
 /obj/machinery/turretid{
 	ailock = 1;
 	control_area = null;
@@ -360,6 +357,9 @@
 	pixel_y = 34;
 	req_access = null;
 	req_access_txt = "150"
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkred/corner{
 	dir = 4
@@ -505,7 +505,7 @@
 	},
 /area/shuttle/caravan/syndicate3)
 "Wr" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkred/corner,

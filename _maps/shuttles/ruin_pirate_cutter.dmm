@@ -679,7 +679,9 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security,
+/obj/machinery/door/airlock/security{
+	name = "Armory"
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/caravan/pirate)
 "II" = (
