@@ -15,8 +15,7 @@
 	else
 		to_chat(user, "<span class='warning'>You need a crowbar to pry this open!</span>")
 
-/obj/structure/closet/crate/large/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/crowbar))
+/obj/structure/closet/crate/large/crowbar_act(mob/living/user, obj/item/I)
 		if(manifest)
 			tear_manifest(user)
 
@@ -30,14 +29,6 @@
 			new material_drop(src)
 		for(var/atom/movable/AM in contents)
 			AM.forceMove(T)
-
+		
 		qdel(src)
-
-	else
-		if(user.a_intent == INTENT_HARM)	//Only return  ..() if intent is harm, otherwise return 0 or just end it.
-			return ..()						//Stops it from opening and turning invisible when items are used on it.
-
-		else
-			to_chat(user, "<span class='warning'>You need a crowbar to pry this open!</span>")
-			return FALSE //Just stop. Do nothing. Don't turn into an invisible sprite. Don't open like a locker.
-					//The large crate has no non-attack interactions other than the crowbar, anyway.
+		return TRUE
