@@ -14217,7 +14217,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/atmos{
 	name = "Turbine Generator Access";
-	req_access_txt = "0";
 	req_one_access_txt = "24;10"
 	},
 /obj/structure/cable/white{
@@ -15452,7 +15451,6 @@
 "aMD" = (
 /obj/machinery/door/airlock/atmos{
 	name = "Turbine Generator Access";
-	req_access_txt = 0;
 	req_one_access_txt = "24;10"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -18028,7 +18026,6 @@
 	},
 /obj/machinery/door/airlock/mining/glass{
 	name = "Delivery Office";
-	req_access_txt = 0;
 	req_one_access_txt = "48;50"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
