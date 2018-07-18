@@ -13456,7 +13456,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/atmos{
 	name = "Port Bow Solar Access";
-	req_one_access_txt = "13; 24"
+	req_one_access_txt = "24;10"
 	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -14217,7 +14217,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/atmos{
 	name = "Turbine Generator Access";
-	req_access_txt = "24"
+	req_access_txt = "0";
+	req_one_access_txt = "24;10"
 	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -15451,7 +15452,8 @@
 "aMD" = (
 /obj/machinery/door/airlock/atmos{
 	name = "Turbine Generator Access";
-	req_access_txt = "24"
+	req_access_txt = 0;
+	req_one_access_txt = "24;10"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
