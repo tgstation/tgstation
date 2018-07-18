@@ -48,6 +48,16 @@
 	category = list("Firing Pins")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/pin_normal
+	name = "Firing Pin"
+	desc = "A normal electronic authentication firing pin for standard weapons."
+	id = "pin_normal"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 800, MAT_GLASS = 500, MAT_SILVER = 300, MAT_GOLD = 300)
+	build_path = /obj/item/firing_pin
+	category = list("Firing Pins")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 /datum/design/pin_mindshield
 	name = "Mindshield Firing Pin"
 	desc = "This is a security firing pin which only authorizes users who are mindshield-implanted."
