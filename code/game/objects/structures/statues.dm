@@ -15,7 +15,7 @@
 	//Restore air flow.
 	density = FALSE
 	air_update_turf(TRUE)
-	. = ..()
+	return ..()
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
