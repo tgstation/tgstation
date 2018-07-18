@@ -501,15 +501,6 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
-/datum/techweb_node/exp_flight
-	id = "exp_flight"
-	display_name = "Experimental Flight Equipment"
-	description = "Highly advanced construction tools."
-	design_ids = list("flightshoes", "flightpack", "flightsuit")
-	prereq_ids = list("adv_engi","integrated_HUDs", "adv_power" , "high_efficiency")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	export_price = 5000
-
 /////////////////////////weaponry tech/////////////////////////
 /datum/techweb_node/weaponry
 	id = "weaponry"
