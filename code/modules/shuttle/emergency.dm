@@ -427,26 +427,6 @@
 		to_chat(usr, "<span class='warning'>Escape pods will only launch during \"Code Red\" security alert.</span>")
 		return TRUE
 
-/obj/docking_port/mobile/pod/Initialize()
-	. = ..()
-	var/static/i = 1
-	if(id == initial(id))
-		id = "[initial(id)][i]"
-	if(name == initial(name))
-		name = "[initial(name)] [i]"
-
-	for(var/k in shuttle_areas)
-		var/area/place = k
-		for(var/obj/machinery/computer/shuttle/pod/pod_comp in place)
-			if(pod_comp.shuttleId == initial(pod_comp.shuttleId))
-				pod_comp.shuttleId = id
-			if(pod_comp.possible_destinations == initial(pod_comp.possible_destinations))
-				pod_comp.possible_destinations = "pod_lavaland[i]"
-
-	i++
-
-
-
 /obj/docking_port/mobile/pod/cancel()
 	return
 
@@ -469,6 +449,11 @@
 		return
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='warning'>You fry the pod's alert level checking system.</span>")
+
+/obj/machinery/computer/shuttle/pod/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	. = ..()
+	if(possible_destinations == initial(possible_destinations) || override)
+		possible_destinations = "pod_lavaland[idnum]"
 
 /obj/docking_port/stationary/random
 	name = "escape pod"

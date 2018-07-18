@@ -196,6 +196,30 @@
 	if(roundstart_template)
 		SSshuttle.manipulator.action_load(roundstart_template, src)
 
+	var/obj/docking_port/mobile/port = get_docked()
+	if(!port)
+		if(roundstart_template)
+			CRASH("No mobile dock found even though a shuttle loaded")
+		return
+
+	var/list/static/shuttle_id = list()
+	var/idnum
+	if(!shuttle_id[roundstart_template])
+		shuttle_id[roundstart_template] = idnum = 1
+	else
+		idnum = shuttle_id[roundstart_template]++
+	if(port.id == initial(port.id))
+		port.id = "[initial(port.id)][idnum]"
+	if(port.name == initial(port.name))
+		port.name = "[initial(port.name)] [idnum]"
+	for(var/i in port.shuttle_areas)
+		var/area/place = i
+		for(var/obj/machinery/computer/shuttle/comp in place)
+			comp.connect_to_shuttle(port, src, idnum)
+		for(var/obj/machinery/computer/camera_advanced/shuttle_docker/comp in place)
+			comp.connect_to_shuttle(port, src, idnum)
+
+
 //returns first-found touching shuttleport
 /obj/docking_port/stationary/get_docked()
 	. = locate(/obj/docking_port/mobile) in loc
