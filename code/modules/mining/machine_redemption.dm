@@ -50,10 +50,6 @@
 /obj/machinery/mineral/ore_redemption/Destroy()
 	if (standalone)
 		materials.retrieve_all()
-	if (silo)
-		silo.orms -= src
-		silo.updateUsrDialog()
-		silo = null
 	QDEL_NULL(stored_research)
 	return ..()
 

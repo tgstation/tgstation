@@ -14,6 +14,13 @@
 	if (silo)
 		silo.orms += src
 
+/obj/machinery/mineral/Destroy()
+	if (silo)
+		silo.orms -= src
+		silo.updateUsrDialog()
+		silo = null
+	return ..()
+
 /obj/machinery/mineral/proc/unload_mineral(atom/movable/S)
 	S.forceMove(drop_location())
 	var/turf/T = get_step(src,output_dir)

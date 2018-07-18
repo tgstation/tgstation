@@ -79,7 +79,7 @@
 
 /obj/machinery/rnd/production/Destroy()
 	if (silo)
-		silo.lathes -= screen
+		silo.lathes -= src
 		silo.updateUsrDialog()
 		silo = null
 		materials = null
