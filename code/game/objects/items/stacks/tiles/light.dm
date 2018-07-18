@@ -20,10 +20,10 @@
 		state = 0 //fine
 
 /obj/item/stack/tile/light/crowbar_act(mob/living/user, obj/item/I)
-		new/obj/item/stack/sheet/metal(user.loc)
-		amount--
-		new/obj/item/stack/light_w(user.loc)
-		if(amount <= 0)
-			qdel(src)
+	new/obj/item/stack/sheet/metal(user.loc)
+	amount--
+	new/obj/item/stack/light_w(user.loc)
+	if(amount <= 0)
+		qdel(src)
 	else
 		return ..()
