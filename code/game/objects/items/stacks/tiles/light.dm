@@ -26,4 +26,4 @@
 	if(amount <= 0)
 		qdel(src)
 	else
-		return ..()
+		return TRUE
