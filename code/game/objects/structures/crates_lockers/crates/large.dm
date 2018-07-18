@@ -1,12 +1,16 @@
 /obj/structure/closet/crate/large
 	name = "large crate"
-	desc = "A hefty wooden crate. You'll need a crowbar to get it open."
+	desc = "A hefty wooden crate."
 	icon_state = "largecrate"
 	density = TRUE
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 4
 	delivery_icon = "deliverybox"
 	integrity_failure = 0 //Makes the crate break when integrity reaches 0, instead of opening and becoming an invisible sprite.
+
+/obj/structure/closet/crate/large/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>It's held together by a couple of <b>nails</b>.</span>")
 
 /obj/structure/closet/crate/large/attack_hand(mob/user)
 	add_fingerprint(user)
