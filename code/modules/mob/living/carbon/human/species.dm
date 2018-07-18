@@ -1517,13 +1517,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
 
 		var/burn_damage
-		if (H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
-			if (H.on_fire)
-				burn_damage = log(1.7,H.bodytemperature)-5
-				warning("body_temperature is [H.bodytemperature] and we're on fire, damage is [burn_damage]")
-			else
-				burn_damage = log(2,H.bodytemperature)-5
-				warning("body_temperature is [H.bodytemperature] and we're not on fire, damage is [burn_damage]")
+		if (H.on_fire)
+			burn_damage = log(1.7,(H.bodytemperature-BODYTEMP_NORMAL)-5
+		else
+			burn_damage = log(2,H.bodytemperature-BODYTEMP_NORMAL)-5
 		if (burn_damage)
 			switch(burn_damage)
 				if(0 to 2)
