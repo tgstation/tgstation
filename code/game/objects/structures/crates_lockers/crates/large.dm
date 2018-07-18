@@ -29,6 +29,6 @@
 			new material_drop(src)
 		for(var/atom/movable/AM in contents)
 			AM.forceMove(T)
-		
+
 		qdel(src)
 		return TRUE
