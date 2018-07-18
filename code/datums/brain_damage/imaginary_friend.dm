@@ -197,7 +197,7 @@
 
 /datum/action/innate/imaginary_hide
 	name = "Hide"
-	desc = "Hide youreself from your owner's sight."
+	desc = "Hide yourself from your owner's sight."
 	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	background_icon_state = "bg_revenant"
 	button_icon_state = "hide"
@@ -210,7 +210,7 @@
 		button_icon_state = "unhide"
 	else
 		name = "Hide"
-		desc = "Hide youreself from your owner's sight."
+		desc = "Hide yourself from your owner's sight."
 		button_icon_state = "hide"
 	UpdateButtonIcon()
 
