@@ -106,15 +106,15 @@ GLOBAL_LIST_EMPTY(bounties_list)
 
 // Called lazily at startup to populate GLOB.bounties_list with random bounties.
 /proc/setup_bounties()
-	for(var/i = 0; i < 3; ++i)
+	for(var/i in 1 to 3)
 		var/subtype = pick(subtypesof(/datum/bounty/item/assistant))
 		try_add_bounty(new subtype)
 
-	for(var/i = 0; i < 1; ++i)
+	for(var/i in 1 to 2)
 		var/list/subtype = pick(subtypesof(/datum/bounty/item/mech))
 		try_add_bounty(new subtype)
 
-	for(var/i = 0; i < 2; ++i)
+	for(var/i in 1 to 2)
 		if(prob(50))
 			var/list/subtype = pick(subtypesof(/datum/bounty/item/slime))
 			try_add_bounty(new subtype)
@@ -122,11 +122,11 @@ GLOBAL_LIST_EMPTY(bounties_list)
 			var/list/subtype = pick(subtypesof(/datum/bounty/item/science))
 			try_add_bounty(new subtype)
 
-	for(var/i = 0; i < 2; ++i)
+	for(var/i in 1 to 2)
 		var/list/subtype = pick(subtypesof(/datum/bounty/item/chef))
 		try_add_bounty(new subtype)
 
-	for(var/i = 0; i < 1; ++i)
+	for(var/i in 1 to 2)
 		var/list/subtype = pick(subtypesof(/datum/bounty/item/security))
 		try_add_bounty(new subtype)
 
@@ -134,7 +134,7 @@ GLOBAL_LIST_EMPTY(bounties_list)
 	try_add_bounty(new /datum/bounty/reagent/complex_drink)
 	try_add_bounty(new /datum/bounty/reagent/chemical)
 
-	for(var/i = 0; i < 1; ++i)
+	for(var/i in 1 to 2)
 		var/list/subtype = pick(subtypesof(/datum/bounty/virus))
 		try_add_bounty(new subtype)
 
