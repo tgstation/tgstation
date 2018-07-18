@@ -26,14 +26,14 @@
 /mob/living/proc/spread_bodyparts()
 	return
 
-/mob/living/dust(just_ash = FALSE, drop_items = FALSE)
+/mob/living/dust(just_ash, drop_items, force)
 	death(TRUE)
 
 	if(drop_items)
 		unequip_everything()
 
 	if(buckled)
-		buckled.unbuckle_mob(src,force=1)
+		buckled.unbuckle_mob(src, force = TRUE)
 
 	dust_animation()
 	spawn_dust(just_ash)

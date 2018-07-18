@@ -1801,7 +1801,7 @@
 /area/ruin/space/has_grav/hotel/bar)
 "fF" = (
 /obj/structure/table,
-/obj/item/book/manual/barman_recipes,
+/obj/item/book/manual/wiki/barman_recipes,
 /obj/item/reagent_containers/food/drinks/shaker,
 /turf/open/floor/plasteel/bar,
 /area/ruin/space/has_grav/hotel/bar)

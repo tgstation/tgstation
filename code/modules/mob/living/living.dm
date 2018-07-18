@@ -807,10 +807,9 @@
 	var/stam = getStaminaLoss()
 	if(stam)
 		var/total_health = (health - stam)
-		if(total_health <= crit_threshold && !stat)
+		if(total_health <= crit_threshold && !stat && !IsKnockdown())
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			Knockdown(100)
-			setStaminaLoss(health - 2, FALSE, FALSE)
 			update_health_hud()
 
 /mob/living/carbon/alien/update_stamina()

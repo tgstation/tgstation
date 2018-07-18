@@ -188,11 +188,11 @@
 /obj/item/reagent_containers/food/snacks/deepfryholder/Initialize(mapload, obj/item/fried)
 	. = ..()
 	name = fried.name //We'll determine the other stuff when it's actually removed
-	icon = fried.icon
-	overlays = fried.copy_overlays()
+	appearance = fried.appearance
+	layer = initial(layer)
+	plane = initial(plane)
 	lefthand_file = fried.lefthand_file
 	righthand_file = fried.righthand_file
-	icon_state = fried.icon_state
 	item_state = fried.item_state
 	desc = fried.desc
 	w_class = fried.w_class

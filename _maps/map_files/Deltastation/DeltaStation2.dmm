@@ -11743,7 +11743,7 @@
 	pixel_y = 32;
 	receive_ore_updates = 1
 	},
-/obj/item/book/manual/barman_recipes,
+/obj/item/book/manual/wiki/barman_recipes,
 /obj/item/reagent_containers/food/drinks/shaker,
 /obj/item/reagent_containers/glass/rag,
 /turf/open/floor/plasteel/vault{
@@ -52379,7 +52379,6 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/book/manual/engineering_particle_accelerator,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -52394,7 +52393,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/book/manual/engineering_singularity_safety,
+/obj/item/book/manual/wiki/engineering_singulo_tesla,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -78978,7 +78977,7 @@
 	pixel_y = 24
 	},
 /obj/item/folder/white,
-/obj/item/book/manual/medical_cloning,
+/obj/item/book/manual/wiki/medical_cloning,
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 4
 	},
@@ -80301,7 +80300,7 @@
 /area/science/explab)
 "dqn" = (
 /obj/structure/table/reinforced,
-/obj/item/book/manual/experimentor,
+/obj/item/book/manual/wiki/experimentor,
 /obj/item/healthanalyzer,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -82010,7 +82009,7 @@
 /area/science/research/abandoned)
 "duq" = (
 /obj/structure/rack,
-/obj/item/book/manual/robotics_cyborgs,
+/obj/item/book/manual/wiki/robotics_cyborgs,
 /obj/item/storage/belt/utility,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/effect/decal/cleanable/dirt,
@@ -84542,7 +84541,7 @@
 /area/science/robotics/lab)
 "dzI" = (
 /obj/structure/rack,
-/obj/item/book/manual/robotics_cyborgs,
+/obj/item/book/manual/wiki/robotics_cyborgs,
 /obj/item/storage/belt/utility/full,
 /obj/machinery/light{
 	dir = 1
@@ -87275,7 +87274,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/book/manual/detective,
+/obj/item/book/manual/wiki/detective,
 /obj/item/camera/detective,
 /turf/open/floor/plasteel/vault{
 	dir = 5

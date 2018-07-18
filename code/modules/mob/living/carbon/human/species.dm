@@ -481,7 +481,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				else
 					standing += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
 
-		if(H.socks && H.get_num_legs() >= 2 && !(DIGITIGRADE in species_traits))
+		if(H.socks && H.get_num_legs(FALSE) >= 2 && !(DIGITIGRADE in species_traits))
 			var/datum/sprite_accessory/socks/socks = GLOB.socks_list[H.socks]
 			if(socks)
 				standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
@@ -723,8 +723,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return FALSE
 
-	var/num_arms = H.get_num_arms()
-	var/num_legs = H.get_num_legs()
+	var/num_arms = H.get_num_arms(FALSE)
+	var/num_legs = H.get_num_legs(FALSE)
 
 	switch(slot)
 		if(SLOT_HANDS)
@@ -1097,13 +1097,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			. -= 2
 		else if(istype(T) && T.allow_thrust(0.01, H))
 			. -= 2
-		else if(flightpack && F.allow_thrust(0.01, src))
-			. -= 2
 
 	if(flightpack && F.boost)
 		. -= F.boost_speed
 	else if(flightpack && F.brake)
-		. += 2
+		. += 1
 
 	if(!ignoreslow && !flightpack && gravity)
 		if(H.wear_suit)
@@ -1348,7 +1346,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	//dismemberment
 	var/probability = I.get_dismemberment_chance(affecting)
-	if(prob(probability) || (H.has_trait(TRAIT_EASYDISMEMBER) && prob(2*probability)))
+	if(prob(probability) || (H.has_trait(TRAIT_EASYDISMEMBER) && prob(probability))) //try twice
 		if(affecting.dismember(I.damtype))
 			I.add_mob_blood(H)
 			playsound(get_turf(H), I.get_dismember_sound(), 80, 1)
