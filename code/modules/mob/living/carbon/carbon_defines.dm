@@ -16,6 +16,9 @@
 
 	var/disgust = 0
 
+	var/last_eaten = 0
+	var/last_seen_nearby_food = 0
+
 //inventory slots
 	var/obj/item/back = null
 	var/obj/item/clothing/mask/wear_mask = null

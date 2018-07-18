@@ -29,10 +29,10 @@
 	if(stat != DEAD)
 		//heart attack stuff
 		handle_heart()
-
-	if(stat != DEAD)
 		//Stuff jammed in your limbs hurts
 		handle_embedded_objects()
+		//Hungry around you
+		handle_nearby_food()
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
@@ -311,8 +311,18 @@
 	// Tissues die without blood circulation
 	adjustBruteLoss(2)
 
+/mob/living/carbon/human/proc/handle_nearby_food()
+	if(!client) return
+	if(world.time - last_eaten < 30 SECONDS) return //30 seconds after eating food you start getting hungry from seeing food again
+	if(world.time - last_seen_nearby_food < 15 SECONDS) return
+	if(nutrition >= NUTRITION_LEVEL_WELL_FED) return
 
-
+	for(var/obj/item/reagent_containers/food/F in view(client.view, get_turf(src)))
+		if(!F.list_reagents || !F.list_reagents["nutriment"]) continue
+		last_seen_nearby_food = world.time
+		to_chat(src, "<span class='notice'>Seeing the [F] makes you hungry...</span>")
+		nutrition -= 30
+		return
 
 #undef THERMAL_PROTECTION_HEAD
 #undef THERMAL_PROTECTION_CHEST

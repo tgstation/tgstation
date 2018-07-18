@@ -19,6 +19,8 @@
 	M.nutrition += nutriment_factor
 	holder.remove_reagent(src.id, metabolization_rate)
 
+	M.last_eaten = world.time
+
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"
 	id = "nutriment"
@@ -575,7 +577,7 @@
   if(iscarbon(M) && (method in list(TOUCH, VAPOR, PATCH)))
     var/mob/living/carbon/C = M
     for(var/s in C.surgeries)
-      var/datum/surgery/S = s 
+      var/datum/surgery/S = s
       S.success_multiplier = max(0.6, S.success_multiplier) // +60% success probability on each step, compared to bacchus' blessing's ~46%
   ..()
 
