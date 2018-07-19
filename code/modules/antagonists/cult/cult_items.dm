@@ -462,7 +462,7 @@
 	item_state = "blindfold"
 	flash_protect = 1
 
-/obj/item/clothing/glasses/night/cultblind/equipped(mob/living/user, slot)
+/obj/item/clothing/glasses/hud/health/night/cultblind/equipped(mob/living/user, slot)
 	..()
 	if(!iscultist(user))
 		to_chat(user, "<span class='cultlarge'>\"You want to be blind, do you?\"</span>")
@@ -770,7 +770,7 @@
 	damage_type = BRUTE
 	impact_effect_type = /obj/effect/temp_visual/dir_setting/bloodsplatter
 
-/obj/item/projectile/magic/arcane_barrage/blood/Collide(atom/target)
+/obj/item/projectile/magic/arcane_barrage/blood/Bump(atom/target)
 	var/turf/T = get_turf(target)
 	playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
 	if(iscultist(target))

@@ -118,7 +118,7 @@
 		if(INGREDIENTS_STACKPLUSTOP)
 			filling.pixel_x = rand(-1,1)
 			filling.pixel_y = 2 * ingredients.len - 1
-			if(overlays)
+			if(overlays && overlays.len >= ingredients.len) //remove the old top if it exists
 				overlays -= overlays[ingredients.len]
 			var/mutable_appearance/TOP = mutable_appearance(icon, "[icon_state]_top")
 			TOP.pixel_y = 2 * ingredients.len + 3

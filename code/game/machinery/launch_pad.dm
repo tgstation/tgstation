@@ -340,7 +340,7 @@
 
 		if("rename")
 			. = TRUE
-			var/new_name = stripped_input(usr, "How do you want to rename the launchpad?", "Launchpad", pad.display_name, 15) as text|null
+			var/new_name = stripped_input(usr, "How do you want to rename the launchpad?", "Launchpad", pad.display_name, 15)
 			if(!new_name)
 				return
 			pad.display_name = new_name

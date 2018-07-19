@@ -275,7 +275,6 @@
 	dir = 8
 	},
 /obj/item/multitool,
-/obj/item/radio/headset/syndicate/alt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/listeningstation)
@@ -719,8 +718,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/caution/red{
-	dir = 8;
-	pixel_x = 6
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{

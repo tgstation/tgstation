@@ -247,17 +247,7 @@
 /obj/item/gun/energy/beam_rifle/proc/process_aim()
 	if(istype(current_user) && current_user.client && current_user.client.mouseParams)
 		var/angle = mouse_angle_from_client(current_user.client)
-		switch(angle)
-			if(316 to 360)
-				current_user.setDir(NORTH)
-			if(0 to 45)
-				current_user.setDir(NORTH)
-			if(46 to 135)
-				current_user.setDir(EAST)
-			if(136 to 225)
-				current_user.setDir(SOUTH)
-			if(226 to 315)
-				current_user.setDir(WEST)
+		current_user.setDir(angle2dir_cardinal(angle))
 		var/difference = abs(closer_angle_difference(lastangle, angle))
 		delay_penalty(difference * aiming_time_increase_angle_multiplier)
 		lastangle = angle
@@ -535,7 +525,7 @@
 	if(!QDELETED(target))
 		handle_impact(target)
 
-/obj/item/projectile/beam/beam_rifle/Collide(atom/target)
+/obj/item/projectile/beam/beam_rifle/Bump(atom/target)
 	if(check_pierce(target))
 		permutated += target
 		trajectory_ignore_forcemove = TRUE

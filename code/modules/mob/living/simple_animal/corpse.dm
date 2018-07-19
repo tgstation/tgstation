@@ -27,7 +27,6 @@
 	back = /obj/item/storage/backpack
 	id = /obj/item/card/id/syndicate
 
-
 /obj/effect/mob_spawn/human/corpse/syndicatecommando
 	name = "Syndicate Commando"
 	id_job = "Operative"
@@ -204,3 +203,23 @@
 	back = /obj/item/storage/backpack/satchel/med
 	id = /obj/item/card/id
 	glasses = /obj/item/clothing/glasses/hud/health
+
+/obj/effect/mob_spawn/human/corpse/bee_terrorist
+	name = "BLF Operative"
+	outfit = /datum/outfit/bee_terrorist
+	
+/datum/outfit/bee_terrorist
+	name = "BLF Operative"
+	uniform = /obj/item/clothing/under/color/yellow
+	suit = /obj/item/clothing/suit/hooded/bee_costume
+	shoes = /obj/item/clothing/shoes/sneakers/yellow
+	gloves = /obj/item/clothing/gloves/color/yellow
+	ears = /obj/item/radio/headset
+	belt = /obj/item/storage/belt/fannypack/yellow/bee_terrorist
+	id = /obj/item/card/id
+	l_pocket = /obj/item/paper/fluff/bee_objectives
+	mask = /obj/item/clothing/mask/rat/bee 
+
+/obj/item/paper/fluff/bee_objectives
+	name = "Objectives of a Bee Liberation Front Operative"
+	info = "<b>Objective #1</b>. Liberate all bees on the NT transport vessel 2416/B. <b>Success!</b>  <br><b>Objective #2</b>. Escape alive. <b>Failed.</b>"

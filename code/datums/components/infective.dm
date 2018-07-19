@@ -13,7 +13,7 @@
 		expire_time = world.time + expire_in
 		QDEL_IN(src, expire_in)
 	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, .proc/try_infect_buckle)
-	RegisterSignal(parent, COMSIG_MOVABLE_COLLIDE, .proc/try_infect_collide)
+	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/try_infect_collide)
 	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/try_infect_crossed)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_ZONE, .proc/try_infect_attack_zone)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/try_infect_attack)
