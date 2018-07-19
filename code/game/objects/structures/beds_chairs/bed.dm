@@ -36,12 +36,13 @@
 /obj/structure/bed/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/bed/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
+/obj/structure/bed/wrench_act(mob/living/user, obj/item/I)
+	if (!(flags_1&NODECONSTRUCT_1))
 		W.play_tool_sound(src)
 		deconstruct(TRUE)
+		return TRUE
 	else
-		return ..()
+		return FALSE
 
 /*
  * Roller beds
