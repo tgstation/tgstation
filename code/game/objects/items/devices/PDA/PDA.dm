@@ -451,13 +451,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 //MAIN FUNCTIONS===================================
 
 			if("Light")
-				if(fon)
-					fon = FALSE
-					set_light(0)
-				else if(f_lum)
-					fon = TRUE
-					set_light(f_lum)
-				update_icon()
+				toggle_light()
 			if("Medical Scan")
 				if(scanmode == PDA_SCANNER_MEDICAL)
 					scanmode = PDA_SCANNER_NONE
@@ -713,6 +707,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	remove_pen()
 
+/obj/item/pda/verb/verb_toggle_light()
+	set category = "Object"
+	set name = "Toggle Flashlight"
+	
+	toggle_light()
+
 /obj/item/pda/verb/verb_remove_id()
 	set category = "Object"
 	set name = "Eject ID"
@@ -729,6 +729,15 @@ GLOBAL_LIST_EMPTY(PDAs)
 	set src in usr
 
 	remove_pen()
+
+/obj/item/pda/proc/toggle_light()
+	if(fon)
+		fon = FALSE
+		set_light(0)
+	else if(f_lum)
+		fon = TRUE
+		set_light(f_lum)
+	update_icon()
 
 /obj/item/pda/proc/remove_pen()
 
