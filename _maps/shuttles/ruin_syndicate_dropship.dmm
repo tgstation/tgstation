@@ -150,6 +150,8 @@
 /obj/structure/closet/syndicate{
 	anchored = 1
 	},
+/obj/item/clothing/under/syndicate,
+/obj/item/clothing/shoes/sneakers/black,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "rz" = (
@@ -243,6 +245,18 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/syndicate3)
+"zq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/syndicate{
+	anchored = 1
+	},
+/obj/item/clothing/shoes/jackboots,
+/obj/item/crowbar/red,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
 "BQ" = (
 /turf/open/floor/plasteel/darkred/side,
 /area/shuttle/caravan/syndicate3)
@@ -266,9 +280,11 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/syndicate/personal{
+/obj/structure/closet/syndicate{
 	anchored = 1
 	},
+/obj/item/gun/ballistic/automatic/pistol,
+/obj/item/crowbar/red,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "Dx" = (
@@ -293,6 +309,10 @@
 /obj/structure/closet/syndicate{
 	anchored = 1
 	},
+/obj/item/clothing/under/syndicate/combat,
+/obj/item/clothing/shoes/jackboots,
+/obj/item/storage/belt/military,
+/obj/item/crowbar/red,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "Gx" = (
@@ -313,10 +333,12 @@
 /obj/structure/closet/syndicate{
 	anchored = 1
 	},
+/obj/item/clothing/under/syndicate/combat,
+/obj/item/storage/belt/military,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "HM" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /mob/living/simple_animal/hostile/syndicate/ranged/pilot{
@@ -325,9 +347,6 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/syndicate3)
 "Ij" = (
-/obj/structure/chair/office/dark{
-	dir = 4
-	},
 /obj/machinery/turretid{
 	ailock = 1;
 	control_area = null;
@@ -338,6 +357,9 @@
 	pixel_y = 34;
 	req_access = null;
 	req_access_txt = "150"
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkred/corner{
 	dir = 4
@@ -383,18 +405,21 @@
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/shoes/sneakers/black,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "NH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/closet/syndicate/personal{
-	anchored = 1
-	},
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/structure/closet/syndicate{
+	anchored = 1
+	},
+/obj/item/clothing/under/syndicate,
+/obj/item/clothing/glasses/night,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "Pt" = (
@@ -480,7 +505,7 @@
 	},
 /area/shuttle/caravan/syndicate3)
 "Wr" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkred/corner,
@@ -492,6 +517,7 @@
 /obj/structure/closet/syndicate{
 	anchored = 1
 	},
+/obj/item/clothing/under/syndicate/combat,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "ZB" = (
@@ -604,7 +630,7 @@ Tn
 Lq
 YU
 Dx
-qE
+zq
 HJ
 Tn
 "}

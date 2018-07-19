@@ -834,13 +834,6 @@
 		return 1
 	..()
 
-/mob/living/carbon/human/Bump(atom/A)
-	..()
-	var/crashdir = get_dir(src, A)
-	var/obj/item/flightpack/FP = get_flightpack()
-	if(FP)
-		FP.flight_impact(A, crashdir)
-
 /mob/living/carbon/human/vv_get_dropdown()
 	. = ..()
 	. += "---"
