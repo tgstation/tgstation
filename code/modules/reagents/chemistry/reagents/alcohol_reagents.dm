@@ -556,7 +556,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/brave_bull/on_mob_add(mob/living/M)
 	tough_text = pick("brawny", "tenacious", "tough", "hardy", "sturdy") //Tuff stuff
 	to_chat(M, "<span class='notice'>You feel [tough_text]!</span>")
-	if(M..add_trait(TRAIT_BRAVE, id)
+	if(M.add_trait(TRAIT_BRAVE, id))
 		M.maxHealth += 10 //Brave Bull makes you sturdier, and thus capable of withstanding a tiny bit more punishment.
 		M.health += 10
 
