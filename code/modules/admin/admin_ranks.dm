@@ -111,7 +111,21 @@ GLOBAL_PROTECT(protected_ranks)
 	var/flag = admin_keyword_to_flag(word)
 	if(flag)
 		return ((rank.rights & flag) == flag) //true only if right has everything in flag
+/proc/sync_ranks_with_db()
+	set waitfor = FALSE
 
+	if(IsAdminAdvancedProcCall())
+		to_chat(usr, "<span class='admin prefix'>Admin rank DB Sync blocked: Advanced ProcCall detected.</span>")
+		return
+
+	var/list/sql_ranks = list()
+	for(var/datum/admin_rank/R in GLOB.admin_ranks)
+		var/sql_rank = sanitizeSQL(R.name)
+		var/sql_flags = sanitizeSQL(R.include_rights)
+		var/sql_exclude_flags = sanitizeSQL(R.exclude_rights)
+		var/sql_can_edit_flags = sanitizeSQL(R.can_edit_rights)
+		sql_ranks += list(list("rank" = "'[sql_rank]'", "flags" = "[sql_flags]", "exclude_flags" = "[sql_exclude_flags]", "can_edit_flags" = "[sql_can_edit_flags]"))
+	SSdbcore.MassInsert(format_table_name("admin_ranks"), sql_ranks, duplicate_key = TRUE)
 //load our rank - > rights associations
 /proc/load_admin_ranks(dbfail, no_update)
 	if(IsAdminAdvancedProcCall())
@@ -139,14 +153,7 @@ GLOBAL_PROTECT(protected_ranks)
 	if(!CONFIG_GET(flag/admin_legacy_system) || dbfail)
 		if(CONFIG_GET(flag/load_legacy_ranks_only))
 			if(!no_update)
-				var/list/sql_ranks = list()
-				for(var/datum/admin_rank/R in GLOB.admin_ranks)
-					var/sql_rank = sanitizeSQL(R.name)
-					var/sql_flags = sanitizeSQL(R.include_rights)
-					var/sql_exclude_flags = sanitizeSQL(R.exclude_rights)
-					var/sql_can_edit_flags = sanitizeSQL(R.can_edit_rights)
-					sql_ranks += list(list("rank" = "'[sql_rank]'", "flags" = "[sql_flags]", "exclude_flags" = "[sql_exclude_flags]", "can_edit_flags" = "[sql_can_edit_flags]"))
-				SSdbcore.MassInsert(format_table_name("admin_ranks"), sql_ranks, duplicate_key = TRUE, blocking = TRUE)
+				sync_ranks_with_db()
 		else
 			var/datum/DBQuery/query_load_admin_ranks = SSdbcore.NewQuery("SELECT rank, flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")]")
 			if(!query_load_admin_ranks.Execute())
@@ -172,11 +179,11 @@ GLOBAL_PROTECT(protected_ranks)
 			qdel(query_load_admin_ranks)
 	//load ranks from backup file
 	if(dbfail)
-		var/backup_file = file("data/admins_backup.json")
-		if(!fexists(backup_file))
+		var/backup_file = file2text("data/admins_backup.json")
+		if(backup_file == null)
 			log_world("Unable to locate admins backup file.")
-			return
-		var/list/json = json_decode(file2text(backup_file))
+			return FALSE
+		var/list/json = json_decode(backup_file)
 		for(var/J in json["ranks"])
 			for(var/datum/admin_rank/R in GLOB.admin_ranks)
 				if(R.name == "[J]") //this rank was already loaded from txt override
@@ -185,7 +192,7 @@ GLOBAL_PROTECT(protected_ranks)
 			if(!R)
 				continue
 			GLOB.admin_ranks += R
-		return 1
+		return json
 	#ifdef TESTING
 	var/msg = "Permission Sets Built:\n"
 	for(var/datum/admin_rank/R in GLOB.admin_ranks)
@@ -210,7 +217,8 @@ GLOBAL_PROTECT(protected_ranks)
 	GLOB.admins.Cut()
 	GLOB.protected_admins.Cut()
 	GLOB.deadmins.Cut()
-	dbfail = load_admin_ranks(dbfail, no_update)
+	var/list/backup_file_json = load_admin_ranks(dbfail, no_update)
+	dbfail = backup_file_json != null
 	//Clear profile access
 	for(var/A in world.GetConfig("admin"))
 		world.SetConfig("APP/admin", A, null)
@@ -251,16 +259,20 @@ GLOBAL_PROTECT(protected_ranks)
 		qdel(query_load_admins)
 	//load admins from backup file
 	if(dbfail)
-		var/backup_file = file("data/admins_backup.json")
-		if(!fexists(backup_file))
-			log_world("Unable to locate admins backup file.")
-			return
-		var/list/json = json_decode(file2text(backup_file))
-		for(var/J in json["admins"])
+		if(!backup_file_json)
+			if(backup_file_json != null)
+				//already tried
+				return
+			var/backup_file = file2text("data/admins_backup.json")
+			if(backup_file == null)
+				log_world("Unable to locate admins backup file.")
+				return
+			backup_file_json = json_decode(backup_file)
+		for(var/J in backup_file_json["admins"])
 			for(var/A in GLOB.admin_datums + GLOB.deadmins)
 				if(A == "[J]") //this admin was already loaded from txt override
 					continue
-			new /datum/admins(rank_names[ckeyEx(json["admins"]["[J]"])], ckey("[J]"))
+			new /datum/admins(rank_names[ckeyEx(backup_file_json["admins"]["[J]"])], ckey("[J]"))
 	#ifdef TESTING
 	var/msg = "Admins Built:\n"
 	for(var/ckey in GLOB.admin_datums)

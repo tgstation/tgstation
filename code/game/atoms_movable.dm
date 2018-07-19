@@ -151,19 +151,11 @@
 	if(!direct)
 		direct = get_dir(src, newloc)
 	setDir(direct)
-	
-	if(!loc.Exit(src))
-		return
-	for(var/i in loc)
-		if(i == src)
-			continue
-		var/atom/movable/thing = i
-		if(!thing.Uncross(src, newloc))
-			if(thing.flags_1 & ON_BORDER_1)
-				Bump(thing)
-			return
 
-	if(!newloc.Enter(src))
+	if(!loc.Exit(src, newloc))
+		return
+
+	if(!newloc.Enter(src, src.loc))
 		return
 
 	// Past this is the point of no return

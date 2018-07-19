@@ -228,7 +228,7 @@
 /area/awaymission/beach)
 "aO" = (
 /obj/structure/table/wood,
-/obj/item/book/manual/barman_recipes,
+/obj/item/book/manual/wiki/barman_recipes,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "aP" = (
