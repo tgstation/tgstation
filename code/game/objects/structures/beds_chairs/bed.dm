@@ -38,7 +38,7 @@
 
 /obj/structure/bed/wrench_act(mob/living/user, obj/item/I)
 	if (!(flags_1&NODECONSTRUCT_1))
-		W.play_tool_sound(src)
+		I.play_tool_sound(src)
 		deconstruct(TRUE)
 		return TRUE
 	else
