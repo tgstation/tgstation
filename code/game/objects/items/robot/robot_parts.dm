@@ -62,6 +62,76 @@
 				return 1
 	return 0
 
+/obj/item/robot_suit/wrench_act(mob/living/user, obj/item/I) //Deconstucts empty borg shell. Flashes remain unbroken because they haven't been used yet
+	var/turf/T = get_turf(src)
+	if(l_leg || r_leg || chest || l_arm || r_arm || head)
+		if(I.use_tool(src, user, 5, volume=50))
+			if(l_leg)
+				l_leg.forceMove(T)
+				l_leg = null
+			if(r_leg)
+				r_leg.forceMove(T)
+				r_leg = null
+			if(chest)
+				if (chest.cell) //Sanity check.
+					chest.cell.forceMove(T)
+					chest.cell = null
+				chest.forceMove(T)
+				new /obj/item/stack/cable_coil(T, 1)
+				chest.wired = FALSE
+				chest = null
+			if(l_arm)
+				l_arm.forceMove(T)
+				l_arm = null
+			if(r_arm)
+				r_arm.forceMove(T)
+				r_arm = null
+			if(head)
+				head.forceMove(T)
+				head.flash1.forceMove(T)
+				head.flash1 = null
+				head.flash2.forceMove(T)
+				head.flash2 = null
+				head = null
+			to_chat(user, "<span class='notice'>You disassemble the cyborg shell.</span>")
+	else
+		to_chat(user, "<span class='notice'>There is nothing to remove from the endoskeleton.</span>")
+	updateicon()
+
+/obj/item/robot_suit/proc/put_in_hand_or_drop(mob/living/user, obj/item/I) //normal put_in_hands() drops the item ontop of the player, this drops it at the suit's loc
+	if(!user.put_in_hands(I))
+		I.forceMove(drop_location())
+		return FALSE
+	return TRUE
+
+/obj/item/robot_suit/screwdriver_act(mob/living/user, obj/item/I) //Swaps the power cell if you're holding a new one in your other hand.
+	if(!chest) //can't remove a cell if there's no chest to remove it from.
+		to_chat(user, "<span class='notice'>[src] has no attached torso.</span>")
+		return
+
+	var/obj/item/stock_parts/cell/temp_cell = user.is_holding_item_of_type(/obj/item/stock_parts/cell)
+	var/swap_failed
+	if(!temp_cell) //if we're not holding a cell
+		swap_failed = TRUE
+	else if(!user.transferItemToLoc(temp_cell, chest))
+		swap_failed = TRUE
+		to_chat(user, "<span class='warning'>[temp_cell] is stuck to your hand, you can't put it in [src]!</span>")
+
+	if(chest.cell) //drop the chest's current cell no matter what.
+		put_in_hand_or_drop(user, chest.cell)
+
+	if(swap_failed) //we didn't transfer any new items.
+		if(chest.cell) //old cell ejected, nothing inserted.
+			to_chat(user, "<span class='notice'>You remove [chest.cell] from [src].</span>")
+			chest.cell = null
+		else
+			to_chat(user, "<span class='notice'>The power cell slot in [src]'s torso is empty.</span>")
+		return
+
+	to_chat(user, "<span class='notice'>You [chest.cell ? "replace [src]'s [chest.cell.name] with [temp_cell]" : "insert [temp_cell] into [src]"].</span>")
+	chest.cell = temp_cell
+	return TRUE
+
 /obj/item/robot_suit/attackby(obj/item/W, mob/user, params)
 
 	if(istype(W, /obj/item/stack/sheet/metal))
@@ -161,6 +231,9 @@
 	else if(istype(W, /obj/item/mmi))
 		var/obj/item/mmi/M = W
 		if(check_completion())
+			if(!chest.cell)
+				to_chat(user, "<span class='warning'>The endoskeleton still needs a power cell!</span>")
+				return
 			if(!isturf(loc))
 				to_chat(user, "<span class='warning'>You can't put [M] in, the frame has to be standing on the ground to be perfectly precise!</span>")
 				return

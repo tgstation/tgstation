@@ -15,7 +15,7 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "e" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/plasteel/cult,
@@ -40,7 +40,7 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "i" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/plasteel/cult,
@@ -49,7 +49,7 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "k" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/plasteel/cult,
@@ -67,7 +67,7 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "n" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet{

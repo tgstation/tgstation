@@ -75,7 +75,7 @@
 /obj/item/electronic_assembly/proc/check_interactivity(mob/user)
 	return user.canUseTopic(src, BE_CLOSE)
 
-/obj/item/electronic_assembly/Collide(atom/AM)
+/obj/item/electronic_assembly/Bump(atom/AM)
 	collw = AM
 	.=..()
 	if((istype(collw, /obj/machinery/door/airlock) ||  istype(collw, /obj/machinery/door/window)) && (!isnull(access_card)))
@@ -420,6 +420,7 @@
 
 
 /obj/item/electronic_assembly/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	for(var/obj/item/integrated_circuit/input/S in assembly_components)
 		if(S.sense(target,user,proximity))
 			visible_message("<span class='notice'> [user] waves [src] around [target].</span>")
@@ -439,7 +440,6 @@
 		if(!user.canUnEquip(I))
 			return FALSE
 		if(try_add_component(I, user))
-			interact(user)
 			return TRUE
 		else
 			for(var/obj/item/integrated_circuit/input/S in assembly_components)
@@ -472,7 +472,6 @@
 		diag_hud_set_circuitstat() //update diagnostic hud
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>You slot \the [cell] inside \the [src]'s power supplier.</span>")
-		interact(user)
 		return TRUE
 	else if(istype(I, /obj/item/integrated_electronics/detailer))
 		var/obj/item/integrated_electronics/detailer/D = I

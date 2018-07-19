@@ -26,7 +26,7 @@
 	. = ..()
 	for(var/m in buckled_mobs)
 		var/mob/living/buckled_mob = m
-		if(buckled_mob.get_num_legs() > 0)
+		if(buckled_mob.get_num_legs(FALSE) > 0)
 			buckled_mob.pixel_y = 5
 		else
 			buckled_mob.pixel_y = -4
@@ -63,7 +63,7 @@
 		density = FALSE
 	return ..()
 
-/obj/vehicle/ridden/scooter/skateboard/Collide(atom/A)
+/obj/vehicle/ridden/scooter/skateboard/Bump(atom/A)
 	. = ..()
 	if(A.density && has_buckled_mobs())
 		var/mob/living/H = buckled_mobs[1]
@@ -176,7 +176,7 @@
 	to_chat(M, "<span class='notice'>You pop out the Wheely-Heel's wheels.</span>")
 	return ..()
 
-/obj/vehicle/ridden/scooter/wheelys/Collide(atom/A)
+/obj/vehicle/ridden/scooter/wheelys/Bump(atom/A)
 	. = ..()
 	if(A.density && has_buckled_mobs())
 		var/mob/living/H = buckled_mobs[1]

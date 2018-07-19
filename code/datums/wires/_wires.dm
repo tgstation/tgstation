@@ -257,8 +257,8 @@
 		if("cut")
 			I = L.is_holding_tool_quality(TOOL_WIRECUTTER)
 			if(I || IsAdminGhost(usr))
-				if(I)
-					I.play_tool_sound(src, 20)
+				if(I && holder)
+					I.play_tool_sound(holder, 20)
 				cut_color(target_wire)
 				. = TRUE
 			else
@@ -266,8 +266,8 @@
 		if("pulse")
 			I = L.is_holding_tool_quality(TOOL_MULTITOOL)
 			if(I || IsAdminGhost(usr))
-				if(I)
-					I.play_tool_sound(src, 20)
+				if(I && holder)
+					I.play_tool_sound(holder, 20)
 				pulse_color(target_wire, L)
 				. = TRUE
 			else

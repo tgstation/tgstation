@@ -66,6 +66,7 @@
 	return
 
 /obj/item/flamethrower/afterattack(atom/target, mob/user, flag)
+	. = ..()
 	if(flag)
 		return // too close
 	if(ishuman(user))

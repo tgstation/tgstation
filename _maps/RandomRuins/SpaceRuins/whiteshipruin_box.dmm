@@ -124,8 +124,9 @@
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)
 "ax" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship/ruin{
-	view_range = 18
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
+	name = "Broken Computer"
 	},
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)
@@ -207,8 +208,10 @@
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)
 "aM" = (
-/obj/machinery/computer/shuttle/white_ship/ruin{
-	dir = 8
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
+	dir = 8;
+	name = "Broken Computer"
 	},
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)
@@ -263,7 +266,8 @@
 /area/ruin/space/has_grav/whiteship/box)
 "aW" = (
 /obj/structure/frame/computer{
-	anchored = 1
+	anchored = 1;
+	dir = 1
 	},
 /obj/structure/light_construct,
 /turf/open/floor/mineral/titanium,
@@ -282,7 +286,8 @@
 /area/ruin/space/has_grav/whiteship/box)
 "aZ" = (
 /obj/structure/frame/computer{
-	anchored = 1
+	anchored = 1;
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)

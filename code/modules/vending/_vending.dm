@@ -477,7 +477,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 /obj/machinery/vending/process()
 	if(stat & (BROKEN|NOPOWER))
-		return
+		return PROCESS_KILL
 	if(!active)
 		return
 
@@ -508,6 +508,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		if(powered())
 			icon_state = initial(icon_state)
 			stat &= ~NOPOWER
+			START_PROCESSING(SSmachines, src)
 		else
 			icon_state = "[initial(icon_state)]-off"
 			stat |= NOPOWER
@@ -547,7 +548,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	if(!prob(prb))
 		return FALSE
 	do_sparks(5, TRUE, src)
-	var/tmp/check_range = TRUE
+	var/check_range = TRUE
 	if(electrocute_mob(user, get_area(src), src, 0.7, check_range))
 		return TRUE
 	else

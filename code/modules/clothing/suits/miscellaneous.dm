@@ -594,3 +594,15 @@
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_cuirass_old"
 	armor = list("melee" = 5, "bullet" = 0, "laser" = -5, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
+
+/obj/item/clothing/suit/ghost_sheet
+	name = "ghost sheet"
+	desc = "The hands float by themselves, so it's extra spooky."
+	icon_state = "ghost_sheet"
+	item_state = "ghost_sheet"
+	throwforce = 0
+	throw_speed = 1
+	throw_range = 2
+	w_class = WEIGHT_CLASS_TINY
+	flags_inv = HIDEGLOVES|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	alternate_worn_layer = UNDER_HEAD_LAYER

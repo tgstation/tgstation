@@ -95,7 +95,7 @@
 		to_chat(M, "<span class='notice'>You tunnel into the rock.</span>")
 		gets_drilled(M)
 
-/turf/closed/mineral/CollidedWith(atom/movable/AM)
+/turf/closed/mineral/Bumped(atom/movable/AM)
 	..()
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM

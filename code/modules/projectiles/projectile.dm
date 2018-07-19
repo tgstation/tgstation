@@ -198,7 +198,7 @@
 	beam_index = pcache
 	beam_segments[beam_index] = null
 
-/obj/item/projectile/Collide(atom/A)
+/obj/item/projectile/Bump(atom/A)
 	var/datum/point/pcache = trajectory.copy_to()
 	if(check_ricochet(A) && check_ricochet_flag(A) && ricochets < ricochets_max)
 		ricochets++
@@ -445,7 +445,7 @@
 	if(isturf(loc))
 		hitscan_last = loc
 	if(can_hit_target(original, permutated))
-		Collide(original)
+		Bump(original)
 	Range()
 
 /obj/item/projectile/proc/process_homing()			//may need speeding up in the future performance wise.
@@ -535,7 +535,7 @@
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
 	..()
 	if(isliving(AM) && (AM.density || AM == original) && !(src.pass_flags & PASSMOB))
-		Collide(AM)
+		Bump(AM)
 
 /obj/item/projectile/Destroy()
 	if(hitscan)

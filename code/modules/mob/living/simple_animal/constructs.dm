@@ -328,7 +328,7 @@
 	can_repair_constructs = TRUE
 
 
-/mob/living/simple_animal/hostile/construct/harvester/Collide(atom/AM)
+/mob/living/simple_animal/hostile/construct/harvester/Bump(atom/AM)
 	. = ..()
 	if(istype(AM, /turf/closed/wall/mineral/cult) && AM != loc) //we can go through cult walls
 		var/atom/movable/stored_pulling = pulling
