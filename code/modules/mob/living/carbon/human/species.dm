@@ -481,7 +481,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				else
 					standing += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
 
-		if(H.socks && H.get_num_legs() >= 2 && !(DIGITIGRADE in species_traits))
+		if(H.socks && H.get_num_legs(FALSE) >= 2 && !(DIGITIGRADE in species_traits))
 			var/datum/sprite_accessory/socks/socks = GLOB.socks_list[H.socks]
 			if(socks)
 				standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
@@ -708,7 +708,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		H.losebreath = 0
 
 		var/takes_crit_damage = (!H.has_trait(TRAIT_NOCRITDAMAGE))
-		if((H.health < H.crit_modifier()) && takes_crit_damage)
+		if((H.health < H.crit_threshold) && takes_crit_damage)
 			H.adjustBruteLoss(1)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
@@ -723,8 +723,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return FALSE
 
-	var/num_arms = H.get_num_arms()
-	var/num_legs = H.get_num_legs()
+	var/num_arms = H.get_num_arms(FALSE)
+	var/num_legs = H.get_num_legs(FALSE)
 
 	switch(slot)
 		if(SLOT_HANDS)
@@ -1065,18 +1065,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/movement_delay(mob/living/carbon/human/H)
 	. = 0	//We start at 0.
 	var/flight = 0	//Check for flight and flying items
-	var/flightpack = 0
 	var/ignoreslow = 0
 	var/gravity = 0
-	var/obj/item/flightpack/F = H.get_flightpack()
-	if(istype(F) && F.flight)
-		flightpack = 1
 	if(H.movement_type & FLYING)
 		flight = 1
 
 	gravity = H.has_gravity()
 
-	if(!flightpack && gravity)	//Check for chemicals and innate speedups and slowdowns if we're moving using our body and not a flying suit
+	if(gravity && !flight)	//Check for chemicals and innate speedups and slowdowns if we're on the ground
 		if(H.has_trait(TRAIT_GOTTAGOFAST))
 			. -= 1
 		if(H.has_trait(TRAIT_GOTTAGOREALLYFAST))
@@ -1098,12 +1094,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		else if(istype(T) && T.allow_thrust(0.01, H))
 			. -= 2
 
-	if(flightpack && F.boost)
-		. -= F.boost_speed
-	else if(flightpack && F.brake)
-		. += 1
-
-	if(!ignoreslow && !flightpack && gravity)
+	if(!ignoreslow && gravity)
 		if(H.wear_suit)
 			. += H.wear_suit.slowdown
 		if(H.shoes)
@@ -1346,7 +1337,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	//dismemberment
 	var/probability = I.get_dismemberment_chance(affecting)
-	if(prob(probability) || (H.has_trait(TRAIT_EASYDISMEMBER) && prob(2*probability)))
+	if(prob(probability) || (H.has_trait(TRAIT_EASYDISMEMBER) && prob(probability))) //try twice
 		if(affecting.dismember(I.damtype))
 			I.add_mob_blood(H)
 			playsound(get_turf(H), I.get_dismember_sound(), 80, 1)

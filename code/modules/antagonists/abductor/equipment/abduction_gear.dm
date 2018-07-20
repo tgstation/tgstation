@@ -545,11 +545,11 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		return
 	var/mob/living/carbon/C = L
 	if(!C.handcuffed)
-		if(C.get_num_arms() >= 2 || C.get_arm_ignore())
+		if(C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore())
 			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 			C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
 									"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
-			if(do_mob(user, C, 30) && (C.get_num_arms() >= 2 || C.get_arm_ignore()))
+			if(do_mob(user, C, 30) && (C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore()))
 				if(!C.handcuffed)
 					C.handcuffed = new /obj/item/restraints/handcuffs/energy/used(C)
 					C.update_handcuffed()
