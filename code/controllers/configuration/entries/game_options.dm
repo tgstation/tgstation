@@ -1,31 +1,43 @@
 /datum/config_entry/number_list/repeated_mode_adjust
 
-/datum/config_entry/keyed_list/text/number/probability
+/datum/config_entry/keyed_list/probability
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUMBER
 
-/datum/config_entry/keyed_list/text/number/probability/ValidateListEntry(key_name)
+/datum/config_entry/keyed_list/probability/ValidateListEntry(key_name)
 	return key_name in config.modes
 
-/datum/config_entry/keyed_list/text/number/max_pop
+/datum/config_entry/keyed_list/max_pop
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUMBER
 
-/datum/config_entry/keyed_list/text/number/max_pop/ValidateListEntry(key_name)
+/datum/config_entry/keyed_list/max_pop/ValidateListEntry(key_name)
 	return key_name in config.modes
 
-/datum/config_entry/keyed_list/text/number/min_pop
+/datum/config_entry/keyed_list/min_pop
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUMBER
 
-/datum/config_entry/keyed_list/text/number/min_pop/ValidateListEntry(key_name, key_value)
+/datum/config_entry/keyed_list/min_pop/ValidateListEntry(key_name, key_value)
 	return key_name in config.modes
 
-/datum/config_entry/keyed_list/text/flag/continuous	// which roundtypes continue if all antagonists die
+/datum/config_entry/keyed_list/continuous	// which roundtypes continue if all antagonists die
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
 
-/datum/config_entry/keyed_list/text/flag/continuous/ValidateListEntry(key_name, key_value)
+/datum/config_entry/keyed_list/continuous/ValidateListEntry(key_name, key_value)
 	return key_name in config.modes
 
-/datum/config_entry/keyed_list/text/flag/midround_antag	// which roundtypes use the midround antagonist system
+/datum/config_entry/keyed_list/midround_antag	// which roundtypes use the midround antagonist system
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
 
-/datum/config_entry/keyed_list/text/flag/midround_antag/ValidateListEntry(key_name, key_value)
+/datum/config_entry/keyed_list/midround_antag/ValidateListEntry(key_name, key_value)
 	return key_name in config.modes
 
-/datum/config_entry/keyed_list/text/string/policy
+/datum/config_entry/keyed_list/policy
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_TEXT
 
 /datum/config_entry/number/damage_multiplier
 	config_entry_value = 1
@@ -124,7 +136,9 @@
 
 /datum/config_entry/flag/show_game_type_odds	//if set this allows players to see the odds of each roundtype on the get revision screen
 
-/datum/config_entry/keyed_list/text/flag/roundstart_races	//races you can play as from the get go.
+/datum/config_entry/keyed_list/roundstart_races	//races you can play as from the get go.
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
 
 /datum/config_entry/flag/join_with_mutant_humans	//players can pick mutant bodyparts for humans before joining the game
 
@@ -174,17 +188,19 @@
 
 /datum/config_entry/flag/emojis
 
-/datum/config_entry/keyed_list/type/number/multiplicative_movespeed
+/datum/config_entry/keyed_list/multiplicative_movespeed
+	key_mode = KEY_MODE_TYPE
+	value_mode = VALUE_MODE_NUMBER
 	config_entry_value = list(			//DEFAULTS
 	/mob/living/simple_animal = 1
 	)
 
-/datum/config_entry/keyed_list/type/number/multiplicative_movespeed/ValidateAndSet()
+/datum/config_entry/keyed_list/multiplicative_movespeed/ValidateAndSet()
 	. = ..()
 	if(.)
 		update_config_movespeed_type_lookup(TRUE)
 
-/datum/config_entry/keyed_list/type/number/multiplicative_movespeed/vv_edit_var(var_name, var_value)
+/datum/config_entry/keyed_list/multiplicative_movespeed/vv_edit_var(var_name, var_value)
 	. = ..()
 	if(.)
 		update_config_movespeed_type_lookup(TRUE)
@@ -228,9 +244,13 @@
 	config_entry_value = 12
 	min_val = 0
 
-/datum/config_entry/keyed_list/text/flag/random_laws
+/datum/config_entry/keyed_list/random_laws
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
 
 /datum/config_entry/keyed_list/text/number/law_weight
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUMBER
 	splitter = ","
 
 /datum/config_entry/number/overflow_cap
@@ -296,6 +316,8 @@
 /datum/config_entry/flag/shift_time_realtime
 
 /datum/config_entry/keyed_list/text/number/antag_rep
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUMBER
 
 /datum/config_entry/number/monkeycap
 	config_entry_value = 64

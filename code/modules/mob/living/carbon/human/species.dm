@@ -94,7 +94,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		GLOB.roundstart_races += "human"
 
 /datum/species/proc/check_roundstart_eligible()
-	if(id in (CONFIG_GET(keyed_list/text/flag/roundstart_races)))
+	if(id in (CONFIG_GET(keyed_list/roundstart_races)))
 		return TRUE
 	return FALSE
 

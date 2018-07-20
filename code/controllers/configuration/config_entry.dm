@@ -170,7 +170,6 @@
 	config_entry_value = new_list
 	return TRUE
 
-//Format: /datum/config_entry/keyed_list/key_type/value_type
 /datum/config_entry/keyed_list
 	abstract_type = /datum/config_entry/keyed_list
 	config_entry_value = list()
@@ -186,42 +185,3 @@
 
 /datum/config_entry/keyed_list/vv_edit_var(var_name, var_value)
 	return var_name != "splitter" && ..()
-
-/datum/config_entry/keyed_list/text
-	abstract_type = /datum/config_entry/keyed_list/text
-	key_mode = KEY_MODE_TEXT
-
-/datum/config_entry/keyed_list/text/flag
-	abstract_type = /datum/config_entry/keyed_list/text/flag
-	value_mode = VALUE_MODE_FLAG
-
-/datum/config_entry/keyed_list/text/number
-	abstract_type = /datum/config_entry/keyed_list/text/string
-	value_mode = VALUE_MODE_NUM
-
-/datum/config_entry/keyed_list/text/string
-	abstract_type = /datum/config_entry/keyed_list/text/string
-	value_mode = VALUE_MODE_TEXT
-
-/datum/config_entry/keyed_list/type
-	abstract_type = /datum/config_entry/keyed_list/type
-	key_mode = KEY_MODE_TYPE
-
-/datum/config_entry/keyed_list/type/flag
-	abstract_type = /datum/config_entry/keyed_list/type/flag
-	value_mode = VALUE_MODE_FLAG
-
-/datum/config_entry/keyed_list/type/number
-	abstract_type = /datum/config_entry/keyed_list/type/number
-	value_mode = VALUE_MODE_NUM
-
-/datum/config_entry/keyed_list/type/string
-	abstract_type = /datum/config_entry/keyed_list/type/string
-	value_mode = VALUE_MODE_TEXT
-
-#undef VALUE_MODE_NUM
-#undef VALUE_MODE_TEXT
-#undef VALUE_MODE_FLAG
-
-#undef KEY_MODE_TEXT
-#undef KEY_MODE_TYPE
