@@ -58,8 +58,11 @@
 				return TRUE
 			return FALSE
 		if("loc")
-			if(var_value == null || istype(var_value, /atom))
+			if(istype(var_value, /atom))
 				forceMove(var_value)
+				return TRUE
+			else if(isnull(var_value))
+				moveToNullspace()
 				return TRUE
 			return FALSE
 	return ..()
