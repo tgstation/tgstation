@@ -384,25 +384,27 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/away/old
 	name = "a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
-	access = list(ACCESS_AWAY_GENERAL)
+	icon_state = "centcom"
 
 /obj/item/card/id/away/old/sec
-	name = "Security Officer ID"
-	desc = "Security officers ID card."
-	icon_state = "centcom"
+	name = "Charlie Station Security Officer's ID card"
+	desc = "A faded Charlie Station ID card. You can make out the rank \"Security Officer\"."
+	assignment = "Charlie Station Security Officer"
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_SEC)
 
 /obj/item/card/id/away/old/sci
-	name = "Scientist ID"
-	desc = "Scientists ID card."
-	icon_state = "centcom"
+	name = "Charlie Station Scientist's ID card"
+	desc = "A faded Charlie Station ID card. You can make out the rank \"Scientist\"."
+	assignment = "Charlie Station Scientist"
+	access = list(ACCESS_AWAY_GENERAL)
 
 /obj/item/card/id/away/old/eng
-	name = "Engineer ID"
-	desc = "Engineers ID card."
-	icon_state = "centcom"
+	name = "Charlie Station Engineer's ID card"
+	desc = "A faded Charlie Station ID card. You can make out the rank \"Station Engineer\"."
+	assignment = "Charlie Station Engineer"
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_ENGINE)
 
 /obj/item/card/id/away/old/apc
 	name = "APC Access ID"
-	desc = "Special ID card to allow access to APCs."
-	icon_state = "centcom"
+	desc = "A special ID card that allows access to APC terminals."
 	access = list(ACCESS_ENGINE_EQUIP)
