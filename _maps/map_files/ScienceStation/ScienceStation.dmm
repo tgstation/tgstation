@@ -6431,7 +6431,7 @@
 	pixel_y = 32
 	},
 /obj/structure/rack,
-/obj/item/book/manual/robotics_cyborgs{
+/obj/item/book/manual/wiki/robotics_cyborgs{
 	pixel_x = 2;
 	pixel_y = 5
 	},
