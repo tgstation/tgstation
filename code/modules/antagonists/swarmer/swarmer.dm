@@ -44,7 +44,7 @@
 	user.visible_message("<span class='warning'>[usr.name] deactivates [src].</span>",
 		"<span class='notice'>After some fiddling, you find a way to disable [src]'s power source.</span>",
 		"<span class='italics'>You hear clicking.</span>")
-	new /obj/item/deactivated_swarmer(get_turf(src))
+	new /obj/item/deactivated_swarmer(drop_location())
 	qdel(src)
 	return TRUE
 
