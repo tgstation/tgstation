@@ -23,33 +23,14 @@
 	var/list/ore_buffer = list()
 	var/datum/techweb/stored_research
 	var/obj/item/disk/design_disk/inserted_disk
-	var/datum/component/material_container/materials  // from silo, from self, or null
-	var/standalone = FALSE  // Whether this machine is allowed to smelt w/o a silo
-
-/obj/machinery/mineral/ore_redemption/standalone
-	standalone = TRUE
-	circuit = /obj/item/circuitboard/machine/ore_redemption/standalone
 
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
 	. = ..()
 	stored_research = new /datum/techweb/specialized/autounlocking/smelter
-	if (standalone)
-		materials = AddComponent(/datum/component/material_container,
-			list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),
-			INFINITY,
-			FALSE,
-			list(/obj/item/stack))
-	else if (mapload && is_station_level(z))
+	if (mapload && is_station_level(z))
 		return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/mineral/ore_redemption/LateInitialize()
-	..()
-	if (silo)
-		materials = silo.GetComponent(/datum/component/material_container)
-
 /obj/machinery/mineral/ore_redemption/Destroy()
-	if (standalone)
-		materials.retrieve_all()
 	QDEL_NULL(stored_research)
 	return ..()
 
@@ -68,7 +49,7 @@
 	sheet_per_ore = sheet_per_ore_temp
 
 /obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/stack/ore/O)
-	if (!materials)
+	if (!silo)
 		return
 
 	ore_buffer -= O
@@ -76,6 +57,7 @@
 	if(O && O.refined_type)
 		points += O.points * point_upgrade * O.amount
 
+	GET_COMPONENT_FROM(materials, /datum/component/material_container, silo)
 	var/material_amount = materials.get_item_material_amount(O)
 
 	if(!material_amount)
@@ -95,10 +77,12 @@
 		qdel(O)
 
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/D)
-	if(!materials || D.make_reagents.len)
+	if(!silo || D.make_reagents.len)
 		return FALSE
 
 	var/build_amount = 0
+
+	GET_COMPONENT_FROM(materials, /datum/component/material_container, silo)
 	for(var/mat_id in D.materials)
 		var/M = D.materials[mat_id]
 		var/datum/material/redemption_mat = materials.materials[mat_id]
@@ -126,7 +110,7 @@
 		smelt_ore(ore)
 
 /obj/machinery/mineral/ore_redemption/proc/send_console_message()
-	if(!materials || !is_station_level(z))
+	if(!silo || !is_station_level(z))
 		return
 	message_sent = TRUE
 
@@ -135,6 +119,7 @@
 
 	var/has_minerals = FALSE
 
+	GET_COMPONENT_FROM(materials, /datum/component/material_container, silo)
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = materials.materials[mat_id]
 		var/mineral_amount = M.amount / MINERAL_MATERIAL_AMOUNT
@@ -150,7 +135,7 @@
 			D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
 
 /obj/machinery/mineral/ore_redemption/process()
-	if(!materials || panel_open || !powered())
+	if(!silo || panel_open || !powered())
 		return
 	var/atom/input = get_step(src, input_dir)
 	var/obj/structure/ore_box/OB = locate() in input
@@ -205,11 +190,10 @@
 		output_dir = turn(output_dir, -90)
 		to_chat(user, "<span class='notice'>You change [src]'s I/O settings, setting the input to [dir2text(input_dir)] and the output to [dir2text(output_dir)].</span>")
 		return TRUE
-	else if (!standalone && istype(I) && !QDELETED(I.buffer) && istype(I.buffer, /obj/machinery/ore_silo))
+	else if (istype(I) && !QDELETED(I.buffer) && istype(I.buffer, /obj/machinery/ore_silo))
 		if (silo)
 			silo.orms -= src
 		silo = I.buffer
-		materials = silo.GetComponent(/datum/component/material_container)
 		silo.orms += src
 		silo.updateUsrDialog()
 		to_chat(user, "<span class='notice'>You connect [src] to [silo] from the multitool's buffer.</span>")
@@ -229,7 +213,8 @@
 		data["claimedPoints"] = inserted_id.mining_points
 
 	data["materials"] = list()
-	if (materials)
+	if (silo)
+		GET_COMPONENT_FROM(materials, /datum/component/material_container, silo)
 		for(var/mat_id in materials.materials)
 			var/datum/material/M = materials.materials[mat_id]
 			var/sheet_amount = M.amount ? M.amount / MINERAL_MATERIAL_AMOUNT : "0"
@@ -239,11 +224,10 @@
 		for(var/v in stored_research.researched_designs)
 			var/datum/design/D = stored_research.researched_designs[v]
 			data["alloys"] += list(list("name" = D.name, "id" = D.id, "amount" = can_smelt_alloy(D)))
-	if (!standalone)
-		if (!silo)
-			data["disconnected"] = "no ore silo connection is available"
-		else if (silo.on_hold(src))
-			data["disconnected"] = "mineral withdrawal is on hold"
+	if (!silo)
+		data["disconnected"] = "no ore silo connection is available"
+	else if (silo.on_hold(src))
+		data["disconnected"] = "mineral withdrawal is on hold"
 
 	data["diskDesigns"] = list()
 	if(inserted_disk)
@@ -259,6 +243,9 @@
 /obj/machinery/mineral/ore_redemption/ui_act(action, params)
 	if(..())
 		return
+	if(!silo)
+		return
+	GET_COMPONENT_FROM(materials, /datum/component/material_container, silo)
 	switch(action)
 		if("Eject")
 			if(!inserted_id)
@@ -281,9 +268,7 @@
 				points = 0
 			return TRUE
 		if("Release")
-			if(!materials)
-				to_chat(usr, "<span class='warning'>No ore silo connection available!</span>")
-			else if(silo && silo.on_hold(src))
+			if(silo.on_hold(src))
 				to_chat(usr, "<span class='warning'>Mineral access is on hold, please contact the quartermaster.</span>")
 			else if(!check_access(inserted_id) && !allowed(usr)) //Check the ID inside, otherwise check the user
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
@@ -329,10 +314,7 @@
 				stored_research.add_design(inserted_disk.blueprints[n])
 			return TRUE
 		if("Smelt")
-			if(!materials)
-				to_chat(usr, "<span class='warning'>No ore silo connection available!</span>")
-				return
-			else if(silo && silo.on_hold(src))
+			if(silo.on_hold(src))
 				to_chat(usr, "<span class='warning'>Mineral access is on hold, please contact the quartermaster.</span>")
 				return
 			var/alloy_id = params["id"]

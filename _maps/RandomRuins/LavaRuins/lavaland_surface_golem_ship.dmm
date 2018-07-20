@@ -87,7 +87,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "p" = (
-/obj/machinery/mineral/ore_redemption/standalone,
+/obj/machinery/mineral/ore_redemption,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "q" = (

@@ -45,9 +45,6 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		var/obj/machinery/mineral/mach = M
 		if (mach.silo == src)
 			mach.silo = null
-			if (istype(M, /obj/machinery/mineral/ore_redemption))
-				var/obj/machinery/mineral/ore_redemption/orm = M
-				orm.materials = null
 
 /obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/user, obj/item/stack/I)
 	GET_COMPONENT(materials, /datum/component/material_container)
