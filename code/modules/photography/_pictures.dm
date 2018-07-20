@@ -63,55 +63,57 @@
 		picture_desc = input["desc"]
 	if(input["name"])
 		picture_name = input["name"]
+	return src
 
-/proc/load_photo_from_disk(id)
+/proc/load_photo_from_disk(id, location)
 	var/datum/picture/P = load_picture_from_disk(id)
 	if(istype(P))
-		var/obj/item/photo/p = new(null, P)
+		var/obj/item/photo/p = new(location, P)
 		return p
 
 /proc/load_picture_from_disk(id)
-	var/path = log_path_from_picture_ID(id)
-	if(!path)
+	var/pathstring = log_path_from_picture_ID(id)
+	if(!pathstring)
 		return
+	var/path = file(pathstring)
 	if(!fexists(path))
 		return
-	var/dir_index = findlasttext(path, "/")
-	var/dir = copytext(path, 1, dir_index + 1)
-	var/json_path = "[dir]/metadata.json"
+	var/dir_index = findlasttext(pathstring, "/")
+	var/dir = copytext(pathstring, 1, dir_index)
+	var/json_path = file("[dir]/metadata.json")
 	if(!fexists(json_path))
 		return
 	var/list/json = json_decode(file2text(json_path))
 	if(!json[id])
 		return
 	var/datum/picture/P = new
-	P.deserialize_list(json[id])
+	P.deserialize_json(json[id])
 	return P
 
 /proc/log_path_from_picture_ID(id)
+	if(!istext(id))
+		return
 	. = "data/picture_logs/"
-	var/posL = findlasttext(id, "_")
-	var/posF = findtext(id, "_")
-	var/n = copytext(id, posL+1)
-	var/mid = copytext(id, posF+1, posL)
-	if(id[1] == "O")
-		. += mid
-	else if(id[1] == "L")
-		var/LposD = findtext(mid, "_")
-		var/D = copytext(mid, 1, LposD)
-		var/m = copytext(mid, LposD+1)
-		var/year = copytext(D, 1, 5)
-		var/month = copytext(D, 5, 7)
-		var/day = copytext(D, 7, 9)
-		. += "[year]/[month]/[day]/"
-		if(m[1] == "R")
-			. += "round-[copytext(m, 2)]"
-		else if(m[2] == "T")
-			. += "[copytext(m, 2)]"
+	var/list/data = splittext(id, "_")
+	if(data.len < 3)
+		return null
+	var/mode = data[1]
+	switch(mode)
+		if("L")
+			if(data.len < 5)
+				return null
+			var/timestamp = data[2]
+			var/year = copytext(timestamp, 1, 5)
+			var/month = copytext(timestamp, 5, 7)
+			var/day = copytext(timestamp, 7, 9)
+			var/round = data[4]
+			. += "[year]/[month]/[day]/round-[round]"
+		if("O")
+			var/list/path = data.Copy(2, data.len)
+			. += path.Join("")
 		else
 			return null
-	else
-		return
+	var/n = data[data.len]
 	. += "/[n].png"
 
 //BE VERY CAREFUL WITH THIS PROC, TO AVOID DUPLICATION.
@@ -127,7 +129,16 @@
 	fcopy(icon(picture_image, dir = SOUTH, frame = 1), finalpath)
 	logpath = finalpath
 	id = "[GLOB.picture_logging_prefix][number]"
-	SSpersistence.picture_logging_information["[id]"] = serialize_json()
+	var/jsonpath = "[GLOB.picture_log_directory]/metadata.json"
+	jsonpath = file(jsonpath)
+	var/list/json
+	if(fexists(jsonpath))
+		json = json_decode(file2text(jsonpath))
+		fdel(jsonpath)
+	else
+		json = list()
+	json[id] = serialize_json()
+	WRITE_FILE(jsonpath, json_encode(json))
 
 /datum/picture/proc/Copy(greyscale = FALSE, cropx = 0, cropy = 0)
 	var/datum/picture/P = new

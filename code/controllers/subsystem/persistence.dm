@@ -198,9 +198,6 @@ SUBSYSTEM_DEF(persistence)
 		T.placer_key = chosen_trophy["placer_key"]
 		T.update_icon()
 
-/datum/controller/subsystem/persistence/Shutdown()
-	SavePhotoData()									//THIS IS LOGGING, NOT THE PERSISTENCE PORTION.
-
 /datum/controller/subsystem/persistence/proc/CollectData()
 	CollectChiselMessages()
 	CollectSecretSatchels()
@@ -268,10 +265,6 @@ SUBSYSTEM_DEF(persistence)
 	frame_json = json_encode(frame_json)
 
 	WRITE_FILE(frame_path, frame_json)
-
-/datum/controller/subsystem/persistence/proc/SavePhotoData()
-	var/path = "[GLOB.picture_log_directory]/metadata.json"
-	file(path) << json_encode(picture_logging_information)
 
 /datum/controller/subsystem/persistence/proc/CollectSecretSatchels()
 	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/crowbar))
