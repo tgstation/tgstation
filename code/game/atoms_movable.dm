@@ -775,7 +775,7 @@
 
 /obj/item/proc/do_pickup_animation(atom/target)
 	set waitfor = FALSE
-	var/image/I = image(icon = src, loc = loc, layer = layer + 0.1)
+	var/mutable_appearance/I = new(icon = src, loc = loc, layer = layer + 0.1)
 	I.plane = GAME_PLANE
 	I.transform *= 0.75
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
@@ -785,7 +785,7 @@
 	var/to_y = 0
 
 	flick_overlay(I, GLOB.clients, 6)
-	var/matrix/M = new
+	var/static/matrix/M = new
 	M.Turn(pick(-30, 30))
 
 	animate(I, transform = M, time = 1)
