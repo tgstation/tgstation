@@ -273,10 +273,10 @@ Nothing else in the console has ID requirements.
 /obj/machinery/computer/rdconsole/proc/ui_protolathe_header()
 	var/list/l = list()
 	l += "<div class='statusDisplay'><A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE]'>Protolathe Menu</A>"
-	if(linked_lathe.materials)
-		l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE_MATERIALS]'><B>Material Amount:</B> [linked_lathe.materials.total_amount] / [linked_lathe.materials.max_amount]</A>"
+	if(linked_lathe.materials.mat_container)
+		l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE_MATERIALS]'><B>Material Amount:</B> [linked_lathe.materials.format_amount()]</A>"
 	else
-		l += "<font color='red'>No material storage connected!</font>"
+		l += "<font color='red'>No material storage connected, please contact the quartermaster.</font>"
 	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE_CHEMICALS]'><B>Chemical volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]</A></div>"
 	return l
 
@@ -374,14 +374,15 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/proc/ui_protolathe_materials()		//Legacy code
 	RDSCREEN_UI_LATHE_CHECK
-	if (!linked_lathe.materials)
+	var/datum/component/material_container/mat_container = linked_lathe.materials.mat_container
+	if (!mat_container)
 		screen = RDSCREEN_PROTOLATHE
 		return ui_protolathe()
 	var/list/l = list()
 	l += ui_protolathe_header()
 	l += "<div class='statusDisplay'><h3>Material Storage:</h3>"
-	for(var/mat_id in linked_lathe.materials.materials)
-		var/datum/material/M = linked_lathe.materials.materials[mat_id]
+	for(var/mat_id in mat_container.materials)
+		var/datum/material/M = mat_container.materials[mat_id]
 		l += "* [M.amount] of [M.name]: "
 		if(M.amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[M.id];eject_amt=1'>Eject</A> [RDSCREEN_NOBREAK]"
 		if(M.amount >= MINERAL_MATERIAL_AMOUNT*5) l += "<A href='?src=[REF(src)];ejectsheet=[M.id];eject_amt=5'>5x</A> [RDSCREEN_NOBREAK]"
@@ -405,10 +406,10 @@ Nothing else in the console has ID requirements.
 /obj/machinery/computer/rdconsole/proc/ui_circuit_header()		//Legacy Code
 	var/list/l = list()
 	l += "<div class='statusDisplay'><A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER]'>Circuit Imprinter Menu</A>"
-	if (linked_imprinter.materials)
-		l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER_MATERIALS]'><B>Material Amount:</B> [linked_imprinter.materials.total_amount] / [linked_imprinter.materials.max_amount]</A>"
+	if (linked_imprinter.materials.mat_container)
+		l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER_MATERIALS]'><B>Material Amount:</B> [linked_imprinter.materials.format_amount()]</A>"
 	else
-		l += "<font color='red'>No material storage connected!</font>"
+		l += "<font color='red'>No material storage connected, please contact the quartermaster.</font>"
 	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER_CHEMICALS]'><B>Chemical volume:</B> [linked_imprinter.reagents.total_volume] / [linked_imprinter.reagents.maximum_volume]</A></div>"
 	return l
 
@@ -505,14 +506,15 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/proc/ui_circuit_materials()	//Legacy code!
 	RDSCREEN_UI_IMPRINTER_CHECK
-	if (!linked_imprinter.materials)
+	var/datum/component/material_container/mat_container = linked_imprinter.materials.mat_container
+	if (!mat_container)
 		screen = RDSCREEN_IMPRINTER
 		return ui_circuit()
 	var/list/l = list()
 	l += ui_circuit_header()
 	l += "<h3><div class='statusDisplay'>Material Storage:</h3>"
-	for(var/mat_id in linked_imprinter.materials.materials)
-		var/datum/material/M = linked_imprinter.materials.materials[mat_id]
+	for(var/mat_id in mat_container.materials)
+		var/datum/material/M = mat_container.materials[mat_id]
 		l += "* [M.amount] of [M.name]: "
 		if(M.amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];imprinter_ejectsheet=[M.id];eject_amt=1'>Eject</A> [RDSCREEN_NOBREAK]"
 		if(M.amount >= MINERAL_MATERIAL_AMOUNT*5) l += "<A href='?src=[REF(src)];imprinter_ejectsheet=[M.id];eject_amt=5'>5x</A> [RDSCREEN_NOBREAK]"
@@ -929,7 +931,7 @@ Nothing else in the console has ID requirements.
 		if(QDELETED(linked_lathe))
 			say("No Protolathe Linked!")
 			return
-		if(!linked_lathe.materials || !linked_lathe.silo)
+		if(!linked_lathe.materials.mat_container)
 			say("No material storage linked to protolathe!")
 			return
 		linked_lathe.eject_sheets(ls["ejectsheet"], ls["eject_amt"])
@@ -948,7 +950,7 @@ Nothing else in the console has ID requirements.
 		if(QDELETED(linked_imprinter))
 			say("No Circuit Imprinter Linked!")
 			return
-		if(!linked_imprinter.materials || !linked_lathe.silo)
+		if(!linked_imprinter.materials.mat_container)
 			say("No material storage linked to circuit imprinter!")
 			return
 		linked_imprinter.eject_sheets(ls["imprinter_ejectsheet"], ls["eject_amt"])

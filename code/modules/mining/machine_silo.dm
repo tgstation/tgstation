@@ -8,9 +8,9 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	icon_state = "bin"
 	density = TRUE
 
-	var/list/lathes = list()
 	var/list/orms = list()
 	var/list/holds = list()
+	var/list/datum/component/remote_materials/connected = list()
 
 /obj/machinery/ore_silo/Initialize(mapload)
 	. = ..()
@@ -31,8 +31,9 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 	for(var/O in orms)
 		_disconnect(O)
-	for(var/L in lathes)
-		_disconnect(L)
+	for(var/C in connected)
+		var/datum/component/remote_materials/mats = C
+		mats.disconnect_from(src)
 
 	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.retrieve_all()
@@ -47,11 +48,6 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 			if (istype(M, /obj/machinery/mineral/ore_redemption))
 				var/obj/machinery/mineral/ore_redemption/orm = M
 				orm.materials = null
-	else if (istype(M, /obj/machinery/rnd/production))
-		var/obj/machinery/rnd/production/lathe = M
-		if (lathe.silo == src)
-			lathe.silo = null
-			lathe.materials = null
 
 /obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/user, obj/item/stack/I)
 	GET_COMPONENT(materials, /datum/component/material_container)
@@ -101,13 +97,16 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		var/obj/machinery/mineral/O = orm
 		var/hold_key = "[get_area(O)]/orm"
 		var/msg = holds[hold_key] ? "Allow" : "Hold"
-		ui += "<a href='?src=[REF(src)];remove_orm=[REF(O)]'>Remove</a><a href='?src=[REF(src)];hold[!holds[hold_key]]=[url_encode(hold_key)]'>[msg]</a> <b>[O.name]</b> in [get_area_name(O, TRUE)]<br>"
-	for(var/lathe in lathes)
-		var/obj/machinery/rnd/production/L = lathe
-		var/hold_key = "[get_area(L)]/lathe"
-		var/msg = holds[hold_key] ? "Allow" : "Hold"
-		ui += "<a href='?src=[REF(src)];remove_lathe=[REF(L)]'>Remove</a><a href='?src=[REF(src)];hold[!holds[hold_key]]=[url_encode(hold_key)]'>[msg]</a> <b>[L.name]</b> in [get_area_name(L, TRUE)]<br>"
-	if(orms.len == 0 && lathes.len == 0)
+		ui += "O <a href='?src=[REF(src)];remove_orm=[REF(O)]'>Remove</a><a href='?src=[REF(src)];hold[!holds[hold_key]]=[url_encode(hold_key)]'>[msg]</a> <b>[O.name]</b> in [get_area_name(O, TRUE)]<br>"
+	for(var/C in connected)
+		var/datum/component/remote_materials/mats = C
+		var/atom/parent = mats.parent
+		var/hold_key = "[get_area(parent)]/[mats.category]"
+		ui += "<a href='?src=[REF(src)];remove=[REF(mats)]'>Remove</a>"
+		ui += "<a href='?src=[REF(src)];hold[!holds[hold_key]]=[url_encode(hold_key)]'>[holds[hold_key] ? "Allow" : "Hold"]</a>"
+		ui += " <b>[parent.name]</b> in [get_area_name(parent, TRUE)]<br>"
+
+	if(!connected.len)
 		ui += "Nothing!"
 
 	ui += "</div><div class='statusDisplay'><h2>Access Logs:</h2><ol>"
@@ -135,11 +134,11 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 			_disconnect(orm)
 			updateUsrDialog()
 			return TRUE
-	else if(href_list["remove_lathe"])
-		var/obj/machinery/rnd/production/lathe = locate(href_list["remove_lathe"]) in lathes
-		if (istype(lathe))
-			lathes -= lathe
-			_disconnect(lathe)
+	else if(href_list["remove"])
+		var/datum/component/remote_materials/mats = locate(href_list["remove"]) in connected
+		if (mats)
+			mats.disconnect_from(src)
+			connected -= mats
 			updateUsrDialog()
 			return TRUE
 	else if(href_list["hold1"])
