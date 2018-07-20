@@ -64,9 +64,6 @@
 	if(input["name"])
 		picture_name = input["name"]
 
-/datum/picture/proc/generate_ID()
-	return "[GLOB.picture_logging_prefix][GLOB.picture_logging_id++]"
-
 /proc/load_photo_from_disk(id)
 	var/datum/picture/P = load_picture_from_disk(id)
 	if(istype(P))
@@ -92,7 +89,7 @@
 	return P
 
 /proc/log_path_from_picture_ID(id)
-	. = "data/logs/"
+	. = "data/picture_logs/"
 	var/posL = findlasttext(id, "_")
 	var/posF = findtext(id, "_")
 	var/n = copytext(id, posL+1)
@@ -125,10 +122,11 @@
 		return
 	if(logpath)
 		return			//we're already logged
-	id = generate_ID()
-	var/finalpath = "[GLOB.picture_log_directory]/[id].png"
+	var/number = GLOB.picture_logging_id++
+	var/finalpath = "[GLOB.picture_log_directory]/[number].png"
 	fcopy(icon(picture_image, dir = SOUTH, frame = 1), finalpath)
 	logpath = finalpath
+	id = "[GLOB.picture_logging_prefix][number]"
 	SSpersistence.picture_logging_information["[id]"] = serialize_json()
 
 /datum/picture/proc/Copy(greyscale = FALSE, cropx = 0, cropy = 0)

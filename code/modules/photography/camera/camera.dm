@@ -23,6 +23,7 @@
 	var/see_ghosts = CAMERA_NO_GHOSTS //for the spoop of it
 	var/obj/item/disk/holodisk/disk
 	var/sound/custom_sound
+	var/silent = FALSE
 	var/picture_size_x = 1
 	var/picture_size_y = 1
 	var/picture_size_x_min = 0
@@ -158,7 +159,7 @@
 	var/psize_x = (size_x * 2 + 1) * world.icon_size
 	var/psize_y = (size_y * 2 + 1) * world.icon_size
 	var/get_icon = camera_get_icon(turfs, target_turf, psize_x, psize_y, clone_area, size_x, size_y, (size_x * 2 + 1), (size_y * 2 + 1))
-	//qdel(clone_area)
+	qdel(clone_area)
 	var/icon/temp = icon('icons/effects/96x96.dmi',"")
 	temp.Blend("#000", ICON_OVERLAY)
 	temp.Scale(psize_x, psize_y)
