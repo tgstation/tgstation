@@ -11,15 +11,10 @@
 
 /mob/living/proc/update_move_intent_slowdown()
 	var/mod = 0
-	var/static/datum/config_entry/number/movedelay/walk_delay/walk_entry
-	var/static/datum/config_entry/number/movedelay/run_delay/run_entry
-	if(!istype(walk_entry) || !istype(run_entry))
-		walk_entry = CONFIG_GET_DATUM(number/movedelay/walk_delay)
-		run_entry = CONFIG_GET_DATUM(number/movedelay/run_delay)
 	if(m_intent == MOVE_INTENT_WALK)
-		mod = walk_entry.config_entry_value
+		mod = CONFIG_GET(number/movedelay/walk_delay)
 	else
-		mod = run_entry.config_entry_value
+		mod = CONFIG_GET(number/movedelay/run_delay)
 	if(!isnum(mod))
 		mod = 1
 	add_movespeed_modifier(MOVESPEED_ID_MOB_WALK_RUN_CONFIG_SPEED, TRUE, 100, override = TRUE, legacy_slowdown = mod)
