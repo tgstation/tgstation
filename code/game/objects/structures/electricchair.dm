@@ -11,7 +11,7 @@
 	add_overlay(mutable_appearance('icons/obj/chairs.dmi', "echair_over", MOB_LAYER + 1))
 
 /obj/structure/chair/e_chair/wrench_act(mob/living/user, obj/item/I)
-	var/obj/structure/chair/C = new /obj/structure/chair(loc)
+	var/obj/structure/chair/C = new(loc)
 	I.play_tool_sound(src)
 	C.setDir(dir)
 	part.forceMove(loc)
