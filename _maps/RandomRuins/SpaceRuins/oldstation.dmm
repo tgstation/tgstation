@@ -21,6 +21,9 @@
 /obj/item/stack/sheet/plasteel{
 	amount = 30
 	},
+/obj/item/stack/sheet/mineral/titanium{
+	amount = 30
+	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/ancientstation/hivebot)
 "af" = (
