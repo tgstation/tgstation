@@ -2,21 +2,21 @@
 
 /datum/config_entry/keyed_list/probability
 	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_NUMBER
+	value_mode = VALUE_MODE_NUM
 
 /datum/config_entry/keyed_list/probability/ValidateListEntry(key_name)
 	return key_name in config.modes
 
 /datum/config_entry/keyed_list/max_pop
 	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_NUMBER
+	value_mode = VALUE_MODE_NUM
 
 /datum/config_entry/keyed_list/max_pop/ValidateListEntry(key_name)
 	return key_name in config.modes
 
 /datum/config_entry/keyed_list/min_pop
 	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_NUMBER
+	value_mode = VALUE_MODE_NUM
 
 /datum/config_entry/keyed_list/min_pop/ValidateListEntry(key_name, key_value)
 	return key_name in config.modes
@@ -190,7 +190,7 @@
 
 /datum/config_entry/keyed_list/multiplicative_movespeed
 	key_mode = KEY_MODE_TYPE
-	value_mode = VALUE_MODE_NUMBER
+	value_mode = VALUE_MODE_NUM
 	config_entry_value = list(			//DEFAULTS
 	/mob/living/simple_animal = 1
 	)
@@ -248,9 +248,9 @@
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_FLAG
 
-/datum/config_entry/keyed_list/text/number/law_weight
+/datum/config_entry/keyed_list/law_weight
 	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_NUMBER
+	value_mode = VALUE_MODE_NUM
 	splitter = ","
 
 /datum/config_entry/number/overflow_cap
@@ -315,9 +315,9 @@
 
 /datum/config_entry/flag/shift_time_realtime
 
-/datum/config_entry/keyed_list/text/number/antag_rep
+/datum/config_entry/keyed_list/antag_rep
 	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_NUMBER
+	value_mode = VALUE_MODE_NUM
 
 /datum/config_entry/number/monkeycap
 	config_entry_value = 64
