@@ -125,9 +125,9 @@
 /datum/chemical_reaction/beesplosion/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	if(created_volume < 5)
-		playsound(location,'sound/effects/sparks1.ogg', 100, 1)
+		playsound(location,'sound/effects/sparks1.ogg', 100, TRUE)
 	else
-		playsound(location,'sound/creatures/bee.ogg', 100, 1)
+		playsound(location,'sound/creatures/bee.ogg', 100, TRUE)
 		var/list/beeagents = list()
 		for(var/X in holder.reagent_list)
 			var/datum/reagent/R = X
@@ -136,7 +136,7 @@
 			beeagents += R
 		var/bee_amount = round(created_volume * 0.2)
 		for(var/i in 1 to bee_amount)
-			var/mob/living/simple_animal/hostile/poison/bees/new_bee = new(location)
+			var/mob/living/simple_animal/hostile/poison/bees/new_bee = new(drop_location(holder.my_atom))
 			if(LAZYLEN(beeagents))
 				new_bee.assign_reagent(pick(beeagents))
 
