@@ -135,6 +135,8 @@ SUBSYSTEM_DEF(ticker)
 	else if(CONFIG_GET(flag/shift_time_realtime))
 		gametime_offset = world.timeofday
 
+	generate_config_movespeed_type_lookup()
+
 /datum/controller/subsystem/ticker/fire()
 	switch(current_state)
 		if(GAME_STATE_STARTUP)
