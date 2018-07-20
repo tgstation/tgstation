@@ -149,7 +149,7 @@
 		firstbump = src
 	else
 		for(var/i in contents)
-			if(i == mover) // Multi tile objects
+			if(i == mover || i == mover.loc) // Multi tile objects and moving out of other objects
 				continue
 			var/atom/movable/thing = i
 			if(thing.Cross(mover))
@@ -160,6 +160,19 @@
 		mover.Bump(firstbump)
 		return FALSE
 	return TRUE
+
+/turf/Exit(atom/movable/mover, atom/newloc)
+	. = ..()
+	if(!.)
+		return FALSE
+	for(var/i in contents)
+		if(i == mover)
+			continue
+		var/atom/movable/thing = i
+		if(!thing.Uncross(mover, newloc))
+			if(thing.flags_1 & ON_BORDER_1)
+				mover.Bump(thing)
+			return FALSE
 
 /turf/Entered(atom/movable/AM)
 	..()

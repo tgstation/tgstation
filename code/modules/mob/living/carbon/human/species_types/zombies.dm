@@ -9,7 +9,7 @@
 	blacklisted = 1
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	species_traits = list(NOBLOOD,NOZOMBIE,NOTRANSSTING)
-	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_NOBREATH)
+	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_NOBREATH,TRAIT_NODEATH)
 	inherent_biotypes = list(MOB_UNDEAD, MOB_HUMANOID)
 	mutanttongue = /obj/item/organ/tongue/zombie
 	var/static/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
@@ -29,6 +29,7 @@
 	armor = 20 // 120 damage to KO a zombie, which kills it
 	speedmod = 1.6
 	mutanteyes = /obj/item/organ/eyes/night_vision/zombie
+	var/heal_rate = 1
 	var/regen_cooldown = 0
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
@@ -46,15 +47,25 @@
 /datum/species/zombie/infectious/spec_life(mob/living/carbon/C)
 	. = ..()
 	C.a_intent = INTENT_HARM // THE SUFFERING MUST FLOW
+	
+	//Zombies never actually die, they just fall down until they regenerate enough to rise back up.
+	//They must be restrained, beheaded or gibbed to stop being a threat.
 	if(regen_cooldown < world.time)
-		C.heal_overall_damage(4,4)
-		C.adjustToxLoss(-4)
-	if(prob(4))
+		var/heal_amt = heal_rate
+		if(C.InCritical())
+			heal_amt *= 2
+		C.heal_overall_damage(heal_amt,heal_amt)
+		C.adjustToxLoss(-heal_amt)
+	if(!C.InCritical() && prob(4))
 		playsound(C, pick(spooks), 50, TRUE, 10)
-	if(C.InCritical())
-		C.death()
-		// Zombies only move around when not in crit, they instantly
-		// succumb otherwise, and will standup again soon
+		
+//Congrats you somehow died so hard you stopped being a zombie
+/datum/species/zombie/infectious/spec_death(mob/living/carbon/C)
+	. = ..()
+	var/obj/item/organ/zombie_infection/infection
+	infection = C.getorganslot(ORGAN_SLOT_ZOMBIE)
+	if(infection)
+		qdel(infection)
 
 /datum/species/zombie/infectious/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

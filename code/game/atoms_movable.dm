@@ -151,19 +151,11 @@
 	if(!direct)
 		direct = get_dir(src, newloc)
 	setDir(direct)
-	
-	if(!loc.Exit(src))
-		return
-	for(var/i in loc)
-		if(i == src)
-			continue
-		var/atom/movable/thing = i
-		if(!thing.Uncross(src, newloc))
-			if(thing.flags_1 & ON_BORDER_1)
-				Bump(thing)
-			return
 
-	if(!newloc.Enter(src))
+	if(!loc.Exit(src, newloc))
+		return
+
+	if(!newloc.Enter(src, src.loc))
 		return
 
 	// Past this is the point of no return
@@ -469,6 +461,9 @@
 	if (!target || speed <= 0)
 		return
 
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_THROW, args) & COMPONENT_CANCEL_THROW)
+		return
+
 	if (pulledby)
 		pulledby.stop_pulling()
 
@@ -538,7 +533,7 @@
 	if(spin)
 		SpinAnimation(5, 1)
 
-	SEND_SIGNAL(src, COMSIG_MOVABLE_THROW, TT, spin)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_THROW, TT, spin)
 	SSthrowing.processing[src] = TT
 	if (SSthrowing.state == SS_PAUSED && length(SSthrowing.currentrun))
 		SSthrowing.currentrun[src] = TT
@@ -776,3 +771,39 @@
 	if(anchored || throwing)
 		return FALSE
 	return TRUE
+
+
+/obj/item/proc/do_pickup_animation(atom/target)
+	set waitfor = FALSE
+	var/mutable_appearance/I = new(icon = src, loc = loc, layer = layer + 0.1)
+	I.plane = GAME_PLANE
+	I.transform *= 0.75
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	var/turf/T = get_turf(src)
+	var/direction
+	var/to_x = 0
+	var/to_y = 0
+
+	flick_overlay(I, GLOB.clients, 6)
+	var/static/matrix/M = new
+	M.Turn(pick(-30, 30))
+
+	animate(I, transform = M, time = 1)
+	sleep(1)
+	animate(I, transform = matrix(), time = 1)
+	sleep(1)
+	if(!QDELETED(T) && !QDELETED(target))
+		direction = get_dir(T, target)
+	if(direction & NORTH)
+		to_y = 32
+	else if(direction & SOUTH)
+		to_y = -32
+	if(direction & EAST)
+		to_x = 32
+	else if(direction & WEST)
+		to_x = -32
+	if(!direction)
+		to_y = 16
+	animate(I, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 3, easing = CUBIC_EASING)
+	sleep(1)
+	animate(I, alpha = 0, time = 1)

@@ -13,6 +13,7 @@
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/smartfridge
 	var/max_n_of_items = 1500
+	var/allow_ai_retrieve = FALSE
 	var/list/initial_contents
 
 /obj/machinery/smartfridge/Initialize()
@@ -132,9 +133,6 @@
 			O.forceMove(src)
 			return TRUE
 
-/obj/machinery/smartfridge/attack_ai(mob/user)
-	return FALSE
-
 /obj/machinery/smartfridge/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -171,6 +169,10 @@
 	switch(action)
 		if("Release")
 			var/desired = 0
+
+			if(!allow_ai_retrieve && isAI(usr))
+				to_chat(usr, "<span class='warning'>[src] does not seem to be configured to respect your authority!</span>")
+				return
 
 			if (params["amount"])
 				desired = text2num(params["amount"])
@@ -415,6 +417,8 @@
 	name = "disk compartmentalizer"
 	desc = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
 	icon_state = "disktoaster"
+	icon_on = "disktoaster"
+	icon_off = "disktoaster-off"
 
 /obj/machinery/smartfridge/disks/accept_check(obj/item/O)
 	if(istype(O, /obj/item/disk/))

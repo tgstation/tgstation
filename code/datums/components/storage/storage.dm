@@ -94,7 +94,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/attack_self)
 	RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/signal_on_pickup)
 
-	RegisterSignal(parent, COMSIG_MOVABLE_THROW, .proc/close_all)
+	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, .proc/close_all)
 
 	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/on_alt_click)
 	RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, .proc/mousedrop_onto)
