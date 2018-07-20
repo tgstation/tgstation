@@ -375,7 +375,7 @@ GLOBAL_VAR(frenzy_exports)
 	return ..(teletarget)
 
 // Hand tele and the hub itself use the Cargo blacklist
-/obj/machinery/teleport/hub/CollidedWith(atom/movable/AM)
+/obj/machinery/teleport/hub/Bumped(atom/movable/AM)
 	if (!is_ready())
 		return
 	var/obj/machinery/computer/teleporter/com = power_station.teleporter_console
