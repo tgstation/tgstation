@@ -6,14 +6,11 @@
 	density = TRUE
 	anchored = TRUE
 
-/obj/structure/dresser/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wrench))
-		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
-		if(I.use_tool(src, user, 20, volume=50))
-			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
-			setAnchored(!anchored)
-	else
-		return ..()
+/obj/structure/dresser/wrench_act(mob/living/user, obj/item/I)
+	setAnchored(!anchored)
+	to_chat(user, "<span class='notice'>You have [anchored ? "unanchored" : "anchored"] [src].</span>")
+	I.play_tool_sound(src)
+	return TRUE
 
 /obj/structure/dresser/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
