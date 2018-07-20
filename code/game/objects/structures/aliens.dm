@@ -68,12 +68,6 @@
 	. = ..()
 	air_update_turf(TRUE)
 
-/obj/structure/alien/resin/Destroy()
-	density = FALSE
-	air_update_turf(TRUE)
-	return ..()
-
-
 /obj/structure/alien/resin/Move()
 	var/turf/T = loc
 	. = ..()

@@ -11,12 +11,6 @@
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
 
-/obj/structure/statue/Destroy()
-	//Restore air flow.
-	density = FALSE
-	air_update_turf(TRUE)
-	return ..()
-
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
 	user.changeNext_move(CLICK_CD_MELEE)
