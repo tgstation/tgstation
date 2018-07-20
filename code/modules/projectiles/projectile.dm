@@ -36,7 +36,6 @@
 	var/trajectory_ignore_forcemove = FALSE	//instructs forceMove to NOT reset our trajectory to the new location!
 
 	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
-	var/pixel_speed = 32	//pixels per move - DO NOT FUCK WITH THIS UNLESS YOU ABSOLUTELY KNOW WHAT YOU ARE DOING OR UNEXPECTED THINGS /WILL/ HAPPEN!
 	var/Angle = 0
 	var/original_angle = 0		//Angle at firing
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
@@ -54,6 +53,17 @@
 	var/tracer_type
 	var/muzzle_type
 	var/impact_type
+
+	//Fancy hitscan lighting effects!
+	var/hitscan_light_intensity = 1.5
+	var/hitscan_light_range = 0.75
+	var/hitscan_light_color_override
+	var/muzzle_flash_intensity = 3
+	var/muzzle_flash_range = 1.5
+	var/muzzle_flash_color_override
+	var/impact_light_intensity = 3
+	var/impact_light_range = 2
+	var/impact_light_color_override
 
 	//Homing
 	var/homing = FALSE
@@ -287,8 +297,8 @@
 	var/datum/point/vector/current = trajectory
 	if(!current)
 		var/turf/T = get_turf(src)
-		current = new(T.x, T.y, T.z, pixel_x, pixel_y, isnull(forced_angle)? Angle : forced_angle, pixel_speed)
-	var/datum/point/vector/v = current.return_vector_after_increments(moves)
+		current = new(T.x, T.y, T.z, pixel_x, pixel_y, isnull(forced_angle)? Angle : forced_angle, SSprojectiles.global_pixel_speed)
+	var/datum/point/vector/v = current.return_vector_after_increments(moves * SSprojectiles.global_iterations_per_move)
 	return v.return_turf()
 
 /obj/item/projectile/proc/return_pathing_turfs_in_moves(moves, forced_angle)
@@ -320,7 +330,7 @@
 		time_offset += MODULUS(elapsed_time_deciseconds, speed)
 
 	for(var/i in 1 to required_moves)
-		pixel_move(required_moves)
+		pixel_move(1, FALSE)
 
 /obj/item/projectile/proc/fire(angle, atom/direct_target)
 	//If no angle needs to resolve it from xo/yo!
@@ -351,14 +361,14 @@
 	trajectory_ignore_forcemove = TRUE
 	forceMove(starting)
 	trajectory_ignore_forcemove = FALSE
-	trajectory = new(starting.x, starting.y, starting.z, pixel_x, pixel_y, Angle, pixel_speed)
+	trajectory = new(starting.x, starting.y, starting.z, pixel_x, pixel_y, Angle, SSprojectiles.global_pixel_speed)
 	last_projectile_move = world.time
 	fired = TRUE
 	if(hitscan)
 		process_hitscan()
 	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)
-	pixel_move(1)	//move it now!
+	pixel_move(1, FALSE)	//move it now!
 
 /obj/item/projectile/proc/setAngle(new_angle)	//wrapper for overrides.
 	Angle = new_angle
@@ -391,6 +401,20 @@
 
 /obj/item/projectile/proc/before_z_change(atom/oldloc, atom/newloc)
 
+/obj/item/projectile/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if(NAMEOF(src, Angle))
+			setAngle(var_value)
+			return TRUE
+		else
+			return ..()
+
+/obj/item/projectile/proc/set_pixel_speed(new_speed)
+	if(trajectory)
+		trajectory.set_speed(new_speed)
+		return TRUE
+	return FALSE
+
 /obj/item/projectile/proc/record_hitscan_start(datum/point/pcache)
 	if(pcache)
 		beam_segments = list()
@@ -405,12 +429,14 @@
 			stoplag(1)
 			continue
 		if(safety-- <= 0)
-			qdel(src)
-			stack_trace("WARNING: [type] projectile encountered infinite recursion during hitscanning in [__FILE__]/[__LINE__]!")
+			if(loc)
+				Bump(loc)
+			if(!QDELETED(src))
+				qdel(src)
 			return	//Kill!
-		pixel_move(1, 1, TRUE)
+		pixel_move(1, TRUE)
 
-/obj/item/projectile/proc/pixel_move(moves, trajectory_multiplier = 1, hitscanning = FALSE)
+/obj/item/projectile/proc/pixel_move(trajectory_multiplier, hitscanning = FALSE)
 	if(!loc || !trajectory)
 		return
 	last_projectile_move = world.time
@@ -420,32 +446,36 @@
 		transform = M
 	if(homing)
 		process_homing()
-	trajectory.increment(trajectory_multiplier)
-	var/turf/T = trajectory.return_turf()
-	if(!istype(T))
-		qdel(src)
-		return
-	if(T.z != loc.z)
-		var/old = loc
-		before_z_change(loc, T)
-		trajectory_ignore_forcemove = TRUE
-		forceMove(T)
-		trajectory_ignore_forcemove = FALSE
-		after_z_change(old, loc)
-		if(!hitscanning)
-			pixel_x = trajectory.return_px()
-			pixel_y = trajectory.return_py()
-	else
-		step_towards(src, T)
-		if(!hitscanning)
-			pixel_x = trajectory.return_px() - trajectory.mpx * trajectory_multiplier
-			pixel_y = trajectory.return_py() - trajectory.mpy * trajectory_multiplier
-	if(!hitscanning)
+	var/forcemoved = FALSE
+	for(var/i in 1 to SSprojectiles.global_iterations_per_move)
+		if(QDELETED(src))
+			return
+		trajectory.increment(trajectory_multiplier)
+		var/turf/T = trajectory.return_turf()
+		if(!istype(T))
+			qdel(src)
+			return
+		if(T.z != loc.z)
+			var/old = loc
+			before_z_change(loc, T)
+			trajectory_ignore_forcemove = TRUE
+			forceMove(T)
+			trajectory_ignore_forcemove = FALSE
+			after_z_change(old, loc)
+			if(!hitscanning)
+				pixel_x = trajectory.return_px()
+				pixel_y = trajectory.return_py()
+			forcemoved = TRUE
+			hitscan_last = loc
+		else if(T != loc)
+			step_towards(src, T)
+			hitscan_last = loc
+		if(can_hit_target(original, permutated))
+			Bump(original)
+	if(!hitscanning && !forcemoved)
+		pixel_x = trajectory.return_px() - trajectory.mpx * trajectory_multiplier * SSprojectiles.global_iterations_per_move
+		pixel_y = trajectory.return_py() - trajectory.mpy * trajectory_multiplier * SSprojectiles.global_iterations_per_move
 		animate(src, pixel_x = trajectory.return_px(), pixel_y = trajectory.return_py(), time = 1, flags = ANIMATION_END_NOW)
-	if(isturf(loc))
-		hitscan_last = loc
-	if(can_hit_target(original, permutated))
-		Bump(original)
 	Range()
 
 /obj/item/projectile/proc/process_homing()			//may need speeding up in the future performance wise.
@@ -561,7 +591,7 @@
 		return
 	if(tracer_type)
 		for(var/datum/point/p in beam_segments)
-			generate_tracer_between_points(p, beam_segments[p], tracer_type, color, duration)
+			generate_tracer_between_points(p, beam_segments[p], tracer_type, color, duration, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity)
 	if(muzzle_type && duration > 0)
 		var/datum/point/p = beam_segments[1]
 		var/atom/movable/thing = new muzzle_type
@@ -569,6 +599,8 @@
 		var/matrix/M = new
 		M.Turn(original_angle)
 		thing.transform = M
+		thing.color = color
+		thing.set_light(muzzle_flash_range, muzzle_flash_intensity, muzzle_flash_color_override? muzzle_flash_color_override : color)
 		QDEL_IN(thing, duration)
 	if(impacting && impact_type && duration > 0)
 		var/datum/point/p = beam_segments[beam_segments[beam_segments.len]]
@@ -577,6 +609,8 @@
 		var/matrix/M = new
 		M.Turn(Angle)
 		thing.transform = M
+		thing.color = color
+		thing.set_light(impact_light_range, impact_light_intensity, impact_light_color_override? impact_light_color_override : color)
 		QDEL_IN(thing, duration)
 	if(cleanup)
 		cleanup_beam_segments()

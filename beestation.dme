@@ -548,6 +548,7 @@
 #include "code\game\machinery\flasher.dm"
 #include "code\game\machinery\gulag_item_reclaimer.dm"
 #include "code\game\machinery\gulag_teleporter.dm"
+#include "code\game\machinery\harvester.dm"
 #include "code\game\machinery\hologram.dm"
 #include "code\game\machinery\igniter.dm"
 #include "code\game\machinery\iv_drip.dm"
