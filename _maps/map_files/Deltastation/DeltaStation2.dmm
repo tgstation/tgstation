@@ -36609,6 +36609,9 @@
 /obj/structure/cable/white{
 	icon_state = "2-4"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "bEq" = (
@@ -36663,6 +36666,9 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
@@ -41279,14 +41285,14 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/external{
 	name = "MiniSat Exterior Access";
-	req_one_access_txt = "32;19"
+	req_one_access_txt = "13;32"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
@@ -41308,15 +41314,15 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/hatch{
-	name = "MiniSat Exterior Access";
-	req_one_access_txt = "32;19"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "MiniSat Exterior Access";
+	req_one_access_txt = "13;32"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
