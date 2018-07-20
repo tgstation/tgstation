@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - admin: "Added hardsuit outfits for the Captain, HoS, and CMO. Removed old Shaft Miner (Asteroid) outfits. Gave Chief Engineer (Hardsuit) engineering scanner goggles. Added debug outfit for testing."

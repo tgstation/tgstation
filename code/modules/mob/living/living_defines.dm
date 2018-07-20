@@ -20,6 +20,7 @@
 	var/fireloss = 0	//Burn damage caused by being way too hot, too cold or burnt.
 	var/cloneloss = 0	//Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
 	var/staminaloss = 0		//Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
+	var/crit_threshold = HEALTH_THRESHOLD_CRIT // when the mob goes from "normal" to crit
 
 	var/confused = 0	//Makes the mob move in random directions.
 
@@ -38,7 +39,7 @@
 
 	var/list/surgeries = list()	//a list of surgery datums. generally empty, they're added when the player wants them.
 
-	var/now_pushing = null //used by living/Collide() and living/PushAM() to prevent potential infinite loop.
+	var/now_pushing = null //used by living/Bump() and living/PushAM() to prevent potential infinite loop.
 
 	var/cameraFollow = null
 

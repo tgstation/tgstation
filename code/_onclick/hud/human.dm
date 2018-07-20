@@ -207,7 +207,7 @@
 
 	using = new /obj/screen/resist()
 	using.icon = ui_style
-	using.screen_loc = ui_pull_resist
+	using.screen_loc = ui_above_intent
 	hotkeybuttons += using
 
 	using = new /obj/screen/human/toggle()
@@ -274,6 +274,11 @@
 	throw_icon.screen_loc = ui_drop_throw
 	hotkeybuttons += throw_icon
 
+	rest_icon = new /obj/screen/rest()
+	rest_icon.icon = ui_style
+	rest_icon.screen_loc = ui_above_movement
+	static_inventory += rest_icon
+
 	internals = new /obj/screen/internals()
 	infodisplay += internals
 
@@ -290,7 +295,7 @@
 	pull_icon = new /obj/screen/pull()
 	pull_icon.icon = ui_style
 	pull_icon.update_icon(mymob)
-	pull_icon.screen_loc = ui_pull_resist
+	pull_icon.screen_loc = ui_above_intent
 	static_inventory += pull_icon
 
 	lingchemdisplay = new /obj/screen/ling/chems()

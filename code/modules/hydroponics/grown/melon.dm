@@ -34,6 +34,7 @@
 	bitesize_mod = 3
 	foodtype = FRUIT
 	juice_results = list("watermelonjuice" = 0)
+	wine_power = 40
 
 // Holymelon
 /obj/item/seeds/watermelon/holy
@@ -54,6 +55,8 @@
 	icon_state = "holymelon"
 	filling_color = "#FFD700"
 	dried_type = null
+	wine_power = 70 //Water to wine, baby.
+	wine_flavor = "divinity"
 
 /obj/item/reagent_containers/food/snacks/grown/holymelon/Initialize()
 	. = ..()

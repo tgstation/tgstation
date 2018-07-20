@@ -68,7 +68,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "ar" = (
-/obj/structure/chair/shuttle,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "as" = (
@@ -137,7 +137,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aJ" = (
-/obj/structure/chair/shuttle,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aK" = (
@@ -204,7 +204,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aW" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,

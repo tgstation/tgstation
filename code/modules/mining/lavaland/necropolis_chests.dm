@@ -766,7 +766,7 @@
 
 	notify_ghosts("[user] is raising [user.p_their()] [src], calling for your help!",
 		enter_link="<a href=?src=[REF(src)];orbit=1>(Click to help)</a>",
-		source = user, action=NOTIFY_ORBIT)
+		source = user, action=NOTIFY_ORBIT, ignore_key = POLL_IGNORE_SPECTRAL_BLADE)
 
 	summon_cooldown = world.time + 600
 
@@ -899,7 +899,7 @@
 	var/static/list/banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
 
 /obj/item/lava_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	..()
+	. = ..()
 	if(timer > world.time)
 		return
 
@@ -1097,7 +1097,7 @@
 	qdel(user)
 
 /obj/item/hierophant_club/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	..()
+	. = ..()
 	var/turf/T = get_turf(target)
 	if(!T || timer > world.time)
 		return

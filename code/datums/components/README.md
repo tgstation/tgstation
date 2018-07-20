@@ -115,6 +115,12 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Clears `parent` and removes the component from it's component list
 1. `/datum/component/proc/_JoinParent` (private, final)
     * Tries to add the component to it's `parent`s `datum_components` list
+1. `/datum/component/proc/RegisterWithParent` (abstract, no-sleep)
+    * Used to register the signals that should be on the `parent` object
+    * Use this if you plan on the component transfering between parents
+1. `/datum/component/proc/UnregisterFromParent` (abstract, no-sleep)
+    * Counterpart to `RegisterWithParent()`
+    * Used to unregister the signals that should only be on the `parent` object
 1. `/datum/component/proc/RegisterSignal(datum/target, signal(string/list of strings), proc_ref(type), override(boolean))` (protected, final)
     * If signal is a list it will be as if RegisterSignal was called for each of the entries with the same following arguments
     * Makes a component listen for the specified `signal` on it's `parent` datum.

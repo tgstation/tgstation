@@ -64,7 +64,7 @@
 	. = ..()
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
+		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_ASHWALKER)
 
 /datum/outfit/ashwalker
 	name ="Ashwalker"
@@ -129,7 +129,7 @@
 	. = ..()
 	var/area/A = get_area(src)
 	if(!mapload && A)
-		notify_ghosts("\A [initial(species.prefix)] golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
+		notify_ghosts("\A [initial(species.prefix)] golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_GOLEM)
 	if(has_owner && creator)
 		flavour_text = "<span class='big bold'>You are a Golem.</span><b> You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. \
 		Serve [creator], and assist [creator.p_them()] in completing [creator.p_their()] goals at any cost.</b>"

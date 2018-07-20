@@ -365,7 +365,7 @@
 			suit_store = /obj/item/tome
 			r_pocket = /obj/item/restraints/legcuffs/bola/cult
 			l_pocket = /obj/item/melee/cultblade/dagger
-			glasses =  /obj/item/clothing/glasses/night/cultblind
+			glasses =  /obj/item/clothing/glasses/hud/health/night/cultblind
 			backpack_contents = list(/obj/item/reagent_containers/glass/beaker/unholywater = 1, /obj/item/cult_shift = 1, /obj/item/flashlight/flare/culttorch = 1, /obj/item/stack/sheet/runed_metal = 15)
 	. = ..()
 

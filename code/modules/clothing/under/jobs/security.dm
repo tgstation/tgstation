@@ -34,6 +34,7 @@
 	icon_state = "secskirt"
 	item_state = "r_suit"
 	item_color = "secskirt"
+	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE //you know now that i think of it if you adjust the skirt and the sprite disappears isn't that just like flashing everyone
 
 

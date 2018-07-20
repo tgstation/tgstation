@@ -251,7 +251,7 @@
 	level = 1
 	component_type = /datum/component/storage/concrete/secret_satchel
 
-/obj/item/storage/backpack/stachel/flat/Initialize()
+/obj/item/storage/backpack/satchel/flat/Initialize()
 	. = ..()
 	SSpersistence.new_secret_satchels += src
 

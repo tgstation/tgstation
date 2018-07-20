@@ -190,6 +190,7 @@
 
 
 /obj/item/abductor/gizmo/afterattack(atom/target, mob/living/user, flag, params)
+	. = ..()
 	if(flag)
 		return
 	if(!ScientistCheck(user))
@@ -251,6 +252,7 @@
 	radio_off(M, user)
 
 /obj/item/abductor/silencer/afterattack(atom/target, mob/living/user, flag, params)
+	. = ..()
 	if(flag)
 		return
 	if(!AbductorCheck(user))
@@ -303,6 +305,7 @@
 	to_chat(user, "<span class='notice'>You switch the device to [mode==MIND_DEVICE_MESSAGE? "TRANSMISSION": "COMMAND"] MODE</span>")
 
 /obj/item/abductor/mind_device/afterattack(atom/target, mob/living/user, flag, params)
+	. = ..()
 	if(!ScientistCheck(user))
 		return
 
@@ -542,11 +545,11 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		return
 	var/mob/living/carbon/C = L
 	if(!C.handcuffed)
-		if(C.get_num_arms() >= 2 || C.get_arm_ignore())
+		if(C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore())
 			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 			C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
 									"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
-			if(do_mob(user, C, 30) && (C.get_num_arms() >= 2 || C.get_arm_ignore()))
+			if(do_mob(user, C, 30) && (C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore()))
 				if(!C.handcuffed)
 					C.handcuffed = new /obj/item/restraints/handcuffs/energy/used(C)
 					C.update_handcuffed()

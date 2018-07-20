@@ -191,10 +191,8 @@
 /atom/proc/check_eye(mob/user)
 	return
 
-
-/atom/proc/CollidedWith(atom/movable/AM)
+/atom/proc/Bumped(atom/movable/AM)
 	set waitfor = FALSE
-	return
 
 // Convenience procs to see if a container is open for chemistry handling
 /atom/proc/is_open_container()

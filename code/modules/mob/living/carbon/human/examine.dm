@@ -51,7 +51,7 @@
 	if(gloves && !(SLOT_GLOVES in obscured))
 		msg += "[t_He] [t_has] [gloves.get_examine_string(user)] on [t_his] hands.\n"
 	else if(FR && length(FR.blood_DNA))
-		var/hand_number = get_num_arms()
+		var/hand_number = get_num_arms(FALSE)
 		if(hand_number)
 			msg += "<span class='warning'>[t_He] [t_has] [hand_number > 1 ? "" : "a"] blood-stained hand[hand_number > 1 ? "s" : ""]!</span>\n"
 
@@ -133,11 +133,19 @@
 	msg += "<span class='warning'>"
 
 	var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	var/list/disabled = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
+		if(BP.disabled)
+			disabled += BP
 		missing -= BP.body_zone
 		for(var/obj/item/I in BP.embedded_objects)
 			msg += "<B>[t_He] [t_has] \a [icon2html(I, user)] [I] embedded in [t_his] [BP.name]!</B>\n"
+
+	for(var/X in disabled)
+		var/obj/item/bodypart/BP = X
+		var/more_brute = BP.brute_dam >= BP.burn_dam
+		msg += "<B>[capitalize(t_his)] [BP.name] is [more_brute ? "broken and mangled" : "burnt and blistered"]!</B>\n"
 
 	//stores missing limbs
 	var/l_limbs_missing = 0

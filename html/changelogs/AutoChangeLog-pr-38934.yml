@@ -1,5 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - bugfix: "constructed directional windows no longer leak atmos across them"
-  - code_imp: "setting the value of anchored for objects should be done via the setAnchored proc to properly handle things like atmos updates in one place"

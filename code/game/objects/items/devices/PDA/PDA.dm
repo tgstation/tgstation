@@ -746,7 +746,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 //trying to insert or remove an id
 /obj/item/pda/proc/id_check(mob/user, obj/item/card/id/I)
 	if(!I)
-		if(id)
+		if(id && (src in user.contents))
 			remove_id()
 			return TRUE
 		else
@@ -835,6 +835,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					user.show_message("<span class='notice'>No radiation detected.</span>")
 
 /obj/item/pda/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	switch(scanmode)
