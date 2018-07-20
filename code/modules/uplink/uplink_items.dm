@@ -204,8 +204,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	
 /datum/uplink_item/dangerous/carbine
 	name = "M-90gl Carbine"
-	desc = "A fully-loaded, specialized three-round burst carbine that fires 30-round 5.56mm magazines with a togglable \
-			underslung 40mm grenade launcher."
+	desc = "A fully-loaded, specialized three-round burst carbine that fires 5.56mm ammunition from a 30 round magazine \
+			with a togglable 40mm under-barrel grenade launcher."
 	item = /obj/item/gun/ballistic/automatic/m90
 	cost = 18
 	surplus = 50
@@ -519,16 +519,16 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	include_modes = list(/datum/game_mode/nuclear)
 	
 /datum/uplink_item/ammo/carbine
-	name = "5.56 Toploader Magazine"
-	desc = "An additional 30-round 5.56 magazine; sutable for use with the M-90gl carbine. \
-			These bullets don't have the punch to knock most targets down, but dish out higher overall damage."
+	name = "5.56mm Toploader Magazine"
+	desc = "An additional 30-round 5.56mm magazine; suitable for use with the M-90gl carbine. \
+			These bullets pack the punch of 1.95mm rounds, but they still offer more power than .45 ammo."
 	item = /obj/item/ammo_box/magazine/m556
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear)
 	
 /datum/uplink_item/ammo/a40mm
 	name = "40mm Grenade"
-	desc = "A 40mm HE grenade for use with the M-90gl's underbarrel grenade launcher. \
+	desc = "A 40mm HE grenade for use with the M-90gl's under-barrel grenade launcher. \
 			Your teammates will ask you to not shoot these down small hallways."
 	item = /obj/item/ammo_casing/a40mm
 	cost = 2
