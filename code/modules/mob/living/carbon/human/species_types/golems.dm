@@ -732,6 +732,19 @@
 	new /obj/structure/cloth_pile(get_turf(H), H)
 	..()
 
+mob/living/carbon/human/species/golem/cloth/gib() //Overrides gib code for cloth golems. Mummies have no organs and are dusted upon gibbing.
+
+	if(istype(loc, /obj/structure/cloth_pile)) //If the cloth golem is gibbed while inside it's cloth pile. (Likely a Megafauna gib)
+		var/turf/T = get_turf(loc)
+		to_chat(src, "<span class='userdanger'>An overwhelming force pulverizes your remains!</span>")
+		new /obj/effect/decal/cleanable/ash(T)
+		QDEL_NULL(loc)
+
+	else
+		to_chat(src, "<span class='userdanger'>An overwhelming force pulverizes you!</span>")
+		src.dust(just_ash = TRUE)
+		QDEL_NULL(src)
+
 /obj/structure/cloth_pile
 	name = "pile of bandages"
 	desc = "It emits a strange aura, as if there was still life within it..."
