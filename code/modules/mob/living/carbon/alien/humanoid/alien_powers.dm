@@ -233,17 +233,17 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/neurotoxin/on_lose(mob/living/carbon/user)
 	remove_ranged_ability()
 
-/obj/effect/proc_holder/alien/neurotoxin/add_ranged_ability(mob/living/user, msg)
+/obj/effect/proc_holder/alien/neurotoxin/add_ranged_ability(mob/living/user,msg,forced)
 	..()
 	if(isalienadult(user))
 		var/mob/living/carbon/alien/humanoid/A = user
 		A.drooling = 1
 		A.update_icons()
 
-/obj/effect/proc_holder/alien/neurotoxin/remove_ranged_ability(mob/living/user, msg)
+/obj/effect/proc_holder/alien/neurotoxin/remove_ranged_ability(msg)
 	..()
-	if(isalienadult(user))
-		var/mob/living/carbon/alien/humanoid/A = user
+	if(isalienadult(ranged_ability_user))
+		var/mob/living/carbon/alien/humanoid/A = ranged_ability_user
 		A.drooling = 0
 		A.update_icons()
 
