@@ -708,13 +708,29 @@
 	name = "food crate"
 	},
 /obj/item/reagent_containers/food/snacks/beans{
-	pixel_x = -3;
+	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/snacks/beans,
 /obj/item/reagent_containers/food/snacks/beans{
-	pixel_x = 3;
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/snacks/beans{
+	pixel_x = -2
+	},
+/obj/item/reagent_containers/food/snacks/beans{
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/food/snacks/beans{
+	pixel_x = 1;
 	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/snacks/beans{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/structure/closet/crate{
+	name = "food crate"
 	},
 /obj/machinery/light{
 	dir = 8
@@ -727,13 +743,29 @@
 	name = "food crate"
 	},
 /obj/item/reagent_containers/food/snacks/beans{
-	pixel_x = -3;
+	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/snacks/beans,
 /obj/item/reagent_containers/food/snacks/beans{
-	pixel_x = 3;
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/snacks/beans{
+	pixel_x = -2
+	},
+/obj/item/reagent_containers/food/snacks/beans{
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/food/snacks/beans{
+	pixel_x = 1;
 	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/snacks/beans{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/structure/closet/crate{
+	name = "food crate"
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/storage)
@@ -991,12 +1023,25 @@
 	name = "food crate"
 	},
 /obj/item/reagent_containers/glass/beaker/waterbottle/large{
-	pixel_x = -3;
+	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/glass/beaker/waterbottle/large,
 /obj/item/reagent_containers/glass/beaker/waterbottle/large{
-	pixel_x = 3;
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/glass/beaker/waterbottle/large{
+	pixel_x = -2
+	},
+/obj/item/reagent_containers/glass/beaker/waterbottle/large{
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/glass/beaker/waterbottle/large{
+	pixel_x = 1;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/glass/beaker/waterbottle/large{
+	pixel_x = 8;
 	pixel_y = -3
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -1340,12 +1385,40 @@
 /obj/structure/closet/crate{
 	name = "food crate"
 	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = -2
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = 5
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = 1;
+	pixel_y = -3
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = 8;
+	pixel_y = -3
+	},
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/vending_refill/coffee,
+/obj/item/vending_refill/cigarette{
+	pixel_x = -3;
+	pixel_y = 3
+	},
 /obj/item/vending_refill/cigarette,
-/obj/item/vending_refill/cigarette,
+/obj/item/vending_refill/coffee{
+	pixel_x = 3;
+	pixel_y = -3
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/storage)
 "dx" = (
@@ -1354,11 +1427,33 @@
 	name = "food crate"
 	},
 /obj/item/storage/box/donkpockets{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = -2
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = 5
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = 1;
+	pixel_y = -3
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/item/vending_refill/cigarette{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/storage/box/donkpockets,
-/obj/item/storage/box/donkpockets{
+/obj/item/vending_refill/cigarette,
+/obj/item/vending_refill/coffee{
 	pixel_x = 3;
 	pixel_y = -3
 	},
