@@ -129,7 +129,7 @@ LOG_MANIFEST
 # LOG_TWITTER
 
 ## Enable logging pictures
-LOG_PICTURES
+# LOG_PICTURES
 
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA
