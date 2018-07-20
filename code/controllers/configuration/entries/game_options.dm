@@ -186,13 +186,7 @@
 /datum/config_entry/keyed_number_list/multiplicative_movespeed/ValidateAndSet()
 	. = ..()
 	if(.)
-		generate_config_movespeed_type_lookup()
-		update_mobs()
-
-/datum/config_entry/keyed_number_list/multiplicative_movespeed/proc/update_mobs()
-	for(var/i in GLOB.mob_list)
-		var/mob/M = i
-		M.update_config_movespeed()
+		update_config_movespeed_type_lookup(TRUE)
 
 //DEPRECATED-------------------------------
 /datum/config_entry/number/movedelay	//Used for modifying movement speed for mobs.
