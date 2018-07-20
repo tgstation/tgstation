@@ -133,7 +133,7 @@ Reagents are all the things you can mix and fille in bottles etc. This can be an
 			Called when the reagent datum is deleted from
 			the mobs holder. Note that this does not check 
 			if on_mob_add has done anything. Saftey check
-			any effect that might stack permenetnt changes
+			any effect that might stack permanent changes
 			to the mob to make sure you added it!	
 
 		reaction_obj(var/obj/O)
