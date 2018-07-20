@@ -213,7 +213,7 @@
 	mode_reports = list()
 	mode_false_report_weight = list()
 	votable_modes = list()
-	var/list/probabilities = Get(/datum/config_entry/keyed_number_list/probability)
+	var/list/probabilities = Get(/datum/config_entry/keyed_list/text/number/probability)
 	for(var/T in gamemode_cache)
 		// I wish I didn't have to instance the game modes in order to look up
 		// their information, but it is the only way (at least that I know of).
@@ -309,9 +309,9 @@
 
 /datum/controller/configuration/proc/get_runnable_modes()
 	var/list/datum/game_mode/runnable_modes = new
-	var/list/probabilities = Get(/datum/config_entry/keyed_number_list/probability)
-	var/list/min_pop = Get(/datum/config_entry/keyed_number_list/min_pop)
-	var/list/max_pop = Get(/datum/config_entry/keyed_number_list/max_pop)
+	var/list/probabilities = Get(/datum/config_entry/keyed_list/text/number/probability)
+	var/list/min_pop = Get(/datum/config_entry/keyed_list/text/number/min_pop)
+	var/list/max_pop = Get(/datum/config_entry/keyed_list/text/number/max_pop)
 	var/list/repeated_mode_adjust = Get(/datum/config_entry/number_list/repeated_mode_adjust)
 	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
@@ -339,9 +339,9 @@
 
 /datum/controller/configuration/proc/get_runnable_midround_modes(crew)
 	var/list/datum/game_mode/runnable_modes = new
-	var/list/probabilities = Get(/datum/config_entry/keyed_number_list/probability)
-	var/list/min_pop = Get(/datum/config_entry/keyed_number_list/min_pop)
-	var/list/max_pop = Get(/datum/config_entry/keyed_number_list/max_pop)
+	var/list/probabilities = Get(/datum/config_entry/keyed_list/text/number/probability)
+	var/list/min_pop = Get(/datum/config_entry/keyed_list/text/number/min_pop)
+	var/list/max_pop = Get(/datum/config_entry/keyed_list/text/number/max_pop)
 	for(var/T in (gamemode_cache - SSticker.mode.type))
 		var/datum/game_mode/M = new T()
 		if(!(M.config_tag in modes))

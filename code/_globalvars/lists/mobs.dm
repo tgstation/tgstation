@@ -38,18 +38,12 @@ GLOBAL_LIST_EMPTY(latejoin_ai_cores)
 GLOBAL_LIST_EMPTY(mob_config_movespeed_type_lookup)
 
 /proc/update_config_movespeed_type_lookup(update_mobs = TRUE)
-	var/list/mob_types = typesof(/mob)
-	var/datum/config_entry/keyed_number_list/multiplicative_movespeed/entry = CONFIG_GET_DATUM(keyed_number_list/multiplicative_movespeed)
+	var/list/mob_types = list()
+	var/datum/config_entry/keyed_list/type/number/multiplicative_movespeed/entry = CONFIG_GET_DATUM(keyed_list/type/number/multiplicative_movespeed)
 	for(var/path in entry.config_entry_value)
-		var/convert = FALSE
-		if(!ispath(path))
-			if(ispath(text2path(path)))
-				convert = TRUE
-			else
-				continue
 		var/value = entry.config_entry_value[path]
-		if(convert)
-			path = text2path(path)
+		if(!value)
+			continue
 		for(var/subpath in typesof(path))
 			mob_types[subpath] += value
 	GLOB.mob_config_movespeed_type_lookup = mob_types

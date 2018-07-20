@@ -34,8 +34,8 @@ EMOJIS
 ## To speed things up make the number negative, to slow things down, make the number positive.
 
 ## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied.
-MULTIPLICATIVE_MOVESPEED RUN 1
-MULTIPLICATIVE_MOVESPEED WALK 4
+RUN_DELAY 1
+WALK_DELAY 4
 
 ## The variables below affect the movement of specific mob types. THIS AFFECTS ALL SUBTYPES OF THE TYPE YOU CHOOSE!
 MULTIPLICATIVE_MOVESPEED /mob/living/carbon/human 0

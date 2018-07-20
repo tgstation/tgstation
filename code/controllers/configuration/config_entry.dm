@@ -1,6 +1,9 @@
-#define LIST_MODE_NUM 0
-#define LIST_MODE_TEXT 1
-#define LIST_MODE_FLAG 2
+#define VALUE_MODE_NUM 0
+#define VALUE_MODE_TEXT 1
+#define VALUE_MODE_FLAG 2
+
+#define KEY_MODE_TEXT 0
+#define KEY_MODE_TYPE 1
 
 /datum/config_entry
 	var/name	//read-only, this is determined by the last portion of the derived entry type
@@ -58,29 +61,40 @@
 	VASProcCallGuard(str_val)
 	CRASH("Invalid config entry type!")
 
-/datum/config_entry/proc/ValidateKeyedList(str_val, list_mode, splitter)
+/datum/config_entry/proc/ValidateKeyedList(str_val, key_mode, value_mode, splitter)
 	str_val = trim(str_val)
 	var/key_pos = findtext(str_val, splitter)
 	var/key_name = null
 	var/key_value = null
 
-	if(key_pos || list_mode == LIST_MODE_FLAG)
+	if(key_pos || value_mode == VALUE_MODE_FLAG)
 		key_name = lowertext(copytext(str_val, 1, key_pos))
 		key_value = copytext(str_val, key_pos + 1)
-		var/temp
-		var/continue_check
-		switch(list_mode)
-			if(LIST_MODE_FLAG)
-				temp = TRUE
-				continue_check = TRUE
-			if(LIST_MODE_NUM)
-				temp = text2num(key_value)
-				continue_check = !isnull(temp)
-			if(LIST_MODE_TEXT)
-				temp = key_value
-				continue_check = temp
-		if(continue_check && ValidateListEntry(key_name, temp))
-			config_entry_value[key_name] = temp
+		var/new_key
+		var/new_value
+		var/continue_check_value
+		var/continue_check_key
+		switch(key_mode)
+			if(KEY_MODE_TEXT)
+				new_key = key_name
+				continue_check_key = new_key
+			if(KEY_MODE_TYPE)
+				new_key = key_name
+				if(!ispath(new_key))
+					new_key = text2path(new_key)
+				continue_check_key = ispath(new_key)
+		switch(value_mode)
+			if(VALUE_MODE_FLAG)
+				new_value = TRUE
+				continue_check_value = TRUE
+			if(VALUE_MODE_NUM)
+				new_value = text2num(key_value)
+				continue_check_value = !isnull(new_value)
+			if(VALUE_MODE_TEXT)
+				new_value = key_value
+				continue_check_value = new_value
+		if(continue_check_value && continue_check_key && ValidateListEntry(new_key, new_value))
+			config_entry_value[new_key] = new_value
 			return TRUE
 	return FALSE
 
@@ -156,44 +170,58 @@
 	config_entry_value = new_list
 	return TRUE
 
-/datum/config_entry/keyed_flag_list
-	abstract_type = /datum/config_entry/keyed_flag_list
+//Format: /datum/config_entry/keyed_list/key_type/value_type
+/datum/config_entry/keyed_list
+	abstract_type = /datum/config_entry/keyed_list
 	config_entry_value = list()
 	dupes_allowed = TRUE
-
-/datum/config_entry/keyed_flag_list/ValidateAndSet(str_val)
-	if(!VASProcCallGuard(str_val))
-		return FALSE
-	return ValidateKeyedList(str_val, LIST_MODE_FLAG, " ")
-
-/datum/config_entry/keyed_number_list
-	abstract_type = /datum/config_entry/keyed_number_list
-	config_entry_value = list()
-	dupes_allowed = TRUE
+	var/key_mode
+	var/value_mode
 	var/splitter = " "
 
-/datum/config_entry/keyed_number_list/vv_edit_var(var_name, var_value)
-	return var_name != "splitter" && ..()
-
-/datum/config_entry/keyed_number_list/ValidateAndSet(str_val)
+/datum/config_entry/keyed_list/ValidateAndSet(str_val)
 	if(!VASProcCallGuard(str_val))
 		return FALSE
-	return ValidateKeyedList(str_val, LIST_MODE_NUM, splitter)
+	return ValidateKeyedList(str_val, key_mode, value_mode, splitter)
 
-/datum/config_entry/keyed_string_list
-	abstract_type = /datum/config_entry/keyed_string_list
-	config_entry_value = list()
-	dupes_allowed = TRUE
-	var/splitter = " "
-
-/datum/config_entry/keyed_string_list/vv_edit_var(var_name, var_value)
+/datum/config_entry/keyed_list/vv_edit_var(var_name, var_value)
 	return var_name != "splitter" && ..()
 
-/datum/config_entry/keyed_string_list/ValidateAndSet(str_val)
-	if(!VASProcCallGuard(str_val))
-		return FALSE
-	return ValidateKeyedList(str_val, LIST_MODE_TEXT, splitter)
+/datum/config_entry/keyed_list/text
+	abstract_type = /datum/config_entry/keyed_list/text
+	key_mode = KEY_MODE_TEXT
 
-#undef LIST_MODE_NUM
-#undef LIST_MODE_TEXT
-#undef LIST_MODE_FLAG
+/datum/config_entry/keyed_list/text/flag
+	abstract_type = /datum/config_entry/keyed_list/text/flag
+	value_mode = VALUE_MODE_FLAG
+
+/datum/config_entry/keyed_list/text/number
+	abstract_type = /datum/config_entry/keyed_list/text/string
+	value_mode = VALUE_MODE_NUM
+
+/datum/config_entry/keyed_list/text/string
+	abstract_type = /datum/config_entry/keyed_list/text/string
+	value_mode = VALUE_MODE_TEXT
+
+/datum/config_entry/keyed_list/type
+	abstract_type = /datum/config_entry/keyed_list/type
+	key_mode = KEY_MODE_TYPE
+
+/datum/config_entry/keyed_list/type/flag
+	abstract_type = /datum/config_entry/keyed_list/type/flag
+	value_mode = VALUE_MODE_FLAG
+
+/datum/config_entry/keyed_list/type/number
+	abstract_type = /datum/config_entry/keyed_list/type/number
+	value_mode = VALUE_MODE_NUM
+
+/datum/config_entry/keyed_list/type/string
+	abstract_type = /datum/config_entry/keyed_list/type/string
+	value_mode = VALUE_MODE_TEXT
+
+#undef VALUE_MODE_NUM
+#undef VALUE_MODE_TEXT
+#undef VALUE_MODE_FLAG
+
+#undef KEY_MODE_TEXT
+#undef KEY_MODE_TYPE
