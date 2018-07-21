@@ -285,3 +285,37 @@
 		set_light(l_power = 0.8)
 	else
 		set_light(l_power = 0)
+
+/*
+ * Return of Party button
+ */
+
+/area
+	var/party = FALSE
+
+/obj/machinery/firealarm/partyalarm
+	name = "\improper PARTY BUTTON"
+	desc = "Cuban Pete is in the house!"
+
+/obj/machinery/firealarm/partyalarm/reset()
+	if (stat & (NOPOWER|BROKEN))
+		return
+	var/area/A = get_area(src)
+	if (!A || !A.party)
+		return
+	A.party = FALSE
+	A.cut_overlay("party")
+
+/obj/machinery/firealarm/partyalarm/alarm()
+	if (stat & (NOPOWER|BROKEN))
+		return
+	var/area/A = get_area(src)
+	if (!A || A.party || A.name == "Space")
+		return
+	A.party = TRUE
+	A.add_overlay("party")
+
+/obj/machinery/firealarm/partyalarm/ui_data(mob/user)
+	. = ..()
+	var/area/A = get_area(src)
+	.["alarm"] = A && A.party
