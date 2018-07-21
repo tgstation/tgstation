@@ -136,7 +136,7 @@
 			beeagents += R
 		var/bee_amount = round(created_volume * 0.2)
 		for(var/i in 1 to bee_amount)
-			var/mob/living/simple_animal/hostile/poison/bees/new_bee = new(drop_location(holder.my_atom))
+			var/mob/living/simple_animal/hostile/poison/bees/new_bee = new(holder.my_atom.drop_location())
 			if(LAZYLEN(beeagents))
 				new_bee.assign_reagent(pick(beeagents))
 
