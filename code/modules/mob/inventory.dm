@@ -174,6 +174,7 @@
 	if(forced || can_put_in_hand(I, hand_index))
 		if(isturf(I.loc))
 			I.do_pickup_animation(src)
+			playsound(src,'sound/effects/itemscream.ogg',40,1)
 		if(hand_index == null)
 			return FALSE
 		if(get_item_for_held_index(hand_index) != null)
