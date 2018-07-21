@@ -152,7 +152,6 @@
 				mobs += M
 			if(locate(/obj/item/areaeditor/blueprints) in T)
 				blueprints = TRUE
-			CHECK_TICK
 	for(var/i in mobs)
 		desc += camera_get_mobdesc(i)
 
