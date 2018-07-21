@@ -281,7 +281,7 @@
 		return TRUE
 
 /mob/living/proc/InCritical()
-	return (health <= crit_modifier() && (stat == SOFT_CRIT || stat == UNCONSCIOUS))
+	return (health <= crit_threshold && (stat == SOFT_CRIT || stat == UNCONSCIOUS))
 
 /mob/living/proc/InFullCritical()
 	return (health <= HEALTH_THRESHOLD_FULLCRIT && stat == UNCONSCIOUS)
@@ -807,7 +807,7 @@
 	var/stam = getStaminaLoss()
 	if(stam)
 		var/total_health = (health - stam)
-		if(total_health <= crit_modifier() && !stat && !IsKnockdown())
+		if(total_health <= crit_threshold && !stat && !IsKnockdown())
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			Knockdown(100)
 			update_health_hud()

@@ -13625,8 +13625,8 @@
 	pixel_x = 32;
 	pixel_y = -40
 	},
-/obj/structure/sign/directions/evac{
-	dir = 1;
+/obj/structure/sign/directions/command{
+	dir = 4;
 	pixel_x = 32;
 	pixel_y = -32
 	},
@@ -15679,14 +15679,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
-"aPw" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/sign/directions/evac{
-	dir = 1;
-	pixel_x = 32
-	},
-/turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/central)
 "aPx" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -17593,6 +17585,20 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
+/obj/structure/sign/directions/supply{
+	dir = 4;
+	pixel_x = -32;
+	pixel_y = -8
+	},
+/obj/structure/sign/directions/command{
+	dir = 1;
+	pixel_x = -32;
+	pixel_y = 8
+	},
+/obj/structure/sign/directions/security{
+	dir = 1;
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel/brown/corner{
 	dir = 1
 	},
@@ -17767,21 +17773,6 @@
 /area/solar/starboard)
 "aUG" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/escape{
-	dir = 1
-	},
-/area/hallway/secondary/exit/departure_lounge)
-"aUH" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/sign/directions/evac{
-	dir = 1;
-	pixel_y = 32
-	},
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -18130,6 +18121,17 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/structure/sign/directions/engineering{
+	pixel_x = -32;
+	pixel_y = -8
+	},
+/obj/structure/sign/directions/science{
+	pixel_x = -32
+	},
+/obj/structure/sign/directions/medical{
+	pixel_x = -32;
+	pixel_y = 8
+	},
 /turf/open/floor/plasteel/brown/corner{
 	dir = 1
 	},
@@ -18327,6 +18329,20 @@
 "aVR" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
+	},
+/obj/structure/sign/directions/evac{
+	dir = 1;
+	pixel_x = 32;
+	pixel_y = -8
+	},
+/obj/structure/sign/directions/security{
+	dir = 1;
+	pixel_x = 32;
+	pixel_y = 8
+	},
+/obj/structure/sign/directions/command{
+	dir = 1;
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
@@ -21859,10 +21875,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/sign/directions/evac{
-	dir = 8;
-	pixel_y = -32
-	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bfg" = (
@@ -22195,17 +22207,18 @@
 /area/crew_quarters/lounge)
 "bge" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/sign/directions/security{
-	dir = 1;
-	pixel_x = 32;
-	pixel_y = 40
-	},
-/obj/structure/sign/directions/science{
+/obj/structure/sign/directions/engineering{
 	dir = 4;
 	pixel_x = 32;
 	pixel_y = 32
 	},
-/obj/structure/sign/directions/engineering{
+/obj/structure/sign/directions/science{
+	dir = 4;
+	pixel_x = 32;
+	pixel_y = 40
+	},
+/obj/structure/sign/directions/medical{
+	dir = 4;
 	pixel_x = 32;
 	pixel_y = 24
 	},
@@ -22384,11 +22397,6 @@
 /area/hallway/primary/central)
 "bgA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/sign/directions/evac{
-	dir = 1;
-	pixel_x = -32;
-	pixel_y = 40
-	},
 /obj/structure/sign/directions/medical{
 	dir = 8;
 	pixel_x = -32;
@@ -22397,6 +22405,11 @@
 /obj/structure/sign/directions/engineering{
 	pixel_x = -32;
 	pixel_y = 24
+	},
+/obj/structure/sign/directions/supply{
+	dir = 1;
+	pixel_x = -32;
+	pixel_y = 40
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -22603,12 +22616,16 @@
 	},
 /obj/structure/sign/directions/engineering{
 	pixel_x = 32;
-	pixel_y = 28
+	pixel_y = 24
 	},
-/obj/structure/sign/directions/evac{
-	dir = 1;
+/obj/structure/sign/directions/science{
 	pixel_x = 32;
-	pixel_y = 38
+	pixel_y = 32
+	},
+/obj/structure/sign/directions/supply{
+	dir = 4;
+	pixel_x = 32;
+	pixel_y = 40
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -25315,12 +25332,12 @@
 	id = "robotics";
 	name = "Shutters Control Button";
 	pixel_x = -26;
-	pixel_y = 4;
+	pixel_y = 8;
 	req_access_txt = "29"
 	},
 /obj/machinery/light_switch{
 	pixel_x = -25;
-	pixel_y = -6
+	pixel_y = -8
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
@@ -26331,7 +26348,7 @@
 	name = "Shutters Control";
 	pixel_x = 26;
 	pixel_y = 4;
-	req_access_txt = "5; 33"
+	req_one_access_txt = "5;33"
 	},
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 5
@@ -26929,9 +26946,9 @@
 /obj/machinery/chem_dispenser{
 	layer = 2.7
 	},
-/obj/item/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = 29
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 28
 	},
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 4
@@ -38283,8 +38300,9 @@
 /area/crew_quarters/heads/chief)
 "bUL" = (
 /obj/machinery/computer/station_alert,
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = 32
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = 29
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
@@ -38292,6 +38310,9 @@
 /area/crew_quarters/heads/chief)
 "bUM" = (
 /obj/machinery/computer/card/minor/ce,
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 5
 	},
@@ -46327,13 +46348,6 @@
 /obj/item/flashlight/lantern,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
-"cwP" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 28
-	},
-/turf/closed/wall,
-/area/medical/chemistry)
 "cwR" = (
 /obj/structure/window/reinforced{
 	dir = 8;
@@ -48090,6 +48104,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/explab)
+"flk" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/sign/directions/evac{
+	dir = 8;
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "fmh" = (
 /turf/open/floor/wood,
 /area/maintenance/department/engine)
@@ -49307,6 +49329,20 @@
 	},
 /turf/open/floor/plating,
 /area/security/execution/transfer)
+"iQH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/escape{
+	dir = 1
+	},
+/area/hallway/secondary/exit/departure_lounge)
 "iSz" = (
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -49747,6 +49783,28 @@
 	dir = 4
 	},
 /area/hallway/secondary/exit/departure_lounge)
+"klP" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/sign/directions/science{
+	dir = 4;
+	pixel_x = 32;
+	pixel_y = 40
+	},
+/obj/structure/sign/directions/engineering{
+	dir = 4;
+	pixel_x = 32;
+	pixel_y = 32
+	},
+/obj/structure/sign/directions/supply{
+	dir = 4;
+	pixel_x = 32;
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "klV" = (
 /obj/item/clothing/under/rank/clown/sexy,
 /turf/open/floor/plasteel/dark,
@@ -49767,6 +49825,15 @@
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
+"knx" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/sign/directions/engineering{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 4
+	},
+/area/hallway/primary/aft)
 "kpK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -50209,6 +50276,21 @@
 /obj/item/wrench,
 /turf/open/floor/plating,
 /area/maintenance/department/science)
+"lKG" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/sign/directions/medical{
+	pixel_x = 32;
+	pixel_y = -8
+	},
+/obj/structure/sign/directions/science{
+	pixel_x = 32
+	},
+/obj/structure/sign/directions/engineering{
+	pixel_x = 32;
+	pixel_y = 8
+	},
+/turf/open/floor/plasteel/neutral/corner,
+/area/hallway/primary/central)
 "lKL" = (
 /obj/machinery/door/airlock/abandoned{
 	name = "Starboard Emergency Storage";
@@ -50494,6 +50576,11 @@
 	dir = 1;
 	pixel_x = 32
 	},
+/obj/structure/sign/directions/security{
+	dir = 8;
+	pixel_x = 32;
+	pixel_y = 8
+	},
 /turf/open/floor/plasteel/vault,
 /area/bridge)
 "mzl" = (
@@ -50635,15 +50722,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
-"nfi" = (
-/obj/structure/sign/directions/evac{
-	dir = 1;
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel/escape{
-	dir = 1
-	},
-/area/hallway/secondary/exit/departure_lounge)
 "nfz" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -50889,6 +50967,14 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
+"nMf" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/sign/directions/evac{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "nMG" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -51677,6 +51763,10 @@
 /area/medical/virology)
 "pSc" = (
 /obj/machinery/chem_heater,
+/obj/item/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = 29
+	},
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 5
 	},
@@ -52919,9 +53009,9 @@
 "tHk" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/sign/directions/evac{
-	pixel_x = 32;
-	pixel_y = 3
+/obj/structure/sign/directions/security{
+	dir = 1;
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -53262,6 +53352,24 @@
 /obj/effect/turf_decal/plaque,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
+"uPN" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/sign/directions/evac{
+	dir = 8;
+	pixel_x = -32;
+	pixel_y = 8
+	},
+/obj/structure/sign/directions/security{
+	dir = 1;
+	pixel_x = -32
+	},
+/obj/structure/sign/directions/command{
+	dir = 1;
+	pixel_x = -32;
+	pixel_y = -8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "uQR" = (
 /obj/item/ammo_casing/shotgun/beanbag,
 /turf/open/floor/plating,
@@ -54095,6 +54203,13 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/library)
+"xjb" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/sign/directions/evac{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "xjc" = (
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -75616,7 +75731,7 @@ aIH
 jTh
 aSu
 aiu
-nfi
+aML
 aJE
 aWF
 aXF
@@ -76130,7 +76245,7 @@ oEA
 scp
 oEA
 oEA
-dpa
+iQH
 dTV
 aWF
 kAa
@@ -77415,7 +77530,7 @@ aQx
 aRG
 qWM
 oEA
-aUH
+mal
 dTV
 aWF
 aXI
@@ -78173,11 +78288,11 @@ aDu
 aEs
 aFr
 aGb
-aGU
+nMf
 aHE
 aAL
 aAL
-aAL
+xjb
 aAL
 aMR
 aAL
@@ -78193,11 +78308,11 @@ aGU
 aAL
 aZL
 aAL
-aAL
+uPN
 aAL
 aAL
 bfg
-aAL
+flk
 aAL
 bhJ
 bif
@@ -78695,14 +78810,14 @@ aKI
 aLv
 aMT
 aKI
-aPw
+aKI
 aQC
 aKI
 aKI
 aTP
 aUM
 aVR
-aKI
+lKG
 aXL
 aYL
 aZN
@@ -82567,7 +82682,7 @@ bdo
 ben
 bfo
 bfo
-aJZ
+klP
 aAL
 bin
 bja
@@ -83659,7 +83774,7 @@ fFv
 fFv
 fFv
 fFv
-bTE
+bXk
 aaa
 aaa
 aaa
@@ -83916,7 +84031,7 @@ fFv
 qbp
 fFv
 fFv
-bTE
+bXk
 aaa
 aaa
 aaa
@@ -84173,7 +84288,7 @@ cBR
 uVW
 lRY
 ckr
-bTE
+bXk
 aaa
 aaa
 aaa
@@ -84430,7 +84545,7 @@ cjs
 cfV
 cfV
 cfV
-bTE
+bXk
 abI
 aaa
 aaa
@@ -84687,7 +84802,7 @@ uaP
 ciG
 cfV
 cfV
-bTE
+bXk
 abI
 abI
 aaa
@@ -84944,7 +85059,7 @@ uoq
 uRk
 ciG
 cfV
-bTE
+bXk
 abI
 aaa
 aaa
@@ -85201,7 +85316,7 @@ fyO
 uoq
 hQC
 mpd
-bTE
+bXk
 abI
 aaa
 aaa
@@ -85458,7 +85573,7 @@ fyO
 fyO
 hQC
 mpd
-bTE
+bXk
 abI
 aaa
 aaa
@@ -85715,7 +85830,7 @@ mpd
 mpd
 hQC
 sYp
-bTE
+bXk
 abI
 aaa
 aaa
@@ -85972,7 +86087,7 @@ fyO
 fyO
 hQC
 mpd
-bTE
+bXk
 aaa
 aaa
 aaa
@@ -86229,7 +86344,7 @@ fyO
 uoq
 hQC
 mpd
-bTE
+bXk
 aaa
 aaa
 aaa
@@ -86433,7 +86548,7 @@ bmA
 bjd
 bpY
 bpY
-cwP
+bpY
 pSc
 gGA
 bwW
@@ -86486,7 +86601,7 @@ fyO
 dZj
 ciI
 cfV
-bTE
+bXk
 aaa
 aaa
 aaa
@@ -86743,7 +86858,7 @@ cZt
 ciI
 cfV
 cfV
-bTE
+bXk
 abI
 aaa
 aaa
@@ -87000,7 +87115,7 @@ cjt
 cfV
 cfV
 cfV
-bTE
+bXk
 abI
 abI
 abI
@@ -87257,7 +87372,7 @@ woh
 liR
 phg
 cks
-bTE
+bXk
 abI
 aaa
 abI
@@ -87514,7 +87629,7 @@ fFv
 kWQ
 fFv
 fFv
-bTE
+bXk
 abI
 aaa
 aaa
@@ -87771,7 +87886,7 @@ fFv
 fFv
 fFv
 fFv
-bTE
+bXk
 abI
 abI
 abI
@@ -90028,7 +90143,7 @@ bks
 blD
 bko
 bko
-bko
+knx
 bqf
 bko
 bsV
