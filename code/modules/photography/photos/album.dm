@@ -35,6 +35,12 @@
 			continue
 		. |= P.picture.id
 
+//Manual loading, DO NOT USE FOR HARDCODED/MAPPED IN ALBUMS. This is for if an album needs to be loaded mid-round from an ID.
+/obj/item/storage/photo_album/proc/persistence_load()
+	var/list/data = SSpersistence.GetPhotoAlbums()
+	if(data[persistence_id])
+		populate_from_id_list(data[persistence_id])
+
 /obj/item/storage/photo_album/proc/populate_from_id_list(list/ids)
 	var/list/current_ids = get_picture_id_list()
 	for(var/i in ids)

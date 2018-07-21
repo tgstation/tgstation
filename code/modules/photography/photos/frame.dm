@@ -90,6 +90,12 @@
 	if(istype(framed) && istype(framed.picture))
 		return framed.picture.id
 
+//Manual loading, DO NOT USE FOR HARDCODED/MAPPED IN ALBUMS. This is for if an album needs to be loaded mid-round from an ID.
+/obj/structure/sign/picture_frame/proc/persistence_load()
+	var/list/data = SSpersistence.GetPhotoFrames()
+	if(data[persistence_id])
+		load_from_id(data[persistence_id])
+
 /obj/structure/sign/picture_frame/proc/load_from_id(id)
 	var/obj/item/photo/P = load_photo_from_disk(id)
 	if(istype(P))
