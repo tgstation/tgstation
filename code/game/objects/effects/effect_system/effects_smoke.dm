@@ -156,43 +156,51 @@
 /datum/effect_system/smoke_spread/freezing
 	effect_type = /obj/effect/particle_effect/smoke/freezing
 	var/blast = 0
+	var/temperature = 2
+	var/weldvents = TRUE
+	var/distcheck = TRUE
 
 /datum/effect_system/smoke_spread/freezing/proc/Chilled(atom/A)
 	if(isopenturf(A))
 		var/turf/open/T = A
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
-			if(get_dist(T, location) < 2) // Otherwise we'll get silliness like people using Nanofrost to kill people through walls with cold air
-				G.temperature = 2
+			if(!distcheck || get_dist(T, location) < blast) // Otherwise we'll get silliness like people using Nanofrost to kill people through walls with cold air
+				G.temperature = temperature
 			T.air_update_turf()
 			for(var/obj/effect/hotspot/H in T)
 				qdel(H)
-				var/list/G_gases = G.gases
-				if(G_gases[/datum/gas/plasma])
-					G.assert_gas(/datum/gas/nitrogen)
-					G_gases[/datum/gas/nitrogen][MOLES] += (G_gases[/datum/gas/plasma][MOLES])
-					G_gases[/datum/gas/plasma][MOLES] = 0
-					G.garbage_collect()
-		for(var/obj/machinery/atmospherics/components/unary/U in T)
-			if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.
-				U.welded = TRUE
-				U.update_icon()
-				U.visible_message("<span class='danger'>[U] was frozen shut!</span>")
+			var/list/G_gases = G.gases
+			if(G_gases[/datum/gas/plasma])
+				G.assert_gas(/datum/gas/nitrogen)
+				G_gases[/datum/gas/nitrogen][MOLES] += (G_gases[/datum/gas/plasma][MOLES])
+				G_gases[/datum/gas/plasma][MOLES] = 0
+				G.garbage_collect()
+		if (weldvents)
+			for(var/obj/machinery/atmospherics/components/unary/U in T)
+				if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.
+					U.welded = TRUE
+					U.update_icon()
+					U.visible_message("<span class='danger'>[U] was frozen shut!</span>")
 		for(var/mob/living/L in T)
 			L.ExtinguishMob()
 		for(var/obj/item/Item in T)
 			Item.extinguish()
 
-/datum/effect_system/smoke_spread/freezing/set_up(radius = 5, loca, blasting = 0)
+/datum/effect_system/smoke_spread/freezing/set_up(radius = 5, loca, blast_radius = 0)
 	..()
-	blast = blasting
+	blast = blast_radius
 
 /datum/effect_system/smoke_spread/freezing/start()
 	if(blast)
-		for(var/turf/T in RANGE_TURFS(2, location))
+		for(var/turf/T in RANGE_TURFS(blast, location))
 			Chilled(T)
 	..()
 
+/datum/effect_system/smoke_spread/freezing/decon
+	temperature = 293.15
+	distcheck = FALSE
+	weldvents = FALSE
 
 
 /////////////////////////////////////////////

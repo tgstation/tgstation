@@ -19043,7 +19043,7 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = 32
 	},
-/obj/item/book/manual/barman_recipes,
+/obj/item/book/manual/wiki/barman_recipes,
 /obj/item/reagent_containers/glass/rag,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
@@ -22691,6 +22691,13 @@
 /area/medical/chemistry)
 "bhd" = (
 /obj/machinery/chem_master,
+/obj/machinery/button/door{
+	id = "chemistry_shutters";
+	name = "Chemistry shutters";
+	pixel_x = 24;
+	pixel_y = -6;
+	req_one_access_txt = "5; 33"
+	},
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 5
 	},
@@ -23226,6 +23233,10 @@
 	req_access_txt = "33"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/preopen{
+	id = "chemistry_shutters";
+	name = "Chemistry shutters"
+	},
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "bis" = (
@@ -23391,7 +23402,7 @@
 	req_access_txt = "29"
 	},
 /obj/structure/table,
-/obj/item/book/manual/robotics_cyborgs{
+/obj/item/book/manual/wiki/robotics_cyborgs{
 	pixel_x = 2;
 	pixel_y = 5
 	},
@@ -24389,6 +24400,10 @@
 	req_access_txt = "33"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/preopen{
+	id = "chemistry_shutters";
+	name = "Chemistry shutters"
+	},
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "bli" = (
@@ -24994,8 +25009,38 @@
 	dir = 4;
 	pixel_x = -22
 	},
-/obj/item/stack/cable_coil/random,
-/obj/item/stack/cable_coil/random,
+/obj/item/assembly/igniter{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/assembly/igniter{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/assembly/igniter{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/assembly/igniter{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/assembly/timer{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/assembly/timer{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/assembly/timer{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/assembly/timer{
+	pixel_x = 3;
+	pixel_y = -3
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bmG" = (
@@ -25110,7 +25155,9 @@
 /area/hallway/primary/central)
 "bmT" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bmU" = (
@@ -25379,26 +25426,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
-"bnB" = (
-/obj/structure/closet/wardrobe/chemistry_white,
-/obj/machinery/light_switch{
-	pixel_x = -23
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/chemistry)
 "bnC" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/white,
-/area/medical/chemistry)
-"bnD" = (
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/table,
-/obj/item/book/manual/wiki/chemistry,
-/obj/item/book/manual/wiki/chemistry{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bnE" = (
@@ -25606,17 +25636,19 @@
 /area/crew_quarters/heads/captain)
 "bob" = (
 /obj/structure/table/glass,
-/obj/item/grenade/chem_grenade,
-/obj/item/grenade/chem_grenade,
-/obj/item/grenade/chem_grenade,
-/obj/item/grenade/chem_grenade,
 /obj/item/screwdriver{
-	pixel_x = -2;
-	pixel_y = 6
+	pixel_x = 2;
+	pixel_y = 18
 	},
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/stack/cable_coil/random,
+/obj/item/stack/cable_coil/random,
+/obj/item/grenade/chem_grenade,
+/obj/item/grenade/chem_grenade,
+/obj/item/grenade/chem_grenade,
+/obj/item/grenade/chem_grenade,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "boc" = (
@@ -25632,7 +25664,7 @@
 "bod" = (
 /obj/structure/table,
 /obj/item/folder/white,
-/obj/item/radio/headset/headset_med,
+/obj/item/pen,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "boe" = (
@@ -26295,6 +26327,7 @@
 	req_access_txt = "33"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "bpG" = (
@@ -26350,9 +26383,8 @@
 /area/medical/genetics)
 "bpM" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plating,
+/obj/machinery/smartfridge/chemistry,
+/turf/closed/wall,
 /area/medical/chemistry)
 "bpN" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -26792,9 +26824,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 1
 	},
@@ -26804,7 +26834,9 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 1
 	},
@@ -28761,7 +28793,7 @@
 	pixel_y = 24
 	},
 /obj/structure/table,
-/obj/item/book/manual/medical_cloning{
+/obj/item/book/manual/wiki/medical_cloning{
 	pixel_y = 6
 	},
 /turf/open/floor/plasteel/white,
@@ -29632,7 +29664,7 @@
 "bxq" = (
 /obj/structure/table,
 /obj/item/clipboard,
-/obj/item/book/manual/experimentor,
+/obj/item/book/manual/wiki/experimentor,
 /turf/open/floor/plasteel/white/corner{
 	dir = 4
 	},
@@ -46211,6 +46243,7 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
+/obj/structure/closet/wardrobe/engineering_yellow,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 9
 	},
@@ -52094,7 +52127,6 @@
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "cGt" = (
-/obj/structure/closet/wardrobe/engineering_yellow,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -53599,6 +53631,22 @@
 	},
 /turf/closed/wall/r_wall,
 /area/science/mixing)
+"kGA" = (
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/obj/effect/landmark/start/chemist,
+/obj/machinery/button/door{
+	id = "chemistry_shutters";
+	name = "Chemistry shutters";
+	pixel_x = 24;
+	pixel_y = -28;
+	req_one_access_txt = "5; 33"
+	},
+/turf/open/floor/plasteel/whiteyellow/side{
+	dir = 4
+	},
+/area/medical/chemistry)
 "kOw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
@@ -53629,6 +53677,12 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
+"lhu" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/chemistry)
 "lAB" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
@@ -53710,6 +53764,14 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"nQI" = (
+/obj/machinery/light_switch{
+	pixel_x = -23
+	},
+/obj/structure/closet/secure_closet/chemical,
+/obj/item/radio/headset/headset_med,
+/turf/open/floor/plasteel/white,
+/area/medical/chemistry)
 "nRG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -87896,13 +87958,13 @@ bcq
 bcq
 bcq
 bfF
-bha
+nQI
 bio
 bgF
 blf
 bmF
 bob
-bnB
+bha
 bfF
 bqR
 brX
@@ -88416,7 +88478,7 @@ bgP
 bjL
 bkL
 bmT
-bnD
+bjL
 bpM
 bqT
 bFD
@@ -88672,7 +88734,7 @@ bip
 bjO
 bip
 bmG
-bip
+lhu
 bnC
 bpF
 bqS
@@ -88927,7 +88989,7 @@ bfF
 bhd
 bis
 bjR
-bis
+kGA
 bmI
 bod
 bpt
