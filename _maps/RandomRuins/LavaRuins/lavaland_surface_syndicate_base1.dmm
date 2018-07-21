@@ -1948,8 +1948,7 @@
 	pixel_y = 8
 	},
 /obj/effect/turf_decal/caution/red{
-	dir = 1;
-	pixel_y = -6
+	dir = 1
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -2670,8 +2669,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/caution/red{
-	dir = 8;
-	pixel_x = 6
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
@@ -2862,7 +2860,7 @@
 /area/ruin/unpowered/syndicate_lava_base/main)
 "ja" = (
 /obj/effect/turf_decal/stripes/red/corner{
-	dir = 1
+	dir = 8
 	},
 /obj/machinery/button/door{
 	id = "syndie_lavaland_vault";

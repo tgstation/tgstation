@@ -615,7 +615,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			return
 		message_admins("[src] has consumed [key_name_admin(user)] [ADMIN_JMP(src)].")
 		investigate_log("has consumed [key_name(user)].", INVESTIGATE_SUPERMATTER)
-		user.dust()
+		user.dust(force = TRUE)
 		matter_power += 200
 	else if(istype(AM, /obj/singularity))
 		return

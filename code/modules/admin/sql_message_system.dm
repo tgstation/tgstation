@@ -128,8 +128,9 @@
 		var/edit_text = sanitizeSQL("Edited by [editor_ckey] on [SQLtime()] from<br>[old_text]<br>to<br>[new_text]<hr>")
 		var/datum/DBQuery/query_edit_message = SSdbcore.NewQuery("UPDATE [format_table_name("messages")] SET text = '[new_text]', lasteditor = '[editor_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE id = [message_id] AND deleted = 0")
 		if(!query_edit_message.warn_execute())
-			qdel(query_find_edit_message)
+			qdel(query_edit_message)
 			return
+		qdel(query_edit_message)
 		log_admin_private("[key_name(usr)] has edited a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""] made by [admin_ckey] from [old_text] to [new_text]")
 		message_admins("[key_name_admin(usr)] has edited a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""] made by [admin_ckey] from<br>[old_text]<br>to<br>[new_text]")
 		if(browse)

@@ -247,11 +247,6 @@
 	. = ..()
 	air_update_turf(1)
 
-/obj/structure/fans/Destroy()
-	var/turf/T = loc
-	. = ..()
-	T.air_update_turf(1)
-
 //Inivisible, indestructible fans
 /obj/structure/fans/tiny/invisible
 	name = "air flow blocker"

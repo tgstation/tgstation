@@ -1,3 +1,6 @@
+#define MINOR_INSANITY_PEN 5
+#define MAJOR_INSANITY_PEN 10
+
 /datum/component/mood
 	var/mood //Real happiness
 	var/sanity = 100 //Current sanity
@@ -6,6 +9,8 @@
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
 	var/datum/mood_event/list/mood_events = list()
 	var/mob/living/owner
+	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
+	var/holdmyinsanityeffect = 0 //before we edit our sanity lets take a look
 
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
@@ -120,13 +125,13 @@
 
 	switch(mood_level)
 		if(1)
-			DecreaseSanity(0.2, 0)
+			DecreaseSanity(0.2)
 		if(2)
-			DecreaseSanity(0.125, 25)
+			DecreaseSanity(0.125, SANITY_CRAZY)
 		if(3)
-			DecreaseSanity(0.075, 50)
+			DecreaseSanity(0.075, SANITY_UNSTABLE)
 		if(4)
-			DecreaseSanity(0.025, 75)
+			DecreaseSanity(0.025, SANITY_DISTURBED)
 		if(5)
 			IncreaseSanity(0.1)
 		if(6)
@@ -134,9 +139,15 @@
 		if(7)
 			IncreaseSanity(0.20)
 		if(8)
-			IncreaseSanity(0.25, 125)
+			IncreaseSanity(0.25, SANITY_GREAT)
 		if(9)
-			IncreaseSanity(0.4, 125)
+			IncreaseSanity(0.4, SANITY_GREAT)
+
+	if(insanity_effect != holdmyinsanityeffect)
+		if(insanity_effect > holdmyinsanityeffect)
+			owner.crit_threshold += (insanity_effect - holdmyinsanityeffect)
+		else
+			owner.crit_threshold -= (holdmyinsanityeffect - insanity_effect)
 
 	if(owner.has_trait(TRAIT_DEPRESSION))
 		if(prob(0.05))
@@ -147,17 +158,29 @@
 			add_event("jolly", /datum/mood_event/jolly)
 			clear_event("depression")
 
-/datum/component/mood/proc/DecreaseSanity(amount, limit = 0)
-	if(sanity < limit) //This might make KevinZ stop fucking pinging me.
+	holdmyinsanityeffect = insanity_effect
+
+/datum/component/mood/proc/DecreaseSanity(amount, minimum = SANITY_INSANE)
+	if(sanity < minimum) //This might make KevinZ stop fucking pinging me.
 		IncreaseSanity(0.5)
 	else
-		sanity = max(0, sanity - amount)
+		sanity = max(minimum, sanity - amount)
+		if(sanity < SANITY_UNSTABLE)
+			if(sanity < SANITY_CRAZY)
+				insanity_effect = (MAJOR_INSANITY_PEN)
+			else
+				insanity_effect = (MINOR_INSANITY_PEN)
 
-/datum/component/mood/proc/IncreaseSanity(amount, limit = 99)
-	if(sanity > limit)
+/datum/component/mood/proc/IncreaseSanity(amount, maximum = SANITY_NEUTRAL)
+	if(sanity > maximum)
 		DecreaseSanity(0.5) //Removes some sanity to go back to our current limit.
 	else
-		sanity = min(limit, sanity + amount)
+		sanity = min(maximum, sanity + amount)
+		if(sanity > SANITY_CRAZY)
+			if(sanity > SANITY_UNSTABLE)
+				insanity_effect = 0
+			else
+				insanity_effect = MINOR_INSANITY_PEN
 
 /datum/component/mood/proc/add_event(category, type, param) //Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
 	var/datum/mood_event/the_event
@@ -183,3 +206,6 @@
 	mood_events -= category
 	qdel(event)
 	update_mood()
+
+#undef MINOR_INSANITY_PEN
+#undef MAJOR_INSANITY_PEN

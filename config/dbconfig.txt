@@ -29,6 +29,14 @@ FEEDBACK_LOGIN username
 ## Password used to access the database.
 FEEDBACK_PASSWORD password
 
-## Time in deciseconds for a query to execute before alerting a for possible slow query timeout.
-## While enabled queries and their execution times are logged if they exceed this value.
-#QUERY_DEBUG_LOG_TIMEOUT 70
+## Time in seconds for asynchronous queries to timeout
+## Set to 0 for infinite
+ASYNC_QUERY_TIMEOUT 10
+
+## Time in seconds for blocking queries to execute before slow query timeout 
+## Set to 0 for infinite
+## Must be less than or equal to ASYNC_QUERY_TIMEOUT
+BLOCKING_QUERY_TIMEOUT 5
+
+## Uncomment to enable verbose BSQL communication logs
+#BSQL_DEBUG
