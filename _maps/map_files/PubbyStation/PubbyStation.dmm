@@ -24892,7 +24892,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "bnO" = (
-/obj/machinery/rnd/production/circuit_imprinter,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -24900,6 +24899,7 @@
 	dir = 4;
 	pixel_x = -28
 	},
+/obj/machinery/rnd/production/circuit_imprinter/department/science,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
