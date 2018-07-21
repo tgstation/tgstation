@@ -643,7 +643,6 @@
 	dir = 4
 	},
 /obj/structure/transit_tube/station/reverse{
-	icon_state = "closed_terminus0";
 	dir = 1
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -3567,7 +3566,6 @@
 	dir = 4
 	},
 /obj/structure/transit_tube/station/reverse{
-	icon_state = "closed_terminus0";
 	dir = 1
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -4186,7 +4184,6 @@
 /area/ruin/space/has_grav/ancientstation/atmo)
 "kW" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	icon_state = "pump_map";
 	dir = 8
 	},
 /turf/open/floor/plasteel/airless/floorgrime,
@@ -4659,7 +4656,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/window/westright,
 /obj/machinery/shower{
-	icon_state = "shower";
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -4673,7 +4669,6 @@
 "SJ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/whitepurple/side{
-	icon_state = "whitepurple";
 	dir = 10
 	},
 /area/ruin/space/has_grav/ancientstation/rnd)
@@ -4722,7 +4717,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/window/westleft,
 /obj/machinery/shower{
-	icon_state = "shower";
 	dir = 8
 	},
 /obj/item/soap/nanotrasen,
