@@ -457,13 +457,15 @@ Code:
 		if (48) // quartermaster ore logs
 			menu = list("<h4>[PDAIMG(crate)] Ore Silo Logs</h4>")
 			if (GLOB.ore_silo_default)
+				var/list/logs = GLOB.silo_access_logs[REF(GLOB.ore_silo_default)]
+				var/len = LAZYLEN(logs)
 				var/i = 0
-				for(var/M in GLOB.silo_access_logs[REF(GLOB.ore_silo_default)])
-					var/datum/ore_silo_log/entry = M
-					menu += "[entry.formatted]<br><br>"
-					if (++i >= 30)
+				for(var/M in logs)
+					if (++i > 30)
 						menu += "(... older logs not shown ...)"
 						break
+					var/datum/ore_silo_log/entry = M
+					menu += "[len - i]. [entry.formatted]<br><br>"
 				if(i == 0)
 					menu += "Nothing!"
 			else
