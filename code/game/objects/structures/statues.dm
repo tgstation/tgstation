@@ -101,6 +101,7 @@
 	max_integrity = 200
 	material_drop_type = /obj/item/stack/sheet/mineral/plasma
 	desc = "This statue is suitably made from plasma."
+	var/already_blown = FALSE
 
 /obj/structure/statue/plasma/scientist
 	name = "statue of a scientist"
@@ -113,8 +114,7 @@
 
 /obj/structure/statue/plasma/bullet_act(obj/item/projectile/Proj)
 	var/burn = FALSE
-	if(!(Proj.nodamage) && Proj.damage_type == BURN)
-		PlasmaBurn(2500)
+	if(!(Proj.nodamage) && Proj.damage_type == BURN && !already_blown)
 		burn = TRUE
 	if(burn)
 		var/turf/T = get_turf(src)
@@ -124,10 +124,11 @@
 		else
 			message_admins("Plasma statue ignited by [Proj]. No known firer, in [ADMIN_VERBOSEJMP(T)]")
 			log_game("Plasma statue ignited by [Proj] in [AREACOORD(T)]. No known firer.")
+		PlasmaBurn(2500)
 	..()
 
 /obj/structure/statue/plasma/attackby(obj/item/W, mob/user, params)
-	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
+	if(W.is_hot() > 300 && !already_blown)//If the temperature of the object is over 300, then ignite
 		var/turf/T = get_turf(src)
 		message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
 		log_game("Plasma statue ignited by [key_name(user)] in [AREACOORD(T)]")
@@ -136,6 +137,9 @@
 		return ..()
 
 /obj/structure/statue/plasma/proc/PlasmaBurn(exposed_temperature)
+	if(already_blown)
+		return
+	already_blown = TRUE
 	atmos_spawn_air("plasma=[oreAmount*10];TEMP=[exposed_temperature]")
 	deconstruct(FALSE)
 
