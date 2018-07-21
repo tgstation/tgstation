@@ -22,13 +22,13 @@
 /obj/machinery/rnd/production/Initialize(mapload)
 	. = ..()
 	create_reagents(0)
-	RefreshParts()
 	matching_designs = list()
 	cached_designs = list()
 	stored_research = new
 	host_research = SSresearch.science_tech
 	update_research()
 	materials = AddComponent(/datum/component/remote_materials, "lathe", mapload)
+	RefreshParts()
 
 /obj/machinery/rnd/production/proc/update_research()
 	host_research.copy_research_to(stored_research, TRUE)
@@ -63,6 +63,11 @@
 		for(var/obj/item/reagent_containers/glass/G in component_parts)
 			reagents.maximum_volume += G.volume
 			G.reagents.trans_to(src, G.reagents.total_volume)
+	if(materials)
+		var/total_storage = 0
+		for(var/obj/item/stock_parts/matter_bin/M in component_parts)
+			total_storage += M.rating * 75000
+		materials.set_local_size(total_storage)
 	var/total_rating = 0
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		total_rating += M.rating

@@ -14,6 +14,7 @@ handles linking back and forth.
 	var/datum/component/material_container/mat_container
 	var/category
 	var/allow_standalone
+	var/local_size = INFINITY
 
 /datum/component/remote_materials/Initialize(category, mapload, allow_standalone = TRUE, force_connect = FALSE)
 	if (!isatom(parent))
@@ -52,9 +53,14 @@ handles linking back and forth.
 	silo = null
 	mat_container = parent.AddComponent(/datum/component/material_container,
 		list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE, MAT_PLASTIC),
-		INFINITY,
+		local_size,
 		FALSE,
 		list(/obj/item/stack))
+
+/datum/component/remote_materials/proc/set_local_size(size)
+	local_size = size
+	if (!silo && mat_container)
+		mat_container.max_amount = size
 
 // called if disconnected by ore silo UI or destruction
 /datum/component/remote_materials/proc/disconnect_from(obj/machinery/ore_silo/old_silo)
