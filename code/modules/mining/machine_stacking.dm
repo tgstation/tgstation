@@ -78,12 +78,13 @@
 	var/stk_amt   = list()
 	var/stack_list[0] //Key: Type.  Value: Instance of type.
 	var/stack_amt = 50 //amount to stack before releassing
+	var/datum/component/remote_materials/materials
+	var/force_connect = FALSE
 
 /obj/machinery/mineral/stacking_machine/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 1)
-	if(mapload && is_station_level(z))
-		return INITIALIZE_HINT_LATELOAD
+	materials = AddComponent(/datum/component/remote_materials, "orm", mapload, FALSE, mapload && force_connect)
 
 /obj/machinery/mineral/stacking_machine/HasProximity(atom/movable/AM)
 	if(istype(AM, /obj/item/stack/sheet) && AM.loc == get_step(src, input_dir))
@@ -96,17 +97,6 @@
 			CONSOLE.machine = src
 			to_chat(user, "<span class='notice'>You link [src] to the console in [M]'s buffer.</span>")
 			return TRUE
-		else if(!QDELETED(M.buffer) && istype(M.buffer, /obj/machinery/ore_silo))
-			if (silo)
-				silo.orms -= src
-			silo = M.buffer
-			silo.orms += src
-			silo.updateUsrDialog()
-			to_chat(user, "<span class='notice'>You connect [src] to [silo] from the multitool's buffer.</span>")
-			return TRUE
-		else
-			to_chat(user, "<span class='warning'>The [M] has no linkage data in its buffer.</span>")
-			return FALSE
 
 /obj/machinery/mineral/stacking_machine/proc/process_sheet(obj/item/stack/sheet/inp)
 	var/key = inp.merge_type
@@ -116,12 +106,11 @@
 	storage.amount += inp.amount //Stack the sheets
 	qdel(inp)
 
-	if(silo && !silo.on_hold(src)) //Dump the sheets to the silo
-		GET_COMPONENT_FROM(materials, /datum/component/material_container, silo)
-		var/matlist = storage.materials & materials.materials
+	if(materials.silo && !materials.on_hold()) //Dump the sheets to the silo
+		var/matlist = storage.materials & materials.mat_container.materials
 		if (length(matlist))
-			var/inserted = materials.insert_stack(storage)
-			silo.silo_log(src, "collected", inserted, "sheets", matlist)
+			var/inserted = materials.mat_container.insert_stack(storage)
+			materials.silo_log(src, "collected", inserted, "sheets", matlist)
 			if (QDELETED(storage))
 				stack_list -= key
 			return

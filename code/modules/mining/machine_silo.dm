@@ -41,8 +41,8 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	return ..()
 
 /obj/machinery/ore_silo/proc/_disconnect(obj/machinery/M)
-	if (istype(M, /obj/machinery/mineral))
-		var/obj/machinery/mineral/mach = M
+	if (istype(M, /obj/machinery/mineral/ore_redemption))
+		var/obj/machinery/mineral/ore_redemption/mach = M
 		if (mach.silo == src)
 			mach.silo = null
 

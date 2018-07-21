@@ -135,12 +135,8 @@ GLOBAL_LIST(labor_sheet_values)
 
 
 /obj/machinery/mineral/stacking_machine/laborstacker
+	force_connect = TRUE
 	var/points = 0 //The unclaimed value of ore stacked.
-
-/obj/machinery/mineral/stacking_machine/laborstacker/Initialize(mapload)
-	. = ..()
-	if(mapload)  // even if not on the station, namely, in a shuttle
-		return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/mineral/stacking_machine/laborstacker/process_sheet(obj/item/stack/sheet/inp)
 	points += inp.point_value * inp.amount

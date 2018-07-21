@@ -14,7 +14,7 @@ handles linking back and forth.
 	var/datum/component/material_container/mat_container
 	var/category
 
-/datum/component/remote_materials/Initialize(category, allow_standalone = TRUE)
+/datum/component/remote_materials/Initialize(category, mapload, allow_standalone = TRUE, force_connect = FALSE)
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -23,8 +23,7 @@ handles linking back and forth.
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
 
 	var/turf/T = get_turf(parent)
-	var/mapload = SSatoms.initialized == INITIALIZATION_INNEW_MAPLOAD
-	if (mapload && is_station_level(T.z))
+	if (force_connect || (mapload && is_station_level(T.z)))
 		addtimer(CALLBACK(src, .proc/LateInitialize))
 	// TODO: create local storage otherwise
 
@@ -63,7 +62,7 @@ handles linking back and forth.
 			silo.connected += src
 			silo.updateUsrDialog()
 			mat_container = silo.GetComponent(/datum/component/material_container)
-			to_chat(user, "<span class='notice'>You connect [src] to [silo] from the multitool's buffer.</span>")
+			to_chat(user, "<span class='notice'>You connect [parent] to [silo] from the multitool's buffer.</span>")
 			return COMPONENT_NO_AFTERATTACK
 
 	else if (silo && istype(I, /obj/item/stack))
