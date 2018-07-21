@@ -79,14 +79,3 @@ handles linking back and forth.
 /datum/component/remote_materials/proc/format_amount()
 	if (mat_container)
 		return "[mat_container.total_amount] / [mat_container.max_amount == INFINITY ? "Unlimited" : mat_container.max_amount]"
-
-/datum/component/remote_materials/proc/eject_sheets(eject_amt, eject_sheet)
-	if (!mat_container)
-		return 0
-
-	var/atom/P = parent
-	var/count = mat_container.retrieve_sheets(eject_amt, eject_sheet, P.drop_location())
-	var/list/matlist = list()
-	matlist[eject_sheet] = MINERAL_MATERIAL_AMOUNT
-	silo_log(src, "ejected", -count, "sheets", matlist)
-	return count

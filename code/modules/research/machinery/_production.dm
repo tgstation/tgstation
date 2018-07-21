@@ -298,13 +298,18 @@
 	updateUsrDialog()
 
 /obj/machinery/rnd/production/proc/eject_sheets(eject_sheet, eject_amt)
-	if (!materials.mat_container)
+	var/datum/component/material_container/mat_container = materials.mat_container
+	if (!mat_container)
 		say("No access to material storage, please contact the quartermaster.")
 		return 0
 	if (materials.on_hold())
 		say("Mineral access is on hold, please contact the quartermaster.")
 		return 0
-	return materials.eject_sheets(text2num(eject_amt), eject_sheet)
+	var/count = mat_container.retrieve_sheets(text2num(eject_amt), eject_sheet, drop_location())
+	var/list/matlist = list()
+	matlist[eject_sheet] = MINERAL_MATERIAL_AMOUNT
+	materials.silo_log(src, "ejected", -count, "sheets", matlist)
+	return count
 
 /obj/machinery/rnd/production/proc/ui_screen_main()
 	var/list/l = list()
