@@ -42021,9 +42021,7 @@
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "cbp" = (
-/obj/structure/closet/secure_closet/engineering_chief{
-	req_access_txt = "0"
-	},
+/obj/structure/closet/secure_closet/engineering_chief,
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "CE Office APC";

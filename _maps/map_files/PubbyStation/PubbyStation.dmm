@@ -39318,8 +39318,7 @@
 	desc = "A remote control-switch for secure storage.";
 	id = "ce_privacy";
 	name = "Privacy Shutters";
-	pixel_x = 24;
-	req_access_txt = "11"
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 6
