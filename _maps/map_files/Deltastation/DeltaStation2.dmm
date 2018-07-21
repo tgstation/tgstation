@@ -87638,13 +87638,13 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dGe" = (
-/obj/machinery/rnd/production/circuit_imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/rnd/production/circuit_imprinter/department/science,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dGf" = (

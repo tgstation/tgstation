@@ -22855,7 +22855,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/rnd/production/circuit_imprinter,
+/obj/machinery/rnd/production/circuit_imprinter/department/science,
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "bhy" = (
@@ -25379,26 +25379,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
-"bnB" = (
-/obj/structure/closet/wardrobe/chemistry_white,
-/obj/machinery/light_switch{
-	pixel_x = -23
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/chemistry)
 "bnC" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/white,
-/area/medical/chemistry)
-"bnD" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/table,
-/obj/item/book/manual/wiki/chemistry,
-/obj/item/book/manual/wiki/chemistry{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bnE" = (
@@ -53896,6 +53878,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/hallway/secondary/service)
+"tgI" = (
+/obj/structure/closet/wardrobe/chemistry_white,
+/obj/machinery/light_switch{
+	pixel_x = -23
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/chemistry)
 "trb" = (
 /obj/machinery/light{
 	dir = 4
@@ -54098,6 +54087,17 @@
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"xKG" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/table,
+/obj/item/book/manual/wiki/chemistry,
+/obj/item/book/manual/wiki/chemistry{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/chemistry)
 "ycu" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -87908,7 +87908,7 @@ bgF
 blf
 bmF
 bob
-bnB
+tgI
 bfF
 bqR
 brX
@@ -88422,7 +88422,7 @@ bgP
 bjL
 bkL
 bmT
-bnD
+xKG
 bpM
 bqT
 bFD
