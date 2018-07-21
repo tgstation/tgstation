@@ -125,14 +125,14 @@ Reagents are all the things you can mix and fille in bottles etc. This can be an
 		
 		on_mob_add(mob/living/L)
 			Called when the reagent datum is created in the mobs holder.
-			Adding more while they still have some dosn't triger the effect a second time.
+			Adding more while they still have some dosen't trigger the effect a second time.
 			has to be  at or above 0.1u to run
 			Happens last in the process
 		
 		on_mob_delete(mob/living/L)
 			Called when the reagent datum is deleted from
 			the mobs holder. Note that this does not check 
-			if on_mob_add has done anything. Saftey check
+			if on_mob_add has done anything. Safety check
 			any effect that might stack permanent changes
 			to the mob to make sure you added it!	
 
