@@ -8,6 +8,7 @@
 	var/obj/structure/table/optable/table
 	var/list/advanced_surgeries = list()
 	light_color = LIGHT_COLOR_BLUE
+	usable_range = 2
 
 /obj/machinery/computer/operating/Initialize()
 	. = ..()

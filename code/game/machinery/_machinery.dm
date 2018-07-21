@@ -114,6 +114,7 @@ Class Procs:
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
 
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
+	var/usable_range = 1
 
 /obj/machinery/Initialize()
 	if(!armor)
@@ -211,6 +212,12 @@ Class Procs:
 /obj/machinery/proc/is_operational()
 	return !(stat & (NOPOWER|BROKEN|MAINT))
 
+/obj/machinery/proc/within_range(mob/user)
+	if(usable_range == 1)
+		return Adjacent(user)
+	else
+		return user in view(usable_range, src)
+
 /obj/machinery/can_interact(mob/user)
 	var/silicon = issiliconoradminghost(user)
 	if((stat & (NOPOWER|BROKEN)) && !(interaction_flags_machine & INTERACT_MACHINE_OFFLINE))
@@ -225,7 +232,7 @@ Class Procs:
 	else
 		if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON)
 			return FALSE
-		if(!Adjacent(user))
+		if(!within_range(user))
 			var/mob/living/carbon/H = user
 			if(!(istype(H) && H.has_dna() && H.dna.check_mutation(TK)))
 				return FALSE
