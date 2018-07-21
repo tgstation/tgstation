@@ -428,6 +428,7 @@
 	name = "Debug outfit"
 	uniform = /obj/item/clothing/under/patriotsuit 
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite
+	shoes = /obj/item/clothing/shoes/magboots/advance
 	suit_store = /obj/item/tank/internals/oxygen
 	mask = /obj/item/clothing/mask/gas/welding
 	belt = /obj/item/storage/belt/utility/chief/full
