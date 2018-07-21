@@ -21,7 +21,7 @@ GLOBAL_PROTECT(security_mode)
 
 	GLOB.revdata = new
 
-	config.Load()
+	config.Load(params[OVERRIDE_CONFIG_DIRECTORY_PARAMETER])
 
 	//SetupLogs depends on the RoundID, so lets check
 	//DB schema and set RoundID if we can

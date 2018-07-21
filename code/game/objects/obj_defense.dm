@@ -8,7 +8,7 @@
 		play_attack_sound(damage_amount, damage_type, damage_flag)
 	if(!(resistance_flags & INDESTRUCTIBLE) && obj_integrity > 0)
 		damage_amount = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
-		if(damage_amount >= 0.1)
+		if(damage_amount >= DAMAGE_PRECISION)
 			. = damage_amount
 			var/old_integ = obj_integrity
 			obj_integrity = max(old_integ - damage_amount, 0)
@@ -33,7 +33,7 @@
 		armor_protection = armor.getRating(damage_flag)
 	if(armor_protection)		//Only apply weak-against-armor/hollowpoint effects if there actually IS armor.
 		armor_protection = CLAMP(armor_protection - armour_penetration, 0, 100)
-	return round(damage_amount * (100 - armor_protection)*0.01, 0.1)
+	return round(damage_amount * (100 - armor_protection)*0.01, DAMAGE_PRECISION)
 
 //the sound played when the obj is damaged.
 /obj/proc/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)

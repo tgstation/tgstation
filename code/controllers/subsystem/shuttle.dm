@@ -218,6 +218,14 @@ SUBSYSTEM_DEF(shuttle)
 		else
 			emergency.request(null, signal_origin, html_decode(emergency_reason), 0)
 
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+
+	if(!frequency)
+		return
+
+	var/datum/signal/status_signal = new(list("command" = "update")) // Start processing shuttle-mode displays to display the timer
+	frequency.post_signal(src, status_signal)
+
 	var/area/A = get_area(user)
 
 	log_game("[key_name(user)] has called the shuttle.")

@@ -656,7 +656,7 @@
 		var/they_breathe = !C.has_trait(TRAIT_NOBREATH)
 		var/they_lung = C.getorganslot(ORGAN_SLOT_LUNGS)
 
-		if(C.health > C.crit_modifier())
+		if(C.health > C.crit_threshold)
 			return
 
 		src.visible_message("[src] performs CPR on [C.name]!", "<span class='notice'>You perform CPR on [C.name].</span>")
@@ -791,6 +791,8 @@
 						hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[BP.body_zone][icon_num]"))
 				for(var/t in get_missing_limbs()) //Missing limbs
 					hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[t]6"))
+				for(var/t in get_disabled_limbs()) //Disabled limbs
+					hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[t]7"))
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
@@ -831,13 +833,6 @@
 			Knockdown(200)
 		return 1
 	..()
-
-/mob/living/carbon/human/Bump(atom/A)
-	..()
-	var/crashdir = get_dir(src, A)
-	var/obj/item/flightpack/FP = get_flightpack()
-	if(FP)
-		FP.flight_impact(A, crashdir)
 
 /mob/living/carbon/human/vv_get_dropdown()
 	. = ..()

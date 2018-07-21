@@ -77,8 +77,8 @@
 	var/type
 	var/target_ckey
 	var/text
-	var/m1 = "[key_name(usr)] has deleted a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for" : " made by"] [target_ckey]: [text]"
-	var/m2 = "[key_name_admin(usr)] has deleted a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for" : " made by"] [target_ckey]:<br>[text]"
+	var/user_key_name = key_name(usr)
+	var/user_name_admin = key_name_admin(usr)
 	var/datum/DBQuery/query_find_del_message = SSdbcore.NewQuery("SELECT type, targetckey, adminckey, text FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
 	if(!query_find_del_message.warn_execute())
 		qdel(query_find_del_message)
@@ -94,6 +94,8 @@
 		return
 	qdel(query_del_message)
 	if(logged)
+		var/m1 = "[user_key_name] has deleted a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for" : " made by"] [target_ckey]: [text]"
+		var/m2 = "[user_name_admin] has deleted a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for" : " made by"] [target_ckey]:<br>[text]"
 		log_admin_private(m1)
 		message_admins(m2)
 		if(browse)
@@ -126,8 +128,9 @@
 		var/edit_text = sanitizeSQL("Edited by [editor_ckey] on [SQLtime()] from<br>[old_text]<br>to<br>[new_text]<hr>")
 		var/datum/DBQuery/query_edit_message = SSdbcore.NewQuery("UPDATE [format_table_name("messages")] SET text = '[new_text]', lasteditor = '[editor_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE id = [message_id] AND deleted = 0")
 		if(!query_edit_message.warn_execute())
-			qdel(query_find_edit_message)
+			qdel(query_edit_message)
 			return
+		qdel(query_edit_message)
 		log_admin_private("[key_name(usr)] has edited a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""] made by [admin_ckey] from [old_text] to [new_text]")
 		message_admins("[key_name_admin(usr)] has edited a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""] made by [admin_ckey] from<br>[old_text]<br>to<br>[new_text]")
 		if(browse)

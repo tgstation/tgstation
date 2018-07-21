@@ -506,9 +506,9 @@
 	var/total_stamina = 0
 	for(var/X in bodyparts)	//hardcoded to streamline things a bit
 		var/obj/item/bodypart/BP = X
-		total_brute	+= BP.brute_dam
-		total_burn	+= BP.burn_dam
-		total_stamina += BP.stamina_dam
+		total_brute	+= (BP.brute_dam * BP.body_damage_coeff)
+		total_burn	+= (BP.burn_dam * BP.body_damage_coeff)
+		total_stamina += (BP.stamina_dam * BP.body_damage_coeff)
 	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
 	staminaloss = total_stamina
 	update_stat()
@@ -599,7 +599,7 @@
 	if(!client)
 		return
 
-	if(health <= crit_modifier())
+	if(health <= crit_threshold)
 		var/severity = 0
 		switch(health)
 			if(-20 to -10)
@@ -728,7 +728,7 @@
 			stat = UNCONSCIOUS
 			blind_eyes(1)
 		else
-			if(health <= crit_modifier() && !has_trait(TRAIT_NOSOFTCRIT))
+			if(health <= crit_threshold && !has_trait(TRAIT_NOSOFTCRIT))
 				stat = SOFT_CRIT
 			else
 				stat = CONSCIOUS
