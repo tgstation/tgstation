@@ -13,26 +13,30 @@ handles linking back and forth.
 	var/obj/machinery/ore_silo/silo
 	var/datum/component/material_container/mat_container
 	var/category
+	var/allow_standalone
 
 /datum/component/remote_materials/Initialize(category, mapload, allow_standalone = TRUE, force_connect = FALSE)
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.category = category
+	src.allow_standalone = allow_standalone
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
 
 	var/turf/T = get_turf(parent)
 	if (force_connect || (mapload && is_station_level(T.z)))
 		addtimer(CALLBACK(src, .proc/LateInitialize))
-	// TODO: create local storage otherwise
+	else if (allow_standalone)
+		_MakeLocal()
 
 /datum/component/remote_materials/proc/LateInitialize()
 	silo = GLOB.ore_silo_default
 	if (silo)
 		silo.connected += src
 		mat_container = silo.GetComponent(/datum/component/material_container)
-	// TODO: create local storage otherwise
+	else
+		_MakeLocal()
 
 /datum/component/remote_materials/Destroy()
 	if (silo)
@@ -44,20 +48,36 @@ handles linking back and forth.
 		mat_container.retrieve_all()
 	return ..()
 
+/datum/component/remote_materials/proc/_MakeLocal()
+	silo = null
+	mat_container = parent.AddComponent(/datum/component/material_container,
+		list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE, MAT_PLASTIC),
+		INFINITY,
+		FALSE,
+		list(/obj/item/stack))
+
 // called if disconnected by ore silo UI or destruction
 /datum/component/remote_materials/proc/disconnect_from(obj/machinery/ore_silo/old_silo)
 	if (!old_silo || silo != old_silo)
 		return
 	silo = null
 	mat_container = null
-	// TODO: revert to local storage if set
+	if (allow_standalone)
+		_MakeLocal()
 
 /datum/component/remote_materials/proc/OnAttackBy(obj/item/I, mob/user)
 	if (istype(I, /obj/item/multitool))
 		var/obj/item/multitool/M = I
 		if (!QDELETED(M.buffer) && istype(M.buffer, /obj/machinery/ore_silo))
+			if (silo == M.buffer)
+				to_chat(user, "<span class='notice'>[parent] is already connected to [silo].</span>")
+				return COMPONENT_NO_AFTERATTACK
 			if (silo)
 				silo.connected -= src
+				silo.updateUsrDialog()
+			else if (mat_container)
+				mat_container.retrieve_all()
+				qdel(mat_container)
 			silo = M.buffer
 			silo.connected += src
 			silo.updateUsrDialog()
@@ -78,4 +98,6 @@ handles linking back and forth.
 
 /datum/component/remote_materials/proc/format_amount()
 	if (mat_container)
-		return "[mat_container.total_amount] / [mat_container.max_amount == INFINITY ? "Unlimited" : mat_container.max_amount]"
+		return "[mat_container.total_amount] / [mat_container.max_amount == INFINITY ? "Unlimited" : mat_container.max_amount] ([silo ? "remote" : "local"])"
+	else
+		return "0 / 0"
