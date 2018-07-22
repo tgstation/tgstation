@@ -814,7 +814,7 @@
 			for (var/i in armorlist)
 				pickerlist += list(list("value" = armorlist[i], "name" = i))
 
-			var/list/result = presentpicker(usr, "Modify armor", "Modify armor: [O]", Button1="Save", Button2 = "Cancel", Timeout=FALSE, Type = "text", values = pickerlist)
+			var/list/result = presentpicker(usr, "Modify armor", "Modify armor: [O]", Button1="Save", Button2 = "Cancel", Timeout=FALSE, inputtype = "text", values = pickerlist)
 
 			if (islist(result))
 				if (result["button"] == 2) // If the user pressed the cancel button
