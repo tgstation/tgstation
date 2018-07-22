@@ -296,6 +296,7 @@
 /obj/machinery/firealarm/partyalarm
 	name = "\improper PARTY BUTTON"
 	desc = "Cuban Pete is in the house!"
+	var/static/party_overlay
 
 /obj/machinery/firealarm/partyalarm/reset()
 	if (stat & (NOPOWER|BROKEN))
@@ -304,7 +305,7 @@
 	if (!A || !A.party)
 		return
 	A.party = FALSE
-	A.cut_overlay("party")
+	A.cut_overlay(party_overlay)
 
 /obj/machinery/firealarm/partyalarm/alarm()
 	if (stat & (NOPOWER|BROKEN))
@@ -313,7 +314,9 @@
 	if (!A || A.party || A.name == "Space")
 		return
 	A.party = TRUE
-	A.add_overlay("party")
+	if (!party_overlay)
+		party_overlay = iconstate2appearance('icons/turf/areas.dmi', "party")
+	A.add_overlay(party_overlay)
 
 /obj/machinery/firealarm/partyalarm/ui_data(mob/user)
 	. = ..()
