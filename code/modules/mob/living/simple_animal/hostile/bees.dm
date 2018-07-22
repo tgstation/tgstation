@@ -295,3 +295,6 @@
 			forceMove(beehome.drop_location())
 	else
 		..()
+
+/mob/living/simple_animal/hostile/poison/bees/short/Initialize()
+	addtimer(CALLBACK(src, .proc/Destroy()), 500)
