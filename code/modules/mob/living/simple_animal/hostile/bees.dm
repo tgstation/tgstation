@@ -297,4 +297,4 @@
 		..()
 
 /mob/living/simple_animal/hostile/poison/bees/short/Initialize()
-	addtimer(CALLBACK(src, .proc/Destroy()), 500)
+	addtimer(CALLBACK(src, .proc/qdel()), 500)
