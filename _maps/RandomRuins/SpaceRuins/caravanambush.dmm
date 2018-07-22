@@ -33,7 +33,7 @@
 /area/template_noop)
 "ah" = (
 /obj/structure/lattice/catwalk,
-/mob/living/simple_animal/hostile/pirate/space/ranged{
+/mob/living/simple_animal/hostile/pirate/ranged/space{
 	environment_smash = 0
 	},
 /turf/template_noop,
@@ -176,7 +176,7 @@
 /area/shuttle/caravan/freighter3)
 "aP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/mob/living/simple_animal/hostile/pirate/space/ranged{
+/mob/living/simple_animal/hostile/pirate/ranged/space{
 	environment_smash = 0
 	},
 /turf/open/floor/plasteel/airless/floorgrime,
@@ -1096,7 +1096,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/pirate/space/ranged{
+/mob/living/simple_animal/hostile/pirate/ranged/space{
 	environment_smash = 0
 	},
 /turf/open/floor/plasteel/airless/floorgrime,
@@ -1108,7 +1108,7 @@
 /area/shuttle/caravan/freighter2)
 "jO" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/pirate/space/ranged{
+/mob/living/simple_animal/hostile/pirate/ranged/space{
 	environment_smash = 0
 	},
 /turf/open/floor/plating/airless,
