@@ -1,0 +1,4 @@
+author: "Epoc"
+delete-after: True
+changes: 
+  - rscadd: "Adds \"Toggle Flashlight\" to PDA context menu."
