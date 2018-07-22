@@ -5,7 +5,6 @@
 /obj/item/grenade/chem_grenade
 	name = "chemical grenade"
 	desc = "A custom made grenade."
-	var/casedesc = "This basic model accepts both beakers and bottles. It heats contents by 10°K upon ignition." // Appears when examining empty casings.
 	icon_state = "chemg"
 	item_state = "flashbang"
 	w_class = WEIGHT_CLASS_SMALL
@@ -19,6 +18,7 @@
 	var/ignition_temp = 10 // The amount of heat added to the reagents when this grenade goes off.
 	var/threatscale = 1 // Used by advanced grenades to make them slightly more worthy.
 	var/no_splash = FALSE //If the grenade deletes even if it has no reagents to splash with. Used for slime core reactions.
+	var/casedesc = "This basic model accepts both beakers and bottles. It heats contents by 10°K upon ignition." // Appears when examining empty casings.
 
 /obj/item/grenade/chem_grenade/Initialize()
 	. = ..()
