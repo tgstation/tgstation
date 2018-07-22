@@ -1004,7 +1004,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/bridge)
 "bC" = (
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command{
 	name = "Bridge"
 	},
 /obj/effect/decal/cleanable/dirt{
