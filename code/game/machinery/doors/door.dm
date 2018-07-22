@@ -70,6 +70,10 @@
 	else
 		layer = initial(layer)
 
+/obj/machinery/door/power_change()
+	..()
+	update_icon()
+
 /obj/machinery/door/Destroy()
 	density = FALSE
 	air_update_turf(1)
