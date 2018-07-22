@@ -303,4 +303,4 @@
 	health = 0
 
 /mob/living/simple_animal/hostile/poison/bees/short/Initialize()
-	addtimer(CALLBACK(src, .proc/suicide()), 500)
+	addtimer(CALLBACK(src, .proc/suicide, 500)
