@@ -38,6 +38,7 @@
 	icon_screen = "seclaptop"
 	icon_keyboard = "laptop_key"
 	clockwork = TRUE //it'd look weird
+	pass_flags = PASSTABLE
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/card/id))

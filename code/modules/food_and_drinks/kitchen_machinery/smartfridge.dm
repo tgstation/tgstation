@@ -420,6 +420,7 @@
 	icon_state = "disktoaster"
 	icon_on = "disktoaster"
 	icon_off = "disktoaster-off"
+	pass_flags = PASSTABLE
 
 /obj/machinery/smartfridge/disks/accept_check(obj/item/O)
 	if(istype(O, /obj/item/disk/))
