@@ -129,6 +129,30 @@
 	name = "Abandoned Ship"
 	blob_allowed = FALSE
 
+/area/shuttle/abandoned/bridge
+	name = "Abandoned Ship Bridge"
+	blob_allowed = FALSE
+
+/area/shuttle/abandoned/engine
+	name = "Abandoned Ship Engine"
+	blob_allowed = FALSE
+
+/area/shuttle/abandoned/bar
+	name = "Abandoned Ship Bar"
+	blob_allowed = FALSE
+
+/area/shuttle/abandoned/crew
+	name = "Abandoned Ship Crew Quarters"
+	blob_allowed = FALSE
+
+/area/shuttle/abandoned/cargo
+	name = "Abandoned Ship Cargo Bay"
+	blob_allowed = FALSE
+
+/area/shuttle/abandoned/medbay
+	name = "Abandoned Ship Medbay"
+	blob_allowed = FALSE
+
 /area/shuttle/sbc_starfury
 	name = "SBC Starfury"
 	blob_allowed = FALSE

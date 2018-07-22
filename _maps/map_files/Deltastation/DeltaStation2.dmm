@@ -1335,10 +1335,10 @@
 /obj/docking_port/stationary{
 	dir = 8;
 	dwidth = 11;
-	height = 15;
+	height = 22;
 	id = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Fore";
-	width = 32
+	width = 35
 	},
 /turf/open/space/basic,
 /area/space)
