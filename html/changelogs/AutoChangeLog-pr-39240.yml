@@ -1,0 +1,4 @@
+author: "obscolene"
+delete-after: True
+changes: 
+  - soundadd: "Curator's whip actually makes a whip sound now"
