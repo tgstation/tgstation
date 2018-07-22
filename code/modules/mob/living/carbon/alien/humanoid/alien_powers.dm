@@ -241,11 +241,11 @@ Doesn't work on other aliens/AI.*/
 		A.update_icons()
 
 /obj/effect/proc_holder/alien/neurotoxin/remove_ranged_ability(msg)
-	..()
 	if(isalienadult(ranged_ability_user))
 		var/mob/living/carbon/alien/humanoid/A = ranged_ability_user
 		A.drooling = 0
 		A.update_icons()
+	..()
 
 /obj/effect/proc_holder/alien/resin
 	name = "Secrete Resin"
