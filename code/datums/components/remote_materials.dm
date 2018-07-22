@@ -46,7 +46,9 @@ handles linking back and forth.
 		silo = null
 		mat_container = null
 	else if (mat_container)
-		mat_container.retrieve_all()
+		// specify explicitly in case the other component is deleted first
+		var/atom/P = parent
+		mat_container.retrieve_all(P.drop_location())
 	return ..()
 
 /datum/component/remote_materials/proc/_MakeLocal()
