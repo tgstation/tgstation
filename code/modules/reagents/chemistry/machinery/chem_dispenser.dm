@@ -384,6 +384,12 @@
 		final_list += list(avoid_assoc_duplicate_keys(fuck[1],key_list) = text2num(fuck[2]))
 	return final_list
 
+/obj/machinery/chem_dispenser/drinks/setDir()
+	var/old = dir
+	. = ..()
+	if(dir != old)
+		update_icon()  // the beaker needs to be re-positioned if we rotate
+
 /obj/machinery/chem_dispenser/drinks/display_beaker()
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
 	switch(dir)
