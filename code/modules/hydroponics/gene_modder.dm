@@ -5,6 +5,7 @@
 	icon_state = "dnamod"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/plantgenes
+	pass_flags = PASSTABLE
 
 	var/obj/item/seeds/seed
 	var/obj/item/disk/plantgene/disk
