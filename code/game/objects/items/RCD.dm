@@ -57,11 +57,14 @@ RLD
 	var/loaded = 0
 	if(istype(W, /obj/item/rcd_ammo))
 		var/obj/item/rcd_ammo/R = W
-		if((matter + R.ammoamt) > max_matter)
+		var/load = min(R.ammoamt, max_matter - matter)
+		if(load <= 0)
 			to_chat(user, "<span class='warning'>[src] can't hold any more matter-units!</span>")
 			return
-		qdel(W)
-		matter += R.ammoamt
+		R.ammoamt -= load
+		if(R.ammoamt <= 0)
+			qdel(R)
+		matter += load
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		loaded = 1
 	else if(istype(W, /obj/item/stack/sheet/metal) || istype(W, /obj/item/stack/sheet/glass))
