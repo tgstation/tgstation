@@ -131,7 +131,7 @@
 		var/list/beeagents = list()
 		for(var/X in holder.reagent_list)
 			var/datum/reagent/R = X
-			if(R.id in required_reagents)
+			if(required_reagents[R.id])
 				continue
 			beeagents += R
 		var/bee_amount = round(created_volume * 0.2)
