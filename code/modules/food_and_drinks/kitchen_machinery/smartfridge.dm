@@ -39,8 +39,6 @@
 
 /obj/machinery/smartfridge/update_icon()
 	var/startstate = initial(icon_state)
-	if((icon_state != startstate)&&(icon_state != "[startstate]-off"))
-		startstate = replacetext(icon_state, "-off", "") //admins ruin everything!
 	if(!stat)
 		icon_state = startstate
 	else
