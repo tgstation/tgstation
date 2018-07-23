@@ -267,9 +267,9 @@ var/list/hubmsgs = world.file2list("strings/hub.txt")
 	if (n > 1)
 		features += "~[n] players"
 	else if (n == 1)
-		features += "~no players"
+		features += "~1 player"
 	else if (n == 0)
-		features += "~[n] player"
+		features += "~no players"
 
 	if (!host && hostedby)
 		features += "hosted by <b>[hostedby]</b>"
