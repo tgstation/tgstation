@@ -290,3 +290,11 @@
 	icon_state = "doubleratkebab"
 	tastes = list("rat meat" = 2, "metal" = 1)
 	bonus_reagents = list("nutriment" = 6, "vitamin" = 2)
+
+/obj/item/reagent_containers/food/snacks/ashsteak
+	name = "Demonico Steak"
+	desc = "A delicacy among miners and ash walkers alike."
+	icon_state = "ash_steak"
+	tastes = list("tough meat" = 1, "sin" = 2)
+	bonus_reagents = list("vitamin" = 1, "vitfro" = 2)
+	foodtype = MEAT
