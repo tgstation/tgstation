@@ -52,10 +52,10 @@
 	//Check if everything is in place
 	for(var/id in 1 to 9)
 		var/target_turf = get_turf_for_id(id)
-		var/obj/structure/puzzle_element/unwanted = locate() in target_turf
-		if(id == empty_tile_id && !unwanted)
+		var/obj/structure/puzzle_element/E = locate() in target_turf
+		if(id == empty_tile_id && !E) // This location should be empty.
 			continue
-		if(!unwanted || unwanted.id != id) //wrong tile or no tile at all
+		if(!E || E.id != id) //wrong tile or no tile at all
 			return
 	//Ding ding
 	finish()
