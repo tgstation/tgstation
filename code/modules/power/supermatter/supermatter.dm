@@ -265,37 +265,38 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	exploding = 1
 	message_admins("<font color='#ff0000'><B>SUPERMATTER AT \"[get_area(src)]\" HAS EXPLODED! [ADMIN_JMP(src)] You have 10 seconds to reverse this.</B></font> Options(<A href='?src=[REF(src)];explode=resume'>Allow</A>, <A href='?src=[REF(src)];explode=pause'>Pause</A> or <A href='?src=[REF(src)];explode=cancel'>Cancel</A>)",'sound/magic/charge.ogg')
 	explodesleeping = 1
-	var/stopsleepingat = world.time+100
-	while(explodesleeping)
-		sleep(5)
-		if(world.time > stopsleepingat)
-			explodesleeping = 0
-	if(exploding == 3)
-		while(exploding == 3)
-			sleep(10)
-	if(exploding == 0)
-		return
-	exploding = 0
-	var/turf/T = get_turf(src)
-	for(var/mob/M in GLOB.player_list)
-		if(M.z == z)
-			SEND_SOUND(M, 'sound/magic/charge.ogg')
-			to_chat(M, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
-			M.SendSignal(COMSIG_ADD_MOOD_EVENT, "delam", /datum/mood_event/delam)
-	if(combined_gas > MOLE_PENALTY_THRESHOLD)
-		investigate_log("has collapsed into a singularity.", INVESTIGATE_SUPERMATTER)
-		if(T)
-			var/obj/singularity/S = new(T)
-			S.energy = 800
-			S.consume(src)
-	else
-		investigate_log("has exploded.", INVESTIGATE_SUPERMATTER)
-		explosion(get_turf(T), explosion_power * max(gasmix_power_ratio, 0.205) * 0.5 , explosion_power * max(gasmix_power_ratio, 0.205) + 2, explosion_power * max(gasmix_power_ratio, 0.205) + 4 , explosion_power * max(gasmix_power_ratio, 0.205) + 6, 1, 1)
-		if(power > POWER_PENALTY_THRESHOLD)
-			investigate_log("has spawned additional energy balls.", INVESTIGATE_SUPERMATTER)
-			var/obj/singularity/energy_ball/E = new(T)
-			E.energy = power
-		qdel(src)
+	spawn(0)
+		var/stopsleepingat = world.time+100
+		while(explodesleeping)
+			sleep(5)
+			if(world.time > stopsleepingat)
+				explodesleeping = 0
+		if(exploding == 3)
+			while(exploding == 3)
+				sleep(10)
+		if(exploding == 0)
+			return
+		exploding = 0
+		var/turf/T = get_turf(src)
+		for(var/mob/M in GLOB.player_list)
+			if(M.z == z)
+				SEND_SOUND(M, 'sound/magic/charge.ogg')
+				to_chat(M, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
+				M.SendSignal(COMSIG_ADD_MOOD_EVENT, "delam", /datum/mood_event/delam)
+		if(combined_gas > MOLE_PENALTY_THRESHOLD)
+			investigate_log("has collapsed into a singularity.", INVESTIGATE_SUPERMATTER)
+			if(T)
+				var/obj/singularity/S = new(T)
+				S.energy = 800
+				S.consume(src)
+		else
+			investigate_log("has exploded.", INVESTIGATE_SUPERMATTER)
+			explosion(get_turf(T), explosion_power * max(gasmix_power_ratio, 0.205) * 0.5 , explosion_power * max(gasmix_power_ratio, 0.205) + 2, explosion_power * max(gasmix_power_ratio, 0.205) + 4 , explosion_power * max(gasmix_power_ratio, 0.205) + 6, 1, 1)
+			if(power > POWER_PENALTY_THRESHOLD)
+				investigate_log("has spawned additional energy balls.", INVESTIGATE_SUPERMATTER)
+				var/obj/singularity/energy_ball/E = new(T)
+				E.energy = power
+			qdel(src)
 
 /obj/machinery/power/supermatter_shard/process_atmos()
 	if(exploding)
