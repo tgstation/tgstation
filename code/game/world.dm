@@ -276,6 +276,8 @@ var/list/hubmsgs = world.file2list("strings/hub.txt")
 
 	if (features)
 		features += "<i>"+pick(hubmsgs)+"</i>"
+
+	if (features)
 		s += ": [jointext(features, ", ")]"
 
 	status = s
