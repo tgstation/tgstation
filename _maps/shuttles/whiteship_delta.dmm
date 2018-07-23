@@ -1942,7 +1942,7 @@
 /turf/open/floor/plasteel/blue/side{
 	dir = 1
 	},
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "cQ" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -1954,11 +1954,11 @@
 /turf/open/floor/plasteel/blue/side{
 	dir = 1
 	},
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "cR" = (
 /obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "cS" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medbay"
@@ -1969,7 +1969,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "cT" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medbay"
@@ -1984,7 +1984,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "cU" = (
 /obj/effect/turf_decal/bot_white,
 /obj/effect/decal/cleanable/dirt{
@@ -2005,7 +2005,7 @@
 	},
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "cV" = (
 /obj/effect/turf_decal/bot_white,
 /obj/effect/decal/cleanable/dirt{
@@ -2023,7 +2023,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "cW" = (
 /obj/structure/sign/departments/cargo,
 /turf/closed/wall/mineral/titanium,
@@ -2144,7 +2144,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dg" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -2155,7 +2155,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/floorgrime,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dh" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -2171,7 +2171,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "di" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/color/latex,
@@ -2182,7 +2182,7 @@
 	name = "dust"
 	},
 /turf/open/floor/plasteel/white,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dj" = (
 /obj/machinery/light/small/built{
 	dir = 1
@@ -2204,7 +2204,7 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 9
 	},
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dk" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -2219,7 +2219,7 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dl" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -2238,7 +2238,7 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dm" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -2256,7 +2256,7 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 5
 	},
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dn" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 5
@@ -2273,7 +2273,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "do" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/decal/cleanable/dirt{
@@ -2287,7 +2287,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dp" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 9
@@ -2302,7 +2302,7 @@
 	},
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dq" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -2317,7 +2317,7 @@
 	name = "E.V.A Access"
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dr" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -2473,7 +2473,7 @@
 	name = "dust"
 	},
 /turf/open/floor/plasteel/white/side,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dE" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -2488,7 +2488,7 @@
 	},
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel/white/side,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dF" = (
 /obj/structure/table/optable,
 /obj/item/storage/firstaid/regular,
@@ -2504,7 +2504,7 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dG" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -2523,7 +2523,7 @@
 	name = "scrawny spider"
 	},
 /turf/open/floor/plasteel,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dH" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -2533,7 +2533,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dI" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -2542,7 +2542,7 @@
 	name = "dust"
 	},
 /turf/open/floor/plating,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dJ" = (
 /obj/machinery/light/small/built{
 	dir = 8
@@ -2611,7 +2611,7 @@
 	name = "dust"
 	},
 /turf/open/floor/plasteel/white,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dO" = (
 /obj/structure/table,
 /obj/item/storage/backpack/duffelbag/med/surgery{
@@ -2630,7 +2630,7 @@
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/white,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dP" = (
 /obj/machinery/sleeper{
 	dir = 8
@@ -2642,7 +2642,7 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dQ" = (
 /obj/machinery/iv_drip,
 /obj/effect/decal/cleanable/dirt{
@@ -2658,7 +2658,7 @@
 	},
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel/white,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dR" = (
 /obj/structure/closet/crate/freezer,
 /obj/item/reagent_containers/blood{
@@ -2677,11 +2677,11 @@
 	name = "dust"
 	},
 /turf/open/floor/plasteel/white,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dS" = (
 /obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dT" = (
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = 32
@@ -2694,7 +2694,7 @@
 	name = "dust"
 	},
 /turf/open/floor/plating,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
 "dU" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -2799,7 +2799,29 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/shuttle/abandoned/crew)
+/area/shuttle/abandoned/medbay)
+"iM" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/medbay)
+"vm" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned/medbay)
+"DZ" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/abandoned/medbay)
+"SY" = (
+/obj/effect/spawner/structure/window/shuttle,
+/obj/machinery/door/poddoor{
+	id = "whiteship_windows"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/medbay)
 
 (1,1,1) = {"
 aa
@@ -2931,8 +2953,8 @@ bC
 cP
 df
 dD
-ac
-cw
+vm
+iM
 "}
 (8,1,1) = {"
 ac
@@ -2951,7 +2973,7 @@ cQ
 dg
 dE
 dN
-ac
+vm
 "}
 (9,1,1) = {"
 ac
@@ -2966,11 +2988,11 @@ ch
 cp
 bT
 bB
-ac
+vm
 dh
-ac
-ac
-ac
+vm
+vm
+vm
 "}
 (10,1,1) = {"
 ac
@@ -2985,11 +3007,11 @@ bT
 bT
 bT
 cE
-ac
+vm
 dj
 dF
 dO
-ac
+vm
 "}
 (11,1,1) = {"
 ac
@@ -3008,7 +3030,7 @@ cS
 dk
 dH
 di
-ac
+vm
 "}
 (12,1,1) = {"
 ac
@@ -3027,7 +3049,7 @@ cT
 dl
 dG
 dQ
-ac
+vm
 "}
 (13,1,1) = {"
 ac
@@ -3046,7 +3068,7 @@ cR
 dm
 dP
 dR
-ac
+vm
 "}
 (14,1,1) = {"
 ac
@@ -3061,11 +3083,11 @@ aa
 aa
 cw
 ac
-ac
+vm
 dq
-ac
-ac
-ac
+vm
+vm
+vm
 "}
 (15,1,1) = {"
 ac
@@ -3079,12 +3101,12 @@ aa
 aa
 aa
 aa
-ac
+vm
 cU
 dn
-ac
+vm
 dS
-ac
+vm
 "}
 (16,1,1) = {"
 ad
@@ -3098,8 +3120,8 @@ aa
 aa
 aa
 aa
-bI
-bs
+SY
+DZ
 do
 dI
 dT
@@ -3117,12 +3139,12 @@ aa
 aa
 aa
 aa
-ac
+vm
 cV
 dp
-ac
-ac
-ac
+vm
+vm
+vm
 "}
 (18,1,1) = {"
 ae
