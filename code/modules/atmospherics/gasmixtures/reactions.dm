@@ -33,25 +33,34 @@
 #define FUSION_SUPER_TIER					50 		//anything above this is super tier
 #define FUSION_HIGH_TIER					20 		//anything above this and below 50 is high tier
 #define FUSION_MID_TIER						5 		//anything above this and below 20 is mid tier - below this is low tier, but that doesnt need a define
-#define FUSION_ENERGY_DIVISOR_SUPER			25
+#define FUSION_ENERGY_DIVISOR_SUPER			25		//power_ratio is divided by this during energy calculations
 #define FUSION_ENERGY_DIVISOR_HIGH			20
 #define FUSION_ENERGY_DIVISOR_MID			10
 #define FUSION_ENERGY_DIVISOR_LOW			2
-#define FUSION_GAS_CREATION_FACTOR_SUPER	0.20	//stimulum and pluoxium - 40% in total
-#define FUSION_GAS_CREATION_FACTOR_HIGH		0.60 	//trit - one gas, so its higher than the other two - 60% in total
-#define FUSION_GAS_CREATION_FACTOR_MID		0.45 	//BZ and N2O - 90% in total
-#define FUSION_GAS_CREATION_FACTOR_LOW		0.48 	//O2 and CO2 - 96% in total
+#define FUSION_GAS_CREATION_FACTOR_TRITIUM	0.40 	//trit - one gas rather than two, so think about that when calculating stuff - 40% in total
+#define FUSION_GAS_CREATION_FACTOR_STIM		0.10	//stim percentage creation from high tier - 10%, 60% in total with pluox
+#define FUSION_GAS_CREATION_FACTOR_PLUOX    0.50	//pluox percentage creation from high tier - 50%, 60% in total with stim
+#define FUSION_GAS_CREATION_FACTOR_NITRYL	0.20 	//nitryl and N2O - 80% in total
+#define FUSION_GAS_CREATION_FACTOR_N2O		0.60 	//nitryl and N2O - 80% in total
+#define FUSION_GAS_CREATION_FACTOR_BZ		0.15 	//BZ - 15% - 90% in total with CO2
+#define FUSION_GAS_CREATION_FACTOR_CO2		0.75 	//CO2 - 75% - 90% in total with BZ
 #define FUSION_MID_TIER_RAD_PROB_FACTOR		2		//probability of radpulse is power ratio * this for whatever tier
 #define FUSION_LOW_TIER_RAD_PROB_FACTOR		5
 #define FUSION_EFFICIENCY_BASE				60		//used in the fusion efficiency calculations
 #define FUSION_EFFICIENCY_DIVISOR			0.6		//ditto
 #define FUSION_RADIATION_FACTOR				15000	//horizontal asymptote
-#define FUSION_RADIATION_CONSTANT			30		//equation is form of (ax) / (x + b), where a = radiation factor and b = radiation constant (https://www.desmos.com/calculator/4i1f296phl)
+#define FUSION_RADIATION_CONSTANT			30		//equation is form of (ax) / (x + b), where a = radiation factor and b = radiation constant and x = power ratio (https://www.desmos.com/calculator/4i1f296phl)
 #define FUSION_VOLUME_SUPER					100		//volume of the sound the fusion noises make
 #define FUSION_VOLUME_HIGH					50
 #define FUSION_VOLUME_MID					25
 #define FUSION_VOLUME_LOW					10
-
+#define FUSION_ZAP_POWER_ASYMPTOTE			5000	//equation is of from [ax / (x + b)] + c, where a = zap power asymptote, b = zap power constant, c = zap power base and x = power ratio
+#define FUSION_ZAP_POWER_CONSTANT			75		//()
+#define FUSION_ZAP_POWER_BASE				1000			
+#define FUSION_ZAP_RANGE_SUPER				5		//range of the tesla zaps that occur from fusion
+#define FUSION_ZAP_RANGE_HIGH
+#define FUSION_ZAP_RANGE_MID
+#define FUSION_ZAP_RANGE_LOW
 
 /proc/init_gas_reactions()
 	var/list/reaction_types = list()
@@ -291,24 +300,27 @@
 
 	var/power_ratio = gas_power/mediation
 	var/radiation_power = (FUSION_RADIATION_FACTOR * power_ratio) / (power_ratio + FUSION_RADIATION_CONSTANT) //https://www.desmos.com/calculator/4i1f296phl
+	var/zap_power = ((FUSION_ZAP_POWER_ASYMPTOTE * power_ratio) / (power_ratio + FUSION_ZAP_POWER_CONSTANT) + FUSION_ZAP_POWER_BASE //
 
 	if (power_ratio > FUSION_SUPER_TIER) //power ratio 50+: SUPER TIER. The gases become so energized that they fuse into stimulum and pluoxium, which is pretty nice! IF you can salvage them, which is going to be hard because this reaction is ridiculously dangerous.
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_SUPER * (power_ratio / FUSION_ENERGY_DIVISOR_SUPER)
 		for (var/id in cached_gases)
 			cached_gases[id][MOLES] = 0
-		air.assert_gases(/datum/gas/stimulum,/datum/gas/pluoxium)
-		cached_gases[/datum/gas/stimulum][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_SUPER //60% of the gas is converted to energy, 40% to stimulum and pluoxium
-		cached_gases[/datum/gas/pluoxium][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_SUPER
+		cached_gases[/datum/gas/tritium][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_TRITIUM //60% of the gas is converted to energy, 40% to trit
 		if (location) //It's going to happen regardless of whether you want it to or not
 			radiation_pulse(location, radiation_power * 2)
-			explosion(location,0,0,10,power_ratio,TRUE,TRUE)//A decent explosion with a huge shockwave. People WILL know you're doing fusion.
+			explosion(location,0,1,6,power_ratio,TRUE,TRUE)//A decent explosion with a huge shockwave. People WILL know you're doing fusion.
+			tesla_zap(location, FUSION_ZAP_RANGE_SUPER, zap_power) //LIGHTNING BOLT! LIGHTNING BOLT!
 			playsound(location, 'sound/effects/supermatter.ogg', FUSION_VOLUME_SUPER, 0)
+
 
 	else if (power_ratio > FUSION_HIGH_TIER) //power ratio 20-50; High tier. Fuses into one big atom which then turns to tritium instantly. Very dangerous, but super cool.
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_HIGH * (power_ratio / FUSION_ENERGY_DIVISOR_HIGH)
 		for (var/id in cached_gases)
 			cached_gases[id][MOLES] = 0
-		cached_gases[/datum/gas/tritium][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_HIGH //40% of the gas is converted to energy, 60% to tritium
+		air.assert_gases(/datum/gas/stimulum, /datum/gas/pluoxium)
+		cached_gases[/datum/gas/stimulum][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_STIM //40% of the gas is converted to energy, 60% to stim and pluox
+		cached_gases[/datum/gas/pluoxium][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_PLUOX
 		if (location)
 			if(prob(power_ratio)) //You really don't want this to happen.
 				radiation_pulse(location, radiation_power)
@@ -316,14 +328,15 @@
 				playsound(location, 'sound/effects/supermatter.ogg', FUSION_VOLUME_HIGH, 0)
 			else
 				playsound(location, 'sound/effects/phasein.ogg', FUSION_VOLUME_HIGH, 0)
+			tesla_zap(location, FUSION_ZAP_RANGE_HIGH, zap_power)
 
 	else if (power_ratio > FUSION_MID_TIER) //power_ratio 5 to 20; Mediation is overpowered, fusion reaction starts to break down.
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_MID * (power_ratio / FUSION_ENERGY_DIVISOR_MID)
 		for (var/id in cached_gases)
 			cached_gases[id][MOLES] = 0
-		air.assert_gases(/datum/gas/bz,/datum/gas/nitrous_oxide)
-		cached_gases[/datum/gas/bz][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_MID //10% of the gas is converted to energy, 90% to BZ and N2O
-		cached_gases[/datum/gas/nitrous_oxide][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_MID
+		air.assert_gases(/datum/gas/nitryl,/datum/gas/nitrous_oxide)
+		cached_gases[/datum/gas/nitryl][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_NITRYL //20% of the gas is converted to energy, 80% to nitryl and N2O
+		cached_gases[/datum/gas/nitrous_oxide][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_N2O
 		if (location)
 			if(prob(power_ratio * FUSION_MID_TIER_RAD_PROB_FACTOR)) //Still weak, but don't stand next to it unprotected
 				radiation_pulse(location, radiation_power * 0.5)
@@ -335,9 +348,9 @@
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_LOW * (power_ratio / FUSION_ENERGY_DIVISOR_LOW)
 		for (var/gas in cached_gases)
 			cached_gases[gas][MOLES] = 0
-		air.assert_gases(/datum/gas/oxygen, /datum/gas/carbon_dioxide)
-		cached_gases[/datum/gas/oxygen][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_LOW //4% of the gas is converted to energy, 94% to oxygen and CO2
-		cached_gases[/datum/gas/carbon_dioxide][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_LOW
+		air.assert_gases(/datum/gas/bz, /datum/gas/carbon_dioxide)
+		cached_gases[/datum/gas/bz][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_BZ //10% of the gas is converted to energy, 90% to BZ and CO2
+		cached_gases[/datum/gas/carbon_dioxide][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_CO2
 		if (location)
 			if(prob(power_ratio * FUSION_LOW_TIER_RAD_PROB_FACTOR)) //Weak, but still something to look out for
 				radiation_pulse(location, radiation_power * 0.25)
