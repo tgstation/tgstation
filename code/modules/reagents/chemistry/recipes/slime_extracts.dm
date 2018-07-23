@@ -8,9 +8,10 @@
 		delete_extract(holder)
 
 /datum/chemical_reaction/slime/proc/delete_extract(datum/reagents/holder)
-	var/obj/item/slime_extract/M = holder.my_atom
-	if(M.Uses <= 0 && !results.len) //if the slime doesn't output chemicals
-		qdel(M)
+	if(istype(holder.my_atom, /obj/item/slime_extract))
+		var/obj/item/slime_extract/M = holder.my_atom
+		if(M.Uses <= 0 && !results.len) //if the slime doesn't output chemicals
+			qdel(M)
 
 //Grey
 /datum/chemical_reaction/slime/slimespawn
@@ -109,10 +110,11 @@
 /datum/chemical_reaction/slime/slimemobspawn/on_reaction(datum/reagents/holder)
 	var/turf/T = get_turf(holder.my_atom)
 	summon_mobs(holder, T)
-	var/obj/item/slime_extract/M = holder.my_atom
-	deltimer(M.qdel_timer)
-	..()
-	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
+	if(istype(holder.my_atom, /obj/item/slime_extract))
+		var/obj/item/slime_extract/M = holder.my_atom
+		deltimer(M.qdel_timer)
+		..()
+		M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
 
 /datum/chemical_reaction/slime/slimemobspawn/proc/summon_mobs(datum/reagents/holder, turf/T)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently!</span>")
@@ -218,10 +220,11 @@
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
 	addtimer(CALLBACK(src, .proc/freeze, holder), 50)
-	var/obj/item/slime_extract/M = holder.my_atom
-	deltimer(M.qdel_timer)
-	..()
-	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
+	if(istype(holder.my_atom, /obj/item/slime_extract))
+		var/obj/item/slime_extract/M = holder.my_atom
+		deltimer(M.qdel_timer)
+		..()
+		M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
 
 /datum/chemical_reaction/slime/slimefreeze/proc/freeze(datum/reagents/holder)
 	if(holder && holder.my_atom)
@@ -261,10 +264,11 @@
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
 	addtimer(CALLBACK(src, .proc/slime_burn, holder), 50)
-	var/obj/item/slime_extract/M = holder.my_atom
-	deltimer(M.qdel_timer)
-	..()
-	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
+	if(istype(holder.my_atom, /obj/item/slime_extract))
+		var/obj/item/slime_extract/M = holder.my_atom
+		deltimer(M.qdel_timer)
+		..()
+		M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
 
 /datum/chemical_reaction/slime/slimefire/proc/slime_burn(datum/reagents/holder)
 	if(holder && holder.my_atom)
@@ -435,12 +439,13 @@
 		touch_msg = "[ADMIN_LOOKUPFLW(toucher)]."
 	message_admins("Slime Explosion reaction started at [ADMIN_VERBOSEJMP(T)]. Last Fingerprint: [touch_msg]")
 	log_game("Slime Explosion reaction started at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"].")
-	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
+	T.visible_message("<span class='danger'>The [holder.my_atom] begins to vibrate violently !</span>")
 	addtimer(CALLBACK(src, .proc/boom, holder), 50)
-	var/obj/item/slime_extract/M = holder.my_atom
-	deltimer(M.qdel_timer)
-	..()
-	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
+	if(istype(holder.my_atom, /obj/item/slime_extract))
+		var/obj/item/slime_extract/M = holder.my_atom
+		deltimer(M.qdel_timer)
+		..()
+		M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
 
 /datum/chemical_reaction/slime/slimeexplosion/proc/boom(datum/reagents/holder)
 	if(holder && holder.my_atom)
@@ -629,7 +634,7 @@
 	required_container = /obj/item/slime_extract/rainbow
 
 /datum/chemical_reaction/slime/slimebomb/on_reaction(datum/reagents/holder, created_volume)
-	var/obj/item/grenade/clusterbuster/slime/volatile/S = new (holder.my_atom.loc)
+	var/obj/item/grenade/clusterbuster/slime/volatile/S = new (get_turf(holder.my_atom))
 	S.visible_message("<span class='danger'>Infused with slime jelly, the core begins to expand uncontrollably!</span>")
 	S.icon_state = "[S.base_state]_active"
 	S.active = TRUE
