@@ -8,14 +8,15 @@
 	desc = "Make dark."
 	var/on = TRUE
 	var/area/area = null
-	var/otherarea = null
 
 /obj/machinery/light_switch/Initialize()
 	. = ..()
-	area = get_area(src)
-
-	if(otherarea)
-		area = locate(text2path("/area/[otherarea]"))
+	if(istext(area))
+		area = text2path(area)
+	if(ispath(area))
+		area = locate(area) in GLOB.sortedAreas
+	if(!area)
+		area = get_area(src)
 
 	if(!name)
 		name = "light switch ([area.name])"
