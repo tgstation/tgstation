@@ -6,9 +6,8 @@ GLOBAL_PROTECT(security_mode)
 //WIP Character breaking filter
 //var/list/ockick = world.file2list('strings/ockick.txt')
 var/list/donators = world.file2list("config/donators.txt")
-var/list/hubmsgs = world.file2list("strings/hub.txt")
 var/list/diamonddonators = world.file2list("config/diamonddonators.txt")
-
+var/list/hubmsgs = world.file2list("strings/hub.txt")
 //This happens after the Master subsystem new(s) (it's a global datum)
 //So subsystems globals exist, but are not initialised
 /world/New()
@@ -125,7 +124,7 @@ var/list/diamonddonators = world.file2list("config/diamonddonators.txt")
 	//try to write to data
 	if(!text2file("The world is running at least safe mode", "data/server_security_check.lock"))
 		GLOB.security_mode = SECURITY_ULTRASAFE
-		warning("/tg/station 13 is not supported in ultrasafe security mode. Everything will break!")
+		warning("BeeStation 13 is not supported in ultrasafe security mode. Everything will break!")
 		return
 
 	//try to shell
@@ -267,7 +266,9 @@ var/list/diamonddonators = world.file2list("config/diamonddonators.txt")
 
 	if (n > 1)
 		features += "~[n] players"
-	else if (n > 0)
+	else if (n == 1)
+		features += "~no players"
+	else if (n == 0)
 		features += "~[n] player"
 
 	if (!host && hostedby)
