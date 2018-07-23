@@ -209,6 +209,7 @@
 	outfit = /datum/outfit/bee_terrorist
 	
 /datum/outfit/bee_terrorist
+	name = "BLF Operative"
 	uniform = /obj/item/clothing/under/color/yellow
 	suit = /obj/item/clothing/suit/hooded/bee_costume
 	shoes = /obj/item/clothing/shoes/sneakers/yellow

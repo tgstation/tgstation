@@ -7,10 +7,10 @@
 	icon_state = "secdrobe"
 	product_ads = "Beat perps in style!;It's red so you can't see the blood!;You have the right to be fashionable!;Now you can be the fashion police you always wanted to be!"
 	vend_reply = "Thank you for using the SecDrobe!"
-	products = list(/obj/item/clothing/suit/hooded/wintercoat/security = 1,
-					/obj/item/storage/backpack/security = 1,
-					/obj/item/storage/backpack/satchel/sec = 1,
-					/obj/item/storage/backpack/duffelbag/sec = 2,
+	products = list(/obj/item/clothing/suit/hooded/wintercoat/security = 3,
+					/obj/item/storage/backpack/security = 3,
+					/obj/item/storage/backpack/satchel/sec = 3,
+					/obj/item/storage/backpack/duffelbag/sec = 3,
 					/obj/item/clothing/under/rank/security = 3,
 					/obj/item/clothing/shoes/jackboots = 3,
 					/obj/item/clothing/head/beret/sec = 3,
@@ -33,23 +33,23 @@
 	icon_state = "medidrobe"
 	product_ads = "Make those blood stains look fashionable!!"
 	vend_reply = "Thank you for using the MediDrobe!"
-	products = list(/obj/item/clothing/accessory/pocketprotector = 1,
-					/obj/item/storage/backpack/duffelbag/med = 1,
-					/obj/item/storage/backpack/medic = 1,
-					/obj/item/storage/backpack/satchel/med = 1,
-					/obj/item/clothing/suit/hooded/wintercoat/medical = 1,
-					/obj/item/clothing/under/rank/nursesuit = 1,
-					/obj/item/clothing/head/nursehat = 1,
-					/obj/item/clothing/under/rank/medical/blue = 1,
-					/obj/item/clothing/under/rank/medical/green = 1,
-					/obj/item/clothing/under/rank/medical/purple = 1,
-					/obj/item/clothing/under/rank/medical = 3,
-					/obj/item/clothing/suit/toggle/labcoat = 3,
-					/obj/item/clothing/suit/toggle/labcoat/emt = 3,
-					/obj/item/clothing/shoes/sneakers/white = 3,
-					/obj/item/clothing/head/soft/emt = 3,
-					/obj/item/clothing/suit/apron/surgical = 1,
-					/obj/item/clothing/mask/surgical = 1)
+	products = list(/obj/item/clothing/accessory/pocketprotector = 4,
+					/obj/item/storage/backpack/duffelbag/med = 4,
+					/obj/item/storage/backpack/medic = 4,
+					/obj/item/storage/backpack/satchel/med = 4,
+					/obj/item/clothing/suit/hooded/wintercoat/medical = 4,
+					/obj/item/clothing/under/rank/nursesuit = 4,
+					/obj/item/clothing/head/nursehat = 4,
+					/obj/item/clothing/under/rank/medical/blue = 4,
+					/obj/item/clothing/under/rank/medical/green = 4,
+					/obj/item/clothing/under/rank/medical/purple = 4,
+					/obj/item/clothing/under/rank/medical = 4,
+					/obj/item/clothing/suit/toggle/labcoat = 4,
+					/obj/item/clothing/suit/toggle/labcoat/emt = 4,
+					/obj/item/clothing/shoes/sneakers/white = 4,
+					/obj/item/clothing/head/soft/emt = 4,
+					/obj/item/clothing/suit/apron/surgical = 4,
+					/obj/item/clothing/mask/surgical = 4)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe
 
 /obj/item/vending_refill/wardrobe/medi_wardrobe
@@ -61,11 +61,11 @@
 	icon_state = "engidrobe"
 	product_ads = "Guaranteed to protect your feet from industrial accidents!;Afraid of radiation? Then wear yellow!"
 	vend_reply = "Thank you for using the EngiDrobe!"
-	products = list(/obj/item/clothing/accessory/pocketprotector = 1,
-					/obj/item/storage/backpack/duffelbag/engineering = 1,
-					/obj/item/storage/backpack/industrial = 1,
-					/obj/item/storage/backpack/satchel/eng = 1,
-					/obj/item/clothing/suit/hooded/wintercoat/engineering = 1,
+	products = list(/obj/item/clothing/accessory/pocketprotector = 3,
+					/obj/item/storage/backpack/duffelbag/engineering = 3,
+					/obj/item/storage/backpack/industrial = 3,
+					/obj/item/storage/backpack/satchel/eng = 3,
+					/obj/item/clothing/suit/hooded/wintercoat/engineering = 3,
 					/obj/item/clothing/under/rank/engineer = 3,
 					/obj/item/clothing/suit/hazardvest = 3,
 					/obj/item/clothing/shoes/workboots = 3,
@@ -81,10 +81,10 @@
 	icon_state = "atmosdrobe"
 	product_ads = "Get your inflammable clothing right here!!!"
 	vend_reply = "Thank you for using the AtmosDrobe!"
-	products = list(/obj/item/clothing/accessory/pocketprotector = 1,
-					/obj/item/storage/backpack/duffelbag/engineering = 1,
-					/obj/item/storage/backpack/satchel/eng = 1,
-					/obj/item/storage/backpack/industrial = 1,
+	products = list(/obj/item/clothing/accessory/pocketprotector = 2,
+					/obj/item/storage/backpack/duffelbag/engineering = 2,
+					/obj/item/storage/backpack/satchel/eng = 2,
+					/obj/item/storage/backpack/industrial = 2,
 					/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos = 3,
 					/obj/item/clothing/under/rank/atmospheric_technician = 3,
 					/obj/item/clothing/shoes/sneakers/black = 3)
@@ -99,12 +99,13 @@
 	icon_state = "cargodrobe"
 	product_ads = "Upgraded Assistant Style! Pick yours today!;These shorts are comfy and easy to wear, get yours now!"
 	vend_reply = "Thank you for using the CargoDrobe!"
-	products = list(/obj/item/clothing/suit/hooded/wintercoat/cargo = 1,
+	products = list(/obj/item/clothing/suit/hooded/wintercoat/cargo = 3,
 					/obj/item/clothing/under/rank/cargotech = 3,
 					/obj/item/clothing/shoes/sneakers/black = 3,
 					/obj/item/clothing/gloves/fingerless = 3,
 					/obj/item/clothing/head/soft = 3,
-					/obj/item/radio/headset/headset_cargo = 1)
+					/obj/item/radio/headset/headset_cargo = 3)
+	premium = list(/obj/item/clothing/under/rank/miner = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/cargo_wardrobe
 
 /obj/item/vending_refill/wardrobe/cargo_wardrobe
@@ -122,7 +123,7 @@
 					/obj/item/clothing/shoes/sneakers/black = 2,
 					/obj/item/clothing/gloves/fingerless = 2,
 					/obj/item/clothing/head/soft/black = 2,
-					/obj/item/clothing/mask/bandana/skull = 1)
+					/obj/item/clothing/mask/bandana/skull = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/robo_wardrobe
 
 /obj/item/vending_refill/wardrobe/robo_wardrobe
@@ -130,18 +131,18 @@
 
 /obj/machinery/vending/wardrobe/science_wardrobe
 	name = "SciDrobe"
-	desc = "A simple vending machine suitable to dispense well tailored science clothing. Endorsed by Cubans."
+	desc = "A simple vending machine suitable to dispense well tailored science clothing. Endorsed by Space Cubans."
 	icon_state = "scidrobe"
-	product_ads = "Longing for the smell of flesh plasma? Buy your science clothing now!;Made with 10% Auxetics, so you don't have to worry losing your arm!"
+	product_ads = "Longing for the smell of plasma burnt flesh? Buy your science clothing now!;Made with 10% Auxetics, so you don't have to worry about losing your arm!"
 	vend_reply = "Thank you for using the SciDrobe!"
-	products = list(/obj/item/clothing/accessory/pocketprotector = 1,
-					/obj/item/storage/backpack/science = 2,
-					/obj/item/storage/backpack/satchel/tox = 2,
-					/obj/item/clothing/suit/hooded/wintercoat/science = 1,
+	products = list(/obj/item/clothing/accessory/pocketprotector = 3,
+					/obj/item/storage/backpack/science = 3,
+					/obj/item/storage/backpack/satchel/tox = 3,
+					/obj/item/clothing/suit/hooded/wintercoat/science = 3,
 					/obj/item/clothing/under/rank/scientist = 3,
 					/obj/item/clothing/suit/toggle/labcoat/science = 3,
 					/obj/item/clothing/shoes/sneakers/white = 3,
-					/obj/item/radio/headset/headset_sci = 2,
+					/obj/item/radio/headset/headset_sci = 3,
 					/obj/item/clothing/mask/gas = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/science_wardrobe
 
@@ -156,7 +157,7 @@
 	vend_reply = "Thank you for using the Hydrobe!"
 	products = list(/obj/item/storage/backpack/botany = 2,
 					/obj/item/storage/backpack/satchel/hyd = 2,
-					/obj/item/clothing/suit/hooded/wintercoat/hydro = 1,
+					/obj/item/clothing/suit/hooded/wintercoat/hydro = 2,
 					/obj/item/clothing/suit/apron = 2,
 					/obj/item/clothing/suit/apron/overalls = 3,
 					/obj/item/clothing/under/rank/hydroponics = 3,
@@ -193,9 +194,9 @@
 					/obj/item/radio/headset/headset_srv = 2,
 					/obj/item/clothing/under/sl_suit = 2,
 					/obj/item/clothing/under/rank/bartender = 2,
-					/obj/item/clothing/under/rank/bartender/purple = 1,
+					/obj/item/clothing/under/rank/bartender/purple = 2,
 					/obj/item/clothing/accessory/waistcoat = 2,
-					/obj/item/clothing/suit/apron/purple_bartender = 1,
+					/obj/item/clothing/suit/apron/purple_bartender = 2,
 					/obj/item/clothing/head/soft/black = 2,
 					/obj/item/clothing/shoes/sneakers/black = 2,
 					/obj/item/reagent_containers/glass/rag = 2,

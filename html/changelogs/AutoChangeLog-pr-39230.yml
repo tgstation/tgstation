@@ -1,0 +1,4 @@
+author: "Cruix"
+delete-after: True
+changes: 
+  - bugfix: "AI eyes will now see static immediately after jumping between cameras."

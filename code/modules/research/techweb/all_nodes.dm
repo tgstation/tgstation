@@ -27,7 +27,7 @@
 	display_name = "Advanced Biotechnology"
 	description = "Advanced Biotechnology"
 	prereq_ids = list("biotech")
-	design_ids = list("piercesyringe", "smoke_machine", "plasmarefiller", "limbgrower", "defibrillator", "meta_beaker", "healthanalyzer_advanced")
+	design_ids = list("piercesyringe", "crewpinpointer", "smoke_machine", "plasmarefiller", "limbgrower", "defibrillator", "meta_beaker", "healthanalyzer_advanced","harvester")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -250,7 +250,7 @@
 /datum/techweb_node/cyborg_upg_util
 	id = "cyborg_upg_util"
 	display_name = "Cyborg Upgrades: Utility"
-	description = "Utility upgrades for cybogs."
+	description = "Utility upgrades for cyborgs."
 	prereq_ids = list("engineering", "cyborg")
 	design_ids = list("borg_upgrade_holding", "borg_upgrade_lavaproof", "borg_upgrade_thrusters", "borg_upgrade_selfrepair", "borg_upgrade_expand", "borg_upgrade_rped")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
@@ -499,15 +499,6 @@
 	design_ids = list("exwelder", "jawsoflife", "handdrill")
 	prereq_ids = list("adv_engi")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	export_price = 5000
-
-/datum/techweb_node/exp_flight
-	id = "exp_flight"
-	display_name = "Experimental Flight Equipment"
-	description = "Highly advanced construction tools."
-	design_ids = list("flightshoes", "flightpack", "flightsuit")
-	prereq_ids = list("adv_engi","integrated_HUDs", "adv_power" , "high_efficiency")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 5000
 
 /////////////////////////weaponry tech/////////////////////////

@@ -62,7 +62,7 @@
 	icon_living = "russianofficer"
 	maxHealth = 65
 	health = 65
-	rapid = 1
+	rapid = 3
 	casingtype = /obj/item/ammo_casing/c9mm
 	loot = list(/obj/effect/mob_spawn/human/corpse/russian/ranged/officer,
 				/obj/item/gun/ballistic/automatic/pistol/APS)

@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - bugfix: "Limbs disabled by stamina damage no longer appear as broken and mangled."

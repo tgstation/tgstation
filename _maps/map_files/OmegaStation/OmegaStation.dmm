@@ -7393,7 +7393,14 @@
 	},
 /area/quartermaster/miningdock)
 "aol" = (
-/obj/structure/ore_box,
+/obj/structure/rack,
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pickaxe,
+/obj/item/storage/toolbox/emergency,
+/obj/item/shovel,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
@@ -8557,19 +8564,12 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard/fore)
 "aqq" = (
-/obj/structure/rack,
-/obj/item/storage/toolbox/emergency{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/pickaxe,
-/obj/item/storage/toolbox/emergency,
-/obj/item/shovel,
 /obj/machinery/camera{
 	c_tag = "Mining Dock";
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/closet/wardrobe/miner,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "aqr" = (
