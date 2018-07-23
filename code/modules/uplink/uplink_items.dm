@@ -885,7 +885,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Stealth Manual"
 	desc = "This one-of-a-kind book will make you almost invisible if you play your cards right."
 	item = /obj/item/book/granter/action/agent_box
-	cost = 13
+	cost = 8
 
 //Space Suits and Hardsuits
 /datum/uplink_item/suits
