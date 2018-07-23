@@ -1,0 +1,4 @@
+author: "WJohnston"
+delete-after: True
+changes: 
+  - bugfix: "Fixed corner decals rotating incorrectly in the small caravan freighter."

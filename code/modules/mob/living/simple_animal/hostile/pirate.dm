@@ -70,7 +70,8 @@
 	icon_dead = "pirateranged_dead"
 	projectilesound = 'sound/weapons/laser.ogg'
 	ranged = 1
-	rapid = 1
+	rapid = 2
+	rapid_fire_delay = 6
 	retreat_distance = 5
 	minimum_distance = 5
 	projectiletype = /obj/item/projectile/beam/laser

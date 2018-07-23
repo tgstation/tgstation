@@ -24909,7 +24909,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "bnO" = (
-/obj/machinery/rnd/production/circuit_imprinter,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -24917,6 +24916,7 @@
 	dir = 4;
 	pixel_x = -28
 	},
+/obj/machinery/rnd/production/circuit_imprinter/department/science,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -31727,7 +31727,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
-/obj/machinery/rnd/production/protolathe/department/medical,
+/obj/machinery/rnd/production/techfab/department/medical,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
@@ -39318,8 +39318,7 @@
 	desc = "A remote control-switch for secure storage.";
 	id = "ce_privacy";
 	name = "Privacy Shutters";
-	pixel_x = 24;
-	req_access_txt = "11"
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 6
@@ -47179,7 +47178,7 @@
 /turf/open/floor/plasteel/dark,
 /area/security/main)
 "cCT" = (
-/obj/machinery/rnd/production/protolathe/department/cargo,
+/obj/machinery/rnd/production/techfab/department/cargo,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "cCU" = (

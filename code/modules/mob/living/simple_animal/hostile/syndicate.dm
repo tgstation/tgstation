@@ -111,7 +111,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/ranged
 	ranged = 1
-	rapid = 1
+	rapid = 2
 	retreat_distance = 5
 	minimum_distance = 5
 	icon_state = "syndicateranged"
@@ -151,8 +151,9 @@
 	name = "Syndicate Stormtrooper"
 	maxHealth = 250
 	health = 250
-	rapid = 0
-	casingtype = /obj/item/ammo_casing/shotgun/buckshot //buckshot (up to 72.5 brute) fired in a three-round burst
+	rapid_fire_delay = 6
+	minimum_distance = 3
+	casingtype = /obj/item/ammo_casing/shotgun/buckshot //buckshot (up to 72.5 brute) fired in a two-round burst
 	projectilesound = 'sound/weapons/gunshot.ogg'
 	loot = list(/obj/effect/gibspawner/human)
 
