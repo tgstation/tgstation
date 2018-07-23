@@ -508,13 +508,23 @@
 		var/obj/item/bodypart/BP = X
 		total_brute	+= (BP.brute_dam * BP.body_damage_coeff)
 		total_burn	+= (BP.burn_dam * BP.body_damage_coeff)
-		total_stamina += (BP.stamina_dam * BP.body_damage_coeff)
+		total_stamina += (BP.stamina_dam * BP.stam_damage_coeff)
 	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
 	staminaloss = total_stamina
 	update_stat()
 	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD) && stat == DEAD )
 		become_husk("burn")
 	med_hud_set_health()
+
+/mob/living/carbon/update_stamina()
+	var/stam = getStaminaLoss()
+	if(stam)
+		var/total_health = (health - stam)
+		if(total_health <= crit_threshold && !stat)
+			if(!IsKnockdown())
+				to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
+			Knockdown(70)
+			update_health_hud()
 
 /mob/living/carbon/update_sight()
 	if(!client)

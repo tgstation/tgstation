@@ -14,6 +14,15 @@
 	if(..()) //not dead
 		handle_blood()
 
+	var/bprv
+	if(stat != DEAD)
+		bprv = handle_bodyparts()
+
+	if(stat != DEAD)
+		if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
+			updatehealth()
+			update_stamina()
+
 	if(stat != DEAD)
 		handle_brain_damage()
 
@@ -243,6 +252,12 @@
 /mob/living/carbon/proc/handle_blood()
 	return
 
+/mob/living/carbon/proc/handle_bodyparts()
+	for(var/I in bodyparts)
+		var/obj/item/bodypart/BP = I
+		if(BP.needs_processing)
+			. |= BP.on_life()
+
 /mob/living/carbon/proc/handle_organs()
 	for(var/V in internal_organs)
 		var/obj/item/organ/O = V
@@ -352,8 +367,6 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
-	if(getStaminaLoss())
-		adjustStaminaLoss(-3)
 
 	var/restingpwr = 1 + 4 * resting
 
