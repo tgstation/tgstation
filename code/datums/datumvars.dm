@@ -511,7 +511,7 @@
 			return
 
 		var/datum/D = locate(href_list["delete"])
-		if(!D)
+		if(!istype(D))
 			to_chat(usr, "Unable to locate item!")
 		admin_delete(D)
 		href_list["datumrefresh"] = href_list["delete"]
