@@ -38,8 +38,7 @@
 
 #define R_DEFAULT R_AUTOLOGIN
 
-#define R_EVERYTHING (1<<16)-1 //the sum of all other rank permissions, used for +EVERYTHING
-//while the actual sum is 32767, this is 65535 for compatability with admin ranks made from when flags were 16 bit
+#define R_EVERYTHING (1<<15)-1 //the sum of all other rank permissions, used for +EVERYTHING
 
 #define ADMIN_QUE(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];adminmoreinfo=[REF(user)]'>?</a>)"
 #define ADMIN_FLW(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];adminplayerobservefollow=[REF(user)]'>FLW</a>)"
