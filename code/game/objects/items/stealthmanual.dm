@@ -19,7 +19,7 @@
 	else
 		owner.forceMove(get_turf(box))
 		QDEL_NULL(box)
-	playsound(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
+	owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
 
 
 //Box Object
