@@ -23,14 +23,9 @@
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = ENVIRON
-	resistance_flags = FIRE_PROOF
-
-	light_power = 0
-	light_range = 7
-	light_color = "#ff3232"
-
 	var/detecting = 1
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
+	resistance_flags = FIRE_PROOF
 	var/last_alarm = 0
 	var/area/myarea = null
 
@@ -278,10 +273,35 @@
 		new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)
 
-/obj/machinery/firealarm/proc/update_fire_light(fire)
-	if(fire == !!light_power)
-		return  // do nothing if we're already active
-	if(fire)
-		set_light(l_power = 0.8)
-	else
-		set_light(l_power = 0)
+
+/*
+ * Party button
+ */
+
+/obj/machinery/firealarm/partyalarm
+	name = "\improper PARTY BUTTON"
+	desc = "Cuban Pete is in the house!"
+
+
+/obj/machinery/firealarm/partyalarm/reset()
+	if (stat & (NOPOWER|BROKEN))
+		return
+	var/area/A = src.loc
+	A = A.loc
+	if (!( istype(A, /area) ))
+		return
+	A.partyreset()
+
+/obj/machinery/firealarm/partyalarm/alarm()
+	if (stat & (NOPOWER|BROKEN))
+		return
+	var/area/A = src.loc
+	A = A.loc
+	if (!( istype(A, /area) ))
+		return
+	A.partyalert()
+
+/obj/machinery/firealarm/partyalarm/ui_data(mob/user)
+	. = ..()
+	var/area/A = get_area(src)
+	.["alarm"] = A.party
