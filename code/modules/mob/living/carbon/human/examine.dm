@@ -144,8 +144,13 @@
 
 	for(var/X in disabled)
 		var/obj/item/bodypart/BP = X
-		var/more_brute = BP.brute_dam >= BP.burn_dam
-		msg += "<B>[capitalize(t_his)] [BP.name] is [more_brute ? "broken and mangled" : "burnt and blistered"]!</B>\n"
+		var/damage_text
+		if(!(BP.get_damage(include_stamina = FALSE) >= BP.max_damage)) //Stamina is disabling the limb
+			damage_text = "limp and lifeless"
+		else
+			var/more_brute = BP.brute_dam >= BP.burn_dam
+			damage_text = more_brute ? "broken and mangled" : "burnt and blistered"
+		msg += "<B>[capitalize(t_his)] [BP.name] is [damage_text]!</B>\n"
 
 	//stores missing limbs
 	var/l_limbs_missing = 0

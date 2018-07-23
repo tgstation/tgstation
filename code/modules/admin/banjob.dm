@@ -30,6 +30,7 @@
 		C.jobbancache = list()
 		var/datum/DBQuery/query_jobban_build_cache = SSdbcore.NewQuery("SELECT job, reason FROM [format_table_name("ban")] WHERE ckey = '[sanitizeSQL(C.ckey)]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
 		if(!query_jobban_build_cache.warn_execute())
+			qdel(query_jobban_build_cache)
 			return
 		while(query_jobban_build_cache.NextRow())
 			C.jobbancache[query_jobban_build_cache.item[1]] = query_jobban_build_cache.item[2]

@@ -1,0 +1,7 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - rscadd: "Shared engineering storage rooms have been added to Deltastation."
+  - bugfix: "Fixed access requirements of lockdown buttons in the CE office. On some maps, these were set to the wrong department."
+  - bugfix: "Fixed Box and Metastation's CE locker having no access requirements."
+  - bugfix: "Deltastation: Fixed engineers having access to atmospheric technicians' storage room. Fixed engineers having no access to port bow solars (the ones at the incinerator by Atmospherics). Also fixed Minisat airlock access requirements."
