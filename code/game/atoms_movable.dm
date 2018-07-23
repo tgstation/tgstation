@@ -778,6 +778,8 @@
 
 /obj/item/proc/do_pickup_animation(turf/target)
 	set waitfor = FALSE
+	if(!istype(loc, /turf))
+		return
 	var/image/I = image(icon = src, loc = loc, layer = layer + 0.1)
 	I.plane = GAME_PLANE
 	I.transform *= 0.75
@@ -801,11 +803,6 @@
 	flick_overlay(I, GLOB.clients, 6)
 	var/matrix/M = new
 	M.Turn(pick(-30, 30))
-
-	animate(I, transform = M, time = 1)
+	animate(I, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 3, transform = M, easing = CUBIC_EASING)
 	sleep(1)
-	animate(I, transform = matrix(), time = 1)
-	sleep(1)
-	animate(I, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 3, easing = CUBIC_EASING)
-	sleep(1)
-	animate(I, alpha = 0, time = 1)
+	animate(I, alpha = 0, transform = matrix(), time = 1)
