@@ -395,6 +395,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	player_minimum = 25
 	restricted = TRUE
 
+/datum/uplink_item/dangerous/buzzkill
+	name = "Buzzkill Grenade Box"
+	desc = "A box with three grenades that release a swarm of angry bees upon activation. These bees indiscriminately attack friend or foe \
+			with random toxins. Courtesy of the BLF and Tiger Cooperative."
+	item = /obj/item/storage/box/syndie_kit/bee_grenades
+	cost = 5
+	surplus = 35
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
 // Ammunition
 /datum/uplink_item/ammo
 	category = "Ammunition"
