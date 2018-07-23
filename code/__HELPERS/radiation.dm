@@ -1,26 +1,24 @@
 // A special GetAllContents that doesn't search past things with rad insulation
-// The protection var only protects the things inside from being affected.
-// The protecting object itself will get returned still.
+// Components which return COMPONENT_BLOCK_RADIATION prevent further searching into that object's contents. The object itself will get returned still.
 // The ignore list makes those objects never return at all
 /proc/get_rad_contents(atom/location)
+	var/static/list/ignored_things = typecacheof(list(
+		/mob/dead,
+		/mob/camera,
+		/obj/effect,
+		/obj/docking_port,
+		/atom/movable/lighting_object,
+		/obj/item/projectile,
+		))
 	var/list/processing_list = list(location)
 	. = list()
 	while(processing_list.len)
-		var/static/list/ignored_things = typecacheof(list(
-			/mob/dead,
-			/mob/camera,
-			/obj/effect,
-			/obj/docking_port,
-			/atom/movable/lighting_object,
-			/obj/item/projectile
-			))
 		var/atom/thing = processing_list[1]
 		processing_list -= thing
 		if(ignored_things[thing.type])
 			continue
 		. += thing
-		var/datum/component/rad_insulation/insulation = thing.GetComponent(/datum/component/rad_insulation)
-		if(insulation && insulation.protects)
+		if(SEND_SIGNAL(thing, COMSIG_ATOM_RAD_PROBE) & COMPONENT_BLOCK_RADIATION)
 			continue
 		processing_list += thing.contents
 
