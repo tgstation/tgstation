@@ -42,9 +42,6 @@ GLOBAL_PROTECT(protected_ranks)
 		return QDEL_HINT_LETMELIVE
 	. = ..()
 
-/datum/admin_rank/can_vv_get(var_name)
-	return FALSE
-
 /datum/admin_rank/vv_edit_var(var_name, var_value)
 	return FALSE
 
