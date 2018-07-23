@@ -17,7 +17,9 @@
 	)
 	activators = list(
 		"replace" = IC_PINTYPE_PULSE_IN,
-		"on replaced" = IC_PINTYPE_PULSE_OUT
+		"on replaced" = IC_PINTYPE_PULSE_OUT,
+		"on found" = IC_PINTYPE_PULSE_OUT,
+		"on not found" = IC_PINTYPE_PULSE_OUT
 	)
 	outputs = list(
 		"replaced string" = IC_PINTYPE_STRING,
