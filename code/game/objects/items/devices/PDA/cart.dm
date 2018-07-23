@@ -652,7 +652,7 @@ Code:
 		switch(href_list["op"])
 
 			if("control")
-				active_bot = locate(href_list["bot"])
+				active_bot = locate(href_list["bot"]) in GLOB.bots_list
 
 			if("botlist")
 				active_bot = null
@@ -671,10 +671,6 @@ Code:
 
 
 /obj/item/cartridge/proc/bot_control()
-
-
-	var/mob/living/simple_animal/bot/Bot
-
 	if(active_bot)
 		menu += "<B>[active_bot]</B><BR> Status: (<A href='byond://?src=[REF(src)];op=control;bot=[REF(active_bot)]'>[PDAIMG(refresh)]<i>refresh</i></A>)<BR>"
 		menu += "Model: [active_bot.model]<BR>"
@@ -718,7 +714,8 @@ Code:
 		var/turf/current_turf = get_turf(src)
 		var/zlevel = current_turf.z
 		var/botcount = 0
-		for(Bot in GLOB.alive_mob_list) //Git da botz
+		for(var/B in GLOB.bots_list) //Git da botz
+			var/mob/living/simple_animal/bot/Bot = B
 			if(!Bot.on || Bot.z != zlevel || Bot.remote_disabled || !(bot_access_flags & Bot.bot_type)) //Only non-emagged bots on the same Z-level are detected!
 				continue //Also, the PDA must have access to the bot type.
 			menu += "<A href='byond://?src=[REF(src)];op=control;bot=[REF(Bot)]'><b>[Bot.name]</b> ([Bot.get_mode()])<BR>"

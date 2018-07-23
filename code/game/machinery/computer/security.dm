@@ -346,9 +346,9 @@ What a mess.*/
 				active2 = null
 
 			if("Browse Record")
-				var/datum/data/record/R = locate(href_list["d_rec"])
-				var/S = locate(href_list["d_rec"])
-				if(!( GLOB.data_core.general.Find(R) ))
+				var/datum/data/record/R = locate(href_list["d_rec"]) in GLOB.data_core.general
+				var/S = R
+				if(!R)
 					temp = "Record Not Found!"
 				else
 					for(var/datum/data/record/E in GLOB.data_core.security)
