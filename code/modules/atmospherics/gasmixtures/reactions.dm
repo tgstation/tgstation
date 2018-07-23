@@ -54,13 +54,13 @@
 #define FUSION_VOLUME_HIGH					50
 #define FUSION_VOLUME_MID					25
 #define FUSION_VOLUME_LOW					10
-#define FUSION_ZAP_POWER_ASYMPTOTE			5000	//equation is of from [ax / (x + b)] + c, where a = zap power asymptote, b = zap power constant, c = zap power base and x = power ratio
-#define FUSION_ZAP_POWER_CONSTANT			75		//()
-#define FUSION_ZAP_POWER_BASE				1000			
-#define FUSION_ZAP_RANGE_SUPER				5		//range of the tesla zaps that occur from fusion
-#define FUSION_ZAP_RANGE_HIGH
-#define FUSION_ZAP_RANGE_MID
-#define FUSION_ZAP_RANGE_LOW
+#define FUSION_ZAP_POWER_ASYMPTOTE			56400	//56400 is 94 x 600, which means at power ratios approaching infinity tesla zap can do at most 99 damage to someone (no instacrits)
+#define FUSION_ZAP_POWER_CONSTANT			75		//equation is of from [ax / (x + b)] + c, where a = zap power asymptote, b = zap power constant, c = zap power base and x = power ratio
+#define FUSION_ZAP_POWER_BASE				1000	//(https://www.desmos.com/calculator/c2kmlxngrq)
+#define FUSION_ZAP_RANGE_SUPER				9		//range of the tesla zaps that occur from fusion
+#define FUSION_ZAP_RANGE_HIGH				7
+#define FUSION_ZAP_RANGE_MID				5
+#define FUSION_ZAP_RANGE_LOW				3
 
 /proc/init_gas_reactions()
 	var/list/reaction_types = list()
