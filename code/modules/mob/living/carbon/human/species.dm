@@ -1517,10 +1517,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
 
 		var/burn_damage
+		var/firemodifier = H.fire_stacks / 5
 		if (H.on_fire)
-			burn_damage = log(1.7,(H.bodytemperature-BODYTEMP_NORMAL))-5
+			burn_damage = log(2-firemodifier,(H.bodytemperature-BODYTEMP_NORMAL))-5
 		else
-			burn_damage = log(2,(H.bodytemperature-BODYTEMP_NORMAL))-5
+			firemodifier = min(firemodifier, 0)
+			burn_damage = max(log(2-firemodifier,(H.bodytemperature-BODYTEMP_NORMAL))-5,0) // this can go below 5 at log 2.5
 		if (burn_damage)
 			switch(burn_damage)
 				if(0 to 2)
