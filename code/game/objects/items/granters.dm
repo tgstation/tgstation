@@ -87,6 +87,14 @@
 	active = FALSE
 	UpdateButtonIcon()
 
+/obj/item/book/granter/action/agent_box
+	granted_action = /datum/action/innate/agent_box
+	name = "Stealth in Plain Sight"
+	desc = "A legendary manual said to contain the unthinkable secret to hiding in plain sight."
+	icon_state = "stealthmanual"
+	actionname = "hiding in plain sight"
+	oneuse = TRUE
+	remarks = list( "What the fuck? They can't be that dumb...", "Are you serious?...", "The fuck kind of stealth is that?")
 ///SPELLS///
 
 /obj/item/book/granter/spell

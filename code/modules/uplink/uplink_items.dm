@@ -881,6 +881,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 1
 	surplus = 1
 
+/datum/uplink_item/stealthy_tools/stealthmanual
+	name = "Stealth Manual"
+	desc = "This one-of-a-kind book will make you almost invisible if you play your cards right."
+	item = /obj/item/book/granter/action/agent_box
+	cost = 13
+
 //Space Suits and Hardsuits
 /datum/uplink_item/suits
 	category = "Space Suits and Hardsuits"
