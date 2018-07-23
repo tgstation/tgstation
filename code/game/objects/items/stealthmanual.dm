@@ -8,6 +8,8 @@
 	var/cooldown = 0
 	var/obj/structure/closet/cardboard/agent/box
 
+
+
 /datum/action/innate/agent_box/Activate()
 	if(!box)
 		if(cooldown < world.time - 30)
@@ -16,8 +18,7 @@
 			cooldown = world.time
 	else
 		owner.forceMove(get_turf(box))
-		qdel(box)
-		box = null
+		QDEL_NULL(box)
 	playsound(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
 
 
@@ -27,6 +28,7 @@
 	name = "inconspicious box"
 	desc = "It's so normal that you didn't notice it before."
 	icon_state = "agentbox"
+	move_speed_multiplier = 0.5
 
 /obj/structure/closet/cardboard/agent/Initialize()
 	. = ..()
