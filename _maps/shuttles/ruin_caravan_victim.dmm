@@ -350,7 +350,7 @@
 /area/shuttle/caravan/freighter1)
 "tg" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 8
+	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/airless/dark,
@@ -398,7 +398,7 @@
 /area/shuttle/caravan/freighter1)
 "xz" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged5"
@@ -527,7 +527,7 @@
 /area/shuttle/caravan/freighter1)
 "DQ" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 1
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
@@ -942,7 +942,7 @@
 /area/shuttle/caravan/freighter1)
 "WX" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 8
+	dir = 1
 	},
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/plasteel/twenty,
@@ -1097,7 +1097,7 @@ ss
 CU
 ZZ
 hk
-RI
+Sn
 NY
 "}
 (8,1,1) = {"
@@ -1108,7 +1108,7 @@ uA
 Fv
 sf
 VT
-Sn
+RI
 hk
 AX
 Xh
@@ -1189,7 +1189,7 @@ El
 zy
 fD
 fD
-fD
+Jv
 "}
 (15,1,1) = {"
 El

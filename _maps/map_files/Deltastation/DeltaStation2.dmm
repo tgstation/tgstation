@@ -1335,10 +1335,10 @@
 /obj/docking_port/stationary{
 	dir = 8;
 	dwidth = 11;
-	height = 15;
+	height = 22;
 	id = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Fore";
-	width = 32
+	width = 35
 	},
 /turf/open/space/basic,
 /area/space)
@@ -68004,10 +68004,10 @@
 /area/maintenance/port)
 "cQd" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "cQe" = (
@@ -93381,7 +93381,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plasteel/grimy,
 /area/library/abandoned)
 "dSu" = (
@@ -94573,7 +94573,7 @@
 /turf/open/floor/plating,
 /area/library/abandoned)
 "dVJ" = (
-/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/wood{
 	icon_state = "wood-broken6"
 	},
@@ -97771,10 +97771,10 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "edj" = (
-/obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plasteel,
 /area/maintenance/port/aft)
 "edk" = (
