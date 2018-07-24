@@ -25,6 +25,7 @@
 	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
 	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
+	occupant_typecache = list(/mob/living)
 
 /obj/machinery/sleeper/Initialize()
 	. = ..()
