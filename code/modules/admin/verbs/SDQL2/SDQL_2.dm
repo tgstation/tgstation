@@ -27,6 +27,7 @@
 	var/list/results = world.SDQL2_query(query_text, key_name_admin(usr), "[usr.ckey]([usr])")
 	for(var/I in 1 to 3)
 		to_chat(usr, results[I])
+	SSblackbox.record_feedback("nested tally", "SDQL query", 1, list(ckey, query_text))
 
 /world/proc/SDQL2_query(query_text, log_entry1, log_entry2)
 	var/query_log = "executed SDQL query: \"[query_text]\"."
