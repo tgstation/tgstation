@@ -303,7 +303,7 @@
 		if (mobhook && mobhook.parent != user)
 			QDEL_NULL(mobhook)
 		if (!mobhook)
-			mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(src, .proc/check_range))
+			mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/check_range)))
 
 /obj/item/twohanded/shockpaddles/Moved()
 	. = ..()
