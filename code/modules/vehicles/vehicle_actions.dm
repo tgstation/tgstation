@@ -125,14 +125,25 @@
 	name = "Honk Horn"
 	desc = "Honk your classy horn."
 	button_icon_state = "car_horn"
+	var/hornsound = 'sound/items/carhorn.ogg'
 	var/last_honk_time
 
 /datum/action/vehicle/sealed/horn/Trigger()
 	if(world.time - last_honk_time > 20)
 		vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] loudly honks</span>")
 		to_chat(owner, "<span class='notice'>You press the vehicle's horn.</span>")
-		playsound(vehicle_entered_target, 'sound/items/AirHorn.ogg', 75)
+		playsound(vehicle_entered_target, hornsound, 75)
 		last_honk_time = world.time
+
+/datum/action/vehicle/sealed/car/clowncar/horn/Trigger()
+	if(world.time - last_honk_time > 20)
+		vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] loudly honks</span>")
+		to_chat(owner, "<span class='notice'>You press the vehicle's horn.</span>")
+		last_honk_time = world.time
+		if(vehicle_target.inserted_key)
+			vehicle_target.inserted_key.attack_self(owner) //The key plays a sound
+		else
+			playsound(vehicle_entered_target, hornsound, 75)
 
 /datum/action/vehicle/sealed/DumpKidnappedMobs
 	name = "Dump kidnapped mobs"
