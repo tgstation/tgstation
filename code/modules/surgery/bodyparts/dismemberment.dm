@@ -1,7 +1,7 @@
 
 /obj/item/bodypart/proc/can_dismember(obj/item/I)
 	if(dismemberable)
-		. = (get_damage() >= (max_damage - I.armour_penetration/2))
+		return TRUE
 
 //Dismember a limb
 /obj/item/bodypart/proc/dismember(dam_type = BRUTE)
@@ -16,7 +16,7 @@
 		return FALSE
 
 	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
-	affecting.receive_damage(CLAMP(brute_dam/2, 15, 50), CLAMP(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
+	affecting.receive_damage(CLAMP(brute_dam/2 * affecting.body_damage_coeff, 15, 50), CLAMP(burn_dam/2 * affecting.body_damage_coeff, 0, 50)) //Damage the chest based on limb's existing damage
 	C.visible_message("<span class='danger'><B>[C]'s [src.name] has been violently dismembered!</B></span>")
 	C.emote("scream")
 	SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "dismembered", /datum/mood_event/dismembered)
@@ -51,7 +51,7 @@
 		return FALSE
 	if(C.has_trait(TRAIT_NODISMEMBER))
 		return FALSE
-
+	. = list()
 	var/organ_spilled = 0
 	var/turf/T = get_turf(C)
 	C.add_splatter_floor(T)
@@ -64,14 +64,15 @@
 		O.Remove(C)
 		O.forceMove(T)
 		organ_spilled = 1
+		. += X
 	if(cavity_item)
 		cavity_item.forceMove(T)
+		. += cavity_item
 		cavity_item = null
 		organ_spilled = 1
 
 	if(organ_spilled)
 		C.visible_message("<span class='danger'><B>[C]'s internal organs spill out onto the floor!</B></span>")
-	return 1
 
 
 

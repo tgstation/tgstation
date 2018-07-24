@@ -34,7 +34,7 @@
 		if(length(place.baseturfs) < 2) // Some snowflake shuttle shit
 			continue
 		place.baseturfs.Insert(3, /turf/baseturf_skipover/shuttle)
-		
+
 		for(var/obj/structure/closet/closet in place)
 			if(closet.anchorable)
 				closet.anchored = TRUE
@@ -446,8 +446,8 @@
 	suffix = "syndicate_dropship"
 	name = "Syndicate Dropship"
 
-/datum/map_template/shuttle/ruin/syndicate_fighter
-	suffix = "syndicate_fighter"
+/datum/map_template/shuttle/ruin/syndicate_fighter_shiv
+	suffix = "syndicate_fighter_shiv"
 	name = "Syndicate Fighter"
 
 /datum/map_template/shuttle/snowdin/mining

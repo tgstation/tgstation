@@ -922,3 +922,8 @@
 	name = "Circulator/Heat Exchanger (Machine Board)"
 	build_path = /obj/machinery/atmospherics/components/binary/circulator
 	req_components = list()
+
+/obj/item/circuitboard/machine/harvester
+	name = "Harvester (Machine Board)"
+	build_path = /obj/machinery/harvester
+	req_components = list(/obj/item/stock_parts/micro_laser = 4)
