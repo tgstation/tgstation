@@ -160,6 +160,7 @@
 	description = "Captain Johann of station 12 has challenged Captain Vic of station 11 to a duel. He's asked for help securing an appropriate revolver to use."
 	reward = 2000
 	wanted_types = list(/obj/item/gun/ballistic/revolver)
+	exclude_types = list(/obj/item/gun/ballistic/revolver/doublebarrel, /obj/item/gun/ballistic/revolver/grenadelauncher)
 
 /datum/bounty/item/assistant/hand_tele
 	name = "Hand Tele"
