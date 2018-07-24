@@ -292,10 +292,6 @@
 		remove_movespeed_modifier(MOVESPEED_ID_SIMPLEMOB_VARSPEED, TRUE)
 	add_movespeed_modifier(MOVESPEED_ID_SIMPLEMOB_VARSPEED, TRUE, 100, legacy_slowdown = speed, override = TRUE)
 
-/mob/living/simple_animal/update_config_movespeed(resort)
-	add_movespeed_modifier(MOVESPEED_ID_SIMPLEMOB_CONFIG_SPEEDMOD, FALSE, 100, legacy_slowdown = get_config_multiplicative_speed(), override = TRUE)
-	return ..()
-
 /mob/living/simple_animal/Stat()
 	..()
 	if(statpanel("Status"))

@@ -56,10 +56,6 @@
 	internal_organs += new /obj/item/organ/stomach
 	..()
 
-/mob/living/carbon/monkey/update_config_movespeed()
-	add_movespeed_modifier(MOVESPEED_ID_MONKEY_CONFIG_SPEEDMOD, FALSE, 100, override = TRUE, legacy_slowdown = get_config_multiplicative_speed())
-	return ..()
-
 /mob/living/carbon/monkey/on_reagent_change()
 	. = ..()
 	remove_movespeed_modifier(MOVESPEED_ID_MONKEY_REAGENT_SPEEDMOD, TRUE)

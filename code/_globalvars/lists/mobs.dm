@@ -45,7 +45,7 @@ GLOBAL_LIST_EMPTY(mob_config_movespeed_type_lookup)
 		if(!value)
 			continue
 		for(var/subpath in typesof(path))
-			mob_types[subpath] += value
+			mob_types[subpath] = value
 	GLOB.mob_config_movespeed_type_lookup = mob_types
 	if(update_mobs)
 		update_mob_config_movespeeds()

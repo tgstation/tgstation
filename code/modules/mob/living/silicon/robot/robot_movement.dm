@@ -3,10 +3,6 @@
 		return 1
 	return ..()
 
-/mob/living/carbon/human/update_config_movespeed()
-	add_movespeed_modifier(MOVESPEED_ID_ROBOT_CONFIG_SPEEDMOD, FALSE, 100, override = TRUE, legacy_slowdown = get_config_multiplicative_speed())
-	return ..()
-
 /mob/living/silicon/robot/mob_negates_gravity()
 	return magpulse
 

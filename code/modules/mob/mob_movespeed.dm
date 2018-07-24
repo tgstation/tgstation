@@ -33,6 +33,7 @@
 	return LAZYACCESS(movespeed_modification, id)
 
 /mob/proc/update_config_movespeed()
+	add_movespeed_modifier(MOVESPEED_ID_CONFIG_SPEEDMOD, FALSE, 100, override = TRUE, legacy_slowdown = get_config_multiplicative_speed())
 
 /mob/proc/get_config_multiplicative_speed()
 	if(!islist(GLOB.mob_config_movespeed_type_lookup) || !GLOB.mob_config_movespeed_type_lookup[type])

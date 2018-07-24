@@ -8,6 +8,7 @@
 
 /mob/living/update_config_movespeed()
 	update_move_intent_slowdown()
+	return ..()
 
 /mob/living/proc/update_move_intent_slowdown()
 	var/mod = 0

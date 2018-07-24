@@ -8,10 +8,6 @@
 			if(data[MOVESPEED_DATA_INDEX_FLAGS] & IGNORE_NOSLOW)
 				.[id] = data
 
-/mob/living/carbon/human/update_config_movespeed()
-	add_movespeed_modifier(MOVESPEED_ID_HUMAN_CONFIG_SPEEDMOD, FALSE, 100, override = TRUE, legacy_slowdown = get_config_multiplicative_speed())
-	return ..()
-
 /mob/living/carbon/human/movement_delay()
 	. = ..()
 	if(dna && dna.species)
