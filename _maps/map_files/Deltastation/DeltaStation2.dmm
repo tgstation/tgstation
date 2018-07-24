@@ -124,6 +124,29 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
+"aaq" = (
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable/white{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/crew_quarters/fitness/recreation)
+"aar" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/weightlifter,
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/crew_quarters/fitness/recreation)
 "aas" = (
 /obj/docking_port/stationary/random{
 	id = "pod_lavaland1";
@@ -143,6 +166,68 @@
 /obj/effect/landmark/xeno_spawn,
 /turf/open/space,
 /area/solar/starboard/fore)
+"aav" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 1;
+	heat_capacity = 1e+006
+	},
+/area/crew_quarters/fitness/recreation)
+"aaw" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/power/excercise_bike{
+	icon_state = "bike-off";
+	dir = 4
+	},
+/obj/structure/cable/white{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 1;
+	heat_capacity = 1e+006
+	},
+/area/crew_quarters/fitness/recreation)
+"aax" = (
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable/white{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/crew_quarters/fitness/recreation)
+"aay" = (
+/obj/structure/stacklifter,
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/crew_quarters/fitness/recreation)
+"aaz" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/neutral/side,
+/area/crew_quarters/fitness/recreation)
+"aaA" = (
+/obj/machinery/power/excercise_bike{
+	icon_state = "bike-off";
+	dir = 4
+	},
+/obj/structure/cable/white{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/neutral/side,
+/area/crew_quarters/fitness/recreation)
 "aaE" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -59726,23 +59811,6 @@
 	dir = 1
 	},
 /area/crew_quarters/fitness/recreation)
-"czh" = (
-/obj/structure/cable/white{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1
-	},
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel/neutral,
-/area/crew_quarters/fitness/recreation)
-"czi" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/weightlifter,
-/turf/open/floor/plasteel/neutral,
-/area/crew_quarters/fitness/recreation)
 "czj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -61925,10 +61993,6 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/fitness/recreation)
-"cDK" = (
-/obj/structure/stacklifter,
-/turf/open/floor/plasteel/neutral,
 /area/crew_quarters/fitness/recreation)
 "cDL" = (
 /turf/open/floor/plasteel/neutral/side,
@@ -154267,10 +154331,10 @@ aad
 cuM
 cwd
 cxx
-czh
+aaq
 cAz
 cCl
-cCl
+aax
 cCl
 cCl
 cCl
@@ -154524,10 +154588,10 @@ aaa
 cuM
 cwd
 cxy
-czi
+aar
 cAA
 cCm
-cDK
+aay
 cxy
 cDL
 cIl
@@ -154781,10 +154845,10 @@ aaa
 cuM
 cwf
 cxy
-czj
+aav
 cAB
 cCn
-cDL
+aaz
 cxy
 cHa
 cIm
@@ -155038,10 +155102,10 @@ aad
 cuM
 cwg
 cxy
-czj
+aaw
 cAC
 cCn
-cDL
+aaA
 cxy
 cHa
 cIm

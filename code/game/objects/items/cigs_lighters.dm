@@ -326,7 +326,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	list_reagents = list("space_drugs" = 15, "lipolicide" = 35)
 
 /obj/item/clothing/mask/cigarette/rollie/mindbreaker
-	list_reagents = list("mindbreaker" = 35, "lipolicide" = 15)	
+	list_reagents = list("mindbreaker" = 35, "lipolicide" = 15)
 
 /obj/item/cigbutt/roach
 	name = "roach"
@@ -871,63 +871,3 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	if(reagents && reagents.total_volume)
 		hand_reagents()
-
-
-
-/////////////////////////////////////////////
-//Tank vapes for ripping the FATTEST clouds//
-/////////////////////////////////////////////
-/obj/item/clothing/mask/vape/tank
-	name = "\improper Tank Vape"
-	desc = "A tank like box with a screen on it, it is basic but should be able to rip FAT clouds were you to try.."
-	icon = 'icons/obj/clothing/masks.dmi'
-	icon_state = "tank_vape"
-	item_state = "tank_vape"
-	w_class = WEIGHT_CLASS_TINY
-	chem_volume = 200 //it's a tank, fuck
-	super = 1 //FAT CLOUDS
-	vapetype = "tank"
-
-/obj/item/clothing/mask/vape/tank/wood
-	name = "\improper Wooden Tank Vape"
-	desc = "A classy looking tank vape with a wooden veneer, extra classy and smooth but also perfectly able to RIP FAT CLOUDS."
-	icon = 'icons/obj/clothing/masks.dmi'
-	icon_state = "tank_vape_wood"
-	item_state = "tank_vape_wood"
-	w_class = WEIGHT_CLASS_TINY
-	chem_volume = 250 //it's a tank, fuck
-
-/obj/item/clothing/mask/vape/tank/tpriv
-	name = "\improper T-priv Tank Vape"
-	desc = "A cloud machine capable of holding a ludicrous amount of juice, it comes preset on a high wattage."
-	icon = 'icons/obj/clothing/masks.dmi'
-	icon_state = "tank_vape_tpriv"
-	item_state = "tank_vape_tpriv"
-	w_class = WEIGHT_CLASS_TINY
-	chem_volume = 500 //FUCK
-
-/obj/item/clothing/mask/vape/tank/syndie
-	name = "\improper Gorlex Cloud Ripper 5,000,000"
-	desc = "Is this the holy grail of vaping? I think...yes"
-	icon = 'icons/obj/clothing/masks.dmi'
-	icon_state = "tank_vape_syndicate"
-	item_state = "tank_vape_syndicate"
-	w_class = WEIGHT_CLASS_TINY
-	chem_volume = 1000 //FUCK
-
-/obj/item/clothing/mask/vape/tank/equipped(mob/user, slot)
-	if(slot == slot_wear_mask)
-		if(!screw)
-			to_chat(user, "<span class='notice'>You feels your lungs melting as you rip MASSIVE clouds</span>")
-			reagents.set_reacting(TRUE)
-			START_PROCESSING(SSobj, src)
-			icon_state += "_rip" //rip a fat one
-		else //it will not start if the vape is opened.
-			to_chat(user, "<span class='warning'>You need to close the cap first!</span>")
-
-/obj/item/clothing/mask/vape/tank/dropped(mob/user)
-	var/mob/living/carbon/C = user
-	if(C.get_item_by_slot(slot_wear_mask) == src)
-		reagents.set_reacting(FALSE)
-		STOP_PROCESSING(SSobj, src)
-		icon_state -= "_rip" //rip a fat one

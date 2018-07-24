@@ -927,3 +927,10 @@
 	name = "Harvester (Machine Board)"
 	build_path = /obj/machinery/harvester
 	req_components = list(/obj/item/stock_parts/micro_laser = 4)
+
+/obj/item/circuitboard/machine/excercise_bike
+	name = "Excercise Bike (Machine Board)"
+	build_path = /obj/machinery/power/excercise_bike
+	req_components = list(
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stack/cable_coil = 2)

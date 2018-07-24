@@ -1920,6 +1920,47 @@
 	},
 /turf/open/floor/plating,
 /area/security/main)
+"aeD" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/item/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -29
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/excercise_bike{
+	icon_state = "bike-off";
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 10
+	},
+/area/crew_quarters/fitness)
+"aeE" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 8
+	},
+/area/crew_quarters/fitness)
+"aeF" = (
+/obj/machinery/power/excercise_bike{
+	icon_state = "bike-off";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "aeG" = (
 /obj/structure/cable,
 /obj/machinery/power/solar{
@@ -9950,35 +9991,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"azj" = (
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/obj/item/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -29
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 10
-	},
-/area/crew_quarters/fitness)
 "azk" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
-"azl" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/neutral/corner{
-	dir = 8
-	},
 /area/crew_quarters/fitness)
 "azm" = (
 /obj/structure/chair/stool{
@@ -80297,7 +80314,7 @@ ced
 bVI
 cay
 ccw
-ciZ
+aeF
 ciZ
 ciZ
 ckC
@@ -88193,7 +88210,7 @@ atV
 avw
 awy
 axQ
-azj
+aeD
 arj
 aAh
 aAh
@@ -88450,7 +88467,7 @@ aus
 aus
 awA
 axT
-azl
+aeE
 aAl
 arj
 aCq

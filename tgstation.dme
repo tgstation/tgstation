@@ -14,6 +14,7 @@
 
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
+#include "_maps\boxstation.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_globals.dm"
@@ -542,6 +543,7 @@
 #include "code\game\machinery\dna_scanner.dm"
 #include "code\game\machinery\doppler_array.dm"
 #include "code\game\machinery\droneDispenser.dm"
+#include "code\game\machinery\excercisebike.dm"
 #include "code\game\machinery\exp_cloner.dm"
 #include "code\game\machinery\firealarm.dm"
 #include "code\game\machinery\flasher.dm"
