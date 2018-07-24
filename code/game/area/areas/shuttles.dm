@@ -71,32 +71,26 @@
 
 /area/shuttle/abandoned/bridge
 	name = "Abandoned Ship Bridge"
-	blob_allowed = FALSE
 	requires_power = TRUE
 
 /area/shuttle/abandoned/engine
 	name = "Abandoned Ship Engine"
-	blob_allowed = FALSE
 	requires_power = TRUE
 
 /area/shuttle/abandoned/bar
 	name = "Abandoned Ship Bar"
-	blob_allowed = FALSE
 	requires_power = TRUE
 
 /area/shuttle/abandoned/crew
 	name = "Abandoned Ship Crew Quarters"
-	blob_allowed = FALSE
 	requires_power = TRUE
 
 /area/shuttle/abandoned/cargo
 	name = "Abandoned Ship Cargo Bay"
-	blob_allowed = FALSE
 	requires_power = TRUE
 
 /area/shuttle/abandoned/medbay
 	name = "Abandoned Ship Medbay"
-	blob_allowed = FALSE
 	requires_power = TRUE
 
 ////////////////////////////Single-area shuttles////////////////////////////
