@@ -881,12 +881,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 1
 	surplus = 1
 
-/datum/uplink_item/stealthy_tools/stealthmanual
-	name = "Stealth Manual"
-	desc = "This one-of-a-kind book will make you almost invisible if you play your cards right."
-	item = /obj/item/book/granter/action/agent_box
-	cost = 8
-
 //Space Suits and Hardsuits
 /datum/uplink_item/suits
 	category = "Space Suits and Hardsuits"
@@ -1301,6 +1295,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/box/cyber_implants
 	cost = 40
 	cant_discount = TRUE
+
+/datum/uplink_item/stealthy_tools/stealthimplant
+	name = "Stealth Implant"
+	desc = "This one-of-a-kind implant will make you almost invisible if you play your cards right."
+	item = /obj/item/implanter/stealth
+	cost = 8
 
 // Role-specific items
 /datum/uplink_item/role_restricted
