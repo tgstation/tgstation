@@ -1296,7 +1296,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 40
 	cant_discount = TRUE
 
-/datum/uplink_item/stealthy_tools/stealthimplant
+/datum/uplink_item/cyber_implants/stealthimplant
 	name = "Stealth Implant"
 	desc = "This one-of-a-kind implant will make you almost invisible if you play your cards right."
 	item = /obj/item/implanter/stealth
