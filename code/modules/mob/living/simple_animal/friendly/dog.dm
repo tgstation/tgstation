@@ -45,6 +45,20 @@
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/pug = 3)
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "pug"
+	
+/mob/living/simple_animal/pet/dog/corgi/exoticcorgi
+	name = "Exotic Corgi"
+	desc = "As cute as it is colorful!"
+	icon = 'icons/mob/pets.dmi'
+	icon_state = "corgigrey"
+	icon_living = "corgigrey"
+	icon_dead = "corgigrey_dead"
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
+	faction = list("dog")
+	animal_species = /mob/living/simple_animal/pet/dog/corgi/exoticcorgi
+	gold_core_spawnable = FRIENDLY_SPAWN
+	nofur = TRUE
+	collar_type = "corgi"
 
 /mob/living/simple_animal/pet/dog/Initialize()
 	. = ..()
@@ -58,6 +72,10 @@
 	. = ..()
 	regenerate_icons()
 
+/mob/living/simple_animal/pet/dog/corgi/exoticcorgi/Initialize()
+		. = ..()
+		var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+		add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 
 /mob/living/simple_animal/pet/dog/corgi/death(gibbed)
 	..(gibbed)
