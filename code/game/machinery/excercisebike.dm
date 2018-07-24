@@ -1,6 +1,6 @@
 /obj/machinery/power/excercise_bike
 	name = "Excercise bike"
-	desc = "The new NT 4FA5 AS5 excercise bike allows you to power the station whilst excercising: It's fitted with an efficient mechanism for power generation."
+	desc = "The new NT 4FA5 AS5 excercise bike allows you to power the station whilst excercising: It's fitted with an efficient mechanism for power generation, <I> buckle into it and then move around whilst riding it to generate power</I>."
 	icon = 'icons/obj/machines/excercise_bike.dmi'
 	icon_state = "bike-off"
 	can_buckle = TRUE
