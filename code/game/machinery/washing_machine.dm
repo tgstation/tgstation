@@ -39,13 +39,13 @@
 
 	busy = TRUE
 	update_icon()
-	addtimer(CALLBACK(src, .proc/wiggle))
 	addtimer(CALLBACK(src, .proc/wash_cycle), 200)
+	START_PROCESSING(SSfastprocess, src)
 
-/obj/machinery/washing_machine/proc/wiggle()
+/obj/machinery/washing_machine/process()
 	if (!busy)
 		animate(src, transform=matrix(), time=2)
-		return
+		return PROCESS_KILL
 	if (anchored)
 		if (prob(5))
 			var/matrix/M = new
@@ -58,7 +58,6 @@
 		var/matrix/M = new
 		M.Translate(rand(-3, 3), rand(-1, 3))
 		animate(src, transform=M, time=2)
-	addtimer(CALLBACK(src, .proc/wiggle), 2)
 
 /obj/machinery/washing_machine/proc/clean_blood()
 	if(!busy)
