@@ -563,6 +563,7 @@
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 0,"energy" = 5, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 25, "acid" = 25)
 	cold_protection = CHEST|GROIN|ARMS|LEGS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+
 /obj/item/clothing/shoes/combat/coldres
 	name = "insulated combat boots"
 	desc = "High speed, low drag combat boots, now with an added layer of insulation."
