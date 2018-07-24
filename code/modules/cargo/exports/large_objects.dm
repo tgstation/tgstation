@@ -16,6 +16,11 @@
 	export_types = list(/obj/structure/closet/crate/large)
 	exclude_types = list()
 
+/datum/export/excercisebike
+	cost = 200
+	unit_name = "toolbox"
+	export_types = list(/obj/machinery/power/excercise_bike)
+
 /datum/export/large/crate/wooden/ore
 	unit_name = "ore box"
 	export_types = list(/obj/structure/ore_box)

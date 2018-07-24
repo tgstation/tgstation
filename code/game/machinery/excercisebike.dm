@@ -33,9 +33,10 @@
 
 /obj/machinery/power/excercise_bike/relaymove(mob/user, direction)
 	user.setDir(dir)
-	if(!powernet)
+	if(!powernet || !anchored)
 		connect_to_network()
-	if(powernet)
+		to_chat(user, "The wheels on [src] lock up, is it connected to a power source?")
+	if(powernet && anchored)
 		if(isliving(user))
 			if(world.time >= cooldown_time+delay)
 				icon_state = "bike-on"
