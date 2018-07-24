@@ -25827,10 +25827,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
-/obj/machinery/camera{
-	c_tag = "Research Division North";
-	dir = 2
-	},
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
@@ -28596,6 +28592,10 @@
 /area/science/research)
 "bvf" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Research Division North";
 	dir = 8
 	},
 /turf/open/floor/plasteel/white/side{
@@ -33623,15 +33623,6 @@
 	dir = 5
 	},
 /area/science/research)
-"bHL" = (
-/obj/machinery/camera{
-	c_tag = "Research Division South";
-	dir = 8
-	},
-/turf/open/floor/plasteel/white/side{
-	dir = 9
-	},
-/area/science/research)
 "bHN" = (
 /obj/machinery/requests_console{
 	department = "Tech storage";
@@ -35982,6 +35973,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bNA" = (
@@ -37286,6 +37280,11 @@
 "bQW" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/heater{
 	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Testing Lab West";
+	dir = 1;
+	network = list("ss13","rd")
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
@@ -38921,6 +38920,9 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/science/misc_lab)
 "bVm" = (
@@ -40041,8 +40043,7 @@
 /obj/machinery/computer/security/telescreen{
 	dir = 8;
 	name = "Test Chamber Monitor";
-	network = list("test");
-	pixel_y = 0
+	network = list("test")
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/science/misc_lab)
@@ -42187,9 +42188,6 @@
 "cdR" = (
 /obj/machinery/atmospherics/components/unary/tank/air,
 /turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"cdS" = (
-/turf/closed/wall/r_wall,
 /area/maintenance/starboard/aft)
 "cdT" = (
 /obj/effect/turf_decal/stripes/line{
@@ -52732,6 +52730,16 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"hxD" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/camera{
+	c_tag = "Testing Lab East";
+	dir = 8;
+	network = list("ss13","rd");
+	pixel_y = -22
+	},
+/turf/open/floor/engine,
+/area/science/misc_lab)
 "hDN" = (
 /obj/machinery/computer/rdconsole/experiment{
 	dir = 1
@@ -53044,6 +53052,20 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
+"kUn" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Toxins Lab South";
+	dir = 1;
+	network = list("ss13","rd")
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "kYU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -53069,6 +53091,13 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"lhY" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/science/misc_lab)
 "lrZ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -53305,6 +53334,13 @@
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
+"oWP" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/science/misc_lab)
 "ptj" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -53451,6 +53487,16 @@
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"rEF" = (
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/camera{
+	c_tag = "Research Division South";
+	dir = 8
+	},
+/turf/open/floor/plasteel/white/side{
+	dir = 9
+	},
+/area/science/research)
 "rKP" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -53469,15 +53515,16 @@
 /area/science/circuit)
 "rPr" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/light{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "rWX" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"sat" = (
+/obj/machinery/holopad,
+/turf/open/floor/plasteel,
+/area/science/misc_lab)
 "slk" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -53645,6 +53692,16 @@
 /obj/structure/rack,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
+"uok" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/obj/effect/turf_decal/bot{
+	dir = 2
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "uPT" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 2
@@ -99840,7 +99897,7 @@ btW
 lYP
 bzE
 bzE
-bzE
+bsX
 bzE
 bzE
 bWo
@@ -100347,11 +100404,11 @@ bBD
 bta
 lcV
 bzZ
-bHL
 bBD
 bBD
 bBD
-bzZ
+bBD
+rEF
 bBD
 bBD
 bBD
@@ -100874,9 +100931,9 @@ bEs
 bEC
 bXh
 bWr
-bWr
+sat
 bOv
-gcn
+lhY
 fGU
 bQZ
 cdR
@@ -101393,9 +101450,9 @@ bZZ
 cjW
 wMI
 bQZ
-cdS
-cdS
-cdS
+bQZ
+bQZ
+bQZ
 cgq
 chx
 cNW
@@ -102155,7 +102212,7 @@ bFU
 bFU
 bFU
 bUo
-eET
+kUn
 bEC
 bOB
 bPs
@@ -102163,8 +102220,8 @@ bYo
 bSc
 pNx
 cbd
-pNx
-pNx
+hxD
+oWP
 pNx
 cfu
 cgu
@@ -102912,7 +102969,7 @@ bzO
 bqe
 qBK
 bEC
-bEA
+uok
 bEA
 jqv
 bGA
