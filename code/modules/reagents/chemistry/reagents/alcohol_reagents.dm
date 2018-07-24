@@ -556,13 +556,16 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/brave_bull/on_mob_add(mob/living/M)
 	tough_text = pick("brawny", "tenacious", "tough", "hardy", "sturdy") //Tuff stuff
 	to_chat(M, "<span class='notice'>You feel [tough_text]!</span>")
-	M.maxHealth += 10 //Brave Bull makes you sturdier, and thus capable of withstanding a tiny bit more punishment.
-	M.health += 10
+	if(M.add_trait(TRAIT_BRAVE, id))
+		M.maxHealth += 10 //Brave Bull makes you sturdier, and thus capable of withstanding a tiny bit more punishment.
+		M.health += 10
 
 /datum/reagent/consumable/ethanol/brave_bull/on_mob_delete(mob/living/M)
 	to_chat(M, "<span class='notice'>You no longer feel [tough_text].</span>")
-	M.maxHealth -= 10
-	M.health = min(M.health - 10, M.maxHealth) //This can indeed crit you if you're alive solely based on alchol ingestion
+	if(M.has_trait(TRAIT_BRAVE, id))
+		M.maxHealth -= 10
+		M.health = min(M.health - 10, M.maxHealth) //This can indeed crit you if you're alive solely based on alchol ingestion
+		M.remove_trait(TRAIT_BRAVE, id)
 
 /datum/reagent/consumable/ethanol/tequila_sunrise
 	name = "Tequila Sunrise"
@@ -590,7 +593,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_delete(mob/living/M)
 	to_chat(M, "<span class='notice'>The warmth in your body fades.</span>")
-	QDEL_NULL(light_holder)
+	if(light_holder)
+		QDEL_NULL(light_holder)
 
 /datum/reagent/consumable/ethanol/toxins_special
 	name = "Toxins Special"

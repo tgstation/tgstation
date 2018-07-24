@@ -1,3 +1,4 @@
+#define CHEM_MIN_VOLUME 0.1
 
 /proc/build_chemical_reagent_list()
 	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
@@ -479,7 +480,7 @@
 	total_volume = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
-		if(R.volume < 0.1)
+		if(R.volume < CHEM_MIN_VOLUME)
 			del_reagent(R.id)
 		else
 			total_volume += R.volume
@@ -600,7 +601,7 @@
 		my_atom.on_reagent_change(ADD_REAGENT)
 	if(!no_react)
 		handle_reactions()
-	if(isliving(my_atom))
+	if(isliving(my_atom) && R.volume >= CHEM_MIN_VOLUME)
 		R.on_mob_add(my_atom)
 	return TRUE
 
@@ -810,3 +811,5 @@
 				random_reagents += initial(R.id)
 	var/picked_reagent = pick(random_reagents)
 	return picked_reagent
+
+#undef CHEM_MIN_VOLUME
