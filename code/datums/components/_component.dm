@@ -10,7 +10,7 @@
 	var/list/arguments = args.Copy(2)
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
 		qdel(src, TRUE, TRUE)
-		CRASH("Incompatible [type] assigned to a [P.type]!")
+		CRASH("Incompatible [type] assigned to a [P.type]! args: [json_encode(arguments)]")
 
 	_JoinParent(P)
 
@@ -281,10 +281,11 @@
 	var/datum/old_parent = parent
 	PreTransfer()
 	_RemoveFromParent()
+	parent = null
 	SEND_SIGNAL(old_parent, COMSIG_COMPONENT_REMOVING, src)
 
 /datum/proc/TakeComponent(datum/component/target)
-	if(!target)
+	if(!target || target.parent == src)
 		return
 	if(target.parent)
 		target.RemoveComponent()
