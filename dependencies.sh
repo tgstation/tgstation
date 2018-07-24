@@ -13,7 +13,7 @@ export BYOND_MINOR=1427
 export RUST_G_VERSION=0.3.0
 
 #bsql git tag
-export BSQL_VERSION=v1.3.0.2
+export BSQL_VERSION=v1.4.0.0
 
 #node version
 export NODE_VERSION=4
