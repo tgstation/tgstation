@@ -208,7 +208,7 @@
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -29
 	},
@@ -230,7 +230,7 @@
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -29
 	},
@@ -244,18 +244,18 @@
 /turf/open/floor/plasteel/darkred,
 /area/shuttle/escape)
 "aR" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Cockpit";
 	req_access_txt = "19"
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aS" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aT" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -283,7 +283,7 @@
 	},
 /area/shuttle/escape)
 "aW" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -294,7 +294,7 @@
 	},
 /area/shuttle/escape)
 "aX" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/plastitanium/brig{
 	icon_state = "darkred";
 	dir = 1;
@@ -302,7 +302,7 @@
 	},
 /area/shuttle/escape)
 "aY" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/plastitanium/brig{
 	icon_state = "darkred";
 	dir = 5;
@@ -330,7 +330,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bd" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/brig,
@@ -339,7 +339,7 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bf" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/machinery/flasher{
@@ -381,7 +381,7 @@
 /turf/open/floor/mech_bay_recharge_floor,
 /area/shuttle/escape)
 "bk" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/brig,
@@ -399,7 +399,7 @@
 	},
 /area/shuttle/escape)
 "bn" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Brig";
 	req_access_txt = "2"
 	},
@@ -412,7 +412,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bp" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/machinery/flasher{
@@ -423,7 +423,7 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bq" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Brig";
 	req_access_txt = "2"
 	},
@@ -479,7 +479,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bw" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/brig{
@@ -489,7 +489,7 @@
 	},
 /area/shuttle/escape)
 "bx" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/brig{
@@ -509,7 +509,7 @@
 	},
 /area/shuttle/escape)
 "bz" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/brig{
@@ -549,9 +549,6 @@
 	dwidth = 15;
 	height = 20;
 	name = "Cere emergency shuttle";
-	port_direction = 4;
-	preferred_direction = 2;
-	timid = 1;
 	width = 42
 	},
 /turf/open/floor/plating,
@@ -563,7 +560,7 @@
 "bG" = (
 /obj/structure/table,
 /obj/item/storage/box/cups,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
 	pixel_y = 27
@@ -640,7 +637,7 @@
 /turf/open/floor/plasteel/neutral/side,
 /area/shuttle/escape)
 "bU" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
 	pixel_y = 27
@@ -659,7 +656,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bW" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -668,7 +665,7 @@
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "bX" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -695,7 +692,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "cb" = (
-/obj/structure/sign/bluecross_2{
+/obj/structure/sign/departments/medbay/alt{
 	pixel_x = 32;
 	pixel_y = -32
 	},
@@ -717,7 +714,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "ce" = (
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	name = "Emergency Shuttle Medbay"
 	},
 /turf/open/floor/plasteel/whiteblue,
@@ -790,7 +787,6 @@
 /area/shuttle/escape)
 "cq" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/white,
@@ -801,7 +797,6 @@
 /area/shuttle/escape)
 "cs" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/white,
@@ -879,8 +874,8 @@
 /area/shuttle/escape)
 "cE" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/blood/empty,
-/obj/item/reagent_containers/blood/empty,
+/obj/item/reagent_containers/blood,
+/obj/item/reagent_containers/blood,
 /obj/item/reagent_containers/blood/AMinus,
 /obj/item/reagent_containers/blood/BMinus{
 	pixel_x = -4;
@@ -963,7 +958,7 @@
 /turf/open/floor/plasteel/whiteblue/side,
 /area/shuttle/escape)
 "cM" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -29
 	},
@@ -986,7 +981,7 @@
 	},
 /area/shuttle/escape)
 "cP" = (
-/obj/machinery/door/airlock/glass_engineering{
+/obj/machinery/door/airlock/engineering/glass{
 	name = "Engine Room";
 	req_one_access_txt = "10;24"
 	},
@@ -1025,7 +1020,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/computer/monitor,
+/obj/machinery/computer/monitor/secret,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
 	},
@@ -1109,7 +1104,7 @@
 	},
 /area/shuttle/escape)
 "di" = (
-/obj/structure/sign/electricshock{
+/obj/structure/sign/warning/electricshock{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -1131,13 +1126,13 @@
 /area/shuttle/escape)
 "dl" = (
 /obj/structure/table,
-/obj/structure/sign/enginesafety{
+/obj/structure/sign/warning/enginesafety{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/yellow/side,
 /area/shuttle/escape)
 "dm" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -29
 	},

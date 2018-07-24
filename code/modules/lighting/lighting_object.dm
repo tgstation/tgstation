@@ -11,8 +11,6 @@
 	layer            = LIGHTING_LAYER
 	invisibility     = INVISIBILITY_LIGHTING
 
-	blend_mode       = BLEND_ADD
-
 	var/needs_update = FALSE
 	var/turf/myturf
 
@@ -138,6 +136,9 @@
 	return
 
 /atom/movable/lighting_object/blob_act()
+	return
+
+/atom/movable/lighting_object/onTransitZ()
 	return
 
 // Override here to prevent things accidentally moving around overlays.

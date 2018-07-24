@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -62,10 +62,6 @@
 /area/ruin/powered/pride)
 "r" = (
 /obj/machinery/light/small,
-/turf/open/floor/mineral/silver,
-/area/ruin/powered/pride)
-"u" = (
-/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/mineral/silver,
 /area/ruin/powered/pride)
 "G" = (
@@ -205,7 +201,7 @@ g
 g
 g
 g
-u
+g
 g
 g
 g

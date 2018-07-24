@@ -2,7 +2,7 @@
 
 SUBSYSTEM_DEF(processing)
 	name = "Processing"
-	priority = 25
+	priority = FIRE_PRIORITY_PROCESS
 	flags = SS_BACKGROUND|SS_POST_FIRE_TIMING|SS_NO_INIT
 	wait = 10
 
@@ -27,7 +27,6 @@ SUBSYSTEM_DEF(processing)
 		if (MC_TICK_CHECK)
 			return
 
-/datum/var/isprocessing = FALSE
 /datum/proc/process()
 	set waitfor = 0
 	STOP_PROCESSING(SSobj, src)

@@ -115,12 +115,20 @@
 	// Generates nothing but atmos runtimes and salt
 	cost = 0
 
+/datum/map_template/ruin/lavaland/ratvar
+	name = "Dead God"
+	id = "ratvar"
+	description = "Ratvars final resting place."
+	suffix = "lavaland_surface_dead_ratvar.dmm"
+	cost = 0
+	allow_duplicates = FALSE
+
 /datum/map_template/ruin/lavaland/hierophant
 	name = "Hierophant's Arena"
 	id = "hierophant"
 	description = "A strange, square chunk of metal of massive size. Inside awaits only death and many, many squares."
 	suffix = "lavaland_surface_hierophant.dmm"
-	cost = -1
+	always_place = TRUE
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/blood_drunk_miner

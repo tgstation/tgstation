@@ -5,7 +5,7 @@
 	icon_state = "water"
 	density = TRUE
 	anchored = FALSE
-	container_type = DRAWABLE_1
+	container_type = DRAINABLE | AMOUNT_VISIBLE
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	max_integrity = 300
 	var/tank_volume = 1000 //In units, how much the dispenser can hold
@@ -18,7 +18,7 @@
 			boom()
 
 /obj/structure/reagent_dispensers/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/reagent_containers))
+	if(W.is_refillable())
 		return 0 //so we can refill them via their afterattack.
 	else
 		return ..()
@@ -27,14 +27,6 @@
 	create_reagents(tank_volume)
 	reagents.add_reagent(reagent_id, tank_volume)
 	. = ..()
-
-/obj/structure/reagent_dispensers/examine(mob/user)
-	..()
-	if(reagents.total_volume)
-		to_chat(user, "<span class='notice'>It has [reagents.total_volume] unit\s left.</span>")
-	else
-		to_chat(user, "<span class='danger'>It's empty.</span>")
-
 
 /obj/structure/reagent_dispensers/proc/boom()
 	visible_message("<span class='danger'>\The [src] ruptures!</span>")
@@ -58,6 +50,13 @@
 	desc = "A highly pressurized water tank made to hold gargantuan amounts of water."
 	icon_state = "water_high" //I was gonna clean my room...
 	tank_volume = 100000
+
+/obj/structure/reagent_dispensers/foamtank
+	name = "firefighting foam tank"
+	desc = "A tank full of firefighting foam."
+	icon_state = "foam"
+	reagent_id = "firefighting_foam"
+	tank_volume = 500
 
 /obj/structure/reagent_dispensers/fueltank
 	name = "fuel tank"
@@ -86,7 +85,7 @@
 	..()
 	if(!QDELETED(src)) //wasn't deleted by the projectile's effects.
 		if(!P.nodamage && ((P.damage_type == BURN) || (P.damage_type == BRUTE)))
-			var/boom_message = "[key_name_admin(P.firer)] triggered a fueltank explosion via projectile."
+			var/boom_message = "[ADMIN_LOOKUPFLW(P.firer)] triggered a fueltank explosion via projectile."
 			GLOB.bombers += boom_message
 			message_admins(boom_message)
 			var/log_message = "triggered a fueltank explosion via projectile."
@@ -109,12 +108,14 @@
 			playsound(src, 'sound/effects/refill.ogg', 50, 1)
 			W.update_icon()
 		else
+			var/turf/T = get_turf(src)
 			user.visible_message("<span class='warning'>[user] catastrophically fails at refilling [user.p_their()] [W.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
-			var/message_admins = "[key_name_admin(user)] triggered a fueltank explosion via welding tool."
+			var/message_admins = "[ADMIN_LOOKUPFLW(user)] triggered a fueltank explosion via welding tool at [ADMIN_VERBOSEJMP(T)]."
 			GLOB.bombers += message_admins
 			message_admins(message_admins)
-			var/message_log = "triggered a fueltank explosion via welding tool."
+			var/message_log = "triggered a fueltank explosion via welding tool at [AREACOORD(T)]."
 			user.log_message(message_log, INDIVIDUAL_ATTACK_LOG)
+			log_game("[key_name(user)] [message_log]")
 			log_attack("[key_name(user)] [message_log]")
 			boom()
 		return
@@ -154,6 +155,9 @@
 		to_chat(user, "There are no paper cups left.")
 
 /obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(!paper_cups)
 		to_chat(user, "<span class='warning'>There aren't any cups left!</span>")
 		return
@@ -161,7 +165,6 @@
 	var/obj/item/reagent_containers/food/drinks/sillycup/S = new(get_turf(src))
 	user.put_in_hands(S)
 	paper_cups--
-
 
 /obj/structure/reagent_dispensers/beerkeg
 	name = "beer keg"

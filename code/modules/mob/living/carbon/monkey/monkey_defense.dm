@@ -7,10 +7,10 @@
 
 /mob/living/carbon/monkey/attack_paw(mob/living/M)
 	if(..()) //successful monkey bite.
-		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+		var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		if(!affecting)
-			affecting = get_bodypart("chest")
+			affecting = get_bodypart(BODY_ZONE_CHEST)
 		if(M.limb_destroyer)
 			dismembering_strike(M, affecting.body_zone)
 		if(stat != DEAD)
@@ -24,7 +24,7 @@
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(L.zone_selected))
 			if(!affecting)
-				affecting = get_bodypart("chest")
+				affecting = get_bodypart(BODY_ZONE_CHEST)
 			apply_damage(damage, BRUTE, affecting)
 
 /mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
@@ -52,7 +52,7 @@
 									"<span class='userdanger'>[M] has knocked out [name]!</span>", null, 5)
 				var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 				if(!affecting)
-					affecting = get_bodypart("chest")
+					affecting = get_bodypart(BODY_ZONE_CHEST)
 				apply_damage(damage, BRUTE, affecting)
 				add_logs(M, src, "attacked")
 
@@ -92,7 +92,7 @@
 				var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 				add_logs(M, src, "attacked")
 				if(!affecting)
-					affecting = get_bodypart("chest")
+					affecting = get_bodypart(BODY_ZONE_CHEST)
 				if(!dismembering_strike(M, affecting.body_zone)) //Dismemberment successful
 					return 1
 				apply_damage(damage, BRUTE, affecting)
@@ -123,12 +123,12 @@
 	. = ..()
 	if(.)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		var/dam_zone = dismembering_strike(M, pick("chest", "l_hand", "r_hand", "l_leg", "r_leg"))
+		var/dam_zone = dismembering_strike(M, pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 		if(!dam_zone) //Dismemberment successful
 			return TRUE
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		if(!affecting)
-			affecting = get_bodypart("chest")
+			affecting = get_bodypart(BODY_ZONE_CHEST)
 		apply_damage(damage, M.melee_damage_type, affecting)
 
 /mob/living/carbon/monkey/attack_slime(mob/living/simple_animal/slime/M)
@@ -136,26 +136,26 @@
 		var/damage = rand(5, 35)
 		if(M.is_adult)
 			damage = rand(20, 40)
-		var/dam_zone = dismembering_strike(M, pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg"))
+		var/dam_zone = dismembering_strike(M, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 		if(!dam_zone) //Dismemberment successful
 			return 1
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		if(!affecting)
-			affecting = get_bodypart("chest")
+			affecting = get_bodypart(BODY_ZONE_CHEST)
 		apply_damage(damage, BRUTE, affecting)
 
 /mob/living/carbon/monkey/acid_act(acidpwr, acid_volume, bodyzone_hit)
 	. = 1
-	if(!bodyzone_hit || bodyzone_hit == "head")
+	if(!bodyzone_hit || bodyzone_hit == BODY_ZONE_HEAD)
 		if(wear_mask)
 			if(!(wear_mask.resistance_flags & UNACIDABLE))
-				wear_mask.acid_act(acidpwr)
+				wear_mask.acid_act(acidpwr, acid_volume)
 			else
 				to_chat(src, "<span class='warning'>Your mask protects you from the acid.</span>")
 			return
 		if(head)
 			if(!(head.resistance_flags & UNACIDABLE))
-				head.acid_act(acidpwr)
+				head.acid_act(acidpwr, acid_volume)
 			else
 				to_chat(src, "<span class='warning'>Your hat protects you from the acid.</span>")
 			return
@@ -192,7 +192,7 @@
 		var/max_limb_loss = round(4/severity) //so you don't lose four limbs at severity 3.
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
-			if(prob(50/severity) && BP.body_zone != "chest")
+			if(prob(50/severity) && BP.body_zone != BODY_ZONE_CHEST)
 				BP.brute_dam = BP.max_damage
 				BP.dismember()
 				max_limb_loss--

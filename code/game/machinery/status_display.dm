@@ -15,7 +15,6 @@
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
 	name = "status display"
-	anchored = TRUE
 	density = FALSE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
@@ -32,7 +31,7 @@
 	var/index1			// display index for scrolling messages or 0 if non-scrolling
 	var/index2
 
-	var/frequency = 1435		// radio frequency
+	var/frequency = FREQ_STATUS_DISPLAYS
 	var/supply_display = 0		// true if a supply shuttle display
 	var/shuttle_id				// Id used for "generic shuttle timer" mode
 
@@ -59,32 +58,32 @@
 /obj/machinery/status_display/process()
 	if(stat & NOPOWER)
 		remove_display()
-		return
-	update()
+		return PROCESS_KILL
+	return update()
 
 /obj/machinery/status_display/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
+	. = ..()
+	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
 	set_picture("ai_bsod")
-	..(severity)
 
 // set what is displayed
 
 /obj/machinery/status_display/proc/update()
 	if(friendc && mode!=4) //Makes all status displays except supply shuttle timer display the eye -- Urist
 		set_picture("ai_friend")
-		return
-
+		return PROCESS_KILL
+	if (supply_display)
+		mode = 4
 	switch(mode)
 		if(0)				//blank
 			remove_display()
+			return PROCESS_KILL
 		if(1)				//emergency shuttle timer
-			display_shuttle_status()
+			. = display_shuttle_status()
 		if(2)				//custom messages
 			var/line1
 			var/line2
-
 			if(!index1)
 				line1 = message1
 			else
@@ -103,11 +102,15 @@
 				if(index2 > message2_len)
 					index2 -= message2_len
 			update_display(line1, line2)
+			if (!index1 && !index2)
+				return PROCESS_KILL
+		if(3)
+			return PROCESS_KILL
 		if(4)				// supply shuttle timer
 			var/line1
 			var/line2
 			if(SSshuttle.supply.mode == SHUTTLE_IDLE)
-				if(SSshuttle.supply.z in GLOB.station_z_levels)
+				if(is_station_level(SSshuttle.supply.z))
 					line1 = "CARGO"
 					line2 = "Docked"
 			else
@@ -115,10 +118,11 @@
 				line2 = SSshuttle.supply.getTimerStr()
 				if(lentext(line2) > CHARS_PER_LINE)
 					line2 = "Error"
-
 			update_display(line1, line2)
 		if(5)
-			display_shuttle_status()
+			. = display_shuttle_status()
+	if (. != PROCESS_KILL)
+		START_PROCESSING(SSmachines, src)
 
 /obj/machinery/status_display/examine(mob/user)
 	. = ..()
@@ -140,7 +144,7 @@
 			var/obj/docking_port/mobile/shuttle = SSshuttle.supply
 			var/shuttleMsg = null
 			if (shuttle.mode == SHUTTLE_IDLE)
-				if (shuttle.z in GLOB.station_z_levels)
+				if (is_station_level(shuttle.z))
 					shuttleMsg = "Docked"
 			else
 				shuttleMsg = "[shuttle.getModeStr()]: [shuttle.getTimerStr()]"
@@ -205,6 +209,7 @@
 		update_display(line1, line2)
 	else
 		remove_display()
+		return PROCESS_KILL
 
 
 /obj/machinery/status_display/receive_signal(datum/signal/signal)
@@ -222,13 +227,15 @@
 		if("alert")
 			mode = 3
 			set_picture(signal.data["picture_state"])
+		if("friendcomputer")
+			friendc = !friendc
+	update()
 
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'
 	desc = "A small screen which the AI can use to present itself."
 	icon_state = "frame"
 	name = "\improper AI display"
-	anchored = TRUE
 	density = FALSE
 
 	var/mode = 0	// 0 = Blank
@@ -251,23 +258,18 @@
 	if(isAI(user))
 		user.ai_statuschange()
 
-/obj/machinery/ai_status_display/process()
-	if(stat & NOPOWER)
-		cut_overlays()
-		return
-
-	update()
-
 /obj/machinery/ai_status_display/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
+	. = ..()
+	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
 	set_picture("ai_bsod")
-	..(severity)
+
+/obj/machinery/ai_status_display/power_change()
+	. = ..()
+	update()
 
 /obj/machinery/ai_status_display/proc/update()
-
-	if(mode==0) //Blank
+	if(mode==0 || stat & NOPOWER) //Blank
 		cut_overlays()
 		return
 
@@ -317,7 +319,7 @@
 	add_overlay(picture_state)
 
 #undef CHARS_PER_LINE
-#undef FOND_SIZE
+#undef FONT_SIZE
 #undef FONT_COLOR
 #undef FONT_STYLE
 #undef SCROLL_SPEED

@@ -5,7 +5,7 @@
 	var/step_in_progress = 0								//Actively performing a Surgery
 	var/can_cancel = 1										//Can cancel this surgery after step 1 with cautery
 	var/list/species = list(/mob/living/carbon/human)		//Acceptable Species
-	var/location = "chest"									//Surgery location
+	var/location = BODY_ZONE_CHEST									//Surgery location
 	var/requires_bodypart_type = BODYPART_ORGANIC			//Prevents you from performing an operation on incorrect limbs. 0 for any limb type
 	var/list/possible_locs = list() 						//Multiple locations
 	var/ignore_clothes = 0									//This surgery ignores clothes
@@ -38,14 +38,17 @@
 	// put special restrictions here
 	return 1
 
-
-/datum/surgery/proc/next_step(mob/user)
+/datum/surgery/proc/next_step(mob/user, intent)
 	if(step_in_progress)
 		return 1
 
+	var/try_to_fail = FALSE
+	if(intent == INTENT_DISARM)
+		try_to_fail = TRUE
+
 	var/datum/surgery_step/S = get_surgery_step()
 	if(S)
-		if(S.try_op(user, target, user.zone_selected, user.get_active_held_item(), src))
+		if(S.try_op(user, target, user.zone_selected, user.get_active_held_item(), src, try_to_fail))
 			return 1
 	return 0
 
@@ -64,7 +67,6 @@
 	SSblackbox.record_feedback("tally", "surgeries_completed", 1, type)
 	qdel(src)
 
-
 /datum/surgery/proc/get_propability_multiplier()
 	var/propability = 0.5
 	var/turf/T = get_turf(target)
@@ -78,8 +80,44 @@
 
 	return propability + success_multiplier
 
+/datum/surgery/advanced
+	name = "advanced surgery"
 
+/datum/surgery/advanced/can_start(mob/user, mob/living/carbon/target)
+	if(!..())
+		return FALSE
+	//Abductor scientists need no instructions
+	if(isabductor(user))
+		var/mob/living/carbon/human/H = user
+		var/datum/species/abductor/S = H.dna.species
+		if(S.scientist)
+			return TRUE
 
+	var/turf/T = get_turf(target)
+	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
+	if(!table || !table.computer)
+		return FALSE
+	if(table.computer.stat & (NOPOWER|BROKEN))
+		return FALSE
+	if(type in table.computer.advanced_surgeries)
+		return TRUE
+
+/obj/item/disk/surgery
+	name = "Surgery Procedure Disk"
+	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
+	icon_state = "datadisk1"
+	materials = list(MAT_METAL=300, MAT_GLASS=100)
+	var/list/surgeries
+
+/obj/item/disk/surgery/debug
+	name = "Debug Surgery Disk"
+	desc = "A disk that contains all existing surgery procedures."
+	icon_state = "datadisk1"
+	materials = list(MAT_METAL=300, MAT_GLASS=100)
+
+/obj/item/disk/surgery/debug/Initialize()
+	. = ..()
+	surgeries = subtypesof(/datum/surgery/advanced)
 
 //INFO
 //Check /mob/living/carbon/attackby for how surgery progresses, and also /mob/living/carbon/attack_hand.

@@ -18,7 +18,7 @@
 		volume = vol
 	create_reagents(volume)
 	if(spawned_disease)
-		var/datum/disease/F = new spawned_disease(0)
+		var/datum/disease/F = new spawned_disease()
 		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", disease_amount, data)
 
@@ -44,18 +44,6 @@
 /obj/item/reagent_containers/attack(mob/M, mob/user, def_zone)
 	if(user.a_intent == INTENT_HARM)
 		return ..()
-
-/obj/item/reagent_containers/afterattack(obj/target, mob/user , flag)
-	return
-
-/obj/item/reagent_containers/proc/reagentlist(obj/item/reagent_containers/snack) //Attack logs for regents in pills
-	var/data
-	if(snack.reagents.reagent_list && snack.reagents.reagent_list.len) //find a reagent list if there is and check if it has entries
-		for (var/datum/reagent/R in snack.reagents.reagent_list) //no reagents will be left behind
-			data += "[R.id]([R.volume] units); " //Using IDs because SOME chemicals(I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
-		return data
-	else
-		return "No reagents"
 
 /obj/item/reagent_containers/proc/canconsume(mob/eater, mob/user)
 	if(!iscarbon(eater))
@@ -88,7 +76,11 @@
 	SplashReagents(target, TRUE)
 
 /obj/item/reagent_containers/proc/bartender_check(atom/target)
-	return (target.CanPass(src, get_turf(src)) && thrownby && thrownby.mind && thrownby.mind.assigned_role == "Bartender")
+	. = FALSE
+	if(target.CanPass(src, get_turf(src)) && thrownby && thrownby.actions)
+		for(var/datum/action/innate/drink_fling/D in thrownby.actions)
+			if(D.active)
+				return TRUE
 
 /obj/item/reagent_containers/proc/SplashReagents(atom/target, thrown = FALSE)
 	if(!reagents || !reagents.total_volume || !spillable)
@@ -115,9 +107,9 @@
 
 	else
 		if(isturf(target) && reagents.reagent_list.len && thrownby)
-			add_logs(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]", "at [target][COORD(target)]")
-			log_game("[key_name(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] at [COORD(target)].")
-			message_admins("[key_name_admin(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] at [ADMIN_COORDJMP(target)].")
+			add_logs(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]", "in [AREACOORD(target)]")
+			log_game("[key_name(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [AREACOORD(target)].")
+			message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [ADMIN_VERBOSEJMP(target)].")
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
 		reagents.reaction(target, TOUCH)
 		if(QDELETED(src))
@@ -126,8 +118,7 @@
 	reagents.clear_reagents()
 
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)
-	if(is_open_container())
-		reagents.expose_temperature(1000)
+	reagents.expose_temperature(1000)
 	..()
 
 /obj/item/reagent_containers/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)

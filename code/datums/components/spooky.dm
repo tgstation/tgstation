@@ -2,7 +2,7 @@
 	var/too_spooky = TRUE //will it spawn a new instrument?
 
 /datum/component/spooky/Initialize()
-	RegisterSignal(COMSIG_ITEM_ATTACK, .proc/spectral_attack)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/spectral_attack)
 
 /datum/component/spooky/proc/spectral_attack(mob/living/carbon/C, mob/user)
 	if(ishuman(user)) //this weapon wasn't meant for mortals.
@@ -19,7 +19,7 @@
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if(istype(H.dna.species, /datum/species/skeleton))
-			return ..() //undeads are unaffected by the spook-pocalypse.
+			return //undeads are unaffected by the spook-pocalypse.
 		if(istype(H.dna.species, /datum/species/zombie))
 			H.adjustStaminaLoss(25)
 			H.Knockdown(15) //zombies can't resist the doot
@@ -42,11 +42,11 @@
 		var/T = get_turf(H)
 		if(too_spooky)
 			if(prob(30))
-				new/obj/item/device/instrument/saxophone/spectral(T)
+				new/obj/item/instrument/saxophone/spectral(T)
 			else if(prob(30))
-				new/obj/item/device/instrument/trumpet/spectral(T)
+				new/obj/item/instrument/trumpet/spectral(T)
 			else if(prob(30))
-				new/obj/item/device/instrument/trombone/spectral(T)
+				new/obj/item/instrument/trombone/spectral(T)
 			else
 				to_chat(H, "The spooky gods forgot to ship your instrument. Better luck next unlife.")
 		to_chat(H, "<B>You are the spooky skeleton!</B>")

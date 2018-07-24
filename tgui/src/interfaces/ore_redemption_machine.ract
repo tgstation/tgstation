@@ -57,9 +57,6 @@
 			<section class="cell">
 			</section>
 			<section class="cell">
-				<ui-button class='center mineral' grid action='Release' params='{"id" : "all"}'>
-					Release All
-				</ui-button>
 			</section>
 			<section class="cell">
 				Ore Value
@@ -103,9 +100,6 @@
 				</ui-button>
 			</section>
 			<section class="cell" align='right'>
-				<ui-button class='center' grid action='SmeltAll' state={{ (amount >= 1) ? null : 'disabled'}} params='{ "id" : {{id}} }'>
-					Smelt All
-				</ui-button>
 			</section>
 		</section>
 	{{/each}}

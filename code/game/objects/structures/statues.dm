@@ -1,6 +1,3 @@
-
-
-
 /obj/structure/statue
 	name = "statue"
 	desc = "Placeholder. Yell at Firecage if you SOMEHOW see this."
@@ -13,69 +10,30 @@
 	var/material_drop_type = /obj/item/stack/sheet/metal
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
+
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(istype(W, /obj/item/wrench))
-		if(anchored)
-			playsound(src.loc, W.usesound, 100, 1)
-			user.visible_message("[user] is loosening the [name]'s bolts.", \
-								 "<span class='notice'>You are loosening the [name]'s bolts...</span>")
-			if(do_after(user,40*W.toolspeed, target = src))
-				if(!src.loc || !anchored)
-					return
-				user.visible_message("[user] loosened the [name]'s bolts!", \
-									 "<span class='notice'>You loosen the [name]'s bolts!</span>")
-				anchored = FALSE
-		else
-			if(!isfloorturf(src.loc))
-				user.visible_message("<span class='warning'>A floor must be present to secure the [name]!</span>")
-				return
-			playsound(src.loc, W.usesound, 100, 1)
-			user.visible_message("[user] is securing the [name]'s bolts...", \
-								 "<span class='notice'>You are securing the [name]'s bolts...</span>")
-			if(do_after(user, 40*W.toolspeed, target = src))
-				if(!src.loc || anchored)
-					return
-				user.visible_message("[user] has secured the [name]'s bolts.", \
-									 "<span class='notice'>You have secured the [name]'s bolts.</span>")
-				anchored = TRUE
-
-	else if(istype(W, /obj/item/gun/energy/plasmacutter))
-		playsound(src, 'sound/items/welder.ogg', 100, 1)
-		user.visible_message("[user] is slicing apart the [name]...", \
-							 "<span class='notice'>You are slicing apart the [name]...</span>")
-		if(do_after(user,40*W.toolspeed, target = src))
-			if(!src.loc)
-				return
-			user.visible_message("[user] slices apart the [name].", \
-								 "<span class='notice'>You slice apart the [name].</span>")
-			deconstruct(TRUE)
-
-	else if(istype(W, /obj/item/pickaxe/drill/jackhammer))
-		var/obj/item/pickaxe/drill/jackhammer/D = W
-		if(!src.loc)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if(default_unfasten_wrench(user, W))
 			return
-		user.visible_message("[user] destroys the [name]!", \
-							 "<span class='notice'>You destroy the [name].</span>")
-		D.playDigSound()
-		qdel(src)
+		if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
+			if(!W.tool_start_check(user, amount=0))
+				return FALSE
 
-	else if(istype(W, /obj/item/weldingtool) && !anchored)
-		playsound(loc, W.usesound, 40, 1)
-		user.visible_message("[user] is slicing apart the [name].", \
-							 "<span class='notice'>You are slicing apart the [name]...</span>")
-		if(do_after(user, 40*W.toolspeed, target = src))
-			if(!src.loc)
-				return
-			playsound(loc, 'sound/items/welder2.ogg', 50, 1)
-			user.visible_message("[user] slices apart the [name].", \
-								 "<span class='notice'>You slice apart the [name]!</span>")
-			deconstruct(TRUE)
-	else
-		return ..()
+			user.visible_message("[user] is slicing apart the [name].", \
+								"<span class='notice'>You are slicing apart the [name]...</span>")
+			if(W.use_tool(src, user, 40, volume=50))
+				user.visible_message("[user] slices apart the [name].", \
+									"<span class='notice'>You slice apart the [name]!</span>")
+				deconstruct(TRUE)
+			return
+	return ..()
 
 /obj/structure/statue/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
 	user.visible_message("[user] rubs some dust off from the [name]'s surface.", \
@@ -115,17 +73,17 @@
 	radiate()
 	return ..()
 
-/obj/structure/statue/uranium/CollidedWith(atom/movable/AM)
+/obj/structure/statue/uranium/Bumped(atom/movable/AM)
 	radiate()
 	..()
 
 /obj/structure/statue/uranium/attack_hand(mob/user)
 	radiate()
-	..()
+	. = ..()
 
 /obj/structure/statue/uranium/attack_paw(mob/user)
 	radiate()
-	..()
+	. = ..()
 
 /obj/structure/statue/uranium/proc/radiate()
 	if(!active)
@@ -155,30 +113,32 @@
 
 /obj/structure/statue/plasma/bullet_act(obj/item/projectile/Proj)
 	var/burn = FALSE
-	if(!(Proj.nodamage) && Proj.damage_type == BURN)
-		PlasmaBurn(2500)
+	if(!(Proj.nodamage) && Proj.damage_type == BURN && !QDELETED(src))
 		burn = TRUE
 	if(burn)
 		var/turf/T = get_turf(src)
 		if(Proj.firer)
-			message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(Proj.firer)] in [ADMIN_COORDJMP(T)]",0,1)
-			log_game("Plasma statue ignited by [key_name(Proj.firer)] in [COORD(T)]")
+			message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(Proj.firer)] in [ADMIN_VERBOSEJMP(T)]")
+			log_game("Plasma statue ignited by [key_name(Proj.firer)] in [AREACOORD(T)]")
 		else
-			message_admins("Plasma statue ignited by [Proj]. No known firer, in [ADMIN_COORDJMP(T)]",0,1)
-			log_game("Plasma statue ignited by [Proj] in [COORD(T)]. No known firer.")
+			message_admins("Plasma statue ignited by [Proj]. No known firer, in [ADMIN_VERBOSEJMP(T)]")
+			log_game("Plasma statue ignited by [Proj] in [AREACOORD(T)]. No known firer.")
+		PlasmaBurn(2500)
 	..()
 
 /obj/structure/statue/plasma/attackby(obj/item/W, mob/user, params)
-	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
+	if(W.is_hot() > 300 && !QDELETED(src))//If the temperature of the object is over 300, then ignite
 		var/turf/T = get_turf(src)
-		message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
-		log_game("Plasma statue ignited by [key_name(user)] in [COORD(T)]")
+		message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
+		log_game("Plasma statue ignited by [key_name(user)] in [AREACOORD(T)]")
 		ignite(W.is_hot())
 	else
 		return ..()
 
-/obj/structure/statue/plasma/proc/PlasmaBurn()
-	atmos_spawn_air("plasma=400;TEMP=1000")
+/obj/structure/statue/plasma/proc/PlasmaBurn(exposed_temperature)
+	if(QDELETED(src))
+		return
+	atmos_spawn_air("plasma=[oreAmount*10];TEMP=[exposed_temperature]")
 	deconstruct(FALSE)
 
 /obj/structure/statue/plasma/proc/ignite(exposed_temperature)
@@ -270,7 +230,7 @@
 	name = "statue of a clown"
 	icon_state = "clown"
 
-/obj/structure/statue/bananium/CollidedWith(atom/movable/AM)
+/obj/structure/statue/bananium/Bumped(atom/movable/AM)
 	honk()
 	..()
 
@@ -280,7 +240,7 @@
 
 /obj/structure/statue/bananium/attack_hand(mob/user)
 	honk()
-	..()
+	. = ..()
 
 /obj/structure/statue/bananium/attack_paw(mob/user)
 	honk()

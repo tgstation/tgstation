@@ -6,7 +6,6 @@
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "coinpress0"
 	density = TRUE
-	anchored = TRUE
 	var/newCoins = 0   //how many coins the machine made in it's last load
 	var/processing = FALSE
 	var/chosen = MAT_METAL //which material will be used to make coins
@@ -16,7 +15,7 @@
 
 /obj/machinery/mineral/mint/Initialize()
 	. = ..()
-	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_URANIUM, MAT_DIAMOND, MAT_BANANIUM), MINERAL_MATERIAL_AMOUNT * 50)
+	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_URANIUM, MAT_DIAMOND, MAT_BANANIUM), MINERAL_MATERIAL_AMOUNT * 50, FALSE, list(/obj/item/stack))
 
 /obj/machinery/mineral/mint/process()
 	var/turf/T = get_step(src, input_dir)
@@ -28,6 +27,9 @@
 		materials.insert_stack(O, O.amount)
 
 /obj/machinery/mineral/mint/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	var/dat = "<b>Coin Press</b><br>"
 
 	GET_COMPONENT(materials, /datum/component/material_container)
@@ -68,7 +70,7 @@
 		if(materials.materials[href_list["choose"]])
 			chosen = href_list["choose"]
 	if(href_list["chooseAmt"])
-		coinsToProduce = Clamp(coinsToProduce + text2num(href_list["chooseAmt"]), 0, 1000)
+		coinsToProduce = CLAMP(coinsToProduce + text2num(href_list["chooseAmt"]), 0, 1000)
 	if(href_list["makeCoins"])
 		var/temp_coins = coinsToProduce
 		processing = TRUE
@@ -100,4 +102,4 @@
 		if(!M)
 			M = new /obj/item/storage/bag/money(src)
 			unload_mineral(M)
-		O.loc = M
+		O.forceMove(M)

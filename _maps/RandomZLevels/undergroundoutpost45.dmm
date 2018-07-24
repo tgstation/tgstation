@@ -8,7 +8,6 @@
 "ac" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
-	broken = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged2"
@@ -26,16 +25,9 @@
 "ag" = (
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/undergroundoutpost45/central)
-"ah" = (
-/turf/closed/wall/mineral/titanium,
-/area/awaymission/undergroundoutpost45/central)
-"ai" = (
-/turf/closed/wall/mineral/titanium,
-/area/awaymission/undergroundoutpost45/central)
 "aj" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
-	broken = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged1"
@@ -49,21 +41,18 @@
 	status = 2
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
 /area/awaymission/undergroundoutpost45/central)
 "al" = (
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
 /area/awaymission/undergroundoutpost45/central)
 "am" = (
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
@@ -84,7 +73,6 @@
 	status = 2
 	},
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2"
@@ -96,27 +84,23 @@
 	id = "UO45_Elevator";
 	name = "Elevator Doors";
 	pixel_x = 6;
-	pixel_y = -24;
-	req_access_txt = "0"
+	pixel_y = -24
 	},
 /obj/machinery/button/door{
 	desc = "A remote control-switch to call the elevator to your level.";
 	id = "UO45_useless";
 	name = "B1";
 	pixel_x = -6;
-	pixel_y = -24;
-	req_access_txt = "0"
+	pixel_y = -24
 	},
 /obj/machinery/button/door{
 	desc = "A remote control-switch to call the elevator to your level.";
 	id = "UO45_useless";
 	name = "B2";
 	pixel_x = -6;
-	pixel_y = -34;
-	req_access_txt = "0"
+	pixel_y = -34
 	},
 /turf/open/floor/plasteel{
-	broken = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged4"
@@ -124,7 +108,6 @@
 /area/awaymission/undergroundoutpost45/central)
 "ar" = (
 /turf/open/floor/plasteel{
-	broken = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged3"
@@ -154,12 +137,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
-"av" = (
-/turf/closed/wall/mineral/titanium,
-/area/awaymission/undergroundoutpost45/central)
-"aw" = (
-/turf/closed/wall/mineral/titanium,
-/area/awaymission/undergroundoutpost45/central)
 "ax" = (
 /obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel{
@@ -176,9 +153,9 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "az" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	desc = "A beacon used by a teleporter.";
-	icon = 'icons/obj/radio.dmi';
+	icon = 'icons/obj/device.dmi';
 	icon_state = "beacon";
 	name = "tracking beacon"
 	},
@@ -187,9 +164,6 @@
 	dir = 4;
 	heat_capacity = 1e+006
 	},
-/area/awaymission/undergroundoutpost45/central)
-"aA" = (
-/turf/closed/wall/mineral/titanium,
 /area/awaymission/undergroundoutpost45/central)
 "aB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -205,9 +179,6 @@
 "aD" = (
 /turf/closed/wall/rust,
 /area/awaymission/undergroundoutpost45/central)
-"aE" = (
-/turf/closed/wall/mineral/titanium,
-/area/awaymission/undergroundoutpost45/central)
 "aF" = (
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -220,16 +191,14 @@
 	id = "UO45_useless";
 	name = "Call Elevator";
 	pixel_x = -6;
-	pixel_y = 24;
-	req_access_txt = "0"
+	pixel_y = 24
 	},
 /obj/machinery/button/door{
 	desc = "A remote control-switch for the elevator doors.";
 	id = "UO45_Elevator";
 	name = "Elevator Doors";
 	pixel_x = 6;
-	pixel_y = 24;
-	req_access_txt = "0"
+	pixel_y = 24
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -419,7 +388,7 @@
 	req_access_txt = "201"
 	},
 /obj/item/storage/bag/plants/portaseeder,
-/obj/item/device/plant_analyzer,
+/obj/item/plant_analyzer,
 /obj/item/clothing/mask/bandana,
 /obj/item/hatchet,
 /turf/open/floor/plasteel/vault{
@@ -429,7 +398,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "bf" = (
 /obj/item/storage/belt/security,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet{
 	icon_state = "sec";
@@ -489,8 +458,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "bm" = (
 /obj/structure/chair/comfy/beige{
-	dir = 1;
-	icon_state = "comfychair"
+	dir = 1
 	},
 /turf/open/floor/plasteel/grimy{
 	heat_capacity = 1e+006
@@ -498,7 +466,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "bn" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -532,10 +500,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "br" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "0";
-	req_one_access_txt = "0"
-	},
+/obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -548,12 +513,9 @@
 /area/awaymission/undergroundoutpost45/central)
 "bt" = (
 /obj/machinery/light/small,
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 1;
-	frequency = 1439;
-	locked = 0;
-	pixel_y = -23;
-	req_access = null
+	pixel_y = -23
 	},
 /turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006
@@ -566,8 +528,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "bv" = (
 /obj/machinery/door/airlock{
-	name = "Unisex Restrooms";
-	req_access_txt = "0"
+	name = "Unisex Restrooms"
 	},
 /turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006
@@ -578,7 +539,7 @@
 /obj/machinery/camera{
 	c_tag = "Arrivals";
 	dir = 8;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4;
@@ -811,7 +772,6 @@
 /area/awaymission/undergroundoutpost45/central)
 "bZ" = (
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -852,7 +812,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -870,10 +829,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "0";
-	req_one_access_txt = "0"
-	},
+/obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -905,7 +861,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -916,7 +871,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
 	},
@@ -936,7 +890,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -1003,11 +956,8 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
-	pixel_y = 23;
-	req_access = null
+/obj/machinery/airalarm/all_access{
+	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -1033,12 +983,9 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "cz" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 4;
-	frequency = 1439;
-	locked = 0;
-	pixel_x = -23;
-	req_access = null
+	pixel_x = -23
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/filingcabinet,
@@ -1055,11 +1002,8 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
-	pixel_y = 23;
-	req_access = null
+/obj/machinery/airalarm/all_access{
+	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -1084,7 +1028,6 @@
 "cC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
@@ -1106,7 +1049,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/grille,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
@@ -1114,7 +1056,6 @@
 "cG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
 	},
@@ -1131,7 +1072,6 @@
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_y = -25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/carpet{
@@ -1173,7 +1113,6 @@
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_y = -25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/carpet{
@@ -1202,7 +1141,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
@@ -1229,7 +1167,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -1307,7 +1244,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "da" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
 	},
 /turf/open/floor/plasteel{
@@ -1339,7 +1276,6 @@
 	dir = 1
 	},
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -1379,7 +1315,6 @@
 	dir = 6
 	},
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -1389,7 +1324,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
@@ -1459,7 +1393,7 @@
 "ds" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
-/obj/structure/sign/deathsposal{
+/obj/structure/sign/warning/deathsposal{
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO EXTERIOR'";
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
 	pixel_y = 32
@@ -1492,15 +1426,11 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 4;
-	frequency = 1439;
-	locked = 0;
-	pixel_x = -23;
-	req_access = null
+	pixel_x = -23
 	},
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -1570,11 +1500,8 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "dE" = (
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
-	pixel_y = 23;
-	req_access = null
+/obj/machinery/airalarm/all_access{
+	pixel_y = 23
 	},
 /obj/machinery/light{
 	dir = 1
@@ -1680,7 +1607,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -1784,7 +1710,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Hydroponics";
 	req_access_txt = "201"
 	},
@@ -1829,9 +1755,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/command{
-	icon_state = "closed";
-	lockdownbyai = 0;
-	locked = 0;
 	name = "Gateway Chamber";
 	req_access_txt = "201"
 	},
@@ -1853,8 +1776,7 @@
 	},
 /obj/machinery/door/airlock/maintenance{
 	name = "Security Checkpoint Maintenance";
-	req_access_txt = "201";
-	req_one_access_txt = "0"
+	req_access_txt = "201"
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -1918,7 +1840,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "eo" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Hydroponics";
 	req_access_txt = "201"
 	},
@@ -1962,7 +1884,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -2225,11 +2146,7 @@
 "eV" = (
 /obj/structure/closet/emcloset,
 /obj/item/clothing/mask/breath,
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
+/obj/structure/sign/warning/vacuum/external{
 	pixel_y = -32
 	},
 /turf/open/floor/plating{
@@ -2248,7 +2165,7 @@
 "eX" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
@@ -2262,7 +2179,7 @@
 "eY" = (
 /obj/machinery/computer/security{
 	dir = 1;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 6;
@@ -2326,7 +2243,7 @@
 /obj/machinery/camera{
 	c_tag = "Hydroponics";
 	dir = 1;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 2;
@@ -2437,12 +2354,9 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 8;
-	frequency = 1439;
-	locked = 0;
-	pixel_x = 23;
-	req_access = null
+	pixel_x = 23
 	},
 /turf/open/floor/plasteel/green/side{
 	dir = 4;
@@ -2521,7 +2435,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -2552,7 +2465,6 @@
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_y = 25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/carpet{
@@ -2659,7 +2571,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
 	},
@@ -2675,12 +2586,9 @@
 /area/awaymission/undergroundoutpost45/central)
 "fR" = (
 /obj/machinery/light/small,
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 1;
-	frequency = 1439;
-	locked = 0;
-	pixel_y = -23;
-	req_access = null
+	pixel_y = -23
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -2715,7 +2623,7 @@
 /obj/machinery/camera{
 	c_tag = "Central Hallway";
 	dir = 1;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -2747,7 +2655,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/structure/sign/deathsposal{
+/obj/structure/sign/warning/deathsposal{
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO EXTERIOR'";
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
 	pixel_y = -32
@@ -2796,7 +2704,7 @@
 "ge" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
 	},
 /turf/open/floor/plasteel{
@@ -2892,7 +2800,6 @@
 	dir = 5
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -3088,7 +2995,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -3151,11 +3057,8 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "gY" = (
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
-	pixel_y = 23;
-	req_access = null
+/obj/machinery/airalarm/all_access{
+	pixel_y = 23
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -3163,7 +3066,7 @@
 /obj/machinery/camera{
 	c_tag = "Research Lab";
 	dir = 2;
-	network = list("UO45","UO45R")
+	network = list("uo45","uo45r")
 	},
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
@@ -3240,12 +3143,9 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "hg" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 8;
-	frequency = 1439;
-	locked = 0;
-	pixel_x = 23;
-	req_access = null
+	pixel_x = 23
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -3339,17 +3239,14 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "hs" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 8;
-	frequency = 1439;
-	locked = 0;
-	pixel_x = 23;
-	req_access = null
+	pixel_x = 23
 	},
 /obj/machinery/camera{
 	c_tag = "Kitchen";
 	dir = 8;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /obj/structure/table,
 /obj/machinery/microwave{
@@ -3408,7 +3305,6 @@
 "hy" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -3448,7 +3344,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "hD" = (
-/obj/machinery/rnd/protolathe,
+/obj/machinery/rnd/production/protolathe,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -3545,7 +3441,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "hP" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Kitchen";
 	req_access_txt = "201"
 	},
@@ -3673,12 +3569,9 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "ic" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 8;
-	frequency = 1439;
-	locked = 0;
-	pixel_x = 23;
-	req_access = null
+	pixel_x = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/chair{
@@ -3721,7 +3614,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "ii" = (
-/obj/machinery/rnd/circuit_imprinter,
+/obj/machinery/rnd/production/circuit_imprinter,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -3769,7 +3662,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "io" = (
 /obj/structure/table,
-/obj/item/book/manual/barman_recipes,
+/obj/item/book/manual/wiki/barman_recipes,
 /obj/item/reagent_containers/food/drinks/shaker,
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
@@ -3844,7 +3737,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/dark{
@@ -3874,7 +3767,7 @@
 	pixel_y = 3
 	},
 /obj/item/stock_parts/scanning_module,
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -4016,7 +3909,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -4024,7 +3916,7 @@
 "iN" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
-/obj/structure/sign/biohazard{
+/obj/structure/sign/warning/biohazard{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -4034,10 +3926,9 @@
 /area/awaymission/undergroundoutpost45/gateway)
 "iO" = (
 /obj/structure/table,
-/obj/item/device/radio/off,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
+/obj/item/radio/off,
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -4159,12 +4050,9 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 4;
-	frequency = 1439;
-	locked = 0;
-	pixel_x = -23;
-	req_access = null
+	pixel_x = -23
 	},
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
@@ -4186,7 +4074,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/structure/sign/deathsposal{
+/obj/structure/sign/warning/deathsposal{
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO EXTERIOR'";
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
 	pixel_y = -32
@@ -4221,17 +4109,14 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "jg" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 4;
-	frequency = 1439;
-	locked = 0;
-	pixel_x = -23;
-	req_access = null
+	pixel_x = -23
 	},
 /obj/machinery/camera{
 	c_tag = "Gateway Chamber";
 	dir = 4;
-	network = list("UO45","UO45R")
+	network = list("uo45","uo45r")
 	},
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -4348,7 +4233,7 @@
 "jt" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
 	},
 /turf/open/floor/plasteel{
@@ -4357,7 +4242,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "ju" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
 	},
 /turf/open/floor/plasteel{
@@ -4389,8 +4274,7 @@
 "jy" = (
 /obj/machinery/door/window/southright{
 	name = "Bar Door";
-	req_access_txt = "201";
-	req_one_access_txt = "0"
+	req_access_txt = "201"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/bar{
@@ -4401,7 +4285,7 @@
 /obj/machinery/camera{
 	c_tag = "Bar";
 	dir = 8;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/bar{
@@ -4444,7 +4328,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
 	},
@@ -4495,12 +4378,9 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "jK" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 8;
-	frequency = 1439;
-	locked = 0;
-	pixel_x = 23;
-	req_access = null
+	pixel_x = 23
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
@@ -4531,8 +4411,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/research{
 	name = "Research Lab";
-	req_access_txt = "201";
-	req_one_access_txt = "0"
+	req_access_txt = "201"
 	},
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
@@ -4567,7 +4446,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -4653,10 +4531,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "0";
-	req_one_access_txt = "0"
-	},
+/obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -4701,7 +4576,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -4796,9 +4670,6 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/command{
-	icon_state = "closed";
-	lockdownbyai = 0;
-	locked = 0;
 	name = "Gateway EVA";
 	req_access_txt = "201"
 	},
@@ -4830,11 +4701,8 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "ko" = (
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
-	pixel_y = 23;
-	req_access = null
+/obj/machinery/airalarm/all_access{
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -4842,7 +4710,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "kp" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Diner"
 	},
 /turf/open/floor/plasteel{
@@ -4901,7 +4769,6 @@
 /obj/structure/closet/emcloset,
 /obj/item/clothing/mask/breath,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -4919,7 +4786,7 @@
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -4928,11 +4795,11 @@
 /obj/structure/table,
 /obj/item/storage/belt/utility,
 /obj/item/clothing/head/welding,
-/obj/structure/sign/biohazard{
+/obj/structure/sign/warning/biohazard{
 	pixel_y = 32
 	},
-/obj/item/device/assembly/prox_sensor,
-/obj/item/device/assembly/prox_sensor,
+/obj/item/assembly/prox_sensor,
+/obj/item/assembly/prox_sensor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -4941,7 +4808,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "kz" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -4992,7 +4859,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/white{
@@ -5048,11 +4915,8 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "kJ" = (
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
-	pixel_y = 23;
-	req_access = null
+/obj/machinery/airalarm/all_access{
+	pixel_y = 23
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -5149,11 +5013,8 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "kT" = (
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
-	pixel_y = 23;
-	req_access = null
+/obj/machinery/airalarm/all_access{
+	pixel_y = 23
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -5214,7 +5075,7 @@
 	pixel_y = 25
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -5250,7 +5111,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/obj/structure/sign/science{
+/obj/structure/sign/departments/science{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/purple/corner{
@@ -5327,12 +5188,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 1;
-	frequency = 1439;
-	locked = 0;
-	pixel_y = -23;
-	req_access = null
+	pixel_y = -23
 	},
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
@@ -5371,8 +5229,8 @@
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/device/multitool,
-/obj/structure/sign/nosmoking_2{
+/obj/item/multitool,
+/obj/structure/sign/warning/nosmoking{
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -5408,11 +5266,8 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
-	pixel_y = 23;
-	req_access = null
+/obj/machinery/airalarm/all_access{
+	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -5420,7 +5275,7 @@
 /obj/machinery/camera{
 	c_tag = "Gateway Ready Room";
 	dir = 2;
-	network = list("UO45","UO45R")
+	network = list("uo45","uo45r")
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -5452,7 +5307,7 @@
 "lu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/item/restraints/handcuffs,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /obj/item/reagent_containers/spray/pepper,
 /obj/structure/closet/secure_closet{
 	icon_state = "sec";
@@ -5537,7 +5392,7 @@
 /obj/machinery/camera{
 	c_tag = "Research Division West";
 	dir = 1;
-	network = list("UO45","UO45R")
+	network = list("uo45","uo45r")
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 2;
@@ -5719,7 +5574,7 @@
 /obj/machinery/camera{
 	c_tag = "Research Division East";
 	dir = 1;
-	network = list("UO45","UO45R")
+	network = list("uo45","uo45r")
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 2;
@@ -5783,7 +5638,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/structure/sign/deathsposal{
+/obj/structure/sign/warning/deathsposal{
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO EXTERIOR'";
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
 	pixel_y = -32
@@ -5795,7 +5650,7 @@
 "lV" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Diner"
 	},
 /turf/open/floor/plasteel{
@@ -5809,7 +5664,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Diner"
 	},
 /turf/open/floor/plasteel{
@@ -5841,7 +5696,7 @@
 /obj/machinery/camera{
 	c_tag = "Engineering Secure Storage";
 	dir = 2;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -5881,7 +5736,6 @@
 /area/awaymission/undergroundoutpost45/gateway)
 "mc" = (
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -5974,7 +5828,7 @@
 "mm" = (
 /obj/structure/closet/firecloset,
 /obj/machinery/light/small,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -5996,7 +5850,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "mo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/purple/corner{
@@ -6037,11 +5891,8 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
-	pixel_y = 23;
-	req_access = null
+/obj/machinery/airalarm/all_access{
+	pixel_y = 23
 	},
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
@@ -6067,11 +5918,8 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
-	pixel_y = 23;
-	req_access = null
+/obj/machinery/airalarm/all_access{
+	pixel_y = 23
 	},
 /obj/structure/chair/wood/normal{
 	dir = 8
@@ -6140,9 +5988,9 @@
 "mB" = (
 /obj/structure/table,
 /obj/item/hand_labeler,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
+/obj/item/flashlight,
+/obj/item/flashlight,
+/obj/item/flashlight,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
@@ -6347,7 +6195,7 @@
 "mV" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Dormitories"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -6358,7 +6206,7 @@
 "mW" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Dormitories"
 	},
 /turf/open/floor/plasteel{
@@ -6372,7 +6220,6 @@
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_y = -25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/structure/chair/wood/normal{
@@ -6390,10 +6237,9 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "mZ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Air to Distro";
-	on = 1
+	name = "Air to Distro"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -6413,7 +6259,6 @@
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_y = -25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/carpet{
@@ -6524,7 +6369,7 @@
 "no" = (
 /obj/machinery/computer/security{
 	dir = 4;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8;
@@ -6545,7 +6390,7 @@
 	desc = "Used for monitoring the research division and the labs within.";
 	dir = 8;
 	name = "research monitor";
-	network = list("UO45R")
+	network = list("uo45r")
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/red/side{
@@ -6587,7 +6432,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -6616,10 +6460,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "0";
-	req_one_access_txt = "0"
-	},
+/obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -6720,7 +6561,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Dormitories"
 	},
 /turf/open/floor/plasteel{
@@ -6802,19 +6643,16 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "nO" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 4;
-	frequency = 1439;
-	locked = 0;
-	pixel_x = -23;
-	req_access = null
+	pixel_x = -23
 	},
 /obj/machinery/light/small{
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/device/radio/off,
-/obj/item/device/laser_pointer,
+/obj/item/radio/off,
+/obj/item/laser_pointer,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
@@ -6860,7 +6698,7 @@
 	desc = "Used for monitoring the research division and the labs within.";
 	dir = 2;
 	name = "research monitor";
-	network = list("UO45R")
+	network = list("uo45r")
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5;
@@ -6875,10 +6713,10 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/device/taperecorder{
+/obj/item/taperecorder{
 	pixel_x = -3
 	},
-/obj/item/device/paicard{
+/obj/item/paicard{
 	pixel_x = 4
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -6887,17 +6725,14 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "nT" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 4;
-	frequency = 1439;
-	locked = 0;
-	pixel_x = -23;
-	req_access = null
+	pixel_x = -23
 	},
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
@@ -6944,12 +6779,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 4;
-	frequency = 1439;
-	locked = 0;
-	pixel_x = -23;
-	req_access = null
+	pixel_x = -23
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8;
@@ -7027,7 +6859,7 @@
 /obj/machinery/camera{
 	c_tag = "Dormitories";
 	dir = 2;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1;
@@ -7072,11 +6904,8 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
-	pixel_y = 23;
-	req_access = null
+/obj/machinery/airalarm/all_access{
+	pixel_y = 23
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -7208,7 +7037,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Dormitories"
 	},
 /turf/open/floor/plasteel{
@@ -7300,7 +7129,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
@@ -7380,7 +7208,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "oE" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Security Office";
 	req_access_txt = "201"
 	},
@@ -7525,12 +7353,9 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 8;
-	frequency = 1439;
-	locked = 0;
-	pixel_x = 23;
-	req_access = null
+	pixel_x = 23
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -7628,7 +7453,6 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "pa" = (
 /obj/machinery/air_sensor{
-	frequency = 1441;
 	id_tag = "UO45_air_sensor"
 	},
 /turf/open/floor/engine/air,
@@ -7655,7 +7479,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -7665,7 +7488,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/structure/sign/deathsposal{
+/obj/structure/sign/warning/deathsposal{
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO EXTERIOR'";
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
 	pixel_y = -32
@@ -7741,7 +7564,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
@@ -7801,8 +7623,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "pr" = (
 /obj/machinery/door/airlock{
-	name = "Unisex Restrooms";
-	req_access_txt = "0"
+	name = "Unisex Restrooms"
 	},
 /turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006
@@ -7810,10 +7631,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "ps" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "0";
-	req_one_access_txt = "0"
-	},
+/obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -7944,9 +7762,8 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "pE" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on{
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos{
 	dir = 2;
-	frequency = 1441;
 	icon_state = "in";
 	id_tag = "UO45_air_out";
 	name = "air out"
@@ -7957,15 +7774,11 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "pF" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 2;
-	frequency = 1441;
 	id = "UO45_air_in"
 	},
-/turf/open/floor/engine{
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644"
-	},
+/turf/open/floor/engine/air,
 /area/awaymission/undergroundoutpost45/engineering)
 "pG" = (
 /obj/structure/cable{
@@ -8008,7 +7821,7 @@
 /turf/closed/wall/rust,
 /area/awaymission/undergroundoutpost45/research)
 "pM" = (
-/obj/machinery/door/airlock/glass_research{
+/obj/machinery/door/airlock/research/glass{
 	name = "Research Storage";
 	req_access_txt = "201"
 	},
@@ -8047,7 +7860,6 @@
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = -25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/carpet{
@@ -8085,7 +7897,6 @@
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = 25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/carpet{
@@ -8134,7 +7945,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
@@ -8159,10 +7969,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
-/obj/machinery/door/airlock/glass_engineering{
+/obj/machinery/door/airlock/engineering/glass{
 	name = "SMES Room";
-	req_access_txt = "201";
-	req_one_access_txt = "0"
+	req_access_txt = "201"
 	},
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
@@ -8197,7 +8006,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -8212,10 +8020,7 @@
 	external_pressure_bound = 120;
 	name = "server vent"
 	},
-/turf/open/floor/circuit{
-	name = "Server Base";
-	initial_gas_mix = "n2=500,TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/server,
 /area/awaymission/undergroundoutpost45/research)
 "qi" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -8228,7 +8033,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "qj" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'SERVER ROOM'.";
 	name = "SERVER ROOM";
 	pixel_y = 32
@@ -8244,11 +8049,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "ql" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	target_temperature = 80;
-	dir = 2;
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -8288,11 +8089,8 @@
 /area/awaymission/undergroundoutpost45/research)
 "qp" = (
 /obj/structure/table,
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
-	pixel_y = 23;
-	req_access = null
+/obj/machinery/airalarm/all_access{
+	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/item/hand_labeler,
@@ -8328,12 +8126,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 8;
-	frequency = 1439;
-	locked = 0;
-	pixel_x = 23;
-	req_access = null
+	pixel_x = 23
 	},
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
@@ -8349,12 +8144,9 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "qv" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 8;
-	frequency = 1439;
-	locked = 0;
-	pixel_x = 23;
-	req_access = null
+	pixel_x = 23
 	},
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
@@ -8364,12 +8156,9 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 4;
-	frequency = 1439;
-	locked = 0;
-	pixel_x = -23;
-	req_access = null
+	pixel_x = -23
 	},
 /turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006
@@ -8441,10 +8230,10 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	name = "primary power monitoring console"
 	},
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -8497,7 +8286,8 @@
 	layer = 2.9
 	},
 /obj/structure/closet/secure_closet/engineering_personal{
-	req_access = list(201)
+	req_access = null;
+	req_access_txt = "201"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/yellow/side{
@@ -8515,7 +8305,7 @@
 /obj/machinery/camera{
 	c_tag = "Atmospherics";
 	dir = 2;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /obj/structure/table,
 /obj/item/clothing/gloves/color/yellow,
@@ -8526,7 +8316,7 @@
 	dir = 2;
 	pixel_y = 24
 	},
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 1;
 	heat_capacity = 1e+006
@@ -8535,7 +8325,6 @@
 "qK" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/machinery/computer/atmos_control/tank{
-	frequency = 1441;
 	input_tag = "UO45_air_in";
 	name = "Mixed Air Supply Control";
 	output_tag = "UO45_air_out";
@@ -8547,13 +8336,8 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "qL" = (
-/obj/machinery/atmospherics/components/trinary/mixer{
-	dir = 1;
-	node1_concentration = 0.8;
-	node2_concentration = 0.2;
-	on = 1;
-	req_access = null;
-	target_pressure = 4500
+/obj/machinery/atmospherics/components/trinary/mixer/airmix{
+	dir = 1
 	},
 /turf/open/floor/plasteel/arrival{
 	dir = 5;
@@ -8604,10 +8388,7 @@
 /obj/machinery/rnd/server{
 	req_access = null
 	},
-/turf/open/floor/circuit{
-	name = "Server Base";
-	initial_gas_mix = "n2=500,TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/server,
 /area/awaymission/undergroundoutpost45/research)
 "qQ" = (
 /obj/machinery/atmospherics/pipe/manifold{
@@ -8622,7 +8403,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "Server Room";
 	req_access_txt = "201"
 	},
@@ -8691,7 +8472,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -8791,7 +8571,6 @@
 	pixel_x = -24
 	},
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -8888,7 +8667,8 @@
 	locked = 1;
 	name = "UO45 Engineering APC";
 	pixel_x = -25;
-	req_access = list(201);
+	req_access = null;
+	req_access_txt = "201";
 	start_charge = 100
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -8900,8 +8680,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "rq" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/visible,
-/obj/machinery/meter{
-	frequency = 1441;
+/obj/machinery/meter/atmos{
 	id_tag = "UO45_distro_meter";
 	name = "Distribution Loop"
 	},
@@ -8959,10 +8738,9 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "Mix to Exterior";
-	on = 1
+	name = "Mix to Exterior"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -9002,7 +8780,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
 	},
@@ -9018,7 +8795,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "rA" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'SERVER ROOM'.";
 	name = "SERVER ROOM";
 	pixel_y = -32
@@ -9049,7 +8826,6 @@
 /obj/item/poster/random_contraband,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -9126,7 +8902,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -9142,7 +8917,6 @@
 "rM" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -9154,7 +8928,7 @@
 /obj/machinery/camera{
 	c_tag = "Engineering Hallway";
 	dir = 4;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -9243,11 +9017,8 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
-	pixel_y = 23;
-	req_access = null
+/obj/machinery/airalarm/all_access{
+	pixel_y = 23
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -9318,9 +9089,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/glass_engineering{
-	name = "Engineering Reception";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Engineering Reception"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
@@ -9439,7 +9209,6 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "UO45_Engineering";
-	layer = 2.9;
 	name = "engineering security door"
 	},
 /turf/open/floor/plating{
@@ -9489,7 +9258,8 @@
 	icon_state = "mining";
 	locked = 0;
 	name = "miner's equipment";
-	req_access = list(201)
+	req_access = null;
+	req_access_txt = "201"
 	},
 /obj/item/storage/backpack/satchel/eng,
 /obj/item/clothing/gloves/fingerless,
@@ -9564,7 +9334,6 @@
 "sr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
-	frequency = 1441;
 	id_tag = "UO45_mix_in";
 	name = "distro out"
 	},
@@ -9595,7 +9364,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/structure/sign/deathsposal{
+/obj/structure/sign/warning/deathsposal{
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO EXTERIOR'";
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
 	pixel_y = -32
@@ -9760,9 +9529,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/glass_engineering{
-	name = "Engineering Reception";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Engineering Reception"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -9862,7 +9630,6 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "UO45_Engineering";
-	layer = 2.9;
 	name = "engineering security door"
 	},
 /turf/open/floor/plating{
@@ -9870,10 +9637,9 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "sU" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
-	name = "Waste In";
-	on = 1
+	name = "Waste In"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -9909,10 +9675,8 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "sY" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 0;
-	name = "Mix to Filter";
-	on = 1
+/obj/machinery/atmospherics/components/binary/pump/on{
+	name = "Mix to Filter"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -9943,7 +9707,6 @@
 "tc" = (
 /obj/machinery/computer/atmos_control/tank{
 	dir = 8;
-	frequency = 1441;
 	input_tag = "UO45_mix_in";
 	name = "Gas Mix Tank Control";
 	output_tag = "UO45_mix_in";
@@ -9971,16 +9734,14 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "te" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 8;
-	frequency = 1441;
 	id = "UO45_mix_in"
 	},
 /turf/open/floor/engine/vacuum,
 /area/awaymission/undergroundoutpost45/engineering)
 "tf" = (
 /obj/machinery/air_sensor{
-	frequency = 1441;
 	id_tag = "UO45_mix_sensor"
 	},
 /turf/open/floor/engine/vacuum,
@@ -10022,7 +9783,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
@@ -10055,7 +9815,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -10174,7 +9933,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -10185,7 +9944,7 @@
 "tz" = (
 /obj/machinery/computer/security{
 	dir = 1;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /obj/machinery/button/door{
 	desc = "A remote control-switch for the security privacy shutters.";
@@ -10213,7 +9972,7 @@
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /turf/open/floor/plasteel/red/side{
 	dir = 4;
 	heat_capacity = 1e+006
@@ -10251,8 +10010,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 8
 	},
-/obj/machinery/meter{
-	frequency = 1441;
+/obj/machinery/meter/atmos{
 	id_tag = "UO45_waste_meter";
 	name = "Waste Loop"
 	},
@@ -10270,20 +10028,18 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "tH" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "N2 Outlet Pump";
-	on = 1
+	name = "N2 Outlet Pump"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "tI" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "O2 Outlet Pump";
-	on = 1
+	name = "O2 Outlet Pump"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
@@ -10291,12 +10047,11 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "tJ" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "Unfiltered to Mix";
-	on = 1
+	name = "Unfiltered to Mix"
 	},
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -10377,7 +10132,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
@@ -10406,7 +10160,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
 	},
@@ -10423,7 +10176,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -10566,20 +10318,17 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "External to Filter";
-	on = 1
+	name = "External to Filter"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "uk" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 0;
-	name = "Air to External";
-	on = 1
+/obj/machinery/atmospherics/components/binary/pump/on{
+	name = "Air to External"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -10590,12 +10339,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 5
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 1;
-	frequency = 1439;
-	locked = 0;
-	pixel_y = -23;
-	req_access = null
+	pixel_y = -23
 	},
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -10603,10 +10349,8 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "um" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	filter_type = "n2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/n2{
+	dir = 4
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 10;
@@ -10619,7 +10363,6 @@
 	},
 /obj/machinery/computer/atmos_control/tank{
 	dir = 1;
-	frequency = 1441;
 	input_tag = "UO45_n2_in";
 	name = "Nitrogen Supply Control";
 	output_tag = "UO45_n2_out";
@@ -10644,10 +10387,8 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "up" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	filter_type = "o2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/o2{
+	dir = 4
 	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 10;
@@ -10661,7 +10402,6 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/machinery/computer/atmos_control/tank{
 	dir = 1;
-	frequency = 1441;
 	input_tag = "UO45_o2_in";
 	name = "Oxygen Supply Control";
 	output_tag = "UO45_o2_out";
@@ -10677,7 +10417,6 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2"
@@ -10734,16 +10473,12 @@
 /obj/structure/closet,
 /obj/item/storage/belt/utility,
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "uz" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "0";
-	req_one_access_txt = "0"
-	},
+/obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -10752,7 +10487,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/computer/atmos_control{
 	dir = 4;
-	frequency = 1441;
 	name = "Tank Monitor";
 	sensors = list("UO45_n2_sensor" = "Nitrogen", "UO45_o2_sensor" = "Oxygen", "UO45_mix_sensor" = "Gas Mix Tank")
 	},
@@ -10793,7 +10527,7 @@
 /turf/closed/wall,
 /area/awaymission/undergroundoutpost45/engineering)
 "uF" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Security Office";
 	req_access_txt = "201"
 	},
@@ -10875,15 +10609,10 @@
 "uN" = (
 /obj/structure/closet/emcloset,
 /obj/item/clothing/mask/breath,
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
+/obj/structure/sign/warning/vacuum/external{
 	pixel_x = -32
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -10894,7 +10623,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -10913,7 +10641,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
 	},
@@ -10927,7 +10654,6 @@
 "uS" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
@@ -10943,7 +10669,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/computer/atmos_control{
 	dir = 4;
-	frequency = 1441;
 	level = 3;
 	name = "Distribution and Waste Monitor";
 	sensors = list("UO45_air_sensor" = "Mixed Air Supply Tank", "UO45_distro_meter" = "Distribution Loop", "UO45_waste_meter" = "Waste Loop")
@@ -10986,11 +10711,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
-	pixel_y = 23;
-	req_access = null
+/obj/machinery/airalarm/all_access{
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -11001,7 +10723,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_x = 32
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -11049,7 +10771,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "vc" = (
 /obj/machinery/door/firedoor,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_y = 32
 	},
 /obj/machinery/door/poddoor/preopen{
@@ -11063,34 +10785,30 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "vd" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 1;
-	frequency = 1441;
 	id = "UO45_n2_in"
 	},
 /turf/open/floor/engine/n2,
 /area/awaymission/undergroundoutpost45/engineering)
 "ve" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	dir = 1;
-	frequency = 1441;
 	id_tag = "UO45_n2_out";
 	name = "nitrogen out"
 	},
 /turf/open/floor/engine/n2,
 /area/awaymission/undergroundoutpost45/engineering)
 "vf" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 1;
-	frequency = 1441;
 	id = "UO45_o2_in"
 	},
 /turf/open/floor/engine/o2,
 /area/awaymission/undergroundoutpost45/engineering)
 "vg" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	dir = 1;
-	frequency = 1441;
 	id_tag = "UO45_o2_out";
 	name = "oxygen out"
 	},
@@ -11170,7 +10888,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -11325,7 +11042,6 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "vD" = (
 /obj/machinery/air_sensor{
-	frequency = 1441;
 	id_tag = "UO45_n2_sensor"
 	},
 /obj/machinery/light/small,
@@ -11337,7 +11053,6 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "vF" = (
 /obj/machinery/air_sensor{
-	frequency = 1441;
 	id_tag = "UO45_o2_sensor"
 	},
 /obj/machinery/light/small,
@@ -11382,7 +11097,7 @@
 "vN" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/airlock/glass_mining{
+/obj/machinery/door/airlock/mining/glass{
 	name = "Mining Foyer";
 	req_access_txt = "201"
 	},
@@ -11396,7 +11111,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/door/airlock/glass_mining{
+/obj/machinery/door/airlock/mining/glass{
 	name = "Mining Foyer";
 	req_access_txt = "201"
 	},
@@ -11465,10 +11180,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE";
+/obj/structure/sign/warning/electricshock{
 	pixel_y = -32
 	},
 /obj/machinery/vending/engivend{
@@ -11477,7 +11189,7 @@
 /obj/machinery/camera{
 	c_tag = "Engineering Foyer";
 	dir = 1;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -11493,7 +11205,6 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2"
@@ -11598,7 +11309,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -11682,7 +11392,7 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "Chief Engineer";
 	req_access_txt = "201"
 	},
@@ -11712,7 +11422,6 @@
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_y = -25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/carpet{
@@ -11776,7 +11485,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/structure/sign/deathsposal{
+/obj/structure/sign/warning/deathsposal{
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO EXTERIOR'";
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
 	pixel_x = -32
@@ -11832,12 +11541,9 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "wC" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 4;
-	frequency = 1439;
-	locked = 0;
-	pixel_x = -23;
-	req_access = null
+	pixel_x = -23
 	},
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -11942,7 +11648,6 @@
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_y = 25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/carpet{
@@ -12022,12 +11727,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 8;
-	frequency = 1439;
-	locked = 0;
-	pixel_x = 23;
-	req_access = null
+	pixel_x = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral{
@@ -12052,7 +11754,8 @@
 	pixel_y = -24
 	},
 /obj/structure/closet/secure_closet/miner{
-	req_access = list(201)
+	req_access = null;
+	req_access_txt = "201"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -12199,7 +11902,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "xk" = (
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	dir = 1;
 	name = "primary power monitoring console"
 	},
@@ -12251,12 +11954,9 @@
 /area/awaymission/undergroundoutpost45/mining)
 "xp" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 8;
-	frequency = 1439;
-	locked = 0;
-	pixel_x = 23;
-	req_access = null
+	pixel_x = 23
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -12270,7 +11970,7 @@
 	dir = 2;
 	id = "UO45_mining"
 	},
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -12313,7 +12013,7 @@
 "xv" = (
 /obj/structure/table,
 /obj/item/pickaxe,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -12347,7 +12047,7 @@
 /obj/machinery/camera{
 	c_tag = "Mining";
 	dir = 4;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /turf/open/floor/plasteel/floorgrime{
 	heat_capacity = 1e+006
@@ -12397,7 +12097,6 @@
 	pixel_y = -1
 	},
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2"
@@ -12448,7 +12147,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/glass_mining{
+/obj/machinery/door/airlock/mining/glass{
 	name = "Mining EVA";
 	req_access_txt = "201"
 	},
@@ -12595,7 +12294,6 @@
 	amount = 6
 	},
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -12620,12 +12318,9 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "xZ" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 4;
-	frequency = 1439;
-	locked = 0;
-	pixel_x = -23;
-	req_access = null
+	pixel_x = -23
 	},
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel/floorgrime{
@@ -12645,7 +12340,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -12669,11 +12363,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
+/obj/structure/sign/warning/vacuum/external{
 	pixel_x = 32
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -12810,16 +12500,6 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
-"ys" = (
-/obj/structure/alien/weeds,
-/obj/structure/bed/nest,
-/turf/open/floor/plating/asteroid{
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	heat_capacity = 1e+006;
-	name = "Cave Floor";
-	temperature = 363.9
-	},
-/area/awaymission/undergroundoutpost45/caves)
 "yt" = (
 /obj/structure/alien/weeds,
 /obj/structure/glowshroom/single,
@@ -12840,37 +12520,9 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
-"yv" = (
-/obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/turf/open/floor/plating/asteroid{
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	heat_capacity = 1e+006;
-	name = "Cave Floor";
-	temperature = 363.9
-	},
-/area/awaymission/undergroundoutpost45/caves)
 "yw" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/plating/asteroid{
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	heat_capacity = 1e+006;
-	name = "Cave Floor";
-	temperature = 363.9
-	},
-/area/awaymission/undergroundoutpost45/caves)
-"yx" = (
-/obj/structure/alien/weeds,
-/turf/open/floor/plating/asteroid{
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	heat_capacity = 1e+006;
-	name = "Cave Floor";
-	temperature = 363.9
-	},
-/area/awaymission/undergroundoutpost45/caves)
-"yy" = (
-/obj/structure/alien/weeds,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
@@ -12927,37 +12579,6 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
-"yE" = (
-/obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/plating/asteroid{
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	heat_capacity = 1e+006;
-	name = "Cave Floor";
-	temperature = 363.9
-	},
-/area/awaymission/undergroundoutpost45/caves)
-"yF" = (
-/obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/blood/gibs/down,
-/turf/open/floor/plating/asteroid{
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	heat_capacity = 1e+006;
-	name = "Cave Floor";
-	temperature = 363.9
-	},
-/area/awaymission/undergroundoutpost45/caves)
-"yG" = (
-/obj/structure/alien/weeds,
-/obj/structure/bed/nest,
-/obj/effect/mob_spawn/human,
-/turf/open/floor/plating/asteroid{
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	heat_capacity = 1e+006;
-	name = "Cave Floor";
-	temperature = 363.9
-	},
-/area/awaymission/undergroundoutpost45/caves)
 "yH" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs/down,
@@ -12969,176 +12590,16 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
-"yI" = (
-/obj/structure/alien/weeds,
-/obj/effect/mob_spawn/human,
-/turf/open/floor/plating/asteroid{
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	heat_capacity = 1e+006;
-	name = "Cave Floor";
-	temperature = 363.9
-	},
-/area/awaymission/undergroundoutpost45/caves)
-"yJ" = (
-/obj/item/shard,
-/turf/open/floor/mineral/titanium/blue,
-/area/awaymission/undergroundoutpost45/caves)
-"yK" = (
-/obj/item/shard{
-	icon_state = "medium"
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/awaymission/undergroundoutpost45/caves)
-"yL" = (
-/obj/item/shard{
-	icon_state = "small"
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/awaymission/undergroundoutpost45/caves)
-"yM" = (
-/turf/open/floor/mineral/titanium/blue,
-/area/awaymission/undergroundoutpost45/caves)
-"yN" = (
-/obj/structure/grille/broken,
-/turf/open/floor/mineral/titanium/blue,
-/area/awaymission/undergroundoutpost45/caves)
-"yO" = (
-/obj/item/stack/rods,
-/turf/open/floor/mineral/titanium/blue,
-/area/awaymission/undergroundoutpost45/caves)
-"yP" = (
-/obj/item/stack/cable_coil,
-/turf/open/floor/mineral/titanium/blue,
-/area/awaymission/undergroundoutpost45/caves)
-"yQ" = (
-/obj/item/stack/cable_coil{
-	amount = 5
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/awaymission/undergroundoutpost45/caves)
-"yR" = (
-/obj/item/stack/cable_coil{
-	amount = 2;
-	icon_state = "coil_red2";
-	item_state = "coil_red2"
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/awaymission/undergroundoutpost45/caves)
-"yS" = (
-/obj/item/stack/cable_coil{
-	amount = 1;
-	icon_state = "coil_red1";
-	item_state = "coil_red1"
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/awaymission/undergroundoutpost45/caves)
-"yT" = (
-/turf/open/floor/plasteel{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/caves)
-"yU" = (
-/turf/open/floor/plasteel/floorgrime{
-	dir = 8;
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/caves)
-"yV" = (
-/turf/open/floor/plasteel{
-	broken = 1;
-	dir = 8;
-	heat_capacity = 1e+006;
-	icon_state = "damaged1"
-	},
-/area/awaymission/undergroundoutpost45/caves)
-"yW" = (
-/turf/open/floor/plasteel{
-	broken = 1;
-	dir = 8;
-	heat_capacity = 1e+006;
-	icon_state = "damaged2"
-	},
-/area/awaymission/undergroundoutpost45/caves)
-"yX" = (
-/turf/open/floor/plasteel{
-	broken = 1;
-	dir = 8;
-	heat_capacity = 1e+006;
-	icon_state = "damaged3"
-	},
-/area/awaymission/undergroundoutpost45/caves)
-"yY" = (
-/turf/open/floor/plasteel{
-	broken = 1;
-	dir = 8;
-	heat_capacity = 1e+006;
-	icon_state = "damaged4"
-	},
-/area/awaymission/undergroundoutpost45/caves)
-"yZ" = (
-/turf/open/floor/plasteel{
-	broken = 1;
-	dir = 8;
-	heat_capacity = 1e+006;
-	icon_state = "damaged5"
-	},
-/area/awaymission/undergroundoutpost45/caves)
-"za" = (
-/turf/open/floor/plasteel{
-	burnt = 1;
-	dir = 8;
-	heat_capacity = 1e+006;
-	icon_state = "floorscorched1"
-	},
-/area/awaymission/undergroundoutpost45/caves)
-"zb" = (
-/turf/open/floor/plasteel{
-	burnt = 1;
-	dir = 8;
-	heat_capacity = 1e+006;
-	icon_state = "floorscorched2"
-	},
-/area/awaymission/undergroundoutpost45/caves)
-"zc" = (
-/turf/open/floor/plasteel/shuttle,
-/area/awaymission/undergroundoutpost45/caves)
-"zd" = (
-/turf/open/floor/plating{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/caves)
-"ze" = (
-/turf/open/floor/plating{
-	broken = 1;
-	heat_capacity = 1e+006;
-	icon_state = "platingdmg1"
-	},
-/area/awaymission/undergroundoutpost45/caves)
-"zf" = (
-/turf/open/floor/plating{
-	broken = 1;
-	heat_capacity = 1e+006;
-	icon_state = "platingdmg2"
-	},
-/area/awaymission/undergroundoutpost45/caves)
-"zg" = (
-/turf/open/floor/plating{
-	broken = 1;
-	heat_capacity = 1e+006;
-	icon_state = "platingdmg3"
-	},
-/area/awaymission/undergroundoutpost45/caves)
-"zh" = (
-/turf/open/floor/plating{
-	burnt = 1;
-	heat_capacity = 1e+006;
-	icon_state = "panelscorched"
-	},
-/area/awaymission/undergroundoutpost45/caves)
 "zi" = (
 /obj/effect/mapping_helpers/planet_z,
 /turf/open/space,
 /area/space/nearstation)
+"KE" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/circuit/telecomms/server,
+/area/awaymission/undergroundoutpost45/research)
 
 (1,1,1) = {"
 aa
@@ -38461,7 +37922,7 @@ gz
 gz
 gz
 gz
-qh
+KE
 qP
 qh
 gz

@@ -4,14 +4,12 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
-	blood_DNA = list()
 	blood_state = BLOOD_STATE_HUMAN
 	bloodiness = MAX_SHOE_BLOODINESS
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
-	if (C.blood_DNA)
-		blood_DNA |= C.blood_DNA.Copy()
-	..()
+	C.add_blood_DNA(return_blood_DNA())
+	return ..()
 
 /obj/effect/decal/cleanable/blood/old
 	name = "dried blood"
@@ -19,9 +17,9 @@
 	bloodiness = 0
 
 /obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
-	. = ..()
 	icon_state += "-old" //This IS necessary because the parent /blood type uses icon randomization.
-	blood_DNA["Non-human DNA"] = "A+"
+	add_blood_DNA(list("Non-human DNA" = "A+")) // Needs to happen before ..()
+	return ..()
 
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
@@ -37,11 +35,9 @@
 	desc = "Your instincts say you shouldn't be following these."
 	random_icon_states = null
 	var/list/existing_dirs = list()
-	blood_DNA = list()
 
 /obj/effect/decal/cleanable/trail_holder/can_bloodcrawl_in()
-	return 1
-
+	return TRUE
 
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"
@@ -58,6 +54,11 @@
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return
+
+/obj/effect/decal/cleanable/blood/gibs/Crossed(mob/living/L)
+	if(istype(L) && has_gravity(loc))
+		playsound(loc, 'sound/effects/gib_step.ogg', L.has_trait(TRAIT_LIGHT_STEP) ? 20 : 50, 1)
+	. = ..()
 
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(list/directions)
 	set waitfor = 0
@@ -100,8 +101,7 @@
 	. = ..()
 	setDir(pick(1,2,4,8))
 	icon_state += "-old"
-	blood_DNA["Non-human DNA"] = "A+"
-
+	add_blood_DNA(list("Non-human DNA" = "A+"))
 
 /obj/effect/decal/cleanable/blood/drip
 	name = "drips of blood"
@@ -111,9 +111,8 @@
 	bloodiness = 0
 	var/drips = 1
 
-
 /obj/effect/decal/cleanable/blood/drip/can_bloodcrawl_in()
-	return 1
+	return TRUE
 
 
 //BLOODY FOOTPRINTS
@@ -151,7 +150,7 @@
 			if (!(exited_dirs & H.dir))
 				exited_dirs |= H.dir
 				update_icon()
-			
+
 
 /obj/effect/decal/cleanable/blood/footprints/update_icon()
 	cut_overlays()
@@ -190,4 +189,3 @@
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
 		return 1
 	return 0
-

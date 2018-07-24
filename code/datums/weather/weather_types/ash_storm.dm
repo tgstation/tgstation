@@ -17,11 +17,13 @@
 	end_overlay = "light_ash"
 
 	area_type = /area/lavaland/surface/outdoors
-	target_z = ZLEVEL_LAVALAND
+	target_trait = ZTRAIT_MINING
 
 	immunity_type = "ash"
 
 	probability = 90
+
+	barometer_predictable = TRUE
 
 	var/datum/looping_sound/active_outside_ashstorm/sound_ao = new(list(), FALSE, TRUE)
 	var/datum/looping_sound/active_inside_ashstorm/sound_ai = new(list(), FALSE, TRUE)
@@ -32,7 +34,9 @@
 	. = ..()
 	var/list/inside_areas = list()
 	var/list/outside_areas = list()
-	var/list/eligible_areas = SSmapping.areas_in_z["[target_z]"]
+	var/list/eligible_areas = list()
+	for (var/z in impacted_z_levels)
+		eligible_areas += SSmapping.areas_in_z["[z]"]
 	for(var/i in 1 to eligible_areas.len)
 		var/area/place = eligible_areas[i]
 		if(place.outdoors)
@@ -70,16 +74,20 @@
 	sound_wo.stop()
 	sound_wi.stop()
 
-/datum/weather/ash_storm/proc/is_ash_immune(mob/living/L)
-	if(ismecha(L.loc)) //Mechs are immune
-		return TRUE
-	if(ishuman(L)) //Are you immune?
-		var/mob/living/carbon/human/H = L
-		var/thermal_protection = H.get_thermal_protection()
-		if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
+/datum/weather/ash_storm/proc/is_ash_immune(atom/L)
+	while (L && !isturf(L))
+		if(ismecha(L)) //Mechs are immune
 			return TRUE
-	if(istype(L.loc, /mob/living) && L.loc != L) //Matryoshka check
-		return is_ash_immune(L.loc)
+		if(ishuman(L)) //Are you immune?
+			var/mob/living/carbon/human/H = L
+			var/thermal_protection = H.get_thermal_protection()
+			if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
+				return TRUE
+		if(isliving(L))// if we're a non immune mob inside an immune mob we have to reconsider if that mob is immune to protect ourselves
+			var/mob/living/the_mob = L
+			if("ash" in the_mob.weather_immunities)
+				return TRUE
+		L = L.loc //Check parent items immunities (recurses up to the turf)
 	return FALSE //RIP you
 
 /datum/weather/ash_storm/weather_act(mob/living/L)

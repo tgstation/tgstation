@@ -5,7 +5,6 @@
 	icon_state = "grinder"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 50
@@ -27,9 +26,6 @@
 
 /obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
-		return
-
-	if(exchange_parts(user, O))
 		return
 
 	if(default_pry_open(O))
@@ -56,7 +52,7 @@
 /obj/machinery/monkey_recycler/proc/stuff_monkey_in(mob/living/carbon/monkey/target, mob/living/user)
 	if(!istype(target))
 		return
-	if(target.stat == 0)
+	if(target.stat == CONSCIOUS)
 		to_chat(user, "<span class='warning'>The monkey is struggling far too much to put it in the recycler.</span>")
 		return
 	if(target.buckled || target.has_buckled_mobs())
@@ -69,14 +65,10 @@
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	use_power(500)
 	grinded++
-	sleep(50)
-	pixel_x = initial(pixel_x) //return to its spot after shaking
-	to_chat(user, "<span class='notice'>The machine now has [grinded] monkey\s worth of material stored.</span>")
+	addtimer(VARSET_CALLBACK(src, pixel_x, initial(pixel_x)))
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, user, "<span class='notice'>The machine now has [grinded] monkey\s worth of material stored.</span>"))
 
-
-/obj/machinery/monkey_recycler/attack_hand(mob/user)
-	if (src.stat != 0) //NOPOWER etc
-		return
+/obj/machinery/monkey_recycler/interact(mob/user)
 	if(grinded >= required_grind)
 		to_chat(user, "<span class='notice'>The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube.</span>")
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
@@ -86,4 +78,3 @@
 		to_chat(user, "<span class='notice'>The machine's display flashes that it has [grinded] monkeys worth of material left.</span>")
 	else
 		to_chat(user, "<span class='danger'>The machine needs at least [required_grind] monkey(s) worth of material to produce a monkey cube. It only has [grinded].</span>")
-	return

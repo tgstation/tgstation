@@ -1,3 +1,5 @@
+GLOBAL_LIST(labor_sheet_values)
+
 /**********************Prisoners' Console**************************/
 
 /obj/machinery/mineral/labor_claim_console
@@ -6,20 +8,31 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
 	density = FALSE
-	anchored = TRUE
 	var/obj/machinery/mineral/stacking_machine/laborstacker/stacking_machine = null
 	var/machinedir = SOUTH
 	var/obj/item/card/id/prisoner/inserted_id
 	var/obj/machinery/door/airlock/release_door
 	var/door_tag = "prisonshuttle"
-	var/obj/item/device/radio/Radio //needed to send messages to sec radio
+	var/obj/item/radio/Radio //needed to send messages to sec radio
 
 
 /obj/machinery/mineral/labor_claim_console/Initialize()
 	. = ..()
-	Radio = new/obj/item/device/radio(src)
+	Radio = new/obj/item/radio(src)
 	Radio.listening = FALSE
 	locate_stacking_machine()
+
+	if(!GLOB.labor_sheet_values)
+		var/sheet_list = list()
+		for(var/sheet_type in subtypesof(/obj/item/stack/sheet))
+			var/obj/item/stack/sheet/sheet = sheet_type
+			if(!initial(sheet.point_value) || (initial(sheet.merge_type) && initial(sheet.merge_type) != sheet_type)) //ignore no-value sheets and x/fifty subtypes
+				continue
+			sheet_list += list(list("ore" = initial(sheet.name), "value" = initial(sheet.point_value)))
+		GLOB.labor_sheet_values = sortList(sheet_list, /proc/cmp_sheet_list)
+
+/proc/cmp_sheet_list(list/a, list/b)
+	return a["value"] - b["value"]
 
 /obj/machinery/mineral/labor_claim_console/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id/prisoner))
@@ -44,7 +57,7 @@
 	var/list/data = list()
 	var/can_go_home = FALSE
 
-	data["emagged"] = emagged
+	data["emagged"] = (obj_flags & EMAGGED) ? 1 : 0
 	if(inserted_id)
 		data["id"] = inserted_id
 		data["id_name"] = inserted_id.registered_name
@@ -53,16 +66,10 @@
 	if(check_auth())
 		can_go_home = TRUE
 
-	var/list/ores = list()
 	if(stacking_machine)
 		data["unclaimed_points"] = stacking_machine.points
-		for(var/ore in stacking_machine.ore_values)
-			var/list/O = list()
-			O["ore"] = ore
-			O["value"] = stacking_machine.ore_values[ore]
-			ores += list(O)
 
-	data["ores"] = ores
+	data["ores"] = GLOB.labor_sheet_values
 	data["can_go_home"] = can_go_home
 
 	return data
@@ -93,21 +100,21 @@
 			if(!alone_in_area(get_area(src), usr))
 				to_chat(usr, "<span class='warning'>Prisoners are only allowed to be released while alone.</span>")
 			else
-				switch(SSshuttle.moveShuttle("laborcamp","laborcamp_home"))
+				switch(SSshuttle.moveShuttle("laborcamp", "laborcamp_home", TRUE))
 					if(1)
-						to_chat(usr, "<span class='notice'>Shuttle not found</span>")
+						to_chat(usr, "<span class='notice'>Shuttle not found.</span>")
 					if(2)
-						to_chat(usr, "<span class='notice'>Shuttle already at station</span>")
+						to_chat(usr, "<span class='notice'>Shuttle already at station.</span>")
 					if(3)
 						to_chat(usr, "<span class='notice'>No permission to dock could be granted.</span>")
 					else
-						if(!emagged)
-							Radio.set_frequency(GLOB.SEC_FREQ)
-							Radio.talk_into(src, "[inserted_id.registered_name] has returned to the station. Minerals and Prisoner ID card ready for retrieval.", GLOB.SEC_FREQ, get_spans(), get_default_language())
+						if(!(obj_flags & EMAGGED))
+							Radio.set_frequency(FREQ_SECURITY)
+							Radio.talk_into(src, "[inserted_id.registered_name] has returned to the station. Minerals and Prisoner ID card ready for retrieval.", FREQ_SECURITY, get_spans(), get_default_language())
 						to_chat(usr, "<span class='notice'>Shuttle received message and will be sent shortly.</span>")
 
 /obj/machinery/mineral/labor_claim_console/proc/check_auth()
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return 1 //Shuttle is emagged, let any ol' person through
 	return (istype(inserted_id) && inserted_id.points >= inserted_id.goal) //Otherwise, only let them out if the prisoner's reached his quota.
 
@@ -119,8 +126,8 @@
 		qdel(src)
 
 /obj/machinery/mineral/labor_claim_console/emag_act(mob/user)
-	if(!emagged)
-		emagged = TRUE
+	if(!(obj_flags & EMAGGED))
+		obj_flags |= EMAGGED
 		to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
 
 
@@ -128,15 +135,10 @@
 
 
 /obj/machinery/mineral/stacking_machine/laborstacker
-	var/points = 0 //The unclaimed value of ore stacked.  Value for each ore loosely relative to its rarity.
-	var/list/ore_values = list("glass" = 1, "metal" = 2, "reinforced glass" = 4, "gold" = 20, "silver" = 20, "uranium" = 20, "titanium" = 20, "solid plasma" = 20, "plasteel" = 23, "plasma glass" = 23, "diamond" = 25, "bluespace polycrystal" = 30, "plastitanium" = 45, "bananium" = 50)
+	var/points = 0 //The unclaimed value of ore stacked.
 
 /obj/machinery/mineral/stacking_machine/laborstacker/process_sheet(obj/item/stack/sheet/inp)
-	if(istype(inp))
-		var/n = inp.name
-		var/a = inp.amount
-		if(n in ore_values)
-			points += ore_values[n] * a
+	points += inp.point_value * inp.amount
 	..()
 
 
@@ -147,9 +149,11 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
 	density = FALSE
-	anchored = TRUE
 
 /obj/machinery/mineral/labor_points_checker/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	user.examinate(src)
 
 /obj/machinery/mineral/labor_points_checker/attackby(obj/item/I, mob/user, params)

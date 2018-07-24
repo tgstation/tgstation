@@ -13,17 +13,19 @@
 	icon_state = "bed"
 	icon = 'icons/obj/objects.dmi'
 	anchored = TRUE
-	can_buckle = 1
-	buckle_lying = 1
+	can_buckle = TRUE
+	buckle_lying = TRUE
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	integrity_failure = 30
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 2
+	var/bolts = TRUE
 
 /obj/structure/bed/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>")
+	if(bolts)
+		to_chat(user, "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>")
 
 /obj/structure/bed/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -36,7 +38,7 @@
 
 /obj/structure/bed/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
-		playsound(src.loc, W.usesound, 50, 1)
+		W.play_tool_sound(src)
 		deconstruct(TRUE)
 	else
 		return ..()
@@ -76,12 +78,9 @@
 /obj/structure/bed/roller/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr))
-		if(!ishuman(usr))
+		if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
 			return 0
 		if(has_buckled_mobs())
-			return 0
-		if(usr.incapacitated())
-			to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 			return 0
 		usr.visible_message("[usr] collapses \the [src.name].", "<span class='notice'>You collapse \the [src.name].</span>")
 		var/obj/structure/bed/roller/B = new foldabletype(get_turf(src))
@@ -89,20 +88,20 @@
 		qdel(src)
 
 /obj/structure/bed/roller/post_buckle_mob(mob/living/M)
-	if(M in buckled_mobs)
-		density = TRUE
-		icon_state = "up"
-		M.pixel_y = initial(M.pixel_y)
-	else
-		density = FALSE
-		icon_state = "down"
-		M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
-		M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
+	density = TRUE
+	icon_state = "up"
+	M.pixel_y = initial(M.pixel_y)
 
 /obj/structure/bed/roller/Moved()
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/effects/roll.ogg', 100, 1)
+
+/obj/structure/bed/roller/post_unbuckle_mob(mob/living/M)
+	density = FALSE
+	icon_state = "down"
+	M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
+	M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
 
 /obj/item/roller
 	name = "roller bed"
@@ -128,6 +127,7 @@
 	deploy_roller(user, user.loc)
 
 /obj/item/roller/afterattack(obj/target, mob/user , proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(isopenturf(target))
@@ -154,7 +154,7 @@
 /obj/item/roller/robo/deploy_roller(mob/user, atom/location)
 	if(loaded)
 		var/obj/structure/bed/roller/R = loaded
-		R.loc = location
+		R.forceMove(location)
 		user.visible_message("[user] deploys [loaded].", "<span class='notice'>You deploy [loaded].</span>")
 		loaded = null
 	else

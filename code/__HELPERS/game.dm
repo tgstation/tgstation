@@ -14,15 +14,11 @@
 	var/turf/T = get_turf(A)
 	return T ? T.loc : null
 
-/proc/get_area_name(atom/X)
-	var/area/Y = get_area(X)
-	return Y.name
-
-/proc/get_area_by_name(N) //get area by its name
-	for(var/area/A in world)
-		if(A.name == N)
-			return A
-	return 0
+/proc/get_area_name(atom/X, format_text = FALSE)
+	var/area/A = isarea(X) ? X : get_area(X)
+	if(!A)
+		return null
+	return format_text ? format_text(A.name) : A.name
 
 /proc/get_areas_in_range(dist=0, atom/center=usr)
 	if(!dist)
@@ -192,7 +188,7 @@
 			if(sight_check && !isInSight(A_tmp, O))
 				passed=0
 
-		else if(include_radio && istype(A, /obj/item/device/radio))
+		else if(include_radio && istype(A, /obj/item/radio))
 			passed=1
 
 			if(sight_check && !isInSight(A, O))
@@ -238,18 +234,15 @@
 		processing_list.Cut(1, 2)
 		processing_list += A.contents
 
-/proc/get_mobs_in_radio_ranges(list/obj/item/device/radio/radios)
-
-	set background = BACKGROUND_ENABLED
-
+/proc/get_mobs_in_radio_ranges(list/obj/item/radio/radios)
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
-	for(var/obj/item/device/radio/R in radios)
+	for(var/obj/item/radio/R in radios)
 		if(R)
 			. |= get_hearers_in_view(R.canhear_range, R)
 
 
-#define SIGN(X) ((X<0)?-1:1)
+#define SIGNV(X) ((X<0)?-1:1)
 
 /proc/inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
 	var/turf/T
@@ -280,7 +273,7 @@
 			if(T.opacity)
 				return 0
 	return 1
-#undef SIGN
+#undef SIGNV
 
 
 /proc/isInSight(atom/A, atom/B)
@@ -320,30 +313,12 @@
 			break
 
 /proc/get_mob_by_key(key)
+	var/ckey = ckey(key)
 	for(var/i in GLOB.player_list)
 		var/mob/M = i
-		if(M.ckey == lowertext(key))
+		if(M.ckey == ckey)
 			return M
 	return null
-
-// Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
-
-/proc/get_candidates(be_special_type, afk_bracket = CONFIG_GET(number/inactivity_period), jobbanType)
-	var/list/candidates = list()
-	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
-	var/afk_period = CONFIG_GET(number/afk_period)
-	while(!candidates.len && afk_bracket < afk_period)
-		for(var/mob/dead/observer/G in GLOB.player_list)
-			if(G.client != null)
-				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-					if(!G.client.is_afk(afk_bracket) && (be_special_type in G.client.prefs.be_special))
-						if (jobbanType)
-							if(!(jobban_isbanned(G, jobbanType) || jobban_isbanned(G, "Syndicate")))
-								candidates += G.client
-						else
-							candidates += G.client
-		afk_bracket += 600 // Add a minute to the bracket, for every attempt
-	return candidates
 
 /proc/considered_alive(datum/mind/M, enforce_human = TRUE)
 	if(M && M.current)
@@ -375,7 +350,7 @@
 /proc/flick_overlay(image/I, list/show_to, duration)
 	for(var/client/C in show_to)
 		C.images += I
-	addtimer(CALLBACK(GLOBAL_PROC, /.proc/remove_images_from_clients, I, show_to), duration)
+	addtimer(CALLBACK(GLOBAL_PROC, /.proc/remove_images_from_clients, I, show_to), duration, TIMER_CLIENT_TIME)
 
 /proc/flick_overlay_view(image/I, atom/target, duration) //wrapper for the above, flicks to everyone who can see the target atom
 	var/list/viewing = list()
@@ -405,44 +380,6 @@
 					continue
 			active_players++
 	return active_players
-
-/datum/projectile_data
-	var/src_x
-	var/src_y
-	var/time
-	var/distance
-	var/power_x
-	var/power_y
-	var/dest_x
-	var/dest_y
-
-/datum/projectile_data/New(var/src_x, var/src_y, var/time, var/distance, \
-						   var/power_x, var/power_y, var/dest_x, var/dest_y)
-	src.src_x = src_x
-	src.src_y = src_y
-	src.time = time
-	src.distance = distance
-	src.power_x = power_x
-	src.power_y = power_y
-	src.dest_x = dest_x
-	src.dest_y = dest_y
-
-/proc/projectile_trajectory(src_x, src_y, rotation, angle, power)
-
-	// returns the destination (Vx,y) that a projectile shot at [src_x], [src_y], with an angle of [angle],
-	// rotated at [rotation] and with the power of [power]
-	// Thanks to VistaPOWA for this function
-
-	var/power_x = power * cos(angle)
-	var/power_y = power * sin(angle)
-	var/time = 2* power_y / 10 //10 = g
-
-	var/distance = time * power_x
-
-	var/dest_x = src_x + distance*sin(rotation);
-	var/dest_y = src_y + distance*cos(rotation);
-
-	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
 
 /proc/showCandidatePollWindow(mob/M, poll_time, Question, list/candidates, ignore_category, time_passed, flashwindow = TRUE)
 	set waitfor = 0
@@ -496,7 +433,7 @@
 			if(!gametypeCheck.age_check(M.client))
 				continue
 		if(jobbanType)
-			if(jobban_isbanned(M, jobbanType) || jobban_isbanned(M, "Syndicate"))
+			if(jobban_isbanned(M, jobbanType) || QDELETED(M) || jobban_isbanned(M, ROLE_SYNDICATE) || QDELETED(M))
 				continue
 
 		showCandidatePollWindow(M, poll_time, Question, result, ignore_category, time_passed, flashwindow)
@@ -559,7 +496,7 @@
 	winset(C, "mainwindow", "flash=5")
 
 /proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
-	if(!SSticker.IsRoundInProgress() || !character)
+	if(!SSticker.IsRoundInProgress() || QDELETED(character))
 		return
 	var/area/A = get_area(character)
 	var/message = "<span class='game deadsay'><span class='name'>\

@@ -25,18 +25,20 @@
 		..()
 	return //unplateable
 
-/turf/open/floor/engine/attackby(obj/item/C, mob/user, params)
-	if(!C || !user)
-		return
-	if(istype(C, /obj/item/wrench))
-		to_chat(user, "<span class='notice'>You begin removing rods...</span>")
-		playsound(src, C.usesound, 80, 1)
-		if(do_after(user, 30*C.toolspeed, target = src))
-			if(!istype(src, /turf/open/floor/engine))
-				return
-			new /obj/item/stack/rods(src, 2)
-			ChangeTurf(/turf/open/floor/plating)
-			return
+/turf/open/floor/engine/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	return
+
+/turf/open/floor/engine/crowbar_act(mob/living/user, obj/item/I)
+	return
+
+/turf/open/floor/engine/wrench_act(mob/living/user, obj/item/I)
+	to_chat(user, "<span class='notice'>You begin removing rods...</span>")
+	if(I.use_tool(src, user, 30, volume=80))
+		if(!istype(src, /turf/open/floor/engine))
+			return TRUE
+		new /obj/item/stack/rods(src, 2)
+		ScrapeAway()
+	return TRUE
 
 /turf/open/floor/engine/acid_act(acidpwr, acid_volume)
 	acidpwr = min(acidpwr, 50) //we reduce the power so reinf floor never get melted.
@@ -48,19 +50,23 @@
 	if(severity != 1 && shielded && target != src)
 		return
 	if(target == src)
-		src.ChangeTurf(src.baseturf)
+		ScrapeAway()
 		return
 	switch(severity)
 		if(1)
 			if(prob(80))
-				ReplaceWithLattice()
+				if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
+					ScrapeAway()
+					ReplaceWithLattice()
+				else
+					ScrapeAway(2)
 			else if(prob(50))
-				ChangeTurf(src.baseturf)
+				ScrapeAway(2)
 			else
-				make_plating(1)
+				ScrapeAway()
 		if(2)
 			if(prob(50))
-				make_plating(1)
+				ScrapeAway()
 
 /turf/open/floor/engine/singularity_pull(S, current_size)
 	..()
@@ -73,20 +79,23 @@
 			ReplaceWithLattice()
 
 /turf/open/floor/engine/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /turf/open/floor/engine/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	user.Move_Pulled(src)
-
 
 //air filled floors; used in atmos pressure chambers
 
 /turf/open/floor/engine/n2o
-	name = "n2o floor"
+	article = "an"
+	name = "\improper N2O floor"
 	initial_gas_mix = "n2o=6000;TEMP=293.15"
 
 /turf/open/floor/engine/co2
-	name = "co2 floor"
+	name = "\improper CO2 floor"
 	initial_gas_mix = "co2=50000;TEMP=293.15"
 
 /turf/open/floor/engine/plasma
@@ -94,11 +103,12 @@
 	initial_gas_mix = "plasma=70000;TEMP=293.15"
 
 /turf/open/floor/engine/o2
-	name = "o2 floor"
+	name = "\improper O2 floor"
 	initial_gas_mix = "o2=100000;TEMP=293.15"
 
 /turf/open/floor/engine/n2
-	name = "n2 floor"
+	article = "an"
+	name = "\improper N2 floor"
 	initial_gas_mix = "n2=100000;TEMP=293.15"
 
 /turf/open/floor/engine/air
@@ -109,27 +119,30 @@
 
 /turf/open/floor/engine/cult
 	name = "engraved floor"
+	desc = "The air smells strangely over this sinister flooring."
 	icon_state = "plating"
-	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearence
+	floor_tile = null
+	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearance
+
 
 /turf/open/floor/engine/cult/Initialize()
 	. = ..()
 	new /obj/effect/temp_visual/cult/turf/floor(src)
-	realappearence = new /obj/effect/clockwork/overlay/floor/bloodcult(src)
-	realappearence.linked = src
+	realappearance = new /obj/effect/clockwork/overlay/floor/bloodcult(src)
+	realappearance.linked = src
 
 /turf/open/floor/engine/cult/Destroy()
 	be_removed()
 	return ..()
 
-/turf/open/floor/engine/cult/ChangeTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE, forceop = FALSE)
+/turf/open/floor/engine/cult/ChangeTurf(path, new_baseturf, flags)
 	if(path != type)
 		be_removed()
 	return ..()
 
 /turf/open/floor/engine/cult/proc/be_removed()
-	qdel(realappearence)
-	realappearence = null
+	qdel(realappearance)
+	realappearance = null
 
 /turf/open/floor/engine/cult/ratvar_act()
 	. = ..()

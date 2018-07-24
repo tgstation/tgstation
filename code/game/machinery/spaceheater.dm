@@ -5,13 +5,13 @@
 /obj/machinery/space_heater
 	anchored = FALSE
 	density = TRUE
-	interact_open = TRUE
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "sheater-off"
 	name = "space heater"
-	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire."
+	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire. Warranty void if used in engines."
 	max_integrity = 250
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 100, fire = 80, acid = 10)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 10)
 	circuit = /obj/item/circuitboard/machine/space_heater
 	var/obj/item/stock_parts/cell/cell
 	var/on = FALSE
@@ -65,7 +65,9 @@
 
 /obj/machinery/space_heater/process()
 	if(!on || !is_operational())
-		return
+		if (on) // If it's broken, turn it off too
+			on = FALSE
+		return PROCESS_KILL
 
 	if(cell && cell.charge > 0)
 		var/turf/L = loc
@@ -107,6 +109,7 @@
 	else
 		on = FALSE
 		update_icon()
+		return PROCESS_KILL
 
 /obj/machinery/space_heater/RefreshParts()
 	var/laser = 0
@@ -121,17 +124,16 @@
 	settableTemperatureRange = cap * 30
 	efficiency = (cap + 1) * 10000
 
-	targetTemperature = Clamp(targetTemperature,
+	targetTemperature = CLAMP(targetTemperature,
 		max(settableTemperatureMedian - settableTemperatureRange, TCMB),
 		settableTemperatureMedian + settableTemperatureRange)
 
 /obj/machinery/space_heater/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
+	. = ..()
+	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_CONTENTS)
 		return
 	if(cell)
 		cell.emp_act(severity)
-	..(severity)
 
 /obj/machinery/space_heater/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
@@ -156,7 +158,7 @@
 		update_icon()
 		if(panel_open)
 			interact(user)
-	else if(exchange_parts(user, I) || default_deconstruction_crowbar(I))
+	else if(default_deconstruction_crowbar(I))
 		return
 	else
 		return ..()
@@ -202,6 +204,8 @@
 			mode = HEATER_MODE_STANDBY
 			usr.visible_message("[usr] switches [on ? "on" : "off"] \the [src].", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
 			update_icon()
+			if (on)
+				START_PROCESSING(SSmachines, src)
 			. = TRUE
 		if("mode")
 			setMode = params["mode"]
@@ -223,12 +227,12 @@
 				target= text2num(target) + T0C
 				. = TRUE
 			if(.)
-				targetTemperature = Clamp(round(target),
+				targetTemperature = CLAMP(round(target),
 					max(settableTemperatureMedian - settableTemperatureRange, TCMB),
 					settableTemperatureMedian + settableTemperatureRange)
 		if("eject")
 			if(panel_open && cell)
-				cell.loc = get_turf(src)
+				cell.forceMove(drop_location())
 				cell = null
 				. = TRUE
 

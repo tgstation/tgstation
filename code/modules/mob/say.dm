@@ -5,7 +5,8 @@
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
-	usr.say(message)
+	if(message)
+		say(message)
 
 
 /mob/verb/whisper_verb(message as text)
@@ -29,7 +30,7 @@
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	usr.emote("me",1,message)
+	usr.emote("me",1,message,TRUE)
 
 /mob/proc/say_dead(var/message)
 	var/name = real_name
@@ -39,9 +40,15 @@
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
-	if(jobban_isbanned(src, "OOC"))
+	var/jb = jobban_isbanned(src, "OOC")
+	if(QDELETED(src))
+		return
+
+	if(jb)
 		to_chat(src, "<span class='danger'>You have been banned from deadchat.</span>")
 		return
+	
+
 
 	if (src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)
@@ -69,14 +76,26 @@
 
 	message = src.say_quote(message, get_spans())
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[message]</span></span>"
-
+	log_message("DEAD: [message]", INDIVIDUAL_SAY_LOG)
 	deadchat_broadcast(rendered, follow_target = src, speaker_key = K)
 
-/mob/proc/emote(var/act)
-	return
+/mob/proc/check_emote(message)
+	if(copytext(message, 1, 2) == "*")
+		emote(copytext(message, 2), intentional = TRUE)
+		return 1
 
 /mob/proc/hivecheck()
 	return 0
 
 /mob/proc/lingcheck()
-	return 0
+	return LINGHIVE_NONE
+
+/mob/proc/get_message_mode(message)
+	var/key = copytext(message, 1, 2)
+	if(key == "#")
+		return MODE_WHISPER
+	else if(key == ";")
+		return MODE_HEADSET
+	else if(length(message) > 2 && (key in GLOB.department_radio_prefixes))
+		var/key_symbol = lowertext(copytext(message, 2, 3))
+		return GLOB.department_radio_keys[key_symbol]

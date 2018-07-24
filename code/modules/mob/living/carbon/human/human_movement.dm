@@ -6,14 +6,23 @@
 	. += ..() + config_human_delay + dna.species.movement_delay(src)
 
 /mob/living/carbon/human/slip(knockdown_amount, obj/O, lube)
-	if(isobj(shoes) && (shoes.flags_1&NOSLIP_1) && !(lube&GALOSHES_DONT_HELP))
+	if(has_trait(TRAIT_NOSLIPALL))
 		return 0
+	if (!(lube&GALOSHES_DONT_HELP))
+		if(has_trait(TRAIT_NOSLIPWATER))
+			return 0
+		if(shoes && istype(shoes, /obj/item/clothing))
+			var/obj/item/clothing/CS = shoes
+			if (CS.clothing_flags & NOSLIP)
+				return 0
 	return ..()
 
 /mob/living/carbon/human/experience_pressure_difference()
 	playsound(src, 'sound/effects/space_wind.ogg', 50, 1)
-	if(shoes && shoes.flags_1&NOSLIP_1)
-		return 0
+	if(shoes && istype(shoes, /obj/item/clothing))
+		var/obj/item/clothing/S = shoes
+		if (S.clothing_flags & NOSLIP)
+			return 0
 	return ..()
 
 /mob/living/carbon/human/mob_has_gravity()
@@ -23,7 +32,7 @@
 			. = 1
 
 /mob/living/carbon/human/mob_negates_gravity()
-	return ((shoes && shoes.negates_gravity()) || dna.species.negates_gravity(src))
+	return ((shoes && shoes.negates_gravity()) || (dna.species.negates_gravity(src)))
 
 /mob/living/carbon/human/Move(NewLoc, direct)
 	. = ..()
@@ -51,19 +60,13 @@
 							FP.blood_state = S.blood_state
 							FP.entered_dirs |= dir
 							FP.bloodiness = S.bloody_shoes[S.blood_state] - BLOOD_LOSS_IN_SPREAD
-							if(S.blood_DNA && S.blood_DNA.len)
-								FP.transfer_blood_dna(S.blood_DNA)
+							FP.add_blood_DNA(S.return_blood_DNA())
 							FP.update_icon()
 						update_inv_shoes()
 				//End bloody footprints
 				S.step_action()
 
-/mob/living/carbon/human/Moved()
-	. = ..()
-	if(buckled_mobs && buckled_mobs.len && riding_datum)
-		riding_datum.on_vehicle_move()
-
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.
-	if(..())
-		return 1
-	return dna.species.space_move(src)
+	if(dna.species.space_move(src))
+		return TRUE
+	return ..()

@@ -15,24 +15,25 @@
 	var/sheet_type
 	var/list/materials
 	var/show_on_examine
+	var/disable_attackby
 	var/list/allowed_typecache
-	var/last_inserted_type
 	var/last_inserted_id
-	var/last_amount_inserted
-	var/last_insert_success
 	var/precise_insertion = FALSE
 	var/datum/callback/precondition
+	var/datum/callback/after_insert
 
-/datum/component/material_container/Initialize(list/mat_list, max_amt = 0, _show_on_examine = FALSE, list/allowed_types, datum/callback/_precondition)
+/datum/component/material_container/Initialize(list/mat_list, max_amt = 0, _show_on_examine = FALSE, list/allowed_types, datum/callback/_precondition, datum/callback/_after_insert, _disable_attackby)
 	materials = list()
 	max_amount = max(0, max_amt)
 	show_on_examine = _show_on_examine
+	disable_attackby = _disable_attackby
 	if(allowed_types)
 		allowed_typecache = typecacheof(allowed_types)
 	precondition = _precondition
+	after_insert = _after_insert
 
-	RegisterSignal(COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
-	RegisterSignal(COMSIG_PARENT_EXAMINE, .proc/OnExamine)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
 
 	var/list/possible_mats = list()
 	for(var/mat_type in subtypesof(/datum/material))
@@ -44,23 +45,27 @@
 			materials[id] = new mat_path()
 
 /datum/component/material_container/proc/OnExamine(mob/user)
-	for(var/I in materials)
-		var/datum/material/M = materials[I]
-		var/amt = amount(M.id)
-		if(amt)
-			to_chat(user, "<span class='notice'>It has [amt] units of [lowertext(M.name)] stored.</span>")
+	if(show_on_examine)
+		for(var/I in materials)
+			var/datum/material/M = materials[I]
+			var/amt = amount(M.id)
+			if(amt)
+				to_chat(user, "<span class='notice'>It has [amt] units of [lowertext(M.name)] stored.</span>")
 
 /datum/component/material_container/proc/OnAttackBy(obj/item/I, mob/living/user)
 	var/list/tc = allowed_typecache
-	if(user.a_intent == INTENT_HARM)
-		return FALSE
-	if((I.flags_2 & (HOLOGRAM_2 | NO_MAT_REDEMPTION_2)) || (tc && !is_type_in_typecache(I, tc)))
+	if(disable_attackby)
+		return
+	if(user.a_intent != INTENT_HELP)
+		return
+	if(I.item_flags & ABSTRACT)
+		return
+	if((I.flags_1 & HOLOGRAM_1) || (I.item_flags & NO_MAT_REDEMPTION) || (tc && !is_type_in_typecache(I, tc)))
 		to_chat(user, "<span class='warning'>[parent] won't accept [I]!</span>")
-		return FALSE
-	. = TRUE
-	last_insert_success = FALSE
+		return
+	. = COMPONENT_NO_AFTERATTACK
 	var/datum/callback/pc = precondition
-	if(pc && !pc.Invoke())
+	if(pc && !pc.Invoke(user))
 		return
 	var/material_amount = get_item_material_amount(I)
 	if(!material_amount)
@@ -69,31 +74,37 @@
 	if(!has_space(material_amount))
 		to_chat(user, "<span class='warning'>[parent] is full. Please remove metal or glass from [parent] in order to insert more.</span>")
 		return
-	INVOKE_ASYNC(src, .proc/user_insert, I, user)
+	user_insert(I, user)
 
 /datum/component/material_container/proc/user_insert(obj/item/I, mob/living/user)
+	set waitfor = FALSE
 	var/requested_amount
+	var/active_held = user.get_active_held_item()  // differs from I when using TK
 	if(istype(I, /obj/item/stack) && precise_insertion)
 		var/atom/current_parent = parent
-		requested_amount = input(user, "How much do you want to insert?", "Inserting sheets") as num|null
+		var/obj/item/stack/S = I
+		requested_amount = input(user, "How much do you want to insert?", "Inserting [S.singular_name]s") as num|null
 		if(isnull(requested_amount) || (requested_amount <= 0))
 			return
-		if(QDELETED(I) || QDELETED(user) || QDELETED(src) || parent != current_parent || !user.canUseTopic(current_parent) || !user.is_holding(I) || !user.Adjacent(current_parent))
+		if(QDELETED(I) || QDELETED(user) || QDELETED(src) || parent != current_parent || user.physical_can_use_topic(current_parent) < UI_INTERACTIVE || user.get_active_held_item() != active_held)
 			return
 	if(!user.temporarilyRemoveItemFromInventory(I))
 		to_chat(user, "<span class='warning'>[I] is stuck to you and cannot be placed into [parent].</span>")
 		return
 	var/inserted = insert_item(I, stack_amt = requested_amount)
 	if(inserted)
-		last_insert_success = TRUE
 		if(istype(I, /obj/item/stack))
-			to_chat(user, "<span class='notice'>You insert [inserted] sheet[inserted>1 ? "s" : ""] into [parent].</span>")
-			if(!QDELETED(I))
-				user.put_in_active_hand(I)
+			var/obj/item/stack/S = I
+			to_chat(user, "<span class='notice'>You insert [inserted] [S.singular_name][inserted>1 ? "s" : ""] into [parent].</span>")
+			if(!QDELETED(I) && I == active_held && !user.put_in_hands(I))
+				stack_trace("Warning: User could not put object back in hand during material container insertion, line [__LINE__]! This can lead to issues.")
+				I.forceMove(user.drop_location())
 		else
 			to_chat(user, "<span class='notice'>You insert a material total of [inserted] into [parent].</span>")
 			qdel(I)
-	else
+		if(after_insert)
+			after_insert.Invoke(I.type, last_inserted_id, inserted)
+	else if(I == active_held)
 		user.put_in_active_hand(I)
 
 //For inserting an amount of material
@@ -132,9 +143,7 @@
 		return FALSE
 
 	last_inserted_id = insert_materials(S,amt * multiplier)
-	last_inserted_type = S.type
 	S.use(amt)
-	last_amount_inserted = amt
 	return amt
 
 /datum/component/material_container/proc/insert_item(obj/item/I, multiplier = 1, stack_amt)
@@ -148,8 +157,6 @@
 		return FALSE
 
 	last_inserted_id = insert_materials(I, multiplier)
-	last_inserted_type = I.type
-	last_amount_inserted = material_amount
 	return material_amount
 
 /datum/component/material_container/proc/insert_materials(obj/item/I, multiplier = 1) //for internal usage only
@@ -193,6 +200,30 @@
 			total_amount -= amt
 			return amt
 	return FALSE
+
+/datum/component/material_container/proc/transer_amt_to(var/datum/component/material_container/T, amt, id)
+	if((amt==0)||(!T)||(!id))
+		return FALSE
+	if(amt<0)
+		return T.transer_amt_to(src, -amt, id)
+	var/datum/material/M = materials[id]
+
+	if(M)
+		var/tr = min(amt, M.amount,T.can_insert_amount(amt, id))
+		if(tr)
+			use_amount_type(tr, id)
+			T.insert_amount(tr, id)
+			return tr
+	return FALSE
+
+/datum/component/material_container/proc/can_insert_amount(amt, id)
+	if(amt && id)
+		var/datum/material/M = materials[id]
+		if(M)
+			if((total_amount + amt) <= max_amount)
+				return amt
+			else
+				return	(max_amount-total_amount)
 
 /datum/component/material_container/proc/can_use_amount(amt, id, list/mats)
 	if(amt && id)
@@ -342,7 +373,7 @@
 	name = "Bananium"
 	id = MAT_BANANIUM
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
-	coin_type = /obj/item/coin/clown
+	coin_type = /obj/item/coin/bananium
 
 /datum/material/titanium
 	name = "Titanium"
@@ -352,3 +383,8 @@
 /datum/material/biomass
 	name = "Biomass"
 	id = MAT_BIOMASS
+
+/datum/material/plastic
+	name = "Plastic"
+	id = MAT_PLASTIC
+	sheet_type = /obj/item/stack/sheet/plastic

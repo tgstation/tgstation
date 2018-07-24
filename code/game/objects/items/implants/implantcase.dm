@@ -25,10 +25,13 @@
 
 /obj/item/implantcase/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))
+		if(!user.is_literate())
+			to_chat(user, "<span class='notice'>You scribble illegibly on the side of [src]!</span>")
+			return
 		var/t = stripped_input(user, "What would you like the label to be?", name, null)
 		if(user.get_active_held_item() != W)
 			return
-		if(!in_range(src, user) && loc != user)
+		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(t)
 			name = "implant case - '[t]'"
@@ -39,7 +42,7 @@
 		if(I.imp)
 			if(imp || I.imp.imp_in)
 				return
-			I.imp.loc = src
+			I.imp.forceMove(src)
 			imp = I.imp
 			I.imp = null
 			update_icon()
@@ -48,7 +51,7 @@
 			if(imp)
 				if(I.imp)
 					return
-				imp.loc = I
+				imp.forceMove(I)
 				I.imp = imp
 				imp = null
 				update_icon()

@@ -39,13 +39,11 @@
 		var/obj/item/ammo_casing/CB
 		CB = magazine.get_round(0)
 		if(CB)
-			CB.loc = get_turf(src.loc)
-			CB.SpinAnimation(10, 1)
-			CB.update_icon()
+			CB.forceMove(drop_location())
+			CB.bounce_away(FALSE, NONE)
 			num_unloaded++
 	if (num_unloaded)
 		to_chat(user, "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>")
-		playsound(user, 'sound/weapons/bulletremove.ogg', 60, 1)
 	else
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
@@ -91,7 +89,7 @@
 	desc = "A cheap Martian knock-off of a classic law enforcement firearm. Uses .38-special rounds."
 	icon_state = "detective"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
-	unique_rename = TRUE
+	obj_flags = UNIQUE_RENAME
 	unique_reskin = list("Default" = "detective",
 						"Leopard Spots" = "detective_leopard",
 						"Black Panther" = "detective_panther",
@@ -99,7 +97,7 @@
 						"The Peacemaker" = "detective_peacemaker"
 						)
 
-/obj/item/gun/ballistic/revolver/detective/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override = "")
+/obj/item/gun/ballistic/revolver/detective/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(magazine.caliber != initial(magazine.caliber))
 		if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
 			playsound(user, fire_sound, 50, 1)
@@ -109,35 +107,34 @@
 			return 0
 	..()
 
-/obj/item/gun/ballistic/revolver/detective/attackby(obj/item/A, mob/user, params)
-	..()
-	if(istype(A, /obj/item/screwdriver))
-		if(magazine.caliber == "38")
-			to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src]...</span>")
+/obj/item/gun/ballistic/revolver/detective/screwdriver_act(mob/living/user, obj/item/I)
+	if(magazine.caliber == "38")
+		to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src]...</span>")
+		if(magazine.ammo_count())
+			afterattack(user, user)	//you know the drill
+			user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
+			return TRUE
+		if(I.use_tool(src, user, 30))
 			if(magazine.ammo_count())
-				afterattack(user, user)	//you know the drill
-				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
-				return
-			if(do_after(user, 30*A.toolspeed, target = src))
-				if(magazine.ammo_count())
-					to_chat(user, "<span class='warning'>You can't modify it!</span>")
-					return
-				magazine.caliber = "357"
-				desc = "The barrel and chamber assembly seems to have been modified."
-				to_chat(user, "<span class='notice'>You reinforce the barrel of [src]. Now it will fire .357 rounds.</span>")
-		else
-			to_chat(user, "<span class='notice'>You begin to revert the modifications to [src]...</span>")
+				to_chat(user, "<span class='warning'>You can't modify it!</span>")
+				return TRUE
+			magazine.caliber = "357"
+			desc = "The barrel and chamber assembly seems to have been modified."
+			to_chat(user, "<span class='notice'>You reinforce the barrel of [src]. Now it will fire .357 rounds.</span>")
+	else
+		to_chat(user, "<span class='notice'>You begin to revert the modifications to [src]...</span>")
+		if(magazine.ammo_count())
+			afterattack(user, user)	//and again
+			user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
+			return TRUE
+		if(I.use_tool(src, user, 30))
 			if(magazine.ammo_count())
-				afterattack(user, user)	//and again
-				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
+				to_chat(user, "<span class='warning'>You can't modify it!</span>")
 				return
-			if(do_after(user, 30*A.toolspeed, target = src))
-				if(magazine.ammo_count())
-					to_chat(user, "<span class='warning'>You can't modify it!</span>")
-					return
-				magazine.caliber = "38"
-				desc = initial(desc)
-				to_chat(user, "<span class='notice'>You remove the modifications on [src]. Now it will fire .38 rounds.</span>")
+			magazine.caliber = "38"
+			desc = initial(desc)
+			to_chat(user, "<span class='notice'>You remove the modifications on [src]. Now it will fire .38 rounds.</span>")
+	return TRUE
 
 
 /obj/item/gun/ballistic/revolver/mateba
@@ -151,10 +148,10 @@
 	icon_state = "goldrevolver"
 	fire_sound = 'sound/weapons/resonator_blast.ogg'
 	recoil = 8
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/ballistic/revolver/nagant
-	name = "nagant revolver"
+	name = "\improper Nagant revolver"
 	desc = "An old model of revolver that originated in Russia. Able to be suppressed. Uses 7.62x38mmR ammo."
 	icon_state = "nagant"
 	can_suppress = TRUE
@@ -166,7 +163,7 @@
 // You can spin the chamber to randomize the position of the bullet.
 
 /obj/item/gun/ballistic/revolver/russian
-	name = "\improper russian revolver"
+	name = "\improper Russian revolver"
 	desc = "A Russian-made revolver for drinking games. Uses .357 ammo, and has a mechanism requiring you to spin the chamber before each trigger pull."
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = FALSE
@@ -194,6 +191,8 @@
 	..()
 
 /obj/item/gun/ballistic/revolver/russian/afterattack(atom/target, mob/living/user, flag, params)
+	. = ..(null, user, flag, params)
+
 	if(flag)
 		if(!(target in user.contents) && ismob(target))
 			if(user.a_intent == INTENT_HARM) // Flogging action
@@ -221,7 +220,7 @@
 				playsound(user, fire_sound, 50, 1)
 				var/zone = check_zone(user.zone_selected)
 				var/obj/item/bodypart/affecting = H.get_bodypart(zone)
-				if(zone == "head" || zone == "eyes" || zone == "mouth")
+				if(zone == BODY_ZONE_HEAD || zone == BODY_ZONE_PRECISE_EYES || zone == BODY_ZONE_PRECISE_MOUTH)
 					shoot_self(user, affecting)
 				else
 					user.visible_message("<span class='danger'>[user.name] cowardly fires [src] at [user.p_their()] [affecting.name]!</span>", "<span class='userdanger'>You cowardly fire [src] at your [affecting.name]!</span>", "<span class='italics'>You hear a gunshot!</span>")
@@ -229,19 +228,19 @@
 				return
 
 		user.visible_message("<span class='danger'>*click*</span>")
-		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+		playsound(src, "gun_dry_fire", 30, 1)
 
-/obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = "head")
+/obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = BODY_ZONE_HEAD)
 	user.apply_damage(300, BRUTE, affecting)
 	user.visible_message("<span class='danger'>[user.name] fires [src] at [user.p_their()] head!</span>", "<span class='userdanger'>You fire [src] at your head!</span>", "<span class='italics'>You hear a gunshot!</span>")
 
 /obj/item/gun/ballistic/revolver/russian/soul
-	name = "cursed russian revolver"
+	name = "cursed Russian revolver"
 	desc = "To play with this revolver requires wagering your very soul."
 
 /obj/item/gun/ballistic/revolver/russian/soul/shoot_self(mob/living/user)
 	..()
-	var/obj/item/device/soulstone/anybody/SS = new /obj/item/device/soulstone/anybody(get_turf(src))
+	var/obj/item/soulstone/anybody/SS = new /obj/item/soulstone/anybody(get_turf(src))
 	if(!SS.transfer_soul("FORCE", user)) //Something went wrong
 		qdel(SS)
 		return
@@ -260,10 +259,10 @@
 	weapon_weight = WEAPON_MEDIUM
 	force = 10
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual
 	sawn_desc = "Omar's coming!"
-	unique_rename = TRUE
+	obj_flags = UNIQUE_RENAME
 	unique_reskin = list("Default" = "dshotgun",
 						"Dark Red Finish" = "dshotgun-d",
 						"Ash" = "dshotgun-f",
@@ -289,7 +288,7 @@
 		var/obj/item/ammo_casing/CB
 		CB = magazine.get_round(0)
 		chambered = null
-		CB.loc = get_turf(src.loc)
+		CB.forceMove(drop_location())
 		CB.update_icon()
 		num_unloaded++
 	if (num_unloaded)
@@ -309,16 +308,15 @@
 	slot_flags = null
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised
 	sawn_desc = "I'm just here for the gasoline."
-	unique_rename = FALSE
 	unique_reskin = null
 	var/slung = FALSE
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised/attackby(obj/item/A, mob/user, params)
 	..()
-	if(istype(A, /obj/item/stack/cable_coil) && !sawn_state)
+	if(istype(A, /obj/item/stack/cable_coil) && !sawn_off)
 		var/obj/item/stack/cable_coil/C = A
 		if(C.use(10))
-			slot_flags = SLOT_BACK
+			slot_flags = ITEM_SLOT_BACK
 			to_chat(user, "<span class='notice'>You tie the lengths of cable to the shotgun, making a sling.</span>")
 			slung = TRUE
 			update_icon()
@@ -343,17 +341,17 @@
 	icon_state = "ishotgun"
 	item_state = "gun"
 	w_class = WEIGHT_CLASS_NORMAL
-	sawn_state = SAWN_OFF
-	slot_flags = SLOT_BELT
+	sawn_off = TRUE
+	slot_flags = ITEM_SLOT_BELT
 
 
 /obj/item/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
 	clumsy_check = 0
 
 /obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user)
-	if((user.disabilities & CLUMSY) || (user.mind && user.mind.assigned_role == "Clown"))
+	if((user.has_trait(TRAIT_CLUMSY)) || (user.mind && user.mind.assigned_role == "Clown"))
 		return ..()
-	if(process_fire(user, user, 0, zone_override = "head"))
+	if(process_fire(user, user, FALSE, null, BODY_ZONE_HEAD))
 		user.visible_message("<span class='warning'>[user] somehow manages to shoot [user.p_them()]self in the face!</span>", "<span class='userdanger'>You somehow shoot yourself in the face! How the hell?!</span>")
 		user.emote("scream")
 		user.drop_all_held_items()

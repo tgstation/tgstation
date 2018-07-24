@@ -15,4 +15,4 @@
 /obj/item/throwing_star/ninja
 	name = "ninja throwing star"
 	throwforce = 30
-	embedded_pain_multiplier = 6
+	embedding = list("embedded_pain_multiplier" = 6, "embed_chance" = 100, "embedded_fall_chance" = 0)

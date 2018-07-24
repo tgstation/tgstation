@@ -9,6 +9,47 @@
  * Misc
  */
 
+#define LAZYINITLIST(L) if (!L) L = list()
+#define UNSETEMPTY(L) if (L && !length(L)) L = null
+#define LAZYREMOVE(L, I) if(L) { L -= I; if(!length(L)) { L = null; } }
+#define LAZYADD(L, I) if(!L) { L = list(); } L += I;
+#define LAZYOR(L, I) if(!L) { L = list(); } L |= I;
+#define LAZYFIND(L, V) L ? L.Find(V) : 0
+#define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
+#define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
+#define LAZYLEN(L) length(L)
+#define LAZYCLEARLIST(L) if(L) L.Cut()
+#define SANITIZE_LIST(L) ( islist(L) ? L : list() )
+#define reverseList(L) reverseRange(L.Copy())
+
+// binary search sorted insert
+// IN: Object to be inserted
+// LIST: List to insert object into
+// TYPECONT: The typepath of the contents of the list
+// COMPARE: The variable on the objects to compare
+#define BINARY_INSERT(IN, LIST, TYPECONT, COMPARE) \
+	var/__BIN_CTTL = length(LIST);\
+	if(!__BIN_CTTL) {\
+		LIST += IN;\
+	} else {\
+		var/__BIN_LEFT = 1;\
+		var/__BIN_RIGHT = __BIN_CTTL;\
+		var/__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
+		var/##TYPECONT/__BIN_ITEM;\
+		while(__BIN_LEFT < __BIN_RIGHT) {\
+			__BIN_ITEM = LIST[__BIN_MID];\
+			if(__BIN_ITEM.##COMPARE <= IN.##COMPARE) {\
+				__BIN_LEFT = __BIN_MID + 1;\
+			} else {\
+				__BIN_RIGHT = __BIN_MID;\
+			};\
+			__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
+		};\
+		__BIN_ITEM = LIST[__BIN_MID];\
+		__BIN_MID = __BIN_ITEM.##COMPARE > IN.##COMPARE ? __BIN_MID : __BIN_MID + 1;\
+		LIST.Insert(__BIN_MID, IN);\
+	}
+
 //Returns a list in plain english as a string
 /proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
 	var/total = input.len
@@ -32,9 +73,9 @@
 
 //Returns list element or null. Should prevent "index out of bounds" error.
 /proc/listgetindex(list/L, index)
-	if(istype(L))
-		if(isnum(index) && IsInteger(index))
-			if(IsInRange(index,1,L.len))
+	if(LAZYLEN(L))
+		if(isnum(index) && ISINTEGER(index))
+			if(ISINRANGE(index,1,L.len))
 				return L[index]
 		else if(index in L)
 			return L[index]
@@ -42,7 +83,7 @@
 
 //Return either pick(list) or null if list is not of type /list or is empty
 /proc/safepick(list/L)
-	if(istype(L) && L.len)
+	if(LAZYLEN(L))
 		return pick(L)
 
 //Checks if the list is empty
@@ -53,7 +94,7 @@
 
 //Checks for specific types in a list
 /proc/is_type_in_list(atom/A, list/L)
-	if(!L || !L.len || !A)
+	if(!LAZYLEN(L) || !A)
 		return FALSE
 	for(var/type in L)
 		if(istype(A, type))
@@ -61,18 +102,11 @@
 	return FALSE
 
 //Checks for specific types in specifically structured (Assoc "type" = TRUE) lists ('typecaches')
-/proc/is_type_in_typecache(atom/A, list/L)
-	if(!L || !L.len || !A)
-
-		return FALSE
-	if(ispath(A))
-		. = L[A]
-	else
-		. = L[A.type]
+#define is_type_in_typecache(A, L) (A && length(L) && L[(ispath(A) ? A : A:type)])
 
 //Checks for a string in a list
 /proc/is_string_in_list(string, list/L)
-	if(!L || !L.len || !string)
+	if(!LAZYLEN(L) || !string)
 		return
 	for(var/V in L)
 		if(string == V)
@@ -81,7 +115,7 @@
 
 //Removes a string from a list
 /proc/remove_strings_from_list(string, list/L)
-	if(!L || !L.len || !string)
+	if(!LAZYLEN(L) || !string)
 		return
 	for(var/V in L)
 		if(V == string)
@@ -483,18 +517,13 @@
 	for(var/key in key_list)
 		. |= key_list[key]
 
+/proc/make_associative(list/flat_list)
+	. = list()
+	for(var/thing in flat_list)
+		.[thing] = TRUE
+
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((islist(L) && length(L)) ? pick(L) : default)
-
-#define LAZYINITLIST(L) if (!L) L = list()
-#define UNSETEMPTY(L) if (L && !L.len) L = null
-#define LAZYREMOVE(L, I) if(L) { L -= I; if(!L.len) { L = null; } }
-#define LAZYADD(L, I) if(!L) { L = list(); } L += I;
-#define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= L.len ? L[I] : null) : L[I]) : null)
-#define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
-#define LAZYLEN(L) length(L)
-#define LAZYCLEARLIST(L) if(L) L.Cut()
-#define SANITIZE_LIST(L) ( islist(L) ? L : list() )
 
 /* Definining a counter as a series of key -> numeric value entries
 

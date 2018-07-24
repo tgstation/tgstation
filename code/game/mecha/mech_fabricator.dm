@@ -4,7 +4,6 @@
 	name = "exosuit fabricator"
 	desc = "Nothing is being built."
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 5000
@@ -36,8 +35,8 @@
 
 /obj/machinery/mecha_part_fabricator/Initialize()
     var/datum/component/material_container/materials = AddComponent(/datum/component/material_container,
-     list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),
-        FALSE, list(/obj/item/stack), CALLBACK(src, .proc/is_insertion_ready))
+     list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE), 0,
+        TRUE, list(/obj/item/stack), CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
     materials.precise_insertion = TRUE
     stored_research = new
     return ..()
@@ -64,21 +63,10 @@
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
 
 
-/obj/machinery/mecha_part_fabricator/check_access(obj/item/card/id/I)
-	if(istype(I, /obj/item/device/pda))
-		var/obj/item/device/pda/pda = I
-		I = pda.id
-	if(!istype(I) || !I.access) //not ID or no access
-		return FALSE
-	for(var/req in req_access)
-		if(!(req in I.access)) //doesn't have this access
-			return FALSE
-	return TRUE
-
 /obj/machinery/mecha_part_fabricator/emag_act()
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	req_access = list()
 	say("DB error \[Code 0x00F1\]")
 	sleep(10)
@@ -186,7 +174,7 @@
 	return queue.len
 
 /obj/machinery/mecha_part_fabricator/proc/remove_from_queue(index)
-	if(!isnum(index) || !IsInteger(index) || !istype(queue) || (index<1 || index>queue.len))
+	if(!isnum(index) || !ISINTEGER(index) || !istype(queue) || (index<1 || index>queue.len))
 		return FALSE
 	queue.Cut(index,++index)
 	return TRUE
@@ -258,14 +246,9 @@
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(datum/design/D, roundto = 1) //aran
 	return round(initial(D.construction_time)*time_coeff, roundto)
 
-/obj/machinery/mecha_part_fabricator/attack_hand(mob/user)
-	if(!(..()))
-		return interact(user)
-
-/obj/machinery/mecha_part_fabricator/interact(mob/user as mob)
+/obj/machinery/mecha_part_fabricator/ui_interact(mob/user as mob)
+	. = ..()
 	var/dat, left_part
-	if (..())
-		return
 	user.set_machine(src)
 	var/turf/exit = get_step(src,(dir))
 	if(exit.density)
@@ -373,8 +356,8 @@
 	if(href_list["queue_move"] && href_list["index"])
 		var/index = afilter.getNum("index")
 		var/new_index = index + afilter.getNum("queue_move")
-		if(isnum(index) && isnum(new_index) && IsInteger(index) && IsInteger(new_index))
-			if(IsInRange(new_index,1,queue.len))
+		if(isnum(index) && isnum(new_index) && ISINTEGER(index) && ISINTEGER(new_index))
+			if(ISINRANGE(new_index,1,queue.len))
 				queue.Swap(index,new_index)
 		return update_queue_on_page()
 	if(href_list["clear_queue"])
@@ -407,22 +390,14 @@
 	materials.retrieve_all()
 	..()
 
-/obj/machinery/mecha_part_fabricator/ComponentActivated(datum/component/C)
-	..()
-	if(istype(C, /datum/component/material_container))
-		var/datum/component/material_container/M = C
-		if(!M.last_insert_success)
-			return
-		var/stack_name = material2name(M.last_inserted_id)
-		add_overlay("fab-load-[stack_name]")
-		addtimer(CALLBACK(src, /atom/proc/cut_overlay, "fab-load-[stack_name]"), 10)
-		updateUsrDialog()
+/obj/machinery/mecha_part_fabricator/proc/AfterMaterialInsert(type_inserted, id_inserted, amount_inserted)
+	var/stack_name = material2name(id_inserted)
+	add_overlay("fab-load-[stack_name]")
+	addtimer(CALLBACK(src, /atom/proc/cut_overlay, "fab-load-[stack_name]"), 10)
+	updateUsrDialog()
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
-		return TRUE
-
-	if(exchange_parts(user, W))
 		return TRUE
 
 	if(default_deconstruction_crowbar(W))

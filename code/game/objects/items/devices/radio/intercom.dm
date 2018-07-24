@@ -1,4 +1,4 @@
-/obj/item/device/radio/intercom
+/obj/item/radio/intercom
 	name = "station intercom"
 	desc = "Talk through this."
 	icon_state = "intercom"
@@ -12,22 +12,22 @@
 	dog_fashion = null
 	var/unfastened = FALSE
 
-/obj/item/device/radio/intercom/unscrewed
+/obj/item/radio/intercom/unscrewed
 	unfastened = TRUE
 
-/obj/item/device/radio/intercom/ratvar
+/obj/item/radio/intercom/ratvar
 	name = "hierophant intercom"
 	desc = "A modified intercom that uses the Hierophant network instead of subspace tech. Can listen to and broadcast on any frequency."
 	icon_state = "intercom_ratvar"
 	freerange = TRUE
 
-/obj/item/device/radio/intercom/ratvar/attackby(obj/item/I, mob/living/user, params)
+/obj/item/radio/intercom/ratvar/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/screwdriver))
 		to_chat(user, "<span class='danger'>[src] is fastened to the wall with [is_servant_of_ratvar(user) ? "replicant alloy" : "some material you've never seen"], and can't be removed.</span>")
 		return //no unfastening!
 	. = ..()
 
-/obj/item/device/radio/intercom/ratvar/process()
+/obj/item/radio/intercom/ratvar/process()
 	if(!istype(SSticker.mode, /datum/game_mode/clockwork_cult))
 		invisibility = INVISIBILITY_OBSERVER
 		alpha = 125
@@ -38,93 +38,89 @@
 		emped = FALSE
 	..()
 
-/obj/item/device/radio/intercom/Initialize(mapload, ndir, building)
+/obj/item/radio/intercom/Initialize(mapload, ndir, building)
 	. = ..()
 	if(building)
 		setDir(ndir)
 	START_PROCESSING(SSobj, src)
 
-/obj/item/device/radio/intercom/Destroy()
+/obj/item/radio/intercom/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/device/radio/intercom/examine(mob/user)
+/obj/item/radio/intercom/examine(mob/user)
 	..()
 	if(!unfastened)
 		to_chat(user, "<span class='notice'>It's <b>screwed</b> and secured to the wall.</span>")
 	else
 		to_chat(user, "<span class='notice'>It's <i>unscrewed</i> from the wall, and can be <b>detached</b>.</span>")
 
-/obj/item/device/radio/intercom/attackby(obj/item/I, mob/living/user, params)
+/obj/item/radio/intercom/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/screwdriver))
-		var/obj/item/screwdriver/S = I
 		if(unfastened)
 			user.visible_message("<span class='notice'>[user] starts tightening [src]'s screws...</span>", "<span class='notice'>You start screwing in [src]...</span>")
-			playsound(src, S.usesound, 50, 1)
-			if(!do_after(user, 30 * S.toolspeed, target = src))
-				return
-			user.visible_message("<span class='notice'>[user] tightens [src]'s screws!</span>", "<span class='notice'>You tighten [src]'s screws.</span>")
-			playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
-			unfastened = FALSE
+			if(I.use_tool(src, user, 30, volume=50))
+				user.visible_message("<span class='notice'>[user] tightens [src]'s screws!</span>", "<span class='notice'>You tighten [src]'s screws.</span>")
+				unfastened = FALSE
 		else
 			user.visible_message("<span class='notice'>[user] starts loosening [src]'s screws...</span>", "<span class='notice'>You start unscrewing [src]...</span>")
-			playsound(src, S.usesound, 50, 1)
-			if(!do_after(user, 60 * S.toolspeed, target = src))
-				return
-			user.visible_message("<span class='notice'>[user] loosens [src]'s screws!</span>", "<span class='notice'>You unscrew [src], loosening it from the wall.</span>")
-			playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
-			unfastened = TRUE
+			if(I.use_tool(src, user, 40, volume=50))
+				user.visible_message("<span class='notice'>[user] loosens [src]'s screws!</span>", "<span class='notice'>You unscrew [src], loosening it from the wall.</span>")
+				unfastened = TRUE
 		return
 	else if(istype(I, /obj/item/wrench))
 		if(!unfastened)
 			to_chat(user, "<span class='warning'>You need to unscrew [src] from the wall first!</span>")
 			return
-		var/obj/item/wrench/W = I
 		user.visible_message("<span class='notice'>[user] starts unsecuring [src]...</span>", "<span class='notice'>You start unsecuring [src]...</span>")
-		playsound(src, W.usesound, 50, 1)
-		if(!do_after(user, 80 * W.toolspeed, target = src))
-			return
-		user.visible_message("<span class='notice'>[user] unsecures [src]!</span>", "<span class='notice'>You detach [src] from the wall.</span>")
-		playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
-		new/obj/item/wallframe/intercom(get_turf(src))
-		qdel(src)
+		I.play_tool_sound(src)
+		if(I.use_tool(src, user, 80))
+			user.visible_message("<span class='notice'>[user] unsecures [src]!</span>", "<span class='notice'>You detach [src] from the wall.</span>")
+			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+			new/obj/item/wallframe/intercom(get_turf(src))
+			qdel(src)
 		return
 	return ..()
 
-/obj/item/device/radio/intercom/attack_ai(mob/user)
+/obj/item/radio/intercom/attack_ai(mob/user)
 	interact(user)
 
-/obj/item/device/radio/intercom/attack_hand(mob/user)
+/obj/item/radio/intercom/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	interact(user)
 
-/obj/item/device/radio/intercom/interact(mob/user)
+/obj/item/radio/intercom/interact(mob/user)
 	..()
 	ui_interact(user, state = GLOB.default_state)
 
-/obj/item/device/radio/intercom/receive_range(freq, level)
+/obj/item/radio/intercom/can_receive(freq, level)
 	if(!on)
-		return -1
+		return FALSE
 	if(wires.is_cut(WIRE_RX))
-		return -1
+		return FALSE
 	if(!(0 in level))
 		var/turf/position = get_turf(src)
 		if(isnull(position) || !(position.z in level))
-			return -1
+			return FALSE
 	if(!src.listening)
-		return -1
-	if(freq == GLOB.SYND_FREQ)
+		return FALSE
+	if(freq == FREQ_SYNDICATE)
 		if(!(src.syndie))
-			return -1//Prevents broadcast of messages over devices lacking the encryption
+			return FALSE//Prevents broadcast of messages over devices lacking the encryption
 
-	return canhear_range
+	return TRUE
 
 
-/obj/item/device/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode)
+/obj/item/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode)
+	if (message_mode == MODE_INTERCOM)
+		return  // Avoid hearing the same thing twice
 	if(!anyai && !(speaker in ai))
 		return
 	..()
 
-/obj/item/device/radio/intercom/process()
+/obj/item/radio/intercom/process()
 	if(((world.timeofday - last_tick) > 30) || ((world.timeofday - last_tick) < 0))
 		last_tick = world.timeofday
 
@@ -139,15 +135,15 @@
 		else
 			icon_state = initial(icon_state)
 
-/obj/item/device/radio/intercom/add_blood(list/blood_dna)
-	return 0
+/obj/item/radio/intercom/add_blood_DNA(list/blood_dna)
+	return FALSE
 
 //Created through the autolathe or through deconstructing intercoms. Can be applied to wall to make a new intercom on it!
 /obj/item/wallframe/intercom
 	name = "intercom frame"
 	desc = "A ready-to-go intercom. Just slap it on a wall and screw it in!"
 	icon_state = "intercom"
-	result_path = /obj/item/device/radio/intercom/unscrewed
+	result_path = /obj/item/radio/intercom/unscrewed
 	pixel_shift = 29
 	inverse = TRUE
 	materials = list(MAT_METAL = 75, MAT_GLASS = 25)

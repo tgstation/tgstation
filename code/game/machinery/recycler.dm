@@ -6,7 +6,6 @@
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "grinder-o0"
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
-	anchored = TRUE
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/recycler
 	var/safety_mode = FALSE // Temporarily stops machine if it detects a mob
@@ -19,9 +18,11 @@
 	var/item_recycle_sound = 'sound/items/welder.ogg'
 
 /obj/machinery/recycler/Initialize()
-	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM))
+	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE, MAT_PLASTIC), INFINITY, FALSE, null, null, null, TRUE)
+	AddComponent(/datum/component/butchering, 1, amount_produced,amount_produced/5)
 	. = ..()
 	update_icon()
+	req_one_access = get_all_accesses() + get_all_centcom_access()
 
 /obj/machinery/recycler/RefreshParts()
 	var/amt_made = 0
@@ -34,12 +35,15 @@
 	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.max_amount = mat_mod
 	amount_produced = min(50, amt_made) + 50
+	GET_COMPONENT(butchering, /datum/component/butchering)
+	butchering.effectiveness = amount_produced
+	butchering.bonus_modifier = amount_produced/5
 
 /obj/machinery/recycler/examine(mob/user)
 	..()
 	to_chat(user, "The power light is [(stat & NOPOWER) ? "off" : "on"].")
 	to_chat(user, "The safety-mode light is [safety_mode ? "on" : "off"].")
-	to_chat(user, "The safety-sensors status light is [emagged ? "off" : "on"].")
+	to_chat(user, "The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"].")
 
 /obj/machinery/recycler/power_change()
 	..()
@@ -48,9 +52,6 @@
 
 /obj/machinery/recycler/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
-		return
-
-	if(exchange_parts(user, I))
 		return
 
 	if(default_pry_open(I))
@@ -64,9 +65,9 @@
 	return ..()
 
 /obj/machinery/recycler/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	if(safety_mode)
 		safety_mode = FALSE
 		update_icon()
@@ -80,7 +81,7 @@
 		is_powered = FALSE
 	icon_state = icon_name + "[is_powered]" + "[(blood ? "bld" : "")]" // add the blood tag at the end
 
-/obj/machinery/recycler/CollidedWith(atom/movable/AM)
+/obj/machinery/recycler/Bumped(atom/movable/AM)
 
 	if(stat & (BROKEN|NOPOWER))
 		return
@@ -105,12 +106,12 @@
 	for(var/i in to_eat)
 		var/atom/movable/AM = i
 		var/obj/item/bodypart/head/as_head = AM
-		var/obj/item/device/mmi/as_mmi = AM
+		var/obj/item/mmi/as_mmi = AM
 		var/brain_holder = istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /mob/living/brain)
 		if(brain_holder)
 			emergency_stop(AM)
 		else if(isliving(AM))
-			if(emagged)
+			if((obj_flags & EMAGGED)||((!allowed(AM))&&(!ishuman(AM))))
 				crush_living(AM)
 			else
 				emergency_stop(AM)
@@ -125,16 +126,25 @@
 		playsound(src, item_recycle_sound, 50, 1)
 
 /obj/machinery/recycler/proc/recycle_item(obj/item/I)
-	I.forceMove(loc)
 
-	GET_COMPONENT(materials, /datum/component/material_container)
-	var/material_amount = materials.get_item_material_amount(I)
-	if(!material_amount)
-		qdel(I)
+	I.forceMove(loc)
+	var/obj/item/grown/log/L = I
+	if(istype(L))
+		var/seed_modifier = 0
+		if(L.seed)
+			seed_modifier = round(L.seed.potency / 25)
+		new L.plank_type(src.loc, 1 + seed_modifier)
+		qdel(L)
 		return
-	materials.insert_item(I, multiplier = (amount_produced / 100))
-	qdel(I)
-	materials.retrieve_all()
+	else
+		GET_COMPONENT(materials, /datum/component/material_container)
+		var/material_amount = materials.get_item_material_amount(I)
+		if(!material_amount)
+			qdel(I)
+			return
+		materials.insert_item(I, multiplier = (amount_produced / 100))
+		qdel(I)
+		materials.retrieve_all()
 
 
 /obj/machinery/recycler/proc/emergency_stop(mob/living/L)
@@ -158,10 +168,8 @@
 	else
 		playsound(src, 'sound/effects/splat.ogg', 50, 1)
 
-	var/gib = TRUE
 	// By default, the emagged recycler will gib all non-carbons. (human simple animal mobs don't count)
 	if(iscarbon(L))
-		gib = FALSE
 		if(L.stat == CONSCIOUS)
 			L.say("ARRRRRRRRRRRGH!!!")
 		add_mob_blood(L)
@@ -172,22 +180,20 @@
 
 	// Remove and recycle the equipped items
 	if(eat_victim_items)
-		for(var/obj/item/I in L.get_equipped_items())
+		for(var/obj/item/I in L.get_equipped_items(TRUE))
 			if(L.dropItemToGround(I))
 				eat(I, sound=FALSE)
 
 	// Instantly lie down, also go unconscious from the pain, before you die.
 	L.Unconscious(100)
-
-	// For admin fun, var edit emagged to 2.
-	if(gib || emagged == 2)
-		L.gib()
-	else if(emagged == 1)
-		L.adjustBruteLoss(crush_damage)
+	L.adjustBruteLoss(crush_damage)
+	if(L.stat == DEAD && (L.butcher_results || L.guaranteed_butcher_results))
+		GET_COMPONENT(butchering, /datum/component/butchering)
+		butchering.Butcher(src,L)
 
 /obj/machinery/recycler/deathtrap
 	name = "dangerous old crusher"
-	emagged = TRUE
+	obj_flags = CAN_BE_HIT | EMAGGED
 	crush_damage = 120
 	flags_1 = NODECONSTRUCT_1
 

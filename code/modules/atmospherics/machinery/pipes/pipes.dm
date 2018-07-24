@@ -18,8 +18,8 @@
 	volume = 35 * device_type
 	..()
 
-/obj/machinery/atmospherics/pipe/nullifyNode(I)
-	var/obj/machinery/atmospherics/oldN = NODE_I
+/obj/machinery/atmospherics/pipe/nullifyNode(i)
+	var/obj/machinery/atmospherics/oldN = nodes[i]
 	..()
 	if(oldN)
 		oldN.build_network()
@@ -33,11 +33,11 @@
 		parent.build_pipeline(src)
 
 /obj/machinery/atmospherics/pipe/update_icon() //overridden by manifolds
-	if(NODE1&&NODE2)
+	if(nodes[1] && nodes[2])
 		icon_state = "intact[invisibility ? "-f" : "" ]"
 	else
-		var/have_node1 = NODE1?1:0
-		var/have_node2 = NODE2?1:0
+		var/have_node1 = nodes[1] ? TRUE : FALSE
+		var/have_node2 = nodes[2] ? TRUE : FALSE
 		icon_state = "exposed[have_node1][have_node2][invisibility ? "-f" : "" ]"
 
 /obj/machinery/atmospherics/pipe/atmosinit()
@@ -59,15 +59,19 @@
 /obj/machinery/atmospherics/pipe/return_air()
 	return parent.air
 
+/obj/machinery/atmospherics/pipe/remove_air(amount)
+	return parent.air.remove(amount)
+
 /obj/machinery/atmospherics/pipe/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/analyzer))
-		atmosanalyzer_scan(parent.air, user)
 	if(istype(W, /obj/item/pipe_meter))
 		var/obj/item/pipe_meter/meter = W
 		user.dropItemToGround(meter)
 		meter.setAttachLayer(piping_layer)
 	else
 		return ..()
+
+/obj/machinery/atmospherics/pipe/analyzer_act(mob/living/user, obj/item/I)
+	atmosanalyzer_scan(parent.air, user, src)
 
 /obj/machinery/atmospherics/pipe/returnPipenet()
 	return parent
@@ -76,9 +80,10 @@
 	parent = P
 
 /obj/machinery/atmospherics/pipe/Destroy()
+	QDEL_NULL(parent)
+
 	releaseAirToTurf()
-	qdel(air_temporary)
-	air_temporary = null
+	QDEL_NULL(air_temporary)
 
 	var/turf/T = loc
 	for(var/obj/machinery/meter/meter in T)
@@ -88,12 +93,10 @@
 			qdel(meter)
 	. = ..()
 
-	QDEL_NULL(parent)
-
 /obj/machinery/atmospherics/pipe/proc/update_node_icon()
-	for(DEVICE_TYPE_LOOP)
-		if(NODE_I)
-			var/obj/machinery/atmospherics/N = NODE_I
+	for(var/i in 1 to device_type)
+		if(nodes[i])
+			var/obj/machinery/atmospherics/N = nodes[i]
 			N.update_icon()
 
 /obj/machinery/atmospherics/pipe/returnPipenets()
@@ -109,4 +112,3 @@
 	pipe_color = paint_color
 	update_node_icon()
 	return TRUE
-

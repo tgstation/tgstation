@@ -2,7 +2,7 @@
 	//Flags
 	var/visibility_flags = 0
 	var/disease_flags = CURABLE|CAN_CARRY|CAN_RESIST
-	var/spread_flags = VIRUS_SPREAD_AIRBORNE | VIRUS_SPREAD_CONTACT_FLUIDS | VIRUS_SPREAD_CONTACT_SKIN
+	var/spread_flags = DISEASE_SPREAD_AIRBORNE | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN
 
 	//Fluff
 	var/form = "Virus"
@@ -26,17 +26,34 @@
 	var/carrier = FALSE //If our host is only a carrier
 	var/bypasses_immunity = FALSE //Does it skip species virus immunity check? Some things may diseases and not viruses
 	var/permeability_mod = 1
-	var/severity = VIRUS_SEVERITY_POSITIVE
+	var/severity = DISEASE_SEVERITY_NONTHREAT
 	var/list/required_organs = list()
 	var/needs_all_cures = TRUE
 	var/list/strain_data = list() //dna_spread special bullshit
-	var/list/infectable_hosts = list(SPECIES_ORGANIC) //if the disease can spread on organics, synthetics, or undead
+	var/list/infectable_biotypes = list(MOB_ORGANIC) //if the disease can spread on organics, synthetics, or undead
 	var/process_dead = FALSE //if this ticks while the host is dead
+	var/copy_type = null //if this is null, copies will use the type of the instance being copied
 
 /datum/disease/Destroy()
-	affected_mob = null
+	. = ..()
+	if(affected_mob)
+		remove_disease()
 	SSdisease.active_diseases.Remove(src)
-	return ..()
+
+//add this disease if the host does not already have too many
+/datum/disease/proc/try_infect(var/mob/living/infectee, make_copy = TRUE)
+	infect(infectee, make_copy)
+	return TRUE
+
+//add the disease with no checks
+/datum/disease/proc/infect(var/mob/living/infectee, make_copy = TRUE)
+	var/datum/disease/D = make_copy ? Copy() : src
+	infectee.diseases += D
+	D.affected_mob = infectee
+	SSdisease.active_diseases += D //Add it to the active diseases list, now that it's actually in a mob and being processed.
+
+	D.after_add()
+	infectee.med_hud_set_status()
 
 /datum/disease/proc/stage_act()
 	var/cure = has_cure()
@@ -60,21 +77,21 @@
 
 /datum/disease/proc/has_cure()
 	if(!(disease_flags & CURABLE))
-		return 0
+		return FALSE
 
 	. = cures.len
 	for(var/C_id in cures)
 		if(!affected_mob.reagents.has_reagent(C_id))
 			.--
 	if(!. || (needs_all_cures && . < cures.len))
-		return 0
+		return FALSE
 
 //Airborne spreading
 /datum/disease/proc/spread(force_spread = 0)
 	if(!affected_mob)
 		return
 
-	if(!(spread_flags & VIRUS_SPREAD_AIRBORNE) && !force_spread)
+	if(!(spread_flags & DISEASE_SPREAD_AIRBORNE) && !force_spread)
 		return
 
 	if(affected_mob.reagents.has_reagent("spaceacillin") || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
@@ -89,42 +106,57 @@
 	if(istype(T))
 		for(var/mob/living/carbon/C in oview(spread_range, affected_mob))
 			var/turf/V = get_turf(C)
-			if(V)
-				while(TRUE)
-					if(V == T)
-						C.AirborneContractDisease(src)
-						break
-					var/turf/Temp = get_step_towards(V, T)
-					if(!CANATMOSPASS(V, Temp))
-						break
-					V = Temp
+			if(disease_air_spread_walk(T, V))
+				C.AirborneContractDisease(src, force_spread)
+
+/proc/disease_air_spread_walk(turf/start, turf/end)
+	if(!start || !end)
+		return FALSE
+	while(TRUE)
+		if(end == start)
+			return TRUE
+		var/turf/Temp = get_step_towards(end, start)
+		if(!CANATMOSPASS(end, Temp))
+			return FALSE
+		end = Temp
 
 
 /datum/disease/proc/cure(add_resistance = TRUE)
 	if(affected_mob)
-		if(disease_flags & CAN_RESIST)
-			var/id = GetDiseaseID()
-			if(add_resistance && !(id in affected_mob.resistances))
-				affected_mob.resistances += id
-		remove_virus()
+		if(add_resistance && (disease_flags & CAN_RESIST))
+			affected_mob.disease_resistances |= GetDiseaseID()
 	qdel(src)
 
 /datum/disease/proc/IsSame(datum/disease/D)
 	if(istype(src, D.type))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /datum/disease/proc/Copy()
-	var/datum/disease/D = new type()
-	D.strain_data = strain_data.Copy()
+	//note that stage is not copied over - the copy starts over at stage 1
+	var/static/list/copy_vars = list("name", "visibility_flags", "disease_flags", "spread_flags", "form", "desc", "agent", "spread_text",
+									"cure_text", "max_stages", "stage_prob", "viable_mobtypes", "cures", "infectivity", "cure_chance",
+									"bypasses_immunity", "permeability_mod", "severity", "required_organs", "needs_all_cures", "strain_data",
+									"infectable_biotypes", "process_dead")
+
+	var/datum/disease/D = copy_type ? new copy_type() : new type()
+	for(var/V in copy_vars)
+		var/val = vars[V]
+		if(islist(val))
+			var/list/L = val
+			val = L.Copy()
+		D.vars[V] = val
 	return D
+
+/datum/disease/proc/after_add()
+	return
 
 
 /datum/disease/proc/GetDiseaseID()
 	return "[type]"
 
-//don't use this proc directly. this should only ever be called by cure()
-/datum/disease/proc/remove_virus()
-	affected_mob.viruses -= src		//remove the datum from the list
+/datum/disease/proc/remove_disease()
+	affected_mob.diseases -= src		//remove the datum from the list
 	affected_mob.med_hud_set_status()
+	affected_mob = null

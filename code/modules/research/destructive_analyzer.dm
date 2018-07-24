@@ -44,6 +44,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 		to_chat(user, "<span class='notice'>You add the [O.name] to the [src.name]!</span>")
 		flick("d_analyzer_la", src)
 		addtimer(CALLBACK(src, .proc/finish_loading), 10)
+		if (linked_console)
+			linked_console.updateUsrDialog()
 
 /obj/machinery/rnd/destructive_analyzer/proc/finish_loading()
 	update_icon()
@@ -73,7 +75,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 		use_power(250)
 		if(thing == loaded_item)
 			loaded_item = null
-		update_icon()
 		var/list/food = thing.GetDeconstructableContents()
 		for(var/obj/item/innerthing in food)
 			destroy_item(innerthing, TRUE)
@@ -84,47 +85,61 @@ Note: Must be placed within 3 tiles of the R&D Console
 		var/obj/item/stack/sheet/S = thing
 		if(S.amount > 1 && !innermode)
 			S.amount--
+			loaded_item = S
 		else
 			qdel(S)
 	else
 		qdel(thing)
+	if (!innermode)
+		update_icon()
 	return TRUE
 
 /obj/machinery/rnd/destructive_analyzer/proc/user_try_decon_id(id, mob/user)
 	if(!istype(loaded_item) || !istype(linked_console))
 		return FALSE
-	if(id && !(id == RESEARCH_MATERIAL_RECLAMATION_ID))
+
+	if (id && id != RESEARCH_MATERIAL_RECLAMATION_ID)
 		var/datum/techweb_node/TN = get_techweb_node_by_id(id)
 		if(!istype(TN))
 			return FALSE
-		var/list/pos1 = techweb_item_boost_check(loaded_item)
-		if(isnull(pos1[id]))
-			return FALSE
 		var/dpath = loaded_item.type
-		if(isnull(TN.boost_item_paths[dpath]))
+		var/list/worths = TN.boost_item_paths[dpath]
+		var/list/differences = list()
+		var/list/already_boosted = linked_console.stored_research.boosted_nodes[TN.id]
+		for(var/i in worths)
+			var/used = already_boosted? already_boosted[i] : 0
+			var/value = min(worths[i], TN.research_costs[i]) - used
+			if(value > 0)
+				differences[i] = value
+		if(length(worths) && !length(differences))
 			return FALSE
-		var/dboost = TN.boost_item_paths[dpath]
-		var/choice = input("Are you sure you want to destroy [loaded_item.name] for a boost of [dboost? 0 : dboost] in node [TN.display_name]") in list("Proceed", "Cancel")
+		var/choice = input("Are you sure you want to destroy [loaded_item] to [!length(worths) ? "reveal [TN.display_name]" : "boost [TN.display_name] by [json_encode(differences)] point\s"]?") in list("Proceed", "Cancel")
 		if(choice == "Cancel")
 			return FALSE
 		if(QDELETED(loaded_item) || QDELETED(linked_console) || !user.Adjacent(linked_console) || QDELETED(src))
 			return FALSE
-		SSblackbox.record_feedback("nested_tally", "item_deconstructed", 1, list("[TN.id]", "[loaded_item.type]"))
+		SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[TN.id]", "[loaded_item.type]"))
 		if(destroy_item(loaded_item))
 			linked_console.stored_research.boost_with_path(SSresearch.techweb_nodes[TN.id], dpath)
+
 	else
-		var/point_value = techweb_item_point_check(loaded_item)
+		var/list/point_value = techweb_item_point_check(loaded_item)
 		if(linked_console.stored_research.deconstructed_items[loaded_item.type])
-			point_value = 0
-		var/choice = input("Are you sure you want to destroy [loaded_item.name] for [point_value? "[point_value] points" : "material reclaimation"]?") in list("Proceed", "Cancel")
+			point_value = list()
+		var/user_mode_string = ""
+		if(length(point_value))
+			user_mode_string = " for [json_encode(point_value)] points"
+		else if(loaded_item.materials.len)
+			user_mode_string = " for material reclamation"
+		var/choice = input("Are you sure you want to destroy [loaded_item][user_mode_string]?") in list("Proceed", "Cancel")
 		if(choice == "Cancel")
 			return FALSE
 		if(QDELETED(loaded_item) || QDELETED(linked_console) || !user.Adjacent(linked_console) || QDELETED(src))
 			return FALSE
-		var/dtype = loaded_item.type
+		var/loaded_type = loaded_item.type
 		if(destroy_item(loaded_item))
-			linked_console.stored_research.research_points += point_value
-			linked_console.stored_research.deconstructed_items[dtype] = point_value
+			linked_console.stored_research.add_point_list(point_value)
+			linked_console.stored_research.deconstructed_items[loaded_type] = point_value
 	return TRUE
 
 /obj/machinery/rnd/destructive_analyzer/proc/unload_item()
@@ -132,4 +147,5 @@ Note: Must be placed within 3 tiles of the R&D Console
 		return FALSE
 	loaded_item.forceMove(get_turf(src))
 	loaded_item = null
+	update_icon()
 	return TRUE

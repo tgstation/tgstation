@@ -2,7 +2,6 @@
 	name = "teleport"
 	icon = 'icons/obj/machines/teleporter.dmi'
 	density = TRUE
-	anchored = TRUE
 
 /obj/machinery/teleport/hub
 	name = "teleporter hub"
@@ -41,13 +40,12 @@
 			break
 	return power_station
 
-/obj/machinery/teleport/hub/CollidedWith(atom/movable/AM)
-	if(z == ZLEVEL_CENTCOM)
+/obj/machinery/teleport/hub/Bumped(atom/movable/AM)
+	if(is_centcom_level(z))
 		to_chat(AM, "You can't use this here.")
 		return
 	if(is_ready())
 		teleport(AM)
-		use_power(5000)
 
 /obj/machinery/teleport/hub/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", W))
@@ -55,29 +53,30 @@
 			power_station.engaged = 0 //hub with panel open is off, so the station must be informed.
 			update_icon()
 		return
-	if(exchange_parts(user, W))
-		return
 	if(default_deconstruction_crowbar(W))
 		return
 	return ..()
 
 /obj/machinery/teleport/hub/proc/teleport(atom/movable/M as mob|obj, turf/T)
 	var/obj/machinery/computer/teleporter/com = power_station.teleporter_console
-	if (!com)
+	if (QDELETED(com))
 		return
-	if (!com.target)
+	if (QDELETED(com.target))
+		com.target = null
 		visible_message("<span class='alert'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
 	if (ismovableatom(M))
 		if(do_teleport(M, com.target))
+			use_power(5000)
 			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
+				log_game("[M] ([key_name(M)]) was turned into a fly person")
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
 					if(human.dna && human.dna.species.id == "human")
 						to_chat(M, "<span class='italics'>You hear a buzzing in your ears.</span>")
 						human.set_species(/datum/species/fly)
 
-					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
+					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), EFFECT_IRRADIATE, 0)
 			calibrated = 0
 	return
 
@@ -151,8 +150,8 @@
 	return ..()
 
 /obj/machinery/teleport/station/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
-		var/obj/item/device/multitool/M = W
+	if(istype(W, /obj/item/multitool))
+		var/obj/item/multitool/M = W
 		if(panel_open)
 			M.buffer = src
 			to_chat(user, "<span class='caution'>You download the data to the [W.name]'s buffer.</span>")
@@ -169,9 +168,6 @@
 		update_icon()
 		return
 
-	else if(exchange_parts(user, W))
-		return
-
 	else if(default_deconstruction_crowbar(W))
 		return
 
@@ -183,32 +179,24 @@
 	else
 		return ..()
 
-/obj/machinery/teleport/station/attack_paw()
-	src.attack_hand()
-
-/obj/machinery/teleport/station/attack_ai()
-	src.attack_hand()
-
-/obj/machinery/teleport/station/attack_hand(mob/user)
-	if(!panel_open)
-		toggle(user)
+/obj/machinery/teleport/station/interact(mob/user)
+	toggle(user)
 
 /obj/machinery/teleport/station/proc/toggle(mob/user)
 	if(stat & (BROKEN|NOPOWER) || !teleporter_hub || !teleporter_console )
 		return
 	if (teleporter_console.target)
 		if(teleporter_hub.panel_open || teleporter_hub.stat & (BROKEN|NOPOWER))
-			visible_message("<span class='alert'>The teleporter hub isn't responding.</span>")
+			to_chat(user, "<span class='alert'>The teleporter hub isn't responding.</span>")
 		else
-			src.engaged = !src.engaged
+			engaged = !engaged
 			use_power(5000)
-			visible_message("<span class='notice'>Teleporter [engaged ? "" : "dis"]engaged!</span>")
+			to_chat(user, "<span class='notice'>Teleporter [engaged ? "" : "dis"]engaged!</span>")
 	else
-		visible_message("<span class='alert'>No target detected.</span>")
-		src.engaged = 0
+		to_chat(user, "<span class='alert'>No target detected.</span>")
+		engaged = FALSE
 	teleporter_hub.update_icon()
-	src.add_fingerprint(user)
-	return
+	add_fingerprint(user)
 
 /obj/machinery/teleport/station/power_change()
 	..()

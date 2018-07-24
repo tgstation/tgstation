@@ -9,7 +9,7 @@
 	max_integrity = 200
 	lights_power = 7
 	deflect_chance = 15
-	armor = list(melee = 40, bullet = 20, laser = 10, energy = 20, bomb = 40, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list("melee" = 40, "bullet" = 20, "laser" = 10, "energy" = 20, "bomb" = 40, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	max_equip = 6
 	wreckage = /obj/structure/mecha_wreckage/ripley
 	var/list/cargo = new
@@ -31,10 +31,8 @@
 					ore.forceMove(ore_box)
 
 /obj/mecha/working/ripley/Destroy()
-	for(var/i=1, i <= hides, i++)
-		new /obj/item/stack/sheet/animalhide/goliath_hide(loc) //If a goliath-plated ripley gets killed, all the plates drop
 	for(var/atom/movable/A in cargo)
-		A.forceMove(loc)
+		A.forceMove(drop_location())
 		step_rand(A)
 	cargo.Cut()
 	return ..()
@@ -49,12 +47,17 @@
 
 /obj/mecha/working/ripley/update_icon()
 	..()
-	if (hides)
+	GET_COMPONENT(C,/datum/component/armor_plate)
+	if (C.amount)
 		cut_overlays()
-		if(hides < 3)
+		if(C.amount < 3)
 			add_overlay(occupant ? "ripley-g" : "ripley-g-open")
 		else
 			add_overlay(occupant ? "ripley-g-full" : "ripley-g-full-open")
+
+/obj/mecha/working/ripley/Initialize()
+	. = ..()
+	AddComponent(/datum/component/armor_plate,3,/obj/item/stack/sheet/animalhide/goliath_hide,list("melee" = 10, "bullet" = 5, "laser" = 5))
 
 
 /obj/mecha/working/ripley/firefighter
@@ -65,7 +68,7 @@
 	max_integrity = 250
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	lights_power = 7
-	armor = list(melee = 40, bullet = 30, laser = 30, energy = 30, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	max_equip = 5 // More armor, less tools
 	wreckage = /obj/structure/mecha_wreckage/ripley/firefighter
 
@@ -80,11 +83,22 @@
 	wreckage = /obj/structure/mecha_wreckage/ripley/deathripley
 	step_energy_drain = 0
 
-/obj/mecha/working/ripley/deathripley/New()
-	..()
+/obj/mecha/working/ripley/deathripley/Initialize()
+	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill
 	ME.attach(src)
-	return
+
+/obj/mecha/working/ripley/deathripley/real
+	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE. FOR REAL"
+
+/obj/mecha/working/ripley/deathripley/real/Initialize()
+	. = ..()
+	for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
+		E.detach()
+		qdel(E)
+	equipment.Cut()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/real
+	ME.attach(src)
 
 /obj/mecha/working/ripley/mining
 	desc = "An old, dusty mining Ripley."
@@ -94,7 +108,7 @@
 /obj/mecha/working/ripley/mining/Initialize()
 	. = ..()
 	if(cell)
-		cell.charge = Floor(cell.charge * 0.25) //Starts at very low charge
+		cell.charge = FLOOR(cell.charge * 0.25, 1) //Starts at very low charge
 	if(prob(70)) //Maybe add a drill
 		if(prob(15)) //Possible diamond drill... Feeling lucky?
 			var/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill/D = new
@@ -128,11 +142,11 @@
 	..()
 	if(href_list["drop_from_cargo"])
 		var/obj/O = locate(href_list["drop_from_cargo"])
-		if(O && O in cargo)
+		if(O && O in src.cargo)
 			occupant_message("<span class='notice'>You unload [O].</span>")
-			O.forceMove(loc)
+			O.forceMove(drop_location())
 			cargo -= O
-			log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - cargo.len]")
+			log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - src.cargo.len]")
 	return
 
 
@@ -141,7 +155,7 @@
 		var/obj/O = X
 		if(prob(30/severity))
 			cargo -= O
-			O.forceMove(loc)
+			O.forceMove(drop_location())
 	. = ..()
 
 /obj/mecha/working/ripley/get_stats_part()
@@ -173,7 +187,7 @@
 		if(!user || user.stat != CONSCIOUS || user.loc != src || O.loc != src )
 			return
 		to_chat(user, "<span class='notice'>You successfully pushed [O] out of [src]!</span>")
-		O.loc = loc
+		O.forceMove(drop_location())
 		cargo -= O
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.

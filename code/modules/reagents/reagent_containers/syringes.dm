@@ -13,7 +13,7 @@
 	var/busy = FALSE		// needed for delayed drawing of blood
 	var/proj_piercing = 0 //does it pierce through thick clothes when shot with syringe gun
 	materials = list(MAT_METAL=10, MAT_GLASS=20)
-	container_type = TRANSPARENT_1
+	container_type = TRANSPARENT
 
 /obj/item/reagent_containers/syringe/Initialize()
 	. = ..()
@@ -36,8 +36,9 @@
 	mode = !mode
 	update_icon()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/reagent_containers/syringe/attack_hand()
-	..()
+	. = ..()
 	update_icon()
 
 /obj/item/reagent_containers/syringe/attack_paw(mob/user)
@@ -47,6 +48,7 @@
 	return
 
 /obj/item/reagent_containers/syringe/afterattack(atom/target, mob/user , proximity)
+	. = ..()
 	if(busy)
 		return
 	if(!proximity)
@@ -101,17 +103,14 @@
 
 				var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this) // transfer from, transfer to - who cares?
 
-				to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the solution.</span>")
+				to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units.</span>")
 			if (reagents.total_volume >= reagents.maximum_volume)
 				mode=!mode
 				update_icon()
 
 		if(SYRINGE_INJECT)
-			//Always log attemped injections for admins
-			var/list/rinject = list()
-			for(var/datum/reagent/R in reagents.reagent_list)
-				rinject += R.name
-			var/contained = english_list(rinject)
+			// Always log attemped injections for admins
+			var/contained = reagents.log_list()
 			add_logs(user, L, "attemped to inject", src, addition="which had [contained]")
 
 			if(!reagents.total_volume)
@@ -157,9 +156,19 @@
 
 
 /obj/item/reagent_containers/syringe/update_icon()
-	var/rounded_vol = Clamp(round((reagents.total_volume / volume * 15),5), 0, 15)
 	cut_overlays()
+	var/rounded_vol
+	if(reagents && reagents.total_volume)
+		rounded_vol = CLAMP(round((reagents.total_volume / volume * 15),5), 1, 15)
+		var/image/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[rounded_vol]")
+		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
+		add_overlay(filling_overlay)
+	else
+		rounded_vol = 0
+	icon_state = "[rounded_vol]"
+	item_state = "syringe_[rounded_vol]"
 	if(ismob(loc))
+		var/mob/M = loc
 		var/injoverlay
 		switch(mode)
 			if (SYRINGE_DRAW)
@@ -167,13 +176,7 @@
 			if (SYRINGE_INJECT)
 				injoverlay = "inject"
 		add_overlay(injoverlay)
-	icon_state = "[rounded_vol]"
-	item_state = "syringe_[rounded_vol]"
-
-	if(reagents.total_volume)
-		var/image/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[rounded_vol]")
-		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
-		add_overlay(filling_overlay)
+		M.update_inv_hands()
 
 /obj/item/reagent_containers/syringe/epinephrine
 	name = "syringe (epinephrine)"
@@ -206,6 +209,11 @@
 	name = "syringe (calomel)"
 	desc = "Contains calomel."
 	list_reagents = list("calomel" = 15)
+
+/obj/item/reagent_containers/syringe/plasma
+	name = "syringe (plasma)"
+	desc = "Contains plasma."
+	list_reagents = list("plasma" = 15)
 
 /obj/item/reagent_containers/syringe/lethal
 	name = "lethal injection syringe"

@@ -4,9 +4,9 @@
 	icon_state = "mouse_gray"
 	icon_living = "mouse_gray"
 	icon_dead = "mouse_gray_dead"
-	speak = list("Squeek!","SQUEEK!","Squeek?")
-	speak_emote = list("squeeks")
-	emote_hear = list("squeeks.")
+	speak = list("Squeak!","SQUEAK!","Squeak?")
+	speak_emote = list("squeaks")
+	emote_hear = list("squeaks.")
 	emote_see = list("runs in a circle.", "shakes.")
 	speak_chance = 1
 	turns_per_move = 5
@@ -21,6 +21,7 @@
 	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
+	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	var/body_color //brown, gray and white, leave blank for random
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/chew_probability = 1
@@ -43,12 +44,13 @@
 /mob/living/simple_animal/mouse/death(gibbed, toast)
 	if(!ckey)
 		..(1)
-		var/obj/item/reagent_containers/food/snacks/deadmouse/M = new(loc)
-		M.icon_state = icon_dead
-		M.name = name
-		if(toast)
-			M.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
-			M.desc = "It's toast."
+		if(!gibbed)
+			var/obj/item/reagent_containers/food/snacks/deadmouse/M = new(loc)
+			M.icon_state = icon_dead
+			M.name = name
+			if(toast)
+				M.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
+				M.desc = "It's toast."
 		qdel(src)
 	else
 		..(gibbed)
@@ -57,7 +59,7 @@
 	if( ishuman(AM) )
 		if(!stat)
 			var/mob/M = AM
-			to_chat(M, "<span class='notice'>[icon2html(src, M)] Squeek!</span>")
+			to_chat(M, "<span class='notice'>[icon2html(src, M)] Squeak!</span>")
 	..()
 
 /mob/living/simple_animal/mouse/handle_automated_action()
@@ -106,6 +108,10 @@
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "mouse_gray_dead"
 	bitesize = 3
-	eatverb = "devours"
+	eatverb = "devour"
 	list_reagents = list("nutriment" = 3, "vitamin" = 2)
 	foodtype = GROSS | MEAT | RAW
+	grind_results = list("blood" = 20, "liquidgibs" = 5)
+
+/obj/item/reagent_containers/food/snacks/deadmouse/on_grind()
+	reagents.clear_reagents()

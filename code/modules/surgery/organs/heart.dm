@@ -2,7 +2,7 @@
 	name = "heart"
 	desc = "I feel bad for the heartless bastard who lost this."
 	icon_state = "heart-on"
-	zone = "chest"
+	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_HEART
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 	var/beating = 1
@@ -54,17 +54,21 @@
 		var/sound/fastbeat = sound('sound/health/fastbeat.ogg', repeat = TRUE)
 		var/mob/living/carbon/H = owner
 
-		if(H.health <= HEALTH_THRESHOLD_CRIT && beat != BEAT_SLOW)
+		if(H.health <= H.crit_threshold && beat != BEAT_SLOW)
 			beat = BEAT_SLOW
 			H.playsound_local(get_turf(H), slowbeat,40,0, channel = CHANNEL_HEARTBEAT)
 			to_chat(owner, "<span class = 'notice'>You feel your heart slow down...</span>")
-		if(beat == BEAT_SLOW && H.health > HEALTH_THRESHOLD_CRIT)
+		if(beat == BEAT_SLOW && H.health > H.crit_threshold)
 			H.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
 
-		if(H.jitteriness && H.health > HEALTH_THRESHOLD_FULLCRIT && (!beat || beat == BEAT_SLOW))
-			H.playsound_local(get_turf(H),fastbeat,40,0, channel = CHANNEL_HEARTBEAT)
-			beat = BEAT_FAST
+		if(H.jitteriness)
+			if(H.health > HEALTH_THRESHOLD_FULLCRIT && (!beat || beat == BEAT_SLOW))
+				H.playsound_local(get_turf(H),fastbeat,40,0, channel = CHANNEL_HEARTBEAT)
+				beat = BEAT_FAST
+		else if(beat == BEAT_FAST)
+			H.stop_sound_channel(CHANNEL_HEARTBEAT)
+			beat = BEAT_NONE
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"
@@ -145,6 +149,25 @@
 	name = "cybernetic heart"
 	desc = "An electronic device designed to mimic the functions of an organic human heart. Offers no benefit over an organic heart other than being easy to make."
 	icon_state = "heart-c"
+	synthetic = TRUE
 
 /obj/item/organ/heart/cybernetic/emp_act()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	Stop()
+
+/obj/item/organ/heart/freedom
+	name = "heart of freedom"
+	desc = "This heart pumps with the passion to give... something freedom."
+	synthetic = TRUE //the power of freedom prevents heart attacks
+	var/min_next_adrenaline = 0
+
+/obj/item/organ/heart/freedom/on_life()
+	. = ..()
+	if(owner.health < 5 && world.time > min_next_adrenaline)
+		min_next_adrenaline = world.time + rand(250, 600) //anywhere from 4.5 to 10 minutes
+		to_chat(owner, "<span class='userdanger'>You feel yourself dying, but you refuse to give up!</span>")
+		owner.heal_overall_damage(15, 15)
+		if(owner.reagents.get_reagent_amount("ephedrine") < 20)
+			owner.reagents.add_reagent("ephedrine", 10)

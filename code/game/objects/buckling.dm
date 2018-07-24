@@ -11,6 +11,8 @@
 //Interaction
 /atom/movable/attack_hand(mob/living/user)
 	. = ..()
+	if(.)
+		return
 	if(can_buckle && has_buckled_mobs())
 		if(buckled_mobs.len > 1)
 			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in buckled_mobs
@@ -45,11 +47,13 @@
 
 	if((!can_buckle && !force) || M.buckled || (buckled_mobs.len >= max_buckled_mobs) || (buckle_requires_restraints && !M.restrained()) || M == src)
 		return FALSE
+	M.buckling = src
 	if(!M.can_buckle() && !force)
 		if(M == usr)
 			to_chat(M, "<span class='warning'>You are unable to buckle yourself to [src]!</span>")
 		else
 			to_chat(usr, "<span class='warning'>You are unable to buckle [M] to [src]!</span>")
+		M.buckling = null
 		return FALSE
 
 	if(M.pulledby && buckle_prevents_pull)
@@ -58,6 +62,7 @@
 	if(!check_loc && M.loc != loc)
 		M.forceMove(loc)
 
+	M.buckling = null
 	M.buckled = src
 	M.setDir(dir)
 	buckled_mobs |= M
@@ -65,6 +70,7 @@
 	M.throw_alert("buckled", /obj/screen/alert/restrained/buckled)
 	post_buckle_mob(M)
 
+	SEND_SIGNAL(src, COMSIG_MOVABLE_BUCKLE, M, force)
 	return TRUE
 
 /obj/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
@@ -82,8 +88,9 @@
 		buckled_mob.update_canmove()
 		buckled_mob.clear_alert("buckled")
 		buckled_mobs -= buckled_mob
+		SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob, force)
 
-		post_buckle_mob(.)
+		post_unbuckle_mob(.)
 
 /atom/movable/proc/unbuckle_all_mobs(force=FALSE)
 	if(!has_buckled_mobs())
@@ -91,15 +98,16 @@
 	for(var/m in buckled_mobs)
 		unbuckle_mob(m, force)
 
-//Handle any extras after buckling/unbuckling
-//Called on buckle_mob() and unbuckle_mob()
+//Handle any extras after buckling
+//Called on buckle_mob()
 /atom/movable/proc/post_buckle_mob(mob/living/M)
-	return
 
+//same but for unbuckle
+/atom/movable/proc/post_unbuckle_mob(mob/living/M)
 
 //Wrapper procs that handle sanity and user feedback
 /atom/movable/proc/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
-	if(!in_range(user, src) || !isturf(user.loc) || user.incapacitated())
+	if(!in_range(user, src) || !isturf(user.loc) || user.incapacitated() || M.anchored)
 		return FALSE
 
 	add_fingerprint(user)

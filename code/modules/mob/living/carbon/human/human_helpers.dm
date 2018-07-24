@@ -4,7 +4,7 @@
 
 
 /mob/living/carbon/human/canBeHandcuffed()
-	if(get_num_arms() >= 2)
+	if(get_num_arms(FALSE) >= 2)
 		return TRUE
 	else
 		return FALSE
@@ -16,7 +16,7 @@
 	if(id)
 		. = id.assignment
 	else
-		var/obj/item/device/pda/pda = wear_id
+		var/obj/item/pda/pda = wear_id
 		if(istype(pda))
 			. = pda.ownjob
 		else
@@ -30,7 +30,7 @@
 	var/obj/item/card/id/id = get_idcard()
 	if(id)
 		return id.registered_name
-	var/obj/item/device/pda/pda = wear_id
+	var/obj/item/pda/pda = wear_id
 	if(istype(pda))
 		return pda.owner
 	return if_no_id
@@ -55,8 +55,8 @@
 		return if_no_face
 	if( head && (head.flags_inv&HIDEFACE) )
 		return if_no_face		//Likewise for hats
-	var/obj/item/bodypart/O = get_bodypart("head")
-	if( !O || (status_flags&DISFIGURED) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
+	var/obj/item/bodypart/O = get_bodypart(BODY_ZONE_HEAD)
+	if( !O || (has_trait(TRAIT_DISFIGURED)) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
 		return if_no_face
 	return real_name
 
@@ -64,9 +64,9 @@
 //Useful when player is being seen by other mobs
 /mob/living/carbon/human/proc/get_id_name(if_no_id = "Unknown")
 	var/obj/item/storage/wallet/wallet = wear_id
-	var/obj/item/device/pda/pda = wear_id
+	var/obj/item/pda/pda = wear_id
 	var/obj/item/card/id/id = wear_id
-	var/obj/item/device/modular_computer/tablet/tablet = wear_id
+	var/obj/item/modular_computer/tablet/tablet = wear_id
 	if(istype(wallet))
 		id = wallet.front_id
 	if(istype(id))
@@ -91,19 +91,10 @@
 		return wear_id.GetID()
 
 
-/mob/living/carbon/human/abiotic(full_body = 0)
-	var/abiotic_hands = FALSE
-	for(var/obj/item/I in held_items)
-		if(!(I.flags_1 & NODROP_1))
-			abiotic_hands = TRUE
-			break
-	if(full_body && abiotic_hands && ((back && !(back.flags_1&NODROP_1)) || (wear_mask && !(wear_mask.flags_1&NODROP_1)) || (head && !(head.flags_1&NODROP_1)) || (shoes && !(shoes.flags_1&NODROP_1)) || (w_uniform && !(w_uniform.flags_1&NODROP_1)) || (wear_suit && !(wear_suit.flags_1&NODROP_1)) || (glasses && !(glasses.flags_1&NODROP_1)) || (ears && !(ears.flags_1&NODROP_1)) || (gloves && !(gloves.flags_1&NODROP_1)) ) )
-		return TRUE
-	return abiotic_hands
-
-
 /mob/living/carbon/human/IsAdvancedToolUser()
-	return 1//Humans can use guns and such
+	if(has_trait(TRAIT_MONKEYLIKE))
+		return FALSE
+	return TRUE//Humans can use guns and such
 
 /mob/living/carbon/human/reagent_check(datum/reagent/R)
 	return dna.species.handle_chemicals(R,src)
@@ -147,7 +138,7 @@
 		if(src.dna.check_mutation(HULK))
 			to_chat(src, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
 			return FALSE
-		if(NOGUNS in src.dna.species.species_traits)
+		if(has_trait(TRAIT_NOGUNS))
 			to_chat(src, "<span class='warning'>Your fingers don't fit in the trigger guard!</span>")
 			return FALSE
 	if(mind)

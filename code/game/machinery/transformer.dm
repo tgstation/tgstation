@@ -6,7 +6,6 @@
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "separator-AO1"
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
-	anchored = TRUE
 	density = FALSE
 	var/transform_dead = 0
 	var/transform_standing = 0
@@ -29,8 +28,7 @@
 /obj/machinery/transformer/examine(mob/user)
 	. = ..()
 	if(cooldown && (issilicon(user) || isobserver(user)))
-		var/seconds_remaining = (cooldown_timer - world.time) / 10
-		to_chat(user, "It will be ready in [max(0, seconds_remaining)] seconds.")
+		to_chat(user, "It will be ready in [DisplayTimeText(cooldown_timer - world.time)].")
 
 /obj/machinery/transformer/Destroy()
 	QDEL_NULL(countdown)
@@ -47,7 +45,7 @@
 	else
 		icon_state = initial(icon_state)
 
-/obj/machinery/transformer/CollidedWith(atom/movable/AM)
+/obj/machinery/transformer/Bumped(atom/movable/AM)
 	if(cooldown == 1)
 		return
 
@@ -57,7 +55,7 @@
 		var/move_dir = get_dir(loc, AM.loc)
 		var/mob/living/carbon/human/H = AM
 		if((transform_standing || H.lying) && move_dir == EAST)// || move_dir == WEST)
-			AM.loc = src.loc
+			AM.forceMove(drop_location())
 			do_transform(AM)
 
 /obj/machinery/transformer/CanPass(atom/movable/mover, turf/target)
@@ -98,9 +96,7 @@
 
 	use_power(5000) // Use a lot of power.
 	var/mob/living/silicon/robot/R = H.Robotize()
-
-	R.cell.maxcharge = robot_cell_charge
-	R.cell.charge = robot_cell_charge
+	R.cell = new /obj/item/stock_parts/cell/upgraded/plus(R, robot_cell_charge)
 
  	// So he can't jump out the gate right away.
 	R.SetLockdown()

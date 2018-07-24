@@ -1,5 +1,5 @@
 //Used by engineering cyborgs in place of generic circuits.
-/obj/item/device/electroadaptive_pseudocircuit
+/obj/item/electroadaptive_pseudocircuit
 	name = "electroadaptive pseudocircuit"
 	desc = "An all-in-one circuit imprinter, designer, synthesizer, outfitter, creator, and chef. It can be used in place of any generic circuit board during construction."
 	icon = 'icons/obj/module.dmi'
@@ -11,25 +11,25 @@
 	var/static/recycleable_circuits = typecacheof(list(/obj/item/electronics/firelock, /obj/item/electronics/airalarm, /obj/item/electronics/firealarm, \
 	/obj/item/electronics/apc))//A typecache of circuits consumable for material
 
-/obj/item/device/electroadaptive_pseudocircuit/Initialize()
+/obj/item/electroadaptive_pseudocircuit/Initialize()
 	. = ..()
 	maptext = "[circuits]"
 
-/obj/item/device/electroadaptive_pseudocircuit/examine(mob/user)
+/obj/item/electroadaptive_pseudocircuit/examine(mob/user)
 	..()
 	if(iscyborg(user))
 		to_chat(user, "<span class='notice'>It has material for <b>[circuits]</b> circuit[circuits == 1 ? "" : "s"]. Use the pseudocircuit on existing circuits to gain material.</span>")
 		to_chat(user, "<span class='notice'>Serves as a substitute for <b>fire/air alarm</b>, <b>firelock</b>, and <b>APC</b> electronics.</span>")
 		to_chat(user, "<span class='notice'>It can also be used on an APC with no power cell to <b>fabricate a low-capacity cell</b> at a high power cost.</span>")
 
-/obj/item/device/electroadaptive_pseudocircuit/proc/adapt_circuit(mob/living/silicon/robot/R, circuit_cost = 0)
+/obj/item/electroadaptive_pseudocircuit/proc/adapt_circuit(mob/living/silicon/robot/R, circuit_cost = 0)
 	if(QDELETED(R) || !istype(R))
 		return
 	if(!R.cell)
 		to_chat(R, "<span class='warning'>You need a power cell installed for that.</span>")
 		return
 	if(!R.cell.use(circuit_cost))
-		to_chat(R, "<span class='warning'>You don't have the power for that (you need [DisplayPower(circuit_cost)].)</span>")
+		to_chat(R, "<span class='warning'>You don't have the energy for that (you need [DisplayEnergy(circuit_cost)].)</span>")
 		return
 	if(recharging)
 		to_chat(R, "<span class='warning'>[src] needs some time to recharge first.</span>")
@@ -46,7 +46,8 @@
 	addtimer(CALLBACK(src, .proc/recharge), recharge_time)
 	return TRUE //The actual circuit magic itself is done on a per-object basis
 
-/obj/item/device/electroadaptive_pseudocircuit/afterattack(atom/target, mob/living/user, proximity)
+/obj/item/electroadaptive_pseudocircuit/afterattack(atom/target, mob/living/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(!is_type_in_typecache(target, recycleable_circuits))
@@ -58,7 +59,7 @@
 	playsound(user, 'sound/items/deconstruct.ogg', 50, TRUE)
 	qdel(target)
 
-/obj/item/device/electroadaptive_pseudocircuit/proc/recharge()
+/obj/item/electroadaptive_pseudocircuit/proc/recharge()
 	playsound(src, 'sound/machines/chime.ogg', 25, TRUE)
 	recharging = FALSE
 	icon_state = initial(icon_state)

@@ -11,12 +11,15 @@
 	var/list/datum/design/researched_designs = list()			//Designs that are available for use. Assoc list, id = datum
 	var/list/datum/techweb_node/boosted_nodes = list()			//Already boosted nodes that can't be boosted again. node datum = path of boost object.
 	var/list/datum/techweb_node/hidden_nodes = list()			//Hidden nodes. id = datum. Used for unhiding nodes when requirements are met by removing the entry of the node.
-	var/list/deconstructed_items = list()						//items already deconstructed for a generic point boost
-	var/research_points = 0										//Available research points.
+	var/list/deconstructed_items = list()						//items already deconstructed for a generic point boost. path = list(point_type = points)
+	var/list/research_points = list()										//Available research points. type = number
 	var/list/obj/machinery/computer/rdconsole/consoles_accessing = list()
 	var/id = "generic"
 	var/list/research_logs = list()								//IC logs.
 	var/max_bomb_value = 0
+	var/organization = "Third-Party"							//Organization name, used for display.
+	var/list/last_bitcoins = list()								//Current per-second production, used for display only.
+	var/list/tiers = list()										//Assoc list, datum = number, 1 is available, 2 is all reqs are 1, so on
 
 /datum/techweb/New()
 	for(var/i in SSresearch.techweb_nodes_starting)
@@ -26,18 +29,21 @@
 	return ..()
 
 /datum/techweb/admin
-	research_points = INFINITY	//KEKKLES.
 	id = "ADMIN"
+	organization = "CentCom"
 
 /datum/techweb/admin/New()	//All unlocked.
 	. = ..()
 	for(var/i in SSresearch.techweb_nodes)
 		var/datum/techweb_node/TN = SSresearch.techweb_nodes[i]
 		research_node(TN, TRUE)
+	for(var/i in SSresearch.point_types)
+		research_points[i] = INFINITY
 	hidden_nodes = list()
 
 /datum/techweb/science	//Global science techweb for RND consoles.
 	id = "SCIENCE"
+	organization = "Nanotrasen"
 
 /datum/techweb/Destroy()
 	researched_nodes = null
@@ -67,19 +73,52 @@
 		V.rescan_views()
 		V.updateUsrDialog()
 
-/datum/techweb/proc/copy_research_to(datum/techweb/reciever, unlock_hidden = TRUE)				//Adds any missing research to theirs.
+/datum/techweb/proc/add_point_list(list/pointlist)
+	for(var/i in pointlist)
+		if(SSresearch.point_types[i] && pointlist[i] > 0)
+			research_points[i] += pointlist[i]
+
+/datum/techweb/proc/add_points_all(amount)
+	var/list/l = SSresearch.point_types.Copy()
+	for(var/i in l)
+		l[i] = amount
+	add_point_list(l)
+
+/datum/techweb/proc/remove_point_list(list/pointlist)
+	for(var/i in pointlist)
+		if(SSresearch.point_types[i] && pointlist[i] > 0)
+			research_points[i] = max(0, research_points[i] - pointlist[i])
+
+/datum/techweb/proc/remove_points_all(amount)
+	var/list/l = SSresearch.point_types.Copy()
+	for(var/i in l)
+		l[i] = amount
+	remove_point_list(l)
+
+/datum/techweb/proc/modify_point_list(list/pointlist)
+	for(var/i in pointlist)
+		if(SSresearch.point_types[i] && pointlist[i] != 0)
+			research_points[i] = max(0, research_points[i] + pointlist[i])
+
+/datum/techweb/proc/modify_points_all(amount)
+	var/list/l = SSresearch.point_types.Copy()
+	for(var/i in l)
+		l[i] = amount
+	modify_point_list(l)
+
+/datum/techweb/proc/copy_research_to(datum/techweb/receiver, unlock_hidden = TRUE)				//Adds any missing research to theirs.
 	for(var/i in researched_nodes)
 		CHECK_TICK
-		reciever.research_node_id(i, TRUE, FALSE)
+		receiver.research_node_id(i, TRUE, FALSE)
 	for(var/i in researched_designs)
 		CHECK_TICK
-		reciever.add_design_by_id(i)
+		receiver.add_design_by_id(i)
 	if(unlock_hidden)
-		for(var/i in reciever.hidden_nodes)
+		for(var/i in receiver.hidden_nodes)
 			CHECK_TICK
 			if(!hidden_nodes[i])
-				reciever.hidden_nodes -= i		//We can see it so let them see it too.
-	reciever.recalculate_nodes()
+				receiver.hidden_nodes -= i		//We can see it so let them see it too.
+	receiver.recalculate_nodes()
 
 /datum/techweb/proc/copy()
 	var/datum/techweb/returned = new()
@@ -99,6 +138,24 @@
 /datum/techweb/proc/get_researched_nodes()
 	return researched_nodes - hidden_nodes
 
+/datum/techweb/proc/add_point_type(type, amount)
+	if(!SSresearch.point_types[type] || (amount <= 0))
+		return FALSE
+	research_points[type] += amount
+	return TRUE
+
+/datum/techweb/proc/modify_point_type(type, amount)
+	if(!SSresearch.point_types[type])
+		return FALSE
+	research_points[type] = max(0, research_points[type] + amount)
+	return TRUE
+
+/datum/techweb/proc/remove_point_type(type, amount)
+	if(!SSresearch.point_types[type] || (amount <= 0))
+		return FALSE
+	research_points[type] = max(0, research_points[type] - amount)
+	return TRUE
+
 /datum/techweb/proc/add_design_by_id(id)
 	return add_design(get_techweb_design_by_id(id))
 
@@ -117,6 +174,15 @@
 	researched_designs -= design.id
 	return TRUE
 
+/datum/techweb/proc/can_afford(list/pointlist)
+	for(var/i in pointlist)
+		if(research_points[i] < pointlist[i])
+			return FALSE
+	return TRUE
+
+/datum/techweb/proc/printout_points()
+	return techweb_point_display_generic(research_points)
+
 /datum/techweb/proc/research_node_id(id, force, auto_update_points)
 	return research_node(get_techweb_node_by_id(id), force, auto_update_points)
 
@@ -125,10 +191,10 @@
 		return FALSE
 	update_node_status(node)
 	if(!force)
-		if(!available_nodes[node.id] || (auto_adjust_cost && (research_points < node.get_price(src))))
+		if(!available_nodes[node.id] || (auto_adjust_cost && (!can_afford(node.get_price(src)))))
 			return FALSE
 	if(auto_adjust_cost)
-		research_points -= node.get_price(src)
+		remove_point_list(node.get_price(src))
 	researched_nodes[node.id] = node				//Add to our researched list
 	for(var/i in node.unlocks)
 		visible_nodes[i] = node.unlocks[i]
@@ -148,14 +214,33 @@
 	recalculate_nodes(TRUE)				//Fully rebuild the tree.
 
 /datum/techweb/proc/boost_with_path(datum/techweb_node/N, itempath)
-	if(!istype(N)||!ispath(itempath))
+	if(!istype(N) || !ispath(itempath))
 		return FALSE
-	var/boost = N.boost_item_paths[itempath]
-	if(!boosted_nodes[N])
-		boosted_nodes[N] = boost
-		if(N.autounlock_by_boost)
-			hidden_nodes -= N.id
+	LAZYINITLIST(boosted_nodes[N])
+	for(var/i in N.boost_item_paths[itempath])
+		boosted_nodes[N][i] = max(boosted_nodes[N][i], N.boost_item_paths[itempath][i])
+	if(N.autounlock_by_boost)
+		hidden_nodes -= N.id
+	update_node_status(N)
 	return TRUE
+
+/datum/techweb/proc/update_tiers(datum/techweb_node/base)
+	var/list/current = list(base)
+	while (current.len)
+		var/list/next = list()
+		for (var/node_ in current)
+			var/datum/techweb_node/node = node_
+			var/tier = 0
+			if (!researched_nodes[node.id])  // researched is tier 0
+				for (var/id in node.prereq_ids)
+					var/prereq_tier = tiers[node.prerequisites[id]]
+					tier = max(tier, prereq_tier + 1)
+
+			if (tier != tiers[node])
+				tiers[node] = tier
+				for (var/id in node.unlocks)
+					next += node.unlocks[id]
+		current = next
 
 /datum/techweb/proc/update_node_status(datum/techweb_node/node, autoupdate_consoles = TRUE)
 	var/researched = FALSE
@@ -185,6 +270,7 @@
 		else
 			if(visible)
 				visible_nodes[node.id] = node
+	update_tiers(node)
 	if(autoupdate_consoles)
 		for(var/v in consoles_accessing)
 			var/obj/machinery/computer/rdconsole/V = v

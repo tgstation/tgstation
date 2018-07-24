@@ -9,11 +9,19 @@
 	name = "White Ship Navigation Computer"
 	desc = "Used to designate a precise transit location for the White Ship."
 	shuttleId = "whiteship"
-	station_lock_override = TRUE
+	lock_override = NONE
 	shuttlePortId = "whiteship_custom"
 	shuttlePortName = "Custom Location"
 	jumpto_ports = list("whiteship_away" = 1, "whiteship_home" = 1, "whiteship_z4" = 1)
 	view_range = 18
 	x_offset = -6
 	y_offset = -10
+	designate_time = 100
 
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship/Initialize()
+	. = ..()
+	GLOB.jam_on_wardec += src
+
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship/Destroy()
+	GLOB.jam_on_wardec -= src
+	return ..()

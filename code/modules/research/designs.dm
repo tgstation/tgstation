@@ -19,14 +19,14 @@ The currently supporting non-reagent materials. All material amounts are set as 
 
 Don't add new keyword/IDs if they are made from an existing one (such as rods which are made from metal). Only add raw materials.
 
-Design Guidlines
+Design Guidelines
 - When adding new designs, check rdreadme.dm to see what kind of things have already been made and where new stuff is needed.
 - A single sheet of anything is 2000 units of material. Materials besides metal/glass require help from other jobs (mining for
 other types of metals and chemistry for reagents).
 - Add the AUTOLATHE tag to
 */
 
-//DESIGNS ARE GLOBAL. DO NOT CREATE OR DESTROY THEM AT RUNTIME OUTSIDE OF INIT, JUST REFERENCE THEM TO WHATEVER YOU'RE DOING!
+//DESIGNS ARE GLOBAL. DO NOT CREATE OR DESTROY THEM AT RUNTIME OUTSIDE OF INIT, JUST REFERENCE THEM TO WHATEVER YOU'RE DOING! //why are you yelling?
 
 /datum/design						//Datum for object designs, used in construction
 	var/name = "Name"					//Name of the created object.
@@ -42,11 +42,18 @@ other types of metals and chemistry for reagents).
 	var/maxstack = 1
 	var/lathe_time_factor = 1			//How many times faster than normal is this to build on the protolathe
 	var/dangerous_construction = FALSE	//notify and log for admin investigations if this is printed.
-	var/departmental_flags = NONE			//bitflags for deplathes.
+	var/departmental_flags = ALL			//bitflags for deplathes.
+	var/list/datum/techweb_node/unlocked_by = list()
+	var/icon_cache
 
 /datum/design/Destroy()
 	CRASH("DESIGN DATUMS SHOULD NOT EVER BE DESTROYED AS THEY ARE ONLY MEANT TO BE IN A GLOBAL LIST AND REFERENCED FOR US.")
 	return ..()
+
+/datum/design/proc/icon_html(client/user)
+	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	sheet.send(user)
+	return sheet.icon_tag(id)
 
 ////////////////////////////////////////
 //Disks for transporting design datums//

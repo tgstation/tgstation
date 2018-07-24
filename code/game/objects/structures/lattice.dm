@@ -5,9 +5,10 @@
 	icon_state = "lattice"
 	density = FALSE
 	anchored = TRUE
-	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 50)
+	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
 	max_integrity = 50
 	layer = LATTICE_LAYER //under pipes
+	plane = FLOOR_PLANE
 	var/number_of_rods = 1
 	canSmoothWith = list(/obj/structure/lattice,
 	/turf/open/floor,
@@ -63,11 +64,11 @@
 	canSmoothWith += /turf/open/indestructible/clock_spawn_room //list overrides are a terrible thing
 	. = ..()
 	ratvar_act()
-	if(z == ZLEVEL_CITYOFCOGS)
+	if(is_reebe(z))
 		resistance_flags |= INDESTRUCTIBLE
 
 /obj/structure/lattice/clockwork/ratvar_act()
-	if(IsOdd(x+y))
+	if(ISODD(x+y))
 		icon = 'icons/obj/smooth_structures/lattice_clockwork_large.dmi'
 		pixel_x = -9
 		pixel_y = -9
@@ -120,11 +121,11 @@
 	if(!mapload)
 		new /obj/effect/temp_visual/ratvar/floor/catwalk(loc)
 		new /obj/effect/temp_visual/ratvar/beam/catwalk(loc)
-	if(z == ZLEVEL_CITYOFCOGS)
+	if(is_reebe(z))
 		resistance_flags |= INDESTRUCTIBLE
 
 /obj/structure/lattice/catwalk/clockwork/ratvar_act()
-	if(IsOdd(x+y))
+	if(ISODD(x+y))
 		icon = 'icons/obj/smooth_structures/catwalk_clockwork_large.dmi'
 		pixel_x = -9
 		pixel_y = -9

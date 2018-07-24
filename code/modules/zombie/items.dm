@@ -4,7 +4,7 @@
 		humans, butchering all other living things to \
 		sustain the zombie, smashing open airlock doors and opening \
 		child-safe caps on bottles."
-	flags_1 = NODROP_1|ABSTRACT_1|DROPDEL_1
+	item_flags = NODROP | ABSTRACT | DROPDEL
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"
@@ -54,7 +54,7 @@
 	user.visible_message("<span class='suicide'>[user] is ripping [user.p_their()] brains out! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(isliving(user))
 		var/mob/living/L = user
-		var/obj/item/bodypart/O = L.get_bodypart("head")
+		var/obj/item/bodypart/O = L.get_bodypart(BODY_ZONE_HEAD)
 		if(O)
 			O.dismember()
 	return (BRUTELOSS)

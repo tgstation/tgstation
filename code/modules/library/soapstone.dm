@@ -19,6 +19,7 @@
 		to_chat(user, "It has [remaining_uses] uses left.")
 
 /obj/item/soapstone/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	var/turf/T = get_turf(target)
 	if(!proximity)
 		return
@@ -56,7 +57,7 @@
 	playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
 	user.visible_message("<span class='notice'>[user] starts engraving a message into [T]...</span>", "<span class='notice'>You start engraving a message into [T]...</span>", "<span class='italics'>You hear a chipping sound.</span>")
 	if(can_use() && do_after(user, tool_speed, target = T) && can_use()) //This looks messy but it's actually really clever!
-		if(!locate(/obj/structure/chisel_message in T))
+		if(!locate(/obj/structure/chisel_message) in T)
 			user.visible_message("<span class='notice'>[user] leaves a message for future spacemen!</span>", "<span class='notice'>You engrave a message into [T]!</span>", "<span class='italics'>You hear a chipping sound.</span>")
 			playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
 			var/obj/structure/chisel_message/M = new(T)
@@ -142,7 +143,7 @@
 	hidden_message = newmessage
 	creator_name = user.real_name
 	creator_key = user.ckey
-	realdate = world.timeofday
+	realdate = world.realtime
 	map = SSmapping.config.map_name
 	update_icon()
 
@@ -193,7 +194,7 @@
 
 /obj/structure/chisel_message/examine(mob/user)
 	..()
-	to_chat(user, "<span class='warning'>[hidden_message]</span>")
+	ui_interact(user)
 
 /obj/structure/chisel_message/Destroy()
 	if(persists)
@@ -201,8 +202,10 @@
 	SSpersistence.chisel_messages -= src
 	. = ..()
 
-/obj/structure/chisel_message/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
+/obj/structure/chisel_message/interact()
+	return
 
+/obj/structure/chisel_message/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "engraved_message", name, 600, 300, master_ui, state)

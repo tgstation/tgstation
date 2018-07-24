@@ -43,6 +43,7 @@
 	throw_speed = 1
 	throw_range = 3
 	attack_verb = list("stung")
+	grind_results = list("sacid" = 0)
 
 /obj/item/grown/nettle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is eating some of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -55,11 +56,8 @@
 	var/mob/living/carbon/C = user
 	if(C.gloves)
 		return FALSE
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		if(H.dna && H.dna.species)
-			if(PIERCEIMMUNE in H.dna.species.species_traits)
-				return FALSE
+	if(C.has_trait(TRAIT_PIERCEIMMUNE))
+		return FALSE
 	var/hit_zone = (C.held_index_to_dir(C.active_hand_index) == "l" ? "l_":"r_") + "arm"
 	var/obj/item/bodypart/affecting = C.get_bodypart(hit_zone)
 	if(affecting)
@@ -69,6 +67,7 @@
 	return TRUE
 
 /obj/item/grown/nettle/afterattack(atom/A as mob|obj, mob/user,proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(force > 0)
@@ -91,6 +90,7 @@
 	icon_state = "deathnettle"
 	force = 30
 	throwforce = 15
+	grind_results = list("facid" = 1, "sacid" = 1)
 
 /obj/item/grown/nettle/death/add_juice()
 	..()

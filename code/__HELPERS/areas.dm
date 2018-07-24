@@ -15,6 +15,8 @@
 		var/turf/sourceT = found_turfs[1]
 		if(break_if_found[sourceT.type])
 			return FALSE
+		if (istype(sourceT.loc, /area/shuttle))
+			return FALSE
 		found_turfs.Cut(1, 2)
 		var/dir_flags = checked_turfs[sourceT]
 		for(var/dir in GLOB.alldirs)
@@ -34,20 +36,24 @@
 
 /proc/create_area(mob/creator)
 	var/static/blacklisted_turfs = typecacheof(/turf/open/space)
-	var/static/blacklisted_areas = typecacheof(/area/space)
+	var/static/blacklisted_areas = typecacheof(list(
+		/area/space,
+		/area/shuttle,
+		))
 	var/list/turfs = detect_room(get_turf(creator), blacklisted_turfs)
 	if(!turfs)
-		to_chat(creator, "<span class='warning'>The new area must be completely airtight.</span>")
+		to_chat(creator, "<span class='warning'>The new area must be completely airtight and not a part of a shuttle.</span>")
 		return
 	if(turfs.len > BP_MAX_ROOM_SIZE)
 		to_chat(creator, "<span class='warning'>The room you're in is too big. It is [((turfs.len / BP_MAX_ROOM_SIZE)-1)*100]% larger than allowed.</span>")
 		return
-	// This will fuck up shuttles that use the base area type but we need to fix those anyway
-	var/list/areas = list("New Area" = /area, "New Shuttle Area" = /area/shuttle/custom)
+	var/list/areas = list("New Area" = /area)
 	for(var/i in 1 to turfs.len)
 		var/area/place = get_area(turfs[i])
-		if(blacklisted_areas[place.type])
+		if(blacklisted_areas[place.type] || istype(place, /area/shuttle))
 			continue
+		if(!place.requires_power || place.noteleport || place.hidden)
+			continue // No expanding powerless rooms etc
 		areas[place.name] = place
 	var/area_choice = input(creator, "Choose an area to expand or make a new area.", "Area Expansion") as null|anything in areas
 	area_choice = areas[area_choice]
@@ -58,7 +64,7 @@
 	var/area/newA
 	var/area/oldA = get_area(get_turf(creator))
 	if(!isarea(area_choice))
-		var/str = trim(stripped_input(creator,"New area name:", "Blueprint Editing", "", MAX_NAME_LEN))
+		var/str = stripped_input(creator,"New area name:", "Blueprint Editing", "", MAX_NAME_LEN)
 		if(!str || !length(str)) //cancel
 			return
 		if(length(str) > 50)
@@ -77,15 +83,10 @@
 		newA.contents += thing
 		thing.change_area(old_area, newA)
 
-	var/list/related_areas = oldA.related
-	for(var/i in 1 to related_areas.len)
-		var/area/place = related_areas[i]
-		var/list/firedoors = place.firedoors
-		if(!LAZYLEN(firedoors))
-			continue
-		for(var/k in 1 to firedoors.len)
-			var/obj/machinery/door/firedoor/FD = firedoors[k]
-			FD.CalculateAffectingAreas()
+	var/list/firedoors = oldA.firedoors
+	for(var/door in firedoors)
+		var/obj/machinery/door/firedoor/FD = door
+		FD.CalculateAffectingAreas()
 
 	to_chat(creator, "<span class='notice'>You have created a new area, named [newA.name]. It is now weather proof, and constructing an APC will allow it to be powered.</span>")
 	return TRUE

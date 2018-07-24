@@ -1,7 +1,7 @@
 /datum/surgery/organ_manipulation
 	name = "organ manipulation"
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	possible_locs = list("chest", "head")
+	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
 	requires_real_bodypart = 1
 	steps = list(
 		/datum/surgery_step/incise,
@@ -15,7 +15,7 @@
 		)
 
 /datum/surgery/organ_manipulation/soft
-	possible_locs = list("groin", "eyes", "mouth", "l_arm", "r_arm")
+	possible_locs = list(BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
@@ -27,7 +27,7 @@
 
 /datum/surgery/organ_manipulation/alien
 	name = "alien organ manipulation"
-	possible_locs = list("chest", "head", "groin", "eyes", "mouth", "l_arm", "r_arm")
+	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 	species = list(/mob/living/carbon/alien/humanoid)
 	steps = list(
 		/datum/surgery_step/saw,
@@ -40,7 +40,7 @@
 
 /datum/surgery/organ_manipulation/mechanic
 	name = "prosthesis organ manipulation"
-	possible_locs = list("chest", "head")
+	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
 	requires_bodypart_type = BODYPART_ROBOTIC
 	steps = list(
 		/datum/surgery_step/mechanic_open,
@@ -53,7 +53,7 @@
 		)
 
 /datum/surgery/organ_manipulation/mechanic/soft
-	possible_locs = list("groin", "eyes", "mouth", "l_arm", "r_arm")
+	possible_locs = list(BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 	steps = list(
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,
@@ -67,32 +67,13 @@
 	name = "manipulate organs"
 	repeatable = 1
 	implements = list(/obj/item/organ = 100, /obj/item/reagent_containers/food/snacks/organ = 0, /obj/item/organ_storage = 100)
-	var/implements_extract = list(/obj/item/hemostat = 100, /obj/item/crowbar = 55)
+	var/implements_extract = list(/obj/item/hemostat = 100, TOOL_CROWBAR = 55)
 	var/current_type
 	var/obj/item/organ/I = null
 
 /datum/surgery_step/manipulate_organs/New()
 	..()
 	implements = implements + implements_extract
-
-/datum/surgery_step/manipulate_organs/tool_check(mob/user, obj/item/tool)
-	if(istype(tool, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = tool
-		if(!WT.isOn())
-			return 0
-
-	else if(istype(tool, /obj/item/lighter))
-		var/obj/item/lighter/L = tool
-		if(!L.lit)
-			return 0
-
-	else if(istype(tool, /obj/item/match))
-		var/obj/item/match/M = tool
-		if(!M.lit)
-			return 0
-
-	return 1
-
 
 /datum/surgery_step/manipulate_organs/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	I = null
@@ -162,7 +143,7 @@
 				"<span class='notice'>You successfully extract [I] from [target]'s [parse_zone(target_zone)].</span>")
 			add_logs(user, target, "surgically removed [I.name] from", addition="INTENT: [uppertext(user.a_intent)]")
 			I.Remove(target)
-			I.loc = get_turf(target)
+			I.forceMove(get_turf(target))
 		else
 			user.visible_message("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!",
 				"<span class='notice'>You can't extract anything from [target]'s [parse_zone(target_zone)]!</span>")

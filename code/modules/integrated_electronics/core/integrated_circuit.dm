@@ -5,7 +5,7 @@
 	icon_state = "template"
 	w_class = WEIGHT_CLASS_TINY
 	materials = list()				// To be filled later
-	var/obj/item/device/electronic_assembly/assembly // Reference to the assembly holding this circuit, if any.
+	var/obj/item/electronic_assembly/assembly // Reference to the assembly holding this circuit, if any.
 	var/extended_desc
 	var/list/inputs = list()
 	var/list/inputs_default = list()// Assoc list which will fill a pin with data upon creation.  e.g. "2" = 0 will set input pin 2 to equal 0 instead of null.
@@ -15,14 +15,16 @@
 	var/next_use = 0 				// Uses world.time
 	var/complexity = 1 				// This acts as a limitation on building machines, more resource-intensive components cost more 'space'.
 	var/size = 1					// This acts as a limitation on building machines, bigger components cost more 'space'. -1 for size 0
-	var/cooldown_per_use = 9		// Circuits are limited in how many times they can be work()'d by this variable.
+	var/cooldown_per_use = 1		// Circuits are limited in how many times they can be work()'d by this variable.
+	var/ext_cooldown = 0			// Circuits are limited in how many times they can be work()'d with external world by this variable.
 	var/power_draw_per_use = 0 		// How much power is drawn when work()'d.
 	var/power_draw_idle = 0			// How much power is drawn when doing nothing.
 	var/spawn_flags					// Used for world initializing, see the #defines above.
+	var/action_flags = NONE			// Used for telling circuits that can do certain actions from other circuits.
 	var/category_text = "NO CATEGORY THIS IS A BUG"	// To show up on circuit printer, and perhaps other places.
 	var/removable = TRUE 			// Determines if a circuit is removable from the assembly.
 	var/displayed_name = ""
-
+	
 /*
 	Integrated circuits are essentially modular machines.  Each circuit has a specific function, and combining them inside Electronic Assemblies allows
 a creative player the means to solve many problems.  Circuits are held inside an electronic assembly, and are wired using special tools.
@@ -58,11 +60,17 @@ a creative player the means to solve many problems.  Circuits are held inside an
 /obj/item/integrated_circuit/proc/any_examine(mob/user)
 	return
 
+/obj/item/integrated_circuit/proc/attackby_react(var/atom/movable/A,mob/user)
+	return
+
+/obj/item/integrated_circuit/proc/sense(var/atom/movable/A,mob/user,prox)
+	return
+
 /obj/item/integrated_circuit/proc/check_interactivity(mob/user)
 	if(assembly)
 		return assembly.check_interactivity(user)
 	else
-		return user.canUseTopic(src,be_close = TRUE)
+		return user.canUseTopic(src, BE_CLOSE)
 
 /obj/item/integrated_circuit/Initialize()
 	displayed_name = name
@@ -110,11 +118,15 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		displayed_name = input
 
 /obj/item/integrated_circuit/interact(mob/user)
+	ui_interact(user)
+
+/obj/item/integrated_circuit/ui_interact(mob/user)
+	. = ..()
 	if(!check_interactivity(user))
 		return
 
 	var/window_height = 350
-	var/window_width = 600
+	var/window_width = 655
 
 	var/table_edge_width = "30%"
 	var/table_middle_width = "40%"
@@ -129,7 +141,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 	HTML += "<a href='?src=[REF(src)]'>\[Refresh\]</a>  |  "
 	HTML += "<a href='?src=[REF(src)];rename=1'>\[Rename\]</a>  |  "
-	HTML += "<a href='?src=[REF(src)];scan=1'>\[Scan with Device\]</a>"
+	HTML += "<a href='?src=[REF(src)];scan=1'>\[Copy Ref\]</a>"
 	if(assembly && removable)
 		HTML += "  |  <a href='?src=[REF(assembly)];component=[REF(src)];remove=1'>\[Remove\]</a>"
 	HTML += "<br>"
@@ -205,6 +217,9 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	HTML += "</div>"
 
 	HTML += "<br><font color='0000AA'>Complexity: [complexity]</font>"
+	HTML += "<br><font color='0000AA'>Cooldown per use: [cooldown_per_use/10] sec</font>"
+	if(ext_cooldown)
+		HTML += "<br><font color='0000AA'>External manipulation cooldown: [ext_cooldown/10] sec</font>"
 	if(power_draw_idle)
 		HTML += "<br><font color='0000AA'>Power Draw: [power_draw_idle] W (Idle)</font>"
 	if(power_draw_per_use)
@@ -232,22 +247,28 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 	if(href_list["rename"])
 		rename_component(usr)
+		if(assembly)
+			assembly.add_allowed_scanner(usr.ckey)
 
 	if(href_list["pin"])
 		var/datum/integrated_io/pin = locate(href_list["pin"]) in inputs + outputs + activators
 		if(pin)
 			var/datum/integrated_io/linked
+			var/success = TRUE
 			if(href_list["link"])
 				linked = locate(href_list["link"]) in pin.linked
 
-			if(istype(held_item, /obj/item/device/integrated_electronics) || istype(held_item, /obj/item/device/multitool))
+			if(istype(held_item, /obj/item/integrated_electronics) || istype(held_item, /obj/item/multitool))
 				pin.handle_wire(linked, held_item, href_list["act"], usr)
 			else
 				to_chat(usr, "<span class='warning'>You can't do a whole lot without the proper tools.</span>")
+				success = FALSE
+			if(success && assembly)
+				assembly.add_allowed_scanner(usr.ckey)
 
 	if(href_list["scan"])
-		if(istype(held_item, /obj/item/device/integrated_electronics/debugger))
-			var/obj/item/device/integrated_electronics/debugger/D = held_item
+		if(istype(held_item, /obj/item/integrated_electronics/debugger))
+			var/obj/item/integrated_electronics/debugger/D = held_item
 			if(D.accepting_refs)
 				D.afterattack(src, usr, TRUE)
 			else
@@ -291,17 +312,22 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		return TRUE // Battery has enough.
 	return FALSE // Not enough power.
 
-/obj/item/integrated_circuit/proc/check_then_do_work(var/ignore_power = FALSE)
+/obj/item/integrated_circuit/proc/check_then_do_work(ord,var/ignore_power = FALSE)
 	if(world.time < next_use) 	// All intergrated circuits have an internal cooldown, to protect from spam.
-		return
+		return FALSE
+	if(assembly && ext_cooldown && (world.time < assembly.ext_next_use)) 	// Some circuits have external cooldown, to protect from spam.
+		return FALSE
 	if(power_draw_per_use && !ignore_power)
 		if(!check_power())
 			power_fail()
-			return
+			return FALSE
 	next_use = world.time + cooldown_per_use
-	do_work()
+	if(assembly)
+		assembly.ext_next_use = world.time + ext_cooldown
+	do_work(ord)
+	return TRUE
 
-/obj/item/integrated_circuit/proc/do_work()
+/obj/item/integrated_circuit/proc/do_work(ord)
 	return
 
 /obj/item/integrated_circuit/proc/disconnect_all()
@@ -330,3 +356,42 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		return assembly.get_object()
 	else
 		return src	// If not, the component is acting on its own.
+
+
+// Returns the location to be used for dropping items.
+// Same as the regular drop_location(), but with proc being run on assembly if there is any.
+/obj/item/integrated_circuit/drop_location()
+	// If the component is located in an assembly, let the assembly figure that one out.
+	if(assembly)
+		return assembly.drop_location()
+	else
+		return ..()	// If not, the component is acting on its own.
+
+
+// Checks if the target object is reachable. Useful for various manipulators and manipulator-like objects.
+/obj/item/integrated_circuit/proc/check_target(atom/target, exclude_contents = FALSE, exclude_components = FALSE, exclude_self = FALSE)
+	if(!target)
+		return FALSE
+
+	var/atom/movable/acting_object = get_object()
+
+	if(exclude_self && target == acting_object)
+		return FALSE
+
+	if(exclude_components && assembly)
+		if(target in assembly.assembly_components)
+			return FALSE
+
+		if(target == assembly.battery)
+			return FALSE
+
+	if(target.Adjacent(acting_object) && isturf(target.loc))
+		return TRUE
+
+	if(!exclude_contents && (target in acting_object.GetAllContents()))
+		return TRUE
+
+	if(target in acting_object.loc)
+		return TRUE
+
+	return FALSE

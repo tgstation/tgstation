@@ -6,7 +6,7 @@
 	req_access = list(ACCESS_BAR)
 	max_integrity = 500
 	integrity_failure = 250
-	armor = list(melee = 20, bullet = 20, laser = 20, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	buildable_sign = 0
 	var/list/barsigns=list()
 	var/list/hiddensigns
@@ -54,21 +54,19 @@
 			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/sign/barsign/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-
+	return attack_hand(user)
 
 /obj/structure/sign/barsign/attack_hand(mob/user)
-	if (!src.allowed(user))
+	. = ..()
+	if(.)
+		return
+	if(!allowed(user))
 		to_chat(user, "<span class='info'>Access denied.</span>")
 		return
 	if (broken)
 		to_chat(user, "<span class ='danger'>The controls seem unresponsive.</span>")
 		return
 	pick_sign()
-
-
-
 
 /obj/structure/sign/barsign/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/screwdriver))
@@ -83,7 +81,7 @@
 			to_chat(user, "<span class='notice'>You close the maintenance panel.</span>")
 			if(!broken && !emagged)
 				set_sign(pick(barsigns))
-			else if(emagged)
+			else if(obj_flags & EMAGGED)
 				set_sign(new /datum/barsign/hiddensigns/syndibarsign)
 			else
 				set_sign(new /datum/barsign/hiddensigns/empbarsign)
@@ -91,7 +89,7 @@
 
 	else if(istype(I, /obj/item/stack/cable_coil) && panel_open)
 		var/obj/item/stack/cable_coil/C = I
-		if(emagged) //Emagged, not broken by EMP
+		if(obj_flags & EMAGGED) //Emagged, not broken by EMP
 			to_chat(user, "<span class='warning'>Sign has been damaged beyond repair!</span>")
 			return
 		else if(!broken)
@@ -108,8 +106,11 @@
 
 
 /obj/structure/sign/barsign/emp_act(severity)
-    set_sign(new /datum/barsign/hiddensigns/empbarsign)
-    broken = 1
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	set_sign(new /datum/barsign/hiddensigns/empbarsign)
+	broken = 1
 
 
 
@@ -118,7 +119,7 @@
 	if(broken || emagged)
 		to_chat(user, "<span class='warning'>Nothing interesting happens!</span>")
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You emag the barsign. Takeover in progress...</span>")
 	sleep(10 SECONDS)
 	set_sign(new /datum/barsign/hiddensigns/syndibarsign)
@@ -292,6 +293,10 @@
 	icon = "maidcafe"
 	desc = "Welcome back, master!"
 
+/datum/barsign/the_lightbulb
+	name = "The Lightbulb"
+	icon = "the_lightbulb"
+	desc = "A cafe popular among moths and moffs. Once shut down for a week after the bartender used mothballs to protect her spare uniforms."
 
 /datum/barsign/hiddensigns
 	hidden = 1
@@ -319,4 +324,3 @@
 	name = "Bar Sign"
 	icon = "empty"
 	desc = "This sign doesn't seem to be on."
-

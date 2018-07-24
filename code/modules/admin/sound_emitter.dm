@@ -44,6 +44,7 @@
 	if(user.client.holder)
 		to_chat(user, "<b>Alt-click it to quickly activate it!</b>")
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/sound_emitter/attack_ghost(mob/user)
 	if(!check_rights_for(user.client, R_SOUNDS))
 		examine(user)
@@ -92,7 +93,7 @@
 		var/new_volume = input(user, "Choose a volume.", "Sound Emitter", sound_volume) as null|num
 		if(isnull(new_volume))
 			return
-		new_volume = Clamp(new_volume, 0, 100)
+		new_volume = CLAMP(new_volume, 0, 100)
 		sound_volume = new_volume
 		to_chat(user, "<span class='notice'>Volume set to [sound_volume]%.</span>")
 	if(href_list["edit_mode"])
@@ -115,7 +116,7 @@
 		var/new_radius = input(user, "Choose a radius.", "Sound Emitter", sound_volume) as null|num
 		if(isnull(new_radius))
 			return
-		new_radius = Clamp(new_radius, 0, 127)
+		new_radius = CLAMP(new_radius, 0, 127)
 		play_radius = new_radius
 		to_chat(user, "<span class='notice'>Audible radius set to [play_radius].</span>")
 	if(href_list["play"])
@@ -142,7 +143,7 @@
 		if(M.client.prefs.toggles & SOUND_MIDI)
 			M.playsound_local(M, sound_file, sound_volume, FALSE, channel = CHANNEL_ADMIN, pressure_affected = FALSE)
 	if(user)
-		log_admin("[ADMIN_LOOKUPFLW(user)] activated a sound emitter with file \"[sound_file]\" at [COORD(src)]")
+		log_admin("[ADMIN_LOOKUPFLW(user)] activated a sound emitter with file \"[sound_file]\" at [AREACOORD(src)]")
 	flick("shield1", src)
 
 #undef SOUND_EMITTER_LOCAL

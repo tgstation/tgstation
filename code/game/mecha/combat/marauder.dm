@@ -5,7 +5,7 @@
 	step_in = 5
 	max_integrity = 500
 	deflect_chance = 25
-	armor = list(melee = 50, bullet = 55, laser = 40, energy = 30, bomb = 30, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list("melee" = 50, "bullet" = 55, "laser" = 40, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	max_temperature = 60000
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	infra_luminosity = 3
@@ -29,8 +29,8 @@
 	thrusters_action.Remove(user)
 	zoom_action.Remove(user)
 
-/obj/mecha/combat/marauder/loaded/New()
-	..()
+/obj/mecha/combat/marauder/loaded/Initialize()
+	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse(src)
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack(src)
@@ -52,8 +52,8 @@
 	force = 55
 	max_equip = 5
 
-/obj/mecha/combat/marauder/seraph/New()
-	..()
+/obj/mecha/combat/marauder/seraph/Initialize()
+	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME
 	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot(src)
 	ME.attach(src)
@@ -74,8 +74,8 @@
 	wreckage = /obj/structure/mecha_wreckage/mauler
 	max_equip = 5
 
-/obj/mecha/combat/marauder/mauler/loaded/New()
-	..()
+/obj/mecha/combat/marauder/mauler/loaded/Initialize()
+	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg(src)
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot(src)

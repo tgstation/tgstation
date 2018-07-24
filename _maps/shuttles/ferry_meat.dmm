@@ -11,14 +11,11 @@
 "c" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
-"d" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
 "e" = (
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/transport)
 "f" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
@@ -93,7 +90,7 @@
 /area/shuttle/transport)
 "n" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
 "o" = (
@@ -113,21 +110,10 @@
 	height = 12;
 	id = "ferry";
 	name = "ferry shuttle";
-	roundstart_move = "ferry_away";
 	port_direction = 2;
-	width = 5;
-	timid = 1
+	width = 5
 	},
 /turf/open/floor/plasteel/freezer,
-/area/shuttle/transport)
-"r" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
-"s" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "t" = (
 /obj/structure/closet/chefcloset,
@@ -140,18 +126,15 @@
 "v" = (
 /obj/machinery/door/airlock/freezer{
 	name = "Meat Tradeship Backroom";
-	req_access = "28"
+	req_access_txt = "28"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
 "w" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/plasteel/freezer,
-/area/shuttle/transport)
-"x" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 
 (1,1,1) = {"

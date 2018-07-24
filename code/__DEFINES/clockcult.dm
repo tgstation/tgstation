@@ -1,12 +1,11 @@
-//component id defines
-#define BELLIGERENT_EYE "belligerent_eye"
-#define VANGUARD_COGWHEEL "vanguard_cogwheel"
-#define GEIS_CAPACITOR "geis_capacitor"
+//component id defines; sometimes these may not make sense in regards to their use in scripture but important ones are bright
+#define BELLIGERENT_EYE "belligerent_eye" //Use this for offensive and damaging scripture!
+#define VANGUARD_COGWHEEL "vanguard_cogwheel" //Use this for defensive and healing scripture!
+#define GEIS_CAPACITOR "geis_capacitor" //Use this for niche scripture!
 #define REPLICANT_ALLOY "replicant_alloy"
-#define HIEROPHANT_ANSIBLE "hierophant_ansible"
+#define HIEROPHANT_ANSIBLE "hierophant_ansible" //Use this for construction-related scripture!
 
 GLOBAL_VAR_INIT(clockwork_construction_value, 0) //The total value of all structures built by the clockwork cult
-GLOBAL_VAR_INIT(clockwork_caches, 0) //How many clockwork caches exist in the world (not each individual)
 GLOBAL_VAR_INIT(clockwork_vitality, 0) //How much Vitality is stored, total
 GLOBAL_VAR_INIT(clockwork_power, 0) //How many watts of power are globally available to the clockwork cult
 
@@ -29,8 +28,9 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define SCRIPTURE_APPLICATION "Application"
 
 //Various costs related to power.
-#define SCRIPT_UNLOCK_THRESHOLD 50000 //Scripts will unlock if the total power reaches this amount
-#define APPLICATION_UNLOCK_THRESHOLD 100000 //Applications will unlock if the total powre reaches this amount
+#define MAX_CLOCKWORK_POWER 50000 //The max power in W that the cult can stockpile
+#define SCRIPT_UNLOCK_THRESHOLD 25000 //Scripts will unlock if the total power reaches this amount
+#define APPLICATION_UNLOCK_THRESHOLD 40000 //Applications will unlock if the total powre reaches this amount
 
 #define ABSCOND_ABDUCTION_COST 95
 
@@ -64,10 +64,11 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 
 #define GATEWAY_RATVAR_ARRIVAL 600 //when progress is at or above this, game over ratvar's here everybody go home
 
-#define ARK_SUMMON_COST 5 //how many of each component an Ark costs to summon
-
 //Objective text define
 #define CLOCKCULT_OBJECTIVE "Construct the Ark of the Clockwork Justicar and free Ratvar."
+
+//Eminence defines
+#define SUPERHEATED_CLOCKWORK_WALL_LIMIT 20 //How many walls can be superheated at once
 
 //misc clockcult stuff
 
@@ -81,8 +82,10 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 
 #define RATVARIAN_SPEAR_COOLDOWN 300 //The cooldown period between summoning another Ratvarian spear
 
-#define MARAUDER_SCRIPTURE_SCALING_THRESHOLD 200 //The amount of deciseconds that must pass before marauder scripture will not gain a recital penalty
+#define MARAUDER_SCRIPTURE_SCALING_THRESHOLD 600 //The amount of deciseconds that must pass before marauder scripture will not gain a recital penalty
 
-#define MARAUDER_SCRIPTURE_SCALING_TIME 50 //The amount of extra deciseconds tacked on to the marauder scripture recital time per recent marauder
+#define MARAUDER_SCRIPTURE_SCALING_TIME 20 //The amount of extra deciseconds tacked on to the marauder scripture recital time per recent marauder
 
 #define MARAUDER_SCRIPTURE_SCALING_MAX 300 //The maximum extra time applied to the marauder scripture
+
+#define ARK_SCREAM_COOLDOWN 600 //This much time has to pass between instances of the Ark taking damage before it will "scream" again

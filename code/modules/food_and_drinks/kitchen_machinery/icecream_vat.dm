@@ -14,7 +14,7 @@
 	anchored = FALSE
 	use_power = NO_POWER_USE
 	layer = BELOW_OBJ_LAYER
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	max_integrity = 300
 	var/list/product_types = list()
 	var/dispense_flavour = ICECREAM_VANILLA
@@ -25,6 +25,7 @@
 		"sugar" = 5,
 		"ice" = 5,
 		"cocoa" = 5,
+		"vanilla" = 5,
 		"berryjuice" = 5,
 		"singulo" = 5)
 
@@ -40,8 +41,8 @@
 			return list("flour", "sugar")
 		if(CONE_CHOC)
 			return list("flour", "sugar", "cocoa")
-		else
-			return list("milk", "ice")
+		else //ICECREAM_VANILLA
+			return list("milk", "ice", "vanilla")
 
 
 /obj/machinery/icecream_vat/proc/get_flavour_name(flavour_type)
@@ -56,7 +57,7 @@
 			return "waffle"
 		if(CONE_CHOC)
 			return "chocolate"
-		else
+		else //ICECREAM_VANILLA
 			return "vanilla"
 
 
@@ -69,11 +70,8 @@
 	for(var/reagent in icecream_vat_reagents)
 		reagents.add_reagent(reagent, icecream_vat_reagents[reagent])
 
-/obj/machinery/icecream_vat/attack_hand(mob/user)
-	user.set_machine(src)
-	interact(user)
-
-/obj/machinery/icecream_vat/interact(mob/user)
+/obj/machinery/icecream_vat/ui_interact(mob/user)
+	. = ..()
 	var/dat
 	dat += "<b>ICE CREAM</b><br><div class='statusDisplay'>"
 	dat += "<b>Dispensing: [flavour_name] icecream </b> <br><br>"
@@ -112,7 +110,7 @@
 		else
 			to_chat(user, "<span class='notice'>[O] already has ice cream in it.</span>")
 		return 1
-	else if(O.is_open_container())
+	else if(O.is_drainable())
 		return
 	else
 		return ..()

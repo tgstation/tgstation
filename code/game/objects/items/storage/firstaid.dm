@@ -16,11 +16,15 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	var/empty = 0
+	var/empty = FALSE
 
 /obj/item/storage/firstaid/regular
 	icon_state = "firstaid"
 	desc = "A first aid kit with the ability to heal common types of injuries."
+
+/obj/item/storage/firstaid/regular/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins giving [user.p_them()]self aids with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
 
 /obj/item/storage/firstaid/regular/PopulateContents()
 	if(empty)
@@ -31,12 +35,11 @@
 	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-	new /obj/item/device/healthanalyzer(src)
+	new /obj/item/healthanalyzer(src)
 
 /obj/item/storage/firstaid/ancient
 	icon_state = "firstaid"
 	desc = "A first aid kit with the ability to heal common types of injuries."
-
 
 /obj/item/storage/firstaid/ancient/PopulateContents()
 	if(empty)
@@ -55,6 +58,10 @@
 	icon_state = "ointment"
 	item_state = "firstaid-ointment"
 
+/obj/item/storage/firstaid/fire/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins rubbing \the [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to start a fire!</span>")
+	return FIRELOSS
+
 /obj/item/storage/firstaid/fire/Initialize(mapload)
 	. = ..()
 	icon_state = pick("ointment","firefirstaid")
@@ -67,13 +74,17 @@
 	new /obj/item/reagent_containers/pill/oxandrolone(src)
 	new /obj/item/reagent_containers/pill/oxandrolone(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-	new /obj/item/device/healthanalyzer(src)
+	new /obj/item/healthanalyzer(src)
 
 /obj/item/storage/firstaid/toxin
 	name = "toxin treatment kit"
 	desc = "Used to treat toxic blood content and radiation poisoning."
 	icon_state = "antitoxin"
 	item_state = "firstaid-toxin"
+
+/obj/item/storage/firstaid/toxin/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins licking the lead paint off \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return TOXLOSS
 
 /obj/item/storage/firstaid/toxin/Initialize(mapload)
 	. = ..()
@@ -86,13 +97,17 @@
 		new /obj/item/reagent_containers/syringe/charcoal(src)
 	for(var/i in 1 to 2)
 		new /obj/item/storage/pill_bottle/charcoal(src)
-	new /obj/item/device/healthanalyzer(src)
+	new /obj/item/healthanalyzer(src)
 
 /obj/item/storage/firstaid/o2
 	name = "oxygen deprivation treatment kit"
 	desc = "A box full of oxygen goodies."
 	icon_state = "o2"
 	item_state = "firstaid-o2"
+
+/obj/item/storage/firstaid/o2/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins hitting [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return OXYLOSS
 
 /obj/item/storage/firstaid/o2/PopulateContents()
 	if(empty)
@@ -101,13 +116,17 @@
 		new /obj/item/reagent_containers/pill/salbutamol(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-	new /obj/item/device/healthanalyzer(src)
+	new /obj/item/healthanalyzer(src)
 
 /obj/item/storage/firstaid/brute
 	name = "brute trauma treatment kit"
 	desc = "A first aid kit for when you get toolboxed."
 	icon_state = "brute"
 	item_state = "firstaid-brute"
+
+/obj/item/storage/firstaid/brute/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins beating [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
 
 /obj/item/storage/firstaid/brute/PopulateContents()
 	if(empty)
@@ -116,13 +135,17 @@
 		new /obj/item/reagent_containers/pill/patch/styptic(src)
 	new /obj/item/stack/medical/gauze(src)
 	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/device/healthanalyzer(src)
+	new /obj/item/healthanalyzer(src)
 
 /obj/item/storage/firstaid/tactical
 	name = "combat medical kit"
 	desc = "I hope you've got insurance."
 	icon_state = "bezerk"
-	max_w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/storage/firstaid/tactical/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/storage/firstaid/tactical/PopulateContents()
 	if(empty)
@@ -135,10 +158,10 @@
 	new /obj/item/reagent_containers/syringe/lethal/choral(src)
 	new /obj/item/clothing/glasses/hud/health/night(src)
 
-
 /*
  * Pill Bottles
  */
+
 /obj/item/storage/pill_bottle
 	name = "pill bottle"
 	desc = "It's an airtight container for storing medication."
@@ -148,24 +171,17 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	can_hold = list(/obj/item/reagent_containers/pill, /obj/item/dice)
-	allow_quick_gather = 1
-	use_to_pickup = 1
 
-/obj/item/storage/pill_bottle/MouseDrop(obj/over_object) //Quick pillbottle fix. -Agouri
+/obj/item/storage/pill_bottle/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.allow_quick_gather = TRUE
+	STR.click_gather = TRUE
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/pill, /obj/item/dice))
 
-	if(ishuman(usr) || ismonkey(usr)) //Can monkeys even place items in the pocket slots? Leaving this in just in case~
-		var/mob/M = usr
-		if(!istype(over_object, /obj/screen) || !Adjacent(M))
-			return ..()
-		if(!M.incapacitated() && istype(over_object, /obj/screen/inventory/hand))
-			var/obj/screen/inventory/hand/H = over_object
-			if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
-				add_fingerprint(usr)
-		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
-			if(usr.s_active)
-				usr.s_active.close(usr)
-			src.show_to(usr)
+/obj/item/storage/pill_bottle/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is trying to get the cap off [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (TOXLOSS)
 
 /obj/item/storage/pill_bottle/charcoal
 	name = "bottle of charcoal pills"
@@ -215,3 +231,35 @@
 	new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/pill/patch/styptic(src)
+
+/obj/item/storage/pill_bottle/zoom
+	name = "suspicious pill bottle"
+	desc = "The label is pretty old and almost unreadable, you recognize some chemical compounds."
+
+/obj/item/storage/pill_bottle/zoom/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/zoom(src)
+
+/obj/item/storage/pill_bottle/happy
+	name = "suspicious pill bottle"
+	desc = "There is a smiley on the top."
+
+/obj/item/storage/pill_bottle/happy/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/happy(src)
+
+/obj/item/storage/pill_bottle/lsd
+	name = "suspicious pill bottle"
+	desc = "There is a badly drawn thing with the shape of a mushroom."
+
+/obj/item/storage/pill_bottle/lsd/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/lsd(src)
+
+/obj/item/storage/pill_bottle/aranesp
+	name = "suspicious pill bottle"
+	desc = "The label says 'gotta go fast'."
+
+/obj/item/storage/pill_bottle/aranesp/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/aranesp(src)

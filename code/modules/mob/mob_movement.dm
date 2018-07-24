@@ -11,93 +11,11 @@
 	return (!mover.density || !density || lying)
 
 
-//The byond version of these verbs wait for the next tick before acting.
-//	instant verbs however can run mid tick or even during the time between ticks.
-/client/verb/moveup()
-	set name = ".moveup"
-	set instant = 1
-	Move(get_step(mob, NORTH), NORTH)
-
-/client/verb/movedown()
-	set name = ".movedown"
-	set instant = 1
-	Move(get_step(mob, SOUTH), SOUTH)
-
-/client/verb/moveright()
-	set name = ".moveright"
-	set instant = 1
-	Move(get_step(mob, EAST), EAST)
-
-/client/verb/moveleft()
-	set name = ".moveleft"
-	set instant = 1
-	Move(get_step(mob, WEST), WEST)
-
-/client/Northeast()
-	swap_hand()
-	return
-
-
-/client/Southeast()
-	attack_self()
-	return
-
-
-/client/Southwest()
-	if(iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		C.toggle_throw_mode()
-	else
-		to_chat(usr, "<span class='danger'>This mob type cannot throw items.</span>")
-	return
-
-
-/client/Northwest()
-	var/obj/item/I = usr.get_active_held_item()
-	if(!I)
-		to_chat(usr, "<span class='warning'>You have nothing to drop in your hand!</span>")
-		return
-	usr.dropItemToGround(I)
-
-//This gets called when you press the delete button.
-/client/verb/delete_key_pressed()
-	set hidden = 1
-
-	if(!isliving(usr))
-		return
-	if(!usr.pulling)
-		to_chat(usr, "<span class='notice'>You are not pulling anything.</span>")
-		return
-	usr.stop_pulling()
-
-/client/verb/swap_hand()
-	set category = "IC"
-	set name = "Swap hands"
-
-	if(mob)
-		mob.swap_hand()
-
-/client/verb/attack_self()
-	set hidden = 1
-	if(mob)
-		mob.mode()
-	return
-
-
 /client/verb/drop_item()
 	set hidden = 1
 	if(!iscyborg(mob) && mob.stat == CONSCIOUS)
 		mob.dropItemToGround(mob.get_active_held_item())
 	return
-
-
-/client/Center()
-	if(isobj(mob.loc))
-		var/obj/O = mob.loc
-		if(mob.canmove)
-			return O.relaymove(mob, 0)
-	return
-
 
 /client/proc/Move_object(direct)
 	if(mob && mob.control_object)
@@ -107,26 +25,30 @@
 				return
 			mob.control_object.setDir(direct)
 		else
-			mob.control_object.loc = get_step(mob.control_object,direct)
+			mob.control_object.forceMove(get_step(mob.control_object,direct))
 	return
 
 #define MOVEMENT_DELAY_BUFFER 0.75
 #define MOVEMENT_DELAY_BUFFER_DELTA 1.25
 
 /client/Move(n, direct)
-	if(world.time < move_delay)
+	if(world.time < move_delay) //do not move anything ahead of this check please
 		return FALSE
+	else
+		next_move_dir_add = 0
+		next_move_dir_sub = 0
 	var/old_move_delay = move_delay
 	move_delay = world.time+world.tick_lag //this is here because Move() can now be called mutiple times per tick
 	if(!mob || !mob.loc)
 		return FALSE
-	var/oldloc = mob.loc
+	if(!n || !direct)
+		return FALSE
 	if(mob.notransform)
 		return FALSE	//This is sota the goto stop mobs from moving var
 	if(mob.control_object)
 		return Move_object(direct)
 	if(!isliving(mob))
-		return mob.Move(n,direct)
+		return mob.Move(n, direct)
 	if(mob.stat == DEAD)
 		mob.ghostize()
 		return FALSE
@@ -159,48 +81,42 @@
 
 	if(!mob.Process_Spacemove(direct))
 		return FALSE
-
 	//We are now going to move
-	var/delay = mob.movement_delay()
-	if(old_move_delay + (delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
-		move_delay = old_move_delay + delay
+	var/add_delay = mob.movement_delay()
+	if(old_move_delay + (add_delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
+		move_delay = old_move_delay
 	else
-		move_delay = delay + world.time
+		move_delay = world.time
+	var/oldloc = mob.loc
 
-	if(mob.confused)
-		if(mob.confused > 40)
-			step(mob, pick(GLOB.cardinals))
-		else if(prob(mob.confused * 1.5))
-			step(mob, angle2dir(dir2angle(direct) + pick(90, -90)))
-		else if(prob(mob.confused * 3))
-			step(mob, angle2dir(dir2angle(direct) + pick(45, -45)))
-		else
-			step(mob, direct)
-	else
-		. = ..()
+	if(L.confused)
+		var/newdir = 0
+		if(L.confused > 40)
+			newdir = pick(GLOB.alldirs)
+		else if(prob(L.confused * 1.5))
+			newdir = angle2dir(dir2angle(direct) + pick(90, -90))
+		else if(prob(L.confused * 3))
+			newdir = angle2dir(dir2angle(direct) + pick(45, -45))
+		if(newdir)
+			direct = newdir
+			n = get_step(L, direct)
 
+	. = ..()
+
+	if((direct & (direct - 1)) && mob.loc == n) //moved diagonally successfully
+		add_delay *= 2
+	if(mob.loc != oldloc)
+		move_delay += add_delay
 	if(.) // If mob is null here, we deserve the runtime
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
 
-	if(LAZYLEN(mob.user_movement_hooks))
-		for(var/obj/O in mob.user_movement_hooks)
-			O.intercept_user_move(direct, mob, n, oldloc)
-	
+	for(var/obj/O in mob.user_movement_hooks)
+		O.intercept_user_move(direct, mob, n, oldloc)
+
 	var/atom/movable/P = mob.pulling
 	if(P && !ismob(P) && P.density)
 		mob.dir = turn(mob.dir, 180)
-
-/mob/Moved(oldLoc, dir, Forced = FALSE)
-	. = ..()
-	for(var/obj/O in contents)
-		O.on_mob_move(dir, src, oldLoc, Forced)
-
-/mob/setDir(newDir)
-	. = ..()
-	for(var/obj/O in contents)
-		O.on_mob_turn(newDir, src)
-
 
 ///Process_Grab()
 ///Called by client/Move()
@@ -284,9 +200,13 @@
 						R.stun(20)
 					return
 				if(stepTurf.flags_1 & NOJAUNT_1)
-					to_chat(L, "<span class='warning'>Holy energies block your path.</span>")
-				else
-					L.loc = get_step(L, direct)
+					to_chat(L, "<span class='warning'>Some strange aura is blocking the way.</span>")
+					return
+				if (locate(/obj/effect/blessing, stepTurf))
+					to_chat(L, "<span class='warning'>Holy energies block your path!</span>")
+					return
+
+				L.loc = get_step(L, direct)
 			L.setDir(direct)
 	return TRUE
 
@@ -338,24 +258,6 @@
 /mob/proc/mob_negates_gravity()
 	return FALSE
 
-//moves the mob/object we're pulling
-/mob/proc/Move_Pulled(atom/A)
-	if(!pulling)
-		return
-	if(pulling.anchored || !pulling.Adjacent(src))
-		stop_pulling()
-		return
-	if(isliving(pulling))
-		var/mob/living/L = pulling
-		if(L.buckled && L.buckled.buckle_prevents_pull) //if they're buckled to something that disallows pulling, prevent it
-			stop_pulling()
-			return
-	if(A == loc && pulling.density)
-		return
-	if(!Process_Spacemove(get_dir(pulling.loc, A)))
-		return
-	step(pulling, get_dir(pulling.loc, A))
-
 
 /mob/proc/slip(s_amount, w_amount, obj/O, lube)
 	return
@@ -380,12 +282,12 @@
 
 	var/next_in_line
 	switch(mob.zone_selected)
-		if("head")
-			next_in_line = "eyes"
-		if("eyes")
-			next_in_line = "mouth"
+		if(BODY_ZONE_HEAD)
+			next_in_line = BODY_ZONE_PRECISE_EYES
+		if(BODY_ZONE_PRECISE_EYES)
+			next_in_line = BODY_ZONE_PRECISE_MOUTH
 		else
-			next_in_line = "head"
+			next_in_line = BODY_ZONE_HEAD
 
 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone(next_in_line, mob)
@@ -398,7 +300,7 @@
 		return
 
 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
-	selector.set_selected_zone("r_arm", mob)
+	selector.set_selected_zone(BODY_ZONE_R_ARM, mob)
 
 /client/verb/body_chest()
 	set name = "body-chest"
@@ -408,7 +310,7 @@
 		return
 
 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
-	selector.set_selected_zone("chest", mob)
+	selector.set_selected_zone(BODY_ZONE_CHEST, mob)
 
 /client/verb/body_l_arm()
 	set name = "body-l-arm"
@@ -418,7 +320,7 @@
 		return
 
 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
-	selector.set_selected_zone("l_arm", mob)
+	selector.set_selected_zone(BODY_ZONE_L_ARM, mob)
 
 /client/verb/body_r_leg()
 	set name = "body-r-leg"
@@ -428,7 +330,7 @@
 		return
 
 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
-	selector.set_selected_zone("r_leg", mob)
+	selector.set_selected_zone(BODY_ZONE_R_LEG, mob)
 
 /client/verb/body_groin()
 	set name = "body-groin"
@@ -438,7 +340,7 @@
 		return
 
 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
-	selector.set_selected_zone("groin", mob)
+	selector.set_selected_zone(BODY_ZONE_PRECISE_GROIN, mob)
 
 /client/verb/body_l_leg()
 	set name = "body-l-leg"
@@ -448,7 +350,7 @@
 		return
 
 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
-	selector.set_selected_zone("l_leg", mob)
+	selector.set_selected_zone(BODY_ZONE_L_LEG, mob)
 
 /client/verb/toggle_walk_run()
 	set name = "toggle-walk-run"

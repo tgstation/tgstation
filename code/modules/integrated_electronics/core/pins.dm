@@ -25,14 +25,16 @@ D [1]/  ||
 	var/list/linked = list()
 	var/io_type = DATA_CHANNEL
 	var/pin_type			// IC_INPUT, IC_OUTPUT, IC_ACTIVATOR - used in saving assembly wiring
+	var/ord
 
-
-/datum/integrated_io/New(loc, _name, _data, _pin_type)
+/datum/integrated_io/New(loc, _name, _data, _pin_type,_ord)
 	name = _name
 	if(_data)
 		data = _data
 	if(_pin_type)
 		pin_type = _pin_type
+	if(_ord)
+		ord = _ord
 
 	holder = loc
 
@@ -103,8 +105,8 @@ D [1]/  ||
 	push_data()
 
 /datum/integrated_io/proc/handle_wire(datum/integrated_io/linked_pin, obj/item/tool, action, mob/living/user)
-	if(istype(tool, /obj/item/device/multitool))
-		var/obj/item/device/multitool/multitool = tool
+	if(istype(tool, /obj/item/multitool))
+		var/obj/item/multitool/multitool = tool
 		switch(action)
 			if("wire")
 				multitool.wire(src, user)
@@ -117,15 +119,15 @@ D [1]/  ||
 				ask_for_pin_data(user)
 				return TRUE
 
-	else if(istype(tool, /obj/item/device/integrated_electronics/wirer))
-		var/obj/item/device/integrated_electronics/wirer/wirer = tool
+	else if(istype(tool, /obj/item/integrated_electronics/wirer))
+		var/obj/item/integrated_electronics/wirer/wirer = tool
 		if(linked_pin)
 			wirer.wire(linked_pin, user)
 		else
 			wirer.wire(src, user)
 
-	else if(istype(tool, /obj/item/device/integrated_electronics/debugger))
-		var/obj/item/device/integrated_electronics/debugger/debugger = tool
+	else if(istype(tool, /obj/item/integrated_electronics/debugger))
+		var/obj/item/integrated_electronics/debugger/debugger = tool
 		debugger.write_data(src, user)
 		return TRUE
 
@@ -148,7 +150,7 @@ D [1]/  ||
 /datum/integrated_io/activate/push_data()
 	for(var/k in 1 to linked.len)
 		var/datum/integrated_io/io = linked[k]
-		io.holder.check_then_do_work()
+		io.holder.check_then_do_work(io.ord)
 
 /datum/integrated_io/proc/pull_data()
 	for(var/k in 1 to linked.len)
@@ -183,7 +185,7 @@ D [1]/  ||
 	var/new_data = null
 	switch(type_to_use)
 		if("string")
-			new_data = stripped_input(user, "Now type in a string.","[src] string writing", istext(default) ? default : null, no_trim = TRUE)
+			new_data = stripped_multiline_input(user, "Now type in a string.","[src] string writing", istext(default) ? default : null, no_trim = TRUE)
 			if(istext(new_data) && holder.check_interactivity(user) )
 				to_chat(user, "<span class='notice'>You input "+new_data+" into the pin.</span>")
 				return new_data
@@ -207,7 +209,8 @@ D [1]/  ||
 	write_data_to_pin(new_data)
 
 /datum/integrated_io/activate/ask_for_pin_data(mob/user) // This just pulses the pin.
-	holder.check_then_do_work(ignore_power = TRUE)
+	holder.investigate_log(" was manually pulsed by [key_name(user)].", INVESTIGATE_CIRCUIT)
+	holder.check_then_do_work(ord,ignore_power = TRUE)
 	to_chat(user, "<span class='notice'>You pulse \the [holder]'s [src] pin.</span>")
 
 /datum/integrated_io/activate

@@ -13,7 +13,6 @@
 
 	var/has_alert = 0
 	var/alarms = list("Fire" = list(), "Atmosphere" = list(), "Power" = list())
-	var/alarm_z = list(ZLEVEL_STATION_PRIMARY,ZLEVEL_LAVALAND)
 
 /datum/computer_file/program/alarm_monitor/process_tick()
 	..()
@@ -41,7 +40,10 @@
 	return data
 
 /datum/computer_file/program/alarm_monitor/proc/triggerAlarm(class, area/A, O, obj/source)
-	if(!(source.z in alarm_z))
+	if(is_station_level(source.z))
+		if(!(A.type in GLOB.the_station_areas))
+			return
+	else if(!is_mining_level(source.z) || istype(A, /area/ruin))
 		return
 
 	var/list/L = alarms[class]

@@ -12,9 +12,9 @@
 /obj/item/gun/magic/wand/Initialize()
 	if(prob(75) && variable_charges) //25% chance of listed max charges, 50% chance of 1/2 max charges, 25% chance of 1/3 max charges
 		if(prob(33))
-			max_charges = Ceiling(max_charges / 3)
+			max_charges = CEILING(max_charges / 3, 1)
 		else
-			max_charges = Ceiling(max_charges / 2)
+			max_charges = CEILING(max_charges / 2, 1)
 	return ..()
 
 /obj/item/gun/magic/wand/examine(mob/user)
@@ -43,7 +43,7 @@
 				no_den_usage = 0
 		zap_self(user)
 	else
-		..()
+		. = ..()
 	update_icon()
 
 
@@ -95,6 +95,10 @@
 	to_chat(user, "<span class='notice'>You feel great!</span>")
 	charges--
 	..()
+
+/obj/item/gun/magic/wand/resurrection/debug //for testing
+	name = "debug wand of healing"
+	max_charges = 500
 
 /////////////////////////////////////
 //WAND OF POLYMORPH

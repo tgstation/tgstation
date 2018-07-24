@@ -104,8 +104,7 @@
 			to_chat(user, "<span class='warning'>There is another network terminal here!</span>")
 			return
 		else
-			var/obj/item/stack/cable_coil/C = new /obj/item/stack/cable_coil(T)
-			C.amount = 10
+			new /obj/item/stack/cable_coil(T, 10)
 			to_chat(user, "<span class='notice'>You cut the cables and disassemble the unused power terminal.</span>")
 			qdel(E)
 	return TRUE
@@ -121,3 +120,4 @@
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=50, MAT_GLASS=50)
+	grind_results = list("iron" = 10, "silicon" = 10)

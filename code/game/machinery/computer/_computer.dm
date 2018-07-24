@@ -3,14 +3,12 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 300
 	active_power_usage = 300
 	max_integrity = 200
 	integrity_failure = 100
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 40, acid = 20)
-	var/processing = FALSE
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 20)
 	var/brightness_on = 2
 	var/icon_keyboard = "generic_key"
 	var/icon_screen = "generic"
@@ -22,7 +20,7 @@
 	if(!QDELETED(C))
 		qdel(circuit)
 		circuit = C
-		C.loc = null
+		C.moveToNullspace()
 
 /obj/machinery/computer/Destroy()
 	QDEL_NULL(circuit)
@@ -69,14 +67,13 @@
 	update_icon()
 	return
 
-/obj/machinery/computer/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver) && circuit && !(flags_1&NODECONSTRUCT_1))
-		playsound(src.loc, I.usesound, 50, 1)
-		to_chat(user, "<span class='notice'> You start to disconnect the monitor...</span>")
-		if(do_after(user, 20*I.toolspeed, target = src))
+/obj/machinery/computer/screwdriver_act(mob/living/user, obj/item/I)
+	if(circuit && !(flags_1&NODECONSTRUCT_1))
+		to_chat(user, "<span class='notice'>You start to disconnect the monitor...</span>")
+		if(I.use_tool(src, user, 20, volume=50))
 			deconstruct(TRUE, user)
-	else
-		return ..()
+	return TRUE
+
 
 /obj/machinery/computer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -97,14 +94,15 @@
 			set_light(0)
 
 /obj/machinery/computer/emp_act(severity)
-	switch(severity)
-		if(1)
-			if(prob(50))
-				obj_break("energy")
-		if(2)
-			if(prob(10))
-				obj_break("energy")
-	..()
+	. = ..()
+	if (!(. & EMP_PROTECT_SELF))
+		switch(severity)
+			if(1)
+				if(prob(50))
+					obj_break("energy")
+			if(2)
+				if(prob(10))
+					obj_break("energy")
 
 /obj/machinery/computer/deconstruct(disassembled = TRUE, mob/user)
 	on_deconstruction()
@@ -113,7 +111,7 @@
 			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
 			A.dir = dir
 			A.circuit = circuit
-			A.anchored = TRUE
+			A.setAnchored(TRUE)
 			if(stat & BROKEN)
 				if(user)
 					to_chat(user, "<span class='notice'>The broken glass falls out.</span>")

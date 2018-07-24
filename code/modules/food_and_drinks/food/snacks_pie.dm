@@ -27,6 +27,7 @@
 	list_reagents = list("nutriment" = 6, "banana" = 5, "vitamin" = 2)
 	tastes = list("pie" = 1)
 	foodtype = GRAIN | DAIRY | SUGAR
+	var/stunning = TRUE
 
 /obj/item/reagent_containers/food/snacks/pie/cream/throw_impact(atom/hit_atom)
 	. = ..()
@@ -38,7 +39,8 @@
 		return
 	var/turf/T = get_turf(hit_atom)
 	new/obj/effect/decal/cleanable/pie_smudge(T)
-	reagents.reaction(hit_atom, TOUCH)
+	if(reagents && reagents.total_volume)
+		reagents.reaction(hit_atom, TOUCH)
 	if(ishuman(hit_atom))
 		var/mob/living/carbon/human/H = hit_atom
 		var/mutable_appearance/creamoverlay = mutable_appearance('icons/effects/creampie.dmi')
@@ -46,15 +48,19 @@
 			creamoverlay.icon_state = "creampie_lizard"
 		else
 			creamoverlay.icon_state = "creampie_human"
-		H.Knockdown(20) //splat!
+		if(stunning)
+			H.Knockdown(20) //splat!
 		H.adjust_blurriness(1)
 		H.visible_message("<span class='warning'>[H] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
 		playsound(H, "desceration", 50, TRUE)
-		if (!H.creamed) // one layer at a time
+		if(!H.creamed) // one layer at a time
 			H.add_overlay(creamoverlay)
 			H.creamed = TRUE
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "creampie", /datum/mood_event/creampie)
 	qdel(src)
 
+/obj/item/reagent_containers/food/snacks/pie/cream/nostun
+	stunning = FALSE
 
 /obj/item/reagent_containers/food/snacks/pie/berryclafoutis
 	name = "berry clafoutis"

@@ -55,18 +55,19 @@
 
 /obj/item/proc/get_volume_by_throwforce_and_or_w_class()
 		if(throwforce && w_class)
-				return Clamp((throwforce + w_class) * 5, 30, 100)// Add the item's throwforce to its weight class and multiply by 5, then clamp the value between 30 and 100
+				return CLAMP((throwforce + w_class) * 5, 30, 100)// Add the item's throwforce to its weight class and multiply by 5, then clamp the value between 30 and 100
 		else if(w_class)
-				return Clamp(w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
+				return CLAMP(w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
 		else
 				return 0
 
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE)
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
-		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geared towards the chest
+		var/zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
 		var/volume = I.get_volume_by_throwforce_and_or_w_class()
+		SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, zone)
 		dtype = I.damtype
 
 		if (I.throwforce > 0) //If the weapon's throwforce is greater than zero...
@@ -127,14 +128,19 @@
 
 /mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = 0)
 	if(user == src || anchored || !isturf(user.loc))
-		return 0
+		return FALSE
 	if(!user.pulling || user.pulling != src)
 		user.start_pulling(src, supress_message)
 		return
 
-	if(!(status_flags & CANPUSH))
+	if(!(status_flags & CANPUSH) || has_trait(TRAIT_PUSHIMMUNE))
 		to_chat(user, "<span class='warning'>[src] can't be grabbed more aggressively!</span>")
-		return 0
+		return FALSE
+
+	if(user.has_trait(TRAIT_PACIFISM))
+		to_chat(user, "<span class='notice'>You don't want to risk hurting [src]!</span>")
+		return FALSE
+
 	grippedby(user)
 
 //proc to upgrade a simple pull into a more aggressive grab.
@@ -188,83 +194,101 @@
 			M.Feedstop()
 		return // can't attack while eating!
 
+	if(has_trait(TRAIT_PACIFISM))
+		to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
+		return FALSE
+
 	if (stat != DEAD)
 		add_logs(M, src, "attacked")
 		M.do_attack_animation(src)
 		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
 				"<span class='userdanger'>The [M.name] glomps [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-		return 1
+		return TRUE
 
 /mob/living/attack_animal(mob/living/simple_animal/M)
 	M.face_atom(src)
 	if(M.melee_damage_upper == 0)
 		M.visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>")
-		return 0
+		return FALSE
 	else
+		if(M.has_trait(TRAIT_PACIFISM))
+			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
+			return FALSE
+
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		M.do_attack_animation(src)
 		visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
 						"<span class='userdanger'>\The [M] [M.attacktext] [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 		add_logs(M, src, "attacked")
-		return 1
+		return TRUE
 
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M)
 	if(isturf(loc) && istype(loc.loc, /area/start))
 		to_chat(M, "No attacking people at spawn, you jackass.")
-		return 0
+		return FALSE
 
 	if (M.a_intent == INTENT_HARM)
+		if(M.has_trait(TRAIT_PACIFISM))
+			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
+			return FALSE
+
 		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
 			to_chat(M, "<span class='warning'>You can't bite with your mouth covered!</span>")
-			return 0
+			return FALSE
 		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
 		if (prob(75))
 			add_logs(M, src, "attacked")
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
 					"<span class='userdanger'>[M.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-			return 1
+			return TRUE
 		else
 			visible_message("<span class='danger'>[M.name] has attempted to bite [src]!</span>", \
 				"<span class='userdanger'>[M.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-	return 0
+	return FALSE
 
 /mob/living/attack_larva(mob/living/carbon/alien/larva/L)
 	switch(L.a_intent)
 		if("help")
 			visible_message("<span class='notice'>[L.name] rubs its head against [src].</span>")
-			return 0
+			return FALSE
 
 		else
+			if(L.has_trait(TRAIT_PACIFISM))
+				to_chat(L, "<span class='notice'>You don't want to hurt anyone!</span>")
+				return
+
 			L.do_attack_animation(src)
 			if(prob(90))
 				add_logs(L, src, "attacked")
 				visible_message("<span class='danger'>[L.name] bites [src]!</span>", \
 					"<span class='userdanger'>[L.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-				return 1
+				return TRUE
 			else
 				visible_message("<span class='danger'>[L.name] has attempted to bite [src]!</span>", \
 					"<span class='userdanger'>[L.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-	return 0
+	return FALSE
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
 	switch(M.a_intent)
 		if ("help")
 			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
-			return 0
-
+			return FALSE
 		if ("grab")
 			grabbedby(M)
-			return 0
+			return FALSE
 		if("harm")
+			if(M.has_trait(TRAIT_PACIFISM))
+				to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
+				return FALSE
 			M.do_attack_animation(src)
-			return 1
+			return TRUE
 		if("disarm")
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-			return 1
+			return TRUE
 
 /mob/living/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
@@ -278,7 +302,9 @@
 	return 1
 
 /mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	if(tesla_shock && (flags_2 & TESLA_IGNORE_2))
+	if(tesla_shock && (flags_1 & TESLA_IGNORE_1))
+		return FALSE
+	if(has_trait(TRAIT_SHOCKIMMUNE))
 		return FALSE
 	if(shock_damage > 0)
 		if(!illusion)
@@ -291,10 +317,11 @@
 		return shock_damage
 
 /mob/living/emp_act(severity)
-	var/list/L = src.get_contents()
-	for(var/obj/O in L)
+	. = ..()
+	if(. & EMP_PROTECT_CONTENTS)
+		return
+	for(var/obj/O in contents)
 		O.emp_act(severity)
-	..()
 
 /mob/living/singularity_act()
 	var/gain = 20
@@ -303,7 +330,7 @@
 	return(gain)
 
 /mob/living/narsie_act()
-	if(status_flags & GODMODE)
+	if(status_flags & GODMODE || QDELETED(src))
 		return
 
 	if(is_servant_of_ratvar(src) && !stat)
@@ -347,10 +374,11 @@
 
 //called when the mob receives a bright flash
 /mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
-	if(get_eye_protection() < intensity && (override_blindness_check || !(disabilities & BLIND)))
+	if(get_eye_protection() < intensity && (override_blindness_check || !(has_trait(TRAIT_BLIND))))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
-		return 1
+		return TRUE
+	return FALSE
 
 //called when the mob receives a loud bang
 /mob/living/proc/soundbang_act()
@@ -361,9 +389,7 @@
 	return
 
 
-/mob/living/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
-	if(A != src)
-		end_pixel_y = get_standard_pixel_y_offset(lying)
+/mob/living/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!used_item)
 		used_item = get_active_held_item()
 	..()

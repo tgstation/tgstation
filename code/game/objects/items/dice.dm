@@ -4,8 +4,8 @@
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "dicebag"
 
-/obj/item/storage/pill_bottle/dice/New()
-	..()
+/obj/item/storage/pill_bottle/dice/Initialize()
+	. = ..()
 	var/special_die = pick("1","2","fudge","space","00","8bd20","4dd6","100")
 	if(special_die == "1")
 		new /obj/item/dice/d1(src)
@@ -30,9 +30,13 @@
 	if(special_die == "100")
 		new /obj/item/dice/d100(src)
 
+/obj/item/storage/pill_bottle/dice/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (OXYLOSS)
+
 /obj/item/dice //depreciated d6, use /obj/item/dice/d6 if you actually want a d6
 	name = "die"
-	desc = "A die with six sides. Basic and servicable."
+	desc = "A die with six sides. Basic and serviceable."
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "d6"
 	w_class = WEIGHT_CLASS_TINY
@@ -42,14 +46,18 @@
 	var/can_be_rigged = TRUE
 	var/rigged = FALSE
 
-/obj/item/dice/New()
-	result = rand(1, sides)
+/obj/item/dice/Initialize()
+	. = ..()
+	result = roll(sides)
 	update_icon()
-	..()
+
+/obj/item/dice/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (OXYLOSS)
 
 /obj/item/dice/d1
 	name = "d1"
-	desc = "A die with one side. Deterministic!"
+	desc = "A die with only one side. Deterministic!"
 	icon_state = "d1"
 	sides = 1
 
@@ -65,6 +73,10 @@
 	icon_state = "d4"
 	sides = 4
 
+/obj/item/dice/d4/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/caltrop, 4)
+
 /obj/item/dice/d6
 	name = "d6"
 
@@ -73,8 +85,8 @@
 	desc = "A die with six sides. 6 TIMES 255 TIMES 255 TILE TOTAL EXISTENCE, SQUARE YOUR MIND OF EDUCATED STUPID: 2 DOES NOT EXIST."
 	icon_state = "spaced6"
 
-/obj/item/dice/d6/space/New()
-	..()
+/obj/item/dice/d6/space/Initialize()
+	. = ..()
 	if(prob(10))
 		name = "spess cube"
 
@@ -99,7 +111,7 @@
 
 /obj/item/dice/d00
 	name = "d00"
-	desc = "A die with ten sides. Works better for d100 rolls than a golfball."
+	desc = "A die with ten sides. Works better for d100 rolls than a golf ball."
 	icon_state = "d00"
 	sides = 10
 
@@ -111,7 +123,7 @@
 
 /obj/item/dice/d20
 	name = "d20"
-	desc = "A die with twenty sides. The prefered die to throw at the GM."
+	desc = "A die with twenty sides. The preferred die to throw at the GM."
 	icon_state = "d20"
 	sides = 20
 
@@ -119,6 +131,7 @@
 	name = "d100"
 	desc = "A die with one hundred sides! Probably not fairly weighted..."
 	icon_state = "d100"
+	w_class = WEIGHT_CLASS_SMALL
 	sides = 100
 
 /obj/item/dice/d100/update_icon()
@@ -136,7 +149,7 @@
 
 /obj/item/dice/fourdd6
 	name = "4d d6"
-	desc = "A die that exists in four dimensional space. Properly interpreting them can only be properly done with the help of a mathematician, a physicist, and a priest."
+	desc = "A die that exists in four dimensional space. Properly interpreting them can only be done with the help of a mathematician, a physicist, and a priest."
 	icon_state = "4dd6"
 	sides = 48
 	special_faces = list("Cube-Side: 1-1","Cube-Side: 1-2","Cube-Side: 1-3","Cube-Side: 1-4","Cube-Side: 1-5","Cube-Side: 1-6","Cube-Side: 2-1","Cube-Side: 2-2","Cube-Side: 2-3","Cube-Side: 2-4","Cube-Side: 2-5","Cube-Side: 2-6","Cube-Side: 3-1","Cube-Side: 3-2","Cube-Side: 3-3","Cube-Side: 3-4","Cube-Side: 3-5","Cube-Side: 3-6","Cube-Side: 4-1","Cube-Side: 4-2","Cube-Side: 4-3","Cube-Side: 4-4","Cube-Side: 4-5","Cube-Side: 4-6","Cube-Side: 5-1","Cube-Side: 5-2","Cube-Side: 5-3","Cube-Side: 5-4","Cube-Side: 5-5","Cube-Side: 5-6","Cube-Side: 6-1","Cube-Side: 6-2","Cube-Side: 6-3","Cube-Side: 6-4","Cube-Side: 6-5","Cube-Side: 6-6","Cube-Side: 7-1","Cube-Side: 7-2","Cube-Side: 7-3","Cube-Side: 7-4","Cube-Side: 7-5","Cube-Side: 7-6","Cube-Side: 8-1","Cube-Side: 8-2","Cube-Side: 8-3","Cube-Side: 8-4","Cube-Side: 8-5","Cube-Side: 8-6")
@@ -152,14 +165,14 @@
 	. = ..()
 
 /obj/item/dice/proc/diceroll(mob/user)
-	result = rand(1, sides)
+	result = roll(sides)
 	if(rigged && result != rigged)
-		if(prob(Clamp(1/(sides - 1) * 100, 25, 80)))
+		if(prob(CLAMP(1/(sides - 1) * 100, 25, 80)))
 			result = rigged
-	var/fake_result = rand(1, sides)//Daredevil isn't as good as he used to be
+	var/fake_result = roll(sides)//Daredevil isn't as good as he used to be
 	var/comment = ""
 	if(sides == 20 && result == 20)
-		comment = "Nat 20!"
+		comment = "NAT 20!"
 	else if(sides == 20 && result == 1)
 		comment = "Ouch, bad luck."
 	update_icon()
@@ -174,17 +187,9 @@
 	else if(!src.throwing) //Dice was thrown and is coming to rest
 		visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
 
-/obj/item/dice/d4/Crossed(mob/living/carbon/human/H)
-	if(istype(H) && !H.shoes)
-		if(PIERCEIMMUNE in H.dna.species.species_traits)
-			return 0
-		to_chat(H, "<span class='userdanger'>You step on the D4!</span>")
-		H.apply_damage(4,BRUTE,(pick("l_leg", "r_leg")))
-		H.Knockdown(60)
-
 /obj/item/dice/update_icon()
 	cut_overlays()
-	add_overlay("[src.icon_state][src.result]")
+	add_overlay("[src.icon_state]-[src.result]")
 
 /obj/item/dice/microwave_act(obj/machinery/microwave/M)
 	if(can_be_rigged)

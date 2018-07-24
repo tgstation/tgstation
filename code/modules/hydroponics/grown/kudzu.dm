@@ -36,8 +36,8 @@
 		to_chat(user, "<span class='warning'>There is too much kudzu here to plant [src].</span>")
 		return FALSE
 	to_chat(user, "<span class='notice'>You plant [src].</span>")
-	message_admins("Kudzu planted by [ADMIN_LOOKUPFLW(user)] at [ADMIN_COORDJMP(user)]",0,1)
-	investigate_log("was planted by [key_name(user)] at [COORD(user)]", INVESTIGATE_BOTANY)
+	message_admins("Kudzu planted by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(user)]")
+	investigate_log("was planted by [key_name(user)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
 	new /datum/spacevine_controller(get_turf(user), mutations, potency, production)
 	qdel(src)
 
@@ -103,3 +103,5 @@
 	filling_color = "#6B8E23"
 	bitesize_mod = 2
 	foodtype = VEGETABLES | GROSS
+	tastes = list("kudzu" = 1)
+	wine_power = 20

@@ -1,59 +1,21 @@
 /datum/component
-	var/enabled = TRUE
+	var/enabled = FALSE
 	var/dupe_mode = COMPONENT_DUPE_HIGHLANDER
 	var/dupe_type
 	var/list/signal_procs
 	var/datum/parent
 
 /datum/component/New(datum/P, ...)
-	if(type == /datum/component)
-		qdel(src)
-		CRASH("[type] instantiated!")
-
-	//check for common mishaps
-	if(!isnum(dupe_mode))
-		qdel(src)
-		CRASH("[type]: Invalid dupe_mode!")
-	if(dupe_type && !ispath(dupe_type))
-		qdel(src)
-		CRASH("[type]: Invalid dupe_type!")
-
 	parent = P
-	var/list/arguments = args.Copy()
-	arguments.Cut(1, 2)
+	var/list/arguments = args.Copy(2)
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
 		qdel(src, TRUE, TRUE)
-		return
+		CRASH("Incompatible [type] assigned to a [P.type]! args: [json_encode(arguments)]")
 
-	_CheckDupesAndJoinParent(P)
+	_JoinParent(P)
 
-/datum/component/proc/_CheckDupesAndJoinParent()
+/datum/component/proc/_JoinParent()
 	var/datum/P = parent
-	var/dm = dupe_mode
-
-	var/datum/component/old
-	if(dm != COMPONENT_DUPE_ALLOWED)
-		var/dt = dupe_type
-		if(!dt)
-			old = P.GetExactComponent(type)
-		else
-			old = P.GetComponent(dt)
-		if(old)
-			//One or the other has to die
-			switch(dm)
-				if(COMPONENT_DUPE_UNIQUE)
-					old.InheritComponent(src, TRUE)
-					qdel(src, TRUE, TRUE)
-					return
-				if(COMPONENT_DUPE_HIGHLANDER)
-					InheritComponent(old, FALSE)
-					qdel(old, FALSE, TRUE)
-
-	//provided we didn't eat someone
-	if(!old)
-		//let the others know
-		P.SendSignal(COMSIG_COMPONENT_ADDED, src)
-
 	//lazy init the parent's dc list
 	var/list/dc = P.datum_components
 	if(!dc)
@@ -85,6 +47,12 @@
 		else	//only component of this type, no list
 			dc[I] = src
 
+	RegisterWithParent()
+
+// If you want/expect to be moving the component around between parents, use this to register on the parent for signals
+/datum/component/proc/RegisterWithParent()
+	return
+
 /datum/component/proc/Initialize(...)
 	return
 
@@ -94,9 +62,10 @@
 	if(!force)
 		_RemoveFromParent()
 	if(!silent)
-		P.SendSignal(COMSIG_COMPONENT_REMOVING, src)
+		SEND_SIGNAL(P, COMSIG_COMPONENT_REMOVING, src)
 	parent = null
-	LAZYCLEARLIST(signal_procs)
+	for(var/target in signal_procs)
+		UnregisterSignal(target, signal_procs[target])
 	return ..()
 
 /datum/component/proc/_RemoveFromParent()
@@ -115,44 +84,85 @@
 	if(!dc.len)
 		P.datum_components = null
 
-/datum/component/proc/RegisterSignal(sig_type_or_types, proc_or_callback, override = FALSE)
-	if(QDELETED(src))
+	UnregisterFromParent()
+
+/datum/component/proc/UnregisterFromParent()
+	return
+
+/datum/component/proc/RegisterSignal(datum/target, sig_type_or_types, proc_or_callback, override = FALSE)
+	if(QDELETED(src) || QDELETED(target))
 		return
+	
 	var/list/procs = signal_procs
 	if(!procs)
-		procs = list()
-		signal_procs = procs
+		signal_procs = procs = list()
+	if(!procs[target])
+		procs[target] = list()
+	var/list/lookup = target.comp_lookup
+	if(!lookup)
+		target.comp_lookup = lookup = list()
+
+	if(!istype(proc_or_callback, /datum/callback)) //if it wasnt a callback before, it is now
+		proc_or_callback = CALLBACK(src, proc_or_callback)
 
 	var/list/sig_types = islist(sig_type_or_types) ? sig_type_or_types : list(sig_type_or_types)
 	for(var/sig_type in sig_types)
-		if(!override)
-			. = procs[sig_type]
-			if(.)
-				stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
+		if(!override && procs[target][sig_type])
+			stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
 
-		if(!istype(proc_or_callback, /datum/callback)) //if it wasnt a callback before, it is now
-			proc_or_callback = CALLBACK(src, proc_or_callback)
-		procs[sig_type] = proc_or_callback
+		procs[target][sig_type] = proc_or_callback
+
+		if(!lookup[sig_type]) // Nothing has registered here yet
+			lookup[sig_type] = src
+		else if(lookup[sig_type] == src) // We already registered here
+			continue
+		else if(!length(lookup[sig_type])) // One other thing registered here
+			lookup[sig_type] = list(lookup[sig_type]=TRUE)
+			lookup[sig_type][src] = TRUE
+		else // Many other things have registered here
+			lookup[sig_type][src] = TRUE
+
+	enabled = TRUE
+
+/datum/component/proc/UnregisterSignal(datum/target, sig_type_or_types)
+	var/list/lookup = target.comp_lookup
+	if(!signal_procs || !signal_procs[target] || !lookup)
+		return
+	if(!islist(sig_type_or_types))
+		sig_type_or_types = list(sig_type_or_types)
+	for(var/sig in sig_type_or_types)
+		switch(length(lookup[sig]))
+			if(2)
+				lookup[sig] = (lookup[sig]-src)[1]
+			if(1)
+				stack_trace("[target] ([target.type]) somehow has single length list inside comp_lookup")
+				if(src in lookup[sig])
+					lookup -= sig
+					if(!length(lookup))
+						target.comp_lookup = null
+						break
+			if(0)
+				lookup -= sig
+				if(!length(lookup))
+					target.comp_lookup = null
+					break
+			else
+				lookup[sig] -= src
+
+	signal_procs[target] -= sig_type_or_types
+	if(!signal_procs[target].len)
+		signal_procs -= target
 
 /datum/component/proc/InheritComponent(datum/component/C, i_am_original)
 	return
 
-/datum/component/proc/OnTransfer(datum/new_parent)
+/datum/component/proc/PreTransfer()
 	return
 
-/datum/component/proc/AfterComponentActivated()
-	set waitfor = FALSE
+/datum/component/proc/PostTransfer()
 	return
 
 /datum/component/proc/_GetInverseTypeList(our_type = type)
-	#if DM_VERSION >= 513
-	#warning 512 is definitely stable now, remove the old code
-	#endif
-
-	#if DM_VERSION < 512
-	//remove this when we use 512 full time
-	set invisibility = 101
-	#endif
 	//we can do this one simple trick
 	var/current_type = parent_type
 	. = list(our_type, current_type)
@@ -161,43 +171,21 @@
 		current_type = type2parent(current_type)
 		. += current_type
 
-/datum/proc/SendSignal(sigtype, ...)
-	var/list/comps = datum_components
-	if(!comps)
-		return FALSE
-	var/list/arguments = args.Copy()
-	arguments.Cut(1, 2)
-	var/target = comps[/datum/component]
+/datum/proc/_SendSignal(sigtype, list/arguments)
+	var/target = comp_lookup[sigtype]
 	if(!length(target))
 		var/datum/component/C = target
 		if(!C.enabled)
-			return FALSE
-		var/list/sps = C.signal_procs
-		var/datum/callback/CB = LAZYACCESS(sps, sigtype)
-		if(!CB)
-			return FALSE
-		. = CB.InvokeAsync(arglist(arguments))
-		if(.)
-			ComponentActivated(C)
-			C.AfterComponentActivated()
-	else
-		. = FALSE
-		for(var/I in target)
-			var/datum/component/C = I
-			if(!C.enabled)
-				continue
-			var/list/sps = C.signal_procs
-			var/datum/callback/CB = LAZYACCESS(sps, sigtype)
-			if(!CB)
-				continue
-			if(CB.InvokeAsync(arglist(arguments)))
-				ComponentActivated(C)
-				C.AfterComponentActivated()
-				. = TRUE
-
-/datum/proc/ComponentActivated(datum/component/C)
-	set waitfor = FALSE
-	return
+			return NONE
+		var/datum/callback/CB = C.signal_procs[src][sigtype]
+		return CB.InvokeAsync(arglist(arguments))
+	. = NONE
+	for(var/I in target)
+		var/datum/component/C = I
+		if(!C.enabled)
+			continue
+		var/datum/callback/CB = C.signal_procs[src][sigtype]
+		. |= CB.InvokeAsync(arglist(arguments))
 
 /datum/proc/GetComponent(c_type)
 	var/list/dc = datum_components
@@ -228,30 +216,86 @@
 		return list(.)
 
 /datum/proc/AddComponent(new_type, ...)
-	var/nt = new_type
+	var/datum/component/nt = new_type
+	var/dm = initial(nt.dupe_mode)
+	var/dt = initial(nt.dupe_type)
+
+	var/datum/component/old_comp
+	var/datum/component/new_comp
+
+	if(ispath(nt))
+		if(nt == /datum/component)
+			CRASH("[nt] attempted instantiation!")
+		if(!isnum(dm))
+			CRASH("[nt]: Invalid dupe_mode ([dm])!")
+		if(dt && !ispath(dt))
+			CRASH("[nt]: Invalid dupe_type ([dt])!")
+	else
+		new_comp = nt
+
 	args[1] = src
-	var/datum/component/C = new nt(arglist(args))
-	return QDELING(C) ? GetExactComponent(new_type) : C
+
+	if(dm != COMPONENT_DUPE_ALLOWED)
+		if(!dt)
+			old_comp = GetExactComponent(nt)
+		else
+			old_comp = GetComponent(dt)
+		if(old_comp)
+			switch(dm)
+				if(COMPONENT_DUPE_UNIQUE)
+					if(!new_comp)
+						new_comp = new nt(arglist(args))
+					if(!QDELETED(new_comp))
+						old_comp.InheritComponent(new_comp, TRUE)
+						QDEL_NULL(new_comp)
+				if(COMPONENT_DUPE_HIGHLANDER)
+					if(!new_comp)
+						new_comp = new nt(arglist(args))
+					if(!QDELETED(new_comp))
+						new_comp.InheritComponent(old_comp, FALSE)
+						QDEL_NULL(old_comp)
+				if(COMPONENT_DUPE_UNIQUE_PASSARGS)
+					if(!new_comp)
+						var/list/arguments = args.Copy(2)
+						old_comp.InheritComponent(null, TRUE, arguments)
+					else
+						old_comp.InheritComponent(new_comp, TRUE)
+		else if(!new_comp)
+			new_comp = new nt(arglist(args)) // There's a valid dupe mode but there's no old component, act like normal
+	else if(!new_comp)
+		new_comp = new nt(arglist(args)) // Dupes are allowed, act like normal
+
+	if(!old_comp && !QDELETED(new_comp)) // Nothing related to duplicate components happened and the new component is healthy
+		SEND_SIGNAL(src, COMSIG_COMPONENT_ADDED, new_comp)
+		return new_comp
+	return old_comp
 
 /datum/proc/LoadComponent(component_type, ...)
 	. = GetComponent(component_type)
 	if(!.)
 		return AddComponent(arglist(args))
 
-/datum/proc/TakeComponent(datum/component/C)
-	if(!C)
+/datum/component/proc/RemoveComponent()
+	if(!parent)
 		return
-	var/datum/helicopter = C.parent
-	if(helicopter == src)
-		//if we're taking to the same thing no need for anything
+	var/datum/old_parent = parent
+	PreTransfer()
+	_RemoveFromParent()
+	parent = null
+	SEND_SIGNAL(old_parent, COMSIG_COMPONENT_REMOVING, src)
+
+/datum/proc/TakeComponent(datum/component/target)
+	if(!target || target.parent == src)
 		return
-	if(C.OnTransfer(src) == COMPONENT_INCOMPATIBLE)
-		qdel(C)
-		return
-	C._RemoveFromParent()
-	helicopter.SendSignal(COMSIG_COMPONENT_REMOVING, C)
-	C.parent = src
-	C._CheckDupesAndJoinParent()
+	if(target.parent)
+		target.RemoveComponent()
+	target.parent = src
+	if(target.PostTransfer() == COMPONENT_INCOMPATIBLE)
+		var/c_type = target.type
+		qdel(target)
+		CRASH("Incompatible [c_type] transfer attempt to a [type]!")
+	if(target == AddComponent(target))
+		target._JoinParent()
 
 /datum/proc/TransferComponents(datum/target)
 	var/list/dc = datum_components

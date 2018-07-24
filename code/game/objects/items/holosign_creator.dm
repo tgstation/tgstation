@@ -11,7 +11,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	var/list/signs = list()
 	var/max_signs = 10
 	var/creation_time = 0 //time to create a holosign in deciseconds.
@@ -19,6 +19,7 @@
 	var/holocreator_busy = FALSE //to prevent placing multiple holo barriers at once
 
 /obj/item/holosign_creator/afterattack(atom/target, mob/user, flag)
+	. = ..()
 	if(flag)
 		if(!check_allowed_items(target, 1))
 			return
@@ -122,4 +123,3 @@
 		for(var/H in signs)
 			qdel(H)
 		to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
-

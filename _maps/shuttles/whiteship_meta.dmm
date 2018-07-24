@@ -17,6 +17,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "ae" = (
@@ -39,15 +40,11 @@
 	name = "NT Recovery White-Ship";
 	port_direction = 8;
 	preferred_direction = 4;
-	roundstart_move = "whiteship_away";
-	timid = 1;
 	width = 28
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
-"af" = (
-/turf/template_noop,
-/area/template_noop)
 "ag" = (
 /obj/structure/shuttle/engine/propulsion/left{
 	dir = 8
@@ -151,7 +148,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ao" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_x = -32
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -185,7 +182,7 @@
 /obj/item/roller{
 	pixel_y = 4
 	},
-/obj/item/device/healthanalyzer,
+/obj/item/healthanalyzer,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -202,7 +199,7 @@
 	},
 /obj/item/grenade/chem_grenade/metalfoam,
 /obj/item/relic,
-/obj/item/device/t_scanner,
+/obj/item/t_scanner,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 3;
 	name = "3maintenance loot spawner"
@@ -219,8 +216,7 @@
 /obj/item/cigbutt,
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
-	name = "spare equipment crate";
-	opened = 1
+	name = "spare equipment crate"
 	},
 /obj/item/tank/internals/oxygen/red,
 /obj/item/tank/internals/air,
@@ -243,11 +239,11 @@
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/storage/toolbox/emergency,
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_x = -6;
 	pixel_y = -2
 	},
@@ -320,10 +316,10 @@
 /obj/structure/table,
 /obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility,
-/obj/item/device/radio/off,
-/obj/item/device/radio/off,
-/obj/item/device/radio/off,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
+/obj/item/radio/off,
+/obj/item/radio/off,
+/obj/item/radio/off,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -559,7 +555,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "aT" = (
-/obj/structure/sign/restroom,
+/obj/structure/sign/departments/restroom,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "aU" = (
@@ -605,10 +601,13 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aY" = (
-/obj/structure/sign/cargo,
+/obj/structure/sign/departments/cargo,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "aZ" = (
@@ -691,7 +690,7 @@
 	name = "dust"
 	},
 /obj/structure/table,
-/obj/item/device/camera,
+/obj/item/camera,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bi" = (
@@ -730,7 +729,7 @@
 /area/shuttle/abandoned)
 "bl" = (
 /obj/structure/reagent_dispensers/fueltank,
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_x = -32
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -754,7 +753,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bo" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -807,7 +806,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/item/device/gps{
+/obj/item/gps{
 	gpstag = "NTREC1";
 	pixel_x = -1;
 	pixel_y = 2
@@ -822,10 +821,13 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bu" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -869,7 +871,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "by" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -1020,7 +1022,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bL" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -1085,7 +1087,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bR" = (
-/obj/structure/sign/science{
+/obj/structure/sign/departments/science{
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -1108,7 +1110,7 @@
 	name = "dust"
 	},
 /obj/structure/table,
-/obj/item/device/megaphone,
+/obj/item/megaphone,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bU" = (
@@ -1118,7 +1120,6 @@
 	},
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
 	dir = 1;
-	station_lock_override = 1;
 	view_range = 15;
 	x_offset = -3;
 	y_offset = -7
@@ -1138,7 +1139,7 @@
 /area/shuttle/abandoned)
 "bW" = (
 /obj/structure/table,
-/obj/item/device/radio/off{
+/obj/item/radio/off{
 	pixel_y = 6
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -1148,7 +1149,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bX" = (
-/obj/structure/sign/botany,
+/obj/structure/sign/departments/botany,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "bY" = (
@@ -1182,7 +1183,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cb" = (
-/obj/structure/sign/bluecross_2,
+/obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cc" = (
@@ -1292,7 +1293,7 @@
 /area/shuttle/abandoned)
 "cl" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/blood/empty{
+/obj/item/reagent_containers/blood{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -1330,7 +1331,7 @@
 	name = "dust"
 	},
 /obj/item/wirecutters,
-/obj/item/device/plant_analyzer,
+/obj/item/plant_analyzer,
 /obj/item/reagent_containers/glass/bucket,
 /obj/machinery/light/small/built{
 	dir = 8
@@ -1424,7 +1425,6 @@
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	pixel_x = -28;
-	req_access_txt = "0";
 	use_power = 0
 	},
 /obj/machinery/iv_drip,
@@ -1631,23 +1631,36 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
+"YT" = (
+/obj/machinery/door/airlock/titanium{
+	name = "recovery shuttle external airlock"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
 
 (1,1,1) = {"
 aa
-af
-af
-af
-af
+aa
+aa
+aa
+aa
 ab
 ab
-ad
+YT
 ab
 ab
-af
-af
-af
-af
-af
+aa
+aa
+aa
+aa
+aa
 "}
 (2,1,1) = {"
 aa
@@ -1664,7 +1677,7 @@ au
 au
 au
 cA
-af
+aa
 "}
 (3,1,1) = {"
 ab
@@ -2025,9 +2038,9 @@ ab
 "}
 (24,1,1) = {"
 aa
-af
-af
-af
+aa
+aa
+aa
 ac
 bj
 aB
@@ -2035,16 +2048,16 @@ bH
 bN
 bV
 ac
-af
-af
-af
-af
+aa
+aa
+aa
+aa
 "}
 (25,1,1) = {"
-af
-af
-af
-af
+aa
+aa
+aa
+aa
 ac
 bk
 bs
@@ -2052,16 +2065,16 @@ bI
 bO
 bW
 ac
-af
-af
-af
-af
+aa
+aa
+aa
+aa
 "}
 (26,1,1) = {"
 aa
-af
-af
-af
+aa
+aa
+aa
 ba
 ac
 ac
@@ -2069,10 +2082,10 @@ ac
 ac
 ac
 ba
-af
-af
-af
-af
+aa
+aa
+aa
+aa
 "}
 (27,1,1) = {"
 aa
@@ -2092,19 +2105,19 @@ aa
 aa
 "}
 (28,1,1) = {"
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}

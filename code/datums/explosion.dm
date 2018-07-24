@@ -1,12 +1,10 @@
 #define EXPLOSION_THROW_SPEED 4
-#define CITYOFCOGS_CAP_MULTIPLIER 0.5
-#define MINING_CAP_MULTIPLIER 3
 
 GLOBAL_LIST_EMPTY(explosions)
 //Against my better judgement, I will return the explosion datum
 //If I see any GC errors for it I will find you
 //and I will gib you
-/proc/explosion(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0 , silent = FALSE, smoke = FALSE)
+/proc/explosion(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0, silent = FALSE, smoke = FALSE)
 	return new /datum/explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
 
 //This datum creates 3 async tasks
@@ -16,6 +14,7 @@ GLOBAL_LIST_EMPTY(explosions)
 
 /datum/explosion
 	var/explosion_id
+	var/atom/explosion_source
 	var/started_at
 	var/running = TRUE
 	var/stopped = 0		//This is the number of threads stopped !DOESN'T COUNT THREAD 2!
@@ -39,6 +38,7 @@ GLOBAL_LIST_EMPTY(explosions)
 
 	var/id = ++id_counter
 	explosion_id = id
+	explosion_source = epicenter
 
 	epicenter = get_turf(epicenter)
 	if(!epicenter)
@@ -54,15 +54,14 @@ GLOBAL_LIST_EMPTY(explosions)
 	var/orig_dev_range = devastation_range
 	var/orig_heavy_range = heavy_impact_range
 	var/orig_light_range = light_impact_range
-	
+
+	var/orig_max_distance = max(devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range)
+
 	//Zlevel specific bomb cap multiplier
-	var/cap_multiplier = 1
-	switch(epicenter.z)
-		if(ZLEVEL_CITYOFCOGS)
-			cap_multiplier = CITYOFCOGS_CAP_MULTIPLIER
-		if(ZLEVEL_MINING)
-			cap_multiplier = MINING_CAP_MULTIPLIER
-	
+	var/cap_multiplier = SSmapping.level_trait(epicenter.z, ZTRAIT_BOMBCAP_MULTIPLIER)
+	if (isnull(cap_multiplier))
+		cap_multiplier = 1
+
 	if(!ignorecap)
 		devastation_range = min(GLOB.MAX_EX_DEVESTATION_RANGE * cap_multiplier, devastation_range)
 		heavy_impact_range = min(GLOB.MAX_EX_HEAVY_RANGE * cap_multiplier, heavy_impact_range)
@@ -86,8 +85,14 @@ GLOBAL_LIST_EMPTY(explosions)
 	var/max_range = max(devastation_range, heavy_impact_range, light_impact_range, flame_range)
 
 	if(adminlog)
-		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area: [get_area(epicenter)] [ADMIN_COORDJMP(epicenter)]")
-		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z])")
+		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [ADMIN_VERBOSEJMP(epicenter)]")
+		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [AREACOORD(epicenter)]")
+
+	var/x0 = epicenter.x
+	var/y0 = epicenter.y
+	var/z0 = epicenter.z
+	var/area/areatype = get_area(epicenter)
+	SSblackbox.record_feedback("associative", "explosion", 1, list("dev" = devastation_range, "heavy" = heavy_impact_range, "light" = light_impact_range, "flash" = flash_range, "flame" = flame_range, "orig_dev" = orig_dev_range, "orig_heavy" = orig_heavy_range, "orig_light" = orig_light_range, "x" = x0, "y" = y0, "z" = z0, "area" = areatype.type, "time" = time_stamp("YYYY-MM-DD hh:mm:ss", 1)))
 
 	// Play sounds; we want sounds to be different depending on distance so we will manually do it ourselves.
 	// Stereo users will also hear the direction of the explosion!
@@ -99,10 +104,6 @@ GLOBAL_LIST_EMPTY(explosions)
 	far_dist += heavy_impact_range * 5
 	far_dist += devastation_range * 20
 
-	var/x0 = epicenter.x
-	var/y0 = epicenter.y
-	var/z0 = epicenter.z
-
 	if(!silent)
 		var/frequency = get_rand_frequency()
 		var/sound/explosion_sound = sound(get_sfx("explosion"))
@@ -113,14 +114,21 @@ GLOBAL_LIST_EMPTY(explosions)
 			var/turf/M_turf = get_turf(M)
 			if(M_turf && M_turf.z == z0)
 				var/dist = get_dist(M_turf, epicenter)
+				var/baseshakeamount
+				if(orig_max_distance - dist > 0)
+					baseshakeamount = sqrt((orig_max_distance - dist)*0.1)
 				// If inside the blast radius + world.view - 2
 				if(dist <= round(max_range + world.view - 2, 1))
 					M.playsound_local(epicenter, null, 100, 1, frequency, falloff = 5, S = explosion_sound)
+					if(baseshakeamount > 0)
+						shake_camera(M, 25, CLAMP(baseshakeamount, 0, 10))
 				// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
 				else if(dist <= far_dist)
-					var/far_volume = Clamp(far_dist, 30, 50) // Volume is based on explosion size and dist
+					var/far_volume = CLAMP(far_dist, 30, 50) // Volume is based on explosion size and dist
 					far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
 					M.playsound_local(epicenter, null, far_volume, 1, frequency, falloff = 5, S = far_explosion_sound)
+					if(baseshakeamount > 0)
+						shake_camera(M, 10, CLAMP(baseshakeamount*0.25, 0, 2.5))
 			EX_PREPROCESS_CHECK_TICK
 
 	//postpone processing for a bit
@@ -187,13 +195,14 @@ GLOBAL_LIST_EMPTY(explosions)
 		//------- EX_ACT AND TURF FIRES -------
 
 		if(T == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
-			var/list/items = list() 
+			var/list/items = list()
 			for(var/I in T)
 				var/atom/A = I
 				items += A.GetAllContents()
 			for(var/O in items)
 				var/atom/A = O
-				A.ex_act(dist)
+				if(!QDELETED(A))
+					A.ex_act(dist)
 
 		if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 			new /obj/effect/hotspot(T) //Mostly for ambience!
@@ -316,6 +325,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	if(stopped < 2)	//wait for main thread and spiral_range thread
 		return QDEL_HINT_IWILLGC
 	GLOB.explosions -= src
+	explosion_source = null
 	return ..()
 
 /client/proc/check_bomb_impacts()
@@ -348,7 +358,7 @@ GLOBAL_LIST_EMPTY(explosions)
 			heavy = 5
 			light = 7
 		if("Custom Bomb")
-			dev = input("Devestation range (Tiles):") as num
+			dev = input("Devastation range (Tiles):") as num
 			heavy = input("Heavy impact range (Tiles):") as num
 			light = input("Light impact range (Tiles):") as num
 
@@ -391,7 +401,7 @@ GLOBAL_LIST_EMPTY(explosions)
 		A.color = null
 		A.maptext = ""
 
-/proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = 1, ignorecap = 1, flame_range = 0 ,silent = 0, smoke = 1)
+/proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = TRUE, ignorecap = TRUE, flame_range = 0, silent = FALSE, smoke = TRUE)
 	if(!power)
 		return
 	var/range = 0
@@ -406,6 +416,3 @@ GLOBAL_LIST_EMPTY(explosions)
 // 10 explosion power is a (1, 3, 6) explosion.
 // 5 explosion power is a (0, 1, 3) explosion.
 // 1 explosion power is a (0, 0, 1) explosion.
-
-#undef CITYOFCOGS_CAP_MULTIPLIER
-#undef MINING_CAP_MULTIPLIER

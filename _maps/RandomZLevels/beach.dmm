@@ -144,7 +144,7 @@
 /area/awaymission/beach)
 "aA" = (
 /obj/machinery/vending/boozeomat{
-	emagged = 1
+	set_obj_flags = "EMAGGED"
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
@@ -162,8 +162,8 @@
 	uniform = /obj/item/clothing/under/rank/bartender;
 	death = 0;
 	desc = "Looks secure.";
-	flavour_text = "You are a bartender for the beach!";
-	icon = 'icons/obj/cryogenic2.dmi';
+	flavour_text = "<span class='big bold'>You are a bartender for the beach!</span>";
+	icon = 'icons/obj/machines/sleeper.dmi';
 	icon_state = "sleeper";
 	mob_name = "Jerry Thomas";
 	name = "bartenders cryosleeper";
@@ -233,9 +233,6 @@
 /obj/effect/overlay/palmtree_r,
 /turf/open/floor/plating/beach/sand,
 /area/space)
-"aR" = (
-/turf/open/floor/plating/beach/sand,
-/area/awaymission/beach)
 "aS" = (
 /obj/machinery/door/airlock/sandstone,
 /turf/open/floor/wood,

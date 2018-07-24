@@ -651,6 +651,15 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_transform_clown
+	name = "Cyborg Upgrade (Clown Module)"
+	id = "borg_transform_clown"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/transform/clown
+	materials = list(MAT_METAL=10000, MAT_GLASS=15000, MAT_BANANIUM = 1000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
 /datum/design/borg_upgrade_selfrepair
 	name = "Cyborg Upgrade (Self-repair)"
 	id = "borg_upgrade_selfrepair"
@@ -696,6 +705,33 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_upgrade_trashofholding
+	name = "Cyborg Upgrade (Trash Bag of Holding)"
+	id = "borg_upgrade_trashofholding"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/tboh
+	materials = list(MAT_METAL=10000, MAT_GOLD=1500, MAT_URANIUM=250, MAT_PLASMA=1500)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_upgrade_advancedmop
+	name = "Cyborg Upgrade (Advanced Mop)"
+	id = "borg_upgrade_advancedmop"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/amop
+	materials = list(MAT_METAL=10000, MAT_GLASS=200, MAT_TITANIUM=1000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_upgrade_expand
+	name = "Cyborg Upgrade (Expand)"
+	id = "borg_upgrade_expand"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/expand
+	materials = list(MAT_METAL=200000, MAT_TITANIUM=5000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
 /datum/design/boris_ai_controller
 	name = "B.O.R.I.S. AI-Cyborg Remote Control Module"
 	id = "borg_ai_control"
@@ -704,6 +740,24 @@
 	materials = list(MAT_METAL = 1200, MAT_GLASS = 1500, MAT_GOLD = 200)
 	construction_time = 50
 	category = list("Misc")
+
+/datum/design/borg_upgrade_rped
+	name = "Cyborg Upgrade (RPED)"
+	id = "borg_upgrade_rped"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/rped
+	materials = list(MAT_METAL = 10000, MAT_GLASS = 5000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_upgrade_pinpointer
+	name = "Cyborg Upgrade (Crew pinpointer)"
+	id = "borg_upgrade_pinpointer"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/pinpointer
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
 
 //Misc
 /datum/design/mecha_tracking
@@ -724,17 +778,6 @@
 	construction_time = 50
 	category = list("Misc")
 
-/datum/design/drone_shell
-	name = "Drone Shell"
-	desc = "A shell of a maintenance drone, an expendable robot built to perform station repairs."
-	id = "drone_shell"
-	build_type = MECHFAB | PROTOLATHE
-	materials = list(MAT_METAL = 800, MAT_GLASS = 350)
-	construction_time=150
-	build_path = /obj/item/drone_shell
-	category = list("Misc")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
 /datum/design/synthetic_flash
 	name = "Flash"
 	desc = "When a problem arises, SCIENCE is the solution."
@@ -742,5 +785,5 @@
 	build_type = MECHFAB
 	materials = list(MAT_METAL = 750, MAT_GLASS = 750)
 	construction_time = 100
-	build_path = /obj/item/device/assembly/flash/handheld
+	build_path = /obj/item/assembly/flash/handheld
 	category = list("Misc")

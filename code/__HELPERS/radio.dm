@@ -1,10 +1,10 @@
-// Ensure the frequency is within bounds of what it should be sending/recieving at
+// Ensure the frequency is within bounds of what it should be sending/receiving at
 /proc/sanitize_frequency(frequency, free = FALSE)
 	. = round(frequency)
 	if(free)
-		. = Clamp(frequency, MIN_FREE_FREQ, MAX_FREE_FREQ)
+		. = CLAMP(frequency, MIN_FREE_FREQ, MAX_FREE_FREQ)
 	else
-		. = Clamp(frequency, MIN_FREQ, MAX_FREQ)
+		. = CLAMP(frequency, MIN_FREQ, MAX_FREQ)
 	if(!(. % 2)) // Ensure the last digit is an odd number
 		. += 1
 

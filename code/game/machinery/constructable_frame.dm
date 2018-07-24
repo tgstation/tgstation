@@ -4,7 +4,7 @@
 	icon_state = "box_0"
 	density = TRUE
 	max_integrity = 250
-	var/obj/item/circuitboard/circuit = null
+	var/obj/item/circuitboard/machine/circuit = null
 	var/state = 1
 
 /obj/structure/frame/examine(user)
@@ -81,24 +81,20 @@
 				to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
 				return
 			if(istype(P, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/C = P
-				if(C.get_amount() >= 5)
-					playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
-					to_chat(user, "<span class='notice'>You start to add cables to the frame...</span>")
-					if(do_after(user, 20*P.toolspeed, target = src))
-						if(C.get_amount() >= 5 && state == 1)
-							C.use(5)
-							to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
-							state = 2
-							icon_state = "box_1"
-				else
-					to_chat(user, "<span class='warning'>You need five length of cable to wire the frame!</span>")
+				if(!P.tool_start_check(user, amount=5))
+					return
+
+				to_chat(user, "<span class='notice'>You start to add cables to the frame...</span>")
+				if(P.use_tool(src, user, 20, volume=50, amount=5))
+					to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
+					state = 2
+					icon_state = "box_1"
+
 				return
 			if(istype(P, /obj/item/screwdriver) && !anchored)
-				playsound(src.loc, P.usesound, 50, 1)
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
 									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
-				if(do_after(user, 40*P.toolspeed, target = src))
+				if(P.use_tool(src, user, 40, volume=50))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
 						var/obj/item/stack/sheet/metal/M = new (loc, 5)
@@ -107,27 +103,25 @@
 				return
 			if(istype(P, /obj/item/wrench))
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				playsound(src.loc, P.usesound, 75, 1)
-				if(do_after(user, 40*P.toolspeed, target = src))
+				if(P.use_tool(src, user, 40, volume=75))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
-						anchored = !anchored
+						setAnchored(!anchored)
 				return
 
 		if(2)
 			if(istype(P, /obj/item/wrench))
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				playsound(src.loc, P.usesound, 75, 1)
-				if(do_after(user, 40*P.toolspeed, target = src))
+				if(P.use_tool(src, user, 40, volume=75))
 					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
-					anchored = !anchored
+					setAnchored(!anchored)
 				return
 
 			if(istype(P, /obj/item/circuitboard/machine))
-				if(!anchored)
+				var/obj/item/circuitboard/machine/B = P
+				if(!anchored && B.needs_anchored)
 					to_chat(user, "<span class='warning'>The frame needs to be secured first!</span>")
 					return
-				var/obj/item/circuitboard/machine/B = P
 				if(!user.transferItemToLoc(B, src))
 					return
 				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
@@ -145,31 +139,37 @@
 				return
 
 			if(istype(P, /obj/item/wirecutters))
-				playsound(src.loc, P.usesound, 50, 1)
+				P.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 1
 				icon_state = "box_0"
-				var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( src.loc )
-				A.amount = 5
+				new /obj/item/stack/cable_coil(drop_location(), 5)
 				return
 
 		if(3)
 			if(istype(P, /obj/item/crowbar))
-				playsound(src.loc, P.usesound, 50, 1)
+				P.play_tool_sound(src)
 				state = 2
-				circuit.loc = src.loc
+				circuit.forceMove(drop_location())
 				components.Remove(circuit)
 				circuit = null
 				if(components.len == 0)
 					to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
 				else
 					to_chat(user, "<span class='notice'>You remove the circuit board and other components.</span>")
-					for(var/atom/movable/A in components)
-						A.loc = src.loc
+					for(var/atom/movable/AM in components)
+						AM.forceMove(drop_location())
 				desc = initial(desc)
 				req_components = null
 				components = null
 				icon_state = "box_1"
+				return
+
+			if(istype(P, /obj/item/wrench) && !circuit.needs_anchored)
+				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
+				if(P.use_tool(src, user, 40, volume=75))
+					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
+					setAnchored(!anchored)
 				return
 
 			if(istype(P, /obj/item/screwdriver))
@@ -179,16 +179,17 @@
 						component_check = 0
 						break
 				if(component_check)
-					playsound(src.loc, P.usesound, 50, 1)
-					var/obj/machinery/new_machine = new src.circuit.build_path(src.loc, 1)
+					P.play_tool_sound(src)
+					var/obj/machinery/new_machine = new circuit.build_path(loc, 1)
+					new_machine.setAnchored(anchored)
 					new_machine.on_construction()
 					for(var/obj/O in new_machine.component_parts)
 						qdel(O)
 					new_machine.component_parts = list()
 					for(var/obj/O in src)
-						O.loc = null
+						O.moveToNullspace()
 						new_machine.component_parts += O
-					circuit.loc = null
+					circuit.moveToNullspace()
 					new_machine.RefreshParts()
 					qdel(src)
 				return
@@ -199,7 +200,7 @@
 				var/list/part_list = list()
 
 				//Assemble a list of current parts, then sort them by their rating!
-				for(var/obj/item/stock_parts/co in replacer)
+				for(var/obj/item/co in replacer)
 					part_list += co
 				//Sort the parts. This ensures that higher tier items are applied first.
 				part_list = sortTim(part_list, /proc/cmp_rped_sort)
@@ -207,13 +208,28 @@
 				for(var/path in req_components)
 					while(req_components[path] > 0 && (locate(path) in part_list))
 						var/obj/item/part = (locate(path) in part_list)
-						added_components[part] = path
-						replacer.remove_from_storage(part, src)
-						req_components[path]--
 						part_list -= part
+						if(istype(part,/obj/item/stack))
+							var/obj/item/stack/S = part
+							var/used_amt = min(round(S.get_amount()), req_components[path])
+							if(!used_amt || !S.use(used_amt))
+								continue
+							var/NS = new S.merge_type(src, used_amt)
+							added_components[NS] = path
+							req_components[path] -= used_amt
+						else
+							added_components[part] = path
+							if(SEND_SIGNAL(replacer, COMSIG_TRY_STORAGE_TAKE, part, src))
+								req_components[path]--
 
-				for(var/obj/item/stock_parts/part in added_components)
-					components += part
+				for(var/obj/item/part in added_components)
+					if(istype(part,/obj/item/stack))
+						var/obj/item/stack/S = part
+						var/obj/item/stack/NS = locate(S.merge_type) in components //find a stack to merge with
+						if(NS)
+							S.merge(NS)
+					if(!QDELETED(part)) //If we're a stack and we merged we might not exist anymore
+						components += part
 					to_chat(user, "<span class='notice'>[part.name] applied.</span>")
 				if(added_components.len)
 					replacer.play_rped_sound()
@@ -248,7 +264,6 @@
 				return 0
 	if(user.a_intent == INTENT_HARM)
 		return ..()
-
 
 /obj/structure/frame/machine/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

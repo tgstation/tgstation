@@ -15,7 +15,7 @@
   * return UI_state The state of the UI.
  **/
 /datum/proc/ui_status(mob/user, datum/ui_state/state)
-	var/src_object = ui_host()
+	var/src_object = ui_host(user)
 	. = UI_CLOSE
 	if(!state)
 		return
@@ -26,7 +26,8 @@
 			. = max(., UI_INTERACTIVE)
 
 		// Regular ghosts can always at least view if in range.
-		if(get_dist(src_object, user) < user.client.view)
+		var/clientviewlist = getviewsize(user.client.view)
+		if(get_dist(src_object, user) < max(clientviewlist[1],clientviewlist[2]))
 			. = max(., UI_UPDATE)
 
 	// Check if the state allows interaction
@@ -69,7 +70,7 @@
 	return ..()
 
 /mob/living/silicon/robot/shared_ui_interaction(src_object)
-	if(cell.charge <= 0 || lockcharge) // Disable UIs if the Borg is unpowered or locked.
+	if(!cell || cell.charge <= 0 || lockcharge) // Disable UIs if the Borg is unpowered or locked.
 		return UI_DISABLED
 	return ..()
 

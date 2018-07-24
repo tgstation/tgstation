@@ -21,7 +21,7 @@
 	item_type = /obj/item/twohanded/pitchfork/demonic/ascended
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/violin
-	item_type = /obj/item/device/instrument/violin/golden
+	item_type = /obj/item/instrument/violin/golden
 	desc = "A devil's instrument of choice.  Use this to summon/unsummon your golden violin."
 	invocation_type = "whisper"
 	invocation = "I aint have this much fun since Georgia."
@@ -118,14 +118,15 @@
 				revert_cast()
 				return ..()
 		else
-			user.notransform = 1
+			user.notransform = TRUE
 			user.fakefire()
 			to_chat(src, "<span class='warning'>You begin to phase back into sinful flames.</span>")
 			if(do_mob(user,user,150))
 				user.infernalphaseout()
 			else
 				to_chat(user, "<span class='warning'>You must remain still while exiting.</span>")
-				user.ExtinguishMob()
+				user.notransform = FALSE
+				user.fakefireextinguish()
 		start_recharge()
 		return
 	revert_cast()
@@ -192,9 +193,11 @@
 	for(var/mob/living/carbon/human/H in targets)
 		if(!H.mind)
 			continue
-		if(locate(/datum/objective/sintouched) in H.mind.objectives)
+		if(H.mind.has_antag_datum(/datum/antagonist/sintouched))
 			continue
-		H.influenceSin()
+		if(H.anti_magic_check(FALSE, TRUE))
+			continue
+		H.mind.add_antag_datum(/datum/antagonist/sintouched)
 		H.Knockdown(400)
 
 

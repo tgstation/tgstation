@@ -5,21 +5,20 @@
 	icon_state = "cart"
 	anchored = FALSE
 	density = TRUE
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	//copypaste sorry
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 	var/obj/item/storage/bag/trash/mybag	= null
 	var/obj/item/mop/mymop = null
 	var/obj/item/reagent_containers/spray/cleaner/myspray = null
-	var/obj/item/device/lightreplacer/myreplacer = null
+	var/obj/item/lightreplacer/myreplacer = null
 	var/signs = 0
 	var/const/max_signs = 4
 
 
-/obj/structure/janitorialcart/New()
+/obj/structure/janitorialcart/Initialize()
+	. = ..()
 	create_reagents(100)
-	..()
-
 
 /obj/structure/janitorialcart/proc/wet_mop(obj/item/mop, mob/user)
 	if(reagents.total_volume < 1)
@@ -65,9 +64,9 @@
 			update_icon()
 		else
 			to_chat(user, fail_msg)
-	else if(istype(I, /obj/item/device/lightreplacer))
+	else if(istype(I, /obj/item/lightreplacer))
 		if(!myreplacer)
-			var/obj/item/device/lightreplacer/l=I
+			var/obj/item/lightreplacer/l=I
 			l.janicart_insert(user,src)
 		else
 			to_chat(user, fail_msg)
@@ -82,7 +81,7 @@
 		mybag.attackby(I, user)
 	else if(istype(I, /obj/item/crowbar))
 		user.visible_message("[user] begins to empty the contents of [src].", "<span class='notice'>You begin to empty the contents of [src]...</span>")
-		if(do_after(user, 30*I.toolspeed, target = src))
+		if(I.use_tool(src, user, 30))
 			to_chat(usr, "<span class='notice'>You empty the contents of [src]'s bucket onto the floor.</span>")
 			reagents.reaction(src.loc)
 			src.reagents.clear_reagents()
@@ -90,6 +89,9 @@
 		return ..()
 
 /obj/structure/janitorialcart/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	user.set_machine(src)
 	var/dat
 	if(mybag)

@@ -1,24 +1,26 @@
 /obj/docking_port/mobile/assault_pod
 	name = "assault pod"
 	id = "steel_rain"
+	timid = FALSE
 	dwidth = 3
 	width = 7
 	height = 7
 
 /obj/docking_port/mobile/assault_pod/request()
-	if(z == initial(src.z)) //No launching pods that have already launched
+	if(!(z in SSmapping.levels_by_trait(ZTRAIT_STATION))) //No launching pods that have already launched
 		return ..()
 
 
-/obj/docking_port/mobile/assault_pod/dock(obj/docking_port/stationary/S1)
+/obj/docking_port/mobile/assault_pod/initiate_docking(obj/docking_port/stationary/S1)
 	. = ..()
 	if(!istype(S1, /obj/docking_port/stationary/transit))
 		playsound(get_turf(src.loc), 'sound/effects/explosion1.ogg',50,1)
 
 
 
-/obj/item/device/assault_pod
-	name = "Assault Pod Targetting Device"
+/obj/item/assault_pod
+	name = "Assault Pod Targeting Device"
+	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-red"
 	item_state = "radio"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
@@ -32,7 +34,7 @@
 	var/lz_dir = 1
 
 
-/obj/item/device/assault_pod/attack_self(mob/living/user)
+/obj/item/assault_pod/attack_self(mob/living/user)
 	var/target_area
 	target_area = input("Area to land", "Select a Landing Zone", target_area) in GLOB.teleportlocs
 	var/area/picked_area = GLOB.teleportlocs[target_area]

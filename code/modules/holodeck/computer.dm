@@ -90,7 +90,7 @@
 	var/list/data = list()
 
 	data["default_programs"] = program_cache
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		data["emagged"] = TRUE
 		data["emag_programs"] = emag_programs
 	data["program"] = program
@@ -111,10 +111,10 @@
 			if(A)
 				load_program(A)
 		if("safety")
-			emagged = !emagged
-			if(emagged && program && emag_programs[program.name])
+			obj_flags ^= EMAGGED
+			if((obj_flags & EMAGGED) && program && emag_programs[program.name])
 				emergency_shutdown()
-			nerf(emagged)
+			nerf(obj_flags & EMAGGED)
 
 /obj/machinery/computer/holodeck/process()
 	if(damaged && prob(10))
@@ -136,9 +136,9 @@
 			if(prob(30))
 				do_sparks(2, 1, T)
 			T.ex_act(EXPLODE_LIGHT)
-			T.hotspot_expose(1000,500,1)
+			T.hotspot_expose(700,25,1)
 
-	if(!emagged)
+	if(!(obj_flags & EMAGGED))
 		for(var/item in spawned)
 			if(!(get_turf(item) in linked))
 				derez(item, 0)
@@ -149,21 +149,23 @@
 	active_power_usage = 50 + spawned.len * 3 + effects.len * 5
 
 /obj/machinery/computer/holodeck/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	if(!LAZYLEN(emag_programs))
 		to_chat(user, "[src] does not seem to have a card swipe port. It must be an inferior model.")
 		return
 	playsound(src, "sparks", 75, 1)
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	to_chat(user, "<span class='warning'>You vastly increase projector power and override the safety and security protocols.</span>")
 	to_chat(user, "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator.")
 	log_game("[key_name(user)] emagged the Holodeck Control Console")
-	nerf(!emagged)
+	nerf(!(obj_flags & EMAGGED))
 
 /obj/machinery/computer/holodeck/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	emergency_shutdown()
-	return ..()
 
 /obj/machinery/computer/holodeck/ex_act(severity, target)
 	emergency_shutdown()
@@ -245,7 +247,7 @@
 	// note nerfing does not yet work on guns, should
 	// should also remove/limit/filter reagents?
 	// this is an exercise left to others I'm afraid.  -Sayu
-	spawned = A.copy_contents_to(linked, 1, nerf_weapons = !emagged)
+	spawned = A.copy_contents_to(linked, 1, nerf_weapons = !(obj_flags & EMAGGED))
 	for(var/obj/machinery/M in spawned)
 		M.flags_1 |= NODECONSTRUCT_1
 	for(var/obj/structure/S in spawned)
@@ -270,7 +272,7 @@
 
 /obj/machinery/computer/holodeck/proc/derez(obj/O, silent = TRUE, forced = FALSE)
 	// Emagging a machine creates an anomaly in the derez systems.
-	if(O && emagged && !stat && !forced)
+	if(O && (obj_flags & EMAGGED) && !stat && !forced)
 		if((ismob(O) || ismob(O.loc)) && prob(50))
 			addtimer(CALLBACK(src, .proc/derez, O, silent), 50) // may last a disturbingly long time
 			return

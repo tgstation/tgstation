@@ -9,7 +9,6 @@
 	icon = 'icons/obj/machines/shuttle_manipulator.dmi'
 	icon_state = "holograph_on"
 
-	anchored = TRUE
 	density = TRUE
 
 	// UI state variables
@@ -23,6 +22,14 @@
 /obj/machinery/shuttle_manipulator/Initialize()
 	. = ..()
 	update_icon()
+	SSshuttle.manipulator = src
+
+/obj/machinery/shuttle_manipulator/Destroy(force)
+	if(!force)
+		. = QDEL_HINT_LETMELIVE
+	else
+		SSshuttle.manipulator = null
+		. = ..()
 
 /obj/machinery/shuttle_manipulator/update_icon()
 	cut_overlays()
@@ -32,6 +39,10 @@
 	hologram_ship.pixel_y = 27
 	add_overlay(hologram_projection)
 	add_overlay(hologram_ship)
+
+/obj/machinery/shuttle_manipulator/can_interact(mob/user)
+	// Only admins can use this, but they can use it from anywhere
+	return user.client && check_rights_for(user.client, R_ADMIN)
 
 /obj/machinery/shuttle_manipulator/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.admin_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -148,8 +159,7 @@
 				if(M.id == params["id"] && M.timer && M.timeLeft() >= 50)
 					M.setTimer(50)
 					. = TRUE
-					message_admins("[key_name_admin(usr)] fast travelled \
-						[M]")
+					message_admins("[key_name_admin(usr)] fast travelled [M]")
 					log_admin("[key_name(usr)] fast travelled [M]")
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[M.name]")
 					break
@@ -174,16 +184,13 @@
 				var/obj/docking_port/mobile/mdp = action_load(S)
 				if(mdp)
 					user.forceMove(get_turf(mdp))
-					message_admins("[key_name_admin(usr)] loaded [mdp] \
-						with the shuttle manipulator.")
-					log_admin("[key_name(usr)] loaded [mdp] with the \
-						shuttle manipulator.</span>")
+					message_admins("[key_name_admin(usr)] loaded [mdp] with the shuttle manipulator.")
+					log_admin("[key_name(usr)] loaded [mdp] with the shuttle manipulator.</span>")
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
 
 	update_icon()
 
-/obj/machinery/shuttle_manipulator/proc/action_load(
-	datum/map_template/shuttle/loading_template)
+/obj/machinery/shuttle_manipulator/proc/action_load(datum/map_template/shuttle/loading_template, obj/docking_port/stationary/destination_port)
 	// Check for an existing preview
 	if(preview_shuttle && (loading_template != preview_template))
 		preview_shuttle.jumpToNullSpace()
@@ -199,16 +206,15 @@
 	var/mode = SHUTTLE_IDLE
 	var/obj/docking_port/stationary/D
 
-	if(existing_shuttle)
+	if(istype(destination_port))
+		D = destination_port
+	else if(existing_shuttle)
 		timer = existing_shuttle.timer
 		mode = existing_shuttle.mode
 		D = existing_shuttle.get_docked()
-	else
-		D = preview_shuttle.findRoundstartDock()
 
 	if(!D)
-		var/m = "No dock found for preview shuttle, aborting."
-		WARNING(m)
+		var/m = "No dock found for preview shuttle ([preview_template.name]), aborting."
 		throw EXCEPTION(m)
 
 	var/result = preview_shuttle.canDock(D)
@@ -216,13 +222,17 @@
 	// but we can ignore the someone else docked error because we'll
 	// be moving into their place shortly
 	if((result != SHUTTLE_CAN_DOCK) && (result != SHUTTLE_SOMEONE_ELSE_DOCKED))
-		var/m = "Unsuccessful dock of [preview_shuttle] ([result])."
-		WARNING(m)
+		WARNING("Template shuttle [preview_shuttle] cannot dock at [D] ([result]).")
 		return
 
-	existing_shuttle.jumpToNullSpace()
+	if(existing_shuttle)
+		existing_shuttle.jumpToNullSpace()
 
-	preview_shuttle.dock(D)
+	var/list/force_memory = preview_shuttle.movement_force
+	preview_shuttle.movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
+	preview_shuttle.initiate_docking(D)
+	preview_shuttle.movement_force = force_memory
+	
 	. = preview_shuttle
 
 	// Shuttle state involves a mode and a timer based on world.time, so
@@ -265,8 +275,7 @@
 					// The shuttle template we loaded isn't "timid" which means
 					// it's already registered with the shuttles subsystem.
 					// This is a bad thing.
-					var/m = "Template [S] is non-timid! Unloading."
-					WARNING(m)
+					stack_trace("Template [S] is non-timid! Unloading.")
 					M.jumpToNullSpace()
 					return
 				else
@@ -274,7 +283,7 @@
 			if(istype(P, /obj/docking_port/stationary))
 				log_world("Map warning: Shuttle Template [S.mappath] has a stationary docking port.")
 	if(!found)
-		var/msg = "load_template(): Shuttle Template [S.mappath] has no	mobile docking port. Aborting import."
+		var/msg = "load_template(): Shuttle Template [S.mappath] has no mobile docking port. Aborting import."
 		for(var/T in affected)
 			var/turf/T0 = T
 			T0.empty()

@@ -170,7 +170,7 @@
 	},
 /area/ruin/powered/snow_biodome)
 "aJ" = (
-/obj/vehicle/atv,
+/obj/vehicle/ridden/atv,
 /turf/open/floor/plating/asteroid/snow{
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
@@ -274,12 +274,6 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
-"bS" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/plating/asteroid/snow{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	},
-/area/ruin/powered/snow_biodome)
 "dS" = (
 /obj/machinery/light/small,
 /turf/open/floor/pod/dark,
@@ -309,6 +303,7 @@
 /obj/machinery/light/built{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/pod/dark{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
@@ -316,8 +311,15 @@
 "qt" = (
 /obj/machinery/door/airlock/silver,
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
+"tb" = (
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
 "tl" = (
 /turf/open/floor/pod/light,
 /area/ruin/powered/snow_biodome)
@@ -383,6 +385,9 @@
 "PD" = (
 /obj/machinery/door/airlock/hatch,
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "PK" = (
@@ -391,6 +396,11 @@
 /obj/item/paper_bin,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
+"Qa" = (
+/obj/effect/mapping_helpers/no_lava,
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
 "QI" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
@@ -412,7 +422,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "UM" = (
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	dir = 1
 	},
 /turf/open/floor/pod/dark,
@@ -578,7 +588,7 @@ ak
 Wg
 Wg
 QI
-QI
+tb
 aa
 "}
 (6,1,1) = {"
@@ -610,7 +620,7 @@ ak
 ak
 Wg
 QI
-QI
+tb
 aa
 "}
 (7,1,1) = {"
@@ -642,7 +652,7 @@ ak
 bM
 Wg
 Wg
-QI
+tb
 aa
 "}
 (8,1,1) = {"
@@ -674,8 +684,8 @@ ak
 az
 ak
 Wg
-QI
-QI
+tb
+tb
 "}
 (9,1,1) = {"
 aa
@@ -707,7 +717,7 @@ ak
 ak
 Wg
 hA
-QI
+tb
 "}
 (10,1,1) = {"
 Wg
@@ -738,8 +748,8 @@ ak
 ak
 ak
 Wg
-QI
-QI
+tb
+tb
 "}
 (11,1,1) = {"
 Wg
@@ -765,13 +775,13 @@ bl
 ak
 aI
 ak
-bS
+ak
 ak
 Wg
 Wg
 Wg
 Wg
-QI
+tb
 "}
 (12,1,1) = {"
 Wg
@@ -803,7 +813,7 @@ Wg
 Dd
 Dd
 Wg
-QI
+tb
 "}
 (13,1,1) = {"
 Wg
@@ -835,7 +845,7 @@ Wg
 Mp
 dS
 Wg
-QI
+tb
 "}
 (14,1,1) = {"
 Wg
@@ -867,7 +877,7 @@ Wg
 tl
 tl
 Wg
-QI
+tb
 "}
 (15,1,1) = {"
 Wg
@@ -899,7 +909,7 @@ aO
 tl
 tl
 Ez
-QI
+Qa
 "}
 (16,1,1) = {"
 Wg
@@ -931,7 +941,7 @@ aP
 tl
 tl
 aP
-QI
+Qa
 "}
 (17,1,1) = {"
 Wg
@@ -963,7 +973,7 @@ Wg
 tl
 tl
 Wg
-QI
+tb
 "}
 (18,1,1) = {"
 Wg
@@ -995,7 +1005,7 @@ Wg
 HP
 dS
 Wg
-QI
+tb
 "}
 (19,1,1) = {"
 Wg
@@ -1027,7 +1037,7 @@ Wg
 QK
 AM
 Wg
-QI
+tb
 "}
 (20,1,1) = {"
 Wg
@@ -1059,7 +1069,7 @@ Wg
 Wg
 Wg
 Wg
-QI
+tb
 "}
 (21,1,1) = {"
 Wg
@@ -1090,8 +1100,8 @@ ak
 ak
 ak
 Wg
-QI
-QI
+tb
+tb
 "}
 (22,1,1) = {"
 aa
@@ -1123,7 +1133,7 @@ ak
 ak
 Wg
 hA
-QI
+tb
 "}
 (23,1,1) = {"
 aa
@@ -1154,8 +1164,8 @@ ak
 ak
 ak
 Wg
-QI
-QI
+tb
+tb
 "}
 (24,1,1) = {"
 aa
@@ -1186,7 +1196,7 @@ ak
 bM
 Wg
 Wg
-QI
+tb
 aa
 "}
 (25,1,1) = {"
@@ -1218,7 +1228,7 @@ aC
 ak
 Wg
 QI
-QI
+tb
 aa
 "}
 (26,1,1) = {"

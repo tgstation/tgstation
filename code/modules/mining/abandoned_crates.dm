@@ -112,7 +112,7 @@
 		if(90)
 			new /obj/item/organ/heart(src)
 		if(91)
-			new /obj/item/device/soulstone/anybody(src)
+			new /obj/item/soulstone/anybody(src)
 		if(92)
 			new /obj/item/katana(src)
 		if(93)
@@ -121,7 +121,7 @@
 			new /obj/item/storage/backpack/clown(src)
 			new /obj/item/clothing/under/rank/clown(src)
 			new /obj/item/clothing/shoes/clown_shoes(src)
-			new /obj/item/device/pda/clown(src)
+			new /obj/item/pda/clown(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/bikehorn(src)
 			new /obj/item/toy/crayon/rainbow(src)
@@ -129,7 +129,7 @@
 		if(95)
 			new /obj/item/clothing/under/rank/mime(src)
 			new /obj/item/clothing/shoes/sneakers/black(src)
-			new /obj/item/device/pda/mime(src)
+			new /obj/item/pda/mime(src)
 			new /obj/item/clothing/gloves/color/white(src)
 			new /obj/item/clothing/mask/gas/mime(src)
 			new /obj/item/clothing/head/beret(src)
@@ -150,11 +150,12 @@
 		if(100)
 			new /obj/item/clothing/head/bearpelt(src)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
 	if(locked)
 		to_chat(user, "<span class='notice'>The crate is locked with a Deca-code lock.</span>")
 		var/input = input(usr, "Enter [codelen] digits. All digits must be unique.", "Deca-Code Lock", "") as text
-		if(user.canUseTopic(src, 1))
+		if(user.canUseTopic(src, BE_CLOSE))
 			var/list/sanitised = list()
 			var/sanitycheck = 1
 			for(var/i=1,i<=length(input),i++) //put the guess into a list
@@ -180,16 +181,13 @@
 		return ..()
 
 /obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
-	if(!user.canUseTopic(src))
+	if(!user.canUseTopic(src, BE_CLOSE))
 		return
-	attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
+	return attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/W, mob/user)
 	if(locked)
-		if(istype(W, /obj/item/card/emag))
-			boom(user)
-			return
-		else if(istype(W, /obj/item/device/multitool))
+		if(istype(W, /obj/item/multitool))
 			to_chat(user, "<span class='notice'>DECA-CODE LOCK REPORT:</span>")
 			if(attempts == 1)
 				to_chat(user, "<span class='warning'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>")
@@ -214,6 +212,10 @@
 				to_chat(user, "<span class='notice'>Last code attempt, [lastattempt], had [bulls] correct digits at correct positions and [cows] correct digits at incorrect positions.</span>")
 			return
 	return ..()
+
+/obj/structure/closet/crate/secure/loot/emag_act(mob/user)
+	if(locked)
+		boom(user)
 
 /obj/structure/closet/crate/secure/loot/togglelock(mob/user)
 	if(locked)

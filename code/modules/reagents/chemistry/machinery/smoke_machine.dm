@@ -1,24 +1,24 @@
+#define REAGENTS_BASE_VOLUME 100 // actual volume is REAGENTS_BASE_VOLUME plus REAGENTS_BASE_VOLUME * rating for each matterbin
+
 /obj/machinery/smoke_machine
 	name = "smoke machine"
 	desc = "A machine with a centrifuge installed into it. It produces smoke with any reagents you put into the machine."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "smoke0"
 	density = TRUE
-	anchored = TRUE
 	circuit = /obj/item/circuitboard/machine/smoke_machine
 	var/efficiency = 10
 	var/on = FALSE
 	var/cooldown = 0
 	var/screen = "home"
 	var/useramount = 30 // Last used amount
-	var/volume = 300
-	var/setting = 3
-	var/list/possible_settings = list(3,6,9)
+	var/setting = 1 // displayed range is 3 * setting
+	var/max_range = 3 // displayed max range is 3 * max range
 
-/datum/effect_system/smoke_spread/chem/smoke_machine/set_up(datum/reagents/carry, setting = 3, efficiency = 10, loc)
+/datum/effect_system/smoke_spread/chem/smoke_machine/set_up(datum/reagents/carry, setting=1, efficiency=10, loc)
 	amount = setting
 	carry.copy_to(chemholder, 20)
-	carry.remove_any(setting * 16 / efficiency)
+	carry.remove_any(amount * 16 / efficiency)
 	location = loc
 
 /datum/effect_system/smoke_spread/chem/smoke_machine
@@ -28,40 +28,54 @@
 	opaque = FALSE
 	alpha = 100
 
-
 /obj/machinery/smoke_machine/Initialize()
 	. = ..()
-	create_reagents(volume)
+	create_reagents(REAGENTS_BASE_VOLUME)
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
+		reagents.maximum_volume += REAGENTS_BASE_VOLUME * B.rating
 
 /obj/machinery/smoke_machine/update_icon()
 	if((!is_operational()) || (!on) || (reagents.total_volume == 0))
-		icon_state = "smoke0"
+		if (panel_open)
+			icon_state = "smoke0-o"
+		else
+			icon_state = "smoke0"
 	else
 		icon_state = "smoke1"
-	. = ..()
+	return ..()
 
 /obj/machinery/smoke_machine/RefreshParts()
-	efficiency = 6
+	var/new_volume = REAGENTS_BASE_VOLUME
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		efficiency += B.rating
+		new_volume += REAGENTS_BASE_VOLUME * B.rating
+	if(!reagents)
+		create_reagents(new_volume)
+	reagents.maximum_volume = new_volume
+	if(new_volume < reagents.total_volume)
+		reagents.reaction(loc, TOUCH) // if someone manages to downgrade it without deconstructing
+		reagents.clear_reagents()
+	efficiency = 9
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		efficiency += C.rating
+	max_range = 1
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		efficiency += M.rating
+		max_range += M.rating
+	max_range = max(3, max_range)
 
 /obj/machinery/smoke_machine/process()
 	..()
-	update_icon()
 	if(!is_operational())
 		return
 	if(reagents.total_volume == 0)
 		on = FALSE
+		update_icon()
 		return
 	var/turf/T = get_turf(src)
 	var/smoke_test = locate(/obj/effect/particle_effect/smoke) in T
 	if(on && !smoke_test)
+		update_icon()
 		var/datum/effect_system/smoke_spread/chem/smoke_machine/smoke = new()
-		smoke.set_up(reagents, setting, efficiency, T)
+		smoke.set_up(reagents, setting*3, efficiency, T)
 		smoke.start()
 
 /obj/machinery/smoke_machine/attackby(obj/item/I, mob/user, params)
@@ -76,6 +90,15 @@
 	if(default_unfasten_wrench(user, I, 40))
 		on = FALSE
 		return
+	if(default_deconstruction_screwdriver(user, "smoke0-o", "smoke0", I))
+		return
+	if(default_deconstruction_crowbar(I))
+		return
+	return ..()
+
+/obj/machinery/smoke_machine/deconstruct()
+	reagents.reaction(loc, TOUCH)
+	reagents.clear_reagents()
 	return ..()
 
 /obj/machinery/smoke_machine/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
@@ -99,6 +122,7 @@
 	data["active"] = on
 	data["setting"] = setting
 	data["screen"] = screen
+	data["maxSetting"] = max_range
 	return data
 
 /obj/machinery/smoke_machine/ui_act(action, params)
@@ -107,18 +131,22 @@
 	switch(action)
 		if("purge")
 			reagents.clear_reagents()
+			update_icon()
 			. = TRUE
 		if("setting")
 			var/amount = text2num(params["amount"])
-			if (locate(amount) in possible_settings)
+			if(amount in 1 to max_range)
 				setting = amount
 				. = TRUE
 		if("power")
 			on = !on
+			update_icon()
 			if(on)
-				message_admins("[key_name_admin(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [ADMIN_COORDJMP(src)].")
-				log_game("[key_name(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [COORD(src)].")
-				add_logs(usr, src, "has activated [src] which contains [english_list(reagents.reagent_list)].")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [ADMIN_VERBOSEJMP(src)].")
+				log_game("[key_name(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [AREACOORD(src)].")
+				add_logs(usr, src, "has activated [src] which contains [english_list(reagents.reagent_list)] at [AREACOORD(src)].")
 		if("goScreen")
 			screen = params["screen"]
 			. = TRUE
+
+#undef REAGENTS_BASE_VOLUME

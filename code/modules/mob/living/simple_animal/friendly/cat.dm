@@ -9,26 +9,28 @@
 	gender = MALE
 	speak = list("Meow!", "Esp!", "Purr!", "HSSSSS")
 	speak_emote = list("purrs", "meows")
-	emote_hear = list("meows", "mews")
-	emote_see = list("shakes its head", "shivers")
+	emote_hear = list("meows.", "mews.")
+	emote_see = list("shakes its head.", "shivers.")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
 	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_SMALL
+	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	minbodytemp = 200
 	maxbodytemp = 400
 	unsuitable_atmos_damage = 1
 	animal_species = /mob/living/simple_animal/pet/cat
 	childtype = list(/mob/living/simple_animal/pet/cat/kitten)
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
 	gold_core_spawnable = FRIENDLY_SPAWN
+	collar_type = "cat"
 
 /mob/living/simple_animal/pet/cat/Initialize()
 	. = ..()
@@ -39,8 +41,11 @@
 	if(client && stat != DEAD)
 		if (resting)
 			icon_state = "[icon_living]_rest"
+			collar_type = "[initial(collar_type)]_rest"
 		else
 			icon_state = "[icon_living]"
+			collar_type = "[initial(collar_type)]"
+	regenerate_icons()
 
 
 /mob/living/simple_animal/pet/cat/space
@@ -60,6 +65,8 @@
 	icon_state = "original"
 	icon_living = "original"
 	icon_dead = "original_dead"
+	collar_type = null
+	unique_pet = TRUE
 
 /mob/living/simple_animal/pet/cat/kitten
 	name = "kitten"
@@ -70,6 +77,7 @@
 	density = FALSE
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
+	collar_type = "kitten"
 
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
 /mob/living/simple_animal/pet/cat/Runtime
@@ -80,6 +88,7 @@
 	icon_dead = "cat_dead"
 	gender = FEMALE
 	gold_core_spawnable = NO_SPAWN
+	unique_pet = TRUE
 	var/list/family = list()//var restored from savefile, has count of each child type
 	var/list/children = list()//Actual mob instances of children
 	var/cats_deployed = 0
@@ -153,23 +162,27 @@
 	name = "Proc"
 	gender = MALE
 	gold_core_spawnable = NO_SPAWN
+	unique_pet = TRUE
 
 /mob/living/simple_animal/pet/cat/Life()
 	if(!stat && !buckled && !client)
 		if(prob(1))
 			emote("me", 1, pick("stretches out for a belly rub.", "wags its tail.", "lies down."))
 			icon_state = "[icon_living]_rest"
+			collar_type = "[initial(collar_type)]_rest"
 			resting = 1
 			update_canmove()
 		else if (prob(1))
 			emote("me", 1, pick("sits down.", "crouches on its hind legs.", "looks alert."))
 			icon_state = "[icon_living]_sit"
+			collar_type = "[initial(collar_type)]_sit"
 			resting = 1
 			update_canmove()
 		else if (prob(1))
 			if (resting)
 				emote("me", 1, pick("gets up and meows.", "walks around.", "stops resting."))
 				icon_state = "[icon_living]"
+				collar_type = "[initial(collar_type)]"
 				resting = 0
 				update_canmove()
 			else
@@ -254,7 +267,7 @@
 	if(!B || !B.brainmob || !B.brainmob.mind)
 		return
 	B.brainmob.mind.transfer_to(src)
-	to_chat(src, "<font size=3><b>Y</b></font><b>ou are a cak! You're a harmless cat/cake hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
+	to_chat(src, "<span class='big bold'>You are a cak!</span><b> You're a harmless cat/cake hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
 	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
 	free cake to the station!</b>")
 	var/new_name = stripped_input(src, "Enter your name, or press \"Cancel\" to stick with Keeki.", "Name Change")

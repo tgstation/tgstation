@@ -1,4 +1,3 @@
-#define MEDAL_PREFIX "Hierophant"
 /*
 
 The Hierophant
@@ -59,6 +58,11 @@ Difficulty: Hard
 	loot = list(/obj/item/hierophant_club)
 	crusher_loot = list(/obj/item/hierophant_club)
 	wander = FALSE
+	medal_type = BOSS_MEDAL_HIEROPHANT
+	score_type = HIEROPHANT_SCORE
+	del_on_death = TRUE
+	death_sound = 'sound/magic/repulse.ogg'
+
 	var/burst_range = 3 //range on burst aoe
 	var/beam_range = 5 //range on cross blast beams
 	var/chaser_speed = 3 //how fast chasers are currently
@@ -71,14 +75,10 @@ Difficulty: Hard
 	var/did_reset = TRUE //if we timed out, returned to our beacon, and healed some
 	var/list/kill_phrases = list("Wsyvgi sj irivkc xettih. Vitemvmrk...", "Irivkc wsyvgi jsyrh. Vitemvmrk...", "Jyip jsyrh. Egxmzexmrk vitemv gcgpiw...", "Kix fiex. Liepmrk...")
 	var/list/target_phrases = list("Xevkix psgexih.", "Iriqc jsyrh.", "Eguymvih xevkix.")
-	medal_type = MEDAL_PREFIX
-	score_type = BIRD_SCORE
-	del_on_death = TRUE
-	death_sound = 'sound/magic/repulse.ogg'
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Initialize()
 	. = ..()
-	internal = new/obj/item/device/gps/internal/hierophant(src)
+	internal = new/obj/item/gps/internal/hierophant(src)
 	spawned_beacon = new(loc)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/spawn_crusher_loot()
@@ -187,7 +187,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/calculate_rage() //how angry we are overall
 	did_reset = FALSE //oh hey we're doing SOMETHING, clearly we might need to heal if we recall
-	anger_modifier = Clamp(((maxHealth - health) / 42),0,50)
+	anger_modifier = CLAMP(((maxHealth - health) / 42),0,50)
 	burst_range = initial(burst_range) + round(anger_modifier * 0.08)
 	beam_range = initial(beam_range) + round(anger_modifier * 0.12)
 
@@ -628,7 +628,7 @@ Difficulty: Hard
 			flash_color(L.client, "#660099", 1)
 		playsound(L,'sound/weapons/sear.ogg', 50, 1, -4)
 		to_chat(L, "<span class='userdanger'>You're struck by a [name]!</span>")
-		var/limb_to_hit = L.get_bodypart(pick("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg"))
+		var/limb_to_hit = L.get_bodypart(pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 		var/armor = L.run_armor_check(limb_to_hit, "melee", "Your armor absorbs [src]!", "Your armor blocks part of [src]!", 50, "Your armor was penetrated by [src]!")
 		L.apply_damage(damage, BURN, limb_to_hit, armor)
 		if(ishostile(L))
@@ -687,10 +687,8 @@ Difficulty: Hard
 	else
 		return ..()
 
-/obj/item/device/gps/internal/hierophant
+/obj/item/gps/internal/hierophant
 	icon_state = null
 	gpstag = "Zealous Signal"
 	desc = "Heed its words."
 	invisibility = 100
-
-#undef MEDAL_PREFIX

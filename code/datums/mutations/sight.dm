@@ -7,12 +7,12 @@
 /datum/mutation/human/nearsight/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.become_nearsighted()
+	owner.become_nearsighted(GENETIC_MUTATION)
 
 /datum/mutation/human/nearsight/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.cure_nearsighted()
+	owner.cure_nearsighted(GENETIC_MUTATION)
 
 
 //Blind makes you blind. Who knew?
@@ -24,15 +24,15 @@
 /datum/mutation/human/blind/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.become_blind()
+	owner.become_blind(GENETIC_MUTATION)
 
 /datum/mutation/human/blind/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.cure_blind()
+	owner.cure_blind(GENETIC_MUTATION)
 
 
-//X-Ray Vision lets you see through walls.
+//X-ray Vision lets you see through walls.
 /datum/mutation/human/x_ray
 	name = "X Ray Vision"
 	quality = POSITIVE
@@ -60,7 +60,7 @@
 	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='notice'>You feel pressure building up behind your eyes.</span>"
 	layer_used = FRONT_MUTATIONS_LAYER
-	limb_req = "head"
+	limb_req = BODY_ZONE_HEAD
 
 /datum/mutation/human/laser_eyes/New()
 	..()

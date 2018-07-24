@@ -111,7 +111,7 @@
 
 	playsound(src, 'sound/effects/comfyfire.ogg',50,0, 0, 1)
 	var/turf/T = get_turf(src)
-	T.hotspot_expose(700, 5)
+	T.hotspot_expose(500, 5)
 	update_icon()
 	adjust_light()
 
@@ -129,7 +129,7 @@
 		if(burn_time_remaining() < MAXIMUM_BURN_TIMER)
 			flame_expiry_timer = world.time + MAXIMUM_BURN_TIMER
 	else
-		fuel_added = Clamp(fuel_added + amount, 0, MAXIMUM_BURN_TIMER)
+		fuel_added = CLAMP(fuel_added + amount, 0, MAXIMUM_BURN_TIMER)
 
 /obj/structure/fireplace/proc/burn_time_remaining()
 	if(lit)

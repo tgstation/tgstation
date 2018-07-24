@@ -18,7 +18,7 @@
 	icon_state = "computer"
 
 /obj/structure/showcase/fakeid/Initialize()
-	..()
+	. = ..()
 	add_overlay("id")
 	add_overlay("id_key")
 
@@ -29,25 +29,25 @@
 	icon_state = "computer"
 
 /obj/structure/showcase/fakesec/Initialize()
-	..()
+	. = ..()
 	add_overlay("security")
 	add_overlay("security_key")
 
 /obj/structure/showcase/horrific_experiment
 	name = "horrific experiment"
 	desc = "Some sort of pod filled with blood and viscera. You swear you can see it moving..."
-	icon = 'icons/obj/cloning.dmi'
+	icon = 'icons/obj/machines/cloning.dmi'
 	icon_state = "pod_g"
 
 /obj/structure/showcase/machinery/oldpod
-	name = "damaged cyrogenic pod"
-	desc = "A damaged cyrogenic pod long since lost to time, including its former occupant..."
-	icon = 'icons/obj/cryogenic2.dmi'
+	name = "damaged cryogenic pod"
+	desc = "A damaged cryogenic pod long since lost to time, including its former occupant..."
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper-open"
 
 /obj/structure/showcase/machinery/oldpod/used
-	name = "opened cyrogenic pod"
-	desc = "Cyrogenic pod that has recently discharged its occupand. The pod appears non-functional."
+	name = "opened cryogenic pod"
+	desc = "A cryogenic pod that has recently discharged its occupant. The pod appears non-functional."
 
 /obj/structure/showcase/cyborg/old
 	name = "Cyborg Statue"
@@ -83,7 +83,7 @@
 /obj/structure/showcase/machinery/cloning_pod
 	name = "cloning pod exhibit"
 	desc = "Signs describe how cloning pods like these ensure that every Nanotrasen employee can carry out their contracts in full, even in the unlikely event of their catastrophic death. Hopefully they aren't all made of cardboard, like this one."
-	icon = 'icons/obj/cloning.dmi'
+	icon = 'icons/obj/machines/cloning.dmi'
 	icon_state = "pod_0"
 
 /obj/structure/showcase/perfect_employee
@@ -112,18 +112,17 @@
 	if(istype(W, /obj/item/screwdriver) && !anchored)
 		if(deconstruction_state == SHOWCASE_SCREWDRIVERED)
 			to_chat(user, "<span class='notice'>You screw the screws back into the showcase.</span>")
-			playsound(loc, W.usesound, 100, 1)
+			W.play_tool_sound(src, 100)
 			deconstruction_state = SHOWCASE_CONSTRUCTED
 		else if (deconstruction_state == SHOWCASE_CONSTRUCTED)
 			to_chat(user, "<span class='notice'>You unscrew the screws.</span>")
-			playsound(loc, W.usesound, 100, 1)
+			W.play_tool_sound(src, 100)
 			deconstruction_state = SHOWCASE_SCREWDRIVERED
 
 	if(istype(W, /obj/item/crowbar) && deconstruction_state == SHOWCASE_SCREWDRIVERED)
-		if(do_after(user, 20*W.toolspeed, target = src))
-			playsound(loc, W.usesound, 100, 1)
+		if(W.use_tool(src, user, 20, volume=100))
 			to_chat(user, "<span class='notice'>You start to crowbar the showcase apart...</span>")
-			new /obj/item/stack/sheet/metal (get_turf(src), 4)
+			new /obj/item/stack/sheet/metal(drop_location(), 4)
 			qdel(src)
 
 	if(deconstruction_state == SHOWCASE_CONSTRUCTED && default_unfasten_wrench(user, W))

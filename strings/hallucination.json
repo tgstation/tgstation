@@ -1,9 +1,25 @@
 {
 	"suspicion": [
-		"I'm watching you...",
-		"I know what you're doing",
-		"What are you hiding?",
+		"@pick(add_name)i'm watching you...",
+		"@pick(add_name)i know what you're doing",
+		"@pick(add_name)what are you hiding?",
 		"I saw that"
+	],
+	
+	"conversation": [
+		"Yes",
+		"Yeah",
+		"Yup",
+		"No",
+		"Nah",
+		"I doubt it",
+		"Uh...",
+		"Why?",
+		"But...",
+		"Hold on",
+		"Hmm",
+		"Yeah, i know",
+		"Weird"
 	],
 
 	"greetings": [
@@ -16,12 +32,12 @@
 	],
 
 	"getout": [
-		"Get out",
-		"Get out!",
-		"Go away",
-		"Fuck off",
+		"@pick(add_name)get out",
+		"@pick(add_name)get out!",
+		"@pick(add_name)go away",
+		"@pick(add_name)fuck off",
 		"OUT!",
-		"Out!"
+		"@pick(add_name)out!"
 	],
 
 	"weird": [
@@ -29,7 +45,7 @@
 		"Kchckchk...",
 		"EEEeeeeEEEE",
 		"khhhhh",
-		"#@§*&£",
+		"#@ï¿½*&ï¿½",
 		"H**p m*",
 		"H-hhhhh..."
 	],
@@ -40,61 +56,33 @@
 		"What was that?"
 	],
 
-	"imatraitor": [
-		"Hail Ratvar",
-		"Hail Nar'Sie",
-		"Hey, i've got some TC left, want something?",
-		"Viva!",
-		"I'll spare you if you don't tell anybody about me",
-		"Hey, are you a traitor too?",
-		"You're my target, but @pick(excuses)",
-		"Are you mr. @pick(ling_names)?"
-	],
-
-	"excuses": [
-		"i like you, so i'll spare you",
-		"i don't really feel like following objectives today",
-		"i'm not robust enough to fight you",
-		"who cares",
-		"i'll kill you later"
-	],
-
-	"ling_names": [
-		"Alpha",
-		"Beta",
-		"Gamma",
-		"Delta",
-		"Epsilon",
-		"Eta",
-		"Theta",
-		"Lambda",
-		"Mu",
-		"Xi",
-		"Rho",
-		"Sigma",
-		"Tau",
-		"Upsilon",
-		"Phi",
-		"Psi",
-		"Omega"
+	"add_name": [
+		"%TARGETNAME%, ",
+		"%TARGETNAME% ",
+		""
 	],
 
 	"doubt": [
 		"Why?",
 		"What?",
 		"Wait, what?",
-		"Wait",
-		"Hold on",
+		"@pick(add_name)wait",
+		"@pick(add_name)hold on",
 		"Uh..."
 	],
 
 	"aggressive": [
-		"Give me that!",
-		"I'm going to kill you!",
-		"Fuck you!"
+		"@pick(add_name)give me that!",
+		"@pick(add_name)stop it!",
+		"@pick(add_name)i'm going to kill you!",
+		"@pick(add_name)fuck you!"
 	],
 
 	"help": [
+		"HELP",
+		"HELP",
+		"HELP",
+		"HELP",
 		"HELP",
 		"HELP ME",
 		"HELP HIM",
@@ -105,19 +93,19 @@
 	],
 
 	"escape": [
-		"RUN!!",
+		"@pick(add_name)RUN!!",
 		"They're behind me!",
 		"It's here!",
-		"Follow me!",
-		"Follow me"
+		"@pick(add_name)follow me!",
+		"@pick(add_name)follow me"
 	],
 
 	"infection_advice": [
-		"stay away",
-		"don't get close",
-		"be careful",
-		"help me",
-		"kill me"
+		"@pick(add_name)stay away",
+		"@pick(add_name)don't get close",
+		"@pick(add_name)be careful",
+		"@pick(add_name)help me",
+		"@pick(add_name)kill me"
 	],
 
 	"people": [
@@ -131,10 +119,11 @@
 		"AI",
 		"Viro",
 		"Qm",
-		"[target.first_name()]"
+		"%TARGETNAME%"
 	],
 
 	"accusations": [
+		"dead",
 		"rogue",
 		"cult",
 		"a cultist",
@@ -157,31 +146,64 @@
 		"Ling",
 		"Ops",
 		"Swarmers",
+		"Spiders",
+		"Xenos",
 		"Revenant",
 		"Traitor",
 		"Harm",
+		"Blue APC",
 		"I hear flashing",
-		"Help"
+		"Help",
+		"%TARGETNAME%"
 	],
 
 	"location": [
-		"bridge",
-		"armory",
+		"space near @pick(sublocation)",
+		"the bridge",
+		"the armory",
 		"sec",
 		"security",
 		"science",
+		"xenobio",
 		"engineering",
 		"cargo",
 		"medbay",
 		"atmos",
 		"maint",
+		"@pick(sublocation) maint",
+		"virology",
+		"morgue",
 		"hops office",
 		"captains office",
-		"chapel",
-		"library",
+		"the chapel",
+		"the library",
 		"tool storage",
 		"botany",
-		"kitchen",
+		"the kitchen",
+		"the ai sat"
+	],
+	
+	"sublocation": [
+		"the bridge",
+		"the armory",
+		"sec",
+		"security",
+		"science",
+		"xenobio",
+		"engineering",
+		"cargo",
+		"medbay",
+		"atmos",
+		"maint",
+		"virology",
+		"morgue",
+		"hops office",
+		"captains office",
+		"the chapel",
+		"the library",
+		"tool storage",
+		"botany",
+		"the kitchen",
 		"the ai sat"
 	],
 
@@ -195,10 +217,12 @@
 		"Kill that person. You know who.",
 		"You should go somewhere else. Quickly.",
 		"Good luck. You'll need it.",
-		"You have my permission. Do it."
+		"You have my permission. Do it.",
+		"Just do it."
 	],
 
 	"chemicals": [
+		"Something",
 		"Ooze",
 		"Fire",
 		"Earth",

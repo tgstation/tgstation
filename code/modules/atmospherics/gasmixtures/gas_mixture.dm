@@ -4,6 +4,7 @@ What are the archived variables for?
 	This prevents race conditions that arise based on the order of tile processing.
 */
 #define MINIMUM_HEAT_CAPACITY	0.0003
+#define MINIMUM_MOLE_COUNT		0.01
 #define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
@@ -22,28 +23,36 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /datum/gas_mixture
 	var/list/gases
-	var/temperature //kelvins
-	var/tmp/temperature_archived
-	var/volume //liters
-	var/last_share
+	var/temperature = 0 //kelvins
+	var/tmp/temperature_archived = 0
+	var/volume = CELL_VOLUME //liters
+	var/last_share = 0
 	var/list/reaction_results
 
-/datum/gas_mixture/New(volume = CELL_VOLUME)
+/datum/gas_mixture/New(volume)
 	gases = new
-	temperature = 0
-	temperature_archived = 0
-	src.volume = volume
-	last_share = 0
+	if (!isnull(volume))
+		src.volume = volume
 	reaction_results = new
 
 //listmos procs
+//use the macros in performance intensive areas. for their definitions, refer to code/__DEFINES/atmospherics.dm
 
-// The following procs used to live here: thermal_energy(), assert_gas() and add_gas(). They have been moved into defines in code/__DEFINES/atmospherics.dm
+	//assert_gas(gas_id) - used to guarantee that the gas list for this id exists in gas_mixture.gases.
+	//Must be used before adding to a gas. May be used before reading from a gas.
+/datum/gas_mixture/proc/assert_gas(gas_id)
+	ASSERT_GAS(gas_id, src)
 
 	//assert_gases(args) - shorthand for calling ASSERT_GAS() once for each gas type.
 /datum/gas_mixture/proc/assert_gases()
 	for(var/id in args)
 		ASSERT_GAS(id, src)
+
+	//add_gas(gas_id) - similar to assert_gas(), but does not check for an existing
+		//gas list for this id. This can clobber existing gases.
+	//Used instead of assert_gas() when you know the gas does not exist. Faster than assert_gas().
+/datum/gas_mixture/proc/add_gas(gas_id)
+	ADD_GAS(gas_id, gases)
 
 	//add_gases(args) - shorthand for calling add_gas() once for each gas_type.
 /datum/gas_mixture/proc/add_gases()
@@ -59,7 +68,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/garbage_collect(list/tocheck)
 	var/list/cached_gases = gases
 	for(var/id in (tocheck || cached_gases))
-		if(cached_gases[id][MOLES] <= 0 && cached_gases[id][ARCHIVE] <= 0)
+		if(QUANTIZE(cached_gases[id][MOLES]) <= 0 && QUANTIZE(cached_gases[id][ARCHIVE]) <= 0)
 			cached_gases -= id
 
 	//PV = nRT
@@ -100,6 +109,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /datum/gas_mixture/proc/return_volume() //liters
 	return max(0, volume)
+
+/datum/gas_mixture/proc/thermal_energy() //joules
+	return THERMAL_ENERGY(src) //see code/__DEFINES/atmospherics.dm; use the define in performance critical areas
 
 /datum/gas_mixture/proc/archive()
 	//Update archived versions of variables
@@ -273,8 +285,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	return 1
 
 /datum/gas_mixture/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
-	if(!sharer)
-		return 0
 
 	var/list/cached_gases = gases
 	var/list/sharer_gases = sharer.gases
@@ -310,7 +320,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			if(delta > 0)
 				heat_capacity_self_to_sharer += gas_heat_capacity
 			else
-				heat_capacity_sharer_to_self -= gas_heat_capacity //subtract here instead of adding the absolute value because we know that delta is negative. saves a proc call.
+				heat_capacity_sharer_to_self -= gas_heat_capacity //subtract here instead of adding the absolute value because we know that delta is negative.
 
 		gas[MOLES]			-= delta
 		sharergas[MOLES]	+= delta
@@ -336,8 +346,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.1) // <10% change in sharer heat capacity
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
 
-	var/list/unique_gases = cached_gases ^ sharer_gases
-	if(unique_gases.len) //if all gases were present in both mixtures, we know that no gases are 0
+	if(length(cached_gases ^ sharer_gases)) //if all gases were present in both mixtures, we know that no gases are 0
 		garbage_collect(cached_gases - sharer_gases) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
 		sharer.garbage_collect(sharer_gases - cached_gases) //the reverse is equally true
 	sharer.after_share(src, atmos_adjacent_turfs)
@@ -346,8 +355,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		TOTAL_MOLES(cached_gases,our_moles)
 		var/their_moles
 		TOTAL_MOLES(sharer_gases,their_moles)
-		var/delta_pressure = temperature_archived*(our_moles + moved_moles) - sharer.temperature_archived*(their_moles - moved_moles)
-		return delta_pressure * R_IDEAL_GAS_EQUATION / volume
+		return (temperature_archived*(our_moles + moved_moles) - sharer.temperature_archived*(their_moles - moved_moles)) * R_IDEAL_GAS_EQUATION / volume
 
 /datum/gas_mixture/after_share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 	return
@@ -398,12 +406,20 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return ""
 
-/datum/gas_mixture/react(turf/open/dump_location)
-	. = 0
-
-	reaction_results = new
-
+/datum/gas_mixture/react(datum/holder)
+	. = NO_REACTION
 	var/list/cached_gases = gases
+	if(!cached_gases.len)
+		return
+	var/possible
+	for(var/I in cached_gases)
+		if(GLOB.nonreactive_gases[I])
+			continue
+		possible = TRUE
+		break
+	if(!possible)
+		return
+	reaction_results = new
 	var/temp = temperature
 	var/ener = THERMAL_ENERGY(src)
 
@@ -423,7 +439,23 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 					continue reaction_loop
 			//at this point, all minimum requirements for the reaction are satisfied.
 
-			. |= reaction.react(src, dump_location)
+			/*	currently no reactions have maximum requirements, so we can leave the checks commented out for a slight performance boost
+				PLEASE DO NOT REMOVE THIS CODE. the commenting is here only for a performance increase.
+				enabling these checks should be as easy as possible and the fact that they are disabled should be as clear as possible
+
+			var/list/max_reqs = reaction.max_requirements.Copy()
+			if((max_reqs["TEMP"] && temp > max_reqs["TEMP"]) \
+			|| (max_reqs["ENER"] && ener > max_reqs["ENER"]))
+				continue
+			max_reqs -= "TEMP"
+			max_reqs -= "ENER"
+			for(var/id in max_reqs)
+				if(cached_gases[id] && cached_gases[id][MOLES] > max_reqs[id])
+					continue reaction_loop
+			//at this point, all requirements for the reaction are satisfied. we can now react()
+			*/
+
+			. |= reaction.react(src, holder)
 			if (. & STOP_REACTIONS)
 				break
 	if(.)

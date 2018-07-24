@@ -41,17 +41,17 @@
 	var/list/dat = list()
 	dat += {"
 	<HR>
-	<B><FONT size=3>[name]</FONT></B>
+	<span class='big bold'>[name]</span>
 	<HR>"}
 	for(var/i in 1 to held_items.len)
 		var/obj/item/I = get_item_for_held_index(i)
-		dat += "<BR><B>[get_held_index_name(i)]:</B><A href='?src=[REF(src)];item=[slot_hands];hand_index=[i]'>[(I && !(I.flags_1 & ABSTRACT_1)) ? I : "<font color=grey>Empty</font>"]</a>"
+		dat += "<BR><B>[get_held_index_name(i)]:</B><A href='?src=[REF(src)];item=[SLOT_HANDS];hand_index=[i]'>[(I && !(I.item_flags & ABSTRACT)) ? I : "<font color=grey>Empty</font>"]</a>"
 	dat += "<BR><A href='?src=[REF(src)];pouches=1'>Empty Pouches</A>"
 
 	if(handcuffed)
-		dat += "<BR><A href='?src=[REF(src)];item=[slot_handcuffed]'>Handcuffed</A>"
+		dat += "<BR><A href='?src=[REF(src)];item=[SLOT_HANDCUFFED]'>Handcuffed</A>"
 	if(legcuffed)
-		dat += "<BR><A href='?src=[REF(src)];item=[slot_legcuffed]'>Legcuffed</A>"
+		dat += "<BR><A href='?src=[REF(src)];item=[SLOT_LEGCUFFED]'>Legcuffed</A>"
 
 	dat += {"
 	<BR>
@@ -106,7 +106,7 @@
 	for(var/atom/movable/A in stomach_contents)
 		stomach_contents.Remove(A)
 		new_xeno.stomach_contents.Add(A)
-		A.loc = new_xeno
+		A.forceMove(new_xeno)
 	..()
 
 //For alien evolution/promotion/queen finder procs. Checks for an active alien of that type

@@ -42,10 +42,10 @@
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
 
-/turf/open/floor/mineral/plasma/attackby(obj/item/W as obj, mob/user as mob, params)
+/turf/open/floor/mineral/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma flooring was ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]",0,1)
-		log_game("Plasma flooring was ignited by [key_name(user)] in [COORD(src)]")
+		message_admins("Plasma flooring was ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
+		log_game("Plasma flooring was ignited by [key_name(user)] in [AREACOORD(src)]")
 		ignite(W.is_hot())
 		return
 	..()
@@ -118,7 +118,7 @@
 	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/mineral/plastitanium/brig
-	name = "Brig floor"
+	name = "brig floor"
 
 //BANANIUM
 
@@ -129,11 +129,11 @@
 	icons = list("bananium","bananium_dam")
 	var/spam_flag = 0
 
-/turf/open/floor/mineral/bananium/Entered(var/mob/AM)
+/turf/open/floor/mineral/bananium/Entered(var/mob/living/L)
 	.=..()
 	if(!.)
-		if(istype(AM))
-			squeek()
+		if(istype(L))
+			squeak()
 
 /turf/open/floor/mineral/bananium/attackby(obj/item/W, mob/user, params)
 	.=..()
@@ -155,7 +155,7 @@
 		playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
 		spam_flag = world.time + 20
 
-/turf/open/floor/mineral/bananium/proc/squeek()
+/turf/open/floor/mineral/bananium/proc/squeak()
 	if(spam_flag < world.time)
 		playsound(src, "clownstep", 50, 1)
 		spam_flag = world.time + 10
@@ -174,6 +174,7 @@
 //URANIUM
 
 /turf/open/floor/mineral/uranium
+	article = "a"
 	name = "uranium floor"
 	icon_state = "uranium"
 	floor_tile = /obj/item/stack/tile/mineral/uranium
@@ -219,6 +220,7 @@
 	icon_state = "alienpod1"
 	floor_tile = /obj/item/stack/tile/mineral/abductor
 	icons = list("alienpod1", "alienpod2", "alienpod3", "alienpod4", "alienpod5", "alienpod6", "alienpod7", "alienpod8", "alienpod9")
+	baseturfs = /turf/open/floor/plating/abductor2
 
 /turf/open/floor/mineral/abductor/Initialize()
 	. = ..()
@@ -229,6 +231,3 @@
 
 /turf/open/floor/mineral/abductor/burn_tile()
 	return //unburnable
-
-/turf/open/floor/mineral/abductor/make_plating()
-	return ChangeTurf(/turf/open/floor/plating/abductor2)

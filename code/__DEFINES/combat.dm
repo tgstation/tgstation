@@ -12,35 +12,29 @@
 #define BRAIN		"brain"
 
 //bitflag damage defines used for suicide_act
-#define BRUTELOSS 1
-#define FIRELOSS 2
-#define TOXLOSS 4
-#define OXYLOSS 8
-#define SHAME 16
-#define MANUAL_SUICIDE 32	//suicide_act will do the actual killing.
+#define BRUTELOSS 		(1<<0)
+#define FIRELOSS 		(1<<1)
+#define TOXLOSS 		(1<<2)
+#define OXYLOSS 		(1<<3)
+#define SHAME 			(1<<4)
+#define MANUAL_SUICIDE	(1<<5)	//suicide_act will do the actual killing.
 
-#define STUN		"stun"
-#define KNOCKDOWN		"knockdown"
-#define UNCONSCIOUS	"unconscious"
-#define IRRADIATE	"irradiate"
-#define STUTTER		"stutter"
-#define SLUR 		"slur"
-#define EYE_BLUR	"eye_blur"
-#define DROWSY		"drowsy"
-#define JITTER		"jitter"
+#define EFFECT_STUN		"stun"
+#define EFFECT_KNOCKDOWN		"knockdown"
+#define EFFECT_UNCONSCIOUS	"unconscious"
+#define EFFECT_IRRADIATE	"irradiate"
+#define EFFECT_STUTTER		"stutter"
+#define EFFECT_SLUR 		"slur"
+#define EFFECT_EYE_BLUR	"eye_blur"
+#define EFFECT_DROWSY		"drowsy"
+#define EFFECT_JITTER		"jitter"
 
 //Bitflags defining which status effects could be or are inflicted on a mob
-#define CANSTUN		1
-#define CANKNOCKDOWN	2
-#define CANUNCONSCIOUS	4
-#define CANPUSH		8
-#define IGNORESLOWDOWN	16
-#define GOTTAGOFAST	32
-#define GOTTAGOREALLYFAST	64
-#define GODMODE		4096
-#define FAKEDEATH	8192	//Replaces stuff like changeling.changeling_fakedeath
-#define DISFIGURED	16384	//I'll probably move this elsewhere if I ever get wround to writing a bitflag mob-damage system
-#define XENO_HOST	32768	//Tracks whether we're gonna be a baby alien's mummy.
+#define CANSTUN			(1<<0)
+#define CANKNOCKDOWN	(1<<1)
+#define CANUNCONSCIOUS	(1<<2)
+#define CANPUSH			(1<<3)
+#define GODMODE			(1<<4)
 
 //Health Defines
 #define HEALTH_THRESHOLD_CRIT 0
@@ -116,11 +110,7 @@
 #define EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER 8	//Coefficient of multiplication for the damage the item does when removed without a surgery (this*item.w_class)
 #define EMBEDDED_UNSAFE_REMOVAL_TIME			30	//A Time in ticks, total removal time = (this*item.w_class)
 
-//Gun Stuff
-#define SAWN_INTACT  0
-#define SAWN_OFF     1
 //Gun weapon weight
-#define WEAPON_DUAL_WIELD 0
 #define WEAPON_LIGHT 1
 #define WEAPON_MEDIUM 2
 #define WEAPON_HEAVY 3
@@ -152,3 +142,25 @@
 
 #define EMP_HEAVY 1
 #define EMP_LIGHT 2
+
+#define GRENADE_CLUMSY_FUMBLE 1
+#define GRENADE_NONCLUMSY_FUMBLE 2
+#define GRENADE_NO_FUMBLE 3
+
+#define BODY_ZONE_HEAD		"head"
+#define BODY_ZONE_CHEST		"chest"
+#define BODY_ZONE_L_ARM		"l_arm"
+#define BODY_ZONE_R_ARM		"r_arm"
+#define BODY_ZONE_L_LEG		"l_leg"
+#define BODY_ZONE_R_LEG		"r_leg"
+
+#define BODY_ZONE_PRECISE_EYES		"eyes"
+#define BODY_ZONE_PRECISE_MOUTH		"mouth"
+#define BODY_ZONE_PRECISE_GROIN		"groin"
+#define BODY_ZONE_PRECISE_L_HAND	"l_hand"
+#define BODY_ZONE_PRECISE_R_HAND	"r_hand"
+#define BODY_ZONE_PRECISE_L_FOOT	"l_foot"
+#define BODY_ZONE_PRECISE_R_FOOT	"r_foot"
+
+//We will round to this value in damage calculations.
+#define DAMAGE_PRECISION 0.1

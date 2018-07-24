@@ -6,7 +6,7 @@
 	var/chained = 0
 
 	body_parts_covered = FEET
-	slot_flags = SLOT_FEET
+	slot_flags = ITEM_SLOT_FEET
 
 	permeability_coefficient = 0.5
 	slowdown = SHOES_SLOWDOWN
@@ -15,12 +15,35 @@
 	var/offset = 0
 	var/equipped_before_drop = FALSE
 
+/obj/item/clothing/shoes/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, .proc/clean_blood)))
+
+/obj/item/clothing/shoes/suicide_act(mob/living/carbon/user)
+	if(rand(2)>1)
+		user.visible_message("<span class='suicide'>[user] begins tying \the [src] up waaay too tightly! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		var/obj/item/bodypart/l_leg = user.get_bodypart(BODY_ZONE_L_LEG)
+		var/obj/item/bodypart/r_leg = user.get_bodypart(BODY_ZONE_R_LEG)
+		if(l_leg)
+			l_leg.dismember()
+			playsound(user,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
+		if(r_leg)
+			r_leg.dismember()
+			playsound(user,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
+		return BRUTELOSS
+	else//didnt realize this suicide act existed (was in miscellaneous.dm) and didnt want to remove it, so made it a 50/50 chance. Why not!
+		user.visible_message("<span class='suicide'>[user] is bashing [user.p_their()] own head in with [src]! Ain't that a kick in the head?</span>")
+		for(var/i = 0, i < 3, i++)
+			sleep(3)
+			playsound(user, 'sound/weapons/genhit2.ogg', 50, 1)
+		return(BRUTELOSS)
+
 /obj/item/clothing/shoes/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
-		var/bloody = 0
-		if(blood_DNA)
-			bloody = 1
+		var/bloody = FALSE
+		IF_HAS_BLOOD_DNA(src)
+			bloody = TRUE
 		else
 			bloody = bloody_shoes[BLOOD_STATE_HUMAN]
 
@@ -53,8 +76,9 @@
 		var/mob/M = loc
 		M.update_inv_shoes()
 
-/obj/item/clothing/shoes/clean_blood()
-	..()
+/obj/item/clothing/shoes/proc/clean_blood(strength)
+	if(strength < CLEAN_STRENGTH_BLOOD)
+		return
 	bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 	blood_state = BLOOD_STATE_NOT_BLOODY
 	if(ismob(loc))
@@ -62,4 +86,4 @@
 		M.update_inv_shoes()
 
 /obj/item/proc/negates_gravity()
-	return 0
+	return FALSE

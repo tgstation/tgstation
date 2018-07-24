@@ -20,6 +20,6 @@
   </ui-section>
 {{/each}}
 {{^data.abilities}}
-  <span class='warning'>No abilities availible.</span>
+  <span class='warning'>No abilities available.</span>
 {{/data.abilities}}
 </ui-display>

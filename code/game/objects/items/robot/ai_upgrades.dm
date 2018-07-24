@@ -2,14 +2,15 @@
 
 
 //Malf Picker
-/obj/item/device/malf_upgrade
+/obj/item/malf_upgrade
 	name = "combat software upgrade"
 	desc = "A highly illegal, highly dangerous upgrade for artificial intelligence units, granting them a variety of powers as well as the ability to hack APCs."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "datadisk3"
 
 
-/obj/item/device/malf_upgrade/afterattack(mob/living/silicon/ai/AI, mob/user)
+/obj/item/malf_upgrade/afterattack(mob/living/silicon/ai/AI, mob/user)
+	. = ..()
 	if(!istype(AI))
 		return
 	if(AI.malf_picker)
@@ -23,13 +24,14 @@
 
 
 //Lipreading
-/obj/item/device/surveillance_upgrade
+/obj/item/surveillance_upgrade
 	name = "surveillance software upgrade"
 	desc = "A software package that will allow an artificial intelligence to 'hear' from its cameras via lip reading."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "datadisk3"
 
-/obj/item/device/surveillance_upgrade/afterattack(mob/living/silicon/ai/AI, mob/user)
+/obj/item/surveillance_upgrade/afterattack(mob/living/silicon/ai/AI, mob/user)
+	. = ..()
 	if(!istype(AI))
 		return
 	if(AI.eyeobj)

@@ -6,7 +6,7 @@
 	anchored = TRUE
 	var/popped = FALSE
 
-/obj/effect/fun_balloon/New()
+/obj/effect/fun_balloon/Initialize()
 	. = ..()
 	SSobj.processing |= src
 
@@ -31,13 +31,15 @@
 	playsound(get_turf(src), 'sound/items/party_horn.ogg', 50, 1, -1)
 	qdel(src)
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/fun_balloon/attack_ghost(mob/user)
 	if(!user.client || !user.client.holder || popped)
 		return
-	switch(alert("Pop [src]?","Fun Balloon","Yes","No"))
-		if("Yes")
-			effect()
-			pop()
+	var/confirmation = alert("Pop [src]?","Fun Balloon","Yes","No")
+	if(confirmation == "Yes" && !popped)
+		popped = TRUE
+		effect()
+		pop()
 
 /obj/effect/fun_balloon/sentience
 	name = "sentience fun balloon"
@@ -51,15 +53,15 @@
 		bodies += M
 
 	var/question = "Would you like to be [group_name]?"
-	var/list/candidates = pollCandidatesForMobs(question, "pAI", null, FALSE, 100, bodies)
-	while(candidates.len && bodies.len)
-		var/mob/dead/observer/ghost = pick_n_take(candidates)
+	var/list/candidates = pollCandidatesForMobs(question, ROLE_PAI, null, FALSE, 100, bodies)
+	while(LAZYLEN(candidates) && LAZYLEN(bodies))
+		var/mob/dead/observer/C = pick_n_take(candidates)
 		var/mob/living/body = pick_n_take(bodies)
 
 		to_chat(body, "Your mob has been taken over by a ghost!")
-		message_admins("[key_name_admin(ghost)] has taken control of ([key_name_admin(body)])")
+		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(body)])")
 		body.ghostize(0)
-		body.key = ghost.key
+		body.key = C.key
 		new /obj/effect/temp_visual/gravpush(get_turf(body))
 
 /obj/effect/fun_balloon/sentience/emergency_shuttle
@@ -95,7 +97,7 @@
 		var/obj/docking_port/stationary/SM = S
 		if(SM.id == "emergency_home")
 			var/new_dir = turn(SM.dir, 180)
-			SM.loc = get_ranged_target_turf(SM, new_dir, rand(3,15))
+			SM.forceMove(get_ranged_target_turf(SM, new_dir, rand(3,15)))
 			break
 	qdel(src)
 
@@ -110,32 +112,30 @@
 	anchored = TRUE
 
 /obj/effect/shuttle_build/New()
-	SSshuttle.emergency.dock(SSshuttle.getDock("emergency_home"))
+	SSshuttle.emergency.initiate_docking(SSshuttle.getDock("emergency_home"))
 	qdel(src)
 
 //Arena
 
 /obj/effect/forcefield/arena_shuttle
 	name = "portal"
-	var/list/warp_points = list()
+	timeleft = 0
+	var/list/warp_points
 
+/obj/effect/forcefield/arena_shuttle/Initialize()
+	. = ..()
+	for(var/obj/effect/landmark/shuttle_arena_safe/exit in GLOB.landmarks_list)
+		warp_points += exit
 
-/obj/effect/forcefield/arena_shuttle/CollidedWith(atom/movable/AM)
+/obj/effect/forcefield/arena_shuttle/Bumped(atom/movable/AM)
 	if(!isliving(AM))
 		return
-	if(!warp_points.len)
-		warp_points = get_area_turfs(/area/shuttle/escape)
-		for(var/turf/T in warp_points)
-			for(var/atom/movable/TAM in T)
-				if(TAM.density && TAM.anchored)
-					warp_points -= T
-					break
 
 	var/mob/living/L = AM
 	if(L.pulling && istype(L.pulling, /obj/item/bodypart/head))
 		to_chat(L, "Your offering is accepted. You may pass.")
 		qdel(L.pulling)
-		var/turf/LA = pick(warp_points)
+		var/turf/LA = get_turf(pick(warp_points))
 		L.forceMove(LA)
 		L.hallucination = 0
 		to_chat(L, "<span class='reallybig redtext'>The battle is won. Your bloodlust subsides.</span>")
@@ -155,9 +155,10 @@
 
 /obj/effect/forcefield/arena_shuttle_entrance
 	name = "portal"
+	timeleft = 0
 	var/list/warp_points = list()
 
-/obj/effect/forcefield/arena_shuttle_entrance/CollidedWith(atom/movable/AM)
+/obj/effect/forcefield/arena_shuttle_entrance/Bumped(atom/movable/AM)
 	if(!isliving(AM))
 		return
 
@@ -176,5 +177,5 @@
 
 /area/shuttle_arena
 	name = "arena"
-	has_gravity = TRUE
+	has_gravity = STANDARD_GRAVITY
 	requires_power = FALSE

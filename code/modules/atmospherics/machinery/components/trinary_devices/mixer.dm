@@ -6,8 +6,6 @@
 	can_unwrench = TRUE
 	desc = "Very useful for mixing gasses."
 
-	var/on = FALSE
-
 	var/target_pressure = ONE_ATMOSPHERE
 	var/node1_concentration = 0.5
 	var/node2_concentration = 0.5
@@ -17,9 +15,49 @@
 
 	//node 3 is the outlet, nodes 1 & 2 are intakes
 
+/obj/machinery/atmospherics/components/trinary/mixer/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/trinary/mixer/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
+
 /obj/machinery/atmospherics/components/trinary/mixer/flipped
 	icon_state = "mixer_off_f"
 	flipped = TRUE
+
+/obj/machinery/atmospherics/components/trinary/mixer/flipped/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/trinary/mixer/flipped/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/trinary/mixer/airmix //For standard airmix to distro
+	name = "air mixer"
+	icon_state = "mixer_on"
+	node1_concentration = N2STANDARD
+	node2_concentration = O2STANDARD
+	on = TRUE
+	target_pressure = MAX_OUTPUT_PRESSURE
+
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/inverse
+	node1_concentration = O2STANDARD
+	node2_concentration = N2STANDARD
+
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped
+	icon_state = "mixer_on_f"
+	flipped = TRUE
+
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/inverse
+	node1_concentration = O2STANDARD
+	node2_concentration = N2STANDARD
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon()
 	cut_overlays()
@@ -33,7 +71,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon_nopipes()
-	if(on && NODE1 && NODE2 && NODE3 && is_operational())
+	if(on && nodes[1] && nodes[2] && nodes[3] && is_operational())
 		icon_state = "mixer_on[flipped?"_f":""]"
 		return
 	icon_state = "mixer_off[flipped?"_f":""]"
@@ -46,18 +84,18 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/New()
 	..()
-	var/datum/gas_mixture/air3 = AIR3
+	var/datum/gas_mixture/air3 = airs[3]
 	air3.volume = 300
-	AIR3 = air3
+	airs[3] = air3
 
 /obj/machinery/atmospherics/components/trinary/mixer/process_atmos()
 	..()
-	if(!on || !(NODE1 && NODE2 && NODE3) && !is_operational())
+	if(!on || !(nodes[1] && nodes[2] && nodes[3]) && !is_operational())
 		return
 
-	var/datum/gas_mixture/air1 = AIR1
-	var/datum/gas_mixture/air2 = AIR2
-	var/datum/gas_mixture/air3 = AIR3
+	var/datum/gas_mixture/air1 = airs[1]
+	var/datum/gas_mixture/air2 = airs[2]
+	var/datum/gas_mixture/air3 = airs[3]
 
 	var/output_starting_pressure = air3.return_pressure()
 
@@ -103,14 +141,14 @@
 		air3.merge(removed2)
 
 	if(transfer_moles1)
-		var/datum/pipeline/parent1 = PARENT1
+		var/datum/pipeline/parent1 = parents[1]
 		parent1.update = TRUE
 
 	if(transfer_moles2)
-		var/datum/pipeline/parent2 = PARENT2
+		var/datum/pipeline/parent2 = parents[2]
 		parent2.update = TRUE
 
-	var/datum/pipeline/parent3 = PARENT3
+	var/datum/pipeline/parent3 = parents[3]
 	parent3.update = TRUE
 
 	return
@@ -152,7 +190,7 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
+				target_pressure = CLAMP(pressure, 0, MAX_OUTPUT_PRESSURE)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("node1")
 			var/value = text2num(params["concentration"])

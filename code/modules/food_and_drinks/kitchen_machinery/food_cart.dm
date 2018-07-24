@@ -15,7 +15,7 @@
 	var/portion = 10
 	var/selected_drink
 	var/list/stored_food = list()
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	var/obj/item/reagent_containers/mixer
 
 /obj/machinery/food_cart/Initialize()
@@ -29,11 +29,8 @@
 	QDEL_NULL(mixer)
 	return ..()
 
-/obj/machinery/food_cart/attack_hand(mob/user)
-	user.set_machine(src)
-	interact(user)
-
-/obj/machinery/food_cart/interact(mob/user)
+/obj/machinery/food_cart/ui_interact(mob/user)
+	. = ..()
 	var/dat
 	dat += "<br><b>STORED INGREDIENTS AND DRINKS</b><br><div class='statusDisplay'>"
 	dat += "Remaining glasses: [glasses]<br>"
@@ -95,12 +92,12 @@
 				to_chat(user, "<span class='warning'>[src] is at full capacity.</span>")
 				break
 			else
-				T.remove_from_storage(S, src)
-				if(stored_food[sanitize(S.name)])
-					stored_food[sanitize(S.name)]++
-				else
-					stored_food[sanitize(S.name)] = 1
-	else if(O.is_open_container())
+				if(SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src))
+					if(stored_food[sanitize(S.name)])
+						stored_food[sanitize(S.name)]++
+					else
+						stored_food[sanitize(S.name)] = 1
+	else if(O.is_drainable())
 		return
 	else
 		. = ..()
@@ -119,11 +116,11 @@
 		else
 			for(var/obj/O in contents)
 				if(sanitize(O.name) == href_list["dispense"])
-					O.loc = src.loc
+					O.forceMove(drop_location())
 					break
 
 	if(href_list["portion"])
-		portion = Clamp(input("How much drink do you want to dispense per glass?") as num, 0, 50)
+		portion = CLAMP(input("How much drink do you want to dispense per glass?") as num, 0, 50)
 
 	if(href_list["pour"] || href_list["m_pour"])
 		if(glasses-- <= 0)

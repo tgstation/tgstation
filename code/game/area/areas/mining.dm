@@ -2,7 +2,7 @@
 
 /area/mine
 	icon_state = "mining"
-	has_gravity = TRUE
+	has_gravity = STANDARD_GRAVITY
 
 /area/mine/explored
 	name = "Mine"
@@ -65,12 +65,6 @@
 /area/mine/sleeper
 	name = "Mining Station Emergency Sleeper"
 
-/area/mine/north_outpost
-	name = "North Mining Outpost"
-
-/area/mine/west_outpost
-	name = "West Mining Outpost"
-
 /area/mine/laborcamp
 	name = "Labor Camp"
 
@@ -86,7 +80,7 @@
 
 /area/lavaland
 	icon_state = "mining"
-	has_gravity = TRUE
+	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 
 /area/lavaland/surface
