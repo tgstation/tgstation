@@ -16,6 +16,7 @@ hr
 
 a, button, a:link, a:visited, a:active, .linkOn, .linkOff
 {
+	border-radius: 8px;
 	color: #ffffff;
 	text-decoration: none;
 	background: #40628a;
