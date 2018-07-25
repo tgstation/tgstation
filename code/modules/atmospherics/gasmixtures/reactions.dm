@@ -259,6 +259,35 @@
 	return cached_results["fire"] ? REACTING : NO_REACTION
 
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again).
+
+//Nuclear particle projectile - a deadly side effect of fusion
+/obj/item/projectile/nuclear_particle
+	name = "nuclear particle"
+	icon_state = "nuclear_particle"
+	damage = 20
+	damage = TOX 
+	flag = "energy"
+	var/static/list/particle_colors = list(
+		"red" = "#FF0000",
+		"blue" = "#00FF00",
+		"green" = "#0000FF",
+		"yellow" = "#FFFF00",
+		"cyan" = "#00FFFF",
+		"purple" = "#FF00FF"
+	)
+	var/radiation_strength = 2500 //enough to knockdown and induce vomiting
+
+/obj/item/projectile/nuclear_particle/Initialize()
+	. = ..()
+	//Random color time!
+	var/our_color = pick(particle_colors)
+	add_atom_colour(particle_colors[our_color], FIXED_COLOUR_PRIORITY)
+
+/obj/item/projectile/nuclear_particle/on_hit(atom/target)
+	if(target && isliving(target))
+		target.rad_act(radiation_strength)
+
+//the actual fusion reaction
 /datum/gas_reaction/fusion
 	exclude = FALSE
 	priority = 2
@@ -313,7 +342,6 @@
 			explosion(location,0,1,6,power_ratio,TRUE,TRUE)//A decent explosion with a huge shockwave. People WILL know you're doing fusion.
 			tesla_zap(location, FUSION_ZAP_RANGE_SUPER, zap_power) //LIGHTNING BOLT! LIGHTNING BOLT!
 			playsound(location, 'sound/effects/supermatter.ogg', FUSION_VOLUME_SUPER, 0)
-
 
 	else if (power_ratio > FUSION_HIGH_TIER_THRESHOLD) //power ratio 20-50; High tier. Fuses into one big atom which then turns to tritium instantly. Very dangerous, but super cool.
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_HIGH * (power_ratio / FUSION_ENERGY_DIVISOR_HIGH)
