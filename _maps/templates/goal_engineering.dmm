@@ -31,18 +31,20 @@
 "E" = (/obj/structure/cable/yellow{icon_state = "2-4"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/open/floor/plasteel/dark,/area/station_goal)
 "F" = (/obj/structure/cable/yellow{icon_state = "4-8"},/mob/living/simple_animal/bot/floorbot,/turf/open/floor/plasteel/dark,/area/station_goal)
 "G" = (/obj/structure/rack,/obj/structure/cable/yellow{icon_state = "1-8"},/obj/item/stack/rods/fifty,/obj/item/stack/tile/noslip/thirty,/turf/open/floor/plasteel/dark,/area/station_goal)
-"H" = (/obj/effect/spawner/structure/window,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/floor/plasteel/dark,/area/station_goal)
+"H" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station_goal)
 "I" = (/obj/structure/cable/yellow{icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/door/airlock/engineering,/turf/open/floor/plasteel/dark,/area/station_goal)
-"J" = (/obj/effect/spawner/structure/window,/turf/open/floor/plasteel/dark,/area/station_goal)
+"J" = (/turf/open/floor/plating,/area/station_goal)
+"K" = (/obj/effect/spawner/structure/window,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/floor/plating,/area/station_goal)
+"L" = (/obj/effect/spawner/structure/window,/turf/open/floor/plating,/area/station_goal)
 
 (1,1,1) = {"
 eeezzzeee
-eaabbbaae
+eaaHHHaae
 eacdfghae
-zbijklmbz
+zHijklmHz
 eanopqrae
 eastuvwae
-zbxyAlBbz
-eaCDEFGae
-baaHIJaab
+zHxyAlBbz
+eaCDEFGJe
+HaaKILaaH
 "}

@@ -50,15 +50,9 @@
 
 	P = SSshuttle.supply_packs[/datum/supply_pack/engineering/dna_probes]
 	P.special_enabled = TRUE
-
-	message_admins("dnavaultonreport ")
-
 	var/turf/T = pick(GLOB.goal_spawn)
-	message_admins(world, "Turf loc [T.x], [T.y], [T.z]")
 	var/datum/map_template/goal/template
 	template = SSmapping.goal_templates[template_id]
-
-	message_admins("[ADMIN_LOOKUPFLW(usr)] has activated the station goal [ADMIN_VERBOSEJMP(T)]")
 	template.load(T, centered = TRUE)
 	qdel(src)
 
