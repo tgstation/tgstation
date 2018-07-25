@@ -33,5 +33,9 @@ map deltastation
 	minplayers 50
 endmap
 
+map microscopicstation
+	maxplayers 5
+endmap
+
 map runtimestation
 endmap

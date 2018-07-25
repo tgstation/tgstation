@@ -1,0 +1,11 @@
+{
+    "map_name": "Microscopic Station",
+    "map_path": "map_files/MicroscopicStation",
+    "map_file": "microscopicstation.dmm",
+    "shuttles": {
+	    "cargo": "cargo_birdboat",
+	    "ferry": "ferry_fancy",
+	    "whiteship": "whiteship_meta",
+	    "emergency": "emergency_mini"
+    }
+}
