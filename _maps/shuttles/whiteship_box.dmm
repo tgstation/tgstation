@@ -2072,7 +2072,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock{
 	name = "Restroom"
 	},
 /turf/open/floor/plasteel/freezer,
