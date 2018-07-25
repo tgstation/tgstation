@@ -1,0 +1,4 @@
+author: "subject217"
+delete-after: True
+changes: 
+  - bugfix: "The revolver cargo bounty no longer accepts double barrel shotguns and grenade launchers."

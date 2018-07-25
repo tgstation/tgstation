@@ -112,7 +112,7 @@
 		limbs_to_dismember = arms + legs
 		if(holding_bodypart)
 			limbs_to_dismember += holding_bodypart
-		
+
 		var/speedbase = abs((4 SECONDS) / limbs_to_dismember.len)
 		for(bodypart in limbs_to_dismember)
 			i++
@@ -352,7 +352,7 @@
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
-	hitsound = 'sound/weapons/chainhit.ogg'
+	hitsound = 'sound/weapons/whip.ogg'
 
 /obj/item/melee/curator_whip/afterattack(target, mob/user, proximity_flag)
 	. = ..()

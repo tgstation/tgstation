@@ -190,4 +190,15 @@
 	if(length(receive))
 		SSblackbox.LogBroadcast(frequency)
 
+	var/spans_part = ""
+	if(length(spans))
+		spans_part = "("
+		for(var/S in spans)
+			spans_part = "[spans_part] [S]"
+		spans_part = "[spans_part] ) "
+
+	var/lang_name = data["language"]
+
+	log_telecomms("[datum_info_line(virt.source)] : \[[get_radio_name(frequency)]\] [spans_part]\"[message]\" language: [lang_name] at [atom_loc_line(get_turf(src.source))]")
+
 	QDEL_IN(virt, 50)  // Make extra sure the virtualspeaker gets qdeleted

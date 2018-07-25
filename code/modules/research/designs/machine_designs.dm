@@ -475,6 +475,14 @@
 	category = list("Medical Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/board/harvester
+	name = "Machine Design (Organ Harvester Board)"
+	desc = "The circuit board for an organ harvester."
+	id = "harvester"
+	build_path = /obj/item/circuitboard/machine/harvester
+	category = list("Medical Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/board/deepfryer
 	name = "Machine Design (Deep Fryer)"
 	desc = "The circuit board for a Deep Fryer."

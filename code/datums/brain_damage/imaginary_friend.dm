@@ -14,12 +14,16 @@
 
 /datum/brain_trauma/special/imaginary_friend/on_life()
 	if(get_dist(owner, friend) > 9)
-		friend.yank()
+		friend.recall()
 	if(!friend)
 		qdel(src)
 		return
 	if(!friend.client && friend_initialized)
 		addtimer(CALLBACK(src, .proc/reroll_friend), 600)
+
+/datum/brain_trauma/special/imaginary_friend/on_death()
+	..()
+	qdel(src) //friend goes down with the ship
 
 /datum/brain_trauma/special/imaginary_friend/on_lose()
 	..()
@@ -55,11 +59,18 @@
 	see_in_dark = 0
 	lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	sight = NONE
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	see_invisible = SEE_INVISIBLE_LIVING
+	invisibility = INVISIBILITY_MAXIMUM
 	var/icon/human_image
 	var/image/current_image
+	var/hidden = FALSE
+	var/move_delay = 0
 	var/mob/living/carbon/owner
 	var/datum/brain_trauma/special/imaginary_friend/trauma
+
+	var/datum/action/innate/imaginary_join/join
+	var/datum/action/innate/imaginary_hide/hide
 
 /mob/camera/imaginary_friend/Login()
 	..()
@@ -75,7 +86,13 @@
 	name = real_name
 	trauma = _trauma
 	owner = trauma.owner
+	copy_known_languages_from(owner, TRUE)
 	human_image = get_flat_human_icon(null, pick(SSjob.occupations))
+
+	join = new
+	join.Grant(src)
+	hide = new
+	hide.Grant(src)
 
 /mob/camera/imaginary_friend/proc/Show()
 	if(!client) //nobody home
@@ -91,9 +108,11 @@
 	current_image = image(human_image, src, , MOB_LAYER, dir=src.dir)
 	current_image.override = TRUE
 	current_image.name = name
+	if(hidden)
+		current_image.alpha = 150
 
 	//Add new image to owner and friend
-	if(owner.client)
+	if(!hidden && owner.client)
 		owner.client.images |= current_image
 
 	client.images |= current_image
@@ -104,12 +123,6 @@
 	if(client)
 		client.images.Remove(human_image)
 	return ..()
-
-/mob/camera/imaginary_friend/proc/yank()
-	if(!client) //don't bother if the friend is braindead
-		return
-	forceMove(get_turf(owner))
-	Show()
 
 /mob/camera/imaginary_friend/say(message)
 	if (!message)
@@ -124,8 +137,11 @@
 
 	friend_talk(message)
 
+/mob/camera/imaginary_friend/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
+	to_chat(src, compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode))
+
 /mob/camera/imaginary_friend/proc/friend_talk(message)
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = capitalize(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
 
 	if(!message)
 		return
@@ -138,17 +154,68 @@
 	to_chat(owner, "[rendered]")
 	to_chat(src, "[rendered]")
 
+	//speech bubble
+	if(owner.client)
+		var/mutable_appearance/MA = mutable_appearance('icons/mob/talk.dmi', src, "default[say_test(message)]", FLY_LAYER)
+		MA.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+		INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, MA, list(owner.client), 30)
+
 	for(var/mob/M in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(M, owner)
 		to_chat(M, "[link] [dead_rendered]")
 
+/mob/camera/imaginary_friend/Move(NewLoc, Dir = 0)
+	if(world.time < move_delay)
+		return FALSE
+	if(get_dist(src, owner) > 9)
+		recall()
+		move_delay = world.time + 10
+		return FALSE
+	forceMove(NewLoc)
+	move_delay = world.time + 1
+
 /mob/camera/imaginary_friend/forceMove(atom/destination)
 	dir = get_dir(get_turf(src), destination)
 	loc = destination
-	if(get_dist(src, owner) > 9)
-		yank()
-		return
 	Show()
 
-/mob/camera/imaginary_friend/movement_delay()
-	return 2
+/mob/camera/imaginary_friend/proc/recall()
+	if(!owner || loc == owner)
+		return FALSE
+	forceMove(owner)
+
+/datum/action/innate/imaginary_join
+	name = "Join"
+	desc = "Join your owner, following them from inside their mind."
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	background_icon_state = "bg_revenant"
+	button_icon_state = "join"
+
+/datum/action/innate/imaginary_join/Activate()
+	var/mob/camera/imaginary_friend/I = owner
+	I.recall()
+
+/datum/action/innate/imaginary_hide
+	name = "Hide"
+	desc = "Hide yourself from your owner's sight."
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	background_icon_state = "bg_revenant"
+	button_icon_state = "hide"
+
+/datum/action/innate/imaginary_hide/proc/update_status()
+	var/mob/camera/imaginary_friend/I = owner
+	if(I.hidden)
+		name = "Show"
+		desc = "Become visible to your owner."
+		button_icon_state = "unhide"
+	else
+		name = "Hide"
+		desc = "Hide yourself from your owner's sight."
+		button_icon_state = "hide"
+	UpdateButtonIcon()
+
+/datum/action/innate/imaginary_hide/Activate()
+	var/mob/camera/imaginary_friend/I = owner
+	I.hidden = !I.hidden
+	I.Show()
+	update_status()

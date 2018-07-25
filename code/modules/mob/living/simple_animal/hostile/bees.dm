@@ -295,3 +295,10 @@
 			forceMove(beehome.drop_location())
 	else
 		..()
+		
+/mob/living/simple_animal/hostile/poison/bees/short
+	desc = "These bees seem unstable and won't survive for long."
+
+/mob/living/simple_animal/hostile/poison/bees/short/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/death), 50 SECONDS)

@@ -18,6 +18,9 @@
 //To be used with TIMER_UNIQUE
 //prevents distinguishing identical timers with the wait variable
 #define TIMER_NO_HASH_WAIT		(1<<4)
+//Loops the timer repeatedly until qdeleted
+//In most cases you want a subsystem instead
+#define TIMER_LOOP				(1<<5)
 
 #define TIMER_NO_INVOKE_WARNING 600 //number of byond ticks that are allowed to pass before the timer subsystem thinks it hung on something
 

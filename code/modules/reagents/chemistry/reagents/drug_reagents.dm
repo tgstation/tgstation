@@ -132,7 +132,7 @@
 	..()
 	. = 1
 
-/datum/reagent/krokodil/addiction_act_stage2(mob/living/M)
+/datum/reagent/drug/krokodil/addiction_act_stage2(mob/living/M)
 	if(prob(25))
 		to_chat(M, "<span class='danger'>Your skin feels loose...</span>")
 	..()
