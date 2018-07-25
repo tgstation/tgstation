@@ -26253,10 +26253,8 @@
 	},
 /area/security/checkpoint/engineering)
 "bep" = (
-<<<<<<< HEAD
 /turf/closed/wall,
 /area/engine/break_room)
-=======
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -26266,7 +26264,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/storage_shared)
->>>>>>> upstream/master
 "beq" = (
 /obj/structure/sign/warning/vacuum/external,
 /turf/closed/wall/r_wall,
@@ -75881,11 +75878,9 @@
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
-<<<<<<< HEAD
 "hdC" = (
 /obj/structure/closet/secure_closet/engineering_welding,
 /obj/effect/turf_decal/delivery,
-=======
 "gYu" = (
 /turf/open/floor/plasteel/caution/corner{
 	dir = 8
@@ -75896,7 +75891,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/vending/cigarette,
->>>>>>> upstream/master
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "hkq" = (
@@ -75966,12 +75960,10 @@
 	},
 /turf/open/floor/plasteel/whitepurple,
 /area/science/lab)
-<<<<<<< HEAD
 "iGO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/maintenance/starboard/aft)
-=======
 "iHl" = (
 /obj/machinery/vending/engivend,
 /obj/effect/turf_decal/bot{
@@ -75980,7 +75972,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/engine/storage_shared)
->>>>>>> upstream/master
 "iLj" = (
 /obj/structure/table,
 /turf/open/floor/plating,
@@ -75998,8 +75989,6 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
-<<<<<<< HEAD
-=======
 "jrE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -76009,7 +75998,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
->>>>>>> upstream/master
 "jwW" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/crew_quarters/fitness/recreation)
@@ -76228,15 +76216,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-<<<<<<< HEAD
-=======
 "mzU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
 /turf/open/floor/plasteel/caution/corner,
 /area/engine/storage_shared)
->>>>>>> upstream/master
 "mWg" = (
 /obj/structure/girder,
 /obj/structure/grille,
@@ -76356,8 +76341,6 @@
 /obj/structure/sign/poster/official/random,
 /turf/closed/wall,
 /area/hydroponics)
-<<<<<<< HEAD
-=======
 "owR" = (
 /turf/closed/wall,
 /area/engine/storage_shared)
@@ -76376,7 +76359,6 @@
 	dir = 8
 	},
 /area/engine/storage_shared)
->>>>>>> upstream/master
 "oLW" = (
 /obj/structure/table/reinforced,
 /obj/structure/cable/yellow{
@@ -76494,13 +76476,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
-<<<<<<< HEAD
-=======
 "qdT" = (
 /obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/engine/storage_shared)
->>>>>>> upstream/master
 "qhe" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -76594,7 +76573,6 @@
 /obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel,
 /area/science/mixing)
-<<<<<<< HEAD
 "rXL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
@@ -76602,7 +76580,6 @@
 	},
 /turf/open/floor/plating,
 /area/engine/break_room)
-=======
 "rWg" = (
 /obj/item/twohanded/required/kirbyplants/random,
 /obj/machinery/airalarm{
@@ -76618,7 +76595,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/storage_shared)
->>>>>>> upstream/master
 "sdi" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -76775,8 +76751,6 @@
 /obj/machinery/vending/assist,
 /turf/open/floor/plasteel,
 /area/science/mixing)
-<<<<<<< HEAD
-=======
 "uEH" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Shared Engineering Storage";
@@ -76787,7 +76761,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/engine/storage_shared)
->>>>>>> upstream/master
 "uGW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -117000,17 +116973,14 @@ bhU
 bjF
 blk
 bmZ
-<<<<<<< HEAD
 bpg
 bie
 fDU
 hdC
-=======
 hfn
 wPB
 bep
 vzO
->>>>>>> upstream/master
 bxd
 byR
 bAB
@@ -117264,15 +117234,12 @@ bhV
 bjG
 bll
 bna
-<<<<<<< HEAD
 hXB
 bie
 bjL
-=======
 kCw
 msD
 hkq
->>>>>>> upstream/master
 bve
 bxd
 byS
@@ -117524,7 +117491,6 @@ aWw
 aWw
 aWw
 bhW
-<<<<<<< HEAD
 cCh
 blq
 bnb
@@ -117532,7 +117498,6 @@ ykW
 ykW
 osS
 bCK
-=======
 rCu
 bjL
 bnb
@@ -117540,7 +117505,6 @@ owR
 owR
 gYu
 qdT
->>>>>>> upstream/master
 bxd
 byT
 bAD
@@ -117795,13 +117759,10 @@ hKs
 bln
 bnc
 bph
-<<<<<<< HEAD
 brD
 bln
-=======
 iHl
 usN
->>>>>>> upstream/master
 bvg
 bxd
 byU
@@ -118057,13 +118018,10 @@ bjI
 tmP
 vzs
 bpi
-<<<<<<< HEAD
 brE
 bjL
-=======
 sao
 gYu
->>>>>>> upstream/master
 bvh
 bxd
 byV
@@ -118575,17 +118533,14 @@ bia
 hPZ
 blo
 bne
-<<<<<<< HEAD
 bep
 bep
 szc
 bCK
-=======
 owR
 owR
 oJW
 rWg
->>>>>>> upstream/master
 bxc
 byW
 bAG
@@ -118839,17 +118794,14 @@ bib
 bjJ
 blp
 bnf
-<<<<<<< HEAD
 bpj
 bep
 bep
 bep
-=======
 bpg
 owR
 owR
 owR
->>>>>>> upstream/master
 bxd
 byX
 bAH
