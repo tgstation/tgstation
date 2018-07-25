@@ -293,14 +293,17 @@
 		stat(null, "Health: [round((health / maxHealth) * 100)]%")
 		return 1
 
+/mob/living/simple_animal/proc/drop_loot()
+	if(loot.len)
+		for(var/i in loot)
+			new i(loc)
+
 /mob/living/simple_animal/death(gibbed)
 	movement_type &= ~FLYING
 	if(nest)
 		nest.spawned_mobs -= src
 		nest = null
-	if(loot.len)
-		for(var/i in loot)
-			new i(loc)
+	drop_loot()
 	if(dextrous)
 		drop_all_held_items()
 	if(!gibbed)

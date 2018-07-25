@@ -1033,7 +1033,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		var/mob/living/carbon/human/dummy/body = generate_or_wait_for_human_dummy(dummy_key)
 
 		if(prefs)
-			prefs.copy_to(body)
+			prefs.copy_to(body,TRUE,FALSE)
 		if(J)
 			J.equip(body, TRUE, FALSE)
 
