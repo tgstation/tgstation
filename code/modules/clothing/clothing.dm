@@ -66,8 +66,7 @@
 	if(user.a_intent != INTENT_HARM && ismoth(M))
 		var/obj/item/reagent_containers/food/snacks/clothing/clothing_as_food = new
 		clothing_as_food.name = name
-		//clothing_as_food.attack(M, user, def_zone) <--- this errored and said some shit about types
-		var/eaten = call(clothing_as_food, "attack")(M, user, def_zone)
+		var/eaten = clothing_as_food.attack(M, user, def_zone)
 		qdel(clothing_as_food)
 
 		if(eaten)
