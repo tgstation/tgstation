@@ -30,9 +30,9 @@
 #define FUSION_RELEASE_ENERGY_MID			5e8 	//Amount of energy released in the fusion process, mid tier
 #define FUSION_RELEASE_ENERGY_LOW			1e8 	//Amount of energy released in the fusion process, low tier
 #define FUSION_MEDIATION_FACTOR				80 		//Arbitrary
-#define FUSION_SUPER_TIER					50 		//anything above this is super tier
-#define FUSION_HIGH_TIER					20 		//anything above this and below 50 is high tier
-#define FUSION_MID_TIER						5 		//anything above this and below 20 is mid tier - below this is low tier, but that doesnt need a define
+#define FUSION_SUPER_TIER_THRESHOLD			50 		//anything above this is super tier
+#define FUSION_HIGH_TIER_THRESHOLD			20 		//anything above this and below 50 is high tier
+#define FUSION_MID_TIER_THRESHOLD			5 		//anything above this and below 20 is mid tier - below this is low tier, but that doesnt need a define
 #define FUSION_ENERGY_DIVISOR_SUPER			25		//power_ratio is divided by this during energy calculations
 #define FUSION_ENERGY_DIVISOR_HIGH			20
 #define FUSION_ENERGY_DIVISOR_MID			10
@@ -277,6 +277,7 @@
 /datum/gas_reaction/fusion/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
+	var/list/cached_results = air.reaction_results //used for having analyzers detect fusion reactions that occur
 	var/turf/open/location
 	if (istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
 		var/datum/pipeline/fusion_pipenet = holder
@@ -302,7 +303,7 @@
 	var/radiation_power = (FUSION_RADIATION_FACTOR * power_ratio) / (power_ratio + FUSION_RADIATION_CONSTANT) //https://www.desmos.com/calculator/4i1f296phl
 	var/zap_power = ((FUSION_ZAP_POWER_ASYMPTOTE * power_ratio) / (power_ratio + FUSION_ZAP_POWER_CONSTANT)) + FUSION_ZAP_POWER_BASE //https://www.desmos.com/calculator/n0zkdpxnrr
 
-	if (power_ratio > FUSION_SUPER_TIER) //power ratio 50+: SUPER TIER. The gases become so energized that they fuse into stimulum and pluoxium, which is pretty nice! IF you can salvage them, which is going to be hard because this reaction is ridiculously dangerous.
+	if (power_ratio > FUSION_SUPER_TIER_THRESHOLD) //power ratio 50+: SUPER TIER. The gases become so energized that they fuse into stimulum and pluoxium, which is pretty nice! IF you can salvage them, which is going to be hard because this reaction is ridiculously dangerous.
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_SUPER * (power_ratio / FUSION_ENERGY_DIVISOR_SUPER)
 		for (var/id in cached_gases)
 			cached_gases[id][MOLES] = 0
@@ -314,7 +315,7 @@
 			playsound(location, 'sound/effects/supermatter.ogg', FUSION_VOLUME_SUPER, 0)
 
 
-	else if (power_ratio > FUSION_HIGH_TIER) //power ratio 20-50; High tier. Fuses into one big atom which then turns to tritium instantly. Very dangerous, but super cool.
+	else if (power_ratio > FUSION_HIGH_TIER_THRESHOLD) //power ratio 20-50; High tier. Fuses into one big atom which then turns to tritium instantly. Very dangerous, but super cool.
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_HIGH * (power_ratio / FUSION_ENERGY_DIVISOR_HIGH)
 		for (var/id in cached_gases)
 			cached_gases[id][MOLES] = 0
@@ -330,7 +331,7 @@
 				playsound(location, 'sound/effects/phasein.ogg', FUSION_VOLUME_HIGH, 0)
 			tesla_zap(location, FUSION_ZAP_RANGE_HIGH, zap_power)
 
-	else if (power_ratio > FUSION_MID_TIER) //power_ratio 5 to 20; Mediation is overpowered, fusion reaction starts to break down.
+	else if (power_ratio > FUSION_MID_TIER_THRESHOLD) //power_ratio 5 to 20; Mediation is overpowered, fusion reaction starts to break down.
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_MID * (power_ratio / FUSION_ENERGY_DIVISOR_MID)
 		for (var/id in cached_gases)
 			cached_gases[id][MOLES] = 0
@@ -359,6 +360,7 @@
 			else
 				playsound(location, 'sound/effects/phasein.ogg', FUSION_VOLUME_LOW, 0)
 			tesla_zap(location, FUSION_ZAP_RANGE_LOW, zap_power)
+	cached_results[id] = power_ratio
 
 	if(reaction_energy > 0)
 		var/new_heat_capacity = air.heat_capacity()
