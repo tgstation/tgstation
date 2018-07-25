@@ -1,0 +1,10 @@
+{
+    "map_name": "EfficiencyStation",
+    "map_path": "map_files/EfficiencyStation",
+    "map_file": "EfficiencyStation.dmm",
+    "shuttles": {
+	    "emergency": "emergency_cramped",
+	    "ferry": "ferry_fancy",
+	    "cargo": "cargo_birdboat"
+    }
+}
