@@ -8,7 +8,7 @@
 	icon_state = "bike-off"
 	can_buckle = TRUE
 	max_buckled_mobs = 1
-	var/power = 200 //How many watts are generated per pedal turn
+	var/power = 50 //How many watts are generated per pedal turn
 	var/nerdpoints = 5 //How much research it makes per pedal turn
 	var/delay = 12 //Delay to avoid ultraspam
 	var/cooldown_time = 0
@@ -48,7 +48,7 @@
 	power = 0
 	nerdpoints = 0
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		power += C.rating*200 //Make it actually viable with better parts
+		power += C.rating*50 //Make it actually viable with better parts
 		nerdpoints += 5*C.rating
 
 /obj/machinery/power/excercise_bike/relaymove(mob/user, direction)
@@ -87,3 +87,6 @@
 	buckled_mob.pixel_y = initial(buckled_mob.pixel_y)
 	icon_state = initial(icon_state)
 	. = ..()
+
+#undef RESEARCH_MODE
+#undef POWER_MODE
