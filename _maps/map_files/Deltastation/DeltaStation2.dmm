@@ -1335,10 +1335,10 @@
 /obj/docking_port/stationary{
 	dir = 8;
 	dwidth = 11;
-	height = 15;
+	height = 22;
 	id = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Fore";
-	width = 32
+	width = 35
 	},
 /turf/open/space/basic,
 /area/space)
@@ -99712,6 +99712,12 @@
 	},
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
+"iCz" = (
+/obj/machinery/ore_silo,
+/turf/open/floor/plasteel/vault{
+	dir = 1
+	},
+/area/security/nuke_storage)
 "iQh" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 1
@@ -146529,7 +146535,7 @@ bvT
 bxi
 byz
 bxi
-bvP
+iCz
 but
 aad
 bHq

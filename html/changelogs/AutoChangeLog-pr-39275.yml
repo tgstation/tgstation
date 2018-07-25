@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - tweak: "RCDs can now be loaded partially by compressed matter cartridges rather than always consuming the entire cartridge."

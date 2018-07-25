@@ -3446,7 +3446,10 @@
 /area/bridge)
 "agX" = (
 /obj/structure/table/reinforced,
-/obj/item/aiModule/reset,
+/obj/item/aiModule/reset{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = -26
@@ -3454,6 +3457,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/item/aiModule/supplied/freeform,
 /turf/open/floor/plasteel/vault/side{
 	dir = 4
 	},
@@ -3936,11 +3940,10 @@
 	},
 /area/bridge)
 "ahP" = (
-/obj/structure/table/reinforced,
-/obj/item/aiModule/supplied/freeform,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/ore_silo,
 /turf/open/floor/plasteel/vault/side{
 	dir = 4
 	},
