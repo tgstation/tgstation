@@ -31,15 +31,15 @@
 	var/allow_switch_interact = TRUE
 
 	var/projectile_type = /obj/item/projectile/beam/emitter
-
 	var/projectile_sound = 'sound/weapons/emitter.ogg'
-
 	var/datum/effect_system/spark_spread/sparks
+	var/obj/item/gun/energy/gun
 
 	// The following 3 vars are mostly for the prototype
 	var/manual = FALSE
 	var/charge = 0
 	var/last_projectile_params
+
 
 /obj/machinery/power/emitter/anchored
 	anchored = TRUE
@@ -269,6 +269,8 @@
 	return TRUE
 
 /obj/machinery/power/emitter/crowbar_act(mob/living/user, obj/item/I)
+	if(panel_open && gun)
+		return remove_gun(user)
 	default_deconstruction_crowbar(I)
 	return TRUE
 
@@ -295,8 +297,34 @@
 	else if(is_wire_tool(I) && panel_open)
 		wires.interact(user)
 		return
-
+	else if(panel_open && !gun && istype(I,/obj/item/gun/energy))
+		if(integrate(I,user))
+			return
 	return ..()
+
+/obj/machinery/power/emitter/proc/integrate(obj/item/gun/energy/E,mob/user)
+	if(istype(E, /obj/item/gun/energy))
+		gun = E
+		if(!gun.chambered)
+			return
+		if(!user.transferItemToLoc(E, src))
+			return
+		if(!gun.chambered || !gun.chambered.BB)
+			return
+		var/obj/item/ammo_casing/energy/AM = gun.chambered
+		projectile_type = AM.BB.type
+		projectile_sound = AM.fire_sound
+		return TRUE
+
+/obj/machinery/power/emitter/proc/remove_gun(mob/user)
+	if(!gun)
+		return
+	user.put_in_hands(gun)
+	gun = null
+	playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+	projectile_type = initial(projectile_type)
+	projectile_sound = initial(projectile_sound)
+	return TRUE
 
 /obj/machinery/power/emitter/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
