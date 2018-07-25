@@ -11,17 +11,17 @@
 	active_power_usage = 300
 	occupant_typecache = list(/mob/living)
 
-	var/cloud_id = 0
+	var/cloud_id = 1
 	var/locked = FALSE
 	var/breakout_time = 1200
 	var/busy = FALSE
 	var/busy_icon_state
 	var/message_cooldown = 0
 
-/obj/machinery/public_nanite_chamber/Initialize()
-	. = ..()
+/obj/machinery/public_nanite_chamber/RefreshParts()
 	var/obj/item/circuitboard/machine/public_nanite_chamber/board = circuit
-	cloud_id = board.cloud_id
+	if(board)
+		cloud_id = board.cloud_id
 
 /obj/machinery/public_nanite_chamber/proc/set_busy(status, working_icon)
 	busy = status

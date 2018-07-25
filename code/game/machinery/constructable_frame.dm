@@ -189,11 +189,11 @@
 					for(var/obj/O in src)
 						O.moveToNullspace()
 						new_machine.component_parts += O
-					new_machine.RefreshParts()
 					if(new_machine.circuit)
 						QDEL_NULL(new_machine.circuit)
 					new_machine.circuit = circuit
 					circuit.moveToNullspace()
+					new_machine.RefreshParts()
 					qdel(src)
 				return
 
