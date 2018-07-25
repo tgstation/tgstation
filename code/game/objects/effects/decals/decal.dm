@@ -8,7 +8,8 @@
 /obj/effect/decal/Initialize()
 	. = ..()
 	if(turf_loc_check && (!isturf(loc) || NeverShouldHaveComeHere(loc)))
-		return INITIALIZE_HINT_QDEL
+		if (!istype(src, /obj/effect/decal/cleanable/crayon) && isclosedturf(loc)) //graffiti on walls
+			return INITIALIZE_HINT_QDEL
 
 /obj/effect/decal/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
