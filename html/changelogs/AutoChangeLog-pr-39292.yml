@@ -1,4 +1,0 @@
-author: "JJRcop"
-delete-after: True
-changes: 
-  - tweak: "The item pick up animation tweens to the correct spot if you move"

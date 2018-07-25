@@ -927,3 +927,8 @@
 	name = "Harvester (Machine Board)"
 	build_path = /obj/machinery/harvester
 	req_components = list(/obj/item/stock_parts/micro_laser = 4)
+
+/obj/item/circuitboard/machine/ore_silo
+	name = "Ore Silo (Machine Board)"
+	build_path = /obj/machinery/ore_silo
+	req_components = list()

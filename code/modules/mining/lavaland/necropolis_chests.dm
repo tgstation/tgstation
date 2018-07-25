@@ -1315,3 +1315,18 @@
 	for(var/t in RANGE_TURFS(1, T))
 		var/obj/effect/temp_visual/hierophant/blast/B = new(t, user, friendly_fire_check)
 		B.damage = 15 //keeps monster damage boost due to lower damage
+
+
+//Just some minor stuff
+/obj/structure/closet/crate/necropolis/puzzle
+	name = "puzzling chest"
+
+/obj/structure/closet/crate/necropolis/puzzle/PopulateContents()
+	var/loot = rand(1,3)
+	switch(loot)
+		if(1)
+			new /obj/item/soulstone/anybody(src)
+		if(2)
+			new /obj/item/wisp_lantern(src)
+		if(3)
+			new /obj/item/prisoncube(src)
