@@ -245,7 +245,7 @@ the new instance inside the host to be updated to the template's stats.
 /mob/camera/disease/proc/set_following(mob/living/L)
 	following_host = L
 	if(!move_listener)
-		move_listener = L.AddComponent(/datum/component/redirect, COMSIG_MOVABLE_MOVED, CALLBACK(src, .proc/follow_mob))
+		move_listener = L.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/follow_mob)))
 	else
 		L.TakeComponent(move_listener)
 		if(QDELING(move_listener))

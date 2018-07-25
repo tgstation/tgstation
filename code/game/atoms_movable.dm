@@ -58,8 +58,11 @@
 				return TRUE
 			return FALSE
 		if("loc")
-			if(var_value == null || istype(var_value, /atom))
+			if(istype(var_value, /atom))
 				forceMove(var_value)
+				return TRUE
+			else if(isnull(var_value))
+				moveToNullspace()
 				return TRUE
 			return FALSE
 	return ..()
@@ -295,7 +298,6 @@
 	return 1
 
 /atom/movable/Destroy(force)
-
 	QDEL_NULL(proximity_monitor)
 	QDEL_NULL(language_holder)
 
@@ -303,6 +305,10 @@
 
 	. = ..()
 	if(loc)
+		//Restore air flow if we were blocking it (movables with ATMOS_PASS_PROC will need to do this manually if necessary)
+		if(((CanAtmosPass == ATMOS_PASS_DENSITY && density) || CanAtmosPass == ATMOS_PASS_NO) && isturf(loc))
+			CanAtmosPass = ATMOS_PASS_YES
+			air_update_turf(TRUE)
 		loc.handle_atom_del(src)
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
@@ -775,7 +781,7 @@
 
 /obj/item/proc/do_pickup_animation(atom/target)
 	set waitfor = FALSE
-	var/mutable_appearance/I = new(icon = src, loc = loc, layer = layer + 0.1)
+	var/image/I = image(icon = src, loc = loc, layer = layer + 0.1)
 	I.plane = GAME_PLANE
 	I.transform *= 0.75
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
@@ -785,7 +791,7 @@
 	var/to_y = 0
 
 	flick_overlay(I, GLOB.clients, 6)
-	var/static/matrix/M = new
+	var/matrix/M = new
 	M.Turn(pick(-30, 30))
 
 	animate(I, transform = M, time = 1)

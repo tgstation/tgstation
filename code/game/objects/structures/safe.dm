@@ -13,6 +13,7 @@ FLOOR SAFES
 	anchored = TRUE
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT 
 	var/open = FALSE		//is the safe open?
 	var/tumbler_1_pos	//the tumbler position- from 0 to 72
 	var/tumbler_1_open	//the tumbler position to open at- 0 to 72
@@ -22,7 +23,6 @@ FLOOR SAFES
 	var/space = 0		//the combined w_class of everything in the safe
 	var/maxspace = 24	//the maximum combined w_class of stuff in the safe
 	var/explosion_count = 0	//Tough, but breakable
-
 
 /obj/structure/safe/New()
 	..()
@@ -61,13 +61,11 @@ FLOOR SAFES
 		return TRUE
 	return FALSE
 
-
 /obj/structure/safe/proc/decrement(num)
 	num -= 1
 	if(num < 0)
 		num = 71
 	return num
-
 
 /obj/structure/safe/proc/increment(num)
 	num += 1
@@ -75,18 +73,13 @@ FLOOR SAFES
 		num = 0
 	return num
 
-
 /obj/structure/safe/update_icon()
 	if(open)
 		icon_state = "[initial(icon_state)]-open"
 	else
 		icon_state = initial(icon_state)
 
-
-/obj/structure/safe/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/structure/safe/ui_interact(mob/user)
 	user.set_machine(src)
 	var/dat = "<center>"
 	dat += "<a href='?src=[REF(src)];open=1'>[open ? "Close" : "Open"] [src]</a> | <a href='?src=[REF(src)];decrement=1'>-</a> [dial] <a href='?src=[REF(src)];increment=1'>+</a>"
@@ -97,7 +90,6 @@ FLOOR SAFES
 			dat += "<tr><td><a href='?src=[REF(src)];retrieve=[REF(P)]'>[P.name]</a></td></tr>"
 		dat += "</table></center>"
 	user << browse("<html><head><title>[name]</title></head><body>[dat]</body></html>", "window=safe;size=350x300")
-
 
 /obj/structure/safe/Topic(href, href_list)
 	if(!ishuman(usr))
