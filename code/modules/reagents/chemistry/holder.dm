@@ -551,8 +551,6 @@
 		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 		return FALSE
 	
-	if(isliving(my_atom))
-		R.on_mob_add(my_atom) //Must occur befor it could posibly run on_mob_delete 
  	update_total()
 	var/cached_total = total_volume
 	if(cached_total + amount > maximum_volume)
@@ -596,7 +594,9 @@
 	if(data)
 		R.data = data
 		R.on_new(data)
-
+	
+	if(isliving(my_atom))
+		R.on_mob_add(my_atom) //Must occur befor it could posibly run on_mob_delete 
 	update_total()
 	if(my_atom)
 		my_atom.on_reagent_change(ADD_REAGENT)
