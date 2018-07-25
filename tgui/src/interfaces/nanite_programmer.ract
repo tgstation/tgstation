@@ -6,43 +6,49 @@
   {{#if !data.has_program}}
     <ui-notice>No program detected.</ui-notice>
   {{else}}
-    <ui-section label='Program Info'>
-      Type: {{data.name}}<br>
-      Description: {{data.desc}}<br>
-    	Nanites Consumed: {{data.decay_rate}}<br>
-      {{#if data.can_trigger}}
-        Trigger Cost: {{data.trigger_cost}}u<br>
-      {{/if}}
-      <br>
-      Status: <ui-button
-                icon='{{data.activated ? "toggle-on" : "toggle-off" }}'
-                action='toggle_active'>
-                {{data.activated ? "Active" : "Inactive" }}
-              </ui-button>
+    <ui-section>
+      <ui-display title='{{data.name}}'>
+        {{data.desc}}
+      </ui-display>
     </ui-section>
-
-    <ui-section label='Settings'>
-      Activation Delay: {{data.activation_delay}} <ui-button icon='pencil' action='set_activation_delay'>Set</ui-button><br>
-      Timer: {{data.timer}} <ui-button icon='pencil' action='set_timer'>Set</ui-button><br>
-      Timer Type: {{data.timer_type}} <ui-button icon='pencil' action='set_timer_type'>Set</ui-button><br>
-    </ui-section>
-
-    <ui-section label='Codes'>
-      Activation Code: {{data.activation_code}} <ui-button icon='pencil' action='set_code' params='{"target_code": "activation"}'>Set</ui-button><br>
-      Deactivation Code: {{data.deactivation_code}} <ui-button icon='pencil' action='set_code' params='{"target_code": "deactivation"}'>Set</ui-button><br>
-      Kill Code: {{data.kill_code}} <ui-button icon='pencil' action='set_code' params='{"target_code": "kill"}'>Set</ui-button><br>
-      {{#if data.can_trigger}}
-        Trigger Code: {{data.trigger_code}} <ui-button icon='pencil' action='set_code' params='{"target_code": "trigger"}'>Set</ui-button><br>
-      {{/if}}
-    </ui-section>
-
-    {{#if data.has_extra_settings}}
-       <ui-section label='Special'>
-        {{#each data.extra_settings}}
-          {{name}}: {{value}} <ui-button icon='pencil' action='set_extra_setting' params='{"target_setting": "{{name}}"}'>Set</ui-button><br>
-        {{/each}}
+    <ui-section>
+      <ui-section label='Program Info'>
+      	Nanites Consumed: {{data.use_rate}}<br>
+        {{#if data.can_trigger}}
+          Trigger Cost: {{data.trigger_cost}}u<br>
+        {{/if}}
       </ui-section>
-	 {{/if}}
 
+      <ui-section label='Status'>
+        <ui-button
+          icon='{{data.activated ? "toggle-on" : "toggle-off" }}'
+          action='toggle_active'>
+          {{data.activated ? "Active" : "Inactive" }}
+        </ui-button>
+      </ui-section>
+
+      <ui-section label='Settings'>
+        <ui-button icon='pencil' action='set_activation_delay'></ui-button> Activation Delay: {{data.activation_delay}} <br>
+        <ui-button icon='pencil' action='set_timer'></ui-button> Timer: {{data.timer}} <br>
+        <ui-button icon='pencil' action='set_timer_type'></ui-button> Timer Type: {{data.timer_type}} <br>
+      </ui-section>
+
+      <ui-section label='Codes'>
+        <ui-button icon='pencil' action='set_code' params='{"target_code": "activation"}'></ui-button> Activation Code: {{data.activation_code}} <br>
+        <ui-button icon='pencil' action='set_code' params='{"target_code": "deactivation"}'></ui-button> Deactivation Code: {{data.deactivation_code}} <br>
+        <ui-button icon='pencil' action='set_code' params='{"target_code": "kill"}'></ui-button> Kill Code: {{data.kill_code}} <br>
+        {{#if data.can_trigger}}
+          <ui-button icon='pencil' action='set_code' params='{"target_code": "trigger"}'></ui-button> Trigger Code: {{data.trigger_code}} <br>
+        {{/if}}
+      </ui-section>
+
+      {{#if data.has_extra_settings}}
+        <ui-section label='Special'>
+          {{#each data.extra_settings}}
+            <ui-button icon='pencil' action='set_extra_setting' params='{"target_setting": "{{name}}"}'></ui-button> {{name}}: {{value}} <br>
+          {{/each}}
+        </ui-section>
+	    {{/if}}
+    </ui-section>
   {{/if}}
 {{/if}}

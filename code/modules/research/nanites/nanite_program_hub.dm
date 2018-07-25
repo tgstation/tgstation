@@ -18,8 +18,7 @@
 						list(name = "Sensor Nanites"),
 						list(name = "Augmentation Nanites"),
 						list(name = "Suppression Nanites"),
-						list(name = "Weaponized Nanites"),
-						list(name = "Defective Nanites")
+						list(name = "Weaponized Nanites")
 						)
 
 /obj/machinery/nanite_program_hub/Initialize()

@@ -15,7 +15,7 @@
 		host_mob.adjustBruteLoss(1, TRUE)
 	if(prob(3))
 		to_chat(host_mob, "<span class='warning'>You feel a stab of pain from somewhere inside you.</span>")
-		
+
 /datum/nanite_program/poison
 	name = "Poisoning"
 	desc = "The nanites deliver poisonous chemicals to the host's internal organs, causing toxin damage and vomiting."
@@ -29,7 +29,7 @@
 		if(iscarbon(host_mob))
 			var/mob/living/carbon/C = host_mob
 			C.vomit(20)
-			
+
 /datum/nanite_program/memory_leak
 	name = "Memory Leak"
 	desc = "This program invades the memory space used by other programs, causing frequent corruptions and errors."
@@ -42,15 +42,17 @@
 		if(target == src)
 			return
 		target.software_error()
-				
+
 /datum/nanite_program/aggressive_replication
 	name = "Aggressive Replication"
-	desc = "Nanites will consume organic matter to improve their replication rate, damaging the host."
-	use_rate = -1 //bonus nanites
+	desc = "Nanites will consume organic matter to improve their replication rate, damaging the host. The efficiency increases with the volume of nanites, requiring 200 to break even."
+	use_rate = 1
 	rogue_types = list(/datum/nanite_program/necrotic)
 
 /datum/nanite_program/aggressive_replication/active_effect()
-	host_mob.adjustBruteLoss(1, TRUE)
+	var/extra_regen = round(nanites.nanite_volume / 200, 0.1)
+	nanites.adjust_nanites(extra_regen)
+	host_mob.adjustBruteLoss(extra_regen / 2, TRUE)
 
 /datum/nanite_program/meltdown
 	name = "Meltdown"
