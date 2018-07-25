@@ -65,7 +65,8 @@
 /obj/machinery/computer/shuttle/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
-	req_access = list()
+	req_access = null
+	req_one_access = null
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You fried the consoles ID checking system.</span>")
 

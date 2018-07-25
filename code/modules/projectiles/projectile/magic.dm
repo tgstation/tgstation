@@ -277,8 +277,9 @@
 				S.icon = P.icon
 				S.icon_state = P.icon_state
 				S.copy_overlays(P, TRUE)
-				S.color = P.color
-				S.atom_colours = P.atom_colours.Copy()
+				if(P.color)
+					S.color = P.color
+					S.atom_colours = P.atom_colours.Copy()
 				if(L.mind)
 					L.mind.transfer_to(S)
 					if(owner)

@@ -30,7 +30,7 @@
 
 	src.check_access(null)
 
-	if(req_access.len || req_one_access.len)
+	if(LAZYLEN(req_access) || LAZYLEN(req_one_access))
 		board = new(src)
 		if(req_access.len)
 			board.accesses = req_access
@@ -103,8 +103,8 @@
 /obj/machinery/button/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
-	req_access = list()
-	req_one_access = list()
+	req_access = null
+	req_one_access = null
 	playsound(src, "sparks", 100, 1)
 	obj_flags |= EMAGGED
 
@@ -135,8 +135,8 @@
 				device = null
 			if(board)
 				board.forceMove(drop_location())
-				req_access = list()
-				req_one_access = list()
+				req_access = null
+				req_one_access = null
 				board = null
 			update_icon()
 			to_chat(user, "<span class='notice'>You remove electronics from the button frame.</span>")

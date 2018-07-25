@@ -10,7 +10,7 @@
 	var/datum/reagents/reagents = null
 
 	//This atom's HUD (med/sec, etc) images. Associative list.
-	var/list/image/hud_list = null
+	var/list/image/hud_list
 	//HUD images that this atom can provide.
 	var/list/hud_possible
 
@@ -457,31 +457,34 @@
 	Adds an instance of colour_type to the atom's atom_colours list
 */
 /atom/proc/add_atom_colour(coloration, colour_priority)
-	if(!atom_colours || !atom_colours.len)
+	if(!coloration || !colour_priority)
+		return
+	if(colour_priority > COLOUR_PRIORITY_AMOUNT)
+		return
+	if(!atom_colours)
 		atom_colours = list()
 		atom_colours.len = COLOUR_PRIORITY_AMOUNT //four priority levels currently.
-	if(!coloration)
-		return
-	if(colour_priority > atom_colours.len)
-		return
 	atom_colours[colour_priority] = coloration
 	update_atom_colour()
-
 
 /*
 	Removes an instance of colour_type from the atom's atom_colours list
 */
 /atom/proc/remove_atom_colour(colour_priority, coloration)
+	if(!colour_priority || colour_priority > COLOUR_PRIORITY_AMOUNT)
+		return
 	if(!atom_colours)
-		atom_colours = list()
-		atom_colours.len = COLOUR_PRIORITY_AMOUNT //four priority levels currently.
-	if(colour_priority > atom_colours.len)
 		return
 	if(coloration && atom_colours[colour_priority] != coloration)
 		return //if we don't have the expected color (for a specific priority) to remove, do nothing
 	atom_colours[colour_priority] = null
 	update_atom_colour()
 
+/atom/proc/clear_atom_colours()
+	LAZYCLEARLIST(atom_colours)
+	if(atom_colours)		//if list exists
+		atom_colours.len = COLOUR_PRIORITY_AMOUNT
+	update_atom_colour()
 
 /*
 	Resets the atom's color to null, and then sets it to the highest priority
@@ -489,8 +492,7 @@
 */
 /atom/proc/update_atom_colour()
 	if(!atom_colours)
-		atom_colours = list()
-		atom_colours.len = COLOUR_PRIORITY_AMOUNT //four priority levels currently.
+		return
 	color = null
 	for(var/C in atom_colours)
 		if(islist(C))

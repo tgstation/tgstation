@@ -1343,7 +1343,7 @@
 			if(!electronics)
 				ae = new/obj/item/electronics/airlock( src.loc )
 				gen_access()
-				if(req_one_access.len)
+				if(LAZYLEN(req_one_access))
 					ae.one_access = 1
 					ae.accesses = src.req_one_access
 				else

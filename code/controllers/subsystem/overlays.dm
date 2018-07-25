@@ -115,82 +115,57 @@ SUBSYSTEM_DEF(overlays)
 #define NOT_QUEUED_ALREADY (!(flags_1 & OVERLAY_QUEUED_1))
 #define QUEUE_FOR_COMPILE flags_1 |= OVERLAY_QUEUED_1; SSoverlays.queue += src;
 /atom/proc/cut_overlays(priority = FALSE)
-	LAZYINITLIST(priority_overlays)
-	LAZYINITLIST(remove_overlays)
-	LAZYINITLIST(add_overlays)
-	remove_overlays = overlays.Copy()
-	add_overlays.Cut()
+	if(overlays.len)
+		remove_overlays = overlays.Copy()
+
+	LAZYCLEARLIST(add_overlays)
 
 	if(priority)
-		priority_overlays.Cut()
+		LAZYCLEARLIST(priority_overlays)
 
 	//If not already queued for work and there are overlays to remove
-	if(NOT_QUEUED_ALREADY && remove_overlays.len)
+	if(NOT_QUEUED_ALREADY && LAZYLEN(remove_overlays))
 		QUEUE_FOR_COMPILE
 
 /atom/proc/cut_overlay(list/overlays, priority)
-	if(!overlays)
+	overlays = build_appearance_list(overlays) & (src.overlays | remove_overlays)
+	if(!overlays.len)
 		return
-	overlays = build_appearance_list(overlays)
-	LAZYINITLIST(add_overlays) //always initialized after this point
-	LAZYINITLIST(priority_overlays)
-	LAZYINITLIST(remove_overlays)
-	var/a_len = add_overlays.len
-	var/r_len = remove_overlays.len
-	var/p_len = priority_overlays.len
-	remove_overlays += overlays
-	add_overlays -= overlays
 
+	remove_overlays = remove_overlays + overlays
+	LAZYREMOVE(add_overlays, overlays)
 
 	if(priority)
-		var/list/cached_priority = priority_overlays
-		LAZYREMOVE(cached_priority, overlays)
+		LAZYREMOVE(priority_overlays, overlays)
 
-	var/fa_len = add_overlays.len
-	var/fr_len = remove_overlays.len
-	var/fp_len = priority_overlays.len
-
-	//If not already queued and there is work to be done
-	if(NOT_QUEUED_ALREADY && (fa_len != a_len || fr_len != r_len || fp_len != p_len))
+	if(NOT_QUEUED_ALREADY)
 		QUEUE_FOR_COMPILE
 
 /atom/proc/add_overlay(list/overlays, priority = FALSE)
-	if(!overlays)
+	overlays = build_appearance_list(overlays) - (src.overlays | add_overlays)
+	if(!overlays.len)
 		return
 
-	overlays = build_appearance_list(overlays)
-
-	LAZYINITLIST(add_overlays) //always initialized after this point
-	LAZYINITLIST(priority_overlays)
-	var/a_len = add_overlays.len
-	var/p_len = priority_overlays.len
+	LAZYREMOVE(remove_overlays, overlays)
 
 	if(priority)
-		priority_overlays += overlays  //or in the image. Can we use [image] = image?
-		var/fp_len = priority_overlays.len
-		if(NOT_QUEUED_ALREADY && fp_len != p_len)
+		priority_overlays = priority_overlays + overlays  //or in the image. Can we use [image] = image?
+		if(NOT_QUEUED_ALREADY)
 			QUEUE_FOR_COMPILE
 	else
-		add_overlays += overlays
-		var/fa_len = add_overlays.len
-		if(NOT_QUEUED_ALREADY && fa_len != a_len)
+		add_overlays = add_overlays + overlays
+		if(NOT_QUEUED_ALREADY)
 			QUEUE_FOR_COMPILE
 
 /atom/proc/copy_overlays(atom/other, cut_old)	//copys our_overlays from another atom
+	if(cut_old)
+		cut_overlays()
 	if(!other)
-		if(cut_old)
-			cut_overlays()
 		return
 
-	var/list/cached_other = other.overlays.Copy()
-	if(cached_other)
-		if(cut_old || !LAZYLEN(overlays))
-			remove_overlays = overlays
-		add_overlays = cached_other
-		if(NOT_QUEUED_ALREADY)
-			QUEUE_FOR_COMPILE
-	else if(cut_old)
-		cut_overlays()
+	var/list/cached_other = other.overlays | other.add_overlays | other.priority_overlays
+	if(cached_other.len)
+		add_overlay(cached_other)
 
 #undef NOT_QUEUED_ALREADY
 #undef QUEUE_FOR_COMPILE

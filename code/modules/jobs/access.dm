@@ -46,19 +46,22 @@
 //Call this before using req_access or req_one_access directly
 /obj/proc/gen_access()
 	//These generations have been moved out of /obj/New() because they were slowing down the creation of objects that never even used the access system.
+	var/list/temp = list()
 	if(!req_access)
-		req_access = list()
 		for(var/a in text2access(req_access_txt))
-			req_access += a
+			temp += a
+		if(temp.len)
+			req_access = temp.Copy()
 	if(!req_one_access)
-		req_one_access = list()
+		temp.Cut()
 		for(var/b in text2access(req_one_access_txt))
-			req_one_access += b
+			temp += b
+		if(temp.len)
+			req_one_access = temp.Copy()
 
 // Check if an item has access to this object
 /obj/proc/check_access(obj/item/I)
 	return check_access_list(I ? I.GetAccess() : null)
-
 
 /obj/proc/check_access_list(list/access_list)
 	gen_access()
