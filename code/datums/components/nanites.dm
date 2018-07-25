@@ -9,7 +9,7 @@
 	var/cloud_id = 0 			//0 if not connected to the cloud, 1-100 to set a determined cloud backup to draw from
 	var/next_sync = 0
 	var/list/datum/nanite_program/programs = list()
-	var/max_programs = 15
+	var/max_programs = NANITE_PROGRAM_LIMIT
 
 	var/stealth = FALSE //if TRUE, does not appear on HUDs and health scans, and does not display the program list on nanite scans
 
