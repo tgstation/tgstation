@@ -450,14 +450,6 @@
 	icon_state = "bridge"
 
 
-//ABANDONED BOX WHITESHIP
-
-/area/ruin/space/has_grav/whiteship/box
-
-	name = "Abandoned Ship"
-	icon_state = "red"
-
-
 //SYNDICATE LISTENING POST STATION
 
 /area/ruin/space/has_grav/listeningstation
