@@ -225,6 +225,9 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 	var/res_name = "spritesheet_[name].css"
 	var/fname = "data/spritesheets/[res_name]"
+	if(fexists(fname))
+		to_chat(world,"Deleting old spritesheet")
+		fdel(fname)
 	text2file(generate_css(), fname)
 	register_asset(res_name, file(fname))
 
