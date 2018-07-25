@@ -215,3 +215,10 @@
 	suffix = "lavaland_surface_random_ripley.dmm"
 	allow_duplicates = FALSE
 	cost = 5
+
+/datum/map_template/ruin/lavaland/puzzle
+	name = "Ancient Puzzle"
+	id = "puzzle"
+	description = "Mystery to be solved."
+	suffix = "lavaland_surface_puzzle.dmm"
+	cost = 5

@@ -2,6 +2,7 @@
 	name = "bluespace beam"
 	icon_state = "spark"
 	hitsound = "sparks"
+	damage = 0
 	nodamage = TRUE
 	pass_flags = PASSGLASS | PASSTABLE | PASSGRILLE | PASSMOB
 	var/obj/item/gun/energy/wormhole_projector/gun
@@ -9,6 +10,7 @@
 	tracer_type = /obj/effect/projectile/tracer/wormhole
 	impact_type = /obj/effect/projectile/impact/wormhole
 	muzzle_type = /obj/effect/projectile/muzzle/wormhole
+	hitscan = TRUE
 
 /obj/item/projectile/beam/wormhole/orange
 	name = "orange bluespace beam"

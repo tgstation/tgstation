@@ -285,7 +285,7 @@
 	if(istype(user))
 		current_user = user
 		LAZYOR(current_user.mousemove_intercept_objects, src)
-		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(src, .proc/on_mob_move))
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/on_mob_move)))
 
 /obj/item/gun/energy/beam_rifle/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	if(aiming)
@@ -555,10 +555,10 @@
 	if(highlander && istype(gun))
 		QDEL_LIST(gun.current_tracers)
 		for(var/datum/point/p in beam_segments)
-			gun.current_tracers += generate_tracer_between_points(p, beam_segments[p], tracer_type, color, 0)
+			gun.current_tracers += generate_tracer_between_points(p, beam_segments[p], tracer_type, color, 0, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity)
 	else
 		for(var/datum/point/p in beam_segments)
-			generate_tracer_between_points(p, beam_segments[p], tracer_type, color, duration)
+			generate_tracer_between_points(p, beam_segments[p], tracer_type, color, duration, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity)
 	if(cleanup)
 		QDEL_LIST(beam_segments)
 		beam_segments = null
@@ -572,6 +572,9 @@
 	nodamage = TRUE
 	damage = 0
 	constant_tracer = TRUE
+	hitscan_light_range = 0
+	hitscan_light_intensity = 0
+	hitscan_light_color_override = "#99ff99"
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit(atom/target)
 	qdel(src)
