@@ -221,5 +221,4 @@
 	id = "puzzle"
 	description = "Mystery to be solved."
 	suffix = "lavaland_surface_puzzle.dmm"
-	allow_duplicates = FALSE
 	cost = 5

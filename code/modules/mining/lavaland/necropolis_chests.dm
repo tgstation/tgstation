@@ -1329,4 +1329,4 @@
 		if(2)
 			new /obj/item/wisp_lantern(src)
 		if(3)
-			new /obj/item/immortality_talisman(src)
+			new /obj/item/prisoncube(src)

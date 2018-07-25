@@ -8,6 +8,7 @@
 	var/floor_type = /turf/open/floor/vault
 	var/finished = FALSE
 	var/reward_type = /obj/item/reagent_containers/food/snacks/cookie
+	var/element_type = /obj/structure/puzzle_element
 	var/auto_setup = TRUE
 	var/empty_tile_id
 
@@ -75,7 +76,10 @@
 		shake_camera(M, COLLAPSE_DURATION , 1)
 	for(var/obj/structure/puzzle_element/E in elements)
 		E.collapse()
-	//TODO : Some kinda visual here ? 
+	
+	dispense_reward()
+
+/obj/effect/sliding_puzzle/proc/dispense_reward()
 	new reward_type(get_turf(src))
 
 /obj/effect/sliding_puzzle/proc/is_solvable()
@@ -167,7 +171,7 @@
 	for(var/spot_id in empty_spots)
 		var/turf/T = get_turf_for_id(spot_id)
 		T = T.PlaceOnTop(floor_type,null,CHANGETURF_INHERIT_AIR)
-		var/obj/structure/puzzle_element/E = new(T)
+		var/obj/structure/puzzle_element/E = new element_type(T)
 		elements += E
 		var/chosen_id = pick_n_take(left_ids)
 		E.puzzle_icon = puzzle_pieces["[chosen_id]"]
@@ -202,6 +206,7 @@
 		var/icon/C = new(puzzle_icon)
 		C.Scale(19,19)
 		var/mutable_appearance/puzzle_small = new(C)
+		puzzle_small.layer = layer + 0.1
 		puzzle_small.pixel_x = 7
 		puzzle_small.pixel_y = 7
 		add_overlay(puzzle_small)
@@ -240,3 +245,89 @@
 //Ruin version
 /obj/effect/sliding_puzzle/lavaland
 	reward_type = /obj/structure/closet/crate/necropolis/puzzle
+
+/obj/effect/sliding_puzzle/lavaland/dispense_reward()
+	if(prob(25))
+		//If it's not roaming somewhere else already.
+		var/mob/living/simple_animal/hostile/megafauna/bubblegum/B = locate() in GLOB.mob_list
+		if(!B)
+			reward_type = /mob/living/simple_animal/hostile/megafauna/bubblegum
+	return ..()
+
+//Prison cube version
+/obj/effect/sliding_puzzle/prison
+	auto_setup = FALSE //This will be done by cube proc
+	var/mob/living/prisoner
+	element_type = /obj/structure/puzzle_element/prison
+
+/obj/effect/sliding_puzzle/prison/get_base_icon()
+	if(!prisoner)
+		CRASH("Prison cube without prisoner")
+	prisoner.setDir(SOUTH)
+	var/icon/I = getFlatIcon(prisoner)
+	I.Scale(96,96)
+	return I
+
+/obj/effect/sliding_puzzle/prison/Destroy()
+	if(prisoner)
+		to_chat(prisoner,"<span class='userdanger'>With the cube broken by force, you can feel your body falling apart.</span>")
+		prisoner.death()
+		qdel(prisoner)
+	. = ..()
+
+/obj/effect/sliding_puzzle/prison/dispense_reward()
+	prisoner.forceMove(get_turf(src))
+	prisoner = null
+
+//Some armor so it's harder to kill someone by mistake.
+/obj/structure/puzzle_element/prison
+	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 50, "rad" = 50, "fire" = 50, "acid" = 50)
+
+/obj/structure/puzzle_element/prison/relaymove(mob/user)
+	return
+
+/obj/item/prisoncube
+	name = "Prison Cube"
+	desc = "Dusty cube with humanoid imprint on it."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "prison_cube"
+
+/obj/item/prisoncube/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!proximity_flag || !isliving(target))
+		return
+	var/mob/living/victim = target
+	var/mob/living/carbon/carbon_victim = victim
+	//Handcuffed or unconcious
+	if(istype(carbon_victim) && carbon_victim.handcuffed || victim.stat != CONSCIOUS)
+		imprison(target)
+		to_chat(user,"<span class='warning'>You trap [victim] in the prison cube!</span>")
+		qdel(src)
+	else
+		to_chat(user,"<span class='notice'>[src] only accepts restrained or unconcious prisoners.</span>")
+
+/obj/item/prisoncube/proc/imprison(mob/living/prisoner)
+	var/turf/T = get_turf(prisoner)
+	var/obj/effect/sliding_puzzle/prison/cube = new(T)
+
+	//First grab the prisoner and move them temporarily into the generator so they won't get thrown around.
+	prisoner.forceMove(cube)
+	to_chat(prisoner,"<span class='userdanger'>You're trapped by the prison cube! You will remain trapped until someone solves it.</span>")
+
+	//Clear the area from objects (and cube user)
+	var/list/things_to_throw = list()
+	for(var/atom/movable/AM in range(1,T))
+		if(!AM.anchored)
+			things_to_throw += AM
+
+	for(var/atom/movable/AM in things_to_throw)
+		var/throwtarget = get_edge_target_turf(T, get_dir(T, get_step_away(AM, T)))
+		AM.throw_at(throwtarget, 2, 3)
+	
+	//Create puzzle itself
+	cube.prisoner = prisoner
+	cube.setup()
+
+	//Move them into random block
+	var/obj/structure/puzzle_element/E = pick(cube.elements)
+	prisoner.forceMove(E)
