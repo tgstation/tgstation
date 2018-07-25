@@ -101,6 +101,7 @@
 	},
 /obj/structure/bed,
 /obj/item/bedsheet/centcom,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/carpet,
 /area/shuttle/abandoned/crew)
 "am" = (
@@ -116,6 +117,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/carpet,
 /area/shuttle/abandoned/crew)
 "an" = (
@@ -347,6 +349,7 @@
 /obj/machinery/door/airlock/glass{
 	name = "Cabin 2"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "aF" = (
@@ -357,6 +360,7 @@
 /obj/machinery/door/airlock/glass{
 	name = "Cabin 1"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "aG" = (
@@ -450,29 +454,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
-	},
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
-"aO" = (
-/obj/effect/decal/cleanable/dirt{
-	desc = "A thin layer of dust coating the floor.";
-	name = "dust"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
-"aP" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Engineering"
-	},
-/obj/effect/decal/cleanable/dirt{
-	desc = "A thin layer of dust coating the floor.";
-	name = "dust"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -583,9 +564,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
@@ -659,6 +638,9 @@
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/crew)
@@ -2301,6 +2283,9 @@
 	icon_state = "4-8"
 	},
 /obj/structure/spider/stickyweb,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/medbay)
 "dq" = (
@@ -2315,6 +2300,10 @@
 	},
 /obj/machinery/door/airlock/external/glass{
 	name = "E.V.A Access"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/abandoned/medbay)
@@ -2806,6 +2795,19 @@
 "vm" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/medbay)
+"Ci" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 4
+	},
+/area/shuttle/abandoned/crew)
 "DZ" = (
 /obj/effect/turf_decal/delivery/white,
 /obj/effect/decal/cleanable/dirt{
@@ -2903,7 +2905,7 @@ aa
 aa
 ai
 aB
-aO
+dd
 bl
 bA
 bB
@@ -2922,7 +2924,7 @@ aa
 aa
 ai
 ai
-aP
+de
 bm
 bB
 bB
@@ -3017,7 +3019,7 @@ vm
 ac
 al
 aE
-aS
+Ci
 bp
 bF
 bF
