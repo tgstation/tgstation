@@ -75,7 +75,7 @@
 
 	for(var/I in dialed_holopads)
 		var/obj/machinery/holopad/H = I
-		LAZYREMOVE(H.holo_calls, src)
+		LAZYUNSETREMOVE(H.holo_calls, src)
 	dialed_holopads.Cut()
 
 	if(calling_holopad)
@@ -110,7 +110,7 @@
 		qdel(src)
 		return
 
-	LAZYREMOVE(H.holo_calls, src)
+	LAZYUNSETREMOVE(H.holo_calls, src)
 	dialed_holopads -= H
 	if(!dialed_holopads.len)
 		if(graceful)

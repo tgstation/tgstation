@@ -16,7 +16,7 @@
 	LAZYADD(AllTeleporters, src)
 
 /obj/effect/bump_teleporter/Destroy()
-	LAZYREMOVE(AllTeleporters, src)
+	LAZYUNSETREMOVE(AllTeleporters, src)
 	return ..()
 
 

@@ -66,5 +66,5 @@
 
 /datum/turf_reservation/Destroy()
 	Release()
-	LAZYREMOVE(SSmapping.turf_reservations, src)
+	LAZYUNSETREMOVE(SSmapping.turf_reservations, src)
 	return ..()

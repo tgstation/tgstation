@@ -76,7 +76,7 @@
 		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks
 	GLOB.cameranet.cameras -= src
 	if(isarea(myarea))
-		LAZYREMOVE(myarea.cameras, src)
+		LAZYUNSETREMOVE(myarea.cameras, src)
 	QDEL_NULL(assembly)
 	if(bug)
 		bug.bugged_cameras -= src.c_tag
@@ -309,7 +309,7 @@
 		set_light(0)
 		GLOB.cameranet.removeCamera(src)
 		if (isarea(myarea))
-			LAZYREMOVE(myarea.cameras, src)
+			LAZYUNSETREMOVE(myarea.cameras, src)
 	GLOB.cameranet.updateChunk(x, y, z)
 	var/change_msg = "deactivates"
 	if(status)

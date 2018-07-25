@@ -138,7 +138,7 @@
 
 /obj/machinery/computer/prototype_cloning/proc/DetachCloner(obj/machinery/clonepod/experimental/pod)
 	pod.connected = null
-	LAZYREMOVE(pods, pod)
+	LAZYUNSETREMOVE(pods, pod)
 
 /obj/machinery/computer/prototype_cloning/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/multitool))

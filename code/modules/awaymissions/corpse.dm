@@ -56,8 +56,8 @@
 /obj/effect/mob_spawn/Destroy()
 	GLOB.poi_list -= src
 	var/list/spawners = GLOB.mob_spawners[name]
-	LAZYREMOVE(spawners, src)
-	if(!LAZYLEN(spawners))
+	LAZYUNSETREMOVE(spawners, src)
+	if(!spawners)
 		GLOB.mob_spawners -= name
 	return ..()
 
@@ -396,7 +396,7 @@
 	name = "lifeguard sleeper"
 	id_job = "Lifeguard"
 	uniform = /obj/item/clothing/under/shorts/red
-	
+
 /datum/outfit/beachbum
 	name = "Beach Bum"
 	glasses = /obj/item/clothing/glasses/sunglasses

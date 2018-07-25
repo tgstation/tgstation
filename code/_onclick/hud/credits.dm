@@ -61,7 +61,7 @@
 	var/client/P = parent
 	P.screen -= src
 	icon = null
-	LAZYREMOVE(P.credits, src)
+	LAZYUNSETREMOVE(P.credits, src)
 	parent = null
 	return ..()
 

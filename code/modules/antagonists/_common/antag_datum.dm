@@ -27,7 +27,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/Destroy()
 	GLOB.antagonists -= src
 	if(owner)
-		LAZYREMOVE(owner.antag_datums, src)
+		LAZYUNSETREMOVE(owner.antag_datums, src)
 	owner = null
 	return ..()
 
@@ -92,7 +92,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	remove_innate_effects()
 	clear_antag_moodies()
 	if(owner)
-		LAZYREMOVE(owner.antag_datums, src)
+		LAZYUNSETREMOVE(owner.antag_datums, src)
 		if(!silent && owner.current)
 			farewell()
 		owner.objectives -= objectives

@@ -32,7 +32,7 @@
 
 	if(LAZYLEN(req_access) || LAZYLEN(req_one_access))
 		board = new(src)
-		if(req_access.len)
+		if(LAZYLEN(req_access))
 			board.accesses = req_access
 		else
 			board.one_access = 1
