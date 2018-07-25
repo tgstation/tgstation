@@ -300,7 +300,7 @@
 
 	var/power_ratio = gas_power/mediation
 	var/radiation_power = (FUSION_RADIATION_FACTOR * power_ratio) / (power_ratio + FUSION_RADIATION_CONSTANT) //https://www.desmos.com/calculator/4i1f296phl
-	var/zap_power = ((FUSION_ZAP_POWER_ASYMPTOTE * power_ratio) / (power_ratio + FUSION_ZAP_POWER_CONSTANT) + FUSION_ZAP_POWER_BASE //
+	var/zap_power = ((FUSION_ZAP_POWER_ASYMPTOTE * power_ratio) / (power_ratio + FUSION_ZAP_POWER_CONSTANT)) + FUSION_ZAP_POWER_BASE //https://www.desmos.com/calculator/n0zkdpxnrr
 
 	if (power_ratio > FUSION_SUPER_TIER) //power ratio 50+: SUPER TIER. The gases become so energized that they fuse into stimulum and pluoxium, which is pretty nice! IF you can salvage them, which is going to be hard because this reaction is ridiculously dangerous.
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_SUPER * (power_ratio / FUSION_ENERGY_DIVISOR_SUPER)
@@ -343,6 +343,7 @@
 				playsound(location, 'sound/effects/supermatter.ogg', FUSION_VOLUME_MID, 0)
 			else
 				playsound(location, 'sound/effects/phasein.ogg', FUSION_VOLUME_MID, 0)
+			tesla_zap(location, FUSION_ZAP_RANGE_MID, zap_power)
 
 	else //power ratio 0 to 5; Gas power is overpowered. Fusion isn't nearly as powerful.
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_LOW * (power_ratio / FUSION_ENERGY_DIVISOR_LOW)
@@ -357,6 +358,7 @@
 				playsound(location, 'sound/effects/supermatter.ogg', FUSION_VOLUME_LOW, 0)
 			else
 				playsound(location, 'sound/effects/phasein.ogg', FUSION_VOLUME_LOW, 0)
+			tesla_zap(location, FUSION_ZAP_RANGE_LOW, zap_power)
 
 	if(reaction_energy > 0)
 		var/new_heat_capacity = air.heat_capacity()
