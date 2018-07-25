@@ -2034,11 +2034,10 @@
 
 /datum/supply_pack/misc/excercise_bikes
 	name = "Excercise Bikes"
-	desc = "For when the engineers delaminate the SM and all your pacmen are out of fuel, this is a 5-pack! (Remember to anchor them into a power source before using!)"
+	desc = "For when the engineers delaminate the SM and you have no backup power generation this is a 5-pack! (Remember to anchor them into a power source before using!)"
 	cost = 1500
-	contains = list(/obj/machinery/power/excercise_bike=5,
-					/obj/item/wrench)
-	crate_name = "Bicycle Crate"
+	contains = list(/obj/machinery/power/excercise_bike=5)
+	crate_name = "Excercise Bicycle Crate"
 	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/misc/bigband

@@ -1,6 +1,6 @@
 /obj/machinery/power/excercise_bike
 	name = "Excercise bike"
-	desc = "The new NT 4FA5 AS5 excercise bike allows you to power the station whilst excercising: It's fitted with an efficient mechanism for power generation, <I> buckle into it and then move around whilst riding it to generate power</I>."
+	desc = "The new NT 4FA5 AS5 excercise bike allows you to power the station through your excercise: <I> buckle into it and then move around whilst riding it to generate power</I>."
 	icon = 'icons/obj/machines/excercise_bike.dmi'
 	icon_state = "bike-off"
 	can_buckle = TRUE
@@ -36,17 +36,23 @@
 	if(!powernet || !anchored)
 		connect_to_network()
 		to_chat(user, "The wheels on [src] lock up, is it connected to a power source?")
+		return
 	if(powernet && anchored)
 		if(isliving(user))
 			if(world.time >= cooldown_time+delay)
+				if(!L.has_trait(TRAIT_NOHUNGER))
+					switch(L.nutrition)
+						if(NUTRITION_LEVEL_STARVING)
+							to_chat(user, "<span_class='warning'>You're too famished to pedal any more!</span>")
+							return
+					L.nutrition -= HUNGER_FACTOR //It's tiring work, this is 10* more tiring than running
 				icon_state = "bike-on"
 				cooldown_time = world.time
 				playsound(loc, 'sound/effects/bikepedal.ogg', 20, 1)
 				var/mob/living/L = user
 				L.apply_status_effect(STATUS_EFFECT_EXERCISED)
 				add_avail(power)
-				if(!L.has_trait(TRAIT_NOHUNGER))
-					L.nutrition -= HUNGER_FACTOR //It's tiring work, this is 10* more tiring than running
+
 /obj/machinery/power/excercise_bike/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	M.pixel_y = 5
 	. = ..()

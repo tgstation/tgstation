@@ -18,7 +18,7 @@
 
 /datum/export/excercisebike
 	cost = 200
-	unit_name = "toolbox"
+	unit_name = "excercise bike"
 	export_types = list(/obj/machinery/power/excercise_bike)
 
 /datum/export/large/crate/wooden/ore
