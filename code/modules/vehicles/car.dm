@@ -78,7 +78,7 @@
 
 /obj/vehicle/sealed/car/clowncar/generate_actions()
 	. = ..()
-	initialize_controller_action_type(//datum/action/vehicle/sealed/horn/clowncar, VEHICLE_CONTROL_DRIVE)
+	initialize_controller_action_type(/datum/action/vehicle/sealed/horn/clowncar, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/sealed/car/clowncar/auto_assign_occupant_flags(mob/M)
 	if(ishuman(M))
