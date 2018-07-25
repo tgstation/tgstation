@@ -1565,7 +1565,7 @@
 "cp" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
 	dir = 8;
-	x_offset = -7;
+	x_offset = -2;
 	y_offset = -8
 	},
 /obj/effect/decal/cleanable/dirt{
