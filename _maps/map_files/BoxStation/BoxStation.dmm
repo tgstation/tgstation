@@ -12606,6 +12606,7 @@
 /area/ai_monitored/nuke_storage)
 "aGb" = (
 /obj/effect/turf_decal/bot_white/right,
+/obj/machinery/ore_silo,
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
