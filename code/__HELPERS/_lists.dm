@@ -9,18 +9,22 @@
  * Misc
  */
 
+//LAZYLISTS
+//WRITE - DOES NOT NEED () EXTERIOR WRAPPING
 #define LAZYINITLIST(L) L? NONE : (L = list())
 #define UNSETEMPTY(L) length(L)? NONE : (L = null)
 #define LAZYREMOVE(L, I) L? (L -= I) : (NONE)
 #define LAZYUNSETREMOVE(L, I) if(L) { L -= I; if(!L.len) { L = null; } }
-#define LAZYADD(L, I) L? (L += I) : ({L = list();} L += I)
-#define LAZYOR(L, I) L? (L |= I) : ({L = list();} L |= I)
-#define LAZYFIND(L, V) L ? (L.Find(V)) : null
-#define LAZYACCESS(L, I) L ? (isnum(I) ? (I > 0 && I <= L.len ? L[I] : null) : L[I]) : null
-#define LAZYSET(L, K, V) L? (L[K] = V) : (L = list(K = V))
-#define LAZYLEN(L) length(L)
+#define LAZYADD(L, I) if(!L) { L = list(); } L += I;
+#define LAZYOR(L, I) if(!L) { L = list(); } L |= I;
 #define LAZYCLEARLIST(L) L? (L.len = 0) : (NONE)
-#define SANITIZE_LIST(L) islist(L)? L : list()
+#define LAZYSET(L, K, V) L? (L[K] = V) : (L = list(K = V))
+
+//READ - WRAP THESE UP IN ()s IF NECESSARY
+#define LAZYFIND(L, V) (L ? (L.Find(V)) : null)
+#define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= L.len ? L[I] : null) : L[I]) : null)
+#define LAZYLEN(L) length(L)
+#define SANITIZE_LIST(L) (islist(L)? L : list())
 #define reverseList(L) reverseRange(L.Copy())
 
 // binary search sorted insert
