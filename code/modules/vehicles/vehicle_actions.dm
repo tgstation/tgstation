@@ -135,7 +135,7 @@
 		playsound(vehicle_entered_target, hornsound, 75)
 		last_honk_time = world.time
 
-/datum/action/vehicle/sealed/car/clowncar/horn/Trigger()
+/datum/action/vehicle/sealed/horn/clowncar/Trigger()
 	if(world.time - last_honk_time > 20)
 		vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] loudly honks</span>")
 		to_chat(owner, "<span class='notice'>You press the vehicle's horn.</span>")
