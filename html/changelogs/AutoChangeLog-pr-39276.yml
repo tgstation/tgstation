@@ -1,5 +1,0 @@
-author: "Telecomms chat logging"
-delete-after: True
-changes: 
-  - code_imp: "Added logging of telecomms chat"
-  - config: "Added LOG_TELECOMMS config flag (enabled by default)"
