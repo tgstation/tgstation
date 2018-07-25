@@ -8,23 +8,31 @@
 	var/mood_level = 5 //To track what stage of moodies they're on
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
 	var/datum/mood_event/list/mood_events = list()
-	var/mob/living/owner
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
 	var/holdmyinsanityeffect = 0 //before we edit our sanity lets take a look
+	var/obj/screen/mood/screen_obj
 
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
+	
 	START_PROCESSING(SSmood, src)
-	owner = parent
+
 	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
 
+	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
+	var/mob/living/owner = parent
+	if(owner.hud_used)
+		modify_hud()
+
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
+	unmodify_hud()
 	return ..()
 
 /datum/component/mood/proc/print_mood()
+	var/mob/living/owner = parent
 	var/msg = "<span class='info'>*---------*\n<EM>Your current mood</EM>\n"
 	msg += "<span class='notice'>My mental status: </span>" //Long term
 	switch(sanity)
@@ -105,13 +113,15 @@
 
 
 /datum/component/mood/proc/update_mood_icon()
+	var/mob/living/owner = parent
 	if(owner.client && owner.hud_used)
 		if(sanity < 25)
-			owner.hud_used.mood.icon_state = "mood_insane"
+			screen_obj.icon_state = "mood_insane"
 		else
-			owner.hud_used.mood.icon_state = "mood[mood_level]"
+			screen_obj.icon_state = "mood[mood_level]"
 
 /datum/component/mood/process() //Called on SSmood process
+	var/mob/living/owner = parent
 	switch(sanity)
 		if(SANITY_INSANE to SANITY_CRAZY)
 			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 3)
@@ -206,6 +216,22 @@
 	mood_events -= category
 	qdel(event)
 	update_mood()
+
+/datum/component/mood/proc/modify_hud()
+	var/mob/living/owner = parent
+	var/datum/hud/hud = owner.hud_used
+	screen_obj = new
+	hud.infodisplay += screen_obj
+	RegisterSignal(hud, COMSIG_PARENT_QDELETED, .proc/unmodify_hud, TRUE)
+
+/datum/component/mood/proc/unmodify_hud()
+	if(!screen_obj)
+		return
+	var/mob/living/owner = parent
+	var/datum/hud/hud = owner.hud_used
+	if(hud && hud.infodisplay)
+		hud.infodisplay -= screen_obj
+	QDEL_NULL(screen_obj)
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
