@@ -4055,7 +4055,7 @@
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "lD" = (
 /obj/machinery/vending/boozeomat{
-	req_access_txt = "0"
+	req_access_txt = "150"
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/bar)
