@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(footstep, list(
 		'sound/effects/footstep/carpet3.ogg',
 		'sound/effects/footstep/carpet4.ogg',
 		'sound/effects/footstep/carpet5.ogg'), 75, -1),
-	FOOTSTEP_DIRT = list(list(
+	FOOTSTEP_SAND = list(list(
 		'sound/effects/footstep/asteroid1.ogg',
 		'sound/effects/footstep/asteroid2.ogg',
 		'sound/effects/footstep/asteroid3.ogg',
