@@ -5,7 +5,6 @@
 "aab" = (
 /obj/machinery/atmospherics/components/trinary/mixer{
 	dir = 1;
-	icon_state = "mixer_off";
 	name = "plasma mixer"
 	},
 /turf/open/floor/plasteel,

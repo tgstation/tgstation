@@ -37236,7 +37236,6 @@
 	},
 /obj/machinery/atmospherics/components/trinary/mixer{
 	name = "plasma mixer";
-	icon_state = "mixer_off";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
