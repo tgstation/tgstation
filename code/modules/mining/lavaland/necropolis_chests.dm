@@ -992,9 +992,9 @@
 	used = TRUE
 
 	var/list/da_list = list()
-	for(var/I in GLOB.alive_mob_list & GLOB.player_list)
-		var/mob/living/L = I
-		da_list[L.real_name] = L
+    for(var/mob/living/M in view(src, 7))
+    	if(ishuman(M) && M.client))
+        	da_list[M.real_name] = M
 
 	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in da_list
 
