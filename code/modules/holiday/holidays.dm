@@ -373,6 +373,9 @@
 	end_day = 29
 	end_month = JULY
 
+/datum/holiday/moth/getStationPrefix()
+	return pick("Mothball","Lepidopteran","Lightbulb","Moth","Giant Atlas","Twin-spotted Sphynx","Madagascan Sunset","Luna","Death's Head","Emperor Gum","Polyphenus","Oleander Hawk","Io","Rosy Maple","Cecropia","Noctuidae","Giant Leopard","Dysphania Militaris","Garden Tiger")
+
 /datum/holiday/ramadan
 	name = "Start of Ramadan"
 
