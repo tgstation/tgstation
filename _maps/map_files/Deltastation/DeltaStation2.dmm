@@ -99593,6 +99593,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/port/aft)
+"hsX" = (
+/obj/machinery/ore_silo,
+/turf/open/floor/plasteel/vault{
+	dir = 1
+	},
+/area/security/nuke_storage)
 "huX" = (
 /obj/structure/cable/white{
 	icon_state = "0-4"
@@ -146498,7 +146504,7 @@ bvT
 bxi
 byz
 bxi
-bvP
+hsX
 but
 aad
 bHq
