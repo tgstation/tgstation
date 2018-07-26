@@ -231,6 +231,13 @@ function iconError(E) {
 	}, opts.imageRetryDelay);
 }
 
+function output_list() {
+	for (var i = 0; i < arguments.length; i++) {
+		var message = arguments[i];
+		output(message);
+	}
+}
+
 //Send a message to the client
 function output(message, flag) {
 	if (typeof message === 'undefined') {

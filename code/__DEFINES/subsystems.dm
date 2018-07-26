@@ -56,17 +56,18 @@
 #define INIT_ORDER_BLACKBOX 17
 #define INIT_ORDER_SERVER_MAINT 16
 #define INIT_ORDER_INPUT 15
-#define INIT_ORDER_RESEARCH 14
-#define INIT_ORDER_EVENTS 13
-#define INIT_ORDER_JOBS 12
-#define INIT_ORDER_QUIRKS 11
-#define INIT_ORDER_TICKER 10
-#define INIT_ORDER_MAPPING 9
-#define INIT_ORDER_NETWORKS 8
-#define INIT_ORDER_ATOMS 7
-#define INIT_ORDER_LANGUAGE 6
-#define INIT_ORDER_MACHINES 5
-#define INIT_ORDER_CIRCUIT 4
+#define INIT_ORDER_CHAT 14
+#define INIT_ORDER_RESEARCH 13
+#define INIT_ORDER_EVENTS 12
+#define INIT_ORDER_JOBS 11
+#define INIT_ORDER_QUIRKS 10
+#define INIT_ORDER_TICKER 9
+#define INIT_ORDER_MAPPING 8
+#define INIT_ORDER_NETWORKS 7
+#define INIT_ORDER_ATOMS 6
+#define INIT_ORDER_LANGUAGE 5
+#define INIT_ORDER_MACHINES 4
+#define INIT_ORDER_CIRCUIT 3
 #define INIT_ORDER_TIMER 1
 #define INIT_ORDER_DEFAULT 0
 #define INIT_ORDER_AIR -1
@@ -110,7 +111,8 @@
 #define FIRE_PRIORITY_TGUI			110
 #define FIRE_PRIORITY_TICKER		200
 #define FIRE_PRIORITY_OVERLAYS		500
-#define FIRE_PRIORITY_INPUT			1000 // This must always always be the max highest priority. Player input must never be lost.
+#define FIRE_PRIORITY_CHAT			900		// Let's have this always be just under the number 1
+#define FIRE_PRIORITY_INPUT			1000	// This must always always be the max highest priority. Player input must never be lost.
 
 // SS runlevels
 
