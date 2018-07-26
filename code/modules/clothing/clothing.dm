@@ -66,11 +66,9 @@
 	if(user.a_intent != INTENT_HARM && ismoth(M))
 		var/obj/item/reagent_containers/food/snacks/clothing/clothing_as_food = new
 		clothing_as_food.name = name
-		var/eaten = clothing_as_food.attack(M, user, def_zone)
+		if(clothing_as_food.attack(M, user, def_zone))
+			take_damage(15, sound_effect=FALSE)
 		qdel(clothing_as_food)
-
-		if(eaten)
-			take_damage(15)
 	else
 		return ..()
 
