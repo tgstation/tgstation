@@ -1,0 +1,5 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - rscadd: "The following machines can now be tabled: all-in-one grinder, cell charger, dish drive, disk compartmentalizer, microwave, recharger, soda/booze dispenser."
+  - rscadd: "Unanchored soda/booze dispensers can now be rotated with alt-click."

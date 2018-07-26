@@ -491,8 +491,10 @@
 
 /datum/reagent/consumable/flour/reaction_turf(turf/T, reac_volume)
 	if(!isspaceturf(T))
-		var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/flour(T)
-		reagentdecal.reagents.add_reagent("flour", reac_volume)
+		var/obj/effect/decal/cleanable/flour/reagentdecal = new/obj/effect/decal/cleanable/flour(T)
+		reagentdecal = locate() in T //Might have merged with flour already there.
+		if(reagentdecal)
+			reagentdecal.reagents.add_reagent("flour", reac_volume)
 
 /datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"
