@@ -792,14 +792,6 @@
 	var/to_x = 0
 	var/to_y = 0
 
-	flick_overlay(I, GLOB.clients, 6)
-	var/matrix/M = new
-	M.Turn(pick(-30, 30))
-
-	animate(I, transform = M, time = 1)
-	sleep(1)
-	animate(I, transform = matrix(), time = 1)
-	sleep(1)
 	if(!QDELETED(T) && !QDELETED(target))
 		direction = get_dir(T, target)
 	if(direction & NORTH)
