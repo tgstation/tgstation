@@ -65,7 +65,7 @@
 	if(reagents.has_reagent("nuka_cola"))
 		amount = -1
 	if(amount)
-		add_movespeed_modifier(MOVESPEED_ID_MONKEY_REAGENT_SPEEDMOD, TRUE, 100, override = TRUE, legacy_slowdown = amount)
+		add_movespeed_modifier(MOVESPEED_ID_MONKEY_REAGENT_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = amount)
 
 /mob/living/carbon/monkey/updatehealth()
 	. = ..()
@@ -73,14 +73,14 @@
 	var/health_deficiency = (100 - health)
 	if(health_deficiency >= 45)
 		slow += (health_deficiency / 25)
-	add_movespeed_modifier(MOVESPEED_ID_MONKEY_HEALTH_SPEEDMOD, TRUE, 100, override = TRUE, legacy_slowdown = slow)
+	add_movespeed_modifier(MOVESPEED_ID_MONKEY_HEALTH_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = slow)
 
 /mob/living/carbon/monkey/adjust_bodytemperature(amount)
 	. = ..()
 	var/slow = 0
 	if (bodytemperature < 283.222)
 		slow += (283.222 - bodytemperature) / 10 * 1.75
-	add_movespeed_modifier(MOVESPEED_ID_MONKEY_TEMPERATURE_SPEEDMOD, TRUE, 100, override = TRUE, legacy_slowdown = amount)
+	add_movespeed_modifier(MOVESPEED_ID_MONKEY_TEMPERATURE_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = amount)
 
 /mob/living/carbon/monkey/Stat()
 	..()

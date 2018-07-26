@@ -6,8 +6,8 @@
 */
 
 //ANY ADD/REMOVE DONE IN UPDATE_MOVESPEED MUST HAVE THE UPDATE ARGUMENT SET AS FALSE!
-/mob/proc/add_movespeed_modifier(id, update = TRUE, priority = 0, flags = NONE, override = FALSE, legacy_slowdown = 0)
-	var/list/temp = list(priority, flags, legacy_slowdown)			//build the modification list
+/mob/proc/add_movespeed_modifier(id, update = TRUE, priority = 0, flags = NONE, override = FALSE, multiplicative_slowdown = 0)
+	var/list/temp = list(priority, flags, multiplicative_slowdown)			//build the modification list
 	if(LAZYACCESS(movespeed_modification, id))
 		if(movespeed_modifier_identical_check(movespeed_modification[id], temp))
 			return FALSE
@@ -15,7 +15,7 @@
 			return FALSE
 		else
 			remove_movespeed_modifier(id, update)
-	LAZYSET(movespeed_modification, id, list(priority, flags, legacy_slowdown))
+	LAZYSET(movespeed_modification, id, list(priority, flags, multiplicative_slowdown))
 	if(update)
 		update_movespeed(TRUE)
 	return TRUE
@@ -30,19 +30,19 @@
 	return TRUE
 
 /mob/vv_edit_var(var_name, var_value)
-	var/slowdown_edit = var_name == NAMEOF(src, cached_legacy_slowdown)
+	var/slowdown_edit = var_name == NAMEOF(src, cached_multiplicative_slowdown)
 	var/diff
-	if(slowdown_edit && isnum(cached_legacy_slowdown) && isnum(var_value))
-		diff = cached_legacy_slowdown - var_value
+	if(slowdown_edit && isnum(cached_multiplicative_slowdown) && isnum(var_value))
+		diff = cached_multiplicative_slowdown - var_value
 	. = ..()
 	if(. && slowdown_edit && isnum(diff))
-		add_movespeed_modifier(MOVESPEED_ID_ADMIN_VAREDIT, TRUE, 100, override = TRUE, legacy_slowdown = diff)
+		add_movespeed_modifier(MOVESPEED_ID_ADMIN_VAREDIT, TRUE, 100, override = TRUE, multiplicative_slowdown = diff)
 
 /mob/proc/has_movespeed_modifier(id)
 	return LAZYACCESS(movespeed_modification, id)
 
 /mob/proc/update_config_movespeed()
-	add_movespeed_modifier(MOVESPEED_ID_CONFIG_SPEEDMOD, FALSE, 100, override = TRUE, legacy_slowdown = get_config_multiplicative_speed())
+	add_movespeed_modifier(MOVESPEED_ID_CONFIG_SPEEDMOD, FALSE, 100, override = TRUE, multiplicative_slowdown = get_config_multiplicative_speed())
 
 /mob/proc/get_config_multiplicative_speed()
 	if(!islist(GLOB.mob_config_movespeed_type_lookup) || !GLOB.mob_config_movespeed_type_lookup[type])
@@ -56,8 +56,8 @@
 	. = 0
 	for(var/id in get_movespeed_modifiers())
 		var/list/data = movespeed_modification[id]
-		. += data[MOVESPEED_DATA_INDEX_LEGACY_SLOWDOWN]
-	cached_legacy_slowdown = .
+		. += data[MOVESPEED_DATA_INDEX_MULTIPLICATIVE_SLOWDOWN]
+	cached_multiplicative_slowdown = .
 
 /mob/proc/get_movespeed_modifiers()
 	return movespeed_modification
@@ -70,15 +70,15 @@
 			return FALSE
 	return TRUE
 
-/mob/proc/total_legacy_slowdown()
+/mob/proc/total_multiplicative_slowdown()
 	. = 0
 	for(var/id in get_movespeed_modifiers())
 		var/list/data = movespeed_modification[id]
-		. += data[MOVESPEED_DATA_INDEX_LEGACY_SLOWDOWN]
+		. += data[MOVESPEED_DATA_INDEX_MULTIPLICATIVE_SLOWDOWN]
 
 /proc/movespeed_data_null_check(list/data)		//Determines if a data list is not meaningful and should be discarded.
 	. = TRUE
-	if(data[MOVESPEED_DATA_INDEX_LEGACY_SLOWDOWN])
+	if(data[MOVESPEED_DATA_INDEX_MULTIPLICATIVE_SLOWDOWN])
 		. = FALSE
 
 /mob/proc/sort_movespeed_modlist()			//Verifies it too. Sorts highest priority (first applied) to lowest priority (last applied)

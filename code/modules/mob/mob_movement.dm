@@ -13,7 +13,7 @@
 //DO NOT USE THIS UNLESS YOU ABSOLUTELY HAVE TO. THIS IS BEING PHASED OUT FOR THE MOVESPEED MODIFICATION SYSTEM.
 //See mob_movespeed.dm
 /mob/proc/movement_delay()	//update /living/movement_delay() if you change this
-	return cached_legacy_slowdown
+	return cached_multiplicative_slowdown
 
 /client/verb/drop_item()
 	set hidden = 1

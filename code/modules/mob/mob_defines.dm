@@ -41,7 +41,7 @@
 
 	//MOVEMENT SPEED
 	var/list/movespeed_modification				//Lazy list, see mob_movespeed.dm
-	var/cached_legacy_slowdown
+	var/cached_multiplicative_slowdown
 	/////////////////
 
 	var/name_archive //For admin things like possession
