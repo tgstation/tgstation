@@ -222,7 +222,8 @@
 	var/datum/hud/hud = owner.hud_used
 	screen_obj = new
 	hud.infodisplay += screen_obj
-	RegisterSignal(hud, COMSIG_PARENT_QDELETED, .proc/unmodify_hud, TRUE)
+	RegisterSignal(hud, COMSIG_PARENT_QDELETED, .proc/unmodify_hud)
+	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/print_mood)
 
 /datum/component/mood/proc/unmodify_hud()
 	if(!screen_obj)
