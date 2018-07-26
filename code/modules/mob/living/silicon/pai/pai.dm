@@ -133,8 +133,6 @@
 	emittersemicd = TRUE
 	addtimer(CALLBACK(src, .proc/emittercool), 600)
 
-	add_movespeed_modifier(MOVESPEED_ID_PAI_INNATE_SPEEDMOD, TRUE, 100, legacy_slowdown = 1)
-
 /mob/living/silicon/pai/Life()
 	if(hacking)
 		process_hack()

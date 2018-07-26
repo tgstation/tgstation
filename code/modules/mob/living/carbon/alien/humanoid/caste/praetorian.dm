@@ -7,7 +7,6 @@
 
 /mob/living/carbon/alien/humanoid/royal/praetorian/Initialize()
 	real_name = name
-	add_movespeed_modifier(MOVESPEED_ID_ALIEN_PRAETORIAN_SPEEDMOD, TRUE, 100, legacy_slowdown = 1)
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
 	AddAbility(new /obj/effect/proc_holder/alien/royal/praetorian/evolve())
 	. = ..()

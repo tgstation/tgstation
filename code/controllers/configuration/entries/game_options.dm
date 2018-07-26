@@ -192,7 +192,11 @@
 	key_mode = KEY_MODE_TYPE
 	value_mode = VALUE_MODE_NUM
 	config_entry_value = list(			//DEFAULTS
-	/mob/living/simple_animal = 1
+	/mob/living/simple_animal = 1,
+	/mob/living/silicon/pai = 1,
+	/mob/living/carbon/alien/humanoid/hunter = -1,
+	/mob/living/carbon/alien/humanoid/royal/praetorian = 1,
+	/mob/living/carbon/alien/humanoid/royal/queen = 3
 	)
 
 /datum/config_entry/keyed_list/multiplicative_movespeed/ValidateAndSet()
@@ -202,7 +206,7 @@
 
 /datum/config_entry/keyed_list/multiplicative_movespeed/vv_edit_var(var_name, var_value)
 	. = ..()
-	if(.)
+	if(. && (var_name == NAMEOF(src, config_entry_value)))
 		update_config_movespeed_type_lookup(TRUE)
 
 /datum/config_entry/number/movedelay	//Used for modifying movement speed for mobs.
@@ -215,7 +219,7 @@
 
 /datum/config_entry/number/movedelay/vv_edit_var(var_name, var_value)
 	. = ..()
-	if(.)
+	if(. && (var_name == NAMEOF(src, config_entry_value)))
 		update_mob_config_movespeeds()
 
 /datum/config_entry/number/movedelay/run_delay

@@ -101,6 +101,7 @@
 		real_name = name
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
+	update_simplemob_varspeed()
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
@@ -278,8 +279,10 @@
 
 /mob/living/simple_animal/vv_edit_var(var_name, var_value)
 	if(var_name == NAMEOF(src, speed))
-		set_varspeed(var_value)
-		return TRUE
+		if(isnum(var_value))
+			var/diff = speed - var_value
+			add_movespeed_modifier(MOVESPEED_ID_SIMPLEMOB_ADMIN, TRUE, 100, legacy_slowdown = diff, override = TRUE)
+		return ..()
 	else
 		return ..()
 

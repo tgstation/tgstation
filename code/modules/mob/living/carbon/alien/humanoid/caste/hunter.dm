@@ -10,10 +10,6 @@
 	internal_organs += new /obj/item/organ/alien/plasmavessel/small
 	..()
 
-/mob/living/carbon/alien/humanoid/hunter/Initialize()
-	add_movespeed_modifier(MOVESPEED_ID_ALIEN_HUNTER_SPEEDMOD, FALSE, 100, legacy_slowdown = -1)
-	return ..()
-
 //Hunter verbs
 
 /mob/living/carbon/alien/humanoid/hunter/proc/toggle_leap(message = 1)
