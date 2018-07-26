@@ -1,0 +1,5 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - rscadd: "Washing machines now wiggle slightly while running."
+  - rscadd: "Washing machines can be unanchored if their panel is open for even more wiggle."
