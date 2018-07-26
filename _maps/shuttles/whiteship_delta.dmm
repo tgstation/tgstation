@@ -102,7 +102,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet/centcom,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/carpet,
+/turf/open/floor/wood,
 /area/shuttle/abandoned/crew)
 "am" = (
 /obj/effect/decal/cleanable/dirt{
@@ -118,7 +118,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/carpet,
+/turf/open/floor/wood,
 /area/shuttle/abandoned/crew)
 "an" = (
 /obj/structure/closet/emcloset/anchored,
@@ -350,7 +350,7 @@
 /obj/machinery/door/airlock{
 	name = "Cabin 2"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/wood,
 /area/shuttle/abandoned/crew)
 "aF" = (
 /obj/effect/decal/cleanable/dirt{
@@ -361,7 +361,7 @@
 /obj/machinery/door/airlock{
 	name = "Cabin 1"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/wood,
 /area/shuttle/abandoned/crew)
 "aG" = (
 /obj/machinery/door/airlock/external,
@@ -1839,7 +1839,7 @@
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/box/white/corners{
-	dir = 1
+	dir = 8
 	},
 /obj/structure/closet/crate/internals,
 /turf/open/floor/plasteel/vault,
@@ -2720,7 +2720,7 @@
 	name = "dust"
 	},
 /obj/effect/turf_decal/box/white/corners{
-	dir = 8
+	dir = 1
 	},
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel/vault,
@@ -3199,7 +3199,7 @@ aa
 aa
 cz
 cH
-cY
+dL
 ds
 dK
 dW
@@ -3239,7 +3239,7 @@ cy
 cJ
 da
 dC
-dL
+cY
 dY
 cy
 "}
