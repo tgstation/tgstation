@@ -303,6 +303,26 @@
 	highlight("#0f0")
 	#endif
 
+// Called after the shuttle is loaded from template
+/obj/docking_port/mobile/proc/linkup(datum/map_template/shuttle/template, obj/docking_port/stationary/dock)
+	var/list/static/shuttle_id = list()
+	var/idnum
+	if(!shuttle_id[template])
+		shuttle_id[template] = idnum = 1
+	else
+		idnum = shuttle_id[template]++
+	if(id == initial(id))
+		id = "[id][idnum]"
+	if(name == initial(name) && idnum > 1)
+		name = "[name] [idnum]"
+	for(var/i in shuttle_areas)
+		var/area/place = i
+		for(var/obj/machinery/computer/shuttle/comp in place)
+			comp.connect_to_shuttle(src, dock, idnum)
+		for(var/obj/machinery/computer/camera_advanced/shuttle_docker/comp in place)
+			comp.connect_to_shuttle(src, dock, idnum)
+
+
 //this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact
 /obj/docking_port/mobile/proc/canMove()
 	return TRUE
