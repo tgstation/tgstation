@@ -61,7 +61,6 @@
 	return ..()
 
 /mob/living/simple_animal/bot/secbot/grievous/attackby(obj/item/W, mob/user, params)
-	..()
 	if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
 		return
 	if(!istype(W, /obj/item/screwdriver) && (W.force) && (!target) && (W.damtype != STAMINA) )
