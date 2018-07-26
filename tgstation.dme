@@ -1011,6 +1011,7 @@
 #include "code\game\turfs\closed.dm"
 #include "code\game\turfs\open.dm"
 #include "code\game\turfs\turf.dm"
+#include "code\game\turfs\openspace\openspace.dm"
 #include "code\game\turfs\simulated\chasm.dm"
 #include "code\game\turfs\simulated\dirtystation.dm"
 #include "code\game\turfs\simulated\floor.dm"

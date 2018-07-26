@@ -1,6 +1,23 @@
 GLOBAL_LIST_INIT(cardinals, list(NORTH, SOUTH, EAST, WEST))
+GLOBAL_LIST_INIT(cardinals_multiz, list(NORTH, SOUTH, EAST, WEST, UP, DOWN))
+GLOBAL_LIST_INIT(alldirs_multiz, __generate_multiz_alldirs())
 GLOBAL_LIST_INIT(alldirs, list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 GLOBAL_LIST_INIT(diagonals, list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
+GLOBAL_LIST_INIT(diagonals_multiz, __generate_multiz_diagonals())
+
+/proc/__generate_multiz_diagonals()
+	. = list()
+	var/list/diagonals = list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
+	for(var/i in diagonals)
+		. += (i | UP)
+		. += (i | DOWN)
+
+/proc/__generate_multiz_alldirs()
+	. = list()
+	var/list/basic = list(NORTH, SOUTH, EAST, WEST, UP, DOWN)
+	for(var/i in basic)
+		for(var/v in basic - i)
+			. += (i | v)
 
 GLOBAL_LIST_EMPTY(landmarks_list)				//list of all landmarks created
 GLOBAL_LIST_EMPTY(start_landmarks_list)			//list of all spawn points created

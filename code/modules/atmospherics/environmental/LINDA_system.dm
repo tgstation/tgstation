@@ -1,4 +1,7 @@
-/atom/var/CanAtmosPass = ATMOS_PASS_YES
+/atom
+	var/CanAtmosPass = ATMOS_PASS_YES
+	var/CanAtmosPassVertical = ATMOS_PASS_YES
+
 /atom/proc/CanAtmosPass(turf/T)
 	switch (CanAtmosPass)
 		if (ATMOS_PASS_PROC)
@@ -8,17 +11,22 @@
 		else
 			return CanAtmosPass
 
-/turf/closed/CanAtmosPass = ATMOS_PASS_NO
+/turf
+	CanAtmosPass = ATMOS_PASS_NO
+	CanAtmosPassVertical = ATMOS_PASS_NO
 
-/turf/open/CanAtmosPass = ATMOS_PASS_PROC
-/turf/open/CanAtmosPass(turf/T)
+/turf/open
+	CanAtmosPass = ATMOS_PASS_PROC
+	CanAtmosPassVertical = ATMOS_PASS_NO
+
+/turf/open/CanAtmosPass(turf/T, vertical = FALSE)
 	var/R
 	if(blocks_air || T.blocks_air)
 		R = 1
 
 	for(var/obj/O in contents+T.contents)
 		var/turf/other = (O.loc == src ? T : src)
-		if(!CANATMOSPASS(O, other))
+		if(!(vertical? CANVERTICALATMOSPASS(O, other) : CANATMOSPASS(O, other)))
 			R = 1
 			if(O.BlockSuperconductivity()) 	//the direction and open/closed are already checked on CanAtmosPass() so there are no arguments
 				var/D = get_dir(src, T)
@@ -32,18 +40,26 @@
 
 	return !R
 
-
-
 /atom/movable/proc/BlockSuperconductivity() // objects that block air and don't let superconductivity act. Only firelocks atm.
 	return 0
 
 /turf/proc/CalculateAdjacentTurfs()
 	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
+	var/list/consider = list()
 	for(var/direction in GLOB.cardinals)
 		var/turf/T = get_step(src, direction)
 		if(!T)
 			continue
-		if( !(blocks_air || T.blocks_air) && CANATMOSPASS(T, src) )
+		consider[T] = FALSE
+	var/turf/up = SSmapping.get_turf_above(src)
+	var/turf/down = SSmapping.get_turf_below(src)
+	if(up)
+		consider[up] = TRUE
+	if(down)
+		consider[down] = TRUE
+	for(var/i in consider)
+		var/turf/T = consider
+		if(!(blocks_air || T.blocks_air) && (consider[T]? CANATMOSPASS(T, src) : CANVERTICALATMOSPASS(T, src)) )
 			LAZYINITLIST(atmos_adjacent_turfs)
 			LAZYINITLIST(T.atmos_adjacent_turfs)
 			atmos_adjacent_turfs[T] = TRUE
@@ -72,11 +88,11 @@
 
 	var/turf/curloc = src
 
-	for (var/direction in GLOB.diagonals)
+	for (var/direction in GLOB.diagonals_multiz)
 		var/matchingDirections = 0
 		var/turf/S = get_step(curloc, direction)
 
-		for (var/checkDirection in GLOB.cardinals)
+		for (var/checkDirection in GLOB.cardinals_multiz)
 			var/turf/checkTurf = get_step(S, checkDirection)
 			if(!S.atmos_adjacent_turfs || !S.atmos_adjacent_turfs[checkTurf])
 				continue
