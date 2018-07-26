@@ -12,6 +12,4 @@
 		return
 	if(!has_gravity(src) && step_track != 0) // don't need to step as often when you hop around
 		return null
-	if(m_intent == MOVE_INTENT_WALK)
-		return list(0.125, -3)
-	return list(0.5, 0)
+	return list(0.5, -1)
