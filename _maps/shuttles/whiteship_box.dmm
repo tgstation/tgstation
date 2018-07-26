@@ -1230,12 +1230,12 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/door/airlock/medical{
-	name = "Cryo Room"
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Cryo Room"
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/abandoned/medbay)
@@ -1298,12 +1298,12 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/door/airlock/medical{
-	name = "Cryo Room"
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Cryo Room"
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/abandoned/medbay)
