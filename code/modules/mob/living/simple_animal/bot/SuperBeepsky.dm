@@ -6,9 +6,17 @@
 	health = 150
 	maxHealth = 150
 	baton_type = /obj/item/melee/transforming/energy/sword
-	var/obj/item/melee/transforming/energy/sword/weapon = new
-	var/block_chance = 50
 	base_speed = 4 //he's a fast fucker
+	var/obj/item/weapon
+	var/block_chance = 50
+
+
+/mob/living/simple_animal/bot/secbot/grievous/toy //A toy version of general beepsky!
+	name = "Genewul Bweepskee"
+	desc = "An adorable looking secbot with four toy swords taped to its arms"
+	health = 50
+	maxHealth = 50
+	baton_type = /obj/item/toy/sword
 
 /mob/living/simple_animal/bot/secbot/grievous/bullet_act(obj/item/projectile/P)
 	if(prob(block_chance))
@@ -18,15 +26,7 @@
 	else
 		. = ..()
 
-
-
 /mob/living/simple_animal/bot/secbot/grievous/Crossed(atom/movable/AM)
-	if(has_gravity() && ismob(AM) && target)
-		var/mob/living/carbon/C = AM
-		if(!istype(C) || !C || in_range(src, target))
-			return
-		knockOver(C)
-		return
 	if(ismob(AM) && AM == target)
 		visible_message("[src] flails his swords and cuts [AM]!")
 		playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
@@ -47,17 +47,15 @@
 
 /mob/living/simple_animal/bot/secbot/grievous/Initialize()
 	. = ..()
+	weapon = new baton_type(src)
 	weapon.attack_self(src)
-	weapon.active = TRUE
 	icon_state = "grievous[on]"
 
 /mob/living/simple_animal/bot/secbot/grievous/attack_hand(mob/living/carbon/human/H)
 	if((H.a_intent == INTENT_HARM) || (H.a_intent == INTENT_DISARM))
 		if(mode == BOT_HUNT) //If he already has his swords out
 			retaliate(H)
-			if(prob(block_chance))
-				visible_message("[src] deflects [H]'s attack with his energy swords!")
-				playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE,-1)
+			if(try_block())
 				return FALSE
 
 	return ..()
@@ -68,10 +66,19 @@
 		return
 	if(!istype(W, /obj/item/screwdriver) && (W.force) && (!target) && (W.damtype != STAMINA) )
 		retaliate(user)
-		if(prob(block_chance))
-			visible_message("[src] deflects [user]'s attack with his energy swords!")
-			playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE, -1)
+		if(try_block())
 			return FALSE
+		else
+			return ..()
+
+
+/mob/living/simple_animal/bot/secbot/grievous/proc/try_block()
+	if(prob(block_chance))
+		visible_message("[src] deflects the attack with his energy swords!")
+		playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE,-1)
+		return TRUE
+	else
+		return FALSE
 
 /mob/living/simple_animal/bot/secbot/grievous/stun_attack(mob/living/carbon/C) //Criminals don't deserve to live
 //	playsound(loc, 'sound/weapons/blade1.ogg', 50, 1, -1)
@@ -167,7 +174,6 @@
 	Sa.add_overlay("hs_hole")
 	Sa.created_name = name
 	new /obj/item/assembly/prox_sensor(Tsec)
-	drop_part(baton_type, Tsec)
 
 	if(prob(50))
 		drop_part(robot_arm, Tsec)
@@ -177,4 +183,26 @@
 	for(var/IS = 0 to 4)
 		new /obj/item/melee/transforming/energy/sword/saber(Tsec)
 	new /obj/effect/decal/cleanable/oil(loc)
-	..()
+	qdel(src)
+
+/mob/living/simple_animal/bot/secbot/grievous/toy/explode()
+
+	walk_to(src,0)
+	visible_message("<span class='boldannounce'>[src] lets out a huge cough as it blows apart!</span>")
+	var/atom/Tsec = drop_location()
+
+	var/obj/item/bot_assembly/secbot/Sa = new (Tsec)
+	Sa.build_step = 1
+	Sa.add_overlay("hs_hole")
+	Sa.created_name = name
+	new /obj/item/assembly/prox_sensor(Tsec)
+
+	if(prob(50))
+		drop_part(robot_arm, Tsec)
+
+	do_sparks(3, TRUE, src)
+	qdel(weapon)
+	for(var/IS = 0 to 4)
+		new /obj/item/toy/sword(Tsec)
+	new /obj/effect/decal/cleanable/oil(loc)
+	qdel(src)
