@@ -2,7 +2,6 @@
 	var/list/considering = ..()
 	. = considering
 	if(has_trait(TRAIT_IGNORESLOWDOWN))
-		. = null
 		for(var/id in .)
 			var/list/data = .[id]
 			if(data[MOVESPEED_DATA_INDEX_FLAGS] & IGNORE_NOSLOW)
