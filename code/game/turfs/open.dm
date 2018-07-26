@@ -21,12 +21,7 @@
 	if(footstep && istype(LM))
 		var/factors = LM.get_footstep_factors()
 		if(factors && factors[1])
-			playsound(src,
-				pick(GLOB.footstep[footstep][1]),
-				GLOB.footstep[footstep][2] * factors[1],
-				GLOB.footstep[footstep][3] * factors[2],
-				GLOB.footstep[footstep][4] * factors[3],
-				ignore_walls = FALSE)
+			playsound(src, pick(GLOB.footstep[footstep][1]), GLOB.footstep[footstep][2] * factors[1], TRUE, factors[2] + GLOB.footstep[footstep][3])
 
 /turf/open/indestructible
 	name = "floor"

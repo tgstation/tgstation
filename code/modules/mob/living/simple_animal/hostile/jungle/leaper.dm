@@ -26,6 +26,8 @@
 	var/hop_cooldown = 0 //Strictly for player controlled leapers
 	var/projectile_ready = FALSE //Stopping AI leapers from firing whenever they want, and only doing it after a hop has finished instead
 
+	do_footstep = TRUE
+
 /obj/item/projectile/leaper
 	name = "leaper bubble"
 	icon_state = "leaper"

@@ -29,6 +29,8 @@
 	status_flags = CANPUSH
 	del_on_death = 1
 
+	do_footstep = TRUE
+
 
 /mob/living/simple_animal/hostile/russian/ranged
 	icon_state = "russianranged"

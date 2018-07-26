@@ -32,6 +32,8 @@
 	faction = list("pirate")
 	var/obj/effect/light_emitter/red_energy_sword/sord
 
+	do_footstep = TRUE
+
 /mob/living/simple_animal/hostile/pirate/Initialize()
 	. = ..()
 	sord = new(src)

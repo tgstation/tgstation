@@ -47,6 +47,8 @@
 	status_flags = CANPUSH
 	del_on_death = 1
 
+	do_footstep = TRUE
+
 ///////////////Sword and shield////////////
 
 /mob/living/simple_animal/hostile/syndicate/melee
@@ -119,7 +121,7 @@
 	loot = list(/obj/effect/gibspawner/human)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/pilot //caravan ambush ruin
-	name = "Syndicate Salvage Pilot"	
+	name = "Syndicate Salvage Pilot"
 	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/infiltrator //shuttle loan event

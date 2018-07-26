@@ -14,6 +14,8 @@
 	speak_chance = 1
 	turns_per_move = 10
 
+	do_footstep = TRUE
+
 //Corgis and pugs are now under one dog subtype
 
 /mob/living/simple_animal/pet/dog/corgi

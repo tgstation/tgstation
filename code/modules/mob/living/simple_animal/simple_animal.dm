@@ -91,6 +91,8 @@
 
 	var/my_z // I don't want to confuse this with client registered_z
 
+	var/do_footstep = FALSE
+
 /mob/living/simple_animal/Initialize()
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src
@@ -113,6 +115,11 @@
 	if (T && AIStatus == AI_Z_OFF)
 		SSidlenpcpool.idle_mobs_by_zlevel[T.z] -= src
 
+	return ..()
+
+/mob/living/simple_animal/get_footstep_factors()
+	if(!do_footstep)
+		return null
 	return ..()
 
 /mob/living/simple_animal/updatehealth()
