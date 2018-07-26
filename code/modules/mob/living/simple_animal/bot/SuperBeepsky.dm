@@ -13,8 +13,8 @@
 /mob/living/simple_animal/bot/secbot/grievous/bullet_act(obj/item/projectile/P)
 	if(prob(block_chance))
 		visible_message("[src] deflects [P] with its energy swords!")
-		playsound(loc, 'sound/weapons/blade1.ogg', 50, 1, -1)
-		return 0
+		playsound(loc, 'sound/weapons/blade1.ogg', 50, TRUE)
+		return FALSE
 	else
 		. = ..()
 
@@ -29,7 +29,7 @@
 		return
 	if(ismob(AM) && AM == target)
 		visible_message("[src] flails his swords and cuts [AM]!")
-		playsound(loc,'sound/effects/beepskyspinsabre.ogg',100,1,-1)
+		playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
 		stun_attack(AM)
 		return
 	..()
@@ -57,8 +57,8 @@
 			retaliate(H)
 			if(prob(block_chance))
 				visible_message("[src] deflects [H]'s attack with his energy swords!")
-				playsound(loc, 'sound/weapons/blade1.ogg', 50, 1, -1)
-				return 0
+				playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE,-1)
+				return FALSE
 
 	return ..()
 
@@ -70,13 +70,13 @@
 		retaliate(user)
 		if(prob(block_chance))
 			visible_message("[src] deflects [user]'s attack with his energy swords!")
-			playsound(loc, 'sound/weapons/blade1.ogg', 50, 1, -1)
-			return 0
+			playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE, -1)
+			return FALSE
 
 /mob/living/simple_animal/bot/secbot/grievous/stun_attack(mob/living/carbon/C) //Criminals don't deserve to live
 //	playsound(loc, 'sound/weapons/blade1.ogg', 50, 1, -1)
 	weapon.attack(C, src)
-	playsound(loc, 'sound/weapons/blade1.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE, -1)
 	if(C.stat == DEAD)
 		addtimer(CALLBACK(src, .proc/update_onsprite), 2)
 		back_to_idle()
@@ -94,7 +94,7 @@
 				mode = BOT_START_PATROL	// switch to patrol mode
 		if(BOT_HUNT)		// hunting for perp
 			icon_state = "grievous-c"
-			playsound(loc,'sound/effects/beepskyspinsabre.ogg',100,1,-1)
+			playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
 			// general beepsky doesn't give up so easily, jedi scum
 			if(frustration >= 20)
 				walk_to(src,0)
@@ -144,8 +144,8 @@
 			target = C
 			oldtarget_name = C.name
 			speak("Level [threatlevel] infraction alert!")
-			playsound(loc, pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg'), 50, 0)
-			playsound(loc,'sound/weapons/saberon.ogg',50,1,-1)
+			playsound(src, pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg'), 50, FALSE)
+			playsound(src,'sound/weapons/saberon.ogg',50,TRUE,-1)
 			visible_message("[src] ignites his energy swords!")
 			icon_state = "grievous-c"
 			visible_message("<b>[src]</b> points at [C.name]!")
