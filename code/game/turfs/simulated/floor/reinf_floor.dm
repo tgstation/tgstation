@@ -6,6 +6,7 @@
 	thermal_conductivity = 0.025
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
+	footstep = FOOTSTEP_PLATING
 
 /turf/open/floor/engine/examine(mob/user)
 	..()

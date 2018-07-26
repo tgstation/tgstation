@@ -44,6 +44,7 @@
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	attachment_holes = FALSE
+	footstep = FOOTSTEP_SAND
 
 /turf/open/floor/plating/ashplanet/Initialize()
 	if(smooth)
@@ -74,6 +75,7 @@
 	smooth_icon = 'icons/turf/floors/rocky_ash.dmi'
 	layer = MID_TURF_LAYER
 	canSmoothWith = list(/turf/open/floor/plating/ashplanet/rocky, /turf/closed)
+	footstep = FOOTSTEP_FLOOR
 
 /turf/open/floor/plating/ashplanet/wateryrock
 	gender = PLURAL
@@ -81,6 +83,7 @@
 	smooth = null
 	icon_state = "wateryrock"
 	slowdown = 2
+	footstep = FOOTSTEP_FLOOR
 
 /turf/open/floor/plating/ashplanet/wateryrock/Initialize()
 	icon_state = "[icon_state][rand(1, 9)]"
@@ -93,6 +96,7 @@
 	flags_1 = NONE
 	attachment_holes = FALSE
 	bullet_bounce_sound = null
+	footstep = FOOTSTEP_SAND
 
 /turf/open/floor/plating/beach/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
@@ -133,6 +137,7 @@
 	gender = PLURAL
 	name = "iron sand"
 	desc = "Like sand, but more <i>metal</i>."
+	footstep = FOOTSTEP_SAND
 
 /turf/open/floor/plating/ironsand/Initialize()
 	. = ..()
@@ -156,6 +161,7 @@
 	slowdown = 1
 	attachment_holes = FALSE
 	bullet_sizzle = TRUE
+	footstep = FOOTSTEP_FLOOR
 
 /turf/open/floor/plating/ice/Initialize()
 	. = ..()
@@ -192,6 +198,7 @@
 	temperature = 180
 	attachment_holes = FALSE
 	planetary_atmos = TRUE
+	footstep = FOOTSTEP_SAND
 
 /turf/open/floor/plating/snowed/cavern
 	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120"

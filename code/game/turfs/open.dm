@@ -7,6 +7,8 @@
 	var/list/archdrops
 	var/wet
 
+	var/footstep = null
+
 /turf/open/ComponentInitialize()
 	. = ..()
 	if(wet)
@@ -14,10 +16,23 @@
 	if(LAZYLEN(archdrops))
 		AddComponent(/datum/component/archaeology, archdrops)
 
+/turf/open/Entered(var/mob/living/LM)
+	..()
+	if(footstep && istype(LM))
+		var/factors = LM.get_footstep_factors()
+		if(factors && factors[1])
+			playsound(src,
+				pick(GLOB.footstep[footstep][1]),
+				GLOB.footstep[footstep][2] * factors[1],
+				GLOB.footstep[footstep][3] * factors[2],
+				GLOB.footstep[footstep][4] * factors[3],
+				ignore_walls = FALSE)
+
 /turf/open/indestructible
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
+	footstep = FOOTSTEP_FLOOR
 
 /turf/open/indestructible/Melt()
 	to_be_destroyed = FALSE
@@ -28,6 +43,7 @@
 
 /turf/open/indestructible/sound
 	name = "squeaky floor"
+	footstep = null
 	var/sound
 
 /turf/open/indestructible/sound/Entered(var/mob/AM)
@@ -42,6 +58,7 @@
 	icon_state = "necro1"
 	baseturfs = /turf/open/indestructible/necropolis
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	footstep = FOOTSTEP_LAVA
 
 /turf/open/indestructible/necropolis/Initialize()
 	. = ..()
@@ -76,12 +93,14 @@
 	name = "notebook floor"
 	desc = "A floor made of invulnerable notebook paper."
 	icon_state = "paperfloor"
+	footstep = null
 
 /turf/open/indestructible/binary
 	name = "tear in the fabric of reality"
 	CanAtmosPass = ATMOS_PASS_NO
 	baseturfs = /turf/open/indestructible/binary
 	icon_state = "binary"
+	footstep = null
 
 /turf/open/indestructible/airblock
 	icon_state = "bluespace"
@@ -93,6 +112,7 @@
 	desc = "Brass plating that gently radiates heat. For some reason, it reminds you of blood."
 	icon_state = "reebe"
 	baseturfs = /turf/open/indestructible/clock_spawn_room
+	footstep = FOOTSTEP_PLATING
 
 /turf/open/indestructible/clock_spawn_room/Entered()
 	..()
