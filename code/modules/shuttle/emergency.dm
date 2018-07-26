@@ -262,9 +262,17 @@
 					if(!(player.mind.has_antag_datum(/datum/antagonist)) && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						return FALSE
 					//Antag present, doesn't stop but let's see if we actually want to hijack
+					var/prevent = FALSE
 					for(var/datum/antagonist/A in player.mind.antag_datums)
-						if(A.can_hijack)
+						if(A.can_hijack == HIJACK_HIJACKER)
 							hijacker_present = TRUE
+							prevent = FALSE
+							break //If we have both prevent and hijacker antags assume we want to hijack.
+						else if(A.can_hijack == HIJACK_PREVENT)
+							prevent = TRUE
+					if(prevent)
+						return FALSE
+
 	
 	return has_people && hijacker_present
 
