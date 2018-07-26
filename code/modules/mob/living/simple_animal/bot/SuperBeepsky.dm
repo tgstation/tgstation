@@ -1,0 +1,156 @@
+/mob/living/simple_animal/bot/secbot/grievous //This bot is powerful. If you managed to get 4 eswords somehow, you deserve this horror. Emag him for best results.
+	name = "General Beepsky"
+	desc = "Is that a secbot with four eswords in its arms...?"
+	icon = 'icons/mob/aibots.dmi'
+	icon_state = "grievous0"
+	health = 150
+	maxHealth = 150
+	baton_type = /obj/item/melee/transforming/energy/sword
+	var/obj/item/melee/transforming/energy/sword/weapon = new
+	var/block_chance = 50
+	base_speed = 4 //he's a fast fucker
+
+/mob/living/simple_animal/bot/secbot/grievous/bullet_act(obj/item/projectile/P)
+	if(prob(block_chance))
+		visible_message("[src] deflects [user]'s attack with his energy swords!")
+		playsound(loc, 'sound/weapons/blade1.ogg', 50, 1, -1)
+		return 0
+	else
+		. = ..()
+
+
+
+/mob/living/simple_animal/bot/secbot/grievous/Crossed(atom/movable/AM)
+	if(has_gravity() && ismob(AM) && target)
+		var/mob/living/carbon/C = AM
+		if(!istype(C) || !C || in_range(src, target))
+			return
+		knockOver(C)
+		return
+	if(ismob(AM) && AM == target)
+		visible_message("[src] flails his swords and cuts [AM]!")
+		playsound(loc,'sound/effects/beepskyspinsabre.ogg',100,1,-1)
+		stun_attack(AM)
+		return
+	..()
+
+/mob/living/simple_animal/bot/secbot/grievous/turn_on()
+	..()
+	icon_state = "grievous[on]"
+
+/mob/living/simple_animal/bot/secbot/grievous/turn_off()
+	..()
+	icon_state = "grievous[on]"
+
+/mob/living/simple_animal/bot/secbot/grievous/update_onsprite()
+	icon_state = "grievous[on]"
+
+/mob/living/simple_animal/bot/secbot/grievous/Initialize()
+	. = ..()
+	weapon.attack_self(src)
+	weapon.active = TRUE
+	icon_state = "grievous[on]"
+
+/mob/living/simple_animal/bot/secbot/grievous/attack_hand(mob/living/carbon/human/H)
+	if((H.a_intent == INTENT_HARM) || (H.a_intent == INTENT_DISARM))
+		if(mode == BOT_HUNT) //If he already has his swords out
+			retaliate(H)
+			if(prob(block_chance))
+				visible_message("[src] deflects [H]'s attack with his energy swords!")
+				playsound(loc, 'sound/weapons/blade1.ogg', 50, 1, -1)
+				return 0
+
+	return ..()
+
+/mob/living/simple_animal/bot/secbot/grievous/attackby(obj/item/W, mob/user, params)
+	..()
+	if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
+		return
+	if(!istype(W, /obj/item/screwdriver) && (W.force) && (!target) && (W.damtype != STAMINA) )
+		retaliate(user)
+		if(prob(block_chance))
+			visible_message("[src] deflects [user]'s attack with his energy swords!")
+			playsound(loc, 'sound/weapons/blade1.ogg', 50, 1, -1)
+			return 0
+
+/mob/living/simple_animal/bot/secbot/grievous/stun_attack(mob/living/carbon/C) //Criminals don't deserve to live
+//	playsound(loc, 'sound/weapons/blade1.ogg', 50, 1, -1)
+	weapon.attack(C, src)
+	playsound(loc, 'sound/weapons/blade1.ogg', 50, 1, -1)
+	if(C.stat == DEAD)
+		addtimer(CALLBACK(src, .proc/update_onsprite), 2)
+		back_to_idle()
+
+
+/mob/living/simple_animal/bot/secbot/grievous/handle_automated_action()
+	if(!on)
+		return
+	switch(mode)
+		if(BOT_IDLE)		// idle
+			update_onsprite()
+			walk_to(src,0)
+			look_for_perp()	// see if any criminals are in range
+			if(!mode && auto_patrol)	// still idle, and set to patrol
+				mode = BOT_START_PATROL	// switch to patrol mode
+		if(BOT_HUNT)		// hunting for perp
+			icon_state = "grievous-c"
+			playsound(loc,'sound/effects/beepskyspinsabre.ogg',100,1,-1)
+			// general beepsky doesn't give up so easily, jedi scum
+			if(frustration >= 20)
+				walk_to(src,0)
+				back_to_idle()
+				return
+			if(target)		// make sure target exists
+				if(Adjacent(target) && isturf(target.loc))	// if right next to perp
+					stun_attack(target)
+				//	mode = BOT_PREP_ARREST
+					anchored = TRUE
+					target_lastloc = target.loc
+					return
+				else								// not next to perp
+					var/turf/olddist = get_dist(src, target)
+					walk_to(src, target,1,4)
+					if((get_dist(src, target)) >= (olddist))
+						frustration++
+					else
+						frustration = 0
+			else
+				back_to_idle()
+
+		if(BOT_START_PATROL)
+			look_for_perp()
+			start_patrol()
+
+		if(BOT_PATROL)
+			look_for_perp()
+			bot_patrol()
+
+/mob/living/simple_animal/bot/secbot/grievous/look_for_perp()
+	anchored = FALSE
+	var/judgement_criteria = judgement_criteria()
+	for (var/mob/living/carbon/C in view(7,src)) //Let's find us a criminal
+		if((C.stat) || (C.handcuffed))
+			continue
+
+		if((C.name == oldtarget_name) && (world.time < last_found + 100))
+			continue
+
+		threatlevel = C.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
+
+		if(!threatlevel)
+			continue
+
+		else if(threatlevel >= 4)
+			target = C
+			oldtarget_name = C.name
+			speak("Level [threatlevel] infraction alert!")
+			playsound(loc, pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg'), 50, 0)
+			playsound(loc,'sound/weapons/saberon.ogg',50,1,-1)
+			visible_message("[src] ignites his energy swords!")
+			icon_state = "grievous-c"
+			visible_message("<b>[src]</b> points at [C.name]!")
+			mode = BOT_HUNT
+			INVOKE_ASYNC(src, .proc/handle_automated_action)
+			break
+		else
+			continue

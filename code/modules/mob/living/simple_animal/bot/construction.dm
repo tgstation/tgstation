@@ -379,6 +379,7 @@
 	icon_state = "helmet_signaler"
 	item_state = "helmet"
 	created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
+	var/swordamt = 0 //If you're converting it into a grievousbot, how many swords have you attached
 
 /obj/item/bot_assembly/secbot/attackby(obj/item/I, mob/user, params)
 	..()
@@ -441,6 +442,25 @@
 				S.robot_arm = robot_arm
 				qdel(I)
 				qdel(src)
+			if(istype(I, /obj/item/melee/transforming/energy/sword/saber))
+				if(swordamt < 3)
+					if(!user.temporarilyRemoveItemFromInventory(I))
+						return
+					created_name = "General Beepsky"
+					name = "helmet/signaler/prox sensor/robot arm/energy sword assembly"
+					icon_state = "grievous_assembly"
+					to_chat(user, "<span class='notice'>You superglue [I] onto one of [src]'s arm slots.</span>")
+					qdel(I)
+					swordamt ++
+				else
+					if(!can_finish_build(I, user))
+						return
+					to_chat(user, "<span class='notice'>You complete the Securitron!...Something seems a bit wrong with it..?</span>")
+					var/mob/living/simple_animal/bot/secbot/grievous/S = new(Tsec)
+					S.name = created_name
+					S.robot_arm = robot_arm
+					qdel(I)
+					qdel(src)
 
 			else if(istype(I, /obj/item/screwdriver)) //deconstruct
 				cut_overlay("hs_arm")
@@ -448,3 +468,8 @@
 				robot_arm = null
 				to_chat(user, "<span class='notice'>You remove [dropped_arm] from [src].</span>")
 				build_step--
+				if(swordamt > 0 || swordamt)
+					icon_state = initial(icon_state)
+					to_chat(user, "<span class='notice'>The superglue binding [src]'s energy swords to its chassis snaps!</span>")
+					for(var/IS = 1 to swordamt)
+						new /obj/item/melee/transforming/energy/sword/saber(src.loc)
