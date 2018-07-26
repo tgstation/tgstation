@@ -12,7 +12,7 @@
 
 /mob/living/simple_animal/bot/secbot/grievous/bullet_act(obj/item/projectile/P)
 	if(prob(block_chance))
-		visible_message("[src] deflects [user]'s attack with his energy swords!")
+		visible_message("[src] deflects [P] with its energy swords!")
 		playsound(loc, 'sound/weapons/blade1.ogg', 50, 1, -1)
 		return 0
 	else
