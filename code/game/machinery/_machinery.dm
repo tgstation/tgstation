@@ -239,11 +239,6 @@ Class Procs:
 		user.set_machine(src)
 	. = ..()
 
-/obj/machinery/ui_status(mob/user)
-	if(can_interact(user))
-		return ..()
-	return UI_CLOSE
-
 /obj/machinery/ui_act(action, params)
 	add_fingerprint(usr)
 	return ..()
