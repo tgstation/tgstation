@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "Pubbystation: Medbay and Cargo now have a techfab instead of protolathe."

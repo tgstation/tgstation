@@ -146,9 +146,6 @@ GLOBAL_PROTECT(href_token)
 			return 1 //we have all the rights they have and more
 	return 0
 
-/datum/admins/can_vv_get(var_name, var_value)
-	return FALSE //nice try trialmin
-
 /datum/admins/vv_edit_var(var_name, var_value)
 	return FALSE //nice try trialmin
 

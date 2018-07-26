@@ -50,7 +50,7 @@
 	scan_action = new
 	potion_action = new
 	stored_slimes = list()
-	listener = AddComponent(/datum/component/redirect, COMSIG_ATOM_CONTENTS_DEL, CALLBACK(src, .proc/on_contents_del))
+	listener = AddComponent(/datum/component/redirect, list(COMSIG_ATOM_CONTENTS_DEL = CALLBACK(src, .proc/on_contents_del)))
 
 /obj/machinery/computer/camera_advanced/xenobio/Destroy()
 	stored_slimes = null

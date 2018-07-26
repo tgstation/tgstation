@@ -51,6 +51,10 @@
 		pixel_x += round((sin(angle_override)+16*sin(angle_override)*2), 1)
 		pixel_y += round((cos(angle_override)+16*cos(angle_override)*2), 1)
 
-/obj/effect/projectile_lighting/Initialize(mapload, color, range, intensity)
+/obj/effect/projectile_lighting
+	var/owner
+
+/obj/effect/projectile_lighting/Initialize(mapload, color, range, intensity, owner_key)
 	. = ..()
 	set_light(range, intensity, color)
+	owner = owner_key
