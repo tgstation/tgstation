@@ -98,7 +98,7 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	slowdown = 2
 	bullet_sizzle = TRUE
-	footstep_sound = FOOTSTEP_SAND
+	footstep = FOOTSTEP_SAND
 
 /turf/open/floor/grass/snow/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
