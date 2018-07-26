@@ -1234,6 +1234,9 @@
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/machinery/light/small/built{
+	dir = 4
+	},
 /turf/open/floor/plasteel/blue/corner,
 /area/shuttle/abandoned/crew)
 "bV" = (
@@ -1442,9 +1445,6 @@
 	},
 /area/shuttle/abandoned/bridge)
 "cj" = (
-/obj/machinery/light/built{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -1680,6 +1680,9 @@
 	pixel_x = 24
 	},
 /obj/structure/spider/stickyweb,
+/obj/machinery/light/small/built{
+	dir = 4
+	},
 /turf/open/floor/plasteel/blue/corner{
 	dir = 4
 	},
@@ -2425,8 +2428,9 @@
 /obj/item/stack/sheet/glass{
 	amount = 10
 	},
+/obj/item/storage/box/lights/bulbs,
 /obj/item/stack/sheet/mineral/plasma{
-	amount = 20
+	amount = 10
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
