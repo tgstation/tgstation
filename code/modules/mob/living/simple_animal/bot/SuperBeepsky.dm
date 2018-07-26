@@ -174,6 +174,6 @@
 
 	do_sparks(3, TRUE, src)
 	for(var/IS = 0 to 4)
-		new /obj/item/melee/transforming/energy/sword/saber(src.loc)
+		new /obj/item/melee/transforming/energy/sword/saber(Tsec)
 	new /obj/effect/decal/cleanable/oil(loc)
 	..()

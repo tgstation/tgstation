@@ -472,4 +472,4 @@
 					icon_state = initial(icon_state)
 					to_chat(user, "<span class='notice'>The superglue binding [src]'s energy swords to its chassis snaps!</span>")
 					for(var/IS = 0 to swordamt)
-						new /obj/item/melee/transforming/energy/sword/saber(src.loc)
+						new /obj/item/melee/transforming/energy/sword/saber(Tsec)
