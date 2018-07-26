@@ -29,6 +29,15 @@
 		update_movespeed(FALSE)
 	return TRUE
 
+/mob/vv_edit_var(var_name, var_value)
+	var/slowdown_edit = var_name == NAMEOF(src, cached_legacy_slowdown)
+	var/diff
+	if(slowdown_edit && isnum(cached_legacy_slowdown) && isnum(var_value))
+		diff = cached_legacy_slowdown - var_value
+	. = ..()
+	if(. && slowdown_edit && isnum(diff))
+		add_movespeed_modifier(MOVESPEED_ID_ADMIN_VAREDIT, TRUE, 100, override = TRUE, legacy_slowdown = diff)
+
 /mob/proc/has_movespeed_modifier(id)
 	return LAZYACCESS(movespeed_modification, id)
 

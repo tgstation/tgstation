@@ -277,15 +277,6 @@
 		act = "me"
 	..(act, m_type, message)
 
-/mob/living/simple_animal/vv_edit_var(var_name, var_value)
-	if(var_name == NAMEOF(src, speed))
-		if(isnum(var_value))
-			var/diff = speed - var_value
-			add_movespeed_modifier(MOVESPEED_ID_SIMPLEMOB_ADMIN, TRUE, 100, legacy_slowdown = diff, override = TRUE)
-		return ..()
-	else
-		return ..()
-
 /mob/living/simple_animal/proc/set_varspeed(var_value)
 	speed = var_value
 	update_simplemob_varspeed()
