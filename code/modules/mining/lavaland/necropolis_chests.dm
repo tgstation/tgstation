@@ -992,7 +992,7 @@
 	used = TRUE
 
 	var/list/da_list = list()
-    for(var/mob/living/M in view(src, 7))
+	for(var/mob/living/M in view(src, 7))
     	if(ishuman(M) && M.client))
         	da_list[M.real_name] = M
 
