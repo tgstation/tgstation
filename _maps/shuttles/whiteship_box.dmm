@@ -1182,10 +1182,6 @@
 	dir = 9
 	},
 /area/shuttle/abandoned/bridge)
-"bL" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/abandoned/medbay)
 "bM" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -2704,7 +2700,7 @@ aa
 at
 cr
 cy
-at
+as
 aa
 aa
 aa
@@ -2757,7 +2753,7 @@ aF
 aW
 bq
 at
-bL
+ah
 at
 cu
 cB
