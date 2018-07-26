@@ -753,7 +753,7 @@
 
 	var/datum/netdata/data = new
 	data.recipient_ids = splittext(target_address, ";")
-	data.standard_format_data(message, text, assembly ? assembly.access_card.access : null)
+	data.standard_format_data(message, text, assembly ? strtohex(XorEncrypt(json_encode(assembly.access_card.access), SScircuit.cipherkey)) : null)
 	ntnet_send(data)
 
 /obj/item/integrated_circuit/input/ntnet_receive(datum/netdata/data)
