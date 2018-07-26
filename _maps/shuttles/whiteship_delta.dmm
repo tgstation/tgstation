@@ -642,6 +642,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/crew)
 "ba" = (
@@ -2007,6 +2010,7 @@
 /obj/machinery/airalarm/all_access{
 	pixel_y = 24
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/medbay)
 "cW" = (
@@ -2289,6 +2293,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/medbay)
 "dq" = (
