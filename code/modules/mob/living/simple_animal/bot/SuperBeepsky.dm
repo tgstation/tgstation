@@ -154,3 +154,26 @@
 			break
 		else
 			continue
+
+
+/mob/living/simple_animal/bot/secbot/grievous/explode()
+
+	walk_to(src,0)
+	visible_message("<span class='boldannounce'>[src] lets out a huge cough as it blows apart!</span>")
+	var/atom/Tsec = drop_location()
+
+	var/obj/item/bot_assembly/secbot/Sa = new (Tsec)
+	Sa.build_step = 1
+	Sa.add_overlay("hs_hole")
+	Sa.created_name = name
+	new /obj/item/assembly/prox_sensor(Tsec)
+	drop_part(baton_type, Tsec)
+
+	if(prob(50))
+		drop_part(robot_arm, Tsec)
+
+	do_sparks(3, TRUE, src)
+	for(var/IS = 0 to 4)
+		new /obj/item/melee/transforming/energy/sword/saber(src.loc)
+	new /obj/effect/decal/cleanable/oil(loc)
+	..()
