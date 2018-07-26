@@ -38,12 +38,12 @@
 #define FUSION_ENERGY_DIVISOR_MID			10
 #define FUSION_ENERGY_DIVISOR_LOW			2
 #define FUSION_GAS_CREATION_FACTOR_TRITIUM	0.40 	//trit - one gas rather than two, so think about that when calculating stuff - 40% in total
-#define FUSION_GAS_CREATION_FACTOR_STIM		0.10	//stim percentage creation from high tier - 10%, 60% in total with pluox
-#define FUSION_GAS_CREATION_FACTOR_PLUOX    0.50	//pluox percentage creation from high tier - 50%, 60% in total with stim
+#define FUSION_GAS_CREATION_FACTOR_STIM		0.05	//stim percentage creation from high tier - 5%, 60% in total with pluox
+#define FUSION_GAS_CREATION_FACTOR_PLUOX    0.55	//pluox percentage creation from high tier - 55%, 60% in total with stim
 #define FUSION_GAS_CREATION_FACTOR_NITRYL	0.20 	//nitryl and N2O - 80% in total
 #define FUSION_GAS_CREATION_FACTOR_N2O		0.60 	//nitryl and N2O - 80% in total
-#define FUSION_GAS_CREATION_FACTOR_BZ		0.15 	//BZ - 15% - 90% in total with CO2
-#define FUSION_GAS_CREATION_FACTOR_CO2		0.75 	//CO2 - 75% - 90% in total with BZ
+#define FUSION_GAS_CREATION_FACTOR_BZ		0.05 	//BZ - 5% - 90% in total with CO2
+#define FUSION_GAS_CREATION_FACTOR_CO2		0.85 	//CO2 - 85% - 90% in total with BZ
 #define FUSION_MID_TIER_RAD_PROB_FACTOR		2		//probability of radpulse is power ratio * this for whatever tier
 #define FUSION_LOW_TIER_RAD_PROB_FACTOR		5
 #define FUSION_EFFICIENCY_BASE				60		//used in the fusion efficiency calculations
@@ -61,6 +61,10 @@
 #define FUSION_ZAP_RANGE_HIGH				7
 #define FUSION_ZAP_RANGE_MID				5
 #define FUSION_ZAP_RANGE_LOW				3
+#define FUSION_PARTICLE_FACTOR_SUPER		4		//# of particles fired out is equal to rand(2,5)
+#define FUSION_PARTICLE_FACTOR_HIGH			3
+#define FUSION_PARTICLE_FACTOR_MID			2
+#define FUSION_PARTICLE_FACTOR_LOW			1
 
 /proc/init_gas_reactions()
 	var/list/reaction_types = list()
@@ -282,10 +286,29 @@
 	//Random color time!
 	var/our_color = pick(particle_colors)
 	add_atom_colour(particle_colors[our_color], FIXED_COLOUR_PRIORITY)
+	set_light(3, 1, particle_colors[our_color]) //Range of 3, brightness of 1 - A little bit less than a flashlight
 
 /obj/item/projectile/nuclear_particle/on_hit(atom/target)
 	if(target && isliving(target))
 		target.rad_act(radiation_strength)
+
+/atom/proc/fire_nuclear_particles(power_ratio) //used by fusion to fire random # of nuclear particles - power ratio determines about how many are fired
+	var/random_particles = rand(2,5)
+	var/particles_to_fire
+	switch(power_ratio) //multiply random_particles * factor for whatever tier
+		if(0 to FUSION_MID_TIER_THRESHOLD)
+			particles_to_fire = random_particles * FUSION_PARTICLE_FACTOR_LOW
+		if(FUSION_MID_TIER_THRESHOLD to FUSION_HIGH_TIER_THRESHOLD)
+			particles_to_fire = random_particles * FUSION_PARTICLE_FACTOR_MID
+		if(FUSION_HIGH_TIER_THRESHOLD to FUSION_SUPER_TIER_THRESHOLD)
+			particles_to_fire = random_particles * FUSION_PARTICLE_FACTOR_HIGH
+		if(FUSION_SUPER_TIER_THRESHOLD to INFINITY)
+			particles_to_fire = random_particles * FUSION_PARTICLE_FACTOR_SUPER
+	while(particles_to_fire)
+		var/angle = rand(0, 360)
+		var/obj/item/particle/nuclear_particle/P = new /obj/item/projectile/nuclear_particle(src)
+		addtimer(CALLBACK(P, .proc/fire, angle), 2) //delay each particle firing by 2 deciseconds
+		particles_to_fire--
 
 //the actual fusion reaction
 /datum/gas_reaction/fusion
@@ -340,7 +363,7 @@
 		if (location) //It's going to happen regardless of whether you want it to or not
 			radiation_pulse(location, radiation_power * 2)
 			explosion(location,0,1,6,power_ratio,TRUE,TRUE)//A decent explosion with a huge shockwave. People WILL know you're doing fusion.
-			tesla_zap(location, FUSION_ZAP_RANGE_SUPER, zap_power) //LIGHTNING BOLT! LIGHTNING BOLT!
+			tesla_zap(location, FUSION_ZAP_RANGE_SUPER, zap_power) //larpers beware
 			playsound(location, 'sound/effects/supermatter.ogg', FUSION_VOLUME_SUPER, 0)
 
 	else if (power_ratio > FUSION_HIGH_TIER_THRESHOLD) //power ratio 20-50; High tier. Fuses into one big atom which then turns to tritium instantly. Very dangerous, but super cool.
@@ -389,6 +412,9 @@
 				playsound(location, 'sound/effects/phasein.ogg', FUSION_VOLUME_LOW, 0)
 			tesla_zap(location, FUSION_ZAP_RANGE_LOW, zap_power)
 	cached_results[id] = power_ratio
+	//Other effects not necessarily specific to each tier
+	if (location)
+		location.fire_nuclear_particles(power_ratio)
 
 	if(reaction_energy > 0)
 		var/new_heat_capacity = air.heat_capacity()
