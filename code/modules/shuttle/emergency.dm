@@ -245,7 +245,7 @@
 
 /obj/docking_port/mobile/emergency/proc/is_hijacked()
 	var/has_people = FALSE
-
+	var/hijacker_present = FALSE
 	for(var/mob/living/player in GLOB.player_list)
 		if(player.mind)
 			if(player.stat != DEAD)
@@ -258,10 +258,23 @@
 				if(shuttle_areas[get_area(player)])
 					has_people = TRUE
 					var/location = get_turf(player.mind.current)
+					//Non-antag present. Can't hijack.
 					if(!(player.mind.has_antag_datum(/datum/antagonist)) && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						return FALSE
+					//Antag present, doesn't stop but let's see if we actually want to hijack
+					var/prevent = FALSE
+					for(var/datum/antagonist/A in player.mind.antag_datums)
+						if(A.can_hijack == HIJACK_HIJACKER)
+							hijacker_present = TRUE
+							prevent = FALSE
+							break //If we have both prevent and hijacker antags assume we want to hijack.
+						else if(A.can_hijack == HIJACK_PREVENT)
+							prevent = TRUE
+					if(prevent)
+						return FALSE
 
-	return has_people
+	
+	return has_people && hijacker_present
 
 /obj/docking_port/mobile/emergency/proc/ShuttleDBStuff()
 	set waitfor = FALSE
