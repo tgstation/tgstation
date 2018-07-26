@@ -69,13 +69,15 @@
 			return FALSE
 		else
 			return ..()
-
+	else
+		return ..()
 
 /mob/living/simple_animal/bot/secbot/grievous/proc/try_block()
-	if(prob(block_chance))
-		visible_message("[src] deflects the attack with his energy swords!")
-		playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE,-1)
-		return TRUE
+	if(mode == BOT_HUNT)
+		if(prob(block_chance))
+			visible_message("[src] deflects the attack with his energy swords!")
+			playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE,-1)
+			return TRUE
 	else
 		return FALSE
 
