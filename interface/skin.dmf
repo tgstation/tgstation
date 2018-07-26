@@ -1,5 +1,6 @@
 macro "default"
 
+
 menu "menu"
 	elem 
 		name = "&File"
@@ -49,13 +50,12 @@ menu "menu"
 window "mainwindow"
 	elem "mainwindow"
 		type = MAIN
-		pos = 0,0
+		pos = 281,0
 		size = 640x440
 		anchor1 = none
 		anchor2 = none
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
-		icon = 'icons\\ss13_64.png'
 		macro = "default"
 		menu = "menu"
 	elem "split"
@@ -128,7 +128,7 @@ window "mainwindow"
 window "mapwindow"
 	elem "mapwindow"
 		type = MAIN
-		pos = 0,0
+		pos = 281,0
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
@@ -142,7 +142,6 @@ window "mapwindow"
 		anchor2 = 100,100
 		font-family = "Arial"
 		font-size = 7
-		text-color = none
 		is-default = true
 		saved-params = "icon-size"
 		zoom-mode = distort
@@ -150,7 +149,7 @@ window "mapwindow"
 window "infowindow"
 	elem "infowindow"
 		type = MAIN
-		pos = 0,0
+		pos = 281,0
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
@@ -159,7 +158,7 @@ window "infowindow"
 	elem "info"
 		type = CHILD
 		pos = 0,30
-		size = 640x445
+		size = 640x450
 		anchor1 = 0,0
 		anchor2 = 100,100
 		saved-params = "splitter"
@@ -178,7 +177,7 @@ window "infowindow"
 	elem "rules"
 		type = BUTTON
 		pos = 120,5
-		size = 100x20
+		size = 99x20
 		anchor1 = 19,0
 		anchor2 = 34,0
 		saved-params = "is-checked"
@@ -186,7 +185,7 @@ window "infowindow"
 		command = "rules"
 	elem "wiki"
 		type = BUTTON
-		pos = 220,5
+		pos = 219,5
 		size = 100x20
 		anchor1 = 34,0
 		anchor2 = 50,0
@@ -195,7 +194,7 @@ window "infowindow"
 		command = "wiki"
 	elem "forum"
 		type = BUTTON
-		pos = 320,5
+		pos = 319,5
 		size = 100x20
 		anchor1 = 50,0
 		anchor2 = 66,0
@@ -204,8 +203,8 @@ window "infowindow"
 		command = "forum"
 	elem "github"
 		type = BUTTON
-		pos = 420,5
-		size = 100x20
+		pos = 419,5
+		size = 99x20
 		anchor1 = 66,0
 		anchor2 = 81,0
 		saved-params = "is-checked"
@@ -213,7 +212,7 @@ window "infowindow"
 		command = "github"
 	elem "report-issue"
 		type = BUTTON
-		pos = 520,5
+		pos = 518,5
 		size = 100x20
 		anchor1 = 81,0
 		anchor2 = 97,0
@@ -224,7 +223,7 @@ window "infowindow"
 window "outputwindow"
 	elem "outputwindow"
 		type = MAIN
-		pos = 0,0
+		pos = 281,0
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
@@ -253,7 +252,7 @@ window "outputwindow"
 window "statwindow"
 	elem "statwindow"
 		type = MAIN
-		pos = 0,0
+		pos = 281,0
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
@@ -267,4 +266,23 @@ window "statwindow"
 		anchor2 = 100,100
 		is-default = true
 		saved-params = ""
+
+window "window_multiz_lookup"
+	elem "window_multiz_lookup"
+		type = MAIN
+		pos = 281,0
+		size = 384x384
+		anchor1 = none
+		anchor2 = none
+		is-visible = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		title = "Look Upwards"
+		statusbar = false
+	elem "map_multiz_lookup"
+		type = MAP
+		pos = 0,0
+		size = 384x384
+		anchor1 = 0,0
+		anchor2 = 100,100
+		saved-params = "zoom;letterbox;zoom-mode"
 
