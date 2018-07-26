@@ -2001,12 +2001,9 @@
 	pixel_y = 3
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/storage/box/lights/bulbs,
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 10
-	},
-/obj/item/clothing/head/welding{
-	pixel_x = -2;
-	pixel_y = 1
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
