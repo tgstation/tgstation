@@ -53,12 +53,8 @@
 	icon_state = "corgigrey"
 	icon_living = "corgigrey"
 	icon_dead = "corgigrey_dead"
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
-	faction = list("dog")
 	animal_species = /mob/living/simple_animal/pet/dog/corgi/exoticcorgi
-	gold_core_spawnable = FRIENDLY_SPAWN
 	nofur = TRUE
-	collar_type = "corgi"
 
 /mob/living/simple_animal/pet/dog/Initialize()
 	. = ..()
