@@ -169,6 +169,7 @@ SUBSYSTEM_DEF(mapping)
 
 #define INIT_ANNOUNCE(X) to_chat(world, "<span class='boldannounce'>[X]</span>"); log_world(X)
 /datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)
+	. = list()
 	var/start_time = REALTIMEOFDAY
 
 	if (!islist(files))  // handle single-level maps
@@ -206,6 +207,8 @@ SUBSYSTEM_DEF(mapping)
 		var/datum/parsed_map/parsed = loader.load_map(file(full_path), 0, 0, start_z + files[file], no_changeturf = TRUE)
 		if(!parsed?.bounds)
 			errorList |= full_path
+		else
+			. += parsed
 	if(!silent)
 		INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
 

@@ -372,12 +372,3 @@
 	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	if(istype(ears) && !ears.deaf)
 		. = TRUE
-
-/mob/living/carbon/crit_modifier()
-	. = ..()
-	GET_COMPONENT(mood, /datum/component/mood)
-	if(mood)
-		if(mood.sanity >= SANITY_UNSTABLE)
-			. += 5
-		else if(mood.sanity >= SANITY_CRAZY)
-			. += 10

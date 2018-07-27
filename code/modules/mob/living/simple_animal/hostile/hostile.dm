@@ -5,7 +5,8 @@
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //Bitflags. Set to ENVIRONMENT_SMASH_STRUCTURES to break closets,tables,racks, etc; ENVIRONMENT_SMASH_WALLS for walls; ENVIRONMENT_SMASH_RWALLS for rwalls
 	var/atom/target
 	var/ranged = 0
-	var/rapid = 0
+	var/rapid = 0 //How many shots per volley.
+	var/rapid_fire_delay = 2 //Time between rapid fire shots
 	var/projectiletype	//set ONLY it and NULLIFY casingtype var, if we have ONLY projectile
 	var/projectilesound
 	var/casingtype		//set ONLY it and NULLIFY projectiletype, if we have projectile IN CASING
@@ -330,11 +331,11 @@
 		return
 	visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
 
-	if(rapid)
+
+	if(rapid > 1)
 		var/datum/callback/cb = CALLBACK(src, .proc/Shoot, A)
-		addtimer(cb, 1)
-		addtimer(cb, 4)
-		addtimer(cb, 6)
+		for(var/i in 1 to rapid)
+			addtimer(cb, (i - 1)*rapid_fire_delay)
 	else
 		Shoot(A)
 	ranged_cooldown = world.time + ranged_cooldown_time

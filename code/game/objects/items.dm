@@ -295,7 +295,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	pickup(user)
 	add_fingerprint(user)
-	if(!user.put_in_active_hand(src))
+	if(!user.put_in_active_hand(src, FALSE, FALSE))
 		user.dropItemToGround(src)
 
 /obj/item/proc/allow_attack_hand_drop(mob/user)
@@ -317,7 +317,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	pickup(user)
 	add_fingerprint(user)
-	if(!user.put_in_active_hand(src))
+	if(!user.put_in_active_hand(src, FALSE, FALSE))
 		user.dropItemToGround(src)
 
 /obj/item/attack_alien(mob/user)
@@ -579,8 +579,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
 	if(affecting.can_dismember(src))
-		if((sharpness || damtype == BURN) && w_class >= 3)
-			. = force*(w_class-1)
+		if((sharpness || damtype == BURN) && w_class >= WEIGHT_CLASS_NORMAL && force >= 10)
+			. = force * (affecting.get_damage() / affecting.max_damage)
 
 /obj/item/proc/get_dismember_sound()
 	if(damtype == BURN)

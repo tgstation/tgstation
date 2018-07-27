@@ -18,6 +18,7 @@
 	var/ignition_temp = 10 // The amount of heat added to the reagents when this grenade goes off.
 	var/threatscale = 1 // Used by advanced grenades to make them slightly more worthy.
 	var/no_splash = FALSE //If the grenade deletes even if it has no reagents to splash with. Used for slime core reactions.
+	var/casedesc = "This basic model accepts both beakers and bottles. It heats contents by 10°K upon ignition." // Appears when examining empty casings.
 
 /obj/item/grenade/chem_grenade/Initialize()
 	. = ..()
@@ -138,7 +139,7 @@
 		stage = N
 	if(stage == EMPTY)
 		name = "[initial(name)] casing"
-		desc = "A do it yourself [initial(name)]!"
+		desc = "A do it yourself [initial(name)]! [initial(casedesc)]"
 		icon_state = initial(icon_state)
 	else if(stage == WIRED)
 		name = "unsecured [initial(name)]"
@@ -211,10 +212,10 @@
 //Large chem grenades accept slime cores and use the appropriately.
 /obj/item/grenade/chem_grenade/large
 	name = "large grenade"
-	desc = "A custom made large grenade. It affects a larger area."
+	desc = "A custom made large grenade. Larger splash range and increased ignition temperature compared to basic grenades. Fits exotic containers."
+	casedesc = "This casing affects a larger area than the basic model and can fit exotic containers, including slime cores. Heats contents by 25°K upon ignition."
 	icon_state = "large_grenade"
-	allowed_containers = list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/condiment,
-								/obj/item/reagent_containers/food/drinks)
+	allowed_containers = list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/condiment, /obj/item/reagent_containers/food/drinks)
 	affected_area = 5
 	ignition_temp = 25 // Large grenades are slightly more effective at setting off heat-sensitive mixtures than smaller grenades.
 	threatscale = 1.1	// 10% more effective.
@@ -255,21 +256,23 @@
 
 /obj/item/grenade/chem_grenade/cryo // Intended for rare cryogenic mixes. Cools the area moderately upon detonation.
 	name = "cryo grenade"
-	desc = "A custom made cryogenic grenade. It rapidly cools its contents upon detonation."
+	desc = "A custom made cryogenic grenade. Rapidly cools contents upon ignition."
+	casedesc = "Upon ignition, it rapidly cools contents by 100°K. Smaller splash range than regular casings."
 	icon_state = "cryog"
 	affected_area = 2
 	ignition_temp = -100
 
 /obj/item/grenade/chem_grenade/pyro // Intended for pyrotechnical mixes. Produces a small fire upon detonation, igniting potentially flammable mixtures.
 	name = "pyro grenade"
-	desc = "A custom made pyrotechnical grenade. It heats up and ignites its contents upon detonation."
+	desc = "A custom made pyrotechnical grenade. Heats up contents upon ignition."
+	casedesc = "Upon ignition, it rapidly heats contents by 500°K."
 	icon_state = "pyrog"
-	affected_area = 3
 	ignition_temp = 500 // This is enough to expose a hotspot.
 
 /obj/item/grenade/chem_grenade/adv_release // Intended for weaker, but longer lasting effects. Could have some interesting uses.
 	name = "advanced release grenade"
 	desc = "A custom made advanced release grenade. It is able to be detonated more than once. Can be configured using a multitool."
+	casedesc = "This casing is able to detonate more than once. Can be configured using a multitool."
 	icon_state = "timeg"
 	var/unit_spread = 10 // Amount of units per repeat. Can be altered with a multitool.
 
@@ -324,7 +327,7 @@
 
 /obj/item/grenade/chem_grenade/metalfoam
 	name = "metal foam grenade"
-	desc = "Used for emergency sealing of air breaches."
+	desc = "Used for emergency sealing of hull breaches."
 	stage = READY
 
 /obj/item/grenade/chem_grenade/metalfoam/Initialize()
@@ -342,7 +345,7 @@
 
 /obj/item/grenade/chem_grenade/smart_metal_foam
 	name = "smart metal foam grenade"
-	desc = "Used for sealing and reconstruction of air breaches."
+	desc = "Used for emergency sealing of hull breaches, while keeping areas accessible."
 	stage = READY
 
 /obj/item/grenade/chem_grenade/smart_metal_foam/Initialize()

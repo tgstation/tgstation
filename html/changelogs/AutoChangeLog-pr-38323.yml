@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - server: "Added BSQL.dll and updated libmariadb.dll for non-blocking SQL support. See https://github.com/tgstation/BSQL for instructions on building for non-windows systems"

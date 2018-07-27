@@ -33,7 +33,7 @@ FEEDBACK_PASSWORD password
 ## Set to 0 for infinite
 ASYNC_QUERY_TIMEOUT 10
 
-## Time in seconds for blocking queries to execute before alerting a for possible slow query timeout 
+## Time in seconds for blocking queries to execute before slow query timeout 
 ## Set to 0 for infinite
 ## Must be less than or equal to ASYNC_QUERY_TIMEOUT
 BLOCKING_QUERY_TIMEOUT 5

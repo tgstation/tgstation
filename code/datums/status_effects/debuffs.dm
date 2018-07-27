@@ -72,7 +72,7 @@
 	if(prob(20))
 		if(carbon_owner)
 			carbon_owner.handle_dreams()
-		if(prob(10) && owner.health > owner.crit_modifier())
+		if(prob(10) && owner.health > owner.crit_threshold)
 			owner.emote("snore")
 
 /obj/screen/alert/status_effect/asleep
@@ -124,7 +124,7 @@
 		qdel(src)
 
 /datum/status_effect/belligerent/proc/do_movement_toggle(force_damage)
-	var/number_legs = owner.get_num_legs()
+	var/number_legs = owner.get_num_legs(FALSE)
 	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.anti_magic_check() && number_legs)
 		if(force_damage || owner.m_intent != MOVE_INTENT_WALK)
 			if(GLOB.ratvar_awakens)
