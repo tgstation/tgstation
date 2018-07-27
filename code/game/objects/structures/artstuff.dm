@@ -70,11 +70,11 @@ GLOBAL_LIST_INIT(globalBlankCanvases, new(AMT_OF_CANVASES))
 //ARE YOU AWARE THEY CRASH HALF THE SERVER WHEN SOMEONE DRAWS ON THEM...
 //...AND NOBODY CAN FIGURE OUT WHY?
 //THEN GO ON BRAVE TRAVELER
-//TRY TO FIX THEM AND REMOVE THIS CODE (AND THE BLOCK COMMENT)
+//TRY TO FIX THEM AND REMOVE THIS CODE
 /obj/item/canvas/Initialize()
+	..()
 	return INITIALIZE_HINT_QDEL //Delete on creation
 
-/*
 //Find the right size blank canvas
 /obj/item/canvas/proc/getGlobalBackup()
 	. = null
@@ -132,5 +132,4 @@ GLOBAL_LIST_INIT(globalBlankCanvases, new(AMT_OF_CANVASES))
 		user.visible_message("<span class='notice'>[user] cleans the canvas.</span>","<span class='notice'>You clean the canvas.</span>")
 
 
-*/
 #undef AMT_OF_CANVASES
