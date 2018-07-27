@@ -71,7 +71,7 @@ GLOBAL_PROTECT(protected_ranks)
 		if("varedit")
 			flag = R_VAREDIT
 		if("everything","host","all")
-			flag = ALL
+			flag = R_EVERYTHING
 		if("sound","sounds")
 			flag = R_SOUNDS
 		if("spawn","create")
@@ -182,9 +182,12 @@ GLOBAL_PROTECT(protected_ranks)
 			return FALSE
 		var/list/json = json_decode(backup_file)
 		for(var/J in json["ranks"])
+			var/skip
 			for(var/datum/admin_rank/R in GLOB.admin_ranks)
 				if(R.name == "[J]") //this rank was already loaded from txt override
-					continue
+					skip = TRUE
+			if(skip)
+				continue
 			var/datum/admin_rank/R = new("[J]", json["ranks"]["[J]"]["include rights"], json["ranks"]["[J]"]["exclude rights"], json["ranks"]["[J]"]["can edit rights"])
 			if(!R)
 				continue
@@ -266,9 +269,12 @@ GLOBAL_PROTECT(protected_ranks)
 				return
 			backup_file_json = json_decode(backup_file)
 		for(var/J in backup_file_json["admins"])
+			var/skip
 			for(var/A in GLOB.admin_datums + GLOB.deadmins)
 				if(A == "[J]") //this admin was already loaded from txt override
-					continue
+					skip = TRUE
+			if(skip)
+				continue
 			new /datum/admins(rank_names[ckeyEx(backup_file_json["admins"]["[J]"])], ckey("[J]"))
 	#ifdef TESTING
 	var/msg = "Admins Built:\n"
