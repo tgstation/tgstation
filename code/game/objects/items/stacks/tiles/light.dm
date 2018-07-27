@@ -19,12 +19,10 @@
 	else
 		state = 0 //fine
 
-/obj/item/stack/tile/light/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/crowbar))
-		new/obj/item/stack/sheet/metal(user.loc)
-		amount--
-		new/obj/item/stack/light_w(user.loc)
-		if(amount <= 0)
-			qdel(src)
-	else
-		return ..()
+/obj/item/stack/tile/light/crowbar_act(mob/living/user, obj/item/I)
+	new/obj/item/stack/sheet/metal(drop_location())
+	amount--
+	new/obj/item/stack/light_w(drop_location())
+	if(amount <= 0)
+		qdel(src)
+	return TRUE
