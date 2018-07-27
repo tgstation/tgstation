@@ -311,10 +311,11 @@
 		shuttle_id[template] = idnum = 1
 	else
 		idnum = shuttle_id[template]++
-	if(id == initial(id))
-		id = "[id][idnum]"
-	if(name == initial(name) && idnum > 1)
-		name = "[name] [idnum]"
+	if(idnum > 1)
+		if(id == initial(id))
+			id = "[id][idnum]"
+		if(name == initial(name))
+			name = "[name] [idnum]"
 	for(var/i in shuttle_areas)
 		var/area/place = i
 		for(var/obj/machinery/computer/shuttle/comp in place)
