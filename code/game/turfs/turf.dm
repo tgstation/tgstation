@@ -120,6 +120,27 @@
 
 /turf/proc/multiz_turf_new(turf/T, dir)
 
+/turf/proc/zImpact(atom/movable/A, levels = 1)
+	A.visible_message("<span class='danger'>[A] crashes into [src]!</span>")
+	A.onZImpact(src, levels)
+	return TRUE
+
+/turf/proc/can_zFall(atom/movable/A, levels = 1)
+	return FALSE
+
+/turf/proc/zFall(atom/movable/A, levels = 1, force = FALSE)
+	if(!force && (!can_zFall(A, levels) || A.can_zFall(src, levels)))
+		return FALSE
+	var/turf/target = get_step_multiz(src, DOWN)
+	if(!target)
+		return FALSE
+	A.visible_message("<span class='danger'>[A] falls through [src]!</span>")
+	A.zfalling = TRUE
+	A.forceMove(target)
+	A.zfalling = FALSE
+	target.zImpact(A, levels)
+	return TRUE
+
 /turf/proc/handleRCL(obj/item/twohanded/rcl/C, mob/user)
 	if(C.loaded)
 		for(var/obj/structure/cable/LC in src)

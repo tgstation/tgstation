@@ -30,6 +30,13 @@
 	var/atom/movable/pulling
 	var/grab_state = 0
 	var/throwforce = 0
+	var/zfalling = FALSE
+
+/atom/movable/proc/onZImpact(turf/T, levels)
+	return TRUE
+
+/atom/movable/proc/can_zFall(turf/T, levels)
+	return TRUE
 
 /atom/movable/vv_edit_var(var_name, var_value)
 	var/static/list/banned_edits = list("step_x", "step_y", "step_size")

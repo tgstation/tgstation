@@ -36,3 +36,17 @@
 	if(dir != DOWN)
 		return
 	vis_contents += T
+
+/turf/open/openspace/Crossed(atom/movable/AM)
+	. = ..()
+	if(!AM.zfalling)
+		zFall(AM)
+
+/turf/open/openspace/can_zFall(atom/movable/A, levels = 1)
+	..()
+	return TRUE
+
+/turf/open/openspace/zImpact(atom/movable/A, levels = 1)
+	..()
+	. = FALSE
+	INVOKE_ASYNC(src, .proc/zFall, A, ++levels)
