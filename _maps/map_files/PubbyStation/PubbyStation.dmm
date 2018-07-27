@@ -6465,6 +6465,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
+/obj/machinery/ore_silo,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},

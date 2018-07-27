@@ -247,6 +247,12 @@
 		current_user.client.images -= remove_images
 		current_user.client.images += add_images
 
+/obj/machinery/computer/camera_advanced/shuttle_docker/proc/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	if(port && (shuttleId == initial(shuttleId) || override))
+		shuttleId = port.id
+	if(dock)
+		jumpto_ports += dock.id
+
 /mob/camera/aiEye/remote/shuttle_docker
 	visible_icon = FALSE
 	use_static = USE_STATIC_NONE

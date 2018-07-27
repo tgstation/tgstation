@@ -427,14 +427,14 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		for(var/r in SSair.gas_reactions)
 			var/datum/gas_reaction/reaction = r
 
-			var/list/min_reqs = reaction.min_requirements.Copy()
+			var/list/min_reqs = reaction.min_requirements
 			if((min_reqs["TEMP"] && temp < min_reqs["TEMP"]) \
 			|| (min_reqs["ENER"] && ener < min_reqs["ENER"]))
 				continue
-			min_reqs -= "TEMP"
-			min_reqs -= "ENER"
 
 			for(var/id in min_reqs)
+				if (id == "TEMP" || id == "ENER")
+					continue
 				if(!cached_gases[id] || cached_gases[id][MOLES] < min_reqs[id])
 					continue reaction_loop
 			//at this point, all minimum requirements for the reaction are satisfied.
