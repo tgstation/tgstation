@@ -432,3 +432,12 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.ruin_landmarks -= src
 	ruin_template = null
 	. = ..()
+
+/obj/effect/landmark/goal_spawn
+	name = "station goal map spawn"
+
+
+/obj/effect/landmark/goal_spawn/Initialize(mapload)
+	. = ..()
+	GLOB.goal_spawn += loc
+	return INITIALIZE_HINT_QDEL

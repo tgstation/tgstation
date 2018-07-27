@@ -1,0 +1,48 @@
+"a" = (/turf/closed/wall,/area/station_goal)
+"b" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plasteel/dark,/area/station_goal)
+"c" = (/obj/machinery/airalarm{pixel_y = 23},/turf/open/floor/plasteel/darkpurple/corner,/area/station_goal)
+"d" = (/obj/machinery/shieldgen,/turf/open/floor/plasteel/darkpurple/corner,/area/station_goal)
+"e" = (/turf/open/space,/area/space/nearstation)
+"f" = (/obj/machinery/shieldgen,/turf/open/floor/plasteel/darkpurple/side,/area/station_goal)
+"g" = (/obj/machinery/shieldgen,/turf/open/floor/plasteel/darkpurple/corner{icon_state = "darkpurplecorners"; dir = 8},/area/station_goal)
+"h" = (/obj/machinery/power/apc{dir = 1; name = "Vault APC"; areastring = "/area/security/nuke_storage"; pixel_y = 25},/obj/structure/cable/yellow{icon_state = "0-2"},/turf/open/floor/plasteel/darkpurple/corner{icon_state = "darkpurplecorners"; dir = 8},/area/station_goal)
+"i" = (/obj/machinery/satellite/meteor_shield,/turf/open/floor/plasteel/darkpurple/side{icon_state = "darkpurple"; dir = 4},/area/station_goal)
+"j" = (/turf/open/floor/plasteel/darkpurple/side{icon_state = "darkpurple"; dir = 5},/area/station_goal)
+"k" = (/turf/open/floor/plasteel/darkpurple/side,/area/station_goal)
+"l" = (/turf/open/floor/plasteel/darkpurple/side{icon_state = "darkpurple"; dir = 9},/area/station_goal)
+"m" = (/obj/machinery/satellite/meteor_shield,/obj/structure/cable/yellow{icon_state = "1-2"},/turf/open/floor/plasteel/darkpurple/side{icon_state = "darkpurple"; dir = 8},/area/station_goal)
+"n" = (/obj/machinery/satellite/meteor_shield,/obj/machinery/camera{c_tag = "Captain's Office - Emergency Escape"; dir = 4},/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 4},/obj/machinery/light{dir = 8},/turf/open/floor/plasteel/darkpurple/corner{icon_state = "darkpurplecorners"; dir = 4},/area/station_goal)
+"o" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/turf/open/floor/plasteel/darkpurple/side{icon_state = "darkpurple"; dir = 8},/area/station_goal)
+"p" = (/obj/machinery/computer/sat_control,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 6},/turf/open/floor/plasteel/darkpurple,/area/station_goal)
+"q" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/open/floor/plasteel/darkpurple/side{icon_state = "darkpurple"; dir = 4},/area/station_goal)
+"r" = (/obj/machinery/satellite/meteor_shield,/obj/structure/cable/yellow{icon_state = "1-2"},/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 8},/obj/machinery/light{dir = 4},/turf/open/floor/plasteel/darkpurple/corner{icon_state = "darkpurplecorners"; dir = 1},/area/station_goal)
+"s" = (/obj/machinery/satellite/meteor_shield,/turf/open/floor/plasteel/dark,/area/station_goal)
+"t" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/floor/plasteel/darkpurple/side{icon_state = "darkpurple"; dir = 8},/area/station_goal)
+"u" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/open/floor/plasteel/darkpurple,/area/station_goal)
+"v" = (/turf/open/floor/plasteel/darkpurple/side{icon_state = "darkpurple"; dir = 4},/area/station_goal)
+"w" = (/obj/machinery/satellite/meteor_shield,/obj/structure/cable/yellow{icon_state = "1-2"},/turf/open/floor/plasteel/dark,/area/station_goal)
+"x" = (/turf/open/floor/plasteel/dark,/area/station_goal)
+"y" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/floor/plasteel/darkpurple/side{icon_state = "darkpurple"; dir = 5},/area/station_goal)
+"z" = (/obj/structure/lattice,/turf/open/space,/area/space/nearstation)
+"A" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/open/floor/plasteel/darkpurple/side,/area/station_goal)
+"B" = (/obj/structure/cable/yellow{icon_state = "1-2"},/turf/open/floor/plasteel/dark,/area/station_goal)
+"C" = (/obj/machinery/suit_storage_unit/engine,/turf/open/floor/plasteel/dark,/area/station_goal)
+"D" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/mob/living/simple_animal/bot/floorbot,/turf/open/floor/plasteel/dark,/area/station_goal)
+"E" = (/obj/structure/cable/yellow{icon_state = "2-4"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/open/floor/plasteel/dark,/area/station_goal)
+"F" = (/obj/structure/cable/yellow{icon_state = "4-8"},/mob/living/simple_animal/bot/floorbot,/turf/open/floor/plasteel/dark,/area/station_goal)
+"G" = (/obj/structure/rack,/obj/structure/cable/yellow{icon_state = "1-8"},/obj/item/stack/rods/fifty,/obj/item/stack/tile/noslip/thirty,/turf/open/floor/plasteel/dark,/area/station_goal)
+"H" = (/obj/effect/spawner/structure/window,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/floor/plasteel/dark,/area/station_goal)
+"I" = (/obj/structure/cable/yellow{icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/door/airlock/engineering,/turf/open/floor/plasteel/dark,/area/station_goal)
+"J" = (/obj/effect/spawner/structure/window,/turf/open/floor/plasteel/dark,/area/station_goal)
+
+(1,1,1) = {"
+eeezzzeee
+eaabbbaae
+eacdfghae
+zbijklmbz
+eanopqrae
+eastuvwae
+zbxyAlBbz
+eaCDEFGae
+baaHIJaab
+"}

@@ -4,6 +4,7 @@
 /datum/station_goal/station_shield
 	name = "Station Shield"
 	var/coverage_goal = 500
+	var/template_id = "goal_shield"
 
 /datum/station_goal/station_shield/get_report()
 	return {"The station is located in a zone full of space debris.
@@ -17,9 +18,16 @@
 	//Unlock
 	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shield_sat]
 	P.special_enabled = TRUE
+	var/turf/T = pick(GLOB.goal_spawn)
+	var/datum/map_template/goal/template
+	template = SSmapping.goal_templates[template_id]
+	template.load(T, centered = TRUE)
+	qdel(src)
 
-	P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shield_sat_control]
-	P.special_enabled = TRUE
+
+	spawngoal()
+
+	spawngoal()
 
 /datum/station_goal/station_shield/check_completion()
 	if(..())
