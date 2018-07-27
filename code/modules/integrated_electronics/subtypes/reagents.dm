@@ -43,6 +43,10 @@
 	var/smoke_radius = 5
 	var/notified = FALSE
 
+/obj/item/integrated_circuit/reagent/smoke/New()
+	..()
+	set_pin_data(IC_OUTPUT, 2, src)
+
 /obj/item/integrated_circuit/reagent/smoke/on_reagent_change(changetype)
 	//reset warning only if we have reagents now
 	if(changetype == ADD_REAGENT)
@@ -132,6 +136,10 @@
 	var/direction_mode = SYRINGE_INJECT
 	var/transfer_amount = 10
 	var/busy = FALSE
+
+/obj/item/integrated_circuit/reagent/injector/New()
+	..()
+	set_pin_data(IC_OUTPUT, 2, src)
 
 /obj/item/integrated_circuit/reagent/injector/on_reagent_change(changetype)
 	push_vol()
@@ -325,7 +333,9 @@
 	activators = list("push ref" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
-
+/obj/item/integrated_circuit/reagent/storage/New()
+	..()
+	set_pin_data(IC_OUTPUT, 2, src)
 
 /obj/item/integrated_circuit/reagent/storage/do_work()
 	set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
@@ -379,7 +389,6 @@
 	power_draw_per_use = 150
 	complexity = 16
 	spawn_flags = IC_SPAWN_RESEARCH
-
 
 /obj/item/integrated_circuit/reagent/storage/grinder/do_work(ord)
 	switch(ord)
