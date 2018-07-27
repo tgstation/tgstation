@@ -75742,10 +75742,6 @@
 /obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
-"evy" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/space)
 "eEe" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -75914,11 +75910,6 @@
 /obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
-"hiz" = (
-/turf/open/floor/plasteel/purple/corner{
-	dir = 1
-	},
-/area/science/circuit)
 "hkq" = (
 /turf/open/floor/plasteel/caution/corner,
 /area/engine/storage_shared)
@@ -76081,8 +76072,11 @@
 /obj/item/integrated_electronics/debugger,
 /obj/item/integrated_electronics/wirer,
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/whitepurple/side{
-	dir = 5
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/purple/side{
+	dir = 8
 	},
 /area/science/circuit)
 "kfu" = (
@@ -76242,9 +76236,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/server)
-"mfY" = (
-/turf/open/space,
-/area/space/nearstation)
 "mjJ" = (
 /obj/machinery/nuclearbomb/beer{
 	pixel_x = 2;
@@ -76252,6 +76243,11 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"mps" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/space/nearstation)
 "msD" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -76361,8 +76357,9 @@
 /turf/open/floor/plasteel,
 /area/science/circuit)
 "obJ" = (
-/turf/open/floor/plasteel/whitepurple/side{
-	dir = 6
+/turf/open/floor/plasteel/purple/corner{
+	icon_state = "purplecorner";
+	dir = 1
 	},
 /area/science/circuit)
 "obX" = (
@@ -76501,8 +76498,8 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/whitepurple/side{
-	dir = 4
+/turf/open/floor/plasteel/purple/side{
+	dir = 8
 	},
 /area/science/circuit)
 "pMX" = (
@@ -76739,14 +76736,6 @@
 "sJW" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/engine/break_room)
-"sRC" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/purple/corner{
-	dir = 8
-	},
-/area/science/circuit)
 "tih" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
@@ -76764,11 +76753,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"twK" = (
-/turf/open/floor/plasteel/purple/side{
-	dir = 8
-	},
-/area/science/circuit)
 "tDM" = (
 /obj/machinery/door/airlock/engineering/glass/critical{
 	heat_proof = 1;
@@ -76881,7 +76865,6 @@
 /area/science/circuit)
 "uWb" = (
 /obj/structure/grille/broken,
-/obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
 "uYk" = (
@@ -115307,7 +115290,7 @@ ciL
 cgs
 csc
 dvY
-evy
+dxk
 krD
 lsv
 llb
@@ -115827,7 +115810,7 @@ jNV
 jOj
 pGw
 obJ
-hiz
+noG
 noG
 aaa
 aaa
@@ -116081,11 +116064,11 @@ dvY
 aaf
 krD
 krD
-sRC
-twK
-hiz
+krD
+krD
 noG
 noG
+aaa
 aaa
 aaa
 aaa
@@ -116335,13 +116318,13 @@ cpM
 crc
 aaf
 ctl
-aaa
-aaa
-krD
-krD
-noG
-noG
-noG
+lMJ
+lMJ
+lMJ
+lMJ
+lMJ
+lMJ
+lMJ
 aaa
 aaf
 lMJ
@@ -116593,17 +116576,17 @@ crd
 ack
 ack
 aaf
+aav
+aav
 aaf
-aaf
-aaf
-aaf
-aaf
-aaf
+anT
+anT
+anT
 aaf
 lMJ
 aaa
-aaa
-mfY
+lMJ
+aaf
 aaf
 aaf
 anT
@@ -116850,17 +116833,17 @@ cre
 aaa
 ack
 aaa
-aaf
+aav
 aaa
 aaa
-kCz
-kCz
-kCz
+aaa
+aaa
+aaa
 uWb
 kCz
+mps
 kCz
 kCz
-lMJ
 aaf
 aaa
 aqB
