@@ -19,9 +19,9 @@
 /turf/open/Entered(var/mob/living/LM)
 	..()
 	if(footstep && istype(LM))
-		var/factors = LM.get_footstep_factors()
-		if(factors && factors[1])
-			playsound(src, pick(GLOB.footstep[footstep][1]), GLOB.footstep[footstep][2] * factors[1], TRUE, factors[2] + GLOB.footstep[footstep][3])
+		var/mods = LM.get_footstep_modifiers()
+		if(mods && mods[1])
+			playsound(src, pick(GLOB.footstep[footstep][1]), GLOB.footstep[footstep][2] * mods[1], TRUE, GLOB.footstep[footstep][3] + mods[2])
 
 /turf/open/indestructible
 	name = "floor"

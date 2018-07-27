@@ -2,7 +2,7 @@
 	var/step_track = 0
 
 // returns volume factor and extra range addition value
-/mob/living/proc/get_footstep_factors()
+/mob/living/proc/get_footstep_modifiers()
 	if(lying || !canmove || resting || buckled || throwing)
 		return null
 	step_track++

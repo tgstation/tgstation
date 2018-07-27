@@ -1,4 +1,4 @@
-/mob/living/carbon/human/get_footstep_factors()
+/mob/living/carbon/human/get_footstep_modifiers()
 	. = ..()
 	if(!.)
 		return
