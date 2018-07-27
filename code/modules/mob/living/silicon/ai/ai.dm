@@ -327,7 +327,16 @@
 
 /mob/living/silicon/ai/can_interact_with(atom/A)
 	. = ..()
-	return . || (istype(loc, /obj/item/aicard))? (ISINRANGE(A.x, x - interaction_range, x + interaction_range) && ISINRANGE(A.y, y - interaction_range, y + interaction_range)): GLOB.cameranet.checkTurfVis(get_turf(A))
+	if (.)
+		return
+	if (istype(loc, /obj/item/aicard))
+		var/turf/T0 = get_turf(src)
+		var/turf/T1 = get_turf(A)
+		if (!T0 || ! T1)
+			return FALSE
+		return ISINRANGE(T1.x, T0.x - interaction_range, T0.x + interaction_range) && ISINRANGE(T1.y, T0.y - interaction_range, T0.y + interaction_range)
+	else
+		return GLOB.cameranet.checkTurfVis(get_turf(A))
 
 /mob/living/silicon/ai/cancel_camera()
 	view_core()
