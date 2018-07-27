@@ -71,6 +71,9 @@
 
 		new /obj/item/stack/cable_coil(drop_location(), 10)
 		to_chat(user, "<span class='notice'>You cut the cables and dismantle the power terminal.</span>")
+		var/obj/machinery/power/smes/S = master
+		if(istype(S, /obj/machinery/power/smes))
+			S.terminal = null
 		qdel(src)
 
 /obj/machinery/power/terminal/wirecutter_act(mob/living/user, obj/item/I)
