@@ -3283,7 +3283,6 @@
 /obj/machinery/shower{
 	pixel_y = 22
 	},
-/obj/item/soap,
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
 "DY" = (
