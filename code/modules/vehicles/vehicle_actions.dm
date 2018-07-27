@@ -103,6 +103,7 @@
 /datum/action/vehicle/sealed/climb_out
 	name = "Climb Out"
 	desc = "Climb out of your vehicle!"
+	button_icon_state = "car_eject"
 
 /datum/action/vehicle/sealed/climb_out/Trigger()
 	if(..() && istype(vehicle_entered_target))
@@ -110,3 +111,45 @@
 
 /datum/action/vehicle/ridden
 	var/obj/vehicle/ridden/vehicle_ridden_target
+
+/datum/action/vehicle/sealed/remove_key
+	name = "Remove key"
+	desc = "Take your key out of the vehicle's ignition"
+	button_icon_state = "car_dump"
+
+/datum/action/vehicle/sealed/remove_key/Trigger()
+	vehicle_entered_target.remove_key(owner)
+
+//CLOWN CAR ACTION DATUMS
+/datum/action/vehicle/sealed/horn
+	name = "Honk Horn"
+	desc = "Honk your classy horn."
+	button_icon_state = "car_horn"
+	var/hornsound = 'sound/items/carhorn.ogg'
+	var/last_honk_time
+
+/datum/action/vehicle/sealed/horn/Trigger()
+	if(world.time - last_honk_time > 20)
+		vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] loudly honks</span>")
+		to_chat(owner, "<span class='notice'>You press the vehicle's horn.</span>")
+		playsound(vehicle_entered_target, hornsound, 75)
+		last_honk_time = world.time
+
+/datum/action/vehicle/sealed/horn/clowncar/Trigger()
+	if(world.time - last_honk_time > 20)
+		vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] loudly honks</span>")
+		to_chat(owner, "<span class='notice'>You press the vehicle's horn.</span>")
+		last_honk_time = world.time
+		if(vehicle_target.inserted_key)
+			vehicle_target.inserted_key.attack_self(owner) //The key plays a sound
+		else
+			playsound(vehicle_entered_target, hornsound, 75)
+
+/datum/action/vehicle/sealed/DumpKidnappedMobs
+	name = "Dump kidnapped mobs"
+	desc = "Dump all objects and people in your car on the floor."
+	button_icon_state = "car_dump"
+
+/datum/action/vehicle/sealed/DumpKidnappedMobs/Trigger()
+	vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] starts dumping the people inside of it.</span>")
+	vehicle_entered_target.DumpSpecificMobs(VEHICLE_CONTROL_KIDNAPPED)

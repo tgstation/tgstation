@@ -1201,6 +1201,7 @@
 #include "code\modules\antagonists\clockcult\clock_structures\heralds_beacon.dm"
 #include "code\modules\antagonists\clockcult\clock_structures\mania_motor.dm"
 #include "code\modules\antagonists\clockcult\clock_structures\ocular_warden.dm"
+#include "code\modules\vehicles\car.dm"
 #include "code\modules\antagonists\clockcult\clock_structures\ratvar_the_clockwork_justicar.dm"
 #include "code\modules\antagonists\clockcult\clock_structures\taunting_trail.dm"
 #include "code\modules\antagonists\clockcult\clock_structures\wall_gear.dm"
