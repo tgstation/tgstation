@@ -12,7 +12,7 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	if(NOBLOOD in H.dna.species.species_traits) //can't lose blood if your species doesn't have any
 		return
-	else 
+	else
 		quirk_holder.blood_volume -= 0.275
 
 
@@ -260,7 +260,7 @@
 
 /datum/quirk/social_anxiety/on_process()
 	var/nearby_people = 0
-	for(var/mob/living/carbon/human/H in view(5, quirk_holder))
+	for(var/mob/living/carbon/human/H in oview(3, quirk_holder))
 		if(H.client)
 			nearby_people++
 	var/mob/living/carbon/human/H = quirk_holder
