@@ -58,6 +58,15 @@
 
 	return QDEL_HINT_QUEUE
 
+/datum/proc/CalcMemory()
+	. = 24
+	var/list/builtins = list(NAMEOF(src, type) = TRUE, NAMEOF(src, vars) = TRUE, NAMEOF(src, tag) = TRUE, NAMEOF(src, parent_type) = TRUE)
+	for(var/I in vars)
+		if(builtins[I])
+			continue
+		if(vars[I] != initial(vars[I]))
+			. += 8
+
 #ifdef DATUMVAR_DEBUGGING_MODE
 /datum/proc/save_vars()
 	cached_vars = list()
