@@ -158,7 +158,7 @@
 
 /obj/machinery/power/smes/wirecutter_act(mob/living/user, obj/item/I)
 	//disassembling the terminal
-	if(terminal)
+	if(terminal && panel_open)
 		terminal.dismantle(user, I)
 		return TRUE
 
@@ -195,6 +195,7 @@
 /obj/machinery/power/smes/disconnect_terminal()
 	if(terminal)
 		terminal.master = null
+		terminal = null
 		stat |= BROKEN
 
 
