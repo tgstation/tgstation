@@ -289,7 +289,6 @@
 			contained = "\[[contained]\]"
 
 		var/where = "[AREACOORD(location)]"
-		
 		if(carry.my_atom.fingerprintslast)
 			var/mob/M = get_mob_by_key(carry.my_atom.fingerprintslast)
 			var/more = ""
