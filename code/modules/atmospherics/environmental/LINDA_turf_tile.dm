@@ -42,8 +42,7 @@
 
 /turf/open/Destroy()
 	if(active_hotspot)
-		qdel(active_hotspot)
-		active_hotspot = null
+		QDEL_NULL(active_hotspot)
 	// Adds the adjacent turfs to the current atmos processing
 	for(var/T in atmos_adjacent_turfs)
 		SSair.add_to_active(T)
