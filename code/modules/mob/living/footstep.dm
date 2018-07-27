@@ -5,7 +5,10 @@
 /mob/living/proc/get_footstep_factors()
 	if(lying || !canmove || resting || buckled || throwing)
 		return null
-	step_track++
+	if(prob(80))
+		step_track++
+	if(prob(10))
+		step_track++
 	if(step_track > 5)
 		step_track = 0
 	if(step_track % 2)
