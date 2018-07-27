@@ -26196,7 +26196,8 @@
 	id_tag = "GeneticsDoor";
 	name = "Cloning";
 	req_access_txt = "0";
-	req_one_access_txt = "5;9"
+	req_one_access_txt = "5;9";
+	unres_sides = 8
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -27369,14 +27370,6 @@
 	},
 /obj/item/storage/box/bodybags,
 /obj/item/pen,
-/obj/machinery/button/door{
-	desc = "A remote control switch for the genetics doors.";
-	id = "GeneticsDoor";
-	name = "Genetics Exit Button";
-	normaldoorcontrol = 1;
-	pixel_x = 24;
-	pixel_y = 8
-	},
 /turf/open/floor/plasteel/whiteblue/side,
 /area/medical/genetics)
 "btZ" = (

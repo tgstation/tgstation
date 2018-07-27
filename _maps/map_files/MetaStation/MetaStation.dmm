@@ -51982,7 +51982,8 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
-	req_access_txt = "5"
+	req_access_txt = "5";
+	unres_sides = 2
 	},
 /turf/open/floor/plasteel/whiteblue,
 /area/medical/medbay/central)
@@ -51992,7 +51993,8 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
-	req_access_txt = "5"
+	req_access_txt = "5";
+	unres_sides = 2
 	},
 /turf/open/floor/plasteel/whiteblue,
 /area/medical/medbay/central)
@@ -52568,13 +52570,6 @@
 	},
 /area/medical/medbay/central)
 "cis" = (
-/obj/machinery/button/door{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "MedbayFoyer";
-	name = "Medbay Exit Button";
-	normaldoorcontrol = 1;
-	pixel_y = 26
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -60178,7 +60173,8 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "CloningDoor";
 	name = "Cloning Lab";
-	req_access_txt = "5; 68"
+	req_access_txt = "5; 68";
+	unres_sides = 4
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -60612,14 +60608,6 @@
 	},
 /area/medical/medbay/aft)
 "cyV" = (
-/obj/machinery/button/door{
-	desc = "A remote control switch for the cloning door.";
-	id = "CloningDoor";
-	name = "Cloning Exit Button";
-	normaldoorcontrol = 1;
-	pixel_x = -23;
-	pixel_y = 8
-	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 10
 	},

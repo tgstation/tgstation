@@ -22564,14 +22564,6 @@
 	pixel_x = -24;
 	pixel_y = -38
 	},
-/obj/machinery/button/door{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "cloningfoyer";
-	name = "Cloning Doors Control";
-	normaldoorcontrol = 1;
-	pixel_x = -24;
-	pixel_y = -24
-	},
 /obj/structure/closet/crate/freezer/surplus_limbs,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/whiteblue/corner{
@@ -22906,7 +22898,8 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "cloningfoyer";
 	name = "Cloning Lab";
-	req_access_txt = "5"
+	req_access_txt = "5";
+	unres_sides = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -23199,13 +23192,6 @@
 "aXu" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21"
-	},
-/obj/machinery/button/door{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "MedbayFoyer";
-	name = "Medbay Doors Control";
-	normaldoorcontrol = 1;
-	pixel_x = 24
 	},
 /obj/machinery/light{
 	dir = 4
@@ -24005,7 +23991,8 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
-	req_access_txt = "5"
+	req_access_txt = "5";
+	unres_sides = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -24428,7 +24415,8 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
-	req_access_txt = "5"
+	req_access_txt = "5";
+	unres_sides = 8
 	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
