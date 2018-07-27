@@ -1,2 +1,2 @@
-/mob/dead/observer/canZMove(dir, turf/target)
+/mob/dead/observer/canZMove(direction, turf/target)
 	return TRUE

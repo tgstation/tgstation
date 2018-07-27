@@ -393,5 +393,5 @@
 	forceMove(target)
 	return TRUE
 
-/mob/verb/canZMove(dir, turf/target)
+/mob/proc/canZMove(direction, turf/target)
 	return FALSE

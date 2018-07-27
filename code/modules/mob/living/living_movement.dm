@@ -2,4 +2,4 @@
 	return !(movement_type & FLYING)
 
 /mob/living/canZMove(dir, turf/target)
-	return (movement_type & FLYING)
+	return can_zTravel(target, dir) && (movement_type & FLYING)

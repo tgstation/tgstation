@@ -12,10 +12,11 @@
 
 /turf/open/openspace/Initialize()
 	. = ..()
-	setup_multiz()
-	//if(!setup_multiz())
-		//. = INITIALIZE_HINT_QDEL
-		//ChangeTurf(/turf/open/floor/plating)
+	return INITIALIZE_HINT_LATELOAD
+
+/turf/open/openspace/LateInitialize()
+	if(!setup_multiz())
+		ChangeTurf(/turf/open/floor/plating)
 
 /turf/open/openspace/Destroy()
 	vis_contents.Cut()
@@ -42,8 +43,10 @@
 	if(!AM.zfalling)
 		zFall(AM)
 
-/turf/open/openspace/can_zFall(atom/movable/A, levels = 1)
-	..()
+/turf/open/openspace/zPassIn(atom/movable/A, direction, turf/source)
+	return TRUE
+
+/turf/open/openspace/zPassOut(atom/movable/A, direction, turf/destination)
 	return TRUE
 
 /turf/open/openspace/zImpact(atom/movable/A, levels = 1)

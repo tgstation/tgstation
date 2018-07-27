@@ -120,19 +120,27 @@
 
 /turf/proc/multiz_turf_new(turf/T, dir)
 
+//direction is where it's coming from
+/turf/proc/zPassIn(atom/movable/A, direction, turf/source)
+	return (direction == DOWN)
+
+//direction is where it's going to
+/turf/proc/zPassOut(atom/movable/A, direction, turf/destination)
+	return (direction == UP)
+
 /turf/proc/zImpact(atom/movable/A, levels = 1)
 	A.visible_message("<span class='danger'>[A] crashes into [src]!</span>")
 	A.onZImpact(src, levels)
 	return TRUE
 
-/turf/proc/can_zFall(atom/movable/A, levels = 1)
-	return FALSE
+/turf/proc/can_zFall(atom/movable/A, levels = 1, turf/target)
+	return zPassOut(A, DOWN, target) && target.zPassIn(A, UP, src)
 
 /turf/proc/zFall(atom/movable/A, levels = 1, force = FALSE)
-	if(!force && (!can_zFall(A, levels) || A.can_zFall(src, levels)))
-		return FALSE
 	var/turf/target = get_step_multiz(src, DOWN)
 	if(!target)
+		return FALSE
+	if(!force && (!can_zFall(A, levels) || A.can_zFall(src, levels, target)))
 		return FALSE
 	A.visible_message("<span class='danger'>[A] falls through [src]!</span>")
 	A.zfalling = TRUE
