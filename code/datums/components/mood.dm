@@ -25,14 +25,15 @@
 	var/mob/living/owner = parent
 	if(owner.hud_used)
 		modify_hud()
+		var/datum/hud/hud = owner.hud_used
+		hud.show_hud(hud.hud_version)
 
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
 	unmodify_hud()
 	return ..()
 
-/datum/component/mood/proc/print_mood()
-	var/mob/living/owner = parent
+/datum/component/mood/proc/print_mood(mob/user)
 	var/msg = "<span class='info'>*---------*\n<EM>Your current mood</EM>\n"
 	msg += "<span class='notice'>My mental status: </span>" //Long term
 	switch(sanity)
@@ -77,7 +78,7 @@
 			msg += event.description
 	else
 		msg += "<span class='nicegreen'>Nothing special has happened to me lately!<span>\n"
-	to_chat(owner, msg)
+	to_chat(user || parent, msg)
 
 /datum/component/mood/proc/update_mood() //Called whenever a mood event is added or removed
 	mood = 0
@@ -223,7 +224,7 @@
 	screen_obj = new
 	hud.infodisplay += screen_obj
 	RegisterSignal(hud, COMSIG_PARENT_QDELETED, .proc/unmodify_hud)
-	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/print_mood)
+	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
 
 /datum/component/mood/proc/unmodify_hud()
 	if(!screen_obj)
@@ -233,6 +234,9 @@
 	if(hud && hud.infodisplay)
 		hud.infodisplay -= screen_obj
 	QDEL_NULL(screen_obj)
+
+/datum/component/mood/proc/hud_click(location, control, params, mob/user)
+	print_mood(user)
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
