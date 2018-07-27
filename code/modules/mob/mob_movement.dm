@@ -378,7 +378,7 @@
 	if(zMove(DOWN, TRUE))
 		to_chat(src, "<span class='notice'>You move down.</span>")
 
-/mob/verb/zMove(dir, feedback = FALSE)
+/mob/proc/zMove(dir, feedback = FALSE)
 	if(dir != UP && dir != DOWN)
 		return FALSE
 	var/turf/target = get_step_multiz(src, dir)
