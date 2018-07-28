@@ -53,14 +53,23 @@
 			if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, P, null, TRUE, TRUE))
 				qdel(P)
 
-#define ALBUM_DEFINE(id) /obj/item/storage/photo_album/##id/persistence_id = #id
+/obj/item/storage/photo_album/HoS
+	persistence_id = "HoS"
 
-ALBUM_DEFINE(HoS)
-ALBUM_DEFINE(RD)
-ALBUM_DEFINE(HoP)
-ALBUM_DEFINE(Captain)
-ALBUM_DEFINE(CMO)
-ALBUM_DEFINE(QM)
-ALBUM_DEFINE(CE)
+/obj/item/storage/photo_album/RD
+	persistence_id = "RD"
 
-#undef ALBUM_DEFINE
+/obj/item/storage/photo_album/HoP
+	persistence_id = "HoP"
+
+/obj/item/storage/photo_album/Captain
+	persistence_id = "Captain"
+
+/obj/item/storage/photo_album/CMO
+	persistence_id = "CMO"
+
+/obj/item/storage/photo_album/QM
+	persistence_id = "QM"
+
+/obj/item/storage/photo_album/CE
+	persistence_id = "CE"

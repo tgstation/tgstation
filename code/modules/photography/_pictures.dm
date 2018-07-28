@@ -4,21 +4,29 @@
 	var/caption
 	var/icon/picture_image
 	var/icon/picture_icon
-	var/psize_x = 0
-	var/psize_y = 0
+	var/psize_x = 96
+	var/psize_y = 96
 	var/has_blueprints = FALSE
 	var/logpath						//If the picture has been logged this is the path.
 	var/id							//this var is NOT protected because the worst you can do with this that you couldn't do otherwise is overwrite photos, and photos aren't going to be used as attack logs/investigations anytime soon.
 
-/datum/picture/New(name = "picture", desc = "This is a picture. A bugged one. Report it to coderbus!", image, icon, size_x = 96, size_y = 96, bp = FALSE, caption_, autogenerate_icon = FALSE)
-	picture_name = name
-	picture_desc = desc
-	picture_image = image
-	picture_icon = icon
-	psize_x = size_x
-	psize_y = size_y
-	has_blueprints = bp
-	caption = caption_
+/datum/picture/New(name, desc, image, icon, size_x, size_y, bp, caption_, autogenerate_icon)
+	if(!isnull(name))
+		picture_name = name
+	if(!isnull(desc))
+		picture_desc = desc
+	if(!isnull(image))
+		picture_image = image
+	if(!isnull(icon))
+		picture_icon = icon
+	if(!isnull(psize_x))
+		psize_x = size_x
+	if(!isnull(psize_y))
+		psize_y = size_y
+	if(!isnull(bp))
+		has_blueprints = bp
+	if(!isnull(caption_))
+		caption = caption_
 	if(autogenerate_icon && !picture_icon && picture_image)
 		regenerate_small_icon()
 

@@ -24,21 +24,12 @@
 	var/obj/item/disk/holodisk/disk
 	var/sound/custom_sound
 	var/silent = FALSE
-	var/picture_size_x = 1
-	var/picture_size_y = 1
-	var/picture_size_x_min = 0
-	var/picture_size_y_min = 0
-	var/picture_size_x_max = 3
-	var/picture_size_y_max = 3
-
-/obj/item/camera/CheckParts(list/parts_list)
-	..()
-	var/obj/item/camera/C = locate(/obj/item/camera) in contents
-	if(C)
-		pictures_max = C.pictures_max
-		pictures_left = C.pictures_left
-		visible_message("[C] has been imbued with godlike power!")
-		qdel(C)
+	var/picture_size_x = 2
+	var/picture_size_y = 2
+	var/picture_size_x_min = 1
+	var/picture_size_y_min = 1
+	var/picture_size_x_max = 4
+	var/picture_size_y_max = 4
 
 /obj/item/camera/attack_self(mob/user)
 	if(!disk)
@@ -86,9 +77,23 @@
 	..()
 	to_chat(user, "It has [pictures_left] photos left.")
 
+//user can be atom or mob
 /obj/item/camera/proc/can_target(atom/target, mob/user, prox_flag)
-	if(!on || blending || !pictures_left || (!isturf(target) && !isturf(target.loc)) || !((isAI(user) && GLOB.cameranet.checkTurfVis(get_turf(target))) || ((user.client && (get_turf(target) in get_hear(user.client.view, user)) || (get_turf(target) in get_hear(world.view, user))))))
+	if(!on || blending || !pictures_left)
 		return FALSE
+	var/turf/T = get_turf(target)
+	if(!T)
+		return FALSE
+	if(istype(user))
+		if(isAI(user) && !GLOB.cameranet.checkTurfVis(T))
+			return FALSE
+		else if(user.client && !(get_turf(target) in get_hear(user.client.view, user)))
+			return FALSE
+		else if(!(get_turf(target) in get_hear(world.view, user)))
+			return FALSE
+	else					//user is an atom
+		if(!(get_turf(target) in view(world.view, user)))
+			return FALSE
 	return TRUE
 
 /obj/item/camera/afterattack(atom/target, mob/user, flag)
@@ -112,7 +117,7 @@
 	addtimer(CALLBACK(src, .proc/cooldown), cooldown)
 	icon_state = state_off
 
-	INVOKE_ASYNC(src, .proc/captureimage, target, user, flag, picture_size_x, picture_size_y)
+	INVOKE_ASYNC(src, .proc/captureimage, target, user, flag, picture_size_x - 1, picture_size_y - 1)
 
 
 /obj/item/camera/proc/cooldown()
@@ -134,7 +139,7 @@
 		return FALSE
 	size_x = CLAMP(size_x, 0, CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	size_y = CLAMP(size_y, 0, CAMERA_PICTURE_SIZE_HARD_LIMIT)
-	var/list/desc = list()
+	var/list/desc = list("This is a photo of an area of [size_x+1] meters by [size_y+1] meters.")
 	var/ai_user = isAI(user)
 	var/list/seen
 	var/list/viewlist = (user && user.client)? getviewsize(user.client.view) : getviewsize(world.view)
@@ -153,7 +158,8 @@
 			if(locate(/obj/item/areaeditor/blueprints) in T)
 				blueprints = TRUE
 	for(var/i in mobs)
-		desc += camera_get_mobdesc(i)
+		var/mob/M = i
+		desc += M.get_photo_description()
 
 	var/psize_x = (size_x * 2 + 1) * world.icon_size
 	var/psize_y = (size_y * 2 + 1) * world.icon_size
@@ -164,33 +170,9 @@
 	temp.Scale(psize_x, psize_y)
 	temp.Blend(get_icon, ICON_OVERLAY)
 
-	var/datum/picture/P = new("picture", desc.Join(""), temp, null, psize_x, psize_y, blueprints)
+	var/datum/picture/P = new("picture", desc.Join(" "), temp, null, psize_x, psize_y, blueprints)
 	after_picture(user, P, flag)
 	blending = FALSE
-
-/obj/item/camera/proc/camera_get_mobdesc(mob/M)
-	var/list/mob_details = list()
-	if(M.invisibility)
-		if(see_ghosts && isobserver(M))
-			mob_details += "You can also see a g-g-g-g-ghooooost! "
-		else
-			return mob_details
-	var/list/holding = list()
-	if(isliving(M))
-		var/mob/living/L = M
-		var/len = length(L.held_items)
-		if(len)
-			for(var/obj/item/I in L.held_items)
-				if(!holding.len)
-					holding += "They are holding \a [I]"
-				else if(L.held_items.Find(I) == len)
-					holding += ", and \a [I]."
-				else
-					holding += ", \a [I]"
-		holding += "."
-		holding = holding.Join("")
-		mob_details += "You can also see [L] on the photo[L.health < (L.maxHealth * 0.75) ? ", looking a bit hurt":""][holding ? ". [holding]":"."]."
-	return mob_details.Join("")
 
 /obj/item/camera/proc/after_picture(mob/user, datum/picture/picture, proximity_flag)
 	printpicture(user, picture)

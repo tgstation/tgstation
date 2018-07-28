@@ -150,6 +150,22 @@
 			if(prob(I.block_chance*2))
 				return 1
 
+/mob/living/get_photo_description(obj/item/camera/camera)
+	var/list/mob_details = list()
+	var/list/holding = list()
+	var/len = length(held_items)
+	if(len)
+		for(var/obj/item/I in held_items)
+			if(!holding.len)
+				holding += "They are holding \a [I]"
+			else if(held_items.Find(I) == len)
+				holding += ", and \a [I]."
+			else
+				holding += ", \a [I]"
+	holding += "."
+	mob_details += "You can also see [src] on the photo[health < (maxHealth * 0.75) ? ", looking a bit hurt":""][holding ? ". [holding.Join("")]":"."]."
+	return mob_details.Join("")
+
 //Called when we bump onto an obj
 /mob/living/proc/ObjBump(obj/O)
 	return
