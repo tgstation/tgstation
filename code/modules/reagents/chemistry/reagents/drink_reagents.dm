@@ -233,21 +233,6 @@
 	glass_icon_state = "glass_white"
 	glass_name = "glass of soy milk"
 	glass_desc = "White and nutritious soy goodness!"
-	overdose_threshold = 200
-
-/datum/reagent/consumable/soymilk/overdose_process(mob/living/M)
-	if(!ishuman(M))
-		return
-	var/mob/living/carbon/human/H = M
-	if(H.gender == "male")
-		H.gender = "female"
-		H.facial_hair_style = "Shaved"
-		to_chat(H, "<span class='notice'>Too much soy!</span>")
-		H.dna.update_ui_block(DNA_GENDER_BLOCK)
-		H.update_hair()
-		H.update_body()
-		H.update_mutations_overlay() //for male/female hulks
-	..()
 
 /datum/reagent/consumable/soymilk/on_mob_life(mob/living/carbon/M)
 	if(M.getBruteLoss() && prob(20))
