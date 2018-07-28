@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aa" = (
 /obj/effect/baseturf_helper/asteroid/snow,
 /turf/closed/indestructible/rock/snow,
@@ -6786,13 +6786,6 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/snowdin/post/cavern2)
-"qn" = (
-/obj/structure/guncase/shotgun,
-/obj/item/gun/ballistic/shotgun/automatic,
-/obj/item/gun/ballistic/shotgun/automatic,
-/obj/item/gun/ballistic/shotgun/automatic,
-/turf/open/floor/plasteel/dark,
-/area/awaymission/snowdin/post/secpost)
 "qo" = (
 /turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/post/secpost)
@@ -14013,6 +14006,35 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
+"Mk" = (
+/obj/machinery/jukebox,
+/turf/open/floor/mineral/titanium/airless,
+/area/awaymission/snowdin/outside)
+"MC" = (
+/turf/open/floor/mineral/titanium/airless,
+/area/awaymission/snowdin/outside)
+"MW" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/airless,
+/area/awaymission/snowdin/outside)
+"NC" = (
+/obj/machinery/computer{
+	desc = "Some kind of machine.";
+	dir = 8;
+	explosion_block = 0;
+	icon_state = "computer_broken";
+	name = "Broken Computer"
+	},
+/turf/open/floor/mineral/titanium/airless,
+/area/awaymission/snowdin/outside)
+"Oo" = (
+/obj/structure/piano{
+	desc = "How did this get here?"
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave)
 "OF" = (
 /obj/machinery/door/airlock/external{
 	name = "Ready Room";
@@ -14025,6 +14047,14 @@
 	dir = 5
 	},
 /area/awaymission/snowdin/cave)
+"Pn" = (
+/obj/structure/lattice,
+/turf/open/floor/plating/asteroid/snow{
+	floor_variance = 0;
+	icon_state = "snow_dug";
+	slowdown = 1
+	},
+/area/awaymission/snowdin/outside)
 "PR" = (
 /obj/machinery/door/airlock/external{
 	name = "Ready Room";
@@ -14035,6 +14065,31 @@
 	dir = 5
 	},
 /area/awaymission/snowdin/cave)
+"Qi" = (
+/obj/item/instrument/guitar,
+/turf/open/floor/mineral/titanium/airless,
+/area/awaymission/snowdin/outside)
+"Rk" = (
+/obj/item/stack/rods,
+/turf/open/floor/plating/asteroid/snow{
+	floor_variance = 0;
+	icon_state = "snow_dug";
+	slowdown = 1
+	},
+/area/awaymission/snowdin/outside)
+"Rn" = (
+/obj/structure/guncase/shotgun,
+/obj/item/gun/ballistic/shotgun/automatic,
+/turf/open/floor/plasteel/dark,
+/area/awaymission/snowdin/post/secpost)
+"SN" = (
+/obj/item/instrument/piano_synth,
+/turf/open/floor/mineral/titanium/airless,
+/area/awaymission/snowdin/outside)
+"SO" = (
+/obj/item/stack/sheet/mineral/titanium,
+/turf/open/floor/plating/ice/smooth,
+/area/awaymission/snowdin/outside)
 "SX" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -14042,12 +14097,48 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main)
+"TB" = (
+/obj/structure/door_assembly/door_assembly_shuttle,
+/turf/open/floor/plating/asteroid/snow{
+	floor_variance = 0;
+	icon_state = "snow_dug";
+	slowdown = 1
+	},
+/area/awaymission/snowdin/outside)
+"TW" = (
+/obj/structure/table,
+/obj/item/paper/crumpled/awaymissions{
+	info = {"I can't believe this. You know, when I took this internship, I excpected a nice and calming time, playing music in a dinky space bar. Little did I know, the bar would either be completly empty, or there'd be a fucking hole in the middle of it. At least I have my insturments... "}
+	},
+/turf/open/floor/mineral/titanium/airless,
+/area/awaymission/snowdin/outside)
+"Uj" = (
+/obj/structure/guncase/shotgun,
+/obj/item/gun/ballistic/shotgun/automatic,
+/obj/item/gun/ballistic/shotgun/automatic,
+/turf/open/floor/plasteel/dark,
+/area/awaymission/snowdin/post/secpost)
+"UR" = (
+/obj/item/stack/rods,
+/turf/open/floor/mineral/titanium/airless,
+/area/awaymission/snowdin/outside)
+"Vd" = (
+/obj/item/stack/sheet/mineral/titanium,
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/outside)
+"VV" = (
+/turf/closed/wall/mineral/titanium,
+/area/awaymission/snowdin/outside)
 "VW" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
+"WE" = (
+/obj/item/stack/rods,
+/turf/open/floor/plating/ice/smooth,
+/area/awaymission/snowdin/outside)
 "WK" = (
 /turf/open/floor/plating/asteroid/snow/ice,
 /obj/effect/turf_decal/stripes/corner{
@@ -14055,6 +14146,10 @@
 	},
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
+"WO" = (
+/obj/item/instrument/accordion,
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/outside)
 "XO" = (
 /turf/open/floor/plating/asteroid/snow/ice,
 /obj/effect/turf_decal/stripes/line{
@@ -14062,6 +14157,21 @@
 	},
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
+"XT" = (
+/obj/structure/closet/cabinet,
+/obj/item/instrument/violin,
+/obj/item/instrument/saxophone,
+/turf/open/floor/mineral/titanium/airless,
+/area/awaymission/snowdin/outside)
+"XU" = (
+/obj/structure/lattice,
+/obj/item/instrument/glockenspiel,
+/turf/open/floor/plating/asteroid/snow{
+	floor_variance = 0;
+	icon_state = "snow_dug";
+	slowdown = 1
+	},
+/area/awaymission/snowdin/outside)
 "Yn" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -14072,6 +14182,14 @@
 "Ys" = (
 /turf/open/floor/plasteel/elevatorshaft,
 /area/awaymission/snowdin/post/mining_dock)
+"Zc" = (
+/obj/item/stack/sheet/mineral/titanium,
+/turf/open/floor/plating/asteroid/snow{
+	floor_variance = 0;
+	icon_state = "snow_dug";
+	slowdown = 1
+	},
+/area/awaymission/snowdin/outside)
 
 (1,1,1) = {"
 aa
@@ -16744,7 +16862,7 @@ aj
 aj
 tI
 tI
-tI
+ud
 tI
 aj
 aj
@@ -18794,7 +18912,7 @@ ae
 ae
 ae
 aj
-tI
+Oo
 tI
 tI
 ud
@@ -19646,7 +19764,7 @@ af
 af
 af
 af
-fq
+ao
 af
 am
 af
@@ -19902,11 +20020,11 @@ af
 am
 af
 af
+zh
 af
 af
 af
-af
-al
+ao
 af
 af
 af
@@ -20156,13 +20274,13 @@ fq
 af
 af
 af
-fq
+ao
 af
+Co
 af
+zh
 af
-fq
-af
-af
+zh
 af
 af
 af
@@ -20414,16 +20532,16 @@ af
 af
 af
 af
+zh
+zh
 af
 af
+zh
+zh
+zh
+Zc
 af
-af
-af
-af
-af
-af
-af
-fq
+ao
 am
 af
 am
@@ -20626,7 +20744,7 @@ tI
 tI
 tI
 tI
-tQ
+vK
 tI
 tI
 aj
@@ -20670,14 +20788,14 @@ af
 am
 af
 af
+WO
 af
-af
-fq
-af
-ak
-af
-am
-af
+VV
+VV
+VV
+VV
+VV
+VV
 af
 af
 af
@@ -20925,18 +21043,18 @@ af
 af
 af
 af
-fq
+ao
 af
-af
-af
-af
-tN
-tN
-tN
-tN
-tN
-af
-af
+Vd
+zh
+zh
+MC
+MC
+XT
+Mk
+VV
+zh
+zh
 af
 am
 af
@@ -21183,16 +21301,16 @@ af
 af
 af
 af
+zh
+zh
 tN
-tN
-tN
-tN
-tN
-tN
-tN
-tN
-tN
-tN
+Zc
+XU
+MC
+MC
+MC
+VV
+Zc
 tN
 tN
 tN
@@ -21442,16 +21560,16 @@ tN
 tN
 tN
 tN
+Rk
+TB
+MC
+MW
+UR
+Pn
+VV
+SO
 tN
-tN
-tN
-tN
-tN
-tN
-fq
-tN
-tN
-tN
+WE
 tN
 tN
 tN
@@ -21699,14 +21817,14 @@ tN
 tN
 tN
 tN
-tN
-tN
-af
-af
-af
-af
-af
-af
+zh
+VV
+Qi
+NC
+TW
+SN
+MC
+zh
 af
 af
 af
@@ -21956,15 +22074,15 @@ tN
 tN
 tN
 af
+zh
+VV
+VV
+VV
+VV
+VV
+VV
 af
-af
-af
-af
-af
-fq
-af
-af
-am
+zh
 af
 af
 af
@@ -22212,16 +22330,16 @@ af
 af
 af
 af
-am
+zh
 af
+zh
+zh
+zh
+zh
 af
-fq
+zh
 af
-ak
-af
-af
-af
-fq
+ao
 af
 af
 af
@@ -22339,8 +22457,8 @@ oc
 oz
 pi
 pH
-qn
-qn
+Rn
+Uj
 pH
 af
 af
@@ -22477,7 +22595,7 @@ af
 af
 af
 af
-af
+zh
 af
 af
 af
@@ -22725,15 +22843,15 @@ af
 af
 af
 af
-af
-fq
+zh
+ao
 ak
+zh
+af
+Vd
+zh
 af
 af
-af
-af
-af
-fq
 af
 af
 af
@@ -22992,7 +23110,7 @@ af
 af
 af
 af
-af
+Co
 fq
 af
 af
