@@ -166,7 +166,7 @@
 	complexity = number_of_pins
 
 	. = ..()
-	desc += " It has [number_of_pins] input pins and [number_of_pins] output pins."
+	desc += " It has [number_of_pins] pulse in pins and [number_of_pins] output pins."
 	extended_desc += " This pulse multiplexer has a range from 1 to [activators.len - 1]."
 
 /obj/item/integrated_circuit/transfer/pulsemultiplexer/do_work(ord)
