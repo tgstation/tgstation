@@ -307,10 +307,10 @@
 
 /obj/machinery/power/emitter/proc/integrate(obj/item/gun/energy/E,mob/user)
 	if(istype(E, /obj/item/gun/energy))
-		gun = E
 		if(!user.transferItemToLoc(E, src))
 			return
-		gun_properties = E.get_turret_properties()
+		gun = E
+		gun_properties = gun.get_turret_properties()
 		set_projectile()
 		return TRUE
 
