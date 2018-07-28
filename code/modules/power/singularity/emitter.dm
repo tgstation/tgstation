@@ -33,7 +33,10 @@
 	var/projectile_type = /obj/item/projectile/beam/emitter
 	var/projectile_sound = 'sound/weapons/emitter.ogg'
 	var/datum/effect_system/spark_spread/sparks
+
 	var/obj/item/gun/energy/gun
+	var/list/gun_properties
+	var/mode = 0
 
 	// The following 3 vars are mostly for the prototype
 	var/manual = FALSE
@@ -305,15 +308,10 @@
 /obj/machinery/power/emitter/proc/integrate(obj/item/gun/energy/E,mob/user)
 	if(istype(E, /obj/item/gun/energy))
 		gun = E
-		if(!gun.chambered)
-			return
 		if(!user.transferItemToLoc(E, src))
 			return
-		if(!gun.chambered || !gun.chambered.BB)
-			return
-		var/obj/item/ammo_casing/energy/AM = gun.chambered
-		projectile_type = AM.BB.type
-		projectile_sound = AM.fire_sound
+		gun_properties = E.get_turret_properties()
+		set_projectile()
 		return TRUE
 
 /obj/machinery/power/emitter/proc/remove_gun(mob/user)
@@ -322,9 +320,21 @@
 	user.put_in_hands(gun)
 	gun = null
 	playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+	gun_properties = list()
+	set_projectile()
+	return TRUE
+
+/obj/machinery/power/emitter/proc/set_projectile()
+	if(LAZYLEN(gun_properties))
+		if(mode || !gun_properties["lethal_projectile"])
+			projectile_type = gun_properties["stun_projectile"]
+			projectile_sound = gun_properties["stun_projectile_sound"]
+		else
+			projectile_type = gun_properties["lethal_projectile"]
+			projectile_sound = gun_properties["lethal_projectile_sound"]
+		return
 	projectile_type = initial(projectile_type)
 	projectile_sound = initial(projectile_sound)
-	return TRUE
 
 /obj/machinery/power/emitter/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
