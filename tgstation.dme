@@ -14,6 +14,14 @@
 
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
+#include "_maps\RandomRuins\StationRuins\StationGoalCommand.dmm"
+#include "_maps\RandomRuins\StationRuins\StationGoalEngineering.dmm"
+#include "_maps\RandomRuins\StationRuins\StationGoalMedical.dmm"
+#include "_maps\RandomRuins\StationRuins\StationGoalScience.dmm"
+#include "_maps\RandomRuins\StationRuins\StationGoalSecurity.dmm"
+#include "_maps\RandomRuins\StationRuins\StationGoalService.dmm"
+#include "_maps\RandomRuins\StationRuins\StationGoalSyndicate.dmm"
+#include "_maps\RandomRuins\StationRuins\Template.dmm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_globals.dm"
@@ -2507,6 +2515,7 @@
 #include "code\modules\spells\spell_types\wizard.dm"
 #include "code\modules\station_goals\bsa.dm"
 #include "code\modules\station_goals\dna_vault.dm"
+#include "code\modules\station_goals\goals.dm"
 #include "code\modules\station_goals\shield.dm"
 #include "code\modules\station_goals\station_goal.dm"
 #include "code\modules\surgery\amputation.dm"

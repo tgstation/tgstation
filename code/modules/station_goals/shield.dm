@@ -13,7 +13,6 @@
 			 You can order the satellites and control systems at cargo.
 			 "}
 
-
 /datum/station_goal/station_shield/on_report()
 	//Unlock
 	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shield_sat]

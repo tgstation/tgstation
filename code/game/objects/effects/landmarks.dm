@@ -283,7 +283,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 // carp.
 /obj/effect/landmark/carpspawn
-	name = "carpspawn"
+	name = "spawn"
 	icon_state = "carp_spawn"
 
 // observer-start.
@@ -383,6 +383,17 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.tdomeadmin += loc
 	return INITIALIZE_HINT_QDEL
 
+// Station Goal
+
+/obj/effect/landmark/station_goal/
+	name = "station_goal"
+	icon_state = "station_goal"
+
+/obj/effect/landmark/station_goal/Initialize(mapload)
+	..()
+	GLOB.station_goal	+= loc
+	return INITIALIZE_HINT_QDEL
+
 //Servant spawn locations
 /obj/effect/landmark/servant_of_ratvar
 	name = "servant of ratvar spawn"
@@ -403,6 +414,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	..()
 	GLOB.city_of_cogs_spawns += loc
 	return INITIALIZE_HINT_QDEL
+
+
 
 //generic event spawns
 /obj/effect/landmark/event_spawn
