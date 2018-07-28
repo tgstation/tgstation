@@ -144,7 +144,8 @@
 	icon_state = "dmux16"
 	w_class = WEIGHT_CLASS_SMALL
 	number_of_pins = 16
-	/obj/item/integrated_circuit/transfer/pulsemultiplexer
+
+/obj/item/integrated_circuit/transfer/pulsemultiplexer
 	name = "two pulse multiplexer"
 	desc = "Pulse in pins to choose the pin value to be sent."
 	extended_desc = "The input pulses are used to select which of the input pins has its data moved to the output."
