@@ -26,7 +26,7 @@
 /datum/bounty/item/security/pinpointer
 	name = "Nuclear Pinpointer"
 	description = "There's a teeny-tiny itty-bitty chance CentCom may have lost a nuke disk. Can the station spare a pinpointer to help out?"
-	reward = 1500
+	reward = 4500
 	wanted_types = list(/obj/item/pinpointer/nuke)
 
 /datum/bounty/item/security/captains_spare
@@ -38,13 +38,13 @@
 /datum/bounty/item/security/hardsuit
 	name = "Security Hardsuit"
 	description = "Space pirates are heading towards CentCom! Quick! Ship a security hardsuit to aid the fight!"
-	reward = 2000
+	reward = 4000
 	wanted_types = list(/obj/item/clothing/suit/space/hardsuit/security)
 
 /datum/bounty/item/security/krav_maga
 	name = "Krav Maga Gloves"
 	description = "Chef Howerwitz of CentCom is trying to take a kung-fu Pizza out of the oven, but his mitts aren't up to the task. Ship them a pair of Krav Maga gloves to do the job right."
-	reward = 2000
+	reward = 5000
 	wanted_types = list(/obj/item/clothing/gloves/krav_maga)
 
 /datum/bounty/item/security/recharger
@@ -57,6 +57,6 @@
 /datum/bounty/item/security/sabre
 	name = "Officer's Sabre"
 	description = "A 3-hour LARP session will be held at CentCom in the upcoming months. A shipped officer's sabre would make a good prop."
-	reward = 2500
+	reward = 5000
 	wanted_types = list(/obj/item/melee/sabre)
 
