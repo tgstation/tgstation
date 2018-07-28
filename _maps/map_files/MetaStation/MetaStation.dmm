@@ -30296,9 +30296,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bna" = (
@@ -30307,15 +30304,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 2
-	},
-/turf/open/floor/plasteel,
-/area/engine/break_room)
-"bnb" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
@@ -31331,10 +31319,10 @@
 	},
 /area/hallway/primary/starboard)
 "bpg" = (
-/obj/structure/table/reinforced,
-/obj/machinery/microwave{
-	pixel_y = 6
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
 	},
+/obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bph" = (
@@ -31349,6 +31337,13 @@
 	},
 /turf/closed/wall,
 /area/engine/storage_shared)
+"bpj" = (
+/obj/structure/table/reinforced,
+/obj/machinery/microwave{
+	pixel_y = 6
+	},
+/turf/open/floor/plasteel,
+/area/engine/break_room)
 "bpk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
@@ -75901,16 +75896,6 @@
 	dir = 8
 	},
 /area/engine/storage_shared)
-"hfn" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/vending/cigarette,
-/turf/open/floor/plasteel,
-/area/engine/break_room)
-"hkq" = (
-/turf/open/floor/plasteel/caution/corner,
-/area/engine/storage_shared)
 "hvt" = (
 /obj/structure/kitchenspike_frame,
 /obj/effect/decal/cleanable/blood/gibs/old,
@@ -75932,6 +75917,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"hJb" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/storage_shared)
 "hKs" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -75941,6 +75930,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
+"hSE" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/storage_shared)
 "ioI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -75952,6 +75948,14 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"ivS" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel,
+/area/engine/storage_shared)
 "izu" = (
 /obj/machinery/autolathe{
 	name = "public autolathe"
@@ -75987,6 +75991,9 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
+"jnH" = (
+/turf/closed/wall,
+/area/engine/storage_shared)
 "jrE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -76050,6 +76057,15 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"kmA" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/break_room)
 "krD" = (
 /turf/closed/wall,
 /area/science/circuit)
@@ -76191,6 +76207,9 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/server)
+"mic" = (
+/turf/open/floor/plasteel/caution/corner,
+/area/engine/storage_shared)
 "mjJ" = (
 /obj/machinery/nuclearbomb/beer{
 	pixel_x = 2;
@@ -76198,10 +76217,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"msD" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/engine/storage_shared)
 "mvj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -76344,9 +76359,6 @@
 /obj/structure/sign/poster/official/random,
 /turf/closed/wall,
 /area/hydroponics)
-"owR" = (
-/turf/closed/wall,
-/area/engine/storage_shared)
 "oJW" = (
 /obj/structure/sign/poster/random{
 	pixel_y = 32
@@ -76561,15 +76573,6 @@
 	dir = 1
 	},
 /area/science/lab)
-"rCu" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/engine/break_room)
 "rQK" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -76589,14 +76592,6 @@
 /obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"rWg" = (
-/obj/item/twohanded/required/kirbyplants/random,
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
-/turf/open/floor/plasteel,
-/area/engine/storage_shared)
 "sao" = (
 /obj/machinery/vending/tool,
 /obj/effect/turf_decal/bot{
@@ -76614,6 +76609,13 @@
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"szm" = (
+/obj/effect/landmark/event_spawn,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel/caution/corner,
+/area/engine/storage_shared)
 "sFv" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -76712,13 +76714,6 @@
 "urv" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/security/prison)
-"usN" = (
-/obj/effect/landmark/event_spawn,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
-/turf/open/floor/plasteel/caution/corner,
-/area/engine/storage_shared)
 "uun" = (
 /obj/machinery/vending/assist,
 /turf/open/floor/plasteel,
@@ -76874,13 +76869,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"wPB" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/engine/storage_shared)
 "wRy" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -76940,6 +76928,18 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"xIU" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/engine/break_room)
 "xVl" = (
 /turf/closed/wall,
 /area/hallway/secondary/service)
@@ -116934,9 +116934,9 @@ bfQ
 bhU
 bjF
 blk
-bmZ
-hfn
-wPB
+xIU
+bpg
+hSE
 bep
 vzO
 bxd
@@ -117193,8 +117193,8 @@ bjG
 bll
 bna
 kCw
-msD
-hkq
+hJb
+mic
 bve
 bxd
 byS
@@ -117446,11 +117446,11 @@ aWw
 aWw
 aWw
 bhW
-rCu
+kmA
 bjL
-bnb
-owR
-owR
+bmZ
+jnH
+jnH
 gYu
 qdT
 bxd
@@ -117708,7 +117708,7 @@ bln
 bnc
 bph
 iHl
-usN
+szm
 bvg
 bxd
 byU
@@ -118477,10 +118477,10 @@ bia
 fHj
 blo
 bne
-owR
-owR
+jnH
+jnH
 oJW
-rWg
+ivS
 bxc
 byW
 bAG
@@ -118734,10 +118734,10 @@ bib
 bjJ
 blp
 bnf
-bpg
-owR
-owR
-owR
+bpj
+jnH
+jnH
+jnH
 bxd
 byX
 bAH
