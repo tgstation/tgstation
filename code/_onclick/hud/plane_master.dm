@@ -16,6 +16,13 @@
 //Trust me, you need one. Period. If you don't think you do, you're doing something extremely wrong.
 /obj/screen/plane_master/proc/backdrop(mob/mymob)
 
+/obj/screen/plane_master/openspace
+	name = "open space plane master"
+	plane = FLOOR_OPENSPACE_PLANE
+	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_MULTIPLY
+	alpha = 128
+
 /obj/screen/plane_master/floor
 	name = "floor plane master"
 	plane = FLOOR_PLANE

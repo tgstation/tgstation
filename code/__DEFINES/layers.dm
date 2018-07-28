@@ -62,6 +62,9 @@
 #define LARGE_MOB_LAYER 4.4
 #define ABOVE_ALL_MOB_LAYER 4.5
 
+#define FLOOR_OPENSPACE_PLANE 4
+#define FLOOR_OPENSPACE_LAYER 4
+
 #define SPACEVINE_LAYER 4.8
 #define SPACEVINE_MOB_LAYER 4.9
 //#define FLY_LAYER 5 //For easy recordkeeping; this is a byond define
@@ -87,6 +90,7 @@
 
 #define CAMERA_STATIC_PLANE 18
 #define CAMERA_STATIC_LAYER 18
+
 //HUD layer defines
 
 #define FULLSCREEN_PLANE 19
