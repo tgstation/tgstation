@@ -1,0 +1,10 @@
+{
+    "map_name": "Cram Station",
+    "map_path": "map_files/CramStation",
+    "map_file": "cramstation.dmm",
+    "shuttles": {
+	    "emergency": "emergency_cramped",
+	    "ferry": "ferry_fancy",
+	    "cargo": "cargo_birdboat"
+    }
+}

@@ -35,3 +35,7 @@ endmap
 
 map runtimestation
 endmap
+
+map cramstation
+	maxplayers 8
+endmap
