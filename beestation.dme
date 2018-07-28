@@ -1983,6 +1983,7 @@
 #include "code\modules\mob\living\simple_animal\bot\medbot.dm"
 #include "code\modules\mob\living\simple_animal\bot\mulebot.dm"
 #include "code\modules\mob\living\simple_animal\bot\secbot.dm"
+#include "code\modules\mob\living\simple_animal\bot\SuperBeepsky.dm"
 #include "code\modules\mob\living\simple_animal\friendly\butterfly.dm"
 #include "code\modules\mob\living\simple_animal\friendly\cat.dm"
 #include "code\modules\mob\living\simple_animal\friendly\cockroach.dm"
