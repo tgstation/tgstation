@@ -28,3 +28,6 @@
 	if(main)
 		paint_colour = main
 	add_atom_colour(paint_colour, FIXED_COLOUR_PRIORITY)
+
+/obj/effect/decal/cleanable/crayon/NeverShouldHaveComeHere(turf/T)
+	return isspaceturf(T) || islava(T) || istype(T, /turf/open/water) || ischasm(T)
