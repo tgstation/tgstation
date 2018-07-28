@@ -22,12 +22,14 @@ SUBSYSTEM_DEF(processing)
 	while(current_run.len)
 		var/datum/thing = current_run[current_run.len]
 		current_run.len--
-		if(QDELETED(thing) || thing.process(wait) == PROCESS_KILL)
+		if(QDELETED(thing))
 			processing -= thing
+		else if(thing.process(wait) == PROCESS_KILL)
+			// fully stop so that a future START_PROCESSING will work
+			STOP_PROCESSING(src, thing)
 		if (MC_TICK_CHECK)
 			return
 
 /datum/proc/process()
 	set waitfor = 0
-	STOP_PROCESSING(SSobj, src)
-	return 0
+	return PROCESS_KILL

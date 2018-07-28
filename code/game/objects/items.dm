@@ -295,7 +295,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	pickup(user)
 	add_fingerprint(user)
-	if(!user.put_in_active_hand(src))
+	if(!user.put_in_active_hand(src, FALSE, FALSE))
 		user.dropItemToGround(src)
 
 /obj/item/proc/allow_attack_hand_drop(mob/user)
@@ -317,7 +317,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	pickup(user)
 	add_fingerprint(user)
-	if(!user.put_in_active_hand(src))
+	if(!user.put_in_active_hand(src, FALSE, FALSE))
 		user.dropItemToGround(src)
 
 /obj/item/attack_alien(mob/user)

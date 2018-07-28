@@ -58,8 +58,11 @@
 				return TRUE
 			return FALSE
 		if("loc")
-			if(var_value == null || istype(var_value, /atom))
+			if(istype(var_value, /atom))
 				forceMove(var_value)
+				return TRUE
+			else if(isnull(var_value))
+				moveToNullspace()
 				return TRUE
 			return FALSE
 	return ..()
@@ -778,7 +781,9 @@
 
 /obj/item/proc/do_pickup_animation(atom/target)
 	set waitfor = FALSE
-	var/mutable_appearance/I = new(icon = src, loc = loc, layer = layer + 0.1)
+	if(!istype(loc, /turf))
+		return
+	var/image/I = image(icon = src, loc = loc, layer = layer + 0.1)
 	I.plane = GAME_PLANE
 	I.transform *= 0.75
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
@@ -787,14 +792,6 @@
 	var/to_x = 0
 	var/to_y = 0
 
-	flick_overlay(I, GLOB.clients, 6)
-	var/static/matrix/M = new
-	M.Turn(pick(-30, 30))
-
-	animate(I, transform = M, time = 1)
-	sleep(1)
-	animate(I, transform = matrix(), time = 1)
-	sleep(1)
 	if(!QDELETED(T) && !QDELETED(target))
 		direction = get_dir(T, target)
 	if(direction & NORTH)
@@ -807,6 +804,9 @@
 		to_x = -32
 	if(!direction)
 		to_y = 16
-	animate(I, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 3, easing = CUBIC_EASING)
+	flick_overlay(I, GLOB.clients, 6)
+	var/matrix/M = new
+	M.Turn(pick(-30, 30))
+	animate(I, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 3, transform = M, easing = CUBIC_EASING)
 	sleep(1)
-	animate(I, alpha = 0, time = 1)
+	animate(I, alpha = 0, transform = matrix(), time = 1)

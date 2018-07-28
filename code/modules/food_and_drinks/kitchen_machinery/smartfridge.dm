@@ -13,8 +13,6 @@
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/smartfridge
 	var/max_n_of_items = 1500
-	var/icon_on = "smartfridge"
-	var/icon_off = "smartfridge-off"
 	var/allow_ai_retrieve = FALSE
 	var/list/initial_contents
 
@@ -40,10 +38,11 @@
 	update_icon()
 
 /obj/machinery/smartfridge/update_icon()
+	var/startstate = initial(icon_state)
 	if(!stat)
-		icon_state = icon_on
+		icon_state = startstate
 	else
-		icon_state = icon_off
+		icon_state = "[startstate]-off"
 
 
 
@@ -208,12 +207,10 @@
 	name = "drying rack"
 	desc = "A wooden contraption, used to dry plant products, food and leather."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
-	icon_state = "drying_rack_on"
+	icon_state = "drying_rack"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 200
-	icon_on = "drying_rack_on"
-	icon_off = "drying_rack"
 	var/drying = FALSE
 
 /obj/machinery/smartfridge/drying_rack/Initialize()
@@ -418,8 +415,7 @@
 	name = "disk compartmentalizer"
 	desc = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
 	icon_state = "disktoaster"
-	icon_on = "disktoaster"
-	icon_off = "disktoaster-off"
+	pass_flags = PASSTABLE
 
 /obj/machinery/smartfridge/disks/accept_check(obj/item/O)
 	if(istype(O, /obj/item/disk/))

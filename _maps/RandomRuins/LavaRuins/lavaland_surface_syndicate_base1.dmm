@@ -68,6 +68,64 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/unpowered/syndicate_lava_base/bar)
+"aj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/medical/syndicate_access,
+/turf/open/floor/plasteel/white/side{
+	dir = 4
+	},
+/area/ruin/unpowered/syndicate_lava_base/virology)
+"ak" = (
+/obj/machinery/vending/boozeomat/syndicate_access,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/unpowered/syndicate_lava_base/bar)
+"al" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/medical/syndicate_access,
+/turf/open/floor/plasteel/white,
+/area/ruin/unpowered/syndicate_lava_base/medbay)
+"am" = (
+/obj/structure/table/reinforced,
+/obj/item/stock_parts/cell/high/plus{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/obj/item/stock_parts/cell/high/plus{
+	pixel_x = -8;
+	pixel_y = -3
+	},
+/obj/item/multitool,
+/turf/open/floor/plasteel/white/side{
+	dir = 8
+	},
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"an" = (
+/obj/structure/table/reinforced,
+/obj/item/stock_parts/cell/high/plus{
+	pixel_x = 7;
+	pixel_y = -5
+	},
+/obj/item/stock_parts/cell/high/plus{
+	pixel_x = -8;
+	pixel_y = -3
+	},
+/obj/item/multitool{
+	pixel_x = -1;
+	pixel_y = -13
+	},
+/turf/open/floor/plasteel/white/side{
+	dir = 4
+	},
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"ao" = (
+/obj/structure/table/reinforced,
+/obj/item/integrated_circuit_printer/upgraded,
+/turf/open/floor/plasteel/white/side{
+	dir = 10
+	},
+/area/ruin/unpowered/syndicate_lava_base/circuits)
 "ap" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -77,6 +135,13 @@
 "aq" = (
 /turf/open/floor/engine,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
+"ar" = (
+/obj/structure/table/reinforced,
+/obj/item/integrated_circuit_printer/upgraded,
+/turf/open/floor/plasteel/white/side{
+	dir = 6
+	},
+/area/ruin/unpowered/syndicate_lava_base/circuits)
 "as" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
@@ -88,6 +153,15 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
+"au" = (
+/obj/structure/grille,
+/obj/structure/window/plastitanium,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor{
+	id = "lavalandsyndi_circuits"
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
 "aL" = (
 /turf/closed/wall/mineral/plastitanium/explosive,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
@@ -100,6 +174,63 @@
 /obj/machinery/chem_dispenser/fullupgrade,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
+"aO" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/white/side{
+	dir = 1
+	},
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"aP" = (
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/syndicate{
+	dir = 1;
+	name = "Circuit Lab APC";
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/white/side{
+	dir = 1
+	},
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"aR" = (
+/turf/open/floor/plasteel/floorgrime,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"aS" = (
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"aT" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/firealarm{
+	dir = 2;
+	pixel_y = 24
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"aU" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"aV" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
 "aW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
@@ -110,20 +241,69 @@
 /obj/machinery/door/airlock/research,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/circuits)
+"aX" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
+	dir = 8
+	},
+/obj/machinery/airalarm/syndicate{
+	pixel_y = 24
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"ba" = (
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/obj/machinery/button/door{
+	id = "lavalandsyndi_circuits";
+	name = "Circuitry Blast Door Control";
+	pixel_x = -26;
+	pixel_y = -26;
+	req_access_txt = "150"
+	},
+/turf/open/floor/plasteel/white/corner{
+	dir = 8
+	},
+/area/ruin/unpowered/syndicate_lava_base/circuits)
 "bb" = (
 /obj/structure/chair/office/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white/side,
+/turf/open/floor/plasteel/white/corner,
 /area/ruin/unpowered/syndicate_lava_base/circuits)
-"bh" = (
-/obj/structure/table/reinforced,
-/obj/item/integrated_circuit_printer/upgraded,
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
+"bd" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plasteel/white/side{
+	dir = 10
+	},
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"be" = (
+/obj/structure/table/glass,
+/obj/item/integrated_electronics/analyzer{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/integrated_electronics/analyzer{
+	pixel_x = 8;
+	pixel_y = 1
 	},
 /turf/open/floor/plasteel/white/side,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"bf" = (
+/obj/structure/table/glass,
+/obj/item/paper_bin,
+/obj/item/pen,
+/turf/open/floor/plasteel/white/side,
+/area/ruin/unpowered/syndicate_lava_base/circuits)
+"bg" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/metal/fifty,
+/turf/open/floor/plasteel/white/side{
+	dir = 6
+	},
 /area/ruin/unpowered/syndicate_lava_base/circuits)
 "cA" = (
 /obj/structure/table/reinforced,
@@ -341,7 +521,7 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "dM" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 1
+	dir = 8
 	},
 /obj/structure/closet/crate,
 /obj/item/storage/box/donkpockets{
@@ -454,7 +634,7 @@
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "ea" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 8
+	dir = 1
 	},
 /obj/structure/closet/crate/secure/weapon{
 	req_access_txt = "150"
@@ -1063,7 +1243,7 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "eY" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 1
+	dir = 8
 	},
 /obj/structure/closet/crate,
 /obj/item/storage/box/donkpockets{
@@ -1285,7 +1465,7 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "fs" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 8
+	dir = 1
 	},
 /obj/structure/closet/crate,
 /obj/item/storage/box/stockparts/deluxe,
@@ -1561,17 +1741,6 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "gj" = (
 /turf/closed/wall/mineral/plastitanium/explosive,
-/area/ruin/unpowered/syndicate_lava_base/virology)
-"go" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/medical{
-	name = "SyndiMed Plus";
-	req_access_txt = "150"
-	},
-/turf/open/floor/plasteel/white/side{
-	dir = 4
-	},
 /area/ruin/unpowered/syndicate_lava_base/virology)
 "gp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -4053,12 +4222,6 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/unpowered/syndicate_lava_base/bar)
-"lD" = (
-/obj/machinery/vending/boozeomat{
-	req_access_txt = "0"
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/ruin/unpowered/syndicate_lava_base/bar)
 "lE" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
@@ -5394,15 +5557,6 @@
 /obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered/syndicate_lava_base/medbay)
-"os" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/medical{
-	name = "SyndiMed Plus";
-	req_access_txt = "150"
-	},
-/turf/open/floor/plasteel/white,
-/area/ruin/unpowered/syndicate_lava_base/medbay)
 "ot" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -5540,50 +5694,6 @@
 /obj/structure/sign/departments/chemistry,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
-"pn" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/syndicate_lava_base/circuits)
-"sJ" = (
-/obj/structure/grille,
-/obj/structure/window/plastitanium,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	id = "lavalandsyndi_circuits"
-	},
-/turf/open/floor/plating,
-/area/ruin/unpowered/syndicate_lava_base/circuits)
-"tZ" = (
-/obj/structure/chair/office/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white/side,
-/area/ruin/unpowered/syndicate_lava_base/circuits)
-"yC" = (
-/obj/structure/table/reinforced,
-/obj/item/integrated_circuit_printer/upgraded,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white/side,
-/area/ruin/unpowered/syndicate_lava_base/circuits)
-"Al" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 5
-	},
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/syndicate_lava_base/circuits)
 "EZ" = (
 /obj/machinery/door/airlock/external{
 	req_access_txt = "150"
@@ -5592,33 +5702,9 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
-"FK" = (
-/obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal/fifty,
-/turf/open/floor/plasteel/white/side,
-/area/ruin/unpowered/syndicate_lava_base/circuits)
-"Gj" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/syndicate{
-	dir = 1;
-	name = "Circuit Lab APC";
-	pixel_y = 24
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/bin,
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/syndicate_lava_base/circuits)
 "MP" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/ruin/unpowered/syndicate_lava_base/circuits)
-"Oa" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/circuits)
 "Pa" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -5633,71 +5719,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
-"UP" = (
-/obj/structure/table/reinforced,
-/obj/machinery/airalarm/syndicate{
-	dir = 8;
-	pixel_x = 24
-	},
-/obj/item/stock_parts/cell/high/plus{
-	pixel_x = 7;
-	pixel_y = -5
-	},
-/obj/item/stock_parts/cell/high/plus{
-	pixel_x = -8;
-	pixel_y = -3
-	},
-/obj/item/multitool{
-	pixel_x = -1;
-	pixel_y = -13
-	},
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/syndicate_lava_base/circuits)
-"Wg" = (
-/obj/structure/table/reinforced,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26
-	},
-/obj/item/stock_parts/cell/high/plus{
-	pixel_x = -5;
-	pixel_y = 9
-	},
-/obj/item/stock_parts/cell/high/plus{
-	pixel_x = -8;
-	pixel_y = -3
-	},
-/obj/item/multitool,
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/syndicate_lava_base/circuits)
-"Yr" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/syndicate_lava_base/circuits)
-"Yu" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/machinery/button/door{
-	id = "lavalandsyndi_circuits";
-	name = "Circuitry Blast Door Control";
-	pixel_y = 26;
-	req_access_txt = "150"
-	},
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/syndicate_lava_base/circuits)
-"ZW" = (
-/obj/structure/table/reinforced,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/item/integrated_electronics/analyzer{
-	pixel_x = -12;
-	pixel_y = 4
-	},
-/turf/open/floor/plasteel/white/side,
-/area/ruin/unpowered/syndicate_lava_base/circuits)
 
 (1,1,1) = {"
 aa
@@ -5709,6 +5730,7 @@ aa
 aa
 aa
 aa
+aa
 ab
 ab
 ab
@@ -5726,6 +5748,8 @@ ab
 ab
 aa
 aa
+ab
+ab
 ab
 ab
 ab
@@ -5754,6 +5778,9 @@ aa
 aa
 aa
 aa
+aa
+ab
+ab
 ab
 ab
 ab
@@ -5798,8 +5825,11 @@ aa
 aa
 aa
 aa
+aa
 ab
 aa
+ab
+ab
 ab
 ab
 ab
@@ -5843,6 +5873,7 @@ aa
 (4,1,1) = {"
 aa
 aa
+aa
 ab
 ab
 ab
@@ -5879,6 +5910,8 @@ mn
 mn
 mn
 mn
+ab
+ab
 ab
 ab
 ab
@@ -5888,6 +5921,7 @@ aa
 aa
 "}
 (5,1,1) = {"
+aa
 aa
 ab
 ab
@@ -5932,9 +5966,12 @@ ab
 ab
 ab
 ab
+ab
+ab
 aa
 "}
 (6,1,1) = {"
+aa
 aa
 aa
 aa
@@ -5978,10 +6015,13 @@ ab
 ab
 ab
 ab
+ab
+ab
 aa
 aa
 "}
 (7,1,1) = {"
+aa
 aa
 ab
 ab
@@ -6026,9 +6066,12 @@ ab
 ab
 ab
 ab
+ab
+ab
 aa
 "}
 (8,1,1) = {"
+aa
 aa
 ab
 ab
@@ -6044,7 +6087,7 @@ eh
 eG
 ff
 eI
-go
+aj
 eh
 eh
 eh
@@ -6073,9 +6116,12 @@ ab
 ab
 ab
 ab
+ab
+ab
 aa
 "}
 (9,1,1) = {"
+aa
 aa
 aa
 ab
@@ -6121,8 +6167,11 @@ ab
 ab
 ab
 ab
+ab
+ab
 "}
 (10,1,1) = {"
+aa
 ab
 ab
 ab
@@ -6168,8 +6217,11 @@ ab
 ab
 ab
 ab
+ab
+ab
 "}
 (11,1,1) = {"
+aa
 aa
 ab
 ab
@@ -6215,8 +6267,11 @@ ab
 ab
 ab
 ab
+ab
+ab
 "}
 (12,1,1) = {"
+aa
 ab
 ab
 ab
@@ -6262,8 +6317,11 @@ ab
 ab
 ab
 ab
+ab
+ab
 "}
 (13,1,1) = {"
+aa
 ab
 ab
 ab
@@ -6309,8 +6367,11 @@ ab
 ab
 ab
 ab
+ab
+ab
 "}
 (14,1,1) = {"
+aa
 ab
 ab
 ab
@@ -6356,8 +6417,11 @@ ab
 ab
 ab
 ab
+ab
+ab
 "}
 (15,1,1) = {"
+ab
 ab
 ab
 ab
@@ -6403,8 +6467,11 @@ ab
 ab
 ab
 ab
+ab
+ab
 "}
 (16,1,1) = {"
+aa
 ab
 ab
 ab
@@ -6450,8 +6517,11 @@ ab
 ab
 ab
 ab
+ab
+ab
 "}
 (17,1,1) = {"
+ab
 ab
 ab
 ab
@@ -6497,8 +6567,11 @@ ab
 ab
 ab
 ab
+ab
+aa
 "}
 (18,1,1) = {"
+ab
 ab
 ab
 ab
@@ -6544,8 +6617,11 @@ ab
 ab
 ab
 ab
+ab
+aa
 "}
 (19,1,1) = {"
+ab
 ab
 ab
 ab
@@ -6591,8 +6667,11 @@ ab
 ab
 ab
 ab
+aa
+aa
 "}
 (20,1,1) = {"
+aa
 ab
 ab
 ab
@@ -6638,8 +6717,11 @@ ab
 ab
 ab
 ab
+ab
+aa
 "}
 (21,1,1) = {"
+aa
 ab
 ab
 ab
@@ -6685,8 +6767,11 @@ ab
 ab
 ab
 ab
+ab
+ab
 "}
 (22,1,1) = {"
+aa
 ab
 ab
 ab
@@ -6732,8 +6817,11 @@ ab
 ab
 ab
 ab
+ab
+ab
 "}
 (23,1,1) = {"
+aa
 ab
 ab
 ab
@@ -6779,8 +6867,11 @@ ab
 ab
 ab
 ab
+ab
+ab
 "}
 (24,1,1) = {"
+aa
 ab
 ab
 ab
@@ -6812,7 +6903,7 @@ jy
 jy
 jy
 jy
-lD
+ak
 ma
 jy
 jy
@@ -6826,8 +6917,11 @@ Pa
 ab
 ab
 ab
+ab
+ab
 "}
 (25,1,1) = {"
+aa
 ab
 ab
 ab
@@ -6867,14 +6961,17 @@ nt
 nW
 oq
 Pa
-Wg
-bh
-sJ
+am
+ao
+Pa
+Pa
+ab
 ab
 ab
 ab
 "}
 (26,1,1) = {"
+ab
 ab
 ab
 ab
@@ -6914,14 +7011,17 @@ nu
 nX
 MP
 Pa
-Yu
-tZ
-sJ
+aT
+ba
+bd
+au
+ab
 ab
 ab
 ab
 "}
 (27,1,1) = {"
+ab
 ab
 ab
 ab
@@ -6960,15 +7060,18 @@ mX
 nv
 nY
 aW
-pn
-Al
-FK
-sJ
+aO
+aU
+aS
+be
+au
 ab
 ab
 ab
+aa
 "}
 (28,1,1) = {"
+aa
 ab
 ab
 ab
@@ -7007,15 +7110,18 @@ mY
 nw
 nZ
 Pa
-Gj
-Oa
-ZW
-sJ
+aP
+aV
+aR
+bf
+au
 ab
 ab
 ab
+aa
 "}
 (29,1,1) = {"
+aa
 ab
 ab
 ab
@@ -7055,14 +7161,17 @@ nx
 kR
 Pa
 Pa
-Yr
+aX
 bb
-sJ
+bg
+au
+ab
 ab
 ab
 ab
 "}
 (30,1,1) = {"
+aa
 ab
 ab
 ab
@@ -7102,14 +7211,17 @@ ny
 oa
 or
 Pa
-UP
-yC
-sJ
+an
+ar
+Pa
+Pa
+ab
 ab
 ab
 ab
 "}
 (31,1,1) = {"
+aa
 ab
 ab
 ab
@@ -7147,16 +7259,19 @@ mB
 na
 nz
 ob
-os
+al
 Pa
 Pa
 Pa
 Pa
+ab
+ab
 ab
 ab
 ab
 "}
 (32,1,1) = {"
+aa
 aa
 ab
 ab
@@ -7202,8 +7317,11 @@ ab
 ab
 ab
 ab
+ab
+ab
 "}
 (33,1,1) = {"
+aa
 aa
 ab
 ab
@@ -7249,8 +7367,11 @@ ab
 ab
 ab
 ab
+ab
+ab
 "}
 (34,1,1) = {"
+aa
 aa
 aa
 ab
@@ -7296,8 +7417,11 @@ ab
 ab
 ab
 ab
+ab
+aa
 "}
 (35,1,1) = {"
+aa
 aa
 ab
 ab
@@ -7343,8 +7467,11 @@ ab
 ab
 ab
 ab
+ab
+ab
 "}
 (36,1,1) = {"
+aa
 aa
 ab
 ab
@@ -7390,8 +7517,11 @@ nf
 ab
 ab
 ab
+ab
+aa
 "}
 (37,1,1) = {"
+aa
 ab
 ab
 ab
@@ -7437,8 +7567,11 @@ oH
 ab
 ab
 ab
+ab
+ab
 "}
 (38,1,1) = {"
+ab
 ab
 ab
 ab
@@ -7484,8 +7617,11 @@ nf
 ab
 ab
 ab
+ab
+ab
 "}
 (39,1,1) = {"
+aa
 ab
 ab
 ab
@@ -7531,8 +7667,11 @@ ab
 ab
 ab
 ab
+ab
+ab
 "}
 (40,1,1) = {"
+aa
 ab
 ab
 ab
@@ -7578,8 +7717,11 @@ ab
 ab
 ab
 ab
+ab
+ab
 "}
 (41,1,1) = {"
+aa
 ab
 ab
 ab
@@ -7625,8 +7767,11 @@ ab
 ab
 ab
 ab
+ab
+ab
 "}
 (42,1,1) = {"
+aa
 aa
 ab
 ab
@@ -7671,9 +7816,12 @@ ab
 ab
 ab
 ab
+ab
+ab
 aa
 "}
 (43,1,1) = {"
+aa
 aa
 ab
 ab
@@ -7718,9 +7866,12 @@ ab
 ab
 ab
 ab
+ab
+ab
 aa
 "}
 (44,1,1) = {"
+aa
 aa
 ab
 ab
@@ -7764,12 +7915,15 @@ ab
 ab
 ab
 ab
+ab
+ab
 aa
 aa
 "}
 (45,1,1) = {"
 aa
 aa
+aa
 ab
 aa
 ab
@@ -7802,6 +7956,8 @@ ju
 ju
 ju
 ju
+ab
+ab
 ab
 ab
 ab
@@ -7819,9 +7975,12 @@ aa
 aa
 aa
 aa
+aa
 ab
 ab
 aa
+ab
+ab
 ab
 ab
 ab
@@ -7871,6 +8030,9 @@ aa
 aa
 aa
 aa
+aa
+ab
+ab
 ab
 ab
 ab
@@ -7921,6 +8083,9 @@ aa
 aa
 aa
 aa
+aa
+ab
+ab
 ab
 ab
 ab

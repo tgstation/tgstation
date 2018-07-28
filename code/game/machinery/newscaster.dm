@@ -703,9 +703,10 @@ GLOBAL_LIST_EMPTY(allCasters)
 		else if(href_list["del_comment"])
 			var/datum/newscaster/feed_comment/FC = locate(href_list["del_comment"])
 			var/datum/newscaster/feed_message/FM = locate(href_list["del_comment_msg"])
-			FM.comments -= FC
-			qdel(FC)
-			updateUsrDialog()
+			if(istype(FC) && istype(FM))
+				FM.comments -= FC
+				qdel(FC)
+				updateUsrDialog()
 		else if(href_list["lock_comment"])
 			var/datum/newscaster/feed_message/FM = locate(href_list["lock_comment"])
 			FM.locked ^= 1
