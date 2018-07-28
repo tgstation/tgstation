@@ -1,0 +1,5 @@
+author: "WJohnston"
+delete-after: True
+changes: 
+  - balance: "Syndicate and pirate simple animals should have stats that more closely resemble fighting a human in those suits, with appropriate health, sounds, and space movement limitations."
+  - imageadd: "Pirates in space suits have more modern space suits."
