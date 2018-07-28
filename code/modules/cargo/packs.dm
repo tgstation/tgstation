@@ -1747,7 +1747,7 @@
 					/obj/item/storage/pill_bottle/lsd,
 					/obj/item/storage/pill_bottle/aranesp,
 					/obj/item/storage/pill_bottle/stimulant,
-					/obj/item/toy/cards/deck/syndicate,				
+					/obj/item/toy/cards/deck/syndicate,
 					/obj/item/reagent_containers/food/drinks/bottle/absinthe,
 					/obj/item/clothing/under/syndicate/tacticool,
 					/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
@@ -2038,6 +2038,14 @@
 	cost = 1000000
 	contains = list(/obj/vehicle/ridden/bicycle)
 	crate_name = "Bicycle Crate"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/misc/excercise_bikes
+	name = "Excercise Bikes"
+	desc = "For when the engineers delaminate the SM and you have no backup power generation this is a 5-pack! (Remember to anchor them into a power source before using!)"
+	cost = 1500
+	contains = list(/obj/machinery/power/excercise_bike=5)
+	crate_name = "Excercise Bicycle Crate"
 	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/misc/bigband
