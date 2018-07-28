@@ -42,12 +42,12 @@
 
 /obj/item/integrated_circuit/output/screen/medium/do_work()
 	..()
-	var/list/nearby_things = range(0, get_turf(src))
+	var/list/nearby_things = range(0, get_turf(assembly.parent))
+	var/atom/A = assembly ? assembly.assembly_atom : src
 	for(var/mob/M in nearby_things)
-		var/obj/O = assembly ? assembly : src
-		to_chat(M, "<span class='notice'>[icon2html(O.icon, world, O.icon_state)] [stuff_to_display]</span>")
+		to_chat(M, "<span class='notice'>[icon2html(A.icon, world, A.icon_state)] [stuff_to_display]</span>")
 	if(assembly)
-		assembly.investigate_log("displayed \"[html_encode(stuff_to_display)]\" with [type].", INVESTIGATE_CIRCUIT)
+		assembly.assembly_atom.investigate_log("displayed \"[html_encode(stuff_to_display)]\" with [type].", INVESTIGATE_CIRCUIT)
 	else
 		investigate_log("displayed \"[html_encode(stuff_to_display)]\" as [type].", INVESTIGATE_CIRCUIT)
 
@@ -60,10 +60,10 @@
 
 /obj/item/integrated_circuit/output/screen/large/do_work()
 	..()
-	var/obj/O = assembly ? get_turf(assembly) : loc
+	var/obj/O = assembly ? get_turf(assembly.parent) : loc
 	O.visible_message("<span class='notice'>[icon2html(O.icon, world, O.icon_state)]  [stuff_to_display]</span>")
 	if(assembly)
-		assembly.investigate_log("displayed \"[html_encode(stuff_to_display)]\" with [type].", INVESTIGATE_CIRCUIT)
+		assembly.assembly_atom.investigate_log("displayed \"[html_encode(stuff_to_display)]\" with [type].", INVESTIGATE_CIRCUIT)
 	else
 		investigate_log("displayed \"[html_encode(stuff_to_display)]\" as [type].", INVESTIGATE_CIRCUIT)
 
@@ -86,12 +86,12 @@
 	update_lighting()
 
 /obj/item/integrated_circuit/output/light/proc/update_lighting()
-	if(light_toggled)
-		if(assembly)
-			assembly.set_light(l_range = light_brightness, l_power = light_brightness, l_color = light_rgb)
-	else
-		if(assembly)
-			assembly.set_light(0)
+	if(assembly)
+		//toggle light
+		if(light_toggled)
+			assembly.assembly_atom.set_light(l_range = light_brightness, l_power = light_brightness, l_color = light_rgb)
+		else
+			assembly.assembly_atom.set_light(0)
 	power_draw_idle = light_toggled ? light_brightness * 2 : 0
 
 /obj/item/integrated_circuit/output/light/power_fail() // Turns off the flashlight if there's no power left.
@@ -160,7 +160,7 @@
 		vol = CLAMP(vol ,0 , 100)
 		playsound(get_turf(src), selected_sound, vol, freq, -1)
 		if(assembly)
-			assembly.investigate_log("played a sound ([selected_sound]) with [type].", INVESTIGATE_CIRCUIT)
+			assembly.assembly_atom.investigate_log("played a sound ([selected_sound]) with [type].", INVESTIGATE_CIRCUIT)
 		else
 			investigate_log("played a sound ([selected_sound]) as [type].", INVESTIGATE_CIRCUIT)
 
@@ -249,8 +249,8 @@
 		var/sanitized_text = sanitize(text)
 		A.say(sanitized_text)
 		if (assembly)
-			log_say("[assembly] [REF(assembly)] : [sanitized_text]")
-		else 
+			log_say("[assembly.parent] [REF(assembly.parent)] : [sanitized_text]")
+		else
 			log_say("[name] ([type]) : [sanitized_text]")
 
 /obj/item/integrated_circuit/output/video_camera
@@ -389,4 +389,4 @@
 		else
 			assembly.prefered_hud_icon = "hudstat"
 		//update the diagnostic hud
-		assembly.diag_hud_set_circuitstat()
+		assembly.update_hud()

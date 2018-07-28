@@ -470,10 +470,17 @@
 /obj/item/integrated_circuit/input/local_locator/do_work()
 	var/datum/integrated_io/O = outputs[1]
 	O.data = null
-	if(assembly)
-		O.data = WEAKREF(assembly.loc)
-	set_pin_data(IC_OUTPUT, 2, isturf(assembly.loc))
-	set_pin_data(IC_OUTPUT, 3, ismob(assembly.loc))
+	if(assembly)//are we in an assembly
+		O.data = WEAKREF(assembly.assembly_atom.loc)
+		set_pin_data(IC_OUTPUT, 2, isturf(assembly.assembly_atom.loc))
+		set_pin_data(IC_OUTPUT, 3, ismob(assembly.assembly_atom.loc))
+		push_data()
+		activate_pin(2)
+		return
+	//otherwise run the location off of the circuit it's self
+	O.data = WEAKREF(loc)
+	set_pin_data(IC_OUTPUT, 2, isturf(loc))
+	set_pin_data(IC_OUTPUT, 3, ismob(loc))
 	push_data()
 	activate_pin(2)
 
@@ -902,7 +909,7 @@
 			return FALSE
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
 	push_data()
-	to_chat(user, "<span class='notice'>You scan [A] with [assembly].</span>")
+	to_chat(user, "<span class='notice'>You scan [A] with [assembly.parent].</span>")
 	activate_pin(1)
 	return TRUE
 
@@ -935,7 +942,7 @@
 			return FALSE
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
 	push_data()
-	to_chat(user, "<span class='notice'>You scan [A] with [assembly].</span>")
+	to_chat(user, "<span class='notice'>You scan [A] with [assembly.parent].</span>")
 	activate_pin(1)
 	return TRUE
 
@@ -962,7 +969,7 @@
 		user.transferItemToLoc(A,drop_location())
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
 	push_data()
-	to_chat(user, "<span class='notice'>You let [assembly] scan [A].</span>")
+	to_chat(user, "<span class='notice'>You let [assembly.parent] scan [A].</span>")
 	activate_pin(1)
 	return TRUE
 

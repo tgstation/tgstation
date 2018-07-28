@@ -99,6 +99,7 @@
 	return TRUE
 
 /atom/movable/proc/stop_pulling()
+	SEND_SIGNAL(src, COMSIG_MOVABLE_STOP_PULLING)
 	if(pulling)
 		pulling.pulledby = null
 		var/mob/living/ex_pulled = pulling

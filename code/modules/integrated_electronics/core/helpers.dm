@@ -70,16 +70,16 @@
 
 // Returns a list of parameters necessary to locate a pin in the assembly: component number, pin type and pin number
 // Components list can be supplied from the outside, for use in savefiles
-/datum/integrated_io/proc/get_pin_parameters(list/components)
+/datum/integrated_io/proc/get_pin_parameters(list/circuits)
 	if(!holder)
 		return
 
-	if(!components)
+	if(!circuits)
 		if(!holder.assembly)
 			return
-		components = holder.assembly.assembly_components
+		circuits = holder.assembly.assembly_circuits
 
-	var/component_number = components.Find(holder)
+	var/circuit_number = circuits.Find(holder)
 
 	var/list/pin_holder_list
 	switch(pin_type)
@@ -94,27 +94,27 @@
 
 	var/pin_number = pin_holder_list.Find(src)
 
-	return list(component_number, pin_type, pin_number)
+	return list(circuit_number, pin_type, pin_number)
 
 
 // Locates a pin in the assembly when given component number, pin type and pin number
 // Components list can be supplied from the outside, for use in savefiles
-/obj/item/electronic_assembly/proc/get_pin_ref(component_number, pin_type, pin_number, list/components)
-	if(!components)
-		components = assembly_components
+/datum/component/integrated_electronic/proc/get_pin_ref(circuit_number, pin_type, pin_number, list/circuits)
+	if(!circuits)
+		circuits = assembly_circuits
 
-	if(component_number > components.len)
+	if(circuit_number > circuits.len)
 		return
 
-	var/obj/item/integrated_circuit/component = components[component_number]
-	return component.get_pin_ref(pin_type, pin_number)
+	var/obj/item/integrated_circuit/circuit = circuits[circuit_number]
+	return circuit.get_pin_ref(pin_type, pin_number)
 
 
 // Same as get_pin_ref, but takes in a list of 3 parameters (same format as get_pin_parameters)
 // and performs extra sanity checks on parameters list and index numbers
-/obj/item/electronic_assembly/proc/get_pin_ref_list(list/parameters, list/components)
-	if(!components)
-		components = assembly_components
+/datum/component/integrated_electronic/proc/get_pin_ref_list(list/parameters, list/circuits)
+	if(!circuits)
+		circuits = assembly_circuits
 
 	if(!islist(parameters) || parameters.len != 3)
 		return
@@ -126,7 +126,7 @@
 	if(!isnum(parameters[3]) || parameters[3] % 1 || parameters[3] < 1)
 		return
 
-	return get_pin_ref(parameters[1], parameters[2], parameters[3], components)
+	return get_pin_ref(parameters[1], parameters[2], parameters[3], circuits)
 
 
 
