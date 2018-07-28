@@ -15,6 +15,9 @@
 	var/list/emote_taunt = list()
 	var/taunt_chance = 0
 
+	var/rapid_melee = 1			 //Number of melee attacks between each npc pool tick. Spread evenly.
+	var/melee_queue_distance = 4 //If target is close enough start preparing to hit them if we have rapid_melee enabled
+
 	var/ranged_message = "fires" //Fluff text for ranged mobs
 	var/ranged_cooldown = 0 //What the current cooldown on ranged attacks is, generally world.time + ranged_cooldown_time
 	var/ranged_cooldown_time = 30 //How long, in deciseconds, the cooldown of ranged attacks is
@@ -221,7 +224,23 @@
 		Aggro()
 		return 1
 
-/mob/living/simple_animal/hostile/proc/MoveToTarget(var/list/possible_targets)//Step 5, handle movement between us and our target
+//What we do after closing in
+/mob/living/simple_animal/hostile/proc/MeleeAction(patience = TRUE)
+	if(rapid_melee > 1)
+		var/datum/callback/cb = CALLBACK(src, .proc/CheckAndAttack)
+		var/delay = SSnpcpool.wait / rapid_melee
+		for(var/i in 1 to rapid_melee)
+			addtimer(cb, (i - 1)*delay)
+	else
+		AttackingTarget()
+	if(patience)
+		GainPatience()
+
+/mob/living/simple_animal/hostile/proc/CheckAndAttack()
+	if(target && targets_from && isturf(targets_from.loc) && target.Adjacent(targets_from) && !incapacitated())
+		AttackingTarget()
+
+/mob/living/simple_animal/hostile/proc/MoveToTarget(list/possible_targets)//Step 5, handle movement between us and our target
 	stop_automated_movement = 1
 	if(!target || !CanAttack(target))
 		LoseTarget()
@@ -247,8 +266,9 @@
 			Goto(target,move_to_delay,minimum_distance)
 		if(target)
 			if(targets_from && isturf(targets_from.loc) && target.Adjacent(targets_from)) //If they're next to us, attack
-				AttackingTarget()
-				GainPatience()
+				MeleeAction()
+			else if(rapid_melee && target_distance <= melee_queue_distance)
+				MeleeAction(FALSE)
 			return 1
 		return 0
 	if(environment_smash)
