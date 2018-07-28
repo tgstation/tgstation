@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "Arrivals shuttles no longer throw objects/players when docking."
