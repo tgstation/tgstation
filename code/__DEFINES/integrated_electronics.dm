@@ -6,6 +6,9 @@
 #define DATA_CHANNEL "data channel"
 #define PULSE_CHANNEL "pulse channel"
 
+// All base objects that the integrated_electronic component is attached to
+#define ASSEMBLY_PATHS list( /obj/item/electronic_assembly, /obj/item/wallframe/integrated_screen, /mob/living/simple_animal/integrated_drone )
+
 // Methods of obtaining a circuit.
 #define IC_SPAWN_DEFAULT			1 // If the circuit comes in the default circuit box and able to be printed in the IC printer.
 #define IC_SPAWN_RESEARCH 			2 // If the circuit design will be available in the IC printer after upgrading it.
