@@ -239,7 +239,7 @@
 		if(50 to INFINITY)
 			if(M.gender == MALE)
 				M.gender = FEMALE
-				to_chat(M, "<span class='boldwarning'>You suddenly feel a lot more... Femenine?</span>")
+				to_chat(M, "<span class='boldwarning'>You suddenly feel a lot more... Feminine?</span>")
 	if(M.getBruteLoss() && prob(20))
 		M.heal_bodypart_damage(1,0, 0)
 		. = 1
