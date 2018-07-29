@@ -48,7 +48,6 @@
 	speed = 1
 	unique_name = TRUE
 	hud_possible = list(ANTAG_HUD)
-	hud_type = /datum/hud/revenant
 
 	var/essence = 75 //The resource, and health, of revenants.
 	var/essence_regen_cap = 75 //The regeneration cap of essence (go figure); regenerates every Life() tick up to this amount.
