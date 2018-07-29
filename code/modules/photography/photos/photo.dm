@@ -12,13 +12,12 @@
 	grind_results = list("iodine" = 4)
 	var/datum/picture/picture
 	var/scribble		//Scribble on the back.
-	var/sillynewscastervar  //Photo objects with this set to 1 will not be ejected by a newscaster. Only gets set to 1 if a silicon puts one of their images into a newscaster
 
 /obj/item/photo/Initialize(mapload, datum/picture/P, datum_name = TRUE, datum_desc = TRUE)
-	set_picture(P, datum_name, datum_desc)
+	set_picture(P, datum_name, datum_desc, TRUE)
 	return ..()
 
-/obj/item/photo/proc/set_picture(datum/picture/P, setname, setdesc)
+/obj/item/photo/proc/set_picture(datum/picture/P, setname, setdesc, name_override = FALSE)
 	if(!istype(P))
 		return
 	picture = P
@@ -26,7 +25,10 @@
 	if(P.caption)
 		scribble = P.caption
 	if(setname && P.picture_name)
-		name = P.picture_name
+		if(name_override)
+			name = P.picture_name
+		else
+			name = "photo - [P.picture_name]"
 	if(setdesc && P.picture_desc)
 		desc = P.picture_desc
 

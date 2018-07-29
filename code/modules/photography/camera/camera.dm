@@ -197,6 +197,6 @@
 			if(caption)
 				caption = copytext(caption, 1, 257)
 				picture.caption = caption
-		p.set_picture(picture)
+		p.set_picture(picture, TRUE, TRUE)
 		if(CONFIG_GET(flag/picture_logging_camera))
 			picture.log_to_file()
