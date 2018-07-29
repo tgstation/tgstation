@@ -44,4 +44,8 @@
 	min_val = 0
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/number/bsql_thread_limit
+	config_entry_value = 50
+	min_val = 1
+
 /datum/config_entry/flag/bsql_debug
