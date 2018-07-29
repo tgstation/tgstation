@@ -475,7 +475,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		var/mob/living/T = pick(nearby_mobs)
 		ClickOn(T)
 
-/mob/proc/log_message(message, message_type)
+/mob/proc/log_message(message, message_type, log_globally = TRUE)
 	if(!LAZYLEN(message) || !message_type)
 		return
 
@@ -486,11 +486,31 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(!islist(logging[message_type]))
 		logging[message_type] = list()
 
-	var/list/timestamped_message = list("[LAZYLEN(logging[message_type]) + 1]\[[time_stamp()]\] [key_name(src)]" = message)
+	var/infopart = key_name(src)
+	var/locpart = loc_name(src)
+
+	var/list/timestamped_message = list("[LAZYLEN(logging[message_type]) + 1]\[[time_stamp()]\] [infopart]" = "[message] [locpart]")
 
 	logging[message_type] += timestamped_message
 	if(client)
 		client.player_details.logging[message_type] += timestamped_message
+
+	if(log_globally)
+		var/global_log_text = "[infopart] [message] [locpart]"
+		switch(message_type)
+			if(INDIVIDUAL_ATTACK_LOG)
+				log_attack(global_log_text)
+			if(INDIVIDUAL_SAY_LOG)
+				log_say(global_log_text)
+			if(INDIVIDUAL_EMOTE_LOG)
+				log_emote(global_log_text)
+			if(INDIVIDUAL_OOC_LOG)
+				log_ooc(global_log_text)
+			if(INDIVIDUAL_OWNERSHIP_LOG)
+				log_game(global_log_text)
+			else
+				warning("Invalid individual logging type detected: [message_type]. Defaulting to say.")
+				log_say(global_log_text)
 
 /mob/proc/can_hear()
 	. = TRUE

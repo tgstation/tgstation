@@ -199,6 +199,6 @@
 
 	var/lang_name = data["language"]
 
-	log_telecomms("[datum_info_line(virt.source)] : \[[get_radio_name(frequency)]\] [spans_part]\"[message]\" language: [lang_name] at [atom_loc_line(get_turf(src.source))]")
+	log_telecomms("[key_name(virt.source)] : \[[get_radio_name(frequency)]\] [spans_part]\"[message]\" language: [lang_name] at [loc_name(get_turf(src.source))]")
 
 	QDEL_IN(virt, 50)  // Make extra sure the virtualspeaker gets qdeleted

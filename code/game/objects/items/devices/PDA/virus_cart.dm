@@ -78,8 +78,8 @@
 			message_admins("[!is_special_character(U) ? "Non-antag " : ""][ADMIN_LOOKUPFLW(U)] triggered a PDA explosion on [target.name] at [ADMIN_VERBOSEJMP(target)].")
 			var/message_log = "triggered a PDA explosion on [target.name] at [AREACOORD(target)]."
 			U.log_message(message_log, INDIVIDUAL_ATTACK_LOG)
-			log_game("[datum_info_line(U)] [message_log]")
-			log_attack("[datum_info_line(U)] [message_log]")
+			log_game("[key_name(U)] [message_log]")
+			log_attack("[key_name(U)] [message_log]")
 			U.show_message("<span class='notice'>Success!</span>", 1)
 			target.explode()
 	else

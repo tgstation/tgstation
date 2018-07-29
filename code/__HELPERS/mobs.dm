@@ -186,23 +186,12 @@ Proc for attack log creation, because really why not
 	if(target && isliving(target))
 		living_target = target
 
-	var/hp =" "
+	var/hp = " "
 	if(living_target)
 		hp = " (NEWHP: [living_target.health]) "
 
-	var/starget = "NON-EXISTENT SUBJECT"
-	if(target)
-		if(is_mob_target && target.ckey)
-			starget = "[target.name]([target.ckey])"
-		else
-			starget = "[target.name]"
-
-	var/ssource = "NON-EXISTENT USER" //How!?
-	if(user)
-		if(is_mob_user && user.ckey)
-			ssource = "[user.name]([user.ckey])"
-		else
-			ssource = "[user.name]"
+	var/starget = key_name(target)
+	var/ssource = key_name(user)
 
 	var/sobject = ""
 	if(object)
@@ -212,18 +201,17 @@ Proc for attack log creation, because really why not
 
 	var/sattackloc = ""
 	if(attack_location)
-		sattackloc = atom_loc_line(attack_location)
+		sattackloc = loc_name(attack_location)
 
 	if(is_mob_user)
 		var/message = "<font color='red'>has [what_done] [starget][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]</font>"
-		user.log_message(message, INDIVIDUAL_ATTACK_LOG)
+		user.log_message(message, INDIVIDUAL_ATTACK_LOG, log_globally=FALSE)
 
 	if(is_mob_target)
 		var/message = "<font color='orange'>has been [what_done] by [ssource][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]</font>"
-		target.log_message(message, INDIVIDUAL_ATTACK_LOG)
+		target.log_message(message, INDIVIDUAL_ATTACK_LOG, log_globally=FALSE)
 
 	log_attack("[ssource] [what_done] [starget][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]")
-
 
 /proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null)
 	if(!user || !target)
@@ -475,13 +463,8 @@ Proc for attack log creation, because really why not
 
 
 /proc/log_talk(mob/user,message,logtype)
-	var/turf/say_turf = get_turf(user)
 
-	var/sayloc = ""
-	if(say_turf)
-		sayloc = atom_loc_line(say_turf)
-
-
+	var/sayloc = loc_name(user)
 	var/logmessage = "[message] [sayloc]"
 
 	switch(logtype)

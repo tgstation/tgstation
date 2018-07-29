@@ -176,7 +176,7 @@
 				var/obj/item/I = owner.get_active_held_item()
 				if(I)
 					to_chat(owner, "<span class='warning'>Your fingers spasm!</span>")
-					log_attack("[datum_info_line(owner)] used [I] due to a Muscle Spasm. [atom_loc_line(owner)]")
+					log_attack("[key_name(owner)] used [I] due to a Muscle Spasm. [loc_name(owner)]")
 					I.attack_self(owner)
 			if(3)
 				var/prev_intent = owner.a_intent
@@ -192,14 +192,14 @@
 						targets += M
 				if(LAZYLEN(targets))
 					to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
-					log_attack("[datum_info_line(owner)] attacked someone due to a Muscle Spasm. [atom_loc_line(owner)]") //the following attack will log itself
+					log_attack("[key_name(owner)] attacked someone due to a Muscle Spasm. [loc_name(owner)]") //the following attack will log itself
 					owner.ClickOn(pick(targets))
 				owner.a_intent = prev_intent
 			if(4)
 				var/prev_intent = owner.a_intent
 				owner.a_intent = INTENT_HARM
 				to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
-				log_attack("[datum_info_line(owner)] attacked himself to a Muscle Spasm. [atom_loc_line(owner)]")
+				log_attack("[key_name(owner)] attacked himself to a Muscle Spasm. [loc_name(owner)]")
 				owner.ClickOn(owner)
 				owner.a_intent = prev_intent
 			if(5)
@@ -211,6 +211,6 @@
 					targets += T
 				if(LAZYLEN(targets) && I)
 					to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
-					log_attack("[datum_info_line(owner)] threw [I] due to a Muscle Spasm. [atom_loc_line(owner)]")
+					log_attack("[key_name(owner)] threw [I] due to a Muscle Spasm. [loc_name(owner)]")
 					owner.throw_item(pick(targets))
 	..()
