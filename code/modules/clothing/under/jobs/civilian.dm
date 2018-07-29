@@ -111,6 +111,15 @@
 	item_color = "orangeclown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	
+/obj/item/clothing/under/rank/rainbowclown
+	name = "rainbow clown suit"
+	desc = "<i>'R A I N B O W HONK!'</i>"
+	icon_state = "rainbowclown"
+	item_state = "rainbowclown"
+	item_color = "rainbowclown"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/clown/Initialize()
 	. = ..()
