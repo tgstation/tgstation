@@ -13,7 +13,7 @@
 
 /datum/bounty/item/assistant/skateboard
 	name = "Skateboard"
-	description = "Nanotrasen has determined walking to be a wasteful. Ship a skateboard to CentCom to speed operations up."
+	description = "Nanotrasen has determined walking to be wasteful. Ship a skateboard to CentCom to speed operations up."
 	reward = 900 // the tony hawk
 	wanted_types = list(/obj/vehicle/ridden/scooter/skateboard)
 
@@ -218,7 +218,7 @@
 
 /datum/bounty/item/assistant/bonfire
 	name = "Lit Bonfire"
-	description = "Space heaters are malfunctioning and the cargo crew of Central Command is starting to feel  cold. Ship a lit bonfire to warm them up."
+	description = "Space heaters are malfunctioning and the cargo crew of Central Command is starting to feel cold. Ship a lit bonfire to warm them up."
 	reward = 5000
 	wanted_types = list(/obj/structure/bonfire)
 

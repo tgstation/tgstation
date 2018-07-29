@@ -195,7 +195,7 @@
 
 /obj/item/borg/upgrade/tboh
 	name = "janitor cyborg trash bag of holding"
-	desc = "A trash bag of holding replace for the janiborgs standard trash bag."
+	desc = "A trash bag of holding replacement for the janiborg's standard trash bag."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = /obj/item/robot_module/janitor
@@ -222,7 +222,7 @@
 
 /obj/item/borg/upgrade/amop
 	name = "janitor cyborg advanced mop"
-	desc = "An advanced mop replacement from the janiborgs standard mop."
+	desc = "An advanced mop replacement for the janiborg's standard mop."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = /obj/item/robot_module/janitor
@@ -460,7 +460,7 @@
 
 /obj/item/borg/upgrade/defib
 	name = "medical cyborg defibrillator"
-	desc = "An upgrade to the Medical module, installing a builtin \
+	desc = "An upgrade to the Medical module, installing a built-in \
 		defibrillator, for on the scene revival."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
