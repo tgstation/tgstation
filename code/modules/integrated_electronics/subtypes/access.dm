@@ -14,10 +14,6 @@
 		"on read" = IC_PINTYPE_PULSE_OUT
 	)
 
-/obj/item/integrated_circuit/input/card_reader/old
-	name = "card reader"
-	spawn_flags = 0
-
 /obj/item/integrated_circuit/input/card_reader/attackby_react(obj/item/I, mob/living/user, intent)
 	var/obj/item/card/id/card = I.GetID()
 	var/list/access = I.GetAccess()

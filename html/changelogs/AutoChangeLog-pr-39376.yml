@@ -1,0 +1,9 @@
+author: "Garen"
+delete-after: True
+changes: 
+  - balance: "Throwers no longer deal damage"
+  - balance: "Flashlight circuits are now the same strength as a normal flashlight"
+  - balance: "Grabber circuits are now combat circuits"
+  - rscdel: "Removed smoke circuits"
+  - rscdel: "Removed all screens larger than small"
+  - tweak: "Ntnet circuits can no longer specify the passkey used, it instead always uses the access"

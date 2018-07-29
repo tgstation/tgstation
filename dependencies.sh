@@ -7,13 +7,13 @@
 #note, this also needs to be changed in the Dockerfile's initial FROM command
 #If someone has an idea for how to set that version within the Dockerfile itself without any other dependencies, feel free to PR it
 export BYOND_MAJOR=512
-export BYOND_MINOR=1427
+export BYOND_MINOR=1441
 
 #rust_g git tag
-export RUST_G_VERSION=0.3.0
+export RUST_G_VERSION=0.4.0
 
 #bsql git tag
-export BSQL_VERSION=v1.3.0.2
+export BSQL_VERSION=v1.4.0.0
 
 #node version
 export NODE_VERSION=4

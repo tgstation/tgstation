@@ -2313,6 +2313,12 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"hz" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
 "hH" = (
 /obj/structure/stone_tile/block{
 	dir = 1
@@ -3241,6 +3247,76 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
+"ss" = (
+/obj/machinery/button/door{
+	id = "miningbathroom";
+	name = "Door Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = 0;
+	pixel_y = -25;
+	specialfunctions = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
+"tI" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
+"vb" = (
+/obj/machinery/door/window/southleft,
+/obj/machinery/shower{
+	pixel_y = 22
+	},
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
+"Es" = (
+/obj/machinery/door/window/southright,
+/obj/machinery/shower{
+	pixel_y = 22
+	},
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
+"Fe" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/structure/mirror{
+	pixel_x = -28
+	},
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
+"HO" = (
+/obj/machinery/atmospherics/pipe/manifold4w/supply,
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"IK" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
+"Nj" = (
+/obj/machinery/door/airlock{
+	name = "Restroom"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
+"Tn" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
 "Uq" = (
 /obj/docking_port/stationary{
 	area_type = /area/lavaland/surface/outdoors;
@@ -3343,6 +3419,16 @@
 "WK" = (
 /obj/effect/baseturf_helper/lava_land/surface,
 /turf/closed/wall,
+/area/mine/living_quarters)
+"Zf" = (
+/obj/machinery/door/airlock{
+	id_tag = "miningbathroom";
+	name = "Restroom"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
 
 (1,1,1) = {"
@@ -13349,7 +13435,7 @@ eN
 fi
 fN
 eN
-fi
+HO
 fp
 cR
 ab
@@ -13606,8 +13692,8 @@ dQ
 cM
 cM
 cM
-cR
-cR
+Nj
+cM
 cM
 ai
 ab
@@ -13862,9 +13948,9 @@ fk
 fk
 fI
 cM
-ab
-ab
-ab
+vb
+hz
+cM
 ai
 ad
 ai
@@ -14119,9 +14205,9 @@ fk
 fC
 fk
 cM
-ab
-aj
-ab
+Es
+Tn
+cM
 ab
 ai
 ai
@@ -14376,9 +14462,9 @@ fu
 fD
 fJ
 cM
-ai
-aj
-aj
+cM
+Zf
+cM
 aj
 aj
 aj
@@ -14633,9 +14719,9 @@ fk
 fE
 fK
 cM
-ad
-aj
-aj
+Fe
+ss
+cM
 aj
 aj
 aj
@@ -14890,9 +14976,9 @@ fk
 fF
 fk
 cM
-ai
-aj
-aj
+IK
+tI
+cM
 aj
 aj
 aj
@@ -15147,9 +15233,9 @@ fv
 fG
 fL
 cM
-ai
-ai
-aj
+cM
+cM
+cM
 aj
 aj
 aj

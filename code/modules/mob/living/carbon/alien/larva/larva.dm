@@ -5,6 +5,7 @@
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
 	density = FALSE
+	hud_type = /datum/hud/larva
 
 	maxHealth = 25
 	health = 25
