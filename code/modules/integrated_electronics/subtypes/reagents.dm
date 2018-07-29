@@ -43,8 +43,8 @@
 	var/smoke_radius = 5
 	var/notified = FALSE
 
-/obj/item/integrated_circuit/reagent/smoke/New()
-	..()
+/obj/item/integrated_circuit/reagent/smoke/Initialize()
+	.=..()
 	set_pin_data(IC_OUTPUT, 2, src)
 
 /obj/item/integrated_circuit/reagent/smoke/on_reagent_change(changetype)
@@ -137,8 +137,8 @@
 	var/transfer_amount = 10
 	var/busy = FALSE
 
-/obj/item/integrated_circuit/reagent/injector/New()
-	..()
+/obj/item/integrated_circuit/reagent/injector/Initialize()
+	.=..()
 	set_pin_data(IC_OUTPUT, 2, src)
 
 /obj/item/integrated_circuit/reagent/injector/on_reagent_change(changetype)
@@ -333,8 +333,8 @@
 	activators = list("push ref" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
-/obj/item/integrated_circuit/reagent/storage/New()
-	..()
+/obj/item/integrated_circuit/reagent/storage/Initialize()
+		.=..()
 	set_pin_data(IC_OUTPUT, 2, src)
 
 /obj/item/integrated_circuit/reagent/storage/do_work()
