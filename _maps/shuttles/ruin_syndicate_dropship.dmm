@@ -69,7 +69,6 @@
 	name = "Syndicate Drop Ship";
 	port_direction = 8;
 	preferred_direction = 4;
-	timid = 1;
 	width = 15
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
