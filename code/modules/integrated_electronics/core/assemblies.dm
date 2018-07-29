@@ -518,7 +518,7 @@
 	if(opened)
 		interact(user)
 
-var/list/input_selection = list()
+	var/list/input_selection = list()
 	//Check all the components asking for an input
 	for(var/obj/item/integrated_circuit/input in assembly_components)
 		if(input.can_be_asked_input)
