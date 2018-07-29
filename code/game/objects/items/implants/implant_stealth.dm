@@ -11,9 +11,13 @@
 	icon_state = "agentbox"
 	move_speed_multiplier = 0.5
 
+/obj/structure/closet/cardboard/agent/proc/go_invisible()
+	animate(src, , alpha = 0, time = 5)
+
 /obj/structure/closet/cardboard/agent/Initialize()
 	. = ..()
-	START_PROCESSING(SSfastprocess, src)
+	go_invisible()
+
 
 /obj/structure/closet/cardboard/agent/open()
 	. = ..()
@@ -26,7 +30,6 @@
 	. = ..()
 	if(isliving(A))
 		alpha = 255
+	addtimer(CALLBACK(src, .proc/go_invisible), 10, TIMER_UNIQUE)
 
-obj/structure/closet/cardboard/agent/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
-	return ..()
+
