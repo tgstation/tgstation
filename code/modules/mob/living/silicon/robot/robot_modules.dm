@@ -23,6 +23,7 @@
 	var/can_be_pushed = TRUE
 	var/magpulsing = FALSE
 	var/clean_on_move = FALSE
+	var/chop_on_move = FALSE //Is this a lawnmower bot that cuts people when run over? Mainly used for the traitor ai lawnmower module
 
 	var/did_feedback = FALSE
 
@@ -386,8 +387,8 @@
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/screwdriver/cyborg,
 		/obj/item/crowbar/cyborg,
-		/obj/item/stack/tile/plasteel/cyborg,
-		/obj/item/soap/nanotrasen,
+		/obj/item/harmalarm,
+		/obj/item/reagent_containers/borghypo/peace,
 		/obj/item/storage/bag/trash/cyborg,
 		/obj/item/extinguisher/mini,
 		/obj/item/mop/cyborg,
@@ -402,6 +403,29 @@
 	moduleselect_icon = "janitor"
 	hat_offset = -5
 	clean_on_move = TRUE
+
+/obj/item/robot_module/lawnmower
+	name = "Lawnmower"
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/screwdriver/cyborg,
+		/obj/item/crowbar/cyborg,
+		/obj/item/stack/tile/plasteel/cyborg,
+		/obj/item/soap/nanotrasen,
+		/obj/item/storage/bag/trash/cyborg,
+		/obj/item/melee/transforming/energy/sword/cyborg,
+		/obj/item/mop/cyborg,
+		/obj/item/restraints/handcuffs/cable/zipties,
+		/obj/item/holosign_creator)
+	emag_modules = list(		/obj/item/reagent_containers/spray/cyborg_lube)
+	ratvar_modules = list(
+		/obj/item/clockwork/slab/cyborg/janitor,
+		/obj/item/clockwork/replica_fabricator/cyborg)
+	cyborg_base_icon = "lawnmower"
+	moduleselect_icon = "malf"
+	hat_offset = -10
+	chop_on_move = TRUE
+
 
 /obj/item/reagent_containers/spray/cyborg_drying
 	name = "drying agent spray"
