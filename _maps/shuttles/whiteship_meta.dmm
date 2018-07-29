@@ -36,7 +36,7 @@
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/docking_port/mobile{
-	callTime = 350;
+	callTime = 250;
 	can_move_docking_ports = 1;
 	dheight = 0;
 	dir = 2;
@@ -290,6 +290,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "aB" = (
@@ -471,6 +472,8 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/remains/human,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "aO" = (
@@ -484,6 +487,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/mob/living/simple_animal/hostile/syndicate{
+	name = "Syndicate Salvage Worker"
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -825,6 +831,7 @@
 	pixel_y = -24
 	},
 /obj/machinery/light/small/built,
+/obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "bj" = (
@@ -1537,6 +1544,7 @@
 	pixel_y = 28;
 	req_access = null
 	},
+/obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 4
 	},
@@ -1632,6 +1640,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/abandoned/cargo)
 "cn" = (
@@ -1738,6 +1747,8 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/abandoned/bridge)
 "ct" = (
@@ -1748,6 +1759,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/abandoned/bridge)
 "cu" = (
@@ -1860,6 +1872,9 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/mob/living/simple_animal/hostile/syndicate{
+	name = "Syndicate Salvage Worker"
+	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/abandoned/bar)
 "cC" = (
@@ -1941,7 +1956,7 @@
 /area/shuttle/abandoned/bridge)
 "cG" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
-	designate_time = 150;
+	designate_time = 100;
 	dir = 8;
 	view_range = 14;
 	x_offset = -4;
@@ -2324,6 +2339,9 @@
 	name = "dust"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/mob/living/simple_animal/hostile/syndicate/ranged{
+	name = "Syndicate Salvage Worker"
+	},
 /turf/open/floor/plasteel/vault,
 /area/shuttle/abandoned/cargo)
 "de" = (
@@ -2687,6 +2705,7 @@
 	name = "dust"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/effect/decal/cleanable/blood,
 /turf/open/floor/plasteel/cafeteria,
 /area/shuttle/abandoned/bar)
 "dD" = (
@@ -2908,6 +2927,7 @@
 	dir = 4;
 	pixel_x = 11
 	},
+/obj/effect/decal/cleanable/flour,
 /turf/open/floor/plasteel/cafeteria,
 /area/shuttle/abandoned/bar)
 "dS" = (
@@ -3159,18 +3179,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/bar)
-"ek" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 4;
-	height = 6;
-	id = "whiteship_pod_home";
-	name = "Salvage Ship Dock";
-	roundstart_template = /datum/map_template/shuttle/whiteship/pod;
-	width = 9
-	},
-/turf/template_noop,
-/area/template_noop)
 "el" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -3192,6 +3200,69 @@
 	},
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plasteel/dark,
+/area/shuttle/abandoned/cargo)
+"fa" = (
+/obj/effect/turf_decal/box/white/corners{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/abandoned/cargo)
+"hv" = (
+/obj/effect/turf_decal/box/white/corners{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/abandoned/cargo)
+"nT" = (
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/remains/human,
+/turf/open/floor/plasteel/vault,
+/area/shuttle/abandoned/cargo)
+"qY" = (
+/obj/effect/turf_decal/box/white/corners{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/mob/living/simple_animal/hostile/syndicate{
+	name = "Syndicate Salvage Worker"
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/abandoned/cargo)
+"wM" = (
+/obj/effect/turf_decal/arrows/white{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plasteel/vault,
 /area/shuttle/abandoned/cargo)
 
 (1,1,1) = {"
@@ -3222,7 +3293,7 @@ ac
 ab
 aa
 aa
-ek
+aa
 aa
 aa
 ab
@@ -3351,7 +3422,7 @@ ae
 ao
 aE
 aS
-bl
+fa
 bz
 bK
 bV
@@ -3370,7 +3441,7 @@ ae
 ap
 ap
 aT
-bm
+qY
 bA
 ap
 aF
@@ -3394,8 +3465,8 @@ bB
 bL
 bW
 bW
-cm
-bB
+nT
+wM
 cR
 dd
 dv
@@ -3413,7 +3484,7 @@ ap
 ap
 dq
 bW
-bo
+hv
 ap
 ap
 de
