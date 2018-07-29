@@ -172,7 +172,11 @@
 /proc/atom_loc_line(atom/A)
 	if(!istype(A))
 		return "UNKNOWN LOCATION"
-	var/turf/T = get_turf(A)
+
+	var/turf/T = A
+	if (!istype(T))
+		T = get_turf(A)
+
 	if(istype(T))
 		return "([A.loc] [COORD(T)] ([A.loc.type]))"
 	else if(A.loc)
