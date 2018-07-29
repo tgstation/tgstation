@@ -93,7 +93,7 @@
 	region_access = 3
 
 /obj/item/door_remote/civillian
-	name = "civillian door remote"
+	name = "civilian door remote"
 	icon_state = "gangtool-white"
 	region_access = 1
 
