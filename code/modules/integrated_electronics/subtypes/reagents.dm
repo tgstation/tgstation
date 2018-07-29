@@ -334,7 +334,7 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 /obj/item/integrated_circuit/reagent/storage/Initialize()
-		.=..()
+	.=..()
 	set_pin_data(IC_OUTPUT, 2, src)
 
 /obj/item/integrated_circuit/reagent/storage/do_work()
