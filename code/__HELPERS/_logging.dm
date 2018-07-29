@@ -163,7 +163,7 @@
 /* Helper procs for building detailed log lines */
 /proc/datum_info_line(datum/D)
 	if(!istype(D))
-		return
+		return "UNKNOWN"
 	if(!ismob(D))
 		return "[D] ([D.type])"
 	var/mob/M = D
@@ -171,7 +171,7 @@
 
 /proc/atom_loc_line(atom/A)
 	if(!istype(A))
-		return
+		return "UNKNOWN LOCATION"
 	var/turf/T = get_turf(A)
 	if(istype(T))
 		return "[A.loc] [COORD(T)] ([A.loc.type])"
