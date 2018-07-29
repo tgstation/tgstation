@@ -212,7 +212,7 @@ Proc for attack log creation, because really why not
 
 	var/sattackloc = ""
 	if(attack_location)
-		sattackloc = "([attack_location.x],[attack_location.y],[attack_location.z])"
+		sattackloc = atom_loc_line(attack_location)
 
 	if(is_mob_user)
 		var/message = "<font color='red'>has [what_done] [starget][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]</font>"
@@ -479,7 +479,7 @@ Proc for attack log creation, because really why not
 
 	var/sayloc = ""
 	if(say_turf)
-		sayloc = "([say_turf.x],[say_turf.y],[say_turf.z])"
+		sayloc = atom_loc_line(say_turf)
 
 
 	var/logmessage = "[message] [sayloc]"

@@ -33,7 +33,7 @@
 
 	if(M.has_dna() && !M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_NOCLONE))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
-		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
+		var/log_msg = "[datum_info_line(user)] injected [datum_info_line(M)] with the [name]"
 		for(var/datum/mutation/human/HM in remove_mutations)
 			HM.force_lose(M)
 		for(var/datum/mutation/human/HM in add_mutations)
@@ -50,7 +50,7 @@
 			if(fields["UI"])	//UI+UE
 				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
 				M.updateappearance(mutations_overlay_update=1)
-		log_attack(log_msg)
+		log_attack("[log_msg] [atom_loc_line(user)]")
 		return TRUE
 	return FALSE
 
@@ -353,7 +353,7 @@
 				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
 				M.updateappearance(mutations_overlay_update=1)
 				M.dna.temporary_mutations[UI_CHANGED] = endtime
-		log_attack(log_msg)
+		log_attack("[log_msg] [atom_loc_line(user)]")
 		return TRUE
 	else
 		return FALSE
