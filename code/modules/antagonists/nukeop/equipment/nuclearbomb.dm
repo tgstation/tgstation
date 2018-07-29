@@ -358,7 +358,7 @@
 				S.switch_mode_to(initial(S.mode))
 				S.alert = FALSE
 		timing = FALSE
-		bomb_set = TRUE
+		bomb_set = FALSE
 		detonation_timer = null
 		countdown.stop()
 	update_icon()
