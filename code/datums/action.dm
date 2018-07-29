@@ -506,8 +506,8 @@
 			owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
 	else
 		owner.forceMove(get_turf(box))
-		QDEL_NULL(box)
 		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
+		QDEL_NULL(box)
 
 //Preset for spells
 /datum/action/spell_action
