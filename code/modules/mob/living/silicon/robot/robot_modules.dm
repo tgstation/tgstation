@@ -387,8 +387,8 @@
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/screwdriver/cyborg,
 		/obj/item/crowbar/cyborg,
-		/obj/item/harmalarm,
-		/obj/item/reagent_containers/borghypo/peace,
+		/obj/item/stack/tile/plasteel/cyborg,
+		/obj/item/soap/nanotrasen,
 		/obj/item/storage/bag/trash/cyborg,
 		/obj/item/extinguisher/mini,
 		/obj/item/mop/cyborg,
@@ -416,6 +416,7 @@
 		/obj/item/melee/transforming/energy/sword/cyborg,
 		/obj/item/mop/cyborg,
 		/obj/item/restraints/handcuffs/cable/zipties,
+		/obj/item/harmalarm,
 		/obj/item/holosign_creator)
 	emag_modules = list(		/obj/item/reagent_containers/spray/cyborg_lube)
 	ratvar_modules = list(
