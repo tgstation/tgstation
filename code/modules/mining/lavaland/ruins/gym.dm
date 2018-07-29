@@ -24,17 +24,10 @@
 	desc = "Just looking at this thing makes you feel tired."
 	density = TRUE
 	anchored = TRUE
-	var/icon_state_passive
 	var/icon_state_inuse
 
 /obj/structure/weightmachine/proc/AnimateMachine(mob/living/user)
 	return
-
-/obj/structure/weightmachine/stackmachine
-	icon = 'goon/icons/obj/fitness.dmi'
-	icon_state = "fitnesslifter"
-	icon_state_passive = "fitnesslifter"
-	icon_state_inuse = "fitnesslifter2"
 
 /obj/structure/weightmachine/attack_hand(mob/living/user)
 	. = ..()
@@ -58,11 +51,16 @@
 		user.pixel_y = 0
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "exercise", /datum/mood_event/exercise)
-		icon_state = icon_state_passive
+		icon_state = initial(icon_state)
 		to_chat(user, finishmessage)
 		user.apply_status_effect(STATUS_EFFECT_EXERCISED)
 
-/obj/structure/weightmachine/stackmachine/AnimateMachine(mob/living/user)
+/obj/structure/weightmachine/stacklifter
+	icon = 'goon/icons/obj/fitness.dmi'
+	icon_state = "fitnesslifter"
+	icon_state_inuse = "fitnesslifter2"
+
+/obj/structure/weightmachine/stacklifter/AnimateMachine(mob/living/user)
 	var/lifts = 0
 	while (lifts++ < 6)
 		if (user.loc != src.loc)
@@ -77,7 +75,6 @@
 /obj/structure/weightmachine/weightlifter
 	icon = 'goon/icons/obj/fitness.dmi'
 	icon_state = "fitnessweight"
-	icon_state_passive = "fitnessweight"
 	icon_state_inuse = "fitnessweight-c"
 
 /obj/structure/weightmachine/weightlifter/AnimateMachine(mob/living/user)
