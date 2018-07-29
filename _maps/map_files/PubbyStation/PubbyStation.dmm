@@ -9108,7 +9108,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
-/obj/structure/stacklifter,
+/obj/structure/weightmachine/stacklifter,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "ayw" = (
@@ -9611,7 +9611,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/obj/structure/weightlifter,
+/obj/structure/weightmachine/weightlifter,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "azE" = (
@@ -44190,7 +44190,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "cnT" = (
-/obj/structure/weightlifter,
+/obj/structure/weightmachine/weightlifter,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "cnV" = (
@@ -50229,7 +50229,7 @@
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "lGp" = (
-/obj/structure/weightlifter,
+/obj/structure/weightmachine/weightlifter,
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "lGv" = (
