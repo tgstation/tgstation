@@ -374,7 +374,7 @@
 /datum/reagent/medicine/synthflesh
 	name = "Synthflesh"
 	id = "synthflesh"
-	description = "Has a 100% chance of instantly healing brute and burn damage. One unit of the chemical will heal one point of damage. Touch application only."
+	description = "Has a 100% chance of instantly healing brute and burn damage. One unit of the chemical will heal one point of damage. Can be applied by patch, smoke and splashing."
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
