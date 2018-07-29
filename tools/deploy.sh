@@ -6,6 +6,7 @@
 
 mkdir -p \
     $1/_maps \
+    $1/icons \
     $1/sound/chatter \
     $1/sound/voice/complionator \
     $1/sound/instruments \
