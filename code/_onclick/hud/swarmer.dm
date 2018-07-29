@@ -90,3 +90,8 @@
 	using = new /obj/screen/swarmer/ContactSwarmers()
 	using.screen_loc = ui_inventory
 	static_inventory += using
+
+
+/mob/living/simple_animal/hostile/swarmer/create_mob_hud()
+	if(client && !hud_used)
+		hud_used = new /datum/hud/swarmer(src)
