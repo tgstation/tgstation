@@ -121,7 +121,3 @@
 		for(var/obj/item/I in H.held_items)
 			I.screen_loc = null
 			H.client.screen -= I
-
-/mob/living/carbon/alien/humanoid/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/alien(src)
