@@ -174,6 +174,6 @@
 		return "UNKNOWN LOCATION"
 	var/turf/T = get_turf(A)
 	if(istype(T))
-		return "[A.loc] [COORD(T)] ([A.loc.type])"
+		return "([A.loc] [COORD(T)] ([A.loc.type]))"
 	else if(A.loc)
-		return "[A.loc] (0, 0, 0) ([A.loc.type])"
+		return "([A.loc] (0, 0, 0) ([A.loc.type]))"
