@@ -159,7 +159,6 @@
 	description = "Commander Jackson is looking for yet another fine addition to her exotic weapons collection. She will reward you handsomely for a Cat o' Nine Tails."
 	reward = 4000
 	wanted_types = list(/obj/item/melee/chainofcommand/tailwhip/kitty)
-	exclude_types = list(/obj/item/melee/chainofcommand/tailwhip)
 
 /datum/bounty/item/assistant/shard
 	name = "Shards"
