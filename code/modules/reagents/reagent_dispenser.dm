@@ -113,7 +113,7 @@
 			var/message_admins = "[ADMIN_LOOKUPFLW(user)] triggered a fueltank explosion via welding tool at [ADMIN_VERBOSEJMP(T)]."
 			GLOB.bombers += message_admins
 			message_admins(message_admins)
-			var/message_log = "triggered a fueltank explosion via welding tool [AREACOORD(T)]."
+			var/message_log = "triggered a fueltank explosion via welding tool at [AREACOORD(T)]."
 			user.log_message(message_log, INDIVIDUAL_ATTACK_LOG)
 			log_game("[datum_info_line(user)] [message_log]")
 			log_attack("[datum_info_line(user)] [message_log]")
