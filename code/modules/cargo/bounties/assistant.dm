@@ -141,24 +141,17 @@
 	reward = 3000
 	wanted_types = list(/obj/item/organ/tail/lizard)
 
-/datum/bounty/item/assistant/lizard_tail_whip
-	name = "Liz o' Nine Tails"
-	description = "Commander Jackson is looking for a rather unusual addition to her exotic weapons collection. She will reward you handsomely for a Liz o' Nine Tails."
-	reward = 4000
-	wanted_types = list(/obj/item/melee/chainofcommand/tailwhip)
-	exclude_types = list(/obj/item/melee/chainofcommand/tailwhip/kitty)
-
 /datum/bounty/item/assistant/cat_tail
 	name = "Cat Tail"
 	description = "Central Command has run out of heavy duty pipe cleaners. Can you ship over a cat tail to help us out?"
 	reward = 3000
 	wanted_types = list(/obj/item/organ/tail/cat)
 
-/datum/bounty/item/assistant/cat_tail_whip
-	name = "Cat o' Nine Tails"
-	description = "Commander Jackson is looking for yet another fine addition to her exotic weapons collection. She will reward you handsomely for a Cat o' Nine Tails."
+/datum/bounty/item/assistant/tail_whip
+	name = "Nine Tails whip"
+	description = "Commander Jackson is looking for a fine addition to her exotic weapons collection. She will reward you handsomely for either a Cat or Liz o' Nine Tails."
 	reward = 4000
-	wanted_types = list(/obj/item/melee/chainofcommand/tailwhip/kitty)
+	wanted_types = list(/obj/item/melee/chainofcommand/tailwhip)
 
 /datum/bounty/item/assistant/shard
 	name = "Shards"
