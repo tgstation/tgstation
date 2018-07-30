@@ -31,17 +31,17 @@
 
 /datum/soullink/Destroy()
 	if(soulowner)
-		LAZYREMOVE(soulowner.ownedSoullinks, src)
+		LAZYUNSETREMOVE(soulowner.ownedSoullinks, src)
 		soulowner = null
 	if(soulsharer)
-		LAZYREMOVE(soulsharer.sharedSoullinks, src)
+		LAZYUNSETREMOVE(soulsharer.sharedSoullinks, src)
 		soulsharer = null
 	return ..()
 
 /datum/soullink/proc/removeSoulsharer(mob/living/sharer)
 	if(soulsharer == sharer)
 		soulsharer = null
-		LAZYREMOVE(sharer.sharedSoullinks, src)
+		LAZYUNSETREMOVE(sharer.sharedSoullinks, src)
 
 //Used to assign variables, called primarily by soullink()
 //Override this to create more unique soullinks (Eg: 1->Many relationships)
@@ -90,7 +90,7 @@
 	return TRUE
 
 /datum/soullink/multisharer/removeSoulsharer(mob/living/sharer)
-	LAZYREMOVE(soulsharers, sharer)
+	LAZYUNSETREMOVE(soulsharers, sharer)
 
 
 

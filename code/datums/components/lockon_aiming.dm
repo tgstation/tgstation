@@ -54,7 +54,7 @@
 /datum/component/lockon_aiming/Destroy()
 	var/mob/M = parent
 	clear_visuals()
-	LAZYREMOVE(M.mousemove_intercept_objects, src)
+	LAZYUNSETREMOVE(M.mousemove_intercept_objects, src)
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
@@ -100,7 +100,7 @@
 /datum/component/lockon_aiming/proc/unlock(atom/A, refresh_vis = TRUE)
 	if(!A.weak_reference)
 		return
-	LAZYREMOVE(locked_weakrefs, A.weak_reference)
+	LAZYUNSETREMOVE(locked_weakrefs, A.weak_reference)
 	if(refresh_vis)
 		refresh_visuals()
 
@@ -118,7 +118,7 @@
 /datum/component/lockon_aiming/proc/remove_immune_atom(atom/A)
 	if(!A.weak_reference || !immune_weakrefs)		//if A doesn't have a weakref how did it get on the immunity list?
 		return
-	LAZYREMOVE(immune_weakrefs, A.weak_reference)
+	LAZYUNSETREMOVE(immune_weakrefs, A.weak_reference)
 
 /datum/component/lockon_aiming/onMouseMove(object,location,control,params)
 	var/mob/M = parent

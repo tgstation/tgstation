@@ -48,7 +48,7 @@
 	LAZYADD(myarea.firealarms, src)
 
 /obj/machinery/firealarm/Destroy()
-	LAZYREMOVE(myarea.firealarms, src)
+	LAZYUNSETREMOVE(myarea.firealarms, src)
 	return ..()
 
 /obj/machinery/firealarm/power_change()
@@ -264,7 +264,7 @@
 
 /obj/machinery/firealarm/obj_break(damage_flag)
 	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1) && buildstage != 0) //can't break the electronics if there isn't any inside.
-		LAZYREMOVE(myarea.firealarms, src)
+		LAZYUNSETREMOVE(myarea.firealarms, src)
 		stat |= BROKEN
 		update_icon()
 

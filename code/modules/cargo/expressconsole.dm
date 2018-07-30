@@ -109,7 +109,7 @@
 	if(SSshuttle.supplyBlocked)
 		message = blockade_warning
 	if(usingBeacon && !beacon)
-		message = "BEACON ERROR: BEACON MISSING"//beacon was destroyed 
+		message = "BEACON ERROR: BEACON MISSING"//beacon was destroyed
 	else if (usingBeacon && !canBeacon)
 		message = "BEACON ERROR: MUST BE EXPOSED"//beacon's loc/user's loc must be a turf
 	if(obj_flags & EMAGGED)
@@ -165,7 +165,7 @@
 					var/LZ
 					if (istype(beacon) && usingBeacon)//prioritize beacons over landing in cargobay
 						LZ = get_turf(beacon)
-						beacon.update_status(SP_LAUNCH)	
+						beacon.update_status(SP_LAUNCH)
 					else if (!usingBeacon)//find a suitable supplypod landing zone in cargobay
 						landingzone = locate(/area/quartermaster/storage) in GLOB.sortedAreas
 						if (!landingzone)
@@ -177,7 +177,7 @@
 							LAZYADD(empty_turfs, T)
 							CHECK_TICK
 						if(empty_turfs && empty_turfs.len)
-							LZ = pick(empty_turfs)	
+							LZ = pick(empty_turfs)
 					if (SO.pack.cost <= SSshuttle.points && LZ)//we need to call the cost check again because of the CHECK_TICK call
 						SSshuttle.points -= SO.pack.cost
 						new /obj/effect/DPtarget(LZ, SO, podID)
@@ -196,7 +196,7 @@
 						SO.generateRequisition(get_turf(src))
 						for(var/i in 1 to MAX_EMAG_ROCKETS)
 							var/LZ = pick(empty_turfs)
-							LAZYREMOVE(empty_turfs, LZ)
+							LAZYUNSETREMOVE(empty_turfs, LZ)
 							new /obj/effect/DPtarget(LZ, SO, podID)
 							. = TRUE
 							update_icon()

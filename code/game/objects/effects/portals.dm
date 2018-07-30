@@ -122,11 +122,11 @@
 /obj/effect/portal/proc/unlink_atmos()
 	if(istype(atmos_source))
 		if(istype(atmos_destination) && !atmos_source.Adjacent(atmos_destination) && !CANATMOSPASS(atmos_destination, atmos_source))
-			LAZYREMOVE(atmos_source.atmos_adjacent_turfs, atmos_destination)
+			LAZYUNSETREMOVE(atmos_source.atmos_adjacent_turfs, atmos_destination)
 		atmos_source = null
 	if(istype(atmos_destination))
 		if(istype(atmos_source) && !atmos_destination.Adjacent(atmos_source) && !CANATMOSPASS(atmos_source, atmos_destination))
-			LAZYREMOVE(atmos_destination.atmos_adjacent_turfs, atmos_source)
+			LAZYUNSETREMOVE(atmos_destination.atmos_adjacent_turfs, atmos_source)
 		atmos_destination = null
 
 /obj/effect/portal/Destroy()				//Calls on_portal_destroy(destroyed portal, location of destroyed portal) on creator if creator has such call.

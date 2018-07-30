@@ -60,7 +60,7 @@
 	if(affecting_areas)
 		for(var/I in affecting_areas)
 			var/area/A = I
-			LAZYREMOVE(A.firedoors, src)
+			LAZYUNSETREMOVE(A.firedoors, src)
 
 /obj/machinery/door/firedoor/Destroy()
 	remove_from_areas()

@@ -118,7 +118,7 @@
 
 /obj/machinery/computer/cloning/proc/DetachCloner(obj/machinery/clonepod/pod)
 	pod.connected = null
-	LAZYREMOVE(pods, pod)
+	LAZYUNSETREMOVE(pods, pod)
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/disk/data)) //INSERT SOME DISKETTES

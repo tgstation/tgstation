@@ -57,7 +57,7 @@
 	var/list/bars = user.progressbars[bar.loc]
 	bars.Remove(src)
 	if(!bars.len)
-		LAZYREMOVE(user.progressbars, bar.loc)
+		LAZYUNSETREMOVE(user.progressbars, bar.loc)
 
 	if (client)
 		client.images -= bar

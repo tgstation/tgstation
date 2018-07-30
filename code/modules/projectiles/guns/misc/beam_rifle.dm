@@ -280,7 +280,7 @@
 	stop_aiming(current_user)
 	QDEL_NULL(mobhook)
 	if(istype(current_user))
-		LAZYREMOVE(current_user.mousemove_intercept_objects, src)
+		LAZYUNSETREMOVE(current_user.mousemove_intercept_objects, src)
 		current_user = null
 	if(istype(user))
 		current_user = user

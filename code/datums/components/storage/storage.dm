@@ -359,7 +359,7 @@
 	M.client.screen -= real_location.contents
 	if(M.active_storage == src)
 		M.active_storage = null
-	LAZYREMOVE(is_using, M)
+	LAZYUNSETREMOVE(is_using, M)
 	return TRUE
 
 /datum/component/storage/proc/close(mob/M)
@@ -430,7 +430,7 @@
 		if(M.active_storage == src && M.client)
 			cansee |= M
 		else
-			LAZYREMOVE(is_using, M)
+			LAZYUNSETREMOVE(is_using, M)
 	return cansee
 
 //Tries to dump content

@@ -52,10 +52,10 @@
 /datum/light_source/Destroy(force)
 	remove_lum()
 	if (source_atom)
-		LAZYREMOVE(source_atom.light_sources, src)
+		LAZYUNSETREMOVE(source_atom.light_sources, src)
 
 	if (top_atom)
-		LAZYREMOVE(top_atom.light_sources, src)
+		LAZYUNSETREMOVE(top_atom.light_sources, src)
 
 	if (needs_update)
 		GLOB.lighting_update_lights -= src
@@ -77,7 +77,7 @@
 	// This top atom is different.
 	if (new_top_atom && new_top_atom != top_atom)
 		if(top_atom != source_atom && top_atom.light_sources) // Remove ourselves from the light sources of that top atom.
-			LAZYREMOVE(top_atom.light_sources, src)
+			LAZYUNSETREMOVE(top_atom.light_sources, src)
 
 		top_atom = new_top_atom
 
@@ -141,7 +141,7 @@
 	var/thing
 	for (thing in affecting_turfs)
 		var/turf/T = thing
-		LAZYREMOVE(T.affecting_lights, src)
+		LAZYUNSETREMOVE(T.affecting_lights, src)
 
 	affecting_turfs = null
 
@@ -150,7 +150,7 @@
 		C = thing
 		REMOVE_CORNER(C)
 
-		LAZYREMOVE(C.affecting, src)
+		LAZYUNSETREMOVE(C.affecting, src)
 
 	effect_str = null
 
@@ -250,7 +250,7 @@
 	affecting_turfs -= L
 	for (thing in L)
 		T = thing
-		LAZYREMOVE(T.affecting_lights, src)
+		LAZYUNSETREMOVE(T.affecting_lights, src)
 
 	LAZYINITLIST(effect_str)
 	if (needs_update == LIGHTING_VIS_UPDATE)
@@ -282,7 +282,7 @@
 	for (thing in L) // Old, now gone, corners.
 		C = thing
 		REMOVE_CORNER(C)
-		LAZYREMOVE(C.affecting, src)
+		LAZYUNSETREMOVE(C.affecting, src)
 	effect_str -= L
 
 	applied_lum_r = lum_r

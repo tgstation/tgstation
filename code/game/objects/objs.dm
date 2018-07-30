@@ -1,4 +1,3 @@
-
 /obj
 	var/crit_fail = FALSE
 	animate_movement = 2

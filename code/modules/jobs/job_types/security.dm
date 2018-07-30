@@ -214,7 +214,7 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 		if(!LAZYLEN(GLOB.available_depts) || department == "None")
 			return
 		else if(department in GLOB.available_depts)
-			LAZYREMOVE(GLOB.available_depts, department)
+			LAZYUNSETREMOVE(GLOB.available_depts, department)
 		else
 			department = pick_n_take(GLOB.available_depts)
 	var/ears = null

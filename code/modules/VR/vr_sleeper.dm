@@ -191,7 +191,7 @@
 	LAZYADD(GLOB.vr_spawnpoints[vr_category], src)
 
 /obj/effect/landmark/vr_spawn/Destroy()
-	LAZYREMOVE(GLOB.vr_spawnpoints[vr_category], src)
+	LAZYUNSETREMOVE(GLOB.vr_spawnpoints[vr_category], src)
 	return ..()
 
 /obj/effect/landmark/vr_spawn/team_1

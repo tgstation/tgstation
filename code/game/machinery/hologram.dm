@@ -462,9 +462,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	var/mob/living/silicon/ai/AI = user
 	if(istype(AI) && AI.current == src)
 		AI.current = null
-	LAZYREMOVE(masters, user) // Discard AI from the list of those who use holopad
+	LAZYUNSETREMOVE(masters, user) // Discard AI from the list of those who use holopad
 	qdel(holorays[user])
-	LAZYREMOVE(holorays, user)
+	LAZYUNSETREMOVE(holorays, user)
 	SetLightsAndPower()
 	return TRUE
 

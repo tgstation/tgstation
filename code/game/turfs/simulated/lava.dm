@@ -79,9 +79,8 @@
 	var/list/found_safeties = typecache_filter_list(contents, lava_safeties_typecache)
 	for(var/obj/structure/stone_tile/S in found_safeties)
 		if(S.fallen)
-			LAZYREMOVE(found_safeties, S)
-	return LAZYLEN(found_safeties)
-
+			found_safeties -= S
+	return found_safeties.len
 
 /turf/open/lava/proc/burn_stuff(AM)
 	. = 0

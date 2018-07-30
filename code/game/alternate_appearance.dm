@@ -48,8 +48,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 /datum/atom_hud/alternate_appearance/remove_from_hud(atom/A)
 	. = ..()
 	if(.)
-		LAZYREMOVE(A.alternate_appearances, appearance_key)
-
+		LAZYUNSETREMOVE(A.alternate_appearances, appearance_key)
 
 //an alternate appearance that attaches a single image to a single atom
 /datum/atom_hud/alternate_appearance/basic
