@@ -2040,6 +2040,14 @@
 	crate_name = "Bicycle Crate"
 	crate_type = /obj/structure/closet/crate/large
 
+/datum/supply_pack/misc/excercise_bikes
+	name = "Excercise Bikes"
+	desc = "For when the engineers delaminate the SM and you have no backup power generation this is a 5-pack! (Remember to anchor them into a power source before using!)"
+	cost = 1500
+	contains = list(/obj/machinery/power/excercise_bike=5)
+	crate_name = "Excercise Bicycle Crate"
+	crate_type = /obj/structure/closet/crate/large
+
 /datum/supply_pack/misc/bigband
 	name = "Big Band Instrument Collection"
 	desc = "Get your sad station movin' and groovin' with this fine collection! Contains nine different instruments!"

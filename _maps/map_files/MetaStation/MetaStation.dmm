@@ -2,10 +2,52 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
+"aab" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 1
+	},
+/area/crew_quarters/fitness/recreation)
 "aac" = (
 /obj/effect/landmark/carpspawn,
 /turf/open/space,
 /area/space)
+"aad" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/obj/structure/sign/poster/official/random{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
+"aae" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/obj/machinery/power/excercise_bike{
+	icon_state = "bike-off";
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 1
+	},
+/area/crew_quarters/fitness/recreation)
 "aaf" = (
 /obj/structure/lattice,
 /turf/open/space,
@@ -252,6 +294,19 @@
 	},
 /turf/open/floor/plating,
 /area/security/prison)
+"aaM" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/power/excercise_bike{
+	icon_state = "bike-off";
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 8
+	},
+/area/crew_quarters/fitness/recreation)
 "aaN" = (
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -3640,18 +3695,6 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/fore)
-"ahV" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/turf/open/floor/plasteel/neutral/corner{
-	dir = 1
-	},
-/area/crew_quarters/fitness/recreation)
 "ahW" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -4073,17 +4116,6 @@
 /obj/item/folder,
 /turf/open/floor/plating,
 /area/maintenance/fore)
-"aiQ" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -27
-	},
-/turf/open/floor/plasteel/neutral/corner{
-	dir = 1
-	},
-/area/crew_quarters/fitness/recreation)
 "aiR" = (
 /obj/structure/table,
 /obj/item/clothing/under/sl_suit{
@@ -73313,21 +73345,6 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"dhp" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
-/obj/structure/sign/poster/official/random{
-	pixel_x = -32
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
 "dhq" = (
 /obj/structure/table/reinforced,
 /obj/structure/light_construct/small{
@@ -112124,11 +112141,11 @@ acQ
 aft
 agt
 ahf
-ahV
-aiQ
-dhp
+aae
+aab
+aad
 alg
-alg
+aaM
 anF
 aoT
 aqc
