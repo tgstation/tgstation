@@ -726,6 +726,7 @@
 	dir = 4
 	},
 /obj/structure/frame/computer{
+	anchored = 1;
 	dir = 8
 	},
 /obj/item/shard,
@@ -1312,6 +1313,7 @@
 /area/shuttle/abandoned/bridge)
 "bZ" = (
 /obj/structure/frame/computer{
+	anchored = 1;
 	dir = 8
 	},
 /obj/item/shard,
@@ -2391,6 +2393,7 @@
 	dir = 4
 	},
 /obj/structure/frame/computer{
+	anchored = 1;
 	dir = 8
 	},
 /obj/item/shard,
@@ -2708,6 +2711,7 @@
 	name = "dust"
 	},
 /obj/structure/frame/computer{
+	anchored = 1;
 	dir = 4
 	},
 /obj/item/shard,

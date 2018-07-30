@@ -573,7 +573,7 @@
 
 /obj/item/circuitboard/machine/tesla_coil
 	name = "Tesla Controller (Machine Board)"
-	desc = "You can use a screwdriver to switch between Research and Power Generation"
+	desc = "You can use a screwdriver to switch between Research and Power Generation."
 	build_path = /obj/machinery/power/tesla_coil
 	req_components = list(/obj/item/stock_parts/capacitor = 1)
 	needs_anchored = FALSE

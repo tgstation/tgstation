@@ -460,7 +460,7 @@
 
 /datum/supply_pack/security/armory/laserarmor
 	name = "Reflector Vest Crate"
-	desc = "Contains two vests of highly reflective material. Each armor peice diffuses a laser's energy by over half, as well as offering a good chance to reflect the laser entirely. Requires Armory access to open."
+	desc = "Contains two vests of highly reflective material. Each armor piece diffuses a laser's energy by over half, as well as offering a good chance to reflect the laser entirely. Requires Armory access to open."
 	cost = 2000
 	contains = list(/obj/item/clothing/suit/armor/laserproof,
 					/obj/item/clothing/suit/armor/laserproof)
@@ -1078,7 +1078,7 @@
 
 /datum/supply_pack/medical/defibs
 	name = "Defibrillator Crate"
-	desc = "Contains two defibrillators for bringing the recently-deceased back to life."
+	desc = "Contains two defibrillators for bringing the recently deceased back to life."
 	cost = 2500
 	contains = list(/obj/item/defibrillator/loaded,
 					/obj/item/defibrillator/loaded)
@@ -1162,7 +1162,7 @@
 
 /datum/supply_pack/science/robotics/mecha_odysseus
 	name = "Circuit Crate (Odysseus)"
-	desc = "Ever wanted to build your own giant medical robot? Well now you can! Contains the Odysseus main control board and Odysseus peripherals board. Requires Robotics access to open."
+	desc = "Ever wanted to build your own giant medical robot? Well, now you can! Contains the Odysseus main control board and Odysseus peripherals board. Requires Robotics access to open."
 	cost = 2500
 	access = ACCESS_ROBOTICS
 	contains = list(/obj/item/circuitboard/mecha/odysseus/peripherals,
