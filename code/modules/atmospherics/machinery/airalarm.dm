@@ -155,6 +155,22 @@
 /obj/machinery/airalarm/syndicate //general syndicate access
 	req_access = list(ACCESS_SYNDICATE)
 
+/obj/machinery/airalarm/directional/north //Pixel offsets get overwritten on New()
+	dir = SOUTH
+	pixel_y = 24
+
+/obj/machinery/airalarm/directional/south
+	dir = NORTH
+	pixel_y = -24
+
+/obj/machinery/airalarm/directional/east
+	dir = WEST
+	pixel_x = 24
+
+/obj/machinery/airalarm/directional/west
+	dir = EAST
+	pixel_x = -24
+
 //all air alarms in area are connected via magic
 /area
 	var/list/air_vent_names = list()
