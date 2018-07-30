@@ -18,6 +18,11 @@
 	mood_change = 3
 	timeout = 3000
 
+/datum/mood_event/exercise
+	description = "<span class='nicegreen'>Working out releases those endorphins!</span>\n"
+	mood_change = 3
+	timeout = 3000
+
 /datum/mood_event/pet_corgi
 	description = "<span class='nicegreen'>Corgis are adorable! I can't stop petting them!</span>\n"
 	mood_change = 3

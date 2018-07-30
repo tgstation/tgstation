@@ -15348,7 +15348,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/weightlifter,
+/obj/structure/weightmachine/weightlifter,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
@@ -59730,7 +59730,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/weightlifter,
+/obj/structure/weightmachine/weightlifter,
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/fitness/recreation)
 "czj" = (
@@ -59746,7 +59746,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
-/obj/structure/stacklifter,
+/obj/structure/weightmachine/stacklifter,
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/fitness/recreation)
 "czl" = (
@@ -61917,7 +61917,7 @@
 	},
 /area/crew_quarters/fitness/recreation)
 "cDK" = (
-/obj/structure/stacklifter,
+/obj/structure/weightmachine/stacklifter,
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/fitness/recreation)
 "cDL" = (
@@ -61928,7 +61928,7 @@
 /turf/open/floor/plasteel/neutral/side,
 /area/crew_quarters/fitness/recreation)
 "cDN" = (
-/obj/structure/weightlifter,
+/obj/structure/weightmachine/weightlifter,
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/fitness/recreation)
 "cDO" = (
