@@ -105,7 +105,7 @@
 		src.visible_message("<span class='danger'>[src] rams into [C] and knocks them down!</span>")
 		C.Knockdown(50)
 		playsound(src, pick('sound/vehicles/clowncar_ram1.ogg', 'sound/vehicles/clowncar_ram2.ogg', 'sound/vehicles/clowncar_ram3.ogg'), 75)
-	else if(istype(M, /obj/structure/window) || istype(M, /turf/closed))
+	else if(istype(M, /turf/closed))
 		src.visible_message("<span class='warning'>[src] rams into [M] and crashes!</span>")
 		playsound(src, pick('sound/vehicles/clowncar_crash1.ogg', 'sound/vehicles/clowncar_crash2.ogg'), 75)
 		DumpMobs()
