@@ -325,11 +325,11 @@
 
 /datum/map_template/shuttle/whiteship/box
 	suffix = "box"
-	name = "NT Medical Ship"
+	name = "Hospital Ship"
 
 /datum/map_template/shuttle/whiteship/meta
 	suffix = "meta"
-	name = "NT Recovery Whiteship"
+	name = "Salvage Ship"
 
 /datum/map_template/shuttle/whiteship/pubby
 	suffix = "pubby"
@@ -341,8 +341,11 @@
 
 /datum/map_template/shuttle/whiteship/delta
 	suffix = "delta"
-	name = "Unnamed NT Vessel"
-	admin_notes = "The Delta whiteship doesn't have a name, apparently."
+	name = "NT Luxury Frigate"
+
+/datum/map_template/shuttle/whiteship/pod
+	suffix = "whiteship_pod"
+	name = "Salvage Pod"
 
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
