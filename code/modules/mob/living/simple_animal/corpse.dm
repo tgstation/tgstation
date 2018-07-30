@@ -75,7 +75,7 @@
 
 /obj/effect/mob_spawn/human/corpse/pirate
 	name = "Pirate"
-	skin_tone = "Caucasian1" //all pirates are white because it's easier that way
+	skin_tone = "caucasian1" //all pirates are white because it's easier that way
 	outfit = /datum/outfit/piratecorpse
 	hair_style = "Bald"
 	facial_hair_style = "Shaved"
@@ -154,7 +154,7 @@
 	outfit = /datum/outfit/wizardcorpse
 	hair_style = "Bald"
 	facial_hair_style = "Long Beard"
-	skin_tone = "Caucasian1"
+	skin_tone = "caucasian1"
 
 /datum/outfit/wizardcorpse
 	name = "Space Wizard Corpse"

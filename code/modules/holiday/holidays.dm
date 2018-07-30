@@ -205,7 +205,7 @@
 	name = "UFO Day"
 	begin_day = 2
 	begin_month = JULY
-	drone_hat = /obj/item/clothing/mask/facehugger/dead 
+	drone_hat = /obj/item/clothing/mask/facehugger/dead
 
 /datum/holiday/UFO/getStationPrefix() //Is such a thing even possible?
 	return pick("Ayy","Truth","Tsoukalos","Mulder") //Yes it is!
@@ -365,6 +365,15 @@
 	begin_week = 3
 	begin_month = JUNE
 	begin_weekday = SUNDAY
+
+/datum/holiday/moth
+	name = "Moth Week"
+
+/datum/holiday/moth/shouldCelebrate(dd, mm, yy, ww, ddd) //National Moth Week falls on the last full week of July
+	return mm == JULY && (ww == 4 || (ww == 5 && ddd == SUNDAY))
+
+/datum/holiday/moth/getStationPrefix()
+	return pick("Mothball","Lepidopteran","Lightbulb","Moth","Giant Atlas","Twin-spotted Sphynx","Madagascan Sunset","Luna","Death's Head","Emperor Gum","Polyphenus","Oleander Hawk","Io","Rosy Maple","Cecropia","Noctuidae","Giant Leopard","Dysphania Militaris","Garden Tiger")
 
 /datum/holiday/ramadan
 	name = "Start of Ramadan"
