@@ -125,6 +125,11 @@ GLOBAL_VAR(restart_counter)
 	if(GLOB.round_id)
 		log_game("Round ID: [GLOB.round_id]")
 
+	// This was printed early in startup to the world log and config_error.log,
+	// but those are both private, so let's put the commit info in the runtime
+	// log which is ultimately public.
+	log_runtime(GLOB.revdata.get_log_message())
+
 /world/Topic(T, addr, master, key)
 	TGS_TOPIC	//redirect to server tools if necessary
 
