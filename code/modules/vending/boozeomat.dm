@@ -63,6 +63,9 @@
 					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 4);
 	req_access = list(ACCESS_CAPTAIN)
 
+/obj/machinery/vending/boozeomat/syndicate_access
+	req_access = list(ACCESS_SYNDICATE)
+
 /obj/item/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"
 	icon_state = "refill_booze"

@@ -1,9 +1,24 @@
-/datum/component/rad_insulation // Yes, this really is just a component to add some vars
+/datum/component/rad_insulation
 	var/amount					// Multiplier for radiation strength passing through
-	var/protects				// Does this protect things in its contents from being affected?
-	var/contamination_proof		// Can this object be contaminated?
 
-/datum/component/rad_insulation/Initialize(_amount=RAD_MEDIUM_INSULATION, _protects=TRUE, _contamination_proof=TRUE)
+/datum/component/rad_insulation/Initialize(_amount=RAD_MEDIUM_INSULATION, protects=TRUE, contamination_proof=TRUE)
+	if(!isatom(parent))
+		return COMPONENT_INCOMPATIBLE
+
+	if(protects) // Does this protect things in its contents from being affected?
+		RegisterSignal(parent, COMSIG_ATOM_RAD_PROBE, .proc/rad_probe_react)
+	if(contamination_proof) // Can this object be contaminated?
+		RegisterSignal(parent, COMSIG_ATOM_RAD_CONTAMINATING, .proc/rad_contaminating)
+	if(_amount != 1) // If it's 1 it wont have any impact on radiation passing through anyway
+		RegisterSignal(parent, COMSIG_ATOM_RAD_WAVE_PASSING, .proc/rad_pass)
+
 	amount = _amount
-	protects = _protects
-	contamination_proof = _contamination_proof
+
+/datum/component/rad_insulation/proc/rad_probe_react()
+	return COMPONENT_BLOCK_RADIATION
+
+/datum/component/rad_insulation/proc/rad_contaminating(strength)
+	return COMPONENT_BLOCK_CONTAMINATION
+
+/datum/component/rad_insulation/proc/rad_pass(datum/radiation_wave/wave, width)
+	wave.intensity = wave.intensity*(1-((1-amount)/width)) // The further out the rad wave goes the less it's affected by insulation (larger width)

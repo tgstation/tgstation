@@ -73,7 +73,7 @@
 
 	using = new /obj/screen/resist()
 	using.icon = ui_style
-	using.screen_loc = ui_pull_resist
+	using.screen_loc = ui_above_movement
 	hotkeybuttons += using
 
 	throw_icon = new /obj/screen/throw_catch()
@@ -84,7 +84,7 @@
 	pull_icon = new /obj/screen/pull()
 	pull_icon.icon = ui_style
 	pull_icon.update_icon(mymob)
-	pull_icon.screen_loc = ui_pull_resist
+	pull_icon.screen_loc = ui_above_movement
 	static_inventory += pull_icon
 
 //begin indicators
@@ -121,7 +121,3 @@
 		for(var/obj/item/I in H.held_items)
 			I.screen_loc = null
 			H.client.screen -= I
-
-/mob/living/carbon/alien/humanoid/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/alien(src)

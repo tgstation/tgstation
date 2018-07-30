@@ -62,6 +62,35 @@
 	name = "Pirate Shuttle Vault"
 	requires_power = FALSE
 
+////////////////////////////White Ship////////////////////////////
+
+/area/shuttle/abandoned
+	name = "Abandoned Ship"
+	blob_allowed = FALSE
+	requires_power = TRUE
+	canSmoothWithAreas = /area/shuttle/abandoned
+
+/area/shuttle/abandoned/bridge
+	name = "Abandoned Ship Bridge"
+
+/area/shuttle/abandoned/engine
+	name = "Abandoned Ship Engine"
+
+/area/shuttle/abandoned/bar
+	name = "Abandoned Ship Bar"
+
+/area/shuttle/abandoned/crew
+	name = "Abandoned Ship Crew Quarters"
+
+/area/shuttle/abandoned/cargo
+	name = "Abandoned Ship Cargo Bay"
+
+/area/shuttle/abandoned/medbay
+	name = "Abandoned Ship Medbay"
+
+/area/shuttle/abandoned/pod
+	name = "Abandoned Ship Pod"
+
 ////////////////////////////Single-area shuttles////////////////////////////
 
 /area/shuttle/transit
@@ -123,10 +152,6 @@
 
 /area/shuttle/assault_pod
 	name = "Steel Rain"
-	blob_allowed = FALSE
-
-/area/shuttle/abandoned
-	name = "Abandoned Ship"
 	blob_allowed = FALSE
 
 /area/shuttle/sbc_starfury

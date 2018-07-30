@@ -26,6 +26,7 @@
 	filling_color = "#FF6347"
 	bitesize_mod = 3
 	foodtype = VEGETABLES | GROSS
+	distill_reagent = "vermouth"
 
 // Lily
 /obj/item/seeds/poppy/lily
@@ -61,7 +62,6 @@
 	icon_state = "geranium"
 	filling_color = "#008B8B"
 
-
 // Harebell
 /obj/item/seeds/harebell
 	name = "pack of harebell seeds"
@@ -89,7 +89,7 @@
 	slot_flags = ITEM_SLOT_HEAD
 	filling_color = "#E6E6FA"
 	bitesize_mod = 3
-
+	distill_reagent = "vermouth"
 
 // Sunflower
 /obj/item/seeds/sunflower
@@ -152,6 +152,7 @@
 	slot_flags = ITEM_SLOT_HEAD
 	filling_color = "#E6E6FA"
 	bitesize_mod = 2
+	distill_reagent = "absinthe" //It's made from flowers.
 
 // Novaflower
 /obj/item/seeds/sunflower/novaflower

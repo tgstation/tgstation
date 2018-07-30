@@ -1,0 +1,4 @@
+author: "Basilman"
+delete-after: True
+changes: 
+  - bugfix: "fixed BM Speedwagon offsets"

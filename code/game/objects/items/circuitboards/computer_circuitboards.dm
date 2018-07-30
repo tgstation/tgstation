@@ -234,7 +234,7 @@
 
 /obj/item/circuitboard/computer/bounty
 	name = "Nanotrasen Bounty Console (Computer Board)"
-	build_path = /obj/machinery/computer/cargo/request
+	build_path = /obj/machinery/computer/bounty
 
 /obj/item/circuitboard/computer/operating
 	name = "Operating Computer (Computer Board)"
@@ -279,6 +279,14 @@
 /obj/item/circuitboard/computer/white_ship
 	name = "White Ship (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/white_ship
+
+/obj/item/circuitboard/computer/white_ship/pod
+	name = "Salvage Pod (Computer Board)"
+	build_path = /obj/machinery/computer/shuttle/white_ship/pod
+
+/obj/item/circuitboard/computer/white_ship/pod/recall
+	name = "Salvage Pod Recall (Computer Board)"
+	build_path = /obj/machinery/computer/shuttle/white_ship/pod/recall
 
 /obj/item/circuitboard/computer/auxillary_base
 	name = "Auxillary Base Management Console (Computer Board)"

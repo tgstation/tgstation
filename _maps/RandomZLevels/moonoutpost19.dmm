@@ -4454,7 +4454,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "jc" = (
 /obj/structure/table,
-/obj/item/book/manual/detective,
+/obj/item/book/manual/wiki/detective,
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -4772,7 +4772,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "jP" = (
 /obj/structure/table,
-/obj/item/book/manual/barman_recipes{
+/obj/item/book/manual/wiki/barman_recipes{
 	pixel_y = 5
 	},
 /obj/item/reagent_containers/food/drinks/shaker,

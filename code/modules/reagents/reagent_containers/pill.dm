@@ -154,7 +154,7 @@
 	icon_state = "pill18"
 	list_reagents = list("insulin" = 50)
 	roundstart = 1
-///////////////////////////////////////// this pill is used only in a legion mob drop 
+///////////////////////////////////////// this pill is used only in a legion mob drop
 /obj/item/reagent_containers/pill/shadowtoxin
 	name = "black pill"
 	desc = "I wouldn't eat this if I were you."
@@ -181,5 +181,18 @@
 	name = "speedy pill"
 	list_reagents = list("aranesp" = 10)
 
+/obj/item/reagent_containers/pill/floorpill
+	name = "floorpill"
+	desc = "A strange pill found in the depths of maintenance"
+	icon_state = "pill21"
+	var/static/list/names = list("maintenance pill","floorpill","mystery pill","suspicious pill","strange pill")
+	var/static/list/descs = list("Your feeling is telling you no, but...","Drugs are expensive, you can't afford not to eat any pills that you find."\
+	, "Surely, there's no way this could go bad.")
 
-
+/obj/item/reagent_containers/pill/floorpill/Initialize()
+	list_reagents = list(get_random_reagent_id() = rand(10,50))
+	. = ..()
+	name = pick(names)
+	if(prob(20))
+		desc = pick(descs)
+	

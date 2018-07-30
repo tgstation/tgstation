@@ -23,7 +23,7 @@
 	last_host_loc = host.loc
 	if(movement_tracker)
 		QDEL_NULL(movement_tracker)
-	movement_tracker = host.AddComponent(/datum/component/redirect, COMSIG_MOVABLE_MOVED, CALLBACK(src, .proc/HandleMove))
+	movement_tracker = host.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/HandleMove)))
 	SetRange(current_range,TRUE)
 
 /datum/proximity_monitor/Destroy()

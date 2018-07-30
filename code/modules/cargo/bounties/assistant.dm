@@ -13,7 +13,7 @@
 
 /datum/bounty/item/assistant/skateboard
 	name = "Skateboard"
-	description = "Nanotrasen has determined walking to be a wasteful. Ship a skateboard to CentCom to speed operations up."
+	description = "Nanotrasen has determined walking to be wasteful. Ship a skateboard to CentCom to speed operations up."
 	reward = 900 // the tony hawk
 	wanted_types = list(/obj/vehicle/ridden/scooter/skateboard)
 
@@ -155,18 +155,6 @@
 	required_count = 5
 	wanted_types = list(/obj/structure/chair/comfy)
 
-/datum/bounty/item/assistant/revolver
-	name = "Revolver"
-	description = "Captain Johann of station 12 has challenged Captain Vic of station 11 to a duel. He's asked for help securing an appropriate revolver to use."
-	reward = 2000
-	wanted_types = list(/obj/item/gun/ballistic/revolver)
-
-/datum/bounty/item/assistant/hand_tele
-	name = "Hand Tele"
-	description = "Central Command has come up with a genius idea: Why not teleport cargo rather than ship it? Send over a hand tele, receive payment, then wait 6-8 years while they deliberate."
-	reward = 2000
-	wanted_types = list(/obj/item/hand_tele)
-
 /datum/bounty/item/assistant/geranium
 	name = "Geraniums"
 	description = "Commander Zot has the hots for Commander Zena. Send a shipment of geraniums - her favorite flower - and he'll happily reward you."
@@ -230,7 +218,7 @@
 
 /datum/bounty/item/assistant/bonfire
 	name = "Lit Bonfire"
-	description = "Space heaters are malfunctioning and the cargo crew of Central Command is starting to feel  cold. Ship a lit bonfire to warm them up."
+	description = "Space heaters are malfunctioning and the cargo crew of Central Command is starting to feel cold. Ship a lit bonfire to warm them up."
 	reward = 5000
 	wanted_types = list(/obj/structure/bonfire)
 
