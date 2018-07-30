@@ -466,7 +466,7 @@
 				S.attackby_react(I,user,user.a_intent)
 			return ..()
 		var/obj/item/stock_parts/cell = I
-		user.transferItemToLoc(I, loc)
+		user.transferItemToLoc(I, contents)
 		cell.forceMove(src)
 		battery = cell
 		diag_hud_set_circuitstat() //update diagnostic hud
