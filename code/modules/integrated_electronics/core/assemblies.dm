@@ -539,7 +539,7 @@
 
 	if(input_selection)
 		if(input_selection.len ==1)
-			choice = input_selection[1]
+			choice = input_selection[input_selection[1]]
 		else
 			var/selection = input(user, "What do you want to interact with?", "Interaction") as null|anything in input_selection
 			if(!check_interactivity(user))
