@@ -510,7 +510,7 @@
 		if(choice)
 			choice.additem(I, user)
 		for(var/obj/item/integrated_circuit/input/S in assembly_components)
-		S.attackby_react(I,user,user.a_intent)
+			S.attackby_react(I,user,user.a_intent)
 		return ..()
 
 
