@@ -504,12 +504,14 @@
 		else
 			var/selection = input(user, "Where do you want to insert that item?", "Interaction") as null|anything in input_selection
 			if(!check_interactivity(user))
-				return FALSE
+				return ..()
 			if(selection)
 				choice = input_selection[selection]
 		if(choice)
 			choice.additem(I, user)
-		return TRUE
+		for(var/obj/item/integrated_circuit/input/S in assembly_components)
+		S.attackby_react(I,user,user.a_intent)
+		return ..()
 
 
 /obj/item/electronic_assembly/attack_self(mob/user)
