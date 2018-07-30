@@ -267,7 +267,7 @@
 		if(target)
 			if(targets_from && isturf(targets_from.loc) && target.Adjacent(targets_from)) //If they're next to us, attack
 				MeleeAction()
-			else if(rapid_melee && target_distance <= melee_queue_distance)
+			else if(rapid_melee > 1 && target_distance <= melee_queue_distance)
 				MeleeAction(FALSE)
 			return 1
 		return 0
