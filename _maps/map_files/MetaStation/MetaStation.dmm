@@ -29167,7 +29167,9 @@
 	dir = 4;
 	pixel_x = -23
 	},
-/obj/machinery/modular_computer/console/preset/command,
+/obj/machinery/modular_computer/console/preset/research{
+	name = "research console"
+	},
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 9
 	},
@@ -29177,7 +29179,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 29
 	},
-/obj/machinery/modular_computer/console/preset/engineering,
+/obj/machinery/computer/rdconsole,
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 1
 	},
@@ -53134,10 +53136,10 @@
 	},
 /area/medical/chemistry)
 "cjX" = (
-/obj/machinery/computer/rdconsole/core{
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/computer/rdconsole/production{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "cjY" = (
@@ -54445,10 +54447,10 @@
 /turf/open/floor/plasteel,
 /area/science/explab)
 "cmT" = (
-/obj/machinery/computer/rdconsole/experiment,
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
+/obj/machinery/computer/rdconsole/production,
 /turf/open/floor/plasteel,
 /area/science/explab)
 "cmU" = (
@@ -63938,9 +63940,6 @@
 	},
 /area/hallway/primary/aft)
 "cGa" = (
-/obj/machinery/computer/rdconsole/robotics{
-	dir = 4
-	},
 /obj/machinery/requests_console{
 	department = "Robotics";
 	departmentType = 2;
@@ -63949,6 +63948,9 @@
 	receive_ore_updates = 1
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/computer/rdconsole/production{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "cGb" = (
