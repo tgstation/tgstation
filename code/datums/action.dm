@@ -487,6 +487,27 @@
 	else
 		to_chat(owner, "<span class='cultitalic'>Your hands are full!</span>")
 
+/datum/action/item_action/agent_box
+	name = "Deploy Box"
+	desc = "Find inner peace, here, in the box."
+	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUN | AB_CHECK_CONSCIOUS
+	background_icon_state = "bg_agent"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "deploy_box"
+	var/cooldown = 0
+	var/obj/structure/closet/cardboard/agent/box
+
+/datum/action/item_action/agent_box/Trigger()
+	if(!box)
+		if(cooldown < world.time - 30)
+			box = new(get_turf(owner))
+			owner.forceMove(box)
+			cooldown = world.time
+			owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
+	else
+		owner.forceMove(get_turf(box))
+		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
+		QDEL_NULL(box)
 
 //Preset for spells
 /datum/action/spell_action
