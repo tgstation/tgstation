@@ -92,7 +92,7 @@
 /datum/component/proc/RegisterSignal(datum/target, sig_type_or_types, proc_or_callback, override = FALSE)
 	if(QDELETED(src) || QDELETED(target))
 		return
-	
+
 	var/list/procs = signal_procs
 	if(!procs)
 		signal_procs = procs = list()
@@ -237,7 +237,10 @@
 
 	if(dm != COMPONENT_DUPE_ALLOWED)
 		if(!dt)
-			old_comp = GetExactComponent(nt)
+			if(ispath(nt))
+				old_comp = GetExactComponent(nt)
+			else
+				old_comp = GetExactComponent(nt.type)
 		else
 			old_comp = GetComponent(dt)
 		if(old_comp)
