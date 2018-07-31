@@ -1,0 +1,5 @@
+author: "Hate9"
+delete-after: True
+changes: 
+  - rscadd: "Added tiny-sized circuits (called Devices)"
+  - imageadd: "added new icons for the Devices"
