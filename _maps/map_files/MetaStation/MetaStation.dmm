@@ -57916,7 +57916,7 @@
 /area/science/nanite)
 "ctM" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Nanite Laboratory Range Maintenance";
+	name = "Nanite Laboratory Maintenance";
 	req_one_access_txt = "7;47;29"
 	},
 /obj/structure/disposalpipe/segment,
