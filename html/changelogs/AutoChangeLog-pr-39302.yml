@@ -1,0 +1,4 @@
+author: "Basilman"
+delete-after: True
+changes: 
+  - rscadd: "Added the stealth manual to the uplink, costs 8 TC. Find it under the implant section"
