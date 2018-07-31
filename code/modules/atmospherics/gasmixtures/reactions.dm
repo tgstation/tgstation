@@ -50,18 +50,14 @@
 #define FUSION_EFFICIENCY_DIVISOR			0.6		//ditto
 #define FUSION_RADIATION_FACTOR				15000	//horizontal asymptote
 #define FUSION_RADIATION_CONSTANT			30		//equation is form of (ax) / (x + b), where a = radiation factor and b = radiation constant and x = power ratio (https://www.desmos.com/calculator/4i1f296phl)
-#define FUSION_VOLUME_SUPER					100		//volume of the sound the fusion noises make
-#define FUSION_VOLUME_HIGH					50
-#define FUSION_VOLUME_MID					25
-#define FUSION_VOLUME_LOW					10
-#define FUSION_ZAP_POWER_ASYMPTOTE			56400	//56400 is 94 x 600, which means at power ratios approaching infinity tesla zap can do at most 99 damage to someone (no instacrits)
+#define FUSION_ZAP_POWER_ASYMPTOTE			20000	//maximum value
 #define FUSION_ZAP_POWER_CONSTANT			75		//equation is of from [ax / (x + b)] + c, where a = zap power asymptote, b = zap power constant, c = zap power base and x = power ratio
-#define FUSION_ZAP_POWER_BASE				1000	//(https://www.desmos.com/calculator/c2kmlxngrq)
+#define FUSION_ZAP_POWER_BASE				1000	//(https://www.desmos.com/calculator/rvq3gxfieh)
 #define FUSION_ZAP_RANGE_SUPER				9		//range of the tesla zaps that occur from fusion
 #define FUSION_ZAP_RANGE_HIGH				7
 #define FUSION_ZAP_RANGE_MID				5
 #define FUSION_ZAP_RANGE_LOW				3
-#define FUSION_PARTICLE_FACTOR_SUPER		4		//# of particles fired out is equal to rand(2,5)
+#define FUSION_PARTICLE_FACTOR_SUPER		4		//# of particles fired out is equal to rand(3,6) * this for whatever tier
 #define FUSION_PARTICLE_FACTOR_HIGH			3
 #define FUSION_PARTICLE_FACTOR_MID			2
 #define FUSION_PARTICLE_FACTOR_LOW			1
@@ -264,53 +260,6 @@
 
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again).
 
-//Nuclear particle projectile - a deadly side effect of fusion
-/obj/item/projectile/nuclear_particle
-	name = "nuclear particle"
-	icon_state = "nuclear_particle"
-	damage = 20
-	damage = TOX 
-	flag = "energy"
-	var/static/list/particle_colors = list(
-		"red" = "#FF0000",
-		"blue" = "#00FF00",
-		"green" = "#0000FF",
-		"yellow" = "#FFFF00",
-		"cyan" = "#00FFFF",
-		"purple" = "#FF00FF"
-	)
-	var/radiation_strength = 2500 //enough to knockdown and induce vomiting
-
-/obj/item/projectile/nuclear_particle/Initialize()
-	. = ..()
-	//Random color time!
-	var/our_color = pick(particle_colors)
-	add_atom_colour(particle_colors[our_color], FIXED_COLOUR_PRIORITY)
-	set_light(3, 1, particle_colors[our_color]) //Range of 3, brightness of 1 - A little bit less than a flashlight
-
-/obj/item/projectile/nuclear_particle/on_hit(atom/target)
-	if(target && isliving(target))
-		target.rad_act(radiation_strength)
-
-/atom/proc/fire_nuclear_particles(power_ratio) //used by fusion to fire random # of nuclear particles - power ratio determines about how many are fired
-	var/random_particles = rand(2,5)
-	var/particles_to_fire
-	switch(power_ratio) //multiply random_particles * factor for whatever tier
-		if(0 to FUSION_MID_TIER_THRESHOLD)
-			particles_to_fire = random_particles * FUSION_PARTICLE_FACTOR_LOW
-		if(FUSION_MID_TIER_THRESHOLD to FUSION_HIGH_TIER_THRESHOLD)
-			particles_to_fire = random_particles * FUSION_PARTICLE_FACTOR_MID
-		if(FUSION_HIGH_TIER_THRESHOLD to FUSION_SUPER_TIER_THRESHOLD)
-			particles_to_fire = random_particles * FUSION_PARTICLE_FACTOR_HIGH
-		if(FUSION_SUPER_TIER_THRESHOLD to INFINITY)
-			particles_to_fire = random_particles * FUSION_PARTICLE_FACTOR_SUPER
-	while(particles_to_fire)
-		var/angle = rand(0, 360)
-		var/obj/item/particle/nuclear_particle/P = new /obj/item/projectile/nuclear_particle(src)
-		addtimer(CALLBACK(P, .proc/fire, angle), 2) //delay each particle firing by 2 deciseconds
-		particles_to_fire--
-
-//the actual fusion reaction
 /datum/gas_reaction/fusion
 	exclude = FALSE
 	priority = 2
@@ -329,7 +278,7 @@
 /datum/gas_reaction/fusion/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
-	var/list/cached_results = air.reaction_results //used for having analyzers detect fusion reactions that occur
+	var/list/cached_results = air.reaction_results
 	var/turf/open/location
 	if (istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
 		var/datum/pipeline/fusion_pipenet = holder
@@ -342,79 +291,70 @@
 
 	var/mediation = FUSION_MEDIATION_FACTOR*(air.heat_capacity()-(cached_gases[/datum/gas/plasma][MOLES]*cached_gases[/datum/gas/plasma][GAS_META][META_GAS_SPECIFIC_HEAT]))/(air.total_moles()-cached_gases[/datum/gas/plasma][MOLES]) //This is the average specific heat of the mixture,not including plasma.
 
-	var/moles_excluding_plasma = air.total_moles() - cached_gases[/datum/gas/plasma][MOLES]
-	var/plasma_differential = (cached_gases[/datum/gas/plasma][MOLES] - moles_excluding_plasma) / air.total_moles()
+	var/gases_fused = air.total_moles() - cached_gases[/datum/gas/plasma][MOLES]
+	var/plasma_differential = (cached_gases[/datum/gas/plasma][MOLES] - gases_fused) / air.total_moles()
 	var/reaction_efficiency = FUSION_EFFICIENCY_BASE ** -((plasma_differential ** 2) / FUSION_EFFICIENCY_DIVISOR) //https://www.desmos.com/calculator/6jjx3vdrvx
-	var/gases_fused = air.total_moles()
 
 	var/gas_power = 0
-	for (var/id in cached_gases)
-		gas_power += reaction_efficiency * (cached_gases[id][GAS_META][META_GAS_FUSION_POWER]*cached_gases[id][MOLES])
+	for (var/gas_id in cached_gases)
+		gas_power += reaction_efficiency * (cached_gases[gas_id][GAS_META][META_GAS_FUSION_POWER]*cached_gases[gas_id][MOLES])
 
 	var/power_ratio = gas_power/mediation
+	cached_results[id] = power_ratio //used for analyzer feedback
+
+	for (var/gas_id in cached_gases) //and now we fuse
+		cached_gases[gas_id][MOLES] = 0
+
 	var/radiation_power = (FUSION_RADIATION_FACTOR * power_ratio) / (power_ratio + FUSION_RADIATION_CONSTANT) //https://www.desmos.com/calculator/4i1f296phl
 	var/zap_power = ((FUSION_ZAP_POWER_ASYMPTOTE * power_ratio) / (power_ratio + FUSION_ZAP_POWER_CONSTANT)) + FUSION_ZAP_POWER_BASE //https://www.desmos.com/calculator/n0zkdpxnrr
+	var/do_explosion = FALSE
+	var/zap_range //these ones are set later
+	var/fusion_prepare_to_die_edition_rng
 
-	if (power_ratio > FUSION_SUPER_TIER_THRESHOLD) //power ratio 50+: SUPER TIER. The gases become so energized that they fuse into stimulum and pluoxium, which is pretty nice! IF you can salvage them, which is going to be hard because this reaction is ridiculously dangerous.
+	if (power_ratio > FUSION_SUPER_TIER_THRESHOLD) //power ratio 50+: SUPER TIER. The gases become so energized that they fuse into a ton of tritium, which is pretty nice! Until you consider the fact that everything just exploded, the canister is probably going to break and you're irradiated.
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_SUPER * (power_ratio / FUSION_ENERGY_DIVISOR_SUPER)
-		for (var/id in cached_gases)
-			cached_gases[id][MOLES] = 0
 		cached_gases[/datum/gas/tritium][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_TRITIUM //60% of the gas is converted to energy, 40% to trit
-		if (location) //It's going to happen regardless of whether you want it to or not
-			radiation_pulse(location, radiation_power * 2)
-			explosion(location,0,1,6,power_ratio,TRUE,TRUE)//A decent explosion with a huge shockwave. People WILL know you're doing fusion.
-			tesla_zap(location, FUSION_ZAP_RANGE_SUPER, zap_power) //larpers beware
-			playsound(location, 'sound/effects/supermatter.ogg', FUSION_VOLUME_SUPER, 0)
+		fusion_prepare_to_die_edition_rng = 100 //Wait a minute..
+		do_explosion = TRUE			
+		zap_range = FUSION_ZAP_RANGE_SUPER
 
-	else if (power_ratio > FUSION_HIGH_TIER_THRESHOLD) //power ratio 20-50; High tier. Fuses into one big atom which then turns to tritium instantly. Very dangerous, but super cool.
+	else if (power_ratio > FUSION_HIGH_TIER_THRESHOLD) //power ratio 20-50; High tier. The reaction is so energized that it fuses into a small amount of stimulum, and some pluoxium. Very dangerous, but super cool and super useful.
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_HIGH * (power_ratio / FUSION_ENERGY_DIVISOR_HIGH)
-		for (var/id in cached_gases)
-			cached_gases[id][MOLES] = 0
 		air.assert_gases(/datum/gas/stimulum, /datum/gas/pluoxium)
 		cached_gases[/datum/gas/stimulum][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_STIM //40% of the gas is converted to energy, 60% to stim and pluox
 		cached_gases[/datum/gas/pluoxium][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_PLUOX
-		if (location)
-			if(prob(power_ratio)) //You really don't want this to happen.
-				radiation_pulse(location, radiation_power)
-				explosion(location,0,0,3,power_ratio * 0.5,TRUE,TRUE)//A tiny explosion with a large shockwave. People will know you're doing fusion.
-				playsound(location, 'sound/effects/supermatter.ogg', FUSION_VOLUME_HIGH, 0)
-			else
-				playsound(location, 'sound/effects/phasein.ogg', FUSION_VOLUME_HIGH, 0)
-			tesla_zap(location, FUSION_ZAP_RANGE_HIGH, zap_power)
+		fusion_prepare_to_die_edition_rng = power_ratio //Now we're getting into dangerous territory
+		do_explosion = TRUE
+		zap_range = FUSION_ZAP_RANGE_HIGH
 
 	else if (power_ratio > FUSION_MID_TIER_THRESHOLD) //power_ratio 5 to 20; Mediation is overpowered, fusion reaction starts to break down.
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_MID * (power_ratio / FUSION_ENERGY_DIVISOR_MID)
-		for (var/id in cached_gases)
-			cached_gases[id][MOLES] = 0
 		air.assert_gases(/datum/gas/nitryl,/datum/gas/nitrous_oxide)
 		cached_gases[/datum/gas/nitryl][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_NITRYL //20% of the gas is converted to energy, 80% to nitryl and N2O
 		cached_gases[/datum/gas/nitrous_oxide][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_N2O
-		if (location)
-			if(prob(power_ratio * FUSION_MID_TIER_RAD_PROB_FACTOR)) //Still weak, but don't stand next to it unprotected
-				radiation_pulse(location, radiation_power * 0.5)
-				playsound(location, 'sound/effects/supermatter.ogg', FUSION_VOLUME_MID, 0)
-			else
-				playsound(location, 'sound/effects/phasein.ogg', FUSION_VOLUME_MID, 0)
-			tesla_zap(location, FUSION_ZAP_RANGE_MID, zap_power)
+		fusion_prepare_to_die_edition_rng = power_ratio * FUSION_MID_TIER_RAD_PROB_FACTOR //Still unlikely, but don't stand next to the reaction unprotected
+		zap_range = FUSION_ZAP_RANGE_MID
 
 	else //power ratio 0 to 5; Gas power is overpowered. Fusion isn't nearly as powerful.
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_LOW * (power_ratio / FUSION_ENERGY_DIVISOR_LOW)
-		for (var/gas in cached_gases)
-			cached_gases[gas][MOLES] = 0
 		air.assert_gases(/datum/gas/bz, /datum/gas/carbon_dioxide)
 		cached_gases[/datum/gas/bz][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_BZ //10% of the gas is converted to energy, 90% to BZ and CO2
 		cached_gases[/datum/gas/carbon_dioxide][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_CO2
-		if (location)
-			if(prob(power_ratio * FUSION_LOW_TIER_RAD_PROB_FACTOR)) //Weak, but still something to look out for
-				radiation_pulse(location, radiation_power * 0.25)
-				playsound(location, 'sound/effects/supermatter.ogg', FUSION_VOLUME_LOW, 0)
-			else
-				playsound(location, 'sound/effects/phasein.ogg', FUSION_VOLUME_LOW, 0)
-			tesla_zap(location, FUSION_ZAP_RANGE_LOW, zap_power)
-	cached_results[id] = power_ratio
-	//Other effects not necessarily specific to each tier
+		fusion_prepare_to_die_edition_rng = power_ratio * FUSION_LOW_TIER_RAD_PROB_FACTOR //Low, but still something to look out for
+		zap_range = FUSION_ZAP_RANGE_LOW
+
+	//All the deadly consequences of fusion, consolidated for your viewing pleasure
 	if (location)
-		location.fire_nuclear_particles(power_ratio)
+		if(prob(fusion_prepare_to_die_edition_rng)) //Some.. permanent effects
+			if(do_explosion)
+				explosion(location, 0, 0, 5, power_ratio, TRUE, TRUE) //large shockwave, the actual radius is quite small - people will recognize that you're doing fusion
+			radiation_pulse(location, radiation_power) //You mean causing a super-tier fusion reaction in the halls is a bad idea?
+			playsound(location, 'sound/effects/supermatter.ogg', 100, 0)
+		else
+			playsound(location, 'sound/effects/phasein.ogg', 75, 0)
+		//These will always happen, so be prepared
+		tesla_zap(location, zap_range, zap_power, TESLA_FUSION_FLAGS) //larpers beware
+		location.fire_nuclear_particles(power_ratio) //see code/modules/projectile/energy/nuclear_particle.dm
 
 	if(reaction_energy > 0)
 		var/new_heat_capacity = air.heat_capacity()
