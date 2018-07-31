@@ -72,6 +72,9 @@
 	if(check_click_intercept(params,A))
 		return
 
+	if(notransform)
+		return
+
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["middle"])
 		ShiftMiddleClickOn(A)
