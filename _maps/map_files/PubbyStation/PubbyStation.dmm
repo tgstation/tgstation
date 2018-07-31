@@ -41874,7 +41874,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/engine/engineering)
 "ceU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -47859,7 +47859,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral,
-/area/maintenance/department/security/brig)
+/area/hallway/secondary/exit/departure_lounge)
 "eCw" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -49185,8 +49185,7 @@
 /area/crew_quarters/dorms)
 "izF" = (
 /turf/open/floor/plating{
-	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2=0.01"
+	luminosity = 2
 	},
 /area/maintenance/department/science)
 "iAx" = (
@@ -50834,8 +50833,7 @@
 	dir = 6
 	},
 /turf/open/floor/plating{
-	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2=0.01"
+	luminosity = 2
 	},
 /area/maintenance/department/science)
 "nAs" = (
@@ -50974,7 +50972,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "nOY" = (
 /obj/effect/turf_decal/stripes/line{
@@ -51064,8 +51062,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/open/floor/plating{
-	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2=0.01"
+	luminosity = 2
 	},
 /area/maintenance/department/science)
 "oep" = (
@@ -52238,8 +52235,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2=0.01"
+	luminosity = 2
 	},
 /area/maintenance/department/science)
 "rrb" = (
@@ -53198,8 +53194,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating{
-	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2=0.01"
+	luminosity = 2
 	},
 /area/maintenance/department/science)
 "uoq" = (
@@ -53514,8 +53509,7 @@
 "vpz" = (
 /obj/structure/girder,
 /turf/open/floor/plating{
-	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2=0.01"
+	luminosity = 2
 	},
 /area/maintenance/department/science)
 "vsk" = (
@@ -54281,8 +54275,7 @@
 "xsO" = (
 /obj/item/ectoplasm,
 /turf/open/floor/plating{
-	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2=0.01"
+	luminosity = 2
 	},
 /area/maintenance/department/science)
 "xuv" = (
