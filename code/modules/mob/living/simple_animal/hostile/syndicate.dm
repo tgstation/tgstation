@@ -50,19 +50,18 @@
 ///////////////Sword and shield////////////
 
 /mob/living/simple_animal/hostile/syndicate/melee
-	melee_damage_lower = 25
+	melee_damage_lower = 30
 	melee_damage_upper = 30
 	icon_state = "syndicatemelee"
 	icon_living = "syndicatemelee"
 	loot = list(/obj/effect/gibspawner/human)
 	attacktext = "slashes"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
-	armour_penetration = 28
+	attack_sound = 'sound/weapons/blade1.ogg'
+	armour_penetration = 35
 	light_color = LIGHT_COLOR_RED
 	status_flags = 0
-	maxHealth = 170
-	health = 170
-	spacewalk = TRUE
+	maxHealth = 100
+	health = 100
 
 /mob/living/simple_animal/hostile/syndicate/melee/Initialize()
 	. = ..()
@@ -84,9 +83,12 @@
 	icon_state = "syndicatemeleespace"
 	icon_living = "syndicatemeleespace"
 	name = "Syndicate Commando"
+	maxHealth = 170
+	health = 170
 	loot = list(/obj/effect/gibspawner/human)
 	speed = 1
 	var/obj/effect/light_emitter/red_energy_sword/sord
+	spacewalk = TRUE
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/Initialize()
 	. = ..()
@@ -101,15 +103,15 @@
 	icon_state = "syndicatemeleestormtrooper"
 	icon_living = "syndicatemeleestormtrooper"
 	name = "Syndicate Stormtrooper"
-	maxHealth = 340
-	health = 340
+	maxHealth = 250
+	health = 250
 	loot = list(/obj/effect/gibspawner/human)
 
 ///////////////Guns////////////
 
 /mob/living/simple_animal/hostile/syndicate/ranged
 	ranged = 1
-	rapid = 3
+	rapid = 2
 	retreat_distance = 5
 	minimum_distance = 5
 	icon_state = "syndicateranged"
@@ -119,7 +121,7 @@
 	loot = list(/obj/effect/gibspawner/human)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/pilot //caravan ambush ruin
-	name = "Syndicate Salvage Pilot"	
+	name = "Syndicate Salvage Pilot"
 	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/infiltrator //shuttle loan event
@@ -131,6 +133,8 @@
 	icon_state = "syndicaterangedspace"
 	icon_living = "syndicaterangedspace"
 	name = "Syndicate Commando"
+	maxHealth = 170
+	health = 170
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
@@ -145,9 +149,11 @@
 	icon_state = "syndicaterangedstormtrooper"
 	icon_living = "syndicaterangedstormtrooper"
 	name = "Syndicate Stormtrooper"
-	maxHealth = 200
-	health = 200
-	casingtype = /obj/item/ammo_casing/shotgun/buckshot //buckshot (up to 72.5 brute) fired in a three-round burst
+	maxHealth = 250
+	health = 250
+	rapid_fire_delay = 6
+	minimum_distance = 3
+	casingtype = /obj/item/ammo_casing/shotgun/buckshot //buckshot (up to 72.5 brute) fired in a two-round burst
 	projectilesound = 'sound/weapons/gunshot.ogg'
 	loot = list(/obj/effect/gibspawner/human)
 
