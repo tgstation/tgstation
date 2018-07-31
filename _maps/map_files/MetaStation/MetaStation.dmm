@@ -57916,7 +57916,7 @@
 /area/science/nanite)
 "ctM" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Nanite Laboratory Maintenance";
+	name = "Nanite Laboratory Range Maintenance";
 	req_one_access_txt = "7;47;29"
 	},
 /obj/structure/disposalpipe/segment,
@@ -58413,13 +58413,13 @@
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
 "cuG" = (
+/obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
 "cuH" = (
@@ -58867,25 +58867,25 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cvJ" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/power/apc/auto_name/west{
-	pixel_x = -26
-	},
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
 	},
+/obj/machinery/power/apc/auto_name/west{
+	pixel_x = -26
+	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
 "cvK" = (
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
-	},
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
@@ -59822,12 +59822,12 @@
 /turf/open/floor/circuit/green,
 /area/science/robotics/mechbay)
 "cxH" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -23
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
@@ -60152,18 +60152,18 @@
 /turf/open/floor/circuit,
 /area/science/robotics/mechbay)
 "cyt" = (
-/obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/machinery/disposal/bin,
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
 "cyu" = (
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 9
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
@@ -60568,22 +60568,23 @@
 /area/science/robotics/mechbay)
 "czl" = (
 /obj/structure/table,
-/obj/machinery/camera{
-	c_tag = "Research Division Hallway - Nanite Lab";
-	dir = 4;
-	network = list("ss13","rd")
+/obj/item/paper_bin{
+	pixel_x = -2;
+	pixel_y = 4
 	},
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 6
-	},
 /obj/item/radio/intercom{
-	dir = 8;
+	freerange = 0;
+	frequency = 1459;
 	name = "Station Intercom (General)";
-	pixel_x = -28
+	pixel_x = -29
+	},
+/obj/machinery/camera/{
+	c_tag = "Research Division Hallway - Nanite Lab";
+	dir = 4;
+	network = list("ss13","rd")
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
@@ -61473,42 +61474,19 @@
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
 "cBk" = (
-/obj/machinery/light,
 /obj/structure/table,
 /obj/item/storage/box/disks_nanite,
+/obj/machinery/light,
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
 "cBl" = (
 /obj/structure/table,
-/obj/item/folder/white{
-	pixel_x = 4;
-	pixel_y = -3
-	},
+/obj/item/folder/white,
 /obj/item/pen,
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
-"cBn" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/whitepurple/corner{
-	dir = 1
-	},
-/area/science/research)
-"cBo" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/science/research)
 "cBp" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 4
 	},
@@ -75664,13 +75642,13 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "fea" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
+/obj/structure/table,
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/table,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
 "fwe" = (
@@ -75683,7 +75661,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/cable/yellow{
-	icon_state = "1-8"
+	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
@@ -75962,18 +75940,15 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "jLp" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
@@ -76801,10 +76776,10 @@
 	name = "Nanite Laboratory";
 	req_one_access_txt = "7;47;29"
 	},
-/obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/science/nanite)
 "vgd" = (
@@ -76914,12 +76889,12 @@
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "xjE" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment,
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
@@ -107538,7 +107513,7 @@ ipE
 cyv
 czo
 cAt
-cBn
+coi
 cCr
 cDj
 caw
@@ -107795,7 +107770,7 @@ fzo
 cyw
 czp
 cAu
-cBo
+cwN
 crL
 cwN
 dDy
