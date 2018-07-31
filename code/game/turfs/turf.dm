@@ -66,6 +66,13 @@
 	if (light_power && light_range)
 		update_light()
 
+	var/turf/T = SSmapping.get_turf_above(src)
+	if(T)
+		T.multiz_turf_new(src, DOWN)
+	T = SSmapping.get_turf_below(src)
+	if(T)
+		T.multiz_turf_new(src, UP)
+
 	if (opacity)
 		has_opaque_atom = TRUE
 
@@ -81,6 +88,12 @@
 	if(!changing_turf)
 		stack_trace("Incorrect turf deletion")
 	changing_turf = FALSE
+	var/turf/T = SSmapping.get_turf_above(src)
+	if(T)
+		T.multiz_turf_del(src, DOWN)
+	T = SSmapping.get_turf_below(src)
+	if(T)
+		T.multiz_turf_del(src, UP)
 	if(force)
 		..()
 		//this will completely wipe turf state
@@ -102,6 +115,45 @@
 	if(.)
 		return
 	user.Move_Pulled(src)
+
+/turf/proc/multiz_turf_del(turf/T, dir)
+
+/turf/proc/multiz_turf_new(turf/T, dir)
+
+//direction is where it's coming from
+/turf/proc/zPassIn(atom/movable/A, direction, turf/source)
+	return (direction == DOWN)
+
+//direction is where it's going to
+/turf/proc/zPassOut(atom/movable/A, direction, turf/destination)
+	return (direction == UP)
+
+/turf/proc/zAirIn(direction, turf/source)
+	return (direction == UP)
+
+/turf/proc/zAirOut(direction, turf/source)
+	return (direction == DOWN)
+
+/turf/proc/zImpact(atom/movable/A, levels = 1)
+	A.visible_message("<span class='danger'>[A] crashes into [src]!</span>")
+	A.onZImpact(src, levels)
+	return TRUE
+
+/turf/proc/can_zFall(atom/movable/A, levels = 1, turf/target)
+	return zPassOut(A, DOWN, target) && target.zPassIn(A, UP, src)
+
+/turf/proc/zFall(atom/movable/A, levels = 1, force = FALSE)
+	var/turf/target = get_step_multiz(src, DOWN)
+	if(!target)
+		return FALSE
+	if(!force && (!can_zFall(A, levels, target) || !A.can_zFall(src, levels, target)))
+		return FALSE
+	A.visible_message("<span class='danger'>[A] falls through [src]!</span>")
+	A.zfalling = TRUE
+	A.forceMove(target)
+	A.zfalling = FALSE
+	target.zImpact(A, levels)
+	return TRUE
 
 /turf/proc/handleRCL(obj/item/twohanded/rcl/C, mob/user)
 	if(C.loaded)

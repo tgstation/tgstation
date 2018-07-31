@@ -30,6 +30,31 @@
 	var/atom/movable/pulling
 	var/grab_state = 0
 	var/throwforce = 0
+	var/zfalling = FALSE
+
+/atom/movable/proc/onZImpact(turf/T, levels)
+	return TRUE
+
+/atom/movable/proc/can_zFall(turf/T, levels = 1)
+	return TRUE
+
+//For physical constraints to travelling up/down.
+/atom/movable/proc/can_zTravel(turf/destination, direction)
+	var/turf/T = get_turf(src)
+	if(!T)
+		return FALSE
+	if(!direction)
+		if(!destination)
+			return FALSE
+		direction = get_dir(T, destination)
+	if(direction != UP && direction != DOWN)
+		return FALSE
+	if(!destination)
+		destination = get_step_multiz(src, direction)
+		if(!destination)
+			return FALSE
+	var/opposite = (direction == DOWN)? UP : DOWN
+	return T.zPassOut(src, direction, destination) && destination.zPassIn(src, opposite, T)
 
 /atom/movable/vv_edit_var(var_name, var_value)
 	var/static/list/banned_edits = list("step_x", "step_y", "step_size")

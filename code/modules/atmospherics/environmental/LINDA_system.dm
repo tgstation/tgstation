@@ -1,4 +1,7 @@
-/atom/var/CanAtmosPass = ATMOS_PASS_YES
+/atom
+	var/CanAtmosPass = ATMOS_PASS_YES
+	var/CanAtmosPassVertical = ATMOS_PASS_YES
+
 /atom/proc/CanAtmosPass(turf/T)
 	switch (CanAtmosPass)
 		if (ATMOS_PASS_PROC)
@@ -8,42 +11,57 @@
 		else
 			return CanAtmosPass
 
-/turf/closed/CanAtmosPass = ATMOS_PASS_NO
+/turf
+	CanAtmosPass = ATMOS_PASS_NO
+	CanAtmosPassVertical = ATMOS_PASS_NO
 
-/turf/open/CanAtmosPass = ATMOS_PASS_PROC
-/turf/open/CanAtmosPass(turf/T)
-	var/R
+/turf/open
+	CanAtmosPass = ATMOS_PASS_PROC
+	CanAtmosPassVertical = ATMOS_PASS_PROC
+
+/turf/open/CanAtmosPass(turf/T, vertical = FALSE)
+	var/dir = get_dir(src, T)
+	var/opp = (dir == UP)? DOWN : UP
+	var/R = FALSE
+	if(vertical && !(zAirOut(dir, T) && T.zAirIn(opp, src)))
+		R = TRUE
 	if(blocks_air || T.blocks_air)
-		R = 1
+		R = TRUE
 
 	for(var/obj/O in contents+T.contents)
 		var/turf/other = (O.loc == src ? T : src)
-		if(!CANATMOSPASS(O, other))
-			R = 1
+		if(!(vertical? CANVERTICALATMOSPASS(O, other) : CANATMOSPASS(O, other)))
+			R = TRUE
 			if(O.BlockSuperconductivity()) 	//the direction and open/closed are already checked on CanAtmosPass() so there are no arguments
-				var/D = get_dir(src, T)
-				atmos_supeconductivity |= D
-				D = get_dir(T, src)
-				T.atmos_supeconductivity |= D
-				return 0						//no need to keep going, we got all we asked
+				atmos_supeconductivity |= dir
+				T.atmos_supeconductivity |= opp
+				return FALSE						//no need to keep going, we got all we asked
 
-	atmos_supeconductivity &= ~get_dir(src, T)
-	T.atmos_supeconductivity &= ~get_dir(T, src)
+	atmos_supeconductivity &= ~dir
+	T.atmos_supeconductivity &= ~opp
 
 	return !R
 
-
-
 /atom/movable/proc/BlockSuperconductivity() // objects that block air and don't let superconductivity act. Only firelocks atm.
-	return 0
+	return FALSE
 
 /turf/proc/CalculateAdjacentTurfs()
 	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
+	var/list/consider = list()
 	for(var/direction in GLOB.cardinals)
 		var/turf/T = get_step(src, direction)
 		if(!T)
 			continue
-		if( !(blocks_air || T.blocks_air) && CANATMOSPASS(T, src) )
+		consider[T] = direction
+	var/turf/up = SSmapping.get_turf_above(src)
+	var/turf/down = SSmapping.get_turf_below(src)
+	if(up)
+		consider[up] = UP
+	if(down)
+		consider[down] = DOWN
+	for(var/i in consider)
+		var/turf/T = consider
+		if(!(blocks_air || T.blocks_air) && (consider[T]? CANATMOSPASS(T, src) : CANVERTICALATMOSPASS(T, src)) )
 			LAZYINITLIST(atmos_adjacent_turfs)
 			LAZYINITLIST(T.atmos_adjacent_turfs)
 			atmos_adjacent_turfs[T] = TRUE
@@ -72,11 +90,13 @@
 
 	var/turf/curloc = src
 
-	for (var/direction in GLOB.diagonals)
+	for (var/direction in GLOB.diagonals_multiz)
 		var/matchingDirections = 0
-		var/turf/S = get_step(curloc, direction)
+		var/turf/S = get_step_multiz(curloc, direction)
+		if(!S)
+			continue
 
-		for (var/checkDirection in GLOB.cardinals)
+		for (var/checkDirection in GLOB.cardinals_multiz)
 			var/turf/checkTurf = get_step(S, checkDirection)
 			if(!S.atmos_adjacent_turfs || !S.atmos_adjacent_turfs[checkTurf])
 				continue
