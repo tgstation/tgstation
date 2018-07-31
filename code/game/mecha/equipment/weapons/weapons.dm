@@ -385,23 +385,23 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(var/obj/item/assembly/mousetrap/armed/M)
 	M.secured = 1
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/firebang
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/incendiary
 	name = "\improper SGL-6 grenade launcher"
-	desc = "A weapon for combat exosuits. Launches primed flashbangs."
+	desc = "A weapon for combat exosuits. Launches primed incendiary grenades."
 	icon_state = "mecha_grenadelnchr"
-	projectile = /obj/item/grenade/chem_grenade/incendiary
+	projectile = /obj/item/grenade/chem_grenade/mechi
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
-	projectiles = 6
+	projectiles = 4
 	missile_speed = 1.5
-	projectile_energy_cost = 800
-	equip_cooldown = 60
+	projectile_energy_cost = 1000
+	equip_cooldown = 30
 	var/det_time = 20
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/firebang/proj_init(var/obj/item/grenade/chem_grenade/incendiary/F)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/incendiary/proj_init(var/obj/item/grenade/chem_grenade/mechi/F)
 	var/turf/T = get_turf(src)
 	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] fired a [src] in [ADMIN_VERBOSEJMP(T)]")
 	log_game("[key_name(chassis.occupant)] fired a [src] in [AREACOORD(T)]")
-	addtimer(CALLBACK(F, /obj/item/grenade/chem_grenade/incendiary.proc/prime), det_time)
+	addtimer(CALLBACK(F, /obj/item/grenade/chem_grenade/mechi.proc/prime), det_time)
 
 //Classic extending punching glove, but weaponised!
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove

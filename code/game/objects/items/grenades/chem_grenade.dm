@@ -375,6 +375,23 @@
 	beakers += B1
 	beakers += B2
 
+/obj/item/grenade/chem_grenade/mechi
+	name = "incendiary grenade"
+	desc = "Used for clearing rooms of living things."
+	stage = READY
+
+/obj/item/grenade/chem_grenade/mechi/Initialize()
+	. = ..()
+	affected_area = 1
+	var/obj/item/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
+
+	B1.reagents.add_reagent("clf3", 25)
+	B2.reagents.add_reagent("napalm", 25)
+	B2.reagents.add_reagent("welding_fuel", 25)
+
+	beakers += B1
+	beakers += B2
 
 /obj/item/grenade/chem_grenade/antiweed
 	name = "weedkiller grenade"
