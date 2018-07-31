@@ -859,6 +859,7 @@
 #include "code\game\objects\items\implants\implant_mindshield.dm"
 #include "code\game\objects\items\implants\implant_misc.dm"
 #include "code\game\objects\items\implants\implant_spell.dm"
+#include "code\game\objects\items\implants\implant_stealth.dm"
 #include "code\game\objects\items\implants\implant_storage.dm"
 #include "code\game\objects\items\implants\implant_track.dm"
 #include "code\game\objects\items\implants\implantcase.dm"
