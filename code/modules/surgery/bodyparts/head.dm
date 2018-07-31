@@ -32,7 +32,7 @@
 	var/lip_color = "white"
 
 /obj/item/bodypart/head/can_dismember(obj/item/I)
-	if(!(owner.stat == DEAD))
+	if(!((owner.stat == DEAD) || (owner.stat == UNCONSCIOUS)))
 		return FALSE
 	return ..()
 
