@@ -260,7 +260,7 @@
 
 /mob/living/proc/cure_fakedeath(list/sources)
 	remove_trait(TRAIT_FAKEDEATH, sources)
-	remove_trait(TRAIT_DEATHCOMA, source)
+	remove_trait(TRAIT_DEATHCOMA, sources)
 	if(stat != DEAD)
 		tod = null
 	update_stat()
