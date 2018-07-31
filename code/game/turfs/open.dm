@@ -14,6 +14,22 @@
 	if(LAZYLEN(archdrops))
 		AddComponent(/datum/component/archaeology, archdrops)
 
+//direction is where it's coming from
+/turf/open/zPassIn(atom/movable/A, direction, turf/source)
+	return (direction == DOWN)
+
+//direction is where it's going to
+/turf/open/zPassOut(atom/movable/A, direction, turf/destination)
+	return (direction == UP)
+
+//direction is where it's coming from
+/turf/open/zAirIn(direction, turf/source)
+	return (direction == DOWN)
+
+//direction is where it's going to
+/turf/open/zAirOut(direction, turf/source)
+	return (direction == UP)
+
 /turf/open/indestructible
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'

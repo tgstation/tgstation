@@ -122,17 +122,19 @@
 
 //direction is where it's coming from
 /turf/proc/zPassIn(atom/movable/A, direction, turf/source)
-	return (direction == DOWN)
+	return FALSE
 
 //direction is where it's going to
 /turf/proc/zPassOut(atom/movable/A, direction, turf/destination)
-	return (direction == UP)
+	return FALSE
 
+//direction is where it's coming from
 /turf/proc/zAirIn(direction, turf/source)
-	return (direction == UP)
+	return FALSE
 
+//direction is where it's going to
 /turf/proc/zAirOut(direction, turf/source)
-	return (direction == DOWN)
+	return FALSE
 
 /turf/proc/zImpact(atom/movable/A, levels = 1)
 	A.visible_message("<span class='danger'>[A] crashes into [src]!</span>")
@@ -140,7 +142,7 @@
 	return TRUE
 
 /turf/proc/can_zFall(atom/movable/A, levels = 1, turf/target)
-	return zPassOut(A, DOWN, target) && target.zPassIn(A, UP, src)
+	return zPassOut(A, DOWN, target) && target.zPassIn(A, DOWN, src)
 
 /turf/proc/zFall(atom/movable/A, levels = 1, force = FALSE)
 	var/turf/target = get_step_multiz(src, DOWN)

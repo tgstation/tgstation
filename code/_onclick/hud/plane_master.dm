@@ -23,6 +23,15 @@
 	blend_mode = BLEND_MULTIPLY
 	alpha = 128
 
+/obj/screen/plane_master/proc/outline(_size, _color)
+	filters += filter(type = "outline", size = _size, color = _color)
+
+/obj/screen/plane_master/proc/shadow(_size, _border, _offset = 0, _x = 0, _y = 0, _color = "#04080FAA")
+	filters += filter(type = "drop_shadow", x = _x, y = _y, color = _color, size = _size, offset = _offset, border = _border)
+
+/obj/screen/plane_master/proc/debug_clear()
+	filters = list()
+
 /obj/screen/plane_master/floor
 	name = "floor plane master"
 	plane = FLOOR_PLANE
