@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - bugfix: "Beheading now works while in hard crit, so it can be used against zombies."
