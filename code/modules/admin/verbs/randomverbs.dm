@@ -37,7 +37,12 @@
 	if(usr)
 		if (usr.client)
 			if(usr.client.holder)
-				to_chat(M, "<i>You hear a voice in your head... <b>[msg]</i></b>")
+				var/pray_msg = "<i>You hear a voice in your head... <b>[msg]</i></b>"
+
+				if (M.ckey)
+					pray_msg = pray_msg + "... <a href='?pray=[REF(M)]'>(pray)</a>"
+
+				to_chat(usr, pray_msg)
 
 	log_admin("SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]")
 	msg = "<span class='adminnotice'><b> SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(M)] :</b> [msg]</span>"
