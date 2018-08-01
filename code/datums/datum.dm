@@ -87,16 +87,16 @@
 
 //Return a LIST for serialize_datum to encode! Not the actual json!
 /datum/proc/serialize_list(list/options)
-	return NOT_IMPLEMENTED
+	CRASH("Attempted to serialize datum [src] of type [type] without serialize_list being implemented!")
 
 //Accepts a LIST from deserialize_datum. Should return src or another datum.
 /datum/proc/deserialize_list(json, list/options)
-	return NOT_IMPLEMENTED
+	CRASH("Attempted to deserialize datum [src] of type [type] without deserialize_list being implemented!")
 
 //Serializes into JSON. Does not encode type.
 /datum/proc/serialize_json(list/options)
 	. = serialize_list(options)
-	if((. == NOT_IMPLEMENTED) || !islist(.))
+	if(!islist(.))
 		. = null
 	else
 		. = json_encode(.)
