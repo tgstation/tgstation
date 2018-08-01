@@ -278,7 +278,9 @@
 /datum/gas_reaction/fusion/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
-	var/list/cached_results = air.reaction_results
+	if(!istype(air.analyzer_results))
+		air.analyzer_results = new
+	var/list/cached_scan_results = air.analyzer_results
 	var/turf/open/location
 	if (istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
 		var/datum/pipeline/fusion_pipenet = holder
@@ -300,7 +302,7 @@
 		gas_power += reaction_efficiency * (cached_gases[gas_id][GAS_META][META_GAS_FUSION_POWER]*cached_gases[gas_id][MOLES])
 
 	var/power_ratio = gas_power/mediation
-	cached_results[id] = power_ratio //used for analyzer feedback
+	cached_scan_results[id] = power_ratio //used for analyzer feedback
 
 	for (var/gas_id in cached_gases) //and now we fuse
 		cached_gases[gas_id][MOLES] = 0
