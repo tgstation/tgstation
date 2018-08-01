@@ -2313,6 +2313,12 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"hz" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
 "hH" = (
 /obj/structure/stone_tile/block{
 	dir = 1
@@ -2396,20 +2402,6 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"iU" = (
-/obj/machinery/button/door{
-	id = "miningbathroom";
-	name = "Door Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 0;
-	pixel_y = -25;
-	specialfunctions = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/turf/open/floor/plasteel/freezer,
-/area/mine/living_quarters)
 "iX" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
@@ -2505,13 +2497,6 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"jy" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/light/small,
-/turf/open/floor/plasteel/freezer,
-/area/mine/living_quarters)
 "jF" = (
 /obj/structure/stone_tile/surrounding_tile,
 /obj/structure/stone_tile/surrounding_tile{
@@ -2658,12 +2643,6 @@
 /obj/structure/stone_tile/center,
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"kK" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel/freezer,
-/area/mine/living_quarters)
 "kM" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 1
@@ -3268,50 +3247,41 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
-"nh" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+"ss" = (
+/obj/machinery/button/door{
+	id = "miningbathroom";
+	name = "Door Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = 0;
+	pixel_y = -25;
+	specialfunctions = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
+"tI" = (
+/obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
-"ty" = (
-/obj/machinery/atmospherics/pipe/manifold4w/supply,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"Cj" = (
-/obj/machinery/door/window/southright,
-/obj/machinery/shower{
-	pixel_y = 22
-	},
-/turf/open/floor/plasteel/freezer,
-/area/mine/living_quarters)
-"DY" = (
-/obj/machinery/door/airlock{
-	id_tag = "miningbathroom";
-	name = "Restroom"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/freezer,
-/area/mine/living_quarters)
-"Os" = (
+"vb" = (
 /obj/machinery/door/window/southleft,
 /obj/machinery/shower{
 	pixel_y = 22
 	},
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
-"OE" = (
-/obj/machinery/door/airlock{
-	name = "Restroom"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+"Es" = (
+/obj/machinery/door/window/southright,
+/obj/machinery/shower{
+	pixel_y = 22
 	},
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
-"TX" = (
+"Fe" = (
 /obj/structure/sink{
 	dir = 8;
 	pixel_x = -12
@@ -3319,6 +3289,32 @@
 /obj/structure/mirror{
 	pixel_x = -28
 	},
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
+"HO" = (
+/obj/machinery/atmospherics/pipe/manifold4w/supply,
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
+"IK" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
+"Nj" = (
+/obj/machinery/door/airlock{
+	name = "Restroom"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/freezer,
+/area/mine/living_quarters)
+"Tn" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/light/small,
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
 "Uq" = (
@@ -3424,9 +3420,13 @@
 /obj/effect/baseturf_helper/lava_land/surface,
 /turf/closed/wall,
 /area/mine/living_quarters)
-"ZY" = (
-/obj/structure/toilet{
-	dir = 8
+"Zf" = (
+/obj/machinery/door/airlock{
+	id_tag = "miningbathroom";
+	name = "Restroom"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
@@ -13435,7 +13435,7 @@ eN
 fi
 fN
 eN
-ty
+HO
 fp
 cR
 ab
@@ -13692,7 +13692,7 @@ dQ
 cM
 cM
 cM
-OE
+Nj
 cM
 cM
 ai
@@ -13948,8 +13948,8 @@ fk
 fk
 fI
 cM
-Os
-nh
+vb
+hz
 cM
 ai
 ad
@@ -14205,8 +14205,8 @@ fk
 fC
 fk
 cM
-Cj
-jy
+Es
+Tn
 cM
 ab
 ai
@@ -14463,7 +14463,7 @@ fD
 fJ
 cM
 cM
-DY
+Zf
 cM
 aj
 aj
@@ -14719,8 +14719,8 @@ fk
 fE
 fK
 cM
-TX
-iU
+Fe
+ss
 cM
 aj
 aj
@@ -14976,8 +14976,8 @@ fk
 fF
 fk
 cM
-ZY
-kK
+IK
+tI
 cM
 aj
 aj

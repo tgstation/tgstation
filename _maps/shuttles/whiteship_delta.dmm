@@ -2806,10 +2806,7 @@
 "iM" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/medbay)
-"vm" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/abandoned/medbay)
-"Ci" = (
+"oo" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -2822,6 +2819,9 @@
 	dir = 4
 	},
 /area/shuttle/abandoned/crew)
+"vm" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned/medbay)
 "DZ" = (
 /obj/effect/turf_decal/delivery/white,
 /obj/effect/decal/cleanable/dirt{
@@ -3033,7 +3033,7 @@ vm
 ac
 al
 aE
-Ci
+oo
 bp
 bF
 bF
