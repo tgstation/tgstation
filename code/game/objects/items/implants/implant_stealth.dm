@@ -36,3 +36,4 @@
 	. = ..()
 	if(isliving(A))
 		alpha = 255
+		addtimer(CALLBACK(src, .proc/go_invisible), 10, TIMER_UNIQUE)
