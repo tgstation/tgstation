@@ -269,7 +269,7 @@
 		if(!DB_ban_record(bantype, playermob, banduration, banreason, banjob, banckey, banip, bancid ))
 			to_chat(usr, "<span class='danger'>Failed to apply ban.</span>")
 			return
-		create_message("note", banckey, null, banreason, null, null, 0, 0)
+		create_message("note", banckey, null, banreason, null, null, 0, 0, null, 0)
 
 	else if(href_list["editrightsbrowser"])
 		edit_admin_permissions(0)
@@ -605,7 +605,7 @@
 					jobban_buildcache(M.client)
 				ban_unban_log_save("[key_name(usr)] appearance banned [key_name(M)]. reason: [reason]")
 				log_admin_private("[key_name(usr)] appearance banned [key_name(M)]. \nReason: [reason]")
-				create_message("note", M.ckey, null, "Appearance banned - [reason]", null, null, 0, 0)
+				create_message("note", M.ckey, null, "Appearance banned - [reason]", null, null, 0, 0, null, 0)
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] appearance banned [key_name_admin(M)].</span>")
 				to_chat(M, "<span class='boldannounce'><BIG>You have been appearance banned by [usr.client.ckey].</BIG></span>")
 				to_chat(M, "<span class='boldannounce'>The reason is: [reason]</span>")
@@ -991,7 +991,7 @@
 							msg = job
 						else
 							msg += ", [job]"
-					create_message("note", M.ckey, null, "Banned  from [msg] - [reason]", null, null, 0, 0)
+					create_message("note", M.ckey, null, "Banned  from [msg] - [reason]", null, null, 0, 0, null, 0)
 					message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [mins] minutes.</span>")
 					to_chat(M, "<span class='boldannounce'><BIG>You have been [(msg == ("ooc" || "appearance")) ? "banned" : "jobbanned"] by [usr.client.ckey] from: [msg].</BIG></span>")
 					to_chat(M, "<span class='boldannounce'>The reason is: [reason]</span>")
@@ -1014,7 +1014,7 @@
 								msg = job
 							else
 								msg += ", [job]"
-						create_message("note", M.ckey, null, "Banned  from [msg] - [reason]", null, null, 0, 0)
+						create_message("note", M.ckey, null, "Banned  from [msg] - [reason]", null, null, 0, 0, null, 0)
 						message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg].</span>")
 						to_chat(M, "<span class='boldannounce'><BIG>You have been [(msg == ("ooc" || "appearance")) ? "banned" : "jobbanned"] by [usr.client.ckey] from: [msg].</BIG></span>")
 						to_chat(M, "<span class='boldannounce'>The reason is: [reason]</span>")
@@ -1138,6 +1138,18 @@
 			return
 		var/message_id = href_list["editmessageempty"]
 		edit_message(message_id, browse = 1)
+
+	else if(href_list["editmessageexpiry"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/message_id = href_list["editmessageexpiry"]
+		edit_message_expiry(message_id)
+
+	else if(href_list["editmessageexpiryempty"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/message_id = href_list["editmessageexpiryempty"]
+		edit_message_expiry(message_id, browse = 1)
 
 	else if(href_list["secretmessage"])
 		if(!check_rights(R_ADMIN))
