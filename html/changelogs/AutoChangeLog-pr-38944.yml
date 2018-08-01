@@ -1,0 +1,6 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - rscadd: "Cameras now shoot from 1x1 to 7x7, fully customizable. Alt click on them to change the size of your photos.
+experimental: All photos, assuming the server host turns this feature on, will be logged to disk in round logs, with their data and path stored in a json. This allows for things like Statbus, and persistence features among other things to easily grab the data and load the photo."
+  - rscadd: "Mappers are now able to add in photo albums and wall frames with persistence! This, obviously, requires photo logging to be turned on. If this is enabled and used, these albums and frames will save the ID of the photo(s) inside them and load it the next time they're loaded in! Like secret satchels, but for photos!"
