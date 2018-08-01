@@ -159,7 +159,7 @@
 				blueprints = TRUE
 	for(var/i in mobs)
 		var/mob/M = i
-		desc += M.get_photo_description()
+		desc += M.get_photo_description(src)
 
 	var/psize_x = (size_x * 2 + 1) * world.icon_size
 	var/psize_y = (size_y * 2 + 1) * world.icon_size
