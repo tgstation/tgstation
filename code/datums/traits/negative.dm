@@ -281,7 +281,7 @@
 	name = "Mute"
 	desc = "You can't speak, at all. No known method exists of alleviating this."
 	mob_trait = TRAIT_MUTE
-	value = -3
+	value = -2
 	gain_text = "<span class='danger'>You suddenly find yourself unable to speak.</span>"
 	lose_text = "<span class='notice'>You find yourself able to speak again.</span>"
 	medical_record_text = "Patient suffers from mutism."
