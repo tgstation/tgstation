@@ -85,8 +85,10 @@
 
 /datum/action/proc/Trigger()
 	if(!IsAvailable())
-		return 0
-	return 1
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_ACTION_TRIGGER, src) & COMPONENT_ACTION_BLOCK_TRIGGER)
+		return FALSE
+	return TRUE
 
 /datum/action/proc/Process()
 	return
@@ -718,7 +720,3 @@
 	target.layer = old_layer
 	target.plane = old_plane
 	current_button.appearance_cache = target.appearance
-
-/datum/action/item_action/storage_gather_mode/Trigger()
-	GET_COMPONENT_FROM(STR, /datum/component/storage, target)
-	STR.gather_mode_switch(owner)
