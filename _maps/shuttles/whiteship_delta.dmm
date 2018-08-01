@@ -25,7 +25,7 @@
 	id = "whiteship";
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
-	name = "NT Luxury Frigate";
+	name = "NT Frigate";
 	port_direction = 8;
 	preferred_direction = 4;
 	width = 27
@@ -96,12 +96,13 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/airalarm/all_access{
-	pixel_y = 24
-	},
 /obj/structure/bed,
 /obj/item/bedsheet/centcom,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/airalarm/all_access{
+	dir = 8;
+	pixel_x = 24
+	},
 /turf/open/floor/wood,
 /area/shuttle/abandoned/crew)
 "am" = (
@@ -109,15 +110,16 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/airalarm/all_access{
-	pixel_y = 24
-	},
 /obj/structure/bed,
 /obj/item/bedsheet/centcom,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/airalarm/all_access{
+	dir = 8;
+	pixel_x = 24
+	},
 /turf/open/floor/wood,
 /area/shuttle/abandoned/crew)
 "an" = (
@@ -191,7 +193,7 @@
 	pixel_y = 24
 	},
 /obj/structure/closet/crate/bin,
-/turf/open/floor/plasteel/floorgrime,
+/turf/open/floor/plasteel/bar,
 /area/shuttle/abandoned/bar)
 "at" = (
 /obj/machinery/light/small/built{
@@ -420,7 +422,7 @@
 	name = "dust"
 	},
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/shuttle/abandoned/bar)
 "aL" = (
 /obj/machinery/light/small/built{
@@ -708,7 +710,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/bar,
 /area/shuttle/abandoned/bar)
 "bf" = (
 /obj/structure/chair/comfy/shuttle{
@@ -911,13 +913,6 @@
 /obj/structure/chair,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/abandoned/bar)
-"bv" = (
-/obj/effect/decal/cleanable/dirt{
-	desc = "A thin layer of dust coating the floor.";
-	name = "dust"
-	},
-/turf/open/floor/plasteel/floorgrime,
-/area/shuttle/abandoned/bar)
 "bw" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -1111,7 +1106,7 @@
 /obj/item/reagent_containers/food/drinks/beer,
 /obj/item/reagent_containers/food/snacks/sandwich,
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel/floorgrime,
+/turf/open/floor/plasteel/bar,
 /area/shuttle/abandoned/bar)
 "bM" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1197,10 +1192,13 @@
 "bS" = (
 /obj/structure/table,
 /obj/item/folder/blue{
-	pixel_x = 3;
-	pixel_y = 2
+	pixel_x = 6;
+	pixel_y = 5
 	},
-/obj/item/pen,
+/obj/item/pen{
+	pixel_x = 5;
+	pixel_y = 3
+	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -1209,6 +1207,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/machinery/recharger,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 4
@@ -1413,6 +1412,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
+/obj/item/gun/energy/laser/retro,
 /mob/living/simple_animal/hostile/poison/giant_spider/tarantula{
 	desc = "Furry and black, it makes you shudder to look at it. This one has abyssal red eyes, and looks abnormally thin and frail.";
 	environment_smash = 0;
@@ -1564,7 +1564,6 @@
 	name = "dust"
 	},
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/gun/energy/laser/retro,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel/darkblue/corner,
 /area/shuttle/abandoned/bridge)
@@ -3030,7 +3029,7 @@ dO
 vm
 "}
 (11,1,1) = {"
-ac
+bI
 al
 aE
 oo
@@ -3046,7 +3045,7 @@ cS
 dk
 dH
 di
-vm
+SY
 "}
 (12,1,1) = {"
 ac
@@ -3068,7 +3067,7 @@ dQ
 vm
 "}
 (13,1,1) = {"
-ac
+bI
 am
 aF
 aV
@@ -3084,7 +3083,7 @@ cR
 dm
 dP
 dR
-vm
+SY
 "}
 (14,1,1) = {"
 ac
@@ -3243,7 +3242,7 @@ ae
 as
 aK
 be
-bv
+be
 bL
 ae
 aa
