@@ -106,37 +106,40 @@ GLOBAL_LIST_EMPTY(bounties_list)
 
 // Called lazily at startup to populate GLOB.bounties_list with random bounties.
 /proc/setup_bounties()
-	for(var/i = 0; i < 3; ++i)
-		var/subtype = pick(subtypesof(/datum/bounty/item/assistant))
-		try_add_bounty(new subtype)
-
-	for(var/i = 0; i < 1; ++i)
-		var/list/subtype = pick(subtypesof(/datum/bounty/item/mech))
-		try_add_bounty(new subtype)
-
-	for(var/i = 0; i < 2; ++i)
-		var/list/subtype = pick(subtypesof(/datum/bounty/item/chef))
-		try_add_bounty(new subtype)
-
-	for(var/i = 0; i < 1; ++i)
-		var/list/subtype = pick(subtypesof(/datum/bounty/item/security))
-		try_add_bounty(new subtype)
-
-	try_add_bounty(new /datum/bounty/reagent/simple_drink)
-	try_add_bounty(new /datum/bounty/reagent/complex_drink)
-	try_add_bounty(new /datum/bounty/reagent/chemical)
-
-	for(var/i = 0; i < 1; ++i)
-		var/list/subtype = pick(subtypesof(/datum/bounty/virus))
-		try_add_bounty(new subtype)
-
+	//Format: type = max amount, normal setup only. Dynamic generation/Strict types gets its own bit. Not static because this should be only called once.
+	var/list/easy_add_list = list(/datum/bounty/item/assistant = 2,
+											/datum/bounty/item/mech = 1, 
+											/datum/bounty/item/chef = 2, 
+											/datum/bounty/item/security = 1,
+											/datum/bounty/reagent/simple_drink = 1,
+											/datum/bounty/reagent/complex_drink = 1,
+											/datum/bounty/reagent/chemical = 1,
+											/datum/bounty/virus = 1)
+	
+	var/pick // instead of creating it a bunch let's go ahead and toss it here, we know we're going to use it!
+											
+	for(var/the_type in easy_add_list)
+		for(var/i in 0 to subtypeprioritylist[the_type])
+			pick = pick(subtypesof(the_type))
+			try_add_bounty(new pick)
+	
+	for(var/i in 0 to 1) // example of special weighting not available to be tossed in the easy add list
+		if(prob(50))
+			pick = pick(subtypesof(/datum/bounty/item/slime))
+		else
+			pick = pick(subtypesof(/datum/bounty/item/science))
+		try_add_bounty(new pick)
+	
 	var/datum/bounty/B = pick(GLOB.bounties_list)
 	B.mark_high_priority()
 
 	// Generate these last so they can't be high priority.
-	try_add_bounty(new /datum/bounty/item/alien_organs)
-	try_add_bounty(new /datum/bounty/item/syndicate_documents)
-	try_add_bounty(new /datum/bounty/more_bounties)
+	var/list/low_priority_strict_type_list = list( /datum/bounty/item/alien_organs,
+													/datum/bounty/item/syndicate_documents,
+													/datum/bounty/more_bounties)
+													
+	for(var/low_priority_bounty in low_priority_strict_type_list)
+		try_add_bounty(new low_priority_bounty)
 
 /proc/completed_bounty_count()
 	var/count = 0
