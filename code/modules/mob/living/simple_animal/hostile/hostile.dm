@@ -12,6 +12,7 @@
 	var/approaching_target = FALSE //We should dodge now
 	var/in_melee = FALSE	//We should sidestep now
 	var/dodge_prob = 30
+	var/sidestep_per_cycle = 1 //How many sidesteps per npcpool cycle when in melee
 
 	var/projectiletype	//set ONLY it and NULLIFY casingtype var, if we have ONLY projectile
 	var/projectilesound
@@ -87,7 +88,13 @@
 /mob/living/simple_animal/hostile/handle_automated_movement()
 	. = ..()
 	if(dodging && target && in_melee && isturf(loc) && isturf(target.loc))
-		addtimer(CALLBACK(src,.proc/sidestep),rand(1,SSnpcpool.wait))
+		var/datum/cb = CALLBACK(src,.proc/sidestep)
+		if(sidestep_per_cycle > 1) //For more than one just spread them equally - this could changed to some sensible distribution later
+			var/sidestep_delay = SSnpcpool.wait / sidestep_per_cycle
+			for(var/i in 1 to sidestep_per_cycle)
+				addtimer(cb, (i - 1)*sidestep_delay)
+		else //Otherwise randomize it to make the players guessing.
+			addtimer(cb,rand(1,SSnpcpool.wait))
 
 /mob/living/simple_animal/hostile/proc/sidestep()
 	if(!target || !isturf(target.loc) || !isturf(loc) || stat == DEAD)
