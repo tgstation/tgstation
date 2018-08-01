@@ -465,13 +465,11 @@
 			for(var/obj/item/integrated_circuit/input/S in assembly_components)
 				S.attackby_react(I,user,user.a_intent)
 			return ..()
-		var/obj/item/stock_parts/cell = I
-		user.transferItemToLoc(I, contents)
-		cell.forceMove(src)
-		battery = cell
+		I.forceMove(src)
+		battery = I
 		diag_hud_set_circuitstat() //update diagnostic hud
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-		to_chat(user, "<span class='notice'>You slot \the [cell] inside \the [src]'s power supplier.</span>")
+		to_chat(user, "<span class='notice'>You slot \the [I] inside \the [src]'s power supplier.</span>")
 		return TRUE
 	else if(istype(I, /obj/item/integrated_electronics/detailer))
 		var/obj/item/integrated_electronics/detailer/D = I
