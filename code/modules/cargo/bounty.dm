@@ -119,7 +119,7 @@ GLOBAL_LIST_EMPTY(bounties_list)
 	var/pick // instead of creating it a bunch let's go ahead and toss it here, we know we're going to use it!
 											
 	for(var/the_type in easy_add_list)
-		for(var/i in 0 to subtypeprioritylist[the_type])
+		for(var/i in 0 to easy_add_list[the_type])
 			pick = pick(subtypesof(the_type))
 			try_add_bounty(new pick)
 	
