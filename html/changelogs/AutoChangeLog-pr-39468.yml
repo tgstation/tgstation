@@ -1,0 +1,4 @@
+author: "Garen"
+delete-after: True
+changes: 
+  - bugfix: "mobs now call COMSIG_PARENT_ATTACKBY"
