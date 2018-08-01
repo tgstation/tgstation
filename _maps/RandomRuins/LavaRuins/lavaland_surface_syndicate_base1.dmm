@@ -5502,18 +5502,14 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "oz" = (
-/turf/open/floor/engine{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
+/turf/open/floor/engine/vacuum,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "oA" = (
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/igniter/incinerator_syndicatelava,
-/turf/open/floor/engine{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
+/turf/open/floor/engine/vacuum,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "oB" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
@@ -5523,15 +5519,11 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = -32
 	},
-/turf/open/floor/engine{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
+/turf/open/floor/engine/vacuum,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "oC" = (
 /obj/machinery/door/poddoor/incinerator_syndicatelava_aux,
-/turf/open/floor/engine{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
+/turf/open/floor/engine/vacuum,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "oD" = (
 /obj/structure/sign/warning/xeno_mining{
@@ -5553,9 +5545,7 @@
 	dir = 1;
 	luminosity = 2
 	},
-/turf/open/floor/engine{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
+/turf/open/floor/engine/vacuum,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "oF" = (
 /obj/structure/sign/warning/securearea,
@@ -5567,15 +5557,11 @@
 	dir = 2;
 	luminosity = 2
 	},
-/turf/open/floor/engine{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
+/turf/open/floor/engine/vacuum,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "oH" = (
 /obj/machinery/door/poddoor/incinerator_syndicatelava_main,
-/turf/open/floor/engine{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
+/turf/open/floor/engine/vacuum,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "oI" = (
 /obj/structure/sign/warning/vacuum{
