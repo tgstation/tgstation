@@ -4,7 +4,7 @@
 /obj/item/camera
 	name = "camera"
 	icon = 'icons/obj/items_and_weapons.dmi'
-	desc = "A polaroid camera."
+	desc = "A polaroid camera. <span class='boldnotice'>Alt click to change its focusing, allowing you to set how big of an area it will capture!</span>"
 	icon_state = "camera"
 	item_state = "electropack"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
