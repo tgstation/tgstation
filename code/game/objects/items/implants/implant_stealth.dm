@@ -9,10 +9,11 @@
 	name = "inconspicious box"
 	desc = "It's so normal that you didn't notice it before."
 	icon_state = "agentbox"
-	move_speed_multiplier = 0.5
+	use_mob_movespeed = TRUE
 
 /obj/structure/closet/cardboard/agent/proc/go_invisible()
 	animate(src, , alpha = 0, time = 5)
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/closet/cardboard/agent/Initialize()
 	. = ..()
@@ -24,12 +25,14 @@
 	qdel(src)
 
 /obj/structure/closet/cardboard/agent/process()
-	alpha = max(0, alpha - 50)
+	animate(src, , alpha = alpha - 50, time = 3)
+
+/obj/structure/closet/cardboard/agent/Move()
+	. = ..()
+	if(.)
+		alpha = min(alpha + 5, 255)
 
 /obj/structure/closet/cardboard/agent/Bump(atom/movable/A)
 	. = ..()
 	if(isliving(A))
 		alpha = 255
-	addtimer(CALLBACK(src, .proc/go_invisible), 10, TIMER_UNIQUE)
-
-

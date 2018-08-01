@@ -14,6 +14,7 @@
 	delivery_icon = "deliverybox"
 	anchorable = FALSE
 	var/move_speed_multiplier = 1
+	var/use_mob_movespeed = FALSE
 	var/move_delay = FALSE
 	var/egged = 0
 
@@ -22,7 +23,7 @@
 		return
 	move_delay = TRUE
 	if(step(src, direction))
-		addtimer(CALLBACK(src, .proc/ResetMoveDelay), CONFIG_GET(number/walk_delay) * move_speed_multiplier)
+		addtimer(CALLBACK(src, .proc/ResetMoveDelay), (use_mob_movespeed ? user.movement_delay() : CONFIG_GET(number/walk_delay)) * move_speed_multiplier)
 	else
 		ResetMoveDelay()
 
