@@ -1,0 +1,5 @@
+author: "Time-Green"
+delete-after: True
+changes: 
+  - rscadd: "You can now mount energy guns into emitters"
+  - bugfix: "portal guns no longer runtime when fired by turrets"
