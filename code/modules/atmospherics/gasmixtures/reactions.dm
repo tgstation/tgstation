@@ -278,7 +278,7 @@
 /datum/gas_reaction/fusion/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
-	if(!istype(air.analyzer_results))
+	if(!air.analyzer_results)
 		air.analyzer_results = new
 	var/list/cached_scan_results = air.analyzer_results
 	var/turf/open/location

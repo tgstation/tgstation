@@ -546,7 +546,7 @@ SLIME SCANNER
 			else
 				to_chat(user, "<span class='notice'>[target] is empty!</span>")
 
-		if(istype(cached_scan_results) && cached_scan_results["fusion"]) //notify the user if a fusion reaction was detected
+		if(cached_scan_results && cached_scan_results["fusion"]) //notify the user if a fusion reaction was detected
 			var/fusion_power = round(cached_scan_results["fusion"], 0.01)
 			var/tier = fusionpower2text(fusion_power)
 			to_chat(user, "<span class='boldnotice'>Large amounts of free neutrons detected in the air indicate that a fusion reaction took place.</span>")
