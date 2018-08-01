@@ -1,0 +1,5 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "ExoNuclear mech reactors now noticably irradiate their environment."
+  - spellcheck: "Adjusted suit storage unit descriptions to mention that they can decontaminate irradiated equipment."
