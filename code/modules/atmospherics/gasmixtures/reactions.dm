@@ -258,7 +258,9 @@
 
 	return cached_results["fire"] ? REACTING : NO_REACTION
 
-//fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again).
+//fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again)
+//Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
+//5 reworks
 
 /datum/gas_reaction/fusion
 	exclude = FALSE
