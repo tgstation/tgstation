@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "The bridge of the gulag shuttle now has a stacking machine console for ejecting sheets."

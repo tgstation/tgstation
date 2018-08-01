@@ -1,0 +1,4 @@
+author: "Cobby"
+delete-after: True
+changes: 
+  - spellcheck: "Drone's Law 3 has been edited to explicitly state that it's for the site of activation (aka people do not get banned for going to upgrade station as derelict drones since it's explicitly clear now). See https://tgstation13.org/phpBB/viewtopic.php?f=33&t=18844&p=429944#p429944 for why this was PR'd"

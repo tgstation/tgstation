@@ -245,18 +245,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/syndicate3)
-"zq" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/syndicate{
-	anchored = 1
-	},
-/obj/item/clothing/shoes/jackboots,
-/obj/item/crowbar/red,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/caravan/syndicate3)
 "BQ" = (
 /turf/open/floor/plasteel/darkred/side,
 /area/shuttle/caravan/syndicate3)
@@ -523,6 +511,18 @@
 "ZB" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
+"ZI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/syndicate{
+	anchored = 1
+	},
+/obj/item/clothing/shoes/jackboots,
+/obj/item/crowbar/red,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
 "ZJ" = (
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/syndicate3)
@@ -630,7 +630,7 @@ Tn
 Lq
 YU
 Dx
-zq
+ZI
 HJ
 Tn
 "}

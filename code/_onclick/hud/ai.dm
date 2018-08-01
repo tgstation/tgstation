@@ -281,7 +281,3 @@
 	using = new /obj/screen/ai/add_multicam()
 	using.screen_loc = ui_ai_add_multicam
 	static_inventory += using
-
-/mob/living/silicon/ai/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/ai(src)

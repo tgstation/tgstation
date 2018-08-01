@@ -40,7 +40,7 @@
 */
 /atom/Click(location,control,params)
 	if(flags_1 & INITIALIZED_1)
-		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params)
+		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
 		usr.ClickOn(src, params)
 
 /atom/DblClick(location,control,params)
@@ -70,6 +70,9 @@
 	next_click = world.time + 1
 
 	if(check_click_intercept(params,A))
+		return
+
+	if(notransform)
 		return
 
 	var/list/modifiers = params2list(params)

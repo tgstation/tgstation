@@ -47,7 +47,7 @@
 			paid_off = TRUE
 			return
 		else
-			priority_announce("Trying to cheat us ? You'll regret this!",sender_override = ship_name)
+			priority_announce("Trying to cheat us? You'll regret this!",sender_override = ship_name)
 	if(!shuttle_spawned)
 		spawn_shuttle()
 
@@ -60,7 +60,7 @@
 /datum/round_event/pirates/proc/spawn_shuttle()
 	shuttle_spawned = TRUE
 
-	var/list/candidates = pollGhostCandidates("Do you wish to be considered for pirate crew ?", ROLE_TRAITOR)
+	var/list/candidates = pollGhostCandidates("Do you wish to be considered for pirate crew?", ROLE_TRAITOR)
 	shuffle_inplace(candidates)
 
 	var/datum/map_template/shuttle/pirate/default/ship = new
@@ -120,12 +120,12 @@
 	gps.tracking = TRUE
 	active = TRUE
 	to_chat(user,"<span class='notice'>You toggle [src] [active ? "on":"off"].</span>")
-	to_chat(user,"<span class='warning'>The scrambling signal can be now tracked by gps.</span>")
+	to_chat(user,"<span class='warning'>The scrambling signal can be now tracked by GPS.</span>")
 	START_PROCESSING(SSobj,src)
 
 /obj/machinery/shuttle_scrambler/interact(mob/user)
 	if(!active)
-		if(alert(user, "Turning the scrambler on will make the shuttle trackable by GPS. Are you sure you want to do it ?", "Scrambler", "Yes", "Cancel") == "Cancel")
+		if(alert(user, "Turning the scrambler on will make the shuttle trackable by GPS. Are you sure you want to do it?", "Scrambler", "Yes", "Cancel") == "Cancel")
 			return
 		if(active || !user.canUseTopic(src))
 			return

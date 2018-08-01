@@ -71,3 +71,7 @@
 /obj/item/implanter/emp
 	name = "implanter (EMP)"
 	imp_type = /obj/item/implant/emp
+
+/obj/item/implanter/stealth
+	name = "implanter (stealth)"
+	imp_type = /obj/item/implant/stealth

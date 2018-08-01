@@ -47,7 +47,8 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/stop_line_profiling,
 	/client/proc/show_line_profiling,
 	/client/proc/create_mapping_job_icons,
-	/client/proc/debug_z_levels
+	/client/proc/debug_z_levels,
+	/client/proc/place_ruin
 ))
 
 /obj/effect/debugging/mapfix_marker

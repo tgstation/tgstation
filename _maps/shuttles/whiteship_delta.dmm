@@ -547,6 +547,7 @@
 	dir = 1
 	},
 /obj/machinery/power/apc{
+	dir = 1;
 	name = "Frigate Crew Quarters APC";
 	pixel_y = 24;
 	req_access = null
@@ -725,6 +726,7 @@
 	dir = 4
 	},
 /obj/structure/frame/computer{
+	anchored = 1;
 	dir = 8
 	},
 /obj/item/shard,
@@ -1311,6 +1313,7 @@
 /area/shuttle/abandoned/bridge)
 "bZ" = (
 /obj/structure/frame/computer{
+	anchored = 1;
 	dir = 8
 	},
 /obj/item/shard,
@@ -2390,6 +2393,7 @@
 	dir = 4
 	},
 /obj/structure/frame/computer{
+	anchored = 1;
 	dir = 8
 	},
 /obj/item/shard,
@@ -2707,6 +2711,7 @@
 	name = "dust"
 	},
 /obj/structure/frame/computer{
+	anchored = 1;
 	dir = 4
 	},
 /obj/item/shard,
@@ -2801,10 +2806,7 @@
 "iM" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/medbay)
-"vm" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/abandoned/medbay)
-"Ci" = (
+"oo" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -2817,6 +2819,9 @@
 	dir = 4
 	},
 /area/shuttle/abandoned/crew)
+"vm" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned/medbay)
 "DZ" = (
 /obj/effect/turf_decal/delivery/white,
 /obj/effect/decal/cleanable/dirt{
@@ -3028,7 +3033,7 @@ vm
 ac
 al
 aE
-Ci
+oo
 bp
 bF
 bF

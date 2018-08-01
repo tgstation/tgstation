@@ -229,7 +229,7 @@
 	suffix = "scrapheap"
 	name = "Standby Evacuation Vessel \"Scrapheap Challenge\""
 	credit_cost = -1000
-	description = "Due to a lack of functional emergency shuttles, we bought this second hand from a scrapyard and pressed it into service. Please do not lean to heavily on the exterior windows, they are fragile."
+	description = "Due to a lack of functional emergency shuttles, we bought this second hand from a scrapyard and pressed it into service. Please do not lean too heavily on the exterior windows, they are fragile."
 	admin_notes = "An abomination with no functional medbay, sections missing, and some very fragile windows. Surprisingly airtight."
 
 /datum/map_template/shuttle/emergency/narnar
@@ -325,11 +325,11 @@
 
 /datum/map_template/shuttle/whiteship/box
 	suffix = "box"
-	name = "NT Medical Ship"
+	name = "Hospital Ship"
 
 /datum/map_template/shuttle/whiteship/meta
 	suffix = "meta"
-	name = "NT Recovery Whiteship"
+	name = "Salvage Ship"
 
 /datum/map_template/shuttle/whiteship/pubby
 	suffix = "pubby"
@@ -341,8 +341,11 @@
 
 /datum/map_template/shuttle/whiteship/delta
 	suffix = "delta"
-	name = "Unnamed NT Vessel"
-	admin_notes = "The Delta whiteship doesn't have a name, apparently."
+	name = "NT Luxury Frigate"
+
+/datum/map_template/shuttle/whiteship/pod
+	suffix = "whiteship_pod"
+	name = "Salvage Pod"
 
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
