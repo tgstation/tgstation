@@ -50,7 +50,7 @@
 #define FUSION_EFFICIENCY_DIVISOR			0.6		//ditto
 #define FUSION_RADIATION_FACTOR				15000	//horizontal asymptote
 #define FUSION_RADIATION_CONSTANT			30		//equation is form of (ax) / (x + b), where a = radiation factor and b = radiation constant and x = power ratio (https://www.desmos.com/calculator/4i1f296phl)
-#define FUSION_ZAP_POWER_ASYMPTOTE			50000	//maximum value
+#define FUSION_ZAP_POWER_ASYMPTOTE			50000	//maximum value - not enough to instacrit but it'll still hurt like shit
 #define FUSION_ZAP_POWER_CONSTANT			75		//equation is of from [ax / (x + b)] + c, where a = zap power asymptote, b = zap power constant, c = zap power base and x = power ratio
 #define FUSION_ZAP_POWER_BASE				1000	//(https://www.desmos.com/calculator/vvbmhf4unm)
 #define FUSION_ZAP_RANGE_SUPER				9		//range of the tesla zaps that occur from fusion
