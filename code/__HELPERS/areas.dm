@@ -14,8 +14,6 @@
 	var/list/found_turfs = list(origin)
 	while(found_turfs.len)
 		var/turf/sourceT = found_turfs[1]
-		if(break_if_found[sourceT.type] || break_if_found[sourceT.loc.type])
-			return FALSE
 		found_turfs.Cut(1, 2)
 		var/dir_flags = checked_turfs[sourceT]
 		for(var/dir in GLOB.alldirs)
@@ -28,6 +26,8 @@
 			checked_turfs[checkT] |= turn(dir, 180)
 			.[sourceT] |= dir
 			.[checkT] |= turn(dir, 180)
+			if(break_if_found[checkT.type] || break_if_found[checkT.loc.type])
+				return FALSE
 			var/static/list/cardinal_cache = list("[NORTH]"=TRUE, "[EAST]"=TRUE, "[SOUTH]"=TRUE, "[WEST]"=TRUE)
 			if(!cardinal_cache["[dir]"] || checkT.blocks_air || !CANATMOSPASS(sourceT, checkT))
 				continue
