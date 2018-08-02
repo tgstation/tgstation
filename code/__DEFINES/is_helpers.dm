@@ -59,7 +59,7 @@
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
 
 //why arent catpeople a subspecies
-#define iscatperson(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/neko) )
+#define iscatperson(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/felinid) )
 
 //more carbon mobs
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))

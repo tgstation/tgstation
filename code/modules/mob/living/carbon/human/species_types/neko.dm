@@ -1,7 +1,7 @@
 //Subtype of human
-/datum/species/human/neko
-	name = "Neko"
-	id = "neko"
+/datum/species/human/felinid
+	name = "felinid"
+	id = "felinid"
 	limbs_id = "human"
 
 	mutant_bodyparts = list("ears", "tail_human")
@@ -10,41 +10,41 @@
 	mutantears = /obj/item/organ/ears/cat
 	mutanttail = /obj/item/organ/tail/cat
 
-/datum/species/human/neko/qualifies_for_rank(rank, list/features)
+/datum/species/human/felinid/qualifies_for_rank(rank, list/features)
 	return TRUE
 
 //Curiosity killed the cat's wagging tail.
-/datum/species/human/neko/spec_death(gibbed, mob/living/carbon/human/H)
+/datum/species/human/felinid/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		stop_wagging_tail(H)
 
-/datum/species/human/neko/spec_stun(mob/living/carbon/human/H,amount)
+/datum/species/human/felinid/spec_stun(mob/living/carbon/human/H,amount)
 	if(H)
 		stop_wagging_tail(H)
 	. = ..()
 
-/datum/species/human/neko/can_wag_tail(mob/living/carbon/human/H)
+/datum/species/human/felinid/can_wag_tail(mob/living/carbon/human/H)
 	return ("tail_human" in mutant_bodyparts) || ("waggingtail_human" in mutant_bodyparts)
 
-/datum/species/human/neko/is_wagging_tail(mob/living/carbon/human/H)
+/datum/species/human/felinid/is_wagging_tail(mob/living/carbon/human/H)
 	return ("waggingtail_human" in mutant_bodyparts)
 
-/datum/species/human/neko/start_wagging_tail(mob/living/carbon/human/H)
+/datum/species/human/felinid/start_wagging_tail(mob/living/carbon/human/H)
 	if("tail_human" in mutant_bodyparts)
 		mutant_bodyparts -= "tail_human"
 		mutant_bodyparts |= "waggingtail_human"
 	H.update_body()
 
-/datum/species/human/neko/stop_wagging_tail(mob/living/carbon/human/H)
+/datum/species/human/felinid/stop_wagging_tail(mob/living/carbon/human/H)
 	if("waggingtail_human" in mutant_bodyparts)
 		mutant_bodyparts -= "waggingtail_human"
 		mutant_bodyparts |= "tail_human"
 	H.update_body()
 
-/datum/species/human/neko/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+/datum/species/human/felinid/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(pref_load)			//Hah! They got forcefully purrbation'd. Force default neko parts on them if they have no mutant parts in those areas!
+		if(pref_load)			//Hah! They got forcefully purrbation'd. Force default felinid parts on them if they have no mutant parts in those areas!
 			if(H.dna.features["tail_human"] == "None")
 				H.dna.features["tail_human"] = "Cat"
 			if(H.dna.features["tail_human"] == "None")
@@ -61,7 +61,7 @@
 			mutanttail = null
 	return ..()
 
-/datum/species/human/neko/on_species_loss(mob/living/carbon/H, datum/species/new_species, pref_load)
+/datum/species/human/felinid/on_species_loss(mob/living/carbon/H, datum/species/new_species, pref_load)
 	var/obj/item/organ/ears/cat/ears = H.getorgan(/obj/item/organ/ears/cat)
 	var/obj/item/organ/tail/cat/tail = H.getorgan(/obj/item/organ/tail/cat)
 
@@ -114,7 +114,7 @@
 /proc/purrbation_apply(mob/living/carbon/human/H, silent = FALSE)
 	if(!ishuman(H) || iscatperson(H))
 		return
-	H.set_species(/datum/species/human/neko)
+	H.set_species(/datum/species/human/felinid)
 
 	if(!silent)
 		to_chat(H, "Something is nya~t right.")
