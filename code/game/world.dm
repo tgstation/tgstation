@@ -263,7 +263,7 @@ var/list/hubmsgs = world.file2list("strings/hub.txt")
 
 	s += "<b>[station_name()]</b>";
 	s += " ("
-	s += "<a href=\"http://beestation13.com/forums\">" //Change this to wherever you want the hub to link to.
+	s += "<a href=\"http://beestation13.com/forum\">" //Change this to wherever you want the hub to link to.
 	s += "Forums"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
 	s += "</a>"
 	s += "|"
