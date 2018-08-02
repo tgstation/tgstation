@@ -54,7 +54,7 @@
 			if(islist(reversed))
 				reversed = reverseRange(reversed.Copy())
 				for(var/entry in reversed)
-					dat += "<font size=2px><b>[entry]</b>:<br>[reversed[entry]]</font><br>"
+					dat += "<font size=2px><b>[entry]</b><br>[reversed[entry]]</font><br>"
 			dat += "<hr>"
 
 	usr << browse(dat, "window=invidual_logging_[key_name(M)];size=600x480")
