@@ -98,7 +98,6 @@
 	name = "Syndicate Fighter";
 	port_direction = 2;
 	preferred_direction = 4;
-	timid = 1;
 	width = 9
 	},
 /turf/open/floor/plating,
