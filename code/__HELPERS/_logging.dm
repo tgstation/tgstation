@@ -196,8 +196,11 @@
 				C = M.client
 		else
 			fallback_name = mind.name
-	else
-		return "*invalid*"
+	else if (istype(whom, /datum))
+		var/swhom = "[whom]"
+		if(!swhom)
+			swhom = "*invalid*"
+		return swhom
 
 	. = ""
 
