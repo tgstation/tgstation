@@ -191,13 +191,15 @@ Proc for attack log creation, because really why not
 	var/message = "has [what_done] [starget][(sobject||addition) ? " with ":""][sobject][addition][hp]"
 	user.log_message(message, LOG_ATTACK, color="red")
 
-	var/reverse_message = "has been [what_done] by [ssource][(sobject||addition) ? " with ":""][sobject][addition][hp]"
-	target.log_message(reverse_message, LOG_ATTACK, color="orange", log_globally=FALSE)
+	if(user != target)
+		var/reverse_message = "has been [what_done] by [ssource][(sobject||addition) ? " with ":""][sobject][addition][hp]"
+		target.log_message(reverse_message, LOG_ATTACK, color="orange", log_globally=FALSE)
 
 // Helper for logging of messages with only one sender and receiver
 /proc/log_directed_talk(mob/source, mob/target, message, message_type, tag)
 	source.log_talk(message, message_type, tag="[tag] to [key_name(target)]")
-	target.log_talk(message, message_type, tag="[tag] from [key_name(source)]", log_globally=FALSE)
+	if(source != target)
+		target.log_talk(message, message_type, tag="[tag] from [key_name(source)]", log_globally=FALSE)
 
 /proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null)
 	if(!user || !target)
