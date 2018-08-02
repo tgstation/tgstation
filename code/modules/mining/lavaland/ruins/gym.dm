@@ -24,6 +24,7 @@
 	desc = "Just looking at this thing makes you feel tired."
 	density = TRUE
 	anchored = TRUE
+	var/sabotaged = FALSE
 	var/icon_state_inuse
 
 /obj/structure/weightmachine/proc/AnimateMachine(mob/living/user)
@@ -36,6 +37,13 @@
 	if(obj_flags & IN_USE)
 		to_chat(user, "It's already in use - wait a bit.")
 		return
+	if(sabotaged)
+		user.setDir(SOUTH)
+		user.forceMove(src.loc)
+		to_chat(user, "<span class='warning'>The weights on the machine come loose and slam down on you, flinging you off the machine!</span>")
+		user.visible_message("<span class='boldwarning'>[user] is flung off [src]!</span>")
+		user.Knockdown(40)
+		user.adjustBruteLoss(20)
 	else
 		obj_flags |= IN_USE
 		icon_state = icon_state_inuse
@@ -93,3 +101,15 @@
 	animate(user, pixel_y = 2, time = 3)
 	sleep(3)
 	cut_overlay(swole_overlay)
+
+/obj/structure/weightmachine/attackby(obj/item/I, mob/user, params)
+	add_fingerprint(user)
+	if(default_unfasten_wrench(user, I))
+		return
+	else if (istype(I, /obj/item/screwdriver))
+		to_chat(user, "<span class='notice'>You start to [sabotaged ? "fix the screws on the machine" : "loosen the screws on the machine"]...</span>")
+		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
+		if(I.use_tool(src, user, 30))
+			user.visible_message("[user] [sabotaged ? "fixes the screws on the machine" : "loosens the screws on the machine"]!", "<span class='notice'>You [sabotaged ? "fix the screws on the machine" : "loosen the screws on the machine. The next person to use it is in for a surprise.."]!</span>", "<span class='italics'>You hear screws against metal.</span>")
+			sabotaged = !sabotaged
+			update_icon()
