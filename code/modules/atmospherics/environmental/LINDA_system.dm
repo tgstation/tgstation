@@ -24,23 +24,15 @@
 	var/opp = (dir == UP)? DOWN : UP
 	var/R = FALSE
 	if(vertical && !(zAirOut(dir, T) && T.zAirIn(dir, src)))
-		if(usr)
-			to_chat(world, "DEBUG: [__LINE__] R TRUE")
 		R = TRUE
 	if(blocks_air || T.blocks_air)
-		if(usr)
-			to_chat(world, "DEBUG: [__LINE__] R TRUE")
 		R = TRUE
 
 	for(var/obj/O in contents+T.contents)
 		var/turf/other = (O.loc == src ? T : src)
 		if(!(vertical? (CANVERTICALATMOSPASS(O, other)) : (CANATMOSPASS(O, other))))
-			if(usr)
-				to_chat(world, "DEBUG: [__LINE__] R TRUE")
 			R = TRUE
 			if(O.BlockSuperconductivity()) 	//the direction and open/closed are already checked on CanAtmosPass() so there are no arguments
-				if(usr)
-					to_chat(world, "DEBUG: [__LINE__] RETURN")
 				atmos_supeconductivity |= dir
 				T.atmos_supeconductivity |= opp
 				return FALSE						//no need to keep going, we got all we asked
@@ -58,35 +50,22 @@
 	var/list/consider = list()
 	for(var/direction in GLOB.cardinals_multiz)
 		var/turf/T = get_step_multiz(src, direction)
-		if(!T)
-			if(usr)
-				to_chat(world, "Bypassing [__LINE__] direction [direction]")
+		if(!isopenturf(T))
 			continue
 		consider[T] = direction
-		if(usr)
-			to_chat(world, "Considering [T] direction [direction]")
 	for(var/i in consider)
-		var/turf/T = consider
-		if(!(blocks_air || T.blocks_air) && ((consider[T] & (UP|DOWN))? (CANATMOSPASS(T, src)) : (CANVERTICALATMOSPASS(T, src))) )
+		var/turf/T = i
+		if(!(blocks_air || T.blocks_air) && ((consider[T] & (UP|DOWN))? (CANVERTICALATMOSPASS(T, src)) : (CANATMOSPASS(T, src))) )
 			LAZYINITLIST(atmos_adjacent_turfs)
 			LAZYINITLIST(T.atmos_adjacent_turfs)
 			atmos_adjacent_turfs[T] = TRUE
 			T.atmos_adjacent_turfs[src] = TRUE
-			if(usr)
-				to_chat(world, "Passed [__LINE__] direction [consider[T]] [T]")
 		else
 			if (atmos_adjacent_turfs)
 				atmos_adjacent_turfs -= T
 			if (T.atmos_adjacent_turfs)
 				T.atmos_adjacent_turfs -= src
 			UNSETEMPTY(T.atmos_adjacent_turfs)
-			if(usr)
-				to_chat(world, "Failed [__LINE__] direction [consider[T]] [T].")
-				if(blocks_air || T.blocks_air)
-					to_chat(world, "Fail Reason: blocks_air.")
-				else if(!((consider[T] & (UP|DOWN))?CANATMOSPASS(T, src):CANVERTICALATMOSPASS(T, src)))
-					to_chat(world, "Fail Reason: Can Atmos Pass.")
-				to_chat(world, "Vertical was [consider[T] & (UP|DOWN)].")
 	UNSETEMPTY(atmos_adjacent_turfs)
 	src.atmos_adjacent_turfs = atmos_adjacent_turfs
 

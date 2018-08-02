@@ -35,9 +35,6 @@
 /atom/movable/proc/onZImpact(turf/T, levels)
 	return TRUE
 
-/atom/movable/proc/can_zFall(turf/T, levels = 1)
-	return TRUE
-
 //For physical constraints to travelling up/down.
 /atom/movable/proc/can_zTravel(turf/destination, direction)
 	var/turf/T = get_turf(src)

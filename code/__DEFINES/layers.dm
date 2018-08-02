@@ -6,8 +6,6 @@
 #define PLANE_SPACE -95
 #define PLANE_SPACE_PARALLAX -90
 
-#define FLOOR_OPENSPACE_PLANE -3
-#define OPENSPACE_LAYER -3
 #define FLOOR_PLANE -2
 #define GAME_PLANE -1
 #define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
@@ -81,6 +79,9 @@
 
 #define LIGHTING_PLANE 15
 #define LIGHTING_LAYER 15
+
+#define FLOOR_OPENSPACE_PLANE 16
+#define OPENSPACE_LAYER 16
 
 #define ABOVE_LIGHTING_PLANE 16
 #define ABOVE_LIGHTING_LAYER 16

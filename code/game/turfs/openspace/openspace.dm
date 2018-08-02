@@ -52,11 +52,6 @@
 	check_effect()
 	lookthrough.vis_contents += T
 
-/turf/open/openspace/Entered(atom/movable/AM)
-	. = ..()
-	if(!AM.zfalling)
-		zFall(AM)
-
 /turf/open/openspace/zAirIn()
 	return TRUE
 

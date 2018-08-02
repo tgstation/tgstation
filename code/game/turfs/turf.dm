@@ -148,7 +148,8 @@
 	var/turf/target = get_step_multiz(src, DOWN)
 	if(!target)
 		return FALSE
-	if(!force && (!can_zFall(A, levels, target) || !A.can_zFall(src, levels, target)))
+	var/gravity = A.has_gravity(src)
+	if(!force && (!gravity || (A.movement_type & FLYING) || !zPassOut(A, DOWN, target) || !target.zPassIn(A, UP, src)))
 		return FALSE
 	A.visible_message("<span class='danger'>[A] falls through [src]!</span>")
 	A.zfalling = TRUE
@@ -245,6 +246,8 @@
 		var/obj/O = AM
 		if(O.obj_flags & FROZEN)
 			O.make_unfrozen()
+	if(!AM.zfalling)
+		zFall(AM)
 
 /turf/proc/is_plasteel_floor()
 	return FALSE
