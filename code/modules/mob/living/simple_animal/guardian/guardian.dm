@@ -38,6 +38,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	melee_damage_upper = 15
 	butcher_results = list(/obj/item/ectoplasm = 1)
 	AIStatus = AI_OFF
+	hud_type = /datum/hud/guardian
 	dextrous_hud_type = /datum/hud/dextrous/guardian //if we're set to dextrous, account for it.
 	var/list/guardian_overlays[GUARDIAN_TOTAL_LAYERS]
 	var/reset = 0 //if the summoner has reset the guardian already

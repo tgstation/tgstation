@@ -378,6 +378,8 @@
 				oldloc.Exited(src, destination)
 				if(old_area)
 					old_area.Exited(src, destination)
+			for(var/atom/movable/AM in oldloc)
+				AM.Uncrossed(src)
 			var/turf/oldturf = get_turf(oldloc)
 			var/turf/destturf = get_turf(destination)
 			var/old_z = (oldturf ? oldturf.z : null)

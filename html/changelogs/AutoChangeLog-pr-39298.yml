@@ -1,6 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - tweak: "Techweb nodes that are available to exofabs by roundstart have been moved to basic research technology."
-  - balance: "Ripley APLU circuit boards are now printable by roundstart."
-  - balance: "Odysseus, Gygax, Durand, H.O.N.K. and Phazon mech parts have to be researched before becoming printable (same as their circuit boards)."

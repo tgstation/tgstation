@@ -1,0 +1,5 @@
+author: "granpawalton"
+delete-after: True
+changes: 
+  - bugfix: "pubby round start atmos issues resolved"
+  - bugfix: "pubby departures lounge vent is no longer belonging to brig maint"

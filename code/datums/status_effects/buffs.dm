@@ -479,7 +479,7 @@
 		if(deathTick < 4)
 			deathTick += 1
 		else
-			owner.visible_message("[owner]'s soul is absorbed into the rod, releaving the previous snake of it's duty.")
+			owner.visible_message("[owner]'s soul is absorbed into the rod, relieving the previous snake of its duty.")
 			var/mob/living/simple_animal/hostile/retaliate/poison/snake/healSnake = new(owner.loc)
 			var/list/chems = list("bicaridine", "salbutamol", "kelotane", "antitoxin")
 			healSnake.poison_type = pick(chems)

@@ -13,7 +13,7 @@
 
 /datum/bounty/item/assistant/skateboard
 	name = "Skateboard"
-	description = "Nanotrasen has determined walking to be a wasteful. Ship a skateboard to CentCom to speed operations up."
+	description = "Nanotrasen has determined walking to be wasteful. Ship a skateboard to CentCom to speed operations up."
 	reward = 900 // the tony hawk
 	wanted_types = list(/obj/vehicle/ridden/scooter/skateboard)
 
@@ -141,6 +141,18 @@
 	reward = 3000
 	wanted_types = list(/obj/item/organ/tail/lizard)
 
+/datum/bounty/item/assistant/cat_tail
+	name = "Cat Tail"
+	description = "Central Command has run out of heavy duty pipe cleaners. Can you ship over a cat tail to help us out?"
+	reward = 3000
+	wanted_types = list(/obj/item/organ/tail/cat)
+
+/datum/bounty/item/assistant/tail_whip
+	name = "Nine Tails whip"
+	description = "Commander Jackson is looking for a fine addition to her exotic weapons collection. She will reward you handsomely for either a Cat or Liz o' Nine Tails."
+	reward = 4000
+	wanted_types = list(/obj/item/melee/chainofcommand/tailwhip)
+
 /datum/bounty/item/assistant/shard
 	name = "Shards"
 	description = "A killer clown has been stalking CentCom, and staff have been unable to catch her because she's not wearing shoes. Please ship some shards so that a booby trap can be constructed."
@@ -150,23 +162,10 @@
 
 /datum/bounty/item/assistant/comfy_chair
 	name = "Comfy Chairs"
-	description = "Commander Pat is unhappy with his chair. He claims it hurts his back. Ship some alternatives out to humor him. "
+	description = "Commander Pat is unhappy with his chair. He claims it hurts his back. Ship some alternatives out to humor him."
 	reward = 1500
 	required_count = 5
 	wanted_types = list(/obj/structure/chair/comfy)
-
-/datum/bounty/item/assistant/revolver
-	name = "Revolver"
-	description = "Captain Johann of station 12 has challenged Captain Vic of station 11 to a duel. He's asked for help securing an appropriate revolver to use."
-	reward = 2000
-	wanted_types = list(/obj/item/gun/ballistic/revolver)
-	exclude_types = list(/obj/item/gun/ballistic/revolver/doublebarrel, /obj/item/gun/ballistic/revolver/grenadelauncher)
-
-/datum/bounty/item/assistant/hand_tele
-	name = "Hand Tele"
-	description = "Central Command has come up with a genius idea: Why not teleport cargo rather than ship it? Send over a hand tele, receive payment, then wait 6-8 years while they deliberate."
-	reward = 2000
-	wanted_types = list(/obj/item/hand_tele)
 
 /datum/bounty/item/assistant/geranium
 	name = "Geraniums"
@@ -231,7 +230,7 @@
 
 /datum/bounty/item/assistant/bonfire
 	name = "Lit Bonfire"
-	description = "Space heaters are malfunctioning and the cargo crew of Central Command is starting to feel  cold. Ship a lit bonfire to warm them up."
+	description = "Space heaters are malfunctioning and the cargo crew of Central Command is starting to feel cold. Ship a lit bonfire to warm them up."
 	reward = 5000
 	wanted_types = list(/obj/structure/bonfire)
 

@@ -130,7 +130,7 @@
 ////////////////////////////////////
 /obj/item/dnainjector/anticough
 	name = "\improper DNA injector (Anti-Cough)"
-	desc = "Will stop that aweful noise."
+	desc = "Will stop that awful noise."
 	remove_mutations_static = list(COUGH)
 
 /obj/item/dnainjector/coughmut
