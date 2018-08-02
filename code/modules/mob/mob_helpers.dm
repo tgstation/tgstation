@@ -475,42 +475,77 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		var/mob/living/T = pick(nearby_mobs)
 		ClickOn(T)
 
-/mob/proc/log_message(message, message_type, log_globally = TRUE)
+// Logs a message in a mob's individual log, and in the global logs as well if log_globally is true
+/mob/proc/log_message(message, message_type, color=null, log_globally = TRUE)
 	if(!LAZYLEN(message) || !message_type)
 		return
 
-	if(client)
-		if(!islist(client.player_details.logging[message_type]))
-			client.player_details.logging[message_type] = list()
+	// Cannot use the list as a map if the key is a number, so we stringify it (thank you BYOND)
+	var/smessage_type = num2text(message_type)
 
-	if(!islist(logging[message_type]))
-		logging[message_type] = list()
+	if(client)
+		if(!islist(client.player_details.logging[smessage_type]))
+			client.player_details.logging[smessage_type] = list()
+
+	if(!islist(logging[smessage_type]))
+		logging[smessage_type] = list()
 
 	var/infopart = key_name(src)
 	var/locpart = loc_name(src)
 
-	var/list/timestamped_message = list("[LAZYLEN(logging[message_type]) + 1]\[[time_stamp()]\] [infopart]" = "[message] [locpart]")
+	var/colored_message = message
+	if(color)
+		if(color[1] == "#")
+			colored_message = "<font color=[color]>[message]</font>"
+		else
+			colored_message = "<font color='[color]'>[message]</font>"
 
-	logging[message_type] += timestamped_message
+	var/list/timestamped_message = list("[LAZYLEN(logging[smessage_type]) + 1]\[[time_stamp()]\] [infopart] [locpart]" = colored_message)
+
+	logging[smessage_type] += timestamped_message
 	if(client)
-		client.player_details.logging[message_type] += timestamped_message
+		client.player_details.logging[smessage_type] += timestamped_message
 
 	if(log_globally)
 		var/global_log_text = "[infopart] [message] [locpart]"
 		switch(message_type)
-			if(INDIVIDUAL_ATTACK_LOG)
+			if(LOG_ATTACK)
 				log_attack(global_log_text)
-			if(INDIVIDUAL_SAY_LOG)
+			if(LOG_SAY)
 				log_say(global_log_text)
-			if(INDIVIDUAL_EMOTE_LOG)
+			if(LOG_WHISPER)
+				log_whisper(global_log_text)
+			if(LOG_EMOTE)
 				log_emote(global_log_text)
-			if(INDIVIDUAL_OOC_LOG)
+			if(LOG_DSAY)
+				log_dsay(global_log_text)
+			if(LOG_PDA)
+				log_pda(global_log_text)
+			if(LOG_CHAT)
+				log_chat(global_log_text)
+			if(LOG_COMMENT)
+				log_comment(global_log_text)
+			if(LOG_TELECOMMS)
+				log_telecomms(global_log_text)
+			if(LOG_OOC)
 				log_ooc(global_log_text)
-			if(INDIVIDUAL_OWNERSHIP_LOG)
+			if(LOG_ADMIN)
+				log_admin(global_log_text)
+			if(LOG_OWNERSHIP)
+				log_game(global_log_text)
+			if(LOG_GAME)
 				log_game(global_log_text)
 			else
-				warning("Invalid individual logging type detected: [message_type]. Defaulting to say.")
-				log_say(global_log_text)
+				warning("Invalid individual logging type detected: [message_type]. Defaulting to [LOG_GAME] (LOG_GAME).")
+				log_game(global_log_text)
+
+// Helper for generic text messages
+/mob/proc/log_talk(message, message_type, tag=null, log_globally=TRUE)
+	var/prefix = ""
+	if(tag)
+		prefix = "([tag]) "
+
+	log_message("[prefix]\"[message]\"", message_type, log_globally=log_globally)
 
 /mob/proc/can_hear()
 	. = TRUE

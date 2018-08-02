@@ -35,7 +35,7 @@
 	. = ..()
 	create_objectives()
 	equip_rev()
-	owner.current.log_message("<font color='red'>Has been converted to the revolution!</font>", INDIVIDUAL_ATTACK_LOG)
+	owner.current.log_message("has been converted to the revolution!", LOG_ATTACK, color="red")
 
 /datum/antagonist/rev/on_removal()
 	remove_objectives()

@@ -47,7 +47,7 @@
 	if(!msg)
 		return
 
-	user.log_message(msg, INDIVIDUAL_EMOTE_LOG)
+	user.log_message(msg, LOG_EMOTE)
 	msg = "<b>[user]</b> " + msg
 
 	for(var/mob/M in GLOB.dead_mob_list)

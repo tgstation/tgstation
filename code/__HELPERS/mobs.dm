@@ -175,23 +175,12 @@ Proc for attack log creation, because really why not
 5 is additional information, anything that needs to be added
 */
 
-/proc/add_logs(mob/user, mob/target, what_done, object=null, addition=null)
-	var/turf/attack_location = get_turf(target)
-
-	var/is_mob_user = user && ismob(user)
-	var/is_mob_target = target && ismob(target)
-
-	var/mob/living/living_target
-
-	if(target && isliving(target))
-		living_target = target
-
-	var/hp = " "
-	if(living_target)
-		hp = " (NEWHP: [living_target.health]) "
-
-	var/starget = key_name(target)
+/proc/log_combat(mob/user, mob/target, what_done, object=null, addition=null)
 	var/ssource = key_name(user)
+	var/starget = key_name(target)
+
+	var/mob/living/living_target = target
+	var/hp = istype(living_target) ? " (NEWHP: [living_target.health]) " : " "
 
 	var/sobject = ""
 	if(object)
@@ -199,19 +188,16 @@ Proc for attack log creation, because really why not
 		if(addition)
 			addition = " [addition]"
 
-	var/sattackloc = ""
-	if(attack_location)
-		sattackloc = loc_name(attack_location)
+	var/message = "has [what_done] [starget][(sobject||addition) ? " with ":""][sobject][addition][hp]"
+	user.log_message(message, LOG_ATTACK, color="red")
 
-	if(is_mob_user)
-		var/message = "<font color='red'>has [what_done] [starget][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]</font>"
-		user.log_message(message, INDIVIDUAL_ATTACK_LOG, log_globally=FALSE)
+	var/reverse_message = "has been [what_done] by [ssource][(sobject||addition) ? " with ":""][sobject][addition][hp]"
+	target.log_message(reverse_message, LOG_ATTACK, color="orange", log_globally=FALSE)
 
-	if(is_mob_target)
-		var/message = "<font color='orange'>has been [what_done] by [ssource][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]</font>"
-		target.log_message(message, INDIVIDUAL_ATTACK_LOG, log_globally=FALSE)
-
-	log_attack("[ssource] [what_done] [starget][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]")
+// Helper for logging of messages with only one sender and receiver
+/proc/log_directed_talk(mob/source, mob/target, message, message_type, tag)
+	source.log_talk(message, message_type, tag="[tag] to [key_name(target)]")
+	target.log_talk(message, message_type, tag="[tag] from [key_name(source)]", log_globally=FALSE)
 
 /proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null)
 	if(!user || !target)
@@ -460,36 +446,6 @@ Proc for attack log creation, because really why not
 			to_chat(M, rendered_message)
 		else
 			to_chat(M, message)
-
-
-/proc/log_talk(mob/user,message,logtype)
-
-	var/sayloc = loc_name(user)
-	var/logmessage = "[message] [sayloc]"
-
-	switch(logtype)
-
-		if(LOGDSAY)
-			log_dsay(logmessage)
-		if(LOGSAY)
-			log_say(logmessage)
-		if(LOGWHISPER)
-			log_whisper(logmessage)
-		if(LOGEMOTE)
-			log_emote(logmessage)
-		if(LOGPDA)
-			log_pda(logmessage)
-		if(LOGCHAT)
-			log_chat(logmessage)
-		if(LOGCOMMENT)
-			log_comment(logmessage)
-		if(LOGASAY)
-			log_adminsay(logmessage)
-		if(LOGOOC)
-			log_ooc(logmessage)
-		else
-			warning("Invalid speech logging type detected. [logtype]. Defaulting to say")
-			log_say(logmessage)
 
 //Used in chemical_mob_spawn. Generates a random mob based on a given gold_core_spawnable value.
 /proc/create_random_mob(spawn_location, mob_class = HOSTILE_SPAWN)

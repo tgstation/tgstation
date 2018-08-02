@@ -3,7 +3,7 @@
 	return ..() | SPAN_ROBOT
 
 /mob/living/proc/robot_talk(message)
-	log_message(message, INDIVIDUAL_SAY_LOG)
+	log_talk(message, LOG_SAY)
 	var/desig = "Default Cyborg" //ezmode for taters
 	if(issilicon(src))
 		var/mob/living/silicon/S = src

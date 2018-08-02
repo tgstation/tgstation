@@ -237,13 +237,13 @@
 
 /proc/loc_name(atom/A)
 	if(!istype(A))
-		return "(UNKNOWN LOCATION)"
+		return "(INVALID LOCATION)"
 
 	var/turf/T = A
 	if (!istype(T))
 		T = get_turf(A)
 
 	if(istype(T))
-		return "([A.loc] [COORD(T)])"
+		return "([AREACOORD(T)])"
 	else if(A.loc)
-		return "([A.loc] (0, 0, 0))"
+		return "(UNKNOWN (?, ?, ?))"

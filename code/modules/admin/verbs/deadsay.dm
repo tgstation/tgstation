@@ -15,7 +15,7 @@
 		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
-	log_talk(mob,"[key_name(src)] : [msg]",LOGDSAY)
+	mob.log_talk(msg, LOG_DSAY)
 
 	if (!msg)
 		return

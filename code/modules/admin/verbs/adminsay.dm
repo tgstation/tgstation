@@ -9,7 +9,8 @@
 	if(!msg)
 		return
 
-	log_talk(mob,"[key_name(src)] : [msg]",LOGASAY)
+	mob.log_talk(msg, LOG_ADMIN)
+
 	msg = keywords_lookup(msg)
 	if(check_rights(R_ADMIN,0))
 		msg = "<span class='admin'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, 1)]</EM> [ADMIN_FLW(mob)]: <span class='message linkify'>[msg]</span></span>"

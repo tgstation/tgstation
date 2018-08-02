@@ -111,7 +111,7 @@
 		if(SYRINGE_INJECT)
 			// Always log attemped injections for admins
 			var/contained = reagents.log_list()
-			add_logs(user, L, "attemped to inject", src, addition="which had [contained]")
+			log_combat(user, L, "attemped to inject", src, addition="which had [contained]")
 
 			if(!reagents.total_volume)
 				to_chat(user, "<span class='notice'>[src] is empty.</span>")
@@ -141,9 +141,9 @@
 									"<span class='userdanger'>[user] injects [L] with the syringe!</span>")
 
 				if(L != user)
-					add_logs(user, L, "injected", src, addition="which had [contained]")
+					log_combat(user, L, "injected", src, addition="which had [contained]")
 				else
-					L.log_message("<font color='orange'>Injected themselves ([contained]) with [src.name].</font>", INDIVIDUAL_ATTACK_LOG)
+					L.log_message("injected themselves ([contained]) with [src.name]", LOG_ATTACK, color="orange")
 
 			var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 			reagents.reaction(L, INJECT, fraction)
