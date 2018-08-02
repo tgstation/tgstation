@@ -6,12 +6,12 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	desc = "A polaroid camera. <span class='boldnotice'>Alt click to change its focusing, allowing you to set how big of an area it will capture!</span>"
 	icon_state = "camera"
-	item_state = "electropack"
+	item_state = "camera"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = ITEM_SLOT_NECK
 	materials = list(MAT_METAL = 50, MAT_GLASS = 150)
 	var/state_on = "camera"
 	var/state_off = "camera_off"
