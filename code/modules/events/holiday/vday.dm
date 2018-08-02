@@ -161,7 +161,7 @@
                 "A heart-shaped candy that reads: ERP",
                 "A heart-shaped candy that reads: LEWD",
                 "A heart-shaped candy that reads: LUSTY",
-                "A heart-shaped candy that reads: SPESS LOVE"
+                "A heart-shaped candy that reads: SPESS LOVE",
                 "A heart-shaped candy that reads: AYY LMAO",
                 "A heart-shaped candy that reads: TABLE ME",
                 "A heart-shaped candy that reads: HAND CUFFS",
