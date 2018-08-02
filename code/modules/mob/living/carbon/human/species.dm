@@ -286,7 +286,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			A.cure(FALSE)
 
 
-/datum/species/proc/on_species_loss(mob/living/carbon/C)
+/datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species)
 	if(C.dna.species.exotic_bloodtype)
 		C.dna.blood_type = random_blood_type()
 	if(DIGITIGRADE in species_traits)
@@ -1664,3 +1664,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/negates_gravity(mob/living/carbon/human/H)
 	return 0
+
+////////////////
+//Tail Wagging//
+////////////////
+
+/datum/species/proc/can_wag_tail(mob/living/carbon/human/H)
+	return FALSE
+
+/datum/species/proc/is_wagging_tail(mob/living/carbon/human/H)
+	return FALSE
+
+/datum/species/proc/start_wagging_tail(mob/living/carbon/human/H)
+
+/datum/species/proc/stop_wagging_tail(mob/living/carbon/human/H)

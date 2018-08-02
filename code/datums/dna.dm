@@ -217,7 +217,7 @@
 
 /mob/living/carbon/set_species(datum/species/mrace, icon_update = 1)
 	if(mrace && has_dna())
-		dna.species.on_species_loss(src)
+		dna.species.on_species_loss(src, mrace)
 		var/old_species = dna.species
 		if(ispath(mrace))
 			dna.species = new mrace()
