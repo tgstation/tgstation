@@ -5,9 +5,9 @@
 	circuit = /obj/item/circuitboard/computer/cargo
 	var/requestonly = FALSE
 	var/contraband = FALSE
-	var/safety_warning = "For safety reasons the automated supply shuttle \
-		cannot transport live organisms, classified nuclear weaponry or \
-		homing beacons."
+	var/safety_warning = "For safety reasons, the automated supply shuttle \
+		cannot transport live organisms, human remains, classified nuclear weaponry \
+		or homing beacons."
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
 
 	light_color = "#E2853D"//orange
@@ -23,21 +23,24 @@
 	. = ..()
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	contraband = board.contraband
-	emagged = board.emagged
+	if (board.obj_flags & EMAGGED)
+		obj_flags |= EMAGGED
+	else
+		obj_flags &= ~EMAGGED
 
 /obj/machinery/computer/cargo/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
 	"<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
 
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	contraband = TRUE
 
 	// This also permamently sets this on the circuit board
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.contraband = TRUE
-	board.emagged = TRUE
+	board.obj_flags |= EMAGGED
 
 /obj/machinery/computer/cargo/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -69,12 +72,13 @@
 				"name" = P.group,
 				"packs" = list()
 			)
-		if((P.hidden && !emagged) || (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.DropPodOnly)
+		if((P.hidden && !(obj_flags & EMAGGED)) || (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.DropPodOnly)
 			continue
 		data["supplies"][P.group]["packs"] += list(list(
 			"name" = P.name,
 			"cost" = P.cost,
-			"id" = pack
+			"id" = pack,
+			"desc" = P.desc || P.name // If there is a description, use it. Otherwise use the pack's name.
 		))
 
 	data["cart"] = list()
@@ -111,10 +115,13 @@
 				say(blockade_warning)
 				return
 			if(SSshuttle.supply.getDockedId() == "supply_home")
-				SSshuttle.supply.emagged = emagged
+				if (obj_flags & EMAGGED)
+					SSshuttle.supply.obj_flags |= EMAGGED
+				else
+					SSshuttle.supply.obj_flags = (SSshuttle.supply.obj_flags & ~EMAGGED)
 				SSshuttle.supply.contraband = contraband
 				SSshuttle.moveShuttle("supply", "supply_away", TRUE)
-				say("The supply shuttle has departed.")
+				say("The supply shuttle is departing.")
 				investigate_log("[key_name(usr)] sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
 				investigate_log("[key_name(usr)] called the supply shuttle.", INVESTIGATE_CARGO)
@@ -140,7 +147,7 @@
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
 				return
-			if((pack.hidden && !emagged) || (pack.contraband && !contraband) || pack.DropPodOnly)
+			if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.contraband && !contraband) || pack.DropPodOnly)
 				return
 
 			var/name = "*None Provided*"

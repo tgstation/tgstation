@@ -2,15 +2,15 @@
 	set name = "Possess Obj"
 	set category = "Object"
 
-	if(O.dangerous_possession && CONFIG_GET(flag/forbid_singulo_possession))
+	if((O.obj_flags & DANGEROUS_POSSESSION) && CONFIG_GET(flag/forbid_singulo_possession))
 		to_chat(usr, "[O] is too powerful for you to possess.")
 		return
 
 	var/turf/T = get_turf(O)
 
 	if(T)
-		log_admin("[key_name(usr)] has possessed [O] ([O.type]) at ([T.x], [T.y], [T.z])")
-		message_admins("[key_name(usr)] has possessed [O] ([O.type]) at ([T.x], [T.y], [T.z])")
+		log_admin("[key_name(usr)] has possessed [O] ([O.type]) at [AREACOORD(T)]")
+		message_admins("[key_name(usr)] has possessed [O] ([O.type]) at [AREACOORD(T)]")
 	else
 		log_admin("[key_name(usr)] has possessed [O] ([O.type]) at an unknown location")
 		message_admins("[key_name(usr)] has possessed [O] ([O.type]) at an unknown location")

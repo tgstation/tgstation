@@ -54,7 +54,7 @@ Bonus
 /datum/symptom/fever/proc/Heat(mob/living/M, datum/disease/advance/A)
 	var/get_heat = 6 * power
 	if(!unsafe)
-		M.bodytemperature = min(M.bodytemperature + (get_heat * A.stage), BODYTEMP_HEAT_DAMAGE_LIMIT - 1)
+		M.adjust_bodytemperature(get_heat * A.stage, 0, BODYTEMP_HEAT_DAMAGE_LIMIT - 1)
 	else
-		M.bodytemperature += (get_heat * A.stage)
+		M.adjust_bodytemperature(get_heat * A.stage)
 	return 1

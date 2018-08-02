@@ -59,6 +59,29 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	"÷" = "cords"
 ))
 
+/mob/living/proc/Ellipsis(original_msg, chance = 50, keep_words)
+    if(chance <= 0)
+        return "..."
+    if(chance >= 100)
+        return original_msg
+
+    var/list
+        words = splittext(original_msg," ")
+        new_words = list()
+
+    var/new_msg = ""
+
+    for(var/w in words)
+        if(prob(chance))
+            new_words += "..."
+            if(!keep_words)
+                continue
+        new_words += w
+
+    new_msg = jointext(new_words," ")
+
+    return new_msg
+
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE)
 	var/static/list/crit_allowed_modes = list(MODE_WHISPER = TRUE, MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
@@ -200,7 +223,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/deaf_type
 	if(speaker != src)
 		if(!radio_freq) //These checks have to be seperate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
-			deaf_message = "<span class='name'>[speaker]</span> [speaker.verb_say] something but you cannot hear them."
+			deaf_message = "<span class='name'>[speaker]</span> [speaker.verb_say] something but you cannot hear [speaker.p_them()]."
 			deaf_type = 1
 	else
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
@@ -273,7 +296,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return 1
 
 /mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
-	if(has_disability(DISABILITY_MUTE))
+	if(has_trait(TRAIT_MUTE))
 		return 0
 
 	if(is_muzzled())
@@ -283,16 +306,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return 0
 
 	return 1
-
-/mob/living/proc/get_message_mode(message)
-	var/key = copytext(message, 1, 2)
-	if(key == "#")
-		return MODE_WHISPER
-	else if(key == ";")
-		return MODE_HEADSET
-	else if(length(message) > 2 && (key in GLOB.department_radio_prefixes))
-		var/key_symbol = lowertext(copytext(message, 2, 3))
-		return GLOB.department_radio_keys[key_symbol]
 
 /mob/living/proc/get_key(message)
 	var/key = copytext(message, 1, 2)
@@ -350,7 +363,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 				return ITALICS | REDUCE_RANGE
 
 		if(MODE_INTERCOM)
-			for (var/obj/item/device/radio/intercom/I in view(1, null))
+			for (var/obj/item/radio/intercom/I in view(1, null))
 				I.talk_into(src, message, , spans, language)
 			return ITALICS | REDUCE_RANGE
 

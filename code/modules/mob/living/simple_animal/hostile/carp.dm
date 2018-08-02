@@ -7,6 +7,7 @@
 	icon_living = "carp"
 	icon_dead = "carp_dead"
 	icon_gib = "carp_gib"
+	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	speak_chance = 0
 	turns_per_move = 5
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/carpmeat = 2)
@@ -93,7 +94,7 @@
 	gender = FEMALE
 	speak_emote = list("squeaks")
 	gold_core_spawnable = NO_SPAWN
-	faction = list("syndicate")
+	faction = list(ROLE_SYNDICATE)
 	AIStatus = AI_OFF
 
 #undef REGENERATION_DELAY

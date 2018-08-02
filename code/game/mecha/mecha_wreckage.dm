@@ -5,7 +5,7 @@
 
 /obj/structure/mecha_wreckage
 	name = "exosuit wreckage"
-	desc = "Remains of some unfortunate mecha. Completely unrepairable, but perhaps something can be salvaged."
+	desc = "Remains of some unfortunate mecha. Completely irreparable, but perhaps something can be salvaged."
 	icon = 'icons/mecha/mecha.dmi'
 	density = TRUE
 	anchored = FALSE
@@ -16,16 +16,18 @@
 	var/salvage_num = 5
 	var/mob/living/silicon/ai/AI //AIs to be salvaged
 
-/obj/structure/mecha_wreckage/New(loc, mob/living/silicon/ai/AI_pilot)
-	..()
-	if(AI_pilot) //Type-checking for this is already done in mecha/Destroy()
-		AI = AI_pilot
-		AI.apply_damage(150, BURN) //Give the AI a bit of damage from the "shock" of being suddenly shut down
-		AI.death() //The damage is not enough to kill the AI, but to be 'corrupted files' in need of repair.
-		AI.forceMove(src) //Put the dead AI inside the wreckage for recovery
-		add_overlay(mutable_appearance('icons/obj/projectiles.dmi', "green_laser")) //Overlay for the recovery beacon
-		AI.controlled_mech = null
-		AI.remote_control = null
+/obj/structure/mecha_wreckage/Initialize(mapload, mob/living/silicon/ai/AI_pilot)
+	. = ..()
+	if(!AI_pilot) //Type-checking for this is already done in mecha/Destroy()
+		return
+
+	AI = AI_pilot
+	AI.apply_damage(150, BURN) //Give the AI a bit of damage from the "shock" of being suddenly shut down
+	AI.death() //The damage is not enough to kill the AI, but to be 'corrupted files' in need of repair.
+	AI.forceMove(src) //Put the dead AI inside the wreckage for recovery
+	add_overlay(mutable_appearance('icons/obj/projectiles.dmi', "green_laser")) //Overlay for the recovery beacon
+	AI.controlled_mech = null
+	AI.remote_control = null
 
 /obj/structure/mecha_wreckage/examine(mob/user)
 	..()
@@ -34,22 +36,23 @@
 
 /obj/structure/mecha_wreckage/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weldingtool))
-		if(salvage_num <= 0)
+		if(salvage_num <= 0 || !length(welder_salvage))
 			to_chat(user, "<span class='warning'>You don't see anything that can be cut with [I]!</span>")
 			return
-		var/obj/item/weldingtool/WT = I
-		if(welder_salvage && welder_salvage.len && WT.remove_fuel(0, user))
-			var/type = prob(70) ? pick(welder_salvage) : null
-			if(type)
-				var/N = new type(get_turf(user))
-				user.visible_message("[user] cuts [N] from [src].", "<span class='notice'>You cut [N] from [src].</span>")
-				if(istype(N, /obj/item/mecha_parts/part))
-					welder_salvage -= type
-				salvage_num--
-			else
-				to_chat(user, "<span class='warning'>You fail to salvage anything valuable from [src]!</span>")
-		else
+
+		if(!I.use_tool(src, user, 0, volume=50))
 			return
+
+		var/type = prob(70) ? pick(welder_salvage) : null
+		if(type)
+			var/N = new type(get_turf(user))
+			user.visible_message("[user] cuts [N] from [src].", "<span class='notice'>You cut [N] from [src].</span>")
+			if(istype(N, /obj/item/mecha_parts/part))
+				welder_salvage -= type
+			salvage_num--
+		else
+			to_chat(user, "<span class='warning'>You fail to salvage anything valuable from [src]!</span>")
+		return
 
 	else if(istype(I, /obj/item/wirecutters))
 		if(salvage_num <= 0)
@@ -76,7 +79,7 @@
 			to_chat(user, "<span class='warning'>You don't see anything that can be pried with [I]!</span>")
 
 
-/obj/structure/mecha_wreckage/transfer_ai(interaction, mob/user, null, obj/item/device/aicard/card)
+/obj/structure/mecha_wreckage/transfer_ai(interaction, mob/user, null, obj/item/aicard/card)
 	if(!..())
 		return
 
@@ -102,8 +105,8 @@
 	name = "\improper Gygax wreckage"
 	icon_state = "gygax-broken"
 
-/obj/structure/mecha_wreckage/gygax/New()
-	..()
+/obj/structure/mecha_wreckage/gygax/Initialize()
+	. = ..()
 	var/list/parts = list(/obj/item/mecha_parts/part/gygax_torso,
 								/obj/item/mecha_parts/part/gygax_head,
 								/obj/item/mecha_parts/part/gygax_left_arm,
@@ -145,8 +148,8 @@
 	name = "\improper Ripley wreckage"
 	icon_state = "ripley-broken"
 
-/obj/structure/mecha_wreckage/ripley/New()
-	..()
+/obj/structure/mecha_wreckage/ripley/Initialize()
+	. = ..()
 	var/list/parts = list(/obj/item/mecha_parts/part/ripley_torso,
 								/obj/item/mecha_parts/part/ripley_left_arm,
 								/obj/item/mecha_parts/part/ripley_right_arm,
@@ -163,8 +166,8 @@
 	name = "\improper Firefighter wreckage"
 	icon_state = "firefighter-broken"
 
-/obj/structure/mecha_wreckage/ripley/firefighter/New()
-	..()
+/obj/structure/mecha_wreckage/ripley/firefighter/Initialize()
+	. = ..()
 	var/list/parts = list(/obj/item/mecha_parts/part/ripley_torso,
 								/obj/item/mecha_parts/part/ripley_left_arm,
 								/obj/item/mecha_parts/part/ripley_right_arm,
@@ -188,8 +191,8 @@
 	icon_state = "honker-broken"
 	desc = "All is right in the universe."
 
-/obj/structure/mecha_wreckage/honker/New()
-	..()
+/obj/structure/mecha_wreckage/honker/Initialize()
+	. = ..()
 	var/list/parts = list(
 							/obj/item/mecha_parts/chassis/honker,
 							/obj/item/mecha_parts/part/honker_torso,
@@ -209,8 +212,8 @@
 	name = "\improper Durand wreckage"
 	icon_state = "durand-broken"
 
-/obj/structure/mecha_wreckage/durand/New()
-	..()
+/obj/structure/mecha_wreckage/durand/Initialize()
+	. = ..()
 	var/list/parts = list(
 								/obj/item/mecha_parts/part/durand_torso,
 								/obj/item/mecha_parts/part/durand_head,
@@ -234,8 +237,8 @@
 	name = "\improper Odysseus wreckage"
 	icon_state = "odysseus-broken"
 
-/obj/structure/mecha_wreckage/odysseus/New()
-	..()
+/obj/structure/mecha_wreckage/odysseus/Initialize()
+	. = ..()
 	var/list/parts = list(
 								/obj/item/mecha_parts/part/odysseus_torso,
 								/obj/item/mecha_parts/part/odysseus_head,

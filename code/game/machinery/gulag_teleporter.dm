@@ -13,7 +13,6 @@ The console is located at computer/gulag_teleporter.dm
 	icon_state = "implantchair"
 	state_open = FALSE
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 5000
@@ -47,6 +46,7 @@ The console is located at computer/gulag_teleporter.dm
 	update_icon()
 
 /obj/machinery/gulag_teleporter/interact(mob/user)
+	. = ..()
 	if(locked)
 		to_chat(user, "<span class='warning'>[src] is locked!</span>")
 		return
@@ -165,15 +165,15 @@ The console is located at computer/gulag_teleporter.dm
 	name = "labor camp teleporter (Machine Board)"
 	build_path = /obj/machinery/gulag_teleporter
 	req_components = list(
-							/obj/item/ore/bluespace_crystal = 2,
+							/obj/item/stack/ore/bluespace_crystal = 2,
 							/obj/item/stock_parts/scanning_module,
 							/obj/item/stock_parts/manipulator)
-	def_components = list(/obj/item/ore/bluespace_crystal = /obj/item/ore/bluespace_crystal/artificial)
+	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /*  beacon that receives the teleported prisoner */
 /obj/structure/gulag_beacon
 	name = "labor camp bluespace beacon"
-	desc = "A recieving beacon for bluespace teleportations."
+	desc = "A receiving beacon for bluespace teleportations."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "light_on-w"
 	resistance_flags = INDESTRUCTIBLE

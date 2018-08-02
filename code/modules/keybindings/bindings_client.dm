@@ -5,8 +5,8 @@
 	set hidden = TRUE
 
 	keys_held[_key] = world.time
-	var/movement = GLOB.movement_keys[_key]
-	if(!(next_move_dir_sub & movement))
+	var/movement = SSinput.movement_keys[_key]
+	if(!(next_move_dir_sub & movement) && !keys_held["Ctrl"])
 		next_move_dir_add |= movement
 
 	// Client-level keybindings are ones anyone should be able to do at any time
@@ -36,7 +36,7 @@
 	set hidden = TRUE
 
 	keys_held -= _key
-	var/movement = GLOB.movement_keys[_key]
+	var/movement = SSinput.movement_keys[_key]
 	if(!(next_move_dir_add & movement))
 		next_move_dir_sub |= movement
 

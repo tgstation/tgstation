@@ -42,7 +42,7 @@
 /area/ruin/space/has_grav/powered/authorship)
 "i" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -77,10 +77,6 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "p" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/powered/authorship)
-"q" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/authorship)
@@ -259,9 +255,9 @@ d
 c
 c
 c
-q
+p
 u
-q
+p
 c
 c
 c

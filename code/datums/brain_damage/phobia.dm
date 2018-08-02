@@ -14,7 +14,7 @@
 	var/list/trigger_turfs
 	var/list/trigger_species
 
-/datum/brain_trauma/mild/phobia/New(mob/living/carbon/C, _permanent, specific_type)
+/datum/brain_trauma/mild/phobia/New(specific_type)
 	phobia_type = specific_type
 	if(!phobia_type)
 		phobia_type = pick(SStraumas.phobia_types)
@@ -31,7 +31,7 @@
 
 /datum/brain_trauma/mild/phobia/on_life()
 	..()
-	if(owner.eye_blind)
+	if(is_blind(owner))
 		return
 	if(world.time > next_check && world.time > next_scare)
 		next_check = world.time + 50
@@ -68,23 +68,29 @@
 							return
 
 /datum/brain_trauma/mild/phobia/on_hear(message, speaker, message_language, raw_message, radio_freq)
-	if(owner.has_disability(DISABILITY_DEAF) || world.time < next_scare) //words can't trigger you if you can't hear them *taps head*
+	if(!owner.can_hear() || world.time < next_scare) //words can't trigger you if you can't hear them *taps head*
 		return message
 	for(var/word in trigger_words)
-		if(findtext(message, word))
+		var/reg = regex("(\\b|\\A)[REGEX_QUOTE(word)]'?s*(\\b|\\Z)", "i")
+
+		if(findtext(raw_message, reg))
 			addtimer(CALLBACK(src, .proc/freak_out, null, word), 10) //to react AFTER the chat message
 			break
 	return message
 
 /datum/brain_trauma/mild/phobia/on_say(message)
 	for(var/word in trigger_words)
-		if(findtext(message, word))
+		var/reg = regex("(\\b|\\A)[REGEX_QUOTE(word)]'?s*(\\b|\\Z)", "i")
+		
+		if(findtext(message, reg))
 			to_chat(owner, "<span class='warning'>You can't bring yourself to say the word \"[word]\"!</span>")
 			return ""
 	return message
 
 /datum/brain_trauma/mild/phobia/proc/freak_out(atom/reason, trigger_word)
 	next_scare = world.time + 120
+	if(owner.stat == DEAD)
+		return
 	var/message = pick("spooks you to the bone", "shakes you up", "terrifies you", "sends you into a panic", "sends chills down your spine")
 	if(reason)
 		to_chat(owner, "<span class='userdanger'>Seeing [reason] [message]!</span>")

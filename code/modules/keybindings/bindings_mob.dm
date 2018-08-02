@@ -29,6 +29,9 @@
 			else
 				dropItemToGround(I)
 			return
+		if("E")
+			quick_equip()
+			return
 		if("Alt")
 			toggle_move_intent()
 			return
@@ -56,7 +59,7 @@
 			return
 
 	if(client.keys_held["Ctrl"])
-		switch(GLOB.movement_keys[_key])
+		switch(SSinput.movement_keys[_key])
 			if(NORTH)
 				northface()
 				return

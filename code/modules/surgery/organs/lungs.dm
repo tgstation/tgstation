@@ -1,17 +1,7 @@
-#define HUMAN_MAX_OXYLOSS 3
-#define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30)
-#define HEAT_GAS_DAMAGE_LEVEL_1 2
-#define HEAT_GAS_DAMAGE_LEVEL_2 4
-#define HEAT_GAS_DAMAGE_LEVEL_3 8
-
-#define COLD_GAS_DAMAGE_LEVEL_1 0.5
-#define COLD_GAS_DAMAGE_LEVEL_2 1.5
-#define COLD_GAS_DAMAGE_LEVEL_3 3
-
 /obj/item/organ/lungs
 	name = "lungs"
 	icon_state = "lungs"
-	zone = "chest"
+	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_LUNGS
 	gender = PLURAL
 	w_class = WEIGHT_CLASS_NORMAL
@@ -68,17 +58,15 @@
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
 	if((H.status_flags & GODMODE))
 		return
-
-	var/species_traits = list()
-	if(H && H.dna && H.dna.species && H.dna.species.species_traits)
-		species_traits = H.dna.species.species_traits
+	if(H.has_trait(TRAIT_NOBREATH))
+		return
 
 	if(!breath || (breath.total_moles() == 0))
 		if(H.reagents.has_reagent(crit_stabilizing_reagent))
 			return
-		if(H.health >= HEALTH_THRESHOLD_CRIT)
+		if(H.health >= H.crit_threshold)
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-		else if(!(NOCRITDAMAGE in species_traits))
+		else if(!H.has_trait(TRAIT_NOCRITDAMAGE))
 			H.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
 		H.failed_last_breath = TRUE
@@ -123,7 +111,7 @@
 			H.throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 		else
 			H.failed_last_breath = FALSE
-			if(H.health >= HEALTH_THRESHOLD_CRIT)
+			if(H.health >= H.crit_threshold)
 				H.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/oxygen][MOLES]
 			H.clear_alert("not_enough_oxy")
@@ -151,7 +139,7 @@
 			H.throw_alert("nitro", /obj/screen/alert/not_enough_nitro)
 		else
 			H.failed_last_breath = FALSE
-			if(H.health >= HEALTH_THRESHOLD_CRIT)
+			if(H.health >= H.crit_threshold)
 				H.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/nitrogen][MOLES]
 			H.clear_alert("nitro")
@@ -188,7 +176,7 @@
 			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
 		else
 			H.failed_last_breath = FALSE
-			if(H.health >= HEALTH_THRESHOLD_CRIT)
+			if(H.health >= H.crit_threshold)
 				H.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/carbon_dioxide][MOLES]
 			H.clear_alert("not_enough_co2")
@@ -218,7 +206,7 @@
 			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
 		else
 			H.failed_last_breath = FALSE
-			if(H.health >= HEALTH_THRESHOLD_CRIT)
+			if(H.health >= H.crit_threshold)
 				H.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/plasma][MOLES]
 			H.clear_alert("not_enough_tox")
@@ -248,11 +236,14 @@
 
 		var/bz_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/bz][MOLES])
 		if(bz_pp > BZ_trip_balls_min)
-			H.hallucination += 20
+			H.hallucination += 10
+			H.reagents.add_reagent("bz_metabolites",5)
 			if(prob(33))
 				H.adjustBrainLoss(3, 150)
+
 		else if(bz_pp > 0.01)
-			H.hallucination += 5//Removed at 2 per tick so this will slowly build up
+			H.hallucination += 5
+			H.reagents.add_reagent("bz_metabolites",1)
 
 
 	// Tritium
@@ -276,14 +267,14 @@
 			H.adjustFireLoss(nitryl_pp/4)
 		gas_breathed = breath_gases[/datum/gas/nitryl][MOLES]
 		if (gas_breathed > gas_stimulation_min)
-			H.reagents.add_reagent("nitryl_gas",1)
+			H.reagents.add_reagent("no2",1)
 
 		breath_gases[/datum/gas/nitryl][MOLES]-=gas_breathed
-		gas_breathed = 0
 	// Stimulum
 		gas_breathed = breath_gases[/datum/gas/stimulum][MOLES]
 		if (gas_breathed > gas_stimulation_min)
-			H.reagents.add_reagent("stimulum",1)
+			var/existing = H.reagents.get_reagent_amount("stimulum")
+			H.reagents.add_reagent("stimulum",max(0, 1 - existing))
 		breath_gases[/datum/gas/stimulum][MOLES]-=gas_breathed
 		handle_breath_temperature(breath, H)
 		breath.garbage_collect()
@@ -310,11 +301,7 @@
 /obj/item/organ/lungs/proc/handle_breath_temperature(datum/gas_mixture/breath, mob/living/carbon/human/H) // called by human/life, handles temperatures
 	var/breath_temperature = breath.temperature
 
-	var/species_traits = list()
-	if(H && H.dna && H.dna.species && H.dna.species.species_traits)
-		species_traits = H.dna.species.species_traits
-
-	if(!(GLOB.mutations_list[COLDRES] in H.dna.mutations) && !(RESISTCOLD in species_traits)) // COLD DAMAGE
+	if(!H.has_trait(TRAIT_RESISTCOLD)) // COLD DAMAGE
 		var/cold_modifier = H.dna.species.coldmod
 		if(breath_temperature < cold_level_3_threshold)
 			H.apply_damage_type(cold_level_3_damage*cold_modifier, cold_damage_type)
@@ -326,7 +313,7 @@
 			if(prob(20))
 				to_chat(H, "<span class='warning'>You feel [cold_message] in your [name]!</span>")
 
-	if(!(RESISTHOT in species_traits)) // HEAT DAMAGE
+	if(!H.has_trait(TRAIT_RESISTHEAT)) // HEAT DAMAGE
 		var/heat_modifier = H.dna.species.heatmod
 		if(breath_temperature > heat_level_1_threshold && breath_temperature < heat_level_2_threshold)
 			H.apply_damage_type(heat_level_1_damage*heat_modifier, heat_damage_type)
@@ -356,8 +343,12 @@
 	name = "cybernetic lungs"
 	desc = "A cybernetic version of the lungs found in traditional humanoid entities. It functions the same as an organic lung and is merely meant as a replacement."
 	icon_state = "lungs-c"
+	synthetic = TRUE
 
 /obj/item/organ/lungs/cybernetic/emp_act()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	owner.losebreath = 20
 
 
@@ -371,13 +362,3 @@
 	cold_level_1_threshold = 200
 	cold_level_2_threshold = 140
 	cold_level_3_threshold = 100
-
-#undef HUMAN_MAX_OXYLOSS
-#undef HUMAN_CRIT_MAX_OXYLOSS
-#undef HEAT_GAS_DAMAGE_LEVEL_1
-#undef HEAT_GAS_DAMAGE_LEVEL_2
-#undef HEAT_GAS_DAMAGE_LEVEL_3
-
-#undef COLD_GAS_DAMAGE_LEVEL_1
-#undef COLD_GAS_DAMAGE_LEVEL_2
-#undef COLD_GAS_DAMAGE_LEVEL_3

@@ -8,9 +8,6 @@
 	},
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/survivalpod)
-"c" = (
-/turf/closed/wall/mineral/titanium/survival,
-/area/survivalpod)
 "d" = (
 /obj/structure/sign/mining/survival{
 	dir = 8
@@ -26,7 +23,7 @@
 /turf/open/floor/pod,
 /area/survivalpod)
 "g" = (
-/obj/item/device/gps/computer,
+/obj/item/gps/computer,
 /turf/open/floor/pod,
 /area/survivalpod)
 "h" = (
@@ -154,7 +151,7 @@
 	alert = 0;
 	desc = "A display case containing an expensive forgery, probably.";
 	pixel_y = -4;
-	req_access = 48;
+	req_access_txt = "48";
 	start_showpiece_type = /obj/item/fakeartefact
 	},
 /turf/open/floor/carpet/black,

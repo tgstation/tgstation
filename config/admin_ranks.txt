@@ -4,12 +4,13 @@
 # Rank is CASE-SENSITIVE, all punctuation save for '-', '_' and '@' will be stripped so spaces don't matter. #
 # You can then define permissions for each rank by adding a '=' followed by keywords                         #
 # These keywords represent groups of verbs and abilities.                                                    #
-# keywords are preceded by either a '+' or a '-', + adds permissions, - takes them away.                     #
+# keywords are preceded by a '+', '-' or '*' + adds permissions, - takes them away.							 #
+# * is used only with SQL-based admin loading to denote what permissions the rank is allowed to edit		 #
 # +@ (or +prev) is a special shorthand which adds all the rights of the rank above it.                       #
-# You can also specify verbs like so +/client/proc/some_added_verb or -/client/proc/some_restricted_verb     #
 # Ranks with no keywords will just be given the most basic verbs and abilities                ~Carn          #
 ##############################################################################################################
 # PLEASE NOTE: depending on config options, some abilities will be unavailable regardless if you have permission to use them!
+# If SQL-based admin loading is enabled, ranks and their keywords listed here will be loaded first and override any with the same name loaded from the database.
 
 # Follow the format below when documenting new keywords so the server tools may parse it
 
@@ -28,6 +29,7 @@
 # +SOUND (or +SOUNDS) = allows you to upload and play sounds
 # +SPAWN (or +CREATE) = mob transformations, spawning of most atoms including mobs (high-risk atoms, e.g. blackholes, will require the +FUN flag too)
 # +AUTOLOGIN = admin gains powers upon connect. This defaults to on, you can use -AUTOLOGIN to make a role require using the readmin verb to gain powers. (this does not effect the admin's ability to walk past bans or other on-connect limitations like panic bunker or pop limit.)
+# +DBRANKS = when sql-based admin loading is enabled, allows for non-temporary changes in the permissions panel to be saved (requires DB)
 # +EVERYTHING (or +HOST or +ALL) = Simply gives you everything without having to type every flag
 # END_KEYWORDS
 
@@ -37,9 +39,9 @@ Admin Candidate	= +@
 Trial Admin		= +@ +SPAWN +VAREDIT +BAN
 Badmin			= +@ +POSSESS +POLL +BUILDMODE +SERVER +FUN
 Game Admin		= +@ +STEALTH +SOUNDS +DEBUG
-Game Master		= +EVERYTHING
-Lazy Master 	= +EVERYTHING -AUTOLOGIN
+Game Master		= +EVERYTHING *EVERYTHING
+Lazy Master 	= +EVERYTHING -AUTOLOGIN *EVERYTHING
 
-Host			= +EVERYTHING
+Host			= +EVERYTHING *EVERYTHING
 
 Coder			= +DEBUG +VAREDIT +SERVER +SPAWN +POLL -AUTOLOGIN

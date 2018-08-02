@@ -52,7 +52,7 @@
 /area/ruin/space/has_grav/powered/aesthetic)
 "m" = (
 /obj/structure/table/reinforced,
-/obj/item/device/taperecorder,
+/obj/item/taperecorder,
 /turf/open/floor/plasteel/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "n" = (
@@ -88,7 +88,7 @@
 /turf/open/floor/plasteel/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "t" = (
-/obj/item/device/instrument/eguitar,
+/obj/item/instrument/eguitar,
 /turf/open/floor/holofloor/beach,
 /area/ruin/space/has_grav/powered/aesthetic)
 "u" = (
@@ -104,7 +104,7 @@
 /area/ruin/space/has_grav/powered/aesthetic)
 "x" = (
 /obj/structure/closet/crate/bin,
-/obj/item/device/tape/random,
+/obj/item/tape/random,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "y" = (
@@ -162,7 +162,6 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "I" = (
-/turf/open/space,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plasteel/airless/asteroid,
 /area/ruin/unpowered/no_grav)
@@ -185,10 +184,6 @@
 /obj/effect/overlay/palmtree_r,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
-"N" = (
-/obj/effect/turf_decal/sand,
-/turf/open/floor/plasteel/airless/asteroid,
-/area/ruin/unpowered/no_grav)
 "O" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
@@ -202,19 +197,7 @@
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
-"Q" = (
-/obj/machinery/light/small,
-/turf/open/floor/plasteel/vaporwave,
-/area/ruin/space/has_grav/powered/aesthetic)
 "R" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plating/astplate{
-	initial_gas_mix = "TEMP=2.7"
-	},
-/area/ruin/unpowered/no_grav)
-"S" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -373,7 +356,7 @@ k
 f
 D
 J
-N
+I
 d
 "}
 (10,1,1) = {"
@@ -391,7 +374,7 @@ z
 E
 K
 E
-N
+I
 "}
 (11,1,1) = {"
 a
@@ -408,7 +391,7 @@ f
 D
 L
 E
-N
+I
 "}
 (12,1,1) = {"
 a

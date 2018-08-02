@@ -56,13 +56,13 @@ GLOBAL_LIST_EMPTY(mutations_list)
 
 /datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/owner)
 	if(!owner || !istype(owner) || owner.stat == DEAD || (src in owner.dna.mutations))
-		return 1
+		return TRUE
 	if(species_allowed.len && !species_allowed.Find(owner.dna.species.id))
-		return 1
+		return TRUE
 	if(health_req && owner.health < health_req)
-		return 1
+		return TRUE
 	if(limb_req && !owner.get_bodypart(limb_req))
-		return 1
+		return TRUE
 	owner.dna.mutations.Add(src)
 	if(text_gain_indication)
 		to_chat(owner, text_gain_indication)

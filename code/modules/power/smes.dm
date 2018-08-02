@@ -19,7 +19,6 @@
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
 	icon_state = "smes"
 	density = TRUE
-	anchored = TRUE
 	use_power = NO_POWER_USE
 	circuit = /obj/item/circuitboard/machine/smes
 	var/capacity = 5e6 // maximum charge
@@ -54,11 +53,11 @@
 					terminal = term
 					break dir_loop
 
-		if(!terminal)
-			stat |= BROKEN
-			return
-		terminal.master = src
-		update_icon()
+	if(!terminal)
+		stat |= BROKEN
+		return
+	terminal.master = src
+	update_icon()
 
 /obj/machinery/power/smes/RefreshParts()
 	var/IO = 0
@@ -96,10 +95,6 @@
 			return
 		stat &= ~BROKEN
 		update_icon()
-		return
-
-	//exchanging parts using the RPE
-	if(exchange_parts(user, I))
 		return
 
 	//building and linking a terminal
@@ -146,24 +141,27 @@
 			//build the terminal and link it to the network
 			make_terminal(T)
 			terminal.connect_to_network()
-		return
-
-	//disassembling the terminal
-	if(istype(I, /obj/item/wirecutters) && terminal && panel_open)
-		terminal.dismantle(user, I)
+			connect_to_network()
 		return
 
 	//crowbarring it !
 	var/turf/T = get_turf(src)
 	if(default_deconstruction_crowbar(I))
-		message_admins("[src] has been deconstructed by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
-		log_game("[src] has been deconstructed by [key_name(user)]")
-		investigate_log("SMES deconstructed by [key_name(user)]", INVESTIGATE_SINGULO)
+		message_admins("[src] has been deconstructed by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
+		log_game("[src] has been deconstructed by [key_name(user)] at [AREACOORD(src)]")
+		investigate_log("SMES deconstructed by [key_name(user)] at [AREACOORD(src)]", INVESTIGATE_SINGULO)
 		return
 	else if(panel_open && istype(I, /obj/item/crowbar))
 		return
 
 	return ..()
+
+/obj/machinery/power/smes/wirecutter_act(mob/living/user, obj/item/I)
+	//disassembling the terminal
+	if(terminal && panel_open)
+		terminal.dismantle(user, I)
+		return TRUE
+
 
 /obj/machinery/power/smes/default_deconstruction_crowbar(obj/item/crowbar/C)
 	if(istype(C) && terminal)
@@ -178,11 +176,10 @@
 
 /obj/machinery/power/smes/Destroy()
 	if(SSticker.IsRoundInProgress())
-		var/area/A = get_area(src)
 		var/turf/T = get_turf(src)
-		message_admins("SMES deleted at [A][ADMIN_JMP(T)]")
-		log_game("SMES deleted at [A][COORD(T)]")
-		investigate_log("<font color='red'>deleted</font> at [A][COORD(T)]", INVESTIGATE_SINGULO)
+		message_admins("SMES deleted at [ADMIN_VERBOSEJMP(T)]")
+		log_game("SMES deleted at [AREACOORD(T)]")
+		investigate_log("<font color='red'>deleted</font> at [AREACOORD(T)]", INVESTIGATE_SINGULO)
 	if(terminal)
 		disconnect_terminal()
 	return ..()
@@ -354,12 +351,12 @@
 	switch(action)
 		if("tryinput")
 			input_attempt = !input_attempt
-			log_smes(usr.ckey)
+			log_smes(usr)
 			update_icon()
 			. = TRUE
 		if("tryoutput")
 			output_attempt = !output_attempt
-			log_smes(usr.ckey)
+			log_smes(usr)
 			update_icon()
 			. = TRUE
 		if("input")
@@ -383,7 +380,7 @@
 				. = TRUE
 			if(.)
 				input_level = CLAMP(target, 0, input_level_max)
-				log_smes(usr.ckey)
+				log_smes(usr)
 		if("output")
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
@@ -405,13 +402,16 @@
 				. = TRUE
 			if(.)
 				output_level = CLAMP(target, 0, output_level_max)
-				log_smes(usr.ckey)
+				log_smes(usr)
 
-/obj/machinery/power/smes/proc/log_smes(user = "")
-	investigate_log("input/output; [input_level>output_level?"<font color='green'>":"<font color='red'>"][input_level]/[output_level]</font> | Charge: [charge] | Output-mode: [output_attempt?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [input_attempt?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [user]", INVESTIGATE_SINGULO)
+/obj/machinery/power/smes/proc/log_smes(mob/user)
+	investigate_log("input/output; [input_level>output_level?"<font color='green'>":"<font color='red'>"][input_level]/[output_level]</font> | Charge: [charge] | Output-mode: [output_attempt?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [input_attempt?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [user ? key_name(user) : "outside forces"]", INVESTIGATE_SINGULO)
 
 
 /obj/machinery/power/smes/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	input_attempt = rand(0,1)
 	inputting = input_attempt
 	output_attempt = rand(0,1)
@@ -422,8 +422,7 @@
 	if (charge < 0)
 		charge = 0
 	update_icon()
-	log_smes("an emp")
-	..()
+	log_smes()
 
 /obj/machinery/power/smes/engineering
 	charge = 1.5e6 // Engineering starts with some charge for singulo

@@ -24,7 +24,6 @@
 	icon_state = "frame"
 	desc = "A remote control for a door."
 	req_access = list(ACCESS_SECURITY)
-	anchored = TRUE
 	density = FALSE
 	var/id = null // id of linked machinery/lockers
 
@@ -33,15 +32,15 @@
 
 	var/timing = FALSE		// boolean, true/1 timer is on, false/0 means it's not timing
 	var/list/obj/machinery/targets = list()
-	var/obj/item/device/radio/Radio //needed to send messages to sec radio
+	var/obj/item/radio/Radio //needed to send messages to sec radio
 
 	maptext_height = 26
 	maptext_width = 32
 
-/obj/machinery/door_timer/New()
-	..()
+/obj/machinery/door_timer/Initialize()
+	. = ..()
 
-	Radio = new/obj/item/device/radio(src)
+	Radio = new/obj/item/radio(src)
 	Radio.listening = 0
 
 /obj/machinery/door_timer/Initialize()

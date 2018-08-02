@@ -27,13 +27,10 @@
 		var/obj/item/storage/bag/trash/T = W
 		to_chat(user, "<span class='notice'>You fill the bag.</span>")
 		for(var/obj/item/O in src)
-			if(T.can_be_inserted(O, 1))
-				O.forceMove(T)
+			SEND_SIGNAL(T, COMSIG_TRY_STORAGE_INSERT, O, user, TRUE)
 		T.update_icon()
 		do_animate()
-	else if(istype(W, /obj/item/wrench))
-		anchored = !anchored
-		playsound(src.loc, W.usesound, 75, 1)
+		return TRUE
 	else
 		return ..()
 

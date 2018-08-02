@@ -1,11 +1,12 @@
 # This list auto requests reviews from the specified org members
 # when a PR that modifies the file in question is opened
 # This list is alphabetized by User -> Filename KEEP IT THAT WAY
+# In the event that multiple org members are to be informed of changes
+# to the same file or dir, add them to the end under Multiple Owners
 
 # ChangelingRain
 
 /code/__DEFINES/clockcult.dm @ChangelingRain
-/code/datums/antagonists/datum_clockcult.dm @ChangelingRain
 /code/game/gamemodes/blob/ @ChangelingRain
 /code/game/gamemodes/clock_cult/ @ChangelingRain
 /code/game/gamemodes/miniantags/revenant/ @ChangelingRain
@@ -34,7 +35,6 @@
 # duncathan
 
 /code/__DEFINES/atmospherics.dm @duncathan
-/code/controllers/subsystem/air.dm @duncathan
 /code/modules/atmospherics/ @duncathan
 
 # Jordie0608
@@ -45,13 +45,13 @@
 
 # MrStonedOne
 
+/SQL/database_changelog.txt @MrStonedOne
 /code/__DEFINES/MC.dm @MrStonedOne
 /code/__DEFINES/tick.dm @MrStonedOne
 /code/controllers/admin.dm @MrStonedOne
 /code/controllers/master.dm @MrStonedOne
 /code/controllers/failsafe.dm @MrStonedOne
 /code/controllers/subsystem.dm @MrStonedOne
-/code/controllers/subsystem/air.dm @MrStonedOne
 /code/controllers/subsystem/timer.dm @MrStonedOne
 
 # ninjanomnom
@@ -64,3 +64,7 @@
 /_maps/ @ShizCalev
 /icons/ @ShizCalev
 /sound/ @ShizCalev
+
+# Multiple Owners
+
+/code/controllers/subsystem/air.dm @duncathan @MrStonedOne

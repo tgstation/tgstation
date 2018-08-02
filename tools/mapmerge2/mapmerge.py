@@ -85,9 +85,10 @@ def merge_map(new_map, old_map, delete_unused=False):
 
 def main(settings):
     for fname in frontend.process(settings, "merge", backup=True):
+        shutil.copyfile(fname, fname + ".before")
         old_map = DMM.from_file(fname + ".backup")
         new_map = DMM.from_file(fname)
-        merge_map(old_map, new_map).to_file(fname, settings.tgm)
+        merge_map(new_map, old_map).to_file(fname, settings.tgm)
 
 if __name__ == '__main__':
     main(frontend.read_settings())

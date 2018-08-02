@@ -1,10 +1,10 @@
 /obj/item/bodypart/head
-	name = "head"
+	name = BODY_ZONE_HEAD
 	desc = "Didn't make sense not to live for fun, your brain gets smart but your head gets dumb."
 	icon = 'icons/mob/human_parts.dmi'
 	icon_state = "default_human_head"
 	max_damage = 200
-	body_zone = "head"
+	body_zone = BODY_ZONE_HEAD
 	body_part = HEAD
 	w_class = WEIGHT_CLASS_BULKY //Quite a hefty load
 	slowdown = 1 //Balancing measure
@@ -30,6 +30,11 @@
 
 	var/lip_style = null
 	var/lip_color = "white"
+
+/obj/item/bodypart/head/can_dismember(obj/item/I)
+	if(!((owner.stat == DEAD) || owner.InFullCritical()))
+		return FALSE
+	return ..()
 
 /obj/item/bodypart/head/drop_organs(mob/user)
 	var/turf/T = get_turf(src)
@@ -61,7 +66,7 @@
 		C = owner
 
 	real_name = C.real_name
-	if(C.has_disability(DISABILITY_HUSK))
+	if(C.has_trait(TRAIT_HUSK))
 		real_name = "Unknown"
 		hair_style = "Bald"
 		facial_hair_style = "Shaved"

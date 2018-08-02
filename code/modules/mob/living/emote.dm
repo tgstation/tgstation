@@ -58,6 +58,11 @@
 	message = "coughs!"
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE)
+	. = ..()
+	if(user.reagents && (user.reagents.get_reagent("menthol") || user.reagents.get_reagent("peppermint_patty")))
+		return FALSE
+
 /datum/emote/living/dance
 	key = "dance"
 	key_third_person = "dances"
@@ -231,6 +236,19 @@
 	message_param = "points at %t."
 	restraint_check = TRUE
 
+/datum/emote/living/point/run_emote(mob/user, params)
+	message_param = initial(message_param) // reset
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.get_num_arms() == 0)
+			if(H.get_num_legs() != 0)
+				message_param = "tries to point at %t with a leg, <span class='userdanger'>falling down</span> in the process!"
+				H.Knockdown(20)
+			else
+				message_param = "<span class='userdanger'>bumps [user.p_their()] head on the ground</span> trying to motion towards %t."
+				H.adjustBrainLoss(5)
+	..()
+
 /datum/emote/living/pout
 	key = "pout"
 	key_third_person = "pouts"
@@ -393,6 +411,8 @@
 /datum/emote/living/custom/run_emote(mob/user, params, type_override = null)
 	if(jobban_isbanned(user, "emote"))
 		to_chat(user, "You cannot send custom emotes (banned).")
+		return FALSE
+	else if(QDELETED(user))
 		return FALSE
 	else if(user.client && user.client.prefs.muted & MUTE_IC)
 		to_chat(user, "You cannot send IC messages (muted).")

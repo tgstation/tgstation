@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/template_noop,
 /area/template_noop)
@@ -195,7 +195,6 @@
 /area/ruin/unpowered)
 "C" = (
 /obj/structure/chair/wood/wings{
-	icon_state = "wooden_chair_wings";
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -253,7 +252,6 @@
 /area/ruin/unpowered)
 "K" = (
 /obj/structure/chair/wood/wings{
-	icon_state = "wooden_chair_wings";
 	dir = 1
 	},
 /obj/effect/decal/remains/human,
@@ -302,44 +300,28 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
-"S" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/wood{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/ruin/unpowered)
 
 (1,1,1) = {"
 a
 a
+b
+b
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+b
+b
+b
+b
+b
+b
+b
+b
 a
 a
 a
 a
 "}
 (2,1,1) = {"
-a
-a
-a
-b
-b
-a
-a
 b
 b
 b
@@ -348,16 +330,18 @@ b
 b
 b
 b
-a
-a
-a
+b
+b
+c
+c
+b
+b
+b
+b
 a
 a
 "}
 (3,1,1) = {"
-a
-b
-b
 b
 b
 b
@@ -368,38 +352,16 @@ b
 b
 c
 c
+e
+e
+c
+c
 b
 b
 b
-b
-a
-a
 a
 "}
 (4,1,1) = {"
-a
-b
-b
-b
-b
-b
-b
-b
-b
-c
-c
-e
-e
-c
-c
-b
-b
-b
-a
-a
-"}
-(5,1,1) = {"
-a
 b
 b
 b
@@ -418,10 +380,8 @@ d
 b
 b
 a
-a
 "}
-(6,1,1) = {"
-a
+(5,1,1) = {"
 a
 b
 b
@@ -440,10 +400,8 @@ d
 b
 b
 b
-a
 "}
-(7,1,1) = {"
-a
+(6,1,1) = {"
 a
 b
 b
@@ -462,10 +420,8 @@ b
 b
 b
 b
-a
 "}
-(8,1,1) = {"
-a
+(7,1,1) = {"
 b
 b
 b
@@ -474,7 +430,7 @@ d
 g
 o
 h
-S
+h
 C
 J
 h
@@ -484,10 +440,8 @@ b
 b
 b
 b
-a
 "}
-(9,1,1) = {"
-a
+(8,1,1) = {"
 b
 b
 b
@@ -506,10 +460,8 @@ b
 b
 b
 b
-a
 "}
-(10,1,1) = {"
-a
+(9,1,1) = {"
 b
 b
 b
@@ -528,10 +480,8 @@ b
 b
 b
 b
-a
 "}
-(11,1,1) = {"
-a
+(10,1,1) = {"
 b
 b
 b
@@ -550,10 +500,8 @@ b
 b
 b
 b
-a
 "}
-(12,1,1) = {"
-a
+(11,1,1) = {"
 b
 b
 b
@@ -572,10 +520,8 @@ b
 b
 b
 b
-a
 "}
-(13,1,1) = {"
-a
+(12,1,1) = {"
 b
 b
 b
@@ -594,10 +540,8 @@ b
 b
 b
 b
-a
 "}
-(14,1,1) = {"
-a
+(13,1,1) = {"
 b
 b
 b
@@ -616,10 +560,8 @@ b
 b
 b
 a
-a
 "}
-(15,1,1) = {"
-a
+(14,1,1) = {"
 b
 b
 b
@@ -638,10 +580,8 @@ b
 b
 b
 a
-a
 "}
-(16,1,1) = {"
-a
+(15,1,1) = {"
 b
 b
 b
@@ -660,10 +600,8 @@ b
 b
 b
 a
-a
 "}
-(17,1,1) = {"
-a
+(16,1,1) = {"
 a
 b
 b
@@ -682,34 +620,30 @@ b
 b
 b
 a
+"}
+(17,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
 a
 "}
 (18,1,1) = {"
 a
 a
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-a
-a
-a
-a
-"}
-(19,1,1) = {"
-a
-a
-a
 a
 a
 b
@@ -720,29 +654,6 @@ b
 b
 b
 b
-a
-a
-a
-a
-a
-a
-a
-"}
-(20,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
 a
 a
 a

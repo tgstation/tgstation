@@ -109,7 +109,7 @@ component.exports = {
 			<ui-button state='{{!data.wires.safe}}' icon='close' action='safe-off' style='{{data.safe ? "" : "selected"}}'>Disabled</ui-button>
 		</div>
 	</ui-section>
-	<ui-section label='Door timing saftey'>
+	<ui-section label='Door timing safety'>
 		{{#if !data.wires.timing}}
 			[ <span class="bad">Wires have been cut</span> ]
 		{{/if}}

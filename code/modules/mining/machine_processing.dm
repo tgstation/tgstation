@@ -2,12 +2,21 @@
 
 /**********************Mineral processing unit console**************************/
 
+/obj/machinery/mineral
+	var/input_dir = NORTH
+	var/output_dir = SOUTH
+
+/obj/machinery/mineral/proc/unload_mineral(atom/movable/S)
+	S.forceMove(drop_location())
+	var/turf/T = get_step(src,output_dir)
+	if(T)
+		S.forceMove(T)
+
 /obj/machinery/mineral/processing_unit_console
 	name = "production machine console"
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
 	density = TRUE
-	anchored = TRUE
 	var/obj/machinery/mineral/processing_unit/machine = null
 	var/machinedir = EAST
 	speed_process = TRUE
@@ -20,8 +29,8 @@
 	else
 		return INITIALIZE_HINT_QDEL
 
-/obj/machinery/mineral/processing_unit_console/attack_hand(mob/user)
-
+/obj/machinery/mineral/processing_unit_console/ui_interact(mob/user)
+	. = ..()
 	if(!machine)
 		return
 
@@ -64,7 +73,6 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "furnace"
 	density = TRUE
-	anchored = TRUE
 	var/obj/machinery/mineral/CONSOLE = null
 	var/on = FALSE
 	var/selected_material = MAT_METAL
@@ -74,7 +82,7 @@
 /obj/machinery/mineral/processing_unit/Initialize()
 	. = ..()
 	proximity_monitor = new(src, 1)
-	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE), INFINITY)
+	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE), INFINITY, TRUE, list(/obj/item/stack))
 	stored_research = new /datum/techweb/specialized/autounlocking/smelter
 
 /obj/machinery/mineral/processing_unit/Destroy()
@@ -83,10 +91,10 @@
 	return ..()
 
 /obj/machinery/mineral/processing_unit/HasProximity(atom/movable/AM)
-	if(istype(AM, /obj/item/ore) && AM.loc == get_step(src, input_dir))
+	if(istype(AM, /obj/item/stack/ore) && AM.loc == get_step(src, input_dir))
 		process_ore(AM)
 
-/obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/ore/O)
+/obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/stack/ore/O)
 	GET_COMPONENT(materials, /datum/component/material_container)
 	var/material_amount = materials.get_item_material_amount(O)
 	if(!materials.has_space(material_amount))

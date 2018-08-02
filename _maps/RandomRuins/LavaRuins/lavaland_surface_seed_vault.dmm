@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -21,11 +21,17 @@
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 "f" = (
-/obj/machinery/plantgenes/seedvault,
+/obj/machinery/plantgenes/seedvault{
+	pixel_y = 6
+	},
+/obj/structure/table/wood,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 "g" = (
 /obj/structure/table/wood,
+/obj/machinery/smartfridge/disks{
+	pixel_y = 2
+	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 "h" = (
@@ -61,6 +67,9 @@
 "m" = (
 /obj/machinery/door/airlock/external,
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 "n" = (
@@ -151,6 +160,9 @@
 /area/ruin/powered/seedvault)
 "z" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 "B" = (
@@ -259,10 +271,6 @@
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/light,
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered/seedvault)
-"Z" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall/r_wall,
 /area/ruin/powered/seedvault)
 
 (1,1,1) = {"
@@ -456,7 +464,7 @@ h
 C
 h
 k
-Z
+Q
 M
 a
 a

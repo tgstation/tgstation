@@ -26,7 +26,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 
 ### Defines
 
-1. `COMPONENT_INCOMPATIBLE` Return this from `/datum/component/Initialize` or `datum/component/OnTransfer` to have the component be deleted if it's applied to an incorrect type. `parent` must not be modified if this is to be returned.
+1. `COMPONENT_INCOMPATIBLE` Return this from `/datum/component/Initialize` or `datum/component/OnTransfer` to have the component be deleted if it's applied to an incorrect type. `parent` must not be modified if this is to be returned. This will be noted in the runtime logs
 
 ### Vars
 
@@ -46,10 +46,13 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
         * `null` means exact match on `type` (default)
         * Any other type means that and all subtypes
 1. `/datum/component/var/list/signal_procs` (private)
-    * Associated lazy list of signals -> `/datum/callback`s that will be run when the parent datum recieves that signal
+    * Associated lazy list of signals -> `/datum/callback`s that will be run when the parent datum receives that signal
 1. `/datum/component/var/datum/parent` (protected, read-only)
     * The datum this component belongs to
     * Never `null` in child procs
+1.	`report_signal_origin` (protected, boolean)
+	* If `TRUE`, will invoke the callback when signalled with the signal type as the first argument.
+	* `FALSE` by default.
 
 ### Procs
 
@@ -61,6 +64,11 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Returns a reference to a component whose type MATCHES component_type if that component exists in the datum, null otherwise
 1. `GET_COMPONENT(varname, component_type)` OR `GET_COMPONENT_FROM(varname, component_type, src)`
     * Shorthand for `var/component_type/varname = src.GetComponent(component_type)`
+1. `SEND_SIGNAL(target, sigtype, ...)` (public, final)
+    * Use to send signals to target datum
+    * Extra arguments are to be specified in the signal definition
+    * Returns a bitflag with signal specific information assembled from all activated components
+    * Arguments are packaged in a list and handed off to _SendSignal()
 1. `/datum/proc/AddComponent(component_type(type), ...) -> datum/component`  (public, final)
     * Creates an instance of `component_type` in the datum and passes `...` to its `Initialize()` call
     * Sends the `COMSIG_COMPONENT_ADDED` signal to the datum
@@ -71,23 +79,22 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 1. `/datum/proc/LoadComponent(component_type(type), ...) -> datum/component` (public, final)
     * Equivalent to calling `GetComponent(component_type)` where, if the result would be `null`, returns `AddComponent(component_type, ...)` instead
 1. `/datum/proc/ComponentActivated(datum/component/C)` (abstract, async)
-    * Called on a component's `parent` after a signal recieved causes it to activate. `src` is the parameter
+    * Called on a component's `parent` after a signal received causes it to activate. `src` is the parameter
     * Will only be called if a component's callback returns `TRUE`
 1. `/datum/proc/TakeComponent(datum/component/C)` (public, final)
     * Properly transfers ownership of a component from one datum to another
     * Signals `COMSIG_COMPONENT_REMOVING` on the parent
     * Called on the datum you want to own the component with another datum's component
-1. `/datum/proc/SendSignal(signal, ...)` (public, final)
-    * Call to send a signal to the components of the target datum
-    * Extra arguments are to be specified in the signal definition
-    * Returns a bitflag with signal specific information assembled from all activated components
+1. `/datum/proc/_SendSignal(signal, list/arguments)` (private, final)
+    * Handles most of the actual signaling procedure
+    * Will runtime if used on datums with an empty component list
 1. `/datum/component/New(datum/parent, ...)` (private, final)
     * Runs internal setup for the component
     * Extra arguments are passed to `Initialize()`
 1. `/datum/component/Initialize(...)` (abstract, no-sleep)
     * Called by `New()` with the same argments excluding `parent`
     * Component does not exist in `parent`'s `datum_components` list yet, although `parent` is set and may be used
-    * Signals will not be recieved while this function is running
+    * Signals will not be received while this function is running
     * Component may be deleted after this function completes without being attached
     * Do not call `qdel(src)` from this function
 1. `/datum/component/Destroy(force(bool), silent(bool))` (virtual, no-sleep)
@@ -108,10 +115,16 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Clears `parent` and removes the component from it's component list
 1. `/datum/component/proc/_JoinParent` (private, final)
     * Tries to add the component to it's `parent`s `datum_components` list
-1. `/datum/component/proc/RegisterSignal(signal(string/list of strings), proc_ref(type), override(boolean))` (protected, final) (Consider removing for performance gainz)
+1. `/datum/component/proc/RegisterWithParent` (abstract, no-sleep)
+    * Used to register the signals that should be on the `parent` object
+    * Use this if you plan on the component transfering between parents
+1. `/datum/component/proc/UnregisterFromParent` (abstract, no-sleep)
+    * Counterpart to `RegisterWithParent()`
+    * Used to unregister the signals that should only be on the `parent` object
+1. `/datum/component/proc/RegisterSignal(datum/target, signal(string/list of strings), proc_ref(type), override(boolean))` (protected, final)
     * If signal is a list it will be as if RegisterSignal was called for each of the entries with the same following arguments
     * Makes a component listen for the specified `signal` on it's `parent` datum.
-    * When that signal is recieved `proc_ref` will be called on the component, along with associated arguments
+    * When that signal is received `proc_ref` will be called on the component, along with associated arguments
     * Example proc ref: `.proc/OnEvent`
     * If a previous registration is overwritten by the call, a runtime occurs. Setting `override` to TRUE prevents this
     * These callbacks run asyncronously

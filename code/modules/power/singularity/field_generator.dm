@@ -18,6 +18,11 @@ field_generator power level display
 #define FG_CHARGING 1
 #define FG_ONLINE 2
 
+//field generator construction defines
+#define FG_UNSECURED 0
+#define FG_SECURED 1
+#define FG_WELDED 2
+
 /obj/machinery/field/generator
 	name = "field generator"
 	desc = "A large thermal battery that projects a high amount of energy when powered."
@@ -28,7 +33,7 @@ field_generator power level display
 	use_power = NO_POWER_USE
 	max_integrity = 500
 	//100% immune to lasers and energy projectiles since it absorbs their energy.
-	armor = list(melee = 25, bullet = 10, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
+	armor = list("melee" = 25, "bullet" = 10, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
 	var/const/num_power_levels = 6	// Total number of power level icon has
 	var/power_level = 0
 	var/active = FG_OFFLINE
@@ -54,12 +59,15 @@ field_generator power level display
 	fields = list()
 	connected_gens = list()
 
+/obj/machinery/field/generator/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/field/generator/process()
 	if(active == FG_ONLINE)
 		calc_power()
 
-/obj/machinery/field/generator/attack_hand(mob/user)
+/obj/machinery/field/generator/interact(mob/user)
 	if(state == FG_WELDED)
 		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
 			if(active >= FG_CHARGING)
@@ -70,20 +78,26 @@ field_generator power level display
 					"<span class='notice'>You turn on [src].</span>", \
 					"<span class='italics'>You hear heavy droning.</span>")
 				turn_on()
-				investigate_log("<font color='green'>activated</font> by [user.key].", INVESTIGATE_SINGULO)
+				investigate_log("<font color='green'>activated</font> by [key_name(user)].", INVESTIGATE_SINGULO)
 
 				add_fingerprint(user)
 	else
 		to_chat(user, "<span class='warning'>[src] needs to be firmly secured to the floor first!</span>")
 
 /obj/machinery/field/generator/can_be_unfasten_wrench(mob/user, silent)
-	if(state == FG_WELDED)
+	if(active)
+		if(!silent)
+			to_chat(user, "<span class='warning'>Turn \the [src] off first!</span>")
+		return FAILED_UNFASTEN
+
+	else if(state == FG_WELDED)
 		if(!silent)
 			to_chat(user, "<span class='warning'>[src] is welded to the floor!</span>")
 		return FAILED_UNFASTEN
+
 	return ..()
 
-/obj/machinery/field/generator/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
+/obj/machinery/field/generator/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(anchored)
@@ -91,41 +105,41 @@ field_generator power level display
 		else
 			state = FG_UNSECURED
 
-/obj/machinery/field/generator/attackby(obj/item/W, mob/user, params)
+/obj/machinery/field/generator/wrench_act(mob/living/user, obj/item/I)
+	default_unfasten_wrench(user, I)
+	return TRUE
+
+/obj/machinery/field/generator/welder_act(mob/living/user, obj/item/I)
 	if(active)
 		to_chat(user, "<span class='warning'>[src] needs to be off!</span>")
-		return
-	else if(istype(W, /obj/item/wrench))
-		default_unfasten_wrench(user, W, 0)
+		return TRUE
 
-	else if(istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = W
-		switch(state)
-			if(FG_UNSECURED)
-				to_chat(user, "<span class='warning'>[src] needs to be wrenched to the floor!</span>")
+	switch(state)
+		if(FG_UNSECURED)
+			to_chat(user, "<span class='warning'>[src] needs to be wrenched to the floor!</span>")
 
-			if(FG_SECURED)
-				if (WT.remove_fuel(0,user))
-					playsound(loc, WT.usesound, 50, 1)
-					user.visible_message("[user] starts to weld [src] to the floor.", \
-						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
-						"<span class='italics'>You hear welding.</span>")
-					if(do_after(user,20*W.toolspeed, target = src) && state == FG_SECURED && WT.isOn())
-						state = FG_WELDED
-						to_chat(user, "<span class='notice'>You weld the field generator to the floor.</span>")
+		if(FG_SECURED)
+			if(!I.tool_start_check(user, amount=0))
+				return TRUE
+			user.visible_message("[user] starts to weld [src] to the floor.", \
+				"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
+				"<span class='italics'>You hear welding.</span>")
+			if(I.use_tool(src, user, 20, volume=50) && state == FG_SECURED)
+				state = FG_WELDED
+				to_chat(user, "<span class='notice'>You weld the field generator to the floor.</span>")
 
-			if(FG_WELDED)
-				if (WT.remove_fuel(0,user))
-					playsound(loc, WT.usesound, 50, 1)
-					user.visible_message("[user] starts to cut [src] free from the floor.", \
-						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
-						"<span class='italics'>You hear welding.</span>")
-					if(do_after(user,20*W.toolspeed, target = src) && state == FG_WELDED && WT.isOn())
-						state = FG_SECURED
-						to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
+		if(FG_WELDED)
+			if(!I.tool_start_check(user, amount=0))
+				return TRUE
+			user.visible_message("[user] starts to cut [src] free from the floor.", \
+				"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
+				"<span class='italics'>You hear welding.</span>")
+			if(I.use_tool(src, user, 20, volume=50) && state == FG_WELDED)
+				state = FG_SECURED
+				to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
 
-	else
-		return ..()
+	return TRUE
+
 
 /obj/machinery/field/generator/attack_animal(mob/living/simple_animal/M)
 	if(M.environment_smash & ENVIRONMENT_SMASH_RWALLS && active == FG_OFFLINE && state != FG_UNSECURED)
@@ -136,10 +150,6 @@ field_generator power level display
 		..()
 	if(!anchored)
 		step(src, get_dir(M, src))
-
-/obj/machinery/field/generator/emp_act()
-	return 0
-
 
 /obj/machinery/field/generator/blob_act(obj/structure/blob/B)
 	if(active)
@@ -321,8 +331,9 @@ field_generator power level display
 			if(O.last_warning && temp)
 				if((world.time - O.last_warning) > 50) //to stop message-spam
 					temp = 0
-					message_admins("A singulo exists and a containment field has failed.",1)
-					investigate_log("has <font color='red'>failed</font> whilst a singulo exists.", INVESTIGATE_SINGULO)
+					var/turf/T = get_turf(src)
+					message_admins("A singulo exists and a containment field has failed at [ADMIN_VERBOSEJMP(T)].")
+					investigate_log("has <font color='red'>failed</font> whilst a singulo exists at [AREACOORD(T)].", INVESTIGATE_SINGULO)
 			O.last_warning = world.time
 
 /obj/machinery/field/generator/shock(mob/living/user)

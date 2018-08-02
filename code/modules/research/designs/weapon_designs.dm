@@ -2,13 +2,49 @@
 /////////////////Weapons/////////////////
 /////////////////////////////////////////
 
+/datum/design/c38/sec
+	id = "sec_38"
+	build_type = PROTOLATHE
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/rubbershot/sec
+	id = "sec_rshot"
+	build_type = PROTOLATHE
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/shotgun_slug/sec
+	id = "sec_slug"
+	build_type = PROTOLATHE
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/buckshot_shell/sec
+	id = "sec_bshot"
+	build_type = PROTOLATHE
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/shotgun_dart/sec
+	id = "sec_dart"
+	build_type = PROTOLATHE
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/incendiary_slug/sec
+	id = "sec_Islug"
+	build_type = PROTOLATHE
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 /datum/design/pin_testing
 	name = "Test-Range Firing Pin"
 	desc = "This safety firing pin allows firearms to be operated within proximity to a firing range."
 	id = "pin_testing"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 300)
-	build_path = /obj/item/device/firing_pin/test_range
+	build_path = /obj/item/firing_pin/test_range
 	category = list("Firing Pins")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
@@ -18,7 +54,7 @@
 	id = "pin_loyalty"
 	build_type = PROTOLATHE
 	materials = list(MAT_SILVER = 600, MAT_DIAMOND = 600, MAT_URANIUM = 200)
-	build_path = /obj/item/device/firing_pin/implant/mindshield
+	build_path = /obj/item/firing_pin/implant/mindshield
 	category = list("Firing Pins")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
@@ -145,7 +181,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/xray
-	name = "Xray Laser Gun"
+	name = "X-ray Laser Gun"
 	desc = "Not quite as menacing as it sounds"
 	id = "xray_laser"
 	build_type = PROTOLATHE
@@ -192,6 +228,7 @@
 	id = "mag_oldsmg_ap"
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 600)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtap
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mag_oldsmg/ic_mag
 	name = "WT-550 Auto Gun Incendiary Magazine (4.6x30mm IC)"
@@ -250,3 +287,13 @@
 	build_path = /obj/item/gun/energy/kinetic_accelerator/crossbow/large
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/cryostatis_shotgun_dart
+	name = "Cryostatis Shotgun Dart"
+	desc = "A shotgun dart designed with similar internals to that of a cryostatis beaker, allowing reagents to not react when inside."
+	id = "shotgundartcryostatis"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3500)
+	build_path = /obj/item/ammo_casing/shotgun/dart/noreact
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL

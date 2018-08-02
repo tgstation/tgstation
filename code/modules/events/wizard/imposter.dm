@@ -3,7 +3,7 @@
 	weight = 1
 	typepath = /datum/round_event/wizard/imposter
 	max_occurrences = 1
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/imposter/start()
 	for(var/datum/mind/M in SSticker.mode.wizards)
@@ -13,7 +13,7 @@
 		var/list/candidates = pollGhostCandidates("Would you like to be an imposter wizard?", ROLE_WIZARD)
 		if(!candidates)
 			return //Sad Trombone
-		var/client/C = pick(candidates)
+		var/mob/dead/observer/C = pick(candidates)
 
 		new /obj/effect/particle_effect/smoke(W.loc)
 
@@ -27,7 +27,7 @@
 		var/datum/antagonist/wizard/master = M.has_antag_datum(/datum/antagonist/wizard)
 		if(!master.wiz_team)
 			master.create_wiz_team()
-		var/datum/antagonist/wizard/apprentice/imposter/imposter = new(I.mind)
+		var/datum/antagonist/wizard/apprentice/imposter/imposter = new()
 		imposter.master = M
 		imposter.wiz_team = master.wiz_team
 		master.wiz_team.add_member(imposter)

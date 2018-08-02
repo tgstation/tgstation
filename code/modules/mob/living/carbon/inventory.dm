@@ -1,16 +1,16 @@
 /mob/living/carbon/get_item_by_slot(slot_id)
 	switch(slot_id)
-		if(slot_back)
+		if(SLOT_BACK)
 			return back
-		if(slot_wear_mask)
+		if(SLOT_WEAR_MASK)
 			return wear_mask
-		if(slot_neck)
+		if(SLOT_NECK)
 			return wear_neck
-		if(slot_head)
+		if(SLOT_HEAD)
 			return head
-		if(slot_handcuffed)
+		if(SLOT_HANDCUFFED)
 			return handcuffed
-		if(slot_legcuffed)
+		if(SLOT_LEGCUFFED)
 			return legcuffed
 	return null
 
@@ -50,33 +50,30 @@
 	I.appearance_flags |= NO_CLIENT_COLOR
 	var/not_handled = FALSE
 	switch(slot)
-		if(slot_back)
+		if(SLOT_BACK)
 			back = I
 			update_inv_back()
-		if(slot_wear_mask)
+		if(SLOT_WEAR_MASK)
 			wear_mask = I
 			wear_mask_update(I, toggle_off = 0)
-		if(slot_head)
+		if(SLOT_HEAD)
 			head = I
 			head_update(I)
-		if(slot_neck)
+		if(SLOT_NECK)
 			wear_neck = I
 			update_inv_neck(I)
-		if(slot_handcuffed)
+		if(SLOT_HANDCUFFED)
 			handcuffed = I
 			update_handcuffed()
-		if(slot_legcuffed)
+		if(SLOT_LEGCUFFED)
 			legcuffed = I
 			update_inv_legcuffed()
-		if(slot_hands)
+		if(SLOT_HANDS)
 			put_in_hands(I)
 			update_inv_hands()
-		if(slot_in_backpack)
-			var/obj/item/storage/B = back
-			var/prev_jimmies = B.rustle_jimmies
-			B.rustle_jimmies = FALSE //don't conspicously rustle
-			B.handle_item_insertion(I, 1, src)
-			B.rustle_jimmies = prev_jimmies
+		if(SLOT_IN_BACKPACK)
+			if(!SEND_SIGNAL(back, COMSIG_TRY_STORAGE_INSERT, I, src, TRUE))
+				not_handled = TRUE
 		else
 			not_handled = TRUE
 
@@ -140,3 +137,6 @@
 		update_inv_wear_mask()
 	update_inv_head()
 
+/mob/living/carbon/proc/get_holding_bodypart_of_item(obj/item/I)
+	var/index = get_held_index_of_item(I)
+	return index && hand_bodyparts[index]

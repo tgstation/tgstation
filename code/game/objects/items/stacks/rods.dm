@@ -22,6 +22,10 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	hitsound = 'sound/weapons/grenadelaunch.ogg'
 	novariants = TRUE
 
+/obj/item/stack/rods/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to stuff \the [src] down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!</span>")//it looks like theyre ur mum
+	return BRUTELOSS
+	
 /obj/item/stack/rods/Initialize(mapload, new_amount, merge = TRUE)
 	. = ..()
 
@@ -36,17 +40,15 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 		icon_state = "rods"
 
 /obj/item/stack/rods/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = W
-
+	if(istype(W, /obj/item/weldingtool))
 		if(get_amount() < 2)
 			to_chat(user, "<span class='warning'>You need at least two rods to do this!</span>")
 			return
 
-		if(WT.remove_fuel(0,user))
+		if(W.use_tool(src, user, 0, volume=40))
 			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
-			user.visible_message("[user.name] shaped [src] into metal with the welding tool.", \
-						 "<span class='notice'>You shape [src] into metal with the welding tool.</span>", \
+			user.visible_message("[user.name] shaped [src] into metal with [W].", \
+						 "<span class='notice'>You shape [src] into metal with [W].</span>", \
 						 "<span class='italics'>You hear welding.</span>")
 			var/obj/item/stack/rods/R = src
 			src = null

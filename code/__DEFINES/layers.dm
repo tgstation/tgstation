@@ -6,13 +6,14 @@
 #define PLANE_SPACE -95
 #define PLANE_SPACE_PARALLAX -90
 
+#define FLOOR_PLANE -2
 #define GAME_PLANE -1
 #define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
 #define SPACE_LAYER 1.8
-#define ABOVE_SPACE_LAYER 1.9
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
 #define MID_TURF_LAYER 2.02
 #define HIGH_TURF_LAYER 2.03
+#define TURF_PLATING_DECAL_LAYER 2.031
 #define TURF_DECAL_LAYER 2.039 //Makes turf decals appear in DM how they will look inworld.
 #define ABOVE_OPEN_TURF_LAYER 2.04
 #define CLOSED_TURF_LAYER 2.05
@@ -33,15 +34,18 @@
 #define HIGH_SIGIL_LAYER 2.56
 
 #define BELOW_OPEN_DOOR_LAYER 2.6
-#define SHUTTER_LAYER 2.65 //Prevents shutters from being placed above doors. It's overridden by /obj/machinery/door/New() & poddoor/shutters/New()
+#define BLASTDOOR_LAYER 2.65
 #define OPEN_DOOR_LAYER 2.7
+#define DOOR_HELPER_LAYER 2.71 //keep this above OPEN_DOOR_LAYER
 #define PROJECTILE_HIT_THRESHHOLD_LAYER 2.75 //projectiles won't hit objects at or below this layer if possible
 #define TABLE_LAYER 2.8
 #define BELOW_OBJ_LAYER 2.9
 #define LOW_ITEM_LAYER 2.95
 //#define OBJ_LAYER 3 //For easy recordkeeping; this is a byond define
+#define CLOSED_BLASTDOOR_LAYER 3.05
 #define CLOSED_DOOR_LAYER 3.1
 #define CLOSED_FIREDOOR_LAYER 3.11
+#define SHUTTER_LAYER 3.12 // HERE BE DRAGONS
 #define ABOVE_OBJ_LAYER 3.2
 #define ABOVE_WINDOW_LAYER 3.3
 #define SIGN_LAYER 3.4
@@ -61,9 +65,13 @@
 #define SPACEVINE_LAYER 4.8
 #define SPACEVINE_MOB_LAYER 4.9
 //#define FLY_LAYER 5 //For easy recordkeeping; this is a byond define
+#define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
 
 #define GHOST_LAYER 6
+#define LOW_LANDMARK_LAYER 9
+#define MID_LANDMARK_LAYER 9.1
+#define HIGH_LANDMARK_LAYER 9.2
 #define AREA_LAYER 10
 #define MASSIVE_OBJ_LAYER 11
 #define POINT_LAYER 12
@@ -71,20 +79,28 @@
 #define LIGHTING_PLANE 15
 #define LIGHTING_LAYER 15
 
+#define ABOVE_LIGHTING_PLANE 16
+#define ABOVE_LIGHTING_LAYER 16
+
+#define BYOND_LIGHTING_PLANE 17
+#define BYOND_LIGHTING_LAYER 17
+
+#define CAMERA_STATIC_PLANE 18
+#define CAMERA_STATIC_LAYER 18
 //HUD layer defines
 
-#define FULLSCREEN_PLANE 18
-#define FLASH_LAYER 18
-#define FULLSCREEN_LAYER 18.1
-#define UI_DAMAGE_LAYER 18.2
-#define BLIND_LAYER 18.3
-#define CRIT_LAYER 18.4
-#define CURSE_LAYER 18.5
+#define FULLSCREEN_PLANE 19
+#define FLASH_LAYER 19
+#define FULLSCREEN_LAYER 19.1
+#define UI_DAMAGE_LAYER 19.2
+#define BLIND_LAYER 19.3
+#define CRIT_LAYER 19.4
+#define CURSE_LAYER 19.5
 
-#define HUD_PLANE 19
-#define HUD_LAYER 19
-#define ABOVE_HUD_PLANE 20
-#define ABOVE_HUD_LAYER 20
+#define HUD_PLANE 20
+#define HUD_LAYER 20
+#define ABOVE_HUD_PLANE 21
+#define ABOVE_HUD_LAYER 21
 
-#define SPLASHSCREEN_LAYER 21
-#define SPLASHSCREEN_PLANE 21
+#define SPLASHSCREEN_LAYER 22
+#define SPLASHSCREEN_PLANE 22

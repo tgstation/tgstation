@@ -5,7 +5,6 @@
 	name = "PanD.E.M.I.C 2200"
 	desc = "Used to work with viruses."
 	density = TRUE
-	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
 	circuit = /obj/item/circuitboard/computer/pandemic
@@ -57,7 +56,7 @@
 		if(istype(D, /datum/disease/advance))
 			var/datum/disease/advance/A = D
 			var/disease_name = SSdisease.get_disease_name(A.GetDiseaseID())
-			if(disease_name == "Unknown")
+			if((disease_name == "Unknown") && A.mutable)
 				this["can_rename"] = TRUE
 			this["name"] = disease_name
 			this["is_adv"] = TRUE
@@ -122,9 +121,9 @@
 
 	icon_state = "mixer[(beaker) ? "1" : "0"][powered() ? "" : "_nopower"]"
 	if(wait)
-		cut_overlays()
-	else
 		add_overlay("waitlight")
+	else
+		cut_overlays()
 
 /obj/machinery/computer/pandemic/proc/eject_beaker()
 	if(beaker)
@@ -180,17 +179,21 @@
 		if("rename_disease")
 			var/id = get_virus_id_by_index(text2num(params["index"]))
 			var/datum/disease/advance/A = SSdisease.archive_diseases[id]
+			if(!A.mutable)
+				return
 			if(A)
 				var/new_name = stripped_input(usr, "Name the disease", "New name", "", MAX_NAME_LEN)
 				if(!new_name || ..())
 					return
 				A.AssignName(new_name)
-				for(var/datum/disease/advance/AD in SSdisease.active_diseases)
-					AD.Refresh()
 				. = TRUE
 		if("create_culture_bottle")
 			var/id = get_virus_id_by_index(text2num(params["index"]))
-			var/datum/disease/advance/A = new(FALSE, SSdisease.archive_diseases[id])
+			var/datum/disease/advance/A = SSdisease.archive_diseases[id]
+			if(!istype(A) || !A.mutable)
+				to_chat(usr, "<span class='warning'>ERROR: Cannot replicate virus strain.</span>")
+				return
+			A = A.Copy()
 			var/list/data = list("viruses" = list(A))
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
 			B.name = "[A.name] culture bottle"
@@ -225,7 +228,7 @@
 
 
 /obj/machinery/computer/pandemic/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
+	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		. = TRUE //no afterattack
 		if(stat & (NOPOWER|BROKEN))
 			return

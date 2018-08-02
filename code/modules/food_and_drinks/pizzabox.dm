@@ -16,6 +16,7 @@
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 
 	var/open = FALSE
+	var/can_open_on_fall = TRUE //if FALSE, this pizza box will never open if it falls from a stack
 	var/boxtag = ""
 	var/list/boxes = list()
 
@@ -31,7 +32,7 @@
 /obj/item/pizzabox/Initialize()
 	. = ..()
 	update_icon()
-	
+
 
 /obj/item/pizzabox/Destroy()
 	unprocess()
@@ -105,17 +106,16 @@
 		START_PROCESSING(SSobj, src)
 	update_icon()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/pizzabox/attack_hand(mob/user)
 	if(user.get_inactive_held_item() != src)
-		..()
-		return
+		return ..()
 	if(open)
 		if(pizza)
 			user.put_in_hands(pizza)
 			to_chat(user, "<span class='notice'>You take [pizza] out of [src].</span>")
 			pizza = null
 			update_icon()
-			return
 		else if(bomb)
 			if(wires.is_all_cut() && bomb_defused)
 				user.put_in_hands(bomb)
@@ -136,7 +136,6 @@
 
 				to_chat(user, "<span class='warning'>You trap [src] with [bomb].</span>")
 				update_icon()
-			return
 	else if(boxes.len)
 		var/obj/item/pizzabox/topbox = boxes[boxes.len]
 		boxes -= topbox
@@ -145,8 +144,6 @@
 		topbox.update_icon()
 		update_icon()
 		user.regenerate_icons()
-		return
-	..()
 
 /obj/item/pizzabox/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/pizzabox))
@@ -196,8 +193,13 @@
 			to_chat(user, "<span class='notice'>[src] already has a bomb in it!</span>")
 	else if(istype(I, /obj/item/pen))
 		if(!open)
+			if(!user.is_literate())
+				to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
+				return
 			var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
 			box.boxtag += stripped_input(user, "Write on [box]'s tag:", box, "", 30)
+			if(!user.canUseTopic(src, BE_CLOSE))
+				return
 			to_chat(user, "<span class='notice'>You write with [I] on [src].</span>")
 			update_icon()
 			return
@@ -239,7 +241,7 @@
 		var/obj/item/pizzabox/P = V
 		var/fall_dir = pick(GLOB.alldirs)
 		step(P, fall_dir)
-		if(P.pizza && prob(50)) //rip pizza
+		if(P.pizza && P.can_open_on_fall && prob(50)) //rip pizza
 			P.open = TRUE
 			P.pizza.forceMove(get_turf(P))
 			fall_dir = pick(GLOB.alldirs)
@@ -267,15 +269,19 @@
 
 /obj/item/pizzabox/margherita/Initialize()
 	. = ..()
-	pizza = new /obj/item/reagent_containers/food/snacks/pizza/margherita(src)
+	AddPizza()
 	boxtag = "Margherita Deluxe"
 
+/obj/item/pizzabox/margherita/proc/AddPizza()
+	pizza = new /obj/item/reagent_containers/food/snacks/pizza/margherita(src)
+
+/obj/item/pizzabox/margherita/robo/AddPizza()
+	pizza = new /obj/item/reagent_containers/food/snacks/pizza/margherita/robo(src)
 
 /obj/item/pizzabox/vegetable/Initialize()
 	. = ..()
 	pizza = new /obj/item/reagent_containers/food/snacks/pizza/vegetable(src)
 	boxtag = "Gourmet Vegatable"
-
 
 /obj/item/pizzabox/mushroom/Initialize()
 	. = ..()
@@ -286,3 +292,49 @@
 	. = ..()
 	pizza = new /obj/item/reagent_containers/food/snacks/pizza/meat(src)
 	boxtag = "Meatlover's Supreme"
+
+/obj/item/pizzabox/pineapple/Initialize()
+	. = ..()
+	pizza = new /obj/item/reagent_containers/food/snacks/pizza/pineapple(src)
+	boxtag = "Honolulu Chew"
+
+//An anomalous pizza box that, when opened, produces the opener's favorite kind of pizza.
+/obj/item/pizzabox/infinite
+	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF //hard to destroy
+	can_open_on_fall = FALSE
+	var/list/pizza_types = list(
+		/obj/item/reagent_containers/food/snacks/pizza/meat = 1,
+		/obj/item/reagent_containers/food/snacks/pizza/mushroom = 1,
+		/obj/item/reagent_containers/food/snacks/pizza/margherita = 1,
+		/obj/item/reagent_containers/food/snacks/pizza/sassysage = 0.8,
+		/obj/item/reagent_containers/food/snacks/pizza/vegetable = 0.8,
+   		/obj/item/reagent_containers/food/snacks/pizza/pineapple = 0.5,
+		/obj/item/reagent_containers/food/snacks/pizza/donkpocket = 0.3,
+		/obj/item/reagent_containers/food/snacks/pizza/dank = 0.1) //pizzas here are weighted by chance to be someone's favorite
+	var/static/list/pizza_preferences
+
+/obj/item/pizzabox/infinite/Initialize()
+	. = ..()
+	if(!pizza_preferences)
+		pizza_preferences = list()
+
+/obj/item/pizzabox/infinite/examine(mob/user)
+	..()
+	if(isobserver(user))
+		to_chat(user, "<span class='deadsay'>This pizza box is anomalous, and will produce infinite pizza.</span>")
+
+/obj/item/pizzabox/infinite/attack_self(mob/living/user)
+	QDEL_NULL(pizza)
+	if(ishuman(user))
+		attune_pizza(user)
+	. = ..()
+
+/obj/item/pizzabox/infinite/proc/attune_pizza(mob/living/carbon/human/noms) //tonight on "proc names I never thought I'd type"
+	if(!pizza_preferences[noms.ckey])
+		pizza_preferences[noms.ckey] = pickweight(pizza_types)
+		if(noms.mind && noms.mind.assigned_role == "Botanist")
+			pizza_preferences[noms.ckey] = /obj/item/reagent_containers/food/snacks/pizza/dank
+
+	var/obj/item/pizza_type = pizza_preferences[noms.ckey]
+	pizza = new pizza_type (src)
+	pizza.foodtype = noms.dna.species.liked_food //it's our favorite!

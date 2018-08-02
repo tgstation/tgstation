@@ -5,6 +5,7 @@
 	icon_living = "old"
 	icon_dead = "old_dead"
 	icon_gib = "clown_gib"
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	gender = MALE
 	turns_per_move = 5
 	response_help = "pokes"
@@ -63,7 +64,7 @@
 	icon_state = "nanotrasenrangedsmg"
 	icon_living = "nanotrasenrangedsmg"
 	vision_range = 9
-	rapid = 1
+	rapid = 3
 	ranged = 1
 	retreat_distance = 3
 	minimum_distance = 5

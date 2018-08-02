@@ -6,8 +6,11 @@
 # Ranks can be anything defined in admin_ranks.txt                                            #
 # NOTE: if the rank-name cannot be found in admin_ranks.txt, they will not be adminned! ~Carn #
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
+# If SQL-based admin loading is enabled, admins listed here will always be loaded first		  #
+# and will override any duplicate entries in the database.									  #
 ###############################################################################################
 Optimumtact = Host
+CitrusGender = Game Master
 NewSta = Game Master
 Expletives = Game Master
 kingofkosmos = Game Master
@@ -32,7 +35,6 @@ agouri = Game Master
 errorage = Game Master
 superxpdude = Game Master
 petethegoat = Game Master
-korphaeron = Game Master
 nodrak = Game Master
 carnwennan = Game Master
 ikarrus = Game Master
@@ -60,7 +62,6 @@ s0ldi3rkr4s0 = Game Master
 ergovisavi = Game Master
 vistapowa = Game Master
 miauw62 = Game Master
-kazeespada = Game Master
 rumia29 = Game Master
 bobylein = Game Master
 sirbayer = Game Master
@@ -132,3 +133,9 @@ excessiveuseofcobby = Game Master
 Plizzard = Game Master
 octareenroon91 = Game Master
 Serpentarium = Game Master
+Averagejoe82 = Game Master
+The Dreamweaver = Game Master
+88Naoki = Game Master
+Naksuasdf = Game Master
+MrDoomBringer = Game Master
+shizcalev = Game Master

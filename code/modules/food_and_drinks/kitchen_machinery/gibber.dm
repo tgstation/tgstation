@@ -4,7 +4,6 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 500
@@ -45,7 +44,7 @@
 		add_overlay("gridle")
 
 /obj/machinery/gibber/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/gibber/container_resist(mob/living/user)
 	go_out()
@@ -54,6 +53,9 @@
 	go_out()
 
 /obj/machinery/gibber/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(operating)
@@ -76,7 +78,7 @@
 
 		if(!ignore_clothing)
 			for(var/obj/item/I in C.held_items + C.get_equipped_items())
-				if(!(I.flags_1 & NODROP_1))
+				if(!(I.item_flags & NODROP))
 					to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")
 					return
 
@@ -96,10 +98,7 @@
 /obj/machinery/gibber/attackby(obj/item/P, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
 		return
-
-	else if(exchange_parts(user, P))
-		return
-
+		
 	else if(default_pry_open(P))
 		return
 
@@ -214,29 +213,13 @@
 
 //auto-gibs anything that bumps into it
 /obj/machinery/gibber/autogibber
-	var/turf/input_plate
+	var/input_dir = NORTH
 
-/obj/machinery/gibber/autogibber/Initialize()
-	. = ..()
-	for(var/i in GLOB.cardinals)
-		var/obj/machinery/mineral/input/input_obj = locate() in get_step(loc, i)
-		if(input_obj)
-			if(isturf(input_obj.loc))
-				input_plate = input_obj.loc
-				qdel(input_obj)
-				break
-
-	if(!input_plate)
-		CRASH("Didn't find an input plate.")
-		return
-
-/obj/machinery/gibber/autogibber/CollidedWith(atom/movable/AM)
-	if(!input_plate)
-		return
-
+/obj/machinery/gibber/autogibber/Bumped(atom/movable/AM)
+	var/atom/input = get_step(src, input_dir)
 	if(ismob(AM))
 		var/mob/M = AM
 
-		if(M.loc == input_plate)
+		if(M.loc == input)
 			M.forceMove(src)
 			M.gib()

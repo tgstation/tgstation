@@ -5,7 +5,8 @@
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //Bitflags. Set to ENVIRONMENT_SMASH_STRUCTURES to break closets,tables,racks, etc; ENVIRONMENT_SMASH_WALLS for walls; ENVIRONMENT_SMASH_RWALLS for rwalls
 	var/atom/target
 	var/ranged = 0
-	var/rapid = 0
+	var/rapid = 0 //How many shots per volley.
+	var/rapid_fire_delay = 2 //Time between rapid fire shots
 	var/projectiletype	//set ONLY it and NULLIFY casingtype var, if we have ONLY projectile
 	var/projectilesound
 	var/casingtype		//set ONLY it and NULLIFY projectiletype, if we have projectile IN CASING
@@ -14,16 +15,8 @@
 	var/list/emote_taunt = list()
 	var/taunt_chance = 0
 
-//typecache of things this mob will attack in DestroyPathToTarget() if it has environment_smash
-	var/list/environment_target_typecache = list(
-	/obj/machinery/door/window,
-	/obj/structure/window,
-	/obj/structure/closet,
-	/obj/structure/table,
-	/obj/structure/grille,
-	/obj/structure/girder,
-	/obj/structure/rack,
-	/obj/structure/barricade) //turned into a typecache in New()
+	var/rapid_melee = 1			 //Number of melee attacks between each npc pool tick. Spread evenly.
+	var/melee_queue_distance = 4 //If target is close enough start preparing to hit them if we have rapid_melee enabled
 
 	var/ranged_message = "fires" //Fluff text for ranged mobs
 	var/ranged_cooldown = 0 //What the current cooldown on ranged attacks is, generally world.time + ranged_cooldown_time
@@ -38,7 +31,6 @@
 	var/robust_searching = 0 //By default, mobs have a simple searching method, set this to 1 for the more scrutinous searching (stat_attack, stat_exclusive, etc), should be disabled on most mobs
 	var/vision_range = 9 //How big of an area to search for targets in, a vision of 9 attempts to find targets as soon as they walk into screen view
 	var/aggro_vision_range = 9 //If a mob is aggro, we search in this radius. Defaults to 9 to keep in line with original simple mob aggro radius
-	var/idle_vision_range = 9 //If a mob is just idling around, it's vision range is limited to this. Defaults to 9 to keep in line with original simple mob aggro radius
 	var/search_objects = 0 //If we want to consider objects when searching around, set this to 1. If you want to search for objects while also ignoring mobs until hurt, set it to 2. To completely ignore mobs, even when attacked, set it to 3
 	var/search_objects_timer_id //Timer for regaining our old search_objects value after being attacked
 	var/search_objects_regain_time = 30 //the delay between being attacked and gaining our old search_objects value back
@@ -58,7 +50,6 @@
 
 	if(!targets_from)
 		targets_from = src
-	environment_target_typecache = typecacheof(environment_target_typecache)
 	wanted_objects = typecacheof(wanted_objects)
 
 
@@ -106,7 +97,7 @@
 	if(!search_objects)
 		. = hearers(vision_range, targets_from) - src //Remove self, so we don't suicide
 
-		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha, /obj/structure/destructible/clockwork/ocular_warden))
+		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha, /obj/structure/destructible/clockwork/ocular_warden,/obj/item/electronic_assembly))
 
 		for(var/HM in typecache_filter_list(range(vision_range, targets_from), hostile_machines))
 			if(can_see(targets_from, HM, vision_range))
@@ -170,6 +161,11 @@
 	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
 		return FALSE
 
+	if(ismob(the_target)) //Target is in godmode, ignore it.
+		var/mob/M = the_target
+		if(M.status_flags & GODMODE)
+			return FALSE
+
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
 		return FALSE
 	if(search_objects < 2)
@@ -196,13 +192,18 @@
 
 		if(istype(the_target, /obj/machinery/porta_turret))
 			var/obj/machinery/porta_turret/P = the_target
-			if(P.faction in faction)
+			if(P.in_faction(src)) //Don't attack if the turret is in the same faction
 				return FALSE
 			if(P.has_cover &&!P.raised) //Don't attack invincible turrets
 				return FALSE
 			if(P.stat & BROKEN) //Or turrets that are already broken
 				return FALSE
 			return TRUE
+
+		if(istype(the_target, /obj/item/electronic_assembly))
+			var/obj/item/electronic_assembly/O = the_target
+			if(O.combat_circuits)
+				return TRUE
 
 		if(istype(the_target, /obj/structure/destructible/clockwork/ocular_warden))
 			var/obj/structure/destructible/clockwork/ocular_warden/OW = the_target
@@ -223,7 +224,23 @@
 		Aggro()
 		return 1
 
-/mob/living/simple_animal/hostile/proc/MoveToTarget(var/list/possible_targets)//Step 5, handle movement between us and our target
+//What we do after closing in
+/mob/living/simple_animal/hostile/proc/MeleeAction(patience = TRUE)
+	if(rapid_melee > 1)
+		var/datum/callback/cb = CALLBACK(src, .proc/CheckAndAttack)
+		var/delay = SSnpcpool.wait / rapid_melee
+		for(var/i in 1 to rapid_melee)
+			addtimer(cb, (i - 1)*delay)
+	else
+		AttackingTarget()
+	if(patience)
+		GainPatience()
+
+/mob/living/simple_animal/hostile/proc/CheckAndAttack()
+	if(target && targets_from && isturf(targets_from.loc) && target.Adjacent(targets_from) && !incapacitated())
+		AttackingTarget()
+
+/mob/living/simple_animal/hostile/proc/MoveToTarget(list/possible_targets)//Step 5, handle movement between us and our target
 	stop_automated_movement = 1
 	if(!target || !CanAttack(target))
 		LoseTarget()
@@ -249,8 +266,9 @@
 			Goto(target,move_to_delay,minimum_distance)
 		if(target)
 			if(targets_from && isturf(targets_from.loc) && target.Adjacent(targets_from)) //If they're next to us, attack
-				AttackingTarget()
-				GainPatience()
+				MeleeAction()
+			else if(rapid_melee > 1 && target_distance <= melee_queue_distance)
+				MeleeAction(FALSE)
 			return 1
 		return 0
 	if(environment_smash)
@@ -295,7 +313,7 @@
 
 /mob/living/simple_animal/hostile/proc/LoseAggro()
 	stop_automated_movement = 0
-	vision_range = idle_vision_range
+	vision_range = initial(vision_range)
 	taunt_chance = initial(taunt_chance)
 
 /mob/living/simple_animal/hostile/proc/LoseTarget()
@@ -319,21 +337,25 @@
 			else
 				M.Goto(src,M.move_to_delay,M.minimum_distance)
 
-/mob/living/simple_animal/hostile/proc/OpenFire(atom/A)
+/mob/living/simple_animal/hostile/proc/CheckFriendlyFire(atom/A)
 	if(check_friendly_fire)
 		for(var/turf/T in getline(src,A)) // Not 100% reliable but this is faster than simulating actual trajectory
 			for(var/mob/living/L in T)
 				if(L == src || L == A)
 					continue
 				if(faction_check_mob(L) && !attack_same)
-					return
+					return TRUE
+
+/mob/living/simple_animal/hostile/proc/OpenFire(atom/A)
+	if(CheckFriendlyFire(A))
+		return
 	visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
 
-	if(rapid)
+
+	if(rapid > 1)
 		var/datum/callback/cb = CALLBACK(src, .proc/Shoot, A)
-		addtimer(cb, 1)
-		addtimer(cb, 4)
-		addtimer(cb, 6)
+		for(var/i in 1 to rapid)
+			addtimer(cb, (i - 1)*rapid_fire_delay)
 	else
 		Shoot(A)
 	ranged_cooldown = world.time + ranged_cooldown_time
@@ -368,13 +390,12 @@
 
 /mob/living/simple_animal/hostile/proc/DestroyObjectsInDirection(direction)
 	var/turf/T = get_step(targets_from, direction)
-	if(T.Adjacent(targets_from))
+	if(T && T.Adjacent(targets_from))
 		if(CanSmashTurfs(T))
 			T.attack_animal(src)
-		for(var/a in T)
-			var/atom/A = a
-			if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
-				A.attack_animal(src)
+		for(var/obj/O in T)
+			if(O.density && environment_smash >= ENVIRONMENT_SMASH_STRUCTURES && !O.IsObscured())
+				O.attack_animal(src)
 				return
 
 
@@ -476,12 +497,15 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 		toggle_ai(AI_Z_OFF)
 		return
 
-	if (isturf(T) && !is_station_level(T.z))
+	var/cheap_search = isturf(T) && !is_station_level(T.z)
+	if (cheap_search)
 		tlist = ListTargetsLazy(T.z)
 	else
 		tlist = ListTargets()
 
 	if(AIStatus == AI_IDLE && FindTarget(tlist, 1))
+		if(cheap_search) //Try again with full effort
+			FindTarget()
 		toggle_ai(AI_ON)
 
 /mob/living/simple_animal/hostile/proc/ListTargetsLazy(var/_Z)//Step 1, find out what we can see

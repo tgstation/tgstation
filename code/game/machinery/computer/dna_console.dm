@@ -9,7 +9,7 @@
 #define RADIATION_DURATION_MAX 30
 #define RADIATION_ACCURACY_MULTIPLIER 3			//larger is less accurate
 
-#define RADIATION_IRRADIATION_MULTIPLIER 1		//multiplier for how much radiation a test subject recieves
+#define RADIATION_IRRADIATION_MULTIPLIER 1		//multiplier for how much radiation a test subject receives
 
 #define SCANNER_ACTION_SE 1
 #define SCANNER_ACTION_UI 2
@@ -33,7 +33,6 @@
 	var/obj/machinery/dna_scannernew/connected = null
 	var/obj/item/disk/data/diskette = null
 	var/list/delayed_action = null
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 400
@@ -60,12 +59,8 @@
 			break
 	injectorready = world.time + INJECTOR_TIMEOUT
 
-/obj/machinery/computer/scan_consolenew/attack_hand(mob/user)
-	if(..())
-		return
-	ShowInterface(user)
-
-/obj/machinery/computer/scan_consolenew/proc/ShowInterface(mob/user, last_change)
+/obj/machinery/computer/scan_consolenew/ui_interact(mob/user, last_change)
+	. = ..()
 	if(!user)
 		return
 	var/datum/browser/popup = new(user, "scannernew", "DNA Modifier Console", 800, 630) // Set up the popup browser window
@@ -81,7 +76,7 @@
 	if(connected && connected.is_operational())
 		if(connected.occupant)	//set occupant_status message
 			viable_occupant = connected.occupant
-			if(viable_occupant.has_dna() && (!(RADIMMUNE in viable_occupant.dna.species.species_traits)) && (!(viable_occupant.has_disability(DISABILITY_NOCLONE)) || (connected.scan_level == 3))) //occupant is viable for dna modification
+			if(viable_occupant.has_dna() && !viable_occupant.has_trait(TRAIT_RADIMMUNE) && !viable_occupant.has_trait(TRAIT_NOCLONE) || (connected.scan_level == 3)) //occupant is viable for dna modification
 				occupant_status += "[viable_occupant.name] => "
 				switch(viable_occupant.stat)
 					if(CONSCIOUS)
@@ -461,7 +456,7 @@
 				connected.locked = TRUE
 
 				current_screen = "working"
-				ShowInterface(usr)
+				ui_interact(usr)
 
 				sleep(radduration*10)
 				current_screen = "mainmenu"
@@ -507,7 +502,7 @@
 				if(connected)
 					connected.locked = locked_state
 
-	ShowInterface(usr,last_change)
+	ui_interact(usr,last_change)
 
 /obj/machinery/computer/scan_consolenew/proc/scramble(input,rs,rd)
 	var/length = length(input)
@@ -528,7 +523,7 @@
 	var/mob/living/carbon/viable_occupant = null
 	if(connected)
 		viable_occupant = connected.occupant
-		if(!istype(viable_occupant) || !viable_occupant.dna || (RADIMMUNE in viable_occupant.dna.species.species_traits) || (viable_occupant.has_disability(DISABILITY_NOCLONE)))
+		if(!istype(viable_occupant) || !viable_occupant.dna || viable_occupant.has_trait(TRAIT_RADIMMUNE) || viable_occupant.has_trait(TRAIT_NOCLONE))
 			viable_occupant = null
 	return viable_occupant
 
@@ -567,11 +562,10 @@
 					viable_occupant.dna.blood_type = buffer_slot["blood_type"]
 
 /obj/machinery/computer/scan_consolenew/proc/on_scanner_close()
-	to_chat(connected.occupant, "<span class='notice'>[src] activates!</span>")
-	if(delayed_action)
+	if(delayed_action && connected)
+		to_chat(connected.occupant, "<span class='notice'>[src] activates!</span>")
 		apply_buffer(delayed_action["action"],delayed_action["buffer"])
 		delayed_action = null //or make it stick + reset button ?
-	return
 
 /////////////////////////// DNA MACHINES
 #undef INJECTOR_TIMEOUT

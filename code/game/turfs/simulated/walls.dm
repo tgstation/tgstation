@@ -31,17 +31,6 @@
 
 	var/list/dent_decals
 
-	var/static/list/dent_decal_list = list(
-	WALL_DENT_HIT = list(
-	mutable_appearance('icons/effects/effects.dmi', "impact1", BULLET_HOLE_LAYER),
-	mutable_appearance('icons/effects/effects.dmi', "impact2", BULLET_HOLE_LAYER),
-	mutable_appearance('icons/effects/effects.dmi', "impact3", BULLET_HOLE_LAYER)
-	),
-	WALL_DENT_SHOT = list(
-	mutable_appearance('icons/effects/effects.dmi', "bullet_hole", BULLET_HOLE_LAYER)
-	)
-	)
-
 /turf/closed/wall/examine(mob/user)
 	..()
 	deconstruction_hints(user)
@@ -56,13 +45,10 @@
 	var/turf/p_turf = get_turf(P)
 	var/face_direction = get_dir(src, p_turf)
 	var/face_angle = dir2angle(face_direction)
-	var/incidence_s = WRAP(GET_ANGLE_OF_INCIDENCE(face_angle, P.Angle), -90, 90)
-	var/new_angle = face_angle + incidence_s
-	var/new_angle_s = new_angle
-	while(new_angle_s > 180)	// Translate to regular projectile degrees
-		new_angle_s -= 360
-	while(new_angle_s < -180)
-		new_angle_s += 360
+	var/incidence_s = GET_ANGLE_OF_INCIDENCE(face_angle, (P.Angle + 180))
+	if(abs(incidence_s) > 90 && abs(incidence_s) < 270)
+		return FALSE
+	var/new_angle_s = SIMPLIFY_DEGREES(face_angle + incidence_s)
 	P.setAngle(new_angle_s)
 	return TRUE
 
@@ -138,7 +124,7 @@
 
 /turf/closed/wall/attack_paw(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 
 /turf/closed/wall/attack_animal(mob/living/simple_animal/M)
@@ -162,12 +148,13 @@
 	return TRUE
 
 /turf/closed/wall/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	to_chat(user, "<span class='notice'>You push the wall but nothing happens!</span>")
 	playsound(src, 'sound/weapons/genhit.ogg', 25, 1)
-	src.add_fingerprint(user)
-	..()
-
+	add_fingerprint(user)
 
 /turf/closed/wall/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -190,18 +177,21 @@
 	return ..()
 
 /turf/closed/wall/proc/try_clean(obj/item/W, mob/user, turf/T)
-	if((user.a_intent != INTENT_HELP) || !LAZYLEN(dent_decals) || !istype(W, /obj/item/weldingtool))
+	if((user.a_intent != INTENT_HELP) || !LAZYLEN(dent_decals))
 		return FALSE
-	var/obj/item/weldingtool/WT = W
-	if(WT.remove_fuel(0, user))
+
+	if(istype(W, /obj/item/weldingtool))
+		if(!W.tool_start_check(user, amount=0))
+			return FALSE
+
 		to_chat(user, "<span class='notice'>You begin fixing dents on the wall...</span>")
-		playsound(src, W.usesound, 100, 1)
-		if(do_after(user, slicing_duration * W.toolspeed * 0.1, target = src))
-			if(iswallturf(src) && user && !QDELETED(WT) && WT.isOn() && !QDELETED(T) && (user.loc == T) && (user.get_active_held_item() == WT) && LAZYLEN(dent_decals))
+		if(W.use_tool(src, user, 0, volume=100))
+			if(iswallturf(src) && LAZYLEN(dent_decals))
 				to_chat(user, "<span class='notice'>You fix some dents on the wall.</span>")
 				cut_overlay(dent_decals)
-				LAZYCLEARLIST(dent_decals)
+				dent_decals.Cut()
 			return TRUE
+
 	return FALSE
 
 /turf/closed/wall/proc/try_wallmount(obj/item/W, mob/user, turf/T)
@@ -215,43 +205,37 @@
 	else if(istype(W, /obj/item/poster))
 		place_poster(W,user)
 		return TRUE
+	//wall mounted IC assembly stuff
+	else if(istype(W, /obj/item/electronic_assembly/wallmount))
+		var/obj/item/electronic_assembly/wallmount/A = W
+		A.mount_assembly(src, user)
+		return TRUE
 
 	return FALSE
 
-/turf/closed/wall/proc/try_decon(obj/item/W, mob/user, turf/T)
-	if(istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = W
-		if(WT.remove_fuel(0, user))
-			to_chat(user, "<span class='notice'>You begin slicing through the outer plating...</span>")
-			playsound(src, W.usesound, 100, 1)
-			if(do_after(user, slicing_duration * W.toolspeed, target = src))
-				if(iswallturf(src) && user && !QDELETED(WT) && WT.isOn() && !QDELETED(T) && (user.loc == T) && (user.get_active_held_item() == WT))
-					to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
-					dismantle_wall()
-				return TRUE
-	else if(istype(W, /obj/item/gun/energy/plasmacutter))
+/turf/closed/wall/proc/try_decon(obj/item/I, mob/user, turf/T)
+	if(istype(I, /obj/item/weldingtool) || istype(I, /obj/item/gun/energy/plasmacutter))
+		if(!I.tool_start_check(user, amount=0))
+			return FALSE
+
 		to_chat(user, "<span class='notice'>You begin slicing through the outer plating...</span>")
-		playsound(src, 'sound/items/welder.ogg', 100, 1)
-		if(do_after(user, slicing_duration * W.toolspeed, target = src))
-			if(!iswallturf(src) || !user || QDELETED(W) || QDELETED(T))
-				return TRUE
-			if((user.loc == T) && (user.get_active_held_item() == W))
+		if(I.use_tool(src, user, slicing_duration, volume=100))
+			if(iswallturf(src))
 				to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
 				dismantle_wall()
-				visible_message("The wall was sliced apart by [user]!", "<span class='italics'>You hear metal being sliced apart.</span>")
-				return TRUE
+			return TRUE
+
 	return FALSE
 
 
-/turf/closed/wall/proc/try_destroy(obj/item/W, mob/user, turf/T)
-	if(istype(W, /obj/item/pickaxe/drill/jackhammer))
-		var/obj/item/pickaxe/drill/jackhammer/D = W
-		if(!iswallturf(src) || !user || !W || !T)
+/turf/closed/wall/proc/try_destroy(obj/item/I, mob/user, turf/T)
+	if(istype(I, /obj/item/pickaxe/drill/jackhammer))
+		if(!iswallturf(src))
 			return TRUE
-		if( user.loc == T && user.get_active_held_item() == W )
-			D.playDigSound()
+		if(user.loc == T)
+			I.play_tool_sound(src)
 			dismantle_wall()
-			visible_message("<span class='warning'>[user] smashes through the [name] with the [W.name]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
+			visible_message("<span class='warning'>[user] smashes through [src] with [I]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
 			return TRUE
 	return FALSE
 
@@ -304,12 +288,22 @@
 	if(LAZYLEN(dent_decals) >= MAX_DENT_DECALS)
 		return
 
-	var/mutable_appearance/decal = pick(dent_decal_list[denttype])
+	var/mutable_appearance/decal = mutable_appearance('icons/effects/effects.dmi', "", BULLET_HOLE_LAYER)
+	switch(denttype)
+		if(WALL_DENT_SHOT)
+			decal.icon_state = "bullet_hole"
+		if(WALL_DENT_HIT)
+			decal.icon_state = "impact[rand(1, 3)]"
+
 	decal.pixel_x = x
 	decal.pixel_y = y
 
-	cut_overlay(dent_decals)
-	LAZYADD(dent_decals, decal)
+	if(LAZYLEN(dent_decals))
+		cut_overlay(dent_decals)
+		dent_decals += decal
+	else
+		dent_decals = list(decal)
+
 	add_overlay(dent_decals)
-	
+
 #undef MAX_DENT_DECALS

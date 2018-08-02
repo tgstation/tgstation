@@ -184,6 +184,12 @@
 	results = list("cryoxadone" = 3)
 	required_reagents = list("stable_plasma" = 1, "acetone" = 1, "mutagen" = 1)
 
+/datum/chemical_reaction/pyroxadone
+	name = "Pyroxadone"
+	id = "pyroxadone"
+	results = list("pyroxadone" = 2)
+	required_reagents = list("cryoxadone" = 1, "slimejelly" = 1)
+
 /datum/chemical_reaction/clonexadone
 	name = "Clonexadone"
 	id = "clonexadone"
@@ -221,8 +227,28 @@
 	results = list("tricordrazine" = 3)
 	required_reagents = list("bicaridine" = 1, "kelotane" = 1, "antitoxin" = 1)
 
+/datum/chemical_reaction/regen_jelly
+	name = "Regenerative Jelly"
+	id = "regen_jelly"
+	results = list("regen_jelly" = 2)
+	required_reagents = list("tricordrazine" = 1, "slimejelly" = 1)
+
 /datum/chemical_reaction/corazone
 	name = "Corazone"
 	id = "corazone"
 	results = list("corazone" = 3)
 	required_reagents = list("phenol" = 2, "lithium" = 1)
+
+/datum/chemical_reaction/morphine
+	name = "Morphine"
+	id = "morphine"
+	results = list("morphine" = 2)
+	required_reagents = list("carbon" = 2, "hydrogen" = 2, "ethanol" = 1, "oxygen" = 1)
+	required_temp = 480
+
+/datum/chemical_reaction/modafinil
+	name = "Modafinil"
+	id = "modafinil"
+	results = list("modafinil" = 5)
+	required_reagents = list("diethylamine" = 1, "ammonia" = 1, "phenol" = 1, "acetone" = 1, "sacid" = 1)
+	required_catalysts = list("bromine" = 1) // as close to the real world synthesis as possible

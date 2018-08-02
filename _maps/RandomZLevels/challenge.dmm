@@ -35,9 +35,8 @@
 /turf/open/floor/plasteel/airless,
 /area/awaymission/challenge/start)
 "ai" = (
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	icon_state = "flashlight-on";
-	item_state = "flashlight";
 	on = 1
 	},
 /turf/open/floor/plasteel/airless,
@@ -242,7 +241,7 @@
 "aX" = (
 /obj/machinery/porta_turret{
 	dir = 8;
-	emagged = 1;
+	set_obj_flags = "EMAGGED";
 	installation = /obj/item/gun/energy/lasercannon
 	},
 /turf/open/floor/plating/airless,
@@ -266,7 +265,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/challenge/main)
 "bb" = (
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/plasteel/airless,
 /area/awaymission/challenge/main)
 "bc" = (
@@ -384,7 +383,7 @@
 "bq" = (
 /obj/machinery/porta_turret{
 	dir = 8;
-	emagged = 1;
+	set_obj_flags = "EMAGGED";
 	installation = /obj/item/gun/energy/lasercannon
 	},
 /turf/open/floor/plating,
@@ -655,8 +654,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/obj/item/device/radio/intercom{
-	dir = 0;
+/obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 28
 	},
@@ -680,8 +678,7 @@
 /turf/open/floor/plating,
 /area/awaymission/challenge/end)
 "cg" = (
-/obj/item/device/radio/intercom{
-	dir = 0;
+/obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -27
 	},
@@ -747,7 +744,7 @@
 /area/awaymission/challenge/end)
 "cs" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -796,7 +793,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "cA" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/closed/indestructible{
 	icon_state = "iron0"
 	},
@@ -899,12 +896,6 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/challenge/end)
-"cQ" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/circuit,
-/area/awaymission/challenge/end)
 "cR" = (
 /obj/machinery/gateway{
 	dir = 9
@@ -928,12 +919,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
-/area/awaymission/challenge/end)
-"cU" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "cV" = (
 /obj/machinery/gateway{

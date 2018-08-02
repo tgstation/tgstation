@@ -57,23 +57,24 @@
 	girder_type = /obj/structure/destructible/clockwork/wall_gear
 	baseturfs = /turf/open/floor/clockwork/reebe
 	var/heated
-	var/obj/effect/clockwork/overlay/wall/realappearence
+	var/obj/effect/clockwork/overlay/wall/realappearance
 
 /turf/closed/wall/clockwork/Initialize()
 	. = ..()
 	new /obj/effect/temp_visual/ratvar/wall(src)
 	new /obj/effect/temp_visual/ratvar/beam(src)
-	realappearence = new /obj/effect/clockwork/overlay/wall(src)
-	realappearence.linked = src
+	realappearance = new /obj/effect/clockwork/overlay/wall(src)
+	realappearance.linked = src
 
 /turf/closed/wall/clockwork/Destroy()
-	if(realappearence)
-		qdel(realappearence)
-		realappearence = null
+	if(realappearance)
+		qdel(realappearance)
+		realappearance = null
 	if(heated)
 		var/mob/camera/eminence/E = get_eminence()
 		if(E)
 			E.superheated_walls--
+
 	return ..()
 
 /turf/closed/wall/clockwork/ReplaceWithLattice()
@@ -136,14 +137,14 @@
 		heated = TRUE
 		hardness = -100 //Lower numbers are tougher, so this makes the wall essentially impervious to smashing
 		slicing_duration = 150
-		animate(realappearence, color = "#FFC3C3", time = 5)
+		animate(realappearance, color = "#FFC3C3", time = 5)
 	else
 		name = initial(name)
 		visible_message("<span class='notice'>[src] cools down.</span>")
 		heated = FALSE
 		hardness = initial(hardness)
 		slicing_duration = initial(slicing_duration)
-		animate(realappearence, color = initial(realappearence.color), time = 25)
+		animate(realappearance, color = initial(realappearance.color), time = 25)
 
 
 /turf/closed/wall/vault
@@ -157,6 +158,7 @@
 	canSmoothWith = null
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal
+	bullet_sizzle = TRUE
 
 /turf/closed/wall/rust
 	name = "rusted wall"
@@ -169,3 +171,12 @@
 	desc = "A huge chunk of rusted reinforced metal."
 	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
 	hardness = 15
+
+/turf/closed/wall/mineral/bronze
+	name = "clockwork wall"
+	desc = "A huge chunk of bronze, decorated like gears and cogs."
+	icon = 'icons/turf/walls/clockwork_wall.dmi'
+	icon_state = "clockwork_wall"
+	sheet_type = /obj/item/stack/tile/bronze
+	sheet_amount = 2
+	girder_type = /obj/structure/girder/bronze

@@ -45,6 +45,9 @@
 	// note AM since can contain mobs or objs
 	for(var/A in D)
 		var/atom/movable/AM = A
+		if(AM == src)
+			continue
+		SEND_SIGNAL(AM, COMSIG_MOVABLE_DISPOSING, src, D)
 		AM.forceMove(src)
 		if(istype(AM, /obj/structure/bigDelivery) && !hasmob)
 			var/obj/structure/bigDelivery/T = AM

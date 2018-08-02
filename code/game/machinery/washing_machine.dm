@@ -4,7 +4,6 @@
 	icon = 'icons/obj/machines/washing_machine.dmi'
 	icon_state = "wm_1_0"
 	density = TRUE
-	anchored = TRUE
 	state_open = TRUE
 	var/busy = FALSE
 	var/bloody_mess = 0
@@ -14,7 +13,7 @@
 
 /obj/machinery/washing_machine/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT), CALLBACK(src, .proc/clean_blood))
+	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, .proc/clean_blood)))
 
 /obj/machinery/washing_machine/examine(mob/user)
 	..()
@@ -41,6 +40,24 @@
 	busy = TRUE
 	update_icon()
 	addtimer(CALLBACK(src, .proc/wash_cycle), 200)
+	START_PROCESSING(SSfastprocess, src)
+
+/obj/machinery/washing_machine/process()
+	if (!busy)
+		animate(src, transform=matrix(), time=2)
+		return PROCESS_KILL
+	if (anchored)
+		if (prob(5))
+			var/matrix/M = new
+			M.Translate(rand(-1, 1), rand(0, 1))
+			animate(src, transform=M, time=1)
+			animate(transform=matrix(), time=1)
+	else
+		if (prob(1))
+			step(src, pick(GLOB.cardinals))
+		var/matrix/M = new
+		M.Translate(rand(-3, 3), rand(-1, 3))
+		animate(src, transform=M, time=2)
 
 /obj/machinery/washing_machine/proc/clean_blood()
 	if(!busy)
@@ -50,7 +67,7 @@
 /obj/machinery/washing_machine/proc/wash_cycle()
 	for(var/X in contents)
 		var/atom/movable/AM = X
-		AM.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 		AM.machine_wash(src)
 
 	busy = FALSE
@@ -65,8 +82,7 @@
 	return
 
 /obj/item/stack/sheet/hairlesshide/machine_wash(obj/machinery/washing_machine/WM)
-	var/obj/item/stack/sheet/wetleather/WL = new(loc)
-	WL.amount = amount
+	new /obj/item/stack/sheet/wetleather(drop_location(), amount)
 	qdel(src)
 
 /obj/item/clothing/suit/hooded/ian_costume/machine_wash(obj/machinery/washing_machine/WM)
@@ -190,6 +206,9 @@
 		add_overlay("wm_panel")
 
 /obj/machinery/washing_machine/attackby(obj/item/W, mob/user, params)
+	if(panel_open && !busy && default_unfasten_wrench(user, W))
+		return
+
 	if(default_deconstruction_screwdriver(user, null, null, W))
 		update_icon()
 		return
@@ -220,6 +239,9 @@
 		return ..()
 
 /obj/machinery/washing_machine/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(busy)
 		to_chat(user, "<span class='warning'>[src] is busy.</span>")
 		return

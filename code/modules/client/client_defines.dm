@@ -49,9 +49,6 @@
 
 	var/obj/screen/click_catcher/void
 
-	// Used by html_interface module.
-	var/hi_last_pos
-
 	var/ip_intel = "Disabled"
 
 	//datum that controls the displaying and hiding of tooltips
@@ -65,6 +62,7 @@
 
 	var/inprefs = FALSE
 	var/list/topiclimiter
+	var/list/clicklimiter
 
 	var/datum/chatOutput/chatOutput
 

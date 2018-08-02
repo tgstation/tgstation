@@ -25,6 +25,7 @@
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
 	GLOB.poi_list += src
+	AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_POST_THROW = CALLBACK(src, .proc/move_gracefully)))
 
 /obj/item/his_grace/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
@@ -86,7 +87,7 @@
 				do_attack_animation(master, null, src)
 				master.emote("scream")
 				master.remove_status_effect(STATUS_EFFECT_HISGRACE)
-				flags_1 &= ~NODROP_1
+				item_flags &= ~NODROP
 				master.Knockdown(60)
 				master.adjustBruteLoss(master.maxHealth)
 				playsound(master, 'sound/effects/splat.ogg', 100, 0)
@@ -129,6 +130,27 @@
 	force_bonus = HIS_GRACE_FORCE_BONUS * LAZYLEN(contents)
 	playsound(user, 'sound/effects/pope_entry.ogg', 100)
 	icon_state = "his_grace_awakened"
+	move_gracefully()
+
+/obj/item/his_grace/proc/move_gracefully()
+	if(!awakened)
+		return
+	var/static/list/transforms
+	if(!transforms)
+		var/matrix/M1 = matrix()
+		var/matrix/M2 = matrix()
+		var/matrix/M3 = matrix()
+		var/matrix/M4 = matrix()
+		M1.Translate(-1, 0)
+		M2.Translate(0, 1)
+		M3.Translate(1, 0)
+		M4.Translate(0, -1)
+		transforms = list(M1, M2, M3, M4)
+
+	animate(src, transform=transforms[1], time=0.2, loop=-1)
+	animate(transform=transforms[2], time=0.1)
+	animate(transform=transforms[3], time=0.2)
+	animate(transform=transforms[4], time=0.3)
 
 /obj/item/his_grace/proc/drowse() //Good night, Mr. Grace.
 	if(!awakened)
@@ -139,6 +161,7 @@
 	name = initial(name)
 	desc = initial(desc)
 	icon_state = initial(icon_state)
+	animate(src, transform=matrix())
 	gender = initial(gender)
 	force = initial(force)
 	force_bonus = initial(force_bonus)
@@ -170,20 +193,20 @@
 	update_stats()
 
 /obj/item/his_grace/proc/update_stats()
-	flags_1 &= ~NODROP_1
+	item_flags &= ~NODROP
 	var/mob/living/master = get_atom_on_turf(src, /mob/living)
 	switch(bloodthirst)
 		if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
 			if(HIS_GRACE_CONSUME_OWNER > prev_bloodthirst)
 				master.visible_message("<span class='userdanger'>[src] enters a frenzy!</span>")
 		if(HIS_GRACE_STARVING to HIS_GRACE_CONSUME_OWNER)
-			flags_1 |= NODROP_1
+			item_flags |= NODROP
 			if(HIS_GRACE_STARVING > prev_bloodthirst)
 				master.visible_message("<span class='boldwarning'>[src] is starving!</span>", "<span class='his_grace big'>[src]'s bloodlust overcomes you. [src] must be fed, or you will become His meal.\
 				[force_bonus < 15 ? " And still, His power grows.":""]</span>")
 				force_bonus = max(force_bonus, 15)
 		if(HIS_GRACE_FAMISHED to HIS_GRACE_STARVING)
-			flags_1 |= NODROP_1
+			item_flags |= NODROP
 			if(HIS_GRACE_FAMISHED > prev_bloodthirst)
 				master.visible_message("<span class='warning'>[src] is very hungry!</span>", "<span class='his_grace big'>Spines sink into your hand. [src] must feed immediately.\
 				[force_bonus < 10 ? " His power grows.":""]</span>")

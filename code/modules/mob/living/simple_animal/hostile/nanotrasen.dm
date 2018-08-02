@@ -6,6 +6,7 @@
 	icon_living = "nanotrasen"
 	icon_dead = null
 	icon_gib = "syndicate_gib"
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	speak_chance = 12
 	turns_per_move = 5
 	response_help = "pokes"
@@ -52,7 +53,7 @@
 /mob/living/simple_animal/hostile/nanotrasen/ranged/smg
 	icon_state = "nanotrasenrangedsmg"
 	icon_living = "nanotrasenrangedsmg"
-	rapid = 1
+	rapid = 3
 	casingtype = /obj/item/ammo_casing/c46x30mm
 	projectilesound = 'sound/weapons/gunshot_smg.ogg'
 	loot = list(/obj/item/gun/ballistic/automatic/wt550,

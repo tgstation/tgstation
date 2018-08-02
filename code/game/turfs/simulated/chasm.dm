@@ -8,10 +8,11 @@
 	icon_state = "smooth"
 	canSmoothWith = list(/turf/open/floor/fakepit, /turf/open/chasm)
 	density = TRUE //This will prevent hostile mobs from pathing into chasms, while the canpass override will still let it function like an open turf
+	bullet_bounce_sound = null //abandon all hope ye who enter
 
 /turf/open/chasm/Initialize()
 	. = ..()
-	AddComponent(/datum/component/chasm, null)
+	AddComponent(/datum/component/chasm, SSmapping.get_turf_below(src))
 
 /turf/open/chasm/proc/set_target(turf/target)
 	GET_COMPONENT(chasm_component, /datum/component/chasm)
@@ -21,11 +22,25 @@
 	GET_COMPONENT(chasm_component, /datum/component/chasm)
 	chasm_component.drop(AM)
 
-/turf/open/chasm/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0)
+/turf/open/chasm/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
 
-/turf/open/chasm/MakeDry(wet_setting = TURF_WET_WATER)
+/turf/open/chasm/MakeDry()
 	return
+
+/turf/open/chasm/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_FLOORWALL)
+			return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
+	return FALSE
+
+/turf/open/chasm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_FLOORWALL)
+			to_chat(user, "<span class='notice'>You build a floor.</span>")
+			PlaceOnTop(/turf/open/floor/plating)
+			return TRUE
+	return FALSE
 
 /turf/open/chasm/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
@@ -64,16 +79,6 @@
 /turf/open/chasm/CanPass(atom/movable/mover, turf/target)
 	return 1
 
-
-// Naive "down" which just subtracts a z-level
-/turf/open/chasm/straight_down
-	baseturfs = /turf/open/chasm/straight_down
-
-/turf/open/chasm/straight_down/Initialize()
-	. = ..()
-	set_target(locate(x, y, z - 1))
-
-
 // Chasms for Lavaland, with planetary atmos and lava glow
 /turf/open/chasm/lavaland
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
@@ -96,9 +101,18 @@
 	underlay_appearance.icon_state = "dirt"
 	return TRUE
 
-/turf/open/chasm/jungle/straight_down
-	baseturfs = /turf/open/chasm/jungle/straight_down
+//For Bag of Holding Bombs
 
-/turf/open/chasm/jungle/straight_down/Initialize(mapload)
+/turf/open/chasm/magic
+	name = "tear in the fabric of reality"
+	desc = "Where does it lead?"
+	icon = 'icons/turf/floors/magic_chasm.dmi'
+	baseturfs = /turf/open/chasm/magic
+	light_range = 1.9
+	light_power = 0.65
+
+/turf/open/chasm/magic/Initialize()
 	. = ..()
-	set_target(locate(x, y, z - 1))
+	var/turf/T = safepick(get_area_turfs(/area/fabric_of_reality))
+	if(T)
+		set_target(T)

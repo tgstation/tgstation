@@ -62,7 +62,6 @@
 	id = "netcard_basic"
 	build_type = IMPRINTER
 	materials = list(MAT_METAL = 250, MAT_GLASS = 100)
-	reagents_list = list("sacid" = 20)
 	build_path = /obj/item/computer_hardware/network_card
 	category = list("Computer Parts")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
@@ -72,7 +71,6 @@
 	id = "netcard_advanced"
 	build_type = IMPRINTER
 	materials = list(MAT_METAL = 500, MAT_GLASS = 200)
-	reagents_list = list("sacid" = 20)
 	build_path = /obj/item/computer_hardware/network_card/advanced
 	category = list("Computer Parts")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
@@ -82,7 +80,6 @@
 	id = "netcard_wired"
 	build_type = IMPRINTER
 	materials = list(MAT_METAL = 2500, MAT_GLASS = 400)
-	reagents_list = list("sacid" = 20)
 	build_path = /obj/item/computer_hardware/network_card/wired
 	category = list("Computer Parts")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
@@ -93,7 +90,6 @@
 	id = "portadrive_basic"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 800)
-	reagents_list = list("sacid" = 20)
 	build_path = /obj/item/computer_hardware/hard_drive/portable
 	category = list("Computer Parts")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
@@ -103,7 +99,6 @@
 	id = "portadrive_advanced"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1600)
-	reagents_list = list("sacid" = 20)
 	build_path = /obj/item/computer_hardware/hard_drive/portable/advanced
 	category = list("Computer Parts")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
@@ -113,7 +108,6 @@
 	id = "portadrive_super"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 3200)
-	reagents_list = list("sacid" = 20)
 	build_path = /obj/item/computer_hardware/hard_drive/portable/super
 	category = list("Computer Parts")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
@@ -219,7 +213,6 @@
 	id = "cpu_normal"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1600)
-	reagents_list = list("sacid" = 20)
 	build_path = /obj/item/computer_hardware/processor_unit
 	category = list("Computer Parts")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
@@ -229,7 +222,6 @@
 	id = "cpu_small"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 800)
-	reagents_list = list("sacid" = 20)
 	build_path = /obj/item/computer_hardware/processor_unit/small
 	category = list("Computer Parts")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
@@ -239,7 +231,6 @@
 	id = "pcpu_normal"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS= 6400, MAT_GOLD = 2000)
-	reagents_list = list("sacid" = 40)
 	build_path = /obj/item/computer_hardware/processor_unit/photonic
 	category = list("Computer Parts")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
@@ -249,7 +240,6 @@
 	id = "pcpu_small"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 3200, MAT_GOLD = 1000)
-	reagents_list = list("sacid" = 20)
 	build_path = /obj/item/computer_hardware/processor_unit/photonic/small
 	category = list("Computer Parts")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING

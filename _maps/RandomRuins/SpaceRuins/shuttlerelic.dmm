@@ -79,24 +79,6 @@
 /mob/living/simple_animal/hostile/retaliate/spaceman,
 /turf/open/floor/oldshuttle,
 /area/ruin/powered)
-"p" = (
-/turf/closed/indestructible/oldshuttle/corner{
-	dir = 8
-	},
-/area/ruin/powered)
-"q" = (
-/turf/closed/indestructible/oldshuttle/corner,
-/area/ruin/powered)
-"r" = (
-/turf/closed/indestructible/oldshuttle/corner{
-	dir = 1
-	},
-/area/ruin/powered)
-"s" = (
-/turf/closed/indestructible/oldshuttle/corner{
-	dir = 4
-	},
-/area/ruin/powered)
 "t" = (
 /obj/machinery/power/generator,
 /turf/open/floor/oldshuttle,
@@ -180,7 +162,7 @@ g
 g
 g
 g
-p
+b
 d
 l
 w
@@ -196,8 +178,8 @@ c
 g
 g
 g
-p
-r
+b
+f
 a
 a
 a
@@ -217,7 +199,7 @@ c
 c
 c
 c
-s
+h
 a
 "}
 (7,1,1) = {"
@@ -235,7 +217,7 @@ i
 c
 u
 c
-s
+h
 "}
 (8,1,1) = {"
 b
@@ -251,7 +233,7 @@ m
 m
 c
 g
-q
+e
 c
 "}
 (9,1,1) = {"
@@ -265,7 +247,7 @@ m
 m
 m
 m
-p
+b
 c
 g
 g
@@ -299,7 +281,7 @@ m
 m
 m
 m
-q
+e
 c
 g
 g
@@ -319,7 +301,7 @@ m
 m
 c
 g
-p
+b
 c
 "}
 (13,1,1) = {"
@@ -337,7 +319,7 @@ i
 c
 u
 c
-r
+f
 "}
 (14,1,1) = {"
 a
@@ -353,7 +335,7 @@ c
 c
 c
 c
-r
+f
 a
 "}
 (15,1,1) = {"
@@ -366,8 +348,8 @@ c
 g
 g
 g
-q
-s
+e
+h
 a
 a
 a
@@ -384,7 +366,7 @@ g
 g
 g
 g
-q
+e
 d
 l
 v

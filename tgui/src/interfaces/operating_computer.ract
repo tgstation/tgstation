@@ -31,10 +31,16 @@
 				<ui-subdisplay title='{{name}}'>
 					<ui-section label='Next Step'>
 						<span class='content'>{{next_step}}</span>
+						{{#if chems_needed}}
+							<span class='content'><b>Required chemicals:</b><br> {{chems_needed}}</span>
+						{{/if}}
 					</ui-section>
 					{{#if alternative_step}}
 						<ui-section label='Alternative Step'>
 							<span class='content'>{{alternative_step}}</span>
+							{{#if alt_chems_needed}}
+								<span class='content'><b>Required chemicals:</b><br> {{chems_needed}}</span>
+							{{/if}}
 						</ui-section>
 					{{/if}}
 				</ui-subdisplay>

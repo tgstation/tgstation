@@ -9,6 +9,7 @@
 	emote_hear = list("squawk!", "gakkers!", "noots.","NOOTS!")
 	emote_see = list("shakes its beak.", "flaps it's wings.","preens itself.")
 	faction = list("penguin")
+	minbodytemp = 0
 	see_in_dark = 5
 	speak_chance = 1
 	turns_per_move = 10
@@ -17,7 +18,7 @@
 /mob/living/simple_animal/pet/penguin/emperor
 	name = "Emperor penguin"
 	real_name = "penguin"
-	desc = "Emperor of all he surveys."
+	desc = "Emperor of all they survey."
 	icon_state = "penguin"
 	icon_living = "penguin"
 	icon_dead = "penguin_dead"

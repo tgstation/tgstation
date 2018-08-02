@@ -1,21 +1,37 @@
 /datum/proximity_monitor
 	var/atom/host	//the atom we are tracking
+	var/atom/hasprox_receiver //the atom that will receive HasProximity calls.
 	var/atom/last_host_loc
 	var/list/checkers //list of /obj/effect/abstract/proximity_checkers
 	var/current_range
 	var/ignore_if_not_on_turf	//don't check turfs in range if the host's loc isn't a turf
+	var/datum/component/movement_tracker
 
 /datum/proximity_monitor/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)
-	host = _host
+	checkers = list()
 	last_host_loc = _host.loc
 	ignore_if_not_on_turf = _ignore_if_not_on_turf
-	checkers = list()
-	SetRange(range)
+	current_range = range
+	SetHost(_host)
+
+/datum/proximity_monitor/proc/SetHost(atom/H,atom/R)
+	if(R)
+		hasprox_receiver = R
+	else if(hasprox_receiver == host) //Default case
+		hasprox_receiver = H
+	host = H
+	last_host_loc = host.loc
+	if(movement_tracker)
+		QDEL_NULL(movement_tracker)
+	movement_tracker = host.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/HandleMove)))
+	SetRange(current_range,TRUE)
 
 /datum/proximity_monitor/Destroy()
 	host = null
 	last_host_loc = null
+	hasprox_receiver = null
 	QDEL_LIST(checkers)
+	QDEL_NULL(movement_tracker)
 	return ..()
 
 /datum/proximity_monitor/proc/HandleMove()
@@ -27,7 +43,7 @@
 		SetRange(curr_range, TRUE)
 		if(curr_range)
 			testing("HasProx: [host] -> [host]")
-			_host.HasProximity(host)	//if we are processing, we're guaranteed to be a movable
+			hasprox_receiver.HasProximity(host)	//if we are processing, we're guaranteed to be a movable
 
 /datum/proximity_monitor/proc/SetRange(range, force_rebuild = FALSE)
 	if(!force_rebuild && range == current_range)
@@ -93,4 +109,4 @@
 
 /obj/effect/abstract/proximity_checker/Crossed(atom/movable/AM)
 	set waitfor = FALSE
-	monitor.host.HasProximity(AM)
+	monitor.hasprox_receiver.HasProximity(AM)

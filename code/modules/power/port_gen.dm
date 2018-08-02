@@ -17,6 +17,8 @@
 	var/base_icon = "portgen0"
 	var/datum/looping_sound/generator/soundloop
 
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_REQUIRES_ANCHORED
+
 /obj/machinery/power/port_gen/Initialize()
 	. = ..()
 	soundloop = new(list(src), active)
@@ -52,12 +54,6 @@
 		handleInactive()
 		update_icon()
 		soundloop.stop()
-
-/obj/machinery/power/port_gen/attack_hand(mob/user)
-	if(..())
-		return
-	if(!anchored)
-		return
 
 /obj/machinery/power/port_gen/examine(mob/user)
 	..()
@@ -115,13 +111,8 @@
 
 /obj/machinery/power/port_gen/pacman/DropFuel()
 	if(sheets)
-		var/fail_safe = FALSE
-		while(sheets > 0 && fail_safe < 100)
-			fail_safe += 1
-			var/obj/item/stack/sheet/S = new sheet_path(loc)
-			var/amount = min(sheets, S.max_amount)
-			S.amount = amount
-			sheets -= amount
+		new sheet_path(drop_location(), sheets)
+		sheets = 0
 
 /obj/machinery/power/port_gen/pacman/UseFuel()
 	var/needed_sheets = 1 / (time_per_sheet * consumption / power_output)
@@ -177,9 +168,6 @@
 		return
 	else if(!active)
 
-		if(exchange_parts(user, O))
-			return
-
 		if(istype(O, /obj/item/wrench))
 
 			if(!anchored && !isinspace())
@@ -195,7 +183,7 @@
 			return
 		else if(istype(O, /obj/item/screwdriver))
 			panel_open = !panel_open
-			playsound(src.loc, O.usesound, 50, 1)
+			O.play_tool_sound(src)
 			if(panel_open)
 				to_chat(user, "<span class='notice'>You open the access panel.</span>")
 			else
@@ -206,17 +194,10 @@
 	return ..()
 
 /obj/machinery/power/port_gen/pacman/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	emp_act(EMP_HEAVY)
-
-/obj/machinery/power/port_gen/pacman/attack_hand(mob/user)
-	..()
-	if (!anchored)
-		return
-
-	interact(user)
 
 /obj/machinery/power/port_gen/pacman/attack_ai(mob/user)
 	interact(user)
@@ -224,14 +205,13 @@
 /obj/machinery/power/port_gen/pacman/attack_paw(mob/user)
 	interact(user)
 
-/obj/machinery/power/port_gen/pacman/interact(mob/user)
+/obj/machinery/power/port_gen/pacman/ui_interact(mob/user)
+	. = ..()
 	if (get_dist(src, user) > 1 )
 		if(!isAI(user))
 			user.unset_machine()
 			user << browse(null, "window=port_gen")
 			return
-
-	user.set_machine(src)
 
 	var/dat = text("<b>[name]</b><br>")
 	if (active)
@@ -273,7 +253,7 @@
 				power_output--
 				src.updateUsrDialog()
 		if (href_list["action"] == "higher_power")
-			if (power_output < 4 || emagged)
+			if (power_output < 4 || (obj_flags & EMAGGED))
 				power_output++
 				src.updateUsrDialog()
 		if (href_list["action"] == "close")

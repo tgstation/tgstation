@@ -10,8 +10,8 @@
 
 	callTime = INFINITY
 	ignitionTime = 50
-
-	roundstart_move = TRUE	//force a call to dockRoundstart
+	
+	movement_force = list("KNOCKDOWN" = 3, "THROW" = 0)
 
 	var/sound_played
 	var/damaged	//too damaged to undock?
@@ -22,15 +22,15 @@
 	var/perma_docked = FALSE	//highlander with RESPAWN??? OH GOD!!!
 
 /obj/docking_port/mobile/arrivals/Initialize(mapload)
-	if(SSshuttle.arrivals)
-		WARNING("More than one arrivals docking_port placed on map!")
-		return INITIALIZE_HINT_QDEL
-	SSshuttle.arrivals = src
-
 	. = ..()
-
 	preferred_direction = dir
 	return INITIALIZE_HINT_LATELOAD	//for latejoin list
+
+/obj/docking_port/mobile/arrivals/register()
+	..()
+	if(SSshuttle.arrivals)
+		WARNING("More than one arrivals docking_port placed on map! Ignoring duplicates.")
+	SSshuttle.arrivals = src
 
 /obj/docking_port/mobile/arrivals/LateInitialize()
 	areas = list()
@@ -53,13 +53,6 @@
 		return
 
 	SSjob.latejoin_trackers = new_latejoin
-
-/obj/docking_port/mobile/arrivals/dockRoundstart()
-	SSshuttle.generate_transit_dock(src)
-	Launch()
-	timer = world.time
-	check()
-	return TRUE
 
 /obj/docking_port/mobile/arrivals/check()
 	. = ..()
@@ -85,8 +78,9 @@
 		damaged = TRUE
 		if(console)
 			console.say("Alert, hull breach detected!")
-		var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
-		announcer.announce("ARRIVALS_BROKEN", channels = list())
+		var/obj/machinery/announcement_system/announcer = safepick(GLOB.announcement_systems)
+		if(!QDELETED(announcer))
+			announcer.announce("ARRIVALS_BROKEN", channels = list())
 		if(mode != SHUTTLE_CALL)
 			sound_played = FALSE
 			mode = SHUTTLE_IDLE
@@ -117,10 +111,14 @@
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/PersonCheck()
-	for(var/M in (GLOB.alive_mob_list & GLOB.player_list))
-		var/mob/living/L = M
-		if((get_area(M) in areas) && L.stat != DEAD)
-			return TRUE
+	for(var/V in GLOB.player_list)
+		var/mob/M = V
+		if((get_area(M) in areas) && M.stat != DEAD)
+			if(!iscameramob(M))
+				return TRUE
+			var/mob/camera/C = M
+			if(C.move_on_shuttle)
+				return TRUE
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/NukeDiskCheck()

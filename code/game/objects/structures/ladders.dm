@@ -23,33 +23,37 @@
 /obj/structure/ladder/Destroy(force)
 	if ((resistance_flags & INDESTRUCTIBLE) && !force)
 		return QDEL_HINT_LETMELIVE
+	disconnect()
+	return ..()
 
+/obj/structure/ladder/LateInitialize()
+	// By default, discover ladders above and below us vertically
+	var/turf/T = get_turf(src)
+	var/obj/structure/ladder/L
+
+	if (!down)
+		L = locate() in SSmapping.get_turf_below(T)
+		if (L)
+			down = L
+			L.up = src  // Don't waste effort looping the other way
+			L.update_icon()
+	if (!up)
+		L = locate() in SSmapping.get_turf_above(T)
+		if (L)
+			up = L
+			L.down = src  // Don't waste effort looping the other way
+			L.update_icon()
+
+	update_icon()
+
+/obj/structure/ladder/proc/disconnect()
 	if(up && up.down == src)
 		up.down = null
 		up.update_icon()
 	if(down && down.up == src)
 		down.up = null
 		down.update_icon()
-	return ..()
-
-/obj/structure/ladder/LateInitialize()
-	// By default, discover ladders above and below us vertically
-	var/turf/T = get_turf(src)
-
-	if (!down)
-		for (var/obj/structure/ladder/L in locate(T.x, T.y, T.z - 1))
-			down = L
-			L.up = src  // Don't waste effort looping the other way
-			L.update_icon()
-			break
-	if (!up)
-		for (var/obj/structure/ladder/L in locate(T.x, T.y, T.z + 1))
-			up = L
-			L.down = src  // Don't waste effort looping the other way
-			L.update_icon()
-			break
-
-	update_icon()
+	up = down = null
 
 /obj/structure/ladder/update_icon()
 	if(up && down)
@@ -109,6 +113,9 @@
 		add_fingerprint(user)
 
 /obj/structure/ladder/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	use(user)
 
 /obj/structure/ladder/attack_paw(mob/user)
@@ -121,8 +128,10 @@
 	if(R.Adjacent(src))
 		return use(R)
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/structure/ladder/attack_ghost(mob/dead/observer/user)
 	use(user, TRUE)
+	return ..()
 
 /obj/structure/ladder/proc/show_fluff_message(going_up, mob/user)
 	if(going_up)
@@ -172,3 +181,51 @@
 				break  // break if both our connections are filled
 
 	update_icon()
+
+/obj/structure/ladder/unbreakable/binary
+	name = "mysterious ladder"
+	desc = "Where does it go?"
+	height = 0
+	id = "lavaland_binary"
+	var/area_to_place = /area/lavaland/surface/outdoors
+	var/active = FALSE
+
+/obj/structure/ladder/unbreakable/binary/proc/ActivateAlmonds()
+	if(area_to_place && !active)
+		var/turf/T = getTargetTurf()
+		if(T)
+			var/obj/structure/ladder/unbreakable/U = new (T)
+			U.id = id
+			U.height = height+1
+			LateInitialize() // LateInit both of these to build the links. It's fine.
+			U.LateInitialize()
+			for(var/turf/TT in range(2,U))
+				TT.TerraformTurf(/turf/open/indestructible/binary, /turf/open/indestructible/binary, CHANGETURF_INHERIT_AIR)
+		active = TRUE
+
+/obj/structure/ladder/unbreakable/binary/proc/getTargetTurf()
+	var/list/turfList = get_area_turfs(area_to_place)
+	while (turfList.len && !.)
+		var/i = rand(1, turfList.len)
+		var/turf/potentialTurf = turfList[i]
+		if (is_centcom_level(potentialTurf.z)) // These ladders don't lead to centcom.
+			turfList.Cut(i,i+1)
+			continue
+		if(!istype(potentialTurf, /turf/open/lava) && !potentialTurf.density)			// Or inside dense turfs or lava
+			var/clear = TRUE
+			for(var/obj/O in potentialTurf) // Let's not place these on dense objects either. Might be funny though.
+				if(O.density)
+					clear = FALSE
+					break
+			if(clear)
+				. = potentialTurf
+		if (!.)
+			turfList.Cut(i,i+1)
+
+/obj/structure/ladder/unbreakable/binary/space
+	id = "space_binary"
+	area_to_place = /area/space
+
+/obj/structure/ladder/unbreakable/binary/unlinked //Crew gets to complete one
+	id = "unlinked_binary"
+	area_to_place = null

@@ -12,7 +12,6 @@
 	desc = "Used to copy important documents and anatomy studies."
 	icon = 'icons/obj/library.dmi'
 	icon_state = "photocopier"
-	anchored = TRUE
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
@@ -30,15 +29,8 @@
 	var/mob/living/ass //i can't believe i didn't write a stupid-ass comment about this var when i first coded asscopy.
 	var/busy = FALSE
 
-/obj/machinery/photocopier/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/photocopier/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/photocopier/attack_hand(mob/user)
-	user.set_machine(src)
-
+/obj/machinery/photocopier/ui_interact(mob/user)
+	. = ..()
 	var/dat = "Photocopier<BR><BR>"
 	if(copy || photocopy || doccopy || (ass && (ass.loc == src.loc)))
 		dat += "<a href='byond://?src=[REF(src)];remove=1'>Remove Paper</a><BR>"
@@ -102,30 +94,7 @@
 		else if(photocopy)
 			for(var/i = 0, i < copies, i++)
 				if(toner >= 5 && !busy && photocopy)  //Was set to = 0, but if there was say 3 toner left and this ran, you would get -2 which would be weird for ink
-					var/obj/item/photo/p = new /obj/item/photo (loc)
-					var/icon/I = icon(photocopy.icon, photocopy.icon_state)
-					var/icon/img = icon(photocopy.img)
-					if(greytoggle == "Greyscale")
-						if(toner > 10) //plenty of toner, go straight greyscale
-							I.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0)) //I'm not sure how expensive this is, but given the many limitations of photocopying, it shouldn't be an issue.
-							img.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
-						else //not much toner left, lighten the photo
-							I.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(100,100,100))
-							img.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(100,100,100))
-						toner -= 5	//photos use a lot of ink!
-					else if(greytoggle == "Color")
-						if(toner >= 10)
-							toner -= 10 //Color photos use even more ink!
-						else
-							continue
-					p.icon = I
-					p.img = img
-					p.name = photocopy.name
-					p.desc = photocopy.desc
-					p.scribble = photocopy.scribble
-					p.pixel_x = rand(-10, 10)
-					p.pixel_y = rand(-10, 10)
-					p.blueprints = photocopy.blueprints //a copy of a picture is still good enough for the syndicate
+					new /obj/item/photo (loc, photocopy.picture.Copy(greytoggle == "Greyscale"? TRUE : FALSE))
 					busy = TRUE
 					sleep(15)
 					busy = FALSE
@@ -145,8 +114,8 @@
 		else if(ass) //ASS COPY. By Miauw
 			for(var/i = 0, i < copies, i++)
 				var/icon/temp_img
-				if(ishuman(ass) && (ass.get_item_by_slot(slot_w_uniform) || ass.get_item_by_slot(slot_wear_suit)))
-					to_chat(usr, "<span class='notice'>You feel kind of silly, copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "their"] clothes on.</span>" )
+				if(ishuman(ass) && (ass.get_item_by_slot(SLOT_W_UNIFORM) || ass.get_item_by_slot(SLOT_WEAR_SUIT)))
+					to_chat(usr, "<span class='notice'>You feel kind of silly, copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "[ass.p_their()]"] clothes on.</span>" )
 					break
 				else if(toner >= 5 && !busy && check_ass()) //You have to be sitting on the copier and either be a xeno or a human without clothes on.
 					if(isalienadult(ass) || istype(ass, /mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
@@ -163,15 +132,10 @@
 					else
 						break
 					var/obj/item/photo/p = new /obj/item/photo (loc)
-					p.desc = "You see [ass]'s ass on the photo."
 					p.pixel_x = rand(-10, 10)
 					p.pixel_y = rand(-10, 10)
-					p.img = temp_img
-					var/icon/small_img = icon(temp_img) //Icon() is needed or else temp_img will be rescaled too >.>
-					var/icon/ic = icon('icons/obj/items_and_weapons.dmi',"photo")
-					small_img.Scale(8, 8)
-					ic.Blend(small_img,ICON_OVERLAY, 13, 13)
-					p.icon = ic
+					p.picture = new(null, "You see [ass]'s ass on the photo.", temp_img)
+					p.update_icon()
 					toner -= 5
 					busy = TRUE
 					sleep(15)
@@ -204,29 +168,14 @@
 		if(!isAI(usr))
 			return
 		if(toner >= 5 && !busy)
-			var/list/nametemp = list()
-			var/find
-			var/datum/picture/selection
 			var/mob/living/silicon/ai/tempAI = usr
-			if(tempAI.aicamera.aipictures.len == 0)
+			if(tempAI.aicamera.stored.len == 0)
 				to_chat(usr, "<span class='boldannounce'>No images saved</span>")
 				return
-			for(var/datum/picture/t in tempAI.aicamera.aipictures)
-				nametemp += t.fields["name"]
-			find = input("Select image (numbered in order taken)") in nametemp
-			var/obj/item/photo/p = new /obj/item/photo (loc)
-			for(var/datum/picture/q in tempAI.aicamera.aipictures)
-				if(q.fields["name"] == find)
-					selection = q
-					break
-			var/icon/I = selection.fields["icon"]
-			var/icon/img = selection.fields["img"]
-			p.icon = I
-			p.img = img
-			p.desc = selection.fields["desc"]
-			p.blueprints = selection.fields["blueprints"]
-			p.pixel_x = rand(-10, 10)
-			p.pixel_y = rand(-10, 10)
+			var/datum/picture/selection = tempAI.aicamera.selectpicture(usr)
+			var/obj/item/photo = new(loc, selection)
+			photo.pixel_x = rand(-10, 10)
+			photo.pixel_y = rand(-10, 10)
 			toner -= 5	 //AI prints color pictures only, thus they can do it more efficiently
 			busy = TRUE
 			sleep(15)
@@ -254,7 +203,10 @@
 	to_chat(user, "<span class='notice'>You take [O] out of [src].</span>")
 
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/paper))
+	if(default_unfasten_wrench(user, O))
+		return
+
+	else if(istype(O, /obj/item/paper))
 		if(copier_empty())
 			if(istype(O, /obj/item/paper/contract/infernal))
 				to_chat(user, "<span class='warning'>[src] smokes, smelling of brimstone!</span>")
@@ -286,7 +238,7 @@
 		else
 			to_chat(user, "<span class='warning'>There is already something in [src]!</span>")
 
-	else if(istype(O, /obj/item/device/toner))
+	else if(istype(O, /obj/item/toner))
 		if(toner <= 0)
 			if(!user.temporarilyRemoveItemFromInventory(O))
 				return
@@ -297,17 +249,6 @@
 		else
 			to_chat(user, "<span class='warning'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>")
 
-	else if(istype(O, /obj/item/wrench))
-		if(isinspace())
-			to_chat(user, "<span class='warning'>There's nothing to fasten [src] to!</span>")
-			return
-		playsound(loc, O.usesound, 50, 1)
-		to_chat(user, "<span class='warning'>You start [anchored ? "unwrenching" : "wrenching"] [src]...</span>")
-		if(do_after(user, 20*O.toolspeed, target = src))
-			if(QDELETED(src))
-				return
-			to_chat(user, "<span class='notice'>You [anchored ? "unwrench" : "wrench"] [src].</span>")
-			anchored = !anchored
 	else if(istype(O, /obj/item/areaeditor/blueprints))
 		to_chat(user, "<span class='warning'>The Blueprint is too large to put into the copier. You need to find something else to record the document</span>")
 	else
@@ -321,7 +262,7 @@
 
 /obj/machinery/photocopier/MouseDrop_T(mob/target, mob/user)
 	check_ass() //Just to make sure that you can re-drag somebody onto it after they moved off.
-	if (!istype(target) || target.anchored || target.buckled || !Adjacent(user) || !Adjacent(target) || !user.canUseTopic(src, 1) || target == ass || copier_blocked())
+	if (!istype(target) || target.anchored || target.buckled || !Adjacent(target) || !user.canUseTopic(src, BE_CLOSE) || target == ass || copier_blocked())
 		return
 	src.add_fingerprint(user)
 	if(target == user)
@@ -360,7 +301,7 @@
 		updateUsrDialog()
 		return 0
 	else if(ishuman(ass))
-		if(!ass.get_item_by_slot(slot_w_uniform) && !ass.get_item_by_slot(slot_wear_suit))
+		if(!ass.get_item_by_slot(SLOT_W_UNIFORM) && !ass.get_item_by_slot(SLOT_WEAR_SUIT))
 			return 1
 		else
 			return 0
@@ -388,8 +329,9 @@
 /*
  * Toner cartridge
  */
-/obj/item/device/toner
+/obj/item/toner
 	name = "toner cartridge"
+	icon = 'icons/obj/device.dmi'
 	icon_state = "tonercartridge"
 	grind_results = list("iodine" = 40, "iron" = 10)
 	var/charges = 5

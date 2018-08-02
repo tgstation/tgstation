@@ -7,11 +7,11 @@
 	desc = "It produces items using metal and glass."
 	icon_state = "autolathe"
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/autolathe
+	layer = BELOW_OBJ_LAYER
 
 	var/operating = FALSE
 	var/list/L = list()
@@ -46,7 +46,7 @@
 							)
 
 /obj/machinery/autolathe/Initialize()
-	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS), 0, FALSE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
+	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
 	wires = new /datum/wires/autolathe(src)
@@ -57,7 +57,8 @@
 	QDEL_NULL(wires)
 	return ..()
 
-/obj/machinery/autolathe/interact(mob/user)
+/obj/machinery/autolathe/ui_interact(mob/user)
+	. = ..()
 	if(!is_operational())
 		return
 
@@ -89,18 +90,14 @@
 
 	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", O))
 		updateUsrDialog()
-		return
+		return TRUE
 
-	if(exchange_parts(user, O))
-		return
+	if(default_deconstruction_crowbar(O))
+		return TRUE
 
-	if(panel_open)
-		if(istype(O, /obj/item/crowbar))
-			default_deconstruction_crowbar(O)
-			return TRUE
-		else if(is_wire_tool(O))
-			wires.interact(user)
-			return TRUE
+	if(panel_open && is_wire_tool(O))
+		wires.interact(user)
+		return TRUE
 
 	if(user.a_intent == INTENT_HARM) //so we can hit the machine
 		return ..()
@@ -124,15 +121,15 @@
 	return ..()
 
 /obj/machinery/autolathe/proc/AfterMaterialInsert(type_inserted, id_inserted, amount_inserted)
-	if(ispath(type_inserted, /obj/item/ore/bluespace_crystal))
-		use_power(max(500, amount_inserted / 10))
+	if(ispath(type_inserted, /obj/item/stack/ore/bluespace_crystal))
+		use_power(MINERAL_MATERIAL_AMOUNT / 10)
 	else
 		switch(id_inserted)
 			if (MAT_METAL)
 				flick("autolathe_o",src)//plays metal insertion animation
 			if (MAT_GLASS)
 				flick("autolathe_r",src)//plays glass insertion animation
-		use_power(amount_inserted * 100)
+		use_power(min(1000, amount_inserted / 100))
 	updateUsrDialog()
 
 /obj/machinery/autolathe/Topic(href, href_list)
@@ -157,6 +154,7 @@
 
 			var/multiplier = text2num(href_list["multiplier"])
 			var/is_stack = ispath(being_built.build_path, /obj/item/stack)
+			multiplier = CLAMP(multiplier,1,50)
 
 			/////////////////
 
@@ -170,8 +168,7 @@
 			if((materials.amount(MAT_METAL) >= metal_cost*multiplier*coeff) && (materials.amount(MAT_GLASS) >= glass_cost*multiplier*coeff))
 				busy = TRUE
 				use_power(power)
-				icon_state = "autolathe"
-				flick("autolathe_n",src)
+				icon_state = "autolathe_n"
 				var/time = is_stack ? 32 : 32*coeff*multiplier
 				addtimer(CALLBACK(src, .proc/make_item, power, metal_cost, glass_cost, multiplier, coeff, is_stack), time)
 
@@ -207,7 +204,7 @@
 			for(var/mat in materials_used)
 				new_item.materials[mat] = materials_used[mat] / multiplier
 			new_item.autolathe_crafted(src)
-
+	icon_state = "autolathe"
 	busy = FALSE
 	updateDialog()
 

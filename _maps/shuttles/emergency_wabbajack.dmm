@@ -29,7 +29,7 @@
 /turf/open/floor/plasteel/darkgreen,
 /area/shuttle/escape)
 "ai" = (
-/obj/structure/sign/biohazard,
+/obj/structure/sign/warning/biohazard,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aj" = (
@@ -38,7 +38,7 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "ak" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/brig,
@@ -47,7 +47,7 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "am" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/brig,
@@ -92,7 +92,7 @@
 	pixel_x = -24;
 	pixel_y = -6
 	},
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/brig,
@@ -102,11 +102,11 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "av" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aw" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
@@ -154,7 +154,6 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	timid = 1;
 	name = "NT Lepton Violet"
 	},
 /turf/open/floor/plating,
@@ -183,13 +182,13 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aI" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aJ" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -316,7 +315,8 @@
 /area/shuttle/escape)
 "be" = (
 /obj/structure/window/reinforced{
-	dir = 1
+	dir = 1;
+	resistance_flags = 33
 	},
 /turf/open/lava/smooth/airless,
 /area/shuttle/escape)
@@ -327,9 +327,6 @@
 "bg" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
-/area/shuttle/escape)
-"bh" = (
-/turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/escape)
 "bi" = (
 /obj/machinery/light,
@@ -355,7 +352,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bm" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -368,7 +365,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bo" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/machinery/light/small{

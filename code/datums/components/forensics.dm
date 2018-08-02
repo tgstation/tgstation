@@ -15,14 +15,13 @@
 
 /datum/component/forensics/Initialize(new_fingerprints, new_hiddenprints, new_blood_DNA, new_fibers)
 	if(!isatom(parent))
-		. = COMPONENT_INCOMPATIBLE
-		CRASH("Forensics datum applied incorrectly to non-atom of type [parent.type]!")
+		return COMPONENT_INCOMPATIBLE
 	fingerprints = new_fingerprints
 	hiddenprints = new_hiddenprints
 	blood_DNA = new_blood_DNA
 	fibers = new_fibers
 	check_blood()
-	RegisterSignal(COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_act)
+	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_act)
 
 /datum/component/forensics/proc/wipe_fingerprints()
 	fingerprints = null
@@ -139,7 +138,8 @@
 		if(laststamppos)
 			LAZYSET(hiddenprints, M.key, copytext(hiddenprints[M.key], 1, laststamppos))
 		hiddenprints[M.key] += " Last: [M.real_name]\[[current_time]\][hasgloves]. Ckey: [M.ckey]"	//made sure to be existing by if(!LAZYACCESS);else
-	parent.fingerprintslast = M.ckey
+	var/atom/A = parent
+	A.fingerprintslast = M.ckey
 	return TRUE
 
 /datum/component/forensics/proc/add_blood_DNA(list/dna)		//list(dna_enzymes = type)

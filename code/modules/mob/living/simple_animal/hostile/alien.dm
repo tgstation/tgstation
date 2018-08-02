@@ -26,7 +26,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
-	faction = list("alien")
+	faction = list(ROLE_ALIEN)
 	status_flags = CANPUSH
 	minbodytemp = 0
 	see_in_dark = 8
@@ -164,6 +164,10 @@
 	icon_living = "maid"
 	icon_dead = "maid_dead"
 
+/mob/living/simple_animal/hostile/alien/maid/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cleaning)
+
 /mob/living/simple_animal/hostile/alien/maid/AttackingTarget()
 	if(ismovableatom(target))
 		if(istype(target, /obj/effect/decal/cleanable))
@@ -171,6 +175,6 @@
 			qdel(target)
 			return TRUE
 		var/atom/movable/M = target
-		M.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		SEND_SIGNAL(M, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 		visible_message("[src] polishes \the [target].")
 		return TRUE

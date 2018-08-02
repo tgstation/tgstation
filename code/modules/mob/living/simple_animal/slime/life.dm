@@ -112,7 +112,7 @@
 
 	var/loc_temp = get_temperature(environment)
 
-	bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
+	adjust_bodytemperature(adjust_body_temperature(bodytemperature, loc_temp, 1))
 
 	//Account for massive pressure differences
 
@@ -181,7 +181,7 @@
 	var/mob/M = buckled
 
 	if(stat)
-		Feedstop(silent = 1)
+		Feedstop(silent = TRUE)
 
 	if(M.stat == DEAD) // our victim died
 		if(!client)
@@ -337,6 +337,16 @@
 					if(L in Friends) // No eating friends!
 						continue
 
+					var/ally = FALSE
+					for(var/F in faction)
+						if(F == "neutral") //slimes are neutral so other mobs not target them, but they can target neutral mobs
+							continue
+						if(F in L.faction)
+							ally = TRUE
+							break
+					if(ally)
+						continue
+
 					if(issilicon(L) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defence
 						targets += L // Possible target found!
 
@@ -405,7 +415,7 @@
 	else if (docile)
 		newmood = ":3"
 	else if (Target)
-		newmood = "mischevous"
+		newmood = "mischievous"
 
 	if (!newmood)
 		if (Discipline && prob(25))

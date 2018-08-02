@@ -20,8 +20,8 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define THIS_PROC_TYPE_STR "[THIS_PROC_TYPE]" //Because you can only obtain a string of THIS_PROC_TYPE using "[]", and it's nice to just +/+= strings
 #define THIS_PROC_TYPE_STR_WITH_ARGS "[THIS_PROC_TYPE]([args.Join(",")])"
 #define THIS_PROC_TYPE_WEIRD ...... //This one is WEIRD, in some cases (When used in certain defines? (eg: ASSERT)) THIS_PROC_TYPE will fail to work, but THIS_PROC_TYPE_WEIRD will work instead
-#define THIS_PROC_TYPE_WEIRD_STR "[THIS_PROC_TYPE_WEIRD]" //Included for completeness
-#define THIS_PROC_TYPE_WEIRD_STR_WITH_ARGS "[THIS_PROC_TYPE_WEIRD]([args.Join(",")])" //Ditto
+//define THIS_PROC_TYPE_WEIRD_STR "[THIS_PROC_TYPE_WEIRD]" //Included for completeness
+//define THIS_PROC_TYPE_WEIRD_STR_WITH_ARGS "[THIS_PROC_TYPE_WEIRD]([args.Join(",")])" //Ditto
 
 #define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
 
@@ -46,7 +46,6 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define HALLOWEEN				"Halloween"
 #define CHRISTMAS				"Christmas"
 #define FESTIVE_SEASON			"Festive Season"
-#define FRIDAY_13TH				"Friday the 13th"
 
 //Human Overlays Indexes/////////
 #define MUTATIONS_LAYER			26		//mutations. Tk headglows, cold resistance glow, etc
@@ -58,8 +57,9 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define DAMAGE_LAYER			20		//damage indicators (cuts and burns)
 #define UNIFORM_LAYER			19
 #define ID_LAYER				18
-#define SHOES_LAYER				17
-#define GLOVES_LAYER			16
+#define HANDS_PART_LAYER		18
+#define GLOVES_LAYER			17
+#define SHOES_LAYER				16
 #define EARS_LAYER				15
 #define SUIT_LAYER				14
 #define GLASSES_LAYER			13
@@ -80,56 +80,12 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
 //IT DOESN'T OK, IT MEANS "UNDER"
-#define UNDER_BODY_BEHIND_LAYER		BODY_BEHIND_LAYER+1
-#define UNDER_BODY_LAYER			BODY_LAYER+1
-#define UNDER_BODY_ADJ_LAYER		BODY_ADJ_LAYER+1
-#define UNDER_MUTATIONS_LAYER		MUTATIONS_LAYER+1
-#define UNDER_BODYPARTS_LAYER		BODYPARTS_LAYER+1
-#define UNDER_DAMAGE_LAYER			DAMAGE_LAYER+1
-#define UNDER_UNIFORM_LAYER			UNIFORM_LAYER+1
-#define UNDER_ID_LAYER				ID_LAYER+1
-#define UNDER_SHOES_LAYER			SHOES_LAYER+1
-#define UNDER_GLOVES_LAYER			GLOVES_LAYER+1
-#define UNDER_EARS_LAYER			EARS_LAYER+1
-#define UNDER_SUIT_LAYER			SUIT_LAYER+1
-#define UNDER_GLASSES_LAYER			GLASSES_LAYER+1
-#define UNDER_BELT_LAYER			BELT_LAYER+1
-#define UNDER_SUIT_STORE_LAYER		SUIT_STORE_LAYER+1
-#define UNDER_BACK_LAYER			BACK_LAYER+1
-#define UNDER_HAIR_LAYER			HAIR_LAYER+1
-#define UNDER_FACEMASK_LAYER		FACEMASK_LAYER+1
-#define UNDER_HEAD_LAYER			HEAD_LAYER+1
-#define UNDER_HANDCUFF_LAYER		HANDCUFF_LAYER+1
-#define UNDER_LEGCUFF_LAYER			LEGCUFF_LAYER+1
-#define UNDER_HANDS_LAYER			HANDS_LAYER+1
-#define UNDER_BODY_FRONT_LAYER		BODY_FRONT_LAYER+1
-#define UNDER_FIRE_LAYER			FIRE_LAYER+1
+#define UNDER_SUIT_LAYER			(SUIT_LAYER+1)
+#define UNDER_HEAD_LAYER			(HEAD_LAYER+1)
 
 //AND -1 MEANS "ABOVE", OK?, OK!?!
-#define ABOVE_BODY_BEHIND_LAYER		BODY_BEHIND_LAYER-1
-#define ABOVE_BODY_LAYER			BODY_LAYER-1
-#define ABOVE_BODY_ADJ_LAYER		BODY_ADJ_LAYER-1
-#define ABOVE_MUTATIONS_LAYER		MUTATIONS_LAYER-1
-#define ABOVE_BODYPARTS_LAYER		BODYPARTS_LAYER-1
-#define ABOVE_DAMAGE_LAYER			DAMAGE_LAYER-1
-#define ABOVE_UNIFORM_LAYER			UNIFORM_LAYER-1
-#define ABOVE_ID_LAYER				ID_LAYER-1
-#define ABOVE_SHOES_LAYER			SHOES_LAYER-1
-#define ABOVE_GLOVES_LAYER			GLOVES_LAYER-1
-#define ABOVE_EARS_LAYER			EARS_LAYER-1
-#define ABOVE_SUIT_LAYER			SUIT_LAYER-1
-#define ABOVE_GLASSES_LAYER			GLASSES_LAYER-1
-#define ABOVE_BELT_LAYER			BELT_LAYER-1
-#define ABOVE_SUIT_STORE_LAYER		SUIT_STORE_LAYER-1
-#define ABOVE_BACK_LAYER			BACK_LAYER-1
-#define ABOVE_HAIR_LAYER			HAIR_LAYER-1
-#define ABOVE_FACEMASK_LAYER		FACEMASK_LAYER-1
-#define ABOVE_HEAD_LAYER			HEAD_LAYER-1
-#define ABOVE_HANDCUFF_LAYER		HANDCUFF_LAYER-1
-#define ABOVE_LEGCUFF_LAYER			LEGCUFF_LAYER-1
-#define ABOVE_HANDS_LAYER			HANDS_LAYER-1
-#define ABOVE_BODY_FRONT_LAYER		BODY_FRONT_LAYER-1
-#define ABOVE_FIRE_LAYER			FIRE_LAYER-1
+#define ABOVE_SHOES_LAYER			(SHOES_LAYER-1)
+#define ABOVE_BODY_FRONT_LAYER		(BODY_FRONT_LAYER-1)
 
 
 //Security levels
@@ -187,7 +143,6 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define AI_MECH_HACK		3 //Malfunctioning AI hijacking mecha
 
 //check_target_facings() return defines
-#define FACING_FAILED											0
 #define FACING_SAME_DIR											1
 #define FACING_EACHOTHER										2
 #define FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR	3 //Do I win the most informative but also most stupid define award?
@@ -205,7 +160,6 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define BLOOD_GAIN_PER_STEP			100
 #define BLOOD_LOSS_PER_STEP			5
 #define BLOOD_LOSS_IN_SPREAD		20
-#define BLOOD_FADEOUT_TIME			2
 
 //Bloody shoe blood states
 #define BLOOD_STATE_HUMAN			"blood"
@@ -227,16 +181,17 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define HAS_SENSORS 1
 #define LOCKED_SENSORS 2
 
-//Turf wet states
+//Wet floor type flags. Stronger ones should be higher in number.
 #define TURF_DRY		0
 #define TURF_WET_WATER	1
-#define TURF_WET_LUBE	2
-#define TURF_WET_ICE	3
-#define TURF_WET_PERMAFROST 4
-#define TURF_WET_SLIDE	5
+#define TURF_WET_PERMAFROST	2
+#define TURF_WET_ICE 4
+#define TURF_WET_LUBE	8
 
-//Maximum amount of time, (in approx. seconds.) a tile can be wet for.
-#define MAXIMUM_WET_TIME 300
+#define IS_WET_OPEN_TURF(O) O.GetComponent(/datum/component/wet_floor)
+
+//Maximum amount of time, (in deciseconds) a tile can be wet for.
+#define MAXIMUM_WET_TIME 5 MINUTES
 
 //unmagic-strings for types of polls
 #define POLLTYPE_OPTION		"OPTION"
@@ -295,22 +250,22 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define ORBITRON	"Orbitron"
 #define SHARE		"Share Tech Mono"
 
+GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
+
 //Color Defines
 #define OOC_COLOR  "#002eb8"
 
 /////////////////////////////////////
 // atom.appearence_flags shortcuts //
 /////////////////////////////////////
-//this was added midway thru 510, so it might not exist in some versions, but we can't check by minor verison
-#ifndef TILE_BOUND
-#error this version of 510 is too old, You must use byond 510.1332 or later. (TILE_BOUND is not defined)
-#endif
+
+/*
 
 // Disabling certain features
 #define APPEARANCE_IGNORE_TRANSFORM			RESET_TRANSFORM
 #define APPEARANCE_IGNORE_COLOUR			RESET_COLOR
 #define	APPEARANCE_IGNORE_CLIENT_COLOUR		NO_CLIENT_COLOR
-#define APPEARANCE_IGNORE_COLOURING			RESET_COLOR|NO_CLIENT_COLOR
+#define APPEARANCE_IGNORE_COLOURING			(RESET_COLOR|NO_CLIENT_COLOR)
 #define APPEARANCE_IGNORE_ALPHA				RESET_ALPHA
 #define APPEARANCE_NORMAL_GLIDE				~LONG_GLIDE
 
@@ -318,20 +273,15 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define APPEARANCE_CONSIDER_TRANSFORM		~RESET_TRANSFORM
 #define APPEARANCE_CONSIDER_COLOUR			~RESET_COLOUR
 #define APPEARANCE_CONSIDER_CLIENT_COLOUR	~NO_CLIENT_COLOR
-#define APPEARANCE_CONSIDER_COLOURING		~RESET_COLOR|~NO_CLIENT_COLOR
+#define APPEARANCE_CONSIDER_COLOURING		(~RESET_COLOR|~NO_CLIENT_COLOR)
 #define APPEARANCE_CONSIDER_ALPHA			~RESET_ALPHA
 #define APPEARANCE_LONG_GLIDE				LONG_GLIDE
 
-#ifndef PIXEL_SCALE
-#define PIXEL_SCALE 0
-#if DM_VERSION >= 512
-#error HEY, PIXEL_SCALE probably exists now, remove this gross ass shim.
-#endif
-#endif
+*/
 
 // Consider these images/atoms as part of the UI/HUD
-#define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA|PIXEL_SCALE
-#define APPEARANCE_UI						RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE
+#define APPEARANCE_UI_IGNORE_ALPHA			(RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA|PIXEL_SCALE)
+#define APPEARANCE_UI						(RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE)
 
 //Just space
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
@@ -369,20 +319,6 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define debug_world_log(msg) if (GLOB.Debug2) log_world("DEBUG: [msg]")
 
 #define INCREMENT_TALLY(L, stat) if(L[stat]){L[stat]++}else{L[stat] = 1}
-
-// Medal names
-#define BOSS_KILL_MEDAL "Killer"
-#define ALL_KILL_MEDAL "Exterminator"	//Killing all of x type
-
-// Score names
-#define LEGION_SCORE "Legion Killed"
-#define COLOSSUS_SCORE "Colossus Killed"
-#define BUBBLEGUM_SCORE "Bubblegum Killed"
-#define DRAKE_SCORE "Drakes Killed"
-#define BIRD_SCORE "Hierophants Killed"
-#define SWARMER_BEACON_SCORE "Swarmer Beacons Killed"
-#define BOSS_SCORE "Bosses Killed"
-#define TENDRIL_CLEAR_SCORE "Tendrils Killed"
 
 //TODO Move to a pref
 #define STATION_GOAL_BUDGET  1
@@ -423,14 +359,6 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define CLOCK_PROSELYTIZATION 23
 #define SHUTTLE_HIJACK 24
 
-#define TURF_DECAL_PAINT "paint"
-#define TURF_DECAL_DAMAGE "damage"
-#define TURF_DECAL_DIRT "dirt"
-
-//Error handler defines
-#define ERROR_USEFUL_LEN 2
-
-#define NO_FIELD 0
 #define FIELD_TURF 1
 #define FIELD_EDGE 2
 
@@ -448,7 +376,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define BEAT_SLOW 2
 #define BEAT_NONE 0
 
-//http://www.byond.com/docs/ref/info.html#/atom/var/mouse_opacity
+//https://secure.byond.com/docs/ref/info.html#/atom/var/mouse_opacity
 #define MOUSE_OPACITY_TRANSPARENT 0
 #define MOUSE_OPACITY_ICON 1
 #define MOUSE_OPACITY_OPAQUE 2
@@ -465,15 +393,13 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 //Dummy mob reserve slots
 #define DUMMY_HUMAN_SLOT_PREFERENCES "dummy_preference_preview"
-
+#define DUMMY_HUMAN_SLOT_ADMIN "admintools"
 #define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
 
 #define PR_ANNOUNCEMENTS_PER_ROUND 5 //The number of unique PR announcements allowed per round
 									//This makes sure that a single person can only spam 3 reopens and 3 closes before being ignored
 
 #define MAX_PROC_DEPTH 195 // 200 proc calls deep and shit breaks, this is a bit lower to give some safety room
-
-#define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
 
 #define SYRINGE_DRAW 0
 #define SYRINGE_INJECT 1
@@ -483,10 +409,23 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define HOSTILE_SPAWN 1
 #define FRIENDLY_SPAWN 2
 
+//slime core activation type
+#define SLIME_ACTIVATE_MINOR 1
+#define SLIME_ACTIVATE_MAJOR 2
+
+#define LUMINESCENT_DEFAULT_GLOW 2
+
 #define RIDING_OFFSET_ALL "ALL"
+
+//stack recipe placement check types
+#define STACK_CHECK_CARDINALS "cardinals" //checks if there is an object of the result type in any of the cardinal directions
+#define STACK_CHECK_ADJACENT "adjacent" //checks if there is an object of the result type within one tile
 
 //text files
 #define BRAIN_DAMAGE_FILE "traumas.json"
+#define ION_FILE "ion_laws.json"
+#define PIRATE_NAMES_FILE "pirates.json"
+
 
 //Fullscreen overlay resolution in tiles.
 #define FULLSCREEN_OVERLAY_RESOLUTION_X 15
@@ -494,3 +433,27 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 #define SUMMON_GUNS "guns"
 #define SUMMON_MAGIC "magic"
+
+//Run the world with this parameter to enable a single run though of the game setup and tear down process with unit tests in between
+#define TEST_RUN_PARAMETER "test-run"
+//Force the log directory to be something specific in the data/logs folder
+#define OVERRIDE_LOG_DIRECTORY_PARAMETER "log-directory"
+//Prevent the master controller from starting automatically, overrides TEST_RUN_PARAMETER
+#define NO_INIT_PARAMETER "no-init"
+//Force the config directory to be something other than "config"
+#define OVERRIDE_CONFIG_DIRECTORY_PARAMETER "config-directory"
+
+#define EGG_LAYING_MESSAGES list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
+
+// Used by PDA and cartridge code to reduce repetitiveness of spritesheets
+#define PDAIMG(what) {"<span class="pda16x16 [#what]"></span>"}
+
+//Filters
+#define AMBIENT_OCCLUSION filter(type="drop_shadow", x=0, y=-2, size=4, border=4, color="#04080FAA")
+
+#define STANDARD_GRAVITY 1 //Anything above this is high gravity, anything below no grav
+#define GRAVITY_DAMAGE_TRESHOLD 3 //Starting with this value gravity will start to damage mobs
+
+#define CAMERA_NO_GHOSTS 0
+#define CAMERA_SEE_GHOSTS_BASIC 1
+#define CAMERA_SEE_GHOSTS_ORBIT 2

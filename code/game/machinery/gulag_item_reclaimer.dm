@@ -5,7 +5,6 @@
 	icon_state = "dorm_taken"
 	req_access = list(ACCESS_SECURITY) //REQACCESS TO ACCESS ALL STORED ITEMS
 	density = FALSE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 100
 	active_power_usage = 2500
@@ -25,10 +24,10 @@
 	return ..()
 
 /obj/machinery/gulag_item_reclaimer/emag_act(mob/user)
-	if(emagged) // emagging lets anyone reclaim all the items
+	if(obj_flags & EMAGGED) // emagging lets anyone reclaim all the items
 		return
 	req_access = list()
-	emagged = TRUE
+	obj_flags |= EMAGGED
 
 /obj/machinery/gulag_item_reclaimer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/card/id/prisoner))

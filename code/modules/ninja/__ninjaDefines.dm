@@ -18,7 +18,6 @@ Contents:
 
 #define INVALID_DRAIN			"INVALID" //This one is if the drain proc needs to cancel, eg missing variables, etc, it's important.
 
-#define DRAIN_RD_HACKED			"RDHACK"
 #define DRAIN_RD_HACK_FAILED	"RDHACKFAIL"
 #define DRAIN_MOB_SHOCK			"MOBSHOCK"
 #define DRAIN_MOB_SHOCK_FAILED	"MOBSHOCKFAIL"

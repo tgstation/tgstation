@@ -1,6 +1,5 @@
 /mob/living/silicon
 	gender = NEUTER
-	voice_name = "synthesized voice"
 	has_unlimited_silicon_privilege = 1
 	verb_say = "states"
 	verb_ask = "queries"
@@ -11,26 +10,28 @@
 	bubble_icon = "machine"
 	weather_immunities = list("ash")
 	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
+	mob_biotypes = list(MOB_ROBOTIC)
 
-	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0
 	var/list/alarms_to_show = list()
 	var/list/alarms_to_clear = list()
 	var/designation = ""
 	var/radiomod = "" //Radio character used before state laws/arrivals announce to allow department transmissions, default, or none at all.
-	var/obj/item/device/camera/siliconcam/aicamera = null //photography
+	var/obj/item/camera/siliconcam/aicamera = null //photography
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_TRACK_HUD)
 
-	var/obj/item/device/radio/borg/radio = null //AIs dont use this but this is at the silicon level to advoid copypasta in say()
+	var/obj/item/radio/borg/radio = null //AIs dont use this but this is at the silicon level to advoid copypasta in say()
 
 	var/list/alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 	var/list/alarm_types_clear = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
 
 	var/lawcheck[1]
 	var/ioncheck[1]
+	var/hackedcheck[1]
 	var/devillawcheck[5]
 
+	var/sensors_on = 0
 	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
 	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
 	var/d_hud = DATA_HUD_DIAGNOSTIC_BASIC //Determines the diag hud to use
@@ -39,9 +40,13 @@
 	var/obj/machinery/camera/builtInCamera = null
 	var/updating = FALSE //portable camera camerachunk update
 
+	var/hack_software = FALSE //Will be able to use hacking actions
+	var/interaction_range = 7			//wireless control range
+
 /mob/living/silicon/Initialize()
 	. = ..()
 	GLOB.silicon_mobs += src
+	faction += "silicon"
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_to_hud(src)
 	diag_hud_set_status()
@@ -148,18 +153,18 @@
 
 /mob/living/silicon/can_inject(mob/user, error_msg)
 	if(error_msg)
-		to_chat(user, "<span class='alert'>Their outer shell is too tough.</span>")
-	return 0
+		to_chat(user, "<span class='alert'>[p_their(TRUE)] outer shell is too tough.</span>")
+	return FALSE
 
 /mob/living/silicon/IsAdvancedToolUser()
-	return 1
+	return TRUE
 
 /proc/islinked(mob/living/silicon/robot/bot, mob/living/silicon/ai/ai)
 	if(!istype(bot) || !istype(ai))
-		return 0
-	if (bot.connected_ai == ai)
-		return 1
-	return 0
+		return FALSE
+	if(bot.connected_ai == ai)
+		return TRUE
+	return FALSE
 
 /mob/living/silicon/Topic(href, href_list)
 	if (href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
@@ -178,6 +183,15 @@
 				ioncheck[L] = "No"
 			if ("No")
 				ioncheck[L] = "Yes"
+		checklaws()
+
+	if (href_list["lawh"])
+		var/L = text2num(href_list["lawh"])
+		switch(hackedcheck[L])
+			if ("Yes")
+				hackedcheck[L] = "No"
+			if ("No")
+				hackedcheck[L] = "Yes"
 		checklaws()
 
 	if (href_list["lawdevil"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
@@ -199,48 +213,56 @@
 /mob/living/silicon/proc/statelaws(force = 0)
 
 	//"radiomod" is inserted before a hardcoded message to change if and how it is handled by an internal radio.
-	src.say("[radiomod] Current Active Laws:")
-	//src.laws_sanity_check()
-	//src.laws.show_laws(world)
+	say("[radiomod] Current Active Laws:")
+	//laws_sanity_check()
+	//laws.show_laws(world)
 	var/number = 1
 	sleep(10)
 
-	if (src.laws.devillaws && src.laws.devillaws.len)
-		for(var/index = 1, index <= src.laws.devillaws.len, index++)
-			if (force || src.devillawcheck[index] == "Yes")
-				src.say("[radiomod] 666. [src.laws.devillaws[index]]")
+	if (laws.devillaws && laws.devillaws.len)
+		for(var/index = 1, index <= laws.devillaws.len, index++)
+			if (force || devillawcheck[index] == "Yes")
+				say("[radiomod] 666. [laws.devillaws[index]]")
 				sleep(10)
 
 
-	if (src.laws.zeroth)
-		if (force || src.lawcheck[1] == "Yes")
-			src.say("[radiomod] 0. [src.laws.zeroth]")
+	if (laws.zeroth)
+		if (force || lawcheck[1] == "Yes")
+			say("[radiomod] 0. [laws.zeroth]")
 			sleep(10)
 
-	for (var/index = 1, index <= src.laws.ion.len, index++)
-		var/law = src.laws.ion[index]
+	for (var/index = 1, index <= laws.hacked.len, index++)
+		var/law = laws.hacked[index]
 		var/num = ionnum()
 		if (length(law) > 0)
-			if (force || src.ioncheck[index] == "Yes")
-				src.say("[radiomod] [num]. [law]")
+			if (force || hackedcheck[index] == "Yes")
+				say("[radiomod] [num]. [law]")
 				sleep(10)
 
-	for (var/index = 1, index <= src.laws.inherent.len, index++)
-		var/law = src.laws.inherent[index]
+	for (var/index = 1, index <= laws.ion.len, index++)
+		var/law = laws.ion[index]
+		var/num = ionnum()
+		if (length(law) > 0)
+			if (force || ioncheck[index] == "Yes")
+				say("[radiomod] [num]. [law]")
+				sleep(10)
+
+	for (var/index = 1, index <= laws.inherent.len, index++)
+		var/law = laws.inherent[index]
 
 		if (length(law) > 0)
-			if (force || src.lawcheck[index+1] == "Yes")
-				src.say("[radiomod] [number]. [law]")
+			if (force || lawcheck[index+1] == "Yes")
+				say("[radiomod] [number]. [law]")
 				number++
 				sleep(10)
 
-	for (var/index = 1, index <= src.laws.supplied.len, index++)
-		var/law = src.laws.supplied[index]
+	for (var/index = 1, index <= laws.supplied.len, index++)
+		var/law = laws.supplied[index]
 
 		if (length(law) > 0)
-			if(src.lawcheck.len >= number+1)
-				if (force || src.lawcheck[number+1] == "Yes")
-					src.say("[radiomod] [number]. [law]")
+			if(lawcheck.len >= number+1)
+				if (force || lawcheck[number+1] == "Yes")
+					say("[radiomod] [number]. [law]")
 					number++
 					sleep(10)
 
@@ -249,45 +271,53 @@
 
 	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
 
-	if (src.laws.devillaws && src.laws.devillaws.len)
-		for(var/index = 1, index <= src.laws.devillaws.len, index++)
-			if (!src.devillawcheck[index])
-				src.devillawcheck[index] = "No"
-			list += {"<A href='byond://?src=[REF(src)];lawdevil=[index]'>[src.devillawcheck[index]] 666:</A> [src.laws.devillaws[index]]<BR>"}
+	if (laws.devillaws && laws.devillaws.len)
+		for(var/index = 1, index <= laws.devillaws.len, index++)
+			if (!devillawcheck[index])
+				devillawcheck[index] = "No"
+			list += {"<A href='byond://?src=[REF(src)];lawdevil=[index]'>[devillawcheck[index]] 666:</A> <font color='#cc5500'>[laws.devillaws[index]]</font><BR>"}
 
-	if (src.laws.zeroth)
-		if (!src.lawcheck[1])
-			src.lawcheck[1] = "No" //Given Law 0's usual nature, it defaults to NOT getting reported. --NeoFite
-		list += {"<A href='byond://?src=[REF(src)];lawc=0'>[src.lawcheck[1]] 0:</A> [src.laws.zeroth]<BR>"}
+	if (laws.zeroth)
+		if (!lawcheck[1])
+			lawcheck[1] = "No" //Given Law 0's usual nature, it defaults to NOT getting reported. --NeoFite
+		list += {"<A href='byond://?src=[REF(src)];lawc=0'>[lawcheck[1]] 0:</A> <font color='#ff0000'><b>[laws.zeroth]</b></font><BR>"}
 
-	for (var/index = 1, index <= src.laws.ion.len, index++)
-		var/law = src.laws.ion[index]
+	for (var/index = 1, index <= laws.hacked.len, index++)
+		var/law = laws.hacked[index]
+		if (length(law) > 0)
+			if (!hackedcheck[index])
+				hackedcheck[index] = "No"
+			list += {"<A href='byond://?src=[REF(src)];lawh=[index]'>[hackedcheck[index]] [ionnum()]:</A> <font color='#660000'>[law]</font><BR>"}
+			hackedcheck.len += 1
+
+	for (var/index = 1, index <= laws.ion.len, index++)
+		var/law = laws.ion[index]
 
 		if (length(law) > 0)
-			if (!src.ioncheck[index])
-				src.ioncheck[index] = "Yes"
-			list += {"<A href='byond://?src=[REF(src)];lawi=[index]'>[src.ioncheck[index]] [ionnum()]:</A> [law]<BR>"}
-			src.ioncheck.len += 1
+			if (!ioncheck[index])
+				ioncheck[index] = "Yes"
+			list += {"<A href='byond://?src=[REF(src)];lawi=[index]'>[ioncheck[index]] [ionnum()]:</A> <font color='#547DFE'>[law]</font><BR>"}
+			ioncheck.len += 1
 
 	var/number = 1
-	for (var/index = 1, index <= src.laws.inherent.len, index++)
-		var/law = src.laws.inherent[index]
+	for (var/index = 1, index <= laws.inherent.len, index++)
+		var/law = laws.inherent[index]
 
 		if (length(law) > 0)
-			src.lawcheck.len += 1
+			lawcheck.len += 1
 
-			if (!src.lawcheck[number+1])
-				src.lawcheck[number+1] = "Yes"
-			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> [law]<BR>"}
+			if (!lawcheck[number+1])
+				lawcheck[number+1] = "Yes"
+			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[lawcheck[number+1]] [number]:</A> [law]<BR>"}
 			number++
 
-	for (var/index = 1, index <= src.laws.supplied.len, index++)
-		var/law = src.laws.supplied[index]
+	for (var/index = 1, index <= laws.supplied.len, index++)
+		var/law = laws.supplied[index]
 		if (length(law) > 0)
-			src.lawcheck.len += 1
-			if (!src.lawcheck[number+1])
-				src.lawcheck[number+1] = "Yes"
-			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> [law]<BR>"}
+			lawcheck.len += 1
+			if (!lawcheck[number+1])
+				lawcheck[number+1] = "Yes"
+			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[lawcheck[number+1]] [number]:</A> <font color='#990099'>[law]</font><BR>"}
 			number++
 	list += {"<br><br><A href='byond://?src=[REF(src)];laws=1'>State Laws</A>"}
 
@@ -328,7 +358,7 @@
 /mob/living/silicon/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt silicon units
 	return -10
 
-/mob/living/silicon/proc/remove_med_sec_hud()
+/mob/living/silicon/proc/remove_sensors()
 	var/datum/atom_hud/secsensor = GLOB.huds[sec_hud]
 	var/datum/atom_hud/medsensor = GLOB.huds[med_hud]
 	var/datum/atom_hud/diagsensor = GLOB.huds[d_hud]
@@ -336,40 +366,28 @@
 	medsensor.remove_hud_from(src)
 	diagsensor.remove_hud_from(src)
 
-/mob/living/silicon/proc/add_sec_hud()
+/mob/living/silicon/proc/add_sensors()
 	var/datum/atom_hud/secsensor = GLOB.huds[sec_hud]
-	secsensor.add_hud_to(src)
-
-/mob/living/silicon/proc/add_med_hud()
 	var/datum/atom_hud/medsensor = GLOB.huds[med_hud]
-	medsensor.add_hud_to(src)
-
-/mob/living/silicon/proc/add_diag_hud()
 	var/datum/atom_hud/diagsensor = GLOB.huds[d_hud]
+	secsensor.add_hud_to(src)
+	medsensor.add_hud_to(src)
 	diagsensor.add_hud_to(src)
 
-/mob/living/silicon/proc/sensor_mode()
+/mob/living/silicon/proc/toggle_sensors()
 	if(incapacitated())
 		return
-	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Diagnostic","Disable")
-	remove_med_sec_hud()
-	switch(sensor_type)
-		if ("Security")
-			add_sec_hud()
-			to_chat(src, "<span class='notice'>Security records overlay enabled.</span>")
-		if ("Medical")
-			add_med_hud()
-			to_chat(src, "<span class='notice'>Life signs monitor overlay enabled.</span>")
-		if ("Diagnostic")
-			add_diag_hud()
-			to_chat(src, "<span class='notice'>Robotics diagnostic overlay enabled.</span>")
-		if ("Disable")
-			to_chat(src, "Sensor augmentations disabled.")
+	sensors_on = !sensors_on
+	if (!sensors_on)
+		to_chat(src, "Sensor overlay deactivated.")
+		remove_sensors()
+		return
+	add_sensors()
+	to_chat(src, "Sensor overlay activated.")
 
-
-/mob/living/silicon/proc/GetPhoto()
+/mob/living/silicon/proc/GetPhoto(mob/user)
 	if (aicamera)
-		return aicamera.selectpicture(aicamera)
+		return aicamera.selectpicture(user)
 
 /mob/living/silicon/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
@@ -385,3 +403,9 @@
 
 /mob/living/silicon/is_literate()
 	return 1
+
+/mob/living/silicon/get_inactive_held_item()
+	return FALSE
+
+/mob/living/silicon/handle_high_gravity(gravity)
+	return

@@ -20,7 +20,7 @@
 /area/ruin/space/has_grav/whiteship/box)
 "af" = (
 /obj/structure/table,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)
 "ag" = (
@@ -58,9 +58,6 @@
 /area/ruin/space/has_grav/whiteship/box)
 "al" = (
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/whiteship/box)
-"am" = (
-/turf/closed/wall/mineral/titanium/interior,
 /area/ruin/space/has_grav/whiteship/box)
 "an" = (
 /obj/structure/rack,
@@ -127,8 +124,9 @@
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)
 "ax" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship/ruin{
-	view_range = 18
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
+	name = "Broken Computer"
 	},
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)
@@ -210,8 +208,10 @@
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)
 "aM" = (
-/obj/machinery/computer/shuttle/white_ship/ruin{
-	dir = 8
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
+	dir = 8;
+	name = "Broken Computer"
 	},
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)
@@ -257,7 +257,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/whiteship/box)
 "aU" = (
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)
 "aV" = (
@@ -266,7 +266,8 @@
 /area/ruin/space/has_grav/whiteship/box)
 "aW" = (
 /obj/structure/frame/computer{
-	anchored = 1
+	anchored = 1;
+	dir = 1
 	},
 /obj/structure/light_construct,
 /turf/open/floor/mineral/titanium,
@@ -285,7 +286,8 @@
 /area/ruin/space/has_grav/whiteship/box)
 "aZ" = (
 /obj/structure/frame/computer{
-	anchored = 1
+	anchored = 1;
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)
@@ -320,7 +322,6 @@ aa
 aa
 aa
 aa
-aa
 "}
 (2,1,1) = {"
 aa
@@ -332,11 +333,10 @@ aa
 aa
 aa
 ab
-am
+aj
 ae
-am
+aj
 ab
-aa
 aa
 aa
 aa
@@ -368,7 +368,6 @@ aa
 aa
 aa
 aa
-aa
 "}
 (4,1,1) = {"
 aa
@@ -384,7 +383,6 @@ ae
 ae
 ae
 ab
-aa
 aa
 aa
 aa
@@ -416,7 +414,6 @@ aa
 aa
 aa
 aa
-aa
 "}
 (6,1,1) = {"
 aa
@@ -432,7 +429,6 @@ ae
 ae
 aA
 ab
-aa
 aa
 aa
 aa
@@ -464,7 +460,6 @@ aa
 aa
 aa
 aa
-aa
 "}
 (8,1,1) = {"
 aa
@@ -480,7 +475,6 @@ ae
 ae
 ae
 ab
-aa
 aa
 aa
 aa
@@ -512,7 +506,6 @@ aa
 aa
 aa
 aa
-aa
 "}
 (10,1,1) = {"
 aa
@@ -524,11 +517,10 @@ aa
 aa
 aa
 ab
-am
+aj
 ae
-am
+aj
 ab
-aa
 aa
 aa
 aa
@@ -560,7 +552,6 @@ aa
 aa
 aa
 aa
-aa
 "}
 (12,1,1) = {"
 aa
@@ -575,7 +566,6 @@ aa
 ab
 ae
 ab
-aa
 aa
 aa
 aa
@@ -608,7 +598,6 @@ aa
 aa
 aa
 aa
-aa
 "}
 (14,1,1) = {"
 aa
@@ -620,12 +609,11 @@ aa
 aa
 ab
 ab
-am
+aj
 ae
-am
+aj
 ab
 ab
-aa
 aa
 aa
 aa
@@ -643,11 +631,11 @@ ah
 ar
 aa
 ab
-am
+aj
 ae
 ae
 ae
-am
+aj
 ab
 aa
 ad
@@ -656,7 +644,6 @@ ah
 ah
 ar
 ab
-aa
 "}
 (16,1,1) = {"
 ab
@@ -680,7 +667,6 @@ ai
 ai
 ab
 ab
-aa
 "}
 (17,1,1) = {"
 aa
@@ -690,20 +676,19 @@ al
 al
 aj
 ab
-am
+aj
 ae
 ae
 ae
 ae
 ae
-am
+aj
 ab
 aj
 al
 al
 aj
 ab
-aa
 aa
 "}
 (18,1,1) = {"
@@ -728,7 +713,6 @@ aj
 ab
 aa
 aa
-aa
 "}
 (19,1,1) = {"
 aa
@@ -749,7 +733,6 @@ ab
 at
 ab
 ab
-aa
 aa
 aa
 aa
@@ -776,14 +759,13 @@ ab
 aa
 aa
 aa
-aa
 "}
 (21,1,1) = {"
 aa
 aa
 ab
 ab
-am
+aj
 au
 ae
 ae
@@ -800,13 +782,12 @@ ab
 ab
 aa
 aa
-aa
 "}
 (22,1,1) = {"
 aa
 ab
 ab
-am
+aj
 ae
 ae
 ae
@@ -823,7 +804,6 @@ ab
 ab
 ab
 ab
-aa
 aa
 "}
 (23,1,1) = {"
@@ -833,7 +813,7 @@ ab
 ab
 ab
 ab
-am
+aj
 ae
 ab
 aD
@@ -845,9 +825,8 @@ ae
 ae
 ac
 ae
-am
+aj
 ab
-aa
 aa
 "}
 (24,1,1) = {"
@@ -856,7 +835,7 @@ ae
 ae
 an
 an
-am
+aj
 ab
 aA
 ab
@@ -872,7 +851,6 @@ ae
 aY
 ab
 ab
-aa
 "}
 (25,1,1) = {"
 ab
@@ -894,9 +872,8 @@ ae
 ab
 ae
 ae
-am
+aj
 ab
-aa
 "}
 (26,1,1) = {"
 ab
@@ -920,7 +897,6 @@ aX
 ae
 ae
 ab
-aa
 "}
 (27,1,1) = {"
 ab
@@ -944,7 +920,6 @@ ae
 ae
 ba
 ab
-aa
 "}
 (28,1,1) = {"
 ab
@@ -954,7 +929,7 @@ ae
 ae
 ae
 ab
-am
+aj
 ae
 ae
 ae
@@ -968,7 +943,6 @@ ae
 ae
 ae
 ab
-aa
 "}
 (29,1,1) = {"
 ab
@@ -976,7 +950,7 @@ ae
 ae
 ae
 ae
-am
+aj
 ab
 ab
 ab
@@ -992,16 +966,15 @@ ae
 ae
 ae
 ab
-aa
 "}
 (30,1,1) = {"
 ab
 ae
 ae
 ae
-am
+aj
 ab
-am
+aj
 ae
 ae
 ae
@@ -1014,9 +987,8 @@ aF
 ab
 ae
 ae
-am
+aj
 ab
-aa
 "}
 (31,1,1) = {"
 ac
@@ -1024,7 +996,7 @@ ae
 ak
 ae
 ab
-am
+aj
 ae
 ae
 ae
@@ -1035,11 +1007,10 @@ ae
 ae
 ae
 ae
-am
-am
+aj
+aj
 aZ
 ab
-aa
 aa
 "}
 (32,1,1) = {"
@@ -1064,7 +1035,6 @@ ab
 ab
 ab
 aa
-aa
 "}
 (33,1,1) = {"
 aa
@@ -1083,10 +1053,9 @@ ae
 ae
 ae
 ae
-am
+aj
 ab
 ab
-aa
 aa
 aa
 "}
@@ -1096,7 +1065,7 @@ aa
 ab
 aq
 ab
-am
+aj
 az
 ae
 ae
@@ -1106,10 +1075,9 @@ aF
 ae
 ae
 ae
-am
+aj
 ab
 ab
-aa
 aa
 aa
 aa
@@ -1132,7 +1100,6 @@ aB
 ab
 ab
 ab
-aa
 aa
 aa
 aa

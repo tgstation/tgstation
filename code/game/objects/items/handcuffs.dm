@@ -1,6 +1,10 @@
 /obj/item/restraints
 	breakouttime = 600
 
+/obj/item/restraints/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return(OXYLOSS)
+
 /obj/item/restraints/Destroy()
 	if(iscarbon(loc))
 		var/mob/living/carbon/M = loc
@@ -25,21 +29,22 @@
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=500)
 	breakouttime = 600 //Deciseconds = 60s = 1 minute
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	var/trashtype = null //for disposable cuffs
 
-/obj/item/restraints/handcuffs/attack(mob/living/carbon/C, mob/living/carbon/human/user)
+/obj/item/restraints/handcuffs/attack(mob/living/carbon/C, mob/living/user)
 	if(!istype(C))
 		return
-	if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
+
+	if(iscarbon(user) && (user.has_trait(TRAIT_CLUMSY) && prob(50)))
 		to_chat(user, "<span class='warning'>Uh... how do those things work?!</span>")
 		apply_cuffs(user,user)
 		return
@@ -51,13 +56,16 @@
 		M.retaliate(user)
 
 	if(!C.handcuffed)
-		if(C.get_num_arms() >= 2 || C.get_arm_ignore())
+		if(C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore())
 			C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
 								"<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
 
 			playsound(loc, cuffsound, 30, 1, -2)
-			if(do_mob(user, C, 30) && (C.get_num_arms() >= 2 || C.get_arm_ignore()))
-				apply_cuffs(C,user)
+			if(do_mob(user, C, 30) && (C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore()))
+				if(iscyborg(user))
+					apply_cuffs(C, user, TRUE)
+				else
+					apply_cuffs(C, user)
 				to_chat(user, "<span class='notice'>You handcuff [C].</span>")
 				SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 
@@ -109,7 +117,6 @@
 	materials = list(MAT_METAL=150, MAT_GLASS=75)
 	breakouttime = 300 //Deciseconds = 30s
 	cuffsound = 'sound/weapons/cablecuff.ogg'
-	var/datum/robot_energy_storage/wirestorage = null
 
 /obj/item/restraints/handcuffs/cable/Initialize(mapload, param_color)
 	. = ..()
@@ -123,23 +130,6 @@
 /obj/item/restraints/handcuffs/cable/update_icon()
 	color = null
 	add_atom_colour(item_color, FIXED_COLOUR_PRIORITY)
-
-/obj/item/restraints/handcuffs/cable/attack(mob/living/carbon/C, mob/living/carbon/human/user)
-	if(!istype(C))
-		return
-	if(wirestorage && wirestorage.energy < 15)
-		to_chat(user, "<span class='warning'>You need at least 15 wire to restrain [C]!</span>")
-		return
-	return ..()
-
-/obj/item/restraints/handcuffs/cable/apply_cuffs(mob/living/carbon/target, mob/user, var/dispense = 0)
-	if(wirestorage)
-		if(!wirestorage.use_charge(15))
-			to_chat(user, "<span class='warning'>You need at least 15 wire to restrain [target]!</span>")
-			return
-		return ..(target, user, 1)
-
-	return ..()
 
 /obj/item/restraints/handcuffs/cable/red
 	item_color = "red"
@@ -211,21 +201,6 @@
 	else
 		return ..()
 
-/obj/item/restraints/handcuffs/cable/zipties/cyborg/attack(mob/living/carbon/C, mob/user)
-	if(iscyborg(user))
-		if(!C.handcuffed)
-			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
-			C.visible_message("<span class='danger'>[user] is trying to put zipties on [C]!</span>", \
-								"<span class='userdanger'>[user] is trying to put zipties on [C]!</span>")
-			if(do_mob(user, C, 30))
-				if(!C.handcuffed)
-					C.handcuffed = new /obj/item/restraints/handcuffs/cable/zipties/used(C)
-					C.update_handcuffed()
-					to_chat(user, "<span class='notice'>You handcuff [C].</span>")
-					add_logs(user, C, "handcuffed")
-			else
-				to_chat(user, "<span class='warning'>You fail to handcuff [C]!</span>")
-
 /obj/item/restraints/handcuffs/cable/zipties
 	name = "zipties"
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
@@ -244,7 +219,6 @@
 
 /obj/item/restraints/handcuffs/cable/zipties/used/attack()
 	return
-
 
 //Legcuffs
 
@@ -292,13 +266,13 @@
 		if(isliving(AM))
 			var/mob/living/L = AM
 			var/snap = 0
-			var/def_zone = "chest"
+			var/def_zone = BODY_ZONE_CHEST
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				snap = 1
 				if(!C.lying)
-					def_zone = pick("l_leg", "r_leg")
-					if(!C.legcuffed && C.get_num_legs() >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
+					def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+					if(!C.legcuffed && C.get_num_legs(FALSE) >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
 						C.legcuffed = src
 						forceMove(C)
 						C.update_inv_legcuffed()
@@ -323,7 +297,8 @@
 	armed = 1
 	icon_state = "e_snare"
 	trap_damage = 0
-	flags_1 = DROPDEL_1
+	item_flags = DROPDEL
+	flags_1 = NONE
 
 /obj/item/restraints/legcuffs/beartrap/energy/New()
 	..()
@@ -336,6 +311,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/energy/attack_hand(mob/user)
 	Crossed(user) //honk
+	. = ..()
 
 /obj/item/restraints/legcuffs/beartrap/energy/cyborg
 	breakouttime = 20 // Cyborgs shouldn't have a strong restraint
@@ -357,7 +333,7 @@
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
 	var/mob/living/carbon/C = hit_atom
-	if(!C.legcuffed && C.get_num_legs() >= 2)
+	if(!C.legcuffed && C.get_num_legs(FALSE) >= 2)
 		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
 		C.legcuffed = src
 		forceMove(C)

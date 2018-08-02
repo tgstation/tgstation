@@ -15,7 +15,7 @@
 	var/isSwitchingStates = 0
 	var/close_delay = -1 //-1 if does not auto close.
 	max_integrity = 200
-	armor = list(melee = 10, bullet = 0, laser = 0, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 50, acid = 50)
+	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 50, "acid" = 50)
 	var/sheetType = /obj/item/stack/sheet/metal
 	var/sheetAmount = 7
 	var/openSound = 'sound/effects/stonedoor_openclose.ogg'
@@ -30,17 +30,12 @@
 /obj/structure/mineral_door/ComponentInitialize()
 	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
 
-/obj/structure/mineral_door/Destroy()
-	density = FALSE
-	air_update_turf(1)
-	return ..()
-
 /obj/structure/mineral_door/Move()
 	var/turf/T = loc
 	. = ..()
 	move_update_air(T)
 
-/obj/structure/mineral_door/CollidedWith(atom/movable/AM)
+/obj/structure/mineral_door/Bumped(atom/movable/AM)
 	..()
 	if(!state)
 		return TryToSwitchState(AM)
@@ -53,9 +48,12 @@
 			return TryToSwitchState(user)
 
 /obj/structure/mineral_door/attack_paw(mob/user)
-	return TryToSwitchState(user)
+	return attack_hand(user)
 
 /obj/structure/mineral_door/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	return TryToSwitchState(user)
 
 /obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target)
@@ -124,15 +122,14 @@
 	else
 		icon_state = initial_state
 
-/obj/structure/mineral_door/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/pickaxe))
-		var/obj/item/pickaxe/digTool = W
+/obj/structure/mineral_door/attackby(obj/item/I, mob/user, params)
+	if(I.tool_behaviour == TOOL_MINING)
 		to_chat(user, "<span class='notice'>You start digging the [name]...</span>")
-		if(do_after(user,digTool.digspeed*(1+round(max_integrity*0.01)), target = src) && src)
+		if(I.use_tool(src, user, 40, volume=50))
 			to_chat(user, "<span class='notice'>You finish digging.</span>")
 			deconstruct(TRUE)
 	else if(user.a_intent != INTENT_HARM)
-		attack_hand(user)
+		return attack_hand(user)
 	else
 		return ..()
 
@@ -202,8 +199,8 @@
 /obj/structure/mineral_door/transparent/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.is_hot())
 		var/turf/T = get_turf(src)
-		message_admins("Plasma mineral door ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
-		log_game("Plasma mineral door ignited by [key_name(user)] in [COORD(T)]")
+		message_admins("Plasma mineral door ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
+		log_game("Plasma mineral door ignited by [key_name(user)] in [AREACOORD(T)]")
 		TemperatureAct()
 	else
 		return ..()

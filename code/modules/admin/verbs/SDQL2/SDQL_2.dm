@@ -27,6 +27,7 @@
 	var/list/results = world.SDQL2_query(query_text, key_name_admin(usr), "[usr.ckey]([usr])")
 	for(var/I in 1 to 3)
 		to_chat(usr, results[I])
+	SSblackbox.record_feedback("nested tally", "SDQL query", 1, list(ckey, query_text))
 
 /world/proc/SDQL2_query(query_text, log_entry1, log_entry2)
 	var/query_log = "executed SDQL query: \"[query_text]\"."
@@ -54,6 +55,7 @@
 		return
 
 	var/list/refs = list()
+	var/where_used = FALSE
 	for(var/list/query_tree in querys)
 		var/list/from_objs = list()
 		var/list/select_types = list()
@@ -82,6 +84,7 @@
 		objs_all = objs.len
 
 		if("where" in query_tree)
+			where_used = TRUE
 			var/objs_temp = objs
 			objs = list()
 			for(var/datum/d in objs_temp)
@@ -95,7 +98,7 @@
 				for(var/datum/d in objs)
 					world.SDQL_var(d, query_tree["call"][1], source = d)
 					CHECK_TICK
-					
+
 			if("delete")
 				for(var/datum/d in objs)
 					SDQL_qdel_datum(d)
@@ -119,7 +122,7 @@
 	var/end_time = REALTIMEOFDAY
 	end_time -= start_time
 	return list("<span class='admin'>SDQL query results: [query_text]</span>",\
-		"<span class='admin'>SDQL query completed: [objs_all] objects selected by path, and [objs_eligible] objects executed on after WHERE filtering if applicable.</span>",\
+		"<span class='admin'>SDQL query completed: [objs_all] objects selected by path, and [where_used ? objs_eligible : objs_all] objects executed on after WHERE filtering if applicable.</span>",\
 		"<span class='admin'>SDQL query took [DisplayTimeText(end_time)] to complete.</span>") + refs
 
 /proc/SDQL_qdel_datum(datum/d)
@@ -133,9 +136,9 @@
 		var/turf/T = a.loc
 		var/turf/actual = get_turf(a)
 		if(istype(T))
-			text += ": [t] at turf [T] [COORD(T)]<br>"
+			text += ": [t] <font color='gray'>at turf</font> [T] [ADMIN_COORDJMP(T)]<br>"
 		else if(a.loc && istype(actual))
-			text += ": [t] in [a.loc] at turf [actual] [COORD(actual)]<br>"
+			text += ": [t] <font color='gray'>in</font> [a.loc] <font color='gray'>at turf</font> [actual] [ADMIN_COORDJMP(actual)]<br>"
 		else
 			text += ": [t]<br>"
 	else
@@ -235,42 +238,42 @@
 
 	if(ispath(type, /mob))
 		for(var/mob/d in location)
-			if(typecache[d.type])
+			if(typecache[d.type] && d.can_vv_get())
 				out += d
 			CHECK_TICK
 
 	else if(ispath(type, /turf))
 		for(var/turf/d in location)
-			if(typecache[d.type])
+			if(typecache[d.type] && d.can_vv_get())
 				out += d
 			CHECK_TICK
 
 	else if(ispath(type, /obj))
 		for(var/obj/d in location)
-			if(typecache[d.type])
+			if(typecache[d.type] && d.can_vv_get())
 				out += d
 			CHECK_TICK
 
 	else if(ispath(type, /area))
 		for(var/area/d in location)
-			if(typecache[d.type])
+			if(typecache[d.type] && d.can_vv_get())
 				out += d
 			CHECK_TICK
 
 	else if(ispath(type, /atom))
 		for(var/atom/d in location)
-			if(typecache[d.type])
+			if(typecache[d.type] && d.can_vv_get())
 				out += d
 			CHECK_TICK
 	else if(ispath(type, /datum))
 		if(location == world) //snowflake for byond shortcut
 			for(var/datum/d) //stupid byond trick to have it not return atoms to make this less laggy
-				if(typecache[d.type])
+				if(typecache[d.type] && d.can_vv_get())
 					out += d
 				CHECK_TICK
 		else
 			for(var/datum/d in location)
-				if(typecache[d.type])
+				if(typecache[d.type] && d.can_vv_get())
 					out += d
 				CHECK_TICK
 

@@ -1,5 +1,3 @@
-#define ION_FILE "ion_laws.json"
-
 /proc/lizard_name(gender)
 	if(gender == MALE)
 		return "[pick(GLOB.lizard_names_male)]-[pick(GLOB.lizard_names_male)]"
@@ -8,6 +6,9 @@
 
 /proc/plasmaman_name()
 	return "[pick(GLOB.plasmaman_names)] \Roman[rand(1,99)]"
+
+/proc/moth_name()
+	return "[pick(GLOB.moth_first)] [pick(GLOB.moth_last)]"
 
 /proc/church_name()
 	var/static/church_name

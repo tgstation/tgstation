@@ -6,7 +6,7 @@
 	icon = 'icons/effects/effects.dmi'
 	anchored = TRUE
 	max_integrity = 1
-	armor = list(melee = 0, bullet = 50, laser = 50, energy = 50, bomb = 0, bio = 0, rad = 0, fire = 20, acid = 20)
+	armor = list("melee" = 0, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
 	var/obj/item/holosign_creator/projector
 
 /obj/structure/holosign/New(loc, source_projector)
@@ -22,6 +22,9 @@
 	return ..()
 
 /obj/structure/holosign/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	user.changeNext_move(CLICK_CD_MELEE)
 	take_damage(5 , BRUTE, "melee", 1)
@@ -80,11 +83,6 @@
 	. = ..()
 	air_update_turf(TRUE)
 
-/obj/structure/holosign/barrier/atmos/Destroy()
-	var/turf/T = get_turf(src)
-	. = ..()
-	T.air_update_turf(TRUE)
-
 /obj/structure/holosign/barrier/cyborg
 	name = "Energy Field"
 	desc = "A fragile energy field that blocks movement. Excels at blocking lethal projectiles."
@@ -99,6 +97,44 @@
 	if(istype(P, /obj/item/projectile/beam/disabler))
 		take_damage(5, BRUTE, "melee", 1)	//Disablers aren't harmful.
 
+/obj/structure/holosign/barrier/medical
+	name = "\improper PENLITE holobarrier"
+	desc = "A holobarrier that uses biometrics to detect human viruses. Denies passing to personnel with easily-detected, malicious viruses. Good for quarantines."
+	icon_state = "holo_medical"
+	alpha = 125 //lazy :)
+	layer = ABOVE_MOB_LAYER
+	var/force_allaccess = FALSE
+	var/buzzcd = 0
+
+/obj/structure/holosign/barrier/medical/examine(mob/user)
+	..()
+	to_chat(user,"<span class='notice'>The biometric scanners are <b>[force_allaccess ? "off" : "on"]</b>.</span>")
+
+/obj/structure/holosign/barrier/medical/CanPass(atom/movable/mover, turf/target)
+	icon_state = "holo_medical"
+	if(force_allaccess)
+		return TRUE
+	if(ishuman(mover))
+		var/mob/living/carbon/human/sickboi = mover
+		var/threat = sickboi.check_virus()
+		switch(threat)
+			if(DISEASE_SEVERITY_MINOR, DISEASE_SEVERITY_MEDIUM, DISEASE_SEVERITY_HARMFUL, DISEASE_SEVERITY_DANGEROUS, DISEASE_SEVERITY_BIOHAZARD)
+				if(buzzcd < world.time)
+					playsound(get_turf(src),'sound/machines/buzz-sigh.ogg',65,1,4)
+					buzzcd = (world.time + 60)
+				icon_state = "holo_medical-deny"
+				return FALSE
+			else
+				return TRUE //nice or benign diseases!
+	return TRUE
+
+/obj/structure/holosign/barrier/medical/attack_hand(mob/living/user)
+	if(CanPass(user) && user.a_intent == INTENT_HELP)
+		force_allaccess = !force_allaccess
+		to_chat(user, "<span class='warning'>You [force_allaccess ? "deactivate" : "activate"] the biometric scanners.</span>") //warning spans because you can make the station sick!
+	else
+		return ..()
+
 /obj/structure/holosign/barrier/cyborg/hacked
 	name = "Charged Energy Field"
 	desc = "A powerful energy field that blocks movement. Energy arcs off it."
@@ -112,6 +148,9 @@
 	shockcd = FALSE
 
 /obj/structure/holosign/barrier/cyborg/hacked/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(!shockcd)
 		if(ismob(user))
 			var/mob/living/M = user
@@ -119,7 +158,7 @@
 			shockcd = TRUE
 			addtimer(CALLBACK(src, .proc/cooldown), 5)
 
-/obj/structure/holosign/barrier/cyborg/hacked/CollidedWith(atom/movable/AM)
+/obj/structure/holosign/barrier/cyborg/hacked/Bumped(atom/movable/AM)
 	if(shockcd)
 		return
 

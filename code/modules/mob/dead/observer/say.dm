@@ -1,7 +1,18 @@
 /mob/dead/observer/say(message)
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-
 	if (!message)
+		return
+
+	var/message_mode = get_message_mode(message)
+	if(client && (message_mode == "admin" || message_mode == "deadmin"))
+		message = copytext(message, 3)
+		if(findtext(message, " ", 1, 2))
+			message = copytext(message, 2)
+
+		if(message_mode == "admin")
+			client.cmd_admin_say(message)
+		else if(message_mode == "deadmin")
+			client.dsay(message)
 		return
 
 	log_talk(src,"Ghost/[src.key] : [message]", LOGSAY)

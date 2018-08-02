@@ -1,6 +1,6 @@
 
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
-	if(!tool_check(user, target) && pre_attackby(target, user, params))
+	if(!tool_attack_chain(user, target) && pre_attack(target, user, params))
 		// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
 		var/resolved = target.attackby(src, user, params)
 		if(!resolved && target && !QDELETED(src))
@@ -8,61 +8,61 @@
 
 
 //Checks if the item can work as a tool, calling the appropriate tool behavior on the target
-/obj/item/proc/tool_check(mob/user, atom/target)
-	switch(tool_behaviour)
-		if(TOOL_NONE)
-			return FALSE
-		if(TOOL_CROWBAR)
-			return target.crowbar_act(user, src)
-		if(TOOL_MULTITOOL)
-			return target.multitool_act(user, src)
-		if(TOOL_SCREWDRIVER)
-			return target.screwdriver_act(user, src)
-		if(TOOL_WRENCH)
-			return target.wrench_act(user, src)
-		if(TOOL_WIRECUTTER)
-			return target.wirecutter_act(user, src)
+/obj/item/proc/tool_attack_chain(mob/user, atom/target)
+	if(!tool_behaviour)
+		return FALSE
+
+	return target.tool_act(user, src, tool_behaviour)
 
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
-	SendSignal(COMSIG_ITEM_ATTACK_SELF, user)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user) & COMPONENT_NO_INTERACT)
+		return
 	interact(user)
 
-/obj/item/proc/pre_attackby(atom/A, mob/living/user, params) //do stuff before attackby!
+/obj/item/proc/pre_attack(atom/A, mob/living/user, params) //do stuff before attackby!
+	if(SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK, A, user, params) & COMPONENT_NO_ATTACK)
+		return FALSE
 	return TRUE //return FALSE to avoid calling attackby after this proc does stuff
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
-	if(SendSignal(COMSIG_PARENT_ATTACKBY, W, user, params) & COMPONENT_NO_AFTERATTACK)
+	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, W, user, params) & COMPONENT_NO_AFTERATTACK)
 		return TRUE
 	return FALSE
 
 /obj/attackby(obj/item/I, mob/living/user, params)
-	return ..() || (can_be_hit && I.attack_obj(src, user))
+	return ..() || ((obj_flags & CAN_BE_HIT) && I.attack_obj(src, user))
 
 /mob/living/attackby(obj/item/I, mob/living/user, params)
+	if(..())
+		return TRUE
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(user.a_intent == INTENT_HARM && stat == DEAD && butcher_results) //can we butcher it?
-		var/sharpness = I.is_sharp()
-		if(sharpness)
+	if(user.a_intent == INTENT_HARM && stat == DEAD && (butcher_results || guaranteed_butcher_results)) //can we butcher it?
+		GET_COMPONENT_FROM(butchering, /datum/component/butchering, I)
+		if(butchering && butchering.butchering_enabled)
 			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
-			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-			if(do_mob(user, src, 80/sharpness) && Adjacent(I))
-				harvest(user)
+			playsound(loc, butchering.butcher_sound, 50, TRUE, -1)
+			if(do_mob(user, src, butchering.speed) && Adjacent(I))
+				butchering.Butcher(user, src)
 			return 1
+		else if(I.is_sharp() && !butchering) //give sharp objects butchering functionality, for consistency
+			I.AddComponent(/datum/component/butchering, 80 * I.toolspeed)
+			attackby(I, user, params) //call the attackby again to refresh and do the butchering check again
+			return
 	return I.attack(src, user)
 
 
 /obj/item/proc/attack(mob/living/M, mob/living/user)
-	SendSignal(COMSIG_ITEM_ATTACK, M, user)
-	if(flags_1 & NOBLUDGEON_1)
+	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user)
+	if(item_flags & NOBLUDGEON)
 		return
 
-	if(force && user.has_disability(DISABILITY_PACIFISM))
+	if(force && user.has_trait(TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 		return
-    
+
 	if(!force)
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)
 	else if(hitsound)
@@ -80,8 +80,9 @@
 
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
-	SendSignal(COMSIG_ITEM_ATTACK_OBJ, O, user)
-	if(flags_1 & NOBLUDGEON_1)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, O, user) & COMPONENT_NO_ATTACK_OBJ)
+		return
+	if(item_flags & NOBLUDGEON)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(O)
@@ -118,7 +119,7 @@
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
 /obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	return
+	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
 
 
 /obj/item/proc/get_clamped_volume()

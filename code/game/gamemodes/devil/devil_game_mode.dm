@@ -36,15 +36,16 @@
 	for(var/j = 0, j < num_devils, j++)
 		if (!antag_candidates.len)
 			break
-		var/datum/mind/devil = pick(antag_candidates)
+		var/datum/mind/devil = antag_pick(antag_candidates)
 		devils += devil
 		devil.special_role = traitor_name
 		devil.restricted_roles = restricted_jobs
 
-		log_game("[devil.key] (ckey) has been selected as a [traitor_name]")
+		log_game("[key_name(devil)] has been selected as a [traitor_name]")
 		antag_candidates.Remove(devil)
 
 	if(devils.len < required_enemies)
+		setup_error = "Not enough devil candidates"
 		return 0
 	return 1
 
@@ -64,18 +65,18 @@
 	add_devil_objectives(devil,2)
 
 /proc/is_devil(mob/living/M)
-	return M && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_DEVIL)
+	return M && M.mind && M.mind.has_antag_datum(/datum/antagonist/devil)
 
 /proc/add_devil(mob/living/L, ascendable = FALSE)
 	if(!L || !L.mind)
 		return FALSE
-	var/datum/antagonist/devil/devil_datum = L.mind.add_antag_datum(ANTAG_DATUM_DEVIL)
+	var/datum/antagonist/devil/devil_datum = L.mind.add_antag_datum(/datum/antagonist/devil)
 	devil_datum.ascendable = ascendable
 	return devil_datum
 
 /proc/remove_devil(mob/living/L)
 	if(!L || !L.mind)
 		return FALSE
-	var/datum/antagonist/devil_datum = L.mind.has_antag_datum(ANTAG_DATUM_DEVIL)
+	var/datum/antagonist/devil_datum = L.mind.has_antag_datum(/datum/antagonist/devil)
 	devil_datum.on_removal()
 	return TRUE

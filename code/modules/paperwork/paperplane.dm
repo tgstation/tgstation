@@ -65,8 +65,8 @@
 		update_icon()
 
 	else if(P.is_hot())
-		if(user.has_disability(DISABILITY_CLUMSY) && prob(10))
-			user.visible_message("<span class='warning'>[user] accidentally ignites themselves!</span>", \
+		if(user.has_trait(TRAIT_CLUMSY) && prob(10))
+			user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
 				"<span class='userdanger'>You miss [src] and accidentally light yourself on fire!</span>")
 			user.dropItemToGround(P)
 			user.adjust_fire_stacks(1)
@@ -99,12 +99,9 @@
 		H.emote("scream")
 
 /obj/item/paper/AltClick(mob/living/carbon/user, obj/item/I)
-	if ( istype(user) )
-		if( (!in_range(src, user)) || user.stat || user.restrained() )
-			return
-		to_chat(user, "<span class='notice'>You fold [src] into the shape of a plane!</span>")
-		user.temporarilyRemoveItemFromInventory(src)
-		I = new /obj/item/paperplane(user, src)
-		user.put_in_hands(I)
-	else
-		to_chat(user, "<span class='notice'> You lack the dexterity to fold \the [src]. </span>")
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	to_chat(user, "<span class='notice'>You fold [src] into the shape of a plane!</span>")
+	user.temporarilyRemoveItemFromInventory(src)
+	I = new /obj/item/paperplane(user, src)
+	user.put_in_hands(I)

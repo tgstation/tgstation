@@ -6,6 +6,7 @@
 CONTAINS:
 RCD
 ARCD
+RLD
 */
 
 /obj/item/construction
@@ -14,7 +15,8 @@ ARCD
 	opacity = 0
 	density = FALSE
 	anchored = FALSE
-	flags_1 = CONDUCT_1 | NOBLUDGEON_1
+	flags_1 = CONDUCT_1
+	item_flags = NOBLUDGEON
 	force = 0
 	throwforce = 10
 	throw_speed = 3
@@ -22,14 +24,18 @@ ARCD
 	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=100000)
 	req_access_txt = "11"
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	var/datum/effect_system/spark_spread/spark_system
 	var/matter = 0
 	var/max_matter = 100
 	var/sheetmultiplier	= 4 //Controls the amount of matter added for each glass/metal sheet, triple for plasteel
 	var/plasteelmultiplier = 3 //Plasteel is worth 3 times more than glass or metal
+	var/plasmarglassmultiplier = 2 //50% less plasma than in plasteel
+	var/rglassmultiplier = 1.5 //One metal sheet, half a glass sheet
 	var/no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on the device blinks yellow.</span>"
+	var/has_ammobar = FALSE	//controls whether or not does update_icon apply ammo indicator overlays
+	var/ammo_sections = 10	//amount of divisions in the ammo indicator overlay/number of ammo indicator states
 
 /obj/item/construction/Initialize()
 	. = ..()
@@ -51,21 +57,29 @@ ARCD
 	var/loaded = 0
 	if(istype(W, /obj/item/rcd_ammo))
 		var/obj/item/rcd_ammo/R = W
-		if((matter + R.ammoamt) > max_matter)
+		var/load = min(R.ammoamt, max_matter - matter)
+		if(load <= 0)
 			to_chat(user, "<span class='warning'>[src] can't hold any more matter-units!</span>")
 			return
-		qdel(W)
-		matter += R.ammoamt
+		R.ammoamt -= load
+		if(R.ammoamt <= 0)
+			qdel(R)
+		matter += load
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		loaded = 1
 	else if(istype(W, /obj/item/stack/sheet/metal) || istype(W, /obj/item/stack/sheet/glass))
 		loaded = loadwithsheets(W, sheetmultiplier, user)
 	else if(istype(W, /obj/item/stack/sheet/plasteel))
-		loaded = loadwithsheets(W, plasteelmultiplier*sheetmultiplier, user) //Plasteel is worth 3 times more than glass or metal
+		loaded = loadwithsheets(W, plasteelmultiplier*sheetmultiplier, user) //12 matter for 1 plasteel sheet
+	else if(istype(W, /obj/item/stack/sheet/plasmarglass))
+		loaded = loadwithsheets(W, plasmarglassmultiplier*sheetmultiplier, user) //8 matter for one plasma rglass sheet
+	else if(istype(W, /obj/item/stack/sheet/rglass))
+		loaded = loadwithsheets(W, rglassmultiplier*sheetmultiplier, user) //6 matter for one rglass sheet
 	if(loaded)
 		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
 	else
 		return ..()
+	update_icon()	//ensures that ammo counters (if present) get updated
 
 /obj/item/construction/proc/loadwithsheets(obj/item/stack/sheet/S, value, mob/user)
 	var/maxsheets = round((max_matter-matter)/value)    //calculate the max number of sheets that will fit in RCD
@@ -100,6 +114,8 @@ ARCD
 	. = matter >= amount
 	if(!. && user)
 		to_chat(user, no_ammo_message)
+		if(has_ammobar)
+			flick("[icon_state]_empty", src)	//somewhat hacky thing to make RCDs with ammo counters actually have a blinking yellow light
 	return .
 
 /obj/item/construction/proc/range_check(atom/A, mob/user)
@@ -123,7 +139,8 @@ ARCD
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	max_matter = 160
-	flags_2 = NO_MAT_REDEMPTION_2
+	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
+	has_ammobar = TRUE
 	var/mode = 1
 	var/ranged = FALSE
 	var/airlock_type = /obj/machinery/door/airlock
@@ -134,7 +151,6 @@ ARCD
 	var/use_one_access = 0 //If the airlock should require ALL or only ONE of the listed accesses.
 	var/delay_mod = 1
 	var/canRturf = FALSE //Variable for R walls to deconstruct them
-
 
 /obj/item/construction/rcd/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
@@ -366,6 +382,7 @@ ARCD
 		return FALSE
 
 /obj/item/construction/rcd/afterattack(atom/A, mob/user, proximity)
+	. = ..()
 	if(!prox_check(proximity))
 		return
 	rcd_create(A, user)
@@ -381,6 +398,16 @@ ARCD
 	explosion(src, 0, 0, 3, 1, flame_range = 1)
 	qdel(src)
 
+/obj/item/construction/rcd/update_icon()
+	..()
+	if(has_ammobar)
+		var/ratio = CEILING((matter / max_matter) * ammo_sections, 1)
+		cut_overlays()	//To prevent infinite stacking of overlays
+		add_overlay("[icon_state]_charge[ratio]")
+
+/obj/item/construction/rcd/Initialize()
+	..()
+	update_icon()
 
 /obj/item/construction/rcd/borg
 	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
@@ -419,6 +446,8 @@ ARCD
 
 /obj/item/construction/rcd/combat
 	name = "industrial RCD"
+	icon_state = "ircd"
+	item_state = "ircd"
 	max_matter = 500
 	matter = 500
 	canRturf = TRUE
@@ -456,9 +485,11 @@ ARCD
 	delay_mod = 0.6
 	ranged = TRUE
 	icon_state = "arcd"
-	item_state = "rcd"
+	item_state = "oldrcd"
+	has_ammobar = FALSE
 
 /obj/item/construction/rcd/arcd/afterattack(atom/A, mob/user)
+	. = ..()
 	if(!range_check(A,user))
 		return
 	if(target_check(A,user))
@@ -497,7 +528,7 @@ ARCD
 
 /obj/item/construction/rld/ui_action_click(mob/user, var/datum/action/A)
 	if(istype(A, /datum/action/item_action/pick_color))
-		color_choice = input(user,"Choose Color") as color
+		color_choice = input(user,"","Choose Color",color_choice) as color
 	else
 		..()
 
@@ -529,6 +560,7 @@ ARCD
 
 
 /obj/item/construction/rld/afterattack(atom/A, mob/user)
+	. = ..()
 	if(!range_check(A,user))
 		return
 	var/turf/start = get_turf(src)
@@ -617,7 +649,7 @@ ARCD
 			if(useResource(launchcost, user))
 				activate()
 				to_chat(user, "<span class='notice'>You fire a glowstick!</span>")
-				var/obj/item/device/flashlight/glowstick/G  = new /obj/item/device/flashlight/glowstick(start)
+				var/obj/item/flashlight/glowstick/G  = new /obj/item/flashlight/glowstick(start)
 				G.color = color_choice
 				G.light_color = G.color
 				G.throw_at(A, 9, 3, user)
