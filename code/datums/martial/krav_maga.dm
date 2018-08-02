@@ -119,7 +119,7 @@
 /datum/martial_art/krav_maga/grab_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	if(check_streak(A,D))
 		return 1
-	log_combat(A, D, "grabbed with krav maga")
+	log_combat(A, D, "grabbed (Krav Maga)")
 	..()
 
 /datum/martial_art/krav_maga/harm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
@@ -159,7 +159,7 @@
 		D.visible_message("<span class='danger'>[A] attempted to disarm [D]!</span>", \
 							"<span class='userdanger'>[A] attempted to disarm [D]!</span>")
 		playsound(D, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-	log_combat(A, D, "disarmed with krav maga", "[I ? " removing \the [I]" : ""]")
+	log_combat(A, D, "disarmed (Krav Maga)", "[I ? " removing \the [I]" : ""]")
 	return 1
 
 //Krav Maga Gloves
