@@ -27,14 +27,15 @@
 	alpha = max(0, alpha - 50)
 
 /obj/structure/closet/cardboard/agent/proc/reveal()
-	if(isliving(A))
-		alpha = 255
+	alpha = 255
 	addtimer(CALLBACK(src, .proc/go_invisible), 10, TIMER_UNIQUE)
 
 /obj/structure/closet/cardboard/agent/Bump(atom/movable/A)
 	. = ..()
-	reveal()
+	if(isliving(A))
+		reveal()
 
 /obj/structure/closet/cardboard/agent/Bumped(atom/movable/A)
 	. = ..()
-	reveal()
+	if(isliving(A))
+		reveal()
