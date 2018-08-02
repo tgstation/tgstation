@@ -241,7 +241,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/obj/item/organ/I = new path()
 		I.Insert(C)
 
-/datum/species/proc/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+/datum/species/proc/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	// Drop the items the new species can't wear
 	for(var/slot_id in no_equip)
 		var/obj/item/thing = C.get_item_by_slot(slot_id)
@@ -286,7 +286,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			A.cure(FALSE)
 
 
-/datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species)
+/datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	if(C.dna.species.exotic_bloodtype)
 		C.dna.blood_type = random_blood_type()
 	if(DIGITIGRADE in species_traits)

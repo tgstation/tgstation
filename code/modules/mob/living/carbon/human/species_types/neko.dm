@@ -2,6 +2,7 @@
 /datum/species/human/neko
 	name = "Neko"
 	id = "neko"
+	limbs_id = "human"
 
 	mutant_bodyparts = list("ears", "tail_human")
 	default_features = list("mcolor" = "FFF", "tail_human" = "Cat", "ears" = "Cat", "wings" = "None")
@@ -40,13 +41,14 @@
 		mutant_bodyparts |= "tail_human"
 	H.update_body()
 
-/datum/species/human/neko/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+/datum/species/human/neko/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(!H.dna.features["tail_human"])
-			H.dna.features["tail_human"] = "Cat"
-		if(!H.dna.features["ears"])
-			H.dna.features["ears"] = "Cat"
+		if(pref_load)			//Hah! They got forcefully purrbation'd. Force default neko parts on them if they have no mutant parts in those areas!
+			if(H.dna.features["tail_human"] == "None")
+				H.dna.features["tail_human"] = "Cat"
+			if(H.dna.features["tail_human"] == "None")
+				H.dna.features["ears"] = "Cat"
 		if(H.dna.features["ears"] == "Cat")
 			var/obj/item/organ/ears/cat/ears = new
 			ears.Insert(H, drop_if_replaced = FALSE)
@@ -59,7 +61,7 @@
 			mutanttail = null
 	return ..()
 
-/datum/species/human/neko/on_species_loss(mob/living/carbon/H, datum/species/new_species)
+/datum/species/human/neko/on_species_loss(mob/living/carbon/H, datum/species/new_species, pref_load)
 	var/obj/item/organ/ears/cat/ears = H.getorgan(/obj/item/organ/ears/cat)
 	var/obj/item/organ/tail/cat/tail = H.getorgan(/obj/item/organ/tail/cat)
 

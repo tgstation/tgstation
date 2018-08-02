@@ -1515,7 +1515,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		chosen_species = /datum/species/human
 		pref_species = new /datum/species/human
 		save_character()
-	character.set_species(chosen_species, icon_update=0)
+	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
 
 	if(icon_updates)
 		character.update_body()

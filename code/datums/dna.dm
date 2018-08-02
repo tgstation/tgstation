@@ -215,7 +215,7 @@
 			stored_dna.species = mrace //not calling any species update procs since we're a brain, not a monkey/human
 
 
-/mob/living/carbon/set_species(datum/species/mrace, icon_update = 1)
+/mob/living/carbon/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	if(mrace && has_dna())
 		var/datum/species/new_race
 		if(ispath(mrace))
@@ -224,12 +224,12 @@
 			new_race = mrace
 		else
 			return
-		dna.species.on_species_loss(src, new_race)
+		dna.species.on_species_loss(src, new_race, pref_load)
 		var/datum/species/old_species = dna.species
 		dna.species = new_race
-		dna.species.on_species_gain(src, old_species)
+		dna.species.on_species_gain(src, old_species, pref_load)
 
-/mob/living/carbon/human/set_species(datum/species/mrace, icon_update = 1)
+/mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()
 	if(icon_update)
 		update_body()
