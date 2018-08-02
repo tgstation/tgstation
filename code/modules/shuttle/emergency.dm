@@ -273,7 +273,7 @@
 					if(prevent)
 						return FALSE
 
-	
+
 	return has_people && hijacker_present
 
 /obj/docking_port/mobile/emergency/proc/ShuttleDBStuff()
@@ -422,7 +422,6 @@
 /obj/docking_port/mobile/pod
 	name = "escape pod"
 	id = "pod"
-	timid = FALSE
 	dwidth = 1
 	width = 3
 	height = 4

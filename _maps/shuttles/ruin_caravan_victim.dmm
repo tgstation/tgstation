@@ -901,7 +901,6 @@
 	name = "Small Freighter";
 	port_direction = 8;
 	preferred_direction = 4;
-	timid = 1;
 	width = 21
 	},
 /turf/open/floor/plating,
