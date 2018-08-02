@@ -65,7 +65,7 @@
 
 /proc/individual_logging_panel_link(mob/M, log_type, log_src, label, selected_src, selected_type)
 	var/slabel = label
-	if(selected_type == log_type || selected_src == log_src)
+	if(selected_type == log_type && selected_src == log_src)
 		slabel = "<b>\[[label]\]</b>"
 
 	return "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[log_type];log_src=[log_src]'>[slabel]</a>"
