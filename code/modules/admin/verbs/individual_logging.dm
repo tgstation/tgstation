@@ -58,7 +58,7 @@
 			if(islist(reversed))
 				reversed = reverseRange(reversed.Copy())
 				for(var/entry in reversed)
-					dat += "<font size=2px><b>[entry]</b>:<br> [reversed[entry]]</font><br>"
+					dat += "<font size=2px><b>[entry]</b>:<br>[reversed[entry]]</font><br>"
 			dat += "<hr>"
 
 	usr << browse(dat, "window=invidual_logging_[key_name(M)];size=600x480")
@@ -68,4 +68,4 @@
 	if(selected_type == log_type || selected_src == log_src)
 		slabel = "<b>\[[label]\]</b>"
 
-	return "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[log_type];log_src=[LOGSRC_CLIENT]'>[slabel]</a>"
+	return "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[log_type];log_src=[log_src]'>[slabel]</a>"
