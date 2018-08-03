@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - soundadd: "Added a new, shoutier RoundEnd Sound."
