@@ -13129,7 +13129,7 @@
 	dir = 4;
 	dwidth = 2;
 	height = 7;
-	id = "pod1_away";
+	id = "pod_away";
 	name = "recovery ship";
 	width = 5
 	},
