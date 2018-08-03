@@ -1,0 +1,4 @@
+author: "Kmc2000"
+delete-after: True
+changes: 
+  - rscadd: "You can now attach 4 energy swords to a securiton assembly instead of a baton to create a 4 esword wielding nightmare-bot"
