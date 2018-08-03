@@ -1,6 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - tweak: "You can now have fakedeath without also being unconscious. Existing sources of fakedeath still cause unconsciousness."
-  - rscadd: "Zombies and skeletons now appear as dead. Don't trust zombies on the ground!"
-  - rscadd: "You can now make Ghoul Powder with Zombie Powder and epinephrine, which causes fakedeath without uncounsciousness."
