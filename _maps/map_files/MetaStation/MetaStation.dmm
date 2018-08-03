@@ -29810,7 +29810,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel,
 /area/engine/break_room)
 "blk" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -76797,7 +76797,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel,
 /area/engine/storage_shared)
 "uGW" = (
 /obj/effect/turf_decal/stripes/line{
