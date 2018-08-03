@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "The first pod spawned had some issues with shuttle id and wouldn't move properly. This has been fixed."
