@@ -499,7 +499,7 @@
 
 /datum/action/item_action/agent_box/Trigger()
 	if(!box)
-		if(cooldown < world.time - 30)
+		if(cooldown < world.time - 100)
 			box = new(get_turf(owner))
 			owner.forceMove(box)
 			cooldown = world.time
