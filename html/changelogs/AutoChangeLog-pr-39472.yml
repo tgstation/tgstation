@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "Syndicate lavaland base: Added a grenade parts vendor and smoke machine board. The testing chamber now has a heatproof door and vents/scrubbers to replace air after testing gas grenades. Chemical/soda/beer vendors are emagged by default; the vault contains a set of valuable Syndicate documents."
