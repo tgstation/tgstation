@@ -555,7 +555,7 @@
 	anchored = TRUE
 	alpha = 255
 
-/obj/structure/trap/examine(mob/user)
+/obj/structure/trap/ctf/examine(mob/user)
 	return
 
 /obj/structure/trap/ctf/trap_effect(mob/living/L)
