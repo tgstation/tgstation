@@ -31687,6 +31687,7 @@
 	},
 /area/security/checkpoint/customs)
 "bpu" = (
+/obj/structure/lattice,
 /turf/closed/wall/r_wall,
 /area/space/nearstation)
 "bpv" = (
@@ -76677,6 +76678,11 @@
 	dir = 8
 	},
 /area/science/circuit)
+"svg" = (
+/obj/structure/lattice,
+/obj/structure/girder/reinforced,
+/turf/open/space/basic,
+/area/space/nearstation)
 "szA" = (
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 8
@@ -123684,10 +123690,10 @@ anT
 anT
 anT
 anT
+aqB
 anT
-aaf
-aaa
-aaa
+fwb
+fwb
 aaf
 aaa
 aaa
@@ -123933,13 +123939,13 @@ bpu
 bpu
 bpu
 bpu
+svg
 bpu
 bpu
 bpu
 bpu
-bpu
-bpu
-aaa
+svg
+lMJ
 aaa
 aaa
 aaf
@@ -124196,9 +124202,9 @@ anT
 anT
 anT
 aqB
-aaf
-aaf
-aaf
+anT
+anT
+anT
 aaf
 aaa
 aaf
