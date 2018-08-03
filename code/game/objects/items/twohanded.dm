@@ -814,13 +814,10 @@
 	icon_state = "binoculars"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	var/datum/component/mobhook
 	var/view_range_increase = 7
-
-/obj/item/twohanded/binoculars/handle_atom_del(atom/A) // This is to ensure the mobhook is removed if it somehow is unwielded without the unwield proc
-	QDEL_NULL(mobhook)
 
 /obj/item/twohanded/binoculars/wield(mob/user)
 	..()
