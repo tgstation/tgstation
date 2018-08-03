@@ -260,13 +260,17 @@
 
 /mob/living/proc/cure_fakedeath(list/sources)
 	remove_trait(TRAIT_FAKEDEATH, sources)
+	remove_trait(TRAIT_DEATHCOMA, sources)
 	if(stat != DEAD)
 		tod = null
 	update_stat()
 
-/mob/living/proc/fakedeath(source)
+/mob/living/proc/fakedeath(source, silent = FALSE)
 	if(stat == DEAD)
 		return
+	if(!silent)
+		emote("deathgasp")
 	add_trait(TRAIT_FAKEDEATH, source)
+	add_trait(TRAIT_DEATHCOMA, source)
 	tod = station_time_timestamp()
 	update_stat()
