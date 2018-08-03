@@ -1,12 +1,19 @@
 Any time you make a change to the schema files, remember to increment the database schema version. Generally increment the minor number, major should be reserved for significant changes to the schema. Both values go up to 255.
 
-The latest database version is 4.4; The query to update the schema revision table is:
+The latest database version is 4.5; The query to update the schema revision table is:
 
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (4, 4);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (4, 5);
 or
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (4, 4);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (4, 5);
 
 In any query remember to add a prefix to the table names if you use one.
+
+----------------------------------------------------
+
+Version 4.5, 1 August 2018, by Jordie0608
+Modified table `messages`, adding column `expire_timestamp` to allow for auto-"deleting" messages.
+
+ALTER TABLE `messages` ADD `expire_timestamp` DATETIME NULL DEFAULT NULL AFTER `secret`;
 
 ----------------------------------------------------
 

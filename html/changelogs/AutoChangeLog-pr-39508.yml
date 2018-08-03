@@ -1,0 +1,5 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - imageadd: "added sprites for camera when equipped or in hand"
+  - tweak: "cameras are now equipped in the neck slot"
