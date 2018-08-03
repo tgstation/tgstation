@@ -21,7 +21,13 @@
 	plane = FLOOR_OPENSPACE_PLANE
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_MULTIPLY
-	alpha = 128
+	alpha = 255
+
+/obj/screen/plane_master/openspace/backdrop(mob/mymob)
+	filters = list()
+	filters += filter(type = "drop_shadow", color = "#04080FAA", border = 5, size = -10)
+	filters += filter(type = "drop_shadow", color = "#04080FAA", border = 5, size = -15)
+	filters += filter(type = "drop_shadow", color = "#04080FAA", border = 5, size = -20)
 
 /obj/screen/plane_master/proc/outline(_size, _color)
 	filters += filter(type = "outline", size = _size, color = _color)
@@ -29,7 +35,7 @@
 /obj/screen/plane_master/proc/shadow(_size, _border, _offset = 0, _x = 0, _y = 0, _color = "#04080FAA")
 	filters += filter(type = "drop_shadow", x = _x, y = _y, color = _color, size = _size, offset = _offset, border = _border)
 
-/obj/screen/plane_master/proc/debug_clear()
+/obj/screen/plane_master/proc/clear_filters()
 	filters = list()
 
 /obj/screen/plane_master/floor

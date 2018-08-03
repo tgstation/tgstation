@@ -120,19 +120,19 @@
 
 /turf/proc/multiz_turf_new(turf/T, dir)
 
-//direction is where it's coming from
+//direction is direction of travel of air
 /turf/proc/zPassIn(atom/movable/A, direction, turf/source)
 	return FALSE
 
-//direction is where it's going to
+//direction is direction of travel of air
 /turf/proc/zPassOut(atom/movable/A, direction, turf/destination)
 	return FALSE
 
-//direction is where it's coming from
+//direction is direction of travel of air
 /turf/proc/zAirIn(direction, turf/source)
 	return FALSE
 
-//direction is where it's going to
+//direction is direction of travel of air
 /turf/proc/zAirOut(direction, turf/source)
 	return FALSE
 
@@ -148,8 +148,7 @@
 	var/turf/target = get_step_multiz(src, DOWN)
 	if(!target)
 		return FALSE
-	var/gravity = A.has_gravity(src)
-	if(!force && (!gravity || (A.movement_type & FLYING) || !zPassOut(A, DOWN, target) || !target.zPassIn(A, UP, src)))
+	if(!force && !can_zFall(A, levels, target) && A.can_zFall(src, levels, target, DOWN))
 		return FALSE
 	A.visible_message("<span class='danger'>[A] falls through [src]!</span>")
 	A.zfalling = TRUE
