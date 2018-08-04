@@ -33,10 +33,17 @@
 	dummy_prefs.pref_species = new /datum/species/zombie
 	dummy_prefs.be_random_body = TRUE
 	var/datum/job/J = SSjob.GetJob(zombiejob)
-	var/icon/P = get_flat_human_icon("zombie_[zombiejob]", J , dummy_prefs, "zombie")
+	var/datum/outfit/O
+	if(J.outfit)
+		O = new J.outfit
+		//They have claws now.
+		O.r_hand = null
+		O.l_hand = null
+
+	var/icon/P = get_flat_human_icon("zombie_[zombiejob]", J , dummy_prefs, "zombie", outfit_override = O)
 	icon = P
 	corpse = new(src)
-	corpse.outfit = J.outfit
+	corpse.outfit = O
 	corpse.mob_species = /datum/species/zombie
 	corpse.mob_name = name
 
