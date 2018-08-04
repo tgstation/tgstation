@@ -41,15 +41,17 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
  * 2) Read the map line by line, parsing the result (using parse_grid)
  *
  */
-/datum/maploader/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, lower_crop_x as num,  lower_crop_y as num, upper_crop_x as num, upper_crop_y as num, placeOnTop as num)
+/proc/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, lower_crop_x as num,  lower_crop_y as num, upper_crop_x as num, upper_crop_y as num, placeOnTop as num)
+	var/static/datum/maploader/loader = new
+
 	//How I wish for RAII
 	Master.StartLoadingMap()
 	#ifdef TESTING
-	turfsSkipped = 0
+	loader.turfsSkipped = 0
 	#endif
-	. = load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, lower_crop_x, upper_crop_x, lower_crop_y, upper_crop_y, placeOnTop)
+	. = loader.load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, lower_crop_x, upper_crop_x, lower_crop_y, upper_crop_y, placeOnTop)
 	#ifdef TESTING
-	if(turfsSkipped)
+	if(loader.turfsSkipped)
 		testing("Skipped loading [turfsSkipped] default turfs")
 	#endif
 	Master.StopLoadingMap()
