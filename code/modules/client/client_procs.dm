@@ -706,7 +706,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		if (clicklimiter[SECOND_COUNT] > scl)
 			to_chat(src, "<span class='danger'>Your previous click was ignored because you've done too many in a second</span>")
 			return
-
+	
+	if (ab)
+		return
+	
 	if (prefs.hotkeys)
 		// If hotkey mode is enabled, then clicking the map will automatically
 		// unfocus the text bar. This removes the red color from the text bar
