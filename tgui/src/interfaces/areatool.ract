@@ -1,0 +1,17 @@
+<ui-display title='{{data.area.name}}' button>
+	{{#partial button}}
+		<ui-button icon='pencil' action='rename'>Rename</ui-button>
+	{{/partial}}
+	<ui-section label='Shuttle'>
+			<ui-button action='init_skipover' params='{"leavepath": "/turf/open/space"}'>Init skipover into spess</ui-button>
+			<ui-button action='init_skipover' params='{"leavepath": "/turf/open/floor/plating"}'>Init skipover into plating</ui-button>
+			<ui-button action='spawn_ports'>Spawn shuttle docking ports</ui-button>
+			<ui-button action='spawn_navcomputer'>Spawn navigation computer</ui-button>
+			<ui-button action='spawn_shuttleconsole'>Spawn shuttle console</ui-button>
+	</ui-section>
+	<ui-section label='Booleans'>
+		{{#each data.booleans}}
+			<ui-button icon='{{setting ? "check-square-o" : "square-o"}}' style='{{setting ? "selected" : null}}' action='toggle_boolean' params='{"setting": "{{name}}"}'>{{name}}</ui-button>
+		{{/each}}
+	</ui-section>>
+</ui-display>
