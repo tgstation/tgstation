@@ -173,13 +173,13 @@
 //Called when we want to push an atom/movable
 /mob/living/proc/PushAM(atom/movable/AM)
 	if(now_pushing)
-		return 1
+		return TRUE
 	if(moving_diagonally)// no pushing during diagonal moves.
-		return 1
+		return TRUE
 	if(!client && (mob_size < MOB_SIZE_SMALL))
 		return
 	if(!AM.anchored)
-		now_pushing = 1
+		now_pushing = TRUE
 		var/t = get_dir(src, AM)
 		if (istype(AM, /obj/structure/window))
 			var/obj/structure/window/W = AM
@@ -192,10 +192,13 @@
 		var/current_dir
 		if(isliving(AM))
 			current_dir = AM.dir
-		step(AM, t)
+		if(step(AM, t))
+			step(src, t)
 		if(current_dir)
 			AM.setDir(current_dir)
-		now_pushing = 0
+		now_pushing = FALSE
+	else if(move_force > AM.move_resist)
+		force_push(AM)
 
 /mob/living/start_pulling(atom/movable/AM, supress_message = 0)
 	if(!AM || !src)

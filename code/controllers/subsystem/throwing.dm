@@ -116,7 +116,7 @@ SUBSYSTEM_DEF(throwing)
 			return
 
 		dist_travelled++
-		
+
 		if (dist_travelled > MAX_THROWING_DIST)
 			finalize()
 			return
