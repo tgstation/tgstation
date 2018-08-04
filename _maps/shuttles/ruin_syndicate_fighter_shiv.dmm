@@ -18,7 +18,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
-/mob/living/simple_animal/hostile/syndicate/ranged/pilot{
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/pilot{
 	environment_smash = 0
 	},
 /turf/open/floor/mineral/plastitanium,

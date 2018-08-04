@@ -488,7 +488,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/syndicate{
+/mob/living/simple_animal/hostile/syndicate/ranged{
+	environment_smash = 0;
 	name = "Syndicate Salvage Worker"
 	},
 /turf/open/floor/plating,
@@ -1760,6 +1761,9 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
+/mob/living/simple_animal/hostile/syndicate/melee{
+	environment_smash = 0
+	},
 /turf/open/floor/plasteel/vault,
 /area/shuttle/abandoned/bridge)
 "cu" = (
@@ -1871,9 +1875,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable{
 	icon_state = "1-2"
-	},
-/mob/living/simple_animal/hostile/syndicate{
-	name = "Syndicate Salvage Worker"
 	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/abandoned/bar)
@@ -2339,8 +2340,8 @@
 	name = "dust"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/mob/living/simple_animal/hostile/syndicate/ranged{
-	name = "Syndicate Salvage Worker"
+/mob/living/simple_animal/hostile/syndicate/melee{
+	environment_smash = 0
 	},
 /turf/open/floor/plasteel/vault,
 /area/shuttle/abandoned/cargo)
@@ -3248,8 +3249,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/mob/living/simple_animal/hostile/syndicate{
-	name = "Syndicate Salvage Worker"
+/mob/living/simple_animal/hostile/syndicate/melee{
+	environment_smash = 0
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/cargo)
