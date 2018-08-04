@@ -155,7 +155,7 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 
 //Bloody shoes/footprints
-#define MAX_SHOE_BLOODINESS			100
+#define MAX_SHOE_BLOODINESS			0 	//disabled due to being very buggy. set value back to 100 to restore
 #define BLOODY_FOOTPRINT_BASE_ALPHA	150
 #define BLOOD_GAIN_PER_STEP			100
 #define BLOOD_LOSS_PER_STEP			5
