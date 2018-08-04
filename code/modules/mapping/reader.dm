@@ -19,10 +19,10 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 	var/list/bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
 	var/key_len = 0
 
+	// /"([a-zA-Z]+)" = \(((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}/g
+	var/static/regex/dmmRegex = new/regex({""(\[a-zA-Z]+)" = \\(((?:.|\n)*?)\\)\n(?!\t)|\\((\\d+),(\\d+),(\\d+)\\) = \\{"(\[a-zA-Z\n]*)"\\}"}, "g")
 
 /datum/maploader
-		// /"([a-zA-Z]+)" = \(((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}/g
-	var/static/regex/dmmRegex = new/regex({""(\[a-zA-Z]+)" = \\(((?:.|\n)*?)\\)\n(?!\t)|\\((\\d+),(\\d+),(\\d+)\\) = \\{"(\[a-zA-Z\n]*)"\\}"}, "g")
 		// /^[\s\n]+"?|"?[\s\n]+$|^"|"$/g
 	var/static/regex/trimQuotesRegex = new/regex({"^\[\\s\n]+"?|"?\[\\s\n]+$|^"|"$"}, "g")
 		// /^[\s\n]+|[\s\n]+$/
@@ -54,7 +54,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 	#endif
 	Master.StopLoadingMap()
 
-/datum/parsed_map/New(tfile, x_offset, y_offset, z_offset, x_lower, x_upper, y_lower, y_upper, measureOnly, regex/dmmRegex, cropMap)
+/datum/parsed_map/New(tfile, x_offset, y_offset, z_offset, x_lower, x_upper, y_lower, y_upper, measureOnly, cropMap)
 	var/stored_index = 1
 
 	//multiz lool
@@ -138,7 +138,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 	if(!z_offset)
 		z_offset = world.maxz + 1
 
-	var/datum/parsed_map/parsed = new(tfile, x_offset, y_offset, z_offset, x_lower, x_upper, y_lower, y_upper, measureOnly, dmmRegex, cropMap)
+	var/datum/parsed_map/parsed = new(tfile, x_offset, y_offset, z_offset, x_lower, x_upper, y_lower, y_upper, measureOnly, cropMap)
 
 	var/list/modelCache
 	var/space_key
