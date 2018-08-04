@@ -511,7 +511,7 @@
 			return
 
 		var/datum/D = locate(href_list["delete"])
-		if(!D)
+		if(!istype(D))
 			to_chat(usr, "Unable to locate item!")
 		admin_delete(D)
 		href_list["datumrefresh"] = href_list["delete"]
@@ -814,7 +814,7 @@
 			for (var/i in armorlist)
 				pickerlist += list(list("value" = armorlist[i], "name" = i))
 
-			var/list/result = presentpicker(usr, "Modify armor", "Modify armor: [O]", Button1="Save", Button2 = "Cancel", Timeout=FALSE, Type = "text", values = pickerlist)
+			var/list/result = presentpicker(usr, "Modify armor", "Modify armor: [O]", Button1="Save", Button2 = "Cancel", Timeout=FALSE, inputtype = "text", values = pickerlist)
 
 			if (islist(result))
 				if (result["button"] == 2) // If the user pressed the cancel button
@@ -997,6 +997,33 @@
 
 			manipulate_organs(C)
 			href_list["datumrefresh"] = href_list["editorgans"]
+
+		else if(href_list["givemartialart"])
+			if(!check_rights(NONE))
+				return
+
+			var/mob/living/carbon/C = locate(href_list["givemartialart"]) in GLOB.carbon_list
+			if(!istype(C))
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
+				return
+
+			var/list/artpaths = subtypesof(/datum/martial_art)
+			var/list/artnames = list()
+			for(var/i in artpaths)
+				var/datum/martial_art/M = i
+				artnames[initial(M.name)] = M
+
+			var/result = input(usr, "Choose the martial art to teach","JUDO CHOP") as null|anything in artnames
+			if(!usr)
+				return
+			if(QDELETED(C))
+				to_chat(usr, "Mob doesn't exist anymore")
+				return
+
+			if(result)
+				var/chosenart = artnames[result]
+				var/datum/martial_art/MA = new chosenart
+				MA.teach(C)
 
 		else if(href_list["givetrauma"])
 			if(!check_rights(NONE))

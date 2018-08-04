@@ -201,6 +201,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 10
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
+	
+/datum/uplink_item/dangerous/carbine
+	name = "M-90gl Carbine"
+	desc = "A fully-loaded, specialized three-round burst carbine that fires 5.56mm ammunition from a 30 round magazine \
+			with a togglable 40mm under-barrel grenade launcher."
+	item = /obj/item/gun/ballistic/automatic/m90
+	cost = 18
+	surplus = 50
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
@@ -395,6 +404,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	player_minimum = 25
 	restricted = TRUE
 
+/datum/uplink_item/dangerous/buzzkill
+	name = "Buzzkill Grenade Box"
+	desc = "A box with three grenades that release a swarm of angry bees upon activation. These bees indiscriminately attack friend or foe \
+			with random toxins. Courtesy of the BLF and Tiger Cooperative."
+	item = /obj/item/storage/box/syndie_kit/bee_grenades
+	cost = 5
+	surplus = 35
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
 // Ammunition
 /datum/uplink_item/ammo
 	category = "Ammunition"
@@ -508,6 +526,22 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/smg
 	cost = 20
 	include_modes = list(/datum/game_mode/nuclear)
+	
+/datum/uplink_item/ammo/carbine
+	name = "5.56mm Toploader Magazine"
+	desc = "An additional 30-round 5.56mm magazine; suitable for use with the M-90gl carbine. \
+			These bullets pack less punch than 1.95mm rounds, but they still offer more power than .45 ammo."
+	item = /obj/item/ammo_box/magazine/m556
+	cost = 4
+	include_modes = list(/datum/game_mode/nuclear)
+	
+/datum/uplink_item/ammo/a40mm
+	name = "40mm Grenade"
+	desc = "A 40mm HE grenade for use with the M-90gl's under-barrel grenade launcher. \
+			Your teammates will ask you to not shoot these down small hallways."
+	item = /obj/item/ammo_casing/a40mm
+	cost = 2
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun
 	cost = 6
@@ -531,6 +565,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; equipped with special properties \
 			to puncture even the most durable armor."
 	item = /obj/item/ammo_box/magazine/mm195x129/ap
+	cost = 9
 
 /datum/uplink_item/ammo/machinegun/incen
 	name = "1.95x129mm (Incendiary) Box Magazine"
@@ -1136,7 +1171,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 20
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/device_tools/shield
+/datum/uplink_item/device_tools/bananashield
 	name = "Bananium Energy Shield"
 	desc = "A clown's most powerful defensive weapon, this personal shield provides near immunity to ranged energy attacks \
 		by bouncing them back at the ones who fired them. It can also be thrown to bounce off of people, slipping them, \
@@ -1552,7 +1587,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/badass/random
 	name = "Random Item"
 	desc = "Picking this will purchase a random item. Useful if you have some TC to spare or if you haven't decided on a strategy yet."
-	item = /obj/item/paper
+	item = /obj/effect/gibspawner/generic // non-tangible item because techwebs use this path to determine illegal tech
 	cost = 0
 	cant_discount = TRUE
 

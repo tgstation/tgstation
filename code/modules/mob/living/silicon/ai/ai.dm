@@ -23,6 +23,7 @@
 	a_intent = INTENT_HARM //so we always get pushed instead of trying to swap
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
 	see_in_dark = 8
+	hud_type = /datum/hud/ai
 	med_hud = DATA_HUD_MEDICAL_BASIC
 	sec_hud = DATA_HUD_SECURITY_BASIC
 	d_hud = DATA_HUD_DIAGNOSTIC_ADVANCED
@@ -327,7 +328,16 @@
 
 /mob/living/silicon/ai/can_interact_with(atom/A)
 	. = ..()
-	return . || (istype(loc, /obj/item/aicard))? (ISINRANGE(A.x, x - interaction_range, x + interaction_range) && ISINRANGE(A.y, y - interaction_range, y + interaction_range)): GLOB.cameranet.checkTurfVis(get_turf(A))
+	if (.)
+		return
+	if (istype(loc, /obj/item/aicard))
+		var/turf/T0 = get_turf(src)
+		var/turf/T1 = get_turf(A)
+		if (!T0 || ! T1)
+			return FALSE
+		return ISINRANGE(T1.x, T0.x - interaction_range, T0.x + interaction_range) && ISINRANGE(T1.y, T0.y - interaction_range, T0.y + interaction_range)
+	else
+		return GLOB.cameranet.checkTurfVis(get_turf(A))
 
 /mob/living/silicon/ai/cancel_camera()
 	view_core()
@@ -625,13 +635,14 @@
 		if(istype(M, /obj/machinery/ai_status_display))
 			var/obj/machinery/ai_status_display/AISD = M
 			AISD.emotion = emote
-		//if Friend Computer, change ALL displays
-		else if(istype(M, /obj/machinery/status_display))
-			var/obj/machinery/status_display/SD = M
-			if(emote=="Friend Computer")
-				SD.friendc = 1
-			else
-				SD.friendc = 0
+	if (emote == "Friend Computer")
+		var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+
+		if(!frequency)
+			return
+
+		var/datum/signal/status_signal = new(list("command" = "friendcomputer"))
+		frequency.post_signal(src, status_signal)
 	return
 
 //I am the icon meister. Bow fefore me.	//>fefore

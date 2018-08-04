@@ -489,7 +489,7 @@
 /obj/item/melee/blood_magic/shackles/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(iscultist(user) && iscarbon(target) && proximity)
 		var/mob/living/carbon/C = target
-		if(C.get_num_arms() >= 2 || C.get_arm_ignore())
+		if(C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore())
 			CuffAttack(C, user)
 		else
 			user.visible_message("<span class='cultitalic'>This victim doesn't have enough arms to complete the restraint!</span>")

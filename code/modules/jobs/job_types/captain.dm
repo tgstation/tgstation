@@ -52,6 +52,13 @@ Captain
 
 	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/captain)
 
+/datum/outfit/job/captain/hardsuit
+	name = "Captain (Hardsuit)"
+
+	mask = /obj/item/clothing/mask/gas/sechailer
+	suit = /obj/item/clothing/suit/space/hardsuit/captain
+	suit_store = /obj/item/tank/internals/oxygen
+
 /*
 Head of Personnel
 */

@@ -31,6 +31,21 @@
 /*
  * Costume
  */
+/obj/item/clothing/suit/hooded/flashsuit
+	name = "flashy costume"
+	desc = "What did you expect?"
+	icon_state = "flashsuit"
+	item_state = "armor"
+	body_parts_covered = CHEST|GROIN
+	hoodtype = /obj/item/clothing/head/hooded/flashsuit
+
+/obj/item/clothing/head/hooded/flashsuit
+	name = "flash button"
+	desc = "You will learn to fear the flash."
+	icon_state = "flashsuit"
+	body_parts_covered = HEAD
+	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACIALHAIR|HIDEFACE|HIDEMASK
+
 /obj/item/clothing/suit/pirate
 	name = "pirate coat"
 	desc = "Yarr."
@@ -599,7 +614,10 @@
 	name = "ghost sheet"
 	desc = "The hands float by themselves, so it's extra spooky."
 	icon_state = "ghost_sheet"
-	item_state = "ghost_sheet_item"
+	item_state = "ghost_sheet"
+	throwforce = 0
+	throw_speed = 1
+	throw_range = 2
 	w_class = WEIGHT_CLASS_TINY
-	flags_inv = HIDEGLOVES|HIDEMASK|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEGLOVES|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	alternate_worn_layer = UNDER_HEAD_LAYER
