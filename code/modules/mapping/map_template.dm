@@ -22,7 +22,7 @@
 		height = bounds[MAP_MAXY]
 	return bounds
 
-/datum/map_template/proc/initTemplateBounds(var/list/bounds)
+/datum/parsed_map/proc/initTemplateBounds()
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
@@ -62,7 +62,7 @@
 	repopulate_sorted_areas()
 
 	//initialize things that are normally initialized after map load
-	initTemplateBounds(bounds)
+	parsed.initTemplateBounds()
 	smooth_zlevel(world.maxz)
 	log_game("Z-level [name] loaded at at [x],[y],[world.maxz]")
 
@@ -87,7 +87,7 @@
 		repopulate_sorted_areas()
 
 	//initialize things that are normally initialized after map load
-	initTemplateBounds(bounds)
+	parsed.initTemplateBounds()
 
 	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
 	return bounds
