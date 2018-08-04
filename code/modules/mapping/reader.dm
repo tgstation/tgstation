@@ -52,10 +52,6 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 	Master.StopLoadingMap()
 
 /proc/_load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
-	var/tfile = dmm_file//the map file we're creating
-	if(isfile(tfile))
-		tfile = file2text(tfile)
-
 	if(!x_offset)
 		x_offset = 1
 	if(!y_offset)
@@ -63,7 +59,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 	if(!z_offset)
 		z_offset = world.maxz + 1
 
-	var/datum/parsed_map/parsed = new(tfile, x_offset, y_offset, z_offset, x_lower, x_upper, y_lower, y_upper, measureOnly, cropMap)
+	var/datum/parsed_map/parsed = new(dmm_file, x_offset, y_offset, z_offset, x_lower, x_upper, y_lower, y_upper, measureOnly, cropMap)
 	if(parsed.bounds[1] == 1.#INF) // Shouldn't need to check every item
 		parsed.bounds = null
 	else if(!measureOnly)
@@ -71,6 +67,12 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 	return parsed
 
 /datum/parsed_map/New(tfile, x_offset, y_offset, z_offset, x_lower, x_upper, y_lower, y_upper, measureOnly, cropMap)
+	if(isfile(tfile))
+		tfile = file2text(tfile)
+	else if(isnull(tfile))
+		// create a new datum without loading a map
+		return
+
 	var/stored_index = 1
 
 	//multiz lool
