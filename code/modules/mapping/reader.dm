@@ -22,13 +22,12 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 	// /"([a-zA-Z]+)" = \(((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}/g
 	var/static/regex/dmmRegex = new/regex({""(\[a-zA-Z]+)" = \\(((?:.|\n)*?)\\)\n(?!\t)|\\((\\d+),(\\d+),(\\d+)\\) = \\{"(\[a-zA-Z\n]*)"\\}"}, "g")
 
-/datum/maploader
-		// /^[\s\n]+"?|"?[\s\n]+$|^"|"$/g
+	// /^[\s\n]+"?|"?[\s\n]+$|^"|"$/g
 	var/static/regex/trimQuotesRegex = new/regex({"^\[\\s\n]+"?|"?\[\\s\n]+$|^"|"$"}, "g")
-		// /^[\s\n]+|[\s\n]+$/
+	// /^[\s\n]+|[\s\n]+$/
 	var/static/regex/trimRegex = new/regex("^\[\\s\n]+|\[\\s\n]+$", "g")
 	#ifdef TESTING
-	var/turfsSkipped
+	var/turfsSkipped = 0
 	#endif
 
 /**
@@ -42,19 +41,31 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
  *
  */
 /proc/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, lower_crop_x as num,  lower_crop_y as num, upper_crop_x as num, upper_crop_y as num, placeOnTop as num)
-	var/static/datum/maploader/loader = new
-
 	//How I wish for RAII
 	Master.StartLoadingMap()
+	. = _load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, lower_crop_x, upper_crop_x, lower_crop_y, upper_crop_y, placeOnTop)
 	#ifdef TESTING
-	loader.turfsSkipped = 0
-	#endif
-	. = loader.load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, lower_crop_x, upper_crop_x, lower_crop_y, upper_crop_y, placeOnTop)
-	#ifdef TESTING
-	if(loader.turfsSkipped)
+	var/datum/parsed_map/P = .
+	if(P && P.turfsSkipped)
 		testing("Skipped loading [turfsSkipped] default turfs")
 	#endif
 	Master.StopLoadingMap()
+
+/proc/_load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
+	var/tfile = dmm_file//the map file we're creating
+	if(isfile(tfile))
+		tfile = file2text(tfile)
+
+	if(!x_offset)
+		x_offset = 1
+	if(!y_offset)
+		y_offset = 1
+	if(!z_offset)
+		z_offset = world.maxz + 1
+
+	var/datum/parsed_map/parsed = new(tfile, x_offset, y_offset, z_offset, x_lower, x_upper, y_lower, y_upper, measureOnly, cropMap)
+	parsed.load(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
+	return parsed
 
 /datum/parsed_map/New(tfile, x_offset, y_offset, z_offset, x_lower, x_upper, y_lower, y_upper, measureOnly, cropMap)
 	var/stored_index = 1
@@ -128,27 +139,14 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 			bounds[MAP_MAXX] = CLAMP(max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx), x_lower, x_upper)
 		CHECK_TICK
 
-/datum/maploader/proc/load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
-	var/tfile = dmm_file//the map file we're creating
-	if(isfile(tfile))
-		tfile = file2text(tfile)
-
-	if(!x_offset)
-		x_offset = 1
-	if(!y_offset)
-		y_offset = 1
-	if(!z_offset)
-		z_offset = world.maxz + 1
-
-	var/datum/parsed_map/parsed = new(tfile, x_offset, y_offset, z_offset, x_lower, x_upper, y_lower, y_upper, measureOnly, cropMap)
-
+/datum/parsed_map/proc/load(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
 	var/list/modelCache
 	var/space_key
 	if(!measureOnly)
-		modelCache = build_cache(parsed, no_changeturf)
+		modelCache = build_cache(no_changeturf)
 		space_key = modelCache[SPACE_KEY]
 
-	for(var/I in parsed.gridSets)
+	for(var/I in gridSets)
 		var/datum/grid_set/gset = I
 		if(!cropMap && !measureOnly && gset.ycrd > world.maxy)
 			world.maxy = gset.ycrd // Expand Y here.  X is expanded in the loop below
@@ -170,7 +168,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 					continue
 				if(gset.ycrd <= world.maxy && gset.ycrd >= 1)
 					gset.xcrd = gset.xcrdStart
-					for(var/tpos = 1 to length(line) - parsed.key_len + 1 step parsed.key_len)
+					for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
 						if((gset.xcrd - x_offset + 1) < x_lower || (gset.xcrd - x_offset + 1) > x_upper)			//Same as above.
 							++gset.xcrd
 							continue								//X cropping.
@@ -181,7 +179,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 								world.maxx = gset.xcrd
 
 						if(gset.xcrd >= 1)
-							var/model_key = copytext(line, tpos, tpos + parsed.key_len)
+							var/model_key = copytext(line, tpos, tpos + key_len)
 							var/no_afterchange = no_changeturf || zexpansion
 							if(!no_afterchange || (model_key != space_key))
 								var/list/cache = modelCache[model_key]
@@ -199,19 +197,19 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 
 		CHECK_TICK
 
-	var/list/bounds = parsed.bounds
+	var/list/bounds = src.bounds
 	if(bounds[1] == 1.#INF) // Shouldn't need to check every item
-		parsed.bounds = null
+		src.bounds = null
 	else if(!measureOnly && !no_changeturf)
 		for(var/t in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
 			var/turf/T = t
 			//we do this after we load everything in. if we don't; we'll have weird atmos bugs regarding atmos adjacent turfs
 			T.AfterChange(CHANGETURF_IGNORE_AIR)
-	return parsed
+	return src
 
-/datum/maploader/proc/build_cache(datum/parsed_map/parsed, no_changeturf)
+/datum/parsed_map/proc/build_cache(no_changeturf)
 	. = list()
-	var/list/grid_models = parsed.grid_models
+	var/list/grid_models = src.grid_models
 	for(var/model_key in grid_models)
 		var/model = grid_models[model_key]
 		var/list/members = list() //will contain all members (paths) in model (in our example : /turf/unsimulated/wall and /area/mine/explored)
@@ -283,7 +281,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 
 		.[model_key] = list(members, members_attributes)
 
-/datum/maploader/proc/build_coordinate(list/model, xcrd as num, ycrd as num, zcrd as num, no_changeturf as num, placeOnTop as num)
+/datum/parsed_map/proc/build_coordinate(list/model, xcrd as num, ycrd as num, zcrd as num, no_changeturf as num, placeOnTop as num)
 	var/index
 	var/list/members = model[1]
 	var/list/members_attributes = model[2]
@@ -346,7 +344,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 ////////////////
 
 //Instance an atom at (x,y,z) and gives it the variables in attributes
-/datum/maploader/proc/instance_atom(path,list/attributes, turf/crds, no_changeturf, placeOnTop)
+/datum/parsed_map/proc/instance_atom(path,list/attributes, turf/crds, no_changeturf, placeOnTop)
 	GLOB._preloader.setup(attributes, path)
 
 	if(crds)
@@ -369,13 +367,13 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 		stoplag()
 		SSatoms.map_loader_begin()
 
-/datum/maploader/proc/create_atom(path, crds)
+/datum/parsed_map/proc/create_atom(path, crds)
 	set waitfor = FALSE
 	. = new path (crds)
 
 //text trimming (both directions) helper proc
 //optionally removes quotes before and after the text (for variable name)
-/datum/maploader/proc/trim_text(what as text,trim_quotes=0)
+/datum/parsed_map/proc/trim_text(what as text,trim_quotes=0)
 	if(trim_quotes)
 		return trimQuotesRegex.Replace(what, "")
 	else
@@ -384,7 +382,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 
 //find the position of the next delimiter,skipping whatever is comprised between opening_escape and closing_escape
 //returns 0 if reached the last delimiter
-/datum/maploader/proc/find_next_delimiter_position(text as text,initial_position as num, delimiter=",",opening_escape="\"",closing_escape="\"")
+/datum/parsed_map/proc/find_next_delimiter_position(text as text,initial_position as num, delimiter=",",opening_escape="\"",closing_escape="\"")
 	var/position = initial_position
 	var/next_delimiter = findtext(text,delimiter,position,0)
 	var/next_opening = findtext(text,opening_escape,position,0)
@@ -399,7 +397,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 
 //build a list from variables in text form (e.g {var1="derp"; var2; var3=7} => list(var1="derp", var2, var3=7))
 //return the filled list
-/datum/maploader/proc/readlist(text as text, delimiter=",")
+/datum/parsed_map/proc/readlist(text as text, delimiter=",")
 
 	var/list/to_return = list()
 
@@ -452,7 +450,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 
 	return to_return
 
-/datum/maploader/Destroy()
+/datum/parsed_map/Destroy()
 	..()
 	return QDEL_HINT_HARDDEL_NOW
 
