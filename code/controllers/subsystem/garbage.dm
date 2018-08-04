@@ -181,7 +181,7 @@ SUBSYSTEM_DEF(garbage)
 				testing("GC: -- \ref[src] | [type] was unable to be GC'd --")
 				I.failures++
 			if (GC_QUEUE_HARDDELETE)
-				HardDelete(D)
+				//HardDelete(D)
 				if (MC_TICK_CHECK)
 					break
 				continue
