@@ -64,7 +64,10 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 		z_offset = world.maxz + 1
 
 	var/datum/parsed_map/parsed = new(tfile, x_offset, y_offset, z_offset, x_lower, x_upper, y_lower, y_upper, measureOnly, cropMap)
-	parsed.load(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
+	if(parsed.bounds[1] == 1.#INF) // Shouldn't need to check every item
+		parsed.bounds = null
+	else if(!measureOnly)
+		parsed.load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
 	return parsed
 
 /datum/parsed_map/New(tfile, x_offset, y_offset, z_offset, x_lower, x_upper, y_lower, y_upper, measureOnly, cropMap)
@@ -139,19 +142,16 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 			bounds[MAP_MAXX] = CLAMP(max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx), x_lower, x_upper)
 		CHECK_TICK
 
-/datum/parsed_map/proc/load(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
-	var/list/modelCache
-	var/space_key
-	if(!measureOnly)
-		modelCache = build_cache(no_changeturf)
-		space_key = modelCache[SPACE_KEY]
+/datum/parsed_map/proc/load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
+	var/list/modelCache = build_cache(no_changeturf)
+	var/space_key = modelCache[SPACE_KEY]
 
 	for(var/I in gridSets)
 		var/datum/grid_set/gset = I
-		if(!cropMap && !measureOnly && gset.ycrd > world.maxy)
+		if(!cropMap && gset.ycrd > world.maxy)
 			world.maxy = gset.ycrd // Expand Y here.  X is expanded in the loop below
 		var/zexpansion = gset.zcrd > world.maxz
-		if(zexpansion && !measureOnly)
+		if(zexpansion)
 			if(cropMap)
 				continue
 			else
@@ -161,46 +161,43 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 				WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
 
 		var/maxx = gset.xcrdStart
-		if(!measureOnly)
-			for(var/line in gset.gridLines)
-				if((gset.ycrd - y_offset + 1) < y_lower || (gset.ycrd - y_offset + 1) > y_upper)				//Reverse operation and check if it is out of bounds of cropping.
-					--gset.ycrd
-					continue
-				if(gset.ycrd <= world.maxy && gset.ycrd >= 1)
-					gset.xcrd = gset.xcrdStart
-					for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
-						if((gset.xcrd - x_offset + 1) < x_lower || (gset.xcrd - x_offset + 1) > x_upper)			//Same as above.
-							++gset.xcrd
-							continue								//X cropping.
-						if(gset.xcrd > world.maxx)
-							if(cropMap)
-								break
-							else
-								world.maxx = gset.xcrd
-
-						if(gset.xcrd >= 1)
-							var/model_key = copytext(line, tpos, tpos + key_len)
-							var/no_afterchange = no_changeturf || zexpansion
-							if(!no_afterchange || (model_key != space_key))
-								var/list/cache = modelCache[model_key]
-								if(!cache)
-									CRASH("Undefined model key in DMM: [model_key]")
-								build_coordinate(cache, gset.xcrd, gset.ycrd, gset.zcrd, no_afterchange, placeOnTop)
-							#ifdef TESTING
-							else
-								++turfsSkipped
-							#endif
-							CHECK_TICK
-						maxx = max(maxx, gset.xcrd)
-						++gset.xcrd
+		for(var/line in gset.gridLines)
+			if((gset.ycrd - y_offset + 1) < y_lower || (gset.ycrd - y_offset + 1) > y_upper)				//Reverse operation and check if it is out of bounds of cropping.
 				--gset.ycrd
+				continue
+			if(gset.ycrd <= world.maxy && gset.ycrd >= 1)
+				gset.xcrd = gset.xcrdStart
+				for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
+					if((gset.xcrd - x_offset + 1) < x_lower || (gset.xcrd - x_offset + 1) > x_upper)			//Same as above.
+						++gset.xcrd
+						continue								//X cropping.
+					if(gset.xcrd > world.maxx)
+						if(cropMap)
+							break
+						else
+							world.maxx = gset.xcrd
+
+					if(gset.xcrd >= 1)
+						var/model_key = copytext(line, tpos, tpos + key_len)
+						var/no_afterchange = no_changeturf || zexpansion
+						if(!no_afterchange || (model_key != space_key))
+							var/list/cache = modelCache[model_key]
+							if(!cache)
+								CRASH("Undefined model key in DMM: [model_key]")
+							build_coordinate(cache, gset.xcrd, gset.ycrd, gset.zcrd, no_afterchange, placeOnTop)
+						#ifdef TESTING
+						else
+							++turfsSkipped
+						#endif
+						CHECK_TICK
+					maxx = max(maxx, gset.xcrd)
+					++gset.xcrd
+			--gset.ycrd
 
 		CHECK_TICK
 
 	var/list/bounds = src.bounds
-	if(bounds[1] == 1.#INF) // Shouldn't need to check every item
-		src.bounds = null
-	else if(!measureOnly && !no_changeturf)
+	if(!no_changeturf)
 		for(var/t in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
 			var/turf/T = t
 			//we do this after we load everything in. if we don't; we'll have weird atmos bugs regarding atmos adjacent turfs
