@@ -1,6 +1,6 @@
-#define TICK_LIMIT_RUNNING 80
-#define TICK_LIMIT_TO_RUN 70
-#define TICK_LIMIT_MC 70
+#define TICK_LIMIT_RUNNING 65
+#define TICK_LIMIT_TO_RUN 60
+#define TICK_LIMIT_MC 55
 #define TICK_LIMIT_MC_INIT_DEFAULT 98
 
 #define TICK_USAGE world.tick_usage //for general usage
