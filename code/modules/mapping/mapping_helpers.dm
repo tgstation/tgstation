@@ -144,9 +144,6 @@
 		return
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
 	if(airlock)
-//		if(airlock.cyclelinkeddir)
-//			log_world("### MAP WARNING, [src] at [AREACOORD(src)] tried to set [airlock] cyclelinkeddir, but it's already set!")
-//		else
 		airlock.unres_sides ^= dir
 	else
 		log_world("### MAP WARNING, [src] failed to find an airlock at [AREACOORD(src)]")
