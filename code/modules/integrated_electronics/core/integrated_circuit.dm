@@ -25,6 +25,7 @@
 	var/removable = TRUE 			// Determines if a circuit is removable from the assembly.
 	var/displayed_name = ""
 	var/demands_object_input = FALSE
+	var/can_input_object_when_closed = FALSE
 	
 	
 /*
