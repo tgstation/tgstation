@@ -1,22 +1,23 @@
 /mob/living/simple_animal/hostile/zombie
-	name = "Sickly looking individual."
-	desc = "Needs a hug."
+	name = "Shambling Corpse"
+	desc = "When there is no more room in hell, the dead will walk in outer space."
 	icon = 'icons/mob/simple_human.dmi'
-	icon_state = "syndicate"
-	icon_living = "syndicate"
+	icon_state = "zombie"
+	icon_living = "zombie"
 	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	speak_chance = 0
 	stat_attack = UNCONSCIOUS //braains
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
-	melee_damage_lower = 10
-	melee_damage_upper = 10
-	attacktext = "punches"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	melee_damage_lower = 21
+	melee_damage_upper = 21
+	attacktext = "bites"
+	attack_sound = 'sound/hallucinations/growl1.ogg'
 	a_intent = INTENT_HARM
-	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
-	unsuitable_atmos_damage = 15
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0
+	spacewalk = FALSE
 	status_flags = CANPUSH
 	del_on_death = 1
 	var/zombiejob = "Medical Doctor"
