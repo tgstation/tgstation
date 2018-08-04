@@ -2527,7 +2527,6 @@
 #include "code\modules\superbox\howl.dm"
 #include "code\modules\superbox\hullrot.dm"
 #include "code\modules\superbox\medals.dm"
-#include "code\modules\superbox\missions.dm"
 #include "code\modules\superbox\plaques.dm"
 #include "code\modules\superbox\sabotage.dm"
 #include "code\modules\superbox\shuttles.dm"
