@@ -162,11 +162,6 @@
 	push_data()
 	activate_pin(2)
 
-//please delete at a later date after people stop using the old named circuit
-/obj/item/integrated_circuit/input/adv_med_scanner/old
-	name = "integrated advanced medical analyser"
-	spawn_flags = 0
-
 /obj/item/integrated_circuit/input/slime_scanner
 	name = "slime_scanner"
 	desc = "A very small version of the xenobio analyser. This allows the machine to know every needed properties of slime. Output mutation list is non-associative."
@@ -729,8 +724,7 @@
 	inputs = list(
 		"target NTNet addresses"= IC_PINTYPE_STRING,
 		"data to send"			= IC_PINTYPE_STRING,
-		"secondary text"		= IC_PINTYPE_STRING,
-		"passkey"				= IC_PINTYPE_STRING,							//No this isn't a real passkey encryption scheme but that's why you keep your nodes secure so no one can find it out!
+		"secondary text"		= IC_PINTYPE_STRING
 		)
 	outputs = list(
 		"address received"			= IC_PINTYPE_STRING,
@@ -756,11 +750,10 @@
 	var/target_address = get_pin_data(IC_INPUT, 1)
 	var/message = get_pin_data(IC_INPUT, 2)
 	var/text = get_pin_data(IC_INPUT, 3)
-	var/key = get_pin_data(IC_INPUT, 4)
 
 	var/datum/netdata/data = new
 	data.recipient_ids = splittext(target_address, ";")
-	data.standard_format_data(message, text, key)
+	data.standard_format_data(message, text, assembly ? strtohex(XorEncrypt(json_encode(assembly.access_card.access), SScircuit.cipherkey)) : null)
 	ntnet_send(data)
 
 /obj/item/integrated_circuit/input/ntnet_receive(datum/netdata/data)
@@ -777,9 +770,9 @@
 	name = "Low level NTNet transreceiver"
 	desc = "Enables the sending and receiving of messages over NTNet via packet data protocol. Allows advanced control of message contents and signalling. Must use associative lists. Outputs associative list. Has a slower transmission rate than normal NTNet circuits, due to increased data processing complexity."
 	extended_desc = "Data can be sent or received using the second pin on each side, \
-	with additonal data reserved for the third pin. When a message is received, the second activation pin \
-	will pulse whatever is connected to it. Pulsing the first activation pin will send a message. Messages \
-	can be sent to multiple recepients. Addresses must be separated with a semicolon, like this: Address1;Address2;Etc."
+	When a message is received, the second activation pin will pulse whatever is connected to it. \
+	Pulsing the first activation pin will send a message. Messages can be sent to multiple recepients. \
+	Addresses must be separated with a semicolon, like this: Address1;Address2;Etc."
 	icon_state = "signal"
 	complexity = 4
 	cooldown_per_use = 10
@@ -809,6 +802,7 @@
 	var/datum/netdata/data = new
 	data.recipient_ids = splittext(target_address, ";")
 	data.data = message
+	data.passkey = assembly.access_card.access
 	ntnet_send(data)
 
 /obj/item/integrated_circuit/input/ntnet_advanced/ntnet_receive(datum/netdata/data)

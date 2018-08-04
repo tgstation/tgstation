@@ -547,3 +547,28 @@
 		file_data["admins"]["[i]"] = A.rank.name
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
+
+/datum/controller/subsystem/ticker/proc/update_everything_flag_in_db()
+	for(var/datum/admin_rank/R in GLOB.admin_ranks)
+		var/list/flags = list()
+		if(R.include_rights == R_EVERYTHING)
+			flags += "flags"
+		if(R.exclude_rights == R_EVERYTHING)
+			flags += "exclude_flags"
+		if(R.can_edit_rights == R_EVERYTHING)
+			flags += "can_edit_flags"
+		if(!flags.len)
+			continue
+		var/flags_to_check = flags.Join(" != [R_EVERYTHING] AND ") + " != [R_EVERYTHING]"
+		var/datum/DBQuery/query_check_everything_ranks = SSdbcore.NewQuery("SELECT flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")] WHERE rank = '[R.name]' AND ([flags_to_check])")
+		if(!query_check_everything_ranks.Execute())
+			qdel(query_check_everything_ranks)
+			return
+		if(query_check_everything_ranks.NextRow()) //no row is returned if the rank already has the correct flag value
+			var/flags_to_update = flags.Join(" = [R_EVERYTHING], ") + " = [R_EVERYTHING]"
+			var/datum/DBQuery/query_update_everything_ranks = SSdbcore.NewQuery("UPDATE [format_table_name("admin_ranks")] SET [flags_to_update] WHERE rank = '[R.name]'")
+			if(!query_update_everything_ranks.Execute())
+				qdel(query_update_everything_ranks)
+				return
+			qdel(query_update_everything_ranks)
+		qdel(query_check_everything_ranks)

@@ -577,6 +577,7 @@ SUBSYSTEM_DEF(ticker)
 	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
 
 	save_admin_data()
+	update_everything_flag_in_db()
 	SEND_SOUND(world, round_end_sound)
 	text2file(login_music, "data/last_round_lobby_music.txt")
 

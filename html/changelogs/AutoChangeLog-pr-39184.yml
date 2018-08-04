@@ -1,4 +1,0 @@
-author: "WJohn"
-delete-after: True
-changes: 
-  - rscadd: "The white ship is no longer stuck to flying around the station z level. It can now fly around its own spawn's level and the derelict's level too (these sometimes will be the same level)."

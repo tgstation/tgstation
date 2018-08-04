@@ -198,7 +198,8 @@
 		preview_template = null
 
 	if(!preview_shuttle)
-		load_template(loading_template)
+		if(load_template(loading_template))
+			preview_shuttle.linkup(loading_template, destination_port)
 		preview_template = loading_template
 
 	// get the existing shuttle information, if any
@@ -232,7 +233,7 @@
 	preview_shuttle.movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
 	preview_shuttle.initiate_docking(D)
 	preview_shuttle.movement_force = force_memory
-	
+
 	. = preview_shuttle
 
 	// Shuttle state involves a mode and a timer based on world.time, so
@@ -249,8 +250,8 @@
 	existing_shuttle = null
 	selected = null
 
-/obj/machinery/shuttle_manipulator/proc/load_template(
-	datum/map_template/shuttle/S)
+/obj/machinery/shuttle_manipulator/proc/load_template(datum/map_template/shuttle/S)
+	. = FALSE
 	// load shuttle template, centred at shuttle import landmark,
 	var/turf/landmark_turf = get_turf(locate(/obj/effect/landmark/shuttle_import) in GLOB.landmarks_list)
 	S.load(landmark_turf, centered = TRUE)
@@ -266,18 +267,10 @@
 	for(var/T in affected)
 		for(var/obj/docking_port/P in T)
 			if(istype(P, /obj/docking_port/mobile))
-				var/obj/docking_port/mobile/M = P
 				found++
 				if(found > 1)
 					qdel(P, force=TRUE)
 					log_world("Map warning: Shuttle Template [S.mappath] has multiple mobile docking ports.")
-				else if(!M.timid)
-					// The shuttle template we loaded isn't "timid" which means
-					// it's already registered with the shuttles subsystem.
-					// This is a bad thing.
-					stack_trace("Template [S] is non-timid! Unloading.")
-					M.jumpToNullSpace()
-					return
 				else
 					preview_shuttle = P
 			if(istype(P, /obj/docking_port/stationary))
@@ -293,6 +286,7 @@
 		return
 	//Everything fine
 	S.on_bought()
+	return TRUE
 
 /obj/machinery/shuttle_manipulator/proc/unload_preview()
 	if(preview_shuttle)

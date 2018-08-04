@@ -280,6 +280,14 @@
 	name = "White Ship (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/white_ship
 
+/obj/item/circuitboard/computer/white_ship/pod
+	name = "Salvage Pod (Computer Board)"
+	build_path = /obj/machinery/computer/shuttle/white_ship/pod
+
+/obj/item/circuitboard/computer/white_ship/pod/recall
+	name = "Salvage Pod Recall (Computer Board)"
+	build_path = /obj/machinery/computer/shuttle/white_ship/pod/recall
+
 /obj/item/circuitboard/computer/auxillary_base
 	name = "Auxillary Base Management Console (Computer Board)"
 	build_path = /obj/machinery/computer/auxillary_base

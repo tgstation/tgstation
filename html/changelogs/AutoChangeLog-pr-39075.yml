@@ -1,5 +1,0 @@
-author: "Cobby"
-delete-after: True
-changes: 
-  - bugfix: "having higher sanity is no longer punished by making you enter crit faster"
-  - balance: "you can have 100 mood instead of 99 before it starts slowly decreasing"

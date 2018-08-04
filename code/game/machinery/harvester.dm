@@ -169,3 +169,10 @@
 /obj/machinery/harvester/relaymove(mob/user)
 	if (!state_open)
 		container_resist(user)
+
+/obj/machinery/harvester/examine(mob/user)
+	..()
+	if(state_open)
+		to_chat(user, "<span class='notice'>[src] must be closed before harvesting.</span>")
+	else
+		to_chat(user, "<span class='notice'>Alt-click [src] to start harvesting.</span>")
