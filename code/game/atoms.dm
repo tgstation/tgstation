@@ -175,6 +175,10 @@
 			else
 				M.forceMove(src)
 
+//common name
+/atom/proc/update_multiz(prune_on_fail = FALSE)
+	return FALSE
+
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	qdel(giver)
 	return null

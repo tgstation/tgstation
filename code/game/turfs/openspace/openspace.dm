@@ -17,16 +17,19 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/openspace/LateInitialize()
-	if(!setup_multiz())
-		ChangeTurf(/turf/open/floor/plating)
+	update_multiz(TRUE)
 
 /turf/open/openspace/Destroy()
 	vis_contents.Cut()
 	return ..()
 
-/turf/open/openspace/proc/setup_multiz()
+/turf/open/openspace/update_multiz(prune_on_fail = FALSE)
+	. = ..()
+	vis_contents.Cut()
 	var/turf/T = below()
 	if(!T)
+		if(prune_on_fail)
+			ChangeTurf(/turf/open/floor/plating)
 		return FALSE
 	vis_contents += T
 	return TRUE
@@ -34,12 +37,12 @@
 /turf/open/openspace/multiz_turf_del(turf/T, dir)
 	if(dir != DOWN)
 		return
-	vis_contents -= T
+	update_multiz()
 
 /turf/open/openspace/multiz_turf_new(turf/T, dir)
 	if(dir != DOWN)
 		return
-	vis_contents += T
+	update_multiz()
 
 /turf/open/openspace/zAirIn()
 	return TRUE
