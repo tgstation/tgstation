@@ -476,12 +476,12 @@
 		detail_color = D.detail_color
 		update_icon()
 	else
-		if(user.a_intent != "help" || !(opened))
+		if(user.a_intent != "help")
 			return ..()
 		var/list/input_selection = list()
 		//Check all the components asking for an input
 		for(var/obj/item/integrated_circuit/input in assembly_components)
-			if(input.demands_object_input)
+			if((input.demands_object_input && opened) || (input.demands_object_input && can_input_object_when_closed))
 				var/i = 0
 				//Check if there is another component with the same name and append a number for identification
 				for(var/s in input_selection)
