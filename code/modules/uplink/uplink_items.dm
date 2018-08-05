@@ -1293,6 +1293,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 4
 	restricted = TRUE
 
+/datum/uplink_item/implants/stealthimplant
+	name = "Stealth Implant"
+	desc = "This one-of-a-kind implant will make you almost invisible if you play your cards right."
+	item = /obj/item/implanter/stealth
+	cost = 8
+
 // Cybernetics
 /datum/uplink_item/cyber_implants
 	category = "Cybernetic Implants"
