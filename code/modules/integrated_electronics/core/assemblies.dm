@@ -33,8 +33,8 @@
 	assembly_atom = parent
 	if(!istype(assembly_atom))//So many parts of circuits use the parent as an atom that we define it as a var
 		return COMPONENT_INCOMPATIBLE
-	max_circuits = _max_circuits
-	max_complexity = _max_complexity
+	max_circuits = round(_max_circuits)
+	max_complexity = round(_max_complexity)
 	allowed_circuit_action_flags = _allowed_circuit_action_flags
 	can_fire_equipped = _can_fire_equipped
 	START_PROCESSING(SScircuit, src)
@@ -573,7 +573,6 @@
 /obj/item/electronic_assembly/attackby(obj/item/I, mob/living/user)
 	if(can_anchor && default_unfasten_wrench(user, I, 20))
 		return
-	stack_trace("failed [flags_1] [I.tool_behaviour] [!(flags_1 & NODECONSTRUCT_1)] [I.tool_behaviour == TOOL_WRENCH]")
 	return ..()
 
 /obj/item/electronic_assembly/attack_tk(mob/user)
@@ -617,6 +616,38 @@
 	name = "type-f electronic assembly"
 	icon_state = "setup_small_pda"
 	desc = "It's a case, for building small electronics with. This one resembles a PDA."
+
+/obj/item/electronic_assembly/small
+	name = "electronic device"
+	icon_state = "setup_device"
+	desc = "It's a case, for building tiny-sized electronics with."
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/electronic_assembly/small/ComponentInitialize()
+	AddComponent(/datum/component/integrated_electronic, IC_MAX_SIZE_BASE/2, IC_COMPLEXITY_BASE/2)
+
+/obj/item/electronic_assembly/small/default
+	name = "type-a electronic device"
+
+/obj/item/electronic_assembly/small/cylinder
+	name = "type-b electronic device"
+	icon_state = "setup_device_cylinder"
+	desc = "It's a case, for building tiny-sized electronics with. This one has a cylindrical design."
+
+/obj/item/electronic_assembly/small/scanner
+	name = "type-c electronic device"
+	icon_state = "setup_device_scanner"
+	desc = "It's a case, for building tiny-sized electronics with. This one has a scanner-like design."
+
+/obj/item/electronic_assembly/small/hook
+	name = "type-d electronic device"
+	icon_state = "setup_device_hook"
+	desc = "It's a case, for building tiny-sized electronics with. This one looks like it has a belt clip, but it's purely decorative."
+
+/obj/item/electronic_assembly/small/box
+	name = "type-e electronic device"
+	icon_state = "setup_device_box"
+	desc = "It's a case, for building tiny-sized electronics with. This one has a boxy design."
 
 /obj/item/electronic_assembly/medium
 	name = "electronic mechanism"
@@ -794,6 +825,15 @@
 
 /obj/item/wallframe/integrated_screen/light/ComponentInitialize()
 	AddComponent(/datum/component/integrated_electronic, IC_MAX_SIZE_BASE, IC_COMPLEXITY_BASE)
+
+/obj/item/wallframe/integrated_screen/tiny
+	name = "tiny wall-mounted electronic assembly"
+	icon_state = "setup_wallmount_tiny"
+	desc = "It's a case, for building tiny electronics with. It has a magnetized backing to allow it to stick to walls, but you'll still need to wrench the anchoring bolts in place to keep it on."
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/wallframe/integrated_screen/tiny/ComponentInitialize()
+	AddComponent(/datum/component/integrated_electronic, IC_MAX_SIZE_BASE/2, IC_COMPLEXITY_BASE/2)
 
 /obj/item/wallframe/integrated_screen/try_build(turf/on_wall, mob/user)
 	if(..())

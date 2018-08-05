@@ -11,7 +11,3 @@
 
 	healths = new /obj/screen/healths/construct()
 	infodisplay += healths
-
-/mob/living/simple_animal/hostile/construct/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/constructs(src)
