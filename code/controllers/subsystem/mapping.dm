@@ -202,7 +202,7 @@ SUBSYSTEM_DEF(mapping)
 	// load the maps
 	for (var/file in files)
 		var/full_path = "_maps/[path]/[file]"
-		var/datum/parsed_map/parsed = load_map(file(full_path), 0, 0, start_z + files[file], no_changeturf = TRUE)
+		var/datum/parsed_map/parsed = load_map(file(full_path), 1, 1, start_z + files[file], no_changeturf = TRUE)
 		if(!parsed?.bounds)
 			errorList |= full_path
 		else
