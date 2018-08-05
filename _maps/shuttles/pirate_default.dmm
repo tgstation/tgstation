@@ -167,7 +167,7 @@
 /obj/structure/barricade/wooden/crude,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/pod/dark,
-/area/shuttle/pirate)
+/area/shuttle/pirate/vault)
 "aq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
@@ -186,7 +186,7 @@
 	dir = 1
 	},
 /turf/open/floor/pod/light,
-/area/shuttle/pirate)
+/area/shuttle/pirate/vault)
 "ar" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack{
@@ -207,7 +207,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/pod/light,
-/area/shuttle/pirate)
+/area/shuttle/pirate/vault)
 "as" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -229,7 +229,7 @@
 	},
 /obj/machinery/recharger,
 /turf/open/floor/pod/light,
-/area/shuttle/pirate)
+/area/shuttle/pirate/vault)
 "at" = (
 /obj/machinery/light/small,
 /obj/effect/decal/cleanable/dirt,
@@ -251,7 +251,7 @@
 	pixel_y = 10
 	},
 /turf/open/floor/pod/light,
-/area/shuttle/pirate)
+/area/shuttle/pirate/vault)
 "au" = (
 /obj/machinery/door/airlock/hatch{
 	id_tag = "piratebridgebolt";
@@ -279,7 +279,7 @@
 	pixel_x = -28
 	},
 /turf/open/floor/pod/dark,
-/area/shuttle/pirate)
+/area/shuttle/pirate/vault)
 "ax" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -289,7 +289,7 @@
 	dir = 4
 	},
 /turf/open/floor/pod/dark,
-/area/shuttle/pirate)
+/area/shuttle/pirate/vault)
 "ay" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Armory"
@@ -299,7 +299,7 @@
 	dir = 4
 	},
 /turf/open/floor/pod/dark,
-/area/shuttle/pirate)
+/area/shuttle/pirate/vault)
 "az" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -665,7 +665,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/pod/dark,
-/area/shuttle/pirate)
+/area/shuttle/pirate/vault)
 "bx" = (
 /obj/machinery/door/airlock{
 	name = "Captain's Quarters"
@@ -744,7 +744,7 @@
 	dir = 1
 	},
 /turf/open/floor/pod/dark,
-/area/shuttle/pirate)
+/area/shuttle/pirate/vault)
 "bH" = (
 /obj/structure/chair/wood/normal,
 /obj/machinery/light/small{
@@ -912,6 +912,15 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
+"df" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 4;
+	faction = list("pirate");
+	icon_state = "standard_lethal";
+	mode = 1
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/pirate)
 "ek" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -1075,6 +1084,18 @@
 /obj/machinery/vending/boozeomat/all_access,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/pirate)
+"wR" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 8;
+	faction = list("pirate");
+	icon_state = "standard_lethal";
+	mode = 1
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/pirate/vault)
+"Oe" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/pirate/vault)
 
 (1,1,1) = {"
 af
@@ -1083,12 +1104,12 @@ af
 fW
 aj
 aj
-aj
-aj
-aj
-aj
-aj
-fW
+Oe
+Oe
+Oe
+Oe
+Oe
+wR
 af
 af
 af
@@ -1106,7 +1127,7 @@ aw
 bw
 bF
 as
-aj
+Oe
 aj
 fW
 af
@@ -1119,12 +1140,12 @@ aj
 aj
 aj
 aj
-aj
+Oe
 ax
 aq
 ar
 at
-aj
+Oe
 aM
 ep
 aH
@@ -1137,12 +1158,12 @@ af
 af
 af
 af
-aj
+Oe
 ay
-aj
-aj
-aj
-aj
+Oe
+Oe
+Oe
+Oe
 br
 ep
 er
@@ -1376,7 +1397,7 @@ aj
 aj
 aj
 aj
-fW
+df
 af
 af
 af
