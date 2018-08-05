@@ -200,7 +200,7 @@
 	if(!essence)
 		death()
 
-/mob/living/simple_animal/revenant/dust()
+/mob/living/simple_animal/revenant/dust(just_ash, drop_items, force)
 	death()
 
 /mob/living/simple_animal/revenant/gib()

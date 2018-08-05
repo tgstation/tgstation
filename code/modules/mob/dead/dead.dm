@@ -19,7 +19,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	set_focus(src)
 	return INITIALIZE_HINT_NORMAL
 
-/mob/dead/dust()	//ghosts can't be vaporised.
+/mob/dead/dust(just_ash, drop_items, force)	//ghosts can't be vaporised.
 	return
 
 /mob/dead/gib()		//ghosts can't be gibbed.

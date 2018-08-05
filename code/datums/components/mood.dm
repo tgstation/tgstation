@@ -77,7 +77,7 @@
 			var/datum/mood_event/event = mood_events[i]
 			msg += event.description
 	else
-		msg += "<span class='nicegreen'>Nothing special has happened to me lately!<span>\n"
+		msg += "<span class='nicegreen'>I don't have much of a reaction to anything right now.<span>\n"
 	to_chat(user || parent, msg)
 
 /datum/component/mood/proc/update_mood() //Called whenever a mood event is added or removed

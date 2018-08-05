@@ -141,6 +141,18 @@
 	reward = 3000
 	wanted_types = list(/obj/item/organ/tail/lizard)
 
+/datum/bounty/item/assistant/cat_tail
+	name = "Cat Tail"
+	description = "Central Command has run out of heavy duty pipe cleaners. Can you ship over a cat tail to help us out?"
+	reward = 3000
+	wanted_types = list(/obj/item/organ/tail/cat)
+
+/datum/bounty/item/assistant/tail_whip
+	name = "Nine Tails whip"
+	description = "Commander Jackson is looking for a fine addition to her exotic weapons collection. She will reward you handsomely for either a Cat or Liz o' Nine Tails."
+	reward = 4000
+	wanted_types = list(/obj/item/melee/chainofcommand/tailwhip)
+
 /datum/bounty/item/assistant/shard
 	name = "Shards"
 	description = "A killer clown has been stalking CentCom, and staff have been unable to catch her because she's not wearing shoes. Please ship some shards so that a booby trap can be constructed."
@@ -150,7 +162,7 @@
 
 /datum/bounty/item/assistant/comfy_chair
 	name = "Comfy Chairs"
-	description = "Commander Pat is unhappy with his chair. He claims it hurts his back. Ship some alternatives out to humor him. "
+	description = "Commander Pat is unhappy with his chair. He claims it hurts his back. Ship some alternatives out to humor him."
 	reward = 1500
 	required_count = 5
 	wanted_types = list(/obj/structure/chair/comfy)

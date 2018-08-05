@@ -39,12 +39,12 @@
 	timeout = 2400
 
 /datum/mood_event/gross_food
-	description = "<span class='nicegreen'>I really didn't like that food.</span>\n"
+	description = "<span class='warning'>I really didn't like that food.</span>\n"
 	mood_change = -2
 	timeout = 2400
 
 /datum/mood_event/disgusting_food
-	description = "<span class='nicegreen'>That food was disgusting!</span>\n"
+	description = "<span class='warning'>That food was disgusting!</span>\n"
 	mood_change = -4
 	timeout = 2400
 
