@@ -224,6 +224,37 @@
 		. = 1
 	..()
 
+/datum/reagent/consumable/gutlunch_milk
+	name = "Gutlunch milk"
+	id = "gutlunch_milk"
+	description = "An opaque white liquid produced by the mammary glands of gutlunchs."
+	color = "#DADB90" // rgb: 218, 219, 144
+	taste_description = "salty milk"
+	glass_icon_state = "glass_white"
+	glass_name = "glass of gutlunch milk"
+	glass_desc = "White and nutritious goodness!"
+
+/datum/reagent/consumable/gutlunch_milk/on_mob_life(mob/living/carbon/M)
+	M.adjustToxLoss(-2, 0)
+	M.adjustBruteLoss(-1, 0)
+	M.adjustFireLoss(-1, 0)
+	..()
+	. = 1
+
+/datum/reagent/consumable/gutlunch_milk/on_mob_add(mob/living/M)
+	var/datum/dna/Mdna = M.has_dna()
+	if(Mdna && Mdna.species && (Mdna.species.id == "ashlizard" || Mdna.species.id == "lizard"))
+		to_chat(M, "<span class='notice'>Your scales feel hardened!</span>")
+		M.maxHealth += 10
+		M.health += 10
+
+/datum/reagent/consumable/gutlunch_milk/on_mob_delete(mob/living/M)
+	var/datum/dna/Mdna = M.has_dna()
+	if(Mdna && Mdna.species && (Mdna.species.id == "ashlizard" || Mdna.species.id == "lizard"))
+		to_chat(M, "<span class='notice'>Your scales no longer feel hardened.</span>")
+		M.maxHealth -= 10
+		M.health = min(M.health - 10, M.maxHealth)
+
 /datum/reagent/consumable/soymilk
 	name = "Soy Milk"
 	id = "soymilk"
