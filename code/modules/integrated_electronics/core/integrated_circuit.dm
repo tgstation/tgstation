@@ -5,7 +5,7 @@
 	icon_state = "template"
 	w_class = WEIGHT_CLASS_TINY
 	materials = list()				// To be filled later
-	var/obj/item/electronic_assembly/assembly // Reference to the assembly holding this circuit, if any.
+	var/datum/component/integrated_electronic/assembly // Reference to the component holding this circuit, if any.
 	var/extended_desc
 	var/list/inputs = list()
 	var/list/inputs_default = list()// Assoc list which will fill a pin with data upon creation.  e.g. "2" = 0 will set input pin 2 to equal 0 instead of null.
@@ -24,7 +24,7 @@
 	var/category_text = "NO CATEGORY THIS IS A BUG"	// To show up on circuit printer, and perhaps other places.
 	var/removable = TRUE 			// Determines if a circuit is removable from the assembly.
 	var/displayed_name = ""
-	
+
 /*
 	Integrated circuits are essentially modular machines.  Each circuit has a specific function, and combining them inside Electronic Assemblies allows
 a creative player the means to solve many problems.  Circuits are held inside an electronic assembly, and are wired using special tools.
@@ -143,7 +143,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	HTML += "<a href='?src=[REF(src)];rename=1'>\[Rename\]</a>  |  "
 	HTML += "<a href='?src=[REF(src)];scan=1'>\[Copy Ref\]</a>"
 	if(assembly && removable)
-		HTML += "  |  <a href='?src=[REF(assembly)];component=[REF(src)];remove=1'>\[Remove\]</a>"
+		HTML += "  |  <a href='?src=[REF(assembly)];circuit=[REF(src)];remove=1'>\[Remove\]</a>"
 	HTML += "<br>"
 
 	HTML += "<colgroup>"
@@ -369,7 +369,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 
 // Checks if the target object is reachable. Useful for various manipulators and manipulator-like objects.
-/obj/item/integrated_circuit/proc/check_target(atom/target, exclude_contents = FALSE, exclude_components = FALSE, exclude_self = FALSE)
+/obj/item/integrated_circuit/proc/check_target(atom/target, exclude_contents = FALSE, exclude_circuits = FALSE, exclude_self = FALSE)
 	if(!target)
 		return FALSE
 
@@ -378,8 +378,8 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	if(exclude_self && target == acting_object)
 		return FALSE
 
-	if(exclude_components && assembly)
-		if(target in assembly.assembly_components)
+	if(exclude_circuits && assembly)
+		if(target in assembly.assembly_circuits)
 			return FALSE
 
 		if(target == assembly.battery)

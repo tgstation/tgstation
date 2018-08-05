@@ -33,17 +33,16 @@
 
 /obj/item/integrated_circuit_printer/Initialize()
 	. = ..()
-	AddComponent(/datum/component/material_container, list(MAT_METAL), MINERAL_MATERIAL_AMOUNT * 25, TRUE, list(/obj/item/stack, /obj/item/integrated_circuit, /obj/item/electronic_assembly))
+	AddComponent(/datum/component/material_container, list(MAT_METAL), MINERAL_MATERIAL_AMOUNT * 25, TRUE, list(/obj/item/stack, /obj/item/integrated_circuit) + IC_ASSEMBLY_PATHS)
 
 /obj/item/integrated_circuit_printer/proc/print_program(mob/user)
 	if(!cloning)
 		return
-
 	visible_message("<span class='notice'>[src] has finished printing its assembly!</span>")
 	playsound(src, 'sound/items/poster_being_created.ogg', 50, TRUE)
-	var/obj/item/electronic_assembly/assembly = SScircuit.load_electronic_assembly(get_turf(src), program)
+	var/datum/component/integrated_electronic/assembly = SScircuit.load_electronic_assembly(get_turf(src), program)
 	assembly.creator = key_name(user)
-	assembly.investigate_log("was printed by [assembly.creator].", INVESTIGATE_CIRCUIT)
+	assembly.assembly_atom.investigate_log("was printed by [assembly.creator].", INVESTIGATE_CIRCUIT)
 	cloning = FALSE
 
 /obj/item/integrated_circuit_printer/attackby(obj/item/O, mob/user)
@@ -53,6 +52,7 @@
 			return TRUE
 		to_chat(user, "<span class='notice'>You install [O] into [src]. </span>")
 		upgraded = TRUE
+		interact(user)
 		return TRUE
 
 	if(istype(O, /obj/item/disk/integrated_circuit/upgrade/clone))
@@ -61,31 +61,32 @@
 			return TRUE
 		to_chat(user, "<span class='notice'>You install [O] into [src]. Circuit cloning will now be instant. </span>")
 		fast_clone = TRUE
+		interact(user)
 		return TRUE
 
-	if(istype(O, /obj/item/electronic_assembly))
-		var/obj/item/electronic_assembly/EA = O //microtransactions not included
-		if(EA.assembly_components.len)
+	var/datum/component/integrated_electronic/EA = O.GetComponent(/datum/component/integrated_electronic)
+	if(EA)
+		if(EA.assembly_circuits.len)
 			if(recycling)
 				return
 			if(!EA.opened)
-				to_chat(user, "<span class='warning'>You can't reach [EA]'s components to remove them!</span>")
+				to_chat(user, "<span class='warning'>You can't reach [O]'s components to remove them!</span>")
 				return
 			if(EA.battery)
-				to_chat(user, "<span class='warning'>Remove [EA]'s power cell first!</span>")
+				to_chat(user, "<span class='warning'>Remove [O]'s power cell first!</span>")
 				return
-			for(var/V in EA.assembly_components)
+			for(var/V in EA.assembly_circuits)
 				var/obj/item/integrated_circuit/IC = V
 				if(!IC.removable)
-					to_chat(user, "<span class='warning'>[EA] has irremovable components in the casing, preventing you from emptying it.</span>")
+					to_chat(user, "<span class='warning'>[O] has irremovable components in the casing, preventing you from emptying it.</span>")
 					return
-			to_chat(user, "<span class='notice'>You begin recycling [EA]'s components...</span>")
+			to_chat(user, "<span class='notice'>You begin recycling [O]'s components...</span>")
 			playsound(src, 'sound/items/electronic_assembly_emptying.ogg', 50, TRUE)
 			if(!do_after(user, 30, target = src) || recycling) //short channel so you don't accidentally start emptying out a complex assembly
 				return
 			recycling = TRUE
 			var/datum/component/material_container/mats = GetComponent(/datum/component/material_container)
-			for(var/V in EA.assembly_components)
+			for(var/V in EA.assembly_circuits)
 				var/obj/item/integrated_circuit/IC = V
 				if(!mats.has_space(mats.get_item_material_amount(IC)))
 					to_chat(user, "<span class='notice'>[src] can't hold any more materials!</span>")
@@ -94,9 +95,9 @@
 					recycling = FALSE
 					return
 				playsound(src, 'sound/items/crowbar.ogg', 50, TRUE)
-				if(EA.try_remove_component(IC, user, TRUE))
+				if(EA.try_remove_circuit(IC, user, TRUE))
 					mats.user_insert(IC, user)
-			to_chat(user, "<span class='notice'>You recycle all the components[EA.assembly_components.len ? " you could " : " "]from [EA]!</span>")
+			to_chat(user, "<span class='notice'>You recycle all the components[EA.assembly_circuits.len ? " you could " : " "]from [EA]!</span>")
 			playsound(src, 'sound/items/electronic_assembly_empty.ogg', 50, TRUE)
 			recycling = FALSE
 			return TRUE
@@ -187,11 +188,11 @@
 			return TRUE
 
 		var/cost = 400
-		if(ispath(build_type, /obj/item/electronic_assembly))
-			var/obj/item/electronic_assembly/E = SScircuit.cached_assemblies[build_type]
-			cost = E.materials[MAT_METAL]
+		if(build_type in IC_ASSEMBLY_PATHS)
+			GET_COMPONENT_FROM(IE, /datum/component/integrated_electronic, SScircuit.cached_circuits[build_type])
+			cost = IC_GET_COST(IE.max_circuits, IE.max_complexity)
 		else if(ispath(build_type, /obj/item/integrated_circuit))
-			var/obj/item/integrated_circuit/IC = SScircuit.cached_components[build_type]
+			var/obj/item/integrated_circuit/IC = SScircuit.cached_circuits[build_type]
 			cost = IC.materials[MAT_METAL]
 		else if(!build_type in SScircuit.circuit_fabricator_recipe_list["Tools"])
 			return
@@ -203,19 +204,17 @@
 			return TRUE
 
 		var/obj/item/built = new build_type(drop_location())
-		usr.put_in_hands(built)
+		if(istype(built))
+			usr.put_in_hands(built)
 
-		if(istype(built, /obj/item/electronic_assembly))
-			var/obj/item/electronic_assembly/E = built
-			E.creator = key_name(usr)
-			E.opened = TRUE
-			E.update_icon()
+		var/datum/component/integrated_electronic/IE = built.GetComponent(/datum/component/integrated_electronic)
+		if(IE)
+			IE.creator = key_name(usr)
+			IE.opened = TRUE
+			IE.update_icon()
 			//reupdate diagnostic hud because it was put_in_hands() and not pickup()'ed
-			E.diag_hud_set_circuithealth()
-			E.diag_hud_set_circuitcell()
-			E.diag_hud_set_circuitstat()
-			E.diag_hud_set_circuittracking()
-			E.investigate_log("was printed by [E.creator].", INVESTIGATE_CIRCUIT)
+			IE.update_hud()
+			built.investigate_log("was printed by [IE.creator].", INVESTIGATE_CIRCUIT)
 
 		to_chat(usr, "<span class='notice'>[capitalize(built.name)] printed.</span>")
 		playsound(src, 'sound/items/jaws_pry.ogg', 50, TRUE)

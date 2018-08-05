@@ -81,27 +81,30 @@
 /obj/item/integrated_circuit/manipulation/weapon_firing/do_work()
 	if(!installed_gun || !installed_gun.handle_pins())
 		return
-	if(!isturf(assembly.loc) && !(assembly.can_fire_equipped && ishuman(assembly.loc)))
-		return
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(installed_gun))
 	push_data()
 	var/datum/integrated_io/xo = inputs[1]
 	var/datum/integrated_io/yo = inputs[2]
 	var/datum/integrated_io/mode1 = inputs[3]
 
+	var/turf/T
 	mode = mode1.data
+	//get turf of assembly
 	if(assembly)
-		if(isnum(xo.data))
-			xo.data = round(xo.data, 1)
-		if(isnum(yo.data))
-			yo.data = round(yo.data, 1)
-
-		var/turf/T = get_turf(assembly)
-		var/target_x = CLAMP(T.x + xo.data, 0, world.maxx)
-		var/target_y = CLAMP(T.y + yo.data, 0, world.maxy)
-
-		assembly.visible_message("<span class='danger'>[assembly] fires [installed_gun]!</span>")
-		shootAt(locate(target_x, target_y, T.z))
+		if(!assembly.assembly_atom || (!isturf(assembly.assembly_atom.loc) && !(assembly.can_fire_equipped && ishuman(assembly.assembly_atom.loc))))
+			return
+		T = get_turf(assembly.assembly_atom)
+		assembly.assembly_atom.visible_message("<span class='danger'>[assembly.parent] fires [installed_gun]!</span>")
+	else//otherwise use the circuit's turf
+		T = get_turf(src)
+		visible_message("<span class='danger'>[src] fires [installed_gun]!</span>")
+	if(isnum(xo.data))
+		xo.data = round(xo.data, 1)
+	if(isnum(yo.data))
+		yo.data = round(yo.data, 1)
+	var/target_x = CLAMP(T.x + xo.data, 0, world.maxx)
+	var/target_y = CLAMP(T.y + yo.data, 0, world.maxy)
+	shootAt(locate(target_x, target_y, T.z))
 
 /obj/item/integrated_circuit/manipulation/weapon_firing/proc/shootAt(turf/target)
 	var/turf/T = get_turf(src)
@@ -151,14 +154,15 @@
 
 /obj/item/integrated_circuit/manipulation/locomotion/do_work()
 	..()
-	var/turf/T = get_turf(src)
+	var/turf/T = get_turf(assembly.parent)
 	if(T && assembly)
-		if(assembly.anchored || !assembly.can_move())
+		var/mob/assembly_mob = assembly.parent
+		if(!istype(assembly_mob))
 			return
-		if(assembly.loc == T) // Check if we're held by someone.  If the loc is the floor, we're not held.
+		if(assembly_mob.loc == T) // Check if we're held by someone.  If the loc is the floor, we're not held.
 			var/datum/integrated_io/wanted_dir = inputs[1]
 			if(isnum(wanted_dir.data))
-				if(step(assembly, wanted_dir.data))
+				if(assembly_mob.Move(get_step(assembly_mob, wanted_dir.data), wanted_dir.data))
 					activate_pin(2)
 					return
 				else
@@ -364,11 +368,15 @@
 	var/max_items = 10
 
 /obj/item/integrated_circuit/manipulation/grabber/do_work()
-	var/max_w_class = assembly.w_class
+	var/max_w_class = WEIGHT_CLASS_BULKY
+	if(assembly)
+		var/obj/item/assembly_item = assembly.parent
+		if(assembly_item)
+			max_w_class = assembly_item.w_class
 	var/atom/movable/acting_object = get_object()
 	var/turf/T = get_turf(acting_object)
 	var/obj/item/AM = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
-	if(!QDELETED(AM) && !istype(AM, /obj/item/electronic_assembly) && !istype(AM, /obj/item/transfer_valve) && !istype(AM, /obj/item/twohanded) && !istype(assembly.loc, /obj/item/implant/storage))
+	if(!QDELETED(AM) && !istype(AM, /obj/item/electronic_assembly) && !istype(AM, /obj/item/transfer_valve) && !istype(AM, /obj/item/twohanded) && !(assembly && istype(assembly.assembly_atom.loc, /obj/item/implant/storage)))
 		var/mode = get_pin_data(IC_INPUT, 2)
 		if(mode == 1)
 			if(check_target(AM))
@@ -492,7 +500,19 @@
 	power_draw_per_use = 50
 
 /obj/item/integrated_circuit/manipulation/thrower/do_work()
-	var/max_w_class = assembly.w_class
+	var/max_w_class = WEIGHT_CLASS_BULKY
+	var/obj/item/assembly_item
+	if(assembly)
+		assembly_item = assembly.parent
+		if(istype(assembly_item))
+			max_w_class = assembly_item.w_class
+		//Prevents the more abusive form of chestgun.
+		if(istype(assembly.assembly_atom.loc, /obj/item/implant/storage))
+			return
+		//Can the assembly throw while equipped?
+		if(ishuman(assembly.assembly_atom.loc) && !assembly.can_fire_equipped)
+			return
+
 	var/target_x_rel = round(get_pin_data(IC_INPUT, 1))
 	var/target_y_rel = round(get_pin_data(IC_INPUT, 2))
 	var/obj/item/A = get_pin_data_as_type(IC_INPUT, 3, /obj/item)
@@ -500,17 +520,11 @@
 	if(!A || A.anchored || A.throwing || A == assembly || istype(A, /obj/item/twohanded) || istype(A, /obj/item/transfer_valve))
 		return
 
-	if (istype(assembly.loc, /obj/item/implant/storage)) //Prevents the more abusive form of chestgun.
-		return
-
-	if(max_w_class && (A.w_class > max_w_class))
-		return
-
-	if(!assembly.can_fire_equipped && ishuman(assembly.loc))
+	if(A.w_class > max_w_class)
 		return
 
 	// Is the target inside the assembly or close to it?
-	if(!check_target(A, exclude_components = TRUE))
+	if(!check_target(A, exclude_circuits = TRUE))
 		return
 
 	var/turf/T = get_turf(get_object())
@@ -533,8 +547,8 @@
 	A.throwforce = 0
 	A.embedding = list("embed_chance" = 0)
 	//throw it
-	assembly.visible_message("<span class='danger'>[assembly] has thrown [A]!</span>")
-	log_attack("[assembly] [REF(assembly)] has thrown [A].")
+	assembly.assembly_atom.visible_message("<span class='danger'>[assembly.parent] has thrown [A]!</span>")
+	log_attack("[assembly.parent] [REF(assembly.parent)] has thrown [A].")
 	A.forceMove(drop_location())
 	A.throw_at(locate(x_abs, y_abs, T.z), range, 3, , , , CALLBACK(src, .proc/post_throw, A))
 

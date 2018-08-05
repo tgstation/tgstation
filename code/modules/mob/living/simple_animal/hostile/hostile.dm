@@ -235,8 +235,8 @@
 			return TRUE
 
 		if(istype(the_target, /obj/item/electronic_assembly))
-			var/obj/item/electronic_assembly/O = the_target
-			if(O.combat_circuits)
+			var/datum/component/integrated_electronic/C = the_target.GetComponent(/datum/component/integrated_electronic)
+			if(C.combat_circuits)
 				return TRUE
 
 		if(istype(the_target, /obj/structure/destructible/clockwork/ocular_warden))
