@@ -21,6 +21,7 @@
 	age = rand(AGE_MIN,AGE_MAX)
 
 /datum/preferences/proc/update_preview_icon()
+	return
 	// Silicons only need a very basic preview since there is no customization for them.
 	if(job_engsec_high)
 		switch(job_engsec_high)

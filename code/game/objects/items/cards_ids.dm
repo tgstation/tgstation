@@ -408,3 +408,34 @@ update_label("John Doe", "Clowny")
 	name = "APC Access ID"
 	desc = "A special ID card that allows access to APC terminals."
 	access = list(ACCESS_ENGINE_EQUIP)
+
+/obj/item/card/id/away/arena
+	name = "Toolbox For A Cause IDs"
+	desc = "bring back old toolbox sprites 2018"
+	access = list(ACCESS_AWAY_GENERAL)
+
+/obj/item/card/id/away/arena/donator
+	name = "Donator ID"
+	desc = "A golden card to show off your donator bling and superior status amongst the peasents."
+	icon_state = "gold"
+	item_state = "gold_id"
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT)
+
+/obj/item/card/id/away/arena/announcer
+	name = "Announcer ID"
+	desc = "John madden FOOTBALL"
+	icon_state = "centcom"
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_SEC, ACCESS_AWAY_GENERIC1)
+
+/obj/item/card/id/away/arena/contestant
+	name = "Contestant ID"
+	desc = "A card with the required access to enter the equipment rooms for each arena. Use the supplied agent cards to scan for proper access!"
+	icon_state = "centcom"
+	access = list(ACCESS_AWAY_GENERAL)
+
+/obj/item/card/id/away/arena/security
+	name = "Arena Security ID"
+	desc = "For those insane enough to volunteer their time to babysit man-children."
+	icon_state = "silver"
+	item_state = "silver_id"
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_SEC)
