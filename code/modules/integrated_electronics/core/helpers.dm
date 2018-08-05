@@ -97,25 +97,30 @@
 	return list(circuit_number, pin_type, pin_number)
 
 
-// Locates a pin in the assembly when given component number, pin type and pin number
-// Components list can be supplied from the outside, for use in savefiles
+// A wrapper for SScircuit's get_pin_ref
 /datum/component/integrated_electronic/proc/get_pin_ref(circuit_number, pin_type, pin_number, list/circuits)
 	if(!circuits)
 		circuits = assembly_circuits
+	return SScircuit.get_pin_ref(circuit_number, pin_type, pin_number, circuits)
 
+// Locates a pin in the assembly when given component number, pin type and pin number
+// Circuits list can be supplied from the outside, for use in savefiles
+/datum/controller/subsystem/processing/circuit/proc/get_pin_ref(circuit_number, pin_type, pin_number, list/circuits)
 	if(circuit_number > circuits.len)
 		return
 
 	var/obj/item/integrated_circuit/circuit = circuits[circuit_number]
 	return circuit.get_pin_ref(pin_type, pin_number)
 
-
-// Same as get_pin_ref, but takes in a list of 3 parameters (same format as get_pin_parameters)
-// and performs extra sanity checks on parameters list and index numbers
+// A wrapper for SScircuit's get_pin_ref_list
 /datum/component/integrated_electronic/proc/get_pin_ref_list(list/parameters, list/circuits)
 	if(!circuits)
 		circuits = assembly_circuits
+	return SScircuit.get_pin_ref_list(parameters, circuits)
 
+// Same as get_pin_ref, but takes in a list of 3 parameters (same format as get_pin_parameters)
+// and performs extra sanity checks on parameters list and index numbers
+/datum/controller/subsystem/processing/circuit/proc/get_pin_ref_list(list/parameters, list/circuits)
 	if(!islist(parameters) || parameters.len != 3)
 		return
 
@@ -127,8 +132,6 @@
 		return
 
 	return get_pin_ref(parameters[1], parameters[2], parameters[3], circuits)
-
-
 
 
 // Used to obfuscate object refs imported/exported as strings.

@@ -7,7 +7,10 @@
 #define PULSE_CHANNEL "pulse channel"
 
 // All base objects that the integrated_electronic component is attached to
-#define ASSEMBLY_PATHS list( /obj/item/electronic_assembly, /obj/item/wallframe/integrated_screen, /mob/living/simple_animal/integrated_drone )
+#define IC_ASSEMBLY_PATHS list( /obj/item/electronic_assembly, /obj/item/wallframe/integrated_screen, /mob/living/integrated_drone )
+
+// Get the material costs
+#define IC_GET_COST(max_circuits, max_complexity) (round((max_complexity + max_circuits) / 4) * SScircuit.cost_multiplier)
 
 // Methods of obtaining a circuit.
 #define IC_SPAWN_DEFAULT			1 // If the circuit comes in the default circuit box and able to be printed in the IC printer.

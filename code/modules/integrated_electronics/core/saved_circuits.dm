@@ -261,11 +261,7 @@
 	blocks["max_complexity"] = assembly.max_complexity
 	blocks["used_space"] = 0
 	blocks["max_space"] = assembly.max_circuits
-
-	var/obj/item/assembly_item = assembly.parent
-	if(istype(assembly_item))
-		// Start keeping track of total metal cost
-		blocks["metal_cost"] = assembly_item.materials[MAT_METAL]
+	blocks["metal_cost"] = IC_GET_COST(assembly.max_circuits, assembly.max_complexity)
 
 
 	// Block 2. Circuits.
@@ -325,8 +321,8 @@
 			if(!islist(wire) || wire.len != 2)
 				return "Invalid wire data."
 
-			var/datum/integrated_io/IO = assembly.get_pin_ref_list(wire[1], assembly_circuits)
-			var/datum/integrated_io/IO2 = assembly.get_pin_ref_list(wire[2], assembly_circuits)
+			var/datum/integrated_io/IO = SScircuit.get_pin_ref_list(wire[1], assembly_circuits)
+			var/datum/integrated_io/IO2 = SScircuit.get_pin_ref_list(wire[2], assembly_circuits)
 			if(!IO || !IO2)
 				return "Invalid wire data."
 

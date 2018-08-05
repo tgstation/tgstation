@@ -33,7 +33,7 @@
 
 /obj/item/integrated_circuit_printer/Initialize()
 	. = ..()
-	AddComponent(/datum/component/material_container, list(MAT_METAL), MINERAL_MATERIAL_AMOUNT * 25, TRUE, list(/obj/item/stack, /obj/item/integrated_circuit) + ASSEMBLY_PATHS)
+	AddComponent(/datum/component/material_container, list(MAT_METAL), MINERAL_MATERIAL_AMOUNT * 25, TRUE, list(/obj/item/stack, /obj/item/integrated_circuit) + IC_ASSEMBLY_PATHS)
 
 /obj/item/integrated_circuit_printer/proc/print_program(mob/user)
 	if(!cloning)
@@ -188,9 +188,9 @@
 			return TRUE
 
 		var/cost = 400
-		if(ispath(build_type, /obj/item/electronic_assembly))
-			var/obj/item/electronic_assembly/E = SScircuit.cached_assemblies[build_type]
-			cost = E.materials[MAT_METAL]
+		if(build_type in IC_ASSEMBLY_PATHS)
+			GET_COMPONENT_FROM(IE, /datum/component/integrated_electronic, SScircuit.cached_circuits[build_type])
+			cost = IC_GET_COST(IE.max_circuits, IE.max_complexity)
 		else if(ispath(build_type, /obj/item/integrated_circuit))
 			var/obj/item/integrated_circuit/IC = SScircuit.cached_circuits[build_type]
 			cost = IC.materials[MAT_METAL]

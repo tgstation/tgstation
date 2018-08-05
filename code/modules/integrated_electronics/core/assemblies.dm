@@ -4,9 +4,9 @@
 /datum/component/integrated_electronic
 	var/list/assembly_circuits = list()
 	var/max_circuits = IC_MAX_SIZE_BASE
+	var/max_complexity = IC_COMPLEXITY_BASE
 	datum_flags = DF_USE_TAG
 	var/list/ckeys_allowed_to_scan = list() // Players who built the circuit can scan it as a ghost.
-	var/max_complexity = IC_COMPLEXITY_BASE
 	var/opened = TRUE
 	var/obj/item/stock_parts/cell/battery // Internal cell which most circuits need to work.
 	var/cell_type = /obj/item/stock_parts/cell
@@ -19,7 +19,7 @@
 	var/ext_next_use = 0
 	var/atom/collw
 	var/obj/item/card/id/access_card
-	var/allowed_circuit_action_flags = IC_ACTION_COMBAT | IC_ACTION_LONG_RANGE //which circuit flags are allowed
+	var/allowed_circuit_action_flags//which circuit flags are allowed
 	var/combat_circuits = 0 //number of combat cicuits in the assembly, used for diagnostic hud
 	var/long_range_circuits = 0 //number of long range cicuits in the assembly, used for diagnostic hud
 	var/prefered_hud_icon = "hudstat"		// Used by the AR circuit to change the hud icon.
@@ -28,7 +28,7 @@
 	var/static/next_assembly_id = 0
 	var/atom/assembly_atom
 
-/datum/component/integrated_electronic/Initialize(_max_circuits , _max_complexity, _allowed_circuit_action_flags = IC_ACTION_COMBAT | IC_ACTION_LONG_RANGE,_can_fire_equipped = FALSE)
+/datum/component/integrated_electronic/Initialize(_max_circuits , _max_complexity, _allowed_circuit_action_flags = IC_ACTION_COMBAT|IC_ACTION_LONG_RANGE,_can_fire_equipped = FALSE)
 	tag = "assembly_[next_assembly_id++]"//datums can't use GenerateTag() so we assign it here
 	assembly_atom = parent
 	if(!istype(assembly_atom))//So many parts of circuits use the parent as an atom that we define it as a var
@@ -40,7 +40,7 @@
 	START_PROCESSING(SScircuit, src)
 	var/obj/item/assembly_item = parent
 	if(istype(assembly_item))
-		assembly_item.materials[MAT_METAL] = round((max_complexity + max_circuits) / 4) * SScircuit.cost_multiplier
+		assembly_item.materials[MAT_METAL] = IC_GET_COST(max_circuits, max_complexity)
 	access_card = new /obj/item/card/id(src)
 	update_icon()
 
@@ -561,12 +561,31 @@
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/assemblies/electronic_setups.dmi'
 	icon_state = "setup_small"
-	flags_1 = NOBLUDGEON
+	item_flags = NOBLUDGEON
+	anchored = FALSE
+	var/can_anchor = TRUE
 	materials = list()		// To be filled later
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD, DIAG_CIRCUIT_HUD) //diagnostic hud overlays
 	max_integrity = 50
 	pass_flags = 0
 	armor = list("melee" = 50, "bullet" = 70, "laser" = 70, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
+
+/obj/item/electronic_assembly/attackby(obj/item/I, mob/living/user)
+	if(can_anchor && default_unfasten_wrench(user, I, 20))
+		return
+	stack_trace("failed [flags_1] [I.tool_behaviour] [!(flags_1 & NODECONSTRUCT_1)] [I.tool_behaviour == TOOL_WRENCH]")
+	return ..()
+
+/obj/item/electronic_assembly/attack_tk(mob/user)
+	if(anchored)
+		return
+	..()
+
+/obj/item/electronic_assembly/attack_hand(mob/user)
+	if(anchored)
+		attack_self(user)
+		return
+	..()
 
 /obj/item/electronic_assembly/ComponentInitialize()
 	AddComponent(/datum/component/integrated_electronic, IC_MAX_SIZE_BASE, IC_COMPLEXITY_BASE)
@@ -682,56 +701,55 @@
 /********
  * Mobs *
  ********/
-/mob/living/simple_animal/integrated_drone
+/mob/living/integrated_drone
 	name = "electronic drone"
 	desc = "It's a case, for building mobile electronics with."
 	icon_state = "setup_drone"
 	icon = 'icons/obj/assemblies/electronic_setups.dmi'
 	mob_biotypes = list(MOB_ROBOTIC)
-	wander = FALSE
-	damage_coeff = list(BRUTE = 1, BURN = 2, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD, DIAG_CIRCUIT_HUD)
 
-/mob/living/simple_animal/integrated_drone/ComponentInitialize()
-	AddComponent(/datum/component/integrated_electronic, 3*IC_MAX_SIZE_BASE, 3*IC_COMPLEXITY_BASE, IC_ACTION_MOVEMENT | IC_ACTION_COMBAT | IC_ACTION_LONG_RANGE)
+/mob/living/integrated_drone/ComponentInitialize()
+	AddComponent(/datum/component/integrated_electronic, 3*IC_MAX_SIZE_BASE, 3*IC_COMPLEXITY_BASE, IC_ACTION_MOVEMENT|IC_ACTION_COMBAT|IC_ACTION_LONG_RANGE)
 
-/mob/living/simple_animal/integrated_drone/med_hud_set_health()
+/mob/living/integrated_drone/med_hud_set_health()
 	return //we use a different hud
 
-/mob/living/simple_animal/integrated_drone/med_hud_set_status()
+/mob/living/integrated_drone/med_hud_set_status()
 	return //we use a different hud
 
-/mob/living/simple_animal/integrated_drone/death(gibbed)
+/mob/living/integrated_drone/death(gibbed)
+	. = ..()
 	GET_COMPONENT(assembly, /datum/component/integrated_electronic)
 	if(!assembly.opened)
 		assembly.opened = TRUE
 		assembly.update_icon()
 	STOP_PROCESSING(SScircuit, assembly)
 
-/mob/living/simple_animal/integrated_drone/default
+/mob/living/integrated_drone/default
 	name = "type-a electronic drone"
 
-/mob/living/simple_animal/integrated_drone/arms
+/mob/living/integrated_drone/arms
 	name = "type-b electronic drone"
 	icon_state = "setup_drone_arms"
 	desc = "It's a case, for building mobile electronics with. This one is armed and dangerous."
 
-/mob/living/simple_animal/integrated_drone/secbot
+/mob/living/integrated_drone/secbot
 	name = "type-c electronic drone"
 	icon_state = "setup_drone_secbot"
 	desc = "It's a case, for building mobile electronics with. This one resembles a Securitron."
 
-/mob/living/simple_animal/integrated_drone/medbot
+/mob/living/integrated_drone/medbot
 	name = "type-d electronic drone"
 	icon_state = "setup_drone_medbot"
 	desc = "It's a case, for building mobile electronics with. This one resembles a Medibot."
 
-/mob/living/simple_animal/integrated_drone/genbot
+/mob/living/integrated_drone/genbot
 	name = "type-e electronic drone"
 	icon_state = "setup_drone_genbot"
 	desc = "It's a case, for building mobile electronics with. This one has a generic bot design."
 
-/mob/living/simple_animal/integrated_drone/android
+/mob/living/integrated_drone/android
 	name = "type-f electronic drone"
 	icon_state = "setup_drone_android"
 	desc = "It's a case, for building mobile electronics with. This one has a hominoid design."
@@ -745,7 +763,7 @@
 	icon_state = "setup_wallmount_medium"
 	desc = "It's a case, for building medium-sized electronics with. It has a magnetized backing to allow it to stick to walls, but you'll still need to wrench the anchoring bolts in place to keep it on."
 	obj_flags = CAN_BE_HIT
-	flags_1 = NOBLUDGEON
+	item_flags = NOBLUDGEON
 	materials = list()		// To be filled later
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD, DIAG_CIRCUIT_HUD) //diagnostic hud overlays
 	max_integrity = 50

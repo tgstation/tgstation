@@ -54,7 +54,7 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 		var/list/category_list = circuit_fabricator_recipe_list[category]
 		category_list += IC // Populating the fabricator categories
 
-	for(var/type in ASSEMBLY_PATHS)
+	for(var/type in IC_ASSEMBLY_PATHS)
 		for(var/path in typesof(type))
 			var/atom/A = path
 			var/name = initial(A.name)
@@ -81,12 +81,12 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 		/obj/item/electronic_assembly/large/arm,
 		/obj/item/electronic_assembly/large/tall,
 		/obj/item/electronic_assembly/large/industrial,
-		/mob/living/simple_animal/integrated_drone/default,
-		/mob/living/simple_animal/integrated_drone/arms,
-		/mob/living/simple_animal/integrated_drone/secbot,
-		/mob/living/simple_animal/integrated_drone/medbot,
-		/mob/living/simple_animal/integrated_drone/genbot,
-		/mob/living/simple_animal/integrated_drone/android,
+		/mob/living/integrated_drone/default,
+		/mob/living/integrated_drone/arms,
+		/mob/living/integrated_drone/secbot,
+		/mob/living/integrated_drone/medbot,
+		/mob/living/integrated_drone/genbot,
+		/mob/living/integrated_drone/android,
 		/obj/item/wallframe/integrated_screen/light,
 		/obj/item/wallframe/integrated_screen,
 		/obj/item/wallframe/integrated_screen/heavy

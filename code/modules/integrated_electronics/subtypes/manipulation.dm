@@ -162,7 +162,7 @@
 		if(assembly_mob.loc == T) // Check if we're held by someone.  If the loc is the floor, we're not held.
 			var/datum/integrated_io/wanted_dir = inputs[1]
 			if(isnum(wanted_dir.data))
-				if(step(assembly_mob, wanted_dir.data))
+				if(assembly_mob.Move(get_step(assembly_mob, wanted_dir.data), wanted_dir.data))
 					activate_pin(2)
 					return
 				else
