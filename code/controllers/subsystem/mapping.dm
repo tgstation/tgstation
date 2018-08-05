@@ -175,11 +175,15 @@ SUBSYSTEM_DEF(mapping)
 
 	// check that the total z count of all maps matches the list of traits
 	var/total_z = 0
+	var/list/parsed_maps = list()
 	for (var/file in files)
 		var/full_path = "_maps/[path]/[file]"
-		var/datum/parsed_map/pm = load_map(file(full_path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
+		var/datum/parsed_map/pm = new(file(full_path))
 		var/bounds = pm?.bounds
-		files[file] = total_z  // save the start Z of this file
+		if (!bounds)
+			errorList |= full_path
+			continue
+		parsed_maps[pm] = total_z  // save the start Z of this file
 		total_z += bounds[MAP_MAXZ] - bounds[MAP_MINZ] + 1
 
 	if (!length(traits))  // null or empty - default
@@ -200,15 +204,13 @@ SUBSYSTEM_DEF(mapping)
 		++i
 
 	// load the maps
-	for (var/file in files)
-		var/full_path = "_maps/[path]/[file]"
-		var/datum/parsed_map/parsed = load_map(file(full_path), 1, 1, start_z + files[file], no_changeturf = TRUE)
-		if(!parsed?.bounds)
-			errorList |= full_path
-		else
-			. += parsed
+	for (var/P in parsed_maps)
+		var/datum/parsed_map/pm = P
+		if (!pm.load(1, 1, start_z + parsed_maps[P], no_changeturf = TRUE))
+			errorList |= pm.original_path
 	if(!silent)
 		INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
+	return parsed_maps
 
 /datum/controller/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong

@@ -13,6 +13,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 	var/gridLines
 
 /datum/parsed_map
+	var/original_path
 	var/key_len = 0
 	var/list/grid_models = list()
 	var/list/gridSets = list()
@@ -53,6 +54,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 
 /datum/parsed_map/New(tfile, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper=INFINITY, measureOnly=FALSE)
 	if(isfile(tfile))
+		original_path = "[tfile]"
 		tfile = file2text(tfile)
 	else if(isnull(tfile))
 		// create a new datum without loading a map
