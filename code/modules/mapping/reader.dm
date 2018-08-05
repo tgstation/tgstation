@@ -25,13 +25,12 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 	/// Offset bounds. Same as parsed_bounds until load().
 	var/list/bounds
 
-	// /"([a-zA-Z]+)" = \(((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}/g
-	var/static/regex/dmmRegex = new/regex({""(\[a-zA-Z]+)" = \\(((?:.|\n)*?)\\)\n(?!\t)|\\((\\d+),(\\d+),(\\d+)\\) = \\{"(\[a-zA-Z\n]*)"\\}"}, "g")
+	// raw strings used to represent regexes more accurately
+	// '' used to avoid confusing syntax highlighting
+	var/static/regex/dmmRegex = new(@'"([a-zA-Z]+)" = \(((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}', "g")
+	var/static/regex/trimQuotesRegex = new(@'^[\s\n]+"?|"?[\s\n]+$|^"|"$', "g")
+	var/static/regex/trimRegex = new(@'^[\s\n]+|[\s\n]+$', "g")
 
-	// /^[\s\n]+"?|"?[\s\n]+$|^"|"$/g
-	var/static/regex/trimQuotesRegex = new/regex({"^\[\\s\n]+"?|"?\[\\s\n]+$|^"|"$"}, "g")
-	// /^[\s\n]+|[\s\n]+$/
-	var/static/regex/trimRegex = new/regex("^\[\\s\n]+|\[\\s\n]+$", "g")
 	#ifdef TESTING
 	var/turfsSkipped = 0
 	#endif
