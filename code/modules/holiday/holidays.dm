@@ -182,7 +182,7 @@
 	begin_month = APRIL
 
 /datum/holiday/tea/getStationPrefix()
-	return pick("Crumpet","Assam","Oolong","Pu-erh","Sweet Tea")
+	return pick("Crumpet","Assam","Oolong","Pu-erh","Sweet Tea","Green","Black")
 
 /datum/holiday/earth
 	name = "Earth Day"
