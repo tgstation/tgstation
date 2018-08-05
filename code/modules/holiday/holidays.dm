@@ -82,7 +82,7 @@
 	drone_hat = /obj/item/clothing/head/helmet/space/chronos
 
 /datum/holiday/groundhog/getStationPrefix()
-	return pick("Deja vu") //I have been to this place before
+	return pick("Deja Vu") //I have been to this place before
 
 /datum/holiday/valentines
 	name = VALENTINES
@@ -262,7 +262,7 @@
 	return FALSE
 
 /datum/holiday/beer/getStationPrefix()
-	return pick("Stout","Porter","Lager","Ale","Malt","Bock","Doppelbock","Hefeweizen","Pilsner","IPA","Lite")) //I'm sorry for the last one
+	return pick("Stout","Porter","Lager","Ale","Malt","Bock","Doppelbock","Hefeweizen","Pilsner","IPA","Lite") //I'm sorry for the last one
 
 /datum/holiday/pirate
 	name = "Talk-Like-a-Pirate Day"
