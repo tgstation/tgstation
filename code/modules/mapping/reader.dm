@@ -13,13 +13,17 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 	var/gridLines
 
 /datum/parsed_map
+	var/key_len = 0
 	var/list/grid_models = list()
 	var/list/gridSets = list()
-	// bounds without x/y/z offsets
+
+	var/list/modelCache
+	var/list/bad_paths
+
+	/// Unoffset bounds. Null on parse failure.
 	var/list/parsed_bounds
-	// bounds with x/y/z offsets, same as parsed_bounds until load()
+	/// Offset bounds. Same as parsed_bounds until load().
 	var/list/bounds
-	var/key_len = 0
 
 	// /"([a-zA-Z]+)" = \(((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}/g
 	var/static/regex/dmmRegex = new/regex({""(\[a-zA-Z]+)" = \\(((?:.|\n)*?)\\)\n(?!\t)|\\((\\d+),(\\d+),(\\d+)\\) = \\{"(\[a-zA-Z\n]*)"\\}"}, "g")
@@ -216,7 +220,9 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 	return TRUE
 
 /datum/parsed_map/proc/build_cache(no_changeturf)
-	. = list()
+	if(modelCache)
+		return modelCache
+	. = modelCache = list()
 	var/list/grid_models = src.grid_models
 	for(var/model_key in grid_models)
 		var/model = grid_models[model_key]
@@ -237,10 +243,12 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 
 			var/full_def = trim_text(copytext(model, old_position, dpos)) //full definition, e.g : /obj/foo/bar{variables=derp}
 			var/variables_start = findtext(full_def, "{")
-			var/atom_def = text2path(trim_text(copytext(full_def, 1, variables_start))) //path definition, e.g /obj/foo/bar
+			var/path_text = trim_text(copytext(full_def, 1, variables_start))
+			var/atom_def = text2path(path_text) //path definition, e.g /obj/foo/bar
 			old_position = dpos + 1
 
 			if(!atom_def) // Skip the item if the path does not exist.  Fix your crap, mappers!
+				LAZYADD(bad_paths, path_text)
 				continue
 			members.Add(atom_def)
 
