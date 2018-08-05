@@ -26215,7 +26215,10 @@
 	name = "Cloning";
 	req_access_txt = "0";
 	req_one_access_txt = "5;9";
-	unres_sides = 8
+	},
+/obj/effect/mapping_helpers/airlock/unres{
+	icon_state = "airlock_unres_helper";
+	dir = 8
 	},
 /obj/structure/cable{
 	icon_state = "4-8"

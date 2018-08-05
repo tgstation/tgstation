@@ -25674,8 +25674,8 @@
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
 	req_access_txt = "5";
-	unres_sides = 2
 	},
+/obj/effect/mapping_helpers/airlock/unres,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
@@ -25694,8 +25694,8 @@
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
 	req_access_txt = "5";
-	unres_sides = 2
 	},
+/obj/effect/mapping_helpers/airlock/unres,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
@@ -27543,8 +27543,8 @@
 	id_tag = "GeneticsDoor";
 	name = "Genetics";
 	req_access_txt = "5; 68";
-	unres_sides = 2
 	},
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "bsv" = (

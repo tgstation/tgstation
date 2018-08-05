@@ -69106,7 +69106,10 @@
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
 	req_access_txt = "5";
-	unres_sides = 4
+	},
+/obj/effect/mapping_helpers/airlock/unres{
+	icon_state = "airlock_unres_helper";
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -70024,7 +70027,10 @@
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
 	req_access_txt = "5";
-	unres_sides = 4
+	},
+/obj/effect/mapping_helpers/airlock/unres{
+	icon_state = "airlock_unres_helper";
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -79666,7 +79672,10 @@
 	id_tag = "cloningfoyer";
 	name = "Cloning Lab";
 	req_access_txt = "5";
-	unres_sides = 8
+	},
+/obj/effect/mapping_helpers/airlock/unres{
+	icon_state = "airlock_unres_helper";
+	dir = 8
 	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -80472,7 +80481,10 @@
 	id_tag = "cloningfoyer";
 	name = "Cloning Lab";
 	req_access_txt = "5";
-	unres_sides = 8
+	},
+/obj/effect/mapping_helpers/airlock/unres{
+	icon_state = "airlock_unres_helper";
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4

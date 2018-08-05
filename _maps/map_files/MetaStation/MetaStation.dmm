@@ -51804,8 +51804,8 @@
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
 	req_access_txt = "5";
-	unres_sides = 2
 	},
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plasteel/whiteblue,
 /area/medical/medbay/central)
 "cha" = (
@@ -51815,8 +51815,8 @@
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
 	req_access_txt = "5";
-	unres_sides = 2
 	},
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plasteel/whiteblue,
 /area/medical/medbay/central)
 "chb" = (
@@ -59996,9 +59996,12 @@
 	id_tag = "CloningDoor";
 	name = "Cloning Lab";
 	req_access_txt = "5; 68";
-	unres_sides = 4
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/unres{
+	icon_state = "airlock_unres_helper";
 	dir = 4
 	},
 /turf/open/floor/plasteel/whiteblue,
