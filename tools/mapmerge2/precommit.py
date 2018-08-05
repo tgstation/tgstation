@@ -9,6 +9,13 @@ def main(repo):
         print("You need to resolve merge conflicts first.")
         return 1
 
+    try:
+        repo.lookup_reference('MERGE_HEAD')
+        print("Not running mapmerge for merge commit.")
+        return 0
+    except KeyError:
+        pass
+
     changed = 0
     for path, status in repo.status().items():
         if path.endswith(".dmm") and (status & (pygit2.GIT_STATUS_INDEX_MODIFIED | pygit2.GIT_STATUS_INDEX_NEW)):

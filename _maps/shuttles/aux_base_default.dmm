@@ -56,8 +56,7 @@
 	dir = 2;
 	dwidth = 4;
 	height = 9;
-	width = 9;
-	timid = 1
+	width = 9
 	},
 /obj/machinery/bluespace_beacon,
 /obj/machinery/computer/auxillary_base,
