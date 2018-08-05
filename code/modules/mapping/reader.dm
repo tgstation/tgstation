@@ -36,22 +36,22 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 	var/turfsSkipped = 0
 	#endif
 
-/**
- * Construct the model map and control the loading process
- *
- * WORKING :
- *
- * 1) Makes an associative mapping of model_keys with model
- *		e.g aa = /turf/unsimulated/wall{icon_state = "rock"}
- * 2) Read the map line by line, parsing the result (using parse_grid)
- *
- */
+/// Shortcut function to parse a map and apply it to the world.
+///
+/// - dmm_file: A .dmm file to load (Required).
+/// - x_offset, y_offset, z_offset: Positions representign where to load the map (Optional).
+/// - cropMap: When true, the map will be cropped to fit the existing world dimensions (Optional).
+/// - measureOnly: When true, no changes will be made to the world (Optional).
+/// - no_changeturf: When true, turf/AfterChange won't be called on loaded turfs
+/// - x_lower, x_upper, y_lower, y_upper: Coordinates (relative to the map) to crop to (Optional).
+/// - placeOnTop: Whether to use turf/PlaceOnTop rather than turf/ChangeTurf (Optional).
 /proc/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, x_lower = -INFINITY as num, x_upper = INFINITY as num, y_lower = -INFINITY as num, y_upper = INFINITY as num, placeOnTop = FALSE as num)
 	var/datum/parsed_map/parsed = new(dmm_file, x_lower, x_upper, y_lower, y_upper, measureOnly)
 	if(parsed.bounds && !measureOnly)
 		parsed.load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
 	return parsed
 
+/// Parse a map, possibly cropping it.
 /datum/parsed_map/New(tfile, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper=INFINITY, measureOnly=FALSE)
 	if(isfile(tfile))
 		original_path = "[tfile]"
@@ -133,12 +133,14 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 		bounds = null
 	parsed_bounds = bounds
 
+/// Load the parsed map into the world. See /proc/load_map for arguments.
 /datum/parsed_map/proc/load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
 	//How I wish for RAII
 	Master.StartLoadingMap()
 	. = _load_impl(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
 	Master.StopLoadingMap()
 
+// Do not call except via load() above.
 /datum/parsed_map/proc/_load_impl(x_offset = 1, y_offset = 1, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
 	var/list/modelCache = build_cache(no_changeturf)
 	var/space_key = modelCache[SPACE_KEY]
