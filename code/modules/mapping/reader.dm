@@ -15,7 +15,10 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 /datum/parsed_map
 	var/list/grid_models = list()
 	var/list/gridSets = list()
-	var/list/bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
+	// bounds without x/y/z offsets
+	var/list/parsed_bounds
+	// bounds with x/y/z offsets, same as parsed_bounds until load()
+	var/list/bounds
 	var/key_len = 0
 
 	// /"([a-zA-Z]+)" = \(((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}/g
@@ -40,27 +43,19 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
  *
  */
 /proc/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, x_lower = -INFINITY as num, x_upper = INFINITY as num, y_lower = -INFINITY as num, y_upper = INFINITY as num, placeOnTop = FALSE as num)
-	if(!x_offset)
-		x_offset = 1
-	if(!y_offset)
-		y_offset = 1
-	if(!z_offset)
-		z_offset = world.maxz + 1
-
-	var/datum/parsed_map/parsed = new(dmm_file, x_offset, y_offset, z_offset, x_lower, x_upper, y_lower, y_upper, measureOnly, cropMap)
-	if(parsed.bounds[1] == 1.#INF) // Shouldn't need to check every item
-		parsed.bounds = null
-	else if(!measureOnly)
+	var/datum/parsed_map/parsed = new(dmm_file, x_lower, x_upper, y_lower, y_upper, measureOnly, cropMap)
+	if(parsed.bounds && !measureOnly)
 		parsed.load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
 	return parsed
 
-/datum/parsed_map/New(tfile, x_offset, y_offset, z_offset, x_lower, x_upper, y_lower, y_upper, measureOnly, cropMap)
+/datum/parsed_map/New(tfile, x_lower, x_upper, y_lower, y_upper, measureOnly, cropMap)
 	if(isfile(tfile))
 		tfile = file2text(tfile)
 	else if(isnull(tfile))
 		// create a new datum without loading a map
 		return
 
+	bounds = parsed_bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
 	var/stored_index = 1
 
 	//multiz lool
@@ -92,10 +87,10 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 
 			var/datum/grid_set/gridSet = new
 
-			gridSet.xcrd = curr_x + x_offset - 1
+			gridSet.xcrd = curr_x
 			//position of the currently processed square
-			gridSet.ycrd = text2num(dmmRegex.group[4]) + y_offset - 1
-			gridSet.zcrd = text2num(dmmRegex.group[5]) + z_offset - 1
+			gridSet.ycrd = text2num(dmmRegex.group[4])
+			gridSet.zcrd = text2num(dmmRegex.group[5])
 
 			bounds[MAP_MINX] = min(bounds[MAP_MINX], CLAMP(gridSet.xcrd, x_lower, x_upper))
 			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], gridSet.zcrd)
@@ -132,6 +127,11 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 			bounds[MAP_MAXX] = CLAMP(max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx), x_lower, x_upper)
 		CHECK_TICK
 
+	// Indicate failure to parse any coordinates by nulling bounds
+	if(bounds[1] == 1.#INF)
+		bounds = null
+	parsed_bounds = bounds
+
 /datum/parsed_map/proc/load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
 	//How I wish for RAII
 	Master.StartLoadingMap()
@@ -139,29 +139,40 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 	Master.StopLoadingMap()
 
 /datum/parsed_map/proc/_load_impl(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
+	if(!x_offset)
+		x_offset = 1
+	if(!y_offset)
+		y_offset = 1
+	if(!z_offset)
+		z_offset = world.maxz + 1
+
 	var/list/modelCache = build_cache(no_changeturf)
 	var/space_key = modelCache[SPACE_KEY]
+	var/list/bounds
+	src.bounds = bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
 
 	for(var/I in gridSets)
 		var/datum/grid_set/gset = I
-		if(!cropMap && gset.ycrd > world.maxy)
-			world.maxy = gset.ycrd // Expand Y here.  X is expanded in the loop below
-		var/zexpansion = gset.zcrd > world.maxz
+		var/ycrd = gset.ycrd + y_offset - 1
+		var/zcrd = gset.zcrd + z_offset - 1
+		if(!cropMap && ycrd > world.maxy)
+			world.maxy = ycrd // Expand Y here.  X is expanded in the loop below
+		var/zexpansion = zcrd > world.maxz
 		if(zexpansion)
 			if(cropMap)
 				continue
 			else
-				while (gset.zcrd > world.maxz) //create a new z_level if needed
+				while (zcrd > world.maxz) //create a new z_level if needed
 					world.incrementMaxZ()
 			if(!no_changeturf)
 				WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
 
 		for(var/line in gset.gridLines)
-			if((gset.ycrd - y_offset + 1) < y_lower || (gset.ycrd - y_offset + 1) > y_upper)				//Reverse operation and check if it is out of bounds of cropping.
-				--gset.ycrd
+			if((ycrd - y_offset + 1) < y_lower || (ycrd - y_offset + 1) > y_upper)				//Reverse operation and check if it is out of bounds of cropping.
+				--ycrd
 				continue
-			if(gset.ycrd <= world.maxy && gset.ycrd >= 1)
-				var/xcrd = gset.xcrd
+			if(ycrd <= world.maxy && ycrd >= 1)
+				var/xcrd = gset.xcrd + x_offset - 1
 				for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
 					if((xcrd - x_offset + 1) < x_lower || (xcrd - x_offset + 1) > x_upper)			//Same as above.
 						++xcrd
@@ -179,18 +190,25 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 							var/list/cache = modelCache[model_key]
 							if(!cache)
 								CRASH("Undefined model key in DMM: [model_key]")
-							build_coordinate(cache, xcrd, gset.ycrd, gset.zcrd, no_afterchange, placeOnTop)
+							build_coordinate(cache, xcrd, ycrd, zcrd, no_afterchange, placeOnTop)
+
+							// only bother with bounds that actually exist
+							bounds[MAP_MINX] = min(bounds[MAP_MINX], xcrd)
+							bounds[MAP_MINY] = min(bounds[MAP_MINY], ycrd)
+							bounds[MAP_MINZ] = min(bounds[MAP_MINZ], zcrd)
+							bounds[MAP_MAXX] = max(bounds[MAP_MAXX], xcrd)
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], ycrd)
+							bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], zcrd)
 						#ifdef TESTING
 						else
 							++turfsSkipped
 						#endif
 						CHECK_TICK
 					++xcrd
-			--gset.ycrd
+			--ycrd
 
 		CHECK_TICK
 
-	var/list/bounds = src.bounds
 	if(!no_changeturf)
 		for(var/t in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
 			var/turf/T = t
@@ -202,7 +220,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 		testing("Skipped loading [turfsSkipped] default turfs")
 	#endif
 
-	return src
+	return TRUE
 
 /datum/parsed_map/proc/build_cache(no_changeturf)
 	. = list()
