@@ -2317,6 +2317,7 @@
 #include "code\modules\projectiles\projectile\energy\ebow.dm"
 #include "code\modules\projectiles\projectile\energy\misc.dm"
 #include "code\modules\projectiles\projectile\energy\net_snare.dm"
+#include "code\modules\projectiles\projectile\energy\nuclear_particle.dm"
 #include "code\modules\projectiles\projectile\energy\stun.dm"
 #include "code\modules\projectiles\projectile\energy\tesla.dm"
 #include "code\modules\projectiles\projectile\magic\spellcard.dm"
