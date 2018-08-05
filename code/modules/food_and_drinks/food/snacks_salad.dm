@@ -116,3 +116,13 @@
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 4)
 	tastes = list("rice" = 1, "egg" = 1)
 	foodtype = GRAIN | MEAT //EGG = MEAT -NinjaNomNom 2017
+	
+/obj/item/reagent_containers/food/snacks/salad/paleosalad
+	name = "Paleolithic salad"
+	desc = "At least it's not rocks."
+	icon_state = "paleo_salad"
+	trash = /obj/item/reagent_containers/glass/bowl/mushroom_bowl
+	bonus_reagents = list("omnizine" = 5, "oculine" = 5)
+	list_reagents = list("nutriment" = 4, "vitamin" = 2)	
+	tastes = list("mushroom" = 1, "cacti" = 1)
+	foodtype = VEGETABLES
