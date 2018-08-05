@@ -12,7 +12,6 @@
 	mix_message = "The mixture violently reacts, leaving behind a few crystalline shards."
 	required_temp = 390
 
-
 /datum/chemical_reaction/krokodil
 	name = "Krokodil"
 	id = "krokodil"
@@ -40,3 +39,10 @@
 	id = "aranesp"
 	results = list("aranesp" = 3)
 	required_reagents = list("epinephrine" = 1, "atropine" = 1, "morphine" = 1)
+
+
+/datum/chemical_reaction/entpolyneutr
+	name = "entpolyneutr"
+	id = "entpolyneutr"
+	results = list("rotatium" = 1)
+	required_reagents = list("antitoxin" = 1, "entpoly" = 1)
