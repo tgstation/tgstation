@@ -4,6 +4,7 @@
 	results = list("space_drugs" = 3)
 	required_reagents = list("mercury" = 1, "sugar" = 1, "lithium" = 1)
 
+
 /datum/chemical_reaction/crank
 	name = "Crank"
 	id = "crank"
@@ -39,10 +40,3 @@
 	id = "aranesp"
 	results = list("aranesp" = 3)
 	required_reagents = list("epinephrine" = 1, "atropine" = 1, "morphine" = 1)
-
-
-/datum/chemical_reaction/entpolyneutr
-	name = "entpolyneutr"
-	id = "entpolyneutr"
-	results = list("rotatium" = 1)
-	required_reagents = list("antitoxin" = 1, "entpoly" = 1)
