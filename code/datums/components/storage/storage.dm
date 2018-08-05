@@ -89,6 +89,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_GHOST, .proc/show_to_ghost)
 	RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/refresh_mob_views)
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, .proc/_remove_and_refresh)
+	RegisterSignal(parent, COMSIG_ATOM_CANREACH, .proc/canreach_react)
 
 	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/preattack_intercept)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/attack_self)
@@ -118,6 +119,7 @@
 		return
 	var/obj/item/I = parent
 	modeswitch_action = new(I)
+	RegisterSignal(modeswitch_action, COMSIG_ACTION_TRIGGER, .proc/action_trigger)
 	if(I.obj_flags & IN_INVENTORY)
 		var/mob/M = I.loc
 		if(!istype(M))
@@ -142,6 +144,16 @@
 /datum/component/storage/proc/real_location()
 	var/datum/component/storage/concrete/master = master()
 	return master? master.real_location() : null
+
+/datum/component/storage/proc/canreach_react(list/next)
+	var/datum/component/storage/concrete/master = master()
+	if(!master)
+		return
+	. = COMPONENT_BLOCK_REACH
+	next += master.parent
+	for(var/i in master.slaves)
+		var/datum/component/storage/slave = i
+		next += slave.parent
 
 /datum/component/storage/proc/attack_self(mob/M)
 	if(locked)
@@ -730,6 +742,10 @@
 		to_chat(user, "<span class='notice'>You fumble for [I] and it falls on the floor.</span>")
 		return
 	user.visible_message("<span class='warning'>[user] draws [I] from [parent]!</span>", "<span class='notice'>You draw [I] from [parent].</span>")
+
+/datum/component/storage/proc/action_trigger(datum/action/source)
+	gather_mode_switch(source.owner)
+	return COMPONENT_ACTION_BLOCK_TRIGGER
 
 /datum/component/storage/proc/gather_mode_switch(mob/user)
 	collection_mode = (collection_mode+1)%3

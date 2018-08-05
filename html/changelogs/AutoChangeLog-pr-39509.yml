@@ -1,0 +1,4 @@
+author: "JohnGinnane"
+delete-after: True
+changes: 
+  - rscadd: "Users can now see their prayers (similar to PDA sending messages)"
