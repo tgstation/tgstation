@@ -232,15 +232,13 @@
 			CRASH("[nt]: Invalid dupe_type ([dt])!")
 	else
 		new_comp = nt
+		nt = new_comp.type
 
 	args[1] = src
 
 	if(dm != COMPONENT_DUPE_ALLOWED)
 		if(!dt)
-			if(ispath(nt))
-				old_comp = GetExactComponent(nt)
-			else
-				old_comp = GetExactComponent(nt.type)
+			old_comp = GetExactComponent(nt)
 		else
 			old_comp = GetComponent(dt)
 		if(old_comp)
