@@ -225,3 +225,23 @@
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 6)
 	tastes = list("beet" = 1)
 	foodtype = VEGETABLES
+
+/obj/item/reagent_containers/food/snacks/soup/bonebroth
+	name = "Bone broth"
+	desc = "Food for your bones."
+	icon_state = "bone_broth"
+	trash = /obj/item/reagent_containers/glass/bowl/mushroom_bowl
+	bonus_reagents = list("nutriment" = 3, "iron" = 5)
+	list_reagents = list("nutriment" = 6, "vitamin" = 2)
+	tastes = list("bones" = 2)
+	foodtype = MEAT
+
+/obj/item/reagent_containers/food/snacks/soup/toadlicksoup
+	name = "Toad lick soup"
+	desc = "The local shaman apreciates this delicacy."
+	icon_state = "toad_lick_soup"
+	trash = /obj/item/reagent_containers/glass/bowl/mushroom_bowl
+	bonus_reagents = list("nutriment" = 2,  "vitamin" = 2, "mushroomhallucinogen" = 10, "mindbreaker" = 10, "antitoxin" = 4)
+	list_reagents = list("nutriment" = 1, "mushroomhallucinogen" = 3, "mindbreaker" = 3)
+	tastes = list("toad" = 1)
+	foodtype = VEGETABLES | MEAT
