@@ -26767,6 +26767,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/port)
+"rHc" = (
+/obj/machinery/ore_silo,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "rJt" = (
 /turf/closed/wall,
 /area/maintenance/disposal)
@@ -57320,8 +57324,8 @@ ave
 arD
 arD
 axU
+rHc
 azf
-aFX
 aBO
 aCQ
 aEc
