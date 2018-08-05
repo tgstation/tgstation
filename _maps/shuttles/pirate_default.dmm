@@ -203,6 +203,9 @@
 	pixel_x = -2;
 	pixel_y = 2
 	},
+/obj/structure/sign/poster/contraband/revolver{
+	pixel_x = 32
+	},
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "as" = (
@@ -269,11 +272,11 @@
 /area/shuttle/pirate)
 "aw" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/revolver{
-	pixel_x = -32
-	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
+	},
+/obj/machinery/vending/wallmed{
+	pixel_x = -28
 	},
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
