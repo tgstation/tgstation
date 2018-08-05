@@ -710,6 +710,28 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		to_chat(src, "<span class='warning'>[alert_msg]</span>")
 	return success
 
+//Lawnmower mode - Spawns the AI a borg shell with law mowing capabilities, it's pretty strong but not invincible
+/datum/AI_Module/large/lawnmower
+	module_name = "Create Lawnmower Shell"
+	mod_pick_name = "lawnmower"
+	description = "Divert your processing time to fabricating a borg shell for yourself, loaded with a module that will do serious human harm to humans as long as they're laying down. Pair with a secborg for best effect."
+	cost = 30
+	one_purchase = FALSE // MULTIPLE LAWNMOWERS
+	power_type = /datum/action/innate/ai/lawnmower
+	unlock_text = "<span class='notice'>You latch onto nanotrasen's bluespace item beaming subsystems and upload the design for a lawnmower borg shell</span>"
+	unlock_sound = 'sound/weapons/chainsawhit.ogg'
+
+/datum/action/innate/ai/lawnmower
+	name = "Print Lawnmower Borg Shell"
+	desc = "Summons a lawnmower that you can drive, which will seriously injure people who are knocked down."
+	button_icon_state = "lawnmower"
+	uses = 1
+
+/datum/action/innate/ai/lawnmower/Activate()
+	to_chat(owner, "You serupticiously create a new borg shell for yourself.")
+	var/mob/living/silicon/robot/LM = new(owner.loc)
+	LM.make_shell()
+	LM.module.transform_to(/obj/item/robot_module/lawnmower)
 
 //Blackout: Overloads a random number of lights across the station. Three uses.
 /datum/AI_Module/small/blackout
