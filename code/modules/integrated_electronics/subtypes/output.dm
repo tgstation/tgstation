@@ -2,7 +2,7 @@
 	category_text = "Output"
 
 /obj/item/integrated_circuit/output/screen
-	name = "small screen"
+	name = "screen"
 	extended_desc = " use &lt;br&gt; to start a new line"
 	desc = "Takes any data type as an input, and displays it to the user upon examining."
 	icon_state = "screen"
@@ -34,39 +34,6 @@
 	else
 		stuff_to_display = replacetext("[I.data]", eol , "<br>")
 
-/obj/item/integrated_circuit/output/screen/medium
-	name = "screen"
-	desc = "Takes any data type as an input and displays it to the user upon examining, and to adjacent beings when pulsed."
-	icon_state = "screen_medium"
-	power_draw_per_use = 20
-
-/obj/item/integrated_circuit/output/screen/medium/do_work()
-	..()
-	var/list/nearby_things = range(0, get_turf(src))
-	for(var/mob/M in nearby_things)
-		var/obj/O = assembly ? assembly : src
-		to_chat(M, "<span class='notice'>[icon2html(O.icon, world, O.icon_state)] [stuff_to_display]</span>")
-	if(assembly)
-		assembly.investigate_log("displayed \"[html_encode(stuff_to_display)]\" with [type].", INVESTIGATE_CIRCUIT)
-	else
-		investigate_log("displayed \"[html_encode(stuff_to_display)]\" as [type].", INVESTIGATE_CIRCUIT)
-
-/obj/item/integrated_circuit/output/screen/large
-	name = "large screen"
-	desc = "Takes any data type as an input and displays it to the user upon examining, and to all nearby beings when pulsed."
-	icon_state = "screen_large"
-	power_draw_per_use = 40
-	cooldown_per_use = 10
-
-/obj/item/integrated_circuit/output/screen/large/do_work()
-	..()
-	var/obj/O = assembly ? get_turf(assembly) : loc
-	O.visible_message("<span class='notice'>[icon2html(O.icon, world, O.icon_state)]  [stuff_to_display]</span>")
-	if(assembly)
-		assembly.investigate_log("displayed \"[html_encode(stuff_to_display)]\" with [type].", INVESTIGATE_CIRCUIT)
-	else
-		investigate_log("displayed \"[html_encode(stuff_to_display)]\" as [type].", INVESTIGATE_CIRCUIT)
-
 /obj/item/integrated_circuit/output/light
 	name = "light"
 	desc = "A basic light which can be toggled on/off when pulsed."
@@ -88,7 +55,7 @@
 /obj/item/integrated_circuit/output/light/proc/update_lighting()
 	if(light_toggled)
 		if(assembly)
-			assembly.set_light(l_range = light_brightness, l_power = light_brightness, l_color = light_rgb)
+			assembly.set_light(l_range = light_brightness, l_power = 1, l_color = light_rgb)
 	else
 		if(assembly)
 			assembly.set_light(0)
@@ -118,7 +85,7 @@
 	var/brightness = get_pin_data(IC_INPUT, 2)
 
 	if(new_color && isnum(brightness))
-		brightness = CLAMP(brightness, 0, 6)
+		brightness = CLAMP(brightness, 0, 4)
 		light_rgb = new_color
 		light_brightness = brightness
 
@@ -250,7 +217,7 @@
 		A.say(sanitized_text)
 		if (assembly)
 			log_say("[assembly] [REF(assembly)] : [sanitized_text]")
-		else 
+		else
 			log_say("[name] ([type]) : [sanitized_text]")
 
 /obj/item/integrated_circuit/output/video_camera
