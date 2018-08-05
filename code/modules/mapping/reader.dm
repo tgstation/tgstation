@@ -46,12 +46,12 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
  *
  */
 /proc/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, x_lower = -INFINITY as num, x_upper = INFINITY as num, y_lower = -INFINITY as num, y_upper = INFINITY as num, placeOnTop = FALSE as num)
-	var/datum/parsed_map/parsed = new(dmm_file, x_lower, x_upper, y_lower, y_upper, measureOnly, cropMap)
+	var/datum/parsed_map/parsed = new(dmm_file, x_lower, x_upper, y_lower, y_upper, measureOnly)
 	if(parsed.bounds && !measureOnly)
 		parsed.load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
 	return parsed
 
-/datum/parsed_map/New(tfile, x_lower, x_upper, y_lower, y_upper, measureOnly, cropMap)
+/datum/parsed_map/New(tfile, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper=INFINITY, measureOnly=FALSE)
 	if(isfile(tfile))
 		tfile = file2text(tfile)
 	else if(isnull(tfile))
@@ -117,17 +117,13 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 
 			bounds[MAP_MINY] = min(bounds[MAP_MINY], CLAMP(gridSet.ycrd, y_lower, y_upper))
 			gridSet.ycrd += gridLines.len - 1 // Start at the top and work down
-
-			if(!cropMap && gridSet.ycrd > world.maxy)
-				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(gridSet.ycrd, y_lower, y_upper))
-			else
-				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(min(gridSet.ycrd, world.maxy), y_lower, y_upper))
+			bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(gridSet.ycrd, y_lower, y_upper))
 
 			var/maxx = gridSet.xcrd
 			if(gridLines.len) //Not an empty map
 				maxx = max(maxx, gridSet.xcrd + length(gridLines[1]) / key_len - 1)
 
-			bounds[MAP_MAXX] = CLAMP(max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx), x_lower, x_upper)
+			bounds[MAP_MAXX] = CLAMP(max(bounds[MAP_MAXX], maxx), x_lower, x_upper)
 		CHECK_TICK
 
 	// Indicate failure to parse any coordinates by nulling bounds
