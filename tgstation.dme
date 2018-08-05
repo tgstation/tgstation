@@ -328,6 +328,7 @@
 #include "code\datums\components\forced_gravity.dm"
 #include "code\datums\components\forensics.dm"
 #include "code\datums\components\infective.dm"
+#include "code\datums\components\integrated_electronic.dm"
 #include "code\datums\components\jousting.dm"
 #include "code\datums\components\knockoff.dm"
 #include "code\datums\components\lockon_aiming.dm"

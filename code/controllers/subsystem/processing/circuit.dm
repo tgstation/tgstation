@@ -94,7 +94,7 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 		/mob/living/integrated_drone/android,
 		/obj/item/wallframe/integrated_screen/tiny,
 		/obj/item/wallframe/integrated_screen/light,
-		/obj/item/wallframe/integrated_screen,
+		/obj/item/wallframe/integrated_screen/medium,
 		/obj/item/wallframe/integrated_screen/heavy
 		///obj/item/weapon/implant/integrated_circuit
 		)
