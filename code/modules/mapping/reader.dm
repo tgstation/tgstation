@@ -40,18 +40,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
  * 2) Read the map line by line, parsing the result (using parse_grid)
  *
  */
-/proc/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, lower_crop_x as num,  lower_crop_y as num, upper_crop_x as num, upper_crop_y as num, placeOnTop as num)
-	//How I wish for RAII
-	Master.StartLoadingMap()
-	. = _load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, lower_crop_x, upper_crop_x, lower_crop_y, upper_crop_y, placeOnTop)
-	#ifdef TESTING
-	var/datum/parsed_map/P = .
-	if(P && P.turfsSkipped)
-		testing("Skipped loading [turfsSkipped] default turfs")
-	#endif
-	Master.StopLoadingMap()
-
-/proc/_load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
+/proc/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, x_lower = -INFINITY as num, x_upper = INFINITY as num, y_lower = -INFINITY as num, y_upper = INFINITY as num, placeOnTop = FALSE as num)
 	if(!x_offset)
 		x_offset = 1
 	if(!y_offset)
@@ -145,6 +134,12 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 		CHECK_TICK
 
 /datum/parsed_map/proc/load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
+	//How I wish for RAII
+	Master.StartLoadingMap()
+	. = _load_impl(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
+	Master.StopLoadingMap()
+
+/datum/parsed_map/proc/_load_impl(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
 	var/list/modelCache = build_cache(no_changeturf)
 	var/space_key = modelCache[SPACE_KEY]
 
@@ -204,6 +199,12 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 			var/turf/T = t
 			//we do this after we load everything in. if we don't; we'll have weird atmos bugs regarding atmos adjacent turfs
 			T.AfterChange(CHANGETURF_IGNORE_AIR)
+
+	#ifdef TESTING
+	if(turfsSkipped)
+		testing("Skipped loading [turfsSkipped] default turfs")
+	#endif
+
 	return src
 
 /datum/parsed_map/proc/build_cache(no_changeturf)
