@@ -10,7 +10,6 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 	var/xcrd
 	var/ycrd
 	var/zcrd
-	var/xcrdStart
 	var/gridLines
 
 /datum/parsed_map
@@ -93,12 +92,12 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 
 			var/datum/grid_set/gridSet = new
 
-			gridSet.xcrdStart = curr_x + x_offset - 1
+			gridSet.xcrd = curr_x + x_offset - 1
 			//position of the currently processed square
 			gridSet.ycrd = text2num(dmmRegex.group[4]) + y_offset - 1
 			gridSet.zcrd = text2num(dmmRegex.group[5]) + z_offset - 1
 
-			bounds[MAP_MINX] = min(bounds[MAP_MINX], CLAMP(gridSet.xcrdStart, x_lower, x_upper))
+			bounds[MAP_MINX] = min(bounds[MAP_MINX], CLAMP(gridSet.xcrd, x_lower, x_upper))
 			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], gridSet.zcrd)
 			bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], gridSet.zcrd)
 
@@ -126,9 +125,9 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 			else
 				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(min(gridSet.ycrd, world.maxy), y_lower, y_upper))
 
-			var/maxx = gridSet.xcrdStart
+			var/maxx = gridSet.xcrd
 			if(gridLines.len) //Not an empty map
-				maxx = max(maxx, gridSet.xcrdStart + length(gridLines[1]) / key_len - 1)
+				maxx = max(maxx, gridSet.xcrd + length(gridLines[1]) / key_len - 1)
 
 			bounds[MAP_MAXX] = CLAMP(max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx), x_lower, x_upper)
 		CHECK_TICK
@@ -157,38 +156,36 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 			if(!no_changeturf)
 				WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
 
-		var/maxx = gset.xcrdStart
 		for(var/line in gset.gridLines)
 			if((gset.ycrd - y_offset + 1) < y_lower || (gset.ycrd - y_offset + 1) > y_upper)				//Reverse operation and check if it is out of bounds of cropping.
 				--gset.ycrd
 				continue
 			if(gset.ycrd <= world.maxy && gset.ycrd >= 1)
-				gset.xcrd = gset.xcrdStart
+				var/xcrd = gset.xcrd
 				for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
-					if((gset.xcrd - x_offset + 1) < x_lower || (gset.xcrd - x_offset + 1) > x_upper)			//Same as above.
-						++gset.xcrd
+					if((xcrd - x_offset + 1) < x_lower || (xcrd - x_offset + 1) > x_upper)			//Same as above.
+						++xcrd
 						continue								//X cropping.
-					if(gset.xcrd > world.maxx)
+					if(xcrd > world.maxx)
 						if(cropMap)
 							break
 						else
-							world.maxx = gset.xcrd
+							world.maxx = xcrd
 
-					if(gset.xcrd >= 1)
+					if(xcrd >= 1)
 						var/model_key = copytext(line, tpos, tpos + key_len)
 						var/no_afterchange = no_changeturf || zexpansion
 						if(!no_afterchange || (model_key != space_key))
 							var/list/cache = modelCache[model_key]
 							if(!cache)
 								CRASH("Undefined model key in DMM: [model_key]")
-							build_coordinate(cache, gset.xcrd, gset.ycrd, gset.zcrd, no_afterchange, placeOnTop)
+							build_coordinate(cache, xcrd, gset.ycrd, gset.zcrd, no_afterchange, placeOnTop)
 						#ifdef TESTING
 						else
 							++turfsSkipped
 						#endif
 						CHECK_TICK
-					maxx = max(maxx, gset.xcrd)
-					++gset.xcrd
+					++xcrd
 			--gset.ycrd
 
 		CHECK_TICK
