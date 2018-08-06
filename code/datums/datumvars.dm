@@ -1,3 +1,6 @@
+#define VV_MSG_MARKED "<br><font size='1' color='red'><b>Marked Object</b></font>"
+#define VV_MSG_EDITED "<br><font size='1' color='red'><b>Var Edited</b></font>"
+
 /datum/proc/CanProcCall(procname)
 	return TRUE
 
@@ -103,10 +106,10 @@
 	var/formatted_type = replacetext("[type]", "/", "<wbr>/")
 	var/marked
 	if(holder && holder.marked_datum && holder.marked_datum == D)
-		marked = "<br><font size='1' color='red'><b>Marked Object</b></font>"
+		marked = VV_MSG_MARKED
 	var/varedited_line = ""
 	if(!islist && (D.datum_flags & DF_VAR_EDITED))
-		varedited_line = "<br><font size='1' color='red'><b>Var Edited</b></font>"
+		varedited_line = VV_MSG_EDITED
 
 	var/list/dropdownoptions = list()
 	if (islist)
@@ -308,6 +311,12 @@
 				list.selectedIndex = 0;
 				document.getElementById('filter').focus();
 			}
+
+			// byjax
+			function replace_span(what) {
+				var idx = what.indexOf(':');
+				document.getElementById(what.substr(0, idx)).innerHTML = what.substr(idx + 1);
+			}
 		</script>
 		<div align='center'>
 			<table width='100%'>
@@ -325,8 +334,8 @@
 						</table>
 						<div align='center'>
 							<b><font size='1'>[formatted_type]</font></b>
-							[marked]
-							[varedited_line]
+							<span id='marked'>[marked]</span>
+							<span id='varedited'>[varedited_line]</span>
 						</div>
 					</td>
 					<td width='50%'>
@@ -379,6 +388,10 @@
 </html>
 "}
 	src << browse(html, "window=variables[refid];size=475x650")
+
+
+/client/proc/vv_update_display(datum/D, span, content)
+	src << output("[span]:[content]", "variables[REF(D)].browser:replace_span")
 
 
 #define VV_HTML_ENCODE(thing) ( sanitize ? html_encode(thing) : thing )
@@ -503,8 +516,10 @@
 			to_chat(usr, "This can only be done to instances of type /datum")
 			return
 
-		src.holder.marked_datum = D
-		href_list["datumrefresh"] = href_list["mark_object"]
+		if(holder.marked_datum)
+			vv_update_display(holder.marked_datum, "marked", "")
+		holder.marked_datum = D
+		vv_update_display(D, "marked", VV_MSG_MARKED)
 
 	else if(href_list["proc_call"])
 		if(!check_rights(NONE))
