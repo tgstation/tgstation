@@ -155,3 +155,17 @@
 		var/mob/living/carbon/M = target
 		M.visible_message("<span class='danger'>[M] explodes into a shower of gibs!</span>")
 		M.gib()
+
+/obj/item/projectile/beam/disabler/revolver
+	name = "disabler beam"
+	icon_state = "omnilaser"
+	damage = 24
+	damage_type = STAMINA
+	flag = "energy"
+	hitsound = 'sound/weapons/tap.ogg'
+	eyeblur = 0
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
+	light_color = LIGHT_COLOR_BLUE
+	tracer_type = /obj/effect/projectile/tracer/disabler
+	muzzle_type = /obj/effect/projectile/muzzle/disabler
+	impact_type = /obj/effect/projectile/impact/disabler
