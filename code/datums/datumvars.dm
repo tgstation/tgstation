@@ -305,6 +305,8 @@
 				if (value !== "") {
 					location.href = value;
 				}
+				list.selectedIndex = 0;
+				document.getElementById('filter').focus();
 			}
 		</script>
 		<div align='center'>
