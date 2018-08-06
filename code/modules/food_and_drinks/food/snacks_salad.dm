@@ -122,7 +122,7 @@
 	desc = "At least it's not rocks."
 	icon_state = "paleo_salad"
 	trash = /obj/item/reagent_containers/glass/bowl/mushroom_bowl
-	bonus_reagents = list("omnizine" = 5, "oculine" = 5)
-	list_reagents = list("nutriment" = 4, "vitamin" = 2)	
+	bonus_reagents = list("omnizine" = 7, "oculine" = 5)
+	list_reagents = list("nutriment" = 1, "vitamin" = 2)	
 	tastes = list("mushroom" = 1, "cacti" = 1)
 	foodtype = VEGETABLES
