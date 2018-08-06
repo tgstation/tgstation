@@ -72,6 +72,7 @@
 			src << browse_rsc(sprite, "vv[hash].png")
 
 	title = "[D] ([REF(D)]) = [type]"
+	var/formatted_type = replacetext("[type]", "/", "<wbr>/")
 
 	var/sprite_text
 	if(sprite)
@@ -101,10 +102,12 @@
 			atomsnowflake += "<a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=name'><b>[D]</b></a>"
 			if(A.dir)
 				atomsnowflake += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
+	else if("name" in D.vars)
+		atomsnowflake += "<a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=name'><b>[D]</b></a>"
 	else
-		atomsnowflake += "<b>[D]</b>"
+		atomsnowflake += "<b>[formatted_type]</b>"
+		formatted_type = null
 
-	var/formatted_type = replacetext("[type]", "/", "<wbr>/")
 	var/marked
 	if(holder && holder.marked_datum && holder.marked_datum == D)
 		marked = VV_MSG_MARKED
