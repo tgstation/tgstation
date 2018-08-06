@@ -130,8 +130,5 @@
 	reagents.my_atom = src
 
 /obj/item/udder/gutlunch/generateMilk()
-	if(prob(60))
-		reagents.add_reagent("gutlunch_milk", rand(2, 5))
-	if(prob(45))
-		reagents.add_reagent("salglu_solution", rand(2,5))
+	reagents.add_reagent("gutlunch_milk", rand(2, 5))
 
