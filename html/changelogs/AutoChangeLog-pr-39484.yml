@@ -1,4 +1,0 @@
-author: "Garen"
-delete-after: True
-changes: 
-  - bugfix: "Fixed AddComponent(target) not working when an instance is passed rather than a path"

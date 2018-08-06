@@ -1,4 +1,0 @@
-author: "JJRcop"
-delete-after: True
-changes: 
-  - bugfix: "Fixed some strange string handling in SDQL"
