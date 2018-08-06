@@ -151,11 +151,11 @@
 	range = 5
 	stationary = FALSE
 	var/closed = TRUE
-	var/obj/item/storage/briefcase_launchpad/briefcase
+	var/obj/item/storage/briefcase/launchpad/briefcase
 
 /obj/machinery/launchpad/briefcase/Initialize()
 	. = ..()
-	if(istype(loc, /obj/item/storage/briefcase_launchpad))
+	if(istype(loc, /obj/item/storage/briefcase/launchpad))
 		briefcase = loc
 	else
 		log_game("[src] has been spawned without a briefcase.")
@@ -192,46 +192,24 @@
 		return ..()
 
 //Briefcase item that contains the launchpad.
-/obj/item/storage/briefcase_launchpad
-	name = "briefcase"
-	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "briefcase"
-	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
-	flags_1 = CONDUCT_1
-	force = 8
-	hitsound = "swing_hit"
-	throw_speed = 2
-	throw_range = 4
-	w_class = WEIGHT_CLASS_BULKY
-	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
-	resistance_flags = FLAMMABLE
-	max_integrity = 150
+/obj/item/storage/briefcase/launchpad
 	var/obj/machinery/launchpad/briefcase/pad
-	var/folder_path = /obj/item/folder //this is the path of the folder that gets spawned in New()
 
-/obj/item/storage/briefcase_launchpad/Initialize()
+/obj/item/storage/briefcase/launchpad/Initialize()
 	. = ..()
 	pad = new(src)
 
-/obj/item/storage/briefcase_launchpad/Destroy()
+/obj/item/storage/briefcase/launchpad/Destroy()
 	if(!QDELETED(pad))
 		qdel(pad)
 	pad = null
 	return ..()
 
-/obj/item/storage/briefcase_launchpad/ComponentInitialize()
-	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 21
-
-/obj/item/storage/briefcase_launchpad/PopulateContents()
+/obj/item/storage/briefcase/launchpad/PopulateContents()
 	new /obj/item/pen(src)
 	new /obj/item/launchpad_remote(src)
 
-/obj/item/storage/briefcase_launchpad/attack_self(mob/user)
+/obj/item/storage/briefcase/launchpad/attack_self(mob/user)
 	if(!isturf(user.loc)) //no setting up in a locker
 		return
 	add_fingerprint(user)
@@ -241,7 +219,7 @@
 		pad.closed = FALSE
 		user.transferItemToLoc(src, pad, TRUE)
 
-/obj/item/storage/briefcase_launchpad/attackby(obj/item/I, mob/user, params)
+/obj/item/storage/briefcase/launchpad/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/launchpad_remote))
 		var/obj/item/launchpad_remote/L = I
 		L.pad = src.pad
@@ -261,7 +239,7 @@
 /obj/item/launchpad_remote/attack_self(mob/user)
 	. = ..()
 	ui_interact(user)
-	to_chat(user, "<span class='notice'>The folder projects a display onto your retina.</span>")
+	to_chat(user, "<span class='notice'>[src] projects a display onto your retina.</span>")
 
 /obj/item/launchpad_remote/ui_interact(mob/user, ui_key = "launchpad_remote", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
