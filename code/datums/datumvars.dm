@@ -352,7 +352,6 @@
 							<form>
 								<select name="file" size="1"
 									onchange="handle_dropdown(this)"
-									target="_parent._top"
 									onmouseclick="this.focus()"
 									style="background-color:#ffffff">
 									<option value selected>Select option</option>
