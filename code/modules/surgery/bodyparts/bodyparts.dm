@@ -66,9 +66,9 @@
 
 /obj/item/bodypart/examine(mob/user)
 	..()
-	if(brute_dam > 0)
+	if(brute_dam > DAMAGE_PRECISION)
 		to_chat(user, "<span class='warning'>This limb has [brute_dam > 30 ? "severe" : "minor"] bruising.</span>")
-	if(burn_dam > 0)
+	if(burn_dam > DAMAGE_PRECISION)
 		to_chat(user, "<span class='warning'>This limb has [burn_dam > 30 ? "severe" : "minor"] burns.</span>")
 
 /obj/item/bodypart/blob_act()
@@ -135,7 +135,7 @@
 
 //Return TRUE to get whatever mob this is in to update health.
 /obj/item/bodypart/proc/on_life()
-	if(stamina_dam)					//DO NOT update health here, it'll be done in the carbon's life.
+	if(stamina_dam > DAMAGE_PRECISION)					//DO NOT update health here, it'll be done in the carbon's life.
 		if(heal_damage(brute = 0, burn = 0, stamina = stam_heal_tick, only_robotic = FALSE, only_organic = FALSE, updating_health = FALSE))
 			. |= BODYPART_LIFE_UPDATE_HEALTH
 
@@ -177,11 +177,11 @@
 	//We've dealt the physical damages, if there's room lets apply the stamina damage.
 	var/current_damage = get_damage(TRUE)		//This time around, count stamina loss too.
 	var/available_damage = max_damage - current_damage
-	stamina_dam += CLAMP(stamina, 0, min(max_stamina_damage - stamina_dam, available_damage))
+	stamina_dam += round(CLAMP(stamina, 0, min(max_stamina_damage - stamina_dam, available_damage)), DAMAGE_PRECISION)
 
 	if(owner && updating_health)
 		owner.updatehealth()
-		if(stamina)
+		if(stamina > DAMAGE_PRECISION)
 			owner.update_stamina()
 	consider_processing()
 	check_disabled()
