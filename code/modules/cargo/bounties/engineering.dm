@@ -43,15 +43,8 @@
 		return FALSE
 	return T.air_contents.gases[/datum/gas/tritium][MOLES] >= moles_required
 
-/datum/bounty/item/engineering/singularity
-	name = "Contained Singularity"
-	description = "Our frontier science division is looking to research wormhole travel. Send us a contained singularity and we'll take it from there."
-	reward = 75000 //requires 14k credits of purchases, not to mention cooperation with engineering/heads of staff to set up inside the cramped shuttle
-	wanted_types = list(/obj/singularity)
-	exclude_types = list(/obj/singularity/energy_ball)
-
 /datum/bounty/item/engineering/energy_ball
 	name = "Contained Tesla Ball"
 	description = "Station 24 is being overrun by hordes of angry Mothpeople. They are requesting the ultimate bug zapper."
-	reward = 75000
+	reward = 75000 //requires 14k credits of purchases, not to mention cooperation with engineering/heads of staff to set up inside the cramped shuttle
 	wanted_types = list(/obj/singularity/energy_ball)
