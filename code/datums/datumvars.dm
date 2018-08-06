@@ -1,5 +1,6 @@
 #define VV_MSG_MARKED "<br><font size='1' color='red'><b>Marked Object</b></font>"
 #define VV_MSG_EDITED "<br><font size='1' color='red'><b>Var Edited</b></font>"
+#define VV_MSG_DELETED "<br><font size='1' color='red'><b>Deleted</b></font>"
 
 /datum/proc/CanProcCall(procname)
 	return TRUE
@@ -110,6 +111,9 @@
 	var/varedited_line = ""
 	if(!islist && (D.datum_flags & DF_VAR_EDITED))
 		varedited_line = VV_MSG_EDITED
+	var/deleted_line
+	if(!islist && D.gc_destroyed)
+		deleted_line = VV_MSG_DELETED
 
 	var/list/dropdownoptions = list()
 	if (islist)
@@ -336,6 +340,7 @@
 							<b><font size='1'>[formatted_type]</font></b>
 							<span id='marked'>[marked]</span>
 							<span id='varedited'>[varedited_line]</span>
+							<span id='deleted'>[deleted_line]</span>
 						</div>
 					</td>
 					<td width='50%'>
@@ -538,7 +543,8 @@
 		if(!istype(D))
 			to_chat(usr, "Unable to locate item!")
 		admin_delete(D)
-		href_list["datumrefresh"] = href_list["delete"]
+		if (isturf(D))  // show the turf that took its place
+			debug_variables(D)
 
 	else if(href_list["osay"])
 		if(!check_rights(R_FUN, 0))

@@ -605,7 +605,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			var/turf/T = D
 			T.ScrapeAway()
 		else
+			vv_update_display(D, "deleted", VV_MSG_DELETED)
 			qdel(D)
+			if(!QDELETED(D))
+				vv_update_display(D, "deleted", "")
 
 /client/proc/cmd_admin_list_open_jobs()
 	set category = "Admin"
