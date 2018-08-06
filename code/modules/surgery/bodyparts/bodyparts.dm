@@ -126,7 +126,7 @@
 		I.forceMove(T)
 
 /obj/item/bodypart/proc/consider_processing()
-	if(stamina_dam)
+	if(stamina_dam > DAMAGE_PRECISION)
 		. = TRUE
 	//else if.. else if.. so on.
 	else
