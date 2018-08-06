@@ -1268,6 +1268,18 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter3)
+"xU" = (
+/obj/docking_port/stationary{
+	dir = 1;
+	dwidth = 4;
+	height = 5;
+	id = "caravansyndicate1_ambush";
+	name = "Trade Route";
+	roundstart_template = /datum/map_template/shuttle/ruin/syndicate_fighter_shiv;
+	width = 9
+	},
+/turf/template_noop,
+/area/template_noop)
 "GL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external{
@@ -5736,7 +5748,7 @@ aa
 aa
 aa
 aa
-aa
+xU
 aa
 aa
 aa
