@@ -31,10 +31,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
-"af" = (
-/obj/structure/sign/departments/medbay/alt,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/abandoned/crew)
 "ag" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/medbay)
@@ -594,6 +590,9 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/donkpockets,
+/obj/machinery/light/small/built{
+	dir = 4
+	},
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/abandoned/crew)
 "aS" = (
@@ -2482,10 +2481,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/medbay)
-"du" = (
-/obj/structure/sign/departments/medbay/alt,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/abandoned/medbay)
 "dv" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -2515,6 +2510,30 @@
 	dir = 1
 	},
 /area/shuttle/abandoned/bridge)
+"hV" = (
+/obj/structure/shuttle/engine/propulsion/right{
+	dir = 8
+	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned/engine)
+"vk" = (
+/obj/structure/shuttle/engine/propulsion/left{
+	dir = 8
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/engine)
+"JU" = (
+/obj/structure/shuttle/engine/propulsion/right{
+	dir = 8
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/engine)
+"Tw" = (
+/obj/structure/shuttle/engine/propulsion/left{
+	dir = 8
+	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned/engine)
 
 (1,1,1) = {"
 aa
@@ -2523,11 +2542,11 @@ aa
 aa
 aa
 aa
-ar
-at
+vk
+hV
 aa
-at
-ar
+Tw
+JU
 aa
 aa
 aa
@@ -2543,9 +2562,9 @@ aa
 aa
 aS
 as
-at
+as
 aa
-at
+as
 as
 aS
 aa
@@ -2954,7 +2973,7 @@ ds
 dt
 "}
 (24,1,1) = {"
-af
+ab
 ac
 ac
 aC
@@ -2970,7 +2989,7 @@ cU
 dh
 al
 al
-du
+ag
 "}
 (25,1,1) = {"
 aa

@@ -1,5 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - balance: "Social anxiety trigger range decreased. Stay out of my personal space!"
-  - bugfix: "Social anxiety no longer triggers while nobody is around but you"

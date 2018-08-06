@@ -35,6 +35,9 @@
 	to_be_destroyed = FALSE
 	return src
 
+/turf/closed/indestructible/singularity_act()
+	return
+
 /turf/closed/indestructible/oldshuttle
 	name = "strange shuttle wall"
 	icon = 'icons/turf/shuttleold.dmi'

@@ -233,7 +233,7 @@
 	preview_shuttle.movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
 	preview_shuttle.initiate_docking(D)
 	preview_shuttle.movement_force = force_memory
-	
+
 	. = preview_shuttle
 
 	// Shuttle state involves a mode and a timer based on world.time, so
@@ -267,18 +267,10 @@
 	for(var/T in affected)
 		for(var/obj/docking_port/P in T)
 			if(istype(P, /obj/docking_port/mobile))
-				var/obj/docking_port/mobile/M = P
 				found++
 				if(found > 1)
 					qdel(P, force=TRUE)
 					log_world("Map warning: Shuttle Template [S.mappath] has multiple mobile docking ports.")
-				else if(!M.timid)
-					// The shuttle template we loaded isn't "timid" which means
-					// it's already registered with the shuttles subsystem.
-					// This is a bad thing.
-					stack_trace("Template [S] is non-timid! Unloading.")
-					M.jumpToNullSpace()
-					return
 				else
 					preview_shuttle = P
 			if(istype(P, /obj/docking_port/stationary))
