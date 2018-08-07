@@ -820,7 +820,7 @@
 	var/zoom_out_amt = 6
 	var/zoom_amt = 10
 /obj/item/twohanded/binoculars/wield(mob/user)
-	..()
+	. = ..()
 	if(wielded)
 		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/unwield, user)))
 		user.visible_message("[user] holds [src] up to [user.p_their()] eyes.","You hold [src] up to your eyes.")
@@ -846,7 +846,7 @@
 
 /obj/item/twohanded/binoculars/unwield(mob/user)
 	QDEL_NULL(mobhook)
-	..()
+	. = ..()
 	user.visible_message("[user] lowers [src].","You lower [src].")
 	item_state = "binoculars"
 	user.regenerate_icons()
