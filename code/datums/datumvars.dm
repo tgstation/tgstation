@@ -239,33 +239,28 @@
 					return
 				}
 
-				//This part here resets everything to how it was at the start so the filter is applied to the complete list. Screw efficiency, it's client-side anyway and it only looks through 200 or so variables at maximum anyway (mobs).
-				if(complete_list != null && complete_list != ""){
-					var vars_ol1 = document.getElementById("vars");
-					vars_ol1.innerHTML = complete_list
+				//This part here resets everything to how it was at the start so the filter is applied to the complete list.
+				//>"Screw efficiency, it's client-side anyway and it only looks through 200 or so variables at maximum anyway (mobs)."
+				//>proceeds to put 600 variables on GLOB
+				var vars_ol = document.getElementById("vars");
+				while (vars_ol.hasChildNodes()) {
+					vars_ol.removeChild(vars_ol.lastChild);
 				}
+
 				document.cookie="[refid][cookieoffset]search="+encodeURIComponent(filter);
-				if(filter == ""){
-					return;
-				}else{
-					var vars_ol = document.getElementById('vars');
-					var lis = vars_ol.getElementsByTagName("li");
-					for ( var i = 0; i < lis.length; ++i )
-					{
-						try{
-							var li = lis\[i\];
-							if ( li.innerText.toLowerCase().indexOf(filter) == -1 )
-							{
-								vars_ol.removeChild(li);
-								i--;
-							}
-						}catch(err) {   }
-					}
+				for (var i = 0; i < complete_list.length; ++i) {
+					try {
+						var li = complete_list\[i\];
+						if (!filter || li.innerText.toLowerCase().indexOf(filter) != -1)
+						{
+							vars_ol.appendChild(li);
+						}
+					} catch(err) {}
 				}
 				var lis_new = vars_ol.getElementsByTagName("li");
 				for ( var j = 0; j < lis_new.length; ++j )
 				{
-					var li1 = lis\[j\];
+					var li1 = lis_new\[j\];
 					if (j == 0){
 						li1.style.backgroundColor = "#ffee88";
 					}else{
@@ -363,8 +358,9 @@
 			[variable_html.Join()]
 		</ol>
 		<script type='text/javascript'>
-			var vars_ol = document.getElementById("vars");
-			var complete_list = vars_ol.innerHTML;
+			var complete_list = \[\];
+			var lis = document.getElementById("vars").children;
+			for(var i = lis.length; i--;) complete_list\[i\] = lis\[i\];
 		</script>
 	</body>
 </html>
@@ -511,7 +507,7 @@
 			return
 
 		var/datum/D = locate(href_list["delete"])
-		if(!D)
+		if(!istype(D))
 			to_chat(usr, "Unable to locate item!")
 		admin_delete(D)
 		href_list["datumrefresh"] = href_list["delete"]
@@ -814,7 +810,7 @@
 			for (var/i in armorlist)
 				pickerlist += list(list("value" = armorlist[i], "name" = i))
 
-			var/list/result = presentpicker(usr, "Modify armor", "Modify armor: [O]", Button1="Save", Button2 = "Cancel", Timeout=FALSE, Type = "text", values = pickerlist)
+			var/list/result = presentpicker(usr, "Modify armor", "Modify armor: [O]", Button1="Save", Button2 = "Cancel", Timeout=FALSE, inputtype = "text", values = pickerlist)
 
 			if (islist(result))
 				if (result["button"] == 2) // If the user pressed the cancel button

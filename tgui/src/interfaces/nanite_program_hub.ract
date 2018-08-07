@@ -17,7 +17,10 @@
 {{/if}}
 <br>
 <ui-display title='Programs'>
-	<ui-button icon='align-justify ' action='toggle_details'>{{data.detail_view ? "Compact View" : "Detailed View" }}</ui-button><br>
+	<ui-section>
+		<ui-button icon='undo' action='set_category' params='{"category": "Main"}'>Return</ui-button>
+		<ui-button icon='align-justify ' action='toggle_details'>{{data.detail_view ? "Compact View" : "Detailed View" }}</ui-button>
+	</ui-section>
 	{{#if data.category == "Main"}}
 		<ui-display>
 			{{#each data.categories}}
@@ -26,7 +29,6 @@
 		</ui-display>
 	{{else}}
 		<ui-display title='{{data.category}}'>
-			<ui-section><ui-button icon='undo' action='set_category' params='{"category": "Main"}'>Return</ui-button></ui-section>
 			{{#each data.program_list}}
 				{{#if data.detail_view}}
 					<ui-display>

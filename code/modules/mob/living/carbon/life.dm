@@ -59,7 +59,7 @@
 		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL))
 			losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
 
-		else if(health <= crit_modifier())
+		else if(health <= crit_threshold)
 			losebreath += 0.25 //You're having trouble breathing in soft crit, so you'll miss a breath one in four times
 
 	//Suffocate
@@ -154,7 +154,7 @@
 
 	else //Enough oxygen
 		failed_last_breath = 0
-		if(health >= crit_modifier())
+		if(health >= crit_threshold)
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]
 		clear_alert("not_enough_oxy")
@@ -424,6 +424,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(drunkenness)
 		drunkenness = max(drunkenness - (drunkenness * 0.04), 0)
 		if(drunkenness >= 6)
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drugs/drunk)
 			if(prob(25))
 				slurring += 2
 			jitteriness = max(jitteriness - 3, 0)

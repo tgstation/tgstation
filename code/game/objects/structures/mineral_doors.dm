@@ -30,11 +30,6 @@
 /obj/structure/mineral_door/ComponentInitialize()
 	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
 
-/obj/structure/mineral_door/Destroy()
-	density = FALSE
-	air_update_turf(1)
-	return ..()
-
 /obj/structure/mineral_door/Move()
 	var/turf/T = loc
 	. = ..()

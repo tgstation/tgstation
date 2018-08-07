@@ -1,0 +1,9 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "Omegastation's Atmospherics lockdown button now has the proper access reqs."
+  - bugfix: "Pubbystation's disposals conveyor belts now face the correct direction."
+  - bugfix: "Pubby's service techfab is no longer stuck inside a wall."
+  - bugfix: "Pubby's disposal loop is no longer broken."
+  - tweak: "The Lavaland seed vault chem dispenser now has upgraded stock parts."
+  - tweak: "Metastation: Extended protective grilles to partially cover the Supermatter cooling loop."

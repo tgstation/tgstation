@@ -2,7 +2,7 @@
 
 /datum/nanite_program/regenerative
 	name = "Accelerated Regeneration"
-	desc = "The nanites boost the host's natural regeneration, increasing their healing speed."
+	desc = "The nanites boost the host's natural regeneration, increasing their healing speed. Does not consume nanites if the host is unharmed."
 	use_rate = 2.5
 	rogue_types = list(/datum/nanite_program/necrotic)
 
@@ -190,7 +190,7 @@
 	if(iscarbon(host_mob) && prob(10))
 		var/mob/living/carbon/C = host_mob
 		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)
-		
+
 /datum/nanite_program/triggered/defib
 	name = "Defibrillation"
 	desc = "The nanites shock the host's heart when triggered, bringing them back to life if the body can sustain it."
@@ -201,12 +201,12 @@
 /datum/nanite_program/triggered/defib/trigger()
 	if(!..())
 		return
-		
+
 	playsound(host_mob, 'sound/machines/defib_zap.ogg', 75, 1, -1)
 	if(check_revivable())
 		host_mob.notify_ghost_cloning("Your heart is being defibrillated. Re-enter your corpse if you want to be revived!", source = src)
 	addtimer(CALLBACK(src, .proc/zap), 30)
-	
+
 /datum/nanite_program/triggered/defib/proc/check_revivable()
 	if(!iscarbon(host_mob)) //nonstandard biology
 		return FALSE
@@ -225,7 +225,7 @@
 	if(!C.get_ghost())
 		return FALSE
 	return TRUE
-	
+
 /datum/nanite_program/triggered/defib/proc/zap()
 	if(check_revivable())
 		var/mob/living/carbon/C = host_mob
@@ -241,4 +241,4 @@
 		log_game("[C] has been successfully defibrillated by nanites.")
 	else
 		playsound(src, 'sound/machines/defib_failed.ogg', 50, 0)
-		
+

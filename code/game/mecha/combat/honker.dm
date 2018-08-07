@@ -99,6 +99,10 @@
 						<div class='header'>Sounds of HONK:</div>
 						<div class='links'>
 						<a href='?src=[REF(src)];play_sound=sadtrombone'>Sad Trombone</a>
+						<a href='?src=[REF(src)];play_sound=bikehorn'>Bike Horn</a>
+						<a href='?src=[REF(src)];play_sound=airhorn2'>Air Horn</a>
+						<a href='?src=[REF(src)];play_sound=carhorn'>Car Horn</a>
+						<a href='?src=[REF(src)];play_sound=party_horn'>Party Horn</a>
 						</div>
 						</div>
 						"}
@@ -133,6 +137,14 @@
 		switch(href_list["play_sound"])
 			if("sadtrombone")
 				playsound(src, 'sound/misc/sadtrombone.ogg', 50)
+			if("bikehorn")
+				playsound(src, 'sound/items/bikehorn.ogg', 50)
+			if("airhorn2")
+				playsound(src, 'sound/items/airhorn2.ogg', 40) //soundfile has higher than average volume
+			if("carhorn")
+				playsound(src, 'sound/items/carhorn.ogg', 80) //soundfile has lower than average volume
+			if("party_horn")
+				playsound(src, 'sound/items/party_horn.ogg', 50)
 	return
 
 /proc/rand_hex_color()

@@ -10,20 +10,27 @@
 	var/mob/living/carbon/owner = null
 	var/mob/living/carbon/original_owner = null
 	var/status = BODYPART_ORGANIC
+
 	var/body_zone //BODY_ZONE_CHEST, BODY_ZONE_L_ARM, etc , used for def_zone
 	var/aux_zone // used for hands
 	var/aux_layer
 	var/body_part = null //bitflag used to check which clothes cover this bodypart
 	var/use_digitigrade = NOT_DIGITIGRADE //Used for alternate legs, useless elsewhere
+	var/list/embedded_objects = list()
+	var/held_index = 0 //are we a hand? if so, which one!
+	var/is_pseudopart = FALSE //For limbs that don't really exist, eg chainsaws
+
+	var/disabled = FALSE //If TRUE, limb is as good as missing
+	var/body_damage_coeff = 1 //Multiplier of the limb's damage that gets applied to the mob
 	var/brutestate = 0
 	var/burnstate = 0
 	var/brute_dam = 0
 	var/burn_dam = 0
 	var/stamina_dam = 0
 	var/max_damage = 0
-	var/list/embedded_objects = list()
-	var/held_index = 0 //are we a hand? if so, which one!
-	var/is_pseudopart = FALSE //For limbs that don't really exist, eg chainsaws
+
+	var/brute_reduction = 0 //Subtracted to brute damage taken
+	var/burn_reduction = 0	//Subtracted to burn damage taken
 
 	//Coloring and proper item icon update
 	var/skin_tone = ""
@@ -124,19 +131,18 @@
 	brute = round(max(brute * dmg_mlt, 0),DAMAGE_PRECISION)
 	burn = round(max(burn * dmg_mlt, 0),DAMAGE_PRECISION)
 	stamina = round(max(stamina * dmg_mlt, 0),DAMAGE_PRECISION)
-	if(status == BODYPART_ROBOTIC) //This makes robolimbs not damageable by chems and makes it stronger
-		brute = max(0, brute - 5)
-		burn = max(0, burn - 4)
-		//No stamina scaling.. for now..
+	brute = max(0, brute - brute_reduction)
+	burn = max(0, burn - burn_reduction)
+	//No stamina scaling.. for now..
 
 	if(!brute && !burn && !stamina)
 		return FALSE
 
 	switch(animal_origin)
-		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn
+		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn //nothing can burn with so much snowflake code around
 			burn *= 2
 
-	var/can_inflict = max_damage - (brute_dam + burn_dam)
+	var/can_inflict = max_damage - get_damage()
 	if(can_inflict <= 0)
 		return FALSE
 
@@ -151,7 +157,7 @@
 	burn_dam += burn
 
 	//We've dealt the physical damages, if there's room lets apply the stamina damage.
-	var/current_damage = brute_dam + burn_dam + stamina_dam		//This time around, count stamina loss too.
+	var/current_damage = get_damage(TRUE)		//This time around, count stamina loss too.
 	var/available_damage = max_damage - current_damage
 	stamina_dam += CLAMP(stamina, 0, available_damage)
 
@@ -159,6 +165,7 @@
 		owner.updatehealth()
 		if(stamina)
 			owner.update_stamina()
+	check_disabled()
 	return update_bodypart_damage_state()
 
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
@@ -177,13 +184,34 @@
 	stamina_dam = round(max(stamina_dam - stamina, 0), DAMAGE_PRECISION)
 	if(owner && updating_health)
 		owner.updatehealth()
+	check_disabled()
 	return update_bodypart_damage_state()
 
 
 //Returns total damage...kinda pointless really
-/obj/item/bodypart/proc/get_damage()
-	return brute_dam + burn_dam
+/obj/item/bodypart/proc/get_damage(include_stamina = FALSE)
+	var/total = brute_dam + burn_dam
+	if(include_stamina)
+		total += stamina_dam
+	return total
 
+
+//Checks disabled status thresholds
+/obj/item/bodypart/proc/check_disabled()
+	if(!can_dismember() || owner.has_trait(TRAIT_NODISMEMBER))
+		return
+	if(!disabled && (get_damage(TRUE) >= max_damage))
+		set_disabled(TRUE)
+	else if(disabled && (get_damage(TRUE) <= (max_damage * 0.5)))
+		set_disabled(FALSE)
+
+/obj/item/bodypart/proc/set_disabled(new_disabled = TRUE)
+	if(disabled == new_disabled)
+		return
+	disabled = new_disabled
+	owner.update_health_hud() //update the healthdoll
+	owner.update_body()
+	owner.update_canmove()
 
 //Updates an organ's brute/burn states for use by update_damage_overlays()
 //Returns 1 if we need to update overlays. 0 otherwise.
@@ -436,9 +464,22 @@
 	body_part = ARM_LEFT
 	aux_zone = BODY_ZONE_PRECISE_L_HAND
 	aux_layer = HANDS_PART_LAYER
+	body_damage_coeff = 0.75
 	held_index = 1
 	px_x = -6
 	px_y = 0
+
+/obj/item/bodypart/l_arm/set_disabled(new_disabled = TRUE)
+	..()
+	if(disabled)
+		to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
+		owner.emote("scream")
+		if(held_index)
+			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
+	if(owner.hud_used)
+		var/obj/screen/inventory/hand/L = owner.hud_used.hand_slots["[held_index]"]
+		if(L)
+			L.update_icon()
 
 /obj/item/bodypart/l_arm/monkey
 	icon = 'icons/mob/animal_parts.dmi'
@@ -472,9 +513,22 @@
 	body_part = ARM_RIGHT
 	aux_zone = BODY_ZONE_PRECISE_R_HAND
 	aux_layer = HANDS_PART_LAYER
+	body_damage_coeff = 0.75
 	held_index = 2
 	px_x = 6
 	px_y = 0
+
+/obj/item/bodypart/r_arm/set_disabled(new_disabled = TRUE)
+	..()
+	if(disabled)
+		to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
+		owner.emote("scream")
+		if(held_index)
+			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
+	if(owner.hud_used)
+		var/obj/screen/inventory/hand/R = owner.hud_used.hand_slots["[held_index]"]
+		if(R)
+			R.update_icon()
 
 /obj/item/bodypart/r_arm/monkey
 	icon = 'icons/mob/animal_parts.dmi'
@@ -506,8 +560,15 @@
 	max_damage = 50
 	body_zone = BODY_ZONE_L_LEG
 	body_part = LEG_LEFT
+	body_damage_coeff = 0.75
 	px_x = -2
 	px_y = 12
+
+/obj/item/bodypart/l_leg/set_disabled(new_disabled = TRUE)
+	..()
+	if(disabled)
+		to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
+		owner.emote("scream")
 
 /obj/item/bodypart/l_leg/digitigrade
 	name = "left digitigrade leg"
@@ -544,8 +605,15 @@
 	max_damage = 50
 	body_zone = BODY_ZONE_R_LEG
 	body_part = LEG_RIGHT
+	body_damage_coeff = 0.75
 	px_x = 2
 	px_y = 12
+
+/obj/item/bodypart/r_leg/set_disabled(new_disabled = TRUE)
+	..()
+	if(disabled)
+		to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
+		owner.emote("scream")
 
 /obj/item/bodypart/r_leg/digitigrade
 	name = "right digitigrade leg"

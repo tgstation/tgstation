@@ -430,7 +430,7 @@
 	name = "Machine Design (Weapon Recharger Board)"
 	desc = "The circuit board for a Weapon Recharger."
 	id = "recharger"
-	materials = list(MAT_GLASS = 1000, MAT_GOLD = 100)
+	materials = list(MAT_GLASS = 1000, MAT_GOLD = 2000)
 	build_path = /obj/item/circuitboard/machine/recharger
 	category = list("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
@@ -504,6 +504,14 @@
 	desc = "The circuit board for a limb grower."
 	id = "limbgrower"
 	build_path = /obj/item/circuitboard/machine/limbgrower
+	category = list("Medical Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/board/harvester
+	name = "Machine Design (Organ Harvester Board)"
+	desc = "The circuit board for an organ harvester."
+	id = "harvester"
+	build_path = /obj/item/circuitboard/machine/harvester
 	category = list("Medical Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 

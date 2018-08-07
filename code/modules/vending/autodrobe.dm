@@ -8,7 +8,12 @@
 	vend_reply = "Thank you for using AutoDrobe!"
 	products = list(/obj/item/clothing/suit/chickensuit = 1,
 		            /obj/item/clothing/head/chicken = 1,
-		            /obj/item/clothing/under/gladiator = 1,
+		            /obj/item/clothing/under/rank/blueclown = 1,
+					/obj/item/clothing/under/rank/greenclown = 1,
+					/obj/item/clothing/under/rank/yellowclown = 1,
+					/obj/item/clothing/under/rank/orangeclown = 1,
+					/obj/item/clothing/under/rank/purpleclown = 1,
+					/obj/item/clothing/under/gladiator = 1,
 					/obj/item/clothing/head/helmet/gladiator = 1,
 					/obj/item/clothing/under/gimmick/rank/captain/suit = 1,
 					/obj/item/clothing/head/flatcap = 1,
@@ -114,12 +119,14 @@
 		              /obj/item/clothing/mask/muzzle = 2)
 	premium = list(/obj/item/clothing/suit/pirate/captain = 2,
 		           /obj/item/clothing/head/pirate/captain = 2,
+				   /obj/item/clothing/under/rank/rainbowclown = 1,
 		           /obj/item/clothing/head/helmet/roman/fake = 1,
 		           /obj/item/clothing/head/helmet/roman/legionnaire/fake = 1,
 		           /obj/item/clothing/under/roman = 1,
 		           /obj/item/clothing/shoes/roman = 1,
 		           /obj/item/shield/riot/roman/fake = 1,
-		           /obj/item/skub = 1)
+		           /obj/item/skub = 1,)
+				
 	refill_canister = /obj/item/vending_refill/autodrobe
 
 /obj/machinery/vending/autodrobe/all_access

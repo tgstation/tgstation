@@ -76,7 +76,7 @@ SUBSYSTEM_DEF(dbcore)
 	var/address = CONFIG_GET(string/address)
 	var/port = CONFIG_GET(number/port)
 
-	connection = new /datum/BSQL_Connection(BSQL_CONNECTION_TYPE_MARIADB, CONFIG_GET(number/async_query_timeout), CONFIG_GET(number/blocking_query_timeout))
+	connection = new /datum/BSQL_Connection(BSQL_CONNECTION_TYPE_MARIADB, CONFIG_GET(number/async_query_timeout), CONFIG_GET(number/blocking_query_timeout), CONFIG_GET(number/bsql_thread_limit))
 	var/error
 	if(QDELETED(connection))
 		connection = null
@@ -188,7 +188,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	It was included because it is still supported in mariadb.
 	It does not work with duplicate_key and the mysql server ignores it in those cases
 */
-/datum/controller/subsystem/dbcore/proc/MassInsert(table, list/rows, duplicate_key = FALSE, ignore_errors = FALSE, delayed = FALSE, warn = FALSE, async = FALSE)
+/datum/controller/subsystem/dbcore/proc/MassInsert(table, list/rows, duplicate_key = FALSE, ignore_errors = FALSE, delayed = FALSE, warn = FALSE, async = TRUE)
 	if (!table || !rows || !istype(rows))
 		return
 	var/list/columns = list()

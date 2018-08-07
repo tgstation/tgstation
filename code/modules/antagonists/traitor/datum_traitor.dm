@@ -13,6 +13,7 @@
 	var/should_give_codewords = TRUE
 	var/should_equip = TRUE
 	var/traitor_kind = TRAITOR_HUMAN //Set on initial assignment
+	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/traitor/on_gain()
 	if(owner.current && isAI(owner.current))

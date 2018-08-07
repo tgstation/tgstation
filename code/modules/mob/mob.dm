@@ -4,6 +4,7 @@
 	GLOB.alive_mob_list -= src
 	GLOB.all_clockwork_mobs -= src
 	GLOB.mob_directory -= tag
+	focus = null
 	for (var/alert in alerts)
 		clear_alert(alert, TRUE)
 	if(observers && observers.len)
@@ -67,6 +68,9 @@
 			t+="<span class='notice'>[gas[GAS_META][META_GAS_NAME]]: [gas[MOLES]] \n</span>"
 
 	to_chat(usr, t)
+
+/mob/proc/get_photo_description(obj/item/camera/camera)
+	return "a ... thing?"
 
 /mob/proc/show_message(msg, type, alt_msg, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 
