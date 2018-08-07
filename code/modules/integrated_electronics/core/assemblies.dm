@@ -37,6 +37,7 @@
 	max_integrity = 50
 	pass_flags = 0
 	armor = list("melee" = 50, "bullet" = 70, "laser" = 70, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
+	var/wrapper_obj // If this isn't null the assembly will be kept inside it and will have signals rerouted to it
 	anchored = FALSE
 	var/can_anchor = TRUE
 	var/detail_color = COLOR_ASSEMBLY_BLACK
@@ -85,6 +86,23 @@
 
 /obj/item/electronic_assembly/Initialize()
 	.=..()
+	//should the assembly exist inside another object?
+	if(wrapper_obj)
+		wrapper_obj = new wrapper_obj
+		forceMove(wrapper_obj)
+		wrapper_obj.AddComponent(/datum/component/redirect, list(
+			COMSIG_PARENT_ATTACKBY = CALLBACK(src, .proc/attackby),
+			COMSIG_PARENT_EXAMINE = CALLBACK(src, .proc/examine),
+			COMSIG_ATOM_EMP_ACT = CALLBACK(src, .proc/emp_act),
+			COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/Moved),
+			COMSIG_MOVABLE_BUMP = CALLBACK(src, .proc/Bump),
+			//COMSIG_MOVABLE_STOP_PULLING = CALLBACK(src, .proc/stop_pulling),
+			COMSIG_ITEM_AFTERATTACK = CALLBACK(src, .proc/afterattack),
+			COMSIG_ITEM_ATTACK_SELF = CALLBACK(src, .proc/attack_self),
+			COMSIG_ITEM_DROPPED = CALLBACK(src, .proc/dropped),
+			COMSIG_ITEM_PICKUP = CALLBACK(src, .proc/pickup)
+			))
+
 	START_PROCESSING(SScircuit, src)
 	materials[MAT_METAL] = round((max_complexity + max_components) / 4) * SScircuit.cost_multiplier
 
