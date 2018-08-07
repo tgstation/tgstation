@@ -117,6 +117,16 @@
 	export_types = list(/obj/singularity)
 	include_subtypes = FALSE
 
+/datum/export/singulo/total_printout()
+	. = ..()
+	if(.)
+		. += " ERROR: Invalid object detected."
+
 /datum/export/singulo/tesla //see above
 	unit_name = "energy ball"
 	export_types = list(/obj/singularity/energy_ball)
+
+/datum/export/singulo/tesla/total_printout()
+	. = ..()
+	if(.)
+		. += " ERROR: Unscheduled energy ball delivery detected."
