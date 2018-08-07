@@ -226,6 +226,33 @@
 
 /datum/config_entry/number/movedelay/walk_delay
 
+/////////////////////////////////////////////////Outdated move delay
+/datum/config_entry/number/outdated_movedelay
+	deprecated_by = /datum/config_entry/keyed_list/multiplicative_movespeed
+	abstract_type = /datum/config_entry/number/outdated_movedelay
+
+	var/movedelay_type
+
+/datum/config_entry/number/outdated_movedelay/ValidateAndSet()
+	. = ..()
+	if(!.)
+		return
+	CONFIG_SET(keyed_list/multiplicative_movespeed, "[movedelay_type] [config_entry_value]")
+
+/datum/config_entry/number/outdated_movedelay/human_delay
+	movedelay_type = /mob/living/carbon/human
+/datum/config_entry/number/outdated_movedelay/robot_delay
+	movedelay_type = /mob/living/silicon/robot
+/datum/config_entry/number/outdated_movedelay/monkey_delay
+	movedelay_type = /mob/living/carbon/monkey
+/datum/config_entry/number/outdated_movedelay/alien_delay
+	movedelay_type = /mob/living/carbon/alien
+/datum/config_entry/number/outdated_movedelay/slime_delay
+	movedelay_type = /mob/living/simple_animal/slime
+/datum/config_entry/number/outdated_movedelay/animal_delay
+	movedelay_type = /mob/living/simple_animal
+/////////////////////////////////////////////////
+
 /datum/config_entry/flag/roundstart_away	//Will random away mission be loaded.
 
 /datum/config_entry/number/gateway_delay	//How long the gateway takes before it activates. Default is half an hour. Only matters if roundstart_away is enabled.
