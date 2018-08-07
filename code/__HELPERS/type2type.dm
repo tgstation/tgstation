@@ -448,6 +448,17 @@
 		else
 			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))
 
+/proc/fusionpower2text(power) //used when displaying fusion power on analyzers
+	switch(power)
+		if(0 to 5)
+			return "low"
+		if(5 to 20)
+			return "mid"
+		if(20 to 50)
+			return "high"
+		if(50 to INFINITY)
+			return "super"
+
 /proc/color2hex(color)	//web colors
 	if(!color)
 		return "#000000"

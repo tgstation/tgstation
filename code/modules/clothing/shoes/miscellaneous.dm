@@ -27,7 +27,7 @@
 	armor = list("melee" = 40, "bullet" = 30, "laser" = 25, "energy" = 25, "bomb" = 50, "bio" = 30, "rad" = 30, "fire" = 90, "acid" = 50)
 
 /obj/item/clothing/shoes/sandal
-	desc = "A pair of rather plain, wooden sandals."
+	desc = "A pair of rather plain wooden sandals."
 	name = "sandals"
 	icon_state = "wizard"
 	strip_delay = 50
@@ -91,7 +91,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/jester
 	name = "jester shoes"
-	desc = "A court jesters shoes, updated with modern squeaking technology."
+	desc = "A court jester's shoes, updated with modern squeaking technology."
 	icon_state = "jester_shoes"
 
 /obj/item/clothing/shoes/jackboots

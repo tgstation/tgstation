@@ -60,6 +60,11 @@
 		COLOR_ASSEMBLY_PURPLE
 		)
 
+/obj/item/electronic_assembly/New()
+	..()
+	src.max_components = round(max_components)
+	src.max_complexity = round(max_complexity)
+
 /obj/item/electronic_assembly/GenerateTag()
     tag = "assembly_[next_assembly_id++]"
 
@@ -626,6 +631,37 @@
 	icon_state = "setup_small_pda"
 	desc = "It's a case, for building small electronics with. This one resembles a PDA."
 
+/obj/item/electronic_assembly/small
+	name = "electronic device"
+	icon_state = "setup_device"
+	desc = "It's a case, for building tiny-sized electronics with."
+	w_class = WEIGHT_CLASS_TINY
+	max_components = IC_MAX_SIZE_BASE / 2
+	max_complexity = IC_COMPLEXITY_BASE / 2
+
+/obj/item/electronic_assembly/small/default
+	name = "type-a electronic device"
+
+/obj/item/electronic_assembly/small/cylinder
+	name = "type-b electronic device"
+	icon_state = "setup_device_cylinder"
+	desc = "It's a case, for building tiny-sized electronics with. This one has a cylindrical design."
+
+/obj/item/electronic_assembly/small/scanner
+	name = "type-c electronic device"
+	icon_state = "setup_device_scanner"
+	desc = "It's a case, for building tiny-sized electronics with. This one has a scanner-like design."
+
+/obj/item/electronic_assembly/small/hook
+	name = "type-d electronic device"
+	icon_state = "setup_device_hook"
+	desc = "It's a case, for building tiny-sized electronics with. This one looks like it has a belt clip, but it's purely decorative."
+
+/obj/item/electronic_assembly/small/box
+	name = "type-e electronic device"
+	icon_state = "setup_device_box"
+	desc = "It's a case, for building tiny-sized electronics with. This one has a boxy design."
+
 /obj/item/electronic_assembly/medium
 	name = "electronic mechanism"
 	icon_state = "setup_medium"
@@ -766,6 +802,14 @@
 	w_class = WEIGHT_CLASS_SMALL
 	max_components = IC_MAX_SIZE_BASE
 	max_complexity = IC_COMPLEXITY_BASE
+
+/obj/item/electronic_assembly/wallmount/tiny
+	name = "tiny wall-mounted electronic assembly"
+	icon_state = "setup_wallmount_tiny"
+	desc = "It's a case, for building tiny electronics with. It has a magnetized backing to allow it to stick to walls, but you'll still need to wrench the anchoring bolts in place to keep it on."
+	w_class = WEIGHT_CLASS_TINY
+	max_components = IC_MAX_SIZE_BASE / 2
+	max_complexity = IC_COMPLEXITY_BASE / 2
 
 /obj/item/electronic_assembly/wallmount/proc/mount_assembly(turf/on_wall, mob/user) //Yeah, this is admittedly just an abridged and kitbashed version of the wallframe attach procs.
 	if(get_dist(on_wall,user)>1)
