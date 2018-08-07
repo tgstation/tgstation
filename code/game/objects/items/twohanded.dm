@@ -817,8 +817,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	var/datum/component/mobhook
-	var/view_range_increase = 7
-
+	var/zoom_out_amt = 5
+	var/zoom_amt = 10
 /obj/item/twohanded/binoculars/wield(mob/user)
 	..()
 	if(wielded)
@@ -829,7 +829,20 @@
 		if(user && user.client)
 			user.regenerate_icons()
 			var/client/C = user.client
-			C.change_view(world.view + view_range_increase)
+			var/_x = 0
+			var/_y = 0
+			switch(user.dir)
+				if(NORTH)
+					_y = zoom_amt
+				if(EAST)
+					_x = zoom_amt
+				if(SOUTH)
+					_y = -zoom_amt
+				if(WEST)
+					_x = -zoom_amt
+			C.change_view(world.view + zoom_out_amt)
+			C.pixel_x = world.icon_size*_x
+			C.pixel_y = world.icon_size*_y
 
 /obj/item/twohanded/binoculars/unwield(mob/user)
 	QDEL_NULL(mobhook)
@@ -841,3 +854,5 @@
 		user.regenerate_icons()
 		var/client/C = user.client
 		C.change_view(CONFIG_GET(string/default_view))
+		user.client.pixel_x = 0
+		user.client.pixel_y = 0
