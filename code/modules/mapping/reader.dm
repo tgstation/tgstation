@@ -236,7 +236,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 		var/old_position = 1
 		var/dpos
 
-		do
+		while(dpos != 0)
 			//finding next member (e.g /turf/unsimulated/wall{icon_state = "rock"} or /area/mine/explored)
 			dpos = find_next_delimiter_position(model, old_position, ",", "{", "}") //find next delimiter (comma here) that's not within {...}
 
@@ -270,7 +270,6 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 			members_attributes[index++] = fields
 
 			CHECK_TICK
-		while(dpos != 0)
 
 		//check and see if we can just skip this turf
 		//So you don't have to understand this horrid statement, we can do this if
