@@ -16,6 +16,7 @@
 	var/list/stage4 = list("You feel white bread.")
 	var/list/stage5 = list("Oh the humanity!")
 	var/new_form = /mob/living/carbon/human
+	var/bantype
 
 /datum/disease/transformation/Copy()
 	var/datum/disease/transformation/D = ..()
@@ -49,10 +50,6 @@
 	if(istype(affected_mob, /mob/living/carbon) && affected_mob.stat != DEAD)
 		if(stage5)
 			to_chat(affected_mob, pick(stage5))
-		if(jobban_isbanned(affected_mob, new_form))
-			if(!QDELETED(affected_mob))
-				affected_mob.death(1)
-			return
 		if(QDELETED(affected_mob))
 			return
 		if(affected_mob.notransform)
@@ -64,6 +61,8 @@
 			affected_mob.dropItemToGround(I)
 		var/mob/living/new_mob = new new_form(affected_mob.loc)
 		if(istype(new_mob))
+			if(bantype && jobban_isbanned(affected_mob, bantype))
+				replace_banned_player(new_mob)
 			new_mob.a_intent = INTENT_HARM
 			if(affected_mob.mind)
 				affected_mob.mind.transfer_to(new_mob)
@@ -74,7 +73,19 @@
 		new_mob.real_name = new_mob.name
 		qdel(affected_mob)
 
+/datum/disease/transformation/proc/replace_banned_player(var/mob/living/new_mob) // This can run well after the mob has been transferred, so need a handle on the new mob to kill it if needed.
+	set waitfor = FALSE
 
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [affected_mob.name]?", bantype, null, bantype, 50, affected_mob)
+	if(LAZYLEN(candidates))
+		var/mob/dead/observer/C = pick(candidates)
+		to_chat(affected_mob, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
+		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(affected_mob)]) to replace a jobbaned player.")
+		affected_mob.ghostize(0)
+		affected_mob.key = C.key
+	else
+		to_chat(new_mob, "Your mob has been claimed by death! Appeal your job ban if you want to avoid this in the future!")
+		new_mob.death()
 
 /datum/disease/transformation/jungle_fever
 	name = "Jungle Fever"
@@ -92,6 +103,8 @@
 	visibility_flags = 0
 	agent = "Kongey Vibrion M-909"
 	new_form = /mob/living/carbon/monkey
+	bantype = ROLE_MONKEY
+
 
 	stage1	= list()
 	stage2	= list()
@@ -153,6 +166,7 @@
 	stage5	= list("<span class='danger'>Your skin feels as if it's about to burst off!</span>")
 	new_form = /mob/living/silicon/robot
 	infectable_biotypes = list(MOB_ORGANIC, MOB_UNDEAD, MOB_ROBOTIC)
+	bantype = "Cyborg"
 
 /datum/disease/transformation/robot/stage_act()
 	..()
@@ -184,6 +198,7 @@
 	stage4	= list("<span class='danger'>Your skin feels very tight.</span>", "<span class='danger'>Your blood boils!</span>", "<span class='danger'>You can feel... something...inside you.</span>")
 	stage5	= list("<span class='danger'>Your skin feels as if it's about to burst off!</span>")
 	new_form = /mob/living/carbon/alien/humanoid/hunter
+	bantype = ROLE_ALIEN
 
 /datum/disease/transformation/xeno/stage_act()
 	..()
