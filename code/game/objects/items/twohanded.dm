@@ -817,7 +817,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	var/datum/component/mobhook
-	var/zoom_out_amt = 5
+	var/zoom_out_amt = 6
 	var/zoom_amt = 10
 /obj/item/twohanded/binoculars/wield(mob/user)
 	..()
