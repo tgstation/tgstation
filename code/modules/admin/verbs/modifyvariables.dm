@@ -517,6 +517,25 @@ GLOBAL_PROTECT(VVpixelmovement)
 	log_admin("[key_name(src)] modified [original_name]'s [objectvar]: [original_var]=[new_var]")
 	message_admins("[key_name_admin(src)] modified [original_name]'s varlist [objectvar]: [original_var]=[new_var]")
 
+/proc/vv_varname_lockcheck(param_var_name)
+	if(param_var_name in GLOB.VVlocked)
+		if(!check_rights(R_DEBUG))
+			return FALSE
+	if(param_var_name in GLOB.VVckey_edit)
+		if(!check_rights(R_SPAWN|R_DEBUG))
+			return FALSE
+	if(param_var_name in GLOB.VVicon_edit_lock)
+		if(!check_rights(R_FUN|R_DEBUG))
+			return FALSE
+	if(param_var_name in GLOB.VVpixelmovement)
+		if(!check_rights(R_DEBUG))
+			return FALSE
+		var/prompt = alert(usr, "Editing this var may irreparably break tile gliding for the rest of the round. THIS CAN'T BE UNDONE", "DANGER", "ABORT ", "Continue", " ABORT")
+		if (prompt != "Continue")
+			return FALSE
+	return TRUE
+	
+
 /client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
 	if(!check_rights(R_VAREDIT))
 		return
@@ -546,24 +565,10 @@ GLOBAL_PROTECT(VVpixelmovement)
 		return
 
 	var_value = O.vars[variable]
-
-	if(variable in GLOB.VVlocked)
-		if(!check_rights(R_DEBUG))
-			return
-	if(variable in GLOB.VVckey_edit)
-		if(!check_rights(R_SPAWN|R_DEBUG))
-			return
-	if(variable in GLOB.VVicon_edit_lock)
-		if(!check_rights(R_FUN|R_DEBUG))
-			return
+	if(!vv_varname_lockcheck(variable))
+		return
 	if(istype(O, /datum/armor))
 		var/prompt = alert(src, "Editing this var changes this value on potentially thousands of items that share the same combination of armor values. If you want to edit the armor of just one item, use the \"Modify armor values\" dropdown item", "DANGER", "ABORT ", "Continue", " ABORT")
-		if (prompt != "Continue")
-			return
-	if(variable in GLOB.VVpixelmovement)
-		if(!check_rights(R_DEBUG))
-			return
-		var/prompt = alert(src, "Editing this var may irreparably break tile gliding for the rest of the round. THIS CAN'T BE UNDONE", "DANGER", "ABORT ", "Continue", " ABORT")
 		if (prompt != "Continue")
 			return
 
