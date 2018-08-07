@@ -180,7 +180,7 @@
 		usr.visible_message("<span class='notice'>[usr] starts closing [src]...</span>", "<span class='notice'>You start closing [src]...</span>")
 		if(do_after(usr, 30, target = usr))
 			usr.put_in_hands(briefcase)
-			forceMove(briefcase)
+			moveToNullspace() //hides it from suitcase contents
 			closed = TRUE
 
 /obj/machinery/launchpad/briefcase/attackby(obj/item/I, mob/user, params)
@@ -200,7 +200,9 @@
 	pad = new(src)
 
 /obj/item/storage/briefcase/launchpad/Destroy()
-	QDEL_NULL(pad)
+	if(!QDELETED(pad))
+		qdel(pad)
+	pad = null
 	return ..()
 
 /obj/item/storage/briefcase/launchpad/PopulateContents()
