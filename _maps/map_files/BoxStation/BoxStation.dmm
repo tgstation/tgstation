@@ -33091,6 +33091,9 @@
 	dir = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bGB" = (
@@ -33141,6 +33144,9 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -34562,6 +34568,9 @@
 	},
 /obj/item/assembly/timer,
 /obj/structure/table/reinforced,
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bKa" = (
@@ -35109,8 +35118,15 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/power/apc{
+	areastring = "/area/science/mixing/chamber";
+	dir = 8;
+	name = "Toxins Chamber APC";
+	pixel_x = -26
+	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bLj" = (
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = -32
@@ -35548,17 +35564,17 @@
 	pixel_y = 32
 	},
 /turf/open/floor/engine/vacuum,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bMu" = (
 /obj/machinery/door/poddoor/incinerator_toxmix,
 /turf/open/floor/engine/vacuum,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bMv" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bMw" = (
 /obj/machinery/sparker/toxmix{
 	dir = 2;
@@ -35568,7 +35584,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bMx" = (
 /obj/machinery/airlock_sensor/incinerator_toxmix{
 	pixel_y = 24
@@ -35578,7 +35594,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bMy" = (
 /obj/machinery/atmospherics/components/binary/valve{
 	dir = 4;
@@ -35602,7 +35618,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bMA" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
@@ -35904,23 +35920,23 @@
 /area/medical/virology)
 "bNt" = (
 /turf/open/floor/engine/vacuum,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bNu" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior,
 /turf/open/floor/engine,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bNv" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
 /turf/open/floor/engine,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bNw" = (
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_toxmix{
 	dir = 2
 	},
 /turf/open/floor/engine,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bNx" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -35933,11 +35949,8 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bNz" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
-	},
 /obj/machinery/camera{
 	c_tag = "Toxins Lab East";
 	dir = 8;
@@ -36336,7 +36349,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bOF" = (
 /obj/structure/sign/warning/fire{
 	pixel_y = -32
@@ -36346,7 +36359,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/engine,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bOG" = (
 /obj/machinery/atmospherics/components/binary/valve{
 	dir = 4;
@@ -36375,7 +36388,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bOI" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
@@ -37228,9 +37241,6 @@
 /area/science/xenobiology)
 "bQO" = (
 /obj/structure/closet/bombcloset,
-/obj/machinery/light_switch{
-	pixel_x = -20
-	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "bQP" = (
@@ -37253,7 +37263,6 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
-/obj/structure/closet/bombcloset,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
@@ -41092,6 +41101,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "cbe" = (
@@ -49858,7 +49868,7 @@
 /obj/effect/landmark/event_spawn,
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
 /turf/open/floor/engine/vacuum,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "cBF" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 8
@@ -52261,8 +52271,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/airalarm/mixingchamber{
+	dir = 4;
+	pixel_x = -24
+	},
 /turf/open/floor/plasteel/white,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "dwb" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 9
@@ -52280,14 +52294,20 @@
 /area/science/mixing)
 "dCN" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"dGF" = (
+/turf/closed/wall/r_wall,
+/area/science/mixing/chamber)
 "dMC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
-/area/crew_quarters/heads/hor)
+/area/science/mixing/chamber)
 "dMZ" = (
 /obj/item/transfer_valve{
 	pixel_x = -5
@@ -52336,6 +52356,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/explab)
+"eyF" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/science/misc_lab)
 "eyM" = (
 /obj/machinery/mineral/ore_redemption{
 	input_dir = 2;
@@ -52395,7 +52422,7 @@
 	dir = 5
 	},
 /turf/closed/wall/r_wall,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "flc" = (
 /obj/item/assembly/prox_sensor{
 	pixel_x = -4;
@@ -52825,7 +52852,7 @@
 	dir = 6
 	},
 /turf/closed/wall/r_wall,
-/area/crew_quarters/heads/hor)
+/area/science/mixing/chamber)
 "kGA" = (
 /obj/structure/chair/office/light{
 	dir = 4
@@ -53033,12 +53060,6 @@
 /obj/structure/girder,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
-"npZ" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/science/misc_lab)
 "nxv" = (
 /obj/machinery/power/apc{
 	name = "Construction Area APC";
@@ -53236,9 +53257,6 @@
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "qas" = (
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
 /obj/structure/tank_dispenser,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -53278,6 +53296,16 @@
 /obj/item/screwdriver,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"qQC" = (
+/obj/machinery/portable_atmospherics/canister,
+/obj/effect/turf_decal/bot{
+	dir = 2
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "qQH" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -53302,7 +53330,7 @@
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "rfW" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/floorgrime,
@@ -53478,6 +53506,21 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/courtroom)
+"tDw" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light_switch{
+	pixel_y = 28
+	},
+/turf/open/floor/plasteel,
+/area/science/misc_lab)
+"tKG" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/science/misc_lab)
 "tMl" = (
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel/showroomfloor,
@@ -100602,7 +100645,7 @@ bFS
 bJT
 bhA
 bPN
-caZ
+tDw
 cba
 gZY
 cbc
@@ -101104,11 +101147,11 @@ byq
 bwR
 bxY
 bCh
-byt
+dGF
 bMu
 bMu
 bMu
-bEC
+dGF
 bQU
 bFU
 bFU
@@ -101361,11 +101404,11 @@ byp
 bzJ
 bxY
 bCg
-byt
+dGF
 bMt
 bNt
 bNt
-bEC
+dGF
 bQT
 bFU
 bFU
@@ -101618,11 +101661,11 @@ bys
 bzM
 bya
 bCj
-byt
+dGF
 bMw
 cBE
 bOE
-bEC
+dGF
 bQT
 bFU
 bFU
@@ -101635,7 +101678,7 @@ bYm
 uvi
 cbb
 bTl
-bTl
+eyF
 bTl
 bTl
 bQZ
@@ -101875,11 +101918,11 @@ byr
 bzL
 bxZ
 bCi
-byt
+dGF
 bMv
 bNu
 bMv
-bEC
+dGF
 nEP
 bFU
 bFU
@@ -102149,8 +102192,8 @@ bYo
 bSc
 cbb
 bTl
+tKG
 bTl
-npZ
 bTl
 bQZ
 cgu
@@ -102644,7 +102687,7 @@ rYJ
 rYJ
 bFW
 rYJ
-rYJ
+qQC
 dCN
 bLi
 bMz
