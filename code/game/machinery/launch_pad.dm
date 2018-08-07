@@ -200,9 +200,7 @@
 	pad = new(src)
 
 /obj/item/storage/briefcase/launchpad/Destroy()
-	if(!QDELETED(pad))
-		qdel(pad)
-	pad = null
+	QDEL_NULL(pad)
 	return ..()
 
 /obj/item/storage/briefcase/launchpad/PopulateContents()
