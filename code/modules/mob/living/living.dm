@@ -54,7 +54,7 @@
 			return
 	if(ismovableatom(A))
 		var/atom/movable/AM = A
-		if(PushAM(AM))
+		if(PushAM(AM, move_force))
 			return
 
 /mob/living/Bumped(atom/movable/AM)
@@ -171,39 +171,48 @@
 	return
 
 //Called when we want to push an atom/movable
-/mob/living/proc/PushAM(atom/movable/AM)
+/mob/living/proc/PushAM(atom/movable/AM, force = move_force)
 	if(now_pushing)
 		return TRUE
 	if(moving_diagonally)// no pushing during diagonal moves.
 		return TRUE
 	if(!client && (mob_size < MOB_SIZE_SMALL))
 		return
-	if(!AM.anchored)
-		now_pushing = TRUE
-		var/t = get_dir(src, AM)
-		if (istype(AM, /obj/structure/window))
-			var/obj/structure/window/W = AM
-			if(W.fulltile)
-				for(var/obj/structure/window/win in get_step(W,t))
-					now_pushing = 0
-					return
-		if(pulling == AM)
-			stop_pulling()
-		var/current_dir
-		if(isliving(AM))
-			current_dir = AM.dir
-		if(step(AM, t))
-			step(src, t)
-		if(current_dir)
-			AM.setDir(current_dir)
+	now_pushing = TRUE
+	var/t = get_dir(src, AM)
+	var/push_normal = (AM.move_resist * MOVE_FORCE_PUSH_RATIO) <= force
+	var/push_anchored = FALSE
+	if((AM.move_resist * MOVE_FORCE_CRUSH_RATIO) <= force)
+		if(move_crush(AM, move_force, t))
+			push_anchored = TRUE
+	if((AM.move_resist * MOVE_FORCE_FORCEPUSH_RATIO) <= force)			//trigger move_crush and/or force_push regardless of if we can push it normally
+		if(force_push(AM, move_force, t))
+			push_anchored = TRUE
+	push_normal |= push_anchored
+	if(!push_normal || (AM.anchored && !push_anchored))
 		now_pushing = FALSE
-	else if(move_force > AM.move_resist)
-		force_push(AM)
+		return
+	if (istype(AM, /obj/structure/window))
+		var/obj/structure/window/W = AM
+		if(W.fulltile)
+			for(var/obj/structure/window/win in get_step(W,t))
+				now_pushing = FALSE
+				return
+	if(pulling == AM)
+		stop_pulling()
+	var/current_dir
+	if(isliving(AM))
+		current_dir = AM.dir
+	if(step(AM, t))
+		step(src, t)
+	if(current_dir)
+		AM.setDir(current_dir)
+	now_pushing = FALSE
 
-/mob/living/start_pulling(atom/movable/AM, supress_message = 0)
+/mob/living/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE)
 	if(!AM || !src)
 		return FALSE
-	if(!(AM.can_be_pulled(src)))
+	if(!(AM.can_be_pulled(src, state, force)))
 		return FALSE
 	if(throwing || incapacitated())
 		return FALSE

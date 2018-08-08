@@ -57,7 +57,7 @@
 /mob/living/carbon/alien/larva/toggle_throw_mode()
 	return
 
-/mob/living/carbon/alien/larva/start_pulling()
+/mob/living/carbon/alien/larva/start_pulling(atom/movable/AM, state, force = move_force, supress_message = FALSE)
 	return
 
 /mob/living/carbon/alien/larva/stripPanelUnequip(obj/item/what, mob/who)

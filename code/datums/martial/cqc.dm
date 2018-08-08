@@ -126,7 +126,7 @@
 	if(A.grab_state >= GRAB_AGGRESSIVE)
 		D.grabbedby(A, 1)
 	else
-		A.start_pulling(D, 1)
+		A.start_pulling(D, supress_message = TRUE)
 		if(A.pulling)
 			D.stop_pulling()
 			add_logs(A, D, "grabbed", addition="aggressively")

@@ -70,20 +70,20 @@
 			return FALSE
 	return ..()
 
-/atom/movable/proc/start_pulling(atom/movable/AM, gs, force = PULL_FORCE_DEFAULT)
+/atom/movable/proc/start_pulling(atom/movable/AM, state, force = move_force, supress_message = FALSE)
 	if(QDELETED(AM))
 		return FALSE
-	if(!(AM.can_be_pulled(src, gs, force)))
+	if(!(AM.can_be_pulled(src, state, force)))
 		return FALSE
 
 	// If we're pulling something then drop what we're currently pulling and pull this instead.
 	if(pulling)
-		if(gs == 0)
+		if(state == 0)
 			stop_pulling()
 			return FALSE
 		// Are we trying to pull something we are already pulling? Then enter grab cycle and end.
 		if(AM == pulling)
-			grab_state = gs
+			grab_state = state
 			if(istype(AM,/mob/living))
 				var/mob/living/AMob = AM
 				AMob.grabbedby(src)
@@ -94,11 +94,12 @@
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 	pulling = AM
 	AM.pulledby = src
-	grab_state = gs
+	grab_state = state
 	if(ismob(AM))
 		var/mob/M = AM
 		add_logs(src, M, "grabbed", addition="passive grab")
-		visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
+		if(!supress_message)
+			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
 	return TRUE
 
 /atom/movable/proc/stop_pulling()
@@ -561,12 +562,19 @@
 			return 0
 	return 1
 
-/atom/movable/proc/force_pushed(atom/movable/pusher, force, direction)
+/atom/movable/proc/force_pushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	return FALSE
 
-/atom/movable/proc/force_push(atom/movable/AM)
+/atom/movable/proc/force_push(atom/movable/AM, force = move_force, direction)
 	visible_message("<span class='warning'>[src] forcefully pushes against [AM]!</span>", "<span class='warning'>You forcefully push against [AM]!</span>")
-	AM.force_push(src, move_force, get_dir(src, AM))
+	return AM.force_pushed(src, force, direction)
+
+/atom/movable/proc/move_crush(atom/movable/AM, force = move_force, direction)
+	visible_message("<span class='danger'>[src] crushes past [AM]!</span>", "<span class='danger'>You crush [AM]!</span>")
+	return AM.move_crushed(src, force, direction)
+
+/atom/movable/proc/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
+	return FALSE
 
 /atom/movable/CanPass(atom/movable/mover, turf/target)
 	if(mover in buckled_mobs)
@@ -788,7 +796,8 @@
 		return FALSE
 	if(anchored || throwing)
 		return FALSE
-	if(force < move_resist)
+	to_chat(world, "DEBUG: can_be_pulled [__LINE__] force [force] threshold [move_resist * MOVE_FORCE_PULL_RATIO]")
+	if(force < (move_resist * MOVE_FORCE_PULL_RATIO))
 		return FALSE
 	return TRUE
 

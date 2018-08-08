@@ -122,10 +122,16 @@
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 
 /obj/force_pushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
+	return TRUE
+
+/obj/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	collision_damage(pusher, force, direction)
+	return TRUE
 
 /obj/proc/collision_damage(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
-	take_damage(max(0,  force - move_resist), BRUTE)
+	var/amt = max(0, ((force - (move_resist * MOVE_FORCE_CRUSH_RATIO)) / (move_resist * MOVE_FORCE_CRUSH_RATIO)) * 10)
+	to_chat(world, "DEBUG: collision_damage [__LINE__] force [force] damage [amt]")
+	take_damage(amt, BRUTE)
 
 /obj/attack_slime(mob/living/simple_animal/slime/user)
 	if(!user.is_adult)

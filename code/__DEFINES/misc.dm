@@ -433,8 +433,3 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define CAMERA_NO_GHOSTS 0
 #define CAMERA_SEE_GHOSTS_BASIC 1
 #define CAMERA_SEE_GHOSTS_ORBIT 2
-
-//Movement force, until it warrents its own file
-#define MOVE_FORCE_DEFAULT 100
-#define MOVE_RESIST_DEFAULT 100
-#define PULL_FORCE_DEFAULT 101
