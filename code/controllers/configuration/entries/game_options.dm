@@ -233,11 +233,8 @@
 
 	var/movedelay_type
 
-/datum/config_entry/number/outdated_movedelay/ValidateAndSet()
-	. = ..()
-	if(!.)
-		return
-	CONFIG_SET(keyed_list/multiplicative_movespeed, "[movedelay_type] [config_entry_value]")
+/datum/config_entry/number/outdated_movedelay/DeprecationUpdate(value)
+	return "[movedelay_type] [value]"
 
 /datum/config_entry/number/outdated_movedelay/human_delay
 	movedelay_type = /mob/living/carbon/human
