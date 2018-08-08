@@ -10,7 +10,7 @@
 	var/list/arguments = args.Copy(2)
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
 		qdel(src, TRUE, TRUE)
-		CRASH("Incompatible [type] assigned to a [P.type]!")
+		CRASH("Incompatible [type] assigned to a [P.type]! args: [json_encode(arguments)]")
 
 	_JoinParent(P)
 
@@ -92,7 +92,7 @@
 /datum/component/proc/RegisterSignal(datum/target, sig_type_or_types, proc_or_callback, override = FALSE)
 	if(QDELETED(src) || QDELETED(target))
 		return
-	
+
 	var/list/procs = signal_procs
 	if(!procs)
 		signal_procs = procs = list()
@@ -232,6 +232,7 @@
 			CRASH("[nt]: Invalid dupe_type ([dt])!")
 	else
 		new_comp = nt
+		nt = new_comp.type
 
 	args[1] = src
 
@@ -281,10 +282,11 @@
 	var/datum/old_parent = parent
 	PreTransfer()
 	_RemoveFromParent()
+	parent = null
 	SEND_SIGNAL(old_parent, COMSIG_COMPONENT_REMOVING, src)
 
 /datum/proc/TakeComponent(datum/component/target)
-	if(!target)
+	if(!target || target.parent == src)
 		return
 	if(target.parent)
 		target.RemoveComponent()

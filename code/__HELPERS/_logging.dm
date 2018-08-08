@@ -103,6 +103,10 @@
 		//reusing the PDA option because I really don't think news comments are worth a config option
 		WRITE_LOG(GLOB.world_pda_log, "COMMENT: [text]")
 
+/proc/log_telecomms(text)
+	if (CONFIG_GET(flag/log_telecomms))
+		WRITE_LOG(GLOB.world_telecomms_log, "TCOMMS: [text]")
+
 /proc/log_chat(text)
 	if (CONFIG_GET(flag/log_pda))
 		//same thing here

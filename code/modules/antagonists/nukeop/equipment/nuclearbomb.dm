@@ -28,8 +28,8 @@
 	var/deconstruction_state = NUKESTATE_INTACT
 	var/lights = ""
 	var/interior = ""
+	var/proper_bomb = TRUE //Please
 	var/obj/effect/countdown/nuclearbomb/countdown
-	var/static/bomb_set
 
 /obj/machinery/nuclearbomb/Initialize()
 	. = ..()
@@ -227,7 +227,6 @@
 
 /obj/machinery/nuclearbomb/process()
 	if(timing && !exploding)
-		bomb_set = TRUE
 		if(detonation_timer < world.time)
 			explode()
 		else
@@ -358,26 +357,23 @@
 				S.switch_mode_to(initial(S.mode))
 				S.alert = FALSE
 		timing = FALSE
-		bomb_set = TRUE
 		detonation_timer = null
 		countdown.stop()
 	update_icon()
 
 /obj/machinery/nuclearbomb/proc/set_active()
-	if(safety && !bomb_set)
+	if(safety)
 		to_chat(usr, "<span class='danger'>The safety is still on.</span>")
 		return
 	timing = !timing
 	if(timing)
 		previous_level = get_security_level()
-		bomb_set = TRUE
 		detonation_timer = world.time + (timer_set * 10)
 		for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
 			S.switch_mode_to(TRACK_INFILTRATOR)
 		countdown.start()
 		set_security_level("delta")
 	else
-		bomb_set = FALSE
 		detonation_timer = null
 		set_security_level(previous_level)
 		for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
@@ -460,6 +456,7 @@
 /obj/machinery/nuclearbomb/beer
 	name = "Nanotrasen-brand nuclear fission explosive"
 	desc = "One of the more successful achievements of the Nanotrasen Corporate Warfare Division, their nuclear fission explosives are renowned for being cheap to produce and devastatingly effective. Signs explain that though this particular device has been decommissioned, every Nanotrasen station is equipped with an equivalent one, just in case. All Captains carefully guard the disk needed to detonate them - at least, the sign says they do. There seems to be a tap on the back."
+	proper_bomb = FALSE
 	var/obj/structure/reagent_dispensers/beerkeg/keg
 
 /obj/machinery/nuclearbomb/beer/Initialize()
@@ -498,7 +495,6 @@
 		addtimer(CALLBACK(src, .proc/fizzbuzz), 110)
 
 /obj/machinery/nuclearbomb/beer/proc/disarm()
-	bomb_set = FALSE
 	detonation_timer = null
 	exploding = FALSE
 	exploded = TRUE

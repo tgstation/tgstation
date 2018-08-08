@@ -23,8 +23,7 @@
 	dwidth = 3;
 	name = "steel rain";
 	port_direction = 4;
-	preferred_direction = 4;
-	timid = 1
+	preferred_direction = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/assault_pod)

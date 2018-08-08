@@ -1335,10 +1335,10 @@
 /obj/docking_port/stationary{
 	dir = 8;
 	dwidth = 11;
-	height = 15;
+	height = 22;
 	id = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Fore";
-	width = 32
+	width = 35
 	},
 /turf/open/space/basic,
 /area/space)
@@ -12735,6 +12735,9 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plasteel/vault,
 /area/maintenance/disposal/incinerator)
 "aGR" = (
@@ -12743,21 +12746,25 @@
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault,
 /area/maintenance/disposal/incinerator)
 "aGS" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/light{
 	dir = 1
 	},
 /obj/machinery/airalarm{
+	locked = 0;
 	pixel_y = 23
 	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister,
+/obj/effect/turf_decal/delivery,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plasteel/vault,
 /area/maintenance/disposal/incinerator)
 "aGT" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
 	},
@@ -12766,19 +12773,17 @@
 	c_tag = "Atmospherics - Incinerator";
 	name = "atmospherics camera"
 	},
+/obj/effect/turf_decal/delivery,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plasteel/vault,
 /area/maintenance/disposal/incinerator)
 "aGU" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 6
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault,
 /area/maintenance/disposal/incinerator)
 "aGV" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 10
-	},
 /obj/structure/cable/white{
 	icon_state = "2-4"
 	},
@@ -13493,9 +13498,6 @@
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "aIs" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	name = "Gas to Turbine"
-	},
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -13506,19 +13508,6 @@
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "aIt" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	name = "Gas to Turbine"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/maintenance/disposal/incinerator)
-"aIu" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -13528,7 +13517,6 @@
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "aIv" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -14129,44 +14117,20 @@
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "aJK" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 5
-	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/maintenance/disposal/incinerator)
 "aJL" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible,
-/obj/machinery/meter,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/neutral,
-/area/maintenance/disposal/incinerator)
-"aJM" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible,
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/neutral,
-/area/maintenance/disposal/incinerator)
-"aJN" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 9
-	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/maintenance/disposal/incinerator)
 "aJO" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	name = "Mix to Turbine"
-	},
 /obj/structure/cable/white{
 	icon_state = "1-4"
 	},
@@ -14801,7 +14765,9 @@
 "aLj" = (
 /obj/machinery/meter,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/manifold/general/visible,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
 /turf/open/floor/plasteel/caution,
 /area/maintenance/disposal/incinerator)
 "aLk" = (
@@ -15338,7 +15304,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/weightlifter,
+/obj/structure/weightmachine/weightlifter,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
@@ -15380,7 +15346,7 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "aMu" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/incinerator_output{
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
@@ -15413,8 +15379,11 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "aMy" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/trinary/filter/flipped{
+	icon_state = "filter_off_f";
+	dir = 8
+	},
 /turf/open/floor/plasteel/caution{
 	dir = 10
 	},
@@ -23430,12 +23399,12 @@
 	},
 /area/engine/atmos)
 "bdc" = (
-/obj/machinery/atmospherics/pipe/manifold/yellow/visible{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/trinary/mixer{
+	name = "plasma mixer"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -59740,7 +59709,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/weightlifter,
+/obj/structure/weightmachine/weightlifter,
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/fitness/recreation)
 "czj" = (
@@ -59756,7 +59725,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
-/obj/structure/stacklifter,
+/obj/structure/weightmachine/stacklifter,
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/fitness/recreation)
 "czl" = (
@@ -61927,7 +61896,7 @@
 	},
 /area/crew_quarters/fitness/recreation)
 "cDK" = (
-/obj/structure/stacklifter,
+/obj/structure/weightmachine/stacklifter,
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/fitness/recreation)
 "cDL" = (
@@ -61938,7 +61907,7 @@
 /turf/open/floor/plasteel/neutral/side,
 /area/crew_quarters/fitness/recreation)
 "cDN" = (
-/obj/structure/weightlifter,
+/obj/structure/weightmachine/weightlifter,
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/fitness/recreation)
 "cDO" = (
@@ -99624,6 +99593,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/port/aft)
+"hsX" = (
+/obj/machinery/ore_silo,
+/turf/open/floor/plasteel/vault{
+	dir = 1
+	},
+/area/security/nuke_storage)
 "huX" = (
 /obj/structure/cable/white{
 	icon_state = "0-4"
@@ -100642,7 +100617,7 @@
 /turf/open/floor/plasteel,
 /area/science/research)
 "xXn" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxins_mixing_output,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
 "xZM" = (
@@ -123115,7 +123090,7 @@ azN
 aFr
 aGT
 aIt
-aJM
+aJK
 aLh
 aMC
 aNZ
@@ -123371,8 +123346,8 @@ aDl
 avZ
 aFs
 aGU
-aIu
-aJN
+aIt
+aJK
 aLi
 aMD
 aOa
@@ -146529,7 +146504,7 @@ bvT
 bxi
 byz
 bxi
-bvP
+hsX
 but
 aad
 bHq

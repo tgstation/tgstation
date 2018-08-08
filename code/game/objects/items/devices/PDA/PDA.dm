@@ -72,7 +72,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	var/obj/item/paicard/pai = null	// A slot for a personal AI device
 
-	var/icon/photo //Scanned photo
+	var/datum/picture/picture //Scanned photo
 
 	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
@@ -257,6 +257,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 						dat += "<h4>Quartermaster Functions:</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=[REF(src)];choice=47'>[PDAIMG(crate)]Supply Records</A></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=48'>[PDAIMG(crate)]Ore Silo Logs</a></li>"
 						dat += "</ul>"
 				dat += "</ul>"
 
@@ -630,8 +631,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		"message" = message,
 		"targets" = string_targets
 	))
-	if (photo)
-		signal.data["photo"] = photo
+	if (picture)
+		signal.data["photo"] = picture
 	signal.send_to_receivers()
 
 	// If it didn't reach, note that fact
@@ -651,7 +652,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	log_talk(user, "[key_name(user)] (PDA: [initial(name)]) sent \"[message]\" to [target_text]", LOGPDA)
 	to_chat(user, "<span class='info'>Message sent to [target_text]: \"[message]\"</span>")
 	// Reset the photo
-	photo = null
+	picture = null
 	last_text = world.time
 	if (everyone)
 		last_everyone = world.time
@@ -820,7 +821,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			update_icon()
 	else if(istype(C, /obj/item/photo))
 		var/obj/item/photo/P = C
-		photo = P.img
+		picture = P.picture
 		to_chat(user, "<span class='notice'>You scan \the [C].</span>")
 	else
 		return ..()
@@ -935,11 +936,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	var/selected = plist[c]
 
-	if(aicamera.aipictures.len>0)
+	if(aicamera.stored.len)
 		var/add_photo = input(user,"Do you want to attach a photo?","Photo","No") as null|anything in list("Yes","No")
 		if(add_photo=="Yes")
-			var/datum/picture/Pic = aicamera.selectpicture(aicamera)
-			aiPDA.photo = Pic.fields["img"]
+			var/datum/picture/Pic = aicamera.selectpicture(user)
+			aiPDA.picture = Pic
 
 	if(incapacitated())
 		return

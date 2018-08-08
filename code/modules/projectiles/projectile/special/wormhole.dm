@@ -2,6 +2,7 @@
 	name = "bluespace beam"
 	icon_state = "spark"
 	hitsound = "sparks"
+	damage = 0
 	nodamage = TRUE
 	pass_flags = PASSGLASS | PASSTABLE | PASSGRILLE | PASSMOB
 	var/obj/item/gun/energy/wormhole_projector/gun
@@ -20,7 +21,9 @@
 	if(casing)
 		gun = casing.gun
 
+
 /obj/item/projectile/beam/wormhole/on_hit(atom/target)
 	if(!gun)
 		qdel(src)
+		return 
 	gun.create_portal(src, get_turf(src))

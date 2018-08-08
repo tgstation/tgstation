@@ -167,112 +167,9 @@
 			}
 		</style>
 	</head>
-	<body onload='selectTextField(); updateSearch()' onkeydown='return checkreload()' onkeyup='updateSearch()'>
+	<body onload='selectTextField()' onkeydown='return handle_keydown()' onkeyup='handle_keyup()'>
 		<script type="text/javascript">
-			function checkreload() {
-				if(event.keyCode == 116){	//F5 (to refresh properly)
-					document.getElementById("refresh_link").click();
-					event.preventDefault ? event.preventDefault() : (event.returnValue = false)
-					return false;
-				}
-				return true;
-			}
-			function updateSearch(){
-				var filter_text = document.getElementById('filter');
-				var filter = filter_text.value.toLowerCase();
-				if(event.keyCode == 13){	//Enter / return
-					var vars_ol = document.getElementById('vars');
-					var lis = vars_ol.getElementsByTagName("li");
-					for ( var i = 0; i < lis.length; ++i )
-					{
-						try{
-							var li = lis\[i\];
-							if ( li.style.backgroundColor == "#ffee88" )
-							{
-								alist = lis\[i\].getElementsByTagName("a")
-								if(alist.length > 0){
-									location.href=alist\[0\].href;
-								}
-							}
-						}catch(err) {   }
-					}
-					return
-				}
-				if(event.keyCode == 38){	//Up arrow
-					var vars_ol = document.getElementById('vars');
-					var lis = vars_ol.getElementsByTagName("li");
-					for ( var i = 0; i < lis.length; ++i )
-					{
-						try{
-							var li = lis\[i\];
-							if ( li.style.backgroundColor == "#ffee88" )
-							{
-								if( (i-1) >= 0){
-									var li_new = lis\[i-1\];
-									li.style.backgroundColor = "white";
-									li_new.style.backgroundColor = "#ffee88";
-									return
-								}
-							}
-						}catch(err) {  }
-					}
-					return
-				}
-				if(event.keyCode == 40){	//Down arrow
-					var vars_ol = document.getElementById('vars');
-					var lis = vars_ol.getElementsByTagName("li");
-					for ( var i = 0; i < lis.length; ++i )
-					{
-						try{
-							var li = lis\[i\];
-							if ( li.style.backgroundColor == "#ffee88" )
-							{
-								if( (i+1) < lis.length){
-									var li_new = lis\[i+1\];
-									li.style.backgroundColor = "white";
-									li_new.style.backgroundColor = "#ffee88";
-									return
-								}
-							}
-						}catch(err) {  }
-					}
-					return
-				}
-
-				//This part here resets everything to how it was at the start so the filter is applied to the complete list. Screw efficiency, it's client-side anyway and it only looks through 200 or so variables at maximum anyway (mobs).
-				if(complete_list != null && complete_list != ""){
-					var vars_ol1 = document.getElementById("vars");
-					vars_ol1.innerHTML = complete_list
-				}
-				document.cookie="[refid][cookieoffset]search="+encodeURIComponent(filter);
-				if(filter == ""){
-					return;
-				}else{
-					var vars_ol = document.getElementById('vars');
-					var lis = vars_ol.getElementsByTagName("li");
-					for ( var i = 0; i < lis.length; ++i )
-					{
-						try{
-							var li = lis\[i\];
-							if ( li.innerText.toLowerCase().indexOf(filter) == -1 )
-							{
-								vars_ol.removeChild(li);
-								i--;
-							}
-						}catch(err) {   }
-					}
-				}
-				var lis_new = vars_ol.getElementsByTagName("li");
-				for ( var j = 0; j < lis_new.length; ++j )
-				{
-					var li1 = lis\[j\];
-					if (j == 0){
-						li1.style.backgroundColor = "#ffee88";
-					}else{
-						li1.style.backgroundColor = "white";
-					}
-				}
-			}
+			// onload
 			function selectTextField() {
 				var filter_text = document.getElementById('filter');
 				filter_text.focus();
@@ -283,23 +180,132 @@
 					updateSearch();
 				}
 			}
-			function loadPage(list) {
-				if(list.options\[list.selectedIndex\].value == ""){
-					return;
-				}
-				location.href=list.options\[list.selectedIndex\].value;
-			}
 			function getCookie(cname) {
 				var name = cname + "=";
 				var ca = document.cookie.split(';');
 				for(var i=0; i<ca.length; i++) {
-					var c = ca\[i\];
+					var c = ca\[i];
 					while (c.charAt(0)==' ') c = c.substring(1,c.length);
 					if (c.indexOf(name)==0) return c.substring(name.length,c.length);
 				}
 				return "";
 			}
 
+			// main search functionality
+			var last_filter = "";
+			function updateSearch() {
+				var filter = document.getElementById('filter').value.toLowerCase();
+				var vars_ol = document.getElementById("vars");
+
+				if (filter === last_filter) {
+					// An event triggered an update but nothing has changed.
+					return;
+				} else if (filter.indexOf(last_filter) === 0) {
+					// The new filter starts with the old filter, fast path by removing only.
+					var children = vars_ol.childNodes;
+					for (var i = children.length - 1; i >= 0; --i) {
+						try {
+							var li = children\[i];
+							if (li.innerText.toLowerCase().indexOf(filter) == -1) {
+								vars_ol.removeChild(li);
+							}
+						} catch(err) {}
+					}
+				} else {
+					// Remove everything and put back what matches.
+					while (vars_ol.hasChildNodes()) {
+						vars_ol.removeChild(vars_ol.lastChild);
+					}
+
+					for (var i = 0; i < complete_list.length; ++i) {
+						try {
+							var li = complete_list\[i];
+							if (!filter || li.innerText.toLowerCase().indexOf(filter) != -1) {
+								vars_ol.appendChild(li);
+							}
+						} catch(err) {}
+					}
+				}
+
+				last_filter = filter;
+				document.cookie="[refid][cookieoffset]search="+encodeURIComponent(filter);
+
+				var lis_new = vars_ol.getElementsByTagName("li");
+				for (var j = 0; j < lis_new.length; ++j) {
+					lis_new\[j].style.backgroundColor = (j == 0) ? "#ffee88" : "white";
+				}
+			}
+
+			// onkeydown
+			function handle_keydown() {
+				if(event.keyCode == 116) {  //F5 (to refresh properly)
+					document.getElementById("refresh_link").click();
+					event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+					return false;
+				}
+				return true;
+			}
+
+			// onkeyup
+			function handle_keyup() {
+				if (event.keyCode == 13) {  //Enter / return
+					var vars_ol = document.getElementById('vars');
+					var lis = vars_ol.getElementsByTagName("li");
+					for (var i = 0; i < lis.length; ++i) {
+						try {
+							var li = lis\[i];
+							if (li.style.backgroundColor == "#ffee88") {
+								alist = lis\[i].getElementsByTagName("a");
+								if(alist.length > 0) {
+									location.href=alist\[0].href;
+								}
+							}
+						} catch(err) {}
+					}
+				} else if(event.keyCode == 38){  //Up arrow
+					var vars_ol = document.getElementById('vars');
+					var lis = vars_ol.getElementsByTagName("li");
+					for (var i = 0; i < lis.length; ++i) {
+						try {
+							var li = lis\[i];
+							if (li.style.backgroundColor == "#ffee88") {
+								if (i > 0) {
+									var li_new = lis\[i-1];
+									li.style.backgroundColor = "white";
+									li_new.style.backgroundColor = "#ffee88";
+									return
+								}
+							}
+						} catch(err) {}
+					}
+				} else if(event.keyCode == 40) {  //Down arrow
+					var vars_ol = document.getElementById('vars');
+					var lis = vars_ol.getElementsByTagName("li");
+					for (var i = 0; i < lis.length; ++i) {
+						try {
+							var li = lis\[i];
+							if (li.style.backgroundColor == "#ffee88") {
+								if ((i+1) < lis.length) {
+									var li_new = lis\[i+1];
+									li.style.backgroundColor = "white";
+									li_new.style.backgroundColor = "#ffee88";
+									return
+								}
+							}
+						} catch(err) {}
+					}
+				} else {
+					updateSearch();
+				}
+			}
+
+			// onchange
+			function handle_dropdown(list) {
+				var value = list.options\[list.selectedIndex].value;
+				if (value !== "") {
+					location.href = value;
+				}
+			}
 		</script>
 		<div align='center'>
 			<table width='100%'>
@@ -326,7 +332,7 @@
 							<a id='refresh_link' href='?_src_=vars;[HrefToken()];datumrefresh=[refid]'>Refresh</a>
 							<form>
 								<select name="file" size="1"
-									onchange="loadPage(this.form.elements\[0\])"
+									onchange="handle_dropdown(this)"
 									target="_parent._top"
 									onmouseclick="this.focus()"
 									style="background-color:#ffffff">
@@ -363,8 +369,9 @@
 			[variable_html.Join()]
 		</ol>
 		<script type='text/javascript'>
-			var vars_ol = document.getElementById("vars");
-			var complete_list = vars_ol.innerHTML;
+			var complete_list = \[\];
+			var lis = document.getElementById("vars").children;
+			for(var i = lis.length; i--;) complete_list\[i\] = lis\[i\];
 		</script>
 	</body>
 </html>
