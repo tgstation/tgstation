@@ -129,4 +129,4 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	linked_techweb = SSresearch.science_tech
 
 /proc/techweb_scale_bomb(lightradius)
-	return lightradius^1.36
+	return lightradius ** 1.36
