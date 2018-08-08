@@ -152,3 +152,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 	loaded_item = null
 	update_icon()
 	return TRUE
+
+/obj/machinery/rnd/destructive_analyzer/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/clothing/head/mob_holder))
+		to_chat(user, "<span class='warning'>The [src.name] smartly refuses \the [I].</span>")
+		return

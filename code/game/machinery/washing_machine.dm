@@ -213,6 +213,10 @@
 		update_icon()
 		return
 
+	if(istype(W, /obj/item/clothing/head/mob_holder))
+		to_chat(user, "<span class='warning'>This does not fit in the washing machine.</span>")
+		return 1
+
 	else if(user.a_intent != INTENT_HARM)
 
 		if (!state_open)

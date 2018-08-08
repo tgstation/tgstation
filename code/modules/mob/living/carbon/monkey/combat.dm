@@ -143,13 +143,17 @@
 				pickupTimer = 0
 			else
 				INVOKE_ASYNC(src, .proc/walk2derpless, pickupTarget.loc)
-				if(Adjacent(pickupTarget) || Adjacent(pickupTarget.loc)) // next to target				
+				if(Adjacent(pickupTarget) || Adjacent(pickupTarget.loc)) // next to target
 					drop_all_held_items() // who cares about these items, i want that one!
 					if(isturf(pickupTarget.loc)) // on floor
 						equip_item(pickupTarget)
 						pickupTarget = null
 						pickupTimer = 0
 					else if(ismob(pickupTarget.loc)) // in someones hand
+						if(istype(pickupTarget,/obj/item/clothing/head/mob_holder/))
+							var/obj/item/clothing/head/mob_holder/H = pickupTarget
+							if(H && H.held_mob == src)
+								return //Don't let them pickpocket themselves
 						var/mob/M = pickupTarget.loc
 						if(!pickpocketing)
 							pickpocketing = TRUE
@@ -167,7 +171,7 @@
 							battle_screech()
 							retaliate(L)
 							return TRUE
-						else 
+						else
 							bodyDisposal = locate(/obj/machinery/disposal/) in around
 							if(bodyDisposal)
 								target = L

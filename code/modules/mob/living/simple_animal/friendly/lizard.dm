@@ -4,6 +4,7 @@
 	icon_state = "lizard"
 	icon_living = "lizard"
 	icon_dead = "lizard_dead"
+	can_be_held = TRUE
 	speak_emote = list("hisses")
 	health = 5
 	maxHealth = 5
