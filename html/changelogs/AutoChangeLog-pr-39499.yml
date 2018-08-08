@@ -1,6 +1,0 @@
-author: "cyclowns"
-delete-after: True
-changes: 
-  - tweak: "Fusion has been reworked to be a whole lot deadlier!"
-  - tweak: "You can now use analyzers on gas mixtures holders (canisters, pipes, turfs, etc) that have undergone fusion to see the power of the fusion reaction that occurred."
-  - balance: "Several gases' fusion power and fusion's gas creation has been reworked to make its tier system more linear and less cheese-able."
