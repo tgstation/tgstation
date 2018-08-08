@@ -241,7 +241,11 @@
 	desc = "The local shaman apreciates this delicacy."
 	icon_state = "toad_lick_soup"
 	trash = /obj/item/reagent_containers/glass/bowl/mushroom_bowl
-	bonus_reagents = list("nutriment" = 2,  "vitamin" = 2, "mushroomhallucinogen" = 10, "mindbreaker" = 10, "antitoxin" = 4)
+	bonus_reagents = list("nutriment" = 2,  "vitamin" = 2, "mushroomhallucinogen" = 10, "mindbreaker" = 10)
 	list_reagents = list("nutriment" = 1, "mushroomhallucinogen" = 3, "mindbreaker" = 3)
 	tastes = list("toad" = 1)
 	foodtype = VEGETABLES | MEAT
+
+/obj/item/reagent_containers/food/snacks/soup/toadlicksoup/CheckParts(list/list_reagents)
+	..()
+	reagents.remove_reagent("entpoly", 10)

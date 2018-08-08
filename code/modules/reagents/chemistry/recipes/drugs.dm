@@ -39,9 +39,3 @@
 	id = "aranesp"
 	results = list("aranesp" = 3)
 	required_reagents = list("epinephrine" = 1, "atropine" = 1, "morphine" = 1)
-
-/datum/chemical_reaction/entpolyneutr
-	name = "entpolyneutr"
-	id = "entpolyneutr"
-	results = list("rotatium" = 3)
-	required_reagents = list("antitoxin" = 1, "entpoly" = 1)
