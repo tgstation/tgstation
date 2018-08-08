@@ -108,6 +108,7 @@
 	else if(istype(M, /turf/closed))
 		src.visible_message("<span class='warning'>[src] rams into [M] and crashes!</span>")
 		playsound(src, pick('sound/vehicles/clowncar_crash1.ogg', 'sound/vehicles/clowncar_crash2.ogg'), 75)
+		playsound(src, 'sound/vehicles/clowncar_crashpins.ogg', 75)
 		DumpMobs()
 
 /obj/vehicle/sealed/car/clowncar/deconstruct(disassembled = TRUE)

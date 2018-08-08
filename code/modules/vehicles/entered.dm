@@ -40,14 +40,18 @@
 	add_occupant(M)
 	return TRUE
 
-/obj/vehicle/sealed/proc/mob_try_exit(mob/M, mob/user, silent = FALSE)
-	mob_exit(M, silent)
+/obj/vehicle/sealed/proc/mob_try_exit(mob/M, mob/user, silent = FALSE, randomstep = FALSE)
+	mob_exit(M, silent, randomstep)
 
-/obj/vehicle/sealed/proc/mob_exit(mob/M, silent = FALSE)
+/obj/vehicle/sealed/proc/mob_exit(mob/M, silent = FALSE, randomstep = FALSE)
 	if(!istype(M))
 		return FALSE
 	remove_occupant(M)
-	M.forceMove(exit_location(M))
+	if(randomstep)
+		var/turf/target_turf = get_step(exit_location(M), pick(GLOB.cardinals))
+		M.forceMove(target_turf)
+	else
+		M.forceMove(exit_location(M))
 	if(!silent)
 		M.visible_message("<span class='notice'>[M] drops out of \the [src]!</span>")
 	return TRUE
@@ -85,16 +89,16 @@
 	DumpMobs()
 	explosion(src.loc, 0, 1, 2, 3, 0)
 
-/obj/vehicle/sealed/proc/DumpMobs()
+/obj/vehicle/sealed/proc/DumpMobs(randomstep = TRUE)
 	for(var/i in occupants)
 		if(iscarbon(i))
 			var/mob/living/carbon/Carbon = i
-			mob_exit(Carbon)
+			mob_exit(Carbon, randomstep)
 			Carbon.Knockdown(40)
 
-/obj/vehicle/sealed/proc/DumpSpecificMobs(flag)
+/obj/vehicle/sealed/proc/DumpSpecificMobs(flag, randomstep = TRUE)
 	for(var/i in occupants)
 		if((occupants[i] & flag) && iscarbon(i))
 			var/mob/living/carbon/C = i
-			mob_exit(C)
+			mob_exit(C, randomstep)
 			C.Knockdown(40)
