@@ -186,7 +186,7 @@
 		if(move_crush(AM, move_force, t))
 			push_anchored = TRUE
 	if((AM.move_resist * MOVE_FORCE_FORCEPUSH_RATIO) <= force)			//trigger move_crush and/or force_push regardless of if we can push it normally
-		if(force_push(AM, move_force, t))
+		if(force_push(AM, move_force, t, push_anchored))
 			push_anchored = TRUE
 	push_normal |= push_anchored
 	if(!push_normal || (AM.anchored && !push_anchored))

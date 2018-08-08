@@ -565,13 +565,15 @@
 /atom/movable/proc/force_pushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	return FALSE
 
-/atom/movable/proc/force_push(atom/movable/AM, force = move_force, direction)
-	visible_message("<span class='warning'>[src] forcefully pushes against [AM]!</span>", "<span class='warning'>You forcefully push against [AM]!</span>")
-	return AM.force_pushed(src, force, direction)
+/atom/movable/proc/force_push(atom/movable/AM, force = move_force, direction, silent = FALSE)
+	. = AM.force_pushed(src, force, direction)
+	if(!silent && .)
+		visible_message("<span class='warning'>[src] forcefully pushes against [AM]!</span>", "<span class='warning'>You forcefully push against [AM]!</span>")
 
-/atom/movable/proc/move_crush(atom/movable/AM, force = move_force, direction)
-	visible_message("<span class='danger'>[src] crushes past [AM]!</span>", "<span class='danger'>You crush [AM]!</span>")
-	return AM.move_crushed(src, force, direction)
+/atom/movable/proc/move_crush(atom/movable/AM, force = move_force, direction, silent = FALSE)
+	. = AM.move_crushed(src, force, direction)
+	if(!silent && .)
+		visible_message("<span class='danger'>[src] crushes past [AM]!</span>", "<span class='danger'>You crush [AM]!</span>")
 
 /atom/movable/proc/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	return FALSE
@@ -796,7 +798,6 @@
 		return FALSE
 	if(anchored || throwing)
 		return FALSE
-	to_chat(world, "DEBUG: can_be_pulled [__LINE__] force [force] threshold [move_resist * MOVE_FORCE_PULL_RATIO]")
 	if(force < (move_resist * MOVE_FORCE_PULL_RATIO))
 		return FALSE
 	return TRUE
