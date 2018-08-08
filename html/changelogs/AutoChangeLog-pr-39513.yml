@@ -1,0 +1,5 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - rscadd: "Catpeople are now a subspecies of human. Switch your character's species to \"Felinid\" to be one."
+  - rscadd: "Oh yeah and they show up as felinids on health analyzers."
