@@ -1,5 +1,7 @@
 /datum/buildmode_mode/fill
 	key = "fill"
+	
+	use_corner_selection = TRUE
 	var/objholder = null
 
 /datum/buildmode_mode/fill/show_help(mob/user)
@@ -24,36 +26,28 @@
 	deselect_region()
 
 /datum/buildmode_mode/fill/handle_click(mob/user, params, obj/object)
+	if(isnull(objholder))
+		to_chat(user, "<span class='warning'>Select an object type first.</span>")
+		deselect_region()
+		return
+	..()
+
+/datum/buildmode_mode/fill/handle_selected_area(mob/user, params)
 	var/list/pa = params2list(params)
 	var/left_click = pa.Find("left")
 	var/alt_click = pa.Find("alt")
 
-	if(!cornerA)
-		cornerA = select_tile(get_turf(object), AREASELECT_CORNERA)
-		return
-	if(cornerA && !cornerB)
-		cornerB = select_tile(get_turf(object), AREASELECT_CORNERB)
 	if(left_click) //rectangular
-		if(cornerA && cornerB)
-			if(alt_click)
-				for(var/turf/T in block(get_turf(cornerA),get_turf(cornerB)))
-					for(var/atom/movable/AM in T)
-						qdel(AM)
-				// if there's an analogous proc for this on tg lmk
-				// empty_region(block(get_turf(cornerA),get_turf(cornerB)))
-				deselect_region()
-			else
-				if(!objholder)
-					to_chat(user, "<span class='warning'>Select an object type first.</span>")
+		if(alt_click)
+			for(var/turf/T in block(get_turf(cornerA),get_turf(cornerB)))
+				for(var/atom/movable/AM in T)
+					qdel(AM)
+			// if there's an analogous proc for this on tg lmk
+			// empty_region(block(get_turf(cornerA),get_turf(cornerB)))
+		else
+			for(var/turf/T in block(get_turf(cornerA),get_turf(cornerB)))
+				if(ispath(objholder,/turf))
+					T.PlaceOnTop(objholder)
 				else
-					for(var/turf/T in block(get_turf(cornerA),get_turf(cornerB)))
-						if(ispath(objholder,/turf))
-							T.PlaceOnTop(objholder)
-						else
-							var/obj/A = new objholder(T)
-							A.setDir(BM.build_dir)
-				deselect_region()
-			return
-
-	//Something wrong - Reset
-	deselect_region()
+					var/obj/A = new objholder(T)
+					A.setDir(BM.build_dir)

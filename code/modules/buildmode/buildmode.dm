@@ -40,6 +40,7 @@
 
 /datum/buildmode/Destroy()
 	close_switchstates()
+	holder = null
 	QDEL_NULL(mode)
 	QDEL_LIST(modeswitch_buttons)
 	QDEL_LIST(dirswitch_buttons)

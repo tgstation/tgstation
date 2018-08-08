@@ -4,6 +4,7 @@
 	var/datum/buildmode/BM
 
 	// would corner selection work better as a component?
+	var/use_corner_selection = FALSE
 	var/list/preview
 	var/turf/cornerA
 	var/turf/cornerB
@@ -60,5 +61,23 @@
 	cornerA = null
 	cornerB = null
 
-/datum/buildmode_mode/proc/handle_click(user, params, object)
+/datum/buildmode_mode/proc/handle_click(mob/user, params, object)
+	var/list/pa = params2list(params)
+	var/left_click = pa.Find("left")
+	if(use_corner_selection)
+		if(left_click)
+			if(!cornerA)
+				cornerA = select_tile(get_turf(object), AREASELECT_CORNERA)
+				return
+			if(cornerA && !cornerB)
+				cornerB = select_tile(get_turf(object), AREASELECT_CORNERB)
+				to_chat(user, "<span class='boldwarning'>Region selected, if you're happy with your selection left click again, otherwise right click.</span>")
+				return
+			handle_selected_area(user, params)
+			deselect_region()
+		else
+			to_chat(user, "<span class='notice'>Region selection canceled!</span>")
+			deselect_region()
 	return
+
+/datum/buildmode_mode/proc/handle_selected_area(mob/user, params)
