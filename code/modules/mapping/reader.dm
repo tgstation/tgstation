@@ -496,12 +496,12 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 		target_path = path
 
 /datum/map_preloader/proc/load(atom/what)
+	GLOB.use_preloader = FALSE
 	for(var/attribute in attributes)
 		var/value = attributes[attribute]
 		if(islist(value))
 			value = deepCopyList(value)
 		what.vars[attribute] = value
-	GLOB.use_preloader = FALSE
 
 /area/template_noop
 	name = "Area Passthrough"

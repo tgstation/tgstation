@@ -42,9 +42,6 @@ GLOBAL_PROTECT(protected_ranks)
 		return QDEL_HINT_LETMELIVE
 	. = ..()
 
-/datum/admin_rank/can_vv_get(var_name)
-	return FALSE
-
 /datum/admin_rank/vv_edit_var(var_name, var_value)
 	return FALSE
 
@@ -74,7 +71,7 @@ GLOBAL_PROTECT(protected_ranks)
 		if("varedit")
 			flag = R_VAREDIT
 		if("everything","host","all")
-			flag = ALL
+			flag = R_EVERYTHING
 		if("sound","sounds")
 			flag = R_SOUNDS
 		if("spawn","create")
@@ -111,7 +108,21 @@ GLOBAL_PROTECT(protected_ranks)
 	var/flag = admin_keyword_to_flag(word)
 	if(flag)
 		return ((rank.rights & flag) == flag) //true only if right has everything in flag
+/proc/sync_ranks_with_db()
+	set waitfor = FALSE
 
+	if(IsAdminAdvancedProcCall())
+		to_chat(usr, "<span class='admin prefix'>Admin rank DB Sync blocked: Advanced ProcCall detected.</span>")
+		return
+
+	var/list/sql_ranks = list()
+	for(var/datum/admin_rank/R in GLOB.admin_ranks)
+		var/sql_rank = sanitizeSQL(R.name)
+		var/sql_flags = sanitizeSQL(R.include_rights)
+		var/sql_exclude_flags = sanitizeSQL(R.exclude_rights)
+		var/sql_can_edit_flags = sanitizeSQL(R.can_edit_rights)
+		sql_ranks += list(list("rank" = "'[sql_rank]'", "flags" = "[sql_flags]", "exclude_flags" = "[sql_exclude_flags]", "can_edit_flags" = "[sql_can_edit_flags]"))
+	SSdbcore.MassInsert(format_table_name("admin_ranks"), sql_ranks, duplicate_key = TRUE)
 //load our rank - > rights associations
 /proc/load_admin_ranks(dbfail, no_update)
 	if(IsAdminAdvancedProcCall())
@@ -139,14 +150,7 @@ GLOBAL_PROTECT(protected_ranks)
 	if(!CONFIG_GET(flag/admin_legacy_system) || dbfail)
 		if(CONFIG_GET(flag/load_legacy_ranks_only))
 			if(!no_update)
-				var/list/sql_ranks = list()
-				for(var/datum/admin_rank/R in GLOB.admin_ranks)
-					var/sql_rank = sanitizeSQL(R.name)
-					var/sql_flags = sanitizeSQL(R.include_rights)
-					var/sql_exclude_flags = sanitizeSQL(R.exclude_rights)
-					var/sql_can_edit_flags = sanitizeSQL(R.can_edit_rights)
-					sql_ranks += list(list("rank" = "'[sql_rank]'", "flags" = "[sql_flags]", "exclude_flags" = "[sql_exclude_flags]", "can_edit_flags" = "[sql_can_edit_flags]"))
-				SSdbcore.MassInsert(format_table_name("admin_ranks"), sql_ranks, duplicate_key = TRUE, blocking = TRUE)
+				sync_ranks_with_db()
 		else
 			var/datum/DBQuery/query_load_admin_ranks = SSdbcore.NewQuery("SELECT rank, flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")]")
 			if(!query_load_admin_ranks.Execute())
@@ -178,9 +182,12 @@ GLOBAL_PROTECT(protected_ranks)
 			return FALSE
 		var/list/json = json_decode(backup_file)
 		for(var/J in json["ranks"])
+			var/skip
 			for(var/datum/admin_rank/R in GLOB.admin_ranks)
 				if(R.name == "[J]") //this rank was already loaded from txt override
-					continue
+					skip = TRUE
+			if(skip)
+				continue
 			var/datum/admin_rank/R = new("[J]", json["ranks"]["[J]"]["include rights"], json["ranks"]["[J]"]["exclude rights"], json["ranks"]["[J]"]["can edit rights"])
 			if(!R)
 				continue
@@ -262,9 +269,12 @@ GLOBAL_PROTECT(protected_ranks)
 				return
 			backup_file_json = json_decode(backup_file)
 		for(var/J in backup_file_json["admins"])
+			var/skip
 			for(var/A in GLOB.admin_datums + GLOB.deadmins)
 				if(A == "[J]") //this admin was already loaded from txt override
-					continue
+					skip = TRUE
+			if(skip)
+				continue
 			new /datum/admins(rank_names[ckeyEx(backup_file_json["admins"]["[J]"])], ckey("[J]"))
 	#ifdef TESTING
 	var/msg = "Admins Built:\n"

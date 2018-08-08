@@ -150,6 +150,22 @@
 			if(prob(I.block_chance*2))
 				return 1
 
+/mob/living/get_photo_description(obj/item/camera/camera)
+	var/list/mob_details = list()
+	var/list/holding = list()
+	var/len = length(held_items)
+	if(len)
+		for(var/obj/item/I in held_items)
+			if(!holding.len)
+				holding += "They are holding \a [I]"
+			else if(held_items.Find(I) == len)
+				holding += ", and \a [I]."
+			else
+				holding += ", \a [I]"
+	holding += "."
+	mob_details += "You can also see [src] on the photo[health < (maxHealth * 0.75) ? ", looking a bit hurt":""][holding ? ". [holding.Join("")]":"."]."
+	return mob_details.Join("")
+
 //Called when we bump onto an obj
 /mob/living/proc/ObjBump(obj/O)
 	return
@@ -259,7 +275,7 @@
 /mob/living/pointed(atom/A as mob|obj|turf in view())
 	if(incapacitated())
 		return FALSE
-	if(has_trait(TRAIT_FAKEDEATH))
+	if(has_trait(TRAIT_DEATHCOMA))
 		return FALSE
 	if(!..())
 		return FALSE
@@ -281,7 +297,7 @@
 		return TRUE
 
 /mob/living/proc/InCritical()
-	return (health <= crit_modifier() && (stat == SOFT_CRIT || stat == UNCONSCIOUS))
+	return (health <= crit_threshold && (stat == SOFT_CRIT || stat == UNCONSCIOUS))
 
 /mob/living/proc/InFullCritical()
 	return (health <= HEALTH_THRESHOLD_FULLCRIT && stat == UNCONSCIOUS)
@@ -786,7 +802,7 @@
 	var/stam = getStaminaLoss()
 	if(stam)
 		var/total_health = (health - stam)
-		if(total_health <= crit_modifier() && !stat && !IsKnockdown())
+		if(total_health <= crit_threshold && !stat && !IsKnockdown())
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			Knockdown(100)
 			update_health_hud()
@@ -944,7 +960,7 @@
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots, animals and brains have their own version so don't worry about them
 /mob/living/proc/update_canmove()
-	var/ko = IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (has_trait(TRAIT_FAKEDEATH))
+	var/ko = IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (has_trait(TRAIT_DEATHCOMA))
 	var/move_and_fall = stat == SOFT_CRIT && !pulledby
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)

@@ -28,6 +28,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/volume = CELL_VOLUME //liters
 	var/last_share = 0
 	var/list/reaction_results
+	var/list/analyzer_results //used for analyzer feedback - not initialized until its used
 
 /datum/gas_mixture/New(volume)
 	gases = new
@@ -427,14 +428,14 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		for(var/r in SSair.gas_reactions)
 			var/datum/gas_reaction/reaction = r
 
-			var/list/min_reqs = reaction.min_requirements.Copy()
+			var/list/min_reqs = reaction.min_requirements
 			if((min_reqs["TEMP"] && temp < min_reqs["TEMP"]) \
 			|| (min_reqs["ENER"] && ener < min_reqs["ENER"]))
 				continue
-			min_reqs -= "TEMP"
-			min_reqs -= "ENER"
 
 			for(var/id in min_reqs)
+				if (id == "TEMP" || id == "ENER")
+					continue
 				if(!cached_gases[id] || cached_gases[id][MOLES] < min_reqs[id])
 					continue reaction_loop
 			//at this point, all minimum requirements for the reaction are satisfied.

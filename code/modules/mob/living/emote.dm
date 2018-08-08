@@ -60,7 +60,7 @@
 
 /datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE)
 	. = ..()
-	if(user.reagents.get_reagent("menthol") || user.reagents.get_reagent("peppermint_patty"))
+	if(user.reagents && (user.reagents.get_reagent("menthol") || user.reagents.get_reagent("peppermint_patty")))
 		return FALSE
 
 /datum/emote/living/dance

@@ -62,6 +62,14 @@ Head of Security
 
 	chameleon_extras = list(/obj/item/gun/energy/e_gun/hos, /obj/item/stamp/hos)
 
+/datum/outfit/job/hos/hardsuit
+	name = "Head of Security (Hardsuit)"
+
+	mask = /obj/item/clothing/mask/gas/sechailer
+	suit = /obj/item/clothing/suit/space/hardsuit/security/hos
+	suit_store = /obj/item/tank/internals/oxygen
+	backpack_contents = list(/obj/item/melee/baton/loaded=1, /obj/item/gun/energy/e_gun=1)
+
 /*
 Warden
 */

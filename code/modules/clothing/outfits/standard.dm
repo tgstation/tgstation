@@ -424,6 +424,17 @@
 	mask = /obj/item/clothing/mask/breath
 	suit_store = /obj/item/tank/internals/oxygen
 
-
-
-
+/datum/outfit/debug //Debug objs plus hardsuit
+	name = "Debug outfit"
+	uniform = /obj/item/clothing/under/patriotsuit 
+	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite
+	shoes = /obj/item/clothing/shoes/magboots/advance
+	suit_store = /obj/item/tank/internals/oxygen
+	mask = /obj/item/clothing/mask/gas/welding
+	belt = /obj/item/storage/belt/utility/chief/full
+	gloves = /obj/item/clothing/gloves/combat
+	id = /obj/item/card/id/ert
+	glasses = /obj/item/clothing/glasses/meson/night
+	ears = /obj/item/radio/headset/headset_cent/commander
+	back = /obj/item/storage/backpack/holding
+	backpack_contents = list(/obj/item/card/emag=1,	/obj/item/flashlight/emp/debug=1, /obj/item/construction/rcd/combat=1, /obj/item/gun/magic/wand/resurrection/debug=1, /obj/item/melee/transforming/energy/axe=1)
