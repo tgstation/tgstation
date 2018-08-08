@@ -1,0 +1,5 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - rscadd: "Added five new cargo packs: cargo supplies, circuitry starter pack, premium carpet, surgical supplies and wrapping paper."
+  - tweak: "Added one bag of L type blood to the blood pack crate. Added a chance for contraband crates to contain DonkSoft refill packs."
