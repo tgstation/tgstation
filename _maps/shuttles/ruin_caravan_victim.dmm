@@ -174,10 +174,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/syndicate/ranged/space{
-	environment_smash = 0;
-	name = "Syndicate Salvage Worker"
-	},
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
 /turf/open/floor/plasteel/airless,
 /area/shuttle/caravan/freighter1)
 "jg" = (
@@ -384,10 +381,7 @@
 /turf/open/floor/plasteel/vault/airless,
 /area/shuttle/caravan/freighter1)
 "uS" = (
-/mob/living/simple_animal/hostile/syndicate/melee/space{
-	environment_smash = 0;
-	name = "Syndicate Salvage Worker"
-	},
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
 /turf/open/floor/plasteel/vault/airless,
 /area/shuttle/caravan/freighter1)
 "vt" = (
@@ -546,10 +540,7 @@
 /area/shuttle/caravan/freighter1)
 "EI" = (
 /obj/effect/decal/cleanable/blood,
-/mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper{
-	environment_smash = 0;
-	name = "Syndicate Salvage Leader"
-	},
+/mob/living/simple_animal/hostile/syndicate/melee/sword/space/stormtrooper,
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 4;
 	initial_gas_mix = "TEMP=2.7"
@@ -567,10 +558,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/mob/living/simple_animal/hostile/syndicate/ranged/space{
-	environment_smash = 0;
-	name = "Syndicate Salvage Worker"
-	},
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 4;
 	initial_gas_mix = "TEMP=2.7"

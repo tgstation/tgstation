@@ -28,7 +28,7 @@
 			C.purchasedpowers += new /obj/effect/proc_holder/changeling/revive(null)
 
 /obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/living/user)
-	if(user.has_trait(TRAIT_FAKEDEATH, "changeling"))
+	if(user.has_trait(TRAIT_DEATHCOMA, "changeling"))
 		to_chat(user, "<span class='warning'>We are already reviving.</span>")
 		return
 	if(!user.stat) //Confirmation for living changelings if they want to fake their death
