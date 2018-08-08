@@ -21,10 +21,12 @@
 	var/motd
 
 /datum/controller/configuration/proc/admin_reload()
+	if(IsAdminAdvancedProcCall())
+		return
 	log_admin("[key_name_admin(usr)] has forcefully reloaded the configuration from disk.")
 	message_admins("[key_name_admin(usr)] has forcefully reloaded the configuration from disk.")
-	world.PushUsr(null, CALLBACK(src, .proc/full_wipe))
-	world.PushUsr(null, CALLBACK(src, .proc/Load, world.params[OVERRIDE_CONFIG_DIRECTORY_PARAMETER]))
+	full_wipe()
+	Load(world.params[OVERRIDE_CONFIG_DIRECTORY_PARAMETER])
 
 /datum/controller/configuration/proc/Load(_directory)
 	if(IsAdminAdvancedProcCall())		//If admin proccall is detected down the line it will horribly break everything.
@@ -47,12 +49,14 @@
 	LoadMOTD()
 
 /datum/controller/configuration/proc/full_wipe()
+	if(IsAdminAdvancedProcCall())
+		return
 	entries_by_type.Cut()
 	QDEL_LIST_ASSOC_VAL(entries)
+	entries = null
 	QDEL_LIST_ASSOC_VAL(maplist)
+	maplist = null
 	QDEL_NULL(defaultmap)
-	if(IsAdminAdvancedProcCall())				//If an admin wiped us, reload from disk
-		Load(world.params[OVERRIDE_CONFIG_DIRECTORY_PARAMETER])
 
 /datum/controller/configuration/Destroy()
 	world.PushUsr(null, CALLBACK(src, .proc/full_wipe))
