@@ -197,7 +197,7 @@
 
 /obj/item/storage/briefcase/launchpad/Initialize()
 	. = ..()
-	pad = new(src)
+	pad = new(null)
 
 /obj/item/storage/briefcase/launchpad/Destroy()
 	if(!QDELETED(pad))
