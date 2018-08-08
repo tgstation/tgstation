@@ -9,6 +9,7 @@
 		return FALSE
 	vars[var_name] = var_value
 	datum_flags |= DF_VAR_EDITED
+	return TRUE
 
 /datum/proc/vv_get_var(var_name)
 	switch(var_name)
