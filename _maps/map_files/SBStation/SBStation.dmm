@@ -1520,14 +1520,14 @@
 /area/security/main)
 "ado" = (
 /obj/structure/table,
+/obj/item/taperecorder,
+/obj/item/restraints/handcuffs,
 /obj/machinery/syndicatebomb/training,
+/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel/red/side,
 /area/security/main)
 "adp" = (
-/obj/structure/table,
-/obj/item/taperecorder,
-/obj/item/restraints/handcuffs,
-/obj/item/book/manual/wiki/security_space_law,
+/obj/machinery/rnd/production/techfab/department/security,
 /turf/open/floor/plasteel/red/side,
 /area/security/main)
 "adq" = (
@@ -13082,13 +13082,13 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "aEC" = (
-/obj/machinery/rnd/production/protolathe,
 /obj/structure/cable/white{
 	icon_state = "1-4"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/rnd/production/techfab/department/science,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "aED" = (
@@ -19496,6 +19496,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "aTO" = (
+/obj/machinery/rnd/production/techfab/department/engineering,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
 	},
@@ -25846,6 +25847,10 @@
 /obj/structure/falsewall,
 /turf/open/floor/plating,
 /area/quartermaster/miningdock)
+"mhl" = (
+/obj/machinery/rnd/production/techfab/department/cargo,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "mji" = (
 /obj/machinery/power/apc{
 	areastring = "/area/maintenance/solars/starboard/aft";
@@ -25945,6 +25950,12 @@
 	},
 /turf/open/space/basic,
 /area/engine/engineering)
+"nbP" = (
+/obj/machinery/rnd/production/techfab/department/medical,
+/turf/open/floor/plasteel/whiteblue/corner{
+	dir = 4
+	},
+/area/medical/sleeper)
 "nib" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -26374,6 +26385,10 @@
 	},
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/maintenance/solars/starboard/aft)
+"pNj" = (
+/obj/machinery/rnd/production/techfab/department/service,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "pOT" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall,
@@ -56277,7 +56292,7 @@ aiM
 aiM
 akT
 akR
-amw
+pNj
 amw
 anU
 xsc
@@ -56564,7 +56579,7 @@ aHe
 aIe
 nHX
 aFh
-aFX
+mhl
 oXn
 oqg
 kej
@@ -68096,7 +68111,7 @@ aha
 ahB
 aib
 aiF
-ajh
+nbP
 ajU
 ajU
 alw
