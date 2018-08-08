@@ -589,8 +589,8 @@
 	name = "Paleo salad"
 	reqs = list(/obj/item/reagent_containers/glass/bowl/mushroom_bowl = 1,
 				/obj/item/reagent_containers/food/snacks/grown/ash_flora/cactus_fruit = 1,
-				/obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_leaf = 2,
-				/obj/item/reagent_containers/food/snacks/grown/ash_flora = 2)
+				/obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_leaf = 1,
+				/obj/item/reagent_containers/food/snacks/grown/ash_flora/shavings = 1)
 	result = /obj/item/reagent_containers/food/snacks/salad/paleosalad
 	category = CAT_PRIMAL
 
