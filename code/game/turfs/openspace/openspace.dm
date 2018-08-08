@@ -8,7 +8,7 @@
 	layer = OPENSPACE_LAYER
 	//mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/turf/open/openspace/debug/setup_multiz()
+/turf/open/openspace/debug/update_multiz()
 	..()
 	return TRUE
 
