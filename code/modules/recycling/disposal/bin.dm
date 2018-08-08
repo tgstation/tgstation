@@ -113,6 +113,9 @@
 			user.start_pulling(M, 1)
 			stuff_mob_in(M,user)
 		return//you don't want this going into disposals ever
+	else
+		I.forceMove(src)
+		user.visible_message("[user.name] places \the [I] into \the [src].", "<span class='notice'>You place \the [I] into \the [src].</span>")
 
 //mouse drop another mob or self
 /obj/machinery/disposal/MouseDrop_T(mob/living/target, mob/living/user)
