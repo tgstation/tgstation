@@ -825,7 +825,7 @@
 	if(!wielded)
 		return
 	if(!user?.client)
-  		return
+		return
 	mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/unwield, user)))
 	user.visible_message("[user] holds [src] up to [user.p_their()] eyes.","You hold [src] up to your eyes.")
 	item_state = "binoculars_wielded"
