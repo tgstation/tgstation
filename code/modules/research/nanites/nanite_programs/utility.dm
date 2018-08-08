@@ -239,7 +239,7 @@
 		for(var/mob/living/L in oview(5, host_mob))
 			target_hosts += L
 		var/mob/living/infectee = pick(target_hosts)
-		if(prob(infectee.get_permeability_protection() * 100))
+		if(prob(100 - (infectee.get_permeability_protection() * 100)))
 			//this will potentially take over existing nanites!
 			infectee.AddComponent(/datum/component/nanites, 10)
 			SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
