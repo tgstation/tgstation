@@ -10,11 +10,6 @@
 	internal_organs += new /obj/item/organ/alien/plasmavessel/small
 	..()
 
-/mob/living/carbon/alien/humanoid/hunter/movement_delay()
-	. = -1	//hunters are sanic
-	. += ..()	//but they still need to slow down on stun
-
-
 //Hunter verbs
 
 /mob/living/carbon/alien/humanoid/hunter/proc/toggle_leap(message = 1)
@@ -26,14 +21,12 @@
 	else
 		return
 
-
 /mob/living/carbon/alien/humanoid/hunter/ClickOn(atom/A, params)
 	face_atom(A)
 	if(leap_on_click)
 		leap_at(A)
 	else
 		..()
-
 
 #define MAX_ALIEN_LEAP_DIST 7
 

@@ -101,6 +101,7 @@
 		real_name = name
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
+	update_simplemob_varspeed()
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
@@ -278,14 +279,14 @@
 		act = "me"
 	..(act, m_type, message)
 
+/mob/living/simple_animal/proc/set_varspeed(var_value)
+	speed = var_value
+	update_simplemob_varspeed()
 
-
-/mob/living/simple_animal/movement_delay()
-	var/static/config_animal_delay
-	if(isnull(config_animal_delay))
-		config_animal_delay = CONFIG_GET(number/animal_delay)
-	. += config_animal_delay
-	return ..() + speed + config_animal_delay
+/mob/living/simple_animal/proc/update_simplemob_varspeed()
+	if(speed == 0)
+		remove_movespeed_modifier(MOVESPEED_ID_SIMPLEMOB_VARSPEED, TRUE)
+	add_movespeed_modifier(MOVESPEED_ID_SIMPLEMOB_VARSPEED, TRUE, 100, multiplicative_slowdown = speed, override = TRUE)
 
 /mob/living/simple_animal/Stat()
 	..()
