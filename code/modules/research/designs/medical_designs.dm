@@ -122,6 +122,16 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
+/datum/design/crewpinpointer
+	name = "Crew Pinpointer"
+	desc = "Allows tracking of someone's location if their suit sensors are turned to tracking beacon."
+	id = "crewpinpointer"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 1500, MAT_GOLD = 200)
+	build_path = /obj/item/pinpointer/crew
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/defibrillator
 	name = "Defibrillator"
 	id = "defibrillator"
@@ -200,7 +210,7 @@
 	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-	
+
 /datum/design/healthanalyzer_advanced
 	name = "advanced health analyzer"
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject with high accuracy."
@@ -210,7 +220,7 @@
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500, MAT_SILVER = 2000, MAT_GOLD = 1500)
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-	
+
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
 /////////////////////////////////////////
@@ -585,3 +595,13 @@
 	build_path = /obj/item/disk/surgery/necrotic_revival
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/holobarrier_med
+	name = "PENLITE holobarrier projector"
+	desc = "PENLITE holobarriers, a device that halts individuals with malicious diseases."
+	build_type = PROTOLATHE
+	build_path = /obj/item/holosign_creator/medical
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 100) //a hint of silver since it can troll 2 antags (bad viros and sentient disease)
+	id = "holobarrier_med"
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL

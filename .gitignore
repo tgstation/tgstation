@@ -199,3 +199,7 @@ tools/MapAtmosFixer/MapAtmosFixer/bin/*
 
 #GitHub Atom
 .atom-build.json
+
+#extra map stuff
+/_maps/**/backup/
+/_maps/templates.dm

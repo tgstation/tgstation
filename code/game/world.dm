@@ -21,7 +21,7 @@ GLOBAL_PROTECT(security_mode)
 
 	GLOB.revdata = new
 
-	config.Load()
+	config.Load(params[OVERRIDE_CONFIG_DIRECTORY_PARAMETER])
 
 	//SetupLogs depends on the RoundID, so lets check
 	//DB schema and set RoundID if we can
@@ -76,17 +76,29 @@ GLOBAL_PROTECT(security_mode)
 /world/proc/SetupLogs()
 	var/override_dir = params[OVERRIDE_LOG_DIRECTORY_PARAMETER]
 	if(!override_dir)
-		GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
+		var/realtime = world.realtime
+		var/texttime = time2text(realtime, "YYYY/MM/DD")
+		GLOB.log_directory = "data/logs/[texttime]/round-"
+		GLOB.picture_logging_prefix = "L_[time2text(realtime, "YYYYMMDD")]_"
+		GLOB.picture_log_directory = "data/picture_logs/[texttime]/round-"
 		if(GLOB.round_id)
 			GLOB.log_directory += "[GLOB.round_id]"
+			GLOB.picture_logging_prefix += "R_[GLOB.round_id]_"
+			GLOB.picture_log_directory += "[GLOB.round_id]"
 		else
-			GLOB.log_directory += "[replacetext(time_stamp(), ":", ".")]"
+			var/timestamp = replacetext(time_stamp(), ":", ".")
+			GLOB.log_directory += "[timestamp]"
+			GLOB.picture_log_directory += "[timestamp]"
+			GLOB.picture_logging_prefix += "T_[timestamp]_"
 	else
 		GLOB.log_directory = "data/logs/[override_dir]"
+		GLOB.picture_logging_prefix = "O_[override_dir]_"
+		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
 
 	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
 	GLOB.world_attack_log = "[GLOB.log_directory]/attack.log"
 	GLOB.world_pda_log = "[GLOB.log_directory]/pda.log"
+	GLOB.world_telecomms_log = "[GLOB.log_directory]/telecomms.log"
 	GLOB.world_manifest_log = "[GLOB.log_directory]/manifest.log"
 	GLOB.world_href_log = "[GLOB.log_directory]/hrefs.log"
 	GLOB.sql_error_log = "[GLOB.log_directory]/sql.log"
@@ -102,6 +114,7 @@ GLOBAL_PROTECT(security_mode)
 	start_log(GLOB.world_game_log)
 	start_log(GLOB.world_attack_log)
 	start_log(GLOB.world_pda_log)
+	start_log(GLOB.world_telecomms_log)
 	start_log(GLOB.world_manifest_log)
 	start_log(GLOB.world_href_log)
 	start_log(GLOB.world_qdel_log)

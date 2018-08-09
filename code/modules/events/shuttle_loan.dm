@@ -4,6 +4,7 @@
 #define DEPARTMENT_RESUPPLY 4
 #define ANTIDOTE_NEEDED 5
 #define PIZZA_DELIVERY 6
+#define ITS_HIP_TO 7
 
 
 /datum/round_event_control/shuttle_loan
@@ -21,7 +22,7 @@
 	var/thanks_msg = "The cargo shuttle should return in five minutes. Have some supply points for your trouble."
 
 /datum/round_event/shuttle_loan/setup()
-	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY)
+	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY, ITS_HIP_TO)
 
 /datum/round_event/shuttle_loan/announce(fake)
 	SSshuttle.shuttle_loan = src
@@ -38,8 +39,13 @@
 			bonus_points = 0
 		if(ANTIDOTE_NEEDED)
 			priority_announce("Cargo: Your station has been chosen for an epidemiological research project. Send us your cargo shuttle to receive your research samples.", "CentCom Research Initiatives")
-		if (PIZZA_DELIVERY)
-			priority_announce("Cargo: It looks like a neighbouring station accidentally delivered their pizza to you instead", "CentCom Spacepizza Division")
+		if(PIZZA_DELIVERY)
+			priority_announce("Cargo: It looks like a neighbouring station accidentally delivered their pizza to you instead.", "CentCom Spacepizza Division")
+			thanks_msg = "The cargo shuttle should return in 5 minutes."
+			bonus_points = 0
+		if(ITS_HIP_TO)
+			priority_announce("Cargo: One of our freighters carrying a bee shipment has been attacked by eco-terrorists. Can you clean up the mess for us?", "CentCom Janitorial Division")
+			bonus_points = 20000 //Toxin bees can be unbeelievably lethal
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
 	priority_announce(thanks_msg, "Cargo shuttle commandeered by CentCom.")
@@ -65,6 +71,8 @@
 			SSshuttle.centcom_message += "Virus samples incoming."
 		if(PIZZA_DELIVERY)
 			SSshuttle.centcom_message += "Pizza delivery for [station_name()]"
+		if(ITS_HIP_TO)
+			SSshuttle.centcom_message += "Biohazard cleanup incoming."
 
 /datum/round_event/shuttle_loan/tick()
 	if(dispatched)
@@ -95,12 +103,12 @@
 				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/emergency/specialops]
 				pack.generate(pick_n_take(empty_shuttle_turfs))
 
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate)
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate)
+				shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate/ranged/infiltrator)
+				shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate/ranged/infiltrator)
 				if(prob(75))
-					shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate)
+					shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate/ranged/infiltrator)
 				if(prob(50))
-					shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate)
+					shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate/ranged/infiltrator)
 
 			if(RUSKY_PARTY)
 				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/service/party]
@@ -170,15 +178,37 @@
 					var/decal = pick(/obj/effect/decal/cleanable/flour, /obj/effect/decal/cleanable/robot_debris, /obj/effect/decal/cleanable/oil)
 					new decal(pick_n_take(empty_shuttle_turfs))
 			if(PIZZA_DELIVERY)
-				shuttle_spawns.Add(/obj/item/pizzabox/margherita)
-				shuttle_spawns.Add(/obj/item/pizzabox/margherita)
-				shuttle_spawns.Add(/obj/item/pizzabox/meat)
-				shuttle_spawns.Add(/obj/item/pizzabox/meat)
-				shuttle_spawns.Add(/obj/item/pizzabox/vegetable)
-				if(prob(10))
-					shuttle_spawns.Add(/obj/item/pizzabox/bomb)
-				else
-					shuttle_spawns.Add(/obj/item/pizzabox/margherita)
+				var/naughtypizza = list(/obj/item/pizzabox/bomb,/obj/item/pizzabox/margherita/robo) //oh look another blaklist, for pizza nonetheless!
+				var/nicepizza = list(/obj/item/pizzabox/margherita, /obj/item/pizzabox/meat, /obj/item/pizzabox/vegetable, /obj/item/pizzabox/mushroom)
+				for(var/i in 1 to 6)
+					shuttle_spawns.Add(pick(prob(5) ? naughtypizza : nicepizza))
+			if(ITS_HIP_TO)
+				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/organic/hydroponics/beekeeping_fullkit]
+				pack.generate(pick_n_take(empty_shuttle_turfs))
+				
+				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/bee_terrorist)
+				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/cargo_tech)
+				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/cargo_tech)
+				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/nanotrasensoldier)
+				shuttle_spawns.Add(/obj/item/gun/ballistic/automatic/pistol/no_mag)
+				shuttle_spawns.Add(/obj/item/gun/ballistic/automatic/pistol/m1911/no_mag)
+				shuttle_spawns.Add(/obj/item/honey_frame)
+				shuttle_spawns.Add(/obj/item/honey_frame)
+				shuttle_spawns.Add(/obj/item/honey_frame)
+				shuttle_spawns.Add(/obj/structure/beebox/unwrenched)
+				shuttle_spawns.Add(/obj/item/queen_bee/bought)
+				shuttle_spawns.Add(/obj/structure/closet/crate/hydroponics)
+			
+				for(var/i in 1 to 8)
+					shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/bees/toxin)
+
+				for(var/i in 1 to 5)
+					var/decal = pick(/obj/effect/decal/cleanable/blood, /obj/effect/decal/cleanable/insectguts)
+					new decal(pick_n_take(empty_shuttle_turfs))
+
+				for(var/i in 1 to 10)
+					var/casing = /obj/item/ammo_casing/spent
+					new casing(pick_n_take(empty_shuttle_turfs))
 
 		var/false_positive = 0
 		while(shuttle_spawns.len && empty_shuttle_turfs.len)
@@ -196,3 +226,4 @@
 #undef DEPARTMENT_RESUPPLY
 #undef ANTIDOTE_NEEDED
 #undef PIZZA_DELIVERY
+#undef ITS_HIP_TO

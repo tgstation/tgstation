@@ -137,7 +137,7 @@ GLOBAL_PROTECT(href_token)
 /datum/admins/proc/check_if_greater_rights_than_holder(datum/admins/other)
 	if(!other)
 		return 1 //they have no rights
-	if(rank.rights == 65535)
+	if(rank.rights == R_EVERYTHING)
 		return 1 //we have all the rights
 	if(src == other)
 		return 1 //you always have more rights than yourself
@@ -145,9 +145,6 @@ GLOBAL_PROTECT(href_token)
 		if( (rank.rights & other.rank.rights) == other.rank.rights )
 			return 1 //we have all the rights they have and more
 	return 0
-
-/datum/admins/can_vv_get(var_name, var_value)
-	return FALSE //nice try trialmin
 
 /datum/admins/vv_edit_var(var_name, var_value)
 	return FALSE //nice try trialmin

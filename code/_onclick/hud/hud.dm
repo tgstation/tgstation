@@ -38,6 +38,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/obj/screen/action_intent
 	var/obj/screen/zone_select
 	var/obj/screen/pull_icon
+	var/obj/screen/rest_icon
 	var/obj/screen/throw_icon
 	var/obj/screen/module_store_icon
 
@@ -56,7 +57,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/obj/screen/healths
 	var/obj/screen/healthdoll
 	var/obj/screen/internals
-	var/obj/screen/mood
 
 	// subtypes can override this to force a specific UI style
 	var/ui_style
@@ -101,7 +101,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	healths = null
 	healthdoll = null
 	internals = null
-	mood = null
 	lingchemdisplay = null
 	devilsouldisplay = null
 	lingstingdisplay = null
@@ -115,10 +114,15 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	return ..()
 
+/mob
+	var/hud_type = /datum/hud
+
 /mob/proc/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud(src)
-		update_sight()
+	if(!client || hud_used)
+		return
+	hud_used = new hud_type(src)
+	update_sight()
+	SEND_SIGNAL(src, COMSIG_MOB_HUD_CREATED)
 
 //Version denotes which style should be displayed. blank or 0 means "next version"
 /datum/hud/proc/show_hud(version = 0, mob/viewmob)

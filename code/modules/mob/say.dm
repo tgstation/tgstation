@@ -30,7 +30,7 @@
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	usr.emote("me",1,message)
+	usr.emote("me",1,message,TRUE)
 
 /mob/proc/say_dead(var/message)
 	var/name = real_name
@@ -75,13 +75,13 @@
 		K = src.key
 
 	message = src.say_quote(message, get_spans())
-	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[message]</span></span>"
+	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[emoji_parse(message)]</span></span>"
 	log_message("DEAD: [message]", INDIVIDUAL_SAY_LOG)
 	deadchat_broadcast(rendered, follow_target = src, speaker_key = K)
 
 /mob/proc/check_emote(message)
 	if(copytext(message, 1, 2) == "*")
-		emote(copytext(message, 2))
+		emote(copytext(message, 2), intentional = TRUE)
 		return 1
 
 /mob/proc/hivecheck()

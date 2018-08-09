@@ -440,6 +440,8 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define OVERRIDE_LOG_DIRECTORY_PARAMETER "log-directory"
 //Prevent the master controller from starting automatically, overrides TEST_RUN_PARAMETER
 #define NO_INIT_PARAMETER "no-init"
+//Force the config directory to be something other than "config"
+#define OVERRIDE_CONFIG_DIRECTORY_PARAMETER "config-directory"
 
 #define EGG_LAYING_MESSAGES list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
 
@@ -449,6 +451,9 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 //Filters
 #define AMBIENT_OCCLUSION filter(type="drop_shadow", x=0, y=-2, size=4, border=4, color="#04080FAA")
 
-
 #define STANDARD_GRAVITY 1 //Anything above this is high gravity, anything below no grav
 #define GRAVITY_DAMAGE_TRESHOLD 3 //Starting with this value gravity will start to damage mobs
+
+#define CAMERA_NO_GHOSTS 0
+#define CAMERA_SEE_GHOSTS_BASIC 1
+#define CAMERA_SEE_GHOSTS_ORBIT 2

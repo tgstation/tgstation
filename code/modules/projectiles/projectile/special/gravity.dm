@@ -13,7 +13,7 @@
 
 /obj/item/projectile/gravityrepulse/Initialize()
 	. = ..()
-	var/obj/item/ammo_casing/energy/gravityrepulse/C = loc
+	var/obj/item/ammo_casing/energy/gravity/repulse/C = loc
 	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun.power, 15)
 
@@ -44,7 +44,7 @@
 
 /obj/item/projectile/gravityattract/Initialize()
 	. = ..()
-	var/obj/item/ammo_casing/energy/gravityattract/C = loc
+	var/obj/item/ammo_casing/energy/gravity/attract/C = loc
 	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun.power, 15)
 
@@ -74,7 +74,7 @@
 
 /obj/item/projectile/gravitychaos/Initialize()
 	. = ..()
-	var/obj/item/ammo_casing/energy/gravitychaos/C = loc
+	var/obj/item/ammo_casing/energy/gravity/chaos/C = loc
 	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun.power, 15)
 

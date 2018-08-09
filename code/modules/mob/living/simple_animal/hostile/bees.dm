@@ -209,14 +209,14 @@
 	var/datum/reagent/R = pick(typesof(/datum/reagent/toxin))
 	assign_reagent(GLOB.chemical_reagents_list[initial(R.id)])
 
- /mob/living/simple_animal/hostile/poison/bees/queen
- 	name = "queen bee"
- 	desc = "She's the queen of bees, BZZ BZZ!"
- 	icon_base = "queen"
- 	isqueen = TRUE
+/mob/living/simple_animal/hostile/poison/bees/queen
+	name = "queen bee"
+	desc = "She's the queen of bees, BZZ BZZ!"
+	icon_base = "queen"
+	isqueen = TRUE
 
 
- //the Queen doesn't leave the box on her own, and she CERTAINLY doesn't pollinate by herself
+//the Queen doesn't leave the box on her own, and she CERTAINLY doesn't pollinate by herself
 /mob/living/simple_animal/hostile/poison/bees/queen/Found(atom/A)
 	return FALSE
 
@@ -295,3 +295,10 @@
 			forceMove(beehome.drop_location())
 	else
 		..()
+		
+/mob/living/simple_animal/hostile/poison/bees/short
+	desc = "These bees seem unstable and won't survive for long."
+
+/mob/living/simple_animal/hostile/poison/bees/short/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/death), 50 SECONDS)

@@ -1,5 +1,5 @@
 /datum/mood_event/handcuffed
-	description = "<span class='warning'>I guess my antics have finally caught up with me..</span>\n"
+	description = "<span class='warning'>I guess my antics have finally caught up with me.</span>\n"
 	mood_change = -1
 
 /datum/mood_event/broken_vow //Used for when mimes break their vow of silence
@@ -84,8 +84,8 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		if(iscatperson(H))
-			H.startTailWag()
-			addtimer(CALLBACK(H, /mob/living/carbon/human.proc/endTailWag), 30)
+			H.dna.species.start_wagging_tail(H)
+			addtimer(CALLBACK(H.dna.species, /datum/species.proc/stop_wagging_tail, H), 30)
 			description =  "<span class='nicegreen'>They want to play on the table!</span>\n"
 			mood_change = 2
 

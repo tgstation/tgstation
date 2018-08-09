@@ -608,6 +608,11 @@
 	icon_state = "fannypack_yellow"
 	item_state = "fannypack_yellow"
 
+/obj/item/storage/belt/fannypack/yellow/bee_terrorist/PopulateContents() //used in the bee terrorist shuttle loan event
+	new /obj/item/grenade/plastic/c4 (src)
+	new /obj/item/reagent_containers/pill/cyanide(src)
+	new /obj/item/grenade/chem_grenade/facid(src)
+
 /obj/item/storage/belt/sabre
 	name = "sabre sheath"
 	desc = "An ornate sheath designed to hold an officer's blade."
