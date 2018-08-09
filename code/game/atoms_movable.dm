@@ -167,7 +167,7 @@
 	. = TRUE
 	oldloc.Exited(src, newloc)
 
-	for(var/i in loc)
+	for(var/i in oldloc)
 		if(i == src) // Multi tile objects
 			continue
 		var/atom/movable/thing = i
