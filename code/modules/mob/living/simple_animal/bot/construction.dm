@@ -476,11 +476,8 @@
 				if(toyswordamt > 0 || toyswordamt)
 					icon_state = initial(icon_state)
 					to_chat(user, "<span class='notice'>The superglue binding [src]'s toy swords to its chassis snaps!</span>")
-<<<<<<< HEAD
 					for(var/IS = 0 to toyswordamt)
-=======
 					for(var/IS in 1 to toyswordamt)
->>>>>>> 10f958a553e99cff175fec1983b2cf9f5ebb3f8f
 						new /obj/item/toy/sword(Tsec)
 
 		if(ASSEMBLY_FIFTH_STEP)
@@ -507,10 +504,8 @@
 				build_step--
 				icon_state = initial(icon_state)
 				to_chat(user, "<span class='notice'>You unbolt [src]'s energy swords</span>")
-<<<<<<< HEAD
+
 				for(var/IS = 0 to swordamt)
 					new /obj/item/melee/transforming/energy/sword/saber(Tsec)
-=======
 				for(var/IS in 1 to swordamt)
 					new /obj/item/melee/transforming/energy/sword/saber(Tsec)
->>>>>>> 10f958a553e99cff175fec1983b2cf9f5ebb3f8f

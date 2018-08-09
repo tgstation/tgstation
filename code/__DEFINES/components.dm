@@ -118,6 +118,7 @@
 // /mob Signals
 #define COMSIG_MOB_RECEIVE_MAGIC "mob_receive_magic"			//from base of mob/anti_magic_check(): (magic, holy, protection_sources)
 	#define COMPONENT_BLOCK_MAGIC 1
+#define COMSIG_MOB_HUD_CREATED "mob_hud_created"
 
 // /mob/living signals
 #define COMSIG_LIVING_RESIST "living_resist"					//from base of mob/living/resist() (/mob/living)
