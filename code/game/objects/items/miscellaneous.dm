@@ -36,6 +36,7 @@
 	if(alert(user, "Are you sure you want to crash this market with no survivors?", "Protocol CRAB-17", "Yes", "No") == "Yes")
 		sound_to_playing_players('sound/items/dump_it.ogg', 75)
 		addtimer(CALLBACK(src, .proc/crab17), 100)
+		dumped = TRUE
 
 /obj/item/suspiciousphone/proc/crab17()
 	var/loss = rand(20, 40)
