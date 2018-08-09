@@ -325,7 +325,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "An alcoholic beverage from Space China, made by infusing lizard tails in ethanol."
 	color = "#7E4043" // rgb: 126, 64, 67
 	boozepwr = 45
-	quality = DRINK_VERYGOOD
+	quality = DRINK_FANTASTIC
 	taste_description = "scaley sweetness"
 
 /datum/reagent/consumable/ethanol/grappa
@@ -1586,7 +1586,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "Bubbly, classy, and undoubtedly strong - a Glitch City classic."
 	color = "#FFEAC4"
 	boozepwr = 90 //classy hooch, essentially, but lower pwr to make up for slightly easier access
-	quality = DRINK_VERYGOOD
+	quality = DRINK_GOOD
 	taste_description = "ethylic alcohol with a hint of sugar"
 	glass_icon_state = "fringe_weaver"
 	glass_name = "Fringe Weaver"
