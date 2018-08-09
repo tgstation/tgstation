@@ -153,13 +153,12 @@
 	var/closed = TRUE
 	var/obj/item/storage/briefcase/launchpad/briefcase
 
-/obj/machinery/launchpad/briefcase/Initialize()
-	. = ..()
-	if(istype(loc, /obj/item/storage/briefcase/launchpad))
-		briefcase = loc
-	else
-		log_game("[src] has been spawned without a briefcase.")
-		return INITIALIZE_HINT_QDEL
+/obj/machinery/launchpad/briefcase/Initialize(mapload, briefcase)
+    . = ..()
+    if(!briefcase)
+        log_game("[src] has been spawned without a briefcase.")
+        return INITIALIZE_HINT_QDEL
+    src.briefcase = briefcase
 
 /obj/machinery/launchpad/briefcase/Destroy()
 	QDEL_NULL(briefcase)
@@ -197,7 +196,7 @@
 
 /obj/item/storage/briefcase/launchpad/Initialize()
 	. = ..()
-	pad = new(null)
+	pad = new(null, src)
 
 /obj/item/storage/briefcase/launchpad/Destroy()
 	if(!QDELETED(pad))
