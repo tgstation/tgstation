@@ -34,6 +34,8 @@
 		to_chat(usr, "<span class='warning'>You already activated Protocol CRAB-17.</span>")
 		return FALSE
 	if(alert(user, "Are you sure you want to crash this market with no survivors?", "Protocol CRAB-17", "Yes", "No") == "Yes")
+		if(dumped) //Prevents fuckers from cheesing alert
+			return FALSE
 		sound_to_playing_players('sound/items/dump_it.ogg', 75)
 		addtimer(CALLBACK(src, .proc/crab17), 100)
 		dumped = TRUE
