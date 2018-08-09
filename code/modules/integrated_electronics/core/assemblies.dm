@@ -37,7 +37,7 @@
 	max_integrity = 50
 	pass_flags = 0
 	armor = list("melee" = 50, "bullet" = 70, "laser" = 70, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
-	var/wrapper_obj // If this isn't null the assembly will be kept inside it and will have signals rerouted to it
+	var/atom/wrapper_obj // If this isn't null the assembly will be kept inside it and will have signals rerouted to it
 	anchored = FALSE
 	var/can_anchor = TRUE
 	var/detail_color = COLOR_ASSEMBLY_BLACK
@@ -69,7 +69,8 @@
     tag = "assembly_[next_assembly_id++]"
 
 /obj/item/electronic_assembly/examine(mob/user)
-	. = ..()
+	if(!wrapper_obj)
+		. = ..()
 	if(can_anchor)
 		to_chat(user, "<span class='notice'>The anchoring bolts [anchored ? "are" : "can be"] <b>wrenched</b> in place and the maintenance panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>")
 	else
@@ -93,20 +94,20 @@
 	.=..()
 	//should the assembly exist inside another object?
 	if(wrapper_obj)
-		wrapper_obj = new wrapper_obj
+		wrapper_obj = new wrapper_obj(loc)
 		forceMove(wrapper_obj)
 		wrapper_obj.AddComponent(/datum/component/redirect, list(
-			COMSIG_PARENT_ATTACKBY = CALLBACK(src, .proc/attackby),
-			COMSIG_PARENT_EXAMINE = CALLBACK(src, .proc/examine),
-			COMSIG_ATOM_EMP_ACT = CALLBACK(src, .proc/emp_act),
-			COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/Moved),
-			COMSIG_MOVABLE_BUMP = CALLBACK(src, .proc/Bump),
-			//COMSIG_MOVABLE_STOP_PULLING = CALLBACK(src, .proc/stop_pulling),
+			COMSIG_PARENT_ATTACKBY = CALLBACK(src, /obj/item/electronic_assembly/attackby),
+			COMSIG_PARENT_EXAMINE = CALLBACK(src, /obj/item/electronic_assembly/examine),
+			COMSIG_ATOM_EMP_ACT = CALLBACK(src, /obj/item/electronic_assembly/emp_act),
+			COMSIG_MOVABLE_MOVED = CALLBACK(src, /obj/item/electronic_assembly/Moved),
+			COMSIG_MOVABLE_BUMP = CALLBACK(src, /obj/item/electronic_assembly/Bump),
 			COMSIG_ITEM_AFTERATTACK = CALLBACK(src, .proc/afterattack),
 			COMSIG_ITEM_ATTACK_SELF = CALLBACK(src, .proc/attack_self),
 			COMSIG_ITEM_DROPPED = CALLBACK(src, .proc/dropped),
 			COMSIG_ITEM_PICKUP = CALLBACK(src, .proc/pickup)
 			))
+			//COMSIG_MOVABLE_STOP_PULLING = CALLBACK(src, .proc/stop_pulling),
 
 	START_PROCESSING(SScircuit, src)
 	materials[MAT_METAL] = round((max_complexity + max_components) / 4) * SScircuit.cost_multiplier
@@ -579,7 +580,7 @@
 // Returns the object that is supposed to be used in attack messages, location checks, etc.
 // Override in children for special behavior.
 /obj/item/electronic_assembly/proc/get_object()
-	return src
+	return (wrapper_obj ? wrapper_obj : src)
 
 // Returns the location to be used for dropping items.
 // Same as the regular drop_location(), but with checks being run on acting_object if necessary.
@@ -646,6 +647,7 @@
 	name = "type-b electronic device"
 	icon_state = "setup_device_cylinder"
 	desc = "It's a case, for building tiny-sized electronics with. This one has a cylindrical design."
+	wrapper_obj = /obj/item/pen
 
 /obj/item/electronic_assembly/small/scanner
 	name = "type-c electronic device"

@@ -203,10 +203,10 @@
 			return TRUE
 
 		var/obj/item/built = new build_type(drop_location())
-		usr.put_in_hands(built)
 
 		if(istype(built, /obj/item/electronic_assembly))
 			var/obj/item/electronic_assembly/E = built
+			usr.put_in_hands(E.get_object())
 			E.creator = key_name(usr)
 			E.opened = TRUE
 			E.update_icon()
@@ -216,6 +216,8 @@
 			E.diag_hud_set_circuitstat()
 			E.diag_hud_set_circuittracking()
 			E.investigate_log("was printed by [E.creator].", INVESTIGATE_CIRCUIT)
+		else
+			usr.put_in_hands(built)
 
 		to_chat(usr, "<span class='notice'>[capitalize(built.name)] printed.</span>")
 		playsound(src, 'sound/items/jaws_pry.ogg', 50, TRUE)
