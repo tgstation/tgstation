@@ -12,4 +12,4 @@ shopt -u dotglob
 
 build/tools/deploy.sh $1 $1/build
 
-#rm -rf build
+rm -rf build
