@@ -527,6 +527,7 @@ SLIME SCANNER
 		var/pressure = air_contents.return_pressure()
 		var/volume = air_contents.return_volume() //could just do mixture.volume... but safety, I guess?
 		var/temperature = air_contents.temperature
+		var/cached_scan_results = air_contents.analyzer_results
 
 		if(total_moles > 0)
 			to_chat(user, "<span class='notice'>Moles: [round(total_moles, 0.01)] mol</span>")
@@ -544,6 +545,12 @@ SLIME SCANNER
 				to_chat(user, "<span class='notice'>This node is empty!</span>")
 			else
 				to_chat(user, "<span class='notice'>[target] is empty!</span>")
+
+		if(cached_scan_results && cached_scan_results["fusion"]) //notify the user if a fusion reaction was detected
+			var/fusion_power = round(cached_scan_results["fusion"], 0.01)
+			var/tier = fusionpower2text(fusion_power)
+			to_chat(user, "<span class='boldnotice'>Large amounts of free neutrons detected in the air indicate that a fusion reaction took place.</span>")
+			to_chat(user, "<span class='notice'>Power of the last fusion reaction: [fusion_power]\n This power indicates it was a [tier]-tier fusion reaction.</span>")
 	return
 
 //slime scanner
