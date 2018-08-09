@@ -431,6 +431,7 @@
 #include "code\datums\martial\psychotic_brawl.dm"
 #include "code\datums\martial\sleeping_carp.dm"
 #include "code\datums\martial\wrestling.dm"
+#include "code\datums\mood_events\drink_events.dm"
 #include "code\datums\mood_events\drug_events.dm"
 #include "code\datums\mood_events\generic_negative_events.dm"
 #include "code\datums\mood_events\generic_positive_events.dm"
