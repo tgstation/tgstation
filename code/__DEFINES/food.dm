@@ -11,3 +11,8 @@
 #define GROSS 		(1<<10)
 #define TOXIC 		(1<<11)
 #define PINEAPPLE	(1<<12)
+
+#define DRINK_NICE	1
+#define DRINK_GOOD	2
+#define DRINK_VERYGOOD	3
+#define DRINK_FANTASTIC	4
