@@ -82,9 +82,8 @@
 	if(istype(D, /atom))
 		var/atom/A = D
 		if(isliving(A))
-			atomsnowflake += "<a href='?_src_=vars;[HrefToken()];rename=[refid]'><b>[D]</b></a>"
-			if(A.dir)
-				atomsnowflake += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir' id='dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
+			atomsnowflake += "<a href='?_src_=vars;[HrefToken()];rename=[refid]'><b id='name'>[D]</b></a>"
+			atomsnowflake += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir' id='dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
 			var/mob/living/M = A
 			atomsnowflake += {"
 				<br><font size='1'><a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>
@@ -99,11 +98,10 @@
 				</font>
 			"}
 		else
-			atomsnowflake += "<a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=name'><b>[D]</b></a>"
-			if(A.dir)
-				atomsnowflake += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir' id='dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
+			atomsnowflake += "<a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=name'><b id='name'>[D]</b></a>"
+			atomsnowflake += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir' id='dir'>[dir2text(A.dir) || A.dir]</a> <a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
 	else if("name" in D.vars)
-		atomsnowflake += "<a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=name'><b>[D]</b></a>"
+		atomsnowflake += "<a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=name'><b id='name'>[D]</b></a>"
 	else
 		atomsnowflake += "<b>[formatted_type]</b>"
 		formatted_type = null
@@ -603,17 +601,26 @@
 
 			message_admins("Admin [key_name_admin(usr)] renamed [key_name_admin(M)] to [new_name].")
 			M.fully_replace_character_name(M.real_name,new_name)
+			vv_update_display(M, "name", new_name)
 
 		else if(href_list["varnameedit"] && href_list["datumedit"])
 			if(!check_rights(NONE))
 				return
 
-			var/D = locate(href_list["datumedit"])
+			var/datum/D = locate(href_list["datumedit"])
 			if(!istype(D, /datum))
 				to_chat(usr, "This can only be used on datums")
 				return
 
-			modify_variables(D, href_list["varnameedit"], 1)
+			if (!modify_variables(D, href_list["varnameedit"], 1))
+				return
+			switch(href_list["varnameedit"])
+				if("name")
+					vv_update_display(D, "name", "[D]")
+				if("dir")
+					if(isatom(D))
+						var/dir = D.vars["dir"]
+						vv_update_display(D, "dir", dir2text(dir) || dir)
 
 		else if(href_list["varnamechange"] && href_list["datumchange"])
 			if(!check_rights(NONE))

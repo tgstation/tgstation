@@ -636,3 +636,4 @@ GLOBAL_PROTECT(VVpixelmovement)
 	var/msg = "[key_name_admin(src)] modified [original_name]'s [variable] from [var_value] to [var_new]"
 	message_admins(msg)
 	admin_ticket_log(O, msg)
+	return TRUE
