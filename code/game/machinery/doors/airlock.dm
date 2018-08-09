@@ -41,6 +41,11 @@
 #define ELECTRIFIED_PERMANENT -1
 #define AI_ELECTRIFY_DOOR_TIME 30
 
+#define NORTH 1 //defines for the unrestricted sides (unres) section
+#define SOUTH 2
+#define EAST 4
+#define WEST 8
+
 /obj/machinery/door/airlock
 	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/station/public.dmi'
@@ -591,22 +596,22 @@
 
 /obj/machinery/door/airlock/proc/check_unres() //unrestricted sides. This overlay indicates which directions the player can access even without an ID
 	if(hasPower() && unres_sides)
-		if(src.unres_sides & 1)
+		if(unres_sides & NORTH)
 			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_n") //layer=src.layer+1
 			I.pixel_y = 32
 			set_light(l_range = 2, l_power = 1)
 			add_overlay(I)
-		if(src.unres_sides & 2)
+		if(unres_sides & SOUTH)
 			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_s") //layer=src.layer+1
 			I.pixel_y = -32
 			set_light(l_range = 2, l_power = 1)
 			add_overlay(I)
-		if(src.unres_sides & 4)
+		if(unres_sides & EAST)
 			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_e") //layer=src.layer+1
 			I.pixel_x = 32
 			set_light(l_range = 2, l_power = 1)
 			add_overlay(I)
-		if(src.unres_sides & 8)
+		if(unres_sides & WEST)
 			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_w") //layer=src.layer+1
 			I.pixel_x = -32
 			set_light(l_range = 2, l_power = 1)
