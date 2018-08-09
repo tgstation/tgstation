@@ -851,8 +851,8 @@
 	C.pixel_y = world.icon_size*_y
 
 /obj/item/twohanded/binoculars/unwield(mob/user)
-	mobhook.RemoveComponent()
 	. = ..()
+	mobhook.RemoveComponent()
 	user.visible_message("[user] lowers [src].","You lower [src].")
 	item_state = "binoculars"
 	user.regenerate_icons()
