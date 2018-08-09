@@ -1053,7 +1053,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/device_tools/briefcase_launchpad
 	name = "Briefcase Launchpad"
-	desc = "A briefcase containing a launchpad, a device able to teleport items and people to and from targets up to five tiles away from the briefcase. \
+	desc = "A briefcase containing a launchpad, a device able to teleport items and people to and from targets up to six tiles away from the briefcase. \
 			Also includes a remote control, disguised as an ordinary folder. Touch the briefcase with the remote to link it."
 	surplus = 0
 	item = /obj/item/storage/briefcase/launchpad

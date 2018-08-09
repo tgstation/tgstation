@@ -148,7 +148,7 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 	teleport_speed = 20
-	range = 5
+	range = 6
 	stationary = FALSE
 	var/closed = TRUE
 	var/obj/item/storage/briefcase/launchpad/briefcase
@@ -217,6 +217,7 @@
 		pad.forceMove(get_turf(src))
 		pad.closed = FALSE
 		user.transferItemToLoc(src, pad, TRUE)
+		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_HIDE_ALL)
 
 /obj/item/storage/briefcase/launchpad/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/launchpad_remote))
