@@ -88,13 +88,13 @@
 			atomsnowflake += {"
 				<br><font size='1'><a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=ckey' id='ckey'>[M.ckey || "No ckey"]</a> / <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=real_name' id='real_name'>[M.real_name || "No real name"]</a></font>
 				<br><font size='1'>
-					BRUTE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brute'>[M.getBruteLoss()]</a>
-					FIRE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=fire'>[M.getFireLoss()]</a>
-					TOXIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=toxin'>[M.getToxLoss()]</a>
-					OXY:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
-					CLONE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=clone'>[M.getCloneLoss()]</a>
-					BRAIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brain'>[M.getBrainLoss()]</a>
-					STAMINA:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina'>[M.getStaminaLoss()]</a>
+					BRUTE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brute' id='brute'>[M.getBruteLoss()]</a>
+					FIRE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=fire' id='fire'>[M.getFireLoss()]</a>
+					TOXIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=toxin' id='toxin'>[M.getToxLoss()]</a>
+					OXY:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=oxygen' id='oxygen'>[M.getOxyLoss()]</a>
+					CLONE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=clone' id='clone'>[M.getCloneLoss()]</a>
+					BRAIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brain' id='brain'>[M.getBrainLoss()]</a>
+					STAMINA:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina' id='stamina'>[M.getStaminaLoss()]</a>
 				</font>
 			"}
 		else
@@ -1317,21 +1317,29 @@
 				to_chat(usr, "Mob doesn't exist anymore")
 				return
 
+			var/newamt
 			switch(Text)
 				if("brute")
 					L.adjustBruteLoss(amount)
+					newamt = L.getBruteLoss()
 				if("fire")
 					L.adjustFireLoss(amount)
+					newamt = L.getFireLoss()
 				if("toxin")
 					L.adjustToxLoss(amount)
+					newamt = L.getToxLoss()
 				if("oxygen")
 					L.adjustOxyLoss(amount)
+					newamt = L.getOxyLoss()
 				if("brain")
 					L.adjustBrainLoss(amount)
+					newamt = L.getBrainLoss()
 				if("clone")
 					L.adjustCloneLoss(amount)
+					newamt = L.getCloneLoss()
 				if("stamina")
 					L.adjustStaminaLoss(amount)
+					newamt = L.getStaminaLoss()
 				else
 					to_chat(usr, "You caused an error. DEBUG: Text:[Text] Mob:[L]")
 					return
@@ -1341,3 +1349,4 @@
 				var/msg = "<span class='notice'>[key_name(usr)] dealt [amount] amount of [Text] damage to [L] </span>"
 				message_admins(msg)
 				admin_ticket_log(L, msg)
+				vv_update_display(L, Text, "[newamt]")
