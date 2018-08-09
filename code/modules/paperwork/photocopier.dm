@@ -173,7 +173,7 @@
 				to_chat(usr, "<span class='boldannounce'>No images saved</span>")
 				return
 			var/datum/picture/selection = tempAI.aicamera.selectpicture(usr)
-			var/obj/item/photo = new(loc, selection)
+			var/obj/item/photo/photo = new(loc, selection)
 			photo.pixel_x = rand(-10, 10)
 			photo.pixel_y = rand(-10, 10)
 			toner -= 5	 //AI prints color pictures only, thus they can do it more efficiently
