@@ -36,6 +36,10 @@
 	if(cable)
 		debris += new /obj/item/stack/cable_coil(src, cable)
 
+/obj/machinery/door/window/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/ntnet_interface)
+
 /obj/machinery/door/window/Destroy()
 	density = FALSE
 	QDEL_LIST(debris)
@@ -298,6 +302,35 @@
 		if("deny")
 			flick("[src.base_state]deny", src)
 
+/obj/machinery/door/window/check_access_ntnet(datum/netdata/data)
+	return !requiresID() || ..()
+
+/obj/machinery/door/window/ntnet_receive(datum/netdata/data)
+	// Check if the airlock is powered.
+	if(!hasPower())
+		return
+
+	// Check packet access level.
+	if(!check_access_ntnet(data))
+		return
+
+	// Handle received packet.
+	var/command = lowertext(data.data["data"])
+	var/command_value = lowertext(data.data["data_secondary"])
+	switch(command)
+		if("open")
+			if(command_value == "on" && !density)
+				return
+
+			if(command_value == "off" && density)
+				return
+
+			if(density)
+				INVOKE_ASYNC(src, .proc/open)
+			else
+				INVOKE_ASYNC(src, .proc/close)
+		if("touch")
+			INVOKE_ASYNC(src, .proc/open_and_close)
 
 /obj/machinery/door/window/brigdoor
 	name = "secure door"

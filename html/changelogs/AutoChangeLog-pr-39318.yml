@@ -1,0 +1,4 @@
+author: "nicbn"
+delete-after: True
+changes: 
+  - tweak: "BoxStation science changes: Circuitry lab is closer to RnD now; cannisters, portable vents, portable scrubbers, filters and mixers have been moved to Toxin Mixing Lab. There is now a firing range at the testing lab!"

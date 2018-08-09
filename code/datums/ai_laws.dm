@@ -218,7 +218,7 @@
 /* General ai_law functions */
 
 /datum/ai_laws/proc/set_laws_config()
-	var/list/law_ids = CONFIG_GET(keyed_flag_list/random_laws)
+	var/list/law_ids = CONFIG_GET(keyed_list/random_laws)
 	switch(CONFIG_GET(number/default_laws))
 		if(0)
 			add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
@@ -247,7 +247,7 @@
 
 /datum/ai_laws/proc/pick_weighted_lawset()
 	var/datum/ai_laws/lawtype
-	var/list/law_weights = CONFIG_GET(keyed_number_list/law_weight)
+	var/list/law_weights = CONFIG_GET(keyed_list/law_weight)
 	while(!lawtype && law_weights.len)
 		var/possible_id = pickweightAllowZero(law_weights)
 		lawtype = lawid_to_type(possible_id)
