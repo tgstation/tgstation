@@ -10,6 +10,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	body_parts_covered = 0
 	flags_inv = 0
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/M, _worn_state, alt_worn, lh_icon, rh_icon, _can_head = FALSE)
 	. = ..()
