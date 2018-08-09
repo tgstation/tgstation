@@ -22,7 +22,7 @@
 
 /obj/item/suspiciousphone
 	name = "suspicious phone"
-	desc = "This device raises pink levels to unknown highs"
+	desc = "This device raises pink levels to unknown highs."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "suspiciousphone"
 	w_class = WEIGHT_CLASS_SMALL
