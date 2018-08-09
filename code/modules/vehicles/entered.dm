@@ -47,11 +47,11 @@
 	if(!istype(M))
 		return FALSE
 	remove_occupant(M)
+	M.forceMove(exit_location(M))
 	if(randomstep)
 		var/turf/target_turf = get_step(exit_location(M), pick(GLOB.cardinals))
-		M.forceMove(target_turf)
-	else
-		M.forceMove(exit_location(M))
+		M.throw_at(target_turf, 5, 10)
+		
 	if(!silent)
 		M.visible_message("<span class='notice'>[M] drops out of \the [src]!</span>")
 	return TRUE
@@ -93,12 +93,12 @@
 	for(var/i in occupants)
 		if(iscarbon(i))
 			var/mob/living/carbon/Carbon = i
-			mob_exit(Carbon, randomstep)
+			mob_exit(Carbon, null, randomstep)
 			Carbon.Knockdown(40)
 
 /obj/vehicle/sealed/proc/DumpSpecificMobs(flag, randomstep = TRUE)
 	for(var/i in occupants)
 		if((occupants[i] & flag) && iscarbon(i))
 			var/mob/living/carbon/C = i
-			mob_exit(C, randomstep)
+			mob_exit(C, null, randomstep)
 			C.Knockdown(40)

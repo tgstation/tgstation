@@ -5,6 +5,8 @@
 	var/engine_sound = 'sound/vehicles/carrev.ogg'
 	var/last_enginesound_time
 	var/engine_sound_length = 20 //Set this to the length of the engine sound
+	layer = ABOVE_MOB_LAYER
+	anchored = TRUE
 
 /obj/vehicle/sealed/car/generate_actions()
 	. = ..()
@@ -102,14 +104,16 @@
 	..()
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		src.visible_message("<span class='danger'>[src] rams into [C] and knocks them down!</span>")
 		C.Knockdown(50)
+		C.visible_message("<span class='warning'>[src] rams into [C] and sucks him up!</span>") //fuck off shezza this isn't ERP.
+		mob_forced_enter(C)
+
 		playsound(src, pick('sound/vehicles/clowncar_ram1.ogg', 'sound/vehicles/clowncar_ram2.ogg', 'sound/vehicles/clowncar_ram3.ogg'), 75)
 	else if(istype(M, /turf/closed))
 		src.visible_message("<span class='warning'>[src] rams into [M] and crashes!</span>")
 		playsound(src, pick('sound/vehicles/clowncar_crash1.ogg', 'sound/vehicles/clowncar_crash2.ogg'), 75)
 		playsound(src, 'sound/vehicles/clowncar_crashpins.ogg', 75)
-		DumpMobs()
+		DumpMobs(TRUE)
 
 /obj/vehicle/sealed/car/clowncar/deconstruct(disassembled = TRUE)
   . = ..()
