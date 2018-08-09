@@ -833,7 +833,6 @@
 	user.regenerate_icons()
 	if(!user?.client)
 		return
-	user.regenerate_icons()
 	var/client/C = user.client
 	var/_x = 0
 	var/_y = 0
