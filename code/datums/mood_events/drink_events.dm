@@ -1,5 +1,5 @@
 /datum/mood_event/drinks/drunk
-	mood_change = 4
+	mood_change = 3
 	description = "<span class='nicegreen'>Everything just feels better after a drink or two.</span>\n"
 	timeout = 3000
 

@@ -23,18 +23,15 @@
 /datum/reagent/consumable/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == INGEST)
 		if (quality && !M.has_trait(TRAIT_AGEUSIA))
-			if (reac_volume >= 5)
-				switch(quality)
-					if (1)
-						SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/drinks/quality_nice)
-					if (2)
-						SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/drinks/quality_good)
-					if (3)
-						SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/drinks/quality_verygood)
-					if (4)
-						SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/drinks/quality_fantastic)
-			else
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/drinks/quality_nice) //badly mixed drinks!
+			switch(quality)
+				if (1)
+					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/drinks/quality_nice)
+				if (2)
+					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/drinks/quality_good)
+				if (3)
+					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/drinks/quality_verygood)
+				if (4)
+					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/drinks/quality_fantastic)
 	return ..()
 
 /datum/reagent/consumable/nutriment
