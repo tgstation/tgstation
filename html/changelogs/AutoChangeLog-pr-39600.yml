@@ -1,0 +1,5 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Transformation diseases now properly check for job bans where applicable"
+  - code_imp: "Fixed a bunch of runtimes that result from transforming into a nonhuman from a human, or a noncarbon from a carbon."
