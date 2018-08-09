@@ -11,7 +11,7 @@
 	body_parts_covered = 0
 	flags_inv = 0
 
-/obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/M, _worn_state, alt_worn, lh_icon, rh_icon, _can_head_override = FALSE)
+/obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/M, _worn_state, alt_worn, lh_icon, rh_icon, _can_head = FALSE)
 	. = ..()
 
 	if(M)
@@ -22,8 +22,8 @@
 		name = M.name
 		desc = M.desc
 
-	if(_can_head_override)
-		can_head = _can_head_override
+	if(_can_head)
+		can_head = _can_head
 	if(alt_worn)
 		alternate_worn_icon = alt_worn
 	if(_worn_state)
