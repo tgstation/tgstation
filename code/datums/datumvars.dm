@@ -86,7 +86,7 @@
 			atomsnowflake += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir' id='dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
 			var/mob/living/M = A
 			atomsnowflake += {"
-				<br><font size='1'><a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>
+				<br><font size='1'><a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=ckey' id='ckey'>[M.ckey || "No ckey"]</a> / <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=real_name' id='real_name'>[M.real_name || "No real name"]</a></font>
 				<br><font size='1'>
 					BRUTE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brute'>[M.getBruteLoss()]</a>
 					FIRE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=fire'>[M.getFireLoss()]</a>
@@ -602,6 +602,7 @@
 			message_admins("Admin [key_name_admin(usr)] renamed [key_name_admin(M)] to [new_name].")
 			M.fully_replace_character_name(M.real_name,new_name)
 			vv_update_display(M, "name", new_name)
+			vv_update_display(M, "real_name", M.real_name || "No real name")
 
 		else if(href_list["varnameedit"] && href_list["datumedit"])
 			if(!check_rights(NONE))
@@ -621,6 +622,12 @@
 					if(isatom(D))
 						var/dir = D.vars["dir"]
 						vv_update_display(D, "dir", dir2text(dir) || dir)
+				if("ckey")
+					if(isliving(D))
+						vv_update_display(D, "ckey", D.vars["ckey"] || "No ckey")
+				if("real_name")
+					if(isliving(D))
+						vv_update_display(D, "real_name", D.vars["real_name"] || "No real name")
 
 		else if(href_list["varnamechange"] && href_list["datumchange"])
 			if(!check_rights(NONE))
