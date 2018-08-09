@@ -13,11 +13,29 @@
 	taste_description = "generic food"
 	taste_mult = 4
 	var/nutriment_factor = 1 * REAGENTS_METABOLISM
+	var/quality = 0	//affects mood, typically higher for mixed drinks with more complex recipes
 
 /datum/reagent/consumable/on_mob_life(mob/living/carbon/M)
 	current_cycle++
 	M.nutrition += nutriment_factor
 	holder.remove_reagent(src.id, metabolization_rate)
+
+/datum/reagent/consumable/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(method == INGEST)
+		if (quality && !M.has_trait(TRAIT_AGEUSIA))
+			if (reac_volume >= 5)
+				switch(quality)
+					if (1)
+						SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/drinks/quality_nice)
+					if (2)
+						SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/drinks/quality_good)
+					if (3)
+						SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/drinks/quality_verygood)
+					if (4)
+						SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/drinks/quality_fantastic)
+			else
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/drinks/quality_nice) //badly mixed drinks!
+	return ..()
 
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"
@@ -577,7 +595,7 @@
   if(iscarbon(M) && (method in list(TOUCH, VAPOR, PATCH)))
     var/mob/living/carbon/C = M
     for(var/s in C.surgeries)
-      var/datum/surgery/S = s 
+      var/datum/surgery/S = s
       S.success_multiplier = max(0.6, S.success_multiplier) // +60% success probability on each step, compared to bacchus' blessing's ~46%
   ..()
 

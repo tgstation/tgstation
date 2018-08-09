@@ -14,7 +14,6 @@
 	nutriment_factor = 0
 	taste_description = "alcohol"
 	var/boozepwr = 65 //Higher numbers equal higher hardness, higher hardness equals more intense alcohol poisoning
-	var/quality = 0	// affects mood, higher for drinks with more complex recipes
 
 /*
 Boozepwr Chart
@@ -75,17 +74,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				var/datum/surgery/S = s
 				S.success_multiplier = max(0.1*power_multiplier, S.success_multiplier)
 				// +10% success propability on each step, useful while operating in less-than-perfect conditions
-	if(method == INGEST)
-		if (quality && !M.has_trait(TRAIT_AGEUSIA))
-			switch(quality)
-				if (1)
-					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/drinks/quality_nice)
-				if (2)
-					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/drinks/quality_good)
-				if (3)
-					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/drinks/quality_verygood)
-				if (4)
-					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/drinks/quality_fantastic)
 	return ..()
 
 /datum/reagent/consumable/ethanol/beer
@@ -165,13 +153,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#102000" // rgb: 16, 32, 0
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	boozepwr = 80
+	quality = 2
 	overdose_threshold = 60
 	addiction_threshold = 30
 	taste_description = "jitters and death"
 	glass_icon_state = "thirteen_loko_glass"
 	glass_name = "glass of Thirteen Loko"
 	glass_desc = "This is a glass of Thirteen Loko, it appears to be of the highest quality. The drink, not the glass."
-	quality = 2
 
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/M)
 	M.drowsyness = max(0,M.drowsyness-7)
