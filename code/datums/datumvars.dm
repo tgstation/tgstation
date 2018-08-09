@@ -500,7 +500,6 @@
 			return
 
 		src.holder.show_player_panel(M)
-		href_list["datumrefresh"] = href_list["mob_player_panel"]
 
 	else if(href_list["godmode"])
 		if(!check_rights(R_ADMIN))
@@ -512,7 +511,6 @@
 			return
 
 		src.cmd_admin_godmode(M)
-		href_list["datumrefresh"] = href_list["godmode"]
 
 	else if(href_list["mark_object"])
 		if(!check_rights(NONE))
@@ -605,7 +603,6 @@
 
 			message_admins("Admin [key_name_admin(usr)] renamed [key_name_admin(M)] to [new_name].")
 			M.fully_replace_character_name(M.real_name,new_name)
-			href_list["datumrefresh"] = href_list["rename"]
 
 		else if(href_list["varnameedit"] && href_list["datumedit"])
 			if(!check_rights(NONE))
@@ -748,7 +745,6 @@
 				return
 
 			src.give_spell(M)
-			href_list["datumrefresh"] = href_list["give_spell"]
 
 		else if(href_list["remove_spell"])
 			if(!check_rights(NONE))
@@ -760,7 +756,6 @@
 				return
 
 			remove_spell(M)
-			href_list["datumrefresh"] = href_list["remove_spell"]
 
 		else if(href_list["give_disease"])
 			if(!check_rights(NONE))
@@ -772,7 +767,6 @@
 				return
 
 			src.give_disease(M)
-			href_list["datumrefresh"] = href_list["give_spell"]
 
 		else if(href_list["gib"])
 			if(!check_rights(R_FUN))
@@ -795,7 +789,6 @@
 				return
 
 			togglebuildmode(M)
-			href_list["datumrefresh"] = href_list["build_mode"]
 
 		else if(href_list["drop_everything"])
 			if(!check_rights(NONE))
@@ -947,8 +940,6 @@
 						log_admin("[key_name(usr)] has added [amount] units of [chosen_id] to \the [A]")
 						message_admins("<span class='notice'>[key_name(usr)] has added [amount] units of [chosen_id] to \the [A]</span>")
 
-			href_list["datumrefresh"] = href_list["addreagent"]
-
 		else if(href_list["explode"])
 			if(!check_rights(R_FUN))
 				return
@@ -959,7 +950,6 @@
 				return
 
 			src.cmd_admin_explosion(A)
-			href_list["datumrefresh"] = href_list["explode"]
 
 		else if(href_list["emp"])
 			if(!check_rights(R_FUN))
@@ -971,7 +961,6 @@
 				return
 
 			src.cmd_admin_emp(A)
-			href_list["datumrefresh"] = href_list["emp"]
 
 		else if(href_list["modtransform"])
 			if(!check_rights(R_DEBUG))
@@ -1000,8 +989,6 @@
 					if(!isnull(angle))
 						A.transform = M.Turn(angle)
 
-			href_list["datumrefresh"] = href_list["modtransform"]
-
 		else if(href_list["rotatedatum"])
 			if(!check_rights(NONE))
 				return
@@ -1016,7 +1003,6 @@
 					A.setDir(turn(A.dir, -45))
 				if("left")
 					A.setDir(turn(A.dir, 45))
-			href_list["datumrefresh"] = href_list["rotatedatum"]
 
 		else if(href_list["editorgans"])
 			if(!check_rights(NONE))
@@ -1028,7 +1014,6 @@
 				return
 
 			manipulate_organs(C)
-			href_list["datumrefresh"] = href_list["editorgans"]
 
 		else if(href_list["givemartialart"])
 			if(!check_rights(NONE))
@@ -1077,8 +1062,6 @@
 			if(result)
 				C.gain_trauma(result)
 
-			href_list["datumrefresh"] = href_list["givetrauma"]
-
 		else if(href_list["curetraumas"])
 			if(!check_rights(NONE))
 				return
@@ -1089,8 +1072,6 @@
 				return
 
 			C.cure_all_traumas(TRAUMA_RESILIENCE_ABSOLUTE)
-
-			href_list["datumrefresh"] = href_list["curetraumas"]
 
 		else if(href_list["hallucinate"])
 			if(!check_rights(NONE))
@@ -1345,4 +1326,3 @@
 				var/msg = "<span class='notice'>[key_name(usr)] dealt [amount] amount of [Text] damage to [L] </span>"
 				message_admins(msg)
 				admin_ticket_log(L, msg)
-				href_list["datumrefresh"] = href_list["mobToDamage"]
