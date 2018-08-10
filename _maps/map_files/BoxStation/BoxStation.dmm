@@ -25674,6 +25674,7 @@
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
 	req_access_txt = "5";
+	
 	},
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -25694,6 +25695,7 @@
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
 	req_access_txt = "5";
+	
 	},
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -27543,6 +27545,7 @@
 	id_tag = "GeneticsDoor";
 	name = "Genetics";
 	req_access_txt = "5; 68";
+	
 	},
 /obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plasteel/white,

@@ -69085,6 +69085,7 @@
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
 	req_access_txt = "5";
+	
 	},
 /obj/effect/mapping_helpers/airlock/unres{
 	icon_state = "airlock_unres_helper";
@@ -70006,6 +70007,7 @@
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
 	req_access_txt = "5";
+	
 	},
 /obj/effect/mapping_helpers/airlock/unres{
 	icon_state = "airlock_unres_helper";
@@ -79651,6 +79653,7 @@
 	id_tag = "cloningfoyer";
 	name = "Cloning Lab";
 	req_access_txt = "5";
+	
 	},
 /obj/effect/mapping_helpers/airlock/unres{
 	icon_state = "airlock_unres_helper";
@@ -80460,6 +80463,7 @@
 	id_tag = "cloningfoyer";
 	name = "Cloning Lab";
 	req_access_txt = "5";
+	
 	},
 /obj/effect/mapping_helpers/airlock/unres{
 	icon_state = "airlock_unres_helper";
