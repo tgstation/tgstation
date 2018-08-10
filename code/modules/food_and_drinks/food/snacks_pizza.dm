@@ -181,7 +181,7 @@
 
 /obj/item/reagent_containers/food/snacks/proc/i_kill_you(obj/item/I, mob/user)
 	if(istype(I, /obj/item/reagent_containers/food/snacks/pineappleslice))
-		to_chat(user, "<span class='suicide'>If you want something crazy like pineapple, I kill you.</span>")
+		to_chat(user, "<span class='danger'>If you want something crazy like pineapple, I kill you.</span>")
 		user.gib() //if you want something crazy like pineapple, i kill you
 
 /obj/item/reagent_containers/food/snacks/pizza/arnold/attack(mob/living/M, mob/living/user)
@@ -196,7 +196,7 @@
 /obj/item/reagent_containers/food/snacks/pizzaslice/arnold
 	name = "arnold pizza slice"
 	desc = "I come over, maybe I give you a pizza, maybe I break off your arm."
-	icon_state = "pineapplepizzaslice"
+	icon_state = "arnoldpizzaslice"
 	filling_color = "#A52A2A"
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapple" = 2, "ham" = 2)
 	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT
