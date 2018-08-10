@@ -1234,8 +1234,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/device_tools/suspiciousphone
 	name = "Protocol CRAB-17 Phone"
-	desc = "The suspicious phone, a phone borrowed from an unknown third party, it can be used to crash the space markets and cause a massive loss of funds to the station.\
-			It only has one use so make sure to use it when it will make the station lose the most funds!"
+	desc = "The Protocol CRAB-17 Phone, a phone borrowed from an unknown third party, it can be used to crash the space markets and cause a massive loss of funds to the station.\
+			It only has one use so make sure to use it when it will make the station lose the most funds! It also keeps you updated on any purchases or sales the cargo staff makes, even if you already crashed the market!"
 	item = /obj/item/suspiciousphone
 	cost = 5
 

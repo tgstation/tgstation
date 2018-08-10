@@ -106,6 +106,10 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			message_admins("\A [SO.pack.name] ordered by [ADMIN_LOOKUPFLW(SO.orderer_ckey)] has shipped.")
 		purchases++
 
+	for(var/i in GLOB.suspicious_phones) //Let the bogdanoffs know
+		var/obj/item/suspiciousphone/S = i
+		S.ring(CALLTYPE_HEBOUGHT)
+	
 	investigate_log("[purchases] orders in this shipment, worth [value] credits. [SSshuttle.points] credits left.", INVESTIGATE_CARGO)
 
 /obj/docking_port/mobile/supply/proc/sell()
@@ -143,6 +147,10 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		msg += export_text + "\n"
 		SSshuttle.points += E.total_cost
 		E.export_end()
+
+	for(var/i in GLOB.suspicious_phones) //Let the bogdanoffs know
+		var/obj/item/suspiciousphone/S = i
+		S.ring(CALLTYPE_HESOLD)
 
 	SSshuttle.centcom_message = msg
 	investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)

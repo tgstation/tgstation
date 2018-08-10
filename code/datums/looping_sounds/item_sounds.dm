@@ -46,3 +46,8 @@
 	mid_sounds = list('sound/machines/beep.ogg')
 	mid_length = 60
 	volume = 10
+
+/datum/looping_sound/ring
+	mid_sounds = list('sound/items/ringing.ogg')
+	mid_length = 25
+	volume = 25
