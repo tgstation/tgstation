@@ -484,6 +484,7 @@
 	desc = "An upgrade to the Medical module, installing a processor \
 		capable of scanning surgery disks and carrying \
 		out procedures"
+	icon = 'icons/obj/device.dmi'
 	icon_state = "spectrometer"
 	require_module = 1
 	module_type = /obj/item/robot_module/medical
