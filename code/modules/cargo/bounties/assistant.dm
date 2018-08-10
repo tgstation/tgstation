@@ -240,21 +240,6 @@
 	var/obj/structure/bonfire/B = O
 	return !!B.burning
 
-/datum/bounty/item/assistant/plasma_tank
-	name = "Full Tank of Plasma"
-	description = "Station 12 has requested supplies to set up a singularity engine. In particular, they request 28 moles of plasma."
-	reward = 2500
-	wanted_types = list(/obj/item/tank)
-	var/moles_required = 20 // A full tank is 28 moles, but CentCom ignores that fact.
-
-/datum/bounty/item/assistant/plasma_tank/applies_to(obj/O)
-	if(!..())
-		return FALSE
-	var/obj/item/tank/T = O
-	if(!T.air_contents.gases[/datum/gas/plasma])
-		return FALSE
-	return T.air_contents.gases[/datum/gas/plasma][MOLES] >= moles_required
-
 /datum/bounty/item/assistant/corgimeat
 	name = "Raw Corgi Meat"
 	description = "The Syndicate recently stole all of CentCom's corgi meat. Ship out a replacement immediately."

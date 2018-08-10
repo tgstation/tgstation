@@ -58,9 +58,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate2)
 "ap" = (
-/mob/living/simple_animal/hostile/syndicate/ranged{
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier,/obj/item/gun/ballistic/automatic/c20r,/obj/item/shield/energy)
-	},
+/mob/living/simple_animal/hostile/syndicate/ranged/spacebattle,
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate2)
 "aq" = (
@@ -127,10 +125,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate3)
 "aG" = (
-/mob/living/simple_animal/hostile/syndicate/melee{
-	deathmessage = "\[src] falls limp as they release their grip from the energy weapons, activating their self-destruct function!";
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
-	},
+/mob/living/simple_animal/hostile/syndicate/melee/spacebattle,
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate2)
 "aI" = (
@@ -680,9 +675,7 @@
 /turf/open/floor/plasteel/bar,
 /area/awaymission/spacebattle/cruiser)
 "db" = (
-/mob/living/simple_animal/hostile/syndicate/ranged{
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier,/obj/item/gun/ballistic/automatic/c20r,/obj/item/shield/energy)
-	},
+/mob/living/simple_animal/hostile/syndicate/ranged/spacebattle,
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate3)
 "dc" = (
@@ -952,10 +945,7 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "ef" = (
-/mob/living/simple_animal/hostile/syndicate/melee{
-	deathmessage = "\[src] falls limp as they release their grip from the energy weapons, activating their self-destruct function!";
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
-	},
+/mob/living/simple_animal/hostile/syndicate/melee/spacebattle,
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate3)
 "eg" = (
@@ -966,10 +956,7 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "eh" = (
-/mob/living/simple_animal/hostile/syndicate/melee{
-	deathmessage = "\[src] falls limp as they release their grip from the energy weapons, activating their self-destruct function!";
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
-	},
+/mob/living/simple_animal/hostile/syndicate/melee/spacebattle,
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate1)
 "ei" = (
@@ -1057,9 +1044,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "eA" = (
-/mob/living/simple_animal/hostile/syndicate/ranged{
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier,/obj/item/gun/ballistic/automatic/c20r,/obj/item/shield/energy)
-	},
+/mob/living/simple_animal/hostile/syndicate/ranged/spacebattle,
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate1)
 "eC" = (
