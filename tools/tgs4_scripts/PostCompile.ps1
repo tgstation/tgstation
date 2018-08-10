@@ -2,6 +2,8 @@ param(
     $game_path
 )
 
+Write-Host "Deploying tgstation compilation..."
+
 cd $game_path
 
 mkdir build

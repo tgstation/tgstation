@@ -2,6 +2,8 @@
 
 #Basically run deploy.sh, but first
 
+echo 'Deploying tgstation compilation...'
+
 cd $1
 
 mkdir build
