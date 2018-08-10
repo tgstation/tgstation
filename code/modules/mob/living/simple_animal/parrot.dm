@@ -394,6 +394,9 @@
 	if(!isturf(src.loc) || !canmove || buckled)
 		return //If it can't move, dont let it move. (The buckled check probably isn't necessary thanks to canmove)
 
+	if(client && stat == CONSCIOUS && parrot_state != icon_living)
+		icon_state = icon_living
+		//Because the most appropriate place to set icon_state is movement_delay(), clearly
 
 //-----SLEEPING
 	if(parrot_state == PARROT_PERCH)
@@ -603,12 +606,6 @@
 /*
  * Procs
  */
-
-/mob/living/simple_animal/parrot/movement_delay()
-	if(client && stat == CONSCIOUS && parrot_state != icon_living)
-		icon_state = icon_living
-		//Because the most appropriate place to set icon_state is movement_delay(), clearly
-	return ..()
 
 /mob/living/simple_animal/parrot/proc/isStuck()
 	//Check to see if the parrot is stuck due to things like windows or doors or windowdoors
