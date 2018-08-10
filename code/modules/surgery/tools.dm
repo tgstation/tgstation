@@ -235,3 +235,22 @@
 	else
 		to_chat(user, "[src] is empty.")
 	return
+
+/obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
+	name = "Surgical Processor"
+	desc = "A device for scanning and initiating surgeries from a disk."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "spectrometer"
+	var/list/advanced_surgeries = list()
+	
+/obj/item/organ_storage/afterattack(obj/item/O, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	if(istype(O, /obj/item/disk/surgery))
+		to_chat(user, "<span class='notice'>You load the surgery protocol from from [O] into the [src]</span>")
+		var/obj/item/disk/surgery/D = O
+		if(do_after(user, 10, target = O))
+			advanced_surgeries |= D.surgeries
+		return TRUE
+	return
