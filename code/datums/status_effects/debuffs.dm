@@ -468,7 +468,7 @@
 	var/health_difference = old_health - owner.health
 	if(!health_difference)
 		return
-	owner.visible_message("<span class='warning'>The light in [owner]'s eyes dims as they're harmed!</span>", \
+	owner.visible_message("<span class='warning'>The light in [owner]'s eyes dims as [owner.p_theyre()] harmed!</span>", \
 	"<span class='boldannounce'>The dazzling lights dim as you're harmed!</span>")
 	health_difference *= 2 //so 10 health difference translates to 20 deciseconds of stun reduction
 	duration -= health_difference

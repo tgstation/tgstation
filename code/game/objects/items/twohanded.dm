@@ -806,3 +806,58 @@
 
 /obj/item/twohanded/bonespear/update_icon()
 	icon_state = "bone_spear[wielded]"
+
+/obj/item/twohanded/binoculars
+	name = "binoculars"
+	desc = "Used for long-distance surveillance."
+	item_state = "binoculars"
+	icon_state = "binoculars"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_SMALL
+	var/datum/component/mobhook
+	var/zoom_out_amt = 6
+	var/zoom_amt = 10
+
+/obj/item/twohanded/binoculars/wield(mob/user)
+	. = ..()
+	if(!wielded)
+		return
+	if(QDELETED(mobhook))
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/unwield, user)))	
+	else
+		user.TakeComponent(mobhook)
+	user.visible_message("[user] holds [src] up to [user.p_their()] eyes.","You hold [src] up to your eyes.")
+	item_state = "binoculars_wielded"
+	user.regenerate_icons()
+	if(!user?.client)
+		return
+	var/client/C = user.client
+	var/_x = 0
+	var/_y = 0
+	switch(user.dir)
+		if(NORTH)
+			_y = zoom_amt
+		if(EAST)
+			_x = zoom_amt
+		if(SOUTH)
+			_y = -zoom_amt
+		if(WEST)
+			_x = -zoom_amt
+	C.change_view(world.view + zoom_out_amt)
+	C.pixel_x = world.icon_size*_x
+	C.pixel_y = world.icon_size*_y
+
+/obj/item/twohanded/binoculars/unwield(mob/user)
+	. = ..()
+	mobhook.RemoveComponent()
+	user.visible_message("[user] lowers [src].","You lower [src].")
+	item_state = "binoculars"
+	user.regenerate_icons()
+	if(user && user.client)
+		user.regenerate_icons()
+		var/client/C = user.client
+		C.change_view(CONFIG_GET(string/default_view))
+		user.client.pixel_x = 0
+		user.client.pixel_y = 0

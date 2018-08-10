@@ -275,7 +275,7 @@
 /mob/living/pointed(atom/A as mob|obj|turf in view())
 	if(incapacitated())
 		return FALSE
-	if(has_trait(TRAIT_FAKEDEATH))
+	if(has_trait(TRAIT_DEATHCOMA))
 		return FALSE
 	if(!..())
 		return FALSE
@@ -491,27 +491,6 @@
 
 	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
 		makeTrail(newloc, T, old_direction)
-
-/mob/living/movement_delay(ignorewalk = 0)
-	. = 0
-	if(isopenturf(loc) && !is_flying())
-		var/turf/open/T = loc
-		. += T.slowdown
-	var/static/datum/config_entry/number/run_delay/config_run_delay
-	var/static/datum/config_entry/number/walk_delay/config_walk_delay
-	if(isnull(config_run_delay))
-		config_run_delay = CONFIG_GET(number/run_delay)
-		config_walk_delay = CONFIG_GET(number/walk_delay)
-	if(ignorewalk)
-		. += config_run_delay.value_cache
-	else
-		switch(m_intent)
-			if(MOVE_INTENT_RUN)
-				if(drowsyness > 0)
-					. += 6
-				. += config_run_delay.value_cache
-			if(MOVE_INTENT_WALK)
-				. += config_walk_delay.value_cache
 
 /mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
 	if(!has_gravity())
@@ -981,7 +960,7 @@
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots, animals and brains have their own version so don't worry about them
 /mob/living/proc/update_canmove()
-	var/ko = IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (has_trait(TRAIT_FAKEDEATH))
+	var/ko = IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (has_trait(TRAIT_DEATHCOMA))
 	var/move_and_fall = stat == SOFT_CRIT && !pulledby
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)

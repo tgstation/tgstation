@@ -145,6 +145,12 @@
 	req_access = null
 	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_ENGINE)
 
+/obj/machinery/airalarm/mixingchamber
+	name = "chamber air alarm"
+	locked = FALSE
+	req_access = null
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_TOX, ACCESS_TOX_STORAGE)
+
 /obj/machinery/airalarm/all_access
 	name = "all-access air alarm"
 	desc = "This particular atmos control unit appears to have no access restrictions."
@@ -354,25 +360,25 @@
 				locked = !locked
 				. = TRUE
 		if("power", "toggle_filter", "widenet", "scrubbing")
-			send_signal(device_id, list("[action]" = params["val"]))
+			send_signal(device_id, list("[action]" = params["val"]), usr)
 			. = TRUE
 		if("excheck")
-			send_signal(device_id, list("checks" = text2num(params["val"])^1))
+			send_signal(device_id, list("checks" = text2num(params["val"])^1), usr)
 			. = TRUE
 		if("incheck")
-			send_signal(device_id, list("checks" = text2num(params["val"])^2))
+			send_signal(device_id, list("checks" = text2num(params["val"])^2), usr)
 			. = TRUE
 		if("set_external_pressure", "set_internal_pressure")
 			var/area/A = get_area(src)
 			var/target = input("New target pressure:", name, A.air_vent_info[device_id][(action == "set_external_pressure" ? "external" : "internal")]) as num|null
 			if(!isnull(target) && !..())
-				send_signal(device_id, list("[action]" = target))
+				send_signal(device_id, list("[action]" = target), usr)
 				. = TRUE
 		if("reset_external_pressure")
-			send_signal(device_id, list("reset_external_pressure"))
+			send_signal(device_id, list("reset_external_pressure"), usr)
 			. = TRUE
 		if("reset_internal_pressure")
-			send_signal(device_id, list("reset_internal_pressure"))
+			send_signal(device_id, list("reset_internal_pressure"), usr)
 			. = TRUE
 		if("threshold")
 			var/env = params["env"]
@@ -389,9 +395,11 @@
 					tlv.vars[name] = -1
 				else
 					tlv.vars[name] = round(value, 0.01)
+				investigate_log(" treshold value for [env]:[name] was set to [value] by [key_name(usr)]",INVESTIGATE_ATMOS)
 				. = TRUE
 		if("mode")
 			mode = text2num(params["mode"])
+			investigate_log("was turned to [get_mode_name(mode)] mode by [key_name(usr)]",INVESTIGATE_ATMOS)
 			apply_mode()
 			. = TRUE
 		if("alarm")
@@ -449,16 +457,38 @@
 	frequency = new_frequency
 	radio_connection = SSradio.add_object(src, frequency, RADIO_TO_AIRALARM)
 
-/obj/machinery/airalarm/proc/send_signal(target, list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
+/obj/machinery/airalarm/proc/send_signal(target, list/command, mob/user)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 	if(!radio_connection)
 		return 0
 
 	var/datum/signal/signal = new(command)
 	signal.data["tag"] = target
 	signal.data["sigtype"] = "command"
+	signal.data["user"] = user
 	radio_connection.post_signal(src, signal, RADIO_FROM_AIRALARM)
 
 	return 1
+
+/obj/machinery/airalarm/proc/get_mode_name(mode_value)
+	switch(mode_value)
+		if(AALARM_MODE_SCRUBBING)
+			return "Filtering"
+		if(AALARM_MODE_CONTAMINATED)
+			return "Contaminated"
+		if(AALARM_MODE_VENTING)
+			return "Draught"
+		if(AALARM_MODE_REFILL)
+			return "Refill"
+		if(AALARM_MODE_PANIC)
+			return "Panic Siphon"
+		if(AALARM_MODE_REPLACEMENT)
+			return "Cycle"
+		if(AALARM_MODE_SIPHON)
+			return "Siphon"
+		if(AALARM_MODE_OFF)
+			return "Off"
+		if(AALARM_MODE_FLOOD)
+			return "Flood"
 
 /obj/machinery/airalarm/proc/apply_mode()
 	var/area/A = get_area(src)

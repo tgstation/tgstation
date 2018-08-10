@@ -1242,15 +1242,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/computer/arcade/orion_trail{
-	desc = "A test for cadets";
-	events = list("Raiders" = 3, "Interstellar Flux" = 1, "Illness" = 3, "Breakdown" = 2, "Malfunction" = 2, "Collision" = 1, "Spaceport" = 2);
-	icon = 'icons/obj/machines/particle_accelerator.dmi';
-	icon_state = "control_boxp";
-	name = "Kobayashi Maru control computer";
-	prizes = list(/obj/item/paper/fluff/holodeck/trek_diploma = 1);
-	settlers = list("Kirk","Worf","Gene")
-	},
+/obj/machinery/computer/arcade/orion_trail/kobayashi,
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/kobayashi)
 "dP" = (
@@ -1268,30 +1260,14 @@
 	pixel_x = 16;
 	pixel_y = -5
 	},
-/obj/machinery/computer/arcade/orion_trail{
-	desc = "A test for cadets";
-	events = list("Raiders" = 3, "Interstellar Flux" = 1, "Illness" = 3, "Breakdown" = 2, "Malfunction" = 2, "Collision" = 1, "Spaceport" = 2);
-	icon = 'icons/obj/machines/particle_accelerator.dmi';
-	icon_state = "control_boxp";
-	name = "Kobayashi Maru control computer";
-	prizes = list(/obj/item/paper/fluff/holodeck/trek_diploma = 1);
-	settlers = list("Kirk","Worf","Gene")
-	},
+/obj/machinery/computer/arcade/orion_trail/kobayashi,
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/kobayashi)
 "dQ" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/computer/arcade/orion_trail{
-	desc = "A test for cadets";
-	events = list("Raiders" = 3, "Interstellar Flux" = 1, "Illness" = 3, "Breakdown" = 2, "Malfunction" = 2, "Collision" = 1, "Spaceport" = 2);
-	icon = 'icons/obj/machines/particle_accelerator.dmi';
-	icon_state = "control_boxp";
-	name = "Kobayashi Maru control computer";
-	prizes = list(/obj/item/paper/fluff/holodeck/trek_diploma = 1);
-	settlers = list("Kirk","Worf","Gene")
-	},
+/obj/machinery/computer/arcade/orion_trail/kobayashi,
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/kobayashi)
 "dR" = (
@@ -5996,9 +5972,7 @@
 	},
 /area/syndicate_mothership/control)
 "qM" = (
-/obj/machinery/vending/cigarette{
-	products = list(/obj/item/storage/fancy/cigarettes/cigpack_syndicate = 7, /obj/item/storage/fancy/cigarettes/cigpack_uplift = 3, /obj/item/storage/fancy/cigarettes/cigpack_robust = 2, /obj/item/storage/fancy/cigarettes/cigpack_carp = 3, /obj/item/storage/fancy/cigarettes/cigpack_midori = 1, /obj/item/storage/box/matches = 10, /obj/item/lighter/greyscale = 4, /obj/item/storage/fancy/rollingpapers = 5)
-	},
+/obj/machinery/vending/cigarette/syndicate,
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
@@ -13129,7 +13103,7 @@
 	dir = 4;
 	dwidth = 2;
 	height = 7;
-	id = "pod1_away";
+	id = "pod_away";
 	name = "recovery ship";
 	width = 5
 	},
