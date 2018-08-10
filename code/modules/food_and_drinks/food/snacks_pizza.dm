@@ -162,7 +162,7 @@
 
 /obj/item/reagent_containers/food/snacks/pizza/arnold
 	name = "arnold pizza"
-	desc = "Hello you've reached arnold's pizza shop. I'm not here now I'm out killing pepperoni."
+	desc = "Hello, you've reached arnold's pizza shop. I'm not here now, I'm out killing pepperoni."
 	icon_state = "arnoldpizza"
 	slice_path = /obj/item/reagent_containers/food/snacks/pizzaslice/arnold
 	bonus_reagents = list("nutriment" = 30, "vitamin" = 6, "iron" = 10, "omnizine" = 30)
