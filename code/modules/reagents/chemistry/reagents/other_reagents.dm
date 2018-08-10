@@ -1127,6 +1127,18 @@
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
 		L.ForceContractDisease(new /datum/disease/tuberculosis(), FALSE, TRUE)
 
+/datum/reagent/beerol
+	name = "Beerol"
+	id = "beerol"
+	description = "A horrible toxin that turns people into bees."
+	color = "#ebaf4c" // rgb: 235, 175, 76
+	can_synth = FALSE
+	taste_description = "waxxy"
+
+/datum/reagent/beerol/reaction_mob(mob/living/L, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
+		L.ForceContractDisease(new /datum/disease/transformation/bee(), FALSE, TRUE)
+
 /datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"
 	id = "fluorosurfactant"
