@@ -36,7 +36,8 @@
 	if(I.use_tool(src, user, 30, volume=80))
 		if(!istype(src, /turf/open/floor/engine))
 			return TRUE
-		new /obj/item/stack/rods(src, 2)
+		if(floor_tile)
+			new floor_tile(src, 2)
 		ScrapeAway()
 	return TRUE
 
