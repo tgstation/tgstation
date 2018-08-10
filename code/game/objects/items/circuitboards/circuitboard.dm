@@ -58,15 +58,10 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 /obj/item/circuitboard/machine/examine(mob/user)
 	..()
 	if(LAZYLEN(req_components))
-		var/dat = "Required components: "
-		var/first = TRUE
+		var/list/nice_list = list()
 		for(var/B in req_components)
 			var/atom/A = B
 			if(!ispath(A))
 				continue
-			if(!first)
-				dat += ", "
-			else
-				first = FALSE
-			dat += "[req_components[A]] [initial(A.name)]"
-		to_chat(user,"<span class='notice'>[dat]</span>")
+			nice_list += list("[req_components[A]] [initial(A.name)]")
+		to_chat(user,"<span class='notice'>Required components: [english_list(nice_list)]</span>")
