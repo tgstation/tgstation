@@ -67,7 +67,7 @@
 			if(query_validate_expire_time.NextRow())
 				var/checktime = text2num(query_validate_expire_time.item[1])
 				if(!checktime)
-					to_chat(src, "Datetime entered is improperly formatted or not later than current server time.")
+					to_chat(usr, "Datetime entered is improperly formatted or not later than current server time.")
 					return
 				expiry = query_validate_expire_time.item[1]
 			qdel(query_validate_expire_time)
@@ -193,7 +193,7 @@
 		if(query_validate_expire_time_edit.NextRow())
 			var/checktime = text2num(query_validate_expire_time_edit.item[1])
 			if(!checktime)
-				to_chat(src, "Datetime entered is improperly formatted or not later than current server time.")
+				to_chat(usr, "Datetime entered is improperly formatted or not later than current server time.")
 				return
 			new_expiry = query_validate_expire_time_edit.item[1]
 		qdel(query_validate_expire_time_edit)
