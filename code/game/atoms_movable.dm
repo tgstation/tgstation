@@ -1,6 +1,7 @@
 /atom/movable
 	layer = OBJ_LAYER
 	var/last_move = null
+	var/last_move_time = 0
 	var/anchored = FALSE
 	var/move_resist = MOVE_RESIST_DEFAULT
 	var/move_force = MOVE_FORCE_DEFAULT
@@ -171,7 +172,7 @@
 	. = TRUE
 	oldloc.Exited(src, newloc)
 
-	for(var/i in loc)
+	for(var/i in oldloc)
 		if(i == src) // Multi tile objects
 			continue
 		var/atom/movable/thing = i

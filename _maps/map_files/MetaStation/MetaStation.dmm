@@ -1997,9 +1997,7 @@
 	lootcount = 3;
 	name = "3maintenance loot spawner"
 	},
-/obj/effect/spawner/lootdrop/armory_contraband{
-	loot = list(/obj/item/gun/ballistic/automatic/pistol = 5, /obj/item/gun/ballistic/shotgun/automatic/combat = 5, /obj/item/gun/ballistic/revolver/mateba, /obj/item/gun/ballistic/automatic/pistol/deagle, /obj/item/storage/box/syndie_kit/throwing_weapons = 3)
-	},
+/obj/effect/spawner/lootdrop/armory_contraband/metastation,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
@@ -31687,6 +31685,7 @@
 	},
 /area/security/checkpoint/customs)
 "bpu" = (
+/obj/structure/lattice,
 /turf/closed/wall/r_wall,
 /area/space/nearstation)
 "bpv" = (
@@ -36963,10 +36962,7 @@
 /area/crew_quarters/bar)
 "bAq" = (
 /obj/structure/table/wood/poker,
-/obj/effect/spawner/lootdrop{
-	loot = list(/obj/item/gun/ballistic/revolver/russian = 5, /obj/item/storage/box/syndie_kit/throwing_weapons, /obj/item/toy/cards/deck/syndicate = 2);
-	name = "gambling valuables spawner"
-	},
+/obj/effect/spawner/lootdrop/gambling,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "bAr" = (
@@ -76677,6 +76673,11 @@
 	dir = 8
 	},
 /area/science/circuit)
+"svg" = (
+/obj/structure/lattice,
+/obj/structure/girder/reinforced,
+/turf/open/space/basic,
+/area/space/nearstation)
 "szA" = (
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 8
@@ -123684,10 +123685,10 @@ anT
 anT
 anT
 anT
+aqB
 anT
-aaf
-aaa
-aaa
+fwb
+fwb
 aaf
 aaa
 aaa
@@ -123933,13 +123934,13 @@ bpu
 bpu
 bpu
 bpu
+svg
 bpu
 bpu
 bpu
 bpu
-bpu
-bpu
-aaa
+svg
+lMJ
 aaa
 aaa
 aaf
@@ -124196,9 +124197,9 @@ anT
 anT
 anT
 aqB
-aaf
-aaf
-aaf
+anT
+anT
+anT
 aaf
 aaa
 aaf
