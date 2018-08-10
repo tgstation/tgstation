@@ -484,22 +484,22 @@
 	desc = "An upgrade to the Medical module, installing a processor \
 		capable of scanning surgery disks and carrying \
 		out procedures"
-	icon_state = "cyborg_upgrade3"
+	icon_state = "spectrometer"
 	require_module = 1
 	module_type = /obj/item/robot_module/medical
 
 /obj/item/borg/upgrade/processor/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		var/obj/item/twohanded/shockpaddles/cyborg/S = new(R.module)
-		R.module.basic_modules += S
-		R.module.add_module(S, FALSE, TRUE)
+		var//obj/item/surgical_processor/SP = new(R.module)
+		R.module.basic_modules += SP
+		R.module.add_module(SP, FALSE, TRUE)
 
 /obj/item/borg/upgrade/processor/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		var/obj/item/twohanded/shockpaddles/cyborg/S = locate() in R.module
-		R.module.remove_module(S, TRUE)
+		var/obj/item/borg/upgrade/processor/SP = locate() in R.module
+		R.module.remove_module(SP, TRUE)
 		
 /obj/item/borg/upgrade/ai
 	name = "B.O.R.I.S. module"
