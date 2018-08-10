@@ -175,10 +175,9 @@
 		user.visible_message("<span class='warning'>\The [src] breaks off [user]'s arm!!</span>", "<span class='warning'>\The [src] breaks off your arm!</span>")
 		if(l_arm)
 			l_arm.dismember()
-			playsound(user,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
 		else
 			r_arm.dismember()
-			playsound(user,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
+		playsound(user,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
 
 /obj/item/reagent_containers/food/snacks/proc/i_kill_you(obj/item/I, mob/user)
 	if(istype(I, /obj/item/reagent_containers/food/snacks/pineappleslice))
