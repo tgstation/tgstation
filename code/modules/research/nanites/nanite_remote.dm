@@ -76,7 +76,8 @@
 	SEND_SIGNAL(M, COMSIG_NANITE_SIGNAL, code, source)
 
 /obj/item/nanite_remote/proc/signal_relay(code, relay_code, source)
-	for(var/datum/nanite_program/relay/N in SSnanites.nanite_relays)
+	for(var/X in SSnanites.nanite_relays)
+		var/datum/nanite_program/relay/N = X
 		N.relay_signal(code, relay_code, source)
 
 /obj/item/nanite_remote/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)

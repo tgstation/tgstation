@@ -116,7 +116,8 @@
 
 /datum/nanite_program/sensor/relay_repeat/send_code()
 	if(activated && relay_channel)
-		for(var/datum/nanite_program/relay/N in SSnanites.nanite_relays)
+		for(var/X in SSnanites.nanite_relays)
+			var/datum/nanite_program/relay/N = X
 			N.relay_signal(sent_code, relay_channel, "a [name] program")
 
 /datum/nanite_program/sensor/health

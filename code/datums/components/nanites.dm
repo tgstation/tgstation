@@ -14,9 +14,26 @@
 	var/stealth = FALSE //if TRUE, does not appear on HUDs and health scans, and does not display the program list on nanite scans
 
 /datum/component/nanites/Initialize(amount = 100, cloud = 0)
+	if(!isliving(parent) && !istype(parent, /datum/nanite_cloud_backup))
+		return COMPONENT_INCOMPATIBLE
+		
 	nanite_volume = amount
 	cloud_id = cloud
 
+	//Nanites without hosts are non-interactive through normal means
+	if(isliving(parent))
+		host_mob = parent
+
+		if(!(MOB_ORGANIC in host_mob.mob_biotypes) && !(MOB_UNDEAD in host_mob.mob_biotypes)) //Shouldn't happen, but this avoids HUD runtimes in case a silicon gets them somehow.
+			return COMPONENT_INCOMPATIBLE
+
+		host_mob.hud_set_nanite_indicator()
+		START_PROCESSING(SSnanites, src)
+		
+		if(cloud_id)
+			cloud_sync()
+
+/datum/component/nanites/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_HAS_NANITES, .proc/confirm_nanites)
 	RegisterSignal(parent, COMSIG_NANITE_UI_DATA, .proc/nanite_ui_data)
 	RegisterSignal(parent, COMSIG_NANITE_GET_PROGRAMS, .proc/get_programs)
@@ -29,30 +46,39 @@
 	RegisterSignal(parent, COMSIG_NANITE_ADD_PROGRAM, .proc/add_program)
 	RegisterSignal(parent, COMSIG_NANITE_SCAN, .proc/nanite_scan)
 	RegisterSignal(parent, COMSIG_NANITE_SYNC, .proc/sync)
-
-	//Nanites without hosts are non-interactive through normal means
+	
 	if(isliving(parent))
-		host_mob = parent
-
-		if(!(MOB_ORGANIC in host_mob.mob_biotypes) && !(MOB_UNDEAD in host_mob.mob_biotypes)) //Shouldn't happen, but this avoids HUD runtimes in case a silicon gets them somehow.
-			return COMPONENT_INCOMPATIBLE
-
-		host_mob.hud_set_nanite_indicator()
-		START_PROCESSING(SSnanites, src)
-		RegisterSignal(host_mob, COMSIG_ATOM_EMP_ACT, .proc/on_emp)
-		RegisterSignal(host_mob, COMSIG_MOB_DEATH, .proc/on_death)
-		RegisterSignal(host_mob, COMSIG_MOB_ALLOWED, .proc/check_access)
-		RegisterSignal(host_mob, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_shock)
-		RegisterSignal(host_mob, COMSIG_LIVING_MINOR_SHOCK, .proc/on_minor_shock)
-		RegisterSignal(host_mob, COMSIG_MOVABLE_HEAR, .proc/on_hear)
-		RegisterSignal(host_mob, COMSIG_SPECIES_GAIN, .proc/check_viable_biotype)
-
-		RegisterSignal(host_mob, COMSIG_NANITE_SIGNAL, .proc/receive_signal)
-		if(cloud_id)
-			cloud_sync()
-	else if(!istype(parent, /datum/nanite_cloud_backup))
-		return COMPONENT_INCOMPATIBLE
-
+		RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, .proc/on_emp)
+		RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/on_death)
+		RegisterSignal(parent, COMSIG_MOB_ALLOWED, .proc/check_access)
+		RegisterSignal(parent, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_shock)
+		RegisterSignal(parent, COMSIG_LIVING_MINOR_SHOCK, .proc/on_minor_shock)
+		RegisterSignal(parent, COMSIG_MOVABLE_HEAR, .proc/on_hear)
+		RegisterSignal(parent, COMSIG_SPECIES_GAIN, .proc/check_viable_biotype)
+		RegisterSignal(parent, COMSIG_NANITE_SIGNAL, .proc/receive_signal)
+		
+/datum/component/nanites/UnregisterFromParent()
+	UnregisterSignal(parent, list(COMSIG_HAS_NANITES,
+								COMSIG_NANITE_UI_DATA,
+								COMSIG_NANITE_GET_PROGRAMS, 
+								COMSIG_NANITE_SET_VOLUME, 
+								COMSIG_NANITE_ADJUST_VOLUME, 
+								COMSIG_NANITE_SET_MAX_VOLUME, 
+								COMSIG_NANITE_SET_CLOUD, 
+								COMSIG_NANITE_SET_SAFETY, 
+								COMSIG_NANITE_SET_REGEN, 
+								COMSIG_NANITE_ADD_PROGRAM, 
+								COMSIG_NANITE_SCAN, 
+								COMSIG_NANITE_SYNC, 
+								COMSIG_ATOM_EMP_ACT, 
+								COMSIG_MOB_DEATH, 
+								COMSIG_MOB_ALLOWED, 
+								COMSIG_LIVING_ELECTROCUTE_ACT, 
+								COMSIG_LIVING_MINOR_SHOCK, 
+								COMSIG_MOVABLE_HEAR, 
+								COMSIG_SPECIES_GAIN, 
+								COMSIG_NANITE_SIGNAL))
+			
 /datum/component/nanites/Destroy()
 	STOP_PROCESSING(SSnanites, src)
 	set_nanite_bar(TRUE)
@@ -139,27 +165,8 @@
 	if(remove || stealth)
 		return //bye icon
 	var/nanite_percent = (nanite_volume / max_nanites) * 100
-	switch(nanite_percent)
-		if(0 to 10)
-			holder.icon_state = "nanites10"
-		if(10 to 20)
-			holder.icon_state = "nanites20"
-		if(20 to 30)
-			holder.icon_state = "nanites30"
-		if(30 to 40)
-			holder.icon_state = "nanites40"
-		if(40 to 50)
-			holder.icon_state = "nanites50"
-		if(50 to 60)
-			holder.icon_state = "nanites60"
-		if(60 to 70)
-			holder.icon_state = "nanites70"
-		if(70 to 80)
-			holder.icon_state = "nanites80"
-		if(80 to 90)
-			holder.icon_state = "nanites90"
-		if(90 to 100)
-			holder.icon_state = "nanites100"
+	nanite_percent = CLAMP(CEILING(nanite_percent, 10), 10, 100)
+	holder.icon_state = "nanites[nanite_percent]"
 
 /datum/component/nanites/proc/on_emp(severity)
 	nanite_volume *= (rand(0.60, 0.90))		//Lose 10-40% of nanites
