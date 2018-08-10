@@ -1,6 +1,7 @@
 /atom/movable
 	layer = OBJ_LAYER
 	var/last_move = null
+	var/last_move_time = 0
 	var/anchored = FALSE
 	var/datum/thrownthing/throwing = null
 	var/throw_speed = 2 //How many tiles to move per ds when being thrown. Float values are fully supported
@@ -167,7 +168,7 @@
 	. = TRUE
 	oldloc.Exited(src, newloc)
 
-	for(var/i in loc)
+	for(var/i in oldloc)
 		if(i == src) // Multi tile objects
 			continue
 		var/atom/movable/thing = i
@@ -378,6 +379,8 @@
 				oldloc.Exited(src, destination)
 				if(old_area)
 					old_area.Exited(src, destination)
+			for(var/atom/movable/AM in oldloc)
+				AM.Uncrossed(src)
 			var/turf/oldturf = get_turf(oldloc)
 			var/turf/destturf = get_turf(destination)
 			var/old_z = (oldturf ? oldturf.z : null)

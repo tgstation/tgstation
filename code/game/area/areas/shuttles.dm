@@ -67,31 +67,29 @@
 /area/shuttle/abandoned
 	name = "Abandoned Ship"
 	blob_allowed = FALSE
+	requires_power = TRUE
 	canSmoothWithAreas = /area/shuttle/abandoned
 
 /area/shuttle/abandoned/bridge
 	name = "Abandoned Ship Bridge"
-	requires_power = TRUE
 
 /area/shuttle/abandoned/engine
 	name = "Abandoned Ship Engine"
-	requires_power = TRUE
 
 /area/shuttle/abandoned/bar
 	name = "Abandoned Ship Bar"
-	requires_power = TRUE
 
 /area/shuttle/abandoned/crew
 	name = "Abandoned Ship Crew Quarters"
-	requires_power = TRUE
 
 /area/shuttle/abandoned/cargo
 	name = "Abandoned Ship Cargo Bay"
-	requires_power = TRUE
 
 /area/shuttle/abandoned/medbay
 	name = "Abandoned Ship Medbay"
-	requires_power = TRUE
+
+/area/shuttle/abandoned/pod
+	name = "Abandoned Ship Pod"
 
 ////////////////////////////Single-area shuttles////////////////////////////
 

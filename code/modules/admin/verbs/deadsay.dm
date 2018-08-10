@@ -1,6 +1,6 @@
 /client/proc/dsay(msg as text)
 	set category = "Special Verbs"
-	set name = "Dsay" //Gave this shit a shorter name so you only have to time out "dsay" rather than "dead say" to use it --NeoFite
+	set name = "Dsay"
 	set hidden = 1
 	if(!src.holder)
 		to_chat(src, "Only administrators may use this command.")
@@ -21,7 +21,7 @@
 		return
 	var/static/nicknames = world.file2list("[global.config.directory]/admin_nicknames.txt")
 
-	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[uppertext(holder.rank)]([src.holder.fakekey ? pick(nicknames) : src.key])</span> says, <span class='message'>\"[msg]\"</span></span>"
+	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[uppertext(holder.rank)]([src.holder.fakekey ? pick(nicknames) : src.key])</span> says, <span class='message'>\"[emoji_parse(msg)]\"</span></span>"
 
 	for (var/mob/M in GLOB.player_list)
 		if(isnewplayer(M))

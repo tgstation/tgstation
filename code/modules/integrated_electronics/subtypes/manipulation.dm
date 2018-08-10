@@ -359,6 +359,7 @@
 	outputs = list("first" = IC_PINTYPE_REF, "last" = IC_PINTYPE_REF, "amount" = IC_PINTYPE_NUMBER,"contents" = IC_PINTYPE_LIST)
 	activators = list("pulse in" = IC_PINTYPE_PULSE_IN,"pulse out" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
+	action_flags = IC_ACTION_COMBAT
 	power_draw_per_use = 50
 	var/max_items = 10
 
@@ -528,15 +529,23 @@
 	var/x_abs = CLAMP(T.x + target_x_rel, 0, world.maxx)
 	var/y_abs = CLAMP(T.y + target_y_rel, 0, world.maxy)
 	var/range = round(CLAMP(sqrt(target_x_rel*target_x_rel+target_y_rel*target_y_rel),0,8),1)
-
+	//remove damage
+	A.throwforce = 0
+	A.embedding = list("embed_chance" = 0)
+	//throw it
 	assembly.visible_message("<span class='danger'>[assembly] has thrown [A]!</span>")
 	log_attack("[assembly] [REF(assembly)] has thrown [A].")
 	A.forceMove(drop_location())
-	A.throw_at(locate(x_abs, y_abs, T.z), range, 3)
+	A.throw_at(locate(x_abs, y_abs, T.z), range, 3, , , , CALLBACK(src, .proc/post_throw, A))
 
 	// If the item came from a grabber now we can update the outputs since we've thrown it.
 	if(istype(G))
 		G.update_outputs()
+
+/obj/item/integrated_circuit/manipulation/thrower/proc/post_throw(obj/item/A)
+	//return damage
+	A.throwforce = initial(A.throwforce)
+	A.embedding = initial(A.embedding)
 
 /obj/item/integrated_circuit/manipulation/matman
 	name = "material manager"

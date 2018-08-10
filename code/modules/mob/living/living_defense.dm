@@ -154,7 +154,11 @@
 			var/grab_upgrade_time = 30
 			visible_message("<span class='danger'>[user] starts to tighten [user.p_their()] grip on [src]!</span>", \
 				"<span class='userdanger'>[user] starts to tighten [user.p_their()] grip on you!</span>")
-			add_logs(user, src, "attempted to strangle", addition="grab")
+			switch(user.grab_state)
+				if(GRAB_AGGRESSIVE)
+					add_logs(user, src, "attempted to neck grab", addition="neck grab")
+				if(GRAB_NECK)
+					add_logs(user, src, "attempted to strangle", addition="kill grab")
 			if(!do_mob(user, src, grab_upgrade_time))
 				return 0
 			if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state || user.a_intent != INTENT_GRAB)
@@ -175,7 +179,7 @@
 				if(!buckled && !density)
 					Move(user.loc)
 			if(GRAB_KILL)
-				add_logs(user, src, "strangled", addition="grab")
+				add_logs(user, src, "strangled", addition="kill grab")
 				visible_message("<span class='danger'>[user] is strangling [src]!</span>", \
 								"<span class='userdanger'>[user] is strangling you!</span>")
 				update_canmove() //we fall down

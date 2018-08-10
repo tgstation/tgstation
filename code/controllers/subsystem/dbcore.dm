@@ -76,7 +76,7 @@ SUBSYSTEM_DEF(dbcore)
 	var/address = CONFIG_GET(string/address)
 	var/port = CONFIG_GET(number/port)
 
-	connection = new /datum/BSQL_Connection(BSQL_CONNECTION_TYPE_MARIADB, CONFIG_GET(number/async_query_timeout), CONFIG_GET(number/blocking_query_timeout))
+	connection = new /datum/BSQL_Connection(BSQL_CONNECTION_TYPE_MARIADB, CONFIG_GET(number/async_query_timeout), CONFIG_GET(number/blocking_query_timeout), CONFIG_GET(number/bsql_thread_limit))
 	var/error
 	if(QDELETED(connection))
 		connection = null
@@ -90,6 +90,7 @@ SUBSYSTEM_DEF(dbcore)
 		error = connectOperation.GetError()
 	. = !error
 	if (!.)
+		last_error = error
 		log_sql("Connect() failed | [error]")
 		++failed_connections
 		QDEL_NULL(connection)

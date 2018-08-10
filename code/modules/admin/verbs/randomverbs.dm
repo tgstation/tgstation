@@ -48,12 +48,12 @@
 /client/proc/cmd_admin_headset_message(mob/M in GLOB.mob_list)
 	set category = "Special Verbs"
 	set name = "Headset Message"
-	
+
 	admin_headset_message(M)
 
 /client/proc/admin_headset_message(mob/M in GLOB.mob_list, sender = null)
 	var/mob/living/carbon/human/H = M
-	
+
 	if(!check_rights(R_ADMIN))
 		return
 
@@ -1201,82 +1201,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	log_admin("[key_name(usr)] sent \"[input]\" as the Tip of the Round.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Tip")
 
-/proc/mass_purrbation()
-	for(var/M in GLOB.mob_list)
-		if(ishumanbasic(M))
-			purrbation_apply(M)
-		CHECK_TICK
-
-/proc/mass_remove_purrbation()
-	for(var/M in GLOB.mob_list)
-		if(ishumanbasic(M))
-			purrbation_remove(M)
-		CHECK_TICK
-
-/proc/purrbation_toggle(mob/living/carbon/human/H, silent = FALSE)
-	if(!ishumanbasic(H))
-		return
-	if(!iscatperson(H))
-		purrbation_apply(H, silent)
-		. = TRUE
-	else
-		purrbation_remove(H, silent)
-		. = FALSE
-
-/proc/purrbation_apply(mob/living/carbon/human/H, silent = FALSE)
-	if(!ishuman(H))
-		return
-	if(iscatperson(H))
-		return
-
-	var/obj/item/organ/ears/cat/ears = new
-	var/obj/item/organ/tail/cat/tail = new
-	ears.Insert(H, drop_if_replaced=FALSE)
-	tail.Insert(H, drop_if_replaced=FALSE)
-
-	if(!silent)
-		to_chat(H, "Something is nya~t right.")
-		playsound(get_turf(H), 'sound/effects/meow1.ogg', 50, 1, -1)
-
-/proc/purrbation_remove(mob/living/carbon/human/H, silent = FALSE)
-	if(!ishuman(H))
-		return
-	if(!iscatperson(H))
-		return
-
-	var/obj/item/organ/ears/cat/ears = H.getorgan(/obj/item/organ/ears/cat)
-	var/obj/item/organ/tail/cat/tail = H.getorgan(/obj/item/organ/tail/cat)
-
-	if(ears)
-		var/obj/item/organ/ears/NE
-		if(H.dna.species && H.dna.species.mutantears)
-			// Roundstart cat ears override H.dna.species.mutantears, reset it here.
-			H.dna.species.mutantears = initial(H.dna.species.mutantears)
-			if(H.dna.species.mutantears)
-				NE = new H.dna.species.mutantears()
-
-		if(!NE)
-			// Go with default ears
-			NE = new /obj/item/organ/ears()
-
-		NE.Insert(H, drop_if_replaced = FALSE)
-
-	if(tail)
-		var/obj/item/organ/tail/NT
-		if(H.dna.species && H.dna.species.mutanttail)
-			// Roundstart cat tail overrides H.dna.species.mutanttail, reset it here.
-			H.dna.species.mutanttail = initial(H.dna.species.mutanttail)
-			if(H.dna.species.mutanttail)
-				NT = new H.dna.species.mutanttail()
-
-		if(NT)
-			NT.Insert(H, drop_if_replaced = FALSE)
-		else
-			tail.Remove(H)
-
-	if(!silent)
-		to_chat(H, "You are no longer a cat.")
-
 /client/proc/modify_goals()
 	set category = "Debug"
 	set name = "Modify goals"
@@ -1313,7 +1237,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_ROD, ADMIN_PUNISHMENT_SUPPLYPOD)
+	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_ROD, ADMIN_PUNISHMENT_SUPPLYPOD, ADMIN_PUNISHMENT_MAZING)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
 
@@ -1359,6 +1283,10 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			if(iscarbon(target))
 				target.Stun(10)//takes 0.53 seconds for CentCom pod to land
 			new /obj/effect/DPtarget(get_turf(target), delivery, POD_CENTCOM)
+		if(ADMIN_PUNISHMENT_MAZING)
+			if(!puzzle_imprison(target))
+				to_chat(usr,"<span class='warning'>Imprisonment failed!</span>")
+				return
 
 	var/msg = "[key_name_admin(usr)] punished [key_name_admin(target)] with [punishment]."
 	message_admins(msg)

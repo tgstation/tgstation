@@ -17,6 +17,12 @@
 		BSQL_ERROR("Could not find [libPath]!")
 		return
 
+	var/version = _BSQL_Internal_Call("Version")
+	if(version != BSQL_VERSION)
+		BSQL_DEL_CALL(caller)
+		BSQL_ERROR("BSQL DMAPI version mismatch! Expected [BSQL_VERSION], got [version == null ? "NULL" : version]!")
+		return
+
 	var/result = _BSQL_Internal_Call("Initialize")
 	if(result)
 		BSQL_DEL_CALL(caller)
