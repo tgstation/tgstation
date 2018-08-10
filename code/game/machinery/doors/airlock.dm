@@ -41,11 +41,6 @@
 #define ELECTRIFIED_PERMANENT -1
 #define AI_ELECTRIFY_DOOR_TIME 30
 
-#define NORTH 1 //defines for the unrestricted sides (unres) section
-#define SOUTH 2
-#define EAST 4
-#define WEST 8
-
 /obj/machinery/door/airlock
 	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/station/public.dmi'
