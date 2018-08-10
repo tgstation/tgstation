@@ -59,7 +59,7 @@
 	QDEL_NULL(defaultmap)
 
 /datum/controller/configuration/Destroy()
-	world.PushUsr(null, CALLBACK(src, .proc/full_wipe))
+	full_wipe()
 	config = null
 
 	return ..()
