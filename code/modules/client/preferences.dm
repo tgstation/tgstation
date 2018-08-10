@@ -1467,20 +1467,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE)
 	if(be_random_name)
 		real_name = pref_species.random_name(gender)
 
 	if(be_random_body)
 		random_character(gender)
 
-	if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == "human"))
-		var/firstspace = findtext(real_name, " ")
-		var/name_length = length(real_name)
-		if(!firstspace)	//we need a surname
-			real_name += " [pick(GLOB.last_names)]"
-		else if(firstspace == name_length)
-			real_name += "[pick(GLOB.last_names)]"
+	if(roundstart_checks)
+		if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == "human"))
+			var/firstspace = findtext(real_name, " ")
+			var/name_length = length(real_name)
+			if(!firstspace)	//we need a surname
+				real_name += " [pick(GLOB.last_names)]"
+			else if(firstspace == name_length)
+				real_name += "[pick(GLOB.last_names)]"
 
 	character.real_name = real_name
 	character.name = character.real_name
@@ -1509,7 +1510,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.features = features.Copy()
 	character.dna.real_name = character.real_name
 	var/datum/species/chosen_species
-	if(pref_species.id in GLOB.roundstart_races)
+	if(!roundstart_checks || (pref_species.id in GLOB.roundstart_races))
 		chosen_species = pref_species.type
 	else
 		chosen_species = /datum/species/human
