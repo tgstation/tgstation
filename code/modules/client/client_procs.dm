@@ -339,6 +339,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			send2irc_adminless_only("new_byond_user", "[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
 	get_message_output("watchlist entry", ckey)
 	check_ip_intel()
+	validate_key_in_db()
 
 	send_resources()
 
@@ -484,7 +485,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 		new_player = 1
 		account_join_date = sanitizeSQL(findJoinDate())
-		var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] (`ckey`, `firstseen`, `firstseen_round_id`, `lastseen`, `lastseen_round_id`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`) VALUES ('[sql_ckey]', Now(), '[GLOB.round_id]', Now(), '[GLOB.round_id]', INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
+		var/sql_key = sanitizeSQL(key)
+		var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] (`ckey`, `byond_key`, `firstseen`, `firstseen_round_id`, `lastseen`, `lastseen_round_id`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`) VALUES ('[sql_ckey]', '[sql_key]', Now(), '[GLOB.round_id]', Now(), '[GLOB.round_id]', INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
 		if(!query_add_player.Execute())
 			qdel(query_client_in_db)
 			qdel(query_add_player)
@@ -535,7 +537,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 /client/proc/findJoinDate()
 	var/list/http = world.Export("http://byond.com/members/[ckey]?format=text")
 	if(!http)
-		log_world("Failed to connect to byond age check for [ckey]")
+		log_world("Failed to connect to byond member page to age check [ckey]")
 		return
 	var/F = file2text(http["CONTENT"])
 	if(F)
@@ -544,6 +546,32 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			. = R.group[1]
 		else
 			CRASH("Age check regex failed for [src.ckey]")
+
+/client/proc/validate_key_in_db()
+	var/sql_ckey = sanitizeSQL(ckey)
+	var/sql_key
+	var/datum/DBQuery/query_check_byond_key = SSdbcore.NewQuery("SELECT byond_key FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+	if(!query_check_byond_key.Execute())
+		qdel(query_check_byond_key)
+		return
+	if(query_check_byond_key.NextRow())
+		sql_key = query_check_byond_key.item[1]
+	qdel(query_check_byond_key)
+	if(key != sql_key)
+		var/list/http = world.Export("http://byond.com/members/[ckey]?format=text")
+		if(!http)
+			log_world("Failed to connect to byond member page to get changed key for [ckey]")
+			return
+		var/F = file2text(http["CONTENT"])
+		if(F)
+			var/regex/R = regex("\\tkey = \"(.+)\"")
+			if(R.Find(F))
+				var/web_key = sanitizeSQL(R.group[1])
+				var/datum/DBQuery/query_update_byond_key = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET byond_key = '[web_key]' WHERE ckey = '[sql_ckey]'")
+				query_update_byond_key.Execute()
+				qdel(query_update_byond_key)
+			else
+				CRASH("Key check regex failed for [ckey]")
 
 /client/proc/check_randomizer(topic)
 	. = FALSE
@@ -653,7 +681,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			qdel(query_get_notes)
 			return
 	qdel(query_get_notes)
-	create_message("note", ckey, system_ckey, message, null, null, 0, 0, null, 0)
+	create_message("note", key, system_ckey, message, null, null, 0, 0, null, 0)
 
 
 /client/proc/check_ip_intel()

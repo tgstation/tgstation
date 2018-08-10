@@ -92,7 +92,7 @@
 /datum/component/proc/RegisterSignal(datum/target, sig_type_or_types, proc_or_callback, override = FALSE)
 	if(QDELETED(src) || QDELETED(target))
 		return
-	
+
 	var/list/procs = signal_procs
 	if(!procs)
 		signal_procs = procs = list()
@@ -232,6 +232,7 @@
 			CRASH("[nt]: Invalid dupe_type ([dt])!")
 	else
 		new_comp = nt
+		nt = new_comp.type
 
 	args[1] = src
 

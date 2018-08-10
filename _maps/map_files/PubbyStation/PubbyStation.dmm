@@ -14835,11 +14835,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/cafeteria/lunchroom)
 "aNb" = (
-/obj/machinery/vending/sustenance{
-	contraband = list(/obj/item/kitchen/knife = 6, /obj/item/reagent_containers/food/drinks/coffee = 12);
-	desc = "A vending machine which vends food.";
-	product_ads = "Sufficiently healthy."
-	},
+/obj/machinery/vending/sustenance,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/cafeteria/lunchroom)
 "aNc" = (
@@ -15191,6 +15187,14 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/door/window/westleft,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -15610,10 +15614,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aPg" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "garbage"
-	},
 /obj/structure/disposaloutlet{
 	dir = 4
 	},
@@ -15627,11 +15627,8 @@
 /area/maintenance/disposal)
 "aPh" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "garbage"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 10
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -15952,7 +15949,7 @@
 	dir = 8
 	},
 /obj/machinery/conveyor{
-	dir = 2;
+	dir = 1;
 	id = "garbage"
 	},
 /turf/open/floor/plating,
@@ -16997,8 +16994,7 @@
 	},
 /area/maintenance/department/crew_quarters/bar)
 "aSN" = (
-/obj/item/assembly/mousetrap,
-/obj/item/storage/box/mousetraps,
+/obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/wood{
 	icon_state = "wood-broken6"
 	},
@@ -17016,6 +17012,8 @@
 "aSQ" = (
 /obj/effect/landmark/xeno_spawn,
 /obj/item/storage/box/beanbag,
+/obj/item/assembly/mousetrap,
+/obj/item/storage/box/mousetraps,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aSR" = (
@@ -17550,10 +17548,6 @@
 	dir = 8
 	},
 /area/maintenance/department/crew_quarters/bar)
-"aUc" = (
-/obj/structure/reagent_dispensers/beerkeg,
-/turf/open/floor/wood,
-/area/crew_quarters/bar)
 "aUd" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -31895,9 +31889,8 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/vending/wallmed{
-	pixel_y = 28;
-	products = list(/obj/item/reagent_containers/syringe = 3, /obj/item/reagent_containers/pill/patch/styptic = 1, /obj/item/reagent_containers/pill/patch/silver_sulf = 1, /obj/item/reagent_containers/medspray/sterilizine = 1)
+/obj/machinery/vending/wallmed/pubby{
+	pixel_y = 28
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/landmark/blobstart,
@@ -32192,6 +32185,14 @@
 	dir = 5
 	},
 /area/science/mixing)
+"bFq" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/maintenance/department/engine)
 "bFr" = (
 /turf/open/floor/plasteel/purple/side{
 	dir = 1
@@ -33426,9 +33427,8 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/vending/wallmed{
-	pixel_y = 28;
-	products = list(/obj/item/reagent_containers/syringe = 3, /obj/item/reagent_containers/pill/patch/styptic = 1, /obj/item/reagent_containers/pill/patch/silver_sulf = 1, /obj/item/reagent_containers/medspray/sterilizine = 1)
+/obj/machinery/vending/wallmed/pubby{
+	pixel_y = 28
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
@@ -34241,9 +34241,8 @@
 /turf/open/floor/plasteel/freezer,
 /area/medical/medbay/central)
 "bKw" = (
-/obj/machinery/vending/wallmed{
-	pixel_y = 28;
-	products = list(/obj/item/reagent_containers/syringe = 3, /obj/item/reagent_containers/pill/patch/styptic = 1, /obj/item/reagent_containers/pill/patch/silver_sulf = 1, /obj/item/reagent_containers/medspray/sterilizine = 1)
+/obj/machinery/vending/wallmed/pubby{
+	pixel_y = 28
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -41874,7 +41873,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/engine/engineering)
 "ceU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -45855,11 +45854,11 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cvf" = (
+/obj/machinery/recycler,
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "garbage"
 	},
-/obj/machinery/recycler,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "cvg" = (
@@ -47515,7 +47514,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "dqY" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "garbage"
 	},
 /turf/open/floor/plating,
@@ -47859,7 +47858,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral,
-/area/maintenance/department/security/brig)
+/area/hallway/secondary/exit/departure_lounge)
 "eCw" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -49185,8 +49184,7 @@
 /area/crew_quarters/dorms)
 "izF" = (
 /turf/open/floor/plating{
-	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2=0.01"
+	luminosity = 2
 	},
 /area/maintenance/department/science)
 "iAx" = (
@@ -50834,8 +50832,7 @@
 	dir = 6
 	},
 /turf/open/floor/plating{
-	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2=0.01"
+	luminosity = 2
 	},
 /area/maintenance/department/science)
 "nAs" = (
@@ -50974,7 +50971,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "nOY" = (
 /obj/effect/turf_decal/stripes/line{
@@ -51064,8 +51061,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/open/floor/plating{
-	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2=0.01"
+	luminosity = 2
 	},
 /area/maintenance/department/science)
 "oep" = (
@@ -51958,9 +51954,10 @@
 "qEN" = (
 /obj/machinery/rnd/production/techfab/department/service,
 /obj/structure/window/reinforced{
-	dir = 8
+	dir = 8;
+	pixel_x = -4
 	},
-/turf/closed/wall,
+/turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "qFu" = (
 /obj/machinery/power/port_gen/pacman,
@@ -52154,7 +52151,7 @@
 /area/medical/sleeper)
 "rax" = (
 /obj/machinery/conveyor{
-	dir = 2;
+	dir = 1;
 	id = "garbage"
 	},
 /turf/open/floor/plating,
@@ -52238,8 +52235,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2=0.01"
+	luminosity = 2
 	},
 /area/maintenance/department/science)
 "rrb" = (
@@ -53198,8 +53194,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating{
-	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2=0.01"
+	luminosity = 2
 	},
 /area/maintenance/department/science)
 "uoq" = (
@@ -53514,8 +53509,7 @@
 "vpz" = (
 /obj/structure/girder,
 /turf/open/floor/plating{
-	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2=0.01"
+	luminosity = 2
 	},
 /area/maintenance/department/science)
 "vsk" = (
@@ -54281,8 +54275,7 @@
 "xsO" = (
 /obj/item/ectoplasm,
 /turf/open/floor/plating{
-	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2=0.01"
+	luminosity = 2
 	},
 /area/maintenance/department/science)
 "xuv" = (
@@ -84717,7 +84710,7 @@ aPE
 aQS
 aRQ
 aSN
-aUc
+aPE
 aPE
 aWd
 aXb
@@ -87064,7 +87057,7 @@ tTl
 dgg
 phJ
 phJ
-xje
+bFq
 bAk
 bIt
 bJB

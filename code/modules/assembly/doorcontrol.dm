@@ -55,7 +55,7 @@
 			if(specialfunctions & SHOCK)
 				if(D.secondsElectrified)
 					D.secondsElectrified = -1
-					LAZYADD(D.shockedby, "\[[time_stamp()]\][usr](ckey:[usr.ckey])")
+					LAZYADD(D.shockedby, "\[[time_stamp()]\] [key_name(usr)]")
 					add_logs(usr, D, "electrified")
 				else
 					D.secondsElectrified = 0

@@ -239,7 +239,6 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 /obj/docking_port/mobile/auxillary_base
 	name = "auxillary base"
 	id = "colony_drop"
-	timid = FALSE
 	//Reminder to map-makers to set these values equal to the size of your base.
 	dheight = 4
 	dwidth = 4

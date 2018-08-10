@@ -21,10 +21,10 @@
 /client/proc/SDQL2_query(query_text as message)
 	set category = "Debug"
 	if(!check_rights(R_DEBUG))  //Shouldn't happen... but just to be safe.
-		message_admins("<span class='danger'>ERROR: Non-admin [key_name(usr, usr.client)] attempted to execute a SDQL query!</span>")
-		log_admin("Non-admin [usr.ckey]([usr]) attempted to execute a SDQL query!")
+		message_admins("<span class='danger'>ERROR: Non-admin [key_name(usr)] attempted to execute a SDQL query!</span>")
+		log_admin("Non-admin [key_name(usr)] attempted to execute a SDQL query!")
 		return FALSE
-	var/list/results = world.SDQL2_query(query_text, key_name_admin(usr), "[usr.ckey]([usr])")
+	var/list/results = world.SDQL2_query(query_text, key_name_admin(usr), "[key_name(usr)]")
 	for(var/I in 1 to 3)
 		to_chat(usr, results[I])
 	SSblackbox.record_feedback("nested tally", "SDQL query", 1, list(ckey, query_text))
@@ -196,9 +196,10 @@
 
 
 /proc/SDQL_testout(list/query_tree, indent = 0)
+	var/static/whitespace = "&nbsp;&nbsp;&nbsp; "
 	var/spaces = ""
 	for(var/s = 0, s < indent, s++)
-		spaces += "    "
+		spaces += whitespace
 
 	for(var/item in query_tree)
 		if(istype(item, /list))
@@ -212,12 +213,12 @@
 		if(!isnum(item) && query_tree[item])
 
 			if(istype(query_tree[item], /list))
-				to_chat(usr, "[spaces]    (")
+				to_chat(usr, "[spaces][whitespace](")
 				SDQL_testout(query_tree[item], indent + 2)
-				to_chat(usr, "[spaces]    )")
+				to_chat(usr, "[spaces][whitespace])")
 
 			else
-				to_chat(usr, "[spaces]    [query_tree[item]]")
+				to_chat(usr, "[spaces][whitespace][query_tree[item]]")
 
 
 

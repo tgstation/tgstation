@@ -253,11 +253,6 @@
 
 	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
-	// A timid shuttle will not register itself with the shuttle subsystem
-	// All shuttle templates MUST be timid, imports will fail if they're not
-	// Shuttle defined already on the map MUST NOT be timid, or they won't work
-	var/timid = TRUE
-
 	var/list/ripples = list()
 	var/engine_coeff = 1 //current engine coeff
 	var/current_engines = 0 //current engine power
@@ -280,8 +275,6 @@
 
 /obj/docking_port/mobile/Initialize(mapload)
 	. = ..()
-	if(!timid)
-		register()
 
 	if(!id)
 		id = "[SSshuttle.mobile.len]"

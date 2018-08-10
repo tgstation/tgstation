@@ -69,7 +69,6 @@
 	name = "Syndicate Drop Ship";
 	port_direction = 8;
 	preferred_direction = 4;
-	timid = 1;
 	width = 15
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -329,7 +328,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/syndicate/ranged/pilot{
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/pilot{
 	environment_smash = 0
 	},
 /turf/open/floor/plasteel/dark,

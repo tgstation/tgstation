@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/show_line_profiling,
 	/client/proc/create_mapping_job_icons,
 	/client/proc/debug_z_levels,
-	/client/proc/place_ruin,
+	/client/proc/place_ruin
 ))
 
 /obj/effect/debugging/mapfix_marker
@@ -265,9 +265,9 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 
 	GLOB.say_disabled = !GLOB.say_disabled
 	if(GLOB.say_disabled)
-		message_admins("[src.ckey] used 'Disable all communication verbs', killing all communication methods.")
+		message_admins("[key] used 'Disable all communication verbs', killing all communication methods.")
 	else
-		message_admins("[src.ckey] used 'Disable all communication verbs', restoring all communication methods.")
+		message_admins("[key] used 'Disable all communication verbs', restoring all communication methods.")
 
 //This generates the icon states for job starting location landmarks.
 /client/proc/create_mapping_job_icons()

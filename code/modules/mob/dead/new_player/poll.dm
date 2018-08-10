@@ -375,9 +375,9 @@
 		if (!usr || !src)
 			return 0
 		//we gots ourselfs a dirty cheater on our hands!
-		log_game("[key_name(usr)] attempted to rig the vote by voting as [ckey]")
-		message_admins("[key_name_admin(usr)] attempted to rig the vote by voting as [ckey]")
-		to_chat(usr, "<span class='danger'>You don't seem to be [ckey].</span>")
+		log_game("[key_name(usr)] attempted to rig the vote by voting as [key]")
+		message_admins("[key_name_admin(usr)] attempted to rig the vote by voting as [key]")
+		to_chat(usr, "<span class='danger'>You don't seem to be [key].</span>")
 		to_chat(src, "<span class='danger'>Something went horribly wrong processing your vote. Please contact an administrator, they should have gotten a message about this</span>")
 		return 0
 	return 1
@@ -579,7 +579,7 @@
 		return 1
 	var/i
 	if(query_multi_choicelen.NextRow())
-		i = text2num(query_multi_choicelen.item[1])	
+		i = text2num(query_multi_choicelen.item[1])
 	qdel(query_multi_choicelen)
 	var/datum/DBQuery/query_multi_hasvoted = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
 	if(!query_multi_hasvoted.warn_execute())
