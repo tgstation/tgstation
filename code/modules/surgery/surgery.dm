@@ -97,7 +97,11 @@
 		var/mob/living/silicon/robot/R = user
 		var/obj/item/surgical_processor/SP = locate() in R.module
 		if(!SP)
-			return FALSE
+			var/obj/item/surgical_processor/SPH = locate() in R.module
+			if(!SPH)
+				return FALSE
+			if(type in SPH.advanced_surgeries)
+				return TRUE
 		if(type in SP.advanced_surgeries)
 			return TRUE
 	
