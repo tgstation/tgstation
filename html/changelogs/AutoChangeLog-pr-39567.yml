@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - refactor: "The map loader has been cleaned up and made more flexible."
