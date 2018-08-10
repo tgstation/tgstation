@@ -243,7 +243,7 @@
 	icon_state = "spectrometer"
 	var/list/advanced_surgeries = list()
 	
-/obj/item/organ_storage/afterattack(obj/item/O, mob/user, proximity)
+/obj/item/surgical_processor/afterattack(obj/item/O, mob/user, proximity)
 	. = ..()
 	if(!proximity)
 		return
