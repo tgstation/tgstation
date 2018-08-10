@@ -92,7 +92,15 @@
 		var/datum/species/abductor/S = H.dna.species
 		if(S.scientist)
 			return TRUE
-
+	
+	if(iscyborg(user))
+		var/mob/living/silicon/robot/R = user
+		var/obj/item/borg/upgrade/processor/SP = locate() in R.module
+		if(!SP)
+			return FALSE
+		if(type in SP.advanced_surgeries)
+			return TRUE
+	
 	var/turf/T = get_turf(target)
 	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
 	if(!table || !table.computer)
