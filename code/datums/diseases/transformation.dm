@@ -285,3 +285,38 @@
 	stage5	= list("<span class='danger'>You have become a morph.</span>")
 	new_form = /mob/living/simple_animal/hostile/morph
 	infectable_biotypes = list(MOB_ORGANIC, MOB_INORGANIC, MOB_UNDEAD) //magic!
+
+/datum/disease/transformation/bee
+
+	name = "Bee Transformation"
+	cure_text = "An spot of honey."
+	cures = list("honey")
+	cure_chance = 33
+	agent = "Apis Mellifera"
+	desc = "This disease turns entire stations into hives filled with bees. Proceed with caution"
+	severity = DISEASE_SEVERITY_BIOHAZARD
+	visibility_flags = 0
+	stage_prob = 4
+	stage1	= list()
+	stage2	= list("Your joints feel stiff.", "<span class='danger'>Buzz...buzz..</span>")
+	stage3	= list("Your skin feels fuzzy.", "<span class='danger'>You can feel something move...inside.</span>")
+	stage4	= list("<span class='danger'>Antennae erupt from your head.</span>", "<span class='danger'>You can feel your abdomen... moving.</span>")
+	stage5	= list("<span class='danger'>Your skin feels as if it's about to burst off!</span>")
+	new_form = /mob/living/simple_animal/hostile/poison/bees/selfreplicating
+
+/datum/disease/transformation/bee/stage_act()
+	..()
+	switch(stage)
+		if(3)
+			if (prob(8))
+				affected_mob.say(pick("Buzzz...", "Buzz..."))
+		if(4)
+			if (prob(20))
+				affected_mob.say(pick("Buzzzzzzzz...", "Buzzzzz..."))
+
+/datum/disease/transformation/bee/do_disease_transformation(mob/living/carbon/affected_mob)
+	to_chat(affected_mob, "<b>You are a bee now!</b>")
+	to_chat(affected_mob, "<b>Sting humans to infect them and turn them into bees!</b>")
+	to_chat(affected_mob, "<b>Turn the entire station into bees!</b>")
+	SEND_SOUND(affected_mob, sound('sound/ambience/antag/bee.ogg'))
+	. = ..()

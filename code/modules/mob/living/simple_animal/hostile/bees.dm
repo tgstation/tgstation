@@ -204,9 +204,14 @@
 			beehome = BB
 			break // End loop after the first compatible find.
 
-/mob/living/simple_animal/hostile/poison/bees/toxin/Initialize()
+/mob/living/simple_animal/hostile/poison/bees/toxin/Initialize() // This could literarly wreck stations so be careful when you spawn this - CitrusGender
 	. = ..()
 	var/datum/reagent/R = pick(typesof(/datum/reagent/toxin))
+	assign_reagent(GLOB.chemical_reagents_list[initial(R.id)])
+
+/mob/living/simple_animal/hostile/poison/bees/selfreplicating/Initialize()
+	. = ..()
+	var/datum/reagent/R = /datum/reagent/beerol
 	assign_reagent(GLOB.chemical_reagents_list[initial(R.id)])
 
 /mob/living/simple_animal/hostile/poison/bees/queen
