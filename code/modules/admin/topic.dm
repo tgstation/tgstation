@@ -339,7 +339,7 @@
 	else if(href_list["toggle_continuous"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/list/continuous = CONFIG_GET(keyed_flag_list/continuous)
+		var/list/continuous = CONFIG_GET(keyed_list/continuous)
 		if(!continuous[SSticker.mode.config_tag])
 			continuous[SSticker.mode.config_tag] = TRUE
 		else
@@ -352,7 +352,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		var/list/midround_antag = CONFIG_GET(keyed_flag_list/midround_antag)
+		var/list/midround_antag = CONFIG_GET(keyed_list/midround_antag)
 		if(!midround_antag[SSticker.mode.config_tag])
 			midround_antag[SSticker.mode.config_tag] = TRUE
 		else

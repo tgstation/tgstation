@@ -588,7 +588,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	message["key"] = comms_key
 	message += type
 
-	var/list/servers = CONFIG_GET(keyed_string_list/cross_server)
+	var/list/servers = CONFIG_GET(keyed_list/cross_server)
 	for(var/I in servers)
 		world.Export("[servers[I]]?[list2params(message)]")
 
