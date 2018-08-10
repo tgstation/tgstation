@@ -459,7 +459,7 @@
 
 /datum/reagent/mutationtoxin/felinid
 	name = "Felinid Mutation Toxin"
-	id = "felenidmutationtoxin"
+	id = "felinidmutationtoxin"
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/human/felinid
 	mutationtext = "<span class='danger'>The pain subsides. You feel... like a degenerate.</span>"
