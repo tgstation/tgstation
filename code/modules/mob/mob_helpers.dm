@@ -536,7 +536,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			if(LOG_GAME)
 				log_game(global_log_text)
 			else
-				warning("Invalid individual logging type detected: [message_type]. Defaulting to [LOG_GAME] (LOG_GAME).")
+				stack_trace("Invalid individual logging type: [message_type]. Defaulting to [LOG_GAME] (LOG_GAME).")
 				log_game(global_log_text)
 
 // Helper for generic text messages

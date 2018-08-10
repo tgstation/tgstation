@@ -198,8 +198,8 @@ Proc for attack log creation, because really why not
 // Helper for logging of messages with only one sender and receiver
 /proc/log_directed_talk(mob/source, mob/target, message, message_type, tag)
 	if(!tag)
-		warning("Unspecified tag for private message")
-		tag= "UNKNOWN"
+		stack_trace("Unspecified tag for private message")
+		tag = "UNKNOWN"
 
 	source.log_talk(message, message_type, tag="[tag] to [key_name(target)]")
 	if(source != target)
