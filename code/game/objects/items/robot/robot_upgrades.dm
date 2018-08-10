@@ -498,7 +498,7 @@
 /obj/item/borg/upgrade/processor/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		var/obj/item/borg/upgrade/processor/SP = locate() in R.module
+		var/obj/item/surgical_processor/SP = locate() in R.module
 		R.module.remove_module(SP, TRUE)
 		
 /obj/item/borg/upgrade/ai
