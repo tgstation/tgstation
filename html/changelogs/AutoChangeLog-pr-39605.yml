@@ -1,5 +1,0 @@
-author: "zaracka"
-delete-after: True
-changes: 
-  - bugfix: "blunt trauma causes brain damage while unconscious too"
-  - bugfix: "sharp weapons no longer count as blunt trauma in all cases"
