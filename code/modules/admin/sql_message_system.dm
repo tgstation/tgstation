@@ -4,7 +4,7 @@
 		return
 	if(!type)
 		return
-	var/target_ckey
+	var/target_ckey = ckey(target_key)
 	if(!target_key && (type == "note" || type == "message" || type == "watchlist entry"))
 		var/new_key = input(usr,"Who would you like to create a [type] for?","Enter a key or ckey",null) as null|text
 		if(!new_key)
