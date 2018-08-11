@@ -26,6 +26,7 @@
 	var/assignedrole
 	var/show_flavour = TRUE
 	var/banType = "lavaland"
+	var/ghost_usable = TRUE
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/mob_spawn/attack_ghost(mob/user)
@@ -51,7 +52,8 @@
 		create()
 	else
 		GLOB.poi_list |= src
-		LAZYADD(GLOB.mob_spawners[name], src)
+		if(ghost_usable)
+			LAZYADD(GLOB.mob_spawners[name], src)
 
 /obj/effect/mob_spawn/Destroy()
 	GLOB.poi_list -= src
@@ -225,6 +227,7 @@
 	roundstart = FALSE //you could use these for alive fake humans on roundstart but this is more common scenario
 
 /obj/effect/mob_spawn/human/corpse/delayed
+	ghost_usable = FALSE //These are just not-yet-set corpses.
 	instant = FALSE
 
 //Non-human spawners
