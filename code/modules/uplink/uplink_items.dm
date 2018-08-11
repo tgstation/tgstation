@@ -409,7 +409,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A box with three grenades that release a swarm of angry bees upon activation. These bees indiscriminately attack friend or foe \
 			with random toxins. Courtesy of the BLF and Tiger Cooperative."
 	item = /obj/item/storage/box/syndie_kit/bee_grenades
-	cost = 5
+	cost = 15
 	surplus = 35
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
@@ -1292,6 +1292,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/box/syndie_kit/imp_radio
 	cost = 4
 	restricted = TRUE
+
+/datum/uplink_item/implants/stealthimplant
+	name = "Stealth Implant"
+	desc = "This one-of-a-kind implant will make you almost invisible if you play your cards right."
+	item = /obj/item/implanter/stealth
+	cost = 8
 
 // Cybernetics
 /datum/uplink_item/cyber_implants

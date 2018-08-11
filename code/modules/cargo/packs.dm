@@ -460,7 +460,7 @@
 
 /datum/supply_pack/security/armory/laserarmor
 	name = "Reflector Vest Crate"
-	desc = "Contains two vests of highly reflective material. Each armor peice diffuses a laser's energy by over half, as well as offering a good chance to reflect the laser entirely. Requires Armory access to open."
+	desc = "Contains two vests of highly reflective material. Each armor piece diffuses a laser's energy by over half, as well as offering a good chance to reflect the laser entirely. Requires Armory access to open."
 	cost = 2000
 	contains = list(/obj/item/clothing/suit/armor/laserproof,
 					/obj/item/clothing/suit/armor/laserproof)
@@ -1052,6 +1052,15 @@
 					/obj/item/storage/firstaid/o2)
 	crate_name = "oxygen deprivation kit crate"
 
+/datum/supply_pack/medical/surgery
+	name = "Surgical Supplies Crate"
+	desc = "Do you want to perform surgery, but don't have one of those fancy shmancy degrees? Just get started with this crate containing a medical duffelbag, Sterilizine spray and collapsible roller bed."
+	cost = 3000
+	contains = list(/obj/item/storage/backpack/duffelbag/med/surgery,
+					/obj/item/reagent_containers/medspray/sterilizine,
+					/obj/item/roller)
+	crate_name = "surgical supplies crate"
+
 /datum/supply_pack/medical/firstaidtoxins
 	name = "Toxin Treatment Kit Crate"
 	desc = "Contains three first aid kits focused on healing damage dealt by heavy toxins."
@@ -1072,13 +1081,14 @@
 					/obj/item/reagent_containers/blood/BPlus,
 					/obj/item/reagent_containers/blood/BMinus,
 					/obj/item/reagent_containers/blood/OPlus,
-					/obj/item/reagent_containers/blood/OMinus)
+					/obj/item/reagent_containers/blood/OMinus,
+					/obj/item/reagent_containers/blood/lizard)
 	crate_name = "blood freezer"
 	crate_type = /obj/structure/closet/crate/freezer
 
 /datum/supply_pack/medical/defibs
 	name = "Defibrillator Crate"
-	desc = "Contains two defibrillators for bringing the recently-deceased back to life."
+	desc = "Contains two defibrillators for bringing the recently deceased back to life."
 	cost = 2500
 	contains = list(/obj/item/defibrillator/loaded,
 					/obj/item/defibrillator/loaded)
@@ -1162,7 +1172,7 @@
 
 /datum/supply_pack/science/robotics/mecha_odysseus
 	name = "Circuit Crate (Odysseus)"
-	desc = "Ever wanted to build your own giant medical robot? Well now you can! Contains the Odysseus main control board and Odysseus peripherals board. Requires Robotics access to open."
+	desc = "Ever wanted to build your own giant medical robot? Well, now you can! Contains the Odysseus main control board and Odysseus peripherals board. Requires Robotics access to open."
 	cost = 2500
 	access = ACCESS_ROBOTICS
 	contains = list(/obj/item/circuitboard/mecha/odysseus/peripherals,
@@ -1180,6 +1190,16 @@
 					/obj/item/circuitboard/mecha/ripley/peripherals)
 	crate_name = "\improper APLU Ripley circuit crate"
 	crate_type = /obj/structure/closet/crate/secure/science
+
+/datum/supply_pack/science/circuitry
+	name = "Circuitry Starter Pack Crate"
+	desc = "Journey into the mysterious world of Circuitry with this starter pack. Contains a circuit printer, analyzer, debugger and wirer. Power cells not included."
+	cost = 1000
+	contains = list(/obj/item/integrated_electronics/analyzer,
+					/obj/item/integrated_circuit_printer,
+					/obj/item/integrated_electronics/debugger,
+					/obj/item/integrated_electronics/wirer)
+	crate_name = "circuitry starter pack crate"
 
 /datum/supply_pack/science/plasma
 	name = "Plasma Assembly Crate"
@@ -1257,6 +1277,18 @@
 /datum/supply_pack/service
 	group = "Service"
 
+/datum/supply_pack/service/cargo_supples
+	name = "Cargo Supplies Crate"
+	desc = "Sold everything that wasn't bolted down? You can get right back to work with this crate containing stamps, an export scanner, destination tagger, hand labeler and some package wrapping."
+	cost = 1000
+	contains = list(/obj/item/stamp,
+					/obj/item/stamp/denied,
+					/obj/item/export_scanner,
+					/obj/item/destTagger,
+					/obj/item/hand_labeler,
+					/obj/item/stack/packageWrap)
+	crate_name = "cargo supplies crate"
+
 /datum/supply_pack/service/noslipfloor
 	name = "High-traction Floor Tiles"
 	desc = "Make slipping a thing of the past with thirty industrial-grade anti-slip floortiles!"
@@ -1331,6 +1363,16 @@
 					/obj/item/flashlight/glowstick/yellow,
 					/obj/item/flashlight/glowstick/pink)
 	crate_name = "party equipment crate"
+
+/datum/supply_pack/service/carpet
+	name = "Premium Carpet Crate"
+	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together."
+	cost = 1000
+	contains = list(/obj/item/stack/tile/carpet/fifty,
+					/obj/item/stack/tile/carpet/fifty,
+					/obj/item/stack/tile/carpet/black/fifty,
+					/obj/item/stack/tile/carpet/black/fifty)
+	crate_name = "premium carpet crate"
 
 /datum/supply_pack/service/lightbulbs
 	name = "Replacement Lights"
@@ -1747,13 +1789,14 @@
 					/obj/item/storage/pill_bottle/lsd,
 					/obj/item/storage/pill_bottle/aranesp,
 					/obj/item/storage/pill_bottle/stimulant,
-					/obj/item/toy/cards/deck/syndicate,				
+					/obj/item/toy/cards/deck/syndicate,
 					/obj/item/reagent_containers/food/drinks/bottle/absinthe,
 					/obj/item/clothing/under/syndicate/tacticool,
 					/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
 					/obj/item/storage/fancy/cigarettes/cigpack_shadyjims,
 					/obj/item/clothing/mask/gas/syndicate,
-					/obj/item/clothing/neck/necklace/dope)
+					/obj/item/clothing/neck/necklace/dope,
+					/obj/item/vending_refill/donksoft)
 	crate_name = "crate"
 
 /datum/supply_pack/costumes_toys/foamforce
@@ -1950,14 +1993,14 @@
 	crate_name = "autodrobe supply crate"
 
 /datum/supply_pack/costumes_toys/wardrobes/cargo
-	name = "Cargo Department Supply Crate"
+	name = "Cargo Wardrobe Supply Crate"
 	desc = "This crate contains a refill for the CargoDrobe."
 	cost = 750
 	contains = list(/obj/item/vending_refill/wardrobe/cargo_wardrobe)
 	crate_name = "cargo department supply crate"
 
 /datum/supply_pack/costumes_toys/wardrobes/engineering
-	name = "Engineering Department Wardrobe Supply Crate"
+	name = "Engineering Wardrobe Supply Crate"
 	desc = "This crate contains refills for the EngiDrobe and AtmosDrobe."
 	cost = 1500
 	contains = list(/obj/item/vending_refill/wardrobe/engi_wardrobe,
@@ -1983,7 +2026,7 @@
 	crate_name = "hydrobe supply crate"
 
 /datum/supply_pack/costumes_toys/wardrobes/medical
-	name = "Medical Department Wardrobe Supply Crate"
+	name = "Medical Wardrobe Supply Crate"
 	desc = "This crate contains refills for the MediDrobe, ChemDrobe, GeneDrobe, and ViroDrobe."
 	cost = 3000
 	contains = list(/obj/item/vending_refill/wardrobe/medi_wardrobe,
@@ -1993,7 +2036,7 @@
 	crate_name = "medical department wardrobe supply crate"
 
 /datum/supply_pack/costumes_toys/wardrobes/science
-	name = "Science Department Wardrobe Supply Crate"
+	name = "Science Wardrobe Supply Crate"
 	desc = "This crate contains refills for the SciDrobe and RoboDrobe."
 	cost = 1500
 	contains = list(/obj/item/vending_refill/wardrobe/robo_wardrobe,
@@ -2001,7 +2044,7 @@
 	crate_name = "science department wardrobe supply crate"
 
 /datum/supply_pack/costumes_toys/wardrobes/security
-	name = "Security Department Supply Crate"
+	name = "Security Wardrobe Supply Crate"
 	desc = "This crate contains refills for the SecDrobe and LawDrobe."
 	cost = 1500
 	contains = list(/obj/item/vending_refill/wardrobe/sec_wardrobe,
@@ -2098,6 +2141,16 @@
 	cost = 700
 	contains = list(/obj/item/storage/box/fountainpens)
 	crate_type = /obj/structure/closet/crate/wooden
+	crate_name = "calligraphy crate"
+
+/datum/supply_pack/misc/wrapping_paper
+	name = "Festive Wrapping Paper Crate"
+	desc = "Want to mail your loved ones gift-wrapped chocolates, stuffed animals, the Clown's severed head? You can do all that, with this crate full of wrapping paper."
+	cost = 1000
+	contains = list(/obj/item/stack/wrapping_paper)
+	crate_type = /obj/structure/closet/crate/wooden
+	crate_name = "festive wrapping paper crate"
+
 
 /datum/supply_pack/misc/funeral
 	name = "Funeral Supply crate"

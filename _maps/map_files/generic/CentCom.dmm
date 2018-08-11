@@ -1242,15 +1242,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/computer/arcade/orion_trail{
-	desc = "A test for cadets";
-	events = list("Raiders" = 3, "Interstellar Flux" = 1, "Illness" = 3, "Breakdown" = 2, "Malfunction" = 2, "Collision" = 1, "Spaceport" = 2);
-	icon = 'icons/obj/machines/particle_accelerator.dmi';
-	icon_state = "control_boxp";
-	name = "Kobayashi Maru control computer";
-	prizes = list(/obj/item/paper/fluff/holodeck/trek_diploma = 1);
-	settlers = list("Kirk","Worf","Gene")
-	},
+/obj/machinery/computer/arcade/orion_trail/kobayashi,
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/kobayashi)
 "dP" = (
@@ -1268,30 +1260,14 @@
 	pixel_x = 16;
 	pixel_y = -5
 	},
-/obj/machinery/computer/arcade/orion_trail{
-	desc = "A test for cadets";
-	events = list("Raiders" = 3, "Interstellar Flux" = 1, "Illness" = 3, "Breakdown" = 2, "Malfunction" = 2, "Collision" = 1, "Spaceport" = 2);
-	icon = 'icons/obj/machines/particle_accelerator.dmi';
-	icon_state = "control_boxp";
-	name = "Kobayashi Maru control computer";
-	prizes = list(/obj/item/paper/fluff/holodeck/trek_diploma = 1);
-	settlers = list("Kirk","Worf","Gene")
-	},
+/obj/machinery/computer/arcade/orion_trail/kobayashi,
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/kobayashi)
 "dQ" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/computer/arcade/orion_trail{
-	desc = "A test for cadets";
-	events = list("Raiders" = 3, "Interstellar Flux" = 1, "Illness" = 3, "Breakdown" = 2, "Malfunction" = 2, "Collision" = 1, "Spaceport" = 2);
-	icon = 'icons/obj/machines/particle_accelerator.dmi';
-	icon_state = "control_boxp";
-	name = "Kobayashi Maru control computer";
-	prizes = list(/obj/item/paper/fluff/holodeck/trek_diploma = 1);
-	settlers = list("Kirk","Worf","Gene")
-	},
+/obj/machinery/computer/arcade/orion_trail/kobayashi,
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/kobayashi)
 "dR" = (
@@ -5996,9 +5972,7 @@
 	},
 /area/syndicate_mothership/control)
 "qM" = (
-/obj/machinery/vending/cigarette{
-	products = list(/obj/item/storage/fancy/cigarettes/cigpack_syndicate = 7, /obj/item/storage/fancy/cigarettes/cigpack_uplift = 3, /obj/item/storage/fancy/cigarettes/cigpack_robust = 2, /obj/item/storage/fancy/cigarettes/cigpack_carp = 3, /obj/item/storage/fancy/cigarettes/cigpack_midori = 1, /obj/item/storage/box/matches = 10, /obj/item/lighter/greyscale = 4, /obj/item/storage/fancy/rollingpapers = 5)
-	},
+/obj/machinery/vending/cigarette/syndicate,
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
@@ -12622,13 +12596,6 @@
 	dir = 5
 	},
 /area/tdome/tdomeadmin)
-"JV" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape/backup)
-"JW" = (
-/obj/machinery/status_display,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape/backup)
 "JX" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -12669,18 +12636,6 @@
 	dir = 8
 	},
 /area/tdome/tdomeadmin)
-"Kd" = (
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape/backup)
-"Ke" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape/backup)
-"Kf" = (
-/obj/machinery/computer/emergency_shuttle{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape/backup)
 "Kg" = (
 /turf/closed/indestructible/fakedoor{
 	name = "Thunderdome Admin"
@@ -12709,29 +12664,17 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeadmin)
 "Kk" = (
-/obj/machinery/door/airlock/titanium,
 /obj/docking_port/stationary{
 	dir = 4;
 	dwidth = 2;
 	height = 8;
 	id = "backup_away";
 	name = "Backup Shuttle Dock";
+	roundstart_template = /datum/map_template/shuttle/emergency/backup;
 	width = 8
 	},
-/obj/docking_port/mobile/emergency/backup,
-/turf/open/floor/plating,
-/area/shuttle/escape/backup)
-"Kl" = (
-/obj/structure/chair/office/light{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape/backup)
-"Km" = (
-/obj/structure/table/wood,
-/obj/item/paper/fluff/stations/centcom/broken_evac,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape/backup)
+/turf/open/space/basic,
+/area/space)
 "Kn" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/plasteel/vault{
@@ -12863,11 +12806,6 @@
 	dir = 8
 	},
 /area/tdome/tdomeadmin)
-"Kz" = (
-/obj/structure/table/wood,
-/obj/item/book/manual/random,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape/backup)
 "KA" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -12894,18 +12832,6 @@
 /obj/machinery/ai_status_display,
 /turf/closed/indestructible/riveted,
 /area/tdome/tdomeadmin)
-"KE" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape/backup)
-"KF" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape/backup)
 "KG" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -13177,7 +13103,7 @@
 	dir = 4;
 	dwidth = 2;
 	height = 7;
-	id = "pod1_away";
+	id = "pod_away";
 	name = "recovery ship";
 	width = 5
 	},
@@ -63652,14 +63578,14 @@ aa
 aa
 aa
 aa
-JV
-JV
+aa
+aa
 Kk
-JV
-JV
-JV
-JV
-JV
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -63909,14 +63835,14 @@ aa
 aa
 aa
 aa
-JW
-Kd
-Kd
-Kd
-KE
-Kd
-Kd
-JW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -64166,14 +64092,14 @@ aa
 aa
 aa
 aa
-JV
-Kd
-Kd
-Kd
-Kd
-Kd
-Kd
-JV
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -64423,14 +64349,14 @@ aa
 aa
 aa
 aa
-JV
-Ke
-Ke
-Ke
-Ke
-Kd
-Ke
-JV
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -64680,14 +64606,14 @@ aa
 aa
 aa
 aa
-JV
-Ke
-Ke
-Ke
-Ke
-Kd
-Ke
-JV
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -64937,14 +64863,14 @@ aa
 aa
 aa
 aa
-JV
-Kd
-Kl
-Kd
-Kd
-Kd
-Kd
-JV
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -65194,14 +65120,14 @@ aa
 aa
 aa
 aa
-JW
-Kf
-Km
-Kz
-KF
-Kd
-Kd
-JW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -65451,14 +65377,14 @@ aa
 aa
 aa
 aa
-JV
-JV
-JV
-JV
-JV
-JV
-JV
-JV
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa

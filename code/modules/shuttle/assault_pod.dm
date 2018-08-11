@@ -1,7 +1,6 @@
 /obj/docking_port/mobile/assault_pod
 	name = "assault pod"
 	id = "steel_rain"
-	timid = FALSE
 	dwidth = 3
 	width = 7
 	height = 7

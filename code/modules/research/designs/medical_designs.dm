@@ -503,6 +503,8 @@
 	name = "Surgery Design"
 	desc = "what"
 	id = "surgery_parent"
+	research_icon = 'icons/obj/surgery.dmi'
+	research_icon_state = "surgery_any"
 	var/surgery
 
 /datum/design/surgery/lobotomy
@@ -510,60 +512,70 @@
 	desc = "An invasive surgical procedure which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
 	id = "surgery_lobotomy"
 	surgery = /datum/surgery/advanced/lobotomy
+	research_icon_state = "surgery_head"
 
 /datum/design/surgery/pacify
 	name = "Pacification"
 	desc = "A surgical procedure which permanently inhibits the aggression center of the brain, making the patient unwilling to cause direct harm."
 	id = "surgery_pacify"
 	surgery = /datum/surgery/advanced/pacify
+	research_icon_state = "surgery_head"
 
 /datum/design/surgery/viral_bonding
 	name = "Viral Bonding"
 	desc = "A surgical procedure that forces a symbiotic relationship between a virus and its host. The patient must be dosed with spaceacillin, virus food, and formaldehyde."
 	id = "surgery_viral_bond"
 	surgery = /datum/surgery/advanced/viral_bonding
+	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/reconstruction
 	name = "Reconstruction"
 	desc = "A surgical procedure that gradually repairs damage done to a body without the assistance of chemicals. Unlike classic medicine, it is effective on corpses."
 	id = "surgery_reconstruction"
 	surgery = /datum/surgery/advanced/reconstruction
+	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/revival
 	name = "Revival"
 	desc = "An experimental surgical procedure which involves reconstruction and reactivation of the patient's brain even long after death. The body must still be able to sustain life."
 	id = "surgery_revival"
 	surgery = /datum/surgery/advanced/revival
+	research_icon_state = "surgery_head"
 
 /datum/design/surgery/brainwashing
 	name = "Brainwashing"
 	desc = "A surgical procedure which directly implants a directive into the patient's brain, making it their absolute priority. It can be cleared using a mindshield implant."
 	id = "surgery_brainwashing"
 	surgery = /datum/surgery/advanced/brainwashing
+	research_icon_state = "surgery_head"
 
 /datum/design/surgery/nerve_splicing
 	name = "Nerve Splicing"
 	desc = "A surgical procedure which splices the patient's nerves, making them more resistant to stuns."
 	id = "surgery_nerve_splice"
 	surgery = /datum/surgery/advanced/bioware/nerve_splicing
+	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/nerve_grounding
 	name = "Nerve Grounding"
 	desc = "A surgical procedure which makes the patient's nerves act as grounding rods, protecting them from electrical shocks."
 	id = "surgery_nerve_ground"
 	surgery = /datum/surgery/advanced/bioware/nerve_grounding
+	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/vein_threading
 	name = "Vein Threading"
 	desc = "A surgical procedure which severely reduces the amount of blood lost in case of injury."
 	id = "surgery_vein_thread"
 	surgery = /datum/surgery/advanced/bioware/vein_threading
+	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/necrotic_revival
 	name = "Necrotic Revival"
 	desc = "An experimental surgical procedure that stimulates the growth of a Romerol tumor inside the patient's brain. Requires zombie powder or rezadone."
 	id = "surgery_zombie"
 	surgery = /datum/surgery/advanced/necrotic_revival
+	research_icon_state = "surgery_head"
 
 /datum/design/holobarrier_med
 	name = "PENLITE holobarrier projector"
