@@ -161,8 +161,8 @@
 	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT | FRUIT | PINEAPPLE
 
 /obj/item/reagent_containers/food/snacks/pizza/arnold
-	name = "arnold pizza"
-	desc = "Hello, you've reached arnold's pizza shop. I'm not here now, I'm out killing pepperoni."
+	name = "\improper Arnold pizza"
+	desc = "Hello, you've reached Arnold's pizza shop. I'm not here now, I'm out killing pepperoni."
 	icon_state = "arnoldpizza"
 	slice_path = /obj/item/reagent_containers/food/snacks/pizzaslice/arnold
 	bonus_reagents = list("nutriment" = 30, "vitamin" = 6, "iron" = 10, "omnizine" = 30)
@@ -194,7 +194,7 @@
 
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/arnold
-	name = "arnold pizza slice"
+	name = "\improper Arnold pizza slice"
 	desc = "I come over, maybe I give you a pizza, maybe I break off your arm."
 	icon_state = "arnoldpizzaslice"
 	filling_color = "#A52A2A"
