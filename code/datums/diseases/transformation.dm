@@ -270,10 +270,10 @@
 
 /datum/disease/transformation/gondola
 	name = "Gondola Transformation"
-	cure_text = "Liberal ingestion of bath salts."
-	cures = list("bath_salts")
+	cure_text = "Condensed Capsaicin, ingested or injected." //getting pepper sprayed doesn't help
+	cures = list("condensedcapsaicin") //beats the hippie crap right out of your system
 	cure_chance = 80
-	stage_prob = 5 //reduced to give chemists a realistic chance to produce a cure
+	stage_prob = 5
 	agent = "Tranquillity"
 	desc = "Consuming the flesh of a Gondola comes at a terrible price."
 	severity = DISEASE_SEVERITY_BIOHAZARD
