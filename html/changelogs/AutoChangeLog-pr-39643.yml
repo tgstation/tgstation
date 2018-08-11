@@ -1,0 +1,4 @@
+author: "WJohn"
+delete-after: True
+changes: 
+  - rscadd: "Added zombies to boxstation's abandoned ship."
