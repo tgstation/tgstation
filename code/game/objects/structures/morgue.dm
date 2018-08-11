@@ -259,6 +259,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 				log_combat(user, M, "cremated")
 			else
 				M.log_message("was cremated", LOG_ATTACK)
+
 			M.death(1)
 			if(M) //some animals get automatically deleted on death.
 				M.ghostize()

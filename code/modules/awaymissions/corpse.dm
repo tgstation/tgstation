@@ -224,6 +224,8 @@
 	death = FALSE
 	roundstart = FALSE //you could use these for alive fake humans on roundstart but this is more common scenario
 
+/obj/effect/mob_spawn/human/corpse/delayed
+	instant = FALSE
 
 //Non-human spawners
 

@@ -1,0 +1,5 @@
+author: "YPOQ"
+delete-after: True
+changes: 
+  - bugfix: "Cult floors will not deconstruct to space"
+  - bugfix: "Cult floors do not spawn rods when deconstructed"
