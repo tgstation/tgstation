@@ -239,7 +239,7 @@
 	M.adjustBruteLoss(-1, 0)
 	M.adjustFireLoss(-1, 0)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/consumable/gutlunch_milk/on_mob_add(mob/living/M)
 	var/datum/dna/Mdna = M.has_dna()
