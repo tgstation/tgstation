@@ -181,24 +181,27 @@
 		var/old_expiry = query_find_edit_expiry_message.item[4]
 		var/editor_ckey = sanitizeSQL(usr.ckey)
 		var/new_expiry
-		var/expire_time = input("Set expiry time for [type] as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than current time for obvious reasons.", "Set expiry time", old_expiry) as text
+		var/expire_time = input("Set expiry time for [type] as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than current time for obvious reasons. Enter -1 to remove expiry time.", "Set expiry time", old_expiry) as text
 		if(!expire_time)
 			qdel(query_find_edit_expiry_message)
 			return
-		expire_time = sanitizeSQL(expire_time)
-		var/datum/DBQuery/query_validate_expire_time_edit = SSdbcore.NewQuery("SELECT IF(STR_TO_DATE('[expire_time]','%Y-%c-%d %T') > NOW(), STR_TO_DATE('[expire_time]','%Y-%c-%d %T'), 0)")
-		if(!query_validate_expire_time_edit.warn_execute())
-			qdel(query_validate_expire_time_edit)
-			return
-		if(query_validate_expire_time_edit.NextRow())
-			var/checktime = text2num(query_validate_expire_time_edit.item[1])
-			if(!checktime)
-				to_chat(usr, "Datetime entered is improperly formatted or not later than current server time.")
+		if(expire_time == "-1")
+			new_expiry = "non-expiring"
+		else
+			expire_time = sanitizeSQL(expire_time)
+			var/datum/DBQuery/query_validate_expire_time_edit = SSdbcore.NewQuery("SELECT IF(STR_TO_DATE('[expire_time]','%Y-%c-%d %T') > NOW(), STR_TO_DATE('[expire_time]','%Y-%c-%d %T'), 0)")
+			if(!query_validate_expire_time_edit.warn_execute())
+				qdel(query_validate_expire_time_edit)
 				return
-			new_expiry = query_validate_expire_time_edit.item[1]
-		qdel(query_validate_expire_time_edit)
+			if(query_validate_expire_time_edit.NextRow())
+				var/checktime = text2num(query_validate_expire_time_edit.item[1])
+				if(!checktime)
+					to_chat(usr, "Datetime entered is improperly formatted or not later than current server time.")
+					return
+				new_expiry = query_validate_expire_time_edit.item[1]
+			qdel(query_validate_expire_time_edit)
 		var/edit_text = sanitizeSQL("Expiration time edited by [editor_ckey] on [SQLtime()] from [old_expiry] to [new_expiry]<hr>")
-		var/datum/DBQuery/query_edit_message_expiry = SSdbcore.NewQuery("UPDATE [format_table_name("messages")] SET expire_timestamp = '[new_expiry]', lasteditor = '[editor_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE id = [message_id] AND deleted = 0")
+		var/datum/DBQuery/query_edit_message_expiry = SSdbcore.NewQuery("UPDATE [format_table_name("messages")] SET expire_timestamp = [expire_time == "-1" ? "NULL" : "'[new_expiry]'"], lasteditor = '[editor_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE id = [message_id] AND deleted = 0")
 		if(!query_edit_message_expiry.warn_execute())
 			qdel(query_edit_message_expiry)
 			return
