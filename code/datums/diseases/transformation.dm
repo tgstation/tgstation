@@ -274,7 +274,7 @@
 	cures = list("bath_salts")
 	cure_chance = 80
 	stage_prob = 5 //reduced to give chemists a realistic chance to produce a cure
-	agent = "Tranquility"
+	agent = "Tranquillity"
 	desc = "Consuming the flesh of a Gondola comes at a terrible price."
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	visibility_flags = 0
