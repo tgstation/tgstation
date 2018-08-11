@@ -1,0 +1,4 @@
+author: "Time-Green"
+delete-after: True
+changes: 
+  - rscadd: "Circuit Boards now tell you the components required to build them on examine"
