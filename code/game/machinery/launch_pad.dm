@@ -185,6 +185,8 @@
 /obj/machinery/launchpad/briefcase/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/launchpad_remote))
 		var/obj/item/launchpad_remote/L = I
+		if(L.pad == src) //do not attempt to link when already linked
+			return ..()
 		L.pad = src
 		to_chat(user, "<span class='notice'>You link [src] to [L].</span>")
 	else
@@ -196,7 +198,7 @@
 
 /obj/item/storage/briefcase/launchpad/Initialize()
 	. = ..()
-	pad = new(null, src)
+	pad = new(null, src) //spawns pad in nullspace to hide it from briefcase contents
 
 /obj/item/storage/briefcase/launchpad/Destroy()
 	if(!QDELETED(pad))
@@ -205,7 +207,7 @@
 
 /obj/item/storage/briefcase/launchpad/PopulateContents()
 	new /obj/item/pen(src)
-	new /obj/item/launchpad_remote(src)
+	new /obj/item/launchpad_remote(src, pad) 
 
 /obj/item/storage/briefcase/launchpad/attack_self(mob/user)
 	if(!isturf(user.loc)) //no setting up in a locker
@@ -218,14 +220,6 @@
 		user.transferItemToLoc(src, pad, TRUE)
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_HIDE_ALL)
 
-/obj/item/storage/briefcase/launchpad/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/launchpad_remote))
-		var/obj/item/launchpad_remote/L = I
-		L.pad = src.pad
-		to_chat(user, "<span class='notice'>You link [pad] to [L].</span>")
-	else
-		return ..()
-
 /obj/item/launchpad_remote
 	name = "folder"
 	desc = "A folder."
@@ -234,6 +228,10 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/sending = TRUE
 	var/obj/machinery/launchpad/briefcase/pad
+
+/obj/item/launchpad_remote/Initialize(mapload, pad) //remote spawns linked to the briefcase pad
+	. = ..()
+	src.pad = pad
 
 /obj/item/launchpad_remote/attack_self(mob/user)
 	. = ..()
