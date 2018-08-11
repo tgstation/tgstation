@@ -28,6 +28,7 @@
 	name = "Arnold pizza"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pizzabread = 1,
+		/obj/item/reagent_containers/food/snacks/meat/cutlet = 3,
 		/obj/item/ammo_casing/c9mm = 8,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
