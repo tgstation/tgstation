@@ -253,6 +253,7 @@ CREATE TABLE `SS13_messages` (
   `server_port` smallint(5) unsigned NOT NULL,
   `round_id` int(11) unsigned NOT NULL,
   `secret` tinyint(1) unsigned NOT NULL,
+  `expire_timestamp` datetime DEFAULT NULL,
   `lasteditor` varchar(32) DEFAULT NULL,
   `edits` text,
   `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0',
