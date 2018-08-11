@@ -1,4 +1,0 @@
-author: "Jordie0608"
-delete-after: True
-changes: 
-  - admin: "Notes, messages, memos and watchlists can now have an expiry time. Once expired they are hidden like as if deleted."
