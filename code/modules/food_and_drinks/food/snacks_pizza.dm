@@ -182,7 +182,7 @@
 
 /obj/item/reagent_containers/food/snacks/proc/i_kill_you(obj/item/I, mob/user)
 	if(istype(I, /obj/item/reagent_containers/food/snacks/pineappleslice))
-		to_chat(user, "<span class='danger'>If you want something crazy like pineapple, I kill you.</span>")
+		to_chat(user, "<font color='red' size='7'>If you want something crazy like pineapple, I kill you.</font>")
 		user.gib() //if you want something crazy like pineapple, i kill you
 
 /obj/item/reagent_containers/food/snacks/pizza/arnold/attack(mob/living/M, mob/living/user)
@@ -206,7 +206,7 @@
 	. =..()
 	try_break_off(M, user)
 
-/obj/item/reagent_containers/food/snacks/pizzaslice/arnold/attacked_by(obj/item/I, mob/user)
+/obj/item/reagent_containers/food/snacks/pizzaslice/arnold/attackby(obj/item/I, mob/user)
 	i_kill_you(I, user)
 	. = ..()
 
