@@ -37208,10 +37208,10 @@
 /area/tcommsat/computer)
 "bAW" = (
 /obj/structure/table/wood,
-/obj/item/folder/blue,
 /obj/machinery/status_display{
 	pixel_y = 31
 	},
+/obj/item/book/manual/wiki/tcomms,
 /obj/item/folder/blue,
 /obj/item/pen,
 /turf/open/floor/plasteel/grimy,
@@ -37820,13 +37820,14 @@
 /area/engine/atmos)
 "bCn" = (
 /obj/structure/table,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/item/book/manual/wiki/atmospherics,
 /obj/item/storage/belt/utility,
 /obj/item/t_scanner,
 /obj/item/t_scanner,
 /obj/item/t_scanner,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel/caution{
 	dir = 8
 	},
@@ -43561,6 +43562,7 @@
 "bOU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table,
+/obj/item/book/manual/wiki/cooking_to_serve_man,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -51226,15 +51228,6 @@
 /area/medical/sleeper)
 "cfJ" = (
 /obj/structure/table,
-/obj/item/folder/white{
-	pixel_x = 4;
-	pixel_y = -3
-	},
-/obj/item/folder/white{
-	pixel_x = 4;
-	pixel_y = -3
-	},
-/obj/item/pen,
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Sleeper Room APC";
@@ -51244,7 +51237,13 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
+/obj/item/book/manual/wiki/medicine,
 /obj/item/clothing/neck/stethoscope,
+/obj/item/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/pen,
 /turf/open/floor/plasteel/vault,
 /area/medical/sleeper)
 "cfK" = (
@@ -54624,6 +54623,7 @@
 /area/medical/surgery)
 "cnq" = (
 /obj/structure/table,
+/obj/item/book/manual/wiki/surgery,
 /obj/item/retractor,
 /turf/open/floor/plasteel,
 /area/medical/surgery)
@@ -54834,19 +54834,12 @@
 	},
 /area/crew_quarters/heads/cmo)
 "cnH" = (
-/obj/item/clothing/glasses/science{
-	pixel_x = 2;
-	pixel_y = 4
-	},
-/obj/item/clothing/glasses/science,
 /obj/item/radio/intercom{
 	dir = 8;
 	name = "Station Intercom (General)";
 	pixel_x = -28
 	},
 /obj/structure/table/glass,
-/obj/item/stack/cable_coil,
-/obj/item/stack/cable_coil,
 /obj/machinery/camera{
 	c_tag = "Chemistry";
 	dir = 4;
@@ -54855,6 +54848,15 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/book/manual/wiki/chemistry{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/book/manual/wiki/grenades,
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil,
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 10
 	},
@@ -62580,13 +62582,14 @@
 /area/science/mixing)
 "cDp" = (
 /obj/structure/table,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/item/book/manual/wiki/toxins,
 /obj/item/clothing/glasses/science,
 /obj/item/clothing/glasses/science,
 /obj/item/multitool{
 	pixel_x = 3
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -76384,10 +76387,11 @@
 /area/engine/storage_shared)
 "oLW" = (
 /obj/structure/table/reinforced,
-/obj/item/integrated_electronics/debugger,
 /obj/structure/sign/poster/random{
 	pixel_y = 32
 	},
+/obj/item/book/manual/wiki/circuitry,
+/obj/item/integrated_electronics/debugger,
 /turf/open/floor/plasteel/purple/side,
 /area/science/circuit)
 "oRL" = (
