@@ -587,7 +587,10 @@
 	return
 
 // Generic logging helper
-/atom/proc/log_message(message, message_type)
+/atom/proc/log_message(message, message_type, color=null, log_globally=TRUE)
+	if(!log_globally)
+		return
+
 	var/log_text = "[key_name(src)] [message] [loc_name(src)]"
 	switch(message_type)
 		if(LOG_ATTACK)

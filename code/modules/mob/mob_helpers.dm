@@ -505,8 +505,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(client)
 		client.player_details.logging[smessage_type] += timestamped_message
 
-	if(log_globally)
-		..()
+	..()
 
 /mob/proc/can_hear()
 	. = TRUE
