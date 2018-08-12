@@ -197,10 +197,18 @@
 				C = M.client
 		else
 			fallback_name = mind.name
-	else if (istype(whom, /datum))
-		var/swhom = "[whom.name]"
+	else // Catch-all cases if none of the types above match
+		var/swhom = null
+
+		if(istype(whom, /atom))
+			var/atom/A = whom
+			swhom = "[A.name]"
+		else if(istype(whom, /datum))
+			swhom = "[whom]"
+
 		if(!swhom)
 			swhom = "*invalid*"
+
 		return "\[[swhom]\]"
 
 	. = ""
