@@ -1,0 +1,5 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "The briefcase launchpad can now hold items while in briefcase mode (just like a regular briefcase). Its remote has been disguised as a folder and now spawns pre-linked inside the briefcase."
+  - balance: "Increased the briefcase launchpad's range from 3 to 8 tiles, which is roughly half the screen."
