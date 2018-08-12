@@ -339,10 +339,10 @@
 	page_link = "Detective"
 
 /obj/item/book/manual/wiki/barman_recipes
-	name = "Barman Recipes"
+	name = "Barman Recipes: Mixing Drinks and Changing Lives"
 	icon_state = "barbook"
 	author = "Sir John Rose"
-	title = "Barman Recipes"
+	title = "Barman Recipes: Mixing Drinks and Changing Lives"
 	page_link = "Guide_to_food_and_drinks"
 	
 /obj/item/book/manual/wiki/robotics_cyborgs
@@ -396,10 +396,10 @@
 	page_link = "Guide_to_Telecommunications"
 
 /obj/item/book/manual/wiki/atmospherics
-	name = "The Atmosian Chronicles"
+	name = "Lexica Atmosia"
 	icon_state = "book5"
 	author = "the City-state of Atmosia"
-	title = "The Atmosian Chronicles"
+	title = "Lexica Atmosia"
 	page_link = "Guide_to_Atmospherics"
 	
 /obj/item/book/manual/wiki/medicine
@@ -429,3 +429,24 @@
 	author = "Cuban Pete"
 	title = "Toxins or: How I Learned to Stop Worrying and Love the Maxcap"
 	page_link = "Guide_to_toxins"
+
+/obj/item/book/manual/wiki/toxins/suicide_act(mob/user)
+	var/mob/living/carbon/human/H = user
+	user.visible_message("<span class='suicide'>[user] starts dancing to the Rhumba Beat! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
+	if (!QDELETED(H))
+		H.emote("spin")
+		sleep(20)
+		for(var/obj/item/W in H)
+			H.dropItemToGround(W)
+			if(prob(50))
+				step(W, pick(GLOB.alldirs))
+		H.add_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
+		H.bleed_rate = 5
+		H.gib_animation()
+		sleep(3)
+		H.adjustBruteLoss(1000) //to make the body super-bloody
+		H.spawn_gibs()
+		H.spill_organs()
+		H.spread_bodyparts()
+	return (BRUTELOSS)
