@@ -975,7 +975,7 @@
 	to_chat(user, "<span class='notice'>You shatter the bottle!</span>")
 	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
 	message_admins("<span class='adminnotice'>[ADMIN_LOOKUPFLW(user)] has activated a bottle of mayhem!</span>")
-	add_logs(user, null, "activated a bottle of mayhem", src)
+	log_combat(user, null, "activated a bottle of mayhem", src)
 	qdel(src)
 
 /obj/item/blood_contract
@@ -1019,7 +1019,7 @@
 	var/datum/objective/survive/survive = new
 	survive.owner = L.mind
 	L.mind.objectives += survive
-	add_logs(user, L, "took out a blood contract on", src)
+	log_combat(user, L, "took out a blood contract on", src)
 	to_chat(L, "<span class='userdanger'>You've been marked for death! Don't let the demons get you! KILL THEM ALL!</span>")
 	L.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
 	var/obj/effect/mine/pickup/bloodbath/B = new(L)
@@ -1105,7 +1105,7 @@
 	timer = world.time + CLICK_CD_MELEE //by default, melee attacks only cause melee blasts, and have an accordingly short cooldown
 	if(proximity_flag)
 		INVOKE_ASYNC(src, .proc/aoe_burst, T, user)
-		add_logs(user, target, "fired 3x3 blast at", src)
+		log_combat(user, target, "fired 3x3 blast at", src)
 	else
 		if(ismineralturf(target) && get_dist(user, target) < 6) //target is minerals, we can hit it(even if we can't see it)
 			INVOKE_ASYNC(src, .proc/cardinal_blasts, T, user)
@@ -1117,10 +1117,10 @@
 				var/obj/effect/temp_visual/hierophant/chaser/C = new(get_turf(user), user, target, chaser_speed, friendly_fire_check)
 				C.damage = 30
 				C.monster_damage_boost = FALSE
-				add_logs(user, target, "fired a chaser at", src)
+				log_combat(user, target, "fired a chaser at", src)
 			else
 				INVOKE_ASYNC(src, .proc/cardinal_blasts, T, user) //otherwise, just do cardinal blast
-				add_logs(user, target, "fired cardinal blast at", src)
+				log_combat(user, target, "fired cardinal blast at", src)
 		else
 			to_chat(user, "<span class='warning'>That target is out of range!</span>" )
 			timer = world.time
@@ -1232,7 +1232,7 @@
 			INVOKE_ASYNC(src, .proc/prepare_icon_update)
 			beacon.icon_state = "hierophant_tele_off"
 			return
-		add_logs(user, beacon, "teleported self from [AREACOORD(source)] to")
+		user.log_message("teleported self from [AREACOORD(source)] to [beacon]")
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, user)
 		for(var/t in RANGE_TURFS(1, T))
@@ -1279,7 +1279,7 @@
 		return
 	M.visible_message("<span class='hierophant_warning'>[M] fades in!</span>")
 	if(user != M)
-		add_logs(user, M, "teleported", null, "from [AREACOORD(source)]")
+		log_combat(user, M, "teleported", null, "from [AREACOORD(source)]")
 
 /obj/item/hierophant_club/proc/cardinal_blasts(turf/T, mob/living/user) //fire cardinal cross blasts with a delay
 	if(!T)

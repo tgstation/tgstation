@@ -92,7 +92,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
-			add_logs(user, C, "shone in the eyes", src)
+			log_combat(user, C, "shone in the eyes", src)
 
 			var/severity = 1
 			if(prob(33))
@@ -109,7 +109,7 @@
 	//robots
 	else if(iscyborg(target))
 		var/mob/living/silicon/S = target
-		add_logs(user, S, "shone in the sensors", src)
+		log_combat(user, S, "shone in the sensors", src)
 		//chance to actually hit the eyes depends on internal component
 		if(prob(effectchance * diode.rating))
 			S.flash_act(affect_silicon = 1)
@@ -125,7 +125,7 @@
 		if(prob(effectchance * diode.rating))
 			C.emp_act(EMP_HEAVY)
 			outmsg = "<span class='notice'>You hit the lens of [C] with [src], temporarily disabling the camera!</span>"
-			add_logs(user, C, "EMPed", src)
+			log_combat(user, C, "EMPed", src)
 		else
 			outmsg = "<span class='warning'>You miss the lens of [C] with [src]!</span>"
 
@@ -138,7 +138,7 @@
 			if(prob(effectchance))
 				H.visible_message("<span class='warning'>[H] makes a grab for the light!</span>","<span class='userdanger'>LIGHT!</span>")
 				H.Move(targloc)
-				add_logs(user, H, "moved with a laser pointer",src)
+				log_combat(user, H, "moved with a laser pointer",src)
 			else
 				H.visible_message("<span class='notice'>[H] looks briefly distracted by the light.</span>","<span class = 'warning'> You're briefly tempted by the shiny light... </span>")
 		else

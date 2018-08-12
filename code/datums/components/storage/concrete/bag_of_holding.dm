@@ -26,7 +26,7 @@
 		for (var/obj/structure/ladder/unbreakable/binary/ladder in GLOB.ladders)
 			ladder.ActivateAlmonds()
 		message_admins("[ADMIN_LOOKUPFLW(user)] detonated a bag of holding at [ADMIN_VERBOSEJMP(loccheck)].")
-		log_game("[key_name(user)] detonated a bag of holding at [AREACOORD(loccheck)].")
+		log_game("[key_name(user)] detonated a bag of holding at [loc_name(loccheck)].")
 		qdel(A)
 		return
 	. = ..()

@@ -80,7 +80,7 @@
 				A.set_electrified(30)
 				if(usr)
 					LAZYADD(A.shockedby, text("\[[time_stamp()]\] [key_name(usr)]"))
-				add_logs(usr, A, "electrified")
+					log_combat(usr, A, "electrified")
 		if(WIRE_SAFETY)
 			A.safe = !A.safe
 			if(!A.density)
@@ -135,7 +135,7 @@
 					A.set_electrified(-1)
 					if(usr)
 						LAZYADD(A.shockedby, text("\[[time_stamp()]\] [key_name(usr)]"))
-					add_logs(usr, A, "electrified")
+						log_combat(usr, A, "electrified")
 		if(WIRE_SAFETY) // Cut to disable safeties, mend to re-enable.
 			A.safe = mend
 		if(WIRE_TIMING) // Cut to disable auto-close, mend to re-enable.
