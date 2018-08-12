@@ -655,10 +655,11 @@ Proc for attack log creation, because really why not
 	var/hp = istype(living_target) ? " (NEWHP: [living_target.health]) " : ""
 
 	var/sobject = ""
-	var/saddition = "[addition]"
 	if(object)
-		sobject = "with [key_name(object)]"
-		saddition = " [saddition]"
+		sobject = " with [key_name(object)]"
+	var/saddition = ""
+	if(addition)
+		saddition = " [addition]"
 
 	var/postfix = "[sobject][saddition][hp]"
 
