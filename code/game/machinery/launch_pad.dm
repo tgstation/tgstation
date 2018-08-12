@@ -11,7 +11,7 @@
 	var/stationary = TRUE //to prevent briefcase pad deconstruction and such
 	var/display_name = "Launchpad"
 	var/teleport_speed = 35
-	var/range = 5
+	var/range = 8
 	var/teleporting = FALSE //if it's in the process of teleporting
 	var/power_efficiency = 1
 	var/x_offset = 0
@@ -148,7 +148,7 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 	teleport_speed = 20
-	range = 6
+	range = 8
 	stationary = FALSE
 	var/closed = TRUE
 	var/obj/item/storage/briefcase/launchpad/briefcase
@@ -197,8 +197,8 @@
 	var/obj/machinery/launchpad/briefcase/pad
 
 /obj/item/storage/briefcase/launchpad/Initialize()
-	. = ..()
 	pad = new(null, src) //spawns pad in nullspace to hide it from briefcase contents
+	. = ..()
 
 /obj/item/storage/briefcase/launchpad/Destroy()
 	if(!QDELETED(pad))
