@@ -11,7 +11,7 @@
 	var/stationary = TRUE //to prevent briefcase pad deconstruction and such
 	var/display_name = "Launchpad"
 	var/teleport_speed = 35
-	var/range = 8
+	var/range = 15
 	var/teleporting = FALSE //if it's in the process of teleporting
 	var/power_efficiency = 1
 	var/x_offset = 0
@@ -219,6 +219,16 @@
 		pad.closed = FALSE
 		user.transferItemToLoc(src, pad, TRUE)
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_HIDE_ALL)
+
+/obj/item/storage/briefcase/launchpad/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/launchpad_remote))
+		var/obj/item/launchpad_remote/L = I
+		if(L.pad == src.pad) //do not attempt to link when already linked
+			return ..()
+		L.pad = src.pad
+		to_chat(user, "<span class='notice'>You link [pad] to [L].</span>")
+	else
+		return ..()	
 
 /obj/item/launchpad_remote
 	name = "folder"
