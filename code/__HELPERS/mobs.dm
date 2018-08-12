@@ -166,35 +166,6 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			return "unknown"
 
-/*
-Proc for attack log creation, because really why not
-1 argument is the actor
-2 argument is the target of action
-3 is the description of action(like punched, throwed, or any other verb)
-4 is the tool with which the action was made(usually item)					4 and 5 are very similar(5 have "by " before it, that it) and are separated just to keep things in a bit more in order
-5 is additional information, anything that needs to be added
-*/
-
-/proc/log_combat(atom/user, atom/target, what_done, object=null, addition=null)
-	var/ssource = key_name(user)
-	var/starget = key_name(target)
-
-	var/mob/living/living_target = target
-	var/hp = istype(living_target) ? " (NEWHP: [living_target.health]) " : " "
-
-	var/sobject = ""
-	if(object)
-		sobject = "[object]"
-		if(addition)
-			addition = " [addition]"
-
-	var/message = "has [what_done] [starget][(sobject||addition) ? " with ":""][sobject][addition][hp]"
-	user.log_message(message, LOG_ATTACK, color="red")
-
-	if(user != target)
-		var/reverse_message = "has been [what_done] by [ssource][(sobject||addition) ? " with ":""][sobject][addition][hp]"
-		target.log_message(reverse_message, LOG_ATTACK, color="orange", log_globally=FALSE)
-
 /proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null)
 	if(!user || !target)
 		return 0
