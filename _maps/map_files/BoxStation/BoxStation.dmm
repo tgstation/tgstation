@@ -17644,6 +17644,10 @@
 "aTO" = (
 /obj/structure/table,
 /obj/item/book/manual/chef_recipes,
+/obj/item/book/manual/wiki/cooking_to_serve_man{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aTP" = (
@@ -25625,6 +25629,11 @@
 /area/medical/medbay/central)
 "bod" = (
 /obj/structure/table,
+/obj/item/book/manual/wiki/grenades,
+/obj/item/book/manual/wiki/chemistry{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /obj/item/folder/white,
 /obj/item/pen,
 /turf/open/floor/plasteel/white,
@@ -30451,6 +30460,7 @@
 /area/quartermaster/qm)
 "bzS" = (
 /obj/structure/table,
+/obj/item/book/manual/wiki/surgery,
 /obj/item/cautery{
 	pixel_x = 4
 	},
@@ -33816,10 +33826,11 @@
 "bIj" = (
 /obj/structure/table,
 /obj/machinery/light,
+/obj/item/book/manual/wiki/medicine,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
 /obj/item/reagent_containers/spray/cleaner,
-/obj/item/clothing/glasses/hud/health,
-/obj/item/clothing/glasses/hud/health,
-/obj/item/clothing/glasses/hud/health,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bIk" = (
@@ -37895,6 +37906,7 @@
 	pixel_x = 2;
 	pixel_y = 2
 	},
+/obj/item/book/manual/wiki/atmospherics,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bSH" = (
@@ -42222,6 +42234,7 @@
 /area/tcommsat/server)
 "cee" = (
 /obj/structure/table,
+/obj/item/book/manual/wiki/tcomms,
 /obj/item/radio/off,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 10
@@ -52837,6 +52850,7 @@
 /area/maintenance/starboard/aft)
 "kwK" = (
 /obj/structure/table/reinforced,
+/obj/item/book/manual/wiki/toxins,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "kxC" = (
@@ -53568,6 +53582,7 @@
 /area/engine/engineering)
 "ueT" = (
 /obj/structure/table/reinforced,
+/obj/item/book/manual/wiki/circuitry,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "uhH" = (

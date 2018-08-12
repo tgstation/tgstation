@@ -20796,10 +20796,11 @@
 /area/crew_quarters/kitchen)
 "bcg" = (
 /obj/structure/table,
-/obj/item/kitchen/rollingpin,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/item/book/manual/wiki/cooking_to_serve_man,
+/obj/item/kitchen/rollingpin,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bch" = (
@@ -24249,10 +24250,11 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/integrated_electronics/debugger,
 /obj/machinery/computer/security/telescreen/circuitry{
 	pixel_y = 30
 	},
+/obj/item/book/manual/wiki/circuitry,
+/obj/item/integrated_electronics/debugger,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -26931,6 +26933,7 @@
 "bsL" = (
 /obj/item/storage/box/beakers,
 /obj/structure/table/glass,
+/obj/item/stack/cable_coil/random,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bsM" = (
@@ -29916,8 +29919,11 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/item/stack/cable_coil/random,
 /obj/item/book/manual/wiki/chemistry,
+/obj/item/book/manual/wiki/grenades{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /turf/open/floor/plasteel/whiteyellow/side,
 /area/medical/chemistry)
 "bAh" = (
@@ -30776,10 +30782,11 @@
 /area/medical/virology)
 "bCi" = (
 /obj/structure/table/glass,
-/obj/item/stack/medical/gauze,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -24
 	},
+/obj/item/book/manual/wiki/medicine,
+/obj/item/stack/medical/gauze,
 /turf/open/floor/plasteel/blue,
 /area/medical/sleeper)
 "bCj" = (
@@ -32150,11 +32157,12 @@
 /area/science/mixing)
 "bFk" = (
 /obj/structure/table/reinforced,
+/obj/item/book/manual/wiki/toxins,
+/obj/item/analyzer,
 /obj/item/wrench,
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
-/obj/item/analyzer,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bFl" = (
@@ -35157,6 +35165,7 @@
 /area/medical/surgery)
 "bMR" = (
 /obj/structure/table,
+/obj/item/book/manual/wiki/surgery,
 /obj/item/retractor,
 /turf/open/floor/plasteel/whiteblue,
 /area/medical/surgery)
@@ -35940,9 +35949,10 @@
 /area/engine/atmos)
 "bOV" = (
 /obj/structure/table,
+/obj/item/book/manual/wiki/atmospherics,
 /obj/item/clothing/head/welding{
-	pixel_x = -3;
-	pixel_y = 7
+	pixel_x = -5;
+	pixel_y = 3
 	},
 /obj/item/clothing/head/welding{
 	pixel_x = -5;
@@ -43859,6 +43869,7 @@
 	pixel_x = -32
 	},
 /obj/structure/table,
+/obj/item/book/manual/wiki/tcomms,
 /obj/item/paper_bin{
 	pixel_x = -2;
 	pixel_y = 5
