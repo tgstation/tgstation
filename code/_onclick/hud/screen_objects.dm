@@ -102,6 +102,7 @@
 	var/slot_id	// The indentifier for the slot. It has nothing to do with ID cards.
 	var/icon_empty // Icon when empty. For now used only by humans.
 	var/icon_full  // Icon when contains an item. For now used only by humans.
+	var/list/object_overlays = list()
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 
@@ -125,6 +126,14 @@
 		usr.update_inv_hands()
 	return 1
 
+/obj/screen/inventory/MouseEntered()
+	..()
+	update_overlays()
+
+/obj/screen/inventory/MouseExited()
+	..()
+	cut_overlay(object_overlays)
+
 /obj/screen/inventory/update_icon()
 	if(!icon_empty)
 		icon_empty = icon_state
@@ -134,6 +143,42 @@
 			icon_state = icon_full
 		else
 			icon_state = icon_empty
+
+/obj/screen/inventory/proc/update_overlays()
+	var/mob/user = hud.mymob
+
+	cut_overlay(object_overlays)
+	object_overlays.Cut()
+
+	if(hud && user && slot_id)
+		var/obj/item/holding = user.get_active_held_item()
+
+		if(!holding)
+			return
+
+		var/obj/item/item_in_slot = user.get_item_by_slot(slot_id)
+		var/can_equip
+
+		if(item_in_slot)
+			GET_COMPONENT_FROM(storage, /datum/component/storage, item_in_slot)
+
+			if(!storage)
+				return // Don't show preview if there's a regular item
+			
+			can_equip = storage.can_be_inserted(holding, TRUE, user)
+		
+		var/image/item_overlay = image(holding)
+		item_overlay.alpha = 191
+		object_overlays += item_overlay
+		can_equip = user.can_equip(holding, slot_id, disable_warning = TRUE)
+		
+		if(!can_equip)
+			var/image/nope_overlay = image('icons/mob/screen_gen.dmi', "x")
+			nope_overlay.alpha = 128
+			nope_overlay.layer = item_overlay.layer + 1
+			object_overlays += nope_overlay
+
+		add_overlay(object_overlays)
 
 /obj/screen/inventory/hand
 	var/mutable_appearance/handcuff_overlay
