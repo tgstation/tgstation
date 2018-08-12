@@ -1360,20 +1360,20 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		switch(hit_area)
 			if(BODY_ZONE_HEAD)
-				if(H.stat == CONSCIOUS && armor_block < 50)
+				if(!I.is_sharp() && armor_block < 50)
 					if(prob(I.force))
-						H.visible_message("<span class='danger'>[H] has been knocked senseless!</span>", \
-										"<span class='userdanger'>[H] has been knocked senseless!</span>")
-						H.confused = max(H.confused, 20)
 						H.adjustBrainLoss(20)
-						H.adjust_blurriness(10)
+						if(H.stat == CONSCIOUS)
+							H.visible_message("<span class='danger'>[H] has been knocked senseless!</span>", \
+											"<span class='userdanger'>[H] has been knocked senseless!</span>")
+							H.confused = max(H.confused, 20)
+							H.adjust_blurriness(10)
 						if(prob(10))
 							H.gain_trauma(/datum/brain_trauma/mild/concussion)
 					else
-						if(!I.is_sharp())
-							H.adjustBrainLoss(I.force * 0.2)
+						H.adjustBrainLoss(I.force * 0.2)
 
-					if(!I.is_sharp() && prob(I.force + ((100 - H.health) * 0.5)) && H != user) // rev deconversion through blunt trauma.
+					if(H.stat == CONSCIOUS && H != user && prob(I.force + ((100 - H.health) * 0.5))) // rev deconversion through blunt trauma.
 						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)
 						if(rev)
 							rev.remove_revolutionary(FALSE, user)
@@ -1390,7 +1390,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						H.update_inv_glasses()
 
 			if(BODY_ZONE_CHEST)
-				if(H.stat == CONSCIOUS && armor_block < 50)
+				if(H.stat == CONSCIOUS && !I.is_sharp() && armor_block < 50)
 					if(prob(I.force))
 						H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
 									"<span class='userdanger'>[H] has been knocked down!</span>")

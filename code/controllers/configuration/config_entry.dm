@@ -18,6 +18,8 @@
 	var/protection = NONE
 	var/abstract_type = /datum/config_entry	//do not instantiate if type matches this
 
+	var/vv_VAS = TRUE		//Force validate and set on VV. VAS proccall guard will run regardless.
+
 	var/dupes_allowed = FALSE
 
 /datum/config_entry/New()
@@ -40,20 +42,23 @@
 		. &= !(protection & CONFIG_ENTRY_HIDDEN)
 
 /datum/config_entry/vv_edit_var(var_name, var_value)
-	var/static/list/banned_edits = list(NAMEOF(src, name), NAMEOF(src, default), NAMEOF(src, resident_file), NAMEOF(src, protection), NAMEOF(src, abstract_type), NAMEOF(src, modified), NAMEOF(src, dupes_allowed))
+	var/static/list/banned_edits = list(NAMEOF(src, name), NAMEOF(src, vv_VAS), NAMEOF(src, default), NAMEOF(src, resident_file), NAMEOF(src, protection), NAMEOF(src, abstract_type), NAMEOF(src, modified), NAMEOF(src, dupes_allowed))
 	if(var_name == NAMEOF(src, config_entry_value))
 		if(protection & CONFIG_ENTRY_LOCKED)
 			return FALSE
-		. = ValidateAndSet("[var_value]")
-		if(.)
-			datum_flags |= DF_VAR_EDITED
-		return
+		if(vv_VAS)
+			. = ValidateAndSet("[var_value]")
+			if(.)
+				datum_flags |= DF_VAR_EDITED
+			return
+		else
+			return ..()
 	if(var_name in banned_edits)
 		return FALSE
 	return ..()
 
 /datum/config_entry/proc/VASProcCallGuard(str_val)
-	. = !(IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "ValidateAndSet" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
+	. = !((protection & CONFIG_ENTRY_LOCKED) && IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "ValidateAndSet" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
 	if(!.)
 		log_admin_private("Config set of [type] to [str_val] attempted by [key_name(usr)]")
 
@@ -137,6 +142,7 @@
 	abstract_type = /datum/config_entry/keyed_list
 	config_entry_value = list()
 	dupes_allowed = TRUE
+	vv_VAS = FALSE			//VAS will not allow things like deleting from lists, it'll just bug horribly.
 	var/key_mode
 	var/value_mode
 	var/splitter = " "
