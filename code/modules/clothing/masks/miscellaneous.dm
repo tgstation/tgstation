@@ -272,3 +272,12 @@
 	icon_state = "scarecrow_sack"
 	item_state = "scarecrow_sack"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+
+/obj/item/clothing/mask/gondola
+	name = "gondola mask"
+	desc = "Genuine gondola fur."
+	icon_state = "gondola"
+	item_state = "gondola"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_SMALL
+
