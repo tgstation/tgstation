@@ -1239,7 +1239,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 /client/proc/smite(mob/living/carbon/human/target as mob)
 	set name = "Smite"
 	set category = "Fun"
-	if(!check_rights(R_ADMIN))
+	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
 		return
 
 	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_ROD, ADMIN_PUNISHMENT_SUPPLYPOD, ADMIN_PUNISHMENT_MAZING)

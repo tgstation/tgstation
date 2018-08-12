@@ -310,6 +310,7 @@ DROP TABLE IF EXISTS `player`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `player` (
   `ckey` varchar(32) NOT NULL,
+  `byond_key` varchar(32) DEFAULT NULL,
   `firstseen` datetime NOT NULL,
   `firstseen_round_id` int(11) unsigned NOT NULL,
   `lastseen` datetime NOT NULL,

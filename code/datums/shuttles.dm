@@ -346,7 +346,7 @@
 
 /datum/map_template/shuttle/whiteship/delta
 	suffix = "delta"
-	name = "NT Luxury Frigate"
+	name = "NT Frigate"
 
 /datum/map_template/shuttle/whiteship/pod
 	suffix = "whiteship_pod"

@@ -136,7 +136,7 @@
 			if(I && istype(I) && I.imp_in)
 				var/mob/living/R = I.imp_in
 				to_chat(R, "<span class='italics'>You hear a voice in your head saying: '[warning]'</span>")
-				log_talk(usr,"[key_name(usr)] sent an implant message to [R]/[R.ckey]: '[warning]'",LOGSAY)
+				log_talk(usr,"[key_name(usr)] sent an implant message to [key_name(R)]: '[warning]'",LOGSAY)
 
 		src.add_fingerprint(usr)
 	src.updateUsrDialog()

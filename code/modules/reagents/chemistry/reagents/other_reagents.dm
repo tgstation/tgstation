@@ -457,6 +457,13 @@
 	race = /datum/species/jelly/slime
 	mutationtext = "<span class='danger'>The pain subsides. Your whole body feels like slime.</span>"
 
+/datum/reagent/mutationtoxin/felinid
+	name = "Felinid Mutation Toxin"
+	id = "felinidmutationtoxin"
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/human/felinid
+	mutationtext = "<span class='danger'>The pain subsides. You feel... like a degenerate.</span>"
+
 /datum/reagent/mutationtoxin/lizard
 	name = "Lizard Mutation Toxin"
 	id = "lizardmutationtoxin"
@@ -1830,3 +1837,17 @@
 		to_chat(M, "You should sit down and take a rest...")
 	..()
 
+<<<<<<< HEAD
+=======
+/datum/reagent/tranquility
+	name = "Tranquility"
+	id = "tranquility"
+	description = "A highly mutative liquid of unknown origin."
+	color = "#9A6750" //RGB: 154, 103, 80
+	taste_description = "inner peace"
+	can_synth = FALSE
+
+/datum/reagent/tranquility/reaction_mob(mob/living/L, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
+		L.ForceContractDisease(new /datum/disease/transformation/gondola(), FALSE, TRUE)
+>>>>>>> 722abbbcea3ee953d4f6fb43466ab2d050a8c1bb

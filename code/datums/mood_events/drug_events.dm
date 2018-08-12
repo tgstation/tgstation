@@ -2,11 +2,6 @@
 	mood_change = 6
 	description = "<span class='nicegreen'>Woooow duudeeeeee...I'm tripping baaalls...</span>\n"
 
-/datum/mood_event/drugs/drunk
-	mood_change = 4
-	description = "<span class='nicegreen'>Everything just feels better after a drink or two.</span>\n"
-	timeout = 3000
-
 /datum/mood_event/drugs/smoked
 	description = "<span class='nicegreen'>I have had a smoke recently.</span>\n"
 	mood_change = 2

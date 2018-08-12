@@ -1801,6 +1801,7 @@
 #include "code\modules\mob\say.dm"
 #include "code\modules\mob\status_procs.dm"
 #include "code\modules\mob\transform_procs.dm"
+#include "code\modules\mob\typing_indicator.dm"
 #include "code\modules\mob\update_icons.dm"
 #include "code\modules\mob\camera\camera.dm"
 #include "code\modules\mob\dead\dead.dm"
