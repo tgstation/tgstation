@@ -198,10 +198,10 @@
 		else
 			fallback_name = mind.name
 	else if (istype(whom, /datum))
-		var/swhom = "[whom]"
+		var/swhom = "[whom.name]"
 		if(!swhom)
 			swhom = "*invalid*"
-		return swhom
+		return "\[[swhom]\]"
 
 	. = ""
 
