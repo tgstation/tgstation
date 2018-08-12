@@ -78,7 +78,7 @@ for current_ckey in ckey_list:
         else:
             print(msg)
             continue
-    cursor.execute("UPDATE {0} SET byond_key = \'{1}\' WHERE ckey = \'{2}\'".format(player_table, key, current_ckey[0]))
+    cursor.execute("UPDATE {0} SET byond_key = %s WHERE ckey = %s".format(player_table), (key, current_ckey[0]))
     db.commit()
 end_time = datetime.now()
 print("Script completed at {0} with duration {1}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), end_time - start_time))
