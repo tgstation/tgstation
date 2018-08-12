@@ -1,5 +1,5 @@
 /mob/living/proc/alien_talk(message, shown_name = real_name)
-	src.log_talk(message, LOG_SAY)
+	log_talk(src,"[key_name(src)] : [message]",LOGSAY)
 	message = trim(message)
 	if(!message)
 		return

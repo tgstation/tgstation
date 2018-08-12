@@ -45,7 +45,7 @@
 			var/link = FOLLOW_LINK(M, user)
 			to_chat(M, "[link] [my_message]")
 
-	user.log_talk(message, LOG_SAY, tag="cult")
+	log_talk(user,"CULT:[key_name(user)] : [message]",LOGSAY)
 
 /datum/action/innate/cult/comm/spirit
 	name = "Spiritual Communion"

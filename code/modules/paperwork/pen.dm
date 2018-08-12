@@ -117,7 +117,7 @@
 				to_chat(M, "<span class='danger'>You feel a tiny prick!</span>")
 			. = 1
 
-		log_combat(user, M, "stabbed", src)
+		add_logs(user, M, "stabbed", src)
 
 	else
 		. = ..()

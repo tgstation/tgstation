@@ -210,7 +210,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 				threatlevel = 6 // will never let you go
 			addtimer(CALLBACK(src, .proc/spam_flag_false), cooldowntime)
 
-			log_combat(src,C,"honked")
+			add_logs(src,C,"honked")
 
 			C.visible_message("<span class='danger'>[src] has honked [C]!</span>",\
 					"<span class='userdanger'>[src] has honked you!</span>")
