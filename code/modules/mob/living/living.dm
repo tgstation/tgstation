@@ -578,8 +578,8 @@
 	//resisting grabs (as if it helps anyone...)
 	if(!restrained(ignore_grab = 1) && pulledby)
 		visible_message("<span class='danger'>[src] resists against [pulledby]'s grip!</span>")
+		log_combat(src, pulledby, "resisted grab")
 		resist_grab()
-		log_combat(pulledby, src, "resisted grab")
 		return
 
 	//unbuckling yourself
