@@ -75,7 +75,7 @@ GLOBAL_LIST_EMPTY(bounties_list)
 
 // Returns a new bounty of random type, but does not add it to GLOB.bounties_list.
 /proc/random_bounty()
-	switch(rand(1, 11))
+	switch(rand(1, 13))
 		if(1)
 			var/subtype = pick(subtypesof(/datum/bounty/item/assistant))
 			return new subtype
@@ -109,6 +109,12 @@ GLOBAL_LIST_EMPTY(bounties_list)
 		if(11)
 			var/subtype = pick(subtypesof(/datum/bounty/item/mining))
 			return new subtype
+		if(12)
+			var/subtype = pick(subtypesof(/datum/bounty/item/medical))
+			return new subtype
+		if(13)
+			var/subtype = pick(subtypesof(/datum/bounty/item/botany))
+			return new subtype
 
 // Called lazily at startup to populate GLOB.bounties_list with random bounties.
 /proc/setup_bounties()
@@ -122,7 +128,9 @@ GLOBAL_LIST_EMPTY(bounties_list)
 											/datum/bounty/item/security = 1,
 											/datum/bounty/virus = 1,
 											/datum/bounty/item/engineering = 1,
-											/datum/bounty/item/mining = 2)
+											/datum/bounty/item/mining = 2,
+											/datum/bounty/item/medical = 2,
+											/datum/bounty/item/botany = 2)
 	
 	for(var/the_type in easy_add_list_subtypes)
 		for(var/i in 1 to easy_add_list_subtypes[the_type])
@@ -154,6 +162,7 @@ GLOBAL_LIST_EMPTY(bounties_list)
 	/********************************Low Priority Gens********************************/
 	var/list/low_priority_strict_type_list = list( /datum/bounty/item/alien_organs,
 													/datum/bounty/item/syndicate_documents,
+													/datum/bounty/item/adamantine,
 													/datum/bounty/more_bounties)
 													
 	for(var/low_priority_bounty in low_priority_strict_type_list)
