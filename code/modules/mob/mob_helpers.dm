@@ -476,8 +476,9 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		ClickOn(T)
 
 // Logs a message in a mob's individual log, and in the global logs as well if log_globally is true
-/mob/proc/log_message(message, message_type, color=null, log_globally = TRUE)
-	if(!LAZYLEN(message) || !message_type)
+/mob/log_message(message, message_type, color=null, log_globally = TRUE)
+	if(!LAZYLEN(message))
+		stack_trace("Empty message")
 		return
 
 	// Cannot use the list as a map if the key is a number, so we stringify it (thank you BYOND)
@@ -490,9 +491,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(!islist(logging[smessage_type]))
 		logging[smessage_type] = list()
 
-	var/infopart = key_name(src)
-	var/locpart = loc_name(src)
-
 	var/colored_message = message
 	if(color)
 		if(color[1] == "#")
@@ -500,52 +498,15 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		else
 			colored_message = "<font color='[color]'>[message]</font>"
 
-	var/list/timestamped_message = list("[LAZYLEN(logging[smessage_type]) + 1]\[[time_stamp()]\] [infopart] [locpart]" = colored_message)
+	var/list/timestamped_message = list("[LAZYLEN(logging[smessage_type]) + 1]\[[time_stamp()]\] [key_name(src)] [loc_name(src)]" = colored_message)
 
 	logging[smessage_type] += timestamped_message
+
 	if(client)
 		client.player_details.logging[smessage_type] += timestamped_message
 
 	if(log_globally)
-		var/global_log_text = "[infopart] [message] [locpart]"
-		switch(message_type)
-			if(LOG_ATTACK)
-				log_attack(global_log_text)
-			if(LOG_SAY)
-				log_say(global_log_text)
-			if(LOG_WHISPER)
-				log_whisper(global_log_text)
-			if(LOG_EMOTE)
-				log_emote(global_log_text)
-			if(LOG_DSAY)
-				log_dsay(global_log_text)
-			if(LOG_PDA)
-				log_pda(global_log_text)
-			if(LOG_CHAT)
-				log_chat(global_log_text)
-			if(LOG_COMMENT)
-				log_comment(global_log_text)
-			if(LOG_TELECOMMS)
-				log_telecomms(global_log_text)
-			if(LOG_OOC)
-				log_ooc(global_log_text)
-			if(LOG_ADMIN)
-				log_admin(global_log_text)
-			if(LOG_OWNERSHIP)
-				log_game(global_log_text)
-			if(LOG_GAME)
-				log_game(global_log_text)
-			else
-				stack_trace("Invalid individual logging type: [message_type]. Defaulting to [LOG_GAME] (LOG_GAME).")
-				log_game(global_log_text)
-
-// Helper for generic text messages
-/mob/proc/log_talk(message, message_type, tag=null, log_globally=TRUE)
-	var/prefix = ""
-	if(tag)
-		prefix = "([tag]) "
-
-	log_message("[prefix]\"[message]\"", message_type, log_globally=log_globally)
+		..()
 
 /mob/proc/can_hear()
 	. = TRUE

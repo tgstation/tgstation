@@ -175,7 +175,7 @@ Proc for attack log creation, because really why not
 5 is additional information, anything that needs to be added
 */
 
-/proc/log_combat(mob/user, mob/target, what_done, object=null, addition=null)
+/proc/log_combat(atom/user, atom/target, what_done, object=null, addition=null)
 	var/ssource = key_name(user)
 	var/starget = key_name(target)
 
@@ -194,16 +194,6 @@ Proc for attack log creation, because really why not
 	if(user != target)
 		var/reverse_message = "has been [what_done] by [ssource][(sobject||addition) ? " with ":""][sobject][addition][hp]"
 		target.log_message(reverse_message, LOG_ATTACK, color="orange", log_globally=FALSE)
-
-// Helper for logging of messages with only one sender and receiver
-/proc/log_directed_talk(mob/source, mob/target, message, message_type, tag)
-	if(!tag)
-		stack_trace("Unspecified tag for private message")
-		tag = "UNKNOWN"
-
-	source.log_talk(message, message_type, tag="[tag] to [key_name(target)]")
-	if(source != target)
-		target.log_talk(message, message_type, tag="[tag] from [key_name(source)]", log_globally=FALSE)
 
 /proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null)
 	if(!user || !target)

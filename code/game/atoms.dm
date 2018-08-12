@@ -586,6 +586,55 @@
 /atom/proc/GenerateTag()
 	return
 
+// Generic logging helper
+/atom/proc/log_message(message, message_type)
+	var/log_text = "[key_name(src)] [message] [loc_name(src)]"
+	switch(message_type)
+		if(LOG_ATTACK)
+			log_attack(log_text)
+		if(LOG_SAY)
+			log_say(log_text)
+		if(LOG_WHISPER)
+			log_whisper(log_text)
+		if(LOG_EMOTE)
+			log_emote(log_text)
+		if(LOG_DSAY)
+			log_dsay(log_text)
+		if(LOG_PDA)
+			log_pda(log_text)
+		if(LOG_CHAT)
+			log_chat(log_text)
+		if(LOG_COMMENT)
+			log_comment(log_text)
+		if(LOG_TELECOMMS)
+			log_telecomms(log_text)
+		if(LOG_OOC)
+			log_ooc(log_text)
+		if(LOG_ADMIN)
+			log_admin(log_text)
+		if(LOG_OWNERSHIP)
+			log_game(log_text)
+		if(LOG_GAME)
+			log_game(log_text)
+		else
+			stack_trace("Invalid individual logging type: [message_type]. Defaulting to [LOG_GAME] (LOG_GAME).")
+			log_game(log_text)
+
+// Helper for logging chat messages or other logs wiht arbitrary inputs (e.g. announcements)
+/atom/proc/log_talk(message, message_type, tag=null, log_globally=TRUE)
+	var/prefix = tag ? "([tag]) " : ""
+	log_message("[prefix]\"[message]\"", message_type, log_globally=log_globally)
+
+// Helper for logging of messages with only one sender and receiver
+/proc/log_directed_talk(atom/source, atom/target, message, message_type, tag)
+	if(!tag)
+		stack_trace("Unspecified tag for private message")
+		tag = "UNKNOWN"
+
+	source.log_talk(message, message_type, tag="[tag] to [key_name(target)]")
+	if(source != target)
+		target.log_talk(message, message_type, tag="[tag] from [key_name(source)]", log_globally=FALSE)
+
 // Filter stuff
 /atom/movable/proc/add_filter(name,priority,list/params)
 	if(!filter_data)
