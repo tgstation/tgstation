@@ -1,0 +1,4 @@
+author: "WJohnston"
+delete-after: True
+changes: 
+  - balance: "Syndicate (melee) simple animals will now move less predictably and attack twice as often, hopefully making them quite a bit more dangerous."
