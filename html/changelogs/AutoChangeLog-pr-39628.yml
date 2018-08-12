@@ -1,0 +1,5 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - rscadd: "Mixed drinks now give mood boosts with varying strength depending on their quality."
+  - rscadd: "Although powerful, mood boosts from quality drinks are short lived. If you want to make the most out of them, take a sip every few minutes like a normal human being instead of downing the entire glass like the alcoholic you are."
