@@ -640,13 +640,11 @@
 
 /*
 Proc for attack log creation, because really why not
-1 argument is the actor
-2 argument is the target of action
-3 is the description of action(like punched, throwed, or any other verb)
-4 is the tool with which the action was made(usually item)
-5 is additional information, anything that needs to be added
-
-The log will be formatted as "<user> has <what_done> <target> with <object> <addition>"
+1 argument is the actor performing the action
+2 argument is the target of the action
+3 is a verb describing the action (e.g. punched, throwed, kicked, etc.)
+4 is a tool with which the action was made (usually an item)
+5 is any additional text, which will be appended to the rest of the log line
 */
 
 /proc/log_combat(atom/user, atom/target, what_done, atom/object=null, addition=null)
@@ -662,11 +660,13 @@ The log will be formatted as "<user> has <what_done> <target> with <object> <add
 		sobject = "with [key_name(object)]"
 		saddition = " [saddition]"
 
-	var/message = "has [what_done] [starget][sobject][saddition][hp]"
+	var/postfix = "[sobject][saddition][hp]"
+
+	var/message = "has [what_done] [starget][postfix]"
 	user.log_message(message, LOG_ATTACK, color="red")
 
 	if(user != target)
-		var/reverse_message = "has been [what_done] by [ssource][(sobject||addition) ? " with ":""][sobject][addition][hp]"
+		var/reverse_message = "has been [what_done] by [ssource][postfix]"
 		target.log_message(reverse_message, LOG_ATTACK, color="orange", log_globally=FALSE)
 
 // Filter stuff
