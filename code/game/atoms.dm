@@ -654,19 +654,15 @@ The log will be formatted as "<user> has <what_done> <target> with <object> <add
 	var/starget = key_name(target)
 
 	var/mob/living/living_target = target
-	var/hp = istype(living_target) ? " (NEWHP: [living_target.health]) " : " "
+	var/hp = istype(living_target) ? " (NEWHP: [living_target.health]) " : ""
 
 	var/sobject = ""
+	var/saddition = "[addition]"
 	if(object)
 		sobject = "with [key_name(object)]"
+		saddition = " [saddition]"
 
-	var/saddition = ""
-	if(addition)
-		saddition = "[addition]"
-		if(object)
-			saddition = " [saddition]"
-
-	var/message = "has [what_done] [starget][sobject][addition][hp]"
+	var/message = "has [what_done] [starget][sobject][saddition][hp]"
 	user.log_message(message, LOG_ATTACK, color="red")
 
 	if(user != target)
