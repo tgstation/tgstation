@@ -274,7 +274,7 @@
 	cures = list("condensedcapsaicin") //beats the hippie crap right out of your system
 	cure_chance = 80
 	stage_prob = 5
-	agent = "Tranquillity"
+	agent = "Tranquility"
 	desc = "Consuming the flesh of a Gondola comes at a terrible price."
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	visibility_flags = 0
