@@ -5,8 +5,6 @@
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
-	if(typing_indicator)
-		qdel(typing_indicator)
 	if(message)
 		say(message)
 
@@ -17,8 +15,6 @@
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
-	if(typing_indicator)
-		qdel(typing_indicator)
 	whisper(message)
 
 /mob/proc/whisper(message, datum/language/language=null)
