@@ -49,7 +49,7 @@
 		if(!reagents || !reagents.total_volume)
 			return // The condiment might be empty after the delay.
 		user.visible_message("<span class='warning'>[user] feeds [M] from [src].</span>")
-		add_logs(user, M, "fed", reagents.log_list())
+		log_combat(user, M, "fed", reagents.log_list())
 
 	var/fraction = min(10/reagents.total_volume, 1)
 	reagents.reaction(M, INGEST, fraction)

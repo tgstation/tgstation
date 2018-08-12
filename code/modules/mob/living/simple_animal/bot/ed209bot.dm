@@ -549,7 +549,7 @@ Auto Patrol[]"},
 		var/mob/living/carbon/human/H = C
 		var/judgement_criteria = judgement_criteria()
 		threat = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
-	add_logs(src,C,"stunned")
+	log_combat(src,C,"stunned")
 	if(declare_arrests)
 		var/area/location = get_area(src)
 		speak("[arrest_type ? "Detaining" : "Arresting"] level [threat] scumbag <b>[C]</b> in [location].", radio_channel)
@@ -563,7 +563,7 @@ Auto Patrol[]"},
 						"<span class='userdanger'>[src] is trying to put zipties on you!</span>")
 
 	spawn(60)
-		if( !Adjacent(C) || !isturf(C.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
+		if( !on || !Adjacent(C) || !isturf(C.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
 			return
 		if(!C.handcuffed)
 			C.handcuffed = new /obj/item/restraints/handcuffs/cable/zipties/used(C)

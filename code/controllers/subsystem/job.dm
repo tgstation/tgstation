@@ -362,7 +362,7 @@ SUBSYSTEM_DEF(job)
 		var/allowed_to_be_a_loser = !jobban_isbanned(player, SSjob.overflow_role)
 		if(QDELETED(player) || !allowed_to_be_a_loser)
 			RejectPlayer(player)
-		else 
+		else
 			if(!AssignRole(player, SSjob.overflow_role))
 				RejectPlayer(player)
 	else if(player.client.prefs.joblessrole == BERANDOMJOB)

@@ -224,7 +224,7 @@
 			if(is_eligible_servant(owner))
 				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar("You are mine and his, now.")]\"</span>")
 				if(add_servant_of_ratvar(owner))
-					owner.log_message("<font color=#BE8700>Conversion was done with a Mania Motor.</font>", INDIVIDUAL_ATTACK_LOG)
+					owner.log_message("conversion was done with a Mania Motor", LOG_ATTACK, color="#BE8700")
 			owner.Unconscious(100)
 		else
 			if(prob(severity * 0.15))
@@ -468,7 +468,7 @@
 	var/health_difference = old_health - owner.health
 	if(!health_difference)
 		return
-	owner.visible_message("<span class='warning'>The light in [owner]'s eyes dims as they're harmed!</span>", \
+	owner.visible_message("<span class='warning'>The light in [owner]'s eyes dims as [owner.p_theyre()] harmed!</span>", \
 	"<span class='boldannounce'>The dazzling lights dim as you're harmed!</span>")
 	health_difference *= 2 //so 10 health difference translates to 20 deciseconds of stun reduction
 	duration -= health_difference

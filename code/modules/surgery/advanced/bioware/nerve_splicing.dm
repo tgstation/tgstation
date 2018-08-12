@@ -1,10 +1,6 @@
-/obj/item/disk/surgery/nerve_splicing
-	name = "Nerve Splicing Surgery Disk"
-	desc = "The disk provides instructions on how to splice the circulatory system to counter stuns and paralysis."
-	surgeries = list(/datum/surgery/advanced/bioware/nerve_splicing)
-
 /datum/surgery/advanced/bioware/nerve_splicing
-	name = "nerve splicing"
+	name = "Nerve Splicing"
+	desc = "A surgical procedure which splices the patient's nerves, making them more resistant to stuns."
 	steps = list(/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,
 				/datum/surgery_step/clamp_bleeders,

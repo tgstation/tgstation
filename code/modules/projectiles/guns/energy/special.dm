@@ -179,6 +179,7 @@
 	icon_state = "wormhole_projector"
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
+	var/atmos_link = FALSE
 
 /obj/item/gun/energy/wormhole_projector/update_icon()
 	icon_state = "[initial(icon_state)][select]"
@@ -227,7 +228,7 @@
 	p_blue.link_portal(p_orange)
 
 /obj/item/gun/energy/wormhole_projector/proc/create_portal(obj/item/projectile/beam/wormhole/W, turf/target)
-	var/obj/effect/portal/P = new /obj/effect/portal(target, src, 300, null, FALSE, null)
+	var/obj/effect/portal/P = new /obj/effect/portal(target, src, 300, null, FALSE, null, atmos_link)
 	if(istype(W, /obj/item/projectile/beam/wormhole/orange))
 		qdel(p_orange)
 		p_orange = P

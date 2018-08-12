@@ -243,7 +243,7 @@ Difficulty: Medium
 	playsound(loc, 'sound/effects/meteorimpact.ogg', 200, 1)
 	for(var/mob/living/L in orange(1, src))
 		if(L.stat)
-			visible_message("<span class='warning'>[src] slams down on [L], crushing them!</span>")
+			visible_message("<span class='warning'>[src] slams down on [L], crushing [L.p_them()]!</span>")
 			L.gib()
 		else
 			L.adjustBruteLoss(75)

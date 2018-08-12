@@ -1,0 +1,9 @@
+author: "Logging refactor and improvement"
+delete-after: True
+changes: 
+  - code_imp: "All mob-related logs now include the area name and (x,y,z) position."
+  - code_imp: "All logs that included an (x,y,z) position now also include the area name."
+  - code_imp: "Standardized logging format of mob/player keys."
+  - code_imp: "Telecomms logs are now included in the individual logging panel."
+  - code_imp: "Fixed many other cases of logs being sent to either the individual logging panel or the saved log files, but not both."
+  - refactor: "The logging system has been refactored to contain less redundant code and to produce more consistent logs."

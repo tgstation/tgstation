@@ -16846,13 +16846,14 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/item/electronics/airalarm,
-/obj/item/electronics/airalarm,
-/obj/item/electronics/firealarm,
-/obj/item/electronics/firealarm,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
+/obj/item/book/manual/wiki/atmospherics{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/book/manual/wiki/atmospherics,
 /turf/open/floor/plasteel/caution{
 	dir = 9
 	},
@@ -25419,6 +25420,7 @@
 "bhR" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/bot,
+/obj/item/book/manual/wiki/cooking_to_serve_man,
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "bhS" = (
@@ -40706,6 +40708,7 @@
 	name = "Station Intercom";
 	pixel_y = 26
 	},
+/obj/item/book/manual/wiki/tcomms,
 /obj/item/radio{
 	pixel_y = 5
 	},
@@ -55251,11 +55254,12 @@
 	pixel_x = 26
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/delivery,
+/obj/item/book/manual/wiki/tcomms,
 /obj/item/wrench,
 /obj/item/screwdriver{
 	pixel_y = 5
 	},
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/tcommsat/server)
 "cpN" = (
@@ -72482,15 +72486,16 @@
 /area/medical/medbay/central)
 "cZH" = (
 /obj/structure/table/glass,
-/obj/item/stack/medical/gauze,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/stack/medical/ointment,
 /obj/machinery/camera{
 	c_tag = "Medbay - Sleepers";
 	network = list("ss13","medbay");
 	dir = 2;
 	name = "medbay camera"
 	},
+/obj/item/book/manual/wiki/medicine,
+/obj/item/stack/medical/gauze,
+/obj/item/stack/medical/bruise_pack,
+/obj/item/stack/medical/ointment,
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 1
 	},
@@ -73179,8 +73184,19 @@
 /area/medical/chemistry)
 "dbc" = (
 /obj/structure/table/glass,
-/obj/item/clipboard,
-/obj/item/toy/figure/chemist,
+/obj/item/book/manual/wiki/chemistry{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/book/manual/wiki/grenades,
+/obj/item/clipboard{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/toy/figure/chemist{
+	pixel_x = 4;
+	pixel_y = -4
+	},
 /turf/open/floor/plasteel/whiteyellow/corner{
 	dir = 1
 	},
@@ -81084,14 +81100,15 @@
 /area/medical/medbay/central)
 "dsG" = (
 /obj/structure/table/glass,
-/obj/item/wrench/medical,
-/obj/item/clothing/neck/stethoscope,
 /obj/machinery/camera{
 	c_tag = "Medbay - Cryogenics";
 	network = list("ss13","medbay");
 	dir = 1;
 	name = "medbay camera"
 	},
+/obj/item/book/manual/wiki/medicine,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/wrench/medical,
 /turf/open/floor/plasteel/whiteblue,
 /area/medical/medbay/central)
 "dsH" = (
@@ -81181,12 +81198,13 @@
 /turf/open/floor/plasteel/whiteblue,
 /area/medical/surgery)
 "dsQ" = (
-/obj/item/scalpel,
-/obj/item/cautery,
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/book/manual/wiki/surgery,
+/obj/item/scalpel,
+/obj/item/cautery,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 9
 	},
@@ -87920,9 +87938,13 @@
 /area/science/mixing)
 "dHh" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid/toxin,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
+	},
+/obj/item/book/manual/wiki/toxins,
+/obj/item/storage/firstaid/toxin{
+	pixel_x = -4;
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -100070,6 +100092,13 @@
 	},
 /turf/closed/wall,
 /area/engine/storage_shared)
+"nDZ" = (
+/obj/structure/table/reinforced,
+/obj/item/book/manual/wiki/circuitry,
+/turf/open/floor/plasteel/white/side{
+	dir = 4
+	},
+/area/science/circuit)
 "nOg" = (
 /obj/structure/lattice,
 /turf/open/space,
@@ -125486,7 +125515,7 @@ djn
 dle
 dmr
 dog
-dle
+nDZ
 drz
 dhR
 dul

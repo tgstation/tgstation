@@ -11,7 +11,12 @@
 	if(stat != DEAD) //Reagent processing needs to come before breathing, to prevent edge cases.
 		handle_organs()
 
-	if(..()) //not dead
+	. = ..()
+
+	if (QDELETED(src))
+		return
+
+	if(.) //not dead
 		handle_blood()
 
 	if(stat != DEAD)
@@ -424,6 +429,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(drunkenness)
 		drunkenness = max(drunkenness - (drunkenness * 0.04), 0)
 		if(drunkenness >= 6)
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drinks/drunk)
 			if(prob(25))
 				slurring += 2
 			jitteriness = max(jitteriness - 3, 0)

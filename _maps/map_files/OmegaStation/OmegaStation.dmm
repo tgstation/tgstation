@@ -13303,7 +13303,7 @@
 	name = "Atmospherics Lockdown Control";
 	pixel_x = 24;
 	pixel_y = -24;
-	req_access_txt = "25"
+	req_access_txt = "24"
 	},
 /turf/open/floor/plasteel/caution,
 /area/engine/atmos)

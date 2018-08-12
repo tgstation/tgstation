@@ -38,16 +38,17 @@
 			cross.icon_state = "holylight"
 			font_color = "blue"
 			prayer_type = "SPIRITUAL PRAYER"
-
+	
+	var/msg_tmp = msg
 	msg = "<span class='adminnotice'>[icon2html(cross, GLOB.admins)]<b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> <span class='linkify'>[msg]</span></span>"
-
+	
 	for(var/client/C in GLOB.admins)
 		if(C.prefs.chat_toggles & CHAT_PRAYER)
 			to_chat(C, msg)
 			if(C.prefs.toggles & SOUND_PRAYERS)
 				if(usr.job == "Chaplain")
 					SEND_SOUND(C, sound('sound/effects/pray.ogg'))
-	to_chat(usr, "Your prayers have been received by the gods.")
+	to_chat(usr, "<span class='info'>You pray to the gods: \"[msg_tmp]\"</span>")
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Prayer") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	//log_admin("HELP: [key_name(src)]: [msg]")

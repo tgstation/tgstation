@@ -475,22 +475,37 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		var/mob/living/T = pick(nearby_mobs)
 		ClickOn(T)
 
-/mob/proc/log_message(message, message_type)
-	if(!LAZYLEN(message) || !message_type)
+// Logs a message in a mob's individual log, and in the global logs as well if log_globally is true
+/mob/log_message(message, message_type, color=null, log_globally = TRUE)
+	if(!LAZYLEN(message))
+		stack_trace("Empty message")
 		return
 
+	// Cannot use the list as a map if the key is a number, so we stringify it (thank you BYOND)
+	var/smessage_type = num2text(message_type)
+
 	if(client)
-		if(!islist(client.player_details.logging[message_type]))
-			client.player_details.logging[message_type] = list()
+		if(!islist(client.player_details.logging[smessage_type]))
+			client.player_details.logging[smessage_type] = list()
 
-	if(!islist(logging[message_type]))
-		logging[message_type] = list()
+	if(!islist(logging[smessage_type]))
+		logging[smessage_type] = list()
 
-	var/list/timestamped_message = list("[LAZYLEN(logging[message_type]) + 1]\[[time_stamp()]\] [key_name(src)]" = message)
+	var/colored_message = message
+	if(color)
+		if(color[1] == "#")
+			colored_message = "<font color=[color]>[message]</font>"
+		else
+			colored_message = "<font color='[color]'>[message]</font>"
 
-	logging[message_type] += timestamped_message
+	var/list/timestamped_message = list("[LAZYLEN(logging[smessage_type]) + 1]\[[time_stamp()]\] [key_name(src)] [loc_name(src)]" = colored_message)
+
+	logging[smessage_type] += timestamped_message
+
 	if(client)
-		client.player_details.logging[message_type] += timestamped_message
+		client.player_details.logging[smessage_type] += timestamped_message
+
+	..()
 
 /mob/proc/can_hear()
 	. = TRUE

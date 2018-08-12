@@ -786,7 +786,7 @@
 					if(do_after(user, 20, 1, target = src))
 						if(!panel_open || !S.use(2))
 							return
-						user.visible_message("<span class='notice'>[user] reinforce \the [src] with metal.</span>",
+						user.visible_message("<span class='notice'>[user] reinforces \the [src] with metal.</span>",
 											"<span class='notice'>You reinforce \the [src] with metal.</span>")
 						security_level = AIRLOCK_SECURITY_METAL
 						update_icon()
@@ -800,7 +800,7 @@
 					if(do_after(user, 20, 1, target = src))
 						if(!panel_open || !S.use(2))
 							return
-						user.visible_message("<span class='notice'>[user] reinforce \the [src] with plasteel.</span>",
+						user.visible_message("<span class='notice'>[user] reinforces \the [src] with plasteel.</span>",
 											"<span class='notice'>You reinforce \the [src] with plasteel.</span>")
 						security_level = AIRLOCK_SECURITY_PLASTEEL
 						modify_max_integrity(normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER)
@@ -1281,7 +1281,7 @@
 		bolt() //Bolt it!
 		set_electrified(ELECTRIFIED_PERMANENT)  //Shock it!
 		if(origin)
-			LAZYADD(shockedby, "\[[time_stamp()]\][origin](ckey:[origin.ckey])")
+			LAZYADD(shockedby, "\[[time_stamp()]\] [key_name(origin)]")
 
 
 /obj/machinery/door/airlock/disable_lockdown()
@@ -1550,8 +1550,8 @@
 	if(wires.is_cut(WIRE_SHOCK))
 		to_chat(user, "The electrification wire has been cut")
 	else
-		LAZYADD(shockedby, "\[[time_stamp()]\][user](ckey:[user.ckey])")
-		add_logs(user, src, "electrified")
+		LAZYADD(shockedby, "\[[time_stamp()]\] [key_name(user)]")
+		log_combat(user, src, "electrified")
 		set_electrified(AI_ELECTRIFY_DOOR_TIME)
 
 /obj/machinery/door/airlock/proc/shock_perm(mob/user)
@@ -1560,8 +1560,8 @@
 	if(wires.is_cut(WIRE_SHOCK))
 		to_chat(user, "The electrification wire has been cut")
 	else
-		LAZYADD(shockedby, text("\[[time_stamp()]\][user](ckey:[user.ckey])"))
-		add_logs(user, src, "electrified")
+		LAZYADD(shockedby, text("\[[time_stamp()]\] [key_name(user)]"))
+		log_combat(user, src, "electrified")
 		set_electrified(ELECTRIFIED_PERMANENT)
 
 /obj/machinery/door/airlock/proc/emergency_on(mob/user)
