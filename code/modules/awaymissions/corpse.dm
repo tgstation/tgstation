@@ -50,10 +50,9 @@
 	. = ..()
 	if(instant || (roundstart && (mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))))
 		create()
-	else
+	else if(ghost_usable)
 		GLOB.poi_list |= src
-		if(ghost_usable)
-			LAZYADD(GLOB.mob_spawners[name], src)
+		LAZYADD(GLOB.mob_spawners[name], src)
 
 /obj/effect/mob_spawn/Destroy()
 	GLOB.poi_list -= src
