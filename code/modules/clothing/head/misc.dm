@@ -327,6 +327,7 @@
 	name = "french beret"
 	desc = "A quality beret, infused with the aroma of chain-smoking, wine-swilling Parisians. You feel less inclined to engage military conflict, for some reason."
 	icon_state = "beretblack"
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/frenchberet/speechModification(M)
 	if(copytext(M, 1, 2) != "*")
