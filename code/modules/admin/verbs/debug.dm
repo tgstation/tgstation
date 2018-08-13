@@ -1109,7 +1109,11 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 		return
 	if(alert(usr, "Are you absolutely sure you want to count the types in the GC subsystem queue?", "Choppy waves ahead", "No", "Yes") == "Yes")
 		var/list/results = new /list(GC_QUEUE_COUNT)
-		for(var/idx in 1 to GC_QUEUE_COUNT)
+		results[GC_QUEUE_PREQUEUE] = list()
+		for (var/item in SSgarbage.queues[GC_QUEUE_PREQUEUE]) // Prequeue items are references
+			results[GC_QUEUE_PREQUEUE][item?:type] += 1
+			sleep(0) // Yield processing so maybe watchdog won't kill the server
+		for(var/idx in 2 to GC_QUEUE_COUNT) // The rest are not
 			results[idx] = list()
 			for (var/ref in SSgarbage.queues[idx])
 				var/item = locate(ref)
