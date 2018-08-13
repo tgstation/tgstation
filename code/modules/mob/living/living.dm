@@ -180,7 +180,6 @@
 		return
 	now_pushing = TRUE
 	var/t = get_dir(src, AM)
-	var/push_normal = (AM.move_resist * MOVE_FORCE_PUSH_RATIO) <= force
 	var/push_anchored = FALSE
 	if((AM.move_resist * MOVE_FORCE_CRUSH_RATIO) <= force)
 		if(move_crush(AM, move_force, t))
@@ -188,8 +187,7 @@
 	if((AM.move_resist * MOVE_FORCE_FORCEPUSH_RATIO) <= force)			//trigger move_crush and/or force_push regardless of if we can push it normally
 		if(force_push(AM, move_force, t, push_anchored))
 			push_anchored = TRUE
-	push_normal |= push_anchored
-	if(!push_normal || (AM.anchored && !push_anchored))
+	if((AM.anchored && !push_anchored) || force <= AM.move_resist * MOVE_FORCE_PUSH_RATIO)
 		now_pushing = FALSE
 		return
 	if (istype(AM, /obj/structure/window))
