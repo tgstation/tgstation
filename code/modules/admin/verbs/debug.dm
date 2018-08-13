@@ -1100,3 +1100,19 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 		return
 	if(alert(usr, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modificatoins?", "Really reset?", "No", "Yes") == "Yes")
 		config.admin_reload()
+
+/client/proc/count_gc_types()
+	set category = "Debug"
+	set name = "Count GC types"
+	set desc = "Count the types in the GC subsystem queue"
+	if(!check_rights(R_DEBUG))
+		return
+	if(alert(usr, "Are you absolutely sure you want to count the types in the GC subsystem queue?", "Choppy waves ahead", "No", "Yes") == "Yes")
+		var/list/results = new /list(GC_QUEUE_COUNT)
+		for(var/idx in 1 to GC_QUEUE_COUNT)
+			results[idx] = list()
+			for (var/ref in SSgarbage.queues[idx])
+				var/item = locate(ref)
+				results[idx][item?:type] += 1
+				sleep(0) // Yield processing so maybe watchdog won't kill the server
+		to_chat(usr, json_encode(results))
