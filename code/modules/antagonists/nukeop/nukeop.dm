@@ -258,7 +258,6 @@
 			var/turf/T = get_turf(D)
 			if(!T || !is_station_level(T.z))
 				return FALSE
-			//More stuff here.
 	return TRUE
 
 /datum/team/nuclear/proc/operatives_dead()
@@ -275,7 +274,6 @@
 
 /datum/team/nuclear/proc/get_result()
 	var/evacuation = EMERGENCY_ESCAPED_OR_ENDGAMED
-	//var/evacuation = SSshuttle.emergency.mode == SHUTTLE_ENDGAME
 	var/disk_rescued = disk_rescued()
 	var/syndies_didnt_escape = !syndies_escaped()
 	var/station_was_nuked = SSticker.mode.station_was_nuked
