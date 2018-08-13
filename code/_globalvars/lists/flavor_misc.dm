@@ -102,6 +102,7 @@ GLOBAL_LIST_INIT(scarySounds, list('sound/weapons/thudswoosh.ogg','sound/weapons
 27 Virology
 28 Xenobiology
 29 Law Office
+30 Detective's Office
 */
 
 //The whole system for the sorttype var is determined based on the order of this list,
@@ -117,7 +118,7 @@ GLOBAL_LIST_INIT(TAGGERLOCATIONS, list("Disposals",
 	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
 	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics",
 	"Circuitry", "Toxins", "Dormitories", "Virology", 
-	"Xenobiology","Law Office"))
+	"Xenobiology", "Law Office","Detective's Office"))
 
 GLOBAL_LIST_INIT(station_prefixes, world.file2list("strings/station_prefixes.txt") + "")
 

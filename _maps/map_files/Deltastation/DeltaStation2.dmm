@@ -45009,9 +45009,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment,
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 8;
+	sortType = 30
 	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 4
@@ -46195,13 +46195,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/neutral,
-/area/hallway/primary/starboard)
-"bXv" = (
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/starboard)
 "bXw" = (
@@ -47389,15 +47382,6 @@
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -32
-	},
-/turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/starboard)
-"bZB" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/disposalpipe/junction/flip{
-	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/starboard)
@@ -148762,8 +148746,8 @@ bPj
 bRk
 bSZ
 bVd
-bXv
-bZB
+bXn
+bZs
 cbp
 cdg
 ceW
