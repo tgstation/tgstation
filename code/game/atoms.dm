@@ -615,6 +615,8 @@
 			log_ooc(log_text)
 		if(LOG_ADMIN)
 			log_admin(log_text)
+		if(LOG_ADMIN_PRIVATE)
+			log_admin_private(log_text)
 		if(LOG_OWNERSHIP)
 			log_game(log_text)
 		if(LOG_GAME)
