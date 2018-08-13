@@ -26528,7 +26528,9 @@
 /obj/machinery/power/apc/auto_name/west{
 	pixel_x = -26
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/caution{
+	dir = 8
+	},
 /area/engine/storage_shared)
 "beq" = (
 /obj/structure/sign/warning/vacuum/external,
@@ -75907,20 +75909,15 @@
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
-"gYu" = (
-/turf/open/floor/plasteel/caution/corner{
-	dir = 8
-	},
-/area/engine/storage_shared)
 "hfn" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/machinery/vending/cigarette,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/vault,
 /area/engine/break_room)
 "hkq" = (
-/turf/open/floor/plasteel/caution/corner,
+/turf/open/floor/plasteel,
 /area/engine/storage_shared)
 "hvt" = (
 /obj/structure/kitchenspike_frame,
@@ -76115,7 +76112,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "kCw" = (
 /obj/machinery/vending/coffee,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/vault,
 /area/engine/break_room)
 "kDM" = (
 /obj/structure/cable/yellow{
@@ -76246,7 +76243,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel/caution/corner,
+/turf/open/floor/plasteel,
 /area/engine/storage_shared)
 "mWg" = (
 /obj/structure/girder,
@@ -76381,8 +76378,8 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/caution/corner{
-	dir = 8
+/turf/open/floor/plasteel/caution{
+	dir = 4
 	},
 /area/engine/storage_shared)
 "oLW" = (
@@ -76508,7 +76505,9 @@
 /area/science/circuit)
 "qdT" = (
 /obj/item/twohanded/required/kirbyplants/random,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/caution{
+	dir = 2
+	},
 /area/engine/storage_shared)
 "qhe" = (
 /obj/effect/turf_decal/stripes/line{
@@ -76646,7 +76645,9 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/caution{
+	dir = 6
+	},
 /area/engine/storage_shared)
 "sao" = (
 /obj/machinery/vending/tool,
@@ -76788,7 +76789,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel/caution/corner,
+/turf/open/floor/plasteel,
 /area/engine/storage_shared)
 "uun" = (
 /obj/machinery/vending/assist,
@@ -76800,7 +76801,6 @@
 	req_one_access_txt = "32;19"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/engine/storage_shared)
@@ -117535,7 +117535,7 @@ bjL
 bnb
 owR
 owR
-gYu
+hkq
 qdT
 bxd
 byT
@@ -118049,7 +118049,7 @@ ecs
 rxn
 bpi
 sao
-gYu
+hkq
 bvh
 bxd
 byV
