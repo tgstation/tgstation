@@ -72,30 +72,65 @@
 
 // relics of lavaland
 
-/datum/export/weapon/hierophant
+/datum/export/weapon/hierophant_club
 	cost = 40000
 	unit_name = "Hierophant Club"
 	export_types = list(/obj/item/hierophant_club)
 
-/datum/export/weapon/lava
+/datum/export/weapon/legion_stormstaff
+	cost = 40000
+	unit_name = "Staff of Storms"
+	export_types = list(/obj/item/staff/storm)
+
+/datum/export/weapon/drake_lavastaff
 	cost = 40000
 	unit_name = "Lava Staff"
 	export_types = list(/obj/item/lava_staff)
 
-/datum/export/weapon/cleaving_saw
+/datum/export/weapon/drake_blood
+	cost = 40000
+	unit_name = "Bottle of Dragon's Blood"
+	export_types = list(/obj/item/dragons_blood)
+
+/datum/export/weapon/blood_drunk_cleaving_saw
 	cost = 40000
 	unit_name = "Cleaving Saw"
 	export_types = list(/obj/item/melee/transforming/cleaving_saw)
 
-/datum/export/weapon/mayhem
+/datum/export/weapon/colossus_vocalcords
 	cost = 40000
-	unit_name = "Mayhem in a bottle"
+	unit_name = "Angelic Vocal Cords"
+	export_types = list(/obj/item/organ/vocal_cords/colossus)
+
+/datum/export/weapon/colossus_crystal
+	cost = 40000
+	unit_name = "Anomalous Crystal"
+	export_types = list(/obj/machinery/anomalous_crystal)
+
+/datum/export/weapon/bubblegum_mayhem
+	cost = 40000
+	unit_name = "Mayhem in a Bottle"
 	export_types = list(/obj/item/mayhem)
 
-/datum/export/weapon/blood_contract
+/datum/export/weapon/bubblegum_blood_contract
 	cost = 40000
 	unit_name = "Blood Contract"
 	export_types = list(/obj/item/blood_contract)
+
+/datum/export/weapon/bubblegum_spellblade
+	cost = 40000
+	unit_name = "Spellblade"
+	export_types = list(/obj/item/gun/magic/staff/spellblade)
+
+/datum/export/weapon/bubblegum_hev_suit
+	cost = 30000
+	unit_name = "Hostile Environment Suit"
+	export_types = list(/obj/item/clothing/suit/space/hostile_environment)
+
+/datum/export/weapon/bubblegum_hev_helmet
+	cost = 10000
+	unit_name = "Hostile Environment Helmet"
+	export_types = list(/obj/item/clothing/head/helmet/space/hostile_environment)
 
 //Artifacts of lavaland
 
@@ -111,28 +146,18 @@
 
 /datum/export/weapon/hook
 	cost = 10000
-	unit_name = "Meat hook"
+	unit_name = "Meat Hook"
 	export_types = list(/obj/item/gun/magic/hook)
 
 /datum/export/weapon/shipbottle //the price for not breaking the bottle.
 	cost = 20000
-	unit_name = "Ship in a bottle"
+	unit_name = "Ship in a Bottle"
 	export_types = list(/obj/item/ship_in_a_bottle)
 
 /datum/export/weapon/tarot //price for sacraficing a very profitiable ally
 	cost = 20000
-	unit_name = "Tarot cards"
+	unit_name = "Tarot Cards"
 	export_types = list(/obj/item/guardiancreator)
-
-/datum/export/weapon/red //second half of telecube
-	cost = 5000
-	unit_name = "Red Cube"
-	export_types = list(/obj/item/warp_cube/red)
-
-/datum/export/weapon/blue //first half of telecube
-	cost = 5000
-	unit_name = "Blue Cube"
-	export_types = list(/obj/item/warp_cube)
 
 /datum/export/weapon/wisplantern //thermals on lavaland
 	cost = 10000
@@ -156,10 +181,45 @@
 
 /datum/export/weapon/geye //xray
 	cost = 10000
-	unit_name = "God eye"
+	unit_name = "Eye of God"
 	export_types = list(/obj/item/clothing/glasses/godeye)
 
 /datum/export/weapon/spectral
 	cost = 10000
 	unit_name = "Spectral Sword"
 	export_types = list(/obj/item/melee/ghost_sword)
+
+/datum/export/weapon/narnar_hardsuit
+	cost = 10000
+	unit_name = "Nar-Sien Hardened Armor"
+	export_types = list(/obj/item/clothing/suit/space/hardsuit/cult)
+
+/datum/export/weapon/asclepius_rod
+	cost = 20000
+	unit_name = "Rod of Asclepius"
+	export_types = list(/obj/item/rod_of_asclepius)
+
+/datum/export/weapon/cursed_heart
+	cost = 5000 //you should be paying CentCom for this
+	unit_name = "Cursed Heart"
+	export_types = list(/obj/item/organ/heart/cursed/wizard)
+
+/datum/export/weapon/paranormal_hardsuit 
+	cost = 25000 //makes the narnar hardsuit look like a bathrobe
+	unit_name = "Paranormal Hardsuit"
+	export_types = list(/obj/item/clothing/suit/space/hardsuit/ert/paranormal) //covers berserker and inquisitor hardsuits
+
+/datum/export/weapon/voodoo_doll
+	cost = 10000
+	unit_name = "Voodoo Doll"
+	export_types = list(/obj/item/voodoo)
+
+/datum/export/weapon/inferno_clusterbuster
+	cost = 10000
+	unit_name = "Inferno Pattern Clusterbuster Grenade"
+	export_types = list(/obj/item/grenade/clusterbuster/inferno)
+
+/datum/export/weapon/memento_mori
+	cost = 10000
+	unit_name = "Memento Mori"
+	export_types = list(/obj/item/clothing/neck/necklace/memento_mori)
