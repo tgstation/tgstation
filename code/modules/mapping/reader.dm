@@ -16,7 +16,6 @@
 	var/list/gridSets = list()
 
 	var/list/modelCache
-	var/list/bad_paths
 
 	/// Unoffset bounds. Null on parse failure.
 	var/list/parsed_bounds
@@ -215,8 +214,8 @@
 
 	return TRUE
 
-/datum/parsed_map/proc/build_cache(no_changeturf)
-	if(modelCache)
+/datum/parsed_map/proc/build_cache(no_changeturf, bad_paths=null)
+	if(modelCache && !bad_paths)
 		return modelCache
 	. = modelCache = list()
 	var/list/grid_models = src.grid_models
@@ -243,8 +242,9 @@
 			var/atom_def = text2path(path_text) //path definition, e.g /obj/foo/bar
 			old_position = dpos + 1
 
-			if(!atom_def) // Skip the item if the path does not exist.  Fix your crap, mappers!
-				LAZYADD(bad_paths, path_text)
+			if(!ispath(atom_def, /atom)) // Skip the item if the path does not exist.  Fix your crap, mappers!
+				if(bad_paths)
+					LAZYOR(bad_paths[path_text], model_key)
 				continue
 			members.Add(atom_def)
 

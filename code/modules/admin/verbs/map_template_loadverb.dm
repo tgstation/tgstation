@@ -45,9 +45,23 @@
 		else
 			return
 	if(!M.cached_map)
-		to_chat(src, "<span class='warning'>Map template '[map]' failed to load properly</span>")
+		to_chat(src, "<span class='warning'>Map template '[map]' failed to parse properly.</span>")
 		return
 
+	var/datum/map_report/report = M.cached_map.check_for_errors()
+	var/report_link
+	if(report)
+		report.show_to(src)
+		report_link = " - <a href='?src=[REF(report)]&show=1'>validation report</a>"
+		to_chat(src, "<span class='warning'>Map template '[map]' <a href='?src=[REF(report)]&show=1'>failed validation</a>.</span>")
+		if(report.loadable)
+			var/response = alert(src, "The map failed validation, would you like to load it anyways?", "Map Errors", "Cancel", "Upload Anyways")
+			if(response != "Upload Anyways")
+				return
+		else
+			alert(src, "The map failed validation and cannot be loaded.", "Map Errors", "Oh Darn")
+			return
+
 	SSmapping.map_templates[M.name] = M
-	message_admins("<span class='adminnotice'>[key_name_admin(src)] has uploaded a map template ([map], [M.width]x[M.height])</span>")
+	message_admins("<span class='adminnotice'>[key_name_admin(src)] has uploaded a map template '[map]' ([M.width]x[M.height])[report_link].</span>")
 	to_chat(src, "<span class='notice'>Map template '[map]' ready to place ([M.width]x[M.height])</span>")

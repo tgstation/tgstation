@@ -1745,6 +1745,7 @@
 #include "code\modules\mapping\preloader.dm"
 #include "code\modules\mapping\reader.dm"
 #include "code\modules\mapping\ruins.dm"
+#include "code\modules\mapping\verify.dm"
 #include "code\modules\mapping\space_management\space_level.dm"
 #include "code\modules\mapping\space_management\space_reservation.dm"
 #include "code\modules\mapping\space_management\space_transition.dm"
