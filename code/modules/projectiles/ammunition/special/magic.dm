@@ -43,3 +43,6 @@
 
 /obj/item/ammo_casing/magic/honk
 	projectile_type = /obj/item/projectile/bullet/honker
+
+/obj/item/ammo_casing/magic/locker
+	projectile_type = /obj/item/projectile/magic/locker

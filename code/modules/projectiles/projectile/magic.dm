@@ -335,6 +335,57 @@
 			return
 	. = ..()
 
+
+/obj/item/projectile/magic/locker
+	name = "locker bolt"
+	icon_state = "locker"
+	nodamage = 1
+	flag = "magic"
+	var/weld = TRUE
+	var/created = FALSE //prevents creation of more then one locker if it has multiple hits
+
+/obj/item/projectile/magic/locker/Bump(atom/A)
+	if(ismob(A))
+		var/mob/M = A
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [A]!</span>")
+			qdel(src)
+			return
+		if(A == firer)
+			weld = FALSE
+		if(M.anchored)
+			return ..()
+		M.forceMove(src)
+		return
+	return ..()
+
+/obj/item/projectile/magic/locker/on_hit(target)
+	if(created)
+		return . = ..()
+	var/obj/structure/closet/decay/C = new(get_turf(src))
+	if(LAZYLEN(contents))
+		for(var/atom/movable/AM in contents)
+			C.insert(AM)
+		C.welded = weld
+		C.update_icon()
+	created = TRUE
+	return ..()
+
+/obj/item/projectile/magic/locker/Destroy()
+	for(var/atom/movable/AM in contents)
+		AM.forceMove(get_turf(src))
+	. = ..()
+
+/obj/structure/closet/decay/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/bust_open), 5 MINUTES)
+	addtimer(CALLBACK(src, .proc/decay), 5 MINUTES + 5 SECONDS)
+
+/obj/structure/closet/decay/proc/decay()
+	animate(src, alpha = 0, time = 30)
+	animate(color = rgb(255, 0, 0),time = 30)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, src), 30)
+
 /obj/item/projectile/magic/aoe
 	name = "Area Bolt"
 	desc = "What the fuck does this do?!"
@@ -423,3 +474,5 @@
 	var/turf/T = get_turf(target)
 	for(var/i=0, i<50, i+=10)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, T, -1, exp_heavy, exp_light, exp_flash, FALSE, FALSE, exp_fire), i)
+
+
