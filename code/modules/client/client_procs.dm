@@ -448,6 +448,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	qdel(query_get_related_ip)
 	var/datum/DBQuery/query_get_related_cid = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE computerid = '[computer_id]' AND ckey != '[sql_ckey]'")
 	if(!query_get_related_cid.Execute())
+		qdel(query_get_related_cid)
 		return
 	related_accounts_cid = ""
 	while (query_get_related_cid.NextRow())
