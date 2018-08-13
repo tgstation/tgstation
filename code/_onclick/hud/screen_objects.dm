@@ -128,7 +128,7 @@
 
 /obj/screen/inventory/MouseEntered()
 	..()
-	update_overlays()
+	add_overlays()
 
 /obj/screen/inventory/MouseExited()
 	..()
@@ -144,7 +144,7 @@
 		else
 			icon_state = icon_empty
 
-/obj/screen/inventory/proc/update_overlays()
+/obj/screen/inventory/proc/add_overlays()
 	var/mob/user = hud.mymob
 
 	cut_overlay(object_overlays)
