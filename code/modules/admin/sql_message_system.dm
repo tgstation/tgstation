@@ -378,6 +378,14 @@
 				if("note")
 					notedata += data
 		qdel(query_get_messages)
+		if(!target_key)
+			var/datum/DBQuery/query_get_message_key = SSdbcore.NewQuery("SELECT byond_key FROM [format_table_name("player")] WHERE ckey = '[target_ckey]'")
+			if(!query_get_message_key.warn_execute())
+				qdel(query_get_message_key)
+				return
+			if(query_get_message_key.NextRow())
+				target_key = query_get_message_key.item[1]
+			qdel(query_get_message_key)
 		output += "<h2><center>[target_key]</center></h2><center>"
 		if(!linkless)
 			output += "<a href='?_src_=holder;[HrefToken()];addnote=[target_key]'>\[Add note\]</a>"
