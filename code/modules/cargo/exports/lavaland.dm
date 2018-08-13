@@ -23,7 +23,8 @@
 	export_types = list(/obj/item/ship_in_a_bottle,
 						/obj/item/guardiancreator,
 						/obj/item/rod_of_asclepius,
-						/obj/item/clothing/suit/space/hardsuit/ert/paranormal)
+						/obj/item/clothing/suit/space/hardsuit/ert/paranormal,
+						/obj/item/prisoncube)
 
 //Megafauna loot
 
