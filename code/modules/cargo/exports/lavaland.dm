@@ -53,10 +53,10 @@
 
 /datum/export/lavaland/megafauna/hev/suit
 	cost = 30000
-	unit_name = "Hostile Environment Suit"
+	unit_name = "H.E.C.K. suit"
 	export_types = list(/obj/item/clothing/suit/space/hostile_environment)
 
 /datum/export/lavaland/megafauna/hev/helmet
 	cost = 10000
-	unit_name = "Hostile Environment Helmet"
+	unit_name = "H.E.C.K. helmet"
 	export_types = list(/obj/item/clothing/head/helmet/space/hostile_environment)
