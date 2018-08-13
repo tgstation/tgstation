@@ -46,7 +46,7 @@
 	name = "dirt"
 	desc = "Someone should clean that up."
 	icon = 'icons/effects/dirt.dmi'
-	icon_state = ""
+	icon_state = "dirt" // for mapping
 	canSmoothWith = list(/obj/effect/decal/cleanable/dirt,
 	/turf/closed/wall,
 	/obj/structure/falsewall)
