@@ -9,8 +9,7 @@
 	if(!msg)
 		return
 
-	mob.log_talk(msg, LOG_ADMIN)
-
+	log_talk(mob,"[key_name(src)] : [msg]",LOGASAY)
 	msg = keywords_lookup(msg)
 	msg = "<span class='adminsay'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, 1)]</EM> [ADMIN_FLW(mob)]: <span class='message linkify'>[msg]</span></span>"
 	to_chat(GLOB.admins, msg)

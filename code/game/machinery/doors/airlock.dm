@@ -1550,7 +1550,7 @@
 		to_chat(user, "The electrification wire has been cut")
 	else
 		LAZYADD(shockedby, "\[[time_stamp()]\] [key_name(user)]")
-		log_combat(user, src, "electrified")
+		add_logs(user, src, "electrified")
 		set_electrified(AI_ELECTRIFY_DOOR_TIME)
 
 /obj/machinery/door/airlock/proc/shock_perm(mob/user)
@@ -1560,7 +1560,7 @@
 		to_chat(user, "The electrification wire has been cut")
 	else
 		LAZYADD(shockedby, text("\[[time_stamp()]\] [key_name(user)]"))
-		log_combat(user, src, "electrified")
+		add_logs(user, src, "electrified")
 		set_electrified(ELECTRIFIED_PERMANENT)
 
 /obj/machinery/door/airlock/proc/emergency_on(mob/user)

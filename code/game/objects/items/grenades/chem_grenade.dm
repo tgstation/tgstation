@@ -77,7 +77,8 @@
 				to_chat(user, "<span class='notice'>You add [I] to the [initial(name)] assembly.</span>")
 				beakers += I
 				var/reagent_list = pretty_string_from_reagent_list(I.reagents)
-				user.log_message("inserted [I] ([reagent_list]) into [src]")
+				add_logs(user, src, "inserted [I]", addition = "[reagent_list] inside.")
+				log_game("[key_name(user)] inserted [I] into [src] containing [reagent_list] ")
 			else
 				to_chat(user, "<span class='warning'>[I] is empty!</span>")
 
@@ -117,7 +118,8 @@
 				if(!O.reagents)
 					continue
 				var/reagent_list = pretty_string_from_reagent_list(O.reagents)
-				user.log_message("removed [O] ([reagent_list]) from [src]")
+				add_logs(user, src, "removed [O]", addition = "[reagent_list] inside.")
+				log_game("[key_name(user)] removed [O] from [src] containing [reagent_list]")
 			beakers = list()
 			to_chat(user, "<span class='notice'>You open the [initial(name)] assembly and remove the payload.</span>")
 			return // First use of the wrench remove beakers, then use the wrench to remove the activation mechanism.
@@ -173,7 +175,8 @@
 	var/message = "[src] primed by [user] at [ADMIN_VERBOSEJMP(T)] contained [reagent_string]."
 	GLOB.bombers += message
 	message_admins(message)
-	user.log_message("primed [src] ([reagent_string])")
+	log_game("[src] primed by [user] at [AREACOORD(T)] contained [reagent_string].")
+	add_logs(user, src, "primed", addition = "[reagent_string] inside.")
 
 /obj/item/grenade/chem_grenade/prime()
 	if(stage != READY)

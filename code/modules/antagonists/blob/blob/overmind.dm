@@ -208,7 +208,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if (!message)
 		return
 
-	src.log_talk(message, LOG_SAY)
+	log_talk(src,"[key_name(src)] : [message]",LOGSAY)
 
 	var/message_a = say_quote(message, get_spans())
 	var/rendered = "<span class='big'><font color=\"#EE4000\"><b>\[Blob Telepathy\] [name](<font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>)</b> [message_a]</font></span>"

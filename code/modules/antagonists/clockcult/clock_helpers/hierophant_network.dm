@@ -46,5 +46,5 @@
 		return
 	if(ishuman(owner))
 		clockwork_say(owner, "[text2ratvar("Servants, hear my words: [input]")]", TRUE)
-	owner.log_talk(input, LOG_SAY, tag="clockwork")
+	log_talk(owner,"CLOCK:[key_name(owner)] : [input]",LOGSAY)
 	titled_hierophant_message(owner, input, span_for_name, span_for_message, title)

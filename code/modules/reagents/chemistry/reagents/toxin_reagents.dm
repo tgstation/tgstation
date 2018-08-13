@@ -627,7 +627,7 @@
 
 /datum/reagent/toxin/amanitin/on_mob_delete(mob/living/M)
 	var/toxdamage = current_cycle*3*REM
-	M.log_message("has taken [toxdamage] toxin damage from amanitin toxin", LOG_ATTACK)
+	M.log_message("has taken [toxdamage] toxin damage from amanitin toxin", INDIVIDUAL_ATTACK_LOG)
 	M.adjustToxLoss(toxdamage)
 	..()
 
