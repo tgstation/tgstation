@@ -60,6 +60,8 @@
 		var/mob/M = teleatom
 		M.cancel_camera()
 
+	return TRUE
+
 /proc/tele_play_specials(atom/movable/teleatom, atom/location, datum/effect_system/effect, sound)
 	if (location && !isobserver(teleatom))
 		if (sound)
