@@ -110,6 +110,19 @@
 	eat()
 	return
 
+/obj/singularity/wizard/attack_tk(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		to_chat(C, "<span class='userdanger'>OH GOD! NONE OF ITS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!</span>")
+		//for(var/datum/component/mood/insaneinthemembrane in C.datum_components)
+		//	insaneinthemembrane.sanity = 0
+		for(var/lore in typesof(/datum/brain_trauma/severe))
+			C.gain_trauma(lore, TRAUMA_RESILIENCE_MAGIC)
+		sleep(100)
+		C.vomit(0, TRUE, TRUE, 3, TRUE)
+		C.spew_organ(3, 2)
+		C.death()
+
 /obj/singularity/wizard/mapped/admin_investigate_setup()
 	return
 
