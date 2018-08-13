@@ -166,11 +166,12 @@
 				return // Don't show preview if there's a regular item
 			
 			can_equip = storage.can_be_inserted(holding, TRUE, user)
+		else
+			can_equip = user.can_equip(holding, slot_id, disable_warning = TRUE)
 		
 		var/image/item_overlay = image(holding)
 		item_overlay.alpha = 191
 		object_overlays += item_overlay
-		can_equip = user.can_equip(holding, slot_id, disable_warning = TRUE)
 		
 		if(!can_equip)
 			var/image/nope_overlay = image('icons/mob/screen_gen.dmi', "x")
