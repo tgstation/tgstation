@@ -55,6 +55,23 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">13 August 2018</h2>
+			<h3 class="author">Denton updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">The briefcase launchpad can now hold items while in briefcase mode (just like a regular briefcase). Its remote has been disguised as a folder and now spawns pre-linked inside the briefcase.</li>
+				<li class="balance">Increased the briefcase launchpad's range from 3 to 8 tiles, which is roughly half the screen.</li>
+				<li class="spellcheck">Added more ingame manuals that access wiki pages.</li>
+			</ul>
+			<h3 class="author">Logging refactor and improvement updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="code_imp">All mob-related logs now include the area name and (x,y,z) position.</li>
+				<li class="code_imp">All logs that included an (x,y,z) position now also include the area name.</li>
+				<li class="code_imp">Standardized logging format of mob/player keys.</li>
+				<li class="code_imp">Telecomms logs are now included in the individual logging panel.</li>
+				<li class="code_imp">Fixed many other cases of logs being sent to either the individual logging panel or the saved log files, but not both.</li>
+				<li class="refactor">The logging system has been refactored to contain less redundant code and to produce more consistent logs.</li>
+			</ul>
+
 			<h2 class="date">12 August 2018</h2>
 			<h3 class="author">Denton updated:</h3>
 			<ul class="changes bgimages16">
@@ -1537,22 +1554,6 @@
 			<h3 class="author">XDTM updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="bugfix">Diseases now properly lose scan invisibility if their stealth drops below the required threshold.</li>
-			</ul>
-
-			<h2 class="date">11 June 2018</h2>
-			<h3 class="author">Mickyan updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added an abandoned kitchen to Metastation maintenance</li>
-			</ul>
-			<h3 class="author">XDTM updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed anti-magic not working at all.</li>
-			</ul>
-			<h3 class="author">fludd12 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Stabilized gold extracts now respawn the familiar properly.</li>
-				<li class="bugfix">Stabilized gold familiars retain the proper languages even after respawning.</li>
-				<li class="tweak">Stabilized gold familiars can be renamed and have their positions reset at will.</li>
 			</ul>
 		</div>
 
