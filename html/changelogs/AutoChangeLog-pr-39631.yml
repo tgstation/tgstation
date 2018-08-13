@@ -1,6 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - admin: "The VV window loads and searches faster."
-  - admin: "Fields in the VV window's header will immediately show your edits."
-  - admin: "Selecting an action from the VV dropdown no longer leaves it selected after the action is done."

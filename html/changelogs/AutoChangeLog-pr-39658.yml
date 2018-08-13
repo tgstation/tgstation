@@ -1,8 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - rscadd: "Added botanical and medical bounties as well as a static adamantine bar bounty."
-  - tweak: "Increased the syndicate document bounty's reward from 10.000 to 15.000 credits."
-  - tweak: "Removed the gondola hide bounty and in return, increased the export value to the old level."
-  - tweak: "The briefcase bounty now also accepts secure briefcases."
-  - bugfix: "The action figure bounty now correctly spawns as an assistant type bounty."
