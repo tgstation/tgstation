@@ -40,18 +40,23 @@
 						/obj/item/mayhem,
 						/obj/item/blood_contract,
 						/obj/item/gun/magic/staff/spellblade)
-						
-/datum/export/lavaland/megafauna/bubblegum_hev_suit
-	cost = 30000
-	unit_name = "Hostile Environment Suit"
-	export_types = list(/obj/item/clothing/suit/space/hostile_environment)
-
-/datum/export/lavaland/megafauna/bubblegum_hev_helmet
-	cost = 10000
-	unit_name = "Hostile Environment Helmet"
-	export_types = list(/obj/item/clothing/head/helmet/space/hostile_environment)
 
 /datum/export/lavaland/megafauna/total_printout()
 	. = ..()
 	if(.)
 		. += " On behalf of the Nanotrasen RnD division: Thank you for your hard work."
+
+/datum/export/lavaland/megafauna/hev/total_printout()
+	. = ..()
+	if(.)
+		. += " On behalf of the... hey, what the HECK is this?"
+
+/datum/export/lavaland/megafauna/hev/suit
+	cost = 30000
+	unit_name = "Hostile Environment Suit"
+	export_types = list(/obj/item/clothing/suit/space/hostile_environment)
+
+/datum/export/lavaland/megafauna/hev/helmet
+	cost = 10000
+	unit_name = "Hostile Environment Helmet"
+	export_types = list(/obj/item/clothing/head/helmet/space/hostile_environment)
