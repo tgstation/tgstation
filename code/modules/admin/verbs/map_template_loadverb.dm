@@ -34,19 +34,20 @@
 	if(!map)
 		return
 	if(copytext("[map]",-4) != ".dmm")
-		to_chat(src, "Bad map file: [map]")
+		to_chat(src, "<span class='warning'>Filename must end in '.dmm': [map]</span>")
 		return
 	var/datum/map_template/M
 	switch(alert(src, "What kind of map is this?", "Map type", "Normal", "Shuttle", "Cancel"))
 		if("Normal")
-			M = new /datum/map_template(map, "[map]")
+			M = new /datum/map_template(map, "[map]", TRUE)
 		if("Shuttle")
-			M = new /datum/map_template/shuttle(map, "[map]")
+			M = new /datum/map_template/shuttle(map, "[map]", TRUE)
 		else
 			return
-	if(M.preload_size(map))
-		to_chat(src, "Map template '[map]' ready to place ([M.width]x[M.height])")
-		SSmapping.map_templates[M.name] = M
-		message_admins("<span class='adminnotice'>[key_name_admin(src)] has uploaded a map template ([map])</span>")
-	else
-		to_chat(src, "Map template '[map]' failed to load properly")
+	if(!M.cached_map)
+		to_chat(src, "<span class='warning'>Map template '[map]' failed to load properly</span>")
+		return
+
+	SSmapping.map_templates[M.name] = M
+	message_admins("<span class='adminnotice'>[key_name_admin(src)] has uploaded a map template ([map], [M.width]x[M.height])</span>")
+	to_chat(src, "<span class='notice'>Map template '[map]' ready to place ([M.width]x[M.height])</span>")
