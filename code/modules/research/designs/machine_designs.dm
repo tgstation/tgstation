@@ -537,4 +537,4 @@
 	id = "ore_silo"
 	build_path = /obj/item/circuitboard/machine/ore_silo
 	category = list ("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
