@@ -1,4 +1,0 @@
-author: "Coolguy3289"
-delete-after: True
-changes: 
-  - config: "Removed un-needed and un-used RENAME comment from game_options.txt"
