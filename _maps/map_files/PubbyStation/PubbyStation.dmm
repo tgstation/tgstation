@@ -3331,9 +3331,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
 "akh" = (
-/obj/effect/decal/cleanable/oil{
-	icon_state = "floor5"
-	},
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
 "akj" = (
@@ -4413,9 +4410,6 @@
 	},
 /area/maintenance/department/crew_quarters/dorms)
 "amG" = (
-/obj/effect/decal/cleanable/oil{
-	icon_state = "floor6"
-	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken4"
 	},
@@ -13513,9 +13507,6 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/cobweb,
-/obj/effect/decal/cleanable/oil{
-	icon_state = "floor6"
-	},
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -13868,14 +13859,12 @@
 	c_tag = "Dormitory Cyborg Recharging Station";
 	dir = 2
 	},
-/obj/effect/decal/cleanable/oil,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "aKk" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/effect/decal/cleanable/oil,
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
@@ -22427,7 +22416,6 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "bgE" = (
-/obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/robot_debris{
 	icon_state = "gib3"
 	},
@@ -34602,9 +34590,6 @@
 /turf/open/space,
 /area/space/nearstation)
 "bLt" = (
-/obj/effect/decal/cleanable/oil{
-	icon_state = "floor6"
-	},
 /obj/effect/decal/cleanable/robot_debris/old,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/engine)
@@ -35061,7 +35046,6 @@
 	},
 /area/maintenance/department/engine)
 "bMD" = (
-/obj/effect/decal/cleanable/oil,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/engine)
 "bME" = (
@@ -48398,9 +48382,6 @@
 "gjN" = (
 /obj/item/weldingtool,
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/effect/decal/cleanable/oil{
-	icon_state = "floor6"
-	},
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "gkR" = (
@@ -50136,7 +50117,6 @@
 /area/storage/primary)
 "lqc" = (
 /obj/item/toy/gun,
-/obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "lqy" = (
@@ -51510,7 +51490,6 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "pdq" = (
-/obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "pdW" = (
@@ -52561,9 +52540,6 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
 	},
-/obj/effect/decal/cleanable/oil{
-	icon_state = "floor6"
-	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/crew_quarters/dorms)
 "sqQ" = (
@@ -53074,9 +53050,6 @@
 /turf/open/floor/carpet,
 /area/maintenance/department/crew_quarters/dorms)
 "uaE" = (
-/obj/effect/decal/cleanable/oil{
-	icon_state = "floor6"
-	},
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "uaP" = (
@@ -53482,9 +53455,6 @@
 /area/engine/engineering)
 "vlF" = (
 /obj/item/coin/silver,
-/obj/effect/decal/cleanable/oil{
-	icon_state = "floor5"
-	},
 /obj/structure/light_construct/small{
 	dir = 8
 	},

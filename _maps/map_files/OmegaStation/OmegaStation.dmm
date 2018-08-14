@@ -3241,7 +3241,6 @@
 /turf/closed/wall/r_wall,
 /area/security/brig)
 "agG" = (
-/obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
 /area/asteroid/nearstation)
 "agH" = (
@@ -8607,7 +8606,6 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "aqv" = (
-/obj/effect/decal/cleanable/oil,
 /obj/structure/closet/crate,
 /obj/item/flashlight,
 /obj/item/flashlight,
@@ -8821,7 +8819,6 @@
 /area/storage/primary)
 "aqW" = (
 /obj/structure/reagent_dispensers/fueltank,
-/obj/effect/decal/cleanable/oil,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 26
 	},
@@ -9513,7 +9510,6 @@
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "ast" = (
-/obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -10469,7 +10465,6 @@
 /area/maintenance/port/fore)
 "auE" = (
 /obj/machinery/space_heater,
-/obj/effect/decal/cleanable/oil,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -11675,7 +11670,6 @@
 	pixel_x = 24;
 	pixel_y = 24
 	},
-/obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -11972,7 +11966,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/meter/atmos,
 /turf/open/floor/plasteel/vault{
@@ -18968,7 +18961,6 @@
 	id = "engsm";
 	name = "Radiation Chamber Shutters"
 	},
-/obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -24507,7 +24499,6 @@
 /area/science/robotics/mechbay)
 "aZX" = (
 /obj/structure/reagent_dispensers/fueltank,
-/obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side,
 /area/science/robotics/mechbay)
@@ -25408,7 +25399,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
@@ -35352,7 +35342,6 @@
 	},
 /area/hallway/primary/starboard)
 "ueC" = (
-/obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -35504,7 +35493,6 @@
 	},
 /area/engine/atmos)
 "uVJ" = (
-/obj/effect/decal/cleanable/oil,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
