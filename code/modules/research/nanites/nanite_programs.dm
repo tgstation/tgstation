@@ -59,7 +59,7 @@
 			disable_passive_effect()
 	if(nanites)
 		nanites.programs -= src
-	. = ..()
+	return ..()
 
 /datum/nanite_program/proc/copy()
 	var/datum/nanite_program/new_program = new type()

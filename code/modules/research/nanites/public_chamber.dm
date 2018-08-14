@@ -81,7 +81,7 @@
 	icon_state = initial(icon_state)+ (state_open ? "_open" : "")
 
 /obj/machinery/public_nanite_chamber/power_change()
-	..()
+	. = ..()
 	update_icon()
 
 /obj/machinery/public_nanite_chamber/proc/toggle_open(mob/user)
@@ -122,12 +122,12 @@
 	if(!state_open)
 		return FALSE
 
-	..(user)
+	..()
 
 	. = TRUE
 
 	addtimer(CALLBACK(src, .proc/try_inject_nanites), 30) //If someone is shoved in give them a chance to get out before the injection starts
-			
+
 /obj/machinery/public_nanite_chamber/proc/try_inject_nanites()
 	if(occupant)
 		var/mob/living/L = occupant

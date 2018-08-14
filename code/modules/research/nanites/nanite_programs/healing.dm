@@ -14,7 +14,7 @@
 		var/list/parts = C.get_damaged_bodyparts(TRUE,TRUE, status = BODYPART_ORGANIC)
 		if(!parts.len)
 			return FALSE
-	. = ..()
+	return ..()
 
 /datum/nanite_program/regenerative/active_effect()
 	if(iscarbon(host_mob))
@@ -38,7 +38,7 @@
 /datum/nanite_program/temperature/check_conditions()
 	if(host_mob.bodytemperature > (BODYTEMP_NORMAL - 30) && host_mob.bodytemperature < (BODYTEMP_NORMAL + 30))
 		return FALSE
-	. = ..()
+	return ..()
 
 /datum/nanite_program/temperature/active_effect()
 	if(host_mob.bodytemperature > BODYTEMP_NORMAL)
@@ -56,7 +56,7 @@
 	var/foreign_reagent = LAZYLEN(host_mob.reagents.reagent_list)
 	if(!host_mob.getToxLoss() && !foreign_reagent)
 		return FALSE
-	. = ..()
+	return ..()
 
 /datum/nanite_program/purging/active_effect()
 	host_mob.adjustToxLoss(-1)
@@ -72,7 +72,7 @@
 /datum/nanite_program/brain_heal/check_conditions()
 	if(!host_mob.getBrainLoss())
 		return FALSE
-	. = ..()
+	return ..()
 
 /datum/nanite_program/brain_heal/active_effect()
 	host_mob.adjustBrainLoss(-1, TRUE)
@@ -93,7 +93,7 @@
 			return FALSE
 	else
 		return FALSE
-	. = ..()
+	return ..()
 
 /datum/nanite_program/blood_restoring/active_effect()
 	if(iscarbon(host_mob))
@@ -118,7 +118,7 @@
 	else
 		if(!(MOB_ROBOTIC in host_mob.mob_biotypes))
 			return FALSE
-	. = ..()
+	return ..()
 
 /datum/nanite_program/repairing/active_effect(mob/living/M)
 	if(iscarbon(host_mob))
@@ -126,9 +126,12 @@
 		var/list/parts = C.get_damaged_bodyparts(TRUE, TRUE, status = BODYPART_ROBOTIC)
 		if(!parts.len)
 			return
+		var/update = FALSE
 		for(var/obj/item/bodypart/L in parts)
 			if(L.heal_damage(1/parts.len, 1/parts.len))
-				host_mob.update_damage_overlays()
+				update = TRUE
+		if(update)
+			host_mob.update_damage_overlays()
 	else
 		host_mob.adjustBruteLoss(-1, TRUE)
 		host_mob.adjustFireLoss(-1, TRUE)
@@ -147,7 +150,7 @@
 		break
 	if(!host_mob.getToxLoss() && !foreign_reagent)
 		return FALSE
-	. = ..()
+	return ..()
 
 /datum/nanite_program/purging_advanced/active_effect()
 	host_mob.adjustToxLoss(-1)
@@ -167,9 +170,12 @@
 		var/list/parts = C.get_damaged_bodyparts(TRUE,TRUE, status = BODYPART_ORGANIC)
 		if(!parts.len)
 			return
+		var/update = FALSE
 		for(var/obj/item/bodypart/L in parts)
 			if(L.heal_damage(3/parts.len, 3/parts.len))
-				host_mob.update_damage_overlays()
+				update = TRUE
+		if(update)
+			host_mob.update_damage_overlays()
 	else
 		host_mob.adjustBruteLoss(-3, TRUE)
 		host_mob.adjustFireLoss(-3, TRUE)
@@ -183,7 +189,7 @@
 /datum/nanite_program/brain_heal_advanced/check_conditions()
 	if(!host_mob.getBrainLoss())
 		return FALSE
-	. = ..()
+	return ..()
 
 /datum/nanite_program/brain_heal_advanced/active_effect()
 	host_mob.adjustBrainLoss(-2, TRUE)

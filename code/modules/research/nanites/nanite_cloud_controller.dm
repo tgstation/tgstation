@@ -11,7 +11,7 @@
 /obj/machinery/computer/nanite_cloud_controller/Destroy()
 	QDEL_LIST(cloud_backups) //rip backups
 	eject()
-	. = ..()
+	return ..()
 
 /obj/machinery/computer/nanite_cloud_controller/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/disk/nanite_program))

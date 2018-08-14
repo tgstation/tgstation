@@ -9,7 +9,7 @@
 	var/datum/nanite_program/program
 
 /obj/item/nanite_hijacker/AltClick(mob/user)
-	..()
+	. = ..()
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 	if(disk)

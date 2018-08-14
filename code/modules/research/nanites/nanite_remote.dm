@@ -20,12 +20,12 @@
 	var/relay_code = 0
 
 /obj/item/nanite_remote/examine(mob/user)
-	..()
+	. = ..()
 	if(locked)
 		to_chat(user, "<span class='notice'>Alt-click to unlock.</span>")
 
 /obj/item/nanite_remote/AltClick(mob/user)
-	..()
+	. = ..()
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 	if(locked)
@@ -46,7 +46,7 @@
 		update_icon()
 
 /obj/item/nanite_remote/update_icon()
-	..()
+	. = ..()
 	cut_overlays()
 	if(obj_flags & EMAGGED)
 		add_overlay("nanite_remote_emagged")
