@@ -16,9 +16,6 @@
 			if(C != src && C.type == type && !QDELETED(C))
 				if (replace_decal(C))
 					return INITIALIZE_HINT_QDEL
-	if(smooth)
-		queue_smooth(src)
-		queue_smooth_neighbors(src)
 
 	if(LAZYLEN(diseases))
 		var/list/datum/disease/diseases_to_add = list()
@@ -27,11 +24,6 @@
 				diseases_to_add += D
 		if(LAZYLEN(diseases_to_add))
 			AddComponent(/datum/component/infective, diseases_to_add)
-
-/obj/effect/decal/cleanable/Destroy()
-	if(smooth)
-		queue_smooth_neighbors(src)
-	return ..()
 
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C) // Returns true if we should give up in favor of the pre-existing decal
 	if(mergeable_decal)
