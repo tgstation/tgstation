@@ -6641,7 +6641,7 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "anZ" = (
-
+/obj/effect/decal/cleanable/oil,
 /obj/machinery/light_switch{
 	pixel_x = 25
 	},
@@ -43389,7 +43389,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-
+/obj/effect/decal/cleanable/oil,
 /turf/open/floor/wood,
 /area/bridge/showroom/corporate)
 "bOz" = (
@@ -64844,7 +64844,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/aft)
 "cHG" = (
-
+/obj/effect/decal/cleanable/oil,
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/aft)
 "cHH" = (
