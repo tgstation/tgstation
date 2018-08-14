@@ -80,12 +80,12 @@
 	rogue_types = list(/datum/nanite_program/toxic)
 
 /datum/nanite_program/monitoring/enable_passive_effect()
-	..()
+	. = ..()
 	SSnanites.nanite_monitored_mobs |= host_mob
 	host_mob.hud_set_nanite_indicator()
 
 /datum/nanite_program/monitoring/disable_passive_effect()
-	..()
+	. = ..()
 	SSnanites.nanite_monitored_mobs -= host_mob
 	host_mob.hud_set_nanite_indicator()
 
@@ -135,11 +135,11 @@
 	use_rate = 0.2
 
 /datum/nanite_program/stealth/enable_passive_effect()
-	..()
+	. = ..()
 	nanites.stealth = TRUE
 
 /datum/nanite_program/stealth/disable_passive_effect()
-	..()
+	. = ..()
 	nanites.stealth = FALSE
 
 /datum/nanite_program/relay
@@ -165,11 +165,11 @@
 	target.relay_channel = relay_channel
 
 /datum/nanite_program/relay/enable_passive_effect()
-	..()
+	. = ..()
 	SSnanites.nanite_relays |= src
 
 /datum/nanite_program/relay/disable_passive_effect()
-	..()
+	. = ..()
 	SSnanites.nanite_relays -= src
 
 /datum/nanite_program/relay/proc/relay_signal(code, relay_code, source)

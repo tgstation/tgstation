@@ -24,11 +24,11 @@
 	host_mob.Stun(40)
 
 /datum/nanite_program/paralyzing/enable_passive_effect()
-	..()
+	. = ..()
 	to_chat(host_mob, "<span class='warning'>Your muscles seize! You can't move!</span>")
 
 /datum/nanite_program/paralyzing/disable_passive_effect()
-	..()
+	. = ..()
 	to_chat(host_mob, "<span class='notice'>Your muscles relax, and you can move again.</span>")
 
 /datum/nanite_program/triggered/shocking
@@ -64,11 +64,11 @@
 	rogue_types = list(/datum/nanite_program/brain_misfire, /datum/nanite_program/brain_decay)
 
 /datum/nanite_program/pacifying/enable_passive_effect()
-	..()
+	. = ..()
 	host_mob.add_trait(TRAIT_PACIFISM, "nanites")
 
 /datum/nanite_program/pacifying/disable_passive_effect()
-	..()
+	. = ..()
 	host_mob.remove_trait(TRAIT_PACIFISM, "nanites")
 
 /datum/nanite_program/blinding
@@ -78,11 +78,11 @@
 	rogue_types = list(/datum/nanite_program/nerve_decay)
 
 /datum/nanite_program/blinding/enable_passive_effect()
-	..()
+	. = ..()
 	host_mob.become_blind("nanites")
 
 /datum/nanite_program/blinding/disable_passive_effect()
-	..()
+	. = ..()
 	host_mob.cure_blind("nanites")
 
 /datum/nanite_program/mute
@@ -92,11 +92,11 @@
 	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
 
 /datum/nanite_program/mute/enable_passive_effect()
-	..()
+	. = ..()
 	host_mob.add_trait(TRAIT_MUTE, "nanites")
 
 /datum/nanite_program/mute/disable_passive_effect()
-	..()
+	. = ..()
 	host_mob.remove_trait(TRAIT_MUTE, "nanites")
 
 /datum/nanite_program/fake_death
@@ -106,12 +106,12 @@
 	rogue_types = list(/datum/nanite_program/nerve_decay, /datum/nanite_program/necrotic, /datum/nanite_program/brain_decay)
 
 /datum/nanite_program/fake_death/enable_passive_effect()
-	..()
+	. = ..()
 	host_mob.emote("deathgasp")
 	host_mob.fakedeath("nanites")
 
 /datum/nanite_program/fake_death/disable_passive_effect()
-	..()
+	. = ..()
 	host_mob.cure_fakedeath("nanites")
 
 /datum/nanite_program/triggered/speech
