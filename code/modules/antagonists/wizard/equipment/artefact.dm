@@ -113,11 +113,13 @@
 /obj/singularity/wizard/attack_tk(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		to_chat(C, "<span class='userdanger'>OH GOD! NONE OF ITS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!</span>")
 		GET_COMPONENT_FROM(insaneinthemembrane, /datum/component/mood, C)
+		if(insaneinthemembrane.sanity > 15)
+			return //they've already seen it and are about to die, or are just too insane to care
+		to_chat(C, "<span class='userdanger'>OH GOD! NONE OF IT IS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!</span>")
 		insaneinthemembrane.sanity = 0
 		for(var/lore in typesof(/datum/brain_trauma/severe))
-			C.gain_trauma(lore, TRAUMA_RESILIENCE_MAGIC)
+			C.gain_trauma(lore)
 		sleep(100)
 		C.vomit(0, TRUE, TRUE, 3, TRUE)
 		C.spew_organ(3, 2)

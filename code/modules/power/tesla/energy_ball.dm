@@ -130,8 +130,13 @@
 	dust_mobs(AM)
 
 /obj/singularity/energy_ball/attack_tk(mob/user)
-	to_chat(user, "<span class='userdanger'>That was a shockingly dumb idea.</span>")
-	explosion(user.loc,2,2,4,flame_range = 2)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		to_chat(C, "<span class='userdanger'>That was a shockingly dumb idea.</span>")
+		var/obj/item/organ/brain/rip_u = locate(/obj/item/organ/brain) in C.internal_organs
+		C.ghostize(0)
+		qdel(rip_u)
+		C.death()
 
 /obj/singularity/energy_ball/orbit(obj/singularity/energy_ball/target)
 	if (istype(target))
