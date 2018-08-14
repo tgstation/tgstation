@@ -15,7 +15,7 @@
 			client.dsay(message)
 		return
 
-	log_talk(src,"Ghost/[src.key] : [message]", LOGSAY)
+	src.log_talk(message, LOG_SAY, tag="ghost")
 
 	if(check_emote(message))
 		return

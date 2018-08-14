@@ -1053,15 +1053,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/device_tools/briefcase_launchpad
 	name = "Briefcase Launchpad"
-	desc = "A briefcase containing a launchpad, a device able to teleport items and people to and from targets up to three tiles away from the briefcase. \
-			Also includes a remote control. Touch the briefcase with the remote to link it."
+	desc = "A briefcase containing a launchpad, a device able to teleport items and people to and from targets up to eight tiles away from the briefcase. \
+			Also includes a remote control, disguised as an ordinary folder. Touch the briefcase with the remote to link it."
 	surplus = 0
-	item = /obj/item/briefcase_launchpad
+	item = /obj/item/storage/briefcase/launchpad
 	cost = 6
-
-/datum/uplink_item/device_tools/briefcase_launchpad/purchase(mob/user, datum/component/uplink/U)
-	spawn_item(/obj/item/launchpad_remote, user) //free remote
-	..()
 
 /datum/uplink_item/device_tools/magboots
 	name = "Blood-Red Magboots"

@@ -47,7 +47,7 @@
 	if(!msg)
 		return
 
-	user.log_message(msg, INDIVIDUAL_EMOTE_LOG)
+	user.log_message(msg, LOG_EMOTE)
 	msg = "<b>[user]</b> " + msg
 
 	for(var/mob/M in GLOB.dead_mob_list)
@@ -61,7 +61,6 @@
 		user.audible_message(msg)
 	else
 		user.visible_message(msg)
-	log_talk(user,"[key_name(user)] : [msg]",LOGEMOTE)
 
 /datum/emote/proc/replace_pronoun(mob/user, message)
 	if(findtext(message, "their"))

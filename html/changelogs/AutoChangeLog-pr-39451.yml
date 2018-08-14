@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - tweak: "Operating Computers can now sync to the research database to acquire researched surgeries, instead of requiring installation by disk."
-  - rscadd: "You can now review the full list of unlocked surgeries from the operating computer."

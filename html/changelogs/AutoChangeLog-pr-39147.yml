@@ -1,0 +1,6 @@
+author: "Zxaber"
+delete-after: True
+changes: 
+  - rscadd: "Airlock electronics can have now have unrestricted access by direction set. The resulting airlock will allow all traffic from the specified direction(s) while still requiring normal access otherwise. A small floor light will indicate this."
+  - tweak: "Medbay Cloning and Main Access doors now have unrestricted access settings set, and the buttons have been removed. All maps have been updated."
+  - bugfix: "Airlocks now correctly update their overlays (bolts lights, emergency lights) when their power state changes."

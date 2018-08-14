@@ -194,7 +194,7 @@
 	if(to_inject && patient.reagents.get_reagent_amount(R.id) + to_inject <= inject_amount*2)
 		occupant_message("Injecting [patient] with [to_inject] units of [R.name].")
 		log_message("Injecting [patient] with [to_inject] units of [R.name].")
-		add_logs(chassis.occupant, patient, "injected", "[name] ([R] - [to_inject] units)")
+		log_combat(chassis.occupant, patient, "injected", "[name] ([R] - [to_inject] units)")
 		SG.reagents.trans_id_to(patient,R.id,to_inject)
 		update_equip_info()
 	return
@@ -338,7 +338,7 @@
 						mechsyringe.reagents.reaction(M, INJECT)
 						mechsyringe.reagents.trans_to(M, mechsyringe.reagents.total_volume)
 						M.take_bodypart_damage(2)
-						add_logs(originaloccupant, M, "shot", "syringegun")
+						log_combat(originaloccupant, M, "shot", "syringegun")
 					break
 				else if(mechsyringe.loc == trg)
 					mechsyringe.icon_state = initial(mechsyringe.icon_state)

@@ -86,7 +86,7 @@
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message)
 		return
-	log_talk(src, "[key_name(src)] : [message]", LOGSAY)
+	src.log_talk(message, LOG_SAY, tag="clockwork eminence")
 	if(GLOB.ratvar_awakens)
 		visible_message("<span class='brass'><b>You feel light slam into your mind and form words:</b> \"[capitalize(message)]\"</span>")
 		playsound(src, 'sound/machines/clockcult/ark_scream.ogg', 50, FALSE)
