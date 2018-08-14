@@ -8,6 +8,27 @@
 	key = "blush"
 	key_third_person = "blushes"
 	message = "blushes."
+	
+/datum/emote/living/owo
+	key = "owo"
+	key_third_person = "looks super kawaii!"
+	message = "looks super kawaii!"
+
+// Females can also get wood
+/datum/emote/living/getwood
+	key = "getwood"
+	key_third_person = "gets wood."
+	message = "gets wood."
+
+/datum/emote/living/twerk
+	key = "twerk"
+	key_third_person = "twerks."
+	message = "twerks."
+
+/datum/emote/living/fap
+	key = "fap"
+	key_third_person = "fap."
+	message = "faps."
 
 /datum/emote/living/bow
 	key = "bow"
