@@ -26210,8 +26210,7 @@
 	id_tag = "GeneticsDoor";
 	name = "Cloning";
 	req_access_txt = "0";
-	req_one_access_txt = "5;9";
-	
+	req_one_access_txt = "5;9"
 	},
 /obj/effect/mapping_helpers/airlock/unres{
 	icon_state = "airlock_unres_helper";

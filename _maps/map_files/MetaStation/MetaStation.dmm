@@ -51880,8 +51880,7 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
-	req_access_txt = "5";
-	
+	req_access_txt = "5"
 	},
 /obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plasteel/whiteblue,
@@ -51892,8 +51891,7 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
-	req_access_txt = "5";
-	
+	req_access_txt = "5"
 	},
 /obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plasteel/whiteblue,
@@ -59988,8 +59986,7 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "CloningDoor";
 	name = "Cloning Lab";
-	req_access_txt = "5; 68";
-	
+	req_access_txt = "5; 68"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4

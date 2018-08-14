@@ -25643,8 +25643,7 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
-	req_access_txt = "5";
-	
+	req_access_txt = "5"
 	},
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -25664,8 +25663,7 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
-	req_access_txt = "5";
-	
+	req_access_txt = "5"
 	},
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -27445,8 +27443,7 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "GeneticsDoor";
 	name = "Genetics";
-	req_access_txt = "5; 68";
-	
+	req_access_txt = "5; 68"
 	},
 /obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plasteel/white,
