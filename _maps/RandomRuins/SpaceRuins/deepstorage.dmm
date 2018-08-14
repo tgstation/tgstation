@@ -141,7 +141,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/syndicate{
 	dir = 2;
 	name = "Recycling APC";
 	pixel_y = -24
@@ -180,7 +180,7 @@
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/packageWrap,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/airalarm/unlocked{
+/obj/machinery/airalarm/syndicate{
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -263,7 +263,7 @@
 "aO" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Recycling Room";
-	req_access_txt = "200"
+	req_access_txt = "150"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -273,7 +273,7 @@
 "aP" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Recycling Room";
-	req_access_txt = "200"
+	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/crusher)
@@ -384,7 +384,7 @@
 "aZ" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
-/obj/machinery/airalarm/unlocked{
+/obj/machinery/airalarm/syndicate{
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
@@ -663,7 +663,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/syndicate{
 	dir = 2;
 	name = "Kitchen APC";
 	pixel_y = -24
@@ -774,7 +774,7 @@
 "bX" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "General Storage";
-	req_access_txt = "200"
+	req_access_txt = "150"
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
 /turf/open/floor/plasteel/floorgrime,
@@ -844,7 +844,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc/highcap/five_k{
+/obj/machinery/power/apc/syndicate{
 	dir = 4;
 	name = "Hydroponics APC";
 	pixel_x = 24
@@ -853,7 +853,7 @@
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "ch" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/syndicate{
 	dir = 8;
 	pixel_x = 24
 	},
@@ -897,7 +897,7 @@
 /area/ruin/space/has_grav/deepstorage)
 "cm" = (
 /obj/structure/table,
-/obj/machinery/airalarm/unlocked{
+/obj/machinery/airalarm/syndicate{
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -929,7 +929,7 @@
 /obj/machinery/shower{
 	dir = 4
 	},
-/obj/item/soap,
+/obj/item/soap/syndie,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/has_grav/deepstorage)
 "cr" = (
@@ -940,7 +940,7 @@
 /area/ruin/space/has_grav/deepstorage)
 "cs" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/machinery/airalarm/unlocked{
+/obj/machinery/airalarm/syndicate{
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/freezer,
@@ -1052,7 +1052,7 @@
 "cD" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Provisions Storage";
-	req_access_txt = "200"
+	req_access_txt = "150"
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
@@ -1139,7 +1139,7 @@
 /area/ruin/space/has_grav/deepstorage)
 "cQ" = (
 /obj/structure/cable/yellow,
-/obj/machinery/power/apc/highcap/five_k{
+/obj/machinery/power/apc/syndicate{
 	dir = 4;
 	name = "Storage APC";
 	pixel_x = 24
@@ -1549,7 +1549,7 @@
 "dM" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Secure Storage";
-	req_access_txt = "200"
+	req_access_txt = "150"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -1577,7 +1577,7 @@
 /obj/item/radio{
 	pixel_x = 4
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/syndicate{
 	dir = 8;
 	pixel_x = 24
 	},
@@ -1627,7 +1627,7 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow,
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/syndicate{
 	dir = 2;
 	name = "Main Area APC";
 	pixel_y = -24
@@ -1717,7 +1717,7 @@
 "ee" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Secure Storage";
-	req_access_txt = "200"
+	req_access_txt = "150"
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
@@ -1750,7 +1750,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc/highcap/five_k{
+/obj/machinery/power/apc/syndicate{
 	dir = 4;
 	name = "Armory APC";
 	pixel_x = 24
@@ -1793,7 +1793,7 @@
 "en" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Canister Storage";
-	req_access_txt = "200"
+	req_access_txt = "150"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage)
@@ -1818,7 +1818,7 @@
 "er" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Airlock Control";
-	req_access_txt = "200"
+	req_access_txt = "150"
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
 /obj/structure/cable/yellow{
@@ -1879,11 +1879,7 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "ey" = (
 /obj/structure/closet/cabinet,
-/obj/item/card/id/away{
-	desc = "A specialized ID meant for accessing some sort of specific door.";
-	icon_state = "centcom";
-	name = "bunker access ID"
-	},
+/obj/item/card/id/syndicate/deepstorage,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "ez" = (
@@ -1941,16 +1937,16 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage)
 "eG" = (
-/obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	dir = 6
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage)
 "eH" = (
-/obj/machinery/atmospherics/pipe/simple/orange/hidden{
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/closed/wall/mineral/iron,
@@ -1962,36 +1958,33 @@
 	name = "exterior blastdoor access";
 	pixel_x = -24;
 	pixel_y = -8;
-	req_access_txt = "200"
+	req_access_txt = "150"
 	},
 /obj/machinery/button/door{
 	id = "bunkerinterior";
 	name = "interior blastdoor access";
 	pixel_x = -24;
-	req_access_txt = "200"
+	req_access_txt = "150"
 	},
 /obj/machinery/button/door{
 	id = "bunkershutter";
 	name = "hallway shutter toggle";
 	pixel_x = -24;
 	pixel_y = 8;
-	req_access_txt = "200"
-	},
-/obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	dir = 4
+	req_access_txt = "150"
 	},
 /obj/machinery/computer/security/telescreen{
 	dir = 1;
-	name = "Bunker Entrance";
-	network = list("bunker1");
+	name = "Deep Storage Monitor";
+	network = list("deep1");
 	pixel_y = 2
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eJ" = (
-/obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -1999,29 +1992,28 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eK" = (
-/obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eL" = (
-/obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	dir = 10
-	},
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/syndicate{
 	dir = 1;
 	name = "Airlock Control APC";
 	pixel_y = 24
@@ -2137,9 +2129,6 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eX" = (
-/obj/machinery/atmospherics/components/binary/valve{
-	name = "Hall Siphon to Port"
-	},
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
 	pixel_x = 24
@@ -2149,7 +2138,7 @@
 "eY" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Atmospherics and Power Storage";
-	req_access_txt = "200"
+	req_access_txt = "150"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
@@ -2160,7 +2149,7 @@
 "eZ" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Atmospherics and Power Storage";
-	req_access_txt = "200"
+	req_access_txt = "150"
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
 /turf/open/floor/plasteel/floorgrime,
@@ -2227,12 +2216,6 @@
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/airlock)
-"fk" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/space/has_grav/deepstorage/airlock)
 "fl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /obj/structure/cable/yellow{
@@ -2251,13 +2234,13 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/machinery/airalarm/unlocked{
+/obj/machinery/airalarm/syndicate{
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/power)
 "fo" = (
-/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/suit_storage_unit/syndicate_softsuit,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/power)
 "fp" = (
@@ -2288,20 +2271,22 @@
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "ft" = (
-/obj/machinery/atmospherics/pipe/simple/yellow/hidden{
-	dir = 4
-	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/syndicate{
 	dir = 4;
 	pixel_x = -24
+	},
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	icon_state = "intact";
+	dir = 8
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "fu" = (
-/obj/machinery/atmospherics/pipe/simple/yellow/hidden{
-	dir = 4
-	},
 /obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	icon_state = "intact";
+	dir = 8
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "fv" = (
@@ -2327,7 +2312,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/syndicate{
 	dir = 8;
 	name = "Power and Atmospherics APC";
 	pixel_x = -25;
@@ -2343,23 +2328,23 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "fz" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
-/obj/machinery/atmospherics/pipe/simple/supplymain/visible{
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/power)
 "fA" = (
-/obj/machinery/atmospherics/pipe/simple/supplymain/visible{
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/power)
 "fB" = (
-/obj/machinery/atmospherics/pipe/simple/supplymain/visible{
-	dir = 4
-	},
 /obj/machinery/door/firedoor,
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "fC" = (
@@ -2376,9 +2361,9 @@
 "fE" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
 /obj/structure/cable/yellow,
-/obj/machinery/power/apc/highcap/five_k{
+/obj/machinery/power/apc/syndicate{
 	dir = 4;
-	name = "Dormory APC";
+	name = "Dormitory APC";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -2399,7 +2384,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage)
 "fH" = (
-/obj/machinery/atmospherics/pipe/simple/supplymain/visible,
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/power)
 "fI" = (
@@ -2487,7 +2472,8 @@
 /area/ruin/space/has_grav/deepstorage)
 "fU" = (
 /obj/machinery/camera{
-	network = list("bunker1")
+	c_tag = "Deep storage entrance";
+	network = list("deep1")
 	},
 /obj/structure/sign/warning/securearea{
 	pixel_y = 32
@@ -2590,7 +2576,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/syndicate{
 	dir = 8;
 	pixel_x = 24
 	},
@@ -2682,7 +2668,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/power)
 "gu" = (
-/obj/machinery/atmospherics/pipe/simple/supplymain/visible{
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 5
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -2696,7 +2682,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)
 "gw" = (
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/syndicate{
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
@@ -2723,7 +2709,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	desc = "Nothing to see here, folks, just an inconspicuous airlock. Now go away!";
 	name = "Inconspicuous Airlock";
-	req_access_txt = "200"
+	req_access_txt = "150"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
@@ -2807,7 +2793,7 @@
 "gL" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "RTG Observation";
-	req_access_txt = "200"
+	req_access_txt = "150"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -2841,7 +2827,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	desc = "Nothing to see here, folks, just an inconspicuous airlock. Now go away!";
 	name = "Inconspicuous Airlock";
-	req_access_txt = "200"
+	req_access_txt = "150"
 	},
 /obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -2904,7 +2890,7 @@
 "gY" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Telecomms";
-	req_access_txt = "200"
+	req_access_txt = "150"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2945,7 +2931,7 @@
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
 	},
-/obj/machinery/airalarm/unlocked{
+/obj/machinery/airalarm/syndicate{
 	pixel_y = 23
 	},
 /turf/open/floor/light,
@@ -3021,7 +3007,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage)
 "ho" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/closed/wall/mineral/iron,
@@ -4472,7 +4458,7 @@ ea
 eq
 eL
 eX
-fk
+fi
 fw
 eq
 fX
