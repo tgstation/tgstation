@@ -1014,9 +1014,10 @@
 			to_chat(occupant, "[icon2html(src, occupant)] [message]")
 	return
 
-/obj/mecha/proc/log_message(message as text,red=null)
+/obj/mecha/log_message(message as text, message_type=LOG_GAME, color=null)
 	log.len++
-	log[log.len] = list("time"="[station_time_timestamp()]","date","year"="[GLOB.year_integer+540]","message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
+	log[log.len] = list("time"="[station_time_timestamp()]","date","year"="[GLOB.year_integer+540]","message"="[color?"<font color='[color]'>":null][message][color?"</font>":null]")
+	..()
 	return log.len
 
 /obj/mecha/proc/log_append_to_last(message as text,red=null)

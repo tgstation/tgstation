@@ -1997,9 +1997,7 @@
 	lootcount = 3;
 	name = "3maintenance loot spawner"
 	},
-/obj/effect/spawner/lootdrop/armory_contraband{
-	loot = list(/obj/item/gun/ballistic/automatic/pistol = 5, /obj/item/gun/ballistic/shotgun/automatic/combat = 5, /obj/item/gun/ballistic/revolver/mateba, /obj/item/gun/ballistic/automatic/pistol/deagle, /obj/item/storage/box/syndie_kit/throwing_weapons = 3)
-	},
+/obj/effect/spawner/lootdrop/armory_contraband/metastation,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
@@ -26530,7 +26528,9 @@
 /obj/machinery/power/apc/auto_name/west{
 	pixel_x = -26
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/caution{
+	dir = 8
+	},
 /area/engine/storage_shared)
 "beq" = (
 /obj/structure/sign/warning/vacuum/external,
@@ -36964,10 +36964,7 @@
 /area/crew_quarters/bar)
 "bAq" = (
 /obj/structure/table/wood/poker,
-/obj/effect/spawner/lootdrop{
-	loot = list(/obj/item/gun/ballistic/revolver/russian = 5, /obj/item/storage/box/syndie_kit/throwing_weapons, /obj/item/toy/cards/deck/syndicate = 2);
-	name = "gambling valuables spawner"
-	},
+/obj/effect/spawner/lootdrop/gambling,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "bAr" = (
@@ -37213,10 +37210,10 @@
 /area/tcommsat/computer)
 "bAW" = (
 /obj/structure/table/wood,
-/obj/item/folder/blue,
 /obj/machinery/status_display{
 	pixel_y = 31
 	},
+/obj/item/book/manual/wiki/tcomms,
 /obj/item/folder/blue,
 /obj/item/pen,
 /turf/open/floor/plasteel/grimy,
@@ -37825,13 +37822,14 @@
 /area/engine/atmos)
 "bCn" = (
 /obj/structure/table,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/item/book/manual/wiki/atmospherics,
 /obj/item/storage/belt/utility,
 /obj/item/t_scanner,
 /obj/item/t_scanner,
 /obj/item/t_scanner,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel/caution{
 	dir = 8
 	},
@@ -43566,6 +43564,7 @@
 "bOU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table,
+/obj/item/book/manual/wiki/cooking_to_serve_man,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -51231,15 +51230,6 @@
 /area/medical/sleeper)
 "cfJ" = (
 /obj/structure/table,
-/obj/item/folder/white{
-	pixel_x = 4;
-	pixel_y = -3
-	},
-/obj/item/folder/white{
-	pixel_x = 4;
-	pixel_y = -3
-	},
-/obj/item/pen,
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Sleeper Room APC";
@@ -51249,7 +51239,13 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
+/obj/item/book/manual/wiki/medicine,
 /obj/item/clothing/neck/stethoscope,
+/obj/item/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/pen,
 /turf/open/floor/plasteel/vault,
 /area/medical/sleeper)
 "cfK" = (
@@ -54626,6 +54622,7 @@
 /area/medical/surgery)
 "cnq" = (
 /obj/structure/table,
+/obj/item/book/manual/wiki/surgery,
 /obj/item/retractor,
 /turf/open/floor/plasteel,
 /area/medical/surgery)
@@ -54836,19 +54833,12 @@
 	},
 /area/crew_quarters/heads/cmo)
 "cnH" = (
-/obj/item/clothing/glasses/science{
-	pixel_x = 2;
-	pixel_y = 4
-	},
-/obj/item/clothing/glasses/science,
 /obj/item/radio/intercom{
 	dir = 8;
 	name = "Station Intercom (General)";
 	pixel_x = -28
 	},
 /obj/structure/table/glass,
-/obj/item/stack/cable_coil,
-/obj/item/stack/cable_coil,
 /obj/machinery/camera{
 	c_tag = "Chemistry";
 	dir = 4;
@@ -54857,6 +54847,15 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/book/manual/wiki/chemistry{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/book/manual/wiki/grenades,
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil,
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 10
 	},
@@ -62579,13 +62578,14 @@
 /area/science/mixing)
 "cDp" = (
 /obj/structure/table,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/item/book/manual/wiki/toxins,
 /obj/item/clothing/glasses/science,
 /obj/item/clothing/glasses/science,
 /obj/item/multitool{
 	pixel_x = 3
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -75903,20 +75903,15 @@
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
-"gYu" = (
-/turf/open/floor/plasteel/caution/corner{
-	dir = 8
-	},
-/area/engine/storage_shared)
 "hfn" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/machinery/vending/cigarette,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/vault,
 /area/engine/break_room)
 "hkq" = (
-/turf/open/floor/plasteel/caution/corner,
+/turf/open/floor/plasteel,
 /area/engine/storage_shared)
 "hvt" = (
 /obj/structure/kitchenspike_frame,
@@ -76111,7 +76106,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "kCw" = (
 /obj/machinery/vending/coffee,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/vault,
 /area/engine/break_room)
 "kDM" = (
 /obj/structure/cable/yellow{
@@ -76242,7 +76237,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel/caution/corner,
+/turf/open/floor/plasteel,
 /area/engine/storage_shared)
 "mWg" = (
 /obj/structure/girder,
@@ -76377,16 +76372,17 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/caution/corner{
-	dir = 8
+/turf/open/floor/plasteel/caution{
+	dir = 4
 	},
 /area/engine/storage_shared)
 "oLW" = (
 /obj/structure/table/reinforced,
-/obj/item/integrated_electronics/debugger,
 /obj/structure/sign/poster/random{
 	pixel_y = 32
 	},
+/obj/item/book/manual/wiki/circuitry,
+/obj/item/integrated_electronics/debugger,
 /turf/open/floor/plasteel/purple/side,
 /area/science/circuit)
 "oRL" = (
@@ -76503,7 +76499,9 @@
 /area/science/circuit)
 "qdT" = (
 /obj/item/twohanded/required/kirbyplants/random,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/caution{
+	dir = 2
+	},
 /area/engine/storage_shared)
 "qhe" = (
 /obj/effect/turf_decal/stripes/line{
@@ -76641,7 +76639,9 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/caution{
+	dir = 6
+	},
 /area/engine/storage_shared)
 "sao" = (
 /obj/machinery/vending/tool,
@@ -76783,7 +76783,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel/caution/corner,
+/turf/open/floor/plasteel,
 /area/engine/storage_shared)
 "uun" = (
 /obj/machinery/vending/assist,
@@ -76795,7 +76795,6 @@
 	req_one_access_txt = "32;19"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/engine/storage_shared)
@@ -117530,7 +117529,7 @@ bjL
 bnb
 owR
 owR
-gYu
+hkq
 qdT
 bxd
 byT
@@ -118044,7 +118043,7 @@ ecs
 rxn
 bpi
 sao
-gYu
+hkq
 bvh
 bxd
 byV

@@ -440,6 +440,15 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
+/mob/living/simple_animal/hostile/zombie{
+	desc = "This undead fiend looks to be badly decomposed.";
+	environment_smash = 0;
+	health = 60;
+	melee_damage_lower = 11;
+	melee_damage_upper = 11;
+	name = "Rotting Carcass";
+	zombiejob = "Assistant"
+	},
 /turf/open/floor/plasteel/white/corner{
 	dir = 1
 	},
@@ -545,6 +554,14 @@
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/blood/old,
+/mob/living/simple_animal/hostile/zombie{
+	desc = "This undead fiend looks to be badly decomposed.";
+	environment_smash = 0;
+	health = 60;
+	melee_damage_lower = 11;
+	melee_damage_upper = 11;
+	name = "Rotting Carcass"
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/abandoned/crew)
 "aQ" = (
@@ -1263,6 +1280,14 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/blood/old,
+/mob/living/simple_animal/hostile/zombie{
+	desc = "This undead fiend looks to be badly decomposed.";
+	environment_smash = 0;
+	health = 60;
+	melee_damage_lower = 11;
+	melee_damage_upper = 11;
+	name = "Rotting Carcass"
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/abandoned/medbay)
 "bT" = (
@@ -2208,6 +2233,15 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
+/mob/living/simple_animal/hostile/zombie{
+	desc = "This undead fiend looks to be badly decomposed.";
+	environment_smash = 0;
+	health = 60;
+	melee_damage_lower = 11;
+	melee_damage_upper = 11;
+	name = "Rotting Carcass";
+	zombiejob = "Assistant"
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "dc" = (
