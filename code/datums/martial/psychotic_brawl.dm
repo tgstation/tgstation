@@ -29,12 +29,12 @@
 					D.drop_all_held_items()
 					D.stop_pulling()
 					if(A.a_intent == INTENT_GRAB)
-						add_logs(A, D, "grabbed", addition="aggressively")
+						log_combat(A, D, "grabbed", addition="aggressively")
 						D.visible_message("<span class='warning'>[A] violently grabs [D]!</span>", \
 						  "<span class='userdanger'>[A] violently grabs you!</span>")
 						A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
 					else
-						add_logs(A, D, "grabbed", addition="passively")
+						log_combat(A, D, "grabbed", addition="passively")
 						A.grab_state = GRAB_PASSIVE
 		if(4)
 			A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
@@ -62,5 +62,5 @@
 			basic_hit(A,D)
 
 	if(atk_verb)
-		add_logs(A, D, "[atk_verb] (Psychotic Brawling)")
+		log_combat(A, D, "[atk_verb] (Psychotic Brawling)")
 	return 1

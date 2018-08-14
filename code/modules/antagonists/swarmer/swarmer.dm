@@ -483,7 +483,7 @@
 	if(ishuman(target) && (!H.handcuffed))
 		H.handcuffed = new /obj/item/restraints/handcuffs/energy/used(H)
 		H.update_handcuffed()
-		add_logs(src, H, "handcuffed")
+		log_combat(src, H, "handcuffed")
 
 	var/datum/effect_system/spark_spread/S = new
 	S.set_up(4,0,get_turf(target))

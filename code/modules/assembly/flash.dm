@@ -104,7 +104,7 @@
 /obj/item/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
 	if(!istype(M))
 		return
-	add_logs(user, M, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
+	log_combat(user, M, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
 	if(generic_message && M != user)
 		to_chat(M, "<span class='disarm'>[src] emits a blinding light!</span>")
 	if(targeted)
@@ -139,7 +139,7 @@
 		return TRUE
 	else if(issilicon(M))
 		var/mob/living/silicon/robot/R = M
-		add_logs(user, R, "flashed", src)
+		log_combat(user, R, "flashed", src)
 		update_icon(1)
 		R.Knockdown(rand(80,120))
 		var/diff = 5 * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
