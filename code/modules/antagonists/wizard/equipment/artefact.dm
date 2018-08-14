@@ -114,8 +114,8 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		to_chat(C, "<span class='userdanger'>OH GOD! NONE OF ITS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!</span>")
-		//for(var/datum/component/mood/insaneinthemembrane in C.datum_components)
-		//	insaneinthemembrane.sanity = 0
+		GET_COMPONENT_FROM(insaneinthemembrane, /datum/component/mood, C)
+		insaneinthemembrane.sanity = 0
 		for(var/lore in typesof(/datum/brain_trauma/severe))
 			C.gain_trauma(lore, TRAUMA_RESILIENCE_MAGIC)
 		sleep(100)

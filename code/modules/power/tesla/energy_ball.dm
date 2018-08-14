@@ -130,7 +130,7 @@
 	dust_mobs(AM)
 
 /obj/singularity/energy_ball/attack_tk(mob/user)
-	to_chat(user, "<span class='userdanger'>That was a really dumb idea.</span>")
+	to_chat(user, "<span class='userdanger'>That was a shockingly dumb idea.</span>")
 	explosion(user.loc,2,2,4,flame_range = 2)
 
 /obj/singularity/energy_ball/orbit(obj/singularity/energy_ball/target)
