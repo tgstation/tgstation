@@ -7,13 +7,13 @@
 	rogue_types = list(/datum/nanite_program/nerve_decay)
 
 /datum/nanite_program/nervous/enable_passive_effect()
-	..()
+	. = ..()
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
 		H.physiology.stun_mod *= 0.5
 
 /datum/nanite_program/nervous/disable_passive_effect()
-	..()
+	. = ..()
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
 		H.physiology.stun_mod *= 2
@@ -46,14 +46,14 @@
 //TODO on_hit effect that turns skin grey for a moment
 
 /datum/nanite_program/hardening/enable_passive_effect()
-	..()
+	. = ..()
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
 		H.physiology.armor.melee += 50
 		H.physiology.armor.bullet += 35
 
 /datum/nanite_program/hardening/disable_passive_effect()
-	..()
+	. = ..()
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
 		H.physiology.armor.melee -= 50
@@ -66,14 +66,14 @@
 	rogue_types = list(/datum/nanite_program/skin_decay)
 
 /datum/nanite_program/refractive/enable_passive_effect()
-	..()
+	. = ..()
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
 		H.physiology.armor.laser += 50
 		H.physiology.armor.energy += 35
 
 /datum/nanite_program/refractive/disable_passive_effect()
-	..()
+	. = ..()
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
 		H.physiology.armor.laser -= 50
@@ -86,13 +86,13 @@
 	rogue_types = list(/datum/nanite_program/suffocating)
 
 /datum/nanite_program/coagulating/enable_passive_effect()
-	..()
+	. = ..()
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
 		H.physiology.bleed_mod *= 0.1
 
 /datum/nanite_program/coagulating/disable_passive_effect()
-	..()
+	. = ..()
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
 		H.physiology.bleed_mod *= 10
@@ -105,11 +105,11 @@
 	rogue_types = list(/datum/nanite_program/nerve_decay)
 
 /datum/nanite_program/conductive/enable_passive_effect()
-	..()
+	. = ..()
 	host_mob.add_trait(TRAIT_SHOCKIMMUNE, "nanites")
 
 /datum/nanite_program/conductive/disable_passive_effect()
-	..()
+	. = ..()
 	host_mob.remove_trait(TRAIT_SHOCKIMMUNE, "nanites")
 
 /datum/nanite_program/mindshield
@@ -119,12 +119,12 @@
 	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
 
 /datum/nanite_program/mindshield/enable_passive_effect()
-	..()
+	. = ..()
 	if(!host_mob.mind.has_antag_datum(/datum/antagonist/rev)) //won't work if on a rev, to avoid having implanted revs
 		host_mob.add_trait(TRAIT_MINDSHIELD, "nanites")
 		host_mob.sec_hud_set_implants()
 
 /datum/nanite_program/mindshield/disable_passive_effect()
-	..()
+	. = ..()
 	host_mob.remove_trait(TRAIT_MINDSHIELD, "nanites")
 	host_mob.sec_hud_set_implants()

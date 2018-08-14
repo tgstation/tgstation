@@ -168,7 +168,7 @@
 	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
 
 	extra_settings = list("Directive")
-	var/cooldown = 0 //avoids spam
+	var/cooldown = 0 //avoids spam when nanites are running low
 	var/directive = "..."
 
 /datum/nanite_program/mind_control/set_extra_setting(user, setting)
@@ -188,12 +188,12 @@
 /datum/nanite_program/mind_control/enable_passive_effect()
 	if(world.time < cooldown)
 		return
-	..()
+	. = ..()
 	brainwash(host_mob, directive)
 	log_game("A mind control nanite program brainwashed [key_name(host_mob)] with the objective '[directive]'.")
 
 /datum/nanite_program/mind_control/disable_passive_effect()
-	..()
+	. = ..()
 	if(host_mob.mind && host_mob.mind.has_antag_datum(/datum/antagonist/brainwashed))
 		host_mob.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 	log_game("[key_name(host_mob)] is no longer brainwashed by nanites.")
