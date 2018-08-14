@@ -43,7 +43,9 @@
 /obj/machinery/airalarm/unlocked{
 	pixel_y = 23
 	},
-/obj/structure/closet/secure_closet/atmospherics,
+/obj/structure/closet/secure_closet/atmospherics{
+	locked = 0
+	},
 /turf/open/floor/plating,
 /area/engine/atmos)
 "am" = (
@@ -75,7 +77,9 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/structure/closet/secure_closet/engineering_electrical,
+/obj/structure/closet/secure_closet/engineering_electrical{
+	locked = 0
+	},
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
@@ -93,7 +97,9 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ar" = (
-/obj/structure/closet/secure_closet/engineering_welding,
+/obj/structure/closet/secure_closet/engineering_welding{
+	locked = 0
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "as" = (
@@ -220,6 +226,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aH" = (
@@ -417,7 +424,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/announcement_system,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "bh" = (
@@ -494,10 +500,10 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "br" = (
-/obj/structure/closet/radiation,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/announcement_system,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "bs" = (
@@ -582,7 +588,9 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
-/obj/structure/closet/secure_closet/captains,
+/obj/structure/closet/secure_closet/captains{
+	locked = 0
+	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 8
 	},
@@ -624,7 +632,9 @@
 /turf/open/floor/plasteel,
 /area/bridge)
 "bM" = (
-/obj/structure/closet/secure_closet/hop,
+/obj/structure/closet/secure_closet/hop{
+	locked = 0
+	},
 /obj/machinery/camera/autoname,
 /turf/open/floor/plasteel/blue/side{
 	dir = 4
@@ -705,7 +715,7 @@
 	},
 /area/medical/medbay)
 "bX" = (
-/obj/machinery/sleeper/syndie,
+/obj/machinery/sleeper/syndie/fullupgrade,
 /turf/open/floor/plasteel/arrival{
 	dir = 1
 	},
@@ -828,7 +838,9 @@
 /area/science)
 "cp" = (
 /obj/machinery/light,
-/obj/structure/closet/secure_closet/engineering_chief,
+/obj/structure/closet/secure_closet/engineering_chief{
+	locked = 0
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
@@ -841,7 +853,9 @@
 /area/bridge)
 "cr" = (
 /obj/machinery/light,
-/obj/structure/closet/secure_closet/hos,
+/obj/structure/closet/secure_closet/hos{
+	locked = 0
+	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 6
 	},
@@ -956,8 +970,9 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "cJ" = (
-/obj/item/gun/magic/staff/healing,
-/obj/item/gun/magic/wand/resurrection/debug,
+/obj/machinery/computer/operating{
+	dir = 1
+	},
 /turf/open/floor/plasteel/arrival{
 	dir = 10
 	},
@@ -967,11 +982,9 @@
 /turf/open/floor/plasteel/arrival,
 /area/medical/medbay)
 "cL" = (
-/obj/machinery/computer/cloning,
-/turf/open/floor/plasteel/arrival,
-/area/medical/medbay)
-"cM" = (
-/obj/machinery/clonepod,
+/obj/structure/table,
+/obj/item/storage/backpack/duffelbag/syndie/surgery,
+/obj/item/disk/surgery/debug,
 /turf/open/floor/plasteel/arrival,
 /area/medical/medbay)
 "cN" = (
@@ -1477,13 +1490,16 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "er" = (
-/obj/structure/table/optable,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/wand/resurrection/debug,
 /turf/open/floor/plasteel,
 /area/medical/medbay)
 "es" = (
 /obj/machinery/light,
-/obj/machinery/computer/operating,
-/turf/open/floor/plasteel,
+/obj/machinery/clonepod,
+/turf/open/floor/plasteel/arrival{
+	dir = 6
+	},
 /area/medical/medbay)
 "et" = (
 /turf/closed/wall/r_wall,
@@ -1864,7 +1880,7 @@
 /obj/machinery/camera/autoname{
 	dir = 4
 	},
-/obj/machinery/computer/cargo/express{
+/obj/machinery/computer/bounty{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -1873,7 +1889,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/computer/bounty{
+/obj/machinery/computer/cargo/express{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -2632,13 +2648,15 @@
 /turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
 "BB" = (
-/obj/item/storage/backpack/duffelbag/syndie/surgery,
-/obj/structure/table,
-/obj/item/disk/surgery/debug,
-/turf/open/floor/plasteel,
+/obj/machinery/computer/cloning{
+	dir = 1
+	},
+/turf/open/floor/plasteel/arrival,
 /area/medical/medbay)
 "BD" = (
-/obj/structure/closet/secure_closet/CMO,
+/obj/structure/closet/secure_closet/CMO{
+	locked = 0
+	},
 /turf/open/floor/plasteel/blue/side,
 /area/bridge)
 "BG" = (
@@ -2681,7 +2699,9 @@
 /turf/closed/wall/r_wall,
 /area/science)
 "Iy" = (
-/obj/structure/closet/secure_closet/RD,
+/obj/structure/closet/secure_closet/RD{
+	locked = 0
+	},
 /turf/open/floor/plasteel/blue/side,
 /area/bridge)
 "JF" = (
@@ -2723,8 +2743,14 @@
 /obj/item/disk/tech_disk/debug,
 /turf/open/floor/plasteel,
 /area/science)
+"Sj" = (
+/obj/structure/table/optable,
+/turf/open/floor/plasteel/arrival,
+/area/medical/medbay)
 "Ut" = (
-/obj/structure/closet/secure_closet/medical3,
+/obj/structure/closet/secure_closet/medical3{
+	locked = 0
+	},
 /obj/item/healthanalyzer/advanced,
 /turf/open/floor/plasteel,
 /area/medical/medbay)
@@ -8218,7 +8244,7 @@ cm
 cm
 cm
 cm
-cK
+Sj
 by
 dA
 dJ
@@ -8402,7 +8428,7 @@ eU
 cy
 Ut
 cm
-cM
+cK
 by
 dB
 dx
