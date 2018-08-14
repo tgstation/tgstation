@@ -19,18 +19,18 @@
 	QDEL_NULL(areaimage)
 	return ..()
 
-/datum/buildmode_mode/area_edit/show_help(mob/user)
-	to_chat(user, "<span class='notice'>***********************************************************</span>")
-	to_chat(user, "<span class='notice'>Left Mouse Button on obj/turf/mob  = Paint area</span>")
-	to_chat(user, "<span class='notice'>Right Mouse Button on obj/turf/mob = Select area to paint</span>")
-	to_chat(user, "<span class='notice'>Right Mouse Button on buildmode button = Create new area</span>")
-	to_chat(user, "<span class='notice'>***********************************************************</span>")
+/datum/buildmode_mode/area_edit/show_help(client/c)
+	to_chat(c, "<span class='notice'>***********************************************************</span>")
+	to_chat(c, "<span class='notice'>Left Mouse Button on obj/turf/mob  = Paint area</span>")
+	to_chat(c, "<span class='notice'>Right Mouse Button on obj/turf/mob = Select area to paint</span>")
+	to_chat(c, "<span class='notice'>Right Mouse Button on buildmode button = Create new area</span>")
+	to_chat(c, "<span class='notice'>***********************************************************</span>")
 
-/datum/buildmode_mode/area_edit/change_settings(mob/user)
-	var/target_path = input(user,"Enter typepath:", "Typepath", "/area")
+/datum/buildmode_mode/area_edit/change_settings(client/c)
+	var/target_path = input(c, "Enter typepath:", "Typepath", "/area")
 	var/areatype = text2path(target_path)
 	if(ispath(areatype,/area))
-		var/areaname = input(user,"Enter area name:", "Area name", "Area")
+		var/areaname = input(c, "Enter area name:", "Area name", "Area")
 		if(!areaname || !length(areaname))
 			return
 		storedarea = new areatype
@@ -41,17 +41,18 @@
 		storedarea.name = areaname
 		areaimage.loc = storedarea // color our area
 
-/datum/buildmode_mode/area_edit/handle_click(user, params, object)
+/datum/buildmode_mode/area_edit/handle_click(client/c, params, object)
 	var/list/pa = params2list(params)
 	var/left_click = pa.Find("left")
 	var/right_click = pa.Find("right")
 
 	if(left_click)
 		if(!storedarea)
-			to_chat(user, "<span class='warning'>Configure or select the area you want to paint first!</span>")
+			to_chat(c, "<span class='warning'>Configure or select the area you want to paint first!</span>")
 			return
 		var/turf/T = get_turf(object)
 		if(get_area(T) != storedarea)
+			log_admin("Build Mode: [key_name(c)] added [AREACOORD(T)] to [storedarea]")
 			storedarea.contents.Add(T)
 	else if(right_click)
 		var/turf/T = get_turf(object)

@@ -123,8 +123,8 @@
 	dirbutton.update_icon()
 	return 1
 
-/datum/buildmode/proc/InterceptClickOn(user,params,atom/object)
-	mode.handle_click(user, params, object)
+/datum/buildmode/proc/InterceptClickOn(mob/user, params, atom/object)
+	mode.handle_click(user.client, params, object)
 	return TRUE // no doing underlying actions
 
 /proc/togglebuildmode(mob/M as mob in GLOB.player_list)

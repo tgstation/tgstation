@@ -23,7 +23,7 @@
 	if(pa.Find("left"))
 		bd.toggle_modeswitch()
 	else if(pa.Find("right"))
-		bd.mode.change_settings(usr)
+		bd.mode.change_settings(usr.client)
 	update_icon()
 	return 1
 
@@ -35,8 +35,8 @@
 	screen_loc = "NORTH,WEST+1"
 	name = "Buildmode Help"
 
-/obj/screen/buildmode/help/Click()
-	bd.mode.show_help(usr)
+/obj/screen/buildmode/help/Click(location, control, params)
+	bd.mode.show_help(usr.client)
 	return 1
 
 /obj/screen/buildmode/bdir

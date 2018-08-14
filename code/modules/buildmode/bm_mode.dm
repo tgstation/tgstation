@@ -27,11 +27,11 @@
 /datum/buildmode_mode/proc/get_button_iconstate()
 	return "buildmode_[key]"
 
-/datum/buildmode_mode/proc/show_help(mob/user)
+/datum/buildmode_mode/proc/show_help(client/c)
 	CRASH("No help defined, yell at a coder")
 
-/datum/buildmode_mode/proc/change_settings(mob/user)
-	to_chat(user, "<span class='warning'>There is no configuration available for this mode</span>")
+/datum/buildmode_mode/proc/change_settings(client/c)
+	to_chat(c, "<span class='warning'>There is no configuration available for this mode</span>")
 	return
 
 /datum/buildmode_mode/proc/Reset()
@@ -61,7 +61,7 @@
 	cornerA = null
 	cornerB = null
 
-/datum/buildmode_mode/proc/handle_click(mob/user, params, object)
+/datum/buildmode_mode/proc/handle_click(client/c, params, object)
 	var/list/pa = params2list(params)
 	var/left_click = pa.Find("left")
 	if(use_corner_selection)
@@ -71,13 +71,13 @@
 				return
 			if(cornerA && !cornerB)
 				cornerB = select_tile(get_turf(object), AREASELECT_CORNERB)
-				to_chat(user, "<span class='boldwarning'>Region selected, if you're happy with your selection left click again, otherwise right click.</span>")
+				to_chat(c, "<span class='boldwarning'>Region selected, if you're happy with your selection left click again, otherwise right click.</span>")
 				return
-			handle_selected_area(user, params)
+			handle_selected_area(c, params)
 			deselect_region()
 		else
-			to_chat(user, "<span class='notice'>Region selection canceled!</span>")
+			to_chat(c, "<span class='notice'>Region selection canceled!</span>")
 			deselect_region()
 	return
 
-/datum/buildmode_mode/proc/handle_selected_area(mob/user, params)
+/datum/buildmode_mode/proc/handle_selected_area(client/c, params)

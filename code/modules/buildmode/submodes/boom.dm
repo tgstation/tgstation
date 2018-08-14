@@ -7,26 +7,27 @@
 	var/flash = -1
 	var/flames = -1
 
-/datum/buildmode_mode/boom/show_help(mob/user)
-	to_chat(user, "<span class='notice'>***********************************************************</span>")
-	to_chat(user, "<span class='notice'>Mouse Button on obj  = Kaboom</span>")
-	to_chat(user, "<span class='notice'>***********************************************************</span>")
+/datum/buildmode_mode/boom/show_help(client/c)
+	to_chat(c, "<span class='notice'>***********************************************************</span>")
+	to_chat(c, "<span class='notice'>Mouse Button on obj  = Kaboom</span>")
+	to_chat(c, "<span class='notice'>***********************************************************</span>")
 
-/datum/buildmode_mode/boom/change_settings(mob/user)
-	devastation = input("Range of total devastation. -1 to none", text("Input"))  as num|null
+/datum/buildmode_mode/boom/change_settings(client/c)
+	devastation = input(c, "Range of total devastation. -1 to none", text("Input")) as num|null
 	if(devastation == null) devastation = -1
-	heavy = input("Range of heavy impact. -1 to none", text("Input"))  as num|null
+	heavy = input(c, "Range of heavy impact. -1 to none", text("Input")) as num|null
 	if(heavy == null) heavy = -1
-	light = input("Range of light impact. -1 to none", text("Input"))  as num|null
+	light = input(c, "Range of light impact. -1 to none", text("Input")) as num|null
 	if(light == null) light = -1
-	flash = input("Range of flash. -1 to none", text("Input"))  as num|null
+	flash = input(c, "Range of flash. -1 to none", text("Input")) as num|null
 	if(flash == null) flash = -1
-	flames = input("Range of flames. -1 to none", text("Input"))  as num|null
+	flames = input(c, "Range of flames. -1 to none", text("Input")) as num|null
 	if(flames == null) flames = -1
 
-/datum/buildmode_mode/boom/handle_click(user, params, obj/object)
+/datum/buildmode_mode/boom/handle_click(client/c, params, obj/object)
 	var/list/pa = params2list(params)
 	var/left_click = pa.Find("left")
 
 	if(left_click)
-		explosion(object, devastation, heavy, light, flash, null, TRUE, flames)
+		explosion(object, devastation, heavy, light, flash, FALSE, TRUE, flames)
+		log_admin("Build Mode: [key_name(c)] caused an explosion(dev=[devastation], hvy=[heavy], lgt=[light], flash=[flash], flames=[flames]) at [AREACOORD(object)]")
