@@ -13868,14 +13868,14 @@
 	c_tag = "Dormitory Cyborg Recharging Station";
 	dir = 2
 	},
-/obj/effect/decal/cleanable/oil,
+
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "aKk" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/effect/decal/cleanable/oil,
+
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
@@ -22427,7 +22427,7 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "bgE" = (
-/obj/effect/decal/cleanable/oil,
+
 /obj/effect/decal/cleanable/robot_debris{
 	icon_state = "gib3"
 	},
@@ -35061,7 +35061,7 @@
 	},
 /area/maintenance/department/engine)
 "bMD" = (
-/obj/effect/decal/cleanable/oil,
+
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/engine)
 "bME" = (
@@ -50136,7 +50136,7 @@
 /area/storage/primary)
 "lqc" = (
 /obj/item/toy/gun,
-/obj/effect/decal/cleanable/oil,
+
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "lqy" = (
@@ -51510,7 +51510,7 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "pdq" = (
-/obj/effect/decal/cleanable/oil,
+
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "pdW" = (
