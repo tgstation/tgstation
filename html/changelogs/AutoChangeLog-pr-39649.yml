@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "Blood and oil footprints sharing a tile no longer causes footprint decals to stack."

@@ -164,7 +164,7 @@
 		L.lastattackerckey = user.ckey
 		L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
 								"<span class='userdanger'>[user] has stunned you with [src]!</span>")
-		add_logs(user, L, "stunned")
+		log_combat(user, L, "stunned")
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 

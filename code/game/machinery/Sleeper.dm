@@ -184,7 +184,7 @@
 	if((chem in available_chems) && chem_allowed(chem))
 		occupant.reagents.add_reagent(chem_buttons[chem], 10) //emag effect kicks in here so that the "intended" chem is used for all checks, for extra FUUU
 		if(user)
-			add_logs(user, occupant, "injected [chem] into", addition = "via [src]")
+			log_combat(user, occupant, "injected [chem] into", addition = "via [src]")
 		return TRUE
 
 /obj/machinery/sleeper/proc/chem_allowed(chem)

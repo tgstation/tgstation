@@ -62,7 +62,7 @@
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	playsound(loc, 'sound/weapons/tap.ogg', 40, 1, -1)
 	user.visible_message("<span class='danger'>[user] hits [name]. Nothing happens</span>", null, null, COMBAT_MESSAGE_RANGE)
-	log_message("Attack by hand/paw. Attacker - [user].",1)
+	log_message("Attack by hand/paw. Attacker - [user].", color="red")
 	log_append_to_last("Armor saved.")
 
 /obj/mecha/attack_paw(mob/user as mob)
@@ -70,12 +70,12 @@
 
 
 /obj/mecha/attack_alien(mob/living/user)
-	log_message("Attack by alien. Attacker - [user].",1)
+	log_message("Attack by alien. Attacker - [user].", color="red")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 	attack_generic(user, 15, BRUTE, "melee", 0)
 
 /obj/mecha/attack_animal(mob/living/simple_animal/user)
-	log_message("Attack by simple animal. Attacker - [user].",1)
+	log_message("Attack by simple animal. Attacker - [user].", color="red")
 	if(!user.melee_damage_upper && !user.obj_damage)
 		user.emote("custom", message = "[user.friendly] [src].")
 		return 0
@@ -89,7 +89,7 @@
 			animal_damage = user.obj_damage
 		animal_damage = min(animal_damage, 20*user.environment_smash)
 		attack_generic(user, animal_damage, user.melee_damage_type, "melee", play_soundeffect)
-		add_logs(user, src, "attacked")
+		log_combat(user, src, "attacked")
 		return 1
 
 
@@ -99,8 +99,8 @@
 /obj/mecha/attack_hulk(mob/living/carbon/human/user)
 	. = ..()
 	if(.)
-		log_message("Attack by hulk. Attacker - [user].",1)
-		add_logs(user, src, "punched", "hulk powers")
+		log_message("Attack by hulk. Attacker - [user].", color="red")
+		log_combat(user, src, "punched", "hulk powers")
 
 /obj/mecha/blob_act(obj/structure/blob/B)
 	take_damage(30, BRUTE, "melee", 0, get_dir(src, B))
@@ -109,16 +109,16 @@
 	return
 
 /obj/mecha/hitby(atom/movable/A as mob|obj) //wrapper
-	log_message("Hit by [A].",1)
+	log_message("Hit by [A].", color="red")
 	. = ..()
 
 
 /obj/mecha/bullet_act(obj/item/projectile/Proj) //wrapper
-	log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).",1)
+	log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).", color="red")
 	. = ..()
 
 /obj/mecha/ex_act(severity, target)
-	log_message("Affected by explosion of severity: [severity].",1)
+	log_message("Affected by explosion of severity: [severity].", color="red")
 	if(prob(deflect_chance))
 		severity++
 		log_append_to_last("Armor saved, changing severity to [severity].")
@@ -148,12 +148,12 @@
 	if(get_charge())
 		use_power((cell.charge/3)/(severity*2))
 		take_damage(30 / severity, BURN, "energy", 1)
-	log_message("EMP detected",1)
+	log_message("EMP detected", color="red")
 	check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
 
 /obj/mecha/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature>max_temperature)
-		log_message("Exposed to dangerous temperature.",1)
+		log_message("Exposed to dangerous temperature.", color="red")
 		take_damage(5, BURN, 0, 1)
 
 /obj/mecha/attackby(obj/item/W as obj, mob/user as mob, params)
@@ -290,7 +290,7 @@
 		return 0
 	use_power(melee_energy_drain)
 	if(M.damtype == BRUTE || M.damtype == BURN)
-		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
+		log_combat(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 		. = ..()
 
 /obj/mecha/proc/full_repair(charge_cell)

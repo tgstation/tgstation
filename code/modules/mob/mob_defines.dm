@@ -25,7 +25,7 @@
 	var/zone_selected = null
 
 	var/computer_id = null
-	var/list/logging = list(INDIVIDUAL_ATTACK_LOG, INDIVIDUAL_SAY_LOG, INDIVIDUAL_EMOTE_LOG, INDIVIDUAL_OOC_LOG)
+	var/list/logging = list()
 	var/obj/machinery/machine = null
 
 	var/next_move = null

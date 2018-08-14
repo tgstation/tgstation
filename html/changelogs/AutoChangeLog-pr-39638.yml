@@ -1,4 +1,0 @@
-author: "Nichlas0010"
-delete-after: True
-changes: 
-  - bugfix: "Admins with +admin and without +fun are no longer able to smite."

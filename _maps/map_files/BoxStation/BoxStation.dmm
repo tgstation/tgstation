@@ -17661,6 +17661,10 @@
 "aTO" = (
 /obj/structure/table,
 /obj/item/book/manual/chef_recipes,
+/obj/item/book/manual/wiki/cooking_to_serve_man{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aTP" = (
@@ -25642,6 +25646,11 @@
 /area/medical/medbay/central)
 "bod" = (
 /obj/structure/table,
+/obj/item/book/manual/wiki/grenades,
+/obj/item/book/manual/wiki/chemistry{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /obj/item/folder/white,
 /obj/item/pen,
 /turf/open/floor/plasteel/white,
@@ -25653,6 +25662,7 @@
 	name = "Medbay";
 	req_access_txt = "5"
 	},
+/obj/effect/mapping_helpers/airlock/unres,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
@@ -25672,6 +25682,7 @@
 	name = "Medbay";
 	req_access_txt = "5"
 	},
+/obj/effect/mapping_helpers/airlock/unres,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
@@ -26192,13 +26203,6 @@
 /area/medical/chemistry)
 "bpu" = (
 /obj/structure/bed/roller,
-/obj/machinery/button/door{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "MedbayFoyer";
-	name = "Medbay Exit Button";
-	normaldoorcontrol = 1;
-	pixel_y = 26
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
@@ -27458,6 +27462,7 @@
 	name = "Genetics";
 	req_access_txt = "5; 68"
 	},
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "bsv" = (
@@ -28600,14 +28605,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bvn" = (
-/obj/machinery/button/door{
-	desc = "A remote control switch for the genetics doors.";
-	id = "GeneticsDoor";
-	name = "Genetics Exit Button";
-	normaldoorcontrol = 1;
-	pixel_x = 8;
-	pixel_y = 24
-	},
 /obj/structure/table,
 /obj/item/book/manual/wiki/medical_cloning{
 	pixel_y = 6
@@ -30468,6 +30465,7 @@
 /area/quartermaster/qm)
 "bzS" = (
 /obj/structure/table,
+/obj/item/book/manual/wiki/surgery,
 /obj/item/cautery{
 	pixel_x = 4
 	},
@@ -33833,10 +33831,11 @@
 "bIj" = (
 /obj/structure/table,
 /obj/machinery/light,
+/obj/item/book/manual/wiki/medicine,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
 /obj/item/reagent_containers/spray/cleaner,
-/obj/item/clothing/glasses/hud/health,
-/obj/item/clothing/glasses/hud/health,
-/obj/item/clothing/glasses/hud/health,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bIk" = (
@@ -37912,6 +37911,7 @@
 	pixel_x = 2;
 	pixel_y = 2
 	},
+/obj/item/book/manual/wiki/atmospherics,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bSH" = (
@@ -42239,6 +42239,7 @@
 /area/tcommsat/server)
 "cee" = (
 /obj/structure/table,
+/obj/item/book/manual/wiki/tcomms,
 /obj/item/radio/off,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 10
@@ -52854,6 +52855,7 @@
 /area/maintenance/starboard/aft)
 "kwK" = (
 /obj/structure/table/reinforced,
+/obj/item/book/manual/wiki/toxins,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "kxC" = (
@@ -53585,6 +53587,7 @@
 /area/engine/engineering)
 "ueT" = (
 /obj/structure/table/reinforced,
+/obj/item/book/manual/wiki/circuitry,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "uhH" = (
