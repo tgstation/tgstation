@@ -193,4 +193,4 @@
 /datum/nanite_cloud_backup/Destroy()
 	storage.cloud_backups -= src
 	SSnanites.cloud_backups -= src
-	. = ..()
+	return ..()
