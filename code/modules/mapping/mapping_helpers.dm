@@ -133,6 +133,21 @@
 	else
 		log_world("### MAP WARNING, [src] failed to find an airlock at [AREACOORD(src)]")
 
+/obj/effect/mapping_helpers/airlock/unres
+	name = "airlock unresctricted side helper"
+	icon_state = "airlock_unres_helper"
+
+/obj/effect/mapping_helpers/airlock/unres/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		log_world("### MAP WARNING, [src] spawned outside of mapload!")
+		return
+	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
+	if(airlock)
+		airlock.unres_sides ^= dir
+	else
+		log_world("### MAP WARNING, [src] failed to find an airlock at [AREACOORD(src)]")
+
 
 //needs to do its thing before spawn_rivers() is called
 INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)

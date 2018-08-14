@@ -147,7 +147,6 @@
 				welded = TRUE
 			if(24 to 30)
 				panel_open = TRUE
-
 	update_icon()
 
 /obj/machinery/door/airlock/ComponentInitialize()
@@ -362,6 +361,7 @@
 /obj/machinery/door/airlock/proc/regainMainPower()
 	if(src.secondsMainPowerLost > 0)
 		src.secondsMainPowerLost = 0
+	update_icon()
 
 /obj/machinery/door/airlock/proc/handlePowerRestore()
 	var/cont = TRUE
@@ -382,6 +382,7 @@
 			cont = TRUE
 	spawnPowerRestoreRunning = FALSE
 	updateDialog()
+	update_icon()
 
 /obj/machinery/door/airlock/proc/loseMainPower()
 	if(secondsMainPowerLost <= 0)
@@ -391,6 +392,7 @@
 	if(!spawnPowerRestoreRunning)
 		spawnPowerRestoreRunning = TRUE
 	INVOKE_ASYNC(src, .proc/handlePowerRestore)
+	update_icon()
 
 /obj/machinery/door/airlock/proc/loseBackupPower()
 	if(src.secondsBackupPowerLost < 60)
@@ -398,10 +400,12 @@
 	if(!spawnPowerRestoreRunning)
 		spawnPowerRestoreRunning = TRUE
 	INVOKE_ASYNC(src, .proc/handlePowerRestore)
+	update_icon()
 
 /obj/machinery/door/airlock/proc/regainBackupPower()
 	if(src.secondsBackupPowerLost > 0)
 		src.secondsBackupPowerLost = 0
+	update_icon()
 
 // shock user with probability prb (if all connections & power are working)
 // returns TRUE if shocked, FALSE otherwise
@@ -575,6 +579,7 @@
 	add_overlay(sparks_overlay)
 	add_overlay(damag_overlay)
 	add_overlay(note_overlay)
+	check_unres()
 
 /proc/get_airlock_overlay(icon_state, icon_file)
 	var/obj/machinery/door/airlock/A
@@ -583,6 +588,31 @@
 	var/iconkey = "[icon_state][icon_file]"
 	if((!(. = airlock_overlays[iconkey])))
 		. = airlock_overlays[iconkey] = mutable_appearance(icon_file, icon_state)
+
+/obj/machinery/door/airlock/proc/check_unres() //unrestricted sides. This overlay indicates which directions the player can access even without an ID
+	if(hasPower() && unres_sides)
+		if(unres_sides & NORTH)
+			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_n") //layer=src.layer+1
+			I.pixel_y = 32
+			set_light(l_range = 2, l_power = 1)
+			add_overlay(I)
+		if(unres_sides & SOUTH)
+			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_s") //layer=src.layer+1
+			I.pixel_y = -32
+			set_light(l_range = 2, l_power = 1)
+			add_overlay(I)
+		if(unres_sides & EAST)
+			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_e") //layer=src.layer+1
+			I.pixel_x = 32
+			set_light(l_range = 2, l_power = 1)
+			add_overlay(I)
+		if(unres_sides & WEST)
+			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_w") //layer=src.layer+1
+			I.pixel_x = -32
+			set_light(l_range = 2, l_power = 1)
+			add_overlay(I)
+	else
+		set_light(0)
 
 /obj/machinery/door/airlock/do_animate(animation)
 	switch(animation)
