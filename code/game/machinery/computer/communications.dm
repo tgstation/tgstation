@@ -235,6 +235,7 @@
 				currmsg.answer_callback.Invoke()
 
 			state = STATE_VIEWMESSAGE
+			updateDialog()
 		if("status")
 			state = STATE_STATUSDISPLAY
 		if("securitylevel")
