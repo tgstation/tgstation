@@ -133,13 +133,21 @@
 
 				//Parse out the tile and cursor locations from params (e.g. "icon-x=32;icon-y=29;screen-loc=3:10,15:29")
 				var paramsA = tooltip.params.cursor.split(';');
-				if (paramsA.length < 3) {return false;} //Sometimes screen-loc is never sent ahaha fuck you byond
+				var oScreenLoc = tooltip.params.screenLoc.split(','); //o for original ok
+				var left;
+				var top;
+				var iconX;
+				var iconY;
+				var enteredX = 0;
+				var enteredY = 0;
+				if (paramsA.length > 2) {
+				//When screen-loc is sent via mouseparams
 				//icon-x
-				var iconX = paramsA[0];
+				iconX = paramsA[0];
 				iconX = iconX.split('=');
 				iconX = parseInt(iconX[1]);
 				//icon-y
-				var iconY = paramsA[1];
+				iconY = paramsA[1];
 				iconY = iconY.split('=');
 				iconY = parseInt(iconY[1]);
 				//screen-loc
@@ -147,21 +155,26 @@
 				screenLoc = screenLoc.split('=');
 				screenLoc = screenLoc[1].split(',');
 				if (screenLoc.length < 2) {return false;}
-				var left = screenLoc[0];
-				var top = screenLoc[1];
+				left = screenLoc[0];
+				top = screenLoc[1];
 				if (!left || !top) {return false;}
 				screenLoc = left.split(':');
 				left = parseInt(screenLoc[0]);
-				var enteredX = parseInt(screenLoc[1]);
+				enteredX = parseInt(screenLoc[1]);
 				screenLoc = top.split(':');
 				top = parseInt(screenLoc[0]);
-				var enteredY = parseInt(screenLoc[1]);
+				enteredY = parseInt(screenLoc[1]);
+				} else {
+					if (oScreenLoc.length < 1) {
+						return false; //no screenloc
+					}
+				} 
 
 				//Screen loc offsets on objects (e.g. "WEST+0:6,NORTH-1:26") can royally mess with positioning depending on where the cursor enters
 				//This is a giant bitch to parse. Note that it only expects screen_loc in the format <west>,<north>.
-				var oScreenLoc = tooltip.params.screenLoc.split(','); //o for original ok
 
 				var west = oScreenLoc[0].split(':');
+				if (!left) {left = parseInt(west[0]);}
 				if (west.length > 1) { //Only if west has a pixel offset
 					var westOffset = parseInt(west[1]);
 					if (westOffset !== 0) {
@@ -174,6 +187,7 @@
 
 				if (oScreenLoc.length > 1) { //If north is given
 					var north = oScreenLoc[1].split(':');
+					if (!top) {top = parseInt(north[0]);}
 					if (north.length > 1) { //Only if north has a pixel offset
 						var northOffset = parseInt(north[1]);
 						if (northOffset !== 0) {
