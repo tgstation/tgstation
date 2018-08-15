@@ -77,32 +77,35 @@
 
 //TITANIUM (shuttle)
 
-/turf/open/floor/mineral/titanium/blue
-	icon_state = "shuttlefloor"
-	icons = list("shuttlefloor","shuttlefloor_dam")
-
-/turf/open/floor/mineral/titanium/blue/airless
-	initial_gas_mix = "TEMP=2.7"
-
-/turf/open/floor/mineral/titanium/yellow
-	icon_state = "shuttlefloor2"
-	icons = list("shuttlefloor2","shuttlefloor2_dam")
-
-/turf/open/floor/mineral/titanium/yellow/airless
-	initial_gas_mix = "TEMP=2.7"
-
 /turf/open/floor/mineral/titanium
 	name = "shuttle floor"
-	icon_state = "shuttlefloor3"
+	icon_state = "titanium"
 	floor_tile = /obj/item/stack/tile/mineral/titanium
-	icons = list("shuttlefloor3","shuttlefloor3_dam")
+	icons = list("titanium","titanium1_dam","titanium2_dam","titanium3_dam","titanium4_dam","titanium5_dam")
 
 /turf/open/floor/mineral/titanium/airless
 	initial_gas_mix = "TEMP=2.7"
 
+/turf/open/floor/mineral/titanium/yellow
+	icon_state = "titanium_yellow"
+
+/turf/open/floor/mineral/titanium/yellow/airless
+	initial_gas_mix = "TEMP=2.7"
+
+/turf/open/floor/mineral/titanium/blue
+	icon_state = "titanium_blue"
+
+/turf/open/floor/mineral/titanium/blue/airless
+	initial_gas_mix = "TEMP=2.7"
+
+/turf/open/floor/mineral/titanium/white
+	icon_state = "titanium_white"
+
+/turf/open/floor/mineral/titanium/white/airless
+	initial_gas_mix = "TEMP=2.7"
+
 /turf/open/floor/mineral/titanium/purple
-	icon_state = "shuttlefloor5"
-	icons = list("shuttlefloor5","shuttlefloor5_dam")
+	icon_state = "titanium_purple"
 
 /turf/open/floor/mineral/titanium/purple/airless
 	initial_gas_mix = "TEMP=2.7"
@@ -110,14 +113,20 @@
 //PLASTITANIUM (syndieshuttle)
 /turf/open/floor/mineral/plastitanium
 	name = "shuttle floor"
-	icon_state = "shuttlefloor4"
+	icon_state = "plastitanium"
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium
-	icons = list("shuttlefloor4","shuttlefloor4_dam")
+	icons = list("plastitanium","plastitanium1_dam","plastitanium2_dam","plastitanium3_dam","plastitanium4_dam","plastitanium5_dam")
 
 /turf/open/floor/mineral/plastitanium/airless
 	initial_gas_mix = "TEMP=2.7"
 
-/turf/open/floor/mineral/plastitanium/brig
+/turf/open/floor/mineral/plastitanium/red
+	icon_state = "plastitanium_red"
+
+/turf/open/floor/mineral/plastitanium/red/airless
+	initial_gas_mix = "TEMP=2.7"
+
+/turf/open/floor/mineral/plastitanium/red/brig
 	name = "brig floor"
 
 //BANANIUM
