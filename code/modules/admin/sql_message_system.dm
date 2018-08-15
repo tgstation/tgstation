@@ -68,6 +68,7 @@
 				var/checktime = text2num(query_validate_expire_time.item[1])
 				if(!checktime)
 					to_chat(usr, "Datetime entered is improperly formatted or not later than current server time.")
+					qdel(query_validate_expire_time)
 					return
 				expiry = query_validate_expire_time.item[1]
 			qdel(query_validate_expire_time)
@@ -197,6 +198,8 @@
 				var/checktime = text2num(query_validate_expire_time_edit.item[1])
 				if(!checktime)
 					to_chat(usr, "Datetime entered is improperly formatted or not later than current server time.")
+					qdel(query_validate_expire_time_edit)
+					qdel(query_find_edit_expiry_message)
 					return
 				new_expiry = query_validate_expire_time_edit.item[1]
 			qdel(query_validate_expire_time_edit)
@@ -204,6 +207,7 @@
 		var/datum/DBQuery/query_edit_message_expiry = SSdbcore.NewQuery("UPDATE [format_table_name("messages")] SET expire_timestamp = [expire_time == "-1" ? "NULL" : "'[new_expiry]'"], lasteditor = '[editor_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE id = [message_id] AND deleted = 0")
 		if(!query_edit_message_expiry.warn_execute())
 			qdel(query_edit_message_expiry)
+			qdel(query_find_edit_expiry_message)
 			return
 		qdel(query_edit_message_expiry)
 		log_admin_private("[key_name(usr)] has edited the expiration time of a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""] made by [admin_ckey] from [old_expiry] to [new_expiry]")
