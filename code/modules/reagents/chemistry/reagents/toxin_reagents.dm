@@ -884,3 +884,24 @@
 
 /datum/reagent/toxin/mimesbane/on_mob_delete(mob/living/L)
 	L.remove_trait(TRAIT_EMOTEMUTE, id)
+
+
+
+/datum/reagent/toxin/deet
+	name = "Deet"
+	id = "deet"
+	description = "Often used as bug repellent. Mildly corrosive."
+	reagent_state = LIQUID
+	color = "#FFFBC6" // rgb: 255, 251, 198
+	taste_description = "strong bitterness"
+	taste_mult = 1.6
+	glass_name = "Deet"
+	glass_desc = "Very bitter. Keeps the bugs off though!"
+	toxpwr = 2
+
+/datum/reagent/toxin/deet/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+	if(iscarbon(M) && M.stat != DEAD)
+		if(method in list(TOUCH))
+			if(show_message)
+				to_chat(M, "<span class='danger'>Your skin stings a bit!</span>")
+	..()

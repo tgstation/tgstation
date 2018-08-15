@@ -15,7 +15,7 @@
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
-	
+
 	START_PROCESSING(SSmood, src)
 
 	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)

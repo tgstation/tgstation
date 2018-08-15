@@ -40,7 +40,7 @@
 */
 /atom/Click(location,control,params)
 	if(flags_1 & INITIALIZED_1)
-		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
+		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params)
 		usr.ClickOn(src, params)
 
 /atom/DblClick(location,control,params)

@@ -12,6 +12,7 @@ Captain
 	supervisors = "Nanotrasen officials and Space law"
 	selection_color = "#ccccff"
 	req_admin_notify = 1
+	req_space_law = 1
 	minimal_player_age = 14
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
@@ -41,13 +42,13 @@ Captain
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	head = /obj/item/clothing/head/caphat
-	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/station_charter=1)
+	backpack_contents = list(/obj/item/station_charter=1)
 
 	backpack = /obj/item/storage/backpack/captain
 	satchel = /obj/item/storage/backpack/satchel/cap
 	duffelbag = /obj/item/storage/backpack/duffelbag/captain
 
-	implants = list(/obj/item/implant/mindshield)
+	implants = list(/obj/item/implant/mindshield,/obj/item/implant/krav_maga)
 	accessory = /obj/item/clothing/accessory/medal/gold/captain
 
 	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/captain)
@@ -74,6 +75,7 @@ Head of Personnel
 	supervisors = "the captain"
 	selection_color = "#ddddff"
 	req_admin_notify = 1
+	req_space_law = 1
 	minimal_player_age = 10
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
@@ -98,14 +100,13 @@ Head of Personnel
 /datum/outfit/job/hop
 	name = "Head of Personnel"
 	jobtype = /datum/job/hop
-
 	id = /obj/item/card/id/silver
 	belt = /obj/item/pda/heads/hop
 	ears = /obj/item/radio/headset/heads/hop
 	uniform = /obj/item/clothing/under/rank/head_of_personnel
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	head = /obj/item/clothing/head/hopcap
-	backpack_contents = list(/obj/item/storage/box/ids=1,\
-		/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced = 1)
+	backpack_contents = list(/obj/item/storage/box/ids=1,
+		/obj/item/gun/energy/disabler/revolver=1, /obj/item/modular_computer/tablet/preset/advanced = 1)
 
 	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/hop)

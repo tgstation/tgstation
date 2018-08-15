@@ -29,6 +29,7 @@
 		visible_message("[src] flails his swords and cuts [AM]!")
 		playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
 		stun_attack(AM)
+		return
 
 /mob/living/simple_animal/bot/secbot/grievous/Initialize()
 	. = ..()
@@ -144,6 +145,10 @@
 		drop_part(robot_arm, Tsec)
 
 	do_sparks(3, TRUE, src)
+	qdel(weapon)
+	for(var/IS = 0 to 4)
+		drop_part(baton_type, Tsec)
+	new /obj/effect/decal/cleanable/oil(loc)
 	for(var/IS = 0 to 4)
 		drop_part(baton_type, Tsec)
 	new /obj/effect/decal/cleanable/oil(Tsec)

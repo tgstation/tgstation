@@ -274,3 +274,14 @@
 		dumb_thing = FALSE //only once per life
 		if(prob(1))
 			new/obj/item/reagent_containers/food/snacks/pastatomato(get_turf(H)) //now that's what I call spaghetti code
+
+
+
+/datum/quirk/mute
+	name = "Mute"
+	desc = "You can't speak, at all. No known method exists of alleviating this."
+	mob_trait = TRAIT_MUTE
+	value = -2
+	gain_text = "<span class='danger'>You suddenly find yourself unable to speak.</span>"
+	lose_text = "<span class='notice'>You find yourself able to speak again.</span>"
+	medical_record_text = "Patient suffers from mutism."

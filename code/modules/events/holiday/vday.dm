@@ -117,6 +117,7 @@
 	               "I must be tripping on BZ, because I saw an angel walk by.",
 	               "Wanna empty out my tool storage?",
 	               "Did you visit the medbay after you fell from heaven?",
+				   "We go together like a greytide and the spare",
 	               "Are you wearing space pants? Wanna not be?" )
 
 /obj/item/valentine/attackby(obj/item/W, mob/user, params)

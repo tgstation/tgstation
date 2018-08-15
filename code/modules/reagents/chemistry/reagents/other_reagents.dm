@@ -1837,6 +1837,7 @@
 		to_chat(M, "You should sit down and take a rest...")
 	..()
 
+
 /datum/reagent/tranquility
 	name = "Tranquility"
 	id = "tranquility"

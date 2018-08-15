@@ -245,6 +245,11 @@
 		R.shown_robot_modules = 0
 		screenmob.client.screen -= R.robot_modules_background
 
+/mob/living/silicon/robot/create_mob_hud()
+	if(client && !hud_used)
+		hud_used = new /datum/hud/robot(src)
+
+
 /datum/hud/robot/persistent_inventory_update(mob/viewer)
 	if(!mymob)
 		return

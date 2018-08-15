@@ -27,6 +27,32 @@
 		to_chat(src, "<span class='danger'>The forum URL is not set in the server configuration.</span>")
 	return
 
+/client/verb/donate()
+	set name = "donate"
+	set desc = "Help Support the Server."
+	set hidden = 1
+	var/forumurl = CONFIG_GET(string/donateurl)
+	if(forumurl)
+		if(alert("This will open the donation page in your browser. Are you sure?",,"Yes","No")!="Yes")
+			return
+		src << link(forumurl)
+	else
+		to_chat(src, "<span class='danger'>The donation URL is not set in the server configuration.</span>")
+	return
+
+/client/verb/discord()
+	set name = "discord"
+	set desc = "Join the server Discord."
+	set hidden = 1
+	var/forumurl = CONFIG_GET(string/discordurl)
+	if(forumurl)
+		if(alert("This will open the Discord page in your browser. Are you sure?",,"Yes","No")!="Yes")
+			return
+		src << link(forumurl)
+	else
+		to_chat(src, "<span class='danger'>The discord URL is not set in the server configuration.</span>")
+	return
+
 /client/verb/rules()
 	set name = "rules"
 	set desc = "Show Server Rules."

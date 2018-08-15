@@ -414,6 +414,42 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			to_chat(M, message)
 
+
+/proc/log_talk(mob/user,message,logtype)
+	var/turf/say_turf = get_turf(user)
+
+	var/sayloc = ""
+	if(say_turf)
+		sayloc = "([say_turf.x],[say_turf.y],[say_turf.z])"
+
+
+	var/logmessage = "[message] [sayloc]"
+
+	switch(logtype)
+
+		if(LOGDSAY)
+			log_dsay(logmessage)
+		if(LOGSAY)
+			log_say(logmessage)
+		if(LOGWHISPER)
+			log_whisper(logmessage)
+		if(LOGEMOTE)
+			log_emote(logmessage)
+		if(LOGPDA)
+			log_pda(logmessage)
+		if(LOGCHAT)
+			log_chat(logmessage)
+		if(LOGCOMMENT)
+			log_comment(logmessage)
+		if(LOGASAY)
+			log_adminsay(logmessage)
+		if(LOGOOC)
+			log_ooc(logmessage)
+			log_looc(logmessage) //CITADEL EDIT, logging LOOC because why not
+		else
+			warning("Invalid speech logging type detected. [logtype]. Defaulting to say")
+			log_say(logmessage)
+
 //Used in chemical_mob_spawn. Generates a random mob based on a given gold_core_spawnable value.
 /proc/create_random_mob(spawn_location, mob_class = HOSTILE_SPAWN)
 	var/static/list/mob_spawn_meancritters = list() // list of possible hostile mobs

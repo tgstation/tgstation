@@ -37,4 +37,4 @@
 		qdel(query_jobban_build_cache)
 
 /proc/ban_unban_log_save(var/formatted_log)
-	text2file(formatted_log,"data/ban_unban_log.txt")
+	text2file(formatted_log,"data/banlist.txt")

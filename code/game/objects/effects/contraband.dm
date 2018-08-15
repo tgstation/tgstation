@@ -594,4 +594,19 @@
 	desc = "This informational poster teaches the viewer what carbon dioxide is."
 	icon_state = "poster35_legit"
 
+/obj/structure/sign/poster/official/termina
+	name = "Termina"
+	desc = "Termina is the biggest military contractor in known space."
+	icon_state = "poster36_legit"
+
+/obj/structure/sign/poster/official/weaboo
+	name = "Weeaboo Poster"
+	desc = "I'm mostly likely hanging in a weaboo's quarters."
+	icon_state = "poster37_legit"
+
+/obj/structure/sign/poster/official/luna
+	name = "Luna Poster"
+	desc = "The Luna Station is the most modern and advanced space station design. It was invented by a man of the name Luna Lee."
+	icon_state = "poster38_legit"
+
 #undef PLACE_SPEED

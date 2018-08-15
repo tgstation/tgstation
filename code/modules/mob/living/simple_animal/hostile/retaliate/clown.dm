@@ -42,3 +42,4 @@
 /mob/living/simple_animal/hostile/retaliate/clown/attack_hand(mob/living/carbon/human/M)
 	..()
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+

@@ -3,7 +3,11 @@
 GLOBAL_VAR(security_mode)
 GLOBAL_VAR(restart_counter)
 GLOBAL_PROTECT(security_mode)
-
+//WIP Character breaking filter
+//var/list/ockick = world.file2list('strings/ockick.txt')
+var/list/donators = world.file2list("config/donators.txt")
+var/list/diamonddonators = world.file2list("config/diamonddonators.txt")
+var/list/hubmsgs = world.file2list("strings/hub.txt")
 //This happens after the Master subsystem new(s) (it's a global datum)
 //So subsystems globals exist, but are not initialised
 /world/New()
@@ -133,7 +137,7 @@ GLOBAL_PROTECT(security_mode)
 	//try to write to data
 	if(!text2file("The world is running at least safe mode", "data/server_security_check.lock"))
 		GLOB.security_mode = SECURITY_ULTRASAFE
-		warning("/tg/station 13 is not supported in ultrasafe security mode. Everything will break!")
+		warning("BeeStation 13 is not supported in ultrasafe security mode. Everything will break!")
 		return
 
 	//try to shell
@@ -141,7 +145,7 @@ GLOBAL_PROTECT(security_mode)
 		GLOB.security_mode = SECURITY_TRUSTED
 	else
 		GLOB.security_mode = SECURITY_SAFE
-		warning("/tg/station 13 uses many file operations, a few shell()s, and some external call()s. Trusted mode is recommended. You can download our source code for your own browsing and compilation at https://github.com/tgstation/tgstation")
+		warning("BeeStation 13 uses many file operations, a few shell()s, and some external call()s. Trusted mode is recommended. You can download our source code for your own browsing and compilation at https://github.com/tgstation/tgstation")
 
 /world/Topic(T, addr, master, key)
 	TGS_TOPIC	//redirect to server tools if necessary
@@ -255,17 +259,16 @@ GLOBAL_PROTECT(security_mode)
 		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
 			s += "<b>[server_name]</b> &#8212; "
-		features += "[CONFIG_GET(flag/norespawn) ? "no " : ""]respawn"
-		if(CONFIG_GET(flag/allow_vote_mode))
-			features += "vote"
-		if(CONFIG_GET(flag/allow_ai))
-			features += "AI allowed"
 		hostedby = CONFIG_GET(string/hostedby)
 
 	s += "<b>[station_name()]</b>";
 	s += " ("
-	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
-	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
+	s += "<a href=\"http://beestation13.com/forum\">" //Change this to wherever you want the hub to link to.
+	s += "Forums"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
+	s += "</a>"
+	s += "|"
+	s += "<a href=\"https://discord.gg/HAYDMne\">" //Change this to wherever you want the hub to link to.
+	s += "Discord"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
 	s += "</a>"
 	s += ")"
 
@@ -276,11 +279,16 @@ GLOBAL_PROTECT(security_mode)
 
 	if (n > 1)
 		features += "~[n] players"
-	else if (n > 0)
-		features += "~[n] player"
+	else if (n == 1)
+		features += "~1 player"
+	else if (n == 0)
+		features += "~no players"
 
 	if (!host && hostedby)
 		features += "hosted by <b>[hostedby]</b>"
+
+	if (features)
+		features += "<i>"+pick(hubmsgs)+"</i>"
 
 	if (features)
 		s += ": [jointext(features, ", ")]"

@@ -2,6 +2,7 @@
 
 #Ignore everything in datafolder and subdirectories
 /data/**/*
+/config/**/*
 
 #Ignore byond config folder.
 /cfg/**/*

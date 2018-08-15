@@ -38,6 +38,9 @@
 	if (CONFIG_GET(flag/log_admin))
 		WRITE_LOG(GLOB.world_game_log, "ADMIN: [text]")
 
+
+
+
 /proc/log_admin_private(text)
 	GLOB.admin_log.Add(text)
 	if (CONFIG_GET(flag/log_admin))
@@ -83,6 +86,10 @@
 	if (CONFIG_GET(flag/log_ooc))
 		WRITE_LOG(GLOB.world_game_log, "OOC: [text]")
 
+/proc/log_looc(text)
+	if (CONFIG_GET(flag/log_ooc))
+		WRITE_LOG(GLOB.world_game_log, "LOOC: [text]")
+
 /proc/log_whisper(text)
 	if (CONFIG_GET(flag/log_whisper))
 		WRITE_LOG(GLOB.world_game_log, "WHISPER: [text]")
@@ -98,6 +105,8 @@
 /proc/log_pda(text)
 	if (CONFIG_GET(flag/log_pda))
 		WRITE_LOG(GLOB.world_pda_log, "PDA: [text]")
+
+
 
 /proc/log_comment(text)
 	if (CONFIG_GET(flag/log_pda))

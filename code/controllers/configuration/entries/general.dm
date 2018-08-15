@@ -175,11 +175,23 @@
 /datum/config_entry/string/forumurl
 	config_entry_value = "http://tgstation13.org/phpBB/index.php"
 
+/datum/config_entry/string/donateurl
+	config_entry_value = "https://patreon.com/user?u=10639001"
+
+/datum/config_entry/string/discordurl
+	config_entry_value = "https://discord.gg/caumcMV"
+
 /datum/config_entry/string/rulesurl
 	config_entry_value = "http://www.tgstation13.org/wiki/Rules"
 
 /datum/config_entry/string/githuburl
 	config_entry_value = "https://www.github.com/tgstation/-tg-station"
+
+/datum/config_entry/string/donatecolor
+	config_entry_value = "rgba(214, 214, 0, 1)"
+
+/datum/config_entry/string/diamonddonatecolor
+	config_entry_value = "rgba(0, 214, 193, 1)"
 
 /datum/config_entry/string/roundstatsurl
 

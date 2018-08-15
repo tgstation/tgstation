@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(input)
 // This is for when macro sets are eventualy datumized
 /datum/controller/subsystem/input/proc/setup_default_macro_sets()
 	var/list/static/default_macro_sets
-	
+
 	if(default_macro_sets)
 		macro_sets = default_macro_sets
 		return
@@ -32,6 +32,7 @@ SUBSYSTEM_DEF(input)
 		"default" = list(
 			"Tab" = "\".winset \\\"input.focus=true?map.focus=true input.background-color=[COLOR_INPUT_DISABLED]:input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
 			"O" = "ooc",
+			"P" = "looc",
 			"T" = "say",
 			"M" = "me",
 			"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"", // This makes it so backspace can remove default inputs
