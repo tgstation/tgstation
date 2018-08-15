@@ -20,6 +20,9 @@
 	var/bloodthirst = HIS_GRACE_SATIATED
 	var/prev_bloodthirst = HIS_GRACE_SATIATED
 	var/force_bonus = 0
+	var/ascended = FALSE
+	var/victims_needed = 25
+	var/ascend_bonus = 15
 
 /obj/item/his_grace/Initialize()
 	. = ..()
@@ -75,7 +78,7 @@
 	if(!bloodthirst)
 		drowse()
 		return
-	if(bloodthirst < HIS_GRACE_CONSUME_OWNER)
+	if(bloodthirst < HIS_GRACE_CONSUME_OWNER && !ascended)
 		adjust_bloodthirst(1 + FLOOR(LAZYLEN(contents) * 0.5, 1)) //Maybe adjust this?
 	else
 		adjust_bloodthirst(1) //don't cool off rapidly once we're at the point where His Grace consumes all.
@@ -153,10 +156,10 @@
 	animate(transform=transforms[4], time=0.3)
 
 /obj/item/his_grace/proc/drowse() //Good night, Mr. Grace.
-	if(!awakened)
+	if(!awakened || ascended)
 		return
 	var/turf/T = get_turf(src)
-	T.visible_message("<span class='boldwarning'>[src] slowly stops rattling and falls still, His latch snapping closed.</span>")
+	T.visible_message("<span class='boldwarning'>[src] slowly stops rattling and falls still, His latch snapping shut.</span>")
 	playsound(loc, 'sound/weapons/batonextend.ogg', 100, 1)
 	name = initial(name)
 	desc = initial(desc)
@@ -182,13 +185,15 @@
 		bloodthirst = max(LAZYLEN(contents), 1) //Never fully sated, and His hunger will only grow.
 	else
 		bloodthirst = HIS_GRACE_CONSUME_OWNER
+	if(LAZYLEN(contents) >= victims_needed)
+		ascend()
 	update_stats()
 
 /obj/item/his_grace/proc/adjust_bloodthirst(amt)
 	prev_bloodthirst = bloodthirst
-	if(prev_bloodthirst < HIS_GRACE_CONSUME_OWNER)
+	if(prev_bloodthirst < HIS_GRACE_CONSUME_OWNER && !ascended)
 		bloodthirst = CLAMP(bloodthirst + amt, HIS_GRACE_SATIATED, HIS_GRACE_CONSUME_OWNER)
-	else
+	else if(!ascended)
 		bloodthirst = CLAMP(bloodthirst + amt, HIS_GRACE_CONSUME_OWNER, HIS_GRACE_FALL_ASLEEP)
 	update_stats()
 
@@ -229,3 +234,17 @@
 			if(prev_bloodthirst >= HIS_GRACE_PECKISH)
 				master.visible_message("<span class='warning'>[src] is satiated.</span>", "<span class='his_grace big'>[src]'s hunger recedes...</span>")
 	force = initial(force) + force_bonus
+
+/obj/item/his_grace/proc/ascend()
+	if(ascended)
+		return
+	var/mob/living/carbon/human/master = loc
+	force_bonus += ascend_bonus
+	desc = "A legendary toolbox and a distant artifact from The Age of Three Powers. On its three latches engraved are the words \"The Sun\", \"The Moon\", and \"The Stars\". The entire toolbox has the words \"The World\" engraved into its sides."
+	icon_state = "his_grace_ascended"
+	item_state = "toolbox_gold"
+	ascended = TRUE
+	playsound(master, 'sound/effects/his_grace_ascend.ogg', 100)
+	if(istype(master))
+		master.visible_message("<span class='his_grace big bold'>Gods will be watching.</span>", "<span class='his_grace big bold'>God will be watching.</span>")
+		name = "[master]'s mythical toolbox of three powers"
