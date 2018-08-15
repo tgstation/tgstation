@@ -193,6 +193,7 @@
 			var/datum/DBQuery/query_validate_expire_time_edit = SSdbcore.NewQuery("SELECT IF(STR_TO_DATE('[expire_time]','%Y-%c-%d %T') > NOW(), STR_TO_DATE('[expire_time]','%Y-%c-%d %T'), 0)")
 			if(!query_validate_expire_time_edit.warn_execute())
 				qdel(query_validate_expire_time_edit)
+				qdel(query_find_edit_expiry_message)
 				return
 			if(query_validate_expire_time_edit.NextRow())
 				var/checktime = text2num(query_validate_expire_time_edit.item[1])
