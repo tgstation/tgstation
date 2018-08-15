@@ -2656,6 +2656,7 @@
 #include "code\modules\zombie\items.dm"
 #include "code\modules\zombie\organs.dm"
 #include "code\superbox\away.dm"
+#include "code\superbox\booth_seating.dm"
 #include "code\superbox\crashland.dm"
 #include "code\superbox\frenzystation.dm"
 #include "code\superbox\geoscape.dm"
