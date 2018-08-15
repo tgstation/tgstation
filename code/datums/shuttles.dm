@@ -110,6 +110,11 @@
 
 // Shuttles start here:
 
+/datum/map_template/shuttle/emergency/backup
+	suffix = "backup"
+	name = "Backup Shuttle"
+	can_be_bought = FALSE
+
 /datum/map_template/shuttle/emergency/airless
 	suffix = "airless"
 	name = "Build your own shuttle kit"
@@ -341,7 +346,7 @@
 
 /datum/map_template/shuttle/whiteship/delta
 	suffix = "delta"
-	name = "NT Luxury Frigate"
+	name = "NT Frigate"
 
 /datum/map_template/shuttle/whiteship/pod
 	suffix = "whiteship_pod"

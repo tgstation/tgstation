@@ -371,7 +371,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			var/link = FOLLOW_LINK(M, src)
 			to_chat(M, "[link] [my_message]")
 
-		log_talk(src,"GUARDIAN:[key_name(src)]: [input]",LOGSAY)
+		src.log_talk(input, LOG_SAY, tag="guardian")
 
 /mob/living/proc/guardian_comm()
 	set name = "Communicate"
@@ -393,7 +393,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		var/link = FOLLOW_LINK(M, src)
 		to_chat(M, "[link] [my_message]")
 
-	log_talk(src,"GUARDIAN:[key_name(src)]: [input]",LOGSAY)
+	src.log_talk(input, LOG_SAY, tag="guardian")
 
 //FORCE RECALL/RESET
 

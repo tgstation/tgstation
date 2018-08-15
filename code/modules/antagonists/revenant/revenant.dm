@@ -147,7 +147,7 @@
 /mob/living/simple_animal/revenant/say(message)
 	if(!message)
 		return
-	log_talk(src,"[key_name(src)] : [message]",LOGSAY)
+	src.log_talk(message, LOG_SAY)
 	var/rendered = "<span class='revennotice'><b>[src]</b> says, \"[message]\"</span>"
 	for(var/mob/M in GLOB.mob_list)
 		if(isrevenant(M))
@@ -200,7 +200,7 @@
 	if(!essence)
 		death()
 
-/mob/living/simple_animal/revenant/dust()
+/mob/living/simple_animal/revenant/dust(just_ash, drop_items, force)
 	death()
 
 /mob/living/simple_animal/revenant/gib()

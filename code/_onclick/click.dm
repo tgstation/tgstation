@@ -195,17 +195,8 @@
 
 			if (!target.loc)
 				continue
-			GET_COMPONENT_FROM(storage, /datum/component/storage, target.loc)
-			if (storage)
-				var/datum/component/storage/concrete/master = storage.master()
-				if (master)
-					next += master.parent
-					for(var/S in master.slaves)
-						var/datum/component/storage/slave = S
-						next += slave.parent
-				else
-					next += target.loc
-			else
+
+			if(!(SEND_SIGNAL(target.loc, COMSIG_ATOM_CANREACH, next) & COMPONENT_BLOCK_REACH))
 				next += target.loc
 
 		checking = next
