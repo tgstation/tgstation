@@ -17,8 +17,9 @@
 
 
 /turf/open/floor/mineral/Initialize()
-	broken_states = list("[initial(icon_state)]_dam")
-	. = ..()
+	if(!broken_states)
+		broken_states = list("[initial(icon_state)]_dam")
+		. = ..()
 	if (!icons)
 		icons = list()
 
@@ -81,7 +82,7 @@
 	name = "shuttle floor"
 	icon_state = "titanium"
 	floor_tile = /obj/item/stack/tile/mineral/titanium
-	icons = list("titanium","titanium1_dam","titanium2_dam","titanium3_dam","titanium4_dam","titanium5_dam")
+	broken_states = list("titanium1_dam","titanium2_dam","titanium3_dam","titanium4_dam","titanium5_dam")
 
 /turf/open/floor/mineral/titanium/airless
 	initial_gas_mix = "TEMP=2.7"
@@ -115,7 +116,7 @@
 	name = "shuttle floor"
 	icon_state = "plastitanium"
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium
-	icons = list("plastitanium","plastitanium1_dam","plastitanium2_dam","plastitanium3_dam","plastitanium4_dam","plastitanium5_dam")
+	broken_states = list("plastitanium","plastitanium1_dam","plastitanium2_dam","plastitanium3_dam","plastitanium4_dam","plastitanium5_dam")
 
 /turf/open/floor/mineral/plastitanium/airless
 	initial_gas_mix = "TEMP=2.7"
