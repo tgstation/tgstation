@@ -227,8 +227,26 @@
 			miasma_disease.symptoms = miasma_disease.GenerateSymptoms(1,3)
 			miasma_disease.try_infect(src)
 
-		if(prob(5) && miasma_partialpressure > 1.5)
-			to_chat(src, "<span class='notice'>You smell something horribly decayed inside this room.</span>")
+		switch(miasma_partialpressure)
+			if(1.5 to 5)
+				// At lower pp, give out a warning
+				if(prob(5))
+					to_chat(src, "<span class='notice'>There is an unpleasant smell in the air.</span>")
+			if(5 to 15)
+				// At somewhat higher pp, warning becomes more obvious
+				if(prob(15))
+					to_chat(src, "<span class='warning'>You smell something horribly decayed inside this room.</span>")
+			if(15 to 30)
+				// Small chance to vomit. By now, normally people would turn on internals anyway
+				if(prob(5))
+					to_chat(src, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
+					vomit()
+			if(30 to INFINITY)
+				// Higher chance to vomit
+				if(prob(20))
+					to_chat(src, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
+					vomit()
+			
 
 
 
