@@ -200,6 +200,8 @@
 		if(the_event.type != type)
 			clear_event(category)
 		else
+			if(the_event.timeout)
+				addtimer(CALLBACK(src, .proc/clear_event, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 			return 0 //Don't have to update the event.
 	the_event = new type(src, param)
 
@@ -207,7 +209,7 @@
 	update_mood()
 
 	if(the_event.timeout)
-		addtimer(CALLBACK(src, .proc/clear_event, category), the_event.timeout)
+		addtimer(CALLBACK(src, .proc/clear_event, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /datum/component/mood/proc/clear_event(category)
 	var/datum/mood_event/event = mood_events[category]
