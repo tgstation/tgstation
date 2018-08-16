@@ -36,7 +36,7 @@
 	QDEL_LIST(physio_mods)
 	return ..()
 	
-/datum/physiology/apply_mod(datum/physio_mod/mod_type)
+/datum/physiology/proc/apply_mod(datum/physio_mod/mod_type)
 	for(var/i in physio_mods)
 		var/datum/physio_mod/P = i
 		if(P.id == initial(mod_type.id))
@@ -49,13 +49,13 @@
 	new_mod.physiology = src
 	new_mod.apply()
 	
-/datum/physiology/remove_mod_id(id)
+/datum/physiology/proc/remove_mod_id(id)
 	for(var/i in physio_mods)
 		var/datum/physio_mod/P = i
 		if(P.id == id)
 			P.remove()
 			
-/datum/physiology/remove_mod(datum/physio_mod/mod_type)
+/datum/physiology/proc/remove_mod(datum/physio_mod/mod_type)
 	for(var/i in physio_mods)
 		var/datum/physio_mod/P = i
 		if(P.type == mod_type)
