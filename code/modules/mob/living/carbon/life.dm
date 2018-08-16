@@ -259,16 +259,20 @@
 
 // Make corpses rot, emitting miasma
 /mob/living/carbon/proc/rot()
+	// Properly stored corpses shouldn't create miasma
 	if(istype(src.loc, /obj/structure/closet/crate/coffin)|| istype(src.loc, /obj/structure/closet/body_bag) || istype(src.loc, /obj/structure/bodycontainer))
 		return
 	var/deceasedturf = get_turf(src)
-	if(istype(deceasedturf,/turf/open))
-		var/turf/open/miasma_turf = deceasedturf
+	// Closed turfs don't have any air in them, so no gas building up
+	if(!istype(deceasedturf,/turf/open))
+		return
 
-		var/list/cached_gases = miasma_turf.air.gases
+	var/turf/open/miasma_turf = deceasedturf
 
-		ASSERT_GAS(/datum/gas/miasma, miasma_turf.air)
-		cached_gases[/datum/gas/miasma][MOLES] += 0.01
+	var/list/cached_gases = miasma_turf.air.gases
+
+	ASSERT_GAS(/datum/gas/miasma, miasma_turf.air)
+	cached_gases[/datum/gas/miasma][MOLES] += 0.01
 
 /mob/living/carbon/proc/handle_blood()
 	return
