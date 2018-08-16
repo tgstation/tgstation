@@ -285,7 +285,7 @@
 		return
 
 	// No decay if formaldehyde in corpse
-	if(reagents.has_reagent("formaldehyde", 20))
+	if(reagents.has_reagent("formaldehyde", 15))
 		return
 
 	// Also no decay if corpse chilled or not organic/undead
