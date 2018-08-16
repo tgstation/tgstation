@@ -289,9 +289,9 @@
 				miasma_disease.try_infect(owner)
 
 			//Clearing out mood events if insufficient partial pressure
-			if(miasma_partialpressure < 25)
+			if(miasma_pp < 25)
 				END_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "nauseating_stench")
-			if(miasma_partialpressure < 10)
+			if(miasma_pp < 10)
 				END_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "bad smell")
 
 			//Miasma side effects
