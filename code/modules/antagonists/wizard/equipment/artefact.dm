@@ -121,6 +121,8 @@
 		for(var/lore in typesof(/datum/brain_trauma/severe))
 			C.gain_trauma(lore)
 		sleep(100)
+		if(!C)
+			return
 		C.vomit(0, TRUE, TRUE, 3, TRUE)
 		C.spew_organ(3, 2)
 		C.death()
