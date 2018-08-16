@@ -290,9 +290,9 @@
 
 			//Clearing out mood events if insufficient partial pressure
 			if(miasma_pp < 25)
-				END_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "nauseating_stench")
+				SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "nauseating_stench")
 			if(miasma_pp < 10)
-				END_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "bad smell")
+				SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "bad smell")
 
 			//Miasma side effects
 			switch(miasma_pp)
@@ -321,8 +321,8 @@
 
 		//Clear out moods when no miasma at all
 		else
-			END_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "bad smell")
-			END_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "nauseating_stench")
+			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "bad smell")
+			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "nauseating_stench")
 		
 		handle_breath_temperature(breath, H)
 		breath.garbage_collect()
