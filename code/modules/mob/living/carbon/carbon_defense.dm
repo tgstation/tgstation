@@ -1,5 +1,5 @@
 /mob/living/carbon/getarmor(def_zone, type)
-	return physiology.armor.getRating(d_type)
+	return physiology.armor.getRating(type)
 
 /mob/living/carbon/get_eye_protection()
 	var/number = ..()

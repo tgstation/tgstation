@@ -31,11 +31,11 @@
 
 /datum/physiology/New()
 	armor = new
-	
+
 /datum/physiology/Destroy()
 	QDEL_LIST(physio_mods)
 	return ..()
-	
+
 /datum/physiology/proc/apply_mod(datum/physio_mod/mod_type)
 	for(var/i in physio_mods)
 		var/datum/physio_mod/P = i
@@ -44,17 +44,17 @@
 				remove_mod_id(P.id)
 			else
 				return
-	var/new_mod = new mod_type
+	var/datum/physio_mod/new_mod = new mod_type
 	physio_mods += new_mod
 	new_mod.physiology = src
 	new_mod.apply()
-	
+
 /datum/physiology/proc/remove_mod_id(id)
 	for(var/i in physio_mods)
 		var/datum/physio_mod/P = i
 		if(P.id == id)
 			P.remove()
-			
+
 /datum/physiology/proc/remove_mod(datum/physio_mod/mod_type)
 	for(var/i in physio_mods)
 		var/datum/physio_mod/P = i
@@ -66,13 +66,13 @@
 	var/id = "" //Physiology can only have one mod per id
 	var/priority = 10 //Higher priority overrides lower, if same latest applies
 	var/datum/physiology/physiology
-	
+
 /datum/physio_mod/proc/apply()
 	return
 
 /datum/physio_mod/proc/remove()
 	qdel(src)
-	
+
 ///////////////////////////////////PHYSIO MODS/////////////////////////////////////////////////
 
 /datum/physio_mod/spliced_nerves
@@ -107,7 +107,7 @@
 /datum/physio_mod/slimeskin/remove()
 	physiology.damage_resistance -= 10
 	. = ..()
-	
+
 /datum/physio_mod/metal_cookie
 	name = "Metal Cookie"
 	id = "metal_cookie"
@@ -118,7 +118,7 @@
 /datum/physio_mod/metal_cookie/remove()
 	physiology.brute_mod /= 0.9
 	. = ..()
-	
+
 /datum/physio_mod/adamantine_cookie
 	name = "Adamantine Cookie"
 	id = "adamantine_cookie"
@@ -129,7 +129,7 @@
 /datum/physio_mod/adamantine_cookie/remove()
 	physiology.burn_mod /= 0.9
 	. = ..()
-	
+
 /datum/physio_mod/stab_silver
 	name = "Stabilized Silver"
 	id = "stab_silver"
@@ -140,7 +140,7 @@
 /datum/physio_mod/stab_silver/remove()
 	physiology.hunger_mod /= 0.8
 	. = ..()
-	
+
 /datum/physio_mod/time_cookie
 	name = "Time Cookie"
 	id = "time_cookie"
@@ -151,7 +151,7 @@
 /datum/physio_mod/time_cookie/remove()
 	physiology.do_after_speed /= 0.9
 	. = ..()
-	
+
 /datum/physio_mod/tar_foot
 	name = "Tar Foot"
 	id = "tar_foot"
@@ -162,20 +162,20 @@
 /datum/physio_mod/tar_foot/remove()
 	physiology.speed_mod -= 0.5
 	. = ..()
-	
+
 /datum/physio_mod/sepia
 	name = "Sepia"
 	id = "sepia"
 	var/modifier = 0
 
-/datum/physio_mod/sepia/apply()	
+/datum/physio_mod/sepia/apply()
 	modifier = pick(-1, 0, 1)
 	physiology.speed_mod += modifier
 
 /datum/physio_mod/sepia/remove()
 	physiology.speed_mod -= modifier
 	. = ..()
-	
+
 /datum/physio_mod/adamantine_skin
 	name = "Adamantine Skin"
 	id = "adamantine_skin"
