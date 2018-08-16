@@ -339,7 +339,7 @@
 /obj/item/projectile/magic/locker
 	name = "locker bolt"
 	icon_state = "locker"
-	nodamage = 1
+	nodamage = TRUE
 	flag = "magic"
 	var/weld = TRUE
 	var/created = FALSE //prevents creation of more then one locker if it has multiple hits
@@ -359,7 +359,7 @@
 
 /obj/item/projectile/magic/locker/on_hit(target)
 	if(created)
-		return . = ..()
+		return ..()
 	var/obj/structure/closet/decay/C = new(get_turf(src))
 	if(LAZYLEN(contents))
 		for(var/atom/movable/AM in contents)
