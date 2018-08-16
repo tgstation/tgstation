@@ -27,6 +27,7 @@
 
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
+		rot()
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
@@ -217,6 +218,14 @@
 	if (breath_gases[/datum/gas/nitryl])
 		var/nitryl_partialpressure = (breath_gases[/datum/gas/nitryl][MOLES]/breath.total_moles())*breath_pressure
 		adjustFireLoss(nitryl_partialpressure/4)
+	//MIASMA
+	if (breath_gases[/datum/gas/miasma])
+		var/miasma_partialpressure = (breath_gases[/datum/gas/miasma][MOLES]/breath.total_moles())*breath_pressure
+
+		if(prob(1 * miasma_partialpressure))
+			var/datum/disease/advance/miasma_disease = new/datum/disease/advance
+			miasma_disease.symptoms = miasma_disease.GenerateSymptoms(1,3)
+			miasma_disease.try_infect(src)
 
 
 
@@ -244,6 +253,15 @@
 			. = internal.remove_air_volume(volume_needed)
 			if(!.)
 				return FALSE //to differentiate between no internals and active, but empty internals
+
+// Make corpses rot, emitting miasma
+/mob/living/carbon/proc/rot()
+	var/turf/diseasedturf = get_turf(src)
+
+	datum/gas_mixture/air = diseasedturf.air_contents
+	var/list/cached_gases = air.gases
+	ASSERT_GAS(/datum/gas/miasma, miasma_turf.air)
+	cached_gases[/datum/gas/miasma][MOLES] += 0.01
 
 /mob/living/carbon/proc/handle_blood()
 	return
