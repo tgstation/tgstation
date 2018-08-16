@@ -141,7 +141,7 @@
 /obj/machinery/portable_atmospherics/canister/miasma
 	name = "miasma canister"
 	desc = "Miasma. Makes you wish your nose were blocked."
-	icon_state = "blue"
+	icon_state = "miasma"
 	gas_type = /datum/gas/miasma
 
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()
