@@ -231,11 +231,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
 	Cult_team.check_size() // Triggers the eye glow or aura effects if the cult has grown large enough relative to the crew
 	rune_in_use = FALSE
-/proc/mouse_test(mob/user)
-	var/list/paramlist = params2list(user.client.mouseParams)
-	for(var/i in paramlist)
-		to_chat(world, "Param is [i] with contents [paramlist[i]]")
-		
 /obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers)
 	if(invokers.len < 2)
 		for(var/M in invokers)
