@@ -283,9 +283,9 @@
 
 	// No decay if formaldehyde in corpse
 	if(typesof(/datum/reagent/toxin/formaldehyde) in reagents.reagent_list)
-		var/datum/reagent/toxin/formaldehyde/conservant = typesof(/datum/reagent/toxin/formaldehyde) in reagents.reagent_list
+		var/datum/reagent/toxin/formaldehyde/conservant = locate(/datum/reagent/toxin/formaldehyde) in reagents.reagent_list
 		if(conservant.volume >= 20)
-		return
+			return
 
 	// Also no decay if corpse chilled or not organic/undead
 	if(bodytemperature <= TCRYO || (!(MOB_ORGANIC in mob_biotypes) && !(MOB_UNDEAD in mob_biotypes)))
