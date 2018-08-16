@@ -10,12 +10,6 @@
 	button.screen_loc = DEFAULT_BLOODSPELLS
 	button.moved = DEFAULT_BLOODSPELLS
 	button.ordered = FALSE
-	var/datum/action/innate/cult/tooltip/spells/tip = new(owner)
-	var/datum/action/innate/cult/tooltip/spells/second/tip2 = new(owner)
-	var/datum/action/innate/cult/tooltip/bloodsense/tip3 = new(owner)
-	tip.Grant(owner, src)
-	tip2.Grant(owner, src)
-	tip3.Grant(owner, src)
 
 /datum/action/innate/cult/blood_magic/Remove()
 	for(var/X in spells)
