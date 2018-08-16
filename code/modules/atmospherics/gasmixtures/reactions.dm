@@ -454,8 +454,8 @@
 
 	//Replace miasma with oxygen
 	var/cleaned_air = min(cached_gases[/datum/gas/miasma][MOLES], 10)
-	cached_gases[/datum/gas/miasma] -= cleaned_air
-	cached_gases[/datum/gas/oxygen] += cleaned_air
+	cached_gases[/datum/gas/miasma][MOLES] -= cleaned_air
+	cached_gases[/datum/gas/oxygen][MOLES] += cleaned_air
 
 	//Possibly burning a bit of organic matter through maillard reaction, so a *tiny* bit more heat would be understandable
 	air.temperature += cleaned_air + 0.2
