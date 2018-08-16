@@ -4,6 +4,7 @@
 /mob/living/carbon/Initialize()
 	. = ..()
 	create_reagents(1000)
+	physiology = new()
 	update_body_parts() //to update the carbon's new bodyparts appearance
 	GLOB.carbon_list += src
 
@@ -17,6 +18,7 @@
 	QDEL_LIST(implants)
 	remove_from_all_data_huds()
 	QDEL_NULL(dna)
+	QDEL_NULL(physiology)
 	GLOB.carbon_list -= src
 
 /mob/living/carbon/relaymove(mob/user, direction)
@@ -847,6 +849,7 @@
 
 /mob/living/carbon/do_after_coefficent()
 	. = ..()
+	. *= physiology.do_after_speed
 	GET_COMPONENT_FROM(mood, /datum/component/mood, src) //Currently, only carbons or higher use mood, move this once that changes.
 	if(mood)
 		switch(mood.sanity) //Alters do_after delay based on how sane you are

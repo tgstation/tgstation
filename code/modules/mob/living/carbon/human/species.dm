@@ -1653,7 +1653,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 ////////////
 
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
-	. = stunmod * H.physiology.stun_mod * amount
+	. = stunmod * amount
 
 //////////////
 //Space Move//

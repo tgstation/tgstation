@@ -8,6 +8,7 @@
 	var/list/stomach_contents		= list()
 	var/list/internal_organs		= list()	//List of /obj/item/organ in the mob. They don't go in the contents for some reason I don't want to know.
 	var/list/internal_organs_slot= list() //Same as above, but stores "slot ID" - "organ" pairs for easy access.
+	var/datum/physiology/physiology //Stores several damage and status modifiers
 	var/silent = FALSE 		//Can't talk. Value goes down every life proc. //NOTE TO FUTURE CODERS: DO NOT INITIALIZE NUMERICAL VARS AS NULL OR I WILL MURDER YOU.
 	var/dreaming = 0 //How many dream images we have left to send
 

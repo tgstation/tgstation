@@ -22,7 +22,6 @@
 
 	//initialise organs
 	create_internal_organs() //most of it is done in set_species now, this is only for parent call
-	physiology = new()
 
 	handcrafting = new()
 
@@ -35,11 +34,6 @@
 	. = ..()
 	if(!CONFIG_GET(flag/disable_human_mood))
 		AddComponent(/datum/component/mood)
-
-/mob/living/carbon/human/Destroy()
-	QDEL_NULL(physiology)
-	return ..()
-
 
 /mob/living/carbon/human/OpenCraftingMenu()
 	handcrafting.ui_interact(src)
@@ -886,10 +880,6 @@
 	else
 		. = ..(M,force,check_loc)
 		stop_pulling()
-
-/mob/living/carbon/human/do_after_coefficent()
-	. = ..()
-	. *= physiology.do_after_speed
 
 /mob/living/carbon/human/species
 	var/race = null

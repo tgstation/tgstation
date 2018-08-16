@@ -1,5 +1,4 @@
 
-
 /mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE)
 	var/hit_percent = (100-blocked)/100
 	if(!damage || hit_percent <= 0)
@@ -18,30 +17,30 @@
 	switch(damagetype)
 		if(BRUTE)
 			if(BP)
-				if(BP.receive_damage(damage * hit_percent, 0))
+				if(BP.receive_damage(damage * hit_percent * physiology.brute_mod, 0))
 					update_damage_overlays()
 			else //no bodypart, we deal damage with a more general method.
-				adjustBruteLoss(damage * hit_percent)
+				adjustBruteLoss(damage * hit_percent * physiology.brute_mod)
 		if(BURN)
 			if(BP)
-				if(BP.receive_damage(0, damage * hit_percent))
+				if(BP.receive_damage(0, damage * hit_percent * physiology.burn_mod))
 					update_damage_overlays()
 			else
-				adjustFireLoss(damage * hit_percent)
+				adjustFireLoss(damage * hit_percent * physiology.burn_mod)
 		if(TOX)
-			adjustToxLoss(damage * hit_percent)
+			adjustToxLoss(damage * hit_percent * physiology.tox_mod)
 		if(OXY)
-			adjustOxyLoss(damage * hit_percent)
+			adjustOxyLoss(damage * hit_percent * physiology.oxy_mod)
 		if(CLONE)
-			adjustCloneLoss(damage * hit_percent)
+			adjustCloneLoss(damage * hit_percent * physiology.clone_mod)
 		if(STAMINA)
 			if(BP)
-				if(BP.receive_damage(0, 0, damage * hit_percent))
+				if(BP.receive_damage(0, 0, damage * hit_percent * physiology.stamina_mod))
 					update_damage_overlays()
 			else
-				adjustStaminaLoss(damage * hit_percent)
+				adjustStaminaLoss(damage * hit_percent * physiology.stamina_mod)
 		if(BRAIN)
-			adjustBrainLoss(damage * hit_percent)
+			adjustBrainLoss(damage * hit_percent * physiology.brain_mod)
 	return TRUE
 
 

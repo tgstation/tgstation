@@ -1,3 +1,5 @@
+/mob/living/carbon/getarmor(def_zone, type)
+	return physiology.armor.getRating(d_type)
 
 /mob/living/carbon/get_eye_protection()
 	var/number = ..()
@@ -215,9 +217,10 @@
 		return FALSE
 	if(has_trait(TRAIT_SHOCKIMMUNE))
 		return FALSE
-	shock_damage *= siemens_coeff
+	siemens_coeff *= physiology.siemens_coeff
 	if(dna && dna.species)
-		shock_damage *= dna.species.siemens_coeff
+		siemens_coeff *= dna.species.siemens_coeff
+	shock_damage *= siemens_coeff
 	if(shock_damage<1 && !override)
 		return 0
 	if(reagents.has_reagent("teslium"))
