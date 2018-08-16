@@ -227,6 +227,9 @@
 			miasma_disease.symptoms = miasma_disease.GenerateSymptoms(1,3)
 			miasma_disease.try_infect(src)
 
+		if(prob(5) && miasma_partialpressure > 1.5)
+			to_chat(src, "<span class='notice'>You smell something horribly decayed inside this room.</span>")
+
 
 
 	breath.garbage_collect()
@@ -256,7 +259,7 @@
 
 // Make corpses rot, emitting miasma
 /mob/living/carbon/proc/rot()
-	if(istype(src.loc, /obj/structure/closet/crate/coffin) || istype(C.loc, /obj/structure/bodycontainer/morgue))
+	if(istype(src.loc, /obj/structure/closet/crate/coffin)|| istype(src.loc, /obj/structure/closet/body_bag) || istype(C.loc, /obj/structure/bodycontainer))
 		return
 	var/turf/diseasedturf = get_turf(src)
 
