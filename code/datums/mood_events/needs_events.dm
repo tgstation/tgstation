@@ -35,12 +35,10 @@
 /datum/mood_event/disgust/bad_smell
 	description = "<span class='warning'>You smell something horribly decayed inside this room.</span>\n"
 	mood_change = -3
-	timeout = 1800
 
 /datum/mood_event/disgust/nauseating_stench
 	description = "<span class='warning'>The stench of rotting carcasses is unbearable!</span>\n"
 	mood_change = -7
-	timeout = 2400
 
 //Generic needs events
 /datum/mood_event/favorite_food
