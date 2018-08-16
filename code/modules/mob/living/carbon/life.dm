@@ -259,14 +259,16 @@
 
 // Make corpses rot, emitting miasma
 /mob/living/carbon/proc/rot()
-	if(istype(src.loc, /obj/structure/closet/crate/coffin)|| istype(src.loc, /obj/structure/closet/body_bag) || istype(C.loc, /obj/structure/bodycontainer))
+	if(istype(src.loc, /obj/structure/closet/crate/coffin)|| istype(src.loc, /obj/structure/closet/body_bag) || istype(src.loc, /obj/structure/bodycontainer))
 		return
-	var/turf/diseasedturf = get_turf(src)
+	var/deceasedturf = get_turf(src)
+	if(istype(deceasedturf,/turf/open))
+		var/turf/open/miasma_turf = deceasedturf
 
-	datum/gas_mixture/air = diseasedturf.air_contents
-	var/list/cached_gases = air.gases
-	ASSERT_GAS(/datum/gas/miasma, miasma_turf.air)
-	cached_gases[/datum/gas/miasma][MOLES] += 0.01
+		var/list/cached_gases = miasma_turf.air.gases
+
+		ASSERT_GAS(/datum/gas/miasma, miasma_turf.air)
+		cached_gases[/datum/gas/miasma][MOLES] += 0.01
 
 /mob/living/carbon/proc/handle_blood()
 	return
