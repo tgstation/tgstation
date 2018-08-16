@@ -289,7 +289,7 @@
 		return
 
 	// Also no decay if corpse chilled or not organic/undead
-	if(bodytemperature <= TCRYO || (!(MOB_ORGANIC in mob_biotypes) && !(MOB_UNDEAD in mob_biotypes)))
+	if(bodytemperature <= T0C-10 || (!(MOB_ORGANIC in mob_biotypes) && !(MOB_UNDEAD in mob_biotypes)))
 		return
 
 	// Wait a bit before decaying
