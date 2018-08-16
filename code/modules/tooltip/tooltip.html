@@ -155,12 +155,7 @@
 				var enteredX = parseInt(screenLoc[1]);
 				screenLoc = top.split(':');
 				top = parseInt(screenLoc[0]);
-				enteredY = parseInt(screenLoc[1]);
-				} else {
-					if (oScreenLoc.length < 1) {
-						return false; //no screenloc
-					}
-				} 
+				var enteredY = parseInt(screenLoc[1]);
 
 				//Screen loc offsets on objects (e.g. "WEST+0:6,NORTH-1:26") can royally mess with positioning depending on where the cursor enters
 				//This is a giant bitch to parse. Note that it only expects screen_loc in the format <west>,<north>.
