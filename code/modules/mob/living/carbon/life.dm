@@ -224,8 +224,8 @@
 
 		if(prob(1 * miasma_partialpressure))
 			var/datum/disease/advance/miasma_disease = new/datum/disease/advance
-			miasma_disease.symptoms = miasma_disease.GenerateSymptoms(1,3)
-			miasma_disease.try_infect(src)
+			miasma_disease.symptoms = miasma_disease.GenerateSymptoms(1, 3)
+			ForceContractDisease(miasma_disease, TRUE, TRUE)
 
 		switch(miasma_partialpressure)
 			if(0.1 to 0.5)
@@ -283,6 +283,12 @@
 
 	// No decay if formaldehyde in corpse
 	if(typesof(/datum/reagent/toxin/formaldehyde) in reagents.reagent_list)
+		var/datum/reagent/toxin/formaldehyde/conservant = typesof(/datum/reagent/toxin/formaldehyde) in reagents.reagent_list
+		if(conservant.volume >= 20)
+		return
+
+	// Also no decay if corpse chilled or not organic/undead
+	if(bodytemperature <= TCRYO || (!(MOB_ORGANIC in mob_biotypes) && !(MOB_UNDEAD in mob_biotypes)))
 		return
 
 	// Wait a bit before decaying
