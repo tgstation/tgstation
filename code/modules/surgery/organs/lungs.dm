@@ -305,7 +305,7 @@
 						owner.vomit()
 				if(40 to INFINITY)
 					//Higher chance to vomit. Let the horror start
-					if(prob(25))
+					if(prob(15))
 						to_chat(owner, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
 						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "nauseating_stench", /datum/mood_event/disgust/nauseating_stench)
 						owner.vomit()
