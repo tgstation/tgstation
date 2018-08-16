@@ -288,12 +288,6 @@
 				miasma_disease.symptoms = miasma_disease.GenerateSymptoms(1,3)
 				miasma_disease.try_infect(owner)
 
-			//Clearing out mood events if insufficient partial pressure
-			if(miasma_pp < 25)
-				SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "nauseating_stench")
-			if(miasma_pp < 10)
-				SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "bad smell")
-
 			//Miasma side effects
 			switch(miasma_pp)
 				if(1.5 to 10)
