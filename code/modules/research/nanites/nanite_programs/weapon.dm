@@ -65,12 +65,12 @@
 	host_mob.adjustFireLoss(3.5)
 
 /datum/nanite_program/meltdown/enable_passive_effect()
-	..()
+	. = ..()
 	to_chat(host_mob, "<span class='userdanger'>Your blood is burning!</span>")
 	nanites.safety_threshold = 0
 
 /datum/nanite_program/meltdown/disable_passive_effect()
-	..()
+	. = ..()
 	to_chat(host_mob, "<span class='warning'>Your blood cools down, and the pain gradually fades.</span>")
 
 /datum/nanite_program/triggered/explosive
