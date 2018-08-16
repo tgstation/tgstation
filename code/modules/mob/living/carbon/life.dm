@@ -286,7 +286,7 @@
 
 	// No decay if formaldehyde in corpse
 	if(reagents.has_reagent("formaldehyde", 20))
-			return
+		return
 
 	// Also no decay if corpse chilled or not organic/undead
 	if(bodytemperature <= TCRYO || (!(MOB_ORGANIC in mob_biotypes) && !(MOB_UNDEAD in mob_biotypes)))
