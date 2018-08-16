@@ -270,12 +270,47 @@
 			H.reagents.add_reagent("no2",1)
 
 		breath_gases[/datum/gas/nitryl][MOLES]-=gas_breathed
+
 	// Stimulum
 		gas_breathed = breath_gases[/datum/gas/stimulum][MOLES]
 		if (gas_breathed > gas_stimulation_min)
 			var/existing = H.reagents.get_reagent_amount("stimulum")
 			H.reagents.add_reagent("stimulum",max(0, 1 - existing))
 		breath_gases[/datum/gas/stimulum][MOLES]-=gas_breathed
+
+	// Miasma
+		if (breath_gases[/datum/gas/miasma])
+		var/miasma_partialpressure = (breath_gases[/datum/gas/miasma][MOLES]/breath.total_moles())*breath_pressure
+
+		if(prob(0.5 * miasma_partialpressure))
+			var/datum/disease/advance/miasma_disease = new/datum/disease/advance
+			miasma_disease.symptoms = miasma_disease.GenerateSymptoms(1,3)
+			miasma_disease.try_infect(owner)
+
+		switch(miasma_partialpressure)
+			if(1.5 to 10)
+				// At lower pp, give out a little warning
+				if(prob(5))
+					to_chat(owner, "<span class='notice'>There is an unpleasant smell in the air.</span>")
+			if(10 to 25)
+				//At somewhat higher pp, warning becomes more obvious
+				if(prob(15))
+					to_chat(owner, "<span class='warning'>You smell something horribly decayed inside this room.</span>")
+					SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "bad smell", /datum/mood_event/disgust/bad_smell)
+			if(25 to 40)
+				//Small chance to vomit. By now, people have internals on anyway
+				if(prob(5))
+					to_chat(owner, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
+					SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "nauseating_stench", /datum/mood_event/disgust/nauseating_stench)
+					owner.vomit()
+			if(40 to INFINITY)
+				//Higher chance to vomit. Let the horror start
+				if(prob(25))
+					to_chat(owner, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
+					SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "nauseating_stench", /datum/mood_event/disgust/nauseating_stench)
+					owner.vomit()
+		breath_gases[/datum/gas/miasma][MOLES]-=gas_breathed
+			
 		handle_breath_temperature(breath, H)
 		breath.garbage_collect()
 	return TRUE
