@@ -115,7 +115,7 @@
 /datum/action/vehicle/sealed/remove_key
 	name = "Remove key"
 	desc = "Take your key out of the vehicle's ignition"
-	button_icon_state = "car_dump"
+	button_icon_state = "car_removekey"
 
 /datum/action/vehicle/sealed/remove_key/Trigger()
 	vehicle_entered_target.remove_key(owner)
