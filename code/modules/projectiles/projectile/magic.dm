@@ -344,19 +344,17 @@
 	var/weld = TRUE
 	var/created = FALSE //prevents creation of more then one locker if it has multiple hits
 
-/obj/item/projectile/magic/locker/Bump(atom/A)
+/obj/item/projectile/magic/locker/prehit(atom/A)
 	if(ismob(A))
 		var/mob/M = A
 		if(M.anti_magic_check())
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [A]!</span>")
 			qdel(src)
 			return
-		if(A == firer)
-			weld = FALSE
 		if(M.anchored)
 			return ..()
 		M.forceMove(src)
-		return
+		return FALSE
 	return ..()
 
 /obj/item/projectile/magic/locker/on_hit(target)
@@ -376,15 +374,51 @@
 		AM.forceMove(get_turf(src))
 	. = ..()
 
+/obj/structure/closet/decay
+	breakout_time = 600
+	icon_welded = null
+	var/magic_icon = "cursed"
+	var/weakened_icon = "decursed"
+	var/auto_destroy = TRUE
+
 /obj/structure/closet/decay/Initialize()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/bust_open), 5 MINUTES)
-	addtimer(CALLBACK(src, .proc/decay), 5 MINUTES + 5 SECONDS)
+	if(auto_destroy)
+		addtimer(CALLBACK(src, .proc/bust_open), 5 MINUTES)
+	addtimer(CALLBACK(src, .proc/magicly_lock), 5)
+
+/obj/structure/closet/decay/proc/magicly_lock()
+	if(!welded)
+		return
+	icon_state = magic_icon
+	update_icon()
+
+/obj/structure/closet/decay/weld_act(weld_state)
+	if(weld_state)
+		unmagify()
 
 /obj/structure/closet/decay/proc/decay()
 	animate(src, alpha = 0, time = 30)
-	animate(color = rgb(255, 0, 0),time = 30)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, src), 30)
+
+/obj/structure/closet/decay/open(mob/living/user)
+	. = ..()
+	if(.)
+		if(icon_state == magic_icon) //check if we used the magic icon at all before giving it the lesser magic icon
+			unmagify()
+		else
+			addtimer(CALLBACK(src, .proc/decay), 15 SECONDS)
+
+/obj/structure/closet/decay/contents_explosion(severity, target)
+	for(var/atom/A in contents)
+		A.ex_act(severity/2, target) //Difference is it does half the damage to contents from explosion, to make fireball not completely instakill
+		CHECK_TICK
+
+/obj/structure/closet/decay/proc/unmagify()
+	icon_state = weakened_icon
+	update_icon()
+	addtimer(CALLBACK(src, .proc/decay), 15 SECONDS)
+	icon_welded = "welded"
 
 /obj/item/projectile/magic/aoe
 	name = "Area Bolt"
@@ -398,6 +432,7 @@
 			if(L.stat != DEAD && L != firer && !L.anti_magic_check())
 				return Bump(L)
 	..()
+
 
 /obj/item/projectile/magic/aoe/lightning
 	name = "lightning bolt"

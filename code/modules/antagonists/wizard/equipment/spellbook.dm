@@ -318,7 +318,7 @@
 
 /datum/spellbook_entry/item/lockerstaff
 	name = "Staff of the Locker"
-	desc = "A staff that shoots lockers. It eats anyone it hits on its way, leaving a welded locker with your victims behind. You can walk into the same direction as you shoot to put yourself into the locer for a quick travel, this wont weld the locker shut."
+	desc = "A staff that shoots lockers. It eats anyone it hits on its way, leaving a welded locker with your victims behind."
 	item_path = /obj/item/gun/magic/staff/locker
 	category = "Defensive"
 
