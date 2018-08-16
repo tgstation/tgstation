@@ -210,16 +210,19 @@
 			hallucination += 10
 		else if(bz_partialpressure > 0.01)
 			hallucination += 5
+
 	//TRITIUM
 	if(breath_gases[/datum/gas/tritium])
 		var/tritium_partialpressure = (breath_gases[/datum/gas/tritium][MOLES]/breath.total_moles())*breath_pressure
 		radiation += tritium_partialpressure/10
+
 	//NITRYL
-	if (breath_gases[/datum/gas/nitryl])
+	if(breath_gases[/datum/gas/nitryl])
 		var/nitryl_partialpressure = (breath_gases[/datum/gas/nitryl][MOLES]/breath.total_moles())*breath_pressure
 		adjustFireLoss(nitryl_partialpressure/4)
+
 	//MIASMA
-	if (breath_gases[/datum/gas/miasma])
+	if(breath_gases[/datum/gas/miasma])
 		var/miasma_partialpressure = (breath_gases[/datum/gas/miasma][MOLES]/breath.total_moles())*breath_pressure
 
 		if(prob(1 * miasma_partialpressure))
@@ -227,6 +230,13 @@
 			miasma_disease.symptoms = miasma_disease.GenerateSymptoms(1, 3)
 			ForceContractDisease(miasma_disease, TRUE, TRUE)
 
+		//Clearing out mood events if insufficient partial pressure
+		if(miasma_partialpressure < 25)
+			END_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "nauseating_stench")
+		if(miasma_partialpressure < 10)
+			END_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "bad smell")
+
+		//Miasma side effects
 		switch(miasma_partialpressure)
 			if(1.5 to 10)
 				// At lower pp, give out a little warning
@@ -249,6 +259,11 @@
 					to_chat(src, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
 					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "nauseating_stench", /datum/mood_event/disgust/nauseating_stench)
 					vomit()
+
+	//Clear all moods if no miasma at all
+	else
+		END_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "bad smell")
+		END_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "nauseating_stench")
 			
 
 
