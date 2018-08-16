@@ -960,7 +960,7 @@
 		to_chat(holder, "<span class='cult italic'>The shield's illusions are back at full strength!</span>")
 
 /obj/item/shield/mirror/IsReflect()
-	if(prob(block_chance+20))
+	if(prob(block_chance))
 		return TRUE
 	return FALSE
 
