@@ -52,8 +52,8 @@
 	var/report_link
 	if(report)
 		report.show_to(src)
-		report_link = " - <a href='?src=[REF(report)]&show=1'>validation report</a>"
-		to_chat(src, "<span class='warning'>Map template '[map]' <a href='?src=[REF(report)]&show=1'>failed validation</a>.</span>")
+		report_link = " - <a href='?src=[REF(report)];[HrefToken(TRUE)];show=1'>validation report</a>"
+		to_chat(src, "<span class='warning'>Map template '[map]' <a href='?src=[REF(report)];[HrefToken()];show=1'>failed validation</a>.</span>")
 		if(report.loadable)
 			var/response = alert(src, "The map failed validation, would you like to load it anyways?", "Map Errors", "Cancel", "Upload Anyways")
 			if(response != "Upload Anyways")
