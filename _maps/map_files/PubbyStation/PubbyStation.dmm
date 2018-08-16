@@ -52300,7 +52300,7 @@
 	req_access_txt = "6"
 	},
 /turf/open/floor/plasteel/dark,
-/area/crew_quarters/bar)
+/area/medical/morgue)
 "rxa" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
