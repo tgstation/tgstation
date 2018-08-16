@@ -236,15 +236,18 @@
 				// At somewhat higher pp, warning becomes more obvious
 				if(prob(15))
 					to_chat(src, "<span class='warning'>You smell something horribly decayed inside this room.</span>")
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "bad smell", /datum/mood_event/disgust/bad_smell)
 			if(1 to 2)
 				// Small chance to vomit. By now, normally people would turn on internals anyway
 				if(prob(5))
 					to_chat(src, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "nauseating_stench", /datum/mood_event/disgust/nauseating_stench)
 					vomit()
 			if(2 to INFINITY)
 				// Higher chance to vomit
 				if(prob(20))
 					to_chat(src, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "nauseating_stench", /datum/mood_event/disgust/nauseating_stench)
 					vomit()
 			
 
