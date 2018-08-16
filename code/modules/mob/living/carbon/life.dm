@@ -228,20 +228,20 @@
 			miasma_disease.try_infect(src)
 
 		switch(miasma_partialpressure)
-			if(0.5 to 1)
+			if(0.1 to 0.5)
 				// At lower pp, give out a warning
 				if(prob(5))
 					to_chat(src, "<span class='notice'>There is an unpleasant smell in the air.</span>")
-			if(1 to 2)
+			if(0.5 to 1)
 				// At somewhat higher pp, warning becomes more obvious
 				if(prob(15))
 					to_chat(src, "<span class='warning'>You smell something horribly decayed inside this room.</span>")
-			if(2 to 5)
+			if(1 to 2)
 				// Small chance to vomit. By now, normally people would turn on internals anyway
 				if(prob(5))
 					to_chat(src, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
 					vomit()
-			if(5 to INFINITY)
+			if(2 to INFINITY)
 				// Higher chance to vomit
 				if(prob(20))
 					to_chat(src, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
@@ -281,6 +281,10 @@
 	if(istype(loc, /obj/structure/closet/crate/coffin)|| istype(loc, /obj/structure/closet/body_bag) || istype(loc, /obj/structure/bodycontainer))
 		return
 
+	// No decay if formaldehyde in corpse
+	if(typesof(/datum/reagent/toxin/formaldehyde) in reagents.reagent_list)
+		return
+
 	// Wait a bit before decaying
 	if(world.time - timeofdeath < 1200)
 		return
@@ -296,7 +300,7 @@
 	var/list/cached_gases = miasma_turf.air.gases
 
 	ASSERT_GAS(/datum/gas/miasma, miasma_turf.air)
-	cached_gases[/datum/gas/miasma][MOLES] += 0.05
+	cached_gases[/datum/gas/miasma][MOLES] += 0.02
 
 /mob/living/carbon/proc/handle_blood()
 	return
