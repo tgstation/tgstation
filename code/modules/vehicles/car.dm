@@ -15,6 +15,8 @@
 		initialize_controller_action_type(/datum/action/vehicle/sealed/DumpKidnappedMobs, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/sealed/car/MouseDrop_T(atom/dropping, mob/M)
+	if(!usr.canmove || usr.stat || usr.restrained())
+		return FALSE
 	if(ismob(dropping) && M != dropping)
 		var/mob/D = dropping
 		M.visible_message("<span class='warning'>[M] starts forcing [D] into \the [src]!</span>")
