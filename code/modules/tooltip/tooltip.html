@@ -160,7 +160,7 @@
 				//Screen loc offsets on objects (e.g. "WEST+0:6,NORTH-1:26") can royally mess with positioning depending on where the cursor enters
 				//This is a giant bitch to parse. Note that it only expects screen_loc in the format <west>,<north>.
 				var oScreenLoc = tooltip.params.screenLoc.split(','); //o for original ok
-				
+
 				var west = oScreenLoc[0].split(':');
 				if (west.length > 1) { //Only if west has a pixel offset
 					var westOffset = parseInt(west[1]);
