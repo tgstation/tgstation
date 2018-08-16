@@ -282,11 +282,19 @@
 		if (breath_gases[/datum/gas/miasma])
 			var/miasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/miasma][MOLES])
 
+			//Miasma sickness
 			if(prob(0.5 * miasma_pp))
 				var/datum/disease/advance/miasma_disease = new/datum/disease/advance
 				miasma_disease.symptoms = miasma_disease.GenerateSymptoms(1,3)
 				miasma_disease.try_infect(owner)
 
+			//Clearing out mood events if insufficient partial pressure
+			if(miasma_partialpressure < 25)
+				END_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "nauseating_stench")
+			if(miasma_partialpressure < 10)
+				END_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "bad smell")
+
+			//Miasma side effects
 			switch(miasma_pp)
 				if(1.5 to 10)
 					// At lower pp, give out a little warning
@@ -310,7 +318,12 @@
 						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "nauseating_stench", /datum/mood_event/disgust/nauseating_stench)
 						owner.vomit()
 			breath_gases[/datum/gas/miasma][MOLES]-=gas_breathed
-			
+
+		//Clear out moods when no miasma at all
+		else
+			END_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "bad smell")
+			END_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "nauseating_stench")
+		
 		handle_breath_temperature(breath, H)
 		breath.garbage_collect()
 	return TRUE
