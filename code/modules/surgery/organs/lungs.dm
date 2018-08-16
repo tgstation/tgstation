@@ -298,31 +298,34 @@
 			switch(miasma_pp)
 				if(1.5 to 10)
 					// At lower pp, give out a little warning
+					SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
 					if(prob(5))
 						to_chat(owner, "<span class='notice'>There is an unpleasant smell in the air.</span>")
 				if(10 to 25)
 					//At somewhat higher pp, warning becomes more obvious
 					if(prob(15))
 						to_chat(owner, "<span class='warning'>You smell something horribly decayed inside this room.</span>")
-						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "bad smell", /datum/mood_event/disgust/bad_smell)
+						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/bad_smell)
 				if(25 to 40)
 					//Small chance to vomit. By now, people have internals on anyway
 					if(prob(5))
 						to_chat(owner, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
-						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "nauseating_stench", /datum/mood_event/disgust/nauseating_stench)
+						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
 						owner.vomit()
 				if(40 to INFINITY)
 					//Higher chance to vomit. Let the horror start
 					if(prob(15))
 						to_chat(owner, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
-						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "nauseating_stench", /datum/mood_event/disgust/nauseating_stench)
+						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
 						owner.vomit()
+				else
+					SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
+
 			breath_gases[/datum/gas/miasma][MOLES]-=gas_breathed
 
 		//Clear out moods when no miasma at all
 		else
-			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "bad smell")
-			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "nauseating_stench")
+			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
 		
 		handle_breath_temperature(breath, H)
 		breath.garbage_collect()
