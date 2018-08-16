@@ -90,38 +90,6 @@
 		to_chat(owner, "<span class='warning'>Your wounds glows with power, you have prepared a [new_spell.name] invocation!</span>")
 	channeling = FALSE
 
-/datum/action/innate/cult/tooltip // Temporary and invisible buttons that automatically provide info to players
-	name = "Blood Cult Tooltip"
-	button_icon_state = ""
-	background_icon_state = null
-	var/screenloc = DEFAULT_TOOLTIP
-	var/initial_delay = 0
-/datum/action/innate/cult/tooltip/proc/reveal_tip()
-	button.MouseEntered(screenloc,"mainwindow.tooltip", null)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/closeToolTip, owner), 75)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, src), 80)
-/datum/action/innate/cult/tooltip/Grant()
-	..()
-	button.screen_loc = screenloc
-	button.moved = screenloc
-	button.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	button.ordered = FALSE
-	if(initial_delay)
-		addtimer(CALLBACK(src, .proc/reveal_tip), initial_delay)
-	else
-		reveal_tip()
-/datum/action/innate/cult/tooltip/spells
-	name = "Blood Spell Tooltip"
-	desc = "This is your blood magic spell bar. Use the button, preferably near an empowering rune, to prepare powerful blood spells!"
-/datum/action/innate/cult/tooltip/spells/second
-	name = "Blood Spell Tooltip #2"
-	desc = "<u>You can drag this button anywhere on your screen to adjust the location of the entire spellbar</u> (upon the next spell update)."
-	initial_delay = 100
-/datum/action/innate/cult/tooltip/bloodsense
-	name = "Blood Sense Tooltip"
-	desc = "This is your blood-sense tracker, mouse over for more information about your objective. It is also used to track targets."
-	screenloc = DEFAULT_BLOODTIP
-	initial_delay = 200
 /datum/action/innate/cult/blood_spell //The next generation of talismans, handles storage/creation of blood magic
 	name = "Blood Magic"
 	button_icon_state = "telerune"
