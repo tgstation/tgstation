@@ -232,9 +232,9 @@
 
 		//Clearing out mood events if insufficient partial pressure
 		if(miasma_partialpressure < 25)
-			END_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "nauseating_stench")
+			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "nauseating_stench")
 		if(miasma_partialpressure < 10)
-			END_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "bad smell")
+			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "bad smell")
 
 		//Miasma side effects
 		switch(miasma_partialpressure)
@@ -262,8 +262,8 @@
 
 	//Clear all moods if no miasma at all
 	else
-		END_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "bad smell")
-		END_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "nauseating_stench")
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "bad smell")
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "nauseating_stench")
 			
 
 
