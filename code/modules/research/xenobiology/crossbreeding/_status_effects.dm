@@ -509,13 +509,13 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/sepia/tick()
 	var/mob/living/carbon/C = owner
 	if(istype(C))
-		H.physiology.apply_mod(/datum/physio_mod/sepia)
+		C.physiology.apply_mod(/datum/physio_mod/sepia)
 	return ..()
 
 /datum/status_effect/stabilized/sepia/on_remove()
 	var/mob/living/carbon/C = owner
 	if(istype(C))
-		H.physiology.remove_mod(/datum/physio_mod/sepia)
+		C.physiology.remove_mod(/datum/physio_mod/sepia)
 
 /datum/status_effect/stabilized/cerulean
 	id = "stabilizedcerulean"

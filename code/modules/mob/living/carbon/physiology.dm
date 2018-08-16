@@ -1,6 +1,8 @@
 //Stores several modifiers in a way that isn't cleared by changing species
 
 /datum/physiology
+	var/list/physio_mods = list()
+
 	var/brute_mod = 1   	// % of brute damage taken from all sources
 	var/burn_mod = 1    	// % of burn damage taken from all sources
 	var/tox_mod = 1     	// % of toxin damage taken from all sources
@@ -29,7 +31,6 @@
 
 /datum/physiology/New()
 	armor = new
-	var/list/physio_mods = list()
 	
 /datum/physiology/Destroy()
 	QDEL_LIST(physio_mods)
