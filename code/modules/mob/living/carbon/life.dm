@@ -256,6 +256,8 @@
 
 // Make corpses rot, emitting miasma
 /mob/living/carbon/proc/rot()
+	if(istype(src.loc, /obj/structure/closet/crate/coffin) || istype(C.loc, /obj/structure/bodycontainer/morgue))
+		return
 	var/turf/diseasedturf = get_turf(src)
 
 	datum/gas_mixture/air = diseasedturf.air_contents
