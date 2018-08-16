@@ -133,6 +133,8 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	id = "miasma"
 	specific_heat = 0.01
 	name = "Miasma"
+	gas_overlay = "miasma"
+	moles_visible = MOLES_GAS_VISIBLE * 60
 
 /obj/effect/overlay/gas
 	icon = 'icons/effects/tile_effects.dmi'
