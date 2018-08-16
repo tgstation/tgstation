@@ -52297,7 +52297,7 @@
 	dir = 4;
 	icon_state = "left";
 	name = "Medbay Delivery";
-	req_access_txt = "28"
+	req_access_txt = "6"
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
