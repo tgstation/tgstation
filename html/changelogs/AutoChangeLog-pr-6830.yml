@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "Mindswapping with someone else no longer forces ambient occlusion on."

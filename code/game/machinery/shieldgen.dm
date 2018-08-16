@@ -15,6 +15,11 @@
 	setDir(pick(GLOB.cardinals))
 	air_update_turf(1)
 
+/obj/structure/emergency_shield/Destroy()
+	density = FALSE
+	air_update_turf(1)
+	return ..()
+
 /obj/structure/emergency_shield/Move()
 	var/turf/T = loc
 	. = ..()

@@ -7,7 +7,6 @@
 	idle_power_usage = 4
 	active_power_usage = 250
 	circuit = /obj/item/circuitboard/machine/recharger
-	pass_flags = PASSTABLE
 	var/obj/item/charging = null
 	var/recharge_coeff = 1
 
@@ -20,16 +19,6 @@
 /obj/machinery/recharger/RefreshParts()
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		recharge_coeff = C.rating
-
-/obj/machinery/recharger/proc/setCharging(new_charging)
-	charging = new_charging
-	if (new_charging)
-		START_PROCESSING(SSmachines, src)
-		use_power = ACTIVE_POWER_USE
-		update_icon(scan = TRUE)
-	else
-		use_power = IDLE_POWER_USE
-		update_icon()
 
 /obj/machinery/recharger/attackby(obj/item/G, mob/user, params)
 	if(istype(G, /obj/item/wrench))
@@ -63,8 +52,9 @@
 
 			if(!user.transferItemToLoc(G, src))
 				return 1
-			setCharging(G)
-
+			charging = G
+			use_power = ACTIVE_POWER_USE
+			update_icon(scan = TRUE)
 		else
 			to_chat(user, "<span class='notice'>[src] isn't connected to anything!</span>")
 		return 1
@@ -89,17 +79,21 @@
 		charging.update_icon()
 		charging.forceMove(drop_location())
 		user.put_in_hands(charging)
-		setCharging(null)
+		charging = null
+		use_power = IDLE_POWER_USE
+		update_icon()
 
 /obj/machinery/recharger/attack_tk(mob/user)
 	if(charging)
 		charging.update_icon()
 		charging.forceMove(drop_location())
-		setCharging(null)
+		charging = null
+		use_power = IDLE_POWER_USE
+		update_icon()
 
 /obj/machinery/recharger/process()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
-		return PROCESS_KILL
+		return
 
 	var/using_power = 0
 	if(charging)
@@ -119,8 +113,6 @@
 				using_power = 1
 			update_icon(using_power)
 			return
-	else
-		return PROCESS_KILL
 
 /obj/machinery/recharger/power_change()
 	..()

@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - balance: "Reduced the exponent on gas tank ruptures. TTVs and suicide onetanks that were previously 20dev are now approximately 9.6dev. Let's see the actual toxins nerds adapt!"

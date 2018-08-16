@@ -69,6 +69,7 @@
 	name = "Syndicate Drop Ship";
 	port_direction = 8;
 	preferred_direction = 4;
+	timid = 1;
 	width = 15
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -87,7 +88,7 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate3)
 "hF" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/structure/chair/shuttle,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -103,7 +104,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/caravan/syndicate3)
 "ka" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /obj/machinery/light/small{
@@ -149,8 +150,6 @@
 /obj/structure/closet/syndicate{
 	anchored = 1
 	},
-/obj/item/clothing/under/syndicate,
-/obj/item/clothing/shoes/sneakers/black,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "rz" = (
@@ -170,7 +169,7 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate3)
 "rV" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -186,7 +185,7 @@
 	},
 /area/shuttle/caravan/syndicate3)
 "sn" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/structure/chair/shuttle,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
 /area/shuttle/caravan/syndicate3)
@@ -248,7 +247,7 @@
 /turf/open/floor/plasteel/darkred/side,
 /area/shuttle/caravan/syndicate3)
 "Cm" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /obj/machinery/firealarm{
@@ -267,11 +266,9 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/syndicate{
+/obj/structure/closet/syndicate/personal{
 	anchored = 1
 	},
-/obj/item/gun/ballistic/automatic/pistol,
-/obj/item/crowbar/red,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "Dx" = (
@@ -281,7 +278,7 @@
 	},
 /area/shuttle/caravan/syndicate3)
 "EO" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/structure/chair/shuttle,
 /obj/machinery/airalarm/syndicate{
 	pixel_y = 24
 	},
@@ -296,10 +293,6 @@
 /obj/structure/closet/syndicate{
 	anchored = 1
 	},
-/obj/item/clothing/under/syndicate/combat,
-/obj/item/clothing/shoes/jackboots,
-/obj/item/storage/belt/military,
-/obj/item/crowbar/red,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "Gx" = (
@@ -320,20 +313,21 @@
 /obj/structure/closet/syndicate{
 	anchored = 1
 	},
-/obj/item/clothing/under/syndicate/combat,
-/obj/item/storage/belt/military,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "HM" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/office/dark{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/syndicate/ranged/smg/pilot{
+/mob/living/simple_animal/hostile/syndicate/ranged/pilot{
 	environment_smash = 0
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/syndicate3)
 "Ij" = (
+/obj/structure/chair/office/dark{
+	dir = 4
+	},
 /obj/machinery/turretid{
 	ailock = 1;
 	control_area = null;
@@ -344,9 +338,6 @@
 	pixel_y = 34;
 	req_access = null;
 	req_access_txt = "150"
-	},
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
 	},
 /turf/open/floor/plasteel/darkred/corner{
 	dir = 4
@@ -392,21 +383,18 @@
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/shoes/sneakers/black,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "NH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/closet/syndicate/personal{
+	anchored = 1
+	},
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/closet/syndicate{
-	anchored = 1
-	},
-/obj/item/clothing/under/syndicate,
-/obj/item/clothing/glasses/night,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "Pt" = (
@@ -492,7 +480,7 @@
 	},
 /area/shuttle/caravan/syndicate3)
 "Wr" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/office/dark{
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkred/corner,
@@ -504,23 +492,10 @@
 /obj/structure/closet/syndicate{
 	anchored = 1
 	},
-/obj/item/clothing/under/syndicate/combat,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "ZB" = (
 /turf/closed/wall/mineral/plastitanium,
-/area/shuttle/caravan/syndicate3)
-"ZI" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/syndicate{
-	anchored = 1
-	},
-/obj/item/clothing/shoes/jackboots,
-/obj/item/crowbar/red,
-/turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "ZJ" = (
 /turf/open/floor/plasteel/dark,
@@ -629,7 +604,7 @@ Tn
 Lq
 YU
 Dx
-ZI
+qE
 HJ
 Tn
 "}

@@ -11,7 +11,7 @@
 	throw_speed = 2
 	throw_range = 7
 	force = 10
-	materials = list(MAT_METAL = 90)
+	materials = list(MAT_METAL=90)
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 	dog_fashion = /datum/dog_fashion/back
 	resistance_flags = FIRE_PROOF
@@ -37,7 +37,7 @@
 	throwforce = 2
 	w_class = WEIGHT_CLASS_SMALL
 	force = 3
-	materials = list(MAT_METAL = 50, MAT_GLASS = 40)
+	materials = list()
 	max_water = 30
 	sprite_name = "miniFE"
 	dog_fashion = null
@@ -120,7 +120,6 @@
 		return 0
 
 /obj/item/extinguisher/afterattack(atom/target, mob/user , flag)
-	. = ..()
 	// Make it so the extinguisher doesn't spray yourself when you click your inventory items
 	if (target.loc == user)
 		return
@@ -201,6 +200,9 @@
 					if(W.loc == my_target)
 						break
 					sleep(2)
+
+	else
+		return ..()
 
 /obj/item/extinguisher/AltClick(mob/user)
 	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))

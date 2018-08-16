@@ -1,0 +1,4 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - bugfix: "Fixed rpeds throwing stock part rating related runtimes."

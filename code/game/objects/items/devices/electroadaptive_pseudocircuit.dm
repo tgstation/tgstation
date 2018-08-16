@@ -47,7 +47,6 @@
 	return TRUE //The actual circuit magic itself is done on a per-object basis
 
 /obj/item/electroadaptive_pseudocircuit/afterattack(atom/target, mob/living/user, proximity)
-	. = ..()
 	if(!proximity)
 		return
 	if(!is_type_in_typecache(target, recycleable_circuits))

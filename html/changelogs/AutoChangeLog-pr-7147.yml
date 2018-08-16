@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - tweak: "The syndicate mask available in the uplink will now inject you with a chem that cuts your click delay in half and increases your stamina regeneration, when you enter combat mode. The mask has a five minute cooldown between adrenaline injections."

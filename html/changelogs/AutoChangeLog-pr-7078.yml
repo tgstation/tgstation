@@ -1,0 +1,5 @@
+author: "Toriate"
+delete-after: True
+changes: 
+  - rscadd: "Gives the flak helmet a tiny storage compartment"
+  - balance: "Made the flak helmet even weaker against acid and fire so it crumbles into dust easier"

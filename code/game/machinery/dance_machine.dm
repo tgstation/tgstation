@@ -9,7 +9,6 @@
 	var/active = FALSE
 	var/list/rangers = list()
 	var/stop = 0
-	var/list/songs = list()
 	var/datum/track/selection = null
 
 /obj/machinery/jukebox/disco
@@ -28,34 +27,6 @@
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags_1 = NODECONSTRUCT_1
-
-/datum/track
-	var/song_name = "generic"
-	var/song_path = null
-	var/song_length = 0
-	var/song_beat = 0
-
-/datum/track/New(name, path, length, beat)
-	song_name = name
-	song_path = path
-	song_length = length
-	song_beat = beat
-
-/obj/machinery/jukebox/Initialize()
-	. = ..()
-	var/list/tracks = flist("config/jukebox_music/sounds/")
-
-	for(var/S in tracks)
-		var/datum/track/T = new()
-		T.song_path = file("config/jukebox_music/sounds/[S]")
-		var/list/L = splittext(S,"+")
-		T.song_name = L[1]
-		T.song_length = text2num(L[2])
-		T.song_beat = text2num(L[3])
-		songs |= T
-
-	if(songs.len)
-		selection = pick(songs)
 
 /obj/machinery/jukebox/Destroy()
 	dance_over()
@@ -91,7 +62,7 @@
 		to_chat(user,"<span class='warning'>Error: Access Denied.</span>")
 		user.playsound_local(src,'sound/misc/compiler-failure.ogg', 25, 1)
 		return
-	if(!songs.len)
+	if(!SSjukeboxes.songs.len)
 		to_chat(user,"<span class='warning'>Error: No music tracks have been authorized for your station. Petition Central Command to resolve this issue.</span>")
 		playsound(src,'sound/misc/compiler-failure.ogg', 25, 1)
 		return
@@ -100,8 +71,11 @@
 	dat += "<b><A href='?src=[REF(src)];action=toggle'>[!active ? "BREAK IT DOWN" : "SHUT IT DOWN"]<b></A><br>"
 	dat += "</div><br>"
 	dat += "<A href='?src=[REF(src)];action=select'> Select Track</A><br>"
-	dat += "Track Selected: [selection.song_name]<br>"
-	dat += "Track Length: [DisplayTimeText(selection.song_length)]<br><br>"
+	if(istype(selection))
+		dat += "Track Selected: [selection.song_name]<br>"
+		dat += "Track Length: [DisplayTimeText(selection.song_length)]<br><br>"
+	else
+		dat += "Track Selected: None!<br><br>"
 	var/datum/browser/popup = new(user, "vending", "[name]", 400, 350)
 	popup.set_content(dat.Join())
 	popup.open()
@@ -120,8 +94,14 @@
 					to_chat(usr, "<span class='warning'>Error: The device is still resetting from the last activation, it will be ready again in [DisplayTimeText(stop-world.time)].</span>")
 					playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
 					return
-				activate_music()
-				START_PROCESSING(SSobj, src)
+				if(!istype(selection))
+					to_chat(usr, "<span class='warning'>Error: Severe user incompetence detected.</span>")
+					playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
+					return
+				if(!activate_music())
+					to_chat(usr, "<span class='warning'>Error: Generic hardware failure.</span>")
+					playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
+					return
 				updateUsrDialog()
 			else if(active)
 				stop = 0
@@ -132,7 +112,7 @@
 				return
 
 			var/list/available = list()
-			for(var/datum/track/S in songs)
+			for(var/datum/track/S in SSjukeboxes.songs)
 				available[S.song_name] = S
 			var/selected = input(usr, "Choose your song", "Track:") as null|anything in available
 			if(QDELETED(src) || !selected || !istype(available[selected], /datum/track))
@@ -141,10 +121,15 @@
 			updateUsrDialog()
 
 /obj/machinery/jukebox/proc/activate_music()
-	active = TRUE
-	update_icon()
-	START_PROCESSING(SSobj, src)
-	stop = world.time + selection.song_length
+	var/jukeboxslottotake = SSjukeboxes.addjukebox(src, selection, 2)
+	if(jukeboxslottotake)
+		active = TRUE
+		update_icon()
+		START_PROCESSING(SSobj, src)
+		stop = world.time + selection.song_length
+		return TRUE
+	else
+		return FALSE
 
 /obj/machinery/jukebox/disco/activate_music()
 	..()
@@ -375,10 +360,10 @@
 		sleep(speed)
 		for(var/i in 1 to speed)
 			M.setDir(pick(GLOB.cardinals))
-			// update resting manually to avoid chat spam
-			for(var/mob/living/carbon/NS in rangers)
-				NS.resting = !NS.resting
-				NS.update_canmove()
+			// update resting manually to avoid chat spam CITADEL EDIT - NO MORE RESTSPAM
+			//for(var/mob/living/carbon/NS in rangers)
+			//	NS.resting = !NS.resting
+			//	NS.update_canmove()
 		 time--
 
 /obj/machinery/jukebox/disco/proc/dance5(var/mob/living/M)
@@ -433,23 +418,9 @@
 	QDEL_LIST(sparkles)
 
 /obj/machinery/jukebox/process()
-	if(world.time < stop && active)
-		var/sound/song_played = sound(selection.song_path)
-
-		for(var/mob/M in range(10,src))
-			if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
-				continue
-			if(!(M in rangers))
-				rangers[M] = TRUE
-				M.playsound_local(get_turf(M), null, 100, channel = CHANNEL_JUKEBOX, S = song_played)
-		for(var/mob/L in rangers)
-			if(get_dist(src,L) > 10)
-				rangers -= L
-				if(!L || !L.client)
-					continue
-				L.stop_sound_channel(CHANNEL_JUKEBOX)
-	else if(active)
+	if(active && world.time >= stop)
 		active = FALSE
+		SSjukeboxes.removejukebox(SSjukeboxes.findjukeboxindex(src))
 		STOP_PROCESSING(SSobj, src)
 		dance_over()
 		playsound(src,'sound/machines/terminal_off.ogg',50,1)

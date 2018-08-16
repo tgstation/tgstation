@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Screwdrivers and other items with overlays now show the proper appearance of the item when attacking something with them, or when put on a tray."

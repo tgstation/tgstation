@@ -1,0 +1,7 @@
+author: "Garen"
+delete-after: True
+changes: 
+  - rscadd: "Thrower and Gun circuits put messages in chat when they're used."
+  - tweak: "Only the gun assembly can throw/shoot while in hand"
+  - imageadd: "Adds inhands for the gun assembly"
+  - bugfix: "grabber inventories update when a thrower takes from them"

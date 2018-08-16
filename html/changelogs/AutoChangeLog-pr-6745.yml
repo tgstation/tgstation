@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - rscadd: "APC/air alarm/airlock/fire alarm/firelock electronics are now available once Industrial Engineering is researched.."

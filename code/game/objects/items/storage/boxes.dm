@@ -189,14 +189,6 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/glass/beaker( src )
 
-/obj/item/storage/box/beakers/bluespace
-	name = "box of bluespace beakers"
-	illustration = "beaker"
-
-/obj/item/storage/box/beakers/bluespace/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/glass/beaker/bluespace(src)
-
 /obj/item/storage/box/medsprays
 	name = "box of medical sprayers"
 	desc = "A box full of medical sprayers, with unscrewable caps and precision spray heads."
@@ -999,7 +991,6 @@
 /obj/item/storage/box/stockparts/deluxe
 	name = "box of deluxe stock parts"
 	desc = "Contains a variety of deluxe stock parts."
-	icon_state = "syndiebox"
 
 /obj/item/storage/box/stockparts/deluxe/PopulateContents()
 	new /obj/item/stock_parts/capacitor/quadratic(src)

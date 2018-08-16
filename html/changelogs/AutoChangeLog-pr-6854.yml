@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "Field generators are once again operable by adjacent cyborgs."

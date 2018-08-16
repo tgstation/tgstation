@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "The \"Save Logs\" option in the chat now actually works (IE 10+ only)."

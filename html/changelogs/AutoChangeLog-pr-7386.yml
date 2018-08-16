@@ -1,0 +1,9 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - rscadd: "Cameras now can take pictures up to 7x7. Alt click them to change their width/height from the default 3x3."
+  - rscadd: "Photos are now logged to disk, assuming the host enabled the configuration option"
+  - rscadd: "If the above is enabled, albums/frames can now have their persistence IDs set in variables to allow for PHOTO PERSISTENCE"
+  - rscadd: "Every head of staff gets a unique album with its own ID in their locker. Let your successors know about your accomplishments, screwups, and everything in between!"
+  - rscadd: "All of this works or should work with newcasters/pdas/etc etc"
+  - rscadd: "Photo taking now clones the area into transit space and then operates on it, instead of on the spot, in theory making photographing things more accurate?"

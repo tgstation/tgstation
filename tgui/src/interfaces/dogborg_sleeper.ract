@@ -1,0 +1,49 @@
+<ui-display title='Occupant'>
+  <ui-section label='Occupant'>
+	 <span>{{data.occupant.name ? data.occupant.name : "No Occupant"}}</span>
+  </ui-section>
+  {{#if data.items}}
+    <ui-section label='Items in storage'>
+	  <span>{{data.items}}</span>
+	</ui-section>
+  {{/if}}
+  {{#if data.occupied}}
+    <ui-section label='State'>
+      <span class='{{data.occupant.statstate}}'>{{data.occupant.stat}}</span>
+  	</ui-section>
+    <ui-section label='Health'>
+      <ui-bar min='{{data.occupant.minHealth}}' max='{{data.occupant.maxHealth}}' value='{{data.occupant.health}}'
+        state='{{data.occupant.health >= 0 ? "good" : "average"}}'>{{Math.round(adata.occupant.health)}}</ui-bar>
+    </ui-section>
+    {{#each [{label: "Brute", type: "bruteLoss"}, {label: "Respiratory", type: "oxyLoss"}, {label: "Toxin", type: "toxLoss"}, {label: "Burn", type: "fireLoss"}]}}
+      <ui-section label='{{label}}'>
+        <ui-bar min='0' max='{{data.occupant.maxHealth}}' value='{{data.occupant[type]}}' state='bad'>{{Math.round(adata.occupant[type])}}</ui-bar>
+      </ui-section>
+    {{/each}}
+    <ui-section label='Cells'>
+        <span class='{{data.occupant.cloneLoss ? "bad" : "good"}}'>{{data.occupant.cloneLoss ? "Damaged" : "Healthy"}}</span>
+    </ui-section>
+    <ui-section label='Brain'>
+        <span class='{{data.occupant.brainLoss ? "bad" : "good"}}'>{{data.occupant.brainLoss ? "Abnormal" : "Healthy"}}</span>
+    </ui-section>
+    <ui-section label='Bloodstream'>
+        {{#each adata.occupant.reagents}}
+          <span class='highlight' intro-outro='fade'>{{Math.fixed(volume, 1)}} units of {{name}}</span><br/>
+        {{else}}
+          <span class='good'>Pure</span>
+        {{/each}}
+    </ui-section>
+  {{/if}}
+</ui-display>
+<ui-display title='Operations'>
+  <ui-section label='Inject'>
+    {{#each data.chem}}
+      <ui-button icon='flask' state='{{data.occupied ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}"}'>{{name}}</ui-button><br/>
+    {{/each}}
+  </ui-section>
+	<ui-section label='Eject'>
+	    <ui-button icon='sign-out' action='eject'>Eject Contents</ui-button>
+	</ui-section>
+	<ui-section label='Self Cleaning'>
+		<ui-button icon='recycle' action='cleaning'>Self-Clean Cycle</ui-button>
+</ui-display>

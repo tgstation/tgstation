@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - tweak: "When a custom say verb message is spoken without any actual words, the text will render without a `, \"\"` at the end of it."

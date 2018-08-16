@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "Opening and closing airlocks repeatedly no longer stacks queued autocloses."

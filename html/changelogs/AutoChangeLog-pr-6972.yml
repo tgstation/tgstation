@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "The overlay effects of cult flooring are now on the floor plane, fixing their odd ambient occlusion appearance."

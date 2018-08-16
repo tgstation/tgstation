@@ -1,0 +1,5 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - tweak: "\"code [alert level]\" has been changed to \"[alert level] alert\" on the hub entry."
+  - tweak: "The hub entry now displays the current map."

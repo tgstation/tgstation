@@ -23,10 +23,6 @@
 //Called on life ticks
 /datum/brain_trauma/proc/on_life()
 	return
-	
-//Called on death
-/datum/brain_trauma/proc/on_death()
-	return
 
 //Called when given to a mob
 /datum/brain_trauma/proc/on_gain()

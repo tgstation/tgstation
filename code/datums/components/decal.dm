@@ -13,7 +13,7 @@
 	first_dir = _dir
 	description = _description
 	cleanable = _cleanable
-	
+
 	apply()
 
 /datum/component/decal/RegisterWithParent()

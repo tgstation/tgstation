@@ -57,7 +57,6 @@
 	return (TOXLOSS)
 
 /obj/item/soap/afterattack(atom/target, mob/user, proximity)
-	. = ..()
 	if(!proximity || !check_allowed_items(target))
 		return
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.

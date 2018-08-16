@@ -1,0 +1,5 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "Engi-Vend machines now contain fire alarm and firelock electronics!"
+  - code_imp: "Loose tech storage circuit boards have been replaced with spawners."

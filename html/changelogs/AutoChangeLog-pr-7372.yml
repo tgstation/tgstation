@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - rscadd: "You can now manipulate tails, ears, body markings, mutant colors, and taur types via DNA console!"

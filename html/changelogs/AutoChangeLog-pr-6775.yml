@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - tweak: "the walls on the crashed abductor ship ruin in lavaland can now be broken down"

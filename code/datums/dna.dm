@@ -12,7 +12,6 @@
 	var/list/temporary_mutations = list() //Timers for temporary mutations
 	var/list/previous = list() //For temporary name/ui/ue/blood_type modifications
 	var/mob/living/holder
-	var/delete_species = TRUE //Set to FALSE when a body is scanned by a cloner to fix #38875
 
 /datum/dna/New(mob/living/new_holder)
 	if(istype(new_holder))
@@ -24,9 +23,7 @@
 		if(cholder.dna == src)
 			cholder.dna = null
 	holder = null
-
-	if(delete_species)
-		QDEL_NULL(species)
+	QDEL_NULL(species)
 
 	mutations.Cut()					//This only references mutations, just dereference.
 	temporary_mutations.Cut()		//^
@@ -46,6 +43,10 @@
 	destination.dna.temporary_mutations = temporary_mutations.Copy()
 	if(transfer_SE)
 		destination.dna.struc_enzymes = struc_enzymes
+	if(ishuman(destination))
+		var/mob/living/carbon/human/H = destination
+		H.give_genitals(TRUE)//This gives the body the genitals of this DNA. Used for any transformations based on DNA
+	destination.flavor_text = destination.dna.features["flavor_text"] //Update the flavor_text to use new dna text
 
 /datum/dna/proc/copy_dna(datum/dna/new_dna)
 	new_dna.unique_enzymes = unique_enzymes
@@ -95,6 +96,21 @@
 		L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.facial_hair_color)
 		L[DNA_SKIN_TONE_BLOCK] = construct_block(GLOB.skin_tones.Find(H.skin_tone), GLOB.skin_tones.len)
 		L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.eye_color)
+		L[DNA_COLOR_ONE_BLOCK] = sanitize_hexcolor(features["mcolor"])
+		L[DNA_COLOR_TWO_BLOCK] = sanitize_hexcolor(features["mcolor2"])
+		L[DNA_COLOR_THREE_BLOCK] = sanitize_hexcolor(features["mcolor3"])
+		if(!GLOB.mam_tails_list.len)
+			init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails, GLOB.mam_tails_list)
+		L[DNA_MUTANTTAIL_BLOCK] = construct_block(GLOB.mam_tails_list.Find(features["mam_tail"]), GLOB.mam_tails_list.len)
+		if(!GLOB.mam_ears_list.len)
+			init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_ears, GLOB.mam_ears_list)
+		L[DNA_MUTANTEAR_BLOCK] = construct_block(GLOB.mam_ears_list.Find(features["mam_ears"]), GLOB.mam_ears_list.len)
+		if(!GLOB.mam_body_markings_list.len)
+			init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_body_markings, GLOB.mam_body_markings_list)
+		L[DNA_MUTANTMARKING_BLOCK] = construct_block(GLOB.mam_body_markings_list.Find(features["mam_body_markings"]), GLOB.mam_body_markings_list.len)
+		if(!GLOB.taur_list.len)
+			init_sprite_accessory_subtypes(/datum/sprite_accessory/taur, GLOB.taur_list)
+		L[DNA_TAUR_BLOCK] = construct_block(GLOB.taur_list.Find(features["taur"]), GLOB.taur_list.len)
 
 	for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
 		if(L[i])
@@ -145,6 +161,20 @@
 			setblock(uni_identity, blocknumber, construct_block(GLOB.facial_hair_styles_list.Find(H.facial_hair_style), GLOB.facial_hair_styles_list.len))
 		if(DNA_HAIR_STYLE_BLOCK)
 			setblock(uni_identity, blocknumber, construct_block(GLOB.hair_styles_list.Find(H.hair_style), GLOB.hair_styles_list.len))
+		if(DNA_COLOR_ONE_BLOCK)
+			sanitize_hexcolor(features["mcolor"])
+		if(DNA_COLOR_TWO_BLOCK)
+			sanitize_hexcolor(features["mcolor2"])
+		if(DNA_COLOR_THREE_BLOCK)
+			sanitize_hexcolor(features["mcolor3"])
+		if(DNA_MUTANTTAIL_BLOCK)
+			construct_block(GLOB.mam_tails_list.Find(features["mam_tail"]), GLOB.mam_tails_list.len)
+		if(DNA_MUTANTEAR_BLOCK)
+			construct_block(GLOB.mam_ears_list.Find(features["mam_ears"]), GLOB.mam_ears_list.len)
+		if(DNA_MUTANTMARKING_BLOCK)
+			construct_block(GLOB.mam_body_markings_list.Find(features["mam_body_markings"]), GLOB.mam_body_markings_list.len)
+		if(DNA_TAUR_BLOCK)
+			construct_block(GLOB.taur_list.Find(features["taur"]), GLOB.taur_list.len)
 
 /datum/dna/proc/mutations_say_mods(message)
 	if(message)
@@ -179,10 +209,10 @@
 /datum/dna/proc/initialize_dna(newblood_type)
 	if(newblood_type)
 		blood_type = newblood_type
+	features = random_features()
 	unique_enzymes = generate_unique_enzymes()
 	uni_identity = generate_uni_identity()
 	struc_enzymes = generate_struc_enzymes()
-	features = random_features()
 
 
 /datum/dna/stored //subtype used by brain mob's stored_dna
@@ -215,21 +245,17 @@
 			stored_dna.species = mrace //not calling any species update procs since we're a brain, not a monkey/human
 
 
-/mob/living/carbon/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
+/mob/living/carbon/set_species(datum/species/mrace, icon_update = 1)
 	if(mrace && has_dna())
-		var/datum/species/new_race
+		dna.species.on_species_loss(src)
+		var/old_species = dna.species
 		if(ispath(mrace))
-			new_race = new mrace
-		else if(istype(mrace))
-			new_race = mrace
+			dna.species = new mrace()
 		else
-			return
-		dna.species.on_species_loss(src, new_race, pref_load)
-		var/datum/species/old_species = dna.species
-		dna.species = new_race
-		dna.species.on_species_gain(src, old_species, pref_load)
+			dna.species = mrace
+		dna.species.on_species_gain(src, old_species)
 
-/mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
+/mob/living/carbon/human/set_species(datum/species/mrace, icon_update = 1)
 	..()
 	if(icon_update)
 		update_body()
@@ -249,6 +275,7 @@
 
 	if(newfeatures)
 		dna.features = newfeatures
+		flavor_text = dna.features["flavor_text"] //Update the flavor_text to use new dna text
 
 	if(mrace)
 		var/datum/species/newrace = new mrace.type

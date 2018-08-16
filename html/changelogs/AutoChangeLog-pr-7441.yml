@@ -1,0 +1,4 @@
+author: "Flatty"
+delete-after: True
+changes: 
+  - tweak: "The blurry eye overlay has been replaced with an actual blur."

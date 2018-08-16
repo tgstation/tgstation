@@ -1,0 +1,5 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - balance: "The combat rework's training wheels have been removed. Knockdowns no longer have any noticeable stun. This indirectly means stunbatons and tasers will always deal their full stamloss on hit."
+  - balance: "The stamloss required for boxing gloves to throw a knockout punch has been increased from 50 to 100."

@@ -1,6 +1,3 @@
-#define MINOR_INSANITY_PEN 5
-#define MAJOR_INSANITY_PEN 10
-
 /datum/component/mood
 	var/mood //Real happiness
 	var/sanity = 100 //Current sanity
@@ -8,32 +5,25 @@
 	var/mood_level = 5 //To track what stage of moodies they're on
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
 	var/datum/mood_event/list/mood_events = list()
-	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
-	var/holdmyinsanityeffect = 0 //before we edit our sanity lets take a look
-	var/obj/screen/mood/screen_obj
+	var/mob/living/owner
+	var/datum/looping_sound/reverse_bear_trap/slow/soundloop //Insanity ticking
 
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
-	
 	START_PROCESSING(SSmood, src)
-
+	owner = parent
+	soundloop = new(list(owner), FALSE, TRUE)
 	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
-
-	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
-	var/mob/living/owner = parent
-	if(owner.hud_used)
-		modify_hud()
-		var/datum/hud/hud = owner.hud_used
-		hud.show_hud(hud.hud_version)
+	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/update_beauty)
 
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
-	unmodify_hud()
+	QDEL_NULL(soundloop)
 	return ..()
 
-/datum/component/mood/proc/print_mood(mob/user)
+/datum/component/mood/proc/print_mood()
 	var/msg = "<span class='info'>*---------*\n<EM>Your current mood</EM>\n"
 	msg += "<span class='notice'>My mental status: </span>" //Long term
 	switch(sanity)
@@ -77,8 +67,8 @@
 			var/datum/mood_event/event = mood_events[i]
 			msg += event.description
 	else
-		msg += "<span class='nicegreen'>I don't have much of a reaction to anything right now.<span>\n"
-	to_chat(user || parent, msg)
+		msg += "<span class='nicegreen'>Nothing special has happened to me lately!<span>\n"
+	to_chat(owner, msg)
 
 /datum/component/mood/proc/update_mood() //Called whenever a mood event is added or removed
 	mood = 0
@@ -114,35 +104,41 @@
 
 
 /datum/component/mood/proc/update_mood_icon()
-	var/mob/living/owner = parent
 	if(owner.client && owner.hud_used)
 		if(sanity < 25)
-			screen_obj.icon_state = "mood_insane"
+			owner.hud_used.mood.icon_state = "mood_insane"
 		else
-			screen_obj.icon_state = "mood[mood_level]"
+			owner.hud_used.mood.icon_state = "mood[mood_level]"
 
 /datum/component/mood/process() //Called on SSmood process
-	var/mob/living/owner = parent
 	switch(sanity)
 		if(SANITY_INSANE to SANITY_CRAZY)
 			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 3)
 			update_mood_icon()
+			if(prob(7))
+				owner.playsound_local(null, pick(CREEPY_SOUNDS), 40, 1)
+			soundloop.start()
 		if(SANITY_INSANE to SANITY_UNSTABLE)
 			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 2)
+			if(prob(3))
+				owner.playsound_local(null, pick(CREEPY_SOUNDS), 20, 1)
+			soundloop.stop()
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
 			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 1)
+			soundloop.stop()
 		if(SANITY_DISTURBED to INFINITY)
 			owner.clear_fullscreen("depression")
+			soundloop.stop()
 
 	switch(mood_level)
 		if(1)
-			DecreaseSanity(0.2)
+			DecreaseSanity(0.2, 0)
 		if(2)
-			DecreaseSanity(0.125, SANITY_CRAZY)
+			DecreaseSanity(0.125, 25)
 		if(3)
-			DecreaseSanity(0.075, SANITY_UNSTABLE)
+			DecreaseSanity(0.075, 50)
 		if(4)
-			DecreaseSanity(0.025, SANITY_DISTURBED)
+			DecreaseSanity(0.025, 75)
 		if(5)
 			IncreaseSanity(0.1)
 		if(6)
@@ -150,15 +146,9 @@
 		if(7)
 			IncreaseSanity(0.20)
 		if(8)
-			IncreaseSanity(0.25, SANITY_GREAT)
+			IncreaseSanity(0.25, 125)
 		if(9)
-			IncreaseSanity(0.4, SANITY_GREAT)
-
-	if(insanity_effect != holdmyinsanityeffect)
-		if(insanity_effect > holdmyinsanityeffect)
-			owner.crit_threshold += (insanity_effect - holdmyinsanityeffect)
-		else
-			owner.crit_threshold -= (holdmyinsanityeffect - insanity_effect)
+			IncreaseSanity(0.4, 125)
 
 	if(owner.has_trait(TRAIT_DEPRESSION))
 		if(prob(0.05))
@@ -169,29 +159,21 @@
 			add_event("jolly", /datum/mood_event/jolly)
 			clear_event("depression")
 
-	holdmyinsanityeffect = insanity_effect
+	var/area/A = get_area(owner)
+	if(A)
+		update_beauty(A)
 
-/datum/component/mood/proc/DecreaseSanity(amount, minimum = SANITY_INSANE)
-	if(sanity < minimum) //This might make KevinZ stop fucking pinging me.
+/datum/component/mood/proc/DecreaseSanity(amount, limit = 0)
+	if(sanity < limit) //This might make KevinZ stop fucking pinging me.
 		IncreaseSanity(0.5)
 	else
-		sanity = max(minimum, sanity - amount)
-		if(sanity < SANITY_UNSTABLE)
-			if(sanity < SANITY_CRAZY)
-				insanity_effect = (MAJOR_INSANITY_PEN)
-			else
-				insanity_effect = (MINOR_INSANITY_PEN)
+		sanity = max(0, sanity - amount)
 
-/datum/component/mood/proc/IncreaseSanity(amount, maximum = SANITY_NEUTRAL)
-	if(sanity > maximum)
+/datum/component/mood/proc/IncreaseSanity(amount, limit = 99)
+	if(sanity > limit)
 		DecreaseSanity(0.5) //Removes some sanity to go back to our current limit.
 	else
-		sanity = min(maximum, sanity + amount)
-		if(sanity > SANITY_CRAZY)
-			if(sanity > SANITY_UNSTABLE)
-				insanity_effect = 0
-			else
-				insanity_effect = MINOR_INSANITY_PEN
+		sanity = min(limit, sanity + amount)
 
 /datum/component/mood/proc/add_event(category, type, param) //Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
 	var/datum/mood_event/the_event
@@ -218,25 +200,22 @@
 	qdel(event)
 	update_mood()
 
-/datum/component/mood/proc/modify_hud()
-	var/mob/living/owner = parent
-	var/datum/hud/hud = owner.hud_used
-	screen_obj = new
-	hud.infodisplay += screen_obj
-	RegisterSignal(hud, COMSIG_PARENT_QDELETED, .proc/unmodify_hud)
-	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
-
-/datum/component/mood/proc/unmodify_hud()
-	if(!screen_obj)
-		return
-	var/mob/living/owner = parent
-	var/datum/hud/hud = owner.hud_used
-	if(hud && hud.infodisplay)
-		hud.infodisplay -= screen_obj
-	QDEL_NULL(screen_obj)
-
-/datum/component/mood/proc/hud_click(location, control, params, mob/user)
-	print_mood(user)
-
-#undef MINOR_INSANITY_PEN
-#undef MAJOR_INSANITY_PEN
+/datum/component/mood/proc/update_beauty(area/A)
+	if(A.outdoors) //if we're outside, we don't care.
+		clear_event("area_beauty")
+		return FALSE
+	switch(A.beauty)
+		if(-INFINITY to BEAUTY_LEVEL_HORRID)
+			add_event("area_beauty", /datum/mood_event/horridroom)
+		if(BEAUTY_LEVEL_HORRID to BEAUTY_LEVEL_BAD)
+			add_event("area_beauty", /datum/mood_event/badroom)
+		if(BEAUTY_LEVEL_BAD to BEAUTY_LEVEL_MEH)
+			add_event("area_beauty", /datum/mood_event/mehroom)
+		if(BEAUTY_LEVEL_MEH to BEAUTY_LEVEL_DECENT)
+			clear_event("area_beauty")
+		if(BEAUTY_LEVEL_DECENT to BEAUTY_LEVEL_GOOD)
+			add_event("area_beauty", /datum/mood_event/decentroom)
+		if(BEAUTY_LEVEL_GOOD to BEAUTY_LEVEL_GREAT)
+			add_event("area_beauty", /datum/mood_event/goodroom)
+		if(BEAUTY_LEVEL_GREAT to INFINITY)
+			add_event("area_beauty", /datum/mood_event/greatroom)

@@ -1,0 +1,4 @@
+author: "resistor"
+delete-after: True
+changes: 
+  - rscadd: "Added circuit labels! You can now customize the description of your assemblies."

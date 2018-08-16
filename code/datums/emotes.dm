@@ -29,9 +29,9 @@
 	mob_type_blacklist_typecache = typecacheof(mob_type_blacklist_typecache)
 	mob_type_ignore_stat_typecache = typecacheof(mob_type_ignore_stat_typecache)
 
-/datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE)
+/datum/emote/proc/run_emote(mob/user, params, type_override)
 	. = TRUE
-	if(!can_run_emote(user, TRUE, intentional))
+	if(!can_run_emote(user))
 		return FALSE
 	var/msg = select_message_type(user)
 	if(params && message_param)
@@ -94,7 +94,7 @@
 /datum/emote/proc/select_param(mob/user, params)
 	return replacetext(message_param, "%t", params)
 
-/datum/emote/proc/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
+/datum/emote/proc/can_run_emote(mob/user, status_check = TRUE)
 	. = TRUE
 	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
 		return FALSE
@@ -102,12 +102,10 @@
 		return FALSE
 	if(status_check && !is_type_in_typecache(user, mob_type_ignore_stat_typecache))
 		if(user.stat > stat_allowed)
-			if(intentional)
-				to_chat(user, "<span class='notice'>You cannot [key] while unconscious.</span>")
+			to_chat(user, "<span class='notice'>You cannot [key] while unconscious.</span>")
 			return FALSE
 		if(restraint_check && (user.restrained() || user.buckled))
-			if(intentional)
-				to_chat(user, "<span class='notice'>You cannot [key] while restrained.</span>")
+			to_chat(user, "<span class='notice'>You cannot [key] while restrained.</span>")
 			return FALSE
 
 	if(isliving(user))

@@ -8,7 +8,7 @@
 		play_attack_sound(damage_amount, damage_type, damage_flag)
 	if(!(resistance_flags & INDESTRUCTIBLE) && obj_integrity > 0)
 		damage_amount = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
-		if(damage_amount >= DAMAGE_PRECISION)
+		if(damage_amount >= 0.1)
 			. = damage_amount
 			var/old_integ = obj_integrity
 			obj_integrity = max(old_integ - damage_amount, 0)
@@ -33,7 +33,7 @@
 		armor_protection = armor.getRating(damage_flag)
 	if(armor_protection)		//Only apply weak-against-armor/hollowpoint effects if there actually IS armor.
 		armor_protection = CLAMP(armor_protection - armour_penetration, 0, 100)
-	return round(damage_amount * (100 - armor_protection)*0.01, DAMAGE_PRECISION)
+	return round(damage_amount * (100 - armor_protection)*0.01, 0.1)
 
 //the sound played when the obj is damaged.
 /obj/proc/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -71,8 +71,7 @@
 	. = ..()
 	playsound(src, P.hitsound, 50, 1)
 	visible_message("<span class='danger'>[src] is hit by \a [P]!</span>", null, null, COMBAT_MESSAGE_RANGE)
-	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
-		take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration)
+	take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration)
 
 /obj/proc/hulk_damage()
 	return 150 //the damage hulks do on punches to this object, is affected by melee armor

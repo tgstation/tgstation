@@ -112,7 +112,7 @@
 		limbs_to_dismember = arms + legs
 		if(holding_bodypart)
 			limbs_to_dismember += holding_bodypart
-
+		
 		var/speedbase = abs((4 SECONDS) / limbs_to_dismember.len)
 		for(bodypart in limbs_to_dismember)
 			i++
@@ -150,6 +150,10 @@
 /obj/item/melee/classic_baton/attack(mob/living/target, mob/living/user)
 	if(!on)
 		return ..()
+
+	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes batons unusuable in stamina softcrit
+		to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
+		return //CIT CHANGE - ditto
 
 	add_fingerprint(user)
 	if((user.has_trait(TRAIT_CLUMSY)) && prob(50))
@@ -190,6 +194,7 @@
 			else
 				target.LAssailant = user
 			cooldown = world.time + 40
+			user.adjustStaminaLossBuffered(getweight())//CIT CHANGE - makes swinging batons cost stamina
 
 /obj/item/melee/classic_baton/telescopic
 	name = "telescopic baton"
@@ -281,11 +286,11 @@
 			consume_turf(T)
 
 /obj/item/melee/supermatter_sword/afterattack(target, mob/user, proximity_flag)
-	. = ..()
 	if(user && target == user)
 		user.dropItemToGround(src)
 	if(proximity_flag)
 		consume_everything(target)
+	..()
 
 /obj/item/melee/supermatter_sword/throw_impact(target)
 	..()
@@ -317,13 +322,13 @@
 /obj/item/melee/supermatter_sword/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!</span>")
 	user.dropItemToGround(src, TRUE)
-	shard.Bumped(user)
+	shard.CollidedWith(user)
 
 /obj/item/melee/supermatter_sword/proc/consume_everything(target)
 	if(isnull(target))
 		shard.Consume()
 	else if(!isturf(target))
-		shard.Bumped(target)
+		shard.CollidedWith(target)
 	else
 		consume_turf(target)
 
@@ -352,14 +357,14 @@
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
-	hitsound = 'sound/weapons/whip.ogg'
+	hitsound = 'sound/weapons/chainhit.ogg'
 
 /obj/item/melee/curator_whip/afterattack(target, mob/user, proximity_flag)
-	. = ..()
 	if(ishuman(target) && proximity_flag)
 		var/mob/living/carbon/human/H = target
 		H.drop_all_held_items()
 		H.visible_message("<span class='danger'>[user] disarms [H]!</span>", "<span class='userdanger'>[user] disarmed you!</span>")
+	..()
 
 /obj/item/melee/roastingstick
 	name = "advanced roasting stick"
@@ -441,7 +446,6 @@
 		update_icon()
 
 /obj/item/melee/roastingstick/afterattack(atom/target, mob/user, proximity)
-	. = ..()
 	if (!on)
 		return
 	if (is_type_in_typecache(target, ovens))

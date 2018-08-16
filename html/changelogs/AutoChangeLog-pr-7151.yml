@@ -1,0 +1,5 @@
+author: "LetterN"
+delete-after: True
+changes: 
+  - bugfix: "Fixes shock collars, they now fit on the neck slot"
+  - bugfix: "you can't put them on pockets anymore"

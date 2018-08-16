@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "A pAI dying while in holoform no longer deletes the card, instead merely emptying it."

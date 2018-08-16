@@ -1,0 +1,5 @@
+author: "Cobby"
+delete-after: True
+changes: 
+  - rscdel: "Removed Advanced Mining Scanner from roundstart voucher kits."
+  - rscdel: "Removed Explorer Webbing from all voucher kits besides the shelter capsule pack."

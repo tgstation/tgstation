@@ -119,6 +119,10 @@
 		deductcharge(hitcost)
 		return
 
+	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes it impossible to baton in stamina softcrit
+		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
+		return //CIT CHANGE - ditto
+
 	if(iscyborg(M))
 		..()
 		return
@@ -133,6 +137,7 @@
 		if(status)
 			if(baton_stun(M, user))
 				user.do_attack_animation(M)
+				user.adjustStaminaLossBuffered(getweight())//CIT CHANGE - makes stunbatonning others cost stamina
 				return
 		else
 			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
@@ -158,6 +163,7 @@
 			return 0
 
 	L.Knockdown(stunforce)
+	L.adjustStaminaLoss(stunforce*0.1)//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
 	L.apply_effect(EFFECT_STUTTER, stunforce)
 	if(user)
 		L.lastattacker = user.real_name

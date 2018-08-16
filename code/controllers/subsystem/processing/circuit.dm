@@ -50,11 +50,6 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 		/obj/item/electronic_assembly/simple,
 		/obj/item/electronic_assembly/hook,
 		/obj/item/electronic_assembly/pda,
-		/obj/item/electronic_assembly/small/default,
-		/obj/item/electronic_assembly/small/cylinder,
-		/obj/item/electronic_assembly/small/scanner,
-		/obj/item/electronic_assembly/small/hook,
-		/obj/item/electronic_assembly/small/box,
 		/obj/item/electronic_assembly/medium/default,
 		/obj/item/electronic_assembly/medium/box,
 		/obj/item/electronic_assembly/medium/clam,
@@ -73,7 +68,6 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 		/obj/item/electronic_assembly/drone/medbot,
 		/obj/item/electronic_assembly/drone/genbot,
 		/obj/item/electronic_assembly/drone/android,
-		/obj/item/electronic_assembly/wallmount/tiny,
 		/obj/item/electronic_assembly/wallmount/light,
 		/obj/item/electronic_assembly/wallmount,
 		/obj/item/electronic_assembly/wallmount/heavy
@@ -89,4 +83,3 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 		/obj/item/card/data/full_color,
 		/obj/item/card/data/disk
 		)
-		

@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "Removing an ID card from a wallet now properly removes its visual and accesses."

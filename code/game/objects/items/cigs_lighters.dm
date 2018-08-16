@@ -144,7 +144,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return ..()
 
 /obj/item/clothing/mask/cigarette/afterattack(obj/item/reagent_containers/glass/glass, mob/user, proximity)
-	. = ..()
 	if(!proximity || lit) //can't dip if cigarette is lit (it will heat the reagents in the glass instead)
 		return
 	if(istype(glass))	//you can dip cigarettes into beakers
@@ -205,8 +204,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(iscarbon(loc))
 			var/mob/living/carbon/C = loc
 			if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
-				var/fraction = min(REAGENTS_METABOLISM/reagents.total_volume, 1)
-				reagents.reaction(C, INGEST, fraction)
+				if(prob(15)) // so it's not an instarape in case of acid
+					var/fraction = min(REAGENTS_METABOLISM/reagents.total_volume, 1)
+					reagents.reaction(C, INGEST, fraction)
 				if(!reagents.trans_to(C, REAGENTS_METABOLISM))
 					reagents.remove_any(REAGENTS_METABOLISM)
 				return
@@ -681,7 +681,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/rollingpaper/afterattack(atom/target, mob/user, proximity)
-	. = ..()
 	if(!proximity)
 		return
 	if(istype(target, /obj/item/reagent_containers/food/snacks/grown))
@@ -697,6 +696,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			R.desc = "Dried [target.name] rolled up in a thin piece of paper."
 		else
 			to_chat(user, "<span class='warning'>You need to dry this first!</span>")
+	else
+		..()
 
 ///////////////
 //VAPE NATION//

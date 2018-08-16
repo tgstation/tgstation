@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - bugfix: "Items now spawn on top of, rather than inside, closets and other storage structures"

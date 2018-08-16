@@ -1,0 +1,6 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - rscadd: "You can now make use of custom say verbs with the [say verb*message] format"
+  - rscadd: "Yelling will now echo and penetrate walls"
+  - tweak: "Distant voices now have smaller text"

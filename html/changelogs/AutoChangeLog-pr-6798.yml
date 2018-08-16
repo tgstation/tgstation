@@ -1,0 +1,6 @@
+author: "Astatineguy12"
+delete-after: True
+changes: 
+  - tweak: "The experimentor is less likely to produce food when it transforms an item"
+  - bugfix: "The experimentor no longer breaks when the toxic waste malfunction occurs multiple times and isn't cleaned up"
+  - bugfix: "The experimentor irridiate function actually chooses what item to make properly rather than picking from the start of the list"

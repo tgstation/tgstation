@@ -41,7 +41,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/labor)
 "h" = (
-/obj/machinery/mineral/stacking_unit_console{
+/obj/machinery/mineral/labor_claim_console{
 	machinedir = 2;
 	pixel_x = 30;
 	pixel_y = 30
@@ -86,7 +86,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/labor)
 "o" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 8
 	},
 /obj/machinery/flasher{

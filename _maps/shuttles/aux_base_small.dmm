@@ -35,8 +35,7 @@
 /area/shuttle/auxillary_base)
 "h" = (
 /obj/machinery/camera{
-	dir = 1;
-	network = list("auxbase")
+	dir = 1
 	},
 /obj/structure/mining_shuttle_beacon,
 /turf/open/floor/plating,
@@ -53,7 +52,8 @@
 	dir = 2;
 	dwidth = 4;
 	height = 9;
-	width = 9
+	width = 9;
+	timid = 1
 	},
 /obj/machinery/bluespace_beacon,
 /obj/machinery/computer/auxillary_base,

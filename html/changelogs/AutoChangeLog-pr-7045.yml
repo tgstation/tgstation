@@ -1,0 +1,5 @@
+author: "Toriate"
+delete-after: True
+changes: 
+  - rscadd: "It appears that ancient pieces of armor have wound up on the open market! These armors have degraded beyond usefulness. Grab one now in the loadout!"
+  - imageadd: "added flak jacket and M1 Helmet sprites"

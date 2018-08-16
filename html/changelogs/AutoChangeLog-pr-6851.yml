@@ -1,0 +1,4 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - rscadd: "Engineering can now create anomaly neutralizer devices, capable of instantly neutralizing the short lived anomalies created by the supermatter engine."

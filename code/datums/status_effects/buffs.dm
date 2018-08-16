@@ -295,7 +295,7 @@
 		owner.toxloss *= 10
 		owner.oxyloss *= 10
 		owner.cloneloss *= 10
-		owner.staminaloss *= 10
+		owner.staminaloss += -10 // CIT CHANGE - makes blooddrunk status effect not exhaust you
 		owner.updatehealth()
 		last_health = owner.health
 		last_bruteloss = owner.getBruteLoss()
@@ -353,7 +353,7 @@
 
 		var/new_staminaloss = owner.getStaminaLoss()
 		if(new_staminaloss < last_staminaloss)
-			var/heal_amount = (new_staminaloss - last_staminaloss) * 10
+			var/heal_amount = -5 // CIT CHANGE - makes blood drunk status effect not exhaust you
 			owner.adjustStaminaLoss(heal_amount, updating_health = FALSE)
 			new_staminaloss = owner.getStaminaLoss()
 			needs_health_update = TRUE
@@ -479,7 +479,7 @@
 		if(deathTick < 4)
 			deathTick += 1
 		else
-			owner.visible_message("[owner]'s soul is absorbed into the rod, relieving the previous snake of its duty.")
+			owner.visible_message("[owner]'s soul is absorbed into the rod, releaving the previous snake of it's duty.")
 			var/mob/living/simple_animal/hostile/retaliate/poison/snake/healSnake = new(owner.loc)
 			var/list/chems = list("bicaridine", "salbutamol", "kelotane", "antitoxin")
 			healSnake.poison_type = pick(chems)

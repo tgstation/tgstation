@@ -1,0 +1,7 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - rscadd: "Analyzers can now scan all kinds of atmospheric machinery - unary, binary, ternary, quaternary, you name it. This means stuff like gas pumps, gas mixers, vents and so forth can be analyzed."
+  - tweak: "Analyzers now show temperature in kelvin as well as celsius."
+  - tweak: "Analyzers now show total mole count, volume, and mole count of all gases."
+  - tweak: "Analyzers show everything at slightly higher degrees of precision."

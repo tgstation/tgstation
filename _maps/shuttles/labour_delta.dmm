@@ -49,7 +49,7 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/labor)
 "i" = (
-/obj/machinery/mineral/stacking_unit_console{
+/obj/machinery/mineral/labor_claim_console{
 	machinedir = 2;
 	pixel_x = 30;
 	pixel_y = 30
@@ -120,7 +120,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/labor)
 "q" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -133,7 +133,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/labor)
 "s" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 8
 	},
 /obj/machinery/flasher{

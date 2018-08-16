@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - tweak: "Chameleon projector can no longer scan (often temporary) visual effects like projectiles, flashes and the masked appearance of another chameleon projector user"

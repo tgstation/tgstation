@@ -91,7 +91,6 @@
 	return
 
 /obj/item/card/emag/afterattack(atom/target, mob/user, proximity)
-	. = ..()
 	var/atom/A = target
 	if(!proximity && prox_check)
 		return
@@ -365,7 +364,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/mining
 	name = "mining ID"
-	access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
+	access = list(ACCESS_MINERAL_STOREROOM) // CITADEL CHANGE removes golem's ability to get on the station willy nilly.
 
 /obj/item/card/id/away
 	name = "a perfectly generic identification card"
@@ -384,27 +383,25 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/away/old
 	name = "a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
-	icon_state = "centcom"
-
-/obj/item/card/id/away/old/sec
-	name = "Charlie Station Security Officer's ID card"
-	desc = "A faded Charlie Station ID card. You can make out the rank \"Security Officer\"."
-	assignment = "Charlie Station Security Officer"
-	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_SEC)
-
-/obj/item/card/id/away/old/sci
-	name = "Charlie Station Scientist's ID card"
-	desc = "A faded Charlie Station ID card. You can make out the rank \"Scientist\"."
-	assignment = "Charlie Station Scientist"
 	access = list(ACCESS_AWAY_GENERAL)
 
+/obj/item/card/id/away/old/sec
+	name = "Security Officer ID"
+	desc = "Security officers ID card."
+	icon_state = "centcom"
+
+/obj/item/card/id/away/old/sci
+	name = "Scientist ID"
+	desc = "Scientists ID card."
+	icon_state = "centcom"
+
 /obj/item/card/id/away/old/eng
-	name = "Charlie Station Engineer's ID card"
-	desc = "A faded Charlie Station ID card. You can make out the rank \"Station Engineer\"."
-	assignment = "Charlie Station Engineer"
-	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_ENGINE)
+	name = "Engineer ID"
+	desc = "Engineers ID card."
+	icon_state = "centcom"
 
 /obj/item/card/id/away/old/apc
 	name = "APC Access ID"
-	desc = "A special ID card that allows access to APC terminals."
+	desc = "Special ID card to allow access to APCs."
+	icon_state = "centcom"
 	access = list(ACCESS_ENGINE_EQUIP)

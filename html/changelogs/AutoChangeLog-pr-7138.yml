@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "Moving large amounts of items with bluespace launchpads no longer creates a laggy amount of sparks."

@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "The escape pod hallways on MetaStation and DeltaStation now have air again."

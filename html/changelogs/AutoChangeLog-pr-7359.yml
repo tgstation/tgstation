@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - tweak: "The default amount of z-levels reserved specifically for space ruin generation has been reduced from 7 to 1"

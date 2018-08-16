@@ -1,0 +1,6 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - bugfix: "Fixed missing grilles under brig windows of the pubby shuttle."
+  - rscadd: "For the pubby shuttle, added some food in the fridge, mostly pie slices. Also added a sleeper to the minimedbay."
+  - tweak: "Reworded pubby shuttle description to be more inline with the new train shuttle."

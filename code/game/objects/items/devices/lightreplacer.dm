@@ -239,7 +239,6 @@
 		return 0
 
 /obj/item/lightreplacer/afterattack(atom/T, mob/U, proximity)
-	. = ..()
 	if(!proximity)
 		return
 	if(!isturf(T))

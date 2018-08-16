@@ -1,0 +1,9 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - tweak: "The ladders in the tear in the fabric of reality no longer spawn their endpoints when the area is loaded, but only when the tear is made accessible via a BoH bomb."
+  - tweak: "CentCom is no longer accessible via the space ladder in the tear."
+  - tweak: "The lavaland endpoint can no longer spawn completely surrounded by lava, unless it spawns on an island"
+  - code_imp: "ChangeTurf can now conditionally inherit the air of the turf it is replacing, via the CHANGETURF_INHERIT_AIR flag."
+  - bugfix: "when ladder endpoints are created, the binary turfs that are created inherit the air of the turfs they are replacing. This means the lavaland ladder endpoint will have the lavaland airmix, instead of a vacuum."
+  - code_imp: "navigation beacons are now properly deregistered from their Z-level list and re-registered on the correct one if moved across Z-levels by an effect such as teleportation or a BoH-induced chasm."

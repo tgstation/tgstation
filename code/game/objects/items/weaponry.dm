@@ -106,6 +106,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		var/mob/living/carbon/human/H = loc
 		loc.layer = LARGE_MOB_LAYER //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
 		H.bleedsuppress = TRUE //AND WE WON'T BLEED OUT LIKE COWARDS
+		H.adjustStaminaLoss(-5) //CIT CHANGE - AND MAY HE NEVER SUCCUMB TO EXHAUSTION
 	else
 		if(!(flags_1 & ADMIN_SPAWNED_1))
 			qdel(src)
@@ -448,6 +449,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_range = 2
 	attack_verb = list("busted")
 
+/obj/item/statuebust/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 1000), 0)
+
 /obj/item/tailclub
 	name = "tail club"
 	desc = "For the beating to death of lizards with their own tails."
@@ -575,7 +580,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
 	if(proximity_flag)
 		if(is_type_in_typecache(target, strong_against))
 			new /obj/effect/decal/cleanable/insectguts(target.drop_location())
@@ -609,8 +613,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/slapper/attack(mob/M, mob/living/carbon/human/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/L = M
-		if(L && L.dna && L.dna.species)
-			L.dna.species.stop_wagging_tail(M)
+		L.endTailWag()
 	if(user.a_intent != INTENT_HARM && ((user.zone_selected == BODY_ZONE_PRECISE_MOUTH) || (user.zone_selected == BODY_ZONE_PRECISE_EYES) || (user.zone_selected == BODY_ZONE_HEAD)))
 		user.do_attack_animation(M)
 		playsound(M, 'sound/weapons/slap.ogg', 50, 1, -1)

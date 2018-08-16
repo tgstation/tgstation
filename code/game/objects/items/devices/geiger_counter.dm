@@ -132,7 +132,6 @@
 	to_chat(user, "<span class='notice'>[icon2html(src, user)] You switch [scanning ? "on" : "off"] [src].</span>")
 
 /obj/item/geiger_counter/afterattack(atom/target, mob/user)
-	. = ..()
 	if(user.a_intent == INTENT_HELP)
 		if(!(obj_flags & EMAGGED))
 			user.visible_message("<span class='notice'>[user] scans [target] with [src].</span>", "<span class='notice'>You scan [target]'s radiation levels with [src]...</span>")
@@ -142,6 +141,7 @@
 			target.rad_act(radiation_count)
 			radiation_count = 0
 		return TRUE
+	return ..()
 
 /obj/item/geiger_counter/proc/scan(atom/A, mob/user)
 	var/rad_strength = 0
@@ -208,7 +208,7 @@
 	if (mobhook && mobhook.parent != user)
 		QDEL_NULL(mobhook)
 	if (!mobhook)
-		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_RAD_ACT = CALLBACK(src, /atom.proc/rad_act)))
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_RAD_ACT), CALLBACK(src, /atom.proc/rad_act))
 
 /obj/item/geiger_counter/cyborg/dropped()
 	. = ..()

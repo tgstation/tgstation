@@ -47,7 +47,7 @@
 			if(!istype(D.head,/obj/item/clothing/head/helmet/) && !istype(D.head,/obj/item/clothing/head/hardhat))
 				D.adjustBrainLoss(5)
 			A.Stun(rand(10,45))
-			D.Stun(rand(5,30))
+			D.Knockdown(rand(5,30))//CIT CHANGE - makes stuns from martial arts always use Knockdown instead of Stun for the sake of consistency
 		if(5,6)
 			A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 			atk_verb = pick("punches", "kicks", "hits", "slams into")

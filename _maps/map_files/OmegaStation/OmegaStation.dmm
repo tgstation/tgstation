@@ -3446,10 +3446,7 @@
 /area/bridge)
 "agX" = (
 /obj/structure/table/reinforced,
-/obj/item/aiModule/reset{
-	pixel_x = 3;
-	pixel_y = 3
-	},
+/obj/item/aiModule/reset,
 /obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = -26
@@ -3457,7 +3454,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/item/aiModule/supplied/freeform,
 /turf/open/floor/plasteel/vault/side{
 	dir = 4
 	},
@@ -3940,10 +3936,11 @@
 	},
 /area/bridge)
 "ahP" = (
+/obj/structure/table/reinforced,
+/obj/item/aiModule/supplied/freeform,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/ore_silo,
 /turf/open/floor/plasteel/vault/side{
 	dir = 4
 	},
@@ -7396,14 +7393,7 @@
 	},
 /area/quartermaster/miningdock)
 "aol" = (
-/obj/structure/rack,
-/obj/item/storage/toolbox/emergency{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/pickaxe,
-/obj/item/storage/toolbox/emergency,
-/obj/item/shovel,
+/obj/structure/ore_box,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
@@ -8567,12 +8557,19 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard/fore)
 "aqq" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pickaxe,
+/obj/item/storage/toolbox/emergency,
+/obj/item/shovel,
 /obj/machinery/camera{
 	c_tag = "Mining Dock";
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/wardrobe/miner,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "aqr" = (
@@ -11556,7 +11553,7 @@
 /area/crew_quarters/bar/atrium)
 "awZ" = (
 /obj/structure/table/wood,
-/obj/item/book/manual/wiki/barman_recipes,
+/obj/item/book/manual/barman_recipes,
 /obj/item/reagent_containers/food/drinks/shaker,
 /obj/item/reagent_containers/glass/rag,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -11807,14 +11804,13 @@
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/wardrobe/grey,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
 /area/crew_quarters/dorms)
 "axG" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/wardrobe/black,
+/obj/machinery/cryopod,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -12108,18 +12104,6 @@
 "ayx" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/neutral/corner{
-	dir = 4
-	},
-/area/crew_quarters/dorms)
-"ayy" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
 /area/crew_quarters/dorms)
@@ -12511,8 +12495,6 @@
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/dorms)
 "azB" = (
-/obj/structure/table,
-/obj/item/camera,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/dorms)
@@ -13303,7 +13285,7 @@
 	name = "Atmospherics Lockdown Control";
 	pixel_x = 24;
 	pixel_y = -24;
-	req_access_txt = "24"
+	req_access_txt = "25"
 	},
 /turf/open/floor/plasteel/caution,
 /area/engine/atmos)
@@ -20257,7 +20239,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/book/manual/wiki/detective,
+/obj/item/book/manual/detective,
 /obj/item/camera/detective,
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -24562,7 +24544,7 @@
 /area/science/robotics/lab)
 "bad" = (
 /obj/structure/rack,
-/obj/item/book/manual/wiki/robotics_cyborgs,
+/obj/item/book/manual/robotics_cyborgs,
 /obj/item/storage/belt/utility/full,
 /obj/item/circuitboard/mecha/ripley/main,
 /obj/item/circuitboard/mecha/ripley/peripherals,
@@ -30674,6 +30656,13 @@
 /area/engine/atmos)
 "bxJ" = (
 /obj/effect/landmark/event_spawn,
+/obj/machinery/computer/cryopod{
+	pixel_x = 30
+	},
+/obj/machinery/light{
+	dir = 4;
+	light_color = "#e8eaff"
+	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
@@ -73109,7 +73098,7 @@ auT
 avY
 awQ
 axG
-ayy
+axG
 bxJ
 aAH
 aBQ

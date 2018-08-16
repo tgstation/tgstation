@@ -1,0 +1,8 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "Inserting materials into protolathes with telekinesis is now possible."
+  - bugfix: "Telekinesis no longer teleports items removed from deep fryers, constructed sandbags, and leftover materials not inserted into lathes."
+  - bugfix: "Telekinetic sparkles now appear in the correct place when clicking on a turf and when clicking in the fog of war in widescreen."
+  - bugfix: "Telekinetically adjusting power tools no longer causes them to exit the universe."
+  - tweak: "Examining a telekinetic grab in-hand will now examine the grabbed object."

@@ -1,0 +1,5 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "Non-harmfully placing someone who is resting on a table no longer makes them get up."
+  - bugfix: "The disco machine no longer lags the chat by spamming \"You are now resting!\" messages."

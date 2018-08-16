@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - tweak: "Non-admins can no longer use LOOC while dead, unconscious, in crit, or while ghosting."

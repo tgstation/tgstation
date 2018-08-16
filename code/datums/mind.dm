@@ -120,6 +120,13 @@
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
 
+//CIT CHANGE - makes arousal update when transfering bodies
+	if(isliving(new_character)) //New humans and such are by default enabled arousal. Let's always use the new mind's prefs.
+		var/mob/living/L = new_character
+		if(L.client && L.client.prefs)
+			L.canbearoused = L.client.prefs.arousable //Technically this should make taking over a character mean the body gain the new minds setting...
+			L.update_arousal_hud() //Removes the old icon
+
 /datum/mind/proc/store_memory(new_text)
 	memory += "[new_text]<BR>"
 

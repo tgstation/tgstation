@@ -1,0 +1,10 @@
+//File should be in the format of ckey|exact character name/exact second character name/ALL for all chars|exact job name/exact job name/or put ALL instead of any job names|/path/to/item=amount;/path/to/item=amount
+//Each ckey should be in a different line
+//if there's multiple entries of a single ckey the later ones will add to the earlier definitions.
+//is obviously a comment.
+//Recommend defining one job per line, but do what you want.
+//test1|Secondary Memenamefortesting|testjob1/test job 2/ALL|/obj/item/gun/energy/laser=3;/obj/item/gun/energy/laser/retro=1;/obj/item/gun/energy=2
+//test1|Memename Lastname|testjob1|/obj/item/device/aicard=3;/obj/item/device/flightpack=1;/obj/item/gun/energy=3
+//kevinz000|Skylar Lineman|ALL|/obj/item/bikehorn/airhorn=1
+//kevinz000|ALL|Clown|/obj/item/bikehorn=1
+JayEhh|ALL|ALL|/obj/item/custom/ceb_soap=1

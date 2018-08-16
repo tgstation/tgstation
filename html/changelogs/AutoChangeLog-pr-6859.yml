@@ -1,0 +1,5 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "Flipping and then rotating trinary pipe fittings no longer causes their icon to mismatch what they will become when wrenched."
+  - bugfix: "RPD tooltips for flippable trinary components have been corrected."

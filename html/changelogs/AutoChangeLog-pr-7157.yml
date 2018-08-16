@@ -1,0 +1,6 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - tweak: "The blob core (and only the blob core) now respawns randomly on the station when the core is taken off z-level"
+  - bugfix: "Prevents the round from going into an unending state"
+  - code_imp: "Added a variable to the stationloving component for objects that can be destroyed but not moved off z-level"

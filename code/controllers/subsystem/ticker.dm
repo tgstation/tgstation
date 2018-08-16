@@ -66,6 +66,14 @@ SUBSYSTEM_DEF(ticker)
 	var/mode_result = "undefined"
 	var/end_state = "undefined"
 
+	var/modevoted = FALSE					//Have we sent a vote for the gamemode?
+	var/tumpedbuckets = FALSE				//Have we tumped over buckets?
+
+	//Crew Objective/Miscreant stuff
+	var/list/crewobjlist = list()
+	var/list/crewobjjobs = list()
+	var/list/miscreantobjlist = list()
+
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
 
@@ -121,7 +129,14 @@ SUBSYSTEM_DEF(ticker)
 		login_music = pick(music)
 	else
 		login_music = "[global.config.directory]/title_music/sounds/[pick(music)]"
-
+/*
+	crewobjlist = typesof(/datum/objective/crew)
+	miscreantobjlist = (typesof(/datum/objective/miscreant) - /datum/objective/miscreant)
+	for(var/hoorayhackyshit in crewobjlist) //taken from old Hippie's "job2obj" proc with adjustments.
+		var/datum/objective/crew/obj = hoorayhackyshit //dm is not a sane language in any way, shape, or form.
+		var/list/availableto = splittext(initial(obj.jobs),",")
+		for(var/job in availableto)
+			crewobjjobs["[job]"] += list(obj) */
 
 	if(!GLOB.syndicate_code_phrase)
 		GLOB.syndicate_code_phrase	= generate_code_phrase()
@@ -151,6 +166,10 @@ SUBSYSTEM_DEF(ticker)
 			fire()
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
+			if(!tumpedbuckets)
+				SStimer.tump_buckets()
+			if(!modevoted)
+				send_gamemode_vote()
 			if(isnull(timeLeft))
 				timeLeft = max(0,start_at - world.time)
 			totalPlayers = 0
@@ -191,6 +210,7 @@ SUBSYSTEM_DEF(ticker)
 			check_queue()
 			check_maprotate()
 			scripture_states = scripture_unlock_alert(scripture_states)
+			SSshuttle.autoEnd()
 
 			if(!roundend_check_paused && mode.check_finished(force_ending) || force_ending)
 				current_state = GAME_STATE_FINISHED
@@ -253,14 +273,14 @@ SUBSYSTEM_DEF(ticker)
 		message_admins("<span class='notice'>DEBUG: Bypassing prestart checks...</span>")
 
 	CHECK_TICK
-	if(hide_mode)
+	/*if(hide_mode) CIT CHANGE - comments this section out to obfuscate gamemodes. Quit self-antagging during extended just because "hurrrrr no antaggs!!!!!! i giv sec thing 2 do!!!!!!!!!" it's bullshit and everyone hates it
 		var/list/modes = new
 		for (var/datum/game_mode/M in runnable_modes)
 			modes += M.name
 		modes = sortList(modes)
 		to_chat(world, "<b>The gamemode is: secret!\nPossibilities:</B> [english_list(modes)]")
 	else
-		mode.announce()
+		mode.announce()*/
 
 	if(!CONFIG_GET(flag/ooc_during_round))
 		toggle_ooc(FALSE) // Turn it off
@@ -305,6 +325,13 @@ SUBSYSTEM_DEF(ticker)
 	mode.post_setup()
 	GLOB.start_state = new /datum/station_state()
 	GLOB.start_state.count()
+
+/*	//assign crew objectives and generate miscreants
+	if(CONFIG_GET(flag/allow_extended_miscreants) && GLOB.master_mode == "extended")
+		GLOB.miscreants_allowed = TRUE
+	if(CONFIG_GET(flag/allow_miscreants) && GLOB.master_mode != "extended")
+		GLOB.miscreants_allowed = TRUE
+	generate_crew_objectives() */
 
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["present"]
@@ -452,6 +479,13 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/IsRoundInProgress()
 	return current_state == GAME_STATE_PLAYING
 
+/proc/send_gamemode_vote() //CIT CHANGE - adds roundstart gamemode votes
+	if(SSticker.current_state == GAME_STATE_PREGAME)
+		if(SSticker.timeLeft < 900)
+			SSticker.timeLeft = 900
+		SSticker.modevoted = TRUE
+		SSvote.initiate_vote("roundtype","server",TRUE)
+
 /datum/controller/subsystem/ticker/Recover()
 	current_state = SSticker.current_state
 	force_ending = SSticker.force_ending
@@ -488,6 +522,8 @@ SUBSYSTEM_DEF(ticker)
 	queue_delay = SSticker.queue_delay
 	queued_players = SSticker.queued_players
 	maprotatechecked = SSticker.maprotatechecked
+
+	modevoted = SSticker.modevoted
 
 	switch (current_state)
 		if(GAME_STATE_SETTING_UP)
@@ -626,7 +662,6 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/Shutdown()
 	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
 	save_admin_data()
-	update_everything_flag_in_db()
 	if(!round_end_sound)
 		round_end_sound = pick(\
 		'sound/roundend/newroundsexy.ogg',
@@ -635,8 +670,7 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/leavingtg.ogg',
 		'sound/roundend/its_only_game.ogg',
 		'sound/roundend/yeehaw.ogg',
-		'sound/roundend/disappointed.ogg',
-		'sound/roundend/gondolabridge.ogg'\
+		'sound/roundend/disappointed.ogg'\
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))

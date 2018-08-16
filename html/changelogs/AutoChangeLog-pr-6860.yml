@@ -1,0 +1,4 @@
+author: "hatterhat after being yelled at by kevinz"
+delete-after: True
+changes: 
+  - bugfix: "deletes an entire line that might fix flash icons idk blame him if it gets worse"

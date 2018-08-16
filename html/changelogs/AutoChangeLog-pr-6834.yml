@@ -1,0 +1,4 @@
+author: "Wilchen"
+delete-after: True
+changes: 
+  - rscdel: "Removed box of firing pins from rd's locker"

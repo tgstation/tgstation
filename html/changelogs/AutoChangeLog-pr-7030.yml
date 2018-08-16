@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - tweak: "Vehicle speed changes now happen immediately instead of on the next movement cycle"

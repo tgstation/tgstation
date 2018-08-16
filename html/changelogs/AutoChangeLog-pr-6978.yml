@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "fixed the clockwork helmet not dropping to ground when used by non-clock cultists"

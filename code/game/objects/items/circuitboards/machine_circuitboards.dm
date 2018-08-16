@@ -573,7 +573,7 @@
 
 /obj/item/circuitboard/machine/tesla_coil
 	name = "Tesla Controller (Machine Board)"
-	desc = "You can use a screwdriver to switch between Research and Power Generation."
+	desc = "You can use a screwdriver to switch between Research and Power Generation"
 	build_path = /obj/machinery/power/tesla_coil
 	req_components = list(/obj/item/stock_parts/capacitor = 1)
 	needs_anchored = FALSE
@@ -921,14 +921,4 @@
 /obj/item/circuitboard/machine/circulator
 	name = "Circulator/Heat Exchanger (Machine Board)"
 	build_path = /obj/machinery/atmospherics/components/binary/circulator
-	req_components = list()
-
-/obj/item/circuitboard/machine/harvester
-	name = "Harvester (Machine Board)"
-	build_path = /obj/machinery/harvester
-	req_components = list(/obj/item/stock_parts/micro_laser = 4)
-
-/obj/item/circuitboard/machine/ore_silo
-	name = "Ore Silo (Machine Board)"
-	build_path = /obj/machinery/ore_silo
 	req_components = list()

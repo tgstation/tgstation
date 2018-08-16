@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - admin: "Speaking in deadchat now shows your rank instead of ADMIN"

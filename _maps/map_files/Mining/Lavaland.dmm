@@ -515,9 +515,6 @@
 /area/mine/production)
 "bE" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
-	},
 /turf/open/floor/plasteel/purple/corner,
 /area/mine/production)
 "bF" = (
@@ -530,9 +527,6 @@
 /obj/item/stack/packageWrap,
 /obj/item/stack/packageWrap,
 /obj/item/hand_labeler,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
-	},
 /turf/open/floor/plasteel/purple/corner{
 	dir = 8
 	},
@@ -612,9 +606,6 @@
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 1
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 4
@@ -907,9 +898,6 @@
 	},
 /area/mine/production)
 "cI" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel/purple/side{
 	dir = 4
 	},
@@ -933,6 +921,10 @@
 "cM" = (
 /turf/closed/wall,
 /area/mine/living_quarters)
+"cN" = (
+/obj/structure/sign/warning/electricshock,
+/turf/closed/wall,
+/area/mine/living_quarters)
 "cO" = (
 /obj/item/radio/intercom{
 	dir = 8;
@@ -946,9 +938,6 @@
 "cP" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 30
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 1
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 4
@@ -978,9 +967,6 @@
 	dir = 1
 	},
 /obj/structure/closet/crate/secure/loot,
-/obj/structure/sign/warning/electricshock{
-	pixel_y = 32
-	},
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "cU" = (
@@ -1084,7 +1070,6 @@
 	pixel_x = 1;
 	pixel_y = 25
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/dark,
 /area/mine/maintenance)
 "di" = (
@@ -1119,7 +1104,6 @@
 	},
 /area/mine/living_quarters)
 "dm" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
@@ -1150,12 +1134,12 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/obj/machinery/meter,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dq" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/mine/living_quarters)
@@ -1191,9 +1175,6 @@
 "dx" = (
 /obj/structure/cable{
 	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 1
 	},
 /turf/open/floor/circuit,
 /area/mine/maintenance)
@@ -1255,9 +1236,6 @@
 /turf/open/floor/plasteel/white,
 /area/mine/living_quarters)
 "dC" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 1
-	},
 /turf/open/floor/plasteel/white,
 /area/mine/living_quarters)
 "dD" = (
@@ -1294,19 +1272,18 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/components/binary/pump/on,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dJ" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
 /turf/open/floor/plasteel/purple/side{
 	dir = 8
 	},
@@ -1464,7 +1441,6 @@
 	c_tag = "Crew Area Hallway West";
 	network = list("mine")
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ee" = (
@@ -1524,17 +1500,11 @@
 	name = "Processing Area";
 	req_access_txt = "48"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "em" = (
 /obj/machinery/light{
 	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 4
@@ -1555,17 +1525,15 @@
 /turf/open/floor/plating,
 /area/mine/production)
 "ep" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eq" = (
+/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/structure/cable{
 	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
@@ -1604,53 +1572,44 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ev" = (
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ew" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 4
 	},
 /area/mine/living_quarters)
 "ex" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining Station Bridge";
 	req_access_txt = "48"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ey" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable{
@@ -1661,10 +1620,7 @@
 	},
 /area/mine/living_quarters)
 "ez" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable{
@@ -1673,30 +1629,24 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "eA" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining Station Bridge";
 	req_access_txt = "48"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
 "eB" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
-	},
 /obj/structure/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 8
@@ -1760,36 +1710,23 @@
 /area/mine/production)
 "eK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel/brown,
 /area/mine/living_quarters)
 "eL" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel/purple/corner{
 	dir = 8
 	},
 /area/mine/living_quarters)
 "eM" = (
 /obj/machinery/light,
-/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eO" = (
 /obj/machinery/light/small,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
-	},
 /turf/open/floor/plasteel/purple/corner{
 	dir = 4
 	},
@@ -1809,6 +1746,7 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eR" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/glass{
 	name = "Break Room"
 	},
@@ -1916,7 +1854,6 @@
 	network = list("mine")
 	},
 /obj/structure/reagent_dispensers/watertank,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/brown{
 	dir = 5
 	},
@@ -1949,7 +1886,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/brown{
 	dir = 8
 	},
@@ -1965,6 +1901,10 @@
 /turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fk" = (
+/turf/open/floor/plasteel/bar,
+/area/mine/living_quarters)
+"fl" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fm" = (
@@ -1999,18 +1939,12 @@
 	name = "Station Intercom (General)";
 	pixel_x = 28
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
 /turf/open/floor/plasteel/purple/side{
 	dir = 4
 	},
 /area/mine/living_quarters)
 "fr" = (
 /obj/structure/table,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
 /turf/open/floor/carpet,
 /area/mine/living_quarters)
 "fs" = (
@@ -2024,9 +1958,6 @@
 	pixel_x = 25;
 	specialfunctions = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/carpet,
 /area/mine/living_quarters)
 "ft" = (
@@ -2035,15 +1966,13 @@
 	dir = 4;
 	network = list("mine")
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel/purple/corner{
 	dir = 1
 	},
 /area/mine/living_quarters)
 "fu" = (
 /obj/structure/chair,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fv" = (
@@ -2079,9 +2008,6 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
 /turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fD" = (
@@ -2089,6 +2015,9 @@
 /obj/item/reagent_containers/food/drinks/beer{
 	pixel_x = 7;
 	pixel_y = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
 	},
 /obj/item/reagent_containers/food/drinks/beer{
 	pixel_x = -1;
@@ -2103,13 +2032,13 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fF" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
 /turf/open/floor/plasteel/bar,
@@ -2174,18 +2103,12 @@
 	pixel_x = 25;
 	specialfunctions = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/carpet,
 /area/mine/living_quarters)
 "fN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light{
 	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
@@ -2210,9 +2133,6 @@
 	pixel_x = 25;
 	specialfunctions = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/carpet,
 /area/mine/living_quarters)
 "fQ" = (
@@ -2233,12 +2153,6 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"fU" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/purple/corner{
-	dir = 8
-	},
-/area/mine/living_quarters)
 "fV" = (
 /turf/closed/indestructible/riveted/boss/see_through,
 /area/lavaland/surface/outdoors)
@@ -2247,10 +2161,6 @@
 /obj/structure/stone_tile/slab,
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
-"gd" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/mine/production)
 "gj" = (
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 1
@@ -2305,12 +2215,6 @@
 /obj/structure/stone_tile,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"gu" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 1
-	},
-/turf/open/floor/plasteel/bar,
-/area/mine/living_quarters)
 "gy" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile{
@@ -2409,12 +2313,6 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"hz" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/freezer,
-/area/mine/living_quarters)
 "hH" = (
 /obj/structure/stone_tile/block{
 	dir = 1
@@ -2515,14 +2413,6 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"iZ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
-	},
-/turf/open/floor/plasteel/purple/corner{
-	dir = 1
-	},
-/area/mine/living_quarters)
 "ja" = (
 /obj/structure/stone_tile{
 	dir = 8
@@ -2535,14 +2425,6 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"jd" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/brown{
-	dir = 4
-	},
-/area/mine/production)
 "jg" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile/cracked{
@@ -2698,12 +2580,6 @@
 /obj/structure/stone_tile,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"kv" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/brown,
-/area/mine/living_quarters)
 "ky" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
@@ -2815,13 +2691,6 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"lo" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
 "lp" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
@@ -3372,353 +3241,6 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
-"on" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"ot" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"pa" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/bar,
-/area/mine/living_quarters)
-"qY" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"rE" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"rP" = (
-/obj/machinery/atmospherics/pipe/layer_manifold{
-	icon_state = "manifoldlayer";
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"rV" = (
-/obj/machinery/light,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"ss" = (
-/obj/machinery/button/door{
-	id = "miningbathroom";
-	name = "Door Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 0;
-	pixel_y = -25;
-	specialfunctions = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/turf/open/floor/plasteel/freezer,
-/area/mine/living_quarters)
-"sL" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"tI" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
-/turf/open/floor/plasteel/freezer,
-/area/mine/living_quarters)
-"vb" = (
-/obj/machinery/door/window/southleft,
-/obj/machinery/shower{
-	pixel_y = 22
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/freezer,
-/area/mine/living_quarters)
-"vq" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"vZ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"xA" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/brown{
-	dir = 8
-	},
-/area/mine/production)
-"xT" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
-/turf/open/floor/plasteel/purple/corner,
-/area/mine/living_quarters)
-"yR" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"zu" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"zV" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 1
-	},
-/turf/open/floor/plasteel/purple/corner{
-	dir = 4
-	},
-/area/mine/production)
-"AB" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"BD" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/mine/living_quarters)
-"BT" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"Cl" = (
-/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
-/turf/open/floor/plasteel/purple/corner{
-	dir = 8
-	},
-/area/mine/living_quarters)
-"Eg" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"Ej" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/purple/corner,
-/area/mine/living_quarters)
-"El" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall,
-/area/mine/living_quarters)
-"Es" = (
-/obj/machinery/door/window/southright,
-/obj/machinery/shower{
-	pixel_y = 22
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/freezer,
-/area/mine/living_quarters)
-"EG" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"Fe" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/structure/mirror{
-	pixel_x = -28
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/freezer,
-/area/mine/living_quarters)
-"Ho" = (
-/turf/open/floor/plasteel/whiteblue/side{
-	dir = 1
-	},
-/area/mine/living_quarters)
-"HO" = (
-/obj/machinery/atmospherics/pipe/manifold4w/supply,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"IG" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 8
-	},
-/turf/open/floor/plasteel/purple/corner{
-	dir = 8
-	},
-/area/mine/living_quarters)
-"IK" = (
-/obj/structure/toilet{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
-	},
-/turf/open/floor/plasteel/freezer,
-/area/mine/living_quarters)
-"Jh" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 1
-	},
-/turf/open/floor/plasteel/purple/corner{
-	dir = 4
-	},
-/area/mine/living_quarters)
-"Jl" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/mine/living_quarters)
-"JJ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
-	},
-/turf/open/floor/plasteel/purple/corner{
-	dir = 8
-	},
-/area/mine/production)
-"JZ" = (
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Kb" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"LO" = (
-/obj/effect/spawner/structure/window,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/mine/eva)
-"Nj" = (
-/obj/machinery/door/airlock{
-	name = "Restroom"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/freezer,
-/area/mine/living_quarters)
-"OT" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
-/turf/open/floor/plasteel/purple/corner{
-	dir = 8
-	},
-/area/mine/production)
-"Pt" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/open/floor/plasteel/bar,
-/area/mine/living_quarters)
-"PQ" = (
-/obj/effect/spawner/structure/window,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plating,
-/area/mine/living_quarters)
-"RO" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 4;
-	name = "scrubber outlet"
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/mine/living_quarters)
-"Tn" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/light/small,
-/turf/open/floor/plasteel/freezer,
-/area/mine/living_quarters)
-"Tp" = (
-/obj/machinery/atmospherics/pipe/layer_manifold{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
-"TN" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 1
-	},
-/turf/closed/wall/r_wall,
-/area/mine/maintenance)
-"Uh" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/production)
 "Uq" = (
 /obj/docking_port/stationary{
 	area_type = /area/lavaland/surface/outdoors;
@@ -3731,34 +3253,6 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"UQ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/brown{
-	dir = 4
-	},
-/area/mine/production)
-"VD" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 1
-	},
-/turf/open/floor/plasteel/brown{
-	dir = 4
-	},
-/area/mine/production)
-"VP" = (
-/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
-/turf/open/floor/plasteel/purple/corner{
-	dir = 1
-	},
-/area/space)
 "Wp" = (
 /obj/docking_port/stationary{
 	area_type = /area/lavaland/surface/outdoors;
@@ -3849,30 +3343,6 @@
 "WK" = (
 /obj/effect/baseturf_helper/lava_land/surface,
 /turf/closed/wall,
-/area/mine/living_quarters)
-"WO" = (
-/obj/effect/spawner/structure/window,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/mine/living_quarters)
-"YA" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/mine/living_quarters)
-"Zf" = (
-/obj/machinery/door/airlock{
-	id_tag = "miningbathroom";
-	name = "Restroom"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
 
 (1,1,1) = {"
@@ -10529,7 +9999,7 @@ aj
 ab
 ab
 ab
-RO
+ab
 ab
 ab
 aj
@@ -10785,9 +10255,9 @@ aj
 ab
 ad
 ai
-JZ
-YA
-JZ
+ab
+ab
+ab
 ai
 ab
 ab
@@ -11043,7 +10513,7 @@ cQ
 cQ
 cQ
 cR
-Jl
+cR
 cR
 cM
 cR
@@ -11300,7 +10770,7 @@ dg
 dg
 cQ
 dZ
-yR
+dZ
 dZ
 cM
 fa
@@ -11555,10 +11025,10 @@ aj
 cQ
 dh
 dx
-TN
-Jh
+cQ
+ea
 ep
-xT
+ek
 cM
 fb
 dZ
@@ -12328,9 +11798,9 @@ dk
 dA
 WJ
 ed
-Kb
+er
 eM
-El
+cM
 fd
 fq
 fB
@@ -12586,7 +12056,7 @@ cQ
 cQ
 ee
 er
-vZ
+dZ
 cM
 cM
 cM
@@ -12842,8 +12312,8 @@ dl
 dB
 cM
 dZ
-EG
-on
+er
+dZ
 cM
 fe
 fr
@@ -13097,10 +12567,10 @@ ab
 cR
 dm
 dC
-WO
-Jh
-Kb
-Eg
+dQ
+ea
+er
+dZ
 cM
 ff
 fs
@@ -13352,21 +12822,21 @@ aj
 aj
 ab
 cR
-Ho
+dm
 dD
 dR
 ef
 es
-vZ
+dZ
 WK
 fg
-BD
+cM
 cM
 fH
-BD
+cM
 cM
 fO
-BD
+cM
 cM
 aj
 aj
@@ -13614,16 +13084,16 @@ dE
 dQ
 ec
 er
-sL
-fU
+dZ
+eL
 fh
 ft
-fU
+eL
 fh
-VP
-IG
+ec
+eL
 fh
-iZ
+ec
 cR
 aj
 aj
@@ -13872,14 +13342,14 @@ cM
 eg
 et
 eN
-ot
+eN
 fi
-ot
-ot
+eN
+eN
 fi
 fN
-lo
-HO
+eN
+fi
 fp
 cR
 ab
@@ -14127,17 +13597,17 @@ do
 dF
 cM
 eh
-EG
-on
+er
+dZ
 cM
 cM
 dQ
 dQ
 cM
 cM
-BD
-Nj
 cM
+cR
+cR
 cM
 ai
 ab
@@ -14378,23 +13848,23 @@ aD
 aD
 aj
 aj
-cM
+cN
 cT
 cV
 dG
 cM
 ea
 er
-rV
+eM
 cM
 fj
 fk
-Pt
+fk
 fI
 cM
-vb
-hz
-cM
+ab
+ab
+ab
 ai
 ad
 ai
@@ -14642,16 +14112,16 @@ dH
 dS
 ei
 eu
-Ej
-PQ
-pa
-pa
+ek
+dQ
+fk
+fk
 fC
 fk
 cM
-Es
-Tn
-cM
+ab
+aj
+ab
 ab
 ai
 ai
@@ -14899,16 +14369,16 @@ dI
 cM
 ej
 ev
-kv
+eK
 eR
-fk
+fl
 fu
 fD
 fJ
 cM
-BD
-Zf
-cM
+ai
+aj
+aj
 aj
 aj
 aj
@@ -15154,18 +14624,18 @@ cW
 dr
 dr
 cM
-vq
-Kb
-Cl
-WO
-gu
-gu
+dZ
+er
+eL
+dQ
+fk
+fk
 fE
 fK
 cM
-Fe
-ss
-cM
+ad
+aj
+aj
 aj
 aj
 aj
@@ -15413,16 +14883,16 @@ cM
 cM
 dZ
 er
-vZ
+dZ
 cM
 fm
 fk
 fF
 fk
 cM
-IK
-tI
-cM
+ai
+aj
+aj
 aj
 aj
 aj
@@ -15669,17 +15139,17 @@ ab
 ab
 cR
 dZ
-rP
-vZ
+er
+dZ
 cM
 fn
 fv
 fG
 fL
 cM
-cM
-cM
-cM
+ai
+ai
+aj
 aj
 aj
 aj
@@ -16697,7 +16167,7 @@ aj
 aj
 aj
 cR
-BT
+er
 cR
 ab
 aj
@@ -16954,7 +16424,7 @@ aj
 aj
 aj
 cR
-BT
+er
 cR
 ab
 aj
@@ -17211,7 +16681,7 @@ ab
 aj
 aj
 cR
-BT
+er
 cR
 ab
 aj
@@ -18239,7 +17709,7 @@ aj
 aj
 ab
 br
-UQ
+bR
 br
 ab
 ab
@@ -18752,7 +18222,7 @@ bq
 bq
 bq
 br
-JJ
+cH
 eB
 cD
 br
@@ -19003,14 +18473,14 @@ bC
 bP
 cl
 bP
-OT
+cH
 cO
 cX
 ck
 dJ
 dT
-rE
-Tp
+bP
+ez
 bP
 eS
 bq
@@ -19260,13 +18730,13 @@ bD
 bQ
 cm
 cE
-Uh
+cE
 cE
 cY
 cE
-Uh
 cE
-Uh
+cE
+cE
 eC
 eP
 eT
@@ -19515,15 +18985,15 @@ ab
 br
 bE
 bR
-zV
-VD
+cn
+cF
 cI
 cP
-zV
-qY
-zu
-qY
-gd
+cn
+bP
+bP
+bP
+bP
 eD
 bP
 eU
@@ -19770,7 +19240,7 @@ ab
 bf
 bf
 bf
-LO
+bF
 bS
 bF
 bf
@@ -19780,7 +19250,7 @@ cZ
 ds
 dK
 dU
-jd
+cF
 eE
 cn
 eV
@@ -20294,7 +19764,7 @@ da
 du
 dL
 cH
-xA
+ck
 eG
 cD
 bP
@@ -20551,7 +20021,7 @@ db
 bP
 bP
 bP
-rE
+bP
 eH
 cF
 eW
@@ -20808,7 +20278,7 @@ dc
 bP
 dM
 dW
-AB
+dW
 eI
 bq
 eX

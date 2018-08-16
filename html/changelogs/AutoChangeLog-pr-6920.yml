@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "Running diagonally into space now properly continues the diagonal movement in zero-gravity."

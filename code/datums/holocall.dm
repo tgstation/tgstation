@@ -60,6 +60,7 @@
 		user.remote_control = null
 
 	if(!QDELETED(eye))
+		eye.RemoveImages()
 		QDEL_NULL(eye)
 
 	if(connected_holopad && !QDELETED(hologram))

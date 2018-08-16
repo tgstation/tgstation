@@ -116,12 +116,16 @@
 /area/shuttle/caravan/pirate)
 "iX" = (
 /obj/structure/table,
+/obj/item/gun/energy/laser{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/gun/energy/laser,
 /obj/machinery/door/window/southleft{
 	base_state = "right";
 	icon_state = "right";
 	name = "Weapon Storage"
 	},
-/obj/item/gun/energy/laser,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -139,10 +143,15 @@
 /area/shuttle/caravan/pirate)
 "jo" = (
 /obj/structure/table,
+/obj/item/grenade/smokebomb{
+	pixel_x = -4
+	},
+/obj/item/grenade/smokebomb{
+	pixel_x = 2
+	},
 /obj/machinery/airalarm/all_access{
 	pixel_y = 24
 	},
-/obj/item/ammo_box/a40mm,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -282,12 +291,7 @@
 /obj/machinery/door/window/southleft{
 	name = "Weapon Storage"
 	},
-/obj/item/grenade/smokebomb{
-	pixel_x = -4
-	},
-/obj/item/grenade/smokebomb{
-	pixel_x = 2
-	},
+/obj/item/gun/ballistic/shotgun/automatic/combat,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -679,9 +683,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security{
-	name = "Armory"
-	},
+/obj/machinery/door/airlock/security,
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/caravan/pirate)
 "II" = (
@@ -707,6 +709,7 @@
 	name = "Pirate Cutter";
 	port_direction = 8;
 	preferred_direction = 4;
+	timid = 1;
 	width = 22
 	},
 /turf/open/floor/plating,

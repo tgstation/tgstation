@@ -257,7 +257,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 						dat += "<h4>Quartermaster Functions:</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=[REF(src)];choice=47'>[PDAIMG(crate)]Supply Records</A></li>"
-						dat += "<li><a href='byond://?src=[REF(src)];choice=48'>[PDAIMG(crate)]Ore Silo Logs</a></li>"
 						dat += "</ul>"
 				dat += "</ul>"
 
@@ -452,7 +451,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 //MAIN FUNCTIONS===================================
 
 			if("Light")
-				toggle_light()
+				if(fon)
+					fon = FALSE
+					set_light(0)
+				else if(f_lum)
+					fon = TRUE
+					set_light(f_lum)
+				update_icon()
 			if("Medical Scan")
 				if(scanmode == PDA_SCANNER_MEDICAL)
 					scanmode = PDA_SCANNER_NONE
@@ -708,12 +713,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	remove_pen()
 
-/obj/item/pda/verb/verb_toggle_light()
-	set category = "Object"
-	set name = "Toggle Flashlight"
-	
-	toggle_light()
-
 /obj/item/pda/verb/verb_remove_id()
 	set category = "Object"
 	set name = "Eject ID"
@@ -731,15 +730,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	remove_pen()
 
-/obj/item/pda/proc/toggle_light()
-	if(fon)
-		fon = FALSE
-		set_light(0)
-	else if(f_lum)
-		fon = TRUE
-		set_light(f_lum)
-	update_icon()
-
 /obj/item/pda/proc/remove_pen()
 
 	if(issilicon(usr) || !usr.canUseTopic(src, BE_CLOSE))
@@ -756,7 +746,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 //trying to insert or remove an id
 /obj/item/pda/proc/id_check(mob/user, obj/item/card/id/I)
 	if(!I)
-		if(id && (src in user.contents))
+		if(id)
 			remove_id()
 			return TRUE
 		else
@@ -845,7 +835,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 					user.show_message("<span class='notice'>No radiation detected.</span>")
 
 /obj/item/pda/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
-	. = ..()
 	if(!proximity)
 		return
 	switch(scanmode)

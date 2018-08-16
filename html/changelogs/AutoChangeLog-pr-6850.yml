@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - rscadd: "Any anomaly core can now be deconstructed for a one time boost of 10k points in the deconstructive analyzer."

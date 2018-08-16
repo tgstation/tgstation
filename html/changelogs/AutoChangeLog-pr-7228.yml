@@ -1,0 +1,4 @@
+author: "Improvedname"
+delete-after: True
+changes: 
+  - rscadd: "Adds rubbershot secrifle shots"

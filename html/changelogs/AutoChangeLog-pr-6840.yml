@@ -1,0 +1,5 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "Hydroponics trays can no longer be deconstructed with their panels closed or unanchored while irrigated."
+  - tweak: "Frames for machines which do not require being anchored can now be un/anchored after the circuit has been added."

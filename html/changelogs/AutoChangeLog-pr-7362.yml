@@ -1,0 +1,9 @@
+author: "TGstation contributors"
+delete-after: True
+changes: 
+  - bugfix: "Nukeop eshields are now buyable. tgstation/tgstation#39025"
+  - bugfix: "Staff of storms now has admin logging. tgstation/tgstation#39011"
+  - bugfix: "Fixed a couple of inconsistencies in the uplink descriptions of SMGs and SMG ammo. tgstation/tgstation#38980"
+  - bugfix: "Fixed blob victory. tgstation/tgstation#38988"
+  - tweak: "You can now un-ignore notifications you've clicked \"never this round\" on, and more. tgstation/tgstation#38990"
+  - bugfix: "Fixes a weird bug with timers. tgstation/tgstation#38994"

@@ -346,16 +346,13 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "aW" = (
 /obj/structure/closet/cardboard,
+/obj/item/ammo_box/c9mm,
+/obj/item/ammo_box/c9mm,
+/obj/item/ammo_box/c9mm,
+/obj/item/ammo_box/c9mm,
+/obj/item/ammo_box/c9mm,
+/obj/item/ammo_box/c9mm,
 /obj/effect/turf_decal/delivery,
-/obj/item/ammo_box/magazine/pistolm9mm{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/ammo_box/magazine/pistolm9mm,
-/obj/item/ammo_box/magazine/pistolm9mm{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/storage)
 "aX" = (
@@ -704,31 +701,15 @@
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "bT" = (
 /obj/effect/turf_decal/delivery,
-/obj/item/reagent_containers/food/snacks/beans{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/snacks/beans{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/snacks/beans{
-	pixel_x = -2
-	},
-/obj/item/reagent_containers/food/snacks/beans{
-	pixel_x = 5
-	},
-/obj/item/reagent_containers/food/snacks/beans{
-	pixel_x = 1;
-	pixel_y = -3
-	},
-/obj/item/reagent_containers/food/snacks/beans{
-	pixel_x = 8;
-	pixel_y = -3
-	},
 /obj/structure/closet/crate{
 	name = "food crate"
 	},
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -736,31 +717,15 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "bU" = (
 /obj/effect/turf_decal/delivery,
-/obj/item/reagent_containers/food/snacks/beans{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/snacks/beans{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/snacks/beans{
-	pixel_x = -2
-	},
-/obj/item/reagent_containers/food/snacks/beans{
-	pixel_x = 5
-	},
-/obj/item/reagent_containers/food/snacks/beans{
-	pixel_x = 1;
-	pixel_y = -3
-	},
-/obj/item/reagent_containers/food/snacks/beans{
-	pixel_x = 8;
-	pixel_y = -3
-	},
 /obj/structure/closet/crate{
 	name = "food crate"
 	},
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/storage)
 "bV" = (
@@ -1016,28 +981,12 @@
 /obj/structure/closet/crate{
 	name = "food crate"
 	},
-/obj/item/reagent_containers/glass/beaker/waterbottle/large{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/glass/beaker/waterbottle/large{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/glass/beaker/waterbottle/large{
-	pixel_x = -2
-	},
-/obj/item/reagent_containers/glass/beaker/waterbottle/large{
-	pixel_x = 5
-	},
-/obj/item/reagent_containers/glass/beaker/waterbottle/large{
-	pixel_x = 1;
-	pixel_y = -3
-	},
-/obj/item/reagent_containers/glass/beaker/waterbottle/large{
-	pixel_x = 8;
-	pixel_y = -3
-	},
+/obj/item/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/reagent_containers/glass/beaker/waterbottle/large,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/storage)
 "cC" = (
@@ -1379,40 +1328,18 @@
 /obj/structure/closet/crate{
 	name = "food crate"
 	},
-/obj/item/storage/box/donkpockets{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/storage/box/donkpockets{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/obj/item/storage/box/donkpockets{
-	pixel_x = -2
-	},
-/obj/item/storage/box/donkpockets{
-	pixel_x = 5
-	},
-/obj/item/storage/box/donkpockets{
-	pixel_x = 1;
-	pixel_y = -3
-	},
-/obj/item/storage/box/donkpockets{
-	pixel_x = 8;
-	pixel_y = -3
-	},
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/vending_refill/cigarette{
-	pixel_x = -3;
-	pixel_y = 3
-	},
+/obj/item/vending_refill/coffee,
 /obj/item/vending_refill/cigarette,
-/obj/item/vending_refill/coffee{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/item/vending_refill/cigarette,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/storage)
 "dx" = (
@@ -1420,37 +1347,15 @@
 /obj/structure/closet/crate{
 	name = "food crate"
 	},
-/obj/item/storage/box/donkpockets{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/storage/box/donkpockets{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/obj/item/storage/box/donkpockets{
-	pixel_x = -2
-	},
-/obj/item/storage/box/donkpockets{
-	pixel_x = 5
-	},
-/obj/item/storage/box/donkpockets{
-	pixel_x = 1;
-	pixel_y = -3
-	},
-/obj/item/storage/box/donkpockets{
-	pixel_x = 8;
-	pixel_y = -3
-	},
-/obj/item/vending_refill/cigarette{
-	pixel_x = -3;
-	pixel_y = 3
-	},
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/vending_refill/coffee,
 /obj/item/vending_refill/cigarette,
-/obj/item/vending_refill/coffee{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/item/vending_refill/cigarette,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/storage)
 "dy" = (
@@ -1868,12 +1773,15 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "ex" = (
 /obj/structure/table,
+/obj/item/gun/ballistic/automatic/wt550{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/item/gun/ballistic/automatic/wt550{
+	pixel_x = 2
+	},
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = 32
-	},
-/obj/item/gun/ballistic/automatic/wt550,
-/obj/item/ammo_box/magazine/wt550m9{
-	pixel_y = 12
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
@@ -2257,7 +2165,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/power)
 "fo" = (
-/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/power)
 "fp" = (

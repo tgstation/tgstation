@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - balance: "The warden's particle defender now deals less staminaloss when in stun mode."

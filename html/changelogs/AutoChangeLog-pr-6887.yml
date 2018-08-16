@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "The green overlay indicating where a map template will be placed is no longer invisible on space turfs."

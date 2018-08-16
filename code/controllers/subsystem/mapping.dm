@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/z_list
 	var/datum/space_level/transit
 	var/datum/space_level/empty_space
-	var/datum/maploader/loader
+	var/dmm_suite/loader
 
 /datum/controller/subsystem/mapping/PreInit()
 	if(!config)
@@ -94,6 +94,7 @@ SUBSYSTEM_DEF(mapping)
 	// Set up Z-level transitions.
 	setup_map_transitions()
 	generate_station_area_list()
+	QDEL_NULL(loader)
 	initialize_reserved_level()
 	..()
 
@@ -169,7 +170,6 @@ SUBSYSTEM_DEF(mapping)
 
 #define INIT_ANNOUNCE(X) to_chat(world, "<span class='boldannounce'>[X]</span>"); log_world(X)
 /datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)
-	. = list()
 	var/start_time = REALTIMEOFDAY
 
 	if (!islist(files))  // handle single-level maps
@@ -179,8 +179,7 @@ SUBSYSTEM_DEF(mapping)
 	var/total_z = 0
 	for (var/file in files)
 		var/full_path = "_maps/[path]/[file]"
-		var/datum/parsed_map/pm = loader.load_map(file(full_path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
-		var/bounds = pm?.bounds
+		var/bounds = loader.load_map(file(full_path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
 		files[file] = total_z  // save the start Z of this file
 		total_z += bounds[MAP_MAXZ] - bounds[MAP_MINZ] + 1
 
@@ -204,11 +203,8 @@ SUBSYSTEM_DEF(mapping)
 	// load the maps
 	for (var/file in files)
 		var/full_path = "_maps/[path]/[file]"
-		var/datum/parsed_map/parsed = loader.load_map(file(full_path), 0, 0, start_z + files[file], no_changeturf = TRUE)
-		if(!parsed?.bounds)
+		if(!loader.load_map(file(full_path), 0, 0, start_z + files[file], no_changeturf = TRUE))
 			errorList |= full_path
-		else
-			. += parsed
 	if(!silent)
 		INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
 

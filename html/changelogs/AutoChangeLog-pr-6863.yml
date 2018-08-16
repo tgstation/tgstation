@@ -1,0 +1,4 @@
+author: "Astatineguy12"
+delete-after: True
+changes: 
+  - bugfix: "The mime blockade spell now shows up under the right tab"

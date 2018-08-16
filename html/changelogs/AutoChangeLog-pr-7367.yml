@@ -1,0 +1,8 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - rscadd: "Jukeboxes now have realtime directional audio, complete with occlusion when you're far away or behind a wall."
+  - rscadd: "More than one jukebox can play a song at a time now. Have up to 5 jukeboxes playing at once!"
+  - rscadd: "Devs can now control the wet and dry channels of sounds played via playsound_local. The new envwet and envdry arguments will control the volume of the wet and dry track, respectively."
+  - code_imp: "Jukeboxes have been turned into a subsystem. Track initialization, audio playing, etc, are now handled via SSJukeboxes instead of via the jukebox object procs."
+  - config: "Jukebox tracks now require an additional ID field at the end of their name. This will make it easier to add jukebox-style objects that are only capable of playing specific songs, without worrying about copyright issues."

@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - config: "The limit of monkey's spawned via monkey cubes is now configurable"

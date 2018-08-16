@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "comms consoles now work in transit again, and no longer work in centcom"

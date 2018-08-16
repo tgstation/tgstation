@@ -101,6 +101,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/last_force_string_check = 0
 	var/tip_timer
 
+	var/icon_override //CIT CHANGE - adds icon_override var. Will be removed with #4322
+
 	var/trigger_guard = TRIGGER_GUARD_NONE
 
 	//Grinder vars
@@ -295,7 +297,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	pickup(user)
 	add_fingerprint(user)
-	if(!user.put_in_active_hand(src, FALSE, FALSE))
+	if(!user.put_in_active_hand(src))
 		user.dropItemToGround(src)
 
 /obj/item/proc/allow_attack_hand_drop(mob/user)
@@ -317,7 +319,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	pickup(user)
 	add_fingerprint(user)
-	if(!user.put_in_active_hand(src, FALSE, FALSE))
+	if(!user.put_in_active_hand(src))
 		user.dropItemToGround(src)
 
 /obj/item/attack_alien(mob/user)
@@ -346,7 +348,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
 /obj/item/proc/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	SEND_SIGNAL(src, COMSIG_ITEM_HIT_REACT, args)
 	if(prob(final_block_chance))
 		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 		return 1
@@ -453,11 +454,17 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		to_chat(user, "<span class='danger'>You cannot locate any organic eyes on this brain!</span>")
 		return
 
+	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes eyestabbing impossible if you're in stamina softcrit
+		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
+		return //CIT CHANGE - ditto
+
 	src.add_fingerprint(user)
 
 	playsound(loc, src.hitsound, 30, 1, -1)
 
 	user.do_attack_animation(M)
+
+	user.adjustStaminaLossBuffered(10)//CIT CHANGE - makes eyestabbing cost stamina
 
 	if(M != user)
 		M.visible_message("<span class='danger'>[user] has stabbed [M] in the eye with [src]!</span>", \
@@ -579,8 +586,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
 	if(affecting.can_dismember(src))
-		if((sharpness || damtype == BURN) && w_class >= WEIGHT_CLASS_NORMAL && force >= 10)
-			. = force * (affecting.get_damage() / affecting.max_damage)
+		if((sharpness || damtype == BURN) && w_class >= 3)
+			. = force*(w_class-1)
 
 /obj/item/proc/get_dismember_sound()
 	if(damtype == BURN)

@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - rscadd: "Players who edited a circuit assembly can scan it as a ghost."

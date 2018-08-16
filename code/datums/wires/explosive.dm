@@ -23,7 +23,7 @@
 
 /datum/wires/explosive/c4/explode()
 	var/obj/item/grenade/plastic/c4/P = holder
-	P.prime()
+	P.explode()
 
 
 /datum/wires/explosive/pizza

@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - rscadd: "You can now view your last round end report window with the \"Your last round\" verb in the OOC tab"

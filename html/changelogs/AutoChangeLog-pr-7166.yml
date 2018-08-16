@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "Non-secure windoors now properly support the \"One Required\" access mode of airlock electronics."

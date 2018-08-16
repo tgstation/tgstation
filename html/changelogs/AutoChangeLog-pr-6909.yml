@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - tweak: "Clicking on the viewport to focus it no longer leaves the input bar red."

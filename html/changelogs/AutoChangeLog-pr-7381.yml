@@ -1,0 +1,5 @@
+author: "ursamedium"
+delete-after: True
+changes: 
+  - bugfix: "slapping / slamming hands on tables now uses appropriate pronouns"
+  - bugfix: "crow pAI is no longer invisible while resting"

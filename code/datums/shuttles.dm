@@ -34,7 +34,7 @@
 		if(length(place.baseturfs) < 2) // Some snowflake shuttle shit
 			continue
 		place.baseturfs.Insert(3, /turf/baseturf_skipover/shuttle)
-
+		
 		for(var/obj/structure/closet/closet in place)
 			if(closet.anchorable)
 				closet.anchored = TRUE
@@ -110,11 +110,6 @@
 
 // Shuttles start here:
 
-/datum/map_template/shuttle/emergency/backup
-	suffix = "backup"
-	name = "Backup Shuttle"
-	can_be_bought = FALSE
-
 /datum/map_template/shuttle/emergency/airless
 	suffix = "airless"
 	name = "Build your own shuttle kit"
@@ -130,7 +125,6 @@
 	//enable buying engines from cargo
 	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shuttle_engine]
 	P.special_enabled = TRUE
-
 
 /datum/map_template/shuttle/emergency/asteroid
 	suffix = "asteroid"
@@ -234,7 +228,7 @@
 	suffix = "scrapheap"
 	name = "Standby Evacuation Vessel \"Scrapheap Challenge\""
 	credit_cost = -1000
-	description = "Due to a lack of functional emergency shuttles, we bought this second hand from a scrapyard and pressed it into service. Please do not lean too heavily on the exterior windows, they are fragile."
+	description = "Due to a lack of functional emergency shuttles, we bought this second hand from a scrapyard and pressed it into service. Please do not lean to heavily on the exterior windows, they are fragile. <span class='danger'>VIRUS ALERT: This entry seems to be booby-trapped with a redirector trap. Buy this at your own risk.</span>"
 	admin_notes = "An abomination with no functional medbay, sections missing, and some very fragile windows. Surprisingly airtight."
 
 /datum/map_template/shuttle/emergency/narnar
@@ -330,11 +324,11 @@
 
 /datum/map_template/shuttle/whiteship/box
 	suffix = "box"
-	name = "Hospital Ship"
+	name = "NT Medical Ship"
 
 /datum/map_template/shuttle/whiteship/meta
 	suffix = "meta"
-	name = "Salvage Ship"
+	name = "NT Recovery Whiteship"
 
 /datum/map_template/shuttle/whiteship/pubby
 	suffix = "pubby"
@@ -346,11 +340,8 @@
 
 /datum/map_template/shuttle/whiteship/delta
 	suffix = "delta"
-	name = "NT Luxury Frigate"
-
-/datum/map_template/shuttle/whiteship/pod
-	suffix = "whiteship_pod"
-	name = "Salvage Pod"
+	name = "Unnamed NT Vessel"
+	admin_notes = "The Delta whiteship doesn't have a name, apparently."
 
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
@@ -454,8 +445,8 @@
 	suffix = "syndicate_dropship"
 	name = "Syndicate Dropship"
 
-/datum/map_template/shuttle/ruin/syndicate_fighter_shiv
-	suffix = "syndicate_fighter_shiv"
+/datum/map_template/shuttle/ruin/syndicate_fighter
+	suffix = "syndicate_fighter"
 	name = "Syndicate Fighter"
 
 /datum/map_template/shuttle/snowdin/mining

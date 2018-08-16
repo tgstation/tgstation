@@ -19,7 +19,6 @@
 	var/holocreator_busy = FALSE //to prevent placing multiple holo barriers at once
 
 /obj/item/holosign_creator/afterattack(atom/target, mob/user, flag)
-	. = ..()
 	if(flag)
 		if(!check_allowed_items(target, 1))
 			return
@@ -82,14 +81,6 @@
 	icon_state = "signmaker_engi"
 	holosign_type = /obj/structure/holosign/barrier/atmos
 	creation_time = 0
-	max_signs = 3
-
-/obj/item/holosign_creator/medical
-	name = "\improper PENLITE barrier projector"
-	desc = "A holographic projector that creates PENLITE holobarriers. Useful during quarantines since they halt those with malicious diseases."
-	icon_state = "signmaker_med"
-	holosign_type = /obj/structure/holosign/barrier/medical
-	creation_time = 30
 	max_signs = 3
 
 /obj/item/holosign_creator/cyborg

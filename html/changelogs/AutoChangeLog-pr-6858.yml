@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "Entertainment monitors now view the real Thunderdome rather than the template."

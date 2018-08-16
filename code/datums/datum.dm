@@ -20,7 +20,6 @@
 // Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
 /datum/proc/Destroy(force=FALSE, ...)
 	tag = null
-	datum_flags &= ~DF_USE_TAG //In case something tries to REF us
 	weak_reference = null	//ensure prompt GCing of weakref.
 
 	var/list/timers = active_timers
@@ -87,16 +86,16 @@
 
 //Return a LIST for serialize_datum to encode! Not the actual json!
 /datum/proc/serialize_list(list/options)
-	CRASH("Attempted to serialize datum [src] of type [type] without serialize_list being implemented!")
+	return NOT_IMPLEMENTED
 
 //Accepts a LIST from deserialize_datum. Should return src or another datum.
 /datum/proc/deserialize_list(json, list/options)
-	CRASH("Attempted to deserialize datum [src] of type [type] without deserialize_list being implemented!")
+	return NOT_IMPLEMENTED
 
 //Serializes into JSON. Does not encode type.
 /datum/proc/serialize_json(list/options)
 	. = serialize_list(options)
-	if(!islist(.))
+	if((. == NOT_IMPLEMENTED) || !islist(.))
 		. = null
 	else
 		. = json_encode(.)

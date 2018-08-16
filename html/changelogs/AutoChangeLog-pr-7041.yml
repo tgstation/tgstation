@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "The thermal sight benefits of lantern wisps no longer disappear if you change glasses."

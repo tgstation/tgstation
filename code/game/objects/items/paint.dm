@@ -79,7 +79,6 @@
 
 
 /obj/item/paint/afterattack(turf/target, mob/user, proximity)
-	. = ..()
 	if(!proximity)
 		return
 	if(paintleft <= 0)
@@ -97,7 +96,6 @@
 	icon_state = "paint_neutral"
 
 /obj/item/paint/paint_remover/afterattack(turf/target, mob/user, proximity)
-	. = ..()
 	if(!proximity)
 		return
 	if(istype(target) && target.color != initial(target.color))

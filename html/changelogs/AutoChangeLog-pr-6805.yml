@@ -1,0 +1,5 @@
+author: "Alexch2"
+delete-after: True
+changes: 
+  - spellcheck: "Fixes tons of typos related to integrated circuits."
+  - tweak: "Re-writes the descriptions of a few parts of integrated circuits."

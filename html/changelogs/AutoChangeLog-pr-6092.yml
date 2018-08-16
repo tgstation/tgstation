@@ -1,0 +1,7 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - tweak: "(Only visible on 512) Stamina crit will now result in the mob's sprite subtly darkening around its edges."
+  - rscadd: "Added a tiny reference item to a year-old weeby game. If you're a traitor, you can find this item in the \"badassery\" section of the uplink. It's free, and you can order up to 4 of them! The effects of this item are only visible on 512."
+  - code_imp: "Added a component signal for toggling combat mode on/off."
+  - balance: "The cleaving saw now deals less staminaloss to its user while inactive."

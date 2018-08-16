@@ -1,0 +1,8 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - tweak: "You can now see the amount of charges an emag has by examining it"
+  - tweak: "Emags now make a quiet noise when they're close to running out of charges."
+  - tweak: "Emags are no longer irreversibly destroyed upon running out of charges."
+  - rscadd: "Traitors can now purchase emag recharge devices for 2 TC. They have five extra charges each, and can be found in the devices and tools section of the uplink.. There's no cap on the amount of charges a single emag can have, though do be aware that upstream spaghetti code makes it easy to waste charges."
+  - tweak: "Small emag flavortext changes here and there"

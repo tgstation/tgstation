@@ -53,6 +53,8 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
+	var/auto_call = 72000 //CIT CHANGE - time before in deciseconds in which the shuttle is auto called. Default is 2½ hours plus 15 for the shuttle. So total is 3.
+
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	ordernum = rand(1, 9000)
 
@@ -217,14 +219,6 @@ SUBSYSTEM_DEF(shuttle)
 			emergency.request(null, signal_origin, html_decode(emergency_reason), 1) //There is a serious threat we gotta move no time to give them five minutes.
 		else
 			emergency.request(null, signal_origin, html_decode(emergency_reason), 0)
-
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
-
-	if(!frequency)
-		return
-
-	var/datum/signal/status_signal = new(list("command" = "update")) // Start processing shuttle-mode displays to display the timer
-	frequency.post_signal(src, status_signal)
 
 	var/area/A = get_area(user)
 

@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - imageadd: "sandstone wall sprite for indestructible object"

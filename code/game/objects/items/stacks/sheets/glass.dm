@@ -268,7 +268,6 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 			pixel_y = rand(-5, 5)
 
 /obj/item/shard/afterattack(atom/A as mob|obj, mob/user, proximity)
-	. = ..()
 	if(!proximity || !(src in user))
 		return
 	if(isturf(A))

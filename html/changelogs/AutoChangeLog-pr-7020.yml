@@ -1,0 +1,4 @@
+author: "MrDoomBringer"
+delete-after: True
+changes: 
+  - admin: "CentCom Supplypods now stun their target before landing, and won't damage the station as much"

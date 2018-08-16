@@ -80,10 +80,12 @@
 		var/atom/thing = atoms[k]
 		if(!thing)
 			continue
-		SEND_SIGNAL(thing, COMSIG_ATOM_RAD_WAVE_PASSING, src, width)
+		var/datum/component/rad_insulation/insulation = thing.GetComponent(/datum/component/rad_insulation)
+		if(!insulation)
+			continue
+		intensity = intensity*(1-((1-insulation.amount)/width)) // The further out the rad wave goes the less it's affected by insulation
 
 /datum/radiation_wave/proc/radiate(list/atoms, strength)
-	var/contamination_chance = (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_CHANCE_COEFFICIENT * min(1, 1/(steps*range_modifier))
 	for(var/k in 1 to atoms.len)
 		var/atom/thing = atoms[k]
 		if(!thing)
@@ -104,8 +106,11 @@
 			))
 		if(!can_contaminate || blacklisted[thing.type])
 			continue
+		var/contamination_chance = (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_CHANCE_COEFFICIENT * min(1, 1/(steps*range_modifier))
 		if(prob(contamination_chance)) // Only stronk rads get to have little baby rads
-			if(SEND_SIGNAL(thing, COMSIG_ATOM_RAD_CONTAMINATING, strength) & COMPONENT_BLOCK_CONTAMINATION)
+			var/datum/component/rad_insulation/insulation = thing.GetComponent(/datum/component/rad_insulation)
+			if(insulation && insulation.contamination_proof)
 				continue
-			var/rad_strength = (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT
-			thing.AddComponent(/datum/component/radioactive, rad_strength, source)
+			else
+				var/rad_strength = (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT
+				thing.AddComponent(/datum/component/radioactive, rad_strength, source)

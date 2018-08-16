@@ -664,7 +664,9 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "ce" = (
-/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
+/mob/living/simple_animal/hostile/syndicate/ranged/space{
+	name = "Syndicate Officer"
+	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "cf" = (
@@ -705,7 +707,7 @@
 /turf/open/floor/wood,
 /area/awaymission/challenge/end)
 "cl" = (
-/mob/living/simple_animal/hostile/syndicate/melee/sword,
+/mob/living/simple_animal/hostile/syndicate/melee,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "cm" = (
@@ -754,7 +756,7 @@
 /turf/open/floor/wood,
 /area/awaymission/challenge/end)
 "cu" = (
-/mob/living/simple_animal/hostile/syndicate/melee/sword,
+/mob/living/simple_animal/hostile/syndicate/melee,
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/challenge/end)
 "cv" = (
@@ -821,7 +823,7 @@
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "cF" = (
-/mob/living/simple_animal/hostile/syndicate/ranged/smg,
+/mob/living/simple_animal/hostile/syndicate/ranged,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "cG" = (

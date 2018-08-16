@@ -1,0 +1,4 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - balance: "Cult items will no longer be a long ride on the vomit coaster if picked up by a non cultist."

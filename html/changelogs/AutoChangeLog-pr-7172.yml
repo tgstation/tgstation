@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - admin: "It is now possible to use the \".p\" (Asay) and \".d\" (Dsay) prefixes while an admin ghost."

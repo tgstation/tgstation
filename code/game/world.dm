@@ -21,7 +21,7 @@ GLOBAL_PROTECT(security_mode)
 
 	GLOB.revdata = new
 
-	config.Load(params[OVERRIDE_CONFIG_DIRECTORY_PARAMETER])
+	config.Load()
 
 	//SetupLogs depends on the RoundID, so lets check
 	//DB schema and set RoundID if we can
@@ -34,6 +34,7 @@ GLOBAL_PROTECT(security_mode)
 	if(CONFIG_GET(flag/usewhitelist))
 		load_whitelist()
 	LoadBans()
+	reload_custom_roundstart_items_list()//Cit change - loads donator items. Remind me to remove when I port over bay's loadout system
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
@@ -43,6 +44,8 @@ GLOBAL_PROTECT(security_mode)
 
 	if(NO_INIT_PARAMETER in params)
 		return
+
+	cit_initialize()
 
 	Master.Initialize(10, FALSE)
 
@@ -98,7 +101,6 @@ GLOBAL_PROTECT(security_mode)
 	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
 	GLOB.world_attack_log = "[GLOB.log_directory]/attack.log"
 	GLOB.world_pda_log = "[GLOB.log_directory]/pda.log"
-	GLOB.world_telecomms_log = "[GLOB.log_directory]/telecomms.log"
 	GLOB.world_manifest_log = "[GLOB.log_directory]/manifest.log"
 	GLOB.world_href_log = "[GLOB.log_directory]/hrefs.log"
 	GLOB.sql_error_log = "[GLOB.log_directory]/sql.log"
@@ -114,7 +116,6 @@ GLOBAL_PROTECT(security_mode)
 	start_log(GLOB.world_game_log)
 	start_log(GLOB.world_attack_log)
 	start_log(GLOB.world_pda_log)
-	start_log(GLOB.world_telecomms_log)
 	start_log(GLOB.world_manifest_log)
 	start_log(GLOB.world_href_log)
 	start_log(GLOB.world_qdel_log)
@@ -243,11 +244,11 @@ GLOBAL_PROTECT(security_mode)
 
 	var/list/features = list()
 
-	if(GLOB.master_mode)
+	/*if(GLOB.master_mode) CIT CHANGE - hides the gamemode from the hub entry, removes some useless info from the hub entry
 		features += GLOB.master_mode
 
 	if (!GLOB.enter_allowed)
-		features += "closed"
+		features += "closed"*/
 
 	var/s = ""
 	var/hostedby
@@ -255,24 +256,30 @@ GLOBAL_PROTECT(security_mode)
 		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
 			s += "<b>[server_name]</b> &#8212; "
-		features += "[CONFIG_GET(flag/norespawn) ? "no " : ""]respawn"
+		/*features += "[CONFIG_GET(flag/norespawn) ? "no " : ""]respawn" CIT CHANGE - removes some useless info from the hub entry
 		if(CONFIG_GET(flag/allow_vote_mode))
 			features += "vote"
 		if(CONFIG_GET(flag/allow_ai))
-			features += "AI allowed"
+			features += "AI allowed"*/
 		hostedby = CONFIG_GET(string/hostedby)
 
 	s += "<b>[station_name()]</b>";
 	s += " ("
-	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
-	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
+	s += "<a href=\"https://citadel-station.net/home/\">" //Change this to wherever you want the hub to link to. CIT CHANGE - links to cit's website on the hub
+	s += "Citadel"  //Replace this with something else. Or ever better, delete it and uncomment the game version. CIT CHANGE - modifies the hub entry link
 	s += "</a>"
-	s += ")"
+	s += ")\]" //CIT CHANGE - encloses the server title in brackets to make the hub entry fancier
+	s += "<br><small><i>That furry /TG/code server your mother warned you about.</i></small><br>" //CIT CHANGE - adds a tagline!
 
 	var/n = 0
 	for (var/mob/M in GLOB.player_list)
 		if (M.client)
 			n++
+
+	features += "[SSmapping.config.map_name]"	//CIT CHANGE - makes the hub entry display the current map
+
+	if(get_security_level())//CIT CHANGE - makes the hub entry show the security level
+		features += "[get_security_level()] alert"
 
 	if (n > 1)
 		features += "~[n] players"
@@ -283,7 +290,7 @@ GLOBAL_PROTECT(security_mode)
 		features += "hosted by <b>[hostedby]</b>"
 
 	if (features)
-		s += ": [jointext(features, ", ")]"
+		s += "\[[jointext(features, ", ")]" //CIT CHANGE - replaces the colon here with a left bracket
 
 	status = s
 

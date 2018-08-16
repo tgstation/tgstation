@@ -9,6 +9,7 @@
 	height = 5;
 	id = "snowdin_mining";
 	name = "mining elevator";
+	timid = 1;
 	width = 5
 	},
 /turf/open/floor/plating,

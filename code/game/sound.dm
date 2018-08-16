@@ -26,7 +26,7 @@
 			if(T && T.z == turf_source.z)
 				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S)
 
-/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE, sound/S)
+/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE, sound/S, envwet = -10000, envdry = 0)
 	if(!client || !can_hear())
 		return
 
@@ -36,6 +36,7 @@
 	S.wait = 0 //No queue
 	S.channel = channel || open_sound_channel()
 	S.volume = vol
+	S.environment = 7
 
 	if(vary)
 		if(frequency)
@@ -63,6 +64,8 @@
 					pressure_factor = max((pressure - SOUND_MINIMUM_PRESSURE)/(ONE_ATMOSPHERE - SOUND_MINIMUM_PRESSURE), 0)
 			else //space
 				pressure_factor = 0
+
+			S.echo = list(envdry, null, envwet, null, null, null, null, null, null, null, null, null, null, 1, 1, 1, null, null)
 
 			if(distance <= 1)
 				pressure_factor = max(pressure_factor, 0.15) //touching the source of the sound
@@ -149,6 +152,38 @@
 				soundin = pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg')
 			if ("can_open")
 				soundin = pick('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
+	//START OF CIT CHANGES - adds random vore sounds
+			if ("struggle_sound")
+				soundin = pick( 'sound/vore/pred/struggle_01.ogg','sound/vore/pred/struggle_02.ogg','sound/vore/pred/struggle_03.ogg',
+								'sound/vore/pred/struggle_04.ogg','sound/vore/pred/struggle_05.ogg')
+			if ("prey_struggle")
+				soundin = pick( 'sound/vore/prey/struggle_01.ogg','sound/vore/prey/struggle_02.ogg','sound/vore/prey/struggle_03.ogg',
+								'sound/vore/prey/struggle_04.ogg','sound/vore/prey/struggle_05.ogg')
+			if ("digest_pred")
+				soundin = pick( 'sound/vore/pred/digest_01.ogg','sound/vore/pred/digest_02.ogg','sound/vore/pred/digest_03.ogg',
+								'sound/vore/pred/digest_04.ogg','sound/vore/pred/digest_05.ogg','sound/vore/pred/digest_06.ogg',
+								'sound/vore/pred/digest_07.ogg','sound/vore/pred/digest_08.ogg','sound/vore/pred/digest_09.ogg',
+								'sound/vore/pred/digest_10.ogg','sound/vore/pred/digest_11.ogg','sound/vore/pred/digest_12.ogg',
+								'sound/vore/pred/digest_13.ogg','sound/vore/pred/digest_14.ogg','sound/vore/pred/digest_15.ogg',
+								'sound/vore/pred/digest_16.ogg','sound/vore/pred/digest_17.ogg','sound/vore/pred/digest_18.ogg')
+			if ("death_pred")
+				soundin = pick( 'sound/vore/pred/death_01.ogg','sound/vore/pred/death_02.ogg','sound/vore/pred/death_03.ogg',
+								'sound/vore/pred/death_04.ogg','sound/vore/pred/death_05.ogg','sound/vore/pred/death_06.ogg',
+								'sound/vore/pred/death_07.ogg','sound/vore/pred/death_08.ogg','sound/vore/pred/death_09.ogg',
+								'sound/vore/pred/death_10.ogg')
+			if ("digest_prey")
+				soundin = pick( 'sound/vore/prey/digest_01.ogg','sound/vore/prey/digest_02.ogg','sound/vore/prey/digest_03.ogg',
+								'sound/vore/prey/digest_04.ogg','sound/vore/prey/digest_05.ogg','sound/vore/prey/digest_06.ogg',
+								'sound/vore/prey/digest_07.ogg','sound/vore/prey/digest_08.ogg','sound/vore/prey/digest_09.ogg',
+								'sound/vore/prey/digest_10.ogg','sound/vore/prey/digest_11.ogg','sound/vore/prey/digest_12.ogg',
+								'sound/vore/prey/digest_13.ogg','sound/vore/prey/digest_14.ogg','sound/vore/prey/digest_15.ogg',
+								'sound/vore/prey/digest_16.ogg','sound/vore/prey/digest_17.ogg','sound/vore/prey/digest_18.ogg')
+			if ("death_prey")
+				soundin = pick( 'sound/vore/prey/death_01.ogg','sound/vore/prey/death_02.ogg','sound/vore/prey/death_03.ogg',
+								'sound/vore/prey/death_04.ogg','sound/vore/prey/death_05.ogg','sound/vore/prey/death_06.ogg',
+								'sound/vore/prey/death_07.ogg','sound/vore/prey/death_08.ogg','sound/vore/prey/death_09.ogg',
+								'sound/vore/prey/death_10.ogg')
+	//END OF CIT CHANGES
 			if("bullet_miss")
 				soundin = pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg')
 			if("gun_dry_fire")
@@ -160,7 +195,7 @@
 			if("gun_remove_empty_magazine")
 				soundin = pick('sound/weapons/gun_magazine_remove_empty_1.ogg', 'sound/weapons/gun_magazine_remove_empty_2.ogg', 'sound/weapons/gun_magazine_remove_empty_3.ogg', 'sound/weapons/gun_magazine_remove_empty_4.ogg')
 			if("gun_slide_lock")
-				soundin = pick('sound/weapons/gun_slide_lock_1.ogg', 'sound/weapons/gun_slide_lock_2.ogg', 'sound/weapons/gun_slide_lock_3.ogg', 'sound/weapons/gun_slide_lock_4.ogg', 'sound/weapons/gun_slide_lock_5.ogg')		
+				soundin = pick('sound/weapons/gun_slide_lock_1.ogg', 'sound/weapons/gun_slide_lock_2.ogg', 'sound/weapons/gun_slide_lock_3.ogg', 'sound/weapons/gun_slide_lock_4.ogg', 'sound/weapons/gun_slide_lock_5.ogg')
 			if("law")
 				soundin = pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg')
 			if("honkbot_e")

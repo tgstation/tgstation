@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed mobs immune to radiation being killed by HIGH bursts of radiation."

@@ -25,7 +25,6 @@
 	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
 	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
-	occupant_typecache = list(/mob/living)
 
 /obj/machinery/sleeper/Initialize()
 	. = ..()
@@ -41,7 +40,7 @@
 		I += M.rating
 
 	efficiency = initial(efficiency)* E
-	min_health = initial(min_health) * E
+	min_health = initial(min_health) - (10*(E-1)) // CIT CHANGE - changes min health equation to be min_health - (matterbin rating * 10)
 	available_chems = list()
 	for(var/i in 1 to I)
 		available_chems |= possible_chems[i]
@@ -148,7 +147,7 @@
 		data["occupant"]["cloneLoss"] = mob_occupant.getCloneLoss()
 		data["occupant"]["brainLoss"] = mob_occupant.getBrainLoss()
 		data["occupant"]["reagents"] = list()
-		if(mob_occupant.reagents && mob_occupant.reagents.reagent_list.len)
+		if(occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
 				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = R.volume))
 	return data
@@ -189,7 +188,7 @@
 
 /obj/machinery/sleeper/proc/chem_allowed(chem)
 	var/mob/living/mob_occupant = occupant
-	if(!mob_occupant || !mob_occupant.reagents)
+	if(!mob_occupant)
 		return
 	var/amount = mob_occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency
 	var/occ_health = mob_occupant.health > min_health || chem == "epinephrine"

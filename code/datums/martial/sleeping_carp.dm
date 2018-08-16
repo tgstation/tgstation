@@ -43,7 +43,7 @@
 		D.emote("scream")
 		D.dropItemToGround(D.get_active_held_item())
 		D.apply_damage(5, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-		D.Stun(60)
+		D.Knockdown(60)//CIT CHANGE - makes sleepingcarp use knockdown() for its stuns instead of stun()
 		return 1
 	add_logs(A, D, "wrist wrenched (Sleeping Carp)")
 	return basic_hit(A,D)
@@ -67,7 +67,7 @@
 						  "<span class='userdanger'>[A] winds you with a knee in the stomach!</span>")
 		D.audible_message("<b>[D]</b> gags!")
 		D.losebreath += 3
-		D.Stun(40)
+		D.Knockdown(40)//CIT CHANGE - makes sleepingcarp use knockdown() for its stuns instead of stun()
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
 		return 1
 	add_logs(A, D, "stomach kneed (Sleeping Carp)")
@@ -81,7 +81,7 @@
 		D.apply_damage(20, BRUTE, BODY_ZONE_HEAD)
 		D.drop_all_held_items()
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
-		D.Stun(80)
+		D.Knockdown(80)//CIT CHANGE - makes sleepingcarp use knockdown() for its stuns instead of stun()
 		return 1
 	add_logs(A, D, "head kicked (Sleeping Carp)")
 	return basic_hit(A,D)

@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "Moving diagonally past delivery chutes, transit tube pods, &c. no longer causes your camera to be stuck on them."

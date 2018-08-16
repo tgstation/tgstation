@@ -1,0 +1,5 @@
+author: "Toriate"
+delete-after: True
+changes: 
+  - rscadd: "Added the Corporate Uniform and the Silver Bike Horn"
+  - imageadd: "added sprites for the Corporate Uniform and Silver Bike Horn"

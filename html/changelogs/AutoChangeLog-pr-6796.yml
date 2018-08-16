@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - code_imp: "Loose silver/gold/solar panel crates have been replaced with \"proper\" crates."

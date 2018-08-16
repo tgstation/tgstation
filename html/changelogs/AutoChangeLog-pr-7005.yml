@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - rscadd: "Adds the wheelofsalt command to TGS3. Spin the wheel of salt to find out what the Citadel Station 13 players are salting about today!"

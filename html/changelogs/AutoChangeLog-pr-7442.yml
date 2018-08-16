@@ -1,0 +1,4 @@
+author: "Flatty"
+delete-after: True
+changes: 
+  - tweak: "The vending machine UI is now prettier."

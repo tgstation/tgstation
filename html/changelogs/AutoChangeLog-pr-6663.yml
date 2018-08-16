@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - tweak: "Character traits are now called character quirks. Functionality remains unaffected."

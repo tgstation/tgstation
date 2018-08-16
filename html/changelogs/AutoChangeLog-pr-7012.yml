@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - spellcheck: "Faceless persons no longer \"melt their face off\" in energy gun suicides."

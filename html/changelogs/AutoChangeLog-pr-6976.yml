@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "Vomiting on the same tile a second time no deletes the vomited reagents."

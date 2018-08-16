@@ -1,0 +1,6 @@
+author: "slate3"
+delete-after: True
+changes: 
+  - rscadd: "ported a new alternative sprite for engineering borgs, mr. handy"
+  - rscadd: "ported a new alternative sprite for security borgs, a spider-like walker"
+  - rscadd: "ported a new alternative sprite for medical borgs, an eyebot"

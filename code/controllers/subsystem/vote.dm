@@ -16,6 +16,8 @@ SUBSYSTEM_DEF(vote)
 	var/list/voting = list()
 	var/list/generated_actions = list()
 
+	var/obfuscated = FALSE//CIT CHANGE - adds obfuscated/admin-only votes
+
 /datum/controller/subsystem/vote/fire()	//called by master_controller
 	if(mode)
 		time_remaining = round((started_time + CONFIG_GET(number/vote_period) - world.time)/10)
@@ -42,6 +44,7 @@ SUBSYSTEM_DEF(vote)
 	choices.Cut()
 	voted.Cut()
 	voting.Cut()
+	obfuscated = FALSE //CIT CHANGE - obfuscated votes
 	remove_action_buttons()
 
 /datum/controller/subsystem/vote/proc/get_result()
@@ -91,14 +94,14 @@ SUBSYSTEM_DEF(vote)
 			var/votes = choices[choices[i]]
 			if(!votes)
 				votes = 0
-			text += "\n<b>[choices[i]]:</b> [votes]"
+			text += "\n<b>[choices[i]]:</b> [obfuscated ? "???" : votes]" //CIT CHANGE - adds obfuscated votes
 		if(mode != "custom")
-			if(winners.len > 1)
+			if(winners.len > 1 && !obfuscated) //CIT CHANGE - adds obfuscated votes
 				text = "\n<b>Vote Tied Between:</b>"
 				for(var/option in winners)
 					text += "\n\t[option]"
 			. = pick(winners)
-			text += "\n<b>Vote Result: [.]</b>"
+			text += "\n<b>Vote Result: [obfuscated ? "???" : .]</b>" //CIT CHANGE - adds obfuscated votes
 		else
 			text += "\n<b>Did not vote:</b> [GLOB.clients.len-voted.len]"
 	else
@@ -106,6 +109,12 @@ SUBSYSTEM_DEF(vote)
 	log_vote(text)
 	remove_action_buttons()
 	to_chat(world, "\n<font color='purple'>[text]</font>")
+	if(obfuscated) //CIT CHANGE - adds obfuscated votes. this messages admins with the vote's true results
+		var/admintext = "Obfuscated results"
+		for(var/i=1,i<=choices.len,i++)
+			var/votes = choices[choices[i]]
+			admintext += "\n<b>[choices[i]]:</b> [votes]"
+		message_admins(admintext)
 	return .
 
 /datum/controller/subsystem/vote/proc/result()
@@ -113,6 +122,13 @@ SUBSYSTEM_DEF(vote)
 	var/restart = 0
 	if(.)
 		switch(mode)
+			if("roundtype") //CIT CHANGE - adds the roundstart extended/secret vote
+				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
+					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
+				GLOB.master_mode = .
+				SSticker.save_mode(.)
+				message_admins("The gamemode has been voted for, and has been changed to: [GLOB.master_mode]")
+				log_admin("Gamemode has been voted for and switched to: [GLOB.master_mode].")
 			if("restart")
 				if(. == "Restart Round")
 					restart = 1
@@ -148,7 +164,7 @@ SUBSYSTEM_DEF(vote)
 				return vote
 	return 0
 
-/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
+/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, hideresults)//CIT CHANGE - adds hideresults argument to votes to allow for obfuscated votes
 	if(!mode)
 		if(started_time)
 			var/next_allowed_time = (started_time + CONFIG_GET(number/vote_delay))
@@ -166,11 +182,14 @@ SUBSYSTEM_DEF(vote)
 				return 0
 
 		reset()
+		obfuscated = hideresults //CIT CHANGE - adds obfuscated votes
 		switch(vote_type)
 			if("restart")
 				choices.Add("Restart Round","Continue Playing")
 			if("gamemode")
 				choices.Add(config.votable_modes)
+			if("roundtype") //CIT CHANGE - adds the roundstart secret/extended vote
+				choices.Add("secret", "extended")
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
@@ -224,7 +243,7 @@ SUBSYSTEM_DEF(vote)
 			var/votes = choices[choices[i]]
 			if(!votes)
 				votes = 0
-			. += "<li><a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a> ([votes] votes)</li>"
+			. += "<li><a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a> ([obfuscated ? (admin ? "??? ([votes])" : "???") : votes] votes)</li>" // CIT CHANGE - adds obfuscated votes
 		. += "</ul><hr>"
 		if(admin)
 			. += "(<a href='?src=[REF(src)];vote=cancel'>Cancel Vote</a>) "

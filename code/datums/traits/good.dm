@@ -23,10 +23,9 @@
 		mood.mood_modifier = 0.8
 
 /datum/quirk/apathetic/remove()
-	if(quirk_holder)
-		GET_COMPONENT_FROM(mood, /datum/component/mood, quirk_holder)
-		if(mood)
-			mood.mood_modifier = 1 //Change this once/if species get their own mood modifiers.
+	GET_COMPONENT_FROM(mood, /datum/component/mood, quirk_holder)
+	if(mood)
+		mood.mood_modifier = 1 //Change this once/if species get their own mood modifiers.
 
 
 
@@ -61,7 +60,7 @@
 
 /datum/quirk/light_step
 	name = "Light Step"
-	desc = "You walk with a gentle step; stepping on sharp objects is quieter, less painful and you won't leave footprints behind you."
+	desc = "You walk with a gentle step, making stepping on sharp objects quieter and less painful."
 	value = 1
 	mob_trait = TRAIT_LIGHT_STEP
 	gain_text = "<span class='notice'>You walk with a little more litheness.</span>"

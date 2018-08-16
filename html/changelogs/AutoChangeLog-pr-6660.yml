@@ -1,0 +1,5 @@
+author: "GrayRachnid"
+delete-after: True
+changes: 
+  - rscadd: "Adds private rooms to the ninja holding center"
+  - rscadd: "Along with a few things to make it more tolerable, but fear not. There is now a suicide chamber for those who want the easy way out."

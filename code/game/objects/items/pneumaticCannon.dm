@@ -126,7 +126,6 @@
 	return TRUE
 
 /obj/item/pneumatic_cannon/afterattack(atom/target, mob/living/user, flag, params)
-	. = ..()
 	if(flag && user.a_intent == INTENT_HARM) //melee attack
 		return
 	if(!istype(user))

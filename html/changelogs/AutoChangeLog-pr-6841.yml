@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - spellcheck: "Fix \"Your the wormhole jaunter\" when a wormhole jaunter saves you from a chasm."

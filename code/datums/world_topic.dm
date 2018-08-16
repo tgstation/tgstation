@@ -140,7 +140,7 @@
 /datum/world_topic/status/Run(list/input)
 	. = list()
 	.["version"] = GLOB.game_version
-	.["mode"] = GLOB.master_mode
+	.["mode"] = "hidden"	//CIT CHANGE - hides the gamemode in topic() calls to prevent meta'ing the gamemode
 	.["respawn"] = config ? !CONFIG_GET(flag/norespawn) : FALSE
 	.["enter"] = GLOB.enter_allowed
 	.["vote"] = CONFIG_GET(flag/allow_vote_mode)
