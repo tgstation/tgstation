@@ -102,3 +102,7 @@
 			var/mob/living/carbon/C = i
 			mob_exit(C, null, randomstep)
 			C.Knockdown(40)
+
+
+/obj/vehicle/sealed/AllowDrop()
+	return FALSE
