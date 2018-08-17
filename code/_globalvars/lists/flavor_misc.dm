@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(scarySounds, list('sound/weapons/thudswoosh.ogg','sound/weapons
 
 /* List of sortType codes for mapping reference
 0 Waste
-1 Disposals - All unwrapped items and untagged parcels get picked up by a junction with this sortType. It usually leads towards the recycler.
+1 Disposals - All unwrapped items and untagged parcels get picked up by a junction with this sortType. Usually leads to the recycler.
 2 Cargo Bay
 3 QM Office
 4 Engineering
