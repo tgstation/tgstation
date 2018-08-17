@@ -78,6 +78,22 @@
 	required_other = 1
 	required_container = /obj/item/slime_extract/green
 
+/datum/chemical_reaction/slime/slimemoth
+	name = "Moth Mutation Toxin"
+	id = "mothmuttoxin"
+	results = list("mothmutationtoxin" = 1)
+	required_reagents = list("hippiesdelight" = 1)
+	required_other = 1
+	required_container = /obj/item/slime_extract/green
+
+/datum/chemical_reaction/slime/slimefly
+	name = "Fly Mutation Toxin"
+	id = "flymuttoxin"
+	results = list("flymutationtoxin" = 1)
+	required_reagents = list("vomit" = 1)
+	required_other = 1
+	required_container = /obj/item/slime_extract/green
+
 //Metal
 /datum/chemical_reaction/slime/slimemetal
 	name = "Slime Metal"
