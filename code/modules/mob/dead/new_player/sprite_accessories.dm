@@ -149,7 +149,7 @@
 	icon_state = "hair_braided"
 
 /datum/sprite_accessory/hair/front_braid
-	name = "Braided front"
+	name = "Braided Front"
 	icon_state = "hair_braidfront"
 
 /datum/sprite_accessory/hair/not_floorlength_braid
@@ -373,7 +373,7 @@
 	icon_state = "hair_part"
 
 /datum/sprite_accessory/hair/kagami
-	name = "pigtails"
+	name = "Pigtails"
 	icon_state = "hair_kagami"
 
 /datum/sprite_accessory/hair/pigtail
@@ -614,11 +614,6 @@
 /datum/sprite_accessory/underwear
 	icon = 'icons/mob/underwear.dmi'
 
-/datum/sprite_accessory/underwear/nude
-	name = "Nude"
-	icon_state = null
-	gender = NEUTER
-
 /datum/sprite_accessory/underwear/male_mankini
 	name = "Mankini"
 	icon_state = "male_mankini"
@@ -809,6 +804,10 @@
 	icon_state = "female_yellow"
 	gender = FEMALE
 
+/datum/sprite_accessory/underwear/nude
+	name = "Nude"
+	icon_state = null
+	gender = NEUTER
 
 ////////////////////////////
 // Undershirt Definitions //
