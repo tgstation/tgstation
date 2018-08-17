@@ -247,7 +247,7 @@
 /obj/item/bodypart/proc/replace_limb(mob/living/carbon/C, special)
 	if(!istype(C))
 		return
-	var/obj/item/bodypart/O = get_bodypart(body_zone)
+	var/obj/item/bodypart/O = C.get_bodypart(body_zone)
 	if(O)
 		O.drop_limb(1)
 	attach_limb(C, special)
@@ -255,7 +255,7 @@
 /obj/item/bodypart/head/replace_limb(mob/living/carbon/C, special)
 	if(!istype(C))
 		return
-	var/obj/item/bodypart/head/O = get_bodypart(body_zone)
+	var/obj/item/bodypart/head/O = C.get_bodypart(body_zone)
 	if(O)
 		if(!special)
 			return
