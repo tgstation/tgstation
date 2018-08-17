@@ -194,7 +194,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		var/obj/item/soulstone/SS = A
 		to_chat(user, "<span class='notice'>You begin to exorcise [SS].</span>")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
-		if(do_after(user, 40, target = SS))
+		if(do_after(user, 40, user = SS))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
 			SS.usability = TRUE
 			for(var/mob/living/simple_animal/shade/EX in SS)

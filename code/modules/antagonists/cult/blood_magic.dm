@@ -588,7 +588,7 @@
 		else if(istype(target,/obj/machinery/door/airlock))
 			playsound(T, 'sound/machines/airlockforced.ogg', 50, 1)
 			do_sparks(5, TRUE, target)
-			if(do_after(user, 50, target = target))
+			if(do_after(user, 50, target = user))
 				target.narsie_act()
 				uses--
 				user.visible_message("<span class='warning'>Black ribbons suddenly eminate from [user]'s hand and cling to the airlock - twisting and corrupting it!</span>")
