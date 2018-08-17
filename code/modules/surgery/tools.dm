@@ -241,6 +241,7 @@
 	desc = "A device for scanning and initiating surgeries from a disk or operating computer."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "spectrometer"
+	item_flags = NOBLUDGEON
 	var/list/advanced_surgeries = list()
 	
 /obj/item/surgical_processor/afterattack(obj/item/O, mob/user, proximity)
