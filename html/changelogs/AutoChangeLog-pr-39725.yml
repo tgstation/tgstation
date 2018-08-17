@@ -1,4 +1,0 @@
-author: "Tlaltecuhtli"
-delete-after: True
-changes: 
-  - bugfix: "fixes diamond drill bounty having the wrong object path"

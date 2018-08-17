@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - admin: "The \"Map Template - Upload\" verb now reports if a map uses nonexistent paths."
