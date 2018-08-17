@@ -172,7 +172,7 @@
 
 /datum/bounty/item/botany/nettles_death
 	name = "Death Nettles"
-	wanted_types = list(/obj/item/grown/nettle/death)
+	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/nettle/death)
 	multiplier = 2
 	bonus_desc = "Wear protection when handling them."
 	foodtype = "cheese"
