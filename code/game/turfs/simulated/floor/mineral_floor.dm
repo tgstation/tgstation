@@ -13,6 +13,7 @@
 	name = "mineral floor"
 	icon_state = ""
 	var/list/icons
+	tiled_dirt = FALSE
 
 
 
