@@ -2606,7 +2606,6 @@
 #include "code\modules\vehicles\_vehicle.dm"
 #include "code\modules\vehicles\atv.dm"
 #include "code\modules\vehicles\bicycle.dm"
-#include "code\modules\vehicles\car.dm"
 #include "code\modules\vehicles\entered.dm"
 #include "code\modules\vehicles\lavaboat.dm"
 #include "code\modules\vehicles\pimpin_ride.dm"

@@ -82,12 +82,11 @@
 	inserted_key.forceMove(drop_location())
 	user.put_in_hands(inserted_key)
 	inserted_key = null
-	return TRUE
 
 /obj/vehicle/sealed/deconstruct(disassembled = TRUE)
 	. = ..()
 	DumpMobs()
-	explosion(src.loc, 0, 1, 2, 3, 0)
+	explosion(loc, 0, 1, 2, 3, 0)
 
 /obj/vehicle/sealed/proc/DumpMobs(randomstep = TRUE)
 	for(var/i in occupants)
