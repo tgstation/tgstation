@@ -7,7 +7,7 @@
 	enter_delay = 20
 	max_occupants = 50
 	movedelay = 0.6
-	traits = CAN_KIDNAP
+	car_traits = CAN_KIDNAP
 	key_type = /obj/item/bikehorn
 	key_type_exact = FALSE
 

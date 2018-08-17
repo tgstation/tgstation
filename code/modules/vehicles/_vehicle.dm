@@ -1,7 +1,3 @@
-#define VEHICLE_CONTROL_PERMISSION 1
-#define VEHICLE_CONTROL_DRIVE 2
-#define VEHICLE_CONTROL_KIDNAPPED 4 //Can't leave vehicle voluntarily, has to resist.
-
 /obj/vehicle
 	name = "generic vehicle"
 	desc = "Yell at coderbus."
