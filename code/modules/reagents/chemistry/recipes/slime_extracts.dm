@@ -90,7 +90,7 @@
 	name = "Fly Mutation Toxin"
 	id = "flymuttoxin"
 	results = list("flymutationtoxin" = 1)
-	required_reagents = list("vomit" = 1)
+	required_reagents = list("bad_food" = 1)
 	required_other = 1
 	required_container = /obj/item/slime_extract/green
 
