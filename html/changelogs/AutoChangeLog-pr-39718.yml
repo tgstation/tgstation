@@ -1,0 +1,4 @@
+author: "intrnlerr"
+delete-after: True
+changes: 
+  - bugfix: "\"Allows image windows sent by PDA to be closed\""

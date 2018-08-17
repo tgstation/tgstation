@@ -62,10 +62,11 @@
 		remove_noz()
 
 /obj/item/watertank/proc/remove_noz()
-	if(ismob(noz.loc))
-		var/mob/M = noz.loc
-		M.temporarilyRemoveItemFromInventory(noz, TRUE)
-	noz.forceMove(src)
+	if(!QDELETED(noz))
+		if(ismob(noz.loc))
+			var/mob/M = noz.loc
+			M.temporarilyRemoveItemFromInventory(noz, TRUE)
+		noz.forceMove(src)
 
 /obj/item/watertank/Destroy()
 	QDEL_NULL(noz)

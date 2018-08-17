@@ -1367,8 +1367,11 @@
 	to_chat(user, "You name the dummy as \"[doll_name]\"")
 	name = "[initial(name)] - [doll_name]"
 
-/obj/item/toy/dummy/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language)
-	log_talk(M,"[key_name(M)] : through dummy : [message]",LOGSAY)
+/obj/item/toy/dummy/talk_into(atom/movable/A, message, channel, list/spans, datum/language/language)
+	var/mob/M = A
+	if (istype(M))
+		M.log_talk(message, LOG_SAY, tag="dummy toy")
+
 	say(message, language)
 	return NOPASS
 

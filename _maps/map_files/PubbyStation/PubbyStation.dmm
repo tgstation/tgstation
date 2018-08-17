@@ -14835,11 +14835,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/cafeteria/lunchroom)
 "aNb" = (
-/obj/machinery/vending/sustenance{
-	contraband = list(/obj/item/kitchen/knife = 6, /obj/item/reagent_containers/food/drinks/coffee = 12);
-	desc = "A vending machine which vends food.";
-	product_ads = "Sufficiently healthy."
-	},
+/obj/machinery/vending/sustenance,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/cafeteria/lunchroom)
 "aNc" = (
@@ -20800,10 +20796,11 @@
 /area/crew_quarters/kitchen)
 "bcg" = (
 /obj/structure/table,
-/obj/item/kitchen/rollingpin,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/item/book/manual/wiki/cooking_to_serve_man,
+/obj/item/kitchen/rollingpin,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bch" = (
@@ -24253,10 +24250,11 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/integrated_electronics/debugger,
 /obj/machinery/computer/security/telescreen/circuitry{
 	pixel_y = 30
 	},
+/obj/item/book/manual/wiki/circuitry,
+/obj/item/integrated_electronics/debugger,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -26214,6 +26212,10 @@
 	req_access_txt = "0";
 	req_one_access_txt = "5;9"
 	},
+/obj/effect/mapping_helpers/airlock/unres{
+	icon_state = "airlock_unres_helper";
+	dir = 8
+	},
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -26935,6 +26937,7 @@
 "bsL" = (
 /obj/item/storage/box/beakers,
 /obj/structure/table/glass,
+/obj/item/stack/cable_coil/random,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bsM" = (
@@ -27385,14 +27388,6 @@
 	},
 /obj/item/storage/box/bodybags,
 /obj/item/pen,
-/obj/machinery/button/door{
-	desc = "A remote control switch for the genetics doors.";
-	id = "GeneticsDoor";
-	name = "Genetics Exit Button";
-	normaldoorcontrol = 1;
-	pixel_x = 24;
-	pixel_y = 8
-	},
 /turf/open/floor/plasteel/whiteblue/side,
 /area/medical/genetics)
 "btZ" = (
@@ -29920,8 +29915,11 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/item/stack/cable_coil/random,
 /obj/item/book/manual/wiki/chemistry,
+/obj/item/book/manual/wiki/grenades{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /turf/open/floor/plasteel/whiteyellow/side,
 /area/medical/chemistry)
 "bAh" = (
@@ -30780,10 +30778,11 @@
 /area/medical/virology)
 "bCi" = (
 /obj/structure/table/glass,
-/obj/item/stack/medical/gauze,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -24
 	},
+/obj/item/book/manual/wiki/medicine,
+/obj/item/stack/medical/gauze,
 /turf/open/floor/plasteel/blue,
 /area/medical/sleeper)
 "bCj" = (
@@ -31893,9 +31892,8 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/vending/wallmed{
-	pixel_y = 28;
-	products = list(/obj/item/reagent_containers/syringe = 3, /obj/item/reagent_containers/pill/patch/styptic = 1, /obj/item/reagent_containers/pill/patch/silver_sulf = 1, /obj/item/reagent_containers/medspray/sterilizine = 1)
+/obj/machinery/vending/wallmed/pubby{
+	pixel_y = 28
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/landmark/blobstart,
@@ -32155,11 +32153,12 @@
 /area/science/mixing)
 "bFk" = (
 /obj/structure/table/reinforced,
+/obj/item/book/manual/wiki/toxins,
+/obj/item/analyzer,
 /obj/item/wrench,
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
-/obj/item/analyzer,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bFl" = (
@@ -33432,9 +33431,8 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/vending/wallmed{
-	pixel_y = 28;
-	products = list(/obj/item/reagent_containers/syringe = 3, /obj/item/reagent_containers/pill/patch/styptic = 1, /obj/item/reagent_containers/pill/patch/silver_sulf = 1, /obj/item/reagent_containers/medspray/sterilizine = 1)
+/obj/machinery/vending/wallmed/pubby{
+	pixel_y = 28
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
@@ -34247,9 +34245,8 @@
 /turf/open/floor/plasteel/freezer,
 /area/medical/medbay/central)
 "bKw" = (
-/obj/machinery/vending/wallmed{
-	pixel_y = 28;
-	products = list(/obj/item/reagent_containers/syringe = 3, /obj/item/reagent_containers/pill/patch/styptic = 1, /obj/item/reagent_containers/pill/patch/silver_sulf = 1, /obj/item/reagent_containers/medspray/sterilizine = 1)
+/obj/machinery/vending/wallmed/pubby{
+	pixel_y = 28
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -35164,6 +35161,7 @@
 /area/medical/surgery)
 "bMR" = (
 /obj/structure/table,
+/obj/item/book/manual/wiki/surgery,
 /obj/item/retractor,
 /turf/open/floor/plasteel/whiteblue,
 /area/medical/surgery)
@@ -35947,9 +35945,10 @@
 /area/engine/atmos)
 "bOV" = (
 /obj/structure/table,
+/obj/item/book/manual/wiki/atmospherics,
 /obj/item/clothing/head/welding{
-	pixel_x = -3;
-	pixel_y = 7
+	pixel_x = -5;
+	pixel_y = 3
 	},
 /obj/item/clothing/head/welding{
 	pixel_x = -5;
@@ -43866,6 +43865,7 @@
 	pixel_x = -32
 	},
 /obj/structure/table,
+/obj/item/book/manual/wiki/tcomms,
 /obj/item/paper_bin{
 	pixel_x = -2;
 	pixel_y = 5

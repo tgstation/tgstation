@@ -184,7 +184,7 @@
 	if((chem in available_chems) && chem_allowed(chem))
 		occupant.reagents.add_reagent(chem_buttons[chem], 10) //emag effect kicks in here so that the "intended" chem is used for all checks, for extra FUUU
 		if(user)
-			add_logs(user, occupant, "injected [chem] into", addition = "via [src]")
+			log_combat(user, occupant, "injected [chem] into", addition = "via [src]")
 		return TRUE
 
 /obj/machinery/sleeper/proc/chem_allowed(chem)
@@ -211,6 +211,17 @@
 /obj/machinery/sleeper/syndie
 	icon_state = "sleeper_s"
 	controls_inside = TRUE
+
+/obj/machinery/sleeper/syndie/fullupgrade/Initialize()
+	. = ..()
+	component_parts = list()
+	component_parts += new /obj/item/circuitboard/machine/sleeper(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
+	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
+	component_parts += new /obj/item/stack/sheet/glass(null)
+	component_parts += new /obj/item/stack/sheet/glass(null)
+	component_parts += new /obj/item/stack/cable_coil(null)
+	RefreshParts()
 
 /obj/machinery/sleeper/clockwork
 	name = "soothing sleeper"

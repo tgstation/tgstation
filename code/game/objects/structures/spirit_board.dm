@@ -37,7 +37,7 @@
 	planchette = input("Choose the letter.", "Seance!") as null|anything in list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
 	if(!planchette || !Adjacent(M) || next_use > world.time)
 		return
-	add_logs(M, src, "picked a letter on", " which was \"[planchette]\".")
+	M.log_message("picked a letter on [src], which was \"[planchette]\".")
 	next_use = world.time + rand(30,50)
 	lastuser = M.ckey
 	//blind message is the same because not everyone brings night vision to seances

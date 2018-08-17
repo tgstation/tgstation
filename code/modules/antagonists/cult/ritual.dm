@@ -29,7 +29,7 @@ This file contains the cult dagger and rune list code
 			var/holy2unholy = M.reagents.get_reagent_amount("holywater")
 			M.reagents.del_reagent("holywater")
 			M.reagents.add_reagent("unholywater",holy2unholy)
-			add_logs(user, M, "smacked", src, " removing the holy water from them")
+			log_combat(user, M, "smacked", src, " removing the holy water from them")
 		return FALSE
 	. = ..()
 

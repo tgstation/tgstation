@@ -621,7 +621,7 @@
 	if(!can_interact(caller))
 		remove_control()
 		return FALSE
-	add_logs(caller,A,"fired with manual turret control at")
+	log_combat(caller,A,"fired with manual turret control at")
 	target(A)
 	return TRUE
 

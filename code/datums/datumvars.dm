@@ -1,3 +1,7 @@
+#define VV_MSG_MARKED "<br><font size='1' color='red'><b>Marked Object</b></font>"
+#define VV_MSG_EDITED "<br><font size='1' color='red'><b>Var Edited</b></font>"
+#define VV_MSG_DELETED "<br><font size='1' color='red'><b>Deleted</b></font>"
+
 /datum/proc/CanProcCall(procname)
 	return TRUE
 
@@ -9,6 +13,7 @@
 		return FALSE
 	vars[var_name] = var_value
 	datum_flags |= DF_VAR_EDITED
+	return TRUE
 
 /datum/proc/vv_get_var(var_name)
 	switch(var_name)
@@ -68,6 +73,7 @@
 			src << browse_rsc(sprite, "vv[hash].png")
 
 	title = "[D] ([REF(D)]) = [type]"
+	var/formatted_type = replacetext("[type]", "/", "<wbr>/")
 
 	var/sprite_text
 	if(sprite)
@@ -77,36 +83,39 @@
 	if(istype(D, /atom))
 		var/atom/A = D
 		if(isliving(A))
-			atomsnowflake += "<a href='?_src_=vars;[HrefToken()];rename=[refid]'><b>[D]</b></a>"
-			if(A.dir)
-				atomsnowflake += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
+			atomsnowflake += "<a href='?_src_=vars;[HrefToken()];rename=[refid]'><b id='name'>[D]</b></a>"
+			atomsnowflake += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir' id='dir'>[dir2text(A.dir) || A.dir]</a> <a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
 			var/mob/living/M = A
 			atomsnowflake += {"
-				<br><font size='1'><a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>
+				<br><font size='1'><a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=ckey' id='ckey'>[M.ckey || "No ckey"]</a> / <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=real_name' id='real_name'>[M.real_name || "No real name"]</a></font>
 				<br><font size='1'>
-					BRUTE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brute'>[M.getBruteLoss()]</a>
-					FIRE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=fire'>[M.getFireLoss()]</a>
-					TOXIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=toxin'>[M.getToxLoss()]</a>
-					OXY:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
-					CLONE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=clone'>[M.getCloneLoss()]</a>
-					BRAIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brain'>[M.getBrainLoss()]</a>
-					STAMINA:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina'>[M.getStaminaLoss()]</a>
+					BRUTE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brute' id='brute'>[M.getBruteLoss()]</a>
+					FIRE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=fire' id='fire'>[M.getFireLoss()]</a>
+					TOXIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=toxin' id='toxin'>[M.getToxLoss()]</a>
+					OXY:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=oxygen' id='oxygen'>[M.getOxyLoss()]</a>
+					CLONE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=clone' id='clone'>[M.getCloneLoss()]</a>
+					BRAIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brain' id='brain'>[M.getBrainLoss()]</a>
+					STAMINA:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina' id='stamina'>[M.getStaminaLoss()]</a>
 				</font>
 			"}
 		else
-			atomsnowflake += "<a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=name'><b>[D]</b></a>"
-			if(A.dir)
-				atomsnowflake += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
+			atomsnowflake += "<a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=name'><b id='name'>[D]</b></a>"
+			atomsnowflake += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir' id='dir'>[dir2text(A.dir) || A.dir]</a> <a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
+	else if("name" in D.vars)
+		atomsnowflake += "<a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=name'><b id='name'>[D]</b></a>"
 	else
-		atomsnowflake += "<b>[D]</b>"
+		atomsnowflake += "<b>[formatted_type]</b>"
+		formatted_type = null
 
-	var/formatted_type = replacetext("[type]", "/", "<wbr>/")
 	var/marked
 	if(holder && holder.marked_datum && holder.marked_datum == D)
-		marked = "<br><font size='1' color='red'><b>Marked Object</b></font>"
+		marked = VV_MSG_MARKED
 	var/varedited_line = ""
 	if(!islist && (D.datum_flags & DF_VAR_EDITED))
-		varedited_line = "<br><font size='1' color='red'><b>Var Edited</b></font>"
+		varedited_line = VV_MSG_EDITED
+	var/deleted_line
+	if(!islist && D.gc_destroyed)
+		deleted_line = VV_MSG_DELETED
 
 	var/list/dropdownoptions = list()
 	if (islist)
@@ -305,6 +314,14 @@
 				if (value !== "") {
 					location.href = value;
 				}
+				list.selectedIndex = 0;
+				document.getElementById('filter').focus();
+			}
+
+			// byjax
+			function replace_span(what) {
+				var idx = what.indexOf(':');
+				document.getElementById(what.substr(0, idx)).innerHTML = what.substr(idx + 1);
 			}
 		</script>
 		<div align='center'>
@@ -323,8 +340,9 @@
 						</table>
 						<div align='center'>
 							<b><font size='1'>[formatted_type]</font></b>
-							[marked]
-							[varedited_line]
+							<span id='marked'>[marked]</span>
+							<span id='varedited'>[varedited_line]</span>
+							<span id='deleted'>[deleted_line]</span>
 						</div>
 					</td>
 					<td width='50%'>
@@ -333,7 +351,6 @@
 							<form>
 								<select name="file" size="1"
 									onchange="handle_dropdown(this)"
-									target="_parent._top"
 									onmouseclick="this.focus()"
 									style="background-color:#ffffff">
 									<option value selected>Select option</option>
@@ -377,6 +394,10 @@
 </html>
 "}
 	src << browse(html, "window=variables[refid];size=475x650")
+
+
+/client/proc/vv_update_display(datum/D, span, content)
+	src << output("[span]:[content]", "variables[REF(D)].browser:replace_span")
 
 
 #define VV_HTML_ENCODE(thing) ( sanitize ? html_encode(thing) : thing )
@@ -478,7 +499,6 @@
 			return
 
 		src.holder.show_player_panel(M)
-		href_list["datumrefresh"] = href_list["mob_player_panel"]
 
 	else if(href_list["godmode"])
 		if(!check_rights(R_ADMIN))
@@ -490,7 +510,6 @@
 			return
 
 		src.cmd_admin_godmode(M)
-		href_list["datumrefresh"] = href_list["godmode"]
 
 	else if(href_list["mark_object"])
 		if(!check_rights(NONE))
@@ -501,8 +520,10 @@
 			to_chat(usr, "This can only be done to instances of type /datum")
 			return
 
-		src.holder.marked_datum = D
-		href_list["datumrefresh"] = href_list["mark_object"]
+		if(holder.marked_datum)
+			vv_update_display(holder.marked_datum, "marked", "")
+		holder.marked_datum = D
+		vv_update_display(D, "marked", VV_MSG_MARKED)
 
 	else if(href_list["proc_call"])
 		if(!check_rights(NONE))
@@ -521,7 +542,8 @@
 		if(!istype(D))
 			to_chat(usr, "Unable to locate item!")
 		admin_delete(D)
-		href_list["datumrefresh"] = href_list["delete"]
+		if (isturf(D))  // show the turf that took its place
+			debug_variables(D)
 
 	else if(href_list["osay"])
 		if(!check_rights(R_FUN, 0))
@@ -580,18 +602,33 @@
 
 			message_admins("Admin [key_name_admin(usr)] renamed [key_name_admin(M)] to [new_name].")
 			M.fully_replace_character_name(M.real_name,new_name)
-			href_list["datumrefresh"] = href_list["rename"]
+			vv_update_display(M, "name", new_name)
+			vv_update_display(M, "real_name", M.real_name || "No real name")
 
 		else if(href_list["varnameedit"] && href_list["datumedit"])
 			if(!check_rights(NONE))
 				return
 
-			var/D = locate(href_list["datumedit"])
+			var/datum/D = locate(href_list["datumedit"])
 			if(!istype(D, /datum))
 				to_chat(usr, "This can only be used on datums")
 				return
 
-			modify_variables(D, href_list["varnameedit"], 1)
+			if (!modify_variables(D, href_list["varnameedit"], 1))
+				return
+			switch(href_list["varnameedit"])
+				if("name")
+					vv_update_display(D, "name", "[D]")
+				if("dir")
+					if(isatom(D))
+						var/dir = D.vars["dir"]
+						vv_update_display(D, "dir", dir2text(dir) || dir)
+				if("ckey")
+					if(isliving(D))
+						vv_update_display(D, "ckey", D.vars["ckey"] || "No ckey")
+				if("real_name")
+					if(isliving(D))
+						vv_update_display(D, "real_name", D.vars["real_name"] || "No real name")
 
 		else if(href_list["varnamechange"] && href_list["datumchange"])
 			if(!check_rights(NONE))
@@ -723,7 +760,6 @@
 				return
 
 			src.give_spell(M)
-			href_list["datumrefresh"] = href_list["give_spell"]
 
 		else if(href_list["remove_spell"])
 			if(!check_rights(NONE))
@@ -735,7 +771,6 @@
 				return
 
 			remove_spell(M)
-			href_list["datumrefresh"] = href_list["remove_spell"]
 
 		else if(href_list["give_disease"])
 			if(!check_rights(NONE))
@@ -747,7 +782,6 @@
 				return
 
 			src.give_disease(M)
-			href_list["datumrefresh"] = href_list["give_spell"]
 
 		else if(href_list["gib"])
 			if(!check_rights(R_FUN))
@@ -770,7 +804,6 @@
 				return
 
 			togglebuildmode(M)
-			href_list["datumrefresh"] = href_list["build_mode"]
 
 		else if(href_list["drop_everything"])
 			if(!check_rights(NONE))
@@ -922,8 +955,6 @@
 						log_admin("[key_name(usr)] has added [amount] units of [chosen_id] to \the [A]")
 						message_admins("<span class='notice'>[key_name(usr)] has added [amount] units of [chosen_id] to \the [A]</span>")
 
-			href_list["datumrefresh"] = href_list["addreagent"]
-
 		else if(href_list["explode"])
 			if(!check_rights(R_FUN))
 				return
@@ -934,7 +965,6 @@
 				return
 
 			src.cmd_admin_explosion(A)
-			href_list["datumrefresh"] = href_list["explode"]
 
 		else if(href_list["emp"])
 			if(!check_rights(R_FUN))
@@ -946,7 +976,6 @@
 				return
 
 			src.cmd_admin_emp(A)
-			href_list["datumrefresh"] = href_list["emp"]
 
 		else if(href_list["modtransform"])
 			if(!check_rights(R_DEBUG))
@@ -975,8 +1004,6 @@
 					if(!isnull(angle))
 						A.transform = M.Turn(angle)
 
-			href_list["datumrefresh"] = href_list["modtransform"]
-
 		else if(href_list["rotatedatum"])
 			if(!check_rights(NONE))
 				return
@@ -991,7 +1018,7 @@
 					A.setDir(turn(A.dir, -45))
 				if("left")
 					A.setDir(turn(A.dir, 45))
-			href_list["datumrefresh"] = href_list["rotatedatum"]
+			vv_update_display(A, "dir", dir2text(A.dir))
 
 		else if(href_list["editorgans"])
 			if(!check_rights(NONE))
@@ -1003,7 +1030,6 @@
 				return
 
 			manipulate_organs(C)
-			href_list["datumrefresh"] = href_list["editorgans"]
 
 		else if(href_list["givemartialart"])
 			if(!check_rights(NONE))
@@ -1052,8 +1078,6 @@
 			if(result)
 				C.gain_trauma(result)
 
-			href_list["datumrefresh"] = href_list["givetrauma"]
-
 		else if(href_list["curetraumas"])
 			if(!check_rights(NONE))
 				return
@@ -1064,8 +1088,6 @@
 				return
 
 			C.cure_all_traumas(TRAUMA_RESILIENCE_ABSOLUTE)
-
-			href_list["datumrefresh"] = href_list["curetraumas"]
 
 		else if(href_list["hallucinate"])
 			if(!check_rights(NONE))
@@ -1296,21 +1318,29 @@
 				to_chat(usr, "Mob doesn't exist anymore")
 				return
 
+			var/newamt
 			switch(Text)
 				if("brute")
 					L.adjustBruteLoss(amount)
+					newamt = L.getBruteLoss()
 				if("fire")
 					L.adjustFireLoss(amount)
+					newamt = L.getFireLoss()
 				if("toxin")
 					L.adjustToxLoss(amount)
+					newamt = L.getToxLoss()
 				if("oxygen")
 					L.adjustOxyLoss(amount)
+					newamt = L.getOxyLoss()
 				if("brain")
 					L.adjustBrainLoss(amount)
+					newamt = L.getBrainLoss()
 				if("clone")
 					L.adjustCloneLoss(amount)
+					newamt = L.getCloneLoss()
 				if("stamina")
 					L.adjustStaminaLoss(amount)
+					newamt = L.getStaminaLoss()
 				else
 					to_chat(usr, "You caused an error. DEBUG: Text:[Text] Mob:[L]")
 					return
@@ -1320,4 +1350,4 @@
 				var/msg = "<span class='notice'>[key_name(usr)] dealt [amount] amount of [Text] damage to [L] </span>"
 				message_admins(msg)
 				admin_ticket_log(L, msg)
-				href_list["datumrefresh"] = href_list["mobToDamage"]
+				vv_update_display(L, Text, "[newamt]")

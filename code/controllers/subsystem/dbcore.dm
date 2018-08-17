@@ -90,6 +90,7 @@ SUBSYSTEM_DEF(dbcore)
 		error = connectOperation.GetError()
 	. = !error
 	if (!.)
+		last_error = error
 		log_sql("Connect() failed | [error]")
 		++failed_connections
 		QDEL_NULL(connection)

@@ -1,5 +1,6 @@
 /datum/surgery
 	var/name = "surgery"
+	var/desc = "surgery description"
 	var/status = 1
 	var/list/steps = list()									//Steps in a surgery
 	var/step_in_progress = 0								//Actively performing a Surgery
@@ -129,7 +130,6 @@
 
 //TODO
 //specific steps for some surgeries (fluff text)
-//R&D researching new surgeries (especially for non-humans)
 //more interesting failure options
 //randomised complications
 //more surgeries!

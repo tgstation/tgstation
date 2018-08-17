@@ -803,7 +803,7 @@
 				M.updatehealth()
 				if(M.revive())
 					M.emote("gasp")
-					add_logs(M, M, "revived", src)
+					log_combat(M, M, "revived", src)
 	..()
 
 /datum/reagent/medicine/strange_reagent/on_mob_life(mob/living/carbon/M)
