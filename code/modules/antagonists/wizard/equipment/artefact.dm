@@ -120,12 +120,14 @@
 		insaneinthemembrane.sanity = 0
 		for(var/lore in typesof(/datum/brain_trauma/severe))
 			C.gain_trauma(lore)
-		sleep(100)
-		if(!C || C.stat == DEAD)
-			return
-		C.vomit(0, TRUE, TRUE, 3, TRUE)
-		C.spew_organ(3, 2)
-		C.death()
+		addtimer(CALLBACK(src, /obj/singularity/wizard.proc/deranged, C), 100)
+
+/obj/singularity/wizard/proc/deranged(mob/living/carbon/C)
+	if(!C || C.stat == DEAD)
+		return
+	C.vomit(0, TRUE, TRUE, 3, TRUE)
+	C.spew_organ(3, 2)
+	C.death()
 
 /obj/singularity/wizard/mapped/admin_investigate_setup()
 	return
