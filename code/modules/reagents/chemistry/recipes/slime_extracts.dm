@@ -72,7 +72,7 @@
 
 /datum/chemical_reaction/slime/slimefelinid
 	name = "Felinid Mutation Toxin"
-	id = "felinidmutationtoxin"
+	id = "felinidmuttoxin"
 	results = list("felinidmutationtoxin" = 1)
 	required_reagents = list("soymilk" = 1)
 	required_other = 1
