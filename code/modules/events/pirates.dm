@@ -266,6 +266,13 @@
 	var/warmup_state = "lpad-idle"
 	var/sending_state = "lpad-beam"
 	icon_state = "lpad-idle-o"
+	var/cargo_hold_id
+
+/obj/machinery/piratepad/multitool_act(mob/living/user, obj/item/multitool/I)
+	if (istype(I))
+		to_chat(user, "<span class='notice'>You register [src] in [I]s buffer.</span>")
+		I.buffer = src
+		return TRUE
 
 /obj/machinery/computer/piratepad_control
 	name = "cargo hold control terminal"
@@ -276,15 +283,27 @@
 	var/points = 0
 	var/datum/export_report/total_report
 	var/sending_timer
+	var/cargo_hold_id
 
 /obj/machinery/computer/piratepad_control/Initialize()
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
+/obj/machinery/computer/piratepad_control/multitool_act(mob/living/user, obj/item/multitool/I)
+	if (istype(I) && istype(I.buffer,/obj/machinery/piratepad))
+		to_chat(user, "<span class='notice'>You link [src] with [I.buffer] in [I] buffer.</span>")
+		pad = I.buffer
+		updateDialog()
+		return TRUE
+
 /obj/machinery/computer/piratepad_control/LateInitialize()
-	. = ..()
-	pad = locate() in range(4,src)
-	//Todo manual linking with multitool or id linking
+	if(cargo_hold_id)
+		for(var/obj/machinery/piratepad/P in GLOB.machines)
+			if(P.cargo_hold_id == cargo_hold_id)
+				pad = P
+				return
+	else
+		pad = locate() in range(4,src)
 
 /obj/machinery/computer/piratepad_control/ui_interact(mob/user)
 	. = ..()

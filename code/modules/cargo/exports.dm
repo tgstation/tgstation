@@ -88,7 +88,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 
 // Checks the cost. 0 cost items are skipped in export.
 /datum/export/proc/get_cost(obj/O, allowed_categories = NONE, apply_elastic = TRUE)
-	var/amount = get_amount(O, allowed_categories)
+	var/amount = get_amount(O)
 	if(apply_elastic)
 		if(k_elasticity!=0)
 			return round((cost/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * amount)))	//anti-derivative of the marginal cost function
