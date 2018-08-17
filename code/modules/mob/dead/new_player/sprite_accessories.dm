@@ -67,7 +67,9 @@
 /datum/sprite_accessory/hair
 	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
 
-	// try to capitalize the names please~ // try to spell
+	// please make sure they're sorted alphabetically and, where needed, categorized
+	// try to capitalize the names please~ 
+	// try to spell
 	// you do not need to define _s or _l sub-states, game automatically does this for you
 
 /datum/sprite_accessory/hair/afro
@@ -517,9 +519,12 @@
 /////////////////////////////
 // Facial Hair Definitions //
 /////////////////////////////
+
 /datum/sprite_accessory/facial_hair
 	icon = 'icons/mob/human_face.dmi'
 	gender = MALE // barf (unless you're a dorf, dorfs dig chix w/ beards :P)
+
+// please make sure they're sorted alphabetically and categorized
 
 /datum/sprite_accessory/facial_hair/abe
 	name = "Beard (Abraham Lincoln)"
@@ -808,8 +813,11 @@
 ////////////////////////////
 // Undershirt Definitions //
 ////////////////////////////
+
 /datum/sprite_accessory/undershirt
 	icon = 'icons/mob/underwear.dmi'
+
+// please make sure they're sorted alphabetically and categorized
 
 /datum/sprite_accessory/undershirt/bluejersey
 	name = "Jersey (Blue)"
@@ -1089,8 +1097,11 @@
 ///////////////////////
 // Socks Definitions //
 ///////////////////////
+
 /datum/sprite_accessory/socks
 	icon = 'icons/mob/underwear.dmi'
+
+// please make sure they're sorted alphabetically and categorized
 
 /datum/sprite_accessory/socks/black_knee
 	name = "Knee-high (Black)"
