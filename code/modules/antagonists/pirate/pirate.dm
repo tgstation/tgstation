@@ -45,7 +45,7 @@
 /datum/team/pirate/proc/forge_objectives()
 	var/datum/objective/loot/getbooty = new()
 	getbooty.team = src
-	getbooty.storage_area = locate(/area/shuttle/pirate/vault) in GLOB.sortedAreas
+	getbooty.storage_area = locate(/area/shuttle/pirate) in GLOB.sortedAreas
 	getbooty.update_explanation_text()
 	getbooty.link_cargo_hold()
 	objectives += getbooty
