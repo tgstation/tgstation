@@ -15,6 +15,7 @@ SUBSYSTEM_DEF(job)
 	var/overflow_role = "Assistant"
 
 /datum/controller/subsystem/job/Initialize(timeofday)
+	SSmapping.HACK_LoadMapConfig()
 	if(!occupations.len)
 		SetupOccupations()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
