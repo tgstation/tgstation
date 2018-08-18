@@ -45,27 +45,26 @@
 /datum/team/pirate/proc/forge_objectives()
 	var/datum/objective/loot/getbooty = new()
 	getbooty.team = src
-	getbooty.storage_area = locate(/area/shuttle/pirate) in GLOB.sortedAreas
+	for(var/obj/machinery/computer/piratepad_control/P in GLOB.machines)
+		var/area/A = get_area(P)
+		if(istype(A,/area/shuttle/pirate))
+			getbooty.cargo_hold = P
+			break
 	getbooty.update_explanation_text()
-	getbooty.link_cargo_hold()
 	objectives += getbooty
 	for(var/datum/mind/M in members)
 		M.objectives |= objectives
 
 
 /datum/objective/loot
-	var/area/storage_area //Place where we we will look for the loot.
 	var/obj/machinery/computer/piratepad_control/cargo_hold
 	explanation_text = "Acquire valuable loot and store it in designated area."
 	var/target_value = 50000
 
 
-/datum/objective/loot/proc/link_cargo_hold()
-	if(!cargo_hold)
-		cargo_hold = locate() in storage_area.contents
-
 /datum/objective/loot/update_explanation_text()
-	if(storage_area)
+	if(cargo_hold)
+		var/area/storage_area = get_area(cargo_hold)
 		explanation_text = "Acquire loot and store [target_value] of credits worth in [storage_area.name] cargo hold."
 
 /datum/objective/loot/proc/loot_listing()

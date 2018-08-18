@@ -234,8 +234,9 @@
 					currmsg.answered = answer
 					log_game("[key_name(usr)] answered [currmsg.title] comm message. Answer : [currmsg.answered]")
 					if(currmsg)
-						currmsg.answer_callback.Invoke()
+						currmsg.answer_callback.InvokeAsync()
 				state = STATE_VIEWMESSAGE
+				updateDialog()
 		if("status")
 			state = STATE_STATUSDISPLAY
 		if("securitylevel")
@@ -371,7 +372,7 @@
 					aicurrmsg.answered = answer
 					log_game("[key_name(usr)] answered [aicurrmsg.title] comm message. Answer : [aicurrmsg.answered]")
 					if(aicurrmsg.answer_callback)
-						aicurrmsg.answer_callback.Invoke()
+						aicurrmsg.answer_callback.InvokeAsync()
 				aistate = STATE_VIEWMESSAGE
 		if("ai-status")
 			aistate = STATE_STATUSDISPLAY
