@@ -4,6 +4,13 @@
 /datum/gas_mixture/immutable
 	var/initial_temperature
 
+/datum/gas_mixture/immutable/badmin
+	var/list/badmin_gases = list()
+
+/datum/gas_mixture/immutable/badmin/garbage_collect()
+	..()
+	gases = badmin_gases.Copy()
+
 /datum/gas_mixture/immutable/New()
 	..()
 	garbage_collect()
