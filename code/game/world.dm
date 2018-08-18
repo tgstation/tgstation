@@ -44,7 +44,7 @@ GLOBAL_PROTECT(security_mode)
 	if(NO_INIT_PARAMETER in params)
 		return
 
-	Master.Initialize(10, FALSE)
+	Master.Initialize(10, FALSE, TRUE)
 
 	if(TEST_RUN_PARAMETER in params)
 		HandleTestRun()
