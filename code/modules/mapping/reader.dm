@@ -2,9 +2,6 @@
 //SS13 Optimized Map loader
 //////////////////////////////////////////////////////////////
 #define SPACE_KEY "space"
-//global datum that will preload variables on atoms instanciation
-GLOBAL_VAR_INIT(use_preloader, FALSE)
-GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 
 /datum/grid_set
 	var/xcrd
@@ -19,7 +16,6 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 	var/list/gridSets = list()
 
 	var/list/modelCache
-	var/list/bad_paths
 
 	/// Unoffset bounds. Null on parse failure.
 	var/list/parsed_bounds
@@ -38,13 +34,13 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 
 /// Shortcut function to parse a map and apply it to the world.
 ///
-/// - dmm_file: A .dmm file to load (Required).
-/// - x_offset, y_offset, z_offset: Positions representign where to load the map (Optional).
-/// - cropMap: When true, the map will be cropped to fit the existing world dimensions (Optional).
-/// - measureOnly: When true, no changes will be made to the world (Optional).
-/// - no_changeturf: When true, turf/AfterChange won't be called on loaded turfs
-/// - x_lower, x_upper, y_lower, y_upper: Coordinates (relative to the map) to crop to (Optional).
-/// - placeOnTop: Whether to use turf/PlaceOnTop rather than turf/ChangeTurf (Optional).
+/// - `dmm_file`: A .dmm file to load (Required).
+/// - `x_offset`, `y_offset`, `z_offset`: Positions representign where to load the map (Optional).
+/// - `cropMap`: When true, the map will be cropped to fit the existing world dimensions (Optional).
+/// - `measureOnly`: When true, no changes will be made to the world (Optional).
+/// - `no_changeturf`: When true, [turf/AfterChange] won't be called on loaded turfs
+/// - `x_lower`, `x_upper`, `y_lower`, `y_upper`: Coordinates (relative to the map) to crop to (Optional).
+/// - `placeOnTop`: Whether to use [turf/PlaceOnTop] rather than [turf/ChangeTurf] (Optional).
 /proc/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, x_lower = -INFINITY as num, x_upper = INFINITY as num, y_lower = -INFINITY as num, y_upper = INFINITY as num, placeOnTop = FALSE as num)
 	var/datum/parsed_map/parsed = new(dmm_file, x_lower, x_upper, y_lower, y_upper, measureOnly)
 	if(parsed.bounds && !measureOnly)
@@ -133,7 +129,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 		bounds = null
 	parsed_bounds = bounds
 
-/// Load the parsed map into the world. See /proc/load_map for arguments.
+/// Load the parsed map into the world. See [/proc/load_map] for arguments.
 /datum/parsed_map/proc/load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
 	//How I wish for RAII
 	Master.StartLoadingMap()
@@ -218,8 +214,8 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 
 	return TRUE
 
-/datum/parsed_map/proc/build_cache(no_changeturf)
-	if(modelCache)
+/datum/parsed_map/proc/build_cache(no_changeturf, bad_paths=null)
+	if(modelCache && !bad_paths)
 		return modelCache
 	. = modelCache = list()
 	var/list/grid_models = src.grid_models
@@ -246,8 +242,9 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 			var/atom_def = text2path(path_text) //path definition, e.g /obj/foo/bar
 			old_position = dpos + 1
 
-			if(!atom_def) // Skip the item if the path does not exist.  Fix your crap, mappers!
-				LAZYADD(bad_paths, path_text)
+			if(!ispath(atom_def, /atom)) // Skip the item if the path does not exist.  Fix your crap, mappers!
+				if(bad_paths)
+					LAZYOR(bad_paths[path_text], model_key)
 				continue
 			members.Add(atom_def)
 
@@ -467,34 +464,3 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 /datum/parsed_map/Destroy()
 	..()
 	return QDEL_HINT_HARDDEL_NOW
-
-//////////////////
-//Preloader datum
-//////////////////
-
-/datum/map_preloader
-	parent_type = /datum
-	var/list/attributes
-	var/target_path
-
-/datum/map_preloader/proc/setup(list/the_attributes, path)
-	if(the_attributes.len)
-		GLOB.use_preloader = TRUE
-		attributes = the_attributes
-		target_path = path
-
-/datum/map_preloader/proc/load(atom/what)
-	GLOB.use_preloader = FALSE
-	for(var/attribute in attributes)
-		var/value = attributes[attribute]
-		if(islist(value))
-			value = deepCopyList(value)
-		what.vars[attribute] = value
-
-/area/template_noop
-	name = "Area Passthrough"
-
-/turf/template_noop
-	name = "Turf Passthrough"
-	icon_state = "noop"
-	bullet_bounce_sound = null

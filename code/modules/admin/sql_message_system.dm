@@ -68,6 +68,7 @@
 				var/checktime = text2num(query_validate_expire_time.item[1])
 				if(!checktime)
 					to_chat(usr, "Datetime entered is improperly formatted or not later than current server time.")
+					qdel(query_validate_expire_time)
 					return
 				expiry = query_validate_expire_time.item[1]
 			qdel(query_validate_expire_time)
@@ -170,16 +171,19 @@
 	message_id = text2num(message_id)
 	if(!message_id)
 		return
-	var/datum/DBQuery/query_find_edit_expiry_message = SSdbcore.NewQuery("SELECT type, targetckey, adminckey, expire_timestamp FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
+	var/editor_ckey = sanitizeSQL(usr.ckey)
+	var/editor_key = sanitizeSQL(usr.key)
+	var/kn = key_name(usr)
+	var/kna = key_name_admin(usr)
+	var/datum/DBQuery/query_find_edit_expiry_message = SSdbcore.NewQuery("SELECT type, (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), expire_timestamp FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
 	if(!query_find_edit_expiry_message.warn_execute())
 		qdel(query_find_edit_expiry_message)
 		return
 	if(query_find_edit_expiry_message.NextRow())
 		var/type = query_find_edit_expiry_message.item[1]
-		var/target_ckey = query_find_edit_expiry_message.item[2]
-		var/admin_ckey = query_find_edit_expiry_message.item[3]
+		var/target_key = query_find_edit_expiry_message.item[2]
+		var/admin_key = query_find_edit_expiry_message.item[3]
 		var/old_expiry = query_find_edit_expiry_message.item[4]
-		var/editor_ckey = sanitizeSQL(usr.ckey)
 		var/new_expiry
 		var/expire_time = input("Set expiry time for [type] as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than current time for obvious reasons. Enter -1 to remove expiry time.", "Set expiry time", old_expiry) as null|text
 		if(!expire_time)
@@ -192,26 +196,30 @@
 			var/datum/DBQuery/query_validate_expire_time_edit = SSdbcore.NewQuery("SELECT IF(STR_TO_DATE('[expire_time]','%Y-%c-%d %T') > NOW(), STR_TO_DATE('[expire_time]','%Y-%c-%d %T'), 0)")
 			if(!query_validate_expire_time_edit.warn_execute())
 				qdel(query_validate_expire_time_edit)
+				qdel(query_find_edit_expiry_message)
 				return
 			if(query_validate_expire_time_edit.NextRow())
 				var/checktime = text2num(query_validate_expire_time_edit.item[1])
 				if(!checktime)
 					to_chat(usr, "Datetime entered is improperly formatted or not later than current server time.")
+					qdel(query_validate_expire_time_edit)
+					qdel(query_find_edit_expiry_message)
 					return
 				new_expiry = query_validate_expire_time_edit.item[1]
 			qdel(query_validate_expire_time_edit)
-		var/edit_text = sanitizeSQL("Expiration time edited by [editor_ckey] on [SQLtime()] from [old_expiry] to [new_expiry]<hr>")
+		var/edit_text = sanitizeSQL("Expiration time edited by [editor_key] on [SQLtime()] from [old_expiry] to [new_expiry]<hr>")
 		var/datum/DBQuery/query_edit_message_expiry = SSdbcore.NewQuery("UPDATE [format_table_name("messages")] SET expire_timestamp = [expire_time == "-1" ? "NULL" : "'[new_expiry]'"], lasteditor = '[editor_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE id = [message_id] AND deleted = 0")
 		if(!query_edit_message_expiry.warn_execute())
 			qdel(query_edit_message_expiry)
+			qdel(query_find_edit_expiry_message)
 			return
 		qdel(query_edit_message_expiry)
-		log_admin_private("[key_name(usr)] has edited the expiration time of a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""] made by [admin_ckey] from [old_expiry] to [new_expiry]")
-		message_admins("[key_name_admin(usr)] has edited the expiration time of a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""] made by [admin_ckey] from [old_expiry] to [new_expiry]")
+		log_admin_private("[kn] has edited the expiration time of a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""] made by [admin_key] from [old_expiry] to [new_expiry]")
+		message_admins("[kna] has edited the expiration time of a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""] made by [admin_key] from [old_expiry] to [new_expiry]")
 		if(browse)
 			browse_messages("[type]")
 		else
-			browse_messages(target_ckey = target_ckey, agegate = TRUE)
+			browse_messages(target_ckey = ckey(target_key), agegate = TRUE)
 	qdel(query_find_edit_expiry_message)
 
 /proc/toggle_message_secrecy(message_id)
@@ -378,6 +386,14 @@
 				if("note")
 					notedata += data
 		qdel(query_get_messages)
+		if(!target_key)
+			var/datum/DBQuery/query_get_message_key = SSdbcore.NewQuery("SELECT byond_key FROM [format_table_name("player")] WHERE ckey = '[target_ckey]'")
+			if(!query_get_message_key.warn_execute())
+				qdel(query_get_message_key)
+				return
+			if(query_get_message_key.NextRow())
+				target_key = query_get_message_key.item[1]
+			qdel(query_get_message_key)
 		output += "<h2><center>[target_key]</center></h2><center>"
 		if(!linkless)
 			output += "<a href='?_src_=holder;[HrefToken()];addnote=[target_key]'>\[Add note\]</a>"

@@ -170,6 +170,8 @@
 			clear_event("depression")
 
 	holdmyinsanityeffect = insanity_effect
+	
+	HandleNutrition(owner)
 
 /datum/component/mood/proc/DecreaseSanity(amount, minimum = SANITY_INSANE)
 	if(sanity < minimum) //This might make KevinZ stop fucking pinging me.
@@ -237,6 +239,22 @@
 
 /datum/component/mood/proc/hud_click(location, control, params, mob/user)
 	print_mood(user)
+
+
+/datum/component/mood/proc/HandleNutrition(mob/living/L)
+	switch(L.nutrition)
+		if(NUTRITION_LEVEL_FULL to INFINITY)
+			add_event("nutrition", /datum/mood_event/nutrition/fat)
+		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+			add_event("nutrition", /datum/mood_event/nutrition/wellfed)
+		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+			add_event("nutrition", /datum/mood_event/nutrition/fed)
+		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+			clear_event("nutrition")
+		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+			add_event("nutrition", /datum/mood_event/nutrition/hungry)
+		if(0 to NUTRITION_LEVEL_STARVING)
+			add_event("nutrition", /datum/mood_event/nutrition/starving)
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN

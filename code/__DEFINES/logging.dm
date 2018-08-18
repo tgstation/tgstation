@@ -30,6 +30,7 @@
 #define LOG_ADMIN		(1 << 10)
 #define LOG_OWNERSHIP	(1 << 11)
 #define LOG_GAME		(1 << 12)
+#define LOG_ADMIN_PRIVATE (1 << 13)
 
 //Individual logging panel pages
 #define INDIVIDUAL_ATTACK_LOG		(LOG_ATTACK)

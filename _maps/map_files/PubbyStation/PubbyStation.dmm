@@ -26212,6 +26212,10 @@
 	req_access_txt = "0";
 	req_one_access_txt = "5;9"
 	},
+/obj/effect/mapping_helpers/airlock/unres{
+	icon_state = "airlock_unres_helper";
+	dir = 8
+	},
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -27384,14 +27388,6 @@
 	},
 /obj/item/storage/box/bodybags,
 /obj/item/pen,
-/obj/machinery/button/door{
-	desc = "A remote control switch for the genetics doors.";
-	id = "GeneticsDoor";
-	name = "Genetics Exit Button";
-	normaldoorcontrol = 1;
-	pixel_x = 24;
-	pixel_y = 8
-	},
 /turf/open/floor/plasteel/whiteblue/side,
 /area/medical/genetics)
 "btZ" = (
@@ -52301,10 +52297,10 @@
 	dir = 4;
 	icon_state = "left";
 	name = "Medbay Delivery";
-	req_access_txt = "28"
+	req_access_txt = "6"
 	},
 /turf/open/floor/plasteel/dark,
-/area/crew_quarters/bar)
+/area/medical/morgue)
 "rxa" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1

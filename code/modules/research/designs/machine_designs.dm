@@ -530,3 +530,11 @@
 	build_path = /obj/item/circuitboard/machine/stacking_machine
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/board/ore_silo
+	name = "Machine Design (Ore Silo)"
+	desc = "The circuit board for an ore silo."
+	id = "ore_silo"
+	build_path = /obj/item/circuitboard/machine/ore_silo
+	category = list ("Research Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO

@@ -18,6 +18,7 @@
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
+	tiled_dirt = TRUE
 
 /turf/open/indestructible/Melt()
 	to_be_destroyed = FALSE
@@ -45,6 +46,7 @@
 	icon_state = "necro1"
 	baseturfs = /turf/open/indestructible/necropolis
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	tiled_dirt = FALSE
 
 /turf/open/indestructible/necropolis/Initialize()
 	. = ..()
@@ -69,6 +71,7 @@
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	baseturfs = /turf/open/indestructible/hierophant
 	smooth = SMOOTH_TRUE
+	tiled_dirt = FALSE
 
 /turf/open/indestructible/hierophant/two
 
@@ -79,6 +82,7 @@
 	name = "notebook floor"
 	desc = "A floor made of invulnerable notebook paper."
 	icon_state = "paperfloor"
+	tiled_dirt = FALSE
 
 /turf/open/indestructible/binary
 	name = "tear in the fabric of reality"

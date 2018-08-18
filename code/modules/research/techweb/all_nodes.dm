@@ -190,7 +190,7 @@
 	display_name = "Applied Bluespace Research"
 	description = "Using bluespace to make things faster and better."
 	prereq_ids = list("bluespace_basic", "engineering")
-	design_ids = list("bs_rped","minerbag_holding", "bluespacebeaker", "bluespacesyringe", "bluespacebodybag", "phasic_scanning", "roastingstick")
+	design_ids = list("bs_rped","minerbag_holding", "bluespacebeaker", "bluespacesyringe", "bluespacebodybag", "phasic_scanning", "roastingstick", "ore_silo")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 5000
 
@@ -273,7 +273,7 @@
 	display_name = "Cyborg Upgrades: Medical"
 	description = "Medical upgrades for cyborgs."
 	prereq_ids = list("adv_biotech")
-	design_ids = list("borg_upgrade_defibrillator", "borg_upgrade_piercinghypospray", "borg_upgrade_highstrengthsynthesiser", "borg_upgrade_expandedsynthesiser", "borg_upgrade_pinpointer")
+	design_ids = list("borg_upgrade_defibrillator", "borg_upgrade_piercinghypospray", "borg_upgrade_highstrengthsynthesiser", "borg_upgrade_expandedsynthesiser", "borg_upgrade_pinpointer", "borg_upgrade_surgicalprocessor")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 5000
 

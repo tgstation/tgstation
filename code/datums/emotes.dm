@@ -101,12 +101,25 @@
 		return FALSE
 	if(status_check && !is_type_in_typecache(user, mob_type_ignore_stat_typecache))
 		if(user.stat > stat_allowed)
-			if(intentional)
-				to_chat(user, "<span class='notice'>You cannot [key] while unconscious.</span>")
+			if(!intentional)
+				return FALSE
+			switch(user.stat)
+				if(SOFT_CRIT)
+					to_chat(user, "<span class='notice'>You cannot [key] while in a critical condition.</span>")
+				if(UNCONSCIOUS)
+					to_chat(user, "<span class='notice'>You cannot [key] while unconscious.</span>")
+				if(DEAD)
+					to_chat(user, "<span class='notice'>You cannot [key] while dead.</span>")
 			return FALSE
-		if(restraint_check && (user.restrained() || user.buckled))
-			if(intentional)
-				to_chat(user, "<span class='notice'>You cannot [key] while restrained.</span>")
+		if(restraint_check && (user.IsStun() || user.IsKnockdown()))
+			if(!intentional)
+				return FALSE
+			to_chat(user, "<span class='notice'>You cannot [key] while stunned.</span>")
+			return FALSE
+		if(restraint_check && user.restrained())
+			if(!intentional)
+				return FALSE
+			to_chat(user, "<span class='notice'>You cannot [key] while restrained.</span>")
 			return FALSE
 
 	if(isliving(user))

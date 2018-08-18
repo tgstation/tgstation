@@ -316,7 +316,7 @@
 
 /obj/item/reagent_containers/food/snacks/meat/steak/gondola
 	name = "gondola steak"
-	tastes = list("meat = 1", "tranquility" = 1)
+	tastes = list("meat" = 1, "tranquility" = 1)
 
 //////////////////////////////// MEAT CUTLETS ///////////////////////////////////////////////////////
 
