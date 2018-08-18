@@ -457,3 +457,8 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define CAMERA_NO_GHOSTS 0
 #define CAMERA_SEE_GHOSTS_BASIC 1
 #define CAMERA_SEE_GHOSTS_ORBIT 2
+
+//suspicious phone call types
+#define CALLTYPE_NONE 0
+#define CALLTYPE_HEBOUGHT 1
+#define CALLTYPE_HESOLD 2
