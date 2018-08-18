@@ -225,3 +225,11 @@
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 6)
 	tastes = list("beet" = 1)
 	foodtype = VEGETABLES
+
+/obj/item/reagent_containers/food/snacks/soup/monkey
+	name = "sopa de macaco"
+	desc = "Uma delicia"
+	icon_state = "sopademacaco"
+	bonus_reagents = list("nutriment" = 10, "vitamin" = 30)
+	tastes = list("delicia" = 1)
+	foodtype = MEAT
