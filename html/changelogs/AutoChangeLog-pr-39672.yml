@@ -1,0 +1,4 @@
+author: "zaracka"
+delete-after: True
+changes: 
+  - bugfix: "You can now use certain emotes and the suicide verb while buckled, but not while stunned."
