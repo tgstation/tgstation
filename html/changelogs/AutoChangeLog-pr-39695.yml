@@ -1,0 +1,4 @@
+author: "nicbn"
+delete-after: True
+changes: 
+  - imageadd: "New janitor cart sprites (by Quantum-M)"
