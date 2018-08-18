@@ -7,7 +7,7 @@ GLOBAL_PROTECT(security_mode)
 //This happens after the Master subsystem new(s) (it's a global datum)
 //So subsystems globals exist, but are not initialised
 /world/New()
-	log_world("World loaded at [time_stamp()]!")
+	log_world("World loaded at [time_stamp()]! Hello world!")
 
 	SetupExternalRSC()
 
