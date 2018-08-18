@@ -230,6 +230,6 @@
 	name = "sopa de macaco"
 	desc = "Uma delicia"
 	icon_state = "sopademacaco"
-	bonus_reagents = list("nutriment" = 10, "vitamin" = 30)
+	bonus_reagents = list("nutriment" = 5, "vitamin" = 10)
 	tastes = list("delicia" = 1)
 	foodtype = MEAT
