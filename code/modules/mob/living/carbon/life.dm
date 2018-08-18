@@ -226,8 +226,8 @@
 		var/miasma_partialpressure = (breath_gases[/datum/gas/miasma][MOLES]/breath.total_moles())*breath_pressure
 
 		if(prob(1 * miasma_partialpressure))
-			var/datum/disease/advance/miasma_disease = new/datum/disease/advance
-			miasma_disease.symptoms = miasma_disease.GenerateSymptoms(1, 3)
+			var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(2,3)
+			miasma_disease.name = "Unknown"
 			ForceContractDisease(miasma_disease, TRUE, TRUE)
 
 		//Miasma side effects
@@ -296,8 +296,8 @@
 	if(istype(loc, /obj/structure/closet/crate/coffin)|| istype(loc, /obj/structure/closet/body_bag) || istype(loc, /obj/structure/bodycontainer))
 		return
 
-	// No decay if formaldehyde in corpse
-	if(reagents.has_reagent("formaldehyde", 15))
+	// No decay if formaldehyde in corpse or when the corpse is charred
+	if(reagents.has_reagent("formaldehyde", 15) || has_trait(TRAIT_HUSK))
 		return
 
 	// Also no decay if corpse chilled or not organic/undead
