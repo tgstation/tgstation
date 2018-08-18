@@ -285,28 +285,11 @@
 	if(copytext(M, 1, 2) != "*")
 		M = " [M]"
 		var/list/spurdo_words = strings("spurdo_replacement.json", "spurdo")
-
 		for(var/key in spurdo_words)
 			var/value = spurdo_words[key]
 			if(islist(value))
 				value = pick(value)
-
-
 			M = replacetextEx(M,regex(uppertext(key),"g"), "[uppertext(value)]")
 			M = replacetextEx(M,regex(capitalize(key),"g"), "[capitalize(value)]")
 			M = replacetextEx(M,regex(key,"g"), "[value]")
-
-		if(prob(30))
-			M += pick(" :"," X")
-			if(prob(20))
-				M += "-"
-			var/smiles = rand(2, 7)
-			while (smiles > 0)
-				M += "D"
-				smiles--
-			if(prob(50))
-				var/exclaim = rand(2, 7)
-				while (exclaim > 0)
-					M += "!"
-					exclaim--
 	return trim(M)
