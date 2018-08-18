@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Fixed augmentation not working and/or giving you extra limbs"
