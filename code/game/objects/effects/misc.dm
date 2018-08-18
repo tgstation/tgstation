@@ -40,6 +40,10 @@
 	density = TRUE
 	layer = FLY_LAYER
 
+/obj/effect/supplypod_selector
+	icon_state = "supplypod_selector" 
+	layer = FLY_LAYER
+
 //Makes a tile fully lit no matter what
 /obj/effect/fullbright
 	icon = 'icons/effects/alphacolors.dmi'
