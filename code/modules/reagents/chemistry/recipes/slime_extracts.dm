@@ -70,6 +70,14 @@
 	required_other = 1
 	required_container = /obj/item/slime_extract/green
 
+/datum/chemical_reaction/slime/slimemoth
+	name = "Moth Mutation Toxin"
+	id = "mothmuttoxin"
+	results = list("mothmutationtoxin" = 1)
+	required_reagents = list("uranium" = 1) //fuck it, moths are close enough to lizards that this will do
+	required_other = 1
+	required_container = obj/item/slime_extract/green
+
 //Metal
 /datum/chemical_reaction/slime/slimemetal
 	name = "Slime Metal"
