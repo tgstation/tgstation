@@ -237,6 +237,9 @@ update_label("John Doe", "Clowny")
 				return
 	..()
 
+/obj/item/card/id/syndicate/deepstorage
+	name = "deep storage personnel ID"
+
 /obj/item/card/id/syndicate/anyone
 	anyone = TRUE
 
