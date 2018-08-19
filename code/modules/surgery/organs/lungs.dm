@@ -288,7 +288,7 @@
 				miasma_disease.name = "Unknown"
 				miasma_disease.try_infect(owner)
 
-			//Miasma side effects
+			// Miasma side effects
 			switch(miasma_pp)
 				if(1.5 to 10)
 					// At lower pp, give out a little warning
@@ -315,9 +315,12 @@
 				else
 					SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
 
+			// In a full miasma atmosphere with 101.34 pKa, about 1 disgust per breath. Then again, this is a purely hypothetical scenario and hardly reachable
+			owner.adjust_disgust(0.01 * miasma_pp)
+
 			breath_gases[/datum/gas/miasma][MOLES]-=gas_breathed
 
-		//Clear out moods when no miasma at all
+		// Clear out moods when no miasma at all
 		else
 			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
 		
