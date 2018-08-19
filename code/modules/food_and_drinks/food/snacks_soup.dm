@@ -228,8 +228,13 @@
 
 /obj/item/reagent_containers/food/snacks/soup/monkey
 	name = "sopa de macaco"
-	desc = "Uma delicia"
+	desc = "A space-Brazilian delicacy. Uma delicia!"
 	icon_state = "sopademacaco"
 	bonus_reagents = list("nutriment" = 10, "vitamin" = 30)
 	tastes = list("delicia" = 1)
 	foodtype = MEAT
+
+/obj/item/reagent_containers/food/snacks/soup/monkey/attack(mob/M, mob/user, def_zone)
+	if(..())
+		for(var/mob/living/carbon/human/H in oview(M))
+			H.adjust_disgust(5)
