@@ -23,7 +23,7 @@
 	return ..()
 
 /obj/vehicle/sealed/car/mob_try_exit(mob/M, mob/user, silent = FALSE)
-	if(M == user && (occupants[M] & VEHICLE_CONTROL_KIDNAPPED)
+	if(M == user && (occupants[M] & VEHICLE_CONTROL_KIDNAPPED))
 		to_chat(user, "<span class='notice'>You push against the back of [src] trunk to try and get out.</span>")
 		if(!do_after(user, escape_time, target = src))
 			return FALSE
