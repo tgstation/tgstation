@@ -410,7 +410,7 @@
 	name = "black slime extract"
 	icon_state = "black slime extract"
 	effectmod = "transformative"
-	activate_reagents = list("plasma", "soymilk")
+	activate_reagents = list("plasma", "stablemutationtoxin")
 
 /obj/item/slime_extract/black/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
