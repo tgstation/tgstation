@@ -40,7 +40,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/item/clothing/mask/gas,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/listeningstation)
 "ag" = (
 /turf/closed/wall/r_wall,
