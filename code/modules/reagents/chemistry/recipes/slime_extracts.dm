@@ -421,7 +421,7 @@
 	name = "Felinid Mutation Toxin"
 	id = "felinidmutationtoxin"
 	results = list("felinidmutationtoxin" = 1)
-	required_reagents = list("soymilk" = 1)
+	required_reagents = list("stablemutationtoxin" = 1)
 	required_other = 1
 	required_container = /obj/item/slime_extract/black
 
