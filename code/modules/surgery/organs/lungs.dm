@@ -315,8 +315,9 @@
 				else
 					SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
 
-			// In a full miasma atmosphere with 101.34 pKa, about 1 disgust per breath. Then again, this is a purely hypothetical scenario and hardly reachable
-			owner.adjust_disgust(0.01 * miasma_pp)
+			// In a full miasma atmosphere with 101.34 pKa, about 10 disgust per breath, is pretty low compared to threshholds
+			// Then again, this is a purely hypothetical scenario and hardly reachable
+			owner.adjust_disgust(0.1 * miasma_pp)
 
 			breath_gases[/datum/gas/miasma][MOLES]-=gas_breathed
 
