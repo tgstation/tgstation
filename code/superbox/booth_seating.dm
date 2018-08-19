@@ -12,8 +12,11 @@
 	layer = OBJ_LAYER
 	density = TRUE
 
-/obj/structure/booth_seating/end
-	icon_state = "end"
+/obj/structure/booth_seating/end1
+	icon_state = "end1"
+
+/obj/structure/booth_seating/end2
+	icon_state = "end2"
 
 /obj/structure/booth_seating/Initialize()
 	. = ..()
@@ -22,13 +25,13 @@
 /obj/structure/booth_seating/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return 1
-	if(get_dir(loc, target) & turn(dir, 180))
+	if(get_dir(target, loc) & dir)
 		return !density
 	return 1
 
 /obj/structure/booth_seating/CheckExit(atom/movable/O, turf/target)
 	if(istype(O) && (O.pass_flags & PASSGLASS))
 		return 1
-	if(get_dir(O, target) & turn(dir, 180))
+	if(get_dir(target, O) & dir)
 		return !density
 	return 1
