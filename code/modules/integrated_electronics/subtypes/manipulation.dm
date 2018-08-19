@@ -384,18 +384,20 @@
 	var/max_w_class = assembly.w_class
 	if(check_target(AM))
 		if(contents.len < max_items && AM.w_class <= max_w_class)
-			get_object().investigate_log("picked up ([AM]) with [src].", INVESTIGATE_CIRCUIT)
+			var/atom/A = get_object()
+			A.investigate_log("picked up ([AM]) with [src].", INVESTIGATE_CIRCUIT)
 			AM.forceMove(src)
 
-/obj/item/integrated_circuit/manipulation/grabber/proc/drop(obj/item/AM, turf/T = get_turf(get_object()))
-	get_object().investigate_log("dropped ([AM]) from [src].", INVESTIGATE_CIRCUIT)
+/obj/item/integrated_circuit/manipulation/grabber/proc/drop(obj/item/AM, turf/T = drop_location())
+	var/atom/A = get_object()
+	A.investigate_log("dropped ([AM]) from [src].", INVESTIGATE_CIRCUIT)
 	AM.forceMove(T)
 
 /obj/item/integrated_circuit/manipulation/grabber/proc/drop_all()
 	if(contents.len)
-		var/turf/T = get_turf(get_object())
+		var/turf/T = drop_location()
 		var/obj/item/U
-		for(U in contents)
+		for(U in src)
 			drop(U, T)
 
 /obj/item/integrated_circuit/manipulation/grabber/proc/update_outputs()

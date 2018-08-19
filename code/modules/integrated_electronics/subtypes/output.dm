@@ -126,7 +126,8 @@
 			return
 		vol = CLAMP(vol ,0 , 100)
 		playsound(get_turf(src), selected_sound, vol, freq, -1)
-		get_object().investigate_log("played a sound ([selected_sound]) as [type].", INVESTIGATE_CIRCUIT)
+		var/atom/A = get_object()
+		A.investigate_log("played a sound ([selected_sound]) as [type].", INVESTIGATE_CIRCUIT)
 
 /obj/item/integrated_circuit/output/sound/on_data_written()
 	power_draw_per_use =  get_pin_data(IC_INPUT, 2) * 15
