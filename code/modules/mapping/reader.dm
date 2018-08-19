@@ -424,7 +424,7 @@
 		var/equal_position = findtext(text,"=",old_position, position)
 
 		var/trim_left = trim_text(copytext(text,old_position,(equal_position ? equal_position : position)))
-		var/left_constant = parse_constant(trim_left)
+		var/left_constant = delimiter == ";" ? trim_left : parse_constant(trim_left)
 		old_position = position + 1
 
 		if(equal_position && !isnum(left_constant))
@@ -448,7 +448,7 @@
 		return copytext(text,2,findtext(text,"\"",3,0))
 
 	// list
-	if(copytext(text,1,5) == "list")
+	if(copytext(text,1,6) == "list(")
 		return readlist(copytext(text,6,length(text)))
 
 	// typepath
@@ -456,13 +456,13 @@
 	if(ispath(path))
 		return path
 
-	// null
-	if(text == "null")
-		return null
-
 	// file
 	if(copytext(text,1,2) == "'")
 		return file(copytext(text,2,length(text)))
+
+	// null
+	if(text == "null")
+		return null
 
 	// not parsed:
 	// - pops: /obj{name="foo"}
