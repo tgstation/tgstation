@@ -110,11 +110,6 @@
 	layer = BLIND_LAYER
 	plane = FULLSCREEN_PLANE
 
-/obj/screen/fullscreen/depression
-	icon_state = "depression"
-	layer = FLASH_LAYER
-	plane = FULLSCREEN_PLANE
-
 /obj/screen/fullscreen/curse
 	icon_state = "curse"
 	layer = CURSE_LAYER
