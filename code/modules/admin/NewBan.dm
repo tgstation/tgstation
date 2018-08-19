@@ -61,6 +61,8 @@ GLOBAL_PROTECT(Banlist)
 	return 1
 
 /proc/LoadBans()
+	if(!CONFIG_GET(flag/ban_legacy_system))
+		return
 
 	GLOB.Banlist = new("data/banlist.bdb")
 	log_admin("Loading Banlist")
