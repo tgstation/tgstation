@@ -114,12 +114,11 @@ Borg Hypospray
 	log_combat(user, M, "injected", src, "(CHEMICALS: [english_list(injected)])")
 
 /obj/item/reagent_containers/borghypo/attack_self(mob/user)
-	var/chosen_reagent = modes[input(user, "What reagent do you want to dispense?") as null|anything in reagent_ids]
-	if(!chosen_reagent)
-		return
-	mode = chosen_reagent
+	mode++
+	if (mode > modes.len)
+		mode = 1
 	playsound(loc, 'sound/effects/pop.ogg', 50, 0)
-	var/datum/reagent/R = GLOB.chemical_reagents_list[reagent_ids[mode]]
+	var/datum/reagent/R = GLOB.chemical_reagents_list[modes[mode]]
 	to_chat(user, "<span class='notice'>[src] is now dispensing '[R.name]'.</span>")
 	return
 
