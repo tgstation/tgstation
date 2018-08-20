@@ -3,8 +3,8 @@
 	config_tag = "overthrow"
 	antag_flag = ROLE_TRAITOR // they are traitors after all, with a twist
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
-	required_players = 20 // the core idea is of a swift, bloodless coup, so it shouldn't be as chaotic as revs.
-	required_enemies = 2 // minimum two teams, otherwise it's just nerfed revs.
+	required_players = 1 //20 // the core idea is of a swift, bloodless coup, so it shouldn't be as chaotic as revs.
+	required_enemies = 1 //2 minimum two teams, otherwise it's just nerfed revs.
 	recommended_enemies = 4
 
 	announce_span = "danger"
@@ -39,7 +39,7 @@
 /datum/game_mode/overthrow/post_setup()
 	for(var/i in initial_agents) // each agent will have its own team.
 		var/datum/mind/agent = i
-		agent.add_antag_datum(/datum/antagonist/overthrow) // create_team called on_gain will create the team
+		agent.add_antag_datum(/datum/antagonist/overthrow/boss) // create_team called on_gain will create the team
 	return ..()
 
 /datum/game_mode/overthrow/generate_report()
