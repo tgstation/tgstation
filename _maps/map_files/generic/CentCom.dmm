@@ -2218,7 +2218,9 @@
 /turf/open/floor/plasteel/dark,
 /area/ctf)
 "gI" = (
-/obj/machinery/power/emitter/energycannon,
+/obj/machinery/power/emitter/energycannon{
+	active = 0
+	},
 /turf/open/floor/plating,
 /area/ctf)
 "gJ" = (
@@ -2320,6 +2322,7 @@
 /area/ctf)
 "ha" = (
 /obj/machinery/power/emitter/energycannon{
+	active = 0;
 	dir = 1
 	},
 /turf/open/floor/plating,
