@@ -16,7 +16,7 @@
 			to_chat(user, "<span class='notice'>[target.name] woke up already, the implant would be ineffective against him!</span>")
 			return FALSE
 		target_mind.add_antag_datum(/datum/antagonist/overthrow, UO.team)
-		add_logs(user, target, "implanted", "\a [name]")
+		log_combat(user, target, "implanted", "\a [name]")
 		qdel(src)
 		return TRUE
 
