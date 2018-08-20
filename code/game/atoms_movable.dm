@@ -1,6 +1,7 @@
 /atom/movable
 	layer = OBJ_LAYER
 	var/last_move = null
+	var/last_move_time = 0
 	var/anchored = FALSE
 	var/move_resist = MOVE_RESIST_DEFAULT
 	var/move_force = MOVE_FORCE_DEFAULT
@@ -90,14 +91,14 @@
 			return TRUE
 		stop_pulling()
 	if(AM.pulledby)
-		add_logs(AM, AM.pulledby, "pulled from", src)
+		log_combat(AM, AM.pulledby, "pulled from", src)
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 	pulling = AM
 	AM.pulledby = src
 	grab_state = state
 	if(ismob(AM))
 		var/mob/M = AM
-		add_logs(src, M, "grabbed", addition="passive grab")
+		log_combat(src, M, "grabbed", addition="passive grab")
 		if(!supress_message)
 			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
 	return TRUE
@@ -171,7 +172,7 @@
 	. = TRUE
 	oldloc.Exited(src, newloc)
 
-	for(var/i in loc)
+	for(var/i in oldloc)
 		if(i == src) // Multi tile objects
 			continue
 		var/atom/movable/thing = i

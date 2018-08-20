@@ -85,8 +85,10 @@
 
 /datum/action/proc/Trigger()
 	if(!IsAvailable())
-		return 0
-	return 1
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_ACTION_TRIGGER, src) & COMPONENT_ACTION_BLOCK_TRIGGER)
+		return FALSE
+	return TRUE
 
 /datum/action/proc/Process()
 	return
@@ -490,7 +492,7 @@
 /datum/action/item_action/agent_box
 	name = "Deploy Box"
 	desc = "Find inner peace, here, in the box."
-	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUN | AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
 	background_icon_state = "bg_agent"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "deploy_box"
@@ -498,8 +500,10 @@
 	var/obj/structure/closet/cardboard/agent/box
 
 /datum/action/item_action/agent_box/Trigger()
+	if(!..())
+		return FALSE
 	if(!box)
-		if(cooldown < world.time - 30)
+		if(cooldown < world.time - 100)
 			box = new(get_turf(owner))
 			owner.forceMove(box)
 			cooldown = world.time
@@ -718,7 +722,3 @@
 	target.layer = old_layer
 	target.plane = old_plane
 	current_button.appearance_cache = target.appearance
-
-/datum/action/item_action/storage_gather_mode/Trigger()
-	GET_COMPONENT_FROM(STR, /datum/component/storage, target)
-	STR.gather_mode_switch(owner)

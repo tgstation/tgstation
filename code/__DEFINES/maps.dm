@@ -37,6 +37,8 @@ require only minor tweaks.
 #define ZTRAIT_AWAY "Away Mission"
 #define ZTRAIT_SPACE_RUINS "Space Ruins"
 #define ZTRAIT_LAVA_RUINS "Lava Ruins"
+// prevents certain turfs from being stripped by a singularity
+#define ZTRAIT_PLANET "Planet"
 
 // number - bombcap is multiplied by this before being applied to bombs
 #define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier"

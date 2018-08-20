@@ -289,7 +289,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	before_cast(targets)
 	invocation(user)
 	if(user && user.ckey)
-		user.log_message("<span class='danger'>cast the spell [name].</span>", INDIVIDUAL_ATTACK_LOG)
+		user.log_message("<span class='danger'>cast the spell [name].</span>", LOG_ATTACK)
 	if(recharge)
 		recharging = TRUE
 	if(sound)

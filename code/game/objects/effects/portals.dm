@@ -1,10 +1,10 @@
 
-/proc/create_portal_pair(turf/source, turf/destination, _creator = null, _lifespan = 300, accuracy = 0, newtype = /obj/effect/portal)
+/proc/create_portal_pair(turf/source, turf/destination, _creator = null, _lifespan = 300, accuracy = 0, newtype = /obj/effect/portal, atmos_link_override)
 	if(!istype(source) || !istype(destination))
 		return
 	var/turf/actual_destination = get_teleport_turf(destination, accuracy)
-	var/obj/effect/portal/P1 = new newtype(source, _creator, _lifespan, null, FALSE)
-	var/obj/effect/portal/P2 = new newtype(actual_destination, _creator, _lifespan, P1, TRUE)
+	var/obj/effect/portal/P1 = new newtype(source, _creator, _lifespan, null, FALSE, null, atmos_link_override)
+	var/obj/effect/portal/P2 = new newtype(actual_destination, _creator, _lifespan, P1, TRUE, null, atmos_link_override)
 	if(!istype(P1)||!istype(P2))
 		return
 	P1.link_portal(P2)

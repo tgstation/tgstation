@@ -47,7 +47,7 @@
 							"<span class='userdanger'>[user] forces [M] to [apply_method] [src].</span>")
 
 
-	add_logs(user, M, "fed", reagents.log_list())
+	log_combat(user, M, "fed", reagents.log_list())
 	if(reagents.total_volume)
 		reagents.reaction(M, apply_type)
 		reagents.trans_to(M, reagents.total_volume)
@@ -195,4 +195,4 @@
 	name = pick(names)
 	if(prob(20))
 		desc = pick(descs)
-	
+

@@ -100,7 +100,7 @@
 	playsound(T,'sound/weapons/resonator_blast.ogg',50,1)
 	for(var/mob/living/L in T)
 		if(creator)
-			add_logs(creator, L, "used a resonator field on", "resonator")
+			log_combat(creator, L, "used a resonator field on", "resonator")
 		to_chat(L, "<span class='userdanger'>[src] ruptured with you in it!</span>")
 		L.apply_damage(resonance_damage, BRUTE)
 	qdel(src)
