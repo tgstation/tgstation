@@ -1,5 +1,0 @@
-author: "Frosty Fridge"
-delete-after: True
-changes: 
-  - rscadd: "Added the Surgical Processor upgrade for medical cyborgs. Scan surgery disks or an operating computer to be able to initiate advanced procedures."
-  - tweak: "Cyborgs can now perform surgery steps that do not require an instrument."

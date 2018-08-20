@@ -1,6 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - tweak: "Added new destinations for the parcel tagger! You can now send packages to the Circuitry Lab, Toxins, Dormitories, Virology, Xenobiology, Law Office and the Detective's office. Viro/Xeno can only receive parcels."
-  - bugfix: "Deltastation: Tagged parcels no longer get routed straight into the crusher. Untagged parcels also no longer get routed straight into the crusher!"
-  - tweak: "Deltastation: Added disposals to Xenobiology that launch contents into space."
