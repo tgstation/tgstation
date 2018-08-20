@@ -362,7 +362,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "aI" = (
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/ruin/space/has_grav/listeningstation)
 "aJ" = (
 /obj/machinery/washing_machine{
@@ -653,12 +653,12 @@ obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/ruin/space/has_grav/listeningstation)
 "bd" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/ruin/space/has_grav/listeningstation)
 "be" = (
 /obj/effect/decal/cleanable/dirt,

@@ -25,7 +25,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/freighter1)
 "bg" = (
 /obj/machinery/airalarm/all_access{
@@ -45,7 +45,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/freighter1)
 "bI" = (
 /obj/machinery/light/small,
@@ -81,7 +81,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 8
 	},
 /turf/open/floor/plasteel/airless,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/freighter1)
 "cx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -311,7 +311,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 8
 	},
 /turf/open/floor/plasteel/airless,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/freighter1)
 "sf" = (
 /obj/machinery/light{
@@ -348,7 +348,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/airless,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/freighter1)
 "tg" = (
 /obj/effect/turf_decal/box/white/corners{
@@ -679,7 +679,7 @@ obj/effect/decal/cleanable/dirt,
 	name = "broken airlock"
 	},
 /turf/open/floor/plasteel/airless,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/freighter1)
 "Mb" = (
 /obj/machinery/light/small,
@@ -785,7 +785,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 10
 	},
 /turf/open/floor/plasteel/airless,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/freighter1)
 "Qs" = (
 /obj/machinery/light/small{
@@ -906,7 +906,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/freighter1)
 "VT" = (
 /obj/effect/decal/cleanable/dirt,
@@ -934,7 +934,7 @@ obj/effect/decal/cleanable/dirt,
 /obj/effect/mob_spawn/human/corpse/cargo_tech,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plasteel/airless,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/freighter1)
 "WX" = (
 /obj/effect/turf_decal/box/white/corners{

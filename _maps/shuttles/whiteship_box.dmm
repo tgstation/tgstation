@@ -139,7 +139,7 @@
 /obj/machinery/suit_storage_unit/cmo,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/crew)
 "ar" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -330,7 +330,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/crew)
 "aD" = (
 /obj/effect/decal/cleanable/dirt{
@@ -565,7 +565,7 @@ obj/effect/decal/cleanable/dirt,
 	name = "Rotting Carcass"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/crew)
 "aQ" = (
 /obj/effect/decal/cleanable/dirt{
@@ -710,7 +710,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/medbay)
 "ba" = (
 /obj/effect/decal/cleanable/dirt{
@@ -938,7 +938,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/medbay)
 "bt" = (
 /obj/effect/decal/cleanable/dirt{
@@ -961,7 +961,7 @@ obj/effect/decal/cleanable/dirt,
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/medbay)
 "bu" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1104,7 +1104,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/medbay)
 "bF" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1231,7 +1231,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/medbay)
 "bO" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1268,7 +1268,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/medbay)
 "bR" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1298,7 +1298,7 @@ obj/effect/decal/cleanable/dirt,
 	name = "Rotting Carcass"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/medbay)
 "bT" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1307,7 +1307,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/general/visible,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/medbay)
 "bU" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1401,7 +1401,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/bridge)
 "ca" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1412,7 +1412,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/bridge)
 "cb" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1499,7 +1499,7 @@ obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /obj/machinery/iv_drip,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/medbay)
 "ch" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1760,7 +1760,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/medbay)
 "cx" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2079,7 +2079,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/medbay)
 "cQ" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2095,7 +2095,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/medbay)
 "cS" = (
 /obj/structure/sign/departments/restroom,
@@ -2156,7 +2156,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/medbay)
 "cW" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2274,7 +2274,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/medbay)
 "dd" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2338,7 +2338,7 @@ obj/effect/decal/cleanable/dirt,
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/medbay)
 "dh" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2376,7 +2376,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/medbay)
 "dj" = (
 /obj/effect/decal/cleanable/dirt{

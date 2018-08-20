@@ -593,7 +593,7 @@
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/syndicate)
 "bD" = (
 /turf/open/floor/plasteel{
@@ -613,7 +613,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/syndicate)
 "bF" = (
 /obj/structure/toilet{
@@ -829,7 +829,7 @@ obj/effect/decal/cleanable/dirt,
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/syndicate)
 "cb" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1058,7 +1058,7 @@ obj/effect/decal/cleanable/dirt,
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/syndicate)
 "cv" = (
 /obj/structure/cable{
@@ -1954,7 +1954,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/research)
 "ef" = (
 /obj/structure/chair{
@@ -2097,7 +2097,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/research)
 "ex" = (
 /obj/structure/cable{
@@ -2400,7 +2400,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/research)
 "fg" = (
 /obj/structure/table,
@@ -2444,7 +2444,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/research)
 "fj" = (
 /obj/machinery/door/firedoor,
@@ -2596,7 +2596,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/research)
 "fz" = (
 /obj/structure/cable{
@@ -4450,7 +4450,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/arrivals)
 "jc" = (
 /obj/structure/table,
@@ -4458,7 +4458,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/arrivals)
 "jd" = (
 /obj/structure/chair/comfy/black{
@@ -4578,7 +4578,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/arrivals)
 "js" = (
 /obj/structure/chair,
@@ -4593,7 +4593,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/arrivals)
 "ju" = (
 /obj/structure/chair,
@@ -4686,7 +4686,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/arrivals)
 "jG" = (
 /turf/open/floor/plasteel{
@@ -4725,7 +4725,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/arrivals)
 "jK" = (
 /obj/machinery/light/small{
@@ -4734,7 +4734,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/arrivals)
 "jL" = (
 /obj/structure/noticeboard{
@@ -4815,7 +4815,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/arrivals)
 "jU" = (
 /obj/structure/cable{
@@ -4832,7 +4832,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/arrivals)
 "jW" = (
 /obj/structure/cable{
@@ -4851,7 +4851,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/arrivals)
 "jY" = (
 /obj/machinery/light/small{
@@ -4933,7 +4933,7 @@ obj/effect/decal/cleanable/dirt,
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/arrivals)
 "kf" = (
 /obj/machinery/light/small{
@@ -4947,7 +4947,7 @@ obj/effect/decal/cleanable/dirt,
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/arrivals)
 "kg" = (
 /obj/structure/cable{
@@ -4995,7 +4995,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/arrivals)
 "kk" = (
 /obj/machinery/light/small,
@@ -5005,7 +5005,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/arrivals)
 "kl" = (
 /obj/structure/cable{
@@ -5141,7 +5141,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/arrivals)
 "kA" = (
 /obj/effect/decal/cleanable/dirt,
@@ -5186,7 +5186,7 @@ obj/effect/decal/cleanable/dirt,
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/arrivals)
 "kF" = (
 /turf/open/floor/plasteel{
@@ -5204,7 +5204,7 @@ obj/effect/decal/cleanable/dirt,
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/arrivals)
 "kH" = (
 /obj/machinery/door/firedoor/closed{
@@ -5219,7 +5219,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/arrivals)
 "kJ" = (
 /obj/machinery/firealarm{
@@ -5269,7 +5269,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/arrivals)
 "kP" = (
 /obj/item/stack/rods,
@@ -5414,7 +5414,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/arrivals)
 "lh" = (
 /obj/structure/chair{
@@ -6471,7 +6471,7 @@ obj/effect/decal/cleanable/dirt,
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/arrivals)
 "nG" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -6484,7 +6484,7 @@ obj/effect/decal/cleanable/dirt,
 	heat_capacity = 1e+006;
 	temperature = 251
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/moonoutpost19/arrivals)
 "nH" = (
 /obj/structure/bed,

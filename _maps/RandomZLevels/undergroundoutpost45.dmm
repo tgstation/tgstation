@@ -183,7 +183,7 @@
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/central)
 "aG" = (
 /obj/machinery/button/door{
@@ -217,7 +217,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/central)
 "aJ" = (
 /obj/machinery/vending/cigarette,
@@ -1341,7 +1341,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/central)
 "dm" = (
 /obj/machinery/firealarm{
@@ -1747,7 +1747,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/central)
 "ed" = (
 /obj/machinery/door/firedoor,
@@ -1977,7 +1977,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/central)
 "eE" = (
 /obj/structure/table,
@@ -2613,7 +2613,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/central)
 "fU" = (
 /obj/machinery/firealarm{
@@ -2863,7 +2863,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "gB" = (
 /obj/machinery/light/small,
@@ -3922,7 +3922,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/gateway)
 "iO" = (
 /obj/structure/table,
@@ -3958,7 +3958,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/gateway)
 "iS" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -4121,7 +4121,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/gateway)
 "jh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -4366,7 +4366,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/gateway)
 "jJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -4814,7 +4814,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/gateway)
 "kA" = (
 /obj/structure/tank_dispenser/oxygen,
@@ -5610,7 +5610,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "lS" = (
 /obj/structure/chair{
@@ -5865,7 +5865,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "mq" = (
 /obj/structure/table,
@@ -5876,7 +5876,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "mr" = (
 /obj/structure/table/wood,
@@ -5958,7 +5958,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "my" = (
 /obj/structure/cable{
@@ -6304,7 +6304,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "nh" = (
 /obj/machinery/door/poddoor{
@@ -6995,7 +6995,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "on" = (
 /obj/structure/cable{
@@ -7319,7 +7319,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oQ" = (
 /obj/machinery/light/small,
@@ -7645,7 +7645,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "pu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -8553,7 +8553,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rg" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -8582,7 +8582,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/engineering)
 "rj" = (
 /turf/open/floor/plasteel{
@@ -8753,14 +8753,14 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/engineering)
 "rw" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/engineering)
 "rx" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
@@ -9223,7 +9223,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/engineering)
 "si" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -9644,7 +9644,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/engineering)
 "sV" = (
 /obj/structure/cable{
@@ -10057,7 +10057,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/engineering)
 "tK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -10346,7 +10346,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/engineering)
 "um" = (
 /obj/machinery/atmospherics/components/trinary/filter/atmos/n2{
@@ -10384,7 +10384,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/engineering)
 "up" = (
 /obj/machinery/atmospherics/components/trinary/filter/atmos/o2{
@@ -10521,7 +10521,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/engineering)
 "uE" = (
 /turf/closed/wall,
@@ -10717,7 +10717,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/engineering)
 "uY" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -10991,7 +10991,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/engineering)
 "vy" = (
 /obj/structure/cable{
@@ -11038,7 +11038,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/engineering)
 "vD" = (
 /obj/machinery/air_sensor{
@@ -11142,7 +11142,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/engineering)
 "vR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -11152,7 +11152,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/engineering)
 "vS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -11194,7 +11194,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/engineering)
 "vV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -11328,7 +11328,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/mining)
 "wh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -11338,7 +11338,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/mining)
 "wi" = (
 /obj/structure/cable{
@@ -11548,7 +11548,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/mining)
 "wD" = (
 /obj/structure/cable{
@@ -11579,7 +11579,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/mining)
 "wG" = (
 /obj/structure/filingcabinet/chestdrawer,
@@ -11685,7 +11685,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/mining)
 "wR" = (
 /obj/structure/table/reinforced,
@@ -11760,7 +11760,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/mining)
 "wZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -11964,7 +11964,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/mining)
 "xq" = (
 /obj/machinery/conveyor{
@@ -12010,7 +12010,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/mining)
 "xv" = (
 /obj/structure/table,
@@ -12054,7 +12054,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/mining)
 "xz" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -12084,7 +12084,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/mining)
 "xC" = (
 /turf/open/floor/plasteel{
@@ -12190,7 +12190,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/mining)
 "xM" = (
 /obj/machinery/mineral/stacking_unit_console{
@@ -12230,7 +12230,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/mining)
 "xQ" = (
 /obj/machinery/computer/mech_bay_power_console{
@@ -12288,7 +12288,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/mining)
 "xW" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -12316,7 +12316,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/mining)
 "xY" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -12334,7 +12334,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/mining)
 "ya" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -12343,7 +12343,7 @@ obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/undergroundoutpost45/mining)
 "yb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{

@@ -1850,14 +1850,14 @@
 	},
 /obj/item/toy/plush/slimeplushie,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/security/prison)
 "agJ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/security/prison)
 "agK" = (
 /obj/machinery/light/small{
@@ -1876,7 +1876,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/structure/chair,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/security/prison)
 "agL" = (
 /obj/structure/bed,
@@ -1896,7 +1896,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/item/toy/plush/lizardplushie,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/security/prison)
 "agM" = (
 /obj/structure/cable{
@@ -1906,7 +1906,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/security/prison)
 "agN" = (
 /obj/machinery/light/small{
@@ -1925,7 +1925,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/structure/chair,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/security/prison)
 "agO" = (
 /obj/structure/sink{
@@ -1989,19 +1989,19 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/security/prison)
 "agX" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/security/prison)
 "agY" = (
 /obj/structure/table,
 /obj/item/paper,
 /obj/item/pen,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/security/prison)
 "agZ" = (
 /obj/machinery/flasher{
@@ -2010,7 +2010,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/security/prison)
 "aha" = (
 /obj/structure/cable{
@@ -2018,7 +2018,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/security/prison)
 "ahb" = (
 /obj/structure/toilet{
@@ -2098,7 +2098,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/security/prison)
 "ahn" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
@@ -2125,7 +2125,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/security/prison)
 "ahq" = (
 /turf/open/floor/plasteel/showroomfloor,
@@ -7488,11 +7488,11 @@ obj/effect/decal/cleanable/dirt,
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/security/brig)
 "auy" = (
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/security/brig)
 "auz" = (
 /obj/machinery/light/small{
@@ -7502,12 +7502,12 @@ obj/effect/decal/cleanable/dirt,
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/security/brig)
 "auA" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/security/brig)
 "auB" = (
 /obj/machinery/light{
@@ -14560,7 +14560,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/quartermaster/warehouse)
 "aMq" = (
 /obj/effect/spawner/lootdrop/maintenance,
@@ -14571,7 +14571,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/quartermaster/warehouse)
 "aMr" = (
 /obj/structure/closet/crate,
@@ -14582,7 +14582,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/quartermaster/warehouse)
 "aMs" = (
 /obj/structure/disposalpipe/segment{
@@ -14595,7 +14595,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/quartermaster/warehouse)
 "aMt" = (
 /obj/structure/closet/cardboard,
@@ -14613,7 +14613,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/quartermaster/warehouse)
 "aMu" = (
 /obj/item/cigbutt/cigarbutt,
@@ -14624,7 +14624,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/quartermaster/warehouse)
 "aMv" = (
 /obj/structure/disposalpipe/segment{
@@ -14641,7 +14641,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/quartermaster/warehouse)
 "aMw" = (
 /obj/structure/disposalpipe/segment{
@@ -15148,23 +15148,23 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/quartermaster/warehouse)
 "aNO" = (
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/quartermaster/warehouse)
 "aNP" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/quartermaster/warehouse)
 "aNQ" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/quartermaster/warehouse)
 "aNR" = (
 /obj/structure/cable{
@@ -15604,7 +15604,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/quartermaster/warehouse)
 "aOZ" = (
 /obj/item/stack/sheet/cardboard,
@@ -15612,7 +15612,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/quartermaster/warehouse)
 "aPa" = (
 /obj/structure/closet/crate,
@@ -15620,21 +15620,21 @@ obj/effect/decal/cleanable/dirt,
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/quartermaster/warehouse)
 "aPb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/quartermaster/warehouse)
 "aPc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/quartermaster/warehouse)
 "aPd" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -15932,18 +15932,18 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/quartermaster/warehouse)
 "aQd" = (
 /obj/item/flashlight,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/quartermaster/warehouse)
 "aQe" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/quartermaster/warehouse)
 "aQf" = (
 /obj/structure/closet/crate{
@@ -15951,12 +15951,12 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/quartermaster/warehouse)
 "aQg" = (
 /obj/structure/closet/crate/medical,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/quartermaster/warehouse)
 "aQj" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
@@ -16461,7 +16461,7 @@ obj/effect/decal/cleanable/dirt,
 "aRq" = (
 /obj/structure/closet/crate/internals,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/quartermaster/warehouse)
 "aRs" = (
 /obj/structure/disposalpipe/segment,
@@ -19969,11 +19969,11 @@ obj/effect/decal/cleanable/dirt,
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/janitor)
 "aZP" = (
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/janitor)
 "aZQ" = (
 /obj/structure/reagent_dispensers/watertank,
@@ -19986,7 +19986,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/janitor)
 "aZR" = (
 /obj/machinery/hydroponics/constructable,
@@ -20423,7 +20423,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/janitor)
 "baY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -20433,7 +20433,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/janitor)
 "baZ" = (
 /obj/structure/closet/l3closet/janitor,
@@ -20446,7 +20446,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/janitor)
 "bba" = (
 /obj/machinery/holopad,
@@ -20771,7 +20771,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/janitor)
 "bbY" = (
 /obj/machinery/camera{
@@ -20780,7 +20780,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/machinery/vending/wardrobe/jani_wardrobe,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/janitor)
 "bbZ" = (
 /obj/machinery/seed_extractor,
@@ -21186,14 +21186,14 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/janitor)
 "bdh" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/janitor)
 "bdi" = (
 /obj/item/reagent_containers/glass/bucket,
@@ -21207,7 +21207,7 @@ obj/effect/decal/cleanable/dirt,
 	pixel_x = 22
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/janitor)
 "bdj" = (
 /turf/open/floor/plasteel/green/corner,
@@ -21496,7 +21496,7 @@ obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/janitor)
 "bed" = (
 /obj/structure/table,
@@ -21504,7 +21504,7 @@ obj/effect/decal/cleanable/dirt,
 /obj/item/restraints/legcuffs/beartrap,
 /obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/janitor)
 "bee" = (
 /obj/structure/table,
@@ -21518,7 +21518,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/item/clothing/head/crown,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/janitor)
 "bef" = (
 /turf/open/floor/plasteel/neutral/side{
@@ -21957,7 +21957,7 @@ obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/janitor)
 "bfj" = (
 /obj/machinery/hydroponics/constructable,
@@ -22487,7 +22487,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "gib3"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/science/robotics/mechbay)
 "bgF" = (
 /obj/structure/cable{
@@ -27271,7 +27271,7 @@ obj/effect/decal/cleanable/dirt,
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/science/xenobiology)
 "btB" = (
 /obj/structure/cable{
@@ -27281,7 +27281,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/science/xenobiology)
 "btE" = (
 /obj/structure/disposalpipe/segment{
@@ -27320,7 +27320,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/science/xenobiology)
 "btK" = (
 /obj/docking_port/stationary{
@@ -39341,7 +39341,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/maintenance/department/engine)
 "bXe" = (
 /obj/structure/cable{
@@ -40478,7 +40478,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/maintenance/department/engine)
 "cad" = (
 /obj/structure/window/reinforced,
@@ -48279,7 +48279,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/maintenance/department/engine)
 "fAx" = (
 /obj/structure/cable{
@@ -48714,7 +48714,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/science/xenobiology)
 "gIG" = (
 /turf/open/floor/plasteel/darkpurple/side{
@@ -49676,7 +49676,7 @@ obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/item/kitchen/knife,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/maintenance/department/engine)
 "jPo" = (
 /obj/structure/chair,
@@ -49881,7 +49881,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/maintenance/department/engine)
 "ksf" = (
 /obj/item/stack/tile/carpet,
@@ -50110,7 +50110,7 @@ obj/effect/decal/cleanable/dirt,
 /area/maintenance/department/security/brig)
 "kRq" = (
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/maintenance/department/engine)
 "kRK" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
@@ -50562,7 +50562,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/science/xenobiology)
 "mwg" = (
 /obj/structure/closet/crate{
@@ -51395,7 +51395,7 @@ obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/stack/sheet/mineral/wood,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/maintenance/department/engine)
 "oGm" = (
 /obj/structure/disposalpipe/segment{
@@ -51889,7 +51889,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/structure/barricade/wooden,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/maintenance/department/engine)
 "qar" = (
 /obj/structure/chair/office/light{
@@ -51948,7 +51948,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/science/xenobiology)
 "qdj" = (
 /obj/structure/disposalpipe/segment,
@@ -53501,7 +53501,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/science/xenobiology)
 "uXH" = (
 /obj/structure/cable{
@@ -53543,7 +53543,7 @@ obj/effect/decal/cleanable/dirt,
 	req_access_txt = "55"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/science/xenobiology)
 "vhk" = (
 /obj/structure/chair,

@@ -29,7 +29,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/pirate)
 "de" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -320,7 +320,7 @@ obj/effect/decal/cleanable/dirt,
 "pS" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/pirate)
 "pZ" = (
 /obj/structure/tank_dispenser/oxygen,
@@ -377,7 +377,7 @@ obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/pirate)
 "su" = (
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/pirate)
 "th" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -403,7 +403,7 @@ obj/effect/decal/cleanable/dirt,
 	environment_smash = 0
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/pirate)
 "ul" = (
 /obj/structure/table,
@@ -424,7 +424,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/pirate)
 "vq" = (
 /obj/structure/bed,
@@ -546,7 +546,7 @@ obj/effect/decal/cleanable/dirt,
 	name = "Medbay"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/pirate)
 "AP" = (
 /obj/structure/sign/departments/medbay/alt,
@@ -689,7 +689,7 @@ obj/effect/decal/cleanable/dirt,
 	name = "Armory"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/pirate)
 "II" = (
 /obj/structure/closet/crate/freezer/surplus_limbs,

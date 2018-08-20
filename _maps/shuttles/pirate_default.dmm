@@ -649,7 +649,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/pirate)
 "bv" = (
 /obj/effect/decal/cleanable/dirt,
@@ -993,7 +993,7 @@ obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/pirate)
 "eS" = (
 /obj/structure/closet/secure_closet/personal,

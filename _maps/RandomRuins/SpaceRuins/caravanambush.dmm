@@ -162,7 +162,7 @@
 "aN" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/airless,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/freighter3)
 "aO" = (
 /obj/machinery/airalarm/all_access{
@@ -181,7 +181,7 @@ obj/effect/decal/cleanable/dirt,
 	environment_smash = 0
 	},
 /turf/open/floor/plasteel/airless,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/freighter2)
 "aQ" = (
 /obj/structure/rack,
@@ -477,7 +477,7 @@ obj/effect/decal/cleanable/dirt,
 "gT" = (
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
 /turf/open/floor/plasteel/airless,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/freighter3)
 "gU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -758,7 +758,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/airless,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/freighter3)
 "if" = (
 /obj/machinery/firealarm{
@@ -892,7 +892,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
 /turf/open/floor/plasteel/airless,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/freighter3)
 "iF" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1007,7 +1007,7 @@ obj/effect/decal/cleanable/dirt,
 "jq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/airless,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/freighter2)
 "jr" = (
 /obj/effect/turf_decal/box/white/corners{
@@ -1082,7 +1082,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/freighter2)
 "jK" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -1098,7 +1098,7 @@ obj/effect/decal/cleanable/dirt,
 	environment_smash = 0
 	},
 /turf/open/floor/plasteel/airless,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/caravan/freighter2)
 "jN" = (
 /turf/open/floor/plasteel/airless{

@@ -590,7 +590,7 @@
 	name = "E.V.A Access"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/bar)
 "aX" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -1118,7 +1118,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/crew)
 "bN" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1796,7 +1796,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/machinery/cell_charger,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/cargo)
 "cH" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2149,7 +2149,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/medbay)
 "dh" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2320,7 +2320,7 @@ obj/effect/decal/cleanable/dirt,
 	name = "dust"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/medbay)
 "dr" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -2363,7 +2363,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/cargo)
 "du" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2381,7 +2381,7 @@ obj/effect/decal/cleanable/dirt,
 	name = "scrawny giant spider"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/cargo)
 "dv" = (
 /obj/structure/chair/comfy/shuttle{
@@ -2467,7 +2467,7 @@ obj/effect/decal/cleanable/dirt,
 	name = "dust"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/cargo)
 "dD" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2542,7 +2542,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/medbay)
 "dI" = (
 /obj/machinery/door/airlock/external,
@@ -2735,7 +2735,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/cargo)
 "dW" = (
 /obj/effect/decal/cleanable/dirt{

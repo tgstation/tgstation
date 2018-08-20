@@ -570,7 +570,7 @@
 	},
 /obj/machinery/holopad,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/research)
 "bI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -580,7 +580,7 @@ obj/effect/decal/cleanable/dirt,
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/research)
 "bJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -718,7 +718,7 @@ obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/research)
 "bX" = (
 /obj/machinery/door/firedoor,
@@ -773,7 +773,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/kitchen)
 "cg" = (
 /obj/machinery/power/apc{
@@ -786,7 +786,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/kitchen)
 "ch" = (
 /obj/structure/table,
@@ -1109,7 +1109,7 @@ obj/effect/decal/cleanable/dirt,
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/kitchen)
 "cR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -1129,7 +1129,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/effect/decal/cleanable/egg_smudge,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/kitchen)
 "cT" = (
 /obj/item/stack/sheet/mineral/wood,
@@ -1176,7 +1176,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/dorm)
 "cX" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -1378,7 +1378,7 @@ obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/kitchen)
 "dr" = (
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/kitchen)
 "ds" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1402,7 +1402,7 @@ obj/effect/decal/cleanable/dirt,
 "du" = (
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/kitchen)
 "dv" = (
 /obj/structure/table,
@@ -1451,7 +1451,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/dorm)
 "dE" = (
 /turf/open/floor/plasteel/neutral/side{
@@ -1522,7 +1522,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/kitchen)
 "dS" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -1541,7 +1541,7 @@ obj/effect/decal/cleanable/dirt,
 	name = "box of donkpockets"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/kitchen)
 "dT" = (
 /obj/structure/table,
@@ -1552,7 +1552,7 @@ obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/kitchen/knife,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/kitchen)
 "dV" = (
 /obj/effect/decal/cleanable/egg_smudge,
@@ -1793,7 +1793,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/kitchen)
 "ez" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1807,7 +1807,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/kitchen)
 "eA" = (
 /obj/structure/extinguisher_cabinet{
@@ -2240,11 +2240,11 @@ obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/shoes/winterboots,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/gateway)
 "fG" = (
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/gateway)
 "fH" = (
 /obj/structure/bed,
@@ -2255,7 +2255,7 @@ obj/effect/decal/cleanable/dirt,
 "fI" = (
 /obj/effect/landmark/vr_spawn/snowdin,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/gateway)
 "fJ" = (
 /obj/structure/table/reinforced,
@@ -2428,7 +2428,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/dorm)
 "gj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -2543,13 +2543,13 @@ obj/effect/decal/cleanable/dirt,
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/gateway)
 "gw" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/landmark/vr_spawn/snowdin,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/gateway)
 "gx" = (
 /turf/open/floor/plating/asteroid/snow/ice,
@@ -2564,7 +2564,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/effect/landmark/vr_spawn/snowdin,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/gateway)
 "gz" = (
 /obj/machinery/light/broken{
@@ -2621,12 +2621,12 @@ obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/hydro)
 "gH" = (
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/hydro)
 "gI" = (
 /obj/machinery/hydroponics/constructable,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/hydro)
 "gJ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2775,7 +2775,7 @@ obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/trash/can,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/dorm)
 "ha" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -2906,7 +2906,7 @@ obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/vr_spawn/snowdin,
 /obj/machinery/holopad,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/gateway)
 "hn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -2974,7 +2974,7 @@ obj/effect/decal/cleanable/dirt,
 "hy" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/hydro)
 "hz" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3144,7 +3144,7 @@ obj/effect/decal/cleanable/dirt,
 "hQ" = (
 /obj/structure/window,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/gateway)
 "hR" = (
 /obj/effect/landmark/vr_spawn/snowdin,
@@ -3161,7 +3161,7 @@ obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/vr_spawn/snowdin,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/gateway)
 "hT" = (
 /obj/structure/chair{
@@ -3861,7 +3861,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post)
 "js" = (
 /turf/open/floor/plating,
@@ -3882,7 +3882,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/effect/landmark/vr_spawn/snowdin,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/garage)
 "jw" = (
 /obj/structure/table,
@@ -3972,7 +3972,7 @@ obj/effect/decal/cleanable/dirt,
 "jG" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/garage)
 "jH" = (
 /obj/effect/spawner/structure/window,
@@ -3992,7 +3992,7 @@ obj/effect/decal/cleanable/dirt,
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/garage)
 "jK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -4060,7 +4060,7 @@ obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post)
 "jU" = (
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post)
 "jV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -4073,7 +4073,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post)
 "jW" = (
 /obj/effect/decal/cleanable/dirt,
@@ -4189,7 +4189,7 @@ obj/effect/decal/cleanable/dirt,
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/garage)
 "kl" = (
 /obj/effect/decal/cleanable/oil,
@@ -4447,7 +4447,7 @@ obj/effect/decal/cleanable/dirt,
 /obj/machinery/hydroponics/constructable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/hydro)
 "kT" = (
 /obj/item/stack/cable_coil/red{
@@ -4475,7 +4475,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/garage)
 "kW" = (
 /obj/effect/decal/cleanable/dirt,
@@ -4655,7 +4655,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/effect/turf_decal/snowdin_station_sign/up/two,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post)
 "lq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -4673,7 +4673,7 @@ obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/snowdin_station_sign/up/three,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post)
 "lr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -4740,7 +4740,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/effect/turf_decal/snowdin_station_sign/up/seven,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post)
 "lw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -4939,7 +4939,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/hydro)
 "lI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -4952,7 +4952,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/hydro)
 "lJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -4965,7 +4965,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/hydro)
 "lK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -5017,7 +5017,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/garage)
 "lP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -5030,7 +5030,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/garage)
 "lQ" = (
 /obj/machinery/door/airlock{
@@ -5212,19 +5212,19 @@ obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/snowdin_station_sign,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post)
 "mg" = (
 /obj/effect/turf_decal/snowdin_station_sign/two,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post)
 "mh" = (
 /obj/effect/turf_decal/snowdin_station_sign/three,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post)
 "mi" = (
 /obj/effect/turf_decal/snowdin_station_sign/four,
@@ -5239,7 +5239,7 @@ obj/effect/decal/cleanable/dirt,
 "mk" = (
 /obj/effect/turf_decal/snowdin_station_sign/six,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post)
 "ml" = (
 /obj/effect/turf_decal/snowdin_station_sign/seven,
@@ -5358,11 +5358,11 @@ obj/effect/decal/cleanable/dirt,
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/garage)
 "mC" = (
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/garage)
 "mD" = (
 /obj/structure/toilet{
@@ -5423,12 +5423,12 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post)
 "mK" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post)
 "mL" = (
 /turf/open/floor/plasteel,
@@ -5504,13 +5504,13 @@ obj/effect/decal/cleanable/dirt,
 /obj/item/key,
 /obj/item/key,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/garage)
 "mW" = (
 /obj/structure/table,
 /obj/machinery/light/small,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/garage)
 "mX" = (
 /obj/structure/table,
@@ -5696,7 +5696,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/visible,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/engineering)
 "nq" = (
 /obj/structure/cable/yellow{
@@ -5886,7 +5886,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/visible,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/engineering)
 "nS" = (
 /turf/open/floor/plating,
@@ -6060,7 +6060,7 @@ obj/effect/decal/cleanable/dirt,
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/engineering)
 "oo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
@@ -6070,7 +6070,7 @@ obj/effect/decal/cleanable/dirt,
 	piping_layer = 3
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/engineering)
 "op" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
@@ -6144,16 +6144,16 @@ obj/effect/decal/cleanable/dirt,
 "oy" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/secpost)
 "oz" = (
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/secpost)
 "oA" = (
 /obj/machinery/door/window/brigdoor/westleft,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/secpost)
 "oB" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -6202,7 +6202,7 @@ obj/effect/decal/cleanable/dirt,
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/secpost)
 "oG" = (
 /obj/structure/table,
@@ -6292,7 +6292,7 @@ obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/engineering)
 "oP" = (
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/engineering)
 "oQ" = (
 /obj/structure/table,
@@ -6397,12 +6397,12 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/structure/table,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/secpost)
 "pi" = (
 /obj/structure/bed,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/secpost)
 "pj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -6461,13 +6461,13 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post)
 "pr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/holopad,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post)
 "ps" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -6478,7 +6478,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post)
 "pt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -6521,7 +6521,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/engineering)
 "px" = (
 /obj/machinery/atmospherics/pipe/simple/supply/visible{
@@ -6678,7 +6678,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/machinery/holopad,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/engineering)
 "pV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/visible{
@@ -6734,7 +6734,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/engineering)
 "qc" = (
 /obj/structure/reagent_dispensers/watertank/high,
@@ -6872,14 +6872,14 @@ obj/effect/decal/cleanable/dirt,
 	name = "Air Mix To Turbine Mix"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/engineering)
 "qw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/visible{
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/engineering)
 "qx" = (
 /obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped{
@@ -6892,7 +6892,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/engineering)
 "qz" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible{
@@ -7185,7 +7185,7 @@ obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/cavern2)
 "rf" = (
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/cavern2)
 "rg" = (
 /obj/machinery/airalarm{
@@ -7335,7 +7335,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/cavern2)
 "rC" = (
 /obj/structure/sign/warning/nosmoking{
@@ -7524,7 +7524,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/cavern2)
 "rZ" = (
 /mob/living/simple_animal/hostile/netherworld/migo,
@@ -7658,7 +7658,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/cavern2)
 "su" = (
 /obj/machinery/door/airlock/maintenance{
@@ -10315,7 +10315,7 @@ obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/minipost)
 "Aj" = (
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/minipost)
 "Ak" = (
 /obj/structure/table,
@@ -10578,7 +10578,7 @@ obj/effect/decal/cleanable/dirt,
 "Ba" = (
 /obj/item/wrench,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/minipost)
 "Bb" = (
 /obj/machinery/button/door{
@@ -12378,7 +12378,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/mining_dock)
 "Gj" = (
 /turf/open/floor/plasteel,
@@ -12559,7 +12559,7 @@ obj/effect/decal/cleanable/dirt,
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "GL" = (
 /obj/effect/turf_decal/stripes/line{
@@ -12648,7 +12648,7 @@ obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/mining_main/robotics)
 "GZ" = (
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/mining_dock)
 "Ha" = (
 /obj/structure/cable/yellow{
@@ -12682,7 +12682,7 @@ obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "Hg" = (
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "Hh" = (
 /turf/open/floor/plasteel,
@@ -13185,7 +13185,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/awaymission/snowdin/post/mining_dock)
 "IM" = (
 /obj/structure/cable/yellow{

@@ -779,7 +779,7 @@
 	},
 /obj/structure/closet/wardrobe/black,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/crew)
 "bg" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1720,7 +1720,7 @@ obj/effect/decal/cleanable/dirt,
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/bar)
 "cr" = (
 /obj/machinery/door/firedoor,
@@ -1890,7 +1890,7 @@ obj/effect/decal/cleanable/dirt,
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/bar)
 "cD" = (
 /obj/structure/table,
@@ -2225,7 +2225,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/machinery/processor,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/bar)
 "cV" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2234,7 +2234,7 @@ obj/effect/decal/cleanable/dirt,
 	},
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/bar)
 "cW" = (
 /turf/closed/wall/mineral/titanium,
@@ -2951,7 +2951,7 @@ obj/effect/decal/cleanable/dirt,
 	pixel_y = 2
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/bar)
 "dU" = (
 /obj/effect/decal/cleanable/dirt{
@@ -3106,7 +3106,7 @@ obj/effect/decal/cleanable/dirt,
 	pixel_y = 6
 	},
 /turf/open/floor/plasteel,
-obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /area/shuttle/abandoned/bar)
 "ee" = (
 /obj/effect/decal/cleanable/dirt{
