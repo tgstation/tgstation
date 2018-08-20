@@ -261,7 +261,7 @@ Auto Patrol: []"},
 		C.stuttering = 5
 		threat = C.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
 
-	add_logs(src,C,"stunned")
+	log_combat(src,C,"stunned")
 	if(declare_arrests)
 		var/area/location = get_area(src)
 		speak("[arrest_type ? "Detaining" : "Arresting"] level [threat] scumbag <b>[C]</b> in [location].", radio_channel)

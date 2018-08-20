@@ -25,7 +25,7 @@ SUBSYSTEM_DEF(communications)
 	else
 		priority_announce(html_decode(user.treat_message(input)), null, 'sound/misc/announce.ogg', "Captain")
 		nonsilicon_message_cooldown = world.time + COMMUNICATION_COOLDOWN
-	log_talk(user,"[key_name(user)] has made a priority announcement: [input]",LOGSAY)
+	user.log_talk(input, LOG_SAY, tag="priority announcement")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has made a priority announcement.")
 
 /datum/controller/subsystem/communications/proc/send_message(datum/comm_message/sending,print = TRUE,unique = FALSE)

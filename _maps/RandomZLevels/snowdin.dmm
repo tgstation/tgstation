@@ -11282,7 +11282,7 @@
 	dir = 9
 	},
 /obj/item/shard,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/snowdin/cave)
 "Dh" = (
 /obj/effect/turf_decal/stripes/line{
@@ -11291,7 +11291,7 @@
 /obj/item/reagent_containers/food/drinks/beer{
 	list_reagents = null
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/snowdin/cave)
 "Di" = (
 /turf/open/floor/plasteel/vault/side{
@@ -11365,14 +11365,14 @@
 /obj/item/reagent_containers/food/drinks/beer{
 	list_reagents = null
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/snowdin/cave)
 "Dr" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/item/stack/rods,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/snowdin/cave)
 "Ds" = (
 /obj/item/grenade/plastic/c4,
@@ -11441,13 +11441,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/snowdin/cave)
 "DC" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/snowdin/cave)
 "DD" = (
 /obj/structure/table/reinforced,
@@ -11493,7 +11493,7 @@
 /obj/machinery/door/airlock/hatch{
 	req_access_txt = "150"
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/snowdin/cave)
 "DK" = (
 /obj/structure/grille,
@@ -11543,7 +11543,7 @@
 	dir = 8
 	},
 /obj/item/shard,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/snowdin/cave)
 "DS" = (
 /turf/open/floor/plasteel/vault,
@@ -11652,7 +11652,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/vomit/old,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/snowdin/cave)
 "Eh" = (
 /obj/structure/shuttle/engine/propulsion/right{
@@ -11679,7 +11679,7 @@
 /area/awaymission/snowdin/cave)
 "Ek" = (
 /obj/structure/door_assembly/door_assembly_hatch,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/snowdin/cave)
 "El" = (
 /obj/effect/turf_decal/weather/snow,
@@ -11718,7 +11718,7 @@
 	dir = 4
 	},
 /obj/item/shard,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/snowdin/cave)
 "Er" = (
 /obj/structure/table/reinforced,
@@ -11758,7 +11758,7 @@
 /obj/item/reagent_containers/food/drinks/beer{
 	list_reagents = null
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/snowdin/cave)
 "Ew" = (
 /obj/machinery/iv_drip,
@@ -11797,14 +11797,14 @@
 /obj/item/reagent_containers/food/drinks/beer{
 	list_reagents = null
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/snowdin/cave)
 "EB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /obj/item/reagent_containers/glass/beaker,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/snowdin/cave)
 "EC" = (
 /obj/structure/window/reinforced{

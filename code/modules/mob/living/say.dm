@@ -163,7 +163,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if((InCritical() && !fullcrit) || message_mode == MODE_WHISPER)
 		message_range = 1
 		message_mode = MODE_WHISPER
-		log_talk(src,"[key_name(src)] : [message]",LOGWHISPER)
+		src.log_talk(message, LOG_WHISPER)
 		if(fullcrit)
 			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 			// If we cut our message short, abruptly end it with a-..
@@ -174,7 +174,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			message_mode = MODE_WHISPER_CRIT
 			succumbed = TRUE
 	else
-		log_talk(src,"[name]/[key] : [message]",LOGSAY)
+		src.log_talk(message, LOG_SAY)
 
 	message = treat_message(message)
 	if(!message)
@@ -185,9 +185,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(language)
 		var/datum/language/L = GLOB.language_datum_instances[language]
 		spans |= L.spans
-
-	//Log what we've said with an associated timestamp, using the list's len for safety/to prevent overwriting messages
-	log_message(message, INDIVIDUAL_SAY_LOG)
 
 	var/radio_return = radio(message, message_mode, spans, language)
 	if(radio_return & ITALICS)
@@ -216,6 +213,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return 1
 
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
+	. = ..()
 	if(!client)
 		return
 	var/deaf_message

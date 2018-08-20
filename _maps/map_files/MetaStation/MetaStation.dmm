@@ -34542,6 +34542,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/storage_shared)
+"bvj" = (
+/obj/structure/table,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/science/nanite)
 "bvk" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
@@ -75645,6 +75655,9 @@
 	dir = 4
 	},
 /area/science/circuit)
+"fEQ" = (
+/turf/closed/wall,
+/area/science/nanite)
 "fFM" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -75669,6 +75682,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
+"gjC" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/white,
+/area/science/research)
 "gkj" = (
 /turf/open/floor/plasteel/purple/side{
 	dir = 1
@@ -75713,6 +75733,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"gtr" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/science/nanite)
 "gEk" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
@@ -75820,6 +75847,19 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"iyU" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/science/nanite)
 "izu" = (
 /obj/machinery/autolathe{
 	name = "public autolathe"
@@ -76061,6 +76101,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"lUr" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/science/nanite)
 "lWY" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Telecomms Server Room"
@@ -76074,6 +76121,17 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/server)
+"lYP" = (
+/obj/machinery/door/airlock/research{
+	name = "Nanite Laboratory";
+	req_one_access_txt = "7;47;29"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/science/nanite)
 "mjJ" = (
 /obj/machinery/nuclearbomb/beer{
 	pixel_x = 2;
@@ -76416,6 +76474,16 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"qom" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel/white,
+/area/science/research)
 "qqg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -76596,6 +76664,13 @@
 	dir = 8
 	},
 /area/science/circuit)
+"sAO" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/plasteel/dark,
+/area/science/nanite)
 "sFv" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -76911,6 +76986,16 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"xqU" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/science/nanite)
 "xse" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
@@ -106726,8 +106811,8 @@ csS
 ctM
 cuG
 cvK
-pvJ
-wIh
+iyU
+xqU
 cyu
 czm
 cAq
@@ -106982,10 +107067,10 @@ cgo
 cLB
 ctL
 cuH
-fzu
+bvj
 cwL
 cxI
-pER
+sAO
 czn
 cAr
 cBl
@@ -107238,14 +107323,14 @@ cqD
 cgo
 csU
 ctL
-nOf
-nOf
-uKc
-odH
-sti
-nOf
-nOf
-nOf
+fEQ
+fEQ
+lUr
+lYP
+gtr
+fEQ
+fEQ
+fEQ
 cDi
 cDi
 cDi
@@ -107498,7 +107583,7 @@ ctN
 cuI
 cvM
 cwM
-iEx
+gjC
 cyv
 czo
 cAt
@@ -107755,7 +107840,7 @@ ctO
 cuJ
 cvN
 dDy
-xcl
+qom
 cyw
 czp
 cAu

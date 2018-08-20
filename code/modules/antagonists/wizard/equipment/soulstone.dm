@@ -66,7 +66,7 @@
 		if(iscultist(user))
 			to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your bretheren's soul.\"</span>")
 			return
-	add_logs(user, M, "captured [M.name]'s soul", src)
+	log_combat(user, M, "captured [M.name]'s soul", src)
 	transfer_soul("VICTIM", M, user)
 
 ///////////////////Options for using captured souls///////////////////////////////////////

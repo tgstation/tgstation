@@ -256,10 +256,10 @@ GLOBAL_LIST_EMPTY(crematoriums)
 			if (M.stat != DEAD)
 				M.emote("scream")
 			if(user)
-				user.log_message("Cremated <b>[key_name(M)]</b>", INDIVIDUAL_ATTACK_LOG)
-				log_attack("[key_name(user)] cremated [key_name(M)]")
+				log_combat(user, M, "cremated")
 			else
-				log_attack("UNKNOWN cremated [key_name(M)]")
+				M.log_message("was cremated", LOG_ATTACK)
+
 			M.death(1)
 			if(M) //some animals get automatically deleted on death.
 				M.ghostize()

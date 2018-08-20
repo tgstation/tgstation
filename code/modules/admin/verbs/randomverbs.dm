@@ -75,7 +75,7 @@
 		message_admins("[key_name_admin(src)] decided not to answer [key_name_admin(H)]'s [sender] request.")
 		return
 
-	log_admin("[key_name(src)] replied to [key_name(H)]'s [sender] message with the message [input].")
+	log_directed_talk(src, H, input, LOG_ADMIN, "reply")
 	message_admins("[key_name_admin(src)] replied to [key_name_admin(H)]'s [sender] message with: \"[input]\"")
 	to_chat(H, "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from [sender == "Syndicate" ? "your benefactor" : "Central Command"].  Message as follows[sender == "Syndicate" ? ", agent." : ":"] <span class='bold'>[input].</span> Message ends.\"")
 
@@ -596,16 +596,28 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 /client/proc/admin_delete(datum/D)
 	var/atom/A = D
-	var/coords = istype(A) ? " at ([A.x], [A.y], [A.z])" : ""
-	if (alert(src, "Are you sure you want to delete:\n[D]\nat[coords]?", "Confirmation", "Yes", "No") == "Yes")
-		log_admin("[key_name(usr)] deleted [D][coords]")
-		message_admins("[key_name_admin(usr)] deleted [D][coords]")
+	var/coords = ""
+	var/jmp_coords = ""
+	if(istype(A))
+		var/turf/T = get_turf(A)
+		if(T)
+			coords = "at [COORD(T)]"
+			jmp_coords = "at [ADMIN_COORDJMP(T)]"
+		else
+			jmp_coords = coords = "in nullspace"
+
+	if (alert(src, "Are you sure you want to delete:\n[D]\n[coords]?", "Confirmation", "Yes", "No") == "Yes")
+		log_admin("[key_name(usr)] deleted [D] [coords]")
+		message_admins("[key_name_admin(usr)] deleted [D] [jmp_coords]")
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Delete") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		if(isturf(D))
 			var/turf/T = D
 			T.ScrapeAway()
 		else
+			vv_update_display(D, "deleted", VV_MSG_DELETED)
 			qdel(D)
+			if(!QDELETED(D))
+				vv_update_display(D, "deleted", "")
 
 /client/proc/cmd_admin_list_open_jobs()
 	set category = "Admin"
@@ -1117,7 +1129,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		return
 
 	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
-		new /obj/item/organ/zombie_infection(H)
+		new /obj/item/organ/zombie_infection/nodamage(H)
 
 	message_admins("[key_name_admin(usr)] added a latent zombie infection to all humans.")
 	log_admin("[key_name(usr)] added a latent zombie infection to all humans.")
@@ -1134,7 +1146,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(confirm != "Yes")
 		return
 
-	for(var/obj/item/organ/zombie_infection/I in GLOB.zombie_infection_list)
+	for(var/obj/item/organ/zombie_infection/nodamage/I in GLOB.zombie_infection_list)
 		qdel(I)
 
 	message_admins("[key_name_admin(usr)] cured all zombies.")
