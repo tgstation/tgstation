@@ -485,7 +485,7 @@
 			threatcount += 4
 
 	if(shoot_unloyal)
-		if (!perp.isloyal())
+		if (!perp.has_trait(TRAIT_MINDSHIELD))
 			threatcount += 4
 
 	return threatcount
