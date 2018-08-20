@@ -5,6 +5,10 @@
 	var/list/blood_DNA			//assoc dna = bloodtype
 	var/list/fibers				//assoc print = print
 
+/datum/component/forensics/Destroy()
+	..()
+	return QDEL_HINT_IWILLGC
+
 /datum/component/forensics/InheritComponent(datum/component/forensics/F, original)		//Use of | and |= being different here is INTENTIONAL.
 	fingerprints = fingerprints | F.fingerprints
 	hiddenprints = hiddenprints | F.hiddenprints

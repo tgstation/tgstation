@@ -59,6 +59,10 @@
 	if(usr)
 		user = WEAKREF(usr)
 
+/datum/callback/Destroy()
+	..()
+	return QDEL_HINT_IWILLGC
+
 /world/proc/ImmediateInvokeAsync(thingtocall, proctocall, ...)
 	set waitfor = FALSE
 
@@ -177,4 +181,3 @@
 	while(CS.pendingcount)
 		sleep(resolution*world.tick_lag)
 	return CS.finished
-

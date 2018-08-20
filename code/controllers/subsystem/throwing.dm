@@ -68,7 +68,8 @@ SUBSYSTEM_DEF(throwing)
 	target = null
 	thrower = null
 	callback = null
-	return ..()
+	..()
+	return QDEL_HINT_IWILLGC
 
 /datum/thrownthing/proc/tick()
 	var/atom/movable/AM = thrownthing
@@ -116,7 +117,7 @@ SUBSYSTEM_DEF(throwing)
 			return
 
 		dist_travelled++
-		
+
 		if (dist_travelled > MAX_THROWING_DIST)
 			finalize()
 			return
