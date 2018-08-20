@@ -14,11 +14,9 @@
 	if(..()) //not dead
 		handle_blood()
 
-	var/bprv
 	if(stat != DEAD)
-		bprv = handle_bodyparts()
-
-	if(stat != DEAD)
+		var/bprv = NONE
+		bprv |= handle_bodyparts()
 		if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
 			updatehealth()
 			update_stamina()
