@@ -213,37 +213,38 @@
 		var/banduration = text2num(href_list["dbbaddduration"])
 		var/banjob = href_list["dbbanaddjob"]
 		var/banreason = href_list["dbbanreason"]
+		var/banseverity = href_list["dbbanaddseverity"]
 
 		switch(bantype)
 			if(BANTYPE_PERMA)
-				if(!banckey || !banreason)
-					to_chat(usr, "Not enough parameters (Requires ckey and reason).")
+				if(!banckey || !banreason || !banseverity)
+					to_chat(usr, "Not enough parameters (Requires ckey, severity, and reason).")
 					return
 				banduration = null
 				banjob = null
 			if(BANTYPE_TEMP)
-				if(!banckey || !banreason || !banduration)
-					to_chat(usr, "Not enough parameters (Requires ckey, reason and duration).")
+				if(!banckey || !banreason || !banduration || !banseverity)
+					to_chat(usr, "Not enough parameters (Requires ckey, reason, severity and duration).")
 					return
 				banjob = null
 			if(BANTYPE_JOB_PERMA)
-				if(!banckey || !banreason || !banjob)
-					to_chat(usr, "Not enough parameters (Requires ckey, reason and job).")
+				if(!banckey || !banreason || !banjob || !banseverity)
+					to_chat(usr, "Not enough parameters (Requires ckey, severity, reason and job).")
 					return
 				banduration = null
 			if(BANTYPE_JOB_TEMP)
-				if(!banckey || !banreason || !banjob || !banduration)
-					to_chat(usr, "Not enough parameters (Requires ckey, reason and job).")
+				if(!banckey || !banreason || !banjob || !banduration || !banseverity)
+					to_chat(usr, "Not enough parameters (Requires ckey, severity, reason and job).")
 					return
 			if(BANTYPE_ADMIN_PERMA)
-				if(!banckey || !banreason)
-					to_chat(usr, "Not enough parameters (Requires ckey and reason).")
+				if(!banckey || !banreason || !banseverity)
+					to_chat(usr, "Not enough parameters (Requires ckey, severity and reason).")
 					return
 				banduration = null
 				banjob = null
-			if(BANTYPE_ADMIN_TEMP)
-				if(!banckey || !banreason || !banduration)
-					to_chat(usr, "Not enough parameters (Requires ckey, reason and duration).")
+			if(BANTYPE_ADMIN_TEMP || !banseverity)
+				if(!banckey || !banreason || !banduration || !banseverity)
+					to_chat(usr, "Not enough parameters (Requires ckey, severity, reason and duration).")
 					return
 				banjob = null
 
@@ -268,7 +269,7 @@
 		if(!DB_ban_record(bantype, playermob, banduration, banreason, banjob, bankey, banip, bancid ))
 			to_chat(usr, "<span class='danger'>Failed to apply ban.</span>")
 			return
-		create_message("note", bankey, null, banreason, null, null, 0, 0, null, 0)
+		create_message("note", bankey, null, banreason, null, null, 0, 0, null, 0, banseverity)
 
 	else if(href_list["editrightsbrowser"])
 		edit_admin_permissions(0)
@@ -604,7 +605,7 @@
 					jobban_buildcache(M.client)
 				ban_unban_log_save("[key_name(usr)] appearance banned [key_name(M)]. reason: [reason]")
 				log_admin_private("[key_name(usr)] appearance banned [key_name(M)]. \nReason: [reason]")
-				create_message("note", M.key, null, "Appearance banned - [reason]", null, null, 0, 0, null, 0)
+				create_message("note", M.key, null, "Appearance banned - [reason]", null, null, 0, 0, null, 0, 0)
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] appearance banned [key_name_admin(M)].</span>")
 				to_chat(M, "<span class='boldannounce'><BIG>You have been appearance banned by [usr.client.key].</BIG></span>")
 				to_chat(M, "<span class='boldannounce'>The reason is: [reason]</span>")
@@ -967,6 +968,8 @@
 
 		//Banning comes first
 		if(notbannedlist.len) //at least 1 unbanned job exists in joblist so we have stuff to ban.
+			var/list/severity_list = list("High Severity" = 4, "Medium Severity" = 3, "Minor Severity" = 2, "No Severity" = 1)
+			var/severity = null
 			switch(alert("Temporary Ban for [M.key]?",,"Yes","No", "Cancel"))
 				if("Yes")
 					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
@@ -976,7 +979,10 @@
 					var/reason = input(usr,"Please State Reason For Banning [M.key].","Reason") as message|null
 					if(!reason)
 						return
-
+					severity = input("Set the severity of the note/ban.", "Severity", null, null) as null|anything in severity_list
+					if(!severity)
+						return
+					severity = severity_list[severity]
 					var/msg
 					for(var/job in notbannedlist)
 						if(!DB_ban_record(BANTYPE_JOB_TEMP, M, mins, reason, job))
@@ -990,7 +996,7 @@
 							msg = job
 						else
 							msg += ", [job]"
-					create_message("note", M.key, null, "Banned  from [msg] - [reason]", null, null, 0, 0, null, 0)
+					create_message("note", M.key, null, "Banned  from [msg] - [reason]", null, null, 0, 0, null, 0, severity)
 					message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [mins] minutes.</span>")
 					to_chat(M, "<span class='boldannounce'><BIG>You have been [(msg == ("ooc" || "appearance")) ? "banned" : "jobbanned"] by [usr.client.key] from: [msg].</BIG></span>")
 					to_chat(M, "<span class='boldannounce'>The reason is: [reason]</span>")
@@ -999,6 +1005,10 @@
 					return 1
 				if("No")
 					var/reason = input(usr,"Please State Reason For Banning [M.key].","Reason") as message|null
+					severity = input("Set the severity of the note/ban.", "Severity", null, null) as null|anything in severity_list
+					if(!severity)
+						return
+					severity = severity_list[severity]
 					if(reason)
 						var/msg
 						for(var/job in notbannedlist)
@@ -1013,7 +1023,7 @@
 								msg = job
 							else
 								msg += ", [job]"
-						create_message("note", M.key, null, "Banned  from [msg] - [reason]", null, null, 0, 0, null, 0)
+						create_message("note", M.key, null, "Banned  from [msg] - [reason]", null, null, 0, 0, null, 0, severity)
 						message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg].</span>")
 						to_chat(M, "<span class='boldannounce'><BIG>You have been [(msg == ("ooc" || "appearance")) ? "banned" : "jobbanned"] by [usr.client.key] from: [msg].</BIG></span>")
 						to_chat(M, "<span class='boldannounce'>The reason is: [reason]</span>")
@@ -1149,6 +1159,12 @@
 			return
 		var/message_id = href_list["editmessageexpiryempty"]
 		edit_message_expiry(message_id, browse = 1)
+
+	else if(href_list["editmessageseverity"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/message_id = href_list["editmessageseverity"]
+		edit_message_severity(message_id)
 
 	else if(href_list["secretmessage"])
 		if(!check_rights(R_ADMIN))

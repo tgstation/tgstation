@@ -412,6 +412,13 @@
 	output += "<tr><td><b>IP:</b> <input type='text' name='dbbanaddip'></td>"
 	output += "<td><b>Computer id:</b> <input type='text' name='dbbanaddcid'></td></tr>"
 	output += "<tr><td><b>Duration:</b> <input type='text' name='dbbaddduration'></td>"
+	output += "<tr><td><b>Severity:</b><select name='dbbanaddseverity'>"
+	output += "<option value=''>--</option>"
+	output += "<option value='4'>High Severity</option>"
+	output += "<option value='3'>Medium Severity</option>"
+	output += "<option value='2'>Minor Severity</option>"
+	output += "<option value='1'>No Severity</option>"
+	output += "<option value=''>--</option>"
 	output += "<td><b>Job:</b><select name='dbbanaddjob'>"
 	output += "<option value=''>--</option>"
 	for(var/j in get_all_jobs())
