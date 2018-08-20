@@ -95,7 +95,8 @@
 /datum/objective/overthrow_target
 
 /datum/objective/overthrow_target/update_explanation_text()
-	explanation_text = "Convert, exile or kill [target.name], the [target.assigned_role]."
+	if(target)
+		explanation_text = "Convert, exile or kill [target.name], the [target.assigned_role]."
 
 /datum/objective/overthrow_target/is_unique_objective(datum/mind/possible_target)
 	if(possible_target.assigned_role in GLOB.command_positions)
