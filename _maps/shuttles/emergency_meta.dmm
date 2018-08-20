@@ -335,7 +335,8 @@
 	name = "Emergency Recovery Airlock";
 	req_access_txt = "19"
 	},
-/turf/open/floor/plasteel/floorgrime,
+/turf/open/floor/plasteel,
+obj/effect/decal/cleanable/dirt,
 /area/shuttle/escape)
 "aY" = (
 /obj/machinery/door/airlock/security/glass{
@@ -365,16 +366,19 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/open/floor/plasteel/floorgrime,
+/turf/open/floor/plasteel,
+obj/effect/decal/cleanable/dirt,
 /area/shuttle/escape)
 "be" = (
-/turf/open/floor/plasteel/floorgrime,
+/turf/open/floor/plasteel,
+obj/effect/decal/cleanable/dirt,
 /area/shuttle/escape)
 "bf" = (
 /obj/machinery/door/airlock/external{
 	name = "Emergency Recovery Airlock"
 	},
-/turf/open/floor/plasteel/floorgrime,
+/turf/open/floor/plasteel,
+obj/effect/decal/cleanable/dirt,
 /area/shuttle/escape)
 "bh" = (
 /obj/structure/chair/comfy/shuttle{
@@ -499,11 +503,13 @@
 /area/shuttle/escape)
 "bw" = (
 /obj/item/cigbutt,
-/turf/open/floor/plasteel/floorgrime,
+/turf/open/floor/plasteel,
+obj/effect/decal/cleanable/dirt,
 /area/shuttle/escape)
 "by" = (
 /obj/machinery/suit_storage_unit/standard_unit,
-/turf/open/floor/plasteel/floorgrime,
+/turf/open/floor/plasteel,
+obj/effect/decal/cleanable/dirt,
 /area/shuttle/escape)
 "bz" = (
 /obj/structure/table/optable,
@@ -521,7 +527,8 @@
 /area/shuttle/escape)
 "bC" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plasteel/floorgrime,
+/turf/open/floor/plasteel,
+obj/effect/decal/cleanable/dirt,
 /area/shuttle/escape)
 "bD" = (
 /obj/structure/table,
@@ -826,13 +833,15 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/floorgrime,
+/turf/open/floor/plasteel,
+obj/effect/decal/cleanable/dirt,
 /area/shuttle/escape)
 "cc" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/floorgrime,
+/turf/open/floor/plasteel,
+obj/effect/decal/cleanable/dirt,
 /area/shuttle/escape)
 "cd" = (
 /obj/structure/chair/comfy/shuttle{
