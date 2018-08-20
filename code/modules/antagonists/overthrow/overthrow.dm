@@ -52,6 +52,11 @@
 		if(traitor_mob && istype(traitor_mob))
 			traitor_mob.dna.add_mutation(CLOWNMUT)
 	..()
+// there is no promote command because there's no difference between a boss and the normal dude other than roundstart getting the items
+/datum/antagonist/overthrow/get_admin_commands()
+	. = ..()
+	.["Give random item"] = CALLBACK(src,.proc/equip_overthrow)
+	.["Give overthrow boss equip"] = CALLBACK(src,.proc/equip_overthrow_boss)
 
 /datum/antagonist/overthrow/proc/update_overthrow_icons_added(datum/mind/traitor_mind)
 	var/datum/atom_hud/antag/overthrowhud = GLOB.huds[team.hud_entry_num]
