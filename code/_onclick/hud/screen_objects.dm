@@ -150,7 +150,7 @@
 	cut_overlay(object_overlays)
 	object_overlays.Cut()
 
-	if(hud && user && slot_id)
+	if(hud && user && slot_id && usr.client.prefs.hover_storage)
 		var/obj/item/holding = user.get_active_held_item()
 
 		if(!holding || user.get_item_by_slot(slot_id))

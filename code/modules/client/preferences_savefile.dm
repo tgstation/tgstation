@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	20
+#define SAVEFILE_VERSION_MAX	21
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -103,6 +103,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["tip_delay"]			>> tip_delay
 	S["pda_style"]			>> pda_style
 	S["pda_color"]			>> pda_color
+	S["hover_storage"]		>> hover_storage
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -175,7 +176,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["tip_delay"], tip_delay)
 	WRITE_FILE(S["pda_style"], pda_style)
 	WRITE_FILE(S["pda_color"], pda_color)
-
+	WRITE_FILE(S["hover_storage"], hover_storage)
+	
 	return 1
 
 /datum/preferences/proc/load_character(slot)

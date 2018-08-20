@@ -339,6 +339,14 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.save_preferences()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Intent Selection", "[prefs.toggles & INTENT_STYLE ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/toggle_hover_storage()
+	set name = "Toggle Hover Storage Overlay"
+	set category = "Preferences"
+	set desc = "Toggle the overlay in your inventory showing if you can equip an item there."
+	prefs.hover_storage = !prefs.hover_storage
+	prefs.save_preferences()
+	to_chat(usr, "<span class='danger'>Overlays showing if you can equip an item [prefs.hover_storage ? "en" : "dis"]abled.</span>")
+	
 /client/verb/toggle_ghost_hud_pref()
 	set name = "Toggle Ghost HUD"
 	set category = "Preferences"
