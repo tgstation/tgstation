@@ -457,11 +457,11 @@
 	race = /datum/species/jelly/slime
 	mutationtext = "<span class='danger'>The pain subsides. Your whole body feels like slime.</span>"
 
-/datum/reagent/mutationtoxin/felinid
-	name = "Felinid Mutation Toxin"
-	id = "felinidmutationtoxin"
+/datum/reagent/mutationtoxin/cat
+	name = "Cat Mutation Toxin"
+	id = "catmutationtoxin"
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/human/felinid
+	race = /datum/species/human/cat
 	mutationtext = "<span class='danger'>The pain subsides. You feel... like a degenerate.</span>"
 
 /datum/reagent/mutationtoxin/lizard
