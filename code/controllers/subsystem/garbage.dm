@@ -97,11 +97,10 @@ SUBSYSTEM_DEF(garbage)
 				queue = GC_QUEUE_CHECK+1
 			if (GC_QUEUE_HARDDELETE)
 				HandleQueue(GC_QUEUE_HARDDELETE)
-				if (state == SS_PAUSED) //make us wait again before the next run.
-					state = SS_RUNNING
 				break
 
-	
+	if (state == SS_PAUSED) //make us wait again before the next run.
+		state = SS_RUNNING
 
 //If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.
 //Don't attempt to optimize, not worth the effort.
