@@ -1,4 +1,4 @@
-#define AIRLOCK_CONTROL_RANGE 5
+#define AIRLOCK_CONTROL_RANGE 7
 
 // This code allows for airlocks to be controlled externally by setting an id_tag and comm frequency (disables ID access)
 /obj/machinery/door/airlock
