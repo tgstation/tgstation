@@ -417,6 +417,14 @@
 	required_other = 1
 	required_container = /obj/item/slime_extract/black
 
+/datum/chemical_reaction/slime/slimecat
+	name = "Felinid Mutation Toxin"
+	id = "felinidmutationtoxin"
+	results = list("felinidmutationtoxin" = 1)
+	required_reagents = list("stablemutationtoxin" = 1)
+	required_other = 1
+	required_container = /obj/item/slime_extract/black
+
 //Oil
 /datum/chemical_reaction/slime/slimeexplosion
 	name = "Slime Explosion"
