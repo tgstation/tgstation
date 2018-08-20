@@ -16,7 +16,7 @@
 	name = "AI"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
-	anchored = TRUE
+	move_resist = MOVE_RESIST_AI_BOLTED
 	density = TRUE
 	canmove = FALSE
 	status_flags = CANSTUN|CANPUSH
@@ -349,7 +349,12 @@
 		return // stop
 	if(incapacitated())
 		return
-	anchored = !anchored // Toggles the anchor
+	var/anchored = FALSE
+	if(move_resist == MOVE_RESIST_AI_BOLTED)
+		move_resist = MOVE_RESIST_AI_UNBOLTED
+	else
+		anchored = TRUE
+		move_resist = MOVE_RESIST_AI_BOLTED
 
 	to_chat(src, "<b>You are now [anchored ? "" : "un"]anchored.</b>")
 	// the message in the [] will change depending whether or not the AI is anchored

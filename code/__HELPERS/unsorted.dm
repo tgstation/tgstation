@@ -1346,6 +1346,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	density = FALSE
 	see_in_dark = 1e6
 	anchored = TRUE
+	move_resist = INFINITY
 	var/ready_to_die = FALSE
 
 /mob/dview/Initialize() //Properly prevents this mob from gaining huds or joining any global lists

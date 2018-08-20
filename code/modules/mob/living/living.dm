@@ -8,6 +8,17 @@
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
 
+/proc/anchored_mobs()
+	var/list/L = list()
+	for(var/i in typesof(/mob))
+		var/path = i
+		var/mob/M = path
+		if(initial(M.anchored))
+			L += path
+	var/list/R = list()
+	for(var/i in L)
+		R += "[i]"
+	return R.Join(" ")
 
 /mob/living/prepare_huds()
 	..()
