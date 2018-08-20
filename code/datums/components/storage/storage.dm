@@ -552,7 +552,7 @@
 	if(real_location == I.loc)
 		return FALSE //Means the item is already in the storage item
 	if(locked)
-		if(M && !stop_messages)
+		if(M)
 			host.add_fingerprint(M)
 			to_chat(M, "<span class='warning'>[host] seems to be locked!</span>")
 		return FALSE
