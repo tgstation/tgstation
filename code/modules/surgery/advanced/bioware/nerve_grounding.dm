@@ -1,10 +1,6 @@
-/obj/item/disk/surgery/nerve_grounding
-	name = "Nerve Grounding Surgery Disk"
-	desc = "The disk provides instructions on how to reroute the nervous system to ground electric shocks."
-	surgeries = list(/datum/surgery/advanced/bioware/nerve_grounding)
-
 /datum/surgery/advanced/bioware/nerve_grounding
-	name = "nerve grounding"
+	name = "Nerve Grounding"
+	desc = "A surgical procedure which makes the patient's nerves act as grounding rods, protecting them from electrical shocks."
 	steps = list(/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,
 				/datum/surgery_step/clamp_bleeders,

@@ -121,7 +121,7 @@
 /datum/martial_art/wrestling/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(check_streak(A,D))
 		return 1
-	add_logs(A, D, "punched with wrestling")
+	log_combat(A, D, "punched with wrestling")
 	..()
 
 /datum/martial_art/wrestling/proc/throw_wrassle(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -192,7 +192,7 @@
 			if (!D.stat)
 				D.emote("scream")
 			D.throw_at(T, 10, 4, A, TRUE, TRUE, callback = CALLBACK(D, /mob/living/carbon/human/.Knockdown, 20))
-	add_logs(A, D, "has thrown with wrestling")
+	log_combat(A, D, "has thrown with wrestling")
 	return 0
 
 /datum/martial_art/wrestling/proc/FlipAnimation(mob/living/carbon/human/D)
@@ -308,7 +308,7 @@
 			D.pixel_y = 0
 
 
-	add_logs(A, D, "body-slammed")
+	log_combat(A, D, "body-slammed")
 	return 0
 
 /datum/martial_art/wrestling/proc/CheckStrikeTurf(mob/living/carbon/human/A, turf/T)
@@ -330,7 +330,7 @@
 		D.adjustBruteLoss(rand(10,20))
 		playsound(A.loc, "swing_hit", 50, 1)
 		D.Unconscious(20)
-	add_logs(A, D, "headbutted")
+	log_combat(A, D, "headbutted")
 
 /datum/martial_art/wrestling/proc/kick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D)
@@ -347,7 +347,7 @@
 	if (T && isturf(T))
 		D.Knockdown(20)
 		D.throw_at(T, 3, 2)
-	add_logs(A, D, "roundhouse-kicked")
+	log_combat(A, D, "roundhouse-kicked")
 
 /datum/martial_art/wrestling/proc/drop(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D)
@@ -420,13 +420,13 @@
 	else
 		if (A)
 			A.pixel_y = 0
-	add_logs(A, D, "leg-dropped")
+	log_combat(A, D, "leg-dropped")
 	return
 
 /datum/martial_art/wrestling/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(check_streak(A,D))
 		return 1
-	add_logs(A, D, "wrestling-disarmed")
+	log_combat(A, D, "wrestling-disarmed")
 	..()
 
 /datum/martial_art/wrestling/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -438,7 +438,7 @@
 	D.visible_message("<span class='danger'>[A] gets [D] in a cinch!</span>", \
 								"<span class='userdanger'>[A] gets [D] in a cinch!</span>")
 	D.Stun(rand(60,100))
-	add_logs(A, D, "cinched")
+	log_combat(A, D, "cinched")
 	return 1
 
 /obj/item/storage/belt/champion/wrestling

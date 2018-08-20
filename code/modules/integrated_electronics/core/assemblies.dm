@@ -75,7 +75,13 @@
 		to_chat(user, "<span class='notice'>The maintenance panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>")
 
 	if((isobserver(user) && ckeys_allowed_to_scan[user.ckey]) || IsAdminGhost(user))
-		to_chat(user, "You can <a href='?src=[REF(src)];ghostscan=1'>scan</a> this circuit.");
+		to_chat(user, "You can <a href='?src=[REF(src)];ghostscan=1'>scan</a> this circuit.")
+
+	for(var/I in assembly_components)
+		var/obj/item/integrated_circuit/IC = I
+		IC.external_examine(user)
+	if(opened)
+		interact(user)
 
 /obj/item/electronic_assembly/proc/check_interactivity(mob/user)
 	return user.canUseTopic(src, BE_CLOSE)
@@ -310,14 +316,6 @@
 	var/mutable_appearance/detail_overlay = mutable_appearance('icons/obj/assemblies/electronic_setups.dmi', "[icon_state]-color")
 	detail_overlay.color = detail_color
 	add_overlay(detail_overlay)
-
-/obj/item/electronic_assembly/examine(mob/user)
-	..()
-	for(var/I in assembly_components)
-		var/obj/item/integrated_circuit/IC = I
-		IC.external_examine(user)
-	if(opened)
-		interact(user)
 
 /obj/item/electronic_assembly/proc/return_total_complexity()
 	. = 0

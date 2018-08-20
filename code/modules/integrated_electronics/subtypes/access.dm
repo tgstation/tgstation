@@ -20,7 +20,7 @@
 	var/passkey = strtohex(XorEncrypt(json_encode(access), SScircuit.cipherkey))
 
 	if(assembly)
-		assembly.access_card.access = access
+		assembly.access_card.access |= access
 
 	if(card) // An ID card.
 		set_pin_data(IC_OUTPUT, 1, card.registered_name)

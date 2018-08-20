@@ -13,6 +13,7 @@
 	floor_tile = /obj/item/stack/tile/wood
 	broken_states = list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
 	footstep = FOOTSTEP_WOOD
+	tiled_dirt = FALSE
 
 /turf/open/floor/wood/examine(mob/user)
 	..()
@@ -72,6 +73,7 @@
 	footstep = FOOTSTEP_GRASS
 	var/ore_type = /obj/item/stack/ore/glass
 	var/turfverb = "uproot"
+	tiled_dirt = FALSE
 
 /turf/open/floor/grass/Initialize()
 	. = ..()
@@ -152,6 +154,7 @@
 	flags_1 = NONE
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_CARPET
+	tiled_dirt = FALSE
 
 /turf/open/floor/carpet/examine(mob/user)
 	..()
@@ -205,6 +208,7 @@
 	canSmoothWith = list(/turf/open/floor/fakepit)
 	icon = 'icons/turf/floors/Chasms.dmi'
 	icon_state = "smooth"
+	tiled_dirt = FALSE
 
 /turf/open/floor/fakepit/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
@@ -217,6 +221,7 @@
 	floor_tile = /obj/item/stack/tile/fakespace
 	broken_states = list("damaged")
 	plane = PLANE_SPACE
+	tiled_dirt = FALSE
 
 /turf/open/floor/fakespace/Initialize()
 	. = ..()

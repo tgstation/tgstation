@@ -235,7 +235,7 @@
 			response = tgalert(target.current, "A devil is offering you another chance at life, at the price of your soul, do you accept?", "Infernal Resurrection", "Yes", "No", "Never for this round", 0, 200)
 		if(response == "Yes")
 			H.revive(1,0)
-			add_logs(user, H, "infernally revived via contract")
+			log_combat(user, H, "infernally revived via contract")
 			user.visible_message("<span class='notice'>With a sudden blaze, [H] stands back up.</span>")
 			H.fakefire()
 			fulfillContract(H, 1)//Revival contracts are always signed in blood
