@@ -5066,7 +5066,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
@@ -6488,7 +6487,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -8964,7 +8962,6 @@
 	id = "engsm";
 	name = "Radiation Chamber Shutters"
 	},
-/obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -9727,7 +9724,6 @@
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/warehouse)
 "aAy" = (
-/obj/effect/decal/cleanable/oil,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -10363,7 +10359,6 @@
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/storage)
 "aBU" = (
-/obj/effect/decal/cleanable/oil,
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/storage)
 "aBV" = (
@@ -10773,7 +10768,6 @@
 	},
 /area/quartermaster/warehouse)
 "aCR" = (
-/obj/effect/decal/cleanable/oil,
 /obj/structure/cable/white{
 	icon_state = "2-8"
 	},
@@ -13555,7 +13549,6 @@
 /obj/structure/cable/white{
 	icon_state = "0-2"
 	},
-/obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -14729,7 +14722,6 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -19061,7 +19053,6 @@
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/storage)
 "aUe" = (
-/obj/effect/decal/cleanable/oil,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -20652,7 +20643,6 @@
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/office)
 "aXk" = (
-/obj/effect/decal/cleanable/oil,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -24395,7 +24385,6 @@
 	},
 /area/quartermaster/miningoffice)
 "bfy" = (
-/obj/effect/decal/cleanable/oil,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/miningoffice)
@@ -25669,7 +25658,6 @@
 /area/quartermaster/miningoffice)
 "bit" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
@@ -52769,7 +52757,6 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "ckA" = (
-/obj/effect/decal/cleanable/oil,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "engpa";
 	name = "Engineering Chamber Shutters"
@@ -54748,7 +54735,6 @@
 /turf/open/floor/plasteel/neutral/side,
 /area/maintenance/starboard)
 "coG" = (
-/obj/effect/decal/cleanable/oil,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -56225,7 +56211,6 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "crY" = (
-/obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
@@ -56919,7 +56904,6 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "ctr" = (
-/obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cts" = (
@@ -57047,7 +57031,6 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "ctG" = (
-/obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/maintenance/port)
@@ -61959,7 +61942,6 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "cDU" = (
-/obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -68601,7 +68583,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
 "cRI" = (
-/obj/effect/decal/cleanable/oil,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -79807,7 +79788,6 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/construction)
 "dpH" = (
-/obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
 /area/hallway/secondary/construction)
 "dpI" = (
@@ -82554,7 +82534,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -83428,7 +83407,6 @@
 /turf/open/floor/plasteel/neutral,
 /area/science/research/abandoned)
 "dxN" = (
-/obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
@@ -85685,7 +85663,6 @@
 /turf/open/floor/plasteel/neutral,
 /area/science/robotics/lab)
 "dCs" = (
-/obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
@@ -89620,7 +89597,6 @@
 /turf/open/floor/plating/airless,
 /area/science/test_area)
 "dKy" = (
-/obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
@@ -92077,7 +92053,6 @@
 /area/maintenance/port/aft)
 "dPM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 1
@@ -98302,7 +98277,6 @@
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/maintenance/port/aft)

@@ -11254,7 +11254,6 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aCy" = (
-/obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aCz" = (
@@ -24124,7 +24123,6 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "bkC" = (
-/obj/effect/decal/cleanable/oil,
 /obj/machinery/light_switch{
 	pixel_x = 25
 	},
@@ -31770,7 +31768,6 @@
 /turf/open/floor/plasteel/barber,
 /area/crew_quarters/heads/cmo)
 "bCX" = (
-/obj/effect/decal/cleanable/oil,
 /obj/item/cigbutt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -36900,7 +36897,6 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "bPP" = (
-/obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "bPQ" = (
@@ -36936,7 +36932,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bPW" = (
-/obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bPX" = (
@@ -50767,7 +50762,6 @@
 	id = "engsm";
 	name = "Radiation Chamber Shutters"
 	},
-/obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
