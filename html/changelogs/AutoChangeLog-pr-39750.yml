@@ -1,6 +1,0 @@
-author: "Floyd / Qustinnus"
-delete-after: True
-changes: 
-  - code_imp: "removes useless mood events subtypes"
-  - bugfix: "fixes mood event timers not resetting when they get triggered again
-remove: removes the depression overlay which makes our fruit happy"

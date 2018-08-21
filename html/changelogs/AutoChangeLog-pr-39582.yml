@@ -1,6 +1,0 @@
-author: "Garen"
-delete-after: True
-changes: 
-  - bugfix: "fixed using items on a circuit removing all its access(now access gained from each new item stacks)"
-  - admin: "adds logging for gun circuits, grabber circuits, and dragging claw circuits"
-  - rscadd: "grabbers can select what they want to drop"
