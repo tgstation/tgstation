@@ -912,7 +912,6 @@
 	L.regenerate_icons()
 	qdel(src)
 
-<<<<<<< HEAD
 /obj/item/slimepotion/slime/renaming
 	name = "renaming potion"
 	desc = "A potion that allows a self-aware being to change what name it subconciously presents to the world."
