@@ -257,7 +257,7 @@
 		note_severity = sanitizeSQL(note_severity) // This might not be neccesary
 		var/edit_text = sanitizeSQL("Note severity edited by [editor_key] on [SQLtime()] from [old_severity] to [new_severity]<hr>")
 		var/datum/DBQuery/query_edit_note_severity = SSdbcore.NewQuery("UPDATE [format_table_name("messages")] SET severity = '[note_severity]', lasteditor = '[editor_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE id = [message_id] AND deleted = 0")
-		if(!query_edit_note_severity.warn_execute())
+		if(!query_edit_note_severity.warn_execute(async = TRUE))
 			qdel(query_edit_note_severity)
 			qdel(qdel(query_find_edit_note_severity))
 			return
@@ -282,7 +282,7 @@
 	var/kn = key_name(usr)
 	var/kna = key_name_admin(usr)
 	var/datum/DBQuery/query_find_message_secret = SSdbcore.NewQuery("SELECT type, (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), secret FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
-	if(!query_find_message_secret.warn_execute(async = TRUE))
+	if(!query_find_message_secret.warn_execute())
 		qdel(query_find_message_secret)
 		return
 	if(query_find_message_secret.NextRow())
