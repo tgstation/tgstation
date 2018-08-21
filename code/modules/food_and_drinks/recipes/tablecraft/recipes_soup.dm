@@ -236,3 +236,17 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/soup/beet/red
 	subcategory = CAT_SOUP
+
+/datum/crafting_recipe/food/sopademacaco
+	name = "Sopa de macaco"
+	reqs = list(
+	/datum/reagent/water = 10,
+	/obj/item/reagent_containers/glass/bowl = 1,
+	/obj/item/bodypart/head/monkey = 1,
+	/obj/item/bodypart/l_arm/monkey = 1,
+	/obj/item/bodypart/r_arm/monkey = 1,
+	/obj/item/bodypart/r_leg/monkey = 1,
+	/obj/item/bodypart/l_leg/monkey = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/soup/monkey
+	subcategory = CAT_SOUP
