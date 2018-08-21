@@ -410,7 +410,7 @@
 			if(severity)
 				data += "<p class='severity [severity]'>"
 			else
-				data += "<p class='severity naa'>"
+				data += "<p class='severity'>"
 			data += "<b>[timestamp] | [server] | [admin_key]"
 			if(expire_timestamp)
 				data += " | Expires [expire_timestamp]"
