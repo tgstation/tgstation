@@ -159,7 +159,7 @@
 		var/image/item_overlay = image(holding)
 		item_overlay.alpha = 191
 		object_overlays += item_overlay
-		
+
 		if(!user.can_equip(holding, slot_id, disable_warning = TRUE))
 			var/image/nope_overlay = image('icons/mob/screen_gen.dmi', "x")
 			nope_overlay.alpha = 128
@@ -449,6 +449,8 @@
 	icon_state = "zone_sel"
 	screen_loc = ui_zonesel
 	var/selecting = BODY_ZONE_CHEST
+	var/hovering
+	var/mutable_appearance/hover_overlay
 
 /obj/screen/zone_sel/Click(location, control,params)
 	if(isobserver(usr))
@@ -457,52 +459,82 @@
 	var/list/PL = params2list(params)
 	var/icon_x = text2num(PL["icon-x"])
 	var/icon_y = text2num(PL["icon-y"])
-	var/choice
+	var/choice = get_zone_at(icon_x, icon_y)
+	if (!choice)
+		return 1
 
+	return set_selected_zone(choice, usr)
+
+/obj/screen/zone_sel/MouseEntered(location, control, params)
+	MouseMove(location, control, params)
+
+/obj/screen/zone_sel/MouseMove(location, control, params)
+	if(isobserver(usr))
+		return
+
+	var/list/PL = params2list(params)
+	var/icon_x = text2num(PL["icon-x"])
+	var/icon_y = text2num(PL["icon-y"])
+	var/choice = get_zone_at(icon_x, icon_y)
+
+	if (hovering == choice)
+		return
+	hovering = choice
+	if (hover_overlay)
+		cut_overlay(hover_overlay)
+	if (choice && choice != selecting)
+		if (!hover_overlay)
+			hover_overlay = mutable_appearance('icons/mob/screen_gen.dmi', "[choice]")
+			hover_overlay.alpha = 128
+		hover_overlay.icon_state = choice
+		add_overlay(hover_overlay)
+
+
+/obj/screen/zone_sel/MouseExited(location, control, params)
+	if(isobserver(usr))
+		return
+
+	if(hover_overlay)
+		cut_overlay(hover_overlay)
+		hover_overlay = null
+
+/obj/screen/zone_sel/proc/get_zone_at(icon_x, icon_y)
 	switch(icon_y)
 		if(1 to 9) //Legs
 			switch(icon_x)
 				if(10 to 15)
-					choice = BODY_ZONE_R_LEG
+					return BODY_ZONE_R_LEG
 				if(17 to 22)
-					choice = BODY_ZONE_L_LEG
-				else
-					return 1
+					return BODY_ZONE_L_LEG
 		if(10 to 13) //Hands and groin
 			switch(icon_x)
 				if(8 to 11)
-					choice = BODY_ZONE_R_ARM
+					return BODY_ZONE_R_ARM
 				if(12 to 20)
-					choice = BODY_ZONE_PRECISE_GROIN
+					return BODY_ZONE_PRECISE_GROIN
 				if(21 to 24)
-					choice = BODY_ZONE_L_ARM
-				else
-					return 1
+					return BODY_ZONE_L_ARM
 		if(14 to 22) //Chest and arms to shoulders
 			switch(icon_x)
 				if(8 to 11)
-					choice = BODY_ZONE_R_ARM
+					return BODY_ZONE_R_ARM
 				if(12 to 20)
-					choice = BODY_ZONE_CHEST
+					return BODY_ZONE_CHEST
 				if(21 to 24)
-					choice = BODY_ZONE_L_ARM
-				else
-					return 1
+					return BODY_ZONE_L_ARM
 		if(23 to 30) //Head, but we need to check for eye or mouth
 			if(icon_x in 12 to 20)
-				choice = BODY_ZONE_HEAD
 				switch(icon_y)
 					if(23 to 24)
 						if(icon_x in 15 to 17)
-							choice = BODY_ZONE_PRECISE_MOUTH
+							return BODY_ZONE_PRECISE_MOUTH
 					if(26) //Eyeline, eyes are on 15 and 17
 						if(icon_x in 14 to 18)
-							choice = BODY_ZONE_PRECISE_EYES
+							return BODY_ZONE_PRECISE_EYES
 					if(25 to 27)
 						if(icon_x in 15 to 17)
-							choice = BODY_ZONE_PRECISE_EYES
-
-	return set_selected_zone(choice, usr)
+							return BODY_ZONE_PRECISE_EYES
+				return BODY_ZONE_HEAD
 
 /obj/screen/zone_sel/proc/set_selected_zone(choice, mob/user)
 	if(isobserver(user))
