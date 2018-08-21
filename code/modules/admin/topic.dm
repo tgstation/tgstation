@@ -968,7 +968,7 @@
 
 		//Banning comes first
 		if(notbannedlist.len) //at least 1 unbanned job exists in joblist so we have stuff to ban.
-			var/list/severity_list = list("High Severity" = 4, "Medium Severity" = 3, "Minor Severity" = 2, "No Severity" = 1)
+			var/list/severity_list = list("High Severity" = "high", "Medium Severity" = "medium", "Minor Severity" = "minor", "No Severity" = "none")
 			var/severity = null
 			switch(alert("Temporary Ban for [M.key]?",,"Yes","No", "Cancel"))
 				if("Yes")
