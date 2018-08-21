@@ -1,9 +1,3 @@
-#define NOTE_SEVERITY_HIGH "4"
-#define NOTE_SEVERITY_MEDIUM "3"
-#define NOTE_SEVERITY_MINOR "2"
-#define NOTE_SEVERITY_NONE "1"
-
-
 /proc/create_message(type, target_key, admin_ckey, text, timestamp, server, secret, logged = 1, browse, expiry, note_severity)
 	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
@@ -78,13 +72,13 @@
 					return
 				expiry = query_validate_expire_time.item[1]
 			qdel(query_validate_expire_time)
+	var/list/severity_list = list("High Severity" = "high", "Medium Severity" = "medium", "Minor Severity" = "minor", "No Severity" = "none")
 	if(type == "note" && isnull(note_severity))
-		var/list/severity_list = list("High Severity" = 4, "Medium Severity" = 3, "Minor Severity" = 2, "No Severity" = 1)
 		note_severity = input("Set the severity of the note.", "Severity", null, null) as null|anything in severity_list
 		if(!note_severity)
 			return
-		note_severity = severity_list[note_severity] // We want this stored as a number
-		note_severity = sanitizeSQL(note_severity) // This might not be neccesary
+	note_severity = severity_list[note_severity]
+	note_severity = sanitizeSQL(note_severity) // This might not be neccesary
 	var/datum/DBQuery/query_create_message = SSdbcore.NewQuery("INSERT INTO [format_table_name("messages")] (type, targetckey, adminckey, text, timestamp, server, server_ip, server_port, round_id, secret, expire_timestamp, severity) VALUES ('[type]', '[target_ckey]', '[admin_ckey]', '[text]', '[timestamp]', '[server]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', '[GLOB.round_id]','[secret]', [expiry ? "'[expiry]'" : "NULL"], [note_severity ? "'[note_severity]'" : "NULL"])")
 	var/pm = "[key_name(usr)] has created a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""]: [text]"
 	var/header = "[key_name_admin(usr)] has created a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""]"
@@ -239,39 +233,41 @@
 	message_id = text2num(message_id)
 	if(!message_id)
 		return	
-	var/datum/DBQuery/query_find_edit_note_severity = SSdbcore.NewQuery("SELECT type, targetckey, adminckey, severity FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
+	var/kn = key_name(usr)
+	var/kna = key_name_admin(usr)
+	var/datum/DBQuery/query_find_edit_note_severity = SSdbcore.NewQuery("SELECT type, (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), severity FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
 	if(!query_find_edit_note_severity.warn_execute())
 		qdel(query_find_edit_note_severity)
 		return
 	if(query_find_edit_note_severity.NextRow())
-		var/list/severity_list = list("High Severity" = 4, "Medium Severity" = 3, "Minor Severity" = 2, "No Severity" = 1)
+		var/list/severity_list = list("High Severity" = "high", "Medium Severity" = "medium", "Minor Severity" = "minor", "No Severity" = "none")
 		var/type = query_find_edit_note_severity.item[1]
-		var/target_ckey = query_find_edit_note_severity.item[2]
-		var/admin_ckey = query_find_edit_note_severity.item[3]
+		var/target_key = query_find_edit_note_severity.item[2]
+		var/admin_key = query_find_edit_note_severity.item[3]
 		var/old_severity = query_find_edit_note_severity.item[4]
-		if(old_severity)
-			var/list/num2severity = list("4" = "high", "3" = "medium", "2" = "minor", "1" = "none") // there probably is a better way to do this - CitrusGender
-			old_severity = num2severity["[old_severity]"]
-		else
+		if(!old_severity)
 			old_severity = "NA"
+		var/editor_key = sanitizeSQL(usr.key)
 		var/editor_ckey = sanitizeSQL(usr.ckey)
 		var/new_severity = input("Set the severity of the note.", "Severity", null, null) as null|anything in severity_list
 		if(!new_severity)
+			qdel(query_find_edit_note_severity)
 			return
 		var/note_severity = severity_list[new_severity]
 		note_severity = sanitizeSQL(note_severity) // This might not be neccesary
-		var/edit_text = sanitizeSQL("Note severity edited by [editor_ckey] on [SQLtime()] from [old_severity] to [new_severity]<hr>")
-		var/datum/DBQuery/query_edit_note_severity = SSdbcore.NewQuery("UPDATE [format_table_name("messages")] SET severity = [note_severity], lasteditor = '[editor_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE id = [message_id] AND deleted = 0")
+		var/edit_text = sanitizeSQL("Note severity edited by [editor_key] on [SQLtime()] from [old_severity] to [new_severity]<hr>")
+		var/datum/DBQuery/query_edit_note_severity = SSdbcore.NewQuery("UPDATE [format_table_name("messages")] SET severity = '[note_severity]', lasteditor = '[editor_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE id = [message_id] AND deleted = 0")
 		if(!query_edit_note_severity.warn_execute())
 			qdel(query_edit_note_severity)
+			qdel(qdel(query_find_edit_note_severity))
 			return
 		qdel(query_edit_note_severity)
-		log_admin_private("[key_name(usr)] has edited the severity of a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""] made by [admin_ckey] from [old_severity] to [new_severity]")
-		message_admins("[key_name_admin(usr)] has edited the severity time of a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""] made by [admin_ckey] from [old_severity] to [new_severity]")
+		log_admin_private("[kn] has edited the severity of a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""] made by [admin_key] from [old_severity] to [new_severity]")
+		message_admins("[kna] has edited the severity time of a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""] made by [admin_key] from [old_severity] to [new_severity]")
 		if(browse)
 			browse_messages("[type]")
 		else
-			browse_messages(target_ckey = target_ckey, agegate = TRUE)
+			browse_messages(target_ckey = ckey(target_key), agegate = TRUE)
 	qdel(query_find_edit_note_severity)
 
 /proc/toggle_message_secrecy(message_id)
@@ -286,7 +282,7 @@
 	var/kn = key_name(usr)
 	var/kna = key_name_admin(usr)
 	var/datum/DBQuery/query_find_message_secret = SSdbcore.NewQuery("SELECT type, (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), secret FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
-	if(!query_find_message_secret.warn_execute())
+	if(!query_find_message_secret.warn_execute(async = TRUE))
 		qdel(query_find_message_secret)
 		return
 	if(query_find_message_secret.NextRow())
@@ -398,7 +394,6 @@
 			var/expire_timestamp = query_get_messages.item[11]
 			var/severity = query_get_messages.item[12]
 			var/alphatext = ""
-			var/style_defined
 			var/nsd = CONFIG_GET(number/note_stale_days)
 			var/nfd = CONFIG_GET(number/note_fresh_days)
 			if (agegate && type == "note" && isnum(nsd) && isnum(nfd) && nsd > nfd)
@@ -411,32 +406,15 @@
 						alpha = 10
 						skipped = TRUE
 					alphatext = "filter: alpha(opacity=[alpha]); opacity: [alpha/100];"
-			var/list/data = list("")
-			if(!style_defined)
-				data +="<style>"
-				data +="a {color: #0000EE; font-weight: normal !important}"
-				data +="#hii {margin:0px; font-size: 18px; padding: 0px 0px 0px 10px; border-radius: 25px; border: 1px solid black; background: #cc3300; color: white;[alphatext] }"
-				data +="#med {margin:0px; font-size: 18px; padding: 0px 0px 0px 10px; border-radius: 25px; border: 1px solid; background: #ff6600;[alphatext]}"
-				data +="#low {margin:0px; font-size: 18px; padding: 0px 0px 0px 10px; border-radius: 25px; border: 1px solid; background: #FFCC00;[alphatext]}"
-				data +="#non {margin:0px; font-size: 18px; padding: 0px 0px 0px 10px; border-radius: 25px; border: 1px solid; background: #339900;[alphatext]}"
-				data +="#naa {margin:0px; font-size: 18px; padding: 0px 0px 0px 10px;[alphatext]}"
-				data +="</style>" // Is there really a correct way to format this when we're this deep into list HTML? - CitrusGender
-				style_defined++ // only need to define style once
-			switch(severity)
-				if(NOTE_SEVERITY_HIGH)
-					data += "<h1 id='hii'>"
-				if(NOTE_SEVERITY_MEDIUM)
-					data += "<h1 id='med'>"
-				if(NOTE_SEVERITY_MINOR)
-					data += "<h1 id='low'>"
-				if(NOTE_SEVERITY_NONE)
-					data += "<h1 id='non'>"
-				else
-					data += "<h1 id='naa'>"
+			var/list/data = list("<div style='margin:0px;[alphatext]'>")
+			if(severity)
+				data += "<p class='severity [severity]'>"
+			else
+				data += "<p class='severity naa'>"
 			data += "<b>[timestamp] | [server] | [admin_key]"
 			if(expire_timestamp)
 				data += " | Expires [expire_timestamp]"
-			data += "</b>"
+			data += "</b></p><center>"
 			if(!linkless)
 				if(type == "note")
 					data += "<a href='?_src_=holder;[HrefToken()];editmessageseverity=[id]'>\[Change Severity\]</a>"
@@ -452,7 +430,7 @@
 					data += " <a href='?_src_=holder;[HrefToken()];editmessage=[id]'>\[Edit\]</a>"
 				if(editor_key)
 					data += " <font size='2'>Last edit by [editor_key] <a href='?_src_=holder;[HrefToken()];messageedits=[id]'>(Click here to see edit log)</a></font>"
-			data += "</h1>"
+			data += "</div></center>"
 			data += "<p style='[alphatext]'>[text]</p><hr style='background:#000000; border:0; height:1px; [alphatext]'>"
 			switch(type)
 				if("message")
@@ -472,7 +450,7 @@
 			if(query_get_message_key.NextRow())
 				target_key = query_get_message_key.item[1]
 			qdel(query_get_message_key)
-		output += "<h2><center>[target_key]</center></h2><center>"
+		output += "<h2 style='font-size: 16px'><center>[target_key]</center></h2><center>"
 		if(!linkless)
 			output += "<a href='?_src_=holder;[HrefToken()];addnote=[target_key]'>\[Add note\]</a>"
 			output += " <a href='?_src_=holder;[HrefToken()];addmessage=[target_key]'>\[Add message\]</a>"
@@ -521,12 +499,14 @@
 				return
 			var/index_ckey = query_list_messages.item[1]
 			var/index_key = query_list_messages.item[2]
-			output += "<a href='?_src_=holder;[HrefToken()];showmessageckey=[index_ckey]'>[index_key]</a><br>"
+				output += "<a href='?_src_=holder;[HrefToken()];showmessageckey=[index_ckey]'>[index_key]</a><br>"
 		qdel(query_list_messages)
 	else if(!type && !target_ckey && !index)
 		output += "<center></a> <a href='?_src_=holder;[HrefToken()];addmessageempty=1'>\[Add message\]</a><a href='?_src_=holder;[HrefToken()];addwatchempty=1'>\[Add watchlist entry\]</a><a href='?_src_=holder;[HrefToken()];addnoteempty=1'>\[Add note\]</a></center>"
 		output += ruler
-	usr << browse({"<!DOCTYPE html><html><head><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /></head><body>[jointext(output, "")]</body></html>"}, "window=browse_messages;size=900x500")
+	var/datum/browser/browser = new(usr, "Note panel", "Manage player notes", 900, 500)
+	browser.set_content(jointext(output, ""))
+	browser.open()
 
 /proc/get_message_output(type, target_ckey)
 	if(!SSdbcore.Connect())

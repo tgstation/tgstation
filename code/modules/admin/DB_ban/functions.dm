@@ -418,7 +418,6 @@
 	output += "<option value='3'>Medium Severity</option>"
 	output += "<option value='2'>Minor Severity</option>"
 	output += "<option value='1'>No Severity</option>"
-	output += "<option value=''>--</option>"
 	output += "<td><b>Job:</b><select name='dbbanaddjob'>"
 	output += "<option value=''>--</option>"
 	for(var/j in get_all_jobs())

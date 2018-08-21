@@ -13,7 +13,7 @@ In any query remember to add a prefix to the table names if you use one.
 Version 4.7, 18 August 2018, by CitrusGender
 Modified table `messages`, adding column `severity` to classify notes based on their severity.
 
-ALTER TABLE `messages` ADD `severity` TINYINT(1) UNSIGNED NULL AFTER `expire_timestamp`
+ALTER TABLE `messages` ADD `severity` enum('high','medium','minor','none') DEFAULT NULL AFTER `expire_timestamp`
 
 ----------------------------------------------------
 
