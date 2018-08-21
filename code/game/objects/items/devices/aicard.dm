@@ -11,13 +11,11 @@
 	item_flags = NOBLUDGEON
 	var/flush = FALSE
 	var/mob/living/silicon/ai/AI
-	var/isPotato = 0
 
 /obj/item/aicard/aitater
 	name = "intelliTater"
 	desc = "A stylish upgrade (?) to the intelliCard."
 	icon_state = "aitater"
-	isPotato = 1
 
 /obj/item/aicard/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is trying to upload [user.p_them()]self into [src]! That's not going to work out well!</span>")
