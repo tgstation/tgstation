@@ -411,7 +411,7 @@
 				data += "<p class='severity [severity]'>"
 			else
 				data += "<p class='severity'>"
-			data += "<b>[timestamp] | [server] | [admin_key]"
+			data += "<b>[timestamp] | [server] | [admin_key] | [secret ? "<i>- Secret</i>" : ""]"
 			if(expire_timestamp)
 				data += " | Expires [expire_timestamp]"
 			data += "</b></p><center>"
