@@ -88,11 +88,11 @@ SUBSYSTEM_DEF(garbage)
 /datum/controller/subsystem/garbage/fire()
 	//the fact that this resets its processing each fire (rather then resume where it left off) is intentional.
 	var/queue = GC_QUEUE_PREQUEUE
-
+	
 	if (!memorialWritten && length(queues[GC_QUEUE_PREQUEUE]) > 100000) // 100k ought to be enough, the crash happens at ~180k
 		memorialWritten = TRUE
 		writeMemorial()
-
+	log_qdel("Queue state, GC: PREQUEUE [length(queues[GC_QUEUE_PREQUEUE])], GC: QUEUE_CHECK [length(queues[GC_QUEUE_CHECK])], GC: HARDDEL [length(queues[GC_QUEUE_HARDDELETE])]")
 	while (state == SS_RUNNING)
 		switch (queue)
 			if (GC_QUEUE_PREQUEUE)
@@ -110,7 +110,7 @@ SUBSYSTEM_DEF(garbage)
 
 /datum/controller/subsystem/garbage/proc/writeMemorial()
 	to_chat(world, "A diagnostics file is being collected to aid debugging a likely impending OOM crash. The server will be unresponsive for around a minute.")
-	sleep(1) // To make sure the message is seen
+	sleep(5) // To make sure the message is seen
 	var/list/results = new /list(GC_QUEUE_COUNT)
 	results[GC_QUEUE_PREQUEUE] = list()
 	for (var/item in queues[GC_QUEUE_PREQUEUE]) // Prequeue items are references
