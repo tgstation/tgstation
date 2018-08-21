@@ -1,5 +1,5 @@
 /obj/item/radio/intercom
-	name = "station intercom"
+	name = "Station Intercom (General)"
 	desc = "Talk through this."
 	icon_state = "intercom"
 	anchored = TRUE
