@@ -449,8 +449,8 @@
 	icon_state = "zone_sel"
 	screen_loc = ui_zonesel
 	var/selecting = BODY_ZONE_CHEST
+	var/static/list/hover_overlays_cache = list()
 	var/hovering
-	var/mutable_appearance/hover_overlay
 
 /obj/screen/zone_sel/Click(location, control,params)
 	if(isobserver(usr))
@@ -477,21 +477,30 @@
 	var/icon_y = text2num(PL["icon-y"])
 	var/choice = get_zone_at(icon_x, icon_y)
 
-	if (hovering == choice)
+	if(hovering == choice)
 		return
+	vis_contents -= hover_overlays_cache[hovering]
 	hovering = choice
-	if (hover_overlay)
-		cut_overlay(hover_overlay)
-	if (choice && choice != selecting)
-		if (!hover_overlay)
-			hover_overlay = mutable_appearance('icons/mob/screen_gen.dmi', "[choice]")
-			hover_overlay.alpha = 128
-		hover_overlay.icon_state = choice
-		add_overlay(hover_overlay)
+
+	var/obj/effect/overlay/zone_sel/overlay_object = hover_overlays_cache[choice]
+	if(!overlay_object)
+		overlay_object = new
+		overlay_object.icon_state = "[choice]"
+		hover_overlays_cache[choice] = overlay_object
+	vis_contents += overlay_object
+
+/obj/effect/overlay/zone_sel
+	icon = 'icons/mob/screen_gen.dmi'
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	alpha = 128
+	anchored = TRUE
+	layer = ABOVE_HUD_LAYER
+	plane = ABOVE_HUD_PLANE
 
 /obj/screen/zone_sel/MouseExited(location, control, params)
-	if(!isobserver(usr) && hover_overlay)
-		cut_overlay(hover_overlay)
+	if(!isobserver(usr) && hovering)
+		vis_contents -= hover_overlays_cache[hovering]
+		hovering = null
 
 /obj/screen/zone_sel/proc/get_zone_at(icon_x, icon_y)
 	switch(icon_y)
