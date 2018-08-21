@@ -136,12 +136,14 @@ SUBSYSTEM_DEF(traumas)
 						/obj/item/clothing/suit/chickensuit, /obj/item/clothing/head/chicken,
 						/obj/item/clothing/suit/toggle/owlwings, /obj/item/clothing/under/owl, /obj/item/clothing/mask/gas/owl_mask,
 						/obj/item/clothing/under/griffin, /obj/item/clothing/shoes/griffin, /obj/item/clothing/head/griffin,
-						/obj/item/clothing/head/helmet/space/freedom, /obj/item/clothing/suit/space/freedom))
-					   ),
+						/obj/item/clothing/head/helmet/space/freedom, /obj/item/clothing/suit/space/freedom)),
+						
 					   "anime = typecahceof(list(/obj/item/clothing/under/schoolgirl, /obj/item/clothing/under/schoolgirl/red,
 					   /obj/item/clothing/under/schoolgirl/green, /obj/item/clothing/under/schoolgirl/orange, /obj/item/toy/katana, obj/item/katana,
-					   /obj/item/nullrod/claymore/katana, /obj/item/energy_katana))
-
+					   /obj/item/nullrod/claymore/katana, /obj/item/energy_katana, /obj/item/reagent_containers/food/snacks/sashimi,
+					   /obj/item/reagent_containers/food/drinks/bottle/sake))
+						)
+						
 	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)),
 						"the supernatural" = typecacheof(list(/turf/open/floor/clockwork, /turf/closed/wall/clockwork,
 						/turf/open/floor/plasteel/cult, /turf/closed/wall/mineral/cult)),
