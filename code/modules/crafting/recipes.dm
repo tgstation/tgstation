@@ -693,3 +693,4 @@
 	reqs = list(/obj/item/aicard = 1,
 					/obj/item/reagent_containers/food/snacks/grown/potato = 1)
 	category = CAT_MISC
+	
