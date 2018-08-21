@@ -12,7 +12,7 @@
 	environment_smash = ENVIRONMENT_SMASH_WALLS //Walls can't stop THE LAW
 	mob_size = MOB_SIZE_LARGE
 
-	radio_key = /obj/item/device/encryptionkey/headset_sec
+	radio_key = /obj/item/encryptionkey/headset_sec
 	radio_channel = "Security"
 	bot_type = SEC_BOT
 	model = "ED-209"
@@ -26,7 +26,7 @@
 	var/lastfired = 0
 	var/shot_delay = 15
 	var/lasercolor = ""
-	var/disabled = 0//A holder for if it needs to be disabled, if true it will not seach for targets, shoot at targets, or move, currently only used for lasertag
+	var/disabled = FALSE //A holder for if it needs to be disabled, if true it will not seach for targets, shoot at targets, or move, currently only used for lasertag
 
 
 	var/mob/living/carbon/target
@@ -34,11 +34,11 @@
 	var/threatlevel = 0
 	var/target_lastloc //Loc of target when arrested.
 	var/last_found //There's a delay
-	var/declare_arrests = 1 //When making an arrest, should it notify everyone wearing sechuds?
-	var/idcheck = 1 //If true, arrest people with no IDs
-	var/weaponscheck = 1 //If true, arrest people for weapons if they don't have access
-	var/check_records = 1 //Does it check security records?
-	var/arrest_type = 0 //If true, don't handcuff
+	var/declare_arrests = TRUE //When making an arrest, should it notify everyone wearing sechuds?
+	var/idcheck = TRUE //If true, arrest people with no IDs
+	var/weaponscheck = TRUE //If true, arrest people for weapons if they don't have access
+	var/check_records = TRUE //Does it check security records?
+	var/arrest_type = FALSE //If true, don't handcuff
 	var/projectile = /obj/item/projectile/energy/electrode //Holder for projectile type
 	var/shoot_sound = 'sound/weapons/taser.ogg'
 	var/cell_type = /obj/item/stock_parts/cell
@@ -199,7 +199,7 @@ Auto Patrol[]"},
 			to_chat(user, "<span class='warning'>You short out [src]'s target assessment circuits.</span>")
 			oldtarget_name = user.name
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
-		declare_arrests = 0
+		declare_arrests = FALSE
 		icon_state = "[lasercolor]ed209[on]"
 		set_weapon()
 
@@ -357,7 +357,7 @@ Auto Patrol[]"},
 			target = C
 			oldtarget_name = C.name
 			speak("Level [threatlevel] infraction alert!")
-			playsound(loc, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, 0)
+			playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, FALSE)
 			visible_message("<b>[src]</b> points at [C.name]!")
 			mode = BOT_HUNT
 			spawn(0)
@@ -380,7 +380,7 @@ Auto Patrol[]"},
 	Sa.build_step = 1
 	Sa.add_overlay("hs_hole")
 	Sa.created_name = name
-	new /obj/item/device/assembly/prox_sensor(Tsec)
+	new /obj/item/assembly/prox_sensor(Tsec)
 	drop_part(cell_type, Tsec)
 
 	if(!lasercolor)
@@ -447,7 +447,7 @@ Auto Patrol[]"},
 		return
 
 	var/obj/item/projectile/A = new projectile (loc)
-	playsound(loc, shoot_sound, 50, 1)
+	playsound(src, shoot_sound, 50, TRUE)
 	A.preparePixelProjectile(target, src)
 	A.fire()
 
@@ -459,10 +459,12 @@ Auto Patrol[]"},
 
 
 /mob/living/simple_animal/bot/ed209/emp_act(severity)
-
-	if(severity==2 && prob(70))
-		..(severity-1)
-	else
+	if(severity == 2 && prob(70))
+		severity = 1
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if (severity >= 2)
 		new /obj/effect/temp_visual/emp(loc)
 		var/list/mob/living/carbon/targets = new
 		for(var/mob/living/carbon/C in view(12,src))
@@ -536,7 +538,7 @@ Auto Patrol[]"},
 	shootAt(A)
 
 /mob/living/simple_animal/bot/ed209/proc/stun_attack(mob/living/carbon/C)
-	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 	icon_state = "[lasercolor]ed209-c"
 	spawn(2)
 		icon_state = "[lasercolor]ed209[on]"
@@ -547,7 +549,7 @@ Auto Patrol[]"},
 		var/mob/living/carbon/human/H = C
 		var/judgement_criteria = judgement_criteria()
 		threat = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
-	add_logs(src,C,"stunned")
+	log_combat(src,C,"stunned")
 	if(declare_arrests)
 		var/area/location = get_area(src)
 		speak("[arrest_type ? "Detaining" : "Arresting"] level [threat] scumbag <b>[C]</b> in [location].", radio_channel)
@@ -556,12 +558,12 @@ Auto Patrol[]"},
 
 /mob/living/simple_animal/bot/ed209/proc/cuff(mob/living/carbon/C)
 	mode = BOT_ARREST
-	playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
+	playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
 	C.visible_message("<span class='danger'>[src] is trying to put zipties on [C]!</span>",\
 						"<span class='userdanger'>[src] is trying to put zipties on you!</span>")
 
 	spawn(60)
-		if( !Adjacent(C) || !isturf(C.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
+		if( !on || !Adjacent(C) || !isturf(C.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
 			return
 		if(!C.handcuffed)
 			C.handcuffed = new /obj/item/restraints/handcuffs/cable/zipties/used(C)

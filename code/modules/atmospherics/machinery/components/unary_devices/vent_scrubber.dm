@@ -14,7 +14,6 @@
 	layer = GAS_SCRUBBER_LAYER
 
 	var/id_tag = null
-	var/on = FALSE
 	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
 
 	var/filter_types = list(/datum/gas/carbon_dioxide)
@@ -30,6 +29,16 @@
 
 	pipe_state = "scrubber"
 
+/obj/machinery/atmospherics/components/unary/vent_scrubber/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
+
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
 	..()
 	if(!id_tag)
@@ -43,17 +52,25 @@
 	on = TRUE
 	icon_state = "scrub_map_on"
 
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
+
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	var/area/A = get_area(src)
-	A.air_scrub_names -= id_tag
-	A.air_scrub_info -= id_tag
+	if (A)
+		A.air_scrub_names -= id_tag
+		A.air_scrub_info -= id_tag
 
 	SSradio.remove_object(src,frequency)
 	radio_connection = null
-
-	for(var/I in adjacent_turfs)
-		I = null
-
+	adjacent_turfs.Cut()
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/auto_use_power()
@@ -224,6 +241,8 @@
 	if(!is_operational() || !signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 		return 0
 
+	var/mob/signal_sender = signal.data["user"]
+
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
 	if("power_toggle" in signal.data)
@@ -234,10 +253,13 @@
 	if("toggle_widenet" in signal.data)
 		widenet = !widenet
 
+	var/old_scrubbing = scrubbing
 	if("scrubbing" in signal.data)
 		scrubbing = text2num(signal.data["scrubbing"])
 	if("toggle_scrubbing" in signal.data)
 		scrubbing = !scrubbing
+	if(scrubbing != old_scrubbing)
+		investigate_log(" was toggled to [scrubbing ? "scrubbing" : "siphon"] mode by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
 
 	if("toggle_filter" in signal.data)
 		filter_types ^= gas_id2path(signal.data["toggle_filter"])
@@ -284,6 +306,11 @@
 	if(. && on && is_operational())
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
+		
+/obj/machinery/atmospherics/components/unary/vent_scrubber/examine(mob/user)
+	..()
+	if(welded)
+		to_chat(user, "It seems welded shut.")
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_crawl_through()
 	return !welded

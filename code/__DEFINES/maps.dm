@@ -26,7 +26,6 @@ require only minor tweaks.
 #define MAP_REMOVE_JOB(jobpath) /datum/job/##jobpath/map_check() { return (SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) && ..() }
 
 #define SPACERUIN_MAP_EDGE_PAD 15
-#define ZLEVEL_SPACE_RUIN_COUNT 7
 
 // traits
 // boolean - marks a level as having that property if present
@@ -34,13 +33,18 @@ require only minor tweaks.
 #define ZTRAIT_STATION "Station"
 #define ZTRAIT_MINING "Mining"
 #define ZTRAIT_REEBE "Reebe"
-#define ZTRAIT_TRANSIT "Transit"
+#define ZTRAIT_RESERVED "Transit/Reserved"
 #define ZTRAIT_AWAY "Away Mission"
 #define ZTRAIT_SPACE_RUINS "Space Ruins"
 #define ZTRAIT_LAVA_RUINS "Lava Ruins"
+// prevents certain turfs from being stripped by a singularity
+#define ZTRAIT_PLANET "Planet"
 
 // number - bombcap is multiplied by this before being applied to bombs
 #define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier"
+
+// number - default gravity if there's no gravity generators or area overrides present
+#define ZTRAIT_GRAVITY "Gravity"
 
 // numeric offsets - e.g. {"Down": -1} means that chasms will fall to z - 1 rather than oblivion
 #define ZTRAIT_UP "Up"
@@ -56,7 +60,7 @@ require only minor tweaks.
     #define CROSSLINKED "Cross"
 
 // default trait definitions, used by SSmapping
-#define ZTRAITS_CENTCOM list(ZTRAIT_LINKAGE = SELFLOOPING, ZTRAIT_CENTCOM = TRUE)
+#define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE)
 #define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE)
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
 #define ZTRAITS_LAVALAND list(ZTRAIT_MINING = TRUE, ZTRAIT_LAVA_RUINS = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 2)
@@ -77,6 +81,8 @@ require only minor tweaks.
 #define CAMERA_LOCK_CENTCOM 4
 #define CAMERA_LOCK_REEBE 8
 
+//Reserved/Transit turf type
+#define RESERVED_TURF_TYPE /turf/open/space/basic			//What the turf is when not being used
 
 //Ruin Generation
 

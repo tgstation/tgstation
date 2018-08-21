@@ -1,7 +1,7 @@
 /datum/surgery/dental_implant
 	name = "dental implant"
 	steps = list(/datum/surgery_step/drill, /datum/surgery_step/insert_pill)
-	possible_locs = list("mouth")
+	possible_locs = list(BODY_ZONE_PRECISE_MOUTH)
 
 /datum/surgery_step/insert_pill
 	name = "insert pill"
@@ -32,7 +32,7 @@
 	if(!..())
 		return 0
 	to_chat(owner, "<span class='caution'>You grit your teeth and burst the implanted [target.name]!</span>")
-	add_logs(owner, null, "swallowed an implanted pill", target)
+	log_combat(owner, null, "swallowed an implanted pill", target)
 	if(target.reagents.total_volume)
 		target.reagents.reaction(owner, INGEST)
 		target.reagents.trans_to(owner, target.reagents.total_volume)

@@ -3,10 +3,12 @@
 	roundend_category = "syndicate operatives" //just in case
 	antagpanel_category = "NukeOp"
 	job_rank = ROLE_OPERATIVE
+	antag_moodlet = /datum/mood_event/focused
 	var/datum/team/nuclear/nuke_team
 	var/always_new_team = FALSE //If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
 	var/send_to_spawnpoint = TRUE //Should the user be moved to default spawnpoint.
 	var/nukeop_outfit = /datum/outfit/syndicate
+	can_hijack = HIJACK_HIJACKER //Alternative way to wipe out the station.
 
 /datum/antagonist/nukeop/proc/update_synd_icons_added(mob/living/M)
 	var/datum/atom_hud/antag/opshud = GLOB.huds[ANTAG_HUD_OPS]
@@ -64,6 +66,8 @@
 				nuke.r_code = nuke_team.memorized_code
 			else //Already set by admins/something else?
 				nuke_team.memorized_code = nuke.r_code
+			for(var/obj/machinery/nuclearbomb/beer/beernuke in GLOB.nuke_list)
+				beernuke.r_code = nuke_team.memorized_code
 		else
 			stack_trace("Syndicate nuke not found during nuke team creation.")
 			nuke_team.memorized_code = null
@@ -136,7 +140,7 @@
 		to_chat(owner.current, "The nuclear authorization code is: <B>[code]</B>")
 	else
 		to_chat(admin, "<span class='danger'>No valid nuke found!</span>")
-		
+
 /datum/antagonist/nukeop/leader
 	name = "Nuclear Operative Leader"
 	nukeop_outfit = /datum/outfit/syndicate/leader
@@ -217,7 +221,7 @@
 			else //Already set by admins/something else?
 				nuke_team.memorized_code = nuke.r_code
 		else
-			stack_trace("Station self destruct ot found during lone op team creation.")
+			stack_trace("Station self destruct not found during lone op team creation.")
 			nuke_team.memorized_code = null
 
 /datum/antagonist/nukeop/reinforcement
@@ -242,8 +246,18 @@
 
 /datum/team/nuclear/proc/disk_rescued()
 	for(var/obj/item/disk/nuclear/D in GLOB.poi_list)
-		if(!D.onCentCom())
-			return FALSE
+		//If emergency shuttle is in transit disk is only safe on it
+		if(SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
+			if(!SSshuttle.emergency.is_in_shuttle_bounds(D))
+				return FALSE
+		//If shuttle escaped check if it's on centcom side
+		else if(SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
+			if(!D.onCentCom())
+				return FALSE
+		else //Otherwise disk is safe when on station
+			var/turf/T = get_turf(D)
+			if(!T || !is_station_level(T.z))
+				return FALSE
 	return TRUE
 
 /datum/team/nuclear/proc/operatives_dead()
@@ -255,10 +269,11 @@
 
 /datum/team/nuclear/proc/syndies_escaped()
 	var/obj/docking_port/mobile/S = SSshuttle.getShuttle("syndicate")
-	return S && (is_centcom_level(S.z) || is_transit_level(S.z))
+	var/obj/docking_port/stationary/transit/T = locate() in S.loc
+	return S && (is_centcom_level(S.z) || T)
 
 /datum/team/nuclear/proc/get_result()
-	var/evacuation = SSshuttle.emergency.mode == SHUTTLE_ENDGAME
+	var/evacuation = EMERGENCY_ESCAPED_OR_ENDGAMED
 	var/disk_rescued = disk_rescued()
 	var/syndies_didnt_escape = !syndies_escaped()
 	var/station_was_nuked = SSticker.mode.station_was_nuked
@@ -274,13 +289,13 @@
 		return NUKE_RESULT_WRONG_STATION
 	else if (!disk_rescued && !station_was_nuked && nuke_off_station && syndies_didnt_escape)
 		return NUKE_RESULT_WRONG_STATION_DEAD
-	else if ((disk_rescued || evacuation) && operatives_dead())
+	else if ((disk_rescued && evacuation) && operatives_dead())
 		return NUKE_RESULT_CREW_WIN_SYNDIES_DEAD
 	else if (disk_rescued)
 		return NUKE_RESULT_CREW_WIN
 	else if (!disk_rescued && operatives_dead())
 		return NUKE_RESULT_DISK_LOST
-	else if (!disk_rescued &&  evacuation)
+	else if (!disk_rescued && evacuation)
 		return NUKE_RESULT_DISK_STOLEN
 	else
 		return	//Undefined result
@@ -324,6 +339,7 @@
 	var/text = "<br><span class='header'>The syndicate operatives were:</span>"
 	var/purchases = ""
 	var/TC_uses = 0
+	LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
 	for(var/I in members)
 		var/datum/mind/syndicate = I
 		var/datum/uplink_purchase_log/H = GLOB.uplink_purchase_logs_by_key[syndicate.key]

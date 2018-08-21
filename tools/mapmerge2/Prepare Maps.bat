@@ -7,6 +7,6 @@ cls
 echo All dmm files in _maps directories have been backed up
 echo Now you can make your changes...
 echo ---
-echo Remember to run Run_Map_Merge.bat just before you commit your changes!
+echo Remember to run mapmerge.bat just before you commit your changes!
 echo ---
 pause

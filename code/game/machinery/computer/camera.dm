@@ -5,11 +5,16 @@
 	icon_keyboard = "security_key"
 	circuit = /obj/item/circuitboard/computer/security
 	var/last_pic = 1
-	var/list/network = list("SS13")
-	var/mapping = 0//For the overview file, interesting bit of code.
+	var/list/network = list("ss13")
 	var/list/watchers = list() //who's using the console, associated with the camera they're on.
 
 	light_color = LIGHT_COLOR_RED
+
+/obj/machinery/computer/security/Initialize()
+	. = ..()
+	for(var/i in network)
+		network -= i
+		network += lowertext(i)
 
 /obj/machinery/computer/security/check_eye(mob/user)
 	if( (stat & (NOPOWER|BROKEN)) || user.incapacitated() || user.eye_blind )
@@ -45,6 +50,9 @@
 	return ..()
 
 /obj/machinery/computer/security/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(stat)
 		return
 	if (!network)
@@ -124,7 +132,7 @@
 /obj/machinery/computer/security/proc/get_available_cameras()
 	var/list/L = list()
 	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
-		if((is_away_level(z) || is_away_level(C.z)) && (C.z != z))//if on away mission, can only recieve feed from same z_level cameras
+		if((is_away_level(z) || is_away_level(C.z)) && (C.z != z))//if on away mission, can only receive feed from same z_level cameras
 			continue
 		L.Add(C)
 
@@ -144,6 +152,51 @@
 			D["[C.c_tag][(C.status ? null : " (Deactivated)")]"] = C
 	return D
 
+// SECURITY MONITORS
+
+/obj/machinery/computer/security/wooden_tv
+	name = "security camera monitor"
+	desc = "An old TV hooked into the station's camera network."
+	icon_state = "television"
+	icon_keyboard = null
+	icon_screen = "detective_tv"
+	clockwork = TRUE //it'd look weird
+	pass_flags = PASSTABLE
+
+/obj/machinery/computer/security/mining
+	name = "outpost camera console"
+	desc = "Used to access the various cameras on the outpost."
+	icon_screen = "mining"
+	icon_keyboard = "mining_key"
+	network = list("mine", "auxbase")
+	circuit = /obj/item/circuitboard/computer/mining
+
+/obj/machinery/computer/security/research
+	name = "research camera console"
+	desc = "Used to access the various cameras in science."
+	network = list("rd")
+	circuit = /obj/item/circuitboard/computer/research
+
+/obj/machinery/computer/security/hos
+	name = "Head of Security's camera console"
+	desc = "A custom security console with added access to the labor camp network."
+	network = list("ss13", "labor")
+	circuit = null
+
+/obj/machinery/computer/security/labor
+	name = "labor camp monitoring"
+	desc = "Used to access the various cameras on the labor camp."
+	network = list("labor")
+	circuit = null
+
+/obj/machinery/computer/security/qm
+	name = "Quartermaster's camera console"
+	desc = "A console with access to the mining, auxillary base and vault camera networks."
+	network = list("mine", "auxbase", "vault")
+	circuit = null
+
+// TELESCREENS
+
 /obj/machinery/computer/security/telescreen
 	name = "\improper Telescreen"
 	desc = "Used for watching an empty arena."
@@ -153,7 +206,6 @@
 	density = FALSE
 	circuit = null
 	clockwork = TRUE //it'd look very weird
-
 	light_power = 0
 
 /obj/machinery/computer/security/telescreen/update_icon()
@@ -168,22 +220,68 @@
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "entertainment"
 	network = list("thunder")
-	density = FALSE
-	circuit = null
 
-/obj/machinery/computer/security/wooden_tv
-	name = "security camera monitor"
-	desc = "An old TV hooked into the stations camera network."
-	icon_state = "television"
-	icon_keyboard = null
-	icon_screen = "detective_tv"
-	clockwork = TRUE //it'd look weird
+/obj/machinery/computer/security/telescreen/rd
+	name = "Research Director's telescreen"
+	desc = "Used for watching the AI and the RD's goons from the safety of his office."
+	network = list("rd", "aicore", "aiupload", "minisat", "xeno", "test")
 
+/obj/machinery/computer/security/telescreen/circuitry
+	name = "circuitry telescreen"
+	desc = "Used for watching the other eggheads from the safety of the circuitry lab."
+	network = list("rd")
 
-/obj/machinery/computer/security/mining
-	name = "outpost camera console"
-	desc = "Used to access the various cameras on the outpost."
-	icon_screen = "mining"
-	icon_keyboard = "mining_key"
-	network = list("MINE")
-	circuit = /obj/item/circuitboard/computer/mining
+/obj/machinery/computer/security/telescreen/ce
+	name = "Chief Engineer's telescreen"
+	desc = "Used for watching the engine, telecommunications and the minisat."
+	network = list("engine", "singularity", "tcomms", "minisat")
+
+/obj/machinery/computer/security/telescreen/cmo
+	name = "Chief Medical Officer's telescreen"
+	desc = "A telescreen with access to the medbay's camera network."
+	network = list("medbay")
+
+/obj/machinery/computer/security/telescreen/vault
+	name = "Vault monitor"
+	desc = "A telescreen that connects to the vault's camera network."
+	network = list("vault")
+
+/obj/machinery/computer/security/telescreen/toxins
+	name = "Bomb test site monitor"
+	desc = "A telescreen that connects to the bomb test site's camera."
+	network = list("toxin")
+
+/obj/machinery/computer/security/telescreen/engine
+	name = "engine monitor"
+	desc = "A telescreen that connects to the engine's camera network."
+	network = list("engine")
+
+/obj/machinery/computer/security/telescreen/turbine
+	name = "turbine monitor"
+	desc = "A telescreen that connects to the turbine's camera."
+	network = list("turbine")
+
+/obj/machinery/computer/security/telescreen/interrogation
+	name = "interrogation room monitor"
+	desc = "A telescreen that connects to the interrogation room's camera."
+	network = list("interrogation")
+
+/obj/machinery/computer/security/telescreen/prison
+	name = "prison monitor"
+	desc = "A telescreen that connects to the permabrig's camera network."
+	network = list("prison")
+
+/obj/machinery/computer/security/telescreen/auxbase
+	name = "auxillary base monitor"
+	desc = "A telescreen that connects to the auxillary base's camera."
+	network = list("auxbase")
+
+/obj/machinery/computer/security/telescreen/minisat
+	name = "minisat monitor"
+	desc = "A telescreen that connects to the minisat's camera network."
+	network = list("minisat")
+
+/obj/machinery/computer/security/telescreen/aiupload
+	name = "AI upload monitor"
+	desc = "A telescreen that connects to the AI upload's camera network."
+	network = list("aiupload")

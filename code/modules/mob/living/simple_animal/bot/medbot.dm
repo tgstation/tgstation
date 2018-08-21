@@ -16,7 +16,7 @@
 
 	status_flags = (CANPUSH | CANSTUN)
 
-	radio_key = /obj/item/device/encryptionkey/headset_med
+	radio_key = /obj/item/encryptionkey/headset_med
 	radio_channel = "Medical"
 
 	bot_type = MED_BOT
@@ -28,7 +28,7 @@
 	path_image_color = "#DDDDFF"
 
 	var/obj/item/reagent_containers/glass/reagent_glass = null //Can be set to draw from this for reagents.
-	var/healthanalyzer = /obj/item/device/healthanalyzer
+	var/healthanalyzer = /obj/item/healthanalyzer
 	var/firstaid = /obj/item/storage/firstaid
 	var/skin = null //Set to "tox", "ointment" or "o2" for the other two firstaid kits.
 	var/mob/living/carbon/patient = null
@@ -287,7 +287,7 @@
 		oldpatient = patient
 		soft_reset()
 
-	if(!patient)
+	if(QDELETED(patient))
 		if(!shut_up && prob(1))
 			var/list/messagevoice = list("Radar, put a mask on!" = 'sound/voice/mradar.ogg',"There's always a catch, and I'm the best there is." = 'sound/voice/mcatch.ogg',"I knew it, I should've been a plastic surgeon." = 'sound/voice/msurgeon.ogg',"What kind of medbay is this? Everyone's dropping like flies." = 'sound/voice/mflies.ogg',"Delicious!" = 'sound/voice/mdelicious.ogg')
 			var/message = pick(messagevoice)
@@ -357,8 +357,11 @@
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if((H.head && (H.head.flags_1 & THICKMATERIAL_1)) && (H.wear_suit && (H.wear_suit.flags_1 & THICKMATERIAL_1)))
-			return FALSE // Skip over them if they have no exposed flesh.
+		if (H.wear_suit && H.head && istype(H.wear_suit, /obj/item/clothing) && istype(H.head, /obj/item/clothing))
+			var/obj/item/clothing/CS = H.wear_suit
+			var/obj/item/clothing/CH = H.head
+			if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)
+				return FALSE // Skip over them if they have no exposed flesh.
 
 	if(declare_crit && C.health <= 0) //Critical condition! Call for help!
 		declare(C)
@@ -383,12 +386,12 @@
 		return TRUE
 
 	if(treat_virus && !C.reagents.has_reagent(treatment_virus_avoid) && !C.reagents.has_reagent(treatment_virus))
-		for(var/thing in C.viruses)
+		for(var/thing in C.diseases)
 			var/datum/disease/D = thing
 			//the medibot can't detect viruses that are undetectable to Health Analyzers or Pandemic machines.
 			if(!(D.visibility_flags & HIDDEN_SCANNER || D.visibility_flags & HIDDEN_PANDEMIC) \
-			&& D.severity != VIRUS_SEVERITY_POSITIVE \
-			&& (D.stage > 1 || (D.spread_flags & VIRUS_SPREAD_AIRBORNE))) // medibot can't detect a virus in its initial stage unless it spreads airborne.
+			&& D.severity != DISEASE_SEVERITY_POSITIVE \
+			&& (D.stage > 1 || (D.spread_flags & DISEASE_SPREAD_AIRBORNE))) // medibot can't detect a virus in its initial stage unless it spreads airborne.
 				return TRUE //STOP DISEASE FOREVER
 
 	return FALSE
@@ -435,12 +438,12 @@
 	else
 		if(treat_virus)
 			var/virus = 0
-			for(var/thing in C.viruses)
+			for(var/thing in C.diseases)
 				var/datum/disease/D = thing
 				//detectable virus
 				if((!(D.visibility_flags & HIDDEN_SCANNER)) || (!(D.visibility_flags & HIDDEN_PANDEMIC)))
-					if(D.severity != VIRUS_SEVERITY_POSITIVE)      //virus is harmful
-						if((D.stage > 1) || (D.spread_flags & VIRUS_SPREAD_AIRBORNE))
+					if(D.severity != DISEASE_SEVERITY_POSITIVE)      //virus is harmful
+						if((D.stage > 1) || (D.spread_flags & DISEASE_SPREAD_AIRBORNE))
 							virus = 1
 
 			if(!reagent_id && (virus))
@@ -527,7 +530,7 @@
 	var/atom/Tsec = drop_location()
 
 	drop_part(firstaid, Tsec)
-	new /obj/item/device/assembly/prox_sensor(Tsec)
+	new /obj/item/assembly/prox_sensor(Tsec)
 	drop_part(healthanalyzer, Tsec)
 
 	if(reagent_glass)

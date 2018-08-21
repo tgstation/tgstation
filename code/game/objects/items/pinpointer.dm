@@ -5,7 +5,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "pinpointer"
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
@@ -30,7 +30,7 @@
 
 /obj/item/pinpointer/attack_self(mob/living/user)
 	active = !active
-	user.visible_message("<span class='notice'>[user] [active ? "" : "de"]activates their pinpointer.</span>", "<span class='notice'>You [active ? "" : "de"]activate your pinpointer.</span>")
+	user.visible_message("<span class='notice'>[user] [active ? "" : "de"]activates [user.p_their()] pinpointer.</span>", "<span class='notice'>You [active ? "" : "de"]activate your pinpointer.</span>")
 	playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
 	if(active)
 		START_PROCESSING(SSfastprocess, src)
@@ -87,14 +87,14 @@
 			return FALSE
 
 		var/turf/there = get_turf(H)
-		return (H.z != 0 || (there && there.z == H.z))
+		return (H.z != 0 || (there && there.z == here.z))
 
 	return FALSE
 
 /obj/item/pinpointer/crew/attack_self(mob/living/user)
 	if(active)
 		active = FALSE
-		user.visible_message("<span class='notice'>[user] deactivates their pinpointer.</span>", "<span class='notice'>You deactivate your pinpointer.</span>")
+		user.visible_message("<span class='notice'>[user] deactivates [user.p_their()] pinpointer.</span>", "<span class='notice'>You deactivate your pinpointer.</span>")
 		playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
 		target = null //Restarting the pinpointer forces a target reset
 		STOP_PROCESSING(SSfastprocess, src)
@@ -130,7 +130,7 @@
 
 	target = names[A]
 	active = TRUE
-	user.visible_message("<span class='notice'>[user] activates their pinpointer.</span>", "<span class='notice'>You activate your pinpointer.</span>")
+	user.visible_message("<span class='notice'>[user] activates [user.p_their()] pinpointer.</span>", "<span class='notice'>You activate your pinpointer.</span>")
 	playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
 	START_PROCESSING(SSfastprocess, src)
 	update_icon()
@@ -143,9 +143,3 @@
 				target = null
 	if(!target) //target can be set to null from above code, or elsewhere
 		active = FALSE
-
-/obj/item/pinpointer/process()
-	if(!active)
-		return PROCESS_KILL
-	scan_for_target()
-	update_icon()

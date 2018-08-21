@@ -22,7 +22,7 @@
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
 
-	radio_key = /obj/item/device/encryptionkey/headset_cargo
+	radio_key = /obj/item/encryptionkey/headset_cargo
 	radio_channel = "Supply"
 
 	bot_type = MULE_BOT
@@ -60,6 +60,10 @@
 	mulebot_count += 1
 	set_id(suffix || id || "#[mulebot_count]")
 	suffix = null
+
+/mob/living/simple_animal/bot/mulebot/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/ntnet_interface)
 
 /mob/living/simple_animal/bot/mulebot/Destroy()
 	unload(0)
@@ -619,7 +623,7 @@
 	return
 
 // called when bot bumps into anything
-/mob/living/simple_animal/bot/mulebot/Collide(atom/obs)
+/mob/living/simple_animal/bot/mulebot/Bump(atom/obs)
 	if(wires.is_cut(WIRE_AVOIDANCE))	// usually just bumps, but if avoidance disabled knock over mobs
 		if(isliving(obs))
 			var/mob/living/L = obs
@@ -627,7 +631,7 @@
 				visible_message("<span class='danger'>[src] bumps into [L]!</span>")
 			else
 				if(!paicard)
-					add_logs(src, L, "knocked down")
+					log_combat(src, L, "knocked down")
 					visible_message("<span class='danger'>[src] knocks over [L]!</span>")
 					L.Knockdown(160)
 	return ..()
@@ -635,18 +639,18 @@
 // called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
 /mob/living/simple_animal/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
-	add_logs(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")
+	log_combat(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")
 	H.visible_message("<span class='danger'>[src] drives over [H]!</span>", \
 					"<span class='userdanger'>[src] drives over you!</span>")
 	playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 	var/damage = rand(5,15)
-	H.apply_damage(2*damage, BRUTE, "head", run_armor_check("head", "melee"))
-	H.apply_damage(2*damage, BRUTE, "chest", run_armor_check("chest", "melee"))
-	H.apply_damage(0.5*damage, BRUTE, "l_leg", run_armor_check("l_leg", "melee"))
-	H.apply_damage(0.5*damage, BRUTE, "r_leg", run_armor_check("r_leg", "melee"))
-	H.apply_damage(0.5*damage, BRUTE, "l_arm", run_armor_check("l_arm", "melee"))
-	H.apply_damage(0.5*damage, BRUTE, "r_arm", run_armor_check("r_arm", "melee"))
+	H.apply_damage(2*damage, BRUTE, BODY_ZONE_HEAD, run_armor_check(BODY_ZONE_HEAD, "melee"))
+	H.apply_damage(2*damage, BRUTE, BODY_ZONE_CHEST, run_armor_check(BODY_ZONE_CHEST, "melee"))
+	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_LEG, run_armor_check(BODY_ZONE_L_LEG, "melee"))
+	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_LEG, run_armor_check(BODY_ZONE_R_LEG, "melee"))
+	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_ARM, run_armor_check(BODY_ZONE_L_ARM, "melee"))
+	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_ARM, run_armor_check(BODY_ZONE_R_ARM, "melee"))
 
 	var/turf/T = get_turf(src)
 	T.add_mob_blood(H)
@@ -683,18 +687,18 @@
 				calc_path()
 
 /mob/living/simple_animal/bot/mulebot/emp_act(severity)
-	if(cell)
+	. = ..()
+	if(cell && !(. & EMP_PROTECT_CONTENTS))
 		cell.emp_act(severity)
 	if(load)
 		load.emp_act(severity)
-	..()
 
 
 /mob/living/simple_animal/bot/mulebot/explode()
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/atom/Tsec = drop_location()
 
-	new /obj/item/device/assembly/prox_sensor(Tsec)
+	new /obj/item/assembly/prox_sensor(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/cable_coil/cut(Tsec)
@@ -725,7 +729,7 @@
 	else
 		..()
 
-/mob/living/simple_animal/bot/mulebot/insertpai(mob/user, obj/item/device/paicard/card)
+/mob/living/simple_animal/bot/mulebot/insertpai(mob/user, obj/item/paicard/card)
 	if(..())
 		visible_message("[src] safeties are locked on.")
 

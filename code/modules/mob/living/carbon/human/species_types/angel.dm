@@ -2,11 +2,11 @@
 	name = "Angel"
 	id = "angel"
 	default_color = "FFFFFF"
-	species_traits = list(SPECIES_ORGANIC,EYECOLOR,HAIR,FACEHAIR,LIPS)
-	mutant_bodyparts = list("tail_human", "ears", "wings")
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	mutant_bodyparts = list("wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "Angel")
 	use_skintones = 1
-	no_equip = list(slot_back)
+	no_equip = list(SLOT_BACK)
 	blacklisted = 1
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
@@ -15,12 +15,15 @@
 
 /datum/species/angel/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	..()
-	if(H.dna && H.dna.species &&((H.dna.features["wings"] != "Angel") && ("wings" in H.dna.species.mutant_bodyparts)))
+	if(H.dna && H.dna.species && (H.dna.features["wings"] != "Angel"))
+		if(!("wings" in H.dna.species.mutant_bodyparts))
+			H.dna.species.mutant_bodyparts |= "wings"
 		H.dna.features["wings"] = "Angel"
 		H.update_body()
 	if(ishuman(H) && !fly)
 		fly = new
 		fly.Grant(H)
+	H.add_trait(TRAIT_HOLY, SPECIES_TRAIT)
 
 /datum/species/angel/on_species_loss(mob/living/carbon/human/H)
 	if(fly)
@@ -28,9 +31,12 @@
 	if(H.movement_type & FLYING)
 		H.movement_type &= ~FLYING
 	ToggleFlight(H,0)
-	if(H.dna && H.dna.species &&((H.dna.features["wings"] != "None") && ("wings" in H.dna.species.mutant_bodyparts)))
+	if(H.dna && H.dna.species && (H.dna.features["wings"] == "Angel"))
+		if("wings" in H.dna.species.mutant_bodyparts)
+			H.dna.species.mutant_bodyparts -= "wings"
 		H.dna.features["wings"] = "None"
 		H.update_body()
+	H.remove_trait(TRAIT_HOLY, SPECIES_TRAIT)
 	..()
 
 /datum/species/angel/spec_life(mob/living/carbon/human/H)

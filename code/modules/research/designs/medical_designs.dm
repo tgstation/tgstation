@@ -9,7 +9,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
 	construction_time = 75
-	build_path = /obj/item/device/mmi
+	build_path = /obj/item/mmi
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
@@ -20,7 +20,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 1700, MAT_GLASS = 1350, MAT_GOLD = 500) //Gold, because SWAG.
 	construction_time = 75
-	build_path = /obj/item/device/mmi/posibrain
+	build_path = /obj/item/mmi/posibrain
 	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
@@ -43,6 +43,24 @@
 	build_path = /obj/item/reagent_containers/glass/beaker/noreact
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/xlarge_beaker
+	name = "X-large Beaker"
+	id = "xlarge_beaker"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(MAT_GLASS = 2500, MAT_PLASTIC = 3000)
+	build_path = /obj/item/reagent_containers/glass/beaker/plastic
+	category = list("Medical Designs")
+
+/datum/design/meta_beaker
+	name = "Metamaterial Beaker"
+	id = "meta_beaker"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(MAT_GLASS = 2500, MAT_PLASTIC = 3000, MAT_GOLD = 1000, MAT_TITANIUM = 1000)
+	build_path = /obj/item/reagent_containers/glass/beaker/meta
+	category = list("Medical Designs")
 
 /datum/design/bluespacesyringe
 	name = "Bluespace Syringe"
@@ -100,9 +118,19 @@
 	id = "plasmarefiller" //Why did this have no plasmatech
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_PLASMA = 1000)
-	build_path = /obj/item/device/extinguisher_refill
+	build_path = /obj/item/extinguisher_refill
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
+/datum/design/crewpinpointer
+	name = "Crew Pinpointer"
+	desc = "Allows tracking of someone's location if their suit sensors are turned to tracking beacon."
+	id = "crewpinpointer"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 1500, MAT_GOLD = 200)
+	build_path = /obj/item/pinpointer/crew
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/defibrillator
 	name = "Defibrillator"
@@ -180,6 +208,16 @@
 	build_path = /obj/item/cautery/alien
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/healthanalyzer_advanced
+	name = "advanced health analyzer"
+	desc = "A hand-held body scanner able to distinguish vital signs of the subject with high accuracy."
+	id = "healthanalyzer_advanced"
+	build_path = /obj/item/healthanalyzer/advanced
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500, MAT_SILVER = 2000, MAT_GOLD = 1500)
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
@@ -265,7 +303,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/cyberimp_xray
-	name = "X-Ray Eyes"
+	name = "X-ray Eyes"
 	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
 	id = "ci-xray"
 	build_type = PROTOLATHE | MECHFAB
@@ -458,102 +496,93 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/surgery_lobotomy
-	name = "Lobotomy Surgery Disk"
-	desc = "A disk containing the instructions for a Lobotomy surgery."
+/////////////////////
+///Surgery Designs///
+/////////////////////
+/datum/design/surgery
+	name = "Surgery Design"
+	desc = "what"
+	id = "surgery_parent"
+	research_icon = 'icons/obj/surgery.dmi'
+	research_icon_state = "surgery_any"
+	var/surgery
+
+/datum/design/surgery/lobotomy
+	name = "Lobotomy"
+	desc = "An invasive surgical procedure which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
 	id = "surgery_lobotomy"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
-	build_path = /obj/item/disk/surgery/lobotomy
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+	surgery = /datum/surgery/advanced/lobotomy
+	research_icon_state = "surgery_head"
 
-/datum/design/surgery_pacify
-	name = "Pacification Surgery Disk"
-	desc = "A disk containing the instructions for a Pacification surgery."
+/datum/design/surgery/pacify
+	name = "Pacification"
+	desc = "A surgical procedure which permanently inhibits the aggression center of the brain, making the patient unwilling to cause direct harm."
 	id = "surgery_pacify"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
-	build_path = /obj/item/disk/surgery/pacification
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+	surgery = /datum/surgery/advanced/pacify
+	research_icon_state = "surgery_head"
 
-/datum/design/surgery_viral_bonding
-	name = "Viral Bonding Surgery Disk"
-	desc = "A disk containing the instructions for a Viral Bonding surgery."
+/datum/design/surgery/viral_bonding
+	name = "Viral Bonding"
+	desc = "A surgical procedure that forces a symbiotic relationship between a virus and its host. The patient must be dosed with spaceacillin, virus food, and formaldehyde."
 	id = "surgery_viral_bond"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
-	build_path = /obj/item/disk/surgery/viral_bonding
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+	surgery = /datum/surgery/advanced/viral_bonding
+	research_icon_state = "surgery_chest"
 
-/datum/design/surgery_reconstruction
-	name = "Reconstruction Surgery Disk"
-	desc = "A disk containing the instructions for a Reconstruction surgery."
+/datum/design/surgery/reconstruction
+	name = "Reconstruction"
+	desc = "A surgical procedure that gradually repairs damage done to a body without the assistance of chemicals. Unlike classic medicine, it is effective on corpses."
 	id = "surgery_reconstruction"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
-	build_path = /obj/item/disk/surgery/reconstruction
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+	surgery = /datum/surgery/advanced/reconstruction
+	research_icon_state = "surgery_chest"
 
-/datum/design/surgery_revival
-	name = "Revival Surgery Disk"
-	desc = "A disk containing the instructions for a Revival surgery."
+/datum/design/surgery/revival
+	name = "Revival"
+	desc = "An experimental surgical procedure which involves reconstruction and reactivation of the patient's brain even long after death. The body must still be able to sustain life."
 	id = "surgery_revival"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
-	build_path = /obj/item/disk/surgery/revival
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+	surgery = /datum/surgery/advanced/revival
+	research_icon_state = "surgery_head"
 
-/datum/design/surgery_brainwashing
-	name = "Brainwashing Surgery Disk"
-	desc = "A disk containing the instructions for a Brainwashing surgery."
+/datum/design/surgery/brainwashing
+	name = "Brainwashing"
+	desc = "A surgical procedure which directly implants a directive into the patient's brain, making it their absolute priority. It can be cleared using a mindshield implant."
 	id = "surgery_brainwashing"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
-	build_path = /obj/item/disk/surgery/brainwashing
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+	surgery = /datum/surgery/advanced/brainwashing
+	research_icon_state = "surgery_head"
 
-/datum/design/surgery_nerve_splicing
-	name = "Nerve Splicing Surgery Disk"
-	desc = "A disk containing the instructions for a Nerve Splicing surgery."
+/datum/design/surgery/nerve_splicing
+	name = "Nerve Splicing"
+	desc = "A surgical procedure which splices the patient's nerves, making them more resistant to stuns."
 	id = "surgery_nerve_splice"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
-	build_path = /obj/item/disk/surgery/nerve_splicing
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+	surgery = /datum/surgery/advanced/bioware/nerve_splicing
+	research_icon_state = "surgery_chest"
 
-/datum/design/surgery_nerve_grounding
-	name = "Nerve Grounding Surgery Disk"
-	desc = "A disk containing the instructions for a Nerve Grounding surgery."
+/datum/design/surgery/nerve_grounding
+	name = "Nerve Grounding"
+	desc = "A surgical procedure which makes the patient's nerves act as grounding rods, protecting them from electrical shocks."
 	id = "surgery_nerve_ground"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
-	build_path = /obj/item/disk/surgery/nerve_grounding
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+	surgery = /datum/surgery/advanced/bioware/nerve_grounding
+	research_icon_state = "surgery_chest"
 
-/datum/design/surgery_vein_threading
-	name = "Vein Threading Surgery Disk"
-	desc = "A disk containing the instructions for a Vein Threading surgery."
+/datum/design/surgery/vein_threading
+	name = "Vein Threading"
+	desc = "A surgical procedure which severely reduces the amount of blood lost in case of injury."
 	id = "surgery_vein_thread"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
-	build_path = /obj/item/disk/surgery/vein_threading
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+	surgery = /datum/surgery/advanced/bioware/vein_threading
+	research_icon_state = "surgery_chest"
 
-/datum/design/surgery_necrotic_revival
-	name = "Necrotic Revival Surgery Disk"
-	desc = "A disk containing the instructions for a Necrotic Revival surgery."
+/datum/design/surgery/necrotic_revival
+	name = "Necrotic Revival"
+	desc = "An experimental surgical procedure that stimulates the growth of a Romerol tumor inside the patient's brain. Requires zombie powder or rezadone."
 	id = "surgery_zombie"
+	surgery = /datum/surgery/advanced/necrotic_revival
+	research_icon_state = "surgery_head"
+
+/datum/design/holobarrier_med
+	name = "PENLITE holobarrier projector"
+	desc = "PENLITE holobarriers, a device that halts individuals with malicious diseases."
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
-	build_path = /obj/item/disk/surgery/necrotic_revival
+	build_path = /obj/item/holosign_creator/medical
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 100) //a hint of silver since it can troll 2 antags (bad viros and sentient disease)
+	id = "holobarrier_med"
 	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL

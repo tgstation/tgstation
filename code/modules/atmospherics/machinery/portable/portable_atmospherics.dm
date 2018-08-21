@@ -4,7 +4,7 @@
 	use_power = NO_POWER_USE
 	max_integrity = 250
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 60, "acid" = 30)
-
+	anchored = FALSE
 
 	var/datum/gas_mixture/air_contents
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
@@ -35,7 +35,7 @@
 
 /obj/machinery/portable_atmospherics/process_atmos()
 	if(!connected_port) // Pipe network handles reactions if connected.
-		air_contents.react()
+		air_contents.react(src)
 	else
 		update_icon()
 
@@ -80,13 +80,38 @@
 /obj/machinery/portable_atmospherics/portableConnectorReturnAir()
 	return air_contents
 
+/obj/machinery/portable_atmospherics/AltClick(mob/living/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, !ismonkey(user)))
+		return
+	if(holding)
+		to_chat(user, "<span class='notice'>You remove [holding] from [src].</span>")
+		replace_tank(user, TRUE)
+
+/obj/machinery/portable_atmospherics/examine(mob/user)
+	..()
+	if(holding)
+		to_chat(user, "<span class='notice'>\The [src] contains [holding]. Alt-click [src] to remove it.</span>")
+
+/obj/machinery/portable_atmospherics/proc/replace_tank(mob/living/user, close_valve, obj/item/tank/new_tank)
+	if(holding)
+		holding.forceMove(drop_location())
+		if(Adjacent(user) && !issilicon(user))
+			user.put_in_hands(holding)
+	if(new_tank)
+		holding = new_tank
+	else
+		holding = null
+	update_icon()
+	return TRUE
+
 /obj/machinery/portable_atmospherics/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/tank))
 		if(!(stat & BROKEN))
 			var/obj/item/tank/T = W
-			if(holding || !user.transferItemToLoc(T, src))
+			if(!user.transferItemToLoc(T, src))
 				return
-			holding = T
+			to_chat(user, "<span class='notice'>[holding ? "In one smooth motion you pop [holding] out of [src]'s connector and replace it with [T]" : "You insert [T] into [src]"].</span>")
+			replace_tank(user, FALSE, T)
 			update_icon()
 	else if(istype(W, /obj/item/wrench))
 		if(!(stat & BROKEN))
@@ -113,10 +138,11 @@
 					"<span class='notice'>You fasten [src] to the port.</span>", \
 					"<span class='italics'>You hear a ratchet.</span>")
 				update_icon()
-	else if(istype(W, /obj/item/device/analyzer) && Adjacent(user))
-		atmosanalyzer_scan(air_contents, user)
 	else
 		return ..()
+
+/obj/machinery/portable_atmospherics/analyzer_act(mob/living/user, obj/item/I)
+	atmosanalyzer_scan(air_contents, user, src)
 
 /obj/machinery/portable_atmospherics/attacked_by(obj/item/I, mob/user)
 	if(I.force < 10 && !(stat & BROKEN))

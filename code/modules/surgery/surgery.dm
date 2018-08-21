@@ -1,11 +1,12 @@
 /datum/surgery
 	var/name = "surgery"
+	var/desc = "surgery description"
 	var/status = 1
 	var/list/steps = list()									//Steps in a surgery
 	var/step_in_progress = 0								//Actively performing a Surgery
 	var/can_cancel = 1										//Can cancel this surgery after step 1 with cautery
 	var/list/species = list(/mob/living/carbon/human)		//Acceptable Species
-	var/location = "chest"									//Surgery location
+	var/location = BODY_ZONE_CHEST									//Surgery location
 	var/requires_bodypart_type = BODYPART_ORGANIC			//Prevents you from performing an operation on incorrect limbs. 0 for any limb type
 	var/list/possible_locs = list() 						//Multiple locations
 	var/ignore_clothes = 0									//This surgery ignores clothes
@@ -67,7 +68,6 @@
 	SSblackbox.record_feedback("tally", "surgeries_completed", 1, type)
 	qdel(src)
 
-
 /datum/surgery/proc/get_propability_multiplier()
 	var/propability = 0.5
 	var/turf/T = get_turf(target)
@@ -93,7 +93,15 @@
 		var/datum/species/abductor/S = H.dna.species
 		if(S.scientist)
 			return TRUE
-
+	
+	if(iscyborg(user))
+		var/mob/living/silicon/robot/R = user
+		var/obj/item/surgical_processor/SP = locate() in R.module.modules
+		if(!SP)
+			return FALSE
+		if(type in SP.advanced_surgeries)
+			return TRUE
+	
 	var/turf/T = get_turf(target)
 	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
 	if(!table || !table.computer)
@@ -130,7 +138,6 @@
 
 //TODO
 //specific steps for some surgeries (fluff text)
-//R&D researching new surgeries (especially for non-humans)
 //more interesting failure options
 //randomised complications
 //more surgeries!

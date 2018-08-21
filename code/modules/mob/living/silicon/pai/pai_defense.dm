@@ -3,6 +3,9 @@
 	return FALSE
 
 /mob/living/silicon/pai/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	take_holo_damage(50/severity)
 	Knockdown(400/severity)
 	silent = max(30/severity, silent)
@@ -36,7 +39,7 @@
 				spawn(10)
 					fold_in()
 					if(user.put_in_hands(card))
-						user.visible_message("<span class='notice'>[user] promptly scoops up their pAI's card.</span>")
+						user.visible_message("<span class='notice'>[user] promptly scoops up [user.p_their()] pAI's card.</span>")
 			else
 				visible_message("<span class='danger'>[user] stomps on [src]!.</span>")
 				take_holo_damage(2)
@@ -61,7 +64,6 @@
 	if(emitterhealth < 0)
 		fold_in(force = TRUE)
 	to_chat(src, "<span class='userdanger'>The impact degrades your holochassis!</span>")
-	hit_slowdown += amount
 	return amount
 
 /mob/living/silicon/pai/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)

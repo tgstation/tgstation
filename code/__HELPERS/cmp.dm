@@ -78,3 +78,6 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 		return A.plane - B.plane
 	else
 		return A.layer - B.layer
+
+/proc/cmp_advdisease_resistance_asc(datum/disease/advance/A, datum/disease/advance/B)
+	return A.totalResistance() - B.totalResistance()

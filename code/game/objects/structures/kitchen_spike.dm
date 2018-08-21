@@ -47,9 +47,8 @@
 	can_buckle = 1
 	max_integrity = 250
 
-
 /obj/structure/kitchenspike/attack_paw(mob/user)
-	return src.attack_hand(usr)
+	return attack_hand(user)
 
 /obj/structure/kitchenspike/crowbar_act(mob/living/user, obj/item/I)
 	if(has_buckled_mobs())
@@ -61,6 +60,7 @@
 		deconstruct(TRUE)
 	return TRUE
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/kitchenspike/attack_hand(mob/user)
 	if(VIABLE_MOB_CHECK(user.pulling) && user.a_intent == INTENT_GRAB && !has_buckled_mobs())
 		var/mob/living/L = user.pulling

@@ -28,6 +28,7 @@
 	//A neutered symptom has no effect, and only affects statistics.
 	var/neutered = FALSE
 	var/list/thresholds
+	var/naturally_occuring = TRUE //if this symptom can appear from /datum/disease/advance/GenerateSymptoms()
 
 /datum/symptom/New()
 	var/list/S = SSdisease.list_symptoms

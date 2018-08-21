@@ -352,9 +352,17 @@
 /area/ruin/space/has_grav/gasthelizard)
 "V" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/gasthelizard)
 "W" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/gasthelizard)
+"Z" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/gasthelizard)
 
@@ -452,7 +460,7 @@ B
 B
 V
 W
-V
+Z
 "}
 (7,1,1) = {"
 b

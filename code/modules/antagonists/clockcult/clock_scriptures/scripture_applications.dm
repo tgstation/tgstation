@@ -98,32 +98,24 @@
 		var/mob/living/L = M.current
 		if(ishuman(L) && L.stat != DEAD)
 			human_servants++
-	construct_limit = human_servants / 4 //1 per 4 human servants, and a maximum of 3 marauders
-	construct_limit = CLAMP(construct_limit - recent_marauders, 1, 3)
+	construct_limit = round(CLAMP((human_servants / 4), 1, 3)) - recent_marauders //1 per 4 human servants, maximum of 3, reduced by recent marauder creation
 	if(recent_marauders)
-		to_chat(invoker, "<span class='warning'>The Hierophant Network needs [MARAUDER_SCRIPTURE_SCALING_THRESHOLD / 10] seconds to recover from marauder summoning; recent summoning has limited the number of available marauders by [recent_marauders]!</span>")
+		to_chat(invoker, "<span class='warning'>The Hierophant Network is depleted by a summoning in the last [DisplayTimeText(MARAUDER_SCRIPTURE_SCALING_THRESHOLD, TRUE)] - limiting the number of available marauders by [recent_marauders]!</span>")
 
 /datum/clockwork_scripture/create_object/construct/clockwork_marauder/pre_recital()
 	channel_time = initial(channel_time)
-	calculate_scaling()
-	if(scaled_recital_time)
-		to_chat(invoker, "<span class='warning'>The Hierophant Network is under strain from repeated summoning, making this scripture [scaled_recital_time / 10] seconds slower!</span>")
+	if(recent_marauders)
+		scaled_recital_time = min(recent_marauders * MARAUDER_SCRIPTURE_SCALING_TIME, MARAUDER_SCRIPTURE_SCALING_MAX)
+		to_chat(invoker, "<span class='warning'>The Hierophant Network is under strain from repeated summoning, making this scripture [DisplayTimeText(scaled_recital_time)] slower!</span>")
 		channel_time += scaled_recital_time
 	return TRUE
 
 /datum/clockwork_scripture/create_object/construct/clockwork_marauder/scripture_effects()
 	. = ..()
-	time_since_last_marauder = world.time
 	recent_marauders++
-	calculate_scaling()
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/marauder_reset),MARAUDER_SCRIPTURE_SCALING_THRESHOLD)
 
-/datum/clockwork_scripture/create_object/construct/clockwork_marauder/proc/calculate_scaling()
-	var/WT = world.time
-	var/MT = time_since_last_marauder //Cast it for quicker reference
-	var/marauders_to_exclude = 0
-	if(world.time >= time_since_last_marauder + MARAUDER_SCRIPTURE_SCALING_THRESHOLD)
-		marauders_to_exclude = round(WT - MT) / MARAUDER_SCRIPTURE_SCALING_THRESHOLD //If at least 20 seconds have passed, lose one marauder for each 20 seconds
-		//i.e. world.time = 10000, last marauder = 9000, so we lose 5 marauders from the recent count since 10k - 9k = 1k, 1k / 200 = 5
-		time_since_last_marauder = world.time //So that it can't be spammed to make the marauder exclusion plummet; this emulates "ticking"
-	recent_marauders = max(0, recent_marauders - marauders_to_exclude)
-	scaled_recital_time = min(recent_marauders * MARAUDER_SCRIPTURE_SCALING_TIME, MARAUDER_SCRIPTURE_SCALING_MAX)
+/proc/marauder_reset()
+	var/datum/clockwork_scripture/create_object/construct/clockwork_marauder/CM = new()
+	CM.recent_marauders--
+	qdel(CM)

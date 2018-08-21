@@ -7,7 +7,6 @@
 /obj/docking_port
 	invisibility = INVISIBILITY_ABSTRACT
 	icon = 'icons/obj/device.dmi'
-	//icon = 'icons/dirsquare.dmi'
 	icon_state = "pinonfar"
 
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -22,8 +21,6 @@
 	var/dheight = 0	//position relative to covered area, parallel to dir
 
 	var/area_type
-	var/turf_type
-	var/baseturf_type
 	var/hidden = FALSE //are we invisible to shuttle navigation computers?
 
 	//these objects are indestructible
@@ -32,7 +29,7 @@
 	// may result.
 	if(force)
 		..()
-		. = QDEL_HINT_HARDDEL_NOW
+		. = QDEL_HINT_QUEUE
 	else
 		return QDEL_HINT_LETMELIVE
 
@@ -146,24 +143,16 @@
 	var/y0 = bounds[2]
 	var/x1 = bounds[3]
 	var/y1 = bounds[4]
-	if(x0 <= x1 && !ISINRANGE(T.x, x0, x1))
+	if(!ISINRANGE(T.x, min(x0, x1), max(x0, x1)))
 		return FALSE
-	else if(!ISINRANGE(T.x, x1, x0))
-		return FALSE
-	if(y0 <= y1 && !ISINRANGE(T.y, y0, y1))
-		return FALSE
-	else if(!ISINRANGE(T.y, y1, y0))
+	if(!ISINRANGE(T.y, min(y0, y1), max(y0, y1)))
 		return FALSE
 	return TRUE
 
 /obj/docking_port/stationary
 	name = "dock"
 
-	turf_type = SHUTTLE_DEFAULT_TURF_TYPE
-	baseturf_type = SHUTTLE_DEFAULT_BASETURF_TYPE
 	area_type = SHUTTLE_DEFAULT_UNDERLYING_AREA
-
-	var/list/baseturf_cache
 
 	var/last_dock_time
 
@@ -177,7 +166,6 @@
 		id = "[SSshuttle.stationary.len]"
 	if(name == "dock")
 		name = "dock[SSshuttle.stationary.len]"
-	baseturf_cache = typecacheof(baseturf_type)
 
 	if(mapload)
 		for(var/turf/T in return_turfs())
@@ -186,6 +174,11 @@
 	#ifdef DOCKING_PORT_HIGHLIGHT
 	highlight("#f00")
 	#endif
+
+/obj/docking_port/stationary/Destroy(force)
+	if(force)
+		SSshuttle.stationary -= src
+	. = ..()
 
 /obj/docking_port/stationary/proc/load_roundstart()
 	if(json_key)
@@ -209,8 +202,7 @@
 
 /obj/docking_port/stationary/transit
 	name = "In Transit"
-	turf_type = /turf/open/space/transit
-	var/list/turf/assigned_turfs = list()
+	var/datum/turf_reservation/reserved_area
 	var/area/shuttle/transit/assigned_area
 	var/obj/docking_port/mobile/owner
 
@@ -218,26 +210,19 @@
 	. = ..()
 	SSshuttle.transit += src
 
-/obj/docking_port/stationary/transit/proc/dezone()
-	for(var/i in 1 to assigned_turfs.len)
-		var/turf/T = assigned_turfs[i]
-		if(T.type == turf_type)
-			T.ChangeTurf(SHUTTLE_DEFAULT_TURF_TYPE, SHUTTLE_DEFAULT_BASETURF_TYPE)
-			T.flags_1 |= UNUSED_TRANSIT_TURF_1
-
 /obj/docking_port/stationary/transit/Destroy(force=FALSE)
 	if(force)
 		if(get_docked())
 			log_world("A transit dock was destroyed while something was docked to it.")
 		SSshuttle.transit -= src
 		if(owner)
+			if(owner.assigned_transit == src)
+				owner.assigned_transit = null
 			owner = null
-		if(assigned_turfs)
-			dezone()
-			assigned_turfs.Cut()
-		assigned_turfs = null
-	. = ..()
-
+		if(!QDELETED(reserved_area))
+			qdel(reserved_area)
+		reserved_area = null
+	return ..()
 
 /obj/docking_port/mobile
 	name = "shuttle"
@@ -268,11 +253,6 @@
 
 	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
-	// A timid shuttle will not register itself with the shuttle subsystem
-	// All shuttle templates MUST be timid, imports will fail if they're not
-	// Shuttle defined already on the map MUST NOT be timid, or they won't work
-	var/timid = TRUE
-
 	var/list/ripples = list()
 	var/engine_coeff = 1 //current engine coeff
 	var/current_engines = 0 //current engine power
@@ -288,14 +268,13 @@
 		SSshuttle.mobile -= src
 		destination = null
 		previous = null
-		assigned_transit = null
+		QDEL_NULL(assigned_transit)		//don't need it where we're goin'!
 		shuttle_areas = null
+		remove_ripples()
 	. = ..()
 
 /obj/docking_port/mobile/Initialize(mapload)
 	. = ..()
-	if(!timid)
-		register()
 
 	if(!id)
 		id = "[SSshuttle.mobile.len]"
@@ -316,6 +295,23 @@
 	#ifdef DOCKING_PORT_HIGHLIGHT
 	highlight("#0f0")
 	#endif
+
+// Called after the shuttle is loaded from template
+/obj/docking_port/mobile/proc/linkup(datum/map_template/shuttle/template, obj/docking_port/stationary/dock)
+	var/list/static/shuttle_id = list()
+	var/idnum = ++shuttle_id[template]
+	if(idnum > 1)
+		if(id == initial(id))
+			id = "[id][idnum]"
+		if(name == initial(name))
+			name = "[name] [idnum]"
+	for(var/i in shuttle_areas)
+		var/area/place = i
+		for(var/obj/machinery/computer/shuttle/comp in place)
+			comp.connect_to_shuttle(src, dock, idnum)
+		for(var/obj/machinery/computer/camera_advanced/shuttle_docker/comp in place)
+			comp.connect_to_shuttle(src, dock, idnum)
+
 
 //this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact
 /obj/docking_port/mobile/proc/canMove()
@@ -431,21 +427,20 @@
 	// Not in a fancy way, it just ceases.
 	var/obj/docking_port/stationary/current_dock = get_docked()
 
-	var/turf_type = SHUTTLE_DEFAULT_TURF_TYPE
-	var/baseturf_type = SHUTTLE_DEFAULT_BASETURF_TYPE
 	var/underlying_area_type = SHUTTLE_DEFAULT_UNDERLYING_AREA
 	// If the shuttle is docked to a stationary port, restore its normal
 	// "empty" area and turf
-	if(current_dock)
-		if(current_dock.turf_type)
-			turf_type = current_dock.turf_type
-		if(current_dock.baseturf_type)
-			baseturf_type = current_dock.baseturf_type
-		if(current_dock.area_type)
-			underlying_area_type = current_dock.area_type
+	if(current_dock && current_dock.area_type)
+		underlying_area_type = current_dock.area_type
 
 	var/list/old_turfs = return_ordered_turfs(x, y, z, dir)
-	var/area/underlying_area = locate(underlying_area_type) in GLOB.sortedAreas
+
+	var/area/underlying_area
+	for(var/i in GLOB.sortedAreas)
+		var/area/place = i
+		if(place.type == underlying_area_type)
+			underlying_area = place
+			break
 	if(!underlying_area)
 		underlying_area = new underlying_area_type(null)
 
@@ -456,19 +451,24 @@
 		var/area/old_area = oldT.loc
 		underlying_area.contents += oldT
 		oldT.change_area(old_area, underlying_area)
-		oldT.empty(turf_type, baseturf_type)
+		oldT.empty(FALSE)
+
+		// Here we locate the bottomost shuttle boundary and remove all turfs above it
+		var/list/baseturf_cache = oldT.baseturfs
+		for(var/k in 1 to length(baseturf_cache))
+			if(ispath(baseturf_cache[k], /turf/baseturf_skipover/shuttle))
+				oldT.ScrapeAway(baseturf_cache.len - k + 1)
+				break
 
 	qdel(src, force=TRUE)
 
 /obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1, animate_time)
 	var/list/turfs = ripple_area(S1)
 	for(var/t in turfs)
-		ripples += new /obj/effect/temp_visual/ripple(t, animate_time)
+		ripples += new /obj/effect/abstract/ripple(t, animate_time)
 
 /obj/docking_port/mobile/proc/remove_ripples()
-	for(var/R in ripples)
-		qdel(R)
-	ripples.Cut()
+	QDEL_LIST(ripples)
 
 /obj/docking_port/mobile/proc/ripple_area(obj/docking_port/stationary/S1)
 	var/list/L0 = return_ordered_turfs(x, y, z, dir)
@@ -478,13 +478,14 @@
 
 	for(var/i in 1 to L0.len)
 		var/turf/T0 = L0[i]
-		if(!T0 || !istype(T0.loc, area_type))
-			continue
 		var/turf/T1 = L1[i]
-		if(!T1)
-			continue
-		if(T0.type != T0.baseturfs)
-			ripple_turfs += T1
+		if(!T0 || !T1)
+			continue  // out of bounds
+		if(T0.type == T0.baseturfs)
+			continue  // indestructible
+		if(!istype(T0.loc, area_type) || istype(T0.loc, /area/shuttle/transit))
+			continue  // not part of the shuttle
+		ripple_turfs += T1
 
 	return ripple_turfs
 
@@ -521,7 +522,7 @@
 		if(SHUTTLE_CALL)
 			var/error = initiate_docking(destination, preferred_direction)
 			if(error && error & (DOCKING_NULL_DESTINATION | DOCKING_NULL_SOURCE))
-				var/msg = "A mobile dock in transit exited initiate_docking() with an error. This is most likely a mapping problem: Error: [error],  ([src]) ([previous])"
+				var/msg = "A mobile dock in transit exited initiate_docking() with an error. This is most likely a mapping problem: Error: [error],  ([src]) ([previous][ADMIN_JMP(previous)] -> [destination][ADMIN_JMP(destination)])"
 				WARNING(msg)
 				message_admins(msg)
 				mode = SHUTTLE_IDLE

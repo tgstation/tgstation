@@ -106,17 +106,16 @@
 		START_PROCESSING(SSobj, src)
 	update_icon()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/pizzabox/attack_hand(mob/user)
 	if(user.get_inactive_held_item() != src)
-		..()
-		return
+		return ..()
 	if(open)
 		if(pizza)
 			user.put_in_hands(pizza)
 			to_chat(user, "<span class='notice'>You take [pizza] out of [src].</span>")
 			pizza = null
 			update_icon()
-			return
 		else if(bomb)
 			if(wires.is_all_cut() && bomb_defused)
 				user.put_in_hands(bomb)
@@ -137,7 +136,6 @@
 
 				to_chat(user, "<span class='warning'>You trap [src] with [bomb].</span>")
 				update_icon()
-			return
 	else if(boxes.len)
 		var/obj/item/pizzabox/topbox = boxes[boxes.len]
 		boxes -= topbox
@@ -146,8 +144,6 @@
 		topbox.update_icon()
 		update_icon()
 		user.regenerate_icons()
-		return
-	..()
 
 /obj/item/pizzabox/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/pizzabox))
@@ -273,9 +269,14 @@
 
 /obj/item/pizzabox/margherita/Initialize()
 	. = ..()
-	pizza = new /obj/item/reagent_containers/food/snacks/pizza/margherita(src)
+	AddPizza()
 	boxtag = "Margherita Deluxe"
 
+/obj/item/pizzabox/margherita/proc/AddPizza()
+	pizza = new /obj/item/reagent_containers/food/snacks/pizza/margherita(src)
+
+/obj/item/pizzabox/margherita/robo/AddPizza()
+	pizza = new /obj/item/reagent_containers/food/snacks/pizza/margherita/robo(src)
 
 /obj/item/pizzabox/vegetable/Initialize()
 	. = ..()

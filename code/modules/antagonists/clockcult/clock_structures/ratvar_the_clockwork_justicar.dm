@@ -38,6 +38,7 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/structure/destructible/clockwork/massive/ratvar/attack_ghost(mob/dead/observer/O)
 	var/alertresult = alert(O, "Embrace the Justiciar's light? You can no longer be cloned!",,"Yes", "No")
 	if(alertresult == "No" || QDELETED(O) || !istype(O) || !O.key)
@@ -46,7 +47,7 @@
 	R.visible_message("<span class='heavy_brass'>[R] forms, and its eyes blink open, glowing bright red!</span>")
 	R.key = O.key
 
-/obj/structure/destructible/clockwork/massive/ratvar/Collide(atom/A)
+/obj/structure/destructible/clockwork/massive/ratvar/Bump(atom/A)
 	var/turf/T = get_turf(A)
 	if(T == loc)
 		T = get_step(T, dir) //please don't run into a window like a bird, ratvar

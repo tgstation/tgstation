@@ -144,25 +144,25 @@
 	switch (transmission_method)
 		if (TRANSMISSION_SUBSPACE)
 			// Reaches any radios on the levels
-			for(var/obj/item/device/radio/R in GLOB.all_radios["[frequency]"])
+			for(var/obj/item/radio/R in GLOB.all_radios["[frequency]"])
 				if(R.can_receive(frequency, levels))
 					radios += R
 
 			// Syndicate radios can hear all well-known radio channels
 			if (num2text(frequency) in GLOB.reverseradiochannels)
-				for(var/obj/item/device/radio/R in GLOB.all_radios["[FREQ_SYNDICATE]"])
+				for(var/obj/item/radio/R in GLOB.all_radios["[FREQ_SYNDICATE]"])
 					if(R.can_receive(FREQ_SYNDICATE, list(R.z)))
 						radios |= R
 
 		if (TRANSMISSION_RADIO)
 			// Only radios not currently in subspace mode
-			for(var/obj/item/device/radio/R in GLOB.all_radios["[frequency]"])
+			for(var/obj/item/radio/R in GLOB.all_radios["[frequency]"])
 				if(!R.subspace_transmission && R.can_receive(frequency, levels))
 					radios += R
 
 		if (TRANSMISSION_SUPERSPACE)
 			// Only radios which are independent
-			for(var/obj/item/device/radio/R in GLOB.all_radios["[frequency]"])
+			for(var/obj/item/radio/R in GLOB.all_radios["[frequency]"])
 				if(R.independent && R.can_receive(frequency, levels))
 					radios += R
 
@@ -189,5 +189,21 @@
 	// This following recording is intended for research and feedback in the use of department radio channels
 	if(length(receive))
 		SSblackbox.LogBroadcast(frequency)
+
+	var/spans_part = ""
+	if(length(spans))
+		spans_part = "(spans:"
+		for(var/S in spans)
+			spans_part = "[spans_part] [S]"
+		spans_part = "[spans_part] ) "
+
+	var/lang_name = data["language"]
+	var/log_text = "\[[get_radio_name(frequency)]\] [spans_part]\"[message]\" (language: [lang_name])"
+
+	var/mob/source_mob = virt.source
+	if(istype(source_mob))
+		source_mob.log_message(log_text, LOG_TELECOMMS)
+	else
+		log_telecomms("[virt.source] [log_text] [loc_name(get_turf(virt.source))]")
 
 	QDEL_IN(virt, 50)  // Make extra sure the virtualspeaker gets qdeleted

@@ -120,11 +120,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "an" = (
-/obj/effect/spawner/lootdrop{
-	loot = list(/obj/mecha/working/ripley/mining = 1, /obj/structure/mecha_wreckage/ripley = 5);
-	lootdoubles = 0;
-	name = "25% mech 75% wreckage ripley spawner"
-	},
+/obj/effect/spawner/lootdrop/whiteship_cere_ripley,
 /turf/open/floor/mech_bay_recharge_floor,
 /area/shuttle/abandoned)
 "ao" = (
@@ -478,7 +474,7 @@
 /area/shuttle/abandoned)
 "aP" = (
 /obj/structure/table,
-/obj/item/device/gps{
+/obj/item/gps{
 	gpstag = "NTCONST1";
 	pixel_x = -1;
 	pixel_y = 2

@@ -14,7 +14,7 @@
 
 /datum/station_goal/bluespace_cannon/on_report()
 	//Unlock BSA parts
-	var/datum/supply_pack/misc/bsa/P = SSshuttle.supply_packs[/datum/supply_pack/misc/bsa]
+	var/datum/supply_pack/engineering/bsa/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/bsa]
 	P.special_enabled = TRUE
 
 /datum/station_goal/bluespace_cannon/check_completion()
@@ -30,37 +30,37 @@
 	density = TRUE
 	anchored = TRUE
 
+/obj/machinery/bsa/wrench_act(mob/living/user, obj/item/I)
+	default_unfasten_wrench(user, I, 10)
+	return TRUE
+
 /obj/machinery/bsa/back
 	name = "Bluespace Artillery Generator"
 	desc = "Generates cannon pulse. Needs to be linked with a fusor."
 	icon_state = "power_box"
 
-/obj/machinery/bsa/back/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
-		var/obj/item/device/multitool/M = W
+/obj/machinery/bsa/back/multitool_act(mob/living/user, obj/item/I)
+	if(istype(I, /obj/item/multitool)) // Only this multitool type has a data buffer.
+		var/obj/item/multitool/M = I
 		M.buffer = src
-		to_chat(user, "<span class='notice'>You store linkage information in [W]'s buffer.</span>")
-	else if(istype(W, /obj/item/wrench))
-		default_unfasten_wrench(user, W, 10)
-		return TRUE
+		to_chat(user, "<span class='notice'>You store linkage information in [I]'s buffer.</span>")
 	else
-		return ..()
+		to_chat(user, "<span class='warning'>[I] has no data buffer!</span>")
+	return TRUE
 
 /obj/machinery/bsa/front
 	name = "Bluespace Artillery Bore"
 	desc = "Do not stand in front of cannon during operation. Needs to be linked with a fusor."
 	icon_state = "emitter_center"
 
-/obj/machinery/bsa/front/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
-		var/obj/item/device/multitool/M = W
+/obj/machinery/bsa/front/multitool_act(mob/living/user, obj/item/I)
+	if(istype(I, /obj/item/multitool)) // Only this multitool type has a data buffer.
+		var/obj/item/multitool/M = I
 		M.buffer = src
-		to_chat(user, "<span class='notice'>You store linkage information in [W]'s buffer.</span>")
-	else if(istype(W, /obj/item/wrench))
-		default_unfasten_wrench(user, W, 10)
-		return TRUE
+		to_chat(user, "<span class='notice'>You store linkage information in [I]'s buffer.</span>")
 	else
-		return ..()
+		to_chat(user, "<span class='warning'>[I] has no data buffer!</span>")
+	return TRUE
 
 /obj/machinery/bsa/middle
 	name = "Bluespace Artillery Fusor"
@@ -69,9 +69,9 @@
 	var/obj/machinery/bsa/back/back
 	var/obj/machinery/bsa/front/front
 
-/obj/machinery/bsa/middle/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
-		var/obj/item/device/multitool/M = W
+/obj/machinery/bsa/middle/multitool_act(mob/living/user, obj/item/I)
+	if(istype(I, /obj/item/multitool)) // Only this multitool type has a data buffer.
+		var/obj/item/multitool/M = I
 		if(M.buffer)
 			if(istype(M.buffer, /obj/machinery/bsa/back))
 				back = M.buffer
@@ -81,11 +81,11 @@
 				front = M.buffer
 				M.buffer = null
 				to_chat(user, "<span class='notice'>You link [src] with [front].</span>")
-	else if(istype(W, /obj/item/wrench))
-		default_unfasten_wrench(user, W, 10)
-		return TRUE
+		else
+			to_chat(user, "<span class='warning'>[I]'s data buffer is empty!</span>")
 	else
-		return ..()
+		to_chat(user, "<span class='warning'>[I] has no data buffer!</span>")
+	return TRUE
 
 /obj/machinery/bsa/middle/proc/check_completion()
 	if(!front || !back)
@@ -136,6 +136,9 @@
 	bound_x = -192
 	appearance_flags = NONE //Removes default TILE_BOUND
 
+/obj/machinery/bsa/full/wrench_act(mob/living/user, obj/item/I)
+	return FALSE
+
 /obj/machinery/bsa/full/proc/get_front_turf()
 	switch(dir)
 		if(WEST)
@@ -182,7 +185,7 @@
 		T.ex_act(EXPLODE_DEVASTATE)
 	point.Beam(get_target_turf(),icon_state="bsa_beam",time=50,maxdistance = world.maxx) //ZZZAP
 
-	message_admins("[key_name_admin(user)] has launched an artillery strike.")
+	message_admins("[ADMIN_LOOKUPFLW(user)] has launched an artillery strike.")
 	explosion(bullseye,ex_power,ex_power*2,ex_power*4)
 
 	reload()
@@ -250,8 +253,9 @@
 
 /obj/machinery/computer/bsa_control/proc/calibrate(mob/user)
 	var/list/gps_locators = list()
-	for(var/obj/item/device/gps/G in GLOB.GPS_list) //nulls on the list somehow
-		gps_locators[G.gpstag] = G
+	for(var/obj/item/gps/G in GLOB.GPS_list) //nulls on the list somehow
+		if(G.tracking)
+			gps_locators[G.gpstag] = G
 
 	var/list/options = gps_locators
 	if(area_aim)
@@ -263,14 +267,14 @@
 /obj/machinery/computer/bsa_control/proc/get_target_name()
 	if(istype(target, /area))
 		return get_area_name(target, TRUE)
-	else if(istype(target, /obj/item/device/gps))
-		var/obj/item/device/gps/G = target
+	else if(istype(target, /obj/item/gps))
+		var/obj/item/gps/G = target
 		return G.gpstag
 
 /obj/machinery/computer/bsa_control/proc/get_impact_turf()
 	if(istype(target, /area))
 		return pick(get_area_turfs(target))
-	else if(istype(target, /obj/item/device/gps))
+	else if(istype(target, /obj/item/gps))
 		return get_turf(target)
 
 /obj/machinery/computer/bsa_control/proc/fire(mob/user)

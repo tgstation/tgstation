@@ -28,7 +28,7 @@
 		var/mob/dead/observer/C = pick(candidates)
 		stranger_backseat.key = C.key
 		log_game("[key_name(stranger_backseat)] became [key_name(owner)]'s split personality.")
-		message_admins("[key_name_admin(stranger_backseat)] became [key_name_admin(owner)]'s split personality.")
+		message_admins("[ADMIN_LOOKUPFLW(stranger_backseat)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
 	else
 		qdel(src)
 
@@ -61,7 +61,7 @@
 		current_backseat = owner_backseat
 		free_backseat = stranger_backseat
 
-	log_game("[key_name(current_backseat)] assumed control of [key_name(owner)] due to [src]. (Original owner: [current_controller == OWNER ? owner.ckey : current_backseat.ckey])")
+	log_game("[key_name(current_backseat)] assumed control of [key_name(owner)] due to [src]. (Original owner: [current_controller == OWNER ? owner.key : current_backseat.key])")
 	to_chat(owner, "<span class='userdanger'>You feel your control being taken away... your other personality is in charge now!</span>")
 	to_chat(current_backseat, "<span class='userdanger'>You manage to take control of your body!</span>")
 
@@ -142,7 +142,7 @@
 	to_chat(src, "<span class='warning'>You cannot speak, your other self is controlling your body!</span>")
 	return FALSE
 
-/mob/living/split_personality/emote(message)
+/mob/living/split_personality/emote(act, m_type = null, message = null, intentional = FALSE)
 	return
 
 ///////////////BRAINWASHING////////////////////

@@ -39,8 +39,8 @@
 	for(var/F in RANGE_TURFS(1, src))
 		if(ismineralturf(F))
 			var/turf/closed/mineral/M = F
-			M.ChangeTurf(M.turf_type, null, CHANGETURF_IGNORE_AIR)
-	gps = new /obj/item/device/gps/internal(src)
+			M.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
+	gps = new /obj/item/gps/internal(src)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/Destroy()
 	QDEL_NULL(emitted_light)
@@ -53,7 +53,7 @@
 		if(other != src)
 			last_tendril = FALSE
 			break
-	if(last_tendril && !admin_spawned)
+	if(last_tendril && !(flags_1 & ADMIN_SPAWNED_1))
 		if(SSmedals.hub_enabled)
 			for(var/mob/living/L in view(7,src))
 				if(L.stat || !L.client)

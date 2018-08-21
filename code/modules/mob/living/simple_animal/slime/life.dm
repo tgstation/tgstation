@@ -112,7 +112,7 @@
 
 	var/loc_temp = get_temperature(environment)
 
-	bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
+	adjust_bodytemperature(adjust_body_temperature(bodytemperature, loc_temp, 1))
 
 	//Account for massive pressure differences
 
@@ -415,7 +415,7 @@
 	else if (docile)
 		newmood = ":3"
 	else if (Target)
-		newmood = "mischevous"
+		newmood = "mischievous"
 
 	if (!newmood)
 		if (Discipline && prob(25))

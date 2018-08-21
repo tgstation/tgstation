@@ -1,7 +1,6 @@
 /obj/machinery/chem_heater
 	name = "chemical heater"
 	density = TRUE
-	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0b"
 	use_power = IDLE_POWER_USE
@@ -47,26 +46,18 @@
 	if(stat & NOPOWER)
 		return
 	if(on)
-		if(beaker)
-			if(beaker.reagents.chem_temp > target_temperature)
-				beaker.reagents.chem_temp += min(-1, (target_temperature - beaker.reagents.chem_temp) * heater_coefficient)
-			if(beaker.reagents.chem_temp < target_temperature)
-				beaker.reagents.chem_temp += max(1, (target_temperature - beaker.reagents.chem_temp) * heater_coefficient)
-
-			beaker.reagents.chem_temp = round(beaker.reagents.chem_temp)
+		if(beaker && beaker.reagents.total_volume)
+			beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 			beaker.reagents.handle_reactions()
 
 /obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", I))
 		return
 
-	if(exchange_parts(user, I))
-		return
-
 	if(default_deconstruction_crowbar(I))
 		return
 
-	if(istype(I, /obj/item/reagent_containers) && !(I.flags_1 & ABSTRACT_1) && I.is_open_container())
+	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		. = 1 //no afterattack
 		if(beaker)
 			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")

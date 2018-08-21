@@ -7,11 +7,7 @@
 	anchored = TRUE
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall"
-	var/mineral = /obj/item/stack/sheet/metal
-	var/mineral_amount = 2
-	var/walltype = /turf/closed/wall
-	var/girder_type = /obj/structure/girder/displaced
-	var/opening = FALSE
+	layer = CLOSED_TURF_LAYER
 	density = TRUE
 	opacity = 1
 	max_integrity = 100
@@ -28,6 +24,11 @@
 	smooth = SMOOTH_TRUE
 	can_be_unanchored = FALSE
 	CanAtmosPass = ATMOS_PASS_DENSITY
+	var/mineral = /obj/item/stack/sheet/metal
+	var/mineral_amount = 2
+	var/walltype = /turf/closed/wall
+	var/girder_type = /obj/structure/girder/displaced
+	var/opening = FALSE
 
 /obj/structure/falsewall/Initialize()
 	. = ..()
@@ -37,17 +38,15 @@
 	. = ..()
 	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
 
-/obj/structure/falsewall/Destroy()
-	density = FALSE
-	air_update_turf(1)
-	return ..()
-
 /obj/structure/falsewall/ratvar_act()
 	new /obj/structure/falsewall/brass(loc)
 	qdel(src)
 
 /obj/structure/falsewall/attack_hand(mob/user)
 	if(opening)
+		return
+	. = ..()
+	if(.)
 		return
 
 	opening = TRUE
@@ -58,7 +57,6 @@
 			opening = FALSE
 			return
 	addtimer(CALLBACK(src, /obj/structure/falsewall/proc/toggle_open), 5)
-	air_update_turf(1)
 
 /obj/structure/falsewall/proc/toggle_open()
 	if(!QDELETED(src))
@@ -66,6 +64,7 @@
 		set_opacity(density)
 		opening = FALSE
 		update_icon()
+		air_update_turf(TRUE)
 
 /obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	if(opening)
@@ -184,7 +183,7 @@
 
 /obj/structure/falsewall/uranium/attack_hand(mob/user)
 	radiate()
-	..()
+	. = ..()
 
 /obj/structure/falsewall/uranium/proc/radiate()
 	if(!active)
@@ -241,8 +240,8 @@
 /obj/structure/falsewall/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.is_hot() > 300)
 		var/turf/T = get_turf(src)
-		message_admins("Plasma falsewall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
-		log_game("Plasma falsewall ignited by [key_name(user)] in [COORD(T)]")
+		message_admins("Plasma falsewall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
+		log_game("Plasma falsewall ignited by [key_name(user)] in [AREACOORD(T)]")
 		burnbabyburn()
 	else
 		return ..()

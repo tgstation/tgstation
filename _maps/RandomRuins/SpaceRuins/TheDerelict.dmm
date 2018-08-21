@@ -290,12 +290,11 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/solar_control)
 "aT" = (
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/unlocked{
 	dir = 8;
 	environ = 0;
 	equipment = 0;
 	lighting = 0;
-	locked = 0;
 	name = "Starboard Solar APC";
 	pixel_x = -24
 	},
@@ -329,7 +328,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/unpowered/no_grav)
 "aZ" = (
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	dir = 4
 	},
 /obj/structure/cable{
@@ -562,7 +561,7 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bQ" = (
-/obj/item/device/aicard,
+/obj/item/aicard,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
@@ -849,7 +848,6 @@
 "cQ" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
@@ -887,7 +885,6 @@
 "cV" = (
 /obj/machinery/door/airlock/command{
 	name = "E.V.A.";
-	req_access = null;
 	req_access_txt = "18"
 	},
 /obj/structure/cable{
@@ -1388,7 +1385,7 @@
 /area/ruin/space/derelict/bridge/access)
 "eC" = (
 /obj/structure/table,
-/obj/item/device/paicard,
+/obj/item/paicard,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge)
 "eD" = (
@@ -1562,7 +1559,6 @@
 "fg" = (
 /obj/structure/table,
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
@@ -1679,7 +1675,7 @@
 /area/ruin/space/derelict/bridge/access)
 "fy" = (
 /obj/structure/table,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/access)
 "fz" = (
@@ -2003,7 +1999,6 @@
 "gB" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
@@ -2171,7 +2166,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/arrival)
 "hj" = (
-/obj/structure/closet/coffin,
+/obj/structure/closet/crate/coffin,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict/medical/chapel)
 "hk" = (
@@ -2605,7 +2600,7 @@
 	dir = 4;
 	req_access_txt = "25"
 	},
-/obj/structure/closet/coffin,
+/obj/structure/closet/crate/coffin,
 /turf/open/floor/plating,
 /area/ruin/space/derelict/medical/chapel)
 "iL" = (
@@ -2857,7 +2852,6 @@
 /area/ruin/space/derelict/medical/chapel)
 "jz" = (
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
@@ -3123,7 +3117,7 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)
 "kq" = (
-/obj/item/device/assembly/prox_sensor{
+/obj/item/assembly/prox_sensor{
 	pixel_x = -8;
 	pixel_y = 4
 	},
@@ -3132,7 +3126,6 @@
 "kr" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
@@ -3270,7 +3263,6 @@
 "kR" = (
 /obj/machinery/door/airlock/security{
 	name = "Security";
-	req_access = null;
 	req_access_txt = "1"
 	},
 /obj/structure/cable{
@@ -3317,7 +3309,6 @@
 "la" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
@@ -3497,7 +3488,7 @@
 /area/ruin/space/derelict/hallway/primary)
 "lI" = (
 /obj/structure/table,
-/obj/item/device/healthanalyzer,
+/obj/item/healthanalyzer,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)
 "lJ" = (
@@ -4209,12 +4200,11 @@
 /area/ruin/space/derelict/se_solar)
 "nZ" = (
 /obj/structure/cable,
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/unlocked{
 	dir = 8;
 	environ = 0;
 	equipment = 0;
 	lighting = 0;
-	locked = 0;
 	name = "Worn-out APC";
 	pixel_x = -24
 	},

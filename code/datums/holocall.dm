@@ -60,17 +60,18 @@
 		user.remote_control = null
 
 	if(!QDELETED(eye))
-		if(user_good && user.client)
-			for(var/datum/camerachunk/chunk in eye.visibleCameraChunks)
-				chunk.remove(eye)
-		qdel(eye)
-	eye = null
+		QDEL_NULL(eye)
+
+	if(connected_holopad && !QDELETED(hologram))
+		hologram = null
+		connected_holopad.clear_holo(user)
 
 	user = null
 
-	if(hologram)
+	//Hologram survived holopad destro
+	if(!QDELETED(hologram))
 		hologram.HC = null
-		hologram = null
+		QDEL_NULL(hologram)
 
 	for(var/I in dialed_holopads)
 		var/obj/machinery/holopad/H = I
@@ -93,9 +94,10 @@
 /datum/holocall/proc/Disconnect(obj/machinery/holopad/H)
 	testing("Holocall disconnect")
 	if(H == connected_holopad)
-		calling_holopad.say("[usr] disconnected.")
+		var/area/A = get_area(connected_holopad)
+		calling_holopad.say("[A] holopad disconnected.")
 	else if(H == calling_holopad && connected_holopad)
-		connected_holopad.say("[usr] disconnected.")
+		connected_holopad.say("[user] disconnected.")
 
 	ConnectionFailure(H, TRUE)
 
@@ -157,6 +159,7 @@
 	eye.setLoc(H.loc)
 
 	hangup = new(eye, src)
+	hangup.Grant(user)
 
 //Checks the validity of a holocall and qdels itself if it's not. Returns TRUE if valid, FALSE otherwise
 /datum/holocall/proc/Check()
@@ -174,7 +177,7 @@
 		if(!connected_holopad)
 			. = world.time < (call_start_time + HOLOPAD_MAX_DIAL_TIME)
 			if(!.)
-				calling_holopad.say("No answer recieved.")
+				calling_holopad.say("No answer received.")
 				calling_holopad.temp = ""
 
 	if(!.)
@@ -205,7 +208,7 @@
 /datum/holorecord/proc/set_caller_image(mob/user)
 	var/olddir = user.dir
 	user.setDir(SOUTH)
-	caller_image = getFlatIcon(user)
+	caller_image = image(user)
 	user.setDir(olddir)
 
 /obj/item/disk/holodisk
@@ -284,7 +287,7 @@
 	else
 		var/datum/preset_holoimage/H = new preset_image_type
 		record.caller_image = H.build_image()
-		
+
 //These build caller image from outfit and some additional data, for use by mappers for ruin holorecords
 /datum/preset_holoimage
 	var/nonhuman_mobtype //Fill this if you just want something nonhuman
@@ -303,7 +306,7 @@
 			mannequin.equipOutfit(outfit_type,TRUE)
 		mannequin.setDir(SOUTH)
 		COMPILE_OVERLAYS(mannequin)
-		. = getFlatIcon(mannequin)
+		. = image(mannequin)
 		unset_busy_human_dummy("HOLODISK_PRESET")
 
 /obj/item/disk/holodisk/example
@@ -347,4 +350,3 @@
 
 /datum/preset_holoimage/clown
 	outfit_type = /datum/outfit/job/clown
-

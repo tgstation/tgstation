@@ -13,16 +13,19 @@
 	resistance_flags = NONE
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR
-	flags_2 = BANG_PROTECT_2
 
 	dog_fashion = /datum/dog_fashion/head/helmet
+
+/obj/item/clothing/head/helmet/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_HEAD))
 
 /obj/item/clothing/head/helmet/sec
 	can_flashlight = 1
 
 /obj/item/clothing/head/helmet/sec/attackby(obj/item/I, mob/user, params)
 	if(issignaler(I))
-		var/obj/item/device/assembly/signaler/S = I
+		var/obj/item/assembly/signaler/S = I
 		if(F) //Has a flashlight. Player must remove it, else it will be lost forever.
 			to_chat(user, "<span class='warning'>The mounted flashlight is in the way, remove it first!</span>")
 			return
@@ -122,7 +125,7 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	flags_1 = STOPSPRESSUREDMAGE_1
+	clothing_flags = STOPSPRESSUREDAMAGE
 	strip_delay = 80
 	dog_fashion = null
 
@@ -147,7 +150,7 @@
 	dog_fashion = null
 
 /obj/item/clothing/head/helmet/roman
-	name = "roman helmet"
+	name = "\improper Roman helmet"
 	desc = "An ancient helmet made of bronze and leather."
 	flags_inv = HIDEEARS|HIDEHAIR
 	flags_cover = HEADCOVERSEYES
@@ -158,11 +161,19 @@
 	strip_delay = 100
 	dog_fashion = null
 
-/obj/item/clothing/head/helmet/roman/legionaire
-	name = "roman legionaire helmet"
+/obj/item/clothing/head/helmet/roman/fake
+	desc = "An ancient helmet made of plastic and leather."
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+
+/obj/item/clothing/head/helmet/roman/legionnaire
+	name = "\improper Roman legionnaire helmet"
 	desc = "An ancient helmet made of bronze and leather. Has a red crest on top of it."
 	icon_state = "roman_c"
 	item_state = "roman_c"
+
+/obj/item/clothing/head/helmet/roman/legionnaire/fake
+	desc = "An ancient helmet made of plastic and leather. Has a red crest on top of it."
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
 /obj/item/clothing/head/helmet/gladiator
 	name = "gladiator helmet"
@@ -203,11 +214,12 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
-	// old knight helmets do not offer protection against loud noises
-	flags_2 = NONE
+
 
 /obj/item/clothing/head/helmet/knight/Initialize(mapload)
 	. = ..()
+	var/datum/component = GetComponent(/datum/component/wearertargeting/earprotection)
+	qdel(component)
 
 /obj/item/clothing/head/helmet/knight/blue
 	icon_state = "knight_blue"
@@ -220,12 +232,6 @@
 /obj/item/clothing/head/helmet/knight/red
 	icon_state = "knight_red"
 	item_state = "knight_red"
-
-/obj/item/clothing/head/helmet/knight/templar
-	name = "crusader helmet"
-	desc = "Deus Vult."
-	icon_state = "knight_templar"
-	item_state = "knight_templar"
 
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"
@@ -260,8 +266,8 @@
 		..()
 
 /obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/flashlight/seclite))
-		var/obj/item/device/flashlight/seclite/S = I
+	if(istype(I, /obj/item/flashlight/seclite))
+		var/obj/item/flashlight/seclite/S = I
 		if(can_flashlight)
 			if(!F)
 				if(!user.transferItemToLoc(S, src))
@@ -280,7 +286,7 @@
 
 	if(istype(I, /obj/item/screwdriver))
 		if(F)
-			for(var/obj/item/device/flashlight/seclite/S in src)
+			for(var/obj/item/flashlight/seclite/S in src)
 				to_chat(user, "<span class='notice'>You unscrew the seclite from [src].</span>")
 				F = null
 				S.forceMove(user.drop_location())

@@ -10,7 +10,7 @@
 	var/used_capacity = 0
 	var/list/stored_files = list()		// List of stored files on this drive. DO NOT MODIFY DIRECTLY!
 
-/obj/item/computer_hardware/hard_drive/on_remove(obj/item/device/modular_computer/MC, mob/user)
+/obj/item/computer_hardware/hard_drive/on_remove(obj/item/modular_computer/MC, mob/user)
 	MC.shutdown_computer()
 
 /obj/item/computer_hardware/hard_drive/proc/install_default_programs()

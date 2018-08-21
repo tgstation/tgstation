@@ -4,7 +4,7 @@
 	typepath = /datum/round_event/easter
 	weight = -1
 	max_occurrences = 1
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/easter/announce(fake)
 	priority_announce(pick("Hip-hop into Easter!","Find some Bunny's stash!","Today is National 'Hunt a Wabbit' Day.","Be kind, give Chocolate Eggs!"))
@@ -65,18 +65,22 @@
 	name = "Easter Basket"
 	icon = 'icons/mob/easter.dmi'
 	icon_state = "basket"
-	can_hold = list(/obj/item/reagent_containers/food/snacks/egg, /obj/item/reagent_containers/food/snacks/chocolateegg, /obj/item/reagent_containers/food/snacks/boiledegg)
+
+/obj/item/storage/bag/easterbasket/Initialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/egg, /obj/item/reagent_containers/food/snacks/chocolateegg, /obj/item/reagent_containers/food/snacks/boiledegg))
 
 /obj/item/storage/bag/easterbasket/proc/countEggs()
 	cut_overlays()
 	add_overlay("basket-grass")
 	add_overlay("basket-egg[min(contents.len, 5)]")
 
-/obj/item/storage/bag/easterbasket/remove_from_storage(obj/item/W as obj, atom/new_location)
-	..()
+/obj/item/storage/bag/easterbasket/Exited()
+	. = ..()
 	countEggs()
 
-/obj/item/storage/bag/easterbasket/handle_item_insertion(obj/item/I, prevent_warning = 0)
+/obj/item/storage/bag/easterbasket/Entered()
 	. = ..()
 	countEggs()
 
@@ -143,7 +147,7 @@
 	desc = "The Cross represents the Assistants that died for your sins."
 	icon_state = "hotcrossbun"
 
-/datum/crafting_recipe/food/food/hotcrossbun
+/datum/crafting_recipe/food/hotcrossbun
 	name = "Hot-Cross Bun"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1,
@@ -167,7 +171,7 @@
 	icon_state = "briochecake_slice"
 	filling_color = "#FFD700"
 
-/datum/crafting_recipe/food/food/briochecake
+/datum/crafting_recipe/food/briochecake
 	name = "Brioche cake"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1,

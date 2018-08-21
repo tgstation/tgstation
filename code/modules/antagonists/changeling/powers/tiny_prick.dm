@@ -50,9 +50,6 @@
 		return
 	if(!AStar(user, target.loc, /turf/proc/Distance, changeling.sting_range, simulated_only = 0))
 		return
-	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/changeling))
-		sting_feedback(user, target)
-		changeling.chem_charges -= chemical_cost //??
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/sting_feedback(mob/user, mob/target)
@@ -96,7 +93,7 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/transformation/sting_action(mob/user, mob/target)
-	add_logs(user, target, "stung", "transformation sting", " new identity is [selected_dna.dna.real_name]")
+	log_combat(user, target, "stung", "transformation sting", " new identity is '[selected_dna.dna.real_name]'")
 	var/datum/dna/NewDNA = selected_dna.dna
 	if(ismonkey(target))
 		to_chat(user, "<span class='notice'>Our genes cry out as we sting [target.name]!</span>")
@@ -122,9 +119,7 @@
 /obj/item/melee/arm_blade/false
 	desc = "A grotesque mass of flesh that used to be your arm. Although it looks dangerous at first, you can tell it's actually quite dull and useless."
 	force = 5 //Basically as strong as a punch
-
-/obj/item/melee/arm_blade/false/afterattack(atom/target, mob/user, proximity)
-	return
+	fake = TRUE
 
 /obj/effect/proc_holder/changeling/sting/false_armblade/can_sting(mob/user, mob/target)
 	if(!..())
@@ -137,11 +132,11 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/false_armblade/sting_action(mob/user, mob/target)
-	add_logs(user, target, "stung", object="falso armblade sting")
+	log_combat(user, target, "stung", object="false armblade sting")
 
 	var/obj/item/held = target.get_active_held_item()
 	if(held && !target.dropItemToGround(held))
-		to_chat(user, "<span class='warning'>[held] is stuck to their hand, you cannot grow a false armblade over it!</span>")
+		to_chat(user, "<span class='warning'>[held] is stuck to [target.p_their()] hand, you cannot grow a false armblade over it!</span>")
 		return
 
 	if(ismonkey(target))
@@ -158,7 +153,7 @@
 /obj/effect/proc_holder/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/melee/arm_blade/false/blade)
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
 	target.visible_message("<span class='warning'>With a sickening crunch, \
-	[target] reforms their [blade.name] into an arm!</span>",
+	[target] reforms [target.p_their()] [blade.name] into an arm!</span>",
 	"<span class='warning'>[blade] reforms back to normal.</span>",
 	"<span class='italics>You hear organic matter ripping and tearing!</span>")
 
@@ -179,7 +174,7 @@
 		return changeling.can_absorb_dna(target)
 
 /obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(mob/user, mob/living/carbon/human/target)
-	add_logs(user, target, "stung", "extraction sting")
+	log_combat(user, target, "stung", "extraction sting")
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(!(changeling.has_dna(target.dna)))
 		changeling.add_new_profile(target)
@@ -194,7 +189,7 @@
 	dna_cost = 2
 
 /obj/effect/proc_holder/changeling/sting/mute/sting_action(mob/user, mob/living/carbon/target)
-	add_logs(user, target, "stung", "mute sting")
+	log_combat(user, target, "stung", "mute sting")
 	target.silent += 30
 	return TRUE
 
@@ -207,7 +202,7 @@
 	dna_cost = 1
 
 /obj/effect/proc_holder/changeling/sting/blind/sting_action(mob/user, mob/living/carbon/target)
-	add_logs(user, target, "stung", "blind sting")
+	log_combat(user, target, "stung", "blind sting")
 	to_chat(target, "<span class='danger'>Your eyes burn horrifically!</span>")
 	target.become_nearsighted(EYE_DAMAGE)
 	target.blind_eyes(20)
@@ -217,19 +212,19 @@
 /obj/effect/proc_holder/changeling/sting/LSD
 	name = "Hallucination Sting"
 	desc = "Causes terror in the target."
-	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
+	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung, and the effect begins after a few seconds."
 	sting_icon = "sting_lsd"
 	chemical_cost = 10
 	dna_cost = 1
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
-	add_logs(user, target, "stung", "LSD sting")
-	addtimer(CALLBACK(src, .proc/hallucination_time, target), rand(300,600))
+	log_combat(user, target, "stung", "LSD sting")
+	addtimer(CALLBACK(src, .proc/hallucination_time, target), rand(100,200))
 	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/LSD/proc/hallucination_time(mob/living/carbon/target)
 	if(target)
-		target.hallucination = max(400, target.hallucination)
+		target.hallucination = max(90, target.hallucination)
 
 /obj/effect/proc_holder/changeling/sting/cryo
 	name = "Cryogenic Sting"
@@ -240,7 +235,7 @@
 	dna_cost = 2
 
 /obj/effect/proc_holder/changeling/sting/cryo/sting_action(mob/user, mob/target)
-	add_logs(user, target, "stung", "cryo sting")
+	log_combat(user, target, "stung", "cryo sting")
 	if(target.reagents)
 		target.reagents.add_reagent("frostoil", 30)
 	return TRUE

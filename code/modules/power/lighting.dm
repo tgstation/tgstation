@@ -89,7 +89,7 @@
 		if(!cell_connectors)
 			to_chat(user, "<span class='warning'>This [name] can't support a power cell!</span>")
 			return
-		if(W.flags_1 & NODROP_1)
+		if(W.item_flags & NODROP)
 			to_chat(user, "<span class='warning'>[W] is stuck to your hand!</span>")
 			return
 		user.dropItemToGround(W)
@@ -183,10 +183,10 @@
 /obj/machinery/light
 	name = "light fixture"
 	icon = 'icons/obj/lighting.dmi'
+	var/overlayicon = 'icons/obj/lighting_overlay.dmi'
 	var/base_state = "tube"		// base description and icon_state
-	icon_state = "tube1"
+	icon_state = "tube"
 	desc = "A lighting fixture."
-	anchored = TRUE
 	layer = WALL_OBJ_LAYER
 	max_integrity = 100
 	use_power = ACTIVE_POWER_USE
@@ -210,6 +210,13 @@
 
 	var/obj/item/stock_parts/cell/cell
 	var/start_with_cell = TRUE	// if true, this fixture generates a very weak cell at roundstart
+
+	var/nightshift_enabled = FALSE	//Currently in night shift mode?
+	var/nightshift_allowed = TRUE	//Set to FALSE to never let this light get switched to night mode.
+	var/nightshift_brightness = 8
+	var/nightshift_light_power = 0.45
+	var/nightshift_light_color = "#FFDDCC"
+
 	var/emergency_mode = FALSE	// if true, the light is in emergency mode
 	var/no_emergency = FALSE	// if true, this light cannot ever have an emergency mode
 	var/bulb_emergency_brightness_mul = 0.25	// multiplier for this light's base brightness in emergency power mode
@@ -224,7 +231,7 @@
 // the smaller bulb light fixture
 
 /obj/machinery/light/small
-	icon_state = "bulb1"
+	icon_state = "bulb"
 	base_state = "bulb"
 	fitting = "bulb"
 	brightness = 4
@@ -286,12 +293,18 @@
 	return ..()
 
 /obj/machinery/light/update_icon()
+	cut_overlays()
 	switch(status)		// set icon_states
 		if(LIGHT_OK)
-			if(emergency_mode)
+			var/area/A = get_area(src)
+			if(emergency_mode || (A && A.fire))
 				icon_state = "[base_state]_emergency"
 			else
-				icon_state = "[base_state][on]"
+				icon_state = "[base_state]"
+				if(on)
+					var/mutable_appearance/glowybit = mutable_appearance(overlayicon, base_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE)
+					glowybit.alpha = CLAMP(light_power*250, 30, 200)
+					add_overlay(glowybit)
 		if(LIGHT_EMPTY)
 			icon_state = "[base_state]-empty"
 		if(LIGHT_BURNED)
@@ -301,26 +314,38 @@
 	return
 
 // update the icon_state and luminosity of the light depending on its state
-/obj/machinery/light/proc/update(trigger = 1)
+/obj/machinery/light/proc/update(trigger = TRUE)
 	switch(status)
 		if(LIGHT_BROKEN,LIGHT_BURNED,LIGHT_EMPTY)
 			on = FALSE
 	emergency_mode = FALSE
 	if(on)
-		if(!light || light.light_range != brightness)
+		var/BR = brightness
+		var/PO = bulb_power
+		var/CO = bulb_colour
+		var/area/A = get_area(src)
+		if (A && A.fire)
+			CO = bulb_emergency_colour
+		else if (nightshift_enabled)
+			BR = nightshift_brightness
+			PO = nightshift_light_power
+			CO = nightshift_light_color
+		var/matching = light && BR == light.light_range && PO == light.light_power && CO == light.light_color
+		if(!matching)
 			switchcount++
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
 					explode()
-			else if( prob( min(60, switchcount*switchcount*0.01) ) )
+			else if( prob( min(60, (switchcount^2)*0.01) ) )
 				if(trigger)
 					burn_out()
 			else
 				use_power = ACTIVE_POWER_USE
-				set_light(brightness, bulb_power, bulb_colour)
+				set_light(BR, PO, CO)
 	else if(has_emergency_power(LIGHT_EMERGENCY_POWER_USE) && !turned_off())
 		use_power = IDLE_POWER_USE
 		emergency_mode = TRUE
+		START_PROCESSING(SSmachines, src)
 	else
 		use_power = IDLE_POWER_USE
 		set_light(0)
@@ -337,7 +362,11 @@
 
 
 /obj/machinery/light/process()
-	if(has_power() && cell)
+	if (!cell)
+		return PROCESS_KILL
+	if(has_power())
+		if (cell.charge == cell.maxcharge)
+			return PROCESS_KILL
 		cell.charge = min(cell.maxcharge, cell.charge + LIGHT_EMERGENCY_POWER_USE) //Recharge emergency power automatically while not using it
 	if(emergency_mode && !use_emergency_power(LIGHT_EMERGENCY_POWER_USE))
 		update(FALSE) //Disables emergency mode and sets the color to normal
@@ -371,7 +400,7 @@
 		if(LIGHT_BROKEN)
 			to_chat(user, "The [fitting] has been smashed.")
 	if(cell)
-		to_chat(user, "Its backup power charge meter reads [(cell.charge / cell.maxcharge) * 100]%.")
+		to_chat(user, "Its backup power charge meter reads [round((cell.charge / cell.maxcharge) * 100, 0.1)]%.")
 
 
 
@@ -380,8 +409,8 @@
 /obj/machinery/light/attackby(obj/item/W, mob/living/user, params)
 
 	//Light replacer code
-	if(istype(W, /obj/item/device/lightreplacer))
-		var/obj/item/device/lightreplacer/LR = W
+	if(istype(W, /obj/item/lightreplacer))
+		var/obj/item/lightreplacer/LR = W
 		LR.ReplaceLight(src, user)
 
 	// attempt to insert light
@@ -551,6 +580,9 @@
 // if hands aren't protected and the light is on, burn the player
 
 /obj/machinery/light/attack_hand(mob/living/carbon/human/user)
+	. = ..()
+	if(.)
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
 
@@ -642,10 +674,12 @@
 	on = TRUE
 	update()
 
-/obj/machinery/light/tesla_act(power, explosive = FALSE)
-	if(explosive)
-		explosion(src.loc,0,0,0,flame_range = 5, adminlog = 0)
-	qdel(src)
+/obj/machinery/light/tesla_act(power, tesla_flags)
+	if(tesla_flags & TESLA_MACHINE_EXPLOSIVE)
+		explosion(src,0,0,0,flame_range = 5, adminlog = 0)
+		qdel(src)
+	else
+		return ..()
 
 // called when area power state changes
 /obj/machinery/light/power_change()
@@ -771,7 +805,7 @@
 
 /obj/item/light/proc/shatter()
 	if(status == LIGHT_OK || status == LIGHT_BURNED)
-		visible_message("<span class='danger'>[name] shatters.</span>","<span class='italics'>You hear a small glass object shatter.</span>")
+		visible_message("<span class='danger'>[src] shatters.</span>","<span class='italics'>You hear a small glass object shatter.</span>")
 		status = LIGHT_BROKEN
 		force = 5
 		playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)
@@ -782,7 +816,7 @@
 	name = "floor light"
 	icon = 'icons/obj/lighting.dmi'
 	base_state = "floor"		// base description and icon_state
-	icon_state = "floor1"
+	icon_state = "floor"
 	brightness = 4
 	layer = 2.5
 	light_type = /obj/item/light/bulb

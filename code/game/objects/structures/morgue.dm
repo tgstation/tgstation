@@ -58,9 +58,12 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	open()
 
 /obj/structure/bodycontainer/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/bodycontainer/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(locked)
 		to_chat(user, "<span class='danger'>It's locked.</span>")
 		return
@@ -141,22 +144,28 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
  */
 /obj/structure/bodycontainer/morgue
 	name = "morgue"
-	desc = "Used to keep bodies in until someone fetches them."
+	desc = "Used to keep bodies in until someone fetches them. Now includes a high-tech alert system."
 	icon_state = "morgue1"
 	dir = EAST
 	var/beeper = TRUE
+	var/beep_cooldown = 50
+	var/next_beep = 0
 
 /obj/structure/bodycontainer/morgue/New()
 	connected = new/obj/structure/tray/m_tray(src)
 	connected.connected = src
 	..()
 
+/obj/structure/bodycontainer/morgue/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>The speaker is [beeper ? "enabled" : "disabled"]. Alt-click to toggle it.</span>")
+
 /obj/structure/bodycontainer/morgue/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, !issilicon(user)))
 		return
 	beeper = !beeper
-	to_chat(user, "<span class='notice'>You turn the speaker function [beeper ? "off" : "on"].</span>")
+	to_chat(user, "<span class='notice'>You turn the speaker function [beeper ? "on" : "off"].</span>")
 
 /obj/structure/bodycontainer/morgue/update_icon()
 	if (!connected || connected.loc != src) // Open or tray is gone.
@@ -176,7 +185,9 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 				if(mob_occupant.client && !mob_occupant.suiciding && !(mob_occupant.has_trait(TRAIT_NOCLONE)) && !mob_occupant.hellbound)
 					icon_state = "morgue4" // Cloneable
 					if(mob_occupant.stat == DEAD && beeper)
-						playsound(src, 'sound/weapons/smg_empty_alarm.ogg', 50, 0) //Clone them you blind fucks
+						if(world.time > next_beep)
+							playsound(src, 'sound/weapons/smg_empty_alarm.ogg', 50, 0) //Clone them you blind fucks
+							next_beep = world.time + beep_cooldown
 					break
 
 
@@ -190,7 +201,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/bodycontainer/crematorium
 	name = "crematorium"
-	desc = "A human incinerator. Works well on barbeque nights."
+	desc = "A human incinerator. Works well on barbecue nights."
 	icon_state = "crema1"
 	dir = SOUTH
 	var/id = 1
@@ -245,10 +256,10 @@ GLOBAL_LIST_EMPTY(crematoriums)
 			if (M.stat != DEAD)
 				M.emote("scream")
 			if(user)
-				user.log_message("Cremated <b>[M]/[M.ckey]</b>", INDIVIDUAL_ATTACK_LOG)
-				log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> cremated <b>[M]/[M.ckey]</b>")
+				log_combat(user, M, "cremated")
 			else
-				log_attack("\[[time_stamp()]\] <b>UNKNOWN</b> cremated <b>[M]/[M.ckey]</b>")
+				M.log_message("was cremated", LOG_ATTACK)
+
 			M.death(1)
 			if(M) //some animals get automatically deleted on death.
 				M.ghostize()
@@ -308,9 +319,12 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	qdel(src)
 
 /obj/structure/tray/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/tray/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if (src.connected)
 		connected.close()
 		add_fingerprint(user)

@@ -39,7 +39,7 @@
 	for(var/turf/T in range(1,A))
 		turfs.Add(T)
 	R.cast(turfs)
-	add_logs(A, D, "tornado sweeped(Plasma Fist)")
+	log_combat(A, D, "tornado sweeped(Plasma Fist)")
 	return
 
 /datum/martial_art/plasma_fist/proc/Throwback(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -49,7 +49,7 @@
 	var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
 	D.throw_at(throw_target, 200, 4,A)
 	A.say("HYAH!")
-	add_logs(A, D, "threw back (Plasma Fist)")
+	log_combat(A, D, "threw back (Plasma Fist)")
 	return
 
 /datum/martial_art/plasma_fist/proc/Plasma(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -59,7 +59,7 @@
 	D.visible_message("<span class='danger'>[A] has hit [D] with THE PLASMA FIST TECHNIQUE!</span>", \
 								"<span class='userdanger'>[A] has hit [D] with THE PLASMA FIST TECHNIQUE!</span>")
 	D.gib()
-	add_logs(A, D, "gibbed (Plasma Fist)")
+	log_combat(A, D, "gibbed (Plasma Fist)")
 	return
 
 /datum/martial_art/plasma_fist/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -92,23 +92,3 @@
 	to_chat(usr, "<span class='notice'>Tornado Sweep</span>: Harm Harm Disarm. Repulses target and everyone back.")
 	to_chat(usr, "<span class='notice'>Throwback</span>: Disarm Harm Disarm. Throws the target and an item at them.")
 	to_chat(usr, "<span class='notice'>The Plasma Fist</span>: Harm Disarm Disarm Disarm Harm. Knocks the brain out of the opponent and gibs their body.")
-
-/obj/item/plasma_fist_scroll
-	name = "frayed scroll"
-	desc = "An aged and frayed scrap of paper written in shifting runes. There are hand-drawn illustrations of pugilism."
-	icon = 'icons/obj/wizard.dmi'
-	icon_state ="scroll2"
-	var/used = 0
-
-/obj/item/plasma_fist_scroll/attack_self(mob/user)
-	if(!ishuman(user))
-		return
-	if(!used)
-		var/mob/living/carbon/human/H = user
-		var/datum/martial_art/plasma_fist/F = new/datum/martial_art/plasma_fist(null)
-		F.teach(H)
-		to_chat(H, "<span class='boldannounce'>You have learned the ancient martial art of Plasma Fist.</span>")
-		used = 1
-		desc = "It's completely blank."
-		name = "empty scroll"
-		icon_state = "blankscroll"

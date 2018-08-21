@@ -44,6 +44,8 @@ other types of metals and chemistry for reagents).
 	var/dangerous_construction = FALSE	//notify and log for admin investigations if this is printed.
 	var/departmental_flags = ALL			//bitflags for deplathes.
 	var/list/datum/techweb_node/unlocked_by = list()
+	var/research_icon					//Replaces the item icon in the research console
+	var/research_icon_state
 	var/icon_cache
 
 /datum/design/Destroy()
@@ -51,8 +53,9 @@ other types of metals and chemistry for reagents).
 	return ..()
 
 /datum/design/proc/icon_html(client/user)
-	send_asset(user, "design_[id].png", FALSE)
-	return "<img class='icon' src=\"design_[id].png\">"
+	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	sheet.send(user)
+	return sheet.icon_tag(id)
 
 ////////////////////////////////////////
 //Disks for transporting design datums//

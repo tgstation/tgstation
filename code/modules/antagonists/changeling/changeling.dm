@@ -7,6 +7,7 @@
 	roundend_category  = "changelings"
 	antagpanel_category = "Changeling"
 	job_rank = ROLE_CHANGELING
+	antag_moodlet = /datum/mood_event/focused
 
 	var/you_are_greet = TRUE
 	var/give_objectives = TRUE
@@ -18,6 +19,7 @@
 	var/datum/changelingprofile/first_prof = null
 	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 0
+	var/trueabsorbs = 0//dna gained using absorb, not dna sting
 	var/chem_charges = 20
 	var/chem_storage = 75
 	var/chem_recharge_rate = 1
@@ -84,7 +86,6 @@
 			B.vital = TRUE
 			B.decoy_override = FALSE
 	remove_changeling_powers()
-	owner.objectives -= objectives
 	. = ..()
 
 /datum/antagonist/changeling/proc/remove_clownmut()
@@ -166,7 +167,7 @@
 		to_chat(owner.current, "We have reached our capacity for abilities.")
 		return
 
-	if(owner.current.has_trait(TRAIT_FAKEDEATH))//To avoid potential exploits by buying new powers while in stasis, which clears your verblist.
+	if(owner.current.has_trait(TRAIT_DEATHCOMA))//To avoid potential exploits by buying new powers while in stasis, which clears your verblist.
 		to_chat(owner.current, "We lack the energy to evolve new abilities right now.")
 		return
 
@@ -352,7 +353,10 @@
 	if(GLOB.changeling_team_objective_type)
 		var/datum/objective/changeling_team_objective/team_objective = new GLOB.changeling_team_objective_type
 		team_objective.owner = owner
-		objectives += team_objective
+		if(team_objective.prepare())//Setting up succeeded
+			objectives += team_objective
+		else
+			qdel(team_objective)
 	return
 
 /datum/antagonist/changeling/proc/forge_objectives()
@@ -367,11 +371,21 @@
 		if(!CTO.escape_objective_compatible)
 			escape_objective_possible = FALSE
 			break
-
-	var/datum/objective/absorb/absorb_objective = new
-	absorb_objective.owner = owner
-	absorb_objective.gen_amount_goal(6, 8)
-	objectives += absorb_objective
+	var/changeling_objective = rand(1,3)
+	switch(changeling_objective)
+		if(1)
+			var/datum/objective/absorb/absorb_objective = new
+			absorb_objective.owner = owner
+			absorb_objective.gen_amount_goal(6, 8)
+			objectives += absorb_objective
+		if(2)
+			var/datum/objective/absorb_changeling/ac = new
+			ac.owner = owner
+			objectives += ac
+		if(3)
+			var/datum/objective/absorb_most/ac = new
+			ac.owner = owner
+			objectives += ac
 
 	if(prob(60))
 		if(prob(85))
@@ -437,7 +451,7 @@
 /datum/antagonist/changeling/proc/update_changeling_icons_added()
 	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_CHANGELING]
 	hud.join_hud(owner.current)
-	set_antag_hud(owner.current, "changling")
+	set_antag_hud(owner.current, "changeling")
 
 /datum/antagonist/changeling/proc/update_changeling_icons_removed()
 	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_CHANGELING]

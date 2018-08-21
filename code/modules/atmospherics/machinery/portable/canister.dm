@@ -207,13 +207,13 @@
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 	air_contents.gases[/datum/gas/nitrogen][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
-#define HOLDING 1
-#define CONNECTED 2
-#define EMPTY 4
-#define LOW 8
-#define MEDIUM 16
-#define FULL 32
-#define DANGER 64
+#define HOLDING		(1<<0)
+#define CONNECTED	(1<<1)
+#define EMPTY		(1<<2)
+#define LOW			(1<<3)
+#define MEDIUM		(1<<4)
+#define FULL		(1<<5)
+#define DANGER		(1<<6)
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if(stat & BROKEN)
 		cut_overlays()
@@ -314,6 +314,16 @@
 	if(holding)
 		holding.forceMove(T)
 		holding = null
+
+/obj/machinery/portable_atmospherics/canister/replace_tank(mob/living/user, close_valve)
+	. = ..()
+	if(.)
+		if(close_valve)
+			valve_open = FALSE
+			update_icon()
+			investigate_log("Valve was <b>closed</b> by [key_name(user)].<br>", INVESTIGATE_ATMOS)
+		else if(valve_open && holding)
+			investigate_log("[key_name(user)] started a transfer into [holding].<br>", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/canister/process_atmos()
 	..()
@@ -427,15 +437,15 @@
 							danger[gas[GAS_META][META_GAS_NAME]] = gas[MOLES] //ex. "plasma" = 20
 
 					if(danger.len)
-						message_admins("[ADMIN_LOOKUPFLW(usr)] opened a canister that contains the following: [ADMIN_JMP(src)]")
-						log_admin("[key_name(usr)] opened a canister that contains the following at [COORD(src)]:")
+						message_admins("[ADMIN_LOOKUPFLW(usr)] opened a canister that contains the following at [ADMIN_VERBOSEJMP(src)]:")
+						log_admin("[key_name(usr)] opened a canister that contains the following at [AREACOORD(src)]:")
 						for(var/name in danger)
 							var/msg = "[name]: [danger[name]] moles."
 							log_admin(msg)
 							message_admins(msg)
 			else
 				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
-			investigate_log(logmsg, "atmos")
+			investigate_log(logmsg, INVESTIGATE_ATMOS)
 			release_log += logmsg
 			. = TRUE
 		if("timer")

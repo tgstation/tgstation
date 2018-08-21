@@ -5,7 +5,7 @@
 	idle_power_usage = 100
 	var/siphoning = FALSE
 	var/next_warning = 0
-	var/obj/item/device/radio/radio
+	var/obj/item/radio/radio
 	var/radio_channel = "Common"
 	var/minimum_time_between_warnings = 400
 
@@ -55,10 +55,8 @@
 /obj/machinery/computer/bank_machine/get_spans()
 	. = ..() | SPAN_ROBOT
 
-/obj/machinery/computer/bank_machine/attack_hand(mob/user)
-	if(..())
-		return
-	src.add_fingerprint(usr)
+/obj/machinery/computer/bank_machine/ui_interact(mob/user)
+	. = ..()
 	var/dat = "[station_name()] secure vault. Authorized personnel only.<br>"
 	dat += "Current Balance: [SSshuttle.points] credits.<br>"
 	if(!siphoning)

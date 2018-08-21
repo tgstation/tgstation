@@ -1,5 +1,6 @@
 /turf/open/floor/mech_bay_recharge_floor               //        Whos idea it was
 	name = "mech bay recharge station"                      //        Recharging turfs
+	desc = "Parking a mech on this station will recharge its internal power cell."
 	icon = 'icons/turf/floors.dmi'                          //		  That are set in stone to check the west turf for recharge port
 	icon_state = "recharge_floor"                           //        Some people just want to watch the world burn i guess
 
@@ -12,8 +13,8 @@
 
 /obj/machinery/mech_bay_recharge_port
 	name = "mech bay power port"
+	desc = "This port recharges a mech's internal power cell."
 	density = TRUE
-	anchored = TRUE
 	dir = EAST
 	icon = 'icons/mecha/mech_bay.dmi'
 	icon_state = "recharge_port"
@@ -62,29 +63,18 @@
 		recharging_turf = get_step(loc, dir)
 		return
 
-	if(exchange_parts(user, I))
-		return
-
 	if(default_deconstruction_crowbar(I))
 		return
 	return ..()
 
 /obj/machinery/computer/mech_bay_power_console
 	name = "mech bay power control console"
-	desc = "Used to control mechbay power ports."
+	desc = "Displays the status of mechs connected to the recharge station."
 	icon_screen = "recharge_comp"
 	icon_keyboard = "rd_key"
 	circuit = /obj/item/circuitboard/computer/mech_bay_power_console
 	var/obj/machinery/mech_bay_recharge_port/recharge_port
 	light_color = LIGHT_COLOR_PINK
-
-/obj/machinery/computer/mech_bay_power_console/attack_ai(mob/user)
-	return interact(user)
-
-/obj/machinery/computer/mech_bay_power_console/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
 
 /obj/machinery/computer/mech_bay_power_console/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)

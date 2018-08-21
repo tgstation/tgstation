@@ -12,6 +12,7 @@
 	var/dna_cost = -1 //cost of the sting in dna points. 0 = auto-purchase, -1 = cannot be purchased
 	var/req_dna = 0  //amount of dna needed to use this ability. Changelings always have atleast 1
 	var/req_human = 0 //if you need to be human to use this ability
+	var/req_absorbs = 0 //similar to req_dna, but only gained from absorbing, not DNA sting
 	var/req_stat = CONSCIOUS // CONSCIOUS, UNCONSCIOUS or DEAD
 	var/always_keep = 0 // important for abilities like revive that screw you if you lose them.
 	var/ignores_fakedeath = FALSE // usable with the FAKEDEATH flag
@@ -59,20 +60,22 @@
 	if(c.absorbedcount < req_dna)
 		to_chat(user, "<span class='warning'>We require at least [req_dna] sample\s of compatible DNA.</span>")
 		return 0
+	if(c.trueabsorbs < req_absorbs)
+		to_chat(user, "<span class='warning'>We require at least [req_absorbs] sample\s of DNA gained through our Absorb ability.</span>")
 	if(req_stat < user.stat)
 		to_chat(user, "<span class='warning'>We are incapacitated.</span>")
 		return 0
-	if((user.has_trait(TRAIT_FAKEDEATH)) && (!ignores_fakedeath))
+	if((user.has_trait(TRAIT_DEATHCOMA)) && (!ignores_fakedeath))
 		to_chat(user, "<span class='warning'>We are incapacitated.</span>")
 		return 0
 	return 1
 
 //used in /mob/Stat()
 /obj/effect/proc_holder/changeling/proc/can_be_used_by(mob/user)
-	if(!user || QDELETED(user))
-		return 0
+	if(QDELETED(user))
+		return FALSE
 	if(!ishuman(user) && !ismonkey(user))
-		return 0
+		return FALSE
 	if(req_human && !ishuman(user))
-		return 0
-	return 1
+		return FALSE
+	return TRUE

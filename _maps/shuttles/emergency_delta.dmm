@@ -225,7 +225,7 @@
 /turf/open/floor/plasteel/cmo,
 /area/shuttle/escape)
 "at" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = 26;
 	pixel_y = 58
@@ -240,14 +240,14 @@
 /turf/open/floor/plasteel/cmo,
 /area/shuttle/escape)
 "av" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aw" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
@@ -307,9 +307,7 @@
 /area/shuttle/escape)
 "aF" = (
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
-	name = "Escape Shuttle Infirmary";
-	req_access_txt = "0"
+	name = "Escape Shuttle Infirmary"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -328,10 +326,10 @@
 	},
 /area/shuttle/escape)
 "aH" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = -26
 	},
@@ -383,8 +381,7 @@
 /area/shuttle/escape)
 "aO" = (
 /obj/machinery/door/airlock/shuttle{
-	name = "Emergency Shuttle Airlock";
-	req_access_txt = "0"
+	name = "Emergency Shuttle Airlock"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -423,9 +420,7 @@
 /area/shuttle/escape)
 "aV" = (
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
-	name = "Escape Shuttle Infirmary";
-	req_access_txt = "0"
+	name = "Escape Shuttle Infirmary"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -484,7 +479,7 @@
 /area/shuttle/escape)
 "ba" = (
 /obj/structure/reagent_dispensers/fueltank,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = -26
 	},
@@ -516,7 +511,7 @@
 	pixel_x = -4;
 	pixel_y = 3
 	},
-/obj/item/device/healthanalyzer{
+/obj/item/healthanalyzer{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -560,24 +555,23 @@
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/storage/toolbox/emergency,
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_x = -6;
 	pixel_y = -2
 	},
 /obj/item/crowbar,
 /obj/item/wrench,
-/obj/item/device/radio,
+/obj/item/radio,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bj" = (
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
-	req_access_txt = "0";
 	use_power = 0
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -652,7 +646,7 @@
 	name = "Holding Area";
 	req_access_txt = "2"
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bu" = (
 /obj/machinery/door/airlock/command/glass{
@@ -675,16 +669,16 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "bw" = (
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bx" = (
-/obj/structure/chair,
-/turf/open/floor/mineral/plastitanium/brig,
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "by" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bz" = (
 /obj/item/twohanded/required/kirbyplants{
@@ -715,12 +709,12 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bC" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bD" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /obj/machinery/status_display{
 	pixel_y = 32
 	},
@@ -728,10 +722,10 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bE" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bF" = (
 /turf/open/floor/plasteel/red/corner{
@@ -756,7 +750,7 @@
 /turf/open/floor/plasteel/neutral/corner,
 /area/shuttle/escape)
 "bJ" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_y = 58
 	},
@@ -777,24 +771,24 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bM" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bN" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bO" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/lockbox/loyalty,
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bP" = (
 /obj/structure/table/reinforced,
@@ -829,19 +823,19 @@
 	},
 /area/shuttle/escape)
 "bU" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bV" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/zipties,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_y = -26
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bW" = (
 /obj/structure/table/reinforced,
@@ -857,7 +851,6 @@
 "bY" = (
 /obj/machinery/door/airlock/command{
 	name = "Emergency Recovery Airlock";
-	req_access = null;
 	req_access_txt = "19"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -919,7 +912,7 @@
 	},
 /area/shuttle/escape)
 "cg" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = 26;
 	pixel_y = 58
@@ -999,7 +992,7 @@
 /obj/structure/table/reinforced,
 /obj/item/folder/red,
 /obj/item/restraints/handcuffs,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/escape)
 "cs" = (
@@ -1066,7 +1059,7 @@
 	},
 /area/shuttle/escape)
 "cB" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
@@ -1084,16 +1077,20 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "cG" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /obj/machinery/light,
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "cH" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small,
 /turf/open/floor/plasteel,
+/area/shuttle/escape)
+"hB" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -1102,17 +1099,17 @@ ac
 ae
 af
 af
-ag
-ag
+hB
+hB
 af
 af
 aO
 aT
 aW
 af
-ag
-ag
-ag
+hB
+hB
+hB
 af
 aO
 af
@@ -1161,7 +1158,7 @@ aa
 (3,1,1) = {"
 ab
 ad
-ag
+hB
 ai
 ao
 ao
@@ -1182,7 +1179,7 @@ bw
 bw
 bw
 bU
-ag
+hB
 aa
 aa
 aa
@@ -1192,7 +1189,7 @@ aa
 (4,1,1) = {"
 ab
 ad
-ag
+hB
 ai
 ao
 aw
@@ -1239,7 +1236,7 @@ aD
 aX
 ao
 bo
-ag
+hB
 bx
 bw
 bN
@@ -1247,7 +1244,7 @@ bU
 af
 af
 aT
-ag
+hB
 af
 af
 "}
@@ -1285,7 +1282,7 @@ af
 (7,1,1) = {"
 ab
 ad
-ag
+hB
 ai
 ao
 ao
@@ -1304,14 +1301,14 @@ bp
 af
 af
 bt
-ag
+hB
 aT
 af
 cb
 cf
 ck
 cr
-ag
+hB
 "}
 (8,1,1) = {"
 ac
@@ -1332,7 +1329,7 @@ aw
 aw
 ao
 bo
-ag
+hB
 bz
 bF
 bP
@@ -1342,12 +1339,12 @@ cc
 cc
 cl
 cs
-ag
+hB
 "}
 (9,1,1) = {"
 ab
 ad
-ag
+hB
 ai
 ao
 ax
@@ -1373,12 +1370,12 @@ cc
 cc
 cm
 ct
-ag
+hB
 "}
 (10,1,1) = {"
 ab
 ad
-ag
+hB
 ai
 ao
 av
@@ -1404,7 +1401,7 @@ cc
 cc
 cn
 cu
-ag
+hB
 "}
 (11,1,1) = {"
 ac
@@ -1425,7 +1422,7 @@ ao
 ao
 ao
 bo
-ag
+hB
 bA
 bG
 bQ
@@ -1435,12 +1432,12 @@ cc
 cg
 cl
 cv
-ag
+hB
 "}
 (12,1,1) = {"
 ab
 ad
-ag
+hB
 ah
 ap
 aw
@@ -1466,7 +1463,7 @@ cb
 ch
 co
 cw
-ag
+hB
 "}
 (13,1,1) = {"
 ab
@@ -1526,14 +1523,14 @@ af
 af
 af
 aT
-ag
+hB
 af
 af
 "}
 (15,1,1) = {"
 ab
 ad
-ag
+hB
 ak
 as
 az
@@ -1564,7 +1561,7 @@ aa
 (16,1,1) = {"
 ab
 ad
-ag
+hB
 al
 at
 aA
@@ -1585,7 +1582,7 @@ bC
 bJ
 ai
 bZ
-ag
+hB
 aa
 aa
 aa
@@ -1628,25 +1625,25 @@ aa
 ac
 ae
 af
-ag
-ag
-ag
-ag
+hB
+hB
+hB
+hB
 af
 af
 aT
 af
-ag
-ag
-ag
-ag
-ag
+hB
+hB
+hB
+hB
+hB
 af
 af
-ag
+hB
 bL
 bL
-ag
+hB
 af
 aa
 aa

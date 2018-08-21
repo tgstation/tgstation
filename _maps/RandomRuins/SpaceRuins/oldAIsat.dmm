@@ -411,7 +411,7 @@
 /area/template_noop)
 "bt" = (
 /obj/structure/table,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "bu" = (
@@ -556,7 +556,7 @@
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "bR" = (
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /turf/open/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "bS" = (
@@ -580,7 +580,7 @@
 /area/tcommsat/chamber)
 "bV" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/open/floor/plating/airless,
 /area/tcommsat/chamber)
 "bW" = (
@@ -606,7 +606,7 @@
 /area/tcommsat/chamber)
 "ca" = (
 /obj/effect/decal/cleanable/blood,
-/obj/item/device/assembly/signaler,
+/obj/item/assembly/signaler,
 /turf/open/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "cb" = (
@@ -629,7 +629,7 @@
 /area/tcommsat/chamber)
 "ce" = (
 /obj/structure/table,
-/obj/item/device/electropack,
+/obj/item/electropack,
 /turf/open/floor/plating/airless,
 /area/tcommsat/chamber)
 "cf" = (

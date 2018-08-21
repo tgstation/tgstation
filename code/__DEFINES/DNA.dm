@@ -44,20 +44,6 @@
 //Mutations that cant be taken from genetics and are not in SE
 #define	NON_SCANNABLE		-1
 
-	// Extra powers:
-#define LASER			9 	// harm intent - click anywhere to shoot lasers from eyes
-#define HEAL			10 	// healing people with hands
-#define SHADOW			11 	// shadow teleportation (create in/out portals anywhere) (25%)
-#define SCREAM			12 	// supersonic screaming (25%)
-#define EXPLOSIVE		13 	// exploding on-demand (15%)
-#define REGENERATION	14 	// superhuman regeneration (30%)
-#define REPROCESSOR		15 	// eat anything (50%)
-#define SHAPESHIFTING	16 	// take on the appearance of anything (40%)
-#define PHASING			17 	// ability to phase through walls (40%)
-#define SHIELD			18 	// shielding from all projectile attacks (30%)
-#define SHOCKWAVE		19 	// attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
-#define ELECTRICITY		20 	// ability to shoot electric attacks (15%)
-
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE				3
 
@@ -74,15 +60,14 @@
 #define DNA_UNIQUE_ENZYMES_LEN		32
 
 //Transformation proc stuff
-#define TR_KEEPITEMS	1
-#define TR_KEEPVIRUS	2
-#define TR_KEEPDAMAGE	4
-#define TR_HASHNAME		8	// hashing names (e.g. monkey(e34f)) (only in monkeyize)
-#define TR_KEEPIMPLANTS	16
-#define TR_KEEPSE		32 // changelings shouldn't edit the DNA's SE when turning into a monkey
-#define TR_DEFAULTMSG	64
-#define TR_KEEPSRC		128
-#define TR_KEEPORGANS	256
+#define TR_KEEPITEMS	(1<<0)
+#define TR_KEEPVIRUS	(1<<1)
+#define TR_KEEPDAMAGE	(1<<2)
+#define TR_HASHNAME		(1<<3)	// hashing names (e.g. monkey(e34f)) (only in monkeyize)
+#define TR_KEEPIMPLANTS	(1<<4)
+#define TR_KEEPSE		(1<<5)	// changelings shouldn't edit the DNA's SE when turning into a monkey
+#define TR_DEFAULTMSG	(1<<6)
+#define TR_KEEPORGANS	(1<<8)
 
 
 #define CLONER_FRESH_CLONE "fresh"
@@ -94,42 +79,24 @@
 #define FACEHAIR		3
 #define EYECOLOR		4
 #define LIPS			5
-#define RESISTHOT		6
-#define RESISTCOLD		7
-#define RESISTPRESSURE  8
-#define RADIMMUNE		9
-#define NOBREATH		10
-#define NOGUNS			11
-#define NOBLOOD			12
-#define NOFIRE			13
-#define VIRUSIMMUNE		14
-#define PIERCEIMMUNE	15
-#define NOTRANSSTING	16
-#define MUTCOLORS_PARTSONLY	17	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
-#define NODISMEMBER		18
-#define NOHUNGER		19
-#define NOCRITDAMAGE	20
-#define NOZOMBIE		21
-#define EASYDISMEMBER	22
-#define EASYLIMBATTACHMENT 23
-#define TOXINLOVER		24
-#define DIGITIGRADE		25	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
-#define NO_UNDERWEAR	26
-#define NOLIVER			27
-#define NOSTOMACH		28
-#define NO_DNA_COPY     29
-#define DRINKSBLOOD		30
-#define SPECIES_ORGANIC 31
-#define SPECIES_INORGANIC 32
-#define SPECIES_UNDEAD  33
-#define SPECIES_ROBOTIC 34
-#define NOEYES			35
+#define NOBLOOD			6
+#define NOTRANSSTING	7
+#define MUTCOLORS_PARTSONLY	8	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
+#define NOZOMBIE		9
+#define DIGITIGRADE		10	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
+#define NO_UNDERWEAR	11
+#define NOLIVER			12
+#define NOSTOMACH		13
+#define NO_DNA_COPY     14
+#define DRINKSBLOOD		15
+#define NOEYES			16
 
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"
 #define ORGAN_SLOT_RIGHT_ARM_AUG "r_arm_device"
 #define ORGAN_SLOT_LEFT_ARM_AUG "l_arm_device"
 #define ORGAN_SLOT_STOMACH "stomach"
+#define ORGAN_SLOT_STOMACH_AID "stomach_aid"
 #define ORGAN_SLOT_BREATHING_TUBE "breathing_tube"
 #define ORGAN_SLOT_EARS "ears"
 #define ORGAN_SLOT_EYES "eye_sight"

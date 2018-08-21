@@ -29,12 +29,12 @@
 					D.drop_all_held_items()
 					D.stop_pulling()
 					if(A.a_intent == INTENT_GRAB)
-						add_logs(A, D, "grabbed", addition="aggressively")
+						log_combat(A, D, "grabbed", addition="aggressively")
 						D.visible_message("<span class='warning'>[A] violently grabs [D]!</span>", \
 						  "<span class='userdanger'>[A] violently grabs you!</span>")
 						A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
 					else
-						add_logs(A, D, "grabbed", addition="passively")
+						log_combat(A, D, "grabbed", addition="passively")
 						A.grab_state = GRAB_PASSIVE
 		if(4)
 			A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
@@ -42,8 +42,8 @@
 			D.visible_message("<span class='danger'>[A] [atk_verb] [D]!</span>", \
 					  "<span class='userdanger'>[A] [atk_verb] you!</span>")
 			playsound(get_turf(D), 'sound/weapons/punch1.ogg', 40, 1, -1)
-			D.apply_damage(rand(5,10), BRUTE, "head")
-			A.apply_damage(rand(5,10), BRUTE, "head")
+			D.apply_damage(rand(5,10), BRUTE, BODY_ZONE_HEAD)
+			A.apply_damage(rand(5,10), BRUTE, BODY_ZONE_HEAD)
 			if(!istype(D.head,/obj/item/clothing/head/helmet/) && !istype(D.head,/obj/item/clothing/head/hardhat))
 				D.adjustBrainLoss(5)
 			A.Stun(rand(10,45))
@@ -62,5 +62,5 @@
 			basic_hit(A,D)
 
 	if(atk_verb)
-		add_logs(A, D, "[atk_verb] (Psychotic Brawling)")
+		log_combat(A, D, "[atk_verb] (Psychotic Brawling)")
 	return 1

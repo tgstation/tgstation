@@ -294,7 +294,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aP" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/glass/bottle/liver_enhance_virion,
+/obj/item/reagent_containers/glass/bottle/random_virus,
 /obj/item/reagent_containers/dropper,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
@@ -315,12 +315,11 @@
 	},
 /area/ruin/space/has_grav/abandonedzoo)
 "aS" = (
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/unlocked{
 	dir = 8;
 	environ = 0;
 	equipment = 0;
 	lighting = 0;
-	locked = 0;
 	name = "Worn-out APC";
 	pixel_x = -24
 	},
@@ -395,7 +394,7 @@
 "aY" = (
 /obj/structure/table/reinforced,
 /obj/item/gun/energy/temperature{
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 	},
 /turf/open/floor/plasteel{
 	icon_state = "dark"
@@ -652,6 +651,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bG" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel/darkgreen,
 /area/ruin/space/has_grav/abandonedzoo)
 "bH" = (
@@ -747,6 +747,13 @@
 /area/template_noop)
 "bX" = (
 /turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/abandonedzoo)
+"lo" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkgreen,
 /area/ruin/space/has_grav/abandonedzoo)
 "KN" = (
 /turf/template_noop,
@@ -937,7 +944,7 @@ aH
 ay
 bG
 bL
-bG
+lo
 aa
 aa
 "}
@@ -958,7 +965,7 @@ bq
 ay
 bG
 bM
-bG
+lo
 aa
 aa
 "}

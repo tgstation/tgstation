@@ -31,6 +31,7 @@
 	return dat
 
 /obj/item/implant/adrenalin/activate()
+	. = ..()
 	uses--
 	to_chat(imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
 	imp_in.SetStun(0)
@@ -54,6 +55,7 @@
 	uses = 3
 
 /obj/item/implant/emp/activate()
+	. = ..()
 	uses--
 	empulse(imp_in, 3, 5)
 	if(!uses)
@@ -81,13 +83,14 @@
 /obj/item/implant/radio
 	name = "internal radio implant"
 	activated = TRUE
-	var/obj/item/device/radio/radio
+	var/obj/item/radio/radio
 	var/radio_key
 	var/subspace_transmission = FALSE
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "walkietalkie"
 
 /obj/item/implant/radio/activate()
+	. = ..()
 	// needs to be GLOB.deep_inventory_state otherwise it won't open
 	radio.ui_interact(usr, "main", null, FALSE, null, GLOB.deep_inventory_state)
 
@@ -105,18 +108,18 @@
 	radio.recalculateChannels()
 
 /obj/item/implant/radio/mining
-	radio_key = /obj/item/device/encryptionkey/headset_cargo
+	radio_key = /obj/item/encryptionkey/headset_cargo
 
 /obj/item/implant/radio/syndicate
 	desc = "Are you there God? It's me, Syndicate Comms Agent."
-	radio_key = /obj/item/device/encryptionkey/syndicate
+	radio_key = /obj/item/encryptionkey/syndicate
 	subspace_transmission = TRUE
 
 /obj/item/implant/radio/slime
 	name = "slime radio"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "adamantine_resonator"
-	radio_key = /obj/item/device/encryptionkey/headset_sci
+	radio_key = /obj/item/encryptionkey/headset_sci
 	subspace_transmission = TRUE
 
 /obj/item/implant/radio/get_data()

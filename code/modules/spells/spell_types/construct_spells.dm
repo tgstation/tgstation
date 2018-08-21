@@ -91,14 +91,14 @@
 	action_icon_state = "summonsoulstone"
 	action_background_icon_state = "bg_demon"
 
-	summon_type = list(/obj/item/device/soulstone)
+	summon_type = list(/obj/item/soulstone)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/cult
 	cult_req = 1
 	charge_max = 3600
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult
-	summon_type = list(/obj/item/device/soulstone/anybody)
+	summon_type = list(/obj/item/soulstone/anybody)
 
 /obj/effect/proc_holder/spell/targeted/forcewall/cult
 	name = "Shield"
@@ -202,12 +202,16 @@
 		revert_cast()
 		return
 
+	if(target.anti_magic_check(TRUE, TRUE))
+		to_chat(target, "<span class='warning'>You feel a freezing darkness closing in on you, but it rapidly dissipates.</span>")
+		return
+
 	to_chat(target, "<span class='userdanger'>A freezing darkness surrounds you...</span>")
 	target.playsound_local(get_turf(target), 'sound/hallucinations/i_see_you1.ogg', 50, 1)
 	user.playsound_local(get_turf(user), 'sound/effects/ghost2.ogg', 50, 1)
 	target.become_blind(ABYSSAL_GAZE_BLIND)
 	addtimer(CALLBACK(src, .proc/cure_blindness, target), 40)
-	target.bodytemperature -= 200
+	target.adjust_bodytemperature(-200)
 
 /obj/effect/proc_holder/spell/targeted/abyssal_gaze/proc/cure_blindness(mob/target)
 	if(isliving(target))
@@ -216,7 +220,7 @@
 
 /obj/effect/proc_holder/spell/targeted/dominate
 	name = "Dominate"
-	desc = "This spell dominates the mind of a lesser creature, causing it to see you as an ally."
+	desc = "This spell dominates the mind of a lesser creature to the will of Nar'sie, allying it only to her direct followers."
 
 	charge_max = 600
 	range = 7
@@ -294,9 +298,11 @@
 	sound = 'sound/weapons/resonator_blast.ogg'
 	proj_trigger_range = 0
 	ignore_factions = list("cult")
+	check_holy = TRUE
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/juggernaut
 	name = "Gauntlet Echo"
+	alpha = 180
 	amt_dam_brute = 30
 	amt_knockdown = 50
 	sound = 'sound/weapons/punch3.ogg'
@@ -307,6 +313,6 @@
 	new /obj/effect/temp_visual/cult/sac(T)
 	for(var/obj/O in range(src,1))
 		if(O.density && !istype(O, /obj/structure/destructible/cult))
-			O.take_damage(90, BRUTE, "gauntlet echo", 0)
+			O.take_damage(90, BRUTE, "melee", 0)
 			new /obj/effect/temp_visual/cult/turf/floor
 	..()

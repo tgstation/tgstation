@@ -6,9 +6,9 @@
 	item_state = "cleaner"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	container_type = OPENCONTAINER
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
@@ -24,6 +24,7 @@
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 
 /obj/item/reagent_containers/spray/afterattack(atom/A, mob/user)
+	. = ..()
 	if(istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart) || istype(A, /obj/machinery/hydroponics))
 		return
 
@@ -50,16 +51,15 @@
 	user.changeNext_move(CLICK_CD_RANGE*2)
 	user.newtonian_move(get_dir(A, user))
 	var/turf/T = get_turf(src)
-	var/area/area = get_area(src)
 	if(reagents.has_reagent("sacid"))
-		message_admins("[ADMIN_LOOKUPFLW(user)] fired sulphuric acid from \a [src] at [area] [ADMIN_COORDJMP(T)].")
-		log_game("[key_name(user)] fired sulphuric acid from \a [src] at [area] ([T.x], [T.y], [T.z]).")
+		message_admins("[ADMIN_LOOKUPFLW(user)] fired sulphuric acid from \a [src] at [ADMIN_VERBOSEJMP(T)].")
+		log_game("[key_name(user)] fired sulphuric acid from \a [src] at [AREACOORD(T)].")
 	if(reagents.has_reagent("facid"))
-		message_admins("[ADMIN_LOOKUPFLW(user)] fired Fluacid from \a [src] at [area] [ADMIN_COORDJMP(T)].")
-		log_game("[key_name(user)] fired Fluacid from \a [src] at [area] [COORD(T)].")
+		message_admins("[ADMIN_LOOKUPFLW(user)] fired Fluacid from \a [src] at [ADMIN_VERBOSEJMP(T)].")
+		log_game("[key_name(user)] fired Fluacid from \a [src] at [AREACOORD(T)].")
 	if(reagents.has_reagent("lube"))
-		message_admins("[ADMIN_LOOKUPFLW(user)] fired Space lube from \a [src] at [area] [ADMIN_COORDJMP(T)].")
-		log_game("[key_name(user)] fired Space lube from \a [src] at [area] [COORD(T)].")
+		message_admins("[ADMIN_LOOKUPFLW(user)] fired Space lube from \a [src] at [ADMIN_VERBOSEJMP(T)].")
+		log_game("[key_name(user)] fired Space lube from \a [src] at [AREACOORD(T)].")
 	return
 
 
@@ -147,11 +147,14 @@
 /obj/item/reagent_containers/spray/cleaner
 	name = "space cleaner"
 	desc = "BLAM!-brand non-foaming space cleaner!"
-	list_reagents = list("cleaner" = 250)
+	volume = 100
+	list_reagents = list("cleaner" = 100)
+	amount_per_transfer_from_this = 2
+	stream_amount = 5
 
 /obj/item/reagent_containers/spray/cleaner/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting the nozzle of \the [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	if(do_mob(user,user,30))	
+	if(do_mob(user,user,30))
 		if(reagents.total_volume >= amount_per_transfer_from_this)//if not empty
 			user.visible_message("<span class='suicide'>[user] pulls the trigger!</span>")
 			src.spray(user)
@@ -169,19 +172,6 @@
 	volume = 50
 	desc = "Gyaro brand spray tan. Do not spray near eyes or other orifices."
 	list_reagents = list("spraytan" = 50)
-
-
-/obj/item/reagent_containers/spray/medical
-	name = "medical spray"
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "medspray"
-	volume = 100
-
-
-/obj/item/reagent_containers/spray/medical/sterilizer
-	name = "sterilizer spray"
-	desc = "Spray bottle loaded with non-toxic sterilizer. Useful in preparation for surgery."
-	list_reagents = list("sterilizine" = 100)
 
 
 //pepperspray
@@ -206,7 +196,7 @@
 /obj/item/reagent_containers/spray/pepper/afterattack(atom/A as mob|obj, mob/user)
 	if (A.loc == user)
 		return
-	..()
+	. = ..()
 
 //water flower
 /obj/item/reagent_containers/spray/waterflower
@@ -284,7 +274,7 @@
 	// Make it so the bioterror spray doesn't spray yourself when you click your inventory items
 	if (A.loc == user)
 		return
-	..()
+	. = ..()
 
 /obj/item/reagent_containers/spray/chemsprayer/spray(atom/A)
 	var/direction = get_dir(src, A)

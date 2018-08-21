@@ -29,9 +29,9 @@
 	mob_type_blacklist_typecache = typecacheof(mob_type_blacklist_typecache)
 	mob_type_ignore_stat_typecache = typecacheof(mob_type_ignore_stat_typecache)
 
-/datum/emote/proc/run_emote(mob/user, params, type_override)
+/datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE)
 	. = TRUE
-	if(!can_run_emote(user))
+	if(!can_run_emote(user, TRUE, intentional))
 		return FALSE
 	var/msg = select_message_type(user)
 	if(params && message_param)
@@ -47,7 +47,7 @@
 	if(!msg)
 		return
 
-	user.log_message(msg, INDIVIDUAL_EMOTE_LOG)
+	user.log_message(msg, LOG_EMOTE)
 	msg = "<b>[user]</b> " + msg
 
 	for(var/mob/M in GLOB.dead_mob_list)
@@ -61,7 +61,6 @@
 		user.audible_message(msg)
 	else
 		user.visible_message(msg)
-	log_talk(user,"[key_name(user)] : [msg]",LOGEMOTE)
 
 /datum/emote/proc/replace_pronoun(mob/user, message)
 	if(findtext(message, "their"))
@@ -94,7 +93,7 @@
 /datum/emote/proc/select_param(mob/user, params)
 	return replacetext(message_param, "%t", params)
 
-/datum/emote/proc/can_run_emote(mob/user, status_check = TRUE)
+/datum/emote/proc/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
 	. = TRUE
 	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
 		return FALSE
@@ -102,12 +101,30 @@
 		return FALSE
 	if(status_check && !is_type_in_typecache(user, mob_type_ignore_stat_typecache))
 		if(user.stat > stat_allowed)
-			to_chat(user, "<span class='notice'>You cannot [key] while unconscious.</span>")
+			if(!intentional)
+				return FALSE
+			switch(user.stat)
+				if(SOFT_CRIT)
+					to_chat(user, "<span class='notice'>You cannot [key] while in a critical condition.</span>")
+				if(UNCONSCIOUS)
+					to_chat(user, "<span class='notice'>You cannot [key] while unconscious.</span>")
+				if(DEAD)
+					to_chat(user, "<span class='notice'>You cannot [key] while dead.</span>")
 			return FALSE
-		if(restraint_check && (user.restrained() || user.buckled))
+		if(restraint_check && (user.IsStun() || user.IsKnockdown()))
+			if(!intentional)
+				return FALSE
+			to_chat(user, "<span class='notice'>You cannot [key] while stunned.</span>")
+			return FALSE
+		if(restraint_check && user.restrained())
+			if(!intentional)
+				return FALSE
 			to_chat(user, "<span class='notice'>You cannot [key] while restrained.</span>")
 			return FALSE
-		if(user.reagents && user.reagents.has_reagent("mimesbane"))
+
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.has_trait(TRAIT_EMOTEMUTE))
 			return FALSE
 
 /datum/emote/sound

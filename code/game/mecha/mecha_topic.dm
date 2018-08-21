@@ -199,7 +199,7 @@
 						</head>
 						<body>
 						[add_req_access?"<a href='?src=[REF(src)];req_access=1;id_card=[REF(id_card)];user=[REF(user)]'>Edit operation keycodes</a>":null]
-						[maint_access?"<a href='?src=[REF(src)];maint_access=1;id_card=[REF(id_card)];user=[REF(user)]'>Initiate maintenance protocol</a>":null]
+						[maint_access?"<a href='?src=[REF(src)];maint_access=1;id_card=[REF(id_card)];user=[REF(user)]'>[(state>0) ? "Terminate" : "Initiate"] maintenance protocol</a>":null]
 						[(state>0) ?"<a href='?src=[REF(src)];set_internal_tank_valve=1;user=[REF(user)]'>Set Cabin Air Pressure</a>":null]
 						</body>
 						</html>"}
@@ -350,5 +350,5 @@
 				log_message("Recalibration of coordination system finished with 0 errors.")
 			else
 				occupant_message("<span class='warning'>Recalibration failed!</span>")
-				log_message("Recalibration of coordination system failed with 1 error.",1)
+				log_message("Recalibration of coordination system failed with 1 error.", color="red")
 

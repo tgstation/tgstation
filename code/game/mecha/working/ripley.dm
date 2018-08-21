@@ -31,8 +31,6 @@
 					ore.forceMove(ore_box)
 
 /obj/mecha/working/ripley/Destroy()
-	for(var/i=1, i <= hides, i++)
-		new /obj/item/stack/sheet/animalhide/goliath_hide(loc) //If a goliath-plated ripley gets killed, all the plates drop
 	for(var/atom/movable/A in cargo)
 		A.forceMove(drop_location())
 		step_rand(A)
@@ -49,12 +47,17 @@
 
 /obj/mecha/working/ripley/update_icon()
 	..()
-	if (hides)
+	GET_COMPONENT(C,/datum/component/armor_plate)
+	if (C.amount)
 		cut_overlays()
-		if(hides < 3)
+		if(C.amount < 3)
 			add_overlay(occupant ? "ripley-g" : "ripley-g-open")
 		else
 			add_overlay(occupant ? "ripley-g-full" : "ripley-g-full-open")
+
+/obj/mecha/working/ripley/Initialize()
+	. = ..()
+	AddComponent(/datum/component/armor_plate,3,/obj/item/stack/sheet/animalhide/goliath_hide,list("melee" = 10, "bullet" = 5, "laser" = 5))
 
 
 /obj/mecha/working/ripley/firefighter
@@ -83,6 +86,18 @@
 /obj/mecha/working/ripley/deathripley/Initialize()
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill
+	ME.attach(src)
+
+/obj/mecha/working/ripley/deathripley/real
+	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE. FOR REAL"
+
+/obj/mecha/working/ripley/deathripley/real/Initialize()
+	. = ..()
+	for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
+		E.detach()
+		qdel(E)
+	equipment.Cut()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/real
 	ME.attach(src)
 
 /obj/mecha/working/ripley/mining

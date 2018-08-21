@@ -18,6 +18,8 @@
 	var/map_file = "BoxStation.dmm"
 
 	var/traits = null
+	var/space_ruin_levels = 7
+	var/space_empty_levels = 1
 
 	var/minetype = "lavaland"
 
@@ -104,6 +106,20 @@
 	// "traits": null or absent -> default
 	else if (!isnull(traits))
 		log_world("map_config traits is not a list!")
+		return
+
+	var/temp = json["space_ruin_levels"]
+	if (isnum(temp))
+		space_ruin_levels = temp
+	else if (!isnull(temp))
+		log_world("map_config space_ruin_levels is not a number!")
+		return
+
+	temp = json["space_empty_levels"]
+	if (isnum(temp))
+		space_empty_levels = temp
+	else if (!isnull(temp))
+		log_world("map_config space_empty_levels is not a number!")
 		return
 
 	if ("minetype" in json)

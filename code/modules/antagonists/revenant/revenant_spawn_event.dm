@@ -5,7 +5,6 @@
 	typepath = /datum/round_event/ghost_role/revenant
 	weight = 7
 	max_occurrences = 1
-	earliest_start = 12000 //Meant to mix things up early-game.
 	min_players = 5
 
 
@@ -54,7 +53,7 @@
 
 	var/mob/living/simple_animal/revenant/revvie = new(pick(spawn_locs))
 	revvie.key = selected.key
-	message_admins("[key_name_admin(revvie)] has been made into a revenant by an event.")
+	message_admins("[ADMIN_LOOKUPFLW(revvie)] has been made into a revenant by an event.")
 	log_game("[key_name(revvie)] was spawned as a revenant by an event.")
 	spawned_mobs += revvie
 	return SUCCESSFUL_SPAWN

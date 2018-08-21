@@ -95,7 +95,7 @@
 				has_opaque_atom = TRUE
 				break
 
-/turf/Exited(var/atom/movable/Obj, var/atom/newloc)
+/turf/Exited(atom/movable/Obj, atom/newloc)
 	. = ..()
 
 	if (Obj && Obj.opacity)

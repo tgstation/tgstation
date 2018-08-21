@@ -20,8 +20,8 @@
 	addtimer(CALLBACK(src, .proc/emittercool), emittercd)
 	canmove = TRUE
 	density = TRUE
-	if(istype(card.loc, /obj/item/device/pda))
-		var/obj/item/device/pda/P = card.loc
+	if(istype(card.loc, /obj/item/pda))
+		var/obj/item/pda/P = card.loc
 		P.pai = null
 		P.visible_message("<span class='notice'>[src] ejects itself from [P]!</span>")
 	if(isliving(card.loc))
@@ -57,7 +57,7 @@
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = card
-	var/turf/T = get_turf(src)
+	var/turf/T = drop_location()
 	card.forceMove(T)
 	forceMove(card)
 	canmove = FALSE
@@ -103,10 +103,6 @@
 		set_light(0)
 		to_chat(src, "<span class='notice'>You disable your integrated light.</span>")
 
-/mob/living/silicon/pai/movement_delay()
-	. = ..()
-	. += 1 //A bit slower than humans, so they're easier to smash
-
 /mob/living/silicon/pai/mob_pickup(mob/living/L)
 	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, chassis, item_head_icon, item_lh_icon, item_rh_icon)
 	if(!L.put_in_hands(holder))
@@ -116,6 +112,6 @@
 
 /mob/living/silicon/pai/mob_try_pickup(mob/living/user)
 	if(!possible_chassis[chassis])
-		to_chat(user, "<span class='wraning'>[src]'s current form isn't able to be carried!</span>")
+		to_chat(user, "<span class='warning'>[src]'s current form isn't able to be carried!</span>")
 		return FALSE
 	return ..()

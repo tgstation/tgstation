@@ -13,7 +13,7 @@ RSF
 	opacity = 0
 	density = FALSE
 	anchored = FALSE
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	var/matter = 0
 	var/mode = 1
@@ -62,6 +62,7 @@ RSF
 	// Change mode
 
 /obj/item/rsf/afterattack(atom/A, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if (!(istype(A, /obj/structure/table) || isfloorturf(A)))
@@ -159,6 +160,7 @@ RSF
 		matter++
 
 /obj/item/cookiesynth/afterattack(atom/A, mob/user, proximity)
+	. = ..()
 	if(cooldown > world.time)
 		return
 	if(!proximity)
@@ -178,7 +180,7 @@ RSF
 	to_chat(user, "Fabricating Cookie..")
 	var/obj/item/reagent_containers/food/snacks/cookie/S = new /obj/item/reagent_containers/food/snacks/cookie(T)
 	if(toxin)
-		S.reagents.add_reagent("chloralhydrate2", 10)
+		S.reagents.add_reagent("chloralhydratedelayed", 10)
 	if (iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		R.cell.charge -= 100

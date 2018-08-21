@@ -12,7 +12,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ad" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/machinery/newscaster/security_unit{
@@ -21,21 +21,21 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = -32
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "ae" = (
-/obj/structure/chair,
-/turf/open/floor/mineral/plastitanium/brig,
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "af" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_y = 24
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "ag" = (
 /obj/structure/table/reinforced,
@@ -67,7 +67,7 @@
 	},
 /area/shuttle/escape)
 "ak" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/machinery/status_display{
@@ -76,15 +76,14 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "al" = (
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "am" = (
 /obj/machinery/door/airlock/command{
 	name = "Emergency Recovery Airlock";
-	req_access = null;
 	req_access_txt = "19"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -135,7 +134,7 @@
 "ar" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "as" = (
 /obj/item/twohanded/required/kirbyplants{
@@ -172,7 +171,7 @@
 	name = "Holding Area";
 	req_access_txt = "2"
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "aw" = (
 /obj/machinery/ai_status_display,
@@ -233,7 +232,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = 26
 	},
@@ -241,7 +240,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aD" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/machinery/status_display{
@@ -254,7 +253,7 @@
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/escape)
 "aF" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
@@ -357,14 +356,14 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "aJ" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aK" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
@@ -380,13 +379,12 @@
 "aM" = (
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
-	req_access_txt = "0";
 	use_power = 0
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "aN" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
@@ -405,8 +403,7 @@
 /area/shuttle/escape)
 "aP" = (
 /obj/machinery/door/airlock/shuttle{
-	name = "Emergency Shuttle Airlock";
-	req_access_txt = "0"
+	name = "Emergency Shuttle Airlock"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -453,9 +450,7 @@
 /area/shuttle/escape)
 "aV" = (
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
-	name = "Escape Shuttle Infirmary";
-	req_access_txt = "0"
+	name = "Escape Shuttle Infirmary"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -490,7 +485,7 @@
 	pixel_x = -4;
 	pixel_y = 3
 	},
-/obj/item/device/healthanalyzer{
+/obj/item/healthanalyzer{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -514,7 +509,6 @@
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	pixel_x = -26;
-	req_access_txt = "0";
 	use_power = 0
 	},
 /turf/open/floor/plasteel/cmo,
@@ -526,7 +520,7 @@
 /obj/machinery/sleeper{
 	dir = 8
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = 26
 	},
@@ -563,17 +557,17 @@
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/storage/toolbox/emergency,
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_x = -6;
 	pixel_y = -2
 	},
 /obj/item/crowbar,
 /obj/item/wrench,
-/obj/item/device/radio,
+/obj/item/radio,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -612,7 +606,7 @@
 /obj/structure/sign/warning/nosmoking/circle{
 	pixel_x = -32
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_y = -26
 	},

@@ -1,9 +1,6 @@
-/obj/item/disk/surgery/pacification
-	desc = "The disk provides instructions on how to suppress violence by manipulating the patient's brain."
-	surgeries = list(/datum/surgery/advanced/pacify)
-
 /datum/surgery/advanced/pacify
-	name = "violence neutralization"
+	name = "Pacification"
+	desc = "A surgical procedure which permanently inhibits the aggression center of the brain, making the patient unwilling to cause direct harm."
 	steps = list(/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,
 				/datum/surgery_step/saw,
@@ -12,7 +9,7 @@
 				/datum/surgery_step/close)
 
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	possible_locs = list("head")
+	possible_locs = list(BODY_ZONE_HEAD)
 	requires_bodypart_type = 0
 
 /datum/surgery/advanced/pacify/can_start(mob/user, mob/living/carbon/target)
@@ -23,7 +20,7 @@
 
 /datum/surgery_step/pacify
 	name = "rewire brain"
-	implements = list(/obj/item/hemostat = 100, /obj/item/screwdriver = 35, /obj/item/pen = 15)
+	implements = list(/obj/item/hemostat = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
 	time = 40
 
 /datum/surgery_step/pacify/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

@@ -43,7 +43,7 @@
 					to_chat(src, "<span class='revenbignotice'>Ah, the perfect soul. [target] will yield massive amounts of essence to you.</span>")
 			if(do_after(src, rand(15, 25), 0, target)) //how about now
 				if(!target.stat)
-					to_chat(src, "<span class='revenwarning'>[target.p_they(TRUE)] [target.p_are()] now powerful enough to fight off your draining.</span>")
+					to_chat(src, "<span class='revenwarning'>[target.p_theyre(TRUE)] now powerful enough to fight off your draining.</span>")
 					to_chat(target, "<span class='boldannounce'>You feel something tugging across your body before subsiding.</span>")
 					draining = 0
 					essence_drained = 0
@@ -54,6 +54,12 @@
 				reveal(46)
 				stun(46)
 				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, [target.p_their()] skin turning an ashy gray.</span>")
+				if(target.anti_magic_check(FALSE, TRUE))
+					to_chat(src, "<span class='revenminor'>Something's wrong! [target] seems to be resisting the siphoning, leaving you vulnerable!</span>")
+					target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
+											   "<span class='revenwarning'>Violets lights, dancing in your vision, receding--</span>")
+					draining = FALSE
+					return
 				var/datum/beam/B = Beam(target,icon_state="drain_life",time=INFINITY)
 				if(do_after(src, 46, 0, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
 					change_essence_amount(essence_drained, FALSE, target)
@@ -70,13 +76,13 @@
 					drained_mobs.Add(target)
 					target.death(0)
 				else
-					to_chat(src, "<span class='revenwarning'>[target ? "[target] has":"They have"] been drawn out of your grasp. The link has been broken.</span>")
+					to_chat(src, "<span class='revenwarning'>[target ? "[target] has":"[target.p_theyve(TRUE)]"] been drawn out of your grasp. The link has been broken.</span>")
 					if(target) //Wait, target is WHERE NOW?
 						target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
 											   "<span class='revenwarning'>Violets lights, dancing in your vision, receding--</span>")
 				qdel(B)
 			else
-				to_chat(src, "<span class='revenwarning'>You are not close enough to siphon [target ? "[target]'s":"their"] soul. The link has been broken.</span>")
+				to_chat(src, "<span class='revenwarning'>You are not close enough to siphon [target ? "[target]'s":"[target.p_their()]"] soul. The link has been broken.</span>")
 	draining = FALSE
 	essence_drained = 0
 
@@ -108,9 +114,10 @@
 		if(!msg)
 			charge_counter = charge_max
 			return
-		log_talk(user,"RevenantTransmit: [key_name(user)]->[key_name(M)] : [msg]",LOGSAY)
+		log_directed_talk(user, M, msg, LOG_SAY, "revenant whisper")
 		to_chat(user, "<span class='revenboldnotice'>You transmit to [M]:</span> <span class='revennotice'>[msg]</span>")
-		to_chat(M, "<span class='revenboldnotice'>You hear something behind you talking...</span> <span class='revennotice'>[msg]</span>")
+		if(!M.anti_magic_check(FALSE, TRUE)) //hear no evil
+			to_chat(M, "<span class='revenboldnotice'>You hear something behind you talking...</span> <span class='revennotice'>[msg]</span>")
 		for(var/ded in GLOB.dead_mob_list)
 			if(!isobserver(ded))
 				continue
@@ -216,7 +223,8 @@
 		if(M == user)
 			continue
 		L.Beam(M,icon_state="purple_lightning",time=5)
-		M.electrocute_act(shock_damage, L, safety=1)
+		if(!M.anti_magic_check(FALSE, TRUE))
+			M.electrocute_act(shock_damage, L, safety=TRUE)
 		do_sparks(4, FALSE, M)
 		playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 
@@ -282,7 +290,7 @@
 	unlock_amount = 200
 	action_icon_state = "malfunction"
 
-//A note to future coders: do not replace this with an EMP because it will wreck malf AIs and gang dominators and everyone will hate you.
+//A note to future coders: do not replace this with an EMP because it will wreck malf AIs and everyone will hate you.
 /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
@@ -298,11 +306,13 @@
 	for(var/mob/living/carbon/human/human in T)
 		if(human == user)
 			continue
+		if(human.anti_magic_check(FALSE, TRUE))
+			continue
 		to_chat(human, "<span class='revenwarning'>You feel [pick("your sense of direction flicker out", "a stabbing pain in your head", "your mind fill with static")].</span>")
 		new /obj/effect/temp_visual/revenant(human.loc)
 		human.emp_act(EMP_HEAVY)
 	for(var/obj/thing in T)
-		if(istype(thing, /obj/machinery/dominator) || istype(thing, /obj/machinery/power/apc) || istype(thing, /obj/machinery/power/smes)) //Doesn't work on dominators, SMES and APCs, to prevent kekkery
+		if(istype(thing, /obj/machinery/power/apc) || istype(thing, /obj/machinery/power/smes)) //Doesn't work on SMES and APCs, to prevent kekkery
 			continue
 		if(prob(20))
 			if(prob(50))
@@ -336,6 +346,8 @@
 	for(var/mob/living/mob in T)
 		if(mob == user)
 			continue
+		if(mob.anti_magic_check(FALSE, TRUE))
+			continue
 		new /obj/effect/temp_visual/revenant(mob.loc)
 		if(iscarbon(mob))
 			if(ishuman(mob))
@@ -343,12 +355,12 @@
 				if(H.dna && H.dna.species)
 					H.dna.species.handle_hair(H,"#1d2953") //will be reset when blight is cured
 				var/blightfound = FALSE
-				for(var/datum/disease/revblight/blight in H.viruses)
+				for(var/datum/disease/revblight/blight in H.diseases)
 					blightfound = TRUE
 					if(blight.stage < 5)
 						blight.stage++
 				if(!blightfound)
-					H.AddDisease(new /datum/disease/revblight)
+					H.ForceContractDisease(new /datum/disease/revblight(), FALSE, TRUE)
 					to_chat(H, "<span class='revenminor'>You feel [pick("suddenly sick", "a surge of nausea", "like your skin is <i>wrong</i>")].</span>")
 			else
 				if(mob.reagents)

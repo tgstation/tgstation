@@ -6,7 +6,7 @@
 	name = "Computer Design (Express Supply Console)"//shes beautiful
 	desc = "Allows for the construction of circuit boards used to build an Express Supply Console."//who?
 	id = "cargoexpress"//the coder reading this
-	build_type = PROTOLATHE
+	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000)
 	build_path = /obj/item/circuitboard/computer/cargo/express
 	category = list("Mining Designs")
@@ -14,7 +14,7 @@
 
 /datum/design/bluespace_pod
 	name = "Supply Drop Pod Upgrade Disk"
-	desc = "Allows the Cargo Express Console to call down the Bluespace Drop Pod, greatly increasing user saftey."//who?
+	desc = "Allows the Cargo Express Console to call down the Bluespace Drop Pod, greatly increasing user safety."//who?
 	id = "bluespace_pod"//the coder reading this
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 1000)

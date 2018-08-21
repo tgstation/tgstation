@@ -41,7 +41,7 @@
 	else //something wrong
 		name = "[initial(name)]"
 	update_icon()
-	if(user.get_item_by_slot(slot_back) == src)
+	if(user.get_item_by_slot(SLOT_BACK) == src)
 		user.update_inv_back()
 	else
 		user.update_inv_hands()
@@ -67,7 +67,7 @@
 		to_chat(user, "<span class='warning'>You need your other hand to be empty!</span>")
 		return
 	if(user.get_num_arms() < 2)
-		to_chat(user, "<span class='warning'>You don't have enough hands.</span>")
+		to_chat(user, "<span class='warning'>You don't have enough intact hands.</span>")
 		return
 	wielded = 1
 	if(force_wielded)
@@ -121,7 +121,7 @@
 	name = "offhand"
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 = ABSTRACT_1
+	item_flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/item/twohanded/offhand/Destroy()
@@ -178,9 +178,9 @@
 	if(H != null)
 		to_chat(user, "<span class='notice'>[src] is too cumbersome to carry in one hand!</span>")
 		return
-	if(src.loc != user)
+	if(loc != user)
 		wield(user)
-	..()
+	. = ..()
 
 /obj/item/twohanded/required/equipped(mob/user, slot)
 	..()
@@ -191,7 +191,7 @@
 			return
 		qdel(O)
 		return
-	if(slot == slot_hands)
+	if(slot == SLOT_HANDS)
 		wield(user)
 	else
 		unwield(user)
@@ -224,7 +224,7 @@
 	force = 5
 	throwforce = 15
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	force_unwielded = 5
 	force_wielded = 24
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
@@ -233,6 +233,10 @@
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
 	resistance_flags = FIRE_PROOF
+
+/obj/item/twohanded/fireaxe/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 100, 80, 0 , hitsound) //axes are not known for being precision butchering tools
 
 /obj/item/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
@@ -243,6 +247,7 @@
 	return (BRUTELOSS)
 
 /obj/item/twohanded/fireaxe/afterattack(atom/A, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(wielded) //destroys windows and grilles in one hit
@@ -290,7 +295,7 @@
 	if(wielded)
 		user.visible_message("<span class='suicide'>[user] begins spinning way too fast! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 
-		var/obj/item/bodypart/head/myhead = user.get_bodypart("head")//stole from chainsaw code
+		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)//stole from chainsaw code
 		var/obj/item/organ/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
 		B.vital = FALSE//this cant possibly be a good idea
 		var/randdir
@@ -334,7 +339,7 @@
 		icon_state = "dualsaber[item_color][wielded]"
 	else
 		icon_state = "dualsaber0"
-	SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /obj/item/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
@@ -413,9 +418,9 @@
 	var/in_mouth = ""
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		if(C.wear_mask == src)
-			in_mouth = ", barely missing their nose"
-	. = "<span class='warning'>[user] swings [user.p_their()] [src][in_mouth]. [user.p_they()] light[user.p_s()] [A] in the process.</span>"
+		if(C.wear_mask)
+			in_mouth = ", barely missing [user.p_their()] nose"
+	. = "<span class='warning'>[user] swings [user.p_their()] [name][in_mouth]. [user.p_they(TRUE)] light[user.p_s()] [user.p_their()] [A.name] in the process.</span>"
 	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 	add_fingerprint(user)
 	// Light your candles while spinning around the room
@@ -434,7 +439,7 @@
 	possible_colors = list("purple")
 
 /obj/item/twohanded/dualsaber/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
+	if(istype(W, /obj/item/multitool))
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user, "<span class='warning'>2XRNBW_ENGAGE</span>")
@@ -454,7 +459,7 @@
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	force = 10
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	force_unwielded = 10
 	force_wielded = 18
 	throwforce = 20
@@ -469,6 +474,10 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
 	var/obj/item/grenade/explosive = null
 	var/war_cry = "AAAAARGH!!!"
+
+/obj/item/twohanded/spear/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
 
 /obj/item/twohanded/spear/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -497,6 +506,7 @@
 		icon_state = "spearglass[wielded]"
 
 /obj/item/twohanded/spear/afterattack(atom/movable/AM, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(isopenturf(AM)) //So you can actually melee with it
@@ -562,11 +572,15 @@
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	var/on = FALSE
 
+/obj/item/twohanded/required/chainsaw/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 30, 100, 0, 'sound/weapons/chainsawhit.ogg', TRUE)
+
 /obj/item/twohanded/required/chainsaw/suicide_act(mob/living/carbon/user)
 	if(on)
 		user.visible_message("<span class='suicide'>[user] begins to tear [user.p_their()] head off with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		playsound(src, 'sound/weapons/chainsawhit.ogg', 100, 1)
-		var/obj/item/bodypart/head/myhead = user.get_bodypart("head")
+		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
 		if(myhead)
 			myhead.dismember()
 	else
@@ -580,8 +594,10 @@
 	force = on ? force_on : initial(force)
 	throwforce = on ? force_on : initial(force)
 	icon_state = "chainsaw_[on ? "on" : "off"]"
+	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
+	butchering.butchering_enabled = on
 
-	if(hitsound == "swing_hit")
+	if(on)
 		hitsound = 'sound/weapons/chainsawhit.ogg'
 	else
 		hitsound = "swing_hit"
@@ -621,7 +637,7 @@
 	attack_verb = list("gored")
 
 /obj/item/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
-	..()
+	. = ..()
 	if(!proximity)
 		return
 	user.faction |= "greytide([REF(user)])"
@@ -691,17 +707,18 @@
 			"<span class='warning'>\"As you pick up [src] your arms ignite, reminding you of all your past sins.\"</span>")
 		if(ishuman(U))
 			var/mob/living/carbon/human/H = U
-			H.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
+			H.apply_damage(rand(force/2, force), BURN, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		else
 			U.adjustFireLoss(rand(force/2,force))
 
 /obj/item/twohanded/pitchfork/demonic/attack(mob/target, mob/living/carbon/human/user)
 	if(user.mind && user.owns_soul() && !is_devil(user))
 		to_chat(user, "<span class ='warning'>[src] burns in your hands.</span>")
-		user.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
+		user.apply_damage(rand(force/2, force), BURN, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 	..()
 
 /obj/item/twohanded/pitchfork/demonic/ascended/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	if(!proximity || !wielded)
 		return
 	if(iswallturf(target))
@@ -711,7 +728,6 @@
 		W.break_wall()
 		W.ScrapeAway()
 		return
-	..()
 
 //HF blade
 
@@ -730,8 +746,12 @@
 	sharpness = IS_SHARP
 	attack_verb = list("cut", "sliced", "diced")
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/twohanded/vibro_weapon/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 20, 105)
 
 /obj/item/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)
@@ -773,7 +793,7 @@
 	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
 	force = 11
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	force_unwielded = 11
 	force_wielded = 20					//I have no idea how to balance
 	throwforce = 22
@@ -786,3 +806,58 @@
 
 /obj/item/twohanded/bonespear/update_icon()
 	icon_state = "bone_spear[wielded]"
+
+/obj/item/twohanded/binoculars
+	name = "binoculars"
+	desc = "Used for long-distance surveillance."
+	item_state = "binoculars"
+	icon_state = "binoculars"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_SMALL
+	var/datum/component/mobhook
+	var/zoom_out_amt = 6
+	var/zoom_amt = 10
+
+/obj/item/twohanded/binoculars/wield(mob/user)
+	. = ..()
+	if(!wielded)
+		return
+	if(QDELETED(mobhook))
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/unwield, user)))	
+	else
+		user.TakeComponent(mobhook)
+	user.visible_message("[user] holds [src] up to [user.p_their()] eyes.","You hold [src] up to your eyes.")
+	item_state = "binoculars_wielded"
+	user.regenerate_icons()
+	if(!user?.client)
+		return
+	var/client/C = user.client
+	var/_x = 0
+	var/_y = 0
+	switch(user.dir)
+		if(NORTH)
+			_y = zoom_amt
+		if(EAST)
+			_x = zoom_amt
+		if(SOUTH)
+			_y = -zoom_amt
+		if(WEST)
+			_x = -zoom_amt
+	C.change_view(world.view + zoom_out_amt)
+	C.pixel_x = world.icon_size*_x
+	C.pixel_y = world.icon_size*_y
+
+/obj/item/twohanded/binoculars/unwield(mob/user)
+	. = ..()
+	mobhook.RemoveComponent()
+	user.visible_message("[user] lowers [src].","You lower [src].")
+	item_state = "binoculars"
+	user.regenerate_icons()
+	if(user && user.client)
+		user.regenerate_icons()
+		var/client/C = user.client
+		C.change_view(CONFIG_GET(string/default_view))
+		user.client.pixel_x = 0
+		user.client.pixel_y = 0

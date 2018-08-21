@@ -21,11 +21,17 @@
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 "f" = (
-/obj/machinery/plantgenes/seedvault,
+/obj/machinery/plantgenes/seedvault{
+	pixel_y = 6
+	},
+/obj/structure/table/wood,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 "g" = (
 /obj/structure/table/wood,
+/obj/machinery/smartfridge/disks{
+	pixel_y = 2
+	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 "h" = (
@@ -61,6 +67,9 @@
 "m" = (
 /obj/machinery/door/airlock/external,
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 "n" = (
@@ -151,6 +160,9 @@
 /area/ruin/powered/seedvault)
 "z" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 "B" = (

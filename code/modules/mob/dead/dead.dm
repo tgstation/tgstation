@@ -6,20 +6,20 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 
 /mob/dead/Initialize()
-	if(initialized)
+	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	initialized = TRUE
+	flags_1 |= INITIALIZED_1
 	tag = "mob_[next_mob_id++]"
 	GLOB.mob_list += src
 
 	prepare_huds()
 
-	if(length(CONFIG_GET(keyed_string_list/cross_server)))
+	if(length(CONFIG_GET(keyed_list/cross_server)))
 		verbs += /mob/dead/proc/server_hop
 	set_focus(src)
 	return INITIALIZE_HINT_NORMAL
 
-/mob/dead/dust()	//ghosts can't be vaporised.
+/mob/dead/dust(just_ash, drop_items, force)	//ghosts can't be vaporised.
 	return
 
 /mob/dead/gib()		//ghosts can't be gibbed.
@@ -59,7 +59,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	set desc= "Jump to the other server"
 	if(notransform)
 		return
-	var/list/csa = CONFIG_GET(keyed_string_list/cross_server)
+	var/list/csa = CONFIG_GET(keyed_list/cross_server)
 	var/pick
 	switch(csa.len)
 		if(0)
@@ -72,7 +72,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 	if(!pick)
 		return
-	
+
 	var/addr = csa[pick]
 
 	if(alert(src, "Jump to server [pick] ([addr])?", "Server Hop", "Yes", "No") != "Yes")

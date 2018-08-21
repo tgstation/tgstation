@@ -12,17 +12,23 @@
 	var/list/datum/techweb_node/prerequisites = list()		//Assoc list id = datum
 	var/list/datum/techweb_node/unlocks = list()			//CALCULATED FROM OTHER NODE'S PREREQUISITES. Assoc list id = datum.
 	var/list/datum/design/designs = list()					//Assoc list id = datum
-	var/list/boost_item_paths = list()		//Associative list, path = point_value.
+	var/list/boost_item_paths = list()		//Associative list, path = list(point type = point_value).
 	var/autounlock_by_boost = TRUE			//boosting this will autounlock this node.
 	var/export_price = 0					//Cargo export price.
-	var/research_cost = 0					//Point cost to research.
-	var/actual_cost = 0
+	var/list/research_costs = 0					//Point cost to research. type = amount
 	var/category = "Misc"				//Category
-
-/datum/techweb_node/New()
-	actual_cost = research_cost
 
 /datum/techweb_node/proc/get_price(datum/techweb/host)
 	if(host)
-		actual_cost = research_cost - host.boosted_nodes[src]
-	return actual_cost
+		var/list/actual_costs = research_costs
+		if(host.boosted_nodes[src])
+			var/list/L = host.boosted_nodes[src]
+			for(var/i in L)
+				if(actual_costs[i])
+					actual_costs[i] -= L[i]
+		return actual_costs
+	else
+		return research_costs
+
+/datum/techweb_node/proc/price_display(datum/techweb/TN)
+	return techweb_point_display_generic(get_price(TN))

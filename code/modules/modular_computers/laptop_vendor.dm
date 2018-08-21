@@ -6,12 +6,11 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "robotics"
 	layer = 2.9
-	anchored = TRUE
 	density = TRUE
 
 	// The actual laptop/tablet
-	var/obj/item/device/modular_computer/laptop/fabricated_laptop = null
-	var/obj/item/device/modular_computer/tablet/fabricated_tablet = null
+	var/obj/item/modular_computer/laptop/fabricated_laptop = null
+	var/obj/item/modular_computer/tablet/fabricated_tablet = null
 
 	// Utility vars
 	var/state = 0 							// 0: Select device type, 1: Select loadout, 2: Payment, 3: Thankyou screen
@@ -52,7 +51,7 @@
 	if(devtype == 1) 		// Laptop, generally cheaper to make it accessible for most station roles
 		var/obj/item/computer_hardware/battery/battery_module = null
 		if(fabricate)
-			fabricated_laptop = new /obj/item/device/modular_computer/laptop/buildable(src)
+			fabricated_laptop = new /obj/item/modular_computer/laptop/buildable(src)
 			fabricated_laptop.install_component(new /obj/item/computer_hardware/battery)
 			battery_module = fabricated_laptop.all_components[MC_CELL]
 		total_price = 99
@@ -222,23 +221,17 @@
 			return 1
 	return 0
 
-/obj/machinery/lapvend/attack_hand(mob/user)
-	ui_interact(user)
-
 /obj/machinery/lapvend/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	if(stat & (BROKEN | NOPOWER | MAINT))
 		if(ui)
 			ui.close()
 		return 0
 
-
-
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
 		ui = new(user, src, ui_key, "computer_fabricator", "Personal Computer Vendor", 500, 400, state = state)
 		ui.open()
 		ui.set_autoupdate(state = 1)
-
 
 /obj/machinery/lapvend/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/stack/spacecash))
@@ -250,9 +243,7 @@
 		visible_message("<span class='info'><span class='name'>[usr]</span> inserts [c.value] credits into [src].</span>")
 		qdel(c)
 		return
-
 	return ..()
-
 
 // Simplified payment processing, returns 1 on success.
 /obj/machinery/lapvend/proc/process_payment()

@@ -4,16 +4,15 @@
 	icon_state = "pipe_d"
 	desc = "Dispenses countless types of pipes. Very useful if you need pipes."
 	density = TRUE
-	anchored = TRUE
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_OFFLINE
 	var/wait = 0
 	var/piping_layer = PIPING_LAYER_DEFAULT
 
 /obj/machinery/pipedispenser/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/pipedispenser/attack_hand(mob/user)
-	if(..())
-		return 1
+/obj/machinery/pipedispenser/ui_interact(mob/user)
+	. = ..()
 	var/dat = "PIPING LAYER: <A href='?src=[REF(src)];layer_down=1'>--</A><b>[piping_layer]</b><A href='?src=[REF(src)];layer_up=1'>++</A><BR>"
 
 	var/recipes = GLOB.atmos_pipe_recipes
@@ -43,6 +42,8 @@
 	if(href_list["makepipe"])
 		if(wait < world.time)
 			var/p_type = text2path(href_list["makepipe"])
+			if (!verify_recipe(GLOB.atmos_pipe_recipes, p_type))
+				return
 			var/p_dir = text2num(href_list["dir"])
 			var/obj/item/pipe/P = new (loc, p_type, p_dir)
 			P.setPipingLayer(piping_layer)
@@ -67,6 +68,15 @@
 	else
 		return ..()
 
+/obj/machinery/pipedispenser/proc/verify_recipe(recipes, path)
+	for(var/category in recipes)
+		var/list/cat_recipes = recipes[category]
+		for(var/i in cat_recipes)
+			var/datum/pipe_info/info = i
+			if (path == info.id)
+				return TRUE
+	return FALSE
+
 /obj/machinery/pipedispenser/wrench_act(mob/living/user, obj/item/I)
 	if(default_unfasten_wrench(user, I, 40))
 		user << browse(null, "window=pipedispenser")
@@ -80,7 +90,6 @@
 	icon_state = "pipe_d"
 	desc = "Dispenses pipes that will ultimately be used to move trash around."
 	density = TRUE
-	anchored = TRUE
 
 
 //Allow you to drag-drop disposal pipes and transit tubes into it
@@ -99,9 +108,7 @@
 
 	qdel(pipe)
 
-/obj/machinery/pipedispenser/disposal/attack_hand(mob/user)
-	if(..())
-		return 1
+/obj/machinery/pipedispenser/disposal/interact(mob/user)
 
 	var/dat = ""
 	var/recipes = GLOB.disposal_pipe_recipes
@@ -128,6 +135,8 @@
 	if(href_list["dmake"])
 		if(wait < world.time)
 			var/p_type = text2path(href_list["dmake"])
+			if (!verify_recipe(GLOB.disposal_pipe_recipes, p_type))
+				return
 			var/obj/structure/disposalconstruct/C = new (loc, p_type)
 
 			if(!C.can_place())
@@ -149,11 +158,8 @@
 	icon_state = "pipe_d"
 	density = TRUE
 	desc = "Dispenses pipes that will move beings around."
-	anchored = TRUE
 
-/obj/machinery/pipedispenser/disposal/transit_tube/attack_hand(mob/user)
-	if(..())
-		return 1
+/obj/machinery/pipedispenser/disposal/transit_tube/interact(mob/user)
 
 	var/dat = {"<B>Transit Tubes:</B><BR>
 <A href='?src=[REF(src)];tube=[TRANSIT_TUBE_STRAIGHT]'>Straight Tube</A><BR>

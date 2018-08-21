@@ -43,11 +43,23 @@
 	var/datum/ai_laws/master = connected_ai ? connected_ai.laws : null
 	var/temp
 	if (master)
+		laws.devillaws.len = master.devillaws.len
+		for (var/index = 1, index <= master.devillaws.len, index++)
+			temp = master.devillaws[index]
+			if (length(temp) > 0)
+				laws.devillaws[index] = temp
+
 		laws.ion.len = master.ion.len
 		for (var/index = 1, index <= master.ion.len, index++)
 			temp = master.ion[index]
 			if (length(temp) > 0)
 				laws.ion[index] = temp
+
+		laws.hacked.len = master.hacked.len
+		for (var/index = 1, index <= master.hacked.len, index++)
+			temp = master.hacked[index]
+			if (length(temp) > 0)
+				laws.hacked[index] = temp
 
 		if(master.zeroth_borg) //If the AI has a defined law zero specifically for its borgs, give it that one, otherwise give it the same one. --NEO
 			temp = master.zeroth_borg
@@ -66,4 +78,5 @@
 			temp = master.supplied[index]
 			if (length(temp) > 0)
 				laws.supplied[index] = temp
-	return
+
+	picturesync()

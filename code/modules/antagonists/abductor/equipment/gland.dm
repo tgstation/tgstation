@@ -105,7 +105,7 @@
 /obj/item/organ/heart/gland/heals/activate()
 	to_chat(owner, "<span class='notice'>You feel curiously revitalized.</span>")
 	owner.adjustToxLoss(-20, FALSE, TRUE)
-	owner.heal_bodypart_damage(20, 20, TRUE)
+	owner.heal_bodypart_damage(20, 20, 0, TRUE)
 	owner.adjustOxyLoss(-20)
 
 /obj/item/organ/heart/gland/slime
@@ -122,7 +122,7 @@
 	owner.grant_language(/datum/language/slime)
 
 /obj/item/organ/heart/gland/slime/activate()
-	to_chat(owner, "<span class='warning'>You feel nauseous!</span>")
+	to_chat(owner, "<span class='warning'>You feel nauseated!</span>")
 	owner.vomit(20)
 
 	var/mob/living/simple_animal/slime/Slime = new(get_turf(owner), "grey")
@@ -153,7 +153,7 @@
 				H.confused += 15
 				H.adjustBrainLoss(10, 160)
 			if(3)
-				H.hallucination += 80
+				H.hallucination += 60
 
 /obj/item/organ/heart/gland/pop
 	cooldown_low = 900
@@ -194,15 +194,12 @@
 	to_chat(owner, "<span class='warning'>You feel sick.</span>")
 	var/datum/disease/advance/A = random_virus(pick(2,6),6)
 	A.carrier = TRUE
-	owner.viruses += A
-	A.affected_mob = owner
-	owner.med_hud_set_status()
+	owner.ForceContractDisease(A, FALSE, TRUE)
 
 /obj/item/organ/heart/gland/viral/proc/random_virus(max_symptoms, max_level)
-	if(max_symptoms > SYMPTOM_LIMIT)
-		max_symptoms = SYMPTOM_LIMIT
-	var/datum/disease/advance/A = new(FALSE, null)
-	A.symptoms = list()
+	if(max_symptoms > VIRUS_SYMPTOM_LIMIT)
+		max_symptoms = VIRUS_SYMPTOM_LIMIT
+	var/datum/disease/advance/A = new /datum/disease/advance()
 	var/list/datum/symptom/possible_symptoms = list()
 	for(var/symptom in subtypesof(/datum/symptom))
 		var/datum/symptom/S = symptom
@@ -219,7 +216,7 @@
 	A.Refresh() //just in case someone already made and named the same disease
 	return A
 
-/obj/item/organ/heart/gland/trauma //TODO : Replace with something more interesting
+/obj/item/organ/heart/gland/trauma
 	cooldown_low = 800
 	cooldown_high = 1200
 	uses = 5
@@ -230,12 +227,12 @@
 /obj/item/organ/heart/gland/trauma/activate()
 	to_chat(owner, "<span class='warning'>You feel a spike of pain in your head.</span>")
 	if(prob(33))
-		owner.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_LOBOTOMY)
+		owner.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, rand(TRAUMA_RESILIENCE_BASIC, TRAUMA_RESILIENCE_LOBOTOMY))
 	else
 		if(prob(20))
-			owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
+			owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, rand(TRAUMA_RESILIENCE_BASIC, TRAUMA_RESILIENCE_LOBOTOMY))
 		else
-			owner.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_LOBOTOMY)
+			owner.gain_trauma_type(BRAIN_TRAUMA_MILD, rand(TRAUMA_RESILIENCE_BASIC, TRAUMA_RESILIENCE_LOBOTOMY))
 
 /obj/item/organ/heart/gland/spiderman
 	cooldown_low = 450
@@ -275,10 +272,10 @@
 
 /obj/item/organ/heart/gland/electric/Insert(mob/living/carbon/M, special = 0)
 	..()
-	owner.add_trait(TRAIT_SHOCKIMMUNE, "abductor_gland")
+	owner.add_trait(TRAIT_SHOCKIMMUNE, ORGAN_TRAIT)
 
 /obj/item/organ/heart/gland/electric/Remove(mob/living/carbon/M, special = 0)
-	owner.remove_trait(TRAIT_SHOCKIMMUNE, "abductor_gland")
+	owner.remove_trait(TRAIT_SHOCKIMMUNE, ORGAN_TRAIT)
 	..()
 
 /obj/item/organ/heart/gland/electric/activate()
@@ -288,7 +285,7 @@
 	addtimer(CALLBACK(src, .proc/zap), rand(30, 100))
 
 /obj/item/organ/heart/gland/electric/proc/zap()
-	tesla_zap(owner, 4, 8000, FALSE, TRUE)
+	tesla_zap(owner, 4, 8000, TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE | TESLA_MOB_STUN)
 	playsound(get_turf(owner), 'sound/magic/lightningshock.ogg', 50, 1)
 
 /obj/item/organ/heart/gland/chem

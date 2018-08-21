@@ -35,6 +35,9 @@
 	return ..()
 
 /obj/machinery/particle_accelerator/control_box/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(construction_state == PA_CONSTRUCTION_COMPLETE)
 		interact(user)
 	else if(construction_state == PA_CONSTRUCTION_PANEL_OPEN)
@@ -116,9 +119,9 @@
 		strength++
 		strength_change()
 
-		message_admins("PA Control Computer increased to [strength] by [ADMIN_LOOKUPFLW(usr)] in [ADMIN_COORDJMP(src)]",0,1)
-		log_game("PA Control Computer increased to [strength] by [key_name(usr)] in [COORD(src)]")
-		investigate_log("increased to <font color='red'>[strength]</font> by [key_name(usr)]", INVESTIGATE_SINGULO)
+		message_admins("PA Control Computer increased to [strength] by [ADMIN_LOOKUPFLW(usr)] in [ADMIN_VERBOSEJMP(src)]")
+		log_game("PA Control Computer increased to [strength] by [key_name(usr)] in [AREACOORD(src)]")
+		investigate_log("increased to <font color='red'>[strength]</font> by [key_name(usr)] at [AREACOORD(src)]", INVESTIGATE_SINGULO)
 
 
 /obj/machinery/particle_accelerator/control_box/proc/remove_strength(s)
@@ -126,9 +129,9 @@
 		strength--
 		strength_change()
 
-		message_admins("PA Control Computer decreased to [strength] by [ADMIN_LOOKUPFLW(usr)] in [ADMIN_COORDJMP(src)]",0,1)
-		log_game("PA Control Computer decreased to [strength] by [key_name(usr)] in [COORD(src)]")
-		investigate_log("decreased to <font color='green'>[strength]</font> by [key_name(usr)]", INVESTIGATE_SINGULO)
+		message_admins("PA Control Computer decreased to [strength] by [ADMIN_LOOKUPFLW(usr)] in [ADMIN_VERBOSEJMP(src)]")
+		log_game("PA Control Computer decreased to [strength] by [key_name(usr)] in [AREACOORD(src)]")
+		investigate_log("decreased to <font color='green'>[strength]</font> by [key_name(usr)] at [AREACOORD(src)]", INVESTIGATE_SINGULO)
 
 
 /obj/machinery/particle_accelerator/control_box/power_change()
@@ -203,9 +206,9 @@
 
 /obj/machinery/particle_accelerator/control_box/proc/toggle_power()
 	active = !active
-	investigate_log("turned [active?"<font color='green'>ON</font>":"<font color='red'>OFF</font>"] by [usr ? key_name(usr) : "outside forces"]", INVESTIGATE_SINGULO)
-	message_admins("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? key_name_admin(usr) : "outside forces"][ADMIN_QUE(usr)] [ADMIN_FLW(usr)] in [ADMIN_COORDJMP(src)]",0,1)
-	log_game("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? "[key_name(usr)]" : "outside forces"] in [COORD(src)]")
+	investigate_log("turned [active?"<font color='green'>ON</font>":"<font color='red'>OFF</font>"] by [usr ? key_name(usr) : "outside forces"] at [AREACOORD(src)]", INVESTIGATE_SINGULO)
+	message_admins("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? ADMIN_LOOKUPFLW(usr) : "outside forces"] in [ADMIN_VERBOSEJMP(src)]")
+	log_game("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? "[key_name(usr)]" : "outside forces"] at [AREACOORD(src)]")
 	if(active)
 		use_power = ACTIVE_POWER_USE
 		for(var/CP in connected_parts)
@@ -223,13 +226,13 @@
 	return 1
 
 
-/obj/machinery/particle_accelerator/control_box/interact(mob/user)
+/obj/machinery/particle_accelerator/control_box/ui_interact(mob/user)
+	. = ..()
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
 		if(!issilicon(user))
 			user.unset_machine()
 			user << browse(null, "window=pacontrol")
 			return
-	user.set_machine(src)
 
 	var/dat = ""
 	dat += "<A href='?src=[REF(src)];close=1'>Close</A><BR><BR>"

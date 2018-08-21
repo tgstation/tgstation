@@ -9,7 +9,7 @@
 	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
 	var/inhand_overlay //If applicable, this overlay will be applied to the slab's inhand
 
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 
 	var/busy //If the slab is currently being used by something
@@ -36,10 +36,11 @@
 	speed_multiplier = 0
 	no_cost = TRUE
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clockwork/slab/debug/attack_hand(mob/living/user)
-	..()
 	if(!is_servant_of_ratvar(user))
 		add_servant_of_ratvar(user)
+	return ..()
 
 /obj/item/clockwork/slab/cyborg //three scriptures, plus a spear and fabricator
 	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture."
@@ -143,8 +144,8 @@
 		playsound(get_turf(user), 'sound/weapons/sear.ogg', 50, 1)
 		user.dropItemToGround(src)
 		user.emote("scream")
-		user.apply_damage(5, BURN, "l_arm")
-		user.apply_damage(5, BURN, "r_arm")
+		user.apply_damage(5, BURN, BODY_ZONE_L_ARM)
+		user.apply_damage(5, BURN, BODY_ZONE_R_ARM)
 		return 0
 	if(!is_servant_of_ratvar(user))
 		to_chat(user, "<span class='warning'>The information on [src]'s display shifts rapidly. After a moment, your head begins to pound, and you tear your eyes away.</span>")
@@ -277,7 +278,7 @@
 			dat += "<font color=#BE8700 size=3>Items</font><br>"
 			dat += "<font color=#BE8700><b>Slab:</b></font> A clockwork slab, a Servant's most important tool. You're holding one! Keep it safe and hidden.<br>"
 			dat += "<font color=#BE8700><b>Visor:</b></font> A judicial visor, which is a pair of glasses that can smite an area for a brief stun and delayed explosion.<br>"
-			dat += "<font color=#BE8700><b>Wraith Specs:</b></font> Wraith spectacles, which provide true sight (x-ray, night vision) but damage the wearer's eyes.<br>"
+			dat += "<font color=#BE8700><b>Wraith Specs:</b></font> Wraith spectacles, which provide true sight (X-ray, night vision) but damage the wearer's eyes.<br>"
 			dat += "<font color=#BE8700><b>Spear:</b></font> A Ratvarian spear, which is a very powerful melee weapon that produces Vitality.<br>"
 			dat += "<font color=#BE8700><b>Fabricator:</b></font> A replica fabricator, which converts objects into clockwork versions.<br><br>"
 			dat += "<font color=#BE8700 size=3>Constructs</font><br>"

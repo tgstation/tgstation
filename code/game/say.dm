@@ -29,7 +29,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	send_speech(message, 7, src, , spans, message_language=language)
 
 /atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
-	return
+	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
 
 /atom/movable/proc/can_speak()
 	return 1
@@ -166,7 +166,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/virtualspeaker
 	var/job
 	var/atom/movable/source
-	var/obj/item/device/radio/radio
+	var/obj/item/radio/radio
 
 INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 /atom/movable/virtualspeaker/Initialize(mapload, atom/movable/M, radio)

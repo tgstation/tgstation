@@ -33,7 +33,7 @@
 /area/shuttle/escape)
 "g" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "h" = (

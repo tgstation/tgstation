@@ -55,7 +55,7 @@
 	filling_color = "#90EE90"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
-
+	wine_power = 20
 
 // Sugarcane
 /obj/item/seeds/sugarcane
@@ -81,7 +81,7 @@
 	filling_color = "#FFD700"
 	bitesize_mod = 2
 	foodtype = VEGETABLES | SUGAR
-
+	distill_reagent = "rum"
 
 // Gatfruit
 /obj/item/seeds/gatfruit
@@ -112,6 +112,7 @@
 	bitesize_mod = 2
 	foodtype = FRUIT
 	tastes = list("gunpowder" = 1)
+	wine_power = 90 //It burns going down, too.
 
 //Cherry Bombs
 /obj/item/seeds/cherry/bomb
@@ -134,12 +135,12 @@
 	bitesize_mod = 2
 	volume = 125 //Gives enough room for the black powder at max potency
 	max_integrity = 40
+	wine_power = 80
 
 /obj/item/reagent_containers/food/snacks/grown/cherry_bomb/attack_self(mob/living/user)
-	var/area/A = get_area(user)
 	user.visible_message("<span class='warning'>[user] plucks the stem from [src]!</span>", "<span class='userdanger'>You pluck the stem from [src], which begins to hiss loudly!</span>")
-	message_admins("[ADMIN_LOOKUPFLW(user)] primed a cherry bomb for detonation at [A] [ADMIN_COORDJMP(user)]")
-	log_game("[key_name(user)] primed a cherry bomb for detonation at [A] [COORD(user)].")
+	message_admins("[ADMIN_LOOKUPFLW(user)] primed a cherry bomb for detonation at [ADMIN_VERBOSEJMP(user)]")
+	log_game("[key_name(user)] primed a cherry bomb for detonation at [AREACOORD(user)].")
 	prime()
 
 /obj/item/reagent_containers/food/snacks/grown/cherry_bomb/deconstruct(disassembled = TRUE)

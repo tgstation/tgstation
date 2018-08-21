@@ -242,7 +242,7 @@
 	},
 /area/awaymission/wildwest/mines)
 "bf" = (
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
@@ -279,7 +279,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "bn" = (
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/plating,
 /area/awaymission/wildwest/refine)
 "bo" = (
@@ -336,7 +336,7 @@
 	},
 /area/awaymission/wildwest/mines)
 "bz" = (
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -359,7 +359,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "bE" = (
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "bF" = (
@@ -367,7 +367,7 @@
 /area/awaymission/wildwest/mines)
 "bG" = (
 /obj/structure/table/wood,
-/obj/item/book/manual/barman_recipes,
+/obj/item/book/manual/wiki/barman_recipes,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "bH" = (
@@ -700,7 +700,7 @@
 "cD" = (
 /obj/structure/table/wood,
 /obj/item/clothing/gloves/color/yellow,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cE" = (
@@ -804,9 +804,7 @@
 /area/awaymission/wildwest/gov)
 "cT" = (
 /obj/effect/decal/remains/human,
-/mob/living/simple_animal/hostile/syndicate/ranged/space{
-	name = "Syndicate Commander"
-	},
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
 /turf/open/floor/plating,
 /area/awaymission/wildwest/refine)
 "cU" = (
@@ -1076,8 +1074,7 @@
 /area/awaymission/wildwest/mines)
 "dO" = (
 /obj/structure/chair/comfy/beige{
-	dir = 1;
-	icon_state = "comfychair"
+	dir = 1
 	},
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
@@ -1311,7 +1308,7 @@
 	},
 /area/awaymission/wildwest/mines)
 "ew" = (
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "ex" = (
@@ -1331,16 +1328,8 @@
 	icon_state = "ironsand4"
 	},
 /area/awaymission/wildwest/gov)
-"ez" = (
-/obj/machinery/mineral/input,
-/turf/open/floor/plasteel,
-/area/awaymission/wildwest/refine)
 "eA" = (
 /obj/machinery/mineral/mint,
-/turf/open/floor/plasteel,
-/area/awaymission/wildwest/refine)
-"eB" = (
-/obj/machinery/mineral/output,
 /turf/open/floor/plasteel,
 /area/awaymission/wildwest/refine)
 "eC" = (
@@ -28800,7 +28789,7 @@ aG
 aG
 aG
 et
-ez
+eu
 eu
 eu
 eu
@@ -29314,7 +29303,7 @@ aW
 aW
 aW
 et
-eB
+eu
 eu
 eu
 eu

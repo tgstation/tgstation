@@ -3,7 +3,7 @@
 	weight = 3
 	typepath = /datum/round_event/wizard/ghost
 	max_occurrences = 1
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/ghost/start()
 	var/msg = "<span class='warning'>You suddenly feel extremely obvious...</span>"
@@ -17,7 +17,7 @@
 	weight = 2
 	typepath = /datum/round_event/wizard/possession
 	max_occurrences = 5
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/possession/start()
 	for(var/mob/dead/observer/G in GLOB.player_list)

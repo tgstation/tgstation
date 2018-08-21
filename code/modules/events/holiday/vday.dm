@@ -10,7 +10,7 @@
 	typepath = /datum/round_event/valentines
 	weight = -1							//forces it to be called, regardless of weight
 	max_occurrences = 1
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/valentines/start()
 	..()
@@ -160,7 +160,7 @@
                 "A heart-shaped candy that reads: ERP",
                 "A heart-shaped candy that reads: LEWD",
                 "A heart-shaped candy that reads: LUSTY",
-                "A heart-shaped candy that reads: SPESS LOVE"
+                "A heart-shaped candy that reads: SPESS LOVE",
                 "A heart-shaped candy that reads: AYY LMAO",
                 "A heart-shaped candy that reads: TABLE ME",
                 "A heart-shaped candy that reads: HAND CUFFS",

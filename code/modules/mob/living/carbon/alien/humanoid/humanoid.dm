@@ -5,6 +5,7 @@
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
 	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 	limb_destroyer = 1
+	hud_type = /datum/hud/alien
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/caste = ""
@@ -25,16 +26,8 @@
 	AddAbility(new/obj/effect/proc_holder/alien/regurgitate(null))
 	. = ..()
 
-/mob/living/carbon/alien/humanoid/movement_delay()
-	. = ..()
-	var/static/config_alien_delay
-	if(isnull(config_alien_delay))
-		config_alien_delay = CONFIG_GET(number/alien_delay)
-	. += move_delay_add + config_alien_delay + sneaking //move_delay_add is used to slow aliens with stun
-
 /mob/living/carbon/alien/humanoid/restrained(ignore_grab)
-	. = handcuffed
-
+	return handcuffed
 
 /mob/living/carbon/alien/humanoid/show_inv(mob/user)
 	user.set_machine(src)
@@ -45,13 +38,13 @@
 	<HR>"}
 	for(var/i in 1 to held_items.len)
 		var/obj/item/I = get_item_for_held_index(i)
-		dat += "<BR><B>[get_held_index_name(i)]:</B><A href='?src=[REF(src)];item=[slot_hands];hand_index=[i]'>[(I && !(I.flags_1 & ABSTRACT_1)) ? I : "<font color=grey>Empty</font>"]</a>"
+		dat += "<BR><B>[get_held_index_name(i)]:</B><A href='?src=[REF(src)];item=[SLOT_HANDS];hand_index=[i]'>[(I && !(I.item_flags & ABSTRACT)) ? I : "<font color=grey>Empty</font>"]</a>"
 	dat += "<BR><A href='?src=[REF(src)];pouches=1'>Empty Pouches</A>"
 
 	if(handcuffed)
-		dat += "<BR><A href='?src=[REF(src)];item=[slot_handcuffed]'>Handcuffed</A>"
+		dat += "<BR><A href='?src=[REF(src)];item=[SLOT_HANDCUFFED]'>Handcuffed</A>"
 	if(legcuffed)
-		dat += "<BR><A href='?src=[REF(src)];item=[slot_legcuffed]'>Legcuffed</A>"
+		dat += "<BR><A href='?src=[REF(src)];item=[SLOT_LEGCUFFED]'>Legcuffed</A>"
 
 	dat += {"
 	<BR>

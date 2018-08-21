@@ -11,6 +11,8 @@
 	var/stat_affected = CONSCIOUS
 	var/sigil_name = "Sigil"
 	var/resist_string = "glows blinding white" //string for when a null rod blocks its effects, "glows [resist_string]"
+	var/check_antimagic = TRUE
+	var/check_holy = FALSE
 
 /obj/effect/clockwork/sigil/attackby(obj/item/I, mob/living/user, params)
 	if(I.force)
@@ -24,14 +26,15 @@
 /obj/effect/clockwork/sigil/attack_tk(mob/user)
 	return //you can't tk stomp sigils, but you can hit them with something
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/clockwork/sigil/attack_hand(mob/user)
 	if(iscarbon(user) && !user.stat)
 		if(is_servant_of_ratvar(user) && user.a_intent != INTENT_HARM)
 			return ..()
 		user.visible_message("<span class='warning'>[user] stamps out [src]!</span>", "<span class='danger'>You stomp on [src], scattering it into thousands of particles.</span>")
 		qdel(src)
-		return 1
-	..()
+		return TRUE
+	. = ..()
 
 /obj/effect/clockwork/sigil/ex_act(severity)
 	visible_message("<span class='warning'>[src] scatters into thousands of particles.</span>")
@@ -43,10 +46,11 @@
 		var/mob/living/L = AM
 		if(L.stat <= stat_affected)
 			if((!is_servant_of_ratvar(L) || (affects_servants && is_servant_of_ratvar(L))) && (L.mind || L.has_status_effect(STATUS_EFFECT_SIGILMARK)) && !isdrone(L))
-				var/obj/item/I = L.null_rod_check()
+				var/atom/I = L.anti_magic_check(check_antimagic, check_holy)
 				if(I)
-					L.visible_message("<span class='warning'>[L]'s [I.name] [resist_string], protecting them from [src]'s effects!</span>", \
-					"<span class='userdanger'>Your [I.name] [resist_string], protecting you!</span>")
+					if(isitem(I))
+						L.visible_message("<span class='warning'>[L]'s [I.name] [resist_string], protecting [L.p_them()] from [src]'s effects!</span>", \
+						"<span class='userdanger'>Your [I.name] [resist_string], protecting you!</span>")
 					return
 				sigil_effects(L)
 
@@ -139,7 +143,7 @@
 			GLOB.application_scripture_unlocked = TRUE
 			hierophant_message("<span class='large_brass bold'>With the conversion of a new servant the Ark's power grows. Application scriptures are now available.</span>")
 	if(add_servant_of_ratvar(L))
-		L.log_message("<font color=#BE8700>Conversion was done with a [sigil_name].</font>", INDIVIDUAL_ATTACK_LOG)
+		L.log_message("conversion was done with a [sigil_name]", LOG_ATTACK, color="BE8700")
 		if(iscarbon(L))
 			var/mob/living/carbon/M = L
 			M.uncuff()
@@ -239,14 +243,17 @@
 	return TRUE
 
 /obj/effect/clockwork/sigil/transmission/update_icon()
+	var/power_charge = get_clockwork_power()
 	if(GLOB.ratvar_awakens)
 		alpha = 255
-	var/power_charge = get_clockwork_power()
-	alpha = min(initial(alpha) + power_charge * 0.02, 255)
-	if(!power_charge)
-		set_light(0)
 	else
-		set_light(max(alpha * 0.02, 1.4), max(alpha * 0.01, 0.1))
+		alpha = min(CEILING(initial(alpha) + power_charge * 0.02, 35), 255)
+	var/r = alpha * 0.02
+	var/p = max(alpha * 0.01, 0.1)
+	if(!power_charge && light_range != 0)
+		set_light(0)
+	else if(r != light_range || p != light_power)
+		set_light(r, p)
 
 //Vitality Matrix: Drains health from non-servants to heal or even revive servants.
 /obj/effect/clockwork/sigil/vitality

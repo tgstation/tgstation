@@ -76,6 +76,14 @@
 		to_chat(user, "<span class='notice'>You start adding [C] to [src]...</span>")
 		if(do_after(user, 20, target = src) && C.use(1))
 			make_new_table(/obj/structure/table/wood/fancy)
+	else if(istype(I, /obj/item/stack/tile/bronze))
+		var/obj/item/stack/tile/bronze/B = I
+		if(B.get_amount() < 1)
+			to_chat(user, "<span class='warning'>You need one bronze sheet to do this!</span>")
+			return
+		to_chat(user, "<span class='notice'>You start adding [B] to [src]...</span>")
+		if(do_after(user, 20, target = src) && B.use(1))
+			make_new_table(/obj/structure/table/bronze)
 	else
 		return ..()
 

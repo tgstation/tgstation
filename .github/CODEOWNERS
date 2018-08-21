@@ -7,7 +7,6 @@
 # ChangelingRain
 
 /code/__DEFINES/clockcult.dm @ChangelingRain
-/code/datums/antagonists/datum_clockcult.dm @ChangelingRain
 /code/game/gamemodes/blob/ @ChangelingRain
 /code/game/gamemodes/clock_cult/ @ChangelingRain
 /code/game/gamemodes/miniantags/revenant/ @ChangelingRain
@@ -46,6 +45,7 @@
 
 # MrStonedOne
 
+/SQL/database_changelog.txt @MrStonedOne
 /code/__DEFINES/MC.dm @MrStonedOne
 /code/__DEFINES/tick.dm @MrStonedOne
 /code/controllers/admin.dm @MrStonedOne
@@ -62,9 +62,9 @@
 # ShizCalev
 
 /_maps/ @ShizCalev
+/icons/ @ShizCalev
 /sound/ @ShizCalev
 
 # Multiple Owners
 
 /code/controllers/subsystem/air.dm @duncathan @MrStonedOne
-/icons/ @ShizCalev @WJohn

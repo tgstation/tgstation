@@ -2,11 +2,11 @@
 	layer = TURF_LAYER
 	plane = GAME_PLANE
 	var/level = 2
+	var/article  // If non-null, overrides a/an/some in all cases
 
-	var/flags_1 = 0
-	var/flags_2 = 0
+	var/flags_1 = NONE
+	var/interaction_flags_atom = NONE
 	var/container_type = NONE
-	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
 	var/datum/reagents/reagents = null
 
 	//This atom's HUD (med/sec, etc) images. Associative list.
@@ -19,14 +19,16 @@
 
 	var/list/atom_colours	 //used to store the different colors on an atom
 							//its inherent color, the colored paint applied on it, special color effect etc...
-	var/initialized = FALSE
 
-	var/list/our_overlays	//our local copy of (non-priority) overlays without byond magic. Use procs in SSoverlays to manipulate
 	var/list/priority_overlays	//overlays that should remain on top and not normally removed when using cut_overlay functions, like c4.
+	var/list/remove_overlays // a very temporary list of overlays to remove
+	var/list/add_overlays // a very temporary list of overlays to add
 
 	var/datum/proximity_monitor/proximity_monitor
 	var/buckle_message_cooldown = 0
 	var/fingerprintslast
+
+	var/list/filter_data //For handling persistent filters
 
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
@@ -59,9 +61,9 @@
 // /turf/open/space/Initialize
 
 /atom/proc/Initialize(mapload, ...)
-	if(initialized)
+	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	initialized = TRUE
+	flags_1 |= INITIALIZED_1
 
 	//atom color stuff
 	if(color)
@@ -113,7 +115,7 @@
 	if(!T)
 		return FALSE
 
-	if(is_transit_level(T.z))
+	if(is_reserved_level(T.z))
 		for(var/A in SSshuttle.mobile)
 			var/obj/docking_port/mobile/M = A
 			if(M.launch_status == ENDGAME_TRANSIT)
@@ -152,10 +154,10 @@
 	return FALSE
 
 /atom/proc/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
-	SendSignal(COMSIG_ATOM_HULK_ATTACK, user)
+	SEND_SIGNAL(src, COMSIG_ATOM_HULK_ATTACK, user)
 	if(does_attack_animation)
 		user.changeNext_move(CLICK_CD_MELEE)
-		add_logs(user, src, "punched", "hulk powers")
+		log_combat(user, src, "punched", "hulk powers")
 		user.do_attack_animation(src, ATTACK_EFFECT_SMASH)
 
 /atom/proc/CheckParts(list/parts_list)
@@ -189,10 +191,8 @@
 /atom/proc/check_eye(mob/user)
 	return
 
-
-/atom/proc/CollidedWith(atom/movable/AM)
+/atom/proc/Bumped(atom/movable/AM)
 	set waitfor = FALSE
-	return
 
 // Convenience procs to see if a container is open for chemistry handling
 /atom/proc/is_open_container()
@@ -221,12 +221,13 @@
 	return
 
 /atom/proc/emp_act(severity)
-	SendSignal(COMSIG_ATOM_EMP_ACT, severity)
-	if(istype(wires) && !(flags_2 & NO_EMP_WIRES_2))
+	var/protection = SEND_SIGNAL(src, COMSIG_ATOM_EMP_ACT, severity)
+	if(!(protection & EMP_PROTECT_WIRES) && istype(wires))
 		wires.emp_pulse()
+	return protection // Pass the protection value collected here upwards
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
-	SendSignal(COMSIG_ATOM_BULLET_ACT, P, def_zone)
+	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, P, def_zone)
 	. = P.on_hit(src, 0, def_zone)
 
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
@@ -239,8 +240,11 @@
 
 /atom/proc/get_examine_name(mob/user)
 	. = "\a [src]"
-	var/list/override = list(gender == PLURAL? "some" : "a" , " ", "[name]")
-	if(SendSignal(COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
+	var/list/override = list(gender == PLURAL ? "some" : "a", " ", "[name]")
+	if(article)
+		. = "[article] [src]"
+		override[EXAMINE_POSITION_ARTICLE] = article
+	if(SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
 		. = override.Join("")
 
 /atom/proc/get_examine_string(mob/user, thats = FALSE)
@@ -272,7 +276,7 @@
 			else
 				to_chat(user, "<span class='danger'>It's empty.</span>")
 
-	SendSignal(COMSIG_PARENT_EXAMINE, user)
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
 
 /atom/proc/relaymove(mob/user)
 	if(buckle_message_cooldown <= world.time)
@@ -286,14 +290,14 @@
 /atom/proc/ex_act(severity, target)
 	set waitfor = FALSE
 	contents_explosion(severity, target)
-	SendSignal(COMSIG_ATOM_EX_ACT, severity, target)
+	SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)
 
 /atom/proc/blob_act(obj/structure/blob/B)
-	SendSignal(COMSIG_ATOM_BLOB_ACT, B)
+	SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, B)
 	return
 
 /atom/proc/fire_act(exposed_temperature, exposed_volume)
-	SendSignal(COMSIG_ATOM_FIRE_ACT, exposed_temperature, exposed_volume)
+	SEND_SIGNAL(src, COMSIG_ATOM_FIRE_ACT, exposed_temperature, exposed_volume)
 	return
 
 /atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
@@ -303,6 +307,9 @@
 /atom/proc/hitby_react(atom/movable/AM)
 	if(AM && isturf(AM.loc))
 		step(AM, turn(AM.dir, 180))
+
+/atom/proc/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)
+	return
 
 //returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
 /mob/living/proc/get_blood_dna_list()
@@ -354,45 +361,60 @@
 /atom/proc/handle_fall()
 	return
 
-/atom/proc/handle_slip()
-	return
-
 /atom/proc/singularity_act()
 	return
 
 /atom/proc/singularity_pull(obj/singularity/S, current_size)
-	SendSignal(COMSIG_ATOM_SING_PULL, S, current_size)
+	SEND_SIGNAL(src, COMSIG_ATOM_SING_PULL, S, current_size)
 
 /atom/proc/acid_act(acidpwr, acid_volume)
-	SendSignal(COMSIG_ATOM_ACID_ACT, acidpwr, acid_volume)
+	SEND_SIGNAL(src, COMSIG_ATOM_ACID_ACT, acidpwr, acid_volume)
 
 /atom/proc/emag_act()
-	SendSignal(COMSIG_ATOM_EMAG_ACT)
+	SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT)
 
 /atom/proc/rad_act(strength)
-	SendSignal(COMSIG_ATOM_RAD_ACT, strength)
+	SEND_SIGNAL(src, COMSIG_ATOM_RAD_ACT, strength)
 
 /atom/proc/narsie_act()
-	SendSignal(COMSIG_ATOM_NARSIE_ACT)
+	SEND_SIGNAL(src, COMSIG_ATOM_NARSIE_ACT)
 
 /atom/proc/ratvar_act()
-	SendSignal(COMSIG_ATOM_RATVAR_ACT)
+	SEND_SIGNAL(src, COMSIG_ATOM_RATVAR_ACT)
 
 /atom/proc/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	return FALSE
 
 /atom/proc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	SendSignal(COMSIG_ATOM_RCD_ACT, user, the_rcd, passed_mode)
+	SEND_SIGNAL(src, COMSIG_ATOM_RCD_ACT, user, the_rcd, passed_mode)
 	return FALSE
 
 /atom/proc/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
-	return 0
+	if(GetComponent(/datum/component/storage))
+		return component_storage_contents_dump_act(src_object, user)
+	return FALSE
+
+/atom/proc/component_storage_contents_dump_act(datum/component/storage/src_object, mob/user)
+	var/list/things = src_object.contents()
+	var/datum/progressbar/progress = new(user, things.len, src)
+	GET_COMPONENT(STR, /datum/component/storage)
+	while (do_after(user, 10, TRUE, src, FALSE, CALLBACK(STR, /datum/component/storage.proc/handle_mass_item_insertion, things, src_object, user, progress)))
+		stoplag(1)
+	qdel(progress)
+	to_chat(user, "<span class='notice'>You dump as much of [src_object.parent]'s contents into [STR.insert_preposition]to [src] as you can.</span>")
+	STR.orient2hud(user)
+	src_object.orient2hud(user)
+	if(user.active_storage) //refresh the HUD to show the transfered contents
+		user.active_storage.close(user)
+		user.active_storage.show_to(user)
+	return TRUE
 
 /atom/proc/get_dumping_location(obj/item/storage/source,mob/user)
 	return null
 
 //This proc is called on the location of an atom when the atom is Destroy()'d
 /atom/proc/handle_atom_del(atom/A)
+	SEND_SIGNAL(src, COMSIG_ATOM_CONTENTS_DEL, A)
 
 //called when the turf the atom resides on is ChangeTurfed
 /atom/proc/HandleTurfChange(turf/T)
@@ -408,27 +430,10 @@
 /atom/proc/update_remote_sight(mob/living/user)
 	return
 
-/atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
-	if(isturf(src))
-		var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
-		// Make toxins vomit look different
-		if(toxvomit)
-			V.icon_state = "vomittox_[pick(1,4)]"
-		if(M.reagents)
-			clear_reagents_to_vomit_pool(M,V)
-
-/atom/proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V)
-	M.reagents.trans_to(V, M.reagents.total_volume / 10)
-	for(var/datum/reagent/R in M.reagents.reagent_list)                //clears the stomach of anything that might be digested as food
-		if(istype(R, /datum/reagent/consumable))
-			var/datum/reagent/consumable/nutri_check = R
-			if(nutri_check.nutriment_factor >0)
-				M.reagents.remove_reagent(R.id,R.volume)
-
 
 //Hook for running code when a dir change occurs
 /atom/proc/setDir(newdir)
-	SendSignal(COMSIG_ATOM_DIR_CHANGE, dir, newdir)
+	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
 
 /atom/proc/mech_melee_attack(obj/mecha/M)
@@ -499,7 +504,7 @@
 
 /atom/vv_edit_var(var_name, var_value)
 	if(!GLOB.Debug2)
-		admin_spawned = TRUE
+		flags_1 |= ADMIN_SPAWNED_1
 	. = ..()
 	switch(var_name)
 		if("color")
@@ -523,10 +528,15 @@
 	return L.AllowDrop() ? L : get_turf(L)
 
 /atom/Entered(atom/movable/AM, atom/oldLoc)
-	SendSignal(COMSIG_ATOM_ENTERED, AM, oldLoc)
+	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
 
-/atom/Exited(atom/movable/AM)
-	SendSignal(COMSIG_ATOM_EXITED, AM)
+/atom/Exit(atom/movable/AM, atom/newLoc)
+	. = ..()
+	if(SEND_SIGNAL(src, COMSIG_ATOM_EXIT, AM, newLoc) & COMPONENT_ATOM_BLOCK_EXIT)
+		return FALSE
+
+/atom/Exited(atom/movable/AM, atom/newLoc)
+	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, AM, newLoc)
 
 /atom/proc/return_temperature()
 	return
@@ -548,6 +558,8 @@
 			return wirecutter_act(user, I)
 		if(TOOL_WELDER)
 			return welder_act(user, I)
+		if(TOOL_ANALYZER)
+			return analyzer_act(user, I)
 
 // Tool-specific behavior procs. To be overridden in subtypes.
 /atom/proc/crowbar_act(mob/living/user, obj/item/I)
@@ -568,5 +580,116 @@
 /atom/proc/welder_act(mob/living/user, obj/item/I)
 	return
 
+/atom/proc/analyzer_act(mob/living/user, obj/item/I)
+	return
+
 /atom/proc/GenerateTag()
 	return
+
+// Generic logging helper
+/atom/proc/log_message(message, message_type, color=null, log_globally=TRUE)
+	if(!log_globally)
+		return
+
+	var/log_text = "[key_name(src)] [message] [loc_name(src)]"
+	switch(message_type)
+		if(LOG_ATTACK)
+			log_attack(log_text)
+		if(LOG_SAY)
+			log_say(log_text)
+		if(LOG_WHISPER)
+			log_whisper(log_text)
+		if(LOG_EMOTE)
+			log_emote(log_text)
+		if(LOG_DSAY)
+			log_dsay(log_text)
+		if(LOG_PDA)
+			log_pda(log_text)
+		if(LOG_CHAT)
+			log_chat(log_text)
+		if(LOG_COMMENT)
+			log_comment(log_text)
+		if(LOG_TELECOMMS)
+			log_telecomms(log_text)
+		if(LOG_OOC)
+			log_ooc(log_text)
+		if(LOG_ADMIN)
+			log_admin(log_text)
+		if(LOG_ADMIN_PRIVATE)
+			log_admin_private(log_text)
+		if(LOG_OWNERSHIP)
+			log_game(log_text)
+		if(LOG_GAME)
+			log_game(log_text)
+		else
+			stack_trace("Invalid individual logging type: [message_type]. Defaulting to [LOG_GAME] (LOG_GAME).")
+			log_game(log_text)
+
+// Helper for logging chat messages or other logs wiht arbitrary inputs (e.g. announcements)
+/atom/proc/log_talk(message, message_type, tag=null, log_globally=TRUE)
+	var/prefix = tag ? "([tag]) " : ""
+	log_message("[prefix]\"[message]\"", message_type, log_globally=log_globally)
+
+// Helper for logging of messages with only one sender and receiver
+/proc/log_directed_talk(atom/source, atom/target, message, message_type, tag)
+	if(!tag)
+		stack_trace("Unspecified tag for private message")
+		tag = "UNKNOWN"
+
+	source.log_talk(message, message_type, tag="[tag] to [key_name(target)]")
+	if(source != target)
+		target.log_talk(message, message_type, tag="[tag] from [key_name(source)]", log_globally=FALSE)
+
+/*
+Proc for attack log creation, because really why not
+1 argument is the actor performing the action
+2 argument is the target of the action
+3 is a verb describing the action (e.g. punched, throwed, kicked, etc.)
+4 is a tool with which the action was made (usually an item)
+5 is any additional text, which will be appended to the rest of the log line
+*/
+
+/proc/log_combat(atom/user, atom/target, what_done, atom/object=null, addition=null)
+	var/ssource = key_name(user)
+	var/starget = key_name(target)
+
+	var/mob/living/living_target = target
+	var/hp = istype(living_target) ? " (NEWHP: [living_target.health]) " : ""
+
+	var/sobject = ""
+	if(object)
+		sobject = " with [key_name(object)]"
+	var/saddition = ""
+	if(addition)
+		saddition = " [addition]"
+
+	var/postfix = "[sobject][saddition][hp]"
+
+	var/message = "has [what_done] [starget][postfix]"
+	user.log_message(message, LOG_ATTACK, color="red")
+
+	if(user != target)
+		var/reverse_message = "has been [what_done] by [ssource][postfix]"
+		target.log_message(reverse_message, LOG_ATTACK, color="orange", log_globally=FALSE)
+
+// Filter stuff
+/atom/movable/proc/add_filter(name,priority,list/params)
+	if(!filter_data)
+		filter_data = list()
+	var/list/p = params.Copy()
+	p["priority"] = priority
+	filter_data[name] = p
+	update_filters()
+
+/atom/movable/proc/update_filters()
+	filters = null
+	sortTim(filter_data,associative = TRUE)
+	for(var/f in filter_data)
+		var/list/data = filter_data[f]
+		var/list/arguments = data.Copy()
+		arguments -= "priority"
+		filters += filter(arglist(arguments))
+
+/atom/movable/proc/get_filter(name)
+	if(filter_data && filter_data[name])
+		return filters[filter_data.Find(name)]

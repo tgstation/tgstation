@@ -35,7 +35,9 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	density = FALSE
 	mob_size = MOB_SIZE_TINY
+	mob_biotypes = list(MOB_ORGANIC, MOB_BUG)
 	movement_type = FLYING
 	gold_core_spawnable = HOSTILE_SPAWN
 	search_objects = 1 //have to find those plant trays!
@@ -56,7 +58,7 @@
 /mob/living/simple_animal/hostile/poison/bees/Initialize()
 	. = ..()
 	generate_bee_visuals()
-
+	AddComponent(/datum/component/swarming)
 
 /mob/living/simple_animal/hostile/poison/bees/Destroy()
 	if(beehome)
@@ -207,14 +209,14 @@
 	var/datum/reagent/R = pick(typesof(/datum/reagent/toxin))
 	assign_reagent(GLOB.chemical_reagents_list[initial(R.id)])
 
- /mob/living/simple_animal/hostile/poison/bees/queen
- 	name = "queen bee"
- 	desc = "She's the queen of bees, BZZ BZZ!"
- 	icon_base = "queen"
- 	isqueen = TRUE
+/mob/living/simple_animal/hostile/poison/bees/queen
+	name = "queen bee"
+	desc = "She's the queen of bees, BZZ BZZ!"
+	icon_base = "queen"
+	isqueen = TRUE
 
 
- //the Queen doesn't leave the box on her own, and she CERTAINLY doesn't pollinate by herself
+//the Queen doesn't leave the box on her own, and she CERTAINLY doesn't pollinate by herself
 /mob/living/simple_animal/hostile/poison/bees/queen/Found(atom/A)
 	return FALSE
 
@@ -291,5 +293,12 @@
 		if(idle >= BEE_IDLE_ROAMING && prob(BEE_PROB_GOROAM))
 			toggle_ai(AI_ON)
 			forceMove(beehome.drop_location())
-	else  
+	else
 		..()
+		
+/mob/living/simple_animal/hostile/poison/bees/short
+	desc = "These bees seem unstable and won't survive for long."
+
+/mob/living/simple_animal/hostile/poison/bees/short/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/death), 50 SECONDS)

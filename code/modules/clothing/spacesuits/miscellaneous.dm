@@ -22,7 +22,7 @@ Contains:
 	item_state = "deathsquad"
 	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	strip_delay = 130
-	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	actions_types = list()
 
@@ -37,7 +37,7 @@ Contains:
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/kitchen/knife/combat)
 	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	strip_delay = 130
-	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/deathsquad
 	dog_fashion = /datum/dog_fashion/back/deathsquad
@@ -59,11 +59,10 @@ Contains:
 	icon_state = "beret_badge"
 	dynamic_hair_suffix = "+generic"
 	dynamic_fhair_suffix = "+generic"
-	flags_1 = STOPSPRESSUREDMAGE_1
 	flags_inv = 0
 	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	strip_delay = 130
-	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/suit/space/officer
@@ -78,7 +77,7 @@ Contains:
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
 	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	strip_delay = 130
-	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 	//NASA Voidsuit
@@ -93,7 +92,7 @@ Contains:
 	icon_state = "void"
 	item_state = "void"
 	desc = "An old, NASA CentCom branch designed, dark red space suit."
-	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/device/multitool)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool)
 
 /obj/item/clothing/head/helmet/space/nasavoid/old
 	name = "Engineering Void Helmet"
@@ -107,14 +106,13 @@ Contains:
 	item_state = "void"
 	desc = "A CentCom engineering dark red space suit. Age has degraded the suit making is difficult to move around in."
 	slowdown = 4
-	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/device/multitool)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool)
 
 	//Space santa outfit suit
 /obj/item/clothing/head/helmet/space/santahat
 	name = "Santa's hat"
 	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
-	flags_1 = STOPSPRESSUREDMAGE_1
 	flags_cover = HEADCOVERSEYES
 
 	dog_fashion = /datum/dog_fashion/head/santa
@@ -125,7 +123,6 @@ Contains:
 	icon_state = "santa"
 	item_state = "santa"
 	slowdown = 0
-	flags_1 = STOPSPRESSUREDMAGE_1
 	allowed = list(/obj/item) //for stuffing exta special presents
 
 
@@ -136,7 +133,6 @@ Contains:
 	icon_state = "pirate"
 	item_state = "pirate"
 	armor = list("melee" = 30, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 60, "acid" = 75)
-	flags_1 = STOPSPRESSUREDMAGE_1
 	flags_inv = HIDEHAIR
 	strip_delay = 40
 	equip_delay_other = 20
@@ -169,7 +165,7 @@ Contains:
 	item_color = "ert_commander"
 	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 	strip_delay = 130
-	flags_1 = STOPSPRESSUREDMAGE_1 | THICKMATERIAL_1 | NODROP_1
+	item_flags = NODROP
 	brightness_on = 7
 
 /obj/item/clothing/suit/space/hardsuit/ert
@@ -245,7 +241,7 @@ Contains:
 	item_state = "griffinhat"
 	armor = list("melee" = 20, "bullet" = 40, "laser" = 30, "energy" = 25, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 	strip_delay = 130
-	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = ACID_PROOF | FIRE_PROOF
 
 /obj/item/clothing/suit/space/freedom
@@ -256,7 +252,7 @@ Contains:
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
 	armor = list("melee" = 20, "bullet" = 40, "laser" = 30,"energy" = 25, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 	strip_delay = 130
-	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = ACID_PROOF | FIRE_PROOF
 	slowdown = 0
 
@@ -269,7 +265,7 @@ Contains:
 	armor = list("melee" = -20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 75, "fire" = 60, "acid" = 75)	//As whimpy as a space carp
 	brightness_on = 0 //luminosity when on
 	actions_types = list()
-	flags_1 = STOPSPRESSUREDMAGE_1 | THICKMATERIAL_1 | NODROP_1
+	item_flags = NODROP
 
 
 /obj/item/clothing/suit/space/hardsuit/carp
@@ -289,7 +285,7 @@ Contains:
 	icon_state = "hardsuit0-prt"
 	item_state = "hardsuit0-prt"
 	item_color = "knight_grey"
-	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	actions_types = list()
 	resistance_flags = FIRE_PROOF
 
@@ -299,12 +295,12 @@ Contains:
 	icon_state = "knight_grey"
 	item_state = "knight_grey"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal
-	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/suit/space/hardsuit/ert/paranormal/New()
-	..()
-	new /obj/item/nullrod(src)
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
 	name = "inquisitor's hardsuit"
@@ -351,11 +347,9 @@ Contains:
 /obj/item/clothing/suit/space/fragile/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!torn && prob(50))
 		to_chat(owner, "<span class='warning'>[src] tears from the damage, breaking the air-tight seal!</span>")
-		src.flags_1 &= ~STOPSPRESSUREDMAGE_1
-		src.name = "torn [src]."
-		src.desc = "A bulky suit meant to protect the user during emergency situations, at least until someone tore a hole in the suit."
-		src.torn = TRUE
+		clothing_flags &= ~STOPSPRESSUREDAMAGE
+		name = "torn [src]."
+		desc = "A bulky suit meant to protect the user during emergency situations, at least until someone tore a hole in the suit."
+		torn = TRUE
 		playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1)
 		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
-
-

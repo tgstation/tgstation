@@ -16,7 +16,6 @@
 	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
-	anchored = TRUE
 	max_integrity = 250
 	integrity_failure = 100
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 30)
@@ -24,9 +23,14 @@
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = ENVIRON
+	resistance_flags = FIRE_PROOF
+
+	light_power = 0
+	light_range = 7
+	light_color = "#ff3232"
+
 	var/detecting = 1
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
-	resistance_flags = FIRE_PROOF
 	var/last_alarm = 0
 	var/area/myarea = null
 
@@ -81,9 +85,13 @@
 			add_overlay("overlay_fire")
 
 /obj/machinery/firealarm/emp_act(severity)
+	. = ..()
+
+	if (. & EMP_PROTECT_SELF)
+		return
+
 	if(prob(50 / severity))
 		alarm()
-	..()
 
 /obj/machinery/firealarm/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -172,7 +180,7 @@
 
 		switch(buildstage)
 			if(2)
-				if(istype(W, /obj/item/device/multitool))
+				if(istype(W, /obj/item/multitool))
 					detecting = !detecting
 					if (src.detecting)
 						user.visible_message("[user] has reconnected [src]'s detecting unit!", "<span class='notice'>You reconnect [src]'s detecting unit.</span>")
@@ -221,8 +229,8 @@
 					update_icon()
 					return
 
-				else if(istype(W, /obj/item/device/electroadaptive_pseudocircuit))
-					var/obj/item/device/electroadaptive_pseudocircuit/P = W
+				else if(istype(W, /obj/item/electroadaptive_pseudocircuit))
+					var/obj/item/electroadaptive_pseudocircuit/P = W
 					if(!P.adapt_circuit(user, 15))
 						return
 					user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
@@ -270,39 +278,47 @@
 		new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)
 
+/obj/machinery/firealarm/proc/update_fire_light(fire)
+	if(fire == !!light_power)
+		return  // do nothing if we're already active
+	if(fire)
+		set_light(l_power = 0.8)
+	else
+		set_light(l_power = 0)
 
 /*
- * Party button
+ * Return of Party button
  */
+
+/area
+	var/party = FALSE
 
 /obj/machinery/firealarm/partyalarm
 	name = "\improper PARTY BUTTON"
 	desc = "Cuban Pete is in the house!"
-
+	var/static/party_overlay
 
 /obj/machinery/firealarm/partyalarm/reset()
 	if (stat & (NOPOWER|BROKEN))
 		return
-	var/area/A = src.loc
-	A = A.loc
-	if (!( istype(A, /area) ))
+	var/area/A = get_area(src)
+	if (!A || !A.party)
 		return
-	for(var/area/RA in A.related)
-		RA.partyreset()
-	return
+	A.party = FALSE
+	A.cut_overlay(party_overlay)
 
 /obj/machinery/firealarm/partyalarm/alarm()
 	if (stat & (NOPOWER|BROKEN))
 		return
-	var/area/A = src.loc
-	A = A.loc
-	if (!( istype(A, /area) ))
+	var/area/A = get_area(src)
+	if (!A || A.party || A.name == "Space")
 		return
-	for(var/area/RA in A.related)
-		RA.partyalert()
-	return
+	A.party = TRUE
+	if (!party_overlay)
+		party_overlay = iconstate2appearance('icons/turf/areas.dmi', "party")
+	A.add_overlay(party_overlay)
 
 /obj/machinery/firealarm/partyalarm/ui_data(mob/user)
 	. = ..()
 	var/area/A = get_area(src)
-	.["alarm"] = A.party
+	.["alarm"] = A && A.party

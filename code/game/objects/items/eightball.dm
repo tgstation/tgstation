@@ -11,8 +11,8 @@
 	var/shaking = FALSE
 	var/on_cooldown = FALSE
 
-	var/shake_time = 150
-	var/cooldown_time = 1800
+	var/shake_time = 50
+	var/cooldown_time = 100
 
 	var/static/list/possible_answers = list(
 		"It is certain",
@@ -95,6 +95,8 @@
 // except it actually ASKS THE DEAD (wooooo)
 
 /obj/item/toy/eightball/haunted
+	shake_time = 150
+	cooldown_time = 1800
 	flags_1 = HEAR_1
 	var/last_message
 	var/selected_message
@@ -112,13 +114,16 @@
 /obj/item/toy/eightball/haunted/MakeHaunted()
 	return FALSE
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/item/toy/eightball/haunted/attack_ghost(mob/user)
 	if(!shaking)
 		to_chat(user, "<span class='warning'>[src] is not currently being shaken.</span>")
 		return
 	interact(user)
+	return ..()
 
 /obj/item/toy/eightball/haunted/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
+	. = ..()
 	last_message = raw_message
 
 /obj/item/toy/eightball/haunted/start_shaking(mob/user)

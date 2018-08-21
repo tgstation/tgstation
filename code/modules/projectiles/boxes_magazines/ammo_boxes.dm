@@ -13,6 +13,7 @@
 	ammo_type = /obj/item/ammo_casing/c38
 	max_ammo = 6
 	multiple_sprites = 1
+	materials = list(MAT_METAL = 20000)
 
 /obj/item/ammo_box/c9mm
 	name = "ammo box (9mm)"
@@ -59,7 +60,9 @@
 	icon_state = "foambox"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
 	max_ammo = 40
+	materials = list(MAT_METAL = 500)
 
 /obj/item/ammo_box/foambox/riot
 	icon_state = "foambox_riot"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
+	materials = list(MAT_METAL = 50000)

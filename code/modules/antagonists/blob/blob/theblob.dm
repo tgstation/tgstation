@@ -204,6 +204,9 @@
 	return null
 
 /obj/structure/blob/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	if(severity > 0)
 		if(overmind)
 			overmind.blob_reagent_datum.emp_reaction(src, severity)
@@ -227,7 +230,7 @@
 	return 15
 
 /obj/structure/blob/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/analyzer))
+	if(istype(I, /obj/item/analyzer))
 		user.changeNext_move(CLICK_CD_MELEE)
 		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
 		SEND_SOUND(user, sound('sound/machines/ping.ogg'))

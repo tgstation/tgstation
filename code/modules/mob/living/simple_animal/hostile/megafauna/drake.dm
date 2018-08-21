@@ -38,11 +38,11 @@ Difficulty: Medium
 	spacewalk = TRUE
 	attacktext = "chomps"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
+	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
 	icon_state = "dragon"
 	icon_living = "dragon"
 	icon_dead = "dragon_dead"
 	friendly = "stares down"
-	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
 	speak_emote = list("roars")
 	armour_penetration = 40
 	melee_damage_lower = 40
@@ -53,17 +53,20 @@ Difficulty: Medium
 	pixel_x = -16
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/dragon/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/dragon)
-	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
+	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
+	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/ashdrake = 10)
 	var/swooping = NONE
 	var/swoop_cooldown = 0
 	medal_type = BOSS_MEDAL_DRAKE
 	score_type = DRAKE_SCORE
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
+	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/drake()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
+	smallsprite.Grant(src)
 	. = ..()
-	internal = new/obj/item/device/gps/internal/dragon(src)
+	internal = new/obj/item/gps/internal/dragon(src)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
 	if(severity == 3)
@@ -240,7 +243,7 @@ Difficulty: Medium
 	playsound(loc, 'sound/effects/meteorimpact.ogg', 200, 1)
 	for(var/mob/living/L in orange(1, src))
 		if(L.stat)
-			visible_message("<span class='warning'>[src] slams down on [L], crushing them!</span>")
+			visible_message("<span class='warning'>[src] slams down on [L], crushing [L.p_them()]!</span>")
 			L.gib()
 		else
 			L.adjustBruteLoss(75)
@@ -268,7 +271,7 @@ Difficulty: Medium
 		return
 	swoop_attack(TRUE, A, 25)
 
-/obj/item/device/gps/internal/dragon
+/obj/item/gps/internal/dragon
 	icon_state = null
 	gpstag = "Fiery Signal"
 	desc = "Here there be dragons."
@@ -379,6 +382,7 @@ Difficulty: Medium
 	obj_damage = 80
 	melee_damage_upper = 30
 	melee_damage_lower = 30
+	mouse_opacity = MOUSE_OPACITY_ICON
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	loot = list()
 	crusher_loot = list()
@@ -386,5 +390,3 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/grant_achievement(medaltype,scoretype)
 	return
-
-#undef MEDAL_PREFIX

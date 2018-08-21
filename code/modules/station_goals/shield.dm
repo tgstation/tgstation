@@ -15,10 +15,10 @@
 
 /datum/station_goal/station_shield/on_report()
 	//Unlock
-	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/misc/shield_sat]
+	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shield_sat]
 	P.special_enabled = TRUE
 
-	P = SSshuttle.supply_packs[/datum/supply_pack/misc/shield_sat_control]
+	P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shield_sat_control]
 	P.special_enabled = TRUE
 
 /datum/station_goal/station_shield/check_completion()
@@ -87,10 +87,11 @@
 	desc = ""
 	icon = 'icons/obj/machines/satellite.dmi'
 	icon_state = "sat_inactive"
-	var/mode = "NTPROBEV0.8"
-	var/active = FALSE
+	anchored = FALSE
 	density = TRUE
 	use_power = FALSE
+	var/mode = "NTPROBEV0.8"
+	var/active = FALSE
 	var/static/gid = 0
 	var/id = 0
 
@@ -121,7 +122,7 @@
 	icon_state = active ? "sat_active" : "sat_inactive"
 
 /obj/machinery/satellite/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/multitool))
+	if(istype(I, /obj/item/multitool))
 		to_chat(user, "<span class='notice'>// NTSAT-[id] // Mode : [active ? "PRIMARY" : "STANDBY"] //[(obj_flags & EMAGGED) ? "DEBUG_MODE //" : ""]</span>")
 	else
 		return ..()
@@ -174,6 +175,6 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
-	to_chat(user, "<span class='notice'>You scramble the satellite's controller, increasing the chance of meteor strikes.</span>")
+	to_chat(user, "<span class='notice'>You access the satellite's debug mode, increasing the chance of meteor strikes.</span>")
 	if(active)
 		change_meteor_chance(2)

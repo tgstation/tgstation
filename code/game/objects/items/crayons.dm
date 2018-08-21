@@ -241,11 +241,19 @@
 	return jointext(out,"")
 
 /obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
+	. = ..()
 	if(!proximity || !check_allowed_items(target))
 		return
 
-	if(check_empty(user))
+	var/cost = 1
+	if(paint_mode == PAINT_LARGE_HORIZONTAL)
+		cost = 5
+	if(istype(target, /obj/item/canvas))
+		cost = 0
+	var/charges_used = use_charges(user, cost)
+	if(!charges_used)
 		return
+	. = charges_used
 
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
@@ -353,10 +361,6 @@
 		audible_message("<span class='notice'>You hear spraying.</span>")
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 
-	var/cost = 1
-	if(paint_mode == PAINT_LARGE_HORIZONTAL)
-		cost = 5
-	. = use_charges(user, cost)
 	var/fraction = min(1, . / reagents.maximum_volume)
 	if(affected_turfs.len)
 		fraction /= affected_turfs.len
@@ -457,13 +461,14 @@
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox"
 	w_class = WEIGHT_CLASS_SMALL
-	storage_slots = 7
-	can_hold = list(
-		/obj/item/toy/crayon
-	)
 
-/obj/item/storage/crayons/New()
-	..()
+/obj/item/storage/crayons/Initialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 7
+	STR.can_hold = typecacheof(list(/obj/item/toy/crayon))
+
+/obj/item/storage/crayons/PopulateContents()
 	new /obj/item/toy/crayon/red(src)
 	new /obj/item/toy/crayon/orange(src)
 	new /obj/item/toy/crayon/yellow(src)

@@ -1,4 +1,4 @@
-//Wraith spectacles: Grants x-ray and night vision at the eventual cost of the wearer's sight if worn too long. Nar-Sian cultists are instantly blinded.
+//Wraith spectacles: Grants X-ray and night vision at the eventual cost of the wearer's sight if worn too long. Nar-Sian cultists are instantly blinded.
 /obj/item/clothing/glasses/wraith_spectacles
 	name = "antique spectacles"
 	desc = "Unnerving glasses with opaque yellow lenses."
@@ -74,7 +74,7 @@
 
 /obj/item/clothing/glasses/wraith_spectacles/equipped(mob/living/user, slot)
 	..()
-	if(slot != slot_glasses || up)
+	if(slot != SLOT_GLASSES || up)
 		return
 	if(user.has_trait(TRAIT_BLIND))
 		to_chat(user, "<span class='heavy_brass'>\"You're blind, idiot. Stop embarrassing yourself.\"</span>" )

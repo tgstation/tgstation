@@ -5,7 +5,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	force = 5
 	force_unwielded = 5
 	force_wielded = 20
@@ -50,13 +50,14 @@
 					var/obj/item/clothing/shoes/magboots/M = H.shoes
 					if(M.magpulse)
 						continue
-				H.apply_effect(20, KNOCKDOWN, 0)
+				H.apply_effect(20, EFFECT_KNOCKDOWN, 0)
 				step_towards(H,pull)
 				step_towards(H,pull)
 				step_towards(H,pull)
 	return
 
 /obj/item/twohanded/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(wielded)
@@ -76,7 +77,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	force = 5
 	force_unwielded = 5
 	force_wielded = 25

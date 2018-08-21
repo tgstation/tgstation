@@ -1,16 +1,18 @@
 /obj/item/bodypart/head
-	name = "head"
+	name = BODY_ZONE_HEAD
 	desc = "Didn't make sense not to live for fun, your brain gets smart but your head gets dumb."
 	icon = 'icons/mob/human_parts.dmi'
 	icon_state = "default_human_head"
 	max_damage = 200
-	body_zone = "head"
+	body_zone = BODY_ZONE_HEAD
 	body_part = HEAD
 	w_class = WEIGHT_CLASS_BULKY //Quite a hefty load
 	slowdown = 1 //Balancing measure
 	throw_range = 2 //No head bowling
 	px_x = 0
 	px_y = -8
+	stam_damage_coeff = 1
+	max_stamina_damage = 100
 
 	var/mob/living/brain/brainmob = null //The current occupant.
 	var/obj/item/organ/brain/brain = null //The brain organ
@@ -30,6 +32,11 @@
 
 	var/lip_style = null
 	var/lip_color = "white"
+
+/obj/item/bodypart/head/can_dismember(obj/item/I)
+	if(!((owner.stat == DEAD) || owner.InFullCritical()))
+		return FALSE
+	return ..()
 
 /obj/item/bodypart/head/drop_organs(mob/user)
 	var/turf/T = get_turf(src)

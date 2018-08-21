@@ -237,6 +237,16 @@ magboots would let you walk around normally on the floor. Barring those, you can
 or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "weightless"
 
+/obj/screen/alert/highgravity
+	name = "High Gravity"
+	desc = "You're getting crushed by high gravity, picking up items and movement will be slowed."
+	icon_state = "paralysis"
+
+/obj/screen/alert/veryhighgravity
+	name = "Crushing Gravity"
+	desc = "You're getting crushed by high gravity, picking up items and movement will be slowed. You'll also accumulate brute damage!"
+	icon_state = "paralysis"
+
 /obj/screen/alert/fire
 	name = "On Fire"
 	desc = "You're on fire. Stop, drop and roll to put the fire out or move to a vacuum area."
@@ -304,6 +314,9 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /obj/screen/alert/bloodsense/process()
 	var/atom/blood_target
 
+	if(!mob_viewer.mind)
+		return
+
 	var/datum/antagonist/cult/antag = mob_viewer.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	if(!antag)
 		return
@@ -346,7 +359,11 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		icon_state = "runed_sense2"
 		desc = "You can no longer sense your target's presence."
 		return
-	desc = "You are currently tracking [blood_target] in [get_area_name(blood_target)]."
+	if(isliving(blood_target))
+		var/mob/living/real_target = blood_target
+		desc = "You are currently tracking [real_target.real_name] in [get_area_name(blood_target)]."
+	else
+		desc = "You are currently tracking [blood_target] in [get_area_name(blood_target)]."
 	var/target_angle = Get_Angle(Q, P)
 	var/target_dist = get_dist(P, Q)
 	cut_overlays()
@@ -584,7 +601,6 @@ so as to remain in compliance with the most up-to-date laws."
 // Re-render all alerts - also called in /datum/hud/show_hud() because it's needed there
 /datum/hud/proc/reorganize_alerts()
 	var/list/alerts = mymob.alerts
-	var/icon_pref
 	if(!hud_shown)
 		for(var/i = 1, i <= alerts.len, i++)
 			mymob.client.screen -= alerts[alerts[i]]
@@ -592,9 +608,7 @@ so as to remain in compliance with the most up-to-date laws."
 	for(var/i = 1, i <= alerts.len, i++)
 		var/obj/screen/alert/alert = alerts[alerts[i]]
 		if(alert.icon_state == "template")
-			if(!icon_pref)
-				icon_pref = ui_style2icon(mymob.client.prefs.UI_style)
-			alert.icon = icon_pref
+			alert.icon = ui_style
 		switch(i)
 			if(1)
 				. = ui_alert1

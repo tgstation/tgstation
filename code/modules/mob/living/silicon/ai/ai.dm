@@ -18,17 +18,18 @@
 	icon_state = "ai"
 	anchored = TRUE
 	density = TRUE
-	canmove = 0
+	canmove = FALSE
 	status_flags = CANSTUN|CANPUSH
 	a_intent = INTENT_HARM //so we always get pushed instead of trying to swap
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
 	see_in_dark = 8
+	hud_type = /datum/hud/ai
 	med_hud = DATA_HUD_MEDICAL_BASIC
 	sec_hud = DATA_HUD_SECURITY_BASIC
 	d_hud = DATA_HUD_DIAGNOSTIC_ADVANCED
 	mob_size = MOB_SIZE_LARGE
-	var/list/network = list("SS13")
-	var/obj/machinery/camera/current = null
+	var/list/network = list("ss13")
+	var/obj/machinery/camera/current
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = 0
 	var/requires_power = POWER_REQ_ALL
@@ -37,44 +38,44 @@
 	var/viewalerts = 0
 	var/icon/holo_icon//Default is assigned when AI is created.
 	var/obj/mecha/controlled_mech //For controlled_mech a mech, to determine whether to relaymove or use the AI eye.
-	var/radio_enabled = 1 //Determins if a carded AI can speak with its built in radio or not.
+	var/radio_enabled = TRUE //Determins if a carded AI can speak with its built in radio or not.
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
-	var/obj/item/device/pda/ai/aiPDA = null
-	var/obj/item/device/multitool/aiMulti = null
+	var/obj/item/pda/ai/aiPDA
+	var/obj/item/multitool/aiMulti
 	var/mob/living/simple_animal/bot/Bot
-	var/tracking = 0 //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
+	var/tracking = FALSE //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
 	var/datum/effect_system/spark_spread/spark_system//So they can initialize sparks whenever/N
 
 	//MALFUNCTION
 	var/datum/module_picker/malf_picker
 	var/list/datum/AI_Module/current_modules = list()
-	var/can_dominate_mechs = 0
-	var/shunted = 0 //1 if the AI is currently shunted. Used to differentiate between shunted and ghosted/braindead
+	var/can_dominate_mechs = FALSE
+	var/shunted = FALSE	//1 if the AI is currently shunted. Used to differentiate between shunted and ghosted/braindead
 
-	var/control_disabled = 0 // Set to 1 to stop AI from interacting via Click()
-	var/malfhacking = 0 // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
-	var/malf_cooldown = 0 //Cooldown var for malf modules, stores a worldtime + cooldown
+	var/control_disabled = FALSE	// Set to 1 to stop AI from interacting via Click()
+	var/malfhacking = FALSE		// More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
+	var/malf_cooldown = 0		//Cooldown var for malf modules, stores a worldtime + cooldown
 
-	var/obj/machinery/power/apc/malfhack = null
-	var/explosive = 0 //does the AI explode when it dies?
+	var/obj/machinery/power/apc/malfhack
+	var/explosive = FALSE		//does the AI explode when it dies?
 
-	var/mob/living/silicon/ai/parent = null
-	var/camera_light_on = 0
+	var/mob/living/silicon/ai/parent
+	var/camera_light_on = FALSE
 	var/list/obj/machinery/camera/lit_cameras = list()
 
-	var/datum/trackable/track = new()
+	var/datum/trackable/track = new
 
 	var/last_paper_seen = null
-	var/can_shunt = 1
-	var/last_announcement = "" // For AI VOX, if enabled
+	var/can_shunt = TRUE
+	var/last_announcement = "" 		// For AI VOX, if enabled
 	var/turf/waypoint //Holds the turf of the currently selected waypoint.
-	var/waypoint_mode = 0 //Waypoint mode is for selecting a turf via clicking.
-	var/call_bot_cooldown = 0 //time of next call bot command
-	var/apc_override = 0 //hack for letting the AI use its APC even when visionless
+	var/waypoint_mode = FALSE		//Waypoint mode is for selecting a turf via clicking.
+	var/call_bot_cooldown = 0		//time of next call bot command
+	var/apc_override = FALSE		//hack for letting the AI use its APC even when visionless
 	var/nuking = FALSE
 	var/obj/machinery/doomsday_device/doomsday_device
 
-	var/mob/camera/aiEye/eyeobj = new()
+	var/mob/camera/aiEye/eyeobj
 	var/sprint = 10
 	var/cooldown = 0
 	var/acceleration = 1
@@ -84,6 +85,13 @@
 	var/datum/action/innate/deploy_shell/deploy_action = new
 	var/datum/action/innate/deploy_last_shell/redeploy_action = new
 	var/chnotify = 0
+
+	var/multicam_allowed = FALSE
+	var/multicam_on = FALSE
+	var/obj/screen/movable/pic_in_pic/ai/master_multicam
+	var/list/multicam_screens = list()
+	var/list/all_eyes = list()
+	var/max_multicams = 6
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
@@ -116,9 +124,8 @@
 
 	job = "AI"
 
-	eyeobj.ai = src
-	eyeobj.forceMove(src.loc)
-	rename_self("ai")
+	create_eye()
+	apply_pref_name("ai")
 
 	holo_icon = getHologramIcon(icon('icons/mob/ai.dmi',"default"))
 
@@ -128,14 +135,14 @@
 
 	verbs += /mob/living/silicon/ai/proc/show_laws_verb
 
-	aiPDA = new/obj/item/device/pda/ai(src)
+	aiPDA = new/obj/item/pda/ai(src)
 	aiPDA.owner = name
 	aiPDA.ownjob = "AI"
 	aiPDA.name = name + " (" + aiPDA.ownjob + ")"
 
 	aiMulti = new(src)
-	radio = new /obj/item/device/radio/headset/ai(src)
-	aicamera = new/obj/item/device/camera/siliconcam/ai_camera(src)
+	radio = new /obj/item/radio/headset/ai(src)
+	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
 
 	deploy_action.Grant(src)
 
@@ -149,7 +156,7 @@
 	GLOB.shuttle_caller_list += src
 
 	builtInCamera = new (src)
-	builtInCamera.network = list("SS13")
+	builtInCamera.network = list("ss13")
 
 
 /mob/living/silicon/ai/Destroy()
@@ -318,6 +325,19 @@
 		var/obj/machinery/computer/communications/C = locate() in GLOB.machines
 		if(C)
 			C.post_status("shuttle")
+
+/mob/living/silicon/ai/can_interact_with(atom/A)
+	. = ..()
+	if (.)
+		return
+	if (istype(loc, /obj/item/aicard))
+		var/turf/T0 = get_turf(src)
+		var/turf/T1 = get_turf(A)
+		if (!T0 || ! T1)
+			return FALSE
+		return ISINRANGE(T1.x, T0.x - interaction_range, T0.x + interaction_range) && ISINRANGE(T1.y, T0.y - interaction_range, T0.y + interaction_range)
+	else
+		return GLOB.cameranet.checkTurfVis(get_turf(A))
 
 /mob/living/silicon/ai/cancel_camera()
 	view_core()
@@ -567,11 +587,13 @@
 	var/mob/living/silicon/ai/U = usr
 
 	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
+		var/list/tempnetwork = C.network
+		if(!(is_station_level(C.z) || is_mining_level(C.z) || ("ss13" in tempnetwork)))
+			continue
 		if(!C.can_use())
 			continue
 
-		var/list/tempnetwork = C.network
-		tempnetwork.Remove("CREED", "thunder", "RD", "toxins", "Prison")
+		tempnetwork.Remove("rd", "toxins", "prison")
 		if(tempnetwork.len)
 			for(var/i in C.network)
 				cameralist[i] = i
@@ -591,7 +613,7 @@
 			if(network in C.network)
 				U.eyeobj.setLoc(get_turf(C))
 				break
-	to_chat(src, "<span class='notice'>Switched to [network] camera network.</span>")
+	to_chat(src, "<span class='notice'>Switched to the \"[uppertext(network)]\" camera network.</span>")
 //End of code by Mord_Sith
 
 
@@ -609,17 +631,17 @@
 		return
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
-	for (var/M in GLOB.ai_status_displays) //change status of displays
-		if(istype(M, /obj/machinery/ai_status_display))
-			var/obj/machinery/ai_status_display/AISD = M
-			AISD.emotion = emote
-		//if Friend Computer, change ALL displays
-		else if(istype(M, /obj/machinery/status_display))
-			var/obj/machinery/status_display/SD = M
-			if(emote=="Friend Computer")
-				SD.friendc = 1
-			else
-				SD.friendc = 0
+	for (var/obj/machinery/ai_status_display/M in GLOB.ai_status_displays) //change status of displays
+		M.emotion = emote
+		M.update()
+	if (emote == "Friend Computer")
+		var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+
+		if(!frequency)
+			return
+
+		var/datum/signal/status_signal = new(list("command" = "friendcomputer"))
+		frequency.post_signal(src, status_signal)
 	return
 
 //I am the icon meister. Bow fefore me.	//>fefore
@@ -767,7 +789,7 @@
 		return
 	set_autosay()
 
-/mob/living/silicon/ai/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
+/mob/living/silicon/ai/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(!..())
 		return
 	if(interaction == AI_TRANS_TO_CARD)//The only possible interaction. Upload AI mob to a card.
@@ -811,7 +833,7 @@
 		//apc_override is needed here because AIs use their own APC when depowered
 		return (GLOB.cameranet && GLOB.cameranet.checkTurfVis(get_turf_pixel(A))) || apc_override
 	//AI is carded/shunted
-	//view(src) returns nothing for carded/shunted AIs and they have x-ray vision so just use get_dist
+	//view(src) returns nothing for carded/shunted AIs and they have X-ray vision so just use get_dist
 	var/list/viewscale = getviewsize(client.view)
 	return get_dist(src, A) <= max(viewscale[1]*0.5,viewscale[2]*0.5)
 
@@ -864,9 +886,12 @@
 		current = A
 	if(client)
 		if(ismovableatom(A))
+			if(A != GLOB.ai_camera_room_landmark)
+				end_multicam()
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = A
 		else
+			end_multicam()
 			if(isturf(loc))
 				if(eyeobj)
 					client.eye = eyeobj
@@ -986,3 +1011,11 @@
 	. = ..()
 	if(!target_ai)
 		target_ai = src //cheat! just give... ourselves as the spawned AI, because that's technically correct
+
+/mob/living/silicon/ai/proc/camera_visibility(mob/camera/aiEye/moved_eye)
+	GLOB.cameranet.visibility(moved_eye, client, all_eyes, USE_STATIC_OPAQUE)
+
+/mob/living/silicon/ai/forceMove(atom/destination)
+	. = ..()
+	if(.)
+		end_multicam()

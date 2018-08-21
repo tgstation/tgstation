@@ -264,7 +264,7 @@ em						{font-style: normal;	font-weight: bold;}
 .adminobserverooc		{color: #0099cc;	font-weight: bold;}
 .adminooc				{color: #700038;	font-weight: bold;}
 
-.adminobserver			{color: #996600;	font-weight: bold;}
+.adminsay   			{color: #FF4500;	font-weight: bold;}
 .admin					{color: #386aff;	font-weight: bold;}
 
 .name					{					font-weight: bold;}
@@ -316,6 +316,7 @@ h1.alert, h2.alert		{color: #000000;}
 .unconscious			{color: #0000ff;	font-weight: bold;}
 .suicide				{color: #ff5050;	font-style: italic;}
 .green					{color: #03ff39;}
+.nicegreen					{color: #14a833;}
 .shadowling				{color: #3b2769;}
 .cult					{color: #960000;}
 

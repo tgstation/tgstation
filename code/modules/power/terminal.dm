@@ -8,9 +8,8 @@
 	icon_state = "term"
 	desc = "It's an underfloor wiring terminal for power equipment."
 	level = 1
-	var/obj/machinery/power/master = null
-	anchored = TRUE
 	layer = WIRE_TERMINAL_LAYER //a bit above wires
+	var/obj/machinery/power/master = null
 
 
 /obj/machinery/power/terminal/Initialize()
@@ -74,9 +73,6 @@
 		to_chat(user, "<span class='notice'>You cut the cables and dismantle the power terminal.</span>")
 		qdel(src)
 
-
-/obj/machinery/power/terminal/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/wirecutters))
-		dismantle(user, W)
-	else
-		return ..()
+/obj/machinery/power/terminal/wirecutter_act(mob/living/user, obj/item/I)
+	dismantle(user, I)
+	return TRUE

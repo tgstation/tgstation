@@ -3,7 +3,7 @@
 	weight = 4
 	typepath = /datum/round_event/wizard/greentext
 	max_occurrences = 1
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/greentext/start()
 
@@ -63,11 +63,11 @@
 /obj/item/greentext/proc/check_winner()
 	if(!new_holder)
 		return
-	
+
 	if(is_centcom_level(new_holder.z))//you're winner!
 		to_chat(new_holder, "<font color='green'>At last it feels like victory is assured!</font>")
 		new_holder.mind.add_antag_datum(/datum/antagonist/greentext)
-		new_holder.log_message("<font color='green'>Won with greentext!!!</font>", INDIVIDUAL_ATTACK_LOG)
+		new_holder.log_message("won with greentext!!!", LOG_ATTACK, color="green")
 		color_altered_mobs -= new_holder
 		resistance_flags |= ON_FIRE
 		qdel(src)

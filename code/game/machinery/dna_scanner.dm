@@ -4,7 +4,6 @@
 	icon = 'icons/obj/machines/cloning.dmi'
 	icon_state = "scanner"
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	active_power_usage = 300
@@ -133,9 +132,6 @@
 		update_icon()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
 		return
 
-	if(exchange_parts(user, I))
-		return
-
 	if(default_pry_open(I))
 		return
 
@@ -144,10 +140,7 @@
 
 	return ..()
 
-/obj/machinery/dna_scannernew/attack_hand(mob/user)
-	if(..(user,1,0)) //don't set the machine, since there's no dialog
-		return
-
+/obj/machinery/dna_scannernew/interact(mob/user)
 	toggle_open(user)
 
 /obj/machinery/dna_scannernew/MouseDrop_T(mob/target, mob/user)

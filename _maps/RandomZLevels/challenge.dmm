@@ -35,9 +35,8 @@
 /turf/open/floor/plasteel/airless,
 /area/awaymission/challenge/start)
 "ai" = (
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	icon_state = "flashlight-on";
-	item_state = "flashlight";
 	on = 1
 	},
 /turf/open/floor/plasteel/airless,
@@ -266,7 +265,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/challenge/main)
 "bb" = (
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/plasteel/airless,
 /area/awaymission/challenge/main)
 "bc" = (
@@ -655,8 +654,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/obj/item/device/radio/intercom{
-	dir = 0;
+/obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 28
 	},
@@ -666,9 +664,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "ce" = (
-/mob/living/simple_animal/hostile/syndicate/ranged/space{
-	name = "Syndicate Officer"
-	},
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "cf" = (
@@ -680,8 +676,7 @@
 /turf/open/floor/plating,
 /area/awaymission/challenge/end)
 "cg" = (
-/obj/item/device/radio/intercom{
-	dir = 0;
+/obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -27
 	},
@@ -710,7 +705,7 @@
 /turf/open/floor/wood,
 /area/awaymission/challenge/end)
 "cl" = (
-/mob/living/simple_animal/hostile/syndicate/melee,
+/mob/living/simple_animal/hostile/syndicate/melee/sword,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "cm" = (
@@ -747,7 +742,7 @@
 /area/awaymission/challenge/end)
 "cs" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -759,7 +754,7 @@
 /turf/open/floor/wood,
 /area/awaymission/challenge/end)
 "cu" = (
-/mob/living/simple_animal/hostile/syndicate/melee,
+/mob/living/simple_animal/hostile/syndicate/melee/sword,
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/challenge/end)
 "cv" = (
@@ -826,7 +821,7 @@
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "cF" = (
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "cG" = (

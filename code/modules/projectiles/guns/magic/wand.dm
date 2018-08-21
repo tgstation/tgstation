@@ -43,14 +43,14 @@
 				no_den_usage = 0
 		zap_self(user)
 	else
-		..()
+		. = ..()
 	update_icon()
 
 
 /obj/item/gun/magic/wand/proc/zap_self(mob/living/user)
 	user.visible_message("<span class='danger'>[user] zaps [user.p_them()]self with [src].</span>")
 	playsound(user, fire_sound, 50, 1)
-	user.log_message("zapped [user.p_them()]self with a <b>[src]</b>", INDIVIDUAL_ATTACK_LOG)
+	user.log_message("zapped [user.p_them()]self with a <b>[src]</b>", LOG_ATTACK)
 
 
 /////////////////////////////////////
@@ -95,6 +95,10 @@
 	to_chat(user, "<span class='notice'>You feel great!</span>")
 	charges--
 	..()
+
+/obj/item/gun/magic/wand/resurrection/debug //for testing
+	name = "debug wand of healing"
+	max_charges = 500
 
 /////////////////////////////////////
 //WAND OF POLYMORPH

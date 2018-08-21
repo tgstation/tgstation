@@ -13,6 +13,7 @@
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turret_frame"
 	desc = "An unfinished covered turret frame."
+	anchored = FALSE
 	density = TRUE
 	var/build_step = PTURRET_UNSECURED //the current step in the building process
 	var/finish_name = "turret"	//the name applied to the product turret
@@ -25,7 +26,7 @@
 			if(istype(I, /obj/item/wrench) && !anchored)
 				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You secure the external bolts.</span>")
-				anchored = TRUE
+				setAnchored(TRUE)
 				build_step = PTURRET_BOLTED
 				return
 
@@ -50,7 +51,7 @@
 			else if(istype(I, /obj/item/wrench))
 				I.play_tool_sound(src, 75)
 				to_chat(user, "<span class='notice'>You unfasten the external bolts.</span>")
-				anchored = FALSE
+				setAnchored(FALSE)
 				build_step = PTURRET_UNSECURED
 				return
 
@@ -168,6 +169,9 @@
 
 
 /obj/machinery/porta_turret_construct/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	switch(build_step)
 		if(PTURRET_GUN_EQUIPPED)
 			build_step = PTURRET_INTERNAL_ARMOUR_ON
@@ -178,7 +182,7 @@
 
 		if(PTURRET_SENSORS_ON)
 			to_chat(user, "<span class='notice'>You remove the prox sensor from the turret frame.</span>")
-			new /obj/item/device/assembly/prox_sensor(loc)
+			new /obj/item/assembly/prox_sensor(loc)
 			build_step = PTURRET_GUN_EQUIPPED
 
 /obj/machinery/porta_turret_construct/attack_ai()

@@ -68,7 +68,7 @@
 				user.visible_message("[user] drapes [I] over [M]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name].", \
 					"<span class='notice'>You drape [I] over [M]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name].</span>")
 
-				add_logs(user, M, "operated", addition="Operation type: [procedure.name], location: [selected_zone]")
+				log_combat(user, M, "operated on", null, "(OPERATION TYPE: [procedure.name]) (TARGET AREA: [selected_zone])")
 			else
 				to_chat(user, "<span class='warning'>You need to expose [M]'s [parse_zone(selected_zone)] first!</span>")
 
@@ -128,43 +128,43 @@
 				eyesmouth_covered |= I.flags_cover
 
 	switch(location)
-		if("head")
+		if(BODY_ZONE_HEAD)
 			if(covered_locations & HEAD)
 				return 0
-		if("eyes")
+		if(BODY_ZONE_PRECISE_EYES)
 			if(covered_locations & HEAD || face_covered & HIDEEYES || eyesmouth_covered & GLASSESCOVERSEYES)
 				return 0
-		if("mouth")
+		if(BODY_ZONE_PRECISE_MOUTH)
 			if(covered_locations & HEAD || face_covered & HIDEFACE || eyesmouth_covered & MASKCOVERSMOUTH || eyesmouth_covered & HEADCOVERSMOUTH)
 				return 0
-		if("chest")
+		if(BODY_ZONE_CHEST)
 			if(covered_locations & CHEST)
 				return 0
-		if("groin")
+		if(BODY_ZONE_PRECISE_GROIN)
 			if(covered_locations & GROIN)
 				return 0
-		if("l_arm")
+		if(BODY_ZONE_L_ARM)
 			if(covered_locations & ARM_LEFT)
 				return 0
-		if("r_arm")
+		if(BODY_ZONE_R_ARM)
 			if(covered_locations & ARM_RIGHT)
 				return 0
-		if("l_leg")
+		if(BODY_ZONE_L_LEG)
 			if(covered_locations & LEG_LEFT)
 				return 0
-		if("r_leg")
+		if(BODY_ZONE_R_LEG)
 			if(covered_locations & LEG_RIGHT)
 				return 0
-		if("l_hand")
+		if(BODY_ZONE_PRECISE_L_HAND)
 			if(covered_locations & HAND_LEFT)
 				return 0
-		if("r_hand")
+		if(BODY_ZONE_PRECISE_R_HAND)
 			if(covered_locations & HAND_RIGHT)
 				return 0
-		if("l_foot")
+		if(BODY_ZONE_PRECISE_L_FOOT)
 			if(covered_locations & FOOT_LEFT)
 				return 0
-		if("r_foot")
+		if(BODY_ZONE_PRECISE_R_FOOT)
 			if(covered_locations & FOOT_RIGHT)
 				return 0
 

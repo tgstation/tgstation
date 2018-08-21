@@ -9,6 +9,7 @@
 	icon_dead = "human_male"
 	gender = NEUTER
 	a_intent = INTENT_HARM
+	mob_biotypes = list(MOB_INORGANIC, MOB_HUMANOID)
 
 	response_help = "touches"
 	response_disarm = "pushes"
@@ -38,7 +39,6 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	vision_range = 12
 	aggro_vision_range = 12
-	idle_vision_range = 12
 
 	search_objects = 1 // So that it can see through walls
 

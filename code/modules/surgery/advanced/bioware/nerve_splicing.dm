@@ -1,9 +1,6 @@
-/obj/item/disk/surgery/nerve_splicing
-	desc = "The disk provides instructions on how to splice the circulatory system to counter stuns and paralysis."
-	surgeries = list(/datum/surgery/advanced/bioware/nerve_splicing)
-
 /datum/surgery/advanced/bioware/nerve_splicing
-	name = "nerve splicing"
+	name = "Nerve Splicing"
+	desc = "A surgical procedure which splices the patient's nerves, making them more resistant to stuns."
 	steps = list(/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,
 				/datum/surgery_step/clamp_bleeders,
@@ -11,7 +8,7 @@
 				/datum/surgery_step/incise,
 				/datum/surgery_step/splice_nerves,
 				/datum/surgery_step/close)
-	possible_locs = list("chest")
+	possible_locs = list(BODY_ZONE_CHEST)
 	bioware_target = BIOWARE_NERVES
 
 /datum/surgery_step/splice_nerves
@@ -30,7 +27,7 @@
 /datum/bioware/spliced_nerves
 	name = "Spliced Nerves"
 	desc = "Nerves are connected to each other multiple times, greatly reducing the impact of stunning effects."
-	mod_type = "nerves"
+	mod_type = BIOWARE_NERVES
 
 /datum/bioware/spliced_nerves/on_gain()
 	..()

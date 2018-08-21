@@ -18,6 +18,9 @@
 
 
 /obj/structure/toilet/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(swirlie)
 		user.changeNext_move(CLICK_CD_MELEE)
 		playsound(src.loc, "swing_hit", 25, 1)
@@ -51,7 +54,7 @@
 		else
 			to_chat(user, "<span class='warning'>You need a tighter grip!</span>")
 
-	else if(cistern && !open)
+	else if(cistern && !open && user.CanReach(src))
 		if(!contents.len)
 			to_chat(user, "<span class='notice'>The cistern is empty.</span>")
 		else
@@ -133,6 +136,9 @@
 	hiddenitem = new /obj/item/reagent_containers/food/urinalcake
 
 /obj/structure/urinal/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
@@ -204,7 +210,6 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "shower"
 	density = FALSE
-	anchored = TRUE
 	use_power = NO_POWER_USE
 	var/on = FALSE
 	var/obj/effect/mist/mymist = null
@@ -228,16 +233,16 @@
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-
-/obj/machinery/shower/attack_hand(mob/M)
+/obj/machinery/shower/interact(mob/M)
 	on = !on
 	update_icon()
 	add_fingerprint(M)
 	if(on)
+		START_PROCESSING(SSmachines, src)
 		soundloop.start()
 		wash_turf()
 		for(var/atom/movable/G in loc)
-			G.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+			SEND_SIGNAL(G, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 			if(isliving(G))
 				var/mob/living/L = G
 				wash_mob(L)
@@ -247,11 +252,10 @@
 		soundloop.stop()
 		if(isopenturf(loc))
 			var/turf/open/tile = loc
-			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 5, wet_time_to_add = 1)
-
+			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 5 SECONDS, wet_time_to_add = 1 SECONDS)
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user, params)
-	if(I.type == /obj/item/device/analyzer)
+	if(I.type == /obj/item/analyzer)
 		to_chat(user, "<span class='notice'>The water temperature seems to be [watertemp].</span>")
 	else
 		return ..()
@@ -311,7 +315,7 @@
 
 
 /obj/machinery/shower/proc/wash_obj(obj/O)
-	. = O.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+	. = SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	if(isitem(O))
 		var/obj/item/I = O
@@ -322,7 +326,7 @@
 /obj/machinery/shower/proc/wash_turf()
 	if(isturf(loc))
 		var/turf/tile = loc
-		tile.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+		SEND_SIGNAL(tile, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 		tile.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 		for(var/obj/effect/E in tile)
 			if(is_cleanable(E))
@@ -330,11 +334,12 @@
 
 
 /obj/machinery/shower/proc/wash_mob(mob/living/L)
-	L.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+	SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	L.wash_cream()
 	L.ExtinguishMob()
 	L.adjust_fire_stacks(-20) //Douse ourselves with water to avoid fire more easily
 	L.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 	if(iscarbon(L))
 		var/mob/living/carbon/M = L
 		. = TRUE
@@ -374,7 +379,7 @@
 			else if(H.w_uniform && wash_obj(H.w_uniform))
 				H.update_inv_w_uniform()
 			if(washgloves)
-				H.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+				SEND_SIGNAL(H, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 			if(H.shoes && washshoes && wash_obj(H.shoes))
 				H.update_inv_shoes()
 			if(H.wear_mask && washmask && wash_obj(H.wear_mask))
@@ -391,9 +396,9 @@
 		else
 			if(M.wear_mask && wash_obj(M.wear_mask))
 				M.update_inv_wear_mask(0)
-			M.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+			SEND_SIGNAL(M, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 	else
-		L.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /obj/machinery/shower/proc/contamination_cleanse(atom/movable/thing)
 	var/datum/component/radioactive/healthy_green_glow = thing.GetComponent(/datum/component/radioactive)
@@ -414,6 +419,8 @@
 			else if(isobj(AM))
 				wash_obj(AM)
 			contamination_cleanse(AM)
+	else
+		return PROCESS_KILL
 
 /obj/machinery/shower/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/metal (loc, 3)
@@ -421,10 +428,10 @@
 
 /obj/machinery/shower/proc/check_heat(mob/living/carbon/C)
 	if(watertemp == "freezing")
-		C.bodytemperature = max(80, C.bodytemperature - 80)
+		C.adjust_bodytemperature(-80, 80)
 		to_chat(C, "<span class='warning'>The water is freezing!</span>")
 	else if(watertemp == "boiling")
-		C.bodytemperature = min(500, C.bodytemperature + 35)
+		C.adjust_bodytemperature(35, 0, 500)
 		C.adjustFireLoss(5)
 		to_chat(C, "<span class='danger'>The water is searing!</span>")
 
@@ -451,6 +458,9 @@
 
 
 /obj/structure/sink/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(!user || !istype(user))
 		return
 	if(!iscarbon(user))
@@ -463,9 +473,9 @@
 		return
 	var/selected_area = parse_zone(user.zone_selected)
 	var/washing_face = 0
-	if(selected_area in list("head", "mouth", "eyes"))
+	if(selected_area in list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES))
 		washing_face = 1
-	user.visible_message("<span class='notice'>[user] starts washing their [washing_face ? "face" : "hands"]...</span>", \
+	user.visible_message("<span class='notice'>[user] starts washing [user.p_their()] [washing_face ? "face" : "hands"]...</span>", \
 						"<span class='notice'>You start washing your [washing_face ? "face" : "hands"]...</span>")
 	busy = TRUE
 
@@ -475,7 +485,7 @@
 
 	busy = FALSE
 
-	user.visible_message("<span class='notice'>[user] washes their [washing_face ? "face" : "hands"] using [src].</span>", \
+	user.visible_message("<span class='notice'>[user] washes [user.p_their()] [washing_face ? "face" : "hands"] using [src].</span>", \
 						"<span class='notice'>You wash your [washing_face ? "face" : "hands"] using [src].</span>")
 	if(washing_face)
 		if(ishuman(user))
@@ -486,7 +496,7 @@
 			H.regenerate_icons()
 		user.drowsyness = max(user.drowsyness - rand(2,3), 0) //Washing your face wakes you up if you're falling asleep
 	else
-		user.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /obj/structure/sink/attackby(obj/item/O, mob/living/user, params)
 	if(busy)
@@ -512,7 +522,7 @@
 				user.Knockdown(stunforce)
 				user.stuttering = stunforce/20
 				B.deductcharge(B.hitcost)
-				user.visible_message("<span class='warning'>[user] shocks themself while attempting to wash the active [B.name]!</span>", \
+				user.visible_message("<span class='warning'>[user] shocks [user.p_them()]self while attempting to wash the active [B.name]!</span>", \
 									"<span class='userdanger'>You unwisely attempt to wash [B] while it's still on.</span>")
 				playsound(src, "sparks", 50, 1)
 				return
@@ -532,7 +542,7 @@
 
 	if(!istype(O))
 		return
-	if(O.flags_1 & ABSTRACT_1) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
+	if(O.item_flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
 		return
 
 	if(user.a_intent != INTENT_HARM)
@@ -542,7 +552,7 @@
 			busy = FALSE
 			return 1
 		busy = FALSE
-		O.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 		O.acid_level = 0
 		create_reagents(5)
 		reagents.add_reagent(dispensedreagent, 5)
@@ -570,9 +580,10 @@
 	icon_state = "puddle"
 	resistance_flags = UNACIDABLE
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/sink/puddle/attack_hand(mob/M)
 	icon_state = "puddle-splash"
-	..()
+	. = ..()
 	icon_state = "puddle"
 
 /obj/structure/sink/puddle/attackby(obj/item/O, mob/user, params)
@@ -642,9 +653,11 @@
 
 
 /obj/structure/curtain/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	playsound(loc, 'sound/effects/curtain.ogg', 50, 1)
 	toggle()
-	..()
 
 /obj/structure/curtain/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/cloth (loc, 2)

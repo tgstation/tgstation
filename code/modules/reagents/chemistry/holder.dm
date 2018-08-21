@@ -51,7 +51,7 @@
 	var/last_tick = 1
 	var/addiction_tick = 1
 	var/list/datum/reagent/addiction_list = new/list()
-	var/flags
+	var/reagents_holder_flags
 
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
@@ -72,7 +72,7 @@
 	cached_reagents = null
 	if(my_atom && my_atom.reagents == src)
 		my_atom.reagents = null
-
+	my_atom = null
 
 // Used in attack logs for reagents in pills and such
 /datum/reagents/proc/log_list()
@@ -251,7 +251,7 @@
 	R.handle_reactions()
 	return amount
 
-/datum/reagents/proc/metabolize(mob/living/carbon/C, can_overdose = 0)
+/datum/reagents/proc/metabolize(mob/living/carbon/C, can_overdose = FALSE, liverless = FALSE)
 	var/list/cached_reagents = reagent_list
 	var/list/cached_addictions = addiction_list
 	if(C)
@@ -260,6 +260,8 @@
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		if(QDELETED(R.holder))
+			continue
+		if(liverless && !R.self_consuming) //need to be metabolized
 			continue
 		if(!C)
 			C = R.holder.my_atom
@@ -301,6 +303,7 @@
 							need_mob_update += R.addiction_act_stage4(C)
 						if(40 to INFINITY)
 							to_chat(C, "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>")
+							SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.id]_addiction")
 							cached_addictions.Remove(R)
 		addiction_tick++
 	if(C && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
@@ -312,9 +315,9 @@
 
 /datum/reagents/proc/set_reacting(react = TRUE)
 	if(react)
-		flags &= ~(REAGENT_NOREACT)
+		reagents_holder_flags &= ~(REAGENT_NOREACT)
 	else
-		flags |= REAGENT_NOREACT
+		reagents_holder_flags |= REAGENT_NOREACT
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	var/list/cached_reagents = reagent_list
@@ -334,7 +337,7 @@
 	var/list/cached_reagents = reagent_list
 	var/list/cached_reactions = GLOB.chemical_reactions_list
 	var/datum/cached_my_atom = my_atom
-	if(flags & REAGENT_NOREACT)
+	if(reagents_holder_flags & REAGENT_NOREACT)
 		return //Yup, no reactions here. No siree.
 
 	var/reaction_occurred = 0
@@ -403,10 +406,10 @@
 			for(var/V in possible_reactions)
 				var/datum/chemical_reaction/competitor = V
 				if(selected_reaction.is_cold_recipe) //if there are no recipe conflicts, everything in possible_reactions will have this same value for is_cold_reaction. warranty void if assumption not met.
-					if(competitor.required_temp < selected_reaction.required_temp)
+					if(competitor.required_temp <= selected_reaction.required_temp)
 						selected_reaction = competitor
 				else
-					if(competitor.required_temp > selected_reaction.required_temp)
+					if(competitor.required_temp >= selected_reaction.required_temp)
 						selected_reaction = competitor
 			var/list/cached_required_reagents = selected_reaction.required_reagents
 			var/list/cached_results = selected_reaction.results
@@ -523,19 +526,54 @@
 		return TRUE
 	return FALSE
 
+//Returns the average specific heat for all reagents currently in this holder.
+/datum/reagents/proc/specific_heat()
+	. = 0
+	var/cached_amount = total_volume		//cache amount
+	var/list/cached_reagents = reagent_list		//cache reagents
+	for(var/I in cached_reagents)
+		var/datum/reagent/R = I
+		. += R.specific_heat * (R.volume / cached_amount)
+
+/datum/reagents/proc/adjust_thermal_energy(J, min_temp = 2.7, max_temp = 1000)
+	var/S = specific_heat()
+	chem_temp = CLAMP(chem_temp + (J / (S * total_volume)), 2.7, 1000)
+
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)
 	if(!isnum(amount) || !amount)
 		return FALSE
 
-	if(amount < 0)
+	if(amount <= 0)
 		return FALSE
 
+	var/datum/reagent/D = GLOB.chemical_reagents_list[reagent]
+	if(!D)
+		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
+		return FALSE
+	
+ 	update_total()
+	var/cached_total = total_volume
+	if(cached_total + amount > maximum_volume)
+		amount = (maximum_volume - cached_total) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
+		if(amount <= 0)
+			return FALSE
+	var/new_total = cached_total + amount
+	var/cached_temp = chem_temp
 	var/list/cached_reagents = reagent_list
-	update_total()
-	if(total_volume + amount > maximum_volume)
-		amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
-	chem_temp = round(((amount * reagtemp) + (total_volume * chem_temp)) / (total_volume + amount)) //equalize with new chems
 
+	//Equalize temperature - Not using specific_heat() because the new chemical isn't in yet.
+	var/specific_heat = 0
+	var/thermal_energy = 0
+	for(var/i in cached_reagents)
+		var/datum/reagent/R = i
+		specific_heat += R.specific_heat * (R.volume / new_total)
+		thermal_energy += R.specific_heat * R.volume * cached_temp
+	specific_heat += D.specific_heat * (amount / new_total)
+	thermal_energy += D.specific_heat * amount * reagtemp
+	chem_temp = thermal_energy / (specific_heat * new_total)
+	////
+
+	//add the reagent to the existing if it exists
 	for(var/A in cached_reagents)
 		var/datum/reagent/R = A
 		if (R.id == reagent)
@@ -548,29 +586,23 @@
 				handle_reactions()
 			return TRUE
 
-	var/datum/reagent/D = GLOB.chemical_reagents_list[reagent]
-	if(D)
-
-		var/datum/reagent/R = new D.type(data)
-		cached_reagents += R
-		R.holder = src
-		R.volume = amount
-		if(data)
-			R.data = data
-			R.on_new(data)
-
-		update_total()
-		if(my_atom)
-			my_atom.on_reagent_change(ADD_REAGENT)
-		if(!no_react)
-			handle_reactions()
-		if(isliving(my_atom))
-			R.on_mob_add(my_atom)
-		return TRUE
-
-	else
-		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
-	return FALSE
+	//otherwise make a new one
+	var/datum/reagent/R = new D.type(data)
+	cached_reagents += R
+	R.holder = src
+	R.volume = amount
+	if(data)
+		R.data = data
+		R.on_new(data)
+	
+	if(isliving(my_atom))
+		R.on_mob_add(my_atom) //Must occur befor it could posibly run on_mob_delete 
+	update_total()
+	if(my_atom)
+		my_atom.on_reagent_change(ADD_REAGENT)
+	if(!no_react)
+		handle_reactions()
+	return TRUE
 
 /datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null) // Like add_reagent but you can enter a list. Format it like this: list("toxin" = 10, "beer" = 15)
 	for(var/r_id in list_reagents)

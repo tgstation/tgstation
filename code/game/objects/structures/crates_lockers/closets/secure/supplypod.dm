@@ -1,5 +1,7 @@
 //The "BDPtarget" temp visual is created by the expressconsole, which in turn makes two things: a falling droppod animation, and the droppod itself.
-
+#define POD_STANDARD 0
+#define POD_BLUESPACE 1
+#define POD_CENTCOM 2
 
 //------------------------------------SUPPLY POD-------------------------------------//
 /obj/structure/closet/supplypod
@@ -18,15 +20,24 @@
 	anchored = TRUE
 	anchorable = FALSE
 	var/datum/supply_order/SupplyOrder
+	var/atom/other_delivery
 
 /obj/structure/closet/supplypod/bluespacepod
 	name = "Bluespace Drop Pod"
-	desc = "A Nanotrasen Bluespace drop pod. Teleports back to Centcom after delivery."
+	desc = "A Nanotrasen Bluespace drop pod. Teleports back to CentCom after delivery."
 	icon_state = "bluespacepod"
 
-/obj/structure/closet/supplypod/Initialize(mapload, datum/supply_order/so)
+/obj/structure/closet/supplypod/bluespacepod/centcompod
+	name = "CentCom Drop Pod"
+	desc = "A Nanotrasen Bluespace drop pod, this one has been marked with Central Command's designations. Teleports back to Centcom after delivery."
+	icon_state = "centcompod"
+
+/obj/structure/closet/supplypod/Initialize(mapload, SO)
 	. = ..()
-	SupplyOrder = so//uses Supply Order passed from expressconsole into BDPtarget
+	if(istype(SO, /datum/supply_order))
+		SupplyOrder = SO//uses Supply Order passed from expressconsole into BDPtarget
+	else
+		other_delivery = SO//if the object is not a supply order, we force the object in the pod
 	addtimer(CALLBACK(src, .proc/open), 30)//open 3seconds after appearing
 
 /obj/structure/closet/supplypod/update_icon()
@@ -45,15 +56,18 @@
 /obj/structure/closet/supplypod/open()
 	var/turf/T = get_turf(src)
 	opened = TRUE
-	SupplyOrder.generate(T)//not called during populateContents as supplyorder generation requires a turf
+	if(SupplyOrder)
+		SupplyOrder.generate(T)//not called during populateContents as supplyorder generation requires a turf
+	if(other_delivery)
+		new other_delivery(T)
 	update_icon()
 	playsound(src, open_sound, 15, 1, -3)
 	if(istype(src,/obj/structure/closet/supplypod/bluespacepod))
-		addtimer(CALLBACK(src, .proc/sparks), 30)//if bluespace, then 3 seconds after opening, make some sparks and delete		
- 		
-/obj/structure/closet/supplypod/proc/sparks()//sparks cant be called from addtimer		
- 	do_sparks(5, TRUE, src)		
- 	qdel(src)//no need for QDEL_IN if we already have a timer 
+		addtimer(CALLBACK(src, .proc/sparks), 30)//if bluespace, then 3 seconds after opening, make some sparks and delete
+
+/obj/structure/closet/supplypod/proc/sparks()//sparks cant be called from addtimer
+ 	do_sparks(5, TRUE, src)
+ 	qdel(src)//no need for QDEL_IN if we already have a timer
 
 /obj/structure/closet/supplypod/Destroy()//make some sparks b4 deletion
 	QDEL_NULL(SupplyOrder)
@@ -68,14 +82,18 @@
 	desc = "Get out of the way!"
 	layer = FLY_LAYER//that wasnt flying, that was falling with style!
 	randomdir = FALSE
+	icon_state = "supplypod_falling"
 
-/obj/effect/temp_visual/DPfall/Initialize(var/dropLocation, var/podID)
-	if (podID == 1)
+/obj/effect/temp_visual/DPfall/Initialize(dropLocation, podID)
+	if (podID == POD_STANDARD)
+		icon_state = "supplypod_falling"
+		name = "Supply Drop Pod"
+	else if (podID == POD_BLUESPACE)
 		icon_state = "bluespacepod_falling"
 		name = "Bluespace Drop Pod"
 	else
-		icon_state = "supplypod_falling"
-		name = "Supply Drop Pod"
+		icon_state = "centcompod_falling"
+		name = "CentCom Drop Pod"
 	. = ..()
 
 //------------------------------------TEMPORARY_VISUAL-------------------------------------//
@@ -86,22 +104,42 @@
 	light_range = 2
 	var/obj/effect/temp_visual/fallingPod
 
-/obj/effect/DPtarget/Initialize(mapload, datum/supply_order/SO, var/podID)
+/obj/effect/DPtarget/Initialize(mapload, SO, podID)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/beginLaunch, SO, podID), 30)//wait 3 seconds
+	var/delayTime = 17			//We're forcefully adminspawned, make it faster
+	switch(podID)
+		if(POD_STANDARD)
+			delayTime = 30
+		if(POD_BLUESPACE)
+			delayTime = 15
+		if(POD_CENTCOM)			//Admin smite, even faster.
+			delayTime = 5//speedy delivery
 
-/obj/effect/DPtarget/proc/beginLaunch(datum/supply_order/SO, var/podID)
+	addtimer(CALLBACK(src, .proc/beginLaunch, SO, podID), delayTime)//standard pods take 3 seconds to come in, bluespace pods take 1.5
+
+/obj/effect/DPtarget/proc/beginLaunch(SO, podID)
 	fallingPod = new /obj/effect/temp_visual/DPfall(drop_location(), podID)
 	animate(fallingPod, pixel_z = 0, time = 3, easing = LINEAR_EASING)//make and animate a falling pod
-	addtimer(CALLBACK(src, .proc/endLaunch, SO, podID), 3, TIMER_CLIENT_TIME)//fall 0.3seconds 
+	addtimer(CALLBACK(src, .proc/endLaunch, SO, podID), 3, TIMER_CLIENT_TIME)//fall 0.3seconds
 
-/obj/effect/DPtarget/proc/endLaunch(datum/supply_order/SO, var/podID)
-	if (podID == 1)//podID 1 = bluespace supplypod, podID 0 = standard supplypod
-		new /obj/structure/closet/supplypod/bluespacepod(drop_location(), SO)//pod is created
-		explosion(src,0,0,2, flame_range = 1) //explosion and camshake (shoutout to @cyberboss)
-	else
+/obj/effect/DPtarget/proc/endLaunch(SO, podID)
+	if(podID == POD_STANDARD)
 		new /obj/structure/closet/supplypod(drop_location(), SO)//pod is created
 		explosion(src,0,0,2, flame_range = 3) //less advanced equipment than bluespace pod, so larger explosion when landing
+	else if(podID == POD_BLUESPACE)
+		new /obj/structure/closet/supplypod/bluespacepod(drop_location(), SO)//pod is created
+		explosion(src,0,0,2, flame_range = 1) //explosion and camshake (shoutout to @cyberboss)
+	else if(podID == POD_CENTCOM)
+		new /obj/structure/closet/supplypod/bluespacepod/centcompod(drop_location(), SO)//CentCom supplypods dont create explosions; instead they directly deal 40 fire damage to people on the turf
+		var/turf/T = get_turf(src)
+		playsound(src, "explosion", 80, 1)
+		new /obj/effect/hotspot(T)
+		T.hotspot_expose(700, 50, 1)//same as fireball
+		for(var/mob/living/M in T.contents)
+			M.adjustFireLoss(40)
+	else			//We're buildmoded or directly spawned, blow them up damnit.
+		new /obj/structure/closet/supplypod/bluespacepod/centcompod(drop_location(), SO)
+		explosion(src, 0, 0, 2, flame_range = 3)
 	qdel(src)
 
 /obj/effect/DPtarget/Destroy()

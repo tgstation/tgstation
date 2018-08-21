@@ -2,7 +2,7 @@
 	see_invisible = SEE_INVISIBLE_LIVING
 	sight = 0
 	see_in_dark = 2
-	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD)
 	pressure_resistance = 10
 
 	var/resize = 1 //Badminnery resize
@@ -20,6 +20,7 @@
 	var/fireloss = 0	//Burn damage caused by being way too hot, too cold or burnt.
 	var/cloneloss = 0	//Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
 	var/staminaloss = 0		//Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
+	var/crit_threshold = HEALTH_THRESHOLD_CRIT // when the mob goes from "normal" to crit
 
 	var/confused = 0	//Makes the mob move in random directions.
 
@@ -34,9 +35,11 @@
 
 	var/list/status_traits = list()
 
+	var/list/roundstart_quirks = list()
+
 	var/list/surgeries = list()	//a list of surgery datums. generally empty, they're added when the player wants them.
 
-	var/now_pushing = null //used by living/Collide() and living/PushAM() to prevent potential infinite loop.
+	var/now_pushing = null //used by living/Bump() and living/PushAM() to prevent potential infinite loop.
 
 	var/cameraFollow = null
 
@@ -51,8 +54,8 @@
 	var/limb_destroyer = 0 //1 Sets AI behavior that allows mobs to target and dismember limbs with their basic attack.
 
 	var/mob_size = MOB_SIZE_HUMAN
+	var/list/mob_biotypes = list(MOB_ORGANIC)
 	var/metabolism_efficiency = 1 //more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
-	var/list/image/staticOverlays = list()
 	var/has_limbs = 0 //does the mob have distinct limbs?(arms,legs, chest,head)
 
 	var/list/pipes_shown = list()
@@ -65,7 +68,10 @@
 	var/last_bumped = 0
 	var/unique_name = 0 //if a mob's name should be appended with an id when created e.g. Mob (666)
 
-	var/list/butcher_results = null
+	var/list/butcher_results = null //these will be yielded from butchering with a probability chance equal to the butcher item's effectiveness
+	var/list/guaranteed_butcher_results = null //these will always be yielded from butchering
+	var/butcher_difficulty = 0 //effectiveness prob. is modified negatively by this amount; positive numbers make it more difficult, negative ones make it easier
+
 	var/hellbound = 0 //People who've signed infernal contracts are unrevivable.
 
 	var/list/weather_immunities = list()
@@ -102,3 +108,7 @@
 	var/radiation = 0 //If the mob is irradiated.
 	var/ventcrawl_layer = PIPING_LAYER_DEFAULT
 	var/losebreath = 0
+
+	//List of active diseases
+	var/list/diseases = list() // list of all diseases in a mob
+	var/list/disease_resistances = list()

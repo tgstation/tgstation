@@ -12,6 +12,7 @@
 	icon_state = "wood"
 	floor_tile = /obj/item/stack/tile/wood
 	broken_states = list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
+	tiled_dirt = FALSE
 
 /turf/open/floor/wood/examine(mob/user)
 	..()
@@ -67,8 +68,10 @@
 	floor_tile = /obj/item/stack/tile/grass
 	broken_states = list("sand")
 	flags_1 = NONE
+	bullet_bounce_sound = null
 	var/ore_type = /obj/item/stack/ore/glass
 	var/turfverb = "uproot"
+	tiled_dirt = FALSE
 
 /turf/open/floor/grass/Initialize()
 	. = ..()
@@ -84,6 +87,7 @@
 		return
 
 /turf/open/floor/grass/snow
+	gender = PLURAL
 	name = "snow"
 	icon = 'icons/turf/snow.dmi'
 	desc = "Looks cold."
@@ -93,6 +97,7 @@
 	floor_tile = null
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	slowdown = 2
+	bullet_sizzle = TRUE
 
 /turf/open/floor/grass/snow/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
@@ -101,6 +106,7 @@
 	return
 
 /turf/open/floor/grass/snow/basalt //By your powers combined, I am captain planet
+	gender = NEUTER
 	name = "volcanic floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"
@@ -142,6 +148,8 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/turf/open/floor/carpet)
 	flags_1 = NONE
+	bullet_bounce_sound = null
+	tiled_dirt = FALSE
 
 /turf/open/floor/carpet/examine(mob/user)
 	..()
@@ -195,6 +203,7 @@
 	canSmoothWith = list(/turf/open/floor/fakepit)
 	icon = 'icons/turf/floors/Chasms.dmi'
 	icon_state = "smooth"
+	tiled_dirt = FALSE
 
 /turf/open/floor/fakepit/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
@@ -207,6 +216,7 @@
 	floor_tile = /obj/item/stack/tile/fakespace
 	broken_states = list("damaged")
 	plane = PLANE_SPACE
+	tiled_dirt = FALSE
 
 /turf/open/floor/fakespace/Initialize()
 	. = ..()

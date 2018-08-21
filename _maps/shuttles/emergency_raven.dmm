@@ -50,7 +50,7 @@
 "ak" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs,
-/obj/item/device/assembly/flash,
+/obj/item/assembly/flash,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/escape)
 "al" = (
@@ -304,18 +304,7 @@
 	},
 /area/shuttle/escape)
 "aW" = (
-/turf/open/floor/mineral/plastitanium/brig{
-	dir = 9;
-	floor_tile = /obj/item/stack/tile/plasteel;
-	icon_state = "darkred"
-	},
-/area/shuttle/escape)
-"aX" = (
-/turf/open/floor/mineral/plastitanium/brig{
-	dir = 4;
-	floor_tile = /obj/item/stack/tile/plasteel;
-	icon_state = "darkred"
-	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "aZ" = (
 /turf/open/floor/plasteel/darkgreen/side{
@@ -412,22 +401,11 @@
 	dir = 5
 	},
 /area/shuttle/escape)
-"bc" = (
-/turf/open/floor/mineral/plastitanium/brig{
-	dir = 8;
-	floor_tile = /obj/item/stack/tile/plasteel;
-	icon_state = "darkred"
-	},
-/area/shuttle/escape)
 "bd" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium/brig{
-	dir = 4;
-	floor_tile = /obj/item/stack/tile/plasteel;
-	icon_state = "darkred"
-	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "be" = (
 /turf/open/floor/plasteel/darkgreen/side{
@@ -523,11 +501,7 @@
 "bn" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/turf/open/floor/mineral/plastitanium/brig{
-	dir = 4;
-	floor_tile = /obj/item/stack/tile/plasteel;
-	icon_state = "darkred"
-	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "bo" = (
 /obj/machinery/status_display,
@@ -571,16 +545,6 @@
 /obj/structure/chair/office/dark,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
-"bx" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium/brig{
-	dir = 6;
-	floor_tile = /obj/item/stack/tile/plasteel;
-	icon_state = "darkred"
-	},
-/area/shuttle/escape)
 "by" = (
 /turf/open/floor/plasteel/darkgreen/corner,
 /area/shuttle/escape)
@@ -617,12 +581,11 @@
 	width = 32
 	},
 /obj/machinery/door/airlock/hatch,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "bF" = (
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen"
+	dir = 9
 	},
 /area/shuttle/escape)
 "bG" = (
@@ -642,8 +605,7 @@
 	pixel_y = -6
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen"
+	dir = 9
 	},
 /area/shuttle/escape)
 "bI" = (
@@ -662,7 +624,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bK" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 8
 	},
@@ -681,7 +643,7 @@
 	},
 /area/shuttle/escape)
 "bN" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkgreen/side,
@@ -791,8 +753,7 @@
 "bT" = (
 /obj/machinery/recharge_station,
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen"
+	dir = 9
 	},
 /area/shuttle/escape)
 "bU" = (
@@ -806,8 +767,7 @@
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen"
+	dir = 9
 	},
 /area/shuttle/escape)
 "bW" = (
@@ -819,7 +779,7 @@
 	},
 /area/shuttle/escape)
 "bX" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -828,7 +788,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bY" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -837,27 +797,27 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bZ" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ca" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "cb" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 1
 	},
 /area/shuttle/escape)
 "cc" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkgreen/side,
@@ -884,8 +844,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen"
+	dir = 9
 	},
 /area/shuttle/escape)
 "ci" = (
@@ -1004,11 +963,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium/brig{
-	dir = 8;
-	floor_tile = /obj/item/stack/tile/plasteel;
-	icon_state = "darkred"
-	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "eE" = (
 /obj/machinery/light{
@@ -1045,6 +1000,10 @@
 "eP" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/escape)
+"UQ" = (
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -1059,7 +1018,7 @@ bJ
 cs
 bJ
 bJ
-bs
+UQ
 cs
 bE
 bJ
@@ -1067,9 +1026,9 @@ bJ
 cs
 ad
 aa
-bs
+UQ
 bJ
-bs
+UQ
 cs
 bJ
 cs
@@ -1089,11 +1048,11 @@ cs
 cs
 ar
 aW
-bc
+aW
 eD
-bc
-bc
-bc
+aW
+aW
+aW
 bD
 bF
 bK
@@ -1122,12 +1081,12 @@ av
 cs
 an
 aP
-aX
+aW
 bd
 bd
 bn
 bd
-bx
+bd
 ab
 br
 aC

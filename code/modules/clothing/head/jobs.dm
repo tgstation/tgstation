@@ -55,32 +55,18 @@
 	flags_inv = HIDEHAIR
 	flags_cover = HEADCOVERSEYES
 
-/obj/item/clothing/head/cage
-	name = "cage"
-	desc = "A cage that restrains the will of the self, allowing one to see the profane world for what it is."
-	alternate_worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
-	icon_state = "cage"
-	item_state = "cage"
-	worn_x_dimension = 64
-	worn_y_dimension = 64
-	dynamic_hair_suffix = ""
-
-
-/obj/item/clothing/head/witchunter_hat
-	name = "witchunter hat"
-	desc = "This hat saw much use back in the day."
-	icon_state = "witchhunterhat"
-	item_state = "witchhunterhat"
-	flags_cover = HEADCOVERSEYES
-
 //Detective
 /obj/item/clothing/head/fedora/det_hat
 	name = "detective's fedora"
 	desc = "There's only one man who can sniff out the dirty stench of crime, and he's likely wearing this hat."
 	icon_state = "detective"
 	var/candy_cooldown = 0
-	pockets = /obj/item/storage/internal/pocket/small/detective
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/detective
 	dog_fashion = /datum/dog_fashion/head/detective
+
+/obj/item/clothing/head/fedora/det_hat/Initialize()
+	. = ..()
+	new /obj/item/reagent_containers/food/drinks/flask/det(src)
 
 /obj/item/clothing/head/fedora/det_hat/examine(mob/user)
 	..()
@@ -114,7 +100,7 @@
 
 /obj/item/clothing/head/beret/highlander
 	desc = "That was white fabric. <i>Was.</i>"
-	flags_1 = NODROP_1
+	item_flags = NODROP
 	dog_fashion = null //THIS IS FOR SLAUGHTER, NOT PUPPIES
 
 //Security
@@ -150,7 +136,7 @@
 
 /obj/item/clothing/head/beret/sec
 	name = "security beret"
-	desc = "A robust beret with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficent protection."
+	desc = "A robust beret with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection."
 	icon_state = "beret_badge"
 	armor = list("melee" = 40, "bullet" = 30, "laser" = 30,"energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 50)
 	strip_delay = 60

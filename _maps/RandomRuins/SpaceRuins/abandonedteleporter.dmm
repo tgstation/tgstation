@@ -65,16 +65,19 @@
 /area/ruin/space/abandoned_tele)
 "p" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "q" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/device/flashlight,
+/obj/item/flashlight,
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "r" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/device/radio/beacon,
+/obj/item/beacon,
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "s" = (
@@ -107,8 +110,8 @@
 /area/ruin/space/abandoned_tele)
 "z" = (
 /obj/structure/closet/crate,
-/obj/item/device/aicard,
-/obj/item/device/multitool,
+/obj/item/aicard,
+/obj/item/multitool,
 /obj/item/weldingtool,
 /obj/item/wrench,
 /obj/item/circuitboard/computer/teleporter,
@@ -120,6 +123,13 @@
 /area/ruin/space/abandoned_tele)
 "B" = (
 /obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/space/abandoned_tele)
+"O" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 
@@ -184,7 +194,7 @@ a
 c
 b
 b
-p
+O
 b
 b
 c

@@ -18,6 +18,11 @@ field_generator power level display
 #define FG_CHARGING 1
 #define FG_ONLINE 2
 
+//field generator construction defines
+#define FG_UNSECURED 0
+#define FG_SECURED 1
+#define FG_WELDED 2
+
 /obj/machinery/field/generator
 	name = "field generator"
 	desc = "A large thermal battery that projects a high amount of energy when powered."
@@ -54,12 +59,15 @@ field_generator power level display
 	fields = list()
 	connected_gens = list()
 
+/obj/machinery/field/generator/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/field/generator/process()
 	if(active == FG_ONLINE)
 		calc_power()
 
-/obj/machinery/field/generator/attack_hand(mob/user)
+/obj/machinery/field/generator/interact(mob/user)
 	if(state == FG_WELDED)
 		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
 			if(active >= FG_CHARGING)
@@ -70,7 +78,7 @@ field_generator power level display
 					"<span class='notice'>You turn on [src].</span>", \
 					"<span class='italics'>You hear heavy droning.</span>")
 				turn_on()
-				investigate_log("<font color='green'>activated</font> by [user.key].", INVESTIGATE_SINGULO)
+				investigate_log("<font color='green'>activated</font> by [key_name(user)].", INVESTIGATE_SINGULO)
 
 				add_fingerprint(user)
 	else
@@ -89,7 +97,7 @@ field_generator power level display
 
 	return ..()
 
-/obj/machinery/field/generator/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
+/obj/machinery/field/generator/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(anchored)
@@ -98,7 +106,7 @@ field_generator power level display
 			state = FG_UNSECURED
 
 /obj/machinery/field/generator/wrench_act(mob/living/user, obj/item/I)
-	default_unfasten_wrench(user, I, 0)
+	default_unfasten_wrench(user, I)
 	return TRUE
 
 /obj/machinery/field/generator/welder_act(mob/living/user, obj/item/I)
@@ -142,10 +150,6 @@ field_generator power level display
 		..()
 	if(!anchored)
 		step(src, get_dir(M, src))
-
-/obj/machinery/field/generator/emp_act()
-	return 0
-
 
 /obj/machinery/field/generator/blob_act(obj/structure/blob/B)
 	if(active)
@@ -327,8 +331,9 @@ field_generator power level display
 			if(O.last_warning && temp)
 				if((world.time - O.last_warning) > 50) //to stop message-spam
 					temp = 0
-					message_admins("A singulo exists and a containment field has failed.",1)
-					investigate_log("has <font color='red'>failed</font> whilst a singulo exists.", INVESTIGATE_SINGULO)
+					var/turf/T = get_turf(src)
+					message_admins("A singulo exists and a containment field has failed at [ADMIN_VERBOSEJMP(T)].")
+					investigate_log("has <font color='red'>failed</font> whilst a singulo exists at [AREACOORD(T)].", INVESTIGATE_SINGULO)
 			O.last_warning = world.time
 
 /obj/machinery/field/generator/shock(mob/living/user)

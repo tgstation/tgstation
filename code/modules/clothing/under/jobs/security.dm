@@ -28,6 +28,15 @@
 	item_state = "gy_suit"
 	item_color = "security"
 
+/obj/item/clothing/under/rank/security/skirt
+	name = "security jumpskirt"
+	desc = "A \"tactical\" security jumpsuit with the legs replaced by a skirt."
+	icon_state = "secskirt"
+	item_state = "r_suit"
+	item_color = "secskirt"
+	body_parts_covered = CHEST|GROIN|ARMS
+	can_adjust = FALSE //you know now that i think of it if you adjust the skirt and the sprite disappears isn't that just like flashing everyone
+
 
 /obj/item/clothing/under/rank/warden
 	name = "security suit"

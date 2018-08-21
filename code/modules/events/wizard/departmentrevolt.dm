@@ -3,7 +3,7 @@
 	weight = 0 //An order that requires order in a round of chaos was maybe not the best idea. Requiescat in pace departmental uprising August 2014 - March 2015
 	typepath = /datum/round_event/wizard/deprevolt
 	max_occurrences = 1
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/deprevolt/start()
 
@@ -46,8 +46,8 @@
 					if(M.assigned_role == job)
 						citizens += H
 						M.add_antag_datum(/datum/antagonist/separatist,nation)
-						H.log_message("<font color='red'>Was made into a separatist, long live [nation_name]!</font>", INDIVIDUAL_ATTACK_LOG)
-	
+						H.log_message("Was made into a separatist, long live [nation_name]!", LOG_ATTACK, color="red")
+
 	if(citizens.len)
 		var/message
 		for(var/job in jobs_to_revolt)

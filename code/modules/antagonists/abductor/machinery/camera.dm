@@ -1,7 +1,7 @@
 /obj/machinery/computer/camera_advanced/abductor
 	name = "Human Observation Console"
 	var/team_number = 0
-	networks = list("SS13","Abductor")
+	networks = list("ss13", "abductor")
 	var/datum/action/innate/teleport_in/tele_in_action = new
 	var/datum/action/innate/teleport_out/tele_out_action = new
 	var/datum/action/innate/teleport_self/tele_self_action = new
@@ -57,11 +57,6 @@
 /obj/machinery/computer/camera_advanced/abductor/proc/IsScientist(mob/living/carbon/human/H)
 	var/datum/species/abductor/S = H.dna.species
 	return S.scientist
-
-/obj/machinery/computer/camera_advanced/abductor/attack_hand(mob/user)
-	if(!isabductor(user))
-		return
-	return ..()
 
 /datum/action/innate/teleport_in
 	name = "Send To"

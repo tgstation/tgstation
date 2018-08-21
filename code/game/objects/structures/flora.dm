@@ -66,6 +66,9 @@
 	var/list/ckeys_that_took = list()
 
 /obj/structure/flora/tree/pine/xmas/presents/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(!user.ckey)
 		return
 
@@ -290,6 +293,7 @@
 	throwforce = 13
 	throw_speed = 2
 	throw_range = 4
+
 
 /obj/item/twohanded/required/kirbyplants/equipped(mob/living/user)
 	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)

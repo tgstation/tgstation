@@ -6,18 +6,17 @@
 
 /datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
-	var/area/A = get_area(T)
 	var/inside_msg
 	if(ismob(holder.my_atom))
 		var/mob/M = holder.my_atom
-		inside_msg = " inside [key_name_admin(M)]"
+		inside_msg = " inside [ADMIN_LOOKUPFLW(M)]"
 	var/lastkey = holder.my_atom.fingerprintslast
 	var/touch_msg = "N/A"
 	if(lastkey)
 		var/mob/toucher = get_mob_by_key(lastkey)
 		touch_msg = "[ADMIN_LOOKUPFLW(toucher)]"
-	message_admins("Reagent explosion reaction occurred at [A] [ADMIN_COORDJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
-	log_game("Reagent explosion reaction occurred at [A] [COORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
+	message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
+	log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
 	var/datum/effect_system/reagents_explosion/e = new()
 	e.set_up(modifier + round(created_volume/strengthdiv, 1), T, 0, 0)
 	e.start()
@@ -116,6 +115,31 @@
 	// 200 created volume = 8 heavy range & 14 light range. 4 tiles larger than traitor EMP grenades.
 	empulse(location, round(created_volume / 12), round(created_volume / 7), 1)
 	holder.clear_reagents()
+
+
+/datum/chemical_reaction/beesplosion
+	name = "Bee Explosion"
+	id = "beesplosion"
+	required_reagents = list("honey" = 1, "strange_reagent" = 1, "radium" = 1)
+
+/datum/chemical_reaction/beesplosion/on_reaction(datum/reagents/holder, created_volume)
+	var/location = holder.my_atom.drop_location()
+	if(created_volume < 5)
+		playsound(location,'sound/effects/sparks1.ogg', 100, TRUE)
+	else
+		playsound(location,'sound/creatures/bee.ogg', 100, TRUE)
+		var/list/beeagents = list()
+		for(var/X in holder.reagent_list)
+			var/datum/reagent/R = X
+			if(required_reagents[R.id])
+				continue
+			beeagents += R
+		var/bee_amount = round(created_volume * 0.2)
+		for(var/i in 1 to bee_amount)
+			var/mob/living/simple_animal/hostile/poison/bees/short/new_bee = new(location)
+			if(LAZYLEN(beeagents))
+				new_bee.assign_reagent(pick(beeagents))
+
 
 /datum/chemical_reaction/stabilizing_agent
 	name = "stabilizing_agent"
@@ -393,6 +417,7 @@
 	modifier = -100
 	mix_message = "<span class='boldannounce'>The teslium starts to spark as electricity arcs away from it!</span>"
 	mix_sound = 'sound/machines/defib_zap.ogg'
+	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE | TESLA_MOB_STUN
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/on_reaction(datum/reagents/holder, created_volume)
 	var/T1 = created_volume * 20		//100 units : Zap 3 times, with powers 2000/5000/12000. Tesla revolvers have a power of 10000 for comparison.
@@ -400,15 +425,15 @@
 	var/T3 = created_volume * 120
 	sleep(5)
 	if(created_volume >= 75)
-		tesla_zap(holder.my_atom, 7, T1)
+		tesla_zap(holder.my_atom, 7, T1, tesla_flags)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
 		sleep(15)
 	if(created_volume >= 40)
-		tesla_zap(holder.my_atom, 7, T2)
+		tesla_zap(holder.my_atom, 7, T2, tesla_flags)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
 		sleep(15)
 	if(created_volume >= 10)			//10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
-		tesla_zap(holder.my_atom, 7, T3)
+		tesla_zap(holder.my_atom, 7, T3, tesla_flags)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
 	..()
 

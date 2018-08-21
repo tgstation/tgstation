@@ -46,7 +46,23 @@
 	name = "dirt"
 	desc = "Someone should clean that up."
 	icon_state = "dirt"
+	canSmoothWith = list(/obj/effect/decal/cleanable/dirt, /turf/closed/wall, /obj/structure/falsewall)
+	smooth = SMOOTH_FALSE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/effect/decal/cleanable/dirt/Initialize()
+	. = ..()
+	var/turf/T = get_turf(src)
+	if(T.tiled_dirt)
+		smooth = SMOOTH_MORE
+		icon = 'icons/effects/dirt.dmi'
+		icon_state = ""
+		queue_smooth(src)
+	queue_smooth_neighbors(src)
+
+/obj/effect/decal/cleanable/dirt/Destroy()
+	queue_smooth_neighbors(src)
+	return ..()
 
 /obj/effect/decal/cleanable/flour
 	name = "flour"
@@ -98,6 +114,9 @@
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
 
 /obj/effect/decal/cleanable/vomit/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(isflyperson(H))
@@ -201,3 +220,10 @@
 	desc = "A puddle of stabilized plasma."
 	icon_state = "flour"
 	color = "#C8A5DC"
+
+/obj/effect/decal/cleanable/insectguts
+	name = "insect guts"
+	desc = "One bug squashed. Four more will rise in its place."
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "xfloor1"
+	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")

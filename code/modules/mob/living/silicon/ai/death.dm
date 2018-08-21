@@ -28,8 +28,10 @@
 	for(var/obj/machinery/ai_status_display/O in GLOB.ai_status_displays) //change status
 		if(src.key)
 			O.mode = 2
-			if(istype(loc, /obj/item/device/aicard))
-				loc.icon_state = "aicard-404"
+			O.update()
+	
+	if(istype(loc, /obj/item/aicard))
+		loc.icon_state = "aicard-404"
 
 /mob/living/silicon/ai/proc/ShutOffDoomsdayDevice()
 	if(nuking)

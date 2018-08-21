@@ -5,7 +5,7 @@
 	var/lootcount = 1		//how many items will be spawned
 	var/lootdoubles = TRUE	//if the same item can be spawned twice
 	var/list/loot			//a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
-	var/fan_out_items = FALSE //Whether the items should be distributed to offsets 0,3,-3,6,-6,9,-9.. This overrides pixel_x/y on the spawner itself
+	var/fan_out_items = FALSE //Whether the items should be distributed to offsets 0,1,-1,2,-2,3,-3.. This overrides pixel_x/y on the spawner itself
 
 /obj/effect/spawner/lootdrop/Initialize(mapload)
 	..()
@@ -26,7 +26,7 @@
 						spawned_loot.pixel_y = pixel_y
 				else
 					if (loot_spawned)
-						spawned_loot.pixel_x = spawned_loot.pixel_y = ((!(loot_spawned%2)*loot_spawned/2)*-3)+((loot_spawned%2)*(loot_spawned+1)/2*3)
+						spawned_loot.pixel_x = spawned_loot.pixel_y = ((!(loot_spawned%2)*loot_spawned/2)*-1)+((loot_spawned%2)*(loot_spawned+1)/2*1)
 			loot_spawned++
 	return INITIALIZE_HINT_QDEL
 
@@ -40,6 +40,13 @@
 				/obj/item/gun/ballistic/revolver/mateba,
 				/obj/item/gun/ballistic/automatic/pistol/deagle
 				)
+
+/obj/effect/spawner/lootdrop/armory_contraband/metastation
+	loot = list(/obj/item/gun/ballistic/automatic/pistol = 5,
+				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
+				/obj/item/gun/ballistic/revolver/mateba,
+				/obj/item/gun/ballistic/automatic/pistol/deagle,
+				/obj/item/storage/box/syndie_kit/throwing_weapons = 3)
 
 /obj/effect/spawner/lootdrop/gambling
 	name = "gambling valuables spawner"
@@ -193,7 +200,8 @@
 				/obj/item/aiModule/core/full/peacekeeper,
 				/obj/item/aiModule/core/full/reporter,
 				/obj/item/aiModule/core/full/robocop,
-				/obj/item/aiModule/core/full/liveandletlive
+				/obj/item/aiModule/core/full/liveandletlive,
+				/obj/item/aiModule/core/full/hulkamania
 				)
 
 /obj/effect/spawner/lootdrop/aimodule_harmful // These will get the shuttle called
@@ -204,4 +212,116 @@
 				/obj/item/aiModule/core/full/tyrant,
 				/obj/item/aiModule/core/full/thermurderdynamic,
 				/obj/item/aiModule/core/full/damaged
+				)
+
+// Tech storage circuit board spawners
+// For these, make sure that lootcount equals the number of list items
+
+/obj/effect/spawner/lootdrop/techstorage
+	name = "generic circuit board spawner"
+	lootdoubles = FALSE
+	fan_out_items = TRUE
+
+/obj/effect/spawner/lootdrop/techstorage/service
+	name = "service circuit board spawner"
+	lootcount = 10
+	loot = list(
+				/obj/item/circuitboard/computer/arcade/battle,
+				/obj/item/circuitboard/computer/arcade/orion_trail,
+				/obj/item/circuitboard/machine/autolathe,
+				/obj/item/circuitboard/computer/mining,
+				/obj/item/circuitboard/machine/ore_redemption,
+				/obj/item/circuitboard/machine/mining_equipment_vendor,
+				/obj/item/circuitboard/machine/microwave,
+				/obj/item/circuitboard/machine/chem_dispenser/drinks,
+				/obj/item/circuitboard/machine/chem_dispenser/drinks/beer,
+				/obj/item/circuitboard/computer/slot_machine
+				)
+
+/obj/effect/spawner/lootdrop/techstorage/rnd
+	name = "RnD circuit board spawner"
+	lootcount = 8
+	loot = list(
+				/obj/item/circuitboard/computer/aifixer,
+				/obj/item/circuitboard/machine/rdserver,
+				/obj/item/circuitboard/computer/pandemic,
+				/obj/item/circuitboard/machine/mechfab,
+				/obj/item/circuitboard/machine/circuit_imprinter/department,
+				/obj/item/circuitboard/computer/teleporter,
+				/obj/item/circuitboard/machine/destructive_analyzer,
+				/obj/item/circuitboard/computer/rdconsole
+				)
+
+/obj/effect/spawner/lootdrop/techstorage/security
+	name = "security circuit board spawner"
+	lootcount = 3
+	loot = list(
+				/obj/item/circuitboard/computer/secure_data,
+				/obj/item/circuitboard/computer/security,
+				/obj/item/circuitboard/computer/prisoner
+				)
+
+/obj/effect/spawner/lootdrop/techstorage/engineering
+	name = "engineering circuit board spawner"
+	lootcount = 3
+	loot = list(
+				/obj/item/circuitboard/computer/atmos_alert,
+				/obj/item/circuitboard/computer/stationalert,
+				/obj/item/circuitboard/computer/powermonitor
+				)
+
+/obj/effect/spawner/lootdrop/techstorage/tcomms
+	name = "tcomms circuit board spawner"
+	lootcount = 9
+	loot = list(
+				/obj/item/circuitboard/computer/message_monitor,
+				/obj/item/circuitboard/machine/telecomms/broadcaster,
+				/obj/item/circuitboard/machine/telecomms/bus,
+				/obj/item/circuitboard/machine/telecomms/server,
+				/obj/item/circuitboard/machine/telecomms/receiver,
+				/obj/item/circuitboard/machine/telecomms/processor,
+				/obj/item/circuitboard/machine/announcement_system,
+				/obj/item/circuitboard/computer/comm_server,
+				/obj/item/circuitboard/computer/comm_monitor
+				)
+
+/obj/effect/spawner/lootdrop/techstorage/medical
+	name = "medical circuit board spawner"
+	lootcount = 8
+	loot = list(
+				/obj/item/circuitboard/computer/cloning,
+				/obj/item/circuitboard/machine/clonepod,
+				/obj/item/circuitboard/machine/chem_dispenser,
+				/obj/item/circuitboard/computer/scan_consolenew,
+				/obj/item/circuitboard/computer/med_data,
+				/obj/item/circuitboard/machine/smoke_machine,
+				/obj/item/circuitboard/machine/chem_master,
+				/obj/item/circuitboard/machine/clonescanner
+				)
+
+/obj/effect/spawner/lootdrop/techstorage/AI
+	name = "secure AI circuit board spawner"
+	lootcount = 3
+	loot = list(
+				/obj/item/circuitboard/computer/aiupload,
+				/obj/item/circuitboard/computer/borgupload,
+				/obj/item/circuitboard/aicore
+				)
+
+/obj/effect/spawner/lootdrop/techstorage/command
+	name = "secure command circuit board spawner"
+	lootcount = 3
+	loot = list(
+				/obj/item/circuitboard/computer/crew,
+				/obj/item/circuitboard/computer/communications,
+				/obj/item/circuitboard/computer/card
+				)
+
+/obj/effect/spawner/lootdrop/techstorage/RnD_secure
+	name = "secure RnD circuit board spawner"
+	lootcount = 3
+	loot = list(
+				/obj/item/circuitboard/computer/mecha_control,
+				/obj/item/circuitboard/computer/apc_control,
+				/obj/item/circuitboard/computer/robotics
 				)

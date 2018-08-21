@@ -100,8 +100,8 @@
 			R.time *= 2 //Building walls becomes slower when the Ark activates
 	mass_recall()
 	recalls_remaining++ //So it doesn't use up a charge
-	
-	var/turf/T = get_turf(src) 
+
+	var/turf/T = get_turf(src)
 	var/list/open_turfs = list()
 	for(var/turf/open/OT in orange(1, T))
 		if(!is_blocked_turf(OT, TRUE))
@@ -283,7 +283,7 @@
 	for(var/turf/closed/wall/W in RANGE_TURFS(2, src))
 		W.dismantle_wall()
 	for(var/obj/O in orange(1, src))
-		if(!O.pulledby && !istype(O, /obj/effect) && O.density)
+		if(!O.pulledby && !iseffect(O) && O.density)
 			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
 				O.take_damage(50, BURN, "bomb")
 			O.update_icon()
@@ -351,6 +351,7 @@
 					T.ratvar_act(dist)
 					CHECK_TICK
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/structure/destructible/clockwork/massive/celestial_gateway/attack_ghost(mob/user)
 	if(!IsAdminGhost(user))
 		return ..()
