@@ -141,7 +141,7 @@ SUBSYSTEM_DEF(traumas)
 					   "anime = typecahceof(list(/obj/item/clothing/under/schoolgirl, /obj/item/clothing/under/schoolgirl/red,
 					   /obj/item/clothing/under/schoolgirl/green, /obj/item/clothing/under/schoolgirl/orange, /obj/item/toy/katana, obj/item/katana,
 					   /obj/item/nullrod/claymore/katana, /obj/item/energy_katana, /obj/item/reagent_containers/food/snacks/sashimi,
-					   /obj/item/reagent_containers/food/drinks/bottle/sake))
+					   /obj/item/reagent_containers/food/drinks/bottle/sake, /obj/item/throwing_star/ninja, /obj/item/throwing_star))
 						)
 						
 	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)),
