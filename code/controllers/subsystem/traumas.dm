@@ -144,7 +144,7 @@ SUBSYSTEM_DEF(traumas)
 					   /obj/item/reagent_containers/food/drinks/bottle/sake, /obj/item/throwing_star/ninja, /obj/item/throwing_star))
 						)
 						
-	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)),
+	phobia_turfs = list("space" = typecahceof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)),
 						"the supernatural" = typecacheof(list(/turf/open/floor/clockwork, /turf/closed/wall/clockwork,
 						/turf/open/floor/plasteel/cult, /turf/closed/wall/mineral/cult)),
 						"aliens" = typecacheof(list(/turf/open/floor/plating/abductor, /turf/open/floor/plating/abductor2,
