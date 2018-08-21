@@ -53688,7 +53688,7 @@
 	},
 /obj/item/radio/intercom{
 	broadcasting = 1;
-	frequency = 1480;
+	frequency = 1481;
 	name = "Confessional Intercom";
 	pixel_x = 26
 	},
@@ -53850,7 +53850,7 @@
 /obj/structure/chair/wood/normal,
 /obj/item/radio/intercom{
 	broadcasting = 1;
-	frequency = 1480;
+	frequency = 1481;
 	name = "Confessional Intercom";
 	pixel_x = -26
 	},

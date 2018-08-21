@@ -67701,7 +67701,7 @@
 "cNz" = (
 /obj/item/radio/intercom{
 	broadcasting = 1;
-	frequency = 1480;
+	frequency = 1481;
 	name = "Confessional Intercom";
 	pixel_x = -25
 	},
@@ -68256,7 +68256,7 @@
 "cOL" = (
 /obj/item/radio/intercom{
 	broadcasting = 1;
-	frequency = 1480;
+	frequency = 1481;
 	name = "Confessional Intercom";
 	pixel_x = 25
 	},
