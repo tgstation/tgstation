@@ -489,14 +489,9 @@
 		hover_overlay.icon_state = choice
 		add_overlay(hover_overlay)
 
-
 /obj/screen/zone_sel/MouseExited(location, control, params)
-	if(isobserver(usr))
-		return
-
-	if(hover_overlay)
+	if(!isobserver(usr) && hover_overlay)
 		cut_overlay(hover_overlay)
-		hover_overlay = null
 
 /obj/screen/zone_sel/proc/get_zone_at(icon_x, icon_y)
 	switch(icon_y)
