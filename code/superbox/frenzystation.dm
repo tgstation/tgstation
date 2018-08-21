@@ -9,11 +9,8 @@
 // Helper which marks the entire station as parallax in the given dir
 /obj/effect/mapping_helpers/station_parallax
 	name = "station parallax"
-	dir = 1
-
-/obj/effect/mapping_helpers/station_parallax/Initialize()
-	..()
-	return INITIALIZE_HINT_LATELOAD
+	dir = NORTH
+	late = TRUE
 
 /obj/effect/mapping_helpers/station_parallax/LateInitialize()
 	var/turf/loc = get_turf(src)
