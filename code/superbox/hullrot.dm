@@ -245,7 +245,7 @@
 		M.hullrot_needs_update = TRUE
 
 /obj/item/radio/Initialize()
-	..()
+	. = ..()
 	hullrot_check_all_hearers(canhear_range)
 
 /obj/item/radio/ui_act(action, params, datum/tgui/ui)
