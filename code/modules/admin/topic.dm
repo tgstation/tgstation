@@ -242,7 +242,7 @@
 					return
 				banduration = null
 				banjob = null
-			if(BANTYPE_ADMIN_TEMP || !banseverity)
+			if(BANTYPE_ADMIN_TEMP)
 				if(!banckey || !banreason || !banduration || !banseverity)
 					to_chat(usr, "Not enough parameters (Requires ckey, severity, reason and duration).")
 					return
