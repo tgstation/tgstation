@@ -98105,6 +98105,12 @@
 /obj/machinery/newscaster{
 	pixel_y = -32
 	},
+/obj/item/radio/intercom{
+	broadcasting = 1;
+	frequency = 1480;
+	name = "Confessional Intercom";
+	pixel_x = -26
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -98116,6 +98122,12 @@
 /obj/machinery/light/small,
 /obj/machinery/newscaster{
 	pixel_y = 32
+	},
+/obj/item/radio/intercom{
+	broadcasting = 1;
+	frequency = 1480;
+	name = "Confessional Intercom";
+	pixel_y = -26
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5

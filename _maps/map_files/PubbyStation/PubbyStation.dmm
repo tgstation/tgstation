@@ -53682,6 +53682,18 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
+"vFZ" = (
+/obj/structure/chair/wood/normal{
+	dir = 1
+	},
+/obj/item/radio/intercom{
+	broadcasting = 1;
+	frequency = 1480;
+	name = "Confessional Intercom";
+	pixel_x = 26
+	},
+/turf/open/floor/plasteel/dark,
+/area/chapel/main/monastery)
 "vGg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
@@ -53834,6 +53846,16 @@
 /mob/living/simple_animal/hostile/retaliate/poison/snake,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
+"whH" = (
+/obj/structure/chair/wood/normal,
+/obj/item/radio/intercom{
+	broadcasting = 1;
+	frequency = 1480;
+	name = "Confessional Intercom";
+	pixel_x = -26
+	},
+/turf/open/floor/plasteel/dark,
+/area/chapel/main/monastery)
 "wig" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/plating{
@@ -70196,9 +70218,9 @@ bOw
 bOw
 bUC
 bWV
-cdC
+whH
 caT
-cbK
+vFZ
 bWV
 cds
 csO
