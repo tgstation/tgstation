@@ -115,13 +115,11 @@ SUBSYSTEM_DEF(garbage)
 	results[GC_QUEUE_PREQUEUE] = list()
 	for (var/item in queues[GC_QUEUE_PREQUEUE]) // Prequeue items are references
 		results[GC_QUEUE_PREQUEUE][item?:type] += 1
-		sleep(0) // Yield processing so maybe watchdog won't kill the server
 	for(var/idx in 2 to GC_QUEUE_COUNT) // The rest are not
 		results[idx] = list()
 		for (var/ref in queues[idx])
 			var/item = locate(ref)
 			results[idx][item?:type] += 1
-			sleep(0) // Yield processing so maybe watchdog won't kill the server
 	text2file(json_encode(results), "[GLOB.log_directory]/garbagememorial.json")
 
 //If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.
