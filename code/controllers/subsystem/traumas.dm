@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(traumas)
 	//phobia types is to pull from randomly for brain traumas, e.g. conspiracies is for special assignment only
 	phobia_types = list("spiders", "space", "security", "clowns", "greytide", "lizards",
 						"skeletons", "snakes", "robots", "doctors", "authority", "the supernatural",
-						"aliens", "strangers", "birds", "falling")
+						"aliens", "strangers", "birds", "falling", "anime")
 
 	phobia_words = list("spiders"   = strings(PHOBIA_FILE, "spiders"),
 						"space"     = strings(PHOBIA_FILE, "space"),
@@ -32,7 +32,8 @@ SUBSYSTEM_DEF(traumas)
 						"strangers"	= strings(PHOBIA_FILE, "strangers"),
 						"conspiracies" = strings(PHOBIA_FILE, "conspiracies"),
 						"birds" = strings(PHOBIA_FILE, "birds"),
-						"falling" = strings(PHOBIA_FILE, "falling")
+						"falling" = strings(PHOBIA_FILE, "falling"),
+						"anime" = strings(PHOBIA_FILE, "anime")
 					   )
 
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
@@ -136,7 +137,10 @@ SUBSYSTEM_DEF(traumas)
 						/obj/item/clothing/suit/toggle/owlwings, /obj/item/clothing/under/owl, /obj/item/clothing/mask/gas/owl_mask,
 						/obj/item/clothing/under/griffin, /obj/item/clothing/shoes/griffin, /obj/item/clothing/head/griffin,
 						/obj/item/clothing/head/helmet/space/freedom, /obj/item/clothing/suit/space/freedom))
-					   )
+					   ),
+					   "anime = typecahceof(list(/obj/item/clothing/under/schoolgirl, /obj/item/clothing/under/schoolgirl/red,
+					   /obj/item/clothing/under/schoolgirl/green, /obj/item/clothing/under/schoolgirl/orange, /obj/item/toy/katana, obj/item/katana,
+					   /obj/item/nullrod/claymore/katana, /obj/item/energy_katana))
 
 	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)),
 						"the supernatural" = typecacheof(list(/turf/open/floor/clockwork, /turf/closed/wall/clockwork,
@@ -154,6 +158,7 @@ SUBSYSTEM_DEF(traumas)
 						  "aliens" = typecacheof(list(/datum/species/abductor, /datum/species/jelly, /datum/species/pod,
 						  /datum/species/shadow))
 						 )
+						 
 
 	return ..()
 
