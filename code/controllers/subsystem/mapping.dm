@@ -460,7 +460,13 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	for(var/i in levels_by_trait(ZTRAIT_RESERVED))
 		var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,i))
 		var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,i))
-		reserve_turfs(block(A, B))
+		var/block = block(A, B)
+		for(var/t in block)
+			// No need to empty() these, because it's world init and they're
+			// already /turf/open/space/basic.
+			var/turf/T = t
+			T.flags_1 |= UNUSED_RESERVATION_TURF_1
+		unused_turfs["[i]"] = block
 	clearing_reserved_turfs = FALSE
 
 /datum/controller/subsystem/mapping/proc/reserve_turfs(list/turfs)
