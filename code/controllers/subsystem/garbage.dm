@@ -109,7 +109,7 @@ SUBSYSTEM_DEF(garbage)
 		state = SS_RUNNING
 
 /datum/controller/subsystem/garbage/proc/writeMemorial()
-	to_chat(world, "A diagnostics file is being collected to aid debugging a likely impending OOM crash. The server will be unresponsive for around a minute.")
+	to_chat(world, "<span class='userdanger'>A diagnostics file is being collected to aid debugging a likely impending OOM crash. The server will be unresponsive for around a minute.</span>")
 	sleep(5) // To make sure the message is seen
 	var/list/results = new /list(GC_QUEUE_COUNT)
 	results[GC_QUEUE_PREQUEUE] = list()
