@@ -20303,14 +20303,12 @@
 /obj/machinery/door/airlock{
 	name = "Locker Room"
 	},
-<<<<<<< HEAD/turf/open/floor/plasteel,
-/obj/effect/decal/cleanable/dirt,
-=======/obj/structure/disposalpipe/segment{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /obj/effect/decal/cleanable/dirt,
->>>>>>> 7a52e44b0d19f4ee7e87fa92b699ed9a3e93e062/area/crew_quarters/locker)
+/area/crew_quarters/locker)
 "aQQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
