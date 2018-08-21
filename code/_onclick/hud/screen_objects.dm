@@ -157,7 +157,7 @@
 			return
 
 		var/image/item_overlay = image(holding)
-		item_overlay.alpha = 191
+		item_overlay.alpha = 92
 		object_overlays += item_overlay
 		
 		if(!user.can_equip(holding, slot_id, disable_warning = TRUE))
