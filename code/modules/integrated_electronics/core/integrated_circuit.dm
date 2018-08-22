@@ -40,8 +40,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 // Can be called via electronic_assembly/attackby()
 /obj/item/integrated_circuit/proc/additem(var/obj/item/I, var/mob/living/user)
-	to_chat(user,"<span class='warning'>The [I.name] doesn't seem to fit in here.</span>")
-	return
+	attackby(I, user)
 
 // This should be used when someone is examining while the case is opened.
 /obj/item/integrated_circuit/proc/internal_examine(mob/user)
