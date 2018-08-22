@@ -74,7 +74,7 @@
 	. = ..()
 	AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
 	GET_COMPONENT(slipper, /datum/component/slippery)
-	slipper.enabled = active
+	slipper.signal_enabled = active
 
 /obj/item/melee/transforming/energy/sword/bananium/attack(mob/living/M, mob/living/user)
 	..()
@@ -99,7 +99,7 @@
 /obj/item/melee/transforming/energy/sword/bananium/transform_weapon(mob/living/user, supress_message_text)
 	..()
 	GET_COMPONENT(slipper, /datum/component/slippery)
-	slipper.enabled = active
+	slipper.signal_enabled = active
 
 /obj/item/melee/transforming/energy/sword/bananium/ignition_effect(atom/A, mob/user)
 	return ""
@@ -131,12 +131,12 @@
 	. = ..()
 	AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
 	GET_COMPONENT(slipper, /datum/component/slippery)
-	slipper.enabled = active
+	slipper.signal_enabled = active
 
 /obj/item/shield/energy/bananium/attack_self(mob/living/carbon/human/user)
 	..()
 	GET_COMPONENT(slipper, /datum/component/slippery)
-	slipper.enabled = active
+	slipper.signal_enabled = active
 
 /obj/item/shield/energy/bananium/throw_at(atom/target, range, speed, mob/thrower, spin=1)
 	if(active)
