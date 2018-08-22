@@ -18376,8 +18376,8 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 8;
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 4;
 	sortType = 29
 	},
 /turf/open/floor/plasteel/neutral/corner{
