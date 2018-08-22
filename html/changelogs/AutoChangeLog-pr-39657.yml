@@ -1,0 +1,6 @@
+author: "BlueNothing"
+delete-after: True
+changes: 
+  - rscadd: "Allows video camera circuits to be seen on networks other than the science cameranet."
+  - tweak: "Alphabetizes camera list for camera bugs, and lets camera bugs see through borg and circuit cameras."
+  - tweak: "Makes video camera circuits fit in tiny assemblies."
