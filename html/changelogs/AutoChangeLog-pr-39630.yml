@@ -1,7 +1,0 @@
-author: "PKPenguin321"
-delete-after: True
-changes: 
-  - tweak: "The GPS circuit now has a 4th output, placing X,Y,Z all in a string."
-  - rscadd: "2 new converters: Rel to Abs, and Advanced Rel to Abs."
-  - rscadd: "Rel to Abs takes a set of relative and a set of absolute coordinates, and converts the relative one to absolute. 1 complexity."
-  - rscadd: "Advanced Rel to Abs takes a set of relative coordinates and converts it to absolute without the need for an already known set of absolute coordinates. 2 complexity."
