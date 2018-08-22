@@ -33,6 +33,7 @@
 	var/stun_projectile_sound
 	var/lethal_projectile = null	//lethal mode projectile type
 	var/lethal_projectile_sound
+	demands_object_input = TRUE
 
 
 
@@ -184,6 +185,7 @@
 	action_flags = IC_ACTION_COMBAT
 	var/obj/item/grenade/attached_grenade
 	var/pre_attached_grenade_type
+	demands_object_input = TRUE
 
 /obj/item/integrated_circuit/manipulation/grenade/Initialize()
 	. = ..()
