@@ -45,10 +45,6 @@
 			//we were deleted
 			return
 
-	var/list/created = SSatoms.created_atoms
-	if(created)
-		created += src
-
 //Called after New if the map is being loaded. mapload = TRUE
 //Called from base of New if the map is not being loaded. mapload = FALSE
 //This base must be called or derivatives must set initialized to TRUE
