@@ -13,9 +13,9 @@
 	desc = "A Multiple Utility Load Effector bot."
 	icon_state = "mulebot0"
 	density = TRUE
-	move_resist = MOVE_RESIST_MULEBOT
-	move_force = MOVE_FORCE_MULEBOT
-	animate_movement=1
+	move_resist = MOVE_FORCE_STRONG
+	move_force = MOVE_FORCE_STRONG
+	animate_movement = 1
 	health = 50
 	maxHealth = 50
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)

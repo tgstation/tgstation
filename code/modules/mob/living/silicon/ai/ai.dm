@@ -16,7 +16,7 @@
 	name = "AI"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
-	move_resist = MOVE_RESIST_AI_BOLTED
+	move_resist = MOVE_FORCE_VERY_STRONG
 	density = TRUE
 	canmove = FALSE
 	status_flags = CANSTUN|CANPUSH
@@ -349,14 +349,14 @@
 		return // stop
 	if(incapacitated())
 		return
-	var/anchored = FALSE
-	if(move_resist == MOVE_RESIST_AI_BOLTED)
-		move_resist = MOVE_RESIST_AI_UNBOLTED
+	var/is_anchored = FALSE
+	if(move_resist == MOVE_FORCE_VERY_STRONG)
+		move_resist = MOVE_FORCE_VERY_STRONG
 	else
-		anchored = TRUE
-		move_resist = MOVE_RESIST_AI_BOLTED
+		is_anchored = TRUE
+		move_resist = MOVE_FORCE_NORMAL
 
-	to_chat(src, "<b>You are now [anchored ? "" : "un"]anchored.</b>")
+	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
 	// the message in the [] will change depending whether or not the AI is anchored
 
 /mob/living/silicon/ai/update_canmove() //If the AI dies, mobs won't go through it anymore

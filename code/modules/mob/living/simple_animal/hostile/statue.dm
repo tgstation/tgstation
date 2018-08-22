@@ -44,9 +44,9 @@
 
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 
-	move_force = MOVE_FORCE_RESIST_STATUE
-	move_resist = MOVE_FORCE_RESIST_STATUE
-	pull_force = MOVE_FORCE_RESIST_STATUE
+	move_force = MOVE_FORCE_EXTREMELY_STRONG
+	move_resist = MOVE_FORCE_EXTREMELY_STRONG
+	pull_force = MOVE_FORCE_EXTREMELY_STRONG
 
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null

@@ -42,7 +42,7 @@
 	wander = FALSE
 	density = FALSE
 	movement_type = FLYING
-	move_resist = MOVE_RESIST_REVENANT
+	move_resist = MOVE_FORCE_OVERPOWERING
 	mob_size = MOB_SIZE_TINY
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	speed = 1

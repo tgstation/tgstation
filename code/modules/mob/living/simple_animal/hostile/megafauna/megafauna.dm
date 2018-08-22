@@ -21,9 +21,9 @@
 	maxbodytemp = INFINITY
 	vision_range = 5
 	aggro_vision_range = 18
-	move_force = MOVE_FORCE_RESIST_MEGAFAUNA
-	move_resist = MOVE_FORCE_RESIST_MEGAFAUNA
-	pull_force = MOVE_FORCE_RESIST_MEGAFAUNA
+	move_force = MOVE_FORCE_OVERPOWERING
+	move_resist = MOVE_FORCE_OVERPOWERING
+	pull_force = MOVE_FORCE_OVERPOWERING
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
