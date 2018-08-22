@@ -195,7 +195,7 @@
 			break
 	if(repetition < power)
 		repetition++
-		addtimer(CALLBACK(src, /obj/item/integrated_circuit/reagent/extinguisher/.proc/move_particles, particles, repetition), 2)
+		addtimer(CALLBACK(src, /obj/item/extinguisher/.proc/move_particles, particles, repetition), 2)
 
 //Chair movement loop
 /obj/item/extinguisher/proc/move_chair(var/obj/B, var/movementdirection, var/repetition as num)
