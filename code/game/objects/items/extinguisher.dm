@@ -201,9 +201,6 @@
 /obj/item/extinguisher/proc/move_chair(var/obj/B, var/movementdirection, var/repetition as num)
 	step(B, movementdirection)
 
-	if(repetition > 9)
-		return
-
 	var/timer_seconds
 	switch(repetition)
 		if(0 to 2)
