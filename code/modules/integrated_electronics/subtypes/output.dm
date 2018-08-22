@@ -44,13 +44,13 @@
 /obj/item/integrated_circuit/output/screen/large/do_work()
 	..()
 
-	var/in_hands = FALSE//this whole block just returns if the assembly is neither in a mobs hands or on the ground
-	if(isliving(assembly.loc))
+	if(isliving(assembly.loc))//this whole block just returns if the assembly is neither in a mobs hands or on the ground
 		var/mob/living/H = assembly.loc
-		if(H.get_active_held_item() == assembly || H.get_inactive_held_item() == assembly)
-			in_hands = TRUE
-	if(!isturf(assembly.loc) && !in_hands)
-		return
+		if(H.get_active_held_item() != assembly && H.get_inactive_held_item() != assembly)
+			return
+	else
+		if(!isturf(assembly.loc))
+			return
 
 	var/list/nearby_things = range(0, get_turf(src))
 	for(var/mob/M in nearby_things)
