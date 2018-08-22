@@ -1,0 +1,20 @@
+{{#if data.itemFound}}
+	<ui-display>
+		<ui-section label='Input'>
+		<span>{{data.firstText}}</span><span style="color:yellow;"><b>{{data.itemText}}</b></span><span>{{data.lastText}}</span>
+		</ui-section>
+	</ui-display>
+{{else}}
+	<ui-display>
+		<ui-section label='Input'>
+		<span>{{data.itemInput}}</span>
+		</ui-section>
+	</ui-display>
+{{/if}}
+{{#if data.processing}}  
+	<ui-notice>
+		<span>Input is being processed, please wait...</span>
+	</ui-notice>
+{{else}}
+	<ui-button action='pullLever'>Pull Lever</ui-button>
+{{/if}}	
