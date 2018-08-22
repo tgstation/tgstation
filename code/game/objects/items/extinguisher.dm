@@ -145,7 +145,7 @@
 		if(user.buckled && isobj(user.buckled) && !user.buckled.anchored)
 			var/obj/B = user.buckled
 			var/movementdirection = turn(direction,180)
-			addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_chair, B, movementdirection, 0), 1)
+			addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_chair, B, movementdirection), 1)
 
 		else user.newtonian_move(turn(direction, 180))
 
@@ -173,10 +173,10 @@
 			reagents.trans_to(W,1)
 	
 		//Make em move dat ass, hun
-		addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_particles, water_particles, 0), 2)
+		addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_particles, water_particles), 2)
 
 //Particle movement loop
-/obj/item/extinguisher/proc/move_particles(var/list/particles, var/repetition)
+/obj/item/extinguisher/proc/move_particles(var/list/particles, var/repetition=0)
 	//Check if there's anything in here first
 	if(!particles || particles.len == 0)
 		return
@@ -198,7 +198,7 @@
 		addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_particles, particles, repetition), 2)
 
 //Chair movement loop
-/obj/item/extinguisher/proc/move_chair(var/obj/B, var/movementdirection, var/repetition)
+/obj/item/extinguisher/proc/move_chair(var/obj/B, var/movementdirection, var/repetition=0)
 	step(B, movementdirection)
 
 	var/timer_seconds
