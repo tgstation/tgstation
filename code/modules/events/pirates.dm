@@ -81,8 +81,6 @@
 				candidates -= M
 			else
 				notify_ghosts("Space pirates are waking up!", source = spawner, action=NOTIFY_ATTACK, flashwindow = FALSE)
-		for(var/obj/docking_port/mobile/port in A)
-			port.register()
 
 	priority_announce("Unidentified armed ship detected near the station.")
 

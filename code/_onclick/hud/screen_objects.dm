@@ -133,6 +133,7 @@
 /obj/screen/inventory/MouseExited()
 	..()
 	cut_overlay(object_overlays)
+	object_overlays.Cut()
 
 /obj/screen/inventory/update_icon()
 	if(!icon_empty)
@@ -147,9 +148,6 @@
 /obj/screen/inventory/proc/add_overlays()
 	var/mob/user = hud.mymob
 
-	cut_overlay(object_overlays)
-	object_overlays.Cut()
-
 	if(hud && user && slot_id)
 		var/obj/item/holding = user.get_active_held_item()
 
@@ -157,15 +155,14 @@
 			return
 
 		var/image/item_overlay = image(holding)
-		item_overlay.alpha = 191
-		object_overlays += item_overlay
+		item_overlay.alpha = 92
 
 		if(!user.can_equip(holding, slot_id, disable_warning = TRUE))
-			var/image/nope_overlay = image('icons/mob/screen_gen.dmi', "x")
-			nope_overlay.alpha = 128
-			nope_overlay.layer = item_overlay.layer + 1
-			object_overlays += nope_overlay
+			item_overlay.color = "#FF0000"
+		else
+			item_overlay.color = "#00ff00"
 
+		object_overlays += item_overlay
 		add_overlay(object_overlays)
 
 /obj/screen/inventory/hand
