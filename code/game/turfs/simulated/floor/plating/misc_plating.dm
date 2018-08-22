@@ -6,6 +6,7 @@
 /turf/open/floor/plating/abductor
 	name = "alien floor"
 	icon_state = "alienpod1"
+	tiled_dirt = FALSE
 
 /turf/open/floor/plating/abductor/Initialize()
 	. = ..()
@@ -15,6 +16,7 @@
 /turf/open/floor/plating/abductor2
 	name = "alien plating"
 	icon_state = "alienplating"
+	tiled_dirt = FALSE
 
 /turf/open/floor/plating/abductor2/break_tile()
 	return //unbreakable
@@ -44,6 +46,7 @@
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	attachment_holes = FALSE
+	tiled_dirt = FALSE
 
 /turf/open/floor/plating/ashplanet/Initialize()
 	if(smooth)

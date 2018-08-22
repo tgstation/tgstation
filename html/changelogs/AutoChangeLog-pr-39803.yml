@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "Freezers and heaters which start on no longer stay visually on when you turn them off."
