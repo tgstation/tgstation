@@ -78,6 +78,8 @@
 		addtimer(CALLBACK(src, .proc/med_hud_set_status), (DEFIB_TIME_LIMIT * 10) + 1)
 	stop_pulling()
 
+	SEND_SIGNAL(src, COMSIG_MOB_DEATH, gibbed)
+
 	if (client)
 		client.move_delay = initial(client.move_delay)
 

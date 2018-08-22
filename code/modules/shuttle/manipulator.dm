@@ -215,8 +215,7 @@
 		D = existing_shuttle.get_docked()
 
 	if(!D)
-		var/m = "No dock found for preview shuttle ([preview_template.name]), aborting."
-		throw EXCEPTION(m)
+		CRASH("No dock found for preview shuttle ([preview_template.name]), aborting.")
 
 	var/result = preview_shuttle.canDock(D)
 	// truthy value means that it cannot dock for some reason
@@ -254,7 +253,7 @@
 	. = FALSE
 	// load shuttle template, centred at shuttle import landmark,
 	var/turf/landmark_turf = get_turf(locate(/obj/effect/landmark/shuttle_import) in GLOB.landmarks_list)
-	S.load(landmark_turf, centered = TRUE)
+	S.load(landmark_turf, centered = TRUE, register = FALSE)
 
 	var/affected = S.get_affected_turfs(landmark_turf, centered=TRUE)
 

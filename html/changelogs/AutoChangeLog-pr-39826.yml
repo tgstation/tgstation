@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - code_imp: "Atmospherics now initializes 93% (about 40 seconds) faster."

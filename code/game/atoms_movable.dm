@@ -168,9 +168,13 @@
 
 	// Past this is the point of no return
 	var/atom/oldloc = loc
+	var/area/oldarea = get_area(oldloc)
+	var/area/newarea = get_area(newloc)
 	loc = newloc
 	. = TRUE
 	oldloc.Exited(src, newloc)
+	if(oldarea != newarea)
+		oldarea.Exited(src, newloc)
 
 	for(var/i in oldloc)
 		if(i == src) // Multi tile objects
@@ -179,6 +183,8 @@
 		thing.Uncrossed(src)
 
 	newloc.Entered(src, oldloc)
+	if(oldarea != newarea)
+		newarea.Entered(src, oldloc)
 
 	for(var/i in loc)
 		if(i == src) // Multi tile objects
@@ -381,7 +387,7 @@
 		if(!same_loc)
 			if(oldloc)
 				oldloc.Exited(src, destination)
-				if(old_area)
+				if(old_area && old_area != destarea)
 					old_area.Exited(src, destination)
 			for(var/atom/movable/AM in oldloc)
 				AM.Uncrossed(src)
