@@ -1271,7 +1271,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	invisibility = 101
 	density = FALSE
 	see_in_dark = 1e6
-	anchored = TRUE
 	move_resist = INFINITY
 	var/ready_to_die = FALSE
 
