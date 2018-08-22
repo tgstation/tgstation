@@ -65,7 +65,7 @@
 
 	return FALSE
 
-/datum/component/stationloving/proc/check_deletion(force) // TRUE = interrupt deletion, FALSE = proceed with deletion
+/datum/component/stationloving/proc/check_deletion(datum/source, force) // TRUE = interrupt deletion, FALSE = proceed with deletion
 
 	var/turf/T = get_turf(parent)
 

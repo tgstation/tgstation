@@ -101,7 +101,7 @@
 		potion_action.Grant(user)
 		actions += potion_action
 
-/obj/machinery/computer/camera_advanced/xenobio/proc/on_contents_del(atom/deleted)
+/obj/machinery/computer/camera_advanced/xenobio/proc/on_contents_del(datum/source, atom/deleted)
 	if(current_potion == deleted)
 		current_potion = null
 	if(deleted in stored_slimes)
