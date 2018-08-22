@@ -355,6 +355,7 @@
 #include "code\datums\components\swarming.dm"
 #include "code\datums\components\thermite.dm"
 #include "code\datums\components\uplink.dm"
+#include "code\datums\components\waddling.dm"
 #include "code\datums\components\wearertargeting.dm"
 #include "code\datums\components\wet_floor.dm"
 #include "code\datums\components\decals\blood.dm"
