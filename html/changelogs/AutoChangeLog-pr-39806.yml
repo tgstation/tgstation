@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Shuttle templates now handle shuttle registration in the load rather than the shuttle manipulator. This means admin loaded shuttle templates no longer need to be manually registered."

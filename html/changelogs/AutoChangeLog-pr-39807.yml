@@ -1,4 +1,0 @@
-author: "floyd"
-delete-after: True
-changes: 
-  - bugfix: "fixes the hunger alert appearing forever"

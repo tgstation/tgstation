@@ -1,4 +1,0 @@
-author: "oranges"
-delete-after: True
-changes: 
-  - tweak: "Inventory overlay now uses a traffic light to indicate if the item can be placed in there"
