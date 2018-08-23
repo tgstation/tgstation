@@ -102,7 +102,6 @@
 	var/slot_id	// The indentifier for the slot. It has nothing to do with ID cards.
 	var/icon_empty // Icon when empty. For now used only by humans.
 	var/icon_full  // Icon when contains an item. For now used only by humans.
-	var/list/object_overlays = list()
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 
@@ -126,15 +125,6 @@
 		usr.update_inv_hands()
 	return 1
 
-/obj/screen/inventory/MouseEntered()
-	..()
-	add_overlays()
-
-/obj/screen/inventory/MouseExited()
-	..()
-	cut_overlay(object_overlays)
-	object_overlays.Cut()
-
 /obj/screen/inventory/update_icon()
 	if(!icon_empty)
 		icon_empty = icon_state
@@ -144,26 +134,6 @@
 			icon_state = icon_full
 		else
 			icon_state = icon_empty
-
-/obj/screen/inventory/proc/add_overlays()
-	var/mob/user = hud.mymob
-
-	if(hud && user && slot_id)
-		var/obj/item/holding = user.get_active_held_item()
-
-		if(!holding || user.get_item_by_slot(slot_id))
-			return
-
-		var/image/item_overlay = image(holding)
-		item_overlay.alpha = 92
-
-		if(!user.can_equip(holding, slot_id, disable_warning = TRUE))
-			item_overlay.color = "#FF0000"
-		else
-			item_overlay.color = "#00ff00"
-
-		object_overlays += item_overlay
-		add_overlay(object_overlays)
 
 /obj/screen/inventory/hand
 	var/mutable_appearance/handcuff_overlay
@@ -340,21 +310,17 @@
 /obj/screen/mov_intent/Click()
 	toggle(usr)
 
-/obj/screen/mov_intent/update_icon(mob/user)
-	if(!user && hud)
-		user = hud.mymob
-	if(!user)
-		return
-	switch(user.m_intent)
-		if(MOVE_INTENT_WALK)
-			icon_state = "walking"
-		if(MOVE_INTENT_RUN)
-			icon_state = "running"
-
 /obj/screen/mov_intent/proc/toggle(mob/user)
 	if(isobserver(user))
 		return
-	user.toggle_move_intent(user)
+	switch(user.m_intent)
+		if("run")
+			user.m_intent = MOVE_INTENT_WALK
+			icon_state = "walking"
+		if("walk")
+			user.m_intent = MOVE_INTENT_RUN
+			icon_state = "running"
+	user.update_icons()
 
 /obj/screen/pull
 	name = "stop pulling"
@@ -446,8 +412,6 @@
 	icon_state = "zone_sel"
 	screen_loc = ui_zonesel
 	var/selecting = BODY_ZONE_CHEST
-	var/static/list/hover_overlays_cache = list()
-	var/hovering
 
 /obj/screen/zone_sel/Click(location, control,params)
 	if(isobserver(usr))
@@ -456,86 +420,52 @@
 	var/list/PL = params2list(params)
 	var/icon_x = text2num(PL["icon-x"])
 	var/icon_y = text2num(PL["icon-y"])
-	var/choice = get_zone_at(icon_x, icon_y)
-	if (!choice)
-		return 1
+	var/choice
 
-	return set_selected_zone(choice, usr)
-
-/obj/screen/zone_sel/MouseEntered(location, control, params)
-	MouseMove(location, control, params)
-
-/obj/screen/zone_sel/MouseMove(location, control, params)
-	if(isobserver(usr))
-		return
-
-	var/list/PL = params2list(params)
-	var/icon_x = text2num(PL["icon-x"])
-	var/icon_y = text2num(PL["icon-y"])
-	var/choice = get_zone_at(icon_x, icon_y)
-
-	if(hovering == choice)
-		return
-	vis_contents -= hover_overlays_cache[hovering]
-	hovering = choice
-
-	var/obj/effect/overlay/zone_sel/overlay_object = hover_overlays_cache[choice]
-	if(!overlay_object)
-		overlay_object = new
-		overlay_object.icon_state = "[choice]"
-		hover_overlays_cache[choice] = overlay_object
-	vis_contents += overlay_object
-
-/obj/effect/overlay/zone_sel
-	icon = 'icons/mob/screen_gen.dmi'
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	alpha = 128
-	anchored = TRUE
-	layer = ABOVE_HUD_LAYER
-	plane = ABOVE_HUD_PLANE
-
-/obj/screen/zone_sel/MouseExited(location, control, params)
-	if(!isobserver(usr) && hovering)
-		vis_contents -= hover_overlays_cache[hovering]
-		hovering = null
-
-/obj/screen/zone_sel/proc/get_zone_at(icon_x, icon_y)
 	switch(icon_y)
 		if(1 to 9) //Legs
 			switch(icon_x)
 				if(10 to 15)
-					return BODY_ZONE_R_LEG
+					choice = BODY_ZONE_R_LEG
 				if(17 to 22)
-					return BODY_ZONE_L_LEG
+					choice = BODY_ZONE_L_LEG
+				else
+					return 1
 		if(10 to 13) //Hands and groin
 			switch(icon_x)
 				if(8 to 11)
-					return BODY_ZONE_R_ARM
+					choice = BODY_ZONE_R_ARM
 				if(12 to 20)
-					return BODY_ZONE_PRECISE_GROIN
+					choice = BODY_ZONE_PRECISE_GROIN
 				if(21 to 24)
-					return BODY_ZONE_L_ARM
+					choice = BODY_ZONE_L_ARM
+				else
+					return 1
 		if(14 to 22) //Chest and arms to shoulders
 			switch(icon_x)
 				if(8 to 11)
-					return BODY_ZONE_R_ARM
+					choice = BODY_ZONE_R_ARM
 				if(12 to 20)
-					return BODY_ZONE_CHEST
+					choice = BODY_ZONE_CHEST
 				if(21 to 24)
-					return BODY_ZONE_L_ARM
+					choice = BODY_ZONE_L_ARM
+				else
+					return 1
 		if(23 to 30) //Head, but we need to check for eye or mouth
 			if(icon_x in 12 to 20)
+				choice = BODY_ZONE_HEAD
 				switch(icon_y)
 					if(23 to 24)
 						if(icon_x in 15 to 17)
-							return BODY_ZONE_PRECISE_MOUTH
+							choice = BODY_ZONE_PRECISE_MOUTH
 					if(26) //Eyeline, eyes are on 15 and 17
 						if(icon_x in 14 to 18)
-							return BODY_ZONE_PRECISE_EYES
+							choice = BODY_ZONE_PRECISE_EYES
 					if(25 to 27)
 						if(icon_x in 15 to 17)
-							return BODY_ZONE_PRECISE_EYES
-				return BODY_ZONE_HEAD
+							choice = BODY_ZONE_PRECISE_EYES
+
+	return set_selected_zone(choice, usr)
 
 /obj/screen/zone_sel/proc/set_selected_zone(choice, mob/user)
 	if(isobserver(user))
