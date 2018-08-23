@@ -1,5 +1,3 @@
-#define OBJECTIVE_UPDATING_TIME 300
-
 /datum/team/overthrow
 	name = "overthrow" // The team name is set on creation by the leader.
 	member_name = "syndicate agent"
@@ -13,31 +11,16 @@
 
 /datum/team/overthrow/proc/create_objectives()
 	// Heads objective
-	var/datum/objective/overthrow/heads/heads = new()
+	var/datum/objective/ovethrow_heads/heads = new()
 	heads.team = src
 	heads.find_target()
 	objectives += heads
 	// AI objective
-	var/datum/objective/overthrow/AI/AI = new()
+	var/datum/objective/overthrow_AI/AI = new()
 	AI.team = src
-	AI.update_explanation_text()
 	objectives += AI
 	// Target objective
-	var/datum/objective/overthrow/target/target = new()
+	var/datum/objective/overthrow_target/target = new()
 	target.team = src
 	target.find_target()
 	objectives += target
-	addtimer(CALLBACK(src,.proc/update_objectives),OBJECTIVE_UPDATING_TIME,TIMER_UNIQUE)
-
-/datum/team/overthrow/proc/update_objectives()
-	var/datum/objective/overthrow/heads/heads_obj = locate() in objectives
-	if(!heads_obj)
-		heads_obj = new()
-		heads_obj.team = src
-		objectives += heads_obj
-		for(var/i in members)
-			var/datum/mind/M = i
-			M.objectives += heads_obj
-	heads_obj.find_targets()
-
-	addtimer(CALLBACK(src,.proc/update_objectives),OBJECTIVE_UPDATING_TIME,TIMER_UNIQUE)

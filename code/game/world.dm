@@ -1,6 +1,8 @@
 #define RESTART_COUNTER_PATH "data/round_counter.txt"
 
+GLOBAL_VAR(security_mode)
 GLOBAL_VAR(restart_counter)
+GLOBAL_PROTECT(security_mode)
 
 //This happens after the Master subsystem new(s) (it's a global datum)
 //So subsystems globals exist, but are not initialised
@@ -10,6 +12,8 @@ GLOBAL_VAR(restart_counter)
 	SetupExternalRSC()
 
 	GLOB.config_error_log = GLOB.world_manifest_log = GLOB.world_pda_log = GLOB.world_job_debug_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = "data/logs/config_error.log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
+
+	CheckSecurityMode()
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
@@ -124,6 +128,20 @@ GLOBAL_VAR(restart_counter)
 
 	if(GLOB.round_id)
 		log_game("Round ID: [GLOB.round_id]")
+
+/world/proc/CheckSecurityMode()
+	//try to write to data
+	if(!text2file("The world is running at least safe mode", "data/server_security_check.lock"))
+		GLOB.security_mode = SECURITY_ULTRASAFE
+		warning("/tg/station 13 is not supported in ultrasafe security mode. Everything will break!")
+		return
+
+	//try to shell
+	if(shell("echo \"The world is running in trusted mode\"") != null)
+		GLOB.security_mode = SECURITY_TRUSTED
+	else
+		GLOB.security_mode = SECURITY_SAFE
+		warning("/tg/station 13 uses many file operations, a few shell()s, and some external call()s. Trusted mode is recommended. You can download our source code for your own browsing and compilation at https://github.com/tgstation/tgstation")
 
 /world/Topic(T, addr, master, key)
 	TGS_TOPIC	//redirect to server tools if necessary

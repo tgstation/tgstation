@@ -18,7 +18,6 @@
 	objectives += team.objectives
 	owner.objectives += objectives
 	..()
-	owner.announce_objectives()
 	equip_overthrow()
 	owner.special_role = ROLE_OVERTHROW
 
@@ -31,11 +30,12 @@
 		team = new()
 		team.add_member(owner)
 		team.create_objectives()
+		name_team()
 	else
 		team.add_member(owner)
 
 /datum/antagonist/overthrow/proc/name_team()
-	var/team_name = stripped_input(owner.current, "Name your team:", "Team name", , MAX_NAME_LEN)
+	var/team_name = stripped_input(owner, "Name your team:", "Team name", , MAX_NAME_LEN)
 	if(!team_name)
 		team.name = syndicate_name()
 		to_chat(owner, "<span class='danger'>Since you gave no name, your team's name has been randomly generated: [team.name]!</span>")
@@ -133,4 +133,3 @@
 /datum/antagonist/overthrow/boss/on_gain()
 	..()
 	equip_overthrow_boss()
-	name_team()

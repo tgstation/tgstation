@@ -299,6 +299,10 @@
 /turf/open/floor/plasteel/showroomfloor
 	icon_state = "showroomfloor"
 
+/turf/open/floor/plasteel/floorgrime
+	icon_state = "floorgrime"
+/turf/open/floor/plasteel/airless/floorgrime
+	icon_state = "floorgrime"
 
 /turf/open/floor/plasteel/solarpanel
 	icon_state = "solarpanel"

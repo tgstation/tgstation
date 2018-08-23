@@ -406,7 +406,7 @@ RLD
 		add_overlay("[icon_state]_charge[ratio]")
 
 /obj/item/construction/rcd/Initialize()
-	. = ..()
+	..()
 	update_icon()
 
 /obj/item/construction/rcd/borg

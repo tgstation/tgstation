@@ -17,8 +17,7 @@
 			return FALSE
 		target_mind.add_antag_datum(/datum/antagonist/overthrow, UO.team)
 		log_combat(user, target, "implanted", "\a [name]")
-		if(!uses)
-			qdel(src)
+		qdel(src)
 		return TRUE
 
 /obj/item/implanter/overthrow

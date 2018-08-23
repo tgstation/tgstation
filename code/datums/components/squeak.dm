@@ -33,9 +33,9 @@
 		squeak_chance = chance_override
 	if(volume_override)
 		volume = volume_override
-	if(isnum(step_delay_override))
+	if(step_delay_override)
 		step_delay = step_delay_override
-	if(isnum(use_delay_override))
+	if(use_delay_override)
 		use_delay = use_delay_override
 
 /datum/component/squeak/proc/play_squeak()
