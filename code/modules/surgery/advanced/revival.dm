@@ -1,10 +1,6 @@
-/obj/item/disk/surgery/revival
-	name = "Revival Surgery Disk"
-	desc = "The disk provides instructions on how to bring a corpse back to life."
-	surgeries = list(/datum/surgery/advanced/revival)
-
 /datum/surgery/advanced/revival
-	name = "revival"
+	name = "Revival"
+	desc = "An experimental surgical procedure which involves reconstruction and reactivation of the patient's brain even long after death. The body must still be able to sustain life."
 	steps = list(/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,
 				/datum/surgery_step/saw,

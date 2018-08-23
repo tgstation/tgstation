@@ -97,10 +97,11 @@ SUBSYSTEM_DEF(garbage)
 				queue = GC_QUEUE_CHECK+1
 			if (GC_QUEUE_HARDDELETE)
 				HandleQueue(GC_QUEUE_HARDDELETE)
+				if (state == SS_PAUSED) //make us wait again before the next run.
+					state = SS_RUNNING
 				break
 
-	if (state == SS_PAUSED) //make us wait again before the next run.
-		state = SS_RUNNING
+	
 
 //If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.
 //Don't attempt to optimize, not worth the effort.
@@ -115,8 +116,9 @@ SUBSYSTEM_DEF(garbage)
 	for (var/ref in tobequeued)
 		count++
 		Queue(ref, GC_QUEUE_PREQUEUE+1)
+		tobequeued[count] = null
 		if (MC_TICK_CHECK)
-			break
+			return
 	if (count)
 		tobequeued.Cut(1,count+1)
 		count = 0
@@ -141,7 +143,7 @@ SUBSYSTEM_DEF(garbage)
 		if (!refID)
 			count++
 			if (MC_TICK_CHECK)
-				break
+				return
 			continue
 
 		var/GCd_at_time = queue[refID]
@@ -160,7 +162,7 @@ SUBSYSTEM_DEF(garbage)
 			reference_find_on_fail -= refID		//It's deleted we don't care anymore.
 			#endif
 			if (MC_TICK_CHECK)
-				break
+				return
 			continue
 
 		// Something's still referring to the qdel'd object.
@@ -183,13 +185,13 @@ SUBSYSTEM_DEF(garbage)
 			if (GC_QUEUE_HARDDELETE)
 				HardDelete(D)
 				if (MC_TICK_CHECK)
-					break
+					return
 				continue
 
 		Queue(D, level+1)
 
 		if (MC_TICK_CHECK)
-			break
+			return
 	if (count)
 		queue.Cut(1,count+1)
 		count = 0

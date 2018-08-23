@@ -162,4 +162,6 @@
 		add_overlay("cart_replacer")
 	if(signs)
 		add_overlay("cart_sign[signs]")
+	if(reagents.total_volume > 0)
+		add_overlay("cart_water")
 

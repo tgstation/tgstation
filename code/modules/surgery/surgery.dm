@@ -1,5 +1,6 @@
 /datum/surgery
 	var/name = "surgery"
+	var/desc = "surgery description"
 	var/status = 1
 	var/list/steps = list()									//Steps in a surgery
 	var/step_in_progress = 0								//Actively performing a Surgery
@@ -92,7 +93,15 @@
 		var/datum/species/abductor/S = H.dna.species
 		if(S.scientist)
 			return TRUE
-
+	
+	if(iscyborg(user))
+		var/mob/living/silicon/robot/R = user
+		var/obj/item/surgical_processor/SP = locate() in R.module.modules
+		if(!SP)
+			return FALSE
+		if(type in SP.advanced_surgeries)
+			return TRUE
+	
 	var/turf/T = get_turf(target)
 	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
 	if(!table || !table.computer)
@@ -129,7 +138,6 @@
 
 //TODO
 //specific steps for some surgeries (fluff text)
-//R&D researching new surgeries (especially for non-humans)
 //more interesting failure options
 //randomised complications
 //more surgeries!

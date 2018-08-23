@@ -151,7 +151,7 @@
 	var/blueprints = FALSE
 	var/clone_area = SSmapping.RequestBlockReservation(size_x * 2 + 1, size_y * 2 + 1)
 	for(var/turf/T in block(locate(target_turf.x - size_x, target_turf.y - size_y, target_turf.z), locate(target_turf.x + size_x, target_turf.y + size_y, target_turf.z)))
-		if((ai_user && GLOB.cameranet.checkTurfVis(T)) || T in seen)
+		if((ai_user && GLOB.cameranet.checkTurfVis(T)) || (T in seen))
 			turfs += T
 			for(var/mob/M in T)
 				mobs += M
@@ -185,17 +185,14 @@
 		to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 		var/customize = alert(user, "Do you want to customize the photo?", "Customization", "Yes", "No")
 		if(customize == "Yes")
-			var/name1 = input(user, "Set a name for this photo, or leave blank. 32 characters max.", "Name") as text|null
-			var/desc1 = input(user, "Set a description to add to photo, or leave blank. 128 characters max.", "Caption") as text|null
-			var/caption = input(user, "Set a caption for this photo, or leave blank. 256 characters max.", "Caption") as text|null
+			var/name1 = stripped_input(user, "Set a name for this photo, or leave blank. 32 characters max.", "Name", max_length = 32) as text|null
+			var/desc1 = stripped_input(user, "Set a description to add to photo, or leave blank. 128 characters max.", "Caption", max_length = 128) as text|null
+			var/caption = stripped_input(user, "Set a caption for this photo, or leave blank. 256 characters max.", "Caption", max_length = 256) as text|null
 			if(name1)
-				name1 = copytext(name1, 1, 33)
 				picture.picture_name = name1
 			if(desc1)
-				desc1 = copytext(desc1, 1, 129)
 				picture.picture_desc = "[desc1] - [picture.picture_desc]"
 			if(caption)
-				caption = copytext(caption, 1, 257)
 				picture.caption = caption
 		p.set_picture(picture, TRUE, TRUE)
 		if(CONFIG_GET(flag/picture_logging_camera))

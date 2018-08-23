@@ -1,29 +1,45 @@
 /proc/show_individual_logging_panel(mob/M, source = LOGSRC_CLIENT, type = INDIVIDUAL_ATTACK_LOG)
 	if(!M || !ismob(M))
 		return
-	
+
+	var/ntype = text2num(type)
+
 	//Add client links
 	var/dat = ""
-	if(M.client) 
-		dat += "<center><p>Client</p></center>"	
-		dat += "<center><a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[INDIVIDUAL_ATTACK_LOG];log_src=[LOGSRC_CLIENT]'>Attack log</a> | "
-		dat += "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[INDIVIDUAL_SAY_LOG];log_src=[LOGSRC_CLIENT]'>Say log</a> | "
-		dat += "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[INDIVIDUAL_EMOTE_LOG];log_src=[LOGSRC_CLIENT]'>Emote log</a> | "
-		dat += "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[INDIVIDUAL_OOC_LOG];log_src=[LOGSRC_CLIENT]'>OOC log</a> | "
-		dat += "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[INDIVIDUAL_SHOW_ALL_LOG];log_src=[LOGSRC_CLIENT]'>Show all</a> | "
-		dat += "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[type];log_src=[LOGSRC_CLIENT]'>Refresh</a></center>"
+	if(M.client)
+		dat += "<center><p>Client</p></center>"
+		dat += "<center>"
+		dat += individual_logging_panel_link(M, INDIVIDUAL_ATTACK_LOG, LOGSRC_CLIENT, "Attack Log", source, ntype)
+		dat += " | "
+		dat += individual_logging_panel_link(M, INDIVIDUAL_SAY_LOG, LOGSRC_CLIENT, "Say Log", source, ntype)
+		dat += " | "
+		dat += individual_logging_panel_link(M, INDIVIDUAL_EMOTE_LOG, LOGSRC_CLIENT, "Emote Log", source, ntype)
+		dat += " | "
+		dat += individual_logging_panel_link(M, INDIVIDUAL_COMMS_LOG, LOGSRC_CLIENT, "Comms Log", source, ntype)
+		dat += " | "
+		dat += individual_logging_panel_link(M, INDIVIDUAL_OOC_LOG, LOGSRC_CLIENT, "OOC Log", source, ntype)
+		dat += " | "
+		dat += individual_logging_panel_link(M, INDIVIDUAL_SHOW_ALL_LOG, LOGSRC_CLIENT, "Show All", source, ntype)
+		dat += "</center>"
 	else
 		dat += "<p> No client attached to mob </p>"
 
 	dat += "<hr style='background:#000000; border:0; height:1px'>"
-	dat += "<center><p>Mob</p></center>"	
+	dat += "<center><p>Mob</p></center>"
 	//Add the links for the mob specific log
-	dat += "<center><a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[INDIVIDUAL_ATTACK_LOG];log_src=[LOGSRC_MOB]'>Attack log</a> | "
-	dat += "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[INDIVIDUAL_SAY_LOG];log_src=[LOGSRC_MOB]'>Say log</a> | "
-	dat += "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[INDIVIDUAL_EMOTE_LOG];log_src=[LOGSRC_MOB]'>Emote log</a> | "
-	dat += "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[INDIVIDUAL_OOC_LOG];log_src=[LOGSRC_MOB]'>OOC log</a> | "
-	dat += "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[INDIVIDUAL_SHOW_ALL_LOG];log_src=[LOGSRC_MOB]'>Show all</a> | "
-	dat += "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[type];log_src=[LOGSRC_MOB]'>Refresh</a></center>"
+	dat += "<center>"
+	dat += individual_logging_panel_link(M, INDIVIDUAL_ATTACK_LOG, LOGSRC_MOB, "Attack Log", source, ntype)
+	dat += " | "
+	dat += individual_logging_panel_link(M, INDIVIDUAL_SAY_LOG, LOGSRC_MOB, "Say Log", source, ntype)
+	dat += " | "
+	dat += individual_logging_panel_link(M, INDIVIDUAL_EMOTE_LOG, LOGSRC_MOB, "Emote Log", source, ntype)
+	dat += " | "
+	dat += individual_logging_panel_link(M, INDIVIDUAL_COMMS_LOG, LOGSRC_MOB, "Comms Log", source, ntype)
+	dat += " | "
+	dat += individual_logging_panel_link(M, INDIVIDUAL_OOC_LOG, LOGSRC_MOB, "OOC Log", source, ntype)
+	dat += " | "
+	dat += individual_logging_panel_link(M, INDIVIDUAL_SHOW_ALL_LOG, LOGSRC_MOB, "Show All", source, ntype)
+	dat += "</center>"
 
 	dat += "<hr style='background:#000000; border:0; height:1px'>"
 
@@ -31,22 +47,21 @@
 	if(source == LOGSRC_CLIENT && M.client) //if client doesn't exist just fall back to the mob log
 		log_source = M.client.player_details.logging //should exist, if it doesn't that's a bug, don't check for it not existing
 
-	if(type == INDIVIDUAL_SHOW_ALL_LOG)
-		dat += "<center>Displaying all [source] logs of [key_name(M)]</center><br><hr>"
-		for(var/log_type in log_source)
-			dat += "<center><b>[log_type]</b></center><br>"
+	for(var/log_type in log_source)
+		var/nlog_type = text2num(log_type)
+		if(nlog_type & ntype)
 			var/list/reversed = log_source[log_type]
 			if(islist(reversed))
 				reversed = reverseRange(reversed.Copy())
 				for(var/entry in reversed)
-					dat += "<font size=2px>[entry]: [reversed[entry]]</font><br>"
+					dat += "<font size=2px><b>[entry]</b><br>[reversed[entry]]</font><br>"
 			dat += "<hr>"
-	else
-		dat += "<center>[source] [type] of [key_name(M)]</center><br>"
-		var/list/reversed = log_source[type]
-		if(reversed)
-			reversed = reverseRange(reversed.Copy())
-			for(var/entry in reversed)
-				dat += "<font size=2px>[entry]: [reversed[entry]]</font><hr>"
 
 	usr << browse(dat, "window=invidual_logging_[key_name(M)];size=600x480")
+
+/proc/individual_logging_panel_link(mob/M, log_type, log_src, label, selected_src, selected_type)
+	var/slabel = label
+	if(selected_type == log_type && selected_src == log_src)
+		slabel = "<b>\[[label]\]</b>"
+
+	return "<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[log_type];log_src=[log_src]'>[slabel]</a>"

@@ -28,6 +28,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/volume = CELL_VOLUME //liters
 	var/last_share = 0
 	var/list/reaction_results
+	var/list/analyzer_results //used for analyzer feedback - not initialized until its used
 
 /datum/gas_mixture/New(volume)
 	gases = new

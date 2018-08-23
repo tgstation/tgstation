@@ -48,7 +48,7 @@
 			padloc = AREACOORD(padturf)
 		else
 			padloc = "(UNKNOWN)"
-		log_talk(src,"HOLOPAD in [padloc]: [key_name(src)] : [message]", LOGSAY)
+		src.log_talk(message, LOG_SAY, tag="HOLOPAD in [padloc]")
 		send_speech(message, 7, T, "robot", get_spans(), language)
 		to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>")
 	else

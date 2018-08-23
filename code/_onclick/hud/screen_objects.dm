@@ -102,6 +102,7 @@
 	var/slot_id	// The indentifier for the slot. It has nothing to do with ID cards.
 	var/icon_empty // Icon when empty. For now used only by humans.
 	var/icon_full  // Icon when contains an item. For now used only by humans.
+	var/list/object_overlays = list()
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 
@@ -125,6 +126,15 @@
 		usr.update_inv_hands()
 	return 1
 
+/obj/screen/inventory/MouseEntered()
+	..()
+	add_overlays()
+
+/obj/screen/inventory/MouseExited()
+	..()
+	cut_overlay(object_overlays)
+	object_overlays.Cut()
+
 /obj/screen/inventory/update_icon()
 	if(!icon_empty)
 		icon_empty = icon_state
@@ -134,6 +144,26 @@
 			icon_state = icon_full
 		else
 			icon_state = icon_empty
+
+/obj/screen/inventory/proc/add_overlays()
+	var/mob/user = hud.mymob
+
+	if(hud && user && slot_id)
+		var/obj/item/holding = user.get_active_held_item()
+
+		if(!holding || user.get_item_by_slot(slot_id))
+			return
+
+		var/image/item_overlay = image(holding)
+		item_overlay.alpha = 92
+		
+		if(!user.can_equip(holding, slot_id, disable_warning = TRUE))
+			item_overlay.color = "#FF0000"
+		else
+			item_overlay.color = "#00ff00"
+
+		object_overlays += item_overlay
+		add_overlay(object_overlays)
 
 /obj/screen/inventory/hand
 	var/mutable_appearance/handcuff_overlay
@@ -310,17 +340,21 @@
 /obj/screen/mov_intent/Click()
 	toggle(usr)
 
+/obj/screen/mov_intent/update_icon(mob/user)
+	if(!user && hud)
+		user = hud.mymob
+	if(!user)
+		return
+	switch(user.m_intent)
+		if(MOVE_INTENT_WALK)
+			icon_state = "walking"
+		if(MOVE_INTENT_RUN)
+			icon_state = "running"
+
 /obj/screen/mov_intent/proc/toggle(mob/user)
 	if(isobserver(user))
 		return
-	switch(user.m_intent)
-		if("run")
-			user.m_intent = MOVE_INTENT_WALK
-			icon_state = "walking"
-		if("walk")
-			user.m_intent = MOVE_INTENT_RUN
-			icon_state = "running"
-	user.update_icons()
+	user.toggle_move_intent(user)
 
 /obj/screen/pull
 	name = "stop pulling"

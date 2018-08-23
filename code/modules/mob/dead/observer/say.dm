@@ -15,7 +15,7 @@
 			client.dsay(message)
 		return
 
-	log_talk(src,"Ghost/[src.key] : [message]", LOGSAY)
+	src.log_talk(message, LOG_SAY, tag="ghost")
 
 	if(check_emote(message))
 		return
@@ -23,6 +23,7 @@
 	. = say_dead(message)
 
 /mob/dead/observer/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	. = ..()
 	var/atom/movable/to_follow = speaker
 	if(radio_freq)
 		var/atom/movable/virtualspeaker/V = speaker

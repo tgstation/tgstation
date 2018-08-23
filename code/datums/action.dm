@@ -492,7 +492,7 @@
 /datum/action/item_action/agent_box
 	name = "Deploy Box"
 	desc = "Find inner peace, here, in the box."
-	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUN | AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
 	background_icon_state = "bg_agent"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "deploy_box"
@@ -500,8 +500,10 @@
 	var/obj/structure/closet/cardboard/agent/box
 
 /datum/action/item_action/agent_box/Trigger()
+	if(!..())
+		return FALSE
 	if(!box)
-		if(cooldown < world.time - 30)
+		if(cooldown < world.time - 100)
 			box = new(get_turf(owner))
 			owner.forceMove(box)
 			cooldown = world.time

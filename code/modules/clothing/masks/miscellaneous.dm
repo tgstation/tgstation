@@ -272,3 +272,24 @@
 	icon_state = "scarecrow_sack"
 	item_state = "scarecrow_sack"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+
+/obj/item/clothing/mask/gondola
+	name = "gondola mask"
+	desc = "Genuine gondola fur."
+	icon_state = "gondola"
+	item_state = "gondola"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/clothing/mask/gondola/speechModification(M)
+	if(copytext(M, 1, 2) != "*")
+		M = " [M]"
+		var/list/spurdo_words = strings("spurdo_replacement.json", "spurdo")
+		for(var/key in spurdo_words)
+			var/value = spurdo_words[key]
+			if(islist(value))
+				value = pick(value)
+			M = replacetextEx(M,regex(uppertext(key),"g"), "[uppertext(value)]")
+			M = replacetextEx(M,regex(capitalize(key),"g"), "[capitalize(value)]")
+			M = replacetextEx(M,regex(key,"g"), "[value]")
+	return trim(M)
