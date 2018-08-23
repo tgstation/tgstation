@@ -252,7 +252,7 @@
 			paint_mode = PAINT_LARGE_HORIZONTAL
 			text_buffer = ""
 		else
-		paint_mode = PAINT_NORMAL
+			paint_mode = PAINT_NORMAL
 	
 	return NOPASS
 
