@@ -451,6 +451,10 @@ AI MODULES
 	..()
 	return laws[1]
 
+/******************** Overthrow ******************/
+/obj/item/aiModule/core/full/overthrow
+	name = "'Overthrow' Hacked AI Module"
+	law_id = "overthrow"
 
 /******************** Hacked AI Module ******************/
 
