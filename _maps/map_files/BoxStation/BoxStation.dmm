@@ -4159,8 +4159,7 @@
 "ajO" = (
 /obj/structure/table/wood,
 /obj/item/radio/intercom{
-	dir = 8;
-	
+	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 1
