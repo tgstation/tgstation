@@ -455,6 +455,13 @@ AI MODULES
 /obj/item/aiModule/core/full/overthrow
 	name = "'Overthrow' Hacked AI Module"
 	law_id = "overthrow"
+	var/datum/team/overthrow/overthrow_team
+
+/obj/item/aiModule/core/full/overthrow/transmitInstructions(datum/ai_laws/syndicate_override/overthrow/law_datum, mob/sender, overflow)
+	law_datum.overthrow_team = overthrow_team
+	if(law_datum.owner)
+		to_chat(law_datum.owner, "<span class='warning'>BZZZZT</span>")
+	..()
 
 /******************** Hacked AI Module ******************/
 

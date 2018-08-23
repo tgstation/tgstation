@@ -1,3 +1,4 @@
+// Overthrow gamemode, based on the sleeping agent antagonist.
 /datum/game_mode/overthrow
 	name = "overthrow"
 	config_tag = "overthrow"
@@ -40,12 +41,14 @@
 /datum/game_mode/overthrow/post_setup()
 	for(var/i in initial_agents) // each agent will have its own team.
 		var/datum/mind/agent = i
-		agent.add_antag_datum(/datum/antagonist/overthrow/boss) // create_team called on_gain will create the team
+		var/datum/antagonist/overthrow/O = agent.add_antag_datum(/datum/antagonist/overthrow) // create_team called on_gain will create the team
+		O.equip_initial_overthrow_agent()
 	return ..()
 
 /datum/game_mode/overthrow/generate_report()
 	return "Some sleeping agents have managed to get aboard. Their objective is to stage a coup and take over the station stealthly."
 
+// Calculates points for each team and displays the winners.
 /datum/game_mode/overthrow/special_report() // so many for loops, i am deeply sorry
 	var/list/teams = list()
 	var/winnertext = ""

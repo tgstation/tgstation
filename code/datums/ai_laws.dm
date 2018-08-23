@@ -85,7 +85,8 @@
 					"You must maintain the secrecy of any syndicate activities except when doing so would conflict with the First, Second, or Third Law.")
 
 /datum/ai_laws/syndicate_override/overthrow
-	id = "overthrow" // used in end round checks
+	id = "overthrow"
+	var/datum/team/overthrow_team
 
 /datum/ai_laws/ninja_override
 	name = "SpiderOS 3.1"
