@@ -52,7 +52,7 @@
 	var/base_points = 0
 	for(var/i in targets)
 		var/datum/mind/M = i
-		if(M && M.current)
+		if(M)
 			var/target_points
 			var/role = targets[M]
 			switch(role)
@@ -70,7 +70,7 @@
 					target_points = CMOPTS
 			// modifiers
 			var/datum/antagonist/overthrow/O = M.has_antag_datum(/datum/antagonist/overthrow)
-			if(M.current.stat == DEAD) // yeah, you gotta defend him even if you converted him
+			if(!M.current || M.current.stat == DEAD) // yeah, you gotta defend him even if you converted him
 				target_points *= KILLED
 			else if(!is_station_level(M.current.z) && !is_centcom_level(M.current.z)) // exiled.
 				target_points *= EXILED
@@ -105,10 +105,10 @@
 
 /datum/objective/overthrow_target/check_completion()
 	var/base_points
-	if(target && target.current)
+	if(target)
 		base_points = TARGETPTS
 		var/datum/antagonist/overthrow/O = target.has_antag_datum(/datum/antagonist/overthrow)
-		if(target.current.stat == DEAD)
+		if(!target || target.current.stat == DEAD)
 			base_points *= KILLED
 		else if(!is_station_level(target.current.z) && !is_centcom_level(target.current.z)) // exiled.
 			base_points *= EXILED

@@ -1,7 +1,7 @@
 /datum/game_mode/overthrow
 	name = "overthrow"
 	config_tag = "overthrow"
-	antag_flag = ROLE_TRAITOR // they are traitors after all, with a twist
+	antag_flag = ROLE_OVERTHROW
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 1 //20 // the core idea is of a swift, bloodless coup, so it shouldn't be as chaotic as revs.
 	required_enemies = 1 //2 minimum two teams, otherwise it's just nerfed revs.
@@ -30,6 +30,7 @@
 		antag_candidates -= sleeping_agent
 		initial_agents += sleeping_agent
 		sleeping_agent.restricted_roles = restricted_jobs
+		sleeping_agent.special_role = ROLE_OVERTHROW
 
 	if(initial_agents.len < required_enemies)
 		setup_error = "Not enough initial sleeping agents candidates"

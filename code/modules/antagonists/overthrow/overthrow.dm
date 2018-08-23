@@ -4,7 +4,7 @@
 	name = "Syndicate mutineer"
 	roundend_category = "syndicate mutineers"
 	antagpanel_category = "Syndicate Mutineers"
-	job_rank = ROLE_TRAITOR
+	job_rank = ROLE_TRAITOR // simply use the traitor preference & jobban settings
 	var/datum/team/overthrow/team
 	var/static/list/possible_useful_items
 
@@ -15,25 +15,32 @@
 									/obj/item/soap/syndie, /obj/item/card/id/syndicate, /obj/item/storage/box/syndie_kit/chameleon)
 
 /datum/antagonist/overthrow/on_gain()
-	create_team()
 	objectives += team.objectives
 	owner.objectives += objectives
 	..()
 	equip_overthrow()
+	owner.special_role = ROLE_OVERTHROW
+
+/datum/antagonist/overthrow/on_removal()
+	owner.special_role = null
+	..()
 
 /datum/antagonist/overthrow/create_team()
 	if(!team)
 		team = new()
 		team.add_member(owner)
 		team.create_objectives()
-		var/team_name = stripped_input(owner, "Name your team:", "Team name", , MAX_NAME_LEN)
-		if(!team_name)
-			to_chat(owner, "<span class='danger'>You must give a name to your team!</span>")
-			create_team()
-			return
-		team.name = team_name
+		name_team()
 	else
 		team.add_member(owner)
+
+/datum/antagonist/overthrow/proc/name_team()
+	var/team_name = stripped_input(owner, "Name your team:", "Team name", , MAX_NAME_LEN)
+	if(!team_name)
+		team.name = syndicate_name()
+		to_chat(owner, "<span class='danger'>Since you gave no name, your team's name has been randomly generated: [team.name]!</span>")
+		return
+	team.name = team_name
 
 /datum/antagonist/overthrow/apply_innate_effects()
 	..()
@@ -121,7 +128,7 @@
 	to_chat(owner.current, "<B><font size=3 color=red>You are a syndicate sleeping agent. Your job is to stage a swift, fairly bloodless coup. </font></B>")
 
 /datum/antagonist/overthrow/boss
-	name = "Syndicate initial eutineers"
+	name = "Syndicate initial mutineers"
 
 /datum/antagonist/overthrow/boss/on_gain()
 	..()
