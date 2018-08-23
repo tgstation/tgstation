@@ -118,7 +118,7 @@
 
 /obj/item/clothing/glasses/night/sunglasses
 	name = "night vision sunglasses"
-	desc = "Protects from moonlight."
+	desc = "Protects from moonlight. Can see from 12 meters away in the dark."
 	darkness_view = 6
 	icon_state = "sunnig"
 	flash_protect = 1
