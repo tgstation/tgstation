@@ -7,6 +7,11 @@
       </ui-button>
     </td>
     <td>
+      <ui-button action='fly' params='{"id": "{{id}}"}' state='{{can_fly ? null : 'disabled'}}'>
+        Fly
+      </ui-button>
+    </td>
+    <td>
       {{name}} (<code>{{id}}</code>)
     </td>
     <td>

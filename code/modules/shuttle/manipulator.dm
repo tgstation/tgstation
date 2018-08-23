@@ -120,6 +120,7 @@
 		if (timeleft > 1 HOURS)
 			L["timeleft"] = "Infinity"
 		L["can_fast_travel"] = M.timer && timeleft >= 50
+		L["can_fly"] = !istype(M, /obj/docking_port/mobile/emergency)
 		if (M.mode != SHUTTLE_IDLE)
 			L["mode"] = capitalize(shuttlemode2str(M.mode))
 		L["status"] = M.getDbgStatusText()
@@ -154,6 +155,15 @@
 						user.forceMove(get_turf(M))
 						. = TRUE
 						break
+
+		if("fly")
+			for(var/i in SSshuttle.mobile)
+				var/obj/docking_port/mobile/M = i
+				if(M.id == params["id"])
+					. = TRUE
+					M.admin_fly_shuttle(user)
+					break
+
 		if("fast_travel")
 			for(var/i in SSshuttle.mobile)
 				var/obj/docking_port/mobile/M = i
@@ -292,3 +302,47 @@
 	if(preview_shuttle)
 		preview_shuttle.jumpToNullSpace()
 	preview_shuttle = null
+
+/obj/docking_port/mobile/proc/admin_fly_shuttle(mob/user)
+	var/list/options = list()
+	var/list/bad = list()
+
+	for(var/port in SSshuttle.stationary)
+		if (istype(port, /obj/docking_port/stationary/transit))
+			continue  // please don't do this
+		var/obj/docking_port/stationary/S = port
+		var/title = S.name || S.id
+		var/can_dock = canDock(S)
+		if (can_dock == SHUTTLE_CAN_DOCK)
+			options[title] = S
+		else
+			title = "[title] -- [can_dock]"
+			bad[title] = S
+
+	options += "--------"
+	options += bad
+
+	var/selection = input(user, "Select where to fly [name || id]:", "Fly Shuttle") as null|anything in options
+	if(!selection)
+		return
+
+	var/obj/docking_port/stationary/S = options[selection]
+	var/can_dock = canDock(S)
+	var/instant = FALSE
+	if (can_dock == SHUTTLE_CAN_DOCK)
+		var/response = alert(user, "Go through transit or move instantly?", "Fly Shuttle", "Transit", "Instant", "Cancel")
+		if (response == "Cancel")
+			return
+		instant = (response == "Instant")
+	else
+		instant = TRUE
+		if (alert(user, "[name || id] cannot dock at [S.name || S.id]:\n\t[can_dock]\nForce IMMEDIATE docking?", "Fly Shuttle", "Cancel", "Force") != "Force")
+			return
+
+	if(instant)
+		initiate_docking(S, force=TRUE)
+	else
+		request(S)
+
+/obj/docking_port/mobile/emergency/admin_fly_shuttle(mob/user)
+	return  // use the existing verbs for this
