@@ -117,8 +117,9 @@
 	return OXYLOSS
 
 /obj/item/clothing/glasses/night/sunglasses
-	name = "night vision sunglasses
-	des = "Protects from moonlight."
+	name = "night vision sunglasses"
+	desc = "Protects from moonlight."
+	darkness_view = 6
 	icon_state = "sunnig"
 	flash_protect = 1
 	tint = 1
