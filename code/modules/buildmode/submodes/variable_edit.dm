@@ -4,6 +4,11 @@
 	var/varholder = null
 	var/valueholder = null
 
+/datum/buildmode_mode/varedit/Destroy()
+	varholder = null
+	valueholder = null
+	return ..()
+
 /datum/buildmode_mode/varedit/show_help(client/c)
 	to_chat(c, "<span class='notice'>***********************************************************</span>")
 	to_chat(c, "<span class='notice'>Right Mouse Button on buildmode button = Select var(type) & value</span>")

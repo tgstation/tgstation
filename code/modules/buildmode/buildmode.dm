@@ -7,6 +7,9 @@
 	var/datum/buildmode_mode/mode
 	var/client/holder
 
+	var/li_cb
+	var/lo_cb
+
 	var/list/buttons
 	// SECTION UI
 
@@ -24,6 +27,10 @@
 	mode = new /datum/buildmode_mode/basic(src)
 	holder = c
 	buttons = list()
+	li_cb = CALLBACK(src, .proc/post_login)
+	lo_cb = CALLBACK(src, .proc/post_logout)
+	holder.player_details.post_login_callbacks += li_cb
+	holder.player_details.post_logout_callbacks += lo_cb
 	holder.show_popup_menus = FALSE
 	create_buttons()
 	holder.screen += buttons
@@ -36,15 +43,23 @@
 	holder.click_intercept = null
 	holder.show_popup_menus = TRUE
 	qdel(src)
-	return
 
 /datum/buildmode/Destroy()
 	close_switchstates()
+	holder.player_details.post_login_callbacks -= li_cb
+	holder.player_details.post_logout_callbacks -= lo_cb
 	holder = null
 	QDEL_NULL(mode)
 	QDEL_LIST(modeswitch_buttons)
 	QDEL_LIST(dirswitch_buttons)
 	return ..()
+
+/datum/buildmode/proc/post_login()
+	// since these will get wiped upon login
+	holder.screen += buttons
+
+/datum/buildmode/proc/post_logout()
+
 
 /datum/buildmode/proc/create_buttons()
 	// keep a reference so we can update it upon mode switch

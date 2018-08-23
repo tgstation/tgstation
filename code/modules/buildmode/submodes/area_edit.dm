@@ -17,6 +17,7 @@
 
 /datum/buildmode_mode/area_edit/Destroy()
 	QDEL_NULL(areaimage)
+	storedarea = null
 	return ..()
 
 /datum/buildmode_mode/area_edit/show_help(client/c)

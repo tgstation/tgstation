@@ -3,6 +3,10 @@
 	
 	var/atom/movable/throw_atom = null
 	
+/datum/buildmode_mode/throwing/Destroy()
+	throw_atom = null
+	return ..()
+
 /datum/buildmode_mode/throwing/show_help(client/c)
 	to_chat(c, "<span class='notice'>***********************************************************</span>")
 	to_chat(c, "<span class='notice'>Left Mouse Button on turf/obj/mob      = Select</span>")

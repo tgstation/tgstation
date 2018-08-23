@@ -15,7 +15,10 @@
 	return ..()
 
 /datum/buildmode_mode/Destroy()
-	Reset()
+	cornerA = null
+	cornerB = null
+	QDEL_LIST(preview)
+	preview = null
 	return ..()
 
 /datum/buildmode_mode/proc/enter_mode(datum/buildmode/BM)
