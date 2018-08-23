@@ -321,3 +321,26 @@
 
 /obj/docking_port/mobile/emergency/admin_fly_shuttle(mob/user)
 	return  // use the existing verbs for this
+
+/obj/docking_port/mobile/arrivals/admin_fly_shuttle(mob/user)
+	switch(alert(user, "Would you like to fly the arrivals shuttle once or change its destination?", "Fly Shuttle", "Fly", "Retarget", "Cancel"))
+		if("Cancel")
+			return
+		if("Fly")
+			return ..()
+
+	var/list/options = list()
+
+	for(var/port in SSshuttle.stationary)
+		if (istype(port, /obj/docking_port/stationary/transit))
+			continue  // please don't do this
+		var/obj/docking_port/stationary/S = port
+		if (canDock(S) == SHUTTLE_CAN_DOCK)
+			options[S.name || S.id] = S
+
+	var/selection = input(user, "Select the new arrivals destination:", "Fly Shuttle") as null|anything in options
+	if(!selection)
+		return
+	target_dock = options[selection]
+	if(!QDELETED(target_dock))
+		destination = target_dock
