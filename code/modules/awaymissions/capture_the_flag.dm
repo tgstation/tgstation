@@ -333,18 +333,18 @@
 	var/area/A = get_area(src)
 	var/list/ctf_object_typecache = typecacheof(list(
 				/obj/machinery,
-				/obj/structure,
 				/obj/effect/ctf,
 				/obj/item/twohanded/ctf
 			))
 	for(var/atm in A)
 		if (isturf(A) || ismob(A) || isarea(A))
 			continue
-		if(!is_type_in_typecache(atm, ctf_object_typecache))
-			qdel(atm)
 		if(isstructure(atm))
 			var/obj/structure/S = atm
 			S.obj_integrity = S.max_integrity
+		else if(!is_type_in_typecache(atm, ctf_object_typecache))
+			qdel(atm)
+
 
 /obj/machinery/capture_the_flag/proc/stop_ctf()
 	ctf_enabled = FALSE
