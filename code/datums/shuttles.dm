@@ -21,7 +21,7 @@
 	mappath = "[prefix][shuttle_id].dmm"
 	. = ..()
 
-/datum/map_template/shuttle/load(turf/T, centered, register=TRUE)
+/datum/map_template/shuttle/load(turf/T, centered)
 	. = ..()
 	if(!.)
 		return
@@ -34,10 +34,6 @@
 		if(length(place.baseturfs) < 2) // Some snowflake shuttle shit
 			continue
 		place.baseturfs.Insert(3, /turf/baseturf_skipover/shuttle)
-
-		if(register)
-			for(var/obj/docking_port/mobile/port in place)
-				port.register()
 
 		for(var/obj/structure/closet/closet in place)
 			if(closet.anchorable)

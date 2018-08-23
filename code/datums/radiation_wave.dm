@@ -24,9 +24,8 @@
 	START_PROCESSING(SSradiation, src)
 
 /datum/radiation_wave/Destroy()
-	. = QDEL_HINT_IWILLGC
 	STOP_PROCESSING(SSradiation, src)
-	..()
+	return ..()
 
 /datum/radiation_wave/process()
 	master_turf = get_step(master_turf, move_dir)

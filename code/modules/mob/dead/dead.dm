@@ -4,7 +4,6 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 /mob/dead
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-	throwforce = 0
 
 /mob/dead/Initialize()
 	if(flags_1 & INITIALIZED_1)

@@ -1,0 +1,11 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Added programmable nanites to science!"
+  - rscadd: "Science now has a nanite chamber, a nanite program hub, a nanite cloud console and a nanite programmer."
+  - rscadd: "From the program hub you can download nanite programs (unlocked through techwebs) to disks."
+  - rscadd: "You can then customize their functionality and signal codes through the Nanite Programmer."
+  - rscadd: "The nanite chamber is necesary to inject nanites into a patient, and it's also used to install/uninstall programs into a patient's nanites. A second person is required to man the console."
+  - rscadd: "The nanite cloud console controls remote program storage; it stores program backups that nanites can be synced to through cloud IDs."
+  - rscadd: "Nanite programs range can be either helpful or harmful; their main potential is that they can be enabled at will through the use of remotes and sensors. The potential uses are endless!"
+  - rscadd: "More detailed information is available in the wiki."

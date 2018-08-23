@@ -63,9 +63,8 @@
 	if ( loc != user || user.incapacitated() || user.eye_blind || !current )
 		user.unset_machine()
 		return 0
-	var/turf/T_user = get_turf(user.loc)
-	var/turf/T_current = get_turf(current)
-	if(T_user.z != T_current.z || !current.can_use())
+	var/turf/T = get_turf(user.loc)
+	if(T.z != current.z || !current.can_use())
 		to_chat(user, "<span class='danger'>[src] has lost the signal.</span>")
 		current = null
 		user.unset_machine()
@@ -80,9 +79,10 @@
 		for(var/obj/machinery/camera/camera in GLOB.cameranet.cameras)
 			if(camera.stat || !camera.can_use())
 				continue
-			if(length(list("ss13","mine", "rd", "labor", "toxins", "minisat")&camera.network))
+			if(length(list("ss13","mine")&camera.network))
 				bugged_cameras[camera.c_tag] = camera
-	return sortList(bugged_cameras)
+	sortList(bugged_cameras)
+	return bugged_cameras
 
 
 /obj/item/camera_bug/proc/menu(list/cameras)
@@ -296,9 +296,8 @@
 	src.updateSelfDialog()
 
 /obj/item/camera_bug/proc/same_z_level(var/obj/machinery/camera/C)
-	var/turf/T_cam = get_turf(C)
-	var/turf/T_bug = get_turf(loc)
-	if(!T_bug || T_cam.z != T_bug.z)
+	var/turf/T = get_turf(loc)
+	if(!T || C.z != T.z)
 		to_chat(usr, "<span class='warning'>You can't get a signal!</span>")
 		return FALSE
 	return TRUE

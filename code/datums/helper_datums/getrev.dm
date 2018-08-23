@@ -13,7 +13,7 @@
 		originmastercommit = revinfo.origin_commit
 	else
 		var/list/logs = world.file2list(".git/logs/HEAD")
-		if(logs.len)
+		if(logs)
 			logs = splittext(logs[logs.len - 1], " ")
 			date = unix2date(text2num(logs[5]))
 			commit = logs[2]

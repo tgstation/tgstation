@@ -64,12 +64,10 @@
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "o" = (
 /obj/machinery/vending/snack/teal,
-/turf/open/floor/plasteel/airless,
-/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/airless/floorgrime,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "p" = (
-/turf/open/floor/plasteel/airless,
-/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/airless/floorgrime,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "q" = (
 /obj/structure/sign/directions/science{

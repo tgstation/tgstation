@@ -104,10 +104,7 @@
 /obj/item/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
 	if(!istype(M))
 		return
-	if(user)
-		log_combat(user, M, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
-	else //caused by emp/remote signal
-		M.log_message("was [targeted? "flashed(targeted)" : "flashed(AOE)"]",LOG_ATTACK)
+	log_combat(user, M, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
 	if(generic_message && M != user)
 		to_chat(M, "<span class='disarm'>[src] emits a blinding light!</span>")
 	if(targeted)
