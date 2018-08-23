@@ -51,7 +51,8 @@ SUBSYSTEM_DEF(traumas)
 					   "conspiracies" = typecacheof(list(/mob/living/simple_animal/bot/secbot, /mob/living/simple_animal/bot/ed209, /mob/living/simple_animal/drone,
 					   /mob/living/simple_animal/pet/penguin)),
 					   "birds" = typecacheof(list(/mob/living/simple_animal/parrot, /mob/living/simple_animal/chick, /mob/living/simple_animal/chicken,
-					   /mob/living/simple_animal/pet/penguin))
+					   /mob/living/simple_animal/pet/penguin)),
+					   "anime" = typecacheof(list(/mob/living/simple_animal/hostile/guardian))
 					   )
 
 	phobia_objs = list("snakes" = typecacheof(list(/obj/item/rod_of_asclepius)),
