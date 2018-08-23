@@ -119,7 +119,7 @@
 		L["timeleft"] = M.getTimerStr()
 		if (timeleft > 1 HOURS)
 			L["timeleft"] = "Infinity"
-		L["can_fast_travel"] = M.timer && timeleft >= 50
+		L["can_fast_travel"] = M.destination && M.timer && timeleft >= 50
 		L["can_fly"] = !istype(M, /obj/docking_port/mobile/emergency)
 		if (M.mode != SHUTTLE_IDLE)
 			L["mode"] = capitalize(shuttlemode2str(M.mode))
@@ -313,11 +313,52 @@
 		if (canDock(S) == SHUTTLE_CAN_DOCK)
 			options[S.name || S.id] = S
 
+	options += "--------"
+	options += "Infinite Transit"
+	options += "Delete Shuttle"
+	options += "Into The Sunset (delete & greentext 'escape')"
+
 	var/selection = input(user, "Select where to fly [name || id]:", "Fly Shuttle") as null|anything in options
 	if(!selection)
 		return
 
-	request(options[selection])
+	switch(selection)
+		if("Infinite Transit")
+			destination = null
+			mode = SHUTTLE_IGNITING
+			setTimer(ignitionTime)
+			sleep(ignitionTime)
+			UNTIL(mode != SHUTTLE_IGNITING)
+			if (mode == SHUTTLE_CALL)
+				timer = INFINITY
+			else
+				to_chat(user, "<span class='warning'>Unable to send [name || id] to infinite transit.</span>")
+
+		if("Delete Shuttle")
+			if(alert(user, "Really delete [name || id]?", "Delete Shuttle", "Cancel", "Really!") != "Really!")
+				return
+			jumpToNullSpace()
+
+		if("Into The Sunset (delete & greentext 'escape')")
+			if(alert(user, "Really delete [name || id] and greentext escape objectives?", "Delete Shuttle", "Cancel", "Really!") != "Really!")
+				return
+
+			// Loop over mobs
+			for(var/t in return_turfs())
+				var/turf/T = t
+				for(var/mob/living/M in T.GetAllContents())
+					// If they have a mind and they're not in the brig, they escaped
+					if(M.mind && !istype(t, /turf/open/floor/plasteel/shuttle/red) && !istype(t, /turf/open/floor/mineral/plastitanium/red/brig))
+						M.mind.force_escaped = TRUE
+					// Ghostize them and put them in nullspace stasis (for stat & possession checks)
+					M.notransform = TRUE
+					M.ghostize(FALSE)
+					M.moveToNullspace()
+
+			jumpToNullSpace()
+
+		else
+			request(options[selection])
 
 /obj/docking_port/mobile/emergency/admin_fly_shuttle(mob/user)
 	return  // use the existing verbs for this
