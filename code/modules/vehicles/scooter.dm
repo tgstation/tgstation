@@ -136,6 +136,8 @@
 		return ..()
 
 /obj/vehicle/ridden/scooter/skateboard/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
 	to_chat(user, "<span class='notice'>You begin to deconstruct and remove the wheels on [src]...</span>")
 	if(I.use_tool(src, user, 20, volume=50))
 		to_chat(user, "<span class='notice'>You deconstruct the wheels on [src].</span>")

@@ -214,6 +214,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	return TRUE
 
 /obj/machinery/vending/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
 	if(anchored)
 		default_deconstruction_screwdriver(user, icon_state, icon_state, I)
 		cut_overlays()

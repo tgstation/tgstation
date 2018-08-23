@@ -134,6 +134,8 @@
 	return TRUE
 
 /obj/machinery/power/rad_collector/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
 	if(loaded_tank)
 		to_chat(user, "<span class='warning'>Remove the plasma tank first!</span>")
 	else

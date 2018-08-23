@@ -104,7 +104,7 @@
 
 /obj/machinery/power/apc/unlocked
 	locked = FALSE
-	
+
 /obj/machinery/power/apc/syndicate //general syndicate access
 	req_access = list(ACCESS_SYNDICATE)
 
@@ -116,19 +116,19 @@
 
 /obj/machinery/power/apc/highcap/fifteen_k
 	cell_type = /obj/item/stock_parts/cell/high/plus
-	
+
 /obj/machinery/power/apc/auto_name
 	auto_name = TRUE
-	
+
 /obj/machinery/power/apc/auto_name/north
 	dir = NORTH
-	
+
 /obj/machinery/power/apc/auto_name/south
 	dir = SOUTH
 
 /obj/machinery/power/apc/auto_name/east
 	dir = EAST
-	
+
 /obj/machinery/power/apc/auto_name/west
 	dir = WEST
 
@@ -467,6 +467,8 @@
 			return
 
 /obj/machinery/power/apc/screwdriver_act(mob/living/user, obj/item/W)
+	if(..())
+		return TRUE
 	. = TRUE
 	if(opened)
 		if(cell)

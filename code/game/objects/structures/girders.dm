@@ -210,6 +210,9 @@
 
 // Screwdriver behavior for girders
 /obj/structure/girder/screwdriver_act(mob/user, obj/item/tool)
+	if(..())
+		return TRUE
+
 	. = FALSE
 	if(state == GIRDER_DISPLACED)
 		user.visible_message("<span class='warning'>[user] disassembles the girder.</span>",

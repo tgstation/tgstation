@@ -427,6 +427,8 @@
 
 
 /obj/item/electronic_assembly/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
 	I.play_tool_sound(src)
 	opened = !opened
 	to_chat(user, "<span class='notice'>You [opened ? "open" : "close"] the maintenance hatch of [src].</span>")
