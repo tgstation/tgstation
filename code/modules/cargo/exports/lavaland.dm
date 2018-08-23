@@ -15,9 +15,10 @@
 						/obj/item/voodoo,
 						/obj/item/grenade/clusterbuster/inferno,
 						/obj/item/clothing/neck/necklace/memento_mori,
-						/obj/item/organ/heart/cursed/wizard)
+						/obj/item/organ/heart/cursed/wizard,
+						/obj/item/clothing/suit/hooded/cloak/drake)
 
-/datum/export/lavaland/major
+/datum/export/lavaland/major //far more valuable than regular chest loot
 	cost = 20000
 	unit_name = "lava planet artifact"
 	export_types = list(/obj/item/ship_in_a_bottle,
@@ -42,15 +43,10 @@
 						/obj/item/blood_contract,
 						/obj/item/gun/magic/staff/spellblade)
 
-/datum/export/lavaland/megafauna/total_printout()
+/datum/export/lavaland/megafauna/total_printout() //in the unlikely case a miner feels like selling megafauna loot
 	. = ..()
 	if(.)
 		. += " On behalf of the Nanotrasen RnD division: Thank you for your hard work."
-
-/datum/export/lavaland/megafauna/hev/total_printout()
-	. = ..()
-	if(.)
-		. += " On behalf of the... hey, what the HECK is this?"
 
 /datum/export/lavaland/megafauna/hev/suit
 	cost = 30000
