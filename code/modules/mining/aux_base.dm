@@ -354,7 +354,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 			qdel(Mport)
 			return
 
-	if(!mining_shuttle.canDock(Mport))
+	if(mining_shuttle.canDock(Mport) != SHUTTLE_CAN_DOCK)
 		to_chat(user, "<span class='warning'>Unable to secure a valid docking zone. Please try again in an open area near, but not within the aux. mining base.</span>")
 		SSshuttle.stationary.Remove(Mport)
 		qdel(Mport)

@@ -61,7 +61,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 					return FALSE
 	return TRUE
 
-/obj/docking_port/mobile/supply/request()
+/obj/docking_port/mobile/supply/request(obj/docking_port/stationary/S)
 	if(mode != SHUTTLE_IDLE)
 		return 2
 	return ..()
