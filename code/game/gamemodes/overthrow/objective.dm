@@ -31,24 +31,40 @@
 #define EXILED			1
 #define KILLED			0.5
 
-/datum/objective/ovethrow_heads
+/datum/objective/overthrow // parent type holding get_points
+
+/datum/objective/overthrow/check_completion()
+	return get_points() ? TRUE : FALSE
+
+/datum/objective/overthrow/proc/get_points()
+	return 0 // int,not bool
+
+/datum/objective/overthrow/heads
 	var/list/targets = list()	// we want one objective for all the heads, instead of 1 objective per head, because you don't actually "lose" if you get atleast one head.
 								// Also, this is an associative list, target = role. Modifiers (defines) are applied on points calculation at round end.
 
-/datum/objective/ovethrow_heads/proc/find_targets()
+/datum/objective/overthrow/heads/proc/find_targets()
 	var/list/datum/mind/owners = get_owners()
-	for(var/datum/mind/possible_target in get_crewmember_minds())
+	for(var/datum/mind/possible_target in get_crewmember_minds()) // i would use SSjob.get_all_heads() but jesus christ that proc's shit, i ain't using it
 		if(!(possible_target in owners) && ishuman(possible_target.current))
 			if(possible_target.assigned_role in GLOB.command_positions)
 				targets[possible_target] = possible_target.assigned_role
 	update_explanation_text()
 
-/datum/objective/ovethrow_heads/update_explanation_text()
-	explanation_text = "Convert, exile or kill "
-	explanation_text += targets.Join(",")
-	explanation_text += ". Converting to your team will give you more points, whereas killing will give you the least. Syndicates don't want to stir up too many troubles."
+/datum/objective/overthrow/heads/update_explanation_text()
+	if(targets.len)
+		explanation_text = "Convert, exile or kill "
+		explanation_text += targets.Join(",")
+		explanation_text += ". Converting to your team will give you more points, whereas killing will give you the least. Syndicates don't want to stir up too many troubles."
+	else
+		explanation_text = "Nothing."
 
-/datum/objective/ovethrow_heads/check_completion() // This won't return a boolean as usual, but the amount of points earned.
+/datum/objective/overthrow/heads/check_completion()
+	if(!targets.len)
+		return TRUE
+	. = ..()
+
+/datum/objective/overthrow/heads/get_points()
 	var/base_points = 0
 	for(var/i in targets)
 		var/datum/mind/M = i
@@ -83,27 +99,45 @@
 			base_points += target_points
 	return base_points
 
-/datum/objective/overthrow_AI // Basically a shared objective. All teams get the same amount of points, but obviously the one controlling the AI will have more power ingame.
+/datum/objective/overthrow/AI // Basically a shared objective. All teams get the same amount of points, but obviously the one controlling the AI will have more power ingame.
 	explanation_text = "Enslave the AI using the special AI module board in your storage implant. It is required you use said module."
 
-/datum/objective/overthrow_AI/check_completion() // Also returns points, just AIPTS. If you simply kill the Ai you get nothing, you need it to overthrow the heads.
+/datum/objective/overthrow/AI/get_points() // If you simply kill the Ai you get nothing, you need it to overthrow the heads.
 	for(var/i in GLOB.ai_list)
 		var/mob/living/silicon/ai/AI = i
 		if(AI.laws && AI.laws.id == "overthrow")
 			return AIPTS
 
-/datum/objective/overthrow_target
+/datum/objective/overthrow/AI/update_explanation_text()
+	if(!GLOB.ai_list.len)
+		explanation_text = "Nothing."
+	else
+		explanation_text = "Enslave the AI using the special AI module board in your storage implant. It is required you use said module."
 
-/datum/objective/overthrow_target/update_explanation_text()
+/datum/objective/overthrow/AI/check_completion()
+	if(!GLOB.ai_list.len)
+		return TRUE
+	. = ..()
+
+/datum/objective/overthrow/target
+
+/datum/objective/overthrow/target/update_explanation_text()
 	if(target)
 		explanation_text = "Convert, exile or kill [target.name], the [target.assigned_role]."
+	else
+		explanation_text = "Nothing."
 
-/datum/objective/overthrow_target/is_unique_objective(datum/mind/possible_target)
+/datum/objective/overthrow/target/is_unique_objective(datum/mind/possible_target)
 	if(possible_target.assigned_role in GLOB.command_positions)
 		return FALSE
 	return TRUE
 
-/datum/objective/overthrow_target/check_completion()
+/datum/objective/overthrow/target/check_completion()
+	if(!target)
+		return TRUE
+	. = ..()
+
+/datum/objective/overthrow/target/get_points()
 	var/base_points
 	if(target)
 		base_points = TARGETPTS
