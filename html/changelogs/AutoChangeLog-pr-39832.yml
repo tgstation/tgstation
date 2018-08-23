@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - code_imp: "Transit space initializes about five seconds faster."
