@@ -1,6 +1,3 @@
-
-/datum/unit_test/anchored_mobs
-
 /datum/unit_test/anchored_mobs/Run()
 	var/list/L = list()
 	for(var/i in typesof(/mob))
