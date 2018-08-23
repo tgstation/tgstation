@@ -253,11 +253,6 @@
 
 	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
-	// A timid shuttle will not register itself with the shuttle subsystem
-	// All shuttle templates MUST be timid, imports will fail if they're not
-	// Shuttle defined already on the map MUST NOT be timid, or they won't work
-	var/timid = TRUE
-
 	var/list/ripples = list()
 	var/engine_coeff = 1 //current engine coeff
 	var/current_engines = 0 //current engine power
@@ -280,8 +275,6 @@
 
 /obj/docking_port/mobile/Initialize(mapload)
 	. = ..()
-	if(!timid)
-		register()
 
 	if(!id)
 		id = "[SSshuttle.mobile.len]"
@@ -302,6 +295,23 @@
 	#ifdef DOCKING_PORT_HIGHLIGHT
 	highlight("#0f0")
 	#endif
+
+// Called after the shuttle is loaded from template
+/obj/docking_port/mobile/proc/linkup(datum/map_template/shuttle/template, obj/docking_port/stationary/dock)
+	var/list/static/shuttle_id = list()
+	var/idnum = ++shuttle_id[template]
+	if(idnum > 1)
+		if(id == initial(id))
+			id = "[id][idnum]"
+		if(name == initial(name))
+			name = "[name] [idnum]"
+	for(var/i in shuttle_areas)
+		var/area/place = i
+		for(var/obj/machinery/computer/shuttle/comp in place)
+			comp.connect_to_shuttle(src, dock, idnum)
+		for(var/obj/machinery/computer/camera_advanced/shuttle_docker/comp in place)
+			comp.connect_to_shuttle(src, dock, idnum)
+
 
 //this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact
 /obj/docking_port/mobile/proc/canMove()

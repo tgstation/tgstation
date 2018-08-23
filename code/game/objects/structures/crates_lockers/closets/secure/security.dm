@@ -32,6 +32,7 @@
 	new /obj/item/gun/energy/e_gun(src)
 	new /obj/item/door_remote/captain(src)
 	new /obj/item/card/id/captains_spare(src)
+	new /obj/item/storage/photo_album/Captain(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "\proper head of personnel's locker"
@@ -58,6 +59,7 @@
 	new /obj/item/pet_carrier(src)
 	new /obj/item/door_remote/civillian(src)
 	new /obj/item/circuitboard/machine/techfab/department/service(src)
+	new /obj/item/storage/photo_album/HoP(src)
 
 /obj/structure/closet/secure_closet/hos
 	name = "\proper head of security's locker"
@@ -90,6 +92,7 @@
 	new /obj/item/flashlight/seclite(src)
 	new /obj/item/pinpointer/nuke(src)
 	new /obj/item/circuitboard/machine/techfab/department/security(src)
+	new /obj/item/storage/photo_album/HoS(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"
@@ -190,6 +193,7 @@
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)
 	new /obj/item/storage/belt/holster/full(src)
 	new /obj/item/pinpointer/crew(src)
+	new /obj/item/twohanded/binoculars(src)
 
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections"

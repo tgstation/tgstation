@@ -5,7 +5,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	name = "ore silo"
 	desc = "An all-in-one bluespace storage and transmission system for the station's mineral distribution needs."
 	icon = 'icons/obj/mining.dmi'
-	icon_state = "bin"
+	icon_state = "silo"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/ore_silo
 
@@ -178,10 +178,11 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		logs.Insert(1, entry)
 
 	updateUsrDialog()
-	animate(src, icon_state = "bin_partial", time = 2)
-	animate(icon_state = "bin_full", time = 1)
-	animate(icon_state = "bin_partial", time = 2)
-	animate(icon_state = "bin")
+	flick("silo_active", src)
+
+/obj/machinery/ore_silo/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>[src] can be linked to techfabs, circuit printers and protolathes with a multitool.</span>")
 
 /datum/ore_silo_log
 	var/name  // for VV

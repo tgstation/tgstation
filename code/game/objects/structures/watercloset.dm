@@ -54,7 +54,7 @@
 		else
 			to_chat(user, "<span class='warning'>You need a tighter grip!</span>")
 
-	else if(cistern && !open)
+	else if(cistern && !open && user.CanReach(src))
 		if(!contents.len)
 			to_chat(user, "<span class='notice'>The cistern is empty.</span>")
 		else

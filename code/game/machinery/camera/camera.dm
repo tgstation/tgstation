@@ -83,6 +83,7 @@
 		if(bug.current == src)
 			bug.current = null
 		bug = null
+	cancelCameraAlarm()
 	return ..()
 
 /obj/machinery/camera/emp_act(severity)

@@ -372,80 +372,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 		return "[round(units * 0.000001, 0.001)] MJ"
 	return "[round(units * 0.000000001, 0.0001)] GJ"
 
-/proc/key_name(whom, include_link = null, include_name = 1)
-	var/mob/M
-	var/client/C
-	var/key
-	var/ckey
-	var/fallback_name
-
-	if(!whom)
-		return "*null*"
-	if(istype(whom, /client))
-		C = whom
-		M = C.mob
-		key = C.key
-		ckey = C.ckey
-	else if(ismob(whom))
-		M = whom
-		C = M.client
-		key = M.key
-		ckey = M.ckey
-	else if(istext(whom))
-		key = whom
-		ckey = ckey(whom)
-		C = GLOB.directory[ckey]
-		if(C)
-			M = C.mob
-	else if(istype(whom,/datum/mind))
-		var/datum/mind/mind = whom
-		key = mind.key
-		ckey = ckey(key)
-		if(mind.current)
-			M = mind.current
-			if(M.client)
-				C = M.client
-		else
-			fallback_name = mind.name
-	else
-		return "*invalid*"
-
-	. = ""
-
-	if(!ckey)
-		include_link = 0
-
-	if(key)
-		if(C && C.holder && C.holder.fakekey && !include_name)
-			if(include_link)
-				. += "<a href='?priv_msg=[C.findStealthKey()]'>"
-			. += "Administrator"
-		else
-			if(include_link)
-				. += "<a href='?priv_msg=[ckey]'>"
-			. += key
-		if(!C)
-			. += "\[DC\]"
-
-		if(include_link)
-			. += "</a>"
-	else
-		. += "*no key*"
-
-	if(include_name)
-		if(M)
-			if(M.real_name)
-				. += "/([M.real_name])"
-			else if(M.name)
-				. += "/([M.name])"
-		else if(fallback_name)
-			. += "/([fallback_name])"
-
-	return .
-
-/proc/key_name_admin(whom, include_name = 1)
-	return key_name(whom, 1, include_name)
-
 /proc/get_mob_by_ckey(key)
 	if(!key)
 		return
@@ -1292,19 +1218,6 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 	animate(C, color = animate_color, time = flash_time)
 
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
-
-#define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE)
-#define QDEL_IN_CLIENT_TIME(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE | TIMER_CLIENT_TIME)
-#define QDEL_NULL(item) qdel(item); item = null
-#define QDEL_LIST(L) if(L) { for(var/I in L) qdel(I); L.Cut(); }
-#define QDEL_LIST_IN(L, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/______qdel_list_wrapper, L), time, TIMER_STOPPABLE)
-#define QDEL_LIST_ASSOC(L) if(L) { for(var/I in L) { qdel(L[I]); qdel(I); } L.Cut(); }
-#define QDEL_LIST_ASSOC_VAL(L) if(L) { for(var/I in L) qdel(L[I]); L.Cut(); }
-
-/proc/______qdel_list_wrapper(list/L) //the underscores are to encourage people not to use this directly.
-	QDEL_LIST(L)
-
-
 
 /proc/random_nukecode()
 	var/val = rand(0, 99999)

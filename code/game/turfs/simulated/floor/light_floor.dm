@@ -10,6 +10,7 @@
 	var/list/coloredlights = list("g", "r", "y", "b", "p", "w", "s","o","g")
 	var/currentcolor = 1
 	var/can_modify_colour = TRUE
+	tiled_dirt = FALSE
 
 
 /turf/open/floor/light/examine(mob/user)

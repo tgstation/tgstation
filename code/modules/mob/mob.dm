@@ -35,6 +35,8 @@
 		AA.onNewMob(src)
 	nutrition = rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX)
 	. = ..()
+	update_config_movespeed()
+	update_movespeed(TRUE)
 
 /mob/GenerateTag()
 	tag = "mob_[next_mob_id++]"
@@ -68,6 +70,9 @@
 			t+="<span class='notice'>[gas[GAS_META][META_GAS_NAME]]: [gas[MOLES]] \n</span>"
 
 	to_chat(usr, t)
+
+/mob/proc/get_photo_description(obj/item/camera/camera)
+	return "a ... thing?"
 
 /mob/proc/show_message(msg, type, alt_msg, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 
@@ -169,9 +174,6 @@
 		range = hearing_distance
 	for(var/mob/M in get_hearers_in_view(range, src))
 		M.show_message( message, 2, deaf_message, 1)
-
-/mob/proc/movement_delay()	//update /living/movement_delay() if you change this
-	return 0
 
 /mob/proc/Life()
 	set waitfor = FALSE
@@ -314,17 +316,17 @@
 	set category = "Object"
 
 	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
-		return 0
+		return FALSE
 	if(istype(A, /obj/effect/temp_visual/point))
-		return 0
+		return FALSE
 
 	var/tile = get_turf(A)
 	if (!tile)
-		return 0
+		return FALSE
 
 	new /obj/effect/temp_visual/point(A,invisibility)
 
-	return 1
+	return TRUE
 
 /mob/proc/can_resist()
 	return FALSE		//overridden in living.dm
@@ -596,59 +598,61 @@
 		if(S.chemical_cost >=0 && S.can_be_used_by(src))
 			statpanel("[S.panel]",((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""),S)
 
+#define MOB_FACE_DIRECTION_DELAY 1
+
 // facing verbs
 /mob/proc/canface()
 	if(!canmove)
-		return 0
-	if(world.time < client.move_delay)
-		return 0
-	if(stat==2)
-		return 0
+		return FALSE
+	if(world.time < client.last_turn)
+		return FALSE
+	if(stat == DEAD || stat == UNCONSCIOUS)
+		return FALSE
 	if(anchored)
-		return 0
+		return FALSE
 	if(notransform)
-		return 0
+		return FALSE
 	if(restrained())
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/proc/fall(forced)
 	drop_all_held_items()
 
 /mob/verb/eastface()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canface())
-		return 0
+		return FALSE
 	setDir(EAST)
-	client.move_delay += movement_delay()
-	return 1
+	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
+	return TRUE
 
 /mob/verb/westface()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canface())
-		return 0
+		return FALSE
 	setDir(WEST)
-	client.move_delay += movement_delay()
-	return 1
+	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
+	return TRUE
 
 /mob/verb/northface()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canface())
-		return 0
+		return FALSE
 	setDir(NORTH)
-	client.move_delay += movement_delay()
-	return 1
+	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
+	return TRUE
 
 /mob/verb/southface()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canface())
-		return 0
+		return FALSE
 	setDir(SOUTH)
-	client.move_delay += movement_delay()
-	return 1
+	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
+	return TRUE
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
-	return 0
+	return FALSE
 
 /mob/proc/swap_hand()
 	return
@@ -792,7 +796,7 @@
 //This will update a mob's name, real_name, mind.name, GLOB.data_core records, pda, id and traitor text
 //Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
 /mob/proc/fully_replace_character_name(oldname,newname)
-	log_message("[src] name changed from [oldname] to [newname]", INDIVIDUAL_OWNERSHIP_LOG)
+	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 	if(!newname)
 		return 0
 	real_name = newname

@@ -129,6 +129,7 @@
 	//Shooting Code:
 	A.preparePixelProjectile(target, src)
 	A.fire()
+	log_attack("[assembly] [REF(assembly)] has fired [installed_gun].")
 	return A
 
 /obj/item/integrated_circuit/manipulation/locomotion
@@ -350,7 +351,7 @@
 	name = "grabber"
 	desc = "A circuit with its own inventory for items. Used to grab and store things."
 	icon_state = "grabber"
-	extended_desc = "This circuit accepts a reference to an object to be grabbed, and can store up to 10 objects. Modes: 1 to grab, 0 to eject the first object, and -1 to eject all objects. If you throw something from a grabber's inventory with a thrower, the grabber will update its outputs accordingly."
+	extended_desc = "This circuit accepts a reference to an object to be grabbed, and can store up to 10 objects. Modes: 1 to grab, 0 to eject the first object, -1 to eject all objects, and -2 to eject the target. If you throw something from a grabber's inventory with a thrower, the grabber will update its outputs accordingly."
 	w_class = WEIGHT_CLASS_SMALL
 	size = 3
 	cooldown_per_use = 5
@@ -359,36 +360,46 @@
 	outputs = list("first" = IC_PINTYPE_REF, "last" = IC_PINTYPE_REF, "amount" = IC_PINTYPE_NUMBER,"contents" = IC_PINTYPE_LIST)
 	activators = list("pulse in" = IC_PINTYPE_PULSE_IN,"pulse out" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
+	action_flags = IC_ACTION_COMBAT
 	power_draw_per_use = 50
 	var/max_items = 10
 
 /obj/item/integrated_circuit/manipulation/grabber/do_work()
-	var/max_w_class = assembly.w_class
-	var/atom/movable/acting_object = get_object()
-	var/turf/T = get_turf(acting_object)
 	var/obj/item/AM = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
 	if(!QDELETED(AM) && !istype(AM, /obj/item/electronic_assembly) && !istype(AM, /obj/item/transfer_valve) && !istype(AM, /obj/item/twohanded) && !istype(assembly.loc, /obj/item/implant/storage))
 		var/mode = get_pin_data(IC_INPUT, 2)
-		if(mode == 1)
-			if(check_target(AM))
-				var/weightcheck = FALSE
-				if (AM.w_class <= max_w_class)
-					weightcheck = TRUE
-				else
-					weightcheck = FALSE
-				if((contents.len < max_items) && (weightcheck))
-					AM.forceMove(src)
-		if(mode == 0)
-			if(contents.len)
-				var/obj/item/U = contents[1]
-				U.forceMove(T)
-		if(mode == -1)
-			if(contents.len)
-				var/obj/item/U
-				for(U in contents)
-					U.forceMove(T)
+		switch(mode)
+			if(1)
+				grab(AM)
+			if(0)
+				if(contents.len)
+					drop(contents[1])
+			if(-1)
+				drop_all()
+			if(-2)
+				drop(AM)
 	update_outputs()
 	activate_pin(2)
+
+/obj/item/integrated_circuit/manipulation/grabber/proc/grab(obj/item/AM)
+	var/max_w_class = assembly.w_class
+	if(check_target(AM))
+		if(contents.len < max_items && AM.w_class <= max_w_class)
+			var/atom/A = get_object()
+			A.investigate_log("picked up ([AM]) with [src].", INVESTIGATE_CIRCUIT)
+			AM.forceMove(src)
+
+/obj/item/integrated_circuit/manipulation/grabber/proc/drop(obj/item/AM, turf/T = drop_location())
+	var/atom/A = get_object()
+	A.investigate_log("dropped ([AM]) from [src].", INVESTIGATE_CIRCUIT)
+	AM.forceMove(T)
+
+/obj/item/integrated_circuit/manipulation/grabber/proc/drop_all()
+	if(contents.len)
+		var/turf/T = drop_location()
+		var/obj/item/U
+		for(U in src)
+			drop(U, T)
 
 /obj/item/integrated_circuit/manipulation/grabber/proc/update_outputs()
 	if(contents.len)
@@ -402,11 +413,7 @@
 	push_data()
 
 /obj/item/integrated_circuit/manipulation/grabber/attack_self(var/mob/user)
-	if(contents.len)
-		var/turf/T = get_turf(src)
-		var/obj/item/U
-		for(U in contents)
-			U.forceMove(T)
+	drop_all()
 	update_outputs()
 	push_data()
 
@@ -436,6 +443,7 @@
 			mode = CLAMP(mode, GRAB_PASSIVE, max_grab)
 			if(AM)
 				if(check_target(AM, exclude_contents = TRUE))
+					acting_object.investigate_log("grabbed ([AM]) using [src].", INVESTIGATE_CIRCUIT)
 					acting_object.start_pulling(AM,mode)
 					if(acting_object.pulling)
 						set_pin_data(IC_OUTPUT, 1, TRUE)
@@ -528,15 +536,23 @@
 	var/x_abs = CLAMP(T.x + target_x_rel, 0, world.maxx)
 	var/y_abs = CLAMP(T.y + target_y_rel, 0, world.maxy)
 	var/range = round(CLAMP(sqrt(target_x_rel*target_x_rel+target_y_rel*target_y_rel),0,8),1)
-
+	//remove damage
+	A.throwforce = 0
+	A.embedding = list("embed_chance" = 0)
+	//throw it
 	assembly.visible_message("<span class='danger'>[assembly] has thrown [A]!</span>")
 	log_attack("[assembly] [REF(assembly)] has thrown [A].")
 	A.forceMove(drop_location())
-	A.throw_at(locate(x_abs, y_abs, T.z), range, 3)
+	A.throw_at(locate(x_abs, y_abs, T.z), range, 3, , , , CALLBACK(src, .proc/post_throw, A))
 
 	// If the item came from a grabber now we can update the outputs since we've thrown it.
 	if(istype(G))
 		G.update_outputs()
+
+/obj/item/integrated_circuit/manipulation/thrower/proc/post_throw(obj/item/A)
+	//return damage
+	A.throwforce = initial(A.throwforce)
+	A.embedding = initial(A.embedding)
 
 /obj/item/integrated_circuit/manipulation/matman
 	name = "material manager"

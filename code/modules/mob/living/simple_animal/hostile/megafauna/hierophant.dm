@@ -641,7 +641,7 @@ Difficulty: Hard
 						H.Goto(get_turf(caster), H.move_to_delay, 3)
 		if(monster_damage_boost && (ismegafauna(L) || istype(L, /mob/living/simple_animal/hostile/asteroid)))
 			L.adjustBruteLoss(damage)
-		add_logs(caster, L, "struck with a [name]")
+		log_combat(caster, L, "struck with a [name]")
 	for(var/obj/mecha/M in T.contents - hit_things) //also damage mechs.
 		hit_things += M
 		if(M.occupant)

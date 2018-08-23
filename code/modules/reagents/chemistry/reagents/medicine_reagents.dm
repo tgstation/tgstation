@@ -68,11 +68,11 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/adminordrazine/nanites
-	name = "Nanites"
-	id = "nanites"
-	description = "Tiny nanomachines capable of rapid cellular regeneration."
-	taste_description = "sludge"
+/datum/reagent/medicine/adminordrazine/quantum_heal
+	name = "Quantum Medicine"
+	id = "quantum_heal"
+	description = "Rare and experimental particles, that apparently swap the user's body with one from an alternate dimension where it's completely healthy."
+	taste_description = "science"
 
 /datum/reagent/medicine/synaptizine
 	name = "Synaptizine"
@@ -803,7 +803,7 @@
 				M.updatehealth()
 				if(M.revive())
 					M.emote("gasp")
-					add_logs(M, M, "revived", src)
+					log_combat(M, M, "revived", src)
 	..()
 
 /datum/reagent/medicine/strange_reagent/on_mob_life(mob/living/carbon/M)
@@ -1104,20 +1104,20 @@
 	..()
 	return TRUE
 
-/datum/reagent/medicine/miningnanites
-	name = "Nanites"
-	id = "miningnanites"
-	description = "It's mining magic. We don't have to explain it."
+/datum/reagent/medicine/lavaland_extract
+	name = "Lavaland Extract"
+	id = "lavaland_extract"
+	description = "An extract of lavaland atmospheric and mineral elements. Heals the user in small doses, but is extremely toxic otherwise."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	overdose_threshold = 3 //To prevent people stacking massive amounts of a very strong healing reagent
 	can_synth = FALSE
 
-/datum/reagent/medicine/miningnanites/on_mob_life(mob/living/carbon/M)
+/datum/reagent/medicine/lavaland_extract/on_mob_life(mob/living/carbon/M)
 	M.heal_bodypart_damage(5,5)
 	..()
 	return TRUE
 
-/datum/reagent/medicine/miningnanites/overdose_process(mob/living/M)
+/datum/reagent/medicine/lavaland_extract/overdose_process(mob/living/M)
 	M.adjustBruteLoss(3*REM, 0)
 	M.adjustFireLoss(3*REM, 0)
 	M.adjustToxLoss(3*REM, 0)

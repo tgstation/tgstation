@@ -84,6 +84,14 @@
 	creation_time = 0
 	max_signs = 3
 
+/obj/item/holosign_creator/medical
+	name = "\improper PENLITE barrier projector"
+	desc = "A holographic projector that creates PENLITE holobarriers. Useful during quarantines since they halt those with malicious diseases."
+	icon_state = "signmaker_med"
+	holosign_type = /obj/structure/holosign/barrier/medical
+	creation_time = 30
+	max_signs = 3
+
 /obj/item/holosign_creator/cyborg
 	name = "Energy Barrier Projector"
 	desc = "A holographic projector that creates fragile energy fields."

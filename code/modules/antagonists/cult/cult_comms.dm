@@ -45,7 +45,7 @@
 			var/link = FOLLOW_LINK(M, user)
 			to_chat(M, "[link] [my_message]")
 
-	log_talk(user,"CULT:[key_name(user)] : [message]",LOGSAY)
+	user.log_talk(message, LOG_SAY, tag="cult")
 
 /datum/action/innate/cult/comm/spirit
 	name = "Spiritual Communion"
@@ -79,7 +79,7 @@
 	return ..()
 
 /datum/action/innate/cult/mastervote/Activate()
-	var/choice = alert(owner, "The mantle of leadership is a heavy. Success in this role requires an expert level of communication and experience. Are you sure?",, "Yes", "No")
+	var/choice = alert(owner, "The mantle of leadership is heavy. Success in this role requires an expert level of communication and experience. Are you sure?",, "Yes", "No")
 	if(choice == "Yes" && IsAvailable())
 		var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 		pollCultists(owner,C.cult_team)

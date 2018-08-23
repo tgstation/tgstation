@@ -94,7 +94,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		GLOB.roundstart_races += "human"
 
 /datum/species/proc/check_roundstart_eligible()
-	if(id in (CONFIG_GET(keyed_flag_list/roundstart_races)))
+	if(id in (CONFIG_GET(keyed_list/roundstart_races)))
 		return TRUE
 	return FALSE
 
@@ -241,7 +241,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/obj/item/organ/I = new path()
 		I.Insert(C)
 
-/datum/species/proc/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+/datum/species/proc/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	// Drop the items the new species can't wear
 	for(var/slot_id in no_equip)
 		var/obj/item/thing = C.get_item_by_slot(slot_id)
@@ -285,14 +285,18 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		for(var/datum/disease/A in C.diseases)
 			A.cure(FALSE)
 
+	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
-/datum/species/proc/on_species_loss(mob/living/carbon/C)
+
+/datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	if(C.dna.species.exotic_bloodtype)
 		C.dna.blood_type = random_blood_type()
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(TRUE)
 	for(var/X in inherent_traits)
 		C.remove_trait(X, SPECIES_TRAIT)
+
+	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
 	H.remove_overlay(HAIR_LAYER)
@@ -601,15 +605,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if("tail_lizard")
 					S = GLOB.tails_list_lizard[H.dna.features["tail_lizard"]]
 				if("waggingtail_lizard")
-					S.= GLOB.animated_tails_list_lizard[H.dna.features["tail_lizard"]]
+					S = GLOB.animated_tails_list_lizard[H.dna.features["tail_lizard"]]
 				if("tail_human")
 					S = GLOB.tails_list_human[H.dna.features["tail_human"]]
 				if("waggingtail_human")
-					S.= GLOB.animated_tails_list_human[H.dna.features["tail_human"]]
+					S = GLOB.animated_tails_list_human[H.dna.features["tail_human"]]
 				if("spines")
 					S = GLOB.spines_list[H.dna.features["spines"]]
 				if("waggingspines")
-					S.= GLOB.animated_spines_list[H.dna.features["spines"]]
+					S = GLOB.animated_spines_list[H.dna.features["spines"]]
 				if("snout")
 					S = GLOB.snouts_list[H.dna.features["snout"]]
 				if("frills")
@@ -1001,22 +1005,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	switch(H.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/fat)
 			H.throw_alert("nutrition", /obj/screen/alert/fat)
-		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/wellfed)
-			H.clear_alert("nutrition")
-		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/fed)
-			H.clear_alert("nutrition")
-		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "nutrition")
+		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
 			H.clear_alert("nutrition")
 		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/hungry)
 			H.throw_alert("nutrition", /obj/screen/alert/hungry)
 		if(0 to NUTRITION_LEVEL_STARVING)
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/starving)
 			H.throw_alert("nutrition", /obj/screen/alert/starving)
 
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
@@ -1148,7 +1142,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(target.health >= 0 && !(target.has_trait(TRAIT_FAKEDEATH)))
 		target.help_shake_act(user)
 		if(target != user)
-			add_logs(user, target, "shaked")
+			log_combat(user, target, "shaked")
 		return 1
 	else
 		var/we_breathe = !user.has_trait(TRAIT_NOBREATH)
@@ -1221,7 +1215,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(user.limb_destroyer)
 			target.dismembering_strike(user, affecting.body_zone)
 		target.apply_damage(damage, BRUTE, affecting, armor_block)
-		add_logs(user, target, "punched")
+		log_combat(user, target, "punched")
 		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
 			target.visible_message("<span class='danger'>[user] has knocked  [target] down!</span>", \
 							"<span class='userdanger'>[user] has knocked [target] down!</span>", null, COMBAT_MESSAGE_RANGE)
@@ -1251,7 +1245,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				"<span class='userdanger'>[user] has pushed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
 			target.apply_effect(40, EFFECT_KNOCKDOWN, target.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
 			target.forcesay(GLOB.hit_appends)
-			add_logs(user, target, "pushed over")
+			log_combat(user, target, "pushed over")
 			return
 
 		if(randn <= 60)
@@ -1267,14 +1261,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				else
 					I = null
 			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			add_logs(user, target, "disarmed", "[I ? " removing \the [I]" : ""]")
+			log_combat(user, target, "disarmed", "[I ? " removing \the [I]" : ""]")
 			return
 
 
 		playsound(target, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 		target.visible_message("<span class='danger'>[user] attempted to disarm [target]!</span>", \
 						"<span class='userdanger'>[user] attemped to disarm [target]!</span>", null, COMBAT_MESSAGE_RANGE)
-		add_logs(user, target, "attempted to disarm")
+		log_combat(user, target, "attempted to disarm")
 
 
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
@@ -1291,7 +1285,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(M.mind)
 		attacker_style = M.mind.martial_art
 	if((M != H) && M.a_intent != INTENT_HELP && H.check_shields(M, 0, M.name, attack_type = UNARMED_ATTACK))
-		add_logs(M, H, "attempted to touch")
+		log_combat(M, H, "attempted to touch")
 		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>")
 		return 0
 	switch(M.a_intent)
@@ -1356,20 +1350,20 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		switch(hit_area)
 			if(BODY_ZONE_HEAD)
-				if(H.stat == CONSCIOUS && armor_block < 50)
+				if(!I.is_sharp() && armor_block < 50)
 					if(prob(I.force))
-						H.visible_message("<span class='danger'>[H] has been knocked senseless!</span>", \
-										"<span class='userdanger'>[H] has been knocked senseless!</span>")
-						H.confused = max(H.confused, 20)
 						H.adjustBrainLoss(20)
-						H.adjust_blurriness(10)
+						if(H.stat == CONSCIOUS)
+							H.visible_message("<span class='danger'>[H] has been knocked senseless!</span>", \
+											"<span class='userdanger'>[H] has been knocked senseless!</span>")
+							H.confused = max(H.confused, 20)
+							H.adjust_blurriness(10)
 						if(prob(10))
 							H.gain_trauma(/datum/brain_trauma/mild/concussion)
 					else
-						if(!I.is_sharp())
-							H.adjustBrainLoss(I.force * 0.2)
+						H.adjustBrainLoss(I.force * 0.2)
 
-					if(!I.is_sharp() && prob(I.force + ((100 - H.health) * 0.5)) && H != user) // rev deconversion through blunt trauma.
+					if(H.stat == CONSCIOUS && H != user && prob(I.force + ((100 - H.health) * 0.5))) // rev deconversion through blunt trauma.
 						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)
 						if(rev)
 							rev.remove_revolutionary(FALSE, user)
@@ -1386,7 +1380,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						H.update_inv_glasses()
 
 			if(BODY_ZONE_CHEST)
-				if(H.stat == CONSCIOUS && armor_block < 50)
+				if(H.stat == CONSCIOUS && !I.is_sharp() && armor_block < 50)
 					if(prob(I.force))
 						H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
 									"<span class='userdanger'>[H] has been knocked down!</span>")
@@ -1508,19 +1502,20 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
 
 		var/burn_damage
-		switch(H.bodytemperature)
-			if(BODYTEMP_HEAT_DAMAGE_LIMIT to 400)
-				H.throw_alert("temp", /obj/screen/alert/hot, 1)
-				burn_damage = HEAT_DAMAGE_LEVEL_1
-			if(400 to 460)
-				H.throw_alert("temp", /obj/screen/alert/hot, 2)
-				burn_damage = HEAT_DAMAGE_LEVEL_2
-			else
-				H.throw_alert("temp", /obj/screen/alert/hot, 3)
-				if(H.on_fire)
-					burn_damage = HEAT_DAMAGE_LEVEL_3
+		var/firemodifier = H.fire_stacks / 50
+		if (H.on_fire)
+			burn_damage = max(log(2-firemodifier,(H.bodytemperature-BODYTEMP_NORMAL))-5,0)
+		else
+			firemodifier = min(firemodifier, 0)
+			burn_damage = max(log(2-firemodifier,(H.bodytemperature-BODYTEMP_NORMAL))-5,0) // this can go below 5 at log 2.5
+		if (burn_damage)
+			switch(burn_damage)
+				if(0 to 2)
+					H.throw_alert("temp", /obj/screen/alert/hot, 1)
+				if(2 to 4)
+					H.throw_alert("temp", /obj/screen/alert/hot, 2)
 				else
-					burn_damage = HEAT_DAMAGE_LEVEL_2
+					H.throw_alert("temp", /obj/screen/alert/hot, 3)
 		burn_damage = burn_damage * heatmod * H.physiology.heat_mod
 		if (H.stat < UNCONSCIOUS && (prob(burn_damage) * 10) / 4) //40% for level 3 damage on humans
 			H.emote("scream")
@@ -1631,7 +1626,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		var/thermal_protection = H.get_thermal_protection()
 
-		if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT && !no_protection)
+		if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT && !no_protection)
 			return
 		if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
 			H.adjust_bodytemperature(11)
@@ -1664,3 +1659,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/negates_gravity(mob/living/carbon/human/H)
 	return 0
+
+////////////////
+//Tail Wagging//
+////////////////
+
+/datum/species/proc/can_wag_tail(mob/living/carbon/human/H)
+	return FALSE
+
+/datum/species/proc/is_wagging_tail(mob/living/carbon/human/H)
+	return FALSE
+
+/datum/species/proc/start_wagging_tail(mob/living/carbon/human/H)
+
+/datum/species/proc/stop_wagging_tail(mob/living/carbon/human/H)

@@ -101,6 +101,7 @@
 	var/update_state = -1
 	var/update_overlay = -1
 	var/icon_update_needed = FALSE
+	var/obj/machinery/computer/apc_control/remote_control = null
 
 /obj/machinery/power/apc/unlocked
 	locked = FALSE
@@ -120,17 +121,21 @@
 /obj/machinery/power/apc/auto_name
 	auto_name = TRUE
 
-/obj/machinery/power/apc/auto_name/north
+/obj/machinery/power/apc/auto_name/north //Pixel offsets get overwritten on New()
 	dir = NORTH
+	pixel_y = 23
 
 /obj/machinery/power/apc/auto_name/south
 	dir = SOUTH
+	pixel_y = -23
 
 /obj/machinery/power/apc/auto_name/east
 	dir = EAST
+	pixel_x = 24
 
 /obj/machinery/power/apc/auto_name/west
 	dir = WEST
+	pixel_x = -25
 
 /obj/machinery/power/apc/get_cell()
 	return cell
@@ -879,6 +884,16 @@
 				to_chat(user, "<span class='danger'>\The [src] has eee disabled!</span>")
 			return FALSE
 	return TRUE
+
+/obj/machinery/power/apc/can_interact(mob/user)
+	. = ..()
+	if (!. && !QDELETED(remote_control))
+		. = remote_control.can_interact(user)
+
+/obj/machinery/power/apc/ui_status(mob/user)
+	. = ..()
+	if (!QDELETED(remote_control) && user == remote_control.operator)
+		. = UI_INTERACTIVE
 
 /obj/machinery/power/apc/ui_act(action, params)
 	if(..() || !can_use(usr, 1) || (locked && !usr.has_unlimited_silicon_privilege && !failure_timer && !(integration_cog && (is_servant_of_ratvar(usr)))))

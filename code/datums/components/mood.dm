@@ -8,23 +8,32 @@
 	var/mood_level = 5 //To track what stage of moodies they're on
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
 	var/datum/mood_event/list/mood_events = list()
-	var/mob/living/owner
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
 	var/holdmyinsanityeffect = 0 //before we edit our sanity lets take a look
+	var/obj/screen/mood/screen_obj
 
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
+	
 	START_PROCESSING(SSmood, src)
-	owner = parent
+
 	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
 
+	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
+	var/mob/living/owner = parent
+	if(owner.hud_used)
+		modify_hud()
+		var/datum/hud/hud = owner.hud_used
+		hud.show_hud(hud.hud_version)
+
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
+	unmodify_hud()
 	return ..()
 
-/datum/component/mood/proc/print_mood()
+/datum/component/mood/proc/print_mood(mob/user)
 	var/msg = "<span class='info'>*---------*\n<EM>Your current mood</EM>\n"
 	msg += "<span class='notice'>My mental status: </span>" //Long term
 	switch(sanity)
@@ -68,8 +77,8 @@
 			var/datum/mood_event/event = mood_events[i]
 			msg += event.description
 	else
-		msg += "<span class='nicegreen'>Nothing special has happened to me lately!<span>\n"
-	to_chat(owner, msg)
+		msg += "<span class='nicegreen'>I don't have much of a reaction to anything right now.<span>\n"
+	to_chat(user || parent, msg)
 
 /datum/component/mood/proc/update_mood() //Called whenever a mood event is added or removed
 	mood = 0
@@ -105,23 +114,15 @@
 
 
 /datum/component/mood/proc/update_mood_icon()
+	var/mob/living/owner = parent
 	if(owner.client && owner.hud_used)
 		if(sanity < 25)
-			owner.hud_used.mood.icon_state = "mood_insane"
+			screen_obj.icon_state = "mood_insane"
 		else
-			owner.hud_used.mood.icon_state = "mood[mood_level]"
+			screen_obj.icon_state = "mood[mood_level]"
 
 /datum/component/mood/process() //Called on SSmood process
-	switch(sanity)
-		if(SANITY_INSANE to SANITY_CRAZY)
-			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 3)
-			update_mood_icon()
-		if(SANITY_INSANE to SANITY_UNSTABLE)
-			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 2)
-		if(SANITY_UNSTABLE to SANITY_DISTURBED)
-			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 1)
-		if(SANITY_DISTURBED to INFINITY)
-			owner.clear_fullscreen("depression")
+	var/mob/living/owner = parent
 
 	switch(mood_level)
 		if(1)
@@ -159,6 +160,8 @@
 			clear_event("depression")
 
 	holdmyinsanityeffect = insanity_effect
+	
+	HandleNutrition(owner)
 
 /datum/component/mood/proc/DecreaseSanity(amount, minimum = SANITY_INSANE)
 	if(sanity < minimum) //This might make KevinZ stop fucking pinging me.
@@ -189,6 +192,8 @@
 		if(the_event.type != type)
 			clear_event(category)
 		else
+			if(the_event.timeout)
+				addtimer(CALLBACK(src, .proc/clear_event, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 			return 0 //Don't have to update the event.
 	the_event = new type(src, param)
 
@@ -196,7 +201,7 @@
 	update_mood()
 
 	if(the_event.timeout)
-		addtimer(CALLBACK(src, .proc/clear_event, category), the_event.timeout)
+		addtimer(CALLBACK(src, .proc/clear_event, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /datum/component/mood/proc/clear_event(category)
 	var/datum/mood_event/event = mood_events[category]
@@ -206,6 +211,42 @@
 	mood_events -= category
 	qdel(event)
 	update_mood()
+
+/datum/component/mood/proc/modify_hud()
+	var/mob/living/owner = parent
+	var/datum/hud/hud = owner.hud_used
+	screen_obj = new
+	hud.infodisplay += screen_obj
+	RegisterSignal(hud, COMSIG_PARENT_QDELETED, .proc/unmodify_hud)
+	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
+
+/datum/component/mood/proc/unmodify_hud()
+	if(!screen_obj)
+		return
+	var/mob/living/owner = parent
+	var/datum/hud/hud = owner.hud_used
+	if(hud && hud.infodisplay)
+		hud.infodisplay -= screen_obj
+	QDEL_NULL(screen_obj)
+
+/datum/component/mood/proc/hud_click(location, control, params, mob/user)
+	print_mood(user)
+
+
+/datum/component/mood/proc/HandleNutrition(mob/living/L)
+	switch(L.nutrition)
+		if(NUTRITION_LEVEL_FULL to INFINITY)
+			add_event("nutrition", /datum/mood_event/fat)
+		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+			add_event("nutrition", /datum/mood_event/wellfed)
+		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+			add_event("nutrition", /datum/mood_event/fed)
+		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+			clear_event("nutrition")
+		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+			add_event("nutrition", /datum/mood_event/hungry)
+		if(0 to NUTRITION_LEVEL_STARVING)
+			add_event("nutrition", /datum/mood_event/starving)
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN

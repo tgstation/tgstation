@@ -23,7 +23,7 @@
 	actions_types = list(/datum/action/item_action/cult_dagger)
 
 /obj/item/melee/cultblade/dagger/Initialize()
-	..()
+	. = ..()
 	var/image/I = image(icon = 'icons/effects/blood.dmi' , icon_state = null, loc = src)
 	I.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cult_dagger", I)
@@ -589,7 +589,7 @@
 
 /obj/item/flashlight/flare/culttorch
 	name = "void torch"
-	desc = "Used by veteran cultists to instantly transport items to their needful bretheren."
+	desc = "Used by veteran cultists to instantly transport items to their needful brethren."
 	w_class = WEIGHT_CLASS_SMALL
 	brightness_on = 1
 	icon_state = "torch"

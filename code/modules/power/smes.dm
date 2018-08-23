@@ -53,11 +53,11 @@
 					terminal = term
 					break dir_loop
 
-		if(!terminal)
-			stat |= BROKEN
-			return
-		terminal.master = src
-		update_icon()
+	if(!terminal)
+		stat |= BROKEN
+		return
+	terminal.master = src
+	update_icon()
 
 /obj/machinery/power/smes/RefreshParts()
 	var/IO = 0
@@ -141,11 +141,7 @@
 			//build the terminal and link it to the network
 			make_terminal(T)
 			terminal.connect_to_network()
-		return
-
-	//disassembling the terminal
-	if(istype(I, /obj/item/wirecutters) && terminal && panel_open)
-		terminal.dismantle(user, I)
+			connect_to_network()
 		return
 
 	//crowbarring it !
@@ -159,6 +155,13 @@
 		return
 
 	return ..()
+
+/obj/machinery/power/smes/wirecutter_act(mob/living/user, obj/item/I)
+	//disassembling the terminal
+	if(terminal && panel_open)
+		terminal.dismantle(user, I)
+		return TRUE
+
 
 /obj/machinery/power/smes/default_deconstruction_crowbar(obj/item/crowbar/C)
 	if(istype(C) && terminal)
