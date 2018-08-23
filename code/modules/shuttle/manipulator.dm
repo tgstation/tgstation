@@ -111,17 +111,18 @@
 	data["shuttles"] = list()
 	for(var/i in SSshuttle.mobile)
 		var/obj/docking_port/mobile/M = i
+		var/timeleft = M.timeLeft(1)
 		var/list/L = list()
 		L["name"] = M.name
 		L["id"] = M.id
 		L["timer"] = M.timer
 		L["timeleft"] = M.getTimerStr()
-		var/can_fast_travel = FALSE
-		if(M.timer && M.timeLeft() >= 50)
-			can_fast_travel = TRUE
-		L["can_fast_travel"] = can_fast_travel
-		L["mode"] = capitalize(shuttlemode2str(M.mode))
-		L["status"] = M.getStatusText()
+		if (timeleft > 1 HOURS)
+			L["timeleft"] = "Infinity"
+		L["can_fast_travel"] = M.timer && timeleft >= 50
+		if (M.mode != SHUTTLE_IDLE)
+			L["mode"] = capitalize(shuttlemode2str(M.mode))
+		L["status"] = M.getDbgStatusText()
 		if(M == existing_shuttle)
 			data["existing_shuttle"] = L
 
@@ -156,7 +157,7 @@
 		if("fast_travel")
 			for(var/i in SSshuttle.mobile)
 				var/obj/docking_port/mobile/M = i
-				if(M.id == params["id"] && M.timer && M.timeLeft() >= 50)
+				if(M.id == params["id"] && M.timer && M.timeLeft(1) >= 50)
 					M.setTimer(50)
 					. = TRUE
 					message_admins("[key_name_admin(usr)] fast travelled [M]")

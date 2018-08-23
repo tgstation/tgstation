@@ -658,6 +658,25 @@
 		. += " towards [dst ? dst.name : "unknown location"] ([timeLeft(600)] minutes)"
 
 
+/obj/docking_port/mobile/proc/getDbgStatusText()
+	var/obj/docking_port/stationary/dockedAt = get_docked()
+	. = (dockedAt && dockedAt.name) ? dockedAt.name : "unknown"
+	if(istype(dockedAt, /obj/docking_port/stationary/transit))
+		var/obj/docking_port/stationary/dst
+		if(mode == SHUTTLE_RECALL)
+			dst = previous
+		else
+			dst = destination
+		if(dst)
+			. = "(transit to) [dst.name || dst.id]"
+		else
+			. = "(transit to) nowhere"
+	else if(dockedAt)
+		. = dockedAt.name || dockedAt.id
+	else
+		. = "unknown"
+
+
 // attempts to locate /obj/machinery/computer/shuttle with matching ID inside the shuttle
 /obj/docking_port/mobile/proc/getControlConsole()
 	for(var/place in shuttle_areas)
