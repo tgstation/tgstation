@@ -25,6 +25,8 @@ SUBSYSTEM_DEF(garbage)
 	//Queue
 	var/list/queues
 
+	var/memorialWritten = FALSE
+
 	#ifdef TESTING
 	var/list/reference_find_on_fail = list()
 	#endif
@@ -86,7 +88,11 @@ SUBSYSTEM_DEF(garbage)
 /datum/controller/subsystem/garbage/fire()
 	//the fact that this resets its processing each fire (rather then resume where it left off) is intentional.
 	var/queue = GC_QUEUE_PREQUEUE
-
+	
+	if (!memorialWritten && length(queues[GC_QUEUE_PREQUEUE]) > 100000) // 100k ought to be enough, the crash happens at ~180k
+		memorialWritten = TRUE
+		writeMemorial()
+	log_qdel("Queue state, GC: PREQUEUE [length(queues[GC_QUEUE_PREQUEUE])], GC: QUEUE_CHECK [length(queues[GC_QUEUE_CHECK])], GC: HARDDEL [length(queues[GC_QUEUE_HARDDELETE])]")
 	while (state == SS_RUNNING)
 		switch (queue)
 			if (GC_QUEUE_PREQUEUE)
@@ -97,11 +103,24 @@ SUBSYSTEM_DEF(garbage)
 				queue = GC_QUEUE_CHECK+1
 			if (GC_QUEUE_HARDDELETE)
 				HandleQueue(GC_QUEUE_HARDDELETE)
-				if (state == SS_PAUSED) //make us wait again before the next run.
-					state = SS_RUNNING
 				break
 
-	
+	if (state == SS_PAUSED) //make us wait again before the next run.
+		state = SS_RUNNING
+
+/datum/controller/subsystem/garbage/proc/writeMemorial()
+	to_chat(world, "<span class='userdanger'>A diagnostics file is being collected to aid debugging a likely impending OOM crash. The server will be unresponsive for around a minute.</span>")
+	sleep(5) // To make sure the message is seen
+	var/list/results = new /list(GC_QUEUE_COUNT)
+	results[GC_QUEUE_PREQUEUE] = list()
+	for (var/item in queues[GC_QUEUE_PREQUEUE]) // Prequeue items are references
+		results[GC_QUEUE_PREQUEUE][item?:type] += 1
+	for(var/idx in 2 to GC_QUEUE_COUNT) // The rest are not
+		results[idx] = list()
+		for (var/ref in queues[idx])
+			var/item = locate(ref)
+			results[idx][item?:type] += 1
+	text2file(json_encode(results), "[GLOB.log_directory]/garbagememorial.json")
 
 //If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.
 //Don't attempt to optimize, not worth the effort.
@@ -116,9 +135,8 @@ SUBSYSTEM_DEF(garbage)
 	for (var/ref in tobequeued)
 		count++
 		Queue(ref, GC_QUEUE_PREQUEUE+1)
-		tobequeued[count] = null
 		if (MC_TICK_CHECK)
-			return
+			break
 	if (count)
 		tobequeued.Cut(1,count+1)
 		count = 0
@@ -143,7 +161,7 @@ SUBSYSTEM_DEF(garbage)
 		if (!refID)
 			count++
 			if (MC_TICK_CHECK)
-				return
+				break
 			continue
 
 		var/GCd_at_time = queue[refID]
@@ -162,7 +180,7 @@ SUBSYSTEM_DEF(garbage)
 			reference_find_on_fail -= refID		//It's deleted we don't care anymore.
 			#endif
 			if (MC_TICK_CHECK)
-				return
+				break
 			continue
 
 		// Something's still referring to the qdel'd object.
@@ -185,13 +203,13 @@ SUBSYSTEM_DEF(garbage)
 			if (GC_QUEUE_HARDDELETE)
 				HardDelete(D)
 				if (MC_TICK_CHECK)
-					return
+					break
 				continue
 
 		Queue(D, level+1)
 
 		if (MC_TICK_CHECK)
-			return
+			break
 	if (count)
 		queue.Cut(1,count+1)
 		count = 0
