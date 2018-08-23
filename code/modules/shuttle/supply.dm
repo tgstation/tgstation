@@ -23,7 +23,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/item/projectile/beam/wormhole,
 		/obj/effect/portal,
 		/obj/item/shared_storage,
-		/obj/structure/extraction_point
+		/obj/structure/extraction_point,
+		/obj/machinery/syndicatebomb
 	)))
 
 /obj/docking_port/mobile/supply
