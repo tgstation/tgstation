@@ -264,6 +264,9 @@
 
 	if(integration_cog && is_servant_of_ratvar(user))
 		to_chat(user, "<span class='brass'>There is an integration cog installed!</span>")
+	
+	to_chat(user, "<span class='notice'>Alt+Click [src] to toggle the cover lock.</span>")
+	to_chat(user, "<span class='notice'>Ctrl+Click [src] to toggle night shift lighting.</span>")
 
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
@@ -702,6 +705,13 @@
 	else
 		togglelock(user)
 
+/obj/machinery/power/apc/CtrlShiftClick(mob/user) //for AI behavior, see /obj/machinery/power/apc/AICtrlShiftClick()
+	..()
+	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
+		return
+	else
+		toggle_nightshift_lights(user)
+
 /obj/machinery/power/apc/proc/togglelock(mob/living/user)
 	if(obj_flags & EMAGGED)
 		to_chat(user, "<span class='warning'>The interface is broken!</span>")
@@ -718,6 +728,17 @@
 			update_icon()
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
+
+/obj/machinery/power/apc/proc/toggle_nightshift_lights(mob/living/user)
+	if(opened)
+		to_chat(user, "<span class='warning'>You must close the cover!</span>")
+	else if(panel_open)
+		to_chat(user, "<span class='warning'>You must close the panel!</span>")
+	else if(stat & (BROKEN|MAINT))
+		to_chat(user, "<span class='warning'>Nothing happens!</span>")
+	else
+		set_nightshift(!nightshift_lights)
+		to_chat(user, "<span class='notice'>You [ nightshift_lights ? "enable" : "disable"] night shift lighting.</span>")
 
 /obj/machinery/power/apc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee" && damage_amount < 10 && (!(stat & BROKEN) || malfai))
@@ -912,11 +933,7 @@
 			toggle_breaker()
 			. = TRUE
 		if("toggle_nightshift")
-			if(last_nightshift_switch > world.time + 100)			//don't spam..
-				to_chat(usr, "<span class='warning'>[src]'s night lighting circuit breaker is still cycling!</span>")
-				return
-			last_nightshift_switch = world.time
-			set_nightshift(!nightshift_lights)
+			toggle_nightshift_lights()
 			. = TRUE
 		if("charge")
 			chargemode = !chargemode
