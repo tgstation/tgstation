@@ -200,11 +200,11 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		message = replacetext(message, "\n", "<br>")
 		message = replacetext(message, "\t", "[GLOB.TAB][GLOB.TAB]")
 
-	message = url_encode(url_encode(message))
-
 	if(islist(target))
+		// Do the double-encoding outside the loop to save nanoseconds
+		var/twiceEncoded = url_encode(url_encode(message))
 		for(var/I in target)
-			var/client/C = CLIENT_FROM_VAR(target) //Grab us a client if possible
+			var/client/C = CLIENT_FROM_VAR(I) //Grab us a client if possible
 
 			if (!C)
 				continue
@@ -220,7 +220,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 				C.chatOutput.messageQueue += message
 				continue
 
-			C << output(message, "browseroutput:output")
+			C << output(twiceEncoded, "browseroutput:output")
 	else
 		var/client/C = CLIENT_FROM_VAR(target) //Grab us a client if possible
 
