@@ -77,7 +77,7 @@
 				to_chat(user, "<span class='notice'>You add [I] to the [initial(name)] assembly.</span>")
 				beakers += I
 				var/reagent_list = pretty_string_from_reagent_list(I.reagents)
-				user.log_message("inserted [I] ([reagent_list]) into [src]")
+				user.log_message("inserted [I] ([reagent_list]) into [src]",LOG_GAME)
 			else
 				to_chat(user, "<span class='warning'>[I] is empty!</span>")
 
@@ -173,7 +173,7 @@
 	var/message = "[src] primed by [user] at [ADMIN_VERBOSEJMP(T)] contained [reagent_string]."
 	GLOB.bombers += message
 	message_admins(message)
-	user.log_message("primed [src] ([reagent_string])")
+	user.log_message("primed [src] ([reagent_string])",LOG_GAME)
 
 /obj/item/grenade/chem_grenade/prime()
 	if(stage != READY)
