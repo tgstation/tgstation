@@ -339,7 +339,8 @@
 			intoTheSunset()
 
 		else
-			request(options[selection])
+			if(options[selection])
+				request(options[selection])
 
 /obj/docking_port/mobile/emergency/admin_fly_shuttle(mob/user)
 	return  // use the existing verbs for this
