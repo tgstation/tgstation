@@ -462,6 +462,22 @@
 
 	qdel(src, force=TRUE)
 
+/obj/docking_port/mobile/proc/intoTheSunset()
+	// Loop over mobs
+	for(var/t in return_turfs())
+		var/turf/T = t
+		for(var/mob/living/M in T.GetAllContents())
+			// If they have a mind and they're not in the brig, they escaped
+			if(M.mind && !istype(t, /turf/open/floor/plasteel/shuttle/red) && !istype(t, /turf/open/floor/mineral/plastitanium/red/brig))
+				M.mind.force_escaped = TRUE
+			// Ghostize them and put them in nullspace stasis (for stat & possession checks)
+			M.notransform = TRUE
+			M.ghostize(FALSE)
+			M.moveToNullspace()
+
+	// Now that mobs are stowed, delete the shuttle
+	jumpToNullSpace()
+
 /obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1, animate_time)
 	var/list/turfs = ripple_area(S1)
 	for(var/t in turfs)
