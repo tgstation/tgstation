@@ -16,13 +16,6 @@
 	if(LAZYLEN(archdrops))
 		AddComponent(/datum/component/archaeology, archdrops)
 
-/turf/open/Entered(var/mob/living/LM)
-	..()
-	if(footstep && istype(LM))
-		var/mods = LM.get_footstep_modifiers()
-		if(mods && mods[1])
-			playsound(src, pick(GLOB.footstep[footstep][1]), GLOB.footstep[footstep][2] * mods[1], TRUE, GLOB.footstep[footstep][3] + mods[2])
-
 /turf/open/indestructible
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
