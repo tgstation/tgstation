@@ -265,8 +265,8 @@
 	if(integration_cog && is_servant_of_ratvar(user))
 		to_chat(user, "<span class='brass'>There is an integration cog installed!</span>")
 	
-	to_chat(user, "<span class='notice'>Alt+Click [src] to toggle the cover lock.</span>")
-	to_chat(user, "<span class='notice'>Ctrl+Click [src] to toggle night shift lighting.</span>")
+	to_chat(user, "<span class='notice'>Alt-Click [src] to toggle the cover lock.</span>")
+	to_chat(user, "<span class='notice'>Ctrl+Shift-Click [src] to toggle night shift lighting.</span>")
 
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
