@@ -114,7 +114,13 @@
 		return
 
 	on = FALSE
-	addtimer(CALLBACK(src, .proc/cooldown), cooldown)
+
+	var/realcooldown = cooldown
+	var/mob/living/carbon/human/H = user
+	if (H.has_trait(TRAIT_PHOTOGRAPHER))
+		realcooldown *= 0.5
+	addtimer(CALLBACK(src, .proc/cooldown), realcooldown)
+
 	icon_state = state_off
 
 	INVOKE_ASYNC(src, .proc/captureimage, target, user, flag, picture_size_x - 1, picture_size_y - 1)

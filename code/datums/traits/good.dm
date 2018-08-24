@@ -40,6 +40,7 @@
 	medical_record_text = "Patient has unusually efficient liver metabolism and can slowly regenerate wounds by drinking alcoholic beverages."
 
 
+
 /datum/quirk/freerunning
 	name = "Freerunning"
 	desc = "You're great at quick moves! You can climb tables more quickly."
@@ -69,6 +70,23 @@
 
 
 
+/datum/quirk/musician
+	name = "Musician"
+	desc = "zzz"
+	value = 1
+	mob_trait = TRAIT_MUSICIAN
+	gain_text = "<span class='notice'>zzz.</span>"
+	lose_text = "<span class='danger'>zzz.</span>"
+
+/datum/quirk/musician/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/instrument/guitar/guitar = new(get_turf(H))
+	H.put_in_hands(guitar)
+	H.equip_to_slot(guitar, SLOT_IN_BACKPACK)
+	H.regenerate_icons()
+
+
+
 /datum/quirk/night_vision
 	name = "Night Vision"
 	desc = "You can see slightly more clearly in full darkness than most people."
@@ -83,6 +101,23 @@
 	if(!eyes || eyes.lighting_alpha)
 		return
 	eyes.Insert(H) //refresh their eyesight and vision
+
+
+
+/datum/quirk/photographer
+	name = "Photographer"
+	desc = "zzz"
+	value = 1
+	mob_trait = TRAIT_PHOTOGRAPHER
+	gain_text = "<span class='notice'>zzz.</span>"
+	lose_text = "<span class='danger'>zzz.</span>"
+
+/datum/quirk/photographer/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/camera/camera = new(get_turf(H))
+	H.put_in_hands(camera)
+	H.equip_to_slot(camera, SLOT_IN_BACKPACK)
+	H.regenerate_icons()
 
 
 
@@ -110,6 +145,22 @@
 	gain_text = "<span class='notice'>You feel a little more faithful to the gods today.</span>"
 	lose_text = "<span class='danger'>You feel less faithful in the gods.</span>"
 
+
+
+/datum/quirk/tagger
+	name = "Tagger"
+	desc = "zzz"
+	value = 1
+	mob_trait = TRAIT_TAGGER
+	gain_text = "<span class='notice'>zzz.</span>"
+	lose_text = "<span class='danger'>zzz.</span>"
+
+/datum/quirk/tagger/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/toy/crayon/spraycan/spraycan = new(get_turf(H))
+	H.put_in_hands(spraycan)
+	H.equip_to_slot(spraycan, SLOT_IN_BACKPACK)
+	H.regenerate_icons()
 
 
 /datum/quirk/voracious

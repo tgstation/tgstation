@@ -10,12 +10,15 @@
 	var/datum/song/handheld/song
 	var/instrumentId = "generic"
 	var/instrumentExt = "mid"
+	var/tune_time = 0
 
 /obj/item/instrument/Initialize()
 	. = ..()
 	song = new(instrumentId, src, instrumentExt)
 
 /obj/item/instrument/Destroy()
+	if (tune_time)
+		STOP_PROCESSING(SSobj, src)
 	qdel(song)
 	song = null
 	return ..()
@@ -47,6 +50,31 @@
 
 	user.set_machine(src)
 	song.interact(user)
+
+/obj/item/instrument/screwdriver_act(mob/living/user, obj/item/I)
+	if (user.has_trait(TRAIT_MUSICIAN))
+		if (!tune_time)
+			user.visible_message("[user] tunes the [src] to perfection!", "<span class='notice'>You tune the [src] to perfection!</span>")
+			tune_time = 10
+			START_PROCESSING(SSobj, src)
+		else
+			to_chat(user, "<span class='notice'>[src] is already well tuned!</span>")
+	else
+		to_chat(user, "<span class='notice'>You have no clue how this works.</span>")
+
+/obj/item/instrument/process()
+	if (tune_time && song.playing)
+		for (var/mob/living/M in song.hearing_mobs)
+			M.dizziness = max(0,M.dizziness-3)
+			M.jitteriness = max(0,M.jitteriness-2)
+			M.confused = max(M.confused-1)
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
+			tune_time--
+	else
+		if (!tune_time)
+			if (song.playing)
+				src.visible_message("<span class='warning'>[src] starts sounding a little off..</span>")
+			STOP_PROCESSING(SSobj, src)
 
 /obj/item/instrument/violin
 	name = "space violin"
