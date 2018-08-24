@@ -598,6 +598,9 @@
 				var/reason = input(usr,"Please State Reason.","Reason") as message|null
 				if(!reason)
 					return
+				var/severity = input("Set the severity of the note/ban.", "Severity", null, null) as null|anything in list("High", "Medium", "Minor", "None")
+				if(!severity)
+					return
 				if(!DB_ban_record(BANTYPE_JOB_PERMA, M, -1, reason, "appearance"))
 					to_chat(usr, "<span class='danger'>Failed to apply ban.</span>")
 					return
@@ -605,7 +608,7 @@
 					jobban_buildcache(M.client)
 				ban_unban_log_save("[key_name(usr)] appearance banned [key_name(M)]. reason: [reason]")
 				log_admin_private("[key_name(usr)] appearance banned [key_name(M)]. \nReason: [reason]")
-				create_message("note", M.key, null, "Appearance banned - [reason]", null, null, 0, 0, null, 0, 0)
+				create_message("note", M.key, null, "Appearance banned - [reason]", null, null, 0, 0, null, 0, severity)
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] appearance banned [key_name_admin(M)].</span>")
 				to_chat(M, "<span class='boldannounce'><BIG>You have been appearance banned by [usr.client.key].</BIG></span>")
 				to_chat(M, "<span class='boldannounce'>The reason is: [reason]</span>")
@@ -968,7 +971,6 @@
 
 		//Banning comes first
 		if(notbannedlist.len) //at least 1 unbanned job exists in joblist so we have stuff to ban.
-			var/list/severity_list = list("High Severity" = "high", "Medium Severity" = "medium", "Minor Severity" = "minor", "No Severity" = "none")
 			var/severity = null
 			switch(alert("Temporary Ban for [M.key]?",,"Yes","No", "Cancel"))
 				if("Yes")
@@ -979,10 +981,9 @@
 					var/reason = input(usr,"Please State Reason For Banning [M.key].","Reason") as message|null
 					if(!reason)
 						return
-					severity = input("Set the severity of the note/ban.", "Severity", null, null) as null|anything in severity_list
+					severity = input("Set the severity of the note/ban.", "Severity", null, null) as null|anything in list("High", "Medium", "Minor", "None")
 					if(!severity)
 						return
-					severity = severity_list[severity]
 					var/msg
 					for(var/job in notbannedlist)
 						if(!DB_ban_record(BANTYPE_JOB_TEMP, M, mins, reason, job))
@@ -1005,10 +1006,9 @@
 					return 1
 				if("No")
 					var/reason = input(usr,"Please State Reason For Banning [M.key].","Reason") as message|null
-					severity = input("Set the severity of the note/ban.", "Severity", null, null) as null|anything in severity_list
+					severity = input("Set the severity of the note/ban.", "Severity", null, null) as null|anything in list("High", "Medium", "Minor", "None")
 					if(!severity)
 						return
-					severity = severity_list[severity]
 					if(reason)
 						var/msg
 						for(var/job in notbannedlist)
@@ -1230,7 +1230,9 @@
 		if(query_get_message_edits.NextRow())
 			var/edit_log = query_get_message_edits.item[1]
 			if(!QDELETED(usr))
-				usr << browse(edit_log,"window=noteedits")
+				var/datum/browser/browser = new(usr, "Note edits", "Note edits")
+				browser.set_content(jointext(edit_log, ""))
+				browser.open()
 		qdel(query_get_message_edits)
 
 	else if(href_list["newban"])

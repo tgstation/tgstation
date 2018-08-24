@@ -399,30 +399,14 @@ ul.sparse {
 
 .severity {
 	margin:0px;
-	font-size: 18px;
-	padding: 2px 8px 2px 8px;
+	padding: 1px 8px 1px 8px;
 	border-radius: 25px;
-	background-size: cover;
-	background-position: center;
-	border-color: #40628a; 
-	border: 1px solid;
-	color: #40628a;
-}
-
-.severity.high {
-	background: #FF0000;
+	border: 1px solid #161616;
+	background: #40628a;
 	color: #ffffff;
-	border-color: #ffffff;
 }
 
-.severity.medium {
-	background: #ff6600;
-}
-
-.severity.minor {
-	background: #FFCC00
-}
-
-.severity.none {
-	background: #66CC66;
+.severity img {
+    display: inline-block;
+    vertical-align: middle;
 }
