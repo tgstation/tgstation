@@ -248,7 +248,7 @@
 			if(opened)
 				return
 			welded = !welded
-			weld_act(welded)
+			after_weld(welded)
 			user.visible_message("<span class='notice'>[user] [welded ? "welds shut" : "unwelded"] \the [src].</span>",
 							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [W].</span>",
 							"<span class='italics'>You hear welding.</span>")
@@ -267,7 +267,7 @@
 	else
 		return FALSE
 
-/obj/structure/closet/proc/weld_act(weld_state)
+/obj/structure/closet/proc/after_weld(weld_state)
 	return
 
 /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
