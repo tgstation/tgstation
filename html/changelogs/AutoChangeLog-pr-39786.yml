@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - code_imp: "The map loader now supports vars to be set to lists containing non-strings."
