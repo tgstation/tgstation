@@ -737,6 +737,10 @@
 	else if(stat & (BROKEN|MAINT))
 		to_chat(user, "<span class='warning'>Nothing happens!</span>")
 	else
+		if(last_nightshift_switch > world.time - 100) //to prevent spamming
+			to_chat(usr, "<span class='warning'>[src]'s night lighting circuit breaker is still cycling!</span>")
+			return
+		last_nightshift_switch = world.time
 		set_nightshift(!nightshift_lights)
 		to_chat(user, "<span class='notice'>You [ nightshift_lights ? "enable" : "disable"] night shift lighting.</span>")
 
