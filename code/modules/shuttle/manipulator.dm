@@ -119,8 +119,12 @@
 		L["timeleft"] = M.getTimerStr()
 		if (timeleft > 1 HOURS)
 			L["timeleft"] = "Infinity"
-		L["can_fast_travel"] = M.destination && M.timer && timeleft >= 50
-		L["can_fly"] = !istype(M, /obj/docking_port/mobile/emergency)
+		L["can_fast_travel"] = M.timer && timeleft >= 50
+		L["can_fly"] = TRUE
+		if(istype(M, /obj/docking_port/mobile/emergency))
+			L["can_fly"] = FALSE
+		else if(!M.destination)
+			L["can_fast_travel"] = FALSE
 		if (M.mode != SHUTTLE_IDLE)
 			L["mode"] = capitalize(shuttlemode2str(M.mode))
 		L["status"] = M.getDbgStatusText()
