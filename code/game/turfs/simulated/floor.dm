@@ -19,6 +19,8 @@
 	var/list/broken_states
 	var/list/burnt_states
 
+	tiled_dirt = TRUE
+
 /turf/open/floor/Initialize(mapload)
 	if (!broken_states)
 		broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")

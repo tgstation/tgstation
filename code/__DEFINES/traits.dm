@@ -49,6 +49,7 @@
 #define TRAIT_NODEATH			"nodeath"
 #define TRAIT_NOHARDCRIT		"nohardcrit"
 #define TRAIT_NOSOFTCRIT		"nosoftcrit"
+#define TRAIT_MINDSHIELD		"mindshield"
 
 
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"

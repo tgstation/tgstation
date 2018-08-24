@@ -129,7 +129,7 @@
 		new /datum/hallucination/delusion(victim, TRUE, "demon",duration,0)
 
 	var/obj/item/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
-	add_logs(victim, null, "entered a blood frenzy")
+	victim.log_message("entered a blood frenzy", LOG_ATTACK)
 
 	chainsaw.item_flags |= NODROP
 	victim.drop_all_held_items()
@@ -146,7 +146,7 @@
 	sleep(duration)
 	to_chat(victim, "<span class='notice'>Your bloodlust seeps back into the bog of your subconscious and you regain self control.</span>")
 	qdel(chainsaw)
-	add_logs(victim, null, "exited a blood frenzy")
+	victim.log_message("exited a blood frenzy", LOG_ATTACK)
 	qdel(src)
 
 /obj/effect/mine/pickup/healing

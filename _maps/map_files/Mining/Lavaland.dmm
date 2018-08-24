@@ -3423,7 +3423,6 @@
 	id = "miningbathroom";
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
 	pixel_y = -25;
 	specialfunctions = 4
 	},

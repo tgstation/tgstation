@@ -54,7 +54,7 @@
 				if(!affecting)
 					affecting = get_bodypart(BODY_ZONE_CHEST)
 				apply_damage(damage, BRUTE, affecting)
-				add_logs(M, src, "attacked")
+				log_combat(M, src, "attacked")
 
 			else
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
@@ -66,7 +66,7 @@
 				if (prob(25))
 					Knockdown(40)
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-					add_logs(M, src, "pushed")
+					log_combat(M, src, "pushed")
 					visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
 						"<span class='userdanger'>[M] has pushed down [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 				else if(dropItemToGround(get_active_held_item()))
@@ -90,7 +90,7 @@
 							"<span class='userdanger'>[M] has slashed [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 				var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
-				add_logs(M, src, "attacked")
+				log_combat(M, src, "attacked")
 				if(!affecting)
 					affecting = get_bodypart(BODY_ZONE_CHEST)
 				if(!dismembering_strike(M, affecting.body_zone)) //Dismemberment successful
@@ -115,7 +115,7 @@
 					visible_message("<span class='danger'>[M] has disarmed [name]!</span>", "<span class='userdanger'>[M] has disarmed [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 				else
 					I = null
-			add_logs(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
+			log_combat(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
 			updatehealth()
 
 

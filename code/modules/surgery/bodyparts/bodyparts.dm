@@ -10,6 +10,7 @@
 	var/mob/living/carbon/owner = null
 	var/mob/living/carbon/original_owner = null
 	var/status = BODYPART_ORGANIC
+	var/needs_processing = FALSE
 
 	var/body_zone //BODY_ZONE_CHEST, BODY_ZONE_L_ARM, etc , used for def_zone
 	var/aux_zone // used for hands
@@ -22,12 +23,15 @@
 
 	var/disabled = FALSE //If TRUE, limb is as good as missing
 	var/body_damage_coeff = 1 //Multiplier of the limb's damage that gets applied to the mob
+	var/stam_damage_coeff = 0
 	var/brutestate = 0
 	var/burnstate = 0
 	var/brute_dam = 0
 	var/burn_dam = 0
 	var/stamina_dam = 0
+	var/max_stamina_damage = 0
 	var/max_damage = 0
+	var/stam_heal_tick = 3		//per Life().
 
 	var/brute_reduction = 0 //Subtracted to brute damage taken
 	var/burn_reduction = 0	//Subtracted to burn damage taken
@@ -62,9 +66,9 @@
 
 /obj/item/bodypart/examine(mob/user)
 	..()
-	if(brute_dam > 0)
+	if(brute_dam > DAMAGE_PRECISION)
 		to_chat(user, "<span class='warning'>This limb has [brute_dam > 30 ? "severe" : "minor"] bruising.</span>")
-	if(burn_dam > 0)
+	if(burn_dam > DAMAGE_PRECISION)
 		to_chat(user, "<span class='warning'>This limb has [burn_dam > 30 ? "severe" : "minor"] burns.</span>")
 
 /obj/item/bodypart/blob_act()
@@ -121,6 +125,20 @@
 	for(var/obj/item/I in src)
 		I.forceMove(T)
 
+/obj/item/bodypart/proc/consider_processing()
+	if(stamina_dam > DAMAGE_PRECISION)
+		. = TRUE
+	//else if.. else if.. so on.
+	else
+		. = FALSE
+	needs_processing = .
+
+//Return TRUE to get whatever mob this is in to update health.
+/obj/item/bodypart/proc/on_life()
+	if(stamina_dam > DAMAGE_PRECISION)					//DO NOT update health here, it'll be done in the carbon's life.
+		if(heal_damage(brute = 0, burn = 0, stamina = stam_heal_tick, only_robotic = FALSE, only_organic = FALSE, updating_health = FALSE))
+			. |= BODYPART_LIFE_UPDATE_HEALTH
+
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
@@ -159,12 +177,13 @@
 	//We've dealt the physical damages, if there's room lets apply the stamina damage.
 	var/current_damage = get_damage(TRUE)		//This time around, count stamina loss too.
 	var/available_damage = max_damage - current_damage
-	stamina_dam += CLAMP(stamina, 0, available_damage)
+	stamina_dam += round(CLAMP(stamina, 0, min(max_stamina_damage - stamina_dam, available_damage)), DAMAGE_PRECISION)
 
 	if(owner && updating_health)
 		owner.updatehealth()
-		if(stamina)
+		if(stamina > DAMAGE_PRECISION)
 			owner.update_stamina()
+	consider_processing()
 	check_disabled()
 	return update_bodypart_damage_state()
 
@@ -184,17 +203,16 @@
 	stamina_dam = round(max(stamina_dam - stamina, 0), DAMAGE_PRECISION)
 	if(owner && updating_health)
 		owner.updatehealth()
+	consider_processing()
 	check_disabled()
 	return update_bodypart_damage_state()
 
-
-//Returns total damage...kinda pointless really
+//Returns total damage.
 /obj/item/bodypart/proc/get_damage(include_stamina = FALSE)
 	var/total = brute_dam + burn_dam
 	if(include_stamina)
 		total += stamina_dam
 	return total
-
 
 //Checks disabled status thresholds
 /obj/item/bodypart/proc/check_disabled()
@@ -223,8 +241,6 @@
 		burnstate = tburn
 		return TRUE
 	return FALSE
-
-
 
 //Change organ status
 /obj/item/bodypart/proc/change_bodypart_status(new_limb_status, heal_limb, change_icon_to_default)
@@ -414,6 +430,8 @@
 	body_part = CHEST
 	px_x = 0
 	px_y = 0
+	stam_damage_coeff = 1
+	max_stamina_damage = 100
 	var/obj/item/cavity_item
 
 /obj/item/bodypart/chest/Destroy()
@@ -460,7 +478,8 @@
 	icon_state = "default_human_l_arm"
 	attack_verb = list("slapped", "punched")
 	max_damage = 50
-	body_zone =BODY_ZONE_L_ARM
+	max_stamina_damage = 50
+	body_zone = BODY_ZONE_L_ARM
 	body_part = ARM_LEFT
 	aux_zone = BODY_ZONE_PRECISE_L_HAND
 	aux_layer = HANDS_PART_LAYER
@@ -468,6 +487,7 @@
 	held_index = 1
 	px_x = -6
 	px_y = 0
+	stam_heal_tick = 2
 
 /obj/item/bodypart/l_arm/set_disabled(new_disabled = TRUE)
 	..()
@@ -517,6 +537,8 @@
 	held_index = 2
 	px_x = 6
 	px_y = 0
+	stam_heal_tick = 2
+	max_stamina_damage = 50
 
 /obj/item/bodypart/r_arm/set_disabled(new_disabled = TRUE)
 	..()
@@ -563,6 +585,8 @@
 	body_damage_coeff = 0.75
 	px_x = -2
 	px_y = 12
+	stam_heal_tick = 2
+	max_stamina_damage = 50
 
 /obj/item/bodypart/l_leg/set_disabled(new_disabled = TRUE)
 	..()
@@ -608,6 +632,8 @@
 	body_damage_coeff = 0.75
 	px_x = 2
 	px_y = 12
+	max_stamina_damage = 50
+	stam_heal_tick = 2
 
 /obj/item/bodypart/r_leg/set_disabled(new_disabled = TRUE)
 	..()
