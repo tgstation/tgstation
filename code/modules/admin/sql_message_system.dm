@@ -444,7 +444,7 @@
 			if(query_get_message_key.NextRow())
 				target_key = query_get_message_key.item[1]
 			qdel(query_get_message_key)
-		output += "<h3><center>[target_key]</center></h3><center>"
+		output += "<h2><center>[target_key]</center></h2><center>"
 		if(!linkless)
 			output += "<a href='?_src_=holder;[HrefToken()];addnote=[target_key]'>Add note</a>"
 			output += " <a href='?_src_=holder;[HrefToken()];addmessage=[target_key]'>Add message</a>"
