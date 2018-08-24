@@ -102,19 +102,6 @@
 	qdel(src)
 
 
-//Shuttle Build
-
-/obj/effect/shuttle_build
-	name = "shuttle_build"
-	desc = "Some assembly required."
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "syndballoon"
-	anchored = TRUE
-
-/obj/effect/shuttle_build/New()
-	SSshuttle.emergency.initiate_docking(SSshuttle.getDock("emergency_home"))
-	qdel(src)
-
 //Arena
 
 /obj/effect/forcefield/arena_shuttle
