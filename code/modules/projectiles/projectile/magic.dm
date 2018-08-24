@@ -393,7 +393,7 @@
 	icon_state = magic_icon
 	update_icon()
 
-/obj/structure/closet/decay/weld_act(weld_state)
+/obj/structure/closet/decay/after_weld(weld_state)
 	if(weld_state)
 		unmagify()
 
