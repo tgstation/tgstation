@@ -435,12 +435,7 @@
 
 	var/list/old_turfs = return_ordered_turfs(x, y, z, dir)
 
-	var/area/underlying_area
-	for(var/i in GLOB.sortedAreas)
-		var/area/place = i
-		if(place.type == underlying_area_type)
-			underlying_area = place
-			break
+	var/area/underlying_area = GLOB.areas_by_type[underlying_area_type]
 	if(!underlying_area)
 		underlying_area = new underlying_area_type(null)
 
