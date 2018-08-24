@@ -127,7 +127,6 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 		return FALSE
 	
 	report.total_value[src] += the_cost
-	//total_cost += the_cost
 	
 	if(istype(O, /datum/export/material))
 		report.total_amount[src] += amount*MINERAL_MATERIAL_AMOUNT

@@ -262,10 +262,10 @@
 /obj/machinery/piratepad
 	name = "cargo hold pad"
 	icon = 'icons/obj/telescience.dmi'
+	icon_state = "lpad-idle-o"
 	var/idle_state = "lpad-idle-o"
 	var/warmup_state = "lpad-idle"
 	var/sending_state = "lpad-beam"
-	icon_state = "lpad-idle-o"
 	var/cargo_hold_id
 
 /obj/machinery/piratepad/multitool_act(mob/living/user, obj/item/multitool/I)
@@ -297,6 +297,7 @@
 		return TRUE
 
 /obj/machinery/computer/piratepad_control/LateInitialize()
+	. = ..()
 	if(cargo_hold_id)
 		for(var/obj/machinery/piratepad/P in GLOB.machines)
 			if(P.cargo_hold_id == cargo_hold_id)
