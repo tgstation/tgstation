@@ -118,7 +118,6 @@
 	uplink.telecrystals = INITIAL_CRYSTALS
 	// Give AI hacking board
 	var/obj/item/aiModule/core/full/overthrow/O = new(H)
-	O.overthrow_team = team
 	var/list/slots = list (
 		"backpack" = SLOT_IN_BACKPACK,
 		"left pocket" = SLOT_L_STORE,

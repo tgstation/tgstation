@@ -36,6 +36,24 @@
 /datum/objective/overthrow/proc/get_points()
 	return 0 // int, not bool
 
+/datum/objective/overthrow/proc/result_points(datum/mind/the_dude, base_points) // App
+	var/initial_points = base_points
+	if(the_dude)
+		var/datum/antagonist/overthrow/O = the_dude.has_antag_datum(/datum/antagonist/overthrow)
+		if(!the_dude.current || the_dude.current.stat == DEAD)
+			initial_points *= KILLED
+		else if(!is_station_level(the_dude.current.z) && !is_centcom_level(the_dude.current.z)) // exiled.
+			initial_points *= EXILED
+		else if(O)
+			initial_points *= CONVERTED
+			if(team == O.team)
+				initial_points *=  CONVERTED_OURS
+		else
+			initial_points = 0
+	else
+		initial_points = 0
+	return initial_points
+
 // Heads overthrow objective. This targets the heads only, assigning points based on the rank of the head, captain being the highest target.
 /datum/objective/overthrow/heads
 	var/list/targets = list()	// We want one objective for all the heads, instead of 1 objective per head like how it's done for revs, because you don't lose if you get atleast one head.
@@ -83,33 +101,22 @@
 					target_points = RDPTS
 				if("Chief Medical Officer")
 					target_points = CMOPTS
-			// modifiers
-			var/datum/antagonist/overthrow/O = M.has_antag_datum(/datum/antagonist/overthrow)
-			if(!M.current || M.current.stat == DEAD) // Yeah, you gotta defend him even if you converted him.
-				target_points *= KILLED
-			else if(!is_station_level(M.current.z) && !is_centcom_level(M.current.z)) // exiled.
-				target_points *= EXILED
-			else if(O) // Dude's alive, on station/centcom and converted, nice.
-				if(team == O.team) // converted to our team, nice
-					target_points *=  CONVERTED_OURS
-				else
-					target_points *= CONVERTED // Doesn't matter to which team.
-			else // You didn't do anything, no reward for you.
-				target_points = 0
-			base_points += round(target_points)
+			base_points += result_points(M, target_points)
 	return base_points
 
 // AI converting objective. The team who managed to convert the AI with the overthrow module gets the normal 1.5x boost.
 /datum/objective/overthrow/AI
-	explanation_text = "Enslave the AI using the special AI module board in your storage implant. It is required you use said module."
+	explanation_text = "Enslave an AI using the special AI module board in your storage implant. It is required you use said module."
 
 /datum/objective/overthrow/AI/get_points() // If you simply kill the Ai you get nothing, you need it to overthrow the heads.
 	. = 0 // Support for multiple AIs. More AIs means more control over the station.
 	for(var/i in GLOB.ai_list)
 		var/mob/living/silicon/ai/AI = i
-		if(AI.laws && istype(AI.laws, /datum/ai_laws/syndicate_override/overthrow))
-			var/datum/ai_laws/syndicate_override/overthrow/O = AI.laws
-			. += (O.overthrow_team == team) ? AIPTS*CONVERTED_OURS : AIPTS
+		if(AI.mind)
+			var/datum/mind/M = AI.mind
+			var/datum/antagonist/overthrow/O = M.has_antag_datum(/datum/antagonist/overthrow)
+			if(M)
+				. += (O.team == team) ? AIPTS*CONVERTED_OURS : AIPTS
 
 /datum/objective/overthrow/AI/update_explanation_text()
 	if(!GLOB.ai_list.len)
@@ -142,18 +149,4 @@
 	. = ..()
 
 /datum/objective/overthrow/target/get_points()
-	var/base_points
-	if(target)
-		base_points = TARGETPTS
-		var/datum/antagonist/overthrow/O = target.has_antag_datum(/datum/antagonist/overthrow)
-		if(!target.current || target.current.stat == DEAD)
-			base_points *= KILLED
-		else if(!is_station_level(target.current.z) && !is_centcom_level(target.current.z)) // exiled.
-			base_points *= EXILED
-		else if(O)
-			base_points *= CONVERTED
-			if(team == O.team)
-				base_points *=  CONVERTED_OURS
-		else
-			base_points = 0
-	return round(base_points)
+	return result_points(target, TARGETPTS)

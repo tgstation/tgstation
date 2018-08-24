@@ -319,6 +319,9 @@ AI MODULES
 	if(law_datum.owner)
 		law_datum.owner.clear_inherent_laws()
 		law_datum.owner.clear_zeroth_law(0)
+		if(istype(law_datum.owner, /mob/living/silicon/ai)) // check for overthrow antag datum and remove it
+			var/mob/living/silicon/ai/AI = law_datum.owner
+			AI.mind.remove_antag_datum(/datum/antagonist/overthrow)
 	else
 		law_datum.clear_inherent_laws()
 		law_datum.clear_zeroth_law(0)
@@ -455,12 +458,34 @@ AI MODULES
 /obj/item/aiModule/core/full/overthrow
 	name = "'Overthrow' Hacked AI Module"
 	law_id = "overthrow"
-	var/datum/team/overthrow/overthrow_team
 
-/obj/item/aiModule/core/full/overthrow/transmitInstructions(datum/ai_laws/syndicate_override/overthrow/law_datum, mob/sender, overflow)
-	law_datum.overthrow_team = overthrow_team
-	if(law_datum.owner)
-		to_chat(law_datum.owner, "<span class='warning'>BZZZZT</span>")
+/obj/item/aiModule/core/full/overthrow/install(datum/ai_laws/law_datum, mob/user)
+	if(!user || !law_datum || !law_datum.owner)
+		return
+	var/datum/mind/user_mind = user.mind
+	if(!user_mind)
+		return
+	var/datum/antagonist/overthrow/O = user_mind.has_antag_datum(/datum/antagonist/overthrow)
+	if(!O)
+		to_chat(user, "<span class='warning'>It appears that to install this module, you require a password you do not know.</span>") // This is the best fluff i could come up in my mind
+		return
+	var/mob/living/silicon/ai/AI = law_datum.owner
+	if(!AI)
+		return
+	var/datum/mind/target_mind = AI.mind
+	if(!target_mind)
+		return
+	var/datum/antagonist/overthrow/T = target_mind.has_antag_datum(/datum/antagonist/overthrow) // If it is already converted.
+	if(T)
+		if(T.team == O.team)
+			return
+		T.silent = TRUE
+		T.on_removal()
+		if(AI)
+			to_chat(AI, "<span class='userdanger'>You feel your circuits being scrambled! You serve another overthrow team now!</span>") // to make it clearer for the AI
+	target_mind.add_antag_datum(/datum/antagonist/overthrow, O.team)
+	if(AI)
+		to_chat(AI, "<span class='warning'>BZZZZT</span>")
 	..()
 
 /******************** Hacked AI Module ******************/
