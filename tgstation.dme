@@ -40,6 +40,7 @@
 #include "code\__DEFINES\diseases.dm"
 #include "code\__DEFINES\DNA.dm"
 #include "code\__DEFINES\events.dm"
+#include "code\__DEFINES\exports.dm"
 #include "code\__DEFINES\flags.dm"
 #include "code\__DEFINES\food.dm"
 #include "code\__DEFINES\forensics.dm"
