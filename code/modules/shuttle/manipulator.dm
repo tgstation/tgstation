@@ -327,12 +327,6 @@
 			destination = null
 			mode = SHUTTLE_IGNITING
 			setTimer(ignitionTime)
-			sleep(ignitionTime)
-			UNTIL(mode != SHUTTLE_IGNITING)
-			if (mode == SHUTTLE_CALL)
-				timer = INFINITY
-			else
-				to_chat(user, "<span class='warning'>Unable to send [name || id] to infinite transit.</span>")
 
 		if("Delete Shuttle")
 			if(alert(user, "Really delete [name || id]?", "Delete Shuttle", "Cancel", "Really!") != "Really!")
