@@ -227,7 +227,7 @@
 	foodtype = VEGETABLES
 
 /obj/item/reagent_containers/food/snacks/soup/bonebroth
-	name = "Bone broth"
+	name = "bone broth"
 	desc = "Food for your bones."
 	icon_state = "bone_broth"
 	trash = /obj/item/reagent_containers/glass/bowl/mushroom_bowl
@@ -237,7 +237,7 @@
 	foodtype = MEAT
 
 /obj/item/reagent_containers/food/snacks/soup/toadlicksoup
-	name = "Toad lick soup"
+	name = "toad lick soup"
 	desc = "The local shaman apreciates this delicacy."
 	icon_state = "toad_lick_soup"
 	trash = /obj/item/reagent_containers/glass/bowl/mushroom_bowl
