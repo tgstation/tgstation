@@ -225,7 +225,7 @@
 	..()
 
 /datum/reagent/consumable/gutlunch_milk
-	name = "Gutlunch milk"
+	name = "Gutlunch Milk"
 	id = "gutlunch_milk"
 	description = "An opaque white liquid produced by the mammary glands of gutlunchs."
 	color = "#DADB90" // rgb: 218, 219, 144
