@@ -1,6 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - rscadd: "Added missing export rewards for various lavaland items (tendril/megafauna/ruins) and engine parts."
-  - balance: "Increased export values for emitters, PA parts, field generators and radiation collectors to match the rest of engineering exports. Reduced supermatter shard value by 1000 credits."
-  - rscdel: "Removed export rewards for red/blue warp cubes since they're blacklisted from the cargo shuttle."

@@ -1,4 +1,0 @@
-author: "The Dreamweaver"
-delete-after: True
-changes: 
-  - code_imp: "Refactored gift code to fix a minor inefficiency."

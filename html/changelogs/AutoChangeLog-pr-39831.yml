@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - tweak: "Added private intercoms to the confession booths of the Deltastation+Pubbystation chapels."
-  - bugfix: "Fixed invalid radio frequencies on interrogation chamber/confession booth intercoms."
