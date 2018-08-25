@@ -1,5 +1,3 @@
-#define LOOT_LOCATOR_COOLDOWN 150
-
 /datum/round_event_control/pirates
 	name = "Space Pirates"
 	typepath = /datum/round_event/pirates
@@ -26,10 +24,9 @@
 /datum/round_event/pirates/setup()
 	ship_name = pick(strings(PIRATE_NAMES_FILE, "ship_names"))
 
-/datum/round_event/pirates/announce()
+/datum/round_event/pirates/announce(fake)
 	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", 'sound/ai/commandreport.ogg')
-
-	if(!control) //Means this is false alarm, todo : explicit checks instead of using announceWhen
+	if(fake)
 		return
 	threat = new
 	payoff = round(SSshuttle.points * 0.80)
@@ -227,43 +224,234 @@
 	mask_type = /obj/item/clothing/mask/breath
 	storage_type = /obj/item/tank/internals/oxygen
 
+
 /obj/machinery/loot_locator
 	name = "Booty Locator"
 	desc = "This sophisticated machine scans the nearby space for items of value."
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
 	density = TRUE
-	var/cooldown = 0
-	var/result_count = 3 //Show X results.
-
-/obj/machinery/proc/display_current_value()
-	var/area/current = get_area(src)
-	var/value = 0
-	for(var/turf/T in current.contents)
-		value += export_item_and_contents(T,TRUE, TRUE, dry_run = TRUE)
-	say("Current vault value : [value] credits.")
+	var/cooldown = 300
+	var/next_use = 0
 
 /obj/machinery/loot_locator/interact(mob/user)
-	if(world.time <= cooldown)
+	if(world.time <= next_use)
 		to_chat(user,"<span class='warning'>[src] is recharging.</span>")
 		return
-	cooldown = world.time + LOOT_LOCATOR_COOLDOWN
-	display_current_value()
-	var/list/results = list()
-	for(var/atom/movable/AM in world)
-		if(is_type_in_typecache(AM,GLOB.pirate_loot_cache))
-			if(is_station_level(AM.z))
-				if(get_area(AM) == get_area(src)) //Should this be variable ?
-					continue
-				results += AM
-		CHECK_TICK
-	if(!results.len)
+	next_use = world.time + cooldown
+	var/atom/movable/AM = find_random_loot()
+	if(!AM)
 		say("No valuables located. Try again later.")
 	else
-		for(var/i in 1 to result_count)
-			if(!results.len)
-				return
-			var/atom/movable/AM = pick_n_take(results)
-			say("Located: [AM.name] at [get_area_name(AM)]")
+		say("Located: [AM.name] at [get_area_name(AM)]")
 
-#undef LOOT_LOCATOR_COOLDOWN
+/obj/machinery/loot_locator/proc/find_random_loot()
+	if(!GLOB.exports_list.len)
+		setupExports()
+	var/list/possible_loot = list()
+	for(var/datum/export/pirate/E in GLOB.exports_list)
+		possible_loot += E
+	var/datum/export/pirate/P
+	var/atom/movable/AM
+	while(!AM && possible_loot.len)
+		P = pick_n_take(possible_loot)
+		AM = P.find_loot()
+	return AM
+
+//Pad & Pad Terminal
+/obj/machinery/piratepad
+	name = "cargo hold pad"
+	icon = 'icons/obj/telescience.dmi'
+	icon_state = "lpad-idle-o"
+	var/idle_state = "lpad-idle-o"
+	var/warmup_state = "lpad-idle"
+	var/sending_state = "lpad-beam"
+	var/cargo_hold_id
+
+/obj/machinery/piratepad/multitool_act(mob/living/user, obj/item/multitool/I)
+	if (istype(I))
+		to_chat(user, "<span class='notice'>You register [src] in [I]s buffer.</span>")
+		I.buffer = src
+		return TRUE
+
+/obj/machinery/computer/piratepad_control
+	name = "cargo hold control terminal"
+	var/status_report = "Idle"
+	var/obj/machinery/piratepad/pad
+	var/warmup_time = 100
+	var/sending = FALSE
+	var/points = 0
+	var/datum/export_report/total_report
+	var/sending_timer
+	var/cargo_hold_id
+
+/obj/machinery/computer/piratepad_control/Initialize()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/piratepad_control/multitool_act(mob/living/user, obj/item/multitool/I)
+	if (istype(I) && istype(I.buffer,/obj/machinery/piratepad))
+		to_chat(user, "<span class='notice'>You link [src] with [I.buffer] in [I] buffer.</span>")
+		pad = I.buffer
+		updateDialog()
+		return TRUE
+
+/obj/machinery/computer/piratepad_control/LateInitialize()
+	. = ..()
+	if(cargo_hold_id)
+		for(var/obj/machinery/piratepad/P in GLOB.machines)
+			if(P.cargo_hold_id == cargo_hold_id)
+				pad = P
+				return
+	else
+		pad = locate() in range(4,src)
+
+/obj/machinery/computer/piratepad_control/ui_interact(mob/user)
+	. = ..()
+	var/list/t = list()
+	t += "<div class='statusDisplay'>Cargo Hold Control<br>"
+	t += "Current cargo value : [points]"
+	t += "</div>"
+	if(!pad)
+		t += "<div class='statusDisplay'>No pad located.</div><BR>"
+	else
+		t += "<br>[status_report]<br>"
+		if(!sending)
+			t += "<a href='?src=[REF(src)];recalc=1;'>Recalculate Value</a><a href='?src=[REF(src)];send=1'>Send</a>"
+		else
+			t += "<a href='?src=[REF(src)];stop=1'>Stop sending</a>"
+
+	var/datum/browser/popup = new(user, "piratepad", name, 300, 500)
+	popup.set_content(t.Join())
+	popup.open()
+
+/obj/machinery/computer/piratepad_control/proc/recalc()
+	if(sending)
+		return
+	status_report = "Predicted value:<br>"
+	var/datum/export_report/ex = new
+	for(var/atom/movable/AM in get_turf(pad))
+		if(AM == pad)
+			continue
+		export_item_and_contents(AM, EXPORT_PIRATE | EXPORT_CARGO | EXPORT_CONTRABAND | EXPORT_EMAG, apply_elastic = FALSE, dry_run = TRUE, external_report = ex)
+		
+	for(var/datum/export/E in ex.total_amount)
+		status_report += E.total_printout(ex,notes = FALSE) + "<br>"
+
+/obj/machinery/computer/piratepad_control/proc/send()
+	if(!sending)
+		return
+
+	var/datum/export_report/ex = new
+	
+	for(var/atom/movable/AM in get_turf(pad))
+		if(AM == pad)
+			continue
+		export_item_and_contents(AM, EXPORT_PIRATE | EXPORT_CARGO | EXPORT_CONTRABAND | EXPORT_EMAG, apply_elastic = FALSE, delete_unsold = FALSE, external_report = ex)
+	
+	status_report = "Sold:<br>"
+	var/value = 0
+	for(var/datum/export/E in ex.total_amount)
+		var/export_text = E.total_printout(ex,notes = FALSE) //Don't want nanotrasen messages, makes no sense here.
+		if(!export_text)
+			continue
+
+		status_report += export_text + "<br>"
+		value += ex.total_value[E]
+
+	if(!total_report)
+		total_report = ex
+	else
+		total_report.exported_atoms += ex.exported_atoms
+		for(var/datum/export/E in ex.total_amount)
+			total_report.total_amount[E] += ex.total_amount[E]
+			total_report.total_value[E] += ex.total_value[E]
+
+	points += value
+
+	pad.visible_message("<span class='notice'>[pad] activates!</span>")
+	flick(pad.sending_state,pad)
+	pad.icon_state = pad.idle_state
+	sending = FALSE
+	updateDialog()
+
+/obj/machinery/computer/piratepad_control/proc/start_sending()
+	if(sending)
+		return
+	sending = TRUE
+	status_report = "Sending..."
+	pad.visible_message("<span class='notice'>[pad] starts charging up.</span>")
+	pad.icon_state = pad.warmup_state
+	sending_timer = addtimer(CALLBACK(src,.proc/send),warmup_time, TIMER_STOPPABLE)
+
+/obj/machinery/computer/piratepad_control/proc/stop_sending()
+	if(!sending)
+		return
+	sending = FALSE
+	status_report = "Idle"
+	pad.icon_state = pad.idle_state
+	deltimer(sending_timer)
+
+/obj/machinery/computer/piratepad_control/Topic(href, href_list)
+	if(..())
+		return
+	if(pad)
+		if(href_list["recalc"])
+			recalc()
+		if(href_list["send"])
+			start_sending()
+		if(href_list["stop"])
+			stop_sending()
+		updateDialog()
+	else
+		updateDialog()
+
+/datum/export/pirate
+	export_category = EXPORT_PIRATE
+
+//Attempts to find the thing on station
+/datum/export/pirate/proc/find_loot()
+	return
+
+/datum/export/pirate/ransom
+	cost = 3000
+	unit_name = "hostage"
+	export_types = list(/mob/living/carbon/human)
+
+/datum/export/pirate/ransom/find_loot()
+	var/list/head_minds = SSjob.get_living_heads()
+	var/list/head_mobs = list()
+	for(var/datum/mind/M in head_minds)
+		head_mobs += M.current
+	if(head_mobs.len)
+		return pick(head_mobs)
+
+/datum/export/pirate/ransom/get_cost(atom/movable/AM)
+	var/mob/living/carbon/human/H = AM
+	if(H.stat != CONSCIOUS || !H.mind || !H.mind.assigned_role) //mint condition only
+		return 0
+	else
+		if(H.mind.assigned_role in GLOB.command_positions)
+			return 3000
+		else
+			return 1000
+
+/datum/export/pirate/parrot
+	cost = 2000
+	unit_name = "alive parrot"
+	export_types = list(/mob/living/simple_animal/parrot)
+
+/datum/export/pirate/parrot/find_loot()
+	for(var/mob/living/simple_animal/parrot/P in GLOB.alive_mob_list)
+		var/turf/T = get_turf(P)
+		if(T && is_station_level(T.z))
+			return P
+
+/datum/export/pirate/cash
+	cost = 1
+	unit_name = "bills"
+	export_types = list(/obj/item/stack/spacecash)
+
+/datum/export/pirate/cash/get_amount(obj/O)
+	var/obj/item/stack/spacecash/C = O
+	return ..() * C.amount * C.value

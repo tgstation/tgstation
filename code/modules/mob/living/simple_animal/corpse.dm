@@ -218,8 +218,4 @@
 	belt = /obj/item/storage/belt/fannypack/yellow/bee_terrorist
 	id = /obj/item/card/id
 	l_pocket = /obj/item/paper/fluff/bee_objectives
-	mask = /obj/item/clothing/mask/rat/bee 
-
-/obj/item/paper/fluff/bee_objectives
-	name = "Objectives of a Bee Liberation Front Operative"
-	info = "<b>Objective #1</b>. Liberate all bees on the NT transport vessel 2416/B. <b>Success!</b>  <br><b>Objective #2</b>. Escape alive. <b>Failed.</b>"
+	mask = /obj/item/clothing/mask/rat/bee

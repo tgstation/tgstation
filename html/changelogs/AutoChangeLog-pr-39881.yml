@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - rscadd: "Added a new shuttle loan event where crew can get paid for having an active syndicate bomb delivered to cargo bay."

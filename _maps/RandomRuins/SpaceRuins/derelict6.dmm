@@ -161,10 +161,10 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
 "aD" = (
+/obj/item/stack/sheet/metal,
 /turf/open/floor/plasteel/bar{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/obj/item/stack/sheet/metal,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
