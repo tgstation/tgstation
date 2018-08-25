@@ -118,7 +118,7 @@
 	foodtype = GRAIN | MEAT //EGG = MEAT -NinjaNomNom 2017
 	
 /obj/item/reagent_containers/food/snacks/salad/paleosalad
-	name = "Paleolithic salad"
+	name = "/proper paleolithic salad"
 	desc = "At least it's not rocks."
 	icon_state = "paleo_salad"
 	trash = /obj/item/reagent_containers/glass/bowl/mushroom_bowl
