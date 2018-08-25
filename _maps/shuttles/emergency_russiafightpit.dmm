@@ -467,12 +467,12 @@
 /area/shuttle/escape)
 "bA" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/plasteel,
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bB" = (
-/turf/open/floor/plasteel,
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bC" = (
 /obj/structure/extinguisher_cabinet{
@@ -483,22 +483,22 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bD" = (
 /obj/machinery/sleeper{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bE" = (
 /obj/machinery/sleeper{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bF" = (
 /obj/structure/table,
@@ -508,8 +508,8 @@
 	pixel_y = 3
 	},
 /obj/item/crowbar,
-/turf/open/floor/plasteel,
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bG" = (
 /obj/structure/closet,
@@ -531,8 +531,8 @@
 /area/shuttle/escape)
 "bJ" = (
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plasteel,
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bK" = (
 /obj/structure/window/reinforced{

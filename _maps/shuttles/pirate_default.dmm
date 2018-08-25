@@ -869,11 +869,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
-"fV" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
 "fW" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/pirate)
@@ -999,12 +994,6 @@
 	pixel_y = -1
 	},
 /turf/open/floor/pod/light,
-/area/shuttle/pirate)
-"NM" = (
-/obj/effect/turf_decal/delivery,
-/obj/machinery/suit_storage_unit/pirate,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
 /area/shuttle/pirate)
 "Oe" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
@@ -1148,7 +1137,7 @@ yi
 aj
 aj
 Gk
-fV
+aS
 aF
 aI
 aJ
@@ -1255,7 +1244,7 @@ aj
 yi
 aj
 aj
-NM
+Gk
 aS
 bZ
 bo

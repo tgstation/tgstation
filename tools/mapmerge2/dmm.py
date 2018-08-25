@@ -70,9 +70,25 @@ class DMM:
                 new_key = bad_keys[k] = self.generate_new_key()
                 self.dictionary.forceput(new_key, self.dictionary[k])
                 print(f"    {num_to_key(k, self.key_length, True)} -> {num_to_key(new_key, self.key_length)}")
-            for k, v in self.grid.items():
-                # reassign the grid entries which used the old key
-                self.grid[k] = bad_keys.get(v, v)
+
+        # handle entries in the dictionary which have atoms in the wrong order
+        keys = list(self.dictionary.keys())
+        for key in keys:
+            value = self.dictionary[key]
+            if is_bad_atom_ordering(num_to_key(key, self.key_length, True), value):
+                fixed = tuple(fix_atom_ordering(value))
+                try:
+                    self.dictionary[key] = fixed
+                except bidict.DuplicationError:
+                    bad = self.dictionary.inv[fixed]
+                    print(f"During autofixing, merging '{num_to_key(bad, self.key_length)}' into '{num_to_key(key, self.key_length)}'")
+                    bad_keys[bad] = key
+                    self.dictionary.forceput(key, fixed)
+                    keys.remove(bad)
+
+        for k, v in self.grid.items():
+            # reassign the grid entries which used the old key
+            self.grid[k] = bad_keys.get(v, v)
 
     def _ensure_free_keys(self, desired):
         # ensure that free keys exist by increasing the key length if necessary
@@ -178,6 +194,45 @@ def parse_map_atom(atom):
             current += ch
 
     return path, vars
+
+def is_bad_atom_ordering(key, atoms):
+    seen_turfs = 0
+    seen_areas = 0
+    can_fix = False
+    for each in atoms:
+        if each.startswith('/turf'):
+            if seen_turfs == 1:
+                print(f"Warning: key '{key}' has multiple turfs!")
+            if seen_areas:
+                print(f"Warning: key '{key}' has area before turf (autofixing...)")
+                can_fix = True
+            seen_turfs += 1
+        elif each.startswith('/area'):
+            if seen_areas == 1:
+                print(f"Warning: key '{key}' has multiple areas!!!")
+            seen_areas += 1
+        else:
+            if (seen_turfs or seen_areas) and not can_fix:
+                print(f"Warning: key '{key}' has movable after turf or area (autofixing...)")
+                can_fix = True
+    if not seen_areas or not seen_turfs:
+        print(f"Warning: key '{key}' is missing either a turf or area")
+    return can_fix
+
+def fix_atom_ordering(atoms):
+    movables = []
+    turfs = []
+    areas = []
+    for each in atoms:
+        if each.startswith('/turf'):
+            turfs.append(each)
+        elif each.startswith('/area'):
+            areas.append(each)
+        else:
+            movables.append(each)
+    movables.extend(turfs)
+    movables.extend(areas)
+    return movables
 
 # ----------
 # TGM writer
