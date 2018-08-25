@@ -498,10 +498,8 @@
 		output += "<center><a href='?_src_=holder;[HrefToken()];addmessageempty=1'>Add message</a><a href='?_src_=holder;[HrefToken()];addwatchempty=1'>Add watchlist entry</a><a href='?_src_=holder;[HrefToken()];addnoteempty=1'>Add note</a></center>"
 		output += ruler
 	var/datum/browser/browser = new(usr, "Note panel", "Manage player notes", 1000, 500)
-	usr << browse_rsc('html/high_button.png')
-	usr << browse_rsc('html/medium_button.png')
-	usr << browse_rsc('html/minor_button.png')
-	usr << browse_rsc('html/none_button.png')
+	var/datum/asset/permissions_assets = get_asset_datum(/datum/asset/simple/notes)
+	permissions_assets.send(src)
 	browser.set_content(jointext(output, ""))
 	browser.open()
 

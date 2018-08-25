@@ -549,6 +549,14 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"padlock.png"	= 'html/padlock.png'
 	)
 
+/datum/asset/simple/notes
+	assets = list(
+		"high_button.png" = 'html/high_button.png',
+		"medium_button.png" = 'html/medium_button.png',
+		"minor_button.png" = 'html/minor_button.png',
+		"none_button.png" = 'html/none_button.png',
+	)
+
 //this exists purely to avoid meta by pre-loading all language icons.
 /datum/asset/language/register()
 	for(var/path in typesof(/datum/language))
