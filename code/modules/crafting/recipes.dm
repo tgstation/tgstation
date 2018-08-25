@@ -568,7 +568,7 @@
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/food/bonebroth
-	name = "Bone broth"
+	name = "Bone Broth"
 	reqs = list(/datum/reagent/water = 10,
 				/obj/item/reagent_containers/glass/bowl/mushroom_bowl = 1,
 				/obj/item/stack/sheet/bone = 2,
@@ -577,7 +577,7 @@
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/food/toadlicksoup
-	name = "Toad lick soup"
+	name = "Toad Lick Soup"
 	reqs = list(/datum/reagent/water = 10,
 				/obj/item/reagent_containers/glass/bowl/mushroom_bowl = 1,
 				/obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_cap = 2,
@@ -586,7 +586,7 @@
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/food/paleosalad
-	name = "Paleo salad"
+	name = "Paleo Salad"
 	reqs = list(/obj/item/reagent_containers/glass/bowl/mushroom_bowl = 1,
 				/obj/item/reagent_containers/food/snacks/grown/ash_flora/cactus_fruit = 1,
 				/obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_leaf = 1,
