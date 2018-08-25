@@ -177,8 +177,6 @@ SUBSYSTEM_DEF(garbage)
 /datum/controller/subsystem/garbage/proc/Queue(datum/D, level = GC_QUEUE_CHECK)
 	if (isnull(D))
 		return
-	if (D.gc_destroyed == GC_QUEUED_FOR_HARD_DEL)
-		level = GC_QUEUE_HARDDELETE
 	if (level > GC_QUEUE_COUNT)
 		HardDelete(D)
 		return
