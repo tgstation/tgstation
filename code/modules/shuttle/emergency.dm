@@ -571,6 +571,10 @@
 	SSshuttle.emergency = current_emergency
 	SSshuttle.backup_shuttle = src
 
+/obj/docking_port/mobile/emergency/shuttle_build/register()
+	. = ..()
+	initiate_docking(SSshuttle.getDock("emergency_home"))
+
 #undef TIME_LEFT
 #undef ENGINES_START_TIME
 #undef ENGINES_STARTED
