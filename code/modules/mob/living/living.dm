@@ -188,7 +188,7 @@
 	if((AM.move_resist * MOVE_FORCE_FORCEPUSH_RATIO) <= force)			//trigger move_crush and/or force_push regardless of if we can push it normally
 		if(force_push(AM, move_force, t, push_anchored))
 			push_anchored = TRUE
-	if((AM.anchored && !push_anchored) || force <= AM.move_resist * MOVE_FORCE_PUSH_RATIO)
+	if((AM.anchored && !push_anchored) || (force < (AM.move_resist * MOVE_FORCE_PUSH_RATIO)))
 		now_pushing = FALSE
 		return
 	if (istype(AM, /obj/structure/window))
