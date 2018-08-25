@@ -31973,8 +31973,7 @@
 /obj/item/pen,
 /obj/item/stamp/rd,
 /obj/machinery/status_display/evac{
-	pixel_y = -30;
-	supply_display = 0
+	pixel_y = -30
 	},
 /obj/machinery/camera{
 	c_tag = "Research Director's Office";
