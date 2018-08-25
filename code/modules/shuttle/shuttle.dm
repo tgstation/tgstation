@@ -311,6 +311,8 @@
 			comp.connect_to_shuttle(src, dock, idnum)
 		for(var/obj/machinery/computer/camera_advanced/shuttle_docker/comp in place)
 			comp.connect_to_shuttle(src, dock, idnum)
+		for(var/obj/machinery/status_display/shuttle/sd in place)
+			sd.connect_to_shuttle(src, dock, idnum)
 
 
 //this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact
@@ -640,7 +642,9 @@
 		return "--:--"
 
 	var/timeleft = timeLeft()
-	if(timeleft > 0)
+	if(timeleft > 1 HOURS)
+		return "--:--"
+	else if(timeleft > 0)
 		return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
 	else
 		return "00:00"

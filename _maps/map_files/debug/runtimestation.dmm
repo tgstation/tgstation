@@ -1466,10 +1466,7 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "ey" = (
-/obj/machinery/status_display{
-	name = "cargo display";
-	supply_display = 1
-	},
+/obj/machinery/status_display/supply,
 /turf/closed/wall,
 /area/quartermaster/storage)
 "ez" = (
@@ -1931,10 +1928,7 @@
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "fB" = (
-/obj/machinery/status_display{
-	name = "cargo display";
-	supply_display = 1
-	},
+/obj/machinery/status_display/supply,
 /turf/closed/wall/r_wall,
 /area/quartermaster/storage)
 "fC" = (
@@ -2077,7 +2071,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "fQ" = (
 /obj/machinery/computer/communications,
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,

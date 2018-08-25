@@ -51,7 +51,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "j" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "k" = (
