@@ -6,6 +6,7 @@
 	density = FALSE
 	opacity = 0
 	anchored = TRUE
+	move_resist = INFINITY
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = ABOVE_NORMAL_TURF_LAYER
 	var/turf/target
