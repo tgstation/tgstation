@@ -1,0 +1,4 @@
+author: "PKPenguin321"
+delete-after: True
+changes: 
+  - rscadd: "Integrated circuit medium screens have been readded. They are now called large screens. They now only work from your hands or on the ground when you're standing on top of them (NOT from pockets, lockers, backpacks, etc)."
