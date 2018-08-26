@@ -1,5 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - refactor: "Status displays have been refactored to be cleaner and more flexible."
-  - bugfix: "The AI dying properly updates its status displays again."
