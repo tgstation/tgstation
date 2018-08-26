@@ -34,6 +34,33 @@
 	else
 		stuff_to_display = replacetext("[I.data]", eol , "<br>")
 
+/obj/item/integrated_circuit/output/screen/large
+	name = "large screen"
+	desc = "Takes any data type as an input and displays it to anybody near the device when pulsed. \
+	It can also be examined to see the last thing it displayed."
+	icon_state = "screen_medium"
+	power_draw_per_use = 20
+
+/obj/item/integrated_circuit/output/screen/large/do_work()
+	..()
+
+	if(isliving(assembly.loc))//this whole block just returns if the assembly is neither in a mobs hands or on the ground
+		var/mob/living/H = assembly.loc
+		if(H.get_active_held_item() != assembly && H.get_inactive_held_item() != assembly)
+			return
+	else
+		if(!isturf(assembly.loc))
+			return
+
+	var/list/nearby_things = range(0, get_turf(src))
+	for(var/mob/M in nearby_things)
+		var/obj/O = assembly ? assembly : src
+		to_chat(M, "<span class='notice'>[icon2html(O.icon, world, O.icon_state)] [stuff_to_display]</span>")
+	if(assembly)
+		assembly.investigate_log("displayed \"[html_encode(stuff_to_display)]\" with [type].", INVESTIGATE_CIRCUIT)
+	else
+		investigate_log("displayed \"[html_encode(stuff_to_display)]\" as [type].", INVESTIGATE_CIRCUIT)
+
 /obj/item/integrated_circuit/output/light
 	name = "light"
 	desc = "A basic light which can be toggled on/off when pulsed."
