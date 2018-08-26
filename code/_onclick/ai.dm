@@ -174,6 +174,10 @@
 		toggle_breaker()
 		add_fingerprint(usr)
 
+/obj/machinery/power/apc/AICtrlShiftClick() // toggles night shift lighting
+	if(can_use(usr, 1))
+		toggle_nightshift_lights()
+
 /* AI Turrets */
 /obj/machinery/turretid/AIAltClick() //toggles lethal on turrets
 	if(ailock)
