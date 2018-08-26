@@ -50,9 +50,9 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 1. `/datum/component/var/datum/parent` (protected, read-only)
     * The datum this component belongs to
     * Never `null` in child procs
-1.	`report_signal_origin` (protected, boolean)
-	* If `TRUE`, will invoke the callback when signalled with the signal type as the first argument.
-	* `FALSE` by default.
+1. `report_signal_origin` (protected, boolean)
+    * If `TRUE`, will invoke the callback when signalled with the signal type as the first argument.
+    * `FALSE` by default.
 
 ### Procs
 
