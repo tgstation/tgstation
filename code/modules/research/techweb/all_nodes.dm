@@ -896,10 +896,10 @@
 	id = "nanite_hazard"
 	display_name = "Hazard Nanite Programs"
 	description = "Extremely advanced Nanite programs with the potential of being extremely dangerous."
-	prereq_ids = list("nanite_harmonic", "alientech")
+	prereq_ids = list("nanite_harmonic", "syndicate_basic")
 	design_ids = list("spreading_nanites","mindcontrol_nanites","mitosis_nanites")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
-	export_price = 15000
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 15000)
+	export_price = 20000
 
 ////////////////////////Alien technology////////////////////////
 /datum/techweb_node/alientech //AYYYYYYYYLMAOO tech
