@@ -1,6 +1,7 @@
 /mob/living/silicon/ai/Logout()
 	..()
-	for(var/obj/machinery/status_display/ai/O in GLOB.ai_status_displays) //change status
+	for(var/each in GLOB.ai_status_displays) //change status
+		var/obj/machinery/status_display/ai/O = each
 		O.mode = 0
 		O.update()
 	view_core()

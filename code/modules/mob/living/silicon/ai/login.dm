@@ -1,7 +1,8 @@
 /mob/living/silicon/ai/Login()
 	..()
 	if(stat != DEAD)
-		for(var/obj/machinery/status_display/ai/O in GLOB.ai_status_displays) //change status
+		for(var/each in GLOB.ai_status_displays) //change status
+			var/obj/machinery/status_display/ai/O = each
 			O.mode = 1
 			O.emotion = "Neutral"
 			O.update()

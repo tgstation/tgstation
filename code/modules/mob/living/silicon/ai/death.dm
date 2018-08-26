@@ -26,7 +26,8 @@
 			explosion(src.loc, 3, 6, 12, 15)
 
 	if(src.key)
-		for(var/obj/machinery/status_display/ai/O in GLOB.ai_status_displays) //change status
+		for(var/each in GLOB.ai_status_displays) //change status
+			var/obj/machinery/status_display/ai/O = each
 			O.mode = 2
 			O.update()
 
