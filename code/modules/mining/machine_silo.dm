@@ -19,7 +19,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE, MAT_PLASTIC),
 		INFINITY,
 		FALSE,
-		list(/obj/item/stack),
+		/obj/item/stack,
 		null,
 		null,
 		TRUE)
