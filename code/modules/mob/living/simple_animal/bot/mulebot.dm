@@ -14,7 +14,6 @@
 	icon_state = "mulebot0"
 	density = TRUE
 	move_resist = MOVE_FORCE_STRONG
-	move_force = MOVE_FORCE_STRONG
 	animate_movement = 1
 	health = 50
 	maxHealth = 50
