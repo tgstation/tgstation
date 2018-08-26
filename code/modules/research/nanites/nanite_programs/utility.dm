@@ -198,6 +198,15 @@
 /datum/nanite_program/metabolic_synthesis/active_effect()
 	host_mob.nutrition -= 0.5
 
+/datum/nanite_program/research
+	name = "Parallel Computing"
+	desc = "The nanites aid the research servers by performing a portion of its calculations, increasing research point generation."
+	use_rate = 0.2
+	rogue_types = list(/datum/nanite_program/toxic)
+
+/datum/nanite_program/research/active_effect()
+	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = 1))
+
 /datum/nanite_program/triggered/access
 	name = "Subdermal ID"
 	desc = "The nanites store the host's ID access rights in a subdermal magnetic strip. Updates when triggered, copying the host's current access."

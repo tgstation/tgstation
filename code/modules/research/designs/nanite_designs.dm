@@ -25,6 +25,13 @@
 	program_type = /datum/nanite_program/viral
 	category = list("Utility Nanites")
 
+/datum/design/nanites/research
+	name = "Parallel Computing"
+	desc = "The nanites aid the research servers by performing a portion of its calculations, increasing research point generation."
+	id = "research_nanites"
+	program_type = /datum/nanite_program/research
+	category = list("Utility Nanites")
+
 /datum/design/nanites/monitoring
 	name = "Monitoring"
 	desc = "The nanites monitor the host's vitals and location, sending them to the suit sensor network."
