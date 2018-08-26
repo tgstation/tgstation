@@ -427,11 +427,11 @@
 	height = 4
 	launch_status = UNLAUNCHED
 
-/obj/docking_port/mobile/pod/request()
-	var/obj/machinery/computer/shuttle/S = getControlConsole()
-	if(!istype(S, /obj/machinery/computer/shuttle/pod))
+/obj/docking_port/mobile/pod/request(obj/docking_port/stationary/S)
+	var/obj/machinery/computer/shuttle/C = getControlConsole()
+	if(!istype(C, /obj/machinery/computer/shuttle/pod))
 		return ..()
-	if(GLOB.security_level >= SEC_LEVEL_RED || (S && (S.obj_flags & EMAGGED)))
+	if(GLOB.security_level >= SEC_LEVEL_RED || (C && (C.obj_flags & EMAGGED)))
 		if(launch_status == UNLAUNCHED)
 			launch_status = EARLY_LAUNCHED
 			return ..()

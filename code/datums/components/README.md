@@ -32,8 +32,12 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 
 1. `/datum/var/list/datum_components` (private)
     * Lazy associated list of type -> component/list of components.
-1. `/datum/component/var/enabled` (protected, boolean)
-    * If the component is enabled. If not, it will not react to signals
+1. `/datum/var/list/comp_lookup` (private)
+	* Lazy associated list of signal -> registree/list of registrees
+1. `/datum/var/list/signal_procs` (private)
+    * Associated lazy list of signals -> `/datum/callback`s that will be run when the parent datum receives that signal
+1. `/datum/var/signal_enabled` (protected, boolean)
+    * If the datum is signal enabled. If not, it will not react to signals
     * `FALSE` by default, set to `TRUE` when a signal is registered
 1. `/datum/component/var/dupe_mode` (protected, enum)
     * How duplicate component types are handled when added to the datum.
@@ -45,14 +49,12 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Definition of a duplicate component type
         * `null` means exact match on `type` (default)
         * Any other type means that and all subtypes
-1. `/datum/component/var/list/signal_procs` (private)
-    * Associated lazy list of signals -> `/datum/callback`s that will be run when the parent datum receives that signal
 1. `/datum/component/var/datum/parent` (protected, read-only)
     * The datum this component belongs to
     * Never `null` in child procs
-1.	`report_signal_origin` (protected, boolean)
-	* If `TRUE`, will invoke the callback when signalled with the signal type as the first argument.
-	* `FALSE` by default.
+1. `report_signal_origin` (protected, boolean)
+    * If `TRUE`, will invoke the callback when signalled with the signal type as the first argument.
+    * `FALSE` by default.
 
 ### Procs
 
@@ -88,6 +90,14 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 1. `/datum/proc/_SendSignal(signal, list/arguments)` (private, final)
     * Handles most of the actual signaling procedure
     * Will runtime if used on datums with an empty component list
+1. `/datum/proc/RegisterSignal(datum/target, signal(string/list of strings), proc_ref(type), override(boolean))` (protected, final)
+    * If signal is a list it will be as if RegisterSignal was called for each of the entries with the same following arguments
+    * Makes the datum listen for the specified `signal` on it's `parent` datum.
+    * When that signal is received `proc_ref` will be called on the component, along with associated arguments
+    * Example proc ref: `.proc/OnEvent`
+    * If a previous registration is overwritten by the call, a runtime occurs. Setting `override` to TRUE prevents this
+    * These callbacks run asyncronously
+    * Returning `TRUE` from these callbacks will trigger a `TRUE` return from the `SendSignal()` that initiated it
 1. `/datum/component/New(datum/parent, ...)` (private, final)
     * Runs internal setup for the component
     * Extra arguments are passed to `Initialize()`
@@ -121,13 +131,5 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 1. `/datum/component/proc/UnregisterFromParent` (abstract, no-sleep)
     * Counterpart to `RegisterWithParent()`
     * Used to unregister the signals that should only be on the `parent` object
-1. `/datum/component/proc/RegisterSignal(datum/target, signal(string/list of strings), proc_ref(type), override(boolean))` (protected, final)
-    * If signal is a list it will be as if RegisterSignal was called for each of the entries with the same following arguments
-    * Makes a component listen for the specified `signal` on it's `parent` datum.
-    * When that signal is received `proc_ref` will be called on the component, along with associated arguments
-    * Example proc ref: `.proc/OnEvent`
-    * If a previous registration is overwritten by the call, a runtime occurs. Setting `override` to TRUE prevents this
-    * These callbacks run asyncronously
-    * Returning `TRUE` from these callbacks will trigger a `TRUE` return from the `SendSignal()` that initiated it
 
 ### See/Define signals and their arguments in __DEFINES\components.dm

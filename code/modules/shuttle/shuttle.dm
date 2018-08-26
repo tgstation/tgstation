@@ -409,8 +409,9 @@
 		mode = SHUTTLE_IDLE
 		return
 	previous = null
-//		if(!destination)
-//			return
+	if(!destination)
+		// sent to transit with no destination -> unlimited timer
+		timer = INFINITY
 	var/obj/docking_port/stationary/S0 = get_docked()
 	var/obj/docking_port/stationary/S1 = assigned_transit
 	if(S1)
@@ -461,6 +462,22 @@
 				break
 
 	qdel(src, force=TRUE)
+
+/obj/docking_port/mobile/proc/intoTheSunset()
+	// Loop over mobs
+	for(var/t in return_turfs())
+		var/turf/T = t
+		for(var/mob/living/M in T.GetAllContents())
+			// If they have a mind and they're not in the brig, they escaped
+			if(M.mind && !istype(t, /turf/open/floor/plasteel/shuttle/red) && !istype(t, /turf/open/floor/mineral/plastitanium/red/brig))
+				M.mind.force_escaped = TRUE
+			// Ghostize them and put them in nullspace stasis (for stat & possession checks)
+			M.notransform = TRUE
+			M.ghostize(FALSE)
+			M.moveToNullspace()
+
+	// Now that mobs are stowed, delete the shuttle
+	jumpToNullSpace()
 
 /obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1, animate_time)
 	var/list/turfs = ripple_area(S1)
@@ -656,6 +673,25 @@
 		else
 			dst = destination
 		. += " towards [dst ? dst.name : "unknown location"] ([timeLeft(600)] minutes)"
+
+
+/obj/docking_port/mobile/proc/getDbgStatusText()
+	var/obj/docking_port/stationary/dockedAt = get_docked()
+	. = (dockedAt && dockedAt.name) ? dockedAt.name : "unknown"
+	if(istype(dockedAt, /obj/docking_port/stationary/transit))
+		var/obj/docking_port/stationary/dst
+		if(mode == SHUTTLE_RECALL)
+			dst = previous
+		else
+			dst = destination
+		if(dst)
+			. = "(transit to) [dst.name || dst.id]"
+		else
+			. = "(transit to) nowhere"
+	else if(dockedAt)
+		. = dockedAt.name || dockedAt.id
+	else
+		. = "unknown"
 
 
 // attempts to locate /obj/machinery/computer/shuttle with matching ID inside the shuttle

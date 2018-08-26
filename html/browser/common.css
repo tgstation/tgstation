@@ -396,3 +396,17 @@ ul.sparse {
 .slider.round:before {
   border-radius: 50%;
 }
+
+.severity {
+	margin:0px;
+	padding: 1px 8px 1px 8px;
+	border-radius: 25px;
+	border: 1px solid #161616;
+	background: #40628a;
+	color: #ffffff;
+}
+
+.severity img {
+    display: inline-block;
+    vertical-align: middle;
+}
