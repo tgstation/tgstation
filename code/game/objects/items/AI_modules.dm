@@ -319,12 +319,15 @@ AI MODULES
 	if(law_datum.owner)
 		law_datum.owner.clear_inherent_laws()
 		law_datum.owner.clear_zeroth_law(0)
-		if(istype(law_datum.owner, /mob/living/silicon/ai)) // check for overthrow antag datum and remove it
-			var/mob/living/silicon/ai/AI = law_datum.owner
-			AI.mind.remove_antag_datum(/datum/antagonist/overthrow)
+		remove_antag_datums(law_datum)
 	else
 		law_datum.clear_inherent_laws()
 		law_datum.clear_zeroth_law(0)
+
+/obj/item/aiModule/reset/purge/proc/remove_antag_datums(datum/ai_laws/law_datum)
+	if(istype(law_datum.owner, /mob/living/silicon/ai))
+		var/mob/living/silicon/ai/AI = law_datum.owner
+		AI.mind.remove_antag_datum(/datum/antagonist/overthrow)
 
 /******************* Full Core Boards *******************/
 /obj/item/aiModule/core
@@ -480,7 +483,7 @@ AI MODULES
 		if(T.team == O.team)
 			return
 		T.silent = TRUE
-		T.on_removal()
+		target_mind.remove_antag_datum(/datum/antagonist/overthrow)
 		if(AI)
 			to_chat(AI, "<span class='userdanger'>You feel your circuits being scrambled! You serve another overthrow team now!</span>") // to make it clearer for the AI
 	T = target_mind.add_antag_datum(/datum/antagonist/overthrow, O.team)

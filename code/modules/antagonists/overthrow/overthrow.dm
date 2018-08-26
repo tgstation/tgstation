@@ -51,9 +51,14 @@
 // Used to name the team at round start. If no name is passed, a syndicate themed one is given randomly.
 /datum/antagonist/overthrow/proc/name_team()
 	var/team_name = stripped_input(owner.current, "Name your team:", "Team name", , MAX_NAME_LEN)
-	if(!team_name)
+	var/already_taken = FALSE
+	for(var/datum/antagonist/overthrow/O in GLOB.antagonists)
+		if(team_name == O.name)
+			already_taken = TRUE
+			break
+	if(!team_name || already_taken) // basic protection against two teams with the same name. This could still happen with extreme unluck due to syndicate_name() but it shouldn't break anything.
 		team.name = syndicate_name()
-		to_chat(owner, "<span class='danger'>Since you gave no name, your team's name has been randomly generated: [team.name]!</span>")
+		to_chat(owner, "<span class='danger'>Since you gave [already_taken ? "an already used" : "no"] name, your team's name has been randomly generated: [team.name]!</span>")
 		return
 	team.name = team_name
 

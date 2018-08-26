@@ -70,7 +70,7 @@
 /datum/objective/overthrow/heads/update_explanation_text()
 	if(targets.len)
 		explanation_text = "Work with your team to convert, exile or kill "
-		explanation_text += targets.Join(",")
+		explanation_text += english_list(targets)
 		explanation_text += ". Converting to your team will give you more points, whereas killing will give you the least. Syndicates don't want to stir up too many troubles."
 	else
 		explanation_text = "Nothing."

@@ -1,5 +1,5 @@
 /obj/item/overthrow_converter // nearly equal to an implanter, as an object
-	name = "overthrow converter"
+	name = "agent activation implant"
 	desc = "Wakes up syndicate sleeping agents."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "implanter1"

@@ -49,16 +49,12 @@
 	return "Some sleeping agents have managed to get aboard. Their objective is to stage a coup and take over the station stealthly."
 
 // Calculates points for each team and displays the winners.
-/datum/game_mode/overthrow/special_report() // so many for loops, i am deeply sorry
+/datum/game_mode/overthrow/special_report() // so many for loops, I am deeply sorry
 	var/list/teams = list()
-	var/winnertext = ""
-	for(var/i in initial_agents)
-		var/datum/mind/bad_dude = i
-		var/datum/antagonist/overthrow/O = bad_dude.has_antag_datum(/datum/antagonist/overthrow)
-		if(istype(O)) // shouldn't be ever removed but you never know
-			var/datum/team/overthrow/Oteam = O.team
-			if(istype(Oteam)) // same
-				teams += Oteam
+	for(var/datum/antagonist/overthrow/I in GLOB.antagonists)
+		var/datum/team/overthrow/Oteam = I.team
+		if(istype(Oteam)) // same
+			teams |= Oteam
 	var/max_points = 0 // the maximum amount of points reached
 	for(var/j in teams)
 		var/datum/team/T = j
@@ -72,9 +68,9 @@
 		teams[T] = points
 	// Now we will have a list of team=points and a max_points var. Let's fetch all the teams with points=maxpoints and display them as winner. This code allows multiple teams to win if they both achieved
 	// the same amount of points and they got the most points out of all the teams.
+	var/list/winners = list()
 	for(var/l in teams)
-		var/one_winner = winnertext ? FALSE : TRUE
 		var/datum/team/Tagain = l
 		if(teams[Tagain] == max_points)
-			winnertext += "<span class='greentext big'>The [Tagain] team [one_winner ? "" : "also"] won with [max_points] points!</span>[one_winner ? "" : "<br>"]"
-	return winnertext
+			winners += Tagain.name
+	return "<span class='greentext big'>The [english_list(winners)] team[winners.len > 1 ? "s tied" : " won"] with [max_points] points!</span>"
