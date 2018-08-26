@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - code_imp: "living and stack typecaches now use a shared instance where it makes sense, giving small memory savings"
