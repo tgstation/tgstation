@@ -90,12 +90,12 @@
 
 /datum/component/nanites/InheritComponent(datum/component/nanites/new_nanites, i_am_original, list/arguments)
 	if(new_nanites)
-		adjust_nanites(new_nanites.nanite_volume)
+		adjust_nanites(null, new_nanites.nanite_volume)
 	else
-		adjust_nanites(arguments[1]) //just add to the nanite volume
+		adjust_nanites(null, arguments[1]) //just add to the nanite volume
 
 /datum/component/nanites/process()
-	adjust_nanites(regen_rate)
+	adjust_nanites(null, regen_rate)
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_process()
@@ -122,7 +122,7 @@
 			qdel(X)
 	for(var/X in programs_to_add)
 		var/datum/nanite_program/SNP = X
-		add_program(SNP.copy())
+		add_program(null, SNP.copy())
 
 /datum/component/nanites/proc/cloud_sync()
 	if(!cloud_id)
@@ -131,7 +131,7 @@
 	if(backup)
 		var/datum/component/nanites/cloud_copy = backup.nanites
 		if(cloud_copy)
-			sync(cloud_copy)
+			sync(null, cloud_copy)
 
 /datum/component/nanites/proc/add_program(datum/source, datum/nanite_program/new_program, datum/nanite_program/source_program)
 	for(var/X in programs)
@@ -149,7 +149,7 @@
 /datum/component/nanites/proc/consume_nanites(amount, force = FALSE)
 	if(!force && safety_threshold && (nanite_volume - amount < safety_threshold))
 		return FALSE
-	adjust_nanites(-amount)
+	adjust_nanites(null, -amount)
 	return (nanite_volume > 0)
 
 /datum/component/nanites/proc/adjust_nanites(datum/source, amount)
@@ -170,7 +170,7 @@
 
 /datum/component/nanites/proc/on_emp(datum/source, severity)
 	nanite_volume *= (rand(0.60, 0.90))		//Lose 10-40% of nanites
-	adjust_nanites(-(rand(5, 50)))		//Lose 5-50 flat nanite volume
+	adjust_nanites(null, -(rand(5, 50)))		//Lose 5-50 flat nanite volume
 	if(prob(40/severity))
 		cloud_id = 0
 	for(var/X in programs)
@@ -179,13 +179,13 @@
 
 /datum/component/nanites/proc/on_shock(datum/source, shock_damage)
 	nanite_volume *= (rand(0.45, 0.80))		//Lose 20-55% of nanites
-	adjust_nanites(-(rand(5, 50)))			//Lose 5-50 flat nanite volume
+	adjust_nanites(null, -(rand(5, 50)))			//Lose 5-50 flat nanite volume
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_shock(shock_damage)
 
 /datum/component/nanites/proc/on_minor_shock(datum/source)
-	adjust_nanites(-(rand(5, 15)))			//Lose 5-15 flat nanite volume
+	adjust_nanites(null, -(rand(5, 15)))			//Lose 5-15 flat nanite volume
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_minor_shock()
@@ -205,7 +205,7 @@
 		var/datum/nanite_program/NP = X
 		NP.receive_signal(code, source)
 
-/datum/component/nanites/proc/check_viable_biotype(datum/source)
+/datum/component/nanites/proc/check_viable_biotype()
 	if(!(MOB_ORGANIC in host_mob.mob_biotypes) && !(MOB_UNDEAD in host_mob.mob_biotypes))
 		qdel(src) //bodytype no longer sustains nanites
 
@@ -232,7 +232,7 @@
 /datum/component/nanites/proc/set_regen(datum/source, amount)
 	regen_rate = amount
 
-/datum/component/nanites/proc/confirm_nanites(datum/source)
+/datum/component/nanites/proc/confirm_nanites()
 	return TRUE //yup i exist
 
 /datum/component/nanites/proc/get_data(list/nanite_data)
