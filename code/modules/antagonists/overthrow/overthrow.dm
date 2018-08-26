@@ -13,6 +13,9 @@
 	var/datum/team/overthrow/team
 	var/static/list/possible_useful_items
 
+// Overthrow agent. The idea is based on sleeping agents being sent as crewmembers, with one for each team that starts woken up who can also wake up others with their converter implant.
+// Obviously they can just convert anyone, the idea of sleeping agents is just lore. This also explains why this antag type has no deconversion way: they're traitors. Traitors cannot be
+// deconverted.
 // Generates the list of possible items for the storage implant given on_gain
 /datum/antagonist/overthrow/New()
 	..()
@@ -31,6 +34,7 @@
 
 /datum/antagonist/overthrow/on_removal()
 	owner.special_role = null
+	owner.objectives -= objectives
 	..()
 
 // Creates the overthrow team, or sets it. The objectives are static for all the team members.
@@ -96,7 +100,7 @@
 
 // Gives the storage implant with a random item. They're sleeping agents, after all.
 /datum/antagonist/overthrow/proc/equip_overthrow()
-	if(!owner || !owner.current)
+	if(!owner || !owner.current || !ishuman(owner.current)) // only equip existing human overthrow members. This excludes the AI, in particular.
 		return
 	var/obj/item/implant/storage/S = locate(/obj/item/implant/storage) in owner.current
 	if(!S)
@@ -109,7 +113,7 @@
 
 // Equip the initial overthrow agent. Manually called in overthrow gamemode, when the initial agents are chosen. Gives uplink, AI module board and the converter.
 /datum/antagonist/overthrow/proc/equip_initial_overthrow_agent()
-	if(!owner || !owner.current)
+	if(!owner || !owner.current || !ishuman(owner.current))
 		return
 	var/mob/living/carbon/human/H = owner.current
 	// Give uplink
@@ -140,4 +144,9 @@
 	return team
 
 /datum/antagonist/overthrow/greet()
-	to_chat(owner.current, "<B><font size=3 color=red>You are a syndicate sleeping agent. Your job is to stage a swift, fairly bloodless coup.</font></B>")
+	to_chat(owner.current, "<B><font size=3 color=red>You are a syndicate sleeping agent!</font> <font size=2 color=red>Your job is to stage a swift, fairly bloodless coup. You have a two-use converter you can use to convert \
+			anyone you want, even mindshielded crewmembers. You also have a special version of the Syndicate module you can use to convert the AI, too. You and the syndicate agents you wake up \
+			will be able to use the special storage implant you came aboard with, which contains a random, cheap item from our special selection which will aid in your mission. \
+			Your objective is to deal with the heads, the AI and a special target who angered us for several reasons which you're not entitled to know. Converting to your team will let us \
+			take control of the station faster, so it should be prioritized, especially over killing, which should be avoided where possible. The other Syndicate teams are NOT friends and should not \
+			be trusted.</font></B>")

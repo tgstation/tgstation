@@ -69,7 +69,7 @@
 
 /datum/objective/overthrow/heads/update_explanation_text()
 	if(targets.len)
-		explanation_text = "Convert, exile or kill "
+		explanation_text = "Work with your team to convert, exile or kill "
 		explanation_text += targets.Join(",")
 		explanation_text += ". Converting to your team will give you more points, whereas killing will give you the least. Syndicates don't want to stir up too many troubles."
 	else
@@ -106,7 +106,7 @@
 
 // AI converting objective. The team who managed to convert the AI with the overthrow module gets the normal 1.5x boost.
 /datum/objective/overthrow/AI
-	explanation_text = "Enslave an AI using the special AI module board in your storage implant. It is required you use said module."
+	explanation_text = "Enslave the AIs to your team using the special AI module board in your storage implant. It is required you use said module."
 
 /datum/objective/overthrow/AI/get_points() // If you simply kill the Ai you get nothing, you need it to overthrow the heads.
 	. = 0 // Support for multiple AIs. More AIs means more control over the station.
@@ -122,7 +122,7 @@
 	if(!GLOB.ai_list.len)
 		explanation_text = "Nothing."
 	else
-		explanation_text = "Enslave the AIs using the special AI module board in your storage implant. It is required you use said module."
+		explanation_text = "Enslave the AIs to your team using the special AI module board in your storage implant. It is required you use said module."
 
 /datum/objective/overthrow/AI/check_completion()
 	if(!GLOB.ai_list.len)
@@ -134,7 +134,7 @@
 
 /datum/objective/overthrow/target/update_explanation_text()
 	if(target)
-		explanation_text = "Convert, exile or kill [target.name], the [target.assigned_role]. Converting to your team will give you more points, whereas killing will give you the least. Syndicates don't want to stir up too many troubles."
+		explanation_text = "Work with your team to convert, exile or kill [target.name], the [target.assigned_role]. Converting to your team will give you more points, whereas killing will give you the least. Syndicates don't want to stir up too many troubles."
 	else
 		explanation_text = "Nothing."
 

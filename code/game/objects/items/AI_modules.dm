@@ -483,9 +483,9 @@ AI MODULES
 		T.on_removal()
 		if(AI)
 			to_chat(AI, "<span class='userdanger'>You feel your circuits being scrambled! You serve another overthrow team now!</span>") // to make it clearer for the AI
-	target_mind.add_antag_datum(/datum/antagonist/overthrow, O.team)
+	T = target_mind.add_antag_datum(/datum/antagonist/overthrow, O.team)
 	if(AI)
-		to_chat(AI, "<span class='warning'>BZZZZT</span>")
+		to_chat(AI, "<span class='warning'>You serve the [T.team] team now! Assist them in completing the team shared objectives, which you can see in your notes.</span>")
 	..()
 
 /******************** Hacked AI Module ******************/
