@@ -232,6 +232,30 @@
 			drawtype = "a"
 	update_icon()
 
+/obj/item/toy/crayon/talk_into(mob/M, input, channel, spans, datum/language/language)
+	input = trim(input, MAX_MESSAGE_LEN)
+	var/newtext = crayon_text_strip(input)
+	
+	if(input[1] in (letters|numerals)) // accept the input as a string of letters and numbers to paint.
+		text_buffer = newtext
+		paint_mode = PAINT_NORMAL
+		drawtype = "a"
+	
+	if(input[1] == "#" && can_change_colour && length(newtext) >= 6) // RGB hex color.
+		paint_color = sanitize_hexcolor( copytext(newtext,1,7) , 6 , TRUE, paint_color)
+	
+	if(input[1] == "!") // pick a stencil directly
+		var/stencil = newtext
+		if(stencil in all_drawables + randoms) // graffiti sprites have strictly lowercase, alphanumeric names
+			drawtype = stencil
+		if(stencil in graffiti_large_h)
+			paint_mode = PAINT_LARGE_HORIZONTAL
+			text_buffer = ""
+		else
+			paint_mode = PAINT_NORMAL
+	
+	return NOPASS
+
 /obj/item/toy/crayon/proc/crayon_text_strip(text)
 	var/list/base = string2charlist(lowertext(text))
 	var/list/out = list()
