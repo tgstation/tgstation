@@ -1,4 +1,0 @@
-author: "JJRcop"
-delete-after: True
-changes: 
-  - admin: "Asay logs show \"ADMINPRIVATE: ASAY:\" again instead of just \"ADMINPRIVATE:\""
