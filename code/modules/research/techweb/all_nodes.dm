@@ -898,7 +898,7 @@
 	description = "Extremely advanced Nanite programs with the potential of being extremely dangerous."
 	prereq_ids = list("nanite_harmonic", "syndicate_basic")
 	design_ids = list("spreading_nanites","mindcontrol_nanites","mitosis_nanites")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 15000)
 	export_price = 20000
 
 ////////////////////////Alien technology////////////////////////
