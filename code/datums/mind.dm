@@ -62,6 +62,8 @@
 	var/unconvertable = FALSE
 	var/late_joiner = FALSE
 
+	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
+
 /datum/mind/New(var/key)
 	src.key = key
 	soulOwner = src
