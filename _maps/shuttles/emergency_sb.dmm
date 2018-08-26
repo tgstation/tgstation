@@ -25,14 +25,14 @@
 "g" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "h" = (
 /obj/structure/chair,
 /obj/machinery/newscaster/security_unit{
 	pixel_y = 32
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "i" = (
 /obj/structure/chair,
@@ -40,7 +40,7 @@
 	name = "Station Intercom";
 	pixel_y = 24
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "j" = (
 /obj/item/radio/intercom{
@@ -64,13 +64,13 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "m" = (
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "n" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "o" = (
 /obj/structure/sign/nanotrasen,
@@ -96,7 +96,7 @@
 	name = "Holding Area";
 	req_access_txt = "2"
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "s" = (
 /obj/machinery/door/airlock/shuttle{
