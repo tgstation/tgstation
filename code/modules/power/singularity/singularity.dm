@@ -7,6 +7,7 @@
 	icon_state = "singularity_s1"
 	anchored = TRUE
 	density = TRUE
+	move_resist = INFINITY
 	layer = MASSIVE_OBJ_LAYER
 	light_range = 6
 	appearance_flags = 0
