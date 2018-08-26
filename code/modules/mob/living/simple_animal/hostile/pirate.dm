@@ -41,6 +41,8 @@
 	attack_sound = 'sound/weapons/blade1.ogg'
 	var/obj/effect/light_emitter/red_energy_sword/sord
 
+	do_footstep = TRUE
+ 
 /mob/living/simple_animal/hostile/pirate/melee/space
 	name = "Space Pirate Swashbuckler"
 	icon_state = "piratespace"

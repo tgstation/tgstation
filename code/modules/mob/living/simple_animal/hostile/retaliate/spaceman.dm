@@ -24,6 +24,8 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	del_on_death = 0
 
+	do_footstep = TRUE
+
 /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace //this should be in a different file
 	name = "Nanotrasen Private Security Officer"
 	desc = "An officer part of Nanotrasen's private security force."
