@@ -116,6 +116,14 @@
 	user.visible_message("<span class='suicide'>[user] is tightening \the [src]'s straps around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return OXYLOSS
 
+/obj/item/clothing/glasses/night/sunglasses
+	name = "night vision sunglasses"
+	desc = "Protects from moonlight. Can see from 12 meters away in the dark."
+	darkness_view = 6
+	icon_state = "sunnig"
+	flash_protect = 1
+	tint = 1
+
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
 	desc = "Yarr."
