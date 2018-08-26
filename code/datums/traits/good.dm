@@ -111,7 +111,7 @@
 
 /datum/quirk/photographer
 	name = "Photographer"
-	desc = "You know how to handle a camera, shortening the cooldown between each shot."
+	desc = "You know how to handle a camera, shortening the delay between each shot."
 	value = 1
 	mob_trait = TRAIT_PHOTOGRAPHER
 	gain_text = "<span class='notice'>You know everything about photography.</span>"
