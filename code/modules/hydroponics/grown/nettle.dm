@@ -68,13 +68,13 @@
 
 /obj/item/reagent_containers/food/snacks/grown/nettle/afterattack(atom/A as mob|obj, mob/user,proximity)
 	. = ..()
+	if(!proximity)
+		return
 	if (isliving(A))
 		var/mob/living/target = A
 		if (target.reagents)
 			var/inject_amount = rand(5, 10)
 			reagents.trans_to(target, inject_amount)
-	if(!proximity)
-		return
 	if(force > 0)
 		force -= rand(1, (force / 3) + 1) // When you whack someone with it, leaves fall off
 	else
