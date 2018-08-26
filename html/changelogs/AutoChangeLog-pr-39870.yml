@@ -1,0 +1,5 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - admin: "The shuttle manipulator now allows flying any shuttle to any port which will fit it."
+  - bugfix: "The shuttle manipulator now allows fast-travelling shuttles with 5s remaining, down from 50s."
