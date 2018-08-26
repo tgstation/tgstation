@@ -6,6 +6,7 @@
 	var/mobs_only = FALSE
 	invisibility = INVISIBILITY_ABSTRACT // nope cant see this shit
 	anchored = TRUE
+	move_resist = INFINITY
 
 /obj/effect/step_trigger/proc/Trigger(atom/movable/A)
 	return 0
