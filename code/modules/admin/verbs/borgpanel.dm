@@ -21,18 +21,17 @@
 	var/mob/living/silicon/robot/borg
 	var/user
 
-/datum/borgpanel/New(user, mob/living/silicon/robot/borg)
-	if(!istype(borg))
+/datum/borgpanel/New(to_user, mob/living/silicon/robot/to_borg)
+	if(!istype(to_borg))
 		CRASH("Borg panel is only available for borgs")
 		qdel(src)
-	if (istype(user, /mob))
-		var/mob/M = user
-		if (!M.client)
-			CRASH("Borg panel attempted to open to a mob without a client")
-		src.user = M.client
-	else
-		src.user = user
-	src.borg = borg
+
+	user = CLIENT_FROM_VAR(to_user)
+
+	if (!user)
+		CRASH("Borg panel attempted to open to a mob without a client")
+
+	borg = to_borg
 
 /datum/borgpanel/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.admin_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)

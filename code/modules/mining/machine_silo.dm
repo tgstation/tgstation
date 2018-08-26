@@ -19,7 +19,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE, MAT_PLASTIC),
 		INFINITY,
 		FALSE,
-		list(/obj/item/stack),
+		/obj/item/stack,
 		null,
 		null,
 		TRUE)
@@ -179,6 +179,10 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 	updateUsrDialog()
 	flick("silo_active", src)
+
+/obj/machinery/ore_silo/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>[src] can be linked to techfabs, circuit printers and protolathes with a multitool.</span>")
 
 /datum/ore_silo_log
 	var/name  // for VV

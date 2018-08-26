@@ -229,12 +229,14 @@
 			var/answer = text2num(href_list["answer"])
 			if(!currmsg || !answer || currmsg.possible_answers.len < answer)
 				state = STATE_MESSAGELIST
-			currmsg.answered = answer
-			log_game("[key_name(usr)] answered [currmsg.title] comm message. Answer : [currmsg.answered]")
-			if(currmsg)
-				currmsg.answer_callback.Invoke()
-
-			state = STATE_VIEWMESSAGE
+			else
+				if(!currmsg.answered)
+					currmsg.answered = answer
+					log_game("[key_name(usr)] answered [currmsg.title] comm message. Answer : [currmsg.answered]")
+					if(currmsg)
+						currmsg.answer_callback.InvokeAsync()
+				state = STATE_VIEWMESSAGE
+				updateDialog()
 		if("status")
 			state = STATE_STATUSDISPLAY
 		if("securitylevel")
@@ -365,11 +367,13 @@
 			var/answer = text2num(href_list["answer"])
 			if(!aicurrmsg || !answer || aicurrmsg.possible_answers.len < answer)
 				aistate = STATE_MESSAGELIST
-			aicurrmsg.answered = answer
-			log_game("[key_name(usr)] answered [aicurrmsg.title] comm message. Answer : [aicurrmsg.answered]")
-			if(aicurrmsg.answer_callback)
-				aicurrmsg.answer_callback.Invoke()
-			aistate = STATE_VIEWMESSAGE
+			else
+				if(!aicurrmsg.answered)
+					aicurrmsg.answered = answer
+					log_game("[key_name(usr)] answered [aicurrmsg.title] comm message. Answer : [aicurrmsg.answered]")
+					if(aicurrmsg.answer_callback)
+						aicurrmsg.answer_callback.InvokeAsync()
+				aistate = STATE_VIEWMESSAGE
 		if("ai-status")
 			aistate = STATE_STATUSDISPLAY
 		if("ai-announce")

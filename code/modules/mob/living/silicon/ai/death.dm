@@ -29,8 +29,10 @@
 		if(src.key)
 			O.mode = 2
 			O.update()
-	
-	if(istype(loc, /obj/item/aicard))
+
+	if(istype(loc, /obj/item/aicard/aitater))
+		loc.icon_state = "aitater-404"
+	else if(istype(loc, /obj/item/aicard))
 		loc.icon_state = "aicard-404"
 
 /mob/living/silicon/ai/proc/ShutOffDoomsdayDevice()

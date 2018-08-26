@@ -11,3 +11,4 @@
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null //needs a splashing sound one day.
 
+	footstep = FOOTSTEP_WATER

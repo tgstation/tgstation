@@ -6539,7 +6539,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/control)
 "sj" = (
 /obj/structure/toilet{
@@ -6933,7 +6933,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/control)
 "th" = (
 /obj/structure/closet/cardboard,
@@ -7497,7 +7497,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/control)
 "uO" = (
 /obj/machinery/door/airlock/centcom{
@@ -8245,7 +8245,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/control)
 "wW" = (
 /obj/structure/sign/map/left{
@@ -9036,7 +9036,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/control)
 "zy" = (
 /obj/structure/table,
@@ -9046,7 +9046,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/control)
 "zz" = (
 /obj/structure/table/wood,
@@ -12926,7 +12926,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "KV" = (
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium,
 /area/centcom/evac)
 "KW" = (
 /obj/structure/table,
@@ -12981,21 +12981,21 @@
 "Ld" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/evac)
 "Le" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/evac)
 "Lf" = (
 /obj/structure/table/reinforced,
 /obj/item/pen,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/evac)
 "Lg" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/evac)
 "Lh" = (
 /obj/machinery/sleeper{
@@ -13013,33 +13013,33 @@
 /obj/machinery/computer/secure_data{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/evac)
 "Lk" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/evac)
 "Ll" = (
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/evac)
 "Lm" = (
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
 /obj/item/stamp,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/evac)
 "Ln" = (
 /obj/structure/table,
 /obj/item/assembly/flash/handheld,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/evac)
 "Lo" = (
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/evac)
 "Lp" = (
 /obj/structure/chair{
@@ -13050,7 +13050,7 @@
 "Lq" = (
 /obj/structure/table,
 /obj/item/storage/box/handcuffs,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/evac)
 "Lr" = (
 /obj/machinery/door/window/northright{
@@ -13060,7 +13060,7 @@
 	name = "Security Desk";
 	req_access_txt = "103"
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/evac)
 "Ls" = (
 /obj/docking_port/stationary{
@@ -13080,7 +13080,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium,
 /area/centcom/evac)
 "Lv" = (
 /obj/structure/bed,
@@ -13099,7 +13099,7 @@
 /area/centcom/evac)
 "Ly" = (
 /obj/machinery/door/airlock/titanium,
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium,
 /area/centcom/evac)
 "Lz" = (
 /obj/docking_port/stationary{
@@ -13133,7 +13133,7 @@
 	name = "Cockpit";
 	req_access_txt = "109"
 	},
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium,
 /area/centcom/evac)
 "LE" = (
 /obj/structure/table,
@@ -13145,7 +13145,7 @@
 	dir = 4;
 	name = "Prosecution"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/mineral/titanium,
 /area/centcom/evac)
 "LG" = (
 /obj/structure/filingcabinet,
@@ -13161,7 +13161,7 @@
 /area/centcom/evac)
 "LI" = (
 /obj/structure/chair,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/mineral/titanium,
 /area/centcom/evac)
 "LJ" = (
 /obj/structure/table,
@@ -14206,6 +14206,12 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
+"YZ" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/centcom/evac)
 "Za" = (
 /obj/machinery/door/airlock/wood{
 	id_tag = "lmrestroom"
@@ -40742,8 +40748,8 @@ Ly
 KH
 KH
 KH
-Li
-Lb
+YZ
+KV
 LO
 Lw
 aa
@@ -41257,7 +41263,7 @@ Lb
 LA
 KH
 LF
-Lb
+KV
 LQ
 Lw
 aa

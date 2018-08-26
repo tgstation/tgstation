@@ -31,6 +31,8 @@
 	var/attack_state = MOOK_ATTACK_NEUTRAL
 	var/struck_target_leap = FALSE
 
+	do_footstep = TRUE
+
 /mob/living/simple_animal/hostile/jungle/mook/CanPass(atom/movable/O)
 	if(istype(O, /mob/living/simple_animal/hostile/jungle/mook))
 		var/mob/living/simple_animal/hostile/jungle/mook/M = O

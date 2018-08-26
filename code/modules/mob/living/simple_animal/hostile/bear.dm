@@ -39,6 +39,8 @@
 	faction = list("russian")
 	gold_core_spawnable = HOSTILE_SPAWN
 
+	do_footstep = TRUE
+
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/Hudson
 	name = "Hudson"
