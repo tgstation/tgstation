@@ -87,7 +87,7 @@
 	if(isturf(target_loc) || (ismob(target_loc) && isturf(target_loc.loc)))
 		return viewers(range, get_turf(target_loc))
 	else
-		return typecache_filter_list(target_loc.GetAllContents(), typecacheof(list(/mob/living)))
+		return typecache_filter_list(target_loc.GetAllContents(), GLOB.typecache_living)
 
 /obj/item/assembly/flash/proc/try_use_flash(mob/user = null)
 	if(crit_fail || (world.time < last_trigger + cooldown))

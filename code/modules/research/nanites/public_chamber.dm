@@ -9,7 +9,6 @@
 	density = TRUE
 	idle_power_usage = 50
 	active_power_usage = 300
-	occupant_typecache = list(/mob/living)
 
 	var/cloud_id = 1
 	var/locked = FALSE
@@ -17,6 +16,10 @@
 	var/busy = FALSE
 	var/busy_icon_state
 	var/message_cooldown = 0
+
+/obj/machinery/public_nanite_chamber/Initialize()
+	. = ..()
+	occupant_typecache = GLOB.typecache_living
 
 /obj/machinery/public_nanite_chamber/RefreshParts()
 	var/obj/item/circuitboard/machine/public_nanite_chamber/board = circuit

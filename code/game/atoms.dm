@@ -613,6 +613,8 @@
 			log_admin(log_text)
 		if(LOG_ADMIN_PRIVATE)
 			log_admin_private(log_text)
+		if(LOG_ASAY)
+			log_adminsay(log_text)
 		if(LOG_OWNERSHIP)
 			log_game(log_text)
 		if(LOG_GAME)

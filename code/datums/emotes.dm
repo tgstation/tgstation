@@ -16,7 +16,7 @@
 	var/emote_type = EMOTE_VISIBLE //Whether the emote is visible or audible
 	var/restraint_check = FALSE //Checks if the mob is restrained before performing the emote
 	var/muzzle_ignore = FALSE //Will only work if the emote is EMOTE_AUDIBLE
-	var/list/mob_type_allowed_typecache = list(/mob) //Types that are allowed to use that emote
+	var/list/mob_type_allowed_typecache = /mob //Types that are allowed to use that emote
 	var/list/mob_type_blacklist_typecache //Types that are NOT allowed to use that emote
 	var/list/mob_type_ignore_stat_typecache
 	var/stat_allowed = CONSCIOUS
@@ -25,7 +25,16 @@
 /datum/emote/New()
 	if(key_third_person)
 		emote_list[key_third_person] = src
-	mob_type_allowed_typecache = typecacheof(mob_type_allowed_typecache)
+	if (ispath(mob_type_allowed_typecache))
+		switch (mob_type_allowed_typecache)
+			if (/mob)
+				mob_type_allowed_typecache = GLOB.typecache_mob
+			if (/mob/living)
+				mob_type_allowed_typecache = GLOB.typecache_living
+			else
+				mob_type_allowed_typecache = typecacheof(mob_type_allowed_typecache)
+	else
+		mob_type_allowed_typecache = typecacheof(mob_type_allowed_typecache)
 	mob_type_blacklist_typecache = typecacheof(mob_type_blacklist_typecache)
 	mob_type_ignore_stat_typecache = typecacheof(mob_type_ignore_stat_typecache)
 
