@@ -33,6 +33,9 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 /mob/dead/forceMove(atom/destination)
 	loc = destination
 
+/mob/dead/experience_pressure_difference()
+	return								//we don't care for spacewind
+
 /mob/dead/Stat()
 	..()
 
