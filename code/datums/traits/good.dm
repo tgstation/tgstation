@@ -92,7 +92,6 @@
 
 
 
-
 /datum/quirk/night_vision
 	name = "Night Vision"
 	desc = "You can see slightly more clearly in full darkness than most people."
@@ -167,6 +166,7 @@
 	H.put_in_hands(spraycan)
 	H.equip_to_slot(spraycan, SLOT_IN_BACKPACK)
 	H.regenerate_icons()
+
 
 
 /datum/quirk/voracious
