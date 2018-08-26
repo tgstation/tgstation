@@ -612,7 +612,8 @@
 	name = "dust"
 	},
 /obj/machinery/meter,
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "be" = (
 /obj/machinery/atmospherics/components/binary/pump{
@@ -725,7 +726,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "bn" = (
 /obj/machinery/portable_atmospherics/scrubber,
@@ -741,7 +743,8 @@
 	name = "dust"
 	},
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "bo" = (
 /obj/effect/decal/cleanable/dirt{
@@ -763,7 +766,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "bq" = (
 /obj/machinery/door/airlock/glass{
@@ -783,7 +787,8 @@
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 1
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "bt" = (
 /obj/structure/table,
