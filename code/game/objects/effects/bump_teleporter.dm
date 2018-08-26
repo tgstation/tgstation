@@ -6,6 +6,7 @@
 	var/id_target = null	//id of bump_teleporter which this moves you to.
 	invisibility = INVISIBILITY_ABSTRACT 		//nope, can't see this
 	anchored = TRUE
+	move_resist = INFINITY
 	density = TRUE
 	opacity = 0
 
