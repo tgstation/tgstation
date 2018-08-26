@@ -2,6 +2,7 @@
 /obj/effect/temp_visual
 	icon_state = "nothing"
 	anchored = TRUE
+	move_resist = INFINITY
 	layer = ABOVE_MOB_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/duration = 10 //in deciseconds
