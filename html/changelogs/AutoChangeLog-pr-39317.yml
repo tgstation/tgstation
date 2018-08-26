@@ -1,0 +1,5 @@
+author: "Floyd / Qustinnus (Credits to KMC for the sprites)"
+delete-after: True
+changes: 
+  - rscadd: "The Clown Car, your 18TC clown-only solution to asshole co-workers"
+  - rscadd: "Regular car implementation (makes it easier to add more cars if someone actually feels like adding those)"
