@@ -51,29 +51,32 @@
 	user.set_machine(src)
 	song.interact(user)
 
-/obj/item/instrument/screwdriver_act(mob/living/user, obj/item/I)
-	if (user.has_trait(TRAIT_MUSICIAN))
-		if (!tune_time)
-			user.visible_message("[user] tunes the [src] to perfection!", "<span class='notice'>You tune the [src] to perfection!</span>")
-			tune_time = 10
-			START_PROCESSING(SSobj, src)
+/obj/item/instrument/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/musicaltuner))
+		var/mob/living/carbon/human/H = user
+		if (H.has_trait(TRAIT_MUSICIAN))
+			if (!tune_time)
+				H.visible_message("[H] tunes the [src] to perfection!", "<span class='notice'>You tune the [src] to perfection!</span>")
+				tune_time = 300
+				START_PROCESSING(SSobj, src)
+			else
+				to_chat(H, "<span class='notice'>[src] is already well tuned!</span>")
 		else
-			to_chat(user, "<span class='notice'>[src] is already well tuned!</span>")
-	else
-		to_chat(user, "<span class='notice'>You have no clue how this works.</span>")
+			to_chat(H, "<span class='warning'>You have no idea how to use this.</span>")
 
 /obj/item/instrument/process()
 	if (tune_time && song.playing)
 		for (var/mob/living/M in song.hearing_mobs)
-			M.dizziness = max(0,M.dizziness-3)
+			M.dizziness = max(0,M.dizziness-2)
 			M.jitteriness = max(0,M.jitteriness-2)
+			M.drowsyness = max(0,M.drowsyness-1)
 			M.confused = max(M.confused-1)
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
 			tune_time--
 	else
 		if (!tune_time)
 			if (song.playing)
-				src.visible_message("<span class='warning'>[src] starts sounding a little off..</span>")
+				loc.visible_message("<span class='warning'>[src] starts sounding a little off...</span>")
 			STOP_PROCESSING(SSobj, src)
 
 /obj/item/instrument/violin
@@ -252,3 +255,16 @@
 	throw_speed = 3
 	throw_range = 15
 	hitsound = 'sound/items/bikehorn.ogg'
+
+///
+
+/obj/item/musicaltuner
+	name = "musical tuner"
+	desc = "A device for tuning musical instruments both manual and electronic alike."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "musicaltuner"
+	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_SMALL
+	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'

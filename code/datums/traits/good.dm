@@ -72,18 +72,24 @@
 
 /datum/quirk/musician
 	name = "Musician"
-	desc = "zzz"
+	desc = "You can tune handheld musical instruments to play melodies that clear certain negative effects and soothe the soul."
 	value = 1
 	mob_trait = TRAIT_MUSICIAN
-	gain_text = "<span class='notice'>zzz.</span>"
-	lose_text = "<span class='danger'>zzz.</span>"
+	gain_text = "<span class='notice'>You know everything about musical instruments.</span>"
+	lose_text = "<span class='danger'>You forget how musical instruments work.</span>"
 
 /datum/quirk/musician/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
+
 	var/obj/item/instrument/guitar/guitar = new(get_turf(H))
 	H.put_in_hands(guitar)
 	H.equip_to_slot(guitar, SLOT_IN_BACKPACK)
+
+	var/obj/item/musicaltuner/musicaltuner = new(get_turf(H))
+	H.put_in_hands(musicaltuner)
+	H.equip_to_slot(musicaltuner, SLOT_IN_BACKPACK)
 	H.regenerate_icons()
+
 
 
 
@@ -106,17 +112,17 @@
 
 /datum/quirk/photographer
 	name = "Photographer"
-	desc = "zzz"
+	desc = "You know how to handle a camera, shortening the cooldown between each shot."
 	value = 1
 	mob_trait = TRAIT_PHOTOGRAPHER
-	gain_text = "<span class='notice'>zzz.</span>"
-	lose_text = "<span class='danger'>zzz.</span>"
+	gain_text = "<span class='notice'>You know everything about photography.</span>"
+	lose_text = "<span class='danger'>You forget how photo cameras work.</span>"
 
 /datum/quirk/photographer/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/camera/camera = new(get_turf(H))
 	H.put_in_hands(camera)
-	H.equip_to_slot(camera, SLOT_IN_BACKPACK)
+	H.equip_to_slot(camera, SLOT_NECK)
 	H.regenerate_icons()
 
 
@@ -149,11 +155,11 @@
 
 /datum/quirk/tagger
 	name = "Tagger"
-	desc = "zzz"
+	desc = "You're an experienced artist. While drawing graffiti, you can get twice as many uses out of drawing supplies."
 	value = 1
 	mob_trait = TRAIT_TAGGER
-	gain_text = "<span class='notice'>zzz.</span>"
-	lose_text = "<span class='danger'>zzz.</span>"
+	gain_text = "<span class='notice'>You know how to tag walls efficiently.</span>"
+	lose_text = "<span class='danger'>You forget how to tag walls properly.</span>"
 
 /datum/quirk/tagger/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
