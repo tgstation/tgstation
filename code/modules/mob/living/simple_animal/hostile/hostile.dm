@@ -14,7 +14,7 @@
 	var/dodge_prob = 30
 	var/sidestep_per_cycle = 1 //How many sidesteps per npcpool cycle when in melee
 
-	var/projectiletype	//set ONLY it and NULLIFY casingtype var, if we have ONLY projectile
+	var/obj/item/projectile/projectiletype	//set ONLY it and NULLIFY casingtype var, if we have ONLY projectile
 	var/projectilesound
 	var/casingtype		//set ONLY it and NULLIFY projectiletype, if we have projectile IN CASING
 	var/move_to_delay = 3 //delay for the automated movement.
