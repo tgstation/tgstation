@@ -90,18 +90,19 @@
 
 /obj/vehicle/sealed/proc/DumpMobs(randomstep = TRUE)
 	for(var/i in occupants)
+		mob_exit(i, null, randomstep)
 		if(iscarbon(i))
 			var/mob/living/carbon/Carbon = i
-			mob_exit(Carbon, null, randomstep)
 			Carbon.Knockdown(40)
 
 /obj/vehicle/sealed/proc/DumpSpecificMobs(flag, randomstep = TRUE)
 	for(var/i in occupants)
-		if((occupants[i] & flag) && iscarbon(i))
-			var/mob/living/carbon/C = i
-			mob_exit(C, null, randomstep)
-			C.Knockdown(40)
-
-
+		if((occupants[i] & flag))
+			mob_exit(i, null, randomstep)
+			if(iscarbon(i))
+				var/mob/living/carbon/C = i
+				C.Knockdown(40)
+			
+			
 /obj/vehicle/sealed/AllowDrop()
 	return FALSE

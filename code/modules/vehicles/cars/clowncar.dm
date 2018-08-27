@@ -2,7 +2,7 @@
 	name = "clown car"
 	desc = "How someone could even fit in there is beyond me."
 	icon_state = "clowncar"
-	max_integrity = 500
+	max_integrity = 150
 	armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 	enter_delay = 20
 	max_occupants = 50
@@ -35,11 +35,10 @@
 
 /obj/vehicle/sealed/car/clowncar/Bump(atom/movable/M)
 	..()
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		C.Knockdown(50)
-		C.visible_message("<span class='warning'>[src] rams into [C] and sucks him up!</span>") //fuck off shezza this isn't ERP.
-		mob_forced_enter(C)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.visible_message("<span class='warning'>[src] rams into [L] and sucks him up!</span>") //fuck off shezza this isn't ERP.
+		mob_forced_enter(L)
 
 		playsound(src, pick('sound/vehicles/clowncar_ram1.ogg', 'sound/vehicles/clowncar_ram2.ogg', 'sound/vehicles/clowncar_ram3.ogg'), 75)
 	else if(istype(M, /turf/closed))
