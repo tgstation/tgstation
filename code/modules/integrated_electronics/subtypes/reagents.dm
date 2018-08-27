@@ -80,6 +80,10 @@
 	var/transfer_amount = 10
 	var/busy = FALSE
 
+/obj/item/integrated_circuit/reagent/injector/Initialize()
+	.=..()
+	set_pin_data(IC_OUTPUT, 2, src)
+
 /obj/item/integrated_circuit/reagent/injector/on_reagent_change(changetype)
 	push_vol()
 
@@ -272,7 +276,9 @@
 	activators = list("push ref" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
-
+/obj/item/integrated_circuit/reagent/storage/Initialize()
+	.=..()
+	set_pin_data(IC_OUTPUT, 2, src)
 
 /obj/item/integrated_circuit/reagent/storage/do_work()
 	set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
@@ -326,7 +332,6 @@
 	power_draw_per_use = 150
 	complexity = 16
 	spawn_flags = IC_SPAWN_RESEARCH
-
 
 /obj/item/integrated_circuit/reagent/storage/grinder/do_work(ord)
 	switch(ord)
