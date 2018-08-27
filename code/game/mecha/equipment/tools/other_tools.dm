@@ -216,12 +216,12 @@
 		if(equip_ready)
 			START_PROCESSING(SSobj, src)
 			droid_overlay = new(src.icon, icon_state = "repair_droid_a")
-			log_message("Activated.")
+			log_message("Activated.", LOG_MECHA)
 			set_ready_state(0)
 		else
 			STOP_PROCESSING(SSobj, src)
 			droid_overlay = new(src.icon, icon_state = "repair_droid")
-			log_message("Deactivated.")
+			log_message("Deactivated.", LOG_MECHA)
 			set_ready_state(1)
 		chassis.add_overlay(droid_overlay)
 		send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
@@ -304,11 +304,11 @@
 		if(equip_ready) //inactive
 			START_PROCESSING(SSobj, src)
 			set_ready_state(0)
-			log_message("Activated.")
+			log_message("Activated.", LOG_MECHA)
 		else
 			STOP_PROCESSING(SSobj, src)
 			set_ready_state(1)
-			log_message("Deactivated.")
+			log_message("Deactivated.", LOG_MECHA)
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/get_equip_info()
 	if(!chassis)
@@ -379,11 +379,11 @@
 		if(equip_ready) //inactive
 			set_ready_state(0)
 			START_PROCESSING(SSobj, src)
-			log_message("Activated.")
+			log_message("Activated.", LOG_MECHA)
 		else
 			set_ready_state(1)
 			STOP_PROCESSING(SSobj, src)
-			log_message("Deactivated.")
+			log_message("Deactivated.", LOG_MECHA)
 
 /obj/item/mecha_parts/mecha_equipment/generator/get_equip_info()
 	var/output = ..()
@@ -441,14 +441,14 @@
 		return
 	if(fuel.amount<=0)
 		STOP_PROCESSING(SSobj, src)
-		log_message("Deactivated - no fuel.")
+		log_message("Deactivated - no fuel.", LOG_MECHA)
 		set_ready_state(1)
 		return
 	var/cur_charge = chassis.get_charge()
 	if(isnull(cur_charge))
 		set_ready_state(1)
 		occupant_message("No powercell detected.")
-		log_message("Deactivated.")
+		log_message("Deactivated.", LOG_MECHA)
 		STOP_PROCESSING(SSobj, src)
 		return
 	var/use_fuel = fuel_per_cycle_idle
