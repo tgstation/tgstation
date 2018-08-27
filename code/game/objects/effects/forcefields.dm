@@ -3,7 +3,6 @@
 	name = "FORCEWALL"
 	icon_state = "m_shield"
 	anchored = TRUE
-	move_resist = INFINITY
 	opacity = 0
 	density = TRUE
 	CanAtmosPass = ATMOS_PASS_DENSITY
