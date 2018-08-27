@@ -449,8 +449,9 @@
 /datum/gas_reaction/miaster/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases
 	// As the name says it, it needs to be dry
-	if(cached_gases[/datum/gas/water_vapor]/air.total_moles() > 0.1)
-		return
+	if(/datum/gas/water_vapor in cached_gases)
+		if(cached_gases[/datum/gas/water_vapor]/air.total_moles() > 0.1)
+			return
 
 	//Replace miasma with oxygen
 	var/cleaned_air = min(cached_gases[/datum/gas/miasma][MOLES], 20 + (air.temperature - FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 70) / 20)
