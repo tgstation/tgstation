@@ -265,6 +265,8 @@
 	if(integration_cog && is_servant_of_ratvar(user))
 		to_chat(user, "<span class='brass'>There is an integration cog installed!</span>")
 
+	to_chat(user, "<span class='notice'>Alt-Click [src] to [ locked ? "unlock" : "lock"] the interface.</span>")
+
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
 /obj/machinery/power/apc/update_icon()
@@ -721,6 +723,13 @@
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
+/obj/machinery/power/apc/proc/toggle_nightshift_lights(mob/living/user)
+	if(last_nightshift_switch > world.time - 100) //~10 seconds between each toggle to prevent spamming
+		to_chat(usr, "<span class='warning'>[src]'s night lighting circuit breaker is still cycling!</span>")
+		return
+	last_nightshift_switch = world.time
+	set_nightshift(!nightshift_lights)
+
 /obj/machinery/power/apc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee" && damage_amount < 10 && (!(stat & BROKEN) || malfai))
 		return 0
@@ -914,11 +923,7 @@
 			toggle_breaker()
 			. = TRUE
 		if("toggle_nightshift")
-			if(last_nightshift_switch > world.time + 100)			//don't spam..
-				to_chat(usr, "<span class='warning'>[src]'s night lighting circuit breaker is still cycling!</span>")
-				return
-			last_nightshift_switch = world.time
-			set_nightshift(!nightshift_lights)
+			toggle_nightshift_lights()
 			. = TRUE
 		if("charge")
 			chargemode = !chargemode
