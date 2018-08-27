@@ -1011,7 +1011,7 @@
 			"key" = /obj/item/stock_parts/capacitor,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = Scanner module is secured."
+			"desc" = "Scanner module is secured."
 		),
 
 		//14
