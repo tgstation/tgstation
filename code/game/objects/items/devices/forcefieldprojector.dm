@@ -53,7 +53,7 @@
 	to_chat(user, "<span class='notice'>It is currently sustaining [LAZYLEN(current_fields)]/[max_fields] fields, and it's [percent_charge]% charged.</span>")
 
 /obj/item/forcefield_projector/Initialize(mapload)
-	..()
+	. = ..()
 	current_fields = list()
 	START_PROCESSING(SSobj, src)
 
