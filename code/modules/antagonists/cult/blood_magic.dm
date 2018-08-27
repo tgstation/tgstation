@@ -433,7 +433,7 @@
 									   "<span class='userdanger'>A feeling of warmth washes over you, rays of holy light surround your body and protect you from the flash of light!</span>")
 		else
 			to_chat(user, "<span class='cultitalic'>In an brilliant flash of red, [L] falls to the ground!</span>")
-			L.Knockdown(160)
+			L.Paralyze(160)
 			L.flash_act(1,1)
 			if(issilicon(target))
 				var/mob/living/silicon/S = L

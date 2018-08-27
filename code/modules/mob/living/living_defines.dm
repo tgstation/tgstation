@@ -22,6 +22,13 @@
 	var/staminaloss = 0		//Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
 	var/crit_threshold = HEALTH_THRESHOLD_CRIT // when the mob goes from "normal" to crit
 
+	var/mobility_flags = MOBILITY_FLAGS_DEFAULT
+
+	var/resting = FALSE
+
+	var/lying = 0			//number of degrees. DO NOT USE THIS IN CHECKS. CHECK FOR MOBILITY FLAGS INSTEAD!!
+	var/lying_prev = 0		//last value of lying on update_mobility
+
 	var/confused = 0	//Makes the mob move in random directions.
 
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for

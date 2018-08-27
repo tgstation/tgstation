@@ -18,7 +18,7 @@
 				. = COMPONENT_INCOMPATIBLE
 				CRASH("Redirect components must be given instanced callbacks, not proc paths.")
 		_signals[COMSIG_TURF_CHANGE] = CALLBACK(src, .proc/turf_change)
-	
+
 	signals = _signals
 
 /datum/component/redirect/RegisterWithParent()

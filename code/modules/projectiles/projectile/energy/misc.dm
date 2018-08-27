@@ -11,5 +11,5 @@
 	icon_state = "toxin"
 	damage = 5
 	damage_type = TOX
-	knockdown = 100
+	paralyze = 100
 	range = 7

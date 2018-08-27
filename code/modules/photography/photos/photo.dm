@@ -88,6 +88,6 @@
 
 	var/n_name = copytext(sanitize(input(usr, "What would you like to label the photo?", "Photo Labelling", null)  as text), 1, MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
-	if((loc == usr || loc.loc && loc.loc == usr) && usr.stat == CONSCIOUS && usr.canmove && !usr.restrained())
+	if((loc == usr || loc.loc && loc.loc == usr) && usr.stat == CONSCIOUS && !usr.incapacitated())
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)

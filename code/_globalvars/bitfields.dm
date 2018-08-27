@@ -167,4 +167,12 @@ GLOBAL_LIST_INIT(bitfields, list(
 	"car_traits" = list(
 		"CAN_KIDNAP" = CAN_KIDNAP,
 		),
+	"mobility_flags" = list(
+		"MOVE" = MOBILITY_MOVE,
+		"STAND" = MOBILITY_STAND,
+		"PICKUP" = MOBILITY_PICKUP,
+		"USE" = MOBILITY_USE,
+		"UI" = MOBILITY_UI,
+		"STORAGE" = MOBILITY_STORAGE
+		)
 	))

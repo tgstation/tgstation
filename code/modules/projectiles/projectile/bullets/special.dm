@@ -2,7 +2,7 @@
 
 /obj/item/projectile/bullet/honker
 	damage = 0
-	knockdown = 60
+	paralyze = 60
 	forcedodge = TRUE
 	nodamage = TRUE
 	hitsound = 'sound/items/bikehorn.ogg'

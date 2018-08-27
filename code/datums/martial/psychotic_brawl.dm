@@ -57,7 +57,7 @@
 			playsound(get_turf(D), 'sound/effects/meteorimpact.ogg', 25, 1, -1)
 			var/throwtarget = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
 			D.throw_at(throwtarget, 4, 2, A)//So stuff gets tossed around at the same time.
-			D.Knockdown(60)
+			D.Paralyze(60)
 		if(7,8)
 			basic_hit(A,D)
 

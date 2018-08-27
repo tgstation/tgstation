@@ -265,7 +265,7 @@
 		cooldown = COOLDOWN_STUN
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.Knockdown(60 * power_multiplier)
+			L.Paralyze(60 * power_multiplier)
 
 	//SLEEP
 	else if((findtext(message, sleep_words)))
@@ -484,11 +484,8 @@
 		cooldown = COOLDOWN_DAMAGE //because stun removal
 		for(var/V in listeners)
 			var/mob/living/L = V
-			if(L.resting)
-				L.lay_down() //aka get up
-			L.SetStun(0)
-			L.SetKnockdown(0)
-			L.SetUnconscious(0) //i said get up i don't care if you're being tased
+			L.set_resting(FALSE)
+			L.SetAllImmobility(0)
 
 	//SIT
 	else if((findtext(message, sit_words)))

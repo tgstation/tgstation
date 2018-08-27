@@ -47,7 +47,7 @@
 		HM.on_move(src, NewLoc)
 
 	if(shoes)
-		if(!lying && !buckled)
+		if(mobility_flags & MOBILITY_STAND)
 			if(loc == NewLoc)
 				if(!has_gravity(loc))
 					return

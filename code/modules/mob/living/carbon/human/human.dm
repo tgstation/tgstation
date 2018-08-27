@@ -488,7 +488,7 @@
 							to_chat(usr, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
 
 /mob/living/carbon/human/proc/canUseHUD()
-	return !(src.stat || IsKnockdown() || IsStun() || src.restrained())
+	return (mobility_flags & MOBILITY_USE)
 
 /mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, var/penetrate_thick = 0)
 	. = 1 // Default to returning true.
@@ -723,7 +723,7 @@
 	cut_overlay(MA)
 
 /mob/living/carbon/human/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
-	if(incapacitated() || lying )
+	if(!(mobility_flags & MOBILITY_UI))
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
 	if(!Adjacent(M) && (M.loc != src))
@@ -832,7 +832,7 @@
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
 							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
 		if(stun)
-			Knockdown(200)
+			Paralyze(200)
 		return 1
 	..()
 

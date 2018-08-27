@@ -140,9 +140,9 @@
 	var/fall_chance = 1
 	if(owner.m_intent == MOVE_INTENT_RUN)
 		fall_chance += 2
-	if(prob(fall_chance) && !owner.lying && !owner.buckled)
+	if(prob(fall_chance) && (owner.mobility_flags & MOBILITY_STAND))
 		to_chat(owner, "<span class='warning'>Your leg gives out!</span>")
-		owner.Knockdown(35)
+		owner.Paralyze(35)
 
 	else if(owner.get_active_held_item())
 		var/drop_chance = 1
@@ -167,7 +167,7 @@
 	if(prob(7))
 		switch(rand(1,5))
 			if(1)
-				if(owner.canmove && !isspaceturf(owner.loc))
+				if((owner.mobility_flags & MOBILITY_MOVE) && !isspaceturf(owner.loc))
 					to_chat(owner, "<span class='warning'>Your leg spasms!</span>")
 					step(owner, pick(GLOB.cardinals))
 			if(2)

@@ -7,6 +7,8 @@
 		H.SetUnconscious(0)
 		H.SetStun(0)
 		H.SetKnockdown(0)
+		H.SetImmobilized(0)
+		H.SetParalyzed(0)
 		H.adjustStaminaLoss(-75)
 		H.stuttering = 0
 		H.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"), forced = "ninjaboost")
