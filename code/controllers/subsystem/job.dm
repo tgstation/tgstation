@@ -559,7 +559,7 @@ SUBSYSTEM_DEF(job)
 		SendToAtom(M, pick(latejoin_trackers), buckle)
 	else
 		//bad mojo
-		var/area/shuttle/arrival/A = locate() in GLOB.sortedAreas
+		var/area/shuttle/arrival/A = GLOB.areas_by_type[/area/shuttle/arrival]
 		if(A)
 			//first check if we can find a chair
 			var/obj/structure/chair/C = locate() in A
