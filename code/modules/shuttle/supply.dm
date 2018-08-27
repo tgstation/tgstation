@@ -6,7 +6,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/item/disk/nuclear,
 		/obj/machinery/nuclearbomb,
 		/obj/item/beacon,
-		/obj/singularity,
+		/obj/singularity/narsie,
+		/obj/singularity/wizard,
 		/obj/machinery/teleport/station,
 		/obj/machinery/teleport/hub,
 		/obj/machinery/quantumpad,
@@ -22,7 +23,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/item/projectile/beam/wormhole,
 		/obj/effect/portal,
 		/obj/item/shared_storage,
-		/obj/structure/extraction_point
+		/obj/structure/extraction_point,
+		/obj/machinery/syndicatebomb
 	)))
 
 /obj/docking_port/mobile/supply
@@ -37,9 +39,9 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	height = 7
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
 
-	// When TRUE, these vars allow exporting emagged/contraband items, and add some special interactions to existing exports.
-	var/contraband = FALSE
-	var/emagged = FALSE
+
+	//Export categories for this run, this is set by console sending the shuttle.
+	var/export_categories = EXPORT_CARGO
 
 /obj/docking_port/mobile/supply/register()
 	. = ..()
@@ -60,7 +62,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 					return FALSE
 	return TRUE
 
-/obj/docking_port/mobile/supply/request()
+/obj/docking_port/mobile/supply/request(obj/docking_port/stationary/S)
 	if(mode != SHUTTLE_IDLE)
 		return 2
 	return ..()
@@ -116,7 +118,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	var/msg = ""
 	var/matched_bounty = FALSE
-	var/sold_atoms = ""
+
+	var/datum/export_report/ex = new
 
 	for(var/place in shuttle_areas)
 		var/area/shuttle/shuttle_area = place
@@ -126,23 +129,21 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			if(bounty_ship_item_and_contents(AM, dry_run = FALSE))
 				matched_bounty = TRUE
 			if(!AM.anchored || istype(AM, /obj/mecha))
-				sold_atoms += export_item_and_contents(AM, contraband, emagged, dry_run = FALSE)
+				export_item_and_contents(AM, export_categories , dry_run = FALSE, external_report = ex)
 
-	if(sold_atoms)
-		sold_atoms += "."
+	if(ex.exported_atoms)
+		ex.exported_atoms += "." //ugh
 
 	if(matched_bounty)
 		msg += "Bounty items received. An update has been sent to all bounty consoles. "
 
-	for(var/a in GLOB.exports_list)
-		var/datum/export/E = a
-		var/export_text = E.total_printout()
+	for(var/datum/export/E in ex.total_amount)
+		var/export_text = E.total_printout(ex)
 		if(!export_text)
 			continue
 
 		msg += export_text + "\n"
-		SSshuttle.points += E.total_cost
-		E.export_end()
+		SSshuttle.points += ex.total_value[E]
 
 	SSshuttle.centcom_message = msg
-	investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)
+	investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [ex.exported_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)

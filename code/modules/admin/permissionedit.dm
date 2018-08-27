@@ -44,29 +44,29 @@
 				pagecount++
 			output += "|"
 		var/limit = " LIMIT [logssperpage * page], [logssperpage]"
-		var/datum/DBQuery/query_search_admin_logs = SSdbcore.NewQuery("SELECT datetime, round_id, adminckey, operation, target, log FROM [format_table_name("admin_log")][search] ORDER BY datetime DESC[limit]")
+		var/datum/DBQuery/query_search_admin_logs = SSdbcore.NewQuery("SELECT datetime, round_id, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), adminckey), operation, IF(ckey IS NULL, target, byond_key), log FROM [format_table_name("admin_log")] LEFT JOIN [format_table_name("player")] ON target = ckey[search] ORDER BY datetime DESC[limit]")
 		if(!query_search_admin_logs.warn_execute())
 			qdel(query_search_admin_logs)
 			return
 		while(query_search_admin_logs.NextRow())
 			var/datetime = query_search_admin_logs.item[1]
 			var/round_id = query_search_admin_logs.item[2]
-			var/admin_ckey  = query_search_admin_logs.item[3]
+			var/admin_key  = query_search_admin_logs.item[3]
 			operation = query_search_admin_logs.item[4]
 			target = query_search_admin_logs.item[5]
 			var/log = query_search_admin_logs.item[6]
-			output += "<p style='margin:0px'><b>[datetime] | Round ID [round_id] | Admin [admin_ckey] | Operation [operation] on [target]</b><br>[log]</p><hr style='background:#000000; border:0; height:3px'>"
+			output += "<p style='margin:0px'><b>[datetime] | Round ID [round_id] | Admin [admin_key] | Operation [operation] on [target]</b><br>[log]</p><hr style='background:#000000; border:0; height:3px'>"
 		qdel(query_search_admin_logs)
 	if(action == 2)
 		output += "<h3>Admin ckeys with invalid ranks</h3>"
-		var/datum/DBQuery/query_check_admin_errors = SSdbcore.NewQuery("SELECT ckey, [format_table_name("admin")].rank FROM [format_table_name("admin")] LEFT JOIN [format_table_name("admin_ranks")] ON [format_table_name("admin_ranks")].rank = [format_table_name("admin")].rank WHERE [format_table_name("admin_ranks")].rank IS NULL")
+		var/datum/DBQuery/query_check_admin_errors = SSdbcore.NewQuery("SELECT IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("admin")].ckey), ckey), [format_table_name("admin")].rank FROM [format_table_name("admin")] LEFT JOIN [format_table_name("admin_ranks")] ON [format_table_name("admin_ranks")].rank = [format_table_name("admin")].rank WHERE [format_table_name("admin_ranks")].rank IS NULL")
 		if(!query_check_admin_errors.warn_execute())
 			qdel(query_check_admin_errors)
 			return
 		while(query_check_admin_errors.NextRow())
-			var/admin_ckey = query_check_admin_errors.item[1]
+			var/admin_key = query_check_admin_errors.item[1]
 			var/admin_rank = query_check_admin_errors.item[2]
-			output += "[admin_ckey] has non-existent rank [admin_rank] | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightschange=[admin_ckey]'>\[Change Rank\]</a> | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightsremove=[admin_ckey]'>\[Remove\]</a>"
+			output += "[admin_key] has non-existent rank [admin_rank] | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightschange=[admin_key]'>\[Change Rank\]</a> | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightsremove=[admin_key]'>\[Remove\]</a>"
 			output += "<hr style='background:#000000; border:0; height:1px'>"
 		qdel(query_check_admin_errors)
 		output += "<h3>Unused ranks</h3>"
@@ -104,16 +104,18 @@
 				if (!D)
 					continue
 			var/deadminlink = ""
+			if(D.owner)
+				adm_ckey = D.owner.key
 			if (D.deadmined)
-				deadminlink = " <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=activate;ckey=[adm_ckey]'>\[RA\]</a>"
+				deadminlink = " <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=activate;key=[adm_ckey]'>\[RA\]</a>"
 			else
-				deadminlink = " <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=deactivate;ckey=[adm_ckey]'>\[DA\]</a>"
+				deadminlink = " <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=deactivate;key=[adm_ckey]'>\[DA\]</a>"
 			output += "<tr>"
-			output += "<td style='text-align:center;'>[adm_ckey]<br>[deadminlink]<a class='small' href='?src=[REF(src)];[HrefToken()];editrights=remove;ckey=[adm_ckey]'>\[-\]</a><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=sync;ckey=[adm_ckey]'>\[SYNC TGDB\]</a></td>"
-			output += "<td><a href='?src=[REF(src)];[HrefToken()];editrights=rank;ckey=[adm_ckey]'>[D.rank.name]</a></td>"
-			output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;ckey=[adm_ckey]'>[rights2text(D.rank.include_rights," ")]</a></td>"
-			output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;ckey=[adm_ckey]'>[rights2text(D.rank.exclude_rights," ", "-")]</a></td>"
-			output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;ckey=[adm_ckey]'>[rights2text(D.rank.can_edit_rights," ", "*")]</a></td>"
+			output += "<td style='text-align:center;'>[adm_ckey]<br>[deadminlink]<a class='small' href='?src=[REF(src)];[HrefToken()];editrights=remove;key=[adm_ckey]'>\[-\]</a><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=sync;key=[adm_ckey]'>\[SYNC TGDB\]</a></td>"
+			output += "<td><a href='?src=[REF(src)];[HrefToken()];editrights=rank;key=[adm_ckey]'>[D.rank.name]</a></td>"
+			output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;key=[adm_ckey]'>[rights2text(D.rank.include_rights," ")]</a></td>"
+			output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;key=[adm_ckey]'>[rights2text(D.rank.exclude_rights," ", "-")]</a></td>"
+			output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;key=[adm_ckey]'>[rights2text(D.rank.can_edit_rights," ", "*")]</a></td>"
 			output += "</tr>"
 		output += "</table></div><div id='top'><b>Search:</b> <input type='text' id='filter' value='' style='width:70%;' onkeyup='updateSearch();'></div></body>"
 	if(QDELETED(usr))
@@ -130,7 +132,8 @@
 		return
 	var/datum/asset/permissions_assets = get_asset_datum(/datum/asset/simple/permissions)
 	permissions_assets.send(src)
-	var/admin_ckey = ckey(href_list["ckey"])
+	var/admin_key = href_list["key"]
+	var/admin_ckey = ckey(admin_key)
 	var/datum/admins/D = GLOB.admin_datums[admin_ckey]
 	var/use_db
 	var/task = href_list["editrights"]
@@ -172,38 +175,39 @@
 		if(!D)
 			return
 		if((task != "sync") && !check_if_greater_rights_than_holder(D))
-			message_admins("[key_name_admin(usr)] attempted to change the rank of [admin_ckey] without sufficient rights.")
-			log_admin("[key_name(usr)] attempted to change the rank of [admin_ckey] without sufficient rights.")
+			message_admins("[key_name_admin(usr)] attempted to change the rank of [admin_key] without sufficient rights.")
+			log_admin("[key_name(usr)] attempted to change the rank of [admin_key] without sufficient rights.")
 			return
 	switch(task)
 		if("add")
-			admin_ckey = add_admin(admin_ckey, use_db)
+			admin_ckey = add_admin(admin_ckey, admin_key, use_db)
 			if(!admin_ckey)
 				return
-			change_admin_rank(admin_ckey, use_db, null, legacy_only)
+			change_admin_rank(admin_ckey, admin_key, use_db, null, legacy_only)
 		if("remove")
-			remove_admin(admin_ckey, use_db, D)
+			remove_admin(admin_ckey, admin_key, use_db, D)
 		if("rank")
-			change_admin_rank(admin_ckey, use_db, D, legacy_only)
+			change_admin_rank(admin_ckey, admin_key, use_db, D, legacy_only)
 		if("permissions")
-			change_admin_flags(admin_ckey, use_db, D, legacy_only)
+			change_admin_flags(admin_ckey, admin_key, use_db, D, legacy_only)
 		if("activate")
-			force_readmin(admin_ckey, D)
+			force_readmin(admin_key, D)
 		if("deactivate")
-			force_deadmin(admin_ckey, D)
+			force_deadmin(admin_key, D)
 		if("sync")
-			sync_lastadminrank(admin_ckey, D)
+			sync_lastadminrank(admin_ckey, admin_key, D)
 	edit_admin_permissions()
 
-/datum/admins/proc/add_admin(admin_ckey, use_db)
+/datum/admins/proc/add_admin(admin_ckey, admin_key, use_db)
 	if(admin_ckey)
 		. = admin_ckey
 	else
-		. = ckey(input("New admin's ckey","Admin ckey") as text|null)
+		admin_key = input("New admin's key","Admin key") as text|null
+		. = ckey(admin_key)
 	if(!.)
 		return FALSE
 	if(!admin_ckey && (. in GLOB.admin_datums+GLOB.deadmins))
-		to_chat(usr, "<span class='danger'>[.] is already an admin.</span>")
+		to_chat(usr, "<span class='danger'>[admin_key] is already an admin.</span>")
 		return FALSE
 	if(use_db)
 		. = sanitizeSQL(.)
@@ -214,7 +218,7 @@
 			return FALSE
 		if(query_admin_in_db.NextRow())
 			qdel(query_admin_in_db)
-			to_chat(usr, "<span class='danger'>[.] already listed in admin database. Check the Management tab if they don't appear in the list of admins.</span>")
+			to_chat(usr, "<span class='danger'>[admin_key] already listed in admin database. Check the Management tab if they don't appear in the list of admins.</span>")
 			return FALSE
 		qdel(query_admin_in_db)
 		var/datum/DBQuery/query_add_admin = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin")] (ckey, rank) VALUES ('[.]', 'NEW ADMIN')")
@@ -228,14 +232,14 @@
 			return FALSE
 		qdel(query_add_admin_log)
 
-/datum/admins/proc/remove_admin(admin_ckey, use_db, datum/admins/D)
+/datum/admins/proc/remove_admin(admin_ckey, admin_key, use_db, datum/admins/D)
 	if(alert("Are you sure you want to remove [admin_ckey]?","Confirm Removal","Do it","Cancel") == "Do it")
 		GLOB.admin_datums -= admin_ckey
 		GLOB.deadmins -= admin_ckey
 		if(D)
 			D.disassociate()
-		var/m1 = "[key_name_admin(usr)] removed [admin_ckey] from the admins list [use_db ? "permanently" : "temporarily"]"
-		var/m2 = "[key_name(usr)] removed [admin_ckey] from the admins list [use_db ? "permanently" : "temporarily"]"
+		var/m1 = "[key_name_admin(usr)] removed [admin_key] from the admins list [use_db ? "permanently" : "temporarily"]"
+		var/m2 = "[key_name(usr)] removed [admin_key] from the admins list [use_db ? "permanently" : "temporarily"]"
 		if(use_db)
 			var/datum/DBQuery/query_add_rank = SSdbcore.NewQuery("DELETE FROM [format_table_name("admin")] WHERE ckey = '[admin_ckey]'")
 			if(!query_add_rank.warn_execute())
@@ -247,25 +251,25 @@
 				qdel(query_add_rank_log)
 				return
 			qdel(query_add_rank_log)
-			sync_lastadminrank(admin_ckey)
+			sync_lastadminrank(admin_ckey, admin_key)
 		message_admins(m1)
 		log_admin(m2)
 
-/datum/admins/proc/force_readmin(admin_ckey, datum/admins/D)
+/datum/admins/proc/force_readmin(admin_key, datum/admins/D)
 	if(!D || !D.deadmined)
 		return
 	D.activate()
-	message_admins("[key_name_admin(usr)] forcefully readmined [admin_ckey]")
-	log_admin("[key_name(usr)] forcefully readmined [admin_ckey]")
+	message_admins("[key_name_admin(usr)] forcefully readmined [admin_key]")
+	log_admin("[key_name(usr)] forcefully readmined [admin_key]")
 
-/datum/admins/proc/force_deadmin(admin_ckey, datum/admins/D)
+/datum/admins/proc/force_deadmin(admin_key, datum/admins/D)
 	if(!D || D.deadmined)
 		return
-	message_admins("[key_name_admin(usr)] forcefully deadmined [admin_ckey]")
-	log_admin("[key_name(usr)] forcefully deadmined [admin_ckey]")
+	message_admins("[key_name_admin(usr)] forcefully deadmined [admin_key]")
+	log_admin("[key_name(usr)] forcefully deadmined [admin_key]")
 	D.deactivate() //after logs so the deadmined admin can see the message.
 
-/datum/admins/proc/change_admin_rank(admin_ckey, use_db, datum/admins/D, legacy_only)
+/datum/admins/proc/change_admin_rank(admin_ckey, admin_key, use_db, datum/admins/D, legacy_only)
 	var/datum/admin_rank/R
 	var/list/rank_names = list()
 	if(!use_db || (use_db && !legacy_only))
@@ -285,8 +289,8 @@
 		else
 			R = new(new_rank) //blank new admin_rank
 		GLOB.admin_ranks += R
-	var/m1 = "[key_name_admin(usr)] edited the admin rank of [admin_ckey] to [new_rank] [use_db ? "permanently" : "temporarily"]"
-	var/m2 = "[key_name(usr)] edited the admin rank of [admin_ckey] to [new_rank] [use_db ? "permanently" : "temporarily"]"
+	var/m1 = "[key_name_admin(usr)] edited the admin rank of [admin_key] to [new_rank] [use_db ? "permanently" : "temporarily"]"
+	var/m2 = "[key_name(usr)] edited the admin rank of [admin_key] to [new_rank] [use_db ? "permanently" : "temporarily"]"
 	if(use_db)
 		new_rank = sanitizeSQL(new_rank)
 		//if a player was tempminned before having a permanent change made to their rank they won't yet be in the db
@@ -296,7 +300,7 @@
 			qdel(query_admin_in_db)
 			return
 		if(!query_admin_in_db.NextRow())
-			add_admin(admin_ckey, TRUE)
+			add_admin(admin_ckey, admin_key, TRUE)
 			old_rank = "NEW ADMIN"
 		else
 			old_rank = query_admin_in_db.item[1]
@@ -339,18 +343,18 @@
 	message_admins(m1)
 	log_admin(m2)
 
-/datum/admins/proc/change_admin_flags(admin_ckey, use_db, datum/admins/D, legacy_only)
-	var/new_flags = input_bitfield(usr, "Include permission flags<br>[use_db ? "This will affect ALL admins with this rank." : "This will affect only the current admin [admin_ckey]"]", "admin_flags", D.rank.include_rights, 350, 590, allowed_edit_list = usr.client.holder.rank.can_edit_rights)
+/datum/admins/proc/change_admin_flags(admin_ckey, admin_key, use_db, datum/admins/D, legacy_only)
+	var/new_flags = input_bitfield(usr, "Include permission flags<br>[use_db ? "This will affect ALL admins with this rank." : "This will affect only the current admin [admin_key]"]", "admin_flags", D.rank.include_rights, 350, 590, allowed_edit_list = usr.client.holder.rank.can_edit_rights)
 	if(isnull(new_flags))
 		return
-	var/new_exclude_flags = input_bitfield(usr, "Exclude permission flags<br>Flags enabled here will be removed from a rank.<br>Note these take precedence over included flags.<br>[use_db ? "This will affect ALL admins with this rank." : "This will affect only the current admin [admin_ckey]"]", "admin_flags", D.rank.exclude_rights, 350, 670, "red", usr.client.holder.rank.can_edit_rights)
+	var/new_exclude_flags = input_bitfield(usr, "Exclude permission flags<br>Flags enabled here will be removed from a rank.<br>Note these take precedence over included flags.<br>[use_db ? "This will affect ALL admins with this rank." : "This will affect only the current admin [admin_key]"]", "admin_flags", D.rank.exclude_rights, 350, 670, "red", usr.client.holder.rank.can_edit_rights)
 	if(isnull(new_exclude_flags))
 		return
-	var/new_can_edit_flags = input_bitfield(usr, "Editable permission flags<br>These are the flags this rank is allowed to edit if they have access to the permissions panel.<br>They will be unable to modify admins to a rank that has a flag not included here.<br>[use_db ? "This will affect ALL admins with this rank." : "This will affect only the current admin [admin_ckey]"]", "admin_flags", D.rank.can_edit_rights, 350, 710, allowed_edit_list = usr.client.holder.rank.can_edit_rights)
+	var/new_can_edit_flags = input_bitfield(usr, "Editable permission flags<br>These are the flags this rank is allowed to edit if they have access to the permissions panel.<br>They will be unable to modify admins to a rank that has a flag not included here.<br>[use_db ? "This will affect ALL admins with this rank." : "This will affect only the current admin [admin_key]"]", "admin_flags", D.rank.can_edit_rights, 350, 710, allowed_edit_list = usr.client.holder.rank.can_edit_rights)
 	if(isnull(new_can_edit_flags))
 		return
-	var/m1 = "[key_name_admin(usr)] edited the permissions of [use_db ? " rank [D.rank.name] permanently" : "[admin_ckey] temporarily"]"
-	var/m2 = "[key_name(usr)] edited the permissions of [use_db ? " rank [D.rank.name] permanently" : "[admin_ckey] temporarily"]"
+	var/m1 = "[key_name_admin(usr)] edited the permissions of [use_db ? " rank [D.rank.name] permanently" : "[admin_key] temporarily"]"
+	var/m2 = "[key_name(usr)] edited the permissions of [use_db ? " rank [D.rank.name] permanently" : "[admin_key] temporarily"]"
 	if(use_db || legacy_only)
 		var/old_flags
 		var/old_exclude_flags
@@ -446,7 +450,7 @@
 		message_admins(m1)
 		log_admin(m2)
 
-/datum/admins/proc/sync_lastadminrank(admin_ckey, datum/admins/D)
+/datum/admins/proc/sync_lastadminrank(admin_ckey, admin_key, datum/admins/D)
 	var/sqlrank = "Player"
 	if (D)
 		sqlrank = sanitizeSQL(D.rank.name)
@@ -456,4 +460,4 @@
 		qdel(query_sync_lastadminrank)
 		return
 	qdel(query_sync_lastadminrank)
-	to_chat(usr, "<span class='admin'>Sync of [admin_ckey] successful.</span>")
+	to_chat(usr, "<span class='admin'>Sync of [admin_key] successful.</span>")

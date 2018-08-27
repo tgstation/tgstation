@@ -37,35 +37,35 @@
 /obj/machinery/sleeper{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "h" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "i" = (
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "j" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "k" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "l" = (
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	pixel_x = 28
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "m" = (
 /obj/structure/chair/comfy/shuttle{
@@ -74,7 +74,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "n" = (
 /obj/effect/spawner/structure/window/shuttle,
@@ -85,13 +85,13 @@
 	name = "Escape Shuttle Cell";
 	req_access_txt = "2"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "p" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Escape Shuttle Infirmary"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "q" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -101,13 +101,13 @@
 /area/shuttle/escape)
 "s" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "t" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "u" = (
 /obj/machinery/door/airlock/titanium{
@@ -115,23 +115,11 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"v" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"w" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "x" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "y" = (
 /obj/structure/chair/comfy/shuttle{
@@ -140,7 +128,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "z" = (
 /obj/machinery/vending/wallmed{
@@ -155,7 +143,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "B" = (
 /obj/machinery/door/airlock/titanium{
@@ -170,10 +158,6 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"C" = (
-/obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "D" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/fire,
@@ -183,25 +167,14 @@
 	},
 /obj/item/crowbar,
 /obj/item/extinguisher,
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "E" = (
 /obj/machinery/light,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"F" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/obj/item/crowbar,
-/obj/item/extinguisher,
-/turf/closed/wall/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "H" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "I" = (
@@ -209,13 +182,13 @@
 	name = "Escape Shuttle Cockpit";
 	req_access_txt = "19"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "J" = (
 /obj/machinery/computer/atmos_alert{
 	dir = 4
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "K" = (
 /obj/structure/chair/comfy/shuttle{
@@ -228,7 +201,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 24
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "M" = (
 /obj/structure/chair/comfy/shuttle{
@@ -240,25 +213,25 @@
 /obj/machinery/computer/security{
 	dir = 8
 	},
-/turf/closed/wall/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "O" = (
 /obj/machinery/computer/crew{
 	dir = 4
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "P" = (
 /obj/machinery/computer/communications{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Q" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/fire,
 /obj/item/extinguisher,
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "R" = (
 /obj/structure/chair/comfy/shuttle,
@@ -277,7 +250,10 @@
 	pixel_y = 3
 	},
 /obj/item/crowbar,
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"X" = (
+/turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -308,17 +284,17 @@ b
 b
 e
 k
-f
+X
 p
-r
-v
-v
-v
-v
-v
-r
-v
-v
+f
+M
+M
+M
+M
+M
+f
+M
+M
 D
 b
 J
@@ -329,20 +305,20 @@ b
 (3,1,1) = {"
 c
 d
-f
-f
-f
+X
+X
+X
 n
-r
-r
-r
-r
-r
-r
-r
-r
-r
 f
+f
+f
+f
+f
+f
+f
+f
+f
+r
 b
 K
 K
@@ -356,19 +332,19 @@ g
 l
 g
 n
-r
-w
-w
-w
-y
-w
-w
-w
-r
 f
+K
+K
+K
+y
+K
+K
+K
+f
+r
 H
 t
-r
+f
 R
 n
 "}
@@ -386,12 +362,12 @@ n
 z
 n
 n
-C
-r
-r
+R
+f
+f
 I
-r
-r
+f
+f
 S
 n
 "}
@@ -401,20 +377,20 @@ d
 h
 h
 n
+r
 f
-r
-v
-v
-v
+M
+M
+M
 A
-v
-v
-v
-r
+M
+M
+M
+f
 E
 b
 L
-r
+f
 R
 n
 "}
@@ -424,17 +400,17 @@ d
 i
 i
 o
-r
-r
-r
-r
-r
-r
-r
-r
-r
-r
 f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+r
 b
 M
 M
@@ -448,16 +424,16 @@ j
 m
 n
 s
-r
-w
-w
-w
-w
-w
-r
-w
-w
-F
+f
+K
+K
+K
+K
+K
+f
+K
+K
+D
 b
 N
 P

@@ -123,16 +123,6 @@
 
 /datum/component/mood/process() //Called on SSmood process
 	var/mob/living/owner = parent
-	switch(sanity)
-		if(SANITY_INSANE to SANITY_CRAZY)
-			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 3)
-			update_mood_icon()
-		if(SANITY_INSANE to SANITY_UNSTABLE)
-			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 2)
-		if(SANITY_UNSTABLE to SANITY_DISTURBED)
-			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 1)
-		if(SANITY_DISTURBED to INFINITY)
-			owner.clear_fullscreen("depression")
 
 	switch(mood_level)
 		if(1)
@@ -170,6 +160,8 @@
 			clear_event("depression")
 
 	holdmyinsanityeffect = insanity_effect
+	
+	HandleNutrition(owner)
 
 /datum/component/mood/proc/DecreaseSanity(amount, minimum = SANITY_INSANE)
 	if(sanity < minimum) //This might make KevinZ stop fucking pinging me.
@@ -200,6 +192,8 @@
 		if(the_event.type != type)
 			clear_event(category)
 		else
+			if(the_event.timeout)
+				addtimer(CALLBACK(src, .proc/clear_event, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 			return 0 //Don't have to update the event.
 	the_event = new type(src, param)
 
@@ -207,7 +201,7 @@
 	update_mood()
 
 	if(the_event.timeout)
-		addtimer(CALLBACK(src, .proc/clear_event, category), the_event.timeout)
+		addtimer(CALLBACK(src, .proc/clear_event, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /datum/component/mood/proc/clear_event(category)
 	var/datum/mood_event/event = mood_events[category]
@@ -237,6 +231,22 @@
 
 /datum/component/mood/proc/hud_click(location, control, params, mob/user)
 	print_mood(user)
+
+
+/datum/component/mood/proc/HandleNutrition(mob/living/L)
+	switch(L.nutrition)
+		if(NUTRITION_LEVEL_FULL to INFINITY)
+			add_event("nutrition", /datum/mood_event/fat)
+		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+			add_event("nutrition", /datum/mood_event/wellfed)
+		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+			add_event("nutrition", /datum/mood_event/fed)
+		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+			clear_event("nutrition")
+		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+			add_event("nutrition", /datum/mood_event/hungry)
+		if(0 to NUTRITION_LEVEL_STARVING)
+			add_event("nutrition", /datum/mood_event/starving)
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN

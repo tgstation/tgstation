@@ -11,7 +11,6 @@ SUBSYSTEM_DEF(atoms)
 	var/old_initialized
 
 	var/list/late_loaders
-	var/list/created_atoms
 
 	var/list/BadInitializeCalls = list()
 
@@ -33,13 +32,11 @@ SUBSYSTEM_DEF(atoms)
 	var/count
 	var/list/mapload_arg = list(TRUE)
 	if(atoms)
-		created_atoms = list()
 		count = atoms.len
 		for(var/I in atoms)
 			var/atom/A = I
 			if(!(A.flags_1 & INITIALIZED_1))
-				if(InitAtom(I, mapload_arg))
-					atoms -= I
+				InitAtom(I, mapload_arg)
 				CHECK_TICK
 	else
 		count = 0
@@ -60,10 +57,6 @@ SUBSYSTEM_DEF(atoms)
 			A.LateInitialize()
 		testing("Late initialized [late_loaders.len] atoms")
 		late_loaders.Cut()
-
-	if(atoms)
-		. = created_atoms + atoms
-		created_atoms = null
 
 /datum/controller/subsystem/atoms/proc/InitAtom(atom/A, list/arguments)
 	var/the_type = A.type

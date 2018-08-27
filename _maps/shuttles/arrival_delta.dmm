@@ -182,7 +182,7 @@
 	},
 /area/shuttle/arrival)
 "r" = (
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_x = -32
 	},
 /obj/item/twohanded/required/kirbyplants{
@@ -200,7 +200,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "t" = (
-/obj/machinery/ai_status_display{
+/obj/machinery/status_display/ai{
 	pixel_x = 32
 	},
 /obj/item/twohanded/required/kirbyplants{
@@ -337,7 +337,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "N" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "O" = (
@@ -353,7 +353,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "P" = (
-/obj/machinery/ai_status_display,
+/obj/machinery/status_display/ai,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "Q" = (

@@ -98,22 +98,22 @@ GLOBAL_PROTECT(Banlist)
 	return 1
 
 
-/proc/AddBan(ckey, computerid, reason, bannedby, temp, minutes, address)
+/proc/AddBan(key, computerid, reason, bannedby, temp, minutes, address)
 
 	var/bantimestamp
-
+	var/ban_ckey = ckey(key)
 	if (temp)
 		UpdateTime()
 		bantimestamp = GLOB.CMinutes + minutes
 
 	GLOB.Banlist.cd = "/base"
-	if ( GLOB.Banlist.dir.Find("[ckey][computerid]") )
+	if ( GLOB.Banlist.dir.Find("[ban_ckey][computerid]") )
 		to_chat(usr, text("<span class='danger'>Ban already exists.</span>"))
 		return 0
 	else
-		GLOB.Banlist.dir.Add("[ckey][computerid]")
-		GLOB.Banlist.cd = "/base/[ckey][computerid]"
-		WRITE_FILE(GLOB.Banlist["key"], ckey)
+		GLOB.Banlist.dir.Add("[ban_ckey][computerid]")
+		GLOB.Banlist.cd = "/base/[ban_ckey][computerid]"
+		WRITE_FILE(GLOB.Banlist["key"], ban_ckey)
 		WRITE_FILE(GLOB.Banlist["id"], computerid)
 		WRITE_FILE(GLOB.Banlist["ip"], address)
 		WRITE_FILE(GLOB.Banlist["reason"], reason)
@@ -123,9 +123,9 @@ GLOBAL_PROTECT(Banlist)
 		if (temp)
 			WRITE_FILE(GLOB.Banlist["minutes"], bantimestamp)
 		if(!temp)
-			create_message("note", ckey, bannedby, "Permanently banned - [reason]", null, null, 0, 0)
+			create_message("note", key, bannedby, "Permanently banned - [reason]", null, null, 0, 0, null, 0, 0)
 		else
-			create_message("note", ckey, bannedby, "Banned for [minutes] minutes - [reason]", null, null, 0, 0)
+			create_message("note", key, bannedby, "Banned for [minutes] minutes - [reason]", null, null, 0, 0, null, 0, 0)
 	return 1
 
 /proc/RemoveBan(foldername)

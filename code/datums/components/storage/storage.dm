@@ -552,7 +552,7 @@
 	if(real_location == I.loc)
 		return FALSE //Means the item is already in the storage item
 	if(locked)
-		if(M)
+		if(M && !stop_messages)
 			host.add_fingerprint(M)
 			to_chat(M, "<span class='warning'>[host] seems to be locked!</span>")
 		return FALSE
@@ -656,8 +656,8 @@
 			if(!user || !user.CanReach(destination) || !user.CanReach(parent))
 				return FALSE
 	var/list/taking = typecache_filter_list(contents(), typecacheof(type))
-	if(length(taking) > amount)
-		taking.Cut(amount)
+	if(taking.len > amount)
+		taking.len = amount
 	if(inserted)			//duplicated code for performance, don't bother checking retval/checking for list every item.
 		for(var/i in taking)
 			if(remove_from_storage(i, destination))

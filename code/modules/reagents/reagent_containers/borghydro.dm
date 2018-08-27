@@ -111,7 +111,7 @@ Borg Hypospray
 	var/list/injected = list()
 	for(var/datum/reagent/RG in R.reagent_list)
 		injected += RG.name
-	add_logs(user, M, "injected", src, "(CHEMICALS: [english_list(injected)])")
+	log_combat(user, M, "injected", src, "(CHEMICALS: [english_list(injected)])")
 
 /obj/item/reagent_containers/borghypo/attack_self(mob/user)
 	var/chosen_reagent = modes[input(user, "What reagent do you want to dispense?") as null|anything in reagent_ids]

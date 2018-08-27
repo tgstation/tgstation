@@ -1039,6 +1039,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Toxins Mixing Lab"
 	icon_state = "toxmix"
 
+/area/science/mixing/chamber
+	name = "Toxins Mixing Chamber"
+	icon_state = "toxmix"
+	valid_territory = FALSE
+
 /area/science/misc_lab
 	name = "Testing Lab"
 	icon_state = "toxmisc"
@@ -1090,6 +1095,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/science/research/abandoned
 	name = "Abandoned Research Lab"
 	icon_state = "medresearch"
+
+/area/science/nanite
+	name = "Nanite Lab"
+	icon_state = "toxmisc"
 
 //Storage
 

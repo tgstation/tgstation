@@ -8,6 +8,8 @@
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	attachment_holes = FALSE
+	footstep = FOOTSTEP_SAND
+	tiled_dirt = FALSE
 
 /turf/open/floor/plating/dirt/dark
 	icon_state = "greenerdirt"

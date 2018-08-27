@@ -299,10 +299,6 @@
 /turf/open/floor/plasteel/showroomfloor
 	icon_state = "showroomfloor"
 
-/turf/open/floor/plasteel/floorgrime
-	icon_state = "floorgrime"
-/turf/open/floor/plasteel/airless/floorgrime
-	icon_state = "floorgrime"
 
 /turf/open/floor/plasteel/solarpanel
 	icon_state = "solarpanel"
@@ -331,6 +327,7 @@
 
 /turf/open/floor/plasteel/grimy
 	icon_state = "grimy"
+	tiled_dirt = FALSE
 
 /turf/open/floor/plasteel/cafeteria
 	icon_state = "cafeteria"
@@ -365,6 +362,7 @@
 	icon_state = "plaque"
 	name = "commemorative plaque"
 	desc = "\"This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding."
+	tiled_dirt = FALSE
 
 /turf/open/floor/plasteel/cult/narsie_act()
 	return
@@ -390,6 +388,7 @@
 
 /turf/open/floor/plasteel/stairs
 	icon_state = "stairs"
+	tiled_dirt = FALSE
 /turf/open/floor/plasteel/stairs/left
 	icon_state = "stairs-l"
 /turf/open/floor/plasteel/stairs/medium

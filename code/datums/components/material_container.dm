@@ -27,8 +27,13 @@
 	max_amount = max(0, max_amt)
 	show_on_examine = _show_on_examine
 	disable_attackby = _disable_attackby
+
 	if(allowed_types)
-		allowed_typecache = typecacheof(allowed_types)
+		if(ispath(allowed_types) && allowed_types == /obj/item/stack)
+			allowed_typecache = GLOB.typecache_stack
+		else
+			allowed_typecache = typecacheof(allowed_types)
+
 	precondition = _precondition
 	after_insert = _after_insert
 

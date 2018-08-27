@@ -14,14 +14,34 @@
 #define INVESTIGATE_HALLUCINATIONS	"hallucinations"
 #define INVESTIGATE_RADIATION		"radiation"
 #define INVESTIGATE_EXONET			"exonet"
+#define INVESTIGATE_NANITES			"nanites"
 #define INVESTIGATE_CIRCUIT			"circuit"
 
-//Individual logging defines
-#define INDIVIDUAL_ATTACK_LOG		"Attack log"
-#define INDIVIDUAL_SAY_LOG			"Say log"
-#define INDIVIDUAL_EMOTE_LOG		"Emote log"
-#define INDIVIDUAL_OOC_LOG			"OOC log"
-#define INDIVIDUAL_OWNERSHIP_LOG	"Ownership log"
-#define INDIVIDUAL_SHOW_ALL_LOG		"All logs"
+// Logging types for log_message()
+#define LOG_ATTACK		(1 << 0)
+#define LOG_SAY			(1 << 1)
+#define LOG_WHISPER		(1 << 2)
+#define LOG_EMOTE		(1 << 3)
+#define LOG_DSAY		(1 << 4)
+#define LOG_PDA			(1 << 5)
+#define LOG_CHAT		(1 << 6)
+#define LOG_COMMENT		(1 << 7)
+#define LOG_TELECOMMS	(1 << 8)
+#define LOG_OOC			(1 << 9)
+#define LOG_ADMIN		(1 << 10)
+#define LOG_OWNERSHIP	(1 << 11)
+#define LOG_GAME		(1 << 12)
+#define LOG_ADMIN_PRIVATE (1 << 13)
+#define LOG_ASAY		(1 << 14)
+
+//Individual logging panel pages
+#define INDIVIDUAL_ATTACK_LOG		(LOG_ATTACK)
+#define INDIVIDUAL_SAY_LOG			(LOG_SAY | LOG_WHISPER | LOG_DSAY)
+#define INDIVIDUAL_EMOTE_LOG		(LOG_EMOTE)
+#define INDIVIDUAL_COMMS_LOG		(LOG_PDA | LOG_CHAT | LOG_COMMENT | LOG_TELECOMMS)
+#define INDIVIDUAL_OOC_LOG			(LOG_OOC | LOG_ADMIN)
+#define INDIVIDUAL_OWNERSHIP_LOG	(LOG_OWNERSHIP)
+#define INDIVIDUAL_SHOW_ALL_LOG		(LOG_ATTACK | LOG_SAY | LOG_WHISPER | LOG_EMOTE | LOG_DSAY | LOG_PDA | LOG_CHAT | LOG_COMMENT | LOG_TELECOMMS | LOG_OOC | LOG_ADMIN | LOG_OWNERSHIP | LOG_GAME)
+
 #define LOGSRC_CLIENT "Client"
 #define LOGSRC_MOB "Mob"

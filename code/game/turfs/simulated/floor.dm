@@ -6,6 +6,8 @@
 	icon = 'icons/turf/floors.dmi'
 	baseturfs = /turf/open/floor/plating
 
+	footstep = FOOTSTEP_FLOOR
+
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"
 	thermal_conductivity = 0.040
@@ -16,6 +18,8 @@
 	var/floor_tile = null //tile that this floor drops
 	var/list/broken_states
 	var/list/burnt_states
+
+	tiled_dirt = TRUE
 
 /turf/open/floor/Initialize(mapload)
 	if (!broken_states)

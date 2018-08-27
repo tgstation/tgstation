@@ -9,6 +9,7 @@
 	icon_state = "asteroid"
 	icon_plating = "asteroid"
 	postdig_icon_change = TRUE
+	footstep = FOOTSTEP_SAND
 	var/environment_type = "asteroid"
 	var/turf_type = /turf/open/floor/plating/asteroid //Because caves do whacky shit to revert to normal
 	var/floor_variance = 20 //probability floor has a different icon state
@@ -298,6 +299,7 @@
 	icon_state = "snow-ice"
 	icon_plating = "snow-ice"
 	environment_type = "snow_cavern"
+	footstep = FOOTSTEP_FLOOR
 
 /turf/open/floor/plating/asteroid/snow/ice/burn_tile()
 	return FALSE

@@ -178,7 +178,7 @@
 	},
 /area/shuttle/escape)
 "aq" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ar" = (
@@ -294,11 +294,11 @@
 	},
 /area/shuttle/escape)
 "aC" = (
-/obj/machinery/ai_status_display,
+/obj/machinery/status_display/ai,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "aD" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "aE" = (
@@ -646,7 +646,7 @@
 	name = "Holding Area";
 	req_access_txt = "2"
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bu" = (
 /obj/machinery/door/airlock/command/glass{
@@ -669,16 +669,16 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "bw" = (
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bx" = (
 /obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "by" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bz" = (
 /obj/item/twohanded/required/kirbyplants{
@@ -715,7 +715,7 @@
 /area/shuttle/escape)
 "bD" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/bot,
@@ -725,7 +725,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bF" = (
 /turf/open/floor/plasteel/red/corner{
@@ -774,21 +774,21 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_x = -32
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bN" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bO" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/lockbox/loyalty,
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bP" = (
 /obj/structure/table/reinforced,
@@ -826,7 +826,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bV" = (
 /obj/structure/table/reinforced,
@@ -835,7 +835,7 @@
 	name = "Station Intercom";
 	pixel_y = -26
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bW" = (
 /obj/structure/table/reinforced,
@@ -1081,12 +1081,16 @@
 	dir = 1
 	},
 /obj/machinery/light,
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "cH" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small,
 /turf/open/floor/plasteel,
+/area/shuttle/escape)
+"hB" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -1095,17 +1099,17 @@ ac
 ae
 af
 af
-ag
-ag
+hB
+hB
 af
 af
 aO
 aT
 aW
 af
-ag
-ag
-ag
+hB
+hB
+hB
 af
 aO
 af
@@ -1154,7 +1158,7 @@ aa
 (3,1,1) = {"
 ab
 ad
-ag
+hB
 ai
 ao
 ao
@@ -1175,7 +1179,7 @@ bw
 bw
 bw
 bU
-ag
+hB
 aa
 aa
 aa
@@ -1185,7 +1189,7 @@ aa
 (4,1,1) = {"
 ab
 ad
-ag
+hB
 ai
 ao
 aw
@@ -1232,7 +1236,7 @@ aD
 aX
 ao
 bo
-ag
+hB
 bx
 bw
 bN
@@ -1240,7 +1244,7 @@ bU
 af
 af
 aT
-ag
+hB
 af
 af
 "}
@@ -1278,7 +1282,7 @@ af
 (7,1,1) = {"
 ab
 ad
-ag
+hB
 ai
 ao
 ao
@@ -1297,14 +1301,14 @@ bp
 af
 af
 bt
-ag
+hB
 aT
 af
 cb
 cf
 ck
 cr
-ag
+hB
 "}
 (8,1,1) = {"
 ac
@@ -1325,7 +1329,7 @@ aw
 aw
 ao
 bo
-ag
+hB
 bz
 bF
 bP
@@ -1335,12 +1339,12 @@ cc
 cc
 cl
 cs
-ag
+hB
 "}
 (9,1,1) = {"
 ab
 ad
-ag
+hB
 ai
 ao
 ax
@@ -1366,12 +1370,12 @@ cc
 cc
 cm
 ct
-ag
+hB
 "}
 (10,1,1) = {"
 ab
 ad
-ag
+hB
 ai
 ao
 av
@@ -1397,7 +1401,7 @@ cc
 cc
 cn
 cu
-ag
+hB
 "}
 (11,1,1) = {"
 ac
@@ -1418,7 +1422,7 @@ ao
 ao
 ao
 bo
-ag
+hB
 bA
 bG
 bQ
@@ -1428,12 +1432,12 @@ cc
 cg
 cl
 cv
-ag
+hB
 "}
 (12,1,1) = {"
 ab
 ad
-ag
+hB
 ah
 ap
 aw
@@ -1459,7 +1463,7 @@ cb
 ch
 co
 cw
-ag
+hB
 "}
 (13,1,1) = {"
 ab
@@ -1519,14 +1523,14 @@ af
 af
 af
 aT
-ag
+hB
 af
 af
 "}
 (15,1,1) = {"
 ab
 ad
-ag
+hB
 ak
 as
 az
@@ -1557,7 +1561,7 @@ aa
 (16,1,1) = {"
 ab
 ad
-ag
+hB
 al
 at
 aA
@@ -1578,7 +1582,7 @@ bC
 bJ
 ai
 bZ
-ag
+hB
 aa
 aa
 aa
@@ -1621,25 +1625,25 @@ aa
 ac
 ae
 af
-ag
-ag
-ag
-ag
+hB
+hB
+hB
+hB
 af
 af
 aT
 af
-ag
-ag
-ag
-ag
-ag
+hB
+hB
+hB
+hB
+hB
 af
 af
-ag
+hB
 bL
 bL
-ag
+hB
 af
 aa
 aa

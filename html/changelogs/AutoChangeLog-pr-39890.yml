@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - code_imp: "Multiple copies of a shuttle each get their own area instances (affects APCs and air alarms)."
