@@ -15,7 +15,7 @@ Self-sustaining extracts:
 
 //Just divides into the actual item.
 /obj/item/slimecross/selfsustaining/Initialize()
-	. = ..()
+	..()
 	visible_message("<span class='warning'>The [src] shudders, and splits into four smaller extracts.</span>")
 	for(var/i = 0, i < 4, i++)
 		var/obj/item/autoslime/A = new /obj/item/autoslime(src.loc)
@@ -24,11 +24,11 @@ Self-sustaining extracts:
 		A.icon = icon
 		A.icon_state = icon_state
 		A.color = color
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /obj/item/autoslime/Initialize()
 	name = "self-sustaining " + extract.name
-	..()
+	return ..()
 
 /obj/item/autoslime/attack_self(mob/user)
 	var/reagentselect = input(user, "Choose the reagent the extract will produce.", "Self-sustaining Reaction") as null|anything in extract.activate_reagents

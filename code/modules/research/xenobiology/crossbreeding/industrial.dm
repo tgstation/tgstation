@@ -21,7 +21,7 @@ Industrial extracts:
 	return
 
 /obj/item/slimecross/industrial/Initialize()
-	..()
+	. = ..()
 	create_reagents(100)
 	START_PROCESSING(SSobj,src)
 

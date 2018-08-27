@@ -278,7 +278,7 @@ Consuming extracts:
 	var/colour = "#FFFFFF"
 
 /obj/item/slime_cookie/pyrite/Initialize()
-	..()
+	. = ..()
 	var/tastemessage = "paint remover"
 	switch(rand(1,7))
 		if(1)
