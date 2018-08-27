@@ -91,6 +91,7 @@
 	..()
 	if(holding)
 		to_chat(user, "<span class='notice'>\The [src] contains [holding]. Alt-click [src] to remove it.</span>")
+		to_chat(user, "<span class='notice'>Click [src] with another gas tank to hot swap [holding].</span>")
 
 /obj/machinery/portable_atmospherics/proc/replace_tank(mob/living/user, close_valve, obj/item/tank/new_tank)
 	if(holding)

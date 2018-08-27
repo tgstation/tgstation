@@ -789,6 +789,12 @@
 		turrets |= T
 		T.cp = src
 
+/obj/machinery/turretid/examine(mob/user)
+	..()
+	if(issilicon(user) && (!stat & BROKEN))
+		to_chat(user, "<span class='notice'>Ctrl-Click [src] to [ enabled ? "disable" : "ensable"] turrets.</span>")
+		to_chat(user, "<span class='notice'>Alt-Click [src] to set turrets to [ lethal ? "stun" : "kill"].</span>")
+
 /obj/machinery/turretid/attackby(obj/item/I, mob/user, params)
 	if(stat & BROKEN)
 		return

@@ -192,6 +192,11 @@
 	to_chat(user, "<span class='notice'>The scanner logs are cleared.</span>")
 	log = list()
 
+/obj/item/detective_scanner/examine(mob/user)
+	..()
+	if(LAZYLEN(log) && !scanning)
+		to_chat(user, "<span class='notice'>Alt-click to clear scanner logs.</span>")
+
 /obj/item/detective_scanner/proc/displayDetectiveScanResults(mob/living/user)
 	// No need for can-use checks since the action button should do proper checks
 	if(!LAZYLEN(log))
