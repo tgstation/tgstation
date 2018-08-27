@@ -346,7 +346,7 @@
 	return
 
 //Returns null on failure, TRUE if already voted, FALSE if not voted yet.
-/mob/dead/new_player/proc/poll_check_voted(pollid, text = FALSE)
+/mob/dead/new_player/proc/poll_check_voted(pollid, text = FALSE, silent = FALSE)
 	var/table = "poll_vote"
 	if (text)
 		table = "poll_textreply"
@@ -359,7 +359,8 @@
 		return
 	if(query_hasvoted.NextRow())
 		qdel(query_hasvoted)
-		to_chat(usr, "<span class='danger'>You've already replied to this poll.</span>")
+		if(!silent)
+			to_chat(usr, "<span class='danger'>You've already replied to this poll.</span>")
 		return TRUE
 	qdel(query_hasvoted)
 	return FALSE
@@ -517,7 +518,7 @@
 	if(!replytext)
 		to_chat(usr, "The text you entered was blank. Please correct the text and submit again.")
 		return
-	var/voted = poll_check_voted(pollid, TRUE)
+	var/voted = poll_check_voted(pollid, text = TRUE, silent = TRUE)
 	if(isnull(voted))
 		return
 	var/adminrank = sanitizeSQL(poll_rank())
