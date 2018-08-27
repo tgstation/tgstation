@@ -265,7 +265,10 @@
 	if(integration_cog && is_servant_of_ratvar(user))
 		to_chat(user, "<span class='brass'>There is an integration cog installed!</span>")
 
-	to_chat(user, "<span class='notice'>Alt-Click [src] to [ locked ? "unlock" : "lock"] the interface.</span>")
+	to_chat(user, "<span class='notice'>Alt-Click the APC to [ locked ? "unlock" : "lock"] the interface.</span>")
+	
+	if(issilicon(user))
+		to_chat(user, "<span class='notice'>Ctrl-Click the APC to switch the breaker [ operating ? "off" : "on"].</span>")
 
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
