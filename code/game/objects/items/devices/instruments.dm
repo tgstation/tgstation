@@ -65,14 +65,15 @@
 			to_chat(H, "<span class='warning'>You have no idea how to use this.</span>")
 
 /obj/item/instrument/process()
-	if (tune_time && song.playing)
-		for (var/mob/living/M in song.hearing_mobs)
-			M.dizziness = max(0,M.dizziness-2)
-			M.jitteriness = max(0,M.jitteriness-2)
-			M.drowsyness = max(0,M.drowsyness-1)
-			M.confused = max(M.confused-1)
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
-			tune_time--
+	if (tune_time)
+		if (song.playing)
+			for (var/mob/living/M in song.hearing_mobs)
+				M.dizziness = max(0,M.dizziness-2)
+				M.jitteriness = max(0,M.jitteriness-2)
+				M.drowsyness = max(0,M.drowsyness-1)
+				M.confused = max(M.confused-1)
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
+		tune_time--
 	else
 		if (!tune_time)
 			if (song.playing)
