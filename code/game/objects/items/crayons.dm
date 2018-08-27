@@ -568,7 +568,7 @@
 		to_chat(user, "It has [charges_left] use\s left.")
 	else
 		to_chat(user, "It is empty.")
-	to_chat(user, "<span class='notice'>Alt-Click [src] to [ is_capped ? "take the cap off" : "put the cap on"].</span>")
+	to_chat(user, "<span class='notice'>Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"].</span>")
 
 /obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)

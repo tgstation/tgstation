@@ -40,7 +40,7 @@
 
 /obj/item/camera/examine(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>Alt-Click to change its focusing, allowing you to set how big of an area it will capture.</span>")
+	to_chat(user, "<span class='notice'>Alt-click to change its focusing, allowing you to set how big of an area it will capture.</span>")
 
 /obj/item/camera/AltClick(mob/user)
 	var/desired_x = input(user, "How high do you want the camera to shoot, between [picture_size_x_min] and [picture_size_x_max]?", "Zoom", picture_size_x) as num

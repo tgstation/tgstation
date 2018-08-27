@@ -41,7 +41,7 @@
 /obj/machinery/microwave/examine(mob/user)
 	..()
 	if(!operating)
-		to_chat(user, "<span class='notice'>Alt-Click [src] to turn it on.</span>")
+		to_chat(user, "<span class='notice'>Alt-click [src] to turn it on.</span>")
 
 /*******************
 *   Item Adding

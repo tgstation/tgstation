@@ -84,7 +84,7 @@
 	else if(secure && !opened)
 		to_chat(user, "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>")
 	if(user.has_trait(TRAIT_SKITTISH))
-		to_chat(user, "<span class='notice'>Ctrl+Shift-Click [src] to jump inside.</span>")
+		to_chat(user, "<span class='notice'>Ctrl-Shift-click [src] to jump inside.</span>")
 
 /obj/structure/closet/CanPass(atom/movable/mover, turf/target)
 	if(wall_mounted)
