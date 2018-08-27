@@ -358,7 +358,7 @@
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "Advanced scanner module is installed."
+			"desc" = "Scanner module is installed."
 		),
 
 		//13
@@ -366,14 +366,14 @@
 			"key" = /obj/item/stock_parts/capacitor,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Advanced scanner module is secured."
+			"desc" = "Scanner module is secured."
 		),
 
 		//14
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "Advanced capacitor is installed."
+			"desc" = "Capacitor is installed."
 		),
 
 		//15
@@ -381,7 +381,7 @@
 			"key" = /obj/item/stock_parts/cell,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Advanced capacitor is secured."
+			"desc" = "Capacitor is secured."
 		),
 
 		//16
@@ -494,19 +494,19 @@
 				user.visible_message("[user] removes the weapon control module from [parent].", "<span class='notice'>You remove the weapon control module from [parent].</span>")
 		if(11)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs scanner module to [parent].", "<span class='notice'>You install scanner module to [parent].</span>")
+				user.visible_message("[user] installs the scanner module into [parent].", "<span class='notice'>You install scanner module into [parent].</span>")
 			else
 				user.visible_message("[user] unfastens the weapon control module.", "<span class='notice'>You unfasten the weapon control module.</span>")
 		if(12)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the advanced scanner module.", "<span class='notice'>You secure the scanner module.</span>")
+				user.visible_message("[user] secures the scanner module.", "<span class='notice'>You secure the scanner module.</span>")
 			else
-				user.visible_message("[user] removes the advanced scanner module from [parent].", "<span class='notice'>You remove the scanner module from [parent].</span>")
+				user.visible_message("[user] removes the scanner module from [parent].", "<span class='notice'>You remove the scanner module from [parent].</span>")
 		if(13)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs capacitor to [parent].", "<span class='notice'>You install capacitor to [parent].</span>")
+				user.visible_message("[user] installs the capacitor into [parent].", "<span class='notice'>You install capacitor into [parent].</span>")
 			else
-				user.visible_message("[user] unfastens the  scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")
+				user.visible_message("[user] unfastens the scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")
 		if(14)
 			if(diff==FORWARD)
 				user.visible_message("[user] secures the capacitor.", "<span class='notice'>You secure the capacitor.</span>")
@@ -1003,7 +1003,7 @@
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "Phasic scanner module is installed."
+			"desc" = "Scanner module is installed."
 		),
 
 		//13
@@ -1011,14 +1011,14 @@
 			"key" = /obj/item/stock_parts/capacitor,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Phasic scanner module is secured."
+			"desc" = Scanner module is secured."
 		),
 
 		//14
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "Super capacitor is installed."
+			"desc" = "Capacitor is installed."
 		),
 
 		//15
@@ -1026,7 +1026,7 @@
 			"key" = /obj/item/stock_parts/cell,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Super capacitor is secured."
+			"desc" = "Capacitor is secured."
 		),
 
 		//16
@@ -1137,7 +1137,7 @@
 				user.visible_message("[user] removes the weapon control module from [parent].", "<span class='notice'>You remove the weapon control module from [parent].</span>")
 		if(11)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs scanner module to [parent].", "<span class='notice'>You install phasic scanner module to [parent].</span>")
+				user.visible_message("[user] installs scanner module to [parent].", "<span class='notice'>You install scanner module into [parent].</span>")
 			else
 				user.visible_message("[user] unfastens the weapon control module.", "<span class='notice'>You unfasten the weapon control module.</span>")
 		if(12)
@@ -1147,14 +1147,14 @@
 				user.visible_message("[user] removes the scanner module from [parent].", "<span class='notice'>You remove the scanner module from [parent].</span>")
 		if(13)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs capacitor to [parent].", "<span class='notice'>You install capacitor to [parent].</span>")
+				user.visible_message("[user] installs the capacitor to [parent].", "<span class='notice'>You install capacitor to [parent].</span>")
 			else
 				user.visible_message("[user] unfastens the scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")
 		if(14)
 			if(diff==FORWARD)
 				user.visible_message("[user] secures the capacitor.", "<span class='notice'>You secure the capacitor.</span>")
 			else
-				user.visible_message("[user] removes the super capacitor from [parent].", "<span class='notice'>You remove the capacitor from [parent].</span>")
+				user.visible_message("[user] removes the capacitor from [parent].", "<span class='notice'>You remove the capacitor from [parent].</span>")
 		if(15)
 			if(diff==FORWARD)
 				user.visible_message("[user] installs the power cell into [parent].", "<span class='notice'>You install the power cell into [parent].</span>")
@@ -1299,7 +1299,7 @@
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "Phasic scanner module is installed."
+			"desc" = "Scanner module is installed."
 		),
 
 		//13
@@ -1307,14 +1307,14 @@
 			"key" = /obj/item/stock_parts/capacitor,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Phasic scanner module is secured."
+			"desc" = "Scanner module is secured."
 		),
 
 		//14
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "Super capacitor is installed."
+			"desc" = "Capacitor is installed."
 		),
 
 		//15
@@ -1322,7 +1322,7 @@
 			"key" = /obj/item/stack/ore/bluespace_crystal,
 			"amount" = 1,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Super capacitor is secured."
+			"desc" = "Capacitor is secured."
 		),
 
 		//16
@@ -1473,29 +1473,29 @@
 				user.visible_message("[user] removes the weapon control module from [parent].", "<span class='notice'>You remove the weapon control module from [parent].</span>")
 		if(11)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs phasic scanner module to [parent].", "<span class='notice'>You install scanner module to [parent].</span>")
+				user.visible_message("[user] installs the scanner module to [parent].", "<span class='notice'>You install the scanner module into [parent].</span>")
 			else
 				user.visible_message("[user] unfastens the weapon control module.", "<span class='notice'>You unfasten the weapon control module.</span>")
 		if(12)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the phasic scanner module.", "<span class='notice'>You secure the scanner module.</span>")
+				user.visible_message("[user] secures the scanner module.", "<span class='notice'>You secure the scanner module.</span>")
 			else
-				user.visible_message("[user] removes the phasic scanner module from [parent].", "<span class='notice'>You remove the scanner module from [parent].</span>")
+				user.visible_message("[user] removes the scanner module from [parent].", "<span class='notice'>You remove the scanner module from [parent].</span>")
 		if(13)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs super capacitor to [parent].", "<span class='notice'>You install capacitor to [parent].</span>")
+				user.visible_message("[user] installs the capacitor to [parent].", "<span class='notice'>You install capacitor into [parent].</span>")
 			else
-				user.visible_message("[user] unfastens the phasic scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")
+				user.visible_message("[user] unfastens the scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")
 		if(14)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the super capacitor.", "<span class='notice'>You secure the capacitor.</span>")
+				user.visible_message("[user] secures the capacitor.", "<span class='notice'>You secure the capacitor.</span>")
 			else
-				user.visible_message("[user] removes the super capacitor from [parent].", "<span class='notice'>You remove the capacitor from [parent].</span>")
+				user.visible_message("[user] removes the capacitor from [parent].", "<span class='notice'>You remove the capacitor from [parent].</span>")
 		if(15)
 			if(diff==FORWARD)
 				user.visible_message("[user] installs the bluespace crystal.", "<span class='notice'>You install the bluespace crystal.</span>")
 			else
-				user.visible_message("[user] unsecures the super capacitor from [parent].", "<span class='notice'>You unsecure the capacitor from [parent].</span>")
+				user.visible_message("[user] unsecures the capacitor from [parent].", "<span class='notice'>You unsecure the capacitor from [parent].</span>")
 		if(16)
 			if(diff==FORWARD)
 				user.visible_message("[user] connects the bluespace crystal.", "<span class='notice'>You connect the bluespace crystal.</span>")
