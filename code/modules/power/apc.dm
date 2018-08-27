@@ -472,6 +472,8 @@
 			return
 
 /obj/machinery/power/apc/screwdriver_act(mob/living/user, obj/item/W)
+	if(..())
+		return TRUE
 	. = TRUE
 	if(opened)
 		if(cell)

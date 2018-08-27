@@ -105,6 +105,10 @@
 	return TRUE
 
 /obj/item/robot_suit/screwdriver_act(mob/living/user, obj/item/I) //Swaps the power cell if you're holding a new one in your other hand.
+	. = ..()
+	if(.)
+		return TRUE
+
 	if(!chest) //can't remove a cell if there's no chest to remove it from.
 		to_chat(user, "<span class='notice'>[src] has no attached torso.</span>")
 		return
