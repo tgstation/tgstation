@@ -745,6 +745,7 @@
 	var/mob/living/carbon/human/cloth_golem
 
 /obj/structure/cloth_pile/Initialize(mapload, mob/living/carbon/human/H)
+	. = ..()
 	if(!QDELETED(H) && is_species(H, /datum/species/golem/cloth))
 		H.unequip_everything()
 		H.forceMove(src)
