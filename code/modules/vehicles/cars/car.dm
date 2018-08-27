@@ -39,10 +39,18 @@
 	last_enginesound_time = world.time
 	playsound(src, engine_sound, 100, TRUE)
 
+/obj/vehicle/sealed/car/attacked_by(obj/item/I, mob/living/user)
+	if(user in occupants)
+		to_chat(user, "<span class='notice'>Your attack bounces off of the car's padded interior.</span>")
+		return
+	..()
+
 /obj/vehicle/sealed/car/attack_hand(mob/living/user)
 	. = ..()
 	if(!(car_traits & CAN_KIDNAP))
 		return
+	if(user in occupants)
+		return	
 	to_chat(user, "<span class='notice'>You start opening [src]'s trunk.</span>")
 	if(do_after(user, 30))
 		if(return_amount_of_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED))

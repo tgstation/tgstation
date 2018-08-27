@@ -84,9 +84,9 @@
 	inserted_key = null
 
 /obj/vehicle/sealed/deconstruct(disassembled = FALSE)
-	. = ..()
 	DumpMobs()
 	explosion(loc, 0, 1, 2, 3, 0)
+	. = ..()
 
 /obj/vehicle/sealed/proc/DumpMobs(randomstep = TRUE)
 	for(var/i in occupants)
