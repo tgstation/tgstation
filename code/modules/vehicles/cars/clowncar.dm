@@ -20,7 +20,6 @@
 		var/mob/living/carbon/human/H = M
 		if(H.mind && H.mind.assigned_role == "Clown") //Ensures only clowns can drive the car. (Including more at once)
 			add_control_flags(M, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_PERMISSION)
-		return
 	add_control_flags(M, VEHICLE_CONTROL_KIDNAPPED)
 
 /obj/vehicle/sealed/car/clowncar/mob_forced_enter(mob/M, silent = FALSE)
@@ -48,6 +47,12 @@
 		playsound(src, 'sound/vehicles/clowncar_crashpins.ogg', 75)
 		DumpMobs(TRUE)
 
-/obj/vehicle/sealed/car/clowncar/deconstruct(disassembled = TRUE)
+/obj/vehicle/sealed/car/clowncar/emag_act()
+	if(obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+
+
+/obj/vehicle/sealed/car/clowncar/deconstruct(disassembled = FALSE)
   . = ..()
   playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)

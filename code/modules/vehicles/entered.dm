@@ -83,7 +83,7 @@
 	user.put_in_hands(inserted_key)
 	inserted_key = null
 
-/obj/vehicle/sealed/deconstruct(disassembled = TRUE)
+/obj/vehicle/sealed/deconstruct(disassembled = FALSE)
 	. = ..()
 	DumpMobs()
 	explosion(loc, 0, 1, 2, 3, 0)
