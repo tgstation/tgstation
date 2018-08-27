@@ -36,10 +36,11 @@
 /obj/vehicle/sealed/car/clowncar/Bump(atom/movable/M)
 	..()
 	if(isliving(M))
+		if(ismegafauna(M) && !(obj_flags & EMAGGED))
+			return
 		var/mob/living/L = M
 		L.visible_message("<span class='warning'>[src] rams into [L] and sucks him up!</span>") //fuck off shezza this isn't ERP.
 		mob_forced_enter(L)
-
 		playsound(src, pick('sound/vehicles/clowncar_ram1.ogg', 'sound/vehicles/clowncar_ram2.ogg', 'sound/vehicles/clowncar_ram3.ogg'), 75)
 	else if(istype(M, /turf/closed))
 		visible_message("<span class='warning'>[src] rams into [M] and crashes!</span>")
