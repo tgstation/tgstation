@@ -15,7 +15,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 /datum/controller/subsystem/processing/quirks/Initialize(timeofday)
 	if(!quirks.len)
 		SetupQuirks()
-	..()
+	return ..()
 
 /datum/controller/subsystem/processing/quirks/proc/SetupQuirks()
 	for(var/V in subtypesof(/datum/quirk))
