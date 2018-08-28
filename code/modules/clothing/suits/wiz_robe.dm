@@ -168,7 +168,7 @@
 		to_chat(usr, "<span class='warning'>\The robe's internal magic supply is still recharging!</span>")
 		return
 
-	usr.say("Rise, my creation! Off your page into this realm!")
+	usr.say("Rise, my creation! Off your page into this realm!", forced = "stickman summoning")
 	playsound(src.loc, 'sound/magic/summon_magic.ogg', 50, 1, 1)
 	var/mob/living/M = new /mob/living/simple_animal/hostile/stickman(get_turf(usr))
 	var/list/factions = usr.faction

@@ -107,7 +107,7 @@
 		if(2)
 			owner.emote("scream")
 			owner.Jitter(5)
-			owner.say("AAAAH!!")
+			owner.say("AAAAH!!", forced = "phobia")
 			if(reason)
 				owner.pointed(reason)
 		if(3)
