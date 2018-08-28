@@ -73,7 +73,7 @@
 		explanation_text += english_list(targets)
 		explanation_text += ". Converting to your team will give you more points, whereas killing will give you the least. Syndicates don't want to stir up too many troubles."
 	else
-		explanation_text = "Nothing."
+		explanation_text = "Wait until any heads arrive. Once that happens, check your objectives again to see the updated objective. It may require around [OBJECTIVE_UPDATING_TIME] seconds to update."
 
 /datum/objective/overthrow/heads/check_completion()
 	if(!targets.len)

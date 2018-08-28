@@ -149,9 +149,9 @@
 	return team
 
 /datum/antagonist/overthrow/greet()
-	to_chat(owner.current, "<B><font size=3 color=red>You are a syndicate sleeping agent!</font> <font size=2 color=red>Your job is to stage a swift, fairly bloodless coup. You have a two-use converter you can use to convert \
-			anyone you want, even mindshielded crewmembers. You also have a special version of the Syndicate module you can use to convert the AI, too. You and the syndicate agents you wake up \
+	to_chat(owner.current, "<B><font size=3 color=red>You are a syndicate sleeping agent!</font> <font size=2 color=red>Your job is to stage a swift, fairly bloodless coup. Your team has a two-use converter that can be used to convert \
+			anyone you want, although mind shield implants need to be removed firstly for it to work. Your team also has a special version of the Syndicate module to be used to convert the AI, too. You \
 			will be able to use the special storage implant you came aboard with, which contains a random, cheap item from our special selection which will aid in your mission. \
-			Your objective is to deal with the heads, the AI and a special target who angered us for several reasons which you're not entitled to know. Converting to your team will let us \
+			Your team objective is to deal with the heads, the AI and a special target who angered us for several reasons which you're not entitled to know. Converting to your team will let us \
 			take control of the station faster, so it should be prioritized, especially over killing, which should be avoided where possible. The other Syndicate teams are NOT friends and should not \
 			be trusted.</font></B>")
