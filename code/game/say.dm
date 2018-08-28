@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return
 	if(message == "" || !message)
 		return
-	var/list/spans = get_spans()
+	spans |= get_spans()
 	if(!language)
 		language = get_default_language()
 	send_speech(message, 7, src, , spans, message_language=language)
