@@ -70,13 +70,13 @@
 	. = ..()
 	if(!proximity)
 		return
-	if (isliving(A))
-		var/mob/living/target = A
-		if (target.reagents)
-			var/inject_amount = rand(5, 10)
-			reagents.trans_to(target, inject_amount)
 	if(force > 0)
 		force -= rand(1, (force / 3) + 1) // When you whack someone with it, leaves fall off
+		if (isliving(A)) // Inject the reagents
+			var/mob/living/target = A
+			if (target.is_injectable())
+				var/inject_amount = (force / 15) * 8
+				reagents.trans_to(target, inject_amount)
 	else
 		to_chat(usr, "All the leaves have fallen off the nettle from violent whacking.")
 		qdel(src)
