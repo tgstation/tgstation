@@ -12,7 +12,6 @@
 	mix_message = "The mixture violently reacts, leaving behind a few crystalline shards."
 	required_temp = 390
 
-
 /datum/chemical_reaction/krokodil
 	name = "Krokodil"
 	id = "krokodil"

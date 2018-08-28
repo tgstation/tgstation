@@ -517,14 +517,6 @@
 				/obj/item/stack/sheet/animalhide/ashdrake = 5)
 	category = CAT_PRIMAL
 
-/datum/crafting_recipe/gold_horn
-	name = "Golden Bike Horn"
-	result = /obj/item/bikehorn/golden
-	time = 20
-	reqs = list(/obj/item/stack/sheet/mineral/bananium = 5,
-				/obj/item/bikehorn)
-	category = CAT_MISC
-
 /datum/crafting_recipe/bonedagger
 	name = "Bone Dagger"
 	result = /obj/item/kitchen/knife/combat/bone
@@ -574,6 +566,41 @@
 			/obj/item/twohanded/bonespear = 1)
 	result = /obj/structure/headpike/bone
 	category = CAT_PRIMAL
+
+/datum/crafting_recipe/food/bonebroth
+	name = "Bone Broth"
+	reqs = list(/datum/reagent/water = 10,
+				/obj/item/reagent_containers/glass/bowl/mushroom_bowl = 1,
+				/obj/item/stack/sheet/bone = 2,
+				/obj/item/reagent_containers/food/snacks/meat/steak/goliath = 1)
+	result = /obj/item/reagent_containers/food/snacks/soup/bonebroth
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/food/toadlicksoup
+	name = "Toad Lick Soup"
+	reqs = list(/datum/reagent/water = 10,
+				/obj/item/reagent_containers/glass/bowl/mushroom_bowl = 1,
+				/obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_cap = 2,
+				/obj/item/organ/liver = 1)
+	result = /obj/item/reagent_containers/food/snacks/soup/toadlicksoup
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/food/paleosalad
+	name = "Paleo Salad"
+	reqs = list(/obj/item/reagent_containers/glass/bowl/mushroom_bowl = 1,
+				/obj/item/reagent_containers/food/snacks/grown/ash_flora/cactus_fruit = 1,
+				/obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_leaf = 1,
+				/obj/item/reagent_containers/food/snacks/grown/ash_flora/shavings = 1)
+	result = /obj/item/reagent_containers/food/snacks/salad/paleosalad
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/gold_horn
+	name = "Golden Bike Horn"
+	result = /obj/item/bikehorn/golden
+	time = 20
+	reqs = list(/obj/item/stack/sheet/mineral/bananium = 5,
+				/obj/item/bikehorn)
+	category = CAT_MISC
 
 /datum/crafting_recipe/smallcarton
 	name = "Small Carton"
