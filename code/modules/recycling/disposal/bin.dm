@@ -105,8 +105,8 @@
 		return ..()
 
 /obj/machinery/disposal/proc/place_item_in_disposal(obj/item/I, mob/user)
-	if(istype(I, /obj/item/clothing/head/mob_holder))
-		var/obj/item/clothing/head/mob_holder/H = I
+	if(istype(I, /obj/item/mob_holder))
+		var/obj/item/mob_holder/H = I
 		var/mob/living/M = H.held_mob
 		H.release()
 		if(M)

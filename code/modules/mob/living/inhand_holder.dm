@@ -1,6 +1,6 @@
 //Generic system for picking up mobs.
 //Currently works for head and hands.
-/obj/item/clothing/head/mob_holder
+/obj/item/mob_holder
 	name = "bugged mob"
 	desc = "Yell at coderbrush."
 	icon = null
@@ -9,10 +9,10 @@
 	var/can_head = FALSE
 	w_class = WEIGHT_CLASS_BULKY
 	body_parts_covered = 0
-	flags_inv = 0
-	dynamic_hair_suffix = ""
+	item_flags = ABSTRACT
+	slot_flags = ITEM_SLOT_HEAD
 
-/obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/M, _worn_state, alt_worn, lh_icon, rh_icon, _can_head = FALSE)
+/obj/item/mob_holder/Initialize(mapload, mob/living/M, _worn_state, alt_worn, lh_icon, rh_icon, _can_head = FALSE)
 	. = ..()
 
 	if(M)
@@ -37,17 +37,17 @@
 	if(!can_head)
 		slot_flags = NONE
 
-/obj/item/clothing/head/mob_holder/Destroy()
+/obj/item/mob_holder/Destroy()
 	if(held_mob)
 		release()
 	return ..()
 
-/obj/item/clothing/head/mob_holder/dropped()
+/obj/item/mob_holder/dropped()
 	..()
 	if(isturf(loc))//don't release on soft-drops
 		release()
 
-/obj/item/clothing/head/mob_holder/proc/release(del_on_release = TRUE)
+/obj/item/mob_holder/proc/release(del_on_release = TRUE)
 	if(isliving(loc))
 		var/mob/living/L = loc
 		L.dropItemToGround(src)
@@ -60,14 +60,14 @@
 	if(del_on_release)
 		qdel(src)
 
-/obj/item/clothing/head/mob_holder/relaymove(mob/user)
+/obj/item/mob_holder/relaymove(mob/user)
 	release()
 
-/obj/item/clothing/head/mob_holder/container_resist()
+/obj/item/mob_holder/container_resist()
 	release()
 
 /mob/living/proc/mob_pickup(mob/living/L)
-	var/obj/item/clothing/head/mob_holder/holder = generate_mob_holder()
+	var/obj/item/mob_holder/holder = generate_mob_holder()
 	if(!holder) return
 	drop_all_held_items()
 	L.put_in_hands(holder)
@@ -75,24 +75,24 @@
 
 /mob/living/proc/generate_mob_holder()
 	..()
-	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, (istext(can_be_held) ? can_be_held : ""), 'icons/mob/animals_held.dmi', 'icons/mob/animals_held_lh.dmi', 'icons/mob/animals_held_rh.dmi')
+	var/obj/item/mob_holder/holder = new(get_turf(src), src, (istext(can_be_held) ? can_be_held : ""), 'icons/mob/animals_held.dmi', 'icons/mob/animals_held_lh.dmi', 'icons/mob/animals_held_rh.dmi')
 	return holder
 
 /mob/living/simple_animal/drone/generate_mob_holder()
-	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, "[visualAppearence]_hat", null, null, null, TRUE)
+	var/obj/item/mob_holder/holder = new(get_turf(src), src, "[visualAppearence]_hat", null, null, null, TRUE)
 	return holder
 
 /mob/living/carbon/monkey/generate_mob_holder()
-	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, "monkey", 'icons/mob/animals_held.dmi', 'icons/mob/animals_held_lh.dmi', 'icons/mob/animals_held_rh.dmi', TRUE)
+	var/obj/item/mob_holder/holder = new(get_turf(src), src, "monkey", 'icons/mob/animals_held.dmi', 'icons/mob/animals_held_lh.dmi', 'icons/mob/animals_held_rh.dmi', TRUE)
 	return holder
 
 /mob/living/simple_animal/mouse/generate_mob_holder()
-	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, (istext(can_be_held) ? can_be_held : ""), 'icons/mob/animals_held.dmi', 'icons/mob/animals_held_lh.dmi', 'icons/mob/animals_held_rh.dmi')
+	var/obj/item/mob_holder/holder = new(get_turf(src), src, (istext(can_be_held) ? can_be_held : ""), 'icons/mob/animals_held.dmi', 'icons/mob/animals_held_lh.dmi', 'icons/mob/animals_held_rh.dmi')
 	holder.w_class = 1
 	return holder
 
 /mob/living/simple_animal/hostile/lizard/generate_mob_holder()
-	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, "lizard", 'icons/mob/animals_held.dmi', 'icons/mob/animals_held_lh.dmi', 'icons/mob/animals_held_rh.dmi', TRUE)
+	var/obj/item/mob_holder/holder = new(get_turf(src), src, "lizard", 'icons/mob/animals_held.dmi', 'icons/mob/animals_held_lh.dmi', 'icons/mob/animals_held_rh.dmi', TRUE)
 	return holder
 
 /mob/living/proc/mob_try_pickup(mob/living/user)
@@ -129,17 +129,17 @@
 	..()
 
 	// I didn't define these for mobs, because you shouldn't be able to breathe out of mobs and using their loc isn't always the logical thing to do.
-/obj/item/clothing/head/mob_holder/return_air()
+/obj/item/mob_holder/return_air()
 	var/atom/location = loc
 	if(location)
 		return location.loc.return_air(args)
 
-/obj/item/clothing/head/mob_holder/assume_air(datum/gas_mixture/env)
+/obj/item/mob_holder/assume_air(datum/gas_mixture/env)
 	var/atom/location = loc
 	if(location)
 		return location.loc.assume_air(env)
 
-/obj/item/clothing/head/mob_holder/remove_air(amount)
+/obj/item/mob_holder/remove_air(amount)
 	var/atom/location = loc
 	if(location)
 		return location.loc.remove_air(amount)

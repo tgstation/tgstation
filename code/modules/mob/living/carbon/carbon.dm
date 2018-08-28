@@ -152,8 +152,8 @@
 	var/obj/item/I = src.get_active_held_item()
 	var/mob/living/throwable_mob
 
-	if(istype(I, /obj/item/clothing/head/mob_holder))
-		var/obj/item/clothing/head/mob_holder/holder = I
+	if(istype(I, /obj/item/mob_holder))
+		var/obj/item/mob_holder/holder = I
 		if(holder.held_mob)
 			throwable_mob = holder.held_mob
 			holder.release()

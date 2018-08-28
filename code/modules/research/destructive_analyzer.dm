@@ -154,6 +154,5 @@ Note: Must be placed within 3 tiles of the R&D Console
 	return TRUE
 
 /obj/machinery/rnd/destructive_analyzer/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/clothing/head/mob_holder))
-		to_chat(user, "<span class='warning'>The [src.name] smartly refuses \the [I].</span>")
+	if(I.item_flags & (NODROP | ABSTRACT))
 		return
