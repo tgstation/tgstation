@@ -240,7 +240,7 @@
 /datum/team/cult/proc/check_size()
 	if(cult_ascendent)
 		return
-	var/alive = 1
+	var/alive = 0
 	var/cultplayers = 0
 	for(var/I in GLOB.player_list)
 		var/mob/M = I
