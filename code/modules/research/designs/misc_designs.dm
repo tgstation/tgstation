@@ -157,16 +157,6 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
-/datum/design/forcefield_projector
-	name = "Forcefield Projector"
-	desc = "A device which can project temporary forcefields to seal off an area."
-	id = "forcefield_projector"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2500, MAT_GLASS = 1000)
-	build_path = /obj/item/forcefield_projector
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
 /datum/design/sci_goggles
 	name = "Science Goggles"
 	desc = "Goggles fitted with a portable analyzer capable of determining the research worth of an item or components of a machine."
@@ -176,86 +166,6 @@
 	build_path = /obj/item/clothing/glasses/science
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/handdrill
-	name = "Hand Drill"
-	desc = "A small electric hand drill with an interchangeable screwdriver and bolt bit"
-	id = "handdrill"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3500, MAT_SILVER = 1500, MAT_TITANIUM = 2500)
-	build_path = /obj/item/screwdriver/power
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/jawsoflife
-	name = "Jaws of Life"
-	desc = "A small, compact Jaws of Life with an interchangeable pry jaws and cutting jaws"
-	id = "jawsoflife" // added one more requirment since the Jaws of Life are a bit OP
-	build_path = /obj/item/crowbar/power
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4500, MAT_SILVER = 2500, MAT_TITANIUM = 3500)
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/alienwrench
-	name = "Alien Wrench"
-	desc = "An advanced wrench obtained through Abductor technology."
-	id = "alien_wrench"
-	build_path = /obj/item/wrench/abductor
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/alienwirecutters
-	name = "Alien Wirecutters"
-	desc = "Advanced wirecutters obtained through Abductor technology."
-	id = "alien_wirecutters"
-	build_path = /obj/item/wirecutters/abductor
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/alienscrewdriver
-	name = "Alien Screwdriver"
-	desc = "An advanced screwdriver obtained through Abductor technology."
-	id = "alien_screwdriver"
-	build_path = /obj/item/screwdriver/abductor
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/aliencrowbar
-	name = "Alien Crowbar"
-	desc = "An advanced crowbar obtained through Abductor technology."
-	id = "alien_crowbar"
-	build_path = /obj/item/crowbar/abductor
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/alienwelder
-	name = "Alien Welding Tool"
-	desc = "An advanced welding tool obtained through Abductor technology."
-	id = "alien_welder"
-	build_path = /obj/item/weldingtool/abductor
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 5000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/alienmultitool
-	name = "Alien Multitool"
-	desc = "An advanced multitool obtained through Abductor technology."
-	id = "alien_multitool"
-	build_path = /obj/item/multitool/abductor
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 5000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/diskplantgene
 	name = "Plant Data Disk"
@@ -268,7 +178,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/roastingstick
-	name = "Advanced roasting stick"
+	name = "Advanced Roasting Stick"
 	desc = "A roasting stick for cooking sausages in exotic ovens."
 	id = "roastingstick"
 	build_type = PROTOLATHE
@@ -278,7 +188,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/locator
-	name = "Bluespace locator"
+	name = "Bluespace Locator"
 	desc = "Used to track portable teleportation beacons and targets with embedded tracking implants."
 	id = "locator"
 	build_type = PROTOLATHE
@@ -385,6 +295,96 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/handdrill
+	name = "Hand Drill"
+	desc = "A small electric hand drill with an interchangeable screwdriver and bolt bit"
+	id = "handdrill"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3500, MAT_SILVER = 1500, MAT_TITANIUM = 2500)
+	build_path = /obj/item/screwdriver/power
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/jawsoflife
+	name = "Jaws of Life"
+	desc = "A small, compact Jaws of Life with an interchangeable pry jaws and cutting jaws"
+	id = "jawsoflife" // added one more requirment since the Jaws of Life are a bit OP
+	build_path = /obj/item/crowbar/power
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4500, MAT_SILVER = 2500, MAT_TITANIUM = 3500)
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/alienwrench
+	name = "Alien Wrench"
+	desc = "An advanced wrench obtained through Abductor technology."
+	id = "alien_wrench"
+	build_path = /obj/item/wrench/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/alienwirecutters
+	name = "Alien Wirecutters"
+	desc = "Advanced wirecutters obtained through Abductor technology."
+	id = "alien_wirecutters"
+	build_path = /obj/item/wirecutters/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/alienscrewdriver
+	name = "Alien Screwdriver"
+	desc = "An advanced screwdriver obtained through Abductor technology."
+	id = "alien_screwdriver"
+	build_path = /obj/item/screwdriver/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/aliencrowbar
+	name = "Alien Crowbar"
+	desc = "An advanced crowbar obtained through Abductor technology."
+	id = "alien_crowbar"
+	build_path = /obj/item/crowbar/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/alienwelder
+	name = "Alien Welding Tool"
+	desc = "An advanced welding tool obtained through Abductor technology."
+	id = "alien_welder"
+	build_path = /obj/item/weldingtool/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 5000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/alienmultitool
+	name = "Alien Multitool"
+	desc = "An advanced multitool obtained through Abductor technology."
+	id = "alien_multitool"
+	build_path = /obj/item/multitool/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 5000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/forcefield_projector
+	name = "Forcefield Projector"
+	desc = "A device which can project temporary forcefields to seal off an area."
+	id = "forcefield_projector"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2500, MAT_GLASS = 1000)
+	build_path = /obj/item/forcefield_projector
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
 /////////////////////////////////////////
 ////////////Armour//////////////
 /////////////////////////////////////////
@@ -398,3 +398,57 @@
 	build_path = /obj/item/reactive_armour_shell
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/////////////////////////////////////////
+///////////Misc Security/////////////////
+/////////////////////////////////////////
+
+/datum/design/handcuffs
+	name = "Handcuffs"
+	desc = "Standard metal handcuffs."
+	id = "handcuffs"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500)
+	build_path = /obj/item/restraints/handcuffs
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/seclite
+	name = "Seclite"
+	desc = "A robust flashlight used by security."
+	id = "seclite"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2500)
+	build_path = /obj/item/flashlight/seclite
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/detective_scanner
+	name = "Forensic Scanner"
+	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
+	id = "detective_scanner"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_GOLD = 2500, MAT_SILVER = 2000)
+	build_path = /obj/item/detective_scanner
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/pepperspray
+	name = "Pepper Spray"
+	desc = "Manufactured by UhangInc, used to blind and down an opponent quickly. Printed pepper sprays do not contain reagents."
+	id = "pepperspray"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000)
+	build_path = /obj/item/reagent_containers/spray/pepper/empty
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/bola_energy
+	name = "Energy Bola"
+	desc = "A specialized hard-light bola designed to ensnare fleeing criminals and aid in arrests."
+	id = "bola_energy"
+	build_type = PROTOLATHE
+	materials = list(MAT_SILVER = 500, MAT_PLASMA = 1000, MAT_TITANIUM = 1000)
+	build_path = /obj/item/restraints/legcuffs/bola/energy
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
