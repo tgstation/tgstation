@@ -32,3 +32,6 @@
 #define HIJACK_NEUTRAL 0 //Does not stop hijacking but itself won't hijack
 #define HIJACK_HIJACKER 1 //Needs to be present for shuttle to be hijacked
 #define HIJACK_PREVENT 2 //Prevents hijacking same way as non-antags
+
+//Overthrow time to update heads obj
+#define OBJECTIVE_UPDATING_TIME 300

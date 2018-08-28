@@ -1,5 +1,3 @@
-#define OBJECTIVE_UPDATING_TIME 300
-
 /datum/team/overthrow
 	name = "overthrow" // The team name is set on creation by the leader.
 	member_name = "syndicate agent"
