@@ -403,16 +403,6 @@
 ///////////Misc Security/////////////////
 /////////////////////////////////////////
 
-/datum/design/handcuffs
-	name = "Handcuffs"
-	desc = "Standard metal handcuffs."
-	id = "handcuffs"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500)
-	build_path = /obj/item/restraints/handcuffs
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
 /datum/design/seclite
 	name = "Seclite"
 	desc = "A robust flashlight used by security."
