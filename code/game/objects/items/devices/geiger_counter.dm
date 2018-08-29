@@ -208,10 +208,7 @@
 	if (mobhook && mobhook.parent != user)
 		QDEL_NULL(mobhook)
 	if (!mobhook)
-		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_RAD_ACT = CALLBACK(src, .proc/redirect_rad_act)))
-
-/obj/item/geiger_counter/cyborg/proc/redirect_rad_act(datum/source, amount)
-	rad_act(amount)
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_RAD_ACT = CALLBACK(src, /atom.proc/rad_act)))
 
 /obj/item/geiger_counter/cyborg/dropped()
 	. = ..()

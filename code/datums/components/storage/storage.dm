@@ -145,7 +145,7 @@
 	var/datum/component/storage/concrete/master = master()
 	return master? master.real_location() : null
 
-/datum/component/storage/proc/canreach_react(datum/source, list/next)
+/datum/component/storage/proc/canreach_react(list/next)
 	var/datum/component/storage/concrete/master = master()
 	if(!master)
 		return
@@ -155,14 +155,14 @@
 		var/datum/component/storage/slave = i
 		next += slave.parent
 
-/datum/component/storage/proc/attack_self(datum/source, mob/M)
+/datum/component/storage/proc/attack_self(mob/M)
 	if(locked)
 		to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")
 		return FALSE
 	if((M.get_active_held_item() == parent) && allow_quick_empty)
 		quick_empty(M)
 
-/datum/component/storage/proc/preattack_intercept(datum/source, obj/O, mob/M, params)
+/datum/component/storage/proc/preattack_intercept(obj/O, mob/M, params)
 	if(!isitem(O) || !click_gather || SEND_SIGNAL(O, COMSIG_CONTAINS_STORAGE))
 		return FALSE
 	. = COMPONENT_NO_ATTACK
@@ -275,7 +275,7 @@
 		remove_from_storage(I, _target)
 	return TRUE
 
-/datum/component/storage/proc/set_locked(datum/source, new_state)
+/datum/component/storage/proc/set_locked(new_state)
 	locked = new_state
 	if(locked)
 		close_all()
@@ -383,11 +383,11 @@
 		close(M)
 		. = TRUE //returns TRUE if any mobs actually got a close(M) call
 
-/datum/component/storage/proc/emp_act(datum/source, severity)
+/datum/component/storage/proc/emp_act(severity)
 	if(emp_shielded)
 		return
 	var/datum/component/storage/concrete/master = master()
-	master.emp_act(source, severity)
+	master.emp_act(severity)
 
 //This proc draws out the inventory and places the items on it. tx and ty are the upper left tile and mx, my are the bottm right.
 //The numbers are calculated from the bottom-left The bottom-left slot being 1,1.
@@ -417,7 +417,7 @@
 		return FALSE
 	return master._removal_reset(thing)
 
-/datum/component/storage/proc/_remove_and_refresh(datum/source, atom/movable/thing)
+/datum/component/storage/proc/_remove_and_refresh(atom/movable/thing)
 	_removal_reset(thing)
 	refresh_mob_views()
 
@@ -459,7 +459,7 @@
 	return FALSE
 
 //This proc is called when you want to place an item into the storage item.
-/datum/component/storage/proc/attackby(datum/source, obj/item/I, mob/M, params)
+/datum/component/storage/proc/attackby(obj/item/I, mob/M, params)
 	if(istype(I, /obj/item/hand_labeler))
 		var/obj/item/hand_labeler/labeler = I
 		if(labeler.mode)
@@ -488,13 +488,13 @@
 	return real_location.contents.Copy()
 
 //Abuses the fact that lists are just references, or something like that.
-/datum/component/storage/proc/signal_return_inv(datum/source, list/interface, recursive = TRUE)
+/datum/component/storage/proc/signal_return_inv(list/interface, recursive = TRUE)
 	if(!islist(interface))
 		return FALSE
 	interface |= return_inv(recursive)
 	return TRUE
 
-/datum/component/storage/proc/mousedrop_onto(datum/source, atom/over_object, mob/M)
+/datum/component/storage/proc/mousedrop_onto(atom/over_object, mob/M)
 	set waitfor = FALSE
 	. = COMPONENT_NO_MOUSEDROP
 	var/atom/A = parent
@@ -531,7 +531,7 @@
 	if(force || M.CanReach(parent, view_only = TRUE))
 		show_to(M)
 
-/datum/component/storage/proc/mousedrop_receive(datum/source, atom/movable/O, mob/M)
+/datum/component/storage/proc/mousedrop_receive(atom/movable/O, mob/M)
 	if(isitem(O))
 		var/obj/item/I = O
 		if(iscarbon(M) || isdrone(M))
@@ -630,18 +630,18 @@
 		var/obj/O = parent
 		O.update_icon()
 
-/datum/component/storage/proc/signal_insertion_attempt(datum/source, obj/item/I, mob/M, silent = FALSE, force = FALSE)
+/datum/component/storage/proc/signal_insertion_attempt(obj/item/I, mob/M, silent = FALSE, force = FALSE)
 	if((!force && !can_be_inserted(I, TRUE, M)) || (I == parent))
 		return FALSE
 	return handle_item_insertion(I, silent, M)
 
-/datum/component/storage/proc/signal_can_insert(datum/source, obj/item/I, mob/M, silent = FALSE)
+/datum/component/storage/proc/signal_can_insert(obj/item/I, mob/M, silent = FALSE)
 	return can_be_inserted(I, silent, M)
 
-/datum/component/storage/proc/show_to_ghost(datum/source, mob/dead/observer/M)
+/datum/component/storage/proc/show_to_ghost(mob/dead/observer/M)
 	return user_show_to_mob(M, TRUE)
 
-/datum/component/storage/proc/signal_show_attempt(datum/source, mob/showto, force = FALSE)
+/datum/component/storage/proc/signal_show_attempt(mob/showto, force = FALSE)
 	return user_show_to_mob(showto, force)
 
 /datum/component/storage/proc/on_check()
@@ -650,7 +650,7 @@
 /datum/component/storage/proc/check_locked()
 	return locked
 
-/datum/component/storage/proc/signal_take_type(datum/source, type, atom/destination, amount = INFINITY, check_adjacent = FALSE, force = FALSE, mob/user, list/inserted)
+/datum/component/storage/proc/signal_take_type(type, atom/destination, amount = INFINITY, check_adjacent = FALSE, force = FALSE, mob/user, list/inserted)
 	if(!force)
 		if(check_adjacent)
 			if(!user || !user.CanReach(destination) || !user.CanReach(parent))
@@ -671,7 +671,7 @@
 	var/atom/real_location = real_location()
 	return max(0, max_items - real_location.contents.len)
 
-/datum/component/storage/proc/signal_fill_type(datum/source, type, amount = 20, force = FALSE)
+/datum/component/storage/proc/signal_fill_type(type, amount = 20, force = FALSE)
 	var/atom/real_location = real_location()
 	if(!force)
 		amount = min(remaining_space_items(), amount)
@@ -680,7 +680,7 @@
 		CHECK_TICK
 	return TRUE
 
-/datum/component/storage/proc/on_attack_hand(datum/source, mob/user)
+/datum/component/storage/proc/on_attack_hand(mob/user)
 	var/atom/A = parent
 	if(!attack_hand_interact)
 		return
@@ -713,25 +713,25 @@
 		else
 			show_to(user)
 
-/datum/component/storage/proc/signal_on_pickup(datum/source, mob/user)
+/datum/component/storage/proc/signal_on_pickup(mob/user)
 	var/atom/A = parent
 	update_actions()
 	for(var/mob/M in range(1, A))
 		if(M.active_storage == src)
 			close(M)
 
-/datum/component/storage/proc/signal_take_obj(datum/source, atom/movable/AM, new_loc, force = FALSE)
+/datum/component/storage/proc/signal_take_obj(atom/movable/AM, new_loc, force = FALSE)
 	if(!(AM in real_location()))
 		return FALSE
 	return remove_from_storage(AM, new_loc)
 
-/datum/component/storage/proc/signal_quick_empty(datum/source, atom/loctarget)
+/datum/component/storage/proc/signal_quick_empty(atom/loctarget)
 	return do_quick_empty(loctarget)
 
-/datum/component/storage/proc/signal_hide_attempt(datum/source, mob/target)
+/datum/component/storage/proc/signal_hide_attempt(mob/target)
 	return hide_from(target)
 
-/datum/component/storage/proc/on_alt_click(datum/source, mob/user)
+/datum/component/storage/proc/on_alt_click(mob/user)
 	if(!isliving(user) || user.incapacitated() || !quickdraw || locked || !user.CanReach(parent))
 		return
 	var/obj/item/I = locate() in real_location()
@@ -743,7 +743,7 @@
 		return
 	user.visible_message("<span class='warning'>[user] draws [I] from [parent]!</span>", "<span class='notice'>You draw [I] from [parent].</span>")
 
-/datum/component/storage/proc/action_trigger(datum/signal_source, datum/action/source)
+/datum/component/storage/proc/action_trigger(datum/action/source)
 	gather_mode_switch(source.owner)
 	return COMPONENT_ACTION_BLOCK_TRIGGER
 

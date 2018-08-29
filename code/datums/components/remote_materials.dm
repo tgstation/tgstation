@@ -73,7 +73,7 @@ handles linking back and forth.
 	if (allow_standalone)
 		_MakeLocal()
 
-/datum/component/remote_materials/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
+/datum/component/remote_materials/proc/OnAttackBy(obj/item/I, mob/user)
 	if (istype(I, /obj/item/multitool))
 		var/obj/item/multitool/M = I
 		if (!QDELETED(M.buffer) && istype(M.buffer, /obj/machinery/ore_silo))

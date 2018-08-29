@@ -90,7 +90,7 @@
 	S.intensity = intensity
 	S.lube_flags = lube_flags
 
-/datum/component/wet_floor/proc/dry(datum/source, strength = TURF_WET_WATER, immediate = FALSE, duration_decrease = INFINITY)
+/datum/component/wet_floor/proc/dry(strength = TURF_WET_WATER, immediate = FALSE, duration_decrease = INFINITY)
 	for(var/i in time_left_list)
 		if(text2num(i) <= strength)
 			time_left_list[i] = max(0, time_left_list[i] - duration_decrease)

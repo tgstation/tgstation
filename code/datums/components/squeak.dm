@@ -62,18 +62,18 @@
 		last_use = world.time
 		play_squeak()
 
-/datum/component/squeak/proc/on_equip(datum/source, mob/equipper, slot)
+/datum/component/squeak/proc/on_equip(mob/equipper, slot)
 	RegisterSignal(equipper, COMSIG_MOVABLE_DISPOSING, .proc/disposing_react, TRUE)
 
-/datum/component/squeak/proc/on_drop(datum/source, mob/user)
+/datum/component/squeak/proc/on_drop(mob/user)
 	UnregisterSignal(user, COMSIG_MOVABLE_DISPOSING)
 
 // Disposal pipes related shit
-/datum/component/squeak/proc/disposing_react(datum/source, obj/structure/disposalholder/holder, obj/machinery/disposal/source)
+/datum/component/squeak/proc/disposing_react(obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 	//We don't need to worry about unregistering this signal as it will happen for us automaticaly when the holder is qdeleted
 	RegisterSignal(holder, COMSIG_ATOM_DIR_CHANGE, .proc/holder_dir_change)
 
-/datum/component/squeak/proc/holder_dir_change(datum/source, old_dir, new_dir)
+/datum/component/squeak/proc/holder_dir_change(old_dir, new_dir)
 	//If the dir changes it means we're going through a bend in the pipes, let's pretend we bumped the wall
 	if(old_dir != new_dir)
 		play_squeak()
