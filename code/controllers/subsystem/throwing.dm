@@ -142,10 +142,14 @@ SUBSYSTEM_DEF(throwing)
 	if(target)
 		thrownthing.throw_impact(target, src)
 
+	var/datum/callback/cb
 	if (callback)
-		callback.Invoke()
+		cb = callback//.Invoke()
 
 	qdel(src)
+
+	if(cb)
+		cb.Invoke()
 
 /datum/thrownthing/proc/hit_atom(atom/A)
 	finalize(hit=TRUE, target=A)

@@ -1,5 +1,5 @@
 
-/mob/living/silicon/grippedby(mob/living/user)
+/mob/living/silicon/grippedby(mob/living/user, instant = FALSE)
 	return //can't upgrade a simple pull into a more aggressive grab.
 
 /mob/living/silicon/get_ear_protection()//no ears
