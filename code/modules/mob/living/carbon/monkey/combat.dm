@@ -171,7 +171,7 @@
 							battle_screech()
 							retaliate(L)
 							return TRUE
-						else
+						else 
 							bodyDisposal = locate(/obj/machinery/disposal/) in around
 							if(bodyDisposal)
 								target = L
