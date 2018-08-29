@@ -91,6 +91,8 @@
 
 	var/my_z // I don't want to confuse this with client registered_z
 
+	var/do_footstep = FALSE
+
 /mob/living/simple_animal/Initialize()
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src
@@ -117,6 +119,10 @@
 		SSidlenpcpool.idle_mobs_by_zlevel[T.z] -= src
 
 	return ..()
+
+/mob/living/simple_animal/initialize_footstep()
+	if(do_footstep)
+		..()
 
 /mob/living/simple_animal/updatehealth()
 	..()
@@ -294,14 +300,17 @@
 		stat(null, "Health: [round((health / maxHealth) * 100)]%")
 		return 1
 
+/mob/living/simple_animal/proc/drop_loot()
+	if(loot.len)
+		for(var/i in loot)
+			new i(loc)
+
 /mob/living/simple_animal/death(gibbed)
 	movement_type &= ~FLYING
 	if(nest)
 		nest.spawned_mobs -= src
 		nest = null
-	if(loot.len)
-		for(var/i in loot)
-			new i(loc)
+	drop_loot()
 	if(dextrous)
 		drop_all_held_items()
 	if(!gibbed)

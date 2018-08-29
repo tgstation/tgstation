@@ -589,7 +589,8 @@
 /obj/machinery/door/airlock/external/glass{
 	name = "E.V.A Access"
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "aX" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -1116,7 +1117,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "bN" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1793,7 +1795,8 @@
 	pixel_y = 15
 	},
 /obj/machinery/cell_charger,
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/cargo)
 "cH" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2145,7 +2148,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "dh" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2315,7 +2319,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "dr" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -2357,7 +2362,8 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/cargo)
 "du" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2374,7 +2380,8 @@
 	maxHealth = 30;
 	name = "scrawny giant spider"
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/cargo)
 "dv" = (
 /obj/structure/chair/comfy/shuttle{
@@ -2459,7 +2466,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/cargo)
 "dD" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2533,7 +2541,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "dI" = (
 /obj/machinery/door/airlock/external,
@@ -2725,7 +2734,8 @@
 	dir = 8
 	},
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/cargo)
 "dW" = (
 /obj/effect/decal/cleanable/dirt{

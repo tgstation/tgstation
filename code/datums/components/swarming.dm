@@ -11,7 +11,7 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/join_swarm)
 	RegisterSignal(parent, COMSIG_MOVABLE_UNCROSSED, .proc/leave_swarm)
 
-/datum/component/swarming/proc/join_swarm(atom/movable/AM)
+/datum/component/swarming/proc/join_swarm(datum/source, atom/movable/AM)
 	GET_COMPONENT_FROM(other_swarm, /datum/component/swarming, AM)
 	if(!other_swarm)
 		return
@@ -20,7 +20,7 @@
 	other_swarm.swarm()
 	other_swarm.swarm_members |= src
 
-/datum/component/swarming/proc/leave_swarm(atom/movable/AM)
+/datum/component/swarming/proc/leave_swarm(datum/source, atom/movable/AM)
 	GET_COMPONENT_FROM(other_swarm, /datum/component/swarming, AM)
 	if(!other_swarm || !(other_swarm in swarm_members))
 		return

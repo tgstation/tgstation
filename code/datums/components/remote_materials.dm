@@ -57,7 +57,7 @@ handles linking back and forth.
 		list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE, MAT_PLASTIC),
 		local_size,
 		FALSE,
-		list(/obj/item/stack))
+		/obj/item/stack)
 
 /datum/component/remote_materials/proc/set_local_size(size)
 	local_size = size
@@ -73,7 +73,7 @@ handles linking back and forth.
 	if (allow_standalone)
 		_MakeLocal()
 
-/datum/component/remote_materials/proc/OnAttackBy(obj/item/I, mob/user)
+/datum/component/remote_materials/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
 	if (istype(I, /obj/item/multitool))
 		var/obj/item/multitool/M = I
 		if (!QDELETED(M.buffer) && istype(M.buffer, /obj/machinery/ore_silo))

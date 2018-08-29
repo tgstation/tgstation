@@ -90,11 +90,6 @@
 /obj/effect/spawner/structure/window/shuttle,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
-"ay" = (
-/obj/structure/window/shuttle,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/shuttle/transport)
 "az" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
@@ -631,11 +626,11 @@ aa
 aa
 aa
 aa
-ay
+az
 aI
 aE
 aW
-ay
+az
 aa
 aa
 aa
@@ -758,9 +753,9 @@ aa
 aa
 aa
 ad
-ay
+az
 aO
-ay
+az
 ad
 aa
 aa

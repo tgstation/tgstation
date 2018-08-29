@@ -35,9 +35,9 @@ GLOBAL_VAR(antag_prototypes)
 	var/data_part = antag_panel_data()
 	var/objective_part = antag_panel_objectives()
 	var/memory_part = antag_panel_memory()
-	
+
 	var/list/parts = listtrim(list(command_part,data_part,objective_part,memory_part))
-	
+
 	return parts.Join("<br>")
 
 /datum/antagonist/proc/antag_panel_objectives()
@@ -80,7 +80,7 @@ GLOBAL_VAR(antag_prototypes)
 	var/list/result = list()
 	if(!current)
 		result += "<span class='bad'>No body!</span>"
-	if(current && current.isloyal())
+	if(current && current.has_trait(TRAIT_MINDSHIELD))
 		result += "<span class='good'>Mindshielded</span>"
 	//Move these to mob
 	if(iscyborg(current))
@@ -155,8 +155,8 @@ GLOBAL_VAR(antag_prototypes)
 			priority_sections |= antag_category
 			antag_header_parts += "<span class='bad'>[current_antag.name]</span>"
 			antag_header_parts += "<a href='?src=[REF(src)];remove_antag=[REF(current_antag)]'>Remove</a>"
-		
-		
+
+
 		//We aren't antag of this category, grab first prototype to check the prefs (This is pretty vague but really not sure how else to do this)
 		var/datum/antagonist/pref_source = current_antag
 		if(!pref_source)
@@ -167,7 +167,7 @@ GLOBAL_VAR(antag_prototypes)
 				break
 		if(pref_source.job_rank)
 			antag_header_parts += pref_source.enabled_in_preferences(src) ? "Enabled in Prefs" : "Disabled in Prefs"
-		
+
 		//Traitor : None | Traitor | IAA
 		//	Command1 | Command2 | Command3
 		//	Secret Word : Banana
@@ -180,12 +180,12 @@ GLOBAL_VAR(antag_prototypes)
 		if(current_antag)
 			cat_section += current_antag.antag_panel()
 		sections[antag_category] = cat_section
-	
+
 	for(var/s in priority_sections)
 		out += sections[s]
 	for(var/s in sections - priority_sections)
 		out += sections[s]
-	
+
 	out += "<br>"
 
 	//Uplink
@@ -201,7 +201,7 @@ GLOBAL_VAR(antag_prototypes)
 		else
 			uplink_info += "<a href='?src=[REF(src)];common=uplink'>give</a>"
 		uplink_info += "." //hiel grammar
-		
+
 		out += uplink_info + "<br>"
 	//Common Memory
 	var/common_memory = "<span>Common Memory:</span>"
@@ -210,7 +210,7 @@ GLOBAL_VAR(antag_prototypes)
 	out += common_memory + "<br>"
 	//Other stuff
 	out += get_common_admin_commands()
-	
+
 	var/datum/browser/panel = new(usr, "traitorpanel", "", 600, 600)
 	panel.set_content(out)
 	panel.open()

@@ -1058,7 +1058,8 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/awaymission/BMPship/Midship)
 "dP" = (
 /obj/machinery/conveyor{

@@ -160,7 +160,7 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "E" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/wood,
 /area/shuttle/escape)
 

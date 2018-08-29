@@ -31,7 +31,12 @@
 	else
 		// Before you fix it:
 		// yes, checking manifests is a part of intended functionality.
-		var/price = export_item_and_contents(O, cargo_console.contraband, (cargo_console.obj_flags & EMAGGED), dry_run=TRUE)
+		
+		var/datum/export_report/ex = export_item_and_contents(O, cargo_console.get_export_categories(), dry_run=TRUE)
+		var/price = 0
+		for(var/x in ex.total_amount)
+			price += ex.total_value[x]
+
 		if(price)
 			to_chat(user, "<span class='notice'>Scanned [O], value: <b>[price]</b> credits[O.contents.len ? " (contents included)" : ""].</span>")
 		else

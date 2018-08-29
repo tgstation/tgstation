@@ -18,6 +18,6 @@
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_VAR_EDIT, .proc/var_edit_react)
 
-/datum/component/edit_complainer/proc/var_edit_react(list/arguments)
+/datum/component/edit_complainer/proc/var_edit_react(datum/source, list/arguments)
 	var/atom/movable/master = parent
 	master.say(pick(say_lines))

@@ -20,6 +20,8 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	can_be_held = "fox"
 
+	do_footstep = TRUE
+
 //Captain fox
 /mob/living/simple_animal/pet/fox/Renault
 	name = "Renault"

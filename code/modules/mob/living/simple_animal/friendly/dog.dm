@@ -15,6 +15,8 @@
 	turns_per_move = 10
 	can_be_held = TRUE
 
+	do_footstep = TRUE
+
 //Corgis and pugs are now under one dog subtype
 
 /mob/living/simple_animal/pet/dog/corgi

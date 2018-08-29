@@ -1,4 +1,4 @@
-/obj/item/forcefield
+/obj/item/forcefield_projector
 	name = "forcefield projector"
 	desc = "An experimental device that can create several forcefields at a distance."
 	icon = 'icons/obj/device.dmi'
@@ -16,7 +16,7 @@
 	var/list/current_fields
 	var/field_distance_limit = 7
 
-/obj/item/forcefield/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/forcefield_projector/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
 	if(!check_allowed_items(target, 1))
 		return
@@ -41,27 +41,27 @@
 	current_fields += F
 	user.changeNext_move(CLICK_CD_MELEE)
 
-/obj/item/forcefield/attack_self(mob/user)
+/obj/item/forcefield_projector/attack_self(mob/user)
 	if(LAZYLEN(current_fields))
 		to_chat(user, "<span class='notice'>You deactivate [src], disabling all active forcefields.</span>")
 		for(var/obj/structure/projected_forcefield/F in current_fields)
 			qdel(F)
 
-/obj/item/forcefield/examine(mob/user)
+/obj/item/forcefield_projector/examine(mob/user)
 	..()
 	var/percent_charge = round((shield_integrity/max_shield_integrity)*100)
 	to_chat(user, "<span class='notice'>It is currently sustaining [LAZYLEN(current_fields)]/[max_fields] fields, and it's [percent_charge]% charged.</span>")
 
-/obj/item/forcefield/Initialize(mapload)
-	..()
+/obj/item/forcefield_projector/Initialize(mapload)
+	. = ..()
 	current_fields = list()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/forcefield/Destroy()
+/obj/item/forcefield_projector/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/forcefield/process()
+/obj/item/forcefield_projector/process()
 	if(!LAZYLEN(current_fields))
 		shield_integrity = min(shield_integrity + 4, max_shield_integrity)
 	else
@@ -82,9 +82,9 @@
 	resistance_flags = INDESTRUCTIBLE
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	armor = list("melee" = 0, "bullet" = 25, "laser" = 50, "energy" = 50, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
-	var/obj/item/forcefield/generator
+	var/obj/item/forcefield_projector/generator
 
-/obj/structure/projected_forcefield/Initialize(mapload, obj/item/forcefield/origin)
+/obj/structure/projected_forcefield/Initialize(mapload, obj/item/forcefield_projector/origin)
 	. = ..()
 	generator = origin
 

@@ -5,9 +5,9 @@
 	export_types = list(/obj/structure/closet/crate)
 	exclude_types = list(/obj/structure/closet/crate/large, /obj/structure/closet/crate/wooden)
 
-/datum/export/large/crate/total_printout() // That's why a goddamn metal crate costs that much.
+/datum/export/large/crate/total_printout(datum/export_report/ex, notes = TRUE) // That's why a goddamn metal crate costs that much.
 	. = ..()
-	if(.)
+	if(. && notes)
 		. += " Thanks for participating in Nanotrasen Crates Recycling Program."
 
 /datum/export/large/crate/wooden
@@ -56,41 +56,71 @@
 	export_types = list(/obj/structure/reagent_dispensers/beerkeg)
 
 
-
-/datum/export/large/emitter
-	cost = 200
-	unit_name = "emitter"
-	export_types = list(/obj/machinery/power/emitter)
-
-/datum/export/large/field_generator
-	cost = 200
-	unit_name = "field generator"
-	export_types = list(/obj/machinery/field/generator)
-
-/datum/export/large/collector
-	cost = 200
-	unit_name = "collector"
-	export_types = list(/obj/machinery/power/rad_collector)
-
-/datum/export/large/collector/pa
-	cost = 300
-	unit_name = "particle accelerator part"
-	export_types = list(/obj/structure/particle_accelerator)
-
-/datum/export/large/collector/pa/controls
-	cost = 500
-	unit_name = "particle accelerator control console"
-	export_types = list(/obj/machinery/particle_accelerator/control_box)
-
 /datum/export/large/pipedispenser
 	cost = 500
 	unit_name = "pipe dispenser"
 	export_types = list(/obj/machinery/pipedispenser)
 
+/datum/export/large/emitter
+	cost = 550
+	unit_name = "emitter"
+	export_types = list(/obj/machinery/power/emitter)
+
+/datum/export/large/field_generator
+	cost = 550
+	unit_name = "field generator"
+	export_types = list(/obj/machinery/field/generator)
+
+/datum/export/large/collector
+	cost = 400
+	unit_name = "radiation collector"
+	export_types = list(/obj/machinery/power/rad_collector)
+
+/datum/export/large/tesla_coil
+	cost = 450
+	unit_name = "tesla coil"
+	export_types = list(/obj/machinery/power/tesla_coil)
+
+/datum/export/large/pa
+	cost = 350
+	unit_name = "particle accelerator part"
+	export_types = list(/obj/structure/particle_accelerator)
+
+/datum/export/large/pa/controls
+	cost = 500
+	unit_name = "particle accelerator control console"
+	export_types = list(/obj/machinery/particle_accelerator/control_box)
+
 /datum/export/large/supermatter
-	cost = 9000
+	cost = 8000
 	unit_name = "supermatter shard"
 	export_types = list(/obj/machinery/power/supermatter_crystal/shard)
+
+/datum/export/large/grounding_rod
+	cost = 350
+	unit_name = "grounding rod"
+	export_types = list(/obj/machinery/power/grounding_rod)
+
+/datum/export/large/tesla_gen
+	cost = 4000
+	unit_name = "energy ball generator"
+	export_types = list(/obj/machinery/the_singularitygen/tesla)
+
+/datum/export/large/singulo_gen
+	cost = 4000
+	unit_name = "gravitational singularity generator"
+	export_types = list(/obj/machinery/the_singularitygen)
+	include_subtypes = FALSE
+
+/datum/export/large/am_control_unit
+	cost = 4000
+	unit_name = "antimatter control unit"
+	export_types = list(/obj/machinery/power/am_control_unit)
+
+/datum/export/large/am_shielding_container
+	cost = 150
+	unit_name = "packaged antimatter reactor section"
+	export_types = list(/obj/item/am_shielding_container)
 
 
 /datum/export/large/iv

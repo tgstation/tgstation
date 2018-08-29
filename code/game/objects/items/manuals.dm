@@ -339,10 +339,10 @@
 	page_link = "Detective"
 
 /obj/item/book/manual/wiki/barman_recipes
-	name = "Barman Recipes"
+	name = "Barman Recipes: Mixing Drinks and Changing Lives"
 	icon_state = "barbook"
 	author = "Sir John Rose"
-	title = "Barman Recipes"
+	title = "Barman Recipes: Mixing Drinks and Changing Lives"
 	page_link = "Guide_to_food_and_drinks"
 	
 /obj/item/book/manual/wiki/robotics_cyborgs
@@ -372,3 +372,81 @@
 	author = "Medical Journal, volume 3"
 	title = "Cloning techniques of the 26th century"
 	page_link = "Guide_to_genetics#Cloning"
+
+/obj/item/book/manual/wiki/cooking_to_serve_man
+	name = "To Serve Man"
+	desc = "It's a cookbook!"
+	icon_state ="cooked_book"
+	author = "the Kanamitan Empire"
+	title = "To Serve Man"
+	page_link = "Guide_to_food_and_drinks"
+
+/obj/item/book/manual/wiki/circuitry
+	name = "Circuitry for Dummies"
+	icon_state = "book1"
+	author = "Dr. Hans Asperger"
+	title = "Circuitry for Dummies"
+	page_link = "Guide_to_circuits"
+
+/obj/item/book/manual/wiki/tcomms
+	name = "Subspace Telecommunications And You"
+	icon_state = "book3"
+	author = "Engineering Encyclopedia"
+	title = "Subspace Telecommunications And You"
+	page_link = "Guide_to_Telecommunications"
+
+/obj/item/book/manual/wiki/atmospherics
+	name = "Lexica Atmosia"
+	icon_state = "book5"
+	author = "the City-state of Atmosia"
+	title = "Lexica Atmosia"
+	page_link = "Guide_to_Atmospherics"
+	
+/obj/item/book/manual/wiki/medicine
+	name = "Medical Space Compendium, Volume 638"
+	icon_state = "book8"
+	author = "Medical Journal"
+	title = "Medical Space Compendium, Volume 638"
+	page_link = "Guide_to_medicine"
+
+/obj/item/book/manual/wiki/surgery
+	name = "Brain Surgery for Dummies"
+	icon_state = "book4"
+	author = "Dr. F. Fran"
+	title = "Brain Surgery for Dummies"
+	page_link = "Surgery"
+
+/obj/item/book/manual/wiki/grenades
+	name = "DIY Chemical Grenades"
+	icon_state = "book2"
+	author = "W. Powell"
+	title = "DIY Chemical Grenades"
+	page_link = "Grenade"
+
+/obj/item/book/manual/wiki/toxins
+	name = "Toxins or: How I Learned to Stop Worrying and Love the Maxcap"
+	icon_state = "book6"
+	author = "Cuban Pete"
+	title = "Toxins or: How I Learned to Stop Worrying and Love the Maxcap"
+	page_link = "Guide_to_toxins"
+
+/obj/item/book/manual/wiki/toxins/suicide_act(mob/user)
+	var/mob/living/carbon/human/H = user
+	user.visible_message("<span class='suicide'>[user] starts dancing to the Rhumba Beat! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
+	if (!QDELETED(H))
+		H.emote("spin")
+		sleep(20)
+		for(var/obj/item/W in H)
+			H.dropItemToGround(W)
+			if(prob(50))
+				step(W, pick(GLOB.alldirs))
+		H.add_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
+		H.bleed_rate = 5
+		H.gib_animation()
+		sleep(3)
+		H.adjustBruteLoss(1000) //to make the body super-bloody
+		H.spawn_gibs()
+		H.spill_organs()
+		H.spread_bodyparts()
+	return (BRUTELOSS)

@@ -33,6 +33,8 @@
 	collar_type = "cat"
 	can_be_held = "cat2"
 
+	do_footstep = TRUE
+
 /mob/living/simple_animal/pet/cat/Initialize()
 	. = ..()
 	verbs += /mob/living/proc/lay_down
