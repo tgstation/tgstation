@@ -86,3 +86,4 @@
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
 #define EYES_COVERED "eyes_covered"
+#define CULT_EYES "cult_eyes"

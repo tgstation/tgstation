@@ -131,6 +131,7 @@
 		var/mob/living/carbon/human/H = current
 		H.eye_color = initial(H.eye_color)
 		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
+		H.remove_trait(CULT_EYES)
 		H.cut_overlays()
 		H.regenerate_icons()
 /datum/antagonist/cult/on_removal()
@@ -221,6 +222,7 @@
 		var/mob/living/carbon/human/H = current
 		H.eye_color = initial(H.eye_color)
 		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
+		H.remove_trait(CULT_EYES)
 		H.cut_overlays()
 		H.regenerate_icons()
 
@@ -272,6 +274,7 @@
 		var/mob/living/carbon/human/H = cultist
 		H.eye_color = "f00"
 		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
+		H.add_trait(CULT_EYES)
 		H.update_body()
 		
 /datum/team/cult/proc/ascend(cultist)
