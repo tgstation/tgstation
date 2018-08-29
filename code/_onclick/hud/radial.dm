@@ -2,9 +2,9 @@
 
 /obj/screen/radial
 	icon = 'icons/mob/radial.dmi'
-	var/datum/radial_menu/parent
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
+	var/datum/radial_menu/parent
 
 /obj/screen/radial/slice
 	icon_state = "radial_slice"
