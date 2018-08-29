@@ -410,6 +410,14 @@
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
+/datum/design/board/scanner_gate
+	name = "Machine Design (Scanner Gate)"
+	desc = "The circuit board for a scanner gate."
+	id = "scanner_gate"
+	build_path = /obj/item/circuitboard/machine/scanner_gate
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL	
+	
 /datum/design/board/holopad
 	name = "Machine Design (AI Holopad Board)"
 	desc = "The circuit board for a holopad."
