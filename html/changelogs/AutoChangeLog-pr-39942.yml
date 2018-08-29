@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "The 10 second anti spam cooldown of night shift lighting now works properly."
-  - spellcheck: "Added an examine message to APCs that mentions Alt-click and Ctrl-click (silicons only) behavior."
