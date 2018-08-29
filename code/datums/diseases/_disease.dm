@@ -162,7 +162,7 @@
 	affected_mob = null
 	
 //Use this to compare severities	
-proc/get_disease_severity_value(severity)
+/proc/get_disease_severity_value(severity)
 	switch(severity)
 		if(DISEASE_SEVERITY_POSITIVE)
 			return 1
