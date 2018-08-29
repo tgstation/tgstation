@@ -49,7 +49,7 @@
 			var/mat_path = possible_mats[id]
 			materials[id] = new mat_path()
 
-/datum/component/material_container/proc/OnExamine(datum/source, mob/user)
+/datum/component/material_container/proc/OnExamine(mob/user)
 	if(show_on_examine)
 		for(var/I in materials)
 			var/datum/material/M = materials[I]
@@ -57,7 +57,7 @@
 			if(amt)
 				to_chat(user, "<span class='notice'>It has [amt] units of [lowertext(M.name)] stored.</span>")
 
-/datum/component/material_container/proc/OnAttackBy(datum/source, obj/item/I, mob/living/user)
+/datum/component/material_container/proc/OnAttackBy(obj/item/I, mob/living/user)
 	var/list/tc = allowed_typecache
 	if(disable_attackby)
 		return

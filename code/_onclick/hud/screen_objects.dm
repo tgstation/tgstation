@@ -428,7 +428,7 @@
 	if(master)
 		var/obj/item/I = usr.get_active_held_item()
 		if(I)
-			master.attackby(null, I, usr, params)
+			master.attackby(I, usr, params)
 	return TRUE
 
 /obj/screen/throw_catch
