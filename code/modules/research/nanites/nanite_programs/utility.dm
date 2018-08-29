@@ -212,6 +212,20 @@
 		points *= 0.25
 	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = points))
 	
+/datum/nanite_program/bitcoin
+	name = "Cryptocurrency Processing"
+	desc = "The nanites automatically mine cryptocurrency, automatically transferring the resulting credits to the station's account."
+	use_rate = 0.3
+	rogue_types = list(/datum/nanite_program/toxic)
+
+/datum/nanite_program/bitcoin/active_effect()
+	if(!iscarbon(host_mob))
+		return
+	var/points = 4 // 240/min
+	if(!host_mob.client)
+		points *= 0.25
+	SSshuttle.points += points
+	
 /datum/nanite_program/triggered/researchplus
 	name = "Neural Network"
 	desc = "The nanites link the host's brains together forming a neural research network, that becomes more efficient with the amount of total hosts. \

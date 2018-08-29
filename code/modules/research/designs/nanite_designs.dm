@@ -38,6 +38,13 @@
 	id = "researchplus_nanites"
 	program_type = /datum/nanite_program/triggered/researchplus
 	category = list("Utility Nanites")
+	
+/datum/design/nanites/bitcoin
+	name = "Cryptocurrency Processing"
+	desc = "The nanites automatically mine cryptocurrency, automatically transferring the resulting credits to the station's account."
+	id = "cash_nanites"
+	program_type = /datum/nanite_program/bitcoin
+	category = list("Utility Nanites")
 
 /datum/design/nanites/monitoring
 	name = "Monitoring"
