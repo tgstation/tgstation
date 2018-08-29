@@ -144,7 +144,7 @@ SUBSYSTEM_DEF(throwing)
 
 	var/datum/callback/cb
 	if (callback)
-		cb = callback//.Invoke()
+		cb = callback
 
 	qdel(src)
 
