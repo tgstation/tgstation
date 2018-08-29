@@ -30,12 +30,10 @@
 	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/lava/Entered(atom/movable/AM)
-	if(burn_stuff(AM))
-		START_PROCESSING(SSobj, src)
+	START_PROCESSING(SSobj, src)
 
 /turf/open/lava/hitby(atom/movable/AM)
-	if(burn_stuff(AM))
-		START_PROCESSING(SSobj, src)
+	START_PROCESSING(SSobj, src)
 
 /turf/open/lava/process()
 	if(!burn_stuff())
