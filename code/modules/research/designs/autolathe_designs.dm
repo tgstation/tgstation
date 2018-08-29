@@ -445,22 +445,6 @@
 	build_path = /obj/item/storage/pill_bottle
 	category = list("initial", "Medical")
 
-/datum/design/zipties
-	name = "Zipties"
-	id = "zipties"
-	build_type = AUTOLATHE
-	materials = list(MAT_PLASTIC = 250)
-	build_path = /obj/item/restraints/handcuffs/cable/zipties
-	category = list("initial", "Security")
-
-/datum/design/evidencebag
-	name = "Evidence Bag"
-	id = "evidencebag"
-	build_type = AUTOLATHE
-	materials = list(MAT_PLASTIC = 100)
-	build_path = /obj/item/evidencebag
-	category = list("initial", "Security")
-
 /datum/design/beanbag_slug
 	name = "Beanbag Slug"
 	id = "beanbag_slug"
