@@ -3,7 +3,6 @@ SUBSYSTEM_DEF(research)
 	name = "Research"
 	priority = FIRE_PRIORITY_RESEARCH
 	wait = 10
-	runlevels = RUNLEVEL_GAME
 	init_order = INIT_ORDER_RESEARCH
 	var/list/invalid_design_ids = list()		//associative id = number of times
 	var/list/invalid_node_ids = list()			//associative id = number of times
