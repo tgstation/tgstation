@@ -89,7 +89,7 @@
 				if(detect_species == /datum/species/zombie) //Can detect dormant zombies
 					if(H.getorganslot(ORGAN_SLOT_ZOMBIE))
 						beep = TRUE
-		if(SCANGATE_GUNS))
+		if(SCANGATE_GUNS)
 			for(var/I in M.get_contents())
 				if(istype(I, /obj/item/gun))
 					beep = TRUE
