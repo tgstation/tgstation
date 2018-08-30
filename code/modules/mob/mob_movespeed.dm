@@ -30,14 +30,12 @@
 	return TRUE
 
 /mob/vv_edit_var(var_name, var_value)
-	var/slowdown_edit = (var_name == NAMEOF(src, cached_multiplicative_slowdown))
-	var/diff
-	if(slowdown_edit && isnum(cached_multiplicative_slowdown) && isnum(var_value))
-		remove_movespeed_modifier(MOVESPEED_ID_ADMIN_VAREDIT)
-		diff = var_value - cached_multiplicative_slowdown
 	. = ..()
-	if(. && slowdown_edit && isnum(diff))
-		add_movespeed_modifier(MOVESPEED_ID_ADMIN_VAREDIT, TRUE, 100, override = TRUE, multiplicative_slowdown = diff)
+	if(. && (var_name == NAMEOF(src, admin_movespeed)))
+		if(isnum(var_value))
+			add_movespeed_modifier(MOVESPEED_ID_ADMIN_VAREDIT, TRUE, 100, override = TRUE, multiplicative_slowdown = var_value)
+		else		//nonsensical value
+			remove_movespeed_modifier(MOVESPEED_ID_ADMIN_VAREDIT)
 
 /mob/proc/has_movespeed_modifier(id)
 	return LAZYACCESS(movespeed_modification, id)
