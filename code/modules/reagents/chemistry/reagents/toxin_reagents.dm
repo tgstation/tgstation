@@ -924,8 +924,8 @@
 		var/playerMessage = "<span class='danger'>Your bones hurt too much!!</span>"
 		var/ouchie = "OOF!!"
 		var/stamDamage = 200
-		switch(pick(1, 2, 3, 4)) //Yeah, I know that this makes it so that the limb removal can fail if the limb is already gone, it doesn't pick another limb.
-			if(1)				 //It's intentional, the chance of losing a limb decreases the less limbs you have.  It wasn't at first but I liked the result.
+		switch(pick(1, 2, 3, 4)) //God help you if the same limb gets picked twice quickly.
+			if(1)
 				if(l_arm)
 					l_arm.receive_damage(0, 0, stamDamage)
 					playsound(M,pick(possibleSounds), 50, TRUE, -1)
