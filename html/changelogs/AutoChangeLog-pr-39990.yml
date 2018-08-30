@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Broken components left over from the signal origin refactor should be fixed."
