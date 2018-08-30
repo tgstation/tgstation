@@ -906,7 +906,7 @@
 		dat += "<tr bgcolor='000000'><th colspan='5'><a href='?src=[REF(src)];[HrefToken()];jobban3=otherroles;jobban4=[REF(M)]' style='color: white;'>Other Roles</a></th></tr><tr align='center'>"
 
 		//Mind Transfer Potion
-		if(jobban_isbanned(M, ROLE_SENTIENCE))
+		if(jobban_isbanned(M, ROLE_MIND_TRANSFER))
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=Mind Transfer Potion;jobban4=[REF(M)]'><font color=red>Mind Transfer Potion</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=Mind Transfer Potion;jobban4=[REF(M)]'>Mind Transfer Potion</a></td>"
