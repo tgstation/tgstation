@@ -43,7 +43,7 @@
 	no_den_usage = 1
 	var/allowed_projectile_types = list(/obj/item/projectile/magic/change, /obj/item/projectile/magic/animate, /obj/item/projectile/magic/resurrection,
 	/obj/item/projectile/magic/death, /obj/item/projectile/magic/teleport, /obj/item/projectile/magic/door, /obj/item/projectile/magic/aoe/fireball,
-	/obj/item/projectile/magic/spellblade, /obj/item/projectile/magic/arcane_barrage)
+	/obj/item/projectile/magic/spellblade, /obj/item/projectile/magic/arcane_barrage, /obj/item/projectile/magic/locker)
 
 /obj/item/gun/magic/staff/chaos/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	chambered.projectile_type = pick(allowed_projectile_types)
@@ -94,3 +94,15 @@
 	if(attack_type == PROJECTILE_ATTACK)
 		final_block_chance = 0
 	return ..()
+
+/obj/item/gun/magic/staff/locker
+	name = "staff of the locker"
+	desc = "An artefact that expells encapsulating bolts, for incapacitating thy enemy."
+	fire_sound = 'sound/magic/staff_change.ogg'
+	ammo_type = /obj/item/ammo_casing/magic/locker
+	icon_state = "locker"
+	item_state = "locker"
+	max_charges = 6
+	recharge_rate = 4
+
+
