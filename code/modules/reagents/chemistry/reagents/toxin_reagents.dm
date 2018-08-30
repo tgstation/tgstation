@@ -918,12 +918,12 @@
 	var/obj/item/bodypart/l_leg = M.get_bodypart(BODY_ZONE_L_LEG)
 	var/obj/item/bodypart/r_leg = M.get_bodypart(BODY_ZONE_R_LEG)
 	. = ..()
-	if(prob(5) && iscarbon(M) && (r_arm || l_arm || l_leg || r_leg)) //big oof
+	if(prob(4) && iscarbon(M) && (r_arm || l_arm || l_leg || r_leg)) //big oof
 		var/list/possibleSounds = list('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg')
 		var/extMessage = "<span class='warning'>[M]'s bones hurt too much!!</span>"  //I couldn't figure out how to define a new function so let's not repeat the same strings 4 times.
 		var/playerMessage = "<span class='danger'>Your bones hurt too much!!</span>"
 		var/ouchie = "OOF!!"
-		var/stamDamage = 200
+		var/stamDamage = 150
 		switch(pick(1, 2, 3, 4)) //God help you if the same limb gets picked twice quickly.
 			if(1)
 				if(l_arm)

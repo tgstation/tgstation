@@ -123,6 +123,6 @@
 /datum/chemical_reaction/bonehurtingjuice
 	name = "Bone Hurting Juice"
 	id = "bonehurtingjuice"
-	results = list("bonehurtingjuice" = 4)
-	required_reagents = list("mutagen" = 1, "itching_powder" = 3)
+	results = list("bonehurtingjuice" = 5)
+	required_reagents = list("mutagen" = 1, "itching_powder" = 3, "milk" = 1)
 	mix_message = "<span class='danger'>The mixture suddenly becomes clear and looks a lot like water. You feel a strong urge to drink it.</span>"
