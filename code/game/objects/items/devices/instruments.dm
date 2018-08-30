@@ -70,7 +70,6 @@
 			for (var/mob/living/M in song.hearing_mobs)
 				M.dizziness = max(0,M.dizziness-2)
 				M.jitteriness = max(0,M.jitteriness-2)
-				M.drowsyness = max(0,M.drowsyness-1)
 				M.confused = max(M.confused-1)
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
 		tune_time--
