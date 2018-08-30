@@ -1,0 +1,5 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - balance: "Skateboards can fit in backpacks"
+  - tweak: "Skateboards are slower by default, speed can be adjusted by alt-clicking"
