@@ -820,9 +820,9 @@
 
 		//Sentience Potion Spawn
 		if(jobban_isbanned(M, ROLE_SENTIENCE))
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=Sentience Potion Spawn;jobban4=[REF(M)]'><font color=red>Sentience Potion Spawn</font></a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_SENTIENCE];jobban4=[REF(M)]'><font color=red>[ROLE_SENTIENCE]</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=Sentience Potion Spawn;jobban4=[REF(M)]'>Sentience Potion Spawn</a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_SENTIENCE];jobban4=[REF(M)]'>[ROLE_SENTIENCE]</a></td>"
 		
 		//Deathsquad
 		if(jobban_isbanned(M, "deathsquad"))
@@ -907,9 +907,9 @@
 
 		//Mind Transfer Potion
 		if(jobban_isbanned(M, ROLE_MIND_TRANSFER))
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=Mind Transfer Potion;jobban4=[REF(M)]'><font color=red>Mind Transfer Potion</font></a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_MIND_TRANSFER];jobban4=[REF(M)]'><font color=red>[ROLE_MIND_TRANSFER]</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=Mind Transfer Potion;jobban4=[REF(M)]'>Mind Transfer Potion</a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_MIND_TRANSFER];jobban4=[REF(M)]'>[ROLE_MIND_TRANSFER]</a></td>"
 
 		dat += "</tr></table>"
 		usr << browse(dat, "window=jobban2;size=800x450")
