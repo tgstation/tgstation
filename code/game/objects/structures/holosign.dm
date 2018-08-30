@@ -117,15 +117,14 @@
 	if(ishuman(mover))
 		var/mob/living/carbon/human/sickboi = mover
 		var/threat = sickboi.check_virus()
-		switch(threat)
-			if(get_disease_severity_value(threat) > get_disease_severity_value(DISEASE_SEVERITY_MINOR))
-				if(buzzcd < world.time)
-					playsound(get_turf(src),'sound/machines/buzz-sigh.ogg',65,1,4)
-					buzzcd = (world.time + 60)
-				icon_state = "holo_medical-deny"
-				return FALSE
-			else
-				return TRUE //nice or benign diseases!
+		if(get_disease_severity_value(threat) > get_disease_severity_value(DISEASE_SEVERITY_MINOR))
+			if(buzzcd < world.time)
+				playsound(get_turf(src),'sound/machines/buzz-sigh.ogg',65,1,4)
+				buzzcd = (world.time + 60)
+			icon_state = "holo_medical-deny"
+			return FALSE
+		else
+			return TRUE //nice or benign diseases!
 	return TRUE
 
 /obj/structure/holosign/barrier/medical/attack_hand(mob/living/user)
