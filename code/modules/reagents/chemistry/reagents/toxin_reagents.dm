@@ -892,14 +892,14 @@
 	color = "#AAAAAA77"
 	toxpwr = 0
 	taste_description = "bone hurting"
-	overdose_threshold = 60
+	overdose_threshold = 125
 	metabolization_rate = 2.0
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/M)
 	M.say("oof ouch my bones")
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(1.0, 0)
+	M.adjustBruteLoss(0.5, 0)
 	if(prob(20))
 		switch(pick(1, 2, 3))
 			if(1)
