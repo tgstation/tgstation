@@ -11,6 +11,7 @@
 	recommended_enemies = 8
 	reroll_friendly = 0
 	traitor_name = "Nanotrasen Internal Affairs Agent"
+	antag_flag = ROLE_INTERNAL_AFFAIRS
 
 	traitors_possible = 10 //hard limit on traitors if scaling is turned off
 	num_modifier = 4 // Four additional traitors
@@ -28,7 +29,7 @@
 		i++
 		if(i + 1 > pre_traitors.len)
 			i = 0
-		target_list[traitor] = pre_traitors[i+1]	
+		target_list[traitor] = pre_traitors[i+1]
 	..()
 
 
