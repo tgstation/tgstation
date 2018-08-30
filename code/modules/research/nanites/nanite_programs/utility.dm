@@ -250,9 +250,10 @@
 	if(!iscarbon(host_mob))
 		return
 	var/mob/living/carbon/C = host_mob
-	var/points = round(SSnanites.neural_network_count / 15, 1)
+	var/points = round(SSnanites.neural_network_count / 15, 0.1)
 	if(overclock)
-		C.adjustBrainLoss(1, TRUE)
+		if(prob(50))
+			C.adjustBrainLoss(1, TRUE)
 		points *= 2.5
 	if(!C.client) //less brainpower
 		points *= 0.25
@@ -264,8 +265,10 @@
 	overclock = !overclock
 	if(overclock)
 		use_rate = 1.25
+		to_chat(host_mob, "<span class='warning'>You feel like your brain is starting to overheat...</span>")
 	else
 		use_rate = initial(use_rate)
+		to_chat(host_mob, "<span class='warning'>The feeling of overheating in your brain rapidly fades away.</span>")
 
 /datum/nanite_program/triggered/access
 	name = "Subdermal ID"
