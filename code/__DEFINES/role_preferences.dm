@@ -27,8 +27,8 @@
 #define ROLE_BROTHER				"blood brother"
 #define ROLE_BRAINWASHED			"brainwashed victim"
 #define ROLE_OVERTHROW				"syndicate mutineer"
-#define ROLE_SENTIENCE          	"Sentience Potion"
-#define ROLE_CONSCIOUSNESS_TRANSFER "Consciousness Transfer Potion"
+#define ROLE_SENTIENCE          	"Sentience Potion Spawn"
+#define ROLE_MIND_TRANSFER          "Mind Transfer Potion"
 
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough
@@ -51,7 +51,8 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_ABDUCTOR,
 	ROLE_DEVIL = /datum/game_mode/devil,
 	ROLE_SERVANT_OF_RATVAR = /datum/game_mode/clockwork_cult,
-	ROLE_OVERTHROW = /datum/game_mode/overthrow
+	ROLE_OVERTHROW = /datum/game_mode/overthrow,
+	ROLE_SENTIENCE
 ))
 
 //Job defines for what happens when you fail to qualify for any job during job selection
