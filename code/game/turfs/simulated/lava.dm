@@ -96,10 +96,10 @@
 		thing_to_check = list(AM)
 	for(var/thing in thing_to_check)
 		if(isobj(thing))
+			. = 1
 			var/obj/O = thing
 			if((O.resistance_flags & (LAVA_PROOF|INDESTRUCTIBLE)) || O.throwing)
 				continue
-			. = 1
 			if((O.resistance_flags & (ON_FIRE)))
 				continue
 			if(!(O.resistance_flags & FLAMMABLE))
