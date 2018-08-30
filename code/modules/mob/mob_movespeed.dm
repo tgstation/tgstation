@@ -31,7 +31,7 @@
 
 /mob/vv_edit_var(var_name, var_value)
 	. = ..()
-	if(. && (var_name == NAMEOF(src, admin_movespeed))
+	if(. && (var_name == NAMEOF(src, admin_movespeed)))
 		if(isnum(var_value))
 			add_movespeed_modifier(MOVESPEED_ID_ADMIN_VAREDIT, TRUE, 100, override = TRUE, multiplicative_slowdown = var_value)
 		else		//nonsensical value
