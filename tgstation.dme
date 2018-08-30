@@ -1345,6 +1345,7 @@
 #include "code\modules\atmospherics\machinery\portable\portable_atmospherics.dm"
 #include "code\modules\atmospherics\machinery\portable\pump.dm"
 #include "code\modules\atmospherics\machinery\portable\scrubber.dm"
+#include "code\modules\awaymissions\away_props.dm"
 #include "code\modules\awaymissions\bluespaceartillery.dm"
 #include "code\modules\awaymissions\capture_the_flag.dm"
 #include "code\modules\awaymissions\corpse.dm"
