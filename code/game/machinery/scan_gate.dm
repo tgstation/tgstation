@@ -19,7 +19,7 @@
 	var/locked = FALSE
 	var/scangate_mode = SCANGATE_NONE
 	var/disease_threshold = DISEASE_SEVERITY_MINOR
-	var/detect_species = /datum/species/human
+	var/datum/species/detect_species = /datum/species/human
 	var/reverse = FALSE //If true, signals if the scan returns false
 	
 /obj/machinery/scanner_gate/examine(mob/user)
@@ -62,14 +62,16 @@
 	
 /obj/machinery/scanner_gate/proc/perform_scan(mob/living/M)
 	var/beep = FALSE
-	switch(scan_type)
+	switch(scangate_mode)
 		if(SCANGATE_NONE)
 			return
 		if(SCANGATE_WANTED)
-			var/perpname = M.get_face_name(M.get_id_name())
-			var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
-			if(!R || (R.fields["criminal"] == "*Arrest*"))
-				beep = TRUE
+			if(iscarbon(M))
+				var/mob/living/carbon/C = M
+				var/perpname = M.get_face_name(M.get_id_name())
+				var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
+				if(!R || (R.fields["criminal"] == "*Arrest*"))
+					beep = TRUE
 		if(SCANGATE_MINDSHIELD)
 			if(M.has_trait(TRAIT_MINDSHIELD))
 				beep = TRUE
@@ -103,7 +105,7 @@
 	playsound(src, 'sound/machines/alarm.ogg', 100, 0)
 	var/mutable_appearance/red_light = mutable_appearance(icon, "scanner_gate_alarm", ABOVE_LIGHTING_LAYER)
 	add_overlay(red_light)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/cut_overlay, red_light),20)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/cut_overlay, red_light),20)
 	
 /obj/machinery/scanner_gate/can_interact(mob/user)
 	if(locked)
