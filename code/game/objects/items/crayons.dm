@@ -250,6 +250,10 @@
 		cost = 5
 	if(istype(target, /obj/item/canvas))
 		cost = 0
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if (H.has_trait(TRAIT_TAGGER))
+			cost *= 0.5
 	var/charges_used = use_charges(user, cost)
 	if(!charges_used)
 		return
