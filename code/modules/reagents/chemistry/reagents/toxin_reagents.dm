@@ -168,7 +168,7 @@
 	M.adjustOxyLoss(0.5*REM, 0)
 	..()
 	. = 1
-	
+
 /datum/reagent/toxin/ghoulpowder
 	name = "Ghoul Powder"
 	id = "ghoulpowder"
@@ -884,3 +884,62 @@
 
 /datum/reagent/toxin/mimesbane/on_mob_delete(mob/living/L)
 	L.remove_trait(TRAIT_EMOTEMUTE, id)
+
+/datum/reagent/toxin/bonehurtingjuice //oof ouch
+	name = "Bone Hurting Juice"
+	id = "bonehurtingjuice"
+	description = "A strange substance that looks a lot like water. Drinking it is oddly tempting. Oof ouch."
+	color = "#AAAAAA77"
+	toxpwr = 0
+	taste_description = "bone hurting"
+	overdose_threshold = 60
+	metabolization_rate = 2.0
+
+/datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/M)
+	M.say("oof ouch my bones")
+
+/datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
+	M.adjustBruteLoss(1.0, 0)
+	if(prob(20))
+		switch(pick(1, 2, 3))
+			if(1)
+				var/list/possibleSays = list("oof", "ouch", "my bones", "oof ouch", "oof ouch my bones")
+				M.say(pick(possibleSays))
+			if(2)
+				var/list/possibleMes = list("oofs softly", "looks like their bones hurt", "grimaces, as though their bones hurt")
+				M.say("*custom " + pick(possibleMes))
+			if(3)
+				to_chat(M, "<span class='warning'>Your bones hurt!</span>")
+	. = ..()
+
+/datum/reagent/toxin/bonehurtingjuice/overdose_process(mob/living/M)
+	var/obj/item/bodypart/l_arm = M.get_bodypart(BODY_ZONE_L_ARM)
+	var/obj/item/bodypart/r_arm = M.get_bodypart(BODY_ZONE_R_ARM)
+	var/obj/item/bodypart/l_leg = M.get_bodypart(BODY_ZONE_L_LEG)
+	var/obj/item/bodypart/r_leg = M.get_bodypart(BODY_ZONE_R_LEG)
+	. = ..()
+	if(prob(1) && iscarbon(M) && (r_arm || l_arm || l_leg || r_leg)) //big oof
+		var/list/possibleSounds = list('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg')
+		var/extMessage = "<span class='warning'>[M]'s bones hurt too much!!</span>"  //I couldn't figure out how to define a new function so let's not repeat the same strings 4 times.
+		var/playerMessage = "<span class='danger'>Your bones hurt too much!!</span>"
+		switch(pick(1, 2, 3, 4)) //Yeah, I know that this makes it so that the limb removal can fail if the limb is already gone, it doesn't pick another limb.
+			if(1)				 //It's intentional, the chance of losing a limb decreases the less limbs you have.  It wasn't at first but I liked the result.
+				if(l_arm)
+					l_arm.dismember()
+					playsound(M,pick(possibleSounds), 50, TRUE, -1)
+					M.visible_message(extMessage, playerMessage)
+			if(2)
+				if(r_arm)
+					r_arm.dismember()
+					playsound(M,pick(possibleSounds), 50, TRUE, -1)
+					M.visible_message(extMessage, playerMessage)
+			if(3)
+				if(l_leg)
+					l_leg.dismember()
+					playsound(M,pick(possibleSounds), 50, TRUE, -1)
+					M.visible_message(extMessage, playerMessage)
+			if(4)
+				if(r_leg)
+					r_leg.dismember()
+					playsound(M,pick(possibleSounds), 50, TRUE, -1)
+					M.visible_message(extMessage, playerMessage)
