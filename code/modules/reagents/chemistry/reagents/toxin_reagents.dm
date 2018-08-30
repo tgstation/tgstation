@@ -899,7 +899,7 @@
 	M.say("oof ouch my bones")
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
-	M.adjustStaminaLoss(2.0, 0)
+	M.adjustStaminaLoss(1.0, 0)
 	if(prob(20))
 		switch(pick(1, 2, 3))
 			if(1)
