@@ -990,6 +990,8 @@
 	// Remove upgrades.
 	for(var/obj/item/I in upgrades)
 		I.forceMove(get_turf(src))
+		if (hascall(I,"dropped"))
+			I.dropped()
 
 	upgrades.Cut()
 
