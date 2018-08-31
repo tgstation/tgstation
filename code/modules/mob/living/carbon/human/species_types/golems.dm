@@ -793,7 +793,7 @@
 		fire_act()
 
 /datum/species/golem/plastic
-	name = "Plastic"
+	name = "Plastic Golem"
 	id = "plastic golem"
 	prefix = "Plastic"
 	special_names = null
