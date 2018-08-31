@@ -97,10 +97,10 @@
 	for(var/thing in thing_to_check)
 		if(isobj(thing))
 			var/obj/O = thing
-			if((O.resistance_flags & (LAVA_PROOF|INDESTRUCTIBLE)) || O.throwing)
+			if(O.resistance_flags & (LAVA_PROOF|INDESTRUCTIBLE))
 				continue
 			. = 1
-			if((O.resistance_flags & (ON_FIRE)))
+			if(O.throwing || (O.resistance_flags & ON_FIRE))
 				continue
 			if(!(O.resistance_flags & FLAMMABLE))
 				O.resistance_flags |= FLAMMABLE //Even fireproof things burn up in lava
