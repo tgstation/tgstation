@@ -806,7 +806,7 @@
 
 
 		//Drones
-		if(jobban_isbanned(M, "drone"))
+		if(jobban_isbanned(M, ROLE_DRONE))
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_DRONE];jobban4=[REF(M)]'><font color=red>Drone</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_DRONE];jobban4=[REF(M)]'>Drone</a></td>"
@@ -825,13 +825,13 @@
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_SENTIENCE];jobban4=[REF(M)]'>Sentience Potion Spawn</a></td>"
 		
 		//Deathsquad
-		if(jobban_isbanned(M, "deathsquad"))
+		if(jobban_isbanned(M, ROLE_DEATHSQUAD))
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_DEATHSQUAD];jobban4=[REF(M)]'><font color=red>Deathsquad</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_DEATHSQUAD];jobban4=[REF(M)]'>Deathsquad</a></td>"
 
 		//Lavaland roles
-		if(jobban_isbanned(M, "lavaland"))
+		if(jobban_isbanned(M, ROLE_LAVALAND))
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_LAVALAND];jobban4=[REF(M)]'><font color=red>Lavaland</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_LAVALAND];jobban4=[REF(M)]'>Lavaland</a></td>"
