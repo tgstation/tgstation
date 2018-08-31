@@ -144,12 +144,9 @@ SUBSYSTEM_DEF(throwing)
 
 	var/datum/callback/cb
 	if (callback)
-		cb = callback
+		callback.Invoke()
 
 	qdel(src)
-
-	if(cb)
-		cb.Invoke()
 
 /datum/thrownthing/proc/hit_atom(atom/A)
 	finalize(hit=TRUE, target=A)
