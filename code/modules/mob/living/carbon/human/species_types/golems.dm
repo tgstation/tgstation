@@ -575,7 +575,7 @@
 	id = "runic golem"
 	limbs_id = "cultgolem"
 	sexes = FALSE
-	info_text = "As a <span class='danger'>Runic Golem</span>, you possess eldritch powers granted by the Elder Goddess Nar'Sie."
+	info_text = "As a <span class='danger'>Runic Golem</span>, you possess eldritch powers granted by the Elder Goddess Nar-Sie."
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES) //no mutcolors
 	prefix = "Runic"
 	special_names = null

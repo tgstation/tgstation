@@ -160,7 +160,7 @@
 
 /obj/structure/destructible/cult/pylon
 	name = "pylon"
-	desc = "A floating crystal that slowly heals those faithful to Nar'Sie."
+	desc = "A floating crystal that slowly heals those faithful to Nar-Sie."
 	icon_state = "pylon"
 	light_range = 1.5
 	light_color = LIGHT_COLOR_RED
