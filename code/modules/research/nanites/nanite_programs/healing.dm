@@ -128,7 +128,7 @@
 			return
 		var/update = FALSE
 		for(var/obj/item/bodypart/L in parts)
-			if(L.heal_damage(1/parts.len, 1/parts.len))
+			if(L.heal_damage(1/parts.len, 1/parts.len, only_robotic = TRUE, only_organic = FALSE))
 				update = TRUE
 		if(update)
 			host_mob.update_damage_overlays()
