@@ -31,7 +31,7 @@
 	desc = "These seeds grow to produce berries that look a lot like eggs."
 	icon_state = "seed-eggy"
 	species = "eggy"
-	plantname = "Egg-plants"
+	plantname = "Egg-Plants"
 	product = /obj/item/reagent_containers/food/snacks/grown/shell/eggy
 	lifespan = 75
 	production = 12
