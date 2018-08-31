@@ -18,8 +18,10 @@
 /datum/wires/rnd/get_status()
 	var/obj/machinery/rnd/R = holder
 	var/list/status = list()
-	status += "The red light is [R.disabled ? "off" : "on"]."
-	status += "The blue light is [R.hacked ? "off" : "on"]."
+
+	status += {"The red light is [R.disabled ? "off" : "on"].
+		The blue light is [R.hacked ? "off" : "on"]."}
+	
 	return status
 
 /datum/wires/rnd/on_pulse(wire)

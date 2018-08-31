@@ -39,21 +39,22 @@
 	else if(!power_station.teleporter_hub)
 		data += "<div class='statusDisplay'>No hub linked.</div>"
 	else
-		data += "<div class='statusDisplay'>Current regime: [regime_set]<BR>"
-		data += "Current target: [(!target) ? "None" : "[get_area(target)] [(regime_set != "Gate") ? "" : "Teleporter"]"]<BR>"
+
+		data += {"<div class='statusDisplay'>Current regime: [regime_set]<BR>
+			Current target: [(!target) ? "None" : "[get_area(target)] [(regime_set != "Gate") ? "" : "Teleporter"]"]<BR>"}
+		
 		if(calibrating)
 			data += "Calibration: <font color='yellow'>In Progress</font>"
 		else if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accurate >= 3)
 			data += "Calibration: <font color='green'>Optimal</font>"
 		else
 			data += "Calibration: <font color='red'>Sub-Optimal</font>"
-		data += "</div><BR>"
 
-		data += "<A href='?src=[REF(src)];regimeset=1'>Change regime</A><BR>"
-		data += "<A href='?src=[REF(src)];settarget=1'>Set target</A><BR>"
-
-		data += "<BR><A href='?src=[REF(src)];calibrate=1'>Calibrate Hub</A>"
-
+		data += {"</div><BR>
+			<A href='?src=[REF(src)];regimeset=1'>Change regime</A><BR>
+			<A href='?src=[REF(src)];settarget=1'>Set target</A><BR>
+			<BR><A href='?src=[REF(src)];calibrate=1'>Calibrate Hub</A>"}
+		
 	var/datum/browser/popup = new(user, "teleporter", name, 400, 400)
 	popup.set_content(data)
 	popup.open()

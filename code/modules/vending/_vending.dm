@@ -322,8 +322,10 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 /obj/machinery/vending/interact(mob/user)
 	var/dat = ""
 
-	dat += "<h3>Select an item</h3>"
-	dat += "<div class='statusDisplay'>"
+
+	dat += {"<h3>Select an item</h3>
+		<div class='statusDisplay'>"}
+	
 	if(!product_records.len)
 		dat += "<font color = 'red'>No product loaded!</font>"
 	else
@@ -341,9 +343,12 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 				dat += "<a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a> "
 			else
 				dat += "<span class='linkOff'>Sold out</span> "
+
+			dat += {"<font color = '[R.display_color]'><b>[sanitize(R.name)]</b>:</font>
+				<b>[R.amount]</b>
+				</li>"}
+		
 			dat += "<font color = '[R.display_color]'><b>[sanitize(R.name)]</b>:</font>"
-			dat += " <b>[R.amount]</b>"
-			dat += "</li>"
 		dat += "</ul>"
 	dat += "</div>"
 	if(premium.len > 0)
@@ -353,13 +358,18 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		else
 			dat += "<i>No money</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
 	if(istype(src, /obj/machinery/vending/snack))
-		dat += "<h3>Chef's Food Selection</h3>"
-		dat += "<div class='statusDisplay'>"
+
+		dat += {"<h3>Chef's Food Selection</h3>
+			<div class='statusDisplay'>"}
+		
 		for (var/O in dish_quants)
 			if(dish_quants[O] > 0)
 				var/N = dish_quants[O]
+
+				dat += {"<a href='byond://?src=[REF(src)];dispense=[sanitize(O)]'>Dispense</A> 
+					<B>[capitalize(O)]: [N]</B><br>"}
+		
 				dat += "<a href='byond://?src=[REF(src)];dispense=[sanitize(O)]'>Dispense</A> "
-				dat += "<B>[capitalize(O)]: [N]</B><br>"
 		dat += "</div>"
 
 	var/datum/browser/popup = new(user, "vending", (name))

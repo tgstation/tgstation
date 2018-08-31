@@ -261,11 +261,13 @@
 /mob/living/simple_animal/bot/mulebot/get_controls(mob/user)
 	var/ai = issilicon(user)
 	var/dat
-	dat += "<h3>Multiple Utility Load Effector Mk. V</h3>"
-	dat += "<b>ID:</b> [id]<BR>"
-	dat += "<b>Power:</b> [on ? "On" : "Off"]<BR>"
-	dat += "<h3>Status</h3>"
-	dat += "<div class='statusDisplay'>"
+
+	dat += {"<h3>Multiple Utility Load Effector Mk. V</h3>
+		<b>ID:</b> [id]<BR>
+		<b>Power:</b> [on ? "On" : "Off"]<BR>
+		<h3>Status</h3>
+		<div class='statusDisplay'>"}
+	
 	switch(mode)
 		if(BOT_IDLE)
 			dat += "<span class='good'>Ready</span>"
@@ -279,27 +281,28 @@
 			dat += "<span class='average'>[mode_name[BOT_NAV]]</span>"
 		if(BOT_NO_ROUTE)
 			dat += "<span class='bad'>[mode_name[BOT_NO_ROUTE]]</span>"
-	dat += "</div>"
 
-	dat += "<b>Current Load:</b> [load ? load.name : "<i>none</i>"]<BR>"
-	dat += "<b>Destination:</b> [!destination ? "<i>none</i>" : destination]<BR>"
-	dat += "<b>Power level:</b> [cell ? cell.percent() : 0]%"
-
+	dat += {"</div>
+		<b>Current Load:</b> [load ? load.name : "<i>none</i>"]<BR>
+		<b>Destination:</b> [!destination ? "<i>none</i>" : destination]<BR>
+		<b>Power level:</b> [cell ? cell.percent() : 0]%"}
+	
 	if(locked && !ai && !IsAdminGhost(user))
 		dat += "&nbsp;<br /><div class='notice'>Controls are locked</div><A href='byond://?src=[REF(src)];op=unlock'>Unlock Controls</A>"
 	else
-		dat += "&nbsp;<br /><div class='notice'>Controls are unlocked</div><A href='byond://?src=[REF(src)];op=lock'>Lock Controls</A><BR><BR>"
 
-		dat += "<A href='byond://?src=[REF(src)];op=power'>Toggle Power</A><BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=stop'>Stop</A><BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=go'>Proceed</A><BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=home'>Return to Home</A><BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=destination'>Set Destination</A><BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=setid'>Set Bot ID</A><BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=sethome'>Set Home</A><BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=autoret'>Toggle Auto Return Home</A> ([auto_return ? "On":"Off"])<BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=autopick'>Toggle Auto Pickup Crate</A> ([auto_pickup ? "On":"Off"])<BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=report'>Toggle Delivery Reporting</A> ([report_delivery ? "On" : "Off"])<BR>"
+		dat += {"&nbsp;<br /><div class='notice'>Controls are unlocked</div><A href='byond://?src=[REF(src)];op=lock'>Lock Controls</A><BR><BR>
+			<A href='byond://?src=[REF(src)];op=power'>Toggle Power</A><BR>
+			<A href='byond://?src=[REF(src)];op=stop'>Stop</A><BR>
+			<A href='byond://?src=[REF(src)];op=go'>Proceed</A><BR>
+			<A href='byond://?src=[REF(src)];op=home'>Return to Home</A><BR>
+			<A href='byond://?src=[REF(src)];op=destination'>Set Destination</A><BR>
+			<A href='byond://?src=[REF(src)];op=setid'>Set Bot ID</A><BR>
+			<A href='byond://?src=[REF(src)];op=sethome'>Set Home</A><BR>
+			<A href='byond://?src=[REF(src)];op=autoret'>Toggle Auto Return Home</A> ([auto_return ? "On":"Off"])<BR>
+			<A href='byond://?src=[REF(src)];op=autopick'>Toggle Auto Pickup Crate</A> ([auto_pickup ? "On":"Off"])<BR>
+			<A href='byond://?src=[REF(src)];op=report'>Toggle Delivery Reporting</A> ([report_delivery ? "On" : "Off"])<BR>"}
+		
 		if(load)
 			dat += "<A href='byond://?src=[REF(src)];op=unload'>Unload Now</A><BR>"
 		dat += "<div class='notice'>The maintenance hatch is closed.</div>"

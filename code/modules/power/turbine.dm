@@ -249,15 +249,13 @@
 
 	var/t = "<TT><B>Gas Turbine Generator</B><HR><PRE>"
 
-	t += "Generated power : [DisplayPower(lastgen)]<BR><BR>"
 
-	t += "Turbine: [round(compressor.rpm)] RPM<BR>"
-
-	t += "Starter: [ compressor.starter ? "<A href='?src=[REF(src)];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=[REF(src)];str=1'>On</A>"]"
-
-	t += "</PRE><HR><A href='?src=[REF(src)];close=1'>Close</A>"
-
-	t += "</TT>"
+	t += {"Generated power : [DisplayPower(lastgen)]<BR><BR>
+		Turbine: [round(compressor.rpm)] RPM<BR>
+		Starter: [ compressor.starter ? "<A href='?src=[REF(src)];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=[REF(src)];str=1'>On</A>"]
+		</PRE><HR><A href='?src=[REF(src)];close=1'>Close</A>
+		</TT>"}
+	
 	var/datum/browser/popup = new(user, "turbine", name)
 	popup.set_content(t)
 	popup.open()

@@ -129,9 +129,12 @@
 	else
 		dat += "<table cellpadding='3' style='text-align:center;'><tr><td>Name</td><td>Lifespan</td><td>Endurance</td><td>Maturation</td><td>Production</td><td>Yield</td><td>Potency</td><td>Stock</td></tr>"
 		for (var/datum/seed_pile/O in piles)
+
+			dat += {"<tr><td>[O.name]</td><td>[O.lifespan]</td><td>[O.endurance]</td><td>[O.maturation]</td>
+				<td>[O.production]</td><td>[O.yield]</td><td>[O.potency]</td><td>
+				<a href='byond://?src=[REF(src)];name=[O.name];li=[O.lifespan];en=[O.endurance];ma=[O.maturation];pr=[O.production];yi=[O.yield];pot=[O.potency]'>Vend</a> ([O.amount] left)</td></tr>"}
+		
 			dat += "<tr><td>[O.name]</td><td>[O.lifespan]</td><td>[O.endurance]</td><td>[O.maturation]</td>"
-			dat += "<td>[O.production]</td><td>[O.yield]</td><td>[O.potency]</td><td>"
-			dat += "<a href='byond://?src=[REF(src)];name=[O.name];li=[O.lifespan];en=[O.endurance];ma=[O.maturation];pr=[O.production];yi=[O.yield];pot=[O.potency]'>Vend</a> ([O.amount] left)</td></tr>"
 		dat += "</table>"
 	var/datum/browser/popup = new(user, "seed_ext", name, 700, 400)
 	popup.set_content(dat)

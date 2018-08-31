@@ -173,11 +173,15 @@
 							var complete_list = maintable.innerHTML;
 						</script>
 						<hr width='75%' />"}
-					dat += "<A href='?src=[REF(src)];choice=Record Maintenance'>Record Maintenance</A><br><br>"
-					dat += "<A href='?src=[REF(src)];choice=Log Out'>{Log Out}</A>"
+
+					dat += {"<A href='?src=[REF(src)];choice=Record Maintenance'>Record Maintenance</A><br><br>
+						<A href='?src=[REF(src)];choice=Log Out'>{Log Out}</A>"}
+					
 				if(2)
-					dat += "<B>Records Maintenance</B><HR>"
-					dat += "<BR><A href='?src=[REF(src)];choice=Delete All Records'>Delete All Records</A><BR><BR><A href='?src=[REF(src)];choice=Return'>Back</A>"
+
+					dat += {"<B>Records Maintenance</B><HR>
+						<BR><A href='?src=[REF(src)];choice=Delete All Records'>Delete All Records</A><BR><BR><A href='?src=[REF(src)];choice=Return'>Back</A>"}
+					
 				if(3)
 					dat += "<font size='4'><b>Security Record</b></font><br>"
 					if(istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1))
@@ -208,11 +212,11 @@
 					else
 						dat += "<br>General Record Lost!<br>"
 					if((istype(active2, /datum/data/record) && GLOB.data_core.security.Find(active2)))
-						dat += "<font size='4'><b>Security Data</b></font>"
-						dat += "<br>Criminal Status: <A href='?src=[REF(src)];choice=Edit Field;field=criminal'>[active2.fields["criminal"]]</A>"
-						dat += "<br><br>Minor Crimes: <A href='?src=[REF(src)];choice=Edit Field;field=mi_crim_add'>Add New</A>"
 
-
+						dat += {"<font size='4'><b>Security Data</b></font>
+							<br>Criminal Status: <A href='?src=[REF(src)];choice=Edit Field;field=criminal'>[active2.fields["criminal"]]</A>
+							<br><br>Minor Crimes: <A href='?src=[REF(src)];choice=Edit Field;field=mi_crim_add'>Add New</A>"}
+						
 						dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
 						<tr>
 						<th>Crime</th>
@@ -222,17 +226,19 @@
 						<th>Del</th>
 						</tr>"}
 						for(var/datum/data/crime/c in active2.fields["mi_crim"])
+
+							dat += {"<tr><td>[c.crimeName]</td>
+								<td>[c.crimeDetails]</td>
+								<td>[c.author]</td>
+								<td>[c.time]</td>
+								<td><A href='?src=[REF(src)];choice=Edit Field;field=mi_crim_delete;cdataid=[c.dataId]'>\[X\]</A></td>
+								</tr>"}
+						
 							dat += "<tr><td>[c.crimeName]</td>"
-							dat += "<td>[c.crimeDetails]</td>"
-							dat += "<td>[c.author]</td>"
-							dat += "<td>[c.time]</td>"
-							dat += "<td><A href='?src=[REF(src)];choice=Edit Field;field=mi_crim_delete;cdataid=[c.dataId]'>\[X\]</A></td>"
-							dat += "</tr>"
-						dat += "</table>"
 
-
-						dat += "<br>Major Crimes: <A href='?src=[REF(src)];choice=Edit Field;field=ma_crim_add'>Add New</A>"
-
+						dat += {"</table>
+							<br>Major Crimes: <A href='?src=[REF(src)];choice=Edit Field;field=ma_crim_add'>Add New</A>"}
+						
 						dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
 						<tr>
 						<th>Crime</th>
@@ -242,29 +248,40 @@
 						<th>Del</th>
 						</tr>"}
 						for(var/datum/data/crime/c in active2.fields["ma_crim"])
-							dat += "<tr><td>[c.crimeName]</td>"
-							dat += "<td>[c.crimeDetails]</td>"
-							dat += "<td>[c.author]</td>"
-							dat += "<td>[c.time]</td>"
-							dat += "<td><A href='?src=[REF(src)];choice=Edit Field;field=ma_crim_delete;cdataid=[c.dataId]'>\[X\]</A></td>"
-							dat += "</tr>"
-						dat += "</table>"
 
-						dat += "<br>\nImportant Notes:<br>\n\t<A href='?src=[REF(src)];choice=Edit Field;field=notes'>&nbsp;[active2.fields["notes"]]&nbsp;</A>"
-						dat += "<br><br><font size='4'><b>Comments/Log</b></font><br>"
+							dat += {"<tr><td>[c.crimeName]</td>
+								<td>[c.crimeDetails]</td>
+								<td>[c.author]</td>
+								<td>[c.time]</td>
+								<td><A href='?src=[REF(src)];choice=Edit Field;field=ma_crim_delete;cdataid=[c.dataId]'>\[X\]</A></td>
+								</tr>"}
+						
+							dat += "<tr><td>[c.crimeName]</td>"
+
+						dat += {"</table>
+							<br>\nImportant Notes:<br>\n\t<A href='?src=[REF(src)];choice=Edit Field;field=notes'>&nbsp;[active2.fields["notes"]]&nbsp;</A>
+							<br><br><font size='4'><b>Comments/Log</b></font><br>"}
+						
 						var/counter = 1
 						while(active2.fields[text("com_[]", counter)])
 							dat += (active2.fields[text("com_[]", counter)] + "<BR>")
 							if(active2.fields[text("com_[]", counter)] != "<B>Deleted</B>")
 								dat += text("<A href='?src=[REF(src)];choice=Delete Entry;del_c=[]'>Delete Entry</A><BR><BR>", counter)
 							counter++
-						dat += "<A href='?src=[REF(src)];choice=Add Entry'>Add Entry</A><br><br>"
-						dat += "<A href='?src=[REF(src)];choice=Delete Record (Security)'>Delete Record (Security Only)</A><br>"
+
+						dat += {"<A href='?src=[REF(src)];choice=Add Entry'>Add Entry</A><br><br>
+							<A href='?src=[REF(src)];choice=Delete Record (Security)'>Delete Record (Security Only)</A><br>"}
+						
 					else
+
+						dat += {"Security Record Lost!<br>
+							<A href='?src=[REF(src)];choice=New Record (Security)'>New Security Record</A><br><br>"}
+					
 						dat += "Security Record Lost!<br>"
-						dat += "<A href='?src=[REF(src)];choice=New Record (Security)'>New Security Record</A><br><br>"
-					dat += "<A href='?src=[REF(src)];choice=Delete Record (ALL)'>Delete Record (ALL)</A><br><A href='?src=[REF(src)];choice=Print Record'>Print Record</A><BR><A href='?src=[REF(src)];choice=Print Poster'>Print Wanted Poster</A><BR><A href='?src=[REF(src)];choice=Return'>Back</A><BR><BR>"
-					dat += "<A href='?src=[REF(src)];choice=Log Out'>{Log Out}</A>"
+
+					dat += {"<A href='?src=[REF(src)];choice=Delete Record (ALL)'>Delete Record (ALL)</A><br><A href='?src=[REF(src)];choice=Print Record'>Print Record</A><BR><A href='?src=[REF(src)];choice=Print Poster'>Print Wanted Poster</A><BR><A href='?src=[REF(src)];choice=Return'>Back</A><BR><BR>
+						<A href='?src=[REF(src)];choice=Log Out'>{Log Out}</A>"}
+					
 				else
 		else
 			dat += "<A href='?src=[REF(src)];choice=Log In'>{Log In}</A>"
@@ -385,14 +402,18 @@ What a mess.*/
 <th>Time Added</th>
 </tr>"}
 						for(var/datum/data/crime/c in active2.fields["mi_crim"])
-							P.info += "<tr><td>[c.crimeName]</td>"
-							P.info += "<td>[c.crimeDetails]</td>"
-							P.info += "<td>[c.author]</td>"
-							P.info += "<td>[c.time]</td>"
-							P.info += "</tr>"
-						P.info += "</table>"
 
-						P.info += "<BR>\nMajor Crimes: <BR>\n"
+							P.info += {"<tr><td>[c.crimeName]</td>
+								<td>[c.crimeDetails]</td>
+								<td>[c.author]</td>
+								<td>[c.time]</td>
+								</tr>"}
+						
+							P.info += "<tr><td>[c.crimeName]</td>"
+
+						P.info += {"</table>
+							<BR>\nMajor Crimes: <BR>\n"}
+						
 						P.info +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
 <tr>
 <th>Crime</th>
@@ -401,11 +422,14 @@ What a mess.*/
 <th>Time Added</th>
 </tr>"}
 						for(var/datum/data/crime/c in active2.fields["ma_crim"])
+
+							P.info += {"<tr><td>[c.crimeName]</td>
+								<td>[c.crimeDetails]</td>
+								<td>[c.author]</td>
+								<td>[c.time]</td>
+								</tr>"}
+						
 							P.info += "<tr><td>[c.crimeName]</td>"
-							P.info += "<td>[c.crimeDetails]</td>"
-							P.info += "<td>[c.author]</td>"
-							P.info += "<td>[c.time]</td>"
-							P.info += "</tr>"
 						P.info += "</table>"
 
 
@@ -452,11 +476,12 @@ What a mess.*/
 
 //RECORD DELETE
 			if("Delete All Records")
-				temp = ""
-				temp += "Are you sure you wish to delete all Security records?<br>"
-				temp += "<a href='?src=[REF(src)];choice=Purge All Records'>Yes</a><br>"
-				temp += "<a href='?src=[REF(src)];choice=Clear Screen'>No</a>"
 
+				temp = {"
+					Are you sure you wish to delete all Security records?<br>
+					<a href='?src=[REF(src)];choice=Purge All Records'>Yes</a><br>
+					<a href='?src=[REF(src)];choice=Clear Screen'>No</a>"}
+				
 			if("Purge All Records")
 				investigate_log("[key_name(usr)] has purged all the security records.", INVESTIGATE_RECORDS)
 				for(var/datum/data/record/R in GLOB.data_core.security)
@@ -478,16 +503,18 @@ What a mess.*/
 
 			if("Delete Record (ALL)")
 				if(active1)
-					temp = "<h5>Are you sure you wish to delete the record (ALL)?</h5>"
-					temp += "<a href='?src=[REF(src)];choice=Delete Record (ALL) Execute'>Yes</a><br>"
-					temp += "<a href='?src=[REF(src)];choice=Clear Screen'>No</a>"
 
+					temp = {"<h5>Are you sure you wish to delete the record (ALL)?</h5>
+						<a href='?src=[REF(src)];choice=Delete Record (ALL) Execute'>Yes</a><br>
+						<a href='?src=[REF(src)];choice=Clear Screen'>No</a>"}
+					
 			if("Delete Record (Security)")
 				if(active2)
-					temp = "<h5>Are you sure you wish to delete the record (Security Portion Only)?</h5>"
-					temp += "<a href='?src=[REF(src)];choice=Delete Record (Security) Execute'>Yes</a><br>"
-					temp += "<a href='?src=[REF(src)];choice=Clear Screen'>No</a>"
 
+					temp = {"<h5>Are you sure you wish to delete the record (Security Portion Only)?</h5>
+						<a href='?src=[REF(src)];choice=Delete Record (Security) Execute'>Yes</a><br>
+						<a href='?src=[REF(src)];choice=Clear Screen'>No</a>"}
+					
 			if("Delete Entry")
 				if((istype(active2, /datum/data/record) && active2.fields[text("com_[]", href_list["del_c"])]))
 					active2.fields[text("com_[]", href_list["del_c"])] = "<B>Deleted</B>"
@@ -684,20 +711,24 @@ What a mess.*/
 							active2.fields["notes"] = t1
 					if("criminal")
 						if(istype(active2, /datum/data/record))
-							temp = "<h5>Criminal Status:</h5>"
-							temp += "<ul>"
-							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=none'>None</a></li>"
-							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=arrest'>*Arrest*</a></li>"
-							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=incarcerated'>Incarcerated</a></li>"
-							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=paroled'>Paroled</a></li>"
-							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=released'>Discharged</a></li>"
-							temp += "</ul>"
+
+							temp = {"<h5>Criminal Status:</h5>
+								<ul>
+								<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=none'>None</a></li>
+								<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=arrest'>*Arrest*</a></li>
+								<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=incarcerated'>Incarcerated</a></li>
+								<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=paroled'>Paroled</a></li>
+								<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=released'>Discharged</a></li>
+								</ul>"}
+							
 					if("rank")
 						var/list/L = list( "Head of Personnel", "Captain", "AI", "Central Command" )
 						//This was so silly before the change. Now it actually works without beating your head against the keyboard. /N
 						if((istype(active1, /datum/data/record) && L.Find(rank)))
-							temp = "<h5>Rank:</h5>"
-							temp += "<ul>"
+
+							temp = {"<h5>Rank:</h5>
+								<ul>"}
+							
 							for(var/rank in get_all_jobs())
 								temp += "<li><a href='?src=[REF(src)];choice=Change Rank;rank=[rank]'>[rank]</a></li>"
 							temp += "</ul>"

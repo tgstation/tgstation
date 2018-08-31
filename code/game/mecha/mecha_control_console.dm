@@ -25,13 +25,17 @@
 						  <a href='?src=[REF(src)];get_log=[REF(TR)]'>Show exosuit log</a> | <a style='color: #f00;' href='?src=[REF(src)];shock=[REF(TR)]'>(EMP pulse)</a><br>"}
 
 	if(screen==1)
+
+		dat += {"<h3>Log contents</h3>
+			<a href='?src=[REF(src)];return=1'>Return</a><hr>
+			[stored_data]"}
+	
 		dat += "<h3>Log contents</h3>"
-		dat += "<a href='?src=[REF(src)];return=1'>Return</a><hr>"
-		dat += "[stored_data]"
 
-	dat += "<A href='?src=[REF(src)];refresh=1'>(Refresh)</A><BR>"
-	dat += "</body></html>"
 
+	dat += {"<A href='?src=[REF(src)];refresh=1'>(Refresh)</A><BR>
+		</body></html>"}
+	
 	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
 

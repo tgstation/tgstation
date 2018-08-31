@@ -231,8 +231,10 @@ Code:
 <a href='byond://?src=[REF(src)];choice=Signal Code;scode=5'>+</a><br>"}
 		if (41) //crew manifest
 
-			menu = "<h4>[PDAIMG(notes)] Crew Manifest</h4>"
-			menu += "Entries cannot be modified from this terminal.<br><br>"
+
+			menu = {"<h4>[PDAIMG(notes)] Crew Manifest</h4>
+				Entries cannot be modified from this terminal.<br><br>"}
+			
 			if(GLOB.data_core.general)
 				for (var/datum/data/record/t in sortRecord(GLOB.data_core.general))
 					menu += "[t.fields["name"]] - [t.fields["rank"]]<br>"
@@ -240,18 +242,18 @@ Code:
 
 
 		if (42) //status displays
-			menu = "<h4>[PDAIMG(status)] Station Status Display Interlink</h4>"
 
-			menu += "\[ <A HREF='?src=[REF(src)];choice=Status;statdisp=blank'>Clear</A> \]<BR>"
-			menu += "\[ <A HREF='?src=[REF(src)];choice=Status;statdisp=shuttle'>Shuttle ETA</A> \]<BR>"
-			menu += "\[ <A HREF='?src=[REF(src)];choice=Status;statdisp=message'>Message</A> \]"
-			menu += "<ul><li> Line 1: <A HREF='?src=[REF(src)];choice=Status;statdisp=setmsg1'>[ message1 ? message1 : "(none)"]</A>"
-			menu += "<li> Line 2: <A HREF='?src=[REF(src)];choice=Status;statdisp=setmsg2'>[ message2 ? message2 : "(none)"]</A></ul><br>"
-			menu += "\[ Alert: <A HREF='?src=[REF(src)];choice=Status;statdisp=alert;alert=default'>None</A> |"
-			menu += " <A HREF='?src=[REF(src)];choice=Status;statdisp=alert;alert=redalert'>Red Alert</A> |"
-			menu += " <A HREF='?src=[REF(src)];choice=Status;statdisp=alert;alert=lockdown'>Lockdown</A> |"
-			menu += " <A HREF='?src=[REF(src)];choice=Status;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR>"
-
+			menu = {"<h4>[PDAIMG(status)] Station Status Display Interlink</h4>
+				\[ <A HREF='?src=[REF(src)];choice=Status;statdisp=blank'>Clear</A> \]<BR>
+				\[ <A HREF='?src=[REF(src)];choice=Status;statdisp=shuttle'>Shuttle ETA</A> \]<BR>
+				\[ <A HREF='?src=[REF(src)];choice=Status;statdisp=message'>Message</A> \]
+				<ul><li> Line 1: <A HREF='?src=[REF(src)];choice=Status;statdisp=setmsg1'>[ message1 ? message1 : "(none)"]</A>
+				<li> Line 2: <A HREF='?src=[REF(src)];choice=Status;statdisp=setmsg2'>[ message2 ? message2 : "(none)"]</A></ul><br>
+				\[ Alert: <A HREF='?src=[REF(src)];choice=Status;statdisp=alert;alert=default'>None</A> |
+				<A HREF='?src=[REF(src)];choice=Status;statdisp=alert;alert=redalert'>Red Alert</A> |
+				<A HREF='?src=[REF(src)];choice=Status;statdisp=alert;alert=lockdown'>Lockdown</A> |
+				<A HREF='?src=[REF(src)];choice=Status;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR>"}
+			
 		if (43)
 			menu = "<h4>[PDAIMG(power)] Power Monitors - Please select one</h4><BR>"
 			powmonitor = null
@@ -296,10 +298,10 @@ Code:
 						var/obj/machinery/power/apc/A = term.master
 						L += A
 
-				menu += "<PRE>Location: [get_area_name(powmonitor, TRUE)]<BR>Total power: [DisplayPower(connected_powernet.viewavail)]<BR>Total load:  [DisplayPower(connected_powernet.viewload)]<BR>"
 
-				menu += "<FONT SIZE=-1>"
-
+				menu += {"<PRE>Location: [get_area_name(powmonitor, TRUE)]<BR>Total power: [DisplayPower(connected_powernet.viewavail)]<BR>Total load:  [DisplayPower(connected_powernet.viewload)]<BR>
+					<FONT SIZE=-1>"}
+				
 				if(L.len > 0)
 					menu += "Area                           Eqp./Lgt./Env.  Load   Cell<HR>"
 
@@ -322,35 +324,35 @@ Code:
 			menu = "<h4>[PDAIMG(medical)] Medical Record</h4>"
 
 			if(active1 in GLOB.data_core.general)
-				menu += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>"
-				menu += "Sex: [active1.fields["sex"]]<br>"
-				menu += "Age: [active1.fields["age"]]<br>"
-				menu += "Rank: [active1.fields["rank"]]<br>"
-				menu += "Fingerprint: [active1.fields["fingerprint"]]<br>"
-				menu += "Physical Status: [active1.fields["p_stat"]]<br>"
-				menu += "Mental Status: [active1.fields["m_stat"]]<br>"
+
+				menu += {"Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>
+					Sex: [active1.fields["sex"]]<br>
+					Age: [active1.fields["age"]]<br>
+					Rank: [active1.fields["rank"]]<br>
+					Fingerprint: [active1.fields["fingerprint"]]<br>
+					Physical Status: [active1.fields["p_stat"]]<br>
+					Mental Status: [active1.fields["m_stat"]]<br>"}
+				
 			else
 				menu += "<b>Record Lost!</b><br>"
 
-			menu += "<br>"
 
-			menu += "<h4>[PDAIMG(medical)] Medical Data</h4>"
+			menu += {"<br>
+				<h4>[PDAIMG(medical)] Medical Data</h4>"}
+			
 			if(active2 in GLOB.data_core.medical)
-				menu += "Blood Type: [active2.fields["blood_type"]]<br><br>"
 
-				menu += "Minor Disabilities: [active2.fields["mi_dis"]]<br>"
-				menu += "Details: [active2.fields["mi_dis_d"]]<br><br>"
-
-				menu += "Major Disabilities: [active2.fields["ma_dis"]]<br>"
-				menu += "Details: [active2.fields["ma_dis_d"]]<br><br>"
-
-				menu += "Allergies: [active2.fields["alg"]]<br>"
-				menu += "Details: [active2.fields["alg_d"]]<br><br>"
-
-				menu += "Current Diseases: [active2.fields["cdi"]]<br>"
-				menu += "Details: [active2.fields["cdi_d"]]<br><br>"
-
-				menu += "Important Notes: [active2.fields["notes"]]<br>"
+				menu += {"Blood Type: [active2.fields["blood_type"]]<br><br>
+					Minor Disabilities: [active2.fields["mi_dis"]]<br>
+					Details: [active2.fields["mi_dis_d"]]<br><br>
+					Major Disabilities: [active2.fields["ma_dis"]]<br>
+					Details: [active2.fields["ma_dis_d"]]<br><br>
+					Allergies: [active2.fields["alg"]]<br>
+					Details: [active2.fields["alg_d"]]<br><br>
+					Current Diseases: [active2.fields["cdi"]]<br>
+					Details: [active2.fields["cdi_d"]]<br><br>
+					Important Notes: [active2.fields["notes"]]<br>"}
+				
 			else
 				menu += "<b>Record Lost!</b><br>"
 
@@ -366,19 +368,22 @@ Code:
 			menu = "<h4>[PDAIMG(cuffs)] Security Record</h4>"
 
 			if(active1 in GLOB.data_core.general)
-				menu += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>"
-				menu += "Sex: [active1.fields["sex"]]<br>"
-				menu += "Age: [active1.fields["age"]]<br>"
-				menu += "Rank: [active1.fields["rank"]]<br>"
-				menu += "Fingerprint: [active1.fields["fingerprint"]]<br>"
-				menu += "Physical Status: [active1.fields["p_stat"]]<br>"
-				menu += "Mental Status: [active1.fields["m_stat"]]<br>"
+
+				menu += {"Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>
+					Sex: [active1.fields["sex"]]<br>
+					Age: [active1.fields["age"]]<br>
+					Rank: [active1.fields["rank"]]<br>
+					Fingerprint: [active1.fields["fingerprint"]]<br>
+					Physical Status: [active1.fields["p_stat"]]<br>
+					Mental Status: [active1.fields["m_stat"]]<br>"}
+				
 			else
 				menu += "<b>Record Lost!</b><br>"
 
-			menu += "<br>"
 
-			menu += "<h4>[PDAIMG(cuffs)] Security Data</h4>"
+			menu += {"<br>
+				<h4>[PDAIMG(cuffs)] Security Data</h4>"}
+			
 			if(active3 in GLOB.data_core.security)
 				menu += "Criminal Status: [active3.fields["criminal"]]<br>"
 
@@ -392,11 +397,14 @@ Code:
 <th>Time Added</th>
 </tr>"}
 				for(var/datum/data/crime/c in active3.fields["mi_crim"])
+
+					menu += {"<tr><td>[c.crimeName]</td>
+						<td>[c.crimeDetails]</td>
+						<td>[c.author]</td>
+						<td>[c.time]</td>
+						</tr>"}
+				
 					menu += "<tr><td>[c.crimeName]</td>"
-					menu += "<td>[c.crimeDetails]</td>"
-					menu += "<td>[c.author]</td>"
-					menu += "<td>[c.time]</td>"
-					menu += "</tr>"
 				menu += "</table>"
 
 				menu += text("<BR>\nMajor Crimes:")
@@ -409,25 +417,30 @@ Code:
 <th>Time Added</th>
 </tr>"}
 				for(var/datum/data/crime/c in active3.fields["ma_crim"])
-					menu += "<tr><td>[c.crimeName]</td>"
-					menu += "<td>[c.crimeDetails]</td>"
-					menu += "<td>[c.author]</td>"
-					menu += "<td>[c.time]</td>"
-					menu += "</tr>"
-				menu += "</table>"
 
-				menu += "<BR>\nImportant Notes:<br>"
-				menu += "[active3.fields["notes"]]"
+					menu += {"<tr><td>[c.crimeName]</td>
+						<td>[c.crimeDetails]</td>
+						<td>[c.author]</td>
+						<td>[c.time]</td>
+						</tr>"}
+				
+					menu += "<tr><td>[c.crimeName]</td>"
+
+				menu += {"</table>
+					<BR>\nImportant Notes:<br>
+					[active3.fields["notes"]]"}
+				
 			else
 				menu += "<b>Record Lost!</b><br>"
 
 			menu += "<br>"
 
 		if (47) //quartermaster order records
-			menu = "<h4>[PDAIMG(crate)] Supply Record Interlink</h4>"
 
-			menu += "<BR><B>Supply shuttle</B><BR>"
-			menu += "Location: "
+			menu = {"<h4>[PDAIMG(crate)] Supply Record Interlink</h4>
+				<BR><B>Supply shuttle</B><BR>
+				Location: "}
+			
 			switch(SSshuttle.supply.mode)
 				if(SHUTTLE_CALL)
 					menu += "Moving to "
@@ -446,9 +459,10 @@ Code:
 			for(var/S in SSshuttle.shoppinglist)
 				var/datum/supply_order/SO = S
 				menu += "<li>#[SO.id] - [SO.pack.name] approved by [SO.orderer] [SO.reason ? "([SO.reason])":""]</li>"
-			menu += "</ol>"
 
-			menu += "Current requests: <BR><ol>"
+			menu += {"</ol>
+				Current requests: <BR><ol>"}
+			
 			for(var/S in SSshuttle.requestlist)
 				var/datum/supply_order/SO = S
 				menu += "<li>#[SO.id] - [SO.pack.name] requested by [SO.orderer]</li>"
@@ -477,10 +491,10 @@ Code:
 
 			var/turf/cl = get_turf(src)
 			if (cl)
-				menu += "Current Orbital Location: <b>\[[cl.x],[cl.y]\]</b>"
 
-				menu += "<h4>Located Mops:</h4>"
-
+				menu += {"Current Orbital Location: <b>\[[cl.x],[cl.y]\]</b>
+					<h4>Located Mops:</h4>"}
+				
 				var/ldat
 				for (var/obj/item/mop/M in world)
 					var/turf/ml = get_turf(M)
@@ -535,8 +549,10 @@ Code:
 			menu += "<br><br><A href='byond://?src=[REF(src)];choice=49'>Refresh GPS Locator</a>"
 
 		if (53) // Newscaster
-			menu = "<h4>[PDAIMG(notes)] Newscaster Access</h4>"
-			menu += "<br> Current Newsfeed: <A href='byond://?src=[REF(src)];choice=Newscaster Switch Channel'>[current_channel ? current_channel : "None"]</a> <br>"
+
+			menu = {"<h4>[PDAIMG(notes)] Newscaster Access</h4>
+				<br> Current Newsfeed: <A href='byond://?src=[REF(src)];choice=Newscaster Switch Channel'>[current_channel ? current_channel : "None"]</a> <br>"}
+			
 			var/datum/newscaster/feed_channel/current
 			for(var/datum/newscaster/feed_channel/chan in GLOB.news_network.network_channels)
 				if (chan.channel_name == current_channel)
@@ -546,8 +562,10 @@ Code:
 				return
 			var/i = 1
 			for(var/datum/newscaster/feed_message/msg in current.messages)
-				menu +="-[msg.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[msg.returnAuthor(-1)]</FONT>\]</FONT><BR>"
-				menu +="<b><font size=1>[msg.comments.len] comment[msg.comments.len > 1 ? "s" : ""]</font></b><br>"
+
+				menu += {"-[msg.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[msg.returnAuthor(-1)]</FONT>\]</FONT><BR>
+					<b><font size=1>[msg.comments.len] comment[msg.comments.len > 1 ? "s" : ""]</font></b><br>"}
+				
 				if(msg.img)
 					user << browse_rsc(msg.img, "tmp_photo[i].png")
 					menu +="<img src='tmp_photo[i].png' width = '180'><BR>"
@@ -676,10 +694,12 @@ Code:
 	var/mob/living/simple_animal/bot/Bot
 
 	if(active_bot)
-		menu += "<B>[active_bot]</B><BR> Status: (<A href='byond://?src=[REF(src)];op=control;bot=[REF(active_bot)]'>[PDAIMG(refresh)]<i>refresh</i></A>)<BR>"
-		menu += "Model: [active_bot.model]<BR>"
-		menu += "Location: [get_area(active_bot)]<BR>"
-		menu += "Mode: [active_bot.get_mode()]"
+
+		menu += {"<B>[active_bot]</B><BR> Status: (<A href='byond://?src=[REF(src)];op=control;bot=[REF(active_bot)]'>[PDAIMG(refresh)]<i>refresh</i></A>)<BR>
+			Model: [active_bot.model]<BR>
+			Location: [get_area(active_bot)]<BR>
+			Mode: [active_bot.get_mode()]"}
+		
 		if(active_bot.allow_pai)
 			menu += "<BR>pAI: "
 			if(active_bot.paicard && active_bot.paicard.pai)
@@ -693,24 +713,27 @@ Code:
 		if(active_bot.bot_type == MULE_BOT)
 			var/mob/living/simple_animal/bot/mulebot/MULE = active_bot
 			var/atom/Load = MULE.load
-			menu += "<BR>Current Load: [ !Load ? "<i>none</i>" : "[Load.name] (<A href='byond://?src=[REF(src)];mule=unload'><i>unload</i></A>)" ]<BR>"
-			menu += "Destination: [MULE.destination ? MULE.destination : "<i>None</i>"] (<A href='byond://?src=[REF(src)];mule=destination'><i>set</i></A>)<BR>"
-			menu += "Set ID: [MULE.suffix] <A href='byond://?src=[REF(src)];mule=setid'><i> Modify</i></A><BR>"
-			menu += "Power: [MULE.cell ? MULE.cell.percent() : 0]%<BR>"
-			menu += "Home: [!MULE.home_destination ? "<i>none</i>" : MULE.home_destination ]<BR>"
-			menu += "Delivery Reporting: <A href='byond://?src=[REF(src)];mule=report'>[MULE.report_delivery ? "(<B>On</B>)": "(<B>Off</B>)"]</A><BR>"
-			menu += "Auto Return Home: <A href='byond://?src=[REF(src)];mule=autoret'>[MULE.auto_return ? "(<B>On</B>)": "(<B>Off</B>)"]</A><BR>"
-			menu += "Auto Pickup Crate: <A href='byond://?src=[REF(src)];mule=autopick'>[MULE.auto_pickup ? "(<B>On</B>)": "(<B>Off</B>)"]</A><BR><BR>" //Hue.
 
-			menu += "\[<A href='byond://?src=[REF(src)];mule=stop'>Stop</A>\] "
-			menu += "\[<A href='byond://?src=[REF(src)];mule=go'>Proceed</A>\] "
-			menu += "\[<A href='byond://?src=[REF(src)];mule=home'>Return Home</A>\]<BR>"
-
+			menu += {"<BR>Current Load: [ !Load ? "<i>none</i>" : "[Load.name] (<A href='byond://?src=[REF(src)];mule=unload'><i>unload</i></A>)" ]<BR>
+				Destination: [MULE.destination ? MULE.destination : "<i>None</i>"] (<A href='byond://?src=[REF(src)];mule=destination'><i>set</i></A>)<BR>
+				Set ID: [MULE.suffix] <A href='byond://?src=[REF(src)];mule=setid'><i> Modify</i></A><BR>
+				Power: [MULE.cell ? MULE.cell.percent() : 0]%<BR>
+				Home: [!MULE.home_destination ? "<i>none</i>" : MULE.home_destination ]<BR>
+				Delivery Reporting: <A href='byond://?src=[REF(src)];mule=report'>[MULE.report_delivery ? "(<B>On</B>)": "(<B>Off</B>)"]</A><BR>
+				Auto Return Home: <A href='byond://?src=[REF(src)];mule=autoret'>[MULE.auto_return ? "(<B>On</B>)": "(<B>Off</B>)"]</A><BR>
+				Auto Pickup Crate: <A href='byond://?src=[REF(src)];mule=autopick'>[MULE.auto_pickup ? "(<B>On</B>)": "(<B>Off</B>)"]</A><BR><BR>" //Hue
+				\[<A href='byond://?src=[REF(src)];mule=stop'>Stop</A>\] 
+				\[<A href='byond://?src=[REF(src)];mule=go'>Proceed</A>\] 
+				\[<A href='byond://?src=[REF(src)];mule=home'>Return Home</A>\]<BR>"}
+			
 		else
+
+			menu += {"<BR>\[<A href='byond://?src=[REF(src)];op=patroloff'>Stop Patrol</A>\] "	//patrolo
+				\[<A href='byond://?src=[REF(src)];op=patrolon'>Start Patrol</A>\] "	//patrolof
+				\[<A href='byond://?src=[REF(src)];op=summon'>Summon Bot</A>\]<BR>"		//summo
+				Keep an ID inserted to upload access codes upon summoning."}
+		
 			menu += "<BR>\[<A href='byond://?src=[REF(src)];op=patroloff'>Stop Patrol</A>\] "	//patrolon
-			menu += "\[<A href='byond://?src=[REF(src)];op=patrolon'>Start Patrol</A>\] "	//patroloff
-			menu += "\[<A href='byond://?src=[REF(src)];op=summon'>Summon Bot</A>\]<BR>"		//summon
-			menu += "Keep an ID inserted to upload access codes upon summoning."
 
 		menu += "<HR><A href='byond://?src=[REF(src)];op=botlist'>[PDAIMG(back)]Return to bot list</A>"
 	else

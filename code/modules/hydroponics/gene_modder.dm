@@ -121,62 +121,83 @@
 			interact(user)
 			return
 
-		dat += "<div class='line'><h3>Confirm Operation</h3></div>"
-		dat += "<div class='statusDisplay'>Are you sure you want to [operation] "
+
+		dat += {"<div class='line'><h3>Confirm Operation</h3></div>
+			<div class='statusDisplay'>Are you sure you want to [operation] "}
+		
 		switch(operation)
 			if("remove")
 				dat += "<span class='highlight'>[target.get_name()]</span> gene from \the <span class='highlight'>[seed]</span>?<br>"
 			if("extract")
-				dat += "<span class='highlight'>[target.get_name()]</span> gene from \the <span class='highlight'>[seed]</span>?<br>"
-				dat += "<span class='bad'>The sample will be destroyed in process!</span>"
+
+				dat += {"<span class='highlight'>[target.get_name()]</span> gene from \the <span class='highlight'>[seed]</span>?<br>
+					<span class='bad'>The sample will be destroyed in process!</span>"}
+				
 				if(istype(target, /datum/plant_gene/core))
 					var/datum/plant_gene/core/gene = target
 					if(istype(target, /datum/plant_gene/core/potency))
 						if(gene.value > max_potency)
-							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[max_potency]</span> potency. "
-							dat += "Target gene will be degraded to <span class='highlight'>[max_potency]</span> potency on extraction."
+
+							dat += {"<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[max_potency]</span> potency. 
+								Target gene will be degraded to <span class='highlight'>[max_potency]</span> potency on extraction."}
+							
 					else if(istype(target, /datum/plant_gene/core/lifespan))
 						if(gene.value > max_endurance)
-							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[max_endurance]</span> lifespan. "
-							dat += "Target gene will be degraded to <span class='highlight'>[max_endurance]</span> Lifespan on extraction."
+
+							dat += {"<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[max_endurance]</span> lifespan. 
+								Target gene will be degraded to <span class='highlight'>[max_endurance]</span> Lifespan on extraction."}
+							
 					else if(istype(target, /datum/plant_gene/core/endurance))
 						if(gene.value > max_endurance)
-							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[max_endurance]</span> endurance. "
-							dat += "Target gene will be degraded to <span class='highlight'>[max_endurance]</span> endurance on extraction."
+
+							dat += {"<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[max_endurance]</span> endurance. 
+								Target gene will be degraded to <span class='highlight'>[max_endurance]</span> endurance on extraction."}
+							
 					else if(istype(target, /datum/plant_gene/core/yield))
 						if(gene.value > max_yield)
-							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[max_yield]</span> yield. "
-							dat += "Target gene will be degraded to <span class='highlight'>[max_yield]</span> yield on extraction."
+
+							dat += {"<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[max_yield]</span> yield. 
+								Target gene will be degraded to <span class='highlight'>[max_yield]</span> yield on extraction."}
+							
 					else if(istype(target, /datum/plant_gene/core/production))
 						if(gene.value < min_production)
-							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[min_production]</span> production. "
-							dat += "Target gene will be degraded to <span class='highlight'>[min_production]</span> production on extraction."
+
+							dat += {"<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[min_production]</span> production. 
+								Target gene will be degraded to <span class='highlight'>[min_production]</span> production on extraction."}
+							
 					else if(istype(target, /datum/plant_gene/core/weed_rate))
 						if(gene.value < min_wrate)
-							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[min_wrate]</span> weed rate. "
-							dat += "Target gene will be degraded to <span class='highlight'>[min_wrate]</span> weed rate on extraction."
+
+							dat += {"<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[min_wrate]</span> weed rate. 
+								Target gene will be degraded to <span class='highlight'>[min_wrate]</span> weed rate on extraction."}
+							
 					else if(istype(target, /datum/plant_gene/core/weed_chance))
 						if(gene.value < min_wchance)
-							dat += "<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[min_wchance]</span> weed chance. "
-							dat += "Target gene will be degraded to <span class='highlight'>[min_wchance]</span> weed chance on extraction."
 
+							dat += {"<br><br>This device's extraction capabilities are currently limited to <span class='highlight'>[min_wchance]</span> weed chance. 
+								Target gene will be degraded to <span class='highlight'>[min_wchance]</span> weed chance on extraction."}
+							
 			if("replace")
 				dat += "<span class='highlight'>[target.get_name()]</span> gene with <span class='highlight'>[disk.gene.get_name()]</span>?<br>"
 			if("insert")
 				dat += "<span class='highlight'>[disk.gene.get_name()]</span> gene into \the <span class='highlight'>[seed]</span>?<br>"
-		dat += "</div><div class='line'><a href='?src=[REF(src)];gene=[REF(target)];op=[operation]'>Confirm</a> "
-		dat += "<a href='?src=[REF(src)];abort=1'>Abort</a></div>"
+
+		dat += {"</div><div class='line'><a href='?src=[REF(src)];gene=[REF(target)];op=[operation]'>Confirm</a> 
+			<a href='?src=[REF(src)];abort=1'>Abort</a></div>"}
+		
 		popup.set_content(dat)
 		popup.open()
 		return
 
-	dat+= "<div class='statusDisplay'>"
 
-	dat += "<div class='line'><div class='statusLabel'>Plant Sample:</div><div class='statusValue'><a href='?src=[REF(src)];eject_seed=1'>"
+	dat += {"<div class='statusDisplay'>
+		<div class='line'><div class='statusLabel'>Plant Sample:</div><div class='statusValue'><a href='?src=[REF(src)];eject_seed=1'>"}
+	
 	dat += seed ? seed.name : "None"
-	dat += "</a></div></div>"
 
-	dat += "<div class='line'><div class='statusLabel'>Data Disk:</div><div class='statusValue'><a href='?src=[REF(src)];eject_disk=1'>"
+	dat += {"</a></div></div>
+		<div class='line'><div class='statusLabel'>Data Disk:</div><div class='statusValue'><a href='?src=[REF(src)];eject_disk=1'>"}
+	
 	if(!disk)
 		dat += "None"
 	else if(!disk.gene)
@@ -185,10 +206,10 @@
 		dat += disk.gene.get_name()
 	if(disk && disk.read_only)
 		dat += " (RO)"
-	dat += "</a></div></div>"
 
-	dat += "<br></div>"
-
+	dat += {"</a></div></div>
+		<br></div>"}
+	
 	if(seed)
 		var/can_insert = disk && disk.gene && disk.gene.can_add(seed)
 		var/can_extract = disk && !disk.read_only
@@ -215,8 +236,11 @@
 					dat += "<tr><td width='260px'>[G.get_name()]</td><td>"
 					if(can_extract)
 						dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
+
+					dat += {"<a href='?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>
+						</td></tr>"}
+				
 					dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
-					dat += "</td></tr>"
 				dat += "</table>"
 			else
 				dat += "No content-related genes detected in sample.<br>"
@@ -232,8 +256,11 @@
 					dat += "<tr><td width='260px'>[G.get_name()]</td><td>"
 					if(can_extract)
 						dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
+
+					dat += {"<a href='?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>
+						</td></tr>"}
+				
 					dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
-					dat += "</td></tr>"
 				dat += "</table>"
 			else
 				dat += "No trait-related genes detected in sample.<br>"

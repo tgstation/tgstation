@@ -96,9 +96,11 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		var/datum/component/remote_materials/mats = C
 		var/atom/parent = mats.parent
 		var/hold_key = "[get_area(parent)]/[mats.category]"
-		ui += "<a href='?src=[REF(src)];remove=[REF(mats)]'>Remove</a>"
-		ui += "<a href='?src=[REF(src)];hold[!holds[hold_key]]=[url_encode(hold_key)]'>[holds[hold_key] ? "Allow" : "Hold"]</a>"
-		ui += " <b>[parent.name]</b> in [get_area_name(parent, TRUE)]<br>"
+
+		ui += {"<a href='?src=[REF(src)];remove=[REF(mats)]'>Remove</a>
+			<a href='?src=[REF(src)];hold[!holds[hold_key]]=[url_encode(hold_key)]'>[holds[hold_key] ? "Allow" : "Hold"]</a>
+			<b>[parent.name]</b> in [get_area_name(parent, TRUE)]<br>"}
+		
 	if(!connected.len)
 		ui += "Nothing!"
 

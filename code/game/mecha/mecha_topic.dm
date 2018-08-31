@@ -134,10 +134,10 @@
 		for(var/X in equipment)
 			var/obj/item/mecha_parts/mecha_equipment/W = X
 			. += "[W.name] <a href='?src=[REF(W)];detach=1'>Detach</a><br>"
-		. += "<b>Available equipment slots:</b> [max_equip-equipment.len]"
-		. += "</div></div>"
 
-
+		. += {"<b>Available equipment slots:</b> [max_equip-equipment.len]
+			</div></div>"}
+		
 /obj/mecha/proc/get_equipment_list() //outputs mecha equipment list in html
 	if(!equipment.len)
 		return
@@ -180,9 +180,11 @@
 		if(!a_name)
 			continue //there's some strange access without a name
 		. += "[a_name] - <a href='?src=[REF(src)];add_req_access=[a];user=[REF(user)];id_card=[REF(id_card)]'>Add</a><br>"
-	. += "<hr><a href='?src=[REF(src)];finish_req_access=1;user=[REF(user)]'>Finish</a> "
-	. += "<span class='danger'>(Warning! The ID upload panel will be locked. It can be unlocked only through Exosuit Interface.)</span>"
-	. += "</body></html>"
+
+	. += {"<hr><a href='?src=[REF(src)];finish_req_access=1;user=[REF(user)]'>Finish</a> 
+		<span class='danger'>(Warning! The ID upload panel will be locked. It can be unlocked only through Exosuit Interface.)</span>
+		</body></html>"}
+	
 	user << browse(., "window=exosuit_add_access")
 	onclose(user, "exosuit_add_access")
 
@@ -351,4 +353,3 @@
 			else
 				occupant_message("<span class='warning'>Recalibration failed!</span>")
 				log_message("Recalibration of coordination system failed with 1 error.", color="red")
-

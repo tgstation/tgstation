@@ -307,21 +307,26 @@
 	var/list/navbar = list("<a href='?_src_=holder;[HrefToken()];nonalpha=1'>All</a><a href='?_src_=holder;[HrefToken()];nonalpha=2'>#</a>")
 	for(var/letter in GLOB.alphabet)
 		navbar += "<a href='?_src_=holder;[HrefToken()];showmessages=[letter]'>[letter]</a>"
-	navbar += "<a href='?_src_=holder;[HrefToken()];showmemo=1'>Memos</a><a href='?_src_=holder;[HrefToken()];showwatch=1'>Watchlist</a>"
-	navbar += "<br><form method='GET' name='search' action='?'>\
-	<input type='hidden' name='_src_' value='holder'>\
-	[HrefTokenFormField()]\
-	<input type='text' name='searchmessages' value='[index]'>\
-	<input type='submit' value='Search'></form>"
+
+	navbar += {"<a href='?_src_=holder;[HrefToken()];showmemo=1'>Memos</a><a href='?_src_=holder;[HrefToken()];showwatch=1'>Watchlist</a>
+		<br><form method='GET' name='search' action='?'>
+		<input type='hidden' name='_src_' value='holder'>
+		[HrefTokenFormField()]
+		<input type='text' name='searchmessages' value='[index]'>
+		<input type='submit' value='Search'></form>"}
 	if(!linkless)
 		output = navbar
 	if(type == "memo" || type == "watchlist entry")
 		if(type == "memo")
-			output += "<h2><center>Admin memos</h2>"
-			output += "<a href='?_src_=holder;[HrefToken()];addmemo=1'>Add memo</a></center>"
+
+			output += {"<h2><center>Admin memos</h2>
+				<a href='?_src_=holder;[HrefToken()];addmemo=1'>Add memo</a></center>"}
+
 		else if(type == "watchlist entry")
-			output += "<h2><center>Watchlist entries</h2>"
-			output += "<a href='?_src_=holder;[HrefToken()];addwatchempty=1'>Add watchlist entry</a>"
+
+			output += {"<h2><center>Watchlist entries</h2>
+				<a href='?_src_=holder;[HrefToken()];addwatchempty=1'>Add watchlist entry</a>"}
+
 			if(filter)
 				output += "<a href='?_src_=holder;[HrefToken()];showwatch=1'>Unfilter clients</a></center>"
 			else
@@ -351,10 +356,12 @@
 			output += "[timestamp] | [server] | [admin_key]"
 			if(expire_timestamp)
 				output += " | Expires [expire_timestamp]"
-			output += "</b>"
-			output += " <a href='?_src_=holder;[HrefToken()];editmessageexpiryempty=[id]'>Change Expiry Time</a>"
-			output += " <a href='?_src_=holder;[HrefToken()];deletemessageempty=[id]'>Delete</a>"
-			output += " <a href='?_src_=holder;[HrefToken()];editmessageempty=[id]'>Edit</a>"
+
+			output += {"</b>
+				<a href='?_src_=holder;[HrefToken()];editmessageexpiryempty=[id]'>Change Expiry Time</a>
+				<a href='?_src_=holder;[HrefToken()];deletemessageempty=[id]'>Delete</a>
+				<a href='?_src_=holder;[HrefToken()];editmessageempty=[id]'>Edit</a>"}
+
 			if(editor_key)
 				output += " <font size='2'>Last edit by [editor_key] <a href='?_src_=holder;[HrefToken()];messageedits=[id]'>(Click here to see edit log)</a></font>"
 			output += "<br>[text]<hr style='background:#000000; border:0; height:1px'>"
@@ -415,8 +422,10 @@
 						data += "<a href='?_src_=holder;[HrefToken()];editmessageseverity=[id]'>[severity=="none" ? "No" : "[capitalize(severity)]"] Severity</a>"
 					else
 						data += "<a href='?_src_=holder;[HrefToken()];editmessageseverity=[id]'>N/A Severity</a>"
-				data += " <a href='?_src_=holder;[HrefToken()];editmessageexpiry=[id]'>Change Expiry Time</a>"
-				data += " <a href='?_src_=holder;[HrefToken()];deletemessage=[id]'>Delete</a>"
+
+				data += {"<a href='?_src_=holder;[HrefToken()];editmessageexpiry=[id]'>Change Expiry Time</a>
+					<a href='?_src_=holder;[HrefToken()];deletemessage=[id]'>Delete</a>"}
+
 				if(type == "note")
 					data += " <a href='?_src_=holder;[HrefToken()];secretmessage=[id]'>[secret ? "<b>Secret</b>" : "Not secret"]</a>"
 				if(type == "message sent")
@@ -427,8 +436,10 @@
 					data += " <a href='?_src_=holder;[HrefToken()];editmessage=[id]'>Edit</a>"
 				if(editor_key)
 					data += " <font size='2'>Last edit by [editor_key] <a href='?_src_=holder;[HrefToken()];messageedits=[id]'>(Click here to see edit log)</a></font>"
-			data += "</div></center>"
-			data += "<p style='[alphatext]'>[text]</p><hr style='background:#000000; border:0; height:1px; [alphatext]'>"
+
+			data += {"</div></center>
+				<p style='[alphatext]'>[text]</p><hr style='background:#000000; border:0; height:1px; [alphatext]'>"}
+
 			switch(type)
 				if("message")
 					messagedata += data
@@ -449,10 +460,12 @@
 			qdel(query_get_message_key)
 		output += "<h2><center>[target_key]</center></h2><center>"
 		if(!linkless)
-			output += "<a href='?_src_=holder;[HrefToken()];addnote=[target_key]'>Add note</a>"
-			output += " <a href='?_src_=holder;[HrefToken()];addmessage=[target_key]'>Add message</a>"
-			output += " <a href='?_src_=holder;[HrefToken()];addwatch=[target_key]'>Add to watchlist</a>"
-			output += " <a href='?_src_=holder;[HrefToken()];showmessageckey=[target_ckey]'>Refresh page</a></center>"
+
+			output += {"<a href='?_src_=holder;[HrefToken()];addnote=[target_key]'>Add note</a>
+				<a href='?_src_=holder;[HrefToken()];addmessage=[target_key]'>Add message</a>
+				<a href='?_src_=holder;[HrefToken()];addwatch=[target_key]'>Add to watchlist</a>
+				<a href='?_src_=holder;[HrefToken()];showmessageckey=[target_ckey]'>Refresh page</a></center>"}
+
 		else
 			output += " <a href='?_src_=holder;[HrefToken()];showmessageckeylinkless=[target_ckey]'>Refresh page</a></center>"
 		output += ruler
@@ -532,8 +545,10 @@
 		var/editor_key = query_get_message_output.item[5]
 		switch(type)
 			if("message")
-				output += "<font color='red' size='3'><b>Admin message left by <span class='prefix'>[admin_key]</span> on [timestamp]</b></font>"
-				output += "<br><font color='red'>[text]</font><br>"
+
+				output += {"<font color='red' size='3'><b>Admin message left by <span class='prefix'>[admin_key]</span> on [timestamp]</b></font>
+					<br><font color='red'>[text]</font><br>"}
+
 				var/datum/DBQuery/query_message_read = SSdbcore.NewQuery("UPDATE [format_table_name("messages")] SET type = 'message sent' WHERE id = [message_id]")
 				if(!query_message_read.warn_execute())
 					qdel(query_get_message_output)

@@ -178,11 +178,15 @@
 					if(C in D.category)
 						categories[C] += D
 
-			dat += "<div class='statusDisplay'>Biomass: [points] units.</div><BR>"
-			dat += "<A href='?src=[REF(src)];activate=1'>Activate</A><A href='?src=[REF(src)];detach=1'>Detach Container</A>"
+
+			dat += {"<div class='statusDisplay'>Biomass: [points] units.</div><BR>
+				<A href='?src=[REF(src)];activate=1'>Activate</A><A href='?src=[REF(src)];detach=1'>Detach Container</A>"}
+			
 			for(var/cat in categories)
-				dat += "<h3>[cat]:</h3>"
-				dat += "<div class='statusDisplay'>"
+
+				dat += {"<h3>[cat]:</h3>
+					<div class='statusDisplay'>"}
+				
 				for(var/V in categories[cat])
 					var/datum/design/D = V
 					dat += "[D.name]: <A href='?src=[REF(src)];create=[REF(D)];amount=1'>Make</A>"

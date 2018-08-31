@@ -149,12 +149,16 @@ Location: <A href='byond://?src=[REF(src)];locedit=1'>[location ? location : "No
 Transponder Codes:<UL>"}
 
 		for(var/key in codes)
-			t += "<LI>[key] ... [codes[key]]"
-			t += "	<A href='byond://?src=[REF(src)];edit=1;code=[key]'>Edit</A>"
-			t += "	<A href='byond://?src=[REF(src)];delete=1;code=[key]'>Delete</A><BR>"
-		t += "	<A href='byond://?src=[REF(src)];add=1;'>Add New</A><BR>"
-		t+= "<UL></TT>"
 
+			t += {"<LI>[key] ... [codes[key]]
+				<A href='byond://?src=[REF(src)];edit=1;code=[key]'>Edit</A>
+				<A href='byond://?src=[REF(src)];delete=1;code=[key]'>Delete</A><BR>"}
+		
+			t += "<LI>[key] ... [codes[key]]"
+
+		t += {"<A href='byond://?src=[REF(src)];add=1;'>Add New</A><BR>
+			<UL></TT>"}
+		
 	var/datum/browser/popup = new(user, "navbeacon", "Navigation Beacon", 300, 400)
 	popup.set_content(t)
 	popup.open()

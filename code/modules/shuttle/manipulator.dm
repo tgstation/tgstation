@@ -317,11 +317,12 @@
 		if (canDock(S) == SHUTTLE_CAN_DOCK)
 			options[S.name || S.id] = S
 
-	options += "--------"
-	options += "Infinite Transit"
-	options += "Delete Shuttle"
-	options += "Into The Sunset (delete & greentext 'escape')"
 
+	options += {"--------
+		Infinite Transit
+		Delete Shuttle
+		Into The Sunset (delete & greentext 'escape')"}
+	
 	var/selection = input(user, "Select where to fly [name || id]:", "Fly Shuttle") as null|anything in options
 	if(!selection)
 		return

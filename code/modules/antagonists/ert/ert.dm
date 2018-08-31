@@ -119,9 +119,12 @@
 	if(leader) //If Squad Leader
 		missiondesc += " Lead your squad to ensure the completion of the mission. Board the shuttle when your team is ready."
 	else
+
+		missiondesc += {"Follow orders given to you by your squad leader.
+			Avoid civilian casualites when possible."}
+	
 		missiondesc += " Follow orders given to you by your squad leader."
 
-		missiondesc += "Avoid civilian casualites when possible."
 
 	missiondesc += "<BR><B>Your Mission</B> : [ert_team.mission.explanation_text]"
 	to_chat(owner,missiondesc)

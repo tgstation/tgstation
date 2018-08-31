@@ -164,8 +164,10 @@
 	dat += "<table style='width:100%' align='center'><tr>"
 
 	for(var/C in categories)
-		dat += "<td><A href='?src=[REF(src)];category=[C];menu=[LIMBGROWER_CATEGORY_MENU]'>[C]</A></td>"
-		dat += "</tr><tr>"
+
+		dat += {"<td><A href='?src=[REF(src)];category=[C];menu=[LIMBGROWER_CATEGORY_MENU]'>[C]</A></td>
+			</tr><tr>"}
+		
 		//one category per line
 
 	dat += "</tr></table></div>"
@@ -196,8 +198,11 @@
 	dat += materials_printout()
 
 	for(var/datum/reagent/R in reagents.reagent_list)
+
+		dat += {"[R.name]: [R.volume]
+			<A href='?src=[REF(src)];disposeI=[R.id]'>Purge</A><BR>"}
+	
 		dat += "[R.name]: [R.volume]"
-		dat += "<A href='?src=[REF(src)];disposeI=[R.id]'>Purge</A><BR>"
 
 	dat += "</div>"
 	return dat

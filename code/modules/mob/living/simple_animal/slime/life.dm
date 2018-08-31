@@ -550,21 +550,30 @@
 			if (Target)
 				phrases += "[Target]... look yummy..."
 			if (nutrition < get_starve_nutrition())
-				phrases += "So... hungry..."
-				phrases += "Very... hungry..."
-				phrases += "Need... food..."
-				phrases += "Must... eat..."
+
+				phrases += {"So... hungry...
+					Very... hungry...
+					Need... food...
+					Must... eat..."}
+				
 			else if (nutrition < get_hunger_nutrition())
+
+				phrases += {"Hungry...
+					Where food?
+					I want to eat..."}
+			
 				phrases += "Hungry..."
-				phrases += "Where food?"
-				phrases += "I want to eat..."
-			phrases += "Rawr..."
-			phrases += "Blop..."
-			phrases += "Blorble..."
+
+			phrases += {"Rawr...
+				Blop...
+				Blorble..."}
+			
 			if (rabid || attacked)
-				phrases += "Hrr..."
-				phrases += "Nhuu..."
-				phrases += "Unn..."
+
+				phrases += {"Hrr...
+					Nhuu...
+					Unn..."}
+				
 			if (mood == ":3")
 				phrases += "Purr..."
 			if (attacked)
@@ -572,14 +581,20 @@
 			if (bodytemperature < T0C)
 				phrases += "Cold..."
 			if (bodytemperature < T0C - 30)
-				phrases += "So... cold..."
-				phrases += "Very... cold..."
+
+				phrases += {"So... cold...
+					Very... cold..."}
+				
 			if (bodytemperature < T0C - 50)
-				phrases += "..."
-				phrases += "C... c..."
+
+				phrases += {"...
+					C... c..."}
+				
 			if (buckled)
-				phrases += "Nom..."
-				phrases += "Yummy..."
+
+				phrases += {"Nom...
+					Yummy..."}
+				
 			if (powerlevel > 3)
 				phrases += "Bzzz..."
 			if (powerlevel > 5)

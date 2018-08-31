@@ -110,15 +110,16 @@
 	if(!linked_console)
 		dat += "<b><a href='byond://?src=[REF(src)];function=search'>Scan for R&D Console</A></b>"
 	if(loaded_item)
-		dat += "<b>Loaded Item:</b> [loaded_item]"
 
-		dat += "<div>Available tests:"
-		dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_POKE]'>Poke</A></b>"
-		dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_IRRADIATE];'>Irradiate</A></b>"
-		dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_GAS]'>Gas</A></b>"
-		dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_HEAT]'>Burn</A></b>"
-		dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_COLD]'>Freeze</A></b>"
-		dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_OBLITERATE]'>Destroy</A></b></div>"
+		dat += {"<b>Loaded Item:</b> [loaded_item]
+			<div>Available tests:
+			<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_POKE]'>Poke</A></b>
+			<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_IRRADIATE];'>Irradiate</A></b>
+			<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_GAS]'>Gas</A></b>
+			<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_HEAT]'>Burn</A></b>
+			<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_COLD]'>Freeze</A></b>
+			<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_OBLITERATE]'>Destroy</A></b></div>"}
+		
 		if(istype(loaded_item,/obj/item/relic))
 			dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_DISCOVER]'>Discover</A></b>"
 		dat += "<b><a href='byond://?src=[REF(src)];function=eject'>Eject</A>"
@@ -140,8 +141,10 @@
 			dat += output
 	else
 		dat += "<b>Nothing loaded.</b>"
-	dat += "<a href='byond://?src=[REF(src)];function=refresh'>Refresh</A>"
-	dat += "<a href='byond://?src=[REF(src)];close=1'>Close</A></center>"
+
+	dat += {"<a href='byond://?src=[REF(src)];function=refresh'>Refresh</A>
+		<a href='byond://?src=[REF(src)];close=1'>Close</A></center>"}
+	
 	var/datum/browser/popup = new(user, "experimentor","Experimentor", 700, 400, src)
 	popup.set_content(dat.Join("<br>"))
 	popup.open()

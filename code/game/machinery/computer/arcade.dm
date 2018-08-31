@@ -139,17 +139,20 @@
 /obj/machinery/computer/arcade/battle/ui_interact(mob/user)
 	. = ..()
 	var/dat = "<a href='byond://?src=[REF(src)];close=1'>Close</a>"
-	dat += "<center><h4>[enemy_name]</h4></center>"
 
-	dat += "<br><center><h3>[temp]</h3></center>"
-	dat += "<br><center>Health: [player_hp] | Magic: [player_mp] | Enemy Health: [enemy_hp]</center>"
-
+	dat += {"<center><h4>[enemy_name]</h4></center>
+		<br><center><h3>[temp]</h3></center>
+		<br><center>Health: [player_hp] | Magic: [player_mp] | Enemy Health: [enemy_hp]</center>"}
+	
 	if (gameover)
 		dat += "<center><b><a href='byond://?src=[REF(src)];newgame=1'>New Game</a>"
 	else
+
+		dat += {"<center><b><a href='byond://?src=[REF(src)];attack=1'>Attack</a> | 
+			<a href='byond://?src=[REF(src)];heal=1'>Heal</a> | 
+			<a href='byond://?src=[REF(src)];charge=1'>Recharge Power</a>"}
+	
 		dat += "<center><b><a href='byond://?src=[REF(src)];attack=1'>Attack</a> | "
-		dat += "<a href='byond://?src=[REF(src)];heal=1'>Heal</a> | "
-		dat += "<a href='byond://?src=[REF(src)];charge=1'>Recharge Power</a>"
 
 	dat += "</b></center>"
 	var/datum/browser/popup = new(user, "arcade", "Space Villain 2000")
@@ -421,8 +424,10 @@
 		event = null
 	var/dat = ""
 	if(gameStatus == ORION_STATUS_GAMEOVER)
-		dat = "<center><h1>Game Over</h1></center>"
-		dat += "Like many before you, your crew never made it to Orion, lost to space... <br><b>Forever</b>."
+
+		dat = {"<center><h1>Game Over</h1></center>
+			Like many before you, your crew never made it to Orion, lost to space... <br><b>Forever</b>."}
+		
 		if(!settlers.len)
 			dat += "<br>Your entire crew died, and your ship joins the fleet of ghost-ships littering the galaxy."
 		else
@@ -453,23 +458,31 @@
 	else if(gameStatus == ORION_STATUS_NORMAL)
 		var/title = stops[turns]
 		var/subtext = stopblurbs[turns]
-		dat = "<center><h1>[title]</h1></center>"
-		dat += "[subtext]"
-		dat += "<h3><b>Crew:</b></h3>"
+
+		dat = {"<center><h1>[title]</h1></center>
+			[subtext]
+			<h3><b>Crew:</b></h3>"}
+		
 		dat += english_list(settlers)
-		dat += "<br><b>Food: </b>[food] | <b>Fuel: </b>[fuel]"
-		dat += "<br><b>Engine Parts: </b>[engine] | <b>Hull Panels: </b>[hull] | <b>Electronics: </b>[electronics]"
+
+		dat += {"<br><b>Food: </b>[food] | <b>Fuel: </b>[fuel]
+			<br><b>Engine Parts: </b>[engine] | <b>Hull Panels: </b>[hull] | <b>Electronics: </b>[electronics]"}
+		
 		if(turns == 7)
 			dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];pastblack=1'>Go Around</a> <a href='byond://?src=[REF(src)];blackhole=1'>Continue</a></P>"
 		else
 			dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];continue=1'>Continue</a></P>"
-		dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];killcrew=1'>Kill a Crewmember</a></P>"
-		dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+
+		dat += {"<P ALIGN=Right><a href='byond://?src=[REF(src)];killcrew=1'>Kill a Crewmember</a></P>
+			<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"}
+		
 	else
-		dat = "<center><h2>The Orion Trail</h2></center>"
-		dat += "<br><center><h3>Experience the journey of your ancestors!</h3></center><br><br>"
-		dat += "<center><b><a href='byond://?src=[REF(src)];newgame=1'>New Game</a></b></center>"
-		dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+
+		dat = {"<center><h2>The Orion Trail</h2></center>
+			<br><center><h3>Experience the journey of your ancestors!</h3></center><br><br>
+			<center><b><a href='byond://?src=[REF(src)];newgame=1'>New Game</a></b></center>
+			<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"}
+		
 	var/datum/browser/popup = new(user, "arcade", "The Orion Trail",400,700)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
@@ -777,27 +790,34 @@
 				eventdat += "<br>[deadname] tried to fight back, but was killed."
 			else
 				eventdat += "<br>Fortunately, you fended them off without any trouble."
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>"
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+
+			eventdat += {"<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>
+				<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"}
+			
 			canContinueEvent = 1
 
 		if(ORION_TRAIL_FLUX)
-			eventdat += "This region of space is highly turbulent. <br>If we go slowly we may avoid more damage, but if we keep our speed we won't waste supplies."
-			eventdat += "<br>What will you do?"
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];slow=1'>Slow Down</a> <a href='byond://?src=[REF(src)];keepspeed=1'>Continue</a></P>"
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
 
+			eventdat += {"This region of space is highly turbulent. <br>If we go slowly we may avoid more damage, but if we keep our speed we won't waste supplies.
+				<br>What will you do?
+				<P ALIGN=Right><a href='byond://?src=[REF(src)];slow=1'>Slow Down</a> <a href='byond://?src=[REF(src)];keepspeed=1'>Continue</a></P>
+				<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"}
+			
 		if(ORION_TRAIL_ILLNESS)
 			eventdat += "A deadly illness has been contracted!"
 			var/deadname = remove_crewmember()
-			eventdat += "<br>[deadname] was killed by the disease."
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>"
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+
+			eventdat += {"<br>[deadname] was killed by the disease.
+				<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>
+				<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"}
+			
 			canContinueEvent = 1
 
 		if(ORION_TRAIL_BREAKDOWN)
-			eventdat += "Oh no! The engine has broken down!"
-			eventdat += "<br>You can repair it with an engine part, or you can make repairs for 3 days."
+
+			eventdat += {"Oh no! The engine has broken down!
+				<br>You can repair it with an engine part, or you can make repairs for 3 days."}
+			
 			if(engine >= 1)
 				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];useengine=1'>Use Part</a><a href='byond://?src=[REF(src)];wait=1'>Wait</a></P>"
 			else
@@ -805,8 +825,10 @@
 			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
 
 		if(ORION_TRAIL_MALFUNCTION)
-			eventdat += "The ship's systems are malfunctioning!"
-			eventdat += "<br>You can replace the broken electronics with spares, or you can spend 3 days troubleshooting the AI."
+
+			eventdat += {"The ship's systems are malfunctioning!
+				<br>You can replace the broken electronics with spares, or you can spend 3 days troubleshooting the AI."}
+			
 			if(electronics >= 1)
 				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];useelec=1'>Use Part</a><a href='byond://?src=[REF(src)];wait=1'>Wait</a></P>"
 			else
@@ -832,17 +854,21 @@
 			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
 
 		if(ORION_TRAIL_BLACKHOLE)
-			eventdat += "You were swept away into the black hole."
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];holedeath=1'>Oh...</a></P>"
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+
+			eventdat += {"You were swept away into the black hole.
+				<P ALIGN=Right><a href='byond://?src=[REF(src)];holedeath=1'>Oh...</a></P>
+				<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"}
+			
 			settlers = list()
 
 		if(ORION_TRAIL_LING)
 			eventdat += "Strange reports warn of changelings infiltrating crews on trips to Orion..."
 			if(settlers.len <= 2)
-				eventdat += "<br>Your crew's chance of reaching Orion is so slim the changelings likely avoided your ship..."
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>"
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+
+				eventdat += {"<br>Your crew's chance of reaching Orion is so slim the changelings likely avoided your ship...
+					<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>
+					<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"}
+				
 				if(prob(10)) // "likely", I didn't say it was guaranteed!
 					lings_aboard = min(++lings_aboard,2)
 			else
@@ -852,15 +878,19 @@
 				else if(prob(70))
 					lings_aboard = min(++lings_aboard,2)
 
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];killcrew=1'>Kill a Crewmember</a></P>"
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Risk it</a></P>"
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+
+				eventdat += {"<P ALIGN=Right><a href='byond://?src=[REF(src)];killcrew=1'>Kill a Crewmember</a></P>
+					<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Risk it</a></P>
+					<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"}
+				
 			canContinueEvent = 1
 
 		if(ORION_TRAIL_LING_ATTACK)
 			if(lings_aboard <= 0) //shouldn't trigger, but hey.
-				eventdat += "Haha, fooled you, there are no changelings on board!"
-				eventdat += "<br>(You should report this to a coder :S)"
+
+				eventdat += {"Haha, fooled you, there are no changelings on board!
+					<br>(You should report this to a coder :S)"}
+				
 			else
 				var/ling1 = remove_crewmember()
 				var/ling2 = ""
@@ -900,8 +930,10 @@
 					else
 						lings_aboard = max(0,--lings_aboard)
 
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>"
-			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+
+			eventdat += {"<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>
+				<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"}
+			
 			canContinueEvent = 1
 
 
@@ -911,20 +943,24 @@
 				eventdat += "The spaceport is on high alert! You've been barred from docking by the local authorities after your failed raid."
 				if(last_spaceport_action)
 					eventdat += "<br><b>Last Spaceport Action:</b> [last_spaceport_action]"
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];leave_spaceport=1'>Depart Spaceport</a></P>"
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+
+				eventdat += {"<P ALIGN=Right><a href='byond://?src=[REF(src)];leave_spaceport=1'>Depart Spaceport</a></P>
+					<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"}
+				
 			else
-				eventdat += "Your jump into the sector yields a spaceport - a lucky find!"
-				eventdat += "<br>This spaceport is home to travellers who failed to reach Orion, but managed to find a different home..."
-				eventdat += "<br>Trading terms: FU = Fuel, FO = Food"
+
+				eventdat += {"Your jump into the sector yields a spaceport - a lucky find!
+					<br>This spaceport is home to travellers who failed to reach Orion, but managed to find a different home...
+					<br>Trading terms: FU = Fuel, FO = Food"}
+				
 				if(last_spaceport_action)
 					eventdat += "<br><b>Last action:</b> [last_spaceport_action]"
 				eventdat += "<h3><b>Crew:</b></h3>"
 				eventdat += english_list(settlers)
-				eventdat += "<br><b>Food: </b>[food] | <b>Fuel: </b>[fuel]"
-				eventdat += "<br><b>Engine Parts: </b>[engine] | <b>Hull Panels: </b>[hull] | <b>Electronics: </b>[electronics]"
 
-
+				eventdat += {"<br><b>Food: </b>[food] | <b>Fuel: </b>[fuel]
+					<br><b>Engine Parts: </b>[engine] | <b>Hull Panels: </b>[hull] | <b>Electronics: </b>[electronics]"}
+				
 				//If your crew is pathetic you can get freebies (provided you haven't already gotten one from this port)
 				if(!spaceport_freebie && (fuel < 20 || food < 20))
 					spaceport_freebie++
@@ -994,11 +1030,10 @@
 					eventdat += "<P ALIGN=Right>You don't have 5FO to trade.</P"
 
 				//Raid the spaceport
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];raid_spaceport=1'>!! Raid Spaceport !!</a></P>"
 
-				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];leave_spaceport=1'>Depart Spaceport</a></P>"
-
-
+				eventdat += {"<P ALIGN=Right><a href='byond://?src=[REF(src)];raid_spaceport=1'>!! Raid Spaceport !!</a></P>
+					<P ALIGN=Right><a href='byond://?src=[REF(src)];leave_spaceport=1'>Depart Spaceport</a></P>"}
+				
 //Add Random/Specific crewmember
 /obj/machinery/computer/arcade/orion_trail/proc/add_crewmember(var/specific = "")
 	var/newcrew = ""

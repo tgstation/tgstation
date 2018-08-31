@@ -164,9 +164,10 @@
 			dat += "<a href='byond://?src=[REF(src)];task=stopautoprocess'>Stop autoprocess</a>"
 	else
 		dat += "<span class='linkOff'>Autoprocess</span>"
-	dat += "<h3>Cloning Pod Status</h3>"
-	dat += "<div class='statusDisplay'>[temp]&nbsp;</div>"
 
+	dat += {"<h3>Cloning Pod Status</h3>
+		<div class='statusDisplay'>[temp]&nbsp;</div>"}
+	
 	switch(src.menu)
 		if(1)
 			// Modules
@@ -182,9 +183,10 @@
 			if (!isnull(src.scanner))
 				var/mob/living/scanner_occupant = get_mob_or_brainmob(scanner.occupant)
 
-				dat += "<h3>Scanner Functions</h3>"
 
-				dat += "<div class='statusDisplay'>"
+				dat += {"<h3>Scanner Functions</h3>
+					<div class='statusDisplay'>"}
+				
 				if(!scanner_occupant)
 					dat += "Scanner Unoccupied"
 				else if(loading)
@@ -197,8 +199,10 @@
 				dat += "</div>"
 
 				if(scanner_occupant)
-					dat += "<a href='byond://?src=[REF(src)];scan=1'>Start Scan</a>"
-					dat += "<br><a href='byond://?src=[REF(src)];lock=1'>[src.scanner.locked ? "Unlock Scanner" : "Lock Scanner"]</a>"
+
+					dat += {"<a href='byond://?src=[REF(src)];scan=1'>Start Scan</a>
+						<br><a href='byond://?src=[REF(src)];lock=1'>[src.scanner.locked ? "Unlock Scanner" : "Lock Scanner"]</a>"}
+					
 				else
 					dat += "<span class='linkOff'>Start Scan</span>"
 
@@ -214,20 +218,24 @@
 
 
 		if(2)
-			dat += "<h3>Current records</h3>"
-			dat += "<a href='byond://?src=[REF(src)];menu=1'><< Back</a><br><br>"
+
+			dat += {"<h3>Current records</h3>
+				<a href='byond://?src=[REF(src)];menu=1'><< Back</a><br><br>"}
+			
 			for(var/datum/data/record/R in records)
 				dat += "<h4>[R.fields["name"]]</h4>Scan ID [R.fields["id"]] <a href='byond://?src=[REF(src)];view_rec=[R.fields["id"]]'>View Record</a>"
 		if(3)
-			dat += "<h3>Selected Record</h3>"
-			dat += "<a href='byond://?src=[REF(src)];menu=2'><< Back</a><br>"
 
+			dat += {"<h3>Selected Record</h3>
+				<a href='byond://?src=[REF(src)];menu=2'><< Back</a><br>"}
+			
 			if (!src.active_record)
 				dat += "<font class='bad'>Record not found.</font>"
 			else
-				dat += "<h4>[src.active_record.fields["name"]]</h4>"
-				dat += "Scan ID [src.active_record.fields["id"]] <a href='byond://?src=[REF(src)];clone=[active_record.fields["id"]]'>Clone</a><br>"
 
+				dat += {"<h4>[src.active_record.fields["name"]]</h4>
+					Scan ID [src.active_record.fields["id"]] <a href='byond://?src=[REF(src)];clone=[active_record.fields["id"]]'>Clone</a><br>"}
+				
 				var/obj/item/implant/health/H = locate(src.active_record.fields["imp"])
 
 				if ((H) && (istype(H)))
@@ -235,13 +243,16 @@
 				else
 					dat += "<font class='bad'>Unable to locate Health Implant.</font><br /><br />"
 
-				dat += "<b>Unique Identifier:</b><br /><span class='highlight'>[src.active_record.fields["UI"]]</span><br>"
-				dat += "<b>Structural Enzymes:</b><br /><span class='highlight'>[src.active_record.fields["SE"]]</span><br>"
 
+				dat += {"<b>Unique Identifier:</b><br /><span class='highlight'>[src.active_record.fields["UI"]]</span><br>
+					<b>Structural Enzymes:</b><br /><span class='highlight'>[src.active_record.fields["SE"]]</span><br>"}
+				
 				if(diskette && diskette.fields)
-					dat += "<div class='block'>"
-					dat += "<h4>Inserted Disk</h4>"
-					dat += "<b>Contents:</b> "
+
+					dat += {"<div class='block'>
+						<h4>Inserted Disk</h4>
+						<b>Contents:</b> "}
+					
 					var/list/L = list()
 					if(diskette.fields["UI"])
 						L += "Unique Identifier"
@@ -250,23 +261,25 @@
 					if(diskette.fields["SE"])
 						L += "Structural Enzymes"
 					dat += english_list(L, "Empty", " + ", " + ")
+
+					dat += {"<br /><a href='byond://?src=[REF(src)];disk=load'>Load from Disk</a>
+						<br /><a href='byond://?src=[REF(src)];disk=save'>Save to Disk</a>
+						</div>"}
+				
 					dat += "<br /><a href='byond://?src=[REF(src)];disk=load'>Load from Disk</a>"
 
-					dat += "<br /><a href='byond://?src=[REF(src)];disk=save'>Save to Disk</a>"
-					dat += "</div>"
 
 				dat += "<font size=1><a href='byond://?src=[REF(src)];del_rec=1'>Delete Record</a></font>"
 
 		if(4)
 			if (!src.active_record)
 				src.menu = 2
-			dat = "[src.temp]<br>"
-			dat += "<h3>Confirm Record Deletion</h3>"
 
-			dat += "<b><a href='byond://?src=[REF(src)];del_rec=1'>Scan card to confirm.</a></b><br>"
-			dat += "<b><a href='byond://?src=[REF(src)];menu=3'>Cancel</a></b>"
-
-
+			dat = {"[src.temp]<br>
+				<h3>Confirm Record Deletion</h3>
+				<b><a href='byond://?src=[REF(src)];del_rec=1'>Scan card to confirm.</a></b><br>
+				<b><a href='byond://?src=[REF(src)];menu=3'>Cancel</a></b>"}
+			
 	var/datum/browser/popup = new(user, "cloning", "Cloning System Control")
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))

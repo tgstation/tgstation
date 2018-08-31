@@ -32,19 +32,25 @@
 /obj/machinery/food_cart/ui_interact(mob/user)
 	. = ..()
 	var/dat
-	dat += "<br><b>STORED INGREDIENTS AND DRINKS</b><br><div class='statusDisplay'>"
-	dat += "Remaining glasses: [glasses]<br>"
-	dat += "Portion: <a href='?src=[REF(src)];portion=1'>[portion]</a><br>"
+
+	dat += {"<br><b>STORED INGREDIENTS AND DRINKS</b><br><div class='statusDisplay'>
+		Remaining glasses: [glasses]<br>
+		Portion: <a href='?src=[REF(src)];portion=1'>[portion]</a><br>"}
+	
 	for(var/datum/reagent/R in reagents.reagent_list)
-		dat += "[R.name]: [R.volume] "
-		dat += "<a href='?src=[REF(src)];disposeI=[R.id]'>Purge</a>"
+
+		dat += {"[R.name]: [R.volume] 
+			<a href='?src=[REF(src)];disposeI=[R.id]'>Purge</a>"}
+		
 		if (glasses > 0)
 			dat += "<a href='?src=[REF(src)];pour=[R.id]'>Pour in a glass</a>"
 		dat += "<a href='?src=[REF(src)];mix=[R.id]'>Add to the mixer</a><br>"
 	dat += "</div><br><b>MIXER CONTENTS</b><br><div class='statusDisplay'>"
 	for(var/datum/reagent/R in mixer.reagents.reagent_list)
-		dat += "[R.name]: [R.volume] "
-		dat += "<a href='?src=[REF(src)];transfer=[R.id]'>Transfer back</a>"
+
+		dat += {"[R.name]: [R.volume] 
+			<a href='?src=[REF(src)];transfer=[R.id]'>Transfer back</a>"}
+		
 		if (glasses > 0)
 			dat += "<a href='?src=[REF(src)];m_pour=[R.id]'>Pour in a glass</a>"
 		dat += "<br>"

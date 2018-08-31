@@ -113,21 +113,18 @@
 		var/datum/gas_mixture/hot_circ_air1 = hot_circ.airs[1]
 		var/datum/gas_mixture/hot_circ_air2 = hot_circ.airs[2]
 
-		t += "<div class='statusDisplay'>"
 
-		t += "Output: [DisplayPower(lastgenlev)]"
-
-		t += "<BR>"
-
-		t += "<B><font color='blue'>Cold loop</font></B><BR>"
-		t += "Temperature Inlet: [round(cold_circ_air2.temperature, 0.1)] K / Outlet: [round(cold_circ_air1.temperature, 0.1)] K<BR>"
-		t += "Pressure Inlet: [round(cold_circ_air2.return_pressure(), 0.1)] kPa /  Outlet: [round(cold_circ_air1.return_pressure(), 0.1)] kPa<BR>"
-
-		t += "<B><font color='red'>Hot loop</font></B><BR>"
-		t += "Temperature Inlet: [round(hot_circ_air2.temperature, 0.1)] K / Outlet: [round(hot_circ_air1.temperature, 0.1)] K<BR>"
-		t += "Pressure Inlet: [round(hot_circ_air2.return_pressure(), 0.1)] kPa / Outlet: [round(hot_circ_air1.return_pressure(), 0.1)] kPa<BR>"
-
-		t += "</div>"
+		t += {"<div class='statusDisplay'>
+			Output: [DisplayPower(lastgenlev)]
+			<BR>
+			<B><font color='blue'>Cold loop</font></B><BR>
+			Temperature Inlet: [round(cold_circ_air2.temperature, 0.1)] K / Outlet: [round(cold_circ_air1.temperature, 0.1)] K<BR>
+			Pressure Inlet: [round(cold_circ_air2.return_pressure(), 0.1)] kPa /  Outlet: [round(cold_circ_air1.return_pressure(), 0.1)] kPa<BR>
+			<B><font color='red'>Hot loop</font></B><BR>
+			Temperature Inlet: [round(hot_circ_air2.temperature, 0.1)] K / Outlet: [round(hot_circ_air1.temperature, 0.1)] K<BR>
+			Pressure Inlet: [round(hot_circ_air2.return_pressure(), 0.1)] kPa / Outlet: [round(hot_circ_air1.return_pressure(), 0.1)] kPa<BR>
+			</div>"}
+		
 	else if(!hot_circ && cold_circ)
 		t += "<span class='bad'>Unable to locate hot circulator!</span>"
 	else if(hot_circ && !cold_circ)

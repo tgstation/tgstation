@@ -60,26 +60,26 @@
 
 		if(current_pad)
 			var/obj/machinery/launchpad/pad = get_pad(current_pad)
-			t += "<div class='statusDisplay'><b>[pad.display_name]</b></div>"
-			t += "<A href='?src=[REF(src)];change_name=1;pad=[current_pad]'>Rename</A>"
-			t += "<A href='?src=[REF(src)];remove=1;pad=[current_pad]'>Remove</A><BR><BR>"
-			t += "<A href='?src=[REF(src)];raisey=1;lowerx=1;pad=[current_pad]'>O</A>" //up-left
-			t += "<A href='?src=[REF(src)];raisey=1;pad=[current_pad]'>^</A>" //up
-			t += "<A href='?src=[REF(src)];raisey=1;raisex=1;pad=[current_pad]'>O</A><BR>" //up-right
-			t += "<A href='?src=[REF(src)];lowerx=1;pad=[current_pad]'><</A>"//left
-			t += "<A href='?src=[REF(src)];reset=1;pad=[current_pad]'>R</A>"//reset to 0
-			t += "<A href='?src=[REF(src)];raisex=1;pad=[current_pad]'>></A><BR>"//right
-			t += "<A href='?src=[REF(src)];lowery=1;lowerx=1;pad=[current_pad]'>O</A>"//down-left
-			t += "<A href='?src=[REF(src)];lowery=1;pad=[current_pad]'>v</A>"//down
-			t += "<A href='?src=[REF(src)];lowery=1;raisex=1;pad=[current_pad]'>O</A><BR>"//down-right
-			t += "<BR>"
-			t += "<div class='statusDisplay'>Current offset:</div><BR>"
-			t += "<div class='statusDisplay'>[abs(pad.y_offset)] [pad.y_offset > 0 ? "N":"S"]</div><BR>"
-			t += "<div class='statusDisplay'>[abs(pad.x_offset)] [pad.x_offset > 0 ? "E":"W"]</div><BR>"
 
-			t += "<BR><A href='?src=[REF(src)];launch=1;pad=[current_pad]'>Launch</A>"
-			t += " <A href='?src=[REF(src)];pull=1;pad=[current_pad]'>Pull</A>"
-
+			t += {"<div class='statusDisplay'><b>[pad.display_name]</b></div>
+				<A href='?src=[REF(src)];change_name=1;pad=[current_pad]'>Rename</A>
+				<A href='?src=[REF(src)];remove=1;pad=[current_pad]'>Remove</A><BR><BR>
+				<A href='?src=[REF(src)];raisey=1;lowerx=1;pad=[current_pad]'>O</A>" //up-lef
+				<A href='?src=[REF(src)];raisey=1;pad=[current_pad]'>^</A>" //u
+				<A href='?src=[REF(src)];raisey=1;raisex=1;pad=[current_pad]'>O</A><BR>" //up-righ
+				<A href='?src=[REF(src)];lowerx=1;pad=[current_pad]'><</A>"//lef
+				<A href='?src=[REF(src)];reset=1;pad=[current_pad]'>R</A>"//reset to 
+				<A href='?src=[REF(src)];raisex=1;pad=[current_pad]'>></A><BR>"//righ
+				<A href='?src=[REF(src)];lowery=1;lowerx=1;pad=[current_pad]'>O</A>"//down-lef
+				<A href='?src=[REF(src)];lowery=1;pad=[current_pad]'>v</A>"//dow
+				<A href='?src=[REF(src)];lowery=1;raisex=1;pad=[current_pad]'>O</A><BR>"//down-righ
+				<BR>
+				<div class='statusDisplay'>Current offset:</div><BR>
+				<div class='statusDisplay'>[abs(pad.y_offset)] [pad.y_offset > 0 ? "N":"S"]</div><BR>
+				<div class='statusDisplay'>[abs(pad.x_offset)] [pad.x_offset > 0 ? "E":"W"]</div><BR>
+				<BR><A href='?src=[REF(src)];launch=1;pad=[current_pad]'>Launch</A>
+				<A href='?src=[REF(src)];pull=1;pad=[current_pad]'>Pull</A>"}
+			
 	var/datum/browser/popup = new(user, "launchpad", name, 300, 500)
 	popup.set_content(t.Join())
 	popup.open()

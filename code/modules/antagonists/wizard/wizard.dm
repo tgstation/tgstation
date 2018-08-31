@@ -327,8 +327,10 @@
 
 	parts += "<span class='header'>Wizards/witches of [master_wizard.owner.name] team were:</span>"
 	parts += master_wizard.roundend_report()
-	parts += " "
-	parts += "<span class='header'>[master_wizard.owner.name] apprentices were:</span>"
+
+	parts += {"
+		<span class='header'>[master_wizard.owner.name] apprentices were:</span>"}
+	
 	parts += printplayerlist(members - master_wizard.owner)
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

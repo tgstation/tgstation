@@ -424,9 +424,11 @@
 	var/r_list = get_reagents_list()
 	var/inputs
 	if(r_list)
-		inputs += "<input type=\"hidden\" name=\"src\" value=\"[REF(src)]\">"
-		inputs += "<input type=\"hidden\" name=\"select_reagents\" value=\"1\">"
-		inputs += "<input id=\"submit\" type=\"submit\" value=\"Apply settings\">"
+
+		inputs += {"<input type=\"hidden\" name=\"src\" value=\"[REF(src)]\">
+			<input type=\"hidden\" name=\"select_reagents\" value=\"1\">
+			<input id=\"submit\" type=\"submit\" value=\"Apply settings\">"}
+		
 	var/output = {"<form action="byond://" method="get">
 						[r_list || "No known reagents"]
 						[inputs]

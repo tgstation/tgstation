@@ -24,10 +24,11 @@
 	for(var/datum/bounty/B in GLOB.bounties_list)
 		if(B.claimed)
 			continue
-		info += "<h3>[B.name]</h3>"
-		info += "<ul><li>Reward: [B.reward_string()]</li>"
-		info += "<li>Completed: [B.completion_string()]</li></ul>"
 
+		info += {"<h3>[B.name]</h3>
+			<ul><li>Reward: [B.reward_string()]</li>
+			<li>Completed: [B.completion_string()]</li></ul>"}
+		
 /obj/machinery/computer/bounty/ui_interact(mob/user)
 	. = ..()
 
@@ -35,9 +36,11 @@
 		setup_bounties()
 
 	var/dat = ""
-	dat += "<a href='?src=[REF(src)];refresh=1'>Refresh</a>"
-	dat += "<a href='?src=[REF(src)];refresh=1;choice=Print'>Print Paper</a>"
-	dat += "<p>Credits: <b>[SSshuttle.points]</b></p>"
+
+	dat += {"<a href='?src=[REF(src)];refresh=1'>Refresh</a>
+		<a href='?src=[REF(src)];refresh=1;choice=Print'>Print Paper</a>
+		<p>Credits: <b>[SSshuttle.points]</b></p>"}
+	
 	dat += {"<table style="text-align:center;" border="1" cellspacing="0" width="100%">"}
 	dat += "<tr><th>Name</th><th>Description</th><th>Reward</th><th>Completion</th><th>Status</th></tr>"
 	for(var/datum/bounty/B in GLOB.bounties_list)
@@ -91,4 +94,3 @@
 		playsound(src, "terminal_type", 25, 0)
 
 	updateUsrDialog()
-

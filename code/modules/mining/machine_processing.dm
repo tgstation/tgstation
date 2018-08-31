@@ -117,9 +117,10 @@
 			dat += " <A href='?src=[REF(CONSOLE)];material=[mat_id]'><b>Not Smelting</b></A> "
 		dat += "<br>"
 
-	dat += "<br><br>"
-	dat += "<b>Smelt Alloys</b><br>"
 
+	dat += {"<br><br>
+		<b>Smelt Alloys</b><br>"}
+	
 	for(var/v in stored_research.researched_designs)
 		var/datum/design/D = stored_research.researched_designs[v]
 		dat += "<span class=\"res_name\">[D.name] "

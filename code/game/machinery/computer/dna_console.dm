@@ -119,8 +119,10 @@
 
 	status += "<div class='line'><h3>Radiation Emitter Status</h3></div>"
 	var/stddev = radstrength*RADIATION_STRENGTH_MULTIPLIER
-	status += "<div class='line'><div class='statusLabel'>Output Level:</div><div class='statusValue'>[radstrength]</div></div>"
-	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Mutation:</div><div class='statusValue'>(-[stddev] to +[stddev] = 68 %) (-[2*stddev] to +[2*stddev] = 95 %)</div></div>"
+
+	status += {"<div class='line'><div class='statusLabel'>Output Level:</div><div class='statusValue'>[radstrength]</div></div>
+		<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Mutation:</div><div class='statusValue'>(-[stddev] to +[stddev] = 68 %) (-[2*stddev] to +[2*stddev] = 95 %)</div></div>"}
+	
 	if(connected)
 		stddev = RADIATION_ACCURACY_MULTIPLIER/(radduration + (connected.precision_coeff ** 2))
 	else
@@ -135,9 +137,11 @@
 			chance_to_hit = "55-68 %"
 		else
 			chance_to_hit = "<38 %"
-	status += "<div class='line'><div class='statusLabel'>Pulse Duration:</div><div class='statusValue'>[radduration]</div></div>"
-	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Accuracy:</div><div class='statusValue'>[chance_to_hit]</div></div>"
-	status += "<br></div>" // Close statusDisplay div
+
+	status += {"<div class='line'><div class='statusLabel'>Pulse Duration:</div><div class='statusValue'>[radduration]</div></div>
+		<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Accuracy:</div><div class='statusValue'>[chance_to_hit]</div></div>
+		<br></div>" // Close statusDisplay di"}
+	
 	var/list/buttons = list("<a href='?src=[REF(src)];'>Scan</a>")
 	if(connected)
 		buttons += "<a href='?src=[REF(src)];task=toggleopen;'>[connected.state_open ? "Close" : "Open"] Scanner</a>"

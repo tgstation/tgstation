@@ -45,11 +45,13 @@
 	var/dat
 	if(authenticated)
 		if(!checking_logs)
-			dat += "Logged in as [auth_id].<br><br>"
-			dat += "<i>Filters</i><br>"
-			dat += "<b>Name:</b> <a href='?src=[REF(src)];name_filter=1'>[result_filters["Name"] ? result_filters["Name"] : "None set"]</a><br>"
-			dat += "<b>Charge:</b> <a href='?src=[REF(src)];above_filter=1'>\>[result_filters["Charge Above"] ? result_filters["Charge Above"] : "NaN"]%</a> and <a href='?src=[REF(src)];below_filter=1'>\<[result_filters["Charge Below"] ? result_filters["Charge Below"] : "NaN"]%</a><br>"
-			dat += "<b>Accessible:</b> <a href='?src=[REF(src)];access_filter=1'>[result_filters["Responsive"] ? "Non-Responsive Only" : "All"]</a><br><br>"
+
+			dat += {"Logged in as [auth_id].<br><br>
+				<i>Filters</i><br>
+				<b>Name:</b> <a href='?src=[REF(src)];name_filter=1'>[result_filters["Name"] ? result_filters["Name"] : "None set"]</a><br>
+				<b>Charge:</b> <a href='?src=[REF(src)];above_filter=1'>\>[result_filters["Charge Above"] ? result_filters["Charge Above"] : "NaN"]%</a> and <a href='?src=[REF(src)];below_filter=1'>\<[result_filters["Charge Below"] ? result_filters["Charge Below"] : "NaN"]%</a><br>
+				<b>Accessible:</b> <a href='?src=[REF(src)];access_filter=1'>[result_filters["Responsive"] ? "Non-Responsive Only" : "All"]</a><br><br>"}
+			
 			for(var/A in GLOB.apcs_list)
 				if(check_apc(A))
 					var/obj/machinery/power/apc/APC = A
@@ -65,11 +67,15 @@
 					<b>Charge:</b> [APC.cell ? "[DisplayEnergy(APC.cell.charge)] / [DisplayEnergy(APC.cell.maxcharge)] ([round((APC.cell.charge / APC.cell.maxcharge) * 100)]%)" : "No Powercell Installed"]<br>\
 					<b>Area:</b> [APC.area]<br>\
 					[APC.aidisabled || APC.panel_open ? "<font color='#FF0000'>APC does not respond to interface query.</font>" : "<font color='#00FF00'>APC responds to interface query.</font>"]<br><br>"
-			dat += "<a href='?src=[REF(src)];check_logs=1'>Check Logs</a><br>"
-			dat += "<a href='?src=[REF(src)];log_out=1'>Log Out</a><br>"
+
+			dat += {"<a href='?src=[REF(src)];check_logs=1'>Check Logs</a><br>
+				<a href='?src=[REF(src)];log_out=1'>Log Out</a><br>"}
+			
 			if(obj_flags & EMAGGED)
-				dat += "<font color='#FF0000'>WARNING: Logging functionality partially disabled from outside source.</font><br>"
-				dat += "<a href='?src=[REF(src)];restore_logging=1'>Restore logging functionality?</a><br>"
+
+				dat += {"<font color='#FF0000'>WARNING: Logging functionality partially disabled from outside source.</font><br>
+					<a href='?src=[REF(src)];restore_logging=1'>Restore logging functionality?</a><br>"}
+				
 		else
 			if(logs.len)
 				for(var/entry in logs)

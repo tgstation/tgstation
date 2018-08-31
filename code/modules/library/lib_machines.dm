@@ -33,11 +33,13 @@
 	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
 		if(0)
-			dat += "<h2>Search Settings</h2><br>"
-			dat += "<A href='?src=[REF(src)];settitle=1'>Filter by Title: [title]</A><BR>"
-			dat += "<A href='?src=[REF(src)];setcategory=1'>Filter by Category: [category]</A><BR>"
-			dat += "<A href='?src=[REF(src)];setauthor=1'>Filter by Author: [author]</A><BR>"
-			dat += "<A href='?src=[REF(src)];search=1'>\[Start Search\]</A><BR>"
+
+			dat += {"<h2>Search Settings</h2><br>
+				<A href='?src=[REF(src)];settitle=1'>Filter by Title: [title]</A><BR>
+				<A href='?src=[REF(src)];setcategory=1'>Filter by Category: [category]</A><BR>
+				<A href='?src=[REF(src)];setauthor=1'>Filter by Author: [author]</A><BR>
+				<A href='?src=[REF(src)];search=1'>\[Start Search\]</A><BR>"}
+			
 		if(1)
 			if (!SSdbcore.Connect())
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font><BR>"
@@ -46,9 +48,10 @@
 			else if(!SQLquery)
 				dat += "<font color=red><b>ERROR</b>: Malformed search request. Please contact your system administrator for assistance.</font><BR>"
 			else
-				dat += "<table>"
-				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td>SS<sup>13</sup>BN</td></tr>"
 
+				dat += {"<table>
+					<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td>SS<sup>13</sup>BN</td></tr>"}
+				
 				var/datum/DBQuery/query_library_list_books = SSdbcore.NewQuery(SQLquery)
 				if(!query_library_list_books.Execute())
 					dat += "<font color=red><b>ERROR</b>: Unable to retrieve book listings. Please contact your system administrator for assistance.</font><BR>"
@@ -211,13 +214,15 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	switch(screenstate)
 		if(0)
 			// Main Menu
-			dat += "<A href='?src=[REF(src)];switchscreen=1'>1. View General Inventory</A><BR>"
-			dat += "<A href='?src=[REF(src)];switchscreen=2'>2. View Checked Out Inventory</A><BR>"
-			dat += "<A href='?src=[REF(src)];switchscreen=3'>3. Check out a Book</A><BR>"
-			dat += "<A href='?src=[REF(src)];switchscreen=4'>4. Connect to External Archive</A><BR>"
-			dat += "<A href='?src=[REF(src)];switchscreen=5'>5. Upload New Title to Archive</A><BR>"
-			dat += "<A href='?src=[REF(src)];switchscreen=6'>6. Upload Scanned Title to Newscaster</A><BR>"
-			dat += "<A href='?src=[REF(src)];switchscreen=7'>7. Print Corporate Materials</A><BR>"
+
+			dat += {"<A href='?src=[REF(src)];switchscreen=1'>1. View General Inventory</A><BR>
+				<A href='?src=[REF(src)];switchscreen=2'>2. View Checked Out Inventory</A><BR>
+				<A href='?src=[REF(src)];switchscreen=3'>3. Check out a Book</A><BR>
+				<A href='?src=[REF(src)];switchscreen=4'>4. Connect to External Archive</A><BR>
+				<A href='?src=[REF(src)];switchscreen=5'>5. Upload New Title to Archive</A><BR>
+				<A href='?src=[REF(src)];switchscreen=6'>6. Upload Scanned Title to Newscaster</A><BR>
+				<A href='?src=[REF(src)];switchscreen=7'>7. Print Corporate Materials</A><BR>"}
+			
 			if(obj_flags & EMAGGED)
 				dat += "<A href='?src=[REF(src)];switchscreen=8'>8. Access the Forbidden Lore Vault</A><BR>"
 			if(src.arcanecheckout)
@@ -242,21 +247,26 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 					timedue = "<font color=red><b>(OVERDUE)</b> [timedue]</font>"
 				else
 					timedue = round(timedue)
+
+				dat += {"\"[b.bookname]\", Checked out to: [b.mobname]<BR>--- Taken: [timetaken] minutes ago, Due: in [timedue] minutes<BR>
+					<A href='?src=[REF(src)];checkin=[REF(b)]'>(Check In)</A><BR><BR>"}
+			
 				dat += "\"[b.bookname]\", Checked out to: [b.mobname]<BR>--- Taken: [timetaken] minutes ago, Due: in [timedue] minutes<BR>"
-				dat += "<A href='?src=[REF(src)];checkin=[REF(b)]'>(Check In)</A><BR><BR>"
 			dat += "<A href='?src=[REF(src)];switchscreen=0'>(Return to main menu)</A><BR>"
 		if(3)
 			// Check Out a Book
-			dat += "<h3>Check Out a Book</h3><BR>"
-			dat += "Book: [src.buffer_book] "
-			dat += "<A href='?src=[REF(src)];editbook=1'>\[Edit\]</A><BR>"
-			dat += "Recipient: [src.buffer_mob] "
-			dat += "<A href='?src=[REF(src)];editmob=1'>\[Edit\]</A><BR>"
-			dat += "Checkout Date : [world.time/600]<BR>"
-			dat += "Due Date: [(world.time + checkoutperiod)/600]<BR>"
-			dat += "(Checkout Period: [checkoutperiod] minutes) (<A href='?src=[REF(src)];increasetime=1'>+</A>/<A href='?src=[REF(src)];decreasetime=1'>-</A>)"
-			dat += "<A href='?src=[REF(src)];checkout=1'>(Commit Entry)</A><BR>"
-			dat += "<A href='?src=[REF(src)];switchscreen=0'>(Return to main menu)</A><BR>"
+
+			dat += {"<h3>Check Out a Book</h3><BR>
+				Book: [src.buffer_book] 
+				<A href='?src=[REF(src)];editbook=1'>\[Edit\]</A><BR>
+				Recipient: [src.buffer_mob] 
+				<A href='?src=[REF(src)];editmob=1'>\[Edit\]</A><BR>
+				Checkout Date : [world.time/600]<BR>
+				Due Date: [(world.time + checkoutperiod)/600]<BR>
+				(Checkout Period: [checkoutperiod] minutes) (<A href='?src=[REF(src)];increasetime=1'>+</A>/<A href='?src=[REF(src)];decreasetime=1'>-</A>)
+				<A href='?src=[REF(src)];checkout=1'>(Commit Entry)</A><BR>
+				<A href='?src=[REF(src)];switchscreen=0'>(Return to main menu)</A><BR>"}
+			
 		if(4)
 			dat += "<h3>External Archive</h3>"
 			build_library_menu()
@@ -264,12 +274,17 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 			if(!GLOB.cachedbooks)
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font>"
 			else
-				dat += "<A href='?src=[REF(src)];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A><BR><BR>"
-				dat += "<table>"
-				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td></tr>"
+
+				dat += {"<A href='?src=[REF(src)];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A><BR><BR>
+					<table>
+					<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td></tr>"}
+				
 				dat += libcomp_menu[CLAMP(page,1,libcomp_menu.len)]
+
+				dat += {"<tr><td><A href='?src=[REF(src)];page=[(max(1,page-1))]'>&lt;&lt;&lt;&lt;</A></td> <td></td> <td></td> <td><span style='text-align:right'><A href='?src=[REF(src)];page=[(min(libcomp_menu.len,page+1))]'>&gt;&gt;&gt;&gt;</A></span></td></tr>
+					</table>"}
+			
 				dat += "<tr><td><A href='?src=[REF(src)];page=[(max(1,page-1))]'>&lt;&lt;&lt;&lt;</A></td> <td></td> <td></td> <td><span style='text-align:right'><A href='?src=[REF(src)];page=[(min(libcomp_menu.len,page+1))]'>&gt;&gt;&gt;&gt;</A></span></td></tr>"
-				dat += "</table>"
 			dat += "<BR><A href='?src=[REF(src)];switchscreen=0'>(Return to main menu)</A><BR>"
 		if(5)
 			dat += "<H3>Upload a New Title</H3>"
@@ -280,13 +295,18 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 			else if(!scanner.cache)
 				dat += "<FONT color=red>No data found in scanner memory.</FONT><BR>"
 			else
-				dat += "<TT>Data marked for upload...</TT><BR>"
-				dat += "<TT>Title: </TT>[scanner.cache.name]<BR>"
+
+				dat += {"<TT>Data marked for upload...</TT><BR>
+					<TT>Title: </TT>[scanner.cache.name]<BR>"}
+				
 				if(!scanner.cache.author)
 					scanner.cache.author = "Anonymous"
+
+				dat += {"<TT>Author: </TT><A href='?src=[REF(src)];setauthor=1'>[scanner.cache.author]</A><BR>
+					<TT>Category: </TT><A href='?src=[REF(src)];setcategory=1'>[upload_category]</A><BR>
+					<A href='?src=[REF(src)];upload=1'>\[Upload\]</A><BR>"}
+			
 				dat += "<TT>Author: </TT><A href='?src=[REF(src)];setauthor=1'>[scanner.cache.author]</A><BR>"
-				dat += "<TT>Category: </TT><A href='?src=[REF(src)];setcategory=1'>[upload_category]</A><BR>"
-				dat += "<A href='?src=[REF(src)];upload=1'>\[Upload\]</A><BR>"
 			dat += "<A href='?src=[REF(src)];switchscreen=0'>(Return to main menu)</A><BR>"
 		if(6)
 			dat += "<h3>Post Title to Newscaster</h3>"
@@ -297,21 +317,27 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 			else if(!scanner.cache)
 				dat += "<FONT color=red>No data found in scanner memory.</FONT><BR>"
 			else
+
+				dat += {"<TT>Post [scanner.cache.name] to station newscasters?</TT>
+					<A href='?src=[REF(src)];newspost=1'>\[Post\]</A><BR>"}
+			
 				dat += "<TT>Post [scanner.cache.name] to station newscasters?</TT>"
-				dat += "<A href='?src=[REF(src)];newspost=1'>\[Post\]</A><BR>"
 			dat += "<A href='?src=[REF(src)];switchscreen=0'>(Return to main menu)</A><BR>"
 		if(7)
-			dat += "<h3>NTGanda(tm) Universal Printing Module</h3>"
-			dat += "What would you like to print?<BR>"
-			dat += "<A href='?src=[REF(src)];printbible=1'>\[Bible\]</A><BR>"
-			dat += "<A href='?src=[REF(src)];printposter=1'>\[Poster\]</A><BR>"
-			dat += "<A href='?src=[REF(src)];switchscreen=0'>(Return to main menu)</A><BR>"
-		if(8)
-			dat += "<h3>Accessing Forbidden Lore Vault v 1.3</h3>"
-			dat += "Are you absolutely sure you want to proceed? EldritchRelics Inc. takes no responsibilities for loss of sanity resulting from this action.<p>"
-			dat += "<A href='?src=[REF(src)];arccheckout=1'>Yes.</A><BR>"
-			dat += "<A href='?src=[REF(src)];switchscreen=0'>No.</A><BR>"
 
+			dat += {"<h3>NTGanda(tm) Universal Printing Module</h3>
+				What would you like to print?<BR>
+				<A href='?src=[REF(src)];printbible=1'>\[Bible\]</A><BR>
+				<A href='?src=[REF(src)];printposter=1'>\[Poster\]</A><BR>
+				<A href='?src=[REF(src)];switchscreen=0'>(Return to main menu)</A><BR>"}
+			
+		if(8)
+
+			dat += {"<h3>Accessing Forbidden Lore Vault v 1.3</h3>
+				Are you absolutely sure you want to proceed? EldritchRelics Inc. takes no responsibilities for loss of sanity resulting from this action.<p>
+				<A href='?src=[REF(src)];arccheckout=1'>Yes.</A><BR>
+				<A href='?src=[REF(src)];switchscreen=0'>No.</A><BR>"}
+			
 	var/datum/browser/popup = new(user, "library", name, 600, 400)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))

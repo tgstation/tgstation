@@ -98,8 +98,10 @@
 							dat += text("<td>[]</td>", blood_type)
 							dat += text("<td>[]</td>", R.fields["p_stat"])
 							dat += text("<td>[]</td></tr>", R.fields["m_stat"])
-					dat += "</table><hr width='75%' />"
-					dat += "<HR><A href='?src=[REF(src)];screen=1'>Back</A>"
+
+					dat += {"</table><hr width='75%' />
+						<HR><A href='?src=[REF(src)];screen=1'>Back</A>"}
+					
 				if(3)
 					dat += "<B>Records Maintenance</B><HR>\n<A href='?src=[REF(src)];back=1'>Backup To Disk</A><BR>\n<A href='?src=[REF(src)];u_load=1'>Upload From Disk</A><BR>\n<A href='?src=[REF(src)];del_all=1'>Delete All Records</A><BR>\n<BR>\n<A href='?src=[REF(src)];screen=1'>Back</A>"
 				if(4)
@@ -112,47 +114,56 @@
 						if(istype(active1.fields["photo_side"], /obj/item/photo))
 							var/obj/item/photo/P2 = active1.fields["photo_side"]
 							user << browse_rsc(P2.picture.picture_image, "photo_side")
-						dat += "<tr><td>Name:</td><td>[active1.fields["name"]]</td>"
-						dat += "<td><a href='?src=[REF(src)];field=show_photo_front'><img src=photo_front height=80 width=80 border=4></a></td>"
-						dat += "<td><a href='?src=[REF(src)];field=show_photo_side'><img src=photo_side height=80 width=80 border=4></a></td></tr>"
-						dat += "<tr><td>ID:</td><td>[active1.fields["id"]]</td></tr>"
-						dat += "<tr><td>Sex:</td><td><A href='?src=[REF(src)];field=sex'>&nbsp;[active1.fields["sex"]]&nbsp;</A></td></tr>"
-						dat += "<tr><td>Age:</td><td><A href='?src=[REF(src)];field=age'>&nbsp;[active1.fields["age"]]&nbsp;</A></td></tr>"
-						dat += "<tr><td>Species:</td><td><A href='?src=[REF(src)];field=species'>&nbsp;[active1.fields["species"]]&nbsp;</A></td></tr>"
-						dat += "<tr><td>Fingerprint:</td><td><A href='?src=[REF(src)];field=fingerprint'>&nbsp;[active1.fields["fingerprint"]]&nbsp;</A></td></tr>"
-						dat += "<tr><td>Physical Status:</td><td><A href='?src=[REF(src)];field=p_stat'>&nbsp;[active1.fields["p_stat"]]&nbsp;</A></td></tr>"
-						dat += "<tr><td>Mental Status:</td><td><A href='?src=[REF(src)];field=m_stat'>&nbsp;[active1.fields["m_stat"]]&nbsp;</A></td></tr>"
+
+						dat += {"<tr><td>Name:</td><td>[active1.fields["name"]]</td>
+							<td><a href='?src=[REF(src)];field=show_photo_front'><img src=photo_front height=80 width=80 border=4></a></td>
+							<td><a href='?src=[REF(src)];field=show_photo_side'><img src=photo_side height=80 width=80 border=4></a></td></tr>
+							<tr><td>ID:</td><td>[active1.fields["id"]]</td></tr>
+							<tr><td>Sex:</td><td><A href='?src=[REF(src)];field=sex'>&nbsp;[active1.fields["sex"]]&nbsp;</A></td></tr>
+							<tr><td>Age:</td><td><A href='?src=[REF(src)];field=age'>&nbsp;[active1.fields["age"]]&nbsp;</A></td></tr>
+							<tr><td>Species:</td><td><A href='?src=[REF(src)];field=species'>&nbsp;[active1.fields["species"]]&nbsp;</A></td></tr>
+							<tr><td>Fingerprint:</td><td><A href='?src=[REF(src)];field=fingerprint'>&nbsp;[active1.fields["fingerprint"]]&nbsp;</A></td></tr>
+							<tr><td>Physical Status:</td><td><A href='?src=[REF(src)];field=p_stat'>&nbsp;[active1.fields["p_stat"]]&nbsp;</A></td></tr>
+							<tr><td>Mental Status:</td><td><A href='?src=[REF(src)];field=m_stat'>&nbsp;[active1.fields["m_stat"]]&nbsp;</A></td></tr>"}
+						
 					else
 						dat += "<tr><td>General Record Lost!</td></tr>"
 
 					dat += "<tr><td><br><b><font size='4'>Medical Data</font></b></td></tr>"
 					if(active2 in GLOB.data_core.medical)
-						dat += "<tr><td>Blood Type:</td><td><A href='?src=[REF(src)];field=blood_type'>&nbsp;[active2.fields["blood_type"]]&nbsp;</A></td></tr>"
-						dat += "<tr><td>DNA:</td><td><A href='?src=[REF(src)];field=b_dna'>&nbsp;[active2.fields["b_dna"]]&nbsp;</A></td></tr>"
-						dat += "<tr><td><br>Minor Disabilities:</td><td><br><A href='?src=[REF(src)];field=mi_dis'>&nbsp;[active2.fields["mi_dis"]]&nbsp;</A></td></tr>"
-						dat += "<tr><td>Details:</td><td><A href='?src=[REF(src)];field=mi_dis_d'>&nbsp;[active2.fields["mi_dis_d"]]&nbsp;</A></td></tr>"
-						dat += "<tr><td><br>Major Disabilities:</td><td><br><A href='?src=[REF(src)];field=ma_dis'>&nbsp;[active2.fields["ma_dis"]]&nbsp;</A></td></tr>"
-						dat += "<tr><td>Details:</td><td><A href='?src=[REF(src)];field=ma_dis_d'>&nbsp;[active2.fields["ma_dis_d"]]&nbsp;</A></td></tr>"
-						dat += "<tr><td><br>Allergies:</td><td><br><A href='?src=[REF(src)];field=alg'>&nbsp;[active2.fields["alg"]]&nbsp;</A></td></tr>"
-						dat += "<tr><td>Details:</td><td><A href='?src=[REF(src)];field=alg_d'>&nbsp;[active2.fields["alg_d"]]&nbsp;</A></td></tr>"
-						dat += "<tr><td><br>Current Diseases:</td><td><br><A href='?src=[REF(src)];field=cdi'>&nbsp;[active2.fields["cdi"]]&nbsp;</A></td></tr>" //(per disease info placed in log/comment section)
-						dat += "<tr><td>Details:</td><td><A href='?src=[REF(src)];field=cdi_d'>&nbsp;[active2.fields["cdi_d"]]&nbsp;</A></td></tr>"
-						dat += "<tr><td><br>Important Notes:</td><td><br><A href='?src=[REF(src)];field=notes'>&nbsp;[active2.fields["notes"]]&nbsp;</A></td></tr>"
 
-						dat += "<tr><td><br><b><font size='4'>Comments/Log</font></b></td></tr>"
+						dat += {"<tr><td>Blood Type:</td><td><A href='?src=[REF(src)];field=blood_type'>&nbsp;[active2.fields["blood_type"]]&nbsp;</A></td></tr>
+							<tr><td>DNA:</td><td><A href='?src=[REF(src)];field=b_dna'>&nbsp;[active2.fields["b_dna"]]&nbsp;</A></td></tr>
+							<tr><td><br>Minor Disabilities:</td><td><br><A href='?src=[REF(src)];field=mi_dis'>&nbsp;[active2.fields["mi_dis"]]&nbsp;</A></td></tr>
+							<tr><td>Details:</td><td><A href='?src=[REF(src)];field=mi_dis_d'>&nbsp;[active2.fields["mi_dis_d"]]&nbsp;</A></td></tr>
+							<tr><td><br>Major Disabilities:</td><td><br><A href='?src=[REF(src)];field=ma_dis'>&nbsp;[active2.fields["ma_dis"]]&nbsp;</A></td></tr>
+							<tr><td>Details:</td><td><A href='?src=[REF(src)];field=ma_dis_d'>&nbsp;[active2.fields["ma_dis_d"]]&nbsp;</A></td></tr>
+							<tr><td><br>Allergies:</td><td><br><A href='?src=[REF(src)];field=alg'>&nbsp;[active2.fields["alg"]]&nbsp;</A></td></tr>
+							<tr><td>Details:</td><td><A href='?src=[REF(src)];field=alg_d'>&nbsp;[active2.fields["alg_d"]]&nbsp;</A></td></tr>
+							<tr><td><br>Current Diseases:</td><td><br><A href='?src=[REF(src)];field=cdi'>&nbsp;[active2.fields["cdi"]]&nbsp;</A></td></tr>" //(per disease info placed in log/comment section
+							<tr><td>Details:</td><td><A href='?src=[REF(src)];field=cdi_d'>&nbsp;[active2.fields["cdi_d"]]&nbsp;</A></td></tr>
+							<tr><td><br>Important Notes:</td><td><br><A href='?src=[REF(src)];field=notes'>&nbsp;[active2.fields["notes"]]&nbsp;</A></td></tr>
+							<tr><td><br><b><font size='4'>Comments/Log</font></b></td></tr>"}
+						
 						var/counter = 1
 						while(src.active2.fields[text("com_[]", counter)])
 							dat += "<tr><td>[active2.fields[text("com_[]", counter)]]</td></tr><tr><td><A href='?src=[REF(src)];del_c=[counter]'>Delete Entry</A></td></tr>"
 							counter++
-						dat += "<tr><td><A href='?src=[REF(src)];add_c=1'>Add Entry</A></td></tr>"
 
-						dat += "<tr><td><br><A href='?src=[REF(src)];del_r=1'>Delete Record (Medical Only)</A></td></tr>"
+						dat += {"<tr><td><A href='?src=[REF(src)];add_c=1'>Add Entry</A></td></tr>
+							<tr><td><br><A href='?src=[REF(src)];del_r=1'>Delete Record (Medical Only)</A></td></tr>"}
+						
 					else
+
+						dat += {"<tr><td>Medical Record Lost!</tr>
+							<tr><td><br><A href='?src=[REF(src)];new=1'>New Record</A></td></tr>"}
+					
 						dat += "<tr><td>Medical Record Lost!</tr>"
-						dat += "<tr><td><br><A href='?src=[REF(src)];new=1'>New Record</A></td></tr>"
-					dat += "<tr><td><A href='?src=[REF(src)];print_p=1'>Print Record</A></td></tr>"
-					dat += "<tr><td><A href='?src=[REF(src)];screen=2'>Back</A></td></tr>"
-					dat += "</table>"
+
+					dat += {"<tr><td><A href='?src=[REF(src)];print_p=1'>Print Record</A></td></tr>
+						<tr><td><A href='?src=[REF(src)];screen=2'>Back</A></td></tr>
+						</table>"}
+					
 				if(5)
 					dat += "<CENTER><B>Virus Database</B></CENTER>"
 					for(var/Dt in typesof(/datum/disease/))
@@ -164,9 +175,11 @@
 						dat += "<br><a href='?src=[REF(src)];vir=[Dt]'>[Dis.name]</a>"
 					dat += "<br><a href='?src=[REF(src)];screen=1'>Back</a>"
 				if(6)
-					dat += "<center><b>Medical Robot Monitor</b></center>"
-					dat += "<a href='?src=[REF(src)];screen=1'>Back</a>"
-					dat += "<br><b>Medical Robots:</b>"
+
+					dat += {"<center><b>Medical Robot Monitor</b></center>
+						<a href='?src=[REF(src)];screen=1'>Back</a>
+						<br><b>Medical Robots:</b>"}
+					
 					var/bdat = null
 					for(var/mob/living/simple_animal/bot/medbot/M in GLOB.alive_mob_list)
 						if(M.z != src.z)

@@ -26,9 +26,10 @@
 			else
 				GLOB.news_network.SubmitArticle(title + "<br><br>" + text, "Central Command", "Station Announcements", null)
 
-	announcement += "<br><span class='alert'>[html_encode(text)]</span><br>"
-	announcement += "<br>"
 
+	announcement += {"<br><span class='alert'>[html_encode(text)]</span><br>
+		<br>"}
+	
 	var/s = sound(sound)
 	for(var/mob/M in GLOB.player_list)
 		if(!isnewplayer(M) && M.can_hear())

@@ -7,8 +7,10 @@
 	//Add client links
 	var/dat = ""
 	if(M.client)
-		dat += "<center><p>Client</p></center>"
-		dat += "<center>"
+
+		dat += {"<center><p>Client</p></center>
+			<center>"}
+		
 		dat += individual_logging_panel_link(M, INDIVIDUAL_ATTACK_LOG, LOGSRC_CLIENT, "Attack Log", source, ntype)
 		dat += " | "
 		dat += individual_logging_panel_link(M, INDIVIDUAL_SAY_LOG, LOGSRC_CLIENT, "Say Log", source, ntype)
@@ -24,8 +26,10 @@
 	else
 		dat += "<p> No client attached to mob </p>"
 
-	dat += "<hr style='background:#000000; border:0; height:1px'>"
-	dat += "<center><p>Mob</p></center>"
+
+	dat += {"<hr style='background:#000000; border:0; height:1px'>
+		<center><p>Mob</p></center>"}
+	
 	//Add the links for the mob specific log
 	dat += "<center>"
 	dat += individual_logging_panel_link(M, INDIVIDUAL_ATTACK_LOG, LOGSRC_MOB, "Attack Log", source, ntype)
@@ -39,10 +43,10 @@
 	dat += individual_logging_panel_link(M, INDIVIDUAL_OOC_LOG, LOGSRC_MOB, "OOC Log", source, ntype)
 	dat += " | "
 	dat += individual_logging_panel_link(M, INDIVIDUAL_SHOW_ALL_LOG, LOGSRC_MOB, "Show All", source, ntype)
-	dat += "</center>"
 
-	dat += "<hr style='background:#000000; border:0; height:1px'>"
-
+	dat += {"</center>
+		<hr style='background:#000000; border:0; height:1px'>"}
+	
 	var/log_source = M.logging;
 	if(source == LOGSRC_CLIENT && M.client) //if client doesn't exist just fall back to the mob log
 		log_source = M.client.player_details.logging //should exist, if it doesn't that's a bug, don't check for it not existing

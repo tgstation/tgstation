@@ -62,14 +62,16 @@
 				dat += "<A href='?src=[REF(src)];magbot=[REF(R)]'>(<font color=blue><i>Hack</i></font>)</A> "
 		else if(IsAdminGhost(user) && !R.emagged)
 			dat += "<A href='?src=[REF(src)];magbot=[REF(R)]'>(<font color=blue><i>Hack</i></font>)</A> "
-		dat += "<A href='?src=[REF(src)];stopbot=[REF(R)]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
-		dat += "<A href='?src=[REF(src)];killbot=[REF(R)]'>(<font color=red><i>Destroy</i></font>)</A>"
-		dat += "<BR>"
 
+		dat += {"<A href='?src=[REF(src)];stopbot=[REF(R)]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> 
+			<A href='?src=[REF(src)];killbot=[REF(R)]'>(<font color=red><i>Destroy</i></font>)</A>
+			<BR>"}
+		
 	if(!robots)
-		dat += "No Cyborg Units detected within access parameters."
-		dat += "<BR>"
 
+		dat += {"No Cyborg Units detected within access parameters.
+			<BR>"}
+		
 	var/drones = 0
 	for(var/mob/living/simple_animal/drone/D in GLOB.drones_list)
 		if(D.hacked)
@@ -78,9 +80,10 @@
 		dat += "[D.name] |"
 		if(D.stat)
 			dat += " Not Responding |"
-		dat += "<A href='?src=[REF(src)];killdrone=[REF(D)]'>(<font color=red><i>Destroy</i></font>)</A>"
-		dat += "<BR>"
 
+		dat += {"<A href='?src=[REF(src)];killdrone=[REF(D)]'>(<font color=red><i>Destroy</i></font>)</A>
+			<BR>"}
+		
 	if(!drones)
 		dat += "No Drone Units detected within access parameters."
 

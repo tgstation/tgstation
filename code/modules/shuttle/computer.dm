@@ -27,8 +27,11 @@
 		if(!destination_found)
 			dat += "<B>Shuttle Locked</B><br>"
 			if(admin_controlled)
+
+				dat += {"Authorized personnel only<br>
+					<A href='?src=[REF(src)];request=1]'>Request Authorization</A><br>"}
+	
 				dat += "Authorized personnel only<br>"
-				dat += "<A href='?src=[REF(src)];request=1]'>Request Authorization</A><br>"
 	dat += "<a href='?src=[REF(user)];mach_close=computer'>Close</a>"
 
 	var/datum/browser/popup = new(user, "computer", M ? M.name : "shuttle", 300, 200)

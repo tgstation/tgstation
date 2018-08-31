@@ -27,15 +27,18 @@
 	  // --- Main Menu ---
 
 		if(0)
-			dat += "<br>[temp]<br>"
-			dat += "<br>Current Network: <a href='?src=[REF(src)];network=1'>[network]</a><br>"
+
+			dat += {"<br>[temp]<br>
+				<br>Current Network: <a href='?src=[REF(src)];network=1'>[network]</a><br>"}
+			
 			if(servers.len)
 				dat += "<br>Detected Telecommunication Servers:<ul>"
 				for(var/obj/machinery/telecomms/T in servers)
 					dat += "<li><a href='?src=[REF(src)];viewserver=[T.id]'>[REF(T)] [T.name]</a> ([T.id])</li>"
-				dat += "</ul>"
-				dat += "<br><a href='?src=[REF(src)];operation=release'>\[Flush Buffer\]</a>"
 
+				dat += {"</ul>
+					<br><a href='?src=[REF(src)];operation=release'>\[Flush Buffer\]</a>"}
+				
 			else
 				dat += "<br>No servers detected. Scan for servers: <a href='?src=[REF(src)];operation=scan'>\[Scan\]</a>"
 
@@ -43,11 +46,12 @@
 	  // --- Viewing Server ---
 
 		if(1)
-			dat += "<br>[temp]<br>"
-			dat += "<center><a href='?src=[REF(src)];operation=mainmenu'>\[Main Menu\]</a>     <a href='?src=[REF(src)];operation=refresh'>\[Refresh\]</a></center>"
-			dat += "<br>Current Network: [network]"
-			dat += "<br>Selected Server: [SelectedServer.id]"
 
+			dat += {"<br>[temp]<br>
+				<center><a href='?src=[REF(src)];operation=mainmenu'>\[Main Menu\]</a>     <a href='?src=[REF(src)];operation=refresh'>\[Refresh\]</a></center>
+				<br>Current Network: [network]
+				<br>Selected Server: [SelectedServer.id]"}
+			
 			if(SelectedServer.totaltraffic >= 1024)
 				dat += "<br>Total recorded traffic: [round(SelectedServer.totaltraffic / 1024)] Terrabytes<br><br>"
 			else
@@ -108,27 +112,33 @@
 					// -- If the orator is a human, or universal translate is active, OR mob has universal speech on --
 
 					if(language == "Humanoid" || universal_translate || C.parameters["uspeech"])
-						dat += "<u><font color = #18743E>Data type</font color></u>: [C.input_type]<br>"
-						dat += "<u><font color = #18743E>Source</font color></u>: [C.parameters["name"]] (Job: [C.parameters["job"]])<br>"
-						dat += "<u><font color = #18743E>Class</font color></u>: [race]<br>"
-						dat += "<u><font color = #18743E>Contents</font color></u>: \"[C.parameters["message"]]\"<br>"
 
-
+						dat += {"<u><font color = #18743E>Data type</font color></u>: [C.input_type]<br>
+							<u><font color = #18743E>Source</font color></u>: [C.parameters["name"]] (Job: [C.parameters["job"]])<br>
+							<u><font color = #18743E>Class</font color></u>: [race]<br>
+							<u><font color = #18743E>Contents</font color></u>: \"[C.parameters["message"]]\"<br>"}
+						
 					// -- Orator is not human and universal translate not active --
 
 					else
+
+						dat += {"<u><font color = #18743E>Data type</font color></u>: Audio File<br>
+							<u><font color = #18743E>Source</font color></u>: <i>Unidentifiable</i><br>
+							<u><font color = #18743E>Class</font color></u>: [race]<br>
+							<u><font color = #18743E>Contents</font color></u>: <i>Unintelligible</i><br>"}
+					
 						dat += "<u><font color = #18743E>Data type</font color></u>: Audio File<br>"
-						dat += "<u><font color = #18743E>Source</font color></u>: <i>Unidentifiable</i><br>"
-						dat += "<u><font color = #18743E>Class</font color></u>: [race]<br>"
-						dat += "<u><font color = #18743E>Contents</font color></u>: <i>Unintelligible</i><br>"
 
 					dat += "</li><br>"
 
 				else if(C.input_type == "Execution Error")
 
+
+					dat += {"<li><font color = #990000>[C.name]</font color>  <font color = #FF0000><a href='?src=[REF(src)];delete=[i]'>\[X\]</a></font color><br>
+						<u><font color = #787700>Output</font color></u>: \"[C.parameters["message"]]\"<br>
+						</li><br>"}
+			
 					dat += "<li><font color = #990000>[C.name]</font color>  <font color = #FF0000><a href='?src=[REF(src)];delete=[i]'>\[X\]</a></font color><br>"
-					dat += "<u><font color = #787700>Output</font color></u>: \"[C.parameters["message"]]\"<br>"
-					dat += "</li><br>"
 
 
 			dat += "</ol>"

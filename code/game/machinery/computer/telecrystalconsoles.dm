@@ -162,11 +162,11 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 /obj/machinery/computer/telecrystals/boss/ui_interact(mob/user)
 	. = ..()
 	var/dat = ""
-	dat += "<a href='byond://?src=[REF(src)];scan=1'>Scan for TC stations.</a><BR>"
-	dat += "[storedcrystals] telecrystals are available for distribution. <BR>"
-	dat += "<BR><BR>"
 
-
+	dat += {"<a href='byond://?src=[REF(src)];scan=1'>Scan for TC stations.</a><BR>
+		[storedcrystals] telecrystals are available for distribution. <BR>
+		<BR><BR>"}
+	
 	for(var/obj/machinery/computer/telecrystals/uplinker/A in TCstations)
 		dat += "[A.name] | "
 		if(A.uplinkholder)

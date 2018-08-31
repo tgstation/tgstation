@@ -190,17 +190,25 @@
 	var/list/parts = list()
 	switch(get_result())
 		if(MONKEYS_ESCAPED)
-			parts += "<span class='greentext big'><B>Monkey Major Victory!</B></span>"
-			parts += "<span class='greentext'><B>Central Command and [station_name()] were taken over by the monkeys! Ook ook!</B></span>"
+
+			parts += {"<span class='greentext big'><B>Monkey Major Victory!</B></span>
+				<span class='greentext'><B>Central Command and [station_name()] were taken over by the monkeys! Ook ook!</B></span>"}
+			
 		if(MONKEYS_LIVED)
-			parts += "<FONT size = 3><B>Monkey Minor Victory!</B></FONT>"
-			parts += "<span class='greentext'><B>[station_name()] was taken over by the monkeys! Ook ook!</B></span>"
+
+			parts += {"<FONT size = 3><B>Monkey Minor Victory!</B></FONT>
+				<span class='greentext'><B>[station_name()] was taken over by the monkeys! Ook ook!</B></span>"}
+			
 		if(DISEASE_LIVED)
-			parts += "<span class='redtext big'><B>Monkey Minor Defeat!</B></span>"
-			parts += "<span class='redtext'><B>All the monkeys died, but the disease lives on! The future is uncertain.</B></span>"
+
+			parts += {"<span class='redtext big'><B>Monkey Minor Defeat!</B></span>
+				<span class='redtext'><B>All the monkeys died, but the disease lives on! The future is uncertain.</B></span>"}
+			
 		if(MONKEYS_DIED)
-			parts += "<span class='redtext big'><B>Monkey Major Defeat!</B></span>"
-			parts += "<span class='redtext'><B>All the monkeys died, and Jungle Fever was wiped out!</B></span>"
+
+			parts += {"<span class='redtext big'><B>Monkey Major Defeat!</B></span>
+				<span class='redtext'><B>All the monkeys died, and Jungle Fever was wiped out!</B></span>"}
+			
 	var/list/leaders = get_antag_minds(/datum/antagonist/monkey/leader, TRUE)
 	var/list/monkeys = get_antag_minds(/datum/antagonist/monkey, TRUE)
 

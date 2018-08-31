@@ -44,10 +44,11 @@
 			if(PLAYER_READY_TO_OBSERVE)
 				output += "<p>\[ [LINKIFY_READY("Ready", PLAYER_READY_TO_PLAY)] | [LINKIFY_READY("Not Ready", PLAYER_NOT_READY)] | <b> Observe </b> \]</p>"
 	else
-		output += "<p><a href='byond://?src=[REF(src)];manifest=1'>View the Crew Manifest</a></p>"
-		output += "<p><a href='byond://?src=[REF(src)];late_join=1'>Join Game!</a></p>"
-		output += "<p>[LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)]</p>"
 
+		output += {"<p><a href='byond://?src=[REF(src)];manifest=1'>View the Crew Manifest</a></p>
+			<p><a href='byond://?src=[REF(src)];late_join=1'>Join Game!</a></p>
+			<p>[LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)]</p>"}
+		
 	if(!IsGuestKey(src.key))
 		if (SSdbcore.Connect())
 			var/isadmin = 0
@@ -442,8 +443,10 @@
 			else
 				dat += " [a.title]. </div>"
 
-	dat += "<div class='clearBoth'>Choose from the following open positions:</div><br>"
-	dat += "<div class='jobs'><div class='jobsColumn'>"
+
+	dat += {"<div class='clearBoth'>Choose from the following open positions:</div><br>
+		<div class='jobs'><div class='jobsColumn'>"}
+	
 	var/job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)

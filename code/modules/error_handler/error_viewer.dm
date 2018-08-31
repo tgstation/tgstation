@@ -182,13 +182,16 @@ GLOBAL_DATUM(error_cache, /datum/error_viewer/error_cache)
 	var/html = build_header(back_to, linear)
 	html += "[name]<div class='runtime'>[desc]</div>"
 	if (usr_ref)
-		html += "<br><b>usr</b>: <a href='?_src_=vars;[HrefToken()];Vars=[usr_ref]'>VV</a>"
-		html += " <a href='?_src_=holder;[HrefToken()];adminplayeropts=[usr_ref]'>PP</a>"
-		html += " <a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[usr_ref]'>Follow</a>"
-		if (istype(usr_loc))
-			html += "<br><b>usr.loc</b>: <a href='?_src_=vars;[HrefToken()];Vars=[REF(usr_loc)]'>VV</a>"
-			html += " <a href='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[usr_loc.x];Y=[usr_loc.y];Z=[usr_loc.z]'>JMP</a>"
 
+		html += {"<br><b>usr</b>: <a href='?_src_=vars;[HrefToken()];Vars=[usr_ref]'>VV</a>
+			<a href='?_src_=holder;[HrefToken()];adminplayeropts=[usr_ref]'>PP</a>
+			<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[usr_ref]'>Follow</a>"}
+		
+		if (istype(usr_loc))
+
+			html += {"<br><b>usr.loc</b>: <a href='?_src_=vars;[HrefToken()];Vars=[REF(usr_loc)]'>VV</a>
+				<a href='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[usr_loc.x];Y=[usr_loc.y];Z=[usr_loc.z]'>JMP</a>"}
+			
 	browse_to(user, html)
 
 /datum/error_viewer/error_entry/make_link(linktext, datum/error_viewer/back_to, linear)

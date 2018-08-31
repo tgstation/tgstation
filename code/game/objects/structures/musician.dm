@@ -144,22 +144,28 @@
 	if(lines.len > 0)
 		dat += "<H3>Playback</H3>"
 		if(!playing)
-			dat += "<A href='?src=[REF(src)];play=1'>Play</A> <SPAN CLASS='linkOn'>Stop</SPAN><BR><BR>"
-			dat += "Repeat Song: "
+
+			dat += {"<A href='?src=[REF(src)];play=1'>Play</A> <SPAN CLASS='linkOn'>Stop</SPAN><BR><BR>
+				Repeat Song: "}
+			
 			dat += repeat > 0 ? "<A href='?src=[REF(src)];repeat=-10'>-</A><A href='?src=[REF(src)];repeat=-1'>-</A>" : "<SPAN CLASS='linkOff'>-</SPAN><SPAN CLASS='linkOff'>-</SPAN>"
 			dat += " [repeat] times "
 			dat += repeat < max_repeats ? "<A href='?src=[REF(src)];repeat=1'>+</A><A href='?src=[REF(src)];repeat=10'>+</A>" : "<SPAN CLASS='linkOff'>+</SPAN><SPAN CLASS='linkOff'>+</SPAN>"
 			dat += "<BR>"
 		else
-			dat += "<SPAN CLASS='linkOn'>Play</SPAN> <A href='?src=[REF(src)];stop=1'>Stop</A><BR>"
-			dat += "Repeats left: <B>[repeat]</B><BR>"
+
+			dat += {"<SPAN CLASS='linkOn'>Play</SPAN> <A href='?src=[REF(src)];stop=1'>Stop</A><BR>
+				Repeats left: <B>[repeat]</B><BR>"}
+			
 	if(!edit)
 		dat += "<BR><B><A href='?src=[REF(src)];edit=2'>Show Editor</A></B><BR>"
 	else
-		dat += "<H3>Editing</H3>"
-		dat += "<B><A href='?src=[REF(src)];edit=1'>Hide Editor</A></B>"
-		dat += " <A href='?src=[REF(src)];newsong=1'>Start a New Song</A>"
-		dat += " <A href='?src=[REF(src)];import=1'>Import a Song</A><BR><BR>"
+
+		dat += {"<H3>Editing</H3>
+			<B><A href='?src=[REF(src)];edit=1'>Hide Editor</A></B>
+			<A href='?src=[REF(src)];newsong=1'>Start a New Song</A>
+			<A href='?src=[REF(src)];import=1'>Import a Song</A><BR><BR>"}
+		
 		var/bpm = round(600 / tempo)
 		dat += "Tempo: <A href='?src=[REF(src)];tempo=[world.tick_lag]'>-</A> [bpm] BPM <A href='?src=[REF(src)];tempo=-[world.tick_lag]'>+</A><BR><BR>"
 		var/linecount = 0

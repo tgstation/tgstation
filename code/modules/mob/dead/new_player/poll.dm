@@ -67,13 +67,18 @@
 				options += PO
 			qdel(query_option_options)
 			var/output = "<div align='center'><B>Player poll</B><hr>"
-			output += "<b>Question: [pollquestion]</b><br>"
-			output += "<font size='2'>Poll runs from <b>[pollstarttime]</b> until <b>[pollendtime]</b></font><p>"
+
+			output += {"<b>Question: [pollquestion]</b><br>
+				<font size='2'>Poll runs from <b>[pollstarttime]</b> until <b>[pollendtime]</b></font><p>"}
+			
 			if(!votedoptionid)
+
+				output += {"<form name='cardcomp' action='?src=[REF(src)]' method='get'>
+					<input type='hidden' name='src' value='[REF(src)]'>
+					<input type='hidden' name='votepollid' value='[pollid]'>
+					<input type='hidden' name='votetype' value=[POLLTYPE_OPTION]>"}
+			
 				output += "<form name='cardcomp' action='?src=[REF(src)]' method='get'>"
-				output += "<input type='hidden' name='src' value='[REF(src)]'>"
-				output += "<input type='hidden' name='votepollid' value='[pollid]'>"
-				output += "<input type='hidden' name='votetype' value=[POLLTYPE_OPTION]>"
 			output += "<table><tr><td>"
 			for(var/datum/polloption/O in options)
 				if(O.optionid && O.optiontext)
@@ -86,8 +91,11 @@
 						output += "<input type='radio' name='voteoptionid' value='[O.optionid]'>[O.optiontext]<br>"
 			output += "</td></tr></table>"
 			if(!votedoptionid)
+
+				output += {"<p><input type='submit' value='Vote'>
+					</form>"}
+			
 				output += "<p><input type='submit' value='Vote'>"
-				output += "</form>"
 			output += "</div>"
 			src << browse(null ,"window=playerpolllist")
 			src << browse(output,"window=playerpoll;size=500x250")
@@ -101,22 +109,26 @@
 				vote_text = query_text_get_votes.item[1]
 			qdel(query_text_get_votes)
 			var/output = "<div align='center'><B>Player poll</B><hr>"
-			output += "<b>Question: [pollquestion]</b><br>"
-			output += "<font size='2'>Feedback gathering runs from <b>[pollstarttime]</b> until <b>[pollendtime]</b></font><p>"
+
+			output += {"<b>Question: [pollquestion]</b><br>
+				<font size='2'>Feedback gathering runs from <b>[pollstarttime]</b> until <b>[pollendtime]</b></font><p>"}
+			
 			if(!vote_text)
-				output += "<form name='cardcomp' action='?src=[REF(src)]' method='get'>"
-				output += "<input type='hidden' name='src' value='[REF(src)]'>"
-				output += "<input type='hidden' name='votepollid' value='[pollid]'>"
-				output += "<input type='hidden' name='votetype' value=[POLLTYPE_TEXT]>"
-				output += "<font size='2'>Please provide feedback below. You can use any letters of the English alphabet, numbers and the symbols: . , ! ? : ; -</font><br>"
-				output += "<textarea name='replytext' cols='50' rows='14'></textarea>"
-				output += "<p><input type='submit' value='Submit'></form>"
-				output += "<form name='cardcomp' action='?src=[REF(src)]' method='get'>"
-				output += "<input type='hidden' name='src' value='[REF(src)]'>"
-				output += "<input type='hidden' name='votepollid' value='[pollid]'>"
-				output += "<input type='hidden' name='votetype' value=[POLLTYPE_TEXT]>"
-				output += "<input type='hidden' name='replytext' value='ABSTAIN'>"
-				output += "<input type='submit' value='Abstain'></form>"
+
+				output += {"<form name='cardcomp' action='?src=[REF(src)]' method='get'>
+					<input type='hidden' name='src' value='[REF(src)]'>
+					<input type='hidden' name='votepollid' value='[pollid]'>
+					<input type='hidden' name='votetype' value=[POLLTYPE_TEXT]>
+					<font size='2'>Please provide feedback below. You can use any letters of the English alphabet, numbers and the symbols: . , ! ? : ; -</font><br>
+					<textarea name='replytext' cols='50' rows='14'></textarea>
+					<p><input type='submit' value='Submit'></form>
+					<form name='cardcomp' action='?src=[REF(src)]' method='get'>
+					<input type='hidden' name='src' value='[REF(src)]'>
+					<input type='hidden' name='votepollid' value='[pollid]'>
+					<input type='hidden' name='votetype' value=[POLLTYPE_TEXT]>
+					<input type='hidden' name='replytext' value='ABSTAIN'>
+					<input type='submit' value='Abstain'></form>"}
+				
 			else
 				vote_text = replacetext(vote_text, "\n", "<br>")
 				output += "[vote_text]"
@@ -128,8 +140,10 @@
 				qdel(query_rating_get_votes)
 				return
 			var/output = "<div align='center'><B>Player poll</B><hr>"
-			output += "<b>Question: [pollquestion]</b><br>"
-			output += "<font size='2'>Poll runs from <b>[pollstarttime]</b> until <b>[pollendtime]</b></font><p>"
+
+			output += {"<b>Question: [pollquestion]</b><br>
+				<font size='2'>Poll runs from <b>[pollstarttime]</b> until <b>[pollendtime]</b></font><p>"}
+			
 			var/rating
 			while(query_rating_get_votes.NextRow())
 				var/optiontext = query_rating_get_votes.item[1]
@@ -137,10 +151,12 @@
 				output += "<br><b>[optiontext] - [rating]</b>"
 			qdel(query_rating_get_votes)
 			if(!rating)
-				output += "<form name='cardcomp' action='?src=[REF(src)]' method='get'>"
-				output += "<input type='hidden' name='src' value='[REF(src)]'>"
-				output += "<input type='hidden' name='votepollid' value='[pollid]'>"
-				output += "<input type='hidden' name='votetype' value=[POLLTYPE_RATING]>"
+
+				output += {"<form name='cardcomp' action='?src=[REF(src)]' method='get'>
+					<input type='hidden' name='src' value='[REF(src)]'>
+					<input type='hidden' name='votepollid' value='[pollid]'>
+					<input type='hidden' name='votetype' value=[POLLTYPE_RATING]>"}
+				
 				var/minid = 999999
 				var/maxid = 0
 				var/datum/DBQuery/query_rating_options = SSdbcore.NewQuery("SELECT id, text, minval, maxval, descmin, descmid, descmax FROM [format_table_name("poll_option")] WHERE pollid = [pollid]")
@@ -160,8 +176,10 @@
 					if(optionid > maxid)
 						maxid = optionid
 					var/midvalue = round( (maxvalue + minvalue) / 2)
-					output += "<br>[optiontext]: <select name='o[optionid]'>"
-					output += "<option value='abstain'>abstain</option>"
+
+					output += {"<br>[optiontext]: <select name='o[optionid]'>
+						<option value='abstain'>abstain</option>"}
+					
 					for (var/j = minvalue; j <= maxvalue; j++)
 						if(j == minvalue && descmin)
 							output += "<option value='[j]'>[j] ([descmin])</option>"
@@ -173,9 +191,11 @@
 							output += "<option value='[j]'>[j]</option>"
 					output += "</select>"
 				qdel(query_rating_options)
-				output += "<input type='hidden' name='minid' value='[minid]'>"
-				output += "<input type='hidden' name='maxid' value='[maxid]'>"
-				output += "<p><input type='submit' value='Submit'></form>"
+
+				output += {"<input type='hidden' name='minid' value='[minid]'>
+					<input type='hidden' name='maxid' value='[maxid]'>
+					<p><input type='submit' value='Submit'></form>"}
+				
 			if(!QDELETED(src))
 				src << browse(null ,"window=playerpolllist")
 				src << browse(output,"window=playerpoll;size=500x500")
@@ -206,15 +226,20 @@
 				options += PO
 			qdel(query_multi_options)
 			var/output = "<div align='center'><B>Player poll</B><hr>"
-			output += "<b>Question: [pollquestion]</b><br>You can select up to [multiplechoiceoptions] options. If you select more, the first [multiplechoiceoptions] will be saved.<br>"
-			output += "<font size='2'>Poll runs from <b>[pollstarttime]</b> until <b>[pollendtime]</b></font><p>"
+
+			output += {"<b>Question: [pollquestion]</b><br>You can select up to [multiplechoiceoptions] options. If you select more, the first [multiplechoiceoptions] will be saved.<br>
+				<font size='2'>Poll runs from <b>[pollstarttime]</b> until <b>[pollendtime]</b></font><p>"}
+			
 			if(!votedfor.len)
+
+				output += {"<form name='cardcomp' action='?src=[REF(src)]' method='get'>
+					<input type='hidden' name='src' value='[REF(src)]'>
+					<input type='hidden' name='votepollid' value='[pollid]'>
+					<input type='hidden' name='votetype' value=[POLLTYPE_MULTI]>
+					<input type='hidden' name='maxoptionid' value='[maxoptionid]'>
+					<input type='hidden' name='minoptionid' value='[minoptionid]'>"}
+			
 				output += "<form name='cardcomp' action='?src=[REF(src)]' method='get'>"
-				output += "<input type='hidden' name='src' value='[REF(src)]'>"
-				output += "<input type='hidden' name='votepollid' value='[pollid]'>"
-				output += "<input type='hidden' name='votetype' value=[POLLTYPE_MULTI]>"
-				output += "<input type='hidden' name='maxoptionid' value='[maxoptionid]'>"
-				output += "<input type='hidden' name='minoptionid' value='[minoptionid]'>"
 			output += "<table><tr><td>"
 			for(var/datum/polloption/O in options)
 				if(O.optionid && O.optiontext)

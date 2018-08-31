@@ -474,19 +474,22 @@
 	var/turf/ai_current_turf = get_turf(src)
 	var/ai_Zlevel = ai_current_turf.z
 	var/d
-	d += "<A HREF=?src=[REF(src)];botrefresh=1>Query network status</A><br>"
-	d += "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Status</h3></td><td width='30%'><h3>Location</h3></td><td width='10%'><h3>Control</h3></td></tr>"
 
+	d += {"<A HREF=?src=[REF(src)];botrefresh=1>Query network status</A><br>
+		<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Status</h3></td><td width='30%'><h3>Location</h3></td><td width='10%'><h3>Control</h3></td></tr>"}
+	
 	for (Bot in GLOB.alive_mob_list)
 		if(Bot.z == ai_Zlevel && !Bot.remote_disabled) //Only non-emagged bots on the same Z-level are detected!
 			var/bot_mode = Bot.get_mode()
 			d += "<tr><td width='30%'>[Bot.hacked ? "<span class='bad'>(!)</span>" : ""] [Bot.name]</A> ([Bot.model])</td>"
 			//If the bot is on, it will display the bot's current mode status. If the bot is not mode, it will just report "Idle". "Inactive if it is not on at all.
-			d += "<td width='30%'>[bot_mode]</td>"
-			d += "<td width='30%'>[get_area_name(Bot, TRUE)]</td>"
-			d += "<td width='10%'><A HREF=?src=[REF(src)];interface=[REF(Bot)]>Interface</A></td>"
-			d += "<td width='10%'><A HREF=?src=[REF(src)];callbot=[REF(Bot)]>Call</A></td>"
-			d += "</tr>"
+
+			d += {"<td width='30%'>[bot_mode]</td>
+				<td width='30%'>[get_area_name(Bot, TRUE)]</td>
+				<td width='10%'><A HREF=?src=[REF(src)];interface=[REF(Bot)]>Interface</A></td>
+				<td width='10%'><A HREF=?src=[REF(src)];callbot=[REF(Bot)]>Call</A></td>
+				</tr>"}
+			
 			d = format_text(d)
 
 	var/datum/browser/popup = new(src, "botcall", "Remote Robot Control", 700, 400)

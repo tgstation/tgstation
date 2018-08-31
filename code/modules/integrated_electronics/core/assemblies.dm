@@ -149,21 +149,20 @@
 	var/total_complexity = return_total_complexity()
 	var/HTML = ""
 
-	HTML += "<html><head><title>[name]</title></head><body>"
 
-	HTML += "<a href='?src=[REF(src)]'>\[Refresh\]</a>  |  <a href='?src=[REF(src)];rename=1'>\[Rename\]</a><br>"
-	HTML += "[total_part_size]/[max_components] ([round((total_part_size / max_components) * 100, 0.1)]%) space taken up in the assembly.<br>"
-	HTML += "[total_complexity]/[max_complexity] ([round((total_complexity / max_complexity) * 100, 0.1)]%) maximum complexity.<br>"
+	HTML += {"<html><head><title>[name]</title></head><body>
+		<a href='?src=[REF(src)]'>\[Refresh\]</a>  |  <a href='?src=[REF(src)];rename=1'>\[Rename\]</a><br>
+		[total_part_size]/[max_components] ([round((total_part_size / max_components) * 100, 0.1)]%) space taken up in the assembly.<br>
+		[total_complexity]/[max_complexity] ([round((total_complexity / max_complexity) * 100, 0.1)]%) maximum complexity.<br>"}
+	
 	if(battery)
 		HTML += "[round(battery.charge, 0.1)]/[battery.maxcharge] ([round(battery.percent(), 0.1)]%) cell charge. <a href='?src=[REF(src)];remove_cell=1'>\[Remove\]</a>"
 	else
 		HTML += "<span class='danger'>No power cell detected!</span>"
-	HTML += "<br><br>"
 
-
-
-	HTML += "Components:"
-
+	HTML += {"<br><br>
+		Components:"}
+	
 	var/builtin_components = ""
 
 	for(var/c in assembly_components)
@@ -175,25 +174,33 @@
 
 	// Put removable circuits (if any) in separate categories from non-removable
 	if(builtin_components)
-		HTML += "<hr>"
-		HTML += "Built in:<br>"
+
+		HTML += {"<hr>
+			Built in:<br>"}
+		
 		HTML += builtin_components
+
+		HTML += {"<hr>
+			Removable:"}
+	
 		HTML += "<hr>"
-		HTML += "Removable:"
 
 	HTML += "<br>"
 
 	for(var/c in assembly_components)
 		var/obj/item/integrated_circuit/circuit = c
 		if(circuit.removable)
+
+			HTML += {"<a href='?src=[REF(src)];component=[REF(circuit)];up=1' style='text-decoration:none;'>&#8593;</a> 
+				<a href='?src=[REF(src)];component=[REF(circuit)];down=1' style='text-decoration:none;'>&#8595;</a>  
+				<a href='?src=[REF(src)];component=[REF(circuit)];top=1' style='text-decoration:none;'>&#10514;</a> 
+				<a href='?src=[REF(src)];component=[REF(circuit)];bottom=1' style='text-decoration:none;'>&#10515;</a> | 
+				<a href='?src=[REF(circuit)];component=[REF(circuit)];rename=1;return=1'>\[R\]</a> | 
+				<a href='?src=[REF(src)];component=[REF(circuit)];remove=1'>\[-\]</a> | 
+				<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a>
+				<br>"}
+	
 			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];up=1' style='text-decoration:none;'>&#8593;</a> "
-			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];down=1' style='text-decoration:none;'>&#8595;</a>  "
-			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];top=1' style='text-decoration:none;'>&#10514;</a> "
-			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];bottom=1' style='text-decoration:none;'>&#10515;</a> | "
-			HTML += "<a href='?src=[REF(circuit)];component=[REF(circuit)];rename=1;return=1'>\[R\]</a> | "
-			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];remove=1'>\[-\]</a> | "
-			HTML += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a>"
-			HTML += "<br>"
 
 	HTML += "</body></html>"
 	user << browse(HTML, "window=assembly-[REF(src)];size=655x350;border=1;can_resize=1;can_close=1;can_minimize=1")

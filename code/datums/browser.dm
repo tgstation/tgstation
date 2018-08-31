@@ -341,18 +341,20 @@
 			dat += "<b>[setting["desc"]]:</b> <a href='?src=[REF(src)];setting=[name];task=input;type=[setting["type"]]'>[setting["value"]]</a><BR>"
 
 	if (preview_icon)
+
+		dat += {"<td valign='center'>
+			<div class='statusDisplay'><center><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></center></div>
+			</td>"}
+	
 		dat += "<td valign='center'>"
 
-		dat += "<div class='statusDisplay'><center><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></center></div>"
 
-		dat += "</td>"
 
-	dat += "</tr></table>"
 
-	dat += "<hr><center><a href='?src=[REF(src)];button=1'>Ok</a> "
-
-	dat += "</center>"
-
+	dat += {"</tr></table>
+		<hr><center><a href='?src=[REF(src)];button=1'>Ok</a> 
+		</center>"}
+	
 	return dat
 
 /datum/browser/modal/preflikepicker/Topic(href,href_list)

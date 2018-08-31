@@ -134,58 +134,84 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	if(!open)
 		switch(screen)
 			if(1)	//req. assistance
-				dat += "Which department do you need assistance from?<BR><BR>"
-				dat += "<table width='100%'>"
+
+				dat += {"Which department do you need assistance from?<BR><BR>
+					<table width='100%'>"}
+				
 				for(var/dpt in GLOB.req_console_assistance)
 					if (dpt != department)
-						dat += "<tr>"
-						dat += "<td width='55%'>[dpt]</td>"
-						dat += "<td width='45%'><A href='?src=[REF(src)];write=[ckey(dpt)]'>Normal</A> <A href='?src=[REF(src)];write=[ckey(dpt)];priority=2'>High</A>"
+
+						dat += {"<tr>
+							<td width='55%'>[dpt]</td>
+							<td width='45%'><A href='?src=[REF(src)];write=[ckey(dpt)]'>Normal</A> <A href='?src=[REF(src)];write=[ckey(dpt)];priority=2'>High</A>"}
+						
 						if(hackState)
 							dat += "<A href='?src=[REF(src)];write=[ckey(dpt)];priority=3'>EXTREME</A>"
-						dat += "</td>"
-						dat += "</tr>"
-				dat += "</table>"
-				dat += "<BR><A href='?src=[REF(src)];setScreen=0'><< Back</A><BR>"
 
+						dat += {"</td>
+							</tr>"}
+				
+						dat += "</td>"
+
+				dat += {"</table>
+					<BR><A href='?src=[REF(src)];setScreen=0'><< Back</A><BR>"}
+				
 			if(2)	//req. supplies
-				dat += "Which department do you need supplies from?<BR><BR>"
-				dat += "<table width='100%'>"
+
+				dat += {"Which department do you need supplies from?<BR><BR>
+					<table width='100%'>"}
+				
 				for(var/dpt in GLOB.req_console_supplies)
 					if (dpt != department)
-						dat += "<tr>"
-						dat += "<td width='55%'>[dpt]</td>"
-						dat += "<td width='45%'><A href='?src=[REF(src)];write=[ckey(dpt)]'>Normal</A> <A href='?src=[REF(src)];write=[ckey(dpt)];priority=2'>High</A>"
+
+						dat += {"<tr>
+							<td width='55%'>[dpt]</td>
+							<td width='45%'><A href='?src=[REF(src)];write=[ckey(dpt)]'>Normal</A> <A href='?src=[REF(src)];write=[ckey(dpt)];priority=2'>High</A>"}
+						
 						if(hackState)
 							dat += "<A href='?src=[REF(src)];write=[ckey(dpt)];priority=3'>EXTREME</A>"
-						dat += "</td>"
-						dat += "</tr>"
-				dat += "</table>"
-				dat += "<BR><A href='?src=[REF(src)];setScreen=0'><< Back</A><BR>"
 
+						dat += {"</td>
+							</tr>"}
+				
+						dat += "</td>"
+
+				dat += {"</table>
+					<BR><A href='?src=[REF(src)];setScreen=0'><< Back</A><BR>"}
+				
 			if(3)	//relay information
-				dat += "Which department would you like to send information to?<BR><BR>"
-				dat += "<table width='100%'>"
+
+				dat += {"Which department would you like to send information to?<BR><BR>
+					<table width='100%'>"}
+				
 				for(var/dpt in GLOB.req_console_information)
 					if (dpt != department)
-						dat += "<tr>"
-						dat += "<td width='55%'>[dpt]</td>"
-						dat += "<td width='45%'><A href='?src=[REF(src)];write=[ckey(dpt)]'>Normal</A> <A href='?src=[REF(src)];write=[ckey(dpt)];priority=2'>High</A>"
+
+						dat += {"<tr>
+							<td width='55%'>[dpt]</td>
+							<td width='45%'><A href='?src=[REF(src)];write=[ckey(dpt)]'>Normal</A> <A href='?src=[REF(src)];write=[ckey(dpt)];priority=2'>High</A>"}
+						
 						if(hackState)
 							dat += "<A href='?src=[REF(src)];write=[ckey(dpt)];priority=3'>EXTREME</A>"
+
+						dat += {"</td>
+							</tr>"}
+				
 						dat += "</td>"
-						dat += "</tr>"
-				dat += "</table>"
-				dat += "<BR><A href='?src=[REF(src)];setScreen=0'><< Back</A><BR>"
 
+				dat += {"</table>
+					<BR><A href='?src=[REF(src)];setScreen=0'><< Back</A><BR>"}
+				
 			if(6)	//sent successfully
-				dat += "<span class='good'>Message sent.</span><BR><BR>"
-				dat += "<A href='?src=[REF(src)];setScreen=0'>Continue</A><BR>"
 
+				dat += {"<span class='good'>Message sent.</span><BR><BR>
+					<A href='?src=[REF(src)];setScreen=0'>Continue</A><BR>"}
+				
 			if(7)	//unsuccessful; not sent
-				dat += "<span class='bad'>An error occurred.</span><BR><BR>"
-				dat += "<A href='?src=[REF(src)];setScreen=0'>Continue</A><BR>"
 
+				dat += {"<span class='bad'>An error occurred.</span><BR><BR>
+					<A href='?src=[REF(src)];setScreen=0'>Continue</A><BR>"}
+				
 			if(8)	//view messages
 				for (var/obj/machinery/requests_console/Console in GLOB.allConsoles)
 					if (Console.department == department)
@@ -201,22 +227,25 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				dat += "<BR><A href='?src=[REF(src)];setScreen=0'><< Back to Main Menu</A><BR>"
 
 			if(9)	//authentication before sending
-				dat += "<B>Message Authentication</B><BR><BR>"
-				dat += "<b>Message for [dpt]: </b>[message]<BR><BR>"
-				dat += "<div class='notice'>You may authenticate your message now by scanning your ID or your stamp</div><BR>"
-				dat += "<b>Validated by:</b> [msgVerified ? msgVerified : "<i>Not Validated</i>"]<br>"
-				dat += "<b>Stamped by:</b> [msgStamped ? msgStamped : "<i>Not Stamped</i>"]<br><br>"
-				dat += "<A href='?src=[REF(src)];department=[dpt]'>Send Message</A><BR>"
-				dat += "<BR><A href='?src=[REF(src)];setScreen=0'><< Discard Message</A><BR>"
 
+				dat += {"<B>Message Authentication</B><BR><BR>
+					<b>Message for [dpt]: </b>[message]<BR><BR>
+					<div class='notice'>You may authenticate your message now by scanning your ID or your stamp</div><BR>
+					<b>Validated by:</b> [msgVerified ? msgVerified : "<i>Not Validated</i>"]<br>
+					<b>Stamped by:</b> [msgStamped ? msgStamped : "<i>Not Stamped</i>"]<br><br>
+					<A href='?src=[REF(src)];department=[dpt]'>Send Message</A><BR>
+					<BR><A href='?src=[REF(src)];setScreen=0'><< Discard Message</A><BR>"}
+				
 			if(10)	//send announcement
 				dat += "<h3>Station-wide Announcement</h3>"
 				if(announceAuth)
 					dat += "<div class='notice'>Authentication accepted</div><BR>"
 				else
 					dat += "<div class='notice'>Swipe your card to authenticate yourself</div><BR>"
-				dat += "<b>Message: </b>[message ? message : "<i>No Message</i>"]<BR>"
-				dat += "<A href='?src=[REF(src)];writeAnnouncement=1'>[message ? "Edit" : "Write"] Message</A><BR><BR>"
+
+				dat += {"<b>Message: </b>[message ? message : "<i>No Message</i>"]<BR>
+					<A href='?src=[REF(src)];writeAnnouncement=1'>[message ? "Edit" : "Write"] Message</A><BR><BR>"}
+				
 				if ((announceAuth || IsAdminGhost(user)) && message)
 					dat += "<A href='?src=[REF(src)];sendAnnouncement=1'>Announce Message</A><BR>"
 				else
@@ -232,16 +261,18 @@ GLOBAL_LIST_EMPTY(allConsoles)
 					dat += "<div class='notice'>There are new <b>PRIORITY</b> messages</div><BR>"
 				if (newmessagepriority == EXTREME_MESSAGE_PRIORITY)
 					dat += "<div class='notice'>There are new <b>EXTREME PRIORITY</b> messages</div><BR>"
-				dat += "<A href='?src=[REF(src)];setScreen=8'>View Messages</A><BR><BR>"
 
-				dat += "<A href='?src=[REF(src)];setScreen=1'>Request Assistance</A><BR>"
-				dat += "<A href='?src=[REF(src)];setScreen=2'>Request Supplies</A><BR>"
-				dat += "<A href='?src=[REF(src)];setScreen=3'>Relay Anonymous Information</A><BR><BR>"
-
+				dat += {"<A href='?src=[REF(src)];setScreen=8'>View Messages</A><BR><BR>
+					<A href='?src=[REF(src)];setScreen=1'>Request Assistance</A><BR>
+					<A href='?src=[REF(src)];setScreen=2'>Request Supplies</A><BR>
+					<A href='?src=[REF(src)];setScreen=3'>Relay Anonymous Information</A><BR><BR>"}
+				
 				if(!emergency)
-					dat += "<A href='?src=[REF(src)];emergency=1'>Emergency: Security</A><BR>"
-					dat += "<A href='?src=[REF(src)];emergency=2'>Emergency: Engineering</A><BR>"
-					dat += "<A href='?src=[REF(src)];emergency=3'>Emergency: Medical</A><BR><BR>"
+
+					dat += {"<A href='?src=[REF(src)];emergency=1'>Emergency: Security</A><BR>
+						<A href='?src=[REF(src)];emergency=2'>Emergency: Engineering</A><BR>
+						<A href='?src=[REF(src)];emergency=3'>Emergency: Medical</A><BR><BR>"}
+					
 				else
 					dat += "<B><font color='red'>[emergency] has been dispatched to this location.</font></B><BR><BR>"
 

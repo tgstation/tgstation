@@ -223,12 +223,14 @@ Nothing else in the console has ID requirements.
 /obj/machinery/computer/rdconsole/proc/ui_header()
 	var/list/l = list()
 	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
-	l += "[sheet.css_tag()][RDSCREEN_NOBREAK]"
-	l += "<div class='statusDisplay'><b>[stored_research.organization] Research and Development Network</b>"
-	l += "Available points: <BR>[techweb_point_display_rdconsole(stored_research.research_points, stored_research.last_bitcoins)]"
-	l += "Security protocols: [obj_flags & EMAGGED ? "<font color='red'>Disabled</font>" : "<font color='green'>Enabled</font>"]"
-	l += "<a href='?src=[REF(src)];switch_screen=[RDSCREEN_MENU]'>Main Menu</a> | <a href='?src=[REF(src)];switch_screen=[back]'>Back</a></div>[RDSCREEN_NOBREAK]"
-	l += "[ui_mode == 1? "<span class='linkOn'>Normal View</span>" : "<a href='?src=[REF(src)];ui_mode=1'>Normal View</a>"] | [ui_mode == 2? "<span class='linkOn'>Expert View</span>" : "<a href='?src=[REF(src)];ui_mode=2'>Expert View</a>"] | [ui_mode == 3? "<span class='linkOn'>List View</span>" : "<a href='?src=[REF(src)];ui_mode=3'>List View</a>"]"
+
+	l += {"[sheet.css_tag()][RDSCREEN_NOBREAK]
+		<div class='statusDisplay'><b>[stored_research.organization] Research and Development Network</b>
+		Available points: <BR>[techweb_point_display_rdconsole(stored_research.research_points, stored_research.last_bitcoins)]
+		Security protocols: [obj_flags & EMAGGED ? "<font color='red'>Disabled</font>" : "<font color='green'>Enabled</font>"]
+		<a href='?src=[REF(src)];switch_screen=[RDSCREEN_MENU]'>Main Menu</a> | <a href='?src=[REF(src)];switch_screen=[back]'>Back</a></div>[RDSCREEN_NOBREAK]
+		[ui_mode == 1? "<span class='linkOn'>Normal View</span>" : "<a href='?src=[REF(src)];ui_mode=1'>Normal View</a>"] | [ui_mode == 2? "<span class='linkOn'>Expert View</span>" : "<a href='?src=[REF(src)];ui_mode=2'>Expert View</a>"] | [ui_mode == 3? "<span class='linkOn'>List View</span>" : "<a href='?src=[REF(src)];ui_mode=3'>List View</a>"]"}
+
 	return l
 
 /obj/machinery/computer/rdconsole/proc/ui_main_menu()
@@ -253,17 +255,21 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/proc/ui_settings()
 	var/list/l = list()
-	l += "<div class='statusDisplay'><h3>R&D Console Settings:</h3>"
-	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_DEVICE_LINKING]'>Device Linkage Menu</A>"
-	l += "<A href='?src=[REF(src)];lock_console=1'>Lock Console</A></div>"
+
+	l += {"<div class='statusDisplay'><h3>R&D Console Settings:</h3>
+		<A href='?src=[REF(src)];switch_screen=[RDSCREEN_DEVICE_LINKING]'>Device Linkage Menu</A>
+		<A href='?src=[REF(src)];lock_console=1'>Lock Console</A></div>"}
+
 	return l
 
 /obj/machinery/computer/rdconsole/proc/ui_device_linking()
 	var/list/l = list()
-	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_SETTINGS]'>Settings Menu</A><div class='statusDisplay'>"
-	l += "<h3>R&D Console Device Linkage Menu:</h3>"
-	l += "<A href='?src=[REF(src)];find_device=1'>Re-sync with Nearby Devices</A>"
-	l += "<h3>Linked Devices:</h3>"
+
+	l += {"<A href='?src=[REF(src)];switch_screen=[RDSCREEN_SETTINGS]'>Settings Menu</A><div class='statusDisplay'>
+		<h3>R&D Console Device Linkage Menu:</h3>
+		<A href='?src=[REF(src)];find_device=1'>Re-sync with Nearby Devices</A>
+		<h3>Linked Devices:</h3>"}
+
 	l += linked_destroy? "* Destructive Analyzer <A href='?src=[REF(src)];disconnect=destroy'>Disconnect</A>" : "* No Destructive Analyzer Linked"
 	l += linked_lathe? "* Protolathe <A href='?src=[REF(src)];disconnect=lathe'>Disconnect</A>" : "* No Protolathe Linked"
 	l += linked_imprinter? "* Circuit Imprinter <A href='?src=[REF(src)];disconnect=imprinter'>Disconnect</A>" : "* No Circuit Imprinter Linked"
@@ -395,11 +401,16 @@ Nothing else in the console has ID requirements.
 	RDSCREEN_UI_LATHE_CHECK
 	var/list/l = list()
 	l += ui_protolathe_header()
-	l += "<div class='statusDisplay'><A href='?src=[REF(src)];disposeallP=1'>Disposal All Chemicals in Storage</A>"
-	l += "<h3>Chemical Storage:</h3>"
+
+	l += {"<div class='statusDisplay'><A href='?src=[REF(src)];disposeallP=1'>Disposal All Chemicals in Storage</A>
+		<h3>Chemical Storage:</h3>"}
+
 	for(var/datum/reagent/R in linked_lathe.reagents.reagent_list)
+
+		l += {"[R.name]: [R.volume]
+			<A href='?src=[REF(src)];disposeP=[R.id]'>Purge</A>"}
+
 		l += "[R.name]: [R.volume]"
-		l += "<A href='?src=[REF(src)];disposeP=[R.id]'>Purge</A>"
 	l += "</div>"
 	return l
 
@@ -417,15 +428,15 @@ Nothing else in the console has ID requirements.
 	RDSCREEN_UI_IMPRINTER_CHECK
 	var/list/l = list()
 	l += ui_circuit_header()
-	l += "<h3>Circuit Imprinter Menu:</h3>"
 
-	l += "<form name='search' action='?src=[REF(src)]'>\
-	<input type='hidden' name='src' value='[REF(src)]'>\
-	<input type='hidden' name='search' value='to_search'>\
-	<input type='hidden' name='type' value='imprint'>\
-	<input type='text' name='to_search'>\
-	<input type='submit' value='Search'>\
-	</form><HR>"
+	l += {"<h3>Circuit Imprinter Menu:</h3>
+		<form name='search' action='?src=[REF(src)]'>
+		<input type='hidden' name='src' value='[REF(src)]'>
+		<input type='hidden' name='search' value='to_search'>
+		<input type='hidden' name='type' value='imprint'>
+		<input type='text' name='to_search'>
+		<input type='submit' value='Search'>
+		</form><HR>"}
 
 	l += list_categories(linked_imprinter.categories, RDSCREEN_IMPRINTER_CATEGORY_VIEW)
 	return l
@@ -497,11 +508,15 @@ Nothing else in the console has ID requirements.
 	RDSCREEN_UI_IMPRINTER_CHECK
 	var/list/l = list()
 	l += ui_circuit_header()
-	l += "<A href='?src=[REF(src)];disposeallI=1'>Disposal All Chemicals in Storage</A><div class='statusDisplay'>"
-	l += "<h3>Chemical Storage:</h3>"
+
+	l += {"<A href='?src=[REF(src)];disposeallI=1'>Disposal All Chemicals in Storage</A><div class='statusDisplay'>
+		<h3>Chemical Storage:</h3>"}
+
 	for(var/datum/reagent/R in linked_imprinter.reagents.reagent_list)
-		l += "[R.name]: [R.volume]"
-		l += "<A href='?src=[REF(src)];disposeI=[R.id]'>Purge</A>"
+
+		l += {"[R.name]: [R.volume]
+			<A href='?src=[REF(src)];disposeI=[R.id]'>Purge</A>"}
+
 	return l
 
 /obj/machinery/computer/rdconsole/proc/ui_circuit_materials()	//Legacy code!
@@ -524,11 +539,13 @@ Nothing else in the console has ID requirements.
 /obj/machinery/computer/rdconsole/proc/ui_techdisk()		//Legacy code
 	RDSCREEN_UI_TDISK_CHECK
 	var/list/l = list()
-	l += "<div class='statusDisplay'>Disk Operations: <A href='?src=[REF(src)];clear_tech=0'>Clear Disk</A>"
-	l += "<A href='?src=[REF(src)];eject_tech=1'>Eject Disk</A>"
-	l += "<A href='?src=[REF(src)];updt_tech=0'>Upload All</A>"
-	l += "<A href='?src=[REF(src)];copy_tech=1'>Load Technology to Disk</A></div>"
-	l += "<div class='statusDisplay'><h3>Stored Technology Nodes:</h3>"
+
+	l += {"<div class='statusDisplay'>Disk Operations: <A href='?src=[REF(src)];clear_tech=0'>Clear Disk</A>
+		<A href='?src=[REF(src)];eject_tech=1'>Eject Disk</A>
+		<A href='?src=[REF(src)];updt_tech=0'>Upload All</A>
+		<A href='?src=[REF(src)];copy_tech=1'>Load Technology to Disk</A></div>
+		<div class='statusDisplay'><h3>Stored Technology Nodes:</h3>"}
+
 	for(var/i in t_disk.stored_research.researched_nodes)
 		var/datum/techweb_node/N = t_disk.stored_research.researched_nodes[i]
 		l += "<A href='?src=[REF(src)];view_node=[i];back_screen=[screen]'>[N.display_name]</A>"
@@ -543,8 +560,10 @@ Nothing else in the console has ID requirements.
 		l += "<div class='statusDisplay'>"
 		if(d_disk.blueprints[i])
 			var/datum/design/D = d_disk.blueprints[i]
-			l += "<A href='?src=[REF(src)];view_design=[D.id]'>[D.name]</A>"
-			l += "Operations: <A href='?src=[REF(src)];updt_design=[i]'>Upload to database</A> <A href='?src=[REF(src)];clear_design=[i]'>Clear Slot</A>"
+
+			l += {"<A href='?src=[REF(src)];view_design=[D.id]'>[D.name]</A>
+				Operations: <A href='?src=[REF(src)];updt_design=[i]'>Upload to database</A> <A href='?src=[REF(src)];clear_design=[i]'>Clear Slot</A>"}
+
 		else
 			l += "Empty Slot Operations: <A href='?src=[REF(src)];switch_screen=[RDSCREEN_DESIGNDISK_UPLOAD];disk_slot=[i]'>Load Design to Slot</A>"
 		l += "</div>"
@@ -553,12 +572,17 @@ Nothing else in the console has ID requirements.
 /obj/machinery/computer/rdconsole/proc/ui_designdisk_upload()	//Legacy code
 	RDSCREEN_UI_DDISK_CHECK
 	var/list/l = list()
-	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_DESIGNDISK];back_screen=[screen]'>Return to Disk Operations</A><div class='statusDisplay'>"
-	l += "<h3>Load Design to Disk:</h3>"
+
+	l += {"<A href='?src=[REF(src)];switch_screen=[RDSCREEN_DESIGNDISK];back_screen=[screen]'>Return to Disk Operations</A><div class='statusDisplay'>
+		<h3>Load Design to Disk:</h3>"}
+
 	for(var/v in stored_research.researched_designs)
 		var/datum/design/D = stored_research.researched_designs[v]
+
+		l += {"[D.name]
+			<A href='?src=[REF(src)];copy_design=[disk_slot_selected];copy_design_ID=[D.id]'>Copy to Disk</A>"}
+
 		l += "[D.name] "
-		l += "<A href='?src=[REF(src)];copy_design=[disk_slot_selected];copy_design_ID=[D.id]'>Copy to Disk</A>"
 	l += "</div>"
 	return l
 
@@ -568,9 +592,10 @@ Nothing else in the console has ID requirements.
 	if(!linked_destroy.loaded_item)
 		l += "<div class='statusDisplay'>No item loaded. Standing-by...</div>"
 	else
-		l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
-		l += "<table><tr><td>[icon2html(linked_destroy.loaded_item, usr)]</td><td><b>[linked_destroy.loaded_item.name]</b> <A href='?src=[REF(src)];eject_item=1'>Eject</A></td></tr></table>[RDSCREEN_NOBREAK]"
-		l += "Select a node to boost by deconstructing this item. This item can boost:"
+
+		l += {"<div class='statusDisplay'>[RDSCREEN_NOBREAK]
+			<table><tr><td>[icon2html(linked_destroy.loaded_item, usr)]</td><td><b>[linked_destroy.loaded_item.name]</b> <A href='?src=[REF(src)];eject_item=1'>Eject</A></td></tr></table>[RDSCREEN_NOBREAK]
+			Select a node to boost by deconstructing this item. This item can boost:"}
 
 		var/anything = FALSE
 		var/list/boostable_nodes = techweb_item_boost_check(linked_destroy.loaded_item)
@@ -581,15 +606,21 @@ Nothing else in the console has ID requirements.
 
 			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
 			if (stored_research.researched_nodes[N.id])  // already researched
-				l += "<span class='linkOff'>[N.display_name]</span>"
-				l += "This node has already been researched."
+
+				l += {"<span class='linkOff'>[N.display_name]</span>
+					This node has already been researched."}
+
 			else if(!length(worth))  // reveal only
 				if (stored_research.hidden_nodes[N.id])
-					l += "<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]</A>"
-					l += "This node will be revealed."
+
+					l += {"<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]</A>
+						This node will be revealed."}
+
 				else
-					l += "<span class='linkOff'>[N.display_name]</span>"
-					l += "This node has already been revealed."
+
+					l += {"<span class='linkOff'>[N.display_name]</span>
+						This node has already been revealed."}
+
 			else  // boost by the difference
 				var/list/differences = list()
 				var/list/already_boosted = stored_research.boosted_nodes[N.id]
@@ -599,11 +630,16 @@ Nothing else in the console has ID requirements.
 					if(amt > 0)
 						differences[i] = amt
 				if (length(differences))
-					l += "<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]</A>"
-					l += "This node will be boosted with the following:<BR>[techweb_point_display_generic(differences)]"
+
+					l += {"<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]</A>
+						This node will be boosted with the following:<BR>[techweb_point_display_generic(differences)]"}
+
 				else
+
+					l += {"<span class='linkOff'>[N.display_name]</span>
+						This node has already been boosted.</span>"}
+
 					l += "<span class='linkOff'>[N.display_name]</span>"
-					l += "This node has already been boosted.</span>"
 			l += "</div>[RDSCREEN_NOBREAK]"
 
 		// point deconstruction and material reclamation use the same ID to prevent accidentally missing the points
@@ -612,11 +648,16 @@ Nothing else in the console has ID requirements.
 			anything = TRUE
 			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
 			if (stored_research.deconstructed_items[linked_destroy.loaded_item.type])
-				l += "<span class='linkOff'>Point Deconstruction</span>"
-				l += "This item's points have already been claimed."
+
+				l += {"<span class='linkOff'>Point Deconstruction</span>
+					This item's points have already been claimed."}
+
 			else
+
+				l += {"<A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_RECLAMATION_ID]'>Point Deconstruction</A>
+					This item is worth: <BR>[techweb_point_display_generic(point_values)]!"}
+
 				l += "<A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_RECLAMATION_ID]'>Point Deconstruction</A>"
-				l += "This item is worth: <BR>[techweb_point_display_generic(point_values)]!"
 			l += "</div>[RDSCREEN_NOBREAK]"
 
 		if(!(linked_destroy.loaded_item.resistance_flags & INDESTRUCTIBLE))
@@ -665,8 +706,10 @@ Nothing else in the console has ID requirements.
 			if(stored_research.available_nodes[v])
 				continue
 			unavail += stored_research.visible_nodes[v]
-		l += "<h2>Technology Nodes:</h2>[RDSCREEN_NOBREAK]"
-		l += "<div><h3>Available for Research:</h3>"
+
+		l += {"<h2>Technology Nodes:</h2>[RDSCREEN_NOBREAK]
+			<div><h3>Available for Research:</h3>"}
+
 		for(var/datum/techweb_node/N in avail)
 			var/not_unlocked = (stored_research.available_nodes[N.id] && !stored_research.researched_nodes[N.id])
 			var/has_points = (stored_research.can_afford(N.get_price(stored_research)))
@@ -1132,4 +1175,3 @@ Nothing else in the console has ID requirements.
 	name = "Core R&D Console"
 
 /obj/machinery/computer/rdconsole/experiment
-	name = "E.X.P.E.R.I-MENTOR R&D Console"

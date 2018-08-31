@@ -85,12 +85,15 @@
 	var/dat = "<center><font color='blue'[message]</font></center>"
 
 	if(auth)
-		dat += "<h4><dd><A href='?src=[REF(src)];auth=1'>&#09;<font color='green'>\[Authenticated\]</font></a>&#09;/"
-		dat += " Server Power: <A href='?src=[REF(src)];active=1'>[linkedServer && linkedServer.toggled ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</a></h4>"
-	else
-		dat += "<h4><dd><A href='?src=[REF(src)];auth=1'>&#09;<font color='red'>\[Unauthenticated\]</font></a>&#09;/"
-		dat += " Server Power: <u>[linkedServer && linkedServer.toggled ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</u></h4>"
 
+		dat += {"<h4><dd><A href='?src=[REF(src)];auth=1'>&#09;<font color='green'>\[Authenticated\]</font></a>&#09;/
+			Server Power: <A href='?src=[REF(src)];active=1'>[linkedServer && linkedServer.toggled ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</a></h4>"}
+		
+	else
+
+		dat += {"<h4><dd><A href='?src=[REF(src)];auth=1'>&#09;<font color='red'>\[Unauthenticated\]</font></a>&#09;/
+			Server Power: <u>[linkedServer && linkedServer.toggled ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</u></h4>"}
+		
 	if(hacking || (obj_flags & EMAGGED))
 		screen = 2
 	else if(!auth || LINKED_SERVER_NONRESPONSIVE)
@@ -108,12 +111,14 @@
 				if(LINKED_SERVER_NONRESPONSIVE)
 					dat += "<dd><A>&#09;ERROR: Server not found!</A><br></dd>"
 				else
-					dat += "<dd><A href='?src=[REF(src)];view_logs=1'>&#09;[++i]. View Message Logs </a><br></dd>"
-					dat += "<dd><A href='?src=[REF(src)];view_requests=1'>&#09;[++i]. View Request Console Logs </a></br></dd>"
-					dat += "<dd><A href='?src=[REF(src)];clear_logs=1'>&#09;[++i]. Clear Message Logs</a><br></dd>"
-					dat += "<dd><A href='?src=[REF(src)];clear_requests=1'>&#09;[++i]. Clear Request Console Logs</a><br></dd>"
-					dat += "<dd><A href='?src=[REF(src)];pass=1'>&#09;[++i]. Set Custom Key</a><br></dd>"
-					dat += "<dd><A href='?src=[REF(src)];msg=1'>&#09;[++i]. Send Admin Message</a><br></dd>"
+
+					dat += {"<dd><A href='?src=[REF(src)];view_logs=1'>&#09;[++i]. View Message Logs </a><br></dd>
+						<dd><A href='?src=[REF(src)];view_requests=1'>&#09;[++i]. View Request Console Logs </a></br></dd>
+						<dd><A href='?src=[REF(src)];clear_logs=1'>&#09;[++i]. Clear Message Logs</a><br></dd>
+						<dd><A href='?src=[REF(src)];clear_requests=1'>&#09;[++i]. Clear Request Console Logs</a><br></dd>
+						<dd><A href='?src=[REF(src)];pass=1'>&#09;[++i]. Set Custom Key</a><br></dd>
+						<dd><A href='?src=[REF(src)];msg=1'>&#09;[++i]. Send Admin Message</a><br></dd>"}
+					
 			else
 				for(var/n = ++i; n <= optioncount; n++)
 					dat += "<dd><font color='blue'>&#09;[n]. ---------------</font><br></dd>"
@@ -133,8 +138,10 @@
 		//Message Logs
 		if(1)
 			var/index = 0
-			dat += "<center><A href='?src=[REF(src)];back=1'>Back</a> - <A href='?src=[REF(src)];refresh=1'>Refresh</a></center><hr>"
-			dat += "<table border='1' width='100%'><tr><th width = '5%'>X</th><th width='15%'>Sender</th><th width='15%'>Recipient</th><th width='300px' word-wrap: break-word>Message</th></tr>"
+
+			dat += {"<center><A href='?src=[REF(src)];back=1'>Back</a> - <A href='?src=[REF(src)];refresh=1'>Refresh</a></center><hr>
+				<table border='1' width='100%'><tr><th width = '5%'>X</th><th width='15%'>Sender</th><th width='15%'>Recipient</th><th width='300px' word-wrap: break-word>Message</th></tr>"}
+			
 			for(var/datum/data_pda_msg/pda in linkedServer.pda_msgs)
 				index++
 				if(index > 3000)
@@ -146,8 +153,10 @@
 		//Hacking screen.
 		if(2)
 			if(isAI(user) || iscyborg(user))
-				dat += "Brute-forcing for server key.<br> It will take 20 seconds for every character that the password has."
-				dat += "In the meantime, this console can reveal your true intentions if you let someone access it. Make sure no humans enter the room during that time."
+
+				dat += {"Brute-forcing for server key.<br> It will take 20 seconds for every character that the password has.
+					In the meantime, this console can reveal your true intentions if you let someone access it. Make sure no humans enter the room during that time."}
+				
 			else
 				//It's the same message as the one above but in binary. Because robots understand binary and humans don't... well I thought it was clever.
 				dat += {"01000010011100100111010101110100011001010010110<br>

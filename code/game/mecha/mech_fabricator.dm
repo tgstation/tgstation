@@ -213,12 +213,17 @@
 			var/obj/part = D.build_path
 			output += "<li[!check_resources(D)?" style='color: #f00;'":null]>"
 			output += initial(part.name) + " - "
-			output += "[i>1?"<a href='?src=[REF(src)];queue_move=-1;index=[i]' class='arrow'>&uarr;</a>":null] "
-			output += "[i<queue.len?"<a href='?src=[REF(src)];queue_move=+1;index=[i]' class='arrow'>&darr;</a>":null] "
-			output += "<a href='?src=[REF(src)];remove_from_queue=[i]'>Remove</a></li>"
 
-		output += "</ol>"
-		output += "\[<a href='?src=[REF(src)];process_queue=1'>Process queue</a> | <a href='?src=[REF(src)];clear_queue=1'>Clear queue</a>\]"
+			output += {"[i>1?"<a href='?src=[REF(src)];queue_move=-1;index=[i]' class='arrow'>&uarr;</a>":null] 
+				[i<queue.len?"<a href='?src=[REF(src)];queue_move=+1;index=[i]' class='arrow'>&darr;</a>":null] 
+				<a href='?src=[REF(src)];remove_from_queue=[i]'>Remove</a></li>"}
+		
+			output += "[i>1?"<a href='?src=[REF(src)];queue_move=-1;index=[i]' class='arrow'>&uarr;</a>":null] "
+
+
+		output += {"</ol>
+			\[<a href='?src=[REF(src)];process_queue=1'>Process queue</a> | <a href='?src=[REF(src)];clear_queue=1'>Clear queue</a>\]"}
+		
 	return output
 
 /obj/machinery/mecha_part_fabricator/proc/sync()

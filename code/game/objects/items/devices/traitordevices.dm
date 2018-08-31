@@ -114,8 +114,10 @@ effective or pretty fucking useless.
 	. = ..()
 
 	var/dat = "Irradiation: <A href='?src=[REF(src)];rad=1'>[irradiate ? "On" : "Off"]</A><br>"
-	dat += "Stealth Mode (NOTE: Deactivates automatically while Irradiation is off): <A href='?src=[REF(src)];stealthy=[TRUE]'>[stealth ? "On" : "Off"]</A><br>"
-	dat += "Scan Mode: <a href='?src=[REF(src)];mode=1'>"
+
+	dat += {"Stealth Mode (NOTE: Deactivates automatically while Irradiation is off): <A href='?src=[REF(src)];stealthy=[TRUE]'>[stealth ? "On" : "Off"]</A><br>
+		Scan Mode: <a href='?src=[REF(src)];mode=1'>"}
+	
 	if(!scanmode)
 		dat += "Scan Health"
 	else if(scanmode == 1)

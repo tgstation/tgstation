@@ -130,47 +130,59 @@
 	var/list/dat = list()
 	switch(mode)
 		if(BASIC_BUILDMODE)
-			dat += "***********************************************************"
-			dat += "Left Mouse Button        = Construct / Upgrade"
-			dat += "Right Mouse Button       = Deconstruct / Delete / Downgrade"
-			dat += "Left Mouse Button + ctrl = R-Window"
-			dat += "Left Mouse Button + alt  = Airlock"
-			dat += ""
-			dat += "Use the button in the upper left corner to"
-			dat += "change the direction of built objects."
-			dat += "***********************************************************"
+
+			dat += {"***********************************************************
+				Left Mouse Button        = Construct / Upgrade
+				Right Mouse Button       = Deconstruct / Delete / Downgrade
+				Left Mouse Button + ctrl = R-Window
+				Left Mouse Button + alt  = Airlock
+				
+				Use the button in the upper left corner to
+				change the direction of built objects.
+				***********************************************************"}
+			
 		if(ADV_BUILDMODE)
-			dat += "***********************************************************"
-			dat += "Right Mouse Button on buildmode button = Set object type"
-			dat += "Left Mouse Button + alt on turf/obj    = Copy object type"
-			dat += "Left Mouse Button on turf/obj          = Place objects"
-			dat += "Right Mouse Button                     = Delete objects"
-			dat += ""
-			dat += "Use the button in the upper left corner to"
-			dat += "change the direction of built objects."
-			dat += "***********************************************************"
+
+			dat += {"***********************************************************
+				Right Mouse Button on buildmode button = Set object type
+				Left Mouse Button + alt on turf/obj    = Copy object type
+				Left Mouse Button on turf/obj          = Place objects
+				Right Mouse Button                     = Delete objects
+				
+				Use the button in the upper left corner to
+				change the direction of built objects.
+				***********************************************************"}
+			
 		if(VAR_BUILDMODE)
-			dat += "***********************************************************"
-			dat += "Right Mouse Button on buildmode button = Select var(type) & value"
-			dat += "Left Mouse Button on turf/obj/mob      = Set var(type) & value"
-			dat += "Right Mouse Button on turf/obj/mob     = Reset var's value"
-			dat += "***********************************************************"
+
+			dat += {"***********************************************************
+				Right Mouse Button on buildmode button = Select var(type) & value
+				Left Mouse Button on turf/obj/mob      = Set var(type) & value
+				Right Mouse Button on turf/obj/mob     = Reset var's value
+				***********************************************************"}
+			
 		if(THROW_BUILDMODE)
-			dat += "***********************************************************"
-			dat += "Left Mouse Button on turf/obj/mob      = Select"
-			dat += "Right Mouse Button on turf/obj/mob     = Throw"
-			dat += "***********************************************************"
+
+			dat += {"***********************************************************
+				Left Mouse Button on turf/obj/mob      = Select
+				Right Mouse Button on turf/obj/mob     = Throw
+				***********************************************************"}
+			
 		if(AREA_BUILDMODE)
-			dat += "***********************************************************"
-			dat += "Left Mouse Button on turf/obj/mob      = Select corner"
-			dat += "Right Mouse Button on turf/obj/mob     = Reset corner selection"
-			dat += "Right Mouse Button on buildmode button = Select generator"
-			dat += "***********************************************************"
+
+			dat += {"***********************************************************
+				Left Mouse Button on turf/obj/mob      = Select corner
+				Right Mouse Button on turf/obj/mob     = Reset corner selection
+				Right Mouse Button on buildmode button = Select generator
+				***********************************************************"}
+			
 		if(COPY_BUILDMODE)
-			dat += "***********************************************************"
-			dat += "Left Mouse Button on obj/turf/mob   = Spawn a Copy of selected target"
-			dat += "Right Mouse Button on obj/mob = Select target to copy"
-			dat += "***********************************************************"
+
+			dat += {"***********************************************************
+				Left Mouse Button on obj/turf/mob   = Spawn a Copy of selected target
+				Right Mouse Button on obj/mob = Select target to copy
+				***********************************************************"}
+			
 	to_chat(user, "<font color='blue'>[dat.Join("\n")]</font>")
 
 /datum/buildmode/proc/change_settings(mob/user)

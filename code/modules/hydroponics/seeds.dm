@@ -290,10 +290,12 @@
 	text += "- Maturation speed: [maturation]\n"
 	if(yield != -1)
 		text += "- Production speed: [production]\n"
-	text += "- Endurance: [endurance]\n"
-	text += "- Lifespan: [lifespan]\n"
-	text += "- Weed Growth Rate: [weed_rate]\n"
-	text += "- Weed Vulnerability: [weed_chance]\n"
+
+	text += {"- Endurance: [endurance]\n
+		- Lifespan: [lifespan]\n
+		- Weed Growth Rate: [weed_rate]\n
+		- Weed Vulnerability: [weed_chance]\n"}
+	
 	if(rarity)
 		text += "- Species Discovery Value: [rarity]\n"
 	var/all_traits = ""
@@ -301,10 +303,10 @@
 		if(istype(traits, /datum/plant_gene/trait/plant_type))
 			continue
 		all_traits += " [traits.get_name()]"
-	text += "- Plant Traits:[all_traits]\n"
 
-	text += "*---------*"
-
+	text += {"- Plant Traits:[all_traits]\n
+		*---------*"}
+	
 	return text
 
 /obj/item/seeds/proc/on_chem_reaction(datum/reagents/S)  //in case seeds have some special interaction with special chems

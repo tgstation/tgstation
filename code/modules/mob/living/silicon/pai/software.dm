@@ -276,9 +276,11 @@
 
 	dat += "<A href='byond://?src=[REF(src)];software=refresh'>Refresh</A><br>"
 	// Built-in
-	dat += "<A href='byond://?src=[REF(src)];software=directives'>Directives</A><br>"
-	dat += "<A href='byond://?src=[REF(src)];software=radio;sub=0'>Radio Configuration</A><br>"
-	dat += "<A href='byond://?src=[REF(src)];software=image'>Screen Display</A><br>"
+
+	dat += {"<A href='byond://?src=[REF(src)];software=directives'>Directives</A><br>
+		<A href='byond://?src=[REF(src)];software=radio;sub=0'>Radio Configuration</A><br>
+		<A href='byond://?src=[REF(src)];software=image'>Screen Display</A><br>"}
+	
 	//dat += "Text Messaging <br>"
 	dat += "<br>"
 
@@ -319,9 +321,11 @@
 			dat += "<a href='byond://?src=[REF(src)];software=camerajack;sub=0'>Camera Jack</a> <br>"
 		if(s == "door jack")
 			dat += "<a href='byond://?src=[REF(src)];software=doorjack;sub=0'>Door Jack</a> <br>"
-	dat += "<br>"
-	dat += "<br>"
-	dat += "<a href='byond://?src=[REF(src)];software=buy;sub=0'>Download additional software</a>"
+
+	dat += {"<br>
+		<br>
+		<a href='byond://?src=[REF(src)];software=buy;sub=0'>Download additional software</a>"}
+	
 	return dat
 
 
@@ -329,10 +333,11 @@
 /mob/living/silicon/pai/proc/downloadSoftware()
 	var/dat = ""
 
-	dat += "<h2>CentCom pAI Module Subversion Network</h2><br>"
-	dat += "<pre>Remaining Available Memory: [ram]</pre><br>"
-	dat += "<p style=\"text-align:center\"><b>Trunks available for checkout</b><br>"
 
+	dat += {"<h2>CentCom pAI Module Subversion Network</h2><br>
+		<pre>Remaining Available Memory: [ram]</pre><br>
+		<p style=\"text-align:center\"><b>Trunks available for checkout</b><br>"}
+	
 	for(var/s in available_software)
 		if(!software.Find(s))
 			var/cost = available_software[s]
@@ -348,13 +353,15 @@
 /mob/living/silicon/pai/proc/directives()
 	var/dat = ""
 
-	dat += "[(master) ? "Your master: [master] ([master_dna])" : "You are bound to no one."]"
-	dat += "<br><br>"
-	dat += "<a href='byond://?src=[REF(src)];software=directive;getdna=1'>Request carrier DNA sample</a><br>"
-	dat += "<h2>Directives</h2><br>"
-	dat += "<b>Prime Directive</b><br>"
-	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[laws.zeroth]<br>"
-	dat += "<b>Supplemental Directives</b><br>"
+
+	dat += {"[(master) ? "Your master: [master] ([master_dna])" : "You are bound to no one."]
+		<br><br>
+		<a href='byond://?src=[REF(src)];software=directive;getdna=1'>Request carrier DNA sample</a><br>
+		<h2>Directives</h2><br>
+		<b>Prime Directive</b><br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[laws.zeroth]<br>
+		<b>Supplemental Directives</b><br>"}
+	
 	for(var/slaws in laws.supplied)
 		dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[slaws]<br>"
 	dat += "<br>"
@@ -544,8 +551,10 @@
 				if(gas_level > 0.01)
 					dat += "[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_level*100)]%<br>"
 		dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
-	dat += "<a href='byond://?src=[REF(src)];software=atmosensor;sub=0'>Refresh Reading</a> <br>"
-	dat += "<br>"
+
+	dat += {"<a href='byond://?src=[REF(src)];software=atmosensor;sub=0'>Refresh Reading</a> <br>
+		<br>"}
+	
 	return dat
 
 // Camera Jack - Clearly not finished
@@ -572,8 +581,10 @@
 	var/dat = "<h3>Airlock Jack</h3>"
 	dat += "Cable status : "
 	if(!cable)
-		dat += "<font color=#FF5555>Retracted</font> <br>"
-		dat += "<a href='byond://?src=[REF(src)];software=doorjack;cable=1;sub=0'>Extend Cable</a> <br>"
+
+		dat += {"<font color=#FF5555>Retracted</font> <br>
+			<a href='byond://?src=[REF(src)];software=doorjack;cable=1;sub=0'>Extend Cable</a> <br>"}
+		
 		return dat
 	if(!cable.machine)
 		dat += "<font color=#FFFF55>Extended</font> <br>"
@@ -588,8 +599,10 @@
 	if(!hackdoor)
 		dat += "<a href='byond://?src=[REF(src)];software=doorjack;jack=1;sub=0'>Begin Airlock Jacking</a> <br>"
 	else
-		dat += "Jack in progress... [hackprogress]% complete.<br>"
-		dat += "<a href='byond://?src=[REF(src)];software=doorjack;cancel=1;sub=0'>Cancel Airlock Jack</a> <br>"
+
+		dat += {"Jack in progress... [hackprogress]% complete.<br>
+			<a href='byond://?src=[REF(src)];software=doorjack;cancel=1;sub=0'>Cancel Airlock Jack</a> <br>"}
+		
 	return dat
 
 // Door Jack - supporting proc
@@ -615,9 +628,14 @@
 		for (var/obj/item/pda/P in sortNames(get_viewable_pdas()))
 			if (P == pda)
 				continue
+
+			dat += {"<li><a href='byond://?src=[REF(src)];software=pdamessage;target=[REF(P)]'>[P]</a>
+				</li>"}
+	
 			dat += "<li><a href='byond://?src=[REF(src)];software=pdamessage;target=[REF(P)]'>[P]</a>"
-			dat += "</li>"
-	dat += "</ul>"
-	dat += "<br><br>"
-	dat += "Messages: <hr> [pda.tnote]"
+
+	dat += {"</ul>
+		<br><br>
+		Messages: <hr> [pda.tnote]"}
+	
 	return dat

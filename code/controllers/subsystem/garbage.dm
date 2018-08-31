@@ -43,8 +43,10 @@ SUBSYSTEM_DEF(garbage)
 	var/list/counts = list()
 	for (var/list/L in queues)
 		counts += length(L)
-	msg += "Q:[counts.Join(",")]|D:[delslasttick]|G:[gcedlasttick]|"
-	msg += "GR:"
+
+	msg += {"Q:[counts.Join(",")]|D:[delslasttick]|G:[gcedlasttick]|
+		GR:"}
+	
 	if (!(delslasttick+gcedlasttick))
 		msg += "n/a|"
 	else
@@ -55,8 +57,10 @@ SUBSYSTEM_DEF(garbage)
 		msg += "n/a|"
 	else
 		msg += "TGR:[round((totalgcs/(totaldels+totalgcs))*100, 0.01)]%"
-	msg += " P:[pass_counts.Join(",")]"
-	msg += "|F:[fail_counts.Join(",")]"
+
+	msg += {"P:[pass_counts.Join(",")]
+		|F:[fail_counts.Join(",")]"}
+	
 	..(msg)
 
 /datum/controller/subsystem/garbage/Shutdown()
@@ -70,11 +74,15 @@ SUBSYSTEM_DEF(garbage)
 		dellog += "Path: [path]"
 		if (I.failures)
 			dellog += "\tFailures: [I.failures]"
-		dellog += "\tqdel() Count: [I.qdels]"
-		dellog += "\tDestroy() Cost: [I.destroy_time]ms"
+
+		dellog += {"\tqdel() Count: [I.qdels]
+			\tDestroy() Cost: [I.destroy_time]ms"}
+		
 		if (I.hard_deletes)
-			dellog += "\tTotal Hard Deletes [I.hard_deletes]"
-			dellog += "\tTime Spent Hard Deleting: [I.hard_delete_time]ms"
+
+			dellog += {"\tTotal Hard Deletes [I.hard_deletes]
+				\tTime Spent Hard Deleting: [I.hard_delete_time]ms"}
+			
 		if (I.slept_destroy)
 			dellog += "\tSleeps: [I.slept_destroy]"
 		if (I.no_respect_force)

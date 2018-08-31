@@ -132,26 +132,29 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	var/table_middle_width = "40%"
 
 	var/HTML = ""
-	HTML += "<html><head><title>[src.displayed_name]</title></head><body>"
-	HTML += "<div align='center'>"
-	HTML += "<table border='1' style='undefined;table-layout: fixed; width: 80%'>"
 
+	HTML += {"<html><head><title>[src.displayed_name]</title></head><body>
+		<div align='center'>
+		<table border='1' style='undefined;table-layout: fixed; width: 80%'>"}
+	
 	if(assembly)
 		HTML += "<a href='?src=[REF(src)];return=1'>\[Return to Assembly\]</a><br>"
 
-	HTML += "<a href='?src=[REF(src)]'>\[Refresh\]</a>  |  "
-	HTML += "<a href='?src=[REF(src)];rename=1'>\[Rename\]</a>  |  "
-	HTML += "<a href='?src=[REF(src)];scan=1'>\[Copy Ref\]</a>"
+
+	HTML += {"<a href='?src=[REF(src)]'>\[Refresh\]</a>  |  
+		<a href='?src=[REF(src)];rename=1'>\[Rename\]</a>  |  
+		<a href='?src=[REF(src)];scan=1'>\[Copy Ref\]</a>"}
+	
 	if(assembly && removable)
 		HTML += "  |  <a href='?src=[REF(assembly)];component=[REF(src)];remove=1'>\[Remove\]</a>"
-	HTML += "<br>"
 
-	HTML += "<colgroup>"
-	HTML += "<col style='width: [table_edge_width]'>"
-	HTML += "<col style='width: [table_middle_width]'>"
-	HTML += "<col style='width: [table_edge_width]'>"
-	HTML += "</colgroup>"
-
+	HTML += {"<br>
+		<colgroup>
+		<col style='width: [table_edge_width]'>
+		<col style='width: [table_middle_width]'>
+		<col style='width: [table_edge_width]'>
+		</colgroup>"}
+	
 	var/column_width = 3
 	var/row_height = max(inputs.len, outputs.len, 1)
 
@@ -201,32 +204,39 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		var/datum/integrated_io/io = activator
 		var/words = list()
 
-		words += "<b><a href='?src=[REF(src)];act=wire;pin=[REF(io)]'><font color='FF0000'>[io]</font></a> "
-		words += "<a href='?src=[REF(src)];act=data;pin=[REF(io)]'><font color='FF0000'>[io.data?"\<PULSE OUT\>":"\<PULSE IN\>"]</font></a></b><br>"
+
+		words += {"<b><a href='?src=[REF(src)];act=wire;pin=[REF(io)]'><font color='FF0000'>[io]</font></a> 
+			<a href='?src=[REF(src)];act=data;pin=[REF(io)]'><font color='FF0000'>[io.data?"\<PULSE OUT\>":"\<PULSE IN\>"]</font></a></b><br>"}
+		
 		if(io.linked.len)
 			for(var/k in 1 to io.linked.len)
 				var/datum/integrated_io/linked = io.linked[k]
 				words += "<a href='?src=[REF(src)];act=unwire;pin=[REF(io)];link=[REF(linked)]'><font color='FF0000'>[linked]</font></a> \
 				@ <a href='?src=[REF(linked.holder)]'><font color='FF0000'>[linked.holder.displayed_name]</font></a><br>"
 
+
+		HTML += {"<tr>
+			<td colspan='3' align='center'>[jointext(words, null)]</td>
+			</tr>"}
+	
 		HTML += "<tr>"
-		HTML += "<td colspan='3' align='center'>[jointext(words, null)]</td>"
-		HTML += "</tr>"
 
-	HTML += "</table>"
-	HTML += "</div>"
 
-	HTML += "<br><font color='0000AA'>Complexity: [complexity]</font>"
-	HTML += "<br><font color='0000AA'>Cooldown per use: [cooldown_per_use/10] sec</font>"
+	HTML += {"</table>
+		</div>
+		<br><font color='0000AA'>Complexity: [complexity]</font>
+		<br><font color='0000AA'>Cooldown per use: [cooldown_per_use/10] sec</font>"}
+	
 	if(ext_cooldown)
 		HTML += "<br><font color='0000AA'>External manipulation cooldown: [ext_cooldown/10] sec</font>"
 	if(power_draw_idle)
 		HTML += "<br><font color='0000AA'>Power Draw: [power_draw_idle] W (Idle)</font>"
 	if(power_draw_per_use)
 		HTML += "<br><font color='0000AA'>Power Draw: [power_draw_per_use] W (Active)</font>" // Borgcode says that powercells' checked_use() takes joules as input.
-	HTML += "<br><font color='0000AA'>[extended_desc]</font>"
 
-	HTML += "</body></html>"
+	HTML += {"<br><font color='0000AA'>[extended_desc]</font>
+		</body></html>"}
+	
 	if(assembly)
 		user << browse(HTML, "window=assembly-[REF(assembly)];size=[window_width]x[window_height];border=1;can_resize=1;can_close=1;can_minimize=1")
 	else

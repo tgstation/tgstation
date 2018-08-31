@@ -189,15 +189,19 @@
 
 /obj/machinery/rnd/production/proc/ui_header()
 	var/list/l = list()
-	l += "<div class='statusDisplay'><b>[host_research.organization] [department_tag] Department Lathe</b>"
-	l += "Security protocols: [(obj_flags & EMAGGED)? "<font color='red'>Disabled</font>" : "<font color='green'>Enabled</font>"]"
+
+	l += {"<div class='statusDisplay'><b>[host_research.organization] [department_tag] Department Lathe</b>
+		Security protocols: [(obj_flags & EMAGGED)? "<font color='red'>Disabled</font>" : "<font color='green'>Enabled</font>"]"}
+
 	if (materials.mat_container)
 		l += "<A href='?src=[REF(src)];switch_screen=[RESEARCH_FABRICATOR_SCREEN_MATERIALS]'><B>Material Amount:</B> [materials.format_amount()]</A>"
 	else
 		l += "<font color='red'>No material storage connected, please contact the quartermaster.</font>"
-	l += "<A href='?src=[REF(src)];switch_screen=[RESEARCH_FABRICATOR_SCREEN_CHEMICALS]'><B>Chemical volume:</B> [reagents.total_volume] / [reagents.maximum_volume]</A>"
-	l += "<a href='?src=[REF(src)];sync_research=1'>Synchronize Research</a>"
-	l += "<a href='?src=[REF(src)];switch_screen=[RESEARCH_FABRICATOR_SCREEN_MAIN]'>Main Screen</a></div>[RDSCREEN_NOBREAK]"
+
+	l += {"<A href='?src=[REF(src)];switch_screen=[RESEARCH_FABRICATOR_SCREEN_CHEMICALS]'><B>Chemical volume:</B> [reagents.total_volume] / [reagents.maximum_volume]</A>
+		<a href='?src=[REF(src)];sync_research=1'>Synchronize Research</a>
+		<a href='?src=[REF(src)];switch_screen=[RESEARCH_FABRICATOR_SCREEN_MAIN]'>Main Screen</a></div>[RDSCREEN_NOBREAK]"}
+
 	return l
 
 /obj/machinery/rnd/production/proc/ui_screen_materials()
@@ -218,24 +222,30 @@
 
 /obj/machinery/rnd/production/proc/ui_screen_chemicals()
 	var/list/l = list()
-	l += "<div class='statusDisplay'><A href='?src=[REF(src)];disposeall=1'>Disposal All Chemicals in Storage</A>"
-	l += "<h3>Chemical Storage:</h3>"
+
+	l += {"<div class='statusDisplay'><A href='?src=[REF(src)];disposeall=1'>Disposal All Chemicals in Storage</A>
+		<h3>Chemical Storage:</h3>"}
+
 	for(var/datum/reagent/R in reagents.reagent_list)
+
+		l += {"[R.name]: [R.volume]
+			<A href='?src=[REF(src)];dispose=[R.id]'>Purge</A>"}
+
 		l += "[R.name]: [R.volume]"
-		l += "<A href='?src=[REF(src)];dispose=[R.id]'>Purge</A>"
 	l += "</div>"
 	return l
 
 /obj/machinery/rnd/production/proc/ui_screen_search()
 	var/list/l = list()
 	var/coeff = efficiency_coeff
-	l += "<h2>Search Results:</h2>"
-	l += "<form name='search' action='?src=[REF(src)]'>\
-	<input type='hidden' name='src' value='[REF(src)]'>\
-	<input type='hidden' name='search' value='to_search'>\
-	<input type='text' name='to_search'>\
-	<input type='submit' value='Search'>\
-	</form><HR>"
+
+	l += {"<h2>Search Results:</h2>
+		<form name='search' action='?src=[REF(src)]'>
+		<input type='hidden' name='src' value='[REF(src)]'>
+		<input type='hidden' name='search' value='to_search'>
+		<input type='text' name='to_search'>
+		<input type='submit' value='Search'>
+		</form><HR>"}
 	for(var/datum/design/D in matching_designs)
 		l += design_menu_entry(D, coeff)
 	l += "</div>"
