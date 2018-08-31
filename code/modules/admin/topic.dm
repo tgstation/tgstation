@@ -807,34 +807,34 @@
 
 		//Drones
 		if(jobban_isbanned(M, "drone"))
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=drone;jobban4=[REF(M)]'><font color=red>Drone</font></a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_DRONE];jobban4=[REF(M)]'><font color=red>Drone</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=drone;jobban4=[REF(M)]'>Drone</a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_DRONE];jobban4=[REF(M)]'>Drone</a></td>"
 
 
 		//Positronic Brains
-		if(jobban_isbanned(M, "posibrain"))
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=posibrain;jobban4=[REF(M)]'><font color=red>Posibrain</font></a></td>"
+		if(jobban_isbanned(M, ROLE_POSIBRAIN))
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_POSIBRAIN];jobban4=[REF(M)]'><font color=red>Posibrain</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=posibrain;jobban4=[REF(M)]'>Posibrain</a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_POSIBRAIN];jobban4=[REF(M)]'>Posibrain</a></td>"
 
 		//Sentience Potion Spawn
 		if(jobban_isbanned(M, ROLE_SENTIENCE))
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_SENTIENCE];jobban4=[REF(M)]'><font color=red>[ROLE_SENTIENCE]</font></a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_SENTIENCE];jobban4=[REF(M)]'><font color=red>Sentience Potion Spawn</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_SENTIENCE];jobban4=[REF(M)]'>[ROLE_SENTIENCE]</a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_SENTIENCE];jobban4=[REF(M)]'>Sentience Potion Spawn</a></td>"
 		
 		//Deathsquad
 		if(jobban_isbanned(M, "deathsquad"))
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=deathsquad;jobban4=[REF(M)]'><font color=red>Deathsquad</font></a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_DEATHSQUAD];jobban4=[REF(M)]'><font color=red>Deathsquad</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=deathsquad;jobban4=[REF(M)]'>Deathsquad</a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_DEATHSQUAD];jobban4=[REF(M)]'>Deathsquad</a></td>"
 
 		//Lavaland roles
 		if(jobban_isbanned(M, "lavaland"))
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=lavaland;jobban4=[REF(M)]'><font color=red>Lavaland</font></a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_LAVALAND];jobban4=[REF(M)]'><font color=red>Lavaland</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=lavaland;jobban4=[REF(M)]'>Lavaland</a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_LAVALAND];jobban4=[REF(M)]'>Lavaland</a></td>"
 
 		dat += "</tr></table>"
 
@@ -901,15 +901,15 @@
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=alien;jobban4=[REF(M)]'>Alien</a></td>"
 
-		//Other Roles (black)
+	//Other Roles (black)
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
 		dat += "<tr bgcolor='000000'><th colspan='5'><a href='?src=[REF(src)];[HrefToken()];jobban3=otherroles;jobban4=[REF(M)]' style='color: white;'>Other Roles</a></th></tr><tr align='center'>"
 
 		//Mind Transfer Potion
 		if(jobban_isbanned(M, ROLE_MIND_TRANSFER))
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_MIND_TRANSFER];jobban4=[REF(M)]'><font color=red>[ROLE_MIND_TRANSFER]</font></a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_MIND_TRANSFER];jobban4=[REF(M)]'><font color=red>Mind Transfer Potion</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_MIND_TRANSFER];jobban4=[REF(M)]'>[ROLE_MIND_TRANSFER]</a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_MIND_TRANSFER];jobban4=[REF(M)]'>Mind Transfer Potion</a></td>"
 
 		dat += "</tr></table>"
 		usr << browse(dat, "window=jobban2;size=800x450")
@@ -970,7 +970,7 @@
 						continue
 					joblist += jobPos
 			if("ghostroles")
-				joblist += list(ROLE_PAI, "posibrain", "drone", "deathsquad", "lavaland", ROLE_SENTIENCE)
+				joblist += list(ROLE_PAI, ROLE_POSIBRAIN, ROLE_DRONE , ROLE_DEATHSQUAD, ROLE_LAVALAND, ROLE_SENTIENCE)
 			if("teamantags")
 				joblist += list(ROLE_OPERATIVE, ROLE_REV, ROLE_CULTIST, ROLE_SERVANT_OF_RATVAR, ROLE_ABDUCTOR, ROLE_ALIEN)
 			if("convertantags")

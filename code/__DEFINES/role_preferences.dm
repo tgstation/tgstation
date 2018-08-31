@@ -27,8 +27,12 @@
 #define ROLE_BROTHER				"blood brother"
 #define ROLE_BRAINWASHED			"brainwashed victim"
 #define ROLE_OVERTHROW				"syndicate mutineer"
-#define ROLE_SENTIENCE          	"Sentience Potion Spawn"
-#define ROLE_MIND_TRANSFER          "Mind Transfer Potion"
+#define ROLE_SENTIENCE          	"sentience potion spawn"
+#define ROLE_MIND_TRANSFER          "mind transfer potion"
+#define ROLE_POSIBRAIN              "posibrain"
+#define ROLE_DRONE                  "drone"
+#define ROLE_DEATHSQUAD             "deathsquad"
+#define ROLE_LAVALAND               "lavaland"
 
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough
