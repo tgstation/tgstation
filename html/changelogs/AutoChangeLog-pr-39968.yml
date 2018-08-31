@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "Plastic golems can no longer vent crawl with items in their pockets."
