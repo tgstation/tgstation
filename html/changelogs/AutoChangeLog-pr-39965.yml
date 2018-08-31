@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscdel: "Removed the chance of spouting brain damage lines when over 60 brain damage. The dumbness trauma still has them."
