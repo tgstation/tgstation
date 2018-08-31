@@ -223,7 +223,7 @@
 		T.atom_colours = atom_colours.Copy()
 		T.update_atom_colour()
 	if(T.dir != dir)
-		T.dir = dir
+		T.setDir(dir)
 	T.transform = transform
 	return T
 
@@ -295,7 +295,7 @@
 		T.atom_colours = atom_colours.Copy()
 		T.update_atom_colour()
 	if(T.dir != dir)
-		T.dir = dir
+		T.setDir(dir)
 	T.transform = transform
 	return T
 
