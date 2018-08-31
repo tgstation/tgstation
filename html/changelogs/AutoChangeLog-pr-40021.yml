@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Chem dispenser window width increased slightly, no longer shuffles buttons when scroll bar appears."
