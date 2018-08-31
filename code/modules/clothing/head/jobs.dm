@@ -59,6 +59,7 @@
 /obj/item/clothing/head/fedora/det_hat
 	name = "detective's fedora"
 	desc = "There's only one man who can sniff out the dirty stench of crime, and he's likely wearing this hat."
+	armor = list("melee" = 25, "bullet" = 5, "laser" = 25, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 50)
 	icon_state = "detective"
 	var/candy_cooldown = 0
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/detective
