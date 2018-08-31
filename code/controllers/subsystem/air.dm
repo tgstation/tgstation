@@ -45,23 +45,19 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/stat_entry(msg)
 
-	msg += {"C:{
-		AT:[round(cost_turfs,1)]|
-		EG:[round(cost_groups,1)]|
-		HP:[round(cost_highpressure,1)]|
-		HS:[round(cost_hotspots,1)]|
-		SC:[round(cost_superconductivity,1)]|
-		PN:[round(cost_pipenets,1)]|
-		AM:[round(cost_atmos_machinery,1)]
-		} 
-		AT:[active_turfs.len]|
-		EG:[excited_groups.len]|
-		HS:[hotspots.len]|
-		PN:[networks.len]|
-		HP:[high_pressure_delta.len]|
-		AS:[active_super_conductivity.len]|
-		AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]"}
-	
+	msg += "C:{AT:[round(cost_turfs,1)]|EG:[round(cost_groups,1)]|\
+		HP:[round(cost_highpressure,1)]|HS:[round(cost_hotspots,1)]|\
+		SC:[round(cost_superconductivity,1)]|\
+		PN:[round(cost_pipenets,1)]|\
+		AM:[round(cost_atmos_machinery,1)]}\
+		 AT:[active_turfs.len]|\
+		 EG:[excited_groups.len]|\
+		 HS:[hotspots.len]|\
+		 PN:[networks.len]|\
+		 HP:[high_pressure_delta.len]|\
+		 AS:[active_super_conductivity.len]|\
+		 AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]"
+
 	..(msg)
 
 
