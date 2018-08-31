@@ -1,0 +1,6 @@
+author: "The Dreamweaver"
+delete-after: True
+changes: 
+  - bugfix: "Sentience Potions no longer require you to have Xenomorph toggled on in preferences and now relies on its own preference in order to be notified of open roles."
+  - code_imp: "Split xenomorph, intelligence potions, and mind transfer potions into separate roles for more precise role management."
+  - admin: "Sentience Potion Spawns and Mind Transfer Potions are now job-bannable roles."
