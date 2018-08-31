@@ -142,7 +142,6 @@ SUBSYSTEM_DEF(throwing)
 	if(target)
 		thrownthing.throw_impact(target, src)
 
-	var/datum/callback/cb
 	if (callback)
 		callback.Invoke()
 
