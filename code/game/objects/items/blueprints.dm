@@ -61,14 +61,19 @@
 	if(!legend)
 		var/area/A = get_area()
 		if(get_area_type() == AREA_STATION)
+
+			. += {"<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>
+				<p><a href='?src=[REF(src)];edit_area=1'>Change area name</a></p>"}
+		
 			. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
-			. += "<p><a href='?src=[REF(src)];edit_area=1'>Change area name</a></p>"
 		. += "<p><a href='?src=[REF(src)];view_legend=1'>View wire colour legend</a></p>"
 		if(!viewing)
 			. += "<p><a href='?src=[REF(src)];view_blueprints=1'>View structural data</a></p>"
 		else
-			. += "<p><a href='?src=[REF(src)];refresh=1'>Refresh structural data</a></p>"
-			. += "<p><a href='?src=[REF(src)];hide_blueprints=1'>Hide structural data</a></p>"
+
+			. += {"<p><a href='?src=[REF(src)];refresh=1'>Refresh structural data</a></p>
+				<p><a href='?src=[REF(src)];hide_blueprints=1'>Hide structural data</a></p>"}
+			
 	else
 		if(legend == TRUE)
 			. += "<a href='?src=[REF(src)];exit_legend=1'><< Back</a>"
@@ -226,4 +231,3 @@
 	desc = "A digital copy of the station blueprints stored in your memory."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "blueprints"
-	fluffnotice = "Intellectual Property of Nanotrasen. For use in engineering cyborgs only. Wipe from memory upon departure from the station."

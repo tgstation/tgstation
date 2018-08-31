@@ -191,9 +191,11 @@ RLD
 	t1 += "<a href='?src=[REF(src)];access=all'>Remove All</a><br>"
 
 	var/accesses = ""
-	accesses += "<div align='center'><b>Access</b></div>"
-	accesses += "<table style='width:100%'>"
-	accesses += "<tr>"
+
+	accesses += {"<div align='center'><b>Access</b></div>
+		<table style='width:100%'>
+		<tr>"}
+	
 	for(var/i = 1; i <= 7; i++)
 		accesses += "<td style='width:14%'><b>[get_region_accesses_name(i)]:</b></td>"
 	accesses += "</tr><tr>"

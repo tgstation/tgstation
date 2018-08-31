@@ -389,63 +389,66 @@
 
 	var/output = "<div align='center'><table width='90%'><tr>"
 
-	output += "<td width='35%' align='center'>"
-	output += "<h1>Banning panel</h1>"
-	output += "</td>"
 
-	output += "<td width='65%' align='center' bgcolor='#f9f9f9'>"
-
-	output += "<form method='GET' action='?src=[REF(src)]'><b>Add custom ban:</b> (ONLY use this if you can't ban through any other method)"
-	output += "<input type='hidden' name='src' value='[REF(src)]'>"
+	output += {"<td width='35%' align='center'>
+		<h1>Banning panel</h1>
+		</td>
+		<td width='65%' align='center' bgcolor='#f9f9f9'>
+		<form method='GET' action='?src=[REF(src)]'><b>Add custom ban:</b> (ONLY use this if you can't ban through any other method)
+		<input type='hidden' name='src' value='[REF(src)]'>"}
+	
 	output += HrefTokenFormField()
-	output += "<table width='100%'><tr>"
-	output += "<td><b>Ban type:</b><select name='dbbanaddtype'>"
-	output += "<option value=''>--</option>"
-	output += "<option value='[BANTYPE_PERMA]'>PERMABAN</option>"
-	output += "<option value='[BANTYPE_TEMP]'>TEMPBAN</option>"
-	output += "<option value='[BANTYPE_JOB_PERMA]'>JOB PERMABAN</option>"
-	output += "<option value='[BANTYPE_JOB_TEMP]'>JOB TEMPBAN</option>"
-	output += "<option value='[BANTYPE_ADMIN_PERMA]'>ADMIN PERMABAN</option>"
-	output += "<option value='[BANTYPE_ADMIN_TEMP]'>ADMIN TEMPBAN</option>"
-	output += "</select></td>"
-	output += "<td><b>Key:</b> <input type='text' name='dbbanaddkey'></td></tr>"
-	output += "<tr><td><b>IP:</b> <input type='text' name='dbbanaddip'></td>"
-	output += "<td><b>Computer id:</b> <input type='text' name='dbbanaddcid'></td></tr>"
-	output += "<tr><td><b>Duration:</b> <input type='text' name='dbbaddduration'></td>"
-	output += "<tr><td><b>Severity:</b><select name='dbbanaddseverity'>"
-	output += "<option value=''>--</option>"
-	output += "<option value='High'>High Severity</option>"
-	output += "<option value='Medium'>Medium Severity</option>"
-	output += "<option value='Minor'>Minor Severity</option>"
-	output += "<option value='None'>No Severity</option>"
-	output += "<td><b>Job:</b><select name='dbbanaddjob'>"
-	output += "<option value=''>--</option>"
+
+	output += {"<table width='100%'><tr>
+		<td><b>Ban type:</b><select name='dbbanaddtype'>
+		<option value=''>--</option>
+		<option value='[BANTYPE_PERMA]'>PERMABAN</option>
+		<option value='[BANTYPE_TEMP]'>TEMPBAN</option>
+		<option value='[BANTYPE_JOB_PERMA]'>JOB PERMABAN</option>
+		<option value='[BANTYPE_JOB_TEMP]'>JOB TEMPBAN</option>
+		<option value='[BANTYPE_ADMIN_PERMA]'>ADMIN PERMABAN</option>
+		<option value='[BANTYPE_ADMIN_TEMP]'>ADMIN TEMPBAN</option>
+		</select></td>
+		<td><b>Key:</b> <input type='text' name='dbbanaddkey'></td></tr>
+		<tr><td><b>IP:</b> <input type='text' name='dbbanaddip'></td>
+		<td><b>Computer id:</b> <input type='text' name='dbbanaddcid'></td></tr>
+		<tr><td><b>Duration:</b> <input type='text' name='dbbaddduration'></td>
+		<tr><td><b>Severity:</b><select name='dbbanaddseverity'>
+		<option value=''>--</option>
+		<option value='High'>High Severity</option>
+		<option value='Medium'>Medium Severity</option>
+		<option value='Minor'>Minor Severity</option>
+		<option value='None'>No Severity</option>
+		<td><b>Job:</b><select name='dbbanaddjob'>
+		<option value=''>--</option>"}
+	
 	for(var/j in get_all_jobs())
 		output += "<option value='[j]'>[j]</option>"
 	for(var/j in GLOB.nonhuman_positions)
 		output += "<option value='[j]'>[j]</option>"
 	for(var/j in list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_OPERATIVE, ROLE_REV, ROLE_CULTIST, ROLE_WIZARD))
 		output += "<option value='[j]'>[j]</option>"
-	output += "</select></td></tr></table>"
-	output += "<b>Reason:<br></b><textarea name='dbbanreason' cols='50'></textarea><br>"
-	output += "<input type='submit' value='Add ban'>"
-	output += "</form>"
 
-	output += "</td>"
-	output += "</tr>"
-	output += "</table>"
-
-	output += "<form method='GET' action='?src=[REF(src)]'><b>Search:</b> "
-	output += "<input type='hidden' name='src' value='[REF(src)]'>"
+	output += {"</select></td></tr></table>
+		<b>Reason:<br></b><textarea name='dbbanreason' cols='50'></textarea><br>
+		<input type='submit' value='Add ban'>
+		</form>
+		</td>
+		</tr>
+		</table>
+		<form method='GET' action='?src=[REF(src)]'><b>Search:</b> 
+		<input type='hidden' name='src' value='[REF(src)]'>"}
+	
 	output += HrefTokenFormField()
-	output += "<b>Ckey:</b> <input type='text' name='dbsearchckey' value='[playerckey]'>"
-	output += "<b>Admin ckey:</b> <input type='text' name='dbsearchadmin' value='[adminckey]'><br>"
-	output += "<b>IP:</b> <input type='text' name='dbsearchip' value='[ip]'>"
-	output += "<b>CID:</b> <input type='text' name='dbsearchcid' value='[cid]'>"
-	output += "<input type='submit' value='search'>"
-	output += "</form>"
-	output += "Please note that all jobban bans or unbans are in-effect the following round."
 
+	output += {"<b>Ckey:</b> <input type='text' name='dbsearchckey' value='[playerckey]'>
+		<b>Admin ckey:</b> <input type='text' name='dbsearchadmin' value='[adminckey]'><br>
+		<b>IP:</b> <input type='text' name='dbsearchip' value='[ip]'>
+		<b>CID:</b> <input type='text' name='dbsearchcid' value='[cid]'>
+		<input type='submit' value='search'>
+		</form>
+		Please note that all jobban bans or unbans are in-effect the following round."}
+	
 	if(adminckey || playerckey || ip || cid)
 		var/list/searchlist = list()
 		if(playerckey)
@@ -480,14 +483,16 @@
 		var/ulcolor = "#eeffee" //unbanned light
 		var/udcolor = "#ddffdd" //unbanned dark
 
-		output += "<table width='90%' bgcolor='#e3e3e3' cellpadding='5' cellspacing='0' align='center'>"
-		output += "<tr>"
-		output += "<th width='25%'><b>TYPE</b></th>"
-		output += "<th width='20%'><b>CKEY</b></th>"
-		output += "<th width='20%'><b>TIME APPLIED</b></th>"
-		output += "<th width='20%'><b>ADMIN</b></th>"
-		output += "<th width='15%'><b>OPTIONS</b></th>"
-		output += "</tr>"
+
+		output += {"<table width='90%' bgcolor='#e3e3e3' cellpadding='5' cellspacing='0' align='center'>
+			<tr>
+			<th width='25%'><b>TYPE</b></th>
+			<th width='20%'><b>CKEY</b></th>
+			<th width='20%'><b>TIME APPLIED</b></th>
+			<th width='20%'><b>ADMIN</b></th>
+			<th width='15%'><b>OPTIONS</b></th>
+			</tr>"}
+		
 		var/limit = " LIMIT [bansperpage * page], [bansperpage]"
 		var/datum/DBQuery/query_search_bans = SSdbcore.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].ckey), ckey), IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].a_ckey), a_ckey), unbanned, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].unbanned_ckey), unbanned_ckey), unbanned_datetime, edits, round_id FROM [format_table_name("ban")] WHERE [search] ORDER BY bantime DESC[limit]")
 		if(!query_search_bans.warn_execute())
@@ -531,30 +536,39 @@
 				if("ADMIN_TEMPBAN")
 					typedesc = "<b>ADMIN TEMPBAN</b><br><font size='2'>([duration] minutes [(unbanned) ? "" : "(<a href=\"byond://?src=[REF(src)];[HrefToken()];dbbanedit=duration;dbbanid=[banid]\">Edit</a>))"]<br>Expires [expiration]</font>"
 
-			output += "<tr bgcolor='[dcolor]'>"
-			output += "<td align='center'>[typedesc]</td>"
-			output += "<td align='center'><b>[ban_key]</b></td>"
-			output += "<td align='center'>[bantime] (Round ID: [round_id])</td>"
-			output += "<td align='center'><b>[a_key]</b></td>"
-			output += "<td align='center'>[(unbanned) ? "" : "<b><a href=\"byond://?src=[REF(src)];[HrefToken()];dbbanedit=unban;dbbanid=[banid]\">Unban</a></b>"]</td>"
-			output += "</tr>"
-			output += "<tr bgcolor='[lcolor]'>"
-			output += "<td align='center' colspan='5'><b>Reason: [(unbanned) ? "" : "(<a href=\"byond://?src=[REF(src)];[HrefToken()];dbbanedit=reason;dbbanid=[banid]\">Edit</a>)"]</b> <cite>\"[reason]\"</cite></td>"
-			output += "</tr>"
+
+			output += {"<tr bgcolor='[dcolor]'>
+				<td align='center'>[typedesc]</td>
+				<td align='center'><b>[ban_key]</b></td>
+				<td align='center'>[bantime] (Round ID: [round_id])</td>
+				<td align='center'><b>[a_key]</b></td>
+				<td align='center'>[(unbanned) ? "" : "<b><a href=\"byond://?src=[REF(src)];[HrefToken()];dbbanedit=unban;dbbanid=[banid]\">Unban</a></b>"]</td>
+				</tr>
+				<tr bgcolor='[lcolor]'>
+				<td align='center' colspan='5'><b>Reason: [(unbanned) ? "" : "(<a href=\"byond://?src=[REF(src)];[HrefToken()];dbbanedit=reason;dbbanid=[banid]\">Edit</a>)"]</b> <cite>\"[reason]\"</cite></td>
+				</tr>"}
+			
 			if(edits)
-				output += "<tr bgcolor='[dcolor]'>"
-				output += "<td align='center' colspan='5'><b>EDITS</b></td>"
-				output += "</tr>"
-				output += "<tr bgcolor='[lcolor]'>"
-				output += "<td align='center' colspan='5'><font size='2'>[edits]</font></td>"
-				output += "</tr>"
+
+				output += {"<tr bgcolor='[dcolor]'>
+					<td align='center' colspan='5'><b>EDITS</b></td>
+					</tr>
+					<tr bgcolor='[lcolor]'>
+					<td align='center' colspan='5'><font size='2'>[edits]</font></td>
+					</tr>"}
+				
 			if(unbanned)
+
+				output += {"<tr bgcolor='[dcolor]'>
+					<td align='center' colspan='5' bgcolor=''><b>UNBANNED by admin [unban_key] on [unbantime]</b></td>
+					</tr>"}
+			
 				output += "<tr bgcolor='[dcolor]'>"
-				output += "<td align='center' colspan='5' bgcolor=''><b>UNBANNED by admin [unban_key] on [unbantime]</b></td>"
-				output += "</tr>"
-			output += "<tr>"
-			output += "<td colspan='5' bgcolor='white'>&nbsp</td>"
-			output += "</tr>"
+
+			output += {"<tr>
+				<td colspan='5' bgcolor='white'>&nbsp</td>
+				</tr>"}
+			
 		qdel(query_search_bans)
 		output += "</table></div>"
 

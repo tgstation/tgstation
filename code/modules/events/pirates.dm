@@ -309,9 +309,11 @@
 /obj/machinery/computer/piratepad_control/ui_interact(mob/user)
 	. = ..()
 	var/list/t = list()
-	t += "<div class='statusDisplay'>Cargo Hold Control<br>"
-	t += "Current cargo value : [points]"
-	t += "</div>"
+
+	t += {"<div class='statusDisplay'>Cargo Hold Control<br>
+		Current cargo value : [points]
+		</div>"}
+	
 	if(!pad)
 		t += "<div class='statusDisplay'>No pad located.</div><BR>"
 	else

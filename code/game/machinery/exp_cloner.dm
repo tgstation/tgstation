@@ -176,11 +176,11 @@
 	updatemodules(TRUE)
 
 	var/dat = ""
-	dat += "<a href='byond://?src=[REF(src)];refresh=1'>Refresh</a>"
 
-	dat += "<h3>Cloning Pod Status</h3>"
-	dat += "<div class='statusDisplay'>[temp]&nbsp;</div>"
-
+	dat += {"<a href='byond://?src=[REF(src)];refresh=1'>Refresh</a>
+		<h3>Cloning Pod Status</h3>
+		<div class='statusDisplay'>[temp]&nbsp;</div>"}
+	
 	if (isnull(src.scanner) || !LAZYLEN(pods))
 		dat += "<h3>Modules</h3>"
 		//dat += "<a href='byond://?src=[REF(src)];relmodules=1'>Reload Modules</a>"
@@ -193,9 +193,10 @@
 	if (!isnull(src.scanner))
 		var/mob/living/scanner_occupant = get_mob_or_brainmob(scanner.occupant)
 
-		dat += "<h3>Cloning</h3>"
 
-		dat += "<div class='statusDisplay'>"
+		dat += {"<h3>Cloning</h3>
+			<div class='statusDisplay'>"}
+		
 		if(!scanner_occupant)
 			dat += "Scanner Unoccupied"
 		else if(loading)
@@ -206,8 +207,10 @@
 		dat += "</div>"
 
 		if(scanner_occupant)
-			dat += "<a href='byond://?src=[REF(src)];clone=1'>Clone</a>"
-			dat += "<br><a href='byond://?src=[REF(src)];lock=1'>[src.scanner.locked ? "Unlock Scanner" : "Lock Scanner"]</a>"
+
+			dat += {"<a href='byond://?src=[REF(src)];clone=1'>Clone</a>
+				<br><a href='byond://?src=[REF(src)];lock=1'>[src.scanner.locked ? "Unlock Scanner" : "Lock Scanner"]</a>"}
+			
 		else
 			dat += "<span class='linkOff'>Clone</span>"
 

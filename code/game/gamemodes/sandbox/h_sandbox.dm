@@ -76,28 +76,33 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 	if(!hsbinfo)
 		hsbinfo = "<center><b>Sandbox Panel</b></center><hr>"
 		if(admin)
-			hsbinfo += "<b>Administration</b><br>"
-			hsbinfo += "- <a href='?src=[REF(src)];hsb=hsbtobj'>Toggle Object Spawning</a><br>"
-			hsbinfo += "- <a href='?src=[REF(src)];hsb=hsbtac'>Toggle Item Spawn Panel Auto-close</a><br>"
-			hsbinfo += "<b>Canister Spawning</b><br>"
-			hsbinfo += "- <a href='?src=[REF(src)];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/toxins]'>Spawn Plasma Canister</a><br>"
-			hsbinfo += "- <a href='?src=[REF(src)];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/carbon_dioxide]'>Spawn CO2 Canister</a><br>"
-			hsbinfo += "- <a href='?src=[REF(src)];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/nitrogen]'>Spawn Nitrogen Canister</a><br>"
-			hsbinfo += "- <a href='?src=[REF(src)];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/nitrous_oxide]'>Spawn N2O Canister</a><hr>"
+
+			hsbinfo += {"<b>Administration</b><br>
+				- <a href='?src=[REF(src)];hsb=hsbtobj'>Toggle Object Spawning</a><br>
+				- <a href='?src=[REF(src)];hsb=hsbtac'>Toggle Item Spawn Panel Auto-close</a><br>
+				<b>Canister Spawning</b><br>
+				- <a href='?src=[REF(src)];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/toxins]'>Spawn Plasma Canister</a><br>
+				- <a href='?src=[REF(src)];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/carbon_dioxide]'>Spawn CO2 Canister</a><br>
+				- <a href='?src=[REF(src)];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/nitrogen]'>Spawn Nitrogen Canister</a><br>
+				- <a href='?src=[REF(src)];hsb=hsbspawn&path=[/obj/machinery/portable_atmospherics/canister/nitrous_oxide]'>Spawn N2O Canister</a><hr>"}
+			
 		else
-			hsbinfo += "<i>Some item spawning may be disabled by the administrators.</i><br>"
-			hsbinfo += "<i>Only administrators may spawn dangerous canisters.</i><br>"
+
+			hsbinfo += {"<i>Some item spawning may be disabled by the administrators.</i><br>
+				<i>Only administrators may spawn dangerous canisters.</i><br>"}
+			
 		for(var/T in hrefs)
 			var/href = hrefs[T]
 			if(href)
 				hsbinfo += "- <a href='?[REF(src)];hsb=[hrefs[T]]'>[T]</a><br>"
 			else
 				hsbinfo += "<br><b>[T]</b><br>"
-		hsbinfo += "<hr>"
-		hsbinfo += "- <a href='?[REF(src)];hsb=hsbcloth'>Spawn Clothing...</a><br>"
-		hsbinfo += "- <a href='?[REF(src)];hsb=hsbreag'>Spawn Reagent Container...</a><br>"
-		hsbinfo += "- <a href='?[REF(src)];hsb=hsbobj'>Spawn Other Item...</a><br><br>"
 
+		hsbinfo += {"<hr>
+			- <a href='?[REF(src)];hsb=hsbcloth'>Spawn Clothing...</a><br>
+			- <a href='?[REF(src)];hsb=hsbreag'>Spawn Reagent Container...</a><br>
+			- <a href='?[REF(src)];hsb=hsbobj'>Spawn Other Item...</a><br><br>"}
+		
 	usr << browse(hsbinfo, "window=hsbpanel")
 
 /datum/hSB/Topic(href, href_list)

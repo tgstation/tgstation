@@ -36,16 +36,20 @@
 			return
 	var/obj/item/multitool/P = get_multitool(user)
 	var/dat
-	dat = "<font face = \"Courier\"><HEAD><TITLE>[name]</TITLE></HEAD><center><H3>[name] Access</H3></center>"
-	dat += "<br>[temp]<br>"
-	dat += "<br>Power Status: <a href='?src=[REF(src)];input=toggle'>[toggled ? "On" : "Off"]</a>"
+
+	dat = {"<font face = \"Courier\"><HEAD><TITLE>[name]</TITLE></HEAD><center><H3>[name] Access</H3></center>
+		<br>[temp]<br>
+		<br>Power Status: <a href='?src=[REF(src)];input=toggle'>[toggled ? "On" : "Off"]</a>"}
+	
 	if(on && toggled)
 		if(id != "" && id)
 			dat += "<br>Identification String: <a href='?src=[REF(src)];input=id'>[id]</a>"
 		else
 			dat += "<br>Identification String: <a href='?src=[REF(src)];input=id'>NULL</a>"
-		dat += "<br>Network: <a href='?src=[REF(src)];input=network'>[network]</a>"
-		dat += "<br>Prefabrication: [autolinkers.len ? "TRUE" : "FALSE"]"
+
+		dat += {"<br>Network: <a href='?src=[REF(src)];input=network'>[network]</a>
+			<br>Prefabrication: [autolinkers.len ? "TRUE" : "FALSE"]"}
+		
 		if(hide)
 			dat += "<br>Shadow Link: ACTIVE</a>"
 
@@ -60,10 +64,10 @@
 			if(T.hide && !hide)
 				continue
 			dat += "<li>[REF(T)] [T.name] ([T.id])  <a href='?src=[REF(src)];unlink=[i]'>\[X\]</a></li>"
-		dat += "</ol>"
 
-		dat += "<br>Filtering Frequencies: "
-
+		dat += {"</ol>
+			<br>Filtering Frequencies: "}
+		
 		i = 0
 		if(length(freq_listening))
 			for(var/x in freq_listening)
@@ -75,9 +79,10 @@
 		else
 			dat += "NONE"
 
-		dat += "<br>  <a href='?src=[REF(src)];input=freq'>\[Add Filter\]</a>"
-		dat += "<hr>"
 
+		dat += {"<br>  <a href='?src=[REF(src)];input=freq'>\[Add Filter\]</a>
+			<hr>"}
+		
 		if(P)
 			var/obj/machinery/telecomms/T = P.buffer
 			if(istype(T))
@@ -122,8 +127,10 @@
 
 /obj/machinery/telecomms/relay/Options_Menu()
 	var/dat = ""
-	dat += "<br>Broadcasting: <A href='?src=[REF(src)];broadcast=1'>[broadcasting ? "YES" : "NO"]</a>"
-	dat += "<br>Receiving:    <A href='?src=[REF(src)];receive=1'>[receiving ? "YES" : "NO"]</a>"
+
+	dat += {"<br>Broadcasting: <A href='?src=[REF(src)];broadcast=1'>[broadcasting ? "YES" : "NO"]</a>
+		<br>Receiving:    <A href='?src=[REF(src)];receive=1'>[receiving ? "YES" : "NO"]</a>"}
+	
 	return dat
 
 /obj/machinery/telecomms/relay/Options_Topic(href, href_list)

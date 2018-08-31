@@ -205,9 +205,11 @@
 		parts += "<span class='greentext big'>Ratvar's servants defended the Ark until its activation!</span>"
 	else
 		parts += "<span class='redtext big'>The Ark was destroyed! Ratvar will rust away for all eternity!</span>"
-	parts += " "
-	parts += "<b>The servants' objective was:</b> [CLOCKCULT_OBJECTIVE]."
-	parts += "<b>Construction Value(CV)</b> was: <b>[GLOB.clockwork_construction_value]</b>"
+
+	parts += {"
+		<b>The servants' objective was:</b> [CLOCKCULT_OBJECTIVE].
+		<b>Construction Value(CV)</b> was: <b>[GLOB.clockwork_construction_value]</b>"}
+	
 	for(var/i in SSticker.scripture_states)
 		if(i != SCRIPTURE_DRIVER)
 			parts += "<b>[i] scripture</b> was: <b>[SSticker.scripture_states[i] ? "UN":""]LOCKED</b>"

@@ -306,36 +306,55 @@
 
 	switch(get_result())
 		if(NUKE_RESULT_FLUKE)
-			parts += "<span class='redtext big'>Humiliating Syndicate Defeat</span>"
-			parts += "<B>The crew of [station_name()] gave [syndicate_name] operatives back their bomb! The syndicate base was destroyed!</B> Next time, don't lose the nuke!"
-		if(NUKE_RESULT_NUKE_WIN)
-			parts += "<span class='greentext big'>Syndicate Major Victory!</span>"
-			parts += "<B>[syndicate_name] operatives have destroyed [station_name()]!</B>"
-		if(NUKE_RESULT_NOSURVIVORS)
-			parts += "<span class='neutraltext big'>Total Annihilation</span>"
-			parts +=  "<B>[syndicate_name] operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!"
-		if(NUKE_RESULT_WRONG_STATION)
-			parts += "<span class='redtext big'>Crew Minor Victory</span>"
-			parts += "<B>[syndicate_name] operatives secured the authentication disk but blew up something that wasn't [station_name()].</B> Next time, don't do that!"
-		if(NUKE_RESULT_WRONG_STATION_DEAD)
-			parts += "<span class='redtext big'>[syndicate_name] operatives have earned Darwin Award!</span>"
-			parts += "<B>[syndicate_name] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't do that!"
-		if(NUKE_RESULT_CREW_WIN_SYNDIES_DEAD)
-			parts += "<span class='redtext big'>Crew Major Victory!</span>"
-			parts += "<B>The Research Staff has saved the disk and killed the [syndicate_name] Operatives</B>"
-		if(NUKE_RESULT_CREW_WIN)
-			parts += "<span class='redtext big'>Crew Major Victory</span>"
-			parts += "<B>The Research Staff has saved the disk and stopped the [syndicate_name] Operatives!</B>"
-		if(NUKE_RESULT_DISK_LOST)
-			parts += "<span class='neutraltext big'>Neutral Victory!</span>"
-			parts += "<B>The Research Staff failed to secure the authentication disk but did manage to kill most of the [syndicate_name] Operatives!</B>"
-		if(NUKE_RESULT_DISK_STOLEN)
-			parts += "<span class='greentext big'>Syndicate Minor Victory!</span>"
-			parts += "<B>[syndicate_name] operatives survived the assault but did not achieve the destruction of [station_name()].</B> Next time, don't lose the disk!"
-		else
-			parts += "<span class='neutraltext big'>Neutral Victory</span>"
-			parts += "<B>Mission aborted!</B>"
 
+			parts += {"<span class='redtext big'>Humiliating Syndicate Defeat</span>
+				<B>The crew of [station_name()] gave [syndicate_name] operatives back their bomb! The syndicate base was destroyed!</B> Next time, don't lose the nuke!"}
+			
+		if(NUKE_RESULT_NUKE_WIN)
+
+			parts += {"<span class='greentext big'>Syndicate Major Victory!</span>
+				<B>[syndicate_name] operatives have destroyed [station_name()]!</B>"}
+			
+		if(NUKE_RESULT_NOSURVIVORS)
+
+			parts += {"<span class='neutraltext big'>Total Annihilation</span>
+				<B>[syndicate_name] operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!"}
+			
+		if(NUKE_RESULT_WRONG_STATION)
+
+			parts += {"<span class='redtext big'>Crew Minor Victory</span>
+				<B>[syndicate_name] operatives secured the authentication disk but blew up something that wasn't [station_name()].</B> Next time, don't do that!"}
+			
+		if(NUKE_RESULT_WRONG_STATION_DEAD)
+
+			parts += {"<span class='redtext big'>[syndicate_name] operatives have earned Darwin Award!</span>
+				<B>[syndicate_name] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't do that!"}
+			
+		if(NUKE_RESULT_CREW_WIN_SYNDIES_DEAD)
+
+			parts += {"<span class='redtext big'>Crew Major Victory!</span>
+				<B>The Research Staff has saved the disk and killed the [syndicate_name] Operatives</B>"}
+			
+		if(NUKE_RESULT_CREW_WIN)
+
+			parts += {"<span class='redtext big'>Crew Major Victory</span>
+				<B>The Research Staff has saved the disk and stopped the [syndicate_name] Operatives!</B>"}
+			
+		if(NUKE_RESULT_DISK_LOST)
+
+			parts += {"<span class='neutraltext big'>Neutral Victory!</span>
+				<B>The Research Staff failed to secure the authentication disk but did manage to kill most of the [syndicate_name] Operatives!</B>"}
+			
+		if(NUKE_RESULT_DISK_STOLEN)
+
+			parts += {"<span class='greentext big'>Syndicate Minor Victory!</span>
+				<B>[syndicate_name] operatives survived the assault but did not achieve the destruction of [station_name()].</B> Next time, don't lose the disk!"}
+			
+		else
+
+			parts += {"<span class='neutraltext big'>Neutral Victory</span>
+				<B>Mission aborted!</B>"}
+			
 	var/text = "<br><span class='header'>The syndicate operatives were:</span>"
 	var/purchases = ""
 	var/TC_uses = 0
@@ -347,8 +366,10 @@
 			TC_uses += H.total_spent
 			purchases += H.generate_render(show_key = FALSE)
 	text += printplayerlist(members)
-	text += "<br>"
-	text += "(Syndicates used [TC_uses] TC) [purchases]"
+
+	text += {"<br>
+		(Syndicates used [TC_uses] TC) [purchases]"}
+	
 	if(TC_uses == 0 && SSticker.mode.station_was_nuked && !operatives_dead())
 		text += "<BIG>[icon2html('icons/badass.dmi', world, "badass")]</BIG>"
 

@@ -147,16 +147,20 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 	else if(mode == 2)
 		// JOB MANAGEMENT
-		dat = "<a href='?src=[REF(src)];choice=return'>Return</a>"
-		dat += " || Confirm Identity: "
+
+		dat = {"<a href='?src=[REF(src)];choice=return'>Return</a>
+			|| Confirm Identity: "}
+		
 		var/S
 		if(scan)
 			S = html_encode(scan.name)
 		else
 			S = "--------"
-		dat += "<a href='?src=[REF(src)];choice=scan'>[S]</a>"
-		dat += "<table>"
-		dat += "<tr><td style='width:25%'><b>Job</b></td><td style='width:25%'><b>Slots</b></td><td style='width:25%'><b>Open job</b></td><td style='width:25%'><b>Close job</b><td style='width:25%'><b>Prioritize</b></td></td></tr>"
+
+		dat += {"<a href='?src=[REF(src)];choice=scan'>[S]</a>
+			<table>
+			<tr><td style='width:25%'><b>Job</b></td><td style='width:25%'><b>Slots</b></td><td style='width:25%'><b>Open job</b></td><td style='width:25%'><b>Close job</b><td style='width:25%'><b>Prioritize</b></td></td></tr>"}
+		
 		var/ID
 		if(scan && (ACCESS_CHANGE_IDS in scan.access) && !target_dept)
 			ID = 1
@@ -166,9 +170,11 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			dat += "<tr>"
 			if(job.title in blacklisted)
 				continue
-			dat += "<td>[job.title]</td>"
-			dat += "<td>[job.current_positions]/[job.total_positions]</td>"
-			dat += "<td>"
+
+			dat += {"<td>[job.title]</td>
+				<td>[job.current_positions]/[job.total_positions]</td>
+				<td>"}
+			
 			switch(can_open_job(job))
 				if(1)
 					if(ID)
@@ -244,15 +250,20 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			scan_name = "--------"
 
 		if(!authenticated)
-			header += "<br><i>Please insert the cards into the slots</i><br>"
-			header += "Target: <a href='?src=[REF(src)];choice=modify'>[target_name]</a><br>"
-			header += "Confirm Identity: <a href='?src=[REF(src)];choice=scan'>[scan_name]</a><br>"
+
+			header += {"<br><i>Please insert the cards into the slots</i><br>
+				Target: <a href='?src=[REF(src)];choice=modify'>[target_name]</a><br>
+				Confirm Identity: <a href='?src=[REF(src)];choice=scan'>[scan_name]</a><br>"}
+			
 		else
+
+			header += {"<div align='center'><br>
+				<a href='?src=[REF(src)];choice=modify'>Remove [target_name]</a> || 
+				<a href='?src=[REF(src)];choice=scan'>Remove [scan_name]</a> <br> 
+				<a href='?src=[REF(src)];choice=mode;mode_target=1'>Access Crew Manifest</a> <br> 
+				<a href='?src=[REF(src)];choice=logout'>Log Out</a></div>"}
+		
 			header += "<div align='center'><br>"
-			header += "<a href='?src=[REF(src)];choice=modify'>Remove [target_name]</a> || "
-			header += "<a href='?src=[REF(src)];choice=scan'>Remove [scan_name]</a> <br> "
-			header += "<a href='?src=[REF(src)];choice=mode;mode_target=1'>Access Crew Manifest</a> <br> "
-			header += "<a href='?src=[REF(src)];choice=logout'>Log Out</a></div>"
 
 		header += "<hr>"
 
@@ -288,13 +299,16 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 										allJobsSlot.innerHTML = "<a href='#' onclick='showAll()'>show</a>";
 									}
 								</script>"}
+
+				carddesc += {"<form name='cardcomp' action='?src=[REF(src)]' method='get'>
+					<input type='hidden' name='src' value='[REF(src)]'>
+					<input type='hidden' name='choice' value='reg'>
+					<b>registered name:</b> <input type='text' id='namefield' name='reg' value='[target_owner]' style='width:250px; background-color:white;' onchange='markRed()'>
+					<input type='submit' value='Rename' onclick='markGreen()'>
+					</form>
+					<b>Assignment:</b> "}
+				
 				carddesc += "<form name='cardcomp' action='?src=[REF(src)]' method='get'>"
-				carddesc += "<input type='hidden' name='src' value='[REF(src)]'>"
-				carddesc += "<input type='hidden' name='choice' value='reg'>"
-				carddesc += "<b>registered name:</b> <input type='text' id='namefield' name='reg' value='[target_owner]' style='width:250px; background-color:white;' onchange='markRed()'>"
-				carddesc += "<input type='submit' value='Rename' onclick='markGreen()'>"
-				carddesc += "</form>"
-				carddesc += "<b>Assignment:</b> "
 
 				jobs += "<span id='alljobsslot'><a href='#' onclick='showAll()'>[target_rank]</a></span>" //CHECK THIS
 
@@ -311,9 +325,11 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					else
 						accesses += "<a href='?src=[REF(src)];choice=access;access_target=[A];allowed=1'>[replacetext(get_centcom_access_desc(A), " ", "&nbsp")]</a> "
 			else
-				accesses += "<div align='center'><b>Access</b></div>"
-				accesses += "<table style='width:100%'>"
-				accesses += "<tr>"
+
+				accesses += {"<div align='center'><b>Access</b></div>
+					<table style='width:100%'>
+					<tr>"}
+				
 				for(var/i = 1; i <= 7; i++)
 					if(authenticated == 1 && !(i in region_access))
 						continue
@@ -334,8 +350,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			body = "[carddesc]<br>[jobs]<br><br>[accesses]" //CHECK THIS
 
 		else
-			body = "<a href='?src=[REF(src)];choice=auth'>{Log in}</a> <br><hr>"
-			body += "<a href='?src=[REF(src)];choice=mode;mode_target=1'>Access Crew Manifest</a>"
+
+			body = {"<a href='?src=[REF(src)];choice=auth'>{Log in}</a> <br><hr>
+				<a href='?src=[REF(src)];choice=mode;mode_target=1'>Access Crew Manifest</a>"}
+			
 			if(!target_dept)
 				body += "<br><hr><a href = '?src=[REF(src)];choice=mode;mode_target=2'>Job Management</a>"
 

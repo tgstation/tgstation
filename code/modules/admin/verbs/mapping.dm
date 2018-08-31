@@ -154,9 +154,10 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 
 	for(var/t in GLOB.active_turfs_startlist)
 		var/turf/T = t
-		dat += "[ADMIN_VERBOSEJMP(T)]\n"
-		dat += "<br>"
 
+		dat += {"[ADMIN_VERBOSEJMP(T)]\n
+			<br>"}
+		
 	usr << browse(dat, "window=at_list")
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Roundstart Active Turfs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

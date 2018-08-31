@@ -10,20 +10,24 @@
 	. = ..()
 	var/list/my_list = data
 	var/t = "<h2>[src]</h2><br>"
-	t += "List length: [my_list.len]<br>"
-	t += "<a href='?src=[REF(src)]'>\[Refresh\]</a>  |  "
-	t += "<a href='?src=[REF(src)];add=1'>\[Add\]</a>  |  "
-	t += "<a href='?src=[REF(src)];remove=1'>\[Remove\]</a>  |  "
-	t += "<a href='?src=[REF(src)];edit=1'>\[Edit\]</a>  |  "
-	t += "<a href='?src=[REF(src)];swap=1'>\[Swap\]</a>  |  "
-	t += "<a href='?src=[REF(src)];clear=1'>\[Clear\]</a><br>"
-	t += "<hr>"
+
+	t += {"List length: [my_list.len]<br>
+		<a href='?src=[REF(src)]'>\[Refresh\]</a>  |  
+		<a href='?src=[REF(src)];add=1'>\[Add\]</a>  |  
+		<a href='?src=[REF(src)];remove=1'>\[Remove\]</a>  |  
+		<a href='?src=[REF(src)];edit=1'>\[Edit\]</a>  |  
+		<a href='?src=[REF(src)];swap=1'>\[Swap\]</a>  |  
+		<a href='?src=[REF(src)];clear=1'>\[Clear\]</a><br>
+		<hr>"}
+	
 	var/i = 0
 	for(var/line in my_list)
 		i++
-		t += "#[i] | [display_data(line)]  |  "
-		t += "<a href='?src=[REF(src)];edit=1;pos=[i]'>\[Edit\]</a>  |  "
-		t += "<a href='?src=[REF(src)];remove=1;pos=[i]'>\[Remove\]</a><br>"
+
+		t += {"#[i] | [display_data(line)]  |  
+			<a href='?src=[REF(src)];edit=1;pos=[i]'>\[Edit\]</a>  |  
+			<a href='?src=[REF(src)];remove=1;pos=[i]'>\[Remove\]</a><br>"}
+		
 	user << browse(t, "window=list_pin_[REF(src)];size=500x400")
 
 /datum/integrated_io/lists/proc/add_to_list(mob/user, var/new_entry)
@@ -152,4 +156,3 @@
 
 	holder.interact(usr) // Refresh the main UI,
 	interact(usr) // and the list UI.
-

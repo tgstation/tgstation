@@ -18,8 +18,10 @@
 /datum/wires/suit_storage_unit/get_status()
 	var/obj/machinery/suit_storage_unit/SSU = holder
 	var/list/status = list()
-	status += "The UV bulb is [SSU.uv_super ? "glowing" : "dim"]."
-	status += "The service light is [SSU.safeties ? "off" : "on"]."
+
+	status += {"The UV bulb is [SSU.uv_super ? "glowing" : "dim"].
+		The service light is [SSU.safeties ? "off" : "on"]."}
+	
 	return status
 
 /datum/wires/suit_storage_unit/on_pulse(wire)

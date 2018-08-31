@@ -97,9 +97,11 @@
 	dat += "<b>[initial(S.name)]</b>"
 	if(S.charge_type == "recharge")
 		dat += " Cooldown:[S.charge_max/10]"
-	dat += " Cost:[cost]<br>"
-	dat += "<i>[S.desc][desc]</i><br>"
-	dat += "[S.clothes_req?"Needs wizard garb":"Can be cast without wizard garb"]<br>"
+
+	dat += {"Cost:[cost]<br>
+		<i>[S.desc][desc]</i><br>
+		[S.clothes_req?"Needs wizard garb":"Can be cast without wizard garb"]<br>"}
+	
 	return dat
 
 /datum/spellbook_entry/fireball
@@ -274,9 +276,11 @@
 
 /datum/spellbook_entry/item/GetInfo()
 	var/dat =""
-	dat += "<b>[name]</b>"
-	dat += " Cost:[cost]<br>"
-	dat += "<i>[desc]</i><br>"
+
+	dat += {"<b>[name]</b>
+		Cost:[cost]<br>
+		<i>[desc]</i><br>"}
+	
 	if(surplus>=0)
 		dat += "[surplus] left.<br>"
 	return dat
@@ -594,28 +598,38 @@
 	var/dat = ""
 	switch(category)
 		if("Offensive")
-			dat += "Spells and items geared towards debilitating and destroying.<BR><BR>"
-			dat += "Items are not bound to you and can be stolen. Additionally they cannot typically be returned once purchased.<BR>"
-			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
-			dat += "You can reduce this number by spending more points on the spell.<BR>"
+
+			dat += {"Spells and items geared towards debilitating and destroying.<BR><BR>
+				Items are not bound to you and can be stolen. Additionally they cannot typically be returned once purchased.<BR>
+				For spells: the number after the spell name is the cooldown time.<BR>
+				You can reduce this number by spending more points on the spell.<BR>"}
+			
 		if("Defensive")
-			dat += "Spells and items geared towards improving your survivability or reducing foes' ability to attack.<BR><BR>"
-			dat += "Items are not bound to you and can be stolen. Additionally they cannot typically be returned once purchased.<BR>"
-			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
-			dat += "You can reduce this number by spending more points on the spell.<BR>"
+
+			dat += {"Spells and items geared towards improving your survivability or reducing foes' ability to attack.<BR><BR>
+				Items are not bound to you and can be stolen. Additionally they cannot typically be returned once purchased.<BR>
+				For spells: the number after the spell name is the cooldown time.<BR>
+				You can reduce this number by spending more points on the spell.<BR>"}
+			
 		if("Mobility")
-			dat += "Spells and items geared towards improving your ability to move. It is a good idea to take at least one.<BR><BR>"
-			dat += "Items are not bound to you and can be stolen. Additionally they cannot typically be returned once purchased.<BR>"
-			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
-			dat += "You can reduce this number by spending more points on the spell.<BR>"
+
+			dat += {"Spells and items geared towards improving your ability to move. It is a good idea to take at least one.<BR><BR>
+				Items are not bound to you and can be stolen. Additionally they cannot typically be returned once purchased.<BR>
+				For spells: the number after the spell name is the cooldown time.<BR>
+				You can reduce this number by spending more points on the spell.<BR>"}
+			
 		if("Assistance")
-			dat += "Spells and items geared towards bringing in outside forces to aid you or improving upon your other items and abilities.<BR><BR>"
-			dat += "Items are not bound to you and can be stolen. Additionally they cannot typically be returned once purchased.<BR>"
-			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
-			dat += "You can reduce this number by spending more points on the spell.<BR>"
+
+			dat += {"Spells and items geared towards bringing in outside forces to aid you or improving upon your other items and abilities.<BR><BR>
+				Items are not bound to you and can be stolen. Additionally they cannot typically be returned once purchased.<BR>
+				For spells: the number after the spell name is the cooldown time.<BR>
+				You can reduce this number by spending more points on the spell.<BR>"}
+			
 		if("Challenges")
-			dat += "The Wizard Federation typically has hard limits on the potency and number of spells brought to the station based on risk.<BR>"
-			dat += "Arming the station against you will increases the risk, but will grant you one more charge for your spellbook.<BR>"
+
+			dat += {"The Wizard Federation typically has hard limits on the potency and number of spells brought to the station based on risk.<BR>
+				Arming the station against you will increases the risk, but will grant you one more charge for your spellbook.<BR>"}
+			
 		if("Rituals")
 			dat += "These powerful spells change the very fabric of reality. Not always in your favour.<BR>"
 	return dat
@@ -657,9 +671,10 @@
 		cat_dat[category] = "<hr>"
 		dat += "<li><a [tab==category?"class=selected":""] href='byond://?src=[REF(src)];page=[category]'>[category]</a></li>"
 
-	dat += "<li><a><b>Points remaining : [uses]</b></a></li>"
-	dat += "</ul>"
 
+	dat += {"<li><a><b>Points remaining : [uses]</b></a></li>
+		</ul>"}
+	
 	var/datum/spellbook_entry/E
 	for(var/i=1,i<=entries.len,i++)
 		var/spell_info = ""

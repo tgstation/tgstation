@@ -22,8 +22,7 @@
 	if (prob(20))
 		name += " Space"
 
-	name += " " + pick("Church", "Cathedral", "Body", "Worshippers", "Movement", "Witnesses")
-	name += " of [religion_name()]"
+	name += " [pick("Church", "Cathedral", "Body", "Worshippers", "Movement", "Witnesses")] of [religion_name()]"
 
 	return name
 

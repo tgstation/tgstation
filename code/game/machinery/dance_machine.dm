@@ -96,12 +96,14 @@
 		playsound(src,'sound/misc/compiler-failure.ogg', 25, 1)
 		return
 	var/list/dat = list()
-	dat +="<div class='statusDisplay' style='text-align:center'>"
-	dat += "<b><A href='?src=[REF(src)];action=toggle'>[!active ? "BREAK IT DOWN" : "SHUT IT DOWN"]<b></A><br>"
-	dat += "</div><br>"
-	dat += "<A href='?src=[REF(src)];action=select'> Select Track</A><br>"
-	dat += "Track Selected: [selection.song_name]<br>"
-	dat += "Track Length: [DisplayTimeText(selection.song_length)]<br><br>"
+
+	dat += {"<div class='statusDisplay' style='text-align:center'>
+		<b><A href='?src=[REF(src)];action=toggle'>[!active ? "BREAK IT DOWN" : "SHUT IT DOWN"]<b></A><br>
+		</div><br>
+		<A href='?src=[REF(src)];action=select'> Select Track</A><br>
+		Track Selected: [selection.song_name]<br>
+		Track Length: [DisplayTimeText(selection.song_length)]<br><br>"}
+	
 	var/datum/browser/popup = new(user, "vending", "[name]", 400, 350)
 	popup.set_content(dat.Join())
 	popup.open()

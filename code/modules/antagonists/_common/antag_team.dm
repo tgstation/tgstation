@@ -27,8 +27,10 @@
 /datum/team/proc/roundend_report()
 	var/list/report = list()
 
-	report += "<span class='header'>[name]:</span>"
-	report += "The [member_name]s were:"
+
+	report += {"<span class='header'>[name]:</span>
+		The [member_name]s were:"}
+	
 	report += printplayerlist(members)
 
 	if(objectives.len)

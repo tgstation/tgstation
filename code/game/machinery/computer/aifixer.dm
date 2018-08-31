@@ -25,9 +25,10 @@
 
 	if (src.occupier)
 		var/laws
-		dat += "<h3>Stored AI: [src.occupier.name]</h3>"
-		dat += "<b>System integrity:</b> [(src.occupier.health+100)/2]%<br>"
 
+		dat += {"<h3>Stored AI: [src.occupier.name]</h3>
+			<b>System integrity:</b> [(src.occupier.health+100)/2]%<br>"}
+		
 		if (src.occupier.laws.zeroth)
 			laws += "<b>0:</b> [src.occupier.laws.zeroth]<BR>"
 

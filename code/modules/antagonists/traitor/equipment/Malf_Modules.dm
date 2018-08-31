@@ -128,10 +128,12 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/module_picker/proc/use(mob/user)
 	var/list/dat = list()
-	dat += "<B>Select use of processing time: (currently #[processing_time] left.)</B><BR>"
-	dat += "<HR>"
-	dat += "<B>Install Module:</B><BR>"
-	dat += "<I>The number afterwards is the amount of processing time it consumes.</I><BR>"
+
+	dat += {"<B>Select use of processing time: (currently #[processing_time] left.)</B><BR>
+		<HR>
+		<B>Install Module:</B><BR>
+		<I>The number afterwards is the amount of processing time it consumes.</I><BR>"}
+	
 	for(var/datum/AI_Module/large/module in possible_modules)
 		dat += "<A href='byond://?src=[REF(src)];[module.mod_pick_name]=1'>[module.module_name]</A><A href='byond://?src=[REF(src)];showdesc=[module.mod_pick_name]'>\[?\]</A> ([module.cost])<BR>"
 	for(var/datum/AI_Module/small/module in possible_modules)

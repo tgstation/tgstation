@@ -570,11 +570,13 @@
 /obj/item/toy/talking/codex_gigas/generate_messages()
 	var/datum/fakeDevil/devil = new
 	var/list/messages = list()
-	messages += "Some fun facts about: [devil.truename]"
-	messages += "[GLOB.lawlorify[LORE][devil.bane]]"
-	messages += "[GLOB.lawlorify[LORE][devil.obligation]]"
-	messages += "[GLOB.lawlorify[LORE][devil.ban]]"
-	messages += "[GLOB.lawlorify[LORE][devil.banish]]"
+
+	messages += {"Some fun facts about: [devil.truename]
+		[GLOB.lawlorify[LORE][devil.bane]]
+		[GLOB.lawlorify[LORE][devil.obligation]]
+		[GLOB.lawlorify[LORE][devil.ban]]
+		[GLOB.lawlorify[LORE][devil.banish]]"}
+	
 	return messages
 
 /obj/item/toy/talking/owl
@@ -635,27 +637,31 @@
 	..()
 	icon_state = "deck_[deckstyle]_full"
 	for(var/i = 2; i <= 10; i++)
-		cards += "[i] of Hearts"
-		cards += "[i] of Spades"
-		cards += "[i] of Clubs"
-		cards += "[i] of Diamonds"
-	cards += "King of Hearts"
-	cards += "King of Spades"
-	cards += "King of Clubs"
-	cards += "King of Diamonds"
-	cards += "Queen of Hearts"
-	cards += "Queen of Spades"
-	cards += "Queen of Clubs"
-	cards += "Queen of Diamonds"
-	cards += "Jack of Hearts"
-	cards += "Jack of Spades"
-	cards += "Jack of Clubs"
-	cards += "Jack of Diamonds"
-	cards += "Ace of Hearts"
-	cards += "Ace of Spades"
-	cards += "Ace of Clubs"
-	cards += "Ace of Diamonds"
 
+		cards += {"[i] of Hearts
+			[i] of Spades
+			[i] of Clubs
+			[i] of Diamonds"}
+	
+		cards += "[i] of Hearts"
+
+	cards += {"King of Hearts
+		King of Spades
+		King of Clubs
+		King of Diamonds
+		Queen of Hearts
+		Queen of Spades
+		Queen of Clubs
+		Queen of Diamonds
+		Jack of Hearts
+		Jack of Spades
+		Jack of Clubs
+		Jack of Diamonds
+		Ace of Hearts
+		Ace of Spades
+		Ace of Clubs
+		Ace of Diamonds"}
+	
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 //ATTACK HAND NOT CALLING PARENT
 /obj/item/toy/cards/deck/attack_hand(mob/user)

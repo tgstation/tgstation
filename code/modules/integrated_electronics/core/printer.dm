@@ -152,9 +152,10 @@
 			HTML += " <a href='?src=[REF(src)];category=[category]'>\[[category]\]</a> "
 		else // Bold the button if it's already selected.
 			HTML += " <b>\[[category]\]</b> "
-	HTML += "<hr>"
-	HTML += "<center><h4>[current_category]</h4></center>"
 
+	HTML += {"<hr>
+		<center><h4>[current_category]</h4></center>"}
+	
 	var/list/current_list = SScircuit.circuit_fabricator_recipe_list[current_category]
 	for(var/path in current_list)
 		var/obj/O = path

@@ -29,14 +29,18 @@
 	  // --- Main Menu ---
 
 		if(0)
-			dat += "<br>[temp]<br><br>"
-			dat += "<br>Current Network: <a href='?src=[REF(src)];network=1'>[network]</a><br>"
+
+			dat += {"<br>[temp]<br><br>
+				<br>Current Network: <a href='?src=[REF(src)];network=1'>[network]</a><br>"}
+			
 			if(machinelist.len)
 				dat += "<br>Detected Network Entities:<ul>"
 				for(var/obj/machinery/telecomms/T in machinelist)
 					dat += "<li><a href='?src=[REF(src)];viewmachine=[T.id]'>[REF(T)] [T.name]</a> ([T.id])</li>"
-				dat += "</ul>"
-				dat += "<br><a href='?src=[REF(src)];operation=release'>\[Flush Buffer\]</a>"
+
+				dat += {"</ul>
+					<br><a href='?src=[REF(src)];operation=release'>\[Flush Buffer\]</a>"}
+				
 			else
 				dat += "<a href='?src=[REF(src)];operation=probe'>\[Probe Network\]</a>"
 
@@ -44,11 +48,13 @@
 	  // --- Viewing Machine ---
 
 		if(1)
-			dat += "<br>[temp]<br>"
-			dat += "<center><a href='?src=[REF(src)];operation=mainmenu'>\[Main Menu\]</a></center>"
-			dat += "<br>Current Network: [network]<br>"
-			dat += "Selected Network Entity: [SelectedMachine.name] ([SelectedMachine.id])<br>"
-			dat += "Linked Entities: <ol>"
+
+			dat += {"<br>[temp]<br>
+				<center><a href='?src=[REF(src)];operation=mainmenu'>\[Main Menu\]</a></center>
+				<br>Current Network: [network]<br>
+				Selected Network Entity: [SelectedMachine.name] ([SelectedMachine.id])<br>
+				Linked Entities: <ol>"}
+			
 			for(var/obj/machinery/telecomms/T in SelectedMachine.links)
 				if(!T.hide)
 					dat += "<li><a href='?src=[REF(src)];viewmachine=[T.id]'>[REF(T.id)] [T.name]</a> ([T.id])</li>"

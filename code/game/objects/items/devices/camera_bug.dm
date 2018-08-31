@@ -158,9 +158,10 @@
 				names[S.name] = 1
 				dat += "[S.name]"
 			var/stage = round(S.current_size / 2)+1
-			dat += " (Stage [stage])"
-			dat += " <a href='?[REF(src)];track=[REF(S)]'>\[Track\]</a><br>"
 
+			dat += {"(Stage [stage])
+				<a href='?[REF(src)];track=[REF(S)]'>\[Track\]</a><br>"}
+			
 		for(var/obj/mecha/M in seen)
 			if(M.name in names)
 				names[M.name]++

@@ -183,13 +183,17 @@ Possible to do for anyone motivated enough:
 		dat = temp
 	else
 		if(on_network)
-			dat += "<a href='?src=[REF(src)];AIrequest=1'>Request an AI's presence</a><br>"
-			dat += "<a href='?src=[REF(src)];Holocall=1'>Call another holopad</a><br>"
+
+			dat += {"<a href='?src=[REF(src)];AIrequest=1'>Request an AI's presence</a><br>
+				<a href='?src=[REF(src)];Holocall=1'>Call another holopad</a><br>"}
+			
 		if(disk)
 			if(disk.record)
 				//Replay
-				dat += "<a href='?src=[REF(src)];replay_start=1'>Replay disk recording</a><br>"
-				dat += "<a href='?src=[REF(src)];loop_start=1'>Loop disk recording</a><br>"
+
+				dat += {"<a href='?src=[REF(src)];replay_start=1'>Replay disk recording</a><br>
+					<a href='?src=[REF(src)];loop_start=1'>Loop disk recording</a><br>"}
+				
 				//Clear
 				dat += "<a href='?src=[REF(src)];record_clear=1'>Clear disk recording</a><br>"
 			else
@@ -241,23 +245,28 @@ Possible to do for anyone motivated enough:
 	if (href_list["AIrequest"])
 		if(last_request + 200 < world.time)
 			last_request = world.time
-			temp = "You requested an AI's presence.<BR>"
-			temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
+
+			temp = {"You requested an AI's presence.<BR>
+				<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"}
+			
 			var/area/area = get_area(src)
 			for(var/mob/living/silicon/ai/AI in GLOB.silicon_mobs)
 				if(!AI.client)
 					continue
 				to_chat(AI, "<span class='info'>Your presence is requested at <a href='?src=[REF(AI)];jumptoholopad=[REF(src)]'>\the [area]</a>.</span>")
 		else
-			temp = "A request for AI presence was already sent recently.<BR>"
-			temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
 
+			temp = {"A request for AI presence was already sent recently.<BR>
+				<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"}
+			
 	else if(href_list["Holocall"])
 		if(outgoing_call)
 			return
 
-		temp = "You must stand on the holopad to make a call!<br>"
-		temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
+
+		temp = {"You must stand on the holopad to make a call!<br>
+			<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"}
+		
 		if(usr.loc == loc)
 			var/list/callnames = list()
 			for(var/I in holopads)
@@ -271,8 +280,10 @@ Possible to do for anyone motivated enough:
 				return
 
 			if(usr.loc == loc)
-				temp = "Dialing...<br>"
-				temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
+
+				temp = {"Dialing...<br>
+					<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"}
+				
 				new /datum/holocall(usr, src, callnames[result])
 
 	else if(href_list["connectcall"])
@@ -562,9 +573,11 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(!replay_mode)
 		replay_mode = TRUE
 		replay_holo = setup_replay_holo(disk.record)
-		temp = "Replaying...<br>"
-		temp += "<A href='?src=[REF(src)];offset=1'>Change offset</A><br>"
-		temp += "<A href='?src=[REF(src)];replay_stop=1'>End replay</A>"
+
+		temp = {"Replaying...<br>
+			<A href='?src=[REF(src)];offset=1'>Change offset</A><br>
+			<A href='?src=[REF(src)];replay_stop=1'>End replay</A>"}
+		
 		SetLightsAndPower()
 		replay_entry(1)
 	return
@@ -587,9 +600,10 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	record_start = world.time
 	record_user = user
 	disk.record.set_caller_image(user)
-	temp = "Recording...<br>"
-	temp += "<A href='?src=[REF(src)];record_stop=1'>End recording.</A>"
 
+	temp = {"Recording...<br>
+		<A href='?src=[REF(src)];record_stop=1'>End recording.</A>"}
+	
 /obj/machinery/holopad/proc/record_message(mob/living/speaker,message,language)
 	if(!record_mode)
 		return

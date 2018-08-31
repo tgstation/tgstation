@@ -64,8 +64,10 @@
 
 	if(istype(owner.current, /mob/camera/disease))
 		var/mob/camera/disease/D = owner.current
-		result += "<B>[disease_name] completed the round with [D.hosts.len] infected hosts, and reached a maximum of [D.total_points] concurrent infections.</B>"
-		result += "<B>[disease_name] completed the round with the following adaptations:</B>"
+
+		result += {"<B>[disease_name] completed the round with [D.hosts.len] infected hosts, and reached a maximum of [D.total_points] concurrent infections.</B>
+			<B>[disease_name] completed the round with the following adaptations:</B>"}
+		
 		var/list/adaptations = list()
 		for(var/V in D.purchased_abilities)
 			var/datum/disease_ability/A = V

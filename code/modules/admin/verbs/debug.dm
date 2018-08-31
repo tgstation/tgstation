@@ -887,11 +887,15 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 		dellog += "<li><u>[path]</u><ul>"
 		if (I.failures)
 			dellog += "<li>Failures: [I.failures]</li>"
-		dellog += "<li>qdel() Count: [I.qdels]</li>"
-		dellog += "<li>Destroy() Cost: [I.destroy_time]ms</li>"
+
+		dellog += {"<li>qdel() Count: [I.qdels]</li>
+			<li>Destroy() Cost: [I.destroy_time]ms</li>"}
+		
 		if (I.hard_deletes)
-			dellog += "<li>Total Hard Deletes [I.hard_deletes]</li>"
-			dellog += "<li>Time Spent Hard Deleting: [I.hard_delete_time]ms</li>"
+
+			dellog += {"<li>Total Hard Deletes [I.hard_deletes]</li>
+				<li>Time Spent Hard Deleting: [I.hard_delete_time]ms</li>"}
+			
 		if (I.slept_destroy)
 			dellog += "<li>Sleeps: [I.slept_destroy]</li>"
 		if (I.no_respect_force)

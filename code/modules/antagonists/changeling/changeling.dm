@@ -532,9 +532,11 @@
 	parts += printplayer(owner)
 
 	//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
-	parts += "<b>Changeling ID:</b> [changelingID]."
-	parts += "<b>Genomes Extracted:</b> [absorbedcount]"
-	parts += " "
+
+	parts += {"<b>Changeling ID:</b> [changelingID].
+		<b>Genomes Extracted:</b> [absorbedcount]
+		"}
+	
 	if(objectives.len)
 		var/count = 1
 		for(var/datum/objective/objective in objectives)

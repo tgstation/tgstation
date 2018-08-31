@@ -33,8 +33,10 @@
 								entry += " - <font color='black'><b>DEAD</b></font>"
 					if(is_special_character(C.mob))
 						entry += " - <b><font color='red'>Antagonist</font></b>"
-				entry += " [ADMIN_QUE(C.mob)]"
-				entry += " ([round(C.avgping, 1)]ms)"
+
+				entry += {"[ADMIN_QUE(C.mob)]
+					([round(C.avgping, 1)]ms)"}
+				
 				Lines += entry
 		else//If they don't have +ADMIN, only show hidden admins
 			for(var/client/C in GLOB.clients)
@@ -86,4 +88,3 @@
 				msg += "\t[C] is a [C.holder.rank]\n"
 		msg += "<span class='info'>Adminhelps are also sent to IRC. If no admins are available in game adminhelp anyways and an admin on IRC will see it and respond.</span>"
 	to_chat(src, msg)
-

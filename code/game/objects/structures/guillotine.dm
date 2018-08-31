@@ -51,9 +51,10 @@
 		msg += "The blade is hidden inside the stocks."
 
 	if (LAZYLEN(buckled_mobs))
-		msg += "<br/>"
-		msg += "Someone appears to be strapped in. You can help them out, or you can harm them by activating the guillotine."
 
+		msg += {"<br/>
+			Someone appears to be strapped in. You can help them out, or you can harm them by activating the guillotine."}
+		
 	to_chat(user, msg)
 
 	return msg

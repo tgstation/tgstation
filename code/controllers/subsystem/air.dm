@@ -44,22 +44,20 @@ SUBSYSTEM_DEF(air)
 	var/list/queued_for_activation
 
 /datum/controller/subsystem/air/stat_entry(msg)
-	msg += "C:{"
-	msg += "AT:[round(cost_turfs,1)]|"
-	msg += "EG:[round(cost_groups,1)]|"
-	msg += "HP:[round(cost_highpressure,1)]|"
-	msg += "HS:[round(cost_hotspots,1)]|"
-	msg += "SC:[round(cost_superconductivity,1)]|"
-	msg += "PN:[round(cost_pipenets,1)]|"
-	msg += "AM:[round(cost_atmos_machinery,1)]"
-	msg += "} "
-	msg += "AT:[active_turfs.len]|"
-	msg += "EG:[excited_groups.len]|"
-	msg += "HS:[hotspots.len]|"
-	msg += "PN:[networks.len]|"
-	msg += "HP:[high_pressure_delta.len]|"
-	msg += "AS:[active_super_conductivity.len]|"
-	msg += "AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]"
+
+	msg += "C:{AT:[round(cost_turfs,1)]|EG:[round(cost_groups,1)]|\
+		HP:[round(cost_highpressure,1)]|HS:[round(cost_hotspots,1)]|\
+		SC:[round(cost_superconductivity,1)]|\
+		PN:[round(cost_pipenets,1)]|\
+		AM:[round(cost_atmos_machinery,1)]}\
+		 AT:[active_turfs.len]|\
+		 EG:[excited_groups.len]|\
+		 HS:[hotspots.len]|\
+		 PN:[networks.len]|\
+		 HP:[high_pressure_delta.len]|\
+		 AS:[active_super_conductivity.len]|\
+		 AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]"
+
 	..(msg)
 
 

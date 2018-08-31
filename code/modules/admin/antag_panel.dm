@@ -49,8 +49,10 @@ GLOBAL_VAR(antag_prototypes)
 		for(var/datum/objective/objective in objectives)
 			result += "<B>[obj_count]</B>: [objective.explanation_text] <a href='?src=[REF(owner)];obj_edit=[REF(objective)]'>Edit</a> <a href='?src=[REF(owner)];obj_delete=[REF(objective)]'>Delete</a> <a href='?src=[REF(owner)];obj_completed=[REF(objective)]'><font color=[objective.completed ? "green" : "red"]>[objective.completed ? "Mark as incomplete" : "Mark as complete"]</font></a><br>"
 			obj_count++
-	result += "<a href='?src=[REF(owner)];obj_add=1;target_antag=[REF(src)]'>Add objective</a><br>"
-	result += "<a href='?src=[REF(owner)];obj_announce=1'>Announce objectives</a><br>"
+
+	result += {"<a href='?src=[REF(owner)];obj_add=1;target_antag=[REF(src)]'>Add objective</a><br>
+		<a href='?src=[REF(owner)];obj_announce=1'>Announce objectives</a><br>"}
+	
 	return result
 
 /datum/antagonist/proc/antag_panel_memory()
@@ -98,10 +100,11 @@ GLOBAL_VAR(antag_prototypes)
 		return
 
 	var/out = "<B>[name]</B>[(current && (current.real_name!=name))?" (as [current.real_name])":""]<br>"
-	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
-	out += "Assigned role: [assigned_role]. <a href='?src=[REF(src)];role_edit=1'>Edit</a><br>"
-	out += "Faction and special role: <b><font color='red'>[special_role]</font></b><br>"
 
+	out += {"Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>
+		Assigned role: [assigned_role]. <a href='?src=[REF(src)];role_edit=1'>Edit</a><br>
+		Faction and special role: <b><font color='red'>[special_role]</font></b><br>"}
+	
 	var/special_statuses = get_special_statuses()
 	if(length(special_statuses))
 		out += get_special_statuses() + "<br>"
