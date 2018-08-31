@@ -112,7 +112,7 @@
 
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		var/list/parts = C.get_damaged_bodyparts(TRUE, TRUE, status = BODYPART_ROBOTIC)
+		var/list/parts = C.get_damaged_bodyparts(TRUE,TRUE, status = BODYPART_ROBOTIC)
 		if(!parts.len)
 			return FALSE
 	else
@@ -123,7 +123,7 @@
 /datum/nanite_program/repairing/active_effect(mob/living/M)
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		var/list/parts = C.get_damaged_bodyparts(TRUE, TRUE, status = BODYPART_ROBOTIC)
+		var/list/parts = C.get_damaged_bodyparts(TRUE,TRUE, status = BODYPART_ROBOTIC)
 		if(!parts.len)
 			return
 		var/update = FALSE
