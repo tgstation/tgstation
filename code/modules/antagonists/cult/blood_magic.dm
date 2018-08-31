@@ -588,7 +588,7 @@
 		else if(istype(target,/obj/machinery/door/airlock))
 			target.narsie_act()
 			uses--
-			user.visible_message("<span class='warning'>Black ribbons suddenly eminate from [user]'s hand and cling to the airlock - twisting and corrupting it!</span>")
+			user.visible_message("<span class='warning'>Black ribbons suddenly emanate from [user]'s hand and cling to the airlock - twisting and corrupting it!</span>")
 			SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		else
 			to_chat(user, "<span class='warning'>The spell will not work on [target]!</span>")
