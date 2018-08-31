@@ -143,6 +143,7 @@
 	desc = "Miasma. Makes you wish your nose were blocked."
 	icon_state = "miasma"
 	gas_type = /datum/gas/miasma
+	filled = 1
 
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()
 	if(timing)
