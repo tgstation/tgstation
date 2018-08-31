@@ -40,6 +40,8 @@
 	playsound(src, engine_sound, 100, TRUE)
 
 /obj/vehicle/sealed/car/attacked_by(obj/item/I, mob/living/user)
+	if(!I.force)
+		return
 	if(user in occupants)
 		to_chat(user, "<span class='notice'>Your attack bounces off of the car's padded interior.</span>")
 		return
