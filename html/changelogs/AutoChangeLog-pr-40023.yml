@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "The computer screen overlay being rotated incorrectly after construction has been fixed."

@@ -1,5 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Dispensers can now add 5u to buckets, plastic beakers and metamaterial beakers, down from 10u."
-  - bugfix: "You can now pour 5u from buckets, plastic beakers and metamaterial beakers, down from 10u."
