@@ -899,7 +899,7 @@
 	M.say("oof ouch my bones")
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
-	M.adjustStaminaLoss(1.0, 0)
+	M.adjustStaminaLoss(8.0, 0)
 	if(prob(20))
 		switch(pick(1, 2, 3))
 			if(1)
@@ -923,7 +923,7 @@
 		var/extMessage = "<span class='warning'>[M]'s bones hurt too much!!</span>"  //I couldn't figure out how to define a new function so let's not repeat the same strings 4 times.
 		var/playerMessage = "<span class='danger'>Your bones hurt too much!!</span>"
 		var/ouchie = "OOF!!"
-		var/stamDamage = 150
+		var/stamDamage = 200
 		switch(pick(1, 2, 3, 4)) //God help you if the same limb gets picked twice quickly.
 			if(1)
 				if(l_arm)
