@@ -489,7 +489,7 @@
 	//validate the poll
 	if (!vote_valid_check(pollid, client.holder, POLLTYPE_OPTION))
 		return 0
-	var/voted = poll_check_voted()
+	var/voted = poll_check_voted(pollid)
 	if(isnull(voted) || voted) //Failed or already voted.
 		return
 	var/adminrank = sanitizeSQL(poll_rank())
