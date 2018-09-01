@@ -2442,6 +2442,7 @@
 #include "code\modules\research\designs\smelting_designs.dm"
 #include "code\modules\research\designs\stock_parts_designs.dm"
 #include "code\modules\research\designs\telecomms_designs.dm"
+#include "code\modules\research\designs\tool_designs.dm"
 #include "code\modules\research\designs\weapon_designs.dm"
 #include "code\modules\research\machinery\_production.dm"
 #include "code\modules\research\machinery\circuit_imprinter.dm"

@@ -8,9 +8,9 @@
 	display_name = "Basic Research Technology"
 	description = "NT default research technologies."
 	// Default research tech, prevents bricking
-	design_ids = list("basic_matter_bin", "basic_cell", "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani",
+	design_ids = list("basic_matter_bin", "basic_cell", "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani", "desttagger", "handlabel", "packagewrap",
 	"destructive_analyzer", "circuit_imprinter", "experimentor", "rdconsole", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab",
-	"space_heater", "xlarge_beaker", "sec_rshot", "sec_bshot", "sec_slug", "sec_Islug", "sec_dart", "sec_38",
+	"space_heater", "beaker", "large_beaker", "bucket", "xlarge_beaker", "sec_rshot", "sec_bshot", "sec_slug", "sec_Islug", "sec_dart", "sec_38",
 	"rglass","plasteel","plastitanium","plasmaglass","plasmareinforcedglass","titaniumglass","plastitaniumglass")
 
 /datum/techweb_node/mmi
@@ -49,7 +49,7 @@
 	display_name = "Biological Technology"
 	description = "What makes us tick."	//the MC, silly!
 	prereq_ids = list("base")
-	design_ids = list("chem_heater", "chem_master", "chem_dispenser", "sleeper", "vr_sleeper", "pandemic", "defibmount", "operating", "soda_dispenser", "beer_dispenser", "healthanalyzer")
+	design_ids = list("chem_heater", "chem_master", "chem_dispenser", "sleeper", "vr_sleeper", "pandemic", "defibrillator", "defibmount", "operating", "soda_dispenser", "beer_dispenser", "healthanalyzer")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -58,7 +58,7 @@
 	display_name = "Advanced Biotechnology"
 	description = "Advanced Biotechnology"
 	prereq_ids = list("biotech")
-	design_ids = list("piercesyringe", "crewpinpointer", "smoke_machine", "plasmarefiller", "limbgrower", "defibrillator", "meta_beaker", "healthanalyzer_advanced","harvester","holobarrier_med")
+	design_ids = list("piercesyringe", "crewpinpointer", "smoke_machine", "plasmarefiller", "limbgrower", "meta_beaker", "healthanalyzer_advanced", "harvester", "holobarrier_med", "detective_scanner", "defibrillator_compact")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -468,6 +468,16 @@
 	export_price = 5000
 
 ////////////////////////Tools////////////////////////
+
+/datum/techweb_node/basic_tools
+	id = "basic_tools"
+	display_name = "Basic Tools"
+	description = "Basic mechanical, electronic, surgical and botanical tools."
+	prereq_ids = list("base")
+	design_ids = list("screwdriver", "wrench", "wirecutters", "crowbar", "multitool", "welding_tool", "tscanner", "analyzer", "cable_coil", "pipe_painter", "airlock_painter", "scalpel", "circular_saw", "surgicaldrill", "retractor", "cautery", "hemostat", "cultivator", "plant_analyzer", "shovel", "spade", "hatchet")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
+	export_price = 5000
+
 /datum/techweb_node/basic_mining
 	id = "basic_mining"
 	display_name = "Mining Technology"
@@ -511,6 +521,15 @@
 	design_ids = list("exwelder", "jawsoflife", "handdrill")
 	prereq_ids = list("adv_engi")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/sec_basic
+	id = "sec_basic"
+	display_name = "Basic Security Equipment"
+	description = "Standard equipment used by security."
+	design_ids = list("seclite", "pepperspray", "bola_energy", "zipties", "evidencebag")
+	prereq_ids = list("base")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 	export_price = 5000
 
 /////////////////////////weaponry tech/////////////////////////
@@ -945,7 +964,7 @@
 	display_name = "Illegal Technology"
 	description = "Dangerous research used to create dangerous objects."
 	prereq_ids = list("adv_engi", "adv_weaponry", "explosive_weapons")
-	design_ids = list("decloner", "borg_syndicate_module", "suppressor", "largecrossbow", "donksofttoyvendor")
+	design_ids = list("decloner", "borg_syndicate_module", "ai_cam_upgrade", "suppressor", "largecrossbow", "donksofttoyvendor")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	export_price = 5000
 	hidden = TRUE

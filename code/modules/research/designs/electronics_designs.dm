@@ -23,6 +23,15 @@
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
+/datum/design/ai_cam_upgrade
+	name = "AI Surveillance Software Update"
+	desc = "A software package that will allow an artificial intelligence to 'hear' from its cameras via lip reading."
+	id = "ai_cam_upgrade"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_GOLD = 15000, MAT_SILVER = 15000, MAT_DIAMOND = 20000, MAT_PLASMA = 10000)
+	build_path = /obj/item/surveillance_upgrade
+	category = list("Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 ///////////////////////////////////
 //////////Nanite Devices///////////

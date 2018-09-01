@@ -10,6 +10,7 @@
 								"Bluespace Designs",
 								"Stock Parts",
 								"Equipment",
+								"Tool Designs",
 								"Mining Designs",
 								"Electronics",
 								"Weapons",
