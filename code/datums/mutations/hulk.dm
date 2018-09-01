@@ -13,7 +13,7 @@
 		return
 	if(jobban_isbanned(owner, ROLE_HULK))
 		on_losing(owner)
-		to_chat(owner, "<span class='warning'>Your muscles suddenly shrink back to normal. You remember that Nanotrasen has put genetic inhibitors on this sequence due to your misuse of the trait!</span>")
+		to_chat(owner, "<span class='warning'>Your muscles suddenly shrink back to normal! You feel the gods looking down upon you in shame...</span>")
 		return
 	owner.add_trait(TRAIT_STUNIMMUNE, TRAIT_HULK)
 	owner.add_trait(TRAIT_PUSHIMMUNE, TRAIT_HULK)
