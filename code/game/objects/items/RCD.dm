@@ -362,14 +362,11 @@ RLD
 /obj/item/construction/rcd/attack_self(mob/user)
 	..()
 	var/list/choices = list(
-		"Airlock" = image(icon = 'icons/obj/doors/airlocks/station/public.dmi', icon_state = "closed"),
-		"Deconstruct" = image(icon= 'icons/mob/actions/actions_AI.dmi', icon_state = "detonate_rcds"),
-		"Grilles & Windows" = image(icon = 'icons/obj/structures_spawners.dmi', icon_state = "window_spawner"),
-		"Floors & Walls" = image(icon = 'icons/turf/floors.dmi', icon_state = "floor"),
+		"Airlock" = image(icon = 'icons/obj/interface.dmi', icon_state = "airlock"),
+		"Deconstruct" = image(icon= 'icons/obj/interface.dmi', icon_state = "delete"),
+		"Grilles & Windows" = image(icon = 'icons/obj/interface.dmi', icon_state = "grillewindow"),
+		"Floors & Walls" = image(icon = 'icons/obj/interface.dmi', icon_state = "wallfloor"),
 	)
-	choices["Airlock"].transform *= 0.65
-	choices["Grilles & Windows"].transform *= 0.65
-	choices["Floors & Walls"].transform *= 0.65
 	var/choice = show_radial_menu(user,src,choices)
 	switch(choice)
 		if("Floors & Walls")
@@ -380,7 +377,7 @@ RLD
 			mode = 3
 		if("Grilles & Windows")
 			mode = 4
-
+	playsound(src, 'sound/effects/pop.ogg', 50, 0)
 	to_chat(user, "<span class='notice'>You change RCD's mode to '[choice]'.</span>")
 
 /obj/item/construction/rcd/proc/target_check(atom/A, mob/user) // only returns true for stuff the device can actually work with
