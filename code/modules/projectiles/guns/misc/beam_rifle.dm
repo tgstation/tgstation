@@ -529,7 +529,7 @@
 	if(check_pierce(target))
 		permutated += target
 		trajectory_ignore_forcemove = TRUE
-		forceMove(target)
+		forceMove(target.loc)
 		trajectory_ignore_forcemove = FALSE
 		return FALSE
 	if(!QDELETED(target))
