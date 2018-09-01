@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - spellcheck: "Fixed species type names that show up on health scanners."
