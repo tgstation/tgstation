@@ -72967,7 +72967,6 @@
 /area/science/xenobiology)
 "daE" = (
 /obj/structure/chair/office/light{
-	icon_state = "officechair_white";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -76508,7 +76507,6 @@
 /area/science/lab)
 "dil" = (
 /obj/structure/chair/office/light{
-	icon_state = "officechair_white";
 	dir = 4
 	},
 /turf/open/floor/plasteel/whitepurple/corner,
@@ -81882,7 +81880,6 @@
 /area/science/nanite)
 "duD" = (
 /obj/structure/chair/office/light{
-	icon_state = "officechair_white";
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
@@ -84840,7 +84837,6 @@
 /area/science/robotics/lab)
 "dAO" = (
 /obj/structure/chair/office/light{
-	icon_state = "officechair_white";
 	dir = 4
 	},
 /obj/effect/landmark/start/roboticist,

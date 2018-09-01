@@ -100,7 +100,6 @@
 /area/shuttle/escape)
 "at" = (
 /obj/structure/chair/office/light{
-	icon_state = "officechair_white";
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
