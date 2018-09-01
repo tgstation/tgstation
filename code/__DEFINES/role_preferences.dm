@@ -33,7 +33,7 @@
 #define ROLE_DRONE                  "drone"
 #define ROLE_DEATHSQUAD             "deathsquad"
 #define ROLE_LAVALAND               "lavaland"
-#define ROLE_INTERNAL_AFFAIRS	"internal Affairs Agent"
+#define ROLE_INTERNAL_AFFAIRS	"internal affairs agent"
 
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough
