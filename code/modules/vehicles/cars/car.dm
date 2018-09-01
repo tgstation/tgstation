@@ -16,10 +16,10 @@
 /obj/vehicle/sealed/car/MouseDrop_T(atom/dropping, mob/M)
 	if(!M.canmove || M.stat || M.restrained())
 		return FALSE
-	if(ismob(dropping) && M != dropping)
-		var/mob/D = dropping
-		M.visible_message("<span class='warning'>[M] starts forcing [D] into [src]!</span>")
-		mob_try_forced_enter(M, D)
+	if(isliving(dropping) && M != dropping)
+		var/mob/living/L = dropping
+		L.visible_message("<span class='warning'>[M] starts forcing [L] into [src]!</span>")
+		mob_try_forced_enter(M, L)
 	return ..()
 
 /obj/vehicle/sealed/car/mob_try_exit(mob/M, mob/user, silent = FALSE)

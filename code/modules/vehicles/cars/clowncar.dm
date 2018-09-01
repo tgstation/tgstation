@@ -50,6 +50,9 @@
 		if(ismegafauna(M))
 			return
 		var/mob/living/L = M
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			C.Knockdown(40) //I play to make sprites go horizontal
 		L.visible_message("<span class='warning'>[src] rams into [L] and sucks him up!</span>") //fuck off shezza this isn't ERP.
 		mob_forced_enter(L)
 		playsound(src, pick('sound/vehicles/clowncar_ram1.ogg', 'sound/vehicles/clowncar_ram2.ogg', 'sound/vehicles/clowncar_ram3.ogg'), 75)
@@ -66,7 +69,7 @@
 	to_chat(user, "<span class='danger'>You scramble the clowncar child safety lock and a panel with 6 colorful buttons appears!</span>")
 	initialize_controller_action_type(/datum/action/vehicle/sealed/RollTheDice, VEHICLE_CONTROL_DRIVE)
 
-/obj/vehicle/sealed/car/clowncar/deconstruct(disassembled = FALSE)
+/obj/vehicle/sealed/car/clowncar/Destroy()
   playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
   . = ..()
 
