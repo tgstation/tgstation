@@ -242,7 +242,7 @@
 
 /datum/status_effect/cult_master/proc/deathrattle()
 	if(!QDELETED(GLOB.cult_narsie))
-		return //if nar-sie is alive, don't even worry about it
+		return //if Nar'Sie is alive, don't even worry about it
 	var/area/A = get_area(owner)
 	for(var/datum/mind/B in SSticker.mode.cult)
 		if(isliving(B.current))

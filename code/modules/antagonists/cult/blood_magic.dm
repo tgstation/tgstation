@@ -183,7 +183,7 @@
 
 /datum/action/innate/cult/blood_spell/equipment
 	name = "Summon Equipment"
-	desc = "A crucial spell that enables you to summon either a ritual dagger or combat gear including armored robes, the Nar-Sien bola, and an eldritch longsword."
+	desc = "A crucial spell that enables you to summon either a ritual dagger or combat gear including armored robes, the Nar'Sien bola, and an eldritch longsword."
 	button_icon_state = "equip"
 	magic_path = "/obj/item/melee/blood_magic/armor"
 

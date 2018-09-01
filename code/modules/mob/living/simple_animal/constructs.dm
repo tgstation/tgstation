@@ -228,7 +228,7 @@
 /mob/living/simple_animal/hostile/construct/builder
 	name = "Artificer"
 	real_name = "Artificer"
-	desc = "A bulbous construct dedicated to building and maintaining the Cult of Nar-Sie's armies."
+	desc = "A bulbous construct dedicated to building and maintaining the Cult of Nar'Sie's armies."
 	icon_state = "artificer"
 	icon_living = "artificer"
 	maxHealth = 50
@@ -312,7 +312,7 @@
 /mob/living/simple_animal/hostile/construct/harvester
 	name = "Harvester"
 	real_name = "Harvester"
-	desc = "A long, thin construct built to herald Nar-Sie's rise. It'll be all over soon."
+	desc = "A long, thin construct built to herald Nar'Sie's rise. It'll be all over soon."
 	icon_state = "chosen"
 	icon_living = "chosen"
 	maxHealth = 40
@@ -415,7 +415,7 @@
 
 /datum/action/innate/seek_prey
 	name = "Seek the Harvest"
-	desc = "None can hide from Nar-Sie, activate to track a survivor attempting to flee the red harvest!"
+	desc = "None can hide from Nar'Sie, activate to track a survivor attempting to flee the red harvest!"
 	icon_icon = 'icons/mob/actions/actions_cult.dmi'
 	background_icon_state = "bg_demon"
 	buttontooltipstyle = "cult"
@@ -430,10 +430,10 @@
 	if(GLOB.cult_narsie == null)
 		return
 	if(the_construct.seeking)
-		desc = "None can hide from Nar-Sie, activate to track a survivor attempting to flee the red harvest!"
+		desc = "None can hide from Nar'Sie, activate to track a survivor attempting to flee the red harvest!"
 		button_icon_state = "cult_mark"
 		the_construct.seeking = FALSE
-		to_chat(the_construct, "<span class='cult italic'>You are now tracking Nar-Sie, return to reap the harvest!</span>")
+		to_chat(the_construct, "<span class='cult italic'>You are now tracking Nar'Sie, return to reap the harvest!</span>")
 		return
 	else
 		if(LAZYLEN(GLOB.cult_narsie.souls_needed))
@@ -441,9 +441,9 @@
 			var/mob/living/real_target = the_construct.master //We can typecast this way because Narsie only allows /mob/living into the souls list
 			to_chat(the_construct, "<span class='cult italic'>You are now tracking your prey, [real_target.real_name] - harvest [real_target.p_them()]!</span>")
 		else
-			to_chat(the_construct, "<span class='cult italic'>Nar-Sie has completed her harvest!</span>")
+			to_chat(the_construct, "<span class='cult italic'>Nar'Sie has completed her harvest!</span>")
 			return
-		desc = "Activate to track Nar-Sie!"
+		desc = "Activate to track Nar'Sie!"
 		button_icon_state = "sintouch"
 		the_construct.seeking = TRUE
 

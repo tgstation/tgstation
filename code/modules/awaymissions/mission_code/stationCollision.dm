@@ -11,7 +11,7 @@
  *		Guns
  *		Safe code hints
  *		Captain's safe
- *		Modified Nar-Sie
+ *		Modified Nar'Sie
  */
 
 
@@ -134,7 +134,7 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 	new /obj/item/stack/ore/diamond(src)
 
 /*
- * Modified Nar-Sie
+ * Modified Nar'Sie
  */
 /obj/singularity/narsie/mini
 	desc = "Your body becomes weak and your feel your mind slipping away as you try to comprehend what you know can't be possible."

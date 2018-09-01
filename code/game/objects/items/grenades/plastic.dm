@@ -142,7 +142,7 @@
 		else if(UM.has_antag_datum(/datum/antagonist/changeling))
 			message_say = "FOR THE HIVE!"
 		else if(UM.has_antag_datum(/datum/antagonist/cult))
-			message_say = "FOR NAR-SIE!"
+			message_say = "FOR NAR'SIE!"
 		else if(UM.has_antag_datum(/datum/antagonist/clockcult))
 			message_say = "FOR RATVAR!"
 		else if(UM.has_antag_datum(/datum/antagonist/rev))

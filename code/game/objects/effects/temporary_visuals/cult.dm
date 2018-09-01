@@ -28,7 +28,7 @@
 	icon_state = "cultout"
 
 /obj/effect/temp_visual/cult/sac
-	name = "maw of Nar-Sie"
+	name = "maw of Nar'Sie"
 	icon_state = "sacconsume"
 
 /obj/effect/temp_visual/cult/door
