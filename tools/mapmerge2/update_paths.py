@@ -57,7 +57,7 @@ def parse_rep_string(replacement_string, verbose = False):
     return path.strip(), prop_dict
 
 
-def update_path(mapdata, replacement_string, verbose=False):
+def update_path(dmm_data, replacement_string, verbose=False):
     old_path_part, new_path_part = replacement_string.split(':', maxsplit=1)
     old_path, old_path_props = parse_rep_string(old_path_part, verbose)
     new_paths = dict()
@@ -113,26 +113,21 @@ def update_path(mapdata, replacement_string, verbose=False):
         else:
             return [element]
 
-    for definition_key in mapdata:
-        def_value = mapdata[definition_key]
-        start = list(def_value)
-        changed = [y for x in start for y in get_result(x)]
-        new_value = tuple(changed)
+    bad_keys = {}
+    keys = list(dmm_data.dictionary.keys())
+    for definition_key in keys:
+        def_value = dmm_data.dictionary[definition_key]
+        new_value = tuple(y for x in def_value for y in get_result(x))
         if new_value != def_value:
-            # TODO: handle the case that the new VALUE already exists in the
-            # inverse dictionary, and update the grid to match
-            mapdata[definition_key] = new_value
-
-    return mapdata
+            dmm_data.overwrite_key(definition_key, new_value, bad_keys)
+    dmm_data.reassign_bad_keys(bad_keys)
 
 
 def update_map(map_filepath, updates, verbose=False):
     print("Updating: {0}".format(map_filepath))
     dmm_data = DMM.from_file(map_filepath)
-    map_data = dmm_data.dictionary
     for update_string in updates:
-        map_data = update_path(map_data, update_string, verbose)
-    dmm_data.dictionary = map_data
+        update_path(dmm_data, update_string, verbose)
     dmm_data.to_file(map_filepath, True)
 
 
