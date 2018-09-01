@@ -1,4 +1,36 @@
 /proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE)
+	if (prob(50))
+		playsound_new(source, soundin, vol, vary, extrarange, falloff, frequency, channel, pressure_affected, ignore_walls)
+	else
+		playsound_old(source, soundin, vol, vary, extrarange, falloff, frequency, channel, pressure_affected, ignore_walls)
+
+/proc/playsound_new(atom/source, soundin, vol as num, vary, extrarange as num, falloff, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE)
+	if(isarea(source))
+		throw EXCEPTION("playsound(): source is an area")
+		return
+
+	var/turf/turf_source = get_turf(source)
+
+
+	//allocate a channel if necessary now so its the same for everyone
+	channel = channel || open_sound_channel()
+
+ 	// Looping through the player list has the added bonus of working for mobs inside containers
+	var/sound/S = sound(get_sfx(soundin))
+	var/maxdistance = (world.view + extrarange)
+	var/list/listeners = SSmobs.clients_by_zlevel[turf_source.z]
+	if(!ignore_walls) //these sounds don't carry through walls
+		listeners = listeners & hearers(maxdistance,turf_source)
+	for(var/P in listeners)
+		var/mob/M = P
+		if(!M || !M.client)
+			continue
+		var/distance = get_dist(M, turf_source)
+
+		if(distance <= maxdistance)
+			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S)
+
+/proc/playsound_old(atom/source, soundin, vol as num, vary, extrarange as num, falloff, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE)
 	if(isarea(source))
 		throw EXCEPTION("playsound(): source is an area")
 		return
