@@ -8,7 +8,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 200)
 	build_path = /obj/item/reagent_containers/glass/bucket
-	category = list("initial","Tools","Equipment")
+	category = list("initial","Tools","Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/crowbar

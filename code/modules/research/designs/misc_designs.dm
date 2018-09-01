@@ -260,6 +260,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/spraybottle
+	name = "Spray bottle"
+	desc = "A spray bottle, with an unscrewable top."
+	id = "spraybottle"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 200)
+	build_path = /obj/item/reagent_containers/spray
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /////////////////////////////////////////
 /////////////Holobarriers////////////////
 /////////////////////////////////////////

@@ -172,6 +172,16 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/medspray
+	name = "Medical Spray"
+	desc = "A medical spray bottle, designed for precision application, with an unscrewable cap."
+	id = "medspray"
+	build_path = /obj/item/reagent_containers/medspray
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2500, MAT_GLASS = 500)
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
 /////////////////////////////////////////
