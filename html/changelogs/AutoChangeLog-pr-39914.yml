@@ -1,0 +1,4 @@
+author: "McDonald072"
+delete-after: True
+changes: 
+  - bugfix: "Defibrillator nanites work properly."
