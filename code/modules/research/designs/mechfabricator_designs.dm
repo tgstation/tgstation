@@ -791,8 +791,9 @@
 	name = "Flash"
 	desc = "When a problem arises, SCIENCE is the solution."
 	id = "sflash"
-	build_type = MECHFAB
+	build_type = MECHFAB | PROTOLATHE
 	materials = list(MAT_METAL = 750, MAT_GLASS = 750)
 	construction_time = 100
 	build_path = /obj/item/assembly/flash/handheld
-	category = list("Misc")
+	category = list("Misc", "Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
