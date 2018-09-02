@@ -174,3 +174,7 @@
 /datum/dog_fashion/back/deathsquad
 	name = "Trooper REAL_NAME"
 	desc = "That's not red paint. That's real corgi blood."
+
+/datum/dog_fashion/head/horns
+    name = "Troll-REAL_NAME"
+    desc = "The Overseer's favorite pet corgi!"
