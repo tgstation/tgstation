@@ -86,6 +86,15 @@
 	else
 		..()
 
+/obj/item/tank/jetpack/improvised
+	name = "improvised jetpack"
+	desc = "A jetpack made from two air tanks, a fire extinguisher and some atmospherics equipment. It doesn't look like it can hold much."
+	icon_state = "jetpack-sec"
+	item_state = "jetpack-sec"
+	volume = 20 //normal jetpacks have 70 volume
+	gas_type = null //it starts empty
+	full_speed = FALSE //moves at hardsuit jetpack speeds
+
 /obj/item/tank/jetpack/void
 	name = "void jetpack (oxygen)"
 	desc = "It works well in a void."
@@ -121,6 +130,8 @@
 	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas by security forces."
 	icon_state = "jetpack-sec"
 	item_state = "jetpack-sec"
+
+
 
 /obj/item/tank/jetpack/carbondioxide
 	name = "jetpack (carbon dioxide)"
