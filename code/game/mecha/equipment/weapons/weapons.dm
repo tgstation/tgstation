@@ -71,11 +71,11 @@
 	addtimer(CALLBACK(src, .proc/set_ready_state, 1), equip_cooldown)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
-	equip_cooldown = 8
+	equip_cooldown = 6
 	name = "\improper CH-PS \"Immolator\" laser"
 	desc = "A weapon for combat exosuits. Shoots basic lasers."
 	icon_state = "mecha_laser"
-	energy_drain = 30
+	energy_drain = 40
 	projectile = /obj/item/projectile/beam/laser
 	fire_sound = 'sound/weapons/laser.ogg'
 	harmful = TRUE
@@ -88,6 +88,16 @@
 	energy_drain = 60
 	projectile = /obj/item/projectile/beam/laser/heavylaser
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
+
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/xray
+	equip_cooldown = 10
+	name = "\improper xray laser"
+	desc = "A weapon for combat exosuits. Shoots basic lasers."
+	icon_state = "mecha_laser"
+	energy_drain = 60
+	projectile = /obj/item/projectile/beam/xray
+	fire_sound = 'sound/weapons/laser.ogg'
+	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
 	equip_cooldown = 20
@@ -252,6 +262,16 @@
 	projectile_energy_cost = 15
 	harmful = TRUE
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/sniper
+	name = "\improper .50 anitmaterial rifle"
+	desc = "A weapon for combat exosuits. Shoots incendiary bullets."
+	icon_state = "mecha_carbine"
+	equip_cooldown = 30
+	projectile = /obj/item/projectile/bullet/p50/penetrator
+	projectiles = 6
+	projectile_energy_cost = 500
+	harmful = TRUE
+
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced
 	name = "\improper S.H.H. \"Quietus\" Carbine"
 	desc = "A weapon for combat exosuits. A mime invention, field tests have shown that targets cannot even scream before going down."
@@ -389,19 +409,37 @@
 	name = "\improper incendiary grenade launcher"
 	desc = "A weapon for combat exosuits. Launches primed incendiary grenades."
 	icon_state = "mecha_grenadelnchr"
-	projectile = /obj/item/grenade/chem_grenade/mechi
+	projectile = /obj/item/grenade/chem_grenade/pyro/mechi
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
-	projectiles = 4
+	projectiles = 5
 	missile_speed = 1.5
 	projectile_energy_cost = 1000
-	equip_cooldown = 30
+	equip_cooldown = 10
 	var/det_time = 20
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/incendiary/proj_init(var/obj/item/grenade/chem_grenade/mechi/F)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/incendiary/proj_init(var/obj/item/grenade/chem_grenade/pyro/mechi/F)
 	var/turf/T = get_turf(src)
 	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] fired a [src] in [ADMIN_VERBOSEJMP(T)]")
 	log_game("[key_name(chassis.occupant)] fired a [src] in [AREACOORD(T)]")
-	addtimer(CALLBACK(F, /obj/item/grenade/chem_grenade/mechi.proc/prime), det_time)
+	addtimer(CALLBACK(F, /obj/item/grenade/chem_grenade/pyro/mechi.proc/prime), det_time)
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/acid
+	name = "\improper acid grenade launcher"
+	desc = "A weapon for combat exosuits. Launches primed grenades."
+	icon_state = "mecha_grenadelnchr"
+	projectile = /obj/item/grenade/chem_grenade/mecha
+	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	projectiles = 4
+	missile_speed = 1.5
+	projectile_energy_cost = 600
+	equip_cooldown = 20
+	var/det_time = 20
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/acid/proj_init(var/obj/item/grenade/chem_grenade/mecha/F)
+	var/turf/T = get_turf(src)
+	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] fired a [src] in [ADMIN_VERBOSEJMP(T)]")
+	log_game("[key_name(chassis.occupant)] fired a [src] in [AREACOORD(T)]")
+	addtimer(CALLBACK(F, /obj/item/grenade/chem_grenade/mecha.proc/prime), det_time)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/explosive
 	name = "\improper grenade launcher"
@@ -410,12 +448,12 @@
 	projectile = /obj/item/grenade/syndieminibomb/concussion/frag
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	projectiles = 3
-	missile_speed = 1.5
-	projectile_energy_cost = 1400
+	missile_speed = 1
+	projectile_energy_cost = 2000
 	equip_cooldown = 30
-	var/det_time = 20
+	var/det_time = 30
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/incendiary/proj_init(var/obj/item/grenade/syndieminibomb/concussion/frag/F)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/explosive/proj_init(var/obj/item/grenade/syndieminibomb/concussion/frag/F)
 	var/turf/T = get_turf(src)
 	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] fired a [src] in [ADMIN_VERBOSEJMP(T)]")
 	log_game("[key_name(chassis.occupant)] fired a [src] in [AREACOORD(T)]")
