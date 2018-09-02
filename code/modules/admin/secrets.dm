@@ -701,7 +701,6 @@
 		sound_to_playing_players('sound/magic/lightningbolt.ogg')
 
 /proc/doPortalSpawn(turf/loc, mobtype, numtospawn, portal_appearance)
-	message_admins("Spawning [numtospawn] of [mobtype] in [loc][ADMIN_JMP(loc)]")
 	for (var/i in 1 to numtospawn)
 		new mobtype(loc)
 	var/turf/T = get_step(loc, SOUTHWEST)
