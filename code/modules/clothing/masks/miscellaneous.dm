@@ -293,3 +293,10 @@
 			M = replacetextEx(M,regex(capitalize(key),"g"), "[capitalize(value)]")
 			M = replacetextEx(M,regex(key,"g"), "[value]")
 	return trim(M)
+
+/obj/item/clothing/mask/horns
+    name = "fake horns"
+    desc = "Your go-to accessory for shitty tumblr cosplay."
+    icon_state = "horns"
+    item_state = "horns"
+    dog_fashion = /datum/dog_fashion/head/horns
