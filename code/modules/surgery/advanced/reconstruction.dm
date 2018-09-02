@@ -2,12 +2,9 @@
 	name = "Reconstruction"
 	desc = "A surgical procedure that gradually repairs damage done to a body without the assistance of chemicals. Unlike classic medicine, it is effective on corpses."
 	steps = list(/datum/surgery_step/incise,
-				/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,
 				/datum/surgery_step/incise,
 				/datum/surgery_step/clamp_bleeders,
-				/datum/surgery_step/incise,
-				/datum/surgery_step/retract_skin,
 				/datum/surgery_step/reconstruct,
 				/datum/surgery_step/close)
 
