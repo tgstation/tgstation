@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(events)
 		control += E				//add it to the list of all events (controls)
 	reschedule()
 	getHoliday()
-	..()
+	return ..()
 
 
 /datum/controller/subsystem/events/fire(resumed = 0)

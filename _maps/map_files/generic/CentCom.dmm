@@ -2678,7 +2678,7 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/prison)
 "im" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/indestructible/riveted,
 /area/centcom/control)
 "in" = (
@@ -2689,7 +2689,7 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/control)
 "ip" = (
-/obj/machinery/ai_status_display,
+/obj/machinery/status_display/ai,
 /turf/closed/indestructible/riveted,
 /area/centcom/control)
 "iq" = (
@@ -2860,10 +2860,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "iN" = (
-/obj/machinery/status_display{
-	name = "cargo display";
-	supply_display = 1
-	},
+/obj/machinery/status_display/supply,
 /turf/closed/indestructible/riveted,
 /area/centcom/supply)
 "iO" = (
@@ -3216,7 +3213,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "jE" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/indestructible/riveted,
 /area/centcom/supply)
 "jF" = (
@@ -4343,7 +4340,7 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/ferry)
 "mF" = (
-/obj/machinery/ai_status_display,
+/obj/machinery/status_display/ai,
 /turf/closed/indestructible/riveted,
 /area/centcom/supply)
 "mG" = (
@@ -4859,11 +4856,11 @@
 /turf/open/floor/plasteel/white,
 /area/centcom/ferry)
 "nT" = (
-/obj/machinery/ai_status_display,
+/obj/machinery/status_display/ai,
 /turf/closed/indestructible/riveted,
 /area/centcom/ferry)
 "nU" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/indestructible/riveted,
 /area/centcom/ferry)
 "nV" = (
@@ -4962,7 +4959,7 @@
 	},
 /area/centcom/ferry)
 "oh" = (
-/obj/machinery/ai_status_display{
+/obj/machinery/status_display/ai{
 	pixel_y = 32
 	},
 /obj/item/twohanded/required/kirbyplants{
@@ -4979,7 +4976,7 @@
 /turf/open/floor/plasteel/vault,
 /area/centcom/ferry)
 "oj" = (
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/vault{
@@ -5461,7 +5458,7 @@
 	dir = 1
 	},
 /obj/machinery/light,
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/vault{
@@ -5480,7 +5477,7 @@
 /area/centcom/control)
 "pr" = (
 /obj/structure/bookcase/random,
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/vault{
@@ -6472,7 +6469,7 @@
 	},
 /area/centcom/control)
 "rS" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/indestructible/riveted,
 /area/centcom/evac)
 "rT" = (
@@ -7216,7 +7213,7 @@
 	},
 /area/centcom/control)
 "tR" = (
-/obj/machinery/ai_status_display,
+/obj/machinery/status_display/ai,
 /turf/closed/indestructible/riveted,
 /area/centcom/evac)
 "tS" = (
@@ -10812,7 +10809,7 @@
 	},
 /area/tdome/tdomeobserve)
 "EK" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/indestructible/riveted,
 /area/tdome/tdomeobserve)
 "EL" = (
@@ -11822,7 +11819,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/ai_status_display{
+/obj/machinery/status_display/ai{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/vault{
@@ -12828,11 +12825,11 @@
 /turf/open/floor/grass,
 /area/tdome/tdomeadmin)
 "KC" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/indestructible/riveted,
 /area/tdome/tdomeadmin)
 "KD" = (
-/obj/machinery/ai_status_display,
+/obj/machinery/status_display/ai,
 /turf/closed/indestructible/riveted,
 /area/tdome/tdomeadmin)
 "KG" = (

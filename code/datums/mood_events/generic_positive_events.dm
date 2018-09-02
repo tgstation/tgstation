@@ -65,3 +65,8 @@
 /datum/mood_event/family_heirloom
 	description = "<span class='nicegreen'>My family heirloom is safe with me.</span>\n"
 	mood_change = 1
+
+/datum/mood_event/goodmusic
+	description = "<span class='nicegreen'>There is something soothing about this music.</span>\n"
+	mood_change = 3
+	timeout = 600

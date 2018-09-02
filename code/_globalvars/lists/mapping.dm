@@ -34,5 +34,7 @@ GLOBAL_LIST_EMPTY(vr_spawnpoints)
 
 	//used by jump-to-area etc. Updated by area/updateName()
 GLOBAL_LIST_EMPTY(sortedAreas)
+/// An association from typepath to area instance. Only includes areas with `unique` set.
+GLOBAL_LIST_EMPTY(areas_by_type)
 
 GLOBAL_LIST_EMPTY(all_abstract_markers)

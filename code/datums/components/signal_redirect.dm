@@ -28,6 +28,6 @@
 /datum/component/redirect/UnregisterFromParent()
 	UnregisterSignal(parent, signals)
 
-/datum/component/redirect/proc/turf_change(path, new_baseturfs, flags, list/transfers)
+/datum/component/redirect/proc/turf_change(datum/source, path, new_baseturfs, flags, list/transfers)
 	transfers += src
 	return turfchangeCB?.InvokeAsync(arglist(args))

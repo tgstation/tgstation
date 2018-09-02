@@ -30,7 +30,7 @@
 /obj/vehicle/sealed/car/clowncar/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(prob(33))
-		visible_message("<span class='danger'>[src] spews out a ton of space lube!/span>/span>")
+		visible_message("<span class='danger'>[src] spews out a ton of space lube!</span>")
 		new /obj/effect/particle_effect/foam(loc) //YEET
 
 /obj/vehicle/sealed/car/clowncar/Bump(atom/movable/M)

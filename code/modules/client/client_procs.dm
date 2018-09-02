@@ -682,7 +682,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			qdel(query_get_notes)
 			return
 	qdel(query_get_notes)
-	create_message("note", key, system_ckey, message, null, null, 0, 0, null, 0)
+	create_message("note", key, system_ckey, message, null, null, 0, 0, null, 0, 0)
 
 
 /client/proc/check_ip_intel()

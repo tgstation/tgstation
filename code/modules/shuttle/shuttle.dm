@@ -311,6 +311,8 @@
 			comp.connect_to_shuttle(src, dock, idnum)
 		for(var/obj/machinery/computer/camera_advanced/shuttle_docker/comp in place)
 			comp.connect_to_shuttle(src, dock, idnum)
+		for(var/obj/machinery/status_display/shuttle/sd in place)
+			sd.connect_to_shuttle(src, dock, idnum)
 
 
 //this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact
@@ -436,12 +438,7 @@
 
 	var/list/old_turfs = return_ordered_turfs(x, y, z, dir)
 
-	var/area/underlying_area
-	for(var/i in GLOB.sortedAreas)
-		var/area/place = i
-		if(place.type == underlying_area_type)
-			underlying_area = place
-			break
+	var/area/underlying_area = GLOB.areas_by_type[underlying_area_type]
 	if(!underlying_area)
 		underlying_area = new underlying_area_type(null)
 
@@ -657,7 +654,9 @@
 		return "--:--"
 
 	var/timeleft = timeLeft()
-	if(timeleft > 0)
+	if(timeleft > 1 HOURS)
+		return "--:--"
+	else if(timeleft > 0)
 		return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
 	else
 		return "00:00"

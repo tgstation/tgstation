@@ -117,11 +117,11 @@
 			locked = pick(0,1)
 			update_icon()
 
-/obj/machinery/shieldgen/attack_hand(mob/user)
+/obj/machinery/shieldgen/interact(mob/user)
 	. = ..()
 	if(.)
 		return
-	if(locked)
+	if(locked && !issilicon(user))
 		to_chat(user, "<span class='warning'>The machine is locked, you are unable to use it!</span>")
 		return
 	if(panel_open)
@@ -358,7 +358,7 @@
 		add_fingerprint(user)
 		return ..()
 
-/obj/machinery/shieldwallgen/attack_hand(mob/user)
+/obj/machinery/shieldwallgen/interact(mob/user)
 	. = ..()
 	if(.)
 		return

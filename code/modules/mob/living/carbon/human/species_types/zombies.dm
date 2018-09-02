@@ -2,7 +2,7 @@
 
 /datum/species/zombie
 	// 1spooky
-	name = "High Functioning Zombie"
+	name = "High-Functioning Zombie"
 	id = "zombie"
 	say_mod = "moans"
 	sexes = 0

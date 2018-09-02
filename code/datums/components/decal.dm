@@ -59,16 +59,16 @@
 	if(isitem(master))
 		addtimer(CALLBACK(master, /obj/item/.proc/update_slot_icon), 0, TIMER_UNIQUE)
 
-/datum/component/decal/proc/rotate_react(old_dir, new_dir)
+/datum/component/decal/proc/rotate_react(datum/source, old_dir, new_dir)
 	if(old_dir == new_dir)
 		return
 	remove()
 	pic.dir = turn(pic.dir, dir2angle(old_dir) - dir2angle(new_dir))
 	apply()
 
-/datum/component/decal/proc/clean_react(strength)
+/datum/component/decal/proc/clean_react(datum/source, strength)
 	if(strength >= cleanable)
 		qdel(src)
 
-/datum/component/decal/proc/examine(mob/user)
+/datum/component/decal/proc/examine(datum/source, mob/user)
 	to_chat(user, description)
