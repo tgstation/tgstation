@@ -469,14 +469,14 @@
 		battery = I
 		diag_hud_set_circuitstat() //update diagnostic hud
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-		to_chat(user, "<span class='notice'>You slot \the [I] inside \the [src]'s power supplier.</span>")
+		to_chat(user, "<span class='notice'>You slot the [I] inside \the [src]'s power supplier.</span>")
 		return TRUE
 	else if(istype(I, /obj/item/integrated_electronics/detailer))
 		var/obj/item/integrated_electronics/detailer/D = I
 		detail_color = D.detail_color
 		update_icon()
 	else
-		if(user.a_intent != "help")
+		if(user.a_intent != INTENT_HELP)
 			return ..()
 		var/list/input_selection = list()
 		//Check all the components asking for an input
@@ -544,7 +544,7 @@
 			if(!check_interactivity(user))
 				return
 			if(selection)
-				choice = input_selection.[selection]
+				choice = input_selection[selection]
 
 	if(choice)
 		choice.ask_for_input(user)
