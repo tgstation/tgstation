@@ -156,7 +156,7 @@
 	else
 		..()
 
-/mob/living/carbon/human/grippedby(mob/living/user)
+/mob/living/carbon/human/grippedby(mob/living/user, instant = FALSE)
 	if(w_uniform)
 		w_uniform.add_fingerprint(user)
 	..()
