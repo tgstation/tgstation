@@ -30,6 +30,10 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	return
 
 /mob/dead/forceMove(atom/destination)
+	var/old_z = get_turf(src)?:z
+	var/dest_z = get_turf(destination)?:z
+	if (old_z != dest_z)
+		onTransitZ(old_z, dest_z)
 	loc = destination
 
 /mob/dead/Stat()
