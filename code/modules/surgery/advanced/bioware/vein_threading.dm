@@ -31,8 +31,8 @@
 
 /datum/bioware/threaded_veins/on_gain()
 	..()
-	owner.physiology.apply_mod(/datum/physio_mod/threaded_veins)
+	owner.physiology.apply_mod(/datum/stat_mod/threaded_veins)
 
 /datum/bioware/threaded_veins/on_lose()
 	..()
-	owner.physiology.remove_mod(/datum/physio_mod/threaded_veins)
+	owner.physiology.remove_mod(/datum/stat_mod/threaded_veins)

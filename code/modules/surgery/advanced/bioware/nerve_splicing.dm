@@ -31,8 +31,8 @@
 
 /datum/bioware/spliced_nerves/on_gain()
 	..()
-	owner.physiology.apply_mod(/datum/physio_mod/spliced_nerves)
+	owner.physiology.apply_mod(/datum/stat_mod/spliced_nerves)
 
 /datum/bioware/spliced_nerves/on_lose()
 	..()
-	owner.physiology.remove_mod(/datum/physio_mod/spliced_nerves)
+	owner.physiology.remove_mod(/datum/stat_mod/spliced_nerves)

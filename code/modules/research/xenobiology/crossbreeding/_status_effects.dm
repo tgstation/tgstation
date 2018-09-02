@@ -44,7 +44,7 @@
 	owner.color = "#3070CC"
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.physiology.apply_mod(/datum/physio_mod/slimeskin)
+		H.physiology.apply_mod(/datum/stat_mod/slimeskin)
 	owner.visible_message("<span class='warning'>[owner] is suddenly covered in a strange, blue-ish gel!</span>",
 		"<span class='notice'>You are covered in a thick, rubbery gel.</span>")
 	return ..()
@@ -53,7 +53,7 @@
 	owner.color = originalcolor
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.physiology.remove_mod(/datum/physio_mod/slimeskin)
+		H.physiology.remove_mod(/datum/stat_mod/slimeskin)
 	owner.visible_message("<span class='warning'>[owner]'s gel coating liquefies and dissolves away.</span>",
 		"<span class='notice'>Your gel second-skin dissolves!</span>")
 
@@ -101,13 +101,13 @@
 /datum/status_effect/metalcookie/on_apply()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
-		C.physiology.remove_mod(/datum/physio_mod/metal_cookie)
+		C.physiology.remove_mod(/datum/stat_mod/metal_cookie)
 	return ..()
 
 /datum/status_effect/metalcookie/on_remove()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
-		C.physiology.remove_mod(/datum/physio_mod/metal_cookie)
+		C.physiology.remove_mod(/datum/stat_mod/metal_cookie)
 
 /datum/status_effect/sparkcookie
 	id = "sparkcookie"
@@ -144,13 +144,13 @@
 /datum/status_effect/timecookie/on_apply()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
-		C.physiology.apply_mod(/datum/physio_mod/time_cookie)
+		C.physiology.apply_mod(/datum/stat_mod/time_cookie)
 	return ..()
 
 /datum/status_effect/timecookie/on_remove()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
-		C.physiology.remove_mod(/datum/physio_mod/time_cookie)
+		C.physiology.remove_mod(/datum/stat_mod/time_cookie)
 
 /datum/status_effect/lovecookie
 	id = "lovecookie"
@@ -193,13 +193,13 @@
 /datum/status_effect/tarfoot/on_apply()
 	var/mob/living/carbon/C = owner
 	if(istype(C))
-		C.physiology.apply_mod(/datum/physio_mod/tar_foot)
+		C.physiology.apply_mod(/datum/stat_mod/tar_foot)
 	return ..()
 
 /datum/status_effect/tarfoot/on_remove()
 	var/mob/living/carbon/C = owner
 	if(istype(C))
-		C.physiology.remove_mod(/datum/physio_mod/tar_foot)
+		C.physiology.remove_mod(/datum/stat_mod/tar_foot)
 
 /datum/status_effect/spookcookie
 	id = "spookcookie"
@@ -248,13 +248,13 @@
 /datum/status_effect/adamantinecookie/on_apply()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.physiology.apply_mod(/datum/physio_mod/adamantine_cookie)
+		H.physiology.apply_mod(/datum/stat_mod/adamantine_cookie)
 	return ..()
 
 /datum/status_effect/adamantinecookie/on_remove()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.physiology.remove_mod(/datum/physio_mod/adamantine_cookie)
+		H.physiology.remove_mod(/datum/stat_mod/adamantine_cookie)
 
 ///////////////////////////////////////////////////////
 //////////////////STABILIZED EXTRACTS//////////////////
@@ -453,13 +453,13 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/silver/on_apply()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
-		C.physiology.apply_mod(/datum/physio_mod/stab_silver)
+		C.physiology.apply_mod(/datum/stat_mod/stab_silver)
 	return ..()
 
 /datum/status_effect/stabilized/silver/on_remove()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
-		C.physiology.remove_mod(/datum/physio_mod/stab_silver)
+		C.physiology.remove_mod(/datum/stat_mod/stab_silver)
 
 //Bluespace has an icon because it's kinda active.
 /obj/screen/alert/status_effect/bluespaceslime
@@ -509,13 +509,13 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/sepia/tick()
 	var/mob/living/carbon/C = owner
 	if(istype(C))
-		C.physiology.apply_mod(/datum/physio_mod/sepia)
+		C.physiology.apply_mod(/datum/stat_mod/sepia)
 	return ..()
 
 /datum/status_effect/stabilized/sepia/on_remove()
 	var/mob/living/carbon/C = owner
 	if(istype(C))
-		C.physiology.remove_mod(/datum/physio_mod/sepia)
+		C.physiology.remove_mod(/datum/stat_mod/sepia)
 
 /datum/status_effect/stabilized/cerulean
 	id = "stabilizedcerulean"
@@ -768,13 +768,13 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/adamantine/on_apply()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
-		C.physiology.apply_mod(/datum/physio_mod/adamantine_skin)
+		C.physiology.apply_mod(/datum/stat_mod/adamantine_skin)
 	return ..()
 
 /datum/status_effect/stabilized/adamantine/on_remove()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
-		C.physiology.remove_mod(/datum/physio_mod/adamantine_skin)
+		C.physiology.remove_mod(/datum/stat_mod/adamantine_skin)
 
 /datum/status_effect/stabilized/rainbow
 	id = "stabilizedrainbow"
