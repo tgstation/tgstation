@@ -640,7 +640,7 @@
 			var/list/settings = list(
 				"mainsettings" = list(
 					"typepath" = list("desc" = "Path to spawn", "type" = "datum", "path" = "/mob/living", "subtypesonly" = TRUE, "value" = /mob/living/simple_animal/hostile/poison/bees),
-					"humanoutfit" = list("desc" = "Outfit if human", "type" = "datum", "path" = "/datum/outfit", "subtypesonly" = TRUE, "value" = /datum/outfit/job/clown),
+					"humanoutfit" = list("desc" = "Outfit if human", "type" = "datum", "path" = "/datum/outfit", "subtypesonly" = TRUE, "value" = /datum/outfit),
 					"amount" = list("desc" = "Number per portal", "type" = "number", "value" = 1),
 					"portalnum" = list("desc" = "Number of total portals", "type" = "number", "value" = 10),
 					"offerghosts" = list("desc" = "Get ghosts to play mobs", "type" = "boolean", "value" = "No"),
@@ -665,7 +665,7 @@
 					to_chat(usr, "Number of portals and mobs to spawn must be at least 1")
 					return
 
-				var/pathToSpawn = prefs["typepath"]["value"]
+				var/mob/pathToSpawn = prefs["typepath"]["value"]
 				if (!ispath(pathToSpawn))
 					pathToSpawn = text2path(pathToSpawn)
 
@@ -691,12 +691,16 @@
 				message_admins("[key_name_admin(usr)] has created a customized portal storm that will spawn [prefs["portalnum"]["value"]] portals, each of them spawning [prefs["amount"]["value"]] of [pathToSpawn]")
 				log_admin("[key_name(usr)] has created a customized portal storm that will spawn [prefs["portalnum"]["value"]] portals, each of them spawning [prefs["amount"]["value"]] of [pathToSpawn]")
 
+				var/outfit = prefs["humanoutfit"]["value"]
+				if (!ispath(outfit))
+					outfit = text2path(outfit)
+
 				for (var/i in 1 to prefs["portalnum"]["value"])
 					var/ghostcandidates = list()
 					for (var/j in 1 to min(prefs["amount"]["value"], length(candidates)))
 						ghostcandidates += pick_n_take(candidates)
 					if (length(ghostcandidates))
-						addtimer(CALLBACK(GLOBAL_PROC, .proc/doPortalSpawn, get_random_station_turf(), pathToSpawn, length(ghostcandidates), storm, ghostcandidates), i*prefs["delay"]["value"])
+						addtimer(CALLBACK(GLOBAL_PROC, .proc/doPortalSpawn, get_random_station_turf(), pathToSpawn, length(ghostcandidates), storm, ghostcandidates, outfit), i*prefs["delay"]["value"])
 
 	if(E)
 		E.processing = FALSE
@@ -719,15 +723,18 @@
 		sleep(20)
 		sound_to_playing_players('sound/magic/lightningbolt.ogg')
 
-/proc/doPortalSpawn(turf/loc, mobtype, numtospawn, portal_appearance, players)
+/proc/doPortalSpawn(turf/loc, mobtype, numtospawn, portal_appearance, players, humanoutfit)
 	for (var/i in 1 to numtospawn)
 		var/mob/spawnedMob = new mobtype(loc)
 		if (length(players))
 			var/mob/chosen = players[1]
 			if (chosen.client)
-				chosen.client.prefs.copy_to(ERTOperative)
-				ERTOperative.key = chosen_candidate.key
+				chosen.client.prefs.copy_to(spawnedMob)
+				spawnedMob.key = chosen.key
 			players -= chosen
+		if (ishuman(spawnedMob) && ispath(humanoutfit, /datum/outfit))
+			var/mob/living/carbon/human/H = spawnedMob
+			H.equipOutfit(humanoutfit)
 	var/turf/T = get_step(loc, SOUTHWEST)
 	flick_overlay_static(portal_appearance, T, 15)
 	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), 1)
