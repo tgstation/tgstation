@@ -62,7 +62,7 @@
 /area/shuttle/syndicate/bridge)
 "an" = (
 /obj/structure/table/reinforced,
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_x = -32
 	},
 /obj/item/clipboard,
@@ -108,7 +108,7 @@
 /area/shuttle/syndicate/bridge)
 "as" = (
 /obj/structure/table/reinforced,
-/obj/machinery/ai_status_display{
+/obj/machinery/status_display/ai{
 	pixel_x = 32
 	},
 /obj/item/storage/fancy/donut_box,
@@ -123,7 +123,7 @@
 /turf/open/floor/plasteel/vault/side,
 /area/shuttle/syndicate/bridge)
 "au" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate/bridge)
 "av" = (
@@ -431,7 +431,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate/medical)
 "bl" = (
-/obj/machinery/ai_status_display,
+/obj/machinery/status_display/ai,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate/medical)
 "bm" = (
@@ -444,7 +444,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate/armory)
 "bp" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate/armory)
 "bq" = (

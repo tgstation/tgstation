@@ -29,7 +29,7 @@
 	var/obj/item/typecast = upgrade_item
 	upgrade_name = initial(typecast.name)
 
-/datum/component/armor_plate/proc/examine(mob/user)
+/datum/component/armor_plate/proc/examine(datum/source, mob/user)
 	//upgrade_item could also be typecast here instead
 	if(ismecha(parent))
 		if(amount)
@@ -45,7 +45,7 @@
 		else
 			to_chat(user, "<span class='notice'>It can be strengthened with up to [maxamount] [upgrade_name].</span>")
 
-/datum/component/armor_plate/proc/applyplate(obj/item/I, mob/user, params)
+/datum/component/armor_plate/proc/applyplate(datum/source, obj/item/I, mob/user, params)
 	if(!istype(I,upgrade_item))
 		return
 	if(amount >= maxamount)
@@ -72,7 +72,7 @@
 		to_chat(user, "<span class='info'>You strengthen [O], improving its resistance against melee attacks.</span>")
 
 
-/datum/component/armor_plate/proc/dropplates(force)
+/datum/component/armor_plate/proc/dropplates(datum/source, force)
 	if(ismecha(parent)) //items didn't drop the plates before and it causes erroneous behavior for the time being with collapsible helmets
 		for(var/i in 1 to amount)
 			new upgrade_item(get_turf(parent))

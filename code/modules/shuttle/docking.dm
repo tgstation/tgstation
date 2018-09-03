@@ -32,12 +32,7 @@
 
 	// The underlying old area is the area assumed to be under the shuttle's starting location
 	// If it no longer/has never existed it will be created
-	var/area/underlying_old_area
-	for(var/i in GLOB.sortedAreas) // Locate grabs subtypes and we want a particular type
-		var/area/place = i
-		if(place.type == underlying_area_type)
-			underlying_old_area = place
-			break
+	var/area/underlying_old_area = GLOB.areas_by_type[underlying_area_type]
 	if(!underlying_old_area)
 		underlying_old_area = new underlying_area_type(null)
 

@@ -28,7 +28,7 @@ SUBSYSTEM_DEF(persistence)
 	LoadPhotoPersistence()
 	if(CONFIG_GET(flag/use_antag_rep))
 		LoadAntagReputation()
-	..()
+	return ..()
 
 /datum/controller/subsystem/persistence/proc/LoadSatchels()
 	var/placed_satchel = 0

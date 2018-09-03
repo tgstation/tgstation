@@ -142,7 +142,7 @@ Regenerative extracts:
 	do_sparks(5,FALSE,target)
 
 /obj/item/slimecross/regenerative/bluespace/Initialize()
-	..()
+	. = ..()
 	T = get_turf(src)
 
 /obj/item/slimecross/regenerative/sepia

@@ -22,20 +22,20 @@
 	RegisterSignal(parent, COMSIG_FOOD_EATEN, .proc/try_infect_eat)
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean)
 
-/datum/component/infective/proc/try_infect_eat(mob/living/eater, mob/living/feeder)
+/datum/component/infective/proc/try_infect_eat(datum/source, mob/living/eater, mob/living/feeder)
 	for(var/V in diseases)
 		eater.ForceContractDisease(V)
 	try_infect(feeder, BODY_ZONE_L_ARM)
 
-/datum/component/infective/proc/clean(clean_strength)
+/datum/component/infective/proc/clean(datum/source, clean_strength)
 	if(clean_strength >= min_clean_strength)
 		qdel(src)
 
-/datum/component/infective/proc/try_infect_buckle(mob/M, force)
+/datum/component/infective/proc/try_infect_buckle(datum/source, mob/M, force)
 	if(isliving(M))
 		try_infect(M)
 
-/datum/component/infective/proc/try_infect_collide(atom/A)
+/datum/component/infective/proc/try_infect_collide(datum/source, atom/A)
 	var/atom/movable/P = parent
 	if(P.throwing)
 		//this will be handled by try_infect_impact_zone()
@@ -43,19 +43,19 @@
 	if(isliving(A))
 		try_infect(A)
 
-/datum/component/infective/proc/try_infect_impact_zone(mob/living/target, hit_zone)
+/datum/component/infective/proc/try_infect_impact_zone(datum/source, mob/living/target, hit_zone)
 	try_infect(target, hit_zone)
 
-/datum/component/infective/proc/try_infect_attack_zone(mob/living/carbon/target, mob/living/user, hit_zone)
+/datum/component/infective/proc/try_infect_attack_zone(datum/source, mob/living/carbon/target, mob/living/user, hit_zone)
 	try_infect(user, BODY_ZONE_L_ARM)
 	try_infect(target, hit_zone)
 
-/datum/component/infective/proc/try_infect_attack(mob/living/target, mob/living/user)
+/datum/component/infective/proc/try_infect_attack(datum/source, mob/living/target, mob/living/user)
 	if(!iscarbon(target)) //this case will be handled by try_infect_attack_zone
 		try_infect(target)
 	try_infect(user, BODY_ZONE_L_ARM)
 
-/datum/component/infective/proc/try_infect_equipped(mob/living/L, slot)
+/datum/component/infective/proc/try_infect_equipped(datum/source, mob/living/L, slot)
 	var/old_permeability
 	if(isitem(parent))
 		//if you are putting an infective item on, it obviously will not protect you, so set its permeability high enough that it will never block ContactContractDisease()
@@ -69,7 +69,7 @@
 		var/obj/item/I = parent
 		I.permeability_coefficient = old_permeability
 
-/datum/component/infective/proc/try_infect_crossed(atom/movable/M)
+/datum/component/infective/proc/try_infect_crossed(datum/source, atom/movable/M)
 	if(isliving(M))
 		try_infect(M, BODY_ZONE_PRECISE_L_FOOT)
 

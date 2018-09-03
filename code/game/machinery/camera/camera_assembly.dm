@@ -87,6 +87,9 @@
 	return TRUE
 
 /obj/structure/camera_assembly/screwdriver_act(mob/user, obj/item/tool)
+	. = ..()
+	if(.)
+		return TRUE
 	if(state != 3)
 		return FALSE
 

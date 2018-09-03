@@ -249,7 +249,6 @@
 	var/mob/living/carbon/human/traitor_mob = current
 	if (!istype(traitor_mob))
 		return
-	. = TRUE
 
 	var/list/all_contents = traitor_mob.GetAllContents()
 	var/obj/item/pda/PDA = locate() in all_contents
@@ -297,6 +296,7 @@
 			to_chat(traitor_mob, "Unfortunately, [employer] wasn't able to get you an Uplink.")
 		. = 0
 	else
+		. = uplink_loc
 		uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key)
 		var/unlock_note
 
