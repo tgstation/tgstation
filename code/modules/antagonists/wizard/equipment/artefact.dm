@@ -301,7 +301,7 @@
 		switch(user.zone_selected)
 			if(BODY_ZONE_PRECISE_MOUTH)
 				var/wgw =  sanitize(input(user, "What would you like the victim to say", "Voodoo", null)  as text)
-				target.say(wgw)
+				target.say(wgw, forced = "voodoo doll")
 				log_game("[key_name(user)] made [key_name(target)] say [wgw] with a voodoo doll.")
 			if(BODY_ZONE_PRECISE_EYES)
 				user.set_machine(src)

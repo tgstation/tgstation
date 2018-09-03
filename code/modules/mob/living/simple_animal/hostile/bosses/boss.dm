@@ -65,7 +65,7 @@
 				return 0
 		if(boss)
 			if(say_when_triggered)
-				boss.say(say_when_triggered)
+				boss.say(say_when_triggered, forced = "boss action")
 			if(!boss.atb.spend(boss_cost))
 				return 0
 

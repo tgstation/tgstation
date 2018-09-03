@@ -62,7 +62,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 			to_chat(user, "<span class='notice'>You carefully erase the [lowertext(cultist_name)] rune.</span>")
 			qdel(src)
 	else if(istype(I, /obj/item/nullrod))
-		user.say("BEGONE FOUL MAGIKS!!")
+		user.say("BEGONE FOUL MAGIKS!!", forced = "nullrod")
 		to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
 		qdel(src)
 
@@ -136,7 +136,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(isliving(M))
 			var/mob/living/L = M
 			if(invocation)
-				L.say(invocation, language = /datum/language/common, ignore_spam = TRUE)
+				L.say(invocation, language = /datum/language/common, ignore_spam = TRUE, forced = "cult invocation")
 			if(invoke_damage)
 				L.apply_damage(invoke_damage, BRUTE)
 				to_chat(L, "<span class='cult italic'>[src] saps your strength!</span>")

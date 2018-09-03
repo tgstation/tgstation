@@ -164,22 +164,22 @@
 	var/failText = "<span class='warning'>The snake seems unsatisfied with your incomplete oath and returns to it's previous place on the rod, returning to its dormant, wooden state. You must stand still while completing your oath!</span>"
 	to_chat(itemUser, "<span class='notice'>The wooden snake that was carved into the rod seems to suddenly come alive and begins to slither down your arm! The compulsion to help others grows abnormally strong...</span>")
 	if(do_after(itemUser, 40, target = itemUser))
-		itemUser.say("I swear to fulfill, to the best of my ability and judgment, this covenant:")
+		itemUser.say("I swear to fulfill, to the best of my ability and judgment, this covenant:", forced = "hippocratic oath")
 	else
 		to_chat(itemUser, failText)
 		return
 	if(do_after(itemUser, 20, target = itemUser))
-		itemUser.say("I will apply, for the benefit of the sick, all measures that are required, avoiding those twin traps of overtreatment and therapeutic nihilism.")
+		itemUser.say("I will apply, for the benefit of the sick, all measures that are required, avoiding those twin traps of overtreatment and therapeutic nihilism.", forced = "hippocratic oath")
 	else
 		to_chat(itemUser, failText)
 		return
 	if(do_after(itemUser, 30, target = itemUser))
-		itemUser.say("I will remember that I remain a member of society, with special obligations to all my fellow human beings, those sound of mind and body as well as the infirm.")
+		itemUser.say("I will remember that I remain a member of society, with special obligations to all my fellow human beings, those sound of mind and body as well as the infirm.", forced = "hippocratic oath")
 	else
 		to_chat(itemUser, failText)
 		return
 	if(do_after(itemUser, 30, target = itemUser))
-		itemUser.say("If I do not violate this oath, may I enjoy life and art, respected while I live and remembered with affection thereafter. May I always act so as to preserve the finest traditions of my calling and may I long experience the joy of healing those who seek my help.")
+		itemUser.say("If I do not violate this oath, may I enjoy life and art, respected while I live and remembered with affection thereafter. May I always act so as to preserve the finest traditions of my calling and may I long experience the joy of healing those who seek my help.", forced = "hippocratic oath")
 	else
 		to_chat(itemUser, failText)
 		return
@@ -1083,7 +1083,7 @@
 	to_chat(user, "<span class='hierophant_warning'>The[beacon ? " beacon is not currently":"re is a beacon"] attached.</span>")
 
 /obj/item/hierophant_club/suicide_act(mob/living/user)
-	say("Xverwpsgexmrk...")
+	say("Xverwpsgexmrk...", forced = "hierophant club suicide")
 	user.visible_message("<span class='suicide'>[user] holds [src] into the air! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	new/obj/effect/temp_visual/hierophant/telegraph(get_turf(user))
 	playsound(user,'sound/machines/airlockopen.ogg', 75, TRUE)

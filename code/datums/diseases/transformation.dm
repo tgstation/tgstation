@@ -136,7 +136,7 @@
 				affected_mob.confused += 10
 		if(4)
 			if(prob(3))
-				affected_mob.say(pick("Eeek, ook ook!", "Eee-eeek!", "Eeee!", "Ungh, ungh."))
+				affected_mob.say(pick("Eeek, ook ook!", "Eee-eeek!", "Eeee!", "Ungh, ungh."), forced = "jungle fever")
 
 /datum/disease/transformation/jungle_fever/cure()
 	remove_monkey(affected_mob.mind)
@@ -176,13 +176,13 @@
 	switch(stage)
 		if(3)
 			if (prob(8))
-				affected_mob.say(pick("Beep, boop", "beep, beep!", "Boop...bop"))
+				affected_mob.say(pick("Beep, boop", "beep, beep!", "Boop...bop"), forced = "robotic transformation")
 			if (prob(4))
 				to_chat(affected_mob, "<span class='danger'>You feel a stabbing pain in your head.</span>")
 				affected_mob.Unconscious(40)
 		if(4)
 			if (prob(20))
-				affected_mob.say(pick("beep, beep!", "Boop bop boop beep.", "kkkiiiill mmme", "I wwwaaannntt tttoo dddiiieeee..."))
+				affected_mob.say(pick("beep, beep!", "Boop bop boop beep.", "kkkiiiill mmme", "I wwwaaannntt tttoo dddiiieeee..."), forced = "robotic transformation")
 
 
 /datum/disease/transformation/xeno
@@ -212,7 +212,7 @@
 				affected_mob.Unconscious(40)
 		if(4)
 			if (prob(20))
-				affected_mob.say(pick("You look delicious.", "Going to... devour you...", "Hsssshhhhh!"))
+				affected_mob.say(pick("You look delicious.", "Going to... devour you...", "Hsssshhhhh!"), forced = "xenomorph transformation")
 
 
 /datum/disease/transformation/slime
@@ -264,10 +264,10 @@
 	switch(stage)
 		if(3)
 			if (prob(8))
-				affected_mob.say(pick("YAP", "Woof!"))
+				affected_mob.say(pick("YAP", "Woof!"), forced = "corgi transformation")
 		if(4)
 			if (prob(20))
-				affected_mob.say(pick("Bark!", "AUUUUUU"))
+				affected_mob.say(pick("Bark!", "AUUUUUU"), forced = "corgi transformation")
 
 /datum/disease/transformation/morph
 	name = "Gluttony's Blessing"
