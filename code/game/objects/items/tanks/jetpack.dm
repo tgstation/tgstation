@@ -89,7 +89,7 @@
 /obj/item/tank/jetpack/improvised
 	name = "improvised jetpack"
 	desc = "A jetpack made from two air tanks, a fire extinguisher and some atmospherics equipment. It doesn't look like it can hold much."
-	icon_state = "jetpack-sec"
+	icon_state = "jetpack-improvised"
 	item_state = "jetpack-sec"
 	volume = 20 //normal jetpacks have 70 volume
 	gas_type = null //it starts empty
