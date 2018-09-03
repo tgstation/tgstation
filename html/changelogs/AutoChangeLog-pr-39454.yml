@@ -1,0 +1,6 @@
+author: "Shdorsh"
+delete-after: True
+changes: 
+  - tweak: "Makes it possible to create circuits that can get an item loaded into them while they are in an assembly and the assembly is open."
+  - code_imp: "Optimized electronic assemblies also."
+  - bugfix: "A bug pertaining putting batteries in assemblies"
