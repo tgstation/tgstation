@@ -1,0 +1,5 @@
+author: "Cdey78 (Ported by Floyd / Qustinnus)"
+delete-after: True
+changes: 
+  - imageadd: "AI can now think"
+  - imageadd: "New OOC emote: 🤔!"
