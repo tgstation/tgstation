@@ -105,7 +105,7 @@
 	nanomachines()
 	timer_id = addtimer(CALLBACK(src, .proc/son), harden_duration)
 
-/datum/nanite_program/hardening/disable_passive_effect()
+/datum/nanite_program/triggered/reactive_hardening/disable_passive_effect()
 	. = ..()
 	son() //you ran out of nanomachines son
 	
