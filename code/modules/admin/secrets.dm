@@ -640,8 +640,13 @@
 			var/list/settings = list(
 				"mainsettings" = list(
 					"typepath" = list("desc" = "Path to spawn", "type" = "datum", "path" = "/mob/living", "subtypesonly" = TRUE, "value" = /mob/living/simple_animal/hostile/poison/bees),
+					"humanoutfit" = list("desc" = "Outfit if human", "type" = "datum", "path" = "/datum/outfit", "subtypesonly" = TRUE, "value" = /datum/outfit/job/clown),
 					"amount" = list("desc" = "Number per portal", "type" = "number", "value" = 1),
 					"portalnum" = list("desc" = "Number of total portals", "type" = "number", "value" = 10),
+					"offerghosts" = list("desc" = "Get ghosts to play mobs", "type" = "boolean", "value" = "No"),
+					"minplayers" = list("desc" = "Minimum number of ghosts", "type" = "number", "value" = 1),
+					"playersonly" = list("desc" = "Only spawn ghost-controlled mobs", "type" = "boolean", "value" = "No"),
+					"ghostpoll" = list("desc" = "Ghost poll question", "type" = "string", "value" = "Do you want to play as %TYPE% portal invader?"),
 					"delay" = list("desc" = "Time between portals, in deciseconds", "type" = "number", "value" = 50),
 					"color" = list("desc" = "Portal color", "type" = "color", "value" = "#00FF00"),
 					"playlightning" = list("desc" = "Play lightning sounds on announcement", "type" = "boolean", "value" = "Yes"),
@@ -668,6 +673,15 @@
 					to_chat(usr, "Invalid path [pathToSpawn]")
 					return
 
+				var/list/candidates = list()
+
+				if (prefs["offerghosts"]["value"] == "Yes")
+					candidates = pollGhostCandidates(replacetext(prefs["ghostpoll"]["value"], "%TYPE%", initial(pathToSpawn.name)), ROLE_TRAITOR)
+
+				if (prefs["playersonly"]["value"] == "Yes" && length(candidates) < prefs["minplayers"]["value"])
+					message_admins("Not enough players signed up to create a portal storm, the minimum was [prefs["minplayers"]["value"]] and the number of signups [length(candidates)]")
+					return
+
 				if (prefs["announce_players"]["value"] == "Yes")
 					portalAnnounce(prefs["announcement"]["value"], (prefs["playlightning"]["value"] == "Yes" ? TRUE : FALSE))
 
@@ -678,7 +692,11 @@
 				log_admin("[key_name(usr)] has created a customized portal storm that will spawn [prefs["portalnum"]["value"]] portals, each of them spawning [prefs["amount"]["value"]] of [pathToSpawn]")
 
 				for (var/i in 1 to prefs["portalnum"]["value"])
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/doPortalSpawn, get_random_station_turf(), pathToSpawn, prefs["amount"]["value"], storm), i*prefs["delay"]["value"])
+					var/ghostcandidates = list()
+					for (var/j in 1 to min(prefs["amount"]["value"], length(candidates)))
+						ghostcandidates += pick_n_take(candidates)
+					if (length(ghostcandidates))
+						addtimer(CALLBACK(GLOBAL_PROC, .proc/doPortalSpawn, get_random_station_turf(), pathToSpawn, length(ghostcandidates), storm, ghostcandidates), i*prefs["delay"]["value"])
 
 	if(E)
 		E.processing = FALSE
@@ -701,9 +719,15 @@
 		sleep(20)
 		sound_to_playing_players('sound/magic/lightningbolt.ogg')
 
-/proc/doPortalSpawn(turf/loc, mobtype, numtospawn, portal_appearance)
+/proc/doPortalSpawn(turf/loc, mobtype, numtospawn, portal_appearance, players)
 	for (var/i in 1 to numtospawn)
-		new mobtype(loc)
+		var/mob/spawnedMob = new mobtype(loc)
+		if (length(players))
+			var/mob/chosen = players[1]
+			if (chosen.client)
+				chosen.client.prefs.copy_to(ERTOperative)
+				ERTOperative.key = chosen_candidate.key
+			players -= chosen
 	var/turf/T = get_step(loc, SOUTHWEST)
 	flick_overlay_static(portal_appearance, T, 15)
 	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), 1)
