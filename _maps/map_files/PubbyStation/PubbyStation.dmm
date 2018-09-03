@@ -25766,7 +25766,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
-/turf/open/floor/circuit/killroom,
+/turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "biF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -26079,7 +26079,7 @@
 /area/maintenance/department/cargo)
 "bjB" = (
 /obj/machinery/atmospherics/pipe/manifold4w/general/visible,
-/turf/open/floor/circuit/killroom,
+/turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "bjD" = (
 /obj/structure/cable{
@@ -58274,7 +58274,7 @@
 	external_pressure_bound = 120;
 	name = "server vent"
 	},
-/turf/open/floor/circuit/killroom,
+/turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "pps" = (
 /turf/closed/wall,
@@ -60168,7 +60168,7 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
 	},
-/turf/open/floor/circuit/killroom,
+/turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "uwX" = (
 /obj/machinery/field/generator,
@@ -60690,7 +60690,7 @@
 	name = "server vent";
 	pressure_checks = 0
 	},
-/turf/open/floor/circuit/killroom,
+/turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "wcs" = (
 /obj/structure/disposalpipe/segment{

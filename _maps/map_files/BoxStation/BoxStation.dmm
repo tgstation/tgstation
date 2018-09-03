@@ -45800,7 +45800,7 @@
 	dir = 4;
 	network = list("ss13","rd")
 	},
-/turf/open/floor/circuit/killroom,
+/turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "cfu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -46091,7 +46091,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cgi" = (
-/turf/open/floor/circuit/killroom,
+/turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "cgj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -46112,7 +46112,7 @@
 	external_pressure_bound = 120;
 	name = "killroom vent"
 	},
-/turf/open/floor/circuit/killroom,
+/turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "cgm" = (
 /obj/structure/cable{
@@ -46551,7 +46551,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
-/turf/open/floor/circuit/killroom,
+/turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "chp" = (
 /obj/structure/disposalpipe/segment{
@@ -46566,7 +46566,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
-/turf/open/floor/circuit/killroom,
+/turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "chr" = (
 /obj/machinery/door/firedoor,
@@ -46582,7 +46582,7 @@
 "chs" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
-/turf/open/floor/circuit/killroom,
+/turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "cht" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{

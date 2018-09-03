@@ -77873,7 +77873,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "cZv" = (
-/turf/open/floor/circuit/killroom,
+/turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "cZR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -78050,11 +78050,11 @@
 	name = "server vent";
 	pressure_checks = 0
 	},
-/turf/open/floor/circuit/killroom,
+/turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "daS" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/circuit/killroom,
+/turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "daW" = (
 /obj/effect/turf_decal/stripes/line{
@@ -78209,7 +78209,7 @@
 "dbv" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light/small,
-/turf/open/floor/circuit/killroom,
+/turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "dbw" = (
 /obj/machinery/camera{
@@ -78218,7 +78218,7 @@
 	network = list("ss13","rd","xeno");
 	start_active = 1
 	},
-/turf/open/floor/circuit/killroom,
+/turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "dbE" = (
 /obj/machinery/plantgenes{
@@ -79357,7 +79357,7 @@
 	external_pressure_bound = 120;
 	name = "server vent"
 	},
-/turf/open/floor/circuit/killroom,
+/turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "ddC" = (
 /obj/structure/disposalpipe/trunk{
