@@ -1351,3 +1351,9 @@
 				message_admins(msg)
 				admin_ticket_log(L, msg)
 				vv_update_display(L, Text, "[newamt]")
+		else if(href_list["copyoutfit"])
+			if(!check_rights(R_SPAWN))
+				return
+			var/mob/living/carbon/human/H = locate(href_list["copyoutfit"]) in GLOB.carbon_list
+			if(istype(H))
+				H.copy_outfit()
