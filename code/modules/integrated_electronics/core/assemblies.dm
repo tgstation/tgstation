@@ -470,23 +470,50 @@
 			for(var/obj/item/integrated_circuit/input/S in assembly_components)
 				S.attackby_react(I,user,user.a_intent)
 			return ..()
-		var/obj/item/stock_parts/cell = I
-		user.transferItemToLoc(I, loc)
-		cell.forceMove(src)
-		battery = cell
+		I.forceMove(src)
+		battery = I
 		diag_hud_set_circuitstat() //update diagnostic hud
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-		to_chat(user, "<span class='notice'>You slot \the [cell] inside \the [src]'s power supplier.</span>")
+		to_chat(user, "<span class='notice'>You slot the [I] inside \the [src]'s power supplier.</span>")
 		return TRUE
 	else if(istype(I, /obj/item/integrated_electronics/detailer))
 		var/obj/item/integrated_electronics/detailer/D = I
 		detail_color = D.detail_color
 		update_icon()
 	else
-		for(var/obj/item/integrated_circuit/input/S in assembly_components)
-			S.attackby_react(I,user,user.a_intent)
 		if(user.a_intent != INTENT_HELP)
 			return ..()
+		var/list/input_selection = list()
+		//Check all the components asking for an input
+		for(var/obj/item/integrated_circuit/input in assembly_components)
+			if((input.demands_object_input && opened) || (input.demands_object_input && input.can_input_object_when_closed))
+				var/i = 0
+				//Check if there is another component with the same name and append a number for identification
+				for(var/s in input_selection)
+					var/obj/item/integrated_circuit/s_circuit = input_selection[s]
+					if(s_circuit.name == input.name && s_circuit.displayed_name == input.displayed_name && s_circuit != input)
+						i++
+				var/disp_name= "[input.displayed_name] \[[input]\]"
+				if(i)
+					disp_name += " ([i+1])"
+				//Associative lists prevent me from needing another list and using a Find proc
+				input_selection[disp_name] = input
+
+		var/obj/item/integrated_circuit/choice
+		if(input_selection)
+			if(input_selection.len == 1)
+				choice = input_selection[input_selection[1]]
+			else
+				var/selection = input(user, "Where do you want to insert that item?", "Interaction") as null|anything in input_selection
+				if(!check_interactivity(user))
+					return ..()
+				if(selection)
+					choice = input_selection[selection]
+			if(choice)
+				choice.additem(I, user)
+		for(var/obj/item/integrated_circuit/input/S in assembly_components)
+			S.attackby_react(I,user,user.a_intent)
+		return ..()
 
 
 /obj/item/electronic_assembly/attack_self(mob/user)
@@ -496,30 +523,33 @@
 		interact(user)
 
 	var/list/input_selection = list()
-	var/list/available_inputs = list()
+	//Check all the components asking for an input
 	for(var/obj/item/integrated_circuit/input/input in assembly_components)
 		if(input.can_be_asked_input)
-			available_inputs.Add(input)
 			var/i = 0
-			for(var/obj/item/integrated_circuit/s in available_inputs)
-				if(s.name == input.name && s.displayed_name == input.displayed_name && s != input)
+			//Check if there is another component with the same name and append a number for identification
+			for(var/s in input_selection)
+				var/obj/item/integrated_circuit/s_circuit = input_selection[s]
+				if(s_circuit.name == input.name && s_circuit.displayed_name == input.displayed_name && s_circuit != input)
 					i++
 			var/disp_name= "[input.displayed_name] \[[input]\]"
 			if(i)
 				disp_name += " ([i+1])"
-			input_selection.Add(disp_name)
+			//Associative lists prevent me from needing another list and using a Find proc
+			input_selection[disp_name] = input
 
 	var/obj/item/integrated_circuit/input/choice
-	if(available_inputs)
-		if(available_inputs.len ==1)
-			choice = available_inputs[1]
+
+
+	if(input_selection)
+		if(input_selection.len ==1)
+			choice = input_selection[input_selection[1]]
 		else
 			var/selection = input(user, "What do you want to interact with?", "Interaction") as null|anything in input_selection
 			if(!check_interactivity(user))
 				return
 			if(selection)
-				var/index = input_selection.Find(selection)
-				choice = available_inputs[index]
+				choice = input_selection[selection]
 
 	if(choice)
 		choice.ask_for_input(user)
