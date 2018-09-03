@@ -200,6 +200,9 @@
 
 /datum/nanite_program/proc/on_death()
 	return
+	
+/datum/nanite_program/proc/on_damage(damage_type, amount)
+	return
 
 /datum/nanite_program/proc/on_hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	return

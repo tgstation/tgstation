@@ -51,6 +51,7 @@
 		RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, .proc/on_emp)
 		RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/on_death)
 		RegisterSignal(parent, COMSIG_MOB_ALLOWED, .proc/check_access)
+		RegisterSignal(parent, COMSIG_LIVING_ADJUST_DAMAGE, .proc/on_damage)
 		RegisterSignal(parent, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_shock)
 		RegisterSignal(parent, COMSIG_LIVING_MINOR_SHOCK, .proc/on_minor_shock)
 		RegisterSignal(parent, COMSIG_MOVABLE_HEAR, .proc/on_hear)
@@ -190,6 +191,11 @@
 		var/datum/nanite_program/NP = X
 		NP.on_minor_shock()
 
+/datum/component/nanites/proc/on_damage(datum/source, damage_type, amount)
+	for(var/X in programs)
+		var/datum/nanite_program/NP = X
+		NP.on_damage(damage_type, amount)		
+		
 /datum/component/nanites/proc/on_death(datum/source, gibbed)
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X

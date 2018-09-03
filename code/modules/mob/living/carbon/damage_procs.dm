@@ -101,6 +101,7 @@
 		take_overall_damage(0, 0, amount, updating_health)
 	else
 		heal_overall_damage(0, 0, abs(amount), FALSE, FALSE, updating_health)
+	SEND_SIGNAL(src, COMSIG_LIVING_ADJUST_DAMAGE, STAMINA, amount)
 	return amount
 
 /mob/living/carbon/setStaminaLoss(amount, updating = TRUE, forced = FALSE)
@@ -225,6 +226,7 @@
 	if(!B)
 		return
 	B.adjust_brain_damage(amount, maximum)
+	SEND_SIGNAL(src, COMSIG_LIVING_ADJUST_DAMAGE, BRAIN, amount)
 	if(amount <= 0) //cut this early
 		return
 	var/brainloss = getBrainLoss()
