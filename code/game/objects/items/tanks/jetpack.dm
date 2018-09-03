@@ -95,6 +95,27 @@
 	gas_type = null //it starts empty
 	full_speed = FALSE //moves at hardsuit jetpack speeds
 
+/obj/item/tank/jetpack/improvised/allow_thrust(num, mob/living/user)
+	if(!on)
+		return
+	if((num < 0.005 || air_contents.total_moles() < num))
+		turn_off()
+		return
+	if(rand(0,250) == 0)
+		to_chat(user, "<span class='notice'>You feel your jetpack's engines cut out.</span>")
+		turn_off()
+		return
+
+	var/datum/gas_mixture/removed = air_contents.remove(num)
+	if(removed.total_moles() < 0.005)
+		turn_off()
+		return
+
+	var/turf/T = get_turf(user)
+	T.assume_air(removed)
+
+	return 1
+
 /obj/item/tank/jetpack/void
 	name = "void jetpack (oxygen)"
 	desc = "It works well in a void."
