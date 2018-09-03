@@ -66926,9 +66926,14 @@
 /area/tcommsat/server)
 "cie" = (
 /obj/machinery/telecomms/processor/preset_four,
-/turf/open/floor/plasteel/green/side/telecomms{
-	dir = 5
+/obj/effect/turf_decal/tile/green{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/plasteel/telecomms,
 /area/tcommsat/server)
 "cif" = (
 /obj/machinery/light/small,
@@ -66974,9 +66979,14 @@
 /area/tcommsat/server)
 "cii" = (
 /obj/machinery/telecomms/bus/preset_two,
-/turf/open/floor/plasteel/neutral/side/telecomms{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel/telecomms,
 /area/tcommsat/server)
 "cij" = (
 /obj/machinery/door/firedoor,
@@ -67873,9 +67883,14 @@
 /area/tcommsat/server)
 "cjF" = (
 /obj/machinery/telecomms/server/presets/service,
-/turf/open/floor/plasteel/green/side/telecomms{
-	dir = 6
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
 	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel/telecomms,
 /area/tcommsat/server)
 "cjG" = (
 /obj/structure/cable/white{
@@ -67913,9 +67928,14 @@
 /area/tcommsat/server)
 "cjI" = (
 /obj/machinery/telecomms/server/presets/common,
-/turf/open/floor/plasteel/neutral/side/telecomms{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel/telecomms,
 /area/tcommsat/server)
 "cjJ" = (
 /turf/closed/wall/r_wall,
@@ -85351,7 +85371,17 @@
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "cNh" = (
-/turf/open/floor/plasteel/vault/killroom,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark/telecomms,
 /area/science/xenobiology)
 "cNi" = (
 /obj/machinery/light/small{
@@ -85363,7 +85393,17 @@
 	name = "xenobiology camera";
 	network = list("ss13","xeno","rd")
 	},
-/turf/open/floor/plasteel/vault/killroom,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark/telecomms,
 /area/science/xenobiology)
 "cNj" = (
 /obj/structure/closet/crate{
@@ -86177,10 +86217,10 @@
 	name = "killroom vent";
 	pressure_checks = 0
 	},
-/turf/open/floor/circuit/killroom,
+/turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "cOP" = (
-/turf/open/floor/circuit/killroom,
+/turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "cOQ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
@@ -86188,7 +86228,7 @@
 	external_pressure_bound = 120;
 	name = "server vent"
 	},
-/turf/open/floor/circuit/killroom,
+/turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "cOR" = (
 /turf/closed/wall/r_wall,
@@ -87037,19 +87077,49 @@
 /obj/machinery/atmospherics/pipe/manifold/general/hidden{
 	dir = 8
 	},
-/turf/open/floor/plasteel/vault/killroom,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark/telecomms,
 /area/science/xenobiology)
 "cQx" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/vault/killroom,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark/telecomms,
 /area/science/xenobiology)
 "cQy" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 9
 	},
-/turf/open/floor/plasteel/vault/killroom,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark/telecomms,
 /area/science/xenobiology)
 "cQz" = (
 /obj/machinery/vending/wardrobe/science_wardrobe,

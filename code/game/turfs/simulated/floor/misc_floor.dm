@@ -47,10 +47,6 @@
 /turf/open/floor/circuit/airless
 	initial_gas_mix = "TEMP=2.7"
 
-/turf/open/floor/circuit/killroom
-	name = "killroom floor"
-	initial_gas_mix = "n2=500;TEMP=80"
-
 /turf/open/floor/circuit/telecomms
 	initial_gas_mix = "n2=100;TEMP=80"
 
