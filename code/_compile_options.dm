@@ -3,6 +3,10 @@
 
 //#define DATUMVAR_DEBUGGING_MODE	//Enables the ability to cache datum vars and retrieve later for debugging which vars changed.
 
+//#ifdef DEBUG
+//#define USE_CUSTOM_ERROR_HANDLER
+//#endif
+
 #ifdef TESTING
 #define DATUMVAR_DEBUGGING_MODE
 
