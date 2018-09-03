@@ -133,7 +133,8 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/asteroid,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel,
 /area/ruin/powered/beach)
 "aC" = (
 /turf/open/floor/wood,
@@ -182,10 +183,12 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/asteroid,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel,
 /area/ruin/powered/beach)
 "aK" = (
-/turf/open/floor/plasteel/asteroid,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel,
 /area/ruin/powered/beach)
 "aM" = (
 /obj/structure/reagent_dispensers/beerkeg,
@@ -193,7 +196,8 @@
 /area/ruin/powered/beach)
 "aN" = (
 /obj/machinery/vending/cigarette/beach,
-/turf/open/floor/plasteel/asteroid,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel,
 /area/ruin/powered/beach)
 "aO" = (
 /obj/structure/weightmachine/stacklifter,
@@ -219,7 +223,8 @@
 /area/ruin/powered/beach)
 "aT" = (
 /obj/machinery/vending/cola,
-/turf/open/floor/plasteel/asteroid,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel,
 /area/ruin/powered/beach)
 "aU" = (
 /obj/effect/overlay/palmtree_l,
@@ -234,7 +239,8 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/asteroid,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel,
 /area/ruin/powered/beach)
 "aX" = (
 /obj/structure/closet/secure_closet/freezer/meat,
@@ -242,7 +248,8 @@
 /area/ruin/powered/beach)
 "aY" = (
 /obj/machinery/vending/snack,
-/turf/open/floor/plasteel/asteroid,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel,
 /area/ruin/powered/beach)
 "aZ" = (
 /obj/effect/overlay/coconut,
@@ -277,7 +284,8 @@
 /area/ruin/powered/beach)
 "bl" = (
 /obj/effect/turf_decal/caution,
-/turf/open/floor/plasteel/asteroid,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel,
 /area/ruin/powered/beach)
 "bx" = (
 /obj/structure/flora/rock,
@@ -422,7 +430,8 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/asteroid,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel,
 /area/ruin/powered/beach)
 "cs" = (
 /obj/effect/overlay/palmtree_l,
@@ -492,7 +501,8 @@
 /obj/effect/turf_decal/caution{
 	dir = 1
 	},
-/turf/open/floor/plasteel/asteroid,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel,
 /area/ruin/powered/beach)
 "pg" = (
 /obj/effect/turf_decal/sand,
@@ -531,7 +541,8 @@
 /obj/effect/turf_decal/caution{
 	dir = 4
 	},
-/turf/open/floor/plasteel/asteroid,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel,
 /area/ruin/powered/beach)
 "sO" = (
 /obj/machinery/jukebox/disco/indestructible,
@@ -546,7 +557,8 @@
 /area/ruin/powered/beach)
 "yp" = (
 /obj/item/reagent_containers/spray/spraytan,
-/turf/open/floor/plasteel/asteroid,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel,
 /area/ruin/powered/beach)
 "zw" = (
 /obj/structure/closet/athletic_mixed,
@@ -571,7 +583,8 @@
 /obj/effect/turf_decal/caution{
 	dir = 8
 	},
-/turf/open/floor/plasteel/asteroid,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel,
 /area/ruin/powered/beach)
 "Gc" = (
 /obj/effect/turf_decal/sand,

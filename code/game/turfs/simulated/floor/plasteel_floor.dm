@@ -17,7 +17,8 @@
 
 /turf/open/floor/plasteel/airless
 	initial_gas_mix = "TEMP=2.7"
-
+/turf/open/floor/plasteel/telecomms
+	initial_gas_mix = "n2=100;TEMP=80"
 
 /turf/open/floor/plasteel/dark
 	icon_state = "darkfull"
@@ -37,7 +38,8 @@
 	icon_state = "dark"
 /turf/open/floor/plasteel/dark/corner
 	icon_state = "darkcorner"
-
+/turf/open/floor/plasteel/checker
+	icon_state = "checker"
 
 
 /turf/open/floor/plasteel/white
@@ -52,7 +54,8 @@
 	icon_state = "whitehall"
 /turf/open/floor/plasteel/airless/white/corner
 	icon_state = "whitecorner"
-
+/turf/open/floor/plasteel/white/telecomms
+	initial_gas_mix = "n2=100;TEMP=80"
 
 
 /turf/open/floor/plasteel/brown
