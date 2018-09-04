@@ -911,6 +911,12 @@
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_MIND_TRANSFER];jobban4=[REF(M)]'>Mind Transfer Potion</a></td>"
 
+		//Hulk
+		if(jobban_isbanned(M, ROLE_HULK))
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_HULK];jobban4=[REF(M)]'><font color=red>Hulk</font></a></td>"
+		else
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_HULK];jobban4=[REF(M)]'>Hulk</a></td>"
+		
 		dat += "</tr></table>"
 		usr << browse(dat, "window=jobban2;size=800x450")
 		return
@@ -976,7 +982,7 @@
 			if("convertantags")
 				joblist += list(ROLE_REV, ROLE_CULTIST, ROLE_SERVANT_OF_RATVAR, ROLE_ALIEN)
 			if("otherroles")
-				joblist += list(ROLE_MIND_TRANSFER)
+				joblist += list(ROLE_MIND_TRANSFER, ROLE_HULK)
 			else
 				joblist += href_list["jobban3"]
 
