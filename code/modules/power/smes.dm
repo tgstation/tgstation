@@ -264,6 +264,7 @@
 
 			if (add_avail(output_used))				// add output to powernet if it exists (smes side)
 				charge -= output_used*SMESRATE		// reduce the storage (may be recovered in /restore() if excessive)
+			else
 				outputting = 0
 
 			if(output_used < 0.0001)		// either from no charge or set to 0
