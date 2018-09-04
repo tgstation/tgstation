@@ -65170,6 +65170,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/purple,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "cwe" = (
@@ -77639,9 +77640,10 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
-	icon_state = "purplecorner"
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "cWA" = (
 /obj/effect/spawner/lootdrop/maintenance,
