@@ -109,6 +109,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	if(!istype(linked_techweb))
 		say("Warning: No linked research system!")
 		return
+
 	var/point_gain = 0
 	switch(orig_light)
 		if(0 to 9)
@@ -120,18 +121,22 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 			point_gain = (orig_light * 500)// every 20 gives you 10K points
 
 	if(point_gain > linked_techweb.largest_bomb_value)
-		if(point_gain <= TECHWEB_BOMB_POINTCAP)
+		if(point_gain <= TECHWEB_BOMB_POINTCAP || linked.techweb.largest_bomb_value < TECHWEB_BOMB_POINTCAP)
+			var/old_tech_largest_bomb_value = linked_techweb.largest_bomb_value //held so we can pull old before we do math
 			linked_techweb.largest_bomb_value = point_gain
-			point_gain -= linked_techweb.largest_bomb_value
+			point_gain -= old_tech_largest_bomb_value
+			point_gain = min(point_gain,TECHWEB_BOMB_POINTCAP)
 		else
 			linked_techweb.largest_bomb_value = TECHWEB_BOMB_POINTCAP
 			point_gain = 1000
+
+		linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, point_gain)
+		say("Gained [point_gain] points from explosion dataset.")
+
 	else //you've made smaller bombs
 		say("Data already captured. Aborting.")
 		return
 
-	linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, point_gain)
-	say("Gained [point_gain] points from explosion dataset.")
 
 /obj/machinery/doppler_array/research/science/Initialize()
 	. = ..()
