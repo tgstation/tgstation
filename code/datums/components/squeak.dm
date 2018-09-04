@@ -53,8 +53,10 @@
 		steps++
 
 /datum/component/squeak/proc/play_squeak_crossed(atom/movable/AM)
-	if(AM.flags_1 & ABSTRACT_1)
-		return
+	if(isitem(AM))
+		var/obj/item/I = AM
+		if(I.item_flags & ABSTRACT)
+			return
 	if(istype(AM, /obj/item/projectile))
 		var/obj/item/projectile/P = AM
 		if(P.original != parent)
