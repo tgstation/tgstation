@@ -109,21 +109,30 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	if(!istype(linked_techweb))
 		say("Warning: No linked research system!")
 		return
-	var/adjusted = orig_light - 10
-	if(adjusted <= 0)
-		say("Explosion not large enough for research calculations.")
+	var/point_gain = 0
+	switch(orig_light)
+		if(0 to 9)
+			say("Explosion not large enough for research calculations.")
+			return
+		if(10 to 20)
+			point_gain = (orig_light * 1000) - 10000 //10 = 0; 20 = 10000
+		else
+			point_gain = (orig_light * 500)// every 20 gives you 10K points
+
+	if(point_gain > linked_techweb.largest_bomb_value)
+		if(point_gain <= TECHWEB_BOMB_POINTCAP)
+			linked_techweb.largest_bomb_value = point_gain
+			point_gain -= linked_techweb.largest_bomb_value
+		else
+			linked_techweb.largest_bomb_value = TECHWEB_BOMB_POINTCAP
+			point_gain = 1000
+	else //you've made smaller bombs
+		say("Data already captured. Aborting.")
 		return
-	var/point_gain = techweb_scale_bomb(adjusted) - techweb_scale_bomb(linked_techweb.max_bomb_value)
-	if(point_gain <= 0)
-		say("Explosion not large enough for research calculations.")
-		return
-	linked_techweb.max_bomb_value = adjusted
+
 	linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, point_gain)
 	say("Gained [point_gain] points from explosion dataset.")
 
 /obj/machinery/doppler_array/research/science/Initialize()
 	. = ..()
 	linked_techweb = SSresearch.science_tech
-
-/proc/techweb_scale_bomb(lightradius)
-	return (lightradius ** 0.5) * 3000
