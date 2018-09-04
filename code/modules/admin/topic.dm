@@ -1413,7 +1413,7 @@
 		var/speech = input("What will [key_name(M)] say?.", "Force speech", "")// Don't need to sanitize, since it does that in say(), we also trust our admins.
 		if(!speech)
 			return
-		M.say(speech)
+		M.say(speech, forced = "admin speech")
 		speech = sanitize(speech) // Nah, we don't trust them
 		log_admin("[key_name(usr)] forced [key_name(M)] to say: [speech]")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] forced [key_name_admin(M)] to say: [speech]</span>")

@@ -676,7 +676,7 @@
 
 /mob/living/carbon/human/cuff_resist(obj/item/I)
 	if(dna && dna.check_mutation(HULK))
-		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 		if(..(I, cuff_break = FAST_CUFFBREAK))
 			dropItemToGround(I)
 	else
@@ -843,6 +843,7 @@
 	.["Make alien"] = "?_src_=vars;[HrefToken()];makealien=[REF(src)]"
 	.["Make slime"] = "?_src_=vars;[HrefToken()];makeslime=[REF(src)]"
 	.["Toggle Purrbation"] = "?_src_=vars;[HrefToken()];purrbation=[REF(src)]"
+	.["Copy outfit"] = "?_src_=vars;[HrefToken()];copyoutfit=[REF(src)]"
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
 	//If they dragged themselves and we're currently aggressively grabbing them try to piggyback

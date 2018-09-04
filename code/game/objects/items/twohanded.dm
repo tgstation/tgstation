@@ -482,7 +482,7 @@
 /obj/item/twohanded/spear/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(explosive)
-		user.say("[war_cry]")
+		user.say("[war_cry]", forced="spear warcry")
 		explosive.forceMove(user)
 		explosive.prime()
 		user.gib()
@@ -512,7 +512,7 @@
 	if(isopenturf(AM)) //So you can actually melee with it
 		return
 	if(explosive && wielded)
-		user.say("[war_cry]")
+		user.say("[war_cry]", forced="spear warcry")
 		explosive.forceMove(AM)
 		explosive.prime()
 		qdel(src)
