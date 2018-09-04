@@ -1,0 +1,6 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "Added a nanite lab to Deltastation! It's at the old EXPERIMENTOR lab."
+  - tweak: "Delta: Moved the Xenobiology disposals bin to be less obstructive. Added two sets of insulated gloves to Engineering."
+  - bugfix: "Delta: Fixed scientists not having maintenance access near the circuitry lab and toxins launch chamber."
