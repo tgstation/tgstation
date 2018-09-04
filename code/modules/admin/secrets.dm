@@ -696,11 +696,13 @@
 					outfit = text2path(outfit)
 
 				for (var/i in 1 to prefs["portalnum"]["value"])
-					var/ghostcandidates = list()
-					for (var/j in 1 to min(prefs["amount"]["value"], length(candidates)))
-						ghostcandidates += pick_n_take(candidates)
-					if (length(ghostcandidates))
-						addtimer(CALLBACK(GLOBAL_PROC, .proc/doPortalSpawn, get_random_station_turf(), pathToSpawn, length(ghostcandidates), storm, ghostcandidates, outfit), i*prefs["delay"]["value"])
+					if (length(candidates)) // if we're spawning players, gotta be a little tricky and also not spawn players on top of NPCs
+						var/ghostcandidates = list()
+						for (var/j in 1 to min(prefs["amount"]["value"], length(candidates)))
+							ghostcandidates += pick_n_take(candidates)
+							addtimer(CALLBACK(GLOBAL_PROC, .proc/doPortalSpawn, get_random_station_turf(), pathToSpawn, length(ghostcandidates), storm, ghostcandidates, outfit), i*prefs["delay"]["value"])
+					else if (prefs["playersonly"]["value"] != "Yes")
+						addtimer(CALLBACK(GLOBAL_PROC, .proc/doPortalSpawn, get_random_station_turf(), pathToSpawn, prefs["amount"]["value"], storm, null, outfit), i*prefs["delay"]["value"])
 
 	if(E)
 		E.processing = FALSE
