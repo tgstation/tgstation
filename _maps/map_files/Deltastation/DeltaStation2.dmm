@@ -72160,18 +72160,15 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/obj/machinery/disposal/bin,
 /obj/effect/turf_decal/bot,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/reagentgrinder,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cZb" = (
-/obj/structure/table/reinforced,
-/obj/machinery/reagentgrinder{
-	pixel_y = 5
-	},
 /obj/machinery/camera{
 	c_tag = "Xenobiology - Starboard";
 	dir = 8;
@@ -72182,6 +72179,10 @@
 /obj/structure/sign/warning/deathsposal{
 	pixel_x = 32
 	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal/bin,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cZc" = (
