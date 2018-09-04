@@ -28,6 +28,8 @@
 /obj/machinery/power/proc/add_avail(amount)
 	if(powernet)
 		powernet.newavail += amount
+	else
+		return 0
 
 /obj/machinery/power/proc/add_load(amount)
 	if(powernet)

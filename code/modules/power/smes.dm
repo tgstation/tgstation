@@ -246,7 +246,7 @@
 
 				charge += load * SMESRATE	// increase the charge
 
-				add_load(load)		// add the load to the terminal side network
+				terminal.add_load(load) // add the load to the terminal side network
 
 			else					// if not enough capcity
 				inputting = 0		// stop inputting
@@ -262,9 +262,9 @@
 		if(outputting)
 			output_used = min( charge/SMESRATE, output_level)		//limit output to that stored
 
-			charge -= output_used*SMESRATE		// reduce the storage (may be recovered in /restore() if excessive)
-
-			add_avail(output_used)				// add output to powernet (smes side)
+			if (add_avail(output_used))				// add output to powernet if it exists (smes side)
+				charge -= output_used*SMESRATE		// reduce the storage (may be recovered in /restore() if excessive)
+				outputting = 0
 
 			if(output_used < 0.0001)		// either from no charge or set to 0
 				outputting = 0
@@ -311,10 +311,6 @@
 		update_icon()
 	return
 
-
-/obj/machinery/power/smes/add_load(amount)
-	if(terminal && terminal.powernet)
-		terminal.powernet.load += amount
 
 /obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
