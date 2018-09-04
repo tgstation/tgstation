@@ -667,7 +667,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -6475,7 +6475,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -7218,7 +7218,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -7452,7 +7452,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "rB" = (
-/obj/machinery/ai_status_display,
+/obj/machinery/status_display/ai,
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "rC" = (
@@ -7829,7 +7829,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/titanium/blue,

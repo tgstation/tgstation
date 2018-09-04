@@ -2510,7 +2510,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_x = 32
 	},
 /obj/structure/disposalpipe/segment,
@@ -3409,7 +3409,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_y = -30
 	},
 /obj/structure/disposalpipe/segment{
@@ -3590,7 +3590,7 @@
 /area/crew_quarters/heads/cmo)
 "aiF" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	layer = 3.3
 	},
 /turf/open/floor/plating,
@@ -4512,7 +4512,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "akZ" = (
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	layer = 4;
 	pixel_x = -32
 	},
@@ -6266,7 +6266,7 @@
 /area/medical/sleeper)
 "apd" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	layer = 3.3
 	},
 /obj/structure/disposalpipe/segment{
@@ -7017,7 +7017,7 @@
 	dir = 4;
 	light_color = "#e8eaff"
 	},
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	layer = 4;
 	pixel_x = 32
 	},
@@ -7081,7 +7081,7 @@
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/kitchen)
 "arb" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall,
 /area/crew_quarters/bar)
 "arc" = (
@@ -7107,7 +7107,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "arh" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall,
 /area/medical/chemistry)
 "ari" = (
@@ -7138,7 +7138,7 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "arm" = (
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_x = -32
 	},
 /obj/machinery/camera{
@@ -8211,7 +8211,7 @@
 /area/bridge)
 "atK" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	layer = 3.3
 	},
 /obj/machinery/door/poddoor/preopen{
@@ -8265,7 +8265,7 @@
 /area/bridge)
 "atN" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	layer = 3.3
 	},
 /obj/machinery/door/poddoor/preopen{
@@ -8588,7 +8588,7 @@
 /turf/open/floor/carpet,
 /area/chapel/main)
 "auD" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall,
 /area/chapel/main)
 "auE" = (
@@ -8786,7 +8786,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "ave" = (
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel,
@@ -8864,7 +8864,7 @@
 	},
 /area/bridge)
 "avp" = (
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
 /obj/structure/table/reinforced,
@@ -9034,7 +9034,7 @@
 	},
 /area/science/research)
 "avL" = (
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	layer = 4;
 	pixel_y = 32
 	},
@@ -9062,7 +9062,7 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	layer = 4;
 	pixel_y = 32
 	},
@@ -10556,11 +10556,9 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "azi" = (
-/obj/machinery/status_display{
-	name = "cargo display";
+/obj/machinery/status_display/supply{
 	pixel_x = 0;
-	pixel_y = 32;
-	supply_display = 1
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -10951,7 +10949,7 @@
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/machinery/ai_status_display{
+/obj/machinery/status_display/ai{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/white,
@@ -11502,7 +11500,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "aBn" = (
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/white/side{
@@ -11573,7 +11571,7 @@
 	},
 /area/science/server)
 "aBu" = (
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_x = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -11948,7 +11946,7 @@
 /area/crew_quarters/heads/hop)
 "aCq" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	layer = 3.3
 	},
 /turf/open/floor/plating,
@@ -12592,11 +12590,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/status_display{
-	name = "cargo display";
+/obj/machinery/status_display/supply{
 	pixel_x = 0;
-	pixel_y = 32;
-	supply_display = 1
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 1
@@ -13339,7 +13335,7 @@
 /area/science/xenobiology)
 "aEY" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	layer = 3.3
 	},
 /turf/open/floor/plating,
@@ -13558,7 +13554,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aFD" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/science/lab)
@@ -13761,10 +13757,8 @@
 "aGg" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/computer/cargo/request,
-/obj/machinery/status_display{
-	name = "cargo display";
-	pixel_y = 32;
-	supply_display = 1
+/obj/machinery/status_display/supply{
+	pixel_y = 32
 	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -13815,7 +13809,7 @@
 	dir = 1;
 	light_color = "#d1dfff"
 	},
-/obj/machinery/ai_status_display{
+/obj/machinery/status_display/ai{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
@@ -14004,7 +13998,7 @@
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/research)
 "aGI" = (
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/whitepurple/side,
@@ -14635,7 +14629,7 @@
 	icon_state = "0-2"
 	},
 /obj/structure/cable/white,
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	layer = 3.3
 	},
 /turf/open/floor/plating,
@@ -15486,7 +15480,7 @@
 	},
 /area/hallway/secondary/exit)
 "aKg" = (
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_y = -30
 	},
 /obj/machinery/light{
@@ -16007,7 +16001,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
 "aLA" = (
-/obj/machinery/ai_status_display,
+/obj/machinery/status_display/ai,
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
@@ -19970,7 +19964,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aUN" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall,
 /area/engine/engineering)
 "aUO" = (
@@ -20837,7 +20831,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "aWD" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "aWE" = (
@@ -22003,7 +21997,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aZn" = (
-/obj/machinery/ai_status_display,
+/obj/machinery/status_display/ai,
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "aZo" = (
@@ -23269,7 +23263,7 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai)
 "bcs" = (
-/obj/machinery/ai_status_display,
+/obj/machinery/status_display/ai,
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai)
 "bct" = (
@@ -23325,7 +23319,7 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai)
 "bcy" = (
-/obj/machinery/ai_status_display,
+/obj/machinery/status_display/ai,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -25101,7 +25095,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
 "gyi" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall,
 /area/hallway/primary/fore)
 "gyo" = (
@@ -25378,7 +25372,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_y = -30
 	},
 /obj/structure/disposalpipe/segment{
@@ -25565,11 +25559,9 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "jyg" = (
-/obj/machinery/status_display{
+/obj/machinery/status_display/supply{
 	layer = 3.3;
-	name = "cargo display";
-	pixel_x = 32;
-	supply_display = 1
+	pixel_x = 32
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -25652,7 +25644,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "kdN" = (
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	layer = 3.3
 	},
 /obj/structure/disposalpipe/segment,
@@ -25820,7 +25812,7 @@
 /turf/open/floor/plating,
 /area/quartermaster/miningdock)
 "lGV" = (
-/obj/machinery/status_display{
+/obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
 /obj/structure/table/reinforced,
@@ -25900,7 +25892,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall,
 /area/crew_quarters/dorms)
 "mnn" = (
@@ -27159,11 +27151,9 @@
 /obj/machinery/conveyor_switch/oneway{
 	id = "QMLoad"
 	},
-/obj/machinery/status_display{
-	name = "cargo display";
+/obj/machinery/status_display/supply{
 	pixel_x = 0;
-	pixel_y = -32;
-	supply_display = 1
+	pixel_y = -32
 	},
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/storage)
@@ -27623,11 +27613,9 @@
 	name = "Mining Dock APC";
 	pixel_x = 26
 	},
-/obj/machinery/status_display{
-	name = "cargo display";
+/obj/machinery/status_display/supply{
 	pixel_x = 0;
-	pixel_y = -32;
-	supply_display = 1
+	pixel_y = -32
 	},
 /obj/structure/cable/white,
 /obj/machinery/camera{
