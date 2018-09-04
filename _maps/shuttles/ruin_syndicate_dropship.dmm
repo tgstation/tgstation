@@ -69,7 +69,6 @@
 	name = "Syndicate Drop Ship";
 	port_direction = 8;
 	preferred_direction = 4;
-	timid = 1;
 	width = 15
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -245,18 +244,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/syndicate3)
-"zq" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/syndicate{
-	anchored = 1
-	},
-/obj/item/clothing/shoes/jackboots,
-/obj/item/crowbar/red,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/caravan/syndicate3)
 "BQ" = (
 /turf/open/floor/plasteel/darkred/side,
 /area/shuttle/caravan/syndicate3)
@@ -341,7 +328,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/syndicate/ranged/pilot{
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/pilot{
 	environment_smash = 0
 	},
 /turf/open/floor/plasteel/dark,
@@ -523,6 +510,18 @@
 "ZB" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
+"ZI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/syndicate{
+	anchored = 1
+	},
+/obj/item/clothing/shoes/jackboots,
+/obj/item/crowbar/red,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
 "ZJ" = (
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/syndicate3)
@@ -630,7 +629,7 @@ Tn
 Lq
 YU
 Dx
-zq
+ZI
 HJ
 Tn
 "}

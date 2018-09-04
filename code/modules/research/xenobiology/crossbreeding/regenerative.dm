@@ -120,7 +120,7 @@ Regenerative extracts:
 	C.name = "fireproofed [C.name]"
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	C.add_atom_colour("#000080", FIXED_COLOUR_PRIORITY)
-	C.max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	C.max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	C.heat_protection = C.body_parts_covered
 	C.resistance_flags |= FIRE_PROOF
 
@@ -142,7 +142,7 @@ Regenerative extracts:
 	do_sparks(5,FALSE,target)
 
 /obj/item/slimecross/regenerative/bluespace/Initialize()
-	..()
+	. = ..()
 	T = get_turf(src)
 
 /obj/item/slimecross/regenerative/sepia

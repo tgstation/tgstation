@@ -51,7 +51,7 @@
 	tele_play_specials(teleatom, curturf, effectin, asoundin)
 	var/success = force_teleport ? teleatom.forceMove(destturf) : teleatom.Move(destturf)
 	if (success)
-		log_game("[teleatom] ([key_name(teleatom)]) has teleported from [AREACOORD(curturf)] to [AREACOORD(destturf)]")
+		log_game("[key_name(teleatom)] has teleported from [loc_name(curturf)] to [loc_name(destturf)]")
 		tele_play_specials(teleatom, destturf, effectout, asoundout)
 		if(ismegafauna(teleatom))
 			message_admins("[teleatom] [ADMIN_FLW(teleatom)] has teleported from [ADMIN_VERBOSEJMP(curturf)] to [ADMIN_VERBOSEJMP(destturf)].")
@@ -59,6 +59,8 @@
 	if(ismob(teleatom))
 		var/mob/M = teleatom
 		M.cancel_camera()
+
+	return TRUE
 
 /proc/tele_play_specials(atom/movable/teleatom, atom/location, datum/effect_system/effect, sound)
 	if (location && !isobserver(teleatom))

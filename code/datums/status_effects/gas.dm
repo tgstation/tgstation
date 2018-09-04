@@ -9,7 +9,7 @@
 
 /obj/screen/alert/status_effect/freon
 	name = "Frozen Solid"
-	desc = "You're frozen inside of an ice cube, and cannot move! You can still do stuff, like shooting. Resist out of the cube!"
+	desc = "You're frozen inside an ice cube, and cannot move! You can still do stuff, like shooting. Resist out of the cube!"
 	icon_state = "frozen"
 
 /datum/status_effect/freon/on_apply()

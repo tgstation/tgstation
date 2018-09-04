@@ -237,9 +237,9 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	switch(invocation_type)
 		if("shout")
 			if(prob(50))//Auto-mute? Fuck that noise
-				user.say(invocation)
+				user.say(invocation, forced = "spell")
 			else
-				user.say(replacetext(invocation," ","`"))
+				user.say(replacetext(invocation," ","`"), forced = "spell")
 		if("whisper")
 			if(prob(50))
 				user.whisper(invocation)
@@ -289,7 +289,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	before_cast(targets)
 	invocation(user)
 	if(user && user.ckey)
-		user.log_message("<span class='danger'>cast the spell [name].</span>", INDIVIDUAL_ATTACK_LOG)
+		user.log_message("<span class='danger'>cast the spell [name].</span>", LOG_ATTACK)
 	if(recharge)
 		recharging = TRUE
 	if(sound)

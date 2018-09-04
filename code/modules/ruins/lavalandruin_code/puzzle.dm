@@ -43,6 +43,16 @@
 	if(auto_setup)
 		setup()
 
+/obj/effect/sliding_puzzle/proc/check_setup_location()
+	for(var/id in 1 to 9)
+		var/turf/T = get_turf_for_id(id)
+		if(!T)
+			return FALSE
+		if(istype(T,/turf/closed/indestructible))
+			return FALSE
+	return TRUE
+
+
 /obj/effect/sliding_puzzle/proc/validate()
 	if(finished)
 		return
@@ -144,6 +154,8 @@
 	var/tile_count = width * height
 
 	//Generate per tile icons
+	var/icon/base_icon = get_base_icon()
+
 	for(var/id in 1 to tile_count)
 		var/y = width - round((id - 1) / width)
 		var/x = ((id - 1) % width) + 1
@@ -153,7 +165,7 @@
 		var/y_start = 1 + ((y - 1) * world.icon_size)
 		var/y_end = y_start + world.icon_size - 1
 
-		var/icon/T = get_base_icon()
+		var/icon/T = new(base_icon)
 		T.Crop(x_start,y_start,x_end,y_end)
 		puzzle_pieces["[id]"] = T
 		left_ids += id
@@ -277,6 +289,7 @@
 
 /obj/effect/sliding_puzzle/prison/dispense_reward()
 	prisoner.forceMove(get_turf(src))
+	prisoner.notransform = FALSE
 	prisoner = null
 
 //Some armor so it's harder to kill someone by mistake.
@@ -300,17 +313,23 @@
 	var/mob/living/carbon/carbon_victim = victim
 	//Handcuffed or unconcious
 	if(istype(carbon_victim) && carbon_victim.handcuffed || victim.stat != CONSCIOUS)
-		imprison(target)
+		if(!puzzle_imprison(target))
+			to_chat(user,"<span class='warning'>[src] does nothing.</span>")
+			return
 		to_chat(user,"<span class='warning'>You trap [victim] in the prison cube!</span>")
 		qdel(src)
 	else
 		to_chat(user,"<span class='notice'>[src] only accepts restrained or unconcious prisoners.</span>")
 
-/obj/item/prisoncube/proc/imprison(mob/living/prisoner)
+/proc/puzzle_imprison(mob/living/prisoner)
 	var/turf/T = get_turf(prisoner)
 	var/obj/effect/sliding_puzzle/prison/cube = new(T)
+	if(!cube.check_setup_location())
+		qdel(cube)
+		return FALSE
 
 	//First grab the prisoner and move them temporarily into the generator so they won't get thrown around.
+	prisoner.notransform = TRUE
 	prisoner.forceMove(cube)
 	to_chat(prisoner,"<span class='userdanger'>You're trapped by the prison cube! You will remain trapped until someone solves it.</span>")
 
@@ -331,3 +350,4 @@
 	//Move them into random block
 	var/obj/structure/puzzle_element/E = pick(cube.elements)
 	prisoner.forceMove(E)
+	return TRUE

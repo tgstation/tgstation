@@ -81,6 +81,9 @@
 	begin_month = FEBRUARY
 	drone_hat = /obj/item/clothing/head/helmet/space/chronos
 
+/datum/holiday/groundhog/getStationPrefix()
+	return pick("Deja Vu") //I have been to this place before
+
 /datum/holiday/valentines
 	name = VALENTINES
 	begin_day = 13
@@ -149,6 +152,9 @@
 /datum/holiday/no_this_is_patrick/getStationPrefix()
 	return pick("Blarney","Green","Leprechaun","Booze")
 
+/datum/holiday/no_this_is_patrick/greet()
+	return "Happy National Inebriation Day!"
+
 /datum/holiday/april_fools
 	name = APRIL_FOOLS
 	begin_day = 1
@@ -168,7 +174,15 @@
 	begin_month = APRIL
 
 /datum/holiday/fourtwenty/getStationPrefix()
-	return pick("Snoop","Blunt","Toke","Dank")
+	return pick("Snoop","Blunt","Toke","Dank","Cheech","Chong")
+
+/datum/holiday/tea
+	name = "National Tea Day"
+	begin_day = 21
+	begin_month = APRIL
+
+/datum/holiday/tea/getStationPrefix()
+	return pick("Crumpet","Assam","Oolong","Pu-erh","Sweet Tea","Green","Black")
 
 /datum/holiday/earth
 	name = "Earth Day"
@@ -190,6 +204,14 @@
 /datum/holiday/firefighter/getStationPrefix()
 	return pick("Burning","Blazing","Plasma","Fire")
 
+/datum/holiday/bee
+	name = "Bee Day"
+	begin_day = 20
+	begin_month = MAY
+
+/datum/holiday/bee/getStationPrefix()
+	return pick("Bee","Honey","Hive","Africanized","Mead","Buzz")
+
 /datum/holiday/summersolstice
 	name = "Summer Solstice"
 	begin_day = 21
@@ -208,7 +230,15 @@
 	drone_hat = /obj/item/clothing/mask/facehugger/dead
 
 /datum/holiday/UFO/getStationPrefix() //Is such a thing even possible?
-	return pick("Ayy","Truth","Tsoukalos","Mulder") //Yes it is!
+	return pick("Ayy","Truth","Tsoukalos","Mulder","Scully") //Yes it is!
+
+/datum/holiday/USA
+	name = "Independence Day"
+	begin_day = 4
+	begin_month = JULY
+
+/datum/holiday/USA/getStationPrefix()
+	return pick("Independant","American","Burger","Bald Eagle","Star-Spangled")
 
 /datum/holiday/writer
 	name = "Writer's Day"
@@ -225,8 +255,14 @@
 
 /datum/holiday/beer
 	name = "Beer Day"
-	begin_day = 5
-	begin_month = AUGUST
+
+/datum/holiday/beer/shouldCelebrate(dd, mm, yy, ww, ddd)
+	if(mm == 8 && ddd == FRIDAY && ww == 1) //First Friday in August
+		return TRUE
+	return FALSE
+
+/datum/holiday/beer/getStationPrefix()
+	return pick("Stout","Porter","Lager","Ale","Malt","Bock","Doppelbock","Hefeweizen","Pilsner","IPA","Lite") //I'm sorry for the last one
 
 /datum/holiday/pirate
 	name = "Talk-Like-a-Pirate Day"

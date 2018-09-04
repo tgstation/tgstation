@@ -98,7 +98,7 @@
 /obj/machinery/gibber/attackby(obj/item/P, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
 		return
-		
+
 	else if(default_pry_open(P))
 		return
 
@@ -184,7 +184,7 @@
 	if(typeofskin)
 		skin = new typeofskin
 
-	add_logs(user, occupant, "gibbed")
+	log_combat(user, occupant, "gibbed")
 	mob_occupant.death(1)
 	mob_occupant.ghostize()
 	qdel(src.occupant)

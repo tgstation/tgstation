@@ -21,7 +21,9 @@
 	if(casing)
 		gun = casing.gun
 
+
 /obj/item/projectile/beam/wormhole/on_hit(atom/target)
 	if(!gun)
 		qdel(src)
+		return 
 	gun.create_portal(src, get_turf(src))

@@ -4,25 +4,28 @@
 	var/height = 0
 	var/mappath = null
 	var/loaded = 0 // Times loaded this round
-	var/static/datum/maploader/maploader = new
+	var/datum/parsed_map/cached_map
+	var/keep_cached_map = FALSE
 
-/datum/map_template/New(path = null, rename = null)
+/datum/map_template/New(path = null, rename = null, cache = FALSE)
 	if(path)
 		mappath = path
 	if(mappath)
-		preload_size(mappath)
+		preload_size(mappath, cache)
 	if(rename)
 		name = rename
 
-/datum/map_template/proc/preload_size(path)
-	var/datum/parsed_map/parsed = maploader.load_map(file(path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
+/datum/map_template/proc/preload_size(path, cache = FALSE)
+	var/datum/parsed_map/parsed = new(file(path))
 	var/bounds = parsed?.bounds
 	if(bounds)
 		width = bounds[MAP_MAXX] // Assumes all templates are rectangular, have a single Z level, and begin at 1,1,1
 		height = bounds[MAP_MAXY]
+		if(cache)
+			cached_map = parsed
 	return bounds
 
-/datum/map_template/proc/initTemplateBounds(var/list/bounds)
+/datum/parsed_map/proc/initTemplateBounds()
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
@@ -54,7 +57,7 @@
 	var/y = round((world.maxy - height)/2)
 
 	var/datum/space_level/level = SSmapping.add_new_zlevel(name, list(ZTRAIT_AWAY = TRUE))
-	var/datum/parsed_map/parsed = maploader.load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE)
+	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE)
 	var/list/bounds = parsed.bounds
 	if(!bounds)
 		return FALSE
@@ -62,7 +65,7 @@
 	repopulate_sorted_areas()
 
 	//initialize things that are normally initialized after map load
-	initTemplateBounds(bounds)
+	parsed.initTemplateBounds()
 	smooth_zlevel(world.maxz)
 	log_game("Z-level [name] loaded at at [x],[y],[world.maxz]")
 
@@ -78,8 +81,13 @@
 	if(T.y+height > world.maxy)
 		return
 
-	var/datum/parsed_map/parsed = maploader.load_map(file(mappath), T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE)
-	var/list/bounds = parsed?.bounds
+	// Accept cached maps, but don't save them automatically - we don't want
+	// ruins clogging up memory for the whole round.
+	var/datum/parsed_map/parsed = cached_map || new(file(mappath))
+	cached_map = keep_cached_map ? parsed : null
+	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE))
+		return
+	var/list/bounds = parsed.bounds
 	if(!bounds)
 		return
 
@@ -87,7 +95,7 @@
 		repopulate_sorted_areas()
 
 	//initialize things that are normally initialized after map load
-	initTemplateBounds(bounds)
+	parsed.initTemplateBounds()
 
 	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
 	return bounds

@@ -46,6 +46,8 @@
 	var/noteleport = FALSE			//Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
 	var/hidden = FALSE 			//Hides area from player Teleport function.
 	var/safe = FALSE 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
+	/// If false, loading multiple maps with this area type will create multiple instances.
+	var/unique = TRUE
 
 	var/no_air = null
 
@@ -82,6 +84,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 // ===
 
+/area/New()
+	// This interacts with the map loader, so it needs to be set immediately
+	// rather than waiting for atoms to initialize.
+	if (unique)
+		GLOB.areas_by_type[type] = src
+	return ..()
 
 /area/Initialize()
 	icon_state = ""
@@ -135,6 +143,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	power_change()		// all machines set to current power level, also updates icon
 
 /area/Destroy()
+	if(GLOB.areas_by_type[type] == src)
+		GLOB.areas_by_type[type] = null
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 

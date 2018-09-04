@@ -460,7 +460,7 @@
 	M.updatehealth() //forces health update before next life tick
 	playsound(src,  'sound/machines/defib_zap.ogg', 50, 1, -1)
 	M.emote("gasp")
-	add_logs(user, M, "stunned", src)
+	log_combat(user, M, "stunned", src)
 	if(req_defib)
 		defib.deductcharge(revivecost)
 		cooldown = TRUE
@@ -511,7 +511,7 @@
 						"<span class='userdanger'>You feel a horrible agony in your chest!</span>")
 				H.set_heartattack(TRUE)
 			H.apply_damage(50, BURN, BODY_ZONE_CHEST)
-			add_logs(user, H, "overloaded the heart of", defib)
+			log_combat(user, H, "overloaded the heart of", defib)
 			H.Knockdown(100)
 			H.Jitter(100)
 			if(req_defib)
@@ -597,9 +597,10 @@
 					H.revive()
 					H.emote("gasp")
 					H.Jitter(100)
+					SEND_SIGNAL(H, COMSIG_LIVING_MINOR_SHOCK)
 					if(tplus > tloss)
 						H.adjustBrainLoss( max(0, min(99, ((tlimit - tplus) / tlimit * 100))), 150)
-					add_logs(user, H, "revived", defib)
+					log_combat(user, H, "revived", defib)
 				if(req_defib)
 					defib.deductcharge(revivecost)
 					cooldown = 1

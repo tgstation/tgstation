@@ -1,4 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - rscdel: "Temporarily removes canvases until someone figures out how to fix them."

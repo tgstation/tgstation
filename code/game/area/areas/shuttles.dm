@@ -10,6 +10,8 @@
 	always_unpowered = FALSE
 	valid_territory = FALSE
 	icon_state = "shuttle"
+	// Loading the same shuttle map at a different time will produce distinct area instances.
+	unique = FALSE
 
 /area/shuttle/Initialize()
 	if(!canSmoothWithAreas)
@@ -67,31 +69,29 @@
 /area/shuttle/abandoned
 	name = "Abandoned Ship"
 	blob_allowed = FALSE
+	requires_power = TRUE
 	canSmoothWithAreas = /area/shuttle/abandoned
 
 /area/shuttle/abandoned/bridge
 	name = "Abandoned Ship Bridge"
-	requires_power = TRUE
 
 /area/shuttle/abandoned/engine
 	name = "Abandoned Ship Engine"
-	requires_power = TRUE
 
 /area/shuttle/abandoned/bar
 	name = "Abandoned Ship Bar"
-	requires_power = TRUE
 
 /area/shuttle/abandoned/crew
 	name = "Abandoned Ship Crew Quarters"
-	requires_power = TRUE
 
 /area/shuttle/abandoned/cargo
 	name = "Abandoned Ship Cargo Bay"
-	requires_power = TRUE
 
 /area/shuttle/abandoned/medbay
 	name = "Abandoned Ship Medbay"
-	requires_power = TRUE
+
+/area/shuttle/abandoned/pod
+	name = "Abandoned Ship Pod"
 
 ////////////////////////////Single-area shuttles////////////////////////////
 
@@ -105,6 +105,7 @@
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
+	unique = TRUE  // SSjob refers to this area for latejoiners
 
 /area/shuttle/pod_1
 	name = "Escape Pod One"

@@ -41,14 +41,15 @@
 
 /obj/vehicle/ridden/scooter/skateboard
 	name = "skateboard"
-	desc = "An unfinished scooter which can only barely be called a skateboard. It's still rideable, but probably unsafe. Looks like you'll need to add a few rods to make handlebars."
+	desc = "An unfinished scooter which can only barely be called a skateboard. It's still rideable, but probably unsafe. Looks like you'll need to add a few rods to make handlebars. Alt-click to adjust speed."
 	icon_state = "skateboard"
 	density = FALSE
+	var/adjusted_speed = FALSE
 
 /obj/vehicle/ridden/scooter/skateboard/Initialize()
 	. = ..()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = 0
+	D.vehicle_move_delay = 1
 	D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
@@ -91,6 +92,17 @@
 		var/obj/item/melee/skateboard/board = new /obj/item/melee/skateboard()
 		M.put_in_hands(board)
 		qdel(src)
+
+/obj/vehicle/ridden/scooter/skateboard/AltClick(mob/user)
+	var/datum/component/riding/R = src.GetComponent(/datum/component/riding)
+	if (!adjusted_speed)
+		R.vehicle_move_delay = 0
+		to_chat(user, "<span class='notice'>You adjust the wheels on [src] to make it go faster.</span>")
+		adjusted_speed = TRUE
+	else
+		R.vehicle_move_delay = 1
+		to_chat(user, "<span class='notice'>You adjust the wheels on [src] to make it go slower.</span>")
+		adjusted_speed = FALSE
 
 //CONSTRUCTION
 /obj/item/scooter_frame
@@ -136,6 +148,8 @@
 		return ..()
 
 /obj/vehicle/ridden/scooter/skateboard/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
 	to_chat(user, "<span class='notice'>You begin to deconstruct and remove the wheels on [src]...</span>")
 	if(I.use_tool(src, user, 20, volume=50))
 		to_chat(user, "<span class='notice'>You deconstruct the wheels on [src].</span>")

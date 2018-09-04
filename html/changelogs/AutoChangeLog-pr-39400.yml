@@ -1,6 +1,0 @@
-author: "YoYoBatty"
-delete-after: True
-changes: 
-  - bugfix: "SMES power terminals not actually deleting the terminal reference when by cutting the terminal itself rather than the SMES."
-  - bugfix: "SMES now reconnect to the grid properly after construction."
-  - refactor: "SMES now uses wirecutter act to handle terminal deconstruction."

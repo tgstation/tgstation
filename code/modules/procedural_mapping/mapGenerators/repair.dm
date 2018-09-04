@@ -21,13 +21,12 @@
 		return
 	var/datum/mapGenerator/repair/reload_station_map/mother1 = mother
 	GLOB.reloading_map = TRUE
-	var/static/datum/maploader/reloader = new
 	// This is kind of finicky on multi-Z maps but the reader would need to be
 	// changed to allow Z cropping and that's a mess
 	var/z_offset = SSmapping.station_start
 	var/list/bounds
 	for (var/path in SSmapping.config.GetFullMapPaths())
-		var/datum/parsed_map/parsed = reloader.load_map(file(path), measureOnly = FALSE, no_changeturf = FALSE,x_offset = 0, y_offset = 0, z_offset = z_offset, cropMap=TRUE, lower_crop_x = mother1.x_low, lower_crop_y = mother1.y_low, upper_crop_x = mother1.x_high, upper_crop_y = mother1.y_high)
+		var/datum/parsed_map/parsed = load_map(file(path), 1, 1, z_offset, measureOnly = FALSE, no_changeturf = FALSE, cropMap=TRUE, x_lower = mother1.x_low, y_lower = mother1.y_low, x_upper = mother1.x_high, y_upper = mother1.y_high)
 		bounds = parsed?.bounds
 		z_offset += bounds[MAP_MAXZ] - bounds[MAP_MINZ] + 1
 

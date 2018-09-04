@@ -17,7 +17,7 @@
 	icon = 'icons/mob/gondolas.dmi'
 	icon_state = "gondola"
 	icon_living = "gondola"
-	loot = list(/obj/effect/decal/cleanable/blood/gibs, /obj/item/stack/sheet/animalhide/gondola = 1)
+	loot = list(/obj/effect/decal/cleanable/blood/gibs, /obj/item/stack/sheet/animalhide/gondola = 1, /obj/item/reagent_containers/food/snacks/meat/slab/gondola = 1)
 	//Gondolas aren't affected by cold.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -25,6 +25,8 @@
 	maxHealth = 200
 	health = 200
 	del_on_death = TRUE
+
+	//Gondolas don't make footstep sounds
 
 /mob/living/simple_animal/pet/gondola/Initialize()
 	. = ..()

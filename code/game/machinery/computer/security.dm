@@ -183,10 +183,10 @@
 					if(istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1))
 						if(istype(active1.fields["photo_front"], /obj/item/photo))
 							var/obj/item/photo/P1 = active1.fields["photo_front"]
-							user << browse_rsc(P1.img, "photo_front")
+							user << browse_rsc(P1.picture.picture_image, "photo_front")
 						if(istype(active1.fields["photo_side"], /obj/item/photo))
 							var/obj/item/photo/P2 = active1.fields["photo_side"]
-							user << browse_rsc(P2.img, "photo_side")
+							user << browse_rsc(P2.picture.picture_image, "photo_side")
 						dat += {"<table><tr><td><table>
 						<tr><td>Name:</td><td><A href='?src=[REF(src)];choice=Edit Field;field=name'>&nbsp;[active1.fields["name"]]&nbsp;</A></td></tr>
 						<tr><td>ID:</td><td><A href='?src=[REF(src)];choice=Edit Field;field=id'>&nbsp;[active1.fields["id"]]&nbsp;</A></td></tr>
@@ -447,7 +447,7 @@ What a mess.*/
 							sleep(30)
 							if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))//make sure the record still exists.
 								var/obj/item/photo/photo = active1.fields["photo_front"]
-								new /obj/item/poster/wanted(src.loc, photo.img, wanted_name, info)
+								new /obj/item/poster/wanted(loc, photo.picture.picture_image, wanted_name, info)
 							printing = 0
 
 //RECORD DELETE
@@ -612,7 +612,7 @@ What a mess.*/
 						if(photo)
 							qdel(active1.fields["photo_front"])
 							//Lets center it to a 32x32.
-							var/icon/I = photo.img
+							var/icon/I = photo.picture.picture_image
 							var/w = I.Width()
 							var/h = I.Height()
 							var/dw = w - 32
@@ -623,7 +623,7 @@ What a mess.*/
 						if(active1.fields["photo_front"])
 							if(istype(active1.fields["photo_front"], /obj/item/photo))
 								var/obj/item/photo/P = active1.fields["photo_front"]
-								print_photo(P.img, active1.fields["name"])
+								print_photo(P.picture.picture_image, active1.fields["name"])
 					if("show_photo_side")
 						if(active1.fields["photo_side"])
 							if(istype(active1.fields["photo_side"], /obj/item/photo))
@@ -634,7 +634,7 @@ What a mess.*/
 						if(photo)
 							qdel(active1.fields["photo_side"])
 							//Lets center it to a 32x32.
-							var/icon/I = photo.img
+							var/icon/I = photo.picture.picture_image
 							var/w = I.Width()
 							var/h = I.Height()
 							var/dw = w - 32
@@ -645,7 +645,7 @@ What a mess.*/
 						if(active1.fields["photo_side"])
 							if(istype(active1.fields["photo_side"], /obj/item/photo))
 								var/obj/item/photo/P = active1.fields["photo_side"]
-								print_photo(P.img, active1.fields["name"])
+								print_photo(P.picture.picture_image, active1.fields["name"])
 					if("mi_crim_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input minor crime names:", "Secure. records", "", null)
@@ -760,10 +760,9 @@ What a mess.*/
 	var/obj/item/photo/P = null
 	if(issilicon(user))
 		var/mob/living/silicon/tempAI = user
-		var/datum/picture/selection = tempAI.GetPhoto()
+		var/datum/picture/selection = tempAI.GetPhoto(user)
 		if(selection)
-			P = new()
-			P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
+			P = new(null, selection)
 	else if(istype(user.get_active_held_item(), /obj/item/photo))
 		P = user.get_active_held_item()
 	return P
@@ -779,7 +778,7 @@ What a mess.*/
 	small_img.Scale(8, 8)
 	ic.Blend(small_img,ICON_OVERLAY, 13, 13)
 	P.icon = ic
-	P.img = temp
+	P.picture.picture_image = temp
 	P.desc = "The photo on file for [name]."
 	P.pixel_x = rand(-10, 10)
 	P.pixel_y = rand(-10, 10)

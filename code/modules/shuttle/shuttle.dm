@@ -253,11 +253,6 @@
 
 	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
-	// A timid shuttle will not register itself with the shuttle subsystem
-	// All shuttle templates MUST be timid, imports will fail if they're not
-	// Shuttle defined already on the map MUST NOT be timid, or they won't work
-	var/timid = TRUE
-
 	var/list/ripples = list()
 	var/engine_coeff = 1 //current engine coeff
 	var/current_engines = 0 //current engine power
@@ -280,8 +275,6 @@
 
 /obj/docking_port/mobile/Initialize(mapload)
 	. = ..()
-	if(!timid)
-		register()
 
 	if(!id)
 		id = "[SSshuttle.mobile.len]"
@@ -306,11 +299,7 @@
 // Called after the shuttle is loaded from template
 /obj/docking_port/mobile/proc/linkup(datum/map_template/shuttle/template, obj/docking_port/stationary/dock)
 	var/list/static/shuttle_id = list()
-	var/idnum
-	if(!shuttle_id[template])
-		shuttle_id[template] = idnum = 1
-	else
-		idnum = shuttle_id[template]++
+	var/idnum = ++shuttle_id[template]
 	if(idnum > 1)
 		if(id == initial(id))
 			id = "[id][idnum]"
@@ -322,6 +311,8 @@
 			comp.connect_to_shuttle(src, dock, idnum)
 		for(var/obj/machinery/computer/camera_advanced/shuttle_docker/comp in place)
 			comp.connect_to_shuttle(src, dock, idnum)
+		for(var/obj/machinery/status_display/shuttle/sd in place)
+			sd.connect_to_shuttle(src, dock, idnum)
 
 
 //this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact
@@ -420,8 +411,9 @@
 		mode = SHUTTLE_IDLE
 		return
 	previous = null
-//		if(!destination)
-//			return
+	if(!destination)
+		// sent to transit with no destination -> unlimited timer
+		timer = INFINITY
 	var/obj/docking_port/stationary/S0 = get_docked()
 	var/obj/docking_port/stationary/S1 = assigned_transit
 	if(S1)
@@ -446,12 +438,7 @@
 
 	var/list/old_turfs = return_ordered_turfs(x, y, z, dir)
 
-	var/area/underlying_area
-	for(var/i in GLOB.sortedAreas)
-		var/area/place = i
-		if(place.type == underlying_area_type)
-			underlying_area = place
-			break
+	var/area/underlying_area = GLOB.areas_by_type[underlying_area_type]
 	if(!underlying_area)
 		underlying_area = new underlying_area_type(null)
 
@@ -472,6 +459,22 @@
 				break
 
 	qdel(src, force=TRUE)
+
+/obj/docking_port/mobile/proc/intoTheSunset()
+	// Loop over mobs
+	for(var/t in return_turfs())
+		var/turf/T = t
+		for(var/mob/living/M in T.GetAllContents())
+			// If they have a mind and they're not in the brig, they escaped
+			if(M.mind && !istype(t, /turf/open/floor/plasteel/shuttle/red) && !istype(t, /turf/open/floor/mineral/plastitanium/red/brig))
+				M.mind.force_escaped = TRUE
+			// Ghostize them and put them in nullspace stasis (for stat & possession checks)
+			M.notransform = TRUE
+			M.ghostize(FALSE)
+			M.moveToNullspace()
+
+	// Now that mobs are stowed, delete the shuttle
+	jumpToNullSpace()
 
 /obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1, animate_time)
 	var/list/turfs = ripple_area(S1)
@@ -651,7 +654,9 @@
 		return "--:--"
 
 	var/timeleft = timeLeft()
-	if(timeleft > 0)
+	if(timeleft > 1 HOURS)
+		return "--:--"
+	else if(timeleft > 0)
 		return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
 	else
 		return "00:00"
@@ -667,6 +672,25 @@
 		else
 			dst = destination
 		. += " towards [dst ? dst.name : "unknown location"] ([timeLeft(600)] minutes)"
+
+
+/obj/docking_port/mobile/proc/getDbgStatusText()
+	var/obj/docking_port/stationary/dockedAt = get_docked()
+	. = (dockedAt && dockedAt.name) ? dockedAt.name : "unknown"
+	if(istype(dockedAt, /obj/docking_port/stationary/transit))
+		var/obj/docking_port/stationary/dst
+		if(mode == SHUTTLE_RECALL)
+			dst = previous
+		else
+			dst = destination
+		if(dst)
+			. = "(transit to) [dst.name || dst.id]"
+		else
+			. = "(transit to) nowhere"
+	else if(dockedAt)
+		. = dockedAt.name || dockedAt.id
+	else
+		. = "unknown"
 
 
 // attempts to locate /obj/machinery/computer/shuttle with matching ID inside the shuttle

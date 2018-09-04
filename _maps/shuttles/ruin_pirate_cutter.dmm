@@ -28,7 +28,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/caravan/pirate)
 "de" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -318,7 +319,8 @@
 /area/shuttle/caravan/pirate)
 "pS" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/caravan/pirate)
 "pZ" = (
 /obj/structure/tank_dispenser/oxygen,
@@ -374,7 +376,8 @@
 /turf/open/floor/plasteel/red/side,
 /area/shuttle/caravan/pirate)
 "su" = (
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/caravan/pirate)
 "th" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -399,7 +402,8 @@
 /mob/living/simple_animal/hostile/pirate/ranged{
 	environment_smash = 0
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/caravan/pirate)
 "ul" = (
 /obj/structure/table,
@@ -419,7 +423,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/caravan/pirate)
 "vq" = (
 /obj/structure/bed,
@@ -540,7 +545,8 @@
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medbay"
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/caravan/pirate)
 "AP" = (
 /obj/structure/sign/departments/medbay/alt,
@@ -682,7 +688,8 @@
 /obj/machinery/door/airlock/security{
 	name = "Armory"
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/caravan/pirate)
 "II" = (
 /obj/structure/closet/crate/freezer/surplus_limbs,
@@ -707,7 +714,6 @@
 	name = "Pirate Cutter";
 	port_direction = 8;
 	preferred_direction = 4;
-	timid = 1;
 	width = 22
 	},
 /turf/open/floor/plating,

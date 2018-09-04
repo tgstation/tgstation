@@ -87,7 +87,7 @@
 	if(isturf(target_loc) || (ismob(target_loc) && isturf(target_loc.loc)))
 		return viewers(range, get_turf(target_loc))
 	else
-		return typecache_filter_list(target_loc.GetAllContents(), typecacheof(list(/mob/living)))
+		return typecache_filter_list(target_loc.GetAllContents(), GLOB.typecache_living)
 
 /obj/item/assembly/flash/proc/try_use_flash(mob/user = null)
 	if(crit_fail || (world.time < last_trigger + cooldown))
@@ -104,7 +104,10 @@
 /obj/item/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
 	if(!istype(M))
 		return
-	add_logs(user, M, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
+	if(user)
+		log_combat(user, M, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
+	else //caused by emp/remote signal
+		M.log_message("was [targeted? "flashed(targeted)" : "flashed(AOE)"]",LOG_ATTACK)
 	if(generic_message && M != user)
 		to_chat(M, "<span class='disarm'>[src] emits a blinding light!</span>")
 	if(targeted)
@@ -139,7 +142,7 @@
 		return TRUE
 	else if(issilicon(M))
 		var/mob/living/silicon/robot/R = M
-		add_logs(user, R, "flashed", src)
+		log_combat(user, R, "flashed", src)
 		update_icon(1)
 		R.Knockdown(rand(80,120))
 		var/diff = 5 * CONFUSION_STACK_MAX_MULTIPLIER - M.confused

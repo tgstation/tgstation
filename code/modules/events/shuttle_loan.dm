@@ -5,6 +5,7 @@
 #define ANTIDOTE_NEEDED 5
 #define PIZZA_DELIVERY 6
 #define ITS_HIP_TO 7
+#define MY_GOD_JC 8
 
 
 /datum/round_event_control/shuttle_loan
@@ -22,7 +23,7 @@
 	var/thanks_msg = "The cargo shuttle should return in five minutes. Have some supply points for your trouble."
 
 /datum/round_event/shuttle_loan/setup()
-	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY, ITS_HIP_TO)
+	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY, ITS_HIP_TO, MY_GOD_JC)
 
 /datum/round_event/shuttle_loan/announce(fake)
 	SSshuttle.shuttle_loan = src
@@ -46,6 +47,10 @@
 		if(ITS_HIP_TO)
 			priority_announce("Cargo: One of our freighters carrying a bee shipment has been attacked by eco-terrorists. Can you clean up the mess for us?", "CentCom Janitorial Division")
 			bonus_points = 20000 //Toxin bees can be unbeelievably lethal
+		if(MY_GOD_JC)
+			priority_announce("Cargo: We have discovered an active Syndicate bomb near our VIP shuttle's fuel lines. If you feel up to the task, we will pay you for defusing it.", "CentCom Security Division")
+			thanks_msg = "Live explosive ordnance incoming via supply shuttle. Evacuating cargo bay is recommended."
+			bonus_points = 45000 //If you mess up, people die and the shuttle gets turned into swiss cheese
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
 	priority_announce(thanks_msg, "Cargo shuttle commandeered by CentCom.")
@@ -73,6 +78,8 @@
 			SSshuttle.centcom_message += "Pizza delivery for [station_name()]"
 		if(ITS_HIP_TO)
 			SSshuttle.centcom_message += "Biohazard cleanup incoming."
+		if(MY_GOD_JC)
+			SSshuttle.centcom_message += "Live explosive ordnance incoming. Exercise extreme caution."
 
 /datum/round_event/shuttle_loan/tick()
 	if(dispatched)
@@ -210,6 +217,13 @@
 					var/casing = /obj/item/ammo_casing/spent
 					new casing(pick_n_take(empty_shuttle_turfs))
 
+			if(MY_GOD_JC)
+				shuttle_spawns.Add(/obj/machinery/syndicatebomb/shuttle_loan)
+				if(prob(95))
+					shuttle_spawns.Add(/obj/item/paper/fluff/cargo/bomb)
+				else
+					shuttle_spawns.Add(/obj/item/paper/fluff/cargo/bomb/allyourbase)
+
 		var/false_positive = 0
 		while(shuttle_spawns.len && empty_shuttle_turfs.len)
 			var/turf/T = pick_n_take(empty_shuttle_turfs)
@@ -220,6 +234,31 @@
 			var/spawn_type = pick_n_take(shuttle_spawns)
 			new spawn_type(T)
 
+//items that appear only in shuttle loan events
+
+/obj/item/storage/belt/fannypack/yellow/bee_terrorist/PopulateContents()
+	new /obj/item/grenade/plastic/c4 (src)
+	new /obj/item/reagent_containers/pill/cyanide(src)
+	new /obj/item/grenade/chem_grenade/facid(src)
+
+/obj/item/paper/fluff/bee_objectives
+	name = "Objectives of a Bee Liberation Front Operative"
+	info = "<b>Objective #1</b>. Liberate all bees on the NT transport vessel 2416/B. <b>Success!</b>  <br><b>Objective #2</b>. Escape alive. <b>Failed.</b>"
+
+/obj/machinery/syndicatebomb/shuttle_loan/Initialize()
+	. = ..()
+	setAnchored(TRUE)
+	timer_set = rand(480, 600) //once the supply shuttle docks (after 5 minutes travel time), players have between 3-5 minutes to defuse the bomb
+	activate()
+	update_icon()
+
+/obj/item/paper/fluff/cargo/bomb
+	name = "hastly scribbled note"
+	info = "GOOD LUCK!"
+
+/obj/item/paper/fluff/cargo/bomb/allyourbase
+	info = "Somebody set us up the bomb!"
+
 #undef HIJACK_SYNDIE
 #undef RUSKY_PARTY
 #undef SPIDER_GIFT
@@ -227,3 +266,4 @@
 #undef ANTIDOTE_NEEDED
 #undef PIZZA_DELIVERY
 #undef ITS_HIP_TO
+#undef MY_GOD_JC

@@ -328,6 +328,7 @@ SLIME SCANNER
 		if(cyberimp_detect)
 			to_chat(user, "<span class='notice'>Detected cybernetic modifications:</span>")
 			to_chat(user, "<span class='notice'>[cyberimp_detect]</span>")
+	SEND_SIGNAL(M, COMSIG_NANITE_SCAN, user, FALSE)
 
 /proc/chemscan(mob/living/user, mob/living/M)
 	if(istype(M))
@@ -527,6 +528,7 @@ SLIME SCANNER
 		var/pressure = air_contents.return_pressure()
 		var/volume = air_contents.return_volume() //could just do mixture.volume... but safety, I guess?
 		var/temperature = air_contents.temperature
+		var/cached_scan_results = air_contents.analyzer_results
 
 		if(total_moles > 0)
 			to_chat(user, "<span class='notice'>Moles: [round(total_moles, 0.01)] mol</span>")
@@ -544,6 +546,12 @@ SLIME SCANNER
 				to_chat(user, "<span class='notice'>This node is empty!</span>")
 			else
 				to_chat(user, "<span class='notice'>[target] is empty!</span>")
+
+		if(cached_scan_results && cached_scan_results["fusion"]) //notify the user if a fusion reaction was detected
+			var/fusion_power = round(cached_scan_results["fusion"], 0.01)
+			var/tier = fusionpower2text(fusion_power)
+			to_chat(user, "<span class='boldnotice'>Large amounts of free neutrons detected in the air indicate that a fusion reaction took place.</span>")
+			to_chat(user, "<span class='notice'>Power of the last fusion reaction: [fusion_power]\n This power indicates it was a [tier]-tier fusion reaction.</span>")
 	return
 
 //slime scanner
@@ -603,3 +611,30 @@ SLIME SCANNER
 		to_chat(user, "<span class='notice'>Core mutation in progress: [T.effectmod]</span>")
 		to_chat(user, "<span_class = 'notice'>Progress in core mutation: [T.applied] / [SLIME_EXTRACT_CROSSING_REQUIRED]</span>")
 	to_chat(user, "========================")
+
+
+/obj/item/nanite_scanner
+	name = "nanite scanner"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "nanite_scanner"
+	item_state = "nanite_remote"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	desc = "A hand-held body scanner able to detect nanites and their programming."
+	flags_1 = CONDUCT_1
+	item_flags = NOBLUDGEON
+	slot_flags = ITEM_SLOT_BELT
+	throwforce = 3
+	w_class = WEIGHT_CLASS_TINY
+	throw_speed = 3
+	throw_range = 7
+	materials = list(MAT_METAL=200)
+
+/obj/item/nanite_scanner/attack(mob/living/M, mob/living/carbon/human/user)
+	user.visible_message("<span class='notice'>[user] has analyzed [M]'s nanites.</span>")
+
+	add_fingerprint(user)
+
+	var/response = SEND_SIGNAL(M, COMSIG_NANITE_SCAN, user, TRUE)
+	if(!response)
+		to_chat(user, "<span class='info'>No nanites detected in the subject.</span>")

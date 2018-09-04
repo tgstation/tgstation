@@ -196,7 +196,7 @@
 /turf/open/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
 "aO" = (
-/obj/structure/stacklifter,
+/obj/structure/weightmachine/stacklifter,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "aP" = (
@@ -249,7 +249,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bb" = (
-/obj/structure/weightlifter,
+/obj/structure/weightmachine/weightlifter,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bc" = (

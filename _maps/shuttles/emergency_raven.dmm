@@ -6,7 +6,7 @@
 /turf/closed/wall/mineral/plastitanium/interior,
 /area/shuttle/escape)
 "ab" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/plastitanium/interior,
 /area/shuttle/escape)
 "ac" = (
@@ -304,18 +304,7 @@
 	},
 /area/shuttle/escape)
 "aW" = (
-/turf/open/floor/mineral/plastitanium/brig{
-	dir = 9;
-	floor_tile = /obj/item/stack/tile/plasteel;
-	icon_state = "darkred"
-	},
-/area/shuttle/escape)
-"aX" = (
-/turf/open/floor/mineral/plastitanium/brig{
-	dir = 4;
-	floor_tile = /obj/item/stack/tile/plasteel;
-	icon_state = "darkred"
-	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "aZ" = (
 /turf/open/floor/plasteel/darkgreen/side{
@@ -412,22 +401,11 @@
 	dir = 5
 	},
 /area/shuttle/escape)
-"bc" = (
-/turf/open/floor/mineral/plastitanium/brig{
-	dir = 8;
-	floor_tile = /obj/item/stack/tile/plasteel;
-	icon_state = "darkred"
-	},
-/area/shuttle/escape)
 "bd" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium/brig{
-	dir = 4;
-	floor_tile = /obj/item/stack/tile/plasteel;
-	icon_state = "darkred"
-	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "be" = (
 /turf/open/floor/plasteel/darkgreen/side{
@@ -523,14 +501,10 @@
 "bn" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/turf/open/floor/mineral/plastitanium/brig{
-	dir = 4;
-	floor_tile = /obj/item/stack/tile/plasteel;
-	icon_state = "darkred"
-	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "bo" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "bp" = (
@@ -571,16 +545,6 @@
 /obj/structure/chair/office/dark,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
-"bx" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium/brig{
-	dir = 6;
-	floor_tile = /obj/item/stack/tile/plasteel;
-	icon_state = "darkred"
-	},
-/area/shuttle/escape)
 "by" = (
 /turf/open/floor/plasteel/darkgreen/corner,
 /area/shuttle/escape)
@@ -617,7 +581,7 @@
 	width = 32
 	},
 /obj/machinery/door/airlock/hatch,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "bF" = (
 /turf/open/floor/plasteel/darkgreen/side{
@@ -999,11 +963,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium/brig{
-	dir = 8;
-	floor_tile = /obj/item/stack/tile/plasteel;
-	icon_state = "darkred"
-	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "eE" = (
 /obj/machinery/light{
@@ -1034,11 +994,15 @@
 	},
 /area/shuttle/escape)
 "eO" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/escape)
 "eP" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/escape)
+"UQ" = (
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -1054,7 +1018,7 @@ bJ
 cs
 bJ
 bJ
-bs
+UQ
 cs
 bE
 bJ
@@ -1062,9 +1026,9 @@ bJ
 cs
 ad
 aa
-bs
+UQ
 bJ
-bs
+UQ
 cs
 bJ
 cs
@@ -1084,11 +1048,11 @@ cs
 cs
 ar
 aW
-bc
+aW
 eD
-bc
-bc
-bc
+aW
+aW
+aW
 bD
 bF
 bK
@@ -1117,12 +1081,12 @@ av
 cs
 an
 aP
-aX
+aW
 bd
 bd
 bn
 bd
-bx
+bd
 ab
 br
 aC

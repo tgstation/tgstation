@@ -111,17 +111,23 @@
 	data["shuttles"] = list()
 	for(var/i in SSshuttle.mobile)
 		var/obj/docking_port/mobile/M = i
+		var/timeleft = M.timeLeft(1)
 		var/list/L = list()
 		L["name"] = M.name
 		L["id"] = M.id
 		L["timer"] = M.timer
 		L["timeleft"] = M.getTimerStr()
-		var/can_fast_travel = FALSE
-		if(M.timer && M.timeLeft() >= 50)
-			can_fast_travel = TRUE
-		L["can_fast_travel"] = can_fast_travel
-		L["mode"] = capitalize(shuttlemode2str(M.mode))
-		L["status"] = M.getStatusText()
+		if (timeleft > 1 HOURS)
+			L["timeleft"] = "Infinity"
+		L["can_fast_travel"] = M.timer && timeleft >= 50
+		L["can_fly"] = TRUE
+		if(istype(M, /obj/docking_port/mobile/emergency))
+			L["can_fly"] = FALSE
+		else if(!M.destination)
+			L["can_fast_travel"] = FALSE
+		if (M.mode != SHUTTLE_IDLE)
+			L["mode"] = capitalize(shuttlemode2str(M.mode))
+		L["status"] = M.getDbgStatusText()
 		if(M == existing_shuttle)
 			data["existing_shuttle"] = L
 
@@ -153,10 +159,19 @@
 						user.forceMove(get_turf(M))
 						. = TRUE
 						break
+
+		if("fly")
+			for(var/i in SSshuttle.mobile)
+				var/obj/docking_port/mobile/M = i
+				if(M.id == params["id"])
+					. = TRUE
+					M.admin_fly_shuttle(user)
+					break
+
 		if("fast_travel")
 			for(var/i in SSshuttle.mobile)
 				var/obj/docking_port/mobile/M = i
-				if(M.id == params["id"] && M.timer && M.timeLeft() >= 50)
+				if(M.id == params["id"] && M.timer && M.timeLeft(1) >= 50)
 					M.setTimer(50)
 					. = TRUE
 					message_admins("[key_name_admin(usr)] fast travelled [M]")
@@ -215,8 +230,7 @@
 		D = existing_shuttle.get_docked()
 
 	if(!D)
-		var/m = "No dock found for preview shuttle ([preview_template.name]), aborting."
-		throw EXCEPTION(m)
+		CRASH("No dock found for preview shuttle ([preview_template.name]), aborting.")
 
 	var/result = preview_shuttle.canDock(D)
 	// truthy value means that it cannot dock for some reason
@@ -233,7 +247,7 @@
 	preview_shuttle.movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
 	preview_shuttle.initiate_docking(D)
 	preview_shuttle.movement_force = force_memory
-	
+
 	. = preview_shuttle
 
 	// Shuttle state involves a mode and a timer based on world.time, so
@@ -254,7 +268,7 @@
 	. = FALSE
 	// load shuttle template, centred at shuttle import landmark,
 	var/turf/landmark_turf = get_turf(locate(/obj/effect/landmark/shuttle_import) in GLOB.landmarks_list)
-	S.load(landmark_turf, centered = TRUE)
+	S.load(landmark_turf, centered = TRUE, register = FALSE)
 
 	var/affected = S.get_affected_turfs(landmark_turf, centered=TRUE)
 
@@ -267,18 +281,10 @@
 	for(var/T in affected)
 		for(var/obj/docking_port/P in T)
 			if(istype(P, /obj/docking_port/mobile))
-				var/obj/docking_port/mobile/M = P
 				found++
 				if(found > 1)
 					qdel(P, force=TRUE)
 					log_world("Map warning: Shuttle Template [S.mappath] has multiple mobile docking ports.")
-				else if(!M.timid)
-					// The shuttle template we loaded isn't "timid" which means
-					// it's already registered with the shuttles subsystem.
-					// This is a bad thing.
-					stack_trace("Template [S] is non-timid! Unloading.")
-					M.jumpToNullSpace()
-					return
 				else
 					preview_shuttle = P
 			if(istype(P, /obj/docking_port/stationary))
@@ -300,3 +306,68 @@
 	if(preview_shuttle)
 		preview_shuttle.jumpToNullSpace()
 	preview_shuttle = null
+
+/obj/docking_port/mobile/proc/admin_fly_shuttle(mob/user)
+	var/list/options = list()
+
+	for(var/port in SSshuttle.stationary)
+		if (istype(port, /obj/docking_port/stationary/transit))
+			continue  // please don't do this
+		var/obj/docking_port/stationary/S = port
+		if (canDock(S) == SHUTTLE_CAN_DOCK)
+			options[S.name || S.id] = S
+
+	options += "--------"
+	options += "Infinite Transit"
+	options += "Delete Shuttle"
+	options += "Into The Sunset (delete & greentext 'escape')"
+
+	var/selection = input(user, "Select where to fly [name || id]:", "Fly Shuttle") as null|anything in options
+	if(!selection)
+		return
+
+	switch(selection)
+		if("Infinite Transit")
+			destination = null
+			mode = SHUTTLE_IGNITING
+			setTimer(ignitionTime)
+
+		if("Delete Shuttle")
+			if(alert(user, "Really delete [name || id]?", "Delete Shuttle", "Cancel", "Really!") != "Really!")
+				return
+			jumpToNullSpace()
+
+		if("Into The Sunset (delete & greentext 'escape')")
+			if(alert(user, "Really delete [name || id] and greentext escape objectives?", "Delete Shuttle", "Cancel", "Really!") != "Really!")
+				return
+			intoTheSunset()
+
+		else
+			if(options[selection])
+				request(options[selection])
+
+/obj/docking_port/mobile/emergency/admin_fly_shuttle(mob/user)
+	return  // use the existing verbs for this
+
+/obj/docking_port/mobile/arrivals/admin_fly_shuttle(mob/user)
+	switch(alert(user, "Would you like to fly the arrivals shuttle once or change its destination?", "Fly Shuttle", "Fly", "Retarget", "Cancel"))
+		if("Cancel")
+			return
+		if("Fly")
+			return ..()
+
+	var/list/options = list()
+
+	for(var/port in SSshuttle.stationary)
+		if (istype(port, /obj/docking_port/stationary/transit))
+			continue  // please don't do this
+		var/obj/docking_port/stationary/S = port
+		if (canDock(S) == SHUTTLE_CAN_DOCK)
+			options[S.name || S.id] = S
+
+	var/selection = input(user, "Select the new arrivals destination:", "Fly Shuttle") as null|anything in options
+	if(!selection)
+		return
+	target_dock = options[selection]
+	if(!QDELETED(target_dock))
+		destination = target_dock
