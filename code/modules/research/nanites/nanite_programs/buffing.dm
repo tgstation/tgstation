@@ -136,10 +136,10 @@
 
 /datum/nanite_program/triggered/reactive_hardening/set_extra_setting(user, setting)
 	if(setting == "Hardening Duration")
-		var/new_duration = input(user, "Choose the duration of the hardening effect in deciseconds.", name, harden_duration) as null|num
+		var/new_duration = input(user, "Choose the duration of the hardening effect in deciseconds. (Max 150)", name, harden_duration) as null|num
 		if(isnull(new_duration))
 			return
-		new_duration = CLAMP(round(new_duration, 1), 20, 6000)
+		new_duration = CLAMP(round(new_duration, 1), 20, 150)
 
 	if(setting == "Damage Threshold")
 		var/new_threshold = input(user, "Choose the amount of damage that will trigger the program. Set to 0 to disable reactive triggering.", name, trigger_threshold) as null|num
