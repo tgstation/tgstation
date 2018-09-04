@@ -32,7 +32,7 @@
 
 /obj/item/assembly/health/multitool_act(mob/living/user, obj/item/I)
 	if(alarm_health == 0)
-		alarm_health = -90
+		alarm_health = -100
 		to_chat(user, "<span class='notice'>You toggle [src] to \"detect death\" mode.</span>")
 	else
 		alarm_health = 0
