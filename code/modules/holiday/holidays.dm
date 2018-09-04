@@ -257,7 +257,7 @@
 	name = "Beer Day"
 
 /datum/holiday/beer/shouldCelebrate(dd, mm, yy, ww, ddd)
-	if(mm == 8 && ddd == FRIDAY) //First Friday in August
+	if(mm == 8 && ddd == FRIDAY && ww == 1) //First Friday in August
 		return TRUE
 	return FALSE
 

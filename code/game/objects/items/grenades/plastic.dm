@@ -147,7 +147,7 @@
 			message_say = "FOR RATVAR!"
 		else if(UM.has_antag_datum(/datum/antagonist/rev))
 			message_say = "VIVA LA REVOLUTION!"
-	M.say(message_say)
+	M.say(message_say, forced="C4 suicide")
 
 /obj/item/grenade/plastic/suicide_act(mob/user)
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [src] at [ADMIN_VERBOSEJMP(user)]")

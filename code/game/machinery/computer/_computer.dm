@@ -116,7 +116,7 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(circuit) //no circuit, no computer frame
 			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
-			A.dir = dir
+			A.setDir(dir)
 			A.circuit = circuit
 			A.setAnchored(TRUE)
 			if(stat & BROKEN)

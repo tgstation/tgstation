@@ -1,7 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - rscadd: "Show your support for the fine arts with these new quirks:"
-  - rscadd: "Tagger: drawing graffiti takes half as many charges off your spraycan/crayon"
-  - rscadd: "Photographer: halves the cooldown after taking a picture"
-  - rscadd: "Musician: tune instruments to temporarily give your music beneficial effects such as clearing minor debuffs and improving mood."

@@ -144,14 +144,14 @@
 	grippedby(user)
 
 //proc to upgrade a simple pull into a more aggressive grab.
-/mob/living/proc/grippedby(mob/living/carbon/user)
+/mob/living/proc/grippedby(mob/living/carbon/user, instant = FALSE)
 	if(user.grab_state < GRAB_KILL)
 		user.changeNext_move(CLICK_CD_GRABBING)
 		playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 		if(user.grab_state) //only the first upgrade is instantaneous
 			var/old_grab_state = user.grab_state
-			var/grab_upgrade_time = 30
+			var/grab_upgrade_time = instant ? 0 : 30
 			visible_message("<span class='danger'>[user] starts to tighten [user.p_their()] grip on [src]!</span>", \
 				"<span class='userdanger'>[user] starts to tighten [user.p_their()] grip on you!</span>")
 			switch(user.grab_state)
