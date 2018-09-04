@@ -45,7 +45,7 @@
 		qdel(banana)
 
 /obj/vehicle/sealed/car/clowncar/Bump(atom/movable/M)
-	..()
+	. = ..()
 	if(isliving(M))
 		if(ismegafauna(M))
 			return
@@ -71,7 +71,7 @@
 
 /obj/vehicle/sealed/car/clowncar/Destroy()
   playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
-  . = ..()
+  return ..()
 
 /obj/vehicle/sealed/car/clowncar/after_move(direction)
 	. = ..()
