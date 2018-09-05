@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "In extreme lag scenarios, hyperspace ripples are no longer removed before the location is actually safe."

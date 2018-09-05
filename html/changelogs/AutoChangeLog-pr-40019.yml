@@ -1,4 +1,0 @@
-author: "Nichlas0010"
-delete-after: True
-changes: 
-  - bugfix: "IAA now has its own preference"

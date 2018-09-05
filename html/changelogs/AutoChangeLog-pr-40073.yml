@@ -1,5 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "The stealth box and chameleon projector no longer allow escaping lockers."
-  - bugfix: "Combining the stealth box and chameleon projector should cause less teleportation behavior."

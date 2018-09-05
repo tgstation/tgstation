@@ -1,4 +1,0 @@
-author: "jegub"
-delete-after: True
-changes: 
-  - tweak: "Health sensor's 'detect death' mode now triggers on death rather than extreme unwellness."
