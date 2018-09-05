@@ -121,7 +121,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 		say("Explosion not large enough for research calculations.")
 		return
 	else
-		point_gain = round(((log(x)-1)**1.6)*TECHWEB_BOMB_POINTCAP)
+		point_gain = round(((log(point_gain)-1)**1.6)*TECHWEB_BOMB_POINTCAP)
 
 	if(point_gain > linked_techweb.largest_bomb_value)
 		if(point_gain <= TECHWEB_BOMB_POINTCAP || linked_techweb.largest_bomb_value < TECHWEB_BOMB_POINTCAP)
