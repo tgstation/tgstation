@@ -6520,6 +6520,9 @@
 "sg" = (
 /obj/structure/table/wood,
 /obj/item/pizzabox,
+/obj/item/slimepotion/slime/sentience/nuclear{
+	pixel_y = 10
+	},
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
