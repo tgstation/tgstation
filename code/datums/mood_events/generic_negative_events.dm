@@ -63,8 +63,8 @@
   timeout = 2400
 
 /datum/mood_event/noshoes
-	 description = "<span class='warning'>I am a disgrace to comedy everywhere!</span>\n"
-	 mood_change = -5
+	description = "<span class='warning'>I am a disgrace to comedy everywhere!</span>\n"
+	mood_change = -5
 
 /datum/mood_event/tased
 	description = "<span class='warning'>There's no \"z\" in \"taser\". It's in the zap.</span>\n"
