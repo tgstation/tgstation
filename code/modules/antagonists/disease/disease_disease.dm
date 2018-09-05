@@ -27,7 +27,7 @@
 
 
 /datum/disease/advance/sentient_disease/IsSame(datum/disease/D)
-	if(istype(src, D.type))
+	if(istype(D, /datum/disease/advance/sentient_disease))
 		var/datum/disease/advance/sentient_disease/V = D
 		if(V.overmind == overmind)
 			return TRUE

@@ -30,7 +30,7 @@
 	"<span class='notice'>You raise [src] skywards, inspiring your allies!</span>")
 	playsound(src, "rustle", 100, FALSE)
 	if(warcry)
-		user.say("[warcry]")
+		user.say("[warcry]", forced="banner")
 	var/old_transform = user.transform
 	user.transform *= 1.2
 	animate(user, transform = old_transform, time = 10)
@@ -187,7 +187,7 @@
 	inspiration_available = FALSE
 
 /obj/item/banner/command/check_inspiration(mob/living/carbon/human/H)
-	return H.isloyal() //Command is stalwart but rewards their allies.
+	return H.has_trait(TRAIT_MINDSHIELD) //Command is stalwart but rewards their allies.
 
 /datum/crafting_recipe/command_banner
 	name = "Command Banner"

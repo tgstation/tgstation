@@ -378,7 +378,7 @@
 		uses = 0
 		qdel(src)
 		return
-	add_logs(user, M, "used a cult spell on", source.name, "")
+	log_combat(user, M, "used a cult spell on", source.name, "")
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey
 
@@ -489,7 +489,7 @@
 /obj/item/melee/blood_magic/shackles/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(iscultist(user) && iscarbon(target) && proximity)
 		var/mob/living/carbon/C = target
-		if(C.get_num_arms() >= 2 || C.get_arm_ignore())
+		if(C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore())
 			CuffAttack(C, user)
 		else
 			user.visible_message("<span class='cultitalic'>This victim doesn't have enough arms to complete the restraint!</span>")
@@ -507,7 +507,7 @@
 				C.update_handcuffed()
 				C.silent += 5
 				to_chat(user, "<span class='notice'>You shackle [C].</span>")
-				add_logs(user, C, "shackled")
+				log_combat(user, C, "shackled")
 				uses--
 			else
 				to_chat(user, "<span class='warning'>[C] is already bound.</span>")

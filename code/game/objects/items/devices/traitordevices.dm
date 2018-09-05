@@ -39,7 +39,7 @@ effective or pretty fucking useless.
 		to_chat(user, "<span class='danger'>The mind batterer has been burnt out!</span>")
 		return
 
-	add_logs(user, null, "knocked down people in the area", src)
+	log_combat(user, null, "knocked down people in the area", src)
 
 	for(var/mob/living/carbon/human/M in urange(10, user, 1))
 		if(prob(50))
@@ -82,7 +82,7 @@ effective or pretty fucking useless.
 	if(!irradiate)
 		return
 	if(!used)
-		add_logs(user, M, "irradiated", src)
+		log_combat(user, M, "irradiated", src)
 		var/cooldown = GetCooldown()
 		used = 1
 		icon_state = "health1"

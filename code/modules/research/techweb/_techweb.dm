@@ -355,5 +355,4 @@
 	allowed_buildtypes = SMELTER
 
 /datum/techweb/specialized/autounlocking/exofab
-	node_autounlock_ids = list("robotics", "mmi", "cyborg", "mecha_odysseus", "mech_gygax", "mech_durand", "mecha_phazon", "mecha", "mech_tools", "clown")
 	allowed_buildtypes = MECHFAB

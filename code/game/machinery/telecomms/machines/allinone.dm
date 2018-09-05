@@ -17,7 +17,7 @@
 	flags_1 = NODECONSTRUCT_1
 
 /obj/machinery/telecomms/allinone/Initialize()
-	..()
+	. = ..()
 	if (intercept)
 		freq_listening = list(FREQ_SYNDICATE)
 

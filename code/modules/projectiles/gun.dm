@@ -49,8 +49,6 @@
 	var/datum/action/item_action/toggle_gunlight/alight
 	var/mutable_appearance/flashlight_overlay
 
-	var/list/upgrades = list()
-
 	var/ammo_x_offset = 0 //used for positioning ammo count overlay on sprite
 	var/ammo_y_offset = 0
 	var/flight_x_offset = 0
@@ -334,22 +332,21 @@
 			if(loc == user)
 				alight.Grant(user)
 	else if(istype(I, /obj/item/kitchen/knife))
-		if(!can_bayonet)
-			return ..()
 		var/obj/item/kitchen/knife/K = I
-		if(!bayonet)
-			if(!user.transferItemToLoc(I, src))
-				return
-			to_chat(user, "<span class='notice'>You attach \the [K] to the front of \the [src].</span>")
-			bayonet = K
-			var/state = "bayonet"							//Generic state.
-			if(bayonet.icon_state in icon_states('icons/obj/guns/bayonets.dmi'))		//Snowflake state?
-				state = bayonet.icon_state
-			var/icon/bayonet_icons = 'icons/obj/guns/bayonets.dmi'
-			knife_overlay = mutable_appearance(bayonet_icons, state)
-			knife_overlay.pixel_x = knife_x_offset
-			knife_overlay.pixel_y = knife_y_offset
-			add_overlay(knife_overlay, TRUE)
+		if(!can_bayonet || !K.bayonet || bayonet) //ensure the gun has an attachment point available, and that the knife is compatible with it.
+			return ..()
+		if(!user.transferItemToLoc(I, src))
+			return
+		to_chat(user, "<span class='notice'>You attach \the [K] to the front of \the [src].</span>")
+		bayonet = K
+		var/state = "bayonet"							//Generic state.
+		if(bayonet.icon_state in icon_states('icons/obj/guns/bayonets.dmi'))		//Snowflake state?
+			state = bayonet.icon_state
+		var/icon/bayonet_icons = 'icons/obj/guns/bayonets.dmi'
+		knife_overlay = mutable_appearance(bayonet_icons, state)
+		knife_overlay.pixel_x = knife_x_offset
+		knife_overlay.pixel_y = knife_y_offset
+		add_overlay(knife_overlay, TRUE)
 	else if(istype(I, /obj/item/screwdriver))
 		if(gun_light)
 			var/obj/item/flashlight/seclite/S = gun_light

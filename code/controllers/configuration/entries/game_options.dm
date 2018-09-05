@@ -1,31 +1,43 @@
 /datum/config_entry/number_list/repeated_mode_adjust
 
-/datum/config_entry/keyed_number_list/probability
+/datum/config_entry/keyed_list/probability
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
 
-/datum/config_entry/keyed_number_list/probability/ValidateListEntry(key_name)
+/datum/config_entry/keyed_list/probability/ValidateListEntry(key_name)
 	return key_name in config.modes
 
-/datum/config_entry/keyed_number_list/max_pop
+/datum/config_entry/keyed_list/max_pop
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
 
-/datum/config_entry/keyed_number_list/max_pop/ValidateListEntry(key_name)
+/datum/config_entry/keyed_list/max_pop/ValidateListEntry(key_name)
 	return key_name in config.modes
 
-/datum/config_entry/keyed_number_list/min_pop
+/datum/config_entry/keyed_list/min_pop
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
 
-/datum/config_entry/keyed_number_list/min_pop/ValidateListEntry(key_name, key_value)
+/datum/config_entry/keyed_list/min_pop/ValidateListEntry(key_name, key_value)
 	return key_name in config.modes
 
-/datum/config_entry/keyed_flag_list/continuous	// which roundtypes continue if all antagonists die
+/datum/config_entry/keyed_list/continuous	// which roundtypes continue if all antagonists die
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
 
-/datum/config_entry/keyed_flag_list/continuous/ValidateListEntry(key_name, key_value)
+/datum/config_entry/keyed_list/continuous/ValidateListEntry(key_name, key_value)
 	return key_name in config.modes
 
-/datum/config_entry/keyed_flag_list/midround_antag	// which roundtypes use the midround antagonist system
+/datum/config_entry/keyed_list/midround_antag	// which roundtypes use the midround antagonist system
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
 
-/datum/config_entry/keyed_flag_list/midround_antag/ValidateListEntry(key_name, key_value)
+/datum/config_entry/keyed_list/midround_antag/ValidateListEntry(key_name, key_value)
 	return key_name in config.modes
 
-/datum/config_entry/keyed_string_list/policy
+/datum/config_entry/keyed_list/policy
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_TEXT
 
 /datum/config_entry/number/damage_multiplier
 	config_entry_value = 1
@@ -124,7 +136,9 @@
 
 /datum/config_entry/flag/show_game_type_odds	//if set this allows players to see the odds of each roundtype on the get revision screen
 
-/datum/config_entry/keyed_flag_list/roundstart_races	//races you can play as from the get go.
+/datum/config_entry/keyed_list/roundstart_races	//races you can play as from the get go.
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
 
 /datum/config_entry/flag/join_with_mutant_humans	//players can pick mutant bodyparts for humans before joining the game
 
@@ -174,28 +188,67 @@
 
 /datum/config_entry/flag/emojis
 
-/datum/config_entry/number/run_delay	//Used for modifying movement speed for mobs.
-	var/static/value_cache = 0
+/datum/config_entry/keyed_list/multiplicative_movespeed
+	key_mode = KEY_MODE_TYPE
+	value_mode = VALUE_MODE_NUM
+	config_entry_value = list(			//DEFAULTS
+	/mob/living/simple_animal = 1,
+	/mob/living/silicon/pai = 1,
+	/mob/living/carbon/alien/humanoid/hunter = -1,
+	/mob/living/carbon/alien/humanoid/royal/praetorian = 1,
+	/mob/living/carbon/alien/humanoid/royal/queen = 3
+	)
 
-/datum/config_entry/number/run_delay/ValidateAndSet()
+/datum/config_entry/keyed_list/multiplicative_movespeed/ValidateAndSet()
 	. = ..()
 	if(.)
-		value_cache = config_entry_value
+		update_config_movespeed_type_lookup(TRUE)
 
-/datum/config_entry/number/walk_delay
-	var/static/value_cache = 0
+/datum/config_entry/keyed_list/multiplicative_movespeed/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(. && (var_name == NAMEOF(src, config_entry_value)))
+		update_config_movespeed_type_lookup(TRUE)
 
-/datum/config_entry/number/walk_delay/ValidateAndSet()
+/datum/config_entry/number/movedelay	//Used for modifying movement speed for mobs.
+	abstract_type = /datum/config_entry/number/movedelay
+
+/datum/config_entry/number/movedelay/ValidateAndSet()
 	. = ..()
 	if(.)
-		value_cache = config_entry_value
+		update_mob_config_movespeeds()
 
-/datum/config_entry/number/human_delay	//Mob specific modifiers. NOTE: These will affect different mob types in different ways
-/datum/config_entry/number/robot_delay
-/datum/config_entry/number/monkey_delay
-/datum/config_entry/number/alien_delay
-/datum/config_entry/number/slime_delay
-/datum/config_entry/number/animal_delay
+/datum/config_entry/number/movedelay/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(. && (var_name == NAMEOF(src, config_entry_value)))
+		update_mob_config_movespeeds()
+
+/datum/config_entry/number/movedelay/run_delay
+
+/datum/config_entry/number/movedelay/walk_delay
+
+/////////////////////////////////////////////////Outdated move delay
+/datum/config_entry/number/outdated_movedelay
+	deprecated_by = /datum/config_entry/keyed_list/multiplicative_movespeed
+	abstract_type = /datum/config_entry/number/outdated_movedelay
+
+	var/movedelay_type
+
+/datum/config_entry/number/outdated_movedelay/DeprecationUpdate(value)
+	return "[movedelay_type] [value]"
+
+/datum/config_entry/number/outdated_movedelay/human_delay
+	movedelay_type = /mob/living/carbon/human
+/datum/config_entry/number/outdated_movedelay/robot_delay
+	movedelay_type = /mob/living/silicon/robot
+/datum/config_entry/number/outdated_movedelay/monkey_delay
+	movedelay_type = /mob/living/carbon/monkey
+/datum/config_entry/number/outdated_movedelay/alien_delay
+	movedelay_type = /mob/living/carbon/alien
+/datum/config_entry/number/outdated_movedelay/slime_delay
+	movedelay_type = /mob/living/simple_animal/slime
+/datum/config_entry/number/outdated_movedelay/animal_delay
+	movedelay_type = /mob/living/simple_animal
+/////////////////////////////////////////////////
 
 /datum/config_entry/flag/roundstart_away	//Will random away mission be loaded.
 
@@ -219,9 +272,13 @@
 	config_entry_value = 12
 	min_val = 0
 
-/datum/config_entry/keyed_flag_list/random_laws
+/datum/config_entry/keyed_list/random_laws
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
 
-/datum/config_entry/keyed_number_list/law_weight
+/datum/config_entry/keyed_list/law_weight
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
 	splitter = ","
 
 /datum/config_entry/number/overflow_cap
@@ -286,7 +343,9 @@
 
 /datum/config_entry/flag/shift_time_realtime
 
-/datum/config_entry/keyed_number_list/antag_rep
+/datum/config_entry/keyed_list/antag_rep
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
 
 /datum/config_entry/number/monkeycap
 	config_entry_value = 64

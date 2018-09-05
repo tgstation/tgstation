@@ -74,7 +74,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	name = "Water Vapor"
 	gas_overlay = "water_vapor"
 	moles_visible = MOLES_GAS_VISIBLE
-	fusion_power = 4
+	fusion_power = 8
 
 /datum/gas/hypernoblium
 	id = "nob"
@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	gas_overlay = "nitryl"
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
-	fusion_power = 10
+	fusion_power = 15
 
 /datum/gas/tritium
 	id = "tritium"
@@ -115,7 +115,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	specific_heat = 20
 	name = "BZ"
 	dangerous = TRUE
-	fusion_power = 15
+	fusion_power = 8
 
 /datum/gas/stimulum
 	id = "stim"

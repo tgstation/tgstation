@@ -15,7 +15,7 @@ Stabilized extracts:
 	var/mob/living/owner
 
 /obj/item/slimecross/stabilized/Initialize()
-	..()
+	. = ..()
 	START_PROCESSING(SSobj,src)
 
 /obj/item/slimecross/stabilized/Destroy()
@@ -111,7 +111,7 @@ Stabilized extracts:
 	mob_type = pick(mob_spawn_pets)
 
 /obj/item/slimecross/stabilized/gold/Initialize()
-	..()
+	. = ..()
 	generate_mobtype()
 
 /obj/item/slimecross/stabilized/gold/attack_self(mob/user)

@@ -92,7 +92,7 @@
 	. = 0
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		. += BP.stamina_dam
+		. += round(BP.stamina_dam * BP.stam_damage_coeff, DAMAGE_PRECISION)
 
 /mob/living/carbon/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
@@ -113,10 +113,12 @@
 ////////////////////////////////////////////
 
 //Returns a list of damaged bodyparts
-/mob/living/carbon/proc/get_damaged_bodyparts(brute = FALSE, burn = FALSE, stamina = FALSE)
+/mob/living/carbon/proc/get_damaged_bodyparts(brute = FALSE, burn = FALSE, stamina = FALSE, status)
 	var/list/obj/item/bodypart/parts = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
+		if(status && BP.status != status)
+			continue
 		if((brute && BP.brute_dam) || (burn && BP.burn_dam) || (stamina && BP.stamina_dam))
 			parts += BP
 	return parts
@@ -166,9 +168,9 @@
 
 		update |= picked.heal_damage(brute, burn, stamina, only_robotic, only_organic, FALSE)
 
-		brute -= (brute_was - picked.brute_dam)
-		burn -= (burn_was - picked.burn_dam)
-		stamina -= (stamina_was - picked.stamina_dam)
+		brute = round(brute - (brute_was - picked.brute_dam), DAMAGE_PRECISION)
+		burn = round(burn - (burn_was - picked.burn_dam), DAMAGE_PRECISION)
+		stamina = round(stamina - (stamina_was - picked.stamina_dam), DAMAGE_PRECISION)
 
 		parts -= picked
 	if(updating_health)
@@ -186,9 +188,9 @@
 	var/update = 0
 	while(parts.len && (brute > 0 || burn > 0 || stamina > 0))
 		var/obj/item/bodypart/picked = pick(parts)
-		var/brute_per_part = round(brute/parts.len, 0.01)
-		var/burn_per_part = round(burn/parts.len, 0.01)
-		var/stamina_per_part = round(stamina/parts.len, 0.01)
+		var/brute_per_part = round(brute/parts.len, DAMAGE_PRECISION)
+		var/burn_per_part = round(burn/parts.len, DAMAGE_PRECISION)
+		var/stamina_per_part = round(stamina/parts.len, DAMAGE_PRECISION)
 
 		var/brute_was = picked.brute_dam
 		var/burn_was = picked.burn_dam
@@ -197,9 +199,9 @@
 
 		update |= picked.receive_damage(brute_per_part, burn_per_part, stamina_per_part, FALSE)
 
-		brute	-= (picked.brute_dam - brute_was)
-		burn	-= (picked.burn_dam - burn_was)
-		stamina -= (picked.stamina_dam - stamina_was)
+		brute	= round(brute - (picked.brute_dam - brute_was), DAMAGE_PRECISION)
+		burn	= round(burn - (picked.burn_dam - burn_was), DAMAGE_PRECISION)
+		stamina = round(stamina - (picked.stamina_dam - stamina_was), DAMAGE_PRECISION)
 
 		parts -= picked
 	if(updating_health)
@@ -248,4 +250,3 @@
 	if(B)
 		var/adjusted_amount = amount - B.get_brain_damage()
 		B.adjust_brain_damage(adjusted_amount, null)
-

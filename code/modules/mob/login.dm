@@ -49,4 +49,4 @@
 			for(var/datum/action/A in client.player_details.player_actions)
 				A.Grant(src)
 
-	log_message("Client [key_name(src)] has taken ownership of mob [src]", INDIVIDUAL_OWNERSHIP_LOG)
+	log_message("Client [key_name(src)] has taken ownership of mob [src]", LOG_OWNERSHIP)

@@ -205,18 +205,24 @@
 	log_game("[key_name(src)] (job: [src.job ? "[src.job]" : "None"]) committed suicide at [AREACOORD(src)].")
 
 /mob/living/proc/canSuicide()
-	if(stat == CONSCIOUS)
-		return TRUE
-	else if(stat == DEAD)
-		to_chat(src, "You're already dead!")
-	else if(stat == UNCONSCIOUS)
-		to_chat(src, "You need to be conscious to suicide!")
+	switch(stat)
+		if(CONSCIOUS)
+			return TRUE
+		if(SOFT_CRIT)
+			to_chat(src, "You can't commit suicide while in a critical condition!")
+		if(UNCONSCIOUS)
+			to_chat(src, "You need to be conscious to commit suicide!")
+		if(DEAD)
+			to_chat(src, "You're already dead!")
 	return
 
 /mob/living/carbon/canSuicide()
 	if(!..())
 		return
-	if(!canmove || restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
-		to_chat(src, "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))")
+	if(IsStun() || IsKnockdown())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
+		to_chat(src, "You can't commit suicide while stunned! ((You can type Ghost instead however.))")
+		return
+	if(restrained())
+		to_chat(src, "You can't commit suicide while restrained! ((You can type Ghost instead however.))")
 		return
 	return TRUE

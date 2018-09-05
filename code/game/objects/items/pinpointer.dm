@@ -143,9 +143,3 @@
 				target = null
 	if(!target) //target can be set to null from above code, or elsewhere
 		active = FALSE
-
-/obj/item/pinpointer/process()
-	if(!active)
-		return PROCESS_KILL
-	scan_for_target()
-	update_icon()

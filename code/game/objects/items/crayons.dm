@@ -250,6 +250,10 @@
 		cost = 5
 	if(istype(target, /obj/item/canvas))
 		cost = 0
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if (H.has_trait(TRAIT_TAGGER))
+			cost *= 0.5
 	var/charges_used = use_charges(user, cost)
 	if(!charges_used)
 		return
@@ -531,11 +535,11 @@
 	var/mob/living/carbon/human/H = user
 	if(is_capped || !actually_paints)
 		user.visible_message("<span class='suicide'>[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, but nothing happens!</span>")
-		user.say("MEDIOCRE!!")
+		user.say("MEDIOCRE!!", forced="spraycan suicide")
 		return SHAME
 	else
 		user.visible_message("<span class='suicide'>[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, spraying paint across [user.p_their()] teeth!</span>")
-		user.say("WITNESS ME!!")
+		user.say("WITNESS ME!!", forced="spraycan suicide")
 		if(pre_noise || post_noise)
 			playsound(loc, 'sound/effects/spray.ogg', 5, 1, 5)
 		if(can_change_colour)

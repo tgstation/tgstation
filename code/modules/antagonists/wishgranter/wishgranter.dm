@@ -2,6 +2,7 @@
 	name = "Wishgranter Avatar"
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
+	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/wishgranter/proc/forge_objectives()
 	var/datum/objective/hijack/hijack = new

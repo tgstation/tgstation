@@ -305,7 +305,7 @@
 	to_chat(user, "You turn [src] [operating? "on":"off"].")
 	QDEL_NULL(mobhook)
 	if(!istype(current) && operating)
-		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(src, .proc/on_mob_move))
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/on_mob_move)))
 		setup_debug_field()
 	else if(!operating)
 		QDEL_NULL(current)

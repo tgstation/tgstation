@@ -41,7 +41,7 @@
 			var/obj/O = vval
 			if(istype(O) && (O.obj_flags & DANGEROUS_POSSESSION))
 				return FALSE
-	..()
+	return ..()
 
 /obj/Initialize()
 	. = ..()

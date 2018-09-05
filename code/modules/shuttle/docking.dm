@@ -1,4 +1,4 @@
-//this is the main proc. It instantly moves our mobile port to stationary port new_dock
+/// This is the main proc. It instantly moves our mobile port to stationary port `new_dock`.
 /obj/docking_port/mobile/proc/initiate_docking(obj/docking_port/stationary/new_dock, movement_direction, force=FALSE)
 	// Crashing this ship with NO SURVIVORS
 
@@ -32,12 +32,7 @@
 
 	// The underlying old area is the area assumed to be under the shuttle's starting location
 	// If it no longer/has never existed it will be created
-	var/area/underlying_old_area
-	for(var/i in GLOB.sortedAreas) // Locate grabs subtypes and we want a particular type
-		var/area/place = i
-		if(place.type == underlying_area_type)
-			underlying_old_area = place
-			break
+	var/area/underlying_old_area = GLOB.areas_by_type[underlying_area_type]
 	if(!underlying_old_area)
 		underlying_old_area = new underlying_area_type(null)
 

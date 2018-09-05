@@ -34,57 +34,51 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/syndicate2)
 "aj" = (
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "ak" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate2)
 "al" = (
 /mob/living/simple_animal/hostile/syndicate,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "am" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/suit/space/hardsuit/syndi,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "an" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "ao" = (
 /obj/machinery/sleeper,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "ap" = (
-/mob/living/simple_animal/hostile/syndicate/ranged{
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier,/obj/item/gun/ballistic/automatic/c20r,/obj/item/shield/energy)
-	},
-/turf/open/floor/mineral/plastitanium,
+/mob/living/simple_animal/hostile/syndicate/ranged/spacebattle,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "aq" = (
 /obj/machinery/door/unpowered/shuttle,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "ar" = (
 /obj/structure/table/reinforced,
 /obj/item/grenade/empgrenade,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "as" = (
 /obj/structure/table/reinforced,
 /obj/item/ammo_casing/c10mm,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "at" = (
 /obj/structure/table/reinforced,
 /obj/item/gun/ballistic/automatic/c20r,
-/turf/open/floor/mineral/plastitanium,
-/area/awaymission/spacebattle/syndicate2)
-"au" = (
-/obj/machinery/door/unpowered/shuttle,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "aw" = (
 /obj/structure/shuttle/engine/propulsion/right{
@@ -107,7 +101,7 @@
 "aA" = (
 /obj/structure/table/reinforced,
 /obj/item/gun/ballistic/automatic/pistol,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "aB" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -120,37 +114,30 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/syndicate3)
 "aD" = (
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate3)
 "aE" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate3)
 "aG" = (
-/mob/living/simple_animal/hostile/syndicate/melee{
-	deathmessage = "\[src] falls limp as they release their grip from the energy weapons, activating their self-destruct function!";
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
-	},
-/turf/open/floor/mineral/plastitanium,
+/mob/living/simple_animal/hostile/syndicate/melee/spacebattle,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "aI" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/suit/space/hardsuit/syndi,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate3)
 "aJ" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate3)
 "aK" = (
 /obj/machinery/computer/shuttle{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium,
-/area/awaymission/spacebattle/syndicate2)
-"aM" = (
-/obj/machinery/door/airlock/external,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "aP" = (
 /obj/structure/shuttle/engine/propulsion/right{
@@ -172,7 +159,7 @@
 /area/awaymission/spacebattle/syndicate1)
 "aT" = (
 /obj/machinery/sleeper,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate3)
 "aU" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -205,23 +192,23 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/syndicate2)
 "aY" = (
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "aZ" = (
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "ba" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "bb" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate1)
 "bc" = (
 /obj/machinery/porta_turret{
@@ -233,30 +220,30 @@
 /area/awaymission/spacebattle/syndicate2)
 "bd" = (
 /obj/machinery/door/unpowered/shuttle,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate3)
 "be" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/suit/space/hardsuit/syndi,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "bf" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "bg" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/gloves/combat,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "bh" = (
 /obj/machinery/sleeper,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "bi" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/helmet/swat,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate3)
 "bj" = (
 /obj/machinery/computer/pod{
@@ -264,7 +251,7 @@
 	id = "spacebattlepod3";
 	name = "Hull Door Control"
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "bk" = (
 /obj/machinery/door/poddoor{
@@ -278,46 +265,46 @@
 "bl" = (
 /obj/structure/table/reinforced,
 /obj/item/grenade/plastic/c4,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate3)
 "bm" = (
 /obj/machinery/door/unpowered/shuttle,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "bn" = (
 /obj/structure/table/reinforced,
 /obj/item/grenade/plastic/c4,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "bo" = (
 /obj/structure/table/reinforced,
 /obj/item/grenade/spawnergrenade/manhacks,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "bp" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "br" = (
 /mob/living/simple_animal/hostile/syndicate,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate3)
 "bt" = (
 /obj/structure/table/reinforced,
 /obj/item/melee/transforming/energy/sword/saber/red,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "bu" = (
 /obj/machinery/computer/shuttle{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate3)
 "bx" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/helmet/swat,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "by" = (
 /obj/machinery/porta_turret{
@@ -329,17 +316,13 @@
 /area/awaymission/spacebattle/syndicate3)
 "bA" = (
 /obj/structure/chair,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "bC" = (
 /obj/machinery/computer/shuttle{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium,
-/area/awaymission/spacebattle/syndicate1)
-"bE" = (
-/obj/machinery/door/airlock/external,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "bG" = (
 /obj/machinery/porta_turret{
@@ -391,7 +374,7 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/cruiser)
 "bO" = (
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/cruiser)
 "bP" = (
 /obj/structure/window/reinforced,
@@ -407,13 +390,13 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/cruiser)
 "bR" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/cruiser)
 "bS" = (
 /turf/closed/wall/mineral/titanium/overspace,
@@ -453,7 +436,7 @@
 	id = "spacebattlepod";
 	name = "Hull Door Control"
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/cruiser)
 "cc" = (
 /turf/open/floor/plasteel,
@@ -481,7 +464,7 @@
 /area/awaymission/spacebattle/cruiser)
 "ck" = (
 /mob/living/simple_animal/hostile/syndicate,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "cm" = (
 /turf/open/floor/plasteel{
@@ -667,10 +650,6 @@
 	dir = 2
 	},
 /area/awaymission/spacebattle/cruiser)
-"cX" = (
-/mob/living/simple_animal/hostile/syndicate/melee,
-/turf/open/floor/plasteel,
-/area/awaymission/spacebattle/cruiser)
 "cY" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
@@ -684,10 +663,8 @@
 /turf/open/floor/plasteel/bar,
 /area/awaymission/spacebattle/cruiser)
 "db" = (
-/mob/living/simple_animal/hostile/syndicate/ranged{
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier,/obj/item/gun/ballistic/automatic/c20r,/obj/item/shield/energy)
-	},
-/turf/open/floor/mineral/plastitanium,
+/mob/living/simple_animal/hostile/syndicate/ranged/spacebattle,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate3)
 "dc" = (
 /obj/machinery/computer/pod{
@@ -695,7 +672,7 @@
 	id = "spacebattlepod2";
 	name = "Hull Door Control"
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/cruiser)
 "dd" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
@@ -850,7 +827,7 @@
 	icon_state = "recharge_port";
 	dir = 2
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/cruiser)
 "dO" = (
 /obj/structure/reagent_dispensers/watertank,
@@ -956,11 +933,8 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "ef" = (
-/mob/living/simple_animal/hostile/syndicate/melee{
-	deathmessage = "\[src] falls limp as they release their grip from the energy weapons, activating their self-destruct function!";
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
-	},
-/turf/open/floor/mineral/plastitanium,
+/mob/living/simple_animal/hostile/syndicate/melee/spacebattle,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate3)
 "eg" = (
 /obj/structure/closet/crate{
@@ -970,11 +944,8 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "eh" = (
-/mob/living/simple_animal/hostile/syndicate/melee{
-	deathmessage = "\[src] falls limp as they release their grip from the energy weapons, activating their self-destruct function!";
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
-	},
-/turf/open/floor/mineral/plastitanium,
+/mob/living/simple_animal/hostile/syndicate/melee/spacebattle,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "ei" = (
 /obj/structure/closet/l3closet/security,
@@ -1041,7 +1012,7 @@
 /area/awaymission/spacebattle/cruiser)
 "ew" = (
 /obj/structure/chair,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate3)
 "ex" = (
 /turf/open/floor/plasteel/red/side{
@@ -1061,10 +1032,8 @@
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "eA" = (
-/mob/living/simple_animal/hostile/syndicate/ranged{
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier,/obj/item/gun/ballistic/automatic/c20r,/obj/item/shield/energy)
-	},
-/turf/open/floor/mineral/plastitanium,
+/mob/living/simple_animal/hostile/syndicate/ranged/spacebattle,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "eC" = (
 /obj/structure/table/reinforced,
@@ -1084,7 +1053,7 @@
 /area/awaymission/spacebattle/cruiser)
 "eG" = (
 /obj/structure/chair,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "eH" = (
 /obj/effect/mob_spawn/human/engineer/rig{
@@ -1096,11 +1065,11 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/cruiser)
 "eK" = (
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate4)
 "eL" = (
 /obj/machinery/computer/shuttle,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate4)
 "eM" = (
 /turf/open/floor/plasteel/blue/side{
@@ -1125,14 +1094,14 @@
 /area/awaymission/spacebattle/cruiser)
 "eR" = (
 /obj/machinery/sleeper,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate4)
 "eS" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /mob/living/simple_animal/hostile/syndicate,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate4)
 "eT" = (
 /obj/structure/closet/crate,
@@ -1201,7 +1170,7 @@
 	dir = 4
 	},
 /mob/living/simple_animal/hostile/syndicate,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/cruiser)
 "ff" = (
 /obj/machinery/button/door{
@@ -1228,7 +1197,7 @@
 	dir = 8
 	},
 /mob/living/simple_animal/hostile/syndicate,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/cruiser)
 "fj" = (
 /obj/machinery/computer/security/telescreen,
@@ -1236,13 +1205,10 @@
 /area/awaymission/spacebattle/cruiser)
 "fl" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate4)
 "fm" = (
-/mob/living/simple_animal/hostile/syndicate/melee{
-	deathmessage = "\[src] falls limp as they release their grip from the energy weapons, activating their self-destruct function!";
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
-	},
+/mob/living/simple_animal/hostile/syndicate/melee/sword,
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "fn" = (
@@ -1676,7 +1642,7 @@
 /area/awaymission/spacebattle/cruiser)
 "gJ" = (
 /mob/living/simple_animal/hostile/syndicate,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/cruiser)
 "gK" = (
 /obj/machinery/computer/security{
@@ -1811,10 +1777,10 @@
 /area/awaymission/spacebattle/syndicate7)
 "hj" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate7)
 "hk" = (
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate7)
 "hl" = (
 /obj/structure/shuttle/engine/heater{
@@ -1888,7 +1854,7 @@
 /area/awaymission/spacebattle/cruiser)
 "hy" = (
 /obj/machinery/computer/mech_bay_power_console,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/cruiser)
 "hz" = (
 /obj/structure/closet/crate/medical,
@@ -1975,28 +1941,22 @@
 	icon_state = "damaged4"
 	},
 /area/awaymission/spacebattle/cruiser)
-"hR" = (
-/mob/living/simple_animal/hostile/syndicate/ranged{
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier,/obj/item/gun/ballistic/automatic/c20r,/obj/item/shield/energy)
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/spacebattle/cruiser)
 "hS" = (
 /obj/machinery/computer/shuttle{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate7)
 "hT" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /mob/living/simple_animal/hostile/syndicate,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate7)
 "hU" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate7)
 "hV" = (
 /obj/machinery/shower{
@@ -2127,7 +2087,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "it" = (
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "iu" = (
@@ -2164,53 +2124,46 @@
 /area/space/nearstation)
 "iB" = (
 /obj/machinery/sleeper,
-/turf/open/floor/mineral/plastitanium/airless,
+/turf/open/floor/mineral/plastitanium/red/airless,
 /area/space/nearstation)
 "iC" = (
-/turf/open/floor/mineral/plastitanium/airless,
+/turf/open/floor/mineral/plastitanium/red/airless,
 /area/space/nearstation)
 "iD" = (
 /obj/effect/mob_spawn/human/syndicatesoldier,
-/turf/open/floor/mineral/plastitanium/airless,
+/turf/open/floor/mineral/plastitanium/red/airless,
 /area/space/nearstation)
 "iE" = (
 /turf/closed/mineral/bananium,
 /area/space/nearstation)
 "iF" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/plasteel/airless{
-	icon_state = "floor4";
-	dir = 10
-	},
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "iG" = (
 /obj/item/stack/rods,
-/turf/open/floor/mineral/plastitanium/airless,
+/turf/open/floor/mineral/plastitanium/red/airless,
 /area/space/nearstation)
 "iI" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate5)
-"iK" = (
-/obj/machinery/sleeper,
-/turf/open/floor/plasteel/airless,
-/area/space/nearstation)
 "iL" = (
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate5)
 "iM" = (
 /obj/machinery/computer/shuttle,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate5)
 "iP" = (
 /obj/machinery/sleeper,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate5)
 "iQ" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /mob/living/simple_animal/hostile/syndicate,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate5)
 "iR" = (
 /obj/structure/shuttle/engine/heater,
@@ -2225,7 +2178,7 @@
 /area/space/nearstation)
 "iT" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate5)
 "iW" = (
 /obj/structure/shuttle/engine/heater,
@@ -2242,26 +2195,26 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate6)
 "jb" = (
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate6)
 "jc" = (
 /obj/machinery/computer/shuttle,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate6)
 "jd" = (
 /obj/machinery/sleeper,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate6)
 "je" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /mob/living/simple_animal/hostile/syndicate,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate6)
 "jf" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate6)
 "ji" = (
 /obj/structure/shuttle/engine/heater,
@@ -2303,10 +2256,7 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "jr" = (
-/mob/living/simple_animal/hostile/syndicate/melee/space{
-	deathmessage = "\[src] falls limp as they release their grip from the energy weapons, activating their self-destruct function!";
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatecommando)
-	},
+/mob/living/simple_animal/hostile/syndicate/melee/sword/space,
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/cruiser)
 "js" = (
@@ -2423,10 +2373,7 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "jK" = (
-/mob/living/simple_animal/hostile/syndicate/melee{
-	deathmessage = "\[src] falls limp as they release their grip from the energy weapons, activating their self-destruct function!";
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
-	},
+/mob/living/simple_animal/hostile/syndicate/melee/sword,
 /turf/open/floor/plasteel/blue/side{
 	dir = 8
 	},
@@ -2487,9 +2434,7 @@
 /turf/open/floor/plasteel/airless,
 /area/awaymission/spacebattle/cruiser)
 "jU" = (
-/mob/living/simple_animal/hostile/syndicate/ranged/space{
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatecommando,/obj/item/gun/ballistic/automatic/c20r)
-	},
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
 /turf/open/floor/plasteel/airless,
 /area/awaymission/spacebattle/cruiser)
 "jV" = (
@@ -2514,9 +2459,7 @@
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "jY" = (
-/mob/living/simple_animal/hostile/syndicate/ranged/space{
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatecommando,/obj/item/gun/ballistic/automatic/c20r)
-	},
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/cruiser)
 "jZ" = (
@@ -2624,9 +2567,7 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "ku" = (
-/mob/living/simple_animal/hostile/syndicate/ranged{
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier,/obj/item/gun/ballistic/automatic/c20r,/obj/item/shield/energy)
-	},
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/plasteel/white,
 /area/awaymission/spacebattle/cruiser)
 "kv" = (
@@ -2689,7 +2630,7 @@
 /obj/item/ammo_casing/c10mm,
 /obj/item/ammo_casing/c10mm,
 /obj/item/ammo_casing/c10mm,
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/spacebattle/cruiser)
 "kH" = (
@@ -22861,7 +22802,7 @@ aY
 aY
 aY
 aY
-bE
+bb
 ab
 ab
 ab
@@ -23118,7 +23059,7 @@ aY
 aY
 aY
 aY
-bE
+bb
 ab
 ab
 ab
@@ -23415,7 +23356,7 @@ fi
 bR
 bR
 dN
-kj
+bO
 bO
 Wv
 bM
@@ -25506,7 +25447,7 @@ cc
 cc
 cc
 cc
-cX
+fm
 cM
 cN
 cN
@@ -33450,7 +33391,7 @@ cc
 cc
 cc
 cc
-hR
+it
 cc
 fL
 cn
@@ -36289,7 +36230,7 @@ cc
 gd
 gz
 cc
-hR
+it
 gZ
 bT
 cc
@@ -37054,7 +36995,7 @@ eD
 cc
 eY
 cc
-hR
+it
 ft
 cc
 cc
@@ -38256,8 +38197,8 @@ aj
 aj
 aj
 aj
-aM
-aM
+ak
+ak
 aj
 aj
 aj
@@ -38513,8 +38454,8 @@ aj
 aj
 aj
 aj
-aM
-aM
+ak
+ak
 aj
 aj
 aj
@@ -38764,7 +38705,7 @@ ah
 ah
 ah
 ah
-au
+aq
 aq
 ah
 aj
@@ -45827,7 +45768,7 @@ iC
 iC
 iC
 iC
-iK
+iB
 iz
 iz
 ab
@@ -51182,7 +51123,7 @@ bM
 bM
 bM
 cm
-hR
+it
 cc
 cc
 cc
@@ -52206,7 +52147,7 @@ bR
 bR
 bR
 dN
-kj
+bO
 bO
 Wv
 bM
@@ -52727,7 +52668,7 @@ cc
 cc
 cc
 cc
-hR
+it
 cc
 cc
 cc

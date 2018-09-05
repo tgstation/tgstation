@@ -110,6 +110,25 @@
 	eat()
 	return
 
+/obj/singularity/wizard/attack_tk(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		GET_COMPONENT_FROM(insaneinthemembrane, /datum/component/mood, C)
+		if(insaneinthemembrane.sanity < 15)
+			return //they've already seen it and are about to die, or are just too insane to care
+		to_chat(C, "<span class='userdanger'>OH GOD! NONE OF IT IS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!</span>")
+		insaneinthemembrane.sanity = 0
+		for(var/lore in typesof(/datum/brain_trauma/severe))
+			C.gain_trauma(lore)
+		addtimer(CALLBACK(src, /obj/singularity/wizard.proc/deranged, C), 100)
+
+/obj/singularity/wizard/proc/deranged(mob/living/carbon/C)
+	if(!C || C.stat == DEAD)
+		return
+	C.vomit(0, TRUE, TRUE, 3, TRUE)
+	C.spew_organ(3, 2)
+	C.death()
+
 /obj/singularity/wizard/mapped/admin_investigate_setup()
 	return
 
@@ -282,7 +301,7 @@
 		switch(user.zone_selected)
 			if(BODY_ZONE_PRECISE_MOUTH)
 				var/wgw =  sanitize(input(user, "What would you like the victim to say", "Voodoo", null)  as text)
-				target.say(wgw)
+				target.say(wgw, forced = "voodoo doll")
 				log_game("[key_name(user)] made [key_name(target)] say [wgw] with a voodoo doll.")
 			if(BODY_ZONE_PRECISE_EYES)
 				user.set_machine(src)

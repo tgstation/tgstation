@@ -70,7 +70,7 @@
 	if(M.a_intent == INTENT_HARM)
 		M.changeNext_move(CLICK_CD_RAPID)
 		if(warcry)
-			M.say("[warcry]", ignore_spam = TRUE)
+			M.say("[warcry]", ignore_spam = TRUE, forced = "north star warcry")
 	.= FALSE
 
 /obj/item/clothing/gloves/rapid/attack_self(mob/user)

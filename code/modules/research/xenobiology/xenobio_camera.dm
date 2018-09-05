@@ -50,7 +50,7 @@
 	scan_action = new
 	potion_action = new
 	stored_slimes = list()
-	listener = AddComponent(/datum/component/redirect, COMSIG_ATOM_CONTENTS_DEL, CALLBACK(src, .proc/on_contents_del))
+	listener = AddComponent(/datum/component/redirect, list(COMSIG_ATOM_CONTENTS_DEL = CALLBACK(src, .proc/on_contents_del)))
 
 /obj/machinery/computer/camera_advanced/xenobio/Destroy()
 	stored_slimes = null
@@ -101,7 +101,7 @@
 		potion_action.Grant(user)
 		actions += potion_action
 
-/obj/machinery/computer/camera_advanced/xenobio/proc/on_contents_del(atom/deleted)
+/obj/machinery/computer/camera_advanced/xenobio/proc/on_contents_del(datum/source, atom/deleted)
 	if(current_potion == deleted)
 		current_potion = null
 	if(deleted in stored_slimes)

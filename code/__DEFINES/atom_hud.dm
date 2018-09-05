@@ -21,8 +21,10 @@
 #define GLAND_HUD "17"//Gland indicators for abductors
 #define SENTIENT_DISEASE_HUD	"18"
 #define AI_DETECT_HUD	"19"
+#define NANITE_HUD "20"
+#define DIAG_NANITE_FULL_HUD "21"
 //for antag huds. these are used at the /mob level
-#define ANTAG_HUD		"20"
+#define ANTAG_HUD		"22"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior

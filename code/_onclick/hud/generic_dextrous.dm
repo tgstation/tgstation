@@ -76,8 +76,6 @@
 
 //Dextrous simple mobs can use hands!
 /mob/living/simple_animal/create_mob_hud()
-	if(client && !hud_used)
-		if(dextrous)
-			hud_used = new dextrous_hud_type(src)
-		else
-			..()
+	if(dextrous)
+		hud_type = dextrous_hud_type
+	return ..()

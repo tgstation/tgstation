@@ -58,7 +58,7 @@
 	else
 		strength = max(strength, arguments[1])
 
-/datum/component/radioactive/proc/rad_examine(mob/user, atom/thing)
+/datum/component/radioactive/proc/rad_examine(datum/source, mob/user, atom/thing)
 	var/atom/master = parent
 	var/list/out = list()
 	if(get_dist(master, user) <= 1)
@@ -74,7 +74,7 @@
 			out += "."
 	to_chat(user, out.Join())
 
-/datum/component/radioactive/proc/rad_attack(atom/movable/target, mob/living/user)
+/datum/component/radioactive/proc/rad_attack(datum/source, atom/movable/target, mob/living/user)
 	radiation_pulse(parent, strength/20)
 	target.rad_act(strength/2)
 	strength -= strength / hl3_release_date

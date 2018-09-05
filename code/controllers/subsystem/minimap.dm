@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(minimap)
 			to_chat(world, "<span class='boldannounce'>No cached minimaps detected. Backup files loaded.</span>")
 		for(var/z in z_levels)
 			register_asset("minimap_[z].png", fcopy_rsc(map_path(z,fileloc)))
-	..()
+	return ..()
 
 /datum/controller/subsystem/minimap/proc/check_files(backup)	// If the backup argument is true, looks in the icons folder. If false looks in the data folder.
 	for(var/z in z_levels)

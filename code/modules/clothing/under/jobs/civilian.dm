@@ -67,6 +67,60 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
+/obj/item/clothing/under/rank/blueclown
+	name = "blue clown suit"
+	desc = "<i>'BLUE HONK!'</i>"
+	icon_state = "blueclown"
+	item_state = "blueclown"
+	item_color = "blueclown"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/greenclown
+	name = "green clown suit"
+	desc = "<i>'GREEN HONK!'</i>"
+	icon_state = "greenclown"
+	item_state = "greenclown"
+	item_color = "greenclown"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/yellowclown
+	name = "yellow clown suit"
+	desc = "<i>'YELLOW HONK!'</i>"
+	icon_state = "yellowclown"
+	item_state = "yellowclown"
+	item_color = "yellowclown"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/purpleclown
+	name = "purple clown suit"
+	desc = "<i>'PURPLE HONK!'</i>"
+	icon_state = "purpleclown"
+	item_state = "purpleclown"
+	item_color = "purpleclown"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+	
+/obj/item/clothing/under/rank/orangeclown
+	name = "orange clown suit"
+	desc = "<i>'ORANGE HONK!'</i>"
+	icon_state = "orangeclown"
+	item_state = "orangeclown"
+	item_color = "orangeclown"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+	
+/obj/item/clothing/under/rank/rainbowclown
+	name = "rainbow clown suit"
+	desc = "<i>'R A I N B O W HONK!'</i>"
+	icon_state = "rainbowclown"
+	item_state = "rainbowclown"
+	item_color = "rainbowclown"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
 /obj/item/clothing/under/rank/clown/Initialize()
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)

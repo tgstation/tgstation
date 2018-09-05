@@ -38,6 +38,7 @@
 /obj/item/integrated_circuit_printer/proc/print_program(mob/user)
 	if(!cloning)
 		return
+
 	visible_message("<span class='notice'>[src] has finished printing its assembly!</span>")
 	playsound(src, 'sound/items/poster_being_created.ogg', 50, TRUE)
 	var/obj/item/electronic_assembly/assembly = SScircuit.load_electronic_assembly(get_turf(src), program)
@@ -52,7 +53,6 @@
 			return TRUE
 		to_chat(user, "<span class='notice'>You install [O] into [src]. </span>")
 		upgraded = TRUE
-		interact(user)
 		return TRUE
 
 	if(istype(O, /obj/item/disk/integrated_circuit/upgrade/clone))
@@ -61,7 +61,6 @@
 			return TRUE
 		to_chat(user, "<span class='notice'>You install [O] into [src]. Circuit cloning will now be instant. </span>")
 		fast_clone = TRUE
-		interact(user)
 		return TRUE
 
 	if(istype(O, /obj/item/electronic_assembly))
@@ -108,10 +107,16 @@
 	interact(user)
 
 /obj/item/integrated_circuit_printer/interact(mob/user)
+	if(!(in_range(src, user) || issilicon(user)))
+		return
+
 	if(isnull(current_category))
 		current_category = SScircuit.circuit_fabricator_recipe_list[1]
 
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+
+	//Preparing the browser
+	var/datum/browser/popup = new(user, "printernew", "Integrated Circuit Printer", 800, 630) // Set up the popup browser window
 
 	var/HTML = "<center><h2>Integrated Circuit Printer</h2></center><br>"
 	if(debug)
@@ -163,7 +168,8 @@
 		else
 			HTML += "<s>\[[initial(O.name)]\]</s>: [initial(O.desc)]<br>"
 
-	user << browse(HTML, "window=integrated_printer;size=600x500;border=1;can_resize=1;can_close=1;can_minimize=1")
+	popup.set_content(HTML)
+	popup.open()
 
 /obj/item/integrated_circuit_printer/Topic(href, href_list)
 	if(!check_interactivity(usr))

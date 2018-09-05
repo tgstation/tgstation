@@ -20,11 +20,15 @@
 	var/bloodthirst = HIS_GRACE_SATIATED
 	var/prev_bloodthirst = HIS_GRACE_SATIATED
 	var/force_bonus = 0
+	var/ascended = FALSE
+	var/victims_needed = 25
+	var/ascend_bonus = 15
 
 /obj/item/his_grace/Initialize()
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
 	GLOB.poi_list += src
+	AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_POST_THROW = CALLBACK(src, .proc/move_gracefully)))
 
 /obj/item/his_grace/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
@@ -74,7 +78,7 @@
 	if(!bloodthirst)
 		drowse()
 		return
-	if(bloodthirst < HIS_GRACE_CONSUME_OWNER)
+	if(bloodthirst < HIS_GRACE_CONSUME_OWNER && !ascended)
 		adjust_bloodthirst(1 + FLOOR(LAZYLEN(contents) * 0.5, 1)) //Maybe adjust this?
 	else
 		adjust_bloodthirst(1) //don't cool off rapidly once we're at the point where His Grace consumes all.
@@ -129,16 +133,38 @@
 	force_bonus = HIS_GRACE_FORCE_BONUS * LAZYLEN(contents)
 	playsound(user, 'sound/effects/pope_entry.ogg', 100)
 	icon_state = "his_grace_awakened"
+	move_gracefully()
 
-/obj/item/his_grace/proc/drowse() //Good night, Mr. Grace.
+/obj/item/his_grace/proc/move_gracefully()
 	if(!awakened)
 		return
+	var/static/list/transforms
+	if(!transforms)
+		var/matrix/M1 = matrix()
+		var/matrix/M2 = matrix()
+		var/matrix/M3 = matrix()
+		var/matrix/M4 = matrix()
+		M1.Translate(-1, 0)
+		M2.Translate(0, 1)
+		M3.Translate(1, 0)
+		M4.Translate(0, -1)
+		transforms = list(M1, M2, M3, M4)
+
+	animate(src, transform=transforms[1], time=0.2, loop=-1)
+	animate(transform=transforms[2], time=0.1)
+	animate(transform=transforms[3], time=0.2)
+	animate(transform=transforms[4], time=0.3)
+
+/obj/item/his_grace/proc/drowse() //Good night, Mr. Grace.
+	if(!awakened || ascended)
+		return
 	var/turf/T = get_turf(src)
-	T.visible_message("<span class='boldwarning'>[src] slowly stops rattling and falls still, His latch snapping closed.</span>")
+	T.visible_message("<span class='boldwarning'>[src] slowly stops rattling and falls still, His latch snapping shut.</span>")
 	playsound(loc, 'sound/weapons/batonextend.ogg', 100, 1)
 	name = initial(name)
 	desc = initial(desc)
 	icon_state = initial(icon_state)
+	animate(src, transform=matrix())
 	gender = initial(gender)
 	force = initial(force)
 	force_bonus = initial(force_bonus)
@@ -159,13 +185,15 @@
 		bloodthirst = max(LAZYLEN(contents), 1) //Never fully sated, and His hunger will only grow.
 	else
 		bloodthirst = HIS_GRACE_CONSUME_OWNER
+	if(LAZYLEN(contents) >= victims_needed)
+		ascend()
 	update_stats()
 
 /obj/item/his_grace/proc/adjust_bloodthirst(amt)
 	prev_bloodthirst = bloodthirst
-	if(prev_bloodthirst < HIS_GRACE_CONSUME_OWNER)
+	if(prev_bloodthirst < HIS_GRACE_CONSUME_OWNER && !ascended)
 		bloodthirst = CLAMP(bloodthirst + amt, HIS_GRACE_SATIATED, HIS_GRACE_CONSUME_OWNER)
-	else
+	else if(!ascended)
 		bloodthirst = CLAMP(bloodthirst + amt, HIS_GRACE_CONSUME_OWNER, HIS_GRACE_FALL_ASLEEP)
 	update_stats()
 
@@ -206,3 +234,17 @@
 			if(prev_bloodthirst >= HIS_GRACE_PECKISH)
 				master.visible_message("<span class='warning'>[src] is satiated.</span>", "<span class='his_grace big'>[src]'s hunger recedes...</span>")
 	force = initial(force) + force_bonus
+
+/obj/item/his_grace/proc/ascend()
+	if(ascended)
+		return
+	var/mob/living/carbon/human/master = loc
+	force_bonus += ascend_bonus
+	desc = "A legendary toolbox and a distant artifact from The Age of Three Powers. On its three latches engraved are the words \"The Sun\", \"The Moon\", and \"The Stars\". The entire toolbox has the words \"The World\" engraved into its sides."
+	icon_state = "his_grace_ascended"
+	item_state = "toolbox_gold"
+	ascended = TRUE
+	playsound(src, 'sound/effects/his_grace_ascend.ogg', 100)
+	if(istype(master))
+		master.visible_message("<span class='his_grace big bold'>Gods will be watching.</span>")
+		name = "[master]'s mythical toolbox of three powers"
