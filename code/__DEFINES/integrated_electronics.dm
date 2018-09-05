@@ -40,6 +40,7 @@
 #define IC_PINTYPE_REF				/datum/integrated_io/ref
 #define IC_PINTYPE_LIST				/datum/integrated_io/lists
 #define IC_PINTYPE_INDEX			/datum/integrated_io/index
+#define IC_PINTYPE_SELFREF			/datum/integrated_io/selfref
 
 #define IC_PINTYPE_PULSE_IN			/datum/integrated_io/activate
 #define IC_PINTYPE_PULSE_OUT		/datum/integrated_io/activate/out
