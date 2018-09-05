@@ -9,6 +9,10 @@
 			alien_powers -= A
 			alien_powers += new A(src)
 
+/obj/item/organ/alien/Destroy()
+	QDEL_LIST(alien_powers)
+	return ..()
+
 /obj/item/organ/alien/Insert(mob/living/carbon/M, special = 0)
 	..()
 	for(var/obj/effect/proc_holder/alien/P in alien_powers)
