@@ -20,6 +20,8 @@
 		to_chat(user, "<span class='notice'>[src] are no longer <i>screwed</i> to the floor, and the flaps can be <b>cut</b> apart.</span>")
 
 /obj/structure/plasticflaps/screwdriver_act(mob/living/user, obj/item/W)
+	if(..())
+		return TRUE
 	add_fingerprint(user)
 	var/action = anchored ? "unscrews [src] from" : "screws [src] to"
 	var/uraction = anchored ? "unscrew [src] from " : "screw [src] to"

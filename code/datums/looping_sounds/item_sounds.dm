@@ -13,7 +13,7 @@
 	volume = 25
 	var/last_radiation
 
-/datum/looping_sound/geiger/get_sound(looped)
+/datum/looping_sound/geiger/get_sound(starttime)
 	var/danger
 	switch(last_radiation)
 		if(RAD_BACKGROUND_RADIATION to RAD_GEIGER_LOW)
@@ -26,7 +26,7 @@
 			danger = 4
 		else
 			return null
-	return ..(looped, mid_sounds[danger])
+	return ..(starttime, mid_sounds[danger])
 
 /datum/looping_sound/geiger/stop()
 	. = ..()

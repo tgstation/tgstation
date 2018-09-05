@@ -125,8 +125,12 @@
 
 /proc/toggle_all_ctf(mob/user)
 	var/ctf_enabled = FALSE
+	var/area/A
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
 		ctf_enabled = CTF.toggle_ctf()
+		A = get_area(CTF)
+	for(var/obj/machinery/power/emitter/E in A)
+		E.active = ctf_enabled
 	message_admins("[key_name_admin(user)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
 	notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"]!",'sound/effects/ghost2.ogg')
 
@@ -154,22 +158,11 @@
 
 	var/list/dead_barricades = list()
 
-	var/static/ctf_object_typecache
 	var/static/arena_reset = FALSE
 	var/static/list/people_who_want_to_play = list()
 
 /obj/machinery/capture_the_flag/Initialize()
 	. = ..()
-	if(!ctf_object_typecache)
-		ctf_object_typecache = typecacheof(list(
-			/turf,
-			/mob,
-			/area,
-			/obj/machinery,
-			/obj/structure,
-			/obj/effect/ctf,
-			/obj/item/twohanded/ctf
-		))
 	GLOB.poi_list |= src
 
 /obj/machinery/capture_the_flag/Destroy()
@@ -338,12 +331,20 @@
 
 /obj/machinery/capture_the_flag/proc/reset_the_arena()
 	var/area/A = get_area(src)
+	var/list/ctf_object_typecache = typecacheof(list(
+				/obj/machinery,
+				/obj/effect/ctf,
+				/obj/item/twohanded/ctf
+			))
 	for(var/atm in A)
-		if(!is_type_in_typecache(atm, ctf_object_typecache))
-			qdel(atm)
+		if (isturf(A) || ismob(A) || isarea(A))
+			continue
 		if(isstructure(atm))
 			var/obj/structure/S = atm
 			S.obj_integrity = S.max_integrity
+		else if(!is_type_in_typecache(atm, ctf_object_typecache))
+			qdel(atm)
+
 
 /obj/machinery/capture_the_flag/proc/stop_ctf()
 	ctf_enabled = FALSE
@@ -555,7 +556,7 @@
 	anchored = TRUE
 	alpha = 255
 
-/obj/structure/trap/examine(mob/user)
+/obj/structure/trap/ctf/examine(mob/user)
 	return
 
 /obj/structure/trap/ctf/trap_effect(mob/living/L)

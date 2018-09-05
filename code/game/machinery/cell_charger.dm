@@ -8,6 +8,7 @@
 	active_power_usage = 60
 	power_channel = EQUIP
 	circuit = /obj/item/circuitboard/machine/cell_charger
+	pass_flags = PASSTABLE
 	var/obj/item/stock_parts/cell/charging = null
 	var/chargelevel = -1
 	var/charge_rate = 500

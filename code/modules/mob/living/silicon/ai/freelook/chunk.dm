@@ -26,10 +26,10 @@
 
 // Remove an AI eye from the chunk, then update if changed.
 
-/datum/camerachunk/proc/remove(mob/camera/aiEye/eye)
+/datum/camerachunk/proc/remove(mob/camera/aiEye/eye, remove_static_with_last_chunk = TRUE)
 	eye.visibleCameraChunks -= src
 	seenby -= eye
-	if(!eye.visibleCameraChunks.len)
+	if(remove_static_with_last_chunk && !eye.visibleCameraChunks.len)
 		var/client/client = eye.GetViewerClient()
 		if(client)
 			switch(eye.use_static)

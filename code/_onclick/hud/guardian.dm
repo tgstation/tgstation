@@ -26,14 +26,6 @@
 	using.screen_loc = ui_back
 	static_inventory += using
 
-
-/mob/living/simple_animal/hostile/guardian/create_mob_hud()
-	if(client && !hud_used)
-		if(dextrous)
-			..()
-		else
-			hud_used = new /datum/hud/guardian(src)
-
 /datum/hud/dextrous/guardian/New(mob/living/simple_animal/hostile/guardian/owner) //for a dextrous guardian
 	..()
 	var/obj/screen/using

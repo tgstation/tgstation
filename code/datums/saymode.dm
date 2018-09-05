@@ -40,7 +40,7 @@
 				return FALSE
 			var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 			var/msg = "<i><font color=#800080><b>[changeling.changelingID]:</b> [message]</font></i>"
-			log_talk(user,"[changeling.changelingID]/[user.key] : [message]",LOGSAY)
+			user.log_talk(message, LOG_SAY, tag="changeling [changeling.changelingID]")
 			for(var/_M in GLOB.player_list)
 				var/mob/M = _M
 				if(M in GLOB.dead_mob_list)
@@ -129,7 +129,7 @@
 	if(!mind)
 		return TRUE
 	if(is_monkey_leader(mind) || (ismonkey(user) && is_monkey(mind)))
-		log_talk(user, "(MONKEY) [user]/[user.key]: [message]",LOGSAY)
+		user.log_talk(message, LOG_SAY, tag="monkey")
 		if(prob(75) && ismonkey(user))
 			user.visible_message("<span class='notice'>\The [user] chimpers.</span>")
 		var/msg = "<span class='[is_monkey_leader(mind) ? "monkeylead" : "monkeyhive"]'><b><font size=2>\[[is_monkey_leader(mind) ? "Monkey Leader" : "Monkey"]\]</font> [user]</b>: [message]</span>"

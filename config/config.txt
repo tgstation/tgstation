@@ -109,6 +109,9 @@ LOG_ATTACK
 ## log pda messages
 LOG_PDA
 
+## log telecomms messages
+LOG_TELECOMMS
+
 ## log prayers
 LOG_PRAYER
 
@@ -127,6 +130,12 @@ LOG_MANIFEST
 ## enables use of the proc twitterize() that lets you take a large list of strings and turn it into a JSON file of tweet sized strings.
 ## As an example of how this could be """useful""" look towards Poly (https://twitter.com/Poly_the_Parrot)
 # LOG_TWITTER
+
+## Enable logging pictures
+# LOG_PICTURES
+
+##Log camera pictures - Must have picture logging enabled
+PICTURE_LOGGING_CAMERA
 
 ## period of time in seconds for players to be considered inactive
 # INACTIVITY_PERIOD 300

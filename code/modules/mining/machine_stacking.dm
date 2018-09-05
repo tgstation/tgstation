@@ -71,42 +71,51 @@
 	desc = "A machine that automatically stacks acquired materials. Controlled by a nearby console."
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/stacking_machine
+	input_dir = EAST
+	output_dir = WEST
 	var/obj/machinery/mineral/stacking_unit_console/CONSOLE
 	var/stk_types = list()
 	var/stk_amt   = list()
 	var/stack_list[0] //Key: Type.  Value: Instance of type.
-	var/stack_amt = 50; //ammount to stack before releassing
-	input_dir = EAST
-	output_dir = WEST
+	var/stack_amt = 50 //amount to stack before releassing
+	var/datum/component/remote_materials/materials
+	var/force_connect = FALSE
 
-/obj/machinery/mineral/stacking_machine/Initialize()
+/obj/machinery/mineral/stacking_machine/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 1)
+	materials = AddComponent(/datum/component/remote_materials, "stacking", mapload, FALSE, mapload && force_connect)
 
 /obj/machinery/mineral/stacking_machine/HasProximity(atom/movable/AM)
 	if(istype(AM, /obj/item/stack/sheet) && AM.loc == get_step(src, input_dir))
 		process_sheet(AM)
 
-/obj/machinery/mineral/stacking_machine/multitool_act(mob/living/user, obj/item/I)
-	if(istype(I, /obj/item/multitool))
-		var/obj/item/multitool/M = I
-		if(!istype(M.buffer, /obj/machinery/mineral/stacking_unit_console))
-			to_chat(user, "<span class='warning'>The [I] has no linkage data in its buffer.</span>")
-			return FALSE
-		else
+/obj/machinery/mineral/stacking_machine/multitool_act(mob/living/user, obj/item/multitool/M)
+	if(istype(M))
+		if(istype(M.buffer, /obj/machinery/mineral/stacking_unit_console))
 			CONSOLE = M.buffer
 			CONSOLE.machine = src
-			to_chat(user, "<span class='notice'>You link [src] to the console in [I]'s buffer.</span>")
+			to_chat(user, "<span class='notice'>You link [src] to the console in [M]'s buffer.</span>")
 			return TRUE
 
 /obj/machinery/mineral/stacking_machine/proc/process_sheet(obj/item/stack/sheet/inp)
-	if(!(inp.type in stack_list)) //It's the first of this sheet added
-		var/obj/item/stack/sheet/s = new inp.type(src, 0)
-		stack_list[inp.type] = s
-	var/obj/item/stack/sheet/storage = stack_list[inp.type]
+	var/key = inp.merge_type
+	var/obj/item/stack/sheet/storage = stack_list[key]
+	if(!storage) //It's the first of this sheet added
+		stack_list[key] = storage = new inp.type(src, 0)
 	storage.amount += inp.amount //Stack the sheets
-	while(storage.amount > stack_amt) //Get rid of excessive stackage
+	qdel(inp)
+
+	if(materials.silo && !materials.on_hold()) //Dump the sheets to the silo
+		var/matlist = storage.materials & materials.mat_container.materials
+		if (length(matlist))
+			var/inserted = materials.mat_container.insert_stack(storage)
+			materials.silo_log(src, "collected", inserted, "sheets", matlist)
+			if (QDELETED(storage))
+				stack_list -= key
+			return
+
+	while(storage.amount >= stack_amt) //Get rid of excessive stackage
 		var/obj/item/stack/sheet/out = new inp.type(null, stack_amt)
 		unload_mineral(out)
 		storage.amount -= stack_amt
-	qdel(inp) //Let the old sheet garbage collect

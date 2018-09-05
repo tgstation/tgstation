@@ -197,6 +197,11 @@ Nothing else in the console has ID requirements.
 		locked = FALSE
 	return ..()
 
+/obj/machinery/computer/rdconsole/multitool_act(mob/user, obj/item/multitool/I)
+	var/lathe = linked_lathe && linked_lathe.multitool_act(user, I)
+	var/print = linked_imprinter && linked_imprinter.multitool_act(user, I)
+	return lathe || print
+
 /obj/machinery/computer/rdconsole/proc/list_categories(list/categories, menu_num as num)
 	if(!categories)
 		return
@@ -268,7 +273,10 @@ Nothing else in the console has ID requirements.
 /obj/machinery/computer/rdconsole/proc/ui_protolathe_header()
 	var/list/l = list()
 	l += "<div class='statusDisplay'><A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE]'>Protolathe Menu</A>"
-	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE_MATERIALS]'><B>Material Amount:</B> [linked_lathe.materials.total_amount] / [linked_lathe.materials.max_amount]</A>"
+	if(linked_lathe.materials.mat_container)
+		l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE_MATERIALS]'><B>Material Amount:</B> [linked_lathe.materials.format_amount()]</A>"
+	else
+		l += "<font color='red'>No material storage connected, please contact the quartermaster.</font>"
 	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE_CHEMICALS]'><B>Chemical volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]</A></div>"
 	return l
 
@@ -277,7 +285,6 @@ Nothing else in the console has ID requirements.
 	var/list/l = list()
 	l += ui_protolathe_header()
 	l += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3>"
-	var/coeff = linked_lathe.efficiency_coeff
 	for(var/v in stored_research.researched_designs)
 		var/datum/design/D = stored_research.researched_designs[v]
 		if(!(selected_category in D.category)|| !(D.build_type & PROTOLATHE))
@@ -286,11 +293,13 @@ Nothing else in the console has ID requirements.
 			continue
 		var/temp_material
 		var/c = 50
-		var/t
+		var/coeff = linked_lathe.efficiency_coeff
+		if(!linked_lathe.efficient_with(D.build_path))
+			coeff = 1
 
 		var/all_materials = D.materials + D.reagents_list
 		for(var/M in all_materials)
-			t = linked_lathe.check_mat(D, M)
+			var/t = linked_lathe.check_mat(D, M)
 			temp_material += " | "
 			if (t < 1)
 				temp_material += "<span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
@@ -332,16 +341,17 @@ Nothing else in the console has ID requirements.
 	RDSCREEN_UI_LATHE_CHECK
 	var/list/l = list()
 	l += ui_protolathe_header()
-	var/coeff = linked_lathe.efficiency_coeff
 	for(var/datum/design/D in matching_designs)
 		if(!(isnull(linked_lathe.allowed_department_flags) || (D.departmental_flags & linked_lathe.allowed_department_flags)))
 			continue
 		var/temp_material
 		var/c = 50
-		var/t
 		var/all_materials = D.materials + D.reagents_list
+		var/coeff = linked_lathe.efficiency_coeff
+		if(!linked_lathe.efficient_with(D.build_path))
+			coeff = 1
 		for(var/M in all_materials)
-			t = linked_lathe.check_mat(D, M)
+			var/t = linked_lathe.check_mat(D, M)
 			temp_material += " | "
 			if (t < 1)
 				temp_material += "<span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
@@ -364,11 +374,15 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/proc/ui_protolathe_materials()		//Legacy code
 	RDSCREEN_UI_LATHE_CHECK
+	var/datum/component/material_container/mat_container = linked_lathe.materials.mat_container
+	if (!mat_container)
+		screen = RDSCREEN_PROTOLATHE
+		return ui_protolathe()
 	var/list/l = list()
 	l += ui_protolathe_header()
 	l += "<div class='statusDisplay'><h3>Material Storage:</h3>"
-	for(var/mat_id in linked_lathe.materials.materials)
-		var/datum/material/M = linked_lathe.materials.materials[mat_id]
+	for(var/mat_id in mat_container.materials)
+		var/datum/material/M = mat_container.materials[mat_id]
 		l += "* [M.amount] of [M.name]: "
 		if(M.amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[M.id];eject_amt=1'>Eject</A> [RDSCREEN_NOBREAK]"
 		if(M.amount >= MINERAL_MATERIAL_AMOUNT*5) l += "<A href='?src=[REF(src)];ejectsheet=[M.id];eject_amt=5'>5x</A> [RDSCREEN_NOBREAK]"
@@ -392,7 +406,10 @@ Nothing else in the console has ID requirements.
 /obj/machinery/computer/rdconsole/proc/ui_circuit_header()		//Legacy Code
 	var/list/l = list()
 	l += "<div class='statusDisplay'><A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER]'>Circuit Imprinter Menu</A>"
-	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER_MATERIALS]'><B>Material Amount:</B> [linked_imprinter.materials.total_amount] / [linked_imprinter.materials.max_amount]</A>"
+	if (linked_imprinter.materials.mat_container)
+		l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER_MATERIALS]'><B>Material Amount:</B> [linked_imprinter.materials.format_amount()]</A>"
+	else
+		l += "<font color='red'>No material storage connected, please contact the quartermaster.</font>"
 	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER_CHEMICALS]'><B>Chemical volume:</B> [linked_imprinter.reagents.total_volume] / [linked_imprinter.reagents.maximum_volume]</A></div>"
 	return l
 
@@ -419,7 +436,6 @@ Nothing else in the console has ID requirements.
 	l += ui_circuit_header()
 	l += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3>"
 
-	var/coeff = linked_imprinter.efficiency_coeff
 	for(var/v in stored_research.researched_designs)
 		var/datum/design/D = stored_research.researched_designs[v]
 		if(!(selected_category in D.category) || !(D.build_type & IMPRINTER))
@@ -430,6 +446,9 @@ Nothing else in the console has ID requirements.
 		var/check_materials = TRUE
 
 		var/all_materials = D.materials + D.reagents_list
+		var/coeff = linked_imprinter.efficiency_coeff
+		if(!linked_imprinter.efficient_with(D.build_path))
+			coeff = 1
 
 		for(var/M in all_materials)
 			temp_materials += " | "
@@ -451,13 +470,15 @@ Nothing else in the console has ID requirements.
 	l += ui_circuit_header()
 	l += "<div class='statusDisplay'><h3>Search results:</h3>"
 
-	var/coeff = linked_imprinter.efficiency_coeff
 	for(var/datum/design/D in matching_designs)
 		if(!(isnull(linked_imprinter.allowed_department_flags) || (D.departmental_flags & linked_imprinter.allowed_department_flags)))
 			continue
 		var/temp_materials
 		var/check_materials = TRUE
 		var/all_materials = D.materials + D.reagents_list
+		var/coeff = linked_imprinter.efficiency_coeff
+		if(!linked_imprinter.efficient_with(D.build_path))
+			coeff = 1
 		for(var/M in all_materials)
 			temp_materials += " | "
 			if (!linked_imprinter.check_mat(D, M))
@@ -485,11 +506,15 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/proc/ui_circuit_materials()	//Legacy code!
 	RDSCREEN_UI_IMPRINTER_CHECK
+	var/datum/component/material_container/mat_container = linked_imprinter.materials.mat_container
+	if (!mat_container)
+		screen = RDSCREEN_IMPRINTER
+		return ui_circuit()
 	var/list/l = list()
 	l += ui_circuit_header()
 	l += "<h3><div class='statusDisplay'>Material Storage:</h3>"
-	for(var/mat_id in linked_imprinter.materials.materials)
-		var/datum/material/M = linked_imprinter.materials.materials[mat_id]
+	for(var/mat_id in mat_container.materials)
+		var/datum/material/M = mat_container.materials[mat_id]
 		l += "* [M.amount] of [M.name]: "
 		if(M.amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];imprinter_ejectsheet=[M.id];eject_amt=1'>Eject</A> [RDSCREEN_NOBREAK]"
 		if(M.amount >= MINERAL_MATERIAL_AMOUNT*5) l += "<A href='?src=[REF(src)];imprinter_ejectsheet=[M.id];eject_amt=5'>5x</A> [RDSCREEN_NOBREAK]"
@@ -906,7 +931,10 @@ Nothing else in the console has ID requirements.
 		if(QDELETED(linked_lathe))
 			say("No Protolathe Linked!")
 			return
-		linked_lathe.materials.retrieve_sheets(text2num(ls["eject_amt"]), ls["ejectsheet"])
+		if(!linked_lathe.materials.mat_container)
+			say("No material storage linked to protolathe!")
+			return
+		linked_lathe.eject_sheets(ls["ejectsheet"], ls["eject_amt"])
 	//Circuit Imprinter Materials
 	if(ls["disposeI"])  //Causes the circuit imprinter to dispose of a single reagent (all of it)
 		if(QDELETED(linked_imprinter))
@@ -922,7 +950,10 @@ Nothing else in the console has ID requirements.
 		if(QDELETED(linked_imprinter))
 			say("No Circuit Imprinter Linked!")
 			return
-		linked_imprinter.materials.retrieve_sheets(text2num(ls["eject_amt"]), ls["imprinter_ejectsheet"])
+		if(!linked_imprinter.materials.mat_container)
+			say("No material storage linked to circuit imprinter!")
+			return
+		linked_imprinter.eject_sheets(ls["imprinter_ejectsheet"], ls["eject_amt"])
 	if(ls["disk_slot"])
 		disk_slot_selected = text2num(ls["disk_slot"])
 	if(ls["research_node"])

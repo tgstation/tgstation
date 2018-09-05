@@ -274,12 +274,6 @@
 	. = ..()
 	air_update_turf(1)
 
-
-/obj/structure/foamedmetal/Destroy()
-	density = FALSE
-	air_update_turf(1)
-	return ..()
-
 /obj/structure/foamedmetal/Move()
 	var/turf/T = loc
 	. = ..()

@@ -59,7 +59,7 @@
 		if(flags & COMPONENT_STOP_IMPLANTING)
 			UNSETEMPTY(target.implants)
 			return FALSE
-		
+
 		if(istype(imp_e, type))
 			if(!allow_multiple)
 				if(imp_e.uses < initial(imp_e.uses)*2)
@@ -84,7 +84,7 @@
 		H.sec_hud_set_implants()
 
 	if(user)
-		add_logs(user, target, "implanted", "\a [name]")
+		log_combat(user, target, "implanted", "\a [name]")
 
 	return TRUE
 

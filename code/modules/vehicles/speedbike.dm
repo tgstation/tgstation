@@ -47,7 +47,7 @@
 	var/static/mutable_appearance/overlay = mutable_appearance(icon, "speedwagon_cover", ABOVE_MOB_LAYER)
 	max_buckled_mobs = 4
 	var/crash_all = FALSE //CHAOS
-	pixel_y = -48 //to fix the offset when Initialized()
+	pixel_y = -48
 	pixel_x = -48
 
 /obj/vehicle/ridden/space/speedwagon/Initialize()
@@ -59,6 +59,10 @@
 	D.set_riding_offsets(2, list(TEXT_NORTH = list(19, -5, 4), TEXT_SOUTH = list(-13, 3, 4), TEXT_EAST = list(-4, -3, 4.1), TEXT_WEST = list(4, 28, 3.9)))
 	D.set_riding_offsets(3, list(TEXT_NORTH = list(-10, -18, 4.2), TEXT_SOUTH = list(16, 25, 3.9), TEXT_EAST = list(-22, 30), TEXT_WEST = list(22, -3, 4.1)))
 	D.set_riding_offsets(4, list(TEXT_NORTH = list(19, -18, 4.2), TEXT_SOUTH = list(-13, 25, 3.9), TEXT_EAST = list(-22, 3, 3.9), TEXT_WEST = list(22, 28)))
+	D.set_vehicle_dir_offsets(NORTH, -48, -48)
+	D.set_vehicle_dir_offsets(SOUTH, -48, -48)
+	D.set_vehicle_dir_offsets(EAST, -48, -48)
+	D.set_vehicle_dir_offsets(WEST, -48, -48)
 	for(var/i in GLOB.cardinals)
 		D.set_vehicle_dir_layer(i, BELOW_MOB_LAYER)
 

@@ -727,6 +727,14 @@
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 
+/obj/item/clothing/under/gondola
+	name = "gondola hide suit"
+	desc = "Now you're cooking."
+	icon_state = "gondola"
+	item_state = "lb_suit"
+	item_color = "gondola"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/skeleton
 	name = "skeleton jumpsuit"
 	desc = "A black jumpsuit with a white bone pattern printed on it. Spooky!"

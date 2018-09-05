@@ -335,7 +335,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/coin/proc/manual_suicide(mob/living/user)
 	var/index = sideslist.Find(coinflip)
-	message_admins("coinflip landed on [coinflip] which is [index] in sideslist")
 	if (index==2)//tails
 		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] promptly falls over, dead!</span>")
 		user.adjustOxyLoss(200)

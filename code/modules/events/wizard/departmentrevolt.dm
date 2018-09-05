@@ -46,8 +46,8 @@
 					if(M.assigned_role == job)
 						citizens += H
 						M.add_antag_datum(/datum/antagonist/separatist,nation)
-						H.log_message("<font color='red'>Was made into a separatist, long live [nation_name]!</font>", INDIVIDUAL_ATTACK_LOG)
-	
+						H.log_message("Was made into a separatist, long live [nation_name]!", LOG_ATTACK, color="red")
+
 	if(citizens.len)
 		var/message
 		for(var/job in jobs_to_revolt)

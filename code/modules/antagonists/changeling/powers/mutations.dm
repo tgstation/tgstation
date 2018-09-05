@@ -238,6 +238,7 @@
 	fire_sound = 'sound/effects/splat.ogg'
 	force = 0
 	max_charges = 1
+	fire_delay = 1
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
 	throw_speed = 0
@@ -253,6 +254,11 @@
 
 /obj/item/gun/magic/tentacle/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, "<span class='warning'>The [name] is not ready yet.</span>")
+
+/obj/item/gun/magic/tentacle/process_chamber()
+	. = ..()
+	if(charges == 0)
+		qdel(src)
 
 /obj/item/gun/magic/tentacle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] coils [src] tightly around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -302,8 +308,12 @@
 
 /obj/item/projectile/tentacle/proc/tentacle_grab(mob/living/carbon/human/H, mob/living/carbon/C)
 	if(H.Adjacent(C))
+		if(H.get_active_held_item() && !H.get_inactive_held_item())
+			H.swap_hand()
+		if(H.get_active_held_item())
+			return
 		C.grabbedby(H)
-		C.grippedby(H) //instant aggro grab
+		C.grippedby(H, instant = TRUE) //instant aggro grab
 
 /obj/item/projectile/tentacle/proc/tentacle_stab(mob/living/carbon/human/H, mob/living/carbon/C)
 	if(H.Adjacent(C))
@@ -318,7 +328,6 @@
 
 /obj/item/projectile/tentacle/on_hit(atom/target, blocked = FALSE)
 	var/mob/living/carbon/human/H = firer
-	H.dropItemToGround(source.gun, TRUE) //Unequip thus delete the tentacle on hit
 	if(blocked >= 100)
 		return 0
 	if(isitem(target))

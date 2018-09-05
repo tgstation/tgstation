@@ -379,6 +379,8 @@
 	icon_state = "helmet_signaler"
 	item_state = "helmet"
 	created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
+	var/swordamt = 0 //If you're converting it into a grievousbot, how many swords have you attached
+	var/toyswordamt = 0 //honk
 
 /obj/item/bot_assembly/secbot/attackby(obj/item/I, mob/user, params)
 	..()
@@ -441,6 +443,29 @@
 				S.robot_arm = robot_arm
 				qdel(I)
 				qdel(src)
+			if(istype(I, /obj/item/wrench))
+				to_chat(user, "You adjust [src]'s arm slots to mount extra weapons")
+				build_step ++
+				return
+			if(istype(I, /obj/item/toy/sword))
+				if(toyswordamt < 3 && swordamt <= 0)
+					if(!user.temporarilyRemoveItemFromInventory(I))
+						return
+					created_name = "General Beepsky"
+					name = "helmet/signaler/prox sensor/robot arm/toy sword assembly"
+					icon_state = "grievous_assembly"
+					to_chat(user, "<span class='notice'>You superglue [I] onto one of [src]'s arm slots.</span>")
+					qdel(I)
+					toyswordamt ++
+				else
+					if(!can_finish_build(I, user))
+						return
+					to_chat(user, "<span class='notice'>You complete the Securitron!...Something seems a bit wrong with it..?</span>")
+					var/mob/living/simple_animal/bot/secbot/grievous/toy/S = new(Tsec)
+					S.name = created_name
+					S.robot_arm = robot_arm
+					qdel(I)
+					qdel(src)
 
 			else if(istype(I, /obj/item/screwdriver)) //deconstruct
 				cut_overlay("hs_arm")
@@ -448,3 +473,35 @@
 				robot_arm = null
 				to_chat(user, "<span class='notice'>You remove [dropped_arm] from [src].</span>")
 				build_step--
+				if(toyswordamt > 0 || toyswordamt)
+					icon_state = initial(icon_state)
+					to_chat(user, "<span class='notice'>The superglue binding [src]'s toy swords to its chassis snaps!</span>")
+					for(var/IS in 1 to toyswordamt)
+						new /obj/item/toy/sword(Tsec)
+
+		if(ASSEMBLY_FIFTH_STEP)
+			if(istype(I, /obj/item/melee/transforming/energy/sword/saber))
+				if(swordamt < 3)
+					if(!user.temporarilyRemoveItemFromInventory(I))
+						return
+						created_name = "General Beepsky"
+						name = "helmet/signaler/prox sensor/robot arm/energy sword assembly"
+						icon_state = "grievous_assembly"
+						to_chat(user, "<span class='notice'>You bolt [I] onto one of [src]'s arm slots.</span>")
+						qdel(I)
+						swordamt ++
+				else
+					if(!can_finish_build(I, user))
+						return
+					to_chat(user, "<span class='notice'>You complete the Securitron!...Something seems a bit wrong with it..?</span>")
+					var/mob/living/simple_animal/bot/secbot/grievous/S = new(Tsec)
+					S.name = created_name
+					S.robot_arm = robot_arm
+					qdel(I)
+					qdel(src)
+			else if(istype(I, /obj/item/screwdriver)) //deconstruct
+				build_step--
+				icon_state = initial(icon_state)
+				to_chat(user, "<span class='notice'>You unbolt [src]'s energy swords</span>")
+				for(var/IS in 1 to swordamt)
+					new /obj/item/melee/transforming/energy/sword/saber(Tsec)

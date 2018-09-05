@@ -235,3 +235,29 @@
 	else
 		to_chat(user, "[src] is empty.")
 	return
+
+/obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
+	name = "\improper Surgical Processor"
+	desc = "A device for scanning and initiating surgeries from a disk or operating computer."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "spectrometer"
+	item_flags = NOBLUDGEON
+	var/list/advanced_surgeries = list()
+	
+/obj/item/surgical_processor/afterattack(obj/item/O, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	if(istype(O, /obj/item/disk/surgery))
+		to_chat(user, "<span class='notice'>You load the surgery protocol from [O] into [src].</span>")
+		var/obj/item/disk/surgery/D = O
+		if(do_after(user, 10, target = O))
+			advanced_surgeries |= D.surgeries
+		return TRUE
+	if(istype(O, /obj/machinery/computer/operating))
+		to_chat(user, "<span class='notice'>You copy surgery protocols from [O] into [src].</span>")
+		var/obj/machinery/computer/operating/OC = O
+		if(do_after(user, 10, target = O))
+			advanced_surgeries |= OC.advanced_surgeries
+		return TRUE
+	return

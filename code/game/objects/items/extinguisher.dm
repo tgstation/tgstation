@@ -11,7 +11,7 @@
 	throw_speed = 2
 	throw_range = 7
 	force = 10
-	materials = list(MAT_METAL=90)
+	materials = list(MAT_METAL = 90)
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 	dog_fashion = /datum/dog_fashion/back
 	resistance_flags = FIRE_PROOF
@@ -37,7 +37,7 @@
 	throwforce = 2
 	w_class = WEIGHT_CLASS_SMALL
 	force = 3
-	materials = list()
+	materials = list(MAT_METAL = 50, MAT_GLASS = 40)
 	max_water = 30
 	sprite_name = "miniFE"
 	dog_fashion = null
@@ -143,29 +143,13 @@
 		var/direction = get_dir(src,target)
 
 		if(user.buckled && isobj(user.buckled) && !user.buckled.anchored)
-			spawn(0)
-				var/obj/B = user.buckled
-				var/movementdirection = turn(direction,180)
-				step(B, movementdirection)
-				sleep(1)
-				step(B, movementdirection)
-				sleep(1)
-				step(B, movementdirection)
-				sleep(1)
-				step(B, movementdirection)
-				sleep(2)
-				step(B, movementdirection)
-				sleep(2)
-				step(B, movementdirection)
-				sleep(3)
-				step(B, movementdirection)
-				sleep(3)
-				step(B, movementdirection)
-				sleep(3)
-				step(B, movementdirection)
+			var/obj/B = user.buckled
+			var/movementdirection = turn(direction,180)
+			addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_chair, B, movementdirection), 1)
 
 		else user.newtonian_move(turn(direction, 180))
 
+		//Get all the turfs that can be shot at
 		var/turf/T = get_turf(target)
 		var/turf/T1 = get_step(T,turn(direction, 90))
 		var/turf/T2 = get_step(T,turn(direction, -90))
@@ -173,34 +157,63 @@
 		if(precision)
 			var/turf/T3 = get_step(T1, turn(direction, 90))
 			var/turf/T4 = get_step(T2,turn(direction, -90))
-			the_targets = list(T,T1,T2,T3,T4)
+			the_targets.Add(T3,T4)
 
+		var/list/water_particles=list()
 		for(var/a=0, a<5, a++)
-			spawn(0)
-				var/obj/effect/particle_effect/water/W = new /obj/effect/particle_effect/water(get_turf(src))
-				var/turf/my_target = pick(the_targets)
-				if(precision)
-					the_targets -= my_target
-				var/datum/reagents/R = new/datum/reagents(5)
-				if(!W)
-					return
-				W.reagents = R
-				R.my_atom = W
-				if(!W || !src)
-					return
-				src.reagents.trans_to(W,1)
-				for(var/b=0, b<power, b++)
-					step_towards(W,my_target)
-					if(!W || !W.reagents)
-						return
-					W.reagents.reaction(get_turf(W))
-					for(var/A in get_turf(W))
-						if(!W)
-							return
-						W.reagents.reaction(A)
-					if(W.loc == my_target)
-						break
-					sleep(2)
+			var/obj/effect/particle_effect/water/W = new /obj/effect/particle_effect/water(get_turf(src))
+			var/my_target = pick(the_targets)
+			water_particles[W] = my_target
+			// If precise, remove turf from targets so it won't be picked more than once
+			if(precision)
+				the_targets -= my_target
+			var/datum/reagents/R = new/datum/reagents(5)
+			W.reagents = R
+			R.my_atom = W
+			reagents.trans_to(W,1)
+	
+		//Make em move dat ass, hun
+		addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_particles, water_particles), 2)
+
+//Particle movement loop
+/obj/item/extinguisher/proc/move_particles(var/list/particles, var/repetition=0)
+	//Check if there's anything in here first
+	if(!particles || particles.len == 0)
+		return
+	// Second loop: Get all the water particles and make them move to their target
+	for(var/obj/effect/particle_effect/water/W in particles)
+		var/turf/my_target = particles[W]
+		if(!W)
+			continue
+		step_towards(W,my_target)
+		if(!W.reagents)
+			continue
+		W.reagents.reaction(get_turf(W))
+		for(var/A in get_turf(W))
+			W.reagents.reaction(A)
+		if(W.loc == my_target)
+			break
+	if(repetition < power)
+		repetition++
+		addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_particles, particles, repetition), 2)
+
+//Chair movement loop
+/obj/item/extinguisher/proc/move_chair(var/obj/B, var/movementdirection, var/repetition=0)
+	step(B, movementdirection)
+
+	var/timer_seconds
+	switch(repetition)
+		if(0 to 2)
+			timer_seconds = 1
+		if(3 to 4)
+			timer_seconds = 2
+		if(5 to 8)
+			timer_seconds = 3
+		else
+			return
+
+	repetition++
+	addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_chair, B, movementdirection, repetition), timer_seconds)
 
 /obj/item/extinguisher/AltClick(mob/user)
 	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))

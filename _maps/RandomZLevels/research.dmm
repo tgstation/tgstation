@@ -15,7 +15,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/awaymission/research/exterior)
 "af" = (
-/mob/living/simple_animal/hostile/syndicate/ranged/space,
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
 /turf/open/floor/plating/asteroid/airless,
 /area/awaymission/research/exterior)
 "ag" = (
@@ -58,7 +58,7 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/research/interior/engineering)
 "an" = (
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/research/interior/engineering)
 "ao" = (
 /obj/structure/window/reinforced,
@@ -74,20 +74,20 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/research/interior/engineering)
 "aq" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/research/interior/engineering)
 "ar" = (
 /turf/closed/wall/r_wall,
 /area/awaymission/research/interior/engineering)
 "as" = (
-/mob/living/simple_animal/hostile/syndicate/ranged,
-/turf/open/floor/mineral/plastitanium,
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/research/interior/engineering)
 "at" = (
 /obj/machinery/suit_storage_unit/engine,
@@ -126,7 +126,7 @@
 	dir = 8
 	},
 /mob/living/simple_animal/hostile/syndicate,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/research/interior/engineering)
 "az" = (
 /obj/effect/gibspawner/human,
@@ -178,20 +178,20 @@
 	id = "spacebattlepod2";
 	name = "Hull Door Control"
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/research/interior/engineering)
 "aK" = (
 /obj/effect/mob_spawn/human/syndicatesoldier{
 	brute_damage = 200
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/research/interior/engineering)
 "aL" = (
 /obj/structure/table,
 /obj/item/grenade/plastic/c4,
 /obj/item/grenade/plastic/c4,
 /obj/item/storage/toolbox/syndicate,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/research/interior/engineering)
 "aM" = (
 /obj/item/stock_parts/cell/high/empty,
@@ -232,7 +232,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/awaymission/research/interior/engineering)
 "aT" = (
-/mob/living/simple_animal/hostile/syndicate/melee,
+/mob/living/simple_animal/hostile/syndicate/melee/sword,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aU" = (
@@ -805,7 +805,7 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "cA" = (
@@ -1338,7 +1338,7 @@
 /turf/open/floor/plasteel/stairs,
 /area/awaymission/research/interior/genetics)
 "ec" = (
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "ed" = (
@@ -1714,7 +1714,7 @@
 /turf/open/floor/plasteel/whiteyellow,
 /area/awaymission/research/interior)
 "fn" = (
-/mob/living/simple_animal/hostile/syndicate/melee,
+/mob/living/simple_animal/hostile/syndicate/melee/sword,
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior)
 "fo" = (
@@ -2673,7 +2673,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "if" = (
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/plasteel/whitegreen,
 /area/awaymission/research/interior)
 "ig" = (
@@ -3116,7 +3116,7 @@
 	pixel_x = 32;
 	pixel_y = 26
 	},
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/plasteel/whitegreen,
 /area/awaymission/research/interior)
 "js" = (
@@ -3235,7 +3235,7 @@
 /turf/open/floor/plasteel/whiteblue,
 /area/awaymission/research/interior/medbay)
 "jP" = (
-/mob/living/simple_animal/hostile/syndicate/ranged,
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
 /turf/open/floor/plasteel/whiteblue,
 /area/awaymission/research/interior/medbay)
 "jQ" = (

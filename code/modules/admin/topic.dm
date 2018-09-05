@@ -206,45 +206,45 @@
 		if(!check_rights(R_BAN))
 			return
 		var/bantype = text2num(href_list["dbbanaddtype"])
-		var/banckey = href_list["dbbanaddckey"]
+		var/bankey = href_list["dbbanaddkey"]
+		var/banckey = ckey(bankey)
 		var/banip = href_list["dbbanaddip"]
 		var/bancid = href_list["dbbanaddcid"]
 		var/banduration = text2num(href_list["dbbaddduration"])
 		var/banjob = href_list["dbbanaddjob"]
 		var/banreason = href_list["dbbanreason"]
-
-		banckey = ckey(banckey)
+		var/banseverity = href_list["dbbanaddseverity"]
 
 		switch(bantype)
 			if(BANTYPE_PERMA)
-				if(!banckey || !banreason)
-					to_chat(usr, "Not enough parameters (Requires ckey and reason).")
+				if(!banckey || !banreason || !banseverity)
+					to_chat(usr, "Not enough parameters (Requires ckey, severity, and reason).")
 					return
 				banduration = null
 				banjob = null
 			if(BANTYPE_TEMP)
-				if(!banckey || !banreason || !banduration)
-					to_chat(usr, "Not enough parameters (Requires ckey, reason and duration).")
+				if(!banckey || !banreason || !banduration || !banseverity)
+					to_chat(usr, "Not enough parameters (Requires ckey, reason, severity and duration).")
 					return
 				banjob = null
 			if(BANTYPE_JOB_PERMA)
-				if(!banckey || !banreason || !banjob)
-					to_chat(usr, "Not enough parameters (Requires ckey, reason and job).")
+				if(!banckey || !banreason || !banjob || !banseverity)
+					to_chat(usr, "Not enough parameters (Requires ckey, severity, reason and job).")
 					return
 				banduration = null
 			if(BANTYPE_JOB_TEMP)
-				if(!banckey || !banreason || !banjob || !banduration)
-					to_chat(usr, "Not enough parameters (Requires ckey, reason and job).")
+				if(!banckey || !banreason || !banjob || !banduration || !banseverity)
+					to_chat(usr, "Not enough parameters (Requires ckey, severity, reason and job).")
 					return
 			if(BANTYPE_ADMIN_PERMA)
-				if(!banckey || !banreason)
-					to_chat(usr, "Not enough parameters (Requires ckey and reason).")
+				if(!banckey || !banreason || !banseverity)
+					to_chat(usr, "Not enough parameters (Requires ckey, severity and reason).")
 					return
 				banduration = null
 				banjob = null
 			if(BANTYPE_ADMIN_TEMP)
-				if(!banckey || !banreason || !banduration)
-					to_chat(usr, "Not enough parameters (Requires ckey, reason and duration).")
+				if(!banckey || !banreason || !banduration || !banseverity)
+					to_chat(usr, "Not enough parameters (Requires ckey, severity, reason and duration).")
 					return
 				banjob = null
 
@@ -264,12 +264,12 @@
 			if(bancid)
 				banreason = "[banreason] (CUSTOM CID)"
 		else
-			message_admins("Ban process: A mob matching [playermob.ckey] was found at location [playermob.x], [playermob.y], [playermob.z]. Custom ip and computer id fields replaced with the ip and computer id from the located mob.")
+			message_admins("Ban process: A mob matching [playermob.key] was found at location [playermob.x], [playermob.y], [playermob.z]. Custom ip and computer id fields replaced with the ip and computer id from the located mob.")
 
-		if(!DB_ban_record(bantype, playermob, banduration, banreason, banjob, banckey, banip, bancid ))
+		if(!DB_ban_record(bantype, playermob, banduration, banreason, banjob, bankey, banip, bancid ))
 			to_chat(usr, "<span class='danger'>Failed to apply ban.</span>")
 			return
-		create_message("note", banckey, null, banreason, null, null, 0, 0)
+		create_message("note", bankey, null, banreason, null, null, 0, 0, null, 0, banseverity)
 
 	else if(href_list["editrightsbrowser"])
 		edit_admin_permissions(0)
@@ -279,9 +279,9 @@
 
 	if(href_list["editrightsbrowsermanage"])
 		if(href_list["editrightschange"])
-			change_admin_rank(href_list["editrightschange"], TRUE)
+			change_admin_rank(ckey(href_list["editrightschange"]), href_list["editrightschange"], TRUE)
 		else if(href_list["editrightsremove"])
-			remove_admin(href_list["editrightsremove"], TRUE)
+			remove_admin(ckey(href_list["editrightsremove"]), href_list["editrightsremove"], TRUE)
 		else if(href_list["editrightsremoverank"])
 			remove_rank(href_list["editrightsremoverank"])
 		edit_admin_permissions(2)
@@ -339,7 +339,7 @@
 	else if(href_list["toggle_continuous"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/list/continuous = CONFIG_GET(keyed_flag_list/continuous)
+		var/list/continuous = CONFIG_GET(keyed_list/continuous)
 		if(!continuous[SSticker.mode.config_tag])
 			continuous[SSticker.mode.config_tag] = TRUE
 		else
@@ -352,7 +352,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		var/list/midround_antag = CONFIG_GET(keyed_flag_list/midround_antag)
+		var/list/midround_antag = CONFIG_GET(keyed_list/midround_antag)
 		if(!midround_antag[SSticker.mode.config_tag])
 			midround_antag[SSticker.mode.config_tag] = TRUE
 		else
@@ -591,12 +591,15 @@
 					if(M.client)
 						jobban_buildcache(M.client)
 					message_admins("<span class='adminnotice'>[key_name_admin(usr)] removed [key_name_admin(M)]'s appearance ban.</span>")
-					to_chat(M, "<span class='boldannounce'><BIG>[usr.client.ckey] has removed your appearance ban.</BIG></span>")
+					to_chat(M, "<span class='boldannounce'><BIG>[usr.client.key] has removed your appearance ban.</BIG></span>")
 
-		else switch(alert("Appearance ban [M.ckey]?",,"Yes","No", "Cancel"))
+		else switch(alert("Appearance ban [M.key]?",,"Yes","No", "Cancel"))
 			if("Yes")
 				var/reason = input(usr,"Please State Reason.","Reason") as message|null
 				if(!reason)
+					return
+				var/severity = input("Set the severity of the note/ban.", "Severity", null, null) as null|anything in list("High", "Medium", "Minor", "None")
+				if(!severity)
 					return
 				if(!DB_ban_record(BANTYPE_JOB_PERMA, M, -1, reason, "appearance"))
 					to_chat(usr, "<span class='danger'>Failed to apply ban.</span>")
@@ -605,9 +608,9 @@
 					jobban_buildcache(M.client)
 				ban_unban_log_save("[key_name(usr)] appearance banned [key_name(M)]. reason: [reason]")
 				log_admin_private("[key_name(usr)] appearance banned [key_name(M)]. \nReason: [reason]")
-				create_message("note", M.ckey, null, "Appearance banned - [reason]", null, null, 0, 0)
+				create_message("note", M.key, null, "Appearance banned - [reason]", null, null, 0, 0, null, 0, severity)
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] appearance banned [key_name_admin(M)].</span>")
-				to_chat(M, "<span class='boldannounce'><BIG>You have been appearance banned by [usr.client.ckey].</BIG></span>")
+				to_chat(M, "<span class='boldannounce'><BIG>You have been appearance banned by [usr.client.key].</BIG></span>")
 				to_chat(M, "<span class='boldannounce'>The reason is: [reason]</span>")
 				to_chat(M, "<span class='danger'>Appearance ban can be lifted only upon request.</span>")
 				var/bran = CONFIG_GET(string/banappeals)
@@ -803,30 +806,35 @@
 
 
 		//Drones
-		if(jobban_isbanned(M, "drone"))
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=drone;jobban4=[REF(M)]'><font color=red>Drone</font></a></td>"
+		if(jobban_isbanned(M, ROLE_DRONE))
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_DRONE];jobban4=[REF(M)]'><font color=red>Drone</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=drone;jobban4=[REF(M)]'>Drone</a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_DRONE];jobban4=[REF(M)]'>Drone</a></td>"
 
 
 		//Positronic Brains
-		if(jobban_isbanned(M, "posibrain"))
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=posibrain;jobban4=[REF(M)]'><font color=red>Posibrain</font></a></td>"
+		if(jobban_isbanned(M, ROLE_POSIBRAIN))
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_POSIBRAIN];jobban4=[REF(M)]'><font color=red>Posibrain</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=posibrain;jobban4=[REF(M)]'>Posibrain</a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_POSIBRAIN];jobban4=[REF(M)]'>Posibrain</a></td>"
 
-
+		//Sentience Potion Spawn
+		if(jobban_isbanned(M, ROLE_SENTIENCE))
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_SENTIENCE];jobban4=[REF(M)]'><font color=red>Sentience Potion Spawn</font></a></td>"
+		else
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_SENTIENCE];jobban4=[REF(M)]'>Sentience Potion Spawn</a></td>"
+		
 		//Deathsquad
-		if(jobban_isbanned(M, "deathsquad"))
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=deathsquad;jobban4=[REF(M)]'><font color=red>Deathsquad</font></a></td>"
+		if(jobban_isbanned(M, ROLE_DEATHSQUAD))
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_DEATHSQUAD];jobban4=[REF(M)]'><font color=red>Deathsquad</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=deathsquad;jobban4=[REF(M)]'>Deathsquad</a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_DEATHSQUAD];jobban4=[REF(M)]'>Deathsquad</a></td>"
 
 		//Lavaland roles
-		if(jobban_isbanned(M, "lavaland"))
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=lavaland;jobban4=[REF(M)]'><font color=red>Lavaland</font></a></td>"
+		if(jobban_isbanned(M, ROLE_LAVALAND))
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_LAVALAND];jobban4=[REF(M)]'><font color=red>Lavaland</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=lavaland;jobban4=[REF(M)]'>Lavaland</a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_LAVALAND];jobban4=[REF(M)]'>Lavaland</a></td>"
 
 		dat += "</tr></table>"
 
@@ -893,6 +901,16 @@
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=alien;jobban4=[REF(M)]'>Alien</a></td>"
 
+	//Other Roles (black)
+		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		dat += "<tr bgcolor='000000'><th colspan='5'><a href='?src=[REF(src)];[HrefToken()];jobban3=otherroles;jobban4=[REF(M)]' style='color: white;'>Other Roles</a></th></tr><tr align='center'>"
+
+		//Mind Transfer Potion
+		if(jobban_isbanned(M, ROLE_MIND_TRANSFER))
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_MIND_TRANSFER];jobban4=[REF(M)]'><font color=red>Mind Transfer Potion</font></a></td>"
+		else
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_MIND_TRANSFER];jobban4=[REF(M)]'>Mind Transfer Potion</a></td>"
+
 		dat += "</tr></table>"
 		usr << browse(dat, "window=jobban2;size=800x450")
 		return
@@ -952,11 +970,13 @@
 						continue
 					joblist += jobPos
 			if("ghostroles")
-				joblist += list(ROLE_PAI, "posibrain", "drone", "deathsquad", "lavaland")
+				joblist += list(ROLE_PAI, ROLE_POSIBRAIN, ROLE_DRONE , ROLE_DEATHSQUAD, ROLE_LAVALAND, ROLE_SENTIENCE)
 			if("teamantags")
 				joblist += list(ROLE_OPERATIVE, ROLE_REV, ROLE_CULTIST, ROLE_SERVANT_OF_RATVAR, ROLE_ABDUCTOR, ROLE_ALIEN)
 			if("convertantags")
 				joblist += list(ROLE_REV, ROLE_CULTIST, ROLE_SERVANT_OF_RATVAR, ROLE_ALIEN)
+			if("otherroles")
+				joblist += list(ROLE_MIND_TRANSFER)
 			else
 				joblist += href_list["jobban3"]
 
@@ -968,16 +988,19 @@
 
 		//Banning comes first
 		if(notbannedlist.len) //at least 1 unbanned job exists in joblist so we have stuff to ban.
-			switch(alert("Temporary Ban for [M.ckey]?",,"Yes","No", "Cancel"))
+			var/severity = null
+			switch(alert("Temporary Ban for [M.key]?",,"Yes","No", "Cancel"))
 				if("Yes")
 					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
 					if(mins <= 0)
 						to_chat(usr, "<span class='danger'>[mins] is not a valid duration.</span>")
 						return
-					var/reason = input(usr,"Please State Reason For Banning [M.ckey].","Reason") as message|null
+					var/reason = input(usr,"Please State Reason For Banning [M.key].","Reason") as message|null
 					if(!reason)
 						return
-
+					severity = input("Set the severity of the note/ban.", "Severity", null, null) as null|anything in list("High", "Medium", "Minor", "None")
+					if(!severity)
+						return
 					var/msg
 					for(var/job in notbannedlist)
 						if(!DB_ban_record(BANTYPE_JOB_TEMP, M, mins, reason, job))
@@ -991,15 +1014,18 @@
 							msg = job
 						else
 							msg += ", [job]"
-					create_message("note", M.ckey, null, "Banned  from [msg] - [reason]", null, null, 0, 0)
+					create_message("note", M.key, null, "Banned  from [msg] - [reason]", null, null, 0, 0, null, 0, severity)
 					message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [mins] minutes.</span>")
-					to_chat(M, "<span class='boldannounce'><BIG>You have been [(msg == ("ooc" || "appearance")) ? "banned" : "jobbanned"] by [usr.client.ckey] from: [msg].</BIG></span>")
+					to_chat(M, "<span class='boldannounce'><BIG>You have been [(msg == ("ooc" || "appearance")) ? "banned" : "jobbanned"] by [usr.client.key] from: [msg].</BIG></span>")
 					to_chat(M, "<span class='boldannounce'>The reason is: [reason]</span>")
 					to_chat(M, "<span class='danger'>This jobban will be lifted in [mins] minutes.</span>")
 					href_list["jobban2"] = 1 // lets it fall through and refresh
 					return 1
 				if("No")
-					var/reason = input(usr,"Please State Reason For Banning [M.ckey].","Reason") as message|null
+					var/reason = input(usr,"Please State Reason For Banning [M.key].","Reason") as message|null
+					severity = input("Set the severity of the note/ban.", "Severity", null, null) as null|anything in list("High", "Medium", "Minor", "None")
+					if(!severity)
+						return
 					if(reason)
 						var/msg
 						for(var/job in notbannedlist)
@@ -1014,9 +1040,9 @@
 								msg = job
 							else
 								msg += ", [job]"
-						create_message("note", M.ckey, null, "Banned  from [msg] - [reason]", null, null, 0, 0)
+						create_message("note", M.key, null, "Banned  from [msg] - [reason]", null, null, 0, 0, null, 0, severity)
 						message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg].</span>")
-						to_chat(M, "<span class='boldannounce'><BIG>You have been [(msg == ("ooc" || "appearance")) ? "banned" : "jobbanned"] by [usr.client.ckey] from: [msg].</BIG></span>")
+						to_chat(M, "<span class='boldannounce'><BIG>You have been [(msg == ("ooc" || "appearance")) ? "banned" : "jobbanned"] by [usr.client.key] from: [msg].</BIG></span>")
 						to_chat(M, "<span class='boldannounce'>The reason is: [reason]</span>")
 						to_chat(M, "<span class='danger'>Jobban can be lifted only upon request.</span>")
 						href_list["jobban2"] = 1 // lets it fall through and refresh
@@ -1047,7 +1073,7 @@
 						continue
 			if(msg)
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] unbanned [key_name_admin(M)] from [msg].</span>")
-				to_chat(M, "<span class='boldannounce'><BIG>You have been un-jobbanned by [usr.client.ckey] from [msg].</BIG></span>")
+				to_chat(M, "<span class='boldannounce'><BIG>You have been un-jobbanned by [usr.client.key] from [msg].</BIG></span>")
 				href_list["jobban2"] = 1 // lets it fall through and refresh
 			return 1
 		return 0 //we didn't do anything!
@@ -1068,7 +1094,7 @@
 			if(!M.client)
 				to_chat(usr, "<span class='danger'>Error: [M] no longer has a client!</span>")
 				return
-			to_chat(M, "<span class='danger'>You have been kicked from the server by [usr.client.holder.fakekey ? "an Administrator" : "[usr.client.ckey]"].</span>")
+			to_chat(M, "<span class='danger'>You have been kicked from the server by [usr.client.holder.fakekey ? "an Administrator" : "[usr.client.key]"].</span>")
 			log_admin("[key_name(usr)] kicked [key_name(M)].")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] kicked [key_name_admin(M)].</span>")
 			qdel(M.client)
@@ -1076,20 +1102,20 @@
 	else if(href_list["addmessage"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/target_ckey = href_list["addmessage"]
-		create_message("message", target_ckey, secret = 0)
+		var/target_key = href_list["addmessage"]
+		create_message("message", target_key, secret = 0)
 
 	else if(href_list["addnote"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/target_ckey = href_list["addnote"]
-		create_message("note", target_ckey)
+		var/target_key = href_list["addnote"]
+		create_message("note", target_key)
 
 	else if(href_list["addwatch"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/target_ckey = href_list["addwatch"]
-		create_message("watchlist entry", target_ckey, secret = 1)
+		var/target_key = href_list["addwatch"]
+		create_message("watchlist entry", target_key, secret = 1)
 
 	else if(href_list["addmemo"])
 		if(!check_rights(R_ADMIN))
@@ -1138,6 +1164,24 @@
 			return
 		var/message_id = href_list["editmessageempty"]
 		edit_message(message_id, browse = 1)
+
+	else if(href_list["editmessageexpiry"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/message_id = href_list["editmessageexpiry"]
+		edit_message_expiry(message_id)
+
+	else if(href_list["editmessageexpiryempty"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/message_id = href_list["editmessageexpiryempty"]
+		edit_message_expiry(message_id, browse = 1)
+
+	else if(href_list["editmessageseverity"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/message_id = href_list["editmessageseverity"]
+		edit_message_severity(message_id)
 
 	else if(href_list["secretmessage"])
 		if(!check_rights(R_ADMIN))
@@ -1203,7 +1247,9 @@
 		if(query_get_message_edits.NextRow())
 			var/edit_log = query_get_message_edits.item[1]
 			if(!QDELETED(usr))
-				usr << browse(edit_log,"window=noteedits")
+				var/datum/browser/browser = new(usr, "Note edits", "Note edits")
+				browser.set_content(jointext(edit_log, ""))
+				browser.open()
 		qdel(query_get_message_edits)
 
 	else if(href_list["newban"])
@@ -1217,13 +1263,13 @@
 		if(M.client && M.client.holder)
 			return	//admins cannot be banned. Even if they could, the ban doesn't affect them anyway
 
-		switch(alert("Temporary Ban for [M.ckey]?",,"Yes","No", "Cancel"))
+		switch(alert("Temporary Ban for [M.key]?",,"Yes","No", "Cancel"))
 			if("Yes")
 				var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
 				if(mins <= 0)
 					to_chat(usr, "<span class='danger'>[mins] is not a valid duration.</span>")
 					return
-				var/reason = input(usr,"Please State Reason For Banning [M.ckey].","Reason") as message|null
+				var/reason = input(usr,"Please State Reason For Banning [M.key].","Reason") as message|null
 				if(!reason)
 					return
 				if(!DB_ban_record(BANTYPE_TEMP, M, mins, reason))
@@ -1231,14 +1277,14 @@
 					return
 				AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
 				ban_unban_log_save("[key_name(usr)] has banned [key_name(M)]. - Reason: [reason] - This will be removed in [mins] minutes.")
-				to_chat(M, "<span class='boldannounce'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>")
+				to_chat(M, "<span class='boldannounce'><BIG>You have been banned by [usr.client.key].\nReason: [reason]</BIG></span>")
 				to_chat(M, "<span class='danger'>This is a temporary ban, it will be removed in [mins] minutes. The round ID is [GLOB.round_id].</span>")
 				var/bran = CONFIG_GET(string/banappeals)
 				if(bran)
 					to_chat(M, "<span class='danger'>To try to resolve this matter head to [bran]</span>")
 				else
 					to_chat(M, "<span class='danger'>No ban appeals URL has been set.</span>")
-				log_admin_private("[key_name(usr)] has banned [M.ckey].\nReason: [key_name(M)]\nThis will be removed in [mins] minutes.")
+				log_admin_private("[key_name(usr)] has banned [key_name(M)].\nReason: [key_name(M)]\nThis will be removed in [mins] minutes.")
 				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis will be removed in [mins] minutes.</span>"
 				message_admins(msg)
 				var/datum/admin_help/AH = M.client ? M.client.current_ticket : null
@@ -1246,7 +1292,7 @@
 					AH.Resolve()
 				qdel(M.client)
 			if("No")
-				var/reason = input(usr,"Please State Reason For Banning [M.ckey].","Reason") as message|null
+				var/reason = input(usr,"Please State Reason For Banning [M.key].","Reason") as message|null
 				if(!reason)
 					return
 				switch(alert(usr,"IP ban?",,"Yes","No","Cancel"))
@@ -1256,7 +1302,7 @@
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0, M.lastKnownIP)
 					if("No")
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
-				to_chat(M, "<span class='boldannounce'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>")
+				to_chat(M, "<span class='boldannounce'><BIG>You have been banned by [usr.client.key].\nReason: [reason]</BIG></span>")
 				to_chat(M, "<span class='danger'>This is a permanent ban. The round ID is [GLOB.round_id].</span>")
 				var/bran = CONFIG_GET(string/banappeals)
 				if(bran)
@@ -1367,7 +1413,7 @@
 		var/speech = input("What will [key_name(M)] say?.", "Force speech", "")// Don't need to sanitize, since it does that in say(), we also trust our admins.
 		if(!speech)
 			return
-		M.say(speech)
+		M.say(speech, forced = "admin speech")
 		speech = sanitize(speech) // Nah, we don't trust them
 		log_admin("[key_name(usr)] forced [key_name(M)] to say: [speech]")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] forced [key_name_admin(M)] to say: [speech]</span>")
@@ -2349,7 +2395,7 @@
 			if(alert("Are you sure you want to kick all [afkonly ? "AFK" : ""] clients from the lobby??","Message","Yes","Cancel") != "Yes")
 				to_chat(usr, "Kick clients from lobby aborted")
 				return
-			var/list/listkicked = kick_clients_in_lobby("<span class='danger'>You were kicked from the lobby by [usr.client.holder.fakekey ? "an Administrator" : "[usr.client.ckey]"].</span>", afkonly)
+			var/list/listkicked = kick_clients_in_lobby("<span class='danger'>You were kicked from the lobby by [usr.client.holder.fakekey ? "an Administrator" : "[usr.client.key]"].</span>", afkonly)
 
 			var/strkicked = ""
 			for(var/name in listkicked)

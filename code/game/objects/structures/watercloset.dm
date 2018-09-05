@@ -54,7 +54,7 @@
 		else
 			to_chat(user, "<span class='warning'>You need a tighter grip!</span>")
 
-	else if(cistern && !open)
+	else if(cistern && !open && user.CanReach(src))
 		if(!contents.len)
 			to_chat(user, "<span class='notice'>The cistern is empty.</span>")
 		else
@@ -181,6 +181,8 @@
 		return ..()
 
 /obj/structure/urinal/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
 	to_chat(user, "<span class='notice'>You start to [exposed ? "screw the cap back into place" : "unscrew the cap to the drain protector"]...</span>")
 	playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
 	if(I.use_tool(src, user, 20))
@@ -238,6 +240,7 @@
 	update_icon()
 	add_fingerprint(M)
 	if(on)
+		START_PROCESSING(SSmachines, src)
 		soundloop.start()
 		wash_turf()
 		for(var/atom/movable/G in loc)
@@ -418,6 +421,8 @@
 			else if(isobj(AM))
 				wash_obj(AM)
 			contamination_cleanse(AM)
+	else
+		return PROCESS_KILL
 
 /obj/machinery/shower/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/metal (loc, 3)

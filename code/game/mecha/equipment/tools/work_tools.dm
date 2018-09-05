@@ -64,7 +64,7 @@
 			target.visible_message("<span class='danger'>[chassis] squeezes [target].</span>", \
 								"<span class='userdanger'>[chassis] squeezes [target].</span>",\
 								"<span class='italics'>You hear something crack.</span>")
-			add_logs(chassis.occupant, M, "attacked", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
+			log_combat(chassis.occupant, M, "attacked", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
 		else
 			step_away(M,chassis)
 			occupant_message("You push [target] out of the way.")
@@ -124,7 +124,7 @@
 				M.updatehealth()
 				target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury.</span>", \
 									"<span class='userdanger'>[chassis] destroys [target] in an unholy fury.</span>")
-				add_logs(chassis.occupant, M, "attacked", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
+				log_combat(chassis.occupant, M, "attacked", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
 			else
 				target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury.</span>", \
 									"<span class='userdanger'>[chassis] destroys [target] in an unholy fury.</span>")
@@ -147,7 +147,7 @@
 					playsound(src, get_dismember_sound(), 80, TRUE)
 					target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off.</span>", \
 								   "<span class='userdanger'>[chassis] rips [target]'s arms off.</span>")
-					add_logs(chassis.occupant, M, "dismembered of[limbs_gone],", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
+					log_combat(chassis.occupant, M, "dismembered of[limbs_gone],", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYE: [uppertext(damtype)])")
 			else
 				target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off.</span>", \
 								   "<span class='userdanger'>[chassis] rips [target]'s arms off.</span>")

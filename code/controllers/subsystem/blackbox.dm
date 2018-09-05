@@ -68,14 +68,22 @@ SUBSYSTEM_DEF(blackbox)
 			return FALSE
 	return ..()
 
-/datum/controller/subsystem/blackbox/Shutdown()
-	sealed = FALSE
+//Recorded on subsystem shutdown
+/datum/controller/subsystem/blackbox/proc/FinalFeedback()
 	record_feedback("tally", "ahelp_stats", GLOB.ahelp_tickets.active_tickets.len, "unresolved")
 	for (var/obj/machinery/telecomms/message_server/MS in GLOB.telecomms_list)
 		if (MS.pda_msgs.len)
 			record_feedback("tally", "radio_usage", MS.pda_msgs.len, "PDA")
 		if (MS.rc_msgs.len)
 			record_feedback("tally", "radio_usage", MS.rc_msgs.len, "request console")
+
+	for(var/player_key in GLOB.player_details)
+		var/datum/player_details/PD = GLOB.player_details[player_key]
+		record_feedback("tally", "client_byond_version", 1, PD.byond_version)
+
+/datum/controller/subsystem/blackbox/Shutdown()
+	sealed = FALSE
+	FinalFeedback()
 
 	if (!SSdbcore.Connect())
 		return
@@ -323,5 +331,5 @@ Versioning
 	map = sanitizeSQL(map)
 	var/datum/DBQuery/query_report_death = SSdbcore.NewQuery("INSERT INTO [format_table_name("death")] (pod, x_coord, y_coord, z_coord, mapname, server_ip, server_port, round_id, tod, job, special, name, byondkey, laname, lakey, bruteloss, fireloss, brainloss, oxyloss, toxloss, cloneloss, staminaloss, last_words, suicide) VALUES ('[sqlpod]', '[x_coord]', '[y_coord]', '[z_coord]', '[map]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', [GLOB.round_id], '[SQLtime()]', '[sqljob]', '[sqlspecial]', '[sqlname]', '[sqlkey]', '[laname]', '[lakey]', [sqlbrute], [sqlfire], [sqlbrain], [sqloxy], [sqltox], [sqlclone], [sqlstamina], '[last_words]', [suicide])")
 	if(query_report_death)
-		query_report_death.Execute()
+		query_report_death.Execute(async = TRUE)
 		qdel(query_report_death)

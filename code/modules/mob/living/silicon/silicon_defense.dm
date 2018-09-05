@@ -1,5 +1,5 @@
 
-/mob/living/silicon/grippedby(mob/living/user)
+/mob/living/silicon/grippedby(mob/living/user, instant = FALSE)
 	return //can't upgrade a simple pull into a more aggressive grab.
 
 /mob/living/silicon/get_ear_protection()//no ears
@@ -9,13 +9,13 @@
 	if(..()) //if harm or disarm intent
 		var/damage = 20
 		if (prob(90))
-			add_logs(M, src, "attacked")
+			log_combat(M, src, "attacked")
 			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
 							"<span class='userdanger'>[M] has slashed at [src]!</span>")
 			if(prob(8))
 				flash_act(affect_silicon = 1)
-			add_logs(M, src, "attacked")
+			log_combat(M, src, "attacked")
 			adjustBruteLoss(damage)
 			updatehealth()
 		else

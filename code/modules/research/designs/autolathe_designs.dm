@@ -34,6 +34,14 @@
 	build_path = /obj/item/extinguisher
 	category = list("initial","Tools")
 
+/datum/design/pocketfireextinguisher
+	name = "Pocket Fire Extinguisher"
+	id = "pocketfireextinguisher"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 50, MAT_GLASS = 40)
+	build_path = /obj/item/extinguisher/mini
+	category = list("initial","Tools")
+
 /datum/design/multitool
 	name = "Multitool"
 	id = "multitool"
@@ -229,10 +237,10 @@
 /datum/design/rglass
 	name = "Reinforced Glass"
 	id = "rglass"
-	build_type = AUTOLATHE | SMELTER
+	build_type = AUTOLATHE | SMELTER | PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/rglass
-	category = list("initial","Construction")
+	category = list("initial","Construction","Stock Parts")
 	maxstack = 50
 
 /datum/design/rods

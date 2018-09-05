@@ -42,7 +42,7 @@
 		var/turf/currentturf = get_turf(src)
 		to_chat(get(parent, /mob), "<span class='danger'>You can't help but feel that you just lost something back there...</span>")
 		var/turf/targetturf = relocate()
-		log_game("[parent] has been moved out of bounds in [AREACOORD(currentturf)]. Moving it to [AREACOORD(targetturf)].")
+		log_game("[parent] has been moved out of bounds in [loc_name(currentturf)]. Moving it to [loc_name(targetturf)].")
 		if(inform_admins)
 			message_admins("[parent] has been moved out of bounds in [ADMIN_VERBOSEJMP(currentturf)]. Moving it to [ADMIN_VERBOSEJMP(targetturf)].")
 
@@ -65,17 +65,17 @@
 
 	return FALSE
 
-/datum/component/stationloving/proc/check_deletion(force) // TRUE = interrupt deletion, FALSE = proceed with deletion
+/datum/component/stationloving/proc/check_deletion(datum/source, force) // TRUE = interrupt deletion, FALSE = proceed with deletion
 
 	var/turf/T = get_turf(parent)
 
 	if(inform_admins && force)
 		message_admins("[parent] has been !!force deleted!! in [ADMIN_VERBOSEJMP(T)].")
-		log_game("[parent] has been !!force deleted!! in [AREACOORD(T)].")
+		log_game("[parent] has been !!force deleted!! in [loc_name(T)].")
 
 	if(!force && !allow_death)
 		var/turf/targetturf = relocate()
-		log_game("[parent] has been destroyed in [AREACOORD(T)]. Moving it to [AREACOORD(targetturf)].")
+		log_game("[parent] has been destroyed in [loc_name(T)]. Moving it to [loc_name(targetturf)].")
 		if(inform_admins)
 			message_admins("[parent] has been destroyed in [ADMIN_VERBOSEJMP(T)]. Moving it to [ADMIN_VERBOSEJMP(targetturf)].")
 		return TRUE

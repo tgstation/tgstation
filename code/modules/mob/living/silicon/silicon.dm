@@ -385,9 +385,9 @@
 	add_sensors()
 	to_chat(src, "Sensor overlay activated.")
 
-/mob/living/silicon/proc/GetPhoto()
+/mob/living/silicon/proc/GetPhoto(mob/user)
 	if (aicamera)
-		return aicamera.selectpicture(aicamera)
+		return aicamera.selectpicture(user)
 
 /mob/living/silicon/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()

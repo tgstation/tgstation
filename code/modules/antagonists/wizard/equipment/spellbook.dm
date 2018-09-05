@@ -76,7 +76,7 @@
 	return 0
 
 /datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user,obj/item/spellbook/book) //return point value or -1 for failure
-	var/area/wizard_station/A = locate() in GLOB.sortedAreas
+	var/area/wizard_station/A = GLOB.areas_by_type[/area/wizard_station]
 	if(!(user in A.contents))
 		to_chat(user, "<span class='warning'>You can only refund spells at the wizard lair</span>")
 		return -1
@@ -314,6 +314,12 @@
 	desc = "An altruistic staff that can heal the lame and raise the dead."
 	item_path = /obj/item/gun/magic/staff/healing
 	cost = 1
+	category = "Defensive"
+
+/datum/spellbook_entry/item/lockerstaff
+	name = "Staff of the Locker"
+	desc = "A staff that shoots lockers. It eats anyone it hits on its way, leaving a welded locker with your victims behind."
+	item_path = /obj/item/gun/magic/staff/locker
 	category = "Defensive"
 
 /datum/spellbook_entry/item/scryingorb

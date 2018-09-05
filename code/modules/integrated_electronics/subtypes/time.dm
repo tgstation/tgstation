@@ -142,25 +142,44 @@
 	power_draw_per_use = 2
 
 /obj/item/integrated_circuit/time/clock
-	name = "integrated clock"
-	desc = "Tells you what the local time is, specific to your station or planet."
+	name = "integrated clock (NT Common Time)"
+	desc = "Tells you what the time is, in Nanotrasen Common Time."				//round time
 	icon_state = "clock"
 	inputs = list()
 	outputs = list(
 		"time" = IC_PINTYPE_STRING,
 		"hours" = IC_PINTYPE_NUMBER,
 		"minutes" = IC_PINTYPE_NUMBER,
-		"seconds" = IC_PINTYPE_NUMBER
+		"seconds" = IC_PINTYPE_NUMBER,
+		"absolute decisecond elapsed time" = IC_PINTYPE_NUMBER
 		)
 	activators = list("get time" = IC_PINTYPE_PULSE_IN, "on time got" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	power_draw_per_use = 4
+	power_draw_per_use = 2
+
+/obj/item/integrated_circuit/time/clock/proc/get_time()
+	return world.time
 
 /obj/item/integrated_circuit/time/clock/do_work()
-	var/wtime = world.time
-	set_pin_data(IC_OUTPUT, 1, time2text(wtime, "hh:mm:ss") )
-	set_pin_data(IC_OUTPUT, 2, text2num(time2text(wtime, "hh") ) )
-	set_pin_data(IC_OUTPUT, 3, text2num(time2text(wtime, "mm") ) )
-	set_pin_data(IC_OUTPUT, 4, text2num(time2text(wtime, "ss") ) )
+	var/current_time = get_time()
+	set_pin_data(IC_OUTPUT, 1, time2text(current_time, "hh:mm:ss") )
+	set_pin_data(IC_OUTPUT, 2, text2num(time2text(current_time, "hh") ) )
+	set_pin_data(IC_OUTPUT, 3, text2num(time2text(current_time, "mm") ) )
+	set_pin_data(IC_OUTPUT, 4, text2num(time2text(current_time, "ss") ) )
+	set_pin_data(IC_OUTPUT, 5, current_time)
 	push_data()
 	activate_pin(2)
+
+/obj/item/integrated_circuit/time/clock/station
+	name = "integrated clock (Station Time)"
+	desc = "Tells you what the time is, in terms and adjusted for your local station or planet"
+
+/obj/item/integrated_circuit/time/clock/station/get_time()
+	return station_time()
+
+/obj/item/integrated_circuit/time/clock/bluespace
+	name = "integrated clock (Bluespace Absolute Time)"
+	desc = "Tells you what the time is, in Bluespace Absolute Time, unaffected by local time dilation or other phenomenon."
+
+/obj/item/integrated_circuit/time/clock/bluespace/get_time()
+	return REALTIMEOFDAY

@@ -350,5 +350,5 @@
 				log_message("Recalibration of coordination system finished with 0 errors.")
 			else
 				occupant_message("<span class='warning'>Recalibration failed!</span>")
-				log_message("Recalibration of coordination system failed with 1 error.",1)
+				log_message("Recalibration of coordination system failed with 1 error.", color="red")
 

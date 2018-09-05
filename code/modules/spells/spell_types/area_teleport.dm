@@ -77,12 +77,12 @@
 	else
 		switch(invocation_type)
 			if("shout")
-				user.say("[invocation] [uppertext(chosenarea.name)]")
+				user.say("[invocation] [uppertext(chosenarea.name)]", forced = "spell")
 				if(user.gender==MALE)
 					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
 				else
 					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
 			if("whisper")
-				user.whisper("[invocation] [uppertext(chosenarea.name)]")
+				user.whisper("[invocation] [uppertext(chosenarea.name)]", forced = "spell")
 
 	return

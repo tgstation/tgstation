@@ -135,6 +135,7 @@ GLOBAL_LIST(labor_sheet_values)
 
 
 /obj/machinery/mineral/stacking_machine/laborstacker
+	force_connect = TRUE
 	var/points = 0 //The unclaimed value of ore stacked.
 
 /obj/machinery/mineral/stacking_machine/laborstacker/process_sheet(obj/item/stack/sheet/inp)

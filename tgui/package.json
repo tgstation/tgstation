@@ -16,7 +16,6 @@
     "babelify": "7.2.0",
     "babelify-external-helpers": "1.1.0",
     "browserify": "13.0.0",
-    "bulkify": "^1.4.2",
     "bundle-collapser": "1.2.1",
     "dom4": "1.7.0",
     "es3ify": "0.2.1",
