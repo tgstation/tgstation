@@ -10,5 +10,14 @@
 #define RUNE_COLOR_SUMMON "#00FF00"
 
 //blood magic
-#define MAX_BLOODCHARGE 5
-#define RUNELESS_MAX_BLOODCHARGE 2
+#define MAX_BLOODCHARGE 4
+#define RUNELESS_MAX_BLOODCHARGE 1
+#define CULT_RISEN 0.2 //percent before rise
+#define CULT_ASCENDENT 0.4 //percent before ascend
+//screen locations
+#define DEFAULT_BLOODSPELLS "6:-29,4:-2"
+#define DEFAULT_BLOODTIP "14:6,14:27"
+#define DEFAULT_TOOLTIP "6:-29,5:-2"
+//misc
+#define SOULS_TO_REVIVE 3
+#define BLOODCULT_EYE "f00"
