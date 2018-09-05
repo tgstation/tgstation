@@ -112,16 +112,14 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 
 	var/point_gain = 0
 	switch(orig_light)
-		if(0 to 9)
+		if(0 to 10)
 			say("Explosion not large enough for research calculations.")
 			return
-		if(10 to 20)
-			point_gain = (orig_light * 1000) - 10000 //10 = 0; 20 = 10000
 		else
-			point_gain = (orig_light * 500)// every 20 gives you 10K points
+			point_gain = round(((log(x)-1)**1.6)*TECHWEB_BOMB_POINTCAP)
 
 	if(point_gain > linked_techweb.largest_bomb_value)
-		if(point_gain <= TECHWEB_BOMB_POINTCAP || linked.techweb.largest_bomb_value < TECHWEB_BOMB_POINTCAP)
+		if(point_gain <= TECHWEB_BOMB_POINTCAP || linked_techweb.largest_bomb_value < TECHWEB_BOMB_POINTCAP)
 			var/old_tech_largest_bomb_value = linked_techweb.largest_bomb_value //held so we can pull old before we do math
 			linked_techweb.largest_bomb_value = point_gain
 			point_gain -= old_tech_largest_bomb_value
