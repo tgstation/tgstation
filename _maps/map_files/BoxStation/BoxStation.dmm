@@ -40056,7 +40056,6 @@
 /area/science/misc_lab)
 "bYl" = (
 /obj/structure/chair/office/light{
-	icon_state = "officechair_white";
 	dir = 4
 	},
 /obj/effect/landmark/start/scientist,

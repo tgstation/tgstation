@@ -1211,7 +1211,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		target.visible_message("<span class='danger'>[user] has [atk_verb]ed [target]!</span>", \
 					"<span class='userdanger'>[user] has [atk_verb]ed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
-
+		
+		target.lastattacker = user.real_name
+		target.lastattackerckey = user.ckey
+		
 		if(user.limb_destroyer)
 			target.dismembering_strike(user, affecting.body_zone)
 		target.apply_damage(damage, BRUTE, affecting, armor_block)

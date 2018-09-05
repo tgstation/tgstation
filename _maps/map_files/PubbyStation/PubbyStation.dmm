@@ -51823,7 +51823,6 @@
 /area/maintenance/department/engine)
 "qar" = (
 /obj/structure/chair/office/light{
-	icon_state = "officechair_white";
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
@@ -53159,7 +53158,6 @@
 /area/science/xenobiology)
 "ugC" = (
 /obj/structure/chair/office/light{
-	icon_state = "officechair_white";
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,

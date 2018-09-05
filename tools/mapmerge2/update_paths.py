@@ -60,10 +60,10 @@ def parse_rep_string(replacement_string, verbose = False):
 def update_path(dmm_data, replacement_string, verbose=False):
     old_path_part, new_path_part = replacement_string.split(':', maxsplit=1)
     old_path, old_path_props = parse_rep_string(old_path_part, verbose)
-    new_paths = dict()
+    new_paths = list()
     for replacement_def in new_path_part.split(','):
         new_path, new_path_props = parse_rep_string(replacement_def, verbose)
-        new_paths[new_path] = new_path_props
+        new_paths.append((new_path, new_path_props))
 
     def replace_def(match):
         if match.group(2):
@@ -82,7 +82,7 @@ def update_path(dmm_data, replacement_string, verbose=False):
         if verbose:
             print("Found match : {0}".format(match.group(0)))
         out_paths = []
-        for new_path, new_props in new_paths.items():
+        for new_path, new_props in new_paths:
             out = new_path
             out_props = dict()
             for prop_name, prop_value in new_props.items():
