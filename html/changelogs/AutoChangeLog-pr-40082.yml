@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - admin: "Ghost poll description button was broken in the ert spawner. It isn't anymore."
