@@ -22,6 +22,7 @@ AI MODULES
 	throw_range = 7
 	var/list/laws = list()
 	var/bypass_law_amt_check = 0
+	var/bypass_access_check = FALSE
 	materials = list(MAT_GOLD=50)
 
 /obj/item/aiModule/examine(var/mob/user as mob)
@@ -461,6 +462,7 @@ AI MODULES
 /obj/item/aiModule/core/full/overthrow
 	name = "'Overthrow' Hacked AI Module"
 	law_id = "overthrow"
+	bypass_access_check = TRUE
 
 /obj/item/aiModule/core/full/overthrow/install(datum/ai_laws/law_datum, mob/user)
 	if(!user || !law_datum || !law_datum.owner)
@@ -497,6 +499,7 @@ AI MODULES
 	name = "Hacked AI Module"
 	desc = "An AI Module for hacking additional laws to an AI."
 	laws = list("")
+	bypass_access_check = TRUE
 
 /obj/item/aiModule/syndicate/attack_self(mob/user)
 	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1])
