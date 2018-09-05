@@ -280,7 +280,7 @@
 	subcategory = CAT_AMMO
 
 /datum/crafting_recipe/laserslug
-	name = "Laser Slug Shell"
+	name = "Scatter Laser Shell"
 	result = /obj/item/ammo_casing/shotgun/laserslug
 	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
 				/obj/item/stock_parts/capacitor/adv = 1,
