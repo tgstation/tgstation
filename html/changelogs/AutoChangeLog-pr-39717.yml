@@ -1,0 +1,13 @@
+author: "Robustin and Subject217"
+delete-after: True
+changes: 
+  - balance: "Once the blood cult reaches 20% of the active player population, they will receive a notice that the cult is \"rising\" - and after a moderate delay the eyes of all existing and new cultists will be permanently red. Examining a cultist with uncovered eyes will confirm their supernatural appearance."
+  - balance: "Once the blood cult reaches 40% of the active player population they will receive a warning and after a moderate delay will glow red, permanently revealing the identity of existing and new blood cultists."
+  - rscadd: "Any non-cultist can now strike a (filled) soulshard with a bible to purify it. Purified shades have a unique appearance and will be eager to get revenge on the cult. Bibles can be printed in the library."
+  - balance: "Juggernauts have 25% less HP and 35% less projectile reflection."
+  - balance: "Cult mirror shield is slightly easier to break, has less illusions, and has -33% throwing distance."
+  - balance: "The EMP blood spell has -1 light and heavy radius."
+  - balance: "The revive rune now requires 3 sacrifices per revive, it still starts with one \"freebie\" revive. Giving \"souls\" to AFK/Catatonic cultists remains free of charge."
+  - balance: "Twisted Construction now has a channel time with added noise/effects when used on doors. It also hurts you slightly more to use."
+  - balance: "You can now only hold 1 blood spell without an empowering rune and 4 with one."
+  - rscdel: "The Bloody Bastard Sword is no longer available in Blood Cult. It's still spawnable with admin tools."
