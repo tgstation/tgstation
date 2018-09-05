@@ -9,7 +9,6 @@
 			alien_powers -= A
 			alien_powers += new A(src)
 
-
 /obj/item/organ/alien/Destroy()
 	QDEL_LIST(alien_powers)
 	return ..()
