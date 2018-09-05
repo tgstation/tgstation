@@ -1,4 +1,0 @@
-author: "WJohn"
-delete-after: True
-changes: 
-  - refactor: "Refactored floor tiles to use decals like warning lines do."
