@@ -29,7 +29,7 @@
 	if(powernet)
 		powernet.newavail += amount
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/power/proc/add_load(amount)
 	if(powernet)
@@ -54,13 +54,13 @@
 // defaults to power_channel
 /obj/machinery/proc/powered(var/chan = -1) // defaults to power_channel
 	if(!loc)
-		return 0
+		return FALSE
 	if(!use_power)
-		return 1
+		return TRUE
 
 	var/area/A = get_area(src)		// make sure it's in an area
 	if(!A)
-		return 0					// if not, then not powered
+		return FALSE					// if not, then not powered
 	if(chan == -1)
 		chan = power_channel
 	return A.powered(chan)	// return power status of the area
@@ -97,21 +97,21 @@
 /obj/machinery/power/proc/connect_to_network()
 	var/turf/T = src.loc
 	if(!T || !istype(T))
-		return 0
+		return FALSE
 
 	var/obj/structure/cable/C = T.get_cable_node() //check if we have a node cable on the machine turf, the first found is picked
 	if(!C || !C.powernet)
-		return 0
+		return FALSE
 
 	C.powernet.add_machine(src)
-	return 1
+	return TRUE
 
 // remove and disconnect the machine from its current powernet
 /obj/machinery/power/proc/disconnect_from_network()
 	if(!powernet)
-		return 0
+		return FALSE
 	powernet.remove_machine(src)
-	return 1
+	return TRUE
 
 // attach a wire to a power machine - leads from the turf you are standing on
 //almost never called, overwritten by all power machines but terminal and generator
