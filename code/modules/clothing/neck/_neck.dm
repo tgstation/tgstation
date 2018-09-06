@@ -196,8 +196,9 @@
 /obj/item/clothing/neck/neckerchief
 	icon = 'icons/obj/clothing/masks.dmi' //In order to reuse the bandana sprite
 
-/obj/item/clothing/neck/neckerchief/worn_overlays(isinhands = FALSE)
+/obj/item/clothing/neck/neckerchief/worn_overlays(isinhands)
 	. = ..()
-	var/mutable_appearance/realOverlay = mutable_appearance('icons/mob/mask.dmi', icon_state)
-	realOverlay.pixel_y = -3
-	. += realOverlay
+	if(!isinhands)
+		var/mutable_appearance/realOverlay = mutable_appearance('icons/mob/mask.dmi', icon_state)
+		realOverlay.pixel_y = -3
+		. += realOverlay
