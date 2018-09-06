@@ -252,6 +252,6 @@ Borg Shaker
 
 /obj/item/reagent_containers/borghypo/epi
 	name = "epinephrine injector"
-	desc = "An advanced chemical synthesizer and injection system, designed to stabilize patients.."
+	desc = "An advanced chemical synthesizer and injection system, designed to stabilize patients."
 	reagent_ids = list("epinephrine")
 	accepts_reagent_upgrades = FALSE
