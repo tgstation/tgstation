@@ -16,7 +16,7 @@
 
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/def_zone = ""	//Aiming at
-	var/mob/firer = null//Who shot it
+	var/atom/movable/firer = null//Who shot it
 	var/suppressed = FALSE	//Attack message
 	var/yo = null
 	var/xo = null
@@ -191,7 +191,11 @@
 			reagent_note += R.id + " ("
 			reagent_note += num2text(R.volume) + ") "
 
-	log_combat(firer, L, "shot", src, reagent_note)
+	if(ismob(firer))
+		log_combat(firer, L, "shot", src, reagent_note)
+	else
+		L.log_message("has been shot by [firer] with [src]", LOG_ATTACK, color="orange")
+
 	return L.apply_effects(stun, knockdown, unconscious, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter)
 
 /obj/item/projectile/proc/vol_by_damage()

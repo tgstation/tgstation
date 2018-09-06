@@ -548,6 +548,7 @@
 
 	//Shooting Code:
 	A.preparePixelProjectile(target, T)
+	A.firer = src
 	A.fire()
 	return A
 
