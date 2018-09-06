@@ -112,7 +112,7 @@
 		return FALSE
 	visible_message("<span class='warning'>[user] starts picking up [src].</span>", \
 					"<span class='userdanger'>[user] starts picking you up!</span>")
-	if(!do_after(user, 20, target = src))
+	if(!do_after(user, 2 SECONDS, target = src))
 		return FALSE
 
 	if(user.get_active_held_item()||buckled)
