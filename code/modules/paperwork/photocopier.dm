@@ -135,6 +135,8 @@
 					p.pixel_x = rand(-10, 10)
 					p.pixel_y = rand(-10, 10)
 					p.picture = new(null, "You see [ass]'s ass on the photo.", temp_img)
+					p.picture.psize_x = 128
+					p.picture.psize_y = 128
 					p.update_icon()
 					toner -= 5
 					busy = TRUE

@@ -147,7 +147,7 @@
 	if(host_mob.stat == DEAD)
 		return
 	to_chat(host_mob, "<span class='warning'>You feel compelled to speak...</span>")
-	host_mob.say(sentence)
+	host_mob.say(sentence, forced = "nanite speech")
 
 /datum/nanite_program/triggered/voice
 	name = "Skull Echo"

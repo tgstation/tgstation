@@ -8,8 +8,10 @@
 
 	if(!force)
 		if(!check_dock(new_dock))
+			remove_ripples()
 			return DOCKING_BLOCKED
 		if(!canMove())
+			remove_ripples()
 			return DOCKING_IMMOBILIZED
 
 	var/obj/docking_port/stationary/old_dock = get_docked()
@@ -49,10 +51,9 @@
 	var/list/moved_atoms = list() //Everything not a turf that gets moved in the shuttle
 	var/list/areas_to_move = list() //unique assoc list of areas on turfs being moved
 
-	remove_ripples()
-
 	. = preflight_check(old_turfs, new_turfs, areas_to_move, rotation)
 	if(.)
+		remove_ripples()
 		return
 
 	/*******************************************Hiding turfs if necessary*******************************************/
@@ -70,10 +71,15 @@
 
 	if(!force)
 		if(!check_dock(new_dock))
+			remove_ripples()
 			return DOCKING_BLOCKED
 		if(!canMove())
+			remove_ripples()
 			return DOCKING_IMMOBILIZED
 
+	// Moving to the new location will trample the ripples there at the exact
+	// same time any mobs there are trampled, to avoid any discrepancy where
+	// the ripples go away before it is safe.
 	takeoff(old_turfs, new_turfs, moved_atoms, rotation, movement_direction, old_dock, underlying_old_area)
 
 	CHECK_TICK
@@ -92,6 +98,8 @@
 	new_dock.last_dock_time = world.time
 	setDir(new_dock.dir)
 
+	// remove any stragglers just in case, and clear the list
+	remove_ripples()
 	return DOCKING_SUCCESS
 
 /obj/docking_port/mobile/proc/preflight_check(list/old_turfs, list/new_turfs, list/areas_to_move, rotation)

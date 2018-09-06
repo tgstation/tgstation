@@ -431,8 +431,9 @@ datum/status_effect/stabilized/blue/on_remove()
 		if(owner.fire_stacks <= 0)
 			to_chat(owner, "<span class='notice'>[linked_extract] coats you in a watery goo, extinguishing the flames.</span>")
 	var/obj/O = owner.get_active_held_item()
-	O.extinguish() //All shamelessly copied from water's reaction_obj, since I didn't seem to be able to get it here for some reason.
-	O.acid_level = 0
+	if(O)
+		O.extinguish() //All shamelessly copied from water's reaction_obj, since I didn't seem to be able to get it here for some reason.
+		O.acid_level = 0
 	// Monkey cube
 	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube))
 		to_chat(owner, "<span class='warning'>[linked_extract] kept your hands wet! It makes [O] expand!</span>")
