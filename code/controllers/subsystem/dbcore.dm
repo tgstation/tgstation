@@ -37,10 +37,10 @@ SUBSYSTEM_DEF(dbcore)
 			message_admins("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
 		if(2)
 			message_admins("Could not get schema version from database")
-	
+
 	return ..()
 
-	
+
 /datum/controller/subsystem/dbcore/Recover()
 	_db_con = SSdbcore._db_con
 
@@ -228,7 +228,11 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 /datum/DBQuery/proc/warn_execute()
 	. = Execute()
 	if(!.)
-		to_chat(usr, "<span class='danger'>A SQL error occurred during this operation, check the server logs.</span>")
+		SSdbcore.Disconnect()
+		. = Execute()
+		if(!.)
+			to_chat(usr, "<span class='danger'>A SQL error occurred during this operation, check the server logs.</span>")
+			log_game("An SQL error has occured.")
 
 /datum/DBQuery/proc/Execute(sql_query = sql, cursor_handler = default_cursor, log_error = TRUE)
 	Close()
