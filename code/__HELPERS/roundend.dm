@@ -529,9 +529,6 @@
 		return
 	else if(load_admins(TRUE)) //returns true if there was a database failure and the backup was loaded from
 		return
-	var/datum/DBQuery/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] p INNER JOIN [format_table_name("admin")] a ON p.ckey = a.ckey SET p.lastadminrank = a.rank")
-	query_admin_rank_update.Execute()
-	qdel(query_admin_rank_update)
 	sync_ranks_with_db()
 	var/list/sql_admins = list()
 	for(var/datum/admins/A in GLOB.protected_admins)
@@ -539,6 +536,9 @@
 		var/sql_rank = sanitizeSQL(A.rank.name)
 		sql_admins = list(list("ckey" = "'[sql_ckey]'", "rank" = "'[sql_rank]'"))
 	SSdbcore.MassInsert(format_table_name("admin"), sql_admins, duplicate_key = TRUE)
+	var/datum/DBQuery/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] p INNER JOIN [format_table_name("admin")] a ON p.ckey = a.ckey SET p.lastadminrank = a.rank")
+	query_admin_rank_update.Execute()
+	qdel(query_admin_rank_update)
 
 	//json format backup file generation stored per server
 	var/json_file = file("data/admins_backup.json")
