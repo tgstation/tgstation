@@ -2349,9 +2349,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating/airless{
-	icon_state = @skip
-	},
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)
 "fe" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,

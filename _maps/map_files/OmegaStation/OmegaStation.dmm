@@ -1027,9 +1027,7 @@
 /area/hallway/primary/starboard/fore)
 "abu" = (
 /obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating{
-	icon_state = @skip
-	},
+/turf/open/floor/plating,
 /area/asteroid/nearstation)
 "abv" = (
 /turf/closed/wall,
@@ -1269,9 +1267,7 @@
 "abS" = (
 /obj/item/stack/ore/glass,
 /obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating{
-	icon_state = @skip
-	},
+/turf/open/floor/plating,
 /area/asteroid/nearstation)
 "abT" = (
 /turf/closed/wall,
@@ -2090,9 +2086,7 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating{
-	icon_state = @skip
-	},
+/turf/open/floor/plating,
 /area/asteroid/nearstation)
 "adw" = (
 /turf/open/floor/plating{
@@ -3358,16 +3352,12 @@
 /obj/item/stack/ore/iron,
 /obj/structure/barricade/wooden,
 /obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating{
-	icon_state = @skip
-	},
+/turf/open/floor/plating,
 /area/asteroid/nearstation)
 "afN" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating{
-	icon_state = @skip
-	},
+/turf/open/floor/plating,
 /area/asteroid/nearstation)
 "afP" = (
 /obj/structure/table/wood,
@@ -3842,9 +3832,7 @@
 /obj/item/stack/ore/silver,
 /obj/item/stack/ore/iron,
 /obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating{
-	icon_state = @skip
-	},
+/turf/open/floor/plating,
 /area/asteroid/nearstation)
 "agF" = (
 /turf/closed/wall/r_wall,
@@ -4785,9 +4773,7 @@
 "aik" = (
 /obj/structure/barricade/wooden,
 /obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating{
-	icon_state = @skip
-	},
+/turf/open/floor/plating,
 /area/asteroid/nearstation)
 "aim" = (
 /obj/structure/rack,
@@ -5767,9 +5753,7 @@
 "ajQ" = (
 /obj/item/stack/ore/iron,
 /obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating{
-	icon_state = @skip
-	},
+/turf/open/floor/plating,
 /area/asteroid/nearstation)
 "ajR" = (
 /obj/structure/rack,
@@ -9875,9 +9859,7 @@
 "aqG" = (
 /obj/structure/door_assembly/door_assembly_mhatch,
 /obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating{
-	icon_state = @skip
-	},
+/turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aqI" = (
 /obj/structure/closet/secure_closet/security/sec,
@@ -10399,9 +10381,7 @@
 /area/engine/atmos)
 "arB" = (
 /obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating{
-	icon_state = @skip
-	},
+/turf/open/floor/plating,
 /area/maintenance/port/fore)
 "arC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -36414,9 +36394,7 @@
 /area/engine/supermatter)
 "bvg" = (
 /obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating/airless{
-	icon_state = @skip
-	},
+/turf/open/floor/plating/airless,
 /area/asteroid/nearstation)
 "bvh" = (
 /obj/structure/closet/emcloset{
@@ -40017,9 +39995,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/barricade/wooden,
 /obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating{
-	icon_state = @skip
-	},
+/turf/open/floor/plating,
 /area/engine/engineering)
 "sIB" = (
 /turf/closed/wall/rust,
@@ -41314,9 +41290,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating/airless{
-	icon_state = @skip
-	},
+/turf/open/floor/plating/airless,
 /area/ai_monitored/turret_protected/aisat_interior)
 "sNj" = (
 /obj/effect/turf_decal/bot,
@@ -41916,9 +41890,7 @@
 	icon_state = "0-8"
 	},
 /obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating/airless{
-	icon_state = @skip
-	},
+/turf/open/floor/plating/airless,
 /area/asteroid/nearstation)
 "sOK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{

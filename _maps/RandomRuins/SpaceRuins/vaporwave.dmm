@@ -119,15 +119,13 @@
 /obj/effect/turf_decal/sand,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating{
-	initial_gas_mix = "TEMP=2.7";
-	icon_state = @skip
+	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)
 "B" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating{
-	initial_gas_mix = "TEMP=2.7";
-	icon_state = @skip
+	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)
 "C" = (
@@ -137,8 +135,7 @@
 	},
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating{
-	initial_gas_mix = "TEMP=2.7";
-	icon_state = @skip
+	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)
 "D" = (
@@ -157,16 +154,14 @@
 	},
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating{
-	initial_gas_mix = "TEMP=2.7";
-	icon_state = @skip
+	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)
 "G" = (
 /obj/effect/turf_decal/stripes/asteroid/line,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating{
-	initial_gas_mix = "TEMP=2.7";
-	icon_state = @skip
+	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)
 "H" = (
@@ -219,8 +214,7 @@
 	},
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating{
-	initial_gas_mix = "TEMP=2.7";
-	icon_state = @skip
+	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)
 
