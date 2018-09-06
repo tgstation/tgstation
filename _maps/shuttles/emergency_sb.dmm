@@ -213,7 +213,13 @@
 	name = "Escape Shuttle Infirmary";
 	req_access_txt = "0"
 	},
-/turf/open/floor/plasteel/cmo,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "H" = (
 /obj/structure/closet/crate,
@@ -223,7 +229,13 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "I" = (
-/turf/open/floor/plasteel/cmo,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "J" = (
 /obj/machinery/sleeper{
@@ -232,7 +244,13 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/cmo,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "K" = (
 /obj/structure/table,
@@ -262,13 +280,25 @@
 /area/shuttle/escape)
 "N" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/plasteel/cmo,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "O" = (
 /obj/machinery/sleeper{
 	dir = 8
 	},
-/turf/open/floor/plasteel/cmo,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "P" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,

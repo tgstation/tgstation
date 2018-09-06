@@ -35,7 +35,17 @@
 	preferred_direction = 2;
 	width = 17
 	},
-/turf/open/floor/plasteel/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "ae" = (
 /turf/closed/wall/mineral/titanium,
@@ -62,7 +72,17 @@
 	icon_state = "dpvent_map";
 	dir = 4
 	},
-/turf/open/floor/plasteel/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "ah" = (
 /obj/structure/sign/warning/vacuum,
@@ -110,7 +130,17 @@
 	brightness = 3;
 	dir = 8
 	},
-/turf/open/floor/plasteel/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "am" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -118,7 +148,17 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "an" = (
 /obj/structure/closet/emcloset/anchored,
@@ -129,7 +169,17 @@
 /obj/structure/light_construct{
 	dir = 1
 	},
-/turf/open/floor/plasteel/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "ao" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -144,7 +194,17 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "ap" = (
 /obj/machinery/suit_storage_unit/standard_unit,
@@ -155,7 +215,17 @@
 /obj/structure/light_construct{
 	dir = 1
 	},
-/turf/open/floor/plasteel/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "aq" = (
 /obj/machinery/suit_storage_unit/standard_unit,
@@ -163,7 +233,17 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "ar" = (
 /obj/machinery/suit_storage_unit/standard_unit,
@@ -174,7 +254,17 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "as" = (
 /obj/structure/window/reinforced{
@@ -358,7 +448,17 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "aH" = (
 /obj/structure/closet/toolcloset,
@@ -374,7 +474,17 @@
 	icon_state = "vent_map";
 	dir = 4
 	},
-/turf/open/floor/plasteel/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "aI" = (
 /obj/machinery/autolathe,
@@ -385,7 +495,17 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "aJ" = (
 /obj/structure/sign/departments/engineering,
@@ -511,9 +631,14 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "aV" = (
 /obj/effect/decal/cleanable/dirt{
@@ -526,7 +651,17 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4
 	},
-/turf/open/floor/plasteel/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "aW" = (
 /obj/effect/decal/cleanable/dirt{
@@ -534,9 +669,13 @@
 	name = "dust"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel/yellow/side{
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "aX" = (
 /obj/item/airlock_painter,
@@ -648,9 +787,10 @@
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
 /obj/item/gun/energy/e_gun/mini,
-/turf/open/floor/plasteel/yellow/corner{
+/obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "bh" = (
 /obj/effect/decal/cleanable/dirt{
@@ -751,8 +891,16 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/whiteblue/side{
-	dir = 9;
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white{
 	icon_state = "whiteblue"
 	},
 /area/shuttle/abandoned)
@@ -1197,9 +1345,10 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/purple/corner{
+/obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "bY" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1232,7 +1381,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/arrival/corner,
+/turf/open/floor/plasteel/white/corner,
 /area/shuttle/abandoned)
 "cb" = (
 /obj/structure/light_construct{
@@ -1246,9 +1395,13 @@
 	icon_state = "sleeper-open";
 	dir = 8
 	},
-/turf/open/floor/plasteel/whiteblue/side{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "cc" = (
 /obj/structure/table,
@@ -1261,9 +1414,16 @@
 	},
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/effect/decal/cleanable/blood/gibs/old,
-/turf/open/floor/plasteel/whiteblue/side{
-	dir = 9
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "cd" = (
 /obj/effect/spawner/structure/window/shuttle,
@@ -1277,9 +1437,16 @@
 	},
 /obj/structure/table,
 /obj/item/stack/cable_coil/random,
-/turf/open/floor/plasteel/whitepurple/side{
-	dir = 9
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "cf" = (
 /obj/structure/chair{
@@ -1323,18 +1490,26 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/turf/open/floor/plasteel/whitepurple/side{
+/obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "ci" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/purple/side{
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "cj" = (
 /obj/effect/decal/cleanable/generic,
@@ -1345,17 +1520,23 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/whitepurple/side{
+/obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "ck" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/arrival{
-	dir = 4;
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white/corner{
 	icon_state = "arrival"
 	},
 /area/shuttle/abandoned)
@@ -1381,9 +1562,13 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/purple/side{
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "cn" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1401,9 +1586,11 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/whiteblue/side{
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "cp" = (
 /obj/structure/frame/computer,
@@ -1412,9 +1599,13 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/whitepurple/side{
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "cq" = (
 /obj/effect/turf_decal/bot,
@@ -1431,7 +1622,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/whitepurple/corner,
+/obj/effect/turf_decal/tile/purple,
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "cs" = (
 /obj/structure/sign/departments/science,
@@ -1445,9 +1637,10 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/purple/corner{
+/obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "cu" = (
 /obj/machinery/vending/coffee,
@@ -1471,9 +1664,11 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/arrival/corner{
-	icon_state = "arrivalcorner";
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/turf/open/floor/plasteel{
+	icon_state = "arrivalcorner"
 	},
 /area/shuttle/abandoned)
 "cx" = (
@@ -1485,9 +1680,13 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/whiteblue/side{
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "cz" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1497,8 +1696,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/arrival{
-	dir = 4;
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white/corner{
 	icon_state = "arrival"
 	},
 /area/shuttle/abandoned)
@@ -1509,9 +1710,10 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/whiteblue/corner{
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "cB" = (
 /obj/structure/frame/machine,
@@ -1519,9 +1721,13 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/whitepurple/side{
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "cC" = (
 /obj/structure/closet/crate/science{
@@ -1537,9 +1743,11 @@
 /obj/structure/light_construct/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/whitepurple/side{
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "cD" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1559,9 +1767,13 @@
 /obj/structure/light_construct/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel/whiteblue/side{
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "cF" = (
 /obj/machinery/door/airlock/medical/glass{
@@ -1583,9 +1795,11 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/whiteblue/side{
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "cH" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1604,9 +1818,10 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/whitepurple/corner{
+/obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "cJ" = (
 /obj/structure/sink{
@@ -1624,9 +1839,13 @@
 	use_power = 0
 	},
 /obj/effect/decal/cleanable/greenglow,
-/turf/open/floor/plasteel/whiteblue/side{
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "cK" = (
 /obj/structure/table,
@@ -1638,9 +1857,10 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/purple/corner{
+/obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "cL" = (
 /obj/structure/closet/crate,
@@ -1671,7 +1891,7 @@
 	},
 /obj/item/pda/clear,
 /obj/item/camera,
-/turf/open/floor/plasteel/arrival/corner,
+/turf/open/floor/plasteel/white/corner,
 /area/shuttle/abandoned)
 "cO" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
@@ -1690,7 +1910,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/whiteblue/corner,
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "cQ" = (
 /obj/structure/closet/secure_closet/medical2{
@@ -1701,9 +1922,15 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
-	dir = 6
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white{
+	icon_state = "whiteblue"
 	},
 /area/shuttle/abandoned)
 "cR" = (
@@ -1712,18 +1939,28 @@
 	name = "dust"
 	},
 /obj/structure/light_construct,
-/turf/open/floor/plasteel/whitepurple/side{
-	dir = 10
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "cS" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/whitepurple/side{
-	dir = 6
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
 	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "cT" = (
 /obj/machinery/door/airlock/command/glass{
@@ -1734,9 +1971,11 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/whitepurple/side{
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "cU" = (
 /obj/machinery/door/airlock/command/glass{
@@ -1747,18 +1986,27 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/whiteblue/side{
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "cV" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/whiteblue/side{
-	dir = 10
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "cW" = (
 /obj/machinery/iv_drip,
@@ -1768,9 +2016,15 @@
 	},
 /obj/structure/light_construct,
 /obj/structure/closet/crate/freezer/blood,
-/turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
-	dir = 6
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white{
+	icon_state = "whiteblue"
 	},
 /area/shuttle/abandoned)
 "cX" = (
@@ -1792,9 +2046,10 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/purple/corner{
+/obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "cZ" = (
 /obj/structure/chair/comfy/black,
@@ -1814,9 +2069,11 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/arrival/corner{
-	icon_state = "arrivalcorner";
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/turf/open/floor/plasteel{
+	icon_state = "arrivalcorner"
 	},
 /area/shuttle/abandoned)
 "dc" = (
@@ -1994,18 +2251,25 @@
 	name = "dust"
 	},
 /obj/structure/frame/machine,
-/turf/open/floor/plasteel/whitepurple/side{
-	dir = 10
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "dH" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/whitepurple/side{
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 
 (1,1,1) = {"

@@ -7,36 +7,68 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/bot_white/right,
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/template_noop)
 "c" = (
 /obj/machinery/gateway{
 	dir = 1
 	},
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/turf/open/floor/plasteel/dark,
 /area/template_noop)
 "d" = (
 /obj/machinery/gateway{
 	dir = 5
 	},
 /obj/effect/turf_decal/bot_white/left,
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/template_noop)
 "e" = (
 /obj/machinery/gateway{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/turf/open/floor/plasteel/dark,
 /area/template_noop)
 "f" = (
 /obj/machinery/gateway/centerstation,
@@ -47,9 +79,17 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/turf/open/floor/plasteel/dark,
 /area/template_noop)
 "h" = (
 /obj/machinery/gateway{
@@ -59,16 +99,32 @@
 /obj/structure/rack,
 /obj/item/storage/belt/utility/full,
 /obj/item/radio/off,
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/template_noop)
 "i" = (
 /obj/machinery/gateway,
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/turf/open/floor/plasteel/dark,
 /area/template_noop)
 "j" = (
 /obj/machinery/gateway{
@@ -81,9 +137,17 @@
 	pixel_y = -3
 	},
 /obj/item/paper/pamphlet/gateway,
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/template_noop)
 
 (1,1,1) = {"

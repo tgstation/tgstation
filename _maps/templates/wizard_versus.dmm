@@ -101,16 +101,46 @@
 /area/wizard_versus)
 "av" = (
 /obj/structure/dresser,
-/turf/open/floor/plasteel/whiteblue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/wizard_versus)
 "aw" = (
 /obj/structure/mirror/magic{
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/whiteblue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/wizard_versus)
 "ax" = (
-/turf/open/floor/plasteel/whiteblue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/wizard_versus)
 "ay" = (
 /obj/machinery/light{
@@ -127,13 +157,33 @@
 /turf/open/floor/engine/cult,
 /area/wizard_versus)
 "aB" = (
-/turf/open/floor/plasteel/whitered,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/wizard_versus)
 "aC" = (
 /obj/effect/turf_decal/box,
 /obj/effect/mist,
 /obj/effect/wizard_clothier/red,
-/turf/open/floor/plasteel/whitered,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/wizard_versus)
 "aD" = (
 /obj/structure/table/wood/fancy,
@@ -185,7 +235,17 @@
 /obj/effect/turf_decal/box,
 /obj/effect/mist,
 /obj/effect/wizard_clothier,
-/turf/open/floor/plasteel/whiteblue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/wizard_versus)
 "aN" = (
 /obj/machinery/light,
@@ -195,25 +255,65 @@
 /obj/structure/mirror/magic{
 	pixel_y = -28
 	},
-/turf/open/floor/plasteel/whitered,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/wizard_versus)
 "aP" = (
 /obj/structure/dresser,
-/turf/open/floor/plasteel/whitered,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/wizard_versus)
 "aQ" = (
 /obj/item/banner/engineering/mundane,
 /turf/open/floor/engine/cult,
 /area/wizard_versus)
 "aR" = (
-/turf/open/floor/plasteel/whiteyellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/wizard_versus)
 "aS" = (
 /obj/structure/mirror/magic{
 	pixel_x = -28;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/whiteyellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/wizard_versus)
 "aT" = (
 /obj/structure/chair/wood/wings,
@@ -221,7 +321,17 @@
 /area/wizard_versus)
 "aU" = (
 /obj/structure/dresser,
-/turf/open/floor/plasteel/whiteyellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/wizard_versus)
 "aV" = (
 /obj/structure/table/wood/fancy,
@@ -237,7 +347,17 @@
 /obj/effect/turf_decal/box/red,
 /obj/effect/mist,
 /obj/effect/wizard_clothier/yellow,
-/turf/open/floor/plasteel/whiteyellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/wizard_versus)
 "aZ" = (
 /obj/structure/chair/wood/wings,
