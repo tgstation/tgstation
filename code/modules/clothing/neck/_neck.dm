@@ -195,6 +195,7 @@
 
 /obj/item/clothing/neck/neckerchief
 	icon = 'icons/obj/clothing/masks.dmi' //In order to reuse the bandana sprite
+	var/associatedBand
 
 /obj/item/clothing/neck/neckerchief/worn_overlays(isinhands)
 	. = ..()
@@ -202,3 +203,20 @@
 		var/mutable_appearance/realOverlay = mutable_appearance('icons/mob/mask.dmi', icon_state)
 		realOverlay.pixel_y = -3
 		. += realOverlay
+
+/obj/item/clothing/neck/neckerchief/AltClick(mob/user)
+	. = ..()
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(C.get_item_by_slot(SLOT_NECK) == src)
+			to_chat(user, "<span class='warning'>You can't untie [src] while worn!</span>")
+			return ..()
+		if(user.is_holding(src))
+			var/obj/item/clothing/mask/bandana/newBand = new associatedBand(user)
+			var/currentHandIndex = user.get_held_index_of_item(src)
+			user.transferItemToLoc(src)
+			user.put_in_hand(newBand, currentHandIndex)
+			to_chat(user, "<span class='notice'>You untie [src] back into a [newBand.name]</span>")
+			qdel(src)
+		else
+			to_chat(user, "<span class='warning'>You must be holding [src] in order to untie it!")
