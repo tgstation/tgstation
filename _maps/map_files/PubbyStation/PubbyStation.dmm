@@ -34090,13 +34090,13 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/mob/living/simple_animal/pet/cat/Runtime,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/mob/living/simple_animal/pet/cat/Runtime,
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
 "bBi" = (
@@ -39574,11 +39574,15 @@
 	pixel_x = 3
 	},
 /obj/item/clothing/mask/gas{
+	layer = 4;
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas{
+	layer = 4
+	},
+/obj/item/clothing/mask/gas{
+	layer = 4;
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -39588,6 +39592,9 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/item/clothing/gloves/color/black,
+/obj/item/clothing/gloves/color/black,
+/obj/item/clothing/gloves/color/black,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bLZ" = (
@@ -40902,6 +40909,8 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bOX" = (
@@ -43943,13 +43952,13 @@
 /obj/item/folder/yellow,
 /obj/item/paper/monitorkey,
 /obj/item/pen,
-/mob/living/simple_animal/parrot/Poly,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/mob/living/simple_animal/parrot/Poly,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/chief)
 "bVE" = (
