@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "Double-wide shuttle airlocks now cycle link properly, rather than always thinking they are docked."

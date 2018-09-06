@@ -38,9 +38,6 @@
 /obj/item/ammo_casing/magic/arcane_barrage
 	projectile_type = /obj/item/projectile/magic/arcane_barrage
 
-/obj/item/ammo_casing/magic/chaos/newshot()
-	..()
-
 /obj/item/ammo_casing/magic/honk
 	projectile_type = /obj/item/projectile/bullet/honker
 

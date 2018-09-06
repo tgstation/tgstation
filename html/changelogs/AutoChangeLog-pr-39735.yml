@@ -1,0 +1,7 @@
+author: "Shdorsh"
+delete-after: True
+changes: 
+  - rscadd: "A gas named miasma, that has a ridiculously low chance of infecting people with a very basic and benign disease"
+  - rscadd: "A gas reaction to remove miasma"
+  - tweak: "Corpses emit a gas named miasma"
+  - tweak: "Air alarms detect and automatically are set to scrub miasma"

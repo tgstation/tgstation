@@ -92,7 +92,7 @@
 			sleep(1)
 		C.ghostize()
 		var/obj/item/bodypart/head/rip_u = C.get_bodypart(BODY_ZONE_HEAD)
- 		rip_u.dismember(BURN) //nice try jedi
+		rip_u.dismember(BURN) //nice try jedi
 		qdel(rip_u)
 
 /obj/singularity/ex_act(severity, target)
