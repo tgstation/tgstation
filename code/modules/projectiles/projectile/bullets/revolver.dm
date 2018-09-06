@@ -14,8 +14,7 @@
 
 /obj/item/projectile/bullet/c38
 	name = ".38 bullet"
-	damage = 15
-	stamina = 50
+	damage = 25
 
 // .357 (Syndie Revolver)
 
