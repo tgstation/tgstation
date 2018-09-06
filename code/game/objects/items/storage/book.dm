@@ -187,7 +187,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 				SS.release_shades(user)
 				qdel(SS)
 			new /obj/item/nullrod/claymore(get_turf(sword))
-			user.visible_message("<span class='notice'>[user] has purified the [sword]!!</span>")
+			user.visible_message("<span class='notice'>[user] has purified the [sword]!</span>")
 			qdel(sword)
 
 	else if(istype(A, /obj/item/soulstone) && !iscultist(user))
@@ -202,7 +202,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 				EX.icon_state = "ghost1"
 				EX.name = "Purified [EX.name]"
 				SS.release_shades(user)
-			user.visible_message("<span class='notice'>[user] has purified the [SS]!!</span>")
+			user.visible_message("<span class='notice'>[user] has purified the [SS]!</span>")
 			qdel(SS)
 
 /obj/item/storage/book/bible/booze
