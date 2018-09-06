@@ -160,6 +160,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define BLOOD_GAIN_PER_STEP			100
 #define BLOOD_LOSS_PER_STEP			5
 #define BLOOD_LOSS_IN_SPREAD		20
+#define BLOOD_AMOUNT_PER_DECAL		20
 
 //Bloody shoe blood states
 #define BLOOD_STATE_HUMAN			"blood"
