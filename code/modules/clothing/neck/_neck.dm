@@ -195,6 +195,7 @@
 
 /obj/item/clothing/neck/neckerchief
 	icon = 'icons/obj/clothing/masks.dmi' //In order to reuse the bandana sprite
+	w_class = WEIGHT_CLASS_TINY
 	var/associatedBand
 
 /obj/item/clothing/neck/neckerchief/worn_overlays(isinhands)
