@@ -117,13 +117,17 @@
 /area/ruin/space/has_grav/powered/aesthetic)
 "A" = (
 /obj/effect/turf_decal/sand,
-/turf/open/floor/plating/astplate{
-	initial_gas_mix = "TEMP=2.7"
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating{
+	initial_gas_mix = "TEMP=2.7";
+	icon_state = @skip
 	},
 /area/ruin/unpowered/no_grav)
 "B" = (
-/turf/open/floor/plating/astplate{
-	initial_gas_mix = "TEMP=2.7"
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating{
+	initial_gas_mix = "TEMP=2.7";
+	icon_state = @skip
 	},
 /area/ruin/unpowered/no_grav)
 "C" = (
@@ -131,8 +135,10 @@
 	desc = "Ugh, this is merely an ugly amateurish replica of the other statue! The letters RIPGOAT are scribbled onto the base.";
 	dir = 8
 	},
-/turf/open/floor/plating/astplate{
-	initial_gas_mix = "TEMP=2.7"
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating{
+	initial_gas_mix = "TEMP=2.7";
+	icon_state = @skip
 	},
 /area/ruin/unpowered/no_grav)
 "D" = (
@@ -149,14 +155,18 @@
 /obj/structure/statue/sandstone/venus{
 	dir = 4
 	},
-/turf/open/floor/plating/astplate{
-	initial_gas_mix = "TEMP=2.7"
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating{
+	initial_gas_mix = "TEMP=2.7";
+	icon_state = @skip
 	},
 /area/ruin/unpowered/no_grav)
 "G" = (
 /obj/effect/turf_decal/stripes/asteroid/line,
-/turf/open/floor/plating/astplate{
-	initial_gas_mix = "TEMP=2.7"
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating{
+	initial_gas_mix = "TEMP=2.7";
+	icon_state = @skip
 	},
 /area/ruin/unpowered/no_grav)
 "H" = (
@@ -207,8 +217,10 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plating/astplate{
-	initial_gas_mix = "TEMP=2.7"
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating{
+	initial_gas_mix = "TEMP=2.7";
+	icon_state = @skip
 	},
 /area/ruin/unpowered/no_grav)
 
