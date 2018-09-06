@@ -516,7 +516,7 @@
 	item_state = "spraycan"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
-	desc = "A metallic container containing tasty paint.\n Alt-click to toggle the cap."
+	desc = "A metallic container containing tasty paint."
 
 	instant = TRUE
 	edible = FALSE
@@ -572,6 +572,7 @@
 		to_chat(user, "It has [charges_left] use\s left.")
 	else
 		to_chat(user, "It is empty.")
+	to_chat(user, "<span class='notice'>Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"].</span>")
 
 /obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
