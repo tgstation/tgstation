@@ -316,6 +316,12 @@
 	cost = 1
 	category = "Defensive"
 
+/datum/spellbook_entry/item/lockerstaff
+	name = "Staff of the Locker"
+	desc = "A staff that shoots lockers. It eats anyone it hits on its way, leaving a welded locker with your victims behind."
+	item_path = /obj/item/gun/magic/staff/locker
+	category = "Defensive"
+
 /datum/spellbook_entry/item/scryingorb
 	name = "Scrying Orb"
 	desc = "An incandescent orb of crackling energy, using it will allow you to ghost while alive, allowing you to spy upon the station with ease. In addition, buying it will permanently grant you X-ray vision."

@@ -24,6 +24,8 @@
 	var/list/remove_overlays // a very temporary list of overlays to remove
 	var/list/add_overlays // a very temporary list of overlays to add
 
+	var/list/managed_vis_overlays //vis overlays managed by SSvis_overlays to automaticaly turn them like other overlays
+
 	var/datum/proximity_monitor/proximity_monitor
 	var/buckle_message_cooldown = 0
 	var/fingerprintslast
@@ -623,10 +625,11 @@
 			stack_trace("Invalid individual logging type: [message_type]. Defaulting to [LOG_GAME] (LOG_GAME).")
 			log_game(log_text)
 
-// Helper for logging chat messages or other logs wiht arbitrary inputs (e.g. announcements)
-/atom/proc/log_talk(message, message_type, tag=null, log_globally=TRUE)
+// Helper for logging chat messages or other logs with arbitrary inputs (e.g. announcements)
+/atom/proc/log_talk(message, message_type, tag=null, log_globally=TRUE, forced_by=null)
 	var/prefix = tag ? "([tag]) " : ""
-	log_message("[prefix]\"[message]\"", message_type, log_globally=log_globally)
+	var/suffix = forced_by ? " FORCED by [forced_by]" : ""
+	log_message("[prefix]\"[message]\"[suffix]", message_type, log_globally=log_globally)
 
 // Helper for logging of messages with only one sender and receiver
 /proc/log_directed_talk(atom/source, atom/target, message, message_type, tag)

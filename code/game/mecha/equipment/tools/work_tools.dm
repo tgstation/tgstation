@@ -240,8 +240,8 @@
 	GLOB.rcd_list += src
 
 /obj/item/mecha_parts/mecha_equipment/rcd/Destroy()
- 	GLOB.rcd_list -= src
- 	return ..()
+	GLOB.rcd_list -= src
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/rcd/action(atom/target)
 	if(istype(target, /turf/open/space/transit))//>implying these are ever made -Sieve

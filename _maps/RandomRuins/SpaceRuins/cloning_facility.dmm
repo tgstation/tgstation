@@ -26,17 +26,47 @@
 /obj/structure/table,
 /obj/item/flashlight/lamp,
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/plasteel/whiteblue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "h" = (
 /obj/structure/table,
 /obj/item/pen,
 /obj/item/paper/fluff/ruins/exp_cloning/log,
-/turf/open/floor/plasteel/whiteblue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "i" = (
 /obj/machinery/dna_scannernew,
-/turf/open/floor/plasteel/whiteblue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "j" = (
 /obj/machinery/computer/prototype_cloning,
@@ -44,19 +74,59 @@
 	dir = 1
 	},
 /obj/item/paper/fluff/ruins/exp_cloning/manual,
-/turf/open/floor/plasteel/whiteblue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "k" = (
 /obj/machinery/clonepod/experimental,
-/turf/open/floor/plasteel/whiteblue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "l" = (
 /obj/effect/decal/cleanable/vomit/old,
-/turf/open/floor/plasteel/whiteblue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "m" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/plasteel/whiteblue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "n" = (
 /obj/structure/sign/nanotrasen,
@@ -104,36 +174,56 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "v" = (
-/turf/open/floor/plasteel/whiteblue/corner{
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "w" = (
 /obj/structure/chair/office{
 	dir = 1
 	},
-/turf/open/floor/plasteel/whiteblue/side{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "x" = (
-/turf/open/floor/plasteel/whiteblue/side{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "y" = (
 /obj/structure/chair/office{
 	dir = 1
 	},
-/turf/open/floor/plasteel/whiteblue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "z" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/whiteblue/corner{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "A" = (
 /obj/structure/sign/departments/science,

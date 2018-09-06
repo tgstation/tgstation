@@ -33,7 +33,7 @@
 				H.adjust_disgust(-5 + -2.5 * fraction)
 				GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 				if(mood)
-					mood.add_event("fav_food", /datum/mood_event/favorite_food)
+					mood.add_event(null, "fav_food", /datum/mood_event/favorite_food)
 				last_check_time = world.time
 				return
 	..()

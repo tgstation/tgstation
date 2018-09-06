@@ -502,14 +502,14 @@
 /datum/action/item_action/agent_box/Trigger()
 	if(!..())
 		return FALSE
-	if(!box)
+	if(!QDELETED(box))
 		if(cooldown < world.time - 100)
-			box = new(get_turf(owner))
+			box = new(owner.drop_location())
 			owner.forceMove(box)
 			cooldown = world.time
 			owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
 	else
-		owner.forceMove(get_turf(box))
+		owner.forceMove(box.drop_location())
 		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
 		QDEL_NULL(box)
 

@@ -93,7 +93,7 @@ SUBSYSTEM_DEF(mapping)
 	setup_map_transitions()
 	generate_station_area_list()
 	initialize_reserved_level()
-	..()
+	return ..()
 
 /* Nuke threats, for making the blue tiles on the station go RED
    Used by the AI doomsday and the self destruct nuke.

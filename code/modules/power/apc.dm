@@ -305,19 +305,17 @@
 			icon_state = "apc0"
 
 	if(!(update_state & UPSTATE_ALLGOOD))
-		cut_overlays()
+		SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 
 	if(update & 2)
-		cut_overlays()
+		SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 		if(!(stat & (BROKEN|MAINT)) && update_state & UPSTATE_ALLGOOD)
-			var/list/O = list(
-				"apcox-[locked]",
-				"apco3-[charging]")
+			SSvis_overlays.add_vis_overlay(src, icon, "apcox-[locked]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+			SSvis_overlays.add_vis_overlay(src, icon, "apco3-[charging]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
 			if(operating)
-				O += "apco0-[equipment]"
-				O += "apco1-[lighting]"
-				O += "apco2-[environ]"
-			add_overlay(O)
+				SSvis_overlays.add_vis_overlay(src, icon, "apco0-[equipment]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+				SSvis_overlays.add_vis_overlay(src, icon, "apco1-[lighting]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+				SSvis_overlays.add_vis_overlay(src, icon, "apco2-[environ]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
 
 	// And now, separately for cleanness, the lighting changing
 	if(update_state & UPSTATE_ALLGOOD)

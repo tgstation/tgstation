@@ -1,0 +1,6 @@
+author: "subject217"
+delete-after: True
+changes: 
+  - bugfix: "You can actually purify shades with a Bible now, as intended."
+  - code_imp: "Made deconversion just update_body instead of cutting and rebuilding all mob overlays."
+  - spellcheck: "Removed an extra exclamation point from the messages for purifying bastard swords and soul stones."

@@ -201,7 +201,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 /datum/component/uplink/proc/implant_activation()
 	var/obj/item/implant/implant = parent
 	locked = FALSE
-	interact(implant.imp_in)
+	interact(null, implant.imp_in)
 
 /datum/component/uplink/proc/implanting(datum/source, list/arguments)
 	var/mob/user = arguments[2]
@@ -222,7 +222,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	if(trim(lowertext(new_ring_text)) != trim(lowertext(master.lock_code))) //why is the lock code stored on the pda?
 		return
 	locked = FALSE
-	interact(user)
+	interact(null, user)
 	to_chat(user, "The PDA softly beeps.")
 	user << browse(null, "window=pda")
 	master.mode = 0
@@ -237,7 +237,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 		return
 	locked = FALSE
 	if(ismob(master.loc))
-		interact(master.loc)
+		interact(null, master.loc)
 
 // Pen signal responses
 
@@ -247,5 +247,5 @@ GLOBAL_LIST_EMPTY(uplinks)
 		return
 	locked = FALSE
 	master.degrees = 0
-	interact(user)
+	interact(null, user)
 	to_chat(user, "<span class='warning'>Your pen makes a clicking noise, before quickly rotating back to 0 degrees!</span>")

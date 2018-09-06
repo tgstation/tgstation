@@ -1278,6 +1278,9 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/list/turf/startlocs = list()
 	for(var/turf/open/T in view(world.view+1,target)-view(world.view,target))
 		startlocs += T
+	if(!startlocs.len)
+		qdel(src)
+		return
 	var/turf/start = pick(startlocs)
 	var/proj_type = pick(subtypesof(/obj/item/projectile/hallucination))
 	feedback_details += "Type: [proj_type]"

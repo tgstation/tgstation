@@ -619,7 +619,7 @@ RLD
 						var/light = get_turf(winner)
 						var/align = get_dir(winner, A)
 						var/obj/machinery/light/L = new /obj/machinery/light(light)
-						L.dir = align
+						L.setDir(align)
 						L.color = color_choice
 						L.light_color = L.color
 						return TRUE

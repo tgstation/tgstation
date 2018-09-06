@@ -14,7 +14,11 @@
 /obj/machinery/chem_dispenser/drinks/beer{
 	dir = 8
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "ae" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -48,7 +52,11 @@
 /obj/machinery/chem_dispenser/drinks{
 	dir = 8
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "ak" = (
 /obj/structure/extinguisher_cabinet{
@@ -155,10 +163,18 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aE" = (
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aF" = (
 /obj/structure/piano{
@@ -198,7 +214,11 @@
 	name = "Emergency Shuttle Brig";
 	req_access_txt = "2"
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aK" = (
 /obj/machinery/door/airlock/titanium{
@@ -224,23 +244,39 @@
 	can_buckle = 1;
 	name = "buckleable bar stool"
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aO" = (
 /obj/structure/table/wood/bar{
 	boot_dir = 9
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aP" = (
 /obj/structure/table/wood/bar,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aR" = (
 /obj/structure/table/wood/bar{
 	boot_dir = 8
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aS" = (
 /obj/structure/extinguisher_cabinet{
@@ -249,7 +285,11 @@
 /obj/structure/table,
 /obj/item/storage/box/drinkingglasses,
 /obj/item/reagent_containers/food/drinks/bottle/lizardwine,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aT" = (
 /obj/machinery/door/airlock/titanium{
@@ -258,11 +298,19 @@
 /obj/docking_port/mobile/emergency{
 	name = "The Emergency Escape Bar"
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aU" = (
 /mob/living/simple_animal/hostile/alien/maid/barmaid,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aW" = (
 /obj/structure/chair/wood/normal,
@@ -273,7 +321,11 @@
 	dir = 4
 	},
 /mob/living/simple_animal/drone/snowflake/bardrone,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aY" = (
 /obj/machinery/vending/boozeomat,
@@ -302,26 +354,42 @@
 /obj/structure/table/wood/bar{
 	boot_dir = 10
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "be" = (
 /obj/structure/table/wood/bar{
 	boot_dir = 2
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bg" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bi" = (
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bk" = (
 /obj/machinery/vending/cigarette,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bm" = (
 /obj/machinery/door/airlock{
@@ -427,7 +495,11 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bH" = (
 /turf/open/floor/plasteel/grimy,
@@ -435,7 +507,11 @@
 "bI" = (
 /obj/structure/table/wood/bar,
 /obj/item/instrument/guitar,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bJ" = (
 /obj/structure/table/wood/bar,
@@ -463,7 +539,11 @@
 /obj/item/storage/box/drinkingglasses,
 /obj/item/reagent_containers/food/drinks/shaker,
 /obj/item/storage/fancy/cigarettes/cigars/havana,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bO" = (
 /obj/structure/table/wood/bar,
@@ -488,7 +568,11 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bS" = (
 /obj/structure/table,
@@ -503,7 +587,11 @@
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-10"
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bU" = (
 /obj/structure/table,
@@ -521,7 +609,11 @@
 /obj/effect/fun_balloon/sentience/emergency_shuttle{
 	group_name = "bar staff on the Emergency Escape Bar"
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bW" = (
 /obj/machinery/light/small{
@@ -533,21 +625,37 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bY" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bZ" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "ca" = (
 /obj/machinery/light,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "cb" = (
 /obj/machinery/sleeper{

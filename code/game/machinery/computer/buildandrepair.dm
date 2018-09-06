@@ -114,7 +114,7 @@
 				P.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 				var/obj/B = new circuit.build_path (loc, circuit)
-				B.dir = dir
+				B.setDir(dir)
 				transfer_fingerprints_to(B)
 				qdel(src)
 				return

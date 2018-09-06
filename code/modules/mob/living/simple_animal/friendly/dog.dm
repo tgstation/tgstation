@@ -553,7 +553,7 @@
 /mob/living/simple_animal/pet/dog/corgi/puppy/void		//Tribute to the corgis born in nullspace
 	name = "\improper void puppy"
 	real_name = "voidy"
-	desc = "A corgi puppy that has been infused with deep space energy. It's staring back.."
+	desc = "A corgi puppy that has been infused with deep space energy. It's staring back..."
 	icon_state = "void_puppy"
 	icon_living = "void_puppy"
 	icon_dead = "void_puppy_dead"

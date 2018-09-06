@@ -153,11 +153,11 @@
 	if(owner.has_trait(TRAIT_DEPRESSION))
 		if(prob(0.05))
 			add_event(null, "depression", /datum/mood_event/depression)
-			clear_event("jolly")
+			clear_event(null, "jolly")
 	if(owner.has_trait(TRAIT_JOLLY))
 		if(prob(0.05))
 			add_event(null, "jolly", /datum/mood_event/jolly)
-			clear_event("depression")
+			clear_event(null, "depression")
 
 	holdmyinsanityeffect = insanity_effect
 	
@@ -190,10 +190,10 @@
 	if(mood_events[category])
 		the_event = mood_events[category]
 		if(the_event.type != type)
-			clear_event(category)
+			clear_event(null, category)
 		else
 			if(the_event.timeout)
-				addtimer(CALLBACK(src, .proc/clear_event, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
+				addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 			return 0 //Don't have to update the event.
 	the_event = new type(src, param)
 
@@ -201,7 +201,7 @@
 	update_mood()
 
 	if(the_event.timeout)
-		addtimer(CALLBACK(src, .proc/clear_event, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /datum/component/mood/proc/clear_event(datum/source, category)
 	var/datum/mood_event/event = mood_events[category]
@@ -242,7 +242,7 @@
 		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
 			add_event(null, "nutrition", /datum/mood_event/fed)
 		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-			clear_event("nutrition")
+			clear_event(null, "nutrition")
 		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
 			add_event(null, "nutrition", /datum/mood_event/hungry)
 		if(0 to NUTRITION_LEVEL_STARVING)

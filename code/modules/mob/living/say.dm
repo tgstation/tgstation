@@ -81,7 +81,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	return new_msg
 
-/mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE)
+/mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	var/static/list/crit_allowed_modes = list(MODE_WHISPER = TRUE, MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/talk_key = get_key(message)
@@ -174,7 +174,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			message_mode = MODE_WHISPER_CRIT
 			succumbed = TRUE
 	else
-		src.log_talk(message, LOG_SAY)
+		src.log_talk(message, LOG_SAY, forced_by=forced)
 
 	message = treat_message(message)
 	if(!message)

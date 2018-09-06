@@ -185,7 +185,6 @@
 	name = "fedora"
 	icon_state = "fedora"
 	item_state = "fedora"
-	armor = list("melee" = 25, "bullet" = 5, "laser" = 25, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 50)
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small
 
@@ -194,7 +193,7 @@
 		return 0
 	var/mob/living/carbon/human/H = user
 	user.visible_message("<span class='suicide'>[user] is donning [src]! It looks like [user.p_theyre()] trying to be nice to girls.</span>")
-	user.say("M'lady.")
+	user.say("M'lady.", forced = "fedora suicide")
 	sleep(10)
 	H.facial_hair_style = "Neckbeard"
 	return(BRUTELOSS)

@@ -128,7 +128,7 @@
 			return
 		var/update = FALSE
 		for(var/obj/item/bodypart/L in parts)
-			if(L.heal_damage(1/parts.len, 1/parts.len))
+			if(L.heal_damage(1/parts.len, 1/parts.len, only_robotic = TRUE, only_organic = FALSE))
 				update = TRUE
 		if(update)
 			host_mob.update_damage_overlays()
@@ -208,10 +208,8 @@
 	if(!..())
 		return
 
-	playsound(host_mob, 'sound/machines/defib_zap.ogg', 75, 1, -1)
-	if(check_revivable())
-		host_mob.notify_ghost_cloning("Your heart is being defibrillated. Re-enter your corpse if you want to be revived!", source = src)
-	addtimer(CALLBACK(src, .proc/zap), 30)
+	host_mob.notify_ghost_cloning("Your heart is being defibrillated by nanites. Re-enter your corpse if you want to be revived!")
+	addtimer(CALLBACK(src, .proc/zap), 50)
 
 /datum/nanite_program/triggered/defib/proc/check_revivable()
 	if(!iscarbon(host_mob)) //nonstandard biology
@@ -219,22 +217,25 @@
 	var/mob/living/carbon/C = host_mob
 	if(C.suiciding || C.has_trait(TRAIT_NOCLONE) || C.hellbound) //can't revive
 		return FALSE
-	if((world.time - C.timeofdeath) < 1800) //too late
+	if((world.time - C.timeofdeath) > 1800) //too late
 		return FALSE
-	if((C.getBruteLoss() > 180) || (C.getFireLoss() > 180)) //too damaged
+	if((C.getBruteLoss() > 180) || (C.getFireLoss() > 180) || !C.can_be_revived()) //too damaged
 		return FALSE
 	if(!C.getorgan(/obj/item/organ/heart)) //what are we even shocking
 		return FALSE
 	var/obj/item/organ/brain/BR = C.getorgan(/obj/item/organ/brain)
 	if(QDELETED(BR) || BR.damaged_brain)
 		return FALSE
-	if(!C.get_ghost())
+	if(C.get_ghost())
 		return FALSE
 	return TRUE
 
 /datum/nanite_program/triggered/defib/proc/zap()
+	var/mob/living/carbon/C = host_mob
+	playsound(C, 'sound/machines/defib_charge.ogg', 50, 0)
+	sleep(30)
+	playsound(C, 'sound/machines/defib_zap.ogg', 50, 0)
 	if(check_revivable())
-		var/mob/living/carbon/C = host_mob
 		playsound(C, 'sound/machines/defib_success.ogg', 50, 0)
 		C.set_heartattack(FALSE)
 		C.revive()
@@ -246,5 +247,5 @@
 			C.adjustBrainLoss( max(0, ((1800 - tplus) / 1800 * 150)), 150)
 		log_game("[C] has been successfully defibrillated by nanites.")
 	else
-		playsound(src, 'sound/machines/defib_failed.ogg', 50, 0)
+		playsound(C, 'sound/machines/defib_failed.ogg', 50, 0)
 

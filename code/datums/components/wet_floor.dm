@@ -120,8 +120,8 @@
 			if(O.obj_flags & FROZEN)
 				O.make_unfrozen()
 		add_wet(TURF_WET_WATER, max_time_left())
-		dry(TURF_WET_ICE)
-	dry(ALL, FALSE, decrease)
+		dry(null, TURF_WET_ICE)
+	dry(null, ALL, FALSE, decrease)
 	check()
 	last_process = world.time
 
