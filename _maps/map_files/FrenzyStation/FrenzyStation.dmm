@@ -499,9 +499,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark{
-	icon_state = "darkblue"
-	},
+/turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "bt" = (
 /obj/structure/cable/white{
@@ -516,9 +514,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark{
-	icon_state = "darkblue"
-	},
+/turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "bu" = (
 /obj/structure/cable/white{
@@ -536,9 +532,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark{
-	icon_state = "darkblue"
-	},
+/turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "bv" = (
 /obj/structure/cable/white{
@@ -557,9 +551,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark{
-	icon_state = "darkblue"
-	},
+/turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "bw" = (
 /obj/structure/cable/white{
@@ -578,9 +570,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark{
-	icon_state = "darkblue"
-	},
+/turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "bx" = (
 /obj/structure/cable/white{
@@ -599,9 +589,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark{
-	icon_state = "darkblue"
-	},
+/turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "by" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -617,9 +605,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark{
-	icon_state = "darkblue"
-	},
+/turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "bz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -635,9 +621,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark{
-	icon_state = "darkblue"
-	},
+/turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "bA" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -653,9 +637,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark{
-	icon_state = "darkblue"
-	},
+/turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "bB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -667,9 +649,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark{
-	icon_state = "darkblue"
-	},
+/turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "bC" = (
 /obj/structure/disposalpipe/segment,
@@ -682,9 +662,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark{
-	icon_state = "darkblue"
-	},
+/turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "bD" = (
 /obj/machinery/door/airlock/titanium{
@@ -924,9 +902,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white{
-	icon_state = "whitepurple"
-	},
+/turf/open/floor/plasteel/white,
 /area/science/lab)
 "cj" = (
 /obj/machinery/door/airlock/research{
@@ -987,9 +963,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	icon_state = "brown"
-	},
+/turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "cq" = (
 /obj/structure/table,
@@ -1738,9 +1712,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	icon_state = "purple"
-	},
+/turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "dT" = (
 /obj/structure/cable/white{
@@ -1896,9 +1868,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	icon_state = "purple"
-	},
+/turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "ej" = (
 /obj/structure/cable/white{
@@ -3518,9 +3488,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white{
-	icon_state = "whiteblue"
-	},
+/turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "hs" = (
 /obj/structure/cable/white{
@@ -49517,7 +49485,7 @@ ud
 ud
 ud
 ud
-aa
+ud
 ud
 ud
 ud

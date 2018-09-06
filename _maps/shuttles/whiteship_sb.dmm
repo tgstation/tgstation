@@ -900,9 +900,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white{
-	icon_state = "whiteblue"
-	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "bp" = (
 /obj/machinery/portable_atmospherics/pump,
@@ -1536,9 +1534,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white/corner{
-	icon_state = "arrival"
-	},
+/turf/open/floor/plasteel/white/corner,
 /area/shuttle/abandoned)
 "cl" = (
 /obj/machinery/door/airlock/research{
@@ -1667,9 +1663,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	icon_state = "arrivalcorner"
-	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "cx" = (
 /obj/structure/sign/departments/medbay/alt,
@@ -1699,9 +1693,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white/corner{
-	icon_state = "arrival"
-	},
+/turf/open/floor/plasteel/white/corner,
 /area/shuttle/abandoned)
 "cA" = (
 /obj/structure/table/optable,
@@ -1929,9 +1921,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white{
-	icon_state = "whiteblue"
-	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "cR" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2023,9 +2013,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white{
-	icon_state = "whiteblue"
-	},
+/turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
 "cX" = (
 /obj/machinery/porta_turret/centcom_shuttle,
@@ -2072,9 +2060,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	icon_state = "arrivalcorner"
-	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "dc" = (
 /obj/structure/table,
