@@ -97,8 +97,8 @@
 	qdel(src)
 
 /obj/structure/plasticflaps/Initialize()
- 	. = ..()
- 	air_update_turf(TRUE)
+	. = ..()
+	air_update_turf(TRUE)
 
 /obj/structure/plasticflaps/Destroy()
 	var/atom/oldloc = loc

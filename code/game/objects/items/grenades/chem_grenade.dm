@@ -562,9 +562,9 @@
 	beakers += B2
 
 /obj/item/grenade/chem_grenade/tuberculosis
- 	name = "Fungal tuberculosis grenade"
- 	desc = "WARNING: GRENADE WILL RELEASE DEADLY SPORES CONTAINING ACTIVE AGENTS. SEAL SUIT AND AIRFLOW BEFORE USE."
- 	stage = READY
+	name = "Fungal tuberculosis grenade"
+	desc = "WARNING: GRENADE WILL RELEASE DEADLY SPORES CONTAINING ACTIVE AGENTS. SEAL SUIT AND AIRFLOW BEFORE USE."
+	stage = READY
 
 /obj/item/grenade/chem_grenade/tuberculosis/Initialize()
 	. = ..()
