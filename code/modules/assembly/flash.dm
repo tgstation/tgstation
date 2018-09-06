@@ -77,6 +77,8 @@
 		targets -= user
 	for(var/mob/living/carbon/C in targets)
 		flash_carbon(C, user, power, targeted, TRUE)
+	for(var/mob/living/silicon/robot/M in targets)
+		borg_flash(M, user)
 	return TRUE
 
 /obj/item/assembly/flash/proc/get_flash_targets(atom/target_loc, range = 3, override_vision_checks = FALSE)
@@ -141,17 +143,18 @@
 		flash_carbon(M, user, 5, 1)
 		return TRUE
 	else if(issilicon(M))
-		var/mob/living/silicon/robot/R = M
-		log_combat(user, R, "flashed", src)
-		update_icon(1)
-		R.Knockdown(rand(80,120))
-		var/diff = 5 * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
-		R.confused += min(5, diff)
-		R.flash_act(affect_silicon = 1)
-		user.visible_message("<span class='disarm'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
+		borg_flash(M, user)
 		return TRUE
 
 	user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>", "<span class='warning'>You fail to blind [M] with the flash!</span>")
+
+/obj/item/assembly/flash/proc/borg_flash(mob/living/silicon/robot/R, mob/user)
+	update_icon(1)
+	R.Knockdown(rand(80,120))
+	var/diff = 5 * CONFUSION_STACK_MAX_MULTIPLIER - R.confused
+	R.confused += min(5, diff)
+	R.flash_act(affect_silicon = 1)
+	user.visible_message("<span class='disarm'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
 
 /obj/item/assembly/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(holder)
