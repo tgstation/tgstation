@@ -15934,15 +15934,11 @@
 /turf/open/floor/plasteel,
 /area/teleporter)
 "aHB" = (
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/teleporter)
@@ -15957,13 +15953,6 @@
 /turf/open/floor/plasteel,
 /area/teleporter)
 "aHD" = (
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
 	pixel_x = 24
@@ -15971,6 +15960,9 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
 /turf/open/floor/plasteel,
 /area/teleporter)
@@ -16373,14 +16365,14 @@
 	pixel_x = -26;
 	req_access_txt = "19"
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/teleporter)
@@ -16398,11 +16390,11 @@
 /turf/open/floor/plasteel,
 /area/teleporter)
 "aID" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -16863,9 +16855,6 @@
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
 "aJC" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
@@ -16877,6 +16866,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
 	},
 /turf/open/floor/plasteel,
 /area/teleporter)
@@ -16901,17 +16893,16 @@
 /turf/open/floor/plasteel,
 /area/teleporter)
 "aJF" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/machinery/light_switch{
 	pixel_x = 24;
 	pixel_y = -26
 	},
-/obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/teleporter)
@@ -18102,7 +18093,6 @@
 /area/janitor)
 "aMq" = (
 /obj/machinery/disposal/bin,
-/obj/effect/turf_decal/delivery,
 /obj/structure/disposalpipe/trunk,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -18113,6 +18103,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/janitor)
 "aMr" = (
@@ -18160,7 +18151,6 @@
 /area/janitor)
 "aMt" = (
 /obj/structure/closet/l3closet/janitor,
-/obj/effect/turf_decal/bot,
 /obj/item/flashlight,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -18168,11 +18158,11 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/janitor)
 "aMu" = (
 /obj/structure/closet/jcloset,
-/obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -18180,6 +18170,10 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/janitor)
 "aMv" = (
