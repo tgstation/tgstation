@@ -15,9 +15,10 @@
 	return ..() * S.rarity // That's right, no bonus for potency. Send a crappy sample first to "show improvement" later.
 
 /datum/export/seed/sell_object(obj/O)
-	..()
-	var/obj/item/seeds/S = O
-	discoveredPlants[S.type] = S.potency
+	. = ..()
+	if(.)
+		var/obj/item/seeds/S = O
+		discoveredPlants[S.type] = S.potency
 
 
 /datum/export/seed/potency

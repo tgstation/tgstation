@@ -15,6 +15,8 @@
 	turns_per_move = 10
 	icon = 'icons/mob/penguins.dmi'
 
+	do_footstep = TRUE
+
 /mob/living/simple_animal/pet/penguin/emperor
 	name = "Emperor penguin"
 	real_name = "penguin"

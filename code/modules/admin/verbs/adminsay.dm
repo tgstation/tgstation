@@ -9,7 +9,7 @@
 	if(!msg)
 		return
 
-	mob.log_talk(msg, LOG_ADMIN_PRIVATE)
+	mob.log_talk(msg, LOG_ASAY)
 
 	msg = keywords_lookup(msg)
 	msg = "<span class='adminsay'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, 1)]</EM> [ADMIN_FLW(mob)]: <span class='message linkify'>[msg]</span></span>"

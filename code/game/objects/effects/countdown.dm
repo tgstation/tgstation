@@ -86,7 +86,7 @@
 
 /obj/effect/countdown/clonepod
 	name = "cloning pod countdown"
-	color = "#0C479D"
+	color = "#18d100"
 	text_size = 1
 
 /obj/effect/countdown/clonepod/get_value()

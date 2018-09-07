@@ -26,6 +26,8 @@
 	health = 200
 	del_on_death = TRUE
 
+	//Gondolas don't make footstep sounds
+
 /mob/living/simple_animal/pet/gondola/Initialize()
 	. = ..()
 	CreateGondola()

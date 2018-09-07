@@ -795,7 +795,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		if("alarm")
 			target.playsound_local(source, 'sound/machines/alarm.ogg', 100, 0)
 		if("beepsky")
-			target.playsound_local(source, 'sound/voice/bfreeze.ogg', 35, 0)
+			target.playsound_local(source, 'sound/voice/beepsky/freeze.ogg', 35, 0)
 		if("mech")
 			var/mech_dir = pick(GLOB.cardinals)
 			for(var/i in 1 to rand(4,9))
@@ -1278,6 +1278,9 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/list/turf/startlocs = list()
 	for(var/turf/open/T in view(world.view+1,target)-view(world.view,target))
 		startlocs += T
+	if(!startlocs.len)
+		qdel(src)
+		return
 	var/turf/start = pick(startlocs)
 	var/proj_type = pick(subtypesof(/obj/item/projectile/hallucination))
 	feedback_details += "Type: [proj_type]"

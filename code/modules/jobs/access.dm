@@ -11,7 +11,7 @@
 	if(IsAdminGhost(M))
 		//Access can't stop the abuse
 		return TRUE
-	else if(SEND_SIGNAL(M, COMSIG_MOB_ALLOWED, src))
+	else if(istype(M) && SEND_SIGNAL(M, COMSIG_MOB_ALLOWED, src))
 		return TRUE
 	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M

@@ -34,6 +34,33 @@
 	else
 		stuff_to_display = replacetext("[I.data]", eol , "<br>")
 
+/obj/item/integrated_circuit/output/screen/large
+	name = "large screen"
+	desc = "Takes any data type as an input and displays it to anybody near the device when pulsed. \
+	It can also be examined to see the last thing it displayed."
+	icon_state = "screen_medium"
+	power_draw_per_use = 20
+
+/obj/item/integrated_circuit/output/screen/large/do_work()
+	..()
+
+	if(isliving(assembly.loc))//this whole block just returns if the assembly is neither in a mobs hands or on the ground
+		var/mob/living/H = assembly.loc
+		if(H.get_active_held_item() != assembly && H.get_inactive_held_item() != assembly)
+			return
+	else
+		if(!isturf(assembly.loc))
+			return
+
+	var/list/nearby_things = range(0, get_turf(src))
+	for(var/mob/M in nearby_things)
+		var/obj/O = assembly ? assembly : src
+		to_chat(M, "<span class='notice'>[icon2html(O.icon, world, O.icon_state)] [stuff_to_display]</span>")
+	if(assembly)
+		assembly.investigate_log("displayed \"[html_encode(stuff_to_display)]\" with [type].", INVESTIGATE_CIRCUIT)
+	else
+		investigate_log("displayed \"[html_encode(stuff_to_display)]\" as [type].", INVESTIGATE_CIRCUIT)
+
 /obj/item/integrated_circuit/output/light
 	name = "light"
 	desc = "A basic light which can be toggled on/off when pulsed."
@@ -151,14 +178,14 @@
 	name = "securitron sound circuit"
 	desc = "Takes a sound name as an input, and will play said sound when pulsed. This circuit is similar to those used in Securitrons."
 	sounds = list(
-		"creep"			= 'sound/voice/bcreep.ogg',
-		"criminal"		= 'sound/voice/bcriminal.ogg',
-		"freeze"		= 'sound/voice/bfreeze.ogg',
-		"god"			= 'sound/voice/bgod.ogg',
-		"i am the law"	= 'sound/voice/biamthelaw.ogg',
-		"insult"		= 'sound/voice/binsult.ogg',
-		"radio"			= 'sound/voice/bradio.ogg',
-		"secure day"	= 'sound/voice/bsecureday.ogg',
+		"creep"			= 'sound/voice/beepsky/creep.ogg',
+		"criminal"		= 'sound/voice/beepsky/criminal.ogg',
+		"freeze"		= 'sound/voice/beepsky/freeze.ogg',
+		"god"			= 'sound/voice/beepsky/god.ogg',
+		"i am the law"	= 'sound/voice/beepsky/iamthelaw.ogg',
+		"insult"		= 'sound/voice/beepsky/insult.ogg',
+		"radio"			= 'sound/voice/beepsky/radio.ogg',
+		"secure day"	= 'sound/voice/beepsky/secureday.ogg',
 		)
 	spawn_flags = IC_SPAWN_RESEARCH
 
@@ -166,21 +193,21 @@
 	name = "medbot sound circuit"
 	desc = "Takes a sound name as an input, and will play said sound when pulsed. This circuit is often found in medical robots."
 	sounds = list(
-		"surgeon"		= 'sound/voice/msurgeon.ogg',
-		"radar"			= 'sound/voice/mradar.ogg',
-		"feel better"	= 'sound/voice/mfeelbetter.ogg',
-		"patched up"	= 'sound/voice/mpatchedup.ogg',
-		"injured"		= 'sound/voice/minjured.ogg',
-		"insult"		= 'sound/voice/minsult.ogg',
-		"coming"		= 'sound/voice/mcoming.ogg',
-		"help"			= 'sound/voice/mhelp.ogg',
-		"live"			= 'sound/voice/mlive.ogg',
-		"lost"			= 'sound/voice/mlost.ogg',
-		"flies"			= 'sound/voice/mflies.ogg',
-		"catch"			= 'sound/voice/mcatch.ogg',
-		"delicious"		= 'sound/voice/mdelicious.ogg',
-		"apple"			= 'sound/voice/mapple.ogg',
-		"no"			= 'sound/voice/mno.ogg',
+		"surgeon"		= 'sound/voice/medbot/surgeon.ogg',
+		"radar"			= 'sound/voice/medbot/radar.ogg',
+		"feel better"	= 'sound/voice/medbot/feelbetter.ogg',
+		"patched up"	= 'sound/voice/medbot/patchedup.ogg',
+		"injured"		= 'sound/voice/medbot/injured.ogg',
+		"insult"		= 'sound/voice/medbot/insult.ogg',
+		"coming"		= 'sound/voice/medbot/coming.ogg',
+		"help"			= 'sound/voice/medbot/help.ogg',
+		"live"			= 'sound/voice/medbot/live.ogg',
+		"lost"			= 'sound/voice/medbot/lost.ogg',
+		"flies"			= 'sound/voice/medbot/flies.ogg',
+		"catch"			= 'sound/voice/medbot/catch.ogg',
+		"delicious"		= 'sound/voice/medbot/delicious.ogg',
+		"apple"			= 'sound/voice/medbot/apple.ogg',
+		"no"			= 'sound/voice/medbot/no.ogg',
 		)
 	spawn_flags = IC_SPAWN_RESEARCH
 

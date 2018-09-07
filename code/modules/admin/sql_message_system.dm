@@ -1,4 +1,4 @@
-/proc/create_message(type, target_key, admin_ckey, text, timestamp, server, secret, logged = 1, browse, expiry)
+/proc/create_message(type, target_key, admin_ckey, text, timestamp, server, secret, logged = 1, browse, expiry, note_severity)
 	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
@@ -72,7 +72,12 @@
 					return
 				expiry = query_validate_expire_time.item[1]
 			qdel(query_validate_expire_time)
-	var/datum/DBQuery/query_create_message = SSdbcore.NewQuery("INSERT INTO [format_table_name("messages")] (type, targetckey, adminckey, text, timestamp, server, server_ip, server_port, round_id, secret, expire_timestamp) VALUES ('[type]', '[target_ckey]', '[admin_ckey]', '[text]', '[timestamp]', '[server]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', '[GLOB.round_id]','[secret]', [expiry ? "'[expiry]'" : "NULL"])")
+	if(type == "note" && isnull(note_severity))
+		note_severity = input("Set the severity of the note.", "Severity", null, null) as null|anything in list("High", "Medium", "Minor", "None")
+		if(!note_severity)
+			return
+	note_severity = sanitizeSQL(note_severity)
+	var/datum/DBQuery/query_create_message = SSdbcore.NewQuery("INSERT INTO [format_table_name("messages")] (type, targetckey, adminckey, text, timestamp, server, server_ip, server_port, round_id, secret, expire_timestamp, severity) VALUES ('[type]', '[target_ckey]', '[admin_ckey]', '[text]', '[timestamp]', '[server]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', '[GLOB.round_id]','[secret]', [expiry ? "'[expiry]'" : "NULL"], [note_severity ? "'[note_severity]'" : "NULL"])")
 	var/pm = "[key_name(usr)] has created a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""]: [text]"
 	var/header = "[key_name_admin(usr)] has created a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""]"
 	if(!query_create_message.warn_execute())
@@ -101,7 +106,7 @@
 	var/text
 	var/user_key_name = key_name(usr)
 	var/user_name_admin = key_name_admin(usr)
-	var/datum/DBQuery/query_find_del_message = SSdbcore.NewQuery("SELECT type, (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), text FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
+	var/datum/DBQuery/query_find_del_message = SSdbcore.NewQuery("SELECT type, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), targetckey), text FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
 	if(!query_find_del_message.warn_execute())
 		qdel(query_find_del_message)
 		return
@@ -136,7 +141,7 @@
 	var/editor_key = sanitizeSQL(usr.key)
 	var/kn = key_name(usr)
 	var/kna = key_name_admin(usr)
-	var/datum/DBQuery/query_find_edit_message = SSdbcore.NewQuery("SELECT type, (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), text FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
+	var/datum/DBQuery/query_find_edit_message = SSdbcore.NewQuery("SELECT type, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), targetckey), IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), targetckey), text FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
 	if(!query_find_edit_message.warn_execute())
 		qdel(query_find_edit_message)
 		return
@@ -175,7 +180,7 @@
 	var/editor_key = sanitizeSQL(usr.key)
 	var/kn = key_name(usr)
 	var/kna = key_name_admin(usr)
-	var/datum/DBQuery/query_find_edit_expiry_message = SSdbcore.NewQuery("SELECT type, (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), expire_timestamp FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
+	var/datum/DBQuery/query_find_edit_expiry_message = SSdbcore.NewQuery("SELECT type, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), targetckey), IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), adminckey), expire_timestamp FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
 	if(!query_find_edit_expiry_message.warn_execute())
 		qdel(query_find_edit_expiry_message)
 		return
@@ -222,6 +227,45 @@
 			browse_messages(target_ckey = ckey(target_key), agegate = TRUE)
 	qdel(query_find_edit_expiry_message)
 
+/proc/edit_message_severity(message_id)
+	if(!SSdbcore.Connect())
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
+		return
+	message_id = text2num(message_id)
+	if(!message_id)
+		return
+	var/kn = key_name(usr)
+	var/kna = key_name_admin(usr)
+	var/datum/DBQuery/query_find_edit_note_severity = SSdbcore.NewQuery("SELECT type, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), targetckey), IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), adminckey), severity FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
+	if(!query_find_edit_note_severity.warn_execute())
+		qdel(query_find_edit_note_severity)
+		return
+	if(query_find_edit_note_severity.NextRow())
+		var/type = query_find_edit_note_severity.item[1]
+		var/target_key = query_find_edit_note_severity.item[2]
+		var/admin_key = query_find_edit_note_severity.item[3]
+		var/old_severity = query_find_edit_note_severity.item[4]
+		if(!old_severity)
+			old_severity = "NA"
+		var/editor_key = sanitizeSQL(usr.key)
+		var/editor_ckey = sanitizeSQL(usr.ckey)
+		var/new_severity = input("Set the severity of the note.", "Severity", null, null) as null|anything in list("high", "medium", "minor", "none") //lowercase for edit log consistency
+		if(!new_severity)
+			qdel(query_find_edit_note_severity)
+			return
+		new_severity = sanitizeSQL(new_severity)
+		var/edit_text = sanitizeSQL("Note severity edited by [editor_key] on [SQLtime()] from [old_severity] to [new_severity]<hr>")
+		var/datum/DBQuery/query_edit_note_severity = SSdbcore.NewQuery("UPDATE [format_table_name("messages")] SET severity = '[new_severity]', lasteditor = '[editor_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE id = [message_id] AND deleted = 0")
+		if(!query_edit_note_severity.warn_execute(async = TRUE))
+			qdel(query_edit_note_severity)
+			qdel(qdel(query_find_edit_note_severity))
+			return
+		qdel(query_edit_note_severity)
+		log_admin_private("[kn] has edited the severity of a [type] for [target_key] made by [admin_key] from [old_severity] to [new_severity]")
+		message_admins("[kna] has edited the severity time of a [type] for [target_key] made by [admin_key] from [old_severity] to [new_severity]")
+		browse_messages(target_ckey = ckey(target_key), agegate = TRUE)
+	qdel(query_find_edit_note_severity)
+
 /proc/toggle_message_secrecy(message_id)
 	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
@@ -233,7 +277,7 @@
 	var/editor_key = sanitizeSQL(usr.key)
 	var/kn = key_name(usr)
 	var/kna = key_name_admin(usr)
-	var/datum/DBQuery/query_find_message_secret = SSdbcore.NewQuery("SELECT type, (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), secret FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
+	var/datum/DBQuery/query_find_message_secret = SSdbcore.NewQuery("SELECT type, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), targetckey), IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), targetckey), secret FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
 	if(!query_find_message_secret.warn_execute())
 		qdel(query_find_message_secret)
 		return
@@ -260,10 +304,10 @@
 		return
 	var/list/output = list()
 	var/ruler = "<hr style='background:#000000; border:0; height:3px'>"
-	var/list/navbar = list("<a href='?_src_=holder;[HrefToken()];nonalpha=1'>\[All\]</a>|<a href='?_src_=holder;[HrefToken()];nonalpha=2'>\[#\]</a>")
+	var/list/navbar = list("<a href='?_src_=holder;[HrefToken()];nonalpha=1'>All</a><a href='?_src_=holder;[HrefToken()];nonalpha=2'>#</a>")
 	for(var/letter in GLOB.alphabet)
-		navbar += "|<a href='?_src_=holder;[HrefToken()];showmessages=[letter]'>\[[letter]\]</a>"
-	navbar += "|<a href='?_src_=holder;[HrefToken()];showmemo=1'>\[Memos\]</a>|<a href='?_src_=holder;[HrefToken()];showwatch=1'>\[Watchlist\]</a>"
+		navbar += "<a href='?_src_=holder;[HrefToken()];showmessages=[letter]'>[letter]</a>"
+	navbar += "<a href='?_src_=holder;[HrefToken()];showmemo=1'>Memos</a><a href='?_src_=holder;[HrefToken()];showwatch=1'>Watchlist</a>"
 	navbar += "<br><form method='GET' name='search' action='?'>\
 	<input type='hidden' name='_src_' value='holder'>\
 	[HrefTokenFormField()]\
@@ -274,16 +318,16 @@
 	if(type == "memo" || type == "watchlist entry")
 		if(type == "memo")
 			output += "<h2><center>Admin memos</h2>"
-			output += "<a href='?_src_=holder;[HrefToken()];addmemo=1'>\[Add memo\]</a></center>"
+			output += "<a href='?_src_=holder;[HrefToken()];addmemo=1'>Add memo</a></center>"
 		else if(type == "watchlist entry")
 			output += "<h2><center>Watchlist entries</h2>"
-			output += "<a href='?_src_=holder;[HrefToken()];addwatchempty=1'>\[Add watchlist entry\]</a>"
+			output += "<a href='?_src_=holder;[HrefToken()];addwatchempty=1'>Add watchlist entry</a>"
 			if(filter)
-				output += "|<a href='?_src_=holder;[HrefToken()];showwatch=1'>\[Unfilter clients\]</a></center>"
+				output += "<a href='?_src_=holder;[HrefToken()];showwatch=1'>Unfilter clients</a></center>"
 			else
-				output += "|<a href='?_src_=holder;[HrefToken()];showwatchfilter=1'>\[Filter offline clients\]</a></center>"
+				output += "<a href='?_src_=holder;[HrefToken()];showwatchfilter=1'>Filter offline clients</a></center>"
 		output += ruler
-		var/datum/DBQuery/query_get_type_messages = SSdbcore.NewQuery("SELECT id, (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), targetckey, (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), text, timestamp, server, (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = lasteditor), expire_timestamp FROM [format_table_name("messages")] WHERE type = '[type]' AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL)")
+		var/datum/DBQuery/query_get_type_messages = SSdbcore.NewQuery("SELECT id, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), targetckey), targetckey, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), adminckey), text, timestamp, server, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = lasteditor), lasteditor), expire_timestamp FROM [format_table_name("messages")] WHERE type = '[type]' AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL)")
 		if(!query_get_type_messages.warn_execute())
 			qdel(query_get_type_messages)
 			return
@@ -308,9 +352,9 @@
 			if(expire_timestamp)
 				output += " | Expires [expire_timestamp]"
 			output += "</b>"
-			output += " <a href='?_src_=holder;[HrefToken()];editmessageexpiryempty=[id]'>\[Change Expiry Time\]</a>"
-			output += " <a href='?_src_=holder;[HrefToken()];deletemessageempty=[id]'>\[Delete\]</a>"
-			output += " <a href='?_src_=holder;[HrefToken()];editmessageempty=[id]'>\[Edit\]</a>"
+			output += " <a href='?_src_=holder;[HrefToken()];editmessageexpiryempty=[id]'>Change Expiry Time</a>"
+			output += " <a href='?_src_=holder;[HrefToken()];deletemessageempty=[id]'>Delete</a>"
+			output += " <a href='?_src_=holder;[HrefToken()];editmessageempty=[id]'>Edit</a>"
 			if(editor_key)
 				output += " <font size='2'>Last edit by [editor_key] <a href='?_src_=holder;[HrefToken()];messageedits=[id]'>(Click here to see edit log)</a></font>"
 			output += "<br>[text]<hr style='background:#000000; border:0; height:1px'>"
@@ -318,7 +362,7 @@
 	if(target_ckey)
 		target_ckey = sanitizeSQL(target_ckey)
 		var/target_key
-		var/datum/DBQuery/query_get_messages = SSdbcore.NewQuery("SELECT type, secret, id, (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), text, timestamp, server, (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = lasteditor), DATEDIFF(NOW(), timestamp), (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), expire_timestamp FROM [format_table_name("messages")] WHERE type <> 'memo' AND targetckey = '[target_ckey]' AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL) ORDER BY timestamp DESC")
+		var/datum/DBQuery/query_get_messages = SSdbcore.NewQuery("SELECT type, secret, id, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), adminckey), text, timestamp, server, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = lasteditor), lasteditor), DATEDIFF(NOW(), timestamp), IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), targetckey), expire_timestamp, severity FROM [format_table_name("messages")] WHERE type <> 'memo' AND targetckey = '[target_ckey]' AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL) ORDER BY timestamp DESC")
 		if(!query_get_messages.warn_execute())
 			qdel(query_get_messages)
 			return
@@ -344,6 +388,7 @@
 			var/age = text2num(query_get_messages.item[9])
 			target_key = query_get_messages.item[10]
 			var/expire_timestamp = query_get_messages.item[11]
+			var/severity = query_get_messages.item[12]
 			var/alphatext = ""
 			var/nsd = CONFIG_GET(number/note_stale_days)
 			var/nfd = CONFIG_GET(number/note_fresh_days)
@@ -357,25 +402,33 @@
 						alpha = 10
 						skipped = TRUE
 					alphatext = "filter: alpha(opacity=[alpha]); opacity: [alpha/100];"
-
-			var/list/data = list("<p style='margin:0px;[alphatext]'> <b>[timestamp] | [server] | [admin_key]")
+			var/list/data = list("<div style='margin:0px;[alphatext]'><p class='severity'>")
+			if(severity)
+				data += "<img src='[severity]_button.png' height='24' width='24'></img> "
+			data += "<b>[timestamp] | [server] | [admin_key][secret ? " | <i>- Secret</i>" : ""]"
 			if(expire_timestamp)
 				data += " | Expires [expire_timestamp]"
-			data += "</b>"
+			data += "</b></p><center>"
 			if(!linkless)
-				data += " <a href='?_src_=holder;[HrefToken()];editmessageexpiry=[id]'>\[Change Expiry Time\]</a>"
-				data += " <a href='?_src_=holder;[HrefToken()];deletemessage=[id]'>\[Delete\]</a>"
 				if(type == "note")
-					data += " <a href='?_src_=holder;[HrefToken()];secretmessage=[id]'>[secret ? "<b>\[Secret\]</b>" : "\[Not secret\]"]</a>"
+					if(severity)
+						data += "<a href='?_src_=holder;[HrefToken()];editmessageseverity=[id]'>[severity=="none" ? "No" : "[capitalize(severity)]"] Severity</a>"
+					else
+						data += "<a href='?_src_=holder;[HrefToken()];editmessageseverity=[id]'>N/A Severity</a>"
+				data += " <a href='?_src_=holder;[HrefToken()];editmessageexpiry=[id]'>Change Expiry Time</a>"
+				data += " <a href='?_src_=holder;[HrefToken()];deletemessage=[id]'>Delete</a>"
+				if(type == "note")
+					data += " <a href='?_src_=holder;[HrefToken()];secretmessage=[id]'>[secret ? "<b>Secret</b>" : "Not secret"]</a>"
 				if(type == "message sent")
 					data += " <font size='2'>Message has been sent</font>"
 					if(editor_key)
 						data += "|"
 				else
-					data += " <a href='?_src_=holder;[HrefToken()];editmessage=[id]'>\[Edit\]</a>"
+					data += " <a href='?_src_=holder;[HrefToken()];editmessage=[id]'>Edit</a>"
 				if(editor_key)
 					data += " <font size='2'>Last edit by [editor_key] <a href='?_src_=holder;[HrefToken()];messageedits=[id]'>(Click here to see edit log)</a></font>"
-			data += "<br>[text]</p><hr style='background:#000000; border:0; height:1px; [alphatext]'>"
+			data += "</div></center>"
+			data += "<p style='[alphatext]'>[text]</p><hr style='background:#000000; border:0; height:1px; [alphatext]'>"
 			switch(type)
 				if("message")
 					messagedata += data
@@ -396,34 +449,33 @@
 			qdel(query_get_message_key)
 		output += "<h2><center>[target_key]</center></h2><center>"
 		if(!linkless)
-			output += "<a href='?_src_=holder;[HrefToken()];addnote=[target_key]'>\[Add note\]</a>"
-			output += " <a href='?_src_=holder;[HrefToken()];addmessage=[target_key]'>\[Add message\]</a>"
-			output += " <a href='?_src_=holder;[HrefToken()];addwatch=[target_key]'>\[Add to watchlist\]</a>"
-			output += " <a href='?_src_=holder;[HrefToken()];showmessageckey=[target_ckey]'>\[Refresh page\]</a></center>"
+			output += "<a href='?_src_=holder;[HrefToken()];addnote=[target_key]'>Add note</a>"
+			output += " <a href='?_src_=holder;[HrefToken()];addmessage=[target_key]'>Add message</a>"
+			output += " <a href='?_src_=holder;[HrefToken()];addwatch=[target_key]'>Add to watchlist</a>"
+			output += " <a href='?_src_=holder;[HrefToken()];showmessageckey=[target_ckey]'>Refresh page</a></center>"
 		else
-			output += " <a href='?_src_=holder;[HrefToken()];showmessageckeylinkless=[target_ckey]'>\[Refresh page\]</a></center>"
+			output += " <a href='?_src_=holder;[HrefToken()];showmessageckeylinkless=[target_ckey]'>Refresh page</a></center>"
 		output += ruler
 		if(messagedata)
-			output += "<h4>Messages</h4>"
+			output += "<h2>Messages</h2>"
 			output += messagedata
 		if(watchdata)
-			output += "<h4>Watchlist</h4>"
+			output += "<h2>Watchlist</h2>"
 			output += watchdata
 		if(notedata)
-			output += "<h4>Notes</h4>"
+			output += "<h2>Notes</h2>"
 			output += notedata
 			if(!linkless)
 				if (agegate)
 					if (skipped) //the first skipped message is still shown so that we can put this link over it.
-						output += " <center><a href='?_src_=holder;[HrefToken()];showmessageckey=[target_ckey];showall=1' style='position: relative; top: -3em;'>\[Show [skipped] hidden messages\]</center>"
+						output += "<center><a href='?_src_=holder;[HrefToken()];showmessageckey=[target_ckey];showall=1' style='position: relative; top: -3em;'>Show [skipped] hidden messages</a></center>"
 					else
-						output += " <center><a href='?_src_=holder;[HrefToken()];showmessageckey=[target_ckey];showall=1'>\[Show All\]</center>"
-
+						output += "<center><a href='?_src_=holder;[HrefToken()];showmessageckey=[target_ckey];showall=1'>Show All</a></center>"
 				else
-					output += " <center><a href='?_src_=holder;[HrefToken()];showmessageckey=[target_ckey]'>\[Hide Old\]</center>"
+					output += "<center><a href='?_src_=holder;[HrefToken()];showmessageckey=[target_ckey]'>Hide Old</a></center>"
 	if(index)
 		var/search
-		output += "<center><a href='?_src_=holder;[HrefToken()];addmessageempty=1'>\[Add message\]</a><a href='?_src_=holder;[HrefToken()];addwatchempty=1'>\[Add watchlist entry\]</a><a href='?_src_=holder;[HrefToken()];addnoteempty=1'>\[Add note\]</a></center>"
+		output += "<center><a href='?_src_=holder;[HrefToken()];addmessageempty=1'>Add message</a><a href='?_src_=holder;[HrefToken()];addwatchempty=1'>Add watchlist entry</a><a href='?_src_=holder;[HrefToken()];addnoteempty=1'>Add note</a></center>"
 		output += ruler
 		if(!isnum(index))
 			index = sanitizeSQL(index)
@@ -443,12 +495,18 @@
 				return
 			var/index_ckey = query_list_messages.item[1]
 			var/index_key = query_list_messages.item[2]
+			if(!index_key)
+				index_key = index_ckey
 			output += "<a href='?_src_=holder;[HrefToken()];showmessageckey=[index_ckey]'>[index_key]</a><br>"
 		qdel(query_list_messages)
 	else if(!type && !target_ckey && !index)
-		output += "<center></a> <a href='?_src_=holder;[HrefToken()];addmessageempty=1'>\[Add message\]</a><a href='?_src_=holder;[HrefToken()];addwatchempty=1'>\[Add watchlist entry\]</a><a href='?_src_=holder;[HrefToken()];addnoteempty=1'>\[Add note\]</a></center>"
+		output += "<center><a href='?_src_=holder;[HrefToken()];addmessageempty=1'>Add message</a><a href='?_src_=holder;[HrefToken()];addwatchempty=1'>Add watchlist entry</a><a href='?_src_=holder;[HrefToken()];addnoteempty=1'>Add note</a></center>"
 		output += ruler
-	usr << browse({"<!DOCTYPE html><html><head><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /></head><body>[jointext(output, "")]</body></html>"}, "window=browse_messages;size=900x500")
+	var/datum/browser/browser = new(usr, "Note panel", "Manage player notes", 1000, 500)
+	var/datum/asset/notes_assets = get_asset_datum(/datum/asset/simple/notes)
+	notes_assets.send(src)
+	browser.set_content(jointext(output, ""))
+	browser.open()
 
 /proc/get_message_output(type, target_ckey)
 	if(!SSdbcore.Connect())
@@ -459,7 +517,7 @@
 	var/output
 	if(target_ckey)
 		target_ckey = sanitizeSQL(target_ckey)
-	var/query = "SELECT id, (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), text, timestamp, (SELECT byond_key FROM [format_table_name("player")] WHERE ckey = lasteditor) FROM [format_table_name("messages")] WHERE type = '[type]' AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL)"
+	var/query = "SELECT id, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), adminckey), text, timestamp, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = lasteditor), lasteditor) FROM [format_table_name("messages")] WHERE type = '[type]' AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL)"
 	if(type == "message" || type == "watchlist entry")
 		query += " AND targetckey = '[target_ckey]'"
 	var/datum/DBQuery/query_get_message_output = SSdbcore.NewQuery(query)
@@ -521,7 +579,7 @@
 			timestamp = query_convert_time.item[1]
 		qdel(query_convert_time)
 		if(ckey && notetext && timestamp && admin_ckey && server)
-			create_message("note", ckey, admin_ckey, notetext, timestamp, server, 1, 0, null, 0)
+			create_message("note", ckey, admin_ckey, notetext, timestamp, server, 1, 0, null, 0, 0)
 	notesfile.cd = "/"
 	notesfile.dir.Remove(ckey)
 

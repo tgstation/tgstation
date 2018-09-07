@@ -119,7 +119,7 @@
 
 	var/atom/movable/P = mob.pulling
 	if(P && !ismob(P) && P.density)
-		mob.dir = turn(mob.dir, 180)
+		mob.setDir(turn(mob.dir, 180))
 
 ///Process_Grab()
 ///Called by client/Move()

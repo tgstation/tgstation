@@ -84,7 +84,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	gamemode = _gamemode
 	uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted)
 
-/datum/component/uplink/proc/OnAttackBy(obj/item/I, mob/user)
+/datum/component/uplink/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
 	if(!active)
 		return	//no hitting everyone/everything just to try to slot tcs in!
 	if(istype(I, /obj/item/stack/telecrystal))
@@ -101,7 +101,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 				qdel(I)
 				return
 
-/datum/component/uplink/proc/interact(mob/user)
+/datum/component/uplink/proc/interact(datum/source, mob/user)
 	if(locked)
 		return
 	active = TRUE
@@ -201,28 +201,28 @@ GLOBAL_LIST_EMPTY(uplinks)
 /datum/component/uplink/proc/implant_activation()
 	var/obj/item/implant/implant = parent
 	locked = FALSE
-	interact(implant.imp_in)
+	interact(null, implant.imp_in)
 
-/datum/component/uplink/proc/implanting(list/arguments)
+/datum/component/uplink/proc/implanting(datum/source, list/arguments)
 	var/mob/user = arguments[2]
 	owner = "[user.key]"
 
-/datum/component/uplink/proc/old_implant(list/arguments, obj/item/implant/new_implant)
+/datum/component/uplink/proc/old_implant(datum/source, list/arguments, obj/item/implant/new_implant)
 	// It kinda has to be weird like this until implants are components
 	return SEND_SIGNAL(new_implant, COMSIG_IMPLANT_EXISTING_UPLINK, src)
 
-/datum/component/uplink/proc/new_implant(datum/component/uplink/uplink)
+/datum/component/uplink/proc/new_implant(datum/source, datum/component/uplink/uplink)
 	uplink.telecrystals += telecrystals
 	return COMPONENT_DELETE_NEW_IMPLANT
 
 // PDA signal responses
 
-/datum/component/uplink/proc/new_ringtone(mob/living/user, new_ring_text)
+/datum/component/uplink/proc/new_ringtone(datum/source, mob/living/user, new_ring_text)
 	var/obj/item/pda/master = parent
 	if(trim(lowertext(new_ring_text)) != trim(lowertext(master.lock_code))) //why is the lock code stored on the pda?
 		return
 	locked = FALSE
-	interact(user)
+	interact(null, user)
 	to_chat(user, "The PDA softly beeps.")
 	user << browse(null, "window=pda")
 	master.mode = 0
@@ -230,22 +230,22 @@ GLOBAL_LIST_EMPTY(uplinks)
 
 // Radio signal responses
 
-/datum/component/uplink/proc/new_frequency(list/arguments)
+/datum/component/uplink/proc/new_frequency(datum/source, list/arguments)
 	var/obj/item/radio/master = parent
 	var/frequency = arguments[1]
 	if(frequency != master.traitor_frequency)
 		return
 	locked = FALSE
 	if(ismob(master.loc))
-		interact(master.loc)
+		interact(null, master.loc)
 
 // Pen signal responses
 
-/datum/component/uplink/proc/pen_rotation(degrees, mob/living/carbon/user)
+/datum/component/uplink/proc/pen_rotation(datum/source, degrees, mob/living/carbon/user)
 	var/obj/item/pen/master = parent
 	if(degrees != master.traitor_unlock_degrees)
 		return
 	locked = FALSE
 	master.degrees = 0
-	interact(user)
+	interact(null, user)
 	to_chat(user, "<span class='warning'>Your pen makes a clicking noise, before quickly rotating back to 0 degrees!</span>")

@@ -138,6 +138,7 @@
 
 // Do not call except via load() above.
 /datum/parsed_map/proc/_load_impl(x_offset = 1, y_offset = 1, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
+	var/list/areaCache = list()
 	var/list/modelCache = build_cache(no_changeturf)
 	var/space_key = modelCache[SPACE_KEY]
 	var/list/bounds
@@ -182,7 +183,7 @@
 							var/list/cache = modelCache[model_key]
 							if(!cache)
 								CRASH("Undefined model key in DMM: [model_key]")
-							build_coordinate(cache, xcrd, ycrd, zcrd, no_afterchange, placeOnTop)
+							build_coordinate(areaCache, cache, locate(xcrd, ycrd, zcrd), no_afterchange, placeOnTop)
 
 							// only bother with bounds that actually exist
 							bounds[MAP_MINX] = min(bounds[MAP_MINX], xcrd)
@@ -292,7 +293,7 @@
 
 		.[model_key] = list(members, members_attributes)
 
-/datum/parsed_map/proc/build_coordinate(list/model, xcrd as num, ycrd as num, zcrd as num, no_changeturf as num, placeOnTop as num)
+/datum/parsed_map/proc/build_coordinate(list/areaCache, list/model, turf/crds, no_changeturf as num, placeOnTop as num)
 	var/index
 	var/list/members = model[1]
 	var/list/members_attributes = model[2]
@@ -302,20 +303,17 @@
 	////////////////
 
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
-	var/turf/crds = locate(xcrd,ycrd,zcrd)
-
 	//first instance the /area and remove it from the members list
 	index = members.len
 	if(members[index] != /area/template_noop)
-		var/atom/instance
 		GLOB._preloader.setup(members_attributes[index])//preloader for assigning  set variables on atom creation
 		var/atype = members[index]
-		for(var/area/A in world)
-			if(A.type == atype)
-				instance = A
-				break
-		if(!instance)
-			instance = new atype(null)
+		var/atom/instance = areaCache[atype]
+		if (!instance)
+			instance = GLOB.areas_by_type[atype]
+			if (!instance)
+				instance = new atype(null)
+			areaCache[atype] = instance
 		if(crds)
 			instance.contents.Add(crds)
 
@@ -409,57 +407,67 @@
 //build a list from variables in text form (e.g {var1="derp"; var2; var3=7} => list(var1="derp", var2, var3=7))
 //return the filled list
 /datum/parsed_map/proc/readlist(text as text, delimiter=",")
-
-	var/list/to_return = list()
+	. = list()
+	if (!text)
+		return
 
 	var/position
 	var/old_position = 1
 
-	do
-		//find next delimiter that is not within  "..."
+	while(position != 0)
+		// find next delimiter that is not within  "..."
 		position = find_next_delimiter_position(text,old_position,delimiter)
 
-		//check if this is a simple variable (as in list(var1, var2)) or an associative one (as in list(var1="foo",var2=7))
+		// check if this is a simple variable (as in list(var1, var2)) or an associative one (as in list(var1="foo",var2=7))
 		var/equal_position = findtext(text,"=",old_position, position)
 
-		var/trim_left = trim_text(copytext(text,old_position,(equal_position ? equal_position : position)),1)//the name of the variable, must trim quotes to build a BYOND compliant associatives list
+		var/trim_left = trim_text(copytext(text,old_position,(equal_position ? equal_position : position)))
+		var/left_constant = delimiter == ";" ? trim_left : parse_constant(trim_left)
 		old_position = position + 1
 
-		if(equal_position)//associative var, so do the association
-			var/trim_right = trim_text(copytext(text,equal_position+1,position))//the content of the variable
+		if(equal_position && !isnum(left_constant))
+			// Associative var, so do the association.
+			// Note that numbers cannot be keys - the RHS is dropped if so.
+			var/trim_right = trim_text(copytext(text,equal_position+1,position))
+			var/right_constant = parse_constant(trim_right)
+			.[left_constant] = right_constant
 
-			//Check for string
-			if(findtext(trim_right,"\"",1,2))
-				trim_right = copytext(trim_right,2,findtext(trim_right,"\"",3,0))
+		else  // simple var
+			. += list(left_constant)
 
-			//Check for number
-			else if(isnum(text2num(trim_right)))
-				trim_right = text2num(trim_right)
+/datum/parsed_map/proc/parse_constant(text)
+	// number
+	var/num = text2num(text)
+	if(isnum(num))
+		return num
 
-			//Check for null
-			else if(trim_right == "null")
-				trim_right = null
+	// string
+	if(findtext(text,"\"",1,2))
+		return copytext(text,2,findtext(text,"\"",3,0))
 
-			//Check for list
-			else if(copytext(trim_right,1,5) == "list")
-				trim_right = readlist(copytext(trim_right,6,length(trim_right)))
+	// list
+	if(copytext(text,1,6) == "list(")
+		return readlist(copytext(text,6,length(text)))
 
-			//Check for file
-			else if(copytext(trim_right,1,2) == "'")
-				trim_right = file(copytext(trim_right,2,length(trim_right)))
+	// typepath
+	var/path = text2path(text)
+	if(ispath(path))
+		return path
 
-			//Check for path
-			else if(ispath(text2path(trim_right)))
-				trim_right = text2path(trim_right)
+	// file
+	if(copytext(text,1,2) == "'")
+		return file(copytext(text,2,length(text)))
 
-			to_return[trim_left] = trim_right
+	// null
+	if(text == "null")
+		return null
 
-		else//simple var
-			to_return[trim_left] = null
+	// not parsed:
+	// - pops: /obj{name="foo"}
+	// - new(), newlist(), icon(), matrix(), sound()
 
-	while(position != 0)
-
-	return to_return
+	// fallback: string
+	return text
 
 /datum/parsed_map/Destroy()
 	..()

@@ -122,8 +122,8 @@
 	desc = "A massive, armored construct built to spearhead attacks and soak up enemy fire."
 	icon_state = "behemoth"
 	icon_living = "behemoth"
-	maxHealth = 200
-	health = 200
+	maxHealth = 150
+	health = 150
 	response_harm = "harmlessly punches"
 	harm_intent_damage = 0
 	obj_damage = 90
@@ -148,7 +148,7 @@
 
 /mob/living/simple_animal/hostile/construct/armored/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
-		var/reflectchance = 60 - round(P.damage/3)
+		var/reflectchance = 40 - round(P.damage/3)
 		if(prob(reflectchance))
 			apply_damage(P.damage * 0.5, P.damage_type)
 			visible_message("<span class='danger'>The [P.name] is reflected by [src]'s armored shell!</span>", \

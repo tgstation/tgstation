@@ -107,6 +107,7 @@
 	if(mob && LAZYLEN(mob.mousemove_intercept_objects))
 		for(var/datum/D in mob.mousemove_intercept_objects)
 			D.onMouseMove(object, location, control, params)
+	..()
 
 /datum/proc/onMouseMove(object, location, control, params)
 	return

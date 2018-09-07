@@ -25,12 +25,15 @@
 		spawn(10)
 			explosion(src.loc, 3, 6, 12, 15)
 
-	for(var/obj/machinery/ai_status_display/O in GLOB.ai_status_displays) //change status
-		if(src.key)
+	if(src.key)
+		for(var/each in GLOB.ai_status_displays) //change status
+			var/obj/machinery/status_display/ai/O = each
 			O.mode = 2
 			O.update()
-	
-	if(istype(loc, /obj/item/aicard))
+
+	if(istype(loc, /obj/item/aicard/aitater))
+		loc.icon_state = "aitater-404"
+	else if(istype(loc, /obj/item/aicard))
 		loc.icon_state = "aicard-404"
 
 /mob/living/silicon/ai/proc/ShutOffDoomsdayDevice()

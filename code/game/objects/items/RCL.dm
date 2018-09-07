@@ -143,7 +143,7 @@
 		if (mobhook && mobhook.parent != user)
 			QDEL_NULL(mobhook)
 		if (!mobhook)
-			mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/trigger, user)))
+			mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/trigger)))
 	else
 		QDEL_NULL(mobhook)
 

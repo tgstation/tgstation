@@ -4,7 +4,7 @@
 /obj/item/camera
 	name = "camera"
 	icon = 'icons/obj/items_and_weapons.dmi'
-	desc = "A polaroid camera. <span class='boldnotice'>Alt click to change its focusing, allowing you to set how big of an area it will capture!</span>"
+	desc = "A polaroid camera."
 	icon_state = "camera"
 	item_state = "camera"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
@@ -37,6 +37,10 @@
 	to_chat(user, "<span class='notice'>You eject [disk] out the back of [src].</span>")
 	user.put_in_hands(disk)
 	disk = null
+
+/obj/item/camera/examine(mob/user)
+	. = ..()
+	to_chat(user, "<span class='notice'>Alt-click to change its focusing, allowing you to set how big of an area it will capture.</span>")
 
 /obj/item/camera/AltClick(mob/user)
 	var/desired_x = input(user, "How high do you want the camera to shoot, between [picture_size_x_min] and [picture_size_x_max]?", "Zoom", picture_size_x) as num
@@ -114,7 +118,13 @@
 		return
 
 	on = FALSE
-	addtimer(CALLBACK(src, .proc/cooldown), cooldown)
+
+	var/realcooldown = cooldown
+	var/mob/living/carbon/human/H = user
+	if (H.has_trait(TRAIT_PHOTOGRAPHER))
+		realcooldown *= 0.5
+	addtimer(CALLBACK(src, .proc/cooldown), realcooldown)
+
 	icon_state = state_off
 
 	INVOKE_ASYNC(src, .proc/captureimage, target, user, flag, picture_size_x - 1, picture_size_y - 1)

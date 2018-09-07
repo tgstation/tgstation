@@ -49,6 +49,8 @@
 	dodging = TRUE
 	rapid_melee = 2
 
+	do_footstep = TRUE
+
 ///////////////Melee////////////
 
 /mob/living/simple_animal/hostile/syndicate/space

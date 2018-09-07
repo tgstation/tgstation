@@ -159,7 +159,8 @@
 	..()
 
 /obj/item/bodypart/chest/drop_limb(special)
-	return
+	if(special)
+		..()
 
 /obj/item/bodypart/r_arm/drop_limb(special)
 	var/mob/living/carbon/C = owner

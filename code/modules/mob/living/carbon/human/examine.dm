@@ -1,4 +1,4 @@
-/mob/living/carbon/human/examine(mob/user)
+/mob/living/carbon/human/examine(mob/user) //User is the person being examined
 //this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
 	var/t_He = p_they(TRUE)
 	var/t_His = p_their(TRUE)
@@ -80,8 +80,11 @@
 		msg += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck.\n"
 
 	//eyes
-	if(glasses && !(SLOT_GLASSES in obscured))
-		msg += "[t_He] [t_has] [glasses.get_examine_string(user)] covering [t_his] eyes.\n"
+	if(!(SLOT_GLASSES in obscured))
+		if(glasses)
+			msg += "[t_He] [t_has] [glasses.get_examine_string(user)] covering [t_his] eyes.\n"
+		else if(eye_color == BLOODCULT_EYE && iscultist(src) && has_trait(CULT_EYES))
+			msg += "<span class='warning'><B>[t_His] eyes are glowing an unnatural red!</B></span>\n"
 
 	//ears
 	if(ears && !(SLOT_EARS in obscured))

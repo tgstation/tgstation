@@ -91,6 +91,8 @@
 
 	var/my_z // I don't want to confuse this with client registered_z
 
+	var/do_footstep = FALSE
+
 /mob/living/simple_animal/Initialize()
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src
@@ -117,6 +119,10 @@
 		SSidlenpcpool.idle_mobs_by_zlevel[T.z] -= src
 
 	return ..()
+
+/mob/living/simple_animal/initialize_footstep()
+	if(do_footstep)
+		..()
 
 /mob/living/simple_animal/updatehealth()
 	..()
@@ -168,7 +174,7 @@
 						length += emote_see.len
 					var/randomValue = rand(1,length)
 					if(randomValue <= speak.len)
-						say(pick(speak))
+						say(pick(speak), forced = "poly")
 					else
 						randomValue -= speak.len
 						if(emote_see && randomValue <= emote_see.len)
@@ -176,7 +182,7 @@
 						else
 							emote("me [pick(emote_hear)]", 2)
 				else
-					say(pick(speak))
+					say(pick(speak), forced = "poly")
 			else
 				if(!(emote_hear && emote_hear.len) && (emote_see && emote_see.len))
 					emote("me", 1, pick(emote_see))

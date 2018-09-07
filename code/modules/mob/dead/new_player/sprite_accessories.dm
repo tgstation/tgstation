@@ -68,7 +68,7 @@
 	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
 
 	// please make sure they're sorted alphabetically and, where needed, categorized
-	// try to capitalize the names please~ 
+	// try to capitalize the names please~
 	// try to spell
 	// you do not need to define _s or _l sub-states, game automatically does this for you
 
@@ -614,6 +614,11 @@
 /datum/sprite_accessory/underwear
 	icon = 'icons/mob/underwear.dmi'
 
+/datum/sprite_accessory/underwear/nude
+	name = "Nude"
+	icon_state = null
+	gender = NEUTER
+
 /datum/sprite_accessory/underwear/male_mankini
 	name = "Mankini"
 	icon_state = "male_mankini"
@@ -804,17 +809,17 @@
 	icon_state = "female_yellow"
 	gender = FEMALE
 
-/datum/sprite_accessory/underwear/nude
-	name = "Nude"
-	icon_state = null
-	gender = NEUTER
-
 ////////////////////////////
 // Undershirt Definitions //
 ////////////////////////////
 
 /datum/sprite_accessory/undershirt
 	icon = 'icons/mob/underwear.dmi'
+
+/datum/sprite_accessory/undershirt/nude
+	name = "Nude"
+	icon_state = null
+	gender = NEUTER
 
 // please make sure they're sorted alphabetically and categorized
 
@@ -828,13 +833,8 @@
 	icon_state = "shirt_redjersey"
 	gender = NEUTER
 
-/datum/sprite_accessory/undershirt/nude
-	name = "Nude"
-	icon_state = null
-	gender = NEUTER
-
 /datum/sprite_accessory/undershirt/bluepolo
-	name = "Polo Shirt (Gray-Yellow)"
+	name = "Polo Shirt (Blue)"
 	icon_state = "bluepolo"
 	gender = NEUTER
 
@@ -1100,6 +1100,10 @@
 /datum/sprite_accessory/socks
 	icon = 'icons/mob/underwear.dmi'
 
+/datum/sprite_accessory/socks/nude
+	name = "Nude"
+	icon_state = null
+
 // please make sure they're sorted alphabetically and categorized
 
 /datum/sprite_accessory/socks/black_knee
@@ -1141,10 +1145,6 @@
 /datum/sprite_accessory/socks/white_norm
 	name = "Normal (White)"
 	icon_state = "white_norm"
-
-/datum/sprite_accessory/socks/nude
-	name = "Nude"
-	icon_state = null
 
 /datum/sprite_accessory/socks/pantyhose
 	name = "Pantyhose"

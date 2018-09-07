@@ -1,0 +1,4 @@
+author: "octareenroon91"
+delete-after: True
+changes: 
+  - bugfix: "remove base types not meant to spawn from get_random_drink and from the silver-slime spawnlist."
