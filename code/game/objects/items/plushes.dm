@@ -461,7 +461,7 @@
 		P.clashing = FALSE
 
 /obj/item/toy/plush/narplush
-	name = "Nar'Sie plushie"
+	name = "\improper Nar'Sie plushie"
 	desc = "A small stuffed doll of the elder goddess Nar'Sie. Who thought this was a good children's toy?"
 	icon_state = "narplush"
 	var/clashing

@@ -251,7 +251,7 @@
 	holder.update_action_buttons_icon()
 
 /obj/item/restraints/legcuffs/bola/cult
-	name = "Nar'Sien bola"
+	name = "\improper Nar'Sien bola"
 	desc = "A strong bola, bound with dark magic that allows it to pass harmlessly through Nar'Sien cultists. Throw it to trip and slow your victim."
 	icon_state = "bola_cult"
 	breakouttime = 60
