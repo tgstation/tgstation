@@ -23,7 +23,7 @@
 	result = /obj/item/reagent_containers/food/snacks/donut
 	subcategory = CAT_PASTRY
 	
-datum/crafting_recipe/food/donut
+datum/crafting_recipe/food/donut/meat
 	time = 15
 	name = "Meat donut"
 	reqs = list(
