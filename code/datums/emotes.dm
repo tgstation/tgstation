@@ -16,7 +16,7 @@
 	var/emote_type = EMOTE_VISIBLE //Whether the emote is visible or audible
 	var/restraint_check = FALSE //Checks if the mob is restrained before performing the emote
 	var/muzzle_ignore = FALSE //Will only work if the emote is EMOTE_AUDIBLE
-	var/list/mob_type_allowed_typecache = list(/mob) //Types that are allowed to use that emote
+	var/list/mob_type_allowed_typecache = /mob //Types that are allowed to use that emote
 	var/list/mob_type_blacklist_typecache //Types that are NOT allowed to use that emote
 	var/list/mob_type_ignore_stat_typecache
 	var/stat_allowed = CONSCIOUS
@@ -25,7 +25,16 @@
 /datum/emote/New()
 	if(key_third_person)
 		emote_list[key_third_person] = src
-	mob_type_allowed_typecache = typecacheof(mob_type_allowed_typecache)
+	if (ispath(mob_type_allowed_typecache))
+		switch (mob_type_allowed_typecache)
+			if (/mob)
+				mob_type_allowed_typecache = GLOB.typecache_mob
+			if (/mob/living)
+				mob_type_allowed_typecache = GLOB.typecache_living
+			else
+				mob_type_allowed_typecache = typecacheof(mob_type_allowed_typecache)
+	else
+		mob_type_allowed_typecache = typecacheof(mob_type_allowed_typecache)
 	mob_type_blacklist_typecache = typecacheof(mob_type_blacklist_typecache)
 	mob_type_ignore_stat_typecache = typecacheof(mob_type_ignore_stat_typecache)
 
@@ -47,7 +56,7 @@
 	if(!msg)
 		return
 
-	user.log_message(msg, INDIVIDUAL_EMOTE_LOG)
+	user.log_message(msg, LOG_EMOTE)
 	msg = "<b>[user]</b> " + msg
 
 	for(var/mob/M in GLOB.dead_mob_list)
@@ -61,7 +70,6 @@
 		user.audible_message(msg)
 	else
 		user.visible_message(msg)
-	log_talk(user,"[key_name(user)] : [msg]",LOGEMOTE)
 
 /datum/emote/proc/replace_pronoun(mob/user, message)
 	if(findtext(message, "their"))
@@ -102,12 +110,25 @@
 		return FALSE
 	if(status_check && !is_type_in_typecache(user, mob_type_ignore_stat_typecache))
 		if(user.stat > stat_allowed)
-			if(intentional)
-				to_chat(user, "<span class='notice'>You cannot [key] while unconscious.</span>")
+			if(!intentional)
+				return FALSE
+			switch(user.stat)
+				if(SOFT_CRIT)
+					to_chat(user, "<span class='notice'>You cannot [key] while in a critical condition.</span>")
+				if(UNCONSCIOUS)
+					to_chat(user, "<span class='notice'>You cannot [key] while unconscious.</span>")
+				if(DEAD)
+					to_chat(user, "<span class='notice'>You cannot [key] while dead.</span>")
 			return FALSE
-		if(restraint_check && (user.restrained() || user.buckled))
-			if(intentional)
-				to_chat(user, "<span class='notice'>You cannot [key] while restrained.</span>")
+		if(restraint_check && (user.IsStun() || user.IsKnockdown()))
+			if(!intentional)
+				return FALSE
+			to_chat(user, "<span class='notice'>You cannot [key] while stunned.</span>")
+			return FALSE
+		if(restraint_check && user.restrained())
+			if(!intentional)
+				return FALSE
+			to_chat(user, "<span class='notice'>You cannot [key] while restrained.</span>")
 			return FALSE
 
 	if(isliving(user))

@@ -184,7 +184,7 @@
 	. = ..()
 	fire_delay = delay
 	current_tracers = list()
-	START_PROCESSING(SSprojectiles, src)
+	START_PROCESSING(SSfastprocess, src)
 	zoom_lock_action = new(src)
 
 /obj/item/gun/energy/beam_rifle/Destroy()
@@ -529,7 +529,7 @@
 	if(check_pierce(target))
 		permutated += target
 		trajectory_ignore_forcemove = TRUE
-		forceMove(target)
+		forceMove(target.loc)
 		trajectory_ignore_forcemove = FALSE
 		return FALSE
 	if(!QDELETED(target))

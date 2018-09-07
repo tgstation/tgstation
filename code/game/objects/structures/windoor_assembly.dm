@@ -32,7 +32,7 @@
 /obj/structure/windoor_assembly/New(loc, set_dir)
 	..()
 	if(set_dir)
-		dir = set_dir
+		setDir(set_dir)
 	ini_dir = dir
 	air_update_turf(1)
 

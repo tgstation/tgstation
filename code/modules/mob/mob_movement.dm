@@ -10,6 +10,10 @@
 			return TRUE
 	return (!mover.density || !density || lying)
 
+//DO NOT USE THIS UNLESS YOU ABSOLUTELY HAVE TO. THIS IS BEING PHASED OUT FOR THE MOVESPEED MODIFICATION SYSTEM.
+//See mob_movespeed.dm
+/mob/proc/movement_delay()	//update /living/movement_delay() if you change this
+	return cached_multiplicative_slowdown
 
 /client/verb/drop_item()
 	set hidden = 1
@@ -26,7 +30,6 @@
 			mob.control_object.setDir(direct)
 		else
 			mob.control_object.forceMove(get_step(mob.control_object,direct))
-	return
 
 #define MOVEMENT_DELAY_BUFFER 0.75
 #define MOVEMENT_DELAY_BUFFER_DELTA 1.25
@@ -38,7 +41,7 @@
 		next_move_dir_add = 0
 		next_move_dir_sub = 0
 	var/old_move_delay = move_delay
-	move_delay = world.time+world.tick_lag //this is here because Move() can now be called mutiple times per tick
+	move_delay = world.time + world.tick_lag //this is here because Move() can now be called mutiple times per tick
 	if(!mob || !mob.loc)
 		return FALSE
 	if(!n || !direct)
@@ -116,7 +119,7 @@
 
 	var/atom/movable/P = mob.pulling
 	if(P && !ismob(P) && P.density)
-		mob.dir = turn(mob.dir, 180)
+		mob.setDir(turn(mob.dir, 180))
 
 ///Process_Grab()
 ///Called by client/Move()
@@ -357,9 +360,13 @@
 	set hidden = TRUE
 	set instant = TRUE
 	if(mob)
-		mob.toggle_move_intent()
+		mob.toggle_move_intent(usr)
 
-/mob/proc/toggle_move_intent()
+/mob/proc/toggle_move_intent(mob/user)
+	if(m_intent == MOVE_INTENT_RUN)
+		m_intent = MOVE_INTENT_WALK
+	else
+		m_intent = MOVE_INTENT_RUN
 	if(hud_used && hud_used.static_inventory)
 		for(var/obj/screen/mov_intent/selector in hud_used.static_inventory)
-			selector.toggle(src)
+			selector.update_icon(src)

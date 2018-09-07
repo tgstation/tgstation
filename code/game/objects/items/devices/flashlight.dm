@@ -389,7 +389,7 @@
 
 		if(ismob(A))
 			var/mob/M = A
-			add_logs(user, M, "attacked", "EMP-light")
+			log_combat(user, M, "attacked", "EMP-light")
 			M.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].", \
 								"<span class='userdanger'>[user] blinks \the [src] at you.")
 		else

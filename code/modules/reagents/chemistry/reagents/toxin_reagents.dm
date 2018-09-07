@@ -168,7 +168,7 @@
 	M.adjustOxyLoss(0.5*REM, 0)
 	..()
 	. = 1
-	
+
 /datum/reagent/toxin/ghoulpowder
 	name = "Ghoul Powder"
 	id = "ghoulpowder"
@@ -427,7 +427,7 @@
 /datum/reagent/toxin/formaldehyde
 	name = "Formaldehyde"
 	id = "formaldehyde"
-	description = "Formaldehyde, on its own, is a fairly weak toxin. It contains trace amounts of Histamine, very rarely making it decay into Histamine.."
+	description = "Formaldehyde, on its own, is a fairly weak toxin. It contains trace amounts of Histamine, very rarely making it decay into Histamine."
 	reagent_state = LIQUID
 	color = "#B4004B"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -627,7 +627,7 @@
 
 /datum/reagent/toxin/amanitin/on_mob_delete(mob/living/M)
 	var/toxdamage = current_cycle*3*REM
-	M.log_message("has taken [toxdamage] toxin damage from amanitin toxin", INDIVIDUAL_ATTACK_LOG)
+	M.log_message("has taken [toxdamage] toxin damage from amanitin toxin", LOG_ATTACK)
 	M.adjustToxLoss(toxdamage)
 	..()
 

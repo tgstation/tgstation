@@ -133,7 +133,7 @@
 
 			//Always log attemped injections for admins
 			var/contained = reagents.log_list()
-			add_logs(src, L, "attempted to inject", addition="which had [contained]")
+			log_combat(src, L, "attempted to inject", addition="which had [contained]")
 			L.visible_message("<span class='danger'>[acting_object] is trying to inject [L]!</span>", \
 								"<span class='userdanger'>[acting_object] is trying to inject you!</span>")
 			busy = TRUE
@@ -141,7 +141,7 @@
 				var/fraction = min(transfer_amount/reagents.total_volume, 1)
 				reagents.reaction(L, INJECT, fraction)
 				reagents.trans_to(L, transfer_amount)
-				add_logs(src, L, "injected", addition="which had [contained]")
+				log_combat(src, L, "injected", addition="which had [contained]")
 				L.visible_message("<span class='danger'>[acting_object] injects [L] with its needle!</span>", \
 									"<span class='userdanger'>[acting_object] injects you with its needle!</span>")
 			else

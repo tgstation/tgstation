@@ -144,7 +144,7 @@
 		M << browse("<html><head><title>PDA Photo</title></head>" \
 		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
 		+ "<img src='pda_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />" \
-		+ "</body></html>", "window=pdaphoto;size=[picture.psize_x]x[picture.psize_y]")
+		+ "</body></html>", "window=pdaphoto;size=[picture.psize_x]x[picture.psize_y];can-close=true")
 		onclose(M, "pdaphoto")
 
 /datum/data_rc_msg

@@ -143,7 +143,7 @@
 			GLOB.application_scripture_unlocked = TRUE
 			hierophant_message("<span class='large_brass bold'>With the conversion of a new servant the Ark's power grows. Application scriptures are now available.</span>")
 	if(add_servant_of_ratvar(L))
-		L.log_message("<font color=#BE8700>Conversion was done with a [sigil_name].</font>", INDIVIDUAL_ATTACK_LOG)
+		L.log_message("conversion was done with a [sigil_name]", LOG_ATTACK, color="BE8700")
 		if(iscarbon(L))
 			var/mob/living/carbon/M = L
 			M.uncuff()

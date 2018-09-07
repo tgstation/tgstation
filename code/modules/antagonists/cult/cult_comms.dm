@@ -45,7 +45,7 @@
 			var/link = FOLLOW_LINK(M, user)
 			to_chat(M, "[link] [my_message]")
 
-	log_talk(user,"CULT:[key_name(user)] : [message]",LOGSAY)
+	user.log_talk(message, LOG_SAY, tag="cult")
 
 /datum/action/innate/cult/comm/spirit
 	name = "Spiritual Communion"
@@ -196,15 +196,15 @@
 /datum/action/innate/cult/master/finalreck/proc/chant(chant_number)
 	switch(chant_number)
 		if(1)
-			owner.say("C'arta forbici!", language = /datum/language/common)
+			owner.say("C'arta forbici!", language = /datum/language/common, forced = "cult invocation")
 		if(2)
-			owner.say("Pleggh e'ntrath!", language = /datum/language/common)
+			owner.say("Pleggh e'ntrath!", language = /datum/language/common, forced = "cult invocation")
 			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 50, 1)
 		if(3)
-			owner.say("Barhah hra zar'garis!", language = /datum/language/common)
+			owner.say("Barhah hra zar'garis!", language = /datum/language/common, forced = "cult invocation")
 			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 75, 1)
 		if(4)
-			owner.say("N'ath reth sh'yro eth d'rekkathnor!!!", language = /datum/language/common)
+			owner.say("N'ath reth sh'yro eth d'rekkathnor!!!", language = /datum/language/common, forced = "cult invocation")
 			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 100, 1)
 
 /datum/action/innate/cult/master/cultmark

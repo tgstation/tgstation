@@ -44,6 +44,8 @@
 	var/cell_type = /obj/item/stock_parts/cell
 	var/vest_type = /obj/item/clothing/suit/armor/vest
 
+	do_footstep = TRUE
+
 
 /mob/living/simple_animal/bot/ed209/Initialize(mapload,created_name,created_lasercolor)
 	. = ..()
@@ -206,7 +208,7 @@ Auto Patrol[]"},
 /mob/living/simple_animal/bot/ed209/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj , /obj/item/projectile/beam/laser)||istype(Proj, /obj/item/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
-			if(!Proj.nodamage && Proj.damage < src.health)
+			if(!Proj.nodamage && Proj.damage < src.health && ishuman(Proj.firer))
 				retaliate(Proj.firer)
 	..()
 
@@ -549,7 +551,7 @@ Auto Patrol[]"},
 		var/mob/living/carbon/human/H = C
 		var/judgement_criteria = judgement_criteria()
 		threat = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
-	add_logs(src,C,"stunned")
+	log_combat(src,C,"stunned")
 	if(declare_arrests)
 		var/area/location = get_area(src)
 		speak("[arrest_type ? "Detaining" : "Arresting"] level [threat] scumbag <b>[C]</b> in [location].", radio_channel)

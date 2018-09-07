@@ -138,7 +138,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		update_icon()
 
 /mob/living/simple_animal/bot/honkbot/bullet_act(obj/item/projectile/Proj)
-	if((istype(Proj,/obj/item/projectile/beam)) || (istype(Proj,/obj/item/projectile/bullet) && (Proj.damage_type == BURN))||(Proj.damage_type == BRUTE) && (!Proj.nodamage && Proj.damage < health))
+	if((istype(Proj,/obj/item/projectile/beam)) || (istype(Proj,/obj/item/projectile/bullet) && (Proj.damage_type == BURN))||(Proj.damage_type == BRUTE) && (!Proj.nodamage && Proj.damage < health && ishuman(Proj.firer)))
 		retaliate(Proj.firer)
 	..()
 
@@ -210,7 +210,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 				threatlevel = 6 // will never let you go
 			addtimer(CALLBACK(src, .proc/spam_flag_false), cooldowntime)
 
-			add_logs(src,C,"honked")
+			log_combat(src,C,"honked")
 
 			C.visible_message("<span class='danger'>[src] has honked [C]!</span>",\
 					"<span class='userdanger'>[src] has honked you!</span>")

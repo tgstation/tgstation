@@ -362,7 +362,7 @@
 
 		to_chat(L, "<span class='italics'>You hear a voice in your head saying: </span><span class='abductor'>[message]</span>")
 		to_chat(user, "<span class='notice'>You send the message to your target.</span>")
-		log_talk(user,"[key_name(user)] sent an abductor mind message to [key_name(L)]: '[message]'", LOGSAY)
+		log_directed_talk(user, L, message, LOG_SAY, "abductor whisper")
 
 
 /obj/item/firing_pin/abductor
@@ -505,6 +505,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	L.Knockdown(140)
 	L.apply_effect(EFFECT_STUTTER, 7)
+	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 
 	L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
 							"<span class='userdanger'>[user] has stunned you with [src]!</span>")
@@ -514,7 +515,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		var/mob/living/carbon/human/H = L
 		H.forcesay(GLOB.hit_appends)
 
-	add_logs(user, L, "stunned")
+	log_combat(user, L, "stunned")
 
 /obj/item/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
 	if(L.incapacitated(TRUE, TRUE))
@@ -528,7 +529,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
 		playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 		L.Sleeping(1200)
-		add_logs(user, L, "put to sleep")
+		log_combat(user, L, "put to sleep")
 	else
 		if(istype(L.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
 			to_chat(user, "<span class='warning'>The specimen's protective headgear is completely blocking our sleep inducement methods!</span>")
@@ -554,7 +555,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 					C.handcuffed = new /obj/item/restraints/handcuffs/energy/used(C)
 					C.update_handcuffed()
 					to_chat(user, "<span class='notice'>You restrain [C].</span>")
-					add_logs(user, C, "handcuffed")
+					log_combat(user, C, "handcuffed")
 			else
 				to_chat(user, "<span class='warning'>You fail to restrain [C].</span>")
 		else

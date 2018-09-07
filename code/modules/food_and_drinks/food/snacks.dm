@@ -1,3 +1,33 @@
+/** # Snacks
+
+Items in the "Snacks" subcategory are food items that people actually eat. The key points are that they are created
+already filled with reagents and are destroyed when empty. Additionally, they make a "munching" noise when eaten.
+
+Notes by Darem: Food in the "snacks" subtype can hold a maximum of 50 units. Generally speaking, you don't want to go over 40
+total for the item because you want to leave space for extra condiments. If you want effect besides healing, add a reagent for
+it. Try to stick to existing reagents when possible (so if you want a stronger healing effect, just use omnizine). On use
+effect (such as the old officer eating a donut code) requires a unique reagent (unless you can figure out a better way).
+
+The nutriment reagent and bitesize variable replace the old heal_amt and amount variables. Each unit of nutriment is equal to
+2 of the old heal_amt variable. Bitesize is the rate at which the reagents are consumed. So if you have 6 nutriment and a
+bitesize of 2, then it'll take 3 bites to eat. Unlike the old system, the contained reagents are evenly spread among all
+the bites. No more contained reagents = no more bites.
+
+Here is an example of the new formatting for anyone who wants to add more food items.
+```
+/obj/item/reagent_containers/food/snacks/xenoburger			//Identification path for the object.
+	name = "Xenoburger"													//Name that displays in the UI.
+	desc = "Smells caustic. Tastes like heresy."						//Duh
+	icon_state = "xburger"												//Refers to an icon in food.dmi
+/obj/item/reagent_containers/food/snacks/xenoburger/Initialize()		//Don't mess with this. | nO I WILL MESS WITH THIS
+	. = ..()														//Same here.
+	reagents.add_reagent("xenomicrobes", 10)						//This is what is in the food item. you may copy/paste
+	reagents.add_reagent("nutriment", 2)							//this line of code for all the contents.
+	bitesize = 3													//This is the amount each bite consumes.
+```
+
+All foods are distributed among various categories. Use common sense.
+*/
 /obj/item/reagent_containers/food/snacks
 	name = "snack"
 	desc = "Yummy."
@@ -96,7 +126,7 @@
 
 				if(!do_mob(user, M))
 					return
-				add_logs(user, M, "fed", reagents.log_list())
+				log_combat(user, M, "fed", reagents.log_list())
 				M.visible_message("<span class='danger'>[user] forces [M] to eat [src].</span>", \
 									"<span class='userdanger'>[user] forces [M] to eat [src].</span>")
 
@@ -294,40 +324,8 @@
 					M.emote("me", 1, "[sattisfaction_text]")
 				qdel(src)
 
-
-//////////////////////////////////////////////////
-////////////////////////////////////////////Snacks
-//////////////////////////////////////////////////
-//Items in the "Snacks" subcategory are food items that people actually eat. The key points are that they are created
-//	already filled with reagents and are destroyed when empty. Additionally, they make a "munching" noise when eaten.
-
-//Notes by Darem: Food in the "snacks" subtype can hold a maximum of 50 units Generally speaking, you don't want to go over 40
-//	total for the item because you want to leave space for extra condiments. If you want effect besides healing, add a reagent for
-//	it. Try to stick to existing reagents when possible (so if you want a stronger healing effect, just use omnizine). On use
-//	effect (such as the old officer eating a donut code) requires a unique reagent (unless you can figure out a better way).
-
-//The nutriment reagent and bitesize variable replace the old heal_amt and amount variables. Each unit of nutriment is equal to
-//	2 of the old heal_amt variable. Bitesize is the rate at which the reagents are consumed. So if you have 6 nutriment and a
-//	bitesize of 2, then it'll take 3 bites to eat. Unlike the old system, the contained reagents are evenly spread among all
-//	the bites. No more contained reagents = no more bites.
-
-//Here is an example of the new formatting for anyone who wants to add more food items.
-///obj/item/reagent_containers/food/snacks/xenoburger			//Identification path for the object.
-//	name = "Xenoburger"													//Name that displays in the UI.
-//	desc = "Smells caustic. Tastes like heresy."						//Duh
-//	icon_state = "xburger"												//Refers to an icon in food.dmi
-///obj/item/reagent_containers/food/snacks/xenoburger/Initialize()		//Don't mess with this. | nO I WILL MESS WITH THIS
-//		. = ..()														//Same here.
-//		reagents.add_reagent("xenomicrobes", 10)						//This is what is in the food item. you may copy/paste
-//		reagents.add_reagent("nutriment", 2)							//this line of code for all the contents.
-//		bitesize = 3													//This is the amount each bite consumes.
-
-//All foods are distributed among various categories. Use common sense.
-
-/////////////////////////////////////////////////Store////////////////////////////////////////
-// All the food items that can store an item inside itself, like bread or cake.
-
-
+// //////////////////////////////////////////////Store////////////////////////////////////////
+/// All the food items that can store an item inside itself, like bread or cake.
 /obj/item/reagent_containers/food/snacks/store
 	w_class = WEIGHT_CLASS_NORMAL
 	var/stored_item = 0

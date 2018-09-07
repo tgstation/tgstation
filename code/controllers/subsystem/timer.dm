@@ -212,6 +212,7 @@ SUBSYSTEM_DEF(timer)
 		if(!(qtimer.flags & TIMER_LOOP))
 			qdel(qtimer)
 		else
+			bucket_count++
 			qtimer.spent = 0
 			qtimer.bucketEject()
 			if(qtimer.flags & TIMER_CLIENT_TIME)

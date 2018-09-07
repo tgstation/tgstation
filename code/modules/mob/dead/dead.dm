@@ -4,6 +4,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 /mob/dead
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
+	throwforce = 0
 
 /mob/dead/Initialize()
 	if(flags_1 & INITIALIZED_1)
@@ -14,7 +15,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 	prepare_huds()
 
-	if(length(CONFIG_GET(keyed_string_list/cross_server)))
+	if(length(CONFIG_GET(keyed_list/cross_server)))
 		verbs += /mob/dead/proc/server_hop
 	set_focus(src)
 	return INITIALIZE_HINT_NORMAL
@@ -59,7 +60,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	set desc= "Jump to the other server"
 	if(notransform)
 		return
-	var/list/csa = CONFIG_GET(keyed_string_list/cross_server)
+	var/list/csa = CONFIG_GET(keyed_list/cross_server)
 	var/pick
 	switch(csa.len)
 		if(0)

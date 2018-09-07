@@ -6,6 +6,8 @@
 	thermal_conductivity = 0.025
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
+	footstep = FOOTSTEP_PLATING
+	tiled_dirt = FALSE
 
 /turf/open/floor/engine/examine(mob/user)
 	..()
@@ -36,7 +38,8 @@
 	if(I.use_tool(src, user, 30, volume=80))
 		if(!istype(src, /turf/open/floor/engine))
 			return TRUE
-		new /obj/item/stack/rods(src, 2)
+		if(floor_tile)
+			new floor_tile(src, 2)
 		ScrapeAway()
 	return TRUE
 

@@ -167,7 +167,7 @@
 						LZ = get_turf(beacon)
 						beacon.update_status(SP_LAUNCH)
 					else if (!usingBeacon)//find a suitable supplypod landing zone in cargobay
-						landingzone = locate(/area/quartermaster/storage) in GLOB.sortedAreas
+						landingzone = GLOB.areas_by_type[/area/quartermaster/storage]
 						if (!landingzone)
 							WARNING("[src] couldnt find a Quartermaster/Storage (aka cargobay) area on the station, and as such it has set the supplypod landingzone to the area it resides in.")
 							landingzone = get_area(src)
@@ -185,7 +185,7 @@
 						update_icon()
 			else
 				if(SO.pack.cost * (0.72*MAX_EMAG_ROCKETS) <= SSshuttle.points) // bulk discount :^)
-					landingzone = locate(pick(GLOB.the_station_areas)) in GLOB.sortedAreas //override default landing zone
+					landingzone = GLOB.areas_by_type[pick(GLOB.the_station_areas)]  //override default landing zone
 					for(var/turf/open/floor/T in landingzone.contents)
 						if(is_blocked_turf(T))
 							continue

@@ -350,3 +350,11 @@
 /obj/item/circuitboard/computer/sat_control
 	name = "Satellite Network Control (Computer Board)"
 	build_path = /obj/machinery/computer/sat_control
+
+/obj/item/circuitboard/computer/nanite_chamber_control
+	name = "Nanite Chamber Control (Computer Board)"
+	build_path = /obj/machinery/computer/nanite_chamber_control
+
+/obj/item/circuitboard/computer/nanite_cloud_controller
+	name = "Nanite Cloud Control (Computer Board)"
+	build_path = /obj/machinery/computer/nanite_cloud_controller

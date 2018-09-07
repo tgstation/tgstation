@@ -649,7 +649,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
 			to_chat(M, "[FOLLOW_LINK(M, user)] [ghost_message]")
 	// Log in the talk log
-	log_talk(user, "[key_name(user)] (PDA: [initial(name)]) sent \"[message]\" to [target_text]", LOGPDA)
+	user.log_talk(message, LOG_PDA, tag="PDA: [initial(name)] to [target_text]")
 	to_chat(user, "<span class='info'>Message sent to [target_text]: \"[message]\"</span>")
 	// Reset the photo
 	picture = null
@@ -711,7 +711,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/pda/verb/verb_toggle_light()
 	set category = "Object"
 	set name = "Toggle Flashlight"
-	
+
 	toggle_light()
 
 /obj/item/pda/verb/verb_remove_id()

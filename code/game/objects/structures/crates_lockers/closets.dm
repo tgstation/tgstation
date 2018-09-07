@@ -33,6 +33,7 @@
 	var/material_drop_amount = 2
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 	var/anchorable = TRUE
+	var/icon_welded = "welded"
 
 
 /obj/structure/closet/Initialize(mapload)
@@ -59,7 +60,7 @@
 		else
 			add_overlay("[icon_state]_door")
 		if(welded)
-			add_overlay("welded")
+			add_overlay(icon_welded)
 		if(secure && !broken)
 			if(locked)
 				add_overlay("locked")
@@ -73,7 +74,7 @@
 		else
 			add_overlay("[icon_state]_open")
 
-/obj/structure/closet/examine(mob/user)
+/obj/structure/closet/examine(mob/living/user)
 	..()
 	if(welded)
 		to_chat(user, "<span class='notice'>It's welded shut.</span>")
@@ -83,6 +84,8 @@
 		to_chat(user, "<span class='notice'>The parts are <b>welded</b> together.</span>")
 	else if(secure && !opened)
 		to_chat(user, "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>")
+	if(user.has_trait(TRAIT_SKITTISH))
+		to_chat(user, "<span class='notice'>Ctrl-Shift-click [src] to jump inside.</span>")
 
 /obj/structure/closet/CanPass(atom/movable/mover, turf/target)
 	if(wall_mounted)
@@ -247,6 +250,7 @@
 			if(opened)
 				return
 			welded = !welded
+			after_weld(welded)
 			user.visible_message("<span class='notice'>[user] [welded ? "welds shut" : "unwelded"] \the [src].</span>",
 							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [W].</span>",
 							"<span class='italics'>You hear welding.</span>")
@@ -264,6 +268,9 @@
 			togglelock(user)
 	else
 		return FALSE
+
+/obj/structure/closet/proc/after_weld(weld_state)
+	return
 
 /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
 	if(!istype(O) || O.anchored || istype(O, /obj/screen))

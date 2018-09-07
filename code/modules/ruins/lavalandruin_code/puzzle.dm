@@ -154,6 +154,8 @@
 	var/tile_count = width * height
 
 	//Generate per tile icons
+	var/icon/base_icon = get_base_icon()
+
 	for(var/id in 1 to tile_count)
 		var/y = width - round((id - 1) / width)
 		var/x = ((id - 1) % width) + 1
@@ -163,7 +165,7 @@
 		var/y_start = 1 + ((y - 1) * world.icon_size)
 		var/y_end = y_start + world.icon_size - 1
 
-		var/icon/T = get_base_icon()
+		var/icon/T = new(base_icon)
 		T.Crop(x_start,y_start,x_end,y_end)
 		puzzle_pieces["[id]"] = T
 		left_ids += id

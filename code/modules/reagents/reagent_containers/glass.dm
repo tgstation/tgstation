@@ -29,11 +29,10 @@
 					R += A.id + " ("
 					R += num2text(A.volume) + "),"
 			if(isturf(target) && reagents.reagent_list.len && thrownby)
-				add_logs(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]", "in [AREACOORD(target)]")
-				log_game("[key_name(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [AREACOORD(target)].")
+				log_combat(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]")
 				message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
 			reagents.reaction(M, TOUCH)
-			add_logs(user, M, "splashed", R)
+			log_combat(user, M, "splashed", R)
 			reagents.clear_reagents()
 		else
 			if(M != user)
@@ -44,7 +43,7 @@
 				if(!reagents || !reagents.total_volume)
 					return // The drink might be empty after the delay, such as by spam-feeding
 				M.visible_message("<span class='danger'>[user] feeds something to [M].</span>", "<span class='userdanger'>[user] feeds something to you.</span>")
-				add_logs(user, M, "fed", reagents.log_list())
+				log_combat(user, M, "fed", reagents.log_list())
 			else
 				to_chat(user, "<span class='notice'>You swallow a gulp of [src].</span>")
 			var/fraction = min(5/reagents.total_volume, 1)
@@ -173,7 +172,7 @@
 	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000)
 	volume = 120
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(10,15,20,25,30,60,120)
+	possible_transfer_amounts = list(5,10,15,20,25,30,60,120)
 
 /obj/item/reagent_containers/glass/beaker/plastic/update_icon()
 	icon_state = "beakerlarge" // hack to lets us reuse the large beaker reagent fill states
@@ -187,7 +186,7 @@
 	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000, MAT_GOLD=1000, MAT_TITANIUM=1000)
 	volume = 180
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(10,15,20,25,30,60,120,180)
+	possible_transfer_amounts = list(5,10,15,20,25,30,60,120,180)
 
 /obj/item/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
@@ -252,7 +251,7 @@
 	materials = list(MAT_METAL=200)
 	w_class = WEIGHT_CLASS_NORMAL
 	amount_per_transfer_from_this = 20
-	possible_transfer_amounts = list(10,15,20,25,30,50,70)
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,70)
 	volume = 70
 	flags_inv = HIDEHAIR
 	slot_flags = ITEM_SLOT_HEAD

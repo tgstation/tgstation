@@ -11,6 +11,8 @@
 	if(IsAdminGhost(M))
 		//Access can't stop the abuse
 		return TRUE
+	else if(istype(M) && SEND_SIGNAL(M, COMSIG_MOB_ALLOWED, src))
+		return TRUE
 	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
@@ -58,7 +60,6 @@
 // Check if an item has access to this object
 /obj/proc/check_access(obj/item/I)
 	return check_access_list(I ? I.GetAccess() : null)
-
 
 /obj/proc/check_access_list(list/access_list)
 	gen_access()

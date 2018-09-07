@@ -160,8 +160,59 @@
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapple" = 2, "ham" = 2)
 	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT | FRUIT | PINEAPPLE
 
+/obj/item/reagent_containers/food/snacks/pizza/arnold
+	name = "\improper Arnold pizza"
+	desc = "Hello, you've reached Arnold's pizza shop. I'm not here now, I'm out killing pepperoni."
+	icon_state = "arnoldpizza"
+	slice_path = /obj/item/reagent_containers/food/snacks/pizzaslice/arnold
+	bonus_reagents = list("nutriment" = 30, "vitamin" = 6, "iron" = 10, "omnizine" = 30)
+	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pepperoni" = 2, "9 millimeter bullets" = 2)
+
+/obj/item/reagent_containers/food/snacks/proc/try_break_off(mob/living/M, mob/living/user) //maybe i give you a pizza maybe i break off your arm
+	var/obj/item/bodypart/l_arm = user.get_bodypart(BODY_ZONE_L_ARM)
+	var/obj/item/bodypart/r_arm = user.get_bodypart(BODY_ZONE_R_ARM)
+	if(prob(50) && iscarbon(user) && M == user && (r_arm || l_arm))
+		user.visible_message("<span class='warning'>\The [src] breaks off [user]'s arm!!</span>", "<span class='warning'>\The [src] breaks off your arm!</span>")
+		if(l_arm)
+			l_arm.dismember()
+		else
+			r_arm.dismember()
+		playsound(user,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, TRUE, -1)
+
+/obj/item/reagent_containers/food/snacks/proc/i_kill_you(obj/item/I, mob/user)
+	if(istype(I, /obj/item/reagent_containers/food/snacks/pineappleslice))
+		to_chat(user, "<font color='red' size='7'>If you want something crazy like pineapple, I kill you.</font>")
+		user.gib() //if you want something crazy like pineapple, i kill you
+
+/obj/item/reagent_containers/food/snacks/pizza/arnold/attack(mob/living/M, mob/living/user)
+	. = ..()
+	try_break_off(M, user)
+
+/obj/item/reagent_containers/food/snacks/pizza/arnold/attackby(obj/item/I, mob/user)
+	i_kill_you(I, user)
+	. = ..()
+
+
+/obj/item/reagent_containers/food/snacks/pizzaslice/arnold
+	name = "\improper Arnold pizza slice"
+	desc = "I come over, maybe I give you a pizza, maybe I break off your arm."
+	icon_state = "arnoldpizzaslice"
+	filling_color = "#A52A2A"
+	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapple" = 2, "ham" = 2)
+	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT
+
+/obj/item/reagent_containers/food/snacks/pizzaslice/arnold/attack(mob/living/M, mob/living/user)
+	. =..()
+	try_break_off(M, user)
+
+/obj/item/reagent_containers/food/snacks/pizzaslice/arnold/attackby(obj/item/I, mob/user)
+	i_kill_you(I, user)
+	. = ..()
+
+
 /obj/item/reagent_containers/food/snacks/pizzaslice/custom
 	name = "pizza slice"
 	icon_state = "pizzamargheritaslice"
 	filling_color = "#FFFFFF"
 	foodtype = GRAIN | VEGETABLES
+

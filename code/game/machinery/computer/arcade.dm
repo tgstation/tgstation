@@ -367,6 +367,15 @@
 	var/gameStatus = ORION_STATUS_START
 	var/canContinueEvent = 0
 
+/obj/machinery/computer/arcade/orion_trail/kobayashi
+	name = "Kobayashi Maru control computer"
+	desc = "A test for cadets"
+	icon = 'icons/obj/machines/particle_accelerator.dmi'
+	icon_state = "control_boxp"
+	events = list("Raiders" = 3, "Interstellar Flux" = 1, "Illness" = 3, "Breakdown" = 2, "Malfunction" = 2, "Collision" = 1, "Spaceport" = 2)
+	prizes = list(/obj/item/paper/fluff/holodeck/trek_diploma = 1)
+	settlers = list("Kirk","Worf","Gene")
+
 /obj/machinery/computer/arcade/orion_trail/Reset()
 	// Sets up the main trail
 	stops = list("Pluto","Asteroid Belt","Proxima Centauri","Dead Space","Rigel Prime","Tau Ceti Beta","Black Hole","Space Outpost Beta-9","Orion Prime")

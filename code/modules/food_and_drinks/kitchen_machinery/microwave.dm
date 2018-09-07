@@ -38,6 +38,11 @@
 	efficiency = E
 	max_n_of_items = max_items
 
+/obj/machinery/microwave/examine(mob/user)
+	..()
+	if(!operating)
+		to_chat(user, "<span class='notice'>Alt-click [src] to turn it on.</span>")
+
 /*******************
 *   Item Adding
 ********************/

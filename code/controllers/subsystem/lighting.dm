@@ -22,10 +22,10 @@ SUBSYSTEM_DEF(lighting)
 
 		create_all_lighting_objects()
 		initialized = TRUE
-	
+
 	fire(FALSE, TRUE)
 
-	..()
+	return ..()
 
 /datum/controller/subsystem/lighting/fire(resumed, init_tick_checks)
 	MC_SPLIT_TICK_INIT(3)

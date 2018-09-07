@@ -101,6 +101,8 @@
 	..()
 
 /obj/item/assembly/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
 	if(toggle_secure())
 		to_chat(user, "<span class='notice'>\The [src] is ready!</span>")
 	else
