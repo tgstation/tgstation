@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - spellcheck: "Added missing descriptions for objects that have alt+click functionality."

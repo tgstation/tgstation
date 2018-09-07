@@ -146,13 +146,7 @@
 	desc = "Used to set the destination of properly wrapped packages."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "cargotagger"
-	var/currTag = 0
-	//The whole system for the sorttype var is determined based on the order of this list,
-	//disposals must always be 1, since anything that's untagged will automatically go to disposals, or sorttype = 1 --Superxpdude
-
-	//If you don't want to fuck up disposals, add to this list, and don't change the order.
-	//If you insist on changing the order, you'll have to change every sort junction to reflect the new order. --Pete
-
+	var/currTag = 0 //Destinations are stored in code\globalvars\lists\flavor_misc.dm
 	w_class = WEIGHT_CLASS_TINY
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'

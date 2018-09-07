@@ -34,11 +34,13 @@
 	var/lethal_projectile = null	//lethal mode projectile type
 	var/lethal_projectile_sound
 
+	demands_object_input = TRUE		// You can put stuff in once the circuit is in assembly,passed down from additem and handled by attackby()
+
 
 
 /obj/item/integrated_circuit/manipulation/weapon_firing/Destroy()
 	qdel(installed_gun)
-	..()
+	return ..()
 
 /obj/item/integrated_circuit/manipulation/weapon_firing/attackby(var/obj/O, var/mob/user)
 	if(istype(O, /obj/item/gun/energy))
@@ -129,6 +131,7 @@
 	//Shooting Code:
 	A.preparePixelProjectile(target, src)
 	A.fire()
+	log_attack("[assembly] [REF(assembly)] has fired [installed_gun].")
 	return A
 
 /obj/item/integrated_circuit/manipulation/locomotion
@@ -184,6 +187,7 @@
 	action_flags = IC_ACTION_COMBAT
 	var/obj/item/grenade/attached_grenade
 	var/pre_attached_grenade_type
+	demands_object_input = TRUE	// You can put stuff in once the circuit is in assembly,passed down from additem and handled by attackby()
 
 /obj/item/integrated_circuit/manipulation/grenade/Initialize()
 	. = ..()
@@ -350,7 +354,7 @@
 	name = "grabber"
 	desc = "A circuit with its own inventory for items. Used to grab and store things."
 	icon_state = "grabber"
-	extended_desc = "This circuit accepts a reference to an object to be grabbed, and can store up to 10 objects. Modes: 1 to grab, 0 to eject the first object, and -1 to eject all objects. If you throw something from a grabber's inventory with a thrower, the grabber will update its outputs accordingly."
+	extended_desc = "This circuit accepts a reference to an object to be grabbed, and can store up to 10 objects. Modes: 1 to grab, 0 to eject the first object, -1 to eject all objects, and -2 to eject the target. If you throw something from a grabber's inventory with a thrower, the grabber will update its outputs accordingly."
 	w_class = WEIGHT_CLASS_SMALL
 	size = 3
 	cooldown_per_use = 5
@@ -364,32 +368,41 @@
 	var/max_items = 10
 
 /obj/item/integrated_circuit/manipulation/grabber/do_work()
-	var/max_w_class = assembly.w_class
-	var/atom/movable/acting_object = get_object()
-	var/turf/T = get_turf(acting_object)
 	var/obj/item/AM = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
 	if(!QDELETED(AM) && !istype(AM, /obj/item/electronic_assembly) && !istype(AM, /obj/item/transfer_valve) && !istype(AM, /obj/item/twohanded) && !istype(assembly.loc, /obj/item/implant/storage))
 		var/mode = get_pin_data(IC_INPUT, 2)
-		if(mode == 1)
-			if(check_target(AM))
-				var/weightcheck = FALSE
-				if (AM.w_class <= max_w_class)
-					weightcheck = TRUE
-				else
-					weightcheck = FALSE
-				if((contents.len < max_items) && (weightcheck))
-					AM.forceMove(src)
-		if(mode == 0)
-			if(contents.len)
-				var/obj/item/U = contents[1]
-				U.forceMove(T)
-		if(mode == -1)
-			if(contents.len)
-				var/obj/item/U
-				for(U in contents)
-					U.forceMove(T)
+		switch(mode)
+			if(1)
+				grab(AM)
+			if(0)
+				if(contents.len)
+					drop(contents[1])
+			if(-1)
+				drop_all()
+			if(-2)
+				drop(AM)
 	update_outputs()
 	activate_pin(2)
+
+/obj/item/integrated_circuit/manipulation/grabber/proc/grab(obj/item/AM)
+	var/max_w_class = assembly.w_class
+	if(check_target(AM))
+		if(contents.len < max_items && AM.w_class <= max_w_class)
+			var/atom/A = get_object()
+			A.investigate_log("picked up ([AM]) with [src].", INVESTIGATE_CIRCUIT)
+			AM.forceMove(src)
+
+/obj/item/integrated_circuit/manipulation/grabber/proc/drop(obj/item/AM, turf/T = drop_location())
+	var/atom/A = get_object()
+	A.investigate_log("dropped ([AM]) from [src].", INVESTIGATE_CIRCUIT)
+	AM.forceMove(T)
+
+/obj/item/integrated_circuit/manipulation/grabber/proc/drop_all()
+	if(contents.len)
+		var/turf/T = drop_location()
+		var/obj/item/U
+		for(U in src)
+			drop(U, T)
 
 /obj/item/integrated_circuit/manipulation/grabber/proc/update_outputs()
 	if(contents.len)
@@ -403,11 +416,7 @@
 	push_data()
 
 /obj/item/integrated_circuit/manipulation/grabber/attack_self(var/mob/user)
-	if(contents.len)
-		var/turf/T = get_turf(src)
-		var/obj/item/U
-		for(U in contents)
-			U.forceMove(T)
+	drop_all()
 	update_outputs()
 	push_data()
 
@@ -437,6 +446,7 @@
 			mode = CLAMP(mode, GRAB_PASSIVE, max_grab)
 			if(AM)
 				if(check_target(AM, exclude_contents = TRUE))
+					acting_object.investigate_log("grabbed ([AM]) using [src].", INVESTIGATE_CIRCUIT)
 					acting_object.start_pulling(AM,mode)
 					if(acting_object.pulling)
 						set_pin_data(IC_OUTPUT, 1, TRUE)
@@ -602,7 +612,7 @@
 /obj/item/integrated_circuit/manipulation/matman/Initialize()
 	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container,
 	list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE), 0,
-	FALSE, list(/obj/item/stack), CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
+	FALSE, /obj/item/stack, CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
 	materials.max_amount =100000
 	materials.precise_insertion = TRUE
 	.=..()

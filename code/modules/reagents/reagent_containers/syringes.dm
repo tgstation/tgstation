@@ -111,7 +111,7 @@
 		if(SYRINGE_INJECT)
 			// Always log attemped injections for admins
 			var/contained = reagents.log_list()
-			log_combat(user, L, "attemped to inject", src, addition="which had [contained]")
+			log_combat(user, target, "attempted to inject", src, addition="which had [contained]")
 
 			if(!reagents.total_volume)
 				to_chat(user, "<span class='notice'>[src] is empty.</span>")

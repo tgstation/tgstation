@@ -86,6 +86,7 @@
 	operation_order = reverseList(C.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
 	harvesting = TRUE
 	visible_message("<span class='notice'>The [name] begins warming up!</span>")
+	say("Initializing harvest protocol.")
 	update_icon(TRUE)
 	addtimer(CALLBACK(src, .proc/harvest), interval)
 
@@ -130,6 +131,9 @@
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, 0)
 
 /obj/machinery/harvester/screwdriver_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(.)
+		return TRUE
 	if(!state_open && !occupant)
 		if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
 			return
@@ -172,7 +176,9 @@
 
 /obj/machinery/harvester/examine(mob/user)
 	..()
+	if(stat & BROKEN)
+		return
 	if(state_open)
 		to_chat(user, "<span class='notice'>[src] must be closed before harvesting.</span>")
-	else
+	else if(!harvesting)
 		to_chat(user, "<span class='notice'>Alt-click [src] to start harvesting.</span>")

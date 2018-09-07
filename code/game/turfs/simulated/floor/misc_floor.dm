@@ -47,10 +47,6 @@
 /turf/open/floor/circuit/airless
 	initial_gas_mix = "TEMP=2.7"
 
-/turf/open/floor/circuit/killroom
-	name = "killroom floor"
-	initial_gas_mix = "n2=500;TEMP=80"
-
 /turf/open/floor/circuit/telecomms
 	initial_gas_mix = "n2=100;TEMP=80"
 
@@ -144,6 +140,7 @@
 	desc = "Tightly-pressed brass tiles. They emit minute vibration."
 	icon_state = "plating"
 	baseturfs = /turf/open/floor/clockwork
+	footstep = FOOTSTEP_PLATING
 	var/uses_overlay = TRUE
 	var/obj/effect/clockwork/overlay/floor/realappearence
 

@@ -505,6 +505,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	L.Knockdown(140)
 	L.apply_effect(EFFECT_STUTTER, 7)
+	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 
 	L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
 							"<span class='userdanger'>[user] has stunned you with [src]!</span>")

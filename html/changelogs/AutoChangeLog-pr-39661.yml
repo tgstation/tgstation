@@ -1,4 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - rscadd: "Hovering over storage slots with an item in your hand will show you first if you can put the item in."

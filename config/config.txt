@@ -373,10 +373,6 @@ AUTOADMIN_RANK Game Master
 ## Uncomment to automatically give that admin rank to all players
 #AUTOADMIN
 
-## GENERATE_MINIMAPS
-## Generating minimaps(For crew monitor) is slow and bogs down testing, so its disabled by default and must be enabled by uncommenting this config if you are running a production server.
-#GENERATE_MINIMAPS
-
 ## CLIENT VERSION CONTROL
 ## This allows you to configure the minimum required client version, as well as a warning version, and message for both.
 ## These trigger for any version below (non-inclusive) the given version, so 510 triggers on 509 or lower.

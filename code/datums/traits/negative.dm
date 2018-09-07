@@ -15,8 +15,6 @@
 	else
 		quirk_holder.blood_volume -= 0.275
 
-
-
 /datum/quirk/depression
 	name = "Depression"
 	desc = "You sometimes just hate life."
@@ -26,8 +24,6 @@
 	lose_text = "<span class='notice'>You no longer feel depressed.</span>" //if only it were that easy!
 	medical_record_text = "Patient has a severe mood disorder causing them to experience sudden moments of sadness."
 	mood_quirk = TRUE
-
-
 
 /datum/quirk/family_heirloom
 	name = "Family Heirloom"
@@ -111,8 +107,6 @@
 /datum/quirk/brainproblems/on_process()
 	quirk_holder.adjustBrainLoss(0.2)
 
-
-
 /datum/quirk/nearsighted //t. errorage
 	name = "Nearsighted"
 	desc = "You are nearsighted without prescription glasses, but spawn with a pair."
@@ -130,8 +124,6 @@
 	H.put_in_hands(glasses)
 	H.equip_to_slot(glasses, SLOT_GLASSES)
 	H.regenerate_icons() //this is to remove the inhand icon, which persists even if it's not in their hands
-
-
 
 /datum/quirk/nyctophobia
 	name = "Nyctophobia"
@@ -152,8 +144,6 @@
 	else
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
 
-
-
 /datum/quirk/nonviolent
 	name = "Pacifist"
 	desc = "The thought of violence makes you sick. So much so, in fact, that you can't hurt anyone."
@@ -168,8 +158,6 @@
 		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused you to renounce your pacifism.</span>")
 		qdel(src)
 
-
-
 /datum/quirk/poor_aim
 	name = "Poor Aim"
 	desc = "You're terrible with guns and can't line up a straight shot to save your life. Dual-wielding is right out."
@@ -177,16 +165,12 @@
 	mob_trait = TRAIT_POOR_AIM
 	medical_record_text = "Patient possesses a strong tremor in both hands."
 
-
-
 /datum/quirk/prosopagnosia
 	name = "Prosopagnosia"
 	desc = "You have a mental disorder that prevents you from being able to recognize faces at all."
 	value = -1
 	mob_trait = TRAIT_PROSOPAGNOSIA
 	medical_record_text = "Patient suffers from prosopagnosia and cannot recognize faces."
-
-
 
 /datum/quirk/prosthetic_limb
 	name = "Prosthetic Limb"
@@ -220,8 +204,6 @@
 	to_chat(quirk_holder, "<span class='boldannounce'>Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
 	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment.</span>")
 
-
-
 /datum/quirk/insanity
 	name = "Reality Dissociation Syndrome"
 	desc = "You suffer from a severe disorder that causes very vivid hallucinations. Mindbreaker toxin can suppress its effects, and you are immune to mindbreaker's hallucinogenic properties. <b>This is not a license to grief.</b>"
@@ -246,8 +228,6 @@
 		return
 	to_chat(quirk_holder, "<span class='big bold info'>Please note that your dissociation syndrome does NOT give you the right to attack people or otherwise cause any interference to \
 	the round. You are not an antagonist, and the rules will treat you the same as other crewmembers.</span>")
-
-
 
 /datum/quirk/social_anxiety
 	name = "Social Anxiety"

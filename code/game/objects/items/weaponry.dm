@@ -476,7 +476,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	item_state = "skateboard"
 	force = 12
 	throwforce = 4
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("smacked", "whacked", "slammed", "smashed")
 
 /obj/item/melee/skateboard/attack_self(mob/user)
@@ -615,8 +615,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		user.do_attack_animation(M)
 		playsound(M, 'sound/weapons/slap.ogg', 50, 1, -1)
 		user.visible_message("<span class='danger'>[user] slaps [M]!</span>",
- 		"<span class='notice'>You slap [M]!</span>",\
- 		"You hear a slap.")
+		"<span class='notice'>You slap [M]!</span>",\
+		"You hear a slap.")
 		return
 	else
 		..()

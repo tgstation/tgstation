@@ -311,6 +311,8 @@
 			comp.connect_to_shuttle(src, dock, idnum)
 		for(var/obj/machinery/computer/camera_advanced/shuttle_docker/comp in place)
 			comp.connect_to_shuttle(src, dock, idnum)
+		for(var/obj/machinery/status_display/shuttle/sd in place)
+			sd.connect_to_shuttle(src, dock, idnum)
 
 
 //this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact
@@ -409,8 +411,9 @@
 		mode = SHUTTLE_IDLE
 		return
 	previous = null
-//		if(!destination)
-//			return
+	if(!destination)
+		// sent to transit with no destination -> unlimited timer
+		timer = INFINITY
 	var/obj/docking_port/stationary/S0 = get_docked()
 	var/obj/docking_port/stationary/S1 = assigned_transit
 	if(S1)
@@ -435,12 +438,7 @@
 
 	var/list/old_turfs = return_ordered_turfs(x, y, z, dir)
 
-	var/area/underlying_area
-	for(var/i in GLOB.sortedAreas)
-		var/area/place = i
-		if(place.type == underlying_area_type)
-			underlying_area = place
-			break
+	var/area/underlying_area = GLOB.areas_by_type[underlying_area_type]
 	if(!underlying_area)
 		underlying_area = new underlying_area_type(null)
 
@@ -461,6 +459,22 @@
 				break
 
 	qdel(src, force=TRUE)
+
+/obj/docking_port/mobile/proc/intoTheSunset()
+	// Loop over mobs
+	for(var/t in return_turfs())
+		var/turf/T = t
+		for(var/mob/living/M in T.GetAllContents())
+			// If they have a mind and they're not in the brig, they escaped
+			if(M.mind && !istype(t, /turf/open/floor/plasteel/shuttle/red) && !istype(t, /turf/open/floor/mineral/plastitanium/red/brig))
+				M.mind.force_escaped = TRUE
+			// Ghostize them and put them in nullspace stasis (for stat & possession checks)
+			M.notransform = TRUE
+			M.ghostize(FALSE)
+			M.moveToNullspace()
+
+	// Now that mobs are stowed, delete the shuttle
+	jumpToNullSpace()
 
 /obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1, animate_time)
 	var/list/turfs = ripple_area(S1)
@@ -640,13 +654,32 @@
 		return "--:--"
 
 	var/timeleft = timeLeft()
-	if(timeleft > 0)
+	if(timeleft > 1 HOURS)
+		return "--:--"
+	else if(timeleft > 0)
 		return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
 	else
 		return "00:00"
 
 
 /obj/docking_port/mobile/proc/getStatusText()
+	var/obj/docking_port/stationary/dockedAt = get_docked()
+
+	if(istype(dockedAt, /obj/docking_port/stationary/transit))
+		if (timeLeft() > 1 HOURS)
+			return "hyperspace"
+		else
+			var/obj/docking_port/stationary/dst
+			if(mode == SHUTTLE_RECALL)
+				dst = previous
+			else
+				dst = destination
+			. = "transit towards [dst?.name || "unknown location"] ([getTimerStr()])"
+	else
+		return dockedAt?.name || "unknown"
+
+
+/obj/docking_port/mobile/proc/getDbgStatusText()
 	var/obj/docking_port/stationary/dockedAt = get_docked()
 	. = (dockedAt && dockedAt.name) ? dockedAt.name : "unknown"
 	if(istype(dockedAt, /obj/docking_port/stationary/transit))
@@ -655,7 +688,14 @@
 			dst = previous
 		else
 			dst = destination
-		. += " towards [dst ? dst.name : "unknown location"] ([timeLeft(600)] minutes)"
+		if(dst)
+			. = "(transit to) [dst.name || dst.id]"
+		else
+			. = "(transit to) nowhere"
+	else if(dockedAt)
+		. = dockedAt.name || dockedAt.id
+	else
+		. = "unknown"
 
 
 // attempts to locate /obj/machinery/computer/shuttle with matching ID inside the shuttle

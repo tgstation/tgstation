@@ -5,7 +5,7 @@
 	width = 7
 	height = 7
 
-/obj/docking_port/mobile/assault_pod/request()
+/obj/docking_port/mobile/assault_pod/request(obj/docking_port/stationary/S)
 	if(!(z in SSmapping.levels_by_trait(ZTRAIT_STATION))) //No launching pods that have already launched
 		return ..()
 

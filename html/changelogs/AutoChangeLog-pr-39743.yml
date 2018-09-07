@@ -1,4 +1,0 @@
-author: "Floyd / Qustinnus"
-delete-after: True
-changes: 
-  - code_imp: "moves nutrition events to the mood component"

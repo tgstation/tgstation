@@ -227,7 +227,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/fname = "data/spritesheets/[res_name]"
 	fdel(fname)
 	text2file(generate_css(), fname)
-	register_asset(res_name, file(fname))
+	register_asset(res_name, fcopy_rsc(fname))
+	fdel(fname)
 
 	for(var/size_id in sizes)
 		var/size = sizes[size_id]
@@ -254,6 +255,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		if(length(error))
 			stack_trace("Failed to strip [name]_[size_id].png: [error]")
 		size[SPRSZ_STRIPPED] = icon(fname)
+		fdel(fname)
 
 /datum/asset/spritesheet/proc/generate_css()
 	var/list/out = list()
@@ -547,6 +549,14 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/simple/permissions
 	assets = list(
 		"padlock.png"	= 'html/padlock.png'
+	)
+
+/datum/asset/simple/notes
+	assets = list(
+		"high_button.png" = 'html/high_button.png',
+		"medium_button.png" = 'html/medium_button.png',
+		"minor_button.png" = 'html/minor_button.png',
+		"none_button.png" = 'html/none_button.png',
 	)
 
 //this exists purely to avoid meta by pre-loading all language icons.

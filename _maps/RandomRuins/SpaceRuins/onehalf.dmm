@@ -547,17 +547,15 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bt" = (
 /obj/structure/disposalpipe/junction/yjunction{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bu" = (
 /obj/structure/disposalpipe/trunk{
@@ -655,22 +653,19 @@
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bH" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bI" = (
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bJ" = (
 /obj/structure/chair/office{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bK" = (
 /obj/structure/girder,

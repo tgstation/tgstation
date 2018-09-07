@@ -34,6 +34,33 @@
 	else
 		stuff_to_display = replacetext("[I.data]", eol , "<br>")
 
+/obj/item/integrated_circuit/output/screen/large
+	name = "large screen"
+	desc = "Takes any data type as an input and displays it to anybody near the device when pulsed. \
+	It can also be examined to see the last thing it displayed."
+	icon_state = "screen_medium"
+	power_draw_per_use = 20
+
+/obj/item/integrated_circuit/output/screen/large/do_work()
+	..()
+
+	if(isliving(assembly.loc))//this whole block just returns if the assembly is neither in a mobs hands or on the ground
+		var/mob/living/H = assembly.loc
+		if(H.get_active_held_item() != assembly && H.get_inactive_held_item() != assembly)
+			return
+	else
+		if(!isturf(assembly.loc))
+			return
+
+	var/list/nearby_things = range(0, get_turf(src))
+	for(var/mob/M in nearby_things)
+		var/obj/O = assembly ? assembly : src
+		to_chat(M, "<span class='notice'>[icon2html(O.icon, world, O.icon_state)] [stuff_to_display]</span>")
+	if(assembly)
+		assembly.investigate_log("displayed \"[html_encode(stuff_to_display)]\" with [type].", INVESTIGATE_CIRCUIT)
+	else
+		investigate_log("displayed \"[html_encode(stuff_to_display)]\" as [type].", INVESTIGATE_CIRCUIT)
+
 /obj/item/integrated_circuit/output/light
 	name = "light"
 	desc = "A basic light which can be toggled on/off when pulsed."
@@ -126,10 +153,8 @@
 			return
 		vol = CLAMP(vol ,0 , 100)
 		playsound(get_turf(src), selected_sound, vol, freq, -1)
-		if(assembly)
-			assembly.investigate_log("played a sound ([selected_sound]) with [type].", INVESTIGATE_CIRCUIT)
-		else
-			investigate_log("played a sound ([selected_sound]) as [type].", INVESTIGATE_CIRCUIT)
+		var/atom/A = get_object()
+		A.investigate_log("played a sound ([selected_sound]) as [type].", INVESTIGATE_CIRCUIT)
 
 /obj/item/integrated_circuit/output/sound/on_data_written()
 	power_draw_per_use =  get_pin_data(IC_INPUT, 2) * 15
@@ -153,14 +178,14 @@
 	name = "securitron sound circuit"
 	desc = "Takes a sound name as an input, and will play said sound when pulsed. This circuit is similar to those used in Securitrons."
 	sounds = list(
-		"creep"			= 'sound/voice/bcreep.ogg',
-		"criminal"		= 'sound/voice/bcriminal.ogg',
-		"freeze"		= 'sound/voice/bfreeze.ogg',
-		"god"			= 'sound/voice/bgod.ogg',
-		"i am the law"	= 'sound/voice/biamthelaw.ogg',
-		"insult"		= 'sound/voice/binsult.ogg',
-		"radio"			= 'sound/voice/bradio.ogg',
-		"secure day"	= 'sound/voice/bsecureday.ogg',
+		"creep"			= 'sound/voice/beepsky/creep.ogg',
+		"criminal"		= 'sound/voice/beepsky/criminal.ogg',
+		"freeze"		= 'sound/voice/beepsky/freeze.ogg',
+		"god"			= 'sound/voice/beepsky/god.ogg',
+		"i am the law"	= 'sound/voice/beepsky/iamthelaw.ogg',
+		"insult"		= 'sound/voice/beepsky/insult.ogg',
+		"radio"			= 'sound/voice/beepsky/radio.ogg',
+		"secure day"	= 'sound/voice/beepsky/secureday.ogg',
 		)
 	spawn_flags = IC_SPAWN_RESEARCH
 
@@ -168,21 +193,21 @@
 	name = "medbot sound circuit"
 	desc = "Takes a sound name as an input, and will play said sound when pulsed. This circuit is often found in medical robots."
 	sounds = list(
-		"surgeon"		= 'sound/voice/msurgeon.ogg',
-		"radar"			= 'sound/voice/mradar.ogg',
-		"feel better"	= 'sound/voice/mfeelbetter.ogg',
-		"patched up"	= 'sound/voice/mpatchedup.ogg',
-		"injured"		= 'sound/voice/minjured.ogg',
-		"insult"		= 'sound/voice/minsult.ogg',
-		"coming"		= 'sound/voice/mcoming.ogg',
-		"help"			= 'sound/voice/mhelp.ogg',
-		"live"			= 'sound/voice/mlive.ogg',
-		"lost"			= 'sound/voice/mlost.ogg',
-		"flies"			= 'sound/voice/mflies.ogg',
-		"catch"			= 'sound/voice/mcatch.ogg',
-		"delicious"		= 'sound/voice/mdelicious.ogg',
-		"apple"			= 'sound/voice/mapple.ogg',
-		"no"			= 'sound/voice/mno.ogg',
+		"surgeon"		= 'sound/voice/medbot/surgeon.ogg',
+		"radar"			= 'sound/voice/medbot/radar.ogg',
+		"feel better"	= 'sound/voice/medbot/feelbetter.ogg',
+		"patched up"	= 'sound/voice/medbot/patchedup.ogg',
+		"injured"		= 'sound/voice/medbot/injured.ogg',
+		"insult"		= 'sound/voice/medbot/insult.ogg',
+		"coming"		= 'sound/voice/medbot/coming.ogg',
+		"help"			= 'sound/voice/medbot/help.ogg',
+		"live"			= 'sound/voice/medbot/live.ogg',
+		"lost"			= 'sound/voice/medbot/lost.ogg',
+		"flies"			= 'sound/voice/medbot/flies.ogg',
+		"catch"			= 'sound/voice/medbot/catch.ogg',
+		"delicious"		= 'sound/voice/medbot/delicious.ogg',
+		"apple"			= 'sound/voice/medbot/apple.ogg',
+		"no"			= 'sound/voice/medbot/no.ogg',
 		)
 	spawn_flags = IC_SPAWN_RESEARCH
 
@@ -222,16 +247,17 @@
 
 /obj/item/integrated_circuit/output/video_camera
 	name = "video camera circuit"
-	desc = "Takes a string as a name and a boolean to determine whether it is on, and uses this to be a camera linked to the research network."
-	extended_desc = "The camera is linked to the Research camera network."
+	desc = "Takes a string as a name and a boolean to determine whether it is on, and uses this to be a camera linked to a list of networks you choose."
+	extended_desc = "The camera is linked to a list of camera networks of your choosing. Common choices are 'rd' for the research network, 'ss13' for the main station network (visible to AI), 'mine' for the mining network, and 'thunder' for the thunderdome network (viewable from bar)."
 	icon_state = "video_camera"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	complexity = 10
 	inputs = list(
 		"camera name" = IC_PINTYPE_STRING,
-		"camera active" = IC_PINTYPE_BOOLEAN
+		"camera active" = IC_PINTYPE_BOOLEAN,
+		"camera network" = IC_PINTYPE_LIST
 		)
-	inputs_default = list("1" = "video camera circuit")
+	inputs_default = list("1" = "video camera circuit", "3" = list("rd"))
 	outputs = list()
 	activators = list()
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
@@ -263,8 +289,11 @@
 	if(camera)
 		var/cam_name = get_pin_data(IC_INPUT, 1)
 		var/cam_active = get_pin_data(IC_INPUT, 2)
+		var/list/new_network = get_pin_data(IC_INPUT, 3)
 		if(!isnull(cam_name))
 			camera.c_tag = cam_name
+		if(!isnull(new_network))
+			camera.network = new_network
 		set_camera_status(cam_active)
 
 /obj/item/integrated_circuit/output/video_camera/power_fail()

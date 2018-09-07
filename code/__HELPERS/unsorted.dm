@@ -577,14 +577,9 @@ Turf and target are separate in case you want to teleport some distance from a t
 //Takes: Area type as a text string from a variable.
 //Returns: Instance for the area in the world.
 /proc/get_area_instance_from_text(areatext)
-	var/areainstance = null
 	if(istext(areatext))
 		areatext = text2path(areatext)
-	for(var/V in GLOB.sortedAreas)
-		var/area/A = V
-		if(A.type == areatext)
-			areainstance = V
-	return areainstance
+	return GLOB.areas_by_type[areatext]
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
@@ -1275,7 +1270,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	var/ready_to_die = FALSE
 
 /mob/dview/Initialize() //Properly prevents this mob from gaining huds or joining any global lists
-	return
+	return INITIALIZE_HINT_NORMAL
 
 /mob/dview/Destroy(force = FALSE)
 	if(!ready_to_die)

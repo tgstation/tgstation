@@ -8,7 +8,11 @@
 	name = "dust"
 	},
 /obj/structure/chair/stool/bar,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "ac" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -173,7 +177,11 @@
 	pixel_x = 7;
 	pixel_y = 4
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "ar" = (
 /obj/effect/decal/cleanable/dirt{
@@ -182,7 +190,11 @@
 	},
 /obj/structure/chair/stool/bar,
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "as" = (
 /obj/effect/decal/cleanable/dirt{
@@ -193,7 +205,11 @@
 	pixel_y = 24
 	},
 /obj/structure/closet/crate/bin,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "at" = (
 /obj/machinery/light/small/built{
@@ -214,7 +230,11 @@
 	req_access = null
 	},
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "au" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -383,7 +403,11 @@
 	},
 /obj/structure/chair/stool/bar,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "aI" = (
 /obj/effect/decal/cleanable/dirt{
@@ -395,7 +419,11 @@
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "aJ" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -422,7 +450,11 @@
 	name = "dust"
 	},
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "aL" = (
 /obj/machinery/light/small/built{
@@ -473,9 +505,10 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/turf/open/floor/plasteel/neutral/corner{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "aR" = (
 /obj/effect/decal/cleanable/dirt{
@@ -488,9 +521,10 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/turf/open/floor/plasteel/neutral/corner{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "aS" = (
 /obj/effect/decal/cleanable/dirt{
@@ -503,9 +537,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/neutral/corner{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "aT" = (
 /obj/effect/decal/cleanable/dirt{
@@ -527,9 +562,10 @@
 	pixel_y = -24
 	},
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel/neutral/corner{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "aU" = (
 /obj/effect/decal/cleanable/dirt{
@@ -554,9 +590,10 @@
 	pixel_y = 24;
 	req_access = null
 	},
-/turf/open/floor/plasteel/neutral/corner{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "aV" = (
 /obj/machinery/light/small/built,
@@ -568,9 +605,10 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel/neutral/corner{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "aW" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -589,7 +627,8 @@
 /obj/machinery/door/airlock/external/glass{
 	name = "E.V.A Access"
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "aX" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -661,7 +700,11 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "bb" = (
 /obj/effect/decal/cleanable/dirt{
@@ -671,7 +714,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "bc" = (
 /obj/effect/decal/cleanable/dirt{
@@ -691,7 +738,11 @@
 	melee_damage_upper = 10;
 	name = "scrawny spider"
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "bd" = (
 /obj/effect/decal/cleanable/dirt{
@@ -703,14 +754,22 @@
 	},
 /obj/structure/chair,
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "be" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "bf" = (
 /obj/structure/chair/comfy/shuttle{
@@ -721,7 +780,17 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/vault,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bar)
 "bg" = (
 /obj/structure/window/reinforced{
@@ -732,7 +801,17 @@
 	dir = 8
 	},
 /obj/item/shard,
-/turf/open/floor/plasteel/vault,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bar)
 "bh" = (
 /obj/structure/window/reinforced{
@@ -811,7 +890,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel/blue/side,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "bo" = (
 /obj/effect/decal/cleanable/dirt{
@@ -831,7 +914,11 @@
 	desc = "A badge on the arm indicates that it's meant to be worn by CentCom recovery teams. This one seems dusty and clearly hasn't been cleaned in some time.";
 	name = "\improper dusty old CentCom jumpsuit"
 	},
-/turf/open/floor/plasteel/blue/side,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "bp" = (
 /obj/effect/decal/cleanable/dirt{
@@ -911,7 +998,11 @@
 	name = "dust"
 	},
 /obj/structure/chair,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "bw" = (
 /obj/effect/decal/cleanable/dirt{
@@ -920,7 +1011,11 @@
 	},
 /obj/structure/table,
 /obj/machinery/microwave,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "bx" = (
 /obj/machinery/light/small/built{
@@ -1021,9 +1116,10 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/blue/corner{
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "bG" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1034,7 +1130,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/blue/corner,
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "bH" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1074,7 +1171,11 @@
 	pixel_x = -8;
 	pixel_y = 4
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "bK" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1083,7 +1184,11 @@
 	},
 /obj/structure/table,
 /obj/item/storage/fancy/donut_box,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "bL" = (
 /obj/machinery/airalarm/all_access{
@@ -1106,7 +1211,11 @@
 /obj/item/reagent_containers/food/drinks/beer,
 /obj/item/reagent_containers/food/snacks/sandwich,
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "bM" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1116,7 +1225,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "bN" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1209,9 +1319,11 @@
 	},
 /obj/machinery/recharger,
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel/darkblue/side{
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "bT" = (
 /obj/machinery/door/firedoor,
@@ -1241,7 +1353,8 @@
 /obj/machinery/light/small/built{
 	dir = 4
 	},
-/turf/open/floor/plasteel/blue/corner,
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "bV" = (
 /obj/machinery/light/small/built,
@@ -1283,9 +1396,13 @@
 	pixel_x = -4
 	},
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel/darkblue/side{
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "bX" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1306,9 +1423,10 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/darkblue/corner{
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "bZ" = (
 /obj/structure/frame/computer{
@@ -1324,9 +1442,16 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/darkblue/side{
-	dir = 9
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "ca" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1334,9 +1459,10 @@
 	name = "dust"
 	},
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel/blue/corner{
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "cb" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1348,7 +1474,8 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel/blue/corner,
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "cc" = (
 /obj/structure/sign/warning/electricshock,
@@ -1394,9 +1521,13 @@
 	pixel_x = -24;
 	req_access = null
 	},
-/turf/open/floor/plasteel/darkblue/side{
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "cf" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1446,9 +1577,13 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/darkblue/side{
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "cj" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1530,9 +1665,13 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/turf/open/floor/plasteel/darkblue/side{
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "cn" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1565,7 +1704,8 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel/darkblue/corner,
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "cp" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
@@ -1577,18 +1717,24 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/darkblue/side{
-	dir = 10
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "cq" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/blue/corner{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "cr" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1599,9 +1745,10 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/blue/corner{
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "cs" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1663,9 +1810,11 @@
 	name = "dust"
 	},
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel/darkblue/side{
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "cv" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1688,9 +1837,10 @@
 /obj/machinery/light/small/built{
 	dir = 4
 	},
-/turf/open/floor/plasteel/blue/corner{
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "cw" = (
 /turf/closed/wall/mineral/titanium,
@@ -1793,7 +1943,8 @@
 	pixel_y = 15
 	},
 /obj/machinery/cell_charger,
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/cargo)
 "cH" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1811,7 +1962,17 @@
 	lootcount = 3;
 	name = "3maintenance loot spawner"
 	},
-/turf/open/floor/plasteel/vault,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/cargo)
 "cI" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1821,7 +1982,17 @@
 /obj/structure/closet,
 /obj/item/storage/toolbox/emergency,
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel/vault,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/cargo)
 "cJ" = (
 /obj/item/storage/toolbox/emergency,
@@ -1850,7 +2021,17 @@
 	dir = 8
 	},
 /obj/structure/closet/crate/internals,
-/turf/open/floor/plasteel/vault,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/cargo)
 "cK" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -1929,9 +2110,13 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/blue/side{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "cQ" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1941,9 +2126,13 @@
 /obj/structure/rack,
 /obj/item/defibrillator,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel/blue/side{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "cR" = (
 /obj/structure/sign/departments/medbay/alt,
@@ -2038,7 +2227,17 @@
 /obj/effect/turf_decal/box/white/corners{
 	dir = 8
 	},
-/turf/open/floor/plasteel/vault,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/cargo)
 "cZ" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2046,7 +2245,17 @@
 	name = "dust"
 	},
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel/vault,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/cargo)
 "da" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2061,7 +2270,17 @@
 	lootcount = 3;
 	name = "3maintenance loot spawner"
 	},
-/turf/open/floor/plasteel/vault,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/cargo)
 "db" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2145,7 +2364,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "dh" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2315,7 +2535,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "dr" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -2357,7 +2578,8 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/cargo)
 "du" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2374,7 +2596,8 @@
 	maxHealth = 30;
 	name = "scrawny giant spider"
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/cargo)
 "dv" = (
 /obj/structure/chair/comfy/shuttle{
@@ -2385,7 +2608,17 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/vault,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/cargo)
 "dw" = (
 /obj/structure/window/reinforced{
@@ -2399,7 +2632,17 @@
 /obj/effect/turf_decal/bot_white,
 /obj/item/stack/rods,
 /obj/item/stack/cable_coil/cut/red,
-/turf/open/floor/plasteel/vault,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/cargo)
 "dx" = (
 /obj/structure/window/reinforced{
@@ -2459,7 +2702,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/cargo)
 "dD" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2533,7 +2777,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
 "dI" = (
 /obj/machinery/door/airlock/external,
@@ -2569,7 +2814,17 @@
 /obj/effect/turf_decal/box/white/corners{
 	dir = 4
 	},
-/turf/open/floor/plasteel/vault,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/cargo)
 "dL" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2579,7 +2834,17 @@
 /obj/effect/turf_decal/box/white/corners{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vault,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/cargo)
 "dM" = (
 /obj/machinery/light/small/built{
@@ -2714,7 +2979,17 @@
 	dir = 4
 	},
 /obj/item/shard,
-/turf/open/floor/plasteel/vault,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/cargo)
 "dV" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2725,7 +3000,8 @@
 	dir = 8
 	},
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/cargo)
 "dW" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2736,7 +3012,17 @@
 	dir = 1
 	},
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel/vault,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/cargo)
 "dX" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2750,7 +3036,17 @@
 	lootcount = 3;
 	name = "3maintenance loot spawner"
 	},
-/turf/open/floor/plasteel/vault,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/cargo)
 "dY" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2771,7 +3067,17 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/turf/open/floor/plasteel/vault,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/cargo)
 "dZ" = (
 /obj/effect/decal/cleanable/dirt{
@@ -2814,9 +3120,10 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel/neutral/corner{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "vm" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,

@@ -49,6 +49,7 @@
 #define TRAIT_NODEATH			"nodeath"
 #define TRAIT_NOHARDCRIT		"nohardcrit"
 #define TRAIT_NOSOFTCRIT		"nosoftcrit"
+#define TRAIT_MINDSHIELD		"mindshield"
 
 
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
@@ -64,6 +65,9 @@
 #define TRAIT_POOR_AIM			"poor_aim"
 #define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
 #define	TRAIT_DRUNK_HEALING		"drunk_healing"
+#define	TRAIT_TAGGER			"tagger"
+#define	TRAIT_PHOTOGRAPHER		"photographer"
+#define	TRAIT_MUSICIAN			"musician"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
@@ -86,3 +90,4 @@
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
 #define EYES_COVERED "eyes_covered"
+#define CULT_EYES "cult_eyes"
