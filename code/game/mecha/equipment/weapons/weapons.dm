@@ -85,7 +85,7 @@
 	name = "\improper CH-LC \"Solaris\" laser cannon"
 	desc = "A weapon for combat exosuits. Shoots heavy lasers."
 	icon_state = "mecha_laser"
-	energy_drain = 60
+	energy_drain = 80
 	projectile = /obj/item/projectile/beam/laser/heavylaser
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 
@@ -94,7 +94,7 @@
 	name = "\improper xray laser"
 	desc = "A weapon for combat exosuits. Shoots basic lasers."
 	icon_state = "mecha_laser"
-	energy_drain = 60
+	energy_drain = 120
 	projectile = /obj/item/projectile/beam/xray
 	fire_sound = 'sound/weapons/laser.ogg'
 	harmful = TRUE
@@ -104,7 +104,7 @@
 	name = "\improper MKIV ion heavy cannon"
 	desc = "A weapon for combat exosuits. Shoots technology-disabling ion beams. Don't catch yourself in the blast!"
 	icon_state = "mecha_ion"
-	energy_drain = 120
+	energy_drain = 160
 	projectile = /obj/item/projectile/ion
 	fire_sound = 'sound/weapons/laser.ogg'
 
@@ -301,7 +301,7 @@
 	icon_state = "mecha_uac2"
 	equip_cooldown = 10
 	projectile = /obj/item/projectile/bullet/lmg
-	projectiles = 300
+	projectiles = 60
 	projectile_energy_cost = 20
 	projectiles_per_shot = 3
 	variance = 6
@@ -413,9 +413,9 @@
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	projectiles = 5
 	missile_speed = 1.5
-	projectile_energy_cost = 1000
-	equip_cooldown = 10
-	var/det_time = 20
+	projectile_energy_cost = 500
+	equip_cooldown = 6
+	var/det_time = 10
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/incendiary/proj_init(var/obj/item/grenade/chem_grenade/pyro/mechi/F)
 	var/turf/T = get_turf(src)
