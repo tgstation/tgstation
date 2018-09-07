@@ -254,7 +254,8 @@
 					/obj/item/storage/bag/trash = 1,
 					/obj/item/clothing/shoes/galoshes = 1,
 					/obj/item/watertank/janitor = 1,
-					/obj/item/storage/belt/janitor = 1)
+					/obj/item/storage/belt/janitor = 1,
+					/obj/item/janipermit = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/jani_wardrobe
 
 /obj/item/vending_refill/wardrobe/jani_wardrobe
@@ -298,7 +299,7 @@
 					/obj/item/clothing/suit/holidaypriest = 1,
 					/obj/item/storage/fancy/candle_box = 2)
 	contraband = list(/obj/item/toy/plush/plushvar = 1,
-					/obj/item/toy/plush/narplush = 1)				
+					/obj/item/toy/plush/narplush = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/chap_wardrobe
 
 /obj/item/vending_refill/wardrobe/chap_wardrobe

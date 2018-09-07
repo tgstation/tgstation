@@ -63,6 +63,7 @@
 	var/list/firealarms
 	var/firedoors_last_closed_on = 0
 	var/xenobiology_compatible = FALSE //Can the Xenobio management console transverse this area by default?
+	var/janicam_compatible = FALSE
 	var/list/canSmoothWithAreas //typecache to limit the areas that atoms in this area can smooth with
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/

@@ -46,6 +46,14 @@
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/board/janicamera
+	name = "Computer Design (Janitorial Console)"
+	desc = "Allows for the construction of circuit boards used to build janitorial consoles."
+	id = "janiconsole"
+	build_path = /obj/item/circuitboard/computer/janicam
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/board/aiupload
 	name = "Computer Design (AI Upload)"
 	desc = "Allows for the construction of circuit boards used to build an AI Upload Console."
