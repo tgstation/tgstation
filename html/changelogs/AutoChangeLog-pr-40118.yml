@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "You can no longer infinitely sell immortality talismans."
-  - spellcheck: "Added a cooldown message for the immortality talisman."
