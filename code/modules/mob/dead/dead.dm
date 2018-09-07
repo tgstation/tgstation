@@ -119,6 +119,6 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	update_z(null)
 	return ..()
 
-/mob/living/onTransitZ(old_z,new_z)
+/mob/dead/onTransitZ(old_z,new_z)
 	..()
 	update_z(new_z)
