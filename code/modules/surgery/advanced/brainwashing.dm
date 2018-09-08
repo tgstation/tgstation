@@ -2,6 +2,7 @@
 	name = "Brainwashing Surgery Disk"
 	desc = "The disk provides instructions on how to impress an order on a brain, making it the primary objective of the patient."
 	surgeries = list(/datum/surgery/advanced/brainwashing)
+	research_completion_bonus = 3000 //implying you wouldn't watch rnd console to see if someone is doing this surgery
 
 /datum/surgery/advanced/brainwashing
 	name = "Brainwashing"

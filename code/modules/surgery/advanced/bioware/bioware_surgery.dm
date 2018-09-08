@@ -1,6 +1,7 @@
 /datum/surgery/advanced/bioware
 	name = "enhancement surgery"
 	var/bioware_target = BIOWARE_GENERIC
+	research_completion_bonus = 3000
 
 /datum/surgery/advanced/bioware/can_start(mob/user, mob/living/carbon/human/target)
 	if(!..())

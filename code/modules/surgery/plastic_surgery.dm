@@ -2,6 +2,7 @@
 	name = "plastic surgery"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/reshape_face, /datum/surgery_step/close)
 	possible_locs = list(BODY_ZONE_HEAD)
+	research_completion_bonus = 500 // rip snowflake
 
 //reshape_face
 /datum/surgery_step/reshape_face

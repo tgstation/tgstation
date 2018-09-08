@@ -2,6 +2,7 @@
 	name = "dental implant"
 	steps = list(/datum/surgery_step/drill, /datum/surgery_step/insert_pill)
 	possible_locs = list(BODY_ZONE_PRECISE_MOUTH)
+	research_completion_bonus = 100
 
 /datum/surgery_step/insert_pill
 	name = "insert pill"
@@ -13,7 +14,7 @@
 
 /datum/surgery_step/insert_pill/success(mob/user, mob/living/carbon/target, target_zone, var/obj/item/reagent_containers/pill/tool, datum/surgery/surgery)
 	if(!istype(tool))
-		return 0
+		return FALSE
 
 	user.transferItemToLoc(tool, target, TRUE)
 
@@ -23,18 +24,18 @@
 	P.Grant(target)	//The pill never actually goes in an inventory slot, so the owner doesn't inherit actions from it
 
 	user.visible_message("[user] wedges \the [tool] into [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You wedge [tool] into [target]'s [parse_zone(target_zone)].</span>")
-	return 1
+	return TRUE
 
 /datum/action/item_action/hands_free/activate_pill
 	name = "Activate Pill"
 
 /datum/action/item_action/hands_free/activate_pill/Trigger()
 	if(!..())
-		return 0
+		return FALSE
 	to_chat(owner, "<span class='caution'>You grit your teeth and burst the implanted [target.name]!</span>")
 	log_combat(owner, null, "swallowed an implanted pill", target)
 	if(target.reagents.total_volume)
 		target.reagents.reaction(owner, INGEST)
 		target.reagents.trans_to(owner, target.reagents.total_volume)
 	qdel(target)
-	return 1
+	return TRUE
