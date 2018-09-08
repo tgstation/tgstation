@@ -194,10 +194,6 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 //AI procs
 
 /mob/living/silicon/ai/proc/drop_new_multicam(silent = FALSE)
-	if(!multicam_allowed)
-		if(!silent)
-			to_chat(src, "<span class='warning'>This action is currently disabled. Contact an administrator to enable this feature.</span>")
-		return
 	if(!eyeobj)
 		return
 	if(multicam_screens.len >= max_multicams)
@@ -213,9 +209,6 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	return C
 
 /mob/living/silicon/ai/proc/toggle_multicam()
-	if(!multicam_allowed)
-		to_chat(src, "<span class='warning'>This action is currently disabled. Contact an administrator to enable this feature.</span>")
-		return
 	if(multicam_on)
 		end_multicam()
 	else
