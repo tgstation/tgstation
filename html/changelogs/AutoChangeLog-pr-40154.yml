@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - code_imp: "Mappers no longer need to manually update the size and offset vars on mobile docks while mapping."
