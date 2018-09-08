@@ -390,14 +390,10 @@
 
 /obj/item/organ/lungs/cybernetic
 	name = "cybernetic lungs"
-	desc = "A cybernetic version of the lungs found in traditional humanoid entities. Allows for greater intakes of oxygen than organic lungs, requiring slightly less pressure. Also analyzes breathing patterns in a variety of situations and sends the data back to local research clinics, providing a small influx of research points."
+	desc = "A cybernetic version of the lungs found in traditional humanoid entities. Allows for greater intakes of oxygen than organic lungs, requiring slightly less pressure."
 	icon_state = "lungs-c"
 	synthetic = TRUE
 	safe_oxygen_min = 13
-
-/obj/item/organ/lungs/cybernetic/on_life()
-	if(owner.client && owner.stat != DEAD)
-		SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = CYBERNETIC_ORGAN_PASSIVE_RESEARCH_AMOUNT))
 
 /obj/item/organ/lungs/cybernetic/emp_act()
 	. = ..()

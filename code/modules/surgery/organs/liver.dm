@@ -64,7 +64,7 @@
 /obj/item/organ/liver/cybernetic
 	name = "cybernetic liver"
 	icon_state = "liver-c"
-	desc = "An electronic device designed to mimic the functions of a human liver. Not only does it handle toxins slightly better than an organic liver, but it also provides information to foreign galaxies about what products you drink for research points. Expect a Space Mountain Wind ad soon!"
+	desc = "An electronic device designed to mimic the functions of a human liver. Handles toxins slightly better than an organic liver."
 	synthetic = TRUE
 
 /obj/item/organ/liver/cybernetic/Initialize(mapload)
@@ -72,11 +72,6 @@
 	maxHealth = round(maxHealth*1.1, 1)
 	toxTolerance = round(toxTolerance*1.1, 1)
 	toxLethality = round(toxLethality*0.9, 0.001)
-
-/obj/item/organ/liver/on_life()
-	. = ..()
-	if(owner.client && (owner.stat != DEAD))
-		SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = CYBERNETIC_ORGAN_PASSIVE_RESEARCH_AMOUNT))
 
 /obj/item/organ/liver/cybernetic/upgraded
 	name = "upgraded cybernetic liver"
