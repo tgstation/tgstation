@@ -264,9 +264,9 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/sniper
 	name = "\improper .50 anitmaterial rifle"
-	desc = "A weapon for combat exosuits. Shoots incendiary bullets."
+	desc = "A weapon for combat exosuits. Shoots penetrator bullets."
 	icon_state = "mecha_carbine"
-	equip_cooldown = 30
+	equip_cooldown = 45
 	projectile = /obj/item/projectile/bullet/p50/penetrator
 	projectiles = 6
 	projectile_energy_cost = 500
@@ -414,7 +414,7 @@
 	projectiles = 5
 	missile_speed = 1.5
 	projectile_energy_cost = 500
-	equip_cooldown = 6
+	equip_cooldown = 8
 	var/det_time = 10
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/incendiary/proj_init(var/obj/item/grenade/chem_grenade/pyro/mechi/F)
@@ -425,7 +425,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/acid
 	name = "\improper acid grenade launcher"
-	desc = "A weapon for combat exosuits. Launches primed grenades."
+	desc = "A weapon for combat exosuits. Launches primed acid grenades."
 	icon_state = "mecha_grenadelnchr"
 	projectile = /obj/item/grenade/chem_grenade/mecha
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
@@ -443,7 +443,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/explosive
 	name = "\improper grenade launcher"
-	desc = "A weapon for combat exosuits. Launches primed grenades."
+	desc = "A weapon for combat exosuits. Launches primed explosive grenades."
 	icon_state = "mecha_grenadelnchr"
 	projectile = /obj/item/grenade/syndieminibomb/concussion/frag
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'

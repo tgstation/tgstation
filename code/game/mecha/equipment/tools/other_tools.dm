@@ -18,7 +18,7 @@
 	var/turf/T = get_turf(target)
 	if(T)
 		do_teleport(chassis, T, 4)
-		return 1
+		return TRUE
 
 
 
@@ -62,7 +62,7 @@
 	log_game("[key_name(chassis.occupant)] used a Wormhole Generator in [AREACOORD(T)]")
 	src = null
 	QDEL_LIST_IN(created, rand(150,300))
-	return 1
+	return TRUE
 
 
 /////////////////////////////////////// GRAVITATIONAL CATAPULT ///////////////////////////////////////////
@@ -147,31 +147,30 @@
 	range = 0
 	var/deflect_coeff = 1.15
 	var/damage_coeff = 0.8
-	selectable = 0
+	selectable = FALSE
 
 /obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/proc/attack_react()
 	if(action_checks(src))
 		start_cooldown()
-		return 1
+		return TRUE
 
 
 
 /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster
 	name = "armor booster module (Ranged Weaponry)"
-	desc = "Boosts exosuit armor against ranged attacks. Completely blocks taser shots. Requires energy to operate."
+	desc = "Boosts exosuit armor against ranged attacks. Requires energy to operate."
 	icon_state = "mecha_abooster_proj"
 	equip_cooldown = 10
 	energy_drain = 50
 	range = 0
 	var/deflect_coeff = 1.15
 	var/damage_coeff = 0.8
-	selectable = 0
+	selectable = FALSE
 
 /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/proc/projectile_react()
 	if(action_checks(src))
 		start_cooldown()
-		return 1
-
+		return TRUE
 
 ////////////////////////////////// REPAIR DROID //////////////////////////////////////////////////
 
@@ -185,7 +184,7 @@
 	var/health_boost = 1
 	var/icon/droid_overlay
 	var/list/repairable_damage = list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH)
-	selectable = 0
+	selectable = FALSE
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -269,7 +268,7 @@
 	range = 0
 	var/coeff = 100
 	var/list/use_channels = list(EQUIP,ENVIRON,LIGHT)
-	selectable = 0
+	selectable = FALSE
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/Destroy()
 	STOP_PROCESSING(SSobj, src)
