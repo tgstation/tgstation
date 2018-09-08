@@ -39544,11 +39544,15 @@
 	pixel_x = 3
 	},
 /obj/item/clothing/mask/gas{
+	layer = 4;
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas{
+	layer = 4
+	},
+/obj/item/clothing/mask/gas{
+	layer = 4;
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -39558,6 +39562,9 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/item/clothing/gloves/color/black,
+/obj/item/clothing/gloves/color/black,
+/obj/item/clothing/gloves/color/black,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bLZ" = (
@@ -40872,6 +40879,8 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metal_foam,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bOX" = (
