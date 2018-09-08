@@ -420,10 +420,10 @@
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
-/datum/design/mech_grenade_f
+/datum/design/mech_grn_f
 	name = "Exosuit Weapon (SGL-6 Grenade Launcher)"
 	desc = "Allows for the construction of SGL-6 Grenade Launcher."
-	id = "mech_grenade_f"
+	id = "mech_grn_f"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang
 	materials = list(MAT_METAL = 22000, MAT_GLASS = 4000, MAT_GOLD = 6000, MAT_SILVER = 8000)
