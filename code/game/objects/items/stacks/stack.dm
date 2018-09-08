@@ -231,7 +231,9 @@
 			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
 		return FALSE
 	var/turf/T = get_turf(usr)
-	if(R.window_checks && !valid_window_location(T, usr.dir))
+
+	var/obj/D = R.result_type
+	if(R.window_checks && !valid_window_location(T, initial(D.dir) == FULLTILE_WINDOW_DIR ? FULLTILE_WINDOW_DIR : usr.dir))
 		to_chat(usr, "<span class='warning'>The [R.title] won't fit here!</span>")
 		return FALSE
 	if(R.one_per_turf && (locate(R.result_type) in T))
@@ -246,6 +248,10 @@
 				continue
 			if(istype(AM,/obj/structure/table))
 				continue
+			if(istype(AM,/obj/structure/window))
+				var/obj/structure/window/W = AM
+				if(!W.fulltile)
+					continue
 			if(AM.density)
 				to_chat(usr, "<span class='warning'>Theres a [AM.name] here. You cant make a [R.title] here!</span>")
 				return FALSE

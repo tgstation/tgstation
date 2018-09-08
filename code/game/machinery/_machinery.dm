@@ -120,7 +120,7 @@ Class Procs:
 		armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
 	. = ..()
 	GLOB.machines += src
-
+	
 	if(ispath(circuit, /obj/item/circuitboard))
 		circuit = new circuit
 		circuit.apply_default_parts(src)
@@ -130,7 +130,7 @@ Class Procs:
 	else
 		START_PROCESSING(SSfastprocess, src)
 	power_change()
-	AddComponent(/datum/component/redirect, list(COMSIG_ENTER_AREA), CALLBACK(src, .proc/power_change))
+	AddComponent(/datum/component/redirect, list(COMSIG_ENTER_AREA = CALLBACK(src, .proc/power_change)))
 
 	if (occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
@@ -238,11 +238,6 @@ Class Procs:
 	if(interaction_flags_machine & INTERACT_MACHINE_SET_MACHINE)
 		user.set_machine(src)
 	. = ..()
-
-/obj/machinery/ui_status(mob/user)
-	if(can_interact(user))
-		return ..()
-	return UI_CLOSE
 
 /obj/machinery/ui_act(action, params)
 	add_fingerprint(usr)

@@ -25,3 +25,4 @@
 	new /obj/item/laser_pointer(src)
 	new /obj/item/door_remote/research_director(src)
 	new /obj/item/circuitboard/machine/techfab/department/science(src)
+	new /obj/item/storage/photo_album/RD(src)

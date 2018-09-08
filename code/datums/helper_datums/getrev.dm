@@ -7,20 +7,25 @@
 /datum/getrev/New()
 	testmerge = world.TgsTestMerges()
 	log_world("Running /tg/ revision:")
-	var/list/logs = world.file2list(".git/logs/HEAD")
-	if(logs)
-		logs = splittext(logs[logs.len - 1], " ")
-		date = unix2date(text2num(logs[5]))
-		commit = logs[2]
-		log_world("[commit]: [date]")
+	var/datum/tgs_revision_information/revinfo = world.TgsRevision()
+	if(revinfo)
+		commit = revinfo.commit
+		originmastercommit = revinfo.origin_commit
 	else
-		log_world("Unable to read git logs, revision information not available")
-		originmastercommit = commit = "Unknown"
-		date = unix2date(world.timeofday)
-		return
-	logs = world.file2list(".git/logs/refs/remotes/origin/master")
-	if(logs.len)
-		originmastercommit = splittext(logs[logs.len - 1], " ")[2]
+		var/list/logs = world.file2list(".git/logs/HEAD")
+		if(logs.len)
+			logs = splittext(logs[logs.len - 1], " ")
+			date = unix2date(text2num(logs[5]))
+			commit = logs[2]
+			log_world("[commit]: [date]")
+		else
+			log_world("Unable to read git logs, revision information not available")
+			originmastercommit = commit = "Unknown"
+			date = unix2date(world.timeofday)
+			return
+		logs = world.file2list(".git/logs/refs/remotes/origin/master")
+		if(logs.len)
+			originmastercommit = splittext(logs[logs.len - 1], " ")[2]
 
 	if(testmerge.len)
 		log_world(commit)
@@ -72,17 +77,17 @@
 	to_chat(src, "Protect Assistant Role From Traitor: [CONFIG_GET(flag/protect_assistant_from_antagonist)]")
 	to_chat(src, "Enforce Human Authority: [CONFIG_GET(flag/enforce_human_authority)]")
 	to_chat(src, "Allow Latejoin Antagonists: [CONFIG_GET(flag/allow_latejoin_antagonists)]")
-	to_chat(src, "Enforce Continuous Rounds: [length(CONFIG_GET(keyed_flag_list/continuous))] of [config.modes.len] roundtypes")
-	to_chat(src, "Allow Midround Antagonists: [length(CONFIG_GET(keyed_flag_list/midround_antag))] of [config.modes.len] roundtypes")
+	to_chat(src, "Enforce Continuous Rounds: [length(CONFIG_GET(keyed_list/continuous))] of [config.modes.len] roundtypes")
+	to_chat(src, "Allow Midround Antagonists: [length(CONFIG_GET(keyed_list/midround_antag))] of [config.modes.len] roundtypes")
 	if(CONFIG_GET(flag/show_game_type_odds))
-		var/list/probabilities = CONFIG_GET(keyed_number_list/probability)
+		var/list/probabilities = CONFIG_GET(keyed_list/probability)
 		if(SSticker.IsRoundInProgress())
 			var/prob_sum = 0
 			var/current_odds_differ = FALSE
 			var/list/probs = list()
 			var/list/modes = config.gamemode_cache
-			var/list/min_pop = CONFIG_GET(keyed_number_list/min_pop)
-			var/list/max_pop = CONFIG_GET(keyed_number_list/max_pop)
+			var/list/min_pop = CONFIG_GET(keyed_list/min_pop)
+			var/list/max_pop = CONFIG_GET(keyed_list/max_pop)
 			for(var/mode in modes)
 				var/datum/game_mode/M = mode
 				var/ctag = initial(M.config_tag)

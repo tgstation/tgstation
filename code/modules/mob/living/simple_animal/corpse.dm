@@ -75,7 +75,7 @@
 
 /obj/effect/mob_spawn/human/corpse/pirate
 	name = "Pirate"
-	skin_tone = "Caucasian1" //all pirates are white because it's easier that way
+	skin_tone = "caucasian1" //all pirates are white because it's easier that way
 	outfit = /datum/outfit/piratecorpse
 	hair_style = "Bald"
 	facial_hair_style = "Shaved"
@@ -154,7 +154,7 @@
 	outfit = /datum/outfit/wizardcorpse
 	hair_style = "Bald"
 	facial_hair_style = "Long Beard"
-	skin_tone = "Caucasian1"
+	skin_tone = "caucasian1"
 
 /datum/outfit/wizardcorpse
 	name = "Space Wizard Corpse"
@@ -218,8 +218,4 @@
 	belt = /obj/item/storage/belt/fannypack/yellow/bee_terrorist
 	id = /obj/item/card/id
 	l_pocket = /obj/item/paper/fluff/bee_objectives
-	mask = /obj/item/clothing/mask/rat/bee 
-
-/obj/item/paper/fluff/bee_objectives
-	name = "Objectives of a Bee Liberation Front Operative"
-	info = "<b>Objective #1</b>. Liberate all bees on the NT transport vessel 2416/B. <b>Success!</b>  <br><b>Objective #2</b>. Escape alive. <b>Failed.</b>"
+	mask = /obj/item/clothing/mask/rat/bee

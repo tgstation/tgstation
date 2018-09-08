@@ -9,6 +9,7 @@
 	idle_power_usage = 5
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/microwave
+	pass_flags = PASSTABLE
 	var/operating = FALSE // Is it on?
 	var/dirty = 0 // = {0..100} Does it need cleaning?
 	var/broken = 0 // ={0,1,2} How broken is it???
@@ -36,6 +37,11 @@
 		max_items = 10 * M.rating
 	efficiency = E
 	max_n_of_items = max_items
+
+/obj/machinery/microwave/examine(mob/user)
+	..()
+	if(!operating)
+		to_chat(user, "<span class='notice'>Alt-click [src] to turn it on.</span>")
 
 /*******************
 *   Item Adding

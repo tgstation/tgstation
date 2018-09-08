@@ -12,7 +12,7 @@ Charged extracts:
 	icon_state = "charged"
 
 /obj/item/slimecross/charged/Initialize()
-	..()
+	. = ..()
 	create_reagents(10)
 
 /obj/item/slimecross/charged/attack_self(mob/user)
@@ -196,7 +196,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/gold/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	..()
+	return ..()
 
 /obj/item/slimecross/charged/oil
 	colour = "oil"

@@ -66,8 +66,8 @@
 		addtimer(CALLBACK(src, .proc/sparks), 30)//if bluespace, then 3 seconds after opening, make some sparks and delete
 
 /obj/structure/closet/supplypod/proc/sparks()//sparks cant be called from addtimer
- 	do_sparks(5, TRUE, src)
- 	qdel(src)//no need for QDEL_IN if we already have a timer
+	do_sparks(5, TRUE, src)
+	qdel(src)//no need for QDEL_IN if we already have a timer
 
 /obj/structure/closet/supplypod/Destroy()//make some sparks b4 deletion
 	QDEL_NULL(SupplyOrder)

@@ -69,7 +69,7 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aq" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ar" = (

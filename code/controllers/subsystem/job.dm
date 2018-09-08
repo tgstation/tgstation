@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(job)
 		LoadJobs()
 	generate_selectable_species()
 	set_overflow_role(CONFIG_GET(string/overflow_job))
-	..()
+	return ..()
 
 /datum/controller/subsystem/job/proc/set_overflow_role(new_overflow_role)
 	var/datum/job/new_overflow = GetJob(new_overflow_role)
@@ -362,7 +362,7 @@ SUBSYSTEM_DEF(job)
 		var/allowed_to_be_a_loser = !jobban_isbanned(player, SSjob.overflow_role)
 		if(QDELETED(player) || !allowed_to_be_a_loser)
 			RejectPlayer(player)
-		else 
+		else
 			if(!AssignRole(player, SSjob.overflow_role))
 				RejectPlayer(player)
 	else if(player.client.prefs.joblessrole == BERANDOMJOB)
@@ -559,7 +559,7 @@ SUBSYSTEM_DEF(job)
 		SendToAtom(M, pick(latejoin_trackers), buckle)
 	else
 		//bad mojo
-		var/area/shuttle/arrival/A = locate() in GLOB.sortedAreas
+		var/area/shuttle/arrival/A = GLOB.areas_by_type[/area/shuttle/arrival]
 		if(A)
 			//first check if we can find a chair
 			var/obj/structure/chair/C = locate() in A

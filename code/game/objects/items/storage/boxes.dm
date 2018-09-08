@@ -93,6 +93,14 @@
 	for(var/i in 1 to 7)
 		new /obj/item/disk/plantgene(src)
 
+/obj/item/storage/box/disks_nanite
+	name = "nanite program disks box"
+	illustration = "disk_kit"
+
+/obj/item/storage/box/disks_nanite/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/disk/nanite_program(src)
+
 // Ordinary survival box
 /obj/item/storage/box/survival/PopulateContents()
 	new /obj/item/clothing/mask/breath(src)
@@ -188,6 +196,14 @@
 /obj/item/storage/box/beakers/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/glass/beaker( src )
+
+/obj/item/storage/box/beakers/bluespace
+	name = "box of bluespace beakers"
+	illustration = "beaker"
+
+/obj/item/storage/box/beakers/bluespace/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/glass/beaker/bluespace(src)
 
 /obj/item/storage/box/medsprays
 	name = "box of medical sprayers"
@@ -991,6 +1007,7 @@
 /obj/item/storage/box/stockparts/deluxe
 	name = "box of deluxe stock parts"
 	desc = "Contains a variety of deluxe stock parts."
+	icon_state = "syndiebox"
 
 /obj/item/storage/box/stockparts/deluxe/PopulateContents()
 	new /obj/item/stock_parts/capacitor/quadratic(src)

@@ -14,6 +14,8 @@
 	speak_chance = 1
 	turns_per_move = 10
 
+	do_footstep = TRUE
+
 //Corgis and pugs are now under one dog subtype
 
 /mob/living/simple_animal/pet/dog/corgi
@@ -46,6 +48,16 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "pug"
 
+/mob/living/simple_animal/pet/dog/corgi/exoticcorgi
+	name = "Exotic Corgi"
+	desc = "As cute as it is colorful!"
+	icon = 'icons/mob/pets.dmi'
+	icon_state = "corgigrey"
+	icon_living = "corgigrey"
+	icon_dead = "corgigrey_dead"
+	animal_species = /mob/living/simple_animal/pet/dog/corgi/exoticcorgi
+	nofur = TRUE
+
 /mob/living/simple_animal/pet/dog/Initialize()
 	. = ..()
 	var/dog_area = get_area(src)
@@ -58,6 +70,10 @@
 	. = ..()
 	regenerate_icons()
 
+/mob/living/simple_animal/pet/dog/corgi/exoticcorgi/Initialize()
+		. = ..()
+		var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+		add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 
 /mob/living/simple_animal/pet/dog/corgi/death(gibbed)
 	..(gibbed)
@@ -540,7 +556,7 @@
 /mob/living/simple_animal/pet/dog/corgi/puppy/void		//Tribute to the corgis born in nullspace
 	name = "\improper void puppy"
 	real_name = "voidy"
-	desc = "A corgi puppy that has been infused with deep space energy. It's staring back.."
+	desc = "A corgi puppy that has been infused with deep space energy. It's staring back..."
 	icon_state = "void_puppy"
 	icon_living = "void_puppy"
 	icon_dead = "void_puppy_dead"

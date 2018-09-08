@@ -109,6 +109,9 @@ LOG_ATTACK
 ## log pda messages
 LOG_PDA
 
+## log telecomms messages
+LOG_TELECOMMS
+
 ## log prayers
 LOG_PRAYER
 
@@ -127,6 +130,12 @@ LOG_MANIFEST
 ## enables use of the proc twitterize() that lets you take a large list of strings and turn it into a JSON file of tweet sized strings.
 ## As an example of how this could be """useful""" look towards Poly (https://twitter.com/Poly_the_Parrot)
 # LOG_TWITTER
+
+## Enable logging pictures
+# LOG_PICTURES
+
+##Log camera pictures - Must have picture logging enabled
+PICTURE_LOGGING_CAMERA
 
 ## period of time in seconds for players to be considered inactive
 # INACTIVITY_PERIOD 300
@@ -363,10 +372,6 @@ AUTOADMIN_RANK Game Master
 
 ## Uncomment to automatically give that admin rank to all players
 #AUTOADMIN
-
-## GENERATE_MINIMAPS
-## Generating minimaps(For crew monitor) is slow and bogs down testing, so its disabled by default and must be enabled by uncommenting this config if you are running a production server.
-#GENERATE_MINIMAPS
 
 ## CLIENT VERSION CONTROL
 ## This allows you to configure the minimum required client version, as well as a warning version, and message for both.

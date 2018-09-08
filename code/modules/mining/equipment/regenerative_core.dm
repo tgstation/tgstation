@@ -63,7 +63,7 @@
 
 /obj/item/organ/regenerative_core/on_life()
 	..()
-	if(owner.health < owner.crit_modifier())
+	if(owner.health < owner.crit_threshold)
 		ui_action_click()
 
 /obj/item/organ/regenerative_core/afterattack(atom/target, mob/user, proximity_flag)

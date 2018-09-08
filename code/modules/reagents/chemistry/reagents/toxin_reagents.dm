@@ -169,6 +169,28 @@
 	..()
 	. = 1
 
+/datum/reagent/toxin/ghoulpowder
+	name = "Ghoul Powder"
+	id = "ghoulpowder"
+	description = "A strong neurotoxin that slows metabolism to a death-like state, while keeping the patient fully active. Causes toxin buildup if used too long."
+	reagent_state = SOLID
+	color = "#664700" // rgb: 102, 71, 0
+	toxpwr = 0.8
+	taste_description = "death"
+
+/datum/reagent/toxin/ghoulpowder/on_mob_add(mob/living/L)
+	..()
+	L.add_trait(TRAIT_FAKEDEATH, id)
+
+/datum/reagent/toxin/ghoulpowder/on_mob_delete(mob/living/L)
+	L.remove_trait(TRAIT_FAKEDEATH, id)
+	..()
+
+/datum/reagent/toxin/ghoulpowder/on_mob_life(mob/living/carbon/M)
+	M.adjustOxyLoss(1*REM, 0)
+	..()
+	. = 1
+
 /datum/reagent/toxin/mindbreaker
 	name = "Mindbreaker Toxin"
 	id = "mindbreaker"
@@ -405,7 +427,7 @@
 /datum/reagent/toxin/formaldehyde
 	name = "Formaldehyde"
 	id = "formaldehyde"
-	description = "Formaldehyde, on its own, is a fairly weak toxin. It contains trace amounts of Histamine, very rarely making it decay into Histamine.."
+	description = "Formaldehyde, on its own, is a fairly weak toxin. It contains trace amounts of Histamine, very rarely making it decay into Histamine."
 	reagent_state = LIQUID
 	color = "#B4004B"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -605,7 +627,7 @@
 
 /datum/reagent/toxin/amanitin/on_mob_delete(mob/living/M)
 	var/toxdamage = current_cycle*3*REM
-	M.log_message("has taken [toxdamage] toxin damage from amanitin toxin", INDIVIDUAL_ATTACK_LOG)
+	M.log_message("has taken [toxdamage] toxin damage from amanitin toxin", LOG_ATTACK)
 	M.adjustToxLoss(toxdamage)
 	..()
 

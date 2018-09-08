@@ -80,11 +80,6 @@
 	icon_state = "power_display"
 	screen_loc = ui_lingchemdisplay
 
-/mob/living/carbon/human/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/human(src)
-
-
 /datum/hud/human/New(mob/living/carbon/human/owner)
 	..()
 	owner.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
@@ -287,10 +282,6 @@
 
 	healthdoll = new /obj/screen/healthdoll()
 	infodisplay += healthdoll
-
-	if(!CONFIG_GET(flag/disable_human_mood))
-		mood = new /obj/screen/mood()
-		infodisplay += mood
 
 	pull_icon = new /obj/screen/pull()
 	pull_icon.icon = ui_style

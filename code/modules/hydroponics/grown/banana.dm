@@ -33,7 +33,7 @@
 	sleep(25)
 	if(!user)
 		return (OXYLOSS)
-	user.say("BANG!")
+	user.say("BANG!", forced = "banana")
 	sleep(25)
 	if(!user)
 		return (OXYLOSS)

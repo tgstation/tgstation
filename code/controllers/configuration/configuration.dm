@@ -20,7 +20,17 @@
 
 	var/motd
 
+/datum/controller/configuration/proc/admin_reload()
+	if(IsAdminAdvancedProcCall())
+		return
+	log_admin("[key_name_admin(usr)] has forcefully reloaded the configuration from disk.")
+	message_admins("[key_name_admin(usr)] has forcefully reloaded the configuration from disk.")
+	full_wipe()
+	Load(world.params[OVERRIDE_CONFIG_DIRECTORY_PARAMETER])
+
 /datum/controller/configuration/proc/Load(_directory)
+	if(IsAdminAdvancedProcCall())		//If admin proccall is detected down the line it will horribly break everything.
+		return
 	if(_directory)
 		directory = _directory
 	if(entries)
@@ -38,12 +48,18 @@
 	loadmaplist(CONFIG_MAPS_FILE)
 	LoadMOTD()
 
-/datum/controller/configuration/Destroy()
+/datum/controller/configuration/proc/full_wipe()
+	if(IsAdminAdvancedProcCall())
+		return
 	entries_by_type.Cut()
 	QDEL_LIST_ASSOC_VAL(entries)
+	entries = null
 	QDEL_LIST_ASSOC_VAL(maplist)
+	maplist = null
 	QDEL_NULL(defaultmap)
 
+/datum/controller/configuration/Destroy()
+	full_wipe()
 	config = null
 
 	return ..()
@@ -89,7 +105,7 @@
 		L = trim(L)
 		if(!L)
 			continue
-		
+
 		var/firstchar = copytext(L, 1, 2)
 		if(firstchar == "#")
 			continue
@@ -110,7 +126,7 @@
 
 		if(!entry)
 			continue
-		
+
 		if(entry == "$include")
 			if(!value)
 				log_config("Warning: Invalid $include directive: [value]")
@@ -118,7 +134,7 @@
 				LoadEntries(value, stack)
 				++.
 			continue
-		
+
 		var/datum/config_entry/E = _entries[entry]
 		if(!E)
 			log_config("Unknown setting in configuration: '[entry]'")
@@ -140,19 +156,19 @@
 				E = new_ver
 			else
 				warning("[new_ver.type] is deprecated but gave no proper return for DeprecationUpdate()")
-			
+
 		var/validated = E.ValidateAndSet(value)
 		if(!validated)
 			log_config("Failed to validate setting \"[value]\" for [entry]")
-		else 
+		else
 			if(E.modified && !E.dupes_allowed)
 				log_config("Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
 
 		E.resident_file = filename
-		
+
 		if(validated)
 			E.modified = TRUE
-	
+
 	++.
 
 /datum/controller/configuration/can_vv_get(var_name)
@@ -168,9 +184,6 @@
 	stat("[name]:", statclick)
 
 /datum/controller/configuration/proc/Get(entry_type)
-	if(IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Get" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
-		log_admin_private("Config access of [entry_type] attempted by [key_name(usr)]")
-		return
 	var/datum/config_entry/E = entry_type
 	var/entry_is_abstract = initial(E.abstract_type) == entry_type
 	if(entry_is_abstract)
@@ -178,12 +191,12 @@
 	E = entries_by_type[entry_type]
 	if(!E)
 		CRASH("Missing config entry for [entry_type]!")
+	if((E.protection & CONFIG_ENTRY_HIDDEN) && IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Get" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
+		log_admin_private("Config access of [entry_type] attempted by [key_name(usr)]")
+		return
 	return E.config_entry_value
 
 /datum/controller/configuration/proc/Set(entry_type, new_val)
-	if(IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Set" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
-		log_admin_private("Config rewrite of [entry_type] to [new_val] attempted by [key_name(usr)]")
-		return
 	var/datum/config_entry/E = entry_type
 	var/entry_is_abstract = initial(E.abstract_type) == entry_type
 	if(entry_is_abstract)
@@ -191,6 +204,9 @@
 	E = entries_by_type[entry_type]
 	if(!E)
 		CRASH("Missing config entry for [entry_type]!")
+	if((E.protection & CONFIG_ENTRY_LOCKED) && IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Set" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
+		log_admin_private("Config rewrite of [entry_type] to [new_val] attempted by [key_name(usr)]")
+		return
 	return E.ValidateAndSet("[new_val]")
 
 /datum/controller/configuration/proc/LoadModes()
@@ -200,7 +216,7 @@
 	mode_reports = list()
 	mode_false_report_weight = list()
 	votable_modes = list()
-	var/list/probabilities = Get(/datum/config_entry/keyed_number_list/probability)
+	var/list/probabilities = Get(/datum/config_entry/keyed_list/probability)
 	for(var/T in gamemode_cache)
 		// I wish I didn't have to instance the game modes in order to look up
 		// their information, but it is the only way (at least that I know of).
@@ -296,9 +312,9 @@
 
 /datum/controller/configuration/proc/get_runnable_modes()
 	var/list/datum/game_mode/runnable_modes = new
-	var/list/probabilities = Get(/datum/config_entry/keyed_number_list/probability)
-	var/list/min_pop = Get(/datum/config_entry/keyed_number_list/min_pop)
-	var/list/max_pop = Get(/datum/config_entry/keyed_number_list/max_pop)
+	var/list/probabilities = Get(/datum/config_entry/keyed_list/probability)
+	var/list/min_pop = Get(/datum/config_entry/keyed_list/min_pop)
+	var/list/max_pop = Get(/datum/config_entry/keyed_list/max_pop)
 	var/list/repeated_mode_adjust = Get(/datum/config_entry/number_list/repeated_mode_adjust)
 	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
@@ -326,9 +342,9 @@
 
 /datum/controller/configuration/proc/get_runnable_midround_modes(crew)
 	var/list/datum/game_mode/runnable_modes = new
-	var/list/probabilities = Get(/datum/config_entry/keyed_number_list/probability)
-	var/list/min_pop = Get(/datum/config_entry/keyed_number_list/min_pop)
-	var/list/max_pop = Get(/datum/config_entry/keyed_number_list/max_pop)
+	var/list/probabilities = Get(/datum/config_entry/keyed_list/probability)
+	var/list/min_pop = Get(/datum/config_entry/keyed_list/min_pop)
+	var/list/max_pop = Get(/datum/config_entry/keyed_list/max_pop)
 	for(var/T in (gamemode_cache - SSticker.mode.type))
 		var/datum/game_mode/M = new T()
 		if(!(M.config_tag in modes))

@@ -9,10 +9,6 @@
 	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	buildable_sign = 0
 	var/list/barsigns=list()
-	var/list/hiddensigns
-	var/emagged = FALSE
-	var/state = 0
-	var/prev_sign = ""
 	var/panel_open = FALSE
 
 /obj/structure/sign/barsign/Initialize()
@@ -39,7 +35,7 @@
 
 /obj/structure/sign/barsign/obj_break(damage_flag)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
-		broken = 1
+		broken = TRUE
 
 /obj/structure/sign/barsign/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/metal (loc, 2)
@@ -66,7 +62,7 @@
 	if (broken)
 		to_chat(user, "<span class ='danger'>The controls seem unresponsive.</span>")
 		return
-	pick_sign()
+	pick_sign(user)
 
 /obj/structure/sign/barsign/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/screwdriver))
@@ -79,7 +75,7 @@
 			panel_open = TRUE
 		else
 			to_chat(user, "<span class='notice'>You close the maintenance panel.</span>")
-			if(!broken && !emagged)
+			if(!broken && !(obj_flags & EMAGGED))
 				set_sign(pick(barsigns))
 			else if(obj_flags & EMAGGED)
 				set_sign(new /datum/barsign/hiddensigns/syndibarsign)
@@ -98,7 +94,7 @@
 
 		if(C.use(2))
 			to_chat(user, "<span class='notice'>You replace the burnt wiring.</span>")
-			broken = 0
+			broken = FALSE
 		else
 			to_chat(user, "<span class='warning'>You need at least two lengths of cable!</span>")
 	else
@@ -110,13 +106,13 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	set_sign(new /datum/barsign/hiddensigns/empbarsign)
-	broken = 1
+	broken = TRUE
 
 
 
 
 /obj/structure/sign/barsign/emag_act(mob/user)
-	if(broken || emagged)
+	if(broken || (obj_flags & EMAGGED))
 		to_chat(user, "<span class='warning'>Nothing interesting happens!</span>")
 		return
 	obj_flags |= EMAGGED
@@ -126,8 +122,8 @@
 	req_access = list(ACCESS_SYNDICATE)
 
 
-/obj/structure/sign/barsign/proc/pick_sign()
-	var/picked_name = input("Available Signage", "Bar Sign") as null|anything in barsigns
+/obj/structure/sign/barsign/proc/pick_sign(mob/user)
+	var/picked_name = input(user, "Available Signage", "Bar Sign", name) as null|anything in barsigns
 	if(!picked_name)
 		return
 	set_sign(picked_name)
@@ -142,7 +138,7 @@
 	var/name = "Name"
 	var/icon = "Icon"
 	var/desc = "desc"
-	var/hidden = 0
+	var/hidden = FALSE
 
 
 //Anything below this is where all the specific signs are. If people want to add more signs, add them below.
@@ -299,7 +295,7 @@
 	desc = "A cafe popular among moths and moffs. Once shut down for a week after the bartender used mothballs to protect her spare uniforms."
 
 /datum/barsign/hiddensigns
-	hidden = 1
+	hidden = TRUE
 
 
 //Hidden signs list below this point

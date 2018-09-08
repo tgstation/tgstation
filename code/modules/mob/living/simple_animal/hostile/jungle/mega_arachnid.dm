@@ -24,6 +24,8 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 	alpha = 50
 
+	do_footstep = TRUE
+
 /mob/living/simple_animal/hostile/jungle/mega_arachnid/Life()
 	..()
 	if(target && ranged_cooldown > world.time && iscarbon(target))

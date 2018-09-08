@@ -60,24 +60,31 @@
 	return attack_hand(user)
 
 /obj/structure/table/attack_hand(mob/living/user)
-	if(Adjacent(user) && user.pulling && isliving(user.pulling))
-		var/mob/living/pushed_mob = user.pulling
-		if(pushed_mob.buckled)
-			to_chat(user, "<span class='warning'>[pushed_mob] is buckled to [pushed_mob.buckled]!</span>")
-			return
-		if(user.a_intent == INTENT_GRAB)
-			if(user.grab_state < GRAB_AGGRESSIVE)
-				to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
+	if(Adjacent(user) && user.pulling)
+		if(isliving(user.pulling))
+			var/mob/living/pushed_mob = user.pulling
+			if(pushed_mob.buckled)
+				to_chat(user, "<span class='warning'>[pushed_mob] is buckled to [pushed_mob.buckled]!</span>")
 				return
-			tablepush(user, pushed_mob)
-		if(user.a_intent == INTENT_HELP)
-			pushed_mob.visible_message("<span class='notice'>[user] begins to place [pushed_mob] onto [src]...</span>", \
-								"<span class='userdanger'>[user] begins to place [pushed_mob] onto [src]...</span>")
-			if(do_after(user, 35, target = pushed_mob))
-				tableplace(user, pushed_mob)
-			else
-				return
-		user.stop_pulling()
+			if(user.a_intent == INTENT_GRAB)
+				if(user.grab_state < GRAB_AGGRESSIVE)
+					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
+					return
+				tablepush(user, pushed_mob)
+			if(user.a_intent == INTENT_HELP)
+				pushed_mob.visible_message("<span class='notice'>[user] begins to place [pushed_mob] onto [src]...</span>", \
+									"<span class='userdanger'>[user] begins to place [pushed_mob] onto [src]...</span>")
+				if(do_after(user, 35, target = pushed_mob))
+					tableplace(user, pushed_mob)
+				else
+					return
+			user.stop_pulling()
+		else if(user.pulling.pass_flags & PASSTABLE)
+			user.Move_Pulled(src)
+			if (user.pulling.loc == loc)
+				user.visible_message("<span class='notice'>[user] places [user.pulling] onto [src].</span>",
+					"<span class='notice'>You place [user.pulling] onto [src].</span>")
+				user.stop_pulling()
 	return ..()
 
 /obj/structure/table/attack_tk()
@@ -105,14 +112,22 @@
 	pushed_mob.update_canmove()
 	pushed_mob.visible_message("<span class='notice'>[user] places [pushed_mob] onto [src].</span>", \
 								"<span class='notice'>[user] places [pushed_mob] onto [src].</span>")
-	add_logs(user, pushed_mob, "placed")
+	log_combat(user, pushed_mob, "placed")
 
 /obj/structure/table/proc/tablepush(mob/living/user, mob/living/pushed_mob)
-	pushed_mob.forceMove(src.loc)
+	var/added_passtable = FALSE
+	if(!pushed_mob.pass_flags & PASSTABLE)
+		added_passtable = TRUE
+		pushed_mob.pass_flags |= PASSTABLE
+	pushed_mob.Move(src.loc)
+	if(added_passtable)
+		pushed_mob.pass_flags &= ~PASSTABLE
+	if(pushed_mob.loc != loc) //Something prevented the tabling
+		return
 	pushed_mob.Knockdown(40)
 	pushed_mob.visible_message("<span class='danger'>[user] pushes [pushed_mob] onto [src].</span>", \
 								"<span class='userdanger'>[user] pushes [pushed_mob] onto [src].</span>")
-	add_logs(user, pushed_mob, "pushed")
+	log_combat(user, pushed_mob, "pushed")
 	if(!ishuman(pushed_mob))
 		return
 	var/mob/living/carbon/human/H = pushed_mob

@@ -11,7 +11,7 @@ Burning extracts:
 	icon_state = "burning"
 
 /obj/item/slimecross/burning/Initialize()
-	..()
+	. = ..()
 	create_reagents(10)
 
 /obj/item/slimecross/burning/attack_self(mob/user)
