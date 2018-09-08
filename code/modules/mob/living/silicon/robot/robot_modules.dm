@@ -621,7 +621,7 @@
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/engineer,
 		/obj/item/clockwork/replica_fabricator/cyborg)
-	cyborg_base_icon = "engineer"
+	cyborg_base_icon = "synd_engi"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
 	magpulsing = TRUE
