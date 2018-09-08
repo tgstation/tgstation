@@ -73,3 +73,5 @@
 	)
 
 #define TECHWEB_BOMB_POINTCAP		50000 //Adjust as needed; Stops toxins from nullifying RND progression mechanics. Current Value Cap Radius: 100
+#define TACHYON_MODE_RESEARCH	"research"
+#define TACHYON_MODE_CREDIT		"credit"

@@ -1,7 +1,5 @@
 GLOBAL_LIST_EMPTY(doppler_arrays)
 
-#define RESEARCH	"research"
-#define CREDIT	"credit"
 
 /obj/machinery/doppler_array
 	name = "tachyon-doppler array"
@@ -11,7 +9,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	density = TRUE
 	var/integrated = FALSE
 	var/max_dist = 150
-	var/mode = RESEARCH
+	var/mode = TACHYON_MODE_RESEARCH
 	verb_say = "states coldly"
 
 /obj/machinery/doppler_array/Initialize()
@@ -45,12 +43,12 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 		I.play_tool_sound(src)
 
 	if(istype(I, /obj/item/multitool))
-		if(mode == RESEARCH)
-			mode = CREDIT
-			to_chat(user, "<span class='nocice'>You set [src] to generate credits.</span>")
+		if(mode == TACHYON_MODE_RESEARCH)
+			mode = TACHYON_MODE_CREDIT
+			to_chat(user, "<span class='notice'>You set [src] to generate credits.</span>")
 		else
-			mode = RESEARCH
-			to_chat(user, "<span class='nocice'>You set [src] to generate research points.</span>")
+			mode = TACHYON_MODE_RESEARCH
+			to_chat(user, "<span class='notice'>You set [src] to generate research points.</span>")
 	else
 		return ..()
 
@@ -133,7 +131,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 		say("Explosion not large enough for research calculations.")
 		return
 
-	if(mode == RESEARCH)
+	if(mode == TACHYON_MODE_RESEARCH)
 		point_gain = round(((log(orig_light)-1)**1.6)*TECHWEB_BOMB_POINTCAP)
 		linked_techweb.logged_theoretical_points += point_gain
 		say("Logged [point_gain] theoretical points from explosion dataset, new total is [linked_techweb.logged_theoretical_points].")
@@ -149,7 +147,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 				point_gain = 1000
 
 			linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, point_gain)
-			say("Gained [point_gain] points from explosion dataset.")
+			say("Gained [point_gain] research points from explosion dataset.")
 
 		else //you've made smaller bombs
 			say("Data already captured. Aborting.")
@@ -169,7 +167,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 			linked_techweb.reward_level++
 			new /obj/effect/particle_effect/sparks(loc)
 			playsound(src, "sparks", 50, 1)
-			say("Nanotransen has sent you a canister of pluxonium for your efforts, the next reard is at 100000 total points.")
+			say("Nanotrasen has sent you a canister of pluxonium for your efforts, the next reward is at 100000 total points.")
 
 	if(linked_techweb.logged_theoretical_points > 1000000)
 		if(linked_techweb.reward_level==2)
@@ -177,7 +175,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 			linked_techweb.reward_level++
 			new /obj/effect/particle_effect/sparks(loc)
 			playsound(src, "sparks", 50, 1)
-			say("Nanotransen has sent you a canister of nitryl for your efforts, the next reard is at 5000000 total points.")
+			say("Nanotrasen has sent you a canister of nitryl for your efforts, the next rweard is at 5000000 total points.")
 
 	if(linked_techweb.logged_theoretical_points > 5000000)
 		if(linked_techweb.reward_level==3)
@@ -185,12 +183,9 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 			linked_techweb.reward_level++
 			new /obj/effect/particle_effect/sparks(loc)
 			playsound(src, "sparks", 50, 1)
-			say("Nanotransen has sent you a prototype canister for your efforts, this completes our current toxins work cycle.")
+			say("Nanotrasen has sent you a prototype canister for your efforts, this completes our current toxins work cycle.")
 
 
 /obj/machinery/doppler_array/research/science/Initialize()
 	. = ..()
 	linked_techweb = SSresearch.science_tech
-
-#undef RESEARCH
-#undef CREDIT
