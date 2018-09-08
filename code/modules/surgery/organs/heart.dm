@@ -147,15 +147,24 @@
 
 /obj/item/organ/heart/cybernetic
 	name = "cybernetic heart"
-	desc = "An electronic device designed to mimic the functions of an organic human heart. Offers no benefit over an organic heart other than being easy to make."
+	desc = "An electronic device designed to mimic the functions of an organic human heart. Analyzes heartrate during various situations and sends the data back to local research clinics, providing a small influx of research points. Also holds epinephrine, used automatically after facing severe trauma."
 	icon_state = "heart-c"
 	synthetic = TRUE
+	var/crituse = FALSE // doses with epi if in crit once.
 
 /obj/item/organ/heart/cybernetic/emp_act()
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
 	Stop()
+
+/obj/item/organ/heart/cybernetic/on_life()
+	. = ..()
+	if(owner.client && owner.stat != DEAD)
+		SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = CYBERNETIC_ORGAN_PASSIVE_RESEARCH_AMOUNT))
+	if(!crituse && owner.stat == UNCONSCIOUS)
+		crituse = TRUE
+		owner.reagents.add_reagent("epinephrine", 10)
 
 /obj/item/organ/heart/freedom
 	name = "heart of freedom"

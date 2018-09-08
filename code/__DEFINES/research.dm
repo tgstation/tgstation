@@ -71,3 +71,5 @@
 #define TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES list(\
 	TECHWEB_POINT_TYPE_GENERIC = "General Research"\
 	)
+
+#define CYBERNETIC_ORGAN_PASSIVE_RESEARCH_AMOUNT		50 //per life, aka 150 per person with all currently-available cyber organs
