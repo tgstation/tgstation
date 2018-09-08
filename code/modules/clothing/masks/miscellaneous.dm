@@ -241,7 +241,7 @@
 	else
 		if(user.is_holding(src))
 			var/obj/item/clothing/neck/neckerchief/nk = new(src)
-			nk.name = "[src.name] neckerchief"
+			nk.name = "[name] neckerchief"
 			nk.desc = "[desc] It's tied up like a neckerchief."
 			nk.icon_state = icon_state
 			nk.associatedBand = src.type
