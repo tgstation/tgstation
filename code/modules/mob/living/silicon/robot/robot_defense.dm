@@ -177,8 +177,8 @@
 			if (stat != DEAD)
 				adjustBruteLoss(30)
 
-/mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj)
-	..(Proj)
+/mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj, def_zone)
+	..()
 	updatehealth()
 	if(prob(75) && Proj.damage > 0)
 		spark_system.start()
