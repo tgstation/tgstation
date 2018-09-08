@@ -619,6 +619,7 @@
 		/obj/item/destTagger/borg,
 		/obj/item/stack/cable_coil/cyborg,
 		/obj/item/pinpointer/syndicate_cyborg,
+		/obj/item/borg_chameleon,
 		)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/engineer,
