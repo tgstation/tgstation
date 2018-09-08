@@ -1,5 +1,6 @@
 GLOBAL_LIST_EMPTY(doppler_arrays)
 
+
 /obj/machinery/doppler_array
 	name = "tachyon-doppler array"
 	desc = "A highly precise directional sensor array which measures the release of quants from decaying tachyons. The doppler shifting of the mirror-image formed by these quants can reveal the size, location and temporal affects of energetic disturbances within a large radius ahead of the array.\n"
@@ -8,6 +9,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	density = TRUE
 	var/integrated = FALSE
 	var/max_dist = 150
+	var/mode = TACHYON_MODE_RESEARCH
 	verb_say = "states coldly"
 
 /obj/machinery/doppler_array/Initialize()
@@ -23,7 +25,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 
 /obj/machinery/doppler_array/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>Its dish is facing to the [dir2text(dir)].</span>")
+	to_chat(user, "<span class='notice'>Its dish is facing to the [dir2text(dir)], the mode is set to [mode].</span>")
 
 /obj/machinery/doppler_array/process()
 	return PROCESS_KILL
@@ -39,6 +41,14 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 			power_change()
 			to_chat(user, "<span class='notice'>You unfasten [src].</span>")
 		I.play_tool_sound(src)
+
+	if(istype(I, /obj/item/multitool))
+		if(mode == TACHYON_MODE_RESEARCH)
+			mode = TACHYON_MODE_CREDIT
+			to_chat(user, "<span class='notice'>You set [src] to generate credits.</span>")
+		else
+			mode = TACHYON_MODE_RESEARCH
+			to_chat(user, "<span class='notice'>You set [src] to generate research points.</span>")
 	else
 		return ..()
 
@@ -111,22 +121,71 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 		return FALSE
 	if(!istype(linked_techweb))
 		say("Warning: No linked research system!")
-		return 
-	var/adjusted = orig_light - 10
-	if(adjusted <= 0)
+		return
+
+	var/point_gain = 0
+
+	/*****The Point Calculator*****/
+
+	if(orig_light < 10)
 		say("Explosion not large enough for research calculations.")
 		return
-	var/point_gain = techweb_scale_bomb(adjusted) - techweb_scale_bomb(linked_techweb.max_bomb_value)
-	if(point_gain <= 0)
-		say("Explosion not large enough for research calculations.")
-		return
-	linked_techweb.max_bomb_value = adjusted
-	linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, point_gain)
-	say("Gained [point_gain] points from explosion dataset.")
+
+	if(mode == TACHYON_MODE_RESEARCH)
+		point_gain = round(((log(orig_light)-1)**1.6)*TECHWEB_BOMB_POINTCAP)
+		linked_techweb.logged_theoretical_points += point_gain
+		say("Logged [point_gain] theoretical points from explosion dataset, new total is [linked_techweb.logged_theoretical_points].")
+
+		if(point_gain > linked_techweb.largest_bomb_value)
+			if(point_gain <= TECHWEB_BOMB_POINTCAP || linked_techweb.largest_bomb_value < TECHWEB_BOMB_POINTCAP)
+				var/old_tech_largest_bomb_value = linked_techweb.largest_bomb_value //held so we can pull old before we do math
+				linked_techweb.largest_bomb_value = point_gain
+				point_gain -= old_tech_largest_bomb_value
+				point_gain = min(point_gain,TECHWEB_BOMB_POINTCAP)
+			else
+				linked_techweb.largest_bomb_value = TECHWEB_BOMB_POINTCAP
+				point_gain = 1000
+
+			linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, point_gain)
+			say("Gained [point_gain] research points from explosion dataset.")
+
+		else //you've made smaller bombs
+			say("Data already captured. Aborting.")
+
+	else //Credit production is only capped per bomb
+		point_gain = round(((log(orig_light)-1)**1.6)*TECHWEB_BOMB_POINTCAP)
+		linked_techweb.logged_theoretical_points += point_gain
+		say("Logged [point_gain] theoretical points from explosion dataset, new total is [linked_techweb.logged_theoretical_points].")
+		point_gain = min(point_gain,TECHWEB_BOMB_POINTCAP)
+		SSshuttle.points += point_gain
+		say("Gained [point_gain] credits from explosion dataset.")
+
+	//give the toxins scientists things that directly interest them
+	if(linked_techweb.logged_theoretical_points > 50000)
+		if(linked_techweb.reward_level==1)
+			new /obj/machinery/portable_atmospherics/canister/pluoxium(loc)
+			linked_techweb.reward_level++
+			new /obj/effect/particle_effect/sparks(loc)
+			playsound(src, "sparks", 50, 1)
+			say("Nanotrasen has sent you a canister of pluxonium for your efforts, the next reward is at 100000 total points.")
+
+	if(linked_techweb.logged_theoretical_points > 1000000)
+		if(linked_techweb.reward_level==2)
+			new /obj/machinery/portable_atmospherics/canister/nitryl(loc)
+			linked_techweb.reward_level++
+			new /obj/effect/particle_effect/sparks(loc)
+			playsound(src, "sparks", 50, 1)
+			say("Nanotrasen has sent you a canister of nitryl for your efforts, the next rweard is at 5000000 total points.")
+
+	if(linked_techweb.logged_theoretical_points > 5000000)
+		if(linked_techweb.reward_level==3)
+			new /obj/machinery/portable_atmospherics/canister/proto/default(loc) //useful in toxins and fusion but if the player achieves this they should have already done both
+			linked_techweb.reward_level++
+			new /obj/effect/particle_effect/sparks(loc)
+			playsound(src, "sparks", 50, 1)
+			say("Nanotrasen has sent you a prototype canister for your efforts, this completes our current toxins work cycle.")
+
 
 /obj/machinery/doppler_array/research/science/Initialize()
 	. = ..()
 	linked_techweb = SSresearch.science_tech
-
-/proc/techweb_scale_bomb(lightradius)
-	return (lightradius ** 0.5) * 3000
