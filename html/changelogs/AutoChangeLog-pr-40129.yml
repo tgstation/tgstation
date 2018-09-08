@@ -1,6 +1,0 @@
-author: "Shdorsh"
-delete-after: True
-changes: 
-  - bugfix: "Made the self reference pins for reagents reference themselves automatically."
-  - tweak: "Made it possible to copy datas frop pin to pin with the debugger."
-  - spellcheck: "Removed ugly useless brackets from printers."
