@@ -760,7 +760,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
-/datum/techweb_node/mech_grenade_f
+/datum/techweb_node/mech_grenade_flashbang
 	id = "mech_grn_f"
 	display_name = "Exosuit Weapon (SGL-6 Grenade Launcher)"
 	description = "An advanced piece of mech weaponry"
