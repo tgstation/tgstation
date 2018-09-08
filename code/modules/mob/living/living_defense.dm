@@ -339,7 +339,7 @@
 		return
 
 	if(is_servant_of_ratvar(src) && !stat)
-		to_chat(src, "<span class='userdanger'>You resist Nar-Sie's influence... but not all of it. <i>Run!</i></span>")
+		to_chat(src, "<span class='userdanger'>You resist Nar'Sie's influence... but not all of it. <i>Run!</i></span>")
 		adjustBruteLoss(35)
 		if(src && reagents)
 			reagents.add_reagent("heparin", 5)

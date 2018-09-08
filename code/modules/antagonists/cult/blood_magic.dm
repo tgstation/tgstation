@@ -183,7 +183,7 @@
 
 /datum/action/innate/cult/blood_spell/equipment
 	name = "Summon Equipment"
-	desc = "A crucial spell that enables you to summon either a ritual dagger or combat gear including armored robes, the nar'sien bola, and an eldritch longsword."
+	desc = "A crucial spell that enables you to summon either a ritual dagger or combat gear including armored robes, the Nar'Sien bola, and an eldritch longsword."
 	button_icon_state = "equip"
 	magic_path = "/obj/item/melee/blood_magic/armor"
 
@@ -591,7 +591,7 @@
 			if(do_after(user, 50, target = user))
 				target.narsie_act()
 				uses--
-				user.visible_message("<span class='warning'>Black ribbons suddenly eminate from [user]'s hand and cling to the airlock - twisting and corrupting it!</span>")
+				user.visible_message("<span class='warning'>Black ribbons suddenly emanate from [user]'s hand and cling to the airlock - twisting and corrupting it!</span>")
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		else
 			to_chat(user, "<span class='warning'>The spell will not work on [target]!</span>")

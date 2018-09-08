@@ -179,7 +179,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 //Rite of Offering: Converts or sacrifices a target.
 /obj/effect/rune/convert
 	cultist_name = "Offer"
-	cultist_desc = "offers a noncultist above it to Nar-Sie, either converting them or sacrificing them."
+	cultist_desc = "offers a noncultist above it to Nar'Sie, either converting them or sacrificing them."
 	req_cultists_text = "2 for conversion, 3 for living sacrifices and sacrifice targets."
 	invocation = "Mah'weyh pleggh at e'ntrath!"
 	icon_state = "3"
@@ -440,9 +440,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 	light_range = 0
 	update_light()
 
-//Ritual of Dimensional Rending: Calls forth the avatar of Nar-Sie upon the station.
+//Ritual of Dimensional Rending: Calls forth the avatar of Nar'Sie upon the station.
 /obj/effect/rune/narsie
-	cultist_name = "Nar-Sie"
+	cultist_name = "Nar'Sie"
 	cultist_desc = "tears apart dimensional barriers, calling forth the Geometer. Requires 9 invokers."
 	invocation = "TOK-LYR RQA-NAP G'OLT-ULOFT!!"
 	req_cultists = 9
@@ -480,8 +480,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return
 	if(locate(/obj/singularity/narsie) in GLOB.poi_list)
 		for(var/M in invokers)
-			to_chat(M, "<span class='warning'>Nar-Sie is already on this plane!</span>")
-		log_game("Nar-Sie rune failed - already summoned")
+			to_chat(M, "<span class='warning'>Nar'Sie is already on this plane!</span>")
+		log_game("Nar'Sie rune failed - already summoned")
 		return
 	//BEGIN THE SUMMONING
 	used = TRUE
@@ -491,7 +491,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	sleep(40)
 	if(src)
 		color = RUNE_COLOR_RED
-	new /obj/singularity/narsie/large/cult(T) //Causes Nar-Sie to spawn even if the rune has been removed
+	new /obj/singularity/narsie/large/cult(T) //Causes Nar'Sie to spawn even if the rune has been removed
 
 /obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
 	if((istype(I, /obj/item/melee/cultblade/dagger) && iscultist(user)))
@@ -863,7 +863,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		var/obj/structure/emergency_shield/invoker/N = new(T)
 		new_human.key = ghost_to_spawn.key
 		SSticker.mode.add_cultist(new_human.mind, 0)
-		to_chat(new_human, "<span class='cultitalic'><b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar-Sie, and you are to serve them at all costs.</b></span>")
+		to_chat(new_human, "<span class='cultitalic'><b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar'Sie, and you are to serve them at all costs.</b></span>")
 
 		while(!QDELETED(src) && !QDELETED(user) && !QDELETED(new_human) && (user in T))
 			if(user.stat || new_human.InCritical())
@@ -946,7 +946,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		to_chat(user, "<span class='cultlarge'>Only one ritual site remains - it must be reserved for the final summoning!</span>")
 		return
 	if(!(place in summon_objective.summon_spots))
-		to_chat(user, "<span class='cultlarge'>The Apocalypse rune will remove a ritual site, where Nar-sie can be summoned, it can only be scribed in [english_list(summon_objective.summon_spots)]!</span>")
+		to_chat(user, "<span class='cultlarge'>The Apocalypse rune will remove a ritual site, where Nar'Sie can be summoned, it can only be scribed in [english_list(summon_objective.summon_spots)]!</span>")
 		return
 	summon_objective.summon_spots -= place
 	rune_in_use = TRUE
