@@ -37533,11 +37533,11 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/sign/poster/random{
-	pixel_x = -32
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
+	},
+/obj/structure/sign/poster/official/random{
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel/dark/corner,
 /area/engine/break_room)
@@ -83788,9 +83788,6 @@
 /turf/closed/wall,
 /area/engine/storage_shared)
 "oJW" = (
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
 /obj/machinery/camera{
 	c_tag = "Engineering - Foyer - Shared Storage";
 	dir = 8
@@ -83800,6 +83797,9 @@
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
+	},
+/obj/structure/sign/poster/official/random{
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel/dark/corner,
 /area/engine/storage_shared)
@@ -83850,6 +83850,12 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"pmZ" = (
+/obj/structure/sign/poster/official/random{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/engine/storage_shared)
 "pvA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -125089,7 +125095,7 @@ bjL
 bnb
 owR
 owR
-hkq
+pmZ
 qdT
 bxd
 byT
