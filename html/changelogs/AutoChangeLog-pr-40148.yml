@@ -1,5 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - tweak: "the length of footprint trails from blood pools now scales with the amount of blood they contain"
-  - tweak: "blood pools from bleeding will take slightly longer to congregate"
