@@ -21,6 +21,7 @@
 			var/mob/living/carbon/human/H = M
 			if((H.skin_tone == "caucasian1" || H.skin_tone == "albino") && prob(10))
 				to_chat(H,"<span class='warning'>Whew, that food was spicy!</span>")
+				H.reagents.add_reagent("capsaicin", 3)
 			if(!H.has_trait(TRAIT_AGEUSIA))
 				if(foodtype & H.dna.species.toxic_food)
 					to_chat(H,"<span class='warning'>What the hell was that thing?!</span>")
