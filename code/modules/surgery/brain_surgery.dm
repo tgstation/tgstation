@@ -30,11 +30,11 @@
 	user.visible_message("[user] successfully fixes [target]'s brain!", "<span class='notice'>You succeed in fixing [target]'s brain.</span>")
 	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/brainwashed))
 		target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
-		research_completion_bonus += 1000
+		surgery.research_completion_bonus += 1000
 	target.adjustBrainLoss(-60)
 	var/traumas_cured = target.cure_all_traumas(TRAUMA_RESILIENCE_SURGERY)
-		if(traumas_cured)
-			surgery.research_completion_bonus += 500
+	if(traumas_cured)
+		surgery.research_completion_bonus = 500 * traumas_cured
 
 	return TRUE
 
