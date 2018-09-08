@@ -853,7 +853,7 @@
 	export_price = 5000
 
 /datum/techweb_node/mech_xray
-	id = "mech_xay"
+	id = "mech_xray"
 	display_name = "Exosuit Weapon (X-ray Laser)"
 	description = "An advanced piece of mech weaponry"
 	prereq_ids = list("mecha", "adv_beam_weapons")
