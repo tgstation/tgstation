@@ -27,7 +27,8 @@
 							/obj/item/clothing/neck/scarf/red,
 							/obj/item/clothing/suit/jacket/letterman_red,
 							/obj/item/clothing/under/color/red,
-							/obj/item/clothing/mask/bandana/red)
+							/obj/item/clothing/mask/bandana/red,
+							/obj/item/clothing/under/suit_jacket/red)
 	free_clothes = list(/obj/item/clothing/suit/jacket/letterman_red,
 						/obj/item/clothing/under/color/red,
 						/obj/item/toy/crayon/spraycan)
@@ -42,7 +43,8 @@
 							/obj/item/clothing/neck/scarf/purple,
 							/obj/item/clothing/head/beanie/purple,
 							/obj/item/clothing/suit/apron/purple_bartender,
-							/obj/item/clothing/mask/bandana/skull)
+							/obj/item/clothing/mask/bandana/skull,
+							/obj/item/clothing/under/suit_jacket/green)
 	free_clothes = list(/obj/item/clothing/head/beanie/purple,
 						/obj/item/clothing/under/color/lightpurple,
 						/obj/item/toy/crayon/spraycan)
@@ -60,6 +62,59 @@
 							/obj/item/clothing/mask/bandana/green)
 	free_clothes = list(/obj/item/clothing/mask/bandana/green,
 						/obj/item/clothing/under/color/darkgreen,
+						/obj/item/toy/crayon/spraycan)
+
+/datum/antagonist/gang/russian_mafia
+	name = "Russian Mafia"
+	roundend_category = "Russian mafiosos"
+	gang_name = "Russian Mafia"
+	gang_id = "RM"
+	acceptable_clothes = list(/obj/item/clothing/head/soft/red,
+							/obj/item/clothing/neck/scarf/red,
+							/obj/item/clothing/under/suit_jacket/charcoal,
+							/obj/item/clothing/head/beanie/red,
+							/obj/item/clothing/head/ushanka)
+	free_clothes = list(/obj/item/clothing/head/ushanka,
+						/obj/item/clothing/under/suit_jacket/charcoal,
+						/obj/item/toy/crayon/spraycan)
+
+/datum/antagonist/gang/italian_mob
+	name = "Italian Mob"
+	roundend_category = "Italian mobsters"
+	gang_name = "Italian Mob"
+	gang_id = "IM"
+	acceptable_clothes = list(/obj/item/clothing/under/suit_jacket/checkered,
+							/obj/item/clothing/head/fedora,
+							/obj/item/clothing/neck/scarf/green,
+							/obj/item/clothing/mask/bandana/green)
+	free_clothes = list(/obj/item/clothing/head/fedora,
+						/obj/item/clothing/under/suit_jacket/checkered,
+						/obj/item/toy/crayon/spraycan)
+
+/datum/antagonist/gang/tunnel_snakes
+	name = "Tunnel Snakes"
+	roundend_category = "Tunnel snakes"
+	gang_name = "Tunnel Snakes"
+	gang_id = "TS"
+	acceptable_clothes = list(/obj/item/clothing/under/pants/classicjeans,
+							/obj/item/clothing/suit/jacket,
+							/obj/item/clothing/mask/bandana/skull)
+	free_clothes = list(/obj/item/clothing/suit/jacket,
+						/obj/item/clothing/under/pants/classicjeans,
+						/obj/item/toy/crayon/spraycan)
+
+/datum/antagonist/gang/vagos
+	name = "Los Santos Vagos"
+	roundend_category = "Los Santos Vagos gangsters"
+	gang_name = "Los Santos Vagos"
+	gang_id = "LSV"
+	acceptable_clothes = list(/obj/item/clothing/head/soft/yellow,
+							/obj/item/clothing/under/color/yellow,
+							/obj/item/clothing/neck/scarf/yellow,
+							/obj/item/clothing/head/beanie/yellow,
+							/obj/item/clothing/mask/bandana/gold)
+	free_clothes = list(/obj/item/clothing/mask/bandana/gold,
+						/obj/item/clothing/under/color/yellow,
 						/obj/item/toy/crayon/spraycan)
 
 /datum/team/gang

@@ -12,7 +12,7 @@
 	var/check_counter = 0
 	var/endtime = null
 	var/fuckingdone = FALSE
-	var/time_to_end = 32 MINUTES // give time for the gangster signup points to actually get spawned
+	var/time_to_end = 62 MINUTES
 	var/gangs_to_generate = 3
 	var/list/gangs_to_use
 	var/list/datum/mind/gangbangers = list()
@@ -47,8 +47,10 @@
 
 		gangbanger.add_antag_datum(new_gangster)
 		to_chat(gangbanger.current, "<B>As you're the first gangster, a gang signup point will spawn on your location in 2 minutes. Be prepared!</B>")
-		addtimer(CALLBACK(src, .proc/spawn_gang_point, new_gangster), 30 SECONDS)
+		addtimer(CALLBACK(src, .proc/spawn_gang_point, new_gangster), 2 MINUTES)
+	addtimer(CALLBACK(src, .proc/five_minute_warning), 57 MINUTES)
 	gamemode_ready = TRUE
+	SSshuttle.registerHostileEnvironment(src)
 	..()
 
 /datum/game_mode/gang/proc/spawn_gang_point(var/datum/antagonist/gang/new_gangster)
@@ -57,7 +59,7 @@
 		for(var/datum/team/gang/G in gangs)
 			readable_gang_names += G.name
 		var/finalized_gang_names = english_list(readable_gang_names)
-		priority_announce("Julio G coming to you live from Radio Los Spess! We've been hearing reports of gang activity on [station_name()], with the [finalized_gang_names] duking it out, looking for fresh territory and drugs to sling! Stay safe out there for the next 30 minutes 'till the space cops get there, and keep it cool, yeah? Play music, not gunshots, I say. Peace out!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
+		priority_announce("Julio G coming to you live from Radio Los Spess! We've been hearing reports of gang activity on [station_name()], with the [finalized_gang_names] duking it out, looking for fresh territory and drugs to sling! Stay safe out there for the next hour 'till the space cops get there, and keep it cool, yeah? Play music, not gunshots, I say. Peace out!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
 		sent_announcement = TRUE
 	if(new_gangster.owner && new_gangster.owner.current)
 		to_chat(new_gangster.owner.current, "Your Gang Sigunp Point has been teleported into your location.<br>Encourage people to sign up with it!<br>You can use drugs/guns on the signup point to export them to the black market for Gang Points.<br>You've also been supplied with a free set of your gang's clothing.")
@@ -68,6 +70,9 @@
 		signup_point.icon_state = "[new_gangster.gang_id]_gang_point"
 		for(var/threads in new_gangster.free_clothes)
 			new threads(get_turf(new_gangster.owner.current))
+
+/datum/game_mode/gang/proc/five_minute_warning()
+	priority_announce("Julio G coming to you live from Radio Los Spess! The space cops are closing in on [station_name()] and will arrive in about 5 minutes! Better clear on out of there if you don't want to get hurt!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
 
 /datum/game_mode/gang/check_win()
 	for(var/datum/team/gang in gangs)
