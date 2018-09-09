@@ -49,7 +49,6 @@
 	var/gamemode_ready = FALSE //Is the gamemode all set up and ready to start checking for ending conditions.
 	var/setup_error		//What stopepd setting up the mode.
 
-	var/show_all_antags = TRUE //Show all antags on the round-end report?
 
 /datum/game_mode/proc/announce() //Shows the gamemode's name and a fast description.
 	to_chat(world, "<b>The gamemode is: <span class='[announce_span]'>[name]</span>!</b>")
@@ -77,7 +76,6 @@
 
 ///Attempts to select players for special roles the mode might have.
 /datum/game_mode/proc/pre_setup()
-	to_chat(world, "<span class='boldannounce'>FUCKING TICKER</span>")
 	return 1
 
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
