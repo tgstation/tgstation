@@ -266,8 +266,8 @@
 	name = "\improper .50 anitmaterial rifle"
 	desc = "A weapon for combat exosuits. Shoots penetrator bullets."
 	icon_state = "mecha_carbine"
-	equip_cooldown = 45
-	projectile = /obj/item/projectile/bullet/p50/penetrator
+	equip_cooldown = 55
+	projectile = /obj/item/projectile/bullet/p50
 	projectiles = 6
 	projectile_energy_cost = 500
 	harmful = TRUE
