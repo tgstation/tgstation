@@ -118,8 +118,8 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	/*****The Point Calculator*****/
 	
 	if(orig_light < 10)
-    	say("Explosion not large enough for research calculations.")
-    	return
+		say("Explosion not large enough for research calculations.")
+		return
 	else if(orig_light < 4500) 
 		point_gain = (83300 * orig_light) / (orig_light + 3000)
 	else
