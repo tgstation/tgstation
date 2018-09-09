@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - bugfix: "ghosts will no longer lose their hearing from jumping between z-levels via orbiting"
