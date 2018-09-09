@@ -24,8 +24,11 @@
 	gang_name = "San Fierro Triad"
 	gang_id = "SFT"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/red,
-							/obj/item/clothing/under/color/red)
-	free_clothes = list(/obj/item/clothing/head/soft/red,
+							/obj/item/clothing/neck/scarf/red,
+							/obj/item/clothing/suit/jacket/letterman_red,
+							/obj/item/clothing/under/color/red,
+							/obj/item/clothing/mask/bandana/red)
+	free_clothes = list(/obj/item/clothing/suit/jacket/letterman_red,
 						/obj/item/clothing/under/color/red,
 						/obj/item/toy/crayon/spraycan)
 
@@ -35,8 +38,12 @@
 	gang_name = "Ballas"
 	gang_id = "B"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/purple,
-							/obj/item/clothing/under/color/lightpurple)
-	free_clothes = list(/obj/item/clothing/head/soft/purple,
+							/obj/item/clothing/under/color/lightpurple,
+							/obj/item/clothing/neck/scarf/purple,
+							/obj/item/clothing/head/beanie/purple,
+							/obj/item/clothing/suit/apron/purple_bartender,
+							/obj/item/clothing/mask/bandana/skull)
+	free_clothes = list(/obj/item/clothing/head/beanie/purple,
 						/obj/item/clothing/under/color/lightpurple,
 						/obj/item/toy/crayon/spraycan)
 
@@ -46,8 +53,12 @@
 	gang_name = "Grove Street Families"
 	gang_id = "GSF"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/green,
-							/obj/item/clothing/under/color/darkgreen)
-	free_clothes = list(/obj/item/clothing/head/soft/green,
+							/obj/item/clothing/under/color/darkgreen,
+							/obj/item/clothing/neck/scarf/green,
+							/obj/item/clothing/head/beanie/green,
+							/obj/item/clothing/suit/poncho/green,
+							/obj/item/clothing/mask/bandana/green)
+	free_clothes = list(/obj/item/clothing/mask/bandana/green,
 						/obj/item/clothing/under/color/darkgreen,
 						/obj/item/toy/crayon/spraycan)
 
