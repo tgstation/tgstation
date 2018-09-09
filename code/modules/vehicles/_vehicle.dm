@@ -15,7 +15,7 @@
 	var/key_type
 	var/obj/item/key/inserted_key
 	var/key_type_exact = TRUE		//can subtypes work
-	var/canmove = TRUE
+	var/canmove = TRUE //If this is false the vehicle cant drive. (thanks for making this actually functional kevinz :^) )
 	var/emulate_door_bumps = TRUE	//when bumping a door try to make occupants bump them to open them.
 	var/default_driver_move = TRUE	//handle driver movement instead of letting something else do it like riding datums.
 	var/list/autogrant_actions_passenger	//plain list of typepaths
@@ -102,6 +102,8 @@
 		to_chat(user, "<span class='warning'>[src] has no key inserted!</span>")
 		return FALSE
 	if(!default_driver_move)
+		return
+	if(!canmove)
 		return
 	vehicle_move(direction)
 

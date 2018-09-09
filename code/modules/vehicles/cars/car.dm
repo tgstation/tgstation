@@ -16,7 +16,7 @@
 /obj/vehicle/sealed/car/MouseDrop_T(atom/dropping, mob/M)
 	if(!M.canmove || M.stat || M.restrained())
 		return FALSE
-	if(isliving(dropping) && M != dropping)
+	if((car_traits & CAN_KIDNAP) && isliving(dropping) && M != dropping)
 		var/mob/living/L = dropping
 		L.visible_message("<span class='warning'>[M] starts forcing [L] into [src]!</span>")
 		mob_try_forced_enter(M, L)

@@ -157,10 +157,22 @@
 
 /datum/action/vehicle/sealed/RollTheDice
 	name = "Press a colorful button"
-	desc = "Press one of those colorful buttons on your display panel!."
+	desc = "Press one of those colorful buttons on your display panel!"
 	button_icon_state = "car_rtd"
 
 /datum/action/vehicle/sealed/RollTheDice/Trigger()
 	if(istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
 		var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
 		C.RollTheDice(owner)
+
+/datum/action/vehicle/sealed/Cannon
+	name = "Toggle siege mode"
+	desc = "Destroy them with their own fodder"
+	button_icon_state = "car_cannon"
+
+/datum/action/vehicle/sealed/Cannon/Trigger()
+	if(istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
+		var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
+		if(C.cannonbusy)
+			to_chat(owner, "<span class='notice'>Please wait for the vehicle to finish its current action first.</span>")
+		C.ToggleCannon()
