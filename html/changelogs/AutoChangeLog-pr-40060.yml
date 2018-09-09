@@ -1,0 +1,5 @@
+author: "Cw3040"
+delete-after: True
+changes: 
+  - rscadd: "Added Improvised Jetpacks, with approx. 2/7ths of the volume of a normal jetpack, acts like a hardsuit jetpack in terms of speed and can cut out at random!"
+  - imageadd: "Sprite by obscolene"
