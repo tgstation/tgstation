@@ -237,6 +237,8 @@ SUBSYSTEM_DEF(ticker)
 	CHECK_TICK
 	//Configure mode and assign player to special mode stuff
 	var/can_continue = 0
+	to_chat(world, "<span class='boldannounce'>wew im calling pre_setup</span>")
+	to_chat(world, "[mode.type]")
 	can_continue = src.mode.pre_setup()		//Choose antagonists
 	CHECK_TICK
 	SSjob.DivideOccupations() 				//Distribute jobs
@@ -541,6 +543,10 @@ SUBSYSTEM_DEF(ticker)
 			news_message = "The burst of energy released near [station_name()] has been confirmed as merely a test of a new weapon. However, due to an unexpected mechanical error, their communications system has been knocked offline."
 		if(SHUTTLE_HIJACK)
 			news_message = "During routine evacuation procedures, the emergency shuttle of [station_name()] had its navigation protocols corrupted and went off course, but was recovered shortly after."
+		if(GANG_OPERATING)
+			news_message = "[station_name()] has found itself controlled entirely by gangs!"
+		if(GANG_DESTROYED)
+			news_message = "[station_name()] has cleared out all the gangsters infesting the ship!"
 
 	if(news_message)
 		send2otherserver(news_source, news_message,"News_Report")

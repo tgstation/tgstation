@@ -147,7 +147,7 @@
 
 #define ismecha(A) (istype(A, /obj/mecha))
 
-#define is_cleanable(A) (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/rune)) //if something is cleanable
+#define is_cleanable(A) ((istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/rune)) && !istype(A, /obj/effect/decal/cleanable/crayon/gang)) //if something is cleanable
 
 #define isorgan(A) (istype(A, /obj/item/organ))
 
