@@ -57,7 +57,8 @@
 	else
 		to_chat(user, "<span class='notice'>You activate \the [src].</span>")
 		playsound(get_turf(src), 'sound/effects/seedling_chargeup.ogg', 100, 1, -6)
-		var/start = user.filters.len
+		// filters commented out due to dd crash
+	/*	var/start = user.filters.len
 		var/X,Y,rsq,i,f
 		for(i=1, i<=7, ++i)
 			do
@@ -69,7 +70,7 @@
 		for(i=1, i<=7, ++i)
 			f = user.filters[start+i]
 			animate(f, offset=f:offset, time=0, loop=3, flags=ANIMATION_PARALLEL)
-			animate(offset=f:offset-1, time=rand()*20+10)
+			animate(offset=f:offset-1, time=rand()*20+10) */
 		if (do_after(user, 50, target=user) && user.cell.use(activationCost))
 			playsound(get_turf(src), 'sound/effects/bamf.ogg', 100, 1, -6)
 			to_chat(user, "<span class='notice'>You are now disguised as the Nanotrasen engineering borg \"[friendlyName]\".</span>")
@@ -77,10 +78,10 @@
 		else
 			to_chat(user, "<span class='warning'>The chameleon field fizzles.</span>")
 			do_sparks(3, FALSE, user)
-			for(i=1, i<=min(7, user.filters.len), ++i) // removing filters that are animating does nothing, we gotta stop the animations first
+		/*	for(i=1, i<=min(7, user.filters.len), ++i) // removing filters that are animating does nothing, we gotta stop the animations first
 				f = user.filters[start+i]
 				animate(f)
-		user.filters = null
+		user.filters = null */
 
 /obj/item/borg_chameleon/process()
 	if (user)
