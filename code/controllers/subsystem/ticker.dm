@@ -237,8 +237,6 @@ SUBSYSTEM_DEF(ticker)
 	CHECK_TICK
 	//Configure mode and assign player to special mode stuff
 	var/can_continue = 0
-	to_chat(world, "<span class='boldannounce'>wew im calling pre_setup</span>")
-	to_chat(world, "[mode.type]")
 	can_continue = src.mode.pre_setup()		//Choose antagonists
 	CHECK_TICK
 	SSjob.DivideOccupations() 				//Distribute jobs
