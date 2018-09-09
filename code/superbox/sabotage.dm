@@ -14,7 +14,7 @@
 		/obj/machinery/bookbinder,
 		/obj/machinery/shower,
 		// security
-		/obj/machinery/recharger,
+		// /obj/machinery/recharger, -- too hard, there's too many of them
 		/obj/machinery/computer/security,
 		/obj/machinery/computer/secure_data,
 		/obj/machinery/door_timer,
