@@ -1,18 +1,18 @@
 /datum/game_mode/gang
-	name = "Gang"
-	config_tag = "gang"
+	name = "Families"
+	config_tag = "families"
 	antag_flag = ROLE_TRAITOR
 	false_report_weight = 5
-	required_players = 0
-	required_enemies = 1
-	recommended_enemies = 1
+	required_players = 30
+	required_enemies = 3
+	recommended_enemies = 3
 	announce_span = "danger"
 	announce_text = "Grove For Lyfe!"
 	reroll_friendly = FALSE
 	var/check_counter = 0
 	var/endtime = null
 	var/fuckingdone = FALSE
-	var/time_to_end = 5 MINUTES // give time for the gangster signup points to actually get spawned
+	var/time_to_end = 32 MINUTES // give time for the gangster signup points to actually get spawned
 	var/gangs_to_generate = 3
 	var/list/gangs_to_use
 	var/list/datum/mind/gangbangers = list()

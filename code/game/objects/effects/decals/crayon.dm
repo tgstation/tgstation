@@ -37,7 +37,6 @@ GLOBAL_LIST(gang_tags)
 	desc = "Looks like someone's claimed this area for Leet Like Jeff K."
 	icon = 'icons/obj/gang/tags.dmi'
 	var/datum/team/gang/my_gang
-	var/owned_gang_pretty = "Leet Like Jeff K"
 
 /obj/effect/decal/cleanable/crayon/gang/Initialize(mapload, main, type, e_name, graf_rot, alt_icon = null)
 	. = ..()
