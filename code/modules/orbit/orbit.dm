@@ -55,6 +55,11 @@
 	if (!targetloc || (!lock && orbiter.loc != lastloc && orbiter.loc != targetloc))
 		orbiter.stop_orbit()
 		return
+	var/turf/old_turf = get_turf(orbiter)
+	var/turf/new_turf = get_turf(targetloc)
+	if (old_turf?.z != new_turf?.z)
+		orbiter.onTransitZ(old_turf?.z, new_turf?.z)
+	// DO NOT PORT TO FORCEMOVE - MEMECODE WILL KILL MC
 	orbiter.loc = targetloc
 	orbiter.update_parallax_contents()
 	orbiter.update_light()
