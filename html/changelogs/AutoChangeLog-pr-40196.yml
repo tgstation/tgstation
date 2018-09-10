@@ -1,0 +1,6 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - spellcheck: "Multitools and quantum pads now show infos about their buffer when examined."
+  - bugfix: "Players no longer bash quantum pads with multitools that contain no pad in their buffer."
+  - tweak: "You can no longer link a quantum pad to itself."
