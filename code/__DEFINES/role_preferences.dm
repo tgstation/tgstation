@@ -35,6 +35,8 @@
 #define ROLE_LAVALAND               "lavaland"
 #define ROLE_INTERNAL_AFFAIRS	"internal affairs agent"
 
+#define ROLE_INFILTRATOR			"syndicate infiltrator" // sunset -- adds infiltrator role
+
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough
 //(in game days played) to play that role
@@ -58,7 +60,8 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_SERVANT_OF_RATVAR = /datum/game_mode/clockwork_cult,
 	ROLE_OVERTHROW = /datum/game_mode/overthrow,
 	ROLE_INTERNAL_AFFAIRS = /datum/game_mode/traitor/internal_affairs,
-	ROLE_SENTIENCE
+	ROLE_SENTIENCE,
+	ROLE_INFILTRATOR = /datum/game_mode/infiltration // sunset -- adds infiltrator role=gamemode
 ))
 
 //Job defines for what happens when you fail to qualify for any job during job selection

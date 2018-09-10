@@ -111,6 +111,7 @@
 				"<span class='italics'>You hear a click.</span>")
 			set_mode(CLAMPED_OFF)
 
+// sunset -- Mirrored this function in sunset/code/game/objects/item/devices/powersink.dm to add the on_drain proc.
 /obj/item/powersink/process()
 	if(!attached)
 		set_mode(DISCONNECTED)

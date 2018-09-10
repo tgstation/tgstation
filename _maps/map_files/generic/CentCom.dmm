@@ -18041,6 +18041,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/evac)
+"ZQ" = (
+/obj/effect/spawner/template/infiltrator,
+/turf/open/space/basic,
+/area/space)
 "ZT" = (
 /mob/living/simple_animal/cow,
 /turf/open/floor/grass,
@@ -48702,7 +48706,7 @@ aa
 aa
 aa
 aa
-aa
+ZQ
 aa
 aa
 aa
