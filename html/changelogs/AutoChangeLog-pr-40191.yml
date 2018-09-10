@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "The CMO office and morgue disposal bins on Deltastation are now connected to the disposal loop."
