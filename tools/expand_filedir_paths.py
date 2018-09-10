@@ -88,6 +88,6 @@ def rewrite_sources(resources):
                 os.remove(path)
                 os.rename(path + ".tmp", path)
 
-dirs = read_filedirs("tgstation.dme");
+dirs = read_filedirs("sunsetstation.dme");
 resources = index_files(dirs)
 rewrite_sources(resources)
