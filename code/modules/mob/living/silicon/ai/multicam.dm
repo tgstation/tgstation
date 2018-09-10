@@ -213,7 +213,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	return C
 
 /mob/living/silicon/ai/proc/toggle_multicam()
-	if(!CONFIG_GET(flag/allow)_ai_multicam))
+	if(!CONFIG_GET(flag/allow_ai_multicam))
 		to_chat(src, "<span class='warning'>This action is currently disabled. Contact an administrator to enable this feature.</span>")
 		return
 	if(multicam_on)
