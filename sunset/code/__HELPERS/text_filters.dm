@@ -11,7 +11,7 @@ GLOBAL_DATUM_INIT(text_filter_datum, /datum/text_filter, new)
 		return TRUE
 	return FALSE
 
-return FALSE
- /datum/text_filter/proc/yeet_check(message)
+/datum/text_filter/proc/yeet_check(message)
 	if(yeetgex.Find(message))
 		return TRUE
+	return FALSE
