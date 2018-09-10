@@ -630,7 +630,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	reagents.metabolize(src, can_overdose=FALSE, liverless = TRUE)
 	if(has_trait(TRAIT_STABLEHEART))
 		return
-	adjustToxLoss(2.5, TRUE,  TRUE) //slightly more than charcoal, anti-toxin or pentetic acid can heal
+	adjustToxLoss(4, TRUE,  TRUE)
 	if(prob(30))
 		to_chat(src, "<span class='warning'>You feel a stabbing pain in your abdomen!</span>")
 
