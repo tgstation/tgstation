@@ -49,7 +49,7 @@
 
 		gangbanger.add_antag_datum(new_gangster)
 		to_chat(gangbanger.current, "<B>As you're the first gangster, a gang signup point will spawn on your location in 2 minutes. Be prepared!</B>")
-		to_chat(owner.current, "<B><font size=3 color=red>Be sure to be in a public place! Your Signup Point is invincible, and you want to attract as many signups as possible.</font></B>")
+		to_chat(gangbanger.current, "<B><font size=3 color=red>Be sure to be in a public place! Your Signup Point is invincible, and you want to attract as many signups as possible.</font></B>")
 		addtimer(CALLBACK(src, .proc/spawn_gang_point, new_gangster), 2 MINUTES)
 	addtimer(CALLBACK(src, .proc/announce_gang_locations), 130 SECONDS)
 	addtimer(CALLBACK(src, .proc/five_minute_warning), 25 MINUTES)
