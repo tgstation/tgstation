@@ -154,7 +154,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(!can_speak_vocal(message))
 		to_chat(src, "<span class='warning'>You find yourself unable to speak!</span>")
 		return
-
+	// Sunset begin
+	if(check_retard_speech(message))
+		to_chat(src, "<span class='warning'>[pick(GLOB.retard_lines)]</span>")
+		return
+	// Sunset end
 	var/message_range = 7
 
 	var/succumbed = FALSE

@@ -1,0 +1,1 @@
+GLOBAL_LIST_INIT(retard_lines, world.file2list("strings/retard_lines.txt"))
