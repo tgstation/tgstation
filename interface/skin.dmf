@@ -53,6 +53,7 @@ window "mainwindow"
 		size = 640x440
 		anchor1 = none
 		anchor2 = none
+		background-color = #272727
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
 		icon = 'icons\\ss13_64.png'
@@ -64,6 +65,7 @@ window "mainwindow"
 		size = 634x417
 		anchor1 = 0,0
 		anchor2 = 100,100
+		background-color = #272727
 		saved-params = "splitter"
 		left = "mapwindow"
 		right = "infowindow"
@@ -84,6 +86,8 @@ window "mainwindow"
 		size = 40x20
 		anchor1 = 100,100
 		anchor2 = none
+		text-color = #ffffff
+		background-color = #272727
 		saved-params = "is-checked"
 		text = "Chat"
 		command = ".winset \"saybutton.is-checked=true ? input.command=\"!say \\\"\" : input.command=\"\"saybutton.is-checked=true ? mebutton.is-checked=false\"\"saybutton.is-checked=true ? oocbutton.is-checked=false\""
@@ -94,6 +98,8 @@ window "mainwindow"
 		size = 40x20
 		anchor1 = 100,100
 		anchor2 = none
+		text-color = #ffffff
+		background-color = #272727
 		saved-params = "is-checked"
 		text = "OOC"
 		command = ".winset \"oocbutton.is-checked=true ? input.command=\"!ooc \\\"\" : input.command=\"\"oocbutton.is-checked=true ? mebutton.is-checked=false\"\"oocbutton.is-checked=true ? saybutton.is-checked=false\""
@@ -104,6 +110,8 @@ window "mainwindow"
 		size = 40x20
 		anchor1 = 100,100
 		anchor2 = none
+		text-color = #ffffff
+		background-color = #272727
 		saved-params = "is-checked"
 		text = "Me"
 		command = ".winset \"mebutton.is-checked=true ? input.command=\"!me \\\"\" : input.command=\"\"mebutton.is-checked=true ? saybutton.is-checked=false\"\"mebutton.is-checked=true ? oocbutton.is-checked=false\""
@@ -114,6 +122,7 @@ window "mainwindow"
 		size = 200x200
 		anchor1 = none
 		anchor2 = none
+		background-color = #272727
 		is-visible = false
 		saved-params = ""
 	elem "tooltip"
@@ -122,6 +131,7 @@ window "mainwindow"
 		size = 999x999
 		anchor1 = none
 		anchor2 = none
+		background-color = #272727
 		is-visible = false
 		saved-params = ""
 
@@ -140,6 +150,7 @@ window "mapwindow"
 		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
+		background-color = #272727
 		font-family = "Arial"
 		font-size = 7
 		text-color = none
@@ -154,6 +165,7 @@ window "infowindow"
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
+		background-color = #272727
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "info"
@@ -162,61 +174,93 @@ window "infowindow"
 		size = 640x445
 		anchor1 = 0,0
 		anchor2 = 100,100
+		background-color = #272727
 		saved-params = "splitter"
 		left = "statwindow"
 		right = "outputwindow"
 		is-vert = false
+	elem "discord"
+		type = BUTTON
+		pos = 192,5
+		size = 88x20
+		anchor1 = 30,0
+		anchor2 = 44,0
+		font-family = "Verdana"
+		text-color = #ffffff
+		background-color = #40628a
+		saved-params = "is-checked"
+		text = "Join Discord"
+		command = "discord"
 	elem "changelog"
 		type = BUTTON
-		pos = 16,5
-		size = 104x20
-		anchor1 = 3,0
-		anchor2 = 19,0
+		pos = 8,5
+		size = 80x20
+		anchor1 = 1,0
+		anchor2 = 14,0
+		font-family = "Verdana"
+		text-color = #ffffff
+		background-color = #40628a
 		saved-params = "is-checked"
 		text = "Changelog"
 		command = "changelog"
 	elem "rules"
 		type = BUTTON
-		pos = 120,5
-		size = 100x20
-		anchor1 = 19,0
-		anchor2 = 34,0
+		pos = 96,5
+		size = 88x20
+		anchor1 = 15,0
+		anchor2 = 29,0
+		font-family = "Verdana"
+		text-color = #ffffff
+		background-color = #40628a
 		saved-params = "is-checked"
 		text = "Rules"
 		command = "rules"
 	elem "wiki"
 		type = BUTTON
-		pos = 220,5
-		size = 100x20
-		anchor1 = 34,0
-		anchor2 = 50,0
+		pos = 288,5
+		size = 80x20
+		anchor1 = 45,0
+		anchor2 = 58,0
+		font-family = "Verdana"
+		text-color = #ffffff
+		background-color = #40628a
 		saved-params = "is-checked"
 		text = "Wiki"
 		command = "wiki"
 	elem "forum"
 		type = BUTTON
-		pos = 320,5
-		size = 100x20
-		anchor1 = 50,0
-		anchor2 = 66,0
+		pos = 376,5
+		size = 80x20
+		anchor1 = 59,0
+		anchor2 = 71,0
+		font-family = "Verdana"
+		text-color = #ffffff
+		background-color = #40628a
 		saved-params = "is-checked"
 		text = "Forum"
 		command = "forum"
 	elem "github"
 		type = BUTTON
-		pos = 420,5
-		size = 100x20
-		anchor1 = 66,0
-		anchor2 = 81,0
+		pos = 464,5
+		size = 80x20
+		anchor1 = 73,0
+		anchor2 = 85,0
+		font-family = "Verdana"
+		text-color = #ffffff
+		background-color = #40628a
 		saved-params = "is-checked"
-		text = "Github"
+		text = "GitHub"
 		command = "github"
 	elem "report-issue"
 		type = BUTTON
-		pos = 520,5
-		size = 100x20
-		anchor1 = 81,0
-		anchor2 = 97,0
+		pos = 552,5
+		size = 80x20
+		anchor1 = 86,0
+		anchor2 = 99,0
+		font-family = "Verdana"
+		font-size = 8
+		text-color = #ffffff
+		background-color = #40628a
 		saved-params = "is-checked"
 		text = "Report Issue"
 		command = "report-issue"
@@ -228,6 +272,7 @@ window "outputwindow"
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
+		background-color = #272727
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "browseroutput"
@@ -236,7 +281,7 @@ window "outputwindow"
 		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = #ffffff
+		background-color = #272727
 		is-visible = false
 		is-disabled = true
 		saved-params = ""
@@ -247,6 +292,8 @@ window "outputwindow"
 		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
+		text-color = #40628a
+		background-color = #272727
 		is-default = true
 		saved-params = ""
 
@@ -257,6 +304,7 @@ window "statwindow"
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
+		background-color = #272727
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "stat"
@@ -265,6 +313,14 @@ window "statwindow"
 		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
+		font-family = "Verdana"
+		text-color = #ffffff
+		background-color = #383838
 		is-default = true
 		saved-params = ""
+		tab-text-color = #ffffff
+		tab-background-color = #272727
+		tab-font-family = "Verdana"
+		prefix-color = #ebebeb
+		suffix-color = #ebebeb
 
