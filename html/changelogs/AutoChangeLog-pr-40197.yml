@@ -1,0 +1,6 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - balance: "The damage caused by liver failure has been reduced, to give players more time to seek help."
+  - tweak: "Made feedback messages for liver failure/damage more obvious."
+  - spellcheck: "Fixed typos and capitalization in health scanner messages."
