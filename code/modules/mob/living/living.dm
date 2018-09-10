@@ -461,11 +461,12 @@
 	fire_stacks = 0
 	confused = 0
 	update_canmove()
-	GET_COMPONENT(mood, /datum/component/mood)
-	if (mood)
-		QDEL_LIST_ASSOC_VAL(mood.mood_events)
-		mood.sanity = SANITY_GREAT
-		mood.update_mood()
+	if(admin_revive)
+		GET_COMPONENT(mood, /datum/component/mood)
+		if (mood)
+			QDEL_LIST_ASSOC_VAL(mood.mood_events)
+			mood.sanity = SANITY_GREAT
+			mood.update_mood()
 
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
