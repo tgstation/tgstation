@@ -549,7 +549,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	var/list/parts = list()
 	parts += printplayer(owner)
 	parts += printdevilinfo()
-	parts += printobjectives(owner)
+	parts += printobjectives(objectives)
 	return parts.Join("<br>")
 
 //A simple super light weight datum for the codex gigas.

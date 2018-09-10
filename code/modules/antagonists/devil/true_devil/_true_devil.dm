@@ -147,11 +147,15 @@
 	if(ascended || user.mind.soulOwner == src.mind)
 		var/mob/living/simple_animal/imp/S = new(get_turf(loc))
 		S.key = user.key
-		S.mind.assigned_role = "Imp"
-		S.mind.special_role = "Imp"
+		//TODO actual subtype for this
+		var/datum/antagonist/custom/A = new()
+		A.name = "Imp"
+		A.show_in_roundend = FALSE
+		S.mind.add_antag_datum(A)
 		var/datum/objective/newobjective = new
 		newobjective.explanation_text = "Try to get a promotion to a higher devilic rank."
-		S.mind.objectives += newobjective
+		newobjective.owner = S.mind
+		A.objectives += S
 		to_chat(S, S.playstyle_string)
 		to_chat(S, "<B>Objective #[1]</B>: [newobjective.explanation_text]")
 	else

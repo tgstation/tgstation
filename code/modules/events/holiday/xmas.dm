@@ -82,11 +82,18 @@
 		santa.equipOutfit(/datum/outfit/santa)
 		santa.update_icons()
 
+		//todo custom antag type
+		var/datum/antagonist/custom/A = new
+		A.name = "Santa"
+
 		var/datum/objective/santa_objective = new()
 		santa_objective.explanation_text = "Bring joy and presents to the station!"
 		santa_objective.completed = 1 //lets cut our santas some slack.
 		santa_objective.owner = santa.mind
-		santa.mind.objectives += santa_objective
+		A.objectives |= santa_objective
+		
+		santa.mind.add_antag_datum(A)
+
 		santa.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/presents)
 		var/obj/effect/proc_holder/spell/targeted/area_teleport/teleport/telespell = new(santa)
 		telespell.clothes_req = 0 //santa robes aren't actually magical.

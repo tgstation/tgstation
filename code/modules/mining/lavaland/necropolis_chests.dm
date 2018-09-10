@@ -1017,9 +1017,17 @@
 
 	message_admins("<span class='adminnotice'>[ADMIN_LOOKUPFLW(L)] has been marked for death by [ADMIN_LOOKUPFLW(user)]!</span>")
 
+	//todo custom antag type
+	var/datum/antagonist/custom/A = new
+	A.name = "Blood Contract Target"
+	A.show_in_roundend = FALSE
+
 	var/datum/objective/survive/survive = new
 	survive.owner = L.mind
-	L.mind.objectives += survive
+	A.objectives += survive
+
+	L.mind.add_antag_datum(A)
+
 	log_combat(user, L, "took out a blood contract on", src)
 	to_chat(L, "<span class='userdanger'>You've been marked for death! Don't let the demons get you! KILL THEM ALL!</span>")
 	L.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)

@@ -35,7 +35,6 @@
 
 /datum/antagonist/cult/proc/add_objectives()
 	objectives |= cult_team.objectives
-	owner.objectives |= objectives
 
 /datum/antagonist/cult/Destroy()
 	QDEL_NULL(communion)

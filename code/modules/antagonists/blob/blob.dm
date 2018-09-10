@@ -30,7 +30,6 @@
 	var/datum/objective/blob_takeover/main = new
 	main.owner = owner
 	objectives += main
-	owner.objectives |= objectives
 
 /datum/antagonist/blob/apply_innate_effects(mob/living/mob_override)
 	if(!isovermind(owner.current))

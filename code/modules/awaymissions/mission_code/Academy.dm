@@ -266,8 +266,14 @@
 			var/mob/living/carbon/human/H = new(drop_location())
 			H.equipOutfit(/datum/outfit/butler)
 			var/datum/mind/servant_mind = new /datum/mind()
+			var/datum/antagonist/custom/A = new
+			A.name = "Magic Servant"
+			A.show_in_roundend = FALSE
 			var/datum/objective/O = new("Serve [user.real_name].")
-			servant_mind.objectives += O
+			O.owner = servant_mind
+			A.objectives |= O
+			//TODO custom antag type
+			servant_mind.add_antag_datum(A)
 			servant_mind.transfer_to(H)
 
 			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [user.real_name] Servant?", ROLE_WIZARD, null, ROLE_WIZARD, 50, H)

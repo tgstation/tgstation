@@ -63,7 +63,6 @@
 
 /datum/antagonist/monkey/proc/forge_objectives()
 	objectives |= monkey_team.objectives
-	owner.objectives |= objectives
 
 /datum/antagonist/monkey/admin_remove(mob/admin)
 	var/mob/living/carbon/monkey/M = owner.current
