@@ -3,11 +3,15 @@
 /obj/machinery/computer/upload
 	var/mob/living/silicon/current = null //The target of future law uploads
 	icon_screen = "command"
+	req_access = list(ACCESS_RD)
 
 /obj/machinery/computer/upload/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/aiModule))
 		var/obj/item/aiModule/M = O
 		if(src.stat & (NOPOWER|BROKEN|MAINT))
+			return
+		if(!src.allowed(usr) && !M.bypass_access_check)
+			to_chat(usr, "<span class='danger'>Access Denied.</span>")
 			return
 		if(!current)
 			to_chat(user, "<span class='caution'>You haven't selected anything to transmit laws to!</span>")
