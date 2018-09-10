@@ -1104,7 +1104,7 @@
 
 /obj/machinery/power/apc/add_load(amount)
 	if(terminal && terminal.powernet)
-		terminal.powernet.load += amount
+		terminal.add_load(amount)
 
 /obj/machinery/power/apc/avail()
 	if(terminal)
