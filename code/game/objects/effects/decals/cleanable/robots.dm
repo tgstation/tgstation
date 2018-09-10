@@ -8,7 +8,7 @@
 	layer = LOW_OBJ_LAYER
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
 	blood_state = BLOOD_STATE_OIL
-	bloodiness = MAX_SHOE_BLOODINESS
+	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	mergeable_decal = FALSE
 
 /obj/effect/decal/cleanable/robot_debris/proc/streak(list/directions)
@@ -45,7 +45,7 @@
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	blood_state = BLOOD_STATE_OIL
-	bloodiness = MAX_SHOE_BLOODINESS
+	bloodiness = BLOOD_AMOUNT_PER_DECAL
 
 /obj/effect/decal/cleanable/oil/Initialize()
 	. = ..()
