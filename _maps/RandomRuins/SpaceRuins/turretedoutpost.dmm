@@ -153,6 +153,16 @@
 "aB" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/ushanka,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/turretedoutpost)
 "aC" = (
@@ -276,6 +286,16 @@
 "aR" = (
 /obj/structure/table/reinforced,
 /obj/item/paper/crumpled,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/turretedoutpost)
 "aS" = (
@@ -344,6 +364,19 @@
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/breadslice/meat,
 /obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/turretedoutpost)
+"tK" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -586,8 +619,8 @@ ad
 ad
 ad
 aB
-ag
-ag
+tK
+tK
 aR
 ad
 al
