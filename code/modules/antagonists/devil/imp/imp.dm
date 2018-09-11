@@ -61,6 +61,7 @@
 
 /datum/antagonist/imp
 	name = "Imp"
+	antagpanel_category = "Devil"
 	show_in_roundend = FALSE
 
 /datum/antagonist/imp/on_gain()
@@ -72,6 +73,3 @@
 	newobjective.explanation_text = "Try to get a promotion to a higher devilic rank."
 	newobjective.owner = owner
 	objectives += newobjective
-
-/datum/antagonist/imp
-	antagpanel_category = "Devil"
