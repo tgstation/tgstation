@@ -288,6 +288,13 @@
 	else if(drawing in numerals)
 		temp = "number"
 
+	var/gang_mode
+	if(user.mind)
+		gang_mode = user.mind.has_antag_datum(/datum/antagonist/gang)
+
+	if(gang_mode && (!can_claim_for_gang(user, target)))
+		return
+
 
 	var/graf_rot
 	if(drawing in oriented)
@@ -317,7 +324,8 @@
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 
 	var/takes_time = !instant
-
+	if(gang_mode)
+		takes_time = TRUE
 	var/wait_time = 50
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		wait_time *= 3
@@ -333,25 +341,31 @@
 	var/list/turf/affected_turfs = list()
 
 	if(actually_paints)
-		switch(paint_mode)
-			if(PAINT_NORMAL)
-				var/obj/effect/decal/cleanable/crayon/C = new(target, paint_color, drawing, temp, graf_rot)
-				C.add_hiddenprint(user)
-				C.pixel_x = clickx
-				C.pixel_y = clicky
-				affected_turfs += target
-			if(PAINT_LARGE_HORIZONTAL)
-				var/turf/left = locate(target.x-1,target.y,target.z)
-				var/turf/right = locate(target.x+1,target.y,target.z)
-				if(is_type_in_list(left, validSurfaces) && is_type_in_list(right, validSurfaces))
-					var/obj/effect/decal/cleanable/crayon/C = new(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
+		if(gang_mode)
+			if(!can_claim_for_gang(user, target))
+				return
+			tag_for_gang(user, target, gang_mode)
+			affected_turfs += target
+		else
+			switch(paint_mode)
+				if(PAINT_NORMAL)
+					var/obj/effect/decal/cleanable/crayon/C = new(target, paint_color, drawing, temp, graf_rot)
 					C.add_hiddenprint(user)
-					affected_turfs += left
-					affected_turfs += right
+					C.pixel_x = clickx
+					C.pixel_y = clicky
 					affected_turfs += target
-				else
-					to_chat(user, "<span class='warning'>There isn't enough space to paint!</span>")
-					return
+				if(PAINT_LARGE_HORIZONTAL)
+					var/turf/left = locate(target.x-1,target.y,target.z)
+					var/turf/right = locate(target.x+1,target.y,target.z)
+					if(is_type_in_list(left, validSurfaces) && is_type_in_list(right, validSurfaces))
+						var/obj/effect/decal/cleanable/crayon/C = new(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
+						C.add_hiddenprint(user)
+						affected_turfs += left
+						affected_turfs += right
+						affected_turfs += target
+					else
+						to_chat(user, "<span class='warning'>There isn't enough space to paint!</span>")
+						return
 
 	if(!instant)
 		to_chat(user, "<span class='notice'>You finish drawing \the [temp].</span>")
@@ -385,6 +399,46 @@
 		// check_empty() is called during afterattack
 	else
 		..()
+
+/obj/item/toy/crayon/proc/can_claim_for_gang(mob/user, atom/target)
+	var/area/A = get_area(target)
+	if(!A || (!is_station_level(A.z)))
+		to_chat(user, "<span class='warning'>[A] is unsuitable for tagging.</span>")
+		return FALSE
+
+	var/spraying_over = FALSE
+	for(var/obj/effect/decal/cleanable/crayon/gang/G in target)
+		spraying_over = TRUE
+
+	for(var/obj/machinery/power/apc in target)
+		to_chat(user, "<span class='warning'>You can't tag an APC.</span>")
+		return FALSE
+
+	var/occupying_gang = territory_claimed(A, user)
+	if(occupying_gang && !spraying_over)
+		to_chat(user, "<span class='danger'>[A] has already been tagged by a gang! You must find and spray over the old tag first!</span>")
+		return FALSE
+
+	// stolen from oldgang lmao
+	return TRUE
+
+/obj/item/toy/crayon/proc/tag_for_gang(mob/user, atom/target, datum/antagonist/gang/user_gang)
+	for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
+		qdel(old_marking)
+
+	var/area/territory = get_area(target)
+
+	var/obj/effect/decal/cleanable/crayon/gang/tag = new /obj/effect/decal/cleanable/crayon/gang(target)
+	tag.my_gang = user_gang.my_gang
+	tag.icon_state = "[user_gang.gang_id]_tag"
+	tag.name = "[tag.my_gang.name] gang tag"
+	tag.desc = "Looks like someone's claimed this area for [tag.my_gang.name]"
+	to_chat(user, "<span class='notice'>You tagged [territory] for the [tag.my_gang.name]!</span>")
+
+/obj/item/toy/crayon/proc/territory_claimed(area/territory, mob/user)
+	for(var/obj/effect/decal/cleanable/crayon/gang/G in GLOB.gang_tags)
+		if(get_area(G) == territory)
+			return TRUE
 
 /obj/item/toy/crayon/red
 	icon_state = "crayonred"
