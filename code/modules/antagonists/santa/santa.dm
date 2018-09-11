@@ -1,5 +1,6 @@
 /datum/antagonist/santa
 	name = "Santa"
+	show_in_antagpanel = FALSE
 
 /datum/antagonist/santa/on_gain()
 	. = ..()
