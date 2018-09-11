@@ -7,20 +7,20 @@ $include antag_rep.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
-# @SERVERNAME tgstation
+ @SERVERNAME SunsetStation
 # Which sets the SERVERNAME, and disallows admins from being able to change it using View Variables.
 # @LOG_TWITTER 0
 # Which explicitly disables LOG_TWITTER, as well as locking it.
 # There are various options which are hard-locked for security reasons.
 
 ## Server name: This appears at the top of the screen in-game and in the BYOND hub. Uncomment and replace 'tgstation' with the name of your choice.
-# SERVERNAME tgstation
+ SERVERNAME SunsetStation
 
 ## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.
-# SERVERSQLNAME tgstation
+ SERVERSQLNAME sunsetstation
 
 ## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
-STATIONNAME Space Station 13
+##STATIONNAME Space Station 13
 
 ## Put on byond hub: Uncomment this to put your server on the byond hub.
 #HUB
