@@ -888,6 +888,12 @@
 		. = ..(M,force,check_loc)
 		stop_pulling()
 
+/mob/living/carbon/human/adjust_fire_stacks()
+	. = ..()
+	if(iscatperson(src) && fire_stacks < 0)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "sadcat", /datum/mood_event/catwet)
+
+
 /mob/living/carbon/human/do_after_coefficent()
 	. = ..()
 	. *= physiology.do_after_speed
