@@ -86,7 +86,6 @@
 	var/datum/action/innate/deploy_last_shell/redeploy_action = new
 	var/chnotify = 0
 
-	var/multicam_allowed = FALSE
 	var/multicam_on = FALSE
 	var/obj/screen/movable/pic_in_pic/ai/master_multicam
 	var/list/multicam_screens = list()
