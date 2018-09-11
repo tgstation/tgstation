@@ -507,3 +507,25 @@
 	desc = "Your body is covered in blue ichor! You can't be revived by vitality matrices."
 	icon_state = "ichorial_stain"
 	alerttooltipstyle = "clockcult"
+
+/datum/status_effect/gonbolaPacify
+	id = "gonbolaPacify"
+	status_type = STATUS_EFFECT_MULTIPLE
+	alert_type = null
+	var/obj/item/restraints/legcuffs/bola/gonbola/gonbolaReference
+
+/datum/status_effect/gonbolaPacify/tick()
+	if(!iscarbon(owner))
+		qdel(src)
+		return
+	var/mob/living/carbon/C = owner
+	if(C.legcuffed != gonbolaReference)
+		qdel(src)
+
+/datum/status_effect/gonbolaPacify/on_apply()
+	owner.add_trait(TRAIT_PACIFISM, "gonbolaPacify")
+	to_chat(owner, "<span class='notice'>You suddenly feel at peace and feel no need to make any sudden or rash actions...</span>")
+	return ..()
+
+/datum/status_effect/gonbolaPacify/on_remove()
+	owner.remove_trait(TRAIT_PACIFISM, "gonbolaPacify")
