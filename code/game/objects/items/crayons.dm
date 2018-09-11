@@ -150,55 +150,62 @@
 			to_chat(user, "<span class='notice'>The cap on [src] is now [is_capped ? "on" : "off"].</span>")
 			update_icon()
 
-/obj/item/toy/crayon/ui_data()
-	var/list/data = list()
-	data["drawables"] = list()
-	var/list/D = data["drawables"]
+/obj/item/toy/crayon/proc/staticDrawables()
+
+	. = list()
 
 	var/list/g_items = list()
-	D += list(list("name" = "Graffiti", "items" = g_items))
+	. += list(list("name" = "Graffiti", "items" = g_items))
 	for(var/g in graffiti)
 		g_items += list(list("item" = g))
 
 	var/list/glh_items = list()
-	D += list(list("name" = "Graffiti Large Horizontal", "items" = glh_items))
+	. += list(list("name" = "Graffiti Large Horizontal", "items" = glh_items))
 	for(var/glh in graffiti_large_h)
 		glh_items += list(list("item" = glh))
 
 	var/list/L_items = list()
-	D += list(list("name" = "Letters", "items" = L_items))
+	. += list(list("name" = "Letters", "items" = L_items))
 	for(var/L in letters)
 		L_items += list(list("item" = L))
 
 	var/list/N_items = list()
-	D += list(list(name = "Numerals", "items" = N_items))
+	. += list(list(name = "Numerals", "items" = N_items))
 	for(var/N in numerals)
 		N_items += list(list("item" = N))
 
 	var/list/O_items = list()
-	D += list(list(name = "Oriented", "items" = O_items))
+	. += list(list(name = "Oriented", "items" = O_items))
 	for(var/O in oriented)
 		O_items += list(list("item" = O))
 
 	var/list/R_items = list()
-	D += list(list(name = "Runes", "items" = R_items))
+	. += list(list(name = "Runes", "items" = R_items))
 	for(var/R in runes)
 		R_items += list(list("item" = R))
 
 	var/list/rand_items = list()
-	D += list(list(name = "Random", "items" = rand_items))
+	. += list(list(name = "Random", "items" = rand_items))
 	for(var/i in randoms)
 		rand_items += list(list("item" = i))
 
-	data["selected_stencil"] = drawtype
-	data["text_buffer"] = text_buffer
 
-	data["has_cap"] = has_cap
-	data["is_capped"] = is_capped
-	data["can_change_colour"] = can_change_colour
-	data["current_colour"] = paint_color
+/obj/item/toy/crayon/ui_data()
 
-	return data
+	var/static/list/crayon_drawables
+
+	if (!crayon_drawables)
+		crayon_drawables = staticDrawables()
+
+	. = list()
+	.["drawables"] = crayon_drawables
+	.["selected_stencil"] = drawtype
+	.["text_buffer"] = text_buffer
+
+	.["has_cap"] = has_cap
+	.["is_capped"] = is_capped
+	.["can_change_colour"] = can_change_colour
+	.["current_colour"] = paint_color
 
 /obj/item/toy/crayon/ui_act(action, list/params)
 	if(..())
