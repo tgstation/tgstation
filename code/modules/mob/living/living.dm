@@ -468,19 +468,6 @@
 			mood.sanity = SANITY_GREAT
 			mood.update_mood()
 		else // store if moodlet should not be removed by healing and add after removal
-		/*	var/datum/mood_event/saved_events[0]
-			var/datum/mood_event/saved_names[]
-			if(mood.mood_events.len)
-				for(var/i in mood.mood_events)
-					if(!mood.mood_events[i].timeout)
-						saved_events += mood.mood_events[i]
-						saved_names += mood.mood_events[i].name
-			QDEL_LIST_ASSOC_VAL(mood.mood_events)
-			if(saved_events.len)
-				for(var/i in saved_names)
-					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, saved_names[i], saved_events[i])
-			mood.sanity = SANITY_GREAT
-			mood.update_mood() */
 			for(var/i in mood.mood_events)
 				if(mood.mood_events[i].timeout)
 					SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, mood.mood_events[i].name)
