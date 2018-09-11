@@ -32,16 +32,16 @@
 	var/drawtype
 	var/text_buffer = ""
 
-	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","star","poseur tag","prolizard","antilizard")
-	var/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
-	var/list/numerals = list("0","1","2","3","4","5","6","7","8","9")
-	var/list/oriented = list("arrow","body") // These turn to face the same way as the drawer
-	var/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
-	var/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
+	var/static/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","star","poseur tag","prolizard","antilizard")
+	var/static/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
+	var/static/list/numerals = list("0","1","2","3","4","5","6","7","8","9")
+	var/static/list/oriented = list("arrow","body") // These turn to face the same way as the drawer
+	var/static/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
+	var/static/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
 		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER)
-	var/list/graffiti_large_h = list("yiffhell", "secborg", "paint")
+	var/static/list/graffiti_large_h = list("yiffhell", "secborg", "paint")
 
-	var/list/all_drawables
+	var/static/list/all_drawables = graffiti + letters + numerals + oriented + runes + graffiti_large_h
 
 	var/paint_mode = PAINT_NORMAL
 
@@ -53,8 +53,6 @@
 
 	var/instant = FALSE
 	var/self_contained = TRUE // If it deletes itself when it is empty
-
-	var/list/validSurfaces = list(/turf/open/floor)
 
 	var/edible = TRUE // That doesn't mean eating it is a good idea
 
@@ -68,6 +66,8 @@
 	var/pre_noise = FALSE
 	var/post_noise = FALSE
 
+/obj/item/toy/crayon/proc/isValidSurface(surface)
+	return istype(surface, /turf/open/floor)
 
 /obj/item/toy/crayon/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -79,7 +79,6 @@
 	if(name == "crayon")
 		name = "[item_color] crayon"
 
-	all_drawables = graffiti + letters + numerals + oriented + runes + graffiti_large_h
 	drawtype = pick(all_drawables)
 
 	refill()
@@ -262,7 +261,7 @@
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
 
-	if(!is_type_in_list(target,validSurfaces))
+	if(!isValidSurface(target))
 		return
 
 	var/drawing = drawtype
@@ -316,13 +315,11 @@
 		audible_message("<span class='notice'>You hear spraying.</span>")
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 
-	var/takes_time = !instant
-
 	var/wait_time = 50
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		wait_time *= 3
 
-	if(takes_time)
+	if(!instant)
 		if(!do_after(user, 50, target = target))
 			return
 
@@ -343,7 +340,7 @@
 			if(PAINT_LARGE_HORIZONTAL)
 				var/turf/left = locate(target.x-1,target.y,target.z)
 				var/turf/right = locate(target.x+1,target.y,target.z)
-				if(is_type_in_list(left, validSurfaces) && is_type_in_list(right, validSurfaces))
+				if(isValidSurface(left) && isValidSurface(right))
 					var/obj/effect/decal/cleanable/crayon/C = new(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
 					C.add_hiddenprint(user)
 					affected_turfs += left
@@ -525,11 +522,14 @@
 	self_contained = FALSE // Don't disappear when they're empty
 	can_change_colour = TRUE
 
-	validSurfaces = list(/turf/open/floor, /turf/closed/wall)
 	reagent_contents = list("welding_fuel" = 1, "ethanol" = 1)
 
 	pre_noise = TRUE
 	post_noise = FALSE
+
+/obj/item/toy/crayon/spraycan/isValidSurface(surface)
+	return (istype(surface, /turf/open/floor) || istype(surface, /turf/closed/wall))
+
 
 /obj/item/toy/crayon/spraycan/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -556,8 +556,8 @@
 
 		return (OXYLOSS)
 
-/obj/item/toy/crayon/spraycan/New()
-	..()
+/obj/item/toy/crayon/spraycan/Initialize()
+	. = ..()
 	// If default crayon red colour, pick a more fun spraycan colour
 	if(!paint_color)
 		paint_color = pick("#DA0000","#FF9300","#FFF200","#A8E61D","#00B7EF",
@@ -605,7 +605,6 @@
 			H.lip_color = paint_color
 			H.update_body()
 
-		// Caution, spray cans contain inflammable substances
 		. = use_charges(user, 10, FALSE)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.reaction(C, VAPOR, fraction * volume_multiplier)
@@ -686,7 +685,9 @@
 
 	reagent_contents = list("lube" = 1, "banana" = 1)
 	volume_multiplier = 5
-	validSurfaces = list(/turf/open/floor)
+
+/obj/item/toy/crayon/spraycan/lubecan/isValidSurface(surface)
+	return istype(surface, /turf/open/floor)
 
 /obj/item/toy/crayon/spraycan/mimecan
 	name = "silent spraycan"
