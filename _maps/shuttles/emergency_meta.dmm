@@ -593,6 +593,8 @@
 	name = "Station Intercom (General)";
 	pixel_x = -27
 	},
+/obj/item/surgicaldrill,
+/obj/item/cautery,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bI" = (
