@@ -25,5 +25,5 @@
 		to_chat(c, "Selected object '[throw_atom]'")
 	if(right_click)
 		if(throw_atom)
-			throw_atom.throw_at(object, 10, 1, c)
+			throw_atom.throw_at(object, 10, 1, c.mob)
 			log_admin("Build Mode: [key_name(c)] threw [throw_atom] at [object] ([AREACOORD(object)])")

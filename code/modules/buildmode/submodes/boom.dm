@@ -14,15 +14,20 @@
 
 /datum/buildmode_mode/boom/change_settings(client/c)
 	devastation = input(c, "Range of total devastation. -1 to none", text("Input")) as num|null
-	if(devastation == null) devastation = -1
+	if(devastation == null) 
+		devastation = -1
 	heavy = input(c, "Range of heavy impact. -1 to none", text("Input")) as num|null
-	if(heavy == null) heavy = -1
+	if(heavy == null) 
+		heavy = -1
 	light = input(c, "Range of light impact. -1 to none", text("Input")) as num|null
-	if(light == null) light = -1
+	if(light == null) 
+		light = -1
 	flash = input(c, "Range of flash. -1 to none", text("Input")) as num|null
-	if(flash == null) flash = -1
+	if(flash == null) 
+		flash = -1
 	flames = input(c, "Range of flames. -1 to none", text("Input")) as num|null
-	if(flames == null) flames = -1
+	if(flames == null) 
+		flames = -1
 
 /datum/buildmode_mode/boom/handle_click(client/c, params, obj/object)
 	var/list/pa = params2list(params)

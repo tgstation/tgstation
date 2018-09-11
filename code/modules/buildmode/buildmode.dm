@@ -54,6 +54,12 @@
 /datum/buildmode/proc/post_login()
 	// since these will get wiped upon login
 	holder.screen += buttons
+	// re-open the according switch mode
+	switch(switch_state)
+		if(BM_SWITCHSTATE_MODE)
+			open_modeswitch()
+		if(BM_SWITCHSTATE_DIR)
+			open_dirswitch()
 
 /datum/buildmode/proc/create_buttons()
 	// keep a reference so we can update it upon mode switch
