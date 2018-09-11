@@ -132,7 +132,7 @@
 	if(A in DirectAccess())
 		if(W)
 			W.melee_attack_chain(src, A, params)
-			SEND_SIGNAL(src, COMSIG_MOB_attack, A, params)
+			SEND_SIGNAL(src, COMSIG_MOB_ATTACK, A, params)
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
