@@ -126,6 +126,7 @@
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"				//from base of mob/create_mob_hud(): ()
 
 #define COMSIG_MOB_ATTACK "mob_attack"							//from base of mob/ClickOn(): (atom/A, params)
+#define COMSIG_MOB_ITEM_ATTACK "mob_item_attack"				//from base of mob/ClickOn(): (atom/A, params)
 #define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"			//from base of mob/ClickOn(): (atom/A, params)
 #define COMSIG_MOB_THROW "mob_throw"							//from base of mob/ClickOn(): (atom/A, params)
 

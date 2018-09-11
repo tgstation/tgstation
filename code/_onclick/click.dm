@@ -116,7 +116,6 @@
 		return
 
 	if(in_throw_mode)
-		SEND_SIGNAL(src, COMSIG_MOB_THROW, A, params)
 		throw_item(A)
 		return
 
@@ -132,12 +131,11 @@
 	if(A in DirectAccess())
 		if(W)
 			W.melee_attack_chain(src, A, params)
-			SEND_SIGNAL(src, COMSIG_MOB_ATTACK, A, params)
+			SEND_SIGNAL(src, COMSIG_MOB_ITEM_ATTACK, A, params)
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
 			UnarmedAttack(A)
-			SEND_SIGNAL(src, COMSIG_MOB_ATTACK, A, params)
 		return
 
 	//Can't reach anything else in lockers or other weirdness
@@ -148,19 +146,17 @@
 	if(CanReach(A,W))
 		if(W)
 			W.melee_attack_chain(src, A, params)
-			SEND_SIGNAL(src, COMSIG_MOB_ATTACK, A, params)
+			SEND_SIGNAL(src, COMSIG_MOB_ITEM_ATTACK, A, params)
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
 			UnarmedAttack(A,1)
-			SEND_SIGNAL(src, COMSIG_MOB_ATTACK, A, params)
 	else
 		if(W)
 			W.afterattack(A,src,0,params)
-			SEND_SIGNAL(src, COMSIG_MOB_ATTACK, A, params)
+			SEND_SIGNAL(src, COMSIG_MOB_ITEM_ATTACK, A, params)
 		else
 			RangedAttack(A,params)
-			SEND_SIGNAL(src, COMSIG_MOB_ATTACK_RANGED, A, params)
 
 //Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
 /atom/proc/IsObscured()

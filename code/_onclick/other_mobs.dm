@@ -96,6 +96,9 @@
 
 	if(isturf(A) && get_dist(src,A) <= 1)
 		src.Move_Pulled(A)
+		return
+
+	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_RANGED, A, params)
 
 /*
 	Animals & All Unspecified
