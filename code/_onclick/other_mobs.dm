@@ -30,6 +30,7 @@
 
 //Return TRUE to cancel other attack hand effects that respect it.
 /atom/proc/attack_hand(mob/user)
+	SEND_SIGNAL(src, COMSIG_MOB_ATTACK, A, params)
 	. = FALSE
 	if(!(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND))
 		add_fingerprint(user)
@@ -97,8 +98,6 @@
 	if(isturf(A) && get_dist(src,A) <= 1)
 		src.Move_Pulled(A)
 		return
-
-	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_RANGED, A, params)
 
 /*
 	Animals & All Unspecified

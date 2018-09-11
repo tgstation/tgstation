@@ -79,7 +79,6 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	return
 
 /datum/mutation/human/proc/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
-	SEND_SIGNAL(src, COMSIG_MOB_ATTACK, A, params)
 	return
 
 /datum/mutation/human/proc/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
