@@ -805,6 +805,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/cautery,
+/obj/item/surgicaldrill,
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "bo" = (

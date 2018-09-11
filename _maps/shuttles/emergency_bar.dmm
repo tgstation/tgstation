@@ -305,11 +305,11 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aU" = (
-/mob/living/simple_animal/hostile/alien/maid/barmaid,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+/mob/living/simple_animal/hostile/alien/maid/barmaid,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aW" = (
@@ -320,11 +320,11 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/mob/living/simple_animal/drone/snowflake/bardrone,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+/mob/living/simple_animal/drone/snowflake/bardrone,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aY" = (
@@ -472,6 +472,8 @@
 /obj/item/hemostat,
 /obj/item/retractor,
 /obj/item/scalpel,
+/obj/item/surgicaldrill,
+/obj/item/cautery,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bC" = (

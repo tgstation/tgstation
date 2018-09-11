@@ -525,7 +525,6 @@
 /area/shuttle/escape)
 "bb" = (
 /obj/machinery/mech_bay_recharge_port{
-	icon_state = "recharge_port";
 	dir = 2
 	},
 /turf/open/floor/plasteel,
