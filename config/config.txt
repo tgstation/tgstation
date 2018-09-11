@@ -282,7 +282,7 @@ TICK_LIMIT_MC_INIT 500
 TICKLAG 0.5
 
 ##Can also be set as per-second value, the following value is identical to the above.
-#FPS 20
+FPS 20
 
 ## Comment this out to disable automuting
 #AUTOMUTE_ON
