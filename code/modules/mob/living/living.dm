@@ -463,44 +463,28 @@
 	update_canmove()
 	GET_COMPONENT(mood, /datum/component/mood)
 	if (mood)
-		if(admin_revive) // admin_revive removes what should be permanent moodlets
+		if(admin_revive) // admin_revive removes what should be conditional moodlets
 			QDEL_LIST_ASSOC_VAL(mood.mood_events)
 			mood.sanity = SANITY_GREAT
 			mood.update_mood()
 		else // store if moodlet should not be removed by healing and add after removal
-			var/is_hulk = FALSE
-			var/is_broken_vow = FALSE
-			var/is_lost_heirloom = FALSE
-			var/is_cuffed = FALSE
-			var/is_embedded = FALSE
-			var/is_delam = FALSE
-			if(mood.mood_events["hulk"])
-				is_hulk = TRUE
-			if(mood.mood_events["vow"])
-				is_broken_vow = TRUE
-			if(mood.mood_events["family_heirloom_missing"])
-				is_lost_heirloom = TRUE
-			if(mood.mood_events["handcuffed"])
-				is_cuffed = TRUE
-			if(mood.mood_events["embedded"])
-				is_embedded = TRUE
-			if(mood.mood_events["delam"])
-				is_delam = TRUE
+		/*	var/datum/mood_event/saved_events[0]
+			var/datum/mood_event/saved_names[]
+			if(mood.mood_events.len)
+				for(var/i in mood.mood_events)
+					if(!mood.mood_events[i].timeout)
+						saved_events += mood.mood_events[i]
+						saved_names += mood.mood_events[i].name
 			QDEL_LIST_ASSOC_VAL(mood.mood_events)
-			if(is_hulk)
-				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hulk", /datum/mood_event/hulk)
-			if(is_broken_vow)
-				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "vow", /datum/mood_event/broken_vow)
-			if(is_lost_heirloom)
-				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "family_heirloom_missing", /datum/mood_event/family_heirloom_missing)
-			if(is_cuffed)
-				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "handcuffed", /datum/mood_event/handcuffed)
-			if(is_embedded)
-				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
-			if(is_delam)
-				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "delam", /datum/mood_event/delam)
+			if(saved_events.len)
+				for(var/i in saved_names)
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, saved_names[i], saved_events[i])
 			mood.sanity = SANITY_GREAT
-			mood.update_mood()
+			mood.update_mood() */
+			for(var/i in mood.mood_events)
+				if(mood.mood_events[i].timeout)
+					SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, mood.mood_events[i].name)
+
 
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
