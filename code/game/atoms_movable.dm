@@ -108,6 +108,7 @@
 		if(isliving(ex_pulled))
 			var/mob/living/L = ex_pulled
 			L.update_canmove()// mob gets up if it was lyng down in a chokehold
+	SEND_SIGNAL(src, COMSIG_MOVABLE_STOP_PULLING)
 
 /atom/movable/proc/Move_Pulled(atom/A)
 	if(!pulling)

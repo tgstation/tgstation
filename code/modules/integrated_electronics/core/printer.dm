@@ -206,7 +206,8 @@
 
 		if(istype(built, /obj/item/electronic_assembly))
 			var/obj/item/electronic_assembly/E = built
-			usr.put_in_hands(E.get_object())
+			if(!ismob(E.get_object()))
+				usr.put_in_hands(E.get_object())
 			E.creator = key_name(usr)
 			E.opened = TRUE
 			E.update_icon()
