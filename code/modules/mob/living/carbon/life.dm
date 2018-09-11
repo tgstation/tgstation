@@ -630,9 +630,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	reagents.metabolize(src, can_overdose=FALSE, liverless = TRUE)
 	if(has_trait(TRAIT_STABLEHEART))
 		return
-	adjustToxLoss(8, TRUE,  TRUE)
+	adjustToxLoss(4, TRUE,  TRUE)
 	if(prob(30))
-		to_chat(src, "<span class='notice'>You feel confused and nauseated...</span>")//actual symptoms of liver failure
+		to_chat(src, "<span class='warning'>You feel a stabbing pain in your abdomen!</span>")
 
 
 ////////////////

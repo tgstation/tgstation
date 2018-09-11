@@ -530,7 +530,7 @@
 		if(total_health <= crit_threshold && !stat)
 			if(!IsKnockdown())
 				to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
-			Knockdown(70)
+			Knockdown(100)
 			update_health_hud()
 
 /mob/living/carbon/update_sight()

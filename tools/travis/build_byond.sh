@@ -43,9 +43,9 @@ if [ "$BUILD_TOOLS" = false ]; then
 
     source $HOME/BYOND/byond/bin/byondsetup
 	if [ "$BUILD_TESTING" = true ]; then
-		tools/travis/dm.sh -DTRAVISBUILDING -DTRAVISTESTING -DALL_MAPS tgstation.dme
+		tools/travis/dm.sh -DTRAVISBUILDING -DTRAVISTESTING -DALL_MAPS sunsetstation.dme
 	else
-		tools/travis/dm.sh -DTRAVISBUILDING tgstation.dme
+		tools/travis/dm.sh -DTRAVISBUILDING sunsetstation.dme
 		
 		tools/deploy.sh travis_test
 		mkdir travis_test/config
@@ -68,7 +68,7 @@ if [ "$BUILD_TOOLS" = false ]; then
 	
 		cd travis_test
     	ln -s $HOME/libmariadb/libmariadb.so libmariadb.so
-		DreamDaemon tgstation.dmb -close -trusted -verbose -params "test-run&log-directory=travis"
+		DreamDaemon sunsetstation.dmb -close -trusted -verbose -params "test-run&log-directory=travis"
 		cd ..
 		cat travis_test/data/logs/travis/clean_run.lk
 

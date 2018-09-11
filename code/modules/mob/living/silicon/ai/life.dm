@@ -13,6 +13,8 @@
 
 		handle_status_effects()
 
+		sunset_processHijack() // sunset -- process infiltrator hijack
+
 		if(malfhack && malfhack.aidisabled)
 			deltimer(malfhacking)
 			// This proc handles cleanup of screen notifications and

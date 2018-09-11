@@ -108689,6 +108689,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/cmo)
 "dBj" = (
@@ -113459,6 +113462,9 @@
 /area/hallway/primary/aft)
 "dIU" = (
 /obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/medical/morgue)
 "dIV" = (
