@@ -1,4 +1,3 @@
-#define MEDAL_PREFIX "Legion"
 /*
 
 LEGION
@@ -21,45 +20,53 @@ Difficulty: Medium
 	name = "Legion"
 	health = 800
 	maxHealth = 800
+	spacewalk = TRUE
 	icon_state = "legion"
 	icon_living = "legion"
 	desc = "One of many."
 	icon = 'icons/mob/lavaland/legion.dmi'
 	attacktext = "chomps"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
-	faction = list("mining")
 	speak_emote = list("echoes")
 	armour_penetration = 50
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	speed = 2
 	ranged = 1
-	flying = 1
 	del_on_death = 1
 	retreat_distance = 5
 	minimum_distance = 5
 	ranged_cooldown_time = 20
 	var/size = 5
 	var/charging = 0
-	medal_type = MEDAL_PREFIX
+	medal_type = BOSS_MEDAL_LEGION
 	score_type = LEGION_SCORE
 	pixel_y = -90
 	pixel_x = -75
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
+	wander = FALSE
 	elimination = 1
-	aggro_vision_range = 18
-	idle_vision_range = 13
 	appearance_flags = 0
-	mouse_opacity = 1
+	mouse_opacity = MOUSE_OPACITY_ICON
 
-/mob/living/simple_animal/hostile/megafauna/legion/New()
-	..()
-	new/obj/item/device/gps/internal/legion(src)
+/mob/living/simple_animal/hostile/megafauna/legion/Initialize()
+	. = ..()
+	internal = new/obj/item/gps/internal/legion(src)
+
+/mob/living/simple_animal/hostile/megafauna/legion/GiveTarget(new_target)
+	. = ..()
+	if(target)
+		wander = TRUE
+
+/mob/living/simple_animal/hostile/megafauna/legion/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	if(GLOB.necropolis_gate)
+		GLOB.necropolis_gate.toggle_the_gate(null, TRUE) //very clever.
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget()
-	..()
-	if(ishuman(target))
+	. = ..()
+	if(. && ishuman(target))
 		var/mob/living/L = target
 		if(L.stat == UNCONSCIOUS)
 			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
@@ -81,7 +88,7 @@ Difficulty: Medium
 			minimum_distance = 0
 			speed = 0
 			charging = 1
-			addtimer(src, "reset_charge", 50)
+			addtimer(CALLBACK(src, .proc/reset_charge), 50)
 
 /mob/living/simple_animal/hostile/megafauna/legion/proc/reset_charge()
 	ranged = 1
@@ -97,7 +104,7 @@ Difficulty: Medium
 		adjustHealth(-maxHealth) //heal ourself to full in prep for splitting
 		var/mob/living/simple_animal/hostile/megafauna/legion/L = new(loc)
 
-		L.maxHealth = maxHealth * 0.6
+		L.maxHealth = round(maxHealth * 0.6,DAMAGE_PRECISION)
 		maxHealth = L.maxHealth
 
 		L.health = L.maxHealth
@@ -113,26 +120,25 @@ Difficulty: Medium
 		L.update_transform()
 		update_transform()
 
+		L.faction = faction.Copy()
+
 		L.GiveTarget(target)
 
 		visible_message("<span class='boldannounce'>[src] splits in twain!</span>")
 	else
 		var/last_legion = TRUE
-		for(var/mob/living/simple_animal/hostile/megafauna/legion/other in mob_list)
+		for(var/mob/living/simple_animal/hostile/megafauna/legion/other in GLOB.mob_living_list)
 			if(other != src)
 				last_legion = FALSE
 				break
 		if(last_legion)
-			loot = list(/obj/item/weapon/staff/storm)
+			loot = list(/obj/item/staff/storm)
 			elimination = 0
 		else if(prob(5))
 			loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		..()
 
-/mob/living/simple_animal/hostile/megafauna/legion/Process_Spacemove(movement_dir = 0)
-	return 1
-
-/obj/item/device/gps/internal/legion
+/obj/item/gps/internal/legion
 	icon_state = null
 	gpstag = "Echoing Signal"
 	desc = "The message repeats."
@@ -141,56 +147,61 @@ Difficulty: Medium
 
 //Loot
 
-/obj/item/weapon/staff/storm
+/obj/item/staff/storm
 	name = "staff of storms"
 	desc = "An ancient staff retrieved from the remains of Legion. The wind stirs as you move it."
 	icon_state = "staffofstorms"
 	item_state = "staffofstorms"
 	icon = 'icons/obj/guns/magic.dmi'
-	slot_flags = SLOT_BACK
-	item_state = "staffofstorms"
-	w_class = 4
+	slot_flags = ITEM_SLOT_BACK
+	w_class = WEIGHT_CLASS_BULKY
 	force = 25
 	damtype = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	var/storm_type = /datum/weather/ash_storm
 	var/storm_cooldown = 0
+	var/static/list/excluded_areas = list(/area/reebe/city_of_cogs)
 
-/obj/item/weapon/staff/storm/attack_self(mob/user)
+/obj/item/staff/storm/attack_self(mob/user)
 	if(storm_cooldown > world.time)
-		user << "<span class='warning'>The staff is still recharging!</span>"
+		to_chat(user, "<span class='warning'>The staff is still recharging!</span>")
 		return
 
 	var/area/user_area = get_area(user)
+	var/turf/user_turf = get_turf(user)
+	if(!user_area || !user_turf || (user_area.type in excluded_areas))
+		to_chat(user, "<span class='warning'>Something is preventing you from using the staff here.</span>")
+		return
 	var/datum/weather/A
-	for(var/V in SSweather.existing_weather)
+	for(var/V in SSweather.processing)
 		var/datum/weather/W = V
-		if(W.target_z == user.z && W.area_type == user_area.type)
+		if((user_turf.z in W.impacted_z_levels) && W.area_type == user_area.type)
 			A = W
 			break
-	if(A)
 
+	if(A)
 		if(A.stage != END_STAGE)
 			if(A.stage == WIND_DOWN_STAGE)
-				user << "<span class='warning'>The storm is already ending! It would be a waste to use the staff now.</span>"
+				to_chat(user, "<span class='warning'>The storm is already ending! It would be a waste to use the staff now.</span>")
 				return
 			user.visible_message("<span class='warning'>[user] holds [src] skywards as an orange beam travels into the sky!</span>", \
 			"<span class='notice'>You hold [src] skyward, dispelling the storm!</span>")
-			playsound(user, 'sound/magic/Staff_Change.ogg', 200, 0)
+			playsound(user, 'sound/magic/staff_change.ogg', 200, 0)
 			A.wind_down()
+			log_game("[user] ([key_name(user)]) has dispelled a storm at [AREACOORD(user_turf)]")
 			return
 	else
-		A = new storm_type
+		A = new storm_type(list(user_turf.z))
 		A.name = "staff storm"
+		log_game("[user] ([key_name(user)]) has summoned [A] at [AREACOORD(user_turf)]")
+		if (is_special_character(user))
+			message_admins("[A] has been summoned in [ADMIN_VERBOSEJMP(user_turf)] by [user] ([key_name_admin(user)], a non-antagonist")
 		A.area_type = user_area.type
-		A.target_z = user.z
 		A.telegraph_duration = 100
 		A.end_duration = 100
 
 	user.visible_message("<span class='warning'>[user] holds [src] skywards as red lightning crackles into the sky!</span>", \
 	"<span class='notice'>You hold [src] skyward, calling down a terrible storm!</span>")
-	playsound(user, 'sound/magic/Staff_Change.ogg', 200, 0)
+	playsound(user, 'sound/magic/staff_change.ogg', 200, 0)
 	A.telegraph()
 	storm_cooldown = world.time + 200
-
-#undef MEDAL_PREFIX

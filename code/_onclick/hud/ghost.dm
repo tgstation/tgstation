@@ -36,13 +36,16 @@
 	var/mob/dead/observer/G = usr
 	G.dead_tele()
 
+/obj/screen/ghost/pai
+	name = "pAI Candidate"
+	icon_state = "pai"
+
+/obj/screen/ghost/pai/Click()
+	var/mob/dead/observer/G = usr
+	G.register_pai()
+
 /datum/hud/ghost/New(mob/owner)
 	..()
-	var/mob/dead/observer/G = mymob
-	if(!G.client.prefs.ghost_hud)
-		mymob.client.screen = null
-		return
-
 	var/obj/screen/using
 
 	using = new /obj/screen/ghost/jumptomob()
@@ -61,14 +64,26 @@
 	using.screen_loc = ui_ghost_teleport
 	static_inventory += using
 
+	using = new /obj/screen/ghost/pai()
+	using.screen_loc = ui_ghost_pai
+	static_inventory += using
 
-/datum/hud/ghost/show_hud()
-	var/mob/dead/observer/G = mymob
-	mymob.client.screen = list()
-	if(!G.client.prefs.ghost_hud)
+	using = new /obj/screen/language_menu
+	using.icon = ui_style
+	static_inventory += using
+
+/datum/hud/ghost/show_hud(version = 0, mob/viewmob)
+	// don't show this HUD if observing; show the HUD of the observee
+	var/mob/dead/observer/O = mymob
+	if (istype(O) && O.observetarget)
+		plane_masters_update()
+		return FALSE
+
+	. = ..()
+	if(!.)
 		return
-	mymob.client.screen += static_inventory
-
-/mob/dead/observer/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/ghost(src)
+	var/mob/screenmob = viewmob || mymob
+	if(!screenmob.client.prefs.ghost_hud)
+		screenmob.client.screen -= static_inventory
+	else
+		screenmob.client.screen += static_inventory

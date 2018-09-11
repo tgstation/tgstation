@@ -11,11 +11,6 @@
     <span>{{desc}}</span>
     <span>{{helptext}}</span>
     <span>Cost: {{dna_cost}}</span>
-
-    {{#if required_absorbtions}}
-      <span>Required Absorbtions: {{required_absorbtions}}
-    {{/if}}
-
     <ui-button
       state='{{owned ? "selected" : can_purchase ? null : "disabled"}}'
       action='evolve'
@@ -25,6 +20,6 @@
   </ui-section>
 {{/each}}
 {{^data.abilities}}
-  <span class='warning'>No abilities availible.</span>
+  <span class='warning'>No abilities available.</span>
 {{/data.abilities}}
 </ui-display>

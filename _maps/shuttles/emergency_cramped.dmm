@@ -1,68 +1,68 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "b" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "c" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "d" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "e" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "f" = (
-/obj/machinery/computer/emergency_shuttle,
-/turf/open/floor/plasteel/black,
+/obj/machinery/computer/emergency_shuttle{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "g" = (
 /obj/structure/window/reinforced,
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/book/manual/random,
+/obj/item/storage/firstaid/regular,
+/obj/item/book/manual/random,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -30
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "h" = (
 /obj/machinery/door/window/southleft,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "i" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
-/obj/item/device/gps{
+/obj/item/gps{
 	gpstag = "STV5"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "j" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "k" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
 	dwidth = 3;
 	height = 5;
 	name = "Secure Transport Vessel 5";
-	width = 14;
-	timid = 1
+	width = 14
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -74,7 +74,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "n" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -85,14 +85,16 @@
 	lootcount = 8;
 	name = "8maintenance loot spawner"
 	},
-/turf/open/floor/plasteel/bot,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "p" = (
 /obj/structure/closet/crate/secure/loot,
-/turf/open/floor/plasteel/bot,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "q" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/plating,
@@ -100,10 +102,14 @@
 "r" = (
 /obj/structure/closet/crate/secure/weapon,
 /obj/effect/spawner/lootdrop/armory_contraband,
-/turf/open/floor/plasteel/bot,
+/obj/effect/turf_decal/bot,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "s" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
@@ -121,6 +127,19 @@
 "u" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"v" = (
+/obj/structure/closet/emcloset,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"w" = (
+/obj/structure/closet/crate/secure/weapon,
+/obj/effect/spawner/lootdrop/armory_contraband,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -175,14 +194,14 @@ u
 b
 f
 i
-m
+v
 o
 o
 o
 p
 p
 r
-r
+w
 m
 t
 u

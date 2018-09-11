@@ -9,8 +9,6 @@
 
 /mob/living/simple_animal/slime/Life()
 	set invisibility = 0
-	set background = BACKGROUND_ENABLED
-
 	if (notransform)
 		return
 	if(..())
@@ -63,7 +61,7 @@
 				break
 
 			if(Target in view(1,src))
-				if(istype(Target, /mob/living/silicon))
+				if(issilicon(Target))
 					if(!Atkcool)
 						Atkcool = 1
 						spawn(45)
@@ -112,10 +110,9 @@
 	if(!environment)
 		return
 
-	//var/environment_heat_capacity = environment.heat_capacity()
 	var/loc_temp = get_temperature(environment)
 
-	bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
+	adjust_bodytemperature(adjust_body_temperature(bodytemperature, loc_temp, 1))
 
 	//Account for massive pressure differences
 
@@ -134,19 +131,19 @@
 
 	if(stat != DEAD)
 		var/bz_percentage =0
-		if("bz" in environment.gases)
-			bz_percentage = environment.gases["bz"][MOLES] / environment.total_moles()
+		if(environment.gases[/datum/gas/bz])
+			bz_percentage = environment.gases[/datum/gas/bz][MOLES] / environment.total_moles()
 		var/stasis = (bz_percentage >= 0.05 && bodytemperature < (T0C + 100)) || force_stasis
 
 		if(stat == CONSCIOUS && stasis)
-			src << "<span class='danger'>Nerve gas in the air has put you in stasis!</span>"
+			to_chat(src, "<span class='danger'>Nerve gas in the air has put you in stasis!</span>")
 			stat = UNCONSCIOUS
 			powerlevel = 0
 			rabid = 0
 			update_canmove()
 			regenerate_icons()
 		else if(stat == UNCONSCIOUS && !stasis)
-			src << "<span class='notice'>You wake up from the stasis.</span>"
+			to_chat(src, "<span class='notice'>You wake up from the stasis.</span>")
 			stat = CONSCIOUS
 			update_canmove()
 			regenerate_icons()
@@ -184,7 +181,7 @@
 	var/mob/M = buckled
 
 	if(stat)
-		Feedstop(silent = 1)
+		Feedstop(silent = TRUE)
 
 	if(M.stat == DEAD) // our victim died
 		if(!client)
@@ -196,7 +193,7 @@
 						else
 							++Friends[M.LAssailant]
 		else
-			src << "<i>This subject does not have a strong enough life energy anymore...</i>"
+			to_chat(src, "<i>This subject does not have a strong enough life energy anymore...</i>")
 
 		if(M.client && ishuman(M))
 			if(prob(85))
@@ -211,13 +208,13 @@
 		C.adjustToxLoss(rand(1,2))
 
 		if(prob(10) && C.client)
-			C << "<span class='userdanger'>[pick("You can feel your body becoming weak!", \
+			to_chat(C, "<span class='userdanger'>[pick("You can feel your body becoming weak!", \
 			"You feel like you're about to die!", \
 			"You feel every part of your body screaming in agony!", \
 			"A low, rolling pain passes through your body!", \
 			"Your body feels as if it's falling apart!", \
 			"You feel extremely weak!", \
-			"A sharp, deep pain bathes every inch of your body!")]</span>"
+			"A sharp, deep pain bathes every inch of your body!")]</span>")
 
 	else if(isanimal(M))
 		var/mob/living/simple_animal/SA = M
@@ -234,7 +231,7 @@
 		Feedstop(0, 0)
 		return
 
-	add_nutrition((rand(7,15) * config.damage_multiplier))
+	add_nutrition((rand(7, 15) * CONFIG_GET(number/damage_multiplier)))
 
 	//Heal yourself.
 	adjustBruteLoss(-3)
@@ -309,11 +306,11 @@
 
 		if(Target)
 			--target_patience
-			if (target_patience <= 0 || SStun || Discipline || attacked || docile) // Tired of chasing or something draws out attention
+			if (target_patience <= 0 || SStun > world.time || Discipline || attacked || docile) // Tired of chasing or something draws out attention
 				target_patience = 0
 				Target = null
 
-		if(AIproc && SStun)
+		if(AIproc && SStun > world.time)
 			return
 
 		var/hungry = 0 // determines if the slime is hungry
@@ -340,10 +337,20 @@
 					if(L in Friends) // No eating friends!
 						continue
 
+					var/ally = FALSE
+					for(var/F in faction)
+						if(F == "neutral") //slimes are neutral so other mobs not target them, but they can target neutral mobs
+							continue
+						if(F in L.faction)
+							ally = TRUE
+							break
+					if(ally)
+						continue
+
 					if(issilicon(L) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defence
 						targets += L // Possible target found!
 
-					if(istype(L, /mob/living/carbon/human)) //Ignore slime(wo)men
+					if(ishuman(L)) //Ignore slime(wo)men
 						var/mob/living/carbon/human/H = L
 						if(src.type in H.dna.species.ignored_by)
 							continue
@@ -383,7 +390,7 @@
 				if (holding_still)
 					holding_still = max(holding_still - hungry, 0)
 				else if(canmove && isturf(loc) && prob(50))
-					step(src, pick(cardinal))
+					step(src, pick(GLOB.cardinals))
 
 			else
 				if(holding_still)
@@ -391,9 +398,9 @@
 				else if (docile && pulledby)
 					holding_still = 10
 				else if(canmove && isturf(loc) && prob(33))
-					step(src, pick(cardinal))
+					step(src, pick(GLOB.cardinals))
 		else if(!AIproc)
-			addtimer(src, "AIprocess", 0)
+			INVOKE_ASYNC(src, .proc/AIprocess)
 
 /mob/living/simple_animal/slime/handle_automated_movement()
 	return //slime random movement is currently handled in handle_targets()
@@ -408,7 +415,7 @@
 	else if (docile)
 		newmood = ":3"
 	else if (Target)
-		newmood = "mischevous"
+		newmood = "mischievous"
 
 	if (!newmood)
 		if (Discipline && prob(25))

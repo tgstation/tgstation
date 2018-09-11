@@ -4,6 +4,24 @@
 // #define EAST 4
 // #define WEST 8
 
+#define TEXT_NORTH			"[NORTH]"
+#define TEXT_SOUTH			"[SOUTH]"
+#define TEXT_EAST			"[EAST]"
+#define TEXT_WEST			"[WEST]"
+
+//These get to go at the top, because they're special
+//You can use these defines to get the typepath of the currently running proc/verb (yes procs + verbs are objects)
+/* eg:
+/mob/living/carbon/human/death()
+	to_chat(world, THIS_PROC_TYPE_STR) //You can only output the string versions
+Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a string with () (eg: the _WITH_ARGS defines) to make it look nicer)
+*/
+#define THIS_PROC_TYPE .....
+#define THIS_PROC_TYPE_STR "[THIS_PROC_TYPE]" //Because you can only obtain a string of THIS_PROC_TYPE using "[]", and it's nice to just +/+= strings
+#define THIS_PROC_TYPE_STR_WITH_ARGS "[THIS_PROC_TYPE]([args.Join(",")])"
+#define THIS_PROC_TYPE_WEIRD ...... //This one is WEIRD, in some cases (When used in certain defines? (eg: ASSERT)) THIS_PROC_TYPE will fail to work, but THIS_PROC_TYPE_WEIRD will work instead
+//define THIS_PROC_TYPE_WEIRD_STR "[THIS_PROC_TYPE_WEIRD]" //Included for completeness
+//define THIS_PROC_TYPE_WEIRD_STR_WITH_ARGS "[THIS_PROC_TYPE_WEIRD]([args.Join(",")])" //Ditto
 
 #define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
 
@@ -27,7 +45,7 @@
 #define EASTER					"Easter"
 #define HALLOWEEN				"Halloween"
 #define CHRISTMAS				"Christmas"
-#define FRIDAY_13TH				"Friday the 13th"
+#define FESTIVE_SEASON			"Festive Season"
 
 //Human Overlays Indexes/////////
 #define MUTATIONS_LAYER			26		//mutations. Tk headglows, cold resistance glow, etc
@@ -39,21 +57,22 @@
 #define DAMAGE_LAYER			20		//damage indicators (cuts and burns)
 #define UNIFORM_LAYER			19
 #define ID_LAYER				18
-#define SHOES_LAYER				17
-#define GLOVES_LAYER			16
+#define HANDS_PART_LAYER		18
+#define GLOVES_LAYER			17
+#define SHOES_LAYER				16
 #define EARS_LAYER				15
 #define SUIT_LAYER				14
 #define GLASSES_LAYER			13
 #define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
 #define SUIT_STORE_LAYER		11
-#define BACK_LAYER				10
-#define HAIR_LAYER				9		//TODO: make part of head layer?
-#define FACEMASK_LAYER			8
-#define HEAD_LAYER				7
-#define HANDCUFF_LAYER			6
-#define LEGCUFF_LAYER			5
-#define L_HAND_LAYER			4
-#define R_HAND_LAYER			3		//Having the two hands seperate seems rather silly, merge them together? It'll allow for code to be reused on mobs with arbitarily many hands
+#define NECK_LAYER				10
+#define BACK_LAYER				9
+#define HAIR_LAYER				8		//TODO: make part of head layer?
+#define FACEMASK_LAYER			7
+#define HEAD_LAYER				6
+#define HANDCUFF_LAYER			5
+#define LEGCUFF_LAYER			4
+#define HANDS_LAYER				3
 #define BODY_FRONT_LAYER		2
 #define FIRE_LAYER				1		//If you're on fire
 #define TOTAL_LAYERS			26		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
@@ -61,58 +80,12 @@
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
 //IT DOESN'T OK, IT MEANS "UNDER"
-#define UNDER_BODY_BEHIND_LAYER		BODY_BEHIND_LAYER+1
-#define UNDER_BODY_LAYER			BODY_LAYER+1
-#define UNDER_BODY_ADJ_LAYER		BODY_ADJ_LAYER+1
-#define UNDER_MUTATIONS_LAYER		MUTATIONS_LAYER+1
-#define UNDER_BODYPARTS_LAYER		BODYPARTS_LAYER+1
-#define UNDER_DAMAGE_LAYER			DAMAGE_LAYER+1
-#define UNDER_UNIFORM_LAYER			UNIFORM_LAYER+1
-#define UNDER_ID_LAYER				ID_LAYER+1
-#define UNDER_SHOES_LAYER			SHOES_LAYER+1
-#define UNDER_GLOVES_LAYER			GLOVES_LAYER+1
-#define UNDER_EARS_LAYER			EARS_LAYER+1
-#define UNDER_SUIT_LAYER			SUIT_LAYER+1
-#define UNDER_GLASSES_LAYER			GLASSES_LAYER+1
-#define UNDER_BELT_LAYER			BELT_LAYER+1
-#define UNDER_SUIT_STORE_LAYER		SUIT_STORE_LAYER+1
-#define UNDER_BACK_LAYER			BACK_LAYER+1
-#define UNDER_HAIR_LAYER			HAIR_LAYER+1
-#define UNDER_FACEMASK_LAYER		FACEMASK_LAYER+1
-#define UNDER_HEAD_LAYER			HEAD_LAYER+1
-#define UNDER_HANDCUFF_LAYER		HANDCUFF_LAYER+1
-#define UNDER_LEGCUFF_LAYER			LEGCUFF_LAYER+1
-#define UNDER_L_HAND_LAYER			L_HAND_LAYER+1
-#define UNDER_R_HAND_LAYER			R_HAND_LAYER+1
-#define UNDER_BODY_FRONT_LAYER		BODY_FRONT_LAYER+1
-#define UNDER_FIRE_LAYER			FIRE_LAYER+1
+#define UNDER_SUIT_LAYER			(SUIT_LAYER+1)
+#define UNDER_HEAD_LAYER			(HEAD_LAYER+1)
 
 //AND -1 MEANS "ABOVE", OK?, OK!?!
-#define ABOVE_BODY_BEHIND_LAYER		BODY_BEHIND_LAYER-1
-#define ABOVE_BODY_LAYER			BODY_LAYER-1
-#define ABOVE_BODY_ADJ_LAYER		BODY_ADJ_LAYER-1
-#define ABOVE_MUTATIONS_LAYER		MUTATIONS_LAYER-1
-#define ABOVE_BODYPARTS_LAYER		BODYPARTS_LAYER-1
-#define ABOVE_DAMAGE_LAYER			DAMAGE_LAYER-1
-#define ABOVE_UNIFORM_LAYER			UNIFORM_LAYER-1
-#define ABOVE_ID_LAYER				ID_LAYER-1
-#define ABOVE_SHOES_LAYER			SHOES_LAYER-1
-#define ABOVE_GLOVES_LAYER			GLOVES_LAYER-1
-#define ABOVE_EARS_LAYER			EARS_LAYER-1
-#define ABOVE_SUIT_LAYER			SUIT_LAYER-1
-#define ABOVE_GLASSES_LAYER			GLASSES_LAYER-1
-#define ABOVE_BELT_LAYER			BELT_LAYER-1
-#define ABOVE_SUIT_STORE_LAYER		SUIT_STORE_LAYER-1
-#define ABOVE_BACK_LAYER			BACK_LAYER-1
-#define ABOVE_HAIR_LAYER			HAIR_LAYER-1
-#define ABOVE_FACEMASK_LAYER		FACEMASK_LAYER-1
-#define ABOVE_HEAD_LAYER			HEAD_LAYER-1
-#define ABOVE_HANDCUFF_LAYER		HANDCUFF_LAYER-1
-#define ABOVE_LEGCUFF_LAYER			LEGCUFF_LAYER-1
-#define ABOVE_L_HAND_LAYER			L_HAND_LAYER-1
-#define ABOVE_R_HAND_LAYER			R_HAND_LAYER-1
-#define ABOVE_BODY_FRONT_LAYER		BODY_FRONT_LAYER-1
-#define ABOVE_FIRE_LAYER			FIRE_LAYER-1
+#define ABOVE_SHOES_LAYER			(SHOES_LAYER-1)
+#define ABOVE_BODY_FRONT_LAYER		(BODY_FRONT_LAYER-1)
 
 
 //Security levels
@@ -132,53 +105,9 @@
 
 #define TRANSITIONEDGE			7 //Distance from edge to move to another z-level
 
-
-
-//HUD styles. Please ensure HUD_VERSIONS is the same as the maximum index. Index order defines how they are cycled in F12.
-#define HUD_STYLE_STANDARD 1
-#define HUD_STYLE_REDUCED 2
-#define HUD_STYLE_NOHUD 3
-
-
-#define HUD_VERSIONS 3	//used in show_hud()
-//1 = standard hud
-//2 = reduced hud (just hands and intent switcher)
-//3 = no hud (for screenshots)
-
-#define MINERAL_MATERIAL_AMOUNT 2000
-//The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
-#define MAX_STACK_SIZE 50
-//The maximum size of a stack object.
-
-#define CLICK_CD_MELEE 8
-#define CLICK_CD_RANGE 4
-#define CLICK_CD_RAPID 2
-#define CLICK_CD_CLICK_ABILITY 6
-#define CLICK_CD_BREAKOUT 100
-#define CLICK_CD_HANDCUFFED 10
-#define CLICK_CD_RESIST 20
-#define CLICK_CD_GRABBING 10
-
-//click cooldowns, in tenths of a second
-
-
 #define BE_CLOSE 1		//in the case of a silicon, to select if they need to be next to the atom
 #define NO_DEXTERY 1	//if other mobs (monkeys, aliens, etc) can use this
 //used by canUseTopic()
-
-//Sizes of mobs, used by mob/living/var/mob_size
-#define MOB_SIZE_TINY 0
-#define MOB_SIZE_SMALL 1
-#define MOB_SIZE_HUMAN 2
-#define MOB_SIZE_LARGE 3
-
-//Cuff resist speeds
-
-#define FAST_CUFFBREAK 1
-#define INSTANT_CUFFBREAK 2
-
-//Slime evolution threshold. Controls how fast slimes can split/grow
-#define SLIME_EVOLUTION_THRESHOLD 10
 
 //singularity defines
 #define STAGE_ONE 1
@@ -188,65 +117,24 @@
 #define STAGE_FIVE 9
 #define STAGE_SIX 11 //From supermatter shard
 
-//zlevel defines, can be overridden for different maps in the appropriate _maps file.
-#define ZLEVEL_STATION 1
-#define ZLEVEL_CENTCOM 2
-#define ZLEVEL_MINING 5
-#define ZLEVEL_LAVALAND 5
-#define ZLEVEL_EMPTY_SPACE 11
-
-#define ZLEVEL_SPACEMIN 3
-#define ZLEVEL_SPACEMAX 11
-
-//ticker.current_state values
+//SSticker.current_state values
 #define GAME_STATE_STARTUP		0
 #define GAME_STATE_PREGAME		1
 #define GAME_STATE_SETTING_UP	2
 #define GAME_STATE_PLAYING		3
 #define GAME_STATE_FINISHED		4
-//SOUND:
-#define SOUND_MINIMUM_PRESSURE 10
-#define FALLOFF_SOUNDS	1
-#define SURROUND_CAP	7
 
 //FONTS:
 // Used by Paper and PhotoCopier (and PaperBin once a year).
 // Used by PDA's Notekeeper.
 // Used by NewsCaster and NewsPaper.
+// Used by Modular Computers
 #define PEN_FONT "Verdana"
+#define FOUNTAIN_PEN_FONT "Segoe Script"
 #define CRAYON_FONT "Comic Sans MS"
+#define PRINTER_FONT "Times New Roman"
 #define SIGNFONT "Times New Roman"
 
-
-//NPC DEFINES
-#define INTERACTING 2
-#define TRAVEL 4
-#define FIGHTING 8
-
-//TRAITS
-
-#define TRAIT_ROBUST 2
-#define TRAIT_UNROBUST 4
-#define TRAIT_SMART 8
-#define TRAIT_DUMB 16
-#define TRAIT_MEAN 32
-#define TRAIT_FRIENDLY 64
-#define TRAIT_THIEVING 128
-
-//SNPC defines
-#define MAX_RANGE_FIND 32
-#define MIN_RANGE_FIND 16
-#define FUZZY_CHANCE_HIGH 85
-#define FUZZY_CHANCE_LOW 50
-#define CHANCE_TALK 1
-
-#define SNPC_BRUTE 1
-#define SNPC_STEALTH 2
-#define SNPC_MARTYR 3
-#define SNPC_PSYCHO 4
-
-
-#define MAXCOIL 30
 #define RESIZE_DEFAULT_SIZE 1
 
 //transfer_ai() defines. Main proc in ai_core.dm
@@ -254,21 +142,7 @@
 #define AI_TRANS_FROM_CARD	2 //Uploading AI from InteliCard
 #define AI_MECH_HACK		3 //Malfunctioning AI hijacking mecha
 
-//Material defines
-#define MAT_METAL		"$metal"
-#define MAT_GLASS		"$glass"
-#define MAT_SILVER		"$silver"
-#define MAT_GOLD		"$gold"
-#define MAT_DIAMOND		"$diamond"
-#define MAT_URANIUM		"$uranium"
-#define MAT_PLASMA		"$plasma"
-#define MAT_BANANIUM	"$bananium"
-#define MAT_TITANIUM	"$titanium"
-#define MAT_BIOMASS		"$biomass"
-
-
 //check_target_facings() return defines
-#define FACING_FAILED											0
 #define FACING_SAME_DIR											1
 #define FACING_EACHOTHER										2
 #define FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR	3 //Do I win the most informative but also most stupid define award?
@@ -278,35 +152,47 @@
 //Key:
 //"entered-[blood_state]-[dir_of_image]"
 //or: "exited-[blood_state]-[dir_of_image]"
-var/list/bloody_footprints_cache = list()
+GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 
 //Bloody shoes/footprints
 #define MAX_SHOE_BLOODINESS			100
 #define BLOODY_FOOTPRINT_BASE_ALPHA	150
 #define BLOOD_GAIN_PER_STEP			100
 #define BLOOD_LOSS_PER_STEP			5
-#define BLOOD_FADEOUT_TIME			2
+#define BLOOD_LOSS_IN_SPREAD		20
+#define BLOOD_AMOUNT_PER_DECAL		20
 
 //Bloody shoe blood states
 #define BLOOD_STATE_HUMAN			"blood"
 #define BLOOD_STATE_XENO			"xeno"
 #define BLOOD_STATE_OIL				"oil"
 #define BLOOD_STATE_NOT_BLOODY		"no blood whatsoever"
-//Turf wet states
+
+//suit sensors: sensor_mode defines
+
+#define SENSOR_OFF 0
+#define SENSOR_LIVING 1
+#define SENSOR_VITALS 2
+#define SENSOR_COORDS 3
+
+//suit sensors: has_sensor defines
+
+#define BROKEN_SENSORS -1
+#define NO_SENSORS 0
+#define HAS_SENSORS 1
+#define LOCKED_SENSORS 2
+
+//Wet floor type flags. Stronger ones should be higher in number.
 #define TURF_DRY		0
 #define TURF_WET_WATER	1
-#define TURF_WET_LUBE	2
-#define TURF_WET_ICE	3
-#define TURF_WET_PERMAFROST 4
-#define TURF_WET_SLIDE	5
+#define TURF_WET_PERMAFROST	2
+#define TURF_WET_ICE 4
+#define TURF_WET_LUBE	8
 
-//Maximum amount of time, (in approx. seconds.) a tile can be wet for.
-#define MAXIMUM_WET_TIME 300
+#define IS_WET_OPEN_TURF(O) O.GetComponent(/datum/component/wet_floor)
 
-//Object/Item sharpness
-#define IS_BLUNT			0
-#define IS_SHARP			1
-#define IS_SHARP_ACCURATE	2
+//Maximum amount of time, (in deciseconds) a tile can be wet for.
+#define MAXIMUM_WET_TIME 5 MINUTES
 
 //unmagic-strings for types of polls
 #define POLLTYPE_OPTION		"OPTION"
@@ -317,38 +203,11 @@ var/list/bloody_footprints_cache = list()
 
 
 
-//lighting area defines
-#define DYNAMIC_LIGHTING_DISABLED 0 //dynamic lighting disabled (area stays at full brightness)
-#define DYNAMIC_LIGHTING_ENABLED 1 //dynamic lighting enabled
-#define DYNAMIC_LIGHTING_IFSTARLIGHT 2 //dynamic lighting enabled only if starlight is.
-#define IS_DYNAMIC_LIGHTING(A) ( A.lighting_use_dynamic == DYNAMIC_LIGHTING_IFSTARLIGHT ? config.starlight : A.lighting_use_dynamic )
-
 //subtypesof(), typesof() without the parent path
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
 //Gets the turf this atom inhabits
 #define get_turf(A) (get_step(A, 0))
-
-//Bot types
-#define SEC_BOT				1	// Secutritrons (Beepsky) and ED-209s
-#define MULE_BOT			2	// MULEbots
-#define FLOOR_BOT			4	// Floorbots
-#define CLEAN_BOT			8	// Cleanbots
-#define MED_BOT				16	// Medibots
-
-//Sentience types
-#define SENTIENCE_ORGANIC 1
-#define SENTIENCE_ARTIFICIAL 2
-#define SENTIENCE_OTHER 3
-#define SENTIENCE_MINEBOT 4
-#define SENTIENCE_BOSS 5
-
-//Fire stuff, for burn_state
-#define LAVA_PROOF -2
-#define FIRE_PROOF -1
-#define FLAMMABLE 0
-#define ON_FIRE 1
-
 
 //Ghost orbit types:
 #define GHOST_ORBIT_CIRCLE		"circle"
@@ -368,7 +227,7 @@ var/list/bloody_footprints_cache = list()
 
 #define GHOST_ACCS_DEFAULT_OPTION	GHOST_ACCS_FULL
 
-var/global/list/ghost_accs_options = list(GHOST_ACCS_NONE, GHOST_ACCS_DIR, GHOST_ACCS_FULL) //So save files can be sanitized properly.
+GLOBAL_LIST_INIT(ghost_accs_options, list(GHOST_ACCS_NONE, GHOST_ACCS_DIR, GHOST_ACCS_FULL)) //So save files can be sanitized properly.
 
 #define GHOST_OTHERS_SIMPLE 			1
 #define GHOST_OTHERS_DEFAULT_SPRITE		50
@@ -380,11 +239,19 @@ var/global/list/ghost_accs_options = list(GHOST_ACCS_NONE, GHOST_ACCS_DIR, GHOST
 
 #define GHOST_OTHERS_DEFAULT_OPTION			GHOST_OTHERS_THEIR_SETTING
 
-var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DEFAULT_SPRITE, GHOST_OTHERS_THEIR_SETTING) //Same as ghost_accs_options.
+#define GHOST_MAX_VIEW_RANGE_DEFAULT 10
+#define GHOST_MAX_VIEW_RANGE_MEMBER 14
 
-//Bloodcrawling
-#define BLOODCRAWL 1
-#define BLOODCRAWL_EAT 2
+
+GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DEFAULT_SPRITE, GHOST_OTHERS_THEIR_SETTING)) //Same as ghost_accs_options.
+
+//pda fonts
+#define MONO		"Monospaced"
+#define VT			"VT323"
+#define ORBITRON	"Orbitron"
+#define SHARE		"Share Tech Mono"
+
+GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 
 //Color Defines
 #define OOC_COLOR  "#002eb8"
@@ -392,16 +259,14 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 /////////////////////////////////////
 // atom.appearence_flags shortcuts //
 /////////////////////////////////////
-//this was added midway thru 510, so it might not exist in some versions, but we can't check by minor verison
-#ifndef TILE_BOUND
-#error this version of 510 is too old, You must use byond 510.1332 or later. (TILE_BOUND is not defined)
-#endif
+
+/*
 
 // Disabling certain features
 #define APPEARANCE_IGNORE_TRANSFORM			RESET_TRANSFORM
 #define APPEARANCE_IGNORE_COLOUR			RESET_COLOR
 #define	APPEARANCE_IGNORE_CLIENT_COLOUR		NO_CLIENT_COLOR
-#define APPEARANCE_IGNORE_COLOURING			RESET_COLOR|NO_CLIENT_COLOR
+#define APPEARANCE_IGNORE_COLOURING			(RESET_COLOR|NO_CLIENT_COLOR)
 #define APPEARANCE_IGNORE_ALPHA				RESET_ALPHA
 #define APPEARANCE_NORMAL_GLIDE				~LONG_GLIDE
 
@@ -409,27 +274,18 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define APPEARANCE_CONSIDER_TRANSFORM		~RESET_TRANSFORM
 #define APPEARANCE_CONSIDER_COLOUR			~RESET_COLOUR
 #define APPEARANCE_CONSIDER_CLIENT_COLOUR	~NO_CLIENT_COLOR
-#define APPEARANCE_CONSIDER_COLOURING		~RESET_COLOR|~NO_CLIENT_COLOR
+#define APPEARANCE_CONSIDER_COLOURING		(~RESET_COLOR|~NO_CLIENT_COLOR)
 #define APPEARANCE_CONSIDER_ALPHA			~RESET_ALPHA
 #define APPEARANCE_LONG_GLIDE				LONG_GLIDE
 
+*/
+
 // Consider these images/atoms as part of the UI/HUD
-#define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA
-#define APPEARANCE_UI						RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR
+#define APPEARANCE_UI_IGNORE_ALPHA			(RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA|PIXEL_SCALE)
+#define APPEARANCE_UI						(RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE)
 
 //Just space
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
-
-//Gun trigger guards
-#define TRIGGER_GUARD_ALLOW_ALL -1
-#define TRIGGER_GUARD_NONE 0
-#define TRIGGER_GUARD_NORMAL 1
-
-// Plant types
-#define PLANT_NORMAL 0
-#define PLANT_WEED 1
-#define PLANT_MUSHROOM 2
-#define PLANT_ALIEN 3
 
 // Maploader bounds indices
 #define MAP_MINX 1
@@ -439,11 +295,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define MAP_MAXY 5
 #define MAP_MAXZ 6
 
-#define CHECK_DNA_AND_SPECIES(C) if((!(C.dna)) || (!(C.dna.species))) return
-
-// Evil narsie colour
-#define NARSIE_WINDOW_COLOUR "#7D1919"
-
 // Defib stats
 #define DEFIB_TIME_LIMIT 120
 #define DEFIB_TIME_LOSS 60
@@ -451,15 +302,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 // Diagonal movement
 #define FIRST_DIAG_STEP 1
 #define SECOND_DIAG_STEP 2
-
-//Slime commands defines
-#define SLIME_FRIENDSHIP_FOLLOW 			3 //Min friendship to order it to follow
-#define SLIME_FRIENDSHIP_STOPEAT 			5 //Min friendship to order it to stop eating someone
-#define SLIME_FRIENDSHIP_STOPEAT_NOANGRY	7 //Min friendship to order it to stop eating someone without it losing friendship
-#define SLIME_FRIENDSHIP_STOPCHASE			4 //Min friendship to order it to stop chasing someone (their target)
-#define SLIME_FRIENDSHIP_STOPCHASE_NOANGRY	6 //Min friendship to order it to stop chasing someone (their target) without it losing friendship
-#define SLIME_FRIENDSHIP_STAY				3 //Min friendship to order it to stay
-#define SLIME_FRIENDSHIP_ATTACK				8 //Min friendship to order it to attack
 
 #define DEADCHAT_ARRIVALRATTLE "arrivalrattle"
 #define DEADCHAT_DEATHRATTLE "deathrattle"
@@ -472,59 +314,149 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
 
 //debug printing macros
-#define debug_world(msg) if (Debug2) world << "DEBUG: [msg]"
-#define debug_admins(msg) if (Debug2) admins << "DEBUG: [msg]"
-#define debug_world_log(msg) if (Debug2) world.log << "DEBUG: [msg]"
+#define debug_world(msg) if (GLOB.Debug2) to_chat(world, "DEBUG: [msg]")
+#define debug_usr(msg) if (GLOB.Debug2&&usr) to_chat(usr, "DEBUG: [msg]")
+#define debug_admins(msg) if (GLOB.Debug2) to_chat(GLOB.admins, "DEBUG: [msg]")
+#define debug_world_log(msg) if (GLOB.Debug2) log_world("DEBUG: [msg]")
 
-#define COORD(A) "([A.x],[A.y],[A.z])"
 #define INCREMENT_TALLY(L, stat) if(L[stat]){L[stat]++}else{L[stat] = 1}
 
-// Inventory depth: limits how many nested storage items you can access directly.
-// 1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, etc
-#define INVENTORY_DEPTH		3
-#define STORAGE_VIEW_DEPTH	2
+//TODO Move to a pref
+#define STATION_GOAL_BUDGET  1
+
+//Luma coefficients suggested for HDTVs. If you change these, make sure they add up to 1.
+#define LUMA_R 0.213
+#define LUMA_G 0.715
+#define LUMA_B 0.072
+
+//different types of atom colorations
+#define ADMIN_COLOUR_PRIORITY 		1 //only used by rare effects like greentext coloring mobs and when admins varedit color
+#define TEMPORARY_COLOUR_PRIORITY 	2 //e.g. purple effect of the revenant on a mob, black effect when mob electrocuted
+#define WASHABLE_COLOUR_PRIORITY 	3 //color splashed onto an atom (e.g. paint on turf)
+#define FIXED_COLOUR_PRIORITY 		4 //color inherent to the atom (e.g. blob color)
+#define COLOUR_PRIORITY_AMOUNT 4 //how many priority levels there are.
+
+//Endgame Results
+#define NUKE_NEAR_MISS 1
+#define NUKE_MISS_STATION 2
+#define NUKE_SYNDICATE_BASE 3
+#define STATION_DESTROYED_NUKE 4
+#define STATION_EVACUATED 5
+#define BLOB_WIN 8
+#define BLOB_NUKE 9
+#define BLOB_DESTROYED 10
+#define CULT_ESCAPE 11
+#define CULT_FAILURE 12
+#define CULT_SUMMON 13
+#define NUKE_MISS 14
+#define OPERATIVES_KILLED 15
+#define OPERATIVE_SKIRMISH 16
+#define REVS_WIN 17
+#define REVS_LOSE 18
+#define WIZARD_KILLED 19
+#define STATION_NUKED 20
+#define CLOCK_SUMMON 21
+#define CLOCK_SILICONS 22
+#define CLOCK_PROSELYTIZATION 23
+#define SHUTTLE_HIJACK 24
+
+#define FIELD_TURF 1
+#define FIELD_EDGE 2
+
+//gibtonite state defines
+#define GIBTONITE_UNSTRUCK 0
+#define GIBTONITE_ACTIVE 1
+#define GIBTONITE_STABLE 2
+#define GIBTONITE_DETONATE 3
+
+//for obj explosion block calculation
+#define EXPLOSION_BLOCK_PROC -1
+
+//for determining which type of heartbeat sound is playing
+#define BEAT_FAST 1
+#define BEAT_SLOW 2
+#define BEAT_NONE 0
+
+//https://secure.byond.com/docs/ref/info.html#/atom/var/mouse_opacity
+#define MOUSE_OPACITY_TRANSPARENT 0
+#define MOUSE_OPACITY_ICON 1
+#define MOUSE_OPACITY_OPAQUE 2
+
+//world/proc/shelleo
+#define SHELLEO_ERRORLEVEL 1
+#define SHELLEO_STDOUT 2
+#define SHELLEO_STDERR 3
+
+//server security mode
+#define SECURITY_SAFE 1
+#define SECURITY_ULTRASAFE 2
+#define SECURITY_TRUSTED 3
+
+//Dummy mob reserve slots
+#define DUMMY_HUMAN_SLOT_PREFERENCES "dummy_preference_preview"
+#define DUMMY_HUMAN_SLOT_ADMIN "admintools"
+#define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
+
+#define PR_ANNOUNCEMENTS_PER_ROUND 5 //The number of unique PR announcements allowed per round
+									//This makes sure that a single person can only spam 3 reopens and 3 closes before being ignored
+
+#define MAX_PROC_DEPTH 195 // 200 proc calls deep and shit breaks, this is a bit lower to give some safety room
+
+#define SYRINGE_DRAW 0
+#define SYRINGE_INJECT 1
+
+//gold slime core spawning
+#define NO_SPAWN 0
+#define HOSTILE_SPAWN 1
+#define FRIENDLY_SPAWN 2
+
+//slime core activation type
+#define SLIME_ACTIVATE_MINOR 1
+#define SLIME_ACTIVATE_MAJOR 2
+
+#define LUMINESCENT_DEFAULT_GLOW 2
+
+#define RIDING_OFFSET_ALL "ALL"
+
+//stack recipe placement check types
+#define STACK_CHECK_CARDINALS "cardinals" //checks if there is an object of the result type in any of the cardinal directions
+#define STACK_CHECK_ADJACENT "adjacent" //checks if there is an object of the result type within one tile
+
+//text files
+#define BRAIN_DAMAGE_FILE "traumas.json"
+#define ION_FILE "ion_laws.json"
+#define PIRATE_NAMES_FILE "pirates.json"
 
 
+//Fullscreen overlay resolution in tiles.
+#define FULLSCREEN_OVERLAY_RESOLUTION_X 15
+#define FULLSCREEN_OVERLAY_RESOLUTION_Y 15
 
-// Medal names
+#define SUMMON_GUNS "guns"
+#define SUMMON_MAGIC "magic"
 
-#define BOSS_KILL_MEDAL "Killer"
+//Run the world with this parameter to enable a single run though of the game setup and tear down process with unit tests in between
+#define TEST_RUN_PARAMETER "test-run"
+//Force the log directory to be something specific in the data/logs folder
+#define OVERRIDE_LOG_DIRECTORY_PARAMETER "log-directory"
+//Prevent the master controller from starting automatically, overrides TEST_RUN_PARAMETER
+#define NO_INIT_PARAMETER "no-init"
+//Force the config directory to be something other than "config"
+#define OVERRIDE_CONFIG_DIRECTORY_PARAMETER "config-directory"
 
-#define ALL_KILL_MEDAL "Exterminator"	//Killing all of x type
+#define EGG_LAYING_MESSAGES list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
 
-// Score names
+// Used by PDA and cartridge code to reduce repetitiveness of spritesheets
+#define PDAIMG(what) {"<span class="pda16x16 [#what]"></span>"}
 
-#define LEGION_SCORE "Legion Killed"
-#define COLOSSUS_SCORE "Colossus Killed"
-#define BUBBLEGUM_SCORE "Bubblegum Killed"
-#define DRAKE_SCORE "Drakes Killed"
-#define BOSS_SCORE "Bosses Killed"
-#define TENDRIL_CLEAR_SCORE "Tendrils Killed"
+//Filters
+#define AMBIENT_OCCLUSION filter(type="drop_shadow", x=0, y=-2, size=4, border=4, color="#04080FAA")
 
+#define STANDARD_GRAVITY 1 //Anything above this is high gravity, anything below no grav
+#define GRAVITY_DAMAGE_TRESHOLD 3 //Starting with this value gravity will start to damage mobs
 
+#define CAMERA_NO_GHOSTS 0
+#define CAMERA_SEE_GHOSTS_BASIC 1
+#define CAMERA_SEE_GHOSTS_ORBIT 2
 
-									// NTNet module-configuration values. Do not change these. If you need to add another use larger number (5..6..7 etc)
-#define NTNET_SOFTWAREDOWNLOAD 1 	// Downloads of software from NTNet
-#define NTNET_PEERTOPEER 2			// P2P transfers of files between devices
-#define NTNET_COMMUNICATION 3		// Communication (messaging)
-#define NTNET_SYSTEMCONTROL 4		// Control of various systems, RCon, air alarm control, etc.
-
-// NTNet transfer speeds, used when downloading/uploading a file/program.
-#define NTNETSPEED_LOWSIGNAL 0.5	// GQ/s transfer speed when the device is wirelessly connected and on Low signal
-#define NTNETSPEED_HIGHSIGNAL 1	// GQ/s transfer speed when the device is wirelessly connected and on High signal
-#define NTNETSPEED_ETHERNET 2		// GQ/s transfer speed when the device is using wired connection
-
-
-// Program bitflags
-#define PROGRAM_ALL 7
-#define PROGRAM_CONSOLE 1
-#define PROGRAM_LAPTOP 2
-#define PROGRAM_TABLET 4
-
-#define PROGRAM_STATE_KILLED 0
-#define PROGRAM_STATE_BACKGROUND 1
-#define PROGRAM_STATE_ACTIVE 2
-
-// Caps for NTNet logging. Less than 10 would make logging useless anyway, more than 500 may make the log browser too laggy. Defaults to 100 unless user changes it.
-#define MAX_NTNET_LOGS 300
-#define MIN_NTNET_LOGS 10
+#define CLIENT_FROM_VAR(I) (ismob(I) ? I:client : (istype(I, /client) ? I : (istype(I, /datum/mind) ? I:current?:client : null)))

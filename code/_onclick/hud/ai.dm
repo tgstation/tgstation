@@ -2,8 +2,8 @@
 	icon = 'icons/mob/screen_ai.dmi'
 
 /obj/screen/ai/Click()
-	if(isobserver(usr))
-		return 1
+	if(isobserver(usr) || usr.incapacitated())
+		return TRUE
 
 /obj/screen/ai/aicore
 	name = "AI core"
@@ -20,9 +20,10 @@
 	icon_state = "camera"
 
 /obj/screen/ai/camera_list/Click()
+	if(..())
+		return
 	var/mob/living/silicon/ai/AI = usr
-	var/camera = input(AI, "Choose which camera you want to view", "Cameras") as null|anything in AI.get_camera_list()
-	AI.ai_camera_list(camera)
+	AI.show_camera_list()
 
 /obj/screen/ai/camera_track
 	name = "Track With Camera"
@@ -53,7 +54,7 @@
 	if(..())
 		return
 	var/mob/living/silicon/ai/AI = usr
-	crewmonitor.show(AI)
+	GLOB.crewmonitor.show(AI,AI)
 
 /obj/screen/ai/crew_manifest
 	name = "Crew Manifest"
@@ -76,7 +77,7 @@
 	AI.ai_alerts()
 
 /obj/screen/ai/announcement
-	name = "Make Announcement"
+	name = "Make Vox Announcement"
 	icon_state = "announcement"
 
 /obj/screen/ai/announcement/Click()
@@ -130,24 +131,28 @@
 	icon_state = "take_picture"
 
 /obj/screen/ai/image_take/Click()
+	if(..())
+		return
 	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = usr
-		AI.aicamera.toggle_camera_mode()
-	else if(isrobot(usr))
+		AI.aicamera.toggle_camera_mode(usr)
+	else if(iscyborg(usr))
 		var/mob/living/silicon/robot/R = usr
-		R.aicamera.toggle_camera_mode()
+		R.aicamera.toggle_camera_mode(usr)
 
 /obj/screen/ai/image_view
 	name = "View Images"
 	icon_state = "view_images"
 
 /obj/screen/ai/image_view/Click()
+	if(..())
+		return
 	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = usr
-		AI.aicamera.viewpictures()
-	else if(isrobot(usr))
+		AI.aicamera.viewpictures(usr)
+	else if(iscyborg(usr))
 		var/mob/living/silicon/robot/R = usr
-		R.aicamera.viewpictures()
+		R.aicamera.viewpictures(usr)
 
 /obj/screen/ai/sensors
 	name = "Sensor Augmentation"
@@ -157,12 +162,40 @@
 	if(..())
 		return
 	var/mob/living/silicon/S = usr
-	S.sensor_mode()
+	S.toggle_sensors()
 
+/obj/screen/ai/multicam
+	name = "Multicamera Mode"
+	icon_state = "multicam"
+
+/obj/screen/ai/multicam/Click()
+	if(..())
+		return
+	var/mob/living/silicon/ai/AI = usr
+	AI.toggle_multicam()
+
+/obj/screen/ai/add_multicam
+	name = "New Camera"
+	icon_state = "new_cam"
+
+/obj/screen/ai/add_multicam/Click()
+	if(..())
+		return
+	var/mob/living/silicon/ai/AI = usr
+	AI.drop_new_multicam()
+
+
+/datum/hud/ai
+	ui_style = 'icons/mob/screen_ai.dmi'
 
 /datum/hud/ai/New(mob/owner)
 	..()
 	var/obj/screen/using
+
+// Language menu
+	using = new /obj/screen/language_menu
+	using.screen_loc = ui_borg_language_menu
+	static_inventory += using
 
 //AI core
 	using = new /obj/screen/ai/aicore()
@@ -234,13 +267,17 @@
 	using.screen_loc = ui_ai_view_images
 	static_inventory += using
 
-
 //Medical/Security sensors
 	using = new /obj/screen/ai/sensors()
 	using.screen_loc = ui_ai_sensor
 	static_inventory += using
 
+//Multicamera mode
+	using = new /obj/screen/ai/multicam()
+	using.screen_loc = ui_ai_multicam
+	static_inventory += using
 
-/mob/living/silicon/ai/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/ai(src)
+//Add multicamera camera
+	using = new /obj/screen/ai/add_multicam()
+	using.screen_loc = ui_ai_add_multicam
+	static_inventory += using

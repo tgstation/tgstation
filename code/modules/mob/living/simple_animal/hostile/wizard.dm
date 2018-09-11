@@ -1,9 +1,11 @@
 /mob/living/simple_animal/hostile/wizard
 	name = "Space Wizard"
 	desc = "EI NATH?"
+	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "wizard"
 	icon_living = "wizard"
 	icon_dead = "wizard_dead"
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	speak_chance = 0
 	turns_per_move = 3
 	response_help = "pokes"
@@ -17,32 +19,34 @@
 	melee_damage_upper = 5
 	attacktext = "punches"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
-	faction = list("wizard")
+	faction = list(ROLE_WIZARD)
 	status_flags = CANPUSH
 
 	retreat_distance = 3 //out of fireball range
 	minimum_distance = 3
 	del_on_death = 1
 	loot = list(/obj/effect/mob_spawn/human/corpse/wizard,
-				/obj/item/weapon/staff)
+				/obj/item/staff)
 
-	var/obj/effect/proc_holder/spell/fireball/fireball = null
+	var/obj/effect/proc_holder/spell/aimed/fireball/fireball = null
 	var/obj/effect/proc_holder/spell/targeted/turf_teleport/blink/blink = null
 	var/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/mm = null
 
 	var/next_cast = 0
 
+	do_footstep = TRUE
 
-/mob/living/simple_animal/hostile/wizard/New()
-	..()
-	fireball = new /obj/effect/proc_holder/spell/fireball
+/mob/living/simple_animal/hostile/wizard/Initialize()
+	. = ..()
+	fireball = new /obj/effect/proc_holder/spell/aimed/fireball
 	fireball.clothes_req = 0
 	fireball.human_req = 0
 	fireball.player_lock = 0
 	AddSpell(fireball)
+	implants += new /obj/item/implant/exile(src)
 
 	mm = new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
 	mm.clothes_req = 0

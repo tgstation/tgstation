@@ -63,126 +63,78 @@
 /*	the radio controller is a confusing piece of shit and didnt work
 	so i made radios not use the radio controller.
 */
-var/list/all_radios = list()
+GLOBAL_LIST_EMPTY(all_radios)
 /proc/add_radio(obj/item/radio, freq)
 	if(!freq || !radio)
 		return
-	if(!all_radios["[freq]"])
-		all_radios["[freq]"] = list(radio)
+	if(!GLOB.all_radios["[freq]"])
+		GLOB.all_radios["[freq]"] = list(radio)
 		return freq
 
-	all_radios["[freq]"] |= radio
+	GLOB.all_radios["[freq]"] |= radio
 	return freq
 
 /proc/remove_radio(obj/item/radio, freq)
 	if(!freq || !radio)
 		return
-	if(!all_radios["[freq]"])
+	if(!GLOB.all_radios["[freq]"])
 		return
 
-	all_radios["[freq]"] -= radio
+	GLOB.all_radios["[freq]"] -= radio
 
 /proc/remove_radio_all(obj/item/radio)
-	for(var/freq in all_radios)
-		all_radios["[freq]"] -= radio
+	for(var/freq in GLOB.all_radios)
+		GLOB.all_radios["[freq]"] -= radio
 
-/*
-Frequency range: 1200 to 1600
-Radiochat range: 1441 to 1489 (most devices refuse to be tune to other frequency, even during mapmaking)
+// For information on what objects or departments use what frequencies,
+// see __DEFINES/radio.dm. Mappers may also select additional frequencies for
+// use in maps, such as in intercoms.
 
-Radio:
-1459 - standard radio chat
-1351 - Science
-1353 - Command
-1355 - Medical
-1357 - Engineering
-1359 - Security
-1337 - death squad
-1443 - Confession Intercom
-1349 - Miners
-1347 - Cargo techs
-1447 - AI Private
+GLOBAL_LIST_INIT(radiochannels, list(
+	"Common" = FREQ_COMMON,
+	"Science" = FREQ_SCIENCE,
+	"Command" = FREQ_COMMAND,
+	"Medical" = FREQ_MEDICAL,
+	"Engineering" = FREQ_ENGINEERING,
+	"Security" = FREQ_SECURITY,
+	"CentCom" = FREQ_CENTCOM,
+	"Syndicate" = FREQ_SYNDICATE,
+	"Supply" = FREQ_SUPPLY,
+	"Service" = FREQ_SERVICE,
+	"AI Private" = FREQ_AI_PRIVATE,
+	"Red Team" = FREQ_CTF_RED,
+	"Blue Team" = FREQ_CTF_BLUE
+))
 
-Devices:
-1451 - tracking implant
-1457 - RSD default
-
-On the map:
-1311 for prison shuttle console (in fact, it is not used)
-1435 for status displays
-1437 for atmospherics/fire alerts
-1439 for engine components
-1439 for air pumps, air scrubbers, atmo control
-1441 for atmospherics - supply tanks
-1443 for atmospherics - distribution loop/mixed air tank
-1445 for bot nav beacons
-1447 for mulebot, secbot and ed209 control
-1449 for airlock controls, electropack, magnets
-1451 for toxin lab access
-1453 for engineering access
-1455 for AI access
-*/
-
-var/list/radiochannels = list(
-	"Common" = 1459,
-	"Science" = 1351,
-	"Command" = 1353,
-	"Medical" = 1355,
-	"Engineering" = 1357,
-	"Security" = 1359,
-	"Centcom" = 1337,
-	"Syndicate" = 1213,
-	"Supply" = 1347,
-	"Service" = 1349,
-	"AI Private" = 1447
-)
-
-var/list/radiochannelsreverse = list(
-	"1459" = "Common",
-	"1351" = "Science",
-	"1353" = "Command",
-	"1355" = "Medical",
-	"1357" = "Engineering",
-	"1359" = "Security",
-	"1337" = "Centcom",
-	"1213" = "Syndicate",
-	"1347" = "Supply",
-	"1349" = "Service",
-	"1447" = "AI Private"
-)
-
-//depenging helpers
-var/const/SYND_FREQ = 1213 //nuke op frequency, coloured dark brown in chat window
-var/const/SUPP_FREQ = 1347 //supply, coloured light brown in chat window
-var/const/SERV_FREQ = 1349 //service, coloured green in chat window
-var/const/SCI_FREQ = 1351 //science, coloured plum in chat window
-var/const/COMM_FREQ = 1353 //command, colored gold in chat window
-var/const/MED_FREQ = 1355 //medical, coloured blue in chat window
-var/const/ENG_FREQ = 1357 //engineering, coloured orange in chat window
-var/const/SEC_FREQ = 1359 //security, coloured red in chat window
-var/const/CENTCOM_FREQ = 1337 //centcom frequency, coloured grey in chat window
-var/const/AIPRIV_FREQ = 1447 //AI private, colored magenta in chat window
-
-#define TRANSMISSION_WIRE	0
-#define TRANSMISSION_RADIO	1
-
-/* filters */
-var/const/RADIO_TO_AIRALARM = "1"
-var/const/RADIO_FROM_AIRALARM = "2"
-var/const/RADIO_CHAT = "3" //deprecated
-var/const/RADIO_ATMOSIA = "4"
-var/const/RADIO_NAVBEACONS = "5"
-var/const/RADIO_AIRLOCK = "6"
-var/const/RADIO_MAGNETS = "9"
+GLOBAL_LIST_INIT(reverseradiochannels, list(
+	"[FREQ_COMMON]" = "Common",
+	"[FREQ_SCIENCE]" = "Science",
+	"[FREQ_COMMAND]" = "Command",
+	"[FREQ_MEDICAL]" = "Medical",
+	"[FREQ_ENGINEERING]" = "Engineering",
+	"[FREQ_SECURITY]" = "Security",
+	"[FREQ_CENTCOM]" = "CentCom",
+	"[FREQ_SYNDICATE]" = "Syndicate",
+	"[FREQ_SUPPLY]" = "Supply",
+	"[FREQ_SERVICE]" = "Service",
+	"[FREQ_AI_PRIVATE]" = "AI Private",
+	"[FREQ_CTF_RED]" = "Red Team",
+	"[FREQ_CTF_BLUE]" = "Blue Team"
+))
 
 /datum/radio_frequency
-
 	var/frequency as num
 	var/list/list/obj/devices = list()
+
+/datum/radio_frequency/New(freq)
+	frequency = freq
 
 //If range > 0, only post to devices on the same z_level and within range
 //Use range = -1, to restrain to the same z_level without limiting range
 /datum/radio_frequency/proc/post_signal(obj/source as obj|null, datum/signal/signal, filter = null as text|null, range = null as num|null)
+	// Ensure the signal's data is fully filled
+	signal.source = source
+	signal.frequency = frequency
 
 	//Apply filter to the signal. If none supply, broadcast to every devices
 	//_default channel is always checked
@@ -211,7 +163,7 @@ var/const/RADIO_MAGNETS = "9"
 					continue
 				if(start_point.z != end_point.z || (range > 0 && get_dist(start_point, end_point) > range))
 					continue
-			device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
+			device.receive_signal(signal)
 
 /datum/radio_frequency/proc/add_listener(obj/device, filter as text|null)
 	if (!filter)
@@ -219,8 +171,7 @@ var/const/RADIO_MAGNETS = "9"
 
 	var/list/devices_line = devices[filter]
 	if(!devices_line)
-		devices_line = list()
-		devices[filter] = devices_line
+		devices[filter] = devices_line = list()
 	devices_line += device
 
 
@@ -234,69 +185,15 @@ var/const/RADIO_MAGNETS = "9"
 			devices -= devices_filter
 
 
-
-
-var/list/pointers = list()
-
-/client/proc/print_pointers()
-	set name = "Debug Signals"
-	set category = "Debug"
-
-	if(!holder)
-		return
-
-	src << "There are [pointers.len] pointers:"
-	for(var/p in pointers)
-		src << p
-		var/datum/signal/S = locate(p)
-		if(istype(S))
-			src << S.debug_print()
-
-/obj/proc/receive_signal(datum/signal/signal, receive_method, receive_param)
+/obj/proc/receive_signal(datum/signal/signal)
 	return
 
 /datum/signal
 	var/obj/source
-
-	var/transmission_method = 0
-	//0 = wire
-	//1 = radio transmission
-	//2 = subspace transmission
-
-	var/data = list()
-	var/encryption
-
 	var/frequency = 0
+	var/transmission_method
+	var/list/data
 
-/datum/signal/New()
-	..()
-	pointers += "\ref[src]"
-
-/datum/signal/Destroy()
-	pointers -= "\ref[src]"
-	return ..()
-
-/datum/signal/proc/copy_from(datum/signal/model)
-	source = model.source
-	transmission_method = model.transmission_method
-	data = model.data
-	encryption = model.encryption
-	frequency = model.frequency
-
-/datum/signal/proc/debug_print()
-	if (source)
-		. = "signal = {source = '[source]' ([source:x],[source:y],[source:z])\n"
-	else
-		. = "signal = {source = '[source]' ()\n"
-	for (var/i in data)
-		. += "data\[\"[i]\"\] = \"[data[i]]\"\n"
-		if(islist(data[i]))
-			var/list/L = data[i]
-			for(var/t in L)
-				. += "data\[\"[i]\"\] list has: [t]"
-
-/datum/signal/proc/sanitize_data()
-	for(var/d in data)
-		var/val = data[d]
-		if(istext(val))
-			data[d] = html_encode(val)
+/datum/signal/New(data, transmission_method = TRANSMISSION_RADIO)
+	src.data = data || list()
+	src.transmission_method = transmission_method

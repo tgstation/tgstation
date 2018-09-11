@@ -1,12 +1,14 @@
-/var/create_mob_html = null
+
 /datum/admins/proc/create_mob(mob/user)
+	var/static/create_mob_html
 	if (!create_mob_html)
 		var/mobjs = null
 		mobjs = jointext(typesof(/mob), ";")
 		create_mob_html = file2text('html/create_object.html')
+		create_mob_html = replacetext(create_mob_html, "Create Object", "Create Mob")
 		create_mob_html = replacetext(create_mob_html, "null /* object types */", "\"[mobjs]\"")
 
-	user << browse(replacetext(create_mob_html, "/* ref src */", "\ref[src]"), "window=create_mob;size=425x475")
+	user << browse(create_panel_helper(create_mob_html), "window=create_mob;size=425x475")
 
 /proc/randomize_human(mob/living/carbon/human/H)
 	H.gender = pick(MALE, FEMALE)
@@ -20,6 +22,17 @@
 	H.facial_hair_color = H.hair_color
 	H.eye_color = random_eye_color()
 	H.dna.blood_type = random_blood_type()
+
+	// Mutant randomizing, doesn't affect the mob appearance unless it's the specific mutant.
+	H.dna.features["mcolor"] = random_short_color()
+	H.dna.features["tail_lizard"] = pick(GLOB.tails_list_lizard)
+	H.dna.features["snout"] = pick(GLOB.snouts_list) 
+	H.dna.features["horns"] = pick(GLOB.horns_list) 
+	H.dna.features["frills"] = pick(GLOB.frills_list)
+	H.dna.features["spines"] = pick(GLOB.spines_list)
+	H.dna.features["body_markings"] = pick(GLOB.body_markings_list)
+	H.dna.features["moth_wings"] = pick(GLOB.moth_wings_list)
+
 	H.update_body()
 	H.update_hair()
 	H.update_body_parts()

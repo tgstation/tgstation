@@ -1,6 +1,6 @@
 /datum/computer_file/program/ntnetdownload
 	filename = "ntndownloader"
-	filedesc = "NTNet Software Download Tool"
+	filedesc = "Software Download Tool"
 	program_icon_state = "generic"
 	extended_desc = "This program allows downloads of software from official NT repositories"
 	unsendable = 1
@@ -10,6 +10,8 @@
 	requires_ntnet_feature = NTNET_SOFTWAREDOWNLOAD
 	available_on_ntnet = 0
 	ui_header = "downloader_finished.gif"
+	tgui_id = "ntos_net_downloader"
+
 	var/datum/computer_file/program/downloaded_file = null
 	var/hacked_download = 0
 	var/download_completion = 0 //GQ of downloaded data.
@@ -21,24 +23,26 @@
 	if(downloaded_file)
 		return 0
 
-	var/datum/computer_file/program/PRG = ntnet_global.find_ntnet_file_by_name(filename)
+	var/datum/computer_file/program/PRG = SSnetworks.station_network.find_ntnet_file_by_name(filename)
 
 	if(!PRG || !istype(PRG))
 		return 0
 
 	// Attempting to download antag only program, but without having emagged computer. No.
-	if(PRG.available_on_syndinet && !computer_emagged)
+	if(PRG.available_on_syndinet && !(computer.obj_flags & EMAGGED))
 		return 0
 
-	if(!computer || !computer.hard_drive || !computer.hard_drive.try_store_file(PRG))
+	var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
+
+	if(!computer || !hard_drive || !hard_drive.can_store_file(PRG))
 		return 0
 
 	ui_header = "downloader_running.gif"
 
-	if(PRG in ntnet_global.available_station_software)
+	if(PRG in SSnetworks.station_network.available_station_software)
 		generate_network_log("Began downloading file [PRG.filename].[PRG.filetype] from NTNet Software Repository.")
 		hacked_download = 0
-	else if(PRG in ntnet_global.available_antag_software)
+	else if(PRG in SSnetworks.station_network.available_antag_software)
 		generate_network_log("Began downloading file **ENCRYPTED**.[PRG.filetype] from unspecified server.")
 		hacked_download = 1
 	else
@@ -50,7 +54,7 @@
 /datum/computer_file/program/ntnetdownload/proc/abort_file_download()
 	if(!downloaded_file)
 		return
-	generate_network_log("Aborted download of file [hacked_download ? "**ENCRYPTED**" : downloaded_file.filename].[downloaded_file.filetype].")
+	generate_network_log("Aborted download of file [hacked_download ? "**ENCRYPTED**" : "[downloaded_file.filename].[downloaded_file.filetype]"].")
 	downloaded_file = null
 	download_completion = 0
 	ui_header = "downloader_finished.gif"
@@ -58,8 +62,9 @@
 /datum/computer_file/program/ntnetdownload/proc/complete_file_download()
 	if(!downloaded_file)
 		return
-	generate_network_log("Completed download of file [hacked_download ? "**ENCRYPTED**" : downloaded_file.filename].[downloaded_file.filetype].")
-	if(!computer || !computer.hard_drive || !computer.hard_drive.store_file(downloaded_file))
+	generate_network_log("Completed download of file [hacked_download ? "**ENCRYPTED**" : "[downloaded_file.filename].[downloaded_file.filetype]"].")
+	var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
+	if(!computer || !hard_drive || !hard_drive.store_file(downloaded_file))
 		// The download failed
 		downloaderror = "I/O ERROR - Unable to save file. Check whether you have enough free space on your hard drive and whether your hard drive is properly connected. If the issue persists contact your system administrator for assistance."
 	downloaded_file = null
@@ -100,20 +105,7 @@
 			return 1
 	return 0
 
-/datum/computer_file/program/ntnetdownload/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
-
-		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
-		assets.send(user)
-
-		ui = new(user, src, ui_key, "ntnet_downloader", "NTNet Download Program", 575, 700, state = state)
-		ui.open()
-		ui.set_autoupdate(state = 1)
-
 /datum/computer_file/program/ntnetdownload/ui_data(mob/user)
-
 	my_computer = computer
 
 	if(!istype(my_computer))
@@ -131,25 +123,29 @@
 		data["downloadspeed"] = download_netspeed
 		data["downloadcompletion"] = round(download_completion, 0.1)
 	else // No download running, pick file.
-		data["disk_size"] = my_computer.hard_drive.max_capacity
-		data["disk_used"] = my_computer.hard_drive.used_capacity
+		var/obj/item/computer_hardware/hard_drive/hard_drive = my_computer.all_components[MC_HDD]
+		data["disk_size"] = hard_drive.max_capacity
+		data["disk_used"] = hard_drive.used_capacity
 		var/list/all_entries[0]
-		for(var/A in ntnet_global.available_station_software)
+		for(var/A in SSnetworks.station_network.available_station_software)
 			var/datum/computer_file/program/P = A
 			// Only those programs our user can run will show in the list
-			if(!P.can_run(user,transfer = 1))
+			if(!P.can_run(user,transfer = 1) || hard_drive.find_file_by_name(P.filename))
 				continue
 			all_entries.Add(list(list(
 			"filename" = P.filename,
 			"filedesc" = P.filedesc,
 			"fileinfo" = P.extended_desc,
+			"compatibility" = check_compatibility(P),
 			"size" = P.size
 			)))
 		data["hackedavailable"] = 0
-		if(computer_emagged) // If we are running on emagged computer we have access to some "bonus" software
+		if(computer.obj_flags & EMAGGED) // If we are running on emagged computer we have access to some "bonus" software
 			var/list/hacked_programs[0]
-			for(var/S in ntnet_global.available_antag_software)
+			for(var/S in SSnetworks.station_network.available_antag_software)
 				var/datum/computer_file/program/P = S
+				if(hard_drive.find_file_by_name(P.filename))
+					continue
 				data["hackedavailable"] = 1
 				hacked_programs.Add(list(list(
 				"filename" = P.filename,
@@ -162,3 +158,14 @@
 		data["downloadable_programs"] = all_entries
 
 	return data
+
+/datum/computer_file/program/ntnetdownload/proc/check_compatibility(datum/computer_file/program/P)
+	var/hardflag = computer.hardware_flag
+
+	if(P && P.is_supported_by_hardware(hardflag,0))
+		return "Compatible"
+	return "Incompatible!"
+
+/datum/computer_file/program/ntnetdownload/kill_program(forced)
+	abort_file_download()
+	return ..(forced)

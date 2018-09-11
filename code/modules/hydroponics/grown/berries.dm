@@ -5,7 +5,7 @@
 	icon_state = "seed-berry"
 	species = "berry"
 	plantname = "Berry Bush"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/berries
+	product = /obj/item/reagent_containers/food/snacks/grown/berries
 	lifespan = 20
 	maturation = 5
 	production = 5
@@ -13,10 +13,11 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "berry-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "berry-dead" // Same for the dead icon
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/berry/glow, /obj/item/seeds/berry/poison)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/berries
+/obj/item/reagent_containers/food/snacks/grown/berries
 	seed = /obj/item/seeds/berry
 	name = "bunch of berries"
 	desc = "Nutritious!"
@@ -24,6 +25,10 @@
 	gender = PLURAL
 	filling_color = "#FF00FF"
 	bitesize_mod = 2
+	foodtype = FRUIT
+	juice_results = list("berryjuice" = 0)
+	tastes = list("berry" = 1)
+	distill_reagent = "gin"
 
 // Poison Berries
 /obj/item/seeds/berry/poison
@@ -32,17 +37,22 @@
 	icon_state = "seed-poisonberry"
 	species = "poisonberry"
 	plantname = "Poison-Berry Bush"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/berries/poison
+	product = /obj/item/reagent_containers/food/snacks/grown/berries/poison
 	mutatelist = list(/obj/item/seeds/berry/death)
 	reagents_add = list("cyanide" = 0.15, "tirizene" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 10 // Mildly poisonous berries are common in reality
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/berries/poison
+/obj/item/reagent_containers/food/snacks/grown/berries/poison
 	seed = /obj/item/seeds/berry/poison
 	name = "bunch of poison-berries"
-	desc = "Taste so good, you could die!"
+	desc = "Taste so good, you might die!"
 	icon_state = "poisonberrypile"
 	filling_color = "#C71585"
+	foodtype = FRUIT | TOXIC
+	juice_results = list("poisonberryjuice" = 0)
+	tastes = list("poison-berry" = 1)
+	distill_reagent = null
+	wine_power = 35
 
 // Death Berries
 /obj/item/seeds/berry/death
@@ -51,19 +61,23 @@
 	icon_state = "seed-deathberry"
 	species = "deathberry"
 	plantname = "Death Berry Bush"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/berries/death
+	product = /obj/item/reagent_containers/food/snacks/grown/berries/death
 	lifespan = 30
 	potency = 50
 	mutatelist = list()
 	reagents_add = list("coniine" = 0.08, "tirizene" = 0.1, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 30
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/berries/death
+/obj/item/reagent_containers/food/snacks/grown/berries/death
 	seed = /obj/item/seeds/berry/death
 	name = "bunch of death-berries"
-	desc = "Taste so good, you could die!"
+	desc = "Taste so good, you will die!"
 	icon_state = "deathberrypile"
 	filling_color = "#708090"
+	foodtype = FRUIT | TOXIC
+	tastes = list("death-berry" = 1)
+	distill_reagent = null
+	wine_power = 50
 
 // Glow Berries
 /obj/item/seeds/berry/glow
@@ -72,21 +86,24 @@
 	icon_state = "seed-glowberry"
 	species = "glowberry"
 	plantname = "Glow-Berry Bush"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow
+	product = /obj/item/reagent_containers/food/snacks/grown/berries/glow
 	lifespan = 30
 	endurance = 25
 	mutatelist = list()
-	genes = list(/datum/plant_gene/trait/glow/berry)
+	genes = list(/datum/plant_gene/trait/glow/berry , /datum/plant_gene/trait/noreact, /datum/plant_gene/trait/repeated_harvest)
 	reagents_add = list("uranium" = 0.25, "iodine" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 20
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow
+/obj/item/reagent_containers/food/snacks/grown/berries/glow
 	seed = /obj/item/seeds/berry/glow
 	name = "bunch of glow-berries"
 	desc = "Nutritious!"
 	icon_state = "glowberrypile"
 	filling_color = "#7CFC00"
-	origin_tech = "plasmatech=6"
+	foodtype = FRUIT
+	tastes = list("glow-berry" = 1)
+	distill_reagent = null
+	wine_power = 60
 
 // Cherries
 /obj/item/seeds/cherry
@@ -95,7 +112,7 @@
 	icon_state = "seed-cherry"
 	species = "cherry"
 	plantname = "Cherry Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/cherries
+	product = /obj/item/reagent_containers/food/snacks/grown/cherries
 	lifespan = 35
 	endurance = 35
 	maturation = 5
@@ -104,10 +121,11 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "cherry-grow"
 	icon_dead = "cherry-dead"
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/cherry/blue)
 	reagents_add = list("nutriment" = 0.07, "sugar" = 0.07)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/cherries
+/obj/item/reagent_containers/food/snacks/grown/cherries
 	seed = /obj/item/seeds/cherry
 	name = "cherries"
 	desc = "Great for toppings!"
@@ -115,26 +133,34 @@
 	gender = PLURAL
 	filling_color = "#FF0000"
 	bitesize_mod = 2
+	foodtype = FRUIT
+	grind_results = list("cherryjelly" = 0)
+	tastes = list("cherry" = 1)
+	wine_power = 30
 
 // Blue Cherries
 /obj/item/seeds/cherry/blue
 	name = "pack of blue cherry pits"
-	desc = "The blue kind of cherries"
+	desc = "The blue kind of cherries."
 	icon_state = "seed-bluecherry"
 	species = "bluecherry"
 	plantname = "Blue Cherry Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries
+	product = /obj/item/reagent_containers/food/snacks/grown/bluecherries
 	mutatelist = list()
 	reagents_add = list("nutriment" = 0.07, "sugar" = 0.07)
 	rarity = 10
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries
+/obj/item/reagent_containers/food/snacks/grown/bluecherries
 	seed = /obj/item/seeds/cherry/blue
 	name = "blue cherries"
 	desc = "They're cherries that are blue."
 	icon_state = "bluecherry"
 	filling_color = "#6495ED"
 	bitesize_mod = 2
+	foodtype = FRUIT
+	grind_results = list("bluecherryjelly" = 0)
+	tastes = list("blue cherry" = 1)
+	wine_power = 50
 
 // Grapes
 /obj/item/seeds/grape
@@ -143,7 +169,7 @@
 	icon_state = "seed-grapes"
 	species = "grape"
 	plantname = "Grape Vine"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/grapes
+	product = /obj/item/reagent_containers/food/snacks/grown/grapes
 	lifespan = 50
 	endurance = 25
 	maturation = 3
@@ -153,17 +179,22 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "grape-grow"
 	icon_dead = "grape-dead"
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/grape/green)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1, "sugar" = 0.1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/grapes
+/obj/item/reagent_containers/food/snacks/grown/grapes
 	seed = /obj/item/seeds/grape
 	name = "bunch of grapes"
 	desc = "Nutritious!"
 	icon_state = "grapes"
-	dried_type = /obj/item/weapon/reagent_containers/food/snacks/no_raisin
+	dried_type = /obj/item/reagent_containers/food/snacks/no_raisin/healthy
 	filling_color = "#FF1493"
 	bitesize_mod = 2
+	foodtype = FRUIT
+	juice_results = list("grapejuice" = 0)
+	tastes = list("grape" = 1)
+	distill_reagent = "wine"
 
 // Green Grapes
 /obj/item/seeds/grape/green
@@ -172,13 +203,15 @@
 	icon_state = "seed-greengrapes"
 	species = "greengrape"
 	plantname = "Green-Grape Vine"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/grapes/green
+	product = /obj/item/reagent_containers/food/snacks/grown/grapes/green
 	reagents_add = list("kelotane" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1, "sugar" = 0.1)
 	// No rarity: technically it's a beneficial mutant, but it's not exactly "new"...
 	mutatelist = list()
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/grapes/green
+/obj/item/reagent_containers/food/snacks/grown/grapes/green
 	seed = /obj/item/seeds/grape/green
 	name = "bunch of green grapes"
 	icon_state = "greengrapes"
 	filling_color = "#7FFF00"
+	tastes = list("green grape" = 1)
+	distill_reagent = "cognac"

@@ -4,14 +4,21 @@
 	icon = 'icons/obj/doors/blastdoor.dmi'
 	icon_state = "closed"
 	var/id = 1
-	sub_door = 1
+	layer = BLASTDOOR_LAYER
+	closingLayer = CLOSED_BLASTDOOR_LAYER
+	sub_door = TRUE
 	explosion_block = 3
-	heat_proof = 1
-	safe = 0
+	heat_proof = TRUE
+	safe = FALSE
+	max_integrity = 600
+	armor = list("melee" = 50, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 70)
+	resistance_flags = FIRE_PROOF
+	damage_deflection = 70
+	poddoor = TRUE
 
 /obj/machinery/door/poddoor/preopen
 	icon_state = "open"
-	density = 0
+	density = FALSE
 	opacity = 0
 
 /obj/machinery/door/poddoor/ert
@@ -19,16 +26,37 @@
 
 //special poddoors that open when emergency shuttle docks at centcom
 /obj/machinery/door/poddoor/shuttledock
-	var/checkdir = 4	//door won't open if turf in this dir is space
+	var/checkdir = 4	//door won't open if turf in this dir is `turftype`
+	var/turftype = /turf/open/space
 
 /obj/machinery/door/poddoor/shuttledock/proc/check()
 	var/turf/T = get_step(src, checkdir)
-	if(!istype(T,/turf/open/space))
-		addtimer(src, "open", 0, TRUE)
+	if(!istype(T, turftype))
+		INVOKE_ASYNC(src, .proc/open)
 	else
-		addtimer(src, "close", 0, TRUE)
+		INVOKE_ASYNC(src, .proc/close)
 
-/obj/machinery/door/poddoor/Bumped(atom/AM)
+/obj/machinery/door/poddoor/incinerator_toxmix
+	name = "combustion chamber vent"
+	id = INCINERATOR_TOXMIX_VENT
+
+/obj/machinery/door/poddoor/incinerator_atmos_main
+	name = "turbine vent"
+	id = INCINERATOR_ATMOS_MAINVENT
+
+/obj/machinery/door/poddoor/incinerator_atmos_aux
+	name = "combustion chamber vent"
+	id = INCINERATOR_ATMOS_AUXVENT
+
+/obj/machinery/door/poddoor/incinerator_syndicatelava_main
+	name = "turbine vent"
+	id = INCINERATOR_SYNDICATELAVA_MAINVENT
+
+/obj/machinery/door/poddoor/incinerator_syndicatelava_aux
+	name = "combustion chamber vent"
+	id = INCINERATOR_SYNDICATELAVA_AUXVENT
+
+/obj/machinery/door/poddoor/Bumped(atom/movable/AM)
 	if(density)
 		return 0
 	else
@@ -36,37 +64,18 @@
 
 //"BLAST" doors are obviously stronger than regular doors when it comes to BLASTS.
 /obj/machinery/door/poddoor/ex_act(severity, target)
-	if(target == src)
-		qdel(src)
+	if(severity == 3)
 		return
-	switch(severity)
-		if(1)
-			if(prob(80))
-				qdel(src)
-			else
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(2, 1, src)
-				s.start()
-		if(2)
-			if(prob(20))
-				qdel(src)
-			else
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(2, 1, src)
-				s.start()
-
-		if(3)
-			if(prob(80))
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(2, 1, src)
-				s.start()
+	..()
 
 /obj/machinery/door/poddoor/do_animate(animation)
 	switch(animation)
 		if("opening")
 			flick("opening", src)
+			playsound(src, 'sound/machines/blastdoor.ogg', 30, 1)
 		if("closing")
 			flick("closing", src)
+			playsound(src, 'sound/machines/blastdoor.ogg', 30, 1)
 
 /obj/machinery/door/poddoor/update_icon()
 	if(density)
@@ -75,8 +84,8 @@
 		icon_state = "open"
 
 /obj/machinery/door/poddoor/try_to_activate_door(mob/user)
- 	return
+	return
 
-obj/machinery/door/poddoor/try_to_crowbar(obj/item/I, mob/user)
+/obj/machinery/door/poddoor/try_to_crowbar(obj/item/I, mob/user)
 	if(stat & NOPOWER)
 		open(1)

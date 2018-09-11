@@ -3,17 +3,12 @@
 	caste = "h"
 	maxHealth = 125
 	health = 125
-	icon_state = "alienh_s"
+	icon_state = "alienh"
 	var/obj/screen/leap_icon = null
 
-/mob/living/carbon/alien/humanoid/hunter/New()
+/mob/living/carbon/alien/humanoid/hunter/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/small
 	..()
-
-/mob/living/carbon/alien/humanoid/hunter/movement_delay()
-	. = -1		//hunters are sanic
-	. += ..()	//but they still need to slow down on stun
-
 
 //Hunter verbs
 
@@ -22,10 +17,9 @@
 	leap_icon.icon_state = "leap_[leap_on_click ? "on":"off"]"
 	update_icons()
 	if(message)
-		src << "<span class='noticealien'>You will now [leap_on_click ? "leap at":"slash at"] enemies!</span>"
+		to_chat(src, "<span class='noticealien'>You will now [leap_on_click ? "leap at":"slash at"] enemies!</span>")
 	else
 		return
-
 
 /mob/living/carbon/alien/humanoid/hunter/ClickOn(atom/A, params)
 	face_atom(A)
@@ -34,19 +28,18 @@
 	else
 		..()
 
-
 #define MAX_ALIEN_LEAP_DIST 7
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_at(atom/A)
-	if(pounce_cooldown)
-		src << "<span class='alertalien'>You are too fatigued to pounce right now!</span>"
+	if(!canmove || leaping)
 		return
 
-	if(leaping || stat || buckled || lying)
+	if(pounce_cooldown > world.time)
+		to_chat(src, "<span class='alertalien'>You are too fatigued to pounce right now!</span>")
 		return
 
-	if(!has_gravity(src) || !has_gravity(A))
-		src << "<span class='alertalien'>It is unsafe to leap without gravity!</span>"
+	if(!has_gravity() || !A.has_gravity())
+		to_chat(src, "<span class='alertalien'>It is unsafe to leap without gravity!</span>")
 		//It's also extremely buggy visually, so it's balance+bugfix
 		return
 
@@ -54,39 +47,39 @@
 		leaping = 1
 		weather_immunities += "lava"
 		update_icons()
-		throw_at(A,MAX_ALIEN_LEAP_DIST,1, spin=0, diagonals_first = 1)
-		leaping = 0
-		weather_immunities -= "lava"
-		update_icons()
+		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/leap_end))
+
+/mob/living/carbon/alien/humanoid/hunter/proc/leap_end()
+	leaping = 0
+	weather_immunities -= "lava"
+	update_icons()
 
 /mob/living/carbon/alien/humanoid/hunter/throw_impact(atom/A)
 
 	if(!leaping)
 		return ..()
 
+	pounce_cooldown = world.time + pounce_cooldown_time
 	if(A)
-		if(istype(A, /mob/living))
+		if(isliving(A))
 			var/mob/living/L = A
-			var/blocked = 0
+			var/blocked = FALSE
 			if(ishuman(A))
 				var/mob/living/carbon/human/H = A
-				if(H.check_shields(0, "the [name]", src, attack_type = LEAP_ATTACK))
-					blocked = 1
+				if(H.check_shields(src, 0, "the [name]", attack_type = LEAP_ATTACK))
+					blocked = TRUE
 			if(!blocked)
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
-				L.Weaken(5)
+				L.Knockdown(100)
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
 			else
-				Weaken(2, 1, 1)
+				Knockdown(40, 1, 1)
 
 			toggle_leap(0)
-			pounce_cooldown = !pounce_cooldown
-			spawn(pounce_cooldown_time) //3s by default
-				pounce_cooldown = !pounce_cooldown
 		else if(A.density && !A.CanPass(src))
 			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='alertalien'>[src] smashes into [A]!</span>")
-			Weaken(2, 1, 1)
+			Knockdown(40, 1, 1)
 
 		if(leaping)
 			leaping = 0

@@ -1,8 +1,6 @@
-var/global/nttransfer_uid = 0
-
 /datum/computer_file/program/nttransfer
 	filename = "nttransfer"
-	filedesc = "NTNet P2P Transfer Client"
+	filedesc = "P2P Transfer Client"
 	extended_desc = "This program allows for simple file transfer via direct peer to peer connection."
 	program_icon_state = "comm_logs"
 	size = 7
@@ -10,6 +8,7 @@ var/global/nttransfer_uid = 0
 	requires_ntnet_feature = NTNET_PEERTOPEER
 	network_destination = "other device via P2P tunnel"
 	available_on_ntnet = 1
+	tgui_id = "ntos_net_transfer"
 
 	var/error = ""										// Error screen
 	var/server_password = ""							// Optional password to download the file.
@@ -22,10 +21,10 @@ var/global/nttransfer_uid = 0
 	var/actual_netspeed = 0								// Displayed in the UI, this is the actual transfer speed.
 	var/unique_token 									// UID of this program
 	var/upload_menu = 0									// Whether we show the program list and upload menu
+	var/static/nttransfer_uid = 0
 
 /datum/computer_file/program/nttransfer/New()
-	unique_token = nttransfer_uid
-	nttransfer_uid++
+	unique_token = nttransfer_uid++
 	..()
 
 /datum/computer_file/program/nttransfer/process_tick()
@@ -44,7 +43,7 @@ var/global/nttransfer_uid = 0
 		if(!remote)
 			crash_download("Connection to remote server lost")
 
-/datum/computer_file/program/nttransfer/kill_program(forced = 0)
+/datum/computer_file/program/nttransfer/kill_program(forced = FALSE)
 	if(downloaded_file) // Client mode, clean up variables for next use
 		finalize_download()
 
@@ -66,13 +65,14 @@ var/global/nttransfer_uid = 0
 
 // Finishes download and attempts to store the file on HDD
 /datum/computer_file/program/nttransfer/proc/finish_download()
-	if(!computer || !computer.hard_drive || !computer.hard_drive.store_file(downloaded_file))
+	var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
+	if(!computer || !hard_drive || !hard_drive.store_file(downloaded_file))
 		error = "I/O Error:  Unable to save file. Check your hard drive and try again."
 	finalize_download()
 
 //  Crashes the download and displays specific error message
 /datum/computer_file/program/nttransfer/proc/crash_download(var/message)
-	error = message ? message : "An unknown error has occured during download"
+	error = message ? message : "An unknown error has occurred during download"
 	finalize_download()
 
 // Cleans up variables for next use
@@ -83,33 +83,19 @@ var/global/nttransfer_uid = 0
 	remote = null
 	download_completion = 0
 
-
-/datum/computer_file/program/nttransfer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
-
-		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
-		assets.send(user)
-
-
-		ui = new(user, src, ui_key, "ntnet_transfer", "NTNet P2P Transfer Client", 575, 700, state = state)
-		ui.open()
-		ui.set_autoupdate(state = 1)
-
 /datum/computer_file/program/nttransfer/ui_act(action, params)
 	if(..())
 		return 1
 	switch(action)
 		if("PRG_downloadfile")
-			for(var/datum/computer_file/program/nttransfer/P in ntnet_global.fileservers)
+			for(var/datum/computer_file/program/nttransfer/P in SSnetworks.station_network.fileservers)
 				if("[P.unique_token]" == params["id"])
 					remote = P
 					break
 			if(!remote || !remote.provided_file)
 				return
 			if(remote.server_password)
-				var/pass = sanitize(input(usr, "Code 401 Unauthorized. Please enter password:", "Password required"))
+				var/pass = reject_bad_text(input(usr, "Code 401 Unauthorized. Please enter password:", "Password required"))
 				if(pass != remote.server_password)
 					error = "Incorrect Password"
 					return
@@ -120,14 +106,14 @@ var/global/nttransfer_uid = 0
 			error = ""
 			upload_menu = 0
 			finalize_download()
-			if(src in ntnet_global.fileservers)
-				ntnet_global.fileservers.Remove(src)
+			if(src in SSnetworks.station_network.fileservers)
+				SSnetworks.station_network.fileservers.Remove(src)
 			for(var/datum/computer_file/program/nttransfer/T in connected_clients)
 				T.crash_download("Remote server has forcibly closed the connection")
 			provided_file = null
 			return 1
 		if("PRG_setpassword")
-			var/pass = sanitize(input(usr, "Enter new server password. Leave blank to cancel, input 'none' to disable password.", "Server security", "none"))
+			var/pass = reject_bad_text(input(usr, "Enter new server password. Leave blank to cancel, input 'none' to disable password.", "Server security", "none"))
 			if(!pass)
 				return
 			if(pass == "none")
@@ -136,7 +122,8 @@ var/global/nttransfer_uid = 0
 			server_password = pass
 			return 1
 		if("PRG_uploadfile")
-			for(var/datum/computer_file/F in computer.hard_drive.stored_files)
+			var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
+			for(var/datum/computer_file/F in hard_drive.stored_files)
 				if("[F.uid]" == params["id"])
 					if(F.unsendable)
 						error = "I/O Error: File locked."
@@ -146,7 +133,7 @@ var/global/nttransfer_uid = 0
 						if(!P.can_run(usr,transfer = 1))
 							error = "Access Error: Insufficient rights to upload file."
 					provided_file = F
-					ntnet_global.fileservers.Add(src)
+					SSnetworks.station_network.fileservers.Add(src)
 					return
 			error = "I/O Error: Unable to locate file on hard drive."
 			return 1
@@ -174,7 +161,8 @@ var/global/nttransfer_uid = 0
 		data["upload_filename"] = "[provided_file.filename].[provided_file.filetype]"
 	else if (upload_menu)
 		var/list/all_files[0]
-		for(var/datum/computer_file/F in computer.hard_drive.stored_files)
+		var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
+		for(var/datum/computer_file/F in hard_drive.stored_files)
 			all_files.Add(list(list(
 			"uid" = F.uid,
 			"filename" = "[F.filename].[F.filetype]",
@@ -183,7 +171,7 @@ var/global/nttransfer_uid = 0
 		data["upload_filelist"] = all_files
 	else
 		var/list/all_servers[0]
-		for(var/datum/computer_file/program/nttransfer/P in ntnet_global.fileservers)
+		for(var/datum/computer_file/program/nttransfer/P in SSnetworks.station_network.fileservers)
 			all_servers.Add(list(list(
 			"uid" = P.unique_token,
 			"filename" = "[P.provided_file.filename].[P.provided_file.filetype]",

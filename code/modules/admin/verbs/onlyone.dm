@@ -1,87 +1,31 @@
-/client/proc/only_one()
-	if(!ticker || !ticker.mode)
+GLOBAL_VAR_INIT(highlander, FALSE)
+/client/proc/only_one() //Gives everyone kilts, berets, claymores, and pinpointers, with the objective to hijack the emergency shuttle.
+	if(!SSticker.HasRoundStarted())
 		alert("The game hasn't started yet!")
 		return
+	GLOB.highlander = TRUE
 
-	for(var/mob/living/carbon/human/H in player_list)
-		if(H.stat == 2 || !(H.client)) continue
-		if(is_special_character(H)) continue
+	send_to_playing_players("<span class='boldannounce'><font size=6>THERE CAN BE ONLY ONE</font></span>")
 
-		ticker.mode.traitors += H.mind
-		H.mind.special_role = "traitor"
+	for(var/obj/item/disk/nuclear/N in GLOB.poi_list)
+		var/datum/component/stationloving/component = N.GetComponent(/datum/component/stationloving)
+		if (component)
+			component.relocate() //Gets it out of bags and such
 
-		var/datum/objective/steal/steal_objective = new
-		steal_objective.owner = H.mind
-		steal_objective.set_target(new /datum/objective_item/steal/nukedisc)
-		H.mind.objectives += steal_objective
-
-		var/datum/objective/hijack/hijack_objective = new
-		hijack_objective.owner = H.mind
-		H.mind.objectives += hijack_objective
-
-		H << "<B>You are the traitor.</B>"
-		H.mind.announce_objectives()
-
-		for (var/obj/item/I in H)
-			if (istype(I, /obj/item/weapon/implant))
-				continue
-			qdel(I)
-
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/kilt(H), slot_w_uniform)
-		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(H), slot_ears)
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/beret(H), slot_head)
-		H.equip_to_slot_or_del(new /obj/item/weapon/claymore(H), slot_l_hand)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), slot_shoes)
-		H.equip_to_slot_or_del(new /obj/item/weapon/pinpointer(H.loc), slot_l_store)
-
-		var/obj/item/weapon/card/id/W = new(H)
-		W.icon_state = "centcom"
-		W.access = get_all_accesses()
-		W.access += get_all_centcom_access()
-		W.assignment = "Highlander"
-		W.registered_name = H.real_name
-		W.update_label(H.real_name)
-		H.equip_to_slot_or_del(W, slot_wear_id)
+	for(var/mob/living/carbon/human/H in GLOB.player_list)
+		if(H.stat == DEAD || !(H.client))
+			continue
+		H.make_scottish()
 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used THERE CAN BE ONLY ONE!</span>")
-	log_admin("[key_name(usr)] used there can be only one.")
+	log_admin("[key_name(usr)] used THERE CAN BE ONLY ONE.")
+	addtimer(CALLBACK(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 1), 50)
 
+/client/proc/only_one_delayed()
+	send_to_playing_players("<span class='userdanger'>Bagpipes begin to blare. You feel Scottish pride coming over you.</span>")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used (delayed) THERE CAN BE ONLY ONE!</span>")
+	log_admin("[key_name(usr)] used delayed THERE CAN BE ONLY ONE.")
+	addtimer(CALLBACK(src, .proc/only_one), 420)
 
-/proc/only_me()
-	if(!ticker || !ticker.mode)
-		alert("The game hasn't started yet!")
-		return
-
-	for(var/mob/living/carbon/human/H in player_list)
-		if(H.stat == 2 || !(H.client)) continue
-		if(is_special_character(H)) continue
-
-		ticker.mode.traitors += H.mind
-		H.mind.special_role = "[H.real_name] Prime"
-
-		var/datum/objective/hijackclone/hijack_objective = new /datum/objective/hijackclone
-		hijack_objective.owner = H.mind
-		H.mind.objectives += hijack_objective
-
-		H << "<B>You are the multiverse summoner. Activate your blade to summon copies of yourself from another universe to fight by your side.</B>"
-		H.mind.announce_objectives()
-
-		var/obj/item/slot_item_ID = H.get_item_by_slot(slot_wear_id)
-		qdel(slot_item_ID)
-		var/obj/item/slot_item_hand = H.get_item_by_slot(slot_r_hand)
-		H.unEquip(slot_item_hand)
-
-		var /obj/item/weapon/multisword/multi = new(H)
-		H.equip_to_slot_or_del(multi, slot_r_hand)
-
-		var/obj/item/weapon/card/id/W = new(H)
-		W.icon_state = "centcom"
-		W.access = get_all_accesses()
-		W.access += get_all_centcom_access()
-		W.assignment = "Multiverse Summoner"
-		W.registered_name = H.real_name
-		W.update_label(H.real_name)
-		H.equip_to_slot_or_del(W, slot_wear_id)
-
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used THERE CAN BE ONLY ME!</span>")
-	log_admin("[key_name(usr)] used there can be only me.")
+/mob/living/carbon/human/proc/make_scottish()
+	mind.add_antag_datum(/datum/antagonist/highlander)

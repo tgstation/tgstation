@@ -6,7 +6,7 @@
   {{#if data.max_rate}}
     <ui-section label='Transfer Rate'>
       <ui-button icon='pencil' action='rate' params='{"rate": "input"}'>Set</ui-button>
-      <ui-button icon='plus' state='{{data.rate == data.max_rate ? "disabled" : null}}' action='transfer' params='{"rate": "max"}'>Max</ui-button>
+      <ui-button icon='plus' state='{{data.rate == data.max_rate ? "disabled" : null}}' action='rate' params='{"rate": "max"}'>Max</ui-button>
       <span>{{Math.round(adata.rate)}} L/s</span>
     </ui-section>
   {{else}}

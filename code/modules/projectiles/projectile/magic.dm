@@ -15,54 +15,10 @@
 	. = ..()
 	if(ismob(target))
 		var/mob/M = target
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return
 		M.death(0)
-
-/obj/item/projectile/magic/fireball
-	name = "bolt of fireball"
-	icon_state = "fireball"
-	damage = 10
-	damage_type = BRUTE
-	nodamage = 0
-
-	//explosion values
-	var/exp_heavy = 0
-	var/exp_light = 2
-	var/exp_flash = 3
-	var/exp_fire = 2
-
-/obj/item/projectile/magic/fireball/Range()
-	var/turf/T1 = get_step(src,turn(dir, -45))
-	var/turf/T2 = get_step(src,turn(dir, 45))
-	var/turf/T3 = get_step(src,dir)
-	var/mob/living/L = locate(/mob/living) in T1 //if there's a mob alive in our front right diagonal, we hit it.
-	if(L && L.stat != DEAD)
-		Bump(L,1) //Magic Bullet #teachthecontroversy
-		return
-	L = locate(/mob/living) in T2
-	if(L && L.stat != DEAD)
-		Bump(L,1)
-		return
-	L = locate(/mob/living) in T3
-	if(L && L.stat != DEAD)
-		Bump(L,1)
-		return
-	..()
-
-/obj/item/projectile/magic/fireball/on_hit(target)
-	. = ..()
-	var/turf/T = get_turf(target)
-	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = exp_fire)
-	if(ismob(target)) //multiple flavors of pain
-		var/mob/living/M = target
-		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
-
-/obj/item/projectile/magic/fireball/infernal
-	name = "infernal fireball"
-	exp_heavy = -1
-	exp_light = -1
-	exp_flash = 4
-	exp_fire= 5
-
 
 /obj/item/projectile/magic/resurrection
 	name = "bolt of resurrection"
@@ -76,15 +32,18 @@
 	if(isliving(target))
 		if(target.hellbound)
 			return
+		if(target.anti_magic_check())
+			target.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			C.regenerate_limbs()
+			C.regenerate_organs()
 		if(target.revive(full_heal = 1))
 			target.grab_ghost(force = TRUE) // even suicides
-			target << "<span class='notice'>You rise with a start, \
-				you're alive!!!</span>"
+			to_chat(target, "<span class='notice'>You rise with a start, you're alive!!!</span>")
 		else if(target.stat != DEAD)
-			target << "<span class='notice'>You feel great!</span>"
+			to_chat(target, "<span class='notice'>You feel great!</span>")
 
 /obj/item/projectile/magic/teleport
 	name = "bolt of teleportation"
@@ -97,6 +56,11 @@
 
 /obj/item/projectile/magic/teleport/on_hit(mob/target)
 	. = ..()
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] fizzles on contact with [target]!</span>")
+			return
 	var/teleammount = 0
 	var/teleloc = target
 	if(!isturf(target))
@@ -115,10 +79,7 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = 1
-	var/list/door_types = list(/obj/structure/mineral_door/wood,/obj/structure/mineral_door/iron,/obj/structure/mineral_door/silver,\
-		/obj/structure/mineral_door/gold,/obj/structure/mineral_door/uranium,/obj/structure/mineral_door/sandstone,/obj/structure/mineral_door/transparent/plasma,\
-		/obj/structure/mineral_door/transparent/diamond)
-
+	var/list/door_types = list(/obj/structure/mineral_door/wood, /obj/structure/mineral_door/iron, /obj/structure/mineral_door/silver, /obj/structure/mineral_door/gold, /obj/structure/mineral_door/uranium, /obj/structure/mineral_door/sandstone, /obj/structure/mineral_door/transparent/plasma, /obj/structure/mineral_door/transparent/diamond)
 
 /obj/item/projectile/magic/door/on_hit(atom/target)
 	. = ..()
@@ -126,7 +87,7 @@
 		OpenDoor(target)
 	else
 		var/turf/T = get_turf(target)
-		if(istype(T,/turf/closed) && !istype(T, /turf/closed/indestructible))
+		if(isclosedturf(T) && !isindestructiblewall(T))
 			CreateDoor(T)
 
 /obj/item/projectile/magic/door/proc/CreateDoor(turf/T)
@@ -136,9 +97,9 @@
 	D.Open()
 
 /obj/item/projectile/magic/door/proc/OpenDoor(var/obj/machinery/door/D)
-	if(istype(D,/obj/machinery/door/airlock))
+	if(istype(D, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = D
-		A.locked = 0
+		A.locked = FALSE
 	D.open()
 
 /obj/item/projectile/magic/change
@@ -150,7 +111,14 @@
 
 /obj/item/projectile/magic/change/on_hit(atom/change)
 	. = ..()
+	if(ismob(change))
+		var/mob/M = change
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] fizzles on contact with [M]!</span>")
+			qdel(src)
+			return
 	wabbajack(change)
+	qdel(src)
 
 /proc/wabbajack(mob/living/M)
 	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
@@ -164,14 +132,14 @@
 
 	var/list/contents = M.contents.Copy()
 
-	if(istype(M, /mob/living/silicon/robot))
+	if(iscyborg(M))
 		var/mob/living/silicon/robot/Robot = M
 		if(Robot.mmi)
 			qdel(Robot.mmi)
-		Robot.notify_ai(1)
+		Robot.notify_ai(NEW_BORG)
 	else
 		for(var/obj/item/W in contents)
-			if(!M.unEquip(W))
+			if(!M.dropItemToGround(W))
 				qdel(W)
 
 	var/mob/living/new_mob
@@ -180,125 +148,82 @@
 	switch(randomize)
 		if("monkey")
 			new_mob = new /mob/living/carbon/monkey(M.loc)
+
 		if("robot")
-			var/robot = pick("cyborg","syndiborg","drone","cogscarb")
-			switch(robot)
-				if("cyborg")
-					new_mob = new /mob/living/silicon/robot(M.loc)
-				if("syndiborg")
-					var/path
-					if(prob(50))
-						path = /mob/living/silicon/robot/syndicate
-					else
-						path = /mob/living/silicon/robot/syndicate/medical
-					new_mob = new path(M.loc)
-				if("drone")
-					new_mob = new /mob/living/simple_animal/drone/polymorphed(M.loc)
-				if("cogscarb")
-					new_mob = new /mob/living/simple_animal/drone/cogscarab(M.loc)
+			var/robot = pick(200;/mob/living/silicon/robot,
+							/mob/living/silicon/robot/modules/syndicate,
+							/mob/living/silicon/robot/modules/syndicate/medical,
+							200;/mob/living/simple_animal/drone/polymorphed)
+			new_mob = new robot(M.loc)
 			if(issilicon(new_mob))
 				new_mob.gender = M.gender
 				new_mob.invisibility = 0
 				new_mob.job = "Cyborg"
 				var/mob/living/silicon/robot/Robot = new_mob
+				Robot.lawupdate = FALSE
+				Robot.connected_ai = null
 				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
+				Robot.clear_inherent_laws(0)
+				Robot.clear_zeroth_law(0)
+
 		if("slime")
 			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
+
 		if("xeno")
-			if(prob(50))
-				new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
+			var/Xe
+			if(M.ckey)
+				Xe = pick(/mob/living/carbon/alien/humanoid/hunter,/mob/living/carbon/alien/humanoid/sentinel)
 			else
-				new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
+				Xe = pick(/mob/living/carbon/alien/humanoid/hunter,/mob/living/simple_animal/hostile/alien/sentinel)
+			new_mob = new Xe(M.loc)
 
 		if("animal")
-			var/path
-			if(prob(50))
-				var/beast = pick("carp","bear","mushroom","statue", "bat", "goat","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp", "watcher", "goliath", "headcrab", "morph", "stickman", "stickdog", "lesserdragon")
-				switch(beast)
-					if("carp")
-						path = /mob/living/simple_animal/hostile/carp
-					if("bear")
-						path = /mob/living/simple_animal/hostile/bear
-					if("mushroom")
-						path = /mob/living/simple_animal/hostile/mushroom
-					if("statue")
-						path = /mob/living/simple_animal/hostile/statue
-					if("bat")
-						path = /mob/living/simple_animal/hostile/retaliate/bat
-					if("goat")
-						path = /mob/living/simple_animal/hostile/retaliate/goat
-					if("killertomato")
-						path = /mob/living/simple_animal/hostile/killertomato
-					if("spiderbase")
-						path = /mob/living/simple_animal/hostile/poison/giant_spider
-					if("spiderhunter")
-						path = /mob/living/simple_animal/hostile/poison/giant_spider/hunter
-					if("blobbernaut")
-						path = /mob/living/simple_animal/hostile/blob/blobbernaut/independent
-					if("magicarp")
-						path = /mob/living/simple_animal/hostile/carp/ranged
-					if("chaosmagicarp")
-						path = /mob/living/simple_animal/hostile/carp/ranged/chaos
-					if("watcher")
-						path = /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
-					if("goliath")
-						path = /mob/living/simple_animal/hostile/asteroid/goliath/beast
-					if("headcrab")
-						path = /mob/living/simple_animal/hostile/headcrab
-					if("morph")
-						path = /mob/living/simple_animal/hostile/morph
-					if("stickman")
-						path = /mob/living/simple_animal/hostile/stickman
-					if("stickdog")
-						path = /mob/living/simple_animal/hostile/stickman/dog
-					if("lesserdragon")
-						path = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
-			else
-				var/animal = pick("parrot","corgi","crab","pug","cat","mouse","chicken","cow","lizard","chick","fox","butterfly","cak")
-				switch(animal)
-					if("parrot")
-						path = /mob/living/simple_animal/parrot
-					if("corgi")
-						path = /mob/living/simple_animal/pet/dog/corgi
-					if("crab")
-						path = /mob/living/simple_animal/crab
-					if("pug")
-						path = /mob/living/simple_animal/pet/dog/pug
-					if("cat")
-						path = /mob/living/simple_animal/pet/cat
-					if("mouse")
-						path = /mob/living/simple_animal/mouse
-					if("chicken")
-						path = /mob/living/simple_animal/chicken
-					if("cow")
-						path = /mob/living/simple_animal/cow
-					if("lizard")
-						path = /mob/living/simple_animal/hostile/lizard
-					if("fox")
-						path = /mob/living/simple_animal/pet/fox
-					if("butterfly")
-						path = /mob/living/simple_animal/butterfly
-					if("cak")
-						path = /mob/living/simple_animal/pet/cat/cak
-					if("chick")
-						path = /mob/living/simple_animal/chick
-
+			var/path = pick(/mob/living/simple_animal/hostile/carp,
+							/mob/living/simple_animal/hostile/bear,
+							/mob/living/simple_animal/hostile/mushroom,
+							/mob/living/simple_animal/hostile/statue,
+							/mob/living/simple_animal/hostile/retaliate/bat,
+							/mob/living/simple_animal/hostile/retaliate/goat,
+							/mob/living/simple_animal/hostile/killertomato,
+							/mob/living/simple_animal/hostile/poison/giant_spider,
+							/mob/living/simple_animal/hostile/poison/giant_spider/hunter,
+							/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
+							/mob/living/simple_animal/hostile/carp/ranged,
+							/mob/living/simple_animal/hostile/carp/ranged/chaos,
+							/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
+							/mob/living/simple_animal/hostile/asteroid/goliath/beast,
+							/mob/living/simple_animal/hostile/headcrab,
+							/mob/living/simple_animal/hostile/morph,
+							/mob/living/simple_animal/hostile/stickman,
+							/mob/living/simple_animal/hostile/stickman/dog,
+							/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
+							/mob/living/simple_animal/hostile/gorilla,
+							/mob/living/simple_animal/parrot,
+							/mob/living/simple_animal/pet/dog/corgi,
+							/mob/living/simple_animal/crab,
+							/mob/living/simple_animal/pet/dog/pug,
+							/mob/living/simple_animal/pet/cat,
+							/mob/living/simple_animal/mouse,
+							/mob/living/simple_animal/chicken,
+							/mob/living/simple_animal/cow,
+							/mob/living/simple_animal/hostile/lizard,
+							/mob/living/simple_animal/pet/fox,
+							/mob/living/simple_animal/butterfly,
+							/mob/living/simple_animal/pet/cat/cak,
+							/mob/living/simple_animal/chick)
 			new_mob = new path(M.loc)
 
 		if("humanoid")
-			new_mob = new /mob/living/carbon/human(M.loc)
+			if(prob(50))
+				new_mob = new /mob/living/carbon/human(M.loc)
+			else
+				var/hooman = pick(subtypesof(/mob/living/carbon/human/species))
+				new_mob =new hooman(M.loc)
 
 			var/datum/preferences/A = new()	//Randomize appearance for the human
 			A.copy_to(new_mob, icon_updates=0)
 
 			var/mob/living/carbon/human/H = new_mob
-			if(prob(50))
-				var/list/all_species = list()
-				for(var/speciestype in subtypesof(/datum/species))
-					var/datum/species/S = new speciestype()
-					if(!S.dangerous_existence)
-						all_species += speciestype
-				H.set_species(pick(all_species), icon_update=0)
 			H.update_body()
 			H.update_hair()
 			H.update_body_parts()
@@ -306,23 +231,25 @@
 
 	if(!new_mob)
 		return
-
-	new_mob.languages_spoken |= HUMAN
-	new_mob.languages_understood |= HUMAN
-	new_mob.attack_log = M.attack_log
+	new_mob.grant_language(/datum/language/common)
 
 	// Some forms can still wear some items
 	for(var/obj/item/W in contents)
 		new_mob.equip_to_appropriate_slot(W)
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
+	M.log_message("became [new_mob.real_name]", LOG_ATTACK, color="orange")
 
-	new_mob.a_intent = "harm"
+	new_mob.a_intent = INTENT_HARM
 
 	M.wabbajack_act(new_mob)
 
-	new_mob << "<span class='warning'>Your form morphs into that of \
-		a [randomize].</span>"
+	to_chat(new_mob, "<span class='warning'>Your form morphs into that of a [randomize].</span>")
+
+	var/poly_msg = CONFIG_GET(keyed_list/policy)["polymorph"]
+	if(poly_msg)
+		to_chat(new_mob, poly_msg)
+
+	M.transfer_observers_to(new_mob)
 
 	qdel(M)
 	return new_mob
@@ -334,36 +261,43 @@
 	damage_type = BURN
 	nodamage = 1
 
-/obj/item/projectile/magic/animate/Bump(atom/change)
+/obj/item/projectile/magic/animate/on_hit(atom/target, blocked = FALSE)
+	target.animate_atom_living(firer)
 	..()
-	if(istype(change, /obj/item) || istype(change, /obj/structure) && !is_type_in_list(change, protected_objects))
-		if(istype(change, /obj/structure/closet/statue))
-			for(var/mob/living/carbon/human/H in change.contents)
-				var/mob/living/simple_animal/hostile/statue/S = new /mob/living/simple_animal/hostile/statue(change.loc, firer)
-				S.name = "statue of [H.name]"
-				S.faction = list("\ref[firer]")
-				S.icon = change.icon
-				S.icon_state = change.icon_state
-				S.overlays = change.overlays
-				S.color = change.color
-				if(H.mind)
-					H.mind.transfer_to(S)
-					S << "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator.</span>"
-				H = change
-				H.loc = S
-				qdel(src)
+
+/atom/proc/animate_atom_living(var/mob/living/owner = null)
+	if((isitem(src) || isstructure(src)) && !is_type_in_list(src, GLOB.protected_objects))
+		if(istype(src, /obj/structure/statue/petrified))
+			var/obj/structure/statue/petrified/P = src
+			if(P.petrified_mob)
+				var/mob/living/L = P.petrified_mob
+				var/mob/living/simple_animal/hostile/statue/S = new(P.loc, owner)
+				S.name = "statue of [L.name]"
+				if(owner)
+					S.faction = list("[REF(owner)]")
+				S.icon = P.icon
+				S.icon_state = P.icon_state
+				S.copy_overlays(P, TRUE)
+				S.color = P.color
+				S.atom_colours = P.atom_colours.Copy()
+				if(L.mind)
+					L.mind.transfer_to(S)
+					if(owner)
+						to_chat(S, "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [owner], your creator.</span>")
+				P.forceMove(S)
 				return
 		else
-			var/obj/O = change
-			if(istype(O, /obj/item/weapon/gun))
-				new /mob/living/simple_animal/hostile/mimic/copy/ranged(O.loc, O, firer)
+			var/obj/O = src
+			if(istype(O, /obj/item/gun))
+				new /mob/living/simple_animal/hostile/mimic/copy/ranged(loc, src, owner)
 			else
-				new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)
+				new /mob/living/simple_animal/hostile/mimic/copy(loc, src, owner)
 
-	else if(istype(change, /mob/living/simple_animal/hostile/mimic/copy))
+	else if(istype(src, /mob/living/simple_animal/hostile/mimic/copy))
 		// Change our allegiance!
-		var/mob/living/simple_animal/hostile/mimic/copy/C = change
-		C.ChangeOwner(firer)
+		var/mob/living/simple_animal/hostile/mimic/copy/C = src
+		if(owner)
+			C.ChangeOwner(owner)
 
 /obj/item/projectile/magic/spellblade
 	name = "blade energy"
@@ -373,3 +307,208 @@
 	flag = "magic"
 	dismemberment = 50
 	nodamage = 0
+
+/obj/item/projectile/magic/spellblade/on_hit(target)
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			qdel(src)
+			return
+	. = ..()
+
+/obj/item/projectile/magic/arcane_barrage
+	name = "arcane bolt"
+	icon_state = "arcane_barrage"
+	damage = 20
+	damage_type = BURN
+	nodamage = 0
+	armour_penetration = 0
+	flag = "magic"
+	hitsound = 'sound/weapons/barragespellhit.ogg'
+
+/obj/item/projectile/magic/arcane_barrage/on_hit(target)
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			qdel(src)
+			return
+	. = ..()
+
+
+/obj/item/projectile/magic/locker
+	name = "locker bolt"
+	icon_state = "locker"
+	nodamage = TRUE
+	flag = "magic"
+	var/weld = TRUE
+	var/created = FALSE //prevents creation of more then one locker if it has multiple hits
+
+/obj/item/projectile/magic/locker/prehit(atom/A)
+	if(ismob(A))
+		var/mob/M = A
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [A]!</span>")
+			qdel(src)
+			return
+		if(M.anchored)
+			return ..()
+		M.forceMove(src)
+		return FALSE
+	return ..()
+
+/obj/item/projectile/magic/locker/on_hit(target)
+	if(created)
+		return ..()
+	var/obj/structure/closet/decay/C = new(get_turf(src))
+	if(LAZYLEN(contents))
+		for(var/atom/movable/AM in contents)
+			C.insert(AM)
+		C.welded = weld
+		C.update_icon()
+	created = TRUE
+	return ..()
+
+/obj/item/projectile/magic/locker/Destroy()
+	for(var/atom/movable/AM in contents)
+		AM.forceMove(get_turf(src))
+	. = ..()
+
+/obj/structure/closet/decay
+	breakout_time = 600
+	icon_welded = null
+	var/magic_icon = "cursed"
+	var/weakened_icon = "decursed"
+	var/auto_destroy = TRUE
+
+/obj/structure/closet/decay/Initialize()
+	. = ..()
+	if(auto_destroy)
+		addtimer(CALLBACK(src, .proc/bust_open), 5 MINUTES)
+	addtimer(CALLBACK(src, .proc/magicly_lock), 5)
+
+/obj/structure/closet/decay/proc/magicly_lock()
+	if(!welded)
+		return
+	icon_state = magic_icon
+	update_icon()
+
+/obj/structure/closet/decay/after_weld(weld_state)
+	if(weld_state)
+		unmagify()
+
+/obj/structure/closet/decay/proc/decay()
+	animate(src, alpha = 0, time = 30)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, src), 30)
+
+/obj/structure/closet/decay/open(mob/living/user)
+	. = ..()
+	if(.)
+		if(icon_state == magic_icon) //check if we used the magic icon at all before giving it the lesser magic icon
+			unmagify()
+		else
+			addtimer(CALLBACK(src, .proc/decay), 15 SECONDS)
+
+/obj/structure/closet/decay/contents_explosion(severity, target)
+	for(var/atom/A in contents)
+		A.ex_act(severity/2, target) //Difference is it does half the damage to contents from explosion, to make fireball not completely instakill
+		CHECK_TICK
+
+/obj/structure/closet/decay/proc/unmagify()
+	icon_state = weakened_icon
+	update_icon()
+	addtimer(CALLBACK(src, .proc/decay), 15 SECONDS)
+	icon_welded = "welded"
+
+/obj/item/projectile/magic/aoe
+	name = "Area Bolt"
+	desc = "What the fuck does this do?!"
+	damage = 0
+	var/proxdet = TRUE
+
+/obj/item/projectile/magic/aoe/Range()
+	if(proxdet)
+		for(var/mob/living/L in range(1, get_turf(src)))
+			if(L.stat != DEAD && L != firer && !L.anti_magic_check())
+				return Bump(L)
+	..()
+
+
+/obj/item/projectile/magic/aoe/lightning
+	name = "lightning bolt"
+	icon_state = "tesla_projectile"	//Better sprites are REALLY needed and appreciated!~
+	damage = 15
+	damage_type = BURN
+	nodamage = 0
+	speed = 0.3
+	flag = "magic"
+
+	var/tesla_power = 20000
+	var/tesla_range = 15
+	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_MOB_STUN | TESLA_OBJ_DAMAGE
+	var/chain
+	var/mob/living/caster
+
+/obj/item/projectile/magic/aoe/lightning/fire(setAngle)
+	if(caster)
+		chain = caster.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
+	..()
+
+/obj/item/projectile/magic/aoe/lightning/on_hit(target)
+	. = ..()
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			visible_message("<span class='warning'>[src] fizzles on contact with [target]!</span>")
+			qdel(src)
+			return
+	tesla_zap(src, tesla_range, tesla_power, tesla_flags)
+	qdel(src)
+
+/obj/item/projectile/magic/aoe/lightning/Destroy()
+	qdel(chain)
+	. = ..()
+
+/obj/item/projectile/magic/aoe/fireball
+	name = "bolt of fireball"
+	icon_state = "fireball"
+	damage = 10
+	damage_type = BRUTE
+	nodamage = 0
+
+	//explosion values
+	var/exp_heavy = 0
+	var/exp_light = 2
+	var/exp_flash = 3
+	var/exp_fire = 2
+
+/obj/item/projectile/magic/aoe/fireball/on_hit(target)
+	. = ..()
+	if(ismob(target))
+		var/mob/living/M = target
+		if(M.anti_magic_check())
+			visible_message("<span class='warning'>[src] vanishes into smoke on contact with [target]!</span>")
+			return
+		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
+	var/turf/T = get_turf(target)
+	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = exp_fire)
+
+/obj/item/projectile/magic/aoe/fireball/infernal
+	name = "infernal fireball"
+	exp_heavy = -1
+	exp_light = -1
+	exp_flash = 4
+	exp_fire= 5
+
+/obj/item/projectile/magic/aoe/fireball/infernal/on_hit(target)
+	. = ..()
+	if(ismob(target))
+		var/mob/living/M = target
+		if(M.anti_magic_check())
+			return
+	var/turf/T = get_turf(target)
+	for(var/i=0, i<50, i+=10)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, T, -1, exp_heavy, exp_light, exp_flash, FALSE, FALSE, exp_fire), i)
+
+

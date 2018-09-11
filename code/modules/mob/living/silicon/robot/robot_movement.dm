@@ -3,11 +3,6 @@
 		return 1
 	return ..()
 
-/mob/living/silicon/robot/movement_delay()
-	. = ..()
-	. += speed
-	. += config.robot_delay
-
 /mob/living/silicon/robot/mob_negates_gravity()
 	return magpulse
 

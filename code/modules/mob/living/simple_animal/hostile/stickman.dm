@@ -5,29 +5,32 @@
 	icon_living = "stickman"
 	icon_dead = "stickman_dead"
 	icon_gib = "syndicate_gib"
+	mob_biotypes = list(MOB_INORGANIC, MOB_HUMANOID)
+	gender = MALE
 	speak_chance = 0
 	turns_per_move = 5
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 0
-	stat_attack = 1
+	stat_attack = UNCONSCIOUS
 	robust_searching = 1
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
+	obj_damage = 0
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	attacktext = "punches"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
 	faction = list("hostile","stickman")
 	check_friendly_fire = 1
 	status_flags = CANPUSH
-	var/datum/action/boss/wizard_summon_minions/changesummons = /datum/action/boss/wizard_summon_minions/
+	var/datum/action/boss/wizard_summon_minions/changesummons = /datum/action/boss/wizard_summon_minions
 	var/summoned_by_wizard = 0
 
 /mob/living/simple_animal/hostile/stickman/ranged
@@ -36,9 +39,9 @@
 	minimum_distance = 5
 	icon_state = "stickmanranged"
 	icon_living = "stickmanranged"
-	casingtype = /obj/item/ammo_casing/c45nostamina
+	casingtype = /obj/item/ammo_casing/c45/nostamina
 	projectilesound = 'sound/misc/bang.ogg'
-	loot = list(/obj/item/weapon/gun/projectile/automatic/pistol/stickman)
+	loot = list(/obj/item/gun/ballistic/automatic/pistol/stickman)
 
 
 /mob/living/simple_animal/hostile/stickman/dog
@@ -47,10 +50,11 @@
 	icon_state = "stickdog"
 	icon_living = "stickdog"
 	icon_dead = "stickdog_dead"
+	mob_biotypes = list(MOB_INORGANIC, MOB_BEAST)
 
-/mob/living/simple_animal/hostile/stickman/New(var/turf/loc, var/wizard_summoned)
-	..()
-	new /obj/effect/overlay/temp/paper_scatter(src)
+/mob/living/simple_animal/hostile/stickman/Initialize(mapload, var/wizard_summoned)
+	. = ..()
+	new /obj/effect/temp_visual/paper_scatter(src)
 	summoned_by_wizard = wizard_summoned
 
 /mob/living/simple_animal/hostile/stickman/death()

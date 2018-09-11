@@ -1,101 +1,107 @@
-/*
-//////////////////////////////////////
-Sensory-Restoration
-	Very very very very noticable.
-	Lowers resistance tremendously.
-	Decreases stage speed tremendously.
-	Decreases transmittablity tremendously.
-	Fatal.
-Bonus
-	The body generates Sensory restorational chemicals.
-	inacusiate for ears
-	antihol for removal of alcohol
-	synaphydramine to purge sensory hallucigens and histamine based impairment
-	mannitol to kickstart the mind
-
-//////////////////////////////////////
-*/
-/datum/symptom/sensory_restoration
-	name = "Sensory Restoration"
-	stealth = -1
-	resistance = -4
-	stage_speed = -4
-	transmittable = -3
-	level = 5
-	severity = 0
-
-/datum/symptom/sensory_restoration/Activate(var/datum/disease/advance/A)
-	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB * 3))
-		var/mob/living/M = A.affected_mob
-		switch(A.stage)
-			if(2)
-				if(M.reagents.get_reagent_amount("inacusiate")<10)
-					M.reagents.add_reagent("inacusiate", 10)
-					M << "<span class='notice'>Your hearing feels clearer and crisp.</span>"
-			if(3)
-				if(M.reagents.get_reagent_amount("antihol") < 10 && M.reagents.get_reagent_amount("inacusiate") < 10 )
-					M.reagents.add_reagent_list(list("antihol"=10, "inacusiate"=10))
-					M << "<span class='notice'>You feel sober.</span>"
-			if(4)
-				if(M.reagents.get_reagent_amount("antihol") < 10 && M.reagents.get_reagent_amount("inacusiate") < 10 && M.reagents.get_reagent_amount("synaphydramine") < 10)
-					M.reagents.add_reagent_list(list("antihol"=10, "inacusiate"=10, "synaphydramine"=5))
-					M << "<span class='notice'>You feel focused.</span>"
-			if(5)
-				if(M.reagents.get_reagent_amount("antihol") < 10 && M.reagents.get_reagent_amount("inacusiate") < 10 && M.reagents.get_reagent_amount("synaphydramine") < 10 && M.reagents.get_reagent_amount("mannitol") < 10)
-					M.reagents.add_reagent_list(list("mannitol"=10, "antihol"=10, "inacusiate"=10, "synaphydramine"=10))
-	return
-
-/*
-//////////////////////////////////////
-Sensory-Destruction
-	noticable.
-	Lowers resistance
-	Decreases stage speed tremendously.
-	Decreases transmittablity tremendously.
-	the drugs hit them so hard they have to focus on not dying
-
-Bonus
-	The body generates Sensory destructive chemicals.
-	You cannot taste anything anymore.
-	ethanol for extremely drunk victim
-	mindbreaker to break the mind
-	impedrezene to ruin the brain
-
-//////////////////////////////////////
-*/
-/datum/symptom/sensory_destruction
-	name = "Sensory destruction"
+/datum/symptom/mind_restoration
+	name = "Mind Restoration"
+	desc = "The virus strengthens the bonds between neurons, reducing the duration of any ailments of the mind."
 	stealth = -1
 	resistance = -2
-	stage_speed = -3
-	transmittable = -4
-	level = 6
-	severity = 5
+	stage_speed = 1
+	transmittable = -3
+	level = 5
+	symptom_delay_min = 5
+	symptom_delay_max = 10
+	var/purge_alcohol = FALSE
+	var/trauma_heal_mild = FALSE
+	var/trauma_heal_severe = FALSE
+	threshold_desc = "<b>Resistance 6:</b> Heals minor brain traumas.<br>\
+					  <b>Resistance 9:</b> Heals severe brain traumas.<br>\
+					  <b>Transmission 8:</b> Purges alcohol in the bloodstream."
 
-/datum/symptom/sensory_destruction/Activate(var/datum/disease/advance/A)
-	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB))
-		var/mob/living/M = A.affected_mob
-		switch(A.stage)
-			if(1)
-				M << "<span class='warning'>You can't feel anything.</span>"
-			if(2)
-				M << "<span class='warning'>You feel absolutely hammered.</span>"
-				if(prob(10))
-					M.reagents.add_reagent("morphine",rand(5,7))
-			if(3)
-				M.reagents.add_reagent("ethanol",rand(5,7))
-				M << "<span class='warning'>You try to focus on not dying.</span>"
-				if(prob(15))
-					M.reagents.add_reagent("morphine",rand(5,7))
-			if(4)
-				M.reagents.add_reagent_list(list("ethanol" = rand(7,15), "mindbreaker" = rand(5,10)))
-				M << "<span class='warning'>u can count 2 potato!</span>"
+/datum/symptom/mind_restoration/Start(datum/disease/advance/A)
+	if(!..())
+		return
+	if(A.properties["resistance"] >= 6) //heal brain damage
+		trauma_heal_mild = TRUE
+	if(A.properties["resistance"] >= 9) //heal severe traumas
+		trauma_heal_severe = TRUE
+	if(A.properties["transmittable"] >= 8) //purge alcohol
+		purge_alcohol = TRUE
+
+/datum/symptom/mind_restoration/Activate(var/datum/disease/advance/A)
+	if(!..())
+		return
+	var/mob/living/M = A.affected_mob
+
+
+	if(A.stage >= 3)
+		M.dizziness = max(0, M.dizziness - 2)
+		M.drowsyness = max(0, M.drowsyness - 2)
+		M.slurring = max(0, M.slurring - 2)
+		M.confused = max(0, M.confused - 2)
+		if(purge_alcohol)
+			M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.drunkenness = max(H.drunkenness - 5, 0)
+
+	if(A.stage >= 4)
+		M.drowsyness = max(0, M.drowsyness - 2)
+		if(M.reagents.has_reagent("mindbreaker"))
+			M.reagents.remove_reagent("mindbreaker", 5)
+		if(M.reagents.has_reagent("histamine"))
+			M.reagents.remove_reagent("histamine", 5)
+		M.hallucination = max(0, M.hallucination - 10)
+
+	if(A.stage >= 5)
+		M.adjustBrainLoss(-3)
+		if(trauma_heal_mild && iscarbon(M))
+			var/mob/living/carbon/C = M
+			if(prob(10))
+				if(trauma_heal_severe)
+					C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)
+				else
+					C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
+
+
+
+/datum/symptom/sensory_restoration
+	name = "Sensory Restoration"
+	desc = "The virus stimulates the production and replacement of sensory tissues, causing the host to regenerate eyes and ears when damaged."
+	stealth = 0
+	resistance = 1
+	stage_speed = -2
+	transmittable = 2
+	level = 4
+	base_message_chance = 7
+	symptom_delay_min = 1
+	symptom_delay_max = 1
+
+/datum/symptom/sensory_restoration/Activate(datum/disease/advance/A)
+	if(!..())
+		return
+	var/mob/living/M = A.affected_mob
+	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
+	if (!eyes)
+		return
+	switch(A.stage)
+		if(4, 5)
+			M.restoreEars()
+
+			if(M.has_trait(TRAIT_BLIND, EYE_DAMAGE))
 				if(prob(20))
-					M.reagents.add_reagent("morphine",rand(5,7))
-			if(5)
-				M.reagents.add_reagent_list(list("impedrezene" = rand(5,15), "ethanol" = rand(7,20), "mindbreaker" = rand(5,15)))
-				if(prob(25))
-					M.reagents.add_reagent("morphine",rand(5,7))
-	return
+					to_chat(M, "<span class='notice'>Your vision slowly returns...</span>")
+					M.cure_blind(EYE_DAMAGE)
+					M.cure_nearsighted(EYE_DAMAGE)
+					M.blur_eyes(35)
+
+				else if(M.has_trait(TRAIT_NEARSIGHT, EYE_DAMAGE))
+					to_chat(M, "<span class='notice'>You can finally focus your eyes on distant objects.</span>")
+					M.cure_nearsighted(EYE_DAMAGE)
+					M.blur_eyes(10)
+
+				else if(M.eye_blind || M.eye_blurry)
+					M.set_blindness(0)
+					M.set_blurriness(0)
+				else if(eyes.eye_damage > 0)
+					M.adjust_eye_damage(-1)
+		else
+			if(prob(base_message_chance))
+				to_chat(M, "<span class='notice'>[pick("Your eyes feel great.","You feel like your eyes can focus more clearly.", "You don't feel the need to blink.","Your ears feel great.","Your healing feels more acute.")]</span>")

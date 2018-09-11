@@ -130,8 +130,9 @@
 	blobpwrdisplay.name = "blob power"
 	blobpwrdisplay.icon_state = "block"
 	blobpwrdisplay.screen_loc = ui_health
-	blobpwrdisplay.mouse_opacity = 0
+	blobpwrdisplay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blobpwrdisplay.layer = ABOVE_HUD_LAYER
+	blobpwrdisplay.plane = ABOVE_HUD_PLANE
 	infodisplay += blobpwrdisplay
 
 	healths = new /obj/screen/healths/blob()
@@ -159,11 +160,11 @@
 	static_inventory += using
 
 	using = new /obj/screen/blob/NodeBlob()
-	using.screen_loc = ui_rhand
+	using.screen_loc = ui_hand_position(2)
 	static_inventory += using
 
 	using = new /obj/screen/blob/FactoryBlob()
-	using.screen_loc = ui_lhand
+	using.screen_loc = ui_hand_position(1)
 	static_inventory += using
 
 	using = new /obj/screen/blob/ReadaptChemical()
@@ -174,10 +175,3 @@
 	using = new /obj/screen/blob/RelocateCore()
 	using.screen_loc = ui_storage2
 	static_inventory += using
-
-
-/mob/camera/blob/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/blob_overmind(src)
-
-

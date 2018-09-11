@@ -4,11 +4,11 @@
 	name = "water"
 	icon_state = "extinguish"
 	var/life = 15
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 
-/obj/effect/particle_effect/water/New()
-	..()
+/obj/effect/particle_effect/water/Initialize()
+	. = ..()
 	QDEL_IN(src, 70)
 
 /obj/effect/particle_effect/water/Move(turf/newloc)
@@ -34,7 +34,7 @@
 // will always spawn at the items location, even if it's moved.
 
 /* Example:
-var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread() -- creates new system
+ var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread() -- creates new system
 steam.set_up(5, 0, mob.loc) -- sets up variables
 OPTIONAL: steam.attach(mob)
 steam.start() -- spawns the effect
@@ -43,10 +43,10 @@ steam.start() -- spawns the effect
 /obj/effect/particle_effect/steam
 	name = "steam"
 	icon_state = "extinguish"
-	density = 0
+	density = FALSE
 
-/obj/effect/particle_effect/steam/New()
-	..()
+/obj/effect/particle_effect/steam/Initialize()
+	. = ..()
 	QDEL_IN(src, 20)
 
 /datum/effect_system/steam_spread

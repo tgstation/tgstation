@@ -6,38 +6,40 @@
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candle1"
 	item_state = "candle1"
-	w_class = 1
-	var/wax = 200
+	w_class = WEIGHT_CLASS_TINY
+	light_color = LIGHT_COLOR_FIRE
+	var/wax = 1000
 	var/lit = FALSE
 	var/infinite = FALSE
 	var/start_lit = FALSE
 	heat = 1000
 
-/obj/item/candle/New()
-	..()
+/obj/item/candle/Initialize()
+	. = ..()
 	if(start_lit)
 		// No visible message
 		light(show_message = FALSE)
 
 /obj/item/candle/update_icon()
 	var/i
-	if(wax>150)
+	if(wax>750)
 		i = 1
-	else if(wax>80)
+	else if(wax>400)
 		i = 2
 	else i = 3
 	icon_state = "candle[i][lit ? "_lit" : ""]"
 
 
-/obj/item/candle/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/candle/attackby(obj/item/W, mob/user, params)
 	..()
 	var/msg = W.ignition_effect(src, user)
 	if(msg)
 		light(msg)
 
-/obj/item/candle/fire_act()
+/obj/item/candle/fire_act(exposed_temperature, exposed_volume)
 	if(!src.lit)
 		light() //honk
+	..()
 
 /obj/item/candle/proc/light(show_message)
 	if(!src.lit)
@@ -45,7 +47,7 @@
 		//src.damtype = "fire"
 		if(show_message)
 			usr.visible_message(show_message)
-		SetLuminosity(CANDLE_LUMINOSITY)
+		set_light(CANDLE_LUMINOSITY)
 		START_PROCESSING(SSobj, src)
 		update_icon()
 
@@ -57,9 +59,6 @@
 		wax--
 	if(!wax)
 		new/obj/item/trash/candle(src.loc)
-		if(istype(src.loc, /mob))
-			var/mob/M = src.loc
-			M.unEquip(src, 1) //src is being deleted anyway
 		qdel(src)
 	update_icon()
 	open_flame()
@@ -70,22 +69,7 @@
 			"<span class='notice'>[user] snuffs [src].</span>")
 		lit = FALSE
 		update_icon()
-		SetLuminosity(0)
-		user.AddLuminosity(-CANDLE_LUMINOSITY)
-
-
-/obj/item/candle/pickup(mob/user)
-	..()
-	if(lit)
-		SetLuminosity(0)
-		user.AddLuminosity(CANDLE_LUMINOSITY)
-
-
-/obj/item/candle/dropped(mob/user)
-	..()
-	if(lit)
-		user.AddLuminosity(-CANDLE_LUMINOSITY)
-		SetLuminosity(CANDLE_LUMINOSITY)
+		set_light(0)
 
 /obj/item/candle/is_hot()
 	return lit * heat

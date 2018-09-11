@@ -14,8 +14,8 @@ Object.assign(Math, require('util/math'))
 // inline, or called by the server if it was not.
 import TGUI from 'tgui.ract'
 window.initialize = (dataString) => {
-  if (window.tgui) return // Don't run twice.
-  window.tgui = new TGUI({
+  // Don't run twice.
+  window.tgui = window.tgui || new TGUI({
     el: '#container',
     data () {
       const initial = JSON.parse(dataString)
@@ -44,7 +44,7 @@ act(ref, 'tgui:initialize')
 
 // Load fonts.
 import { loadCSS } from 'fg-loadcss'
-loadCSS('https://cdn.jsdelivr.net/fontawesome/4.5.0/css/font-awesome.min.css')
+loadCSS('font-awesome.min.css')
 // Handle font loads.
 import FontFaceObserver from 'fontfaceobserver'
 const fontawesome = new FontFaceObserver('FontAwesome')

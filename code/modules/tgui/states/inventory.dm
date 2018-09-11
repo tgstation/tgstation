@@ -4,7 +4,7 @@
   * Checks that the src_object is in the user's top-level (hand, ear, pocket, belt, etc) inventory.
  **/
 
-/var/global/datum/ui_state/inventory_state/inventory_state = new()
+GLOBAL_DATUM_INIT(inventory_state, /datum/ui_state/inventory_state, new)
 
 /datum/ui_state/inventory_state/can_use_topic(src_object, mob/user)
 	if(!(src_object in user))

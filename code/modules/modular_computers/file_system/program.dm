@@ -16,7 +16,10 @@
 	var/network_destination = null			// Optional string that describes what NTNet server/system this program connects to. Used in default logging.
 	var/available_on_ntnet = 1				// Whether the program can be downloaded from NTNet. Set to 0 to disable.
 	var/available_on_syndinet = 0			// Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to 1 to enable.
-	var/computer_emagged = 0				// Set to 1 if computer that's running us was emagged. Computer updates this every Process() tick
+	var/tgui_id								// ID of TG UI interface
+	var/ui_style							// ID of custom TG UI style (optional)
+	var/ui_x = 575							// Default size of TG UI window, in pixels
+	var/ui_y = 700
 	var/ui_header = null					// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!
 
 /datum/computer_file/program/New(obj/item/modular_computer/comp = null)
@@ -52,7 +55,7 @@
 /datum/computer_file/program/proc/is_supported_by_hardware(hardware_flag = 0, loud = 0, mob/user = null)
 	if(!(hardware_flag & usage_flags))
 		if(loud && computer && user)
-			user << "<span class='danger'>\The [computer] flashes an \"Hardware Error - Incompatible software\" warning.</span>"
+			to_chat(user, "<span class='danger'>\The [computer] flashes an \"Hardware Error - Incompatible software\" warning.</span>")
 		return 0
 	return 1
 
@@ -78,7 +81,7 @@
 	if(!access_to_check) // No required_access, allow it.
 		return 1
 
-	if(computer_emagged && !transfer)	//emags can bypass the execution locks but not the download ones.
+	if(!transfer && computer && (computer.obj_flags & EMAGGED))	//emags can bypass the execution locks but not the download ones.
 		return 1
 
 	if(IsAdminGhost(user))
@@ -88,18 +91,22 @@
 		return 1
 
 	if(ishuman(user))
+		var/obj/item/card/id/D
+		var/obj/item/computer_hardware/card_slot/card_slot
+		if(computer && card_slot)
+			card_slot = computer.all_components[MC_CARD]
+			D = card_slot.GetID()
 		var/mob/living/carbon/human/h = user
-		var/obj/item/weapon/card/id/I = h.get_idcard()
-		var/obj/item/weapon/card/id/C = h.get_active_hand()
-		if (istype(C, /obj/item/device/pda))
-			var/obj/item/device/pda/pda = C
-			C = pda.id
+		var/obj/item/card/id/I = h.get_idcard()
+		var/obj/item/card/id/C = h.get_active_held_item()
+		if(C)
+			C = C.GetID()
 		if(!(C && istype(C)))
 			C = null
 
-		if(!I && !C)
+		if(!I && !C && !D)
 			if(loud)
-				user << "<span class='danger'>\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning.</span>"
+				to_chat(user, "<span class='danger'>\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning.</span>")
 			return 0
 
 		if(I)
@@ -108,8 +115,11 @@
 		else if(C)
 			if(access_to_check in C.GetAccess())
 				return 1
+		else if(D)
+			if(access_to_check in D.GetAccess())
+				return 1
 		if(loud)
-			user << "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>"
+			to_chat(user, "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>")
 	return 0
 
 // This attempts to retrieve header data for UIs. If implementing completely new device of different type than existing ones
@@ -119,7 +129,7 @@
 		return computer.get_header_data()
 	return list()
 
-// This is performed on program startup. May be overriden to add extra logic. Remember to include ..() call. Return 1 on success, 0 on failure.
+// This is performed on program startup. May be overridden to add extra logic. Remember to include ..() call. Return 1 on success, 0 on failure.
 // When implementing new program based device, use this to run the program.
 /datum/computer_file/program/proc/run_program(mob/living/user)
 	if(can_run(user, 1))
@@ -130,19 +140,25 @@
 	return 0
 
 // Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
-/datum/computer_file/program/proc/kill_program(forced = 0)
+/datum/computer_file/program/proc/kill_program(forced = FALSE)
 	program_state = PROGRAM_STATE_KILLED
 	if(network_destination)
 		generate_network_log("Connection to [network_destination] closed.")
 	return 1
 
-// This is called every tick when the program is enabled. Ensure you do parent call if you override it. If parent returns 1 continue with UI initialisation.
 
-/datum/computer_file/program/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
-	if(program_state != PROGRAM_STATE_ACTIVE) // Our program was closed. Close the ui if it exists.
-		return computer.ui_interact(user)
-	return 1
+/datum/computer_file/program/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui && tgui_id)
+		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
+		assets.send(user)
 
+		ui = new(user, src, ui_key, tgui_id, filedesc, ui_x, ui_y, state = state)
+
+		if(ui_style)
+			ui.set_style(ui_style)
+		ui.set_autoupdate(state = 1)
+		ui.open()
 
 // CONVENTIONS, READ THIS WHEN CREATING NEW PROGRAM AND OVERRIDING THIS PROC:
 // Topic calls are automagically forwarded from NanoModule this program contains.
@@ -164,7 +180,7 @@
 				return 1
 			if("PC_minimize")
 				var/mob/user = usr
-				if(!computer.active_program || !computer.processor_unit)
+				if(!computer.active_program || !computer.all_components[MC_CPU])
 					return
 
 				computer.idle_threads.Add(computer.active_program)

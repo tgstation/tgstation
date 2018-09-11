@@ -1,27 +1,28 @@
 /obj/effect/mine
 	name = "dummy mine"
 	desc = "Better stay away from that thing."
-	density = 0
-	anchored = 1
-	icon = 'icons/obj/weapons.dmi'
+	density = FALSE
+	anchored = TRUE
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "uglymine"
 	var/triggered = 0
 
 /obj/effect/mine/proc/mineEffect(mob/victim)
-	victim << "<span class='danger'>*click*</span>"
+	to_chat(victim, "<span class='danger'>*click*</span>")
 
 /obj/effect/mine/Crossed(AM as mob|obj)
-	if(isanimal(AM))
-		var/mob/living/simple_animal/SA = AM
-		if(!SA.flying)
-			triggermine(SA)
-	else
-		triggermine(AM)
+	if(isturf(loc))
+		if(ismob(AM))
+			var/mob/MM = AM
+			if(!(MM.movement_type & FLYING))
+				triggermine(AM)
+		else
+			triggermine(AM)
 
 /obj/effect/mine/proc/triggermine(mob/victim)
 	if(triggered)
 		return
-	visible_message("<span class='danger'>[victim] sets off \icon[src] [src]!</span>")
+	visible_message("<span class='danger'>[victim] sets off [icon2html(src, viewers(src))] [src]!</span>")
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
@@ -43,19 +44,19 @@
 
 /obj/effect/mine/stun
 	name = "stun mine"
-	var/stun_time = 8
+	var/stun_time = 80
 
-/obj/effect/mine/stun/mineEffect(mob/victim)
+/obj/effect/mine/stun/mineEffect(mob/living/victim)
 	if(isliving(victim))
-		victim.Weaken(stun_time)
+		victim.Knockdown(stun_time)
 
 /obj/effect/mine/kickmine
 	name = "kick mine"
 
 /obj/effect/mine/kickmine/mineEffect(mob/victim)
 	if(isliving(victim) && victim.client)
-		victim << "<span class='userdanger'>You have been kicked FOR NO REISIN!</span>"
-		del(victim.client)
+		to_chat(victim, "<span class='userdanger'>You have been kicked FOR NO REISIN!</span>")
+		qdel(victim.client)
 
 
 /obj/effect/mine/gas
@@ -94,11 +95,11 @@
 	desc = "pick me up"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "electricity2"
-	density = 0
+	density = FALSE
 	var/duration = 0
 
-/obj/effect/mine/pickup/New()
-	..()
+/obj/effect/mine/pickup/Initialize()
+	. = ..()
 	animate(src, pixel_y = 4, time = 20, loop = -1)
 
 /obj/effect/mine/pickup/triggermine(mob/victim)
@@ -114,60 +115,62 @@
 	name = "Red Orb"
 	desc = "You feel angry just looking at it."
 	duration = 1200 //2min
-	color = "red"
+	color = "#FF0000"
 
 /obj/effect/mine/pickup/bloodbath/mineEffect(mob/living/carbon/victim)
 	if(!victim.client || !istype(victim))
 		return
-	victim << "<span class='reallybig redtext'>RIP AND TEAR</span>"
-	victim << 'sound/misc/e1m1.ogg'
+	to_chat(victim, "<span class='reallybig redtext'>RIP AND TEAR</span>")
 	var/old_color = victim.client.color
-	var/red_splash = list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0)
-	var/pure_red = list(0,0,0,0,0,0,0,0,0,1,0,0)
+	var/static/list/red_splash = list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0)
+	var/static/list/pure_red = list(0,0,0,0,0,0,0,0,0,1,0,0)
 
 	spawn(0)
-		new /obj/effect/hallucination/delusion(victim.loc,victim,force_kind="demon",duration=duration,skip_nearby=0)
+		new /datum/hallucination/delusion(victim, TRUE, "demon",duration,0)
 
-	var/obj/item/weapon/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
-	chainsaw.flags |= NODROP
-	victim.drop_r_hand()
-	victim.drop_l_hand()
-	victim.put_in_hands(chainsaw)
+	var/obj/item/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
+	victim.log_message("entered a blood frenzy", LOG_ATTACK)
+
+	chainsaw.item_flags |= NODROP
+	victim.drop_all_held_items()
+	victim.put_in_hands(chainsaw, forced = TRUE)
 	chainsaw.attack_self(victim)
 	chainsaw.wield(victim)
 	victim.reagents.add_reagent("adminordrazine",25)
+	to_chat(victim, "<span class='warning'>KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, KILL THEM ALL!</span>")
 
 	victim.client.color = pure_red
 	animate(victim.client,color = red_splash, time = 10, easing = SINE_EASING|EASE_OUT)
 	sleep(10)
 	animate(victim.client,color = old_color, time = duration)//, easing = SINE_EASING|EASE_OUT)
 	sleep(duration)
-	victim << "<span class='notice'>Your bloodlust seeps back into the bog of your subconscious and you regain self control.<span>"
+	to_chat(victim, "<span class='notice'>Your bloodlust seeps back into the bog of your subconscious and you regain self control.</span>")
 	qdel(chainsaw)
+	victim.log_message("exited a blood frenzy", LOG_ATTACK)
 	qdel(src)
 
 /obj/effect/mine/pickup/healing
 	name = "Blue Orb"
 	desc = "You feel better just looking at it."
-	color = "blue"
+	color = "#0000FF"
 
 /obj/effect/mine/pickup/healing/mineEffect(mob/living/carbon/victim)
 	if(!victim.client || !istype(victim))
 		return
-	victim << "<span class='notice'>You feel great!</span>"
+	to_chat(victim, "<span class='notice'>You feel great!</span>")
 	victim.revive(full_heal = 1, admin_revive = 1)
 
 /obj/effect/mine/pickup/speed
 	name = "Yellow Orb"
 	desc = "You feel faster just looking at it."
-	color = "yellow"
+	color = "#FFFF00"
 	duration = 300
 
 /obj/effect/mine/pickup/speed/mineEffect(mob/living/carbon/victim)
 	if(!victim.client || !istype(victim))
 		return
-	victim << "<span class='notice'>You feel fast!</span>"
-	victim.status_flags |= GOTTAGOREALLYFAST
+	to_chat(victim, "<span class='notice'>You feel fast!</span>")
+	victim.add_trait(TRAIT_GOTTAGOREALLYFAST, "yellow_orb")
 	sleep(duration)
-	victim.status_flags &= ~GOTTAGOREALLYFAST
-	victim << "<span class='notice'>You slow down.</span>"
+	victim.remove_trait(TRAIT_GOTTAGOREALLYFAST, "yellow_orb")
+	to_chat(victim, "<span class='notice'>You slow down.</span>")

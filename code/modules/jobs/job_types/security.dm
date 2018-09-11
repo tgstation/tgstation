@@ -1,7 +1,7 @@
 //Warden and regular officers add this result to their get_access()
 /datum/job/proc/check_config_for_sec_maint()
-	if(config.jobs_have_maint_access & SECURITY_HAS_MAINT_ACCESS)
-		return list(access_maint_tunnels)
+	if(CONFIG_GET(flag/security_has_maint_access))
+		return list(ACCESS_MAINT_TUNNELS)
 	return list()
 
 /*
@@ -12,6 +12,7 @@ Head of Security
 	flag = HOS
 	department_head = list("Captain")
 	department_flag = ENGSEC
+	head_announce = list("Security")
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
@@ -19,52 +20,56 @@ Head of Security
 	selection_color = "#ffdddd"
 	req_admin_notify = 1
 	minimal_player_age = 14
+	exp_requirements = 300
+	exp_type = EXP_TYPE_CREW
+	exp_type_department = EXP_TYPE_SECURITY
 
 	outfit = /datum/outfit/job/hos
 
-	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_weapons,
-			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
-			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
-			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_maint_tunnels)
-	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_weapons,
-			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
-			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
-			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_maint_tunnels)
+	access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_COURT, ACCESS_WEAPONS,
+			            ACCESS_FORENSICS_LOCKERS, ACCESS_MORGUE, ACCESS_MAINT_TUNNELS, ACCESS_ALL_PERSONAL_LOCKERS,
+			            ACCESS_RESEARCH, ACCESS_ENGINE, ACCESS_MINING, ACCESS_MEDICAL, ACCESS_CONSTRUCTION, ACCESS_MAILSORTING,
+			            ACCESS_HEADS, ACCESS_HOS, ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_GATEWAY, ACCESS_MAINT_TUNNELS, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_COURT, ACCESS_WEAPONS,
+			            ACCESS_FORENSICS_LOCKERS, ACCESS_MORGUE, ACCESS_MAINT_TUNNELS, ACCESS_ALL_PERSONAL_LOCKERS,
+			            ACCESS_RESEARCH, ACCESS_ENGINE, ACCESS_MINING, ACCESS_MEDICAL, ACCESS_CONSTRUCTION, ACCESS_MAILSORTING,
+			            ACCESS_HEADS, ACCESS_HOS, ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_GATEWAY, ACCESS_MAINT_TUNNELS, ACCESS_MINERAL_STOREROOM)
 
 /datum/outfit/job/hos
 	name = "Head of Security"
+	jobtype = /datum/job/hos
 
-	id = /obj/item/weapon/card/id/silver
-	belt = /obj/item/device/pda/heads/hos
-	ears = /obj/item/device/radio/headset/heads/hos/alt
+	id = /obj/item/card/id/silver
+	belt = /obj/item/pda/heads/hos
+	ears = /obj/item/radio/headset/heads/hos/alt
 	uniform = /obj/item/clothing/under/rank/head_of_security
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/hos/trenchcoat
 	gloves = /obj/item/clothing/gloves/color/black/hos
 	head = /obj/item/clothing/head/HoS/beret
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	suit_store = /obj/item/weapon/gun/energy/gun
-	r_pocket = /obj/item/device/assembly/flash/handheld
-	l_pocket = /obj/item/weapon/restraints/handcuffs
-	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
+	suit_store = /obj/item/gun/energy/e_gun
+	r_pocket = /obj/item/assembly/flash/handheld
+	l_pocket = /obj/item/restraints/handcuffs
+	backpack_contents = list(/obj/item/melee/baton/loaded=1)
 
-	backpack = /obj/item/weapon/storage/backpack/security
-	satchel = /obj/item/weapon/storage/backpack/satchel/sec
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
-	box = /obj/item/weapon/storage/box/security
+	backpack = /obj/item/storage/backpack/security
+	satchel = /obj/item/storage/backpack/satchel/sec
+	duffelbag = /obj/item/storage/backpack/duffelbag/sec
+	box = /obj/item/storage/box/security
 
-/datum/outfit/job/hos/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
+	implants = list(/obj/item/implant/mindshield)
 
-	if(visualsOnly)
-		return
+	chameleon_extras = list(/obj/item/gun/energy/e_gun/hos, /obj/item/stamp/hos)
 
-	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
-	L.imp_in = H
-	L.implanted = 1
-	H.sec_hud_set_implants()
+/datum/outfit/job/hos/hardsuit
+	name = "Head of Security (Hardsuit)"
 
-	announce_head(H, list("Security")) //tell underlings (security radio) they have a head
+	mask = /obj/item/clothing/mask/gas/sechailer
+	suit = /obj/item/clothing/suit/space/hardsuit/security/hos
+	suit_store = /obj/item/tank/internals/oxygen
+	backpack_contents = list(/obj/item/melee/baton/loaded=1, /obj/item/gun/energy/e_gun=1)
+
 /*
 Warden
 */
@@ -79,11 +84,13 @@ Warden
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
+	exp_requirements = 300
+	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/warden
 
-	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels, access_morgue, access_weapons, access_forensics_lockers)
-	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_weapons) //See /datum/job/warden/get_access()
+	access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_COURT, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_FORENSICS_LOCKERS, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_COURT, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM) //SEE /DATUM/JOB/WARDEN/GET_ACCESS()
 
 /datum/job/warden/get_access()
 	var/list/L = list()
@@ -92,36 +99,29 @@ Warden
 
 /datum/outfit/job/warden
 	name = "Warden"
+	jobtype = /datum/job/warden
 
-	belt = /obj/item/device/pda/warden
-	ears = /obj/item/device/radio/headset/headset_sec/alt
+	belt = /obj/item/pda/warden
+	ears = /obj/item/radio/headset/headset_sec/alt
 	uniform = /obj/item/clothing/under/rank/warden
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/vest/warden/alt
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/warden
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	r_pocket = /obj/item/device/assembly/flash/handheld
-	l_pocket = /obj/item/weapon/restraints/handcuffs
-	suit_store = /obj/item/weapon/gun/energy/gun/advtaser
-	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
+	r_pocket = /obj/item/assembly/flash/handheld
+	l_pocket = /obj/item/restraints/handcuffs
+	suit_store = /obj/item/gun/energy/e_gun/advtaser
+	backpack_contents = list(/obj/item/melee/baton/loaded=1)
 
-	backpack = /obj/item/weapon/storage/backpack/security
-	satchel = /obj/item/weapon/storage/backpack/satchel/sec
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
-	box = /obj/item/weapon/storage/box/security
+	backpack = /obj/item/storage/backpack/security
+	satchel = /obj/item/storage/backpack/satchel/sec
+	duffelbag = /obj/item/storage/backpack/duffelbag/sec
+	box = /obj/item/storage/box/security
 
+	implants = list(/obj/item/implant/mindshield)
 
-/datum/outfit/job/warden/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-
-	if(visualsOnly)
-		return
-
-	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
-	L.imp_in = H
-	L.implanted = 1
-	H.sec_hud_set_implants()
+	chameleon_extras = /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 
 /*
 Detective
@@ -137,42 +137,44 @@ Detective
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
+	exp_requirements = 300
+	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/detective
 
-	access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court, access_brig, access_weapons)
-	minimal_access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court, access_brig, access_weapons)
+	access = list(ACCESS_SEC_DOORS, ACCESS_FORENSICS_LOCKERS, ACCESS_MORGUE, ACCESS_MAINT_TUNNELS, ACCESS_COURT, ACCESS_BRIG, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_SEC_DOORS, ACCESS_FORENSICS_LOCKERS, ACCESS_MORGUE, ACCESS_MAINT_TUNNELS, ACCESS_COURT, ACCESS_BRIG, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM)
 
 /datum/outfit/job/detective
 	name = "Detective"
+	jobtype = /datum/job/detective
 
-	belt = /obj/item/device/pda/detective
-	ears = /obj/item/device/radio/headset/headset_sec/alt
+	belt = /obj/item/pda/detective
+	ears = /obj/item/radio/headset/headset_sec/alt
 	uniform = /obj/item/clothing/under/rank/det
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/det_suit
 	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/det_hat
+	head = /obj/item/clothing/head/fedora/det_hat
 	l_pocket = /obj/item/toy/crayon/white
-	r_pocket = /obj/item/weapon/lighter
-	backpack_contents = list(/obj/item/weapon/storage/box/evidence=1,\
-		/obj/item/device/detective_scanner=1,\
-		/obj/item/weapon/melee/classic_baton=1,\
-		/obj/item/weapon/reagent_containers/food/drinks/flask/det=1)
+	r_pocket = /obj/item/lighter
+	backpack_contents = list(/obj/item/storage/box/evidence=1,\
+		/obj/item/detective_scanner=1,\
+		/obj/item/melee/classic_baton=1)
 	mask = /obj/item/clothing/mask/cigarette
+
+	implants = list(/obj/item/implant/mindshield)
+
+	chameleon_extras = list(/obj/item/gun/ballistic/revolver/detective, /obj/item/clothing/glasses/sunglasses)
 
 /datum/outfit/job/detective/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 	var/obj/item/clothing/mask/cigarette/cig = H.wear_mask
-	cig.light("")
+	if(istype(cig)) //Some species specfic changes can mess this up (plasmamen)
+		cig.light("")
 
 	if(visualsOnly)
 		return
-
-	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
-	L.imp_in = H
-	L.implanted = 1
-	H.sec_hud_set_implants()
 
 /*
 Security Officer
@@ -188,98 +190,77 @@ Security Officer
 	supervisors = "the head of security, and the head of your assigned department (if applicable)"
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
+	exp_requirements = 300
+	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/security
 
-	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels, access_morgue, access_weapons, access_forensics_lockers)
-	minimal_access = list(access_security, access_sec_doors, access_brig, access_court, access_weapons) //But see /datum/job/warden/get_access()
+	access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_COURT, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_FORENSICS_LOCKERS, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_COURT, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM) //BUT SEE /DATUM/JOB/WARDEN/GET_ACCESS()
+
 
 /datum/job/officer/get_access()
 	var/list/L = list()
 	L |= ..() | check_config_for_sec_maint()
 	return L
 
-var/list/sec_departments = list("engineering", "supply", "medical", "science")
+GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
 
-/datum/outfit/job/security
-	name = "Security Officer"
-
-	belt = /obj/item/device/pda/security
-	ears = /obj/item/device/radio/headset/headset_sec/alt
-	uniform = /obj/item/clothing/under/rank/security
-	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/helmet/sec
-	suit = /obj/item/clothing/suit/armor/vest/alt
-	shoes = /obj/item/clothing/shoes/jackboots
-	l_pocket = /obj/item/weapon/restraints/handcuffs
-	r_pocket = /obj/item/device/assembly/flash/handheld
-	suit_store = /obj/item/weapon/gun/energy/gun/advtaser
-	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
-
-	backpack = /obj/item/weapon/storage/backpack/security
-	satchel = /obj/item/weapon/storage/backpack/satchel/sec
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
-	box = /obj/item/weapon/storage/box/security
-
-	var/department = null
-	var/tie = null
+/datum/job/officer/after_spawn(mob/living/carbon/human/H, mob/M)
+	// Assign department security
+	var/department
+	if(M && M.client && M.client.prefs)
+		department = M.client.prefs.prefered_security_department
+		if(!LAZYLEN(GLOB.available_depts) || department == "None")
+			return
+		else if(department in GLOB.available_depts)
+			LAZYREMOVE(GLOB.available_depts, department)
+		else
+			department = pick_n_take(GLOB.available_depts)
+	var/ears = null
+	var/accessory = null
 	var/list/dep_access = null
 	var/destination = null
 	var/spawn_point = null
+	switch(department)
+		if(SEC_DEPT_SUPPLY)
+			ears = /obj/item/radio/headset/headset_sec/alt/department/supply
+			dep_access = list(ACCESS_MAILSORTING, ACCESS_MINING, ACCESS_MINING_STATION)
+			destination = /area/security/checkpoint/supply
+			spawn_point = locate(/obj/effect/landmark/start/depsec/supply) in GLOB.department_security_spawns
+			accessory = /obj/item/clothing/accessory/armband/cargo
+		if(SEC_DEPT_ENGINEERING)
+			ears = /obj/item/radio/headset/headset_sec/alt/department/engi
+			dep_access = list(ACCESS_CONSTRUCTION, ACCESS_ENGINE)
+			destination = /area/security/checkpoint/engineering
+			spawn_point = locate(/obj/effect/landmark/start/depsec/engineering) in GLOB.department_security_spawns
+			accessory = /obj/item/clothing/accessory/armband/engine
+		if(SEC_DEPT_MEDICAL)
+			ears = /obj/item/radio/headset/headset_sec/alt/department/med
+			dep_access = list(ACCESS_MEDICAL)
+			destination = /area/security/checkpoint/medical
+			spawn_point = locate(/obj/effect/landmark/start/depsec/medical) in GLOB.department_security_spawns
+			accessory =  /obj/item/clothing/accessory/armband/medblue
+		if(SEC_DEPT_SCIENCE)
+			ears = /obj/item/radio/headset/headset_sec/alt/department/sci
+			dep_access = list(ACCESS_RESEARCH)
+			destination = /area/security/checkpoint/science
+			spawn_point = locate(/obj/effect/landmark/start/depsec/science) in GLOB.department_security_spawns
+			accessory = /obj/item/clothing/accessory/armband/science
 
-/datum/outfit/job/security/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
+	if(accessory)
+		var/obj/item/clothing/under/U = H.w_uniform
+		U.attach_accessory(new accessory)
+	if(ears)
+		if(H.ears)
+			qdel(H.ears)
+		H.equip_to_slot_or_del(new ears(H),SLOT_EARS)
 
-	if(sec_departments.len)
-		department = pick(sec_departments)
-		if(!visualsOnly)
-			sec_departments -= department
-		switch(department)
-			if("supply")
-				ears = /obj/item/device/radio/headset/headset_sec/alt/department/supply
-				dep_access = list(access_mailsorting, access_mining, access_mining_station)
-				destination = /area/security/checkpoint/supply
-				spawn_point = locate(/obj/effect/landmark/start/depsec/supply) in department_security_spawns
-				tie = /obj/item/clothing/tie/armband/cargo
-			if("engineering")
-				ears = /obj/item/device/radio/headset/headset_sec/alt/department/engi
-				dep_access = list(access_construction, access_engine)
-				destination = /area/security/checkpoint/engineering
-				spawn_point = locate(/obj/effect/landmark/start/depsec/engineering) in department_security_spawns
-				tie = /obj/item/clothing/tie/armband/engine
-			if("medical")
-				ears = /obj/item/device/radio/headset/headset_sec/alt/department/med
-				dep_access = list(access_medical)
-				destination = /area/security/checkpoint/medical
-				spawn_point = locate(/obj/effect/landmark/start/depsec/medical) in department_security_spawns
-				tie =  /obj/item/clothing/tie/armband/medblue
-			if("science")
-				ears = /obj/item/device/radio/headset/headset_sec/alt/department/sci
-				dep_access = list(access_research)
-				destination = /area/security/checkpoint/science
-				spawn_point = locate(/obj/effect/landmark/start/depsec/science) in department_security_spawns
-				tie = /obj/item/clothing/tie/armband/science
-
-/datum/outfit/job/security/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-
-	var/obj/item/clothing/under/U = H.w_uniform
-	if(tie)
-		U.attachTie(new tie)
-
-	if(visualsOnly)
-		return
-
-	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
-	L.imp_in = H
-	L.implanted = 1
-	H.sec_hud_set_implants()
-
-	var/obj/item/weapon/card/id/W = H.wear_id
+	var/obj/item/card/id/W = H.wear_id
 	W.access |= dep_access
 
 	var/teleport = 0
-	if(!config.sec_start_brig)
+	if(!CONFIG_GET(flag/sec_start_brig))
 		if(destination || spawn_point)
 			teleport = 1
 	if(teleport)
@@ -297,29 +278,57 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 				else
 					break
 	if(department)
-		H << "<b>You have been assigned to [department]!</b>"
+		to_chat(M, "<b>You have been assigned to [department]!</b>")
 	else
-		H << "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>"
+		to_chat(M, "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>")
 
-/obj/item/device/radio/headset/headset_sec/department/New()
-	wires = new(src)
+
+
+/datum/outfit/job/security
+	name = "Security Officer"
+	jobtype = /datum/job/officer
+
+	belt = /obj/item/pda/security
+	ears = /obj/item/radio/headset/headset_sec/alt
+	uniform = /obj/item/clothing/under/rank/security
+	gloves = /obj/item/clothing/gloves/color/black
+	head = /obj/item/clothing/head/helmet/sec
+	suit = /obj/item/clothing/suit/armor/vest/alt
+	shoes = /obj/item/clothing/shoes/jackboots
+	l_pocket = /obj/item/restraints/handcuffs
+	r_pocket = /obj/item/assembly/flash/handheld
+	suit_store = /obj/item/gun/energy/e_gun/advtaser
+	backpack_contents = list(/obj/item/melee/baton/loaded=1)
+
+	backpack = /obj/item/storage/backpack/security
+	satchel = /obj/item/storage/backpack/satchel/sec
+	duffelbag = /obj/item/storage/backpack/duffelbag/sec
+	box = /obj/item/storage/box/security
+
+	implants = list(/obj/item/implant/mindshield)
+
+	chameleon_extras = list(/obj/item/gun/energy/e_gun/advtaser, /obj/item/clothing/glasses/hud/security/sunglasses, /obj/item/clothing/head/helmet)
+	//The helmet is necessary because /obj/item/clothing/head/helmet/sec is overwritten in the chameleon list by the standard helmet, which has the same name and icon state
+
+
+/obj/item/radio/headset/headset_sec/alt/department/Initialize()
+	. = ..()
+	wires = new/datum/wires/radio(src)
 	secure_radio_connections = new
-
-	initialize()
 	recalculateChannels()
 
-/obj/item/device/radio/headset/headset_sec/alt/department/engi
-	keyslot = new /obj/item/device/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/device/encryptionkey/headset_eng
+/obj/item/radio/headset/headset_sec/alt/department/engi
+	keyslot = new /obj/item/encryptionkey/headset_sec
+	keyslot2 = new /obj/item/encryptionkey/headset_eng
 
-/obj/item/device/radio/headset/headset_sec/alt/department/supply
-	keyslot = new /obj/item/device/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/device/encryptionkey/headset_cargo
+/obj/item/radio/headset/headset_sec/alt/department/supply
+	keyslot = new /obj/item/encryptionkey/headset_sec
+	keyslot2 = new /obj/item/encryptionkey/headset_cargo
 
-/obj/item/device/radio/headset/headset_sec/alt/department/med
-	keyslot = new /obj/item/device/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/device/encryptionkey/headset_med
+/obj/item/radio/headset/headset_sec/alt/department/med
+	keyslot = new /obj/item/encryptionkey/headset_sec
+	keyslot2 = new /obj/item/encryptionkey/headset_med
 
-/obj/item/device/radio/headset/headset_sec/alt/department/sci
-	keyslot = new /obj/item/device/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/device/encryptionkey/headset_sci
+/obj/item/radio/headset/headset_sec/alt/department/sci
+	keyslot = new /obj/item/encryptionkey/headset_sec
+	keyslot2 = new /obj/item/encryptionkey/headset_sci

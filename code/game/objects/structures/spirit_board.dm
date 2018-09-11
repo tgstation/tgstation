@@ -3,10 +3,10 @@
 	desc = "A wooden board with letters etched into it, used in seances."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "spirit_board"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	var/virgin = 1
-	var/cooldown = 0
+	var/next_use = 0
 	var/planchette = "A"
 	var/lastuser = null
 
@@ -15,14 +15,16 @@
 	..()
 
 /obj/structure/spirit_board/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	spirit_board_pick_letter(user)
 
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/structure/spirit_board/attack_ghost(mob/dead/observer/user)
 	spirit_board_pick_letter(user)
-
+	return ..()
 
 /obj/structure/spirit_board/proc/spirit_board_pick_letter(mob/M)
 	if(!spirit_board_checks(M))
@@ -32,16 +34,15 @@
 		virgin = 0
 		notify_ghosts("Someone has begun playing with a [src.name] in [get_area(src)]!", source = src)
 
-	planchette = input("Choose the letter.", "Seance!") in list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
-	add_logs(M, src, "picked a letter on", " which was \"[planchette]\".")
-	cooldown = world.time
+	planchette = input("Choose the letter.", "Seance!") as null|anything in list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
+	if(!planchette || !Adjacent(M) || next_use > world.time)
+		return
+	M.log_message("picked a letter on [src], which was \"[planchette]\".")
+	next_use = world.time + rand(30,50)
 	lastuser = M.ckey
-
-	var/turf/T = loc
-	sleep(rand(20,30))
-	if(T == loc)
-		visible_message("<span class='notice'>The planchette slowly moves... and stops at the letter \"[planchette]\".</span>")
-
+	//blind message is the same because not everyone brings night vision to seances
+	var/msg = "<span class='notice'>The planchette slowly moves... and stops at the letter \"[planchette]\".</span>"
+	visible_message(msg,"",msg)
 
 /obj/structure/spirit_board/proc/spirit_board_checks(mob/M)
 	//cooldown
@@ -49,7 +50,7 @@
 	if(M.ckey == lastuser)
 		bonus = 10 //Give some other people a chance, hog.
 
-	if(cooldown > world.time - (30 + bonus))
+	if(next_use - bonus > world.time )
 		return 0 //No feedback here, hiding the cooldown a little makes it harder to tell who's really picking letters.
 
 	//lighting check
@@ -58,8 +59,8 @@
 	light_amount = T.get_lumcount()
 
 
-	if(light_amount > 2)
-		M << "<span class='warning'>It's too bright here to use [src.name]!</span>"
+	if(light_amount > 0.2)
+		to_chat(M, "<span class='warning'>It's too bright here to use [src.name]!</span>")
 		return 0
 
 	//mobs in range check
@@ -67,12 +68,12 @@
 	for(var/mob/living/L in orange(1,src))
 		if(L.ckey && L.client)
 			if((world.time - L.client.inactivity) < (world.time - 300) || L.stat != CONSCIOUS || L.restrained())//no playing with braindeads or corpses or handcuffed dudes.
-				M << "<span class='warning'>[L] doesn't seem to be paying attention...</span>"
+				to_chat(M, "<span class='warning'>[L] doesn't seem to be paying attention...</span>")
 			else
 				users_in_range++
 
 	if(users_in_range < 2)
-		M << "<span class='warning'>There aren't enough people to use the [src.name]!</span>"
+		to_chat(M, "<span class='warning'>There aren't enough people to use the [src.name]!</span>")
 		return 0
 
 	return 1

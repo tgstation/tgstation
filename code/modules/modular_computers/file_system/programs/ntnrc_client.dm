@@ -1,6 +1,6 @@
 /datum/computer_file/program/chatclient
 	filename = "ntnrc_client"
-	filedesc = "NTNet Relay Chat Client"
+	filedesc = "Chat Client"
 	program_icon_state = "command"
 	extended_desc = "This program allows communication over NTNRC network"
 	size = 8
@@ -9,6 +9,8 @@
 	network_destination = "NTNRC server"
 	ui_header = "ntnrc_idle.gif"
 	available_on_ntnet = 1
+	tgui_id = "ntos_net_chat"
+
 	var/last_message = null				// Used to generate the toolbar icon
 	var/username
 	var/datum/ntnet_conversation/channel = null
@@ -28,16 +30,16 @@
 			if(!channel)
 				return 1
 			var/mob/living/user = usr
-			var/message = sanitize(input(user, "Enter message or leave blank to cancel: "))
+			var/message = reject_bad_text(input(user, "Enter message or leave blank to cancel: "))
 			if(!message || !channel)
 				return
 			channel.add_message(message, username)
-			log_chat("[user]/([user.ckey]) as [username] sent to [channel.title]: [message]")
+			user.log_talk(message, LOG_CHAT, tag="as [username] to channel [channel.title]")
 
 		if("PRG_joinchannel")
 			. = 1
 			var/datum/ntnet_conversation/C
-			for(var/datum/ntnet_conversation/chan in ntnet_global.chat_channels)
+			for(var/datum/ntnet_conversation/chan in SSnetworks.station_network.chat_channels)
 				if(chan.id == text2num(params["id"]))
 					C = chan
 					break
@@ -51,7 +53,7 @@
 
 			if(C.password)
 				var/mob/living/user = usr
-				var/password = sanitize(input(user,"Access Denied. Enter password:"))
+				var/password = reject_bad_text(input(user,"Access Denied. Enter password:"))
 				if(C && (password == C.password))
 					C.add_client(src)
 					channel = C
@@ -66,7 +68,7 @@
 		if("PRG_newchannel")
 			. = 1
 			var/mob/living/user = usr
-			var/channel_title = sanitize(input(user,"Enter channel name or leave blank to cancel:"))
+			var/channel_title = reject_bad_text(input(user,"Enter channel name or leave blank to cancel:"))
 			if(!channel_title)
 				return
 			var/datum/ntnet_conversation/C = new/datum/ntnet_conversation()
@@ -83,7 +85,7 @@
 					channel = null
 				return 1
 			var/mob/living/user = usr
-			if(can_run(usr, 1, access_network))
+			if(can_run(usr, 1, ACCESS_NETWORK))
 				if(channel)
 					var/response = alert(user, "Really engage admin-mode? You will be disconnected from your current channel!", "NTNRC Admin mode", "Yes", "No")
 					if(response == "Yes")
@@ -108,7 +110,7 @@
 			if(!channel)
 				return
 			var/mob/living/user = usr
-			var/logname = input(user,"Enter desired logfile name (.log) or leave blank to cancel:")
+			var/logname = stripped_input(user,"Enter desired logfile name (.log) or leave blank to cancel:")
 			if(!logname || !channel)
 				return 1
 			var/datum/computer_file/data/logfile = new/datum/computer_file/data/logfile()
@@ -119,12 +121,13 @@
 				logfile.stored_data += "[logstring]\[BR\]"
 			logfile.stored_data += "\[b\]Logfile dump completed.\[/b\]"
 			logfile.calculate_size()
-			if(!computer || !computer.hard_drive || !computer.hard_drive.store_file(logfile))
+			var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
+			if(!computer || !hard_drive || !hard_drive.store_file(logfile))
 				if(!computer)
 					// This program shouldn't even be runnable without computer.
 					CRASH("Var computer is null!")
 					return 1
-				if(!computer.hard_drive)
+				if(!hard_drive)
 					computer.visible_message("\The [computer] shows an \"I/O Error - Hard drive connection error\" warning.")
 				else	// In 99.9% cases this will mean our HDD is full
 					computer.visible_message("\The [computer] shows an \"I/O Error - Hard drive may be full. Please free some space and try again. Required space: [logfile.size]GQ\" warning.")
@@ -133,7 +136,7 @@
 			if(!operator_mode || !channel)
 				return 1
 			var/mob/living/user = usr
-			var/newname = sanitize(input(user, "Enter new channel name or leave blank to cancel:"))
+			var/newname = reject_bad_text(input(user, "Enter new channel name or leave blank to cancel:"))
 			if(!newname || !channel)
 				return
 			channel.add_status_message("Channel renamed from [channel.title] to [newname] by operator.")
@@ -173,29 +176,14 @@
 	else
 		ui_header = "ntnrc_idle.gif"
 
-/datum/computer_file/program/chatclient/kill_program(forced = 0)
+/datum/computer_file/program/chatclient/kill_program(forced = FALSE)
 	if(channel)
 		channel.remove_client(src)
 		channel = null
-	..(forced)
-
-/datum/computer_file/program/chatclient/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
-
-
-		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
-		assets.send(user)
-
-
-		ui = new(user, src, ui_key, "ntnet_chat", "NTNet Relay Chat Client", 575, 700, state = state)
-		ui.open()
-		ui.set_autoupdate(state = 1)
-
+	..()
 
 /datum/computer_file/program/chatclient/ui_data(mob/user)
-	if(!ntnet_global || !ntnet_global.chat_channels)
+	if(!SSnetworks.station_network || !SSnetworks.station_network.chat_channels)
 		return
 
 	var/list/data = list()
@@ -224,7 +212,7 @@
 
 	else // Channel selection screen
 		var/list/all_channels[0]
-		for(var/C in ntnet_global.chat_channels)
+		for(var/C in SSnetworks.station_network.chat_channels)
 			var/datum/ntnet_conversation/conv = C
 			if(conv && conv.title)
 				all_channels.Add(list(list(

@@ -1,8 +1,0 @@
-author: "Incoming5643"
-delete-after: True
-changes: 
-  - rscadd: "Smuggler satchels left behind hidden on the station can now reappear in a later round."
-  - experiment: "There's absolutely no way of knowing when exactly it will reappear however..."
-  - rscadd: "Only one item in the satchel will remain when the satchel reappears."
-  - rscadd: "Items are saved in their <b>initial</b> forms, so saving things like chemical grenades will only disappoint you."
-  - rscadd: "The item pool is map specific and needs to be a certain size before satchels can start reappearing, so get to hiding that loot!"

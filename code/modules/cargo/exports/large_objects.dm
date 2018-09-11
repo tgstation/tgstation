@@ -1,20 +1,18 @@
-// Large objects that don't fit in crates, but must be sellable anyway.
-
-// Crates, boxes, lockers.
 /datum/export/large/crate
 	cost = 500
+	k_elasticity = 0
 	unit_name = "crate"
 	export_types = list(/obj/structure/closet/crate)
-	exclude_types = list(/obj/structure/closet/crate/large)
+	exclude_types = list(/obj/structure/closet/crate/large, /obj/structure/closet/crate/wooden)
 
-/datum/export/large/crate/total_printout() // That's why a goddamn metal crate costs that much.
+/datum/export/large/crate/total_printout(datum/export_report/ex, notes = TRUE) // That's why a goddamn metal crate costs that much.
 	. = ..()
-	if(.)
+	if(. && notes)
 		. += " Thanks for participating in Nanotrasen Crates Recycling Program."
 
 /datum/export/large/crate/wooden
 	cost = 100
-	unit_name = "wooden crate"
+	unit_name = "large wooden crate"
 	export_types = list(/obj/structure/closet/crate/large)
 	exclude_types = list()
 
@@ -22,8 +20,17 @@
 	unit_name = "ore box"
 	export_types = list(/obj/structure/ore_box)
 
+/datum/export/large/crate/wood
+	cost = 240
+	unit_name = "wooden crate"
+	export_types = list(/obj/structure/closet/crate/wooden)
+	exclude_types = list()
 
-// Reagent dispensers.
+/datum/export/large/crate/coffin
+	cost = 250//50 wooden crates cost 2000 points, and you can make 10 coffins in seconds with those planks. Each coffin selling for 250 means you can make a net gain of 500 points for wasting your time making coffins.
+	unit_name = "coffin"
+	export_types = list(/obj/structure/closet/crate/coffin)
+
 /datum/export/large/reagent_dispenser
 	cost = 100 // +0-400 depending on amount of reagents left
 	var/contents_cost = 400
@@ -49,62 +56,80 @@
 	export_types = list(/obj/structure/reagent_dispensers/beerkeg)
 
 
-
-// Heavy engineering equipment. Singulo/Tesla parts mostly.
-/datum/export/large/emitter
-	cost = 400
-	unit_name = "emitter"
-	export_types = list(/obj/machinery/power/emitter)
-
-/datum/export/large/field_generator
-	cost = 400
-	unit_name = "field generator"
-	export_types = list(/obj/machinery/field/generator)
-
-/datum/export/large/collector
-	cost = 600
-	unit_name = "collector"
-	export_types = list(/obj/machinery/power/rad_collector)
-
-/datum/export/large/collector/pa
-	cost = 300
-	unit_name = "particle accelerator part"
-	export_types = list(/obj/structure/particle_accelerator)
-
-/datum/export/large/collector/pa/controls
-	cost = 500
-	unit_name = "particle accelerator control console"
-	export_types = list(/obj/machinery/particle_accelerator/control_box)
-
 /datum/export/large/pipedispenser
 	cost = 500
 	unit_name = "pipe dispenser"
 	export_types = list(/obj/machinery/pipedispenser)
 
+/datum/export/large/emitter
+	cost = 550
+	unit_name = "emitter"
+	export_types = list(/obj/machinery/power/emitter)
 
-/datum/export/large/singularitygen
-	cost = 4000 // If you have one left after engine setup, sell it.
-	unit_name = "unused gravitational singularity generator"
+/datum/export/large/field_generator
+	cost = 550
+	unit_name = "field generator"
+	export_types = list(/obj/machinery/field/generator)
+
+/datum/export/large/collector
+	cost = 400
+	unit_name = "radiation collector"
+	export_types = list(/obj/machinery/power/rad_collector)
+
+/datum/export/large/tesla_coil
+	cost = 450
+	unit_name = "tesla coil"
+	export_types = list(/obj/machinery/power/tesla_coil)
+
+/datum/export/large/pa
+	cost = 350
+	unit_name = "particle accelerator part"
+	export_types = list(/obj/structure/particle_accelerator)
+
+/datum/export/large/pa/controls
+	cost = 500
+	unit_name = "particle accelerator control console"
+	export_types = list(/obj/machinery/particle_accelerator/control_box)
+
+/datum/export/large/supermatter
+	cost = 8000
+	unit_name = "supermatter shard"
+	export_types = list(/obj/machinery/power/supermatter_crystal/shard)
+
+/datum/export/large/grounding_rod
+	cost = 350
+	unit_name = "grounding rod"
+	export_types = list(/obj/machinery/power/grounding_rod)
+
+/datum/export/large/tesla_gen
+	cost = 4000
+	unit_name = "energy ball generator"
+	export_types = list(/obj/machinery/the_singularitygen/tesla)
+
+/datum/export/large/singulo_gen
+	cost = 4000
+	unit_name = "gravitational singularity generator"
 	export_types = list(/obj/machinery/the_singularitygen)
 	include_subtypes = FALSE
 
-/datum/export/large/singularitygen/tesla
-	unit_name = "unused energy ball generator"
-	export_types = list(/obj/machinery/the_singularitygen/tesla)
+/datum/export/large/am_control_unit
+	cost = 4000
+	unit_name = "antimatter control unit"
+	export_types = list(/obj/machinery/power/am_control_unit)
 
-/datum/export/large/supermatter
-	cost = 9000
-	unit_name = "supermatter shard"
-	export_types = list(/obj/machinery/power/supermatter_shard)
+/datum/export/large/am_shielding_container
+	cost = 150
+	unit_name = "packaged antimatter reactor section"
+	export_types = list(/obj/item/am_shielding_container)
 
 
-// Misc
 /datum/export/large/iv
-	cost = 300
+	cost = 50
 	unit_name = "iv drip"
 	export_types = list(/obj/machinery/iv_drip)
 
 /datum/export/large/barrier
-	cost = 325
+	cost = 25
 	unit_name = "security barrier"
-	export_types = list(/obj/item/weapon/grenade/barrier, /obj/structure/barricade/security)
+	export_types = list(/obj/item/grenade/barrier, /obj/structure/barricade/security)
+

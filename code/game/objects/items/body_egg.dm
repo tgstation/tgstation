@@ -2,13 +2,12 @@
 	name = "body egg"
 	desc = "All slimy and yuck."
 	icon_state = "innards"
-	origin_tech = "biotech=5"
-	zone = "chest"
+	zone = BODY_ZONE_CHEST
 	slot = "parasite_egg"
 
 /obj/item/organ/body_egg/on_find(mob/living/finder)
 	..()
-	finder << "<span class='warning'>You found an unknown alien organism in [owner]'s [zone]!</span>"
+	to_chat(finder, "<span class='warning'>You found an unknown alien organism in [owner]'s [zone]!</span>")
 
 /obj/item/organ/body_egg/New(loc)
 	if(iscarbon(loc))
@@ -17,17 +16,17 @@
 
 /obj/item/organ/body_egg/Insert(var/mob/living/carbon/M, special = 0)
 	..()
-	owner.status_flags |= XENO_HOST
+	owner.add_trait(TRAIT_XENO_HOST, TRAIT_GENERIC)
 	START_PROCESSING(SSobj, src)
 	owner.med_hud_set_status()
-	addtimer(src, "AddInfectionImages", 0, FALSE, owner)
+	INVOKE_ASYNC(src, .proc/AddInfectionImages, owner)
 
 /obj/item/organ/body_egg/Remove(var/mob/living/carbon/M, special = 0)
 	STOP_PROCESSING(SSobj, src)
 	if(owner)
-		owner.status_flags &= ~(XENO_HOST)
+		owner.remove_trait(TRAIT_XENO_HOST, TRAIT_GENERIC)
 		owner.med_hud_set_status()
-		addtimer(src, "RemoveInfectionImages", 0, FALSE, owner)
+		INVOKE_ASYNC(src, .proc/RemoveInfectionImages, owner)
 	..()
 
 /obj/item/organ/body_egg/process()

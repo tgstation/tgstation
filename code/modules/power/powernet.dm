@@ -15,7 +15,7 @@
 	var/netexcess = 0			// excess power on the powernet (typically avail-load)///////
 
 /datum/powernet/New()
-	SSmachine.powernets += src
+	SSmachines.powernets += src
 
 /datum/powernet/Destroy()
 	//Go away references, you suck!
@@ -26,7 +26,7 @@
 		nodes -= M
 		M.powernet = null
 
-	SSmachine.powernets -= src
+	SSmachines.powernets -= src
 	return ..()
 
 /datum/powernet/proc/is_empty()
@@ -94,6 +94,6 @@
 
 /datum/powernet/proc/get_electrocute_damage()
 	if(avail >= 1000)
-		return Clamp(round(avail/10000), 10, 90) + rand(-5,5)
+		return CLAMP(round(avail/10000), 10, 90) + rand(-5,5)
 	else
 		return 0

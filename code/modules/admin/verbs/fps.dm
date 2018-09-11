@@ -1,24 +1,26 @@
 //replaces the old Ticklag verb, fps is easier to understand
 /client/proc/set_server_fps()
 	set category = "Debug"
-	set name = "Set server fps"
+	set name = "Set Server FPS"
 	set desc = "Sets game speed in frames-per-second. Can potentially break the game"
 
 	if(!check_rights(R_DEBUG))
 		return
 
-	var/fps = round(input("Sets game frames-per-second. Can potentially break the game","FPS", config.fps) as num|null)
+	var/cfg_fps = CONFIG_GET(number/fps)
+	var/new_fps = round(input("Sets game frames-per-second. Can potentially break the game (default: [cfg_fps])","FPS", world.fps) as num|null)
 
-	if(fps <= 0)
-		src << "<span class='danger'>Error: ticklag(): Invalid world.ticklag value. No changes made.</span>"
+	if(new_fps <= 0)
+		to_chat(src, "<span class='danger'>Error: set_server_fps(): Invalid world.fps value. No changes made.</span>")
 		return
-	if(fps > config.fps)
-		if(alert(src, "You are setting fps to a high value:\n\t[fps] frames-per-second\n\tconfig.fps = [config.fps]","Warning!","Confirm","ABORT-ABORT-ABORT") != "Confirm")
+	if(new_fps > cfg_fps * 1.5)
+		if(alert(src, "You are setting fps to a high value:\n\t[new_fps] frames-per-second\n\tconfig.fps = [cfg_fps]","Warning!","Confirm","ABORT-ABORT-ABORT") != "Confirm")
 			return
 
-	var/msg = "[key_name(src)] has modified world.fps to [fps]"
+	var/msg = "[key_name(src)] has modified world.fps to [new_fps]"
 	log_admin(msg, 0)
 	message_admins(msg, 0)
-	feedback_add_details("admin_verb","TICKLAG") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Set Server FPS", "[new_fps]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-	world.fps = fps
+	CONFIG_SET(number/fps, new_fps)
+	world.fps = new_fps

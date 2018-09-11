@@ -8,8 +8,8 @@
 	//When we get into galloping mode, we stay there until both runs win less often than MIN_GALLOP consecutive times.
 #define MIN_GALLOP 7
 
-	//This is a global instance to allow much of this code to be reused. The interfaces are kept seperately
-var/datum/sortInstance/sortInstance = new()
+	//This is a global instance to allow much of this code to be reused. The interfaces are kept separately
+GLOBAL_DATUM_INIT(sortInstance, /datum/sortInstance, new())
 /datum/sortInstance
 	//The array being sorted.
 	var/list/L
@@ -27,7 +27,6 @@ var/datum/sortInstance/sortInstance = new()
 	//Stores information regarding runs yet to be merged.
 	//Run i starts at runBase[i] and extends for runLen[i] elements.
 	//runBase[i] + runLen[i] == runBase[i+1]
-	//var/stackSize
 	var/list/runBases = list()
 	var/list/runLens = list()
 
@@ -326,8 +325,6 @@ var/datum/sortInstance/sortInstance = new()
 			while(offset < maxOffset && call(cmp)(key, fetchElement(L,base+hint-offset)) < 0)	//we are iterating backwards
 				lastOffset = offset
 				offset = (offset << 1) + 1	//1 3 7 15
-				//if(offset <= 0)	//int overflow, not an issue here since we are using floats
-				//	offset = maxOffset
 
 			if(offset > maxOffset)
 				offset = maxOffset
@@ -341,8 +338,6 @@ var/datum/sortInstance/sortInstance = new()
 			while(offset < maxOffset && call(cmp)(key, fetchElement(L,base+hint+offset)) >= 0)
 				lastOffset = offset
 				offset = (offset << 1) + 1
-				//if(offset <= 0)	//int overflow, not an issue here since we are using floats
-				//	offset = maxOffset
 
 			if(offset > maxOffset)
 				offset = maxOffset
@@ -575,7 +570,6 @@ var/datum/sortInstance/sortInstance = new()
 
 		//If array is small, do an insertion sort
 		if(remaining < MIN_MERGE)
-			//var/initRunLen = countRunAndMakeAscending(start, end)
 			binarySort(start, end, start/*+initRunLen*/)
 			return
 
@@ -626,20 +620,17 @@ var/datum/sortInstance/sortInstance = new()
 		var/val2 = fetchElement(L,cursor2)
 
 		while(1)
-			if(call(cmp)(val1,val2) < 0)
+			if(call(cmp)(val1,val2) <= 0)
 				if(++cursor1 >= end1)
 					break
 				val1 = fetchElement(L,cursor1)
 			else
 				moveElement(L,cursor2,cursor1)
 
-				++cursor2
 				if(++cursor2 >= end2)
 					break
 				++end1
 				++cursor1
-				//if(++cursor1 >= end1)
-				//	break
 
 				val2 = fetchElement(L,cursor2)
 

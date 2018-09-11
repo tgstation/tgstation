@@ -1,6 +1,6 @@
 /obj/structure/chair/e_chair
 	name = "electric chair"
-	desc = "Looks absolutely SHOCKING!\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	desc = "Looks absolutely SHOCKING!"
 	icon_state = "echair0"
 	var/obj/item/assembly/shock_kit/part = null
 	var/last_time = 1
@@ -8,14 +8,14 @@
 
 /obj/structure/chair/e_chair/New()
 	..()
-	add_overlay(image('icons/obj/chairs.dmi', src, "echair_over", MOB_LAYER + 1))
+	add_overlay(mutable_appearance('icons/obj/chairs.dmi', "echair_over", MOB_LAYER + 1))
 
-/obj/structure/chair/e_chair/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench))
+/obj/structure/chair/e_chair/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/wrench))
 		var/obj/structure/chair/C = new /obj/structure/chair(loc)
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		W.play_tool_sound(src)
 		C.setDir(dir)
-		part.loc = loc
+		part.forceMove(loc)
 		part.master = null
 		part = null
 		qdel(src)
@@ -41,7 +41,6 @@
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
 			buckled_mob.electrocute_act(85, src, 1)
-			buckled_mob << "<span class='userdanger'>You feel a deep shock course through your body!</span>"
-			spawn(1)
-				buckled_mob.electrocute_act(85, src, 1)
+			to_chat(buckled_mob, "<span class='userdanger'>You feel a deep shock course through your body!</span>")
+			addtimer(CALLBACK(buckled_mob, /mob/living.proc/electrocute_act, 85, src, 1), 1)
 	visible_message("<span class='danger'>The electric chair went off!</span>", "<span class='italics'>You hear a deep sharp shock!</span>")

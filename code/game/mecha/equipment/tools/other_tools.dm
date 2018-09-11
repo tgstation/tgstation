@@ -8,13 +8,13 @@
 	name = "mounted teleporter"
 	desc = "An exosuit module that allows exosuits to teleport to any position in view."
 	icon_state = "mecha_teleport"
-	origin_tech = "bluespace=7"
 	equip_cooldown = 150
 	energy_drain = 1000
 	range = RANGED
 
 /obj/item/mecha_parts/mecha_equipment/teleporter/action(atom/target)
-	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM) return
+	if(!action_checks(target) || is_centcom_level(loc.z))
+		return
 	var/turf/T = get_turf(target)
 	if(T)
 		do_teleport(chassis, T, 4)
@@ -28,14 +28,13 @@
 	name = "mounted wormhole generator"
 	desc = "An exosuit module that allows generating of small quasi-stable wormholes."
 	icon_state = "mecha_wholegen"
-	origin_tech = "bluespace=4;magnets=4;plasmatech=2"
 	equip_cooldown = 50
 	energy_drain = 300
 	range = RANGED
 
 
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(atom/target)
-	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM)
+	if(!action_checks(target) || is_centcom_level(loc.z))
 		return
 	var/list/theareas = get_areas_in_range(100, chassis)
 	if(!theareas.len)
@@ -57,18 +56,12 @@
 	var/turf/target_turf = pick(L)
 	if(!target_turf)
 		return
-	var/obj/effect/portal/P = new /obj/effect/portal(get_turf(target))
-	P.target = target_turf
-	P.creator = null
-	P.icon = 'icons/obj/objects.dmi'
-	P.icon_state = "anom"
-	P.name = "wormhole"
+	var/list/obj/effect/portal/created = create_portal_pair(get_turf(src), target_turf, src, 300, 1, /obj/effect/portal/anom)
 	var/turf/T = get_turf(target)
-	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] used a Wormhole Generator in [ADMIN_COORDJMP(T)]",0,1)
-	log_game("[key_name(chassis.occupant)] used a Wormhole Generator in [COORD(T)]")
+	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] used a Wormhole Generator in [ADMIN_VERBOSEJMP(T)]")
+	log_game("[key_name(chassis.occupant)] used a Wormhole Generator in [AREACOORD(T)]")
 	src = null
-	spawn(rand(150,300))
-		qdel(P)
+	QDEL_LIST_IN(created, rand(150,300))
 	return 1
 
 
@@ -78,7 +71,6 @@
 	name = "mounted gravitational catapult"
 	desc = "An exosuit mounted Gravitational Catapult."
 	icon_state = "mecha_teleport"
-	origin_tech = "bluespace=3;magnets=3;engineering=4"
 	equip_cooldown = 10
 	energy_drain = 100
 	range = MELEE|RANGED
@@ -97,17 +89,20 @@
 					return
 				locked = target
 				occupant_message("Locked on [target]")
-				send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+				send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
 			else if(target!=locked)
 				if(locked in view(chassis))
+					var/turf/targ = get_turf(target)
+					var/turf/orig = get_turf(locked)
 					locked.throw_at(target, 14, 1.5)
 					locked = null
-					send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
-					return 1
+					send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
+					log_game("[key_name(chassis.occupant)] used a Gravitational Catapult to throw [locked] (From [AREACOORD(orig)]) at [target] ([AREACOORD(targ)]).")
+					return TRUE
 				else
 					locked = null
 					occupant_message("Lock on [locked] disengaged.")
-					send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+					send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
 		if(2)
 			var/list/atoms = list()
 			if(isturf(target))
@@ -115,25 +110,26 @@
 			else
 				atoms = orange(3, target)
 			for(var/atom/movable/A in atoms)
-				if(A.anchored) continue
+				if(A.anchored)
+					continue
 				spawn(0)
 					var/iter = 5-get_dist(A,target)
 					for(var/i=0 to iter)
 						step_away(A,target)
 						sleep(2)
 			var/turf/T = get_turf(target)
-			log_game("[chassis.occupant.ckey]([chassis.occupant]) used a Gravitational Catapult in ([T.x],[T.y],[T.z])")
-			return 1
+			log_game("[key_name(chassis.occupant)] used a Gravitational Catapult repulse wave on [AREACOORD(T)]")
+			return TRUE
 
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/get_equip_info()
-	return "[..()] [mode==1?"([locked||"Nothing"])":null] \[<a href='?src=\ref[src];mode=1'>S</a>|<a href='?src=\ref[src];mode=2'>P</a>\]"
+	return "[..()] [mode==1?"([locked||"Nothing"])":null] \[<a href='?src=[REF(src)];mode=1'>S</a>|<a href='?src=[REF(src)];mode=2'>P</a>\]"
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/Topic(href, href_list)
 	..()
 	if(href_list["mode"])
 		mode = text2num(href_list["mode"])
-		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+		send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
 	return
 
 
@@ -146,7 +142,6 @@
 	name = "armor booster module (Close Combat Weaponry)"
 	desc = "Boosts exosuit armor against armed melee attacks. Requires energy to operate."
 	icon_state = "mecha_abooster_ccw"
-	origin_tech = "materials=4;combat=4"
 	equip_cooldown = 10
 	energy_drain = 50
 	range = 0
@@ -154,8 +149,8 @@
 	var/damage_coeff = 0.8
 	selectable = 0
 
-/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/proc/attack_react(mob/user as mob)
-	if(action_checks(user))
+/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/proc/attack_react()
+	if(action_checks(src))
 		start_cooldown()
 		return 1
 
@@ -165,7 +160,6 @@
 	name = "armor booster module (Ranged Weaponry)"
 	desc = "Boosts exosuit armor against ranged attacks. Completely blocks taser shots. Requires energy to operate."
 	icon_state = "mecha_abooster_proj"
-	origin_tech = "materials=4;combat=3;engineering=3"
 	equip_cooldown = 10
 	energy_drain = 50
 	range = 0
@@ -186,7 +180,6 @@
 	name = "exosuit repair droid"
 	desc = "An automated repair droid for exosuits. Scans for damage and repairs it. Can fix almost all types of external or internal damage."
 	icon_state = "repair_droid"
-	origin_tech = "magnets=3;programming=3;engineering=4"
 	energy_drain = 50
 	range = 0
 	var/health_boost = 1
@@ -197,7 +190,7 @@
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	if(chassis)
-		chassis.overlays -= droid_overlay
+		chassis.cut_overlay(droid_overlay)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/attach(obj/mecha/M as obj)
@@ -206,19 +199,20 @@
 	M.add_overlay(droid_overlay)
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/detach()
-	chassis.overlays -= droid_overlay
+	chassis.cut_overlay(droid_overlay)
 	STOP_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/get_equip_info()
-	if(!chassis) return
-	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp; [src.name] - <a href='?src=\ref[src];toggle_repairs=1'>[equip_ready?"A":"Dea"]ctivate</a>"
+	if(!chassis)
+		return
+	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp; [src.name] - <a href='?src=[REF(src)];toggle_repairs=1'>[equip_ready?"A":"Dea"]ctivate</a>"
 
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Topic(href, href_list)
 	..()
 	if(href_list["toggle_repairs"])
-		chassis.overlays -= droid_overlay
+		chassis.cut_overlay(droid_overlay)
 		if(equip_ready)
 			START_PROCESSING(SSobj, src)
 			droid_overlay = new(src.icon, icon_state = "repair_droid_a")
@@ -230,7 +224,7 @@
 			log_message("Deactivated.")
 			set_ready_state(1)
 		chassis.add_overlay(droid_overlay)
-		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+		send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
 
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/process()
@@ -248,8 +242,8 @@
 				chassis.clearInternalDamage(int_dam_flag)
 				repaired = 1
 				break
-	if(health_boost<0 || chassis.health < initial(chassis.health))
-		chassis.health += min(health_boost, initial(chassis.health)-chassis.health)
+	if(health_boost<0 || chassis.obj_integrity < chassis.max_integrity)
+		chassis.obj_integrity += min(health_boost, chassis.max_integrity-chassis.obj_integrity)
 		repaired = 1
 	if(repaired)
 		if(!chassis.use_power(energy_drain))
@@ -258,7 +252,7 @@
 	else //no repair needed, we turn off
 		STOP_PROCESSING(SSobj, src)
 		set_ready_state(1)
-		chassis.overlays -= droid_overlay
+		chassis.cut_overlay(droid_overlay)
 		droid_overlay = new(src.icon, icon_state = "repair_droid")
 		chassis.add_overlay(droid_overlay)
 
@@ -271,7 +265,6 @@
 	name = "exosuit energy relay"
 	desc = "An exosuit module that wirelessly drains energy from any available power channel in area. The performance index is quite low."
 	icon_state = "tesla"
-	origin_tech = "magnets=4;powerstorage=4;engineering=4"
 	energy_drain = 0
 	range = 0
 	var/coeff = 100
@@ -300,7 +293,7 @@
 	var/pow_chan
 	if(A)
 		for(var/c in use_channels)
-			if(A.master && A.master.powered(c))
+			if(A.powered(c))
 				pow_chan = c
 				break
 	return pow_chan
@@ -318,8 +311,9 @@
 			log_message("Deactivated.")
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/get_equip_info()
-	if(!chassis) return
-	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp; [src.name] - <a href='?src=\ref[src];toggle_relay=1'>[equip_ready?"A":"Dea"]ctivate</a>"
+	if(!chassis)
+		return
+	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp; [src.name] - <a href='?src=[REF(src)];toggle_relay=1'>[equip_ready?"A":"Dea"]ctivate</a>"
 
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/process()
@@ -338,13 +332,13 @@
 		if(A)
 			var/pow_chan
 			for(var/c in list(EQUIP,ENVIRON,LIGHT))
-				if(A.master.powered(c))
+				if(A.powered(c))
 					pow_chan = c
 					break
 			if(pow_chan)
 				var/delta = min(20, chassis.cell.maxcharge-cur_charge)
 				chassis.give_power(delta)
-				A.master.use_power(delta*coeff, pow_chan)
+				A.use_power(delta*coeff, pow_chan)
 
 
 
@@ -356,7 +350,6 @@
 	name = "exosuit plasma converter"
 	desc = "An exosuit module that generates power using solid plasma as fuel. Pollutes the environment."
 	icon_state = "tesla"
-	origin_tech = "plasmatech=2;powerstorage=2;engineering=2"
 	range = MELEE
 	var/coeff = 100
 	var/obj/item/stack/sheet/fuel
@@ -365,8 +358,8 @@
 	var/fuel_per_cycle_active = 200
 	var/power_per_cycle = 20
 
-/obj/item/mecha_parts/mecha_equipment/generator/New()
-	..()
+/obj/item/mecha_parts/mecha_equipment/generator/Initialize()
+	. = ..()
 	generator_init()
 
 /obj/item/mecha_parts/mecha_equipment/generator/Destroy()
@@ -374,8 +367,7 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/generator/proc/generator_init()
-	fuel = new /obj/item/stack/sheet/mineral/plasma(src)
-	fuel.amount = 0
+	fuel = new /obj/item/stack/sheet/mineral/plasma(src, 0)
 
 /obj/item/mecha_parts/mecha_equipment/generator/detach()
 	STOP_PROCESSING(SSobj, src)
@@ -396,13 +388,13 @@
 /obj/item/mecha_parts/mecha_equipment/generator/get_equip_info()
 	var/output = ..()
 	if(output)
-		return "[output] \[[fuel]: [round(fuel.amount*fuel.perunit,0.1)] cm<sup>3</sup>\] - <a href='?src=\ref[src];toggle=1'>[equip_ready?"A":"Dea"]ctivate</a>"
+		return "[output] \[[fuel]: [round(fuel.amount*fuel.perunit,0.1)] cm<sup>3</sup>\] - <a href='?src=[REF(src)];toggle=1'>[equip_ready?"A":"Dea"]ctivate</a>"
 
 /obj/item/mecha_parts/mecha_equipment/generator/action(target)
 	if(chassis)
 		var/result = load_fuel(target)
 		if(result)
-			send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+			send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
 
 /obj/item/mecha_parts/mecha_equipment/generator/proc/load_fuel(var/obj/item/stack/sheet/P)
 	if(P.type == fuel.type && P.amount > 0)
@@ -429,16 +421,16 @@
 	if(!istype(T))
 		return
 	var/datum/gas_mixture/GM = new
-	GM.assert_gas("plasma")
+	GM.add_gas(/datum/gas/plasma)
 	if(prob(10))
-		GM.gases["plasma"][MOLES] += 100
+		GM.gases[/datum/gas/plasma][MOLES] += 100
 		GM.temperature = 1500+T0C //should be enough to start a fire
-		T.visible_message("The [src] suddenly disgorges a cloud of heated plasma.")
+		T.visible_message("[src] suddenly disgorges a cloud of heated plasma.")
 		qdel(src)
 	else
-		GM.gases["plasma"][MOLES] += 5
+		GM.gases[/datum/gas/plasma][MOLES] += 5
 		GM.temperature = istype(T) ? T.air.return_temperature() : T20C
-		T.visible_message("The [src] suddenly disgorges a cloud of plasma.")
+		T.visible_message("[src] suddenly disgorges a cloud of plasma.")
 	T.assume_air(GM)
 	return
 
@@ -472,20 +464,18 @@
 	name = "exonuclear reactor"
 	desc = "An exosuit module that generates power using uranium as fuel. Pollutes the environment."
 	icon_state = "tesla"
-	origin_tech = "powerstorage=4;engineering=4"
 	max_fuel = 50000
 	fuel_per_cycle_idle = 10
 	fuel_per_cycle_active = 30
 	power_per_cycle = 50
-	var/rad_per_cycle = 0.3
+	var/rad_per_cycle = 30
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/generator_init()
-	fuel = new /obj/item/stack/sheet/mineral/uranium(src)
-	fuel.amount = 0
+	fuel = new /obj/item/stack/sheet/mineral/uranium(src, 0)
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/critfail()
 	return
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/process()
 	if(..())
-		radiation_pulse(get_turf(src), 2, 7, rad_per_cycle, 1)
+		radiation_pulse(get_turf(src), rad_per_cycle)

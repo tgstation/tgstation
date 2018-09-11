@@ -1,59 +1,42 @@
 // Cold
+/datum/disease/advance/cold
+	copy_type = /datum/disease/advance
 
-/datum/disease/advance/cold/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
-	if(!D)
-		name = "Cold"
-		symptoms = list(new/datum/symptom/sneeze)
-	..(process, D, copy)
-
+/datum/disease/advance/cold/New()
+	name = "Cold"
+	symptoms = list(new/datum/symptom/sneeze)
+	..()
 
 // Flu
+/datum/disease/advance/flu
+	copy_type = /datum/disease/advance
 
-/datum/disease/advance/flu/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
-	if(!D)
-		name = "Flu"
-		symptoms = list(new/datum/symptom/cough)
-	..(process, D, copy)
+/datum/disease/advance/flu/New()
+	name = "Flu"
+	symptoms = list(new/datum/symptom/cough)
+	..()
 
+//Randomly generated Disease, for virus crates and events
+/datum/disease/advance/random
+	name = "Experimental Disease"
+	copy_type = /datum/disease/advance
 
-// Voice Changing
+/datum/disease/advance/random/New(max_symptoms, max_level = 8)
+	if(!max_symptoms)
+		max_symptoms = rand(1, VIRUS_SYMPTOM_LIMIT)
+	var/list/datum/symptom/possible_symptoms = list()
+	for(var/symptom in subtypesof(/datum/symptom))
+		var/datum/symptom/S = symptom
+		if(initial(S.level) > max_level)
+			continue
+		if(initial(S.level) <= 0) //unobtainable symptoms
+			continue
+		possible_symptoms += S
+	for(var/i in 1 to max_symptoms)
+		var/datum/symptom/chosen_symptom = pick_n_take(possible_symptoms)
+		if(chosen_symptom)
+			var/datum/symptom/S = new chosen_symptom
+			symptoms += S
+	Refresh()
 
-/datum/disease/advance/voice_change/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
-	if(!D)
-		name = "Epiglottis Mutation"
-		symptoms = list(new/datum/symptom/voice_change)
-	..(process, D, copy)
-
-
-// Toxin Filter
-
-/datum/disease/advance/heal/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
-	if(!D)
-		name = "Liver Enhancer"
-		symptoms = list(new/datum/symptom/heal)
-	..(process, D, copy)
-
-
-// Hullucigen
-
-/datum/disease/advance/hullucigen/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
-	if(!D)
-		name = "Reality Impairment"
-		symptoms = list(new/datum/symptom/hallucigen)
-	..(process, D, copy)
-
-// Sensory Restoration
-
-/datum/disease/advance/sensory_restoration/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
-	if(!D)
-		name = "Reality Enhancer"
-		symptoms = list(new/datum/symptom/sensory_restoration)
-	..(process, D, copy)
-
-// Sensory Destruction
-
-/datum/disease/advance/sensory_destruction/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
-	if(!D)
-		name = "Reality Destruction"
-		symptoms = list(new/datum/symptom/sensory_destruction)
-	..(process, D, copy)
+	name = "Sample #[rand(1,10000)]"
