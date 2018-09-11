@@ -524,8 +524,12 @@
 
 /datum/status_effect/gonbolaPacify/on_apply()
 	owner.add_trait(TRAIT_PACIFISM, "gonbolaPacify")
+	owner.add_trait(TRAIT_MUTE, "gonbolaMute")
+	owner.add_trait(TRAIT_JOLLY, "gonbolaJolly")
 	to_chat(owner, "<span class='notice'>You suddenly feel at peace and feel no need to make any sudden or rash actions...</span>")
 	return ..()
 
 /datum/status_effect/gonbolaPacify/on_remove()
 	owner.remove_trait(TRAIT_PACIFISM, "gonbolaPacify")
+	owner.remove_trait(TRAIT_MUTE, "gonbolaMute")
+	owner.remove_trait(TRAIT_JOLLY, "gonbolaJolly")
