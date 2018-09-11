@@ -28,7 +28,7 @@
 /datum/bounty/item/ship(obj/O)
 	if(!applies_to(O))
 		return
-	if(istype(O,/obj/item/stack)
+	if(istype(O,/obj/item/stack))
 		var/obj/item/stack/O_is_a_stack = O
 		shipped_count += O_is_a_stack.amount
 	else
