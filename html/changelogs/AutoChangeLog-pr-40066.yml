@@ -1,0 +1,7 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - balance: "Radiation toxin damage has been slightly increased."
+  - balance: "Contaminated objects are overall a bit weaker but are easier to create in the first place."
+  - balance: "Showers deal with high amounts of contamination much faster but aren't that great at dealing with weakly contaminated objects."
+  - rscadd: "Atmos holo-barriers have been given radiation insulation like the engineering ones."
