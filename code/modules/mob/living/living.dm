@@ -468,17 +468,37 @@
 			mood.sanity = SANITY_GREAT
 			mood.update_mood()
 		else // store if moodlet should not be removed by healing and add after removal
-			var/ishulk = FALSE
-			var/isbrokenvow = FALSE
+			var/is_hulk = FALSE
+			var/is_broken_vow = FALSE
+			var/is_lost_heirloom = FALSE
+			var/is_cuffed = FALSE
+			var/is_embedded = FALSE
+			var/is_delam = FALSE
 			if(mood.mood_events["hulk"])
-				ishulk = TRUE
+				is_hulk = TRUE
 			if(mood.mood_events["vow"])
-				isbrokenvow = TRUE
+				is_broken_vow = TRUE
+			if(mood.mood_events["family_heirloom_missing"])
+				is_lost_heirloom = TRUE
+			if(mood.mood_events["handcuffed"])
+				is_cuffed = TRUE
+			if(mood.mood_events["embedded"])
+				is_embedded = TRUE
+			if(mood.mood_events["delam"])
+				is_delam = TRUE
 			QDEL_LIST_ASSOC_VAL(mood.mood_events)
-			if(ishulk)
+			if(is_hulk)
 				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hulk", /datum/mood_event/hulk)
-			if(isbrokenvow)
+			if(is_broken_vow)
 				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "vow", /datum/mood_event/broken_vow)
+			if(is_lost_heirloom)
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "family_heirloom_missing", /datum/mood_event/family_heirloom_missing)
+			if(is_cuffed)
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "handcuffed", /datum/mood_event/handcuffed)
+			if(is_embedded)
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
+			if(is_delam)
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "delam", /datum/mood_event/delam)
 			mood.sanity = SANITY_GREAT
 			mood.update_mood()
 
