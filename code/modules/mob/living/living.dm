@@ -434,13 +434,13 @@
 				spell.updateButtonIcon()
 
 //proc used to completely heal a mob.
-/mob/living/proc/fully_heal(admin_revive = 0)
+/mob/living/proc/fully_heal(admin_revive = FALSE)
 	restore_blood()
-	setToxLoss(0, 0) //zero as second argument not automatically call updatehealth().
-	setOxyLoss(0, 0)
-	setCloneLoss(0, 0)
+	setToxLoss(0, FALSE) //FALSE as second argument not automatically call updatehealth().
+	setOxyLoss(0, FALSE)
+	setCloneLoss(0, FALSE)
 	setBrainLoss(0)
-	setStaminaLoss(0, 0)
+	setStaminaLoss(0, FALSE)
 	SetUnconscious(0, FALSE)
 	set_disgust(0)
 	SetStun(0, FALSE)
@@ -461,10 +461,24 @@
 	fire_stacks = 0
 	confused = 0
 	update_canmove()
-	if(admin_revive)
-		GET_COMPONENT(mood, /datum/component/mood)
-		if (mood)
+	GET_COMPONENT(mood, /datum/component/mood)
+	if (mood)
+		if(admin_revive) // admin_revive removes what should be permanent moodlets
 			QDEL_LIST_ASSOC_VAL(mood.mood_events)
+			mood.sanity = SANITY_GREAT
+			mood.update_mood()
+		else // store if moodlet should not be removed by healing and add after removal
+			var/ishulk = FALSE
+			var/isbrokenvow = FALSE
+			if(mood.mood_events["hulk"])
+				ishulk = TRUE
+			if(mood.mood_events["vow"])
+				isbrokenvow = TRUE
+			QDEL_LIST_ASSOC_VAL(mood.mood_events)
+			if(ishulk)
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hulk", /datum/mood_event/hulk)
+			if(isbrokenvow)
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "vow", /datum/mood_event/broken_vow)
 			mood.sanity = SANITY_GREAT
 			mood.update_mood()
 
