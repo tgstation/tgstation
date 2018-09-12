@@ -79,6 +79,9 @@ ENABLE_LOCALHOST_RANK
 ## log OOC channel
 LOG_OOC
 
+## log LOOC channel
+LOG_LOOC
+
 ## log client Say
 LOG_SAY
 

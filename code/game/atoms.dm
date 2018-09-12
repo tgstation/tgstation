@@ -611,6 +611,8 @@
 			log_telecomms(log_text)
 		if(LOG_OOC)
 			log_ooc(log_text)
+		if(LOG_LOOC) // sunset -- start LOOC log
+			log_looc(log_text) // sunset end
 		if(LOG_ADMIN)
 			log_admin(log_text)
 		if(LOG_ADMIN_PRIVATE)
