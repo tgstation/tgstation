@@ -69,7 +69,6 @@
 	maxHealth = 110
 	toxTolerance = 3.3
 	toxLethality = 0.009
-	var/filterToxins = TRUE //whether to filter toxins
 
 /obj/item/organ/liver/cybernetic/upgraded
 	name = "upgraded cybernetic liver"
