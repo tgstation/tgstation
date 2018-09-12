@@ -1,4 +1,5 @@
 /datum/mood_event
+	var/name // typically named after their path but several are not
 	var/description ///For descriptions, use the span classes bold nicegreen, nicegreen, none, warning and boldwarning in order from great to horrible.
 	var/mood_change = 0
 	var/timeout = 0
