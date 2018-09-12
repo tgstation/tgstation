@@ -381,4 +381,4 @@
 /obj/item/restraints/legcuffs/bola/gonbola/dropped(mob/user)
 	. = ..()
 	if(effectReference)
-		qdel(effectReference)
+		QDEL_NULL(effectReference)
