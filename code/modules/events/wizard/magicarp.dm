@@ -39,9 +39,12 @@
 	var/allowed_projectile_types = list(/obj/item/projectile/magic/change, /obj/item/projectile/magic/animate, /obj/item/projectile/magic/resurrection,
 	/obj/item/projectile/magic/death, /obj/item/projectile/magic/teleport, /obj/item/projectile/magic/door, /obj/item/projectile/magic/aoe/fireball,
 	/obj/item/projectile/magic/spellblade, /obj/item/projectile/magic/arcane_barrage)
+	var/chaos = FALSE
 	
 /mob/living/simple_animal/hostile/carp/ranged/Initialize()
 	projectiletype = pick(allowed_projectile_types)
+	if(!chaos && initial(name) == name)
+		name = "[initial(projectiletype.name)] [name]"
 	. = ..()
 
 /mob/living/simple_animal/hostile/carp/ranged/chaos
@@ -50,7 +53,9 @@
 	color = "#00FFFF"
 	maxHealth = 75
 	health = 75
+	chaos = TRUE
 
 /mob/living/simple_animal/hostile/carp/ranged/chaos/Shoot()
-	projectiletype = pick(allowed_projectile_types)
+	if(chaos)
+		projectiletype = pick(allowed_projectile_types)
 	..()
