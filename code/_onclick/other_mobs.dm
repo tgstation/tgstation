@@ -30,7 +30,6 @@
 
 //Return TRUE to cancel other attack hand effects that respect it.
 /atom/proc/attack_hand(mob/user)
-	SEND_SIGNAL(src, COMSIG_MOB_ATTACK, A, params)
 	. = FALSE
 	if(!(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND))
 		add_fingerprint(user)
@@ -87,6 +86,7 @@
 	return 0
 
 /mob/living/carbon/human/RangedAttack(atom/A, mouseparams)
+	. = ..()
 	if(gloves)
 		var/obj/item/clothing/gloves/G = gloves
 		if(istype(G) && G.Touch(A,0)) // for magic gloves
