@@ -66,12 +66,10 @@
 	icon_state = "liver-c"
 	desc = "An electronic device designed to mimic the functions of a human liver. Handles toxins slightly better than an organic liver."
 	synthetic = TRUE
-
-/obj/item/organ/liver/cybernetic/Initialize(mapload)
-	. = ..()
-	maxHealth = round(maxHealth*1.1, 1)
-	toxTolerance = round(toxTolerance*1.1, 1)
-	toxLethality = round(toxLethality*0.9, 0.001)
+	maxHealth = 110
+	toxTolerance = 3.3
+	toxLethality = 0.009
+	var/filterToxins = TRUE //whether to filter toxins
 
 /obj/item/organ/liver/cybernetic/upgraded
 	name = "upgraded cybernetic liver"
