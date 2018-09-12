@@ -590,7 +590,7 @@
 		to_chat(user, "There is no [fitting] in this light.")
 		return
 
-	// make it burn hands if not wearing fire-insulated gloves
+	// make it burn hands unless you're wearing heat insulated gloves or have the RESISTHEAT/RESISTHEATHANDS traits
 	if(on)
 		var/prot = 0
 		var/mob/living/carbon/human/H = user
@@ -604,7 +604,7 @@
 		else
 			prot = 1
 
-		if(prot > 0)
+		if(prot > 0 || user.has_trait(TRAIT_RESISTHEAT) || user.has_trait(TRAIT_RESISTHEATHANDS))
 			to_chat(user, "<span class='notice'>You remove the light [fitting].</span>")
 		else if(istype(user) && user.dna.check_mutation(TK))
 			to_chat(user, "<span class='notice'>You telekinetically remove the light [fitting].</span>")
