@@ -286,6 +286,26 @@
 	build_path = /obj/item/locator
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	
+/datum/design/quantum_keycard
+	name = "Quantum Keycard"
+	desc = "Allows for the construction of a quantum keycard."
+	id = "quantum_keycard"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 500, MAT_METAL = 500, MAT_SILVER = 500, MAT_BLUESPACE = 1000)
+	build_path = /obj/item/quantum_keycard
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+	
+/datum/design/hand_tele
+	name = "Hand Teleporter"
+	desc = "Allows for the construction of a hand teleporter."
+	id = "hand_tele"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 500, MAT_METAL = 500, MAT_GOLD = 500, MAT_BLUESPACE = 2000, MAT_DIAMOND = 2000)
+	build_path = /obj/item/hand_tele
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
