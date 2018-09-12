@@ -138,8 +138,9 @@
 					 "<span class='notice'>You cut [src] into pieces of cloth with [I].</span>", \
 					 "<span class='italics'>You hear cutting.</span>")
 		var/obj/item/stack/medical/gauze/R = src
-		src = null
 		R.use(2)
+	else
+		return ..()
 
 /obj/item/stack/medical/gauze/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins tightening \the [src] around [user.p_their()] neck! It looks like [user.p_they()] forgot how to use medical supplies!</span>")
