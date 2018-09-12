@@ -131,7 +131,6 @@
 	if(A in DirectAccess())
 		if(W)
 			W.melee_attack_chain(src, A, params)
-			SEND_SIGNAL(src, COMSIG_MOB_ITEM_ATTACK, A, params)
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
@@ -146,7 +145,6 @@
 	if(CanReach(A,W))
 		if(W)
 			W.melee_attack_chain(src, A, params)
-			SEND_SIGNAL(src, COMSIG_MOB_ITEM_ATTACK, A, params)
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
@@ -154,7 +152,6 @@
 	else
 		if(W)
 			W.afterattack(A,src,0,params)
-			SEND_SIGNAL(src, COMSIG_MOB_ITEM_ATTACK, A, params)
 		else
 			RangedAttack(A,params)
 
