@@ -22,6 +22,8 @@
 	if(!CheckAdminHref(href, href_list))
 		return
 
+	sunsetTopic(href, href_list) // sunset -- sunset topic options
+
 	if(href_list["ahelp"])
 		if(!check_rights(R_ADMIN, TRUE))
 			return
