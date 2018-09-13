@@ -302,7 +302,7 @@
 	desc = "Allows for the construction of a hand teleporter."
 	id = "hand_tele"
 	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 500, MAT_METAL = 500, MAT_GOLD = 500, MAT_BLUESPACE = 2000, MAT_DIAMOND = 2000)
+	materials = list(MAT_GLASS = 500, MAT_METAL = 500, MAT_GOLD = 500, MAT_BLUESPACE = 2000, MAT_DIAMOND = 3000)
 	build_path = /obj/item/hand_tele
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
