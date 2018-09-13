@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "Heat resistant species no longer burn their hands on lightbulbs."
