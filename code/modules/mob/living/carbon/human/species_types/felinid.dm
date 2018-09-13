@@ -10,6 +10,9 @@
 	mutantears = /obj/item/organ/ears/cat
 	mutanttail = /obj/item/organ/tail/cat
 
+/datum/species/felinid/after_equip_job(datum/job/J, mob/living/carbon/human/H)
+	H.grant_language(/datum/language/felininese)
+
 /datum/species/human/felinid/qualifies_for_rank(rank, list/features)
 	return TRUE
 
