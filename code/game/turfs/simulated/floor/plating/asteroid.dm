@@ -98,6 +98,10 @@
 	. = ..()
 	set_basalt_light(src)
 
+/turf/open/floor/plating/asteroid/getDug()
+	set_light(0)
+	return ..()
+
 /proc/set_basalt_light(turf/open/floor/B)
 	switch(B.icon_state)
 		if("basalt1", "basalt2", "basalt3")
