@@ -1,0 +1,5 @@
+author: "WJohn & Naksu"
+delete-after: True
+changes: 
+  - rscadd: "Nuke ops may now order a borg with the Syndicate Saboteur module. It's a streamlined engineering unit capable of extraordinary robustness by virtue of not only not being able to leave its welder in the shuttle, but also quick travel around the station via the disposal system. Oh and it can also disguise itself."
+  - rscadd: "Syndicate medical and assault modules have received improved sprites"
