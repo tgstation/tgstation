@@ -907,13 +907,13 @@
 				M.say(pick(possible_says), forced = "bonehurtingjuice")
 			if(2)
 				var/list/possible_mes = list("oofs softly", "looks like their bones hurt", "grimaces, as though their bones hurt")
-				M.say("*custom " + pick(possibleMes), forced = "bonehurtingjuice")
+				M.say("*custom " + pick(possible_mes), forced = "bonehurtingjuice")
 			if(3)
 				to_chat(M, "<span class='warning'>Your bones hurt!</span>")
 	return ..()
 
 /datum/reagent/toxin/bonehurtingjuice/overdose_process(mob/living/M)
-	if(prob(4) && iscarbon(M) && (r_arm || l_arm || l_leg || r_leg)) //big oof
+	if(prob(4) && iscarbon(M)) //big oof
 		var/stamina_damage = 200
 		switch(rand(1, 4)) //God help you if the same limb gets picked twice quickly.
 			if(1)
