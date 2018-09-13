@@ -889,63 +889,42 @@
 	name = "Bone Hurting Juice"
 	id = "bonehurtingjuice"
 	description = "A strange substance that looks a lot like water. Drinking it is oddly tempting. Oof ouch."
-	color = "#AAAAAA77"
+	color = "#AAAAAA77" //RGBA: 170, 170, 170, 77
 	toxpwr = 0
 	taste_description = "bone hurting"
 	overdose_threshold = 50
-	metabolization_rate = 2.0
+	metabolization_rate = 2
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/M)
-	M.say("oof ouch my bones")
+	M.say("oof ouch my bones", forced = "bonehurtingjuice")
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
-	M.adjustStaminaLoss(8.0, 0)
+	M.adjustStaminaLoss(8, 0)
 	if(prob(20))
-		switch(pick(1, 2, 3))
+		switch(rand(1, 3))
 			if(1)
-				var/list/possibleSays = list("oof", "ouch", "my bones", "oof ouch", "oof ouch my bones")
-				M.say(pick(possibleSays))
+				var/list/possible_says = list("oof", "ouch", "my bones", "oof ouch", "oof ouch my bones")
+				M.say(pick(possible_says), forced = "bonehurtingjuice")
 			if(2)
-				var/list/possibleMes = list("oofs softly", "looks like their bones hurt", "grimaces, as though their bones hurt")
-				M.say("*custom " + pick(possibleMes))
+				var/list/possible_mes = list("oofs softly", "looks like their bones hurt", "grimaces, as though their bones hurt")
+				M.say("*custom " + pick(possibleMes), forced = "bonehurtingjuice")
 			if(3)
 				to_chat(M, "<span class='warning'>Your bones hurt!</span>")
-	. = ..()
+	return ..()
 
 /datum/reagent/toxin/bonehurtingjuice/overdose_process(mob/living/M)
-	var/obj/item/bodypart/l_arm = M.get_bodypart(BODY_ZONE_L_ARM)
-	var/obj/item/bodypart/r_arm = M.get_bodypart(BODY_ZONE_R_ARM)
-	var/obj/item/bodypart/l_leg = M.get_bodypart(BODY_ZONE_L_LEG)
-	var/obj/item/bodypart/r_leg = M.get_bodypart(BODY_ZONE_R_LEG)
-	. = ..()
 	if(prob(4) && iscarbon(M) && (r_arm || l_arm || l_leg || r_leg)) //big oof
-		var/list/possibleSounds = list('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg')
-		var/extMessage = "<span class='warning'>[M]'s bones hurt too much!!</span>"  //I couldn't figure out how to define a new function so let's not repeat the same strings 4 times.
-		var/playerMessage = "<span class='danger'>Your bones hurt too much!!</span>"
-		var/ouchie = "OOF!!"
-		var/stamDamage = 200
-		switch(pick(1, 2, 3, 4)) //God help you if the same limb gets picked twice quickly.
+		var/stamina_damage = 200
+		switch(rand(1, 4)) //God help you if the same limb gets picked twice quickly.
 			if(1)
-				if(l_arm)
-					l_arm.receive_damage(0, 0, stamDamage)
-					playsound(M,pick(possibleSounds), 50, TRUE, -1)
-					M.visible_message(extMessage, playerMessage)
-					M.say(ouchie)
+				M.get_bodypart(BODY_ZONE_L_ARM).receive_damage(0, 0, stamina_damage)
 			if(2)
-				if(r_arm)
-					r_arm.receive_damage(0, 0, stamDamage)
-					playsound(M,pick(possibleSounds), 50, TRUE, -1)
-					M.visible_message(extMessage, playerMessage)
-					M.say(ouchie)
+				M.get_bodypart(BODY_ZONE_R_ARM).receive_damage(0, 0, stamina_damage)
 			if(3)
-				if(l_leg)
-					l_leg.receive_damage(0, 0, stamDamage)
-					playsound(M,pick(possibleSounds), 50, TRUE, -1)
-					M.visible_message(extMessage, playerMessage)
-					M.say(ouchie)
+				M.get_bodypart(BODY_ZONE_L_LEG).receive_damage(0, 0, stamina_damage)
 			if(4)
-				if(r_leg)
-					r_leg.receive_damage(0, 0, stamDamage)
-					playsound(M,pick(possibleSounds), 50, TRUE, -1)
-					M.visible_message(extMessage, playerMessage)
-					M.say(ouchie)
+				M.get_bodypart(BODY_ZONE_R_LEG).receive_damage(0, 0, stamina_damage)
+		playsound(M, get_sfx("desceration"), 50, TRUE, -1)
+		M.visible_message("<span class='warning'>[M]'s bones hurt too much!!</span>n", "<span class='danger'>Your bones hurt too much!!</span>")
+		M.say("OOF!!", forced = "bonehurtingjuice")
+	return ..()
