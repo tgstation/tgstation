@@ -363,3 +363,14 @@
 		B.Crossed(hit_atom)
 		qdel(src)
 	..()
+
+/obj/item/restraints/legcuffs/bola/energy/mech/New()
+	..()
+	addtimer(CALLBACK(src, .proc/dissipate), 40)
+
+/obj/item/restraints/legcuffs/bola/energy/mech/proc/dissipate()
+	if(!ismob(loc))
+		do_sparks(1, TRUE, src)
+		qdel(src)
+
+

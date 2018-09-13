@@ -399,12 +399,12 @@
 	name = "bola launcher"
 	desc = "Equipment for combat exosuits. Launches energy bolas."
 	icon_state = "mecha_grenadelnchr"
-	projectile = /obj/item/restraints/legcuffs/bola/energy
+	projectile = /obj/item/restraints/legcuffs/bola/energy/mech
 	fire_sound = 'sound/weapons/bolathrow.ogg'
-	projectiles = 5
-	missile_speed = 1
+	projectiles = 10
+	missile_speed = 1.5
 	projectile_energy_cost = 250
-	equip_cooldown = 15
+	equip_cooldown = 10
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/incendiary
 	name = "\improper incendiary grenade launcher"
@@ -513,14 +513,13 @@
 	desc = "Oh shit"
 	icon_state = "mecha_uac2"
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
-	equip_cooldown = 10
+	equip_cooldown = 9
 	projectile = /obj/item/projectile/bullet/reusable/foam_dart/riot
-	projectiles = 120
+	projectiles = 60
 	projectile_energy_cost = 30
 	projectiles_per_shot = 3
 	variance = 6
 	randomspread = 1
-	projectile_delay = 2
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/foam/can_attach(obj/mecha/M as obj)
