@@ -12,7 +12,6 @@
 		"med" = GLOB.medical_positions,
 		"sci" = GLOB.science_positions,
 		"car" = GLOB.supply_positions,
-		"srv" = GLOB.service_positions,
 		"civ" = GLOB.civilian_positions,
 		"bot" = GLOB.nonhuman_positions
 	)
@@ -21,13 +20,13 @@
 		var/name = t.fields["name"]
 		var/rank = t.fields["rank"]
 		var/real_rank = t.fields["real_rank"]
- 		var/department = 0
+		var/department = FALSE
 		for(var/k in set_names)
 			if(real_rank in set_names[k])
 				if(!positions[k])
 					positions[k] = list()
 				positions[k][name] = rank
-				department = 1
+				department = TRUE
 		if(!department)
 			if(!positions["misc"])
 				positions["misc"] = list()
@@ -39,7 +38,7 @@
 	require_comms_key = TRUE
 
 /datum/world_topic/announce/Run(list/input)
-	for(var/client/C in clients)
+	for(var/client/C in GLOB.clients)
 		to_chat(C, "<span class='announce'>PR: [input["msg"]]</span>")
 
 /datum/world_topic/ircrestart
@@ -47,4 +46,4 @@
 	require_comms_key = TRUE
 
  /datum/world_topic/ircrestart/Run(list/input)
- 	return Reboot(input[keyword], input["reason"])
+ 	return world.Reboot(input[keyword], input["reason"])
