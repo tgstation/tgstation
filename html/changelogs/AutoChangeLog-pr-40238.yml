@@ -1,0 +1,4 @@
+author: "basilman"
+delete-after: True
+changes: 
+  - balance: "mobs without an attached mind dont contribute towards his grace ascension"
