@@ -231,6 +231,9 @@
 		if(MUTE_ALL)
 			mute_string = "everything"
 			feedback_string = "Everything"
+		if(MUTE_LOOC) // sunset start -- looc mute
+			mute_string = "LOOC"
+			feedback_string = "LOOC" //sunset end
 		else
 			return
 

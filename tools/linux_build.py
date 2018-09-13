@@ -32,7 +32,7 @@ def stage2(map):
         txt = "-M{}".format(map)
     else:
         txt = ''
-    args = "bash tools/travis/dm.sh {} tgstation.dme".format(txt)
+    args = "bash tools/travis/dm.sh {} sunsetstation.dme".format(txt)
     print(args)
     p = subprocess.Popen(args, shell=True)
     wait(p)
@@ -42,7 +42,7 @@ def stage3(profile_mode=False):
     play("sound/misc/compiler-stage2.ogg")
     logfile = open('server.log~','w')
     p = subprocess.Popen(
-        "DreamDaemon tgstation.dmb 25001 -trusted",
+        "DreamDaemon sunsetstation.dmb 25001 -trusted",
         shell=True, stdout=PIPE, stderr=STDOUT)
     try:
         while p.returncode is None:

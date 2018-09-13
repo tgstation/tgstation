@@ -18,6 +18,10 @@ REVIVAL_BRAIN_LIFE -1
 ## Comment this out if you want OOC to be automatically disabled during the round, it will be enabled during the lobby and after the round end results.
 OOC_DURING_ROUND
 
+## LOOC DURING ROUND ###
+## Comment this out if you want LOOC to be disabled during the round.
+LOOC_DURING_ROUND
+
 ## EMOJI ###
 ## Comment this out if you want to disable emojis
 EMOJIS
@@ -39,12 +43,12 @@ WALK_DELAY 4
 ## Entries completely override all subtypes. Later entries have precedence over earlier entries.
 ## This means if you put /mob 0 on the last entry, it will null out all changes, while if you put /mob as the first entry and 
 ## /mob/living/carbon/human on the last entry, the last entry will override the first.
-##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/human 0
-##MULTIPLICATIVE_MOVESPEED /mob/living/silicon/robot 0
-##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/monkey 0
-##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/alien 0
-##MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal/slime 0
-MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 1
+MULTIPLICATIVE_MOVESPEED /mob/living/carbon/human 1.5
+MULTIPLICATIVE_MOVESPEED /mob/living/silicon/robot 1.5
+MULTIPLICATIVE_MOVESPEED /mob/living/carbon/monkey 1.5
+MULTIPLICATIVE_MOVESPEED /mob/living/carbon/alien 1.5
+MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal/slime 1.5
+MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 1.5
 
 
 ## NAMES ###
@@ -78,6 +82,7 @@ PROBABILITY TRAITOR 5
 PROBABILITY TRAITORBRO 2
 PROBABILITY TRAITORCHAN 4
 PROBABILITY INTERNAL_AFFAIRS 3
+PROBABILITY INFILTRATION 3
 PROBABILITY NUCLEAR 2
 PROBABILITY REVOLUTION 2
 PROBABILITY CULT 2
