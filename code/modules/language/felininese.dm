@@ -5,6 +5,7 @@
 	ask_verb = "meows"
 	exclaim_verb = "yelps"
 	key = "f"
+	flags = TONGUELESS_SPEECH
 	space_chance = 40
 	syllables = list(
 		"a", "i", "u", "e", "o", "ka", "ki", "ku", "ke", "ko", "ga", "gi", "gu", "ge", "go",
