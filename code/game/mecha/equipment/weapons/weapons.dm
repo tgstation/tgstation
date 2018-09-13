@@ -262,16 +262,6 @@
 	projectile_energy_cost = 15
 	harmful = TRUE
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/sniper
-	name = "\improper .50 anitmaterial rifle"
-	desc = "A weapon for combat exosuits. Shoots penetrator bullets."
-	icon_state = "mecha_carbine"
-	equip_cooldown = 55
-	projectile = /obj/item/projectile/bullet/p50
-	projectiles = 6
-	projectile_energy_cost = 500
-	harmful = TRUE
-
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced
 	name = "\improper S.H.H. \"Quietus\" Carbine"
 	desc = "A weapon for combat exosuits. A mime invention, field tests have shown that targets cannot even scream before going down."
@@ -301,7 +291,7 @@
 	icon_state = "mecha_uac2"
 	equip_cooldown = 10
 	projectile = /obj/item/projectile/bullet/lmg
-	projectiles = 60
+	projectiles = 120
 	projectile_energy_cost = 20
 	projectiles_per_shot = 3
 	variance = 6
@@ -405,6 +395,17 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(var/obj/item/assembly/mousetrap/armed/M)
 	M.secured = 1
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/bolas
+	name = "bola launcher"
+	desc = "Equipment for combat exosuits. Launches energy bolas."
+	icon_state = "mecha_grenadelnchr"
+	projectile = /obj/item/restraints/legcuffs/bola/energy
+	fire_sound = 'sound/weapons/bolathrow.ogg'
+	projectiles = 5
+	missile_speed = 1
+	projectile_energy_cost = 250
+	equip_cooldown = 15
+
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/incendiary
 	name = "\improper incendiary grenade launcher"
 	desc = "A weapon for combat exosuits. Launches primed incendiary grenades."
@@ -416,6 +417,7 @@
 	projectile_energy_cost = 500
 	equip_cooldown = 8
 	var/det_time = 10
+	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/incendiary/proj_init(var/obj/item/grenade/chem_grenade/pyro/mechi/F)
 	var/turf/T = get_turf(src)
@@ -434,6 +436,7 @@
 	projectile_energy_cost = 600
 	equip_cooldown = 20
 	var/det_time = 20
+	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/acid/proj_init(var/obj/item/grenade/chem_grenade/mecha/F)
 	var/turf/T = get_turf(src)
@@ -452,6 +455,7 @@
 	projectile_energy_cost = 2000
 	equip_cooldown = 30
 	var/det_time = 30
+	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/explosive/proj_init(var/obj/item/grenade/syndieminibomb/concussion/frag/F)
 	var/turf/T = get_turf(src)
@@ -503,3 +507,24 @@
 			var/atom/movable/AM = hit_atom
 			AM.safe_throw_at(get_edge_target_turf(AM,get_dir(src, AM)), 7, 2)
 		qdel(src)
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/foam
+	name = "\improper Donksoft mech mounted lmg"
+	desc = "Oh shit"
+	icon_state = "mecha_uac2"
+	fire_sound = 'sound/weapons/gunshot_smg.ogg'
+	equip_cooldown = 10
+	projectile = /obj/item/projectile/bullet/reusable/foam_dart/riot
+	projectiles = 120
+	projectile_energy_cost = 30
+	projectiles_per_shot = 3
+	variance = 6
+	randomspread = 1
+	projectile_delay = 2
+
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/foam/can_attach(obj/mecha/M as obj)
+	if(..())
+		if(istype(M, /obj/mecha/working) || istype(M, /obj/mecha/combat))
+			return TRUE
+	return FALSE

@@ -834,6 +834,15 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
+/datum/techweb_node/mech_bola
+	id = "mech_bola"
+	display_name = "Exosuit Weapon (Bola Launcher)"
+	description = "A piece of mech weaponry"
+	prereq_ids = list("mecha", "weaponry")
+	design_ids = list("mech_bola")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
 /datum/techweb_node/mech_grenade_explosive
 	id = "mech_grn_e"
 	display_name = "Exosuit Weapon (Explosive Grenade Launcher)"
@@ -843,12 +852,12 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
-/datum/techweb_node/mech_sniper
-	id = "mech_sniper"
-	display_name = "Exosuit Weapon (.50 Antimaterial Rifle)"
-	description = "An advanced piece of mech weaponry"
+/datum/techweb_node/mech_foam_lmg
+	id = "mech_foam_lmg"
+	display_name = "Exosuit Weapon (Mech Donksoft LMG)"
+	description = "When your team needs the cavalry."
 	prereq_ids = list("mecha", "ballistic_weapons", "syndicate_basic")
-	design_ids = list("mech_sniper")
+	design_ids = list("mech_foam_lmg")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -946,7 +955,7 @@
 	design_ids = list("spreading_nanites","mindcontrol_nanites","mitosis_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	export_price = 15000
- 
+
 ////////////////////////Alien technology////////////////////////
 /datum/techweb_node/alientech //AYYYYYYYYLMAOO tech
 	id = "alientech"

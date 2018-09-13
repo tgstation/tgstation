@@ -510,13 +510,13 @@
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
-/datum/design/mech_sniper
-	name = "Exosuit Weapon (.50 Antimaterial Rifle)"
-	desc = "A weapon for combat exosuits. It shoots penetrating bullets."
-	id = "mech_sniper"
+/datum/design/mech_foam_lmg
+	name = "Exosuit Weapon (Donksoft LMG)"
+	desc = "A weapon for exosuits. It shoots riot foam darts."
+	id = "mech_foam_lmg"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/sniper
-	materials = list(MAT_METAL = 20000, MAT_GLASS = 18000, MAT_GOLD = 12000, MAT_SILVER = 8000, MAT_DIAMOND = 8000)
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/foam
+	materials = list(MAT_METAL = 20000, MAT_GLASS = 18000, MAT_GOLD = 12000, MAT_SILVER = 8000)
 	construction_time = 150
 	category = list("Exosuit Equipment")
 
@@ -527,5 +527,15 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/xray
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 18000, MAT_GOLD = 12000, MAT_SILVER = 8000, MAT_URANIUM = 10000, MAT_DIAMOND = 2000, MAT_BLUESPACE = 4000)
+	construction_time = 100
+	category = list("Exosuit Equipment")
+
+/datum/design/mech_bola
+	name = "Exosuit Weapon (Bola Launcher)"
+	desc = "A weapon for combat exosuits. Throws energy bolas."
+	id = "mech_bola"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/xray
+	materials = list(MAT_METAL = 10000, MAT_GLASS = 18000, MAT_TITANIUM = 5000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
