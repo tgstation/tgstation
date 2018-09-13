@@ -209,9 +209,9 @@
 
 /datum/emote/living/laugh/run_emote(mob/user, params)
 	. = ..()
-	if(. && ishuman(user))
+	if(. && iscarbon(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
+		if((H.dna.species.id == "human" || H.dna.species.id == "felinid") && (!H.mind || !H.mind.miming))
 			if(user.gender == FEMALE)
 				playsound(H, 'sound/voice/human/womanlaugh.ogg', 50, 1)
 			else
