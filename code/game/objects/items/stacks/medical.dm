@@ -137,8 +137,7 @@
 		user.visible_message("[user] cuts [src] into pieces of cloth with [I].", \
 					 "<span class='notice'>You cut [src] into pieces of cloth with [I].</span>", \
 					 "<span class='italics'>You hear cutting.</span>")
-		var/obj/item/stack/medical/gauze/R = src
-		R.use(2)
+		use(2)
 	else
 		return ..()
 
