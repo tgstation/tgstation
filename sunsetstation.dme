@@ -2734,6 +2734,7 @@
 #include "sunset\code\controllers\configuration\entries\general.dm"
 #include "sunset\code\datums\action.dm"
 #include "sunset\code\datums\shuttles.dm"
+#include "sunset\code\datums\sunsetbot.dm"
 #include "sunset\code\game\area\areas\centcom.dm"
 #include "sunset\code\game\area\areas\shuttles.dm"
 #include "sunset\code\game\gamemodes\objective.dm"
