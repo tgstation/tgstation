@@ -13,11 +13,6 @@
 	var/droppingoil = FALSE
 	var/RTDcooldown = 150
 	var/lastRTDtime = 0
-	
-/obj/vehicle/sealed/car/clowncar/Initialize()
-	.=..()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = 0.6
 
 /obj/vehicle/sealed/car/clowncar/generate_actions()
 	. = ..()
