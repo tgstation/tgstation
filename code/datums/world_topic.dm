@@ -56,7 +56,7 @@
 	return GLOB.player_list.len
 
 /datum/world_topic/pr_announce
-	keyword = "announce"
+	keyword = "pr_announce"
 	require_comms_key = TRUE
 	var/static/list/PRcounts = list()	//PR id -> number of times announced this round
 
@@ -168,7 +168,7 @@
 	.["security_level"] = get_security_level()
 	.["round_duration"] = SSticker ? round((world.time-SSticker.round_start_time)/10) : 0
 	// Amount of world's ticks in seconds, useful for calculating round duration
-	
+
 	//Time dilation stats.
 	.["time_dilation_current"] = SStime_track.time_dilation_current
 	.["time_dilation_avg"] = SStime_track.time_dilation_avg
@@ -180,4 +180,50 @@
 		// Shuttle status, see /__DEFINES/stat.dm
 		.["shuttle_timer"] = SSshuttle.emergency.timeLeft()
 		// Shuttle timer, in seconds
-	
+/datum/world_topic/Manifest
+	keyword = "manifest"
+
+/datum/world_topic/manifest/Run(list/input)
+	var/list/set_names = list(
+	"heads" = command_positions,
+	"sec" = security_positions,
+	"eng" = engineering_positions,
+	"med" = medical_positions,
+	"sci" = science_positions,
+	"car" = supply_positions,
+	"srv" = service_positions,
+	"civ" = civilian_positions,
+	"bot" = nonhuman_positions
+	)
+	var/list/positions = list()
+	for(var/datum/data/record/t in data_core.general)
+			var/name = t.fields["name"]
+			var/rank = t.fields["rank"]
+			var/real_rank = t.fields["real_rank"]
+
+			var/department = 0
+			for(var/k in set_names)
+				if(real_rank in set_names[k])
+					if(!positions[k])
+						positions[k] = list()
+					positions[k][name] = rank
+					department = 1
+			if(!department)
+				if(!positions["misc"])
+					positions["misc"] = list()
+				positions["misc"][name] = rank
+
+		return list2json(positions)
+/datum/world_topic/announce
+	keyword = "announce"
+	require_comms_key = TRUE
+
+/datum/world_topic/announce/Run(list/input)
+	for(var/client/C in clients)
+		to_chat(C, "<span class='announce'>PR: [input["msg"]]</span>")
+/datum/world_topic/ircrestart
+	keyword = "ircrestart"
+	require_comms_key = TRUE
+
+/datum/world_topic/ircrestart/Run(list/input)
+	return Reboot(input[keyword], input["reason"])
