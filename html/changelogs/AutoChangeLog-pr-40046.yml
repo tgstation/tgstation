@@ -1,8 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - rscadd: "Added new available items to all departmental protolathes. Keep an eye out for the new \"Basic Tools\" and \"Basic Security Equipment\" research nodes."
-  - tweak: "Made the AI surveillance upgrade available through the \"Illegal Technology\" research node."
-  - tweak: "Created a \"Tool Designs\" lathe subsection and moved most tools into it."
-  - balance: "Made defibrillators easier to print by moving them to the basic biotechnology research node."
-  - bugfix: "Health analyzers are now properly printable once researched."

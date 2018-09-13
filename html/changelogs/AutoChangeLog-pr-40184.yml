@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - balance: "Bees only inject the reagent they were mutated with. Non-mutated bees still inject toxin when stinging someone."

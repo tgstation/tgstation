@@ -1,7 +1,0 @@
-author: "Crazylemon"
-delete-after: True
-changes: 
-  - admin: "\"Fill\" Buildmode, \"Area Edit\" Buildmode, \"Boom\" Buildmode"
-  - refactor: "Buildmode is now in modules instead of defining new modes by extra branches of switch statements."
-  - imageadd: "Switches buildmode button icons to something with a slightly more refined background."
-  - admin: "Buildmode now switches between modes using a discrete switcher, instead of by repeatedly clicking."
