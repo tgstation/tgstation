@@ -270,15 +270,9 @@
 	max_integrity = 20
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
-/obj/structure/foamedmetal/New()
-	..()
+/obj/structure/foamedmetal/Initialize()
+	. = ..()
 	air_update_turf(1)
-
-
-/obj/structure/foamedmetal/Destroy()
-	density = FALSE
-	air_update_turf(1)
-	return ..()
 
 /obj/structure/foamedmetal/Move()
 	var/turf/T = loc

@@ -31,14 +31,14 @@
 //caves papers
 
 /obj/item/paper/crumpled/awaymissions/caves/unsafe_area
-	info = "<center><b>WARNING</center></b><br><br><center>Majority of this area is consitered 'unsafe' past this point. Theres an outpost directly south of here where you can get your bearing and travel further down if needed. Traveling in groups is HIGHLY advised, the shit out there can be extremely deadly if you're alone.</center>"
+	info = "<center><b>WARNING</center></b><br><br><center>Majority of this area is considered 'unsafe' past this point. Theres an outpost directly south of here where you can get your bearing and travel further down if needed. Traveling in groups is HIGHLY advised, the shit out there can be extremely deadly if you're alone.</center>"
 
 /obj/item/paper/fluff/awaymissions/caves/omega
 	name = "Subject Omega Notes"
 	info = "<b><center>Testing Notes</b></center><br><br><center>Subject appears unresponsive to most interactions, refusing to move away from the corners or face any scientists. Subject appears to move between the two back corners every observation. A strange humming can be heard from inside the cell, appears to be originating from the subject itself, further testing is necessary to confirm or deny this.</center>"
 
 /obj/item/paper/fluff/awaymissions/caves/magma
-	info = "<center> Mining is hell down here, you can feel the heat of the magma no matter how thick the suit is. Conditions are barely managble as is, restless nights and horrid work conditions. The ore maybe rich down here, but we've already lost a few men to the faults shifting, god knows how much longer till it all just collapses down and consumes everyone with it.</center>"
+	info = "<center> Mining is hell down here, you can feel the heat of the magma no matter how thick the suit is. Conditions are barely manageable as is, restless nights and horrid work conditions. The ore maybe rich down here, but we've already lost a few men to the faults shifting, god knows how much longer till it all just collapses down and consumes everyone with it.</center>"
 
 /obj/item/paper/fluff/awaymissions/caves/work_notice
 	name = "work notice"
@@ -48,7 +48,7 @@
 	name = "shipment notice"
 	info = "<center>We were suppose to get a shipment of these special laser rifles and a couple 'nades to help combat the wildlife down here, but its been weeks since we last heard from the caravan carrying the shit down here. At this point we can only assume they fell victim to one of the monster nests or the dumbasses managed to trip into the lava. So much for that shipment, I guess.</center>"
 
-/obj/item/paper/fluff/awaymissions/caves/saftey_notice
+/obj/item/paper/fluff/awaymissions/caves/safety_notice
 	name = "safety notice"
 	info = "<center>Some of the miners have gone to laying some mine traps among the lower levels of the mine to keep the monsters at bay.  This probably isn't the smartest idea in a cavern like this but the boys seem to get a chuckle out of every distant blast they hear go off, so I guess it works </center>"
 

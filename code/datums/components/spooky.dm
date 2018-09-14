@@ -2,9 +2,9 @@
 	var/too_spooky = TRUE //will it spawn a new instrument?
 
 /datum/component/spooky/Initialize()
-	RegisterSignal(COMSIG_ITEM_ATTACK, .proc/spectral_attack)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/spectral_attack)
 
-/datum/component/spooky/proc/spectral_attack(mob/living/carbon/C, mob/user)
+/datum/component/spooky/proc/spectral_attack(datum/source, mob/living/carbon/C, mob/user)
 	if(ishuman(user)) //this weapon wasn't meant for mortals.
 		var/mob/living/carbon/human/U = user
 		if(!istype(U.dna.species, /datum/species/skeleton))

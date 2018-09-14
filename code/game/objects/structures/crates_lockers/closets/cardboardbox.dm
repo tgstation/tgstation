@@ -22,7 +22,7 @@
 		return
 	move_delay = TRUE
 	if(step(src, direction))
-		addtimer(CALLBACK(src, .proc/ResetMoveDelay), CONFIG_GET(number/walk_delay) * move_speed_multiplier)
+		addtimer(CALLBACK(src, .proc/ResetMoveDelay), CONFIG_GET(number/movedelay/walk_delay) * move_speed_multiplier)
 	else
 		ResetMoveDelay()
 

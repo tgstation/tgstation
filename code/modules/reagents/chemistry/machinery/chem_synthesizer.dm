@@ -5,44 +5,23 @@
 	icon_state = "dispenser"
 	amount = 10
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
-	working_state = null
-	nopower_state = null
 	flags_1 = NODECONSTRUCT_1
+	use_power = NO_POWER_USE
 	var/static/list/shortcuts = list(
 		"meth" = "methamphetamine",
 		"tricord" = "tricordrazine"
 	)
-	var/mutable_appearance/top_overlay
-
-/obj/machinery/chem_dispenser/chem_synthesizer/Initialize()
-	. = ..()
-	GLOB.poi_list += src
-	top_overlay = mutable_appearance(icon, "disp_beaker", layer = ABOVE_ALL_MOB_LAYER)
-	update_icon()
-
-/obj/machinery/chem_dispenser/chem_synthesizer/update_icon()
-	cut_overlays()
-	add_overlay(top_overlay)
-
-/obj/machinery/chem_dispenser/chem_synthesizer/Destroy()
-	. = ..()
-	GLOB.poi_list -= src
-	QDEL_NULL(top_overlay)
-
-/obj/machinery/chem_dispenser/chem_synthesizer/display_beaker()
-	return
 
 /obj/machinery/chem_dispenser/chem_synthesizer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "chem_synthesizer", name, 390, 315, master_ui, state)
+		ui = new(user, src, ui_key, "chem_synthesizer", name, 390, 330, master_ui, state)
 		ui.open()
 
 /obj/machinery/chem_dispenser/chem_synthesizer/ui_act(action, params)
 	if(..())
 		return
-	update_icon()
 	switch(action)
 		if("ejectBeaker")
 			if(beaker)
@@ -71,15 +50,18 @@
 				return
 			beaker = new /obj/item/reagent_containers/glass/beaker/bluespace(src)
 			visible_message("<span class='notice'>[src] dispenses a bluespace beaker.</span>")
+		if("amount")
+			var/input = input("Units to dispense", "Units") as num|null
+			if(input)
+				amount = input
+	update_icon()
 
 /obj/machinery/chem_dispenser/chem_synthesizer/proc/find_reagent(input)
 	. = FALSE
 	if(GLOB.chemical_reagents_list[input]) //prefer IDs!
-		var/datum/reagent/R = GLOB.chemical_reagents_list[input]
-		if(R.can_synth_debug)
-			return input
+		return input
 	else
 		for(var/X in GLOB.chemical_reagents_list)
 			var/datum/reagent/R = GLOB.chemical_reagents_list[X]
-			if(R.can_synth_debug && input == replacetext(lowertext(R.name), " ", ""))
+			if(input == replacetext(lowertext(R.name), " ", ""))
 				return X

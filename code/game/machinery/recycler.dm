@@ -81,7 +81,7 @@
 		is_powered = FALSE
 	icon_state = icon_name + "[is_powered]" + "[(blood ? "bld" : "")]" // add the blood tag at the end
 
-/obj/machinery/recycler/CollidedWith(atom/movable/AM)
+/obj/machinery/recycler/Bumped(atom/movable/AM)
 
 	if(stat & (BROKEN|NOPOWER))
 		return
@@ -171,7 +171,7 @@
 	// By default, the emagged recycler will gib all non-carbons. (human simple animal mobs don't count)
 	if(iscarbon(L))
 		if(L.stat == CONSCIOUS)
-			L.say("ARRRRRRRRRRRGH!!!")
+			L.say("ARRRRRRRRRRRGH!!!", forced="recycler grinding")
 		add_mob_blood(L)
 
 	if(!blood && !issilicon(L))

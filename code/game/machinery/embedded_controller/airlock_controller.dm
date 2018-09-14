@@ -97,7 +97,7 @@
 							"sigtype" = "command"
 						))
 						if(memory["pump_status"] == "siphon")
-							signal.data["stabalize"] = 1
+							signal.data["stabilize"] = 1
 						else if(memory["pump_status"] != "release")
 							signal.data["power"] = 1
 						post_signal(signal)

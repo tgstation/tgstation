@@ -54,3 +54,14 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 				M.component_parts += new comp_path(null)
 
 	M.RefreshParts()
+
+/obj/item/circuitboard/machine/examine(mob/user)
+	..()
+	if(LAZYLEN(req_components))
+		var/list/nice_list = list()
+		for(var/B in req_components)
+			var/atom/A = B
+			if(!ispath(A))
+				continue
+			nice_list += list("[req_components[A]] [initial(A.name)]")
+		to_chat(user,"<span class='notice'>Required components: [english_list(nice_list)].</span>")

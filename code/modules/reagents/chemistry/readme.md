@@ -38,7 +38,7 @@ The holder (reagents datum) is the datum that holds a list of all reagents curre
 			If the specified amount is greater than what is available, it will use
 			the amount of the reagent that is available. If no reagent exists, returns null.
 
-		metabolize(var/mob/M)
+		metabolize(var/mob/living/carbon/C)
 			This proc is called by the mobs life proc. It simply calls on_mob_life for
 			all contained reagents. You shouldnt have to use this one directly.
 
@@ -116,7 +116,7 @@ The holder (reagents datum) is the datum that holds a list of all reagents curre
 # About Reagents:
 Reagents are all the things you can mix and fille in bottles etc. This can be anything from rejuvs over water to ... iron. Each reagent also has a few procs - i'll explain those below.
 ```
-		reaction_mob(var/mob/M, var/method=TOUCH)
+		reaction_mob(var/mob/living/L, var/method=TOUCH)
 			This is called by the holder's reation proc.
 			This version is only called when the reagent
 			reacts with a mob. The method var can be either
@@ -135,7 +135,7 @@ Reagents are all the things you can mix and fille in bottles etc. This can be an
 			with a turf. You'll want to put stuff like extra
 			slippery floors for lube or something in here.
 
-		on_mob_life(var/mob/M)
+		on_mob_life(var/mob/living/L)
 			This proc is called everytime the mobs life proc executes.
 			This is the place where you put damage for toxins ,
 			drowsyness for sleep toxins etc etc.
@@ -241,7 +241,7 @@ By default, all atom have a reagents var - but its empty. if you want to use an 
 			Checks if something can be injected to.
 			If this returns 1, you can use syringes and droppers
 			to draw from and add to the contents of this object.
-			
+
 		atom/proc/is_drawable()
 			Checks if something can be drawn from.
 			If this returns 1, you can use syringes and droppers

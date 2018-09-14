@@ -14,9 +14,9 @@
 	var/displayed_text
 	var/atom/attached_to
 
-/obj/effect/countdown/New(atom/A)
+/obj/effect/countdown/Initialize()
 	. = ..()
-	attach(A)
+	attach(loc)
 
 /obj/effect/countdown/examine(mob/user)
 	. = ..()
@@ -86,7 +86,7 @@
 
 /obj/effect/countdown/clonepod
 	name = "cloning pod countdown"
-	color = "#0C479D"
+	color = "#18d100"
 	text_size = 1
 
 /obj/effect/countdown/clonepod/get_value()

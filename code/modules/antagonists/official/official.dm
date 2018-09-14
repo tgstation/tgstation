@@ -4,6 +4,7 @@
 	show_in_antagpanel = FALSE
 	var/datum/objective/mission
 	var/datum/team/ert/ert_team
+	can_hijack = HIJACK_PREVENT
 
 /datum/antagonist/official/greet()
 	to_chat(owner, "<B><font size=3 color=red>You are a CentCom Official.</font></B>")
@@ -31,7 +32,7 @@
 	else if (!mission)
 		var/datum/objective/missionobj = new
 		missionobj.owner = owner
-		missionobj.explanation_text = "Conduct a routine preformance review of [station_name()] and its Captain."
+		missionobj.explanation_text = "Conduct a routine performance review of [station_name()] and its Captain."
 		missionobj.completed = 1
 		mission = missionobj
 		objectives |= mission

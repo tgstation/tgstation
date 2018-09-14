@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - rscdel: "archaeology component no longer handles sand-digging, it has been disabled until someone works on xenoarch again."

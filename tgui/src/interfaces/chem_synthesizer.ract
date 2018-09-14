@@ -2,6 +2,7 @@
 	<ui-section>
 		<ui-button icon='eject' state='{{data.isBeakerLoaded ? null : "disabled"}}' action='ejectBeaker'>Eject</ui-button>
 		<ui-button icon='circle' state='{{data.isBeakerLoaded ? null : "disabled"}}' action='input'>Input</ui-button>
+		<ui-button icon='circle' state='{{data.isBeakerLoaded ? null : "disabled"}}' action='amount'>{{data.amount}}U</ui-button>
 		<ui-button icon='plus' state='{{data.isBeakerLoaded ? "disabled" : null}}' action='makecup'>Create Beaker</ui-button>
 	</ui-section>
 </ui-display>

@@ -32,7 +32,7 @@
 /obj/structure/windoor_assembly/New(loc, set_dir)
 	..()
 	if(set_dir)
-		dir = set_dir
+		setDir(set_dir)
 	ini_dir = dir
 	air_update_turf(1)
 
@@ -121,7 +121,7 @@
 							to_chat(user, "<span class='warning'>There is already a windoor in that location!</span>")
 							return
 					to_chat(user, "<span class='notice'>You secure the windoor assembly.</span>")
-					anchored = TRUE
+					setAnchored(TRUE)
 					if(secure)
 						name = "secure anchored windoor assembly"
 					else
@@ -136,7 +136,7 @@
 					if(!anchored)
 						return
 					to_chat(user, "<span class='notice'>You unsecure the windoor assembly.</span>")
-					anchored = FALSE
+					setAnchored(FALSE)
 					if(secure)
 						name = "secure windoor assembly"
 					else
@@ -293,7 +293,10 @@
 						windoor.setDir(dir)
 						windoor.density = FALSE
 
-						windoor.req_access = electronics.accesses
+						if(electronics.one_access)
+							windoor.req_one_access = electronics.accesses
+						else
+							windoor.req_access = electronics.accesses
 						windoor.electronics = electronics
 						electronics.loc = windoor
 						if(created_name)

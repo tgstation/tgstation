@@ -119,7 +119,7 @@
 	if (mobhook && mobhook.parent != user)
 		QDEL_NULL(mobhook)
 	if (!mobhook)
-		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(src, .proc/Pickup_ores, user))
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/Pickup_ores)))
 
 /obj/item/storage/bag/ore/dropped()
 	. = ..()
@@ -142,7 +142,7 @@
 			if (box)
 				user.transferItemToLoc(A, box)
 				show_message = TRUE
-			else if(SendSignal(COMSIG_TRY_STORAGE_INSERT, A, user, TRUE))
+			else if(SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, A, user, TRUE))
 				show_message = TRUE
 			else
 				if(!spam_protection)

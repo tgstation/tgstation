@@ -6,7 +6,7 @@ Coughing
 	Noticable.
 	Little Resistance.
 	Doesn't increase stage speed much.
-	Transmittable.
+	Transmissibile.
 	Low Level.
 
 BONUS

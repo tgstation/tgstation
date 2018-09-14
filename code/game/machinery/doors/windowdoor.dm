@@ -36,10 +36,13 @@
 	if(cable)
 		debris += new /obj/item/stack/cable_coil(src, cable)
 
+/obj/machinery/door/window/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/ntnet_interface)
+
 /obj/machinery/door/window/Destroy()
 	density = FALSE
-	for(var/I in debris)
-		qdel(I)
+	QDEL_LIST(debris)
 	if(obj_integrity == 0)
 		playsound(src, "shatter", 70, 1)
 	electronics = null
@@ -59,7 +62,7 @@
 		sleep(20)
 	close()
 
-/obj/machinery/door/window/CollidedWith(atom/movable/AM)
+/obj/machinery/door/window/Bumped(atom/movable/AM)
 	if( operating || !src.density )
 		return
 	if (!( ismob(AM) ))
@@ -247,7 +250,7 @@
 							if("rightsecure")
 								WA.facing = "r"
 								WA.secure = TRUE
-						WA.anchored = TRUE
+						WA.setAnchored(TRUE)
 						WA.state= "02"
 						WA.setDir(src.dir)
 						WA.ini_dir = src.dir
@@ -299,6 +302,35 @@
 		if("deny")
 			flick("[src.base_state]deny", src)
 
+/obj/machinery/door/window/check_access_ntnet(datum/netdata/data)
+	return !requiresID() || ..()
+
+/obj/machinery/door/window/ntnet_receive(datum/netdata/data)
+	// Check if the airlock is powered.
+	if(!hasPower())
+		return
+
+	// Check packet access level.
+	if(!check_access_ntnet(data))
+		return
+
+	// Handle received packet.
+	var/command = lowertext(data.data["data"])
+	var/command_value = lowertext(data.data["data_secondary"])
+	switch(command)
+		if("open")
+			if(command_value == "on" && !density)
+				return
+
+			if(command_value == "off" && density)
+				return
+
+			if(density)
+				INVOKE_ASYNC(src, .proc/open)
+			else
+				INVOKE_ASYNC(src, .proc/close)
+		if("touch")
+			INVOKE_ASYNC(src, .proc/open_and_close)
 
 /obj/machinery/door/window/brigdoor
 	name = "secure door"

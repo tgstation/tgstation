@@ -51,6 +51,7 @@
 					))
 				"})
 			if(!query_get_ip_intel.Execute())
+				qdel(query_get_ip_intel)
 				return
 			if (query_get_ip_intel.NextRow())
 				res.cache = TRUE
@@ -59,14 +60,16 @@
 				res.cacheminutesago = text2num(query_get_ip_intel.item[3])
 				res.cacherealtime = world.realtime - (text2num(query_get_ip_intel.item[3])*10*60)
 				SSipintel.cache[ip] = res
+				qdel(query_get_ip_intel)
 				return
+			qdel(query_get_ip_intel)
 	res.intel = ip_intel_query(ip)
 	if (updatecache && res.intel >= 0)
 		SSipintel.cache[ip] = res
 		if(SSdbcore.Connect())
 			var/datum/DBQuery/query_add_ip_intel = SSdbcore.NewQuery("INSERT INTO [format_table_name("ipintel")] (ip, intel) VALUES (INET_ATON('[ip]'), [res.intel]) ON DUPLICATE KEY UPDATE intel = VALUES(intel), date = NOW()")
 			query_add_ip_intel.Execute()
-
+			qdel(query_add_ip_intel)
 
 
 /proc/ip_intel_query(ip, var/retryed=0)

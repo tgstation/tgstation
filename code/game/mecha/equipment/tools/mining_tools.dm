@@ -79,10 +79,8 @@
 
 /turf/open/floor/plating/asteroid/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
 	for(var/turf/open/floor/plating/asteroid/M in range(1, drill.chassis))
-		if(get_dir(drill.chassis,M)&drill.chassis.dir)
-			for(var/I in GetComponents(/datum/component/archaeology))
-				var/datum/component/archaeology/archy = I
-				archy.gets_dug()
+		if((get_dir(drill.chassis,M)&drill.chassis.dir) && !M.dug)
+			M.getDug()
 	drill.log_message("Drilled through [src]")
 	drill.move_ores()
 
@@ -111,9 +109,9 @@
 /obj/item/mecha_parts/mecha_equipment/drill/proc/drill_mob(mob/living/target, mob/user)
 	target.visible_message("<span class='danger'>[chassis] is drilling [target] with [src]!</span>", \
 						"<span class='userdanger'>[chassis] is drilling you with [src]!</span>")
-	add_logs(user, target, "drilled", "[name]", "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
+	log_combat(user, target, "drilled", "[name]", "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	if(target.stat == DEAD && target.getBruteLoss() >= 200)
-		add_logs(user, target, "gibbed", name)
+		log_combat(user, target, "gibbed", name)
 		if(LAZYLEN(target.butcher_results) || LAZYLEN(target.guaranteed_butcher_results))
 			GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
 			butchering.Butcher(chassis, target)

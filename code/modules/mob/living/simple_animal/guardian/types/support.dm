@@ -11,7 +11,7 @@
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught a support carp. It's a kleptocarp!</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Support modules active. Holoparasite swarm online.</span>"
 	toggle_button_type = /obj/screen/guardian/ToggleMode
-	var/obj/structure/recieving_pad/beacon
+	var/obj/structure/receiving_pad/beacon
 	var/beacon_cooldown = 0
 	var/toggle = FALSE
 
@@ -87,22 +87,22 @@
 
 	beacon_cooldown = world.time + 3000
 
-/obj/structure/recieving_pad
-	name = "bluespace recieving pad"
+/obj/structure/receiving_pad
+	name = "bluespace receiving pad"
 	icon = 'icons/turf/floors.dmi'
-	desc = "A recieving zone for bluespace teleportations."
+	desc = "A receiving zone for bluespace teleportations."
 	icon_state = "light_on-w"
 	light_range = 1
 	density = FALSE
 	anchored = TRUE
 	layer = ABOVE_OPEN_TURF_LAYER
 
-/obj/structure/recieving_pad/New(loc, mob/living/simple_animal/hostile/guardian/healer/G)
+/obj/structure/receiving_pad/New(loc, mob/living/simple_animal/hostile/guardian/healer/G)
 	. = ..()
 	if(G.namedatum)
 		add_atom_colour(G.namedatum.colour, FIXED_COLOUR_PRIORITY)
 
-/obj/structure/recieving_pad/proc/disappear()
+/obj/structure/receiving_pad/proc/disappear()
 	visible_message("[src] vanishes!")
 	qdel(src)
 

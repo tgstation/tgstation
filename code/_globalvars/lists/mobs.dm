@@ -26,6 +26,7 @@ GLOBAL_LIST_INIT(simple_animals, list(list(),list(),list(),list())) // One for e
 GLOBAL_LIST_EMPTY(spidermobs)				//all sentient spider mobs
 GLOBAL_LIST_EMPTY(bots_list)
 GLOBAL_LIST_EMPTY(living_cameras)
+GLOBAL_LIST_EMPTY(aiEyes)
 
 GLOBAL_LIST_EMPTY(language_datum_instances)
 GLOBAL_LIST_EMPTY(all_languages)
@@ -33,3 +34,23 @@ GLOBAL_LIST_EMPTY(all_languages)
 GLOBAL_LIST_EMPTY(sentient_disease_instances)
 
 GLOBAL_LIST_EMPTY(latejoin_ai_cores)
+
+GLOBAL_LIST_EMPTY(mob_config_movespeed_type_lookup)
+
+/proc/update_config_movespeed_type_lookup(update_mobs = TRUE)
+	var/list/mob_types = list()
+	var/list/entry_value = CONFIG_GET(keyed_list/multiplicative_movespeed)
+	for(var/path in entry_value)
+		var/value = entry_value[path]
+		if(!value)
+			continue
+		for(var/subpath in typesof(path))
+			mob_types[subpath] = value
+	GLOB.mob_config_movespeed_type_lookup = mob_types
+	if(update_mobs)
+		update_mob_config_movespeeds()
+
+/proc/update_mob_config_movespeeds()
+	for(var/i in GLOB.mob_list)
+		var/mob/M = i
+		M.update_config_movespeed()

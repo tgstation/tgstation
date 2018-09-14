@@ -1,33 +1,4 @@
-//Plasma fire properties
-#define OXYGEN_BURN_RATE_BASE				1.4
-#define PLASMA_BURN_RATE_DELTA				9
-#define PLASMA_MINIMUM_OXYGEN_NEEDED		2
-#define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	30
-#define FIRE_CARBON_ENERGY_RELEASED			100000	//Amount of heat released per mole of burnt carbon into the tile
-#define FIRE_HYDROGEN_ENERGY_RELEASED		280000 // Amount of heat released per mole of burnt hydrogen and/or tritium(hydrogen isotope)
-#define FIRE_PLASMA_ENERGY_RELEASED			3000000	//Amount of heat released per mole of burnt plasma into the tile
-//General assmos defines.
-#define WATER_VAPOR_FREEZE					200
-#define NITRYL_FORMATION_ENERGY				100000
-#define TRITIUM_BURN_OXY_FACTOR				100
-#define TRITIUM_BURN_TRIT_FACTOR			10
-#define TRITIUM_BURN_RADIOACTIVITY_FACTOR	50000 //The neutrons gotta go somewhere. Completely arbitrary number.
-#define TRITIUM_MINIMUM_RADIATION_ENERGY	0.1 //minimum 0.01 moles trit or 10 moles oxygen to start producing rads
-#define SUPER_SATURATION_THRESHOLD			96
-#define STIMULUM_HEAT_SCALE					100000
-#define STIMULUM_FIRST_RISE					0.65
-#define STIMULUM_FIRST_DROP					0.065
-#define STIMULUM_SECOND_RISE				0.0009
-#define STIMULUM_ABSOLUTE_DROP				0.00000335
-#define REACTION_OPPRESSION_THRESHOLD		5
-	//Plasma fusion properties
-#define PLASMA_BINDING_ENERGY				3000000
-#define MAX_CATALYST_EFFICENCY				9
-#define PLASMA_FUSED_COEFFICENT				0.08
-#define CATALYST_COEFFICENT					0.01
-#define FUSION_PURITY_THRESHOLD				0.95
-#define FUSION_HEAT_DROPOFF					(20000+T0C)
-#define NOBLIUM_FORMATION_ENERGY			2e9 //1 Mole of Noblium takes the planck energy to condense.
+//All defines used in reactions are located in ..\__DEFINES\reactions.dm
 
 /proc/init_gas_reactions()
 	var/list/reaction_types = list()
@@ -64,7 +35,7 @@
 
 /datum/gas_reaction/nobliumsupression
 	priority = INFINITY
-	name = "Hyper-Noblium Reaction Supression"
+	name = "Hyper-Noblium Reaction Suppression"
 	id = "nobstop"
 
 /datum/gas_reaction/nobliumsupression/init_reqs()
@@ -225,23 +196,31 @@
 
 	return cached_results["fire"] ? REACTING : NO_REACTION
 
-//fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again.
+//fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again)
+//Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
+//5 reworks
+
 /datum/gas_reaction/fusion
-	exclude = TRUE
+	exclude = FALSE
 	priority = 2
 	name = "Plasmic Fusion"
 	id = "fusion"
 
+//Since fusion isn't really intended to happen in successive chains, the requirements are very high
 /datum/gas_reaction/fusion/init_reqs()
 	min_requirements = list(
-		"ENER" = PLASMA_BINDING_ENERGY * 1000,
-		/datum/gas/plasma = 50,
-		/datum/gas/carbon_dioxide = 1
+		"TEMP" = FUSION_TEMPERATURE_THRESHOLD,
+		"ENER" = FUSION_ENERGY_THRESHOLD,
+		/datum/gas/plasma = FUSION_MOLE_THRESHOLD,
+		/datum/gas/tritium = FUSION_MOLE_THRESHOLD
 	)
 
 /datum/gas_reaction/fusion/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
+	if(!air.analyzer_results)
+		air.analyzer_results = new
+	var/list/cached_scan_results = air.analyzer_results
 	var/turf/open/location
 	if (istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
 		var/datum/pipeline/fusion_pipenet = holder
@@ -250,46 +229,75 @@
 		location = get_turf(holder)
 
 	var/old_heat_capacity = air.heat_capacity()
-	var/reaction_energy
-	var/mediation = 100*(air.heat_capacity()-(cached_gases[/datum/gas/plasma][MOLES]*cached_gases[/datum/gas/plasma][GAS_META][META_GAS_SPECIFIC_HEAT]))/(air.total_moles()-cached_gases[/datum/gas/plasma][MOLES]) //This is the average heat capacity of the mixture,not including plasma.
-	var/gas_power = 0
-	for (var/id in cached_gases)
-		gas_power += cached_gases[id][GAS_META][META_GAS_FUSION_POWER]*cached_gases[id][MOLES]
-	var/plasma_fused = 0
-	var/power_ratio = min(gas_power/mediation,100)//100 is a lot, we really don't want to go over this.
-	if (power_ratio > 10) //Super-fusion. Fuses everything into one big atom which then turns to tritium instantly. Very dangerous, but super cool.
-		var/gases_fused = air.total_moles()
-		reaction_energy += gases_fused*PLASMA_BINDING_ENERGY*(gas_power/(mediation*100))
-		for (var/id in cached_gases)
-			cached_gases[id][MOLES] = 0
-		air.assert_gas(/datum/gas/tritium)
-		cached_gases[/datum/gas/tritium][MOLES] += gases_fused
-		if (prob(power_ratio)) //You really don't want this to happen
-			empulse(location, power_ratio*0.5, power_ratio)
-			radiation_pulse(location, power_ratio*2000)
-			explosion(location,0,1,power_ratio*0.5,power_ratio,TRUE,TRUE)//Bypasses cap. Doesn't blow large hole in station, but produces moderate devestation for long ranges. Be careful with this.
+	var/reaction_energy = 0
 
-	else if (power_ratio > 1) //Mediation is overpowered, fusion reaction starts to break down.
-		plasma_fused = cached_gases[/datum/gas/plasma][MOLES]
-		reaction_energy += plasma_fused*PLASMA_BINDING_ENERGY
-		cached_gases[/datum/gas/plasma][MOLES] -= plasma_fused
-		cached_gases[/datum/gas/carbon_dioxide][MOLES] = 0
-		air.assert_gases(/datum/gas/bz,/datum/gas/nitrous_oxide)
-		cached_gases[/datum/gas/bz][MOLES] += gas_power*0.05
-		cached_gases[/datum/gas/nitrous_oxide][MOLES] += gas_power*0.05
-		if (location)
-			empulse(location, mediation*0.002, mediation*0.004)
-			radiation_pulse(location, power_ratio*(reaction_energy)/(0.3*PLASMA_BINDING_ENERGY))
-	else
-		reaction_energy += cached_gases[/datum/gas/plasma][MOLES]*PLASMA_BINDING_ENERGY*(gas_power/mediation)
-		air.assert_gas(/datum/gas/oxygen)
-		cached_gases[/datum/gas/oxygen][MOLES] += gas_power + cached_gases[/datum/gas/plasma][MOLES]
-		cached_gases[/datum/gas/plasma][MOLES] = 0
-		for (var/gas in cached_gases)
-			if (cached_gases[gas][GAS_META][META_GAS_FUSION_POWER])
-				cached_gases[gas][MOLES] = 0
-		if (location)
-			radiation_pulse(location, (reaction_energy)/(0.3*PLASMA_BINDING_ENERGY))
+	var/mediation = FUSION_MEDIATION_FACTOR*(air.heat_capacity()-(cached_gases[/datum/gas/plasma][MOLES]*cached_gases[/datum/gas/plasma][GAS_META][META_GAS_SPECIFIC_HEAT]))/(air.total_moles()-cached_gases[/datum/gas/plasma][MOLES]) //This is the average specific heat of the mixture,not including plasma.
+
+	var/gases_fused = air.total_moles() - cached_gases[/datum/gas/plasma][MOLES]
+	var/plasma_differential = (cached_gases[/datum/gas/plasma][MOLES] - gases_fused) / air.total_moles()
+	var/reaction_efficiency = FUSION_EFFICIENCY_BASE ** -((plasma_differential ** 2) / FUSION_EFFICIENCY_DIVISOR) //https://www.desmos.com/calculator/6jjx3vdrvx
+
+	var/gas_power = 0
+	for (var/gas_id in cached_gases)
+		gas_power += reaction_efficiency * (cached_gases[gas_id][GAS_META][META_GAS_FUSION_POWER]*cached_gases[gas_id][MOLES])
+
+	var/power_ratio = gas_power/mediation
+	cached_scan_results[id] = power_ratio //used for analyzer feedback
+
+	for (var/gas_id in cached_gases) //and now we fuse
+		cached_gases[gas_id][MOLES] = 0
+
+	var/radiation_power = (FUSION_RADIATION_FACTOR * power_ratio) / (power_ratio + FUSION_RADIATION_CONSTANT) //https://www.desmos.com/calculator/4i1f296phl
+	var/zap_power = ((FUSION_ZAP_POWER_ASYMPTOTE * power_ratio) / (power_ratio + FUSION_ZAP_POWER_CONSTANT)) + FUSION_ZAP_POWER_BASE //https://www.desmos.com/calculator/n0zkdpxnrr
+	var/do_explosion = FALSE
+	var/zap_range //these ones are set later
+	var/fusion_prepare_to_die_edition_rng
+
+	if (power_ratio > FUSION_SUPER_TIER_THRESHOLD) //power ratio 50+: SUPER TIER. The gases become so energized that they fuse into a ton of tritium, which is pretty nice! Until you consider the fact that everything just exploded, the canister is probably going to break and you're irradiated.
+		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_SUPER * (power_ratio / FUSION_ENERGY_DIVISOR_SUPER)
+		cached_gases[/datum/gas/tritium][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_TRITIUM //60% of the gas is converted to energy, 40% to trit
+		fusion_prepare_to_die_edition_rng = 100 //Wait a minute..
+		do_explosion = TRUE			
+		zap_range = FUSION_ZAP_RANGE_SUPER
+
+	else if (power_ratio > FUSION_HIGH_TIER_THRESHOLD) //power ratio 20-50; High tier. The reaction is so energized that it fuses into a small amount of stimulum, and some pluoxium. Very dangerous, but super cool and super useful.
+		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_HIGH * (power_ratio / FUSION_ENERGY_DIVISOR_HIGH)
+		air.assert_gases(/datum/gas/stimulum, /datum/gas/pluoxium)
+		cached_gases[/datum/gas/stimulum][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_STIM //40% of the gas is converted to energy, 60% to stim and pluox
+		cached_gases[/datum/gas/pluoxium][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_PLUOX
+		fusion_prepare_to_die_edition_rng = power_ratio //Now we're getting into dangerous territory
+		do_explosion = TRUE
+		zap_range = FUSION_ZAP_RANGE_HIGH
+
+	else if (power_ratio > FUSION_MID_TIER_THRESHOLD) //power_ratio 5 to 20; Mediation is overpowered, fusion reaction starts to break down.
+		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_MID * (power_ratio / FUSION_ENERGY_DIVISOR_MID)
+		air.assert_gases(/datum/gas/nitryl,/datum/gas/nitrous_oxide)
+		cached_gases[/datum/gas/nitryl][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_NITRYL //20% of the gas is converted to energy, 80% to nitryl and N2O
+		cached_gases[/datum/gas/nitrous_oxide][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_N2O
+		fusion_prepare_to_die_edition_rng = power_ratio * FUSION_MID_TIER_RAD_PROB_FACTOR //Still unlikely, but don't stand next to the reaction unprotected
+		zap_range = FUSION_ZAP_RANGE_MID
+
+	else //power ratio 0 to 5; Gas power is overpowered. Fusion isn't nearly as powerful.
+		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_LOW * (power_ratio / FUSION_ENERGY_DIVISOR_LOW)
+		air.assert_gases(/datum/gas/bz, /datum/gas/carbon_dioxide)
+		cached_gases[/datum/gas/bz][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_BZ //10% of the gas is converted to energy, 90% to BZ and CO2
+		cached_gases[/datum/gas/carbon_dioxide][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_CO2
+		fusion_prepare_to_die_edition_rng = power_ratio * FUSION_LOW_TIER_RAD_PROB_FACTOR //Low, but still something to look out for
+		zap_range = FUSION_ZAP_RANGE_LOW
+
+	//All the deadly consequences of fusion, consolidated for your viewing pleasure
+	if (location)
+		if(prob(fusion_prepare_to_die_edition_rng)) //Some.. permanent effects
+			if(do_explosion)
+				explosion(location, 0, 0, 5, power_ratio, TRUE, TRUE) //large shockwave, the actual radius is quite small - people will recognize that you're doing fusion
+			radiation_pulse(location, radiation_power) //You mean causing a super-tier fusion reaction in the halls is a bad idea?
+			playsound(location, 'sound/effects/supermatter.ogg', 100, 0)
+		else
+			playsound(location, 'sound/effects/phasein.ogg', 75, 0)
+		//These will always happen, so be prepared
+		tesla_zap(location, zap_range, zap_power, TESLA_FUSION_FLAGS) //larpers beware
+		location.fire_nuclear_particles(power_ratio) //see code/modules/projectile/energy/nuclear_particle.dm
+
 	if(reaction_energy > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
@@ -336,7 +344,7 @@
 
 /datum/gas_reaction/bzformation/init_reqs()
 	min_requirements = list(
-		/datum/gas/tritium = 10,
+		/datum/gas/nitrous_oxide = 10,
 		/datum/gas/plasma = 10
 	)
 
@@ -347,13 +355,13 @@
 	var/pressure = air.return_pressure()
 
 	var/old_heat_capacity = air.heat_capacity()
-	var/reaction_efficency = min(1/((pressure/(0.1*ONE_ATMOSPHERE))*(max(cached_gases[/datum/gas/plasma][MOLES]/cached_gases[/datum/gas/tritium][MOLES],1))),cached_gases[/datum/gas/tritium][MOLES],cached_gases[/datum/gas/plasma][MOLES]/2)
+	var/reaction_efficency = min(1/((pressure/(0.1*ONE_ATMOSPHERE))*(max(cached_gases[/datum/gas/plasma][MOLES]/cached_gases[/datum/gas/nitrous_oxide][MOLES],1))),cached_gases[/datum/gas/nitrous_oxide][MOLES],cached_gases[/datum/gas/plasma][MOLES]/2)
 	var/energy_released = 2*reaction_efficency*FIRE_CARBON_ENERGY_RELEASED
-	if ((cached_gases[/datum/gas/tritium][MOLES] - reaction_efficency < 0 )|| (cached_gases[/datum/gas/plasma][MOLES] - (2*reaction_efficency) < 0)) //Shouldn't produce gas from nothing.
+	if ((cached_gases[/datum/gas/nitrous_oxide][MOLES] - reaction_efficency < 0 )|| (cached_gases[/datum/gas/plasma][MOLES] - (2*reaction_efficency) < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	ASSERT_GAS(/datum/gas/bz,air)
 	cached_gases[/datum/gas/bz][MOLES] += reaction_efficency
-	cached_gases[/datum/gas/tritium][MOLES] -= reaction_efficency
+	cached_gases[/datum/gas/nitrous_oxide][MOLES] -= reaction_efficency
 	cached_gases[/datum/gas/plasma][MOLES]  -= 2*reaction_efficency
 
 
@@ -367,6 +375,7 @@
 	priority = 5
 	name = "Stimulum formation"
 	id = "stimformation"
+
 /datum/gas_reaction/stimformation/init_reqs()
 	min_requirements = list(
 		/datum/gas/tritium = 30,
@@ -424,27 +433,29 @@
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = max(((air.temperature*old_heat_capacity - energy_taken)/new_heat_capacity),TCMB)
+	
 
-#undef OXYGEN_BURN_RATE_BASE
-#undef PLASMA_BURN_RATE_DELTA
-#undef PLASMA_MINIMUM_OXYGEN_NEEDED
-#undef PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO
-#undef FIRE_CARBON_ENERGY_RELEASED
-#undef FIRE_PLASMA_ENERGY_RELEASED
-#undef WATER_VAPOR_FREEZE
-#undef NITRYL_FORMATION_ENERGY
-#undef TRITIUM_BURN_OXY_FACTOR
-#undef SUPER_SATURATION_THRESHOLD
-#undef STIMULUM_HEAT_SCALE
-#undef STIMULUM_FIRST_RISE
-#undef STIMULUM_FIRST_DROP
-#undef STIMULUM_SECOND_RISE
-#undef STIMULUM_ABSOLUTE_DROP
-#undef REACTION_OPPRESSION_THRESHOLD
-#undef PLASMA_BINDING_ENERGY
-#undef MAX_CATALYST_EFFICENCY
-#undef PLASMA_FUSED_COEFFICENT
-#undef CATALYST_COEFFICENT
-#undef FUSION_PURITY_THRESHOLD
-#undef FUSION_HEAT_DROPOFF
-#undef NOBLIUM_FORMATION_ENERGY
+/datum/gas_reaction/miaster	//dry heat sterilization: clears out pathogens in the air
+	priority = -10 //after all the heating from fires etc. is done
+	name = "Dry Heat Sterilization"
+	id = "sterilization"
+
+/datum/gas_reaction/miaster/init_reqs()
+	min_requirements = list(
+		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST+70,
+		/datum/gas/miasma = MINIMUM_MOLE_COUNT
+	)
+
+/datum/gas_reaction/miaster/react(datum/gas_mixture/air, datum/holder)
+	var/list/cached_gases = air.gases
+	// As the name says it, it needs to be dry
+	if(cached_gases[/datum/gas/water_vapor] && cached_gases[/datum/gas/water_vapor][MOLES]/air.total_moles() > 0.1)
+		return
+
+	//Replace miasma with oxygen
+	var/cleaned_air = min(cached_gases[/datum/gas/miasma][MOLES], 20 + (air.temperature - FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 70) / 20)
+	cached_gases[/datum/gas/miasma][MOLES] -= cleaned_air
+	cached_gases[/datum/gas/oxygen][MOLES] += cleaned_air
+
+	//Possibly burning a bit of organic matter through maillard reaction, so a *tiny* bit more heat would be understandable
+	air.temperature += cleaned_air * 0.002

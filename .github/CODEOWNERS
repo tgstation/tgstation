@@ -7,7 +7,6 @@
 # ChangelingRain
 
 /code/__DEFINES/clockcult.dm @ChangelingRain
-/code/datums/antagonists/datum_clockcult.dm @ChangelingRain
 /code/game/gamemodes/blob/ @ChangelingRain
 /code/game/gamemodes/clock_cult/ @ChangelingRain
 /code/game/gamemodes/miniantags/revenant/ @ChangelingRain

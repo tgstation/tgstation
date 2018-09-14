@@ -488,7 +488,7 @@
 				L.lay_down() //aka get up
 			L.SetStun(0)
 			L.SetKnockdown(0)
-			L.SetUnconscious(0) //i said get up i don't care if you're being tazed
+			L.SetUnconscious(0) //i said get up i don't care if you're being tased
 
 	//SIT
 	else if((findtext(message, sit_words)))

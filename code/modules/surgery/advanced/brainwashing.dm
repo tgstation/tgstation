@@ -4,7 +4,8 @@
 	surgeries = list(/datum/surgery/advanced/brainwashing)
 
 /datum/surgery/advanced/brainwashing
-	name = "brainwashing"
+	name = "Brainwashing"
+	desc = "A surgical procedure which directly implants a directive into the patient's brain, making it their absolute priority. It can be cleared using a mindshield implant."
 	steps = list(
 	/datum/surgery_step/incise,
 	/datum/surgery_step/retract_skin,
@@ -40,7 +41,7 @@
 	if(!target.mind)
 		user.visible_message("[target] doesn't respond to the brainwashing, as if [target.p_they()] lacked a mind...")
 		return FALSE
-	if(target.isloyal())
+	if(target.has_trait(TRAIT_MINDSHIELD))
 		user.visible_message("You hear a faint buzzing from a device inside [target]'s brain, and the brainwashing is erased.")
 		return FALSE
 	user.visible_message("[user] successfully brainwashes [target]!", "<span class='notice'>You succeed in brainwashing [target].</span>")

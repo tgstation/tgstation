@@ -102,20 +102,20 @@
 		return FALSE
 	data.network_id = src
 	log_data_transfer(data)
-	var/list/datum/component/ntnet_interface/recieving = list()
+	var/list/datum/component/ntnet_interface/receiving = list()
 	if((length(data.recipient_ids == 1) && data.recipient_ids[1] == NETWORK_BROADCAST_ID) || data.recipient_ids == NETWORK_BROADCAST_ID)
 		data.broadcast = TRUE
 		for(var/i in connected_interfaces_by_id)
-			recieving |= connected_interfaces_by_id[i]
+			receiving |= connected_interfaces_by_id[i]
 	else
 		for(var/i in data.recipient_ids)
-			var/datum/component/ntnet_interface/reciever = find_interface_id(i)
-			recieving |= reciever
+			var/datum/component/ntnet_interface/receiver = find_interface_id(i)
+			receiving |= receiver
 
-	for(var/i in recieving)
-		var/datum/component/ntnet_interface/reciever = i
-		if(reciever)
-			reciever.__network_recieve(data)
+	for(var/i in receiving)
+		var/datum/component/ntnet_interface/receiver = i
+		if(receiver)
+			receiver.__network_receive(data)
 
 	for(var/i in services_by_id)
 		var/datum/ntnet_service/serv = services_by_id[i]

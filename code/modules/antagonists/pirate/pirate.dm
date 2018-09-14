@@ -45,65 +45,43 @@
 /datum/team/pirate/proc/forge_objectives()
 	var/datum/objective/loot/getbooty = new()
 	getbooty.team = src
-	getbooty.storage_area = locate(/area/shuttle/pirate/vault) in GLOB.sortedAreas
-	getbooty.update_initial_value()
+	for(var/obj/machinery/computer/piratepad_control/P in GLOB.machines)
+		var/area/A = get_area(P)
+		if(istype(A,/area/shuttle/pirate))
+			getbooty.cargo_hold = P
+			break
 	getbooty.update_explanation_text()
 	objectives += getbooty
 	for(var/datum/mind/M in members)
 		M.objectives |= objectives
 
 
-GLOBAL_LIST_INIT(pirate_loot_cache, typecacheof(list(
-	/obj/structure/reagent_dispensers/beerkeg,
-	/mob/living/simple_animal/parrot,
-	/obj/item/stack/sheet/mineral/gold,
-	/obj/item/stack/sheet/mineral/diamond,
-	/obj/item/stack/spacecash,
-	/obj/item/melee/sabre,)))
-
 /datum/objective/loot
-	var/area/storage_area //Place where we we will look for the loot.
+	var/obj/machinery/computer/piratepad_control/cargo_hold
 	explanation_text = "Acquire valuable loot and store it in designated area."
 	var/target_value = 50000
-	var/initial_value = 0 //Things in the vault at spawn time do not count
+
 
 /datum/objective/loot/update_explanation_text()
-	if(storage_area)
-		explanation_text = "Acquire loot and store [target_value] of credits worth in [storage_area.name]."
+	if(cargo_hold)
+		var/area/storage_area = get_area(cargo_hold)
+		explanation_text = "Acquire loot and store [target_value] of credits worth in [storage_area.name] cargo hold."
 
 /datum/objective/loot/proc/loot_listing()
 	//Lists notable loot.
-	if(!storage_area)
+	if(!cargo_hold || !cargo_hold.total_report)
 		return "Nothing"
-	var/list/loot_table = list()
-	for(var/atom/movable/AM in storage_area.GetAllContents())
-		if(is_type_in_typecache(AM,GLOB.pirate_loot_cache))
-			var/lootname = AM.name
-			var/count = 1
-			if(istype(AM,/obj/item/stack)) //Ugh.
-				var/obj/item/stack/S = AM
-				lootname = S.singular_name
-				count = S.amount
-			if(!loot_table[lootname])
-				loot_table[lootname] = count
-			else
-				loot_table[lootname] += count
+	cargo_hold.total_report.total_value = sortTim(cargo_hold.total_report.total_value, cmp = /proc/cmp_numeric_dsc, associative = TRUE)
+	var/count = 0
 	var/list/loot_texts = list()
-	for(var/key in loot_table)
-		var/amount = loot_table[key]
-		loot_texts += "[amount] [key][amount > 1 ? "s":""]"
+	for(var/datum/export/E in cargo_hold.total_report.total_value)
+		if(++count > 5)
+			break
+		loot_texts += E.total_printout(cargo_hold.total_report,notes = FALSE)
 	return loot_texts.Join(", ")
 
 /datum/objective/loot/proc/get_loot_value()
-	if(!storage_area)
-		return 0
-	var/value = 0
-	for(var/turf/T in storage_area.contents)
-		value += export_item_and_contents(T,TRUE, TRUE, dry_run = TRUE)
-	return value - initial_value
-
-/datum/objective/loot/proc/update_initial_value()
-	initial_value = get_loot_value()
+	return cargo_hold.points
 
 /datum/objective/loot/check_completion()
 	return ..() || get_loot_value() >= target_value

@@ -1,0 +1,7 @@
+author: "Cobby"
+delete-after: True
+changes: 
+  - rscadd: "Cyberorgans give small benefits (advanced versions now also get these obviously)"
+  - balance: "Cyber Heart - Gives Epinephrine once in hardcrit"
+  - balance: "Cyber Liver - 10% better health and toxicity tolerance, with 10% less lethality"
+  - balance: "Cyber Lungs - Can breath at 13 kPa oxygen compared to the normal 16 kPa"

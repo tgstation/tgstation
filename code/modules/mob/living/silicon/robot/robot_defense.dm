@@ -1,5 +1,8 @@
 /mob/living/silicon/robot/attackby(obj/item/I, mob/living/user)
 	if(hat_offset != INFINITY && user.a_intent == INTENT_HELP && is_type_in_typecache(I, equippable_hats))
+		if(!(I.slot_flags & ITEM_SLOT_HEAD))
+			to_chat(user, "<span class='warning'>You can't quite fit [I] onto [src]'s head.</span>")
+			return
 		to_chat(user, "<span class='notice'>You begin to place [I] on [src]'s head...</span>")
 		to_chat(src, "<span class='notice'>[user] is placing [I] on your head...</span>")
 		if(do_after(user, 30, target = src))
@@ -19,11 +22,11 @@
 				uneq_active()
 				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 					"<span class='userdanger'>[M] has disabled [src]'s active module!</span>", null, COMBAT_MESSAGE_RANGE)
-				add_logs(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
+				log_combat(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
 			else
 				Stun(40)
 				step(src,get_dir(M,src))
-				add_logs(M, src, "pushed")
+				log_combat(M, src, "pushed")
 				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
 					"<span class='userdanger'>[M] has forced back [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 			playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
@@ -44,7 +47,7 @@
 		damage = rand(20, 40)
 	else
 		damage = rand(5, 35)
-	damage = round(damage / 2) // borgs recieve half damage
+	damage = round(damage / 2) // borgs receive half damage
 	adjustBruteLoss(damage)
 	updatehealth()
 
@@ -174,8 +177,8 @@
 			if (stat != DEAD)
 				adjustBruteLoss(30)
 
-/mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj)
-	..(Proj)
+/mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj, def_zone)
+	..()
 	updatehealth()
 	if(prob(75) && Proj.damage > 0)
 		spark_system.start()

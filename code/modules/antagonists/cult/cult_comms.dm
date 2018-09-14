@@ -45,7 +45,7 @@
 			var/link = FOLLOW_LINK(M, user)
 			to_chat(M, "[link] [my_message]")
 
-	log_talk(user,"CULT:[key_name(user)] : [message]",LOGSAY)
+	user.log_talk(message, LOG_SAY, tag="cult")
 
 /datum/action/innate/cult/comm/spirit
 	name = "Spiritual Communion"
@@ -79,7 +79,7 @@
 	return ..()
 
 /datum/action/innate/cult/mastervote/Activate()
-	var/choice = alert(owner, "The mantle of leadership is a heavy. Success in this role requires an expert level of communication and experience. Are you sure?",, "Yes", "No")
+	var/choice = alert(owner, "The mantle of leadership is heavy. Success in this role requires an expert level of communication and experience. Are you sure?",, "Yes", "No")
 	if(choice == "Yes" && IsAvailable())
 		var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 		pollCultists(owner,C.cult_team)
@@ -196,15 +196,15 @@
 /datum/action/innate/cult/master/finalreck/proc/chant(chant_number)
 	switch(chant_number)
 		if(1)
-			owner.say("C'arta forbici!", language = /datum/language/common)
+			owner.say("C'arta forbici!", language = /datum/language/common, forced = "cult invocation")
 		if(2)
-			owner.say("Pleggh e'ntrath!", language = /datum/language/common)
+			owner.say("Pleggh e'ntrath!", language = /datum/language/common, forced = "cult invocation")
 			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 50, 1)
 		if(3)
-			owner.say("Barhah hra zar'garis!", language = /datum/language/common)
+			owner.say("Barhah hra zar'garis!", language = /datum/language/common, forced = "cult invocation")
 			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 75, 1)
 		if(4)
-			owner.say("N'ath reth sh'yro eth d'rekkathnor!!!", language = /datum/language/common)
+			owner.say("N'ath reth sh'yro eth d'rekkathnor!!!", language = /datum/language/common, forced = "cult invocation")
 			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 100, 1)
 
 /datum/action/innate/cult/master/cultmark
@@ -215,7 +215,7 @@
 	var/cooldown = 0
 	var/base_cooldown = 1200
 
-/datum/action/innate/cult/master/cultmark/New()
+/datum/action/innate/cult/master/cultmark/New(Target)
 	CM = new()
 	CM.attached_action = src
 	..()
@@ -299,7 +299,7 @@
 	name = "Mark a Blood Target for the Cult"
 	desc = "Marks a target for the entire cult to track."
 
-/datum/action/innate/cult/master/cultmark/IsAvailable()
+/datum/action/innate/cult/master/cultmark/ghost/IsAvailable()
 	if(istype(owner, /mob/dead/observer) && iscultist(owner.mind.current))
 		return TRUE
 	else
@@ -334,7 +334,7 @@
 		if(cooldown>world.time)
 			reset_blood_target(C.cult_team)
 			to_chat(owner, "<span class='cultbold'>You have cleared the cult's blood target!</span>")
-			qdel(C.cult_team.blood_target_reset_timer)
+			deltimer(C.cult_team.blood_target_reset_timer)
 			return
 		else
 			to_chat(owner, "<span class='cultbold'>The cult has already designated a target!</span>")

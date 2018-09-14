@@ -14,7 +14,7 @@
 /obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/U, user)
 	GET_COMPONENT(storage, /datum/component/storage)
 	if(storage)
-		if(U.SendSignal(COMSIG_CONTAINS_STORAGE))
+		if(SEND_SIGNAL(U, COMSIG_CONTAINS_STORAGE))
 			return FALSE
 		U.TakeComponent(storage)
 		detached_pockets = storage
@@ -28,10 +28,10 @@
 		pixel_y -= 8
 	U.add_overlay(src)
 
-	if (islist(U.armor)) 										// This proc can run before /obj/Initialize has run for U and src,
+	if (islist(U.armor) || isnull(U.armor)) 										// This proc can run before /obj/Initialize has run for U and src,
 		U.armor = getArmor(arglist(U.armor))	// we have to check that the armor list has been transformed into a datum before we try to call a proc on it
 																					// This is safe to do as /obj/Initialize only handles setting up the datum if actually needed.
-	if (islist(armor))
+	if (islist(armor) || isnull(armor))
 		armor = getArmor(arglist(armor))
 
 	U.armor = U.armor.attachArmor(armor)
@@ -280,6 +280,11 @@
 	desc = "Fills you with the conviction of JUSTICE. Lawyers tend to want to show it to everyone they meet."
 	icon_state = "lawyerbadge"
 	item_color = "lawyerbadge"
+	
+/obj/item/clothing/accessory/lawyers_badge/attack_self(mob/user)
+	if(prob(1))
+		user.say("The testimony contradicts the evidence!", forced = "attorney's badge")
+	user.visible_message("[user] shows [user.p_their()] attorney's badge.", "<span class='notice'>You show your attorney's badge.</span>")
 
 /obj/item/clothing/accessory/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U, user)
 	var/mob/living/L = user

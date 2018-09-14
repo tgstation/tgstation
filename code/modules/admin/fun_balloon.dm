@@ -6,7 +6,7 @@
 	anchored = TRUE
 	var/popped = FALSE
 
-/obj/effect/fun_balloon/New()
+/obj/effect/fun_balloon/Initialize()
 	. = ..()
 	SSobj.processing |= src
 
@@ -102,19 +102,6 @@
 	qdel(src)
 
 
-//Shuttle Build
-
-/obj/effect/shuttle_build
-	name = "shuttle_build"
-	desc = "Some assembly required."
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "syndballoon"
-	anchored = TRUE
-
-/obj/effect/shuttle_build/New()
-	SSshuttle.emergency.initiate_docking(SSshuttle.getDock("emergency_home"))
-	qdel(src)
-
 //Arena
 
 /obj/effect/forcefield/arena_shuttle
@@ -127,7 +114,7 @@
 	for(var/obj/effect/landmark/shuttle_arena_safe/exit in GLOB.landmarks_list)
 		warp_points += exit
 
-/obj/effect/forcefield/arena_shuttle/CollidedWith(atom/movable/AM)
+/obj/effect/forcefield/arena_shuttle/Bumped(atom/movable/AM)
 	if(!isliving(AM))
 		return
 
@@ -158,7 +145,7 @@
 	timeleft = 0
 	var/list/warp_points = list()
 
-/obj/effect/forcefield/arena_shuttle_entrance/CollidedWith(atom/movable/AM)
+/obj/effect/forcefield/arena_shuttle_entrance/Bumped(atom/movable/AM)
 	if(!isliving(AM))
 		return
 

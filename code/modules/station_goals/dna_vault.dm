@@ -78,7 +78,7 @@
 	dna = list()
 
 /obj/item/dna_probe/afterattack(atom/target, mob/user, proximity)
-	..()
+	. = ..()
 	if(!proximity || !target)
 		return
 	//tray plants

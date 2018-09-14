@@ -11,7 +11,7 @@ Burning extracts:
 	icon_state = "burning"
 
 /obj/item/slimecross/burning/Initialize()
-	..()
+	. = ..()
 	create_reagents(10)
 
 /obj/item/slimecross/burning/attack_self(mob/user)
@@ -300,7 +300,7 @@ Burning extracts:
 	if(!on || !pictures_left || !isturf(target.loc))
 		return
 	new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
-	..()
+	. = ..()
 	var/text = "The camera fades away"
 	if(disk)
 		text += ", leaving the disk behind!"

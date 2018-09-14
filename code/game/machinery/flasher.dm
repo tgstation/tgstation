@@ -100,19 +100,23 @@
 	if(!bulb.flash_recharge(30)) //Bulb can burn out if it's used too often too fast
 		power_change()
 		return
-	bulb.times_used ++
 
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 	flick("[base_state]_flash", src)
 	last_flash = world.time
 	use_power(1000)
 
+	var/flashed = FALSE
 	for (var/mob/living/L in viewers(src, null))
 		if (get_dist(src, L) > range)
 			continue
 
 		if(L.flash_act(affect_silicon = 1))
 			L.Knockdown(strength)
+			flashed = TRUE
+
+	if(flashed)
+		bulb.times_used++
 
 	return 1
 
@@ -167,13 +171,13 @@
 		if (!anchored && !isinspace())
 			to_chat(user, "<span class='notice'>[src] is now secured.</span>")
 			add_overlay("[base_state]-s")
-			anchored = TRUE
+			setAnchored(TRUE)
 			power_change()
 			proximity_monitor.SetRange(range)
 		else
 			to_chat(user, "<span class='notice'>[src] can now be moved.</span>")
 			cut_overlays()
-			anchored = FALSE
+			setAnchored(FALSE)
 			power_change()
 			proximity_monitor.SetRange(0)
 

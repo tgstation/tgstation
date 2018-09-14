@@ -11,8 +11,19 @@
 	if(stat != DEAD) //Reagent processing needs to come before breathing, to prevent edge cases.
 		handle_organs()
 
-	if(..()) //not dead
+	. = ..()
+
+	if (QDELETED(src))
+		return
+
+	if(.) //not dead
 		handle_blood()
+
+	if(stat != DEAD)
+		var/bprv = handle_bodyparts()
+		if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
+			updatehealth()
+			update_stamina()
 
 	if(stat != DEAD)
 		handle_brain_damage()
@@ -22,6 +33,7 @@
 
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
+		rot()
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
@@ -59,7 +71,7 @@
 		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL))
 			losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
 
-		else if(health <= HEALTH_THRESHOLD_CRIT)
+		else if(health <= crit_threshold)
 			losebreath += 0.25 //You're having trouble breathing in soft crit, so you'll miss a breath one in four times
 
 	//Suffocate
@@ -150,15 +162,15 @@
 			adjustOxyLoss(3)
 			failed_last_breath = 1
 		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
-		SendSignal(COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
 
 	else //Enough oxygen
 		failed_last_breath = 0
-		if(health >= HEALTH_THRESHOLD_CRIT)
+		if(health >= crit_threshold)
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]
 		clear_alert("not_enough_oxy")
-		SendSignal(COMSIG_CLEAR_MOOD_EVENT, "suffocation")
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
 
 	breath_gases[/datum/gas/oxygen][MOLES] -= oxygen_used
 	breath_gases[/datum/gas/carbon_dioxide][MOLES] += oxygen_used
@@ -204,14 +216,58 @@
 			hallucination += 10
 		else if(bz_partialpressure > 0.01)
 			hallucination += 5
+
 	//TRITIUM
 	if(breath_gases[/datum/gas/tritium])
 		var/tritium_partialpressure = (breath_gases[/datum/gas/tritium][MOLES]/breath.total_moles())*breath_pressure
 		radiation += tritium_partialpressure/10
+
 	//NITRYL
-	if (breath_gases[/datum/gas/nitryl])
+	if(breath_gases[/datum/gas/nitryl])
 		var/nitryl_partialpressure = (breath_gases[/datum/gas/nitryl][MOLES]/breath.total_moles())*breath_pressure
 		adjustFireLoss(nitryl_partialpressure/4)
+
+	//MIASMA
+	if(breath_gases[/datum/gas/miasma])
+		var/miasma_partialpressure = (breath_gases[/datum/gas/miasma][MOLES]/breath.total_moles())*breath_pressure
+
+		if(prob(1 * miasma_partialpressure))
+			var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(2,3)
+			miasma_disease.name = "Unknown"
+			ForceContractDisease(miasma_disease, TRUE, TRUE)
+
+		//Miasma side effects
+		switch(miasma_partialpressure)
+			if(1 to 5)
+				// At lower pp, give out a little warning
+				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
+				if(prob(5))
+					to_chat(src, "<span class='notice'>There is an unpleasant smell in the air.</span>")
+			if(5 to 20)
+				//At somewhat higher pp, warning becomes more obvious
+				if(prob(15))
+					to_chat(src, "<span class='warning'>You smell something horribly decayed inside this room.</span>")
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/bad_smell)
+			if(15 to 30)
+				//Small chance to vomit. By now, people have internals on anyway
+				if(prob(5))
+					to_chat(src, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
+					vomit()
+			if(30 to INFINITY)
+				//Higher chance to vomit. Let the horror start
+				if(prob(25))
+					to_chat(src, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
+					vomit()
+			else
+				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
+				
+
+	//Clear all moods if no miasma at all
+	else
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
+			
 
 
 
@@ -240,8 +296,45 @@
 			if(!.)
 				return FALSE //to differentiate between no internals and active, but empty internals
 
+// Make corpses rot, emitting miasma
+/mob/living/carbon/proc/rot()
+	// Properly stored corpses shouldn't create miasma
+	if(istype(loc, /obj/structure/closet/crate/coffin)|| istype(loc, /obj/structure/closet/body_bag) || istype(loc, /obj/structure/bodycontainer))
+		return
+
+	// No decay if formaldehyde in corpse or when the corpse is charred
+	if(reagents.has_reagent("formaldehyde", 15) || has_trait(TRAIT_HUSK))
+		return
+
+	// Also no decay if corpse chilled or not organic/undead
+	if(bodytemperature <= T0C-10 || (!(MOB_ORGANIC in mob_biotypes) && !(MOB_UNDEAD in mob_biotypes)))
+		return
+
+	// Wait a bit before decaying
+	if(world.time - timeofdeath < 1200)
+		return
+
+	var/deceasedturf = get_turf(src)
+	
+	// Closed turfs don't have any air in them, so no gas building up
+	if(!istype(deceasedturf,/turf/open))
+		return
+
+	var/turf/open/miasma_turf = deceasedturf
+
+	var/list/cached_gases = miasma_turf.air.gases
+
+	ASSERT_GAS(/datum/gas/miasma, miasma_turf.air)
+	cached_gases[/datum/gas/miasma][MOLES] += 0.02
+
 /mob/living/carbon/proc/handle_blood()
 	return
+
+/mob/living/carbon/proc/handle_bodyparts()
+	for(var/I in bodyparts)
+		var/obj/item/bodypart/BP = I
+		if(BP.needs_processing)
+			. |= BP.on_life()
 
 /mob/living/carbon/proc/handle_organs()
 	for(var/V in internal_organs)
@@ -319,11 +412,39 @@
 					M.adjustBruteLoss(5)
 				nutrition += 10
 
+
+/*
+Alcohol Poisoning Chart
+Note that all higher effects of alcohol poisoning will inherit effects for smaller amounts (i.e. light poisoning inherts from slight poisoning)
+In addition, severe effects won't always trigger unless the drink is poisonously strong
+All effects don't start immediately, but rather get worse over time; the rate is affected by the imbiber's alcohol tolerance
+
+0: Non-alcoholic
+1-10: Barely classifiable as alcohol - occassional slurring
+11-20: Slight alcohol content - slurring
+21-30: Below average - imbiber begins to look slightly drunk
+31-40: Just below average - no unique effects
+41-50: Average - mild disorientation, imbiber begins to look drunk
+51-60: Just above average - disorientation, vomiting, imbiber begins to look heavily drunk
+61-70: Above average - small chance of blurry vision, imbiber begins to look smashed
+71-80: High alcohol content - blurry vision, imbiber completely shitfaced
+81-90: Extremely high alcohol content - light brain damage, passing out
+91-100: Dangerously toxic - swift death
+*/
+#define BALLMER_POINTS 5
+GLOBAL_LIST_INIT(ballmer_good_msg, list("Hey guys, what if we rolled out a bluespace wiring system so mice can't destroy the powergrid anymore?",
+										"Hear me out here. What if, and this is just a theory, we made R&D controllable from our PDAs?",
+										"I'm thinking we should roll out a git repository for our research under the AGPLv3 license so that we can share it among the other stations freely.",
+										"I dunno about you guys, but IDs and PDAs being separate is clunky as fuck. Maybe we should merge them into a chip in our arms? That way they can't be stolen easily.",
+										"Why the fuck aren't we just making every pair of shoes into galoshes? We have the technology."))
+GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put a webserver that's automatically turned on with default admin passwords into every PDA?",
+												"So like, you know how we separate our codebase from the master copy that runs on our consumer boxes? What if we merged the two and undid the separation between codebase and server?",
+												"Dude, radical idea: H.O.N.K mechs but with no bananium required.",
+												"Best idea ever: Disposal pipes instead of hallways."))
+
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
-	if(getStaminaLoss())
-		adjustStaminaLoss(-3)
 
 	var/restingpwr = 1 + 4 * resting
 
@@ -391,6 +512,78 @@
 	if(hallucination)
 		handle_hallucinations()
 
+	if(drunkenness)
+		drunkenness = max(drunkenness - (drunkenness * 0.04), 0)
+		if(drunkenness >= 6)
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
+			if(prob(25))
+				slurring += 2
+			jitteriness = max(jitteriness - 3, 0)
+			if(has_trait(TRAIT_DRUNK_HEALING))
+				adjustBruteLoss(-0.12, FALSE)
+				adjustFireLoss(-0.06, FALSE)
+
+		if(drunkenness >= 11 && slurring < 5)
+			slurring += 1.2
+
+		if(mind && (mind.assigned_role == "Scientist" || mind.assigned_role == "Research Director"))
+			if(SSresearch.science_tech)
+				if(drunkenness >= 12.9 && drunkenness <= 13.8)
+					drunkenness = round(drunkenness, 0.01)
+					var/ballmer_percent = 0
+					if(drunkenness == 13.35) // why run math if I dont have to
+						ballmer_percent = 1
+					else
+						ballmer_percent = (-abs(drunkenness - 13.35) / 0.9) + 1
+					if(prob(5))
+						say(pick(GLOB.ballmer_good_msg), forced = "ballmer")
+					SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = BALLMER_POINTS * ballmer_percent))
+				if(drunkenness > 26) // by this point you're into windows ME territory
+					if(prob(5))
+						SSresearch.science_tech.remove_point_list(list(TECHWEB_POINT_TYPE_GENERIC = BALLMER_POINTS))
+						say(pick(GLOB.ballmer_windows_me_msg), forced = "ballmer")
+
+		if(drunkenness >= 41)
+			if(prob(25))
+				confused += 2
+			Dizzy(10)
+			if(has_trait(TRAIT_DRUNK_HEALING)) // effects stack with lower tiers
+				adjustBruteLoss(-0.3, FALSE)
+				adjustFireLoss(-0.15, FALSE)
+
+		if(drunkenness >= 51)
+			if(prob(5))
+				confused += 10
+				vomit()
+			Dizzy(25)
+
+		if(drunkenness >= 61)
+			if(prob(50))
+				blur_eyes(5)
+			if(has_trait(TRAIT_DRUNK_HEALING))
+				adjustBruteLoss(-0.4, FALSE)
+				adjustFireLoss(-0.2, FALSE)
+
+		if(drunkenness >= 71)
+			blur_eyes(5)
+
+		if(drunkenness >= 81)
+			adjustToxLoss(0.2)
+			if(prob(5) && !stat)
+				to_chat(src, "<span class='warning'>Maybe you should lie down for a bit...</span>")
+
+		if(drunkenness >= 91)
+			adjustBrainLoss(0.4, 60)
+			if(prob(20) && !stat)
+				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(z)) //QoL mainly
+					to_chat(src, "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>")
+				else
+					to_chat(src, "<span class='warning'>Just a quick nap...</span>")
+					Sleeping(900)
+
+		if(drunkenness >= 101)
+			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now
+
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
 	var/body_temperature_difference = BODYTEMP_NORMAL - bodytemperature
@@ -437,9 +630,9 @@
 	reagents.metabolize(src, can_overdose=FALSE, liverless = TRUE)
 	if(has_trait(TRAIT_STABLEHEART))
 		return
-	adjustToxLoss(8, TRUE,  TRUE)
+	adjustToxLoss(4, TRUE,  TRUE)
 	if(prob(30))
-		to_chat(src, "<span class='notice'>You feel confused and nauseated...</span>")//actual symptoms of liver failure
+		to_chat(src, "<span class='warning'>You feel a stabbing pain in your abdomen!</span>")
 
 
 ////////////////
@@ -463,18 +656,25 @@
 /////////////////////////////////////
 
 /mob/living/carbon/proc/can_heartattack()
-	if(dna && dna.species && (NOBLOOD in dna.species.species_traits)) //not all carbons have species!
+	if(!needs_heart())
 		return FALSE
 	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(!heart || heart.synthetic)
 		return FALSE
 	return TRUE
 
-/mob/living/carbon/proc/undergoing_cardiac_arrest()
-	if(!can_heartattack())
+/mob/living/carbon/proc/needs_heart()
+	if(has_trait(TRAIT_STABLEHEART))
 		return FALSE
+	if(dna && dna.species && (NOBLOOD in dna.species.species_traits)) //not all carbons have species!
+		return FALSE
+	return TRUE
+
+/mob/living/carbon/proc/undergoing_cardiac_arrest()
 	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(istype(heart) && heart.beating)
+		return FALSE
+	else if(!needs_heart())
 		return FALSE
 	return TRUE
 

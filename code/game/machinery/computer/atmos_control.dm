@@ -272,7 +272,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 /obj/machinery/computer/atmos_control/tank/ui_act(action, params)
 	if(..() || !radio_connection)
 		return
-	var/datum/signal/signal = new(list("sigtype" = "command"))
+	var/datum/signal/signal = new(list("sigtype" = "command", "user" = usr))
 	switch(action)
 		if("reconnect")
 			reconnect(usr)

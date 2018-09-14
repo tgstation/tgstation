@@ -51,6 +51,9 @@
 	if(user.a_intent != INTENT_HARM || !isGlass)
 		return ..()
 
+	if(user.has_trait(TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
+		return
 
 	force = 15 //Smashing bottles over someoen's head hurts.
 
@@ -102,7 +105,7 @@
 				"<span class='userdanger'>[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!</span>")
 
 	//Attack logs
-	add_logs(user, target, "attacked", src)
+	log_combat(user, target, "attacked", src)
 
 	//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
 	SplashReagents(target)

@@ -17,8 +17,6 @@
 
 /obj/item/vending_refill/snack
 	machine_name = "Getmore Chocolate Corp"
-	charges = list(12, 2, 0)//of 36 standard, 6 contraband
-	init_charges = list(12, 2, 0)
 
 /obj/machinery/vending/snack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/reagent_containers/food/snacks))
@@ -44,7 +42,7 @@
 			if(iscompartmentfull(user))
 				break
 			if(!S.junkiness)
-				T.SendSignal(COMSIG_TRY_STORAGE_TAKE, S, src, TRUE)
+				SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src, TRUE)
 				food_load(S)
 				loaded++
 			else

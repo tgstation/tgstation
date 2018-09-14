@@ -128,7 +128,7 @@
 		pad.x_offset = 0
 
 	if(href_list["change_name"])
-		var/new_name = stripped_input(usr, "What do you wish to name the launchpad?", "Launchpad", pad.display_name, 15) as text|null
+		var/new_name = stripped_input(usr, "What do you wish to name the launchpad?", "Launchpad", pad.display_name, 15)
 		if(!new_name)
 			return
 		pad.display_name = new_name

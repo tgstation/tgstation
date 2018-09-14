@@ -6,6 +6,7 @@
 	icon_state = "lime"
 	bitesize_mod = 2
 	foodtype = FRUIT
+	wine_power = 30
 
 // Lime
 /obj/item/seeds/lime
@@ -58,6 +59,7 @@
 	icon_state = "orange"
 	filling_color = "#FFA500"
 	juice_results = list("orangejuice" = 0)
+	distill_reagent = "triple_sec"
 
 // Lemon
 /obj/item/seeds/lemon
@@ -109,6 +111,7 @@
 	icon_state = "firelemon"
 	bitesize_mod = 2
 	foodtype = FRUIT
+	wine_power = 70
 
 /obj/item/reagent_containers/food/snacks/grown/firelemon/attack_self(mob/living/user)
 	user.visible_message("<span class='warning'>[user] primes [src]!</span>", "<span class='userdanger'>You prime [src]!</span>")

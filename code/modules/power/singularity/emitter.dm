@@ -31,15 +31,18 @@
 	var/allow_switch_interact = TRUE
 
 	var/projectile_type = /obj/item/projectile/beam/emitter
-
 	var/projectile_sound = 'sound/weapons/emitter.ogg'
-
 	var/datum/effect_system/spark_spread/sparks
+
+	var/obj/item/gun/energy/gun
+	var/list/gun_properties
+	var/mode = 0
 
 	// The following 3 vars are mostly for the prototype
 	var/manual = FALSE
 	var/charge = 0
 	var/last_projectile_params
+
 
 /obj/machinery/power/emitter/anchored
 	anchored = TRUE
@@ -157,7 +160,7 @@
 		update_icon()
 		return
 	if(active == TRUE)
-		if(!active_power_usage || avail(active_power_usage))
+		if(!active_power_usage || surplus() >= active_power_usage)
 			add_load(active_power_usage)
 			if(!powered)
 				powered = TRUE
@@ -186,7 +189,7 @@
 		return FALSE
 	if(state != EMITTER_WELDED)
 		return FALSE
-	if(avail(active_power_usage))
+	if(surplus() >= active_power_usage)
 		add_load(active_power_usage)
 		fire_beam()
 
@@ -195,7 +198,7 @@
 	playsound(get_turf(src), projectile_sound, 50, TRUE)
 	if(prob(35))
 		sparks.start()
-	P.firer = user? user : src
+	P.firer = user ? user : src
 	if(last_projectile_params)
 		P.p_x = last_projectile_params[2]
 		P.p_y = last_projectile_params[3]
@@ -210,7 +213,6 @@
 		else
 			fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
 			shot_number = 0
-	P.fire()
 	return P
 
 /obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user, silent)
@@ -270,10 +272,14 @@
 	return TRUE
 
 /obj/machinery/power/emitter/crowbar_act(mob/living/user, obj/item/I)
+	if(panel_open && gun)
+		return remove_gun(user)
 	default_deconstruction_crowbar(I)
 	return TRUE
 
 /obj/machinery/power/emitter/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
 	default_deconstruction_screwdriver(user, "emitter_open", "emitter", I)
 	return TRUE
 
@@ -296,8 +302,41 @@
 	else if(is_wire_tool(I) && panel_open)
 		wires.interact(user)
 		return
-
+	else if(panel_open && !gun && istype(I,/obj/item/gun/energy))
+		if(integrate(I,user))
+			return
 	return ..()
+
+/obj/machinery/power/emitter/proc/integrate(obj/item/gun/energy/E,mob/user)
+	if(istype(E, /obj/item/gun/energy))
+		if(!user.transferItemToLoc(E, src))
+			return
+		gun = E
+		gun_properties = gun.get_turret_properties()
+		set_projectile()
+		return TRUE
+
+/obj/machinery/power/emitter/proc/remove_gun(mob/user)
+	if(!gun)
+		return
+	user.put_in_hands(gun)
+	gun = null
+	playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+	gun_properties = list()
+	set_projectile()
+	return TRUE
+
+/obj/machinery/power/emitter/proc/set_projectile()
+	if(LAZYLEN(gun_properties))
+		if(mode || !gun_properties["lethal_projectile"])
+			projectile_type = gun_properties["stun_projectile"]
+			projectile_sound = gun_properties["stun_projectile_sound"]
+		else
+			projectile_type = gun_properties["lethal_projectile"]
+			projectile_sound = gun_properties["lethal_projectile_sound"]
+		return
+	projectile_type = initial(projectile_type)
+	projectile_sound = initial(projectile_sound)
 
 /obj/machinery/power/emitter/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -406,7 +445,7 @@
 	var/delay = 0
 
 /obj/item/turret_control/afterattack(atom/targeted_atom, mob/user, proxflag, clickparams)
-	..()
+	. = ..()
 	var/obj/machinery/power/emitter/E = user.buckled
 	E.setDir(get_dir(E,targeted_atom))
 	user.setDir(E.dir)

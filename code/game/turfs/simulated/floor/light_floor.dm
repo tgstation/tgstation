@@ -10,6 +10,7 @@
 	var/list/coloredlights = list("g", "r", "y", "b", "p", "w", "s","o","g")
 	var/currentcolor = 1
 	var/can_modify_colour = TRUE
+	tiled_dirt = FALSE
 
 
 /turf/open/floor/light/examine(mob/user)
@@ -80,7 +81,7 @@
 			update_icon()
 			to_chat(user, "<span class='notice'>You replace the light bulb.</span>")
 		else
-			to_chat(user, "<span class='notice'>The lightbulb seems fine, no need to replace it.</span>")
+			to_chat(user, "<span class='notice'>The light bulb seems fine, no need to replace it.</span>")
 
 
 //Cycles through all of the colours

@@ -3,6 +3,7 @@
 	icon_state = "plaque"
 	desc = "\"This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding."
 	floor_tile = /obj/item/stack/tile/plasteel
+	tiled_dirt = FALSE
 
 /turf/open/floor/vault
 	icon_state = "rockvault"
@@ -46,18 +47,14 @@
 /turf/open/floor/circuit/airless
 	initial_gas_mix = "TEMP=2.7"
 
-/turf/open/floor/circuit/killroom
-	name = "Killroom Floor"
-	initial_gas_mix = "n2=500;TEMP=80"
-
 /turf/open/floor/circuit/telecomms
 	initial_gas_mix = "n2=100;TEMP=80"
 
 /turf/open/floor/circuit/telecomms/mainframe
-	name = "Mainframe Base"
+	name = "mainframe base"
 
 /turf/open/floor/circuit/telecomms/server
-	name = "Server Base"
+	name = "server base"
 
 /turf/open/floor/circuit/green
 	icon_state = "gcircuit"
@@ -81,7 +78,7 @@
 	initial_gas_mix = "n2=100;TEMP=80"
 
 /turf/open/floor/circuit/green/telecomms/mainframe
-	name = "Mainframe Base"
+	name = "mainframe base"
 
 /turf/open/floor/circuit/red
 	icon_state = "rcircuit"
@@ -143,6 +140,7 @@
 	desc = "Tightly-pressed brass tiles. They emit minute vibration."
 	icon_state = "plating"
 	baseturfs = /turf/open/floor/clockwork
+	footstep = FOOTSTEP_PLATING
 	var/uses_overlay = TRUE
 	var/obj/effect/clockwork/overlay/floor/realappearence
 

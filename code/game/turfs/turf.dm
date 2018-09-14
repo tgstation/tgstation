@@ -19,8 +19,6 @@
 
 	flags_1 = CAN_BE_DIRTY_1
 
-	var/image/obscured	//camerachunks
-
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
 	var/explosion_level = 0	//for preventing explosion dodging
@@ -33,6 +31,8 @@
 	var/bullet_sizzle = FALSE //used by ammo_casing/bounce_away() to determine if the shell casing should make a sizzle sound when it's ejected over the turf
 							//IE if the turf is supposed to be water, set TRUE.
 
+	var/tiled_dirt = FALSE // use smooth tiled dirt decal
+
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list("x", "y", "z")
 	if(var_name in banned_edits)
@@ -43,6 +43,9 @@
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
+
+	// by default, vis_contents is inherited from the turf that was here before
+	vis_contents.Cut()
 
 	assemble_baseturfs()
 
@@ -138,40 +141,40 @@
 	stack_trace("Non movable passed to turf CanPass : [mover]")
 	return FALSE
 
-/turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
-	// First, make sure it can leave its square
-	if(isturf(mover.loc))
-		// Nothing but border objects stop you from leaving a tile, only one loop is needed
-		for(var/obj/obstacle in mover.loc)
-			if(!obstacle.CheckExit(mover, src) && obstacle != mover && obstacle != forget)
-				mover.Collide(obstacle)
-				return FALSE
-
-	//Then, check the turf itself
-	if (!src.CanPass(mover, src))
-		mover.Collide(src)
+/turf/Enter(atom/movable/mover, atom/oldloc)
+	// Do not call ..()
+	// Byond's default turf/Enter() doesn't have the behaviour we want with Bump()
+	// By default byond will call Bump() on the first dense object in contents
+	// Here's hoping it doesn't stay like this for years before we finish conversion to step_
+	var/atom/firstbump
+	if(!CanPass(mover, src))
+		firstbump = src
+	else
+		for(var/i in contents)
+			if(i == mover || i == mover.loc) // Multi tile objects and moving out of other objects
+				continue
+			var/atom/movable/thing = i
+			if(thing.Cross(mover))
+				continue
+			if(!firstbump || ((thing.layer > firstbump.layer || thing.flags_1 & ON_BORDER_1) && !(firstbump.flags_1 & ON_BORDER_1)))
+				firstbump = thing
+	if(firstbump)
+		mover.Bump(firstbump)
 		return FALSE
+	return TRUE
 
-
-	var/atom/movable/topmost_bump
-	var/top_layer = FALSE
-
-	//Next, check objects to block entry that are on the border
-	for(var/atom/movable/obstacle in src)
-		if(!obstacle.CanPass(mover, mover.loc, 1) && (forget != obstacle))
-			if(obstacle.flags_1 & ON_BORDER_1)
-				mover.Collide(obstacle)
-				return FALSE
-			else
-				if(obstacle.layer > top_layer)
-					topmost_bump = obstacle
-					top_layer = obstacle.layer
-
-	if(topmost_bump)
-		mover.Collide(topmost_bump)
+/turf/Exit(atom/movable/mover, atom/newloc)
+	. = ..()
+	if(!.)
 		return FALSE
-
-	return TRUE //Nothing found to block so return success!
+	for(var/i in contents)
+		if(i == mover)
+			continue
+		var/atom/movable/thing = i
+		if(!thing.Uncross(mover, newloc))
+			if(thing.flags_1 & ON_BORDER_1)
+				mover.Bump(thing)
+			return FALSE
 
 /turf/Entered(atom/movable/AM)
 	..()
@@ -325,6 +328,14 @@
 
 /turf/proc/visibilityChanged()
 	GLOB.cameranet.updateVisibility(src)
+	// The cameranet usually handles this for us, but if we've just been
+	// recreated we should make sure we have the cameranet vis_contents.
+	var/datum/camerachunk/C = GLOB.cameranet.chunkGenerated(x, y, z)
+	if(C)
+		if(C.obscuredTurfs[src])
+			vis_contents += GLOB.cameranet.vis_contents_objects
+		else
+			vis_contents -= GLOB.cameranet.vis_contents_objects
 
 /turf/proc/burn_tile()
 

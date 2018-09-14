@@ -11,7 +11,7 @@
 	var/teleport_cooldown = 400 //30 seconds base due to base parts
 	var/teleport_speed = 50
 	var/last_teleport //to handle the cooldown
-	var/teleporting = 0 //if it's in the process of teleporting
+	var/teleporting = FALSE //if it's in the process of teleporting
 	var/power_efficiency = 1
 	var/obj/machinery/quantumpad/linked_pad
 
@@ -29,6 +29,14 @@
 	mapped_quantum_pads -= map_pad_id
 	return ..()
 
+/obj/machinery/quantumpad/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>It is [ linked_pad ? "currently" : "not"] linked to another pad.</span>")
+	if(!panel_open)
+		to_chat(user, "<span class='notice'>The panel is <i>screwed</i> in, obstructing the linking device.</span>")
+	else
+		to_chat(user, "<span class='notice'>The <i>linking</i> device is now able to be <i>scanned<i> with a multitool.</span>")
+	
 /obj/machinery/quantumpad/RefreshParts()
 	var/E = 0
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
@@ -50,14 +58,21 @@
 		if(istype(I, /obj/item/multitool))
 			var/obj/item/multitool/M = I
 			M.buffer = src
-			to_chat(user, "<span class='notice'>You save the data in [I]'s buffer.</span>")
-			return 1
+			to_chat(user, "<span class='notice'>You save the data in [I]'s buffer. It can now be saved to pads with closed panels.</span>")
+			return TRUE
 	else if(istype(I, /obj/item/multitool))
 		var/obj/item/multitool/M = I
 		if(istype(M.buffer, /obj/machinery/quantumpad))
-			linked_pad = M.buffer
-			to_chat(user, "<span class='notice'>You link [src] to the one in [I]'s buffer.</span>")
-			return 1
+			if(M.buffer == src)
+				to_chat(user, "<span class='warning'>You cannot link a pad to itself!</span>")
+				return TRUE
+			else
+				linked_pad = M.buffer
+				to_chat(user, "<span class='notice'>You link [src] to the one in [I]'s buffer.</span>")
+				return TRUE
+		else
+			to_chat(user, "<span class='warning'>There is no quantum pad data saved in [I]'s buffer!</span>")
+			return TRUE
 
 	if(default_deconstruction_crowbar(I))
 		return
@@ -105,22 +120,22 @@
 /obj/machinery/quantumpad/proc/doteleport(mob/user)
 	if(linked_pad)
 		playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, 1)
-		teleporting = 1
+		teleporting = TRUE
 
 		spawn(teleport_speed)
 			if(!src || QDELETED(src))
-				teleporting = 0
+				teleporting = FALSE
 				return
 			if(stat & NOPOWER)
 				to_chat(user, "<span class='warning'>[src] is unpowered!</span>")
-				teleporting = 0
+				teleporting = FALSE
 				return
 			if(!linked_pad || QDELETED(linked_pad) || linked_pad.stat & NOPOWER)
 				to_chat(user, "<span class='warning'>Linked pad is not responding to ping. Teleport aborted.</span>")
-				teleporting = 0
+				teleporting = FALSE
 				return
 
-			teleporting = 0
+			teleporting = FALSE
 			last_teleport = world.time
 
 			// use a lot of power

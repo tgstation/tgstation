@@ -3475,7 +3475,8 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary/port)
 "lF" = (
-/turf/open/floor/plasteel/airless/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)
 "lG" = (
 /turf/open/floor/plasteel/airless{

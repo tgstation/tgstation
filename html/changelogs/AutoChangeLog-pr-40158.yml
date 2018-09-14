@@ -1,0 +1,5 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Added the experimental dissection surgery, which can be performed once per corpse to gain techweb points."
+  - rscadd: "Rarer specimens are more valuable, so xenos and rare species are more efficient subjects."

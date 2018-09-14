@@ -158,12 +158,12 @@
 
 /obj/item/mecha_parts/part/durand_left_leg
 	name = "\improper Durand left leg"
-	desc = "A Durand left leg. Built particlarly sturdy to support the Durand's heavy weight and defensive needs."
+	desc = "A Durand left leg. Built particularly sturdy to support the Durand's heavy weight and defensive needs."
 	icon_state = "durand_l_leg"
 
 /obj/item/mecha_parts/part/durand_right_leg
 	name = "\improper Durand right leg"
-	desc = "A Durand right leg. Built particlarly sturdy to support the Durand's heavy weight and defensive needs."
+	desc = "A Durand right leg. Built particularly sturdy to support the Durand's heavy weight and defensive needs."
 	icon_state = "durand_r_leg"
 
 /obj/item/mecha_parts/part/durand_armor

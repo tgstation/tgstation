@@ -40,7 +40,10 @@
 	return data
 
 /datum/computer_file/program/alarm_monitor/proc/triggerAlarm(class, area/A, O, obj/source)
-	if(!is_station_level(source.z) && !is_mining_level(source.z))
+	if(is_station_level(source.z))
+		if(!(A.type in GLOB.the_station_areas))
+			return
+	else if(!is_mining_level(source.z) || istype(A, /area/ruin))
 		return
 
 	var/list/L = alarms[class]

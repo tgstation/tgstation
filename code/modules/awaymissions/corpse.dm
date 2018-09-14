@@ -26,10 +26,11 @@
 	var/assignedrole
 	var/show_flavour = TRUE
 	var/banType = "lavaland"
+	var/ghost_usable = TRUE
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/mob_spawn/attack_ghost(mob/user)
-	if(!SSticker.HasRoundStarted() || !loc)
+	if(!SSticker.HasRoundStarted() || !loc || !ghost_usable)
 		return
 	if(!uses)
 		to_chat(user, "<span class='warning'>This spawner is out of charges!</span>")
@@ -37,17 +38,19 @@
 	if(jobban_isbanned(user, banType))
 		to_chat(user, "<span class='warning'>You are jobanned!</span>")
 		return
+	if(QDELETED(src) || QDELETED(user))
+		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No" || !loc)
 		return
-	log_game("[user.ckey] became [mob_name]")
+	log_game("[key_name(user)] became [mob_name]")
 	create(ckey = user.ckey)
 
 /obj/effect/mob_spawn/Initialize(mapload)
 	. = ..()
 	if(instant || (roundstart && (mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))))
 		create()
-	else
+	else if(ghost_usable)
 		GLOB.poi_list |= src
 		LAZYADD(GLOB.mob_spawners[name], src)
 
@@ -222,6 +225,9 @@
 	death = FALSE
 	roundstart = FALSE //you could use these for alive fake humans on roundstart but this is more common scenario
 
+/obj/effect/mob_spawn/human/corpse/delayed
+	ghost_usable = FALSE //These are just not-yet-set corpses.
+	instant = FALSE
 
 //Non-human spawners
 
@@ -334,10 +340,10 @@
 
 /obj/effect/mob_spawn/human/miner
 	name = "Shaft Miner"
-	outfit = /datum/outfit/job/miner/asteroid
+	outfit = /datum/outfit/job/miner
 
 /obj/effect/mob_spawn/human/miner/rig
-	outfit = /datum/outfit/job/miner/equipped/asteroid
+	outfit = /datum/outfit/job/miner/equipped/hardsuit
 
 /obj/effect/mob_spawn/human/miner/explorer
 	outfit = /datum/outfit/job/miner/equipped
@@ -361,8 +367,9 @@
 	name = "bartender sleeper"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	flavour_text = "<span class='big bold'>You are a space bartender!</span>"
+	flavour_text = "<span class='big bold'>You are a space bartender!</span><b> Time to mix drinks and change lives. Smoking space drugs makes it easier to understand your patrons' odd dialect.</b>"
 	assignedrole = "Space Bartender"
+	id_job = "Bartender"
 
 /datum/outfit/spacebartender
 	name = "Space Bartender"
@@ -372,7 +379,6 @@
 	suit = /obj/item/clothing/suit/armor/vest
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	id = /obj/item/card/id
-
 
 /obj/effect/mob_spawn/human/beach
 	outfit = /datum/outfit/beachbum
@@ -385,14 +391,23 @@
 	name = "beach bum sleeper"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	flavour_text = "<span class='big bold'>You are a beach bum!</span>"
+	flavour_text = "<span class='big bold'>You're, like, totally a dudebro, bruh.</span><b> Ch'yea. You came here, like, on spring break, hopin' to pick up some bangin' hot chicks, y'knaw?</b>"
 	assignedrole = "Beach Bum"
 
+/obj/effect/mob_spawn/human/beach/alive/lifeguard
+	flavour_text = "<span class='big bold'>You're a spunky lifeguard!</span><b> It's up to you to make sure nobody drowns or gets eaten by sharks and stuff.</b>"
+	mob_gender = "female"
+	name = "lifeguard sleeper"
+	id_job = "Lifeguard"
+	uniform = /obj/item/clothing/under/shorts/red
+	
 /datum/outfit/beachbum
 	name = "Beach Bum"
 	glasses = /obj/item/clothing/glasses/sunglasses
-	uniform = /obj/item/clothing/under/shorts/red
 	r_pocket = /obj/item/storage/wallet/random
+	l_pocket = /obj/item/reagent_containers/food/snacks/pizzaslice/dank;
+	uniform = /obj/item/clothing/under/pants/youngfolksjeans
+	id = /obj/item/card/id
 
 /datum/outfit/beachbum/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()

@@ -95,7 +95,7 @@
 					SStgui.close_user_uis(occupant, src)
 					vr_human.real_mind = human_occupant.mind
 					vr_human.ckey = human_occupant.ckey
-					to_chat(vr_human, "<span class='notice'>Transfer successful! you are now playing as [vr_human] in VR!</span>")
+					to_chat(vr_human, "<span class='notice'>Transfer successful! You are now playing as [vr_human] in VR!</span>")
 				else
 					if(allow_creating_vr_humans)
 						to_chat(occupant, "<span class='warning'>Virtual avatar not found, attempting to create one...</span>")
@@ -104,7 +104,7 @@
 						if(T)
 							SStgui.close_user_uis(occupant, src)
 							build_virtual_human(occupant, T, V.vr_outfit)
-							to_chat(vr_human, "<span class='notice'>Transfer successful! you are now playing as [vr_human] in VR!</span>")
+							to_chat(vr_human, "<span class='notice'>Transfer successful! You are now playing as [vr_human] in VR!</span>")
 						else
 							to_chat(occupant, "<span class='warning'>Virtual world misconfigured, aborting transfer</span>")
 					else
@@ -144,7 +144,7 @@
 	data["isoccupant"] = (user == occupant)
 	return data
 
-/obj/machinery/vr_sleeper/proc/get_vr_spawnpoint() //proc so it can be overriden for team games or something
+/obj/machinery/vr_sleeper/proc/get_vr_spawnpoint() //proc so it can be overridden for team games or something
 	return safepick(GLOB.vr_spawnpoints[vr_category])
 
 /obj/machinery/vr_sleeper/proc/build_spawnpoints() // used to rebuild the list for admins if need be

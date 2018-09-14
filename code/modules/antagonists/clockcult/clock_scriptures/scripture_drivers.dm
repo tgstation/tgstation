@@ -29,7 +29,7 @@
 	descname = "Trap, Stunning"
 	name = "Sigil of Transgression"
 	desc = "Wards a tile with a sigil, which will briefly stun the next non-Servant to cross it and apply Belligerent to them."
-	invocations = list("Divinity, smite...", "...those who tresspass here!")
+	invocations = list("Divinity, smite...", "...those who trespass here!")
 	channel_time = 50
 	power_cost = 50
 	whispered = TRUE

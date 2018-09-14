@@ -35,7 +35,7 @@
 	to_chat(user, text("The service panel is currently <b>[open ? "unscrewed" : "screwed shut"]</b>."))
 
 /obj/item/storage/secure/attackby(obj/item/W, mob/user, params)
-	if(SendSignal(COMSIG_IS_STORAGE_LOCKED))
+	if(SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
 		if (istype(W, /obj/item/screwdriver))
 			if (W.use_tool(src, user, 20))
 				open =! open
@@ -64,7 +64,7 @@
 	return ..()
 
 /obj/item/storage/secure/attack_self(mob/user)
-	var/locked = SendSignal(COMSIG_IS_STORAGE_LOCKED)
+	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 	user.set_machine(src)
 	var/dat = text("<TT><B>[]</B><BR>\n\nLock Status: []",src, (locked ? "LOCKED" : "UNLOCKED"))
 	var/message = "Code"
@@ -88,7 +88,7 @@
 				l_code = code
 				l_set = 1
 			else if ((code == l_code) && (l_set == 1))
-				SendSignal(COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
+				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
 				cut_overlays()
 				add_overlay(icon_opened)
 				code = null
@@ -96,10 +96,10 @@
 				code = "ERROR"
 		else
 			if ((href_list["type"] == "R") && (!l_setshort))
-				SendSignal(COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
+				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
 				cut_overlays()
 				code = null
-				SendSignal(COMSIG_TRY_STORAGE_HIDE_FROM, usr)
+				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_HIDE_FROM, usr)
 			else
 				code += text("[]", sanitize_text(href_list["type"]))
 				if (length(code) > 5)

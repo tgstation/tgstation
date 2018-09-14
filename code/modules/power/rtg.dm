@@ -43,12 +43,6 @@
 		return
 	return ..()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/machinery/power/rtg/attack_hand(mob/user)
-	if(user.a_intent == INTENT_GRAB && user_buckle_mob(user.pulling, user, check_loc = 0))
-		return
-	. = ..()
-
 /obj/machinery/power/rtg/advanced
 	desc = "An advanced RTG capable of moderating isotope decay, increasing power output but reducing lifetime. It uses plasma-fueled radiation collectors to increase output even further."
 	power_gen = 1250 // 2500 on T1, 10000 on T4.

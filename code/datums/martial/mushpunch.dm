@@ -17,7 +17,7 @@
 	D.throw_at(throwtarget, 4, 2, A)//So stuff gets tossed around at the same time.
 	D.Knockdown(20)
 	if(atk_verb)
-		add_logs(A, D, "[atk_verb] (Mushroom Punch)")
+		log_combat(A, D, "[atk_verb] (Mushroom Punch)")
 	return TRUE
 
 /obj/item/mushpunch

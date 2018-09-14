@@ -1,7 +1,7 @@
 //Update this whenever the db schema changes
 //make sure you add an update to the schema_version stable in the db changelog
 #define DB_MAJOR_VERSION 4
-#define DB_MINOR_VERSION 4
+#define DB_MINOR_VERSION 7
 
 //Timing subsystem
 //Don't run if there is an identical unique timer active
@@ -18,6 +18,9 @@
 //To be used with TIMER_UNIQUE
 //prevents distinguishing identical timers with the wait variable
 #define TIMER_NO_HASH_WAIT		(1<<4)
+//Loops the timer repeatedly until qdeleted
+//In most cases you want a subsystem instead
+#define TIMER_LOOP				(1<<5)
 
 #define TIMER_NO_INVOKE_WARNING 600 //number of byond ticks that are allowed to pass before the timer subsystem thinks it hung on something
 
@@ -48,36 +51,36 @@
 // Subsystems shutdown in the reverse of the order they initialize in
 // The numbers just define the ordering, they are meaningless otherwise.
 
-#define INIT_ORDER_GARBAGE 19
-#define INIT_ORDER_DBCORE 18
-#define INIT_ORDER_BLACKBOX 17
-#define INIT_ORDER_SERVER_MAINT 16
-#define INIT_ORDER_INPUT 15
-#define INIT_ORDER_RESEARCH 14
-#define INIT_ORDER_EVENTS 13
-#define INIT_ORDER_JOBS 12
-#define INIT_ORDER_QUIRKS 11
-#define INIT_ORDER_TICKER 10
-#define INIT_ORDER_MAPPING 9
-#define INIT_ORDER_NETWORKS 8
-#define INIT_ORDER_ATOMS 7
-#define INIT_ORDER_LANGUAGE 6
-#define INIT_ORDER_MACHINES 5
-#define INIT_ORDER_CIRCUIT 4
-#define INIT_ORDER_TIMER 1
-#define INIT_ORDER_DEFAULT 0
-#define INIT_ORDER_AIR -1
-#define INIT_ORDER_MINIMAP -3
-#define INIT_ORDER_ASSETS -4
-#define INIT_ORDER_ICON_SMOOTHING -5
-#define INIT_ORDER_OVERLAY -6
-#define INIT_ORDER_XKEYSCORE -10
-#define INIT_ORDER_STICKY_BAN -10
-#define INIT_ORDER_LIGHTING -20
-#define INIT_ORDER_SHUTTLE -21
-#define INIT_ORDER_SQUEAK -40
-#define INIT_ORDER_PATH -50
-#define INIT_ORDER_PERSISTENCE -100
+#define INIT_ORDER_GARBAGE			19
+#define INIT_ORDER_DBCORE			18
+#define INIT_ORDER_BLACKBOX			17
+#define INIT_ORDER_SERVER_MAINT		16
+#define INIT_ORDER_INPUT			15
+#define INIT_ORDER_VIS				14
+#define INIT_ORDER_RESEARCH			13
+#define INIT_ORDER_EVENTS			12
+#define INIT_ORDER_JOBS				11
+#define INIT_ORDER_QUIRKS			10
+#define INIT_ORDER_TICKER			9
+#define INIT_ORDER_MAPPING			8
+#define INIT_ORDER_NETWORKS			7
+#define INIT_ORDER_ATOMS			6
+#define INIT_ORDER_LANGUAGE			5
+#define INIT_ORDER_MACHINES			4
+#define INIT_ORDER_CIRCUIT			3
+#define INIT_ORDER_TIMER			1
+#define INIT_ORDER_DEFAULT			0
+#define INIT_ORDER_AIR				-1
+#define INIT_ORDER_ASSETS			-4
+#define INIT_ORDER_ICON_SMOOTHING	-5
+#define INIT_ORDER_OVERLAY			-6
+#define INIT_ORDER_XKEYSCORE		-10
+#define INIT_ORDER_STICKY_BAN		-10
+#define INIT_ORDER_LIGHTING			-20
+#define INIT_ORDER_SHUTTLE			-21
+#define INIT_ORDER_SQUEAK			-40
+#define INIT_ORDER_PATH				-50
+#define INIT_ORDER_PERSISTENCE		-100
 
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
@@ -86,6 +89,7 @@
 #define FIRE_PRIORITY_IDLE_NPC		10
 #define FIRE_PRIORITY_SERVER_MAINT	10
 #define FIRE_PRIORITY_RESEARCH		10
+#define FIRE_PRIORITY_VIS			10
 #define FIRE_PRIORITY_GARBAGE		15
 #define FIRE_PRIORITY_WET_FLOORS	20
 #define FIRE_PRIORITY_AIR			20

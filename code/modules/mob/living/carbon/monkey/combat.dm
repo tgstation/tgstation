@@ -56,7 +56,7 @@
 		return 1
 	if(IsUnconscious())
 		return 1
-	if(IsStun())
+	if(IsStun() || IsKnockdown())
 		return 1
 	if(stat)
 		return 1
@@ -220,7 +220,7 @@
 				return TRUE
 
 			if(target && target.stat == CONSCIOUS)		// make sure target exists
-				if(Adjacent(target) && isturf(target.loc))	// if right next to perp
+				if(Adjacent(target) && isturf(target.loc) && !IsDeadOrIncap())	// if right next to perp
 
 					// check if target has a weapon
 					var/obj/item/W
@@ -397,7 +397,7 @@
 /mob/living/carbon/monkey/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj , /obj/item/projectile/beam)||istype(Proj, /obj/item/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
-			if(!Proj.nodamage && Proj.damage < src.health)
+			if(!Proj.nodamage && Proj.damage < src.health && isliving(Proj.firer))
 				retaliate(Proj.firer)
 	..()
 

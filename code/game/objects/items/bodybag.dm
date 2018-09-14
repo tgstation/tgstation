@@ -11,6 +11,7 @@
 	deploy_bodybag(user, user.loc)
 
 /obj/item/bodybag/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	if(proximity)
 		if(isopenturf(target))
 			deploy_bodybag(user, target)

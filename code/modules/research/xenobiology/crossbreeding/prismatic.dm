@@ -22,6 +22,7 @@ Prismatic extracts:
 	desc = "It's constantly wet with a pungent-smelling, clear chemical."
 
 /obj/item/slimecross/prismatic/grey/afterattack(turf/target, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(istype(target) && target.color != initial(target.color))

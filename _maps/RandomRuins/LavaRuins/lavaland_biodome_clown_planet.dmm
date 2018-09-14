@@ -37,8 +37,18 @@
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
 	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -48,8 +58,18 @@
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
 	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -57,8 +77,18 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -87,8 +117,18 @@
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
 	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -97,8 +137,18 @@
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -108,8 +158,18 @@
 	invisibility = 101
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -118,8 +178,18 @@
 	dir = 4;
 	invisibility = 101
 	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -127,21 +197,51 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
 "aC" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
 "aD" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -149,8 +249,18 @@
 /obj/effect/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
 	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -160,8 +270,18 @@
 	invisibility = 101
 	},
 /obj/effect/decal/cleanable/cobweb,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -169,8 +289,18 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -179,8 +309,18 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -189,8 +329,18 @@
 	dir = 5
 	},
 /obj/item/bikehorn,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -206,8 +356,18 @@
 	invisibility = 101
 	},
 /obj/effect/decal/cleanable/pie_smudge,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -222,8 +382,18 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -233,8 +403,18 @@
 	dir = 4;
 	invisibility = 101
 	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -256,8 +436,18 @@
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
 	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -270,8 +460,18 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -281,8 +481,18 @@
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
 	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -300,8 +510,18 @@
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
 	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -310,14 +530,35 @@
 	dir = 4;
 	invisibility = 101
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
 /turf/open/indestructible{
-	icon_state = "darkredfull"
+	icon_state = "darkfull";
+	wet = 8
 	},
 /area/ruin/powered/clownplanet)
 "ba" = (
 /obj/effect/decal/cleanable/pie_smudge,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -335,8 +576,18 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -368,8 +619,18 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/pie_smudge,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -459,8 +720,19 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
 /turf/open/indestructible{
-	icon_state = "darkredfull"
+	icon_state = "darkfull";
+	wet = 8
 	},
 /area/ruin/powered/clownplanet)
 "bt" = (
@@ -474,22 +746,52 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
 "bx" = (
 /obj/effect/decal/cleanable/cobweb,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
 /turf/open/indestructible{
-	icon_state = "darkredfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
 "by" = (
 /obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -503,8 +805,18 @@
 	},
 /area/ruin/powered/clownplanet)
 "bA" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
 /turf/open/indestructible{
-	icon_state = "darkredfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -522,8 +834,18 @@
 	invisibility = 101
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -565,18 +887,18 @@
 "bI" = (
 /obj/effect/mob_spawn/human/corpse/damaged,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/indestructible{
-	icon_state = "darkyellowfull";
-	wet = 8
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
 	},
-/area/ruin/powered/clownplanet)
-"bJ" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	invisibility = 101
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
 	},
 /turf/open/indestructible{
-	icon_state = "darkredfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -584,8 +906,18 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
 /turf/open/indestructible{
-	icon_state = "darkredfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -708,8 +1040,18 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -721,8 +1063,18 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -733,8 +1085,18 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -746,8 +1108,18 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
 /turf/open/indestructible{
-	icon_state = "darkyellowfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -791,8 +1163,18 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
 /turf/open/indestructible{
-	icon_state = "darkredfull";
+	icon_state = "darkfull";
 	wet = 8
 	},
 /area/ruin/powered/clownplanet)
@@ -864,6 +1246,23 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors/explored)
+"Hj" = (
+/obj/effect/decal/cleanable/pie_smudge,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/indestructible{
+	icon_state = "darkfull";
+	wet = 8
+	},
+/area/ruin/powered/clownplanet)
 "KX" = (
 /obj/item/grown/bananapeel{
 	color = "#2F3000";
@@ -1146,7 +1545,7 @@ am
 ax
 aB
 az
-am
+at
 ar
 aJ
 aL
@@ -1526,7 +1925,7 @@ aA
 aC
 aM
 aG
-ba
+Hj
 aL
 bI
 cc
@@ -1630,7 +2029,7 @@ bl
 bl
 bp
 cc
-bJ
+aZ
 bA
 bB
 bB

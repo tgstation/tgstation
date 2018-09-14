@@ -64,7 +64,6 @@
 	if(emitterhealth < 0)
 		fold_in(force = TRUE)
 	to_chat(src, "<span class='userdanger'>The impact degrades your holochassis!</span>")
-	hit_slowdown += amount
 	return amount
 
 /mob/living/silicon/pai/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)

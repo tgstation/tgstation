@@ -120,7 +120,7 @@
 						dat += "<u><font color = #18743E>Data type</font color></u>: Audio File<br>"
 						dat += "<u><font color = #18743E>Source</font color></u>: <i>Unidentifiable</i><br>"
 						dat += "<u><font color = #18743E>Class</font color></u>: [race]<br>"
-						dat += "<u><font color = #18743E>Contents</font color></u>: <i>Unintelligble</i><br>"
+						dat += "<u><font color = #18743E>Contents</font color></u>: <i>Unintelligible</i><br>"
 
 					dat += "</li><br>"
 

@@ -133,7 +133,7 @@
 		if((istype(S) && S.hack_software) || IsAdminGhost(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["magbot"]) in GLOB.silicon_mobs
 			if(istype(R) && !R.emagged && (R.connected_ai == usr || IsAdminGhost(usr)) && !R.scrambledcodes && can_control(usr, R))
-				log_game("[key_name(usr)] emagged [R.name] using robotic console!")
+				log_game("[key_name(usr)] emagged [key_name(R)] using robotic console!")
 				message_admins("[ADMIN_LOOKUPFLW(usr)] emagged cyborg [key_name_admin(R)] using robotic console!")
 				R.SetEmagged(1)
 
@@ -141,7 +141,7 @@
 		if(isAI(usr) && is_servant_of_ratvar(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["convert"]) in GLOB.silicon_mobs
 			if(istype(R) && !is_servant_of_ratvar(R) && R.connected_ai == usr)
-				log_game("[key_name(usr)] converted [R.name] using robotic console!")
+				log_game("[key_name(usr)] converted [key_name(R)] using robotic console!")
 				message_admins("[ADMIN_LOOKUPFLW(usr)] converted cyborg [key_name_admin(R)] using robotic console!")
 				add_servant_of_ratvar(R)
 

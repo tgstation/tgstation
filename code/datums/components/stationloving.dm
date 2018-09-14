@@ -2,20 +2,23 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/inform_admins = FALSE
 	var/disallow_soul_imbue = TRUE
+	var/allow_death = FALSE
 
-/datum/component/stationloving/Initialize(inform_admins = FALSE)
+/datum/component/stationloving/Initialize(inform_admins = FALSE, allow_death = FALSE)
 	if(!ismovableatom(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(list(COMSIG_MOVABLE_Z_CHANGED), .proc/check_in_bounds)
-	RegisterSignal(list(COMSIG_PARENT_PREQDELETED), .proc/check_deletion)
-	RegisterSignal(list(COMSIG_ITEM_IMBUE_SOUL), .proc/check_soul_imbue)
+	RegisterSignal(parent, list(COMSIG_MOVABLE_Z_CHANGED), .proc/check_in_bounds)
+	RegisterSignal(parent, list(COMSIG_PARENT_PREQDELETED), .proc/check_deletion)
+	RegisterSignal(parent, list(COMSIG_ITEM_IMBUE_SOUL), .proc/check_soul_imbue)
 	src.inform_admins = inform_admins
+	src.allow_death = allow_death
 	check_in_bounds() // Just in case something is being created outside of station/centcom
 
 /datum/component/stationloving/InheritComponent(datum/component/stationloving/newc, original, list/arguments)
 	if (original)
 		if (istype(newc))
 			inform_admins = newc.inform_admins
+			allow_death = newc.allow_death
 		else if (LAZYLEN(arguments))
 			inform_admins = arguments[1]
 
@@ -39,7 +42,7 @@
 		var/turf/currentturf = get_turf(src)
 		to_chat(get(parent, /mob), "<span class='danger'>You can't help but feel that you just lost something back there...</span>")
 		var/turf/targetturf = relocate()
-		log_game("[parent] has been moved out of bounds in [AREACOORD(currentturf)]. Moving it to [AREACOORD(targetturf)].")
+		log_game("[parent] has been moved out of bounds in [loc_name(currentturf)]. Moving it to [loc_name(targetturf)].")
 		if(inform_admins)
 			message_admins("[parent] has been moved out of bounds in [ADMIN_VERBOSEJMP(currentturf)]. Moving it to [ADMIN_VERBOSEJMP(targetturf)].")
 
@@ -56,23 +59,23 @@
 		return FALSE
 	if (is_station_level(T.z) || is_centcom_level(T.z))
 		return TRUE
-	if (is_transit_level(T.z))
+	if (is_reserved_level(T.z))
 		if (is_type_in_typecache(A, allowed_shuttles))
 			return TRUE
 
 	return FALSE
 
-/datum/component/stationloving/proc/check_deletion(force) // TRUE = interrupt deletion, FALSE = proceed with deletion
+/datum/component/stationloving/proc/check_deletion(datum/source, force) // TRUE = interrupt deletion, FALSE = proceed with deletion
 
 	var/turf/T = get_turf(parent)
 
 	if(inform_admins && force)
 		message_admins("[parent] has been !!force deleted!! in [ADMIN_VERBOSEJMP(T)].")
-		log_game("[parent] has been !!force deleted!! in [AREACOORD(T)].")
+		log_game("[parent] has been !!force deleted!! in [loc_name(T)].")
 
-	if(!force)
+	if(!force && !allow_death)
 		var/turf/targetturf = relocate()
-		log_game("[parent] has been destroyed in [AREACOORD(T)]. Moving it to [AREACOORD(targetturf)].")
+		log_game("[parent] has been destroyed in [loc_name(T)]. Moving it to [loc_name(targetturf)].")
 		if(inform_admins)
 			message_admins("[parent] has been destroyed in [ADMIN_VERBOSEJMP(T)]. Moving it to [ADMIN_VERBOSEJMP(targetturf)].")
 		return TRUE

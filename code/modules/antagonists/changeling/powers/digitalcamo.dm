@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/changeling/digitalcamo
 	name = "Digital Camouflage"
-	desc = "By evolving the ability to distort our form and proprotions, we defeat common altgorithms used to detect lifeforms on cameras."
+	desc = "By evolving the ability to distort our form and proportions, we defeat common algorithms used to detect lifeforms on cameras."
 	helptext = "We cannot be tracked by camera or seen by AI units while using this skill. However, humans looking at us will find us... uncanny."
 	dna_cost = 1
 

@@ -103,10 +103,6 @@
 		set_light(0)
 		to_chat(src, "<span class='notice'>You disable your integrated light.</span>")
 
-/mob/living/silicon/pai/movement_delay()
-	. = ..()
-	. += 1 //A bit slower than humans, so they're easier to smash
-
 /mob/living/silicon/pai/mob_pickup(mob/living/L)
 	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, chassis, item_head_icon, item_lh_icon, item_rh_icon)
 	if(!L.put_in_hands(holder))
@@ -116,6 +112,6 @@
 
 /mob/living/silicon/pai/mob_try_pickup(mob/living/user)
 	if(!possible_chassis[chassis])
-		to_chat(user, "<span class='wraning'>[src]'s current form isn't able to be carried!</span>")
+		to_chat(user, "<span class='warning'>[src]'s current form isn't able to be carried!</span>")
 		return FALSE
 	return ..()

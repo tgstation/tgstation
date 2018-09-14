@@ -40,7 +40,7 @@
 */
 /atom/Click(location,control,params)
 	if(flags_1 & INITIALIZED_1)
-		SendSignal(COMSIG_CLICK, location, control, params)
+		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
 		usr.ClickOn(src, params)
 
 /atom/DblClick(location,control,params)
@@ -57,7 +57,7 @@
 
 	After that, mostly just check your state, check whether you're holding an item,
 	check whether you're adjacent to the target, then pass off the click to whoever
-	is recieving it.
+	is receiving it.
 	The most common are:
 	* mob/UnarmedAttack(atom,adjacent) - used here only when adjacent, with no item in hand; in the case of humans, checks gloves
 	* atom/attackby(item,user) - used only when adjacent
@@ -70,6 +70,9 @@
 	next_click = world.time + 1
 
 	if(check_click_intercept(params,A))
+		return
+
+	if(notransform)
 		return
 
 	var/list/modifiers = params2list(params)
@@ -190,17 +193,10 @@
 				if(Adjacent(target) || (tool && CheckToolReach(src, target, tool.reach))) //Adjacent or reaching attacks
 					return TRUE
 
-			GET_COMPONENT_FROM(storage, /datum/component/storage, target.loc)
-			if (storage)
-				var/datum/component/storage/concrete/master = storage.master()
-				if (master)
-					next += master.parent
-					for(var/S in master.slaves)
-						var/datum/component/storage/slave = S
-						next += slave.parent
-				else
-					next += target.loc
-			else
+			if (!target.loc)
+				continue
+
+			if(!(SEND_SIGNAL(target.loc, COMSIG_ATOM_CANREACH, next) & COMPONENT_BLOCK_REACH))
 				next += target.loc
 
 		checking = next
@@ -272,6 +268,7 @@
 	animals lunging, etc.
 */
 /mob/proc/RangedAttack(atom/A, params)
+	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_RANGED, A, params)
 /*
 	Restrained ClickOn
 
@@ -315,7 +312,7 @@
 	A.ShiftClick(src)
 	return
 /atom/proc/ShiftClick(mob/user)
-	SendSignal(COMSIG_CLICK_SHIFT, user)
+	SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user)
 	if(user.client && user.client.eye == user || user.client.eye == user.loc)
 		user.examinate(src)
 	return
@@ -330,7 +327,7 @@
 	return
 
 /atom/proc/CtrlClick(mob/user)
-	SendSignal(COMSIG_CLICK_CTRL, user)
+	SEND_SIGNAL(src, COMSIG_CLICK_CTRL, user)
 	var/mob/living/ML = user
 	if(istype(ML))
 		ML.pulled(src)
@@ -362,7 +359,7 @@
 	..()
 
 /atom/proc/AltClick(mob/user)
-	SendSignal(COMSIG_CLICK_ALT, user)
+	SEND_SIGNAL(src, COMSIG_CLICK_ALT, user)
 	var/turf/T = get_turf(src)
 	if(T && user.TurfAdjacent(T))
 		if(user.listed_turf == T)
@@ -387,7 +384,7 @@
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)
-	SendSignal(COMSIG_CLICK_CTRL_SHIFT)
+	SEND_SIGNAL(src, COMSIG_CLICK_CTRL_SHIFT)
 	return
 
 /*
