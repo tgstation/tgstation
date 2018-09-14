@@ -1,0 +1,4 @@
+author: "Zxaber"
+delete-after: True
+changes: 
+  - bugfix: "Cyborg Self-Repair item no longer attaches an action button to anyone that picks it up under certain circumstances. You can no longer remote-control a borg's Self-Repair."
