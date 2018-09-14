@@ -1,4 +1,0 @@
-author: "Administrative Moonman"
-delete-after: True
-changes: 
-  - tweak: "Fake nuclear disks no longer appear in null-crates, but can appear in surplus traitor crates with the regularity they had before."

@@ -1,4 +1,0 @@
-author: "Shdorsh"
-delete-after: True
-changes: 
-  - bugfix: "atmos analyzer circuit not analyzing certain stuff"
