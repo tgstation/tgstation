@@ -10,6 +10,9 @@
 	mutantears = /obj/item/organ/ears/cat
 	mutanttail = /obj/item/organ/tail/cat
 
+	burnmod = 1.25
+	heatmod = 1.5
+
 /datum/species/human/felinid/qualifies_for_rank(rank, list/features)
 	return TRUE
 
