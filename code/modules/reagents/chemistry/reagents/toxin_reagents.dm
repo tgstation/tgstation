@@ -927,7 +927,7 @@
 			if(4)
 				selected_part = BODY_ZONE_R_LEG
 		var/obj/item/bodypart/bp = M.get_bodypart(selected_part)
-		if(M.dna.species.type == /datum/species/skeleton || M.dna.species.type == /datum/species/plasmaman) //We're so sorry skeletons, you're so misunderstood
+		if(M.dna.species.type != /datum/species/skeleton && M.dna.species.type != /datum/species/plasmaman) //We're so sorry skeletons, you're so misunderstood
 			if(bp)
 				bp.receive_damage(0, 0, 200)
 				playsound(M, get_sfx("desceration"), 50, TRUE, -1)
