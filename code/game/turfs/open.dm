@@ -9,10 +9,6 @@
 
 	var/footstep = null
 
-/turf/open/Initialize()
-	. = ..()
-	archdrops = typelist("archdrops", archdrops)
-
 /turf/open/ComponentInitialize()
 	. = ..()
 	if(wet)
