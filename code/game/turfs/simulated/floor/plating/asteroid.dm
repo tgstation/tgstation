@@ -96,6 +96,7 @@
 
 /turf/open/floor/plating/asteroid/airless
 	initial_gas_mix = "TEMP=2.7"
+	baseturfs = /turf/open/floor/plating/asteroid/airless
 	turf_type = /turf/open/floor/plating/asteroid/airless
 
 
