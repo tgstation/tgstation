@@ -917,13 +917,13 @@
 		
 		switch(rand(1, 4)) //God help you if the same limb gets picked twice quickly.
 			if(1)
-				var/selected_part = BODY_ZONE_L_ARM
+				var/body_zone/selected_part = BODY_ZONE_L_ARM
 			if(2)
-				var/selected_part = BODY_ZONE_R_ARM
+				var/body_zone/selected_part = BODY_ZONE_R_ARM
 			if(3)
-				var/selected_part = BODY_ZONE_L_LEG
+				var/body_zone/selected_part = BODY_ZONE_L_LEG
 			if(4)
-				var/selected_part = BODY_ZONE_R_LEG
+				var/body_zone/selected_part = BODY_ZONE_R_LEG
 		/var/obj/item/bodypart/bp = M.get_bodypart(selected_part)
 		if(bp)
 			bp.receive_damage(0, 0, 200)
