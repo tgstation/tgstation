@@ -615,8 +615,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		user.do_attack_animation(M)
 		playsound(M, 'sound/weapons/slap.ogg', 50, 1, -1)
 		user.visible_message("<span class='danger'>[user] slaps [M]!</span>",
- 		"<span class='notice'>You slap [M]!</span>",\
- 		"You hear a slap.")
+		"<span class='notice'>You slap [M]!</span>",\
+		"You hear a slap.")
 		return
 	else
 		..()

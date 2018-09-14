@@ -294,8 +294,8 @@
 							break
 						parse_error("Expected ',' or ']' after array assoc value, but found '[token(i)]'")
 						return i
- 				i++
- 				continue
+				i++
+				continue
 			temp_expression_list = list()
 			i = expression(i, temp_expression_list)
 		while(token(i) && token(i) != "]")

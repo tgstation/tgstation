@@ -1,0 +1,4 @@
+author: "Granpawalton"
+delete-after: True
+changes: 
+  - bugfix: "fixed some round start atmospherics differences on lavaland caused by the ufo crash ruin"

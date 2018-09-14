@@ -102,7 +102,6 @@
 
 	var/list/obj/effect/proc_holder/abilities = list()
 
-	var/registered_z
 	var/can_be_held = FALSE	//whether this can be picked up and held.
 
 	var/radiation = 0 //If the mob is irradiated.

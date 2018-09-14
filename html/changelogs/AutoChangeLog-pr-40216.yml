@@ -1,0 +1,8 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Power changes between power ticks are now tracked by the powernets and applied to the next power tick."
+  - bugfix: "Power sinks now apply load before machines. This includes SMES and APC charging."
+  - code_imp: "Electric grilles, ninja gloves, apc terminals and power sinks now use helper procs to add load."
+  - code_imp: "Power beacons can no longer cause powernet excess to go negative instead of turning off."
+  - code_imp: "Shocks can no longer cause powernet excess to go negative."

@@ -4,7 +4,7 @@
 /obj/item/camera
 	name = "camera"
 	icon = 'icons/obj/items_and_weapons.dmi'
-	desc = "A polaroid camera. <span class='boldnotice'>Alt click to change its focusing, allowing you to set how big of an area it will capture!</span>"
+	desc = "A polaroid camera."
 	icon_state = "camera"
 	item_state = "camera"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
@@ -37,6 +37,10 @@
 	to_chat(user, "<span class='notice'>You eject [disk] out the back of [src].</span>")
 	user.put_in_hands(disk)
 	disk = null
+
+/obj/item/camera/examine(mob/user)
+	. = ..()
+	to_chat(user, "<span class='notice'>Alt-click to change its focusing, allowing you to set how big of an area it will capture.</span>")
 
 /obj/item/camera/AltClick(mob/user)
 	var/desired_x = input(user, "How high do you want the camera to shoot, between [picture_size_x_min] and [picture_size_x_max]?", "Zoom", picture_size_x) as num
@@ -191,9 +195,9 @@
 		to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 		var/customize = alert(user, "Do you want to customize the photo?", "Customization", "Yes", "No")
 		if(customize == "Yes")
-			var/name1 = stripped_input(user, "Set a name for this photo, or leave blank. 32 characters max.", "Name", max_length = 32) as text|null
-			var/desc1 = stripped_input(user, "Set a description to add to photo, or leave blank. 128 characters max.", "Caption", max_length = 128) as text|null
-			var/caption = stripped_input(user, "Set a caption for this photo, or leave blank. 256 characters max.", "Caption", max_length = 256) as text|null
+			var/name1 = stripped_input(user, "Set a name for this photo, or leave blank. 32 characters max.", "Name", max_length = 32)
+			var/desc1 = stripped_input(user, "Set a description to add to photo, or leave blank. 128 characters max.", "Caption", max_length = 128)
+			var/caption = stripped_input(user, "Set a caption for this photo, or leave blank. 256 characters max.", "Caption", max_length = 256)
 			if(name1)
 				picture.picture_name = name1
 			if(desc1)

@@ -500,47 +500,12 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = -32
 	},
-/turf/open/floor/mineral/plastitanium/red/brig{
-	dir = 9;
-	floor_tile = /obj/item/stack/tile/plasteel;
-	icon_state = "darkred"
-	},
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "aV" = (
 /obj/structure/table,
 /obj/item/book/manual/wiki/security_space_law,
-/turf/open/floor/mineral/plastitanium/red/brig{
-	icon_state = "darkred";
-	dir = 1;
-	floor_tile = /obj/item/stack/tile/plasteel
-	},
-/area/shuttle/escape)
-"aW" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium/red/brig{
-	icon_state = "darkred";
-	dir = 1;
-	floor_tile = /obj/item/stack/tile/plasteel
-	},
-/area/shuttle/escape)
-"aX" = (
-/obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/red/brig{
-	icon_state = "darkred";
-	dir = 1;
-	floor_tile = /obj/item/stack/tile/plasteel
-	},
-/area/shuttle/escape)
-"aY" = (
-/obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/red/brig{
-	icon_state = "darkred";
-	dir = 5;
-	floor_tile = /obj/item/stack/tile/plasteel
-	},
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "aZ" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -560,7 +525,6 @@
 /area/shuttle/escape)
 "bb" = (
 /obj/machinery/mech_bay_recharge_port{
-	icon_state = "recharge_port";
 	dir = 2
 	},
 /turf/open/floor/plasteel,
@@ -596,25 +560,7 @@
 	},
 /obj/structure/table,
 /obj/machinery/recharger,
-/turf/open/floor/mineral/plastitanium/red/brig{
-	dir = 8;
-	floor_tile = /obj/item/stack/tile/plasteel;
-	icon_state = "darkred"
-	},
-/area/shuttle/escape)
-"bh" = (
-/turf/open/floor/mineral/plastitanium/red/brig{
-	icon_state = "darkred";
-	dir = 1;
-	floor_tile = /obj/item/stack/tile/plasteel
-	},
-/area/shuttle/escape)
-"bi" = (
-/turf/open/floor/mineral/plastitanium/red/brig{
-	dir = 4;
-	floor_tile = /obj/item/stack/tile/plasteel;
-	icon_state = "darkred"
-	},
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bj" = (
 /turf/open/floor/mech_bay_recharge_floor,
@@ -625,26 +571,12 @@
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
-"bl" = (
-/turf/open/floor/mineral/plastitanium/red/brig{
-	dir = 8;
-	floor_tile = /obj/item/stack/tile/plasteel;
-	icon_state = "darkred"
-	},
-/area/shuttle/escape)
-"bm" = (
-/turf/open/floor/mineral/plastitanium/red/brig{
-	icon_state = "darkredfull"
-	},
-/area/shuttle/escape)
 "bn" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Brig";
 	req_access_txt = "2"
 	},
-/turf/open/floor/mineral/plastitanium/red/brig{
-	icon_state = "darkredfull"
-	},
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bo" = (
 /obj/machinery/computer/mech_bay_power_console,
@@ -666,16 +598,7 @@
 	name = "Emergency Shuttle Brig";
 	req_access_txt = "2"
 	},
-/turf/open/floor/mineral/plastitanium/red/brig{
-	icon_state = "darkredfull"
-	},
-/area/shuttle/escape)
-"br" = (
-/turf/open/floor/mineral/plastitanium/red/brig{
-	icon_state = "darkred";
-	dir = 2;
-	floor_tile = /obj/item/stack/tile/plasteel
-	},
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bs" = (
 /obj/effect/turf_decal/stripes/line{
@@ -727,41 +650,13 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium/red/brig{
-	icon_state = "darkred";
-	dir = 10;
-	floor_tile = /obj/item/stack/tile/plasteel
-	},
-/area/shuttle/escape)
-"bx" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium/red/brig{
-	icon_state = "darkred";
-	dir = 2;
-	floor_tile = /obj/item/stack/tile/plasteel
-	},
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "by" = (
 /obj/structure/table,
 /obj/item/storage/box/teargas,
 /obj/item/storage/box/zipties,
-/turf/open/floor/mineral/plastitanium/red/brig{
-	icon_state = "darkred";
-	dir = 2;
-	floor_tile = /obj/item/stack/tile/plasteel
-	},
-/area/shuttle/escape)
-"bz" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium/red/brig{
-	dir = 6;
-	floor_tile = /obj/item/stack/tile/plasteel;
-	icon_state = "darkred"
-	},
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bA" = (
 /obj/machinery/door/airlock/shuttle{
@@ -1117,9 +1012,6 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "ch" = (
-/mob/living/simple_animal/bot/medbot{
-	name = "Speedy* Recovery"
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -1128,6 +1020,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/mob/living/simple_animal/bot/medbot{
+	name = "Speedy* Recovery"
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
@@ -2085,8 +1980,8 @@ aM
 ab
 aU
 bg
-bl
-bl
+be
+be
 bw
 ab
 bG
@@ -2128,10 +2023,10 @@ aI
 aN
 ab
 aV
-bh
-bl
-br
-bx
+be
+be
+be
+bw
 ac
 bH
 bR
@@ -2171,10 +2066,10 @@ aA
 aC
 aC
 ab
-aW
-bh
-bm
-br
+aT
+be
+be
+be
 by
 ac
 bI
@@ -2215,11 +2110,11 @@ aB
 aC
 aC
 ab
-aX
-bh
-bi
-br
-bx
+aS
+be
+be
+be
+bw
 ac
 bJ
 bR
@@ -2259,11 +2154,11 @@ aC
 aC
 aC
 ab
-aY
-bi
-bi
-bi
-bz
+aS
+be
+be
+be
+bw
 ab
 bK
 bR

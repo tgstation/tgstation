@@ -410,7 +410,7 @@
 	if(strength <= RAD_BACKGROUND_RADIATION)
 		qdel(healthy_green_glow)
 		return
-	healthy_green_glow.strength = max(strength-1, 0)
+	healthy_green_glow.strength -= max(0, (healthy_green_glow.strength - (RAD_BACKGROUND_RADIATION * 2)) * 0.2)
 
 /obj/machinery/shower/process()
 	if(on)

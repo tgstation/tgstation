@@ -228,7 +228,7 @@
 /mob/living/simple_animal/hostile/construct/builder
 	name = "Artificer"
 	real_name = "Artificer"
-	desc = "A bulbous construct dedicated to building and maintaining the Cult of Nar-Sie's armies."
+	desc = "A bulbous construct dedicated to building and maintaining the Cult of Nar'Sie's armies."
 	icon_state = "artificer"
 	icon_living = "artificer"
 	maxHealth = 50
@@ -312,7 +312,7 @@
 /mob/living/simple_animal/hostile/construct/harvester
 	name = "Harvester"
 	real_name = "Harvester"
-	desc = "A long, thin construct built to herald Nar-Sie's rise. It'll be all over soon."
+	desc = "A long, thin construct built to herald Nar'Sie's rise. It'll be all over soon."
 	icon_state = "chosen"
 	icon_living = "chosen"
 	maxHealth = 40

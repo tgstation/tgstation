@@ -187,14 +187,14 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 				SS.release_shades(user)
 				qdel(SS)
 			new /obj/item/nullrod/claymore(get_turf(sword))
-			user.visible_message("<span class='notice'>[user] has purified the [sword]!!</span>")
+			user.visible_message("<span class='notice'>[user] has purified the [sword]!</span>")
 			qdel(sword)
 
 	else if(istype(A, /obj/item/soulstone) && !iscultist(user))
 		var/obj/item/soulstone/SS = A
 		to_chat(user, "<span class='notice'>You begin to exorcise [SS].</span>")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
-		if(do_after(user, 40, user = SS))
+		if(do_after(user, 40, target = SS))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
 			SS.usability = TRUE
 			for(var/mob/living/simple_animal/shade/EX in SS)
@@ -202,7 +202,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 				EX.icon_state = "ghost1"
 				EX.name = "Purified [EX.name]"
 				SS.release_shades(user)
-			user.visible_message("<span class='notice'>[user] has purified the [SS]!!</span>")
+			user.visible_message("<span class='notice'>[user] has purified the [SS]!</span>")
 			qdel(SS)
 
 /obj/item/storage/book/bible/booze
