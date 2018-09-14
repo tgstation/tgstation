@@ -213,5 +213,5 @@
 	update_movespeed(FALSE)
 
 /mob/living/proc/ignore_slowdown(source)
-	add_trait(TRAIT_IGNORESLOWDOWN, sources)
+	add_trait(TRAIT_IGNORESLOWDOWN, source)
 	update_movespeed(FALSE)
