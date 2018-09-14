@@ -914,7 +914,7 @@
 
 /datum/reagent/toxin/bonehurtingjuice/overdose_process(mob/living/M)
 	if(prob(4) && iscarbon(M)) //big oof
-		var/body_zone/selected_part = BODY_ZONE_HEAD //This should always be reassigned.  Null safe!
+		var/selected_part = ""
 		switch(rand(1, 4)) //God help you if the same limb gets picked twice quickly.
 			if(1)
 				selected_part = BODY_ZONE_L_ARM
@@ -924,7 +924,7 @@
 				selected_part = BODY_ZONE_L_LEG
 			if(4)
 				selected_part = BODY_ZONE_R_LEG
-		/var/obj/item/bodypart/bp = M.get_bodypart(selected_part)
+		var/obj/item/bodypart/bp = M.get_bodypart(selected_part)
 		if(bp)
 			bp.receive_damage(0, 0, 200)
 			playsound(M, get_sfx("desceration"), 50, TRUE, -1)
