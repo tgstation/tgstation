@@ -52,7 +52,7 @@
 	light_power = 1.75
 
 /obj/machinery/power/floodlight/process()
-	if(surplus() >= active_power_usage)
+	if(avail(active_power_usage))
 		add_load(active_power_usage)
 	else
 		change_setting(1)
@@ -61,7 +61,7 @@
 	if((val < 1) || (val > light_setting_list.len))
 		return
 	active_power_usage = light_setting_list[val]
-	if(surplus() < active_power_usage)
+	if(!avail(active_power_usage))
 		return change_setting(val - 1)
 	setting = val
 	set_light(light_setting_list[val])
