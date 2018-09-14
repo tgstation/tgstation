@@ -944,5 +944,5 @@
 				bp.receive_damage(200, 0, 0) //But I don't think we should
 			else
 				to_chat(M, "<span class='warning'>Your missing arm aches from whever you left it.</span>")
-				M.emote("sigh"))
+				M.emote("sigh")
 	return ..()
