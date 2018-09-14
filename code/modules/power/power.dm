@@ -42,7 +42,7 @@
 
 /obj/machinery/power/proc/surplus()
 	if(powernet)
-		return powernet.avail - powernet.load
+		return CLAMP(powernet.avail-powernet.load, 0, powernet.avail)
 	else
 		return 0
 
@@ -58,7 +58,7 @@
 
 /obj/machinery/power/proc/delayed_surplus()
 	if(powernet)
-		return powernet.newavail - powernet.delayedload
+		return CLAMP(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
 	else
 		return 0
 
