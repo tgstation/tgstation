@@ -914,23 +914,23 @@
 
 /datum/reagent/toxin/bonehurtingjuice/overdose_process(mob/living/M)
 	if(prob(4) && iscarbon(M)) //big oof
-		
+		var/body_zone/selected_part = BODY_ZONE_HEAD //This should always be reassigned.  Null safe!
 		switch(rand(1, 4)) //God help you if the same limb gets picked twice quickly.
 			if(1)
-				var/body_zone/selected_part = BODY_ZONE_L_ARM
+				selected_part = BODY_ZONE_L_ARM
 			if(2)
-				var/body_zone/selected_part = BODY_ZONE_R_ARM
+				selected_part = BODY_ZONE_R_ARM
 			if(3)
-				var/body_zone/selected_part = BODY_ZONE_L_LEG
+				selected_part = BODY_ZONE_L_LEG
 			if(4)
-				var/body_zone/selected_part = BODY_ZONE_R_LEG
+				selected_part = BODY_ZONE_R_LEG
 		/var/obj/item/bodypart/bp = M.get_bodypart(selected_part)
 		if(bp)
 			bp.receive_damage(0, 0, 200)
 			playsound(M, get_sfx("desceration"), 50, TRUE, -1)
 			M.visible_message("<span class='warning'>[M]'s bones hurt too much!!</span>n", "<span class='danger'>Your bones hurt too much!!</span>")
 			M.say("OOF!!", forced = "bonehurtingjuice")
-		else
+		else //SUCH A LUST FOR REVENGE!!!
 			to_chat(M, "<span class='warning'>A phantom limb hurts!</span>")
 			M.say("Why are we still here, just to suffer?", forced = "bonehurtingjuice")
 	return ..()
