@@ -467,6 +467,13 @@
 	research_icon = 'icons/obj/surgery.dmi'
 	research_icon_state = "surgery_any"
 	var/surgery
+	
+/datum/design/surgery/experimental_dissection
+	name = "Experimental Dissection"
+	desc = "A surgical procedure which deeply analyzes the biology of a corpse, and automatically adds new findings to the research database."
+	id = "surgery_exp_dissection"
+	surgery = /datum/surgery/advanced/bioware/experimental_dissection
+	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/lobotomy
 	name = "Lobotomy"
