@@ -43299,6 +43299,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/sign/poster/official/random{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel,
 /area/engine/storage_shared)
 "bzk" = (
@@ -48433,53 +48436,51 @@
 /turf/open/floor/plasteel,
 /area/engine/storage_shared)
 "bGh" = (
-/obj/structure/closet/secure_closet/engineering_electrical,
-/obj/effect/turf_decal/bot,
 /obj/machinery/light_switch{
 	pixel_x = -22
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
 /area/engine/storage_shared)
 "bGi" = (
-/obj/machinery/vending/engivend,
-/obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/vending/tool,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/engine/storage_shared)
 "bGj" = (
-/obj/machinery/vending/tool,
-/obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/structure/closet/toolcloset,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/engine/storage_shared)
 "bGk" = (
-/obj/structure/closet/secure_closet/engineering_welding,
 /obj/machinery/camera{
 	c_tag = "Engineering - Shared Storage";
 	dir = 1;
 	name = "engineering camera"
 	},
-/obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
 /area/engine/storage_shared)
 "bGl" = (
@@ -67721,6 +67722,8 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cjo" = (
+/obj/machinery/vending/engivend,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cjp" = (
@@ -75918,6 +75921,8 @@
 	pixel_x = -26;
 	pixel_y = 26
 	},
+/obj/structure/closet/secure_closet/engineering_electrical,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cxH" = (
@@ -127708,6 +127713,11 @@
 	dir = 1
 	},
 /area/science/circuit)
+"pqq" = (
+/obj/structure/closet/secure_closet/engineering_welding,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "psi" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bodycontainer/morgue{
@@ -153480,7 +153490,7 @@ cfF
 chy
 cjk
 ckE
-cjo
+pqq
 cnG
 cpe
 cqx
