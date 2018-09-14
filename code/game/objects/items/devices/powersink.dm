@@ -122,8 +122,8 @@
 
 		// found a powernet, so drain up to max power from it
 
-		var/drained = min ( drain_rate, PN.avail )
-		PN.load += drained
+		var/drained = min ( drain_rate, attached.newavail() )
+		attached.add_delayedload(drained)
 		power_drained += drained
 
 		// if tried to drain more than available on powernet
@@ -137,6 +137,8 @@
 						power_drained += 50
 						if(A.charging == 2) // If the cell was full
 							A.charging = 1 // It's no longer full
+				if(drained >= drain_rate)
+					break
 
 	if(power_drained > max_power * 0.98)
 		if (!admins_warned)
