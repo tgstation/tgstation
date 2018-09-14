@@ -900,6 +900,8 @@
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
 	M.adjustStaminaLoss(8, 0)
+	if(M.dna.species.type == /datum/species/skeleton || M.dna.species.type == /datum/species/plasmaman)
+		M.adjustBruteLoss(0.5, 0)
 	if(prob(20))
 		switch(rand(1, 3))
 			if(1)
@@ -912,9 +914,9 @@
 				to_chat(M, "<span class='warning'>Your bones hurt!</span>")
 	return ..()
 
-/datum/reagent/toxin/bonehurtingjuice/overdose_process(mob/living/M)
+/datum/reagent/toxin/bonehurtingjuice/overdose_process(mob/living/carbon/M)
 	if(prob(4) && iscarbon(M)) //big oof
-		var/selected_part = ""
+		var/selected_part
 		switch(rand(1, 4)) //God help you if the same limb gets picked twice quickly.
 			if(1)
 				selected_part = BODY_ZONE_L_ARM
@@ -925,12 +927,22 @@
 			if(4)
 				selected_part = BODY_ZONE_R_LEG
 		var/obj/item/bodypart/bp = M.get_bodypart(selected_part)
-		if(bp)
-			bp.receive_damage(0, 0, 200)
-			playsound(M, get_sfx("desceration"), 50, TRUE, -1)
-			M.visible_message("<span class='warning'>[M]'s bones hurt too much!!</span>n", "<span class='danger'>Your bones hurt too much!!</span>")
-			M.say("OOF!!", forced = "bonehurtingjuice")
-		else //SUCH A LUST FOR REVENGE!!!
-			to_chat(M, "<span class='warning'>A phantom limb hurts!</span>")
-			M.say("Why are we still here, just to suffer?", forced = "bonehurtingjuice")
+		if(M.dna.species.type == /datum/species/skeleton || M.dna.species.type == /datum/species/plasmaman) //We're so sorry skeletons, you're so misunderstood
+			if(bp)
+				bp.receive_damage(0, 0, 200)
+				playsound(M, get_sfx("desceration"), 50, TRUE, -1)
+				M.visible_message("<span class='warning'>[M]'s bones hurt too much!!</span>", "<span class='danger'>Your bones hurt too much!!</span>")
+				M.say("OOF!!", forced = "bonehurtingjuice")
+			else //SUCH A LUST FOR REVENGE!!!
+				to_chat(M, "<span class='warning'>A phantom limb hurts!</span>")
+				M.say("Why are we still here, just to suffer?", forced = "bonehurtingjuice")
+		else //you just want to socialize
+			if(bp)
+				playsound(M, get_sfx("desceration"), 50, TRUE, -1)
+				M.visible_message("<span class='warning'>[M] rattles loudly and flails around!!</span>", "<span class='danger'>Your bones so much your missing muscles spasm!!</span>")
+				M.say("OOF!!", forced="bonehurtingjuice")
+				bp.receive_damage(200, 0, 0) //But I don't think we should
+			else
+				to_chat(M, "<span class='warning'>Your missing arm aches from whever you left it.</span>")
+				M.say("*custom sighs", forced="bonehurtingjuice")
 	return ..()
