@@ -899,7 +899,7 @@
 	M.say("oof ouch my bones", forced = "bonehurtingjuice")
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
-	M.adjustStaminaLoss(8, 0)
+	M.adjustStaminaLoss(15, 0)
 	if(M.dna.species.type == /datum/species/skeleton || M.dna.species.type == /datum/species/plasmaman)
 		M.adjustBruteLoss(0.5, 0)
 	if(prob(20))
