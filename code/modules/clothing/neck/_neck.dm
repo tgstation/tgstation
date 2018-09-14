@@ -210,8 +210,8 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(C.get_item_by_slot(SLOT_NECK) == src)
-			to_chat(user, "<span class='warning'>You can't untie [src] while worn!</span>")
-			return ..()
+			to_chat(user, "<span class='warning'>You can't untie [src] while wearing it!</span>")
+			return
 		if(user.is_holding(src))
 			var/obj/item/clothing/mask/bandana/newBand = new sourceBandanaType(user)
 			var/currentHandIndex = user.get_held_index_of_item(src)
