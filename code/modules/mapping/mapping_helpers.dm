@@ -41,10 +41,12 @@
 				baseturf_cache -= i
 		if(!baseturf_cache.len)
 			thing.assemble_baseturfs(baseturf)
-		else
-			thing.PlaceOnBottom(null, baseturf)
+			return
 	else if(baseturf_to_replace[thing.baseturfs])
 		thing.assemble_baseturfs(baseturf)
+		return
+
+	thing.PlaceOnBottom(null, baseturf)
 
 /obj/effect/baseturf_helper/space
 	name = "space baseturf editor"
