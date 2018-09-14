@@ -999,9 +999,9 @@
 	module.transform_to(/obj/item/robot_module)
 
 	// Remove upgrades.
-	for(var/obj/item/I in upgrades)
+	for(var/obj/item/borg/upgrade/I in upgrades)
+		I.deactivate(src)
 		I.forceMove(get_turf(src))
-		I.dropped()
 
 	upgrades.Cut()
 
