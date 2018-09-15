@@ -3,14 +3,6 @@ echo node.js 5.3.0 or newer must be installed for this script to work.
 echo If this script fails, try closing editors and running it again first.
 echo Any warnings about optional dependencies can be safely ignored.
 pause
-REM Install npm-cache
-cmd /c npm install npm-cache -g
-REM Install Gulp
-cmd /c npm install gulp-cli -g
-REM Install tgui dependencies
-cmd /c npm-cache install npm
-REM Flatten dependency tree
-cmd /c npm dedupe
-REM Clean dependency tree
-cmd /c npm prune
+REM Install dependencies
+npm ci
 pause
