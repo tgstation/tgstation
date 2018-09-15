@@ -56,6 +56,7 @@
 
 /obj/item/proc/attack(mob/living/M, mob/living/user)
 	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user)
+	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, M, user)
 	if(item_flags & NOBLUDGEON)
 		return
 
@@ -121,6 +122,7 @@
 // Click parameters is the params string from byond Click() code, see that documentation.
 /obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
+	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
 
 
 /obj/item/proc/get_clamped_volume()

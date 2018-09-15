@@ -79,10 +79,8 @@
 
 /turf/open/floor/plating/asteroid/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
 	for(var/turf/open/floor/plating/asteroid/M in range(1, drill.chassis))
-		if(get_dir(drill.chassis,M)&drill.chassis.dir)
-			for(var/I in GetComponents(/datum/component/archaeology))
-				var/datum/component/archaeology/archy = I
-				archy.gets_dug()
+		if((get_dir(drill.chassis,M)&drill.chassis.dir) && !M.dug)
+			M.getDug()
 	drill.log_message("Drilled through [src]")
 	drill.move_ores()
 

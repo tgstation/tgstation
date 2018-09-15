@@ -4,6 +4,7 @@
 	circuit = /obj/item/circuitboard/machine/public_nanite_chamber
 	icon = 'icons/obj/machines/nanite_chamber.dmi'
 	icon_state = "nanite_chamber"
+	layer = ABOVE_WINDOW_LAYER
 	use_power = IDLE_POWER_USE
 	anchored = TRUE
 	density = TRUE

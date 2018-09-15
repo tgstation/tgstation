@@ -2348,7 +2348,8 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 8
 	},
-/turf/open/floor/plating/airless/astplate,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)
 "fe" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,

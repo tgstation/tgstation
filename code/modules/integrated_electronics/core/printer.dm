@@ -137,13 +137,13 @@
 		if(!cloning)
 			HTML += " <A href='?src=[REF(src)];print=load'>{Load Program}</a> "
 		else
-			HTML += " {Load Program}"
+			HTML += " Load Program"
 		if(!program)
-			HTML += " {[fast_clone ? "Print" : "Begin Printing"] Assembly}"
+			HTML += " [fast_clone ? "Print" : "Begin Printing"] Assembly"
 		else if(cloning)
-			HTML += " <A href='?src=[REF(src)];print=cancel'>{Cancel Print}</a>"
+			HTML += " <A href='?src=[REF(src)];print=cancel'>Cancel Print</a>"
 		else
-			HTML += " <A href='?src=[REF(src)];print=print'>{[fast_clone ? "Print" : "Begin Printing"] Assembly}</a>"
+			HTML += " <A href='?src=[REF(src)];print=print'>[fast_clone ? "Print" : "Begin Printing"] Assembly</a>"
 
 		HTML += "<br><hr>"
 	HTML += "Categories:"
@@ -164,9 +164,9 @@
 			if((initial(IC.spawn_flags) & IC_SPAWN_RESEARCH) && (!(initial(IC.spawn_flags) & IC_SPAWN_DEFAULT)) && !upgraded)
 				can_build = FALSE
 		if(can_build)
-			HTML += "<A href='?src=[REF(src)];build=[path]'>\[[initial(O.name)]\]</A>: [initial(O.desc)]<br>"
+			HTML += "<a href='?src=[REF(src)];build=[path]'>[initial(O.name)]</a>: [initial(O.desc)]<br>"
 		else
-			HTML += "<s>\[[initial(O.name)]\]</s>: [initial(O.desc)]<br>"
+			HTML += "<s>[initial(O.name)]</s>: [initial(O.desc)]<br>"
 
 	popup.set_content(HTML)
 	popup.open()

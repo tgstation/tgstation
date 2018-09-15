@@ -7,6 +7,7 @@
 	icon_state = "singularity_s1"
 	anchored = TRUE
 	density = TRUE
+	move_resist = INFINITY
 	layer = MASSIVE_OBJ_LAYER
 	light_range = 6
 	appearance_flags = 0
@@ -92,7 +93,7 @@
 			sleep(1)
 		C.ghostize()
 		var/obj/item/bodypart/head/rip_u = C.get_bodypart(BODY_ZONE_HEAD)
- 		rip_u.dismember(BURN) //nice try jedi
+		rip_u.dismember(BURN) //nice try jedi
 		qdel(rip_u)
 
 /obj/singularity/ex_act(severity, target)

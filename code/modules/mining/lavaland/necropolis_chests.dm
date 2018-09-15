@@ -434,7 +434,7 @@
 
 //Immortality Talisman
 /obj/item/immortality_talisman
-	name = "Immortality Talisman"
+	name = "\improper Immortality Talisman"
 	desc = "A dread talisman that can render you completely invulnerable."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "talisman"
@@ -449,12 +449,6 @@
 /datum/action/item_action/immortality
 	name = "Immortality"
 
-/obj/item/immortality_talisman/Destroy(force)
-	if(force)
-		. = ..()
-	else
-		return QDEL_HINT_LETMELIVE
-
 /obj/item/immortality_talisman/attack_self(mob/user)
 	if(cooldown < world.time)
 		SSblackbox.record_feedback("amount", "immortality_talisman_uses", 1)
@@ -468,6 +462,8 @@
 		user.notransform = 1
 		user.status_flags |= GODMODE
 		addtimer(CALLBACK(src, .proc/return_to_reality, user, Z), 100)
+	else
+		to_chat(user, "<span class='warning'>[src] is not ready yet!</span>")
 
 /obj/item/immortality_talisman/proc/return_to_reality(mob/user, obj/effect/immortality_talisman/Z)
 	user.status_flags &= ~GODMODE

@@ -24,14 +24,14 @@
 	var/capacity = 5e6 // maximum charge
 	var/charge = 0 // actual charge
 
-	var/input_attempt = 1 // 1 = attempting to charge, 0 = not attempting to charge
-	var/inputting = 1 // 1 = actually inputting, 0 = not inputting
+	var/input_attempt = TRUE // TRUE = attempting to charge, FALSE = not attempting to charge
+	var/inputting = TRUE // TRUE = actually inputting, FALSE = not inputting
 	var/input_level = 50000 // amount of power the SMES attempts to charge by
 	var/input_level_max = 200000 // cap on input_level
 	var/input_available = 0 // amount of charge available from input last tick
 
-	var/output_attempt = 1 // 1 = attempting to output, 0 = not attempting to output
-	var/outputting = 1 // 1 = actually outputting, 0 = not outputting
+	var/output_attempt = TRUE // TRUE = attempting to output, FALSE = not attempting to output
+	var/outputting = TRUE // TRUE = actually outputting, FALSE = not outputting
 	var/output_level = 50000 // amount of power the SMES attempts to output
 	var/output_level_max = 200000 // cap on output_level
 	var/output_used = 0 // amount of power actually outputted. may be less than output_level if the powernet returns excess power
@@ -246,35 +246,36 @@
 
 				charge += load * SMESRATE	// increase the charge
 
-				add_load(load)		// add the load to the terminal side network
+				terminal.add_load(load) // add the load to the terminal side network
 
 			else					// if not enough capcity
-				inputting = 0		// stop inputting
+				inputting = FALSE		// stop inputting
 
 		else
 			if(input_attempt && input_available > 0)
-				inputting = 1
+				inputting = TRUE
 	else
-		inputting = 0
+		inputting = FALSE
 
 	//outputting
 	if(output_attempt)
 		if(outputting)
 			output_used = min( charge/SMESRATE, output_level)		//limit output to that stored
 
-			charge -= output_used*SMESRATE		// reduce the storage (may be recovered in /restore() if excessive)
-
-			add_avail(output_used)				// add output to powernet (smes side)
+			if (add_avail(output_used))				// add output to powernet if it exists (smes side)
+				charge -= output_used*SMESRATE		// reduce the storage (may be recovered in /restore() if excessive)
+			else
+				outputting = FALSE
 
 			if(output_used < 0.0001)		// either from no charge or set to 0
-				outputting = 0
+				outputting = FALSE
 				investigate_log("lost power and turned <font color='red'>off</font>", INVESTIGATE_SINGULO)
 		else if(output_attempt && charge > output_level && output_level > 0)
-			outputting = 1
+			outputting = TRUE
 		else
 			output_used = 0
 	else
-		outputting = 0
+		outputting = FALSE
 
 	// only update icon if state changed
 	if(last_disp != chargedisplay() || last_chrg != inputting || last_onln != outputting)
@@ -311,10 +312,6 @@
 		update_icon()
 	return
 
-
-/obj/machinery/power/smes/add_load(amount)
-	if(terminal && terminal.powernet)
-		terminal.powernet.load += amount
 
 /obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)

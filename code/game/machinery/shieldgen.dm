@@ -4,6 +4,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield-old"
 	density = TRUE
+	move_resist = INFINITY
 	opacity = 0
 	anchored = TRUE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -93,6 +94,7 @@
 /obj/machinery/shieldgen/proc/shields_up()
 	active = TRUE
 	update_icon()
+	move_resist = INFINITY
 
 	for(var/turf/target_tile in range(shield_range, src))
 		if(isspaceturf(target_tile) && !(locate(/obj/structure/emergency_shield) in target_tile))
@@ -101,6 +103,7 @@
 
 /obj/machinery/shieldgen/proc/shields_down()
 	active = FALSE
+	move_resist = initial(move_resist)
 	update_icon()
 	QDEL_LIST(deployed_shields)
 

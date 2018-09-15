@@ -1266,7 +1266,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	invisibility = 101
 	density = FALSE
 	see_in_dark = 1e6
-	anchored = TRUE
+	move_resist = INFINITY
 	var/ready_to_die = FALSE
 
 /mob/dview/Initialize() //Properly prevents this mob from gaining huds or joining any global lists
@@ -1466,6 +1466,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		/obj/item/reagent_containers/food/snacks/soup,
 		/obj/item/reagent_containers/food/snacks/grown,
 		/obj/item/reagent_containers/food/snacks/grown/mushroom,
+		/obj/item/reagent_containers/food/snacks/grown/nettle, // base type
 		/obj/item/reagent_containers/food/snacks/deepfryholder
 		)
 	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
@@ -1473,7 +1474,10 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	return pick(typesof(/obj/item/reagent_containers/food/snacks) - blocked)
 
 /proc/get_random_drink()
-	return pick(subtypesof(/obj/item/reagent_containers/food/drinks))
+	var/list/blocked = list(/obj/item/reagent_containers/food/drinks/soda_cans,
+		/obj/item/reagent_containers/food/drinks/bottle
+		)	
+	return pick(subtypesof(/obj/item/reagent_containers/food/drinks) - blocked)
 
 //For these two procs refs MUST be ref = TRUE format like typecaches!
 /proc/weakref_filter_list(list/things, list/refs)

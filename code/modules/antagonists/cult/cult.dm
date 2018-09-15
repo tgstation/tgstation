@@ -132,8 +132,7 @@
 		H.eye_color = initial(H.eye_color)
 		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
 		H.remove_trait(CULT_EYES)
-		H.cut_overlays()
-		H.regenerate_icons()
+		H.update_body()
 /datum/antagonist/cult/on_removal()
 	SSticker.mode.cult -= owner
 	SSticker.mode.update_cult_icons_removed(owner)
@@ -353,7 +352,7 @@
 	update_explanation_text()
 
 /datum/objective/eldergod/update_explanation_text()
-	explanation_text = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie'. <b>The summoning can only be accomplished in [english_list(summon_spots)] - where the veil is weak enough for the ritual to begin.</b>"
+	explanation_text = "Summon Nar'Sie by invoking the rune 'Summon Nar'Sie'. <b>The summoning can only be accomplished in [english_list(summon_spots)] - where the veil is weak enough for the ritual to begin.</b>"
 
 /datum/objective/eldergod/check_completion()
 	return summoned || completed
@@ -368,7 +367,7 @@
 	var/list/parts = list()
 
 	if(check_cult_victory())
-		parts += "<span class='greentext big'>The cult has succeeded! Nar-sie has snuffed out another torch in the void!</span>"
+		parts += "<span class='greentext big'>The cult has succeeded! Nar'Sie has snuffed out another torch in the void!</span>"
 	else
 		parts += "<span class='redtext big'>The staff managed to stop the cult! Dark words and heresy are no match for Nanotrasen's finest!</span>"
 

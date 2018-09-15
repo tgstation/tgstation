@@ -157,7 +157,7 @@
 
 /datum/action/vehicle/sealed/RollTheDice
 	name = "Press a colorful button"
-	desc = "Press one of those colorful buttons on your display panel!."
+	desc = "Press one of those colorful buttons on your display panel!"
 	button_icon_state = "car_rtd"
 
 /datum/action/vehicle/sealed/RollTheDice/Trigger()
