@@ -37,9 +37,6 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		onTransitZ(old_turf?.z, new_turf?.z)
 	loc = destination
 
-/mob/dead/experience_pressure_difference()
-	return								//we don't care for spacewind
-
 /mob/dead/Stat()
 	..()
 
