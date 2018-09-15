@@ -28566,6 +28566,7 @@
 /area/maintenance/port/aft)
 "oKy" = (
 /mob/living/simple_animal/sloth/paperwork{
+	icon = 'icons/superbox/sloth.dmi';
 	name = "Raumr"
 	},
 /turf/open/floor/plasteel,
