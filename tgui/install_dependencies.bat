@@ -4,5 +4,5 @@ echo If this script fails, try closing editors and running it again first.
 echo Any warnings about optional dependencies can be safely ignored.
 pause
 REM Install dependencies
-npm install
+npm ci
 pause
