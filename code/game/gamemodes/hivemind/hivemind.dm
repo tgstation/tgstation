@@ -1,5 +1,5 @@
 /datum/game_mode/hivemind
-	name = "hivemind"
+	name = "Assimilation"
 	config_tag = "hivemind"
 	antag_flag = ROLE_HIVE
 	false_report_weight = 5
@@ -12,8 +12,8 @@
 	enemy_minimum_age = 0
 
 	announce_span = "danger"
-	announce_text = "The hosts of several psionic hiveminds have infiltrated the station and are looking to expand!\n\
-	<span class='danger'>Hosts</span>: Expand your hivemind and eliminate the enemy hosts.\n\
+	announce_text = "The hosts of several psionic hiveminds have infiltrated the station and are looking to assimilate the crew!\n\
+	<span class='danger'>Hosts</span>: Expand your hivemind and complete your objectives at all costs!\n\
 	<span class='notice'>Crew</span>: Prevent the hosts from getting into your mind!"
 
 	var/list/hosts = list()
@@ -72,4 +72,4 @@
 /datum/game_mode/hivemind/generate_report()
 	return "Reports of psychic activity have been showing up in this sector, and we believe this may have to do with a containment breach on \[REDACTED\] last month \
 		when a sapient hive intelligence displaying paranormal powers escaped into the unknown. They present a very large risk as they can assimilate people into \
-		the hivemind with ease, although they appear unable to affect mindshielded personell."
+		the hivemind with ease, although they appear unable to affect mindshielded personnel."

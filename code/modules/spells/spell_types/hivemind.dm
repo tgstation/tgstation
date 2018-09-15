@@ -55,7 +55,7 @@
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
 	var/success = FALSE
 
-	if(/*target.mind && target.mind.client &&*/ target.stat != DEAD) //uncomment later
+	if(target.mind && target.stat != DEAD)
 		if(!target.has_trait(TRAIT_MINDSHIELD))
 			to_chat(user, "<span class='notice'>We begin linking our mind with [target.name]!</span>")
 			if(do_mob(user,user,70))
@@ -65,13 +65,13 @@
 					success = TRUE
 					hive.add_to_hive(target)
 				else
-					to_chat(user, "The connection between [target.name] has been disrupted!")
+					to_chat(user, "<span class='notice'>The connection between [target.name] has been disrupted!</span>")
 			else
-				to_chat(user, "We fail to connect to [target.name].")
+				to_chat(user, "<span class='notice'>We fail to connect to [target.name].</span>")
 		else
-			to_chat(user, "Powerful technology protects [target.name]'s mind.")
+			to_chat(user, "<span class='warning'>Powerful technology protects [target.name]'s mind.</span>")
 	else
-		to_chat(user, "We detect no neural activity in this body.")
+		to_chat(user, "<span class='notice'>We detect no neural activity in this body.</span>")
 	if(!success)
 		charge_counter = charge_max
 
@@ -90,7 +90,7 @@
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
 	hive.hivemembers -= target
 	hive.calc_size()
-	to_chat(user, "We remove [target.name] from the hive")
+	to_chat(user, "<span class='notice'>We remove [target.name] from the hive</span>")
 
 /obj/effect/proc_holder/spell/target_hive/hive_see
 	name = "Hive Vision"
@@ -140,7 +140,7 @@
 		else
 			to_chat(user, "<span class='notice'>The vessel was too far away to be affected!</span>")
 	else
-		to_chat(user, "<span class='notice'>Our channeling has been interrupted!</span>")
+		to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")
 		charge_counter = charge_max
 
 /obj/effect/proc_holder/spell/self/hive_drain
@@ -193,7 +193,7 @@
 /obj/effect/proc_holder/spell/target_hive/hive_force
 	name = "Cerebellic Pulse"
 	desc = "We pulse the cerebellum of the target, forcing them to move in whatever direction we look at."
-	charge_max = 50 //change to 600
+	charge_max = 600
 	action_icon_state = "force"
 
 /obj/effect/proc_holder/spell/target_hive/hive_force/cast(list/targets, mob/living/user = usr)
@@ -274,7 +274,7 @@
 	name = "Medullary Failure"
 	desc = "We overload the target's medulla, inducing an immediate heart attack."
 
-	charge_max = 50 //Change to 3000
+	charge_max = 3000
 	action_icon_state = "attack"
 
 /obj/effect/proc_holder/spell/target_hive/hive_attack/cast(list/targets, mob/living/user = usr)
@@ -394,7 +394,7 @@
 
 /obj/effect/proc_holder/spell/targeted/hive_loyal
 	name = "Bruteforce"
-	desc = "We crush the technology shielding the minds of Security and Command personell, allowing us to assimilate them into the hive."
+	desc = "We crush the technology shielding the minds of Security and Command personnel, allowing us to assimilate them into the hive."
 	panel = "Hivemind Abilities"
 	charge_max = 3000
 	range = 1
