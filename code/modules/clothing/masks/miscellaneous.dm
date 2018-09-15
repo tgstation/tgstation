@@ -246,7 +246,7 @@
 			nk.icon_state = icon_state
 			nk.sourceBandanaType = src.type
 			var/currentHandIndex = user.get_held_index_of_item(src)
-			user.transferItemToLoc(src)
+			user.transferItemToLoc(src, null)
 			user.put_in_hand(nk, currentHandIndex)
 			user.visible_message("<span class='notice'>You tie [src] up like a neckerchief.</span>", "<span class='notice'>[user] ties [src] up like a neckerchief.</span>")
 			qdel(src)
