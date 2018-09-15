@@ -3,7 +3,7 @@ For the main html chat area
 *********************************/
 
 //Precaching a bunch of shit
-GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of icons for the browser output
+GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of icons for the browser output
 
 //On client, created on login
 /datum/chatOutput
