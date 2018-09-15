@@ -1,5 +1,0 @@
-author: "Cobby (using cyclown's formula)"
-delete-after: True
-changes: 
-  - balance: "Techweb point gen via toxins are now very-hard-soft capped at 50K point rewards. After 50K points have been awarded, you can still get points for bombs that would reward higher than 50K, but they are worth only a flat 1K (hint: it's not beneficial). Give those other bombs to mining!"
-  - balance: "Techweb toxins equation has been edited (once again)"

@@ -1,7 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - rscadd: "All atom movables now have move force and move resist, and pull force An atom can only pull another atom if its pull force is stronger than that atom's move resist"
-  - rscadd: "Mobs with a higher move force than an atom's move resist will automatically try to force the atom out of its way. This might not always work, depending on how snowflakey code is.
-experimental: As of right now, everything has a move force and resist of 100, and a pull force of 101. Things take (resist - force) damage when bumped into
-experimental; Failing to move onto a tile will now still bump up your last move timer. However, successfully pushing something out of your way will result in you automatically moving into where it was."
