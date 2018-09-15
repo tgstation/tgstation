@@ -215,7 +215,7 @@
 		if(user.is_holding(src))
 			var/obj/item/clothing/mask/bandana/newBand = new sourceBandanaType(user)
 			var/currentHandIndex = user.get_held_index_of_item(src)
-			user.transferItemToLoc(src)
+			user.transferItemToLoc(src, null)
 			user.put_in_hand(newBand, currentHandIndex)
 			user.visible_message("<span class='notice'>You untie [src] back into a [newBand.name]</span>", "<span class='notice'>[user] unties [src] back into a [newBand.name]</span>")
 			qdel(src)
