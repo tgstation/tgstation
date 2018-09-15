@@ -89,6 +89,13 @@
 	icon_state = "jdonut1"
 	extra_reagent = "cherryjelly"
 	foodtype = JUNKFOOD | GRAIN | FRIED | FRUIT
+	
+/obj/item/reagent_containers/food/snacks/donut/meat
+	bonus_reagents = list("ketchup" = 1)
+	list_reagents = list("nutriment" = 3, "ketchup" = 2)
+	tastes = list("meat" = 1)
+	foodtype = JUNKFOOD | MEAT | GROSS | FRIED
+	
 
 ////////////////////////////////////////////MUFFINS////////////////////////////////////////////
 

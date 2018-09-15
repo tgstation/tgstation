@@ -13,14 +13,14 @@
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/spiderlollipop
- 	name = "Spider Lollipop"
- 	reqs = list(/obj/item/stack/rods = 1,
- 		/datum/reagent/consumable/sugar = 5,
- 		/datum/reagent/water = 5,
- 		/obj/item/reagent_containers/food/snacks/spiderling = 1
- 	)
- 	result = /obj/item/reagent_containers/food/snacks/spiderlollipop
- 	subcategory = CAT_MISCFOOD
+	name = "Spider Lollipop"
+	reqs = list(/obj/item/stack/rods = 1,
+		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/water = 5,
+		/obj/item/reagent_containers/food/snacks/spiderling = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/spiderlollipop
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/chococoin
 	name = "Choco coin"

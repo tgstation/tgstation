@@ -188,6 +188,9 @@
 	amount_per_transfer_from_this = 5
 	list_reagents = list("condensedcapsaicin" = 40)
 
+/obj/item/reagent_containers/spray/pepper/empty //for protolathe printing
+	list_reagents = null
+
 /obj/item/reagent_containers/spray/pepper/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins huffing \the [src]! It looks like [user.p_theyre()] getting a dirty high!</span>")
 	return OXYLOSS

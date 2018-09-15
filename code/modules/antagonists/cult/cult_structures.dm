@@ -76,7 +76,7 @@
 
 /obj/structure/destructible/cult/talisman
 	name = "altar"
-	desc = "A bloodstained altar dedicated to Nar-Sie."
+	desc = "A bloodstained altar dedicated to Nar'Sie."
 	icon_state = "talismanaltar"
 	break_message = "<span class='warning'>The altar shatters, leaving only the wailing of the damned!</span>"
 
@@ -110,7 +110,7 @@
 
 /obj/structure/destructible/cult/forge
 	name = "daemon forge"
-	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie."
+	desc = "A forge used in crafting the unholy weapons used by the armies of Nar'Sie."
 	icon_state = "forge"
 	light_range = 2
 	light_color = LIGHT_COLOR_LAVA
@@ -131,7 +131,7 @@
 		return
 	var/choice
 	if(user.mind.has_antag_datum(/datum/antagonist/cult/master))
-		choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Bastard Sword")
+		choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Mirror Shield")
 	else
 		choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Mirror Shield")
 	var/list/pickedtype = list()
@@ -140,14 +140,6 @@
 			pickedtype += /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 		if("Flagellant's Robe")
 			pickedtype += /obj/item/clothing/suit/hooded/cultrobes/berserker
-		if("Bastard Sword")
-			if((world.time - SSticker.round_start_time) >= 12000)
-				pickedtype += /obj/item/twohanded/required/cult_bastard
-			else
-				cooldowntime = 12000 - (world.time - SSticker.round_start_time)
-				to_chat(user, "<span class='cult italic'>The forge fires are not yet hot enough for this weapon, give it another [DisplayTimeText(cooldowntime)].</span>")
-				cooldowntime = 0
-				return
 		if("Mirror Shield")
 			pickedtype += /obj/item/shield/mirror
 	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)

@@ -37,7 +37,7 @@
 	repopulate_sorted_areas()
 
 	for(var/L in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], SSmapping.station_start),
-	                   locate(bounds[MAP_MAXX], bounds[MAP_MAXY], z_offset - 1)))
+						locate(bounds[MAP_MAXX], bounds[MAP_MAXY], z_offset - 1)))
 		set waitfor = FALSE
 		var/turf/B = L
 		atoms += B

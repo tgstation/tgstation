@@ -345,6 +345,8 @@
 				set_picture("ai_awesome")
 			if("Dorfy")
 				set_picture("ai_urist")
+			if("Thinking")
+				set_picture("ai_thinking")
 			if("Facepalm")
 				set_picture("ai_facepalm")
 			if("Friend Computer")

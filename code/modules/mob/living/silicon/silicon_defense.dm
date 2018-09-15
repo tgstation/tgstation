@@ -65,6 +65,9 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/silicon/attack_hand(mob/living/carbon/human/M)
+	. = FALSE
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, M) & COMPONENT_NO_ATTACK_HAND)
+		. = TRUE
 	switch(M.a_intent)
 		if ("help")
 			M.visible_message("[M] pets [src].", \
@@ -76,7 +79,6 @@
 			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
 			visible_message("<span class='danger'>[M] punches [src], but doesn't leave a dent.</span>", \
 				"<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>", null, COMBAT_MESSAGE_RANGE)
-	return 0
 
 /mob/living/silicon/attack_drone(mob/living/simple_animal/drone/M)
 	if(M.a_intent == INTENT_HARM)
@@ -108,7 +110,8 @@
 			M.visible_message("<span class='boldwarning'>[M] is thrown off of [src]!</span>")
 	flash_act(affect_silicon = 1)
 
-/mob/living/silicon/bullet_act(obj/item/projectile/Proj)
+/mob/living/silicon/bullet_act(obj/item/projectile/Proj, def_zone)
+	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, Proj, def_zone)
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		adjustBruteLoss(Proj.damage)
 		if(prob(Proj.damage*1.5))

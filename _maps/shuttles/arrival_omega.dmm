@@ -42,7 +42,8 @@
 	anchored = 1
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel/neutral/corner,
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "h" = (
 /obj/structure/closet/emcloset{
@@ -62,16 +63,21 @@
 /obj/item/clothing/head/hardhat/orange,
 /obj/item/clothing/head/hardhat/orange,
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel/neutral/side,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "i" = (
 /obj/structure/closet/wardrobe/mixed{
 	anchored = 1
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel/neutral/corner{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "j" = (
 /obj/machinery/door/airlock/shuttle,
@@ -87,12 +93,24 @@
 /obj/effect/turf_decal/caution{
 	dir = 4
 	},
-/turf/open/floor/plasteel/neutral/side{
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "l" = (
-/turf/open/floor/plasteel/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "m" = (
 /obj/machinery/light{
@@ -101,23 +119,29 @@
 /obj/structure/sign/poster/official/enlist{
 	pixel_x = 32
 	},
-/turf/open/floor/plasteel/neutral/side{
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "n" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
-/turf/open/floor/plasteel/neutral/corner{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "o" = (
 /obj/item/twohanded/required/kirbyplants/random,
-/turf/open/floor/plasteel/neutral/corner{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "p" = (
 /obj/effect/spawner/structure/window/shuttle,
@@ -152,19 +176,28 @@
 	dir = 4
 	},
 /obj/machinery/cell_charger,
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/shuttle/arrival)
-"u" = (
-/turf/open/floor/plasteel/neutral/corner{
-	dir = 4
-	},
-/area/shuttle/arrival)
-"v" = (
-/turf/open/floor/plasteel/neutral/side{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/arrival)
+"u" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/arrival)
+"v" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "w" = (
 /obj/structure/closet/crate/internals,
@@ -178,9 +211,10 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel/neutral/corner{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "x" = (
 /obj/machinery/door/airlock/shuttle/glass,

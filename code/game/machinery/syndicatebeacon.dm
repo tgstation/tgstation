@@ -86,7 +86,7 @@
 	if(!active)
 		return
 
-	if(surplus() > 1500)
+	if(surplus() >= 1500)
 		add_load(1500)
 		if(cooldown <= world.time)
 			cooldown = world.time + 80

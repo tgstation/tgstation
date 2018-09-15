@@ -4,7 +4,6 @@
 
 	var/postdig_icon_change = FALSE
 	var/postdig_icon
-	var/list/archdrops
 	var/wet
 
 	var/footstep = null
@@ -13,8 +12,6 @@
 	. = ..()
 	if(wet)
 		AddComponent(/datum/component/wet_floor, wet, INFINITY, 0, INFINITY, TRUE)
-	if(LAZYLEN(archdrops))
-		AddComponent(/datum/component/archaeology, archdrops)
 
 /turf/open/indestructible
 	name = "floor"

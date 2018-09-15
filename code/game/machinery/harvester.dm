@@ -86,6 +86,7 @@
 	operation_order = reverseList(C.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
 	harvesting = TRUE
 	visible_message("<span class='notice'>The [name] begins warming up!</span>")
+	say("Initializing harvest protocol.")
 	update_icon(TRUE)
 	addtimer(CALLBACK(src, .proc/harvest), interval)
 
@@ -175,7 +176,9 @@
 
 /obj/machinery/harvester/examine(mob/user)
 	..()
+	if(stat & BROKEN)
+		return
 	if(state_open)
 		to_chat(user, "<span class='notice'>[src] must be closed before harvesting.</span>")
-	else
+	else if(!harvesting)
 		to_chat(user, "<span class='notice'>Alt-click [src] to start harvesting.</span>")

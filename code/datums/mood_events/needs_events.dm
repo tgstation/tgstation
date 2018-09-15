@@ -32,6 +32,14 @@
 	description = "<span class='boldwarning'>Oh god that's disgusting...</span>\n"
 	mood_change = -8
 
+/datum/mood_event/disgust/bad_smell
+	description = "<span class='warning'>You smell something horribly decayed inside this room.</span>\n"
+	mood_change = -3
+
+/datum/mood_event/disgust/nauseating_stench
+	description = "<span class='warning'>The stench of rotting carcasses is unbearable!</span>\n"
+	mood_change = -7
+
 //Generic needs events
 /datum/mood_event/favorite_food
 	description = "<span class='nicegreen'>I really enjoyed eating that.</span>\n"

@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(research)
 	//----------------------------------------------
 	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = 54.3)
 	var/multiserver_calculation = FALSE
-	var/last_income = 0
+	var/last_income
 	//^^^^^^^^ ALL OF THESE ARE PER SECOND! ^^^^^^^^
 
 	//Aiming for 1.5 hours to max R&D
@@ -41,9 +41,6 @@ SUBSYSTEM_DEF(research)
 	return ..()
 
 /datum/controller/subsystem/research/fire()
-	handle_research_income()
-
-/datum/controller/subsystem/research/proc/handle_research_income()
 	var/list/bitcoins = list()
 	if(multiserver_calculation)
 		var/eff = calculate_server_coefficient()
@@ -57,11 +54,12 @@ SUBSYSTEM_DEF(research)
 			if(miner.working)
 				bitcoins = single_server_income.Copy()
 				break			//Just need one to work.
-	var/income_time_difference = world.time - last_income
-	science_tech.last_bitcoins = bitcoins  // Doesn't take tick drift into account
-	for(var/i in bitcoins)
-		bitcoins[i] *= income_time_difference / 10
-	science_tech.add_point_list(bitcoins)
+	if (!isnull(last_income))
+		var/income_time_difference = world.time - last_income
+		science_tech.last_bitcoins = bitcoins  // Doesn't take tick drift into account
+		for(var/i in bitcoins)
+			bitcoins[i] *= income_time_difference / 10
+		science_tech.add_point_list(bitcoins)
 	last_income = world.time
 
 /datum/controller/subsystem/research/proc/calculate_server_coefficient()	//Diminishing returns.
