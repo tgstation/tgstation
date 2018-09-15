@@ -442,9 +442,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
-	icon_state = "darkyellow"
-	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bb" = (
 /obj/item/clothing/suit/hazardvest{
@@ -555,9 +553,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark{
-	icon_state = "darkyellow"
-	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bg" = (
 /obj/structure/table/reinforced,
@@ -594,9 +590,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
-	icon_state = "darkyellow"
-	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bk" = (
 /obj/machinery/suit_storage_unit/standard_unit,

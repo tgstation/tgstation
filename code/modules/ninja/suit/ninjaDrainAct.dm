@@ -169,8 +169,8 @@ They *could* go in their appropriate files, but this is supposed to be modular
 		drain = (round((rand(G.mindrain, G.maxdrain))/2))
 		var/drained = 0
 		if(PN && do_after(H,10, target = src))
-			drained = min(drain, PN.avail)
-			PN.load += drained
+			drained = min(drain, delayed_surplus())
+			add_delayedload(drained)
 			if(drained < drain)//if no power on net, drain apcs
 				for(var/obj/machinery/power/terminal/T in PN.nodes)
 					if(istype(T.master, /obj/machinery/power/apc))

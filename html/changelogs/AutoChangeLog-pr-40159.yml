@@ -1,7 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the Cere emergency shuttle brig floor."
-  - tweak: "Removed access restrictions on the Hi Daniel shuttle's booze-o-mat."
-  - tweak: "Added missing surgical drills and cauteries to emergency shuttles."
-  - tweak: "Replaced boring high traction floors in the SnapPop!(tm) shuttle with exciting bananium floors."

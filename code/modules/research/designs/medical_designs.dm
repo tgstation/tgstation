@@ -77,7 +77,7 @@
 	desc = "Produce additional disks for storing genetic data."
 	id = "cloning_disk"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 100, MAT_SILVER=50)
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100, MAT_SILVER = 50)
 	build_path = /obj/item/disk/data
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
@@ -134,6 +134,7 @@
 
 /datum/design/defibrillator
 	name = "Defibrillator"
+	desc = "A portable defibrillator, used for resuscitating recently deceased crew."
 	id = "defibrillator"
 	build_type = PROTOLATHE
 	build_path = /obj/item/defibrillator
@@ -151,73 +152,33 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/alienscalpel
-	name = "Alien Scalpel"
-	desc = "An advanced scalpel obtained through Abductor technology."
-	id = "alien_scalpel"
-	build_path = /obj/item/scalpel/alien
+/datum/design/defibrillator_compact
+	name = "Compact Defibrillator"
+	desc = "A compact defibrillator that can be worn on a belt."
+	id = "defibrillator_compact"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/alienhemostat
-	name = "Alien Hemostat"
-	desc = "An advanced hemostat obtained through Abductor technology."
-	id = "alien_hemostat"
-	build_path = /obj/item/hemostat/alien
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/alienretractor
-	name = "Alien Retractor"
-	desc = "An advanced retractor obtained through Abductor technology."
-	id = "alien_retractor"
-	build_path = /obj/item/retractor/alien
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/aliensaw
-	name = "Alien Circular Saw"
-	desc = "An advanced surgical saw obtained through Abductor technology."
-	id = "alien_saw"
-	build_path = /obj/item/circular_saw/alien
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 1500)
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/aliendrill
-	name = "Alien Drill"
-	desc = "An advanced drill obtained through Abductor technology."
-	id = "alien_drill"
-	build_path = /obj/item/surgicaldrill/alien
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 1500)
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/aliencautery
-	name = "Alien Cautery"
-	desc = "An advanced cautery obtained through Abductor technology."
-	id = "alien_cautery"
-	build_path = /obj/item/cautery/alien
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
+	build_path = /obj/item/defibrillator/compact
+	materials = list(MAT_METAL = 16000, MAT_GLASS = 8000, MAT_SILVER = 6000, MAT_GOLD = 3000)
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/healthanalyzer_advanced
-	name = "advanced health analyzer"
+	name = "Advanced Health Analyzer"
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject with high accuracy."
 	id = "healthanalyzer_advanced"
 	build_path = /obj/item/healthanalyzer/advanced
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500, MAT_SILVER = 2000, MAT_GOLD = 1500)
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/medspray
+	name = "Medical Spray"
+	desc = "A medical spray bottle, designed for precision application, with an unscrewable cap."
+	id = "medspray"
+	build_path = /obj/item/reagent_containers/medspray
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2500, MAT_GLASS = 500)
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
@@ -506,6 +467,13 @@
 	research_icon = 'icons/obj/surgery.dmi'
 	research_icon_state = "surgery_any"
 	var/surgery
+	
+/datum/design/surgery/experimental_dissection
+	name = "Experimental Dissection"
+	desc = "A surgical procedure which deeply analyzes the biology of a corpse, and automatically adds new findings to the research database."
+	id = "surgery_exp_dissection"
+	surgery = /datum/surgery/advanced/bioware/experimental_dissection
+	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/lobotomy
 	name = "Lobotomy"
@@ -576,13 +544,3 @@
 	id = "surgery_zombie"
 	surgery = /datum/surgery/advanced/necrotic_revival
 	research_icon_state = "surgery_head"
-
-/datum/design/holobarrier_med
-	name = "PENLITE holobarrier projector"
-	desc = "PENLITE holobarriers, a device that halts individuals with malicious diseases."
-	build_type = PROTOLATHE
-	build_path = /obj/item/holosign_creator/medical
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 100) //a hint of silver since it can troll 2 antags (bad viros and sentient disease)
-	id = "holobarrier_med"
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL

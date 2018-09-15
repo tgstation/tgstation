@@ -11,6 +11,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	var/uses_left = 3
 	var/can_use_indoors
 	var/safe_for_living_creatures = 1
+	var/max_force_fulton = MOVE_FORCE_STRONG
 
 /obj/item/extraction_pack/examine()
 	. = ..()
@@ -57,7 +58,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			return
 		if(!isturf(A.loc)) // no extracting stuff inside other stuff
 			return
-		if(A.anchored)
+		if(A.anchored || (A.move_resist > max_force_fulton))
 			return
 		to_chat(user, "<span class='notice'>You start attaching the pack to [A]...</span>")
 		if(do_after(user,50,target=A))
