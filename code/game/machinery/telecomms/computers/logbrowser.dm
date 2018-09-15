@@ -86,7 +86,7 @@
 					else if(isobj(mobtype))
 						race = "Machinery"
 
-					else if(ispath(mobtype, ))
+					else if(ispath(mobtype, /mob/living/simple_animal))
 						race = "Domestic Animal"
 
 					else
