@@ -446,31 +446,36 @@
 						else
 							target_antag = target
 
-		var/list/allowed_types = list(
-			/datum/objective/assassinate,
-			/datum/objective/maroon,
-			/datum/objective/debrain,
-			/datum/objective/protect,
-			/datum/objective/destroy,
-			/datum/objective/hijack,
-			/datum/objective/escape,
-			/datum/objective/survive,
-			/datum/objective/martyr,
-			/datum/objective/steal,
-			/datum/objective/download,
-			/datum/objective/nuclear,
-			/datum/objective/capture,
-			/datum/objective/absorb,
-			/datum/objective/custom
-		)
 
-		var/choices = list()
-		for(var/T in allowed_types)
-			var/datum/objective/X = T
-			choices[initial(X.name)] = T
+		
+		var/static/list/choices
+		if(!choices)
+			choices = list()
+		
+			var/list/allowed_types = list(
+				/datum/objective/assassinate,
+				/datum/objective/maroon,
+				/datum/objective/debrain,
+				/datum/objective/protect,
+				/datum/objective/destroy,
+				/datum/objective/hijack,
+				/datum/objective/escape,
+				/datum/objective/survive,
+				/datum/objective/martyr,
+				/datum/objective/steal,
+				/datum/objective/download,
+				/datum/objective/nuclear,
+				/datum/objective/capture,
+				/datum/objective/absorb,
+				/datum/objective/custom
+			)
+			
+			for(var/T in allowed_types)
+				var/datum/objective/X = T
+				choices[initial(X.name)] = T
 
 		if(old_objective)
-			if(old_objective.name in allowed_types)
+			if(old_objective.name in choices)
 				def_value = old_objective.name
 
 		var/selected_type = input("Select objective type:", "Objective type", def_value) as null|anything in choices
