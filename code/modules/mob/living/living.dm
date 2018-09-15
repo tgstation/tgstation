@@ -1053,34 +1053,6 @@
 	..()
 	update_z(new_z)
 
-/mob/living/MouseDrop(mob/over)
-	. = ..()
-	var/mob/living/user = usr
-	if(!istype(over) || !istype(user))
-		return
-	if(!over.Adjacent(src) || (user != src) || !canUseTopic(over))
-		return
-	if(can_be_held)
-		mob_try_pickup(over)
-
-/mob/living/proc/mob_pickup(mob/living/L)
-	return
-
-/mob/living/proc/mob_try_pickup(mob/living/user)
-	if(!ishuman(user))
-		return
-	if(user.get_active_held_item())
-		to_chat(user, "<span class='warning'>Your hands are full!</span>")
-		return FALSE
-	if(buckled)
-		to_chat(user, "<span class='warning'>[src] is buckled to something!</span>")
-		return FALSE
-	user.visible_message("<span class='notice'>[user] starts trying to scoop up [src]!</span>")
-	if(!do_after(user, 20, target = src))
-		return FALSE
-	mob_pickup(user)
-	return TRUE
-
 /mob/living/proc/get_static_viruses() //used when creating blood and other infective objects
 	if(!LAZYLEN(diseases))
 		return

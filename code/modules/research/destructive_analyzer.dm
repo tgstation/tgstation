@@ -152,3 +152,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	loaded_item = null
 	update_icon()
 	return TRUE
+
+/obj/machinery/rnd/destructive_analyzer/attackby(obj/item/I, mob/user)
+	if(I.item_flags & (NODROP | ABSTRACT))
+		return

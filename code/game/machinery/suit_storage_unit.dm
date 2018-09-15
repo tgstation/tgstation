@@ -305,6 +305,8 @@
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
 	if(state_open && is_operational())
+		if(I.item_flags & (NODROP | ABSTRACT))
+			return
 		if(istype(I, /obj/item/clothing/suit))
 			if(suit)
 				to_chat(user, "<span class='warning'>The unit already contains a suit!.</span>")

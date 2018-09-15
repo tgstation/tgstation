@@ -1,84 +1,145 @@
 //Generic system for picking up mobs.
 //Currently works for head and hands.
-/obj/item/clothing/head/mob_holder
+/obj/item/mob_holder
 	name = "bugged mob"
 	desc = "Yell at coderbrush."
 	icon = null
 	icon_state = ""
-	item_flags = DROPDEL
 	var/mob/living/held_mob
-	var/can_head = TRUE
-	var/destroying = FALSE
+	var/can_head = FALSE
+	w_class = WEIGHT_CLASS_BULKY
+	body_parts_covered = 0
+	item_flags = ABSTRACT
+	slot_flags = ITEM_SLOT_HEAD
 
-/obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/M, _worn_state, head_icon, lh_icon, rh_icon, _can_head = TRUE)
+/obj/item/mob_holder/Initialize(mapload, mob/living/M, _worn_state, alt_worn, lh_icon, rh_icon, _can_head = FALSE)
 	. = ..()
-	can_head = _can_head
-	if(head_icon)
-		alternate_worn_icon = head_icon
+
+	if(M)
+		M.setDir(SOUTH)
+		held_mob = M
+		M.forceMove(src)
+		appearance = M.appearance
+		name = M.name
+		desc = M.desc
+
+	if(_can_head)
+		can_head = _can_head
+	if(alt_worn)
+		alternate_worn_icon = alt_worn
 	if(_worn_state)
 		item_state = _worn_state
+		icon_state = _worn_state
 	if(lh_icon)
 		lefthand_file = lh_icon
 	if(rh_icon)
 		righthand_file = rh_icon
 	if(!can_head)
 		slot_flags = NONE
-	deposit(M)
 
-/obj/item/clothing/head/mob_holder/Destroy()
-	destroying = TRUE
+/obj/item/mob_holder/Destroy()
 	if(held_mob)
-		release(FALSE)
+		release()
 	return ..()
 
-/obj/item/clothing/head/mob_holder/proc/deposit(mob/living/L)
-	if(!istype(L))
-		return FALSE
-	L.setDir(SOUTH)
-	update_visuals(L)
-	held_mob = L
-	L.forceMove(src)
-	name = L.name
-	desc = L.desc
-	return TRUE
+/obj/item/mob_holder/dropped()
+	..()
+	if(isturf(loc))//don't release on soft-drops
+		release()
 
-/obj/item/clothing/head/mob_holder/proc/update_visuals(mob/living/L)
-	appearance = L.appearance
-
-/obj/item/clothing/head/mob_holder/proc/release(del_on_release = TRUE)
-	if(!held_mob)
-		if(del_on_release && !destroying)
-			qdel(src)
-		return FALSE
+/obj/item/mob_holder/proc/release(del_on_release = TRUE)
 	if(isliving(loc))
 		var/mob/living/L = loc
-		to_chat(L, "<span class='warning'>[held_mob] wriggles free!</span>")
 		L.dropItemToGround(src)
-	held_mob.forceMove(get_turf(held_mob))
-	held_mob.reset_perspective()
-	held_mob.setDir(SOUTH)
-	held_mob.visible_message("<span class='warning'>[held_mob] uncurls!</span>")
-	held_mob = null
-	if(del_on_release && !destroying)
+	if(held_mob)
+		var/mob/living/m = held_mob
+		m.forceMove(get_turf(m))
+		m.reset_perspective()
+		m.setDir(SOUTH)
+		held_mob = null
+	if(del_on_release)
 		qdel(src)
+
+/obj/item/mob_holder/relaymove(mob/user)
+	release()
+
+/obj/item/mob_holder/container_resist()
+	release()
+
+/mob/living/proc/mob_pickup(mob/living/L)
+	var/obj/item/mob_holder/holder = generate_mob_holder()
+	if(!holder) return
+	drop_all_held_items()
+	L.put_in_hands(holder)
+	return
+
+/mob/living/proc/generate_mob_holder()
+	..()
+	var/obj/item/mob_holder/holder = new(get_turf(src), src, (istext(can_be_held) ? can_be_held : ""), 'icons/mob/animals_held.dmi', 'icons/mob/animals_held_lh.dmi', 'icons/mob/animals_held_rh.dmi')
+	return holder
+
+/mob/living/simple_animal/drone/generate_mob_holder()
+	var/obj/item/mob_holder/holder = new(get_turf(src), src, "[visualAppearence]_hat", null, null, null, TRUE)
+	return holder
+
+/mob/living/carbon/monkey/generate_mob_holder()
+	var/obj/item/mob_holder/holder = new(get_turf(src), src, "monkey", 'icons/mob/animals_held.dmi', 'icons/mob/animals_held_lh.dmi', 'icons/mob/animals_held_rh.dmi', TRUE)
+	return holder
+
+/mob/living/simple_animal/mouse/generate_mob_holder()
+	var/obj/item/mob_holder/holder = new(get_turf(src), src, (istext(can_be_held) ? can_be_held : ""), 'icons/mob/animals_held.dmi', 'icons/mob/animals_held_lh.dmi', 'icons/mob/animals_held_rh.dmi')
+	holder.w_class = 1
+	return holder
+
+/mob/living/simple_animal/hostile/lizard/generate_mob_holder()
+	var/obj/item/mob_holder/holder = new(get_turf(src), src, "lizard", 'icons/mob/animals_held.dmi', 'icons/mob/animals_held_lh.dmi', 'icons/mob/animals_held_rh.dmi', TRUE)
+	return holder
+
+/mob/living/proc/mob_try_pickup(mob/living/user)
+	if(!ishuman(user) || !src.Adjacent(user) || user.incapacitated() || !can_be_held)
+		return FALSE
+	if(user.get_active_held_item())
+		to_chat(user, "<span class='warning'>Your hands are full!</span>")
+		return FALSE
+	if(buckled)
+		to_chat(user, "<span class='warning'>[src] is buckled to something!</span>")
+		return FALSE
+	if(src == user)
+		to_chat(user, "<span class='warning'>You can't pick yourself up.</span>")
+		return FALSE
+	if(user.can_be_held)
+		to_chat(user, "<span class='warning'>You're too small to pick that up.</span>")
+		return FALSE
+	visible_message("<span class='warning'>[user] starts picking up [src].</span>", \
+					"<span class='userdanger'>[user] starts picking you up!</span>")
+	if(!do_after(user, 2 SECONDS, target = src))
+		return FALSE
+
+	if(user.get_active_held_item()||buckled)
+		return FALSE
+
+	visible_message("<span class='warning'>[user] picks up [src]!</span>", \
+					"<span class='userdanger'>[user] picks you up!</span>")
+	to_chat(user, "<span class='notice'>You pick [src] up.</span>")
+	mob_pickup(user)
 	return TRUE
 
-/obj/item/clothing/head/mob_holder/relaymove(mob/user)
-	release()
+/mob/living/AltClick(mob/user)
+	mob_try_pickup(user)
+	..()
 
-/obj/item/clothing/head/mob_holder/container_resist()
-	release()
+	// I didn't define these for mobs, because you shouldn't be able to breathe out of mobs and using their loc isn't always the logical thing to do.
+/obj/item/mob_holder/return_air()
+	var/atom/location = loc
+	if(location)
+		return location.loc.return_air(args)
 
-/obj/item/clothing/head/mob_holder/drone/deposit(mob/living/L)
-	. = ..()
-	if(!isdrone(L))
-		qdel(src)
-	name = "drone (hiding)"
-	desc = "This drone is scared and has curled up into a ball!"
+/obj/item/mob_holder/assume_air(datum/gas_mixture/env)
+	var/atom/location = loc
+	if(location)
+		return location.loc.assume_air(env)
 
-/obj/item/clothing/head/mob_holder/drone/update_visuals(mob/living/L)
-	var/mob/living/simple_animal/drone/D = L
-	if(!D)
-		return ..()
-	icon = 'icons/mob/drone.dmi'
-	icon_state = "[D.visualAppearence]_hat"
+/obj/item/mob_holder/remove_air(amount)
+	var/atom/location = loc
+	if(location)
+		return location.loc.remove_air(amount)

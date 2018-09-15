@@ -96,7 +96,7 @@
 			return
 
 	if(user.a_intent != INTENT_HARM)
-		if((I.item_flags & ABSTRACT) || !user.temporarilyRemoveItemFromInventory(I))
+		if((I.flags_1 & ABSTRACT))
 			return
 		place_item_in_disposal(I, user)
 		update_icon()
@@ -105,8 +105,17 @@
 		return ..()
 
 /obj/machinery/disposal/proc/place_item_in_disposal(obj/item/I, mob/user)
-	I.forceMove(src)
-	user.visible_message("[user.name] places \the [I] into \the [src].", "<span class='notice'>You place \the [I] into \the [src].</span>")
+	if(istype(I, /obj/item/mob_holder))
+		var/obj/item/mob_holder/H = I
+		var/mob/living/M = H.held_mob
+		H.release()
+		if(M)
+			user.start_pulling(M, 1)
+			stuff_mob_in(M,user)
+		return//you don't want this going into disposals ever
+	else
+		I.forceMove(src)
+		user.visible_message("[user.name] places \the [I] into \the [src].", "<span class='notice'>You place \the [I] into \the [src].</span>")
 
 //mouse drop another mob or self
 /obj/machinery/disposal/MouseDrop_T(mob/living/target, mob/living/user)

@@ -213,6 +213,9 @@
 		update_icon()
 		return
 
+	if(W.item_flags & (ABSTRACT))
+		return 1
+
 	else if(user.a_intent != INTENT_HARM)
 
 		if (!state_open)
