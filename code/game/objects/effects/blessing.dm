@@ -4,7 +4,6 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = null
 	anchored = TRUE
-	move_resist = INFINITY
 	density = FALSE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
