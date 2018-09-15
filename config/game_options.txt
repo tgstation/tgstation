@@ -411,6 +411,7 @@ ROUNDSTART_RACES lizard
 #ROUNDSTART_RACES moth
 ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
+#ROUNDSTART_RACES felinid
 
 ## Races that are better than humans in some ways, but worse in others
 #ROUNDSTART_RACES jelly
