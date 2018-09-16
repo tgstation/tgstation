@@ -117,6 +117,7 @@
 	icon_state = "buckknife"
 	item_state = "knife"
 	desc = "A military combat utility survival knife."
+	embeding = 65
 	force = 20
 	throwforce = 20
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "cut")
@@ -126,6 +127,7 @@
 	name = "survival knife"
 	icon_state = "survivalknife"
 	item_state = "knife"
+	embeding = 30
 	desc = "A hunting grade survival knife."
 	force = 15
 	throwforce = 15
@@ -138,6 +140,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A sharpened bone. The bare minimum in survival."
+	embeding = 30
 	force = 15
 	throwforce = 15
 	materials = list()
