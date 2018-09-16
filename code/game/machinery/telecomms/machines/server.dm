@@ -36,6 +36,7 @@
 	log.parameters["name"] = signal.data["name"]
 	log.parameters["job"] = signal.data["job"]
 	log.parameters["message"] = signal.data["message"]
+	log.parameters["language"] = signal.language
 
 	// If the signal is still compressed, make the log entry gibberish
 	var/compression = signal.data["compression"]
