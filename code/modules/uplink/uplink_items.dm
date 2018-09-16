@@ -89,12 +89,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	if(purchase_log_vis && U.purchase_log)
 		U.purchase_log.LogPurchase(A, src, cost)
 
-/datum/uplink_item/proc/spawn_item(spawn_item, mob/user, datum/component/uplink/U)
-	if(!spawn_item)
+/datum/uplink_item/proc/spawn_item(spawn_path, mob/user, datum/component/uplink/U)
+	if(!spawn_path)
 		return
 	var/atom/A
-	if(ispath(spawn_item))
-		A = new spawn_item(get_turf(user))
+	if(ispath(spawn_path))
+		A = new spawn_path(get_turf(user))
 	else
 		A = spawn_item
 	if(ishuman(user) && istype(A, /obj/item))
@@ -858,9 +858,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	restricted = TRUE
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
-/datum/uplink_item/stealthy_tools/failsafe/spawn_item(spawn_item, mob/user, datum/component/uplink/U)
+/datum/uplink_item/stealthy_tools/failsafe/spawn_item(spawn_path, mob/user, datum/component/uplink/U)
+	if(!U)
+		return
 	U.failsafe_code = U.generate_code()
 	to_chat(user, "The new failsafe code for this uplink is now : [U.failsafe_code].")
+	if(user.mind)
+		user.mind.store_memory("Failsafe code for [U.parent] : [U.failsafe_code]")
 	return U.parent //For log icon
 
 /datum/uplink_item/stealthy_tools/agent_card
@@ -1602,7 +1606,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	var/list/uplink_items = get_uplink_items(SSticker && SSticker.mode? SSticker.mode : null, FALSE)
 
 	var/crate_value = starting_crate_value
-	var/obj/structure/closet/crate/C = spawn_item(/obj/structure/closet/crate, user)
+	var/obj/structure/closet/crate/C = spawn_item(/obj/structure/closet/crate, user, U)
 	if(U.purchase_log)
 		U.purchase_log.LogPurchase(C, src, cost)
 	while(crate_value)
