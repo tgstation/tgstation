@@ -861,6 +861,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/stealthy_tools/failsafe/spawn_item(spawn_item, mob/user, datum/component/uplink/U)
 	U.failsafe_code = U.generate_code()
 	to_chat(user, "The new failsafe code for this uplink is now : [U.failsafe_code].")
+	return U.parent //For log icon
 
 /datum/uplink_item/stealthy_tools/agent_card
 	name = "Agent Identification Card"
