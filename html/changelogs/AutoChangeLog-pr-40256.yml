@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "The telecomms log computers now use the actual language of messages, rather than mob type."
