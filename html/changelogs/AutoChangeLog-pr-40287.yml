@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - code_imp: "windows no longer hold whole instances of the things that pop out from them hoping for the day some assistant breaks the windows in reebe."
