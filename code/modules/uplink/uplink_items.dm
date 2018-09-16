@@ -96,7 +96,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	if(ispath(spawn_path))
 		A = new spawn_path(get_turf(user))
 	else
-		A = spawn_item
+		A = spawn_path
 	if(ishuman(user) && istype(A, /obj/item))
 		var/mob/living/carbon/human/H = user
 		if(H.put_in_hands(A))
