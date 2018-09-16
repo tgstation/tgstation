@@ -220,6 +220,9 @@
 	var/obj/effect/temp_visual/fallingPod //Temporary "falling pod" that we animate
 	var/obj/structure/closet/supplypod/pod //The supplyPod that will be landing ontop of this target
 
+/obj/effect/ex_act()
+	return
+
 /obj/effect/DPtarget/Initialize(mapload, podParam, var/supplyorder = null)
 	if (ispath(podParam)) //We can pass either a path for a pod (as expressconsoles do), or a reference to an instantiated pod (as the centcom_podlauncher does)
 		podParam = new podParam() //If its just a path, instantiate it
