@@ -24,7 +24,7 @@
 /turf/open/floor/Initialize(mapload)
 
 	broken_states = typelist("broken_states", broken_states)
-	burnt_states = typelist("burnt_states", broken_states)
+	burnt_states = typelist("burnt_states", burnt_states)
 	if(!broken && broken_states && (icon_state in broken_states))
 		broken = TRUE
 	if(!burnt && burnt_states && (icon_state in burnt_states))
