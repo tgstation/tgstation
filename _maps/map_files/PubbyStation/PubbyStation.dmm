@@ -36970,7 +36970,7 @@
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/white,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bGt" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/machinery/meter,
@@ -38107,17 +38107,17 @@
 	dir = 2
 	},
 /turf/closed/wall/r_wall,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bIL" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/engine,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bIM" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/closed/wall/r_wall,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bIN" = (
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the test chamber.";
@@ -38676,13 +38676,13 @@
 	pixel_x = -24
 	},
 /turf/open/floor/engine,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bJR" = (
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_toxmix{
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bJS" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1
@@ -38694,7 +38694,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bJT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -39224,7 +39224,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bLh" = (
 /obj/structure/window/reinforced{
 	dir = 8;
@@ -39701,20 +39701,20 @@
 	pixel_x = -32
 	},
 /turf/open/floor/engine/vacuum,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bMm" = (
 /obj/machinery/igniter{
 	id = "toxigniter";
 	luminosity = 2
 	},
 /turf/open/floor/engine/vacuum,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bMn" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
 /turf/open/floor/engine/vacuum,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bMp" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -40199,7 +40199,7 @@
 /area/engine/atmos)
 "bNp" = (
 /turf/open/floor/engine/vacuum,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bNq" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
@@ -40633,11 +40633,11 @@
 "bOs" = (
 /obj/structure/sign/warning/fire,
 /turf/closed/wall/r_wall,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bOt" = (
 /obj/machinery/door/poddoor/incinerator_toxmix,
 /turf/open/floor/engine/vacuum,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bOu" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1
@@ -54203,6 +54203,12 @@
 	},
 /turf/closed/wall,
 /area/maintenance/department/security/brig)
+"eQF" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/science/explab)
 "eQN" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -55787,6 +55793,9 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
+"iUX" = (
+/turf/closed/wall/r_wall,
+/area/science/mixing/chamber)
 "iVJ" = (
 /obj/effect/spawner/lootdrop/organ_spawner,
 /turf/open/floor/plating{
@@ -56192,7 +56201,7 @@
 	dir = 9
 	},
 /turf/closed/wall/r_wall,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "kfM" = (
 /obj/structure/closet,
 /obj/machinery/light/small{
@@ -57538,6 +57547,9 @@
 /obj/structure/sign/plaques/kiddie/perfect_drone{
 	pixel_y = 32
 	},
+/obj/machinery/atmospherics/components/trinary/filter{
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/science/explab)
 "nLl" = (
@@ -57890,6 +57902,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"oAM" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/science/explab)
 "oAW" = (
 /obj/item/stack/sheet/mineral/wood,
 /turf/open/floor/plating,
@@ -59254,7 +59273,7 @@
 "rPW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "rQa" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/sign/directions/evac{
@@ -61219,6 +61238,10 @@
 /obj/machinery/door/airlock/maintenance/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/science)
+"xlQ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/science/mixing/chamber)
 "xmp" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -61378,7 +61401,7 @@
 	dir = 5
 	},
 /turf/closed/wall/r_wall,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "xJy" = (
 /obj/structure/chair/comfy/black,
 /obj/structure/sign/plaques/atmos{
@@ -61433,6 +61456,9 @@
 "xPa" = (
 /obj/machinery/airalarm{
 	pixel_y = 22
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
 	},
 /turf/open/floor/engine,
 /area/science/explab)
@@ -103587,11 +103613,11 @@ bEa
 bFm
 bGs
 ubW
-ubW
+xlQ
 xIx
-bHy
-bHy
-bHy
+iUX
+iUX
+iUX
 bOs
 mZE
 aaa
@@ -103827,7 +103853,7 @@ aEj
 obj
 aLi
 tim
-eXo
+oAM
 bof
 eXo
 bqw
@@ -104085,7 +104111,7 @@ bjx
 aFi
 bjw
 nJI
-bky
+eQF
 bpo
 lAR
 bqs
@@ -104617,9 +104643,9 @@ bGw
 nsD
 rPW
 kfh
-bHy
-bHy
-bHy
+iUX
+iUX
+iUX
 bOs
 aht
 aaa
