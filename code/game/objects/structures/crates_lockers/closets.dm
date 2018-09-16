@@ -74,7 +74,7 @@
 		else
 			add_overlay("[icon_state]_open")
 
-/obj/structure/closet/examine(mob/living/user)
+/obj/structure/closet/examine(mob/user)
 	..()
 	if(welded)
 		to_chat(user, "<span class='notice'>It's welded shut.</span>")
@@ -84,8 +84,10 @@
 		to_chat(user, "<span class='notice'>The parts are <b>welded</b> together.</span>")
 	else if(secure && !opened)
 		to_chat(user, "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>")
-	if(user.has_trait(TRAIT_SKITTISH))
-		to_chat(user, "<span class='notice'>Ctrl-Shift-click [src] to jump inside.</span>")
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.has_trait(TRAIT_SKITTISH))
+			to_chat(user, "<span class='notice'>Ctrl-Shift-click [src] to jump inside.</span>")
 
 /obj/structure/closet/CanPass(atom/movable/mover, turf/target)
 	if(wall_mounted)

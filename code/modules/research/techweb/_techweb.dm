@@ -16,7 +16,7 @@
 	var/list/obj/machinery/computer/rdconsole/consoles_accessing = list()
 	var/id = "generic"
 	var/list/research_logs = list()								//IC logs.
-	var/max_bomb_value = 0
+	var/largest_bomb_value = 0
 	var/organization = "Third-Party"							//Organization name, used for display.
 	var/list/last_bitcoins = list()								//Current per-second production, used for display only.
 	var/list/tiers = list()										//Assoc list, datum = number, 1 is available, 2 is all reqs are 1, so on

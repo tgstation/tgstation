@@ -54,6 +54,7 @@ SUBSYSTEM_DEF(throwing)
 	var/dist_y
 	var/dx
 	var/dy
+	var/force = MOVE_FORCE_DEFAULT
 	var/pure_diagonal
 	var/diagonal_error
 	var/datum/callback/callback
@@ -116,7 +117,7 @@ SUBSYSTEM_DEF(throwing)
 			return
 
 		dist_travelled++
-		
+
 		if (dist_travelled > MAX_THROWING_DIST)
 			finalize()
 			return

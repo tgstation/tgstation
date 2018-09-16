@@ -25,6 +25,10 @@
 //////////////////////////////
 
 // common helper procs for all power machines
+// All power generation handled in add_avail()
+// Machines should use add_load(), surplus(), avail()
+// Non-machines should use add_delayedload(), delayed_surplus(), newavail()
+
 /obj/machinery/power/proc/add_avail(amount)
 	if(powernet)
 		powernet.newavail += amount
@@ -38,13 +42,29 @@
 
 /obj/machinery/power/proc/surplus()
 	if(powernet)
-		return powernet.avail - powernet.load
+		return CLAMP(powernet.avail-powernet.load, 0, powernet.avail)
 	else
 		return 0
 
 /obj/machinery/power/proc/avail()
 	if(powernet)
 		return powernet.avail
+	else
+		return 0
+
+/obj/machinery/power/proc/add_delayedload(amount)
+	if(powernet)
+		powernet.delayedload += amount
+
+/obj/machinery/power/proc/delayed_surplus()
+	if(powernet)
+		return CLAMP(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
+	else
+		return 0
+
+/obj/machinery/power/proc/newavail()
+	if(powernet)
+		return powernet.newavail
 	else
 		return 0
 
@@ -341,7 +361,7 @@
 		source_area.use_power(drained_energy/GLOB.CELLRATE)
 	else if (istype(power_source, /datum/powernet))
 		var/drained_power = drained_energy/GLOB.CELLRATE //convert from "joules" to "watts"
-		PN.load+=drained_power
+		PN.delayedload += (min(drained_power, max(PN.newavail - PN.delayedload, 0)))
 	else if (istype(power_source, /obj/item/stock_parts/cell))
 		cell.use(drained_energy)
 	return drained_energy

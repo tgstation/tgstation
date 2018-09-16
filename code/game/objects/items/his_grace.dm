@@ -174,6 +174,7 @@
 /obj/item/his_grace/proc/consume(mob/living/meal) //Here's your dinner, Mr. Grace.
 	if(!meal)
 		return
+	var/victims = 0
 	meal.visible_message("<span class='warning'>[src] swings open and devours [meal]!</span>", "<span class='his_grace big bold'>[src] consumes you!</span>")
 	meal.adjustBruteLoss(200)
 	playsound(meal, 'sound/misc/desceration-02.ogg', 75, 1)
@@ -185,7 +186,10 @@
 		bloodthirst = max(LAZYLEN(contents), 1) //Never fully sated, and His hunger will only grow.
 	else
 		bloodthirst = HIS_GRACE_CONSUME_OWNER
-	if(LAZYLEN(contents) >= victims_needed)
+	for(var/mob/living/C in contents)
+		if(C.mind)
+			victims++
+	if(victims >= victims_needed)
 		ascend()
 	update_stats()
 

@@ -364,6 +364,7 @@
 		qdel(src)
 	..()
 
+
 /obj/item/restraints/legcuffs/bola/energy/mech/New()
 	..()
 	addtimer(CALLBACK(src, .proc/dissipate), 40)
@@ -373,4 +374,23 @@
 		do_sparks(1, TRUE, src)
 		qdel(src)
 
+
+/obj/item/restraints/legcuffs/bola/gonbola
+	name = "gonbola"
+	desc = "Hey, if you have to be hugged in the legs by anything, it might as well be this little guy."
+	icon_state = "gonbola"
+	breakouttime = 300
+	slowdown = 0
+	var/datum/status_effect/gonbolaPacify/effectReference
+
+/obj/item/restraints/legcuffs/bola/gonbola/throw_impact(atom/hit_atom)
+	. = ..()
+	if(iscarbon(hit_atom))
+		var/mob/living/carbon/C = hit_atom
+		effectReference = C.apply_status_effect(STATUS_EFFECT_GONBOLAPACIFY)
+
+/obj/item/restraints/legcuffs/bola/gonbola/dropped(mob/user)
+	. = ..()
+	if(effectReference)
+		QDEL_NULL(effectReference)
 
