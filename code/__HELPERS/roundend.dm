@@ -531,10 +531,11 @@
 		return
 	sync_ranks_with_db()
 	var/list/sql_admins = list()
-	for(var/datum/admins/A in GLOB.protected_admins)
-		var/sql_ckey = sanitizeSQL(A.owner.ckey)
+	for(var/i in GLOB.protected_admins)
+		var/datum/admins/A = GLOB.protected_admins[i]
+		var/sql_ckey = sanitizeSQL(A.target)
 		var/sql_rank = sanitizeSQL(A.rank.name)
-		sql_admins = list(list("ckey" = "'[sql_ckey]'", "rank" = "'[sql_rank]'"))
+		sql_admins += list(list("ckey" = "'[sql_ckey]'", "rank" = "'[sql_rank]'"))
 	SSdbcore.MassInsert(format_table_name("admin"), sql_admins, duplicate_key = TRUE)
 	var/datum/DBQuery/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] p INNER JOIN [format_table_name("admin")] a ON p.ckey = a.ckey SET p.lastadminrank = a.rank")
 	query_admin_rank_update.Execute()
