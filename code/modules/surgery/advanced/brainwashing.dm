@@ -16,6 +16,7 @@
 
 	species = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_HEAD)
+	research_completion_bonus = 3000 //implying you wouldn't watch rnd console to see if someone is doing this surgery
 
 /datum/surgery/advanced/brainwashing/can_start(mob/user, mob/living/carbon/target)
 	if(!..())

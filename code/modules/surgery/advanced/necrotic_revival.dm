@@ -9,6 +9,7 @@
 				/datum/surgery_step/close)
 
 	possible_locs = list(BODY_ZONE_HEAD)
+	research_completion_bonus = 7500 // quite a bargain...
 
 /datum/surgery/advanced/necrotic_revival/can_start(mob/user, mob/living/carbon/target)
 	. = ..()

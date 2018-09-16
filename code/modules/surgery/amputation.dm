@@ -5,6 +5,7 @@
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_HEAD)
 	requires_bodypart_type = 0
+	research_completion_bonus = 500 // pity points because just clicking with harm on a saw is faster.
 
 
 /datum/surgery_step/sever_limb
@@ -22,4 +23,4 @@
 		var/obj/item/bodypart/target_limb = surgery.operated_bodypart
 		target_limb.drop_limb()
 
-	return 1
+	return TRUE

@@ -15,6 +15,7 @@
 	var/requires_bodypart = TRUE							//Surgery available only when a bodypart is present, or only when it is missing.
 	var/success_multiplier = 0								//Step success propability multiplier
 	var/requires_real_bodypart = 0							//Some surgeries don't work on limbs that don't really exist
+	var/research_completion_bonus = 0 //upon completion, you will get X amount of points for SCIENCE!
 
 /datum/surgery/New(surgery_target, surgery_location, surgery_bodypart)
 	..()
@@ -66,6 +67,8 @@
 
 /datum/surgery/proc/complete()
 	SSblackbox.record_feedback("tally", "surgeries_completed", 1, type)
+	if(research_completion_bonus && target.client) //anti-farm check
+		SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = research_completion_bonus))
 	qdel(src)
 
 /datum/surgery/proc/get_propability_multiplier()
@@ -93,7 +96,7 @@
 		var/datum/species/abductor/S = H.dna.species
 		if(S.scientist)
 			return TRUE
-	
+
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		var/obj/item/surgical_processor/SP = locate() in R.module.modules
@@ -101,7 +104,7 @@
 			return FALSE
 		if(type in SP.advanced_surgeries)
 			return TRUE
-	
+
 	var/turf/T = get_turf(target)
 	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
 	if(!table || !table.computer)

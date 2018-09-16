@@ -281,5 +281,8 @@
 
 /obj/item/organ/brain/proc/cure_all_traumas(resilience = TRAUMA_RESILIENCE_BASIC)
 	var/list/traumas = get_traumas_type(resilience = resilience)
+	var/count_traumas_cured = 0
 	for(var/X in traumas)
+		count_traumas_cured++
 		qdel(X)
+	return count_traumas_cured

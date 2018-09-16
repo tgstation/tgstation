@@ -6,8 +6,8 @@
 
 /datum/surgery/core_removal/can_start(mob/user, mob/living/target)
 	if(target.stat == DEAD)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 //extract brain
 /datum/surgery_step/extract_core
@@ -22,15 +22,16 @@
 	var/mob/living/simple_animal/slime/slime = target
 	if(slime.cores > 0)
 		slime.cores--
+		surgery.research_completion_bonus += 100
 		user.visible_message("[user] successfully extracts a core from [target]!", "<span class='notice'>You successfully extract a core from [target]. [slime.cores] core\s remaining.</span>")
 
 		new slime.coretype(slime.loc)
 
 		if(slime.cores <= 0)
 			slime.icon_state = "[slime.colour] baby slime dead-nocore"
-			return 1
+			return TRUE
 		else
-			return 0
+			return FALSE
 	else
 		to_chat(user, "<span class='warning'>There aren't any cores left in [target]!</span>")
-		return 1
+		return TRUE

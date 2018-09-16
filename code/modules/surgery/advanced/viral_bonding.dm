@@ -10,6 +10,7 @@
 
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST)
+	research_completion_bonus = 3000
 
 /datum/surgery/advanced/viral_bonding/can_start(mob/user, mob/living/carbon/target)
 	if(!..())
