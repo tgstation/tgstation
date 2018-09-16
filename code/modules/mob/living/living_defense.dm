@@ -61,7 +61,7 @@
 		else
 				return 0
 
-/mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE)
+/mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
 		var/zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
@@ -126,11 +126,11 @@
 	adjust_fire_stacks(3)
 	IgniteMob()
 
-/mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = 0)
+/mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
 	if(user == src || anchored || !isturf(user.loc))
 		return FALSE
 	if(!user.pulling || user.pulling != src)
-		user.start_pulling(src, supress_message)
+		user.start_pulling(src, supress_message = supress_message)
 		return
 
 	if(!(status_flags & CANPUSH) || has_trait(TRAIT_PUSHIMMUNE))
@@ -144,14 +144,14 @@
 	grippedby(user)
 
 //proc to upgrade a simple pull into a more aggressive grab.
-/mob/living/proc/grippedby(mob/living/carbon/user)
+/mob/living/proc/grippedby(mob/living/carbon/user, instant = FALSE)
 	if(user.grab_state < GRAB_KILL)
 		user.changeNext_move(CLICK_CD_GRABBING)
 		playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 		if(user.grab_state) //only the first upgrade is instantaneous
 			var/old_grab_state = user.grab_state
-			var/grab_upgrade_time = 30
+			var/grab_upgrade_time = instant ? 0 : 30
 			visible_message("<span class='danger'>[user] starts to tighten [user.p_their()] grip on [src]!</span>", \
 				"<span class='userdanger'>[user] starts to tighten [user.p_their()] grip on you!</span>")
 			switch(user.grab_state)
@@ -339,7 +339,7 @@
 		return
 
 	if(is_servant_of_ratvar(src) && !stat)
-		to_chat(src, "<span class='userdanger'>You resist Nar-Sie's influence... but not all of it. <i>Run!</i></span>")
+		to_chat(src, "<span class='userdanger'>You resist Nar'Sie's influence... but not all of it. <i>Run!</i></span>")
 		adjustBruteLoss(35)
 		if(src && reagents)
 			reagents.add_reagent("heparin", 5)

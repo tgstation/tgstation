@@ -16,7 +16,7 @@
 	name = "AI"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
-	anchored = TRUE
+	move_resist = MOVE_FORCE_VERY_STRONG
 	density = TRUE
 	canmove = FALSE
 	status_flags = CANSTUN|CANPUSH
@@ -86,7 +86,6 @@
 	var/datum/action/innate/deploy_last_shell/redeploy_action = new
 	var/chnotify = 0
 
-	var/multicam_allowed = FALSE
 	var/multicam_on = FALSE
 	var/obj/screen/movable/pic_in_pic/ai/master_multicam
 	var/list/multicam_screens = list()
@@ -178,9 +177,11 @@
 	if(incapacitated())
 		return
 
-	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo", "Angel")
+	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", ":thinking:", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo", "Angel")
 	if(icontype == "Clown")
 		icon_state = "ai-clown2"
+	else if (icontype == ":thinking:")
+		icon_state = "ai-:thinking:"
 	else if(icontype == "Monochrome")
 		icon_state = "ai-mono"
 	else if(icontype == "Blue")
@@ -349,9 +350,14 @@
 		return // stop
 	if(incapacitated())
 		return
-	anchored = !anchored // Toggles the anchor
+	var/is_anchored = FALSE
+	if(move_resist == MOVE_FORCE_VERY_STRONG)
+		move_resist = MOVE_FORCE_VERY_STRONG
+	else
+		is_anchored = TRUE
+		move_resist = MOVE_FORCE_NORMAL
 
-	to_chat(src, "<b>You are now [anchored ? "" : "un"]anchored.</b>")
+	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
 	// the message in the [] will change depending whether or not the AI is anchored
 
 /mob/living/silicon/ai/update_canmove() //If the AI dies, mobs won't go through it anymore
@@ -629,7 +635,7 @@
 
 	if(incapacitated())
 		return
-	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
+	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Thinking", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
 	for (var/each in GLOB.ai_status_displays) //change status of displays
 		var/obj/machinery/status_display/ai/M = each

@@ -2,6 +2,7 @@
 //Keep this sorted alphabetically
 
 #ifdef UNIT_TESTS
+#include "anchored_mobs.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_recipe_collisions.dm"
 #include "spawn_humans.dm"

@@ -34,17 +34,17 @@ SUBSYSTEM_DEF(mapping)
 	var/datum/space_level/transit
 	var/datum/space_level/empty_space
 
-/datum/controller/subsystem/mapping/PreInit()
+//dlete dis once #39770 is resolved
+/datum/controller/subsystem/mapping/proc/HACK_LoadMapConfig()
 	if(!config)
 #ifdef FORCE_MAP
 		config = load_map_config(FORCE_MAP)
 #else
 		config = load_map_config(error_if_missing = FALSE)
 #endif
-	return ..()
-
 
 /datum/controller/subsystem/mapping/Initialize(timeofday)
+	HACK_LoadMapConfig()
 	if(initialized)
 		return
 	if(config.defaulted)
@@ -93,7 +93,7 @@ SUBSYSTEM_DEF(mapping)
 	setup_map_transitions()
 	generate_station_area_list()
 	initialize_reserved_level()
-	..()
+	return ..()
 
 /* Nuke threats, for making the blue tiles on the station go RED
    Used by the AI doomsday and the self destruct nuke.

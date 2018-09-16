@@ -34,11 +34,13 @@
 	var/lethal_projectile = null	//lethal mode projectile type
 	var/lethal_projectile_sound
 
+	demands_object_input = TRUE		// You can put stuff in once the circuit is in assembly,passed down from additem and handled by attackby()
+
 
 
 /obj/item/integrated_circuit/manipulation/weapon_firing/Destroy()
 	qdel(installed_gun)
-	..()
+	return ..()
 
 /obj/item/integrated_circuit/manipulation/weapon_firing/attackby(var/obj/O, var/mob/user)
 	if(istype(O, /obj/item/gun/energy))
@@ -185,6 +187,7 @@
 	action_flags = IC_ACTION_COMBAT
 	var/obj/item/grenade/attached_grenade
 	var/pre_attached_grenade_type
+	demands_object_input = TRUE	// You can put stuff in once the circuit is in assembly,passed down from additem and handled by attackby()
 
 /obj/item/integrated_circuit/manipulation/grenade/Initialize()
 	. = ..()

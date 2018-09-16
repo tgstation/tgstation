@@ -25,6 +25,7 @@
 	healable = FALSE
 	spacewalk = TRUE
 	sight = SEE_SELF
+	throwforce = 0
 
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
@@ -42,7 +43,7 @@
 	wander = FALSE
 	density = FALSE
 	movement_type = FLYING
-	anchored = TRUE
+	move_resist = MOVE_FORCE_OVERPOWERING
 	mob_size = MOB_SIZE_TINY
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	speed = 1
@@ -144,7 +145,7 @@
 /mob/living/simple_animal/revenant/med_hud_set_status()
 	return //we use no hud
 
-/mob/living/simple_animal/revenant/say(message)
+/mob/living/simple_animal/revenant/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(!message)
 		return
 	src.log_talk(message, LOG_SAY)

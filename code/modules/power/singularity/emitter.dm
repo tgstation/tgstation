@@ -160,7 +160,7 @@
 		update_icon()
 		return
 	if(active == TRUE)
-		if(!active_power_usage || avail(active_power_usage))
+		if(!active_power_usage || surplus() >= active_power_usage)
 			add_load(active_power_usage)
 			if(!powered)
 				powered = TRUE
@@ -189,7 +189,7 @@
 		return FALSE
 	if(state != EMITTER_WELDED)
 		return FALSE
-	if(avail(active_power_usage))
+	if(surplus() >= active_power_usage)
 		add_load(active_power_usage)
 		fire_beam()
 

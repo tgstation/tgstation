@@ -5,6 +5,7 @@
 	icon_state = "door1"
 	opacity = 1
 	density = TRUE
+	move_resist = MOVE_FORCE_VERY_STRONG
 	layer = OPEN_DOOR_LAYER
 	power_channel = ENVIRON
 	max_integrity = 350

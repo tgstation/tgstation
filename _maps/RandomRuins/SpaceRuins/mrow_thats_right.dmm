@@ -114,17 +114,25 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "aw" = (
-/turf/open/floor/plasteel/neutral/side{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/powered/cat_man)
 "ax" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/neutral/side{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/powered/cat_man)
 "ay" = (
 /obj/effect/decal/cleanable/dirt,
@@ -178,17 +186,29 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "aF" = (
 /obj/item/twohanded/required/kirbyplants/random,
-/turf/open/floor/plasteel/neutral/side,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/powered/cat_man)
 "aG" = (
-/turf/open/floor/plasteel/neutral/side,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/powered/cat_man)
 "aH" = (
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
 	},
-/turf/open/floor/plasteel/neutral/side,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/powered/cat_man)
 "aI" = (
 /turf/open/floor/plasteel,
@@ -264,21 +284,34 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "aU" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/neutral/side{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/powered/cat_man)
 "aV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/twohanded/required/kirbyplants/random,
-/turf/open/floor/plasteel/neutral/side{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/powered/cat_man)
 "aW" = (
-/turf/open/floor/plasteel/neutral/side{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/powered/cat_man)
 "aX" = (
 /obj/effect/decal/cleanable/dirt,
@@ -353,9 +386,11 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bh" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/neutral/side{
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/powered/cat_man)
 "bi" = (
 /obj/effect/decal/cleanable/dirt,
@@ -453,9 +488,11 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/turf/open/floor/plasteel/neutral/side{
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/powered/cat_man)
 "bw" = (
 /obj/structure/table/wood,
@@ -506,18 +543,31 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bE" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/neutral/side,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/powered/cat_man)
 "bF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/twohanded/required/kirbyplants/random,
-/turf/open/floor/plasteel/neutral/side,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/powered/cat_man)
 "bG" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/neutral/side{
-	dir = 6
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/powered/cat_man)
 "bH" = (
 /obj/effect/decal/cleanable/dirt,
@@ -540,27 +590,43 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bJ" = (
 /obj/structure/closet/crate/bin,
-/turf/open/floor/plasteel/neutral/side{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/powered/cat_man)
 "bK" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/neutral/side{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/powered/cat_man)
 "bL" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/neutral/side{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/powered/cat_man)
 "bM" = (
 /obj/structure/reagent_dispensers/water_cooler,
-/turf/open/floor/plasteel/neutral/side{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/powered/cat_man)
 "bN" = (
 /obj/machinery/door/firedoor/border_only,
@@ -605,7 +671,11 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bT" = (
 /obj/machinery/light,
-/turf/open/floor/plasteel/neutral/side,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/powered/cat_man)
 "bU" = (
 /obj/effect/decal/cleanable/dirt,

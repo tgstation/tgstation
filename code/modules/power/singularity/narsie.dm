@@ -1,5 +1,5 @@
 /obj/singularity/narsie //Moving narsie to a child object of the singularity so it can be made to function differently. --NEO
-	name = "Nar-sie's Avatar"
+	name = "Nar'Sie's Avatar"
 	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
 	icon = 'icons/obj/magic_terror.dmi'
 	pixel_x = -89
@@ -15,10 +15,10 @@
 	light_range = 15
 	light_color = rgb(255, 0, 0)
 	gender = FEMALE
-	var/clashing = FALSE //If Nar-Sie is fighting Ratvar
+	var/clashing = FALSE //If Nar'Sie is fighting Ratvar
 
 /obj/singularity/narsie/large
-	name = "Nar-Sie"
+	name = "Nar'Sie"
 	icon = 'icons/obj/narsie.dmi'
 	// Pixel stuff centers Narsie.
 	pixel_x = -236
@@ -29,13 +29,13 @@
 
 /obj/singularity/narsie/large/Initialize()
 	. = ..()
-	send_to_playing_players("<span class='narsie'>NAR-SIE HAS RISEN</span>")
+	send_to_playing_players("<span class='narsie'>NAR'SIE HAS RISEN</span>")
 	sound_to_playing_players('sound/creatures/narsie_rises.ogg')
 
 	var/area/A = get_area(src)
 	if(A)
 		var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/cult_effects.dmi', "ghostalertsie")
-		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, action=NOTIFY_ATTACK)
+		notify_ghosts("Nar'Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, action=NOTIFY_ATTACK)
 	INVOKE_ASYNC(src, .proc/narsie_spawn_animation)
 
 /obj/singularity/narsie/large/cult  // For the new cult ending, guaranteed to end the round within 3 minutes
@@ -121,7 +121,7 @@
 /obj/singularity/narsie/Bump(atom/A)
 	var/turf/T = get_turf(A)
 	if(T == loc)
-		T = get_step(A, A.dir) //please don't slam into a window like a bird, nar-sie
+		T = get_step(A, A.dir) //please don't slam into a window like a bird, Nar'Sie
 	forceMove(T)
 
 
@@ -185,12 +185,12 @@
 /obj/singularity/narsie/proc/acquire(atom/food)
 	if(food == target)
 		return
-	to_chat(target, "<span class='cultsmall'>NAR-SIE HAS LOST INTEREST IN YOU.</span>")
+	to_chat(target, "<span class='cultsmall'>NAR'SIE HAS LOST INTEREST IN YOU.</span>")
 	target = food
 	if(ishuman(target))
-		to_chat(target, "<span class ='cult'>NAR-SIE HUNGERS FOR YOUR SOUL.</span>")
+		to_chat(target, "<span class ='cult'>NAR'SIE HUNGERS FOR YOUR SOUL.</span>")
 	else
-		to_chat(target, "<span class ='cult'>NAR-SIE HAS CHOSEN YOU TO LEAD HER TO HER NEXT MEAL.</span>")
+		to_chat(target, "<span class ='cult'>NAR'SIE HAS CHOSEN YOU TO LEAD HER TO HER NEXT MEAL.</span>")
 
 //Wizard narsie
 /obj/singularity/narsie/wizard

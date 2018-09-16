@@ -126,12 +126,11 @@
 	nodamage = 1
 	var/obj/item/gun/energy/chrono_gun/gun = null
 
-/obj/item/projectile/energy/chrono_beam/fire()
-	gun = firer.get_active_held_item()
-	if(istype(gun))
-		return ..()
-	else
-		return 0
+/obj/item/projectile/energy/chrono_beam/Initialize()
+	. = ..()
+	var/obj/item/ammo_casing/energy/chrono_beam/C = loc
+	if(istype(C))
+		gun = C.gun
 
 /obj/item/projectile/energy/chrono_beam/on_hit(atom/target)
 	if(target && gun && isliving(target))
@@ -144,6 +143,15 @@
 	projectile_type = /obj/item/projectile/energy/chrono_beam
 	icon_state = "chronobolt"
 	e_cost = 0
+	var/obj/item/gun/energy/chrono_gun/gun
+
+/obj/item/ammo_casing/energy/chrono_beam/Initialize()
+	if(istype(loc))
+		gun = loc
+	. = ..()
+
+	
+	
 
 
 /obj/effect/chrono_field

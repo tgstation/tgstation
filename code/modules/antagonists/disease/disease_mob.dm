@@ -107,7 +107,7 @@ the new instance inside the host to be updated to the template's stats.
 			if(istype(B))
 				to_chat(user, "<span class='notice'>[B.name]</span>")
 
-/mob/camera/disease/say(message)
+/mob/camera/disease/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	return
 
 /mob/camera/disease/Move(NewLoc, Dir = 0)
@@ -261,7 +261,7 @@ the new instance inside the host to be updated to the template's stats.
 			index = index == hosts.len ? 1 : index + 1
 		set_following(hosts[index])
 
-/mob/camera/disease/proc/follow_mob(newloc, dir)
+/mob/camera/disease/proc/follow_mob(datum/source, newloc, dir)
 	var/turf/T = get_turf(following_host)
 	if(T)
 		forceMove(T)

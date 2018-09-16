@@ -199,6 +199,10 @@ By design, d1 is the smallest direction and d2 is the highest
 // Power related
 ///////////////////////////////////////////
 
+// All power generation handled in add_avail()
+// Machines should use add_load(), surplus(), avail()
+// Non-machines should use add_delayedload(), delayed_surplus(), newavail()
+
 /obj/structure/cable/proc/add_avail(amount)
 	if(powernet)
 		powernet.newavail += amount
@@ -209,13 +213,29 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/structure/cable/proc/surplus()
 	if(powernet)
-		return powernet.avail-powernet.load
+		return CLAMP(powernet.avail-powernet.load, 0, powernet.avail)
 	else
 		return 0
 
 /obj/structure/cable/proc/avail()
 	if(powernet)
 		return powernet.avail
+	else
+		return 0
+
+/obj/structure/cable/proc/add_delayedload(amount)
+	if(powernet)
+		powernet.delayedload += amount
+
+/obj/structure/cable/proc/delayed_surplus()
+	if(powernet)
+		return CLAMP(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
+	else
+		return 0
+
+/obj/structure/cable/proc/newavail()
+	if(powernet)
+		return powernet.newavail
 	else
 		return 0
 

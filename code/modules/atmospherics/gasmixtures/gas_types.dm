@@ -129,6 +129,13 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	name = "Pluoxium"
 	fusion_power = 10
 
+/datum/gas/miasma
+	id = "miasma"
+	specific_heat = 20
+	name = "Miasma"
+	gas_overlay = "miasma"
+	moles_visible = MOLES_GAS_VISIBLE * 60
+
 /obj/effect/overlay/gas
 	icon = 'icons/effects/tile_effects.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

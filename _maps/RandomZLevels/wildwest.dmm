@@ -635,20 +635,28 @@
 /area/awaymission/wildwest/gov)
 "cp" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
-/turf/open/floor/plasteel/stage_bleft,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
 /area/awaymission/wildwest/gov)
 "cq" = (
 /obj/structure/table/wood,
-/turf/open/floor/plasteel/stage_bleft,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
 /area/awaymission/wildwest/gov)
 "cr" = (
 /obj/structure/table/wood,
 /obj/machinery/microwave,
-/turf/open/floor/plasteel/stage_bleft,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
 /area/awaymission/wildwest/gov)
 "cs" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
-/turf/open/floor/plasteel/stage_bleft,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
 /area/awaymission/wildwest/gov)
 "ct" = (
 /obj/structure/lattice,
@@ -679,7 +687,9 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cz" = (
-/turf/open/floor/plasteel/stage_bleft,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
 /area/awaymission/wildwest/gov)
 "cA" = (
 /obj/effect/decal/cleanable/blood/splatter,
@@ -715,13 +725,17 @@
 /area/awaymission/wildwest/gov)
 "cG" = (
 /mob/living/simple_animal/hostile/netherworld,
-/turf/open/floor/plasteel/stage_bleft,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
 /area/awaymission/wildwest/gov)
 "cH" = (
 /obj/effect/mob_spawn/human/cook{
 	mob_name = "Chef"
 	},
-/turf/open/floor/plasteel/stage_bleft,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
 /area/awaymission/wildwest/gov)
 "cI" = (
 /obj/structure/bookcase{
@@ -814,17 +828,23 @@
 "cV" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/soup/monkeysdelight,
-/turf/open/floor/plasteel/stage_bleft,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
 /area/awaymission/wildwest/gov)
 "cW" = (
 /obj/structure/table/wood,
 /obj/item/kitchen/knife/butcher,
-/turf/open/floor/plasteel/stage_bleft,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
 /area/awaymission/wildwest/gov)
 "cX" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/soup/stew,
-/turf/open/floor/plasteel/stage_bleft,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
 /area/awaymission/wildwest/gov)
 "cY" = (
 /obj/structure/chair/comfy/black{
@@ -869,17 +889,23 @@
 "dd" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/store/bread/creamcheese,
-/turf/open/floor/plasteel/stage_bleft,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
 /area/awaymission/wildwest/gov)
 "de" = (
 /obj/structure/table/wood,
 /obj/item/kitchen/rollingpin,
-/turf/open/floor/plasteel/stage_bleft,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
 /area/awaymission/wildwest/gov)
 "df" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/grown/citrus/lemon,
-/turf/open/floor/plasteel/stage_bleft,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
 /area/awaymission/wildwest/gov)
 "dg" = (
 /obj/structure/window/reinforced{
@@ -950,7 +976,9 @@
 "dq" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
-/turf/open/floor/plasteel/stage_bleft,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
 /area/awaymission/wildwest/gov)
 "dr" = (
 /obj/structure/table/wood,
@@ -958,12 +986,16 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
-/turf/open/floor/plasteel/stage_bleft,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
 /area/awaymission/wildwest/gov)
 "ds" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/bottle/patron,
-/turf/open/floor/plasteel/stage_bleft,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
 /area/awaymission/wildwest/gov)
 "dt" = (
 /obj/effect/decal/cleanable/blood/tracks,
@@ -1480,33 +1512,53 @@
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "eX" = (
-/turf/open/floor/plasteel/barber{
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/wildwest/mines)
 "eY" = (
 /obj/machinery/vending/cigarette,
-/turf/open/floor/plasteel/barber{
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/wildwest/mines)
 "eZ" = (
 /obj/machinery/vending/coffee,
-/turf/open/floor/plasteel/barber{
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/wildwest/mines)
 "fa" = (
 /obj/machinery/vending/snack,
-/turf/open/floor/plasteel/barber{
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/wildwest/mines)
 "fb" = (
 /obj/machinery/vending/cola,
-/turf/open/floor/plasteel/barber{
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/wildwest/mines)
 "fc" = (
 /obj/structure/window/reinforced{
@@ -1537,23 +1589,35 @@
 /obj/effect/decal/cleanable/blood/gibs/body{
 	icon_state = "gibdown1"
 	},
-/turf/open/floor/plasteel/barber{
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/wildwest/mines)
 "fh" = (
 /obj/effect/mob_spawn/human/doctor{
 	mob_name = "Doctor Mugabee"
 	},
-/turf/open/floor/plasteel/barber{
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/wildwest/mines)
 "fi" = (
 /obj/item/stack/medical/bruise_pack,
-/turf/open/floor/plasteel/barber{
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/wildwest/mines)
 "fj" = (
 /obj/structure/window/reinforced{
@@ -1583,9 +1647,13 @@
 /area/awaymission/wildwest/mines)
 "fn" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/plasteel/barber{
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/wildwest/mines)
 "fo" = (
 /obj/structure/window/reinforced{
@@ -1633,23 +1701,35 @@
 /obj/structure/chair/wood/normal{
 	dir = 4
 	},
-/turf/open/floor/plasteel/barber{
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/wildwest/mines)
 "fw" = (
 /obj/structure/table/wood,
-/turf/open/floor/plasteel/barber{
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/wildwest/mines)
 "fx" = (
 /obj/structure/chair/wood/normal{
 	dir = 8
 	},
-/turf/open/floor/plasteel/barber{
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/wildwest/mines)
 "fy" = (
 /obj/structure/window/reinforced{
@@ -1732,9 +1812,13 @@
 /obj/effect/decal/cleanable/blood/gibs/body{
 	icon_state = "gibup1"
 	},
-/turf/open/floor/plasteel/barber{
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/wildwest/mines)
 "fJ" = (
 /obj/structure/window/reinforced{
@@ -1806,9 +1890,13 @@
 /area/awaymission/wildwest/mines)
 "fT" = (
 /obj/structure/chair/wood/normal,
-/turf/open/floor/plasteel/barber{
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/wildwest/mines)
 "fU" = (
 /obj/structure/window/reinforced{
@@ -1894,9 +1982,13 @@
 /obj/structure/chair/wood/normal{
 	dir = 1
 	},
-/turf/open/floor/plasteel/barber{
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/wildwest/mines)
 "gi" = (
 /obj/machinery/door/airlock/external,
@@ -1960,9 +2052,13 @@
 	icon_state = "gibup1"
 	},
 /obj/structure/chair/wood/normal,
-/turf/open/floor/plasteel/barber{
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/wildwest/mines)
 "gv" = (
 /obj/item/hatchet,

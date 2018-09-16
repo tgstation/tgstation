@@ -548,6 +548,7 @@
 
 	//Shooting Code:
 	A.preparePixelProjectile(target, T)
+	A.firer = src
 	A.fire()
 	return A
 
@@ -736,8 +737,8 @@
 	integrity_failure = 60
 	name = "Old Laser Turret"
 	desc = "A turret built with substandard parts and run down further with age. Still capable of delivering lethal lasers to the odd space carp, but not much else."
-	stun_projectile = /obj/item/projectile/beam/weak
-	lethal_projectile = /obj/item/projectile/beam/weak
+	stun_projectile = /obj/item/projectile/beam/weak/penetrator
+	lethal_projectile = /obj/item/projectile/beam/weak/penetrator
 	faction = list("neutral","silicon","turret")
 
 ////////////////////////
@@ -788,6 +789,12 @@
 	for(var/obj/machinery/porta_turret/T in control_area)
 		turrets |= T
 		T.cp = src
+
+/obj/machinery/turretid/examine(mob/user)
+	..()
+	if(issilicon(user) && (!stat & BROKEN))
+		to_chat(user, "<span class='notice'>Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.</span>")
+		to_chat(user, "<span class='notice'>Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].</span>")
 
 /obj/machinery/turretid/attackby(obj/item/I, mob/user, params)
 	if(stat & BROKEN)

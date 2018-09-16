@@ -1,4 +1,0 @@
-author: "Garen"
-delete-after: True
-changes: 
-  - code_imp: "adds a signal for screwdriver_act"

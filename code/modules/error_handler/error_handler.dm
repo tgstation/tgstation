@@ -1,8 +1,7 @@
 GLOBAL_VAR_INIT(total_runtimes, GLOB.total_runtimes || 0)
 GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
-#ifdef DEBUG
-
+#ifdef USE_CUSTOM_ERROR_HANDLER
 #define ERROR_USEFUL_LEN 2
 
 /world/Error(exception/E, datum/e_src)
@@ -128,5 +127,4 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
 	// This writes the regular format (unwrapping newlines and inserting timestamps as needed).
 	log_runtime("runtime error: [E.name]\n[E.desc]")
-
 #endif

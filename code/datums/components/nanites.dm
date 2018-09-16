@@ -16,7 +16,7 @@
 /datum/component/nanites/Initialize(amount = 100, cloud = 0)
 	if(!isliving(parent) && !istype(parent, /datum/nanite_cloud_backup))
 		return COMPONENT_INCOMPATIBLE
-		
+
 	nanite_volume = amount
 	cloud_id = cloud
 
@@ -29,7 +29,7 @@
 
 		host_mob.hud_set_nanite_indicator()
 		START_PROCESSING(SSnanites, src)
-		
+
 		if(cloud_id)
 			cloud_sync()
 
@@ -46,7 +46,7 @@
 	RegisterSignal(parent, COMSIG_NANITE_ADD_PROGRAM, .proc/add_program)
 	RegisterSignal(parent, COMSIG_NANITE_SCAN, .proc/nanite_scan)
 	RegisterSignal(parent, COMSIG_NANITE_SYNC, .proc/sync)
-	
+
 	if(isliving(parent))
 		RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, .proc/on_emp)
 		RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/on_death)
@@ -56,29 +56,29 @@
 		RegisterSignal(parent, COMSIG_MOVABLE_HEAR, .proc/on_hear)
 		RegisterSignal(parent, COMSIG_SPECIES_GAIN, .proc/check_viable_biotype)
 		RegisterSignal(parent, COMSIG_NANITE_SIGNAL, .proc/receive_signal)
-		
+
 /datum/component/nanites/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_HAS_NANITES,
 								COMSIG_NANITE_UI_DATA,
-								COMSIG_NANITE_GET_PROGRAMS, 
-								COMSIG_NANITE_SET_VOLUME, 
-								COMSIG_NANITE_ADJUST_VOLUME, 
-								COMSIG_NANITE_SET_MAX_VOLUME, 
-								COMSIG_NANITE_SET_CLOUD, 
-								COMSIG_NANITE_SET_SAFETY, 
-								COMSIG_NANITE_SET_REGEN, 
-								COMSIG_NANITE_ADD_PROGRAM, 
-								COMSIG_NANITE_SCAN, 
-								COMSIG_NANITE_SYNC, 
-								COMSIG_ATOM_EMP_ACT, 
-								COMSIG_MOB_DEATH, 
-								COMSIG_MOB_ALLOWED, 
-								COMSIG_LIVING_ELECTROCUTE_ACT, 
-								COMSIG_LIVING_MINOR_SHOCK, 
-								COMSIG_MOVABLE_HEAR, 
-								COMSIG_SPECIES_GAIN, 
+								COMSIG_NANITE_GET_PROGRAMS,
+								COMSIG_NANITE_SET_VOLUME,
+								COMSIG_NANITE_ADJUST_VOLUME,
+								COMSIG_NANITE_SET_MAX_VOLUME,
+								COMSIG_NANITE_SET_CLOUD,
+								COMSIG_NANITE_SET_SAFETY,
+								COMSIG_NANITE_SET_REGEN,
+								COMSIG_NANITE_ADD_PROGRAM,
+								COMSIG_NANITE_SCAN,
+								COMSIG_NANITE_SYNC,
+								COMSIG_ATOM_EMP_ACT,
+								COMSIG_MOB_DEATH,
+								COMSIG_MOB_ALLOWED,
+								COMSIG_LIVING_ELECTROCUTE_ACT,
+								COMSIG_LIVING_MINOR_SHOCK,
+								COMSIG_MOVABLE_HEAR,
+								COMSIG_SPECIES_GAIN,
 								COMSIG_NANITE_SIGNAL))
-			
+
 /datum/component/nanites/Destroy()
 	STOP_PROCESSING(SSnanites, src)
 	set_nanite_bar(TRUE)
@@ -90,12 +90,12 @@
 
 /datum/component/nanites/InheritComponent(datum/component/nanites/new_nanites, i_am_original, list/arguments)
 	if(new_nanites)
-		adjust_nanites(new_nanites.nanite_volume)
+		adjust_nanites(null, new_nanites.nanite_volume)
 	else
-		adjust_nanites(arguments[1]) //just add to the nanite volume
+		adjust_nanites(null, arguments[1]) //just add to the nanite volume
 
 /datum/component/nanites/process()
-	adjust_nanites(regen_rate)
+	adjust_nanites(null, regen_rate)
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_process()
@@ -105,7 +105,7 @@
 		next_sync = world.time + NANITE_SYNC_DELAY
 
 //Syncs the nanite component to another, making it so programs are the same with the same programming (except activation status)
-/datum/component/nanites/proc/sync(datum/component/nanites/source, full_overwrite = TRUE, copy_activation = FALSE)
+/datum/component/nanites/proc/sync(datum/signal_source, datum/component/nanites/source, full_overwrite = TRUE, copy_activation = FALSE)
 	var/list/programs_to_remove = programs.Copy()
 	var/list/programs_to_add = source.programs.Copy()
 	for(var/X in programs)
@@ -122,7 +122,7 @@
 			qdel(X)
 	for(var/X in programs_to_add)
 		var/datum/nanite_program/SNP = X
-		add_program(SNP.copy())
+		add_program(null, SNP.copy())
 
 /datum/component/nanites/proc/cloud_sync()
 	if(!cloud_id)
@@ -131,9 +131,9 @@
 	if(backup)
 		var/datum/component/nanites/cloud_copy = backup.nanites
 		if(cloud_copy)
-			sync(cloud_copy)
+			sync(null, cloud_copy)
 
-/datum/component/nanites/proc/add_program(datum/nanite_program/new_program, datum/nanite_program/source_program)
+/datum/component/nanites/proc/add_program(datum/source, datum/nanite_program/new_program, datum/nanite_program/source_program)
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		if(NP.unique && NP.type == new_program.type)
@@ -149,10 +149,10 @@
 /datum/component/nanites/proc/consume_nanites(amount, force = FALSE)
 	if(!force && safety_threshold && (nanite_volume - amount < safety_threshold))
 		return FALSE
-	adjust_nanites(-amount)
+	adjust_nanites(null, -amount)
 	return (nanite_volume > 0)
 
-/datum/component/nanites/proc/adjust_nanites(amount)
+/datum/component/nanites/proc/adjust_nanites(datum/source, amount)
 	nanite_volume = CLAMP(nanite_volume + amount, 0, max_nanites)
 	if(nanite_volume <= 0) //oops we ran out
 		qdel(src)
@@ -168,39 +168,39 @@
 	nanite_percent = CLAMP(CEILING(nanite_percent, 10), 10, 100)
 	holder.icon_state = "nanites[nanite_percent]"
 
-/datum/component/nanites/proc/on_emp(severity)
+/datum/component/nanites/proc/on_emp(datum/source, severity)
 	nanite_volume *= (rand(0.60, 0.90))		//Lose 10-40% of nanites
-	adjust_nanites(-(rand(5, 50)))		//Lose 5-50 flat nanite volume
+	adjust_nanites(null, -(rand(5, 50)))		//Lose 5-50 flat nanite volume
 	if(prob(40/severity))
 		cloud_id = 0
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_emp(severity)
 
-/datum/component/nanites/proc/on_shock(shock_damage)
+/datum/component/nanites/proc/on_shock(datum/source, shock_damage)
 	nanite_volume *= (rand(0.45, 0.80))		//Lose 20-55% of nanites
-	adjust_nanites(-(rand(5, 50)))			//Lose 5-50 flat nanite volume
+	adjust_nanites(null, -(rand(5, 50)))			//Lose 5-50 flat nanite volume
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_shock(shock_damage)
 
-/datum/component/nanites/proc/on_minor_shock()
-	adjust_nanites(-(rand(5, 15)))			//Lose 5-15 flat nanite volume
+/datum/component/nanites/proc/on_minor_shock(datum/source)
+	adjust_nanites(null, -(rand(5, 15)))			//Lose 5-15 flat nanite volume
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_minor_shock()
 
-/datum/component/nanites/proc/on_death(gibbed)
+/datum/component/nanites/proc/on_death(datum/source, gibbed)
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_death(gibbed)
 
-/datum/component/nanites/proc/on_hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/datum/component/nanites/proc/on_hear(datum/source, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
 
-/datum/component/nanites/proc/receive_signal(code, source = "an unidentified source")
+/datum/component/nanites/proc/receive_signal(datum/source, code, source = "an unidentified source")
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.receive_signal(code, source)
@@ -209,7 +209,7 @@
 	if(!(MOB_ORGANIC in host_mob.mob_biotypes) && !(MOB_UNDEAD in host_mob.mob_biotypes))
 		qdel(src) //bodytype no longer sustains nanites
 
-/datum/component/nanites/proc/check_access(obj/O)
+/datum/component/nanites/proc/check_access(datum/source, obj/O)
 	for(var/datum/nanite_program/triggered/access/access_program in programs)
 		if(access_program.activated)
 			return O.check_access_list(access_program.access)
@@ -217,19 +217,19 @@
 			return FALSE
 	return FALSE
 
-/datum/component/nanites/proc/set_volume(amount)
+/datum/component/nanites/proc/set_volume(datum/source, amount)
 	nanite_volume = CLAMP(amount, 0, max_nanites)
 
-/datum/component/nanites/proc/set_max_volume(amount)
+/datum/component/nanites/proc/set_max_volume(datum/source, amount)
 	max_nanites = max(1, max_nanites)
 
-/datum/component/nanites/proc/set_cloud(amount)
+/datum/component/nanites/proc/set_cloud(datum/source, amount)
 	cloud_id = CLAMP(amount, 0, 100)
 
-/datum/component/nanites/proc/set_safety(amount)
+/datum/component/nanites/proc/set_safety(datum/source, amount)
 	safety_threshold = CLAMP(amount, 0, max_nanites)
 
-/datum/component/nanites/proc/set_regen(amount)
+/datum/component/nanites/proc/set_regen(datum/source, amount)
 	regen_rate = amount
 
 /datum/component/nanites/proc/confirm_nanites()
@@ -243,10 +243,10 @@
 	nanite_data["safety_threshold"] = safety_threshold
 	nanite_data["stealth"] = stealth
 
-/datum/component/nanites/proc/get_programs(list/nanite_programs)
+/datum/component/nanites/proc/get_programs(datum/source, list/nanite_programs)
 	nanite_programs |= programs
 
-/datum/component/nanites/proc/nanite_scan(mob/user, full_scan)
+/datum/component/nanites/proc/nanite_scan(datum/source, mob/user, full_scan)
 	if(!full_scan)
 		if(!stealth)
 			to_chat(user, "<span class='notice'><b>Nanites Detected</b></span>")
@@ -268,7 +268,7 @@
 				to_chat(user, "<span class='info'><b>[NP.name]</b> | [NP.activated ? "Active" : "Inactive"]</span>")
 		return TRUE
 
-/datum/component/nanites/proc/nanite_ui_data(list/data, scan_level)
+/datum/component/nanites/proc/nanite_ui_data(datum/source, list/data, scan_level)
 	data["has_nanites"] = TRUE
 	data["nanite_volume"] = nanite_volume
 	data["regen_rate"] = regen_rate
