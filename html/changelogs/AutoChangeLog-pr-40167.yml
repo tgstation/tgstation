@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - code_imp: "Git revision info is now gathered by rust-g instead of manually reading .git files."
