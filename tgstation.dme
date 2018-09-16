@@ -133,6 +133,7 @@
 #include "code\__HELPERS\text.dm"
 #include "code\__HELPERS\time.dm"
 #include "code\__HELPERS\type2type.dm"
+#include "code\__HELPERS\typelists.dm"
 #include "code\__HELPERS\unsorted.dm"
 #include "code\__HELPERS\view.dm"
 #include "code\__HELPERS\sorts\__main.dm"
