@@ -27934,11 +27934,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/explab)
-"boa" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/manifold/general/visible,
-/turf/open/floor/engine,
-/area/science/explab)
 "boc" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 8
@@ -27949,29 +27944,28 @@
 /turf/closed/wall,
 /area/science/explab)
 "boe" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 4
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 8
+	},
+/obj/machinery/meter,
 /turf/open/floor/engine,
 /area/science/explab)
 "bof" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/components/trinary/filter,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
 /area/science/explab)
-"bog" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 5
-	},
-/turf/open/floor/engine,
-/area/science/explab)
 "boh" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/science/explab)
 "bok" = (
@@ -28532,15 +28526,6 @@
 /area/science/xenobiology)
 "bpo" = (
 /obj/item/wrench,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/science/explab)
-"bpp" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
-	},
 /turf/open/floor/engine,
 /area/science/explab)
 "bpq" = (
@@ -29781,7 +29766,6 @@
 /obj/machinery/light_switch{
 	pixel_x = -25
 	},
-/obj/machinery/portable_atmospherics/pump,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -31073,6 +31057,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/machinery/vending/wardrobe/science_wardrobe,
 /turf/open/floor/plasteel/white,
 /area/science/explab)
 "buI" = (
@@ -34440,7 +34425,7 @@
 /obj/item/radio/intercom{
 	pixel_y = 26
 	},
-/obj/machinery/portable_atmospherics/canister,
+/obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
 "bBQ" = (
@@ -34455,7 +34440,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/portable_atmospherics/canister,
+/obj/machinery/portable_atmospherics/pump,
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
 "bBR" = (
@@ -35148,6 +35137,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
 "bDc" = (
@@ -35720,6 +35712,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/meter,
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
 "bEf" = (
@@ -36374,10 +36367,10 @@
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
+/obj/item/pipe_dispenser,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bFl" = (
-/obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bFm" = (
@@ -36843,13 +36836,29 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bGn" = (
-/obj/machinery/vending/wardrobe/science_wardrobe,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/item/assembly/igniter{
+	step_x = 2;
+	step_y = -9
+	},
+/obj/item/assembly/igniter{
+	pixel_x = -9;
+	pixel_y = -2
+	},
+/obj/item/assembly/igniter{
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/obj/item/assembly/igniter{
+	pixel_x = 9;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -36956,6 +36965,10 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/machinery/airalarm/mixingchamber{
+	dir = 1;
+	pixel_y = -24
+	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bGt" = (
@@ -36990,10 +37003,6 @@
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
 "bGv" = (
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -37006,6 +37015,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/trinary/filter{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
@@ -54245,9 +54257,6 @@
 /area/engine/engineering)
 "eXo" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 10
-	},
 /turf/open/floor/engine,
 /area/science/explab)
 "eYr" = (
@@ -56650,6 +56659,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
+"loF" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister,
+/turf/open/floor/engine,
+/area/science/explab)
 "lqc" = (
 /obj/item/toy/gun,
 /obj/effect/decal/cleanable/oil,
@@ -57516,7 +57535,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "nJI" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/structure/sign/plaques/kiddie/perfect_drone{
 	pixel_y = 32
 	},
@@ -60152,9 +60170,6 @@
 /turf/open/floor/carpet,
 /area/lawoffice)
 "uAZ" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 4
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -60163,6 +60178,8 @@
 	dir = 2;
 	network = list("ss13","rd")
 	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/engine,
 /area/science/explab)
 "uCS" = (
@@ -61414,7 +61431,6 @@
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
 "xPa" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
@@ -103556,7 +103572,7 @@ bjw
 bjw
 uAZ
 boe
-boe
+loF
 bqv
 bqs
 brJ
@@ -103813,7 +103829,7 @@ aLi
 tim
 eXo
 bof
-boa
+eXo
 bqw
 brH
 btp
@@ -104069,7 +104085,7 @@ bjx
 aFi
 bjw
 nJI
-bog
+bky
 bpo
 lAR
 bqs
@@ -104327,7 +104343,7 @@ aEj
 bjw
 xPa
 boh
-bpp
+boh
 bqx
 bqs
 brJ
