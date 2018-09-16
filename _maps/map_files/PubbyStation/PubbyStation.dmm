@@ -36845,10 +36845,6 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/assembly/igniter{
-	step_x = 2;
-	step_y = -9
-	},
-/obj/item/assembly/igniter{
 	pixel_x = -9;
 	pixel_y = -2
 	},
@@ -36859,6 +36855,10 @@
 /obj/item/assembly/igniter{
 	pixel_x = 9;
 	pixel_y = 2
+	},
+/obj/item/assembly/igniter{
+	pixel_x = 2;
+	pixel_y = -9
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
