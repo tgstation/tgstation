@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - code_imp: "Added a new framework for saving memory on type-associated invariant lists"
