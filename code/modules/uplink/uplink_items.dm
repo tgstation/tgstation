@@ -85,11 +85,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	return pick(4;0.75,2;0.5,1;0.25)
 
 /datum/uplink_item/proc/purchase(mob/user, datum/component/uplink/U)
-	var/atom/A = spawn_item(item, user)
+	var/atom/A = spawn_item(item, user, U)
 	if(purchase_log_vis && U.purchase_log)
 		U.purchase_log.LogPurchase(A, src, cost)
 
-/datum/uplink_item/proc/spawn_item(spawn_item, mob/user)
+/datum/uplink_item/proc/spawn_item(spawn_item, mob/user, datum/component/uplink/U)
 	if(!spawn_item)
 		return
 	var/atom/A
@@ -848,6 +848,19 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/cartridge/virus/frame
 	cost = 4
 	restricted = TRUE
+
+/datum/uplink_item/stealthy_tools/failsafe
+	name = "Failsafe Uplink Code"
+	desc = "When entered the uplink will self-destruct immidiately."
+	item = /obj/effect/gibspawner/generic
+	cost = 1
+	surplus = 0
+	restricted = TRUE
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/stealthy_tools/failsafe/spawn_item(spawn_item, mob/user, datum/component/uplink/U)
+	U.failsafe_code = U.generate_code()
+	to_chat(user, "The new failsafe code for this uplink is now : [U.failsafe_code].")
 
 /datum/uplink_item/stealthy_tools/agent_card
 	name = "Agent Identification Card"
