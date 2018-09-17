@@ -8,14 +8,14 @@
 	becoming a lich destroys all internal organs except the brain."
 	school = "necromancy"
 	charge_max = 10
-	clothes_req = 0
-	centcom_cancast = 0
+	clothes_req = FALSE
+	centcom_cancast = FALSE
 	invocation = "NECREM IMORTIUM!"
 	invocation_type = "shout"
 	range = -1
 	level_max = 0 //cannot be improved
 	cooldown_min = 10
-	include_user = 1
+	include_user = TRUE
 
 	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "skeleton"

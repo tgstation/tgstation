@@ -1,16 +1,16 @@
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt
 	name = "Ethereal Jaunt"
-	desc = "This spell creates your ethereal form, temporarily making you invisible and able to pass through walls."
+	desc = "This spell turns your form ethereal, temporarily making you invisible and able to pass through walls."
 
 	school = "transmutation"
 	charge_max = 300
-	clothes_req = 1
+	clothes_req = TRUE
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
 	cooldown_min = 100 //50 deciseconds reduction per rank
-	include_user = 1
-	nonabstract_req = 1
+	include_user = TRUE
+	nonabstract_req = TRUE
 	var/jaunt_duration = 50 //in deciseconds
 	var/jaunt_in_time = 5
 	var/jaunt_in_type = /obj/effect/temp_visual/wizard
@@ -66,7 +66,7 @@
 	name = "water"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
-	var/reappearing = 0
+	var/reappearing = FALSE
 	var/movedelay = 0
 	var/movespeed = 2
 	density = FALSE

@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/spacetime_dist
 	name = "Spacetime Distortion"
-	desc = "Entangle the strings of spacetime to deny easy movement around you. The strings vibrate..."
+	desc = "Entangle the strings of space-time to deny easy movement in an area around you. The strings vibrate..."
 	charge_max = 300
 	var/duration = 150
 	range = 7

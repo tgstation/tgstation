@@ -2,11 +2,11 @@
 	name = "Shadow Walk"
 	desc = "Grants unlimited movement in darkness."
 	charge_max = 0
-	clothes_req = 0
-	phase_allowed = 1
+	clothes_req = FALSE
+	phase_allowed = TRUE
 	selection_type = "range"
 	range = -1
-	include_user = 1
+	include_user = TRUE
 	cooldown_min = 0
 	overlay = null
 	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'
@@ -38,7 +38,7 @@
 	name = "darkness"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
-	var/canmove = 1
+	var/canmove = TRUE
 	var/mob/living/jaunter
 	density = FALSE
 	anchored = TRUE
