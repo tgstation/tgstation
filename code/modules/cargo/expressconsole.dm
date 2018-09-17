@@ -103,7 +103,12 @@
 	data["hasBeacon"] = beacon != null//is there a linked beacon?
 	data["beaconName"] = beacon ? beacon.name : "No Beacon Found"
 	data["printMsg"] = cooldown > 0 ? "Print Beacon for [BEACON_COST] credits ([cooldown])" : "Print Beacon for [BEACON_COST] credits"//buttontext for printing beacons
-	data["points"] = SSshuttle.points
+	if(CONFIG_GET(flag/economy))
+		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+		if(D)
+			data["points"] = D.account_balance
+	else
+		data["points"] = SSshuttle.points
 	data["supplies"] = list()
 	message = "Sales are near-instantaneous - please choose carefully."
 	if(SSshuttle.supplyBlocked)
@@ -134,13 +139,26 @@
 			if (beacon)
 				beacon.update_status(SP_READY) //turns on the beacon's ready light
 		if("printBeacon")
-			if (SSshuttle.points >= BEACON_COST)
+			var/points_to_check
+			if(CONFIG_GET(flag/economy))
+				var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+				if(D)
+					points_to_check = D.account_balance
+			else
+				points_to_check = SSshuttle.points
+			if (points_to_check >= BEACON_COST)
 				cooldown = 10//a ~ten second cooldown for printing beacons to prevent spam
 				var/obj/item/supplypod_beacon/C = new /obj/item/supplypod_beacon(drop_location())
 				C.link_console(src, usr)//rather than in beacon's Initialize(), we can assign the computer to the beacon by reusing this proc)
 				printed_beacons++//printed_beacons starts at 0, so the first one out will be called beacon # 1
 				beacon.name = "Supply Pod Beacon #[printed_beacons]"
-				SSshuttle.points -= BEACON_COST
+				if(CONFIG_GET(flag/economy))
+					var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+					if(D)
+						D.adjust_money(-1 * BEACON_COST)
+				else
+					SSshuttle.points -= BEACON_COST
+
 
 		if("add")//Generate Supply Order first
 			var/id = text2path(params["id"])
@@ -160,8 +178,15 @@
 			var/reason = ""
 			var/list/empty_turfs
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason)
+			var/points_to_check
+			if(CONFIG_GET(flag/economy))
+				var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+				if(D)
+					points_to_check = D.account_balance
+			else
+				points_to_check = SSshuttle.points
 			if(!(obj_flags & EMAGGED))
-				if(SO.pack.cost <= SSshuttle.points)
+				if(SO.pack.cost <= points_to_check)
 					var/LZ
 					if (istype(beacon) && usingBeacon)//prioritize beacons over landing in cargobay
 						LZ = get_turf(beacon)
@@ -178,13 +203,19 @@
 							CHECK_TICK
 						if(empty_turfs && empty_turfs.len)
 							LZ = pick(empty_turfs)
-					if (SO.pack.cost <= SSshuttle.points && LZ)//we need to call the cost check again because of the CHECK_TICK call
-						SSshuttle.points -= SO.pack.cost
+					if (SO.pack.cost <= points_to_check && LZ)//we need to call the cost check again because of the CHECK_TICK call
+						if(CONFIG_GET(flag/economy))
+							var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+							if(D)
+								D.adjust_money(-1 * SO.pack.cost)
+						else
+							SSshuttle.points -= SO.pack.cost
+
 						new /obj/effect/DPtarget(LZ, SO, podID)
 						. = TRUE
 						update_icon()
 			else
-				if(SO.pack.cost * (0.72*MAX_EMAG_ROCKETS) <= SSshuttle.points) // bulk discount :^)
+				if(SO.pack.cost * (0.72*MAX_EMAG_ROCKETS) <= points_to_check) // bulk discount :^)
 					landingzone = GLOB.areas_by_type[pick(GLOB.the_station_areas)]  //override default landing zone
 					for(var/turf/open/floor/T in landingzone.contents)
 						if(is_blocked_turf(T))
@@ -192,7 +223,13 @@
 						LAZYADD(empty_turfs, T)
 						CHECK_TICK
 					if(empty_turfs && empty_turfs.len)
-						SSshuttle.points -= SO.pack.cost * (0.72*MAX_EMAG_ROCKETS)
+						if(CONFIG_GET(flag/economy))
+							var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+							if(D)
+								D.adjust_money(-1 * (SO.pack.cost * (0.72*MAX_EMAG_ROCKETS)))
+						else
+							SSshuttle.points -= SO.pack.cost * (0.72*MAX_EMAG_ROCKETS)
+
 						SO.generateRequisition(get_turf(src))
 						for(var/i in 1 to MAX_EMAG_ROCKETS)
 							var/LZ = pick(empty_turfs)

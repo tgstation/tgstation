@@ -167,7 +167,14 @@
 					else if(!S.prerequisites_met())
 						to_chat(usr, "You have not met the requirements for purchasing this shuttle.")
 					else
-						if(SSshuttle.points >= S.credit_cost)
+						var/points_to_check
+						if(CONFIG_GET(flag/economy))
+							var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+							if(D)
+								points_to_check = D.account_balance
+						else
+							points_to_check = SSshuttle.points
+						if(points_to_check >= S.credit_cost)
 							var/obj/machinery/shuttle_manipulator/M = locate() in GLOB.machines
 							if(M)
 								SSshuttle.shuttle_purchased = TRUE
@@ -175,7 +182,12 @@
 								M.load_template(S)
 								M.existing_shuttle = SSshuttle.emergency
 								M.action_load(S)
-								SSshuttle.points -= S.credit_cost
+								if(CONFIG_GET(flag/economy))
+									var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+									if(D)
+										D.adjust_money(-1 * S.credit_cost)
+								else
+									SSshuttle.points -= S.credit_cost
 								minor_announce("[usr.real_name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
 								message_admins("[ADMIN_LOOKUPFLW(usr)] purchased [S.name].")
 								SSblackbox.record_feedback("text", "shuttle_purchase", 1, "[S.name]")

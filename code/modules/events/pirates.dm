@@ -29,6 +29,12 @@
 	if(fake)
 		return
 	threat = new
+	if(CONFIG_GET(flag/economy))
+		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+		if(D)
+			payoff = round(D.account_balance * 0.80)
+	else
+		payoff = round(SSshuttle.points * 0.80)
 	payoff = round(SSshuttle.points * 0.80)
 	threat.title = "Business proposition"
 	threat.content = "This is [ship_name]. Pay up [payoff] credits or you'll walk the plank."
@@ -38,8 +44,17 @@
 
 /datum/round_event/pirates/proc/answered()
 	if(threat && threat.answered == 1)
-		if(SSshuttle.points >= payoff)
-			SSshuttle.points -= payoff
+		var/paid_check = FALSE
+		if(CONFIG_GET(flag/economy))
+			var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+			if(D)
+				if(D.adjust_money(-1 * payoff))
+					paid_check = TRUE
+		else
+			if(SSshuttle.points >= payoff)
+				SSshuttle.points -= payoff
+				paid_check = TRUE
+		if(paid_check)
 			priority_announce("Thanks for the credits, landlubbers.",sender_override = ship_name)
 			paid_off = TRUE
 			return
