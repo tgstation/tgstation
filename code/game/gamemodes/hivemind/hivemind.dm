@@ -65,7 +65,7 @@
 
 
 /datum/game_mode/hivemind/post_setup()
-	for(var/datum/mind/i in hosts) // each agent will have its own team.
+	for(var/datum/mind/i in hosts)
 		i.add_antag_datum(/datum/antagonist/hivemind)
 	return ..()
 

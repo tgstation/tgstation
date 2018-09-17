@@ -45,6 +45,8 @@
 	var/warning = "<span class='userdanger'>We have detected an enemy hivemind via [H.name], we can remove them from the hive to protect our identity or probe them to discover those of our enemies!</span>"
 	var/enemies = FALSE
 	for(var/datum/antagonist/hivemind/enemy_hive in GLOB.antagonists)
+		if(enemy.owner == owner)
+			continue
 		if(enemy_hive.hivemembers.Find(H))
 			addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, enemy_hive.owner, warning), rand(500,700)) //Warn opposing hivehosts that a vessel has been assimilated
 			enemies = TRUE

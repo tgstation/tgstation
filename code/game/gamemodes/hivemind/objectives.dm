@@ -5,7 +5,7 @@
 	target_amount = 10
 
 /datum/objective/hivemind/hivesize/New()
-	target_amount = ( max(8, GLOB.joined_player_list.len/3) + rand(0,3) )
+	target_amount = ( max(8, round(GLOB.joined_player_list.len/3)) + rand(0,3) )
 	update_explanation_text()
 
 /datum/objective/hivemind/hivesize/update_explanation_text()
@@ -22,7 +22,7 @@
 	target_amount = 10
 
 /datum/objective/hivemind/hiveescape/New()
-	target_amount = ( max(5, GLOB.joined_player_list.len/6) + rand(0,2) )
+	target_amount = ( max(5, round(GLOB.joined_player_list.len/6)) + rand(0,2) )
 	update_explanation_text()
 
 /datum/objective/hivemind/hiveescape/update_explanation_text()

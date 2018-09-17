@@ -77,7 +77,7 @@
 
 /obj/effect/proc_holder/spell/target_hive/hive_remove
 	name = "Release Vessel"
-	desc = "We silently remove a nearby target from the hive."
+	desc = "We silently remove a nearby target from the hive. We must be close to their body to do so."
 	selection_type = "view"
 	action_icon_state = "remove"
 
@@ -311,16 +311,19 @@
 	var/enemy_names = ""
 
 	to_chat(user, "<span class='notice'>We begin probing [target.name]'s mind!</span>")
-	if(do_mob(user,target,15))
+	if(do_mob(user,target,150))
 		if(!in_hive)
 			to_chat(user, "<span class='notice'>Their mind slowly opens up to us.</span>")
-			if(!do_mob(user,target,30))
+			if(!do_mob(user,target,300))
 				to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")
 				revert_cast()
 		for(var/datum/antagonist/hivemind/enemy in GLOB.antagonists)
+			if(enemy.owner == user)
+				continue
 			if(enemy.hivemembers.Find(target))
-				var/mob/M = enemy.owner
-				enemies += M.real_name
+				var/mob/M = enemy.owner.current
+				if(M)
+					enemies += M.real_name
 				enemy.remove_from_hive(target)
 			if(enemy.owner == target)
 				user.Stun(70)
@@ -331,7 +334,7 @@
 			enemy_names = enemies.Join(". ")
 			to_chat(user, "<span class='userdanger'>In a moment of clarity, we see all. Another hive. Faces. Our nemesis. [enemy_names]. They are watching us. They know we are coming.</span>")
 		else
-			to_chat(user, "<span class='notice'>We peer into the inner depths of their mind and see nothing. </span>")
+			to_chat(user, "<span class='notice'>We peer into the inner depths of their mind and see nothing, this mind is loyal to us and only us.</span>")
 	else
 		to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")
 		revert_cast()
@@ -394,7 +397,7 @@
 
 /obj/effect/proc_holder/spell/targeted/hive_loyal
 	name = "Bruteforce"
-	desc = "We crush the technology shielding the minds of Security and Command personnel, allowing us to assimilate them into the hive."
+	desc = "We crush the technology shielding the minds of adjacent Security and Command personnel after much concentration, allowing us to assimilate them into the hive."
 	panel = "Hivemind Abilities"
 	charge_max = 3000
 	range = 1
