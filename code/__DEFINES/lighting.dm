@@ -41,6 +41,9 @@
 #define LIGHT_COLOR_PURPLE     "#952CF4" //Light Purple. rgb(149, 44, 244)
 #define LIGHT_COLOR_LAVENDER   "#9B51FF" //Less-saturated light purple. rgb(155, 81, 255)
 
+#define LIGHT_COLOR_HOLY_MAGIC	"#FFF743" //slightly desaturated bright yellow.
+#define LIGHT_COLOR_BLOOD_MAGIC	"#D00000" //deep crimson
+
 //These ones aren't a direct colour like the ones above, because nothing would fit
 #define LIGHT_COLOR_FIRE       "#FAA019" //Warm orange color, leaning strongly towards yellow. rgb(250, 160, 25)
 #define LIGHT_COLOR_LAVA       "#C48A18" //Very warm yellow, leaning slightly towards orange. rgb(196, 138, 24)

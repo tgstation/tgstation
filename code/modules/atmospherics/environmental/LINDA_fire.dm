@@ -42,7 +42,7 @@
 		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
 			//remove just_spawned protection if no longer processing this cell
 		SSair.add_to_active(src, 0)
-	else	
+	else
 		var/datum/gas_mixture/heating = air_contents.remove_ratio(exposed_volume/air_contents.volume)
 		heating.temperature = exposed_temperature
 		heating.react()
@@ -261,4 +261,13 @@
 	. = ..()
 	if(!isliving(loc))
 		return INITIALIZE_HINT_QDEL
+
+/obj/effect/dummy/fire/cult_magic
+	name = "crimson glow"
+	light_color = LIGHT_COLOR_BLOOD_MAGIC
+
+/obj/effect/dummy/fire/holy_magic
+	name = "holy glow"
+	light_color = LIGHT_COLOR_HOLY_MAGIC
+
 #undef INSUFFICIENT
