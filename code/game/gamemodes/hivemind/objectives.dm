@@ -13,6 +13,8 @@
 
 /datum/objective/hivemind/hivesize/check_completion()
 	var/datum/antagonist/hivemind/host = owner.has_antag_datum(/datum/antagonist/hivemind)
+	if(!host)
+		return FALSE
 	return host.hive_size >= target_amount
 
 /datum/objective/hivemind/hiveescape
@@ -29,6 +31,8 @@
 /datum/objective/hivemind/hiveescape/check_completion()
 	var/count = 0
 	var/datum/antagonist/hivemind/host = owner.has_antag_datum(/datum/antagonist/hivemind)
+	if(!host)
+		return FALSE
 	for(var/mob/living/L in host.hivemembers)
 		var/datum/mind/M = L.mind
 		if(M)
@@ -47,6 +51,8 @@
 
 /datum/objective/hivemind/assimilate/check_completion()
 	var/datum/antagonist/hivemind/host = owner.has_antag_datum(/datum/antagonist/hivemind)
+	if(!host)
+		return FALSE
 	for(var/mob/living/L in host.hivemembers)
 		var/datum/mind/M = L.mind
 		if(M == target)

@@ -60,7 +60,7 @@
 			to_chat(user, "<span class='notice'>We begin linking our mind with [target.name]!</span>")
 			if(do_mob(user,user,70))
 				to_chat(user, "<span class='notice'>Our mind is ready to connect [target.name] to the Hive!</span>")
-				if((target in oview(range)) && do_mob(user,target,30))
+				if((target in view(range)) && do_mob(user,target,30))
 					to_chat(user, "<span class='notice'>[target.name] was added to the Hive!</span>")
 					success = TRUE
 					hive.add_to_hive(target)
@@ -73,7 +73,7 @@
 	else
 		to_chat(user, "<span class='notice'>We detect no neural activity in this body.</span>")
 	if(!success)
-		charge_counter = charge_max
+		revert_cast()
 
 /obj/effect/proc_holder/spell/target_hive/hive_remove
 	name = "Release Vessel"
@@ -108,7 +108,7 @@
 		var/mob/target = targets[1]
 		user.reset_perspective(target)
 		active = TRUE
-		charge_counter = charge_max
+		revert_cast()
 	else
 		user.reset_perspective(null)
 		active = FALSE
@@ -141,7 +141,7 @@
 			to_chat(user, "<span class='notice'>The vessel was too far away to be affected!</span>")
 	else
 		to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")
-		charge_counter = charge_max
+		revert_cast()
 
 /obj/effect/proc_holder/spell/self/hive_drain
 	name = "Repair Protocol"
@@ -165,7 +165,8 @@
 	var/power = 5
 
 	if(!user.getBruteLoss() && !user.getFireLoss() && !user.getCloneLoss() && !user.getBrainLoss())
-		to_chat(user, "<span class='notice'>We cannot heal ourselves anymore with this power!</span>")
+		to_chat(user, "<span class='notice'>We cannot heal ourselves any more with this power!</span>")
+		revert_cast()
 	to_chat(user, "<span class='notice'>We begin siphoning power from our many vessels!</span>")
 	while(iterations < 7)
 		var/mob/living/carbon/human/target = pick(hive.hivemembers)
@@ -176,14 +177,11 @@
 			break
 		target.adjustBrainLoss(5)
 		power = max(5-(round(get_dist(user, target)/40)),2)
-		if(user.getCloneLoss()) //If we have genetic damage, prioritize this
-			user.adjustCloneLoss(-power)
-		else if(user.getBruteLoss() || user.getFireLoss()) //Otherwise heal the type we have more of
-			if(user.getBruteLoss() > user.getFireLoss())
-				user.adjustBruteLoss(-power)
-			else
-				user.adjustFireLoss(-power)
-		else //If we don't have any of these, stop looping
+		if(user.getBruteLoss() > user.getFireLoss())
+			user.heal_ordered_damage(power, list(CLONE, BRUTE, BURN))
+		else
+			user.heal_ordered_damage(power, list(CLONE, BURN, BRUTE))
+		if(!user.getBruteLoss() && !user.getFireLoss() && !user.getCloneLoss()) //If we don't have any of these, stop looping
 			to_chat(user, "<span class='warning'>We finish our healing</span>")
 			break
 		iterations++
@@ -202,11 +200,12 @@
 
 	if(power < 5  || user.z != target.z)
 		to_chat(user, "<span class='notice'>[target.name] is too far away to use this power on!</span>")
+		revert_cast()
 		return
 	to_chat(user, "<span class='notice'>We prepare to pulse [target.name]'s cerebellum!</span>")
 	if(!do_mob(user,user,15))
 		to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")
-		charge_counter = charge_max
+		revert_cast()
 		return
 	to_chat(user, "<span class='notice'>We pulse [target.name]'s cerebellum, forcing him to move!</span>")
 	while(power > 0)
@@ -317,10 +316,11 @@
 			to_chat(user, "<span class='notice'>Their mind slowly opens up to us.</span>")
 			if(!do_mob(user,target,30))
 				to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")
-				charge_counter = charge_max
+				revert_cast()
 		for(var/datum/antagonist/hivemind/enemy in GLOB.antagonists)
 			if(enemy.hivemembers.Find(target))
-				enemies += enemy.owner.name
+				var/mob/M = enemy.owner
+				enemies += M.real_name
 				enemy.remove_from_hive(target)
 			if(enemy.owner == target)
 				user.Stun(70)
@@ -334,7 +334,7 @@
 			to_chat(user, "<span class='notice'>We peer into the inner depths of their mind and see nothing. </span>")
 	else
 		to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")
-		charge_counter = charge_max
+		revert_cast()
 
 /obj/effect/proc_holder/spell/targeted/hive_assim
 	name = "Mass Assimilation"
@@ -361,7 +361,7 @@
 	if(do_mob(user,target,150))
 		if(!target.mind)
 			to_chat(user, "<span class='notice'>This being has no mind!</span>")
-			charge_counter = charge_max
+			revert_cast()
 			return
 		var/datum/antagonist/hivemind/enemy_hive = target.mind.has_antag_datum(/datum/antagonist/hivemind)
 		if(enemy_hive)

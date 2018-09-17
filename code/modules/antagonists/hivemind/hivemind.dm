@@ -167,16 +167,6 @@
 
 	owner.announce_objectives()
 
-/datum/antagonist/hivemind/proc/update_traitor_icons_added(datum/mind/traitor_mind)
-	var/datum/atom_hud/antag/traitorhud = GLOB.huds[ANTAG_HUD_TRAITOR]
-	traitorhud.join_hud(owner.current)
-	set_antag_hud(owner.current, "traitor")
-
-/datum/antagonist/hivemind/proc/update_traitor_icons_removed(datum/mind/traitor_mind)
-	var/datum/atom_hud/antag/traitorhud = GLOB.huds[ANTAG_HUD_TRAITOR]
-	traitorhud.leave_hud(owner.current)
-	set_antag_hud(owner.current, null)
-
 /datum/antagonist/hivemind/roundend_report()
 	var/list/result = list()
 
