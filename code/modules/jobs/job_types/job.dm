@@ -52,6 +52,9 @@
 	//can be overridden by antag_rep.txt config
 	var/antag_rep = 10
 
+	var/paycheck = PAYCHECK_MINIMAL
+	var/paycheck_department = ACCOUNT_CIV
+
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
@@ -77,7 +80,11 @@
 /datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, datum/outfit/outfit_override = null)
 	if(!H)
 		return FALSE
-
+	if(CONFIG_GET(flag/economy) && !visualsOnly)
+		var/datum/bank_account/bank_account = new
+		bank_account.account_holder = H.real_name
+		bank_account.account_job = src
+		bank_account.i_need_my_payday_too(STARTING_PAYCHECKS, TRUE)
 	if(CONFIG_GET(flag/enforce_human_authority) && (title in GLOB.command_positions))
 		if(H.dna.species.id != "human")
 			H.set_species(/datum/species/human)
@@ -196,6 +203,12 @@
 		C.registered_name = H.real_name
 		C.assignment = J.title
 		C.update_label()
+		for(var/A in GLOB.bank_accounts)
+			var/datum/bank_account/B = A
+			if(B.account_holder == H.real_name)
+				C.registered_account = B
+				B.bank_card = C
+				break
 		H.sec_hud_set_ID()
 
 	var/obj/item/pda/PDA = H.get_item_by_slot(pda_slot)

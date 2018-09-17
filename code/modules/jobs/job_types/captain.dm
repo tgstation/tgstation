@@ -20,6 +20,8 @@ Captain
 
 	access = list() 			//See get_access()
 	minimal_access = list() 	//See get_access()
+	paycheck = PAYCHECK_COMMAND
+	paycheck_department = ACCOUNT_SEC
 
 /datum/job/captain/get_access()
 	return get_all_accesses()

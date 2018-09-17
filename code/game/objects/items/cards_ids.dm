@@ -124,6 +124,7 @@
 	var/registered_name = null // The name registered_name on the card
 	var/assignment = null
 	var/access_txt // mapping aid
+	var/datum/bank_account/registered_account
 
 
 
