@@ -25,7 +25,7 @@
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/do_jaunt(mob/living/target)
 	target.notransform = 1
 	var/turf/mobloc = get_turf(target)
-	var/obj/effect/dummy/spell_jaunt/holder = new /obj/effect/dummy/spell_jaunt(mobloc)
+	var/obj/effect/dummy/phased_mob/spell_jaunt/holder = new /obj/effect/dummy/phased_mob/spell_jaunt(mobloc)
 	new jaunt_out_type(mobloc, target.dir)
 	target.ExtinguishMob()
 	target.forceMove(holder)
@@ -62,7 +62,7 @@
 	steam.set_up(10, 0, mobloc)
 	steam.start()
 
-/obj/effect/dummy/spell_jaunt
+/obj/effect/dummy/phased_mob/spell_jaunt
 	name = "water"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
@@ -74,13 +74,13 @@
 	invisibility = 60
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/effect/dummy/spell_jaunt/Destroy()
+/obj/effect/dummy/phased_mob/spell_jaunt/Destroy()
 	// Eject contents if deleted somehow
 	for(var/atom/movable/AM in src)
 		AM.forceMove(get_turf(src))
 	return ..()
 
-/obj/effect/dummy/spell_jaunt/relaymove(var/mob/user, direction)
+/obj/effect/dummy/phased_mob/spell_jaunt/relaymove(var/mob/user, direction)
 	if ((movedelay > world.time) || reappearing || !direction)
 		return
 	var/turf/newLoc = get_step(src,direction)
@@ -97,7 +97,7 @@
 
 	forceMove(newLoc)
 
-/obj/effect/dummy/spell_jaunt/ex_act(blah)
+/obj/effect/dummy/phased_mob/spell_jaunt/ex_act(blah)
 	return
-/obj/effect/dummy/spell_jaunt/bullet_act(blah)
+/obj/effect/dummy/phased_mob/spell_jaunt/bullet_act(blah)
 	return
