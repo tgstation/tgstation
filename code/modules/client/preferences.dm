@@ -1520,8 +1520,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
 	character.dna.features = features.Copy()
 	character.dna.real_name = character.real_name
-	
-	if(!features["tail_lizard"] == "None")
+
+	if("tail_lizard" in pref_species.default_features)
 		character.dna.species.mutant_bodyparts |= "tail_lizard"
 
 	if(icon_updates)
