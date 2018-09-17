@@ -85,18 +85,18 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	return pick(4;0.75,2;0.5,1;0.25)
 
 /datum/uplink_item/proc/purchase(mob/user, datum/component/uplink/U)
-	var/atom/A = spawn_item(item, user)
+	var/atom/A = spawn_item(item, user, U)
 	if(purchase_log_vis && U.purchase_log)
 		U.purchase_log.LogPurchase(A, src, cost)
 
-/datum/uplink_item/proc/spawn_item(spawn_item, mob/user)
-	if(!spawn_item)
+/datum/uplink_item/proc/spawn_item(spawn_path, mob/user, datum/component/uplink/U)
+	if(!spawn_path)
 		return
 	var/atom/A
-	if(ispath(spawn_item))
-		A = new spawn_item(get_turf(user))
+	if(ispath(spawn_path))
+		A = new spawn_path(get_turf(user))
 	else
-		A = spawn_item
+		A = spawn_path
 	if(ishuman(user) && istype(A, /obj/item))
 		var/mob/living/carbon/human/H = user
 		if(H.put_in_hands(A))
@@ -849,6 +849,24 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 4
 	restricted = TRUE
 
+/datum/uplink_item/stealthy_tools/failsafe
+	name = "Failsafe Uplink Code"
+	desc = "When entered the uplink will self-destruct immidiately."
+	item = /obj/effect/gibspawner/generic
+	cost = 1
+	surplus = 0
+	restricted = TRUE
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/stealthy_tools/failsafe/spawn_item(spawn_path, mob/user, datum/component/uplink/U)
+	if(!U)
+		return
+	U.failsafe_code = U.generate_code()
+	to_chat(user, "The new failsafe code for this uplink is now : [U.failsafe_code].")
+	if(user.mind)
+		user.mind.store_memory("Failsafe code for [U.parent] : [U.failsafe_code]")
+	return U.parent //For log icon
+
 /datum/uplink_item/stealthy_tools/agent_card
 	name = "Agent Identification Card"
 	desc = "Agent cards prevent artificial intelligences from tracking the wearer, and can copy access \
@@ -1588,7 +1606,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	var/list/uplink_items = get_uplink_items(SSticker && SSticker.mode? SSticker.mode : null, FALSE)
 
 	var/crate_value = starting_crate_value
-	var/obj/structure/closet/crate/C = spawn_item(/obj/structure/closet/crate, user)
+	var/obj/structure/closet/crate/C = spawn_item(/obj/structure/closet/crate, user, U)
 	if(U.purchase_log)
 		U.purchase_log.LogPurchase(C, src, cost)
 	while(crate_value)

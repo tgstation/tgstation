@@ -99,7 +99,7 @@
 		GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, target)
 		if(!hidden_uplink)
 			hidden_uplink = target.AddComponent(/datum/component/uplink)
-			target.lock_code = lock_code
+			hidden_uplink.unlock_code = lock_code
 		else
 			hidden_uplink.hidden_crystals += hidden_uplink.telecrystals //Temporarially hide the PDA's crystals, so you can't steal telecrystals.
 		hidden_uplink.telecrystals = telecrystals
