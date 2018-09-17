@@ -174,13 +174,26 @@
 	researched_designs -= design.id
 	return TRUE
 
-/datum/techweb/proc/can_afford(list/pointlist)
+/datum/techweb/proc/get_point_total(list/pointlist)
 	for(var/i in pointlist)
-		if(research_points[i] < pointlist[i])
-			return FALSE
+		. += pointlist[i]
+
+/datum/techweb/proc/can_afford(list/pointlist)
+	if(CONFIG_GET(flag/economy))
+		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_SCI)
+		if(D && D.has_money(get_point_total(pointlist)))
+			return TRUE
+		return FALSE
+	else
+		for(var/i in pointlist)
+			if(research_points[i] < pointlist[i])
+				return FALSE
 	return TRUE
 
 /datum/techweb/proc/printout_points()
+	if(CONFIG_GET(flag/economy))
+		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_SCI)
+		return "Budget: $[D.account_balance]<br>"
 	return techweb_point_display_generic(research_points)
 
 /datum/techweb/proc/research_node_id(id, force, auto_update_points)
@@ -194,7 +207,11 @@
 		if(!available_nodes[node.id] || (auto_adjust_cost && (!can_afford(node.get_price(src)))))
 			return FALSE
 	if(auto_adjust_cost)
-		remove_point_list(node.get_price(src))
+		if(CONFIG_GET(flag/economy))
+			var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_SCI)
+			D.adjust_money(get_point_total(node.get_price(src)) * -1)
+		else
+			remove_point_list(node.get_price(src))
 	researched_nodes[node.id] = node				//Add to our researched list
 	for(var/i in node.unlocks)
 		visible_nodes[i] = node.unlocks[i]

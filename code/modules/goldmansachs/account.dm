@@ -43,16 +43,16 @@ GLOBAL_LIST_EMPTY(department_accounts)
 	if(free)
 		adjust_money(account_job.paycheck * amt_of_paychecks)
 	else
-		for(var/datum/bank_account/department/D in SSgoldmansachs.generated_accounts)
-			if(D.department_id == account_job.paycheck_department)
-				if(!transfer_money(D, account_job.paycheck * amt_of_paychecks))
-					if(bank_card)
-						bank_card.say("ERROR: Payday aborted, departmental funds insufficient.")
-					return FALSE
-				else
-					if(bank_card)
-						bank_card.say("Payday processed, account now holds $[account_balance].")
-					return TRUE
+		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(account_job.paycheck_department)
+		if(D)
+			if(!transfer_money(D, account_job.paycheck * amt_of_paychecks))
+				if(bank_card)
+					bank_card.say("ERROR: Payday aborted, departmental funds insufficient.")
+				return FALSE
+			else
+				if(bank_card)
+					bank_card.say("Payday processed, account now holds $[account_balance].")
+				return TRUE
 	if(bank_card)
 		bank_card.say("ERROR: Payday aborted, unable to contact departmental account.")
 	return FALSE
