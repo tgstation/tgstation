@@ -500,7 +500,7 @@
 	if (.)
 		var/obj/item/surgical_processor/SP = locate() in R.module
 		R.module.remove_module(SP, TRUE)
-		
+
 /obj/item/borg/upgrade/ai
 	name = "B.O.R.I.S. module"
 	desc = "Bluespace Optimized Remote Intelligence Synchronization. An uplink device which takes the place of an MMI in cyborg endoskeletons, creating a robotic shell controlled by an AI."
@@ -636,3 +636,31 @@
 	desc = "Allows you to to turn a cyborg into a clown, honk."
 	icon_state = "cyborg_upgrade3"
 	new_module = /obj/item/robot_module/clown
+
+/obj/item/borg/upgrade/bitcoin
+	name = "bitcoin upgrade"
+	desc = "An energy-operated miner system for cyborgs."
+	icon_state = "cyborg_upgrade3"
+
+/obj/item/borg/upgrade/bitcoin/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/borg/upgrade/bitcoin/U = locate() in R
+		if(U)
+			to_chat(user, "<span class='warning'>This unit is already equipped with bitcoin.</span>")
+			return FALSE
+		if(!U)
+			START_PROCESSING(SSobj, src)
+			to_chat(user, "<span class='warning'>it worked?</span>")
+
+/obj/item/borg/upgrade/bitcoin/process()
+	if(!(R.cell))
+		SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = 9999999))
+
+
+/obj/item/borg/upgrade/bitcoin/deactivate(mob/living/silicon/robot/R, user = usr)
+    . = ..()
+    if (.)
+        var/obj/item/borg/upgrade/bitcoin/U = locate() in R
+        R.module.remove_module(U, TRUE)
+        STOP_PROCESSING(SSobj, src)
