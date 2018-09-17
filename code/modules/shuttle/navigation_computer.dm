@@ -22,6 +22,7 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/Initialize()
 	. = ..()
 	GLOB.navigation_computers += src
+	RegisterSignal(src, COMSIG_CONNECT_TO_SHUTTLE, .proc/connect_to_shuttle)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/Destroy()
 	. = ..()
@@ -246,7 +247,7 @@
 		current_user.client.images -= remove_images
 		current_user.client.images += add_images
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/proc/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+/obj/machinery/computer/camera_advanced/shuttle_docker/proc/connect_to_shuttle(_self, obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	if(port && (shuttleId == initial(shuttleId) || override))
 		shuttleId = port.id
 		shuttlePortId = "[port.id]_custom"

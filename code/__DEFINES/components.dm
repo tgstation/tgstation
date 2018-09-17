@@ -91,6 +91,9 @@
 	#define COMPONENT_NO_MOUSEDROP 1
 #define COMSIG_MOUSEDROPPED_ONTO "mousedropped_onto"			//from base of atom/MouseDrop_T: (/atom/from, /mob/user)
 
+/// from [/atom/movable/proc/connect_to_shuttle]: ([obj/docking_port/mobile]/port, [obj/docking_port/stationary]/dock, idnum, override)
+#define COMSIG_CONNECT_TO_SHUTTLE "connect_to_shuttle"
+
 // /area signals
 #define COMSIG_AREA_ENTERED "area_entered" 						//from base of area/Entered(): (atom/movable/M)
 #define COMSIG_AREA_EXITED "area_exited" 							//from base of area/Exited(): (atom/movable/M)

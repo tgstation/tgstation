@@ -305,14 +305,12 @@
 			id = "[id][idnum]"
 		if(name == initial(name))
 			name = "[name] [idnum]"
-	for(var/i in shuttle_areas)
-		var/area/place = i
-		for(var/obj/machinery/computer/shuttle/comp in place)
-			comp.connect_to_shuttle(src, dock, idnum)
-		for(var/obj/machinery/computer/camera_advanced/shuttle_docker/comp in place)
-			comp.connect_to_shuttle(src, dock, idnum)
-		for(var/obj/machinery/status_display/shuttle/sd in place)
-			sd.connect_to_shuttle(src, dock, idnum)
+	for(var/place in shuttle_areas)
+		var/area/area = place
+		SEND_SIGNAL(area, COMSIG_CONNECT_TO_SHUTTLE, src, dock, idnum, FALSE)
+		for(var/each in place)
+			var/atom/atom = each
+			SEND_SIGNAL(atom, COMSIG_CONNECT_TO_SHUTTLE, src, dock, idnum, FALSE)
 
 
 //this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact
