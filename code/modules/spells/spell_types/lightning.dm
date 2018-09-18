@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/tesla
 	name = "Tesla Blast"
-	desc = "Charge up a tesla arc and release it at a random nearby target! The arc jumps between targets and can knock them out."
+	desc = "Charge up a tesla arc and release it at a random nearby target! You can move freely while it charges. The arc jumps between targets and can knock them down."
 	charge_type = "recharge"
 	charge_max	= 300
 	clothes_req = TRUE
