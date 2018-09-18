@@ -17,7 +17,7 @@
 	var/mob/living/LM = parent
 	var/v = volume
 	var/e = e_range
-	if(!T.footstep || LM.lying || !LM.canmove || LM.resting || LM.buckled || LM.throwing)
+	if(!T.footstep || LM.lying || !LM.canmove || LM.resting || LM.buckled || LM.throwing || LM.movement_type & (VENTCRAWLING | FLYING))
 		return
 	if(iscarbon(LM))
 		var/mob/living/carbon/C = LM
