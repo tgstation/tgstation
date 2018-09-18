@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Flying and ventcrawling mobs will no longer make footstep sounds."
