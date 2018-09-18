@@ -30,7 +30,7 @@
 			var/warning = ""
 			for(var/datum/antagonist/hivemind/hive in GLOB.antagonists)
 				if(hive.hivemembers.Find(target))
-					var/mob/M = hive.owner
+					var/mob/M = hive.owner.current
 					warning += "[M.real_name]. "
 			to_chat(target, "<span class='warning'>You hear supernatural wailing echo throughout your mind. If you listen closely you can hear... [warning]Are those... names?</span>")
 			remove_hivemember(target)
