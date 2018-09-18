@@ -14,9 +14,10 @@ WORKDIR /rust_g
 
 RUN apt-get install -y --no-install-recommends \
     libssl-dev \
-    rustc \
-    cargo \
     pkg-config \
+    curl \
+    gcc-multilib \
+    && curl https://sh.rustup.rs -sSf | sh -s -- -y --default-host i686-unknown-linux-gnu \
     && git init \
     && git remote add origin https://github.com/tgstation/rust-g
 
