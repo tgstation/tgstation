@@ -138,16 +138,15 @@
 	droppingoil = FALSE
 
 /obj/vehicle/sealed/car/clowncar/proc/ToggleCannon()
+	cannonbusy = TRUE
 	if(cannonmode)
 		cannonmode = FALSE
 		flick("clowncar_fromfire", src)
-		cannonbusy = TRUE
 		addtimer(CALLBACK(src, .proc/LeaveCannonMode), 20)
 		playsound(src, 'sound/vehicles/clowncar_cannonmode2.ogg', 75)
 		visible_message("<span class='danger'>The [src] starts going back into mobile mode.</span>")
 	else
 		canmove = FALSE
-		cannonbusy = TRUE
 		flick("clowncar_tofire", src)
 		visible_message("<span class='danger'>The [src] opens up and reveals a large cannon.</span>")
 		addtimer(CALLBACK(src, .proc/EnterCannonMode), 20)
