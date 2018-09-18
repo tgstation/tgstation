@@ -250,24 +250,9 @@
 /obj/effect/hotspot/singularity_pull()
 	return
 
-/obj/effect/dummy/fire
+/obj/effect/dummy/moblight/fire
 	name = "fire"
-	desc = "OWWWWWW. IT BURNS. Tell a coder if you're seeing this."
-	icon_state = "nothing"
 	light_color = LIGHT_COLOR_FIRE
 	light_range = LIGHT_RANGE_FIRE
-
-/obj/effect/dummy/fire/Initialize()
-	. = ..()
-	if(!isliving(loc))
-		return INITIALIZE_HINT_QDEL
-
-/obj/effect/dummy/fire/cult_magic
-	name = "crimson glow"
-	light_color = LIGHT_COLOR_BLOOD_MAGIC
-
-/obj/effect/dummy/fire/holy_magic
-	name = "holy glow"
-	light_color = LIGHT_COLOR_HOLY_MAGIC
 
 #undef INSUFFICIENT

@@ -414,17 +414,15 @@
 		user.visible_message("<span class='warning'>[user] holds up [user.p_their()] hand, which explodes in a flash of red light!</span>", \
 							"<span class='cultitalic'>You attempt to stun [L] with the spell!</span>")
 
-		var/obj/effect/dummy/fire/cult_magic/cult_light = new(user)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, cult_light), 2)
+		user.mob_light(_color = LIGHT_COLOR_BLOOD_MAGIC, _range = 3, _duration = 2)
 
 		var/anti_magic_source = L.anti_magic_check()
 		if(anti_magic_source)
 
-			var/obj/effect/dummy/fire/holy_magic/holy_light = new(L)
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, holy_light), 85)
+			L.mob_light(_color = LIGHT_COLOR_HOLY_MAGIC, _range = 2, _duration = 100)
 			var/mutable_appearance/forbearance = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
 			L.add_overlay(forbearance)
-			addtimer(CALLBACK(L, /atom/proc/cut_overlay, forbearance), 85)
+			addtimer(CALLBACK(L, /atom/proc/cut_overlay, forbearance), 100)
 
 			if(istype(anti_magic_source, /obj/item))
 				var/obj/item/ams_object = anti_magic_source
