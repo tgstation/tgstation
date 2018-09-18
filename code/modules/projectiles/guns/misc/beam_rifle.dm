@@ -112,18 +112,6 @@
 				to_chat(owner, "<span class='boldnotice'>You disable [src]'s zooming system.</span>")
 	reset_zooming()
 
-/obj/item/gun/energy/beam_rifle/proc/smooth_zooming(delay_override = null)
-	if(!check_user() || !zooming || zoom_lock == ZOOM_LOCK_OFF || zoom_lock == ZOOM_LOCK_CENTER_VIEW)
-		return
-	if(zoom_animating && delay_override != 0)
-		return smooth_zooming(zoom_animating + delay_override)	//Automatically compensate for ongoing zooming actions.
-	var/total_time = SSfastprocess.wait
-	if(delay_override)
-		total_time = delay_override
-	zoom_animating = total_time
-	animate(current_user.client, pixel_x = current_zoom_x, pixel_y = current_zoom_y , total_time, SINE_EASING, ANIMATION_PARALLEL)
-	zoom_animating = 0
-
 /obj/item/gun/energy/beam_rifle/proc/set_autozoom_pixel_offsets_immediate(current_angle)
 	if(zoom_lock == ZOOM_LOCK_CENTER_VIEW || zoom_lock == ZOOM_LOCK_OFF)
 		return
@@ -136,7 +124,6 @@
 	current_user.client.change_view(world.view + zoom_target_view_increase)
 	zoom_current_view_increase = zoom_target_view_increase
 	set_autozoom_pixel_offsets_immediate(zooming_angle)
-	smooth_zooming()
 
 /obj/item/gun/energy/beam_rifle/proc/start_zooming()
 	if(zoom_lock == ZOOM_LOCK_OFF)
@@ -294,7 +281,6 @@
 		if(zoom_lock == ZOOM_LOCK_AUTOZOOM_FREEMOVE)
 			zooming_angle = lastangle
 			set_autozoom_pixel_offsets_immediate(zooming_angle)
-			smooth_zooming(2)
 	return ..()
 
 /obj/item/gun/energy/beam_rifle/onMouseDown(object, location, params, mob/mob)
