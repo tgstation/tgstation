@@ -41,6 +41,9 @@
 		reset = new reset_path(get_turf(src))
 
 /obj/item/twohanded/ctf/process()
+	if(is_ctf_target(loc)) //don't reset from someone's hands.
+		STOP_PROCESSING(SSobj, src)
+		return
 	if(world.time > reset_cooldown)
 		forceMove(get_turf(src.reset))
 		for(var/mob/M in GLOB.player_list)
