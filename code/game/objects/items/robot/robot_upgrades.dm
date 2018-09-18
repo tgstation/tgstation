@@ -426,13 +426,7 @@
 	desc = "An upgrade to the Medical module's hypospray, allowing it \
 		to treat a wider range of conditions and problems."
 	additional_reagents = list("mannitol", "oculine", "inacusiate",
-		"mutadone", "haloperidol")
-
-/obj/item/borg/upgrade/hypospray/high_strength
-	name = "medical cyborg high-strength hypospray"
-	desc = "An upgrade to the Medical module's hypospray, containing \
-		stronger versions of existing chemicals."
-	additional_reagents = list("oxandrolone", "sal_acid", "rezadone",
+		"mutadone", "haloperidol","oxandrolone", "sal_acid", "rezadone",
 		"pen_acid")
 
 /obj/item/borg/upgrade/piercing_hypospray
@@ -637,30 +631,31 @@
 	icon_state = "cyborg_upgrade3"
 	new_module = /obj/item/robot_module/clown
 
-/obj/item/borg/upgrade/bitcoin
-	name = "bitcoin upgrade"
-	desc = "An energy-operated miner system for cyborgs."
-	icon_state = "cyborg_upgrade3"
+/obj/item/borg/upgrade/research
+	name = "research upgrade"
+	desc = "An efficent module that uses the cyborg processor to calculate complex math equations, uses extra power to run."
+	icon_state = "graphic_card"
+	var/mob/living/silicon/robot/cyborg
 
-/obj/item/borg/upgrade/bitcoin/action(mob/living/silicon/robot/R, user = usr)
+/obj/item/borg/upgrade/research/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		var/obj/item/borg/upgrade/bitcoin/U = locate() in R
+		var/obj/item/borg/upgrade/research/U = locate() in R
+		cyborg = R
 		if(U)
-			to_chat(user, "<span class='warning'>This unit is already equipped with bitcoin.</span>")
+			to_chat(user, "<span class='warning'>This unit is already equipped with a research module.</span>")
 			return FALSE
-		if(!U)
+		else
 			START_PROCESSING(SSobj, src)
-			to_chat(user, "<span class='warning'>it worked?</span>")
 
-/obj/item/borg/upgrade/bitcoin/process()
-	if(!(R.cell))
-		SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = 9999999))
+/obj/item/borg/upgrade/research/process()
+	if(cyborg.cell.charge > 100)
+		cyborg.cell.use(100)
+		SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = 50))
 
-
-/obj/item/borg/upgrade/bitcoin/deactivate(mob/living/silicon/robot/R, user = usr)
+/obj/item/borg/upgrade/research/deactivate(mob/living/silicon/robot/R, user = usr)
     . = ..()
     if (.)
-        var/obj/item/borg/upgrade/bitcoin/U = locate() in R
+        var/obj/item/borg/upgrade/research/U = locate() in R
         R.module.remove_module(U, TRUE)
         STOP_PROCESSING(SSobj, src)
