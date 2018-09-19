@@ -1,0 +1,6 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Blood cultists using a stun spell now emit a flash of red light when.... they emit a flash of red light!"
+  - bugfix: "Blood cult stun spells now properly check for any holy items on the target mob."
+  - tweak: "Targets immune to blood cult stun spells will now glow with holy light for a short duration after."
