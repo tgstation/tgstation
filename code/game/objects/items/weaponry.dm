@@ -246,7 +246,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		var/obj/item/twohanded/spear/S = new /obj/item/twohanded/spear
 
 		remove_item_from_storage(user)
-		I.forceMove(S)
+		if (!user.transferItemToLoc(I, S))
+			return
 		S.CheckParts(list(I))
 		qdel(src)
 
