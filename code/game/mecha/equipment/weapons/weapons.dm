@@ -448,7 +448,7 @@
 	name = "\improper grenade launcher"
 	desc = "A weapon for combat exosuits. Launches primed explosive grenades."
 	icon_state = "mecha_grenadelnchr"
-	projectile = /obj/item/grenade/syndieminibomb/concussion/frag/mech
+	projectile = /obj/item/grenade/syndieminibomb/concussion/mech
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	projectiles = 3
 	missile_speed = 1
