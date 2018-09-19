@@ -183,7 +183,7 @@
 	design_ids = list("tele_station", "tele_hub", "teleconsole", "quantumpad", "launchpad", "launchpad_console", "bluespace_pod")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 5000
-	
+
 /datum/techweb_node/micro_bluespace
 	id = "micro_bluespace"
 	display_name = "Miniaturized Bluespace Research"
