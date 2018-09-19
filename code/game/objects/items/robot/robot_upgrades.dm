@@ -649,9 +649,9 @@
 			START_PROCESSING(SSobj, src)
 
 /obj/item/borg/upgrade/research/process()
-	if(cyborg.cell.charge > 100)
-		cyborg.cell.use(100)
-		SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = 50))
+	if(cyborg.cell.charge > 150)
+		cyborg.cell.use(150)
+		SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = 15))
 
 /obj/item/borg/upgrade/research/deactivate(mob/living/silicon/robot/R, user = usr)
     . = ..()
