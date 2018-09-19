@@ -1,5 +1,0 @@
-author: "Naksu & octareenroon91"
-delete-after: True
-changes: 
-  - rscadd: "plasmaglass windows leave plasmaglass shards when destroyed, these shards can also be used to make spears."
-  - bugfix: "fulltile windows didn't give you the promised 2 shards, this has been fixed."
