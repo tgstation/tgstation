@@ -29,13 +29,9 @@
 	if(fake)
 		return
 	threat = new
-	if(CONFIG_GET(flag/economy))
-		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
-		if(D)
-			payoff = round(D.account_balance * 0.80)
-	else
-		payoff = round(SSshuttle.points * 0.80)
-	payoff = round(SSshuttle.points * 0.80)
+	var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+	if(D)
+		payoff = round(D.account_balance * 0.80)
 	threat.title = "Business proposition"
 	threat.content = "This is [ship_name]. Pay up [payoff] credits or you'll walk the plank."
 	threat.possible_answers = list("We'll pay.","No way.")
@@ -44,22 +40,14 @@
 
 /datum/round_event/pirates/proc/answered()
 	if(threat && threat.answered == 1)
-		var/paid_check = FALSE
-		if(CONFIG_GET(flag/economy))
-			var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
-			if(D)
-				if(D.adjust_money(-1 * payoff))
-					paid_check = TRUE
-		else
-			if(SSshuttle.points >= payoff)
-				SSshuttle.points -= payoff
-				paid_check = TRUE
-		if(paid_check)
-			priority_announce("Thanks for the credits, landlubbers.",sender_override = ship_name)
-			paid_off = TRUE
-			return
-		else
-			priority_announce("Trying to cheat us? You'll regret this!",sender_override = ship_name)
+		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+		if(D)
+			if(D.adjust_money(-1 * payoff))
+				priority_announce("Thanks for the credits, landlubbers.",sender_override = ship_name)
+				paid_off = TRUE
+				return
+			else
+				priority_announce("Trying to cheat us? You'll regret this!",sender_override = ship_name)
 	if(!shuttle_spawned)
 		spawn_shuttle()
 

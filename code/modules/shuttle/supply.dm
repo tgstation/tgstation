@@ -93,17 +93,10 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 		if(!empty_turfs.len)
 			break
-		if(CONFIG_GET(flag/economy))
-			var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
-			if(D)
-				if(!D.adjust_money(-1 * SO.pack.cost))
-					continue
-		else
-			if(SO.pack.cost > SSshuttle.points)
+		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+		if(D)
+			if(!D.adjust_money(-1 * SO.pack.cost))
 				continue
-
-			SSshuttle.points -= SO.pack.cost
-
 		value += SO.pack.cost
 		SSshuttle.shoppinglist -= SO
 		SSshuttle.orderhistory += SO

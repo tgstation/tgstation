@@ -14,15 +14,14 @@ SUBSYSTEM_DEF(goldmansachs)
 	var/list/generated_accounts = list()
 
 /datum/controller/subsystem/goldmansachs/fire(resumed = 0)
-	if(CONFIG_GET(flag/economy))
-		var/budget_to_hand_out = round(budget_pool / department_accounts.len)
-		for(var/A in department_accounts)
-			var/datum/bank_account/department/D = new /datum/bank_account/department(src)
-			D.department_id = A
-			D.account_holder = department_accounts[A]
-			D.account_balance = budget_to_hand_out
-			generated_accounts += D
-		addtimer(CALLBACK(src, .proc/its_payday_fellas), paycheck_interval)
+	var/budget_to_hand_out = round(budget_pool / department_accounts.len)
+	for(var/A in department_accounts)
+		var/datum/bank_account/department/D = new /datum/bank_account/department(src)
+		D.department_id = A
+		D.account_holder = department_accounts[A]
+		D.account_balance = budget_to_hand_out
+		generated_accounts += D
+	addtimer(CALLBACK(src, .proc/its_payday_fellas), paycheck_interval)
 	flags |= SS_NO_FIRE
 
 

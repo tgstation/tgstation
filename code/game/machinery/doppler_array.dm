@@ -135,14 +135,11 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 		else
 			linked_techweb.largest_bomb_value = TECHWEB_BOMB_POINTCAP
 			point_gain = 1000
-		if(CONFIG_GET(flag/economy))
-			var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_SCI)
-			if(D)
-				D.adjust_money(point_gain)
-				say("Explosion details and mixture sold to the highest bidder for $[point_gain].")
-		else
+		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_SCI)
+		if(D)
+			D.adjust_money(point_gain)
 			linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, point_gain)
-			say("Gained [point_gain] points from explosion dataset.")
+			say("Explosion details and mixture analyzed and sold to the highest bidder for $[point_gain], with a reward of [point_gain] points.")
 
 	else //you've made smaller bombs
 		say("Data already captured. Aborting.")

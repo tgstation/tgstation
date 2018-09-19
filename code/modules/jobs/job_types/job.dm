@@ -80,7 +80,7 @@
 /datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, datum/outfit/outfit_override = null)
 	if(!H)
 		return FALSE
-	if(CONFIG_GET(flag/economy) && !visualsOnly)
+	if(!visualsOnly)
 		var/datum/bank_account/bank_account = new
 		bank_account.account_holder = H.real_name
 		bank_account.account_job = src

@@ -59,15 +59,7 @@ SUBSYSTEM_DEF(research)
 		science_tech.last_bitcoins = bitcoins  // Doesn't take tick drift into account
 		for(var/i in bitcoins)
 			bitcoins[i] *= income_time_difference / 10
-		if(CONFIG_GET(flag/economy))
-			var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_SCI)
-			if(D)
-				var/fuck = 0
-				for(var/i in bitcoins)
-					fuck += bitcoins[i]
-				D.adjust_money(fuck)
-		else
-			science_tech.add_point_list(bitcoins)
+		science_tech.add_point_list(bitcoins)
 	last_income = world.time
 
 /datum/controller/subsystem/research/proc/calculate_server_coefficient()	//Diminishing returns.

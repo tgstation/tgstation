@@ -67,12 +67,10 @@
 			loaded_tank.air_contents.gases[/datum/gas/carbon_dioxide][MOLES] += gasdrained*2
 			loaded_tank.air_contents.garbage_collect()
 			var/bitcoins_mined = RAD_COLLECTOR_OUTPUT
-			if(CONFIG_GET(flag/economy))
-				var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_SCI)
-				if(D)
-					D.adjust_money(bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
-			else
-				SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
+			var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_ENG)
+			if(D)
+				D.adjust_money(bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
+			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
 			stored_power-=bitcoins_mined
 
 /obj/machinery/power/rad_collector/interact(mob/user)
