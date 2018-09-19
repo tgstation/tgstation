@@ -69,7 +69,6 @@
 	var/zooming_angle
 	var/current_zoom_x = 0
 	var/current_zoom_y = 0
-	var/zoom_animating = 0
 
 	var/static/image/charged_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_charged")
 	var/static/image/drained_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_empty")
