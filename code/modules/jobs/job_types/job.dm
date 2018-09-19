@@ -84,7 +84,9 @@
 		var/datum/bank_account/bank_account = new
 		bank_account.account_holder = H.real_name
 		bank_account.account_job = src
+		bank_account.account_id = rand(111111,999999)
 		bank_account.i_need_my_payday_too(STARTING_PAYCHECKS, TRUE)
+		H.account_id = bank_account.account_id
 	if(CONFIG_GET(flag/enforce_human_authority) && (title in GLOB.command_positions))
 		if(H.dna.species.id != "human")
 			H.set_species(/datum/species/human)
@@ -205,7 +207,7 @@
 		C.update_label()
 		for(var/A in GLOB.bank_accounts)
 			var/datum/bank_account/B = A
-			if(B.account_holder == H.real_name)
+			if(B.account_id == H.account_id)
 				C.registered_account = B
 				B.bank_card = C
 				break

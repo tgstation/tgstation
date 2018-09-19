@@ -7,6 +7,7 @@ GLOBAL_LIST_EMPTY(department_accounts)
 	var/datum/job/account_job
 	var/obj/item/card/id/bank_card
 	var/add_to_accounts = TRUE
+	var/account_id
 
 /datum/bank_account/New()
 	..()
