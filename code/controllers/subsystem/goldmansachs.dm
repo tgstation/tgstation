@@ -77,7 +77,6 @@ SUBSYSTEM_DEF(goldmansachs)
 	var/station_integrity = min(PERCENT(GLOB.start_state.score(engineering_check)), 100)
 	station_integrity *= 0.01
 	engineering_cash *= station_integrity
-	to_chat(world, "ENG CASH: [engineering_cash]")
 	var/datum/bank_account/D = get_dep_account(ACCOUNT_ENG)
 	if(D)
 		D.adjust_money(engineering_cash)
@@ -106,13 +105,11 @@ SUBSYSTEM_DEF(goldmansachs)
 						if(D)
 							var/mood_dosh = (mood_to_use / 100) * mood_bounty
 							D.adjust_money(mood_dosh)
-							to_chat(world, "SERVICE CASH: [mood_dosh]")
 						medical_cash *= (mood.sanity / 100)
 
 					var/datum/bank_account/D = get_dep_account(ACCOUNT_MED)
 					if(D)
 						D.adjust_money(medical_cash)
-						to_chat(world, "MED CASH: [medical_cash]")
 		if(ishostile(m))
 			var/mob/living/simple_animal/hostile/H = m
 			if(H.stat == DEAD && H.z in SSmapping.levels_by_trait(ZTRAIT_STATION))
@@ -123,11 +120,12 @@ SUBSYSTEM_DEF(goldmansachs)
 	var/datum/bank_account/D = get_dep_account(ACCOUNT_SEC)
 	if(D)
 		D.adjust_money(cash_to_grant)
-		to_chat(world, "SEC CASH: [cash_to_grant]")
 
 /datum/controller/subsystem/goldmansachs/proc/why_do_we_have_to_wear_such_ridiculous_ties()
 	var/science_bounty = 0
 	for(var/mob/living/simple_animal/slime/S in GLOB.mob_list)
+		if(S.stat == DEAD)
+			continue
 		science_bounty += slime_bounty[S.colour]
 	var/datum/bank_account/D = get_dep_account(ACCOUNT_SCI)
 	if(D)
