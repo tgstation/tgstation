@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - rscadd: "The luxury shuttle now accepts dragged money. Useful for mobs without hands."
