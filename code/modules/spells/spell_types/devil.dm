@@ -2,9 +2,9 @@
 	name = "Summon Pitchfork"
 	desc = "A devil's weapon of choice.  Use this to summon/unsummon your pitchfork."
 	invocation_type = "none"
-	include_user = 1
+	include_user = TRUE
 	range = -1
-	clothes_req = 0
+	clothes_req = FALSE
 	item_type = /obj/item/twohanded/pitchfork/demonic
 
 	school = "conjuration"
@@ -35,9 +35,9 @@
 	desc = "Skip making a contract by hand, just do it by magic."
 	invocation_type = "whisper"
 	invocation = "Just sign on the dotted line."
-	include_user = 0
+	include_user = FALSE
 	range = 5
-	clothes_req = 0
+	clothes_req = FALSE
 
 	school = "conjuration"
 	charge_max = 150
@@ -79,7 +79,7 @@
 
 	school = "evocation"
 	charge_max = 80
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "Your very soul will catch fire!"
 	invocation_type = "shout"
 	range = 2
@@ -92,15 +92,15 @@
 	name = "Infernal Jaunt"
 	desc = "Use hellfire to phase out of existence."
 	charge_max = 200
-	clothes_req = 0
+	clothes_req = FALSE
 	selection_type = "range"
 	range = -1
 	cooldown_min = 0
 	overlay = null
-	include_user = 1
+	include_user = TRUE
 	action_icon_state = "jaunt"
 	action_background_icon_state = "bg_demon"
-	phase_allowed = 1
+	phase_allowed = TRUE
 
 /obj/effect/proc_holder/spell/targeted/infernal_jaunt/cast(list/targets, mob/living/user = usr)
 	if(istype(user))
@@ -149,7 +149,7 @@
 	ExtinguishMob()
 	forceMove(holder)
 	holder = holder
-	notransform = 0
+	notransform = FALSE
 	fakefireextinguish()
 
 /mob/living/proc/infernalphasein()
@@ -167,17 +167,17 @@
 	name = "Sin Touch"
 	desc = "Subtly encourage someone to sin."
 	charge_max = 1800
-	clothes_req = 0
+	clothes_req = FALSE
 	selection_type = "range"
 	range = 2
 	cooldown_min = 0
 	overlay = null
-	include_user = 0
+	include_user = FALSE
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "sintouch"
 	action_background_icon_state = "bg_demon"
-	phase_allowed = 0
-	random_target = 1
+	phase_allowed = FALSE
+	random_target = TRUE
 	random_target_priority = TARGET_RANDOM
 	max_targets = 3
 	invocation = "TASTE SIN AND INDULGE!!"
@@ -204,9 +204,9 @@
 /obj/effect/proc_holder/spell/targeted/summon_dancefloor
 	name = "Summon Dancefloor"
 	desc = "When what a Devil really needs is funk."
-	include_user = 1
+	include_user = TRUE
 	range = -1
-	clothes_req = 0
+	clothes_req = FALSE
 
 	school = "conjuration"
 	charge_max = 10

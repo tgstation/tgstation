@@ -109,12 +109,12 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
 
-	var/clothes_req = 1 //see if it requires clothes
-	var/cult_req = 0 //SPECIAL SNOWFLAKE clothes required for cult only spells
-	var/human_req = 0 //spell can only be cast by humans
-	var/nonabstract_req = 0 //spell can only be cast by mobs that are physical entities
-	var/stat_allowed = 0 //see if it requires being conscious/alive, need to set to 1 for ghostpells
-	var/phase_allowed = 0 // If true, the spell can be cast while phased, eg. blood crawling, ethereal jaunting
+	var/clothes_req = TRUE //see if it requires clothes
+	var/cult_req = FALSE //SPECIAL SNOWFLAKE clothes required for cult only spells
+	var/human_req = FALSE //spell can only be cast by humans
+	var/nonabstract_req = FALSE //spell can only be cast by mobs that are physical entities
+	var/stat_allowed = FALSE //see if it requires being conscious/alive, need to set to 1 for ghostpells
+	var/phase_allowed = FALSE // If true, the spell can be cast while phased, eg. blood crawling, ethereal jaunting
 	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
 	var/invocation_emote_self = null
 	var/invocation_type = "none" //can be none, whisper, emote and shout
@@ -124,7 +124,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/spell_level = 0 //if a spell can be taken multiple times, this raises
 	var/level_max = 4 //The max possible level_max is 4
 	var/cooldown_min = 0 //This defines what spell quickened four times has as a cooldown. Make sure to set this for every spell
-	var/player_lock = 1 //If it can be used by simple mobs
+	var/player_lock = TRUE //If it can be used by simple mobs
 
 	var/overlay = 0
 	var/overlay_icon = 'icons/obj/wizard.dmi'
@@ -136,7 +136,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/smoke_spread = 0 //1 - harmless, 2 - harmful
 	var/smoke_amt = 0 //cropped at 10
 
-	var/centcom_cancast = 1 //Whether or not the spell should be allowed on z2
+	var/centcom_cancast = TRUE //Whether or not the spell should be allowed on z2
 
 	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "spell_default"
@@ -518,8 +518,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/self/basic_heal //This spell exists mainly for debugging purposes, and also to show how casting works
 	name = "Lesser Heal"
 	desc = "Heals a small amount of brute and burn damage."
-	human_req = 1
-	clothes_req = 0
+	human_req = TRUE
+	clothes_req = FALSE
 	charge_max = 100
 	cooldown_min = 50
 	invocation = "Victus sano!"
