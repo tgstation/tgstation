@@ -26,7 +26,7 @@ COPY dependencies.sh .
 RUN /bin/bash -c "source dependencies.sh \
     && git fetch --depth 1 origin \$RUST_G_VERSION" \
     && git checkout FETCH_HEAD \
-    && cargo build --release
+    && ~/.cargo/bin/cargo build --release
 
 FROM build_base as bsql
 
