@@ -102,10 +102,9 @@ SUBSYSTEM_DEF(goldmansachs)
 					GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 					var/medical_cash = (H.health / H.maxHealth) * alive_humans_bounty
 					if(mood)
-						var/mood_to_use = mood.mood_level + 10
 						var/datum/bank_account/D = get_dep_account(ACCOUNT_SRV)
 						if(D)
-							var/mood_dosh = (mood_to_use / 100) * mood_bounty
+							var/mood_dosh = (mood.mood_level / 9) * mood_bounty
 							D.adjust_money(mood_dosh)
 						medical_cash *= (mood.sanity / 100)
 
