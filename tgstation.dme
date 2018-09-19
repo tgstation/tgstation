@@ -1631,6 +1631,7 @@
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_spaghetti.dm"
 #include "code\modules\games\cas.dm"
 #include "code\modules\goldmansachs\account.dm"
+#include "code\modules\goldmansachs\pay_stand.dm"
 #include "code\modules\goonchat\browserOutput.dm"
 #include "code\modules\goonchat\jsErrorHandler.dm"
 #include "code\modules\holiday\easter.dm"

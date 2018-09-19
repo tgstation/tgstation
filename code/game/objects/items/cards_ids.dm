@@ -125,6 +125,7 @@
 	var/assignment = null
 	var/access_txt // mapping aid
 	var/datum/bank_account/registered_account
+	var/obj/machinery/paystand/my_store
 
 
 
@@ -140,15 +141,41 @@
 			if("assignment","registered_name")
 				update_label()
 
+/obj/item/card/id/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/stack/spacecash))
+		var/obj/item/stack/spacecash/vbucks = W
+		if(registered_account)
+			registered_account.adjust_money(vbucks.value)
+			to_chat(user, "You insert [vbucks] into [src], adding the value to your account.")
+			qdel(vbucks)
+
+
 /obj/item/card/id/attack_self(mob/user)
-	if(Adjacent(user))
-		user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name].</span>", \
-					"<span class='notice'>You show \the [src.name].</span>")
-		add_fingerprint(user)
-		return
+	if(registered_account)
+		var/msg = stripped_input(user, "Name of pay stand:", "Paystand Naming", "[user]'s Awesome Paystand")
+		if(!msg)
+			return
+		var/price = input(user, "Enter price.", "Paystand Pricing", 25) as num
+		if(!price)
+			return
+		if(my_store)
+			my_store.relocate(get_area(user))
+		var/obj/machinery/paystand/vbuck_store = new /obj/machinery/paystand(get_turf(user))
+		vbuck_store.name = "[msg] ($[price])"
+		vbuck_store.desc = "Owned by [registered_account.account_holder]. Pays directly into [user.p_their()] account when swiped with an ID card."
+		vbuck_store.price = price
+		vbuck_store.alpha = 127
+		vbuck_store.color = "#CDE4FD"
+		vbuck_store.my_card = src
+		my_store = vbuck_store
 
 /obj/item/card/id/examine(mob/user)
 	..()
+	if(registered_account)
+		to_chat(user, "The registered account belongs to '[registered_account.account_holder]' and reports a balance of $[registered_account.account_balance].")
+		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(registered_account.account_job.paycheck_department)
+		if(D)
+			to_chat(user, "The [D.account_holder] reports a balance of $[D.account_balance].")
 	if(mining_points)
 		to_chat(user, "There's [mining_points] mining equipment redemption point\s loaded onto this card.")
 

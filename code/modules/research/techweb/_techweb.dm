@@ -206,6 +206,10 @@
 	for(var/i in node.designs)
 		add_design(node.designs[i])
 	update_node_status(node)
+	if(!istype(src, /datum/techweb/admin))
+		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_SCI)
+		if(D)
+			D.adjust_money(SSgoldmansachs.techweb_bounty)
 	return TRUE
 
 /datum/techweb/proc/unresearch_node_id(id)
