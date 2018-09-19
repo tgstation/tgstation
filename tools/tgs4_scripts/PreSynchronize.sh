@@ -3,10 +3,11 @@
 has_python="$(command -v python3)"
 has_git="$(command -v git)"
 has_sudo="$(command -v sudo)"
+has_pip="$(command -v pip3)"
 
 set -e
 
-if ! { [ -x "$has_python" ] && [ -x "$has_git" ];  }; then
+if ! { [ -x "$has_python" ] && [ -x "$has_pip" ] && [ -x "$has_git" ];  }; then
     echo "Installing apt dependencies..."
     if ! [ -x "$has_sudo" ]; then
         apt update
