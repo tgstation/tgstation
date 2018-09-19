@@ -92,7 +92,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/xray
 	equip_cooldown = 10
 	name = "\improper xray laser"
-	desc = "A weapon for combat exosuits. Shoots basic lasers."
+	desc = "A weapon for combat exosuits. Shoots xray lasers."
 	icon_state = "mecha_laser"
 	energy_drain = 120
 	projectile = /obj/item/projectile/beam/xray
