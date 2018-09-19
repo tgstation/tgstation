@@ -1,6 +1,8 @@
 //Bay lighting engine shit, not in /code/modules/lighting because BYOND is being shit about it
 #define LIGHTING_INTERVAL       5 // frequency, in 1/10ths of a second, of the lighting process
 
+#define MINIMUM_USEFUL_LIGHT_RANGE 1.4
+
 #define LIGHTING_FALLOFF        1 // type of falloff to use for lighting; 1 for circular, 2 for square
 #define LIGHTING_LAMBERTIAN     0 // use lambertian shading for light sources
 #define LIGHTING_HEIGHT         1 // height off the ground of light sources on the pseudo-z-axis, you should probably leave this alone
@@ -40,6 +42,9 @@
 #define LIGHT_COLOR_ORANGE     "#FA9632" //Mostly pure orange. rgb(250, 150, 50)
 #define LIGHT_COLOR_PURPLE     "#952CF4" //Light Purple. rgb(149, 44, 244)
 #define LIGHT_COLOR_LAVENDER   "#9B51FF" //Less-saturated light purple. rgb(155, 81, 255)
+
+#define LIGHT_COLOR_HOLY_MAGIC	"#FFF743" //slightly desaturated bright yellow.
+#define LIGHT_COLOR_BLOOD_MAGIC	"#D00000" //deep crimson
 
 //These ones aren't a direct colour like the ones above, because nothing would fit
 #define LIGHT_COLOR_FIRE       "#FAA019" //Warm orange color, leaning strongly towards yellow. rgb(250, 160, 25)
