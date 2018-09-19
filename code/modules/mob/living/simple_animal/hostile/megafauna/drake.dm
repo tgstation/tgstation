@@ -64,6 +64,8 @@ Difficulty: Medium
 	death_sound = 'sound/magic/demon_dies.ogg'
 	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/drake()
 	
+	do_footstep = TRUE
+	
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
 	smallsprite.Grant(src)
 	. = ..()
@@ -311,7 +313,7 @@ Difficulty: Medium
 /obj/effect/temp_visual/target/ex_act()
 	return
 
-/obj/effect/temp_visual/target/Initialize(mapload, var/reset_time = 10, var/skip_animation = FALSE)
+/obj/effect/temp_visual/target/Initialize(mapload, var/reset_time = 10)
 	. = ..()
 	INVOKE_ASYNC(src, .proc/fall, reset_time)
 	src.alpha = 127.5
