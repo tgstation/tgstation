@@ -33,6 +33,13 @@
 	if(burn_stuff(AM))
 		START_PROCESSING(SSobj, src)
 
+/turf/open/lava/Exited(atom/movable/Obj, atom/newloc)
+	. = ..()
+	if(isliving(Obj))
+		var/mob/living/L = Obj
+		if(!islava(newloc) && !L.on_fire)
+			L.update_fire()
+
 /turf/open/lava/hitby(atom/movable/AM)
 	if(burn_stuff(AM))
 		START_PROCESSING(SSobj, src)
@@ -97,26 +104,15 @@
 	for(var/thing in thing_to_check)
 		if(isobj(thing))
 			var/obj/O = thing
-			if((O.resistance_flags & (LAVA_PROOF|INDESTRUCTIBLE)) || O.throwing)
-				continue
-			. = 1
-			if((O.resistance_flags & (ON_FIRE)))
-				continue
-			if(!(O.resistance_flags & FLAMMABLE))
-				O.resistance_flags |= FLAMMABLE //Even fireproof things burn up in lava
-			if(O.resistance_flags & FIRE_PROOF)
-				O.resistance_flags &= ~FIRE_PROOF
-			if(O.armor.fire > 50) //obj with 100% fire armor still get slowly burned away.
-				O.armor = O.armor.setRating(fire = 50)
-			O.fire_act(10000, 1000)
+			if(burn_items(O, TRUE))
+				. = TRUE
 
 		else if (isliving(thing))
-			. = 1
+			. = TRUE
 			var/mob/living/L = thing
 			if(L.movement_type & FLYING)
 				continue	//YOU'RE FLYING OVER IT
-			if("lava" in L.weather_immunities)
-				continue
+
 			var/buckle_check = L.buckling
 			if(!buckle_check)
 				buckle_check = L.buckled
@@ -128,18 +124,47 @@
 				var/mob/living/live = buckle_check
 				if("lava" in live.weather_immunities)
 					continue
+
+			if(!L.on_fire)
+				L.update_fire()
+
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				var/obj/item/clothing/S = C.get_item_by_slot(SLOT_WEAR_SUIT)
 				var/obj/item/clothing/H = C.get_item_by_slot(SLOT_HEAD)
 
 				if(S && H && S.clothing_flags & LAVAPROTECT && H.clothing_flags & LAVAPROTECT)
+					for(var/obj/item/I in L.held_items) //lavasuits don't protect items in hands!
+						burn_items(I)
 					return
+
+			var/list/visible_items = L.get_visible_items(TRUE)
+			for(var/visible_item in visible_items) //burn away non-lavaproofed equipment
+				var/obj/O = visible_item
+				burn_items(O)
+
+			if("lava" in L.weather_immunities)
+				continue
 
 			L.adjustFireLoss(20)
 			if(L) //mobs turning into object corpses could get deleted here.
 				L.adjust_fire_stacks(20)
 				L.IgniteMob()
+
+/turf/open/lava/proc/burn_items(obj/O, throwing_check)
+	if(QDELETED(O) || O.resistance_flags & (LAVA_PROOF|INDESTRUCTIBLE) || (throwing_check && O.throwing))
+		return
+	. = TRUE
+	if((O.resistance_flags & (ON_FIRE)))
+		return
+	if(!(O.resistance_flags & FLAMMABLE))
+		O.resistance_flags |= FLAMMABLE //Even fireproof things burn up in lava
+	if(O.resistance_flags & FIRE_PROOF)
+		O.resistance_flags &= ~FIRE_PROOF
+	if(O.armor.fire > 50) //obj with 100% fire armor still get slowly burned away.
+		O.armor = O.armor.setRating(fire = 50)
+	O.fire_act(10000, 1000)
+
 
 /turf/open/lava/smooth
 	name = "lava"

@@ -379,6 +379,99 @@
 			items += s_store
 	return items
 
+
+/mob/living/proc/get_visible_items(top_layer_only)
+	var/list/items = list()
+	items += get_equipped_items()
+	for(var/obj/item/I in held_items)
+		items += I
+	return items
+
+
+/mob/living/carbon/monkey/get_visible_items(top_layer_only)
+	if(top_layer_only)
+		var/list/items = list()
+		//HEAD//
+		var/obj/item/clothing/head_clothes = null
+		if(wear_mask)
+			head_clothes = wear_mask
+		if(wear_neck)
+			head_clothes = wear_neck
+		if(head)
+			head_clothes = head
+		if(head_clothes)
+			items += head_clothes
+
+		if(back)
+			items += back
+
+		for(var/obj/item/I in held_items)
+			items += I
+		return items
+
+	return ..()
+
+/mob/living/carbon/human/get_visible_items(top_layer_only)
+	if(top_layer_only)
+		var/list/items = list()
+
+		//HEAD//
+		var/obj/item/clothing/head_clothes = null
+		if(glasses)
+			head_clothes = glasses
+		if(wear_mask)
+			head_clothes = wear_mask
+		if(wear_neck)
+			head_clothes = wear_neck
+		if(head)
+			head_clothes = head
+		if(head_clothes)
+			items += head_clothes
+		else if(ears)
+			items += ears
+
+		//CHEST//
+		var/obj/item/clothing/chest_clothes = null
+		if(w_uniform)
+			chest_clothes = w_uniform
+		if(wear_suit)
+			chest_clothes = wear_suit
+
+		if(chest_clothes)
+			items += chest_clothes
+
+		//ARMS & HANDS//
+		var/obj/item/clothing/arm_clothes = null
+		if(gloves)
+			arm_clothes = gloves
+		if(w_uniform && ((w_uniform.body_parts_covered & HANDS) || (w_uniform.body_parts_covered & ARMS)))
+			arm_clothes = w_uniform
+		if(wear_suit && ((wear_suit.body_parts_covered & HANDS) || (wear_suit.body_parts_covered & ARMS)))
+			arm_clothes = wear_suit
+		if(arm_clothes)
+			items |= arm_clothes
+
+		//LEGS & FEET//
+		var/obj/item/clothing/leg_clothes = null
+		if(shoes)
+			leg_clothes = shoes
+		if(w_uniform && ((w_uniform.body_parts_covered & FEET) || (w_uniform.body_parts_covered & LEGS)))
+			leg_clothes = w_uniform
+		if(wear_suit && ((wear_suit.body_parts_covered & FEET) || (wear_suit.body_parts_covered & LEGS)))
+			leg_clothes = wear_suit
+		if(leg_clothes)
+			items |= leg_clothes
+
+		if(back)
+			items += back
+
+		for(var/obj/item/I in held_items)
+			items += I
+
+		return items
+
+	return ..()
+
 /mob/living/proc/unequip_everything()
 	var/list/items = list()
 	items |= get_equipped_items(TRUE)
