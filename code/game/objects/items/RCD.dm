@@ -351,8 +351,8 @@ RLD
 				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 				return TRUE
 
-/obj/item/construction/rcd/New()
-	..()
+/obj/item/construction/rcd/Initialize()
+	. = ..()
 	GLOB.rcd_list += src
 
 /obj/item/construction/rcd/Destroy()
@@ -361,19 +361,24 @@ RLD
 
 /obj/item/construction/rcd/attack_self(mob/user)
 	..()
-	switch(mode)
-		if(1)
-			mode = 2
-			to_chat(user, "<span class='notice'>You change RCD's mode to 'Airlock'.</span>")
-		if(2)
-			mode = 3
-			to_chat(user, "<span class='notice'>You change RCD's mode to 'Deconstruct'.</span>")
-		if(3)
-			mode = 4
-			to_chat(user, "<span class='notice'>You change RCD's mode to 'Grilles & Windows'.</span>")
-		if(4)
+	var/list/choices = list(
+		"Airlock" = image(icon = 'icons/obj/interface.dmi', icon_state = "airlock"),
+		"Deconstruct" = image(icon= 'icons/obj/interface.dmi', icon_state = "delete"),
+		"Grilles & Windows" = image(icon = 'icons/obj/interface.dmi', icon_state = "grillewindow"),
+		"Floors & Walls" = image(icon = 'icons/obj/interface.dmi', icon_state = "wallfloor"),
+	)
+	var/choice = show_radial_menu(user,src,choices)
+	switch(choice)
+		if("Floors & Walls")
 			mode = 1
-			to_chat(user, "<span class='notice'>You change RCD's mode to 'Floor & Walls'.</span>")
+		if("Airlock")
+			mode = 2
+		if("Deconstruct")
+			mode = 3
+		if("Grilles & Windows")
+			mode = 4
+	playsound(src, 'sound/effects/pop.ogg', 50, 0)
+	to_chat(user, "<span class='notice'>You change RCD's mode to '[choice]'.</span>")
 
 /obj/item/construction/rcd/proc/target_check(atom/A, mob/user) // only returns true for stuff the device can actually work with
 	if((isturf(A) && A.density && mode==RCD_DECONSTRUCT) || (isturf(A) && !A.density) || (istype(A, /obj/machinery/door/airlock) && mode==RCD_DECONSTRUCT) || istype(A, /obj/structure/grille) || (istype(A, /obj/structure/window) && mode==RCD_DECONSTRUCT) || istype(A, /obj/structure/girder))
