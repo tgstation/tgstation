@@ -31,4 +31,4 @@
 	resistance_flags = FIRE_PROOF
 	default_price = 50
 	extra_price = 60
-	department = ACCOUNT_ENG
+	payment_department = ACCOUNT_ENG

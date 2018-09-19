@@ -9,7 +9,7 @@
 #define ACCOUNT_CIV "CIV"
 #define ACCOUNT_CIV_NAME "Civil Budget"
 #define ACCOUNT_ENG "ENG"
-#define ACCOUNT_ENG_NAME "Enginering Budget"
+#define ACCOUNT_ENG_NAME "Engineering Budget"
 #define ACCOUNT_SCI "SCI"
 #define ACCOUNT_SCI_NAME "Scientific Budget"
 #define ACCOUNT_MED "MED"

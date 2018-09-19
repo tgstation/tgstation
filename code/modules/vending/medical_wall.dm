@@ -18,7 +18,7 @@
 	refill_canister = /obj/item/vending_refill/wallmed
 	default_price = 50
 	extra_price = 100
-	department = ACCOUNT_MED
+	payment_department = ACCOUNT_MED
 
 /obj/item/vending_refill/wallmed
 	machine_name = "NanoMed"

@@ -20,7 +20,7 @@
 	resistance_flags = FIRE_PROOF
 	default_price = 100
 	extra_price = 150
-	department = ACCOUNT_SEC
+	payment_department = ACCOUNT_SEC
 
 /obj/machinery/vending/security/pre_throw(obj/item/I)
 	if(istype(I, /obj/item/grenade))

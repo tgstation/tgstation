@@ -1,8 +1,10 @@
 /obj/item/vending_refill/wardrobe
 	icon_state = "refill_clothes"
+
+/obj/machinery/vending/wardrobe
 	default_price = 100
 	extra_price = 150
-	department = NO_FREEBIES
+	payment_department = NO_FREEBIES
 
 /obj/machinery/vending/wardrobe/sec_wardrobe
 	name = "\improper SecDrobe"
@@ -29,7 +31,7 @@
 	refill_canister = /obj/item/vending_refill/wardrobe/sec_wardrobe
 	default_price = 100
 	extra_price = 150
-	department = NO_FREEBIES
+	payment_department = NO_FREEBIES
 
 /obj/item/vending_refill/wardrobe/sec_wardrobe
 	machine_name = "SecDrobe"

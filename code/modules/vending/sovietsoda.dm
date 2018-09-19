@@ -9,4 +9,4 @@
 	resistance_flags = FIRE_PROOF
 	default_price = 1
 	extra_price = 1
-	department = NO_FREEBIES
+	payment_department = NO_FREEBIES

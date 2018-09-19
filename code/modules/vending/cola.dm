@@ -20,7 +20,7 @@
 	refill_canister = /obj/item/vending_refill/cola
 	default_price = 10
 	extra_price = 25
-	department = ACCOUNT_SRV
+	payment_department = ACCOUNT_SRV
 /obj/item/vending_refill/cola
 	machine_name = "Robust Softdrinks"
 	icon_state = "refill_cola"

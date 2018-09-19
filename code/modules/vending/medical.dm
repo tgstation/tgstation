@@ -36,7 +36,7 @@
 	refill_canister = /obj/item/vending_refill/medical
 	default_price = 50
 	extra_price = 100
-	department = ACCOUNT_MED
+	payment_department = ACCOUNT_MED
 /obj/item/vending_refill/medical
 	machine_name = "NanoMed Plus"
 	icon_state = "refill_medical"

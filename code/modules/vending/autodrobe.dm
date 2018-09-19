@@ -130,7 +130,7 @@
 	refill_canister = /obj/item/vending_refill/autodrobe
 	default_price = 100
 	extra_price = 200
-	department = NO_FREEBIES
+	payment_department = NO_FREEBIES
 /obj/machinery/vending/autodrobe/all_access
 	desc = "A vending machine for costumes. This model appears to have no access restrictions."
 	req_access = null

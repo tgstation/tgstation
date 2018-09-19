@@ -117,7 +117,7 @@
 	refill_canister = /obj/item/vending_refill/clothing
 	default_price = 50
 	extra_price = 75
-	department = NO_FREEBIES
+	payment_department = NO_FREEBIES
 /obj/item/vending_refill/clothing
 	machine_name = "ClothesMate"
 	icon_state = "refill_clothes"

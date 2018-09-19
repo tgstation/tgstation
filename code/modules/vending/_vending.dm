@@ -69,7 +69,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/chef_price = 10
 	var/default_price = 25
 	var/extra_price = 50
-	var/department = ACCOUNT_SRV
+	payment_department = ACCOUNT_SRV
 
 	var/dish_quants = list()  //used by the snack machine's custom compartment to count dishes.
 
@@ -321,7 +321,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 						continue
 					if(coin_records.Find(R) || is_hidden)
 						price_listed = "$[extra_price]"
-					if(account.account_job.paycheck_department == department)
+					if(account.account_job.paycheck_department == payment_department)
 						price_listed = "FREE"
 					dat += "<li>"
 					if(R.amount > 0)
@@ -442,7 +442,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 				vend_ready = 1
 				return
 			var/datum/bank_account/account = C.registered_account
-			if(account.account_job.paycheck_department == department)
+			if(account.account_job.paycheck_department == payment_department)
 				price_to_use = 0
 			if(price_to_use && !account.adjust_money(-1 * price_to_use))
 				say("You do not posess the funds to purchase [R.name].")
@@ -450,7 +450,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 				vend_ready = 1
 				return
 		say("Thank you for shopping with [src]!")
-		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(department)
+		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(payment_department)
 		if(D)
 			D.adjust_money(price_to_use)
 		use_power(5)

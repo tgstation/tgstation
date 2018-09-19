@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(goldmansachs)
 	name = "Economy"
 	flags = SS_NO_INIT
-	var/paycheck_interval = 1 MINUTES
+	var/paycheck_interval = 5 MINUTES
 	var/roundstart_paychecks = 5
 	var/budget_pool = 35000
 	var/list/department_accounts = list(ACCOUNT_CIV = ACCOUNT_CIV_NAME,
@@ -12,6 +12,8 @@ SUBSYSTEM_DEF(goldmansachs)
 										ACCOUNT_CAR = ACCOUNT_CAR_NAME,
 										ACCOUNT_SEC = ACCOUNT_SEC_NAME)
 	var/list/generated_accounts = list()
+	var/full_ancap = FALSE // Enables extra money charges for things that normally would be free, such as sleepers/cryo/cloning.
+							//Take care when enabling, as players will NOT respond well if the economy is set up for low cash flows.
 	var/datum/station_state/engineering_check = new /datum/station_state()
 	var/alive_humans_bounty = 100
 	var/crew_safety_bounty = 1500
