@@ -104,7 +104,6 @@ Difficulty: Medium
 	if(swooping)
 		return
 	if(swoop_cooldown >= world.time)
-		fire_cone()
 		return
 	anger_modifier = CLAMP(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + ranged_cooldown_time
@@ -194,7 +193,7 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/triple_swoop()
 	swoop_attack()
 	swoop_attack()
-	swoop_attack(TRUE, null, 40) // longer cooldown on triple swoop ending
+	swoop_attack(TRUE, null, 20) // longer cooldown on triple swoop ending
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(lava_pool = TRUE, atom/movable/manual_target, var/cooldown = 20)
 	if(stat || swooping)
