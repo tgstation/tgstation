@@ -104,6 +104,7 @@ Difficulty: Medium
 	if(swooping)
 		return
 	if(swoop_cooldown >= world.time)
+		fire_cone()
 		return
 	anger_modifier = CLAMP(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + ranged_cooldown_time
