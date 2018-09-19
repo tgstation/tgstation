@@ -593,7 +593,7 @@
 	id = "borg_upgrade_vtec"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/vtec
-	materials = list(MAT_METAL = 25000 , MAT_GLASS = 6000 , MAT_URANIUM = 5000)
+	materials = list(MAT_METAL = 35000 , MAT_GLASS = 12000 , MAT_URANIUM = 10000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
@@ -674,7 +674,7 @@
 	id = "borg_upgrade_expandedsynthesiser"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/hypospray/expanded
-	materials = list(MAT_METAL = 10000, MAT_GLASS = 5000, MAT_PLASMA = 5000, MAT_URANIUM = 5000)
+	materials = list(MAT_METAL = 15000, MAT_GLASS = 15000, MAT_PLASMA = 8000, MAT_URANIUM = 8000)
 	construction_time = 80
 	category = list("Cyborg Upgrade Modules")
 
@@ -683,7 +683,7 @@
 	id = "borg_upgrade_piercinghypospray"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/piercing_hypospray
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_TITANIUM = 5000, MAT_DIAMOND = 4000)
+	materials = list(MAT_METAL = 15000, MAT_GLASS = 15000, MAT_TITANIUM = 5000, MAT_DIAMOND = 4000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
@@ -701,7 +701,7 @@
 	id = "borg_upgrade_surgicalprocessor"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/processor
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 400, MAT_SILVER = 4000)
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 4000, MAT_SILVER = 4000)
 	construction_time = 40
 	category = list("Cyborg Upgrade Modules")
 
