@@ -92,7 +92,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/xray
 	equip_cooldown = 10
 	name = "\improper xray laser"
-	desc = "A weapon for combat exosuits. Shoots xray lasers."
+	desc = "A weapon for combat exosuits. Shoots basic lasers."
 	icon_state = "mecha_laser"
 	energy_drain = 120
 	projectile = /obj/item/projectile/beam/xray
@@ -448,7 +448,7 @@
 	name = "\improper grenade launcher"
 	desc = "A weapon for combat exosuits. Launches primed explosive grenades."
 	icon_state = "mecha_grenadelnchr"
-	projectile = /obj/item/grenade/syndieminibomb/concussion/mech
+	projectile = /obj/item/grenade/syndieminibomb/concussion/frag
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	projectiles = 3
 	missile_speed = 1
