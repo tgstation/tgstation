@@ -1,5 +1,7 @@
 #define NEXT_PAGE_ID "__next__"
 
+GLOBAL_LIST_EMPTY(radial_menus)
+
 /obj/screen/radial
 	icon = 'icons/mob/radial.dmi'
 	layer = ABOVE_HUD_LAYER
@@ -256,10 +258,19 @@
 	Choices should be a list where list keys are movables or text used for element names and return value
 	and list values are movables/icons/images used for element icons
 */
-/proc/show_radial_menu(mob/user,atom/anchor,list/choices)
+/proc/show_radial_menu(mob/user,atom/anchor,list/choices, uniqueid , radius)
+	if(!user || !anchor || !length(choices))
+		return
+	if(!uniqueid)
+		uniqueid = "defmenu_[REF(user)]_[REF(anchor)]"
+
+	if(GLOB.radial_menus[uniqueid])
+		return
+
 	var/datum/radial_menu/menu = new
-	if(!user)
-		user = usr
+	GLOB.radial_menus[uniqueid] = menu
+	if(radius)
+		menu.radius = radius
 	menu.anchor = anchor
 	menu.check_screen_border(user) //Do what's needed to make it look good near borders or on hud
 	menu.set_choices(choices)
@@ -267,4 +278,5 @@
 	menu.wait()
 	var/answer = menu.selected_choice
 	qdel(menu)
+	GLOB.radial_menus -= uniqueid
 	return answer
