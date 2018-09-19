@@ -128,20 +128,63 @@
 			if(!L.on_fire)
 				L.update_fire()
 
+			var/skip_redundant = FALSE // no sense doing the processing to burn items twice, it would just return anyway.
+
+			if(L.resting || L.lying) //burn all visible non-lavaproofed items if they're lying down on the lava.
+				var/list/visible_items = L.get_visible_items(TRUE)
+				for(var/visible_item in visible_items)
+					var/obj/O = visible_item
+					burn_items(O)
+				skip_redundant = TRUE
+
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				var/obj/item/clothing/S = C.get_item_by_slot(SLOT_WEAR_SUIT)
 				var/obj/item/clothing/H = C.get_item_by_slot(SLOT_HEAD)
 
 				if(S && H && S.clothing_flags & LAVAPROTECT && H.clothing_flags & LAVAPROTECT)
-					for(var/obj/item/I in L.held_items) //lavasuits don't protect items in hands!
-						burn_items(I)
+					if(!skip_redundant)
+						for(var/obj/item/I in L.held_items) //lavasuits don't protect items in hands!
+							burn_items(I)
 					return
 
-			var/list/visible_items = L.get_visible_items(TRUE)
-			for(var/visible_item in visible_items) //burn away non-lavaproofed equipment
-				var/obj/O = visible_item
-				burn_items(O)
+				if(!skip_redundant)
+					var/obj/item/clothing/U = C.get_item_by_slot(SLOT_W_UNIFORM)
+					var/obj/item/clothing/Z = C.get_item_by_slot(SLOT_SHOES)
+					var/obj/item/B = C.get_item_by_slot(SLOT_BELT)
+
+					var/list/burned_items = list() //if they aren't wearing a set of lavaproof equipment, widdle away exposed leg/waist items.
+
+						//CHEST & WAIST//
+					var/obj/item/clothing/chest_clothes = null
+					if(U)
+						chest_clothes = U
+					if(S)
+						chest_clothes = S
+					else if(B)
+						burned_items += B
+
+					if(chest_clothes)
+						burned_items += chest_clothes
+
+						//LEGS & FEET//
+					var/obj/item/clothing/leg_clothes = null
+					if(Z)
+						leg_clothes = Z
+					if(U && (U.body_parts_covered & FEET)) //if uniform is protecting shoes, burn uniform first
+						leg_clothes = U
+					if(S && (S.body_parts_covered & FEET)) //if suit is protecting shoes, burn suit first.
+						leg_clothes = S
+					if(leg_clothes)
+						burned_items |= leg_clothes
+
+					for(var/obj/item/I in burned_items)
+						burn_items(I)
+
+			if(!skip_redundant)
+				for(var/obj/item/I in L.held_items) //wading through lava is still risky to held items.
+					burn_items(I)
+
 
 			if("lava" in L.weather_immunities)
 				continue

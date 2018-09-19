@@ -436,6 +436,8 @@
 			chest_clothes = w_uniform
 		if(wear_suit)
 			chest_clothes = wear_suit
+		else if(belt)
+			items += belt
 
 		if(chest_clothes)
 			items += chest_clothes
