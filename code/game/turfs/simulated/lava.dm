@@ -157,9 +157,9 @@
 
 						//CHEST & WAIST//
 					var/obj/item/clothing/chest_clothes = null
-					if(U)
+					if(U && (U.body_parts_covered & (LEGS|GROIN))) //only burn uniform if it's covering legs/groin
 						chest_clothes = U
-					if(S)
+					if(S && (S.body_parts_covered & (LEGS|GROIN))) //only burn suit if it's covering legs/groin
 						chest_clothes = S
 					else if(B)
 						burned_items += B
@@ -167,11 +167,11 @@
 					if(chest_clothes)
 						burned_items += chest_clothes
 
-						//LEGS & FEET//
+						//SHOES//
 					var/obj/item/clothing/leg_clothes = null
 					if(Z)
 						leg_clothes = Z
-					if(U && (U.body_parts_covered & FEET)) //if uniform is protecting shoes, burn uniform first
+					if(U && (U.body_parts_covered & FEET)) //if uniform is protecting shoes, burn uniform first.
 						leg_clothes = U
 					if(S && (S.body_parts_covered & FEET)) //if suit is protecting shoes, burn suit first.
 						leg_clothes = S
