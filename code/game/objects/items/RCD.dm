@@ -256,8 +256,6 @@ RLD
 	if(!user)
 		return
 
-	//TODO: After input interactivity checks.
-
 	var/list/solid_or_glass_choices = list(
 		"Solid" = get_airlock_image(/obj/machinery/door/airlock),
 		"Glass" = get_airlock_image(/obj/machinery/door/airlock/glass)
