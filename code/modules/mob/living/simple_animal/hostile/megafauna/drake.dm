@@ -56,7 +56,6 @@ Difficulty: Medium
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/ashdrake = 10)
 	var/swooping = NONE
-	var/swoop_cooldown = 0
 	var/player_cooldown = 0
 	medal_type = BOSS_MEDAL_DRAKE
 	score_type = DRAKE_SCORE
@@ -105,7 +104,7 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
 	if(swooping)
 		return
-	if(swoop_cooldown >= world.time)
+	if(recovery_time >= world.time)
 		return
 	anger_modifier = CLAMP(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + ranged_cooldown_time
@@ -114,40 +113,47 @@ Difficulty: Medium
 		if(health < maxHealth/2)
 			swoop_attack()
 		else
-			INVOKE_ASYNC(src, .proc/lava_pools)
-			swoop_attack(FALSE)
+			lava_swoop()
 
 	else if(prob(10+anger_modifier) && !client)
 		if(health < maxHealth/2)
-			triple_pools()
+			triple_swoop()
 		else
 			fire_cone()
 	else
 		fire_cone()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_pools()
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_pools(var/amount)
 	if(!target)
 		return
 	target.visible_message("<span class='boldwarning'>Lava starts to pool up around you!</span>")
-	var/amount = 25
 	while(amount > 0)
-		var/turf/T = pick(RANGE_TURFS(4, target))
+		if(!target)
+			break
+		var/turf/T = pick(RANGE_TURFS(7, target))
 		new /obj/effect/temp_visual/lava_warning(T, 60) // longer reset time for the lava
 		amount--
-		sleep(0.3)
+		sleep(0.4)
+		
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_swoop(var/amount = 30)
+	INVOKE_ASYNC(src, .proc/lava_pools, amount)
+	swoop_attack(FALSE, target, 1000) // longer cooldown until it gets reset below
+	fire_cone()
+	sleep(10)
+	fire_cone()
+	sleep(10)
+	fire_cone()
+	SetRecoveryTime(40)
 			
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/triple_pools()
-	INVOKE_ASYNC(src, .proc/lava_pools)
-	swoop_attack(FALSE)
-	INVOKE_ASYNC(src, .proc/lava_pools)
-	swoop_attack(FALSE)
-	INVOKE_ASYNC(src, .proc/lava_pools)
-	swoop_attack(FALSE)
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/triple_swoop()
+	lava_swoop(15)
+	lava_swoop(15)
+	lava_swoop(15)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_arena()
 	if(!target)
 		return
-	target.visible_message("<span class='boldwarning'>The Ash Drake encases you in an arena of lava!</span>")
+	target.visible_message("<span class='boldwarning'>The [src] encases you in an arena of lava!</span>")
 	var/amount = 3
 	var/turf/center = get_turf(target)
 	var/list/walled = RANGE_TURFS(3, center) - RANGE_TURFS(2, center)
@@ -185,26 +191,31 @@ Difficulty: Medium
 		if(!check)
 			return
 		T = check
-	return getline(src, T)
+	return (getline(src, T) - get_turf(src))
 	
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_line(var/list/turfs)
+	var/list/hit_list = list()
 	for(var/turf/T in turfs)
 		if(istype(T, /turf/closed))
 			break
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700,50,1)
 		for(var/mob/living/L in T.contents)
-			if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
+			if(L in hit_list || L == src)
 				continue
+			hit_list += L
 			L.adjustFireLoss(30)
-			to_chat(L, "<span class='userdanger'>You're hit by the drake's fire breath!</span>")
+			to_chat(L, "<span class='userdanger'>You're hit by the [src]'s fire breath!</span>")
 			
 		// deals damage to mechs
 		for(var/obj/mecha/M in T.contents)
+			if(M in hit_list)
+				continue
+			hit_list += M
 			M.take_damage(60, BRUTE, "melee", 1)
-		sleep(1.5)
+		sleep(1.25)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(lava_arena = TRUE, atom/movable/manual_target, var/cooldown = 20)
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(lava_arena = TRUE, atom/movable/manual_target, var/swoop_cooldown = 15)
 	if(stat || swooping)
 		return
 	if(manual_target)
@@ -286,7 +297,7 @@ Difficulty: Medium
 	density = TRUE
 	sleep(1)
 	swooping &= ~SWOOP_DAMAGEABLE
-	swoop_cooldown = world.time + cooldown
+	SetRecoveryTime(swoop_cooldown)
 	
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/goto_target()
 	if(!target)
@@ -302,7 +313,7 @@ Difficulty: Medium
 		to_chat(src, "<span class='warning'>You need to wait 20 seconds between swoop attacks!</span>")
 		return
 	swoop_attack(FALSE, A, 30)
-	player_cooldown = world.time + 200
+	player_cooldown = world.time + 200 // needs seperate cooldown or cant use fire attacks
 
 /obj/item/gps/internal/dragon
 	icon_state = null
@@ -322,7 +333,7 @@ Difficulty: Medium
 /obj/effect/temp_visual/lava_warning/Initialize(mapload, var/reset_time = 10)
 	. = ..()
 	INVOKE_ASYNC(src, .proc/fall, reset_time)
-	src.alpha = 127.5
+	src.alpha = 63.75
 	animate(src, alpha = 255, time = duration)
 	
 /obj/effect/temp_visual/lava_warning/proc/fall(var/reset_time)
@@ -334,7 +345,7 @@ Difficulty: Medium
 	for(var/mob/living/L in T.contents)
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
 			continue
-		L.adjustFireLoss(10)
+		L.adjustFireLoss(20)
 		to_chat(L, "<span class='userdanger'>You fall directly into the pool of lava!</span>")
 		
 	// deals damage to mechs
