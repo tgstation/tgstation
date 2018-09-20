@@ -55,7 +55,7 @@
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
 	var/success = FALSE
 
-	if(/*target.mind &&*/ target.stat != DEAD)
+	if(target.mind && target.client && target.stat != DEAD)
 		if(!target.has_trait(TRAIT_MINDSHIELD))
 			to_chat(user, "<span class='notice'>We begin linking our mind with [target.name]!</span>")
 			if(do_mob(user,user,70))
@@ -97,12 +97,12 @@
 	desc = "We use the eyes of one of our vessels. Use again to look through our own eyes once more."
 	action_icon_state = "see"
 	var/mob/vessel
+	var/mob/living/host //Didn't really have any other way to auto-reset the perspective if the other mob got qdeled
 
 	charge_max = 150
 
-/obj/effect/proc_holder/spell/target_hive/on_lose(mob/user)
-	if(active)
-		user.reset_perspective(null)
+/obj/effect/proc_holder/spell/target_hive/hive_see/on_lose(mob/living/user)
+	user.reset_perspective()
 
 /obj/effect/proc_holder/spell/target_hive/hive_see/cast(list/targets, mob/living/user = usr)
 	if(!active)
@@ -110,15 +110,16 @@
 		if(vessel)
 			user.reset_perspective(vessel)
 			active = TRUE
+			host = user
 		revert_cast()
 	else
-		user.reset_perspective(null)
+		user.reset_perspective()
 		active = FALSE
 
 /obj/effect/proc_holder/spell/target_hive/hive_see/process()
 	if(active && (!vessel || !is_hivemember(vessel) || QDELETED(vessel)))
-		to_chat(usr, "<span class='warning'>Our vessel is one of us no more!</span>")
-		perform(,usr)
+		to_chat(host, "<span class='warning'>Our vessel is one of us no more!</span>")
+		perform(,host)
 	..()
 
 /obj/effect/proc_holder/spell/target_hive/hive_see/choose_targets(mob/user = usr)
@@ -198,7 +199,7 @@
 
 /obj/effect/proc_holder/spell/target_hive/hive_control
 	name = "Mind Control"
-	desc = "We assume direct control of one of our vessels, leaving our current body for up to ten seconds. This power becomes stronger the larger our hive is, eventually our control can last up to 2 minutes."
+	desc = "We assume direct control of one of our vessels, leaving our current body for up to ten seconds. We may use other powers through the vessel if we wish. This power becomes stronger the larger our hive is, eventually our control can last up to 2 minutes."
 	charge_max = 3000
 	action_icon_state = "force"
 	active  = FALSE
@@ -223,10 +224,14 @@
 		vessel.real_name = backseat.real_name
 
 	if(backseat && backseat.mind)
+		backseat.remove_trait(TRAIT_MUTE)
 		if(!vessel)
 			backseat.ghostize(0)
 		else
 			backseat.mind.transfer_to(vessel,1)
+
+	message_admins("[ADMIN_LOOKUPFLW(vessel)] is no longer being controlled by [ADMIN_LOOKUPFLW(original_body)] (Hivemind Host).")
+	log_game("[key_name(vessel)] was released from Mind Control by [key_name(original_body)].")
 
 	qdel(backseat)
 
@@ -252,7 +257,7 @@
 			else
 				power = 1200
 		for(var/datum/antagonist/hivemind/H in GLOB.antagonists)
-			if(H.owner.current == user)
+			if(H.owner == user.mind)
 				continue
 			if(H.hivemembers.Find(vessel))
 				to_chat(user, "<span class='danger'>We have detected a foreign presence within this mind, it would be unwise to merge so intimately with it.</span>")
@@ -267,16 +272,24 @@
 			revert_cast()
 			return
 		if(vessel && vessel.mind && backseat)
+			var/obj/effect/proc_holder/spell/target_hive/hive_see/the_spell = locate(/obj/effect/proc_holder/spell/target_hive/hive_see) in user.mind.spell_list
+			if(the_spell && the_spell.active) //Uncast Hive Sight just to make things easier when casting during mind control
+				the_spell.perform(,user)
+
+			message_admins("[ADMIN_LOOKUPFLW(vessel)] has been temporarily taken over by [ADMIN_LOOKUPFLW(user)] (Hivemind Host).")
+			log_game("[key_name(vessel)] was Mind Controlled by [key_name(user)].")
+
 			original_body = user
 			backseat.loc = vessel
 			backseat.name = vessel.real_name
 			backseat.real_name = vessel.real_name
 			vessel.mind.transfer_to(backseat, 1)
 			user.mind.transfer_to(vessel, 1)
-			backseat.Unconscious(power)
+			backseat.add_trait(TRAIT_MUTE)
 			vessel.SetSpecialVoice(vessel.real_name)
 			vessel.real_name = original_body.real_name
 			active = TRUE
+			revert_cast()
 			if(do_mob(user,user,power))
 				to_chat(usr, "<span class='warning'>We cannot sustain the mind control any longer and release control!</span>")
 			else
@@ -290,10 +303,10 @@
 
 /obj/effect/proc_holder/spell/target_hive/hive_control/process()
 	if(active && (!vessel || !is_hivemember(vessel) || QDELETED(vessel)))
-		to_chat(usr, "<span class='warning'>Our vessel is one of us no more!</span>")
+		to_chat(vessel, "<span class='warning'>Our vessel is one of us no more!</span>")
 		release_control()
 	if(active && (!original_body || original_body.stat != CONSCIOUS || QDELETED(original_body)))
-		to_chat(usr, "<span class='userdanger'>Our body is in grave danger, we abandon the mind of the vessel to tend to more pressing matters!</span>")
+		to_chat(vessel, "<span class='userdanger'>Our body is in grave danger, we abandon the mind of the vessel to tend to more pressing matters!</span>")
 		release_control()
 	..()
 
@@ -464,6 +477,9 @@
 					hive.calc_size()
 					enemy_hive.calc_size()
 					target.setBrainLoss(200)
+
+					message_admins("[ADMIN_LOOKUPFLW(target)] was killed and had their hive stolen by [ADMIN_LOOKUPFLW(user)].")
+					log_game("[key_name(target)] was killed via Mass Assimilation by [key_name(user)].")
 				else
 					to_chat(user, "<span class='notice'>It seems we have been mistaken, this mind is not the host of a hive.</span>")
 			else

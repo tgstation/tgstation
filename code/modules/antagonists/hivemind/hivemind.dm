@@ -9,12 +9,11 @@
 	var/hive_size = 0
 
 	var/list/upgrade_tiers = list(
-		//Roundstart
+		//Tier 1
 		/obj/effect/proc_holder/spell/target_hive/hive_add = 0,
 		/obj/effect/proc_holder/spell/target_hive/hive_remove = 0,
-		//Tier 1
-		/obj/effect/proc_holder/spell/target_hive/hive_see = 1,
-		/obj/effect/proc_holder/spell/target_hive/hive_shock = 1,
+		/obj/effect/proc_holder/spell/target_hive/hive_see = 0,
+		/obj/effect/proc_holder/spell/target_hive/hive_shock = 0,
 		/obj/effect/proc_holder/spell/self/hive_drain = 4,
 		//Tier 2
 		/obj/effect/proc_holder/spell/targeted/induce_panic = 10,
@@ -129,11 +128,9 @@
 	..()
 
 /datum/antagonist/hivemind/proc/add_objective(var/datum/objective/O)
-	owner.objectives += O
 	objectives += O
 
 /datum/antagonist/hivemind/proc/remove_objective(var/datum/objective/O)
-	owner.objectives -= O
 	objectives -= O
 
 /datum/antagonist/hivemind/proc/forge_objectives()
