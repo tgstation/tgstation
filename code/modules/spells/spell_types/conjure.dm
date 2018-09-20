@@ -7,8 +7,8 @@
 
 	var/summon_lifespan = 0 // 0=permanent, any other time in deciseconds
 	var/summon_amt = 1 //amount of objects summoned
-	var/summon_ignore_density = FALSE //if set to 1, adds dense tiles to possible spawn places
-	var/summon_ignore_prev_spawn_points = 0 //if set to 1, each new object is summoned on a new spawn point
+	var/summon_ignore_density = FALSE //if set to TRUE, adds dense tiles to possible spawn places
+	var/summon_ignore_prev_spawn_points = TRUE //if set to TRUE, each new object is summoned on a new spawn point
 
 	var/list/newVars = list() //vars of the summoned objects will be replaced with those where they meet
 	//should have format of list("emagged" = 1,"name" = "Wizard's Justicebot"), for example
@@ -72,9 +72,9 @@
 	name = "Summon weapon"
 	desc = "A generic spell that should not exist.  This summons an instance of a specific type of item, or if one already exists, un-summons it.  Summons into hand if possible."
 	invocation_type = "none"
-	include_user = 1
+	include_user = TRUE
 	range = -1
-	clothes_req = 0
+	clothes_req = FALSE
 	var/obj/item/item
 	var/item_type = /obj/item/banhammer
 	school = "conjuration"

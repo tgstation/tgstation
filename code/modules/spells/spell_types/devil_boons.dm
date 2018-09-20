@@ -2,9 +2,9 @@
 	name = "Summon wealth"
 	desc = "The reward for selling your soul."
 	invocation_type = "none"
-	include_user = 1
+	include_user = TRUE
 	range = -1
-	clothes_req = 0
+	clothes_req = FALSE
 	school = "conjuration"
 	charge_max = 100
 	cooldown_min = 10
@@ -30,9 +30,9 @@
 	name = "Distant vision"
 	desc = "The reward for selling your soul."
 	invocation_type = "none"
-	include_user = 1
+	include_user = TRUE
 	range = -1
-	clothes_req = 0
+	clothes_req = FALSE
 	charge_max = 50
 	cooldown_min = 10
 	action_icon = 'icons/mob/actions/actions_silicon.dmi'
@@ -49,9 +49,9 @@
 	name = "Summon Friend"
 	desc = "The reward for selling your soul."
 	invocation_type = "none"
-	include_user = 1
+	include_user = TRUE
 	range = -1
-	clothes_req = 0
+	clothes_req = FALSE
 	charge_max = 50
 	cooldown_min = 10
 	action_icon = 'icons/mob/actions/actions_spells.dmi'

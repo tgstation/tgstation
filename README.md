@@ -100,12 +100,11 @@ https://github.com/tgstation/tgstation-server
 
 ## MAPS
 
-/tg/station currently comes equipped with five maps.
+/tg/station currently comes equipped with four maps.
 
 * [BoxStation (default)](https://tgstation13.org/wiki/Boxstation)
 * [MetaStation](https://tgstation13.org/wiki/MetaStation)
 * [DeltaStation](https://tgstation13.org/wiki/DeltaStation)
-* [OmegaStation](https://tgstation13.org/wiki/OmegaStation)
 * [PubbyStation](https://tgstation13.org/wiki/PubbyStation)
 
 

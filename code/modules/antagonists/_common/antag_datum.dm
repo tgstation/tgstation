@@ -96,7 +96,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 		LAZYREMOVE(owner.antag_datums, src)
 		if(!silent && owner.current)
 			farewell()
-		owner.objectives -= objectives
 	var/datum/team/team = get_team()
 	if(team)
 		team.remove_member(owner)
@@ -132,14 +131,14 @@ GLOBAL_LIST_EMPTY(antagonists)
 	report += printplayer(owner)
 
 	var/objectives_complete = TRUE
-	if(owner.objectives.len)
-		report += printobjectives(owner)
-		for(var/datum/objective/objective in owner.objectives)
+	if(objectives.len)
+		report += printobjectives(objectives)
+		for(var/datum/objective/objective in objectives)
 			if(!objective.check_completion())
 				objectives_complete = FALSE
 				break
 
-	if(owner.objectives.len == 0 || objectives_complete)
+	if(objectives.len == 0 || objectives_complete)
 		report += "<span class='greentext big'>The [name] was successful!</span>"
 	else
 		report += "<span class='redtext big'>The [name] has failed!</span>"
@@ -215,25 +214,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if (isnull(new_memo))
 		return
 	antag_memory = new_memo
-
-//This datum will autofill the name with special_role
-//Used as placeholder for minor antagonists, please create proper datums for these
-/datum/antagonist/auto_custom
-	show_in_antagpanel = FALSE
-	antagpanel_category = "Other"
-	show_name_in_check_antagonists = TRUE
-
-/datum/antagonist/auto_custom/on_gain()
-	..()
-	name = owner.special_role
-	//Add all objectives not already owned by other datums to this one.
-	var/list/already_registered_objectives = list()
-	for(var/datum/antagonist/A in owner.antag_datums)
-		if(A == src)
-			continue
-		else
-			already_registered_objectives |= A.objectives
-	objectives = owner.objectives - already_registered_objectives
 
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom

@@ -10842,7 +10842,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "atK" = (
 /obj/machinery/computer/gulag_teleporter_computer{
 	dir = 1
@@ -66482,7 +66482,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /obj/effect/turf_decal/stripes/line{
-	dir = 2
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -66490,70 +66490,63 @@
 /obj/item/radio/intercom{
 	pixel_y = 25
 	},
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/components/unary/thermomachine/heater,
 /obj/effect/turf_decal/stripes/line{
-	dir = 2
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cyD" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/stripes/line{
-	dir = 2
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cyE" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/camera{
 	c_tag = "Toxins - Lab";
 	dir = 2;
 	network = list("ss13","rd")
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/machinery/portable_atmospherics/canister,
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cyF" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cyG" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
 	},
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 1
 	},
+/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cyH" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
 /obj/effect/turf_decal/stripes/line{
-	dir = 2
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -66570,10 +66563,10 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
-/obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cyK" = (
@@ -66938,32 +66931,27 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
-"czv" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible,
-/turf/open/floor/plasteel/white,
-/area/science/mixing)
-"czw" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible,
-/obj/machinery/meter,
-/turf/open/floor/plasteel/white,
-/area/science/mixing)
 "czx" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 9
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel,
 /area/science/mixing)
 "czy" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 5
-	},
-/turf/open/floor/plasteel/white,
-/area/science/mixing)
-"czz" = (
-/obj/machinery/atmospherics/components/trinary/filter{
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
+"czz" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/science/mixing)
 "czA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -67616,7 +67604,6 @@
 "cAG" = (
 /obj/structure/window/reinforced,
 /obj/machinery/portable_atmospherics/scrubber,
-/obj/item/storage/firstaid/toxin,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -67925,6 +67912,7 @@
 	dir = 5
 	},
 /obj/item/analyzer,
+/obj/item/pipe_dispenser,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cBw" = (
@@ -68776,18 +68764,14 @@
 "cDk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
-/area/science/mixing)
-"cDl" = (
-/obj/structure/sign/warning/securearea,
-/turf/closed/wall/r_wall,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "cDm" = (
-/obj/machinery/shower{
+/obj/machinery/airalarm/mixingchamber{
 	dir = 4;
-	name = "emergency shower"
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/white,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "cDn" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -68816,6 +68800,7 @@
 /obj/item/multitool{
 	pixel_x = 3
 	},
+/obj/item/storage/firstaid/toxin,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cDq" = (
@@ -69410,23 +69395,23 @@
 "cEq" = (
 /obj/structure/lattice,
 /turf/open/space,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "cEr" = (
 /obj/machinery/door/poddoor/incinerator_toxmix,
 /turf/open/floor/engine/vacuum,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "cEs" = (
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
 	},
 /turf/open/floor/engine/vacuum,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "cEu" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "cEv" = (
 /obj/machinery/airlock_sensor/incinerator_toxmix{
 	pixel_y = 24
@@ -69436,7 +69421,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "cEw" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
@@ -69847,24 +69832,24 @@
 /area/science/research)
 "cFn" = (
 /turf/open/floor/engine/vacuum,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "cFo" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior,
 /turf/open/floor/engine,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "cFp" = (
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_toxmix{
 	dir = 2
 	},
 /obj/effect/landmark/blobstart,
 /turf/open/floor/engine,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "cFq" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
 /turf/open/floor/engine,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "cFr" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -70330,7 +70315,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "cGk" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/sign/warning/fire{
@@ -70340,7 +70325,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "cGl" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
@@ -70353,10 +70338,6 @@
 /obj/machinery/button/ignition/incinerator/toxmix{
 	pixel_x = -25;
 	pixel_y = -5
-	},
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -71645,6 +71626,9 @@
 /obj/item/storage/box/lights/mixed,
 /obj/item/flashlight,
 /obj/effect/decal/cleanable/cobweb,
+/obj/structure/sign/warning/biohazard{
+	pixel_y = 32
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cIi" = (
@@ -83030,6 +83014,15 @@
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
 /area/engine/engineering)
+"ffD" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "fwb" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -83075,6 +83068,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
+"fIp" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "gjC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
@@ -83412,6 +83414,15 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"kgI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/machinery/atmospherics/components/trinary/filter{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "krD" = (
 /turf/closed/wall,
 /area/science/circuit)
@@ -83606,6 +83617,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"mom" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "msD" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -84229,6 +84249,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"tjt" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/science/mixing/chamber)
 "tsx" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -84277,7 +84301,7 @@
 "tXK" = (
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
 /turf/open/floor/engine/vacuum,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "uaC" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -84491,6 +84515,9 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engine/storage_shared)
+"wQA" = (
+/turf/closed/wall/r_wall,
+/area/science/mixing/chamber)
 "wRy" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -115890,10 +115917,10 @@ czr
 cAw
 cBq
 cyy
-cyK
-cyK
-cAP
-cyK
+wQA
+wQA
+tjt
+wQA
 cHd
 cHZ
 cIT
@@ -116147,7 +116174,7 @@ czs
 cAx
 cFr
 cCt
-cyK
+wQA
 cEq
 cEq
 cEq
@@ -116404,7 +116431,7 @@ czt
 cAy
 cBs
 cCt
-cyK
+wQA
 cEr
 cEr
 cEr
@@ -116657,11 +116684,11 @@ cvS
 cwR
 crQ
 cyB
-czy
+fIp
 cAz
 cBt
 cCu
-cyK
+wQA
 cEs
 cFn
 cFn
@@ -116914,11 +116941,11 @@ cvS
 cwS
 crQ
 cyC
-czv
+ffD
 dDA
 cBu
 cCv
-cyK
+wQA
 atJ
 tXK
 cGj
@@ -117171,11 +117198,11 @@ cvT
 cwT
 crQ
 cyD
-czw
+mom
 cAA
 cBv
 cCw
-cyK
+wQA
 cEu
 cFo
 cEu
@@ -117428,7 +117455,7 @@ cvU
 cwU
 crQ
 cyE
-czx
+kgI
 cAB
 cBw
 cCx
@@ -117689,7 +117716,7 @@ czy
 cAC
 cBx
 cCy
-cDl
+wQA
 cEu
 cFq
 cEu

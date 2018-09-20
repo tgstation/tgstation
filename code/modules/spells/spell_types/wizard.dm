@@ -4,7 +4,7 @@
 
 	school = "evocation"
 	charge_max = 200
-	clothes_req = 1
+	clothes_req = TRUE
 	invocation = "FORTI GY AMA"
 	invocation_type = "shout"
 	range = 7
@@ -20,7 +20,7 @@
 	proj_lifespan = 20
 	proj_step_delay = 5
 
-	proj_trail = 1
+	proj_trail = TRUE
 	proj_trail_lifespan = 5
 	proj_trail_icon_state = "magicmd"
 
@@ -37,11 +37,11 @@
 
 	school = "transmutation"
 	charge_max = 400
-	clothes_req = 1
+	clothes_req = TRUE
 	invocation = "BIRUZ BENNAR"
 	invocation_type = "shout"
 	range = -1
-	include_user = 1
+	include_user = TRUE
 
 	mutations = list(LASEREYES, HULK)
 	duration = 300
@@ -53,15 +53,15 @@
 
 /obj/effect/proc_holder/spell/targeted/smoke
 	name = "Smoke"
-	desc = "This spell spawns a cloud of choking smoke at your location and does not require wizard garb."
+	desc = "This spell spawns a cloud of choking smoke at your location."
 
 	school = "conjuration"
 	charge_max = 120
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
-	include_user = 1
+	include_user = TRUE
 	cooldown_min = 20 //25 deciseconds reduction per rank
 
 	smoke_spread = 2
@@ -76,11 +76,11 @@
 
 	school = "conjuration"
 	charge_max = 360
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
-	include_user = 1
+	include_user = TRUE
 
 	smoke_spread = 1
 	smoke_amt = 2
@@ -91,11 +91,11 @@
 	name = "Disable Tech"
 	desc = "This spell disables all weapons, cameras and most other technology in range."
 	charge_max = 400
-	clothes_req = 1
+	clothes_req = TRUE
 	invocation = "NEC CANTIO"
 	invocation_type = "shout"
 	range = -1
-	include_user = 1
+	include_user = TRUE
 	cooldown_min = 200 //50 deciseconds reduction per rank
 
 	emp_heavy = 6
@@ -108,11 +108,11 @@
 
 	school = "abjuration"
 	charge_max = 20
-	clothes_req = 1
+	clothes_req = TRUE
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
-	include_user = 1
+	include_user = TRUE
 	cooldown_min = 5 //4 deciseconds reduction per rank
 
 
@@ -130,20 +130,20 @@
 	name = "quickstep"
 
 	charge_max = 100
-	clothes_req = 0
-	cult_req = 1
+	clothes_req = FALSE
+	clothes_req = TRUE
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
 	name = "Teleport"
-	desc = "This spell teleports you to a type of area of your selection."
+	desc = "This spell teleports you to an area of your selection."
 
 	school = "abjuration"
 	charge_max = 600
-	clothes_req = 1
+	clothes_req = TRUE
 	invocation = "SCYAR NILA"
 	invocation_type = "shout"
 	range = -1
-	include_user = 1
+	include_user = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	smoke_spread = 1
@@ -155,7 +155,7 @@
 	name = "Stop Time"
 	desc = "This spell stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
 	charge_max = 500
-	clothes_req = 1
+	clothes_req = TRUE
 	invocation = "TOKI WO TOMARE"
 	invocation_type = "shout"
 	range = 0
@@ -171,7 +171,7 @@
 
 	school = "conjuration"
 	charge_max = 1200
-	clothes_req = 1
+	clothes_req = TRUE
 	invocation = "NOUK FHUNMM SACP RISSKA"
 	invocation_type = "shout"
 	range = 1
@@ -186,7 +186,7 @@
 
 	school = "conjuration"
 	charge_max = 600
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
@@ -203,7 +203,7 @@
 
 	school = "conjuration"
 	charge_max = 1200
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "IA IA"
 	invocation_type = "shout"
 	summon_amt = 10
@@ -214,11 +214,11 @@
 
 /obj/effect/proc_holder/spell/targeted/trigger/blind
 	name = "Blind"
-	desc = "This spell temporarily blinds a single person and does not require wizard garb."
+	desc = "This spell temporarily blinds a single target."
 
 	school = "transmutation"
 	charge_max = 300
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "STI KALY"
 	invocation_type = "whisper"
 	message = "<span class='notice'>Your eyes cry out in pain!</span>"
@@ -230,7 +230,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature/cult
 	name = "Summon Creatures (DANGEROUS)"
-	cult_req = 1
+	clothes_req = TRUE
 	charge_max = 5000
 	summon_amt = 2
 
@@ -249,7 +249,7 @@
 	name = "Repulse"
 	desc = "This spell throws everything around the user away."
 	charge_max = 400
-	clothes_req = 1
+	clothes_req = TRUE
 	invocation = "GITTAH WEIGH"
 	invocation_type = "shout"
 	range = 5
@@ -302,7 +302,7 @@
 	desc = "Throw back attackers with a sweep of your tail."
 	sound = 'sound/magic/tail_swing.ogg'
 	charge_max = 150
-	clothes_req = 0
+	clothes_req = FALSE
 	range = 2
 	cooldown_min = 150
 	invocation_type = "none"
@@ -323,12 +323,12 @@
 	name = "Sacred Flame"
 	desc = "Makes everyone around you more flammable, and lights yourself on fire."
 	charge_max = 60
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "FI'RAN DADISKO"
 	invocation_type = "shout"
 	max_targets = 0
 	range = 6
-	include_user = 1
+	include_user = TRUE
 	selection_type = "view"
 	action_icon_state = "sacredflame"
 	sound = 'sound/magic/fireball.ogg'
@@ -346,7 +346,7 @@
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
 	name = "Thrown Lightning"
 	desc = "Forged from eldrich energies, a packet of pure power, known as a spell packet will appear in your hand, that when thrown will stun the target."
-	clothes_req = 1
+	clothes_req = TRUE
 	item_type = /obj/item/spellpacket/lightningbolt
 	charge_max = 10
 
@@ -357,7 +357,7 @@
 
 /obj/item/spellpacket/lightningbolt
 	name = "\improper Lightning bolt Spell Packet"
-	desc = "Some birdseed wrapped in cloth that somehow crackles with electricity."
+	desc = "Some birdseed wrapped in cloth that crackles with electricity."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "snappop"
 	w_class = WEIGHT_CLASS_TINY
@@ -370,7 +370,7 @@
 				M.electrocute_act(80, src, illusion = 1)
 		qdel(src)
 
-/obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
+/obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, datum/callback/callback, force = INFINITY)
 	. = ..()
 	if(ishuman(thrower))
 		var/mob/living/carbon/human/H = thrower
