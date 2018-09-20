@@ -10,6 +10,9 @@
 	var/flashbang_turf = get_turf(src)
 	if(!flashbang_turf)
 		return
+	do_sparks(rand(5, 9), FALSE, src)
+	playsound(flashbang_turf, 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
+	new /obj/effect/dummy/lighting_obj (flashbang_turf, LIGHT_COLOR_WHITE, (world.view + 2), 4, 2)
 	for(var/mob/living/M in get_hearers_in_view(7, flashbang_turf))
 		bang(get_turf(M), M)
 	qdel(src)
@@ -18,7 +21,6 @@
 	if(M.stat == DEAD)	//They're dead!
 		return
 	M.show_message("<span class='warning'>BANG</span>", 2)
-	playsound(loc, 'sound/weapons/flashbang.ogg', 100, 1)
 	var/distance = max(0,get_dist(get_turf(src),T))
 
 //Flash

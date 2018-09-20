@@ -900,7 +900,7 @@
 		on_fire = 1
 		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
 						"<span class='userdanger'>You're set on fire!</span>")
-		new/obj/effect/dummy/moblight/fire(src)
+		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
 		SEND_SIGNAL(src, COMSIG_LIVING_IGNITED,src)
@@ -911,7 +911,7 @@
 	if(on_fire)
 		on_fire = 0
 		fire_stacks = 0
-		for(var/obj/effect/dummy/moblight/fire/F in src)
+		for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
 			qdel(F)
 		clear_alert("fire")
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
