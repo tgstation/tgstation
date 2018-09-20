@@ -25,10 +25,6 @@ endmap
 map pubbystation
 endmap
 
-map omegastation
-	maxplayers 35
-endmap
-
 map deltastation
 	minplayers 50
 endmap
