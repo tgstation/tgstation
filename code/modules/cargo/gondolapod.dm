@@ -45,7 +45,7 @@
 	set name = "Count Contents"
 	set category = "Gondola"
 	set desc = "Take a deep look inside youself, and count up what's inside"
-	var/total = linked_pod.contents.len
+	var/total = contents.len
 	if (total)	
 		to_chat(src, "<span class='notice'>You detect [total] object[total > 1 ? "s" : ""] within your incredibly vast belly.</span>")
 	else

@@ -126,12 +126,12 @@
 	else
 		addtimer(CALLBACK(src, .proc/open, src), openingDelay) //After the openingDelay passes, we use the open proc from this supplypod, while referencing this supplypod's contents
 
-/obj/structure/closet/supplypod/open(atom/movable/holder, var/broken = FALSE, var/manual = FALSE) //The holder var represents an atom whose contents we will be working with
+/obj/structure/closet/supplypod/open(atom/movable/holder, var/broken = FALSE, var/forced = FALSE) //The holder var represents an atom whose contents we will be working with
 	var/turf/T = get_turf(holder) //Get the turf of whoever's contents we're talking about
 	var/mob/M
 	if (istype(holder, /mob)) //Allows mobs to assume the role of the holder, meaning we look at the mob's contents rather than the supplypod's contents. Typically by this point the supplypod's contents have already been moved over to the mob's contents
 		M = holder
-		if (M.key && !manual && !broken) //If we are player controlled, then we shouldnt open unless the opening is manual, or if it is due to being destroyed (represented by the "broken" parameter)
+		if (M.key && !forced && !broken) //If we are player controlled, then we shouldnt open unless the opening is manual, or if it is due to being destroyed (represented by the "broken" parameter)
 			return
 	opened = TRUE //This is to ensure we don't open something that has already been opened
 	if (openingSound)
@@ -174,7 +174,7 @@
 	holder.forceMove(bay) //Move the pod back to centcom, where it belongs
 	animate(risingPod, pixel_z = 200, time = 10, easing = LINEAR_EASING) //Animate our rising pod
 	reversing = FALSE //Now that we're done reversing, we set this to false (otherwise we would get stuck in an infinite loop of calling the close proc at the bottom of open() )
-	open(holder, manual = TRUE)
+	open(holder, forced = TRUE)
 	return
 
 /obj/structure/closet/supplypod/proc/setOpened() //Proc exists here, as well as in any atom that can assume the role of a "holder" of a supplypod. Check the open() proc for more details
