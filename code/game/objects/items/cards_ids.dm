@@ -145,37 +145,47 @@
 	if(istype(W, /obj/item/stack/spacecash))
 		var/obj/item/stack/spacecash/vbucks = W
 		if(registered_account)
-			registered_account.adjust_money(vbucks.value)
+			registered_account.adjust_money(vbucks.value * vbucks.amount)
 			to_chat(user, "You insert [vbucks] into [src], adding the value to your account.")
 			qdel(vbucks)
 
 
 /obj/item/card/id/attack_self(mob/user)
-	if(registered_account)
-		var/msg = stripped_input(user, "Name of pay stand:", "Paystand Naming", "[user]'s Awesome Paystand")
-		if(!msg)
+	if(!registered_account)
+		var/new_bank_id = input(user, "Enter your account ID.", "Account Reclamation", 111111) as num
+		if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
+			to_chat(user, "The ID needs to be between 111111 and 999999.")
 			return
-		var/price = input(user, "Enter price.", "Paystand Pricing", 25) as num
-		if(!price)
-			return
-		if(my_store)
-			my_store.relocate(get_area(user))
-		var/obj/machinery/paystand/vbuck_store = new /obj/machinery/paystand(get_turf(user))
-		vbuck_store.name = "[msg] ($[price])"
-		vbuck_store.desc = "Owned by [registered_account.account_holder]. Pays directly into [user.p_their()] account when swiped with an ID card."
-		vbuck_store.price = price
-		vbuck_store.alpha = 127
-		vbuck_store.color = "#CDE4FD"
-		vbuck_store.my_card = src
-		my_store = vbuck_store
+		for(var/A in GLOB.bank_accounts)
+			var/datum/bank_account/B = A
+			if(B.account_id == new_bank_id)
+				B.bank_cards += src
+				registered_account = B
+				to_chat(user, "Your account has been assigned to this ID card.")
+				return
+		to_chat(user, "The ID provided is not a real account.")
+		return
+	var/amount_to_remove = input(user, "How much do you want to withdraw?", "Account Reclamation", 5) as num
+	if(!amount_to_remove || amount_to_remove < 0)
+		return
+	if(registered_account.adjust_money(-1 * amount_to_remove))
+		var/obj/item/stack/spacecash/c1/dosh = new /obj/item/stack/spacecash/c1(get_turf(user))
+		dosh.amount = amount_to_remove
+		user.put_in_hands(dosh)
+		to_chat(user, "You withdraw $[amount_to_remove].")
+		return
+	else
+		to_chat(user, "You don't have the funds for that.")
+		return
 
 /obj/item/card/id/examine(mob/user)
 	..()
 	if(registered_account)
 		to_chat(user, "The registered account belongs to '[registered_account.account_holder]' and reports a balance of $[registered_account.account_balance].")
-		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(registered_account.account_job.paycheck_department)
-		if(D)
-			to_chat(user, "The [D.account_holder] reports a balance of $[D.account_balance].")
+		if(registered_account.account_job)
+			var/datum/bank_account/D = SSgoldmansachs.get_dep_account(registered_account.account_job.paycheck_department)
+			if(D)
+				to_chat(user, "The [D.account_holder] reports a balance of $[D.account_balance].")
 	if(mining_points)
 		to_chat(user, "There's [mining_points] mining equipment redemption point\s loaded onto this card.")
 
@@ -436,3 +446,55 @@ update_label("John Doe", "Clowny")
 	name = "APC Access ID"
 	desc = "A special ID card that allows access to APC terminals."
 	access = list(ACCESS_ENGINE_EQUIP)
+
+/obj/item/card/id/departmental_budget
+	name = "departmental card (FUCK)"
+	desc = "Provides access to the departmental budget. This idea is retarded but you dipshits kept clamoring for it so I'm gonna just laugh when it destroys the economy."
+	var/department_ID = ACCOUNT_CIV
+	var/department_name = ACCOUNT_CIV_NAME
+
+GLOBAL_LIST_EMPTY(dep_cards)
+
+
+/obj/item/card/id/departmental_budget/Initialize()
+	..()
+	var/datum/bank_account/B = SSgoldmansachs.get_dep_account(department_ID)
+	if(B)
+		registered_account = B
+		if(!B.bank_cards.Find(src))
+			B.bank_cards += src
+		name = "departmental card ([department_name])"
+		desc = "Provides access to the [department_name]."
+	GLOB.dep_cards += src
+
+/obj/item/card/id/departmental_budget/Destroy()
+	GLOB.dep_cards -= src
+	..()
+
+/obj/item/card/id/departmental_budget/civ
+	department_ID = ACCOUNT_CIV
+	department_name = ACCOUNT_CIV_NAME
+
+/obj/item/card/id/departmental_budget/eng
+	department_ID = ACCOUNT_ENG
+	department_name = ACCOUNT_ENG_NAME
+
+/obj/item/card/id/departmental_budget/sci
+	department_ID = ACCOUNT_SCI
+	department_name = ACCOUNT_SCI_NAME
+
+/obj/item/card/id/departmental_budget/med
+	department_ID = ACCOUNT_MED
+	department_name = ACCOUNT_MED_NAME
+
+/obj/item/card/id/departmental_budget/srv
+	department_ID = ACCOUNT_SRV
+	department_name = ACCOUNT_SRV_NAME
+
+/obj/item/card/id/departmental_budget/car
+	department_ID = ACCOUNT_CAR
+	department_name = ACCOUNT_CAR_NAME
+
+/obj/item/card/id/departmental_budget/sec
+	department_ID = ACCOUNT_SEC
+	department_name = ACCOUNT_SEC_NAME

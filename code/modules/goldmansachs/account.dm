@@ -5,7 +5,7 @@ GLOBAL_LIST_EMPTY(department_accounts)
 	var/account_holder = "Rusty Venture"
 	var/account_balance = 0
 	var/datum/job/account_job
-	var/obj/item/card/id/bank_card
+	var/list/bank_cards = list()
 	var/add_to_accounts = TRUE
 	var/account_id
 
@@ -47,16 +47,20 @@ GLOBAL_LIST_EMPTY(department_accounts)
 		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(account_job.paycheck_department)
 		if(D)
 			if(!transfer_money(D, account_job.paycheck * amt_of_paychecks))
-				if(bank_card)
-					bank_card.say("ERROR: Payday aborted, departmental funds insufficient.")
+				bank_card_talk("ERROR: Payday aborted, departmental funds insufficient.")
 				return FALSE
 			else
-				if(bank_card)
-					bank_card.say("Payday processed, account now holds $[account_balance].")
+				bank_card_talk("Payday processed, account now holds $[account_balance].")
 				return TRUE
-	if(bank_card)
-		bank_card.say("ERROR: Payday aborted, unable to contact departmental account.")
+	bank_card_talk("ERROR: Payday aborted, unable to contact departmental account.")
 	return FALSE
+
+/datum/bank_account/proc/bank_card_talk(fuck)
+	if(!fuck || !bank_cards.len)
+		return
+	for(var/obj/A in bank_cards)
+		for(var/mob/M in hearers(1,get_turf(A)))
+			to_chat(M, fuck)
 
 /datum/bank_account/department
 	account_holder = "Guild Credit Agency"

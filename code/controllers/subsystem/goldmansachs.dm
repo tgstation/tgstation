@@ -54,6 +54,15 @@ SUBSYSTEM_DEF(goldmansachs)
 		D.account_holder = department_accounts[A]
 		D.account_balance = budget_to_hand_out
 		generated_accounts += D
+	for(var/A in GLOB.dep_cards)
+		var/obj/item/card/id/departmental_budget/C = A
+		var/datum/bank_account/B = get_dep_account(C.department_ID)
+		if(B)
+			C.registered_account = B
+			if(!B.bank_cards.Find(C))
+				B.bank_cards += C
+			C.name = "departmental card ([C.department_name])"
+			C.desc = "Provides access to the [C.department_name]."
 	addtimer(CALLBACK(src, .proc/its_payday_fellas), paycheck_interval)
 	flags |= SS_NO_FIRE
 
@@ -64,16 +73,16 @@ SUBSYSTEM_DEF(goldmansachs)
 			return D
 
 /datum/controller/subsystem/goldmansachs/proc/its_payday_fellas()
-	sips_monster_i_built_that()
-	why_do_we_have_to_wear_such_ridiculous_ties()
-	become_detective_carry_gun_murder_kids()
-	step4_question_mark_step5_profit()
+	boring_eng_payout()
+	boring_sci_payout()
+	boring_secmedsrv_payout()
+	boring_civ_payout()
 	for(var/A in GLOB.bank_accounts)
 		var/datum/bank_account/B = A
 		B.i_need_my_payday_too(1)
 	addtimer(CALLBACK(src, .proc/its_payday_fellas), paycheck_interval)
 
-/datum/controller/subsystem/goldmansachs/proc/sips_monster_i_built_that()
+/datum/controller/subsystem/goldmansachs/proc/boring_eng_payout()
 	var/engineering_cash = 3000
 	engineering_check.count()
 	var/station_integrity = min(PERCENT(GLOB.start_state.score(engineering_check)), 100)
@@ -83,7 +92,7 @@ SUBSYSTEM_DEF(goldmansachs)
 	if(D)
 		D.adjust_money(engineering_cash)
 
-/datum/controller/subsystem/goldmansachs/proc/become_detective_carry_gun_murder_kids()
+/datum/controller/subsystem/goldmansachs/proc/boring_secmedsrv_payout()
 	var/crew
 	var/alive_crew
 	var/dead_monsters
@@ -122,7 +131,7 @@ SUBSYSTEM_DEF(goldmansachs)
 	if(D)
 		D.adjust_money(cash_to_grant)
 
-/datum/controller/subsystem/goldmansachs/proc/why_do_we_have_to_wear_such_ridiculous_ties()
+/datum/controller/subsystem/goldmansachs/proc/boring_sci_payout()
 	var/science_bounty = 0
 	for(var/mob/living/simple_animal/slime/S in GLOB.mob_list)
 		if(S.stat == DEAD)
@@ -132,7 +141,7 @@ SUBSYSTEM_DEF(goldmansachs)
 	if(D)
 		D.adjust_money(science_bounty)
 
-/datum/controller/subsystem/goldmansachs/proc/step4_question_mark_step5_profit()
+/datum/controller/subsystem/goldmansachs/proc/boring_civ_payout()
 	var/datum/bank_account/D = get_dep_account(ACCOUNT_CIV)
 	if(D)
 		D.adjust_money((rand(1,5) * 500))

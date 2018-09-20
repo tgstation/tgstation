@@ -313,7 +313,7 @@
 	build_path = /obj/item/circuitboard/machine/nanite_chamber
 	category = list("Research Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-	
+
 /datum/design/board/public_nanite_chamber
 	name = "Machine Design (Public Nanite Chamber Board)"
 	desc = "The circuit board for a Public Nanite Chamber."
@@ -570,3 +570,11 @@
 	build_path = /obj/item/circuitboard/machine/ore_silo
 	category = list ("Research Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
+
+/datum/design/board/paystand
+	name = "Machine Design (Pay Stand)"
+	desc = "The circuit board for a paystand."
+	id = "paystand"
+	build_path = /obj/item/circuitboard/machine/paystand
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL

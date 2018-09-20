@@ -14,7 +14,7 @@ Assistant
 	minimal_access = list()	//See /datum/job/assistant/get_access()
 	outfit = /datum/outfit/job/assistant
 	antag_rep = 7
-	paycheck = PAYCHECK_MINIMAL
+	paycheck = PAYCHECK_ASSISTANT // Get a job. Job reassignment changes your paycheck now. Get over it.
 	paycheck_department = ACCOUNT_CIV
 
 /datum/job/assistant/get_access()

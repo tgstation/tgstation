@@ -321,7 +321,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 						continue
 					if(coin_records.Find(R) || is_hidden)
 						price_listed = "$[extra_price]"
-					if(account.account_job.paycheck_department == payment_department)
+					if(account.account_job.paycheck_department == payment_department || !(z in SSmapping.levels_by_trait(ZTRAIT_STATION)))
 						price_listed = "FREE"
 					dat += "<li>"
 					if(R.amount > 0)
@@ -424,7 +424,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			flick(icon_deny,src)
 			vend_ready = 1
 			return
-		if(ishuman(usr))
+		if(ishuman(usr) && (z in SSmapping.levels_by_trait(ZTRAIT_STATION)))
 			var/mob/living/carbon/human/H = usr
 			var/obj/item/card/id/C = H.get_idcard()
 
