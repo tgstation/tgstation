@@ -466,10 +466,11 @@
 		scantemp = "<font class='average'>Subject already in database.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
-	if(!has_bank_account)
-		scantemp = "<font class='average'>Subject has no way to pay for operation.</font>"
-		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-		return
+	if(SSgoldmansachs.full_ancap)
+		if(!has_bank_account)
+			scantemp = "<font class='average'>Subject is either missing an ID card with a bank account on it, or does not have an account to begin with. Please ensure the ID card is on the body before attempting to scan.</font>"
+			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+			return
 	var/datum/data/record/R = new()
 	if(dna.species)
 		// We store the instance rather than the path, because some
