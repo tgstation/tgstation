@@ -9,7 +9,7 @@
 /obj/machinery/computer/cargo/express
 	name = "express supply console"
 	desc = "This console allows the user to purchase a package \
-		with 1/40th of the delivery time: made possible by Nanotrasen's new \"1500mm Orbital Railgun\".\
+		with 1/40th of the delivery time: made possible by NanoTrasen's new \"1500mm Orbital Railgun\".\
 		All sales are near instantaneous - please choose carefully"
 	icon_screen = "supply_express"
 	circuit = /obj/item/circuitboard/computer/cargo/express
@@ -20,7 +20,7 @@
 	var/list/meme_pack_data
 	var/obj/item/supplypod_beacon/beacon //the linked supplypod beacon
 	var/area/landingzone = /area/quartermaster/storage //where we droppin boys
-	var/podID = POD_STANDARD //0 is your standard supply supplypod (requires dissassembly after landing), 1 is the bluespace supply pod (teleports out after landing)
+	var/podType = /obj/structure/closet/supplypod //0 is your standard supply supplypod (requires dissassembly after landing), 1 is the bluespace supply pod (teleports out after landing)
 	var/cooldown = 0 //cooldown to prevent printing supplypod beacon spam
 	var/locked = TRUE //is the console locked? unlock with ID
 	var/usingBeacon = FALSE //is the console in beacon mode? exists to let beacon know when a pod may come in
@@ -40,7 +40,7 @@
 		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the interface.</span>")
 		return
 	else if(istype(W, /obj/item/disk/cargo/bluespace_pod))
-		podID = POD_BLUESPACE//doesnt effect circuit board, making reversal possible
+		podType = /obj/structure/closet/supplypod/bluespacepod//doesnt effect circuit board, making reversal possible
 		to_chat(user, "<span class='notice'>You insert the disk into [src], allowing for advanced supply delivery vehicles.</span>")
 		qdel(W)
 		return TRUE
@@ -109,7 +109,7 @@
 	if(SSshuttle.supplyBlocked)
 		message = blockade_warning
 	if(usingBeacon && !beacon)
-		message = "BEACON ERROR: BEACON MISSING"//beacon was destroyed
+		message = "BEACON ERROR: BEACON MISSING"//beacon was destroyed 
 	else if (usingBeacon && !canBeacon)
 		message = "BEACON ERROR: MUST BE EXPOSED"//beacon's loc/user's loc must be a turf
 	if(obj_flags & EMAGGED)
@@ -165,7 +165,7 @@
 					var/LZ
 					if (istype(beacon) && usingBeacon)//prioritize beacons over landing in cargobay
 						LZ = get_turf(beacon)
-						beacon.update_status(SP_LAUNCH)
+						beacon.update_status(SP_LAUNCH)	
 					else if (!usingBeacon)//find a suitable supplypod landing zone in cargobay
 						landingzone = GLOB.areas_by_type[/area/quartermaster/storage]
 						if (!landingzone)
@@ -177,10 +177,10 @@
 							LAZYADD(empty_turfs, T)
 							CHECK_TICK
 						if(empty_turfs && empty_turfs.len)
-							LZ = pick(empty_turfs)
+							LZ = pick(empty_turfs)	
 					if (SO.pack.cost <= SSshuttle.points && LZ)//we need to call the cost check again because of the CHECK_TICK call
 						SSshuttle.points -= SO.pack.cost
-						new /obj/effect/DPtarget(LZ, SO, podID)
+						new /obj/effect/DPtarget(LZ, podType, SO)
 						. = TRUE
 						update_icon()
 			else
@@ -197,7 +197,7 @@
 						for(var/i in 1 to MAX_EMAG_ROCKETS)
 							var/LZ = pick(empty_turfs)
 							LAZYREMOVE(empty_turfs, LZ)
-							new /obj/effect/DPtarget(LZ, SO, podID)
+							new /obj/effect/DPtarget(LZ, podType, SO)
 							. = TRUE
 							update_icon()
 							CHECK_TICK

@@ -41,6 +41,15 @@
 	else if(dx<0)
 		.+=360
 
+/proc/Get_Pixel_Angle(var/y, var/x)//for getting the angle when animating something's pixel_x and pixel_y
+	if(!y)
+		return (x>=0)?90:270
+	.=arctan(x/y)
+	if(y<0)
+		.+=180
+	else if(x<0)
+		.+=360
+
 //Returns location. Returns null if no location was found.
 /proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = FALSE, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
 /*
