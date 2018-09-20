@@ -17,7 +17,7 @@ Clown
 	access = list(ACCESS_THEATRE)
 	minimal_access = list(ACCESS_THEATRE)
 	paycheck = PAYCHECK_MINIMAL
-	paycheck_department = ACCOUNT_CIV
+	paycheck_department = ACCOUNT_SRV
 
 
 /datum/job/clown/after_spawn(mob/living/carbon/human/H, mob/M)
@@ -83,7 +83,7 @@ Mime
 	access = list(ACCESS_THEATRE)
 	minimal_access = list(ACCESS_THEATRE)
 	paycheck = PAYCHECK_MINIMAL
-	paycheck_department = ACCOUNT_CIV
+	paycheck_department = ACCOUNT_SRV
 
 
 /datum/job/mime/after_spawn(mob/living/carbon/human/H, mob/M)

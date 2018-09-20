@@ -186,6 +186,10 @@
 			var/datum/bank_account/D = SSgoldmansachs.get_dep_account(registered_account.account_job.paycheck_department)
 			if(D)
 				to_chat(user, "The [D.account_holder] reports a balance of $[D.account_balance].")
+		to_chat(user, "Use your ID in-hand to pull money from your account in the form of cash.")
+		to_chat(user, "You can insert cash into your account by smashing the money against the ID.")
+		to_chat(user, "If you lose this ID card, you can reclaim your account by using a blank ID card inhand and punching in the account ID.")
+
 	if(mining_points)
 		to_chat(user, "There's [mining_points] mining equipment redemption point\s loaded onto this card.")
 
@@ -449,7 +453,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/departmental_budget
 	name = "departmental card (FUCK)"
-	desc = "Provides access to the departmental budget. This idea is retarded but you dipshits kept clamoring for it so I'm gonna just laugh when it destroys the economy."
+	desc = "Provides access to the departmental budget."
 	var/department_ID = ACCOUNT_CIV
 	var/department_name = ACCOUNT_CIV_NAME
 

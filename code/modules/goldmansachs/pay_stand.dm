@@ -1,6 +1,6 @@
 /obj/machinery/paystand
 	name = "unregistered pay stand"
-	desc = "Fuck shit ass clown.."
+	desc = "See title."
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "card_scanner"
 	density = TRUE
@@ -23,7 +23,7 @@
 				desc = "Owned by [assistant_mains_need_to_die.registered_account.account_holder]. Pays directly into [user.p_their()] account when swiped with an ID card."
 				price = price2
 				my_card = assistant_mains_need_to_die
-				to_chat(user, "you link the card to the tsand or whatever fuck you and fuck this feature this is shit and holograms were better")
+				to_chat(user, "You ")
 				return
 		var/obj/item/card/id/vbucks = W
 		if(vbucks.registered_account)

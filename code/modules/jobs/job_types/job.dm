@@ -211,7 +211,6 @@
 				C.registered_account = B
 				B.bank_cards += C
 				break
-		to_chat(H, "<span class = 'userdanger'>Your account ID is [H.account_id], remember this so you don't lose your account if you lose your ID.</span>")
 		H.sec_hud_set_ID()
 
 	var/obj/item/pda/PDA = H.get_item_by_slot(pda_slot)
