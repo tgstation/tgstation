@@ -294,6 +294,10 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	return ..()
 
 /obj/machinery/vending/ui_interact(mob/user)
+	var/onstation = FALSE
+	for(var/A in SSmapping.levels_by_trait(ZTRAIT_STATION))
+		if(src.z == A)
+			onstation = TRUE
 	var/dat = ""
 	var/datum/bank_account/account
 	if(ishuman(user))
@@ -321,7 +325,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 						continue
 					if(coin_records.Find(R) || is_hidden)
 						price_listed = "$[extra_price]"
-					if(account.account_job.paycheck_department == payment_department || !(z in SSmapping.levels_by_trait(ZTRAIT_STATION)))
+					if(account.account_job.paycheck_department == payment_department || !onstation)
 						price_listed = "FREE"
 					dat += "<li>"
 					if(R.amount > 0)
@@ -352,7 +356,10 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 /obj/machinery/vending/Topic(href, href_list)
 	if(..())
 		return
-
+	var/onstation = FALSE
+	for(var/A in SSmapping.levels_by_trait(ZTRAIT_STATION))
+		if(src.z == A)
+			onstation = TRUE
 
 	usr.set_machine(src)
 
@@ -361,7 +368,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		if(dish_quants[N] <= 0) // Sanity check, there are probably ways to press the button when it shouldn't be possible.
 			return
 		vend_ready = 0
-		if(ishuman(usr))
+		if(ishuman(usr) && onstation)
 			var/mob/living/carbon/human/H = usr
 			var/obj/item/card/id/C = H.get_idcard()
 
@@ -424,32 +431,33 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			flick(icon_deny,src)
 			vend_ready = 1
 			return
-		if(ishuman(usr) && (z in SSmapping.levels_by_trait(ZTRAIT_STATION)))
-			var/mob/living/carbon/human/H = usr
-			var/obj/item/card/id/C = H.get_idcard()
+		if(ishuman(usr))
+			if(onstation)
+				var/mob/living/carbon/human/H = usr
+				var/obj/item/card/id/C = H.get_idcard()
 
-			if(!C)
-				say("No card found.")
-				flick(icon_deny,src)
-				vend_ready = 1
-				return
-			else if (!C.registered_account)
-				say("No account found.")
-				flick(icon_deny,src)
-				vend_ready = 1
-				return
-			var/datum/bank_account/account = C.registered_account
-			if(account.account_job.paycheck_department == payment_department)
-				price_to_use = 0
-			if(price_to_use && !account.adjust_money(-1 * price_to_use))
-				say("You do not posess the funds to purchase [R.name].")
-				flick(icon_deny,src)
-				vend_ready = 1
-				return
+				if(!C)
+					say("No card found.")
+					flick(icon_deny,src)
+					vend_ready = 1
+					return
+				else if (!C.registered_account)
+					say("No account found.")
+					flick(icon_deny,src)
+					vend_ready = 1
+					return
+				var/datum/bank_account/account = C.registered_account
+				if(account.account_job.paycheck_department == payment_department)
+					price_to_use = 0
+				if(price_to_use && !account.adjust_money(-1 * price_to_use))
+					say("You do not posess the funds to purchase [R.name].")
+					flick(icon_deny,src)
+					vend_ready = 1
+					return
+				var/datum/bank_account/D = SSgoldmansachs.get_dep_account(payment_department)
+				if(D)
+					D.adjust_money(price_to_use)
 		say("Thank you for shopping with [src]!")
-		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(payment_department)
-		if(D)
-			D.adjust_money(price_to_use)
 		use_power(5)
 		if(icon_vend) //Show the vending animation if needed
 			flick(icon_vend,src)
