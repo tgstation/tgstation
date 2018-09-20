@@ -301,6 +301,17 @@
 	pixel_x = -32
 	pixel_y = -32
 	duration = 8
+	layer = ABOVE_LIGHTING_LAYER
+	plane = ABOVE_LIGHTING_PLANE
+	light_color = LIGHT_COLOR_FIRE
+	light_range = 3
+	light_power = 4
+
+/obj/effect/temp_visual/explosion/singularity_pull()
+	return
+
+/obj/effect/temp_visual/explosion/ex_act()
+	return
 
 /obj/effect/temp_visual/explosion/fast
 	icon_state = "explosionfast"

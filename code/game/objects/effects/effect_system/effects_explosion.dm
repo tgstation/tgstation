@@ -3,10 +3,21 @@
 	icon_state = "explosion_particle"
 	opacity = 1
 	anchored = TRUE
+	layer = ABOVE_LIGHTING_LAYER
+	plane = ABOVE_LIGHTING_PLANE
+	light_color = LIGHT_COLOR_FIRE
+	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+	light_power = 3
 
 /obj/effect/particle_effect/expl_particles/Initialize()
 	. = ..()
 	QDEL_IN(src, 15)
+
+/obj/effect/particle_effect/expl_particles/singularity_pull()
+	return
+
+/obj/effect/particle_effect/expl_particles/ex_act()
+	return
 
 /datum/effect_system/expl_particles
 	number = 10
@@ -23,15 +34,26 @@
 	name = "fire"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "explosion"
-	opacity = 1
+	opacity = TRUE
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	layer = ABOVE_LIGHTING_LAYER
+	plane = ABOVE_LIGHTING_PLANE
+	light_color = LIGHT_COLOR_FIRE
+	light_range = 4
+	light_power = 4
 	pixel_x = -32
 	pixel_y = -32
 
 /obj/effect/explosion/Initialize()
 	. = ..()
 	QDEL_IN(src, 10)
+
+/obj/effect/explosion/singularity_pull()
+	return
+
+/obj/effect/explosion/ex_act()
+	return
 
 /datum/effect_system/explosion
 
