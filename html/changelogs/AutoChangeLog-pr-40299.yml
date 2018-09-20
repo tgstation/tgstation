@@ -1,5 +1,0 @@
-author: "Granpawalton"
-delete-after: True
-changes: 
-  - rscadd: "toxins on all maps now have an unlocked chamber air alarm, 2 air pumps, a rpd, a heater, a freezer, and igniters"
-  - tweak: "the pipe arrangements in toxins have been reorganized for efficiency"
