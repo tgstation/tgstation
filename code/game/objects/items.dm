@@ -108,8 +108,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
 
 /obj/item/Initialize()
-	if (!materials)
-		materials = list()
+
+	materials =	typelist("materials", materials)
+
+	if (attack_verb)
+		attack_verb = typelist("attack_verb", attack_verb)
+
 	. = ..()
 	for(var/path in actions_types)
 		new path(src)

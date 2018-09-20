@@ -16,7 +16,6 @@
 
 	var/on = TRUE
 	var/frequency = FREQ_COMMON
-	var/traitor_frequency = 0  // If tuned to this frequency, uplink will be unlocked.
 	var/canhear_range = 3  // The range around the radio in which mobs can hear what it receives.
 	var/emped = 0  // Tracks the number of EMPs currently stacked.
 

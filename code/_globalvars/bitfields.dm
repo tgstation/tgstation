@@ -164,4 +164,7 @@ GLOBAL_LIST_INIT(bitfields, list(
 		"TRANSPARENT" = TRANSPARENT,
 		"AMOUNT_VISIBLE" = AMOUNT_VISIBLE,
 		),
+	"car_traits" = list(
+		"CAN_KIDNAP" = CAN_KIDNAP,
+		),
 	))

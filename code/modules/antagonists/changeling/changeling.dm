@@ -446,8 +446,6 @@
 			objectives += identity_theft
 		escape_objective_possible = FALSE
 
-	owner.objectives |= objectives
-
 /datum/antagonist/changeling/proc/update_changeling_icons_added()
 	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_CHANGELING]
 	hud.join_hud(owner.current)

@@ -36,7 +36,6 @@
 		missionobj.completed = 1
 		mission = missionobj
 		objectives |= mission
-	owner.objectives |= objectives
 
 
 /datum/antagonist/official/on_gain()

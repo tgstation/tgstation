@@ -66,3 +66,23 @@
 /obj/effect/abstract/marker/at
 	name = "active turf marker"
 
+
+/mob/living/proc/mob_light(_color, _range, _power, _duration)
+	var/obj/effect/dummy/moblight/mob_light_obj = new (src, _color, _range, _power, _duration)
+	return mob_light_obj
+
+/obj/effect/dummy/moblight
+	name = "mob lighting fx"
+	desc = "Tell a coder if you're seeing this."
+	icon_state = "nothing"
+	light_color = "#FFFFFF"
+	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+
+/obj/effect/dummy/moblight/Initialize(mapload, _color, _range, _power, _duration)
+	. = ..()
+	if(!isliving(loc))
+		return INITIALIZE_HINT_QDEL
+	set_light(_range ? _range : light_range, _power ? _power : light_power, _color ? _color : light_color)
+	if(_duration)
+		QDEL_IN(src, _duration)
+

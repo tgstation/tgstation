@@ -1,4 +1,4 @@
-/world/TgsNew(datum/tgs_event_handler/event_handler)
+/world/TgsNew(datum/tgs_event_handler/event_handler, minimum_required_security_level = TGS_SECURITY_ULTRASAFE)
 	var/current_api = TGS_READ_GLOBAL(tgs)
 	if(current_api)
 		TGS_ERROR_LOG("TgsNew(): TGS API datum already set ([current_api])!")
@@ -18,7 +18,7 @@
 
 	TGS_WRITE_GLOBAL(tgs, new_api)
 
-	var/result = new_api.OnWorldNew(event_handler ? event_handler : new /datum/tgs_event_handler/tgs_default)
+	var/result = new_api.OnWorldNew(event_handler ? event_handler : new /datum/tgs_event_handler/tgs_default, minimum_required_security_level)
 	if(!result || result == TGS_UNIMPLEMENTED)
 		TGS_WRITE_GLOBAL(tgs, null)
 		TGS_ERROR_LOG("Failed to activate API!")
@@ -126,6 +126,11 @@
 	var/datum/tgs_api/api = TGS_READ_GLOBAL(tgs)
 	if(api)
 		api.ChatPrivateMessage(message, user)
+
+/world/TgsSecurityLevel()
+	var/datum/tgs_api/api = TGS_READ_GLOBAL(tgs)
+	if(api)
+		api.SecurityLevel()
 
 /*
 The MIT License

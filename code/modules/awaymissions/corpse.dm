@@ -16,6 +16,7 @@
 	var/faction = null
 	var/permanent = FALSE	//If true, the spawner will not disappear upon running out of uses.
 	var/random = FALSE		//Don't set a name or gender, just go random
+	var/antagonist_type
 	var/objectives = null
 	var/uses = 1			//how many times can we spawn from it. set to -1 for infinite.
 	var/brute_damage = 0
@@ -93,9 +94,16 @@
 		if(show_flavour)
 			to_chat(M, "[flavour_text]")
 		var/datum/mind/MM = M.mind
+		var/datum/antagonist/A
+		if(antagonist_type)
+			A = MM.add_antag_datum(antagonist_type)
 		if(objectives)
+			if(!A)
+				A = MM.add_antag_datum(/datum/antagonist/custom)
 			for(var/objective in objectives)
-				MM.objectives += new/datum/objective(objective)
+				var/datum/objective/O = new/datum/objective(objective)
+				O.owner = MM
+				A.objectives += O
 		if(assignedrole)
 			M.mind.assigned_role = assignedrole
 		special(M, name)

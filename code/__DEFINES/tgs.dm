@@ -55,11 +55,16 @@
 #define TGS_REBOOT_MODE_SHUTDOWN 1
 #define TGS_REBOOT_MODE_RESTART 2
 
+#define TGS_SECURITY_TRUSTED 0
+#define TGS_SECURITY_SAFE 1
+#define TGS_SECURITY_ULTRASAFE 2
+
 //REQUIRED HOOKS
 
 //Call this somewhere in /world/New() that is always run
 //event_handler: optional user defined event handler. The default behaviour is to broadcast the event in english to all connected admin channels
-/world/proc/TgsNew(datum/tgs_event_handler/event_handler)
+//minimum_required_security_level: The minimum required security level to run the game in which the DMAPI is integrated
+/world/proc/TgsNew(datum/tgs_event_handler/event_handler, minimum_required_security_level = TGS_SECURITY_ULTRASAFE)
 	return
 
 //Call this when your initializations are complete and your game is ready to play before any player interactions happen
@@ -153,6 +158,10 @@
 
 //Get the current `/datum/tgs_revision_information`
 /world/proc/TgsRevision()
+	return
+
+//Get the current BYOND security level
+/world/proc/TgsSecurityLevel()
 	return
 
 //Gets a list of active `/datum/tgs_revision_information/test_merge`s

@@ -62,72 +62,63 @@
 
 				// If the log is a speech file
 				if(C.input_type == "Speech File")
-
-					dat += "<li><font color = #008F00>[C.name]</font color>  <font color = #FF0000><a href='?src=[REF(src)];delete=[i]'>\[X\]</a></font color><br>"
+					dat += "<li><font color = #008F00>[C.name]</font>  <font color = #FF0000><a href='?src=[REF(src)];delete=[i]'>\[X\]</a></font><br>"
 
 					// -- Determine race of orator --
 
-					var/race			   // The actual race of the mob
-					var/language = "Human" // MMIs, pAIs, Cyborgs and humans all speak Human
 					var/mobtype = C.parameters["mobtype"]
+					var/race			   // The actual race of the mob
 
-					var/list/humans = typesof(/mob/living/carbon/human, /mob/living/brain)
-					var/list/monkeys = typesof(/mob/living/carbon/monkey)
-					var/list/silicons = typesof(/mob/living/silicon)
-					var/list/slimes = typesof(/mob/living/simple_animal/slime)
-					var/list/animals = typesof(/mob/living/simple_animal)
-
-					if(mobtype in humans)
+					if(ispath(mobtype, /mob/living/carbon/human) || ispath(mobtype, /mob/living/brain))
 						race = "Humanoid"
-						language = race
 
-					else if(mobtype in slimes) // NT knows a lot about slimes, but not aliens. Can identify slimes
+					// NT knows a lot about slimes, but not aliens. Can identify slimes
+					else if(ispath(mobtype, /mob/living/simple_animal/slime))
 						race = "Slime"
-						language = race
 
-					else if(mobtype in monkeys)
+					else if(ispath(mobtype, /mob/living/carbon/monkey))
 						race = "Monkey"
-						language = race
 
-					else if(mobtype in silicons || C.parameters["job"] == "AI") // sometimes M gets deleted prematurely for AIs... just check the job
+					// sometimes M gets deleted prematurely for AIs... just check the job
+					else if(ispath(mobtype, /mob/living/silicon) || C.parameters["job"] == "AI")
 						race = "Artificial Life"
-						language = "Humanoid" //Ais and borgs speak human, and binary isnt picked up.
 
 					else if(isobj(mobtype))
 						race = "Machinery"
-						language = race
 
-					else if(mobtype in animals)
+					else if(ispath(mobtype, /mob/living/simple_animal))
 						race = "Domestic Animal"
-						language = race
 
 					else
 						race = "<i>Unidentifiable</i>"
-						language = race
 
-					// -- If the orator is a human, or universal translate is active, OR mob has universal speech on --
+					dat += "<u><font color = #18743E>Data type</font></u>: [C.input_type]<br>"
+					dat += "<u><font color = #18743E>Source</font></u>: [C.parameters["name"]] (Job: [C.parameters["job"]])<br>"
+					dat += "<u><font color = #18743E>Class</font></u>: [race]<br>"
+					var/message = C.parameters["message"]
+					var/language = C.parameters["language"]
 
-					if(language == "Humanoid" || universal_translate || C.parameters["uspeech"])
-						dat += "<u><font color = #18743E>Data type</font color></u>: [C.input_type]<br>"
-						dat += "<u><font color = #18743E>Source</font color></u>: [C.parameters["name"]] (Job: [C.parameters["job"]])<br>"
-						dat += "<u><font color = #18743E>Class</font color></u>: [race]<br>"
-						dat += "<u><font color = #18743E>Contents</font color></u>: \"[C.parameters["message"]]\"<br>"
+					// based on [/atom/movable/proc/lang_treat]
+					if (universal_translate || user.has_language(language))
+						message = "\"[message]\""
+					else if (!user.has_language(language))
+						var/datum/language/D = GLOB.language_datum_instances[language]
+						message = "\"[D.scramble(message)]\""
+					else if (language)
+						message = "<i>(unintelligible)</i>"
 
-
-					// -- Orator is not human and universal translate not active --
-
-					else
-						dat += "<u><font color = #18743E>Data type</font color></u>: Audio File<br>"
-						dat += "<u><font color = #18743E>Source</font color></u>: <i>Unidentifiable</i><br>"
-						dat += "<u><font color = #18743E>Class</font color></u>: [race]<br>"
-						dat += "<u><font color = #18743E>Contents</font color></u>: <i>Unintelligible</i><br>"
-
+					dat += "<u><font color = #18743E>Contents</font></u>: [message]<br>"
 					dat += "</li><br>"
 
 				else if(C.input_type == "Execution Error")
+					dat += "<li><font color = #990000>[C.name]</font>  <a href='?src=[REF(src)];delete=[i]'>\[X\]</a><br>"
+					dat += "<u><font color = #787700>Error</font></u>: \"[C.parameters["message"]]\"<br>"
+					dat += "</li><br>"
 
-					dat += "<li><font color = #990000>[C.name]</font color>  <font color = #FF0000><a href='?src=[REF(src)];delete=[i]'>\[X\]</a></font color><br>"
-					dat += "<u><font color = #787700>Output</font color></u>: \"[C.parameters["message"]]\"<br>"
+				else
+					dat += "<li><font color = #000099>[C.name]</font>  <a href='?src=[REF(src)];delete=[i]'>\[X\]</a><br>"
+					dat += "<u><font color = #18743E>Data type</font></u>: [C.input_type]<br>"
+					dat += "<u><font color = #18743E>Contents</font></u>: <i>(unintelligible)</i><br>"
 					dat += "</li><br>"
 
 
