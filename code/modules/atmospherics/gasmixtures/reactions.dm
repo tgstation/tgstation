@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(reactionsdict, init_gas_reactionsdict())
 		for (var/req in reaction.min_requirements)
 			if (ispath(req))
 				var/datum/gas/req_gas = req
-				if (!reaction_key || initial(reaction_key.rarity) > initial(req_gas))
+				if (!reaction_key || initial(reaction_key.rarity) > initial(req_gas.rarity))
 					reaction_key = req_gas
 		.[reaction_key] += list(reaction)
 
