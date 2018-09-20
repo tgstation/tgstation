@@ -1,6 +1,5 @@
 /obj/effect/proc_holder/spell/target_hive
 	panel = "Hivemind Abilities"
-	still_recharging_msg = "<span class='notice'>Our psionic powers are still recharging.</span>"
 	invocation_type = "none"
 	selection_type = "range"
 	action_icon = 'icons/mob/actions/actions_hive.dmi'
@@ -159,7 +158,6 @@
 	panel = "Hivemind Abilities"
 	charge_max = 600
 	clothes_req = 0
-	still_recharging_msg = "<span class='notice'>Our psionic powers are still recharging.</span>"
 	invocation_type = "none"
 	action_icon = 'icons/mob/actions/actions_hive.dmi'
 	action_background_icon_state = "bg_hive"
@@ -199,7 +197,7 @@
 
 /obj/effect/proc_holder/spell/target_hive/hive_control
 	name = "Mind Control"
-	desc = "We assume direct control of one of our vessels, leaving our current body for up to ten seconds. We may use other powers through the vessel if we wish. This power becomes stronger the larger our hive is, eventually our control can last up to 2 minutes."
+	desc = "We assume direct control of one of our vessels, leaving our current body for up to ten seconds, although a larger hive may be able to sustain it for up to two minutes. Powers can be used via our vessel, although if it dies, the entire hivemind will come down with it."
 	charge_max = 3000
 	action_icon_state = "force"
 	active  = FALSE
@@ -297,17 +295,20 @@
 			release_control()
 		else
 			to_chat(usr, "<span class='warning'>We detect no neural activity in our vessel!</span>")
-		revert_cast()
+			revert_cast()
 	else
 		release_control()
 
 /obj/effect/proc_holder/spell/target_hive/hive_control/process()
-	if(active && (!vessel || !is_hivemember(vessel) || QDELETED(vessel)))
-		to_chat(vessel, "<span class='warning'>Our vessel is one of us no more!</span>")
-		release_control()
-	if(active && (!original_body || original_body.stat != CONSCIOUS || QDELETED(original_body)))
-		to_chat(vessel, "<span class='userdanger'>Our body is in grave danger, we abandon the mind of the vessel to tend to more pressing matters!</span>")
-		release_control()
+	if(active)
+		if(!vessel || QDELETED(vessel))
+			release_control()
+		else if(!is_hivemember(vessel))
+			to_chat(vessel, "<span class='warning'>Our vessel is one of us no more!</span>")
+			release_control()
+		if(!original_body || original_body.stat != CONSCIOUS || QDELETED(original_body))
+			to_chat(vessel, "<span class='userdanger'>Our body is in grave danger, we abandon the mind of the vessel to tend to more pressing matters!</span>")
+			release_control()
 	..()
 
 /obj/effect/proc_holder/spell/target_hive/hive_control/choose_targets(mob/user = usr)
@@ -318,7 +319,7 @@
 
 /obj/effect/proc_holder/spell/targeted/induce_panic
 	name = "Induce Panic"
-	desc = "We unleash a burst of psionic energy, inducing fear in those around us."
+	desc = "We unleash a burst of psionic energy, inducing a debilitating fear in those around us and reducing their combat readiness. Mindshielded foes have a chance to resist this power."
 	panel = "Hivemind Abilities"
 	charge_max = 1500
 	range = 7
