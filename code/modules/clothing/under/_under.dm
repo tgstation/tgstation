@@ -90,6 +90,9 @@
 				to_chat(user, "<span class='warning'>[src] already has an accessory.</span>")
 			return
 		else
+
+			if(!A.can_attach_accessory(src, user)) //Make sure the suit has a place to put the accessory.
+				return
 			if(user && !user.temporarilyRemoveItemFromInventory(I))
 				return
 			if(!A.attach(src, user))
