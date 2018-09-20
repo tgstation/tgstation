@@ -9,16 +9,17 @@
 	var/hive_size = 0
 
 	var/list/upgrade_tiers = list(
-		//Tier 1
+		//Roundstart
 		/obj/effect/proc_holder/spell/target_hive/hive_add = 0,
 		/obj/effect/proc_holder/spell/target_hive/hive_remove = 0,
-		/obj/effect/proc_holder/spell/target_hive/hive_see = 0,
-		/obj/effect/proc_holder/spell/target_hive/hive_shock = 0,
-		/obj/effect/proc_holder/spell/self/hive_drain = 5,
+		//Tier 1
+		/obj/effect/proc_holder/spell/target_hive/hive_see = 1,
+		/obj/effect/proc_holder/spell/target_hive/hive_shock = 1,
+		/obj/effect/proc_holder/spell/self/hive_drain = 4,
 		//Tier 2
-		/obj/effect/proc_holder/spell/target_hive/hive_force = 10,
-		/obj/effect/proc_holder/spell/targeted/induce_panic = 12,
-		/obj/effect/proc_holder/spell/targeted/hive_hack = 15,
+		/obj/effect/proc_holder/spell/targeted/induce_panic = 10,
+		/obj/effect/proc_holder/spell/targeted/hive_hack = 12,
+		/obj/effect/proc_holder/spell/target_hive/hive_control = 15,
 		//Tier 3
 		/obj/effect/proc_holder/spell/targeted/hive_loyal = 20,
 		/obj/effect/proc_holder/spell/targeted/forcewall/hive = 20,
@@ -42,7 +43,8 @@
 
 
 /datum/antagonist/hivemind/proc/add_to_hive(var/mob/living/carbon/human/H)
-	var/warning = "<span class='userdanger'>We have detected an enemy hivemind via [H.name], we can remove them from the hive to protect our identity or probe them to discover those of our enemies!</span>"
+	var/warning = "<span class='userdanger'>We have detected an enemy hivemind via [H.real_name], we can remove them from the hive to protect our identity or probe them to discover those of our enemies!</span>"
+	var/user_warning = "<span class='userdanger'>We have detected an enemy hivemind using our physical form as a vessel! We will eject them, but this may take some time!</span>"
 	var/enemies = FALSE
 	for(var/datum/antagonist/hivemind/enemy_hive in GLOB.antagonists)
 		if(enemy_hive.owner == owner)
@@ -50,6 +52,9 @@
 		if(enemy_hive.hivemembers.Find(H))
 			addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, enemy_hive.owner, warning), rand(500,700)) //Warn opposing hivehosts that a vessel has been assimilated
 			enemies = TRUE
+		if(H.mind == enemy_hive.owner)
+			addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, H, user_warning), rand(500,700)) // If the host has assimilated an enemy hive host, alert the enemy before booting them from the hive after a short while
+			addtimer(CALLBACK(GLOBAL_PROC, /proc/remove_hivemember, H), rand(1000,1400))
 	if(enemies)
 		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, owner, warning), rand(500,700)) //As well as the host who just added them
 	hivemembers |= H
@@ -58,6 +63,9 @@
 /datum/antagonist/hivemind/proc/remove_from_hive(var/mob/living/carbon/human/H)
 	hivemembers -= H
 	calc_size()
+
+/datum/antagonist/hivemind/antag_panel_data()
+	return "Vessels Assimilated: [hive_size]"
 
 /datum/antagonist/hivemind/on_gain()
 
@@ -165,6 +173,11 @@
 
 /datum/antagonist/hivemind/greet()
 	to_chat(owner.current, "<B><font size=3 color=red>You are the host of a powerful Hivemind.</font></B>")
+	to_chat(owner.current, "<b>Your psionic powers will grow by assimilating the crew into your hive. Use the Assimilate Vessel spell on a stationary \
+		target, and after ten seconds he will be one of the hive. This is completely silent and safe to use, and failing will reset the cooldown. As \
+		you assimilate the crew, you will gain more powers to use. Most are silent and won't help you in a fight, but grant you great power over your \
+		vessels. There are other hiveminds onboard the station, collaboration is possible, but a strong enough hivemind can reap many rewards from a \
+		well planned betrayal.</b>")
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE)
 
 	owner.announce_objectives()

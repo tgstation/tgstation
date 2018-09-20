@@ -55,7 +55,7 @@
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
 	var/success = FALSE
 
-	if(target.mind && target.stat != DEAD)
+	if(/*target.mind &&*/ target.stat != DEAD)
 		if(!target.has_trait(TRAIT_MINDSHIELD))
 			to_chat(user, "<span class='notice'>We begin linking our mind with [target.name]!</span>")
 			if(do_mob(user,user,70))
@@ -96,6 +96,7 @@
 	name = "Hive Vision"
 	desc = "We use the eyes of one of our vessels. Use again to look through our own eyes once more."
 	action_icon_state = "see"
+	var/mob/vessel
 
 	charge_max = 150
 
@@ -105,13 +106,20 @@
 
 /obj/effect/proc_holder/spell/target_hive/hive_see/cast(list/targets, mob/living/user = usr)
 	if(!active)
-		var/mob/target = targets[1]
-		user.reset_perspective(target)
-		active = TRUE
+		vessel = targets[1]
+		if(vessel)
+			user.reset_perspective(vessel)
+			active = TRUE
 		revert_cast()
 	else
 		user.reset_perspective(null)
 		active = FALSE
+
+/obj/effect/proc_holder/spell/target_hive/hive_see/process()
+	if(active && (!vessel || !is_hivemember(vessel) || QDELETED(vessel)))
+		to_chat(usr, "<span class='warning'>Our vessel is one of us no more!</span>")
+		perform(,usr)
+	..()
 
 /obj/effect/proc_holder/spell/target_hive/hive_see/choose_targets(mob/user = usr)
 	if(!active)
@@ -188,37 +196,112 @@
 	user.setBrainLoss(0)
 
 
-/obj/effect/proc_holder/spell/target_hive/hive_force
-	name = "Cerebellic Pulse"
-	desc = "We pulse the cerebellum of the target, forcing them to move in whatever direction we look at."
-	charge_max = 600
+/obj/effect/proc_holder/spell/target_hive/hive_control
+	name = "Mind Control"
+	desc = "We assume direct control of one of our vessels, leaving our current body for up to ten seconds. This power becomes stronger the larger our hive is, eventually our control can last up to 2 minutes."
+	charge_max = 3000
 	action_icon_state = "force"
+	active  = FALSE
+	var/mob/living/carbon/human/original_body //The original hivemind host
+	var/mob/living/carbon/human/vessel
+	var/mob/living/backseat //Storage for the mind controlled vessel
+	var/power = 10
 
-/obj/effect/proc_holder/spell/target_hive/hive_force/cast(list/targets, mob/living/user = usr)
-	var/mob/living/carbon/human/target = targets[1]
-	var/power = 20-(round(get_dist(user, target)/5))
+/obj/effect/proc_holder/spell/target_hive/hive_control/proc/release_control() //If the spell is active, force everybody into their original bodies if they exist, ghost them otherwise, delete the backseat
+	if(!active)
+		return
+	active = FALSE
+	charge_counter = 0
 
-	if(power < 5  || user.z != target.z)
-		to_chat(user, "<span class='notice'>[target.name] is too far away to use this power on!</span>")
+	if(vessel)
+		if(vessel.mind)
+			if(!original_body)
+				vessel.ghostize(0)
+			else
+				vessel.mind.transfer_to(original_body, 1)
+		vessel.UnsetSpecialVoice()
+		vessel.real_name = backseat.real_name
+
+	if(backseat && backseat.mind)
+		if(!vessel)
+			backseat.ghostize(0)
+		else
+			backseat.mind.transfer_to(vessel,1)
+
+	qdel(backseat)
+
+/obj/effect/proc_holder/spell/target_hive/hive_control/on_lose(mob/user)
+	if(active)
+		release_control()
+
+/obj/effect/proc_holder/spell/target_hive/hive_control/cast(list/targets, mob/living/user = usr)
+	if(!active)
+		vessel = targets[1]
+		var/power = 100
+		var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
+		if(!hive)
+			to_chat(user, "<span class='notice'>This is a bug. Error:HIVE1</span>")
+			return
+		switch(hive.hive_size)
+			if(15 to 19)
+				power = 100
+			if(20 to 24)
+				power = 300
+			if(25 to 29)
+				power = 600
+			else
+				power = 1200
+		for(var/datum/antagonist/hivemind/H in GLOB.antagonists)
+			if(H.owner.current == user)
+				continue
+			if(H.hivemembers.Find(vessel))
+				to_chat(user, "<span class='danger'>We have detected a foreign presence within this mind, it would be unwise to merge so intimately with it.</span>")
+				revert_cast()
+				return
+		original_body = user
+		vessel = targets[1]
+		backseat = new /mob/living()
+		to_chat(user, "<span class='notice'>We begin merging our mind with [vessel.name].</span>")
+		if(!do_mob(user,user,50))
+			to_chat(user, "<span class='notice'>We fail to assume control of the target.</span>")
+			revert_cast()
+			return
+		if(vessel && vessel.mind && backseat)
+			original_body = user
+			backseat.loc = vessel
+			backseat.name = vessel.real_name
+			backseat.real_name = vessel.real_name
+			vessel.mind.transfer_to(backseat, 1)
+			user.mind.transfer_to(vessel, 1)
+			backseat.Unconscious(power)
+			vessel.SetSpecialVoice(vessel.real_name)
+			vessel.real_name = original_body.real_name
+			active = TRUE
+			if(do_mob(user,user,power))
+				to_chat(usr, "<span class='warning'>We cannot sustain the mind control any longer and release control!</span>")
+			else
+				to_chat(usr, "<span class='warning'>Our body has been disturbed, interrupting the mind control!</span>")
+			release_control()
+		else
+			to_chat(usr, "<span class='warning'>We detect no neural activity in our vessel!</span>")
 		revert_cast()
-		return
-	to_chat(user, "<span class='notice'>We prepare to pulse [target.name]'s cerebellum!</span>")
-	if(!do_mob(user,user,15))
-		to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")
-		revert_cast()
-		return
-	to_chat(user, "<span class='notice'>We pulse [target.name]'s cerebellum, forcing him to move!</span>")
-	while(power > 0)
-		if(!target || !target.canmove)
-			break
-		if(!do_mob(user,user,3,0,0))
-			to_chat(user, "<span class='warning'>Our concentration has been broken!</span>")
-			break
-		var/turf/T = get_step(target,user.dir)
-		target.Move(T)
-		power--
-	if(power == 0)
-		to_chat(user, "<span class='warning'>We reach our limit and stop moving [target.name]!</span>")
+	else
+		release_control()
+
+/obj/effect/proc_holder/spell/target_hive/hive_control/process()
+	if(active && (!vessel || !is_hivemember(vessel) || QDELETED(vessel)))
+		to_chat(usr, "<span class='warning'>Our vessel is one of us no more!</span>")
+		release_control()
+	if(active && (!original_body || original_body.stat != CONSCIOUS || QDELETED(original_body)))
+		to_chat(usr, "<span class='userdanger'>Our body is in grave danger, we abandon the mind of the vessel to tend to more pressing matters!</span>")
+		release_control()
+	..()
+
+/obj/effect/proc_holder/spell/target_hive/hive_control/choose_targets(mob/user = usr)
+	if(!active)
+		..()
+	else
+		perform(,user)
 
 /obj/effect/proc_holder/spell/targeted/induce_panic
 	name = "Induce Panic"
@@ -318,12 +401,11 @@
 				to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")
 				revert_cast()
 		for(var/datum/antagonist/hivemind/enemy in GLOB.antagonists)
-			if(enemy.owner == user)
+			var/mob/M = enemy.owner.current
+			if(!M || M == user)
 				continue
 			if(enemy.hivemembers.Find(target))
-				var/mob/M = enemy.owner.current
-				if(M)
-					enemies += M.real_name
+				enemies += M.real_name
 				enemy.remove_from_hive(target)
 			if(enemy.owner == target)
 				user.Stun(70)
@@ -394,6 +476,7 @@
 			to_chat(user, "<span class='notice'>We appear to have made a mistake... this mind is too weak to be the one we're looking for.</span>")
 	else
 		to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")
+		revert_cast()
 
 /obj/effect/proc_holder/spell/targeted/hive_loyal
 	name = "Bruteforce"
@@ -425,6 +508,7 @@
 					to_chat(user, "<span class='notice'>Synthetic microorganisms delay our task...</span>")
 					if(!do_mob(user,target,150))
 						to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")
+						revert_cast()
 						return
 					else
 						SEND_SIGNAL(target, COMSIG_NANITE_SET_VOLUME, 0)
@@ -433,8 +517,10 @@
 					qdel(M)
 			else
 				to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")
+				revert_cast()
 		else
 			to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")
+			revert_cast()
 	else
 		to_chat(user, "<span class='notice'>This mind is not shielded!</span>")
 
@@ -458,6 +544,9 @@
 		new wall_type(get_step(user, dir),user)
 
 /obj/effect/forcefield/wizard/hive
+	name = "Telekinetic Field"
+	desc = "A psychic barrier, usable by only the strongest of minds."
+	timeleft = 150
 
 /obj/effect/forcefield/wizard/hive/CanPass(atom/movable/mover, turf/target)
 	if(mover == wizard)
