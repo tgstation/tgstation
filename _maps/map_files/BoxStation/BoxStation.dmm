@@ -35806,6 +35806,7 @@
 	pixel_y = 10
 	},
 /obj/item/analyzer,
+/obj/item/pipe_dispenser,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bGA" = (
@@ -40544,9 +40545,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 6
-	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bSk" = (
@@ -41381,10 +41379,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 1
-	},
-/obj/machinery/meter,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bUo" = (
@@ -41392,15 +41387,6 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/turf/open/floor/plasteel,
-/area/science/mixing)
-"bUp" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4
-	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bUq" = (
@@ -41816,12 +41802,13 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bVt" = (
 /obj/structure/table/reinforced,
+/obj/item/book/manual/wiki/toxins,
 /obj/item/storage/firstaid/toxin,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -55945,15 +55932,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
-"eBP" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 10
-	},
-/turf/open/floor/plasteel,
-/area/science/mixing)
 "eHI" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/disposalpipe/segment{
@@ -56244,15 +56222,6 @@
 "hZk" = (
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"ick" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/trinary/mixer{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/science/mixing)
 "ijc" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal/fifty,
@@ -56430,9 +56399,30 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"kwA" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "kwK" = (
 /obj/structure/table/reinforced,
-/obj/item/book/manual/wiki/toxins,
+/obj/item/assembly/igniter{
+	pixel_x = 2;
+	pixel_y = -9
+	},
+/obj/item/assembly/igniter{
+	pixel_x = -9;
+	pixel_y = -2
+	},
+/obj/item/assembly/igniter{
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/obj/item/assembly/igniter{
+	pixel_x = 9;
+	pixel_y = 2
+	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "kxC" = (
@@ -56572,6 +56562,11 @@
 	},
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
+"lEW" = (
+/obj/machinery/atmospherics/pipe/manifold/general/visible,
+/obj/machinery/meter,
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "lLp" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -56781,8 +56776,8 @@
 /turf/open/floor/engine,
 /area/science/misc_lab)
 "oUq" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
+/obj/machinery/atmospherics/components/trinary/filter{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -56811,10 +56806,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 6
-	},
-/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "pjk" = (
@@ -57261,13 +57252,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
 /obj/machinery/camera{
 	c_tag = "Toxins Lab South";
 	dir = 1;
 	network = list("ss13","rd")
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -57475,10 +57466,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 10
+/turf/open/floor/plasteel,
+/area/science/mixing)
+"vDl" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
 	},
-/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "vGb" = (
@@ -57527,6 +57520,12 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
+/area/science/mixing)
+"wfU" = (
+/obj/machinery/atmospherics/components/trinary/mixer{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/science/mixing)
 "wkN" = (
 /turf/closed/wall,
@@ -105104,7 +105103,7 @@ bQT
 mPh
 bFU
 bSh
-oUq
+vDl
 bEC
 jHW
 caZ
@@ -105361,7 +105360,7 @@ bQT
 mPh
 bFU
 bUn
-oUq
+lEW
 bEC
 fsD
 uCq
@@ -105617,8 +105616,8 @@ dGF
 nEP
 mPh
 bFU
-eBP
-oUq
+bSh
+kwA
 bEC
 bOy
 caZ
@@ -106388,7 +106387,7 @@ dvO
 bFU
 vzp
 bFU
-ick
+bUn
 oUq
 bQZ
 ulo
@@ -106645,8 +106644,8 @@ jMF
 kOw
 bSk
 fvi
-bUp
-oUq
+bUn
+wfU
 bQZ
 tbd
 bQZ

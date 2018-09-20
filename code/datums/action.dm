@@ -502,7 +502,7 @@
 /datum/action/item_action/agent_box/Trigger()
 	if(!..())
 		return FALSE
-	if(!QDELETED(box))
+	if(QDELETED(box))
 		if(cooldown < world.time - 100)
 			box = new(owner.drop_location())
 			owner.forceMove(box)

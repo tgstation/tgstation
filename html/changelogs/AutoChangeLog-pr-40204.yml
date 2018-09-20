@@ -1,5 +1,0 @@
-author: "Potato Masher"
-delete-after: True
-changes: 
-  - tweak: "CentCom would like to announce that new station AIs will now support updated surveillance software, allowing units to monitor multiple locations with ease with customizable viewing range, albeit at an overall reduced viewing radius."
-  - config: "Cruix's AI Multicamera mode has been finally enabled, with a new config option for enabling and disabling it as well!"

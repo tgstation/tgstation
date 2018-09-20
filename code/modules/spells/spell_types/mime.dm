@@ -8,10 +8,10 @@
 	invocation_emote_self = "<span class='notice'>You form a wall in front of yourself.</span>"
 	summon_lifespan = 300
 	charge_max = 300
-	clothes_req = 0
+	clothes_req = FALSE
 	range = 0
 	cast_sound = null
-	human_req = 1
+	human_req = TRUE
 
 	action_icon_state = "mime"
 	action_background_icon_state = "bg_mime"
@@ -32,11 +32,11 @@
 	desc = "Make or break a vow of silence."
 	school = "mime"
 	panel = "Mime"
-	clothes_req = 0
-	human_req = 1
+	clothes_req = FALSE
+	human_req = TRUE
 	charge_max = 3000
 	range = -1
-	include_user = 1
+	include_user = TRUE
 
 	action_icon_state = "mime"
 	action_background_icon_state = "bg_mime"
@@ -75,9 +75,9 @@
 	invocation_emote_self = "<span class='notice'>You form a blockade in front of yourself.</span>"
 	charge_max = 600
 	sound =  null
-	clothes_req = 0
+	clothes_req = FALSE
 	range = -1
-	include_user = 1
+	include_user = TRUE
 
 	action_icon_state = "mime"
 	action_background_icon_state = "bg_mime"
@@ -98,7 +98,7 @@
 	school = "mime"
 	panel = "Mime"
 	charge_max = 300
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation_type = "emote"
 	invocation_emote_self = "<span class='dangers'>You fire your finger gun!</span>"
 	range = 20
