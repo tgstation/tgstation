@@ -24,8 +24,6 @@
 	hijack_objective.owner = owner
 	objectives += hijack_objective
 
-	owner.objectives |= objectives
-
 /datum/antagonist/highlander/on_gain()
 	forge_objectives()
 	owner.special_role = "highlander"

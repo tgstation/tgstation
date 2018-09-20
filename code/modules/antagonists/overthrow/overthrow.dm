@@ -26,7 +26,6 @@
 // Sets objectives, equips all antags with the storage implant.
 /datum/antagonist/overthrow/on_gain()
 	objectives += team.objectives
-	owner.objectives += objectives
 	..()
 	owner.announce_objectives()
 	equip_overthrow()
@@ -34,7 +33,6 @@
 
 /datum/antagonist/overthrow/on_removal()
 	owner.special_role = null
-	owner.objectives -= objectives
 	..()
 
 // Creates the overthrow team, or sets it. The objectives are static for all the team members.
