@@ -12,11 +12,11 @@ Ash drakes spawn randomly wherever a lavaland creature is able to spawn. They ar
 
 It acts as a melee creature, chasing down and attacking its target while also using different attacks to augment its power that increase as it takes damage.
 
-Whenever possible, the drake will breathe fire in the four cardinal directions, igniting and heavily damaging anything caught in the blast.
-It also often causes fire to rain from the sky - many nearby turfs will flash red as a fireball crashes into them, dealing damage to anything on the turfs.
+Whenever possible, the drake will breathe fire directly at it's target, igniting and heavily damaging anything caught in the blast.
+It also often causes lava to pool from the ground around you - many nearby turfs will temporarily turn into lava, dealing damage to anything on the turfs.
 The drake also utilizes its wings to fly into the sky, flying after its target and attempting to slam down on them. Anything near when it slams down takes huge damage.
  - Sometimes it will chain these swooping attacks over and over, making swiftness a necessity.
- - Sometimes, it will spew fire while flying at its target.
+ - Sometimes, it will encase its target in an arena of lava
 
 When an ash drake dies, it leaves behind a chest that can contain four things:
  1. A spectral blade that allows its wielder to call ghosts to it, enhancing its power
@@ -112,26 +112,38 @@ Difficulty: Medium
 	
 	if(prob(15 + anger_modifier) && !client)
 		if(health < maxHealth/2)
-			INVOKE_ASYNC(src, .proc/swoop_attack, FALSE)
+			swoop_attack()
 		else
-			lava_pools()
+			INVOKE_ASYNC(src, .proc/lava_pools)
+			swoop_attack(FALSE)
 
 	else if(prob(10+anger_modifier) && !client)
-		if(health > maxHealth/2)
-			INVOKE_ASYNC(src, .proc/swoop_attack)
+		if(health < maxHealth/2)
+			triple_pools()
 		else
-			INVOKE_ASYNC(src, .proc/triple_swoop)
+			fire_cone()
 	else
 		fire_cone()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_pools()
 	if(!target)
 		return
-	target.visible_message("<span class='boldwarning'>Lava starts to pool up beneath you!</span>")
-	for(var/turf/turf in range(10,get_turf(target)))
-		if(prob(35))
-			new /obj/effect/temp_visual/target(turf)
-	
+	target.visible_message("<span class='boldwarning'>Lava starts to pool up around you!</span>")
+	var/amount = 25
+	while(amount > 0)
+		var/turf/T = pick(RANGE_TURFS(4, target))
+		new /obj/effect/temp_visual/lava_warning(T, 60) // longer reset time for the lava
+		amount--
+		sleep(0.3)
+			
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/triple_pools()
+	INVOKE_ASYNC(src, .proc/lava_pools)
+	swoop_attack(FALSE)
+	INVOKE_ASYNC(src, .proc/lava_pools)
+	swoop_attack(FALSE)
+	INVOKE_ASYNC(src, .proc/lava_pools)
+	swoop_attack(FALSE)
+
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_arena()
 	if(!target)
 		return
@@ -140,17 +152,17 @@ Difficulty: Medium
 	var/turf/center = get_turf(target)
 	var/list/walled = RANGE_TURFS(3, center) - RANGE_TURFS(2, center)
 	for(var/turf/T in walled)
-		var/summoned_object_type = /obj/effect/forcefield/wizard
-		var/atom/summoned_object = new summoned_object_type(T) // no people with lava immunity can just run away from the attack for free
-		QDEL_IN(summoned_object, 66)
+		new /obj/effect/temp_visual/drakewall(T) // no people with lava immunity can just run away from the attack for free
 	while(amount > 0)
-		if(!target)
-			return
 		var/list/turfs = RANGE_TURFS(2, center)
-		var/turf/empty = pick((RANGE_TURFS(2, target) - RANGE_TURFS(1, target)) & turfs) // picks a turf within 2 of you not outside or in the shield
+		var/list/empty = list()
 		for(var/turf/T in turfs)
-			if(T != empty)
-				new /obj/effect/temp_visual/target(T)
+			for(var/mob/living/L in T.contents)
+				if(L.client)
+					empty += pick(((RANGE_TURFS(2, L) - RANGE_TURFS(1, L)) & turfs) - empty) // picks a turf within 2 of the creature not outside or in the shield
+		for(var/turf/T in turfs)
+			if(!(T in empty))
+				new /obj/effect/temp_visual/lava_warning(T)
 		amount--
 		sleep(22)
 	
@@ -190,14 +202,9 @@ Difficulty: Medium
 		// deals damage to mechs
 		for(var/obj/mecha/M in T.contents)
 			M.take_damage(60, BRUTE, "melee", 1)
-		sleep(1.25)
+		sleep(1.5)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/triple_swoop()
-	swoop_attack()
-	swoop_attack()
-	swoop_attack(TRUE, null, 20) // longer cooldown on triple swoop ending
-
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(lava_pool = TRUE, atom/movable/manual_target, var/cooldown = 20)
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(lava_arena = TRUE, atom/movable/manual_target, var/cooldown = 20)
 	if(stat || swooping)
 		return
 	if(manual_target)
@@ -240,10 +247,7 @@ Difficulty: Medium
 	
 	// Ash drake flies onto its target and rains fire down upon them
 	var/descentTime = 10;
-	if(lava_pool)
-		goto_target()
-		lava_pools()
-	else
+	if(lava_arena)
 		lava_arena()
 	goto_target()
 	
@@ -287,6 +291,8 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/goto_target()
 	if(!target)
 		return
+	if(!get_turf(target))
+		return
 	forceMove(get_turf(target))
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AltClickOn(atom/movable/A)
@@ -295,7 +301,7 @@ Difficulty: Medium
 	if(player_cooldown >= world.time)
 		to_chat(src, "<span class='warning'>You need to wait 20 seconds between swoop attacks!</span>")
 		return
-	swoop_attack(TRUE, A, 30)
+	swoop_attack(FALSE, A, 30)
 	player_cooldown = world.time + 200
 
 /obj/item/gps/internal/dragon
@@ -304,22 +310,22 @@ Difficulty: Medium
 	desc = "Here there be dragons."
 	invisibility = 100
 
-/obj/effect/temp_visual/target
+/obj/effect/temp_visual/lava_warning
 	icon_state = "lavastaff_warn"
 	layer = BELOW_MOB_LAYER
 	light_range = 2
 	duration = 11
 
-/obj/effect/temp_visual/target/ex_act()
+/obj/effect/temp_visual/lava_warning/ex_act()
 	return
 
-/obj/effect/temp_visual/target/Initialize(mapload, var/reset_time = 10)
+/obj/effect/temp_visual/lava_warning/Initialize(mapload, var/reset_time = 10)
 	. = ..()
 	INVOKE_ASYNC(src, .proc/fall, reset_time)
 	src.alpha = 127.5
 	animate(src, alpha = 255, time = duration)
 	
-/obj/effect/temp_visual/target/proc/fall(var/reset_time)
+/obj/effect/temp_visual/lava_warning/proc/fall(var/reset_time)
 	var/turf/T = get_turf(src)
 	playsound(T,'sound/magic/fleshtostone.ogg', 80, 1)
 	sleep(duration)
@@ -342,6 +348,18 @@ Difficulty: Medium
 		T.ChangeTurf(lava_turf)
 		sleep(reset_time)
 		T.ChangeTurf(reset_turf)
+		
+/obj/effect/temp_visual/drakewall
+	desc = "An ash drakes true flame."
+	name = "Fire Barrier"
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "1"
+	anchored = TRUE
+	opacity = 0
+	density = TRUE
+	CanAtmosPass = ATMOS_PASS_DENSITY
+	duration = 66
+	color = COLOR_DARK_ORANGE
 
 /obj/effect/temp_visual/dragon_swoop
 	name = "certain death"
