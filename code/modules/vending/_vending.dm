@@ -38,6 +38,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	integrity_failure = 100
 	armor = list("melee" = 20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
 	circuit = /obj/item/circuitboard/machine/vendor
+	payment_department = ACCOUNT_SRV
 	var/active = 1		//No sales pitches if off!
 	var/vend_ready = 1	//Are we ready to vend?? Is it time??
 
@@ -70,7 +71,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/chef_price = 10
 	var/default_price = 25
 	var/extra_price = 50
-	payment_department = ACCOUNT_SRV
 
 	var/dish_quants = list()  //used by the snack machine's custom compartment to count dishes.
 

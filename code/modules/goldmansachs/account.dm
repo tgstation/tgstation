@@ -1,6 +1,3 @@
-GLOBAL_LIST_EMPTY(bank_accounts)
-GLOBAL_LIST_EMPTY(department_accounts)
-
 /datum/bank_account
 	var/account_holder = "Rusty Venture"
 	var/account_balance = 0
@@ -9,15 +6,17 @@ GLOBAL_LIST_EMPTY(department_accounts)
 	var/add_to_accounts = TRUE
 	var/account_id
 
-/datum/bank_account/New()
-	..()
+/datum/bank_account/New(newname, job)
 	if(add_to_accounts)
-		GLOB.bank_accounts += src
+		SSgoldmansachs.bank_accounts += src
+	account_holder = newname
+	account_job = job
+	account_id = rand(111111,999999)
 
 /datum/bank_account/Destroy()
 	if(add_to_accounts)
-		GLOB.bank_accounts -= src
-	..()
+		SSgoldmansachs.bank_accounts -= src
+	return ..()
 
 /datum/bank_account/proc/_adjust_money(amt)
 	account_balance += amt
@@ -40,7 +39,7 @@ GLOBAL_LIST_EMPTY(department_accounts)
 		return TRUE
 	return FALSE
 
-/datum/bank_account/proc/i_need_my_payday_too(amt_of_paychecks, free = FALSE)
+/datum/bank_account/proc/payday(amt_of_paychecks, free = FALSE)
 	if(free)
 		adjust_money(account_job.paycheck * amt_of_paychecks)
 	else
@@ -66,3 +65,9 @@ GLOBAL_LIST_EMPTY(department_accounts)
 	account_holder = "Guild Credit Agency"
 	var/department_id = "REPLACE_ME"
 	add_to_accounts = FALSE
+
+/datum/bank_account/department/New(dep_id, budget)
+	department_id = dep_id
+	account_balance = budget
+	account_holder = SSgoldmansachs.department_accounts[dep_id]
+	SSgoldmansachs.generated_accounts += src

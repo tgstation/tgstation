@@ -457,11 +457,8 @@ update_label("John Doe", "Clowny")
 	var/department_ID = ACCOUNT_CIV
 	var/department_name = ACCOUNT_CIV_NAME
 
-GLOBAL_LIST_EMPTY(dep_cards)
-
-
 /obj/item/card/id/departmental_budget/Initialize()
-	..()
+	. = ..()
 	var/datum/bank_account/B = SSgoldmansachs.get_dep_account(department_ID)
 	if(B)
 		registered_account = B
@@ -469,11 +466,11 @@ GLOBAL_LIST_EMPTY(dep_cards)
 			B.bank_cards += src
 		name = "departmental card ([department_name])"
 		desc = "Provides access to the [department_name]."
-	GLOB.dep_cards += src
+	SSgoldmansachs.dep_cards += src
 
 /obj/item/card/id/departmental_budget/Destroy()
-	GLOB.dep_cards -= src
-	..()
+	SSgoldmansachs.dep_cards -= src
+	return ..()
 
 /obj/item/card/id/departmental_budget/civ
 	department_ID = ACCOUNT_CIV

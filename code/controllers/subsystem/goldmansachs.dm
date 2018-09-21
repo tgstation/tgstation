@@ -45,25 +45,23 @@ SUBSYSTEM_DEF(goldmansachs)
 							"adamantine" = 750,
 							// tier 4
 							"rainbow" = 1000)
+	var/list/bank_accounts = list()
+	var/list/dep_cards = list()
 
 /datum/controller/subsystem/goldmansachs/Initialize(timeofday)
 	var/budget_to_hand_out = round(budget_pool / department_accounts.len)
 	for(var/A in department_accounts)
-		var/datum/bank_account/department/D = new /datum/bank_account/department(src)
-		D.department_id = A
-		D.account_holder = department_accounts[A]
-		D.account_balance = budget_to_hand_out
-		generated_accounts += D
+		new /datum/bank_account/department(A, budget_to_hand_out)
 	return ..()
 
 /datum/controller/subsystem/goldmansachs/fire(resumed = 0)
-	boring_eng_payout()
-	boring_sci_payout()
-	boring_secmedsrv_payout()
-	boring_civ_payout()
-	for(var/A in GLOB.bank_accounts)
+	boring_eng_payout()  // Payout based on integrity.
+	boring_sci_payout() // Payout based on slimes.
+	boring_secmedsrv_payout() // Payout based on crew safety, health, and mood.
+	boring_civ_payout() // Payout based on ??? Profit
+	for(var/A in bank_accounts)
 		var/datum/bank_account/B = A
-		B.i_need_my_payday_too(1)
+		B.payday(1)
 
 
 /datum/controller/subsystem/goldmansachs/proc/get_dep_account(dep_id)

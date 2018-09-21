@@ -37,7 +37,7 @@
 
 /obj/machinery/computer/bank_machine/process()
 	..()
-	if(siphoning) // todo: make this drain from all budgets
+	if(siphoning
 		if (stat & (BROKEN|NOPOWER))
 			say("Insufficient power. Halting siphon.")
 			siphoning =	FALSE
