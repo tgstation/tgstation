@@ -617,7 +617,7 @@
 	name = "swarmer blockade"
 	desc = "A quickly assembled energy blockade. Will not retain its form if damaged enough, but disabler beams and swarmers pass right through."
 	icon_state = "barricade"
-	light_range = 1
+	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	max_integrity = 50
 
 /obj/structure/swarmer/blockade/CanPass(atom/movable/O)

@@ -1,0 +1,5 @@
+author: "Mark9013100"
+delete-after: True
+changes: 
+  - rscadd: "Added ERT backpacks, sprites by PlasmaRifle."
+  - rscadd: "Replaced the old metal foam grenades with smart foam grenades in engineering ERT locker."

@@ -8,7 +8,6 @@
 	var/datum/objective/hijack/hijack = new
 	hijack.owner = owner
 	objectives += hijack
-	owner.objectives |= objectives
 
 /datum/antagonist/wishgranter/on_gain()
 	owner.special_role = "Avatar of the Wish Granter"

@@ -146,6 +146,7 @@
 	return
 
 /mob/living/carbon/throw_item(atom/target)
+	. = ..()
 	throw_mode_off()
 	if(!target || !isturf(loc))
 		return
