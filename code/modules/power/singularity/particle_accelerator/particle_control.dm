@@ -34,14 +34,11 @@
 	QDEL_NULL(wires)
 	return ..()
 
-/obj/machinery/particle_accelerator/control_box/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-	if(construction_state == PA_CONSTRUCTION_COMPLETE)
-		interact(user)
-	else if(construction_state == PA_CONSTRUCTION_PANEL_OPEN)
+/obj/machinery/particle_accelerator/control_box/multitool_act(mob/living/user, obj/item/I)
+	if(construction_state == PA_CONSTRUCTION_PANEL_OPEN)
 		wires.interact(user)
+		return TRUE
+	return ..()
 
 /obj/machinery/particle_accelerator/control_box/proc/update_state()
 	if(construction_state < PA_CONSTRUCTION_COMPLETE)
@@ -228,6 +225,13 @@
 
 /obj/machinery/particle_accelerator/control_box/ui_interact(mob/user)
 	. = ..()
+
+	if(construction_state != PA_CONSTRUCTION_COMPLETE)
+		return
+	if(construction_state == PA_CONSTRUCTION_PANEL_OPEN)
+		wires.interact(user)
+		return
+
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
 		if(!issilicon(user))
 			user.unset_machine()
