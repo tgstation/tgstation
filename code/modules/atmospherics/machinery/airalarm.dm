@@ -84,7 +84,6 @@
 	var/shorted = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 	var/brightness_on = 1
-	var/static/list/alert_levels = list(AALARM_OVERLAY_OFF, AALARM_OVERLAY_GREEN, AALARM_OVERLAY_WARN, AALARM_OVERLAY_DANGER)
 
 	var/frequency = FREQ_ATMOS_CONTROL
 	var/alarm_frequency = FREQ_ATMOS_ALARMS
@@ -626,7 +625,6 @@
 				))
 
 /obj/machinery/airalarm/update_icon()
-	cut_overlays()
 	set_light(0)
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(stat & NOPOWER)
@@ -647,27 +645,24 @@
 				icon_state = "alarm_b1"
 		return
 
+	icon_state = "alarm1"
 	var/overlay_state = AALARM_OVERLAY_OFF
 	var/area/A = get_area(src)
 	switch(max(danger_level, A.atmosalm))
 		if(0)
-			add_overlay(AALARM_OVERLAY_GREEN)
 			overlay_state = AALARM_OVERLAY_GREEN
 			light_color = LIGHT_COLOR_GREEN
 			set_light(brightness_on)
 		if(1)
-			add_overlay(AALARM_OVERLAY_WARN)
 			overlay_state = AALARM_OVERLAY_WARN
 			light_color = LIGHT_COLOR_LAVA
 			set_light(brightness_on)
 		if(2)
-			add_overlay(AALARM_OVERLAY_DANGER)
 			overlay_state = AALARM_OVERLAY_DANGER
 			light_color = LIGHT_COLOR_RED
 			set_light(brightness_on)
 
-	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir, alpha=128)
+	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
 	update_light()
 
 /obj/machinery/airalarm/process()
