@@ -16,13 +16,13 @@
 
 /obj/item/reagent_containers/food/snacks/grown/banana
 	seed = /obj/item/seeds/banana
-	name = "banana"
+	name = "bananananananana"
 	desc = "It's an excellent prop for a clown."
 	icon_state = "banana"
 	item_state = "banana"
 	trash = /obj/item/grown/bananapeel
 	filling_color = "#FFFF00"
-	bitesize = 5
+	bitesize = 1000
 	foodtype = FRUIT
 	juice_results = list("banana" = 0)
 	distill_reagent = "bananahonk"
@@ -43,16 +43,16 @@
 //Banana Peel
 /obj/item/grown/bananapeel
 	seed = /obj/item/seeds/banana
-	name = "banana peel"
-	desc = "A peel from a banana."
+	name = "bananaanananana peel"
+	desc = "A peel from a bananananananana."
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	icon_state = "banana_peel"
 	item_state = "banana_peel"
 	w_class = WEIGHT_CLASS_TINY
-	throwforce = 0
-	throw_speed = 3
-	throw_range = 7
+	throwforce = 5
+	throw_speed = 12
+	throw_range = 30
 
 /obj/item/grown/bananapeel/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is deliberately slipping on [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
