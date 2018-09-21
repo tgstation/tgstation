@@ -22,6 +22,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/amount = 0
 	var/max_amount = 0
 	var/display_color = "blue"
+	var/custom_price = 0
 
 /obj/machinery/vending
 	name = "\improper Vendomat"
@@ -163,6 +164,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			R.amount = amount
 		R.max_amount = amount
 		R.display_color = pick("#ff8080","#80ff80","#8080ff")
+		R.custom_price = initial(temp.custom_price)
 		recordlist += R
 
 /obj/machinery/vending/proc/restock(obj/item/vending_refill/canister)
@@ -326,6 +328,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 						continue
 					if(coin_records.Find(R) || is_hidden)
 						price_listed = "$[extra_price]"
+					if(R.custom_price)
+						price_listed = "$[R.custom_price]"
 					if(!onstation || account && account.account_job && account.account_job.paycheck_department == payment_department)
 						price_listed = "FREE"
 					dat += "<li>"
@@ -419,6 +423,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		var/price_to_use = default_price
 		if(R in coin_records || R in hidden_records)
 			price_to_use = extra_price
+		if(R.custom_price)
+			price_to_use = R.custom_price
 		if(R in hidden_records)
 			if(!extended_inventory)
 				vend_ready = 1
