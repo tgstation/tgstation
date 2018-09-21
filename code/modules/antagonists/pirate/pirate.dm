@@ -78,7 +78,7 @@
 	return loot_texts.Join(", ")
 
 /datum/objective/loot/proc/get_loot_value()
-	return cargo_hold.points
+	return cargo_hold ? cargo_hold.points : 0
 
 /datum/objective/loot/check_completion()
 	return ..() || get_loot_value() >= target_value
