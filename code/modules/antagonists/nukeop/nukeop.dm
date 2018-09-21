@@ -87,7 +87,7 @@
 
 /datum/antagonist/nukeop/proc/forge_objectives()
 	if(nuke_team)
-		owner.objectives |= nuke_team.objectives
+		objectives |= nuke_team.objectives
 
 /datum/antagonist/nukeop/proc/move_to_spawnpoint()
 	var/team_number = 1

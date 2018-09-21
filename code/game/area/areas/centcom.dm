@@ -29,6 +29,30 @@
 /area/centcom/holding
 	name = "Holding Facility"
 
+/area/centcom/supplypod
+	name = "Supplypod Facility"
+	icon_state = "supplypod"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+
+/area/centcom/supplypod/podStorage
+	name = "Supplypod Storage"
+	icon_state = "supplypod_holding"
+
+/area/centcom/supplypod/loading
+	name = "Supplypod Loading Facility"
+	icon_state = "supplypod_loading"
+
+/area/centcom/supplypod/loading/one
+	name = "Supplypod Loading Bay #1"
+
+/area/centcom/supplypod/loading/two
+	name = "Supplypod Loading Bay #2"
+
+/area/centcom/supplypod/loading/three
+	name = "Supplypod Loading Bay #3"
+
+/area/centcom/supplypod/loading/four
+	name = "Supplypod Loading Bay #4"
 //THUNDERDOME
 
 /area/tdome

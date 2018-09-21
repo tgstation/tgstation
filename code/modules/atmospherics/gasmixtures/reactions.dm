@@ -455,6 +455,7 @@
 	//Replace miasma with oxygen
 	var/cleaned_air = min(cached_gases[/datum/gas/miasma][MOLES], 20 + (air.temperature - FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 70) / 20)
 	cached_gases[/datum/gas/miasma][MOLES] -= cleaned_air
+	ASSERT_GAS(/datum/gas/oxygen,air)
 	cached_gases[/datum/gas/oxygen][MOLES] += cleaned_air
 
 	//Possibly burning a bit of organic matter through maillard reaction, so a *tiny* bit more heat would be understandable

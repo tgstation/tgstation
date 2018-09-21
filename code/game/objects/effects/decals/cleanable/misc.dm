@@ -42,6 +42,9 @@
 /obj/effect/decal/cleanable/glass/ex_act()
 	qdel(src)
 
+/obj/effect/decal/cleanable/glass/plasma
+	icon_state = "plasmatiny"
+
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
 	desc = "Someone should clean that up."

@@ -1,16 +1,16 @@
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt
 	name = "Ethereal Jaunt"
-	desc = "This spell creates your ethereal form, temporarily making you invisible and able to pass through walls."
+	desc = "This spell turns your form ethereal, temporarily making you invisible and able to pass through walls."
 
 	school = "transmutation"
 	charge_max = 300
-	clothes_req = 1
+	clothes_req = TRUE
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
 	cooldown_min = 100 //50 deciseconds reduction per rank
-	include_user = 1
-	nonabstract_req = 1
+	include_user = TRUE
+	nonabstract_req = TRUE
 	var/jaunt_duration = 50 //in deciseconds
 	var/jaunt_in_time = 5
 	var/jaunt_in_type = /obj/effect/temp_visual/wizard
@@ -25,7 +25,7 @@
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/do_jaunt(mob/living/target)
 	target.notransform = 1
 	var/turf/mobloc = get_turf(target)
-	var/obj/effect/dummy/spell_jaunt/holder = new /obj/effect/dummy/spell_jaunt(mobloc)
+	var/obj/effect/dummy/phased_mob/spell_jaunt/holder = new /obj/effect/dummy/phased_mob/spell_jaunt(mobloc)
 	new jaunt_out_type(mobloc, target.dir)
 	target.ExtinguishMob()
 	target.forceMove(holder)
@@ -62,11 +62,11 @@
 	steam.set_up(10, 0, mobloc)
 	steam.start()
 
-/obj/effect/dummy/spell_jaunt
+/obj/effect/dummy/phased_mob/spell_jaunt
 	name = "water"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
-	var/reappearing = 0
+	var/reappearing = FALSE
 	var/movedelay = 0
 	var/movespeed = 2
 	density = FALSE
@@ -74,13 +74,13 @@
 	invisibility = 60
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/effect/dummy/spell_jaunt/Destroy()
+/obj/effect/dummy/phased_mob/spell_jaunt/Destroy()
 	// Eject contents if deleted somehow
 	for(var/atom/movable/AM in src)
 		AM.forceMove(get_turf(src))
 	return ..()
 
-/obj/effect/dummy/spell_jaunt/relaymove(var/mob/user, direction)
+/obj/effect/dummy/phased_mob/spell_jaunt/relaymove(var/mob/user, direction)
 	if ((movedelay > world.time) || reappearing || !direction)
 		return
 	var/turf/newLoc = get_step(src,direction)
@@ -97,7 +97,7 @@
 
 	forceMove(newLoc)
 
-/obj/effect/dummy/spell_jaunt/ex_act(blah)
+/obj/effect/dummy/phased_mob/spell_jaunt/ex_act(blah)
 	return
-/obj/effect/dummy/spell_jaunt/bullet_act(blah)
+/obj/effect/dummy/phased_mob/spell_jaunt/bullet_act(blah)
 	return

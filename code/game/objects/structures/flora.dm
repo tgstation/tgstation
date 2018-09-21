@@ -362,10 +362,6 @@
 	icon_state = "lavarocks"
 	desc = "A pile of rocks."
 
-/obj/structure/flora/rock/pile/Initialize()
-	. = ..()
-	icon_state = "[icon_state][rand(1,3)]"
-
 //Jungle grass
 
 /obj/structure/flora/grass/jungle

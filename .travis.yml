@@ -3,6 +3,7 @@ sudo: false
 branches:
   except:
   - ___TGS3TempBranch
+  - ___TGSTempBranch
 matrix:
   include:
     - env:

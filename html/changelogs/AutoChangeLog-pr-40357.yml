@@ -1,0 +1,7 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Flashbangs will now make a sound if nobody is around to see them. (honk)"
+  - tweak: "Flashbangs now come with sparks and will also light things up around them on detonation!"
+  - tweak: "Flashes, flashers, flash powder, and cameras also now produce lighting! Woo!"
+  - bugfix: "Cameras will no longer give you a prompt when alt-clicking them while not adjacent to them."
