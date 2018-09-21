@@ -22,7 +22,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/amount = 0
 	var/max_amount = 0
 	var/display_color = "blue"
-	var/custom_price = 0
+	var/custom_price
 
 /obj/machinery/vending
 	name = "\improper Vendomat"
