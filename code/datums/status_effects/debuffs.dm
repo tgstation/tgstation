@@ -567,5 +567,5 @@
 		return
 	var/mob/living/carbon/C = owner
 	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
-	C.gain_trauma(current_hypnosis, TRAUMA_RESILIENCE_SURGERY, raw_message)
+	C.gain_trauma(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, raw_message)
 	C.Unconscious(60, TRUE, TRUE) //Take some time to think about it
