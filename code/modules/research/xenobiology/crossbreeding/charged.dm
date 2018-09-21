@@ -349,6 +349,7 @@ Charged extracts:
 	desc = "A strange, reddish goo said to repel lava as if it were water, without reducing flammability. Has two uses."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potred"
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	var/uses = 2
 
 /obj/item/slimepotion/lavaproof/afterattack(obj/item/C, mob/user, proximity)

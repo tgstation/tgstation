@@ -6,6 +6,7 @@
 	name = "gas sensor"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gsensor1"
+	resistance_flags = FIRE_PROOF
 
 	var/on = TRUE
 

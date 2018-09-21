@@ -10,6 +10,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	materials = list(MAT_METAL = 300, MAT_GLASS = 300)
 	crit_fail = FALSE     //Is the flash burnt out?
+	light_color = LIGHT_COLOR_WHITE
+	light_power = FLASH_LIGHT_POWER
 	var/times_used = 0 //Number of times it's been used.
 	var/burnout_resistance = 0
 	var/last_used = 0 //last world.time it was used.
@@ -94,6 +96,7 @@
 		return FALSE
 	last_trigger = world.time
 	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
+	flash_lighting_fx(FLASH_LIGHT_RANGE, light_power, light_color)
 	times_used++
 	flash_recharge()
 	update_icon(TRUE)

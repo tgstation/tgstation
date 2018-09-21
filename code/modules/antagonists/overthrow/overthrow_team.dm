@@ -35,7 +35,9 @@
 		objectives += heads_obj
 		for(var/i in members)
 			var/datum/mind/M = i
-			M.objectives += heads_obj
+			var/datum/antagonist/overthrow/O = M.has_antag_datum(/datum/antagonist/overthrow)
+			if(O)
+				O.objectives += heads_obj
 	heads_obj.find_targets()
 
 	addtimer(CALLBACK(src,.proc/update_objectives),OBJECTIVE_UPDATING_TIME,TIMER_UNIQUE)

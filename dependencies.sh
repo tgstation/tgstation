@@ -10,10 +10,10 @@ export BYOND_MAJOR=512
 export BYOND_MINOR=1448
 
 #rust_g git tag
-export RUST_G_VERSION=0.4.0
+export RUST_G_VERSION=0.4.1
 
 #bsql git tag
 export BSQL_VERSION=v1.4.0.0
 
 #node version
-export NODE_VERSION=4
+export NODE_VERSION=8
