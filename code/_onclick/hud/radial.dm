@@ -1,4 +1,5 @@
 #define NEXT_PAGE_ID "__next__"
+#define DEFAULT_CHECK_DELAY 20
 
 GLOBAL_LIST_EMPTY(radial_menus)
 
@@ -50,6 +51,9 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	var/atom/anchor
 	var/image/menu_holder
 	var/finished = FALSE
+	var/datum/callback/custom_check_callback
+	var/next_check = 0
+	var/check_delay = DEFAULT_CHECK_DELAY
 
 	var/radius = 32
 	var/starting_angle = 0
@@ -195,6 +199,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	choices_icons.Cut()
 	choices_values.Cut()
 	current_page = 1
+	QDEL_NULL(custom_check_callback)
 
 /datum/radial_menu/proc/element_chosen(choice_id,mob/user)
 	selected_choice = choices_values[choice_id]
@@ -247,6 +252,11 @@ GLOBAL_LIST_EMPTY(radial_menus)
 
 /datum/radial_menu/proc/wait()
 	while (current_user && !finished && !selected_choice)
+		if(custom_check_callback && next_check < world.time)
+			if(!custom_check_callback.Invoke())
+				return
+			else
+				next_check = world.time + check_delay
 		stoplag(1)
 
 /datum/radial_menu/Destroy()
@@ -258,7 +268,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	Choices should be a list where list keys are movables or text used for element names and return value
 	and list values are movables/icons/images used for element icons
 */
-/proc/show_radial_menu(mob/user,atom/anchor,list/choices, uniqueid , radius)
+/proc/show_radial_menu(mob/user,atom/anchor,list/choices, uniqueid , radius , datum/callback/custom_check)
 	if(!user || !anchor || !length(choices))
 		return
 	if(!uniqueid)
@@ -271,6 +281,8 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	GLOB.radial_menus[uniqueid] = menu
 	if(radius)
 		menu.radius = radius
+	if(istype(custom_check))
+		menu.custom_check_callback = custom_check
 	menu.anchor = anchor
 	menu.check_screen_border(user) //Do what's needed to make it look good near borders or on hud
 	menu.set_choices(choices)

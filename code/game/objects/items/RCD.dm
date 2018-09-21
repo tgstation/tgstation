@@ -156,13 +156,8 @@ RLD
 	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
 	return (BRUTELOSS)
 
-/obj/item/construction/rcd/verb/toggle_window_type()
-	set name = "Toggle Window Type"
-	set category = "Object"
-	set src in usr // What does this do?
-
+/obj/item/construction/rcd/verb/toggle_window_type(mob/user)
 	var/window_type_name
-
 	if (window_type == /obj/structure/window/fulltile)
 		window_type = /obj/structure/window/reinforced/fulltile
 		window_type_name = "reinforced glass"
@@ -170,7 +165,7 @@ RLD
 		window_type = /obj/structure/window/fulltile
 		window_type_name = "glass"
 
-	to_chat(usr, "<span class='notice'>You change \the [src]'s window mode to [window_type_name].</span>")
+	to_chat(user, "<span class='notice'>You change \the [src]'s window mode to [window_type_name].</span>")
 
 /obj/item/construction/rcd/proc/change_airlock_access(mob/user)
 	if (!ishuman(user) && !user.has_unlimited_silicon_privilege)
@@ -252,6 +247,9 @@ RLD
 	//Not scaling these down to button size because they look horrible then, instead just bumping up radius.
 	return MA
 
+/obj/item/construction/rcd/proc/check_menu(mob/user)
+	return user.canUseTopic(src,be_close = TRUE)
+
 /obj/item/construction/rcd/proc/change_airlock_setting(mob/user)	
 	if(!user)
 		return
@@ -298,14 +296,14 @@ RLD
 		"External Maintenance" = get_airlock_image(/obj/machinery/door/airlock/maintenance/external/glass)
 	)
 
-	var/airlockcat = show_radial_menu(user, src , solid_or_glass_choices)
-	if(!user.canUseTopic(src,be_close = TRUE))
+	var/airlockcat = show_radial_menu(user, src , solid_or_glass_choices, custom_check = CALLBACK(src,.proc/check_menu,user))
+	if(!check_menu(user))
 		return
 	switch(airlockcat)
 		if("Solid")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, src , solid_choices, radius = 42)
-				if(!user.canUseTopic(src,be_close = TRUE))
+				var/airlockpaint = show_radial_menu(user, src , solid_choices, radius = 42, custom_check = CALLBACK(src,.proc/check_menu,user))
+				if(!check_menu(user))
 					return
 				switch(airlockpaint)
 					if("Standard")
@@ -349,8 +347,8 @@ RLD
 
 		if("Glass")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, src , glass_choices, radius = 42)
-				if(!user.canUseTopic(src,be_close = TRUE))
+				var/airlockpaint = show_radial_menu(user, src , glass_choices, radius = 42, custom_check = CALLBACK(src,.proc/check_menu,user))
+				if(!check_menu(user))
 					return
 				switch(airlockpaint)
 					if("Standard")
@@ -422,8 +420,12 @@ RLD
 		"Change Access" = image(icon = 'icons/obj/interface.dmi', icon_state = "access"),
 		"Change Airlock Type" = image(icon = 'icons/obj/interface.dmi', icon_state = "airlocktype")
 		)
-	var/choice = show_radial_menu(user,src,choices)
-	if(!user.canUseTopic(src,be_close = TRUE))
+	else if(mode == RCD_WINDOWGRILLE)
+		choices += list(
+			"Change Window Type" = image(icon = 'icons/obj/interface.dmi', icon_state = "grillewindow")
+		)
+	var/choice = show_radial_menu(user,src,choices, custom_check = CALLBACK(src,.proc/check_menu,user))
+	if(!check_menu(user))
 		return
 	switch(choice)
 		if("Floors & Walls")
@@ -439,6 +441,9 @@ RLD
 			return
 		if("Change Airlock Type")
 			change_airlock_setting(user)
+			return
+		if("Change Window Type")
+			toggle_window_type(user)
 			return
 		else
 			return
