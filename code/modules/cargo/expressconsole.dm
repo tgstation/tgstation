@@ -136,7 +136,6 @@
 			if (beacon)
 				beacon.update_status(SP_READY) //turns on the beacon's ready light
 		if("printBeacon")
-			var/points_to_check
 			var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
 			if(D)
 				if(D.adjust_money(-1 * BEACON_COST))
