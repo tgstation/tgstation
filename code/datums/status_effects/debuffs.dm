@@ -566,7 +566,6 @@
 	if(speaker == owner)
 		return
 	var/mob/living/carbon/C = owner
-	for(var/X in C.get_traumas_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY)) //clear existing hypnosis
-		qdel(X)
-	owner.gain_trauma(current_hypnosis, TRAUMA_RESILIENCE_SURGERY, raw_message)
-	owner.Unconscious(60, TRUE, TRUE) //Take some time to think about it
+	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
+	C.gain_trauma(current_hypnosis, TRAUMA_RESILIENCE_SURGERY, raw_message)
+	C.Unconscious(60, TRUE, TRUE) //Take some time to think about it

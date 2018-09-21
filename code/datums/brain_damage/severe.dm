@@ -214,11 +214,10 @@
 
 /datum/brain_trauma/severe/hypnotic_stupor/on_lose() //hypnosis must be cleared separately, but brain surgery should get rid of both anyway
 	..()
-	if(active_stupor)
-		owner.remove_status_effect(/datum/status_effect/trance)
+	owner.remove_status_effect(/datum/status_effect/trance)
 	
 /datum/brain_trauma/severe/hypnotic_stupor/on_life()
 	..()
-	if(!active_stupor && prob(1))
+	if(prob(1) && !owner.has_status_effect(/datum/status_effect/trance))
 		owner.apply_status_effect(/datum/status_effect/trance, rand(100,300), FALSE)
 	
