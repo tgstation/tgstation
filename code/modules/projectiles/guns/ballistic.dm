@@ -7,6 +7,7 @@
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
 	var/obj/item/ammo_box/magazine/magazine
 	var/casing_ejector = TRUE //whether the gun ejects the chambered casing
+	var/magazine_wording = "magazine"
 
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
@@ -57,7 +58,7 @@
 		if (!magazine && istype(AM, mag_type))
 			if(user.transferItemToLoc(AM, src))
 				magazine = AM
-				to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
+				to_chat(user, "<span class='notice'>You load a new [magazine_wording] into \the [src].</span>")
 				if(magazine.ammo_count())
 					playsound(src, "gun_insert_full_magazine", 70, 1)
 					if(!chambered)
@@ -72,7 +73,7 @@
 				to_chat(user, "<span class='warning'>You cannot seem to get \the [src] out of your hands!</span>")
 				return
 		else if (magazine)
-			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
+			to_chat(user, "<span class='notice'>There's already a [magazine_wording] in \the [src].</span>")
 	if(istype(A, /obj/item/suppressor))
 		var/obj/item/suppressor/S = A
 		if(!can_suppress)

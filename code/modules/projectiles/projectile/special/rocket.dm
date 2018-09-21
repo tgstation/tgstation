@@ -11,7 +11,7 @@
 /obj/item/projectile/bullet/a84mm
 	name ="anti-armour rocket"
 	desc = "USE A WEEL GUN"
-	icon_state= "atrocket"
+	icon_state= "84mm-hedp"
 	damage = 80
 	var/anti_armour_damage = 200
 	armour_penetration = 100
