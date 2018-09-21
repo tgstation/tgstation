@@ -153,12 +153,16 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_arena()
 	if(!target)
 		return
-	target.visible_message("<span class='boldwarning'>The [src] encases you in an arena of lava!</span>")
+	target.visible_message("<span class='boldwarning'>[src] encases you in an arena of lava!</span>")
 	var/amount = 3
 	var/turf/center = get_turf(target)
 	var/list/walled = RANGE_TURFS(3, center) - RANGE_TURFS(2, center)
 	for(var/turf/T in walled)
 		new /obj/effect/temp_visual/drakewall(T) // no people with lava immunity can just run away from the attack for free
+	for(var/turf/T in RANGE_TURFS(2, center))
+		if(!(istype(T, /turf/closed/indestructible)))
+			T.ChangeTurf(/turf/open/floor/plating/asteroid/basalt/lava_land_surface)
+	sleep(10) // give them a bit of time to realize what attack is actually happening
 	while(amount > 0)
 		var/list/turfs = RANGE_TURFS(2, center)
 		var/list/empty = list()
@@ -169,11 +173,15 @@ Difficulty: Medium
 		for(var/turf/T in turfs)
 			if(!(T in empty))
 				new /obj/effect/temp_visual/lava_warning(T)
+			else
+				new /obj/effect/temp_visual/lava_safe(T)
 		amount--
 		sleep(22)
 	
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_cone()
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, 1)
+	if(QDELETED(src) || stat == DEAD) // we dead no fire
+		return
 	var/range = 15
 	var/list/turfs = list()
 	turfs = line_target(-40, range)
@@ -184,6 +192,8 @@ Difficulty: Medium
 	INVOKE_ASYNC(src, .proc/fire_line, turfs)
 	
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/line_target(var/offset, var/range)
+	if(!target)
+		return
 	var/angle = ATAN2(target.x - src.x, target.y - src.y) + offset
 	var/turf/T = get_turf(src)
 	for(var/i in 1 to range)
@@ -204,8 +214,8 @@ Difficulty: Medium
 			if(L in hit_list || L == src)
 				continue
 			hit_list += L
-			L.adjustFireLoss(30)
-			to_chat(L, "<span class='userdanger'>You're hit by the [src]'s fire breath!</span>")
+			L.adjustFireLoss(15)
+			to_chat(L, "<span class='userdanger'>You're hit by [src]'s fire breath!</span>")
 			
 		// deals damage to mechs
 		for(var/obj/mecha/M in T.contents)
@@ -256,11 +266,15 @@ Difficulty: Medium
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	sleep(7)
 	
+	while(target && loc != get_turf(target))
+		forceMove(get_step(src, get_dir(src, target)))
+		var/swoop_speed = 0.5
+		sleep(swoop_speed)
+	
 	// Ash drake flies onto its target and rains fire down upon them
 	var/descentTime = 10;
 	if(lava_arena)
 		lava_arena()
-	goto_target()
 	
 	//ensure swoop direction continuity.
 	if(negative)
@@ -345,7 +359,7 @@ Difficulty: Medium
 	for(var/mob/living/L in T.contents)
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
 			continue
-		L.adjustFireLoss(20)
+		L.adjustFireLoss(10)
 		to_chat(L, "<span class='userdanger'>You fall directly into the pool of lava!</span>")
 		
 	// deals damage to mechs
@@ -369,8 +383,15 @@ Difficulty: Medium
 	opacity = 0
 	density = TRUE
 	CanAtmosPass = ATMOS_PASS_DENSITY
-	duration = 66
+	duration = 76
 	color = COLOR_DARK_ORANGE
+	
+/obj/effect/temp_visual/lava_safe
+	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon_state = "trap-earth"
+	layer = BELOW_MOB_LAYER
+	light_range = 2
+	duration = 11
 
 /obj/effect/temp_visual/dragon_swoop
 	name = "certain death"
