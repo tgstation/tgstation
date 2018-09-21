@@ -220,6 +220,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/dangerous/rawketlawnchair
+	name = "84mm Armor-Piercing Rocket Propelled Grenade Launcher"
+	desc = "A one-shot rocket propelled grenade launcher loaded with a 84mm HEDP round. \
+		Guaranteed to send your target out with a bang or your money back!"
+	item = /obj/item/gun/ballistic/automatic/atlauncher
+	cost = 14
+	surplus = 25
+	include_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/dangerous/grenadier
 	name = "Grenadier's belt"
 	desc = "A belt of a large variety of lethally dangerous and destructive grenades."

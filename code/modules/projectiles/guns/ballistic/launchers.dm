@@ -83,12 +83,16 @@
 	fire_sound = 'sound/weapons/rocketlaunch.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	can_suppress = FALSE
+	pin = /obj/item/firing_pin/implant/pindicate
 	burst_size = 1
 	fire_delay = 0
 	select = 0
 	actions_types = list()
 	casing_ejector = FALSE
 	weapon_weight = WEAPON_HEAVY
+
+/obj/item/gun/ballistic/automatic/atlauncher/unrestricted
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/ballistic/automatic/atlauncher/attack_self()
 	return
