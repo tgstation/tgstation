@@ -426,7 +426,7 @@ RLD
 		)
 	else if(mode == RCD_WINDOWGRILLE)
 		choices += list(
-			"Change Window Type" = image(icon = 'icons/obj/interface.dmi', icon_state = "grillewindow")
+			"Change Window Type" = image(icon = 'icons/obj/interface.dmi', icon_state = "windowtype")
 		)
 	var/choice = show_radial_menu(user,src,choices, custom_check = CALLBACK(src,.proc/check_menu,user))
 	if(!check_menu(user))
