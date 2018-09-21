@@ -111,7 +111,7 @@
 	if(SSshuttle.supplyBlocked)
 		message = blockade_warning
 	if(usingBeacon && !beacon)
-		message = "BEACON ERROR: BEACON MISSING"//beacon was destroyed 
+		message = "BEACON ERROR: BEACON MISSING"//beacon was destroyed
 	else if (usingBeacon && !canBeacon)
 		message = "BEACON ERROR: MUST BE EXPOSED"//beacon's loc/user's loc must be a turf
 	if(obj_flags & EMAGGED)
@@ -137,10 +137,6 @@
 				beacon.update_status(SP_READY) //turns on the beacon's ready light
 		if("printBeacon")
 			var/points_to_check
-			var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
-			if(D)
-				points_to_check = D.account_balance
-			if (points_to_check >= BEACON_COST)
 			var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
 			if(D)
 				if(D.adjust_money(-1 * BEACON_COST))
@@ -178,7 +174,7 @@
 					var/LZ
 					if (istype(beacon) && usingBeacon)//prioritize beacons over landing in cargobay
 						LZ = get_turf(beacon)
-						beacon.update_status(SP_LAUNCH)	
+						beacon.update_status(SP_LAUNCH)
 					else if (!usingBeacon)//find a suitable supplypod landing zone in cargobay
 						landingzone = GLOB.areas_by_type[/area/quartermaster/storage]
 						if (!landingzone)
@@ -190,7 +186,7 @@
 							LAZYADD(empty_turfs, T)
 							CHECK_TICK
 						if(empty_turfs && empty_turfs.len)
-							LZ = pick(empty_turfs)	
+							LZ = pick(empty_turfs)
 					if (SO.pack.cost <= points_to_check && LZ)//we need to call the cost check again because of the CHECK_TICK call
 						D.adjust_money(-1 * SO.pack.cost)
 						new /obj/effect/DPtarget(LZ, podType, SO)
