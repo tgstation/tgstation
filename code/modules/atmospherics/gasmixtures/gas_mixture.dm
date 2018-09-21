@@ -162,9 +162,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	//Returns: a string indicating what check failed, or "" if check passes
 
 /datum/gas_mixture/proc/react(turf/open/dump_location)
-	if (prob(50))
-		return new_react(dump_location)
-	return old_react(dump_location)
 	//Performs various reactions such as combustion or fusion (LOL)
 	//Returns: 1 if any reaction took place; 0 otherwise
 
@@ -410,7 +407,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return ""
 
-/datum/gas_mixture/proc/new_react(datum/holder)
+/datum/gas_mixture/react(datum/holder)
 	. = NO_REACTION
 	var/list/cached_gases = gases
 	if(!length(cached_gases))
@@ -418,7 +415,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/topprio // priority of the first element in the list
 	var/list/reactions = list()
 	for(var/I in cached_gases)
-		for(var/R in GLOB.reactionsdict[I])
+		for(var/R in SSair.gas_reactions[I])
 			var/datum/gas_reaction/reaction = R
 			if (reaction.priority > topprio)
 				topprio = reaction.priority
@@ -467,67 +464,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 				break
 	if(.)
 		garbage_collect()
-		if(temperature < TCMB) //just for safety
-			warning("TCMB memes")
-			temperature = TCMB
-
-
-/datum/gas_mixture/proc/old_react(datum/holder)
-	. = NO_REACTION
-	var/list/cached_gases = gases
-	if(!cached_gases.len)
-		return
-	var/possible
-	for(var/I in cached_gases)
-		if(GLOB.nonreactive_gases[I])
-			continue
-		possible = TRUE
-		break
-	if(!possible)
-		return
-	reaction_results = new
-	var/temp = temperature
-	var/ener = THERMAL_ENERGY(src)
-
-	reaction_loop:
-		for(var/r in SSair.gas_reactions)
-			var/datum/gas_reaction/reaction = r
-
-			var/list/min_reqs = reaction.min_requirements
-			if((min_reqs["TEMP"] && temp < min_reqs["TEMP"]) \
-			|| (min_reqs["ENER"] && ener < min_reqs["ENER"]))
-				continue
-
-			for(var/id in min_reqs)
-				if (id == "TEMP" || id == "ENER")
-					continue
-				if(!cached_gases[id] || cached_gases[id][MOLES] < min_reqs[id])
-					continue reaction_loop
-			//at this point, all minimum requirements for the reaction are satisfied.
-
-			/*	currently no reactions have maximum requirements, so we can leave the checks commented out for a slight performance boost
-				PLEASE DO NOT REMOVE THIS CODE. the commenting is here only for a performance increase.
-				enabling these checks should be as easy as possible and the fact that they are disabled should be as clear as possible
-
-			var/list/max_reqs = reaction.max_requirements
-			if((max_reqs["TEMP"] && temp > max_reqs["TEMP"]) \
-			|| (max_reqs["ENER"] && ener > max_reqs["ENER"]))
-				continue
-			for(var/id in max_reqs)
-				if(id == "TEMP" || id == "ENER")
-					continue
-				if(cached_gases[id] && cached_gases[id][MOLES] > max_reqs[id])
-					continue reaction_loop
-			//at this point, all requirements for the reaction are satisfied. we can now react()
-			*/
-
-			. |= reaction.react(src, holder)
-			if (. & STOP_REACTIONS)
-				break
-	if(.)
-		garbage_collect()
-		if(temperature < TCMB) //just for safety
-			temperature = TCMB
 
 //Takes the amount of the gas you want to PP as an argument
 //So I don't have to do some hacky switches/defines/magic strings

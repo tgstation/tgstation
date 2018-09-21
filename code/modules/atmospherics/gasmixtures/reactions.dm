@@ -1,8 +1,6 @@
 //All defines used in reactions are located in ..\__DEFINES\reactions.dm
 
-GLOBAL_LIST_INIT(reactionsdict, init_gas_reactionsdict())
-
-/proc/init_gas_reactionsdict()
+/proc/init_gas_reactions()
 	. = list()
 	for(var/type in subtypesof(/datum/gas))
 		.[type] = list()
@@ -19,25 +17,6 @@ GLOBAL_LIST_INIT(reactionsdict, init_gas_reactionsdict())
 				if (!reaction_key || initial(reaction_key.rarity) > initial(req_gas.rarity))
 					reaction_key = req_gas
 		.[reaction_key] += list(reaction)
-
-/proc/init_gas_reactions()
-	var/list/reaction_types = list()
-	for(var/r in subtypesof(/datum/gas_reaction))
-		var/datum/gas_reaction/reaction = r
-		if(!initial(reaction.exclude))
-			reaction_types += reaction
-	reaction_types = sortList(reaction_types, /proc/cmp_gas_reactions)
-
-	. = list()
-	for(var/path in reaction_types)
-		. += new path
-
-/proc/cmp_gas_reactions(datum/gas_reaction/a, datum/gas_reaction/b) //sorts in descending order of priority
-	if (ispath(a) && ispath(b))
-		return initial(b.priority) - initial(a.priority)
-
-/proc/cmp_gas_reactionprio(datum/gas/a, datum/gas/b) //sorts in descending order of priority
-	return initial(a.rarity) - initial(b.rarity)
 
 /datum/gas_reaction
 	//regarding the requirements lists: the minimum or maximum requirements must be non-zero.
