@@ -124,8 +124,15 @@
 		materials[material] = material_amount
 
 //Behavior for magazines
-/obj/item/ammo_box/magazine/proc/ammo_count()
-	return stored_ammo.len
+/obj/item/ammo_box/magazine/proc/ammo_count(countempties = TRUE)
+	if(countempties)
+		return stored_ammo.len
+
+	var/boolets = 0
+	for(var/obj/item/ammo_casing/bullet in stored_ammo)
+		if(bullet && bullet.BB)
+			boolets++
+	return boolets
 
 /obj/item/ammo_box/magazine/proc/empty_magazine()
 	var/turf_mag = get_turf(src)
