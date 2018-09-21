@@ -249,8 +249,7 @@
 		SSticker.mode_result = "win - [winner] won"
 
 /datum/antagonist/wizard/versus/create_objectives()
-	if (!(locate(/datum/objective/survive) in owner.objectives))
+	if (!(locate(/datum/objective/survive) in objectives))
 		var/datum/objective/survive/survive_objective = new
 		survive_objective.owner = owner
 		objectives += survive_objective
-		owner.objectives += survive_objective

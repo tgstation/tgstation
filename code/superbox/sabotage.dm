@@ -98,7 +98,7 @@
 		message_admins("[key_name_admin(owner.current)] did not sabotage:\n[missed.Join("\n")]")
 
 /datum/antagonist/traitor/forge_single_objective()
-	if (prob(30) && !(locate(/datum/objective/sabotage) in owner.objectives))
+	if (prob(30) && !(locate(/datum/objective/sabotage) in objectives))
 		var/datum/objective/sabotage/sabotage_objective = new
 		sabotage_objective.owner = owner
 		sabotage_objective.pick_target_machine()
