@@ -23,7 +23,7 @@
 				desc = "Owned by [assistant_mains_need_to_die.registered_account.account_holder]. Pays directly into [user.p_their()] account when swiped with an ID card."
 				price = price2
 				my_card = assistant_mains_need_to_die
-				to_chat(user, "You ")
+				to_chat(user, "You link the stand to your account.")
 				return
 		var/obj/item/card/id/vbucks = W
 		if(vbucks.registered_account)
@@ -44,3 +44,17 @@
 	if(istype(W, /obj/item/coin))
 		to_chat(user, "What is this, the 1800s? We only take card here.")
 		return
+
+	if(default_deconstruction_screwdriver(user, "card_scanner", "card_scanner", W))
+		return
+
+	else if(default_pry_open(W))
+		return
+
+	else if(default_unfasten_wrench(user, W))
+		return
+
+	else if(default_deconstruction_crowbar(W))
+		return
+	else
+		return ..()
