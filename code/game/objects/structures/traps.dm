@@ -56,7 +56,6 @@
 		animate(src, alpha = initial(alpha), time = time_between_triggers)
 
 /obj/structure/trap/Crossed(atom/movable/AM)
-	..()
 	if(last_trigger + time_between_triggers > world.time)
 		return
 	// Don't want the traps triggered by sparks, ghosts or projectiles.
@@ -64,10 +63,8 @@
 		return
 	if(ismob(AM))
 		var/mob/M = AM
-		if(M.mind in immune_minds)
+		if(M.mind in immune_minds || M.anti_magic_check())
 			return
-	if(AM.anti_magic_check()) //dude magic
-		return
 	if(charges <= 0)
 		return
 	flare()
