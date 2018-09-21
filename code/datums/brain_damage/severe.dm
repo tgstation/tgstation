@@ -211,54 +211,14 @@
 	scan_desc = "oneiric feedback loop"
 	gain_text = "<span class='warning'>You feel somewhat dazed.</span>"
 	lose_text = "<span class='notice'>You feel like a fog was lifted from your mind.</span>"
-	var/active_stupor = FALSE
-	var/stupor_timer
-	var/datum/brain_trauma/hypnosis/current_hypnosis
 
-/datum/brain_trauma/severe/hypnotic_stupor/on_lose()
+/datum/brain_trauma/severe/hypnotic_stupor/on_lose() //hypnosis must be cleared separately, but brain surgery should get rid of both anyway
 	..()
 	if(active_stupor)
-		clear_stupor(TRUE)
-	if(current_hypnosis)
-		QDEL_NULL(current_hypnosis)
+		owner.remove_status_effect(/datum/status_effect/trance)
 	
 /datum/brain_trauma/severe/hypnotic_stupor/on_life()
 	..()
 	if(!active_stupor && prob(1))
-		start_stupor()
-
-/datum/brain_trauma/severe/hypnotic_stupor/proc/start_stupor()
-	to_chat(owner, "<span class='warning'>[pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...")]</span>")
-	active_stupor = TRUE
-	if(stupor_timer)
-		deltimer(stupor_timer)
-	owner.dizziness = 300
-	owner.add_trait(TRAIT_MUTE, "hypnotic_stupor") //Too dazed to speak (or warn people around you)
-	stupor_timer = addtimer(CALLBACK(src, .proc/clear_stupor, TRUE), rand(100, 300), TIMER_STOPPABLE)
-	
-/datum/brain_trauma/severe/hypnotic_stupor/proc/clear_stupor(timeout = FALSE)
-	if(timeout)
-		to_chat(owner, "<span class='notice'>The weird feeling passes.</span>")
-	active_stupor = FALSE
-	owner.dizziness = 0
-	owner.remove_trait(TRAIT_MUTE, "hypnotic_stupor")
-	if(stupor_timer)
-		deltimer(stupor_timer)
-		
-/datum/brain_trauma/severe/hypnotic_stupor/on_hear(message, speaker, message_language, raw_message, radio_freq)
-	. = message
-	if(!active_stupor || !owner.can_hear()) //words can't hypnotize you if you can't hear them *taps head*
-		return
-	if(speaker == owner) //No self hypnosis!
-		return
-	addtimer(CALLBACK(src, .proc/hypnotize, raw_message), 10) //to react AFTER the chat message	
-	
-/datum/brain_trauma/severe/hypnotic_stupor/proc/hypnotize(phrase)
-	clear_stupor()
-	if(current_hypnosis)
-		QDEL_NULL(current_hypnosis)
-	current_hypnosis = new
-	owner.gain_trauma(current_hypnosis, TRAUMA_RESILIENCE_ABSOLUTE, phrase)
-	owner.Unconscious(60) //Take some time to think about it
-	
+		owner.apply_status_effect(/datum/status_effect/trance, rand(100,300), FALSE)
 	

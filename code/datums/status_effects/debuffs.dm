@@ -525,3 +525,48 @@
 	owner.remove_trait(TRAIT_PACIFISM, "gonbolaPacify")
 	owner.remove_trait(TRAIT_MUTE, "gonbolaMute")
 	owner.remove_trait(TRAIT_JOLLY, "gonbolaJolly")
+	
+/datum/status_effect/trance
+	id = "trance"
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = 300
+	tick_interval = 10
+	examine_text = "<span class='warning'>SUBJECTPRONOUN seems slow and unfocused.</span>"
+	var/stun = TRUE
+
+/datum/status_effect/trance/tick()
+	if(stun)
+		owner.Stun(60, TRUE, TRUE)
+	
+/datum/status_effect/trance/on_apply()
+	if(!iscarbon(owner))
+		return FALSE
+	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/hypnotize)
+	owner.add_trait(TRAIT_MUTE, "trance")
+	owner.dizziness = 300
+	owner.visible_message([stun ? "<span class='warning'>[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.</span>" : ""], \
+	"<span class='warning'>[pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")]</span>")
+	return TRUE	
+	
+/datum/status_effect/trance/on_creation(mob/living/new_owner, _duration, _stun = TRUE)
+	. = ..()
+	if(.)
+		duration = _duration
+		stun = _stun
+	
+/datum/status_effect/trance/on_remove()
+	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
+	owner.remove_trait(TRAIT_MUTE, "trance")
+	owner.dizziness = 0
+	to_chat(owner, "<span class='warning'>You snap out of your trance!</span>")
+
+/datum/status_effect/trance/proc/hypnotize(datum/source, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	if(!owner.can_hear())
+		return
+	if(speaker == owner)
+		return
+	var/mob/living/carbon/C = owner
+	for(var/X in C.get_traumas_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY)) //clear existing hypnosis
+		qdel(X)
+	owner.gain_trauma(current_hypnosis, TRAUMA_RESILIENCE_SURGERY, raw_message)
+	owner.Unconscious(60, TRUE, TRUE) //Take some time to think about it
