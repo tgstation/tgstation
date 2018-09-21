@@ -65,6 +65,8 @@
 		var/mob/M = AM
 		if(M.mind in immune_minds)
 			return
+	if(AM.anti_magic_check()) //dude magic
+		return
 	if(charges <= 0)
 		return
 	flare()
