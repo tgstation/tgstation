@@ -60,7 +60,8 @@
 
 	msg += "<b>BYOND Version:</b> [world.byond_version].[world.byond_build]"
 	if(DM_VERSION != world.byond_version || DM_BUILD != world.byond_build)
-		msg += "<b>DM Version:</b> [DM_VERSION].[DM_BUILD]"
+		msg += "<b>Compiled with BYOND Version:</b> [DM_VERSION].[DM_BUILD]"
+
 	// Revision information
 	var/datum/getrev/revdata = GLOB.revdata
 	msg += "<b>Server revision compiled on:</b> [revdata.date]"
