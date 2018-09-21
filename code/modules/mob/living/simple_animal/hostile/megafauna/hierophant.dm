@@ -455,7 +455,7 @@ Difficulty: Hard
 /obj/effect/temp_visual/hierophant/squares
 	icon_state = "hierophant_squares"
 	duration = 3
-	light_range = 1
+	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	randomdir = FALSE
 
 /obj/effect/temp_visual/hierophant/squares/Initialize(mapload, new_caster)
@@ -468,7 +468,7 @@ Difficulty: Hard
 	name = "vortex wall"
 	icon = 'icons/turf/walls/hierophant_wall_temp.dmi'
 	icon_state = "wall"
-	light_range = 1
+	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	duration = 100
 	smooth = SMOOTH_TRUE
 
