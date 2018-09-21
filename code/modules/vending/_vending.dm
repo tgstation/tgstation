@@ -307,8 +307,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			dat += "<font color = 'red'><h3>No ID Card detected!</h3></font>"
 		else if (!C.registered_account)
 			dat += "<font color = 'red'><h3>No account on registered ID card!</h3></font>"
-		else
-			account = C.registered_account
+		if((onstation && C && C.registered_account) || (!onstation))
+			if(onstation)
+				account = C.registered_account
 			dat += "<h3>Select an item</h3>"
 			dat += "<div class='statusDisplay'>"
 			if(!product_records.len)
@@ -325,7 +326,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 						continue
 					if(coin_records.Find(R) || is_hidden)
 						price_listed = "$[extra_price]"
-					if(account.account_job.paycheck_department == payment_department || !onstation)
+					if(!onstation || account && account.account_job && account.account_job.paycheck_department == payment_department)
 						price_listed = "FREE"
 					dat += "<li>"
 					if(R.amount > 0)
@@ -337,7 +338,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					dat += "</li>"
 				dat += "</ul>"
 			dat += "</div>"
-			dat += "<b>Balance: $[account.account_balance]</b>"
+			if(onstation)
+				dat += "<b>Balance: $[account.account_balance]</b>"
 			if(istype(src, /obj/machinery/vending/snack))
 				dat += "<h3>Chef's Food Selection</h3>"
 				dat += "<div class='statusDisplay'>"
@@ -447,7 +449,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					vend_ready = 1
 					return
 				var/datum/bank_account/account = C.registered_account
-				if(account.account_job.paycheck_department == payment_department)
+				if(account.account_job && account.account_job.paycheck_department == payment_department)
 					price_to_use = 0
 				if(price_to_use && !account.adjust_money(-1 * price_to_use))
 					say("You do not posess the funds to purchase [R.name].")
