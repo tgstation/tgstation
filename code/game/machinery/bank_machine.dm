@@ -37,7 +37,7 @@
 
 /obj/machinery/computer/bank_machine/process()
 	..()
-	if(siphoning
+	if(siphoning)
 		if (stat & (BROKEN|NOPOWER))
 			say("Insufficient power. Halting siphon.")
 			siphoning =	FALSE
@@ -47,7 +47,7 @@
 			siphoning = FALSE
 			return
 		new /obj/item/stack/spacecash/c200(drop_location()) // will autostack
-		playsound(src.loc, 'sound/items/poster_being_created.ogg', 100, 1)
+		playsound(src, 'sound/items/poster_being_created.ogg', 100, 1)
 		D.adjust_money(-200)
 		if(next_warning < world.time && prob(15))
 			var/area/A = get_area(loc)

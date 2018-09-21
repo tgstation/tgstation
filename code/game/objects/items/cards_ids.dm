@@ -156,7 +156,7 @@
 		if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
 			to_chat(user, "The ID needs to be between 111111 and 999999.")
 			return
-		for(var/A in GLOB.bank_accounts)
+		for(var/A in SSgoldmansachs.bank_accounts)
 			var/datum/bank_account/B = A
 			if(B.account_id == new_bank_id)
 				B.bank_cards += src
