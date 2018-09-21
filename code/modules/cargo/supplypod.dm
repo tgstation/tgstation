@@ -108,7 +108,7 @@
 			M.gib() //After adjusting the fuck outta that brute loss we finish the job with some satisfying gibs
 		M.adjustBruteLoss(damage)
 
-	for (var/i in 1 to B.len-1)
+	for (var/i in B)
 		boomTotal += i //Count up all the values of the explosion
 
 	if (boomTotal != 0) //If the explosion list isn't all zeroes, call an explosion
