@@ -222,7 +222,7 @@ Difficulty: Medium
 			if(M in hit_list)
 				continue
 			hit_list += M
-			M.take_damage(60, BRUTE, "melee", 1)
+			M.take_damage(45, BRUTE, "melee", 1)
 		sleep(1.25)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(lava_arena = TRUE, atom/movable/manual_target, var/swoop_cooldown = 15)
@@ -268,11 +268,10 @@ Difficulty: Medium
 	
 	while(target && loc != get_turf(target))
 		forceMove(get_step(src, get_dir(src, target)))
-		var/swoop_speed = 0.5
-		sleep(swoop_speed)
+		sleep(0.5)
 	
 	// Ash drake flies onto its target and rains fire down upon them
-	var/descentTime = 10;
+	var/descentTime = 7;
 	if(lava_arena)
 		lava_arena()
 	
@@ -312,13 +311,6 @@ Difficulty: Medium
 	sleep(1)
 	swooping &= ~SWOOP_DAMAGEABLE
 	SetRecoveryTime(swoop_cooldown)
-	
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/goto_target()
-	if(!target)
-		return
-	if(!get_turf(target))
-		return
-	forceMove(get_turf(target))
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AltClickOn(atom/movable/A)
 	if(!istype(A))
@@ -364,7 +356,7 @@ Difficulty: Medium
 		
 	// deals damage to mechs
 	for(var/obj/mecha/M in T.contents)
-		M.take_damage(60, BRUTE, "melee", 1)
+		M.take_damage(45, BRUTE, "melee", 1)
 		
 	// changes turf to lava temporarily
 	if(!istype(T, /turf/closed) && !istype(T, /turf/open/lava))
