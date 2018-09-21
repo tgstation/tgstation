@@ -124,6 +124,7 @@
 	force = 12
 	sharpness = IS_SHARP
 	can_charge = 0
+	pin = /obj/item/firing_pin/mining //Can't use it as weapons on station unless you get an actual weapon pin.
 
 	heat = 3800
 	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
