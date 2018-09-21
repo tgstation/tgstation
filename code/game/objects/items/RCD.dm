@@ -247,8 +247,12 @@ RLD
 	//Not scaling these down to button size because they look horrible then, instead just bumping up radius.
 	return MA
 
-/obj/item/construction/rcd/proc/check_menu(mob/user)
-	return user.canUseTopic(src,be_close = TRUE)
+/obj/item/construction/rcd/proc/check_menu(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
 
 /obj/item/construction/rcd/proc/change_airlock_setting(mob/user)	
 	if(!user)
