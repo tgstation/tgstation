@@ -40,7 +40,7 @@
 			if(1)
 				to_chat(owner, "<i>...[lowertext(hypnotic_phrase)]...</i>")
 			if(2)
-				new /datum/hallucination/chat(owner, TRUE, FALSE, hypnotic_phrase)
+				new /datum/hallucination/chat(owner, TRUE, FALSE, "<span class='hypnophrase'>[hypnotic_phrase]</span>")
 				
 /datum/brain_trauma/hypnosis/on_hear(message, speaker, message_language, raw_message, radio_freq)			
 	message = replacetext(message, hypnotic_phrase, "<span class='hypnophrase'>[hypnotic_phrase]</span>")

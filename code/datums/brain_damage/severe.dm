@@ -208,7 +208,7 @@
 /datum/brain_trauma/severe/hypnotic_stupor
 	name = "Hypnotic Stupor"
 	desc = "Patient is prone to episodes of extreme stupor that leaves them extremely suggestible."
-	scan_desc = "oniric feedback loop"
+	scan_desc = "oneiric feedback loop"
 	gain_text = "<span class='warning'>You feel somewhat dazed.</span>"
 	lose_text = "<span class='notice'>You feel like a fog was lifted from your mind.</span>"
 	var/active_stupor = FALSE
@@ -233,6 +233,7 @@
 	if(stupor_timer)
 		deltimer(stupor_timer)
 	owner.dizziness = 300
+	owner.add_trait(TRAIT_MUTE, "hypnotic_stupor") //Too dazed to speak (or warn people around you)
 	stupor_timer = addtimer(CALLBACK(src, .proc/clear_stupor, TRUE), rand(100, 300), TIMER_STOPPABLE)
 	
 /datum/brain_trauma/severe/hypnotic_stupor/proc/clear_stupor(timeout = FALSE)
@@ -240,6 +241,7 @@
 		to_chat(owner, "<span class='notice'>The weird feeling passes.</span>")
 	active_stupor = FALSE
 	owner.dizziness = 0
+	owner.remove_trait(TRAIT_MUTE, "hypnotic_stupor")
 	if(stupor_timer)
 		deltimer(stupor_timer)
 		
