@@ -223,6 +223,7 @@
 
 /datum/tgs_api/v4/OnReboot()
 	var/json = Export(TGS4_COMM_WORLD_REBOOT)
+	TGS_INFO_LOG("Received reboot response: [json]")
 	var/list/result = json_decode(json)
 	if(!result)
 		return
