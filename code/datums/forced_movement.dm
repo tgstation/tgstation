@@ -91,6 +91,3 @@
 		var/obj/structure/S = A
 		if(S.climbable)
 			S.do_climb(src)
-
-//Caused by ice.
-/datum/forced_movement/iceslip
