@@ -33,9 +33,11 @@
 	var/list/pa = params2list(params)
 	var/left_click = pa.Find("left")
 	var/right_click = pa.Find("right")
+	var/alt_click = pa.Find("alt")
+
 	if(left_click && alt_click)
 		objholder = object.type
-		to_chat(user, "<span class='notice'>[initial(object.name)] ([object.type]) selected.</span>")
+		to_chat(c, "<span class='notice'>[initial(object.name)] ([object.type]) selected.</span>")
 	else if(left_click)
 		if(ispath(objholder,/turf))
 			var/turf/T = get_turf(object)
