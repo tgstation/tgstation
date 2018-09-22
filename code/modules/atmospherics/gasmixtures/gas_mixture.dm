@@ -412,16 +412,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/cached_gases = gases
 	if(!length(cached_gases))
 		return
-	var/topprio // priority of the first element in the list
 	var/list/reactions = list()
 	for(var/I in cached_gases)
-		for(var/R in SSair.gas_reactions[I])
-			var/datum/gas_reaction/reaction = R
-			if (reaction.priority > topprio)
-				topprio = reaction.priority
-				reactions.Insert(1, reaction)
-			else
-				reactions += reaction
+		reactions += SSair.gas_reactions[I]
 	if(!length(reactions))
 		return
 	reaction_results = new
