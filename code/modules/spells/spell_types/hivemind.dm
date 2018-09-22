@@ -485,7 +485,7 @@
 					to_chat(user, "<span class='notice'>It seems we have been mistaken, this mind is not the host of a hive.</span>")
 			else
 				to_chat(user, "<span class='userdanger'>Our concentration has been broken, leaving our mind wide open for a counterattack!</span>")
-				to_chat(target, "<span class='userdanger'>Their concentration has been broken... and are wide open for a counterattack!</span>")
+				to_chat(target, "<span class='userdanger'>Their concentration has been broken... leaving them wide open for a counterattack!</span>")
 				user.Unconscious(120)
 				user.adjustStaminaLoss(70)
 				user.Jitter(60)

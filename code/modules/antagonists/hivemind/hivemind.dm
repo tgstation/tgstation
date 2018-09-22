@@ -68,29 +68,11 @@
 
 /datum/antagonist/hivemind/on_gain()
 
-//	SSticker.mode.hivemind |= owner
 	owner.special_role = special_role
 	apply_innate_effects()
-//	grant_powers()
 	check_powers()
 	forge_objectives()
 	..()
-/*
-/datum/antagonist/hivemind/proc/grant_powers()
-	owner.AddSpell(new /obj/effect/proc_holder/spell/target_hive/hive_add(null))
-	owner.AddSpell(new /obj/effect/proc_holder/spell/target_hive/hive_remove(null))
-	owner.AddSpell(new /obj/effect/proc_holder/spell/target_hive/hive_see(null))
-	owner.AddSpell(new /obj/effect/proc_holder/spell/target_hive/hive_shock(null))
-	owner.AddSpell(new /obj/effect/proc_holder/spell/self/hive_drain(null))
-	//Tier 2
-	owner.AddSpell(new /obj/effect/proc_holder/spell/target_hive/hive_force(null))
-	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/induce_panic(null))
-	//Tier 3
-	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/hive_assim(null))
-	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/hive_loyal(null))
-	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall/hive(null))
-	owner.AddSpell(new /obj/effect/proc_holder/spell/target_hive/hive_attack(null))
-*/
 
 /datum/antagonist/hivemind/apply_innate_effects()
 	if(owner.assigned_role == "Clown")
@@ -120,7 +102,6 @@
 	hive_size = -1
 	check_powers()
 
-//	SSticker.mode.hivemind -= owner
 	remove_innate_effects()
 	if(!silent && owner.current)
 		to_chat(owner.current,"<span class='userdanger'> Your psionic powers fade, you are no longer the hivemind's host! </span>")
