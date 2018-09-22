@@ -1,5 +1,5 @@
 #define YTDL_NOT_CONFIGURED "YOUTUBE DL NOT CONFIGURED"
-#define YTDL_FAILURE_NO_HTTPS "MEDIA IS NOT HTTPS"
+#define YTDL_FAILURE_NO_HTTPS "MEDIA IS NOT HTTP(S)"
 #define YTDL_FAILURE_NO_URL "NO URL SPECIFIED"
 #define YTDL_FAILURE_UNKNOWN "YOUTUBE DL FAILED (UNKNOWN)"
 #define YTDL_FAILURE_FORMAT "YOUTUBE DL COULD NOT FIND THE RIGHT FORMAT"
@@ -124,12 +124,12 @@
 	if(returned == YTDL_FAILURE_UNKNOWN)
 		return	
 	var/web_sound_url
-	if (data["url"])
-		web_sound_url = data["url"]
-		var/title = "[data["title"]]"
+	if (returned["url"])
+		web_sound_url = returned["url"]
+		var/title = "[returned["title"]]"
 		var/webpage_url = title
-		if (data["webpage_url"])
-			webpage_url = "<a href=\"[data["webpage_url"]]\">[title]</a>"
+		if (returned["webpage_url"])
+			webpage_url = "<a href=\"[returned["webpage_url"]]\">[title]</a>"
 		var/res = alert(usr, "Show the title of and link to this song to the players?\n[title]",, "No", "Yes", "Cancel")
 		switch(res)
 			if("Yes")
