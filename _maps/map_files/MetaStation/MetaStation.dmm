@@ -12462,9 +12462,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "axh" = (
@@ -12478,6 +12475,9 @@
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 2
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -13375,7 +13375,7 @@
 	name = "Supermatter Engine";
 	req_access_txt = "10"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "ayX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -15483,10 +15483,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/brown{
-	dir = 4
+	dir = 8
 	},
 /obj/effect/turf_decal/tile/brown{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
@@ -16154,6 +16154,13 @@
 "aEv" = (
 /obj/machinery/computer/security/mining{
 	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
@@ -28586,16 +28593,6 @@
 	},
 /obj/item/wirecutters,
 /obj/item/multitool,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
 "bcE" = (
