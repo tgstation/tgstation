@@ -223,6 +223,7 @@
 
 /datum/tgs_api/v4/OnReboot()
 	var/json = Export(TGS4_COMM_WORLD_REBOOT)
+	TGS_INFO_LOG("Received reboot response: [json]")
 	var/list/result = json_decode(json)
 	if(!result)
 		return
@@ -236,7 +237,7 @@
 	if(port == 0)
 		//to byond 0 means any port and "none" means close vOv
 		port = "none"
-
+	TGS_INFO_LOG("Setting port to [port]")
 	if(!world.OpenPort(port))
 		TGS_ERROR_LOG("Unable to set port to [port]!")
 
