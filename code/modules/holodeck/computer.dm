@@ -136,7 +136,7 @@
 			if(prob(30))
 				do_sparks(2, 1, T)
 			T.ex_act(EXPLODE_LIGHT)
-			T.hotspot_expose(1000,500,1)
+			T.hotspot_expose(700,25,1)
 
 	if(!(obj_flags & EMAGGED))
 		for(var/item in spawned)
@@ -177,7 +177,7 @@
 
 /obj/machinery/computer/holodeck/proc/generate_program_list()
 	for(var/typekey in subtypesof(program_type))
-		var/area/holodeck/A = locate(typekey) in GLOB.sortedAreas
+		var/area/holodeck/A = GLOB.areas_by_type[typekey]
 		if(!A || !A.contents.len)
 			continue
 		var/list/info_this = list()

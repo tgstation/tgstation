@@ -8,6 +8,7 @@
 	var/cooldown = 30
 
 /obj/item/implant/abductor/activate()
+	. = ..()
 	if(cooldown == initial(cooldown))
 		home.Retrieve(imp_in,1)
 		cooldown = 0

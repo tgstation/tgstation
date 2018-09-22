@@ -2,7 +2,7 @@
 /mob/living/silicon/robot/gib_animation()
 	new /obj/effect/temp_visual/gib_animation(loc, "gibbed-r")
 
-/mob/living/silicon/robot/dust()
+/mob/living/silicon/robot/dust(just_ash, drop_items, force)
 	if(mmi)
 		qdel(mmi)
 	..()

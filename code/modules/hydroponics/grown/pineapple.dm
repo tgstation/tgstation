@@ -31,3 +31,4 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	foodtype = FRUIT | PINEAPPLE
 	tastes = list("pineapple" = 1)
+	wine_power = 40

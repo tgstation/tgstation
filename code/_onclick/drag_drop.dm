@@ -2,13 +2,13 @@
 	MouseDrop:
 
 	Called on the atom you're dragging.  In a lot of circumstances we want to use the
-	recieving object instead, so that's the default action.  This allows you to drag
+	receiving object instead, so that's the default action.  This allows you to drag
 	almost anything into a trash can.
 */
 /atom/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	if(!usr || !over)
 		return
-	if(SendSignal(COMSIG_MOUSEDROP_ONTO, over, usr) & COMPONENT_NO_MOUSEDROP)	//Whatever is recieving will verify themselves for adjacency.
+	if(SEND_SIGNAL(src, COMSIG_MOUSEDROP_ONTO, over, usr) & COMPONENT_NO_MOUSEDROP)	//Whatever is receiving will verify themselves for adjacency.
 		return
 	if(over == src)
 		return usr.client.Click(src, src_location, src_control, params)
@@ -18,9 +18,9 @@
 	over.MouseDrop_T(src,usr)
 	return
 
-// recieve a mousedrop
+// receive a mousedrop
 /atom/proc/MouseDrop_T(atom/dropping, mob/user)
-	SendSignal(COMSIG_MOUSEDROPPED_ONTO, dropping, user)
+	SEND_SIGNAL(src, COMSIG_MOUSEDROPPED_ONTO, dropping, user)
 	return
 
 
@@ -35,6 +35,8 @@
 	var/atom/middragatom
 
 /client/MouseDown(object, location, control, params)
+	if (mouse_down_icon)
+		mouse_pointer_icon = mouse_down_icon
 	var/delay = mob.CanMobAutoclick(object, location, params)
 	if(delay)
 		selected_target[1] = object
@@ -47,6 +49,8 @@
 		active_mousedown_item.onMouseDown(object, location, params, mob)
 
 /client/MouseUp(object, location, control, params)
+	if (mouse_up_icon)
+		mouse_pointer_icon = mouse_up_icon
 	selected_target[1] = null
 	if(active_mousedown_item)
 		active_mousedown_item.onMouseUp(object, location, params, mob)
@@ -61,7 +65,7 @@
 	if(h)
 		. = h.CanItemAutoclick(object, location, params)
 
-/mob/proc/canMobMousedown(object, location, params)
+/mob/proc/canMobMousedown(atom/object, location, params)
 
 /mob/living/carbon/canMobMousedown(atom/object, location, params)
 	var/obj/item/H = get_active_held_item()
@@ -107,6 +111,7 @@
 	if(mob && LAZYLEN(mob.mousemove_intercept_objects))
 		for(var/datum/D in mob.mousemove_intercept_objects)
 			D.onMouseMove(object, location, control, params)
+	..()
 
 /datum/proc/onMouseMove(object, location, control, params)
 	return

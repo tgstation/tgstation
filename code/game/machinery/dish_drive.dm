@@ -9,6 +9,7 @@
 	active_power_usage = 13 //10 with default parts
 	density = FALSE
 	circuit = /obj/item/circuitboard/machine/dish_drive
+	pass_flags = PASSTABLE
 	var/static/list/item_types = list(/obj/item/trash/waffles,
 		/obj/item/trash/plate,
 		/obj/item/trash/tray,

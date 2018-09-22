@@ -4,6 +4,7 @@
 	GLOB.alive_mob_list -= src
 	GLOB.all_clockwork_mobs -= src
 	GLOB.mob_directory -= tag
+	focus = null
 	for (var/alert in alerts)
 		clear_alert(alert, TRUE)
 	if(observers && observers.len)
@@ -34,6 +35,8 @@
 		AA.onNewMob(src)
 	nutrition = rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX)
 	. = ..()
+	update_config_movespeed()
+	update_movespeed(TRUE)
 
 /mob/GenerateTag()
 	tag = "mob_[next_mob_id++]"
@@ -67,6 +70,9 @@
 			t+="<span class='notice'>[gas[GAS_META][META_GAS_NAME]]: [gas[MOLES]] \n</span>"
 
 	to_chat(usr, t)
+
+/mob/proc/get_photo_description(obj/item/camera/camera)
+	return "a ... thing?"
 
 /mob/proc/show_message(msg, type, alt_msg, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 
@@ -168,9 +174,6 @@
 		range = hearing_distance
 	for(var/mob/M in get_hearers_in_view(range, src))
 		M.show_message( message, 2, deaf_message, 1)
-
-/mob/proc/movement_delay()	//update /living/movement_delay() if you change this
-	return 0
 
 /mob/proc/Life()
 	set waitfor = FALSE
@@ -293,6 +296,10 @@
 	set name = "Examine"
 	set category = "IC"
 
+	if(isturf(A) && !(sight & SEE_TURFS) && !(A in view(client ? client.view : world.view, src)))
+		// shift-click catcher may issue examinate() calls for out-of-sight turfs
+		return
+
 	if(is_blind(src))
 		to_chat(src, "<span class='notice'>Something is there but you can't see it.</span>")
 		return
@@ -303,23 +310,23 @@
 //same as above
 //note: ghosts can point, this is intended
 //visible_message will handle invisibility properly
-//overriden here and in /mob/dead/observer for different point span classes and sanity checks
+//overridden here and in /mob/dead/observer for different point span classes and sanity checks
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
 	set name = "Point To"
 	set category = "Object"
 
 	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
-		return 0
+		return FALSE
 	if(istype(A, /obj/effect/temp_visual/point))
-		return 0
+		return FALSE
 
 	var/tile = get_turf(A)
 	if (!tile)
-		return 0
+		return FALSE
 
 	new /obj/effect/temp_visual/point(A,invisibility)
 
-	return 1
+	return TRUE
 
 /mob/proc/can_resist()
 	return FALSE		//overridden in living.dm
@@ -347,6 +354,11 @@
 	if(hud_used)
 		if(hud_used.pull_icon)
 			hud_used.pull_icon.update_icon(src)
+
+/mob/proc/update_rest_hud_icon()
+	if(hud_used)
+		if(hud_used.rest_icon)
+			hud_used.rest_icon.update_icon(src)
 
 /mob/verb/mode()
 	set name = "Activate Held Object"
@@ -395,22 +407,22 @@
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
 		return
 
-	log_game("[usr.name]/[usr.key] used abandon mob.")
+	log_game("[key_name(usr)] used abandon mob.")
 
 	to_chat(usr, "<span class='boldnotice'>Please roleplay correctly!</span>")
 
 	if(!client)
-		log_game("[usr.key] AM failed due to disconnect.")
+		log_game("[key_name(usr)] AM failed due to disconnect.")
 		return
 	client.screen.Cut()
 	client.screen += client.void
 	if(!client)
-		log_game("[usr.key] AM failed due to disconnect.")
+		log_game("[key_name(usr)] AM failed due to disconnect.")
 		return
 
 	var/mob/dead/new_player/M = new /mob/dead/new_player()
 	if(!client)
-		log_game("[usr.key] AM failed due to disconnect.")
+		log_game("[key_name(usr)] AM failed due to disconnect.")
 		qdel(M)
 		return
 
@@ -502,7 +514,7 @@
 	if(statpanel("Status"))
 		if (client)
 			stat(null, "Ping: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
-		stat(null, "Map: [SSmapping.config.map_name]")
+		stat(null, "Map: [SSmapping.config?.map_name || "Loading..."]")
 		var/datum/map_config/cached = SSmapping.next_map_config
 		if(cached)
 			stat(null, "Next Map: [cached.map_name]")
@@ -586,59 +598,61 @@
 		if(S.chemical_cost >=0 && S.can_be_used_by(src))
 			statpanel("[S.panel]",((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""),S)
 
+#define MOB_FACE_DIRECTION_DELAY 1
+
 // facing verbs
 /mob/proc/canface()
 	if(!canmove)
-		return 0
-	if(world.time < client.move_delay)
-		return 0
-	if(stat==2)
-		return 0
+		return FALSE
+	if(world.time < client.last_turn)
+		return FALSE
+	if(stat == DEAD || stat == UNCONSCIOUS)
+		return FALSE
 	if(anchored)
-		return 0
+		return FALSE
 	if(notransform)
-		return 0
+		return FALSE
 	if(restrained())
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/proc/fall(forced)
 	drop_all_held_items()
 
 /mob/verb/eastface()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canface())
-		return 0
+		return FALSE
 	setDir(EAST)
-	client.move_delay += movement_delay()
-	return 1
+	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
+	return TRUE
 
 /mob/verb/westface()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canface())
-		return 0
+		return FALSE
 	setDir(WEST)
-	client.move_delay += movement_delay()
-	return 1
+	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
+	return TRUE
 
 /mob/verb/northface()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canface())
-		return 0
+		return FALSE
 	setDir(NORTH)
-	client.move_delay += movement_delay()
-	return 1
+	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
+	return TRUE
 
 /mob/verb/southface()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canface())
-		return 0
+		return FALSE
 	setDir(SOUTH)
-	client.move_delay += movement_delay()
-	return 1
+	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
+	return TRUE
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
-	return 0
+	return FALSE
 
 /mob/proc/swap_hand()
 	return
@@ -675,6 +689,16 @@
 		if(istype(S, spell))
 			mob_spell_list -= S
 			qdel(S)
+
+/mob/proc/anti_magic_check(magic = TRUE, holy = FALSE)
+	if(!magic && !holy)
+		return
+	var/list/protection_sources = list()
+	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, magic, holy, protection_sources) & COMPONENT_BLOCK_MAGIC)
+		if(protection_sources.len)
+			return pick(protection_sources)
+		else
+			return src
 
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
@@ -772,6 +796,7 @@
 //This will update a mob's name, real_name, mind.name, GLOB.data_core records, pda, id and traitor text
 //Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
 /mob/proc/fully_replace_character_name(oldname,newname)
+	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 	if(!newname)
 		return 0
 	real_name = newname
@@ -787,7 +812,7 @@
 		replace_identification_name(oldname,newname)
 
 		for(var/datum/mind/T in SSticker.minds)
-			for(var/datum/objective/obj in T.objectives)
+			for(var/datum/objective/obj in T.get_all_objectives())
 				// Only update if this player is a target
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
@@ -828,6 +853,14 @@
 	return
 
 /mob/proc/update_sight()
+	for(var/O in orbiters)
+		var/datum/orbit/orbit = O
+		var/obj/effect/wisp/wisp = orbit.orbiter
+		if (istype(wisp))
+			sight |= wisp.sight_flags
+			if(!isnull(wisp.lighting_alpha))
+				lighting_alpha = min(lighting_alpha, wisp.lighting_alpha)
+
 	sync_lighting_plane_alpha()
 
 /mob/proc/sync_lighting_plane_alpha()

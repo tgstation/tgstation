@@ -14,7 +14,8 @@
 #define TRAIT_IGNORESLOWDOWN	"ignoreslow"
 #define TRAIT_GOTTAGOFAST		"fast"
 #define TRAIT_GOTTAGOREALLYFAST	"2fast"
-#define TRAIT_FAKEDEATH			"fakedeath"
+#define TRAIT_DEATHCOMA			"deathcoma" //Causes death-like unconsciousness
+#define TRAIT_FAKEDEATH			"fakedeath" //Makes the owner appear as dead to most forms of medical examination
 #define TRAIT_DISFIGURED		"disfigured"
 #define TRAIT_XENO_HOST			"xeno_host"	//Tracks whether we're gonna be a baby alien's mummy.
 #define TRAIT_STUNIMMUNE		"stun_immunity"
@@ -48,6 +49,7 @@
 #define TRAIT_NODEATH			"nodeath"
 #define TRAIT_NOHARDCRIT		"nohardcrit"
 #define TRAIT_NOSOFTCRIT		"nosoftcrit"
+#define TRAIT_MINDSHIELD		"mindshield"
 
 
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
@@ -63,6 +65,9 @@
 #define TRAIT_POOR_AIM			"poor_aim"
 #define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
 #define	TRAIT_DRUNK_HEALING		"drunk_healing"
+#define	TRAIT_TAGGER			"tagger"
+#define	TRAIT_PHOTOGRAPHER		"photographer"
+#define	TRAIT_MUSICIAN			"musician"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
@@ -85,3 +90,4 @@
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
 #define EYES_COVERED "eyes_covered"
+#define CULT_EYES "cult_eyes"

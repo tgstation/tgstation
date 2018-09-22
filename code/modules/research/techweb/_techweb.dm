@@ -16,7 +16,7 @@
 	var/list/obj/machinery/computer/rdconsole/consoles_accessing = list()
 	var/id = "generic"
 	var/list/research_logs = list()								//IC logs.
-	var/max_bomb_value = 0
+	var/largest_bomb_value = 0
 	var/organization = "Third-Party"							//Organization name, used for display.
 	var/list/last_bitcoins = list()								//Current per-second production, used for display only.
 	var/list/tiers = list()										//Assoc list, datum = number, 1 is available, 2 is all reqs are 1, so on
@@ -106,19 +106,19 @@
 		l[i] = amount
 	modify_point_list(l)
 
-/datum/techweb/proc/copy_research_to(datum/techweb/reciever, unlock_hidden = TRUE)				//Adds any missing research to theirs.
+/datum/techweb/proc/copy_research_to(datum/techweb/receiver, unlock_hidden = TRUE)				//Adds any missing research to theirs.
 	for(var/i in researched_nodes)
 		CHECK_TICK
-		reciever.research_node_id(i, TRUE, FALSE)
+		receiver.research_node_id(i, TRUE, FALSE)
 	for(var/i in researched_designs)
 		CHECK_TICK
-		reciever.add_design_by_id(i)
+		receiver.add_design_by_id(i)
 	if(unlock_hidden)
-		for(var/i in reciever.hidden_nodes)
+		for(var/i in receiver.hidden_nodes)
 			CHECK_TICK
 			if(!hidden_nodes[i])
-				reciever.hidden_nodes -= i		//We can see it so let them see it too.
-	reciever.recalculate_nodes()
+				receiver.hidden_nodes -= i		//We can see it so let them see it too.
+	receiver.recalculate_nodes()
 
 /datum/techweb/proc/copy()
 	var/datum/techweb/returned = new()
@@ -355,5 +355,4 @@
 	allowed_buildtypes = SMELTER
 
 /datum/techweb/specialized/autounlocking/exofab
-	node_autounlock_ids = list("robotics", "mmi", "cyborg", "mecha_odysseus", "mech_gygax", "mech_durand", "mecha_phazon", "mecha", "mech_tools", "clown")
 	allowed_buildtypes = MECHFAB

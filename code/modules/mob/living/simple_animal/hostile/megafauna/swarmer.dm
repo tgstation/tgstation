@@ -54,7 +54,6 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	weather_immunities = list("lava","ash")
 	stop_automated_movement = TRUE
 	wander = FALSE
-	anchored = TRUE
 	layer = BELOW_MOB_LAYER
 	AIStatus = AI_OFF
 	var/swarmer_spawn_cooldown = 0
@@ -93,7 +92,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 /obj/item/gps/internal/swarmer_beacon
 	icon_state = null
 	gpstag = "Hungry Signal"
-	desc = "Transmited over the signal is a strange message repeated in every language you know of, and some you don't too..." //the message is "nom nom nom"
+	desc = "Transmitted over the signal is a strange message repeated in every language you know of, and some you don't too..." //the message is "nom nom nom"
 	invisibility = 100
 
 //SWARMER AI

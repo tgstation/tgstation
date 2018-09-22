@@ -169,7 +169,7 @@
 
 /obj/item/nullrod
 	name = "null rod"
-	desc = "A rod of pure obsidian; its very presence disrupts and dampens the powers of Nar-Sie and Ratvar's followers."
+	desc = "A rod of pure obsidian; its very presence disrupts and dampens the powers of Nar'Sie and Ratvar's followers."
 	icon_state = "nullrod"
 	item_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -181,6 +181,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	obj_flags = UNIQUE_RENAME
 	var/reskinned = FALSE
+	var/chaplain_spawnable = TRUE
 
 /obj/item/nullrod/Initialize()
 	. = ..()
@@ -201,16 +202,15 @@
 	var/list/holy_weapons_list = typesof(/obj/item/nullrod)
 	var/list/display_names = list()
 	for(var/V in holy_weapons_list)
-		var/atom/A = V
-		display_names += initial(A.name)
+		var/obj/item/nullrod/rodtype = V
+		if (initial(rodtype.chaplain_spawnable))
+			display_names[initial(rodtype.name)] = rodtype
 
 	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
 	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || reskinned)
 		return
 
-	var/index = display_names.Find(choice)
-	var/A = holy_weapons_list[index]
-
+	var/A = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new 
 	holy_weapon = new A
 
 	SSreligion.holy_weapon_type = holy_weapon.type
@@ -307,7 +307,7 @@
 	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/nullrod/claymore/katana
-	name = "hanzo steel"
+	name = "\improper Hanzo steel"
 	desc = "Capable of cutting clean through a holy claymore."
 	icon_state = "katana"
 	item_state = "katana"
@@ -448,8 +448,9 @@
 	item_state = "chainswordon"
 	name = "possessed chainsaw sword"
 	desc = "Suffer not a heretic to live."
-	slot_flags = ITEM_SLOT_BELT
+	chaplain_spawnable = FALSE
 	force = 30
+	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 
@@ -504,6 +505,7 @@
 	hitsound = 'sound/weapons/blade1.ogg'
 
 /obj/item/nullrod/pride_hammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(prob(30) && ishuman(A))

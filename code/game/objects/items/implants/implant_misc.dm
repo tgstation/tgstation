@@ -31,6 +31,7 @@
 	return dat
 
 /obj/item/implant/adrenalin/activate()
+	. = ..()
 	uses--
 	to_chat(imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
 	imp_in.SetStun(0)
@@ -54,6 +55,7 @@
 	uses = 3
 
 /obj/item/implant/emp/activate()
+	. = ..()
 	uses--
 	empulse(imp_in, 3, 5)
 	if(!uses)
@@ -88,6 +90,7 @@
 	icon_state = "walkietalkie"
 
 /obj/item/implant/radio/activate()
+	. = ..()
 	// needs to be GLOB.deep_inventory_state otherwise it won't open
 	radio.ui_interact(usr, "main", null, FALSE, null, GLOB.deep_inventory_state)
 

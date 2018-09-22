@@ -53,7 +53,7 @@
 
 /obj/item/clothing/suit/armor/hos/trenchcoat
 	name = "armored trenchoat"
-	desc = "A trenchcoat enchanced with a special lightweight kevlar. The epitome of tactical plainclothes."
+	desc = "A trenchcoat enhanced with a special lightweight kevlar. The epitome of tactical plainclothes."
 	icon_state = "hostrench"
 	item_state = "hostrench"
 	flags_inv = 0

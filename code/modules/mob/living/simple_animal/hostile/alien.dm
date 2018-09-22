@@ -36,6 +36,8 @@
 	death_sound = 'sound/voice/hiss6.ogg'
 	deathmessage = "lets out a waning guttural screech, green blood bubbling from its maw..."
 
+	do_footstep = TRUE
+
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"
 	icon_state = "aliend"
@@ -175,6 +177,6 @@
 			qdel(target)
 			return TRUE
 		var/atom/movable/M = target
-		M.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		SEND_SIGNAL(M, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 		visible_message("[src] polishes \the [target].")
 		return TRUE

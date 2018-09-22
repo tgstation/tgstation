@@ -348,6 +348,12 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 /obj/machinery/computer/card/Topic(href, href_list)
 	if(..())
 		return
+
+	if(!usr.canUseTopic(src, !issilicon(usr)) || !is_operational())
+		usr.unset_machine()
+		usr << browse(null, "window=id_com")
+		return
+
 	usr.set_machine(src)
 	switch(href_list["choice"])
 		if ("modify")
@@ -532,11 +538,12 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	updateUsrDialog()
 
 /obj/machinery/computer/card/AltClick(mob/user)
-	if(user.canUseTopic(src))
-		if(scan)
-			eject_id_scan(user)
-		if(modify)
-			eject_id_modify(user)
+	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational())
+		return
+	if(scan)
+		eject_id_scan(user)
+	if(modify)
+		eject_id_modify(user)
 
 /obj/machinery/computer/card/proc/eject_id_scan(mob/user)
 	if(scan)

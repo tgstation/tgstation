@@ -87,7 +87,7 @@
 	pull_icon = new /obj/screen/pull()
 	pull_icon.icon = ui_style
 	pull_icon.update_icon(mymob)
-	pull_icon.screen_loc = ui_pull_resist
+	pull_icon.screen_loc = ui_above_movement
 	static_inventory += pull_icon
 
 	lingchemdisplay = new /obj/screen/ling/chems()
@@ -106,7 +106,7 @@
 
 	using = new /obj/screen/resist()
 	using.icon = ui_style
-	using.screen_loc = ui_pull_resist
+	using.screen_loc = ui_above_intent
 	hotkeybuttons += using
 
 	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))
@@ -149,7 +149,3 @@
 		for(var/obj/item/I in M.held_items)
 			I.screen_loc = null
 			M.client.screen -= I
-
-/mob/living/carbon/monkey/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/monkey(src)

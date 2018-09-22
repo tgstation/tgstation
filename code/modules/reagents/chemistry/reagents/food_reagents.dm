@@ -13,11 +13,26 @@
 	taste_description = "generic food"
 	taste_mult = 4
 	var/nutriment_factor = 1 * REAGENTS_METABOLISM
+	var/quality = 0	//affects mood, typically higher for mixed drinks with more complex recipes
 
-/datum/reagent/consumable/on_mob_life(mob/living/M)
+/datum/reagent/consumable/on_mob_life(mob/living/carbon/M)
 	current_cycle++
 	M.nutrition += nutriment_factor
 	holder.remove_reagent(src.id, metabolization_rate)
+
+/datum/reagent/consumable/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(method == INGEST)
+		if (quality && !M.has_trait(TRAIT_AGEUSIA))
+			switch(quality)
+				if (DRINK_NICE)
+					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_nice)
+				if (DRINK_GOOD)
+					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_good)
+				if (DRINK_VERYGOOD)
+					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_verygood)
+				if (DRINK_FANTASTIC)
+					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_fantastic)
+	return ..()
 
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"
@@ -30,7 +45,7 @@
 	var/brute_heal = 1
 	var/burn_heal = 0
 
-/datum/reagent/consumable/nutriment/on_mob_life(mob/living/M)
+/datum/reagent/consumable/nutriment/on_mob_life(mob/living/carbon/M)
 	if(prob(50))
 		M.heal_bodypart_damage(brute_heal,burn_heal, 0)
 		. = 1
@@ -78,7 +93,7 @@
 	brute_heal = 1
 	burn_heal = 1
 
-/datum/reagent/consumable/nutriment/vitamin/on_mob_life(mob/living/M)
+/datum/reagent/consumable/nutriment/vitamin/on_mob_life(mob/living/carbon/M)
 	if(M.satiety < 600)
 		M.satiety += 30
 	. = ..()
@@ -183,7 +198,7 @@
 	taste_description = "hot peppers"
 	taste_mult = 1.5
 
-/datum/reagent/consumable/capsaicin/on_mob_life(mob/living/M)
+/datum/reagent/consumable/capsaicin/on_mob_life(mob/living/carbon/M)
 	var/heating = 0
 	switch(current_cycle)
 		if(1 to 15)
@@ -214,7 +229,7 @@
 	color = "#8BA6E9" // rgb: 139, 166, 233
 	taste_description = "mint"
 
-/datum/reagent/consumable/frostoil/on_mob_life(mob/living/M)
+/datum/reagent/consumable/frostoil/on_mob_life(mob/living/carbon/M)
 	var/cooling = 0
 	switch(current_cycle)
 		if(1 to 15)
@@ -283,10 +298,10 @@
 		if(ishuman(victim))
 			var/mob/living/carbon/human/H = victim
 			if( H.head )
-				if ( H.head.flags_cover & MASKCOVERSEYES )
+				if ( H.head.flags_cover & HEADCOVERSEYES )
 					eyes_covered = 1
 					safe_thing = H.head
-				if ( H.head.flags_cover & MASKCOVERSMOUTH )
+				if ( H.head.flags_cover & HEADCOVERSMOUTH )
 					mouth_covered = 1
 					safe_thing = H.head
 			if(H.glasses)
@@ -320,7 +335,7 @@
 			victim.Knockdown(100)
 		victim.update_damage_hud()
 
-/datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/M)
+/datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
 		M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
 	..()
@@ -374,7 +389,7 @@
 	glass_name = "glass of chocolate"
 	glass_desc = "Tasty."
 
-/datum/reagent/consumable/hot_coco/on_mob_life(mob/living/M)
+/datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 
@@ -386,7 +401,7 @@
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	taste_description = "mushroom"
 
-/datum/reagent/mushroomhallucinogen/on_mob_life(mob/living/M)
+/datum/reagent/mushroomhallucinogen/on_mob_life(mob/living/carbon/M)
 	if(!M.slurring)
 		M.slurring = 1
 	switch(current_cycle)
@@ -416,7 +431,7 @@
 	color = "#FF00FF" // rgb: 255, 0, 255
 	taste_description = "childhood whimsy"
 
-/datum/reagent/consumable/sprinkles/on_mob_life(mob/living/M)
+/datum/reagent/consumable/sprinkles/on_mob_life(mob/living/carbon/M)
 	if(ishuman(M) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden"))
 		M.heal_bodypart_damage(1,1, 0)
 		. = 1
@@ -465,7 +480,7 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "wet and cheap noodles"
 
-/datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/M)
+/datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 
@@ -477,7 +492,7 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "wet and cheap noodles on fire"
 
-/datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/M)
+/datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT)
 	..()
 
@@ -491,8 +506,10 @@
 
 /datum/reagent/consumable/flour/reaction_turf(turf/T, reac_volume)
 	if(!isspaceturf(T))
-		var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/flour(T)
-		reagentdecal.reagents.add_reagent("flour", reac_volume)
+		var/obj/effect/decal/cleanable/flour/reagentdecal = new/obj/effect/decal/cleanable/flour(T)
+		reagentdecal = locate() in T //Might have merged with flour already there.
+		if(reagentdecal)
+			reagentdecal.reagents.add_reagent("flour", reac_volume)
 
 /datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"
@@ -549,20 +566,20 @@
 	metabolization_rate = 3 * REAGENTS_METABOLISM
 	taste_description = "sweet slime"
 
-/datum/reagent/consumable/corn_syrup/on_mob_life(mob/living/M)
+/datum/reagent/consumable/corn_syrup/on_mob_life(mob/living/carbon/M)
 	holder.add_reagent("sugar", 3)
 	..()
 
 /datum/reagent/consumable/honey
 	name = "honey"
 	id = "honey"
-	description = "Sweet sweet honey, decays into sugar and has natural healing properties."
+	description = "Sweet sweet honey that decays into sugar. Has antibacterial and natural healing properties."
 	color = "#d3a308"
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	taste_description = "sweetness"
 
-/datum/reagent/consumable/honey/on_mob_life(mob/living/M)
+/datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M)
 	M.reagents.add_reagent("sugar",3)
 	if(prob(55))
 		M.adjustBruteLoss(-1*REM, 0)
@@ -570,6 +587,14 @@
 		M.adjustOxyLoss(-1*REM, 0)
 		M.adjustToxLoss(-1*REM, 0)
 	..()
+
+/datum/reagent/consumable/honey/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+  if(iscarbon(M) && (method in list(TOUCH, VAPOR, PATCH)))
+    var/mob/living/carbon/C = M
+    for(var/s in C.surgeries)
+      var/datum/surgery/S = s
+      S.success_multiplier = max(0.6, S.success_multiplier) // +60% success probability on each step, compared to bacchus' blessing's ~46%
+  ..()
 
 /datum/reagent/consumable/mayonnaise
 	name = "Mayonnaise"
@@ -607,7 +632,7 @@
 			M.blur_eyes(5)
 	..()
 
-/datum/reagent/consumable/tearjuice/on_mob_life(mob/living/M)
+/datum/reagent/consumable/tearjuice/on_mob_life(mob/living/carbon/M)
 	..()
 	if(M.eye_blurry)	//Don't worsen vision if it was otherwise fine
 		M.blur_eyes(4)
@@ -624,7 +649,7 @@
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	color = "#664330" // rgb: 102, 67, 48
 
-/datum/reagent/consumable/nutriment/stabilized/on_mob_life(mob/living/M)
+/datum/reagent/consumable/nutriment/stabilized/on_mob_life(mob/living/carbon/M)
 	if(M.nutrition > NUTRITION_LEVEL_FULL - 25)
 		M.nutrition -= 3*nutriment_factor
 	..()
@@ -639,7 +664,7 @@
 	color = "#1d043d"
 	taste_description = "bitter mushroom"
 
-/datum/reagent/consumable/entpoly/on_mob_life(mob/living/M)
+/datum/reagent/consumable/entpoly/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 10)
 		M.Unconscious(40, 0)
 		. = 1
@@ -673,7 +698,7 @@
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	taste_description = "fruity mushroom"
 
-/datum/reagent/consumable/vitfro/on_mob_life(mob/living/M)
+/datum/reagent/consumable/vitfro/on_mob_life(mob/living/carbon/M)
 	if(prob(80))
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)

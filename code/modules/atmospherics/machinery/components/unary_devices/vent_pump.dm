@@ -337,11 +337,13 @@
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 		return
 
+	var/mob/signal_sender = signal.data["user"]
+
 	if("purge" in signal.data)
 		pressure_checks &= ~EXT_BOUND
 		pump_direction = SIPHONING
 
-	if("stabalize" in signal.data)
+	if("stabilize" in signal.data)
 		pressure_checks |= EXT_BOUND
 		pump_direction = RELEASING
 
@@ -352,7 +354,10 @@
 		on = !on
 
 	if("checks" in signal.data)
+		var/old_checks = pressure_checks
 		pressure_checks = text2num(signal.data["checks"])
+		if(pressure_checks != old_checks)
+			investigate_log(" pressure checks were set to [pressure_checks] by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
 
 	if("checks_toggle" in signal.data)
 		pressure_checks = (pressure_checks?0:NO_BOUND)
@@ -361,10 +366,16 @@
 		pump_direction = text2num(signal.data["direction"])
 
 	if("set_internal_pressure" in signal.data)
+		var/old_pressure = internal_pressure_bound
 		internal_pressure_bound = CLAMP(text2num(signal.data["set_internal_pressure"]),0,ONE_ATMOSPHERE*50)
+		if(old_pressure != internal_pressure_bound)
+			investigate_log(" internal pressure was set to [internal_pressure_bound] by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
 
 	if("set_external_pressure" in signal.data)
+		var/old_pressure = external_pressure_bound
 		external_pressure_bound = CLAMP(text2num(signal.data["set_external_pressure"]),0,ONE_ATMOSPHERE*50)
+		if(old_pressure != external_pressure_bound)
+			investigate_log(" external pressure was set to [external_pressure_bound] by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
 
 	if("reset_external_pressure" in signal.data)
 		external_pressure_bound = ONE_ATMOSPHERE
@@ -399,7 +410,7 @@
 			user.visible_message("[user] welds the vent shut.", "<span class='notice'>You weld the vent shut.</span>", "<span class='italics'>You hear welding.</span>")
 			welded = TRUE
 		else
-			user.visible_message("[user] unwelds the vent.", "<span class='notice'>You unweld the vent.</span>", "<span class='italics'>You hear welding.</span>")
+			user.visible_message("[user] unwelded the vent.", "<span class='notice'>You unweld the vent.</span>", "<span class='italics'>You hear welding.</span>")
 			welded = FALSE
 		update_icon()
 		pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)

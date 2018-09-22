@@ -14,11 +14,6 @@ REVIVAL_CLONING
 ## amount of time (in hundredths of seconds) for which a brain retains the "spark of life" after the person's death (set to -1 for infinite)
 REVIVAL_BRAIN_LIFE -1
 
-## RENAMING ###
-
-## Uncomment to allow cyborgs to rename themselves at roundstart.  Has no effect on roboticists renaming cyborgs the normal way.
-#RENAME_CYBORG
-
 ## OOC DURING ROUND ###
 ## Comment this out if you want OOC to be automatically disabled during the round, it will be enabled during the lobby and after the round end results.
 OOC_DURING_ROUND
@@ -40,13 +35,16 @@ EMOJIS
 RUN_DELAY 1
 WALK_DELAY 4
 
-## The variables below affect the movement of specific mob types.
-HUMAN_DELAY 0
-ROBOT_DELAY 0
-MONKEY_DELAY 0
-ALIEN_DELAY 0
-SLIME_DELAY 0
-ANIMAL_DELAY 1
+## The variables below affect the movement of specific mob types. THIS AFFECTS ALL SUBTYPES OF THE TYPE YOU CHOOSE!
+## Entries completely override all subtypes. Later entries have precedence over earlier entries.
+## This means if you put /mob 0 on the last entry, it will null out all changes, while if you put /mob as the first entry and 
+## /mob/living/carbon/human on the last entry, the last entry will override the first.
+##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/human 0
+##MULTIPLICATIVE_MOVESPEED /mob/living/silicon/robot 0
+##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/monkey 0
+##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/alien 0
+##MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal/slime 0
+MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 1
 
 
 ## NAMES ###
@@ -259,6 +257,9 @@ EVENTS_MIN_PLAYERS_MUL 1
 
 ## Allow the AI job to be picked.
 ALLOW_AI
+
+## Allow the AI Multicamera feature to be used by AI players
+ALLOW_AI_MULTICAM
 
 ## Secborg ###
 ## Uncomment to prevent the security cyborg module from being chosen

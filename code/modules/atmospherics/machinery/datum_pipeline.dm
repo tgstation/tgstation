@@ -60,7 +60,7 @@
 									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z])")
 									pipenetwarnings -= 1
 									if(pipenetwarnings == 0)
-										warning("build_pipeline(): further messages about pipenets will be supressed")
+										warning("build_pipeline(): further messages about pipenets will be suppressed")
 							members += item
 							possible_expansions += item
 
@@ -129,6 +129,9 @@
 
 /obj/machinery/atmospherics/components/addMember(obj/machinery/atmospherics/A)
 	var/datum/pipeline/P = returnPipenet(A)
+	if(!P)
+		CRASH("null.addMember() called by [type] on [COORD(src)]")
+		return
 	P.addMember(A, src)
 
 

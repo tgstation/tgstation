@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "Switching mobs into/out of a mech (by VR, ghosting, or mindswap) no longer improperly applies the mech's cursor."

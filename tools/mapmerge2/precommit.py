@@ -9,6 +9,13 @@ def main(repo):
         print("You need to resolve merge conflicts first.")
         return 1
 
+    try:
+        repo.lookup_reference('MERGE_HEAD')
+        print("Not running mapmerge for merge commit.")
+        return 0
+    except KeyError:
+        pass
+
     changed = 0
     for path, status in repo.status().items():
         if path.endswith(".dmm") and (status & (pygit2.GIT_STATUS_INDEX_MODIFIED | pygit2.GIT_STATUS_INDEX_NEW)):
@@ -20,12 +27,12 @@ def main(repo):
                 head_blob = repo[repo[repo.head.target].tree[path].id]
             except KeyError:
                 # New map, no entry in HEAD
-                print(f"Converting new map: {path}")
+                print(f"Converting new map: {path}", flush=True)
                 assert (status & pygit2.GIT_STATUS_INDEX_NEW)
                 merged_map = index_map
             else:
                 # Entry in HEAD, merge the index over it
-                print(f"Merging map: {path}")
+                print(f"Merging map: {path}", flush=True)
                 assert not (status & pygit2.GIT_STATUS_INDEX_NEW)
                 head_map = dmm.DMM.from_bytes(head_blob.read_raw())
                 merged_map = merge_map(index_map, head_map)

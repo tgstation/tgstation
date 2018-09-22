@@ -57,7 +57,7 @@
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = card
-	var/turf/T = get_turf(src)
+	var/turf/T = drop_location()
 	card.forceMove(T)
 	forceMove(card)
 	canmove = FALSE
@@ -92,7 +92,7 @@
 	if(loc != card)
 		visible_message("<span class='notice'>[src] [rest? "lays down for a moment..." : "perks up from the ground"]</span>")
 
-/mob/living/silicon/pai/start_pulling(atom/movable/AM)
+/mob/living/silicon/pai/start_pulling(atom/movable/AM, state, force = move_force, supress_message = FALSE)
 	return FALSE
 
 /mob/living/silicon/pai/proc/toggle_integrated_light()
@@ -103,10 +103,6 @@
 		set_light(0)
 		to_chat(src, "<span class='notice'>You disable your integrated light.</span>")
 
-/mob/living/silicon/pai/movement_delay()
-	. = ..()
-	. += 1 //A bit slower than humans, so they're easier to smash
-
 /mob/living/silicon/pai/mob_pickup(mob/living/L)
 	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, chassis, item_head_icon, item_lh_icon, item_rh_icon)
 	if(!L.put_in_hands(holder))
@@ -116,6 +112,6 @@
 
 /mob/living/silicon/pai/mob_try_pickup(mob/living/user)
 	if(!possible_chassis[chassis])
-		to_chat(user, "<span class='wraning'>[src]'s current form isn't able to be carried!</span>")
+		to_chat(user, "<span class='warning'>[src]'s current form isn't able to be carried!</span>")
 		return FALSE
 	return ..()

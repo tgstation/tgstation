@@ -38,8 +38,8 @@ To add a crossbreed:
 	throw_range = 6
 
 /obj/item/slimecross/Initialize()
-	..()
-	name = colour + " " + name
+	. = ..()
+	name =  effect + " " + colour + " extract"
 	var/itemcolor = "#FFFFFF"
 	switch(colour)
 		if("orange")
@@ -94,7 +94,7 @@ To add a crossbreed:
 	var/list/list_reagents
 
 /obj/item/slimecrossbeaker/Initialize()
-	..()
+	. = ..()
 	create_reagents(50)
 	if(list_reagents)
 		for(var/reagent in list_reagents)

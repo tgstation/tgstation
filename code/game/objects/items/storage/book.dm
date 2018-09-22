@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		H.visible_message("<span class='notice'>[user] heals [H] with the power of [deity_name]!</span>")
 		to_chat(H, "<span class='boldnotice'>May the power of [deity_name] compel you to be healed!</span>")
 		playsound(src.loc, "punch", 25, 1, -1)
-		H.SendSignal(COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return 1
 
 /obj/item/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
@@ -146,13 +146,14 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", \
 					"<span class='userdanger'>[user] beats [M] over the head with [src]!</span>")
 			playsound(src.loc, "punch", 25, 1, -1)
-			add_logs(user, M, "attacked", src)
+			log_combat(user, M, "attacked", src)
 
 	else
 		M.visible_message("<span class='danger'>[user] smacks [M]'s lifeless corpse with [src].</span>")
 		playsound(src.loc, "punch", 25, 1, -1)
 
 /obj/item/storage/book/bible/afterattack(atom/A, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(isfloorturf(A))
@@ -186,9 +187,23 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 				SS.release_shades(user)
 				qdel(SS)
 			new /obj/item/nullrod/claymore(get_turf(sword))
-			user.visible_message("<span class='notice'>[user] has purified the [sword]!!</span>")
+			user.visible_message("<span class='notice'>[user] has purified the [sword]!</span>")
 			qdel(sword)
 
+	else if(istype(A, /obj/item/soulstone) && !iscultist(user))
+		var/obj/item/soulstone/SS = A
+		to_chat(user, "<span class='notice'>You begin to exorcise [SS].</span>")
+		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
+		if(do_after(user, 40, target = SS))
+			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
+			SS.usability = TRUE
+			for(var/mob/living/simple_animal/shade/EX in SS)
+				SSticker.mode.remove_cultist(EX.mind, 1, 0)
+				EX.icon_state = "ghost1"
+				EX.name = "Purified [EX.name]"
+				SS.release_shades(user)
+			user.visible_message("<span class='notice'>[user] has purified the [SS]!</span>")
+			qdel(SS)
 
 /obj/item/storage/book/bible/booze
 	desc = "To be applied to the head repeatedly."

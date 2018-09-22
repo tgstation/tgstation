@@ -14,6 +14,7 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics
 	anchored = TRUE
+	move_resist = INFINITY				//Moving a connected machine without actually doing the normal (dis)connection things will probably cause a LOT of issues.
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = ENVIRON
@@ -125,7 +126,7 @@ Pipelines + Other Objects -> Pipe network
 	pixel_y = (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
 	layer = initial(layer) + ((piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE)
 
-/obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target)
+/obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target, iteration)
 	return connection_check(target, piping_layer)
 
 //Find a connecting /obj/machinery/atmospherics in specified direction

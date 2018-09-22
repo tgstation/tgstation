@@ -81,7 +81,7 @@ the new instance inside the host to be updated to the template's stats.
 /mob/camera/disease/Login()
 	..()
 	if(freemove)
-		to_chat(src, "<span class='warning'>You have [round((freemove_end - world.time)/10)] seconds to select your first host. Click on a human to select your host.</span>")
+		to_chat(src, "<span class='warning'>You have [DisplayTimeText(freemove_end - world.time)] to select your first host. Click on a human to select your host.</span>")
 
 
 /mob/camera/disease/Stat()
@@ -107,7 +107,7 @@ the new instance inside the host to be updated to the template's stats.
 			if(istype(B))
 				to_chat(user, "<span class='notice'>[B.name]</span>")
 
-/mob/camera/disease/say(message)
+/mob/camera/disease/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	return
 
 /mob/camera/disease/Move(NewLoc, Dir = 0)
@@ -245,7 +245,7 @@ the new instance inside the host to be updated to the template's stats.
 /mob/camera/disease/proc/set_following(mob/living/L)
 	following_host = L
 	if(!move_listener)
-		move_listener = L.AddComponent(/datum/component/redirect, COMSIG_MOVABLE_MOVED, CALLBACK(src, .proc/follow_mob))
+		move_listener = L.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/follow_mob)))
 	else
 		L.TakeComponent(move_listener)
 		if(QDELING(move_listener))
@@ -261,7 +261,7 @@ the new instance inside the host to be updated to the template's stats.
 			index = index == hosts.len ? 1 : index + 1
 		set_following(hosts[index])
 
-/mob/camera/disease/proc/follow_mob(newloc, dir)
+/mob/camera/disease/proc/follow_mob(datum/source, newloc, dir)
 	var/turf/T = get_turf(following_host)
 	if(T)
 		forceMove(T)
@@ -285,7 +285,7 @@ the new instance inside the host to be updated to the template's stats.
 		..()
 
 /mob/camera/disease/proc/adapt_cooldown()
-	to_chat(src, "<span class='notice'>You have altered your genetic structure. You will be unable to adapt again for [adaptation_cooldown/10] seconds.</span>")
+	to_chat(src, "<span class='notice'>You have altered your genetic structure. You will be unable to adapt again for [DisplayTimeText(adaptation_cooldown)].</span>")
 	next_adaptation_time = world.time + adaptation_cooldown
 	addtimer(CALLBACK(src, .proc/notify_adapt_ready), adaptation_cooldown)
 
@@ -310,7 +310,7 @@ the new instance inside the host to be updated to the template's stats.
 			Resistance: [DT.totalResistance()]<br>\
 			Stealth: [DT.totalStealth()]<br>\
 			Stage Speed: [DT.totalStageSpeed()]<br>\
-			Transmittability: [DT.totalTransmittable()]<hr>\
+			Transmissibility: [DT.totalTransmittable()]<hr>\
 			Cure: [DT.cure_text]"
 		dat += "<hr><h1>Adaptations</h1>\
 			Points: [points] / [total_points]\

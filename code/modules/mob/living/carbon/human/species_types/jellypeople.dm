@@ -57,7 +57,7 @@
 	if(!limbs_to_consume.len)
 		H.losebreath++
 		return
-	if(H.get_num_legs()) //Legs go before arms
+	if(H.get_num_legs(FALSE)) //Legs go before arms
 		limbs_to_consume -= list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
 	consumed_limb = H.get_bodypart(pick(limbs_to_consume))
 	consumed_limb.drop_limb()
@@ -587,7 +587,7 @@
 /datum/species/jelly/stargazer/proc/link_mob(mob/living/M)
 	if(QDELETED(M) || M.stat == DEAD)
 		return FALSE
-	if(M.isloyal()) //mindshield implant, no dice
+	if(M.has_trait(TRAIT_MINDSHIELD)) //mindshield implant, no dice
 		return FALSE
 	if(M in linked_mobs)
 		return FALSE
@@ -640,7 +640,7 @@
 
 	if(message)
 		var/msg = "<i><font color=#008CA2>\[[species.slimelink_owner.real_name]'s Slime Link\] <b>[H]:</b> [message]</font></i>"
-		log_talk(H,"SlimeLink: [key_name(H)] : [msg]",LOGSAY)
+		log_directed_talk(H, species.slimelink_owner, msg, LOG_SAY, "slime link")
 		for(var/X in species.linked_mobs)
 			var/mob/living/M = X
 			if(QDELETED(M) || M.stat == DEAD)
@@ -662,6 +662,8 @@
 
 /datum/action/innate/project_thought/Activate()
 	var/mob/living/carbon/human/H = owner
+	if(H.stat == DEAD)
+		return
 	if(!is_species(H, /datum/species/jelly/stargazer))
 		return
 	CHECK_DNA_AND_SPECIES(H)
@@ -675,7 +677,7 @@
 
 	var/msg = sanitize(input("Message:", "Telepathy") as text|null)
 	if(msg)
-		log_talk(H,"SlimeTelepathy: [key_name(H)]->[M.key] : [msg]",LOGSAY)
+		log_directed_talk(H, M, msg, LOG_SAY, "slime telepathy")
 		to_chat(M, "<span class='notice'>You hear an alien voice in your head... </span><font color=#008CA2>[msg]</font>")
 		to_chat(H, "<span class='notice'>You telepathically said: \"[msg]\" to [M]</span>")
 		for(var/dead in GLOB.dead_mob_list)

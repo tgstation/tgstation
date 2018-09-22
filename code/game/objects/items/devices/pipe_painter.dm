@@ -9,6 +9,7 @@
 	materials = list(MAT_METAL=5000, MAT_GLASS=2000)
 
 /obj/item/pipe_painter/afterattack(atom/A, mob/user, proximity_flag)
+	. = ..()
 	//Make sure we only paint adjacent items
 	if(!proximity_flag)
 		return

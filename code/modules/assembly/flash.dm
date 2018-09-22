@@ -1,3 +1,4 @@
+#define CONFUSION_STACK_MAX_MULTIPLIER 2
 /obj/item/assembly/flash
 	name = "flash"
 	desc = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production."
@@ -9,6 +10,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	materials = list(MAT_METAL = 300, MAT_GLASS = 300)
 	crit_fail = FALSE     //Is the flash burnt out?
+	light_color = LIGHT_COLOR_WHITE
+	light_power = FLASH_LIGHT_POWER
 	var/times_used = 0 //Number of times it's been used.
 	var/burnout_resistance = 0
 	var/last_used = 0 //last world.time it was used.
@@ -86,13 +89,14 @@
 	if(isturf(target_loc) || (ismob(target_loc) && isturf(target_loc.loc)))
 		return viewers(range, get_turf(target_loc))
 	else
-		return typecache_filter_list(target_loc.GetAllContents(), typecacheof(list(/mob/living)))
+		return typecache_filter_list(target_loc.GetAllContents(), GLOB.typecache_living)
 
 /obj/item/assembly/flash/proc/try_use_flash(mob/user = null)
 	if(crit_fail || (world.time < last_trigger + cooldown))
 		return FALSE
 	last_trigger = world.time
 	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
+	flash_lighting_fx(FLASH_LIGHT_RANGE, light_power, light_color)
 	times_used++
 	flash_recharge()
 	update_icon(TRUE)
@@ -103,12 +107,17 @@
 /obj/item/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
 	if(!istype(M))
 		return
-	add_logs(user, M, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
+	if(user)
+		log_combat(user, M, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
+	else //caused by emp/remote signal
+		M.log_message("was [targeted? "flashed(targeted)" : "flashed(AOE)"]",LOG_ATTACK)
 	if(generic_message && M != user)
 		to_chat(M, "<span class='disarm'>[src] emits a blinding light!</span>")
 	if(targeted)
 		if(M.flash_act(1, 1))
-			M.confused += power
+			if(M.confused < power)
+				var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
+				M.confused += min(power, diff)
 			if(user)
 				terrible_conversion_proc(M, user)
 				visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
@@ -125,7 +134,8 @@
 			to_chat(M, "<span class='danger'>[src] fails to blind you!</span>")
 	else
 		if(M.flash_act())
-			M.confused += power
+			var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
+			M.confused += min(power, diff)
 
 /obj/item/assembly/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
@@ -135,10 +145,11 @@
 		return TRUE
 	else if(issilicon(M))
 		var/mob/living/silicon/robot/R = M
-		add_logs(user, R, "flashed", src)
+		log_combat(user, R, "flashed", src)
 		update_icon(1)
-		M.Knockdown(rand(80,120))
-		R.confused += 5
+		R.Knockdown(rand(80,120))
+		var/diff = 5 * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
+		R.confused += min(5, diff)
 		R.flash_act(affect_silicon = 1)
 		user.visible_message("<span class='disarm'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
 		return TRUE
@@ -161,7 +172,7 @@
 	AOE_flash()
 	burn_out()
 
-/obj/item/assembly/flash/activate()//AOE flash on signal recieved
+/obj/item/assembly/flash/activate()//AOE flash on signal received
 	if(!..())
 		return
 	AOE_flash()
@@ -210,7 +221,7 @@
 
 /obj/item/assembly/flash/armimplant
 	name = "photon projector"
-	desc = "A high-powered photon projector implant normally used for lighting purposes, but also doubles as a flashbulb weapon. Self-repair protocals fix the flashbulb if it ever burns out."
+	desc = "A high-powered photon projector implant normally used for lighting purposes, but also doubles as a flashbulb weapon. Self-repair protocols fix the flashbulb if it ever burns out."
 	var/flashcd = 20
 	var/overheat = 0
 	var/obj/item/organ/cyberimp/arm/flash/I = null

@@ -17,7 +17,7 @@
 	var/weather_overlay
 	var/weather_color = null
 
-	var/end_message = "<span class='danger'>The wind relents its assault.</span>" //Displayed once the wather is over
+	var/end_message = "<span class='danger'>The wind relents its assault.</span>" //Displayed once the weather is over
 	var/end_duration = 300 //In deciseconds, how long the "wind-down" graphic will appear before vanishing entirely
 	var/end_sound
 	var/end_overlay

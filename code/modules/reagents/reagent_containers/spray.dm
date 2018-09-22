@@ -24,6 +24,7 @@
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 
 /obj/item/reagent_containers/spray/afterattack(atom/A, mob/user)
+	. = ..()
 	if(istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart) || istype(A, /obj/machinery/hydroponics))
 		return
 
@@ -187,6 +188,9 @@
 	amount_per_transfer_from_this = 5
 	list_reagents = list("condensedcapsaicin" = 40)
 
+/obj/item/reagent_containers/spray/pepper/empty //for protolathe printing
+	list_reagents = null
+
 /obj/item/reagent_containers/spray/pepper/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins huffing \the [src]! It looks like [user.p_theyre()] getting a dirty high!</span>")
 	return OXYLOSS
@@ -195,7 +199,7 @@
 /obj/item/reagent_containers/spray/pepper/afterattack(atom/A as mob|obj, mob/user)
 	if (A.loc == user)
 		return
-	..()
+	. = ..()
 
 //water flower
 /obj/item/reagent_containers/spray/waterflower
@@ -273,7 +277,7 @@
 	// Make it so the bioterror spray doesn't spray yourself when you click your inventory items
 	if (A.loc == user)
 		return
-	..()
+	. = ..()
 
 /obj/item/reagent_containers/spray/chemsprayer/spray(atom/A)
 	var/direction = get_dir(src, A)

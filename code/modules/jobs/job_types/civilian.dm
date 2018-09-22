@@ -18,7 +18,7 @@ Clown
 	minimal_access = list(ACCESS_THEATRE)
 
 /datum/job/clown/after_spawn(mob/living/carbon/human/H, mob/M)
-	H.rename_self("clown", M.client)
+	H.apply_pref_name("clown", M.client)
 
 /datum/outfit/job/clown
 	name = "Clown"
@@ -81,7 +81,7 @@ Mime
 	minimal_access = list(ACCESS_THEATRE)
 
 /datum/job/mime/after_spawn(mob/living/carbon/human/H, mob/M)
-	H.rename_self("mime", M.client)
+	H.apply_pref_name("mime", M.client)
 
 /datum/outfit/job/mime
 	name = "Mime"
@@ -154,7 +154,6 @@ Curator
 		return
 
 	H.grant_all_languages(omnitongue=TRUE)
-	H.gain_trauma(/datum/brain_trauma/mild/phobia, TRAUMA_RESILIENCE_SURGERY, "snakes") //why does it have to be snakes...
 /*
 Lawyer
 */

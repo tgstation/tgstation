@@ -42,9 +42,9 @@
 			for(var/obj/structure/transit_tube_pod/pod in src.loc)
 				to_chat(user, "<span class='warning'>Remove the pod first!</span>")
 				return
-			user.visible_message("[user] starts to deattach \the [src].", "<span class='notice'>You start to deattach the [name]...</span>")
+			user.visible_message("[user] starts to detach \the [src].", "<span class='notice'>You start to detach the [name]...</span>")
 			if(W.use_tool(src, user, time_to_unwrench, volume=50))
-				to_chat(user, "<span class='notice'>You deattach the [name].</span>")
+				to_chat(user, "<span class='notice'>You detach the [name].</span>")
 				var/obj/structure/c_transit_tube/R = new tube_construction(loc)
 				R.setDir(dir)
 				transfer_fingerprints_to(R)

@@ -101,7 +101,10 @@ Actual Adjacent procs :
 	//sanitation
 	var/turf/end = get_turf(_end)
 	var/turf/start = get_turf(caller)
-	if((!start)||(start.z != end.z)||(start == end)) //no pathfinding between z levels
+	if(!start || !end)
+		stack_trace("Invalid A* start or destination")
+		return 0
+	if( start.z != end.z || start == end ) //no pathfinding between z levels
 		return 0
 	if(maxnodes)
 		//if start turf is farther than maxnodes from end turf, no need to do anything

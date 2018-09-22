@@ -12,7 +12,7 @@ Charged extracts:
 	icon_state = "charged"
 
 /obj/item/slimecross/charged/Initialize()
-	..()
+	. = ..()
 	create_reagents(10)
 
 /obj/item/slimecross/charged/attack_self(mob/user)
@@ -196,7 +196,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/gold/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	..()
+	return ..()
 
 /obj/item/slimecross/charged/oil
 	colour = "oil"
@@ -315,7 +315,7 @@ Charged extracts:
 	var/uses = 2
 
 /obj/item/slimepotion/spaceproof/afterattack(obj/item/clothing/C, mob/user, proximity)
-	..()
+	. = ..()
 	if(!uses)
 		qdel(src)
 		return
@@ -349,10 +349,11 @@ Charged extracts:
 	desc = "A strange, reddish goo said to repel lava as if it were water, without reducing flammability. Has two uses."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potred"
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	var/uses = 2
 
 /obj/item/slimepotion/lavaproof/afterattack(obj/item/C, mob/user, proximity)
-	..()
+	. = ..()
 	if(!uses)
 		qdel(src)
 		return ..()
@@ -386,6 +387,9 @@ Charged extracts:
 	if(user == M)
 		to_chat(user, "<span class='warning'>You can't drink the love potion. What are you, a narcissist?</span>")
 		return ..()
+	if(M.has_status_effect(STATUS_EFFECT_INLOVE))
+		to_chat(user, "<span class='warning'>[M] is already lovestruck!</span>")
+		return ..()
 
 	M.visible_message("<span class='danger'>[user] starts to feed [M] a love potion!</span>",
 		"<span class='userdanger'>[user] starts to feed you a love potion!</span>")
@@ -393,10 +397,11 @@ Charged extracts:
 	if(!do_after(user, 50, target = M))
 		return
 	to_chat(user, "<span class='notice'>You feed [M] the love potion!</span>")
-	to_chat(M, "<span class='notice'>You develop feelings for [user], and anyone [p_they(user)] like.</span>")
-	if(!("[REF(user)]" in M.faction) && M.mind)
-		M.mind.store_memory("You have strong feelings for [user].")
+	to_chat(M, "<span class='notice'>You develop feelings for [user], and anyone [user.p_they()] like.</span>")
+	if(M.mind)
+		M.mind.store_memory("You are in love with [user].")
 	M.faction |= "[REF(user)]"
+	M.apply_status_effect(STATUS_EFFECT_INLOVE, user)
 	qdel(src)
 
 /obj/item/slimepotion/peacepotion

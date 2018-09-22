@@ -75,13 +75,7 @@
 	var/overload_maxhealth = 0
 	canmove = FALSE
 	var/silent = FALSE
-	var/hit_slowdown = 0
 	var/brightness_power = 5
-	var/slowdown = 0
-
-/mob/living/silicon/pai/movement_delay()
-	. = ..()
-	. += slowdown
 
 /mob/living/silicon/pai/can_unbuckle()
 	return FALSE
@@ -90,6 +84,11 @@
 	return FALSE
 
 /mob/living/silicon/pai/Destroy()
+	if (loc != card)
+		card.forceMove(drop_location())
+	card.pai = null
+	card.cut_overlays()
+	card.add_overlay("pai-off")
 	GLOB.pai_list -= src
 	return ..()
 
@@ -231,7 +230,7 @@
 		P.fold_out()
 
 /datum/action/innate/pai/chassis
-	name = "Holochassis Appearence Composite"
+	name = "Holochassis Appearance Composite"
 	button_icon_state = "pai_chassis"
 	background_icon_state = "bg_tech"
 
@@ -261,9 +260,9 @@
 /mob/living/silicon/pai/Process_Spacemove(movement_dir = 0)
 	. = ..()
 	if(!.)
-		slowdown = 2
+		add_movespeed_modifier(MOVESPEED_ID_PAI_SPACEWALK_SPEEDMOD, TRUE, 100, multiplicative_slowdown = 2)
 		return TRUE
-	slowdown = initial(slowdown)
+	remove_movespeed_modifier(MOVESPEED_ID_PAI_SPACEWALK_SPEEDMOD, TRUE)
 	return TRUE
 
 /mob/living/silicon/pai/examine(mob/user)
@@ -288,7 +287,5 @@
 	health = maxHealth - getBruteLoss() - getFireLoss()
 	update_stat()
 
-
 /mob/living/silicon/pai/process()
 	emitterhealth = CLAMP((emitterhealth + emitterregen), -50, emittermaxhealth)
-	hit_slowdown = CLAMP((hit_slowdown - 1), 0, 100)

@@ -261,7 +261,7 @@
 
 		//This code handles moving the turret around. After all, it's a portable turret!
 		if(!anchored && !isinspace())
-			anchored = TRUE
+			setAnchored(TRUE)
 			invisibility = INVISIBILITY_MAXIMUM
 			update_icon()
 			to_chat(user, "<span class='notice'>You secure the exterior bolts on the turret.</span>")
@@ -269,7 +269,7 @@
 				cover = new /obj/machinery/porta_turret_cover(loc) //create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
 				cover.parent_turret = src //make the cover's parent src
 		else if(anchored)
-			anchored = FALSE
+			setAnchored(FALSE)
 			to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
 			power_change()
 			invisibility = 0
@@ -485,7 +485,7 @@
 			threatcount += 4
 
 	if(shoot_unloyal)
-		if (!perp.isloyal())
+		if (!perp.has_trait(TRAIT_MINDSHIELD))
 			threatcount += 4
 
 	return threatcount
@@ -548,12 +548,9 @@
 
 	//Shooting Code:
 	A.preparePixelProjectile(target, T)
+	A.firer = src
 	A.fire()
 	return A
-
-/obj/machinery/porta_turret/shuttleRotate(rotation)
-	if(wall_turret_direction)
-		wall_turret_direction = turn(wall_turret_direction,rotation)
 
 /obj/machinery/porta_turret/proc/setState(on, mode)
 	if(controllock)
@@ -625,7 +622,7 @@
 	if(!can_interact(caller))
 		remove_control()
 		return FALSE
-	add_logs(caller,A,"fired with manual turret control at")
+	log_combat(caller,A,"fired with manual turret control at")
 	target(A)
 	return TRUE
 
@@ -740,8 +737,8 @@
 	integrity_failure = 60
 	name = "Old Laser Turret"
 	desc = "A turret built with substandard parts and run down further with age. Still capable of delivering lethal lasers to the odd space carp, but not much else."
-	stun_projectile = /obj/item/projectile/beam/weak
-	lethal_projectile = /obj/item/projectile/beam/weak
+	stun_projectile = /obj/item/projectile/beam/weak/penetrator
+	lethal_projectile = /obj/item/projectile/beam/weak/penetrator
 	faction = list("neutral","silicon","turret")
 
 ////////////////////////
@@ -792,6 +789,12 @@
 	for(var/obj/machinery/porta_turret/T in control_area)
 		turrets |= T
 		T.cp = src
+
+/obj/machinery/turretid/examine(mob/user)
+	..()
+	if(issilicon(user) && (!stat & BROKEN))
+		to_chat(user, "<span class='notice'>Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.</span>")
+		to_chat(user, "<span class='notice'>Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].</span>")
 
 /obj/machinery/turretid/attackby(obj/item/I, mob/user, params)
 	if(stat & BROKEN)

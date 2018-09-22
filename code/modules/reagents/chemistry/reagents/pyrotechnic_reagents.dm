@@ -11,10 +11,10 @@
 	if(reac_volume >= 1)
 		T.AddComponent(/datum/component/thermite, reac_volume)
 
-/datum/reagent/thermite/on_mob_life(mob/living/M)
+/datum/reagent/thermite/on_mob_life(mob/living/carbon/M)
 	M.adjustFireLoss(1, 0)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/nitroglycerin
 	name = "Nitroglycerin"
@@ -40,12 +40,12 @@
 	metabolization_rate = 4
 	taste_description = "burning"
 
-/datum/reagent/clf3/on_mob_life(mob/living/M)
+/datum/reagent/clf3/on_mob_life(mob/living/carbon/M)
 	M.adjust_fire_stacks(2)
 	var/burndmg = max(0.3*M.fire_stacks, 0.3)
 	M.adjustFireLoss(burndmg, 0)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/clf3/reaction_turf(turf/T, reac_volume)
 	if(isplatingturf(T))
@@ -100,7 +100,7 @@
 	metabolization_rate = 0.05
 	taste_description = "salt"
 
-/datum/reagent/blackpowder/on_mob_life(mob/living/M)
+/datum/reagent/blackpowder/on_mob_life(mob/living/carbon/M)
 	..()
 	if(isplasmaman(M))
 		M.hallucination += 5
@@ -151,12 +151,12 @@
 	M.IgniteMob()
 	..()
 
-/datum/reagent/phlogiston/on_mob_life(mob/living/M)
+/datum/reagent/phlogiston/on_mob_life(mob/living/carbon/M)
 	M.adjust_fire_stacks(1)
 	var/burndmg = max(0.3*M.fire_stacks, 0.3)
 	M.adjustFireLoss(burndmg, 0)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/napalm
 	name = "Napalm"
@@ -166,7 +166,7 @@
 	color = "#FA00AF"
 	taste_description = "burning"
 
-/datum/reagent/napalm/on_mob_life(mob/living/M)
+/datum/reagent/napalm/on_mob_life(mob/living/carbon/M)
 	M.adjust_fire_stacks(1)
 	..()
 
@@ -184,7 +184,7 @@
 	taste_description = "bitterness"
 
 
-/datum/reagent/cryostylane/on_mob_life(mob/living/M) //TODO: code freezing into an ice cube
+/datum/reagent/cryostylane/on_mob_life(mob/living/carbon/M) //TODO: code freezing into an ice cube
 	if(M.reagents.has_reagent("oxygen"))
 		M.reagents.remove_reagent("oxygen", 0.5)
 		M.adjust_bodytemperature(-15)
@@ -203,7 +203,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
 
-/datum/reagent/pyrosium/on_mob_life(mob/living/M)
+/datum/reagent/pyrosium/on_mob_life(mob/living/carbon/M)
 	if(M.reagents.has_reagent("oxygen"))
 		M.reagents.remove_reagent("oxygen", 0.5)
 		M.adjust_bodytemperature(15)
@@ -219,7 +219,7 @@
 	taste_description = "charged metal"
 	var/shock_timer = 0
 
-/datum/reagent/teslium/on_mob_life(mob/living/M)
+/datum/reagent/teslium/on_mob_life(mob/living/carbon/M)
 	shock_timer++
 	if(shock_timer >= rand(5,30)) //Random shocks are wildly unpredictable
 		shock_timer = 0
@@ -235,7 +235,7 @@
 	color = "#CAFF43"
 	taste_description = "jelly"
 
-/datum/reagent/teslium/energized_jelly/on_mob_life(mob/living/M)
+/datum/reagent/teslium/energized_jelly/on_mob_life(mob/living/carbon/M)
 	if(isjellyperson(M))
 		shock_timer = 0 //immune to shocks
 		M.AdjustStun(-40, 0)
@@ -280,8 +280,6 @@
 	O.extinguish()
 
 /datum/reagent/firefighting_foam/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(!istype(M))
-		return
 	if(method in list(VAPOR, TOUCH))
 		M.adjust_fire_stacks(-reac_volume)
 		M.ExtinguishMob()

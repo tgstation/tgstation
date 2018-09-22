@@ -14,7 +14,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/list/objectives = list()
 	var/antag_memory = ""//These will be removed with antag datum
 	var/antag_moodlet //typepath of moodlet that the mob will gain with their status
-
+	var/can_hijack = HIJACK_NEUTRAL //If these antags are alone on shuttle hijack happens.
+	
 	//Antag panel properties
 	var/show_in_antagpanel = TRUE	//This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
 	var/antagpanel_category = "Uncategorized"	//Antagpanel will display these together, REQUIRED
@@ -75,7 +76,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/is_banned(mob/M)
 	if(!M)
 		return FALSE
-	. = (jobban_isbanned(M, ROLE_SYNDICATE) || (job_rank && jobban_isbanned(M,job_rank)))
+	. = (jobban_isbanned(M, ROLE_SYNDICATE) || QDELETED(M) || (job_rank && (jobban_isbanned(M,job_rank) || QDELETED(M))))
 
 /datum/antagonist/proc/replace_banned_player()
 	set waitfor = FALSE
@@ -95,7 +96,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 		LAZYREMOVE(owner.antag_datums, src)
 		if(!silent && owner.current)
 			farewell()
-		owner.objectives -= objectives
 	var/datum/team/team = get_team()
 	if(team)
 		team.remove_member(owner)
@@ -110,12 +110,12 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/give_antag_moodies()
 	if(!antag_moodlet)
 		return
-	owner.current.SendSignal(COMSIG_ADD_MOOD_EVENT, "antag_moodlet", antag_moodlet)
+	SEND_SIGNAL(owner.current, COMSIG_ADD_MOOD_EVENT, "antag_moodlet", antag_moodlet)
 
 /datum/antagonist/proc/clear_antag_moodies()
 	if(!antag_moodlet)
 		return
-	owner.current.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "antag_moodlet")
+	SEND_SIGNAL(owner.current, COMSIG_CLEAR_MOOD_EVENT, "antag_moodlet")
 
 //Returns the team antagonist belongs to if any.
 /datum/antagonist/proc/get_team()
@@ -131,14 +131,14 @@ GLOBAL_LIST_EMPTY(antagonists)
 	report += printplayer(owner)
 
 	var/objectives_complete = TRUE
-	if(owner.objectives.len)
-		report += printobjectives(owner)
-		for(var/datum/objective/objective in owner.objectives)
+	if(objectives.len)
+		report += printobjectives(objectives)
+		for(var/datum/objective/objective in objectives)
 			if(!objective.check_completion())
 				objectives_complete = FALSE
 				break
 
-	if(owner.objectives.len == 0 || objectives_complete)
+	if(objectives.len == 0 || objectives_complete)
 		report += "<span class='greentext big'>The [name] was successful!</span>"
 	else
 		report += "<span class='redtext big'>The [name] has failed!</span>"
@@ -214,25 +214,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if (isnull(new_memo))
 		return
 	antag_memory = new_memo
-
-//This datum will autofill the name with special_role
-//Used as placeholder for minor antagonists, please create proper datums for these
-/datum/antagonist/auto_custom
-	show_in_antagpanel = FALSE
-	antagpanel_category = "Other"
-	show_name_in_check_antagonists = TRUE
-
-/datum/antagonist/auto_custom/on_gain()
-	..()
-	name = owner.special_role
-	//Add all objectives not already owned by other datums to this one.
-	var/list/already_registered_objectives = list()
-	for(var/datum/antagonist/A in owner.antag_datums)
-		if(A == src)
-			continue
-		else
-			already_registered_objectives |= A.objectives
-	objectives = owner.objectives - already_registered_objectives
 
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom

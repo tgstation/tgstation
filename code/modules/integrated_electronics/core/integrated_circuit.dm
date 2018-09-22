@@ -24,7 +24,10 @@
 	var/category_text = "NO CATEGORY THIS IS A BUG"	// To show up on circuit printer, and perhaps other places.
 	var/removable = TRUE 			// Determines if a circuit is removable from the assembly.
 	var/displayed_name = ""
-
+	var/demands_object_input = FALSE
+	var/can_input_object_when_closed = FALSE
+	
+	
 /*
 	Integrated circuits are essentially modular machines.  Each circuit has a specific function, and combining them inside Electronic Assemblies allows
 a creative player the means to solve many problems.  Circuits are held inside an electronic assembly, and are wired using special tools.
@@ -34,6 +37,10 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	interact(user)
 	external_examine(user)
 	. = ..()
+
+// Can be called via electronic_assembly/attackby()
+/obj/item/integrated_circuit/proc/additem(var/obj/item/I, var/mob/living/user)
+	attackby(I, user)
 
 // This should be used when someone is examining while the case is opened.
 /obj/item/integrated_circuit/proc/internal_examine(mob/user)
@@ -247,11 +254,14 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 	if(href_list["rename"])
 		rename_component(usr)
+		if(assembly)
+			assembly.add_allowed_scanner(usr.ckey)
 
 	if(href_list["pin"])
 		var/datum/integrated_io/pin = locate(href_list["pin"]) in inputs + outputs + activators
 		if(pin)
 			var/datum/integrated_io/linked
+			var/success = TRUE
 			if(href_list["link"])
 				linked = locate(href_list["link"]) in pin.linked
 
@@ -259,6 +269,9 @@ a creative player the means to solve many problems.  Circuits are held inside an
 				pin.handle_wire(linked, held_item, href_list["act"], usr)
 			else
 				to_chat(usr, "<span class='warning'>You can't do a whole lot without the proper tools.</span>")
+				success = FALSE
+			if(success && assembly)
+				assembly.add_allowed_scanner(usr.ckey)
 
 	if(href_list["scan"])
 		if(istype(held_item, /obj/item/integrated_electronics/debugger))

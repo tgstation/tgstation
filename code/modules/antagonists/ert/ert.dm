@@ -12,6 +12,7 @@
 	var/list/name_source
 	show_in_antagpanel = FALSE
 	antag_moodlet = /datum/mood_event/focused
+	can_hijack = HIJACK_PREVENT
 
 /datum/antagonist/ert/on_gain()
 	update_name()
@@ -100,7 +101,6 @@
 /datum/antagonist/ert/proc/forge_objectives()
 	if(ert_team)
 		objectives |= ert_team.objectives
-	owner.objectives |= objectives
 
 /datum/antagonist/ert/proc/equipERT()
 	var/mob/living/carbon/human/H = owner.current

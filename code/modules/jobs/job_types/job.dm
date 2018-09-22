@@ -49,7 +49,7 @@
 	var/exp_type_department = ""
 
 	//The amount of good boy points playing this role will earn you towards a higher chance to roll antagonist next round
-	//can be overriden by antag_rep.txt config
+	//can be overridden by antag_rep.txt config
 	var/antag_rep = 10
 
 //Only override this proc
@@ -69,26 +69,25 @@
 	return TRUE
 
 /datum/job/proc/GetAntagRep()
-	. = CONFIG_GET(keyed_number_list/antag_rep)[lowertext(title)]
+	. = CONFIG_GET(keyed_list/antag_rep)[lowertext(title)]
 	if(. == null)
 		return antag_rep
 
 //Don't override this unless the job transforms into a non-human (Silicons do this for example)
-/datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE)
+/datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, datum/outfit/outfit_override = null)
 	if(!H)
 		return FALSE
 
 	if(CONFIG_GET(flag/enforce_human_authority) && (title in GLOB.command_positions))
 		if(H.dna.species.id != "human")
 			H.set_species(/datum/species/human)
-			H.rename_self("human", H.client)
-		purrbation_remove(H, silent=TRUE)
+			H.apply_pref_name("human", H.client)
 
 	//Equip the rest of the gear
 	H.dna.species.before_equip_job(src, H, visualsOnly)
 
-	if(outfit)
-		H.equipOutfit(outfit, visualsOnly)
+	if(outfit_override || outfit)
+		H.equipOutfit(outfit_override ? outfit_override : outfit, visualsOnly)
 
 	H.dna.species.after_equip_job(src, H, visualsOnly)
 

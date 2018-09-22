@@ -27,6 +27,7 @@
 	foodtype = VEGETABLES
 	juice_results = list("corn_starch" = 0)
 	tastes = list("corn" = 1)
+	distill_reagent = "whiskey"
 
 /obj/item/grown/corncob
 	name = "corn cob"

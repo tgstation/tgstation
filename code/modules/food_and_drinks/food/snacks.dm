@@ -1,3 +1,33 @@
+/** # Snacks
+
+Items in the "Snacks" subcategory are food items that people actually eat. The key points are that they are created
+already filled with reagents and are destroyed when empty. Additionally, they make a "munching" noise when eaten.
+
+Notes by Darem: Food in the "snacks" subtype can hold a maximum of 50 units. Generally speaking, you don't want to go over 40
+total for the item because you want to leave space for extra condiments. If you want effect besides healing, add a reagent for
+it. Try to stick to existing reagents when possible (so if you want a stronger healing effect, just use omnizine). On use
+effect (such as the old officer eating a donut code) requires a unique reagent (unless you can figure out a better way).
+
+The nutriment reagent and bitesize variable replace the old heal_amt and amount variables. Each unit of nutriment is equal to
+2 of the old heal_amt variable. Bitesize is the rate at which the reagents are consumed. So if you have 6 nutriment and a
+bitesize of 2, then it'll take 3 bites to eat. Unlike the old system, the contained reagents are evenly spread among all
+the bites. No more contained reagents = no more bites.
+
+Here is an example of the new formatting for anyone who wants to add more food items.
+```
+/obj/item/reagent_containers/food/snacks/xenoburger			//Identification path for the object.
+	name = "Xenoburger"													//Name that displays in the UI.
+	desc = "Smells caustic. Tastes like heresy."						//Duh
+	icon_state = "xburger"												//Refers to an icon in food.dmi
+/obj/item/reagent_containers/food/snacks/xenoburger/Initialize()		//Don't mess with this. | nO I WILL MESS WITH THIS
+	. = ..()														//Same here.
+	reagents.add_reagent("xenomicrobes", 10)						//This is what is in the food item. you may copy/paste
+	reagents.add_reagent("nutriment", 2)							//this line of code for all the contents.
+	bitesize = 3													//This is the amount each bite consumes.
+```
+
+All foods are distributed among various categories. Use common sense.
+*/
 /obj/item/reagent_containers/food/snacks
 	name = "snack"
 	desc = "Yummy."
@@ -72,15 +102,15 @@
 				to_chat(M, "<span class='notice'>You don't feel like eating any more junk food at the moment.</span>")
 				return 0
 			else if(fullness <= 50)
-				to_chat(M, "<span class='notice'>You hungrily [eatverb] some of \the [src] and gobble it down!</span>")
+				user.visible_message("<span class='notice'>[user] hungrily takes a [eatverb] from \the [src], gobbling it down!</span>", "<span class='notice'>You hungrily take a [eatverb] from \the [src], gobbling it down!</span>")
 			else if(fullness > 50 && fullness < 150)
-				to_chat(M, "<span class='notice'>You hungrily begin to [eatverb] \the [src].</span>")
+				user.visible_message("<span class='notice'>[user] hungrily takes a [eatverb] from \the [src].</span>", "<span class='notice'>You hungrily take a [eatverb] from \the [src].</span>")
 			else if(fullness > 150 && fullness < 500)
-				to_chat(M, "<span class='notice'>You [eatverb] \the [src].</span>")
+				user.visible_message("<span class='notice'>[user] takes a [eatverb] from \the [src].</span>", "<span class='notice'>You take a [eatverb] from \the [src].</span>")
 			else if(fullness > 500 && fullness < 600)
-				to_chat(M, "<span class='notice'>You unwillingly [eatverb] a bit of \the [src].</span>")
+				user.visible_message("<span class='notice'>[user] unwillingly takes a [eatverb] of a bit of \the [src].</span>", "<span class='notice'>You unwillingly take a [eatverb] of a bit of \the [src].</span>")
 			else if(fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
-				to_chat(M, "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>")
+				user.visible_message("<span class='warning'>[user] cannot force any more of \the [src] to go down [user.p_their()] throat!</span>", "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>")
 				return 0
 			if(M.has_trait(TRAIT_VORACIOUS))
 				M.changeNext_move(CLICK_CD_MELEE * 0.5) //nom nom nom
@@ -96,7 +126,7 @@
 
 				if(!do_mob(user, M))
 					return
-				add_logs(user, M, "fed", reagents.log_list())
+				log_combat(user, M, "fed", reagents.log_list())
 				M.visible_message("<span class='danger'>[user] forces [M] to eat [src].</span>", \
 									"<span class='userdanger'>[user] forces [M] to eat [src].</span>")
 
@@ -109,7 +139,7 @@
 				M.satiety -= junkiness
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			if(reagents.total_volume)
-				SendSignal(COMSIG_FOOD_EATEN, M, user)
+				SEND_SIGNAL(src, COMSIG_FOOD_EATEN, M, user)
 				var/fraction = min(bitesize / reagents.total_volume, 1)
 				reagents.reaction(M, INGEST, fraction)
 				reagents.trans_to(M, bitesize)
@@ -119,11 +149,6 @@
 				return 1
 
 	return 0
-
-
-/obj/item/reagent_containers/food/snacks/afterattack(obj/target, mob/user , proximity)
-	return
-
 
 /obj/item/reagent_containers/food/snacks/examine(mob/user)
 	..()
@@ -299,40 +324,8 @@
 					M.emote("me", 1, "[sattisfaction_text]")
 				qdel(src)
 
-
-//////////////////////////////////////////////////
-////////////////////////////////////////////Snacks
-//////////////////////////////////////////////////
-//Items in the "Snacks" subcategory are food items that people actually eat. The key points are that they are created
-//	already filled with reagents and are destroyed when empty. Additionally, they make a "munching" noise when eaten.
-
-//Notes by Darem: Food in the "snacks" subtype can hold a maximum of 50 units Generally speaking, you don't want to go over 40
-//	total for the item because you want to leave space for extra condiments. If you want effect besides healing, add a reagent for
-//	it. Try to stick to existing reagents when possible (so if you want a stronger healing effect, just use omnizine). On use
-//	effect (such as the old officer eating a donut code) requires a unique reagent (unless you can figure out a better way).
-
-//The nutriment reagent and bitesize variable replace the old heal_amt and amount variables. Each unit of nutriment is equal to
-//	2 of the old heal_amt variable. Bitesize is the rate at which the reagents are consumed. So if you have 6 nutriment and a
-//	bitesize of 2, then it'll take 3 bites to eat. Unlike the old system, the contained reagents are evenly spread among all
-//	the bites. No more contained reagents = no more bites.
-
-//Here is an example of the new formatting for anyone who wants to add more food items.
-///obj/item/reagent_containers/food/snacks/xenoburger			//Identification path for the object.
-//	name = "Xenoburger"													//Name that displays in the UI.
-//	desc = "Smells caustic. Tastes like heresy."						//Duh
-//	icon_state = "xburger"												//Refers to an icon in food.dmi
-///obj/item/reagent_containers/food/snacks/xenoburger/Initialize()		//Don't mess with this. | nO I WILL MESS WITH THIS
-//		. = ..()														//Same here.
-//		reagents.add_reagent("xenomicrobes", 10)						//This is what is in the food item. you may copy/paste
-//		reagents.add_reagent("nutriment", 2)							//this line of code for all the contents.
-//		bitesize = 3													//This is the amount each bite consumes.
-
-//All foods are distributed among various categories. Use common sense.
-
-/////////////////////////////////////////////////Store////////////////////////////////////////
-// All the food items that can store an item inside itself, like bread or cake.
-
-
+// //////////////////////////////////////////////Store////////////////////////////////////////
+/// All the food items that can store an item inside itself, like bread or cake.
 /obj/item/reagent_containers/food/snacks/store
 	w_class = WEIGHT_CLASS_NORMAL
 	var/stored_item = 0

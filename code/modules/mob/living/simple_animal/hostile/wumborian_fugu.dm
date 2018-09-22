@@ -127,6 +127,7 @@
 	var/list/banned_mobs
 
 /obj/item/fugu_gland/afterattack(atom/target, mob/user, proximity_flag)
+	. = ..()
 	if(proximity_flag && isanimal(target))
 		var/mob/living/simple_animal/A = target
 		if(A.buffed || (A.type in banned_mobs) || A.stat)

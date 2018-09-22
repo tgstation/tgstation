@@ -32,6 +32,10 @@
 		if(IC || tool.w_class > WEIGHT_CLASS_NORMAL || (tool.item_flags & NODROP) || istype(tool, /obj/item/organ))
 			to_chat(user, "<span class='warning'>You can't seem to fit [tool] in [target]'s [target_zone]!</span>")
 			return 0
+		var/obj/item/electronic_assembly/EA = tool
+		if(istype(EA) && EA.combat_circuits && tool.w_class > WEIGHT_CLASS_SMALL)
+			to_chat(user, "<span class='warning'>[tool] is too dangerous to put in [target]'s [target_zone]! Maybe if it was smaller...</span>")
+			return 0
 		else
 			user.visible_message("[user] stuffs [tool] into [target]'s [target_zone]!", "<span class='notice'>You stuff [tool] into [target]'s [target_zone].</span>")
 			user.transferItemToLoc(tool, target, TRUE)

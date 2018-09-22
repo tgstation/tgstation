@@ -28,6 +28,7 @@
 
 /obj/machinery/sleeper/Initialize()
 	. = ..()
+	occupant_typecache = GLOB.typecache_living
 	update_icon()
 	reset_chem_buttons()
 
@@ -147,7 +148,7 @@
 		data["occupant"]["cloneLoss"] = mob_occupant.getCloneLoss()
 		data["occupant"]["brainLoss"] = mob_occupant.getBrainLoss()
 		data["occupant"]["reagents"] = list()
-		if(occupant.reagents.reagent_list.len)
+		if(mob_occupant.reagents && mob_occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
 				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = R.volume))
 	return data
@@ -170,7 +171,7 @@
 				return
 			if(mob_occupant.health < min_health && chem != "epinephrine")
 				return
-			if(inject_chem(chem))
+			if(inject_chem(chem, usr))
 				. = TRUE
 				if(scrambled_chems && prob(5))
 					to_chat(usr, "<span class='warning'>Chem System Re-route detected, results may not be as expected!</span>")
@@ -179,14 +180,16 @@
 	scramble_chem_buttons()
 	to_chat(user, "<span class='warning'>You scramble the sleeper's user interface!</span>")
 
-/obj/machinery/sleeper/proc/inject_chem(chem)
+/obj/machinery/sleeper/proc/inject_chem(chem, mob/user)
 	if((chem in available_chems) && chem_allowed(chem))
 		occupant.reagents.add_reagent(chem_buttons[chem], 10) //emag effect kicks in here so that the "intended" chem is used for all checks, for extra FUUU
+		if(user)
+			log_combat(user, occupant, "injected [chem] into", addition = "via [src]")
 		return TRUE
 
 /obj/machinery/sleeper/proc/chem_allowed(chem)
 	var/mob/living/mob_occupant = occupant
-	if(!mob_occupant)
+	if(!mob_occupant || !mob_occupant.reagents)
 		return
 	var/amount = mob_occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency
 	var/occ_health = mob_occupant.health > min_health || chem == "epinephrine"
@@ -208,6 +211,17 @@
 /obj/machinery/sleeper/syndie
 	icon_state = "sleeper_s"
 	controls_inside = TRUE
+
+/obj/machinery/sleeper/syndie/fullupgrade/Initialize()
+	. = ..()
+	component_parts = list()
+	component_parts += new /obj/item/circuitboard/machine/sleeper(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
+	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
+	component_parts += new /obj/item/stack/sheet/glass(null)
+	component_parts += new /obj/item/stack/sheet/glass(null)
+	component_parts += new /obj/item/stack/cable_coil(null)
+	RefreshParts()
 
 /obj/machinery/sleeper/clockwork
 	name = "soothing sleeper"

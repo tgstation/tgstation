@@ -49,11 +49,15 @@
 
 /datum/config_entry/flag/log_pda	// log pda messages
 
+/datum/config_entry/flag/log_telecomms	// log telecomms messages
+
 /datum/config_entry/flag/log_twitter	// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
 
 /datum/config_entry/flag/log_world_topic	// log all world.Topic() calls
 
 /datum/config_entry/flag/log_manifest	// log crew manifest to seperate file
+
+/datum/config_entry/flag/log_job_debug	// log roundstart divide occupations debug information to a file
 
 /datum/config_entry/flag/allow_admin_ooccolor	// Allows admins with relevant permissions to have their own ooc colour
 
@@ -322,8 +326,6 @@
 
 /datum/config_entry/flag/allow_map_voting
 
-/datum/config_entry/flag/generate_minimaps
-
 /datum/config_entry/number/client_warn_version
 	config_entry_value = null
 	min_val = 500
@@ -408,3 +410,7 @@
 
 /datum/config_entry/string/default_view
 	config_entry_value = "15x15"
+
+/datum/config_entry/flag/log_pictures
+
+/datum/config_entry/flag/picture_logging_camera

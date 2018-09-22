@@ -80,7 +80,7 @@
 			if(loaded_tank)
 				fuel = loaded_tank.air_contents.gases[/datum/gas/plasma]
 			fuel = fuel ? fuel[MOLES] : 0
-			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [loaded_tank?"Fuel: [round(fuel/0.29)]%":"<font color='red'>It is empty</font>"].", INVESTIGATE_SINGULO)
+			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [key_name(user)]. [loaded_tank?"Fuel: [round(fuel/0.29)]%":"<font color='red'>It is empty</font>"].", INVESTIGATE_SINGULO)
 			return
 		else
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
@@ -134,6 +134,8 @@
 	return TRUE
 
 /obj/machinery/power/rad_collector/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
 	if(loaded_tank)
 		to_chat(user, "<span class='warning'>Remove the plasma tank first!</span>")
 	else

@@ -49,19 +49,19 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 /obj/machinery/doppler_array/proc/sense_explosion(turf/epicenter,devastation_range,heavy_impact_range,light_impact_range,
 												  took,orig_dev_range,orig_heavy_range,orig_light_range)
 	if(stat & NOPOWER)
-		return
+		return FALSE
 	var/turf/zone = get_turf(src)
 
 	if(zone.z != epicenter.z)
-		return
+		return FALSE
 
 	var/distance = get_dist(epicenter, zone)
 	var/direct = get_dir(zone, epicenter)
 
 	if(distance > max_dist)
-		return
+		return FALSE
 	if(!(direct & dir) && !integrated)
-		return
+		return FALSE
 
 
 	var/list/messages = list("Explosive disturbance detected.", \
@@ -75,11 +75,12 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	if(integrated)
 		var/obj/item/clothing/head/helmet/space/hardsuit/helm = loc
 		if(!helm || !istype(helm, /obj/item/clothing/head/helmet/space/hardsuit))
-			return
+			return FALSE
 		helm.display_visor_message("Explosion detected! Epicenter: [devastation_range], Outer: [heavy_impact_range], Shock: [light_impact_range]")
 	else
 		for(var/message in messages)
 			say(message)
+	return TRUE
 
 /obj/machinery/doppler_array/power_change()
 	if(stat & BROKEN)
@@ -106,24 +107,43 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 
 /obj/machinery/doppler_array/research/sense_explosion(turf/epicenter, dev, heavy, light, time, orig_dev, orig_heavy, orig_light)	//probably needs a way to ignore admin explosives later on
 	. = ..()
+	if(!.)
+		return FALSE
 	if(!istype(linked_techweb))
 		say("Warning: No linked research system!")
 		return
-	var/adjusted = orig_light - 10
-	if(adjusted <= 0)
+
+	var/point_gain = 0
+	
+	/*****The Point Calculator*****/
+	
+	if(orig_light < 10)
 		say("Explosion not large enough for research calculations.")
 		return
-	var/point_gain = techweb_scale_bomb(adjusted) - techweb_scale_bomb(linked_techweb.max_bomb_value)
-	if(point_gain <= 0)
-		say("Explosion not large enough for research calculations.")
+	else if(orig_light < 4500) 
+		point_gain = (83300 * orig_light) / (orig_light + 3000)
+	else
+		point_gain = TECHWEB_BOMB_POINTCAP
+
+	/*****The Point Capper*****/
+	if(point_gain > linked_techweb.largest_bomb_value)
+		if(point_gain <= TECHWEB_BOMB_POINTCAP || linked_techweb.largest_bomb_value < TECHWEB_BOMB_POINTCAP)
+			var/old_tech_largest_bomb_value = linked_techweb.largest_bomb_value //held so we can pull old before we do math
+			linked_techweb.largest_bomb_value = point_gain
+			point_gain -= old_tech_largest_bomb_value
+			point_gain = min(point_gain,TECHWEB_BOMB_POINTCAP)
+		else
+			linked_techweb.largest_bomb_value = TECHWEB_BOMB_POINTCAP
+			point_gain = 1000
+
+		linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, point_gain)
+		say("Gained [point_gain] points from explosion dataset.")
+
+	else //you've made smaller bombs
+		say("Data already captured. Aborting.")
 		return
-	linked_techweb.max_bomb_value = adjusted
-	linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, point_gain)
-	say("Gained [point_gain] points from explosion dataset.")
+
 
 /obj/machinery/doppler_array/research/science/Initialize()
 	. = ..()
 	linked_techweb = SSresearch.science_tech
-
-/proc/techweb_scale_bomb(lightradius)
-	return (lightradius ** 0.5) * 3000

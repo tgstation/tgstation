@@ -4,9 +4,9 @@
 	icon_state = "mouse_gray"
 	icon_living = "mouse_gray"
 	icon_dead = "mouse_gray_dead"
-	speak = list("Squeek!","SQUEEK!","Squeek?")
-	speak_emote = list("squeeks")
-	emote_hear = list("squeeks.")
+	speak = list("Squeak!","SQUEAK!","Squeak?")
+	speak_emote = list("squeaks")
+	emote_hear = list("squeaks.")
 	emote_see = list("runs in a circle.", "shakes.")
 	speak_chance = 1
 	turns_per_move = 5
@@ -59,7 +59,7 @@
 	if( ishuman(AM) )
 		if(!stat)
 			var/mob/M = AM
-			to_chat(M, "<span class='notice'>[icon2html(src, M)] Squeek!</span>")
+			to_chat(M, "<span class='notice'>[icon2html(src, M)] Squeak!</span>")
 	..()
 
 /mob/living/simple_animal/mouse/handle_automated_action()

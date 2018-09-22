@@ -282,7 +282,7 @@
 	if(href_list["task"])
 		switch(href_list["task"])
 			if("autoprocess")
-				if(!(scanner && HasEfficientPod() && scanner.scan_level >= AUTOCLONING_MINIMAL_LEVEL))
+				if(scanner && HasEfficientPod() && scanner.scan_level >= AUTOCLONING_MINIMAL_LEVEL)
 					autoprocess = TRUE
 					START_PROCESSING(SSmachines, src)
 					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
@@ -468,6 +468,7 @@
 		// We store the instance rather than the path, because some
 		// species (abductors, slimepeople) store state in their
 		// species datums
+		dna.delete_species = FALSE
 		R.fields["mrace"] = dna.species
 	else
 		var/datum/species/rando_race = pick(GLOB.roundstart_races)

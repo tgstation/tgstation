@@ -109,6 +109,9 @@ LOG_ATTACK
 ## log pda messages
 LOG_PDA
 
+## log telecomms messages
+LOG_TELECOMMS
+
 ## log prayers
 LOG_PRAYER
 
@@ -118,12 +121,21 @@ LOG_LAW
 ## log crew manifest to seperate file
 LOG_MANIFEST
 
+## log job divide debugging information
+#LOG_JOB_DEBUG
+
 ## log all world.Topic() calls
 # LOG_WORLD_TOPIC
 
 ## enables use of the proc twitterize() that lets you take a large list of strings and turn it into a JSON file of tweet sized strings.
 ## As an example of how this could be """useful""" look towards Poly (https://twitter.com/Poly_the_Parrot)
 # LOG_TWITTER
+
+## Enable logging pictures
+# LOG_PICTURES
+
+##Log camera pictures - Must have picture logging enabled
+PICTURE_LOGGING_CAMERA
 
 ## period of time in seconds for players to be considered inactive
 # INACTIVITY_PERIOD 300
@@ -139,9 +151,6 @@ ALLOW_ADMIN_OOCCOLOR
 
 ## Job slot open/close by identification consoles delay in seconds
 ID_CONSOLE_JOBSLOT_DELAY 30
-
-## If metadata is supported
-ALLOW_METADATA
 
 ## allow players to initiate a restart vote
 #ALLOW_VOTE_RESTART
@@ -254,7 +263,7 @@ CHECK_RANDOMIZER
 ## Uncomment this to forbid admins from possessing the singularity.
 #FORBID_SINGULO_POSSESSION
 
-## Uncomment to show a popup 'reply to' window to every non-admin that recieves an adminPM.
+## Uncomment to show a popup 'reply to' window to every non-admin that receives an adminPM.
 ## The intention is to make adminPMs more visible. (although I fnd popups annoying so this defaults to off)
 #POPUP_ADMIN_PM
 
@@ -363,10 +372,6 @@ AUTOADMIN_RANK Game Master
 
 ## Uncomment to automatically give that admin rank to all players
 #AUTOADMIN
-
-## GENERATE_MINIMAPS
-## Generating minimaps(For crew monitor) is slow and bogs down testing, so its disabled by default and must be enabled by uncommenting this config if you are running a production server.
-#GENERATE_MINIMAPS
 
 ## CLIENT VERSION CONTROL
 ## This allows you to configure the minimum required client version, as well as a warning version, and message for both.

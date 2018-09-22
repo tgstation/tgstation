@@ -231,3 +231,35 @@
 	new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/pill/patch/styptic(src)
+
+/obj/item/storage/pill_bottle/zoom
+	name = "suspicious pill bottle"
+	desc = "The label is pretty old and almost unreadable, you recognize some chemical compounds."
+
+/obj/item/storage/pill_bottle/zoom/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/zoom(src)
+
+/obj/item/storage/pill_bottle/happy
+	name = "suspicious pill bottle"
+	desc = "There is a smiley on the top."
+
+/obj/item/storage/pill_bottle/happy/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/happy(src)
+
+/obj/item/storage/pill_bottle/lsd
+	name = "suspicious pill bottle"
+	desc = "There is a badly drawn thing with the shape of a mushroom."
+
+/obj/item/storage/pill_bottle/lsd/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/lsd(src)
+
+/obj/item/storage/pill_bottle/aranesp
+	name = "suspicious pill bottle"
+	desc = "The label says 'gotta go fast'."
+
+/obj/item/storage/pill_bottle/aranesp/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/aranesp(src)

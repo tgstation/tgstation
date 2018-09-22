@@ -148,13 +148,16 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
 	buildstackamount = 2
-	var/mutable_appearance/armrest
 	item_chair = null
+	var/mutable_appearance/armrest
 
 /obj/structure/chair/comfy/Initialize()
-	armrest = mutable_appearance('icons/obj/chairs.dmi', "comfychair_armrest")
+	armrest = GetArmrest()
 	armrest.layer = ABOVE_MOB_LAYER
 	return ..()
+
+/obj/structure/chair/comfy/proc/GetArmrest()
+	return mutable_appearance('icons/obj/chairs.dmi', "comfychair_armrest")
 
 /obj/structure/chair/comfy/Destroy()
 	QDEL_NULL(armrest)
@@ -188,6 +191,14 @@
 
 /obj/structure/chair/comfy/lime
 	color = rgb(255,251,0)
+
+/obj/structure/chair/comfy/shuttle
+	name = "shuttle seat"
+	desc = "A comfortable, secure seat. It has a more sturdy looking buckling system, for smoother flights."
+	icon_state = "shuttle_chair"
+
+/obj/structure/chair/comfy/shuttle/GetArmrest()
+	return mutable_appearance('icons/obj/chairs.dmi', "shuttle_chair_armrest")
 
 /obj/structure/chair/office
 	anchored = FALSE
@@ -305,7 +316,7 @@
 	return 0
 
 /obj/item/chair/afterattack(atom/target, mob/living/carbon/user, proximity)
-	..()
+	. = ..()
 	if(!proximity)
 		return
 	if(prob(break_chance))
@@ -385,7 +396,7 @@
 	turns = 0
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
-	if(!isprocessing)
+	if(!(datum_flags & DF_ISPROCESSING))
 		user.visible_message("<span class='notice'>[user] spins [src] around, and Ratvarian technology keeps it spinning FOREVER.</span>", \
 		"<span class='notice'>Automated spinny chairs. The pinnacle of Ratvarian technology.</span>")
 		START_PROCESSING(SSfastprocess, src)

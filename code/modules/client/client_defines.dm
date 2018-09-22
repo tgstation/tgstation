@@ -20,8 +20,8 @@
 		//OTHER//
 		/////////
 	var/datum/preferences/prefs = null
-	var/move_delay		= 1
-
+	var/last_turn = 0
+	var/move_delay = 0
 	var/area			= null
 
 		///////////////
@@ -48,6 +48,10 @@
 	preload_rsc = PRELOAD_RSC
 
 	var/obj/screen/click_catcher/void
+
+	//These two vars are used to make a special mouse cursor, with a unique icon for clicking
+	var/mouse_up_icon = null
+	var/mouse_down_icon = null
 
 	var/ip_intel = "Disabled"
 

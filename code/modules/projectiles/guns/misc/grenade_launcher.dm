@@ -28,16 +28,10 @@
 		else
 			to_chat(usr, "<span class='danger'>The grenade launcher cannot hold more grenades.</span>")
 
-/obj/item/gun/grenadelauncher/afterattack(obj/target, mob/user , flag)
-	if(target == user)
-		return
+/obj/item/gun/grenadelauncher/can_shoot()
+	return grenades.len
 
-	if(grenades.len)
-		fire_grenade(target,user)
-	else
-		to_chat(user, "<span class='danger'>The grenade launcher is empty.</span>")
-
-/obj/item/gun/grenadelauncher/proc/fire_grenade(atom/target, mob/user)
+/obj/item/gun/grenadelauncher/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	user.visible_message("<span class='danger'>[user] fired a grenade!</span>", \
 						"<span class='danger'>You fire the grenade launcher!</span>")
 	var/obj/item/grenade/F = grenades[1] //Now with less copypasta!

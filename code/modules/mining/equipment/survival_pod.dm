@@ -4,7 +4,7 @@
 	icon_state = "away"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
-	has_gravity = TRUE
+	has_gravity = STANDARD_GRAVITY
 	valid_territory = FALSE
 
 //Survival Capsule
@@ -175,8 +175,6 @@
 	desc = "A heated storage unit."
 	icon_state = "donkvendor"
 	icon = 'icons/obj/lavaland/donkvendor.dmi'
-	icon_on = "donkvendor"
-	icon_off = "donkvendor"
 	light_range = 5
 	light_power = 1.2
 	light_color = "#DDFFD3"
@@ -184,6 +182,9 @@
 	pixel_y = -4
 	flags_1 = NODECONSTRUCT_1
 	var/empty = FALSE
+
+/obj/machinery/smartfridge/survival_pod/update_icon()
+	return
 
 /obj/machinery/smartfridge/survival_pod/Initialize(mapload)
 	. = ..()
@@ -246,11 +247,6 @@
 /obj/structure/fans/Initialize(mapload)
 	. = ..()
 	air_update_turf(1)
-
-/obj/structure/fans/Destroy()
-	var/turf/T = loc
-	. = ..()
-	T.air_update_turf(1)
 
 //Inivisible, indestructible fans
 /obj/structure/fans/tiny/invisible

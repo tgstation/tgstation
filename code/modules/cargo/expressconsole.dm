@@ -20,7 +20,7 @@
 	var/list/meme_pack_data
 	var/obj/item/supplypod_beacon/beacon //the linked supplypod beacon
 	var/area/landingzone = /area/quartermaster/storage //where we droppin boys
-	var/podID = POD_STANDARD //0 is your standard supply supplypod (requires dissassembly after landing), 1 is the bluespace supply pod (teleports out after landing)
+	var/podType = /obj/structure/closet/supplypod //0 is your standard supply supplypod (requires dissassembly after landing), 1 is the bluespace supply pod (teleports out after landing)
 	var/cooldown = 0 //cooldown to prevent printing supplypod beacon spam
 	var/locked = TRUE //is the console locked? unlock with ID
 	var/usingBeacon = FALSE //is the console in beacon mode? exists to let beacon know when a pod may come in
@@ -40,7 +40,7 @@
 		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the interface.</span>")
 		return
 	else if(istype(W, /obj/item/disk/cargo/bluespace_pod))
-		podID = POD_BLUESPACE//doesnt effect circuit board, making reversal possible
+		podType = /obj/structure/closet/supplypod/bluespacepod//doesnt effect circuit board, making reversal possible
 		to_chat(user, "<span class='notice'>You insert the disk into [src], allowing for advanced supply delivery vehicles.</span>")
 		qdel(W)
 		return TRUE
@@ -167,7 +167,7 @@
 						LZ = get_turf(beacon)
 						beacon.update_status(SP_LAUNCH)	
 					else if (!usingBeacon)//find a suitable supplypod landing zone in cargobay
-						landingzone = locate(/area/quartermaster/storage) in GLOB.sortedAreas
+						landingzone = GLOB.areas_by_type[/area/quartermaster/storage]
 						if (!landingzone)
 							WARNING("[src] couldnt find a Quartermaster/Storage (aka cargobay) area on the station, and as such it has set the supplypod landingzone to the area it resides in.")
 							landingzone = get_area(src)
@@ -180,12 +180,12 @@
 							LZ = pick(empty_turfs)	
 					if (SO.pack.cost <= SSshuttle.points && LZ)//we need to call the cost check again because of the CHECK_TICK call
 						SSshuttle.points -= SO.pack.cost
-						new /obj/effect/DPtarget(LZ, SO, podID)
+						new /obj/effect/DPtarget(LZ, podType, SO)
 						. = TRUE
 						update_icon()
 			else
 				if(SO.pack.cost * (0.72*MAX_EMAG_ROCKETS) <= SSshuttle.points) // bulk discount :^)
-					landingzone = locate(pick(GLOB.the_station_areas)) in GLOB.sortedAreas //override default landing zone
+					landingzone = GLOB.areas_by_type[pick(GLOB.the_station_areas)]  //override default landing zone
 					for(var/turf/open/floor/T in landingzone.contents)
 						if(is_blocked_turf(T))
 							continue
@@ -197,7 +197,7 @@
 						for(var/i in 1 to MAX_EMAG_ROCKETS)
 							var/LZ = pick(empty_turfs)
 							LAZYREMOVE(empty_turfs, LZ)
-							new /obj/effect/DPtarget(LZ, SO, podID)
+							new /obj/effect/DPtarget(LZ, podType, SO)
 							. = TRUE
 							update_icon()
 							CHECK_TICK

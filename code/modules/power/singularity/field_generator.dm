@@ -78,7 +78,7 @@ field_generator power level display
 					"<span class='notice'>You turn on [src].</span>", \
 					"<span class='italics'>You hear heavy droning.</span>")
 				turn_on()
-				investigate_log("<font color='green'>activated</font> by [user.key].", INVESTIGATE_SINGULO)
+				investigate_log("<font color='green'>activated</font> by [key_name(user)].", INVESTIGATE_SINGULO)
 
 				add_fingerprint(user)
 	else
@@ -245,6 +245,7 @@ field_generator power level display
 	if(state != FG_WELDED || !anchored)
 		turn_off()
 		return
+	move_resist = INFINITY
 	spawn(1)
 		setup_field(1)
 	spawn(2)
@@ -335,6 +336,8 @@ field_generator power level display
 					message_admins("A singulo exists and a containment field has failed at [ADMIN_VERBOSEJMP(T)].")
 					investigate_log("has <font color='red'>failed</font> whilst a singulo exists at [AREACOORD(T)].", INVESTIGATE_SINGULO)
 			O.last_warning = world.time
+	
+	move_resist = initial(move_resist)
 
 /obj/machinery/field/generator/shock(mob/living/user)
 	if(fields.len)

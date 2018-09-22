@@ -11,10 +11,10 @@
 	list_reagents = list("lube" = 30)
 
 //COMBAT CLOWN SHOES
-//Clown shoes with combat stats and noslip. Of course they still squeek.
+//Clown shoes with combat stats and noslip. Of course they still squeak.
 /obj/item/clothing/shoes/clown_shoes/combat
 	name = "combat clown shoes"
-	desc = "advanced clown shoes that protect the wearer and render them nearly immune to slipping on their own peels. They also squeek at 100% capacity."
+	desc = "advanced clown shoes that protect the wearer and render them nearly immune to slipping on their own peels. They also squeak at 100% capacity."
 	clothing_flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN
 	armor = list("melee" = 25, "bullet" = 25, "laser" = 25, "energy" = 25, "bomb" = 50, "bio" = 10, "rad" = 0, "fire" = 70, "acid" = 50)
@@ -74,7 +74,7 @@
 	. = ..()
 	AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
 	GET_COMPONENT(slipper, /datum/component/slippery)
-	slipper.enabled = active
+	slipper.signal_enabled = active
 
 /obj/item/melee/transforming/energy/sword/bananium/attack(mob/living/M, mob/living/user)
 	..()
@@ -99,7 +99,7 @@
 /obj/item/melee/transforming/energy/sword/bananium/transform_weapon(mob/living/user, supress_message_text)
 	..()
 	GET_COMPONENT(slipper, /datum/component/slippery)
-	slipper.enabled = active
+	slipper.signal_enabled = active
 
 /obj/item/melee/transforming/energy/sword/bananium/ignition_effect(atom/A, mob/user)
 	return ""
@@ -131,12 +131,12 @@
 	. = ..()
 	AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
 	GET_COMPONENT(slipper, /datum/component/slippery)
-	slipper.enabled = active
+	slipper.signal_enabled = active
 
 /obj/item/shield/energy/bananium/attack_self(mob/living/carbon/human/user)
 	..()
 	GET_COMPONENT(slipper, /datum/component/slippery)
-	slipper.enabled = active
+	slipper.signal_enabled = active
 
 /obj/item/shield/energy/bananium/throw_at(atom/target, range, speed, mob/thrower, spin=1)
 	if(active)

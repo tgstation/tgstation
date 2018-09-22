@@ -25,6 +25,7 @@
 	healable = FALSE
 	spacewalk = TRUE
 	sight = SEE_SELF
+	throwforce = 0
 
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
@@ -42,12 +43,13 @@
 	wander = FALSE
 	density = FALSE
 	movement_type = FLYING
-	anchored = TRUE
+	move_resist = MOVE_FORCE_OVERPOWERING
 	mob_size = MOB_SIZE_TINY
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	speed = 1
 	unique_name = TRUE
 	hud_possible = list(ANTAG_HUD)
+	hud_type = /datum/hud/revenant
 
 	var/essence = 75 //The resource, and health, of revenants.
 	var/essence_regen_cap = 75 //The regeneration cap of essence (go figure); regenerates every Life() tick up to this amount.
@@ -143,10 +145,10 @@
 /mob/living/simple_animal/revenant/med_hud_set_status()
 	return //we use no hud
 
-/mob/living/simple_animal/revenant/say(message)
+/mob/living/simple_animal/revenant/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(!message)
 		return
-	log_talk(src,"[key_name(src)] : [message]",LOGSAY)
+	src.log_talk(message, LOG_SAY)
 	var/rendered = "<span class='revennotice'><b>[src]</b> says, \"[message]\"</span>"
 	for(var/mob/M in GLOB.mob_list)
 		if(isrevenant(M))
@@ -199,7 +201,7 @@
 	if(!essence)
 		death()
 
-/mob/living/simple_animal/revenant/dust()
+/mob/living/simple_animal/revenant/dust(just_ash, drop_items, force)
 	death()
 
 /mob/living/simple_animal/revenant/gib()

@@ -164,22 +164,22 @@
 	var/failText = "<span class='warning'>The snake seems unsatisfied with your incomplete oath and returns to it's previous place on the rod, returning to its dormant, wooden state. You must stand still while completing your oath!</span>"
 	to_chat(itemUser, "<span class='notice'>The wooden snake that was carved into the rod seems to suddenly come alive and begins to slither down your arm! The compulsion to help others grows abnormally strong...</span>")
 	if(do_after(itemUser, 40, target = itemUser))
-		itemUser.say("I swear to fulfill, to the best of my ability and judgment, this covenant:")
+		itemUser.say("I swear to fulfill, to the best of my ability and judgment, this covenant:", forced = "hippocratic oath")
 	else
 		to_chat(itemUser, failText)
 		return
 	if(do_after(itemUser, 20, target = itemUser))
-		itemUser.say("I will apply, for the benefit of the sick, all measures that are required, avoiding those twin traps of overtreatment and therapeutic nihilism.")
+		itemUser.say("I will apply, for the benefit of the sick, all measures that are required, avoiding those twin traps of overtreatment and therapeutic nihilism.", forced = "hippocratic oath")
 	else
 		to_chat(itemUser, failText)
 		return
 	if(do_after(itemUser, 30, target = itemUser))
-		itemUser.say("I will remember that I remain a member of society, with special obligations to all my fellow human beings, those sound of mind and body as well as the infirm.")
+		itemUser.say("I will remember that I remain a member of society, with special obligations to all my fellow human beings, those sound of mind and body as well as the infirm.", forced = "hippocratic oath")
 	else
 		to_chat(itemUser, failText)
 		return
 	if(do_after(itemUser, 30, target = itemUser))
-		itemUser.say("If I do not violate this oath, may I enjoy life and art, respected while I live and remembered with affection thereafter. May I always act so as to preserve the finest traditions of my calling and may I long experience the joy of healing those who seek my help.")
+		itemUser.say("If I do not violate this oath, may I enjoy life and art, respected while I live and remembered with affection thereafter. May I always act so as to preserve the finest traditions of my calling and may I long experience the joy of healing those who seek my help.", forced = "hippocratic oath")
 	else
 		to_chat(itemUser, failText)
 		return
@@ -266,26 +266,29 @@
 /obj/item/wisp_lantern/attack_self(mob/user)
 	if(!wisp)
 		to_chat(user, "<span class='warning'>The wisp has gone missing!</span>")
+		icon_state = "lantern"
 		return
+
 	if(wisp.loc == src)
 		to_chat(user, "<span class='notice'>You release the wisp. It begins to bob around your head.</span>")
-		user.sight |= SEE_MOBS
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
+		user.update_sight()
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Freed")
 
 	else
 		to_chat(user, "<span class='notice'>You return the wisp to the lantern.</span>")
 
+		var/mob/target
 		if(wisp.orbiting)
-			var/atom/A = wisp.orbiting.orbiting
-			if(isliving(A))
-				var/mob/living/M = A
-				M.sight &= ~SEE_MOBS
-				to_chat(M, "<span class='notice'>Your vision returns to normal.</span>")
-
+			target = wisp.orbiting.orbiting
 		wisp.stop_orbit()
 		wisp.forceMove(src)
+
+		if (istype(target))
+			target.update_sight()
+			to_chat(target, "<span class='notice'>Your vision returns to normal.</span>")
+
 		icon_state = "lantern-blue"
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
 
@@ -308,6 +311,8 @@
 	icon_state = "orb"
 	light_range = 7
 	layer = ABOVE_ALL_MOB_LAYER
+	var/sight_flags = SEE_MOBS
+	var/lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 
 //Red/Blue Cubes
 /obj/item/warp_cube
@@ -367,6 +372,7 @@
 
 /obj/effect/warp_cube
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
 
 /obj/effect/warp_cube/ex_act(severity, target)
 	return
@@ -428,10 +434,11 @@
 
 //Immortality Talisman
 /obj/item/immortality_talisman
-	name = "Immortality Talisman"
+	name = "\improper Immortality Talisman"
 	desc = "A dread talisman that can render you completely invulnerable."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "talisman"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	actions_types = list(/datum/action/item_action/immortality)
 	var/cooldown = 0
 
@@ -441,12 +448,6 @@
 
 /datum/action/item_action/immortality
 	name = "Immortality"
-
-/obj/item/immortality_talisman/Destroy(force)
-	if(force)
-		. = ..()
-	else
-		return QDEL_HINT_LETMELIVE
 
 /obj/item/immortality_talisman/attack_self(mob/user)
 	if(cooldown < world.time)
@@ -461,6 +462,8 @@
 		user.notransform = 1
 		user.status_flags |= GODMODE
 		addtimer(CALLBACK(src, .proc/return_to_reality, user, Z), 100)
+	else
+		to_chat(user, "<span class='warning'>[src] is not ready yet!</span>")
 
 /obj/item/immortality_talisman/proc/return_to_reality(mob/user, obj/effect/immortality_talisman/Z)
 	user.status_flags &= ~GODMODE
@@ -589,7 +592,7 @@
 	to_chat(user, "<span class='notice'>You unfold the ladder. It extends much farther than you were expecting.</span>")
 	var/last_ladder = null
 	for(var/i in 1 to world.maxz)
-		if(is_centcom_level(i) || is_transit_level(i) || is_reebe(i) || is_away_level(i))
+		if(is_centcom_level(i) || is_reserved_level(i) || is_reebe(i) || is_away_level(i))
 			continue
 		var/turf/T2 = locate(ladder_x, ladder_y, i)
 		last_ladder = new /obj/structure/ladder/unbreakable/jacob(T2, null, last_ladder)
@@ -760,7 +763,7 @@
 
 	notify_ghosts("[user] is raising [user.p_their()] [src], calling for your help!",
 		enter_link="<a href=?src=[REF(src)];orbit=1>(Click to help)</a>",
-		source = user, action=NOTIFY_ORBIT)
+		source = user, action=NOTIFY_ORBIT, ignore_key = POLL_IGNORE_SPECTRAL_BLADE)
 
 	summon_cooldown = world.time + 600
 
@@ -893,7 +896,7 @@
 	var/static/list/banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
 
 /obj/item/lava_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	..()
+	. = ..()
 	if(timer > world.time)
 		return
 
@@ -969,7 +972,7 @@
 	to_chat(user, "<span class='notice'>You shatter the bottle!</span>")
 	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
 	message_admins("<span class='adminnotice'>[ADMIN_LOOKUPFLW(user)] has activated a bottle of mayhem!</span>")
-	add_logs(user, null, "activated a bottle of mayhem", src)
+	log_combat(user, null, "activated a bottle of mayhem", src)
 	qdel(src)
 
 /obj/item/blood_contract
@@ -1010,21 +1013,10 @@
 
 	message_admins("<span class='adminnotice'>[ADMIN_LOOKUPFLW(L)] has been marked for death by [ADMIN_LOOKUPFLW(user)]!</span>")
 
-	var/datum/objective/survive/survive = new
-	survive.owner = L.mind
-	L.mind.objectives += survive
-	add_logs(user, L, "took out a blood contract on", src)
-	to_chat(L, "<span class='userdanger'>You've been marked for death! Don't let the demons get you! KILL THEM ALL!</span>")
-	L.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
-	var/obj/effect/mine/pickup/bloodbath/B = new(L)
-	INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, L)
+	var/datum/antagonist/blood_contract/A = new
+	L.mind.add_antag_datum(A)
 
-	for(var/mob/living/carbon/human/H in GLOB.player_list)
-		if(H == L)
-			continue
-		to_chat(H, "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_theyve(TRUE)] been marked red! Whoever [L.p_they()] [L.p_were()], friend or foe, go kill [L.p_them()]!</span>")
-		H.put_in_hands(new /obj/item/kitchen/knife/butcher(H), TRUE)
-
+	log_combat(user, L, "took out a blood contract on", src)
 	qdel(src)
 
 //Colossus
@@ -1076,7 +1068,7 @@
 	to_chat(user, "<span class='hierophant_warning'>The[beacon ? " beacon is not currently":"re is a beacon"] attached.</span>")
 
 /obj/item/hierophant_club/suicide_act(mob/living/user)
-	say("Xverwpsgexmrk...")
+	say("Xverwpsgexmrk...", forced = "hierophant club suicide")
 	user.visible_message("<span class='suicide'>[user] holds [src] into the air! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	new/obj/effect/temp_visual/hierophant/telegraph(get_turf(user))
 	playsound(user,'sound/machines/airlockopen.ogg', 75, TRUE)
@@ -1091,7 +1083,7 @@
 	qdel(user)
 
 /obj/item/hierophant_club/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	..()
+	. = ..()
 	var/turf/T = get_turf(target)
 	if(!T || timer > world.time)
 		return
@@ -1099,7 +1091,7 @@
 	timer = world.time + CLICK_CD_MELEE //by default, melee attacks only cause melee blasts, and have an accordingly short cooldown
 	if(proximity_flag)
 		INVOKE_ASYNC(src, .proc/aoe_burst, T, user)
-		add_logs(user, target, "fired 3x3 blast at", src)
+		log_combat(user, target, "fired 3x3 blast at", src)
 	else
 		if(ismineralturf(target) && get_dist(user, target) < 6) //target is minerals, we can hit it(even if we can't see it)
 			INVOKE_ASYNC(src, .proc/cardinal_blasts, T, user)
@@ -1111,10 +1103,10 @@
 				var/obj/effect/temp_visual/hierophant/chaser/C = new(get_turf(user), user, target, chaser_speed, friendly_fire_check)
 				C.damage = 30
 				C.monster_damage_boost = FALSE
-				add_logs(user, target, "fired a chaser at", src)
+				log_combat(user, target, "fired a chaser at", src)
 			else
 				INVOKE_ASYNC(src, .proc/cardinal_blasts, T, user) //otherwise, just do cardinal blast
-				add_logs(user, target, "fired cardinal blast at", src)
+				log_combat(user, target, "fired cardinal blast at", src)
 		else
 			to_chat(user, "<span class='warning'>That target is out of range!</span>" )
 			timer = world.time
@@ -1226,7 +1218,7 @@
 			INVOKE_ASYNC(src, .proc/prepare_icon_update)
 			beacon.icon_state = "hierophant_tele_off"
 			return
-		add_logs(user, beacon, "teleported self from ([source.x],[source.y],[source.z]) to")
+		user.log_message("teleported self from [AREACOORD(source)] to [beacon]")
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, user)
 		for(var/t in RANGE_TURFS(1, T))
@@ -1273,7 +1265,7 @@
 		return
 	M.visible_message("<span class='hierophant_warning'>[M] fades in!</span>")
 	if(user != M)
-		add_logs(user, M, "teleported", null, "from ([source.x],[source.y],[source.z])")
+		log_combat(user, M, "teleported", null, "from [AREACOORD(source)]")
 
 /obj/item/hierophant_club/proc/cardinal_blasts(turf/T, mob/living/user) //fire cardinal cross blasts with a delay
 	if(!T)
@@ -1309,3 +1301,18 @@
 	for(var/t in RANGE_TURFS(1, T))
 		var/obj/effect/temp_visual/hierophant/blast/B = new(t, user, friendly_fire_check)
 		B.damage = 15 //keeps monster damage boost due to lower damage
+
+
+//Just some minor stuff
+/obj/structure/closet/crate/necropolis/puzzle
+	name = "puzzling chest"
+
+/obj/structure/closet/crate/necropolis/puzzle/PopulateContents()
+	var/loot = rand(1,3)
+	switch(loot)
+		if(1)
+			new /obj/item/soulstone/anybody(src)
+		if(2)
+			new /obj/item/wisp_lantern(src)
+		if(3)
+			new /obj/item/prisoncube(src)

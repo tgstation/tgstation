@@ -5,11 +5,13 @@
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	blood_state = BLOOD_STATE_HUMAN
-	bloodiness = MAX_SHOE_BLOODINESS
-	beauty = -60
+	bloodiness = BLOOD_AMOUNT_PER_DECAL
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	C.add_blood_DNA(return_blood_DNA())
+	if (bloodiness)
+		if (C.bloodiness < MAX_SHOE_BLOODINESS)
+			C.bloodiness += bloodiness
 	return ..()
 
 /obj/effect/decal/cleanable/blood/old
@@ -55,6 +57,11 @@
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return
+
+/obj/effect/decal/cleanable/blood/gibs/Crossed(mob/living/L)
+	if(istype(L) && has_gravity(loc))
+		playsound(loc, 'sound/effects/gib_step.ogg', L.has_trait(TRAIT_LIGHT_STEP) ? 20 : 50, 1)
+	. = ..()
 
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(list/directions)
 	set waitfor = 0

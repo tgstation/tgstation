@@ -20,7 +20,7 @@
 
 /obj/item/wormhole_jaunter/proc/turf_check(mob/user)
 	var/turf/device_turf = get_turf(user)
-	if(!device_turf || is_centcom_level(device_turf.z) || is_transit_level(device_turf.z))
+	if(!device_turf || is_centcom_level(device_turf.z) || is_reserved_level(device_turf.z))
 		to_chat(user, "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>")
 		return FALSE
 	return TRUE
@@ -54,18 +54,20 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	var/triggered = FALSE
 
-	if(usr.get_item_by_slot(SLOT_BELT) == src)
-		if(power == 1)
-			triggered = TRUE
-		else if(power == 2 && prob(50))
-			triggered = TRUE
+	var/mob/M = loc
+	if(istype(M))
+		var/triggered = FALSE
+		if(M.get_item_by_slot(SLOT_BELT) == src)
+			if(power == 1)
+				triggered = TRUE
+			else if(power == 2 && prob(50))
+				triggered = TRUE
 
-	if(triggered)
-		usr.visible_message("<span class='warning'>[src] overloads and activates!</span>")
-		SSblackbox.record_feedback("tally", "jaunter", 1, "EMP") // EMP accidental activation
-		activate(usr)
+		if(triggered)
+			M.visible_message("<span class='warning'>[src] overloads and activates!</span>")
+			SSblackbox.record_feedback("tally", "jaunter", 1, "EMP") // EMP accidental activation
+			activate(M)
 
 /obj/item/wormhole_jaunter/proc/chasm_react(mob/user)
 	if(user.get_item_by_slot(SLOT_BELT) == src)

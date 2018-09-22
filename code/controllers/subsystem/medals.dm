@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(medals)
 /datum/controller/subsystem/medals/Initialize(timeofday)
 	if(CONFIG_GET(string/medal_hub_address) && CONFIG_GET(string/medal_hub_password))
 		hub_enabled = TRUE
-	..()
+	return ..()
 
 /datum/controller/subsystem/medals/proc/UnlockMedal(medal, client/player)
 	set waitfor = FALSE
@@ -14,8 +14,8 @@ SUBSYSTEM_DEF(medals)
 		return
 	if(isnull(world.SetMedal(medal, player, CONFIG_GET(string/medal_hub_address), CONFIG_GET(string/medal_hub_password))))
 		hub_enabled = FALSE
-		log_game("MEDAL ERROR: Could not contact hub to award medal:[medal] player:[player.ckey]")
-		message_admins("Error! Failed to contact hub to award [medal] medal to [player.ckey]!")
+		log_game("MEDAL ERROR: Could not contact hub to award medal:[medal] player:[player.key]")
+		message_admins("Error! Failed to contact hub to award [medal] medal to [player.key]!")
 		return
 	to_chat(player, "<span class='greenannounce'><B>Achievement unlocked: [medal]!</B></span>")
 
@@ -38,8 +38,8 @@ SUBSYSTEM_DEF(medals)
 
 	if(isnull(world.SetScores(player.ckey, newscoreparam, CONFIG_GET(string/medal_hub_address), CONFIG_GET(string/medal_hub_password))))
 		hub_enabled = FALSE
-		log_game("SCORE ERROR: Could not contact hub to set score. Score:[score] player:[player.ckey]")
-		message_admins("Error! Failed to contact hub to set [score] score for [player.ckey]!")
+		log_game("SCORE ERROR: Could not contact hub to set score. Score:[score] player:[player.key]")
+		message_admins("Error! Failed to contact hub to set [score] score for [player.key]!")
 
 /datum/controller/subsystem/medals/proc/GetScore(score, client/player, returnlist)
 	if(!score || !hub_enabled)
@@ -48,8 +48,8 @@ SUBSYSTEM_DEF(medals)
 	var/scoreget = world.GetScores(player.ckey, score, CONFIG_GET(string/medal_hub_address), CONFIG_GET(string/medal_hub_password))
 	if(isnull(scoreget))
 		hub_enabled = FALSE
-		log_game("SCORE ERROR: Could not contact hub to get score. Score:[score] player:[player.ckey]")
-		message_admins("Error! Failed to contact hub to get score: [score] for [player.ckey]!")
+		log_game("SCORE ERROR: Could not contact hub to get score. Score:[score] player:[player.key]")
+		message_admins("Error! Failed to contact hub to get score: [score] for [player.key]!")
 		return
 	. = params2list(scoreget)
 	if(!returnlist)
@@ -61,8 +61,8 @@ SUBSYSTEM_DEF(medals)
 
 	if(isnull(world.GetMedal(medal, player, CONFIG_GET(string/medal_hub_address), CONFIG_GET(string/medal_hub_password))))
 		hub_enabled = FALSE
-		log_game("MEDAL ERROR: Could not contact hub to get medal:[medal] player: [player.ckey]")
-		message_admins("Error! Failed to contact hub to get [medal] medal for [player.ckey]!")
+		log_game("MEDAL ERROR: Could not contact hub to get medal:[medal] player: [player.key]")
+		message_admins("Error! Failed to contact hub to get [medal] medal for [player.key]!")
 		return
 	to_chat(player, "[medal] is unlocked")
 
@@ -73,15 +73,15 @@ SUBSYSTEM_DEF(medals)
 	switch(result)
 		if(null)
 			hub_enabled = FALSE
-			log_game("MEDAL ERROR: Could not contact hub to clear medal:[medal] player:[player.ckey]")
-			message_admins("Error! Failed to contact hub to clear [medal] medal for [player.ckey]!")
+			log_game("MEDAL ERROR: Could not contact hub to clear medal:[medal] player:[player.key]")
+			message_admins("Error! Failed to contact hub to clear [medal] medal for [player.key]!")
 		if(TRUE)
-			message_admins("Medal: [medal] removed for [player.ckey]")
+			message_admins("Medal: [medal] removed for [player.key]")
 		if(FALSE)
-			message_admins("Medal: [medal] was not found for [player.ckey]. Unable to clear.")
+			message_admins("Medal: [medal] was not found for [player.key]. Unable to clear.")
 
 
 /datum/controller/subsystem/medals/proc/ClearScore(client/player)
 	if(isnull(world.SetScores(player.ckey, "", CONFIG_GET(string/medal_hub_address), CONFIG_GET(string/medal_hub_password))))
-		log_game("MEDAL ERROR: Could not contact hub to clear scores for [player.ckey]!")
-		message_admins("Error! Failed to contact hub to clear scores for [player.ckey]!")
+		log_game("MEDAL ERROR: Could not contact hub to clear scores for [player.key]!")
+		message_admins("Error! Failed to contact hub to clear scores for [player.key]!")

@@ -20,7 +20,7 @@
 	allow_quick_gather = TRUE
 	allow_quick_empty = TRUE
 	click_gather = TRUE
-	max_w_class = WEIGHT_CLASS_NORMAL
+	max_w_class = WEIGHT_CLASS_BULKY  // can fit vending refills
 	max_combined_w_class = 800
 	max_items = 400
 	display_numerical_stacking = TRUE
@@ -29,5 +29,5 @@
 	. = ..()
 	if(!I.get_part_rating())
 		if (!stop_messages)
-			to_chat(M, "<span class='warning'>[parent] only accepts machine par	ts!</span>")
+			to_chat(M, "<span class='warning'>[parent] only accepts machine parts!</span>")
 		return FALSE

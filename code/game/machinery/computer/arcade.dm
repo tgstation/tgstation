@@ -51,7 +51,9 @@
 		/obj/item/hot_potato/harmless/toy						= 1,
 		/obj/item/card/emagfake									= 1,
 		/obj/item/clothing/shoes/wheelys				= 2,
-		/obj/item/clothing/shoes/kindleKicks				= 2)
+		/obj/item/clothing/shoes/kindleKicks				= 2,
+		/obj/item/storage/belt/military/snack					= 2
+		)
 
 	light_color = LIGHT_COLOR_GREEN
 
@@ -70,7 +72,7 @@
 	Reset()
 
 /obj/machinery/computer/arcade/proc/prizevend(mob/user)
-	user.SendSignal(COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
+	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
 	if(prob(0.0001)) //1 in a million
 		new /obj/item/gun/energy/pulse/prize(src)
 		SSmedals.UnlockMedal(MEDAL_PULSE, usr.client)
@@ -111,7 +113,7 @@
 	desc = "Does not support Pinball."
 	icon_state = "arcade"
 	circuit = /obj/item/circuitboard/computer/arcade/battle
-	var/enemy_name = "Space Villian"
+	var/enemy_name = "Space Villain"
 	var/temp = "Winners don't use space drugs" //Temporary message, for attack messages, etc
 	var/player_hp = 30 //Player health/attack points
 	var/player_mp = 10
@@ -150,7 +152,7 @@
 		dat += "<a href='byond://?src=[REF(src)];charge=1'>Recharge Power</a>"
 
 	dat += "</b></center>"
-	var/datum/browser/popup = new(user, "arcade", "Space Villian 2000")
+	var/datum/browser/popup = new(user, "arcade", "Space Villain 2000")
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
@@ -364,6 +366,15 @@
 	var/last_spaceport_action = ""
 	var/gameStatus = ORION_STATUS_START
 	var/canContinueEvent = 0
+
+/obj/machinery/computer/arcade/orion_trail/kobayashi
+	name = "Kobayashi Maru control computer"
+	desc = "A test for cadets"
+	icon = 'icons/obj/machines/particle_accelerator.dmi'
+	icon_state = "control_boxp"
+	events = list("Raiders" = 3, "Interstellar Flux" = 1, "Illness" = 3, "Breakdown" = 2, "Malfunction" = 2, "Collision" = 1, "Spaceport" = 2)
+	prizes = list(/obj/item/paper/fluff/holodeck/trek_diploma = 1)
+	settlers = list("Kirk","Worf","Gene")
 
 /obj/machinery/computer/arcade/orion_trail/Reset()
 	// Sets up the main trail
@@ -702,7 +713,7 @@
 							say("WEEWOO! WEEWOO! Spaceport security en route!")
 							playsound(src, 'sound/items/weeoo1.ogg', 100, FALSE)
 							for(var/i, i<=3, i++)
-								var/mob/living/simple_animal/hostile/syndicate/ranged/orion/O = new/mob/living/simple_animal/hostile/syndicate/ranged/orion(get_turf(src))
+								var/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion/O = new/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion(get_turf(src))
 								O.target = usr
 
 
@@ -1045,7 +1056,7 @@
 	newgame()
 	obj_flags |= EMAGGED
 
-/mob/living/simple_animal/hostile/syndicate/ranged/orion
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion
 	name = "spaceport security"
 	desc = "Premier corporate security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")

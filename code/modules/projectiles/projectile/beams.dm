@@ -38,6 +38,8 @@
 
 /obj/item/projectile/beam/weak
 	damage = 15
+
+/obj/item/projectile/beam/weak/penetrator
 	armour_penetration = 50
 
 /obj/item/projectile/beam/practice
@@ -51,10 +53,10 @@
 	damage = 5
 
 /obj/item/projectile/beam/xray
-	name = "xray beam"
+	name = "\improper X-ray beam"
 	icon_state = "xray"
 	damage = 15
-	irradiate = 30
+	irradiate = 300
 	range = 15
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF
 
@@ -90,7 +92,7 @@
 
 /obj/item/projectile/beam/pulse/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(isturf(target) || istype(target, /obj/structure/))
+	if (!QDELETED(target) && (isturf(target) || istype(target, /obj/structure/)))
 		target.ex_act(EXPLODE_HEAVY)
 
 /obj/item/projectile/beam/pulse/shotgun

@@ -167,3 +167,16 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	if(isrevenant(M) || iseminence(M) || iswizard(M))
 		return TRUE
 	return FALSE
+
+datum/atom_hud/alternate_appearance/basic/onePerson
+	var/mob/seer
+
+/datum/atom_hud/alternate_appearance/basic/onePerson/mobShouldSee(mob/M)
+	if(M == seer)
+		return TRUE
+	return FALSE
+
+/datum/atom_hud/alternate_appearance/basic/onePerson/New(key, image/I, mob/living/M)
+	..(key, I, FALSE)
+	seer = M
+	add_hud_to(seer)

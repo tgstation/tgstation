@@ -1,4 +1,4 @@
-//Augmented Eyesight: Gives you x-ray vision or protection from flashes. Also, high DNA cost because of how powerful it is.
+//Augmented Eyesight: Gives you X-ray vision or protection from flashes. Also, high DNA cost because of how powerful it is.
 //Possible todo: make a custom message for directing a penlight/flashlight at the eyes - not sure what would display though.
 
 /obj/effect/proc_holder/changeling/augmented_eyesight
@@ -41,7 +41,7 @@
 	return 1
 
 
-/obj/effect/proc_holder/changeling/augmented_eyesight/on_refund(mob/user) //Get rid of x-ray vision and flash protection when the user refunds this ability
+/obj/effect/proc_holder/changeling/augmented_eyesight/on_refund(mob/user) //Get rid of X-ray vision and flash protection when the user refunds this ability
 	var/obj/item/organ/eyes/E = user.getorganslot(ORGAN_SLOT_EYES)
 	if(E)
 		if (active)

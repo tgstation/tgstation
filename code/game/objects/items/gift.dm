@@ -56,7 +56,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		/obj/item/grown/corncob,
 		/obj/item/poster/random_contraband,
 		/obj/item/poster/random_official,
-		/obj/item/book/manual/barman_recipes,
+		/obj/item/book/manual/wiki/barman_recipes,
 		/obj/item/book/manual/chef_recipes,
 		/obj/item/bikehorn,
 		/obj/item/toy/beach_ball,
@@ -97,7 +97,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			var/obj/item/I = V
 			if((!initial(I.icon_state)) || (!initial(I.item_state)) || (initial(I.item_flags) & ABSTRACT))
 				gift_types_list -= V
-				GLOB.possible_gifts = gift_types_list
+		GLOB.possible_gifts = gift_types_list
 	var/gift_type = pick(GLOB.possible_gifts)
 
 	return gift_type

@@ -339,3 +339,11 @@
 	new /obj/item/stamp/chameleon/broken(src)
 	new /obj/item/pda/chameleon/broken(src)
 	// No chameleon laser, they can't randomise for //REASONS//
+
+/obj/item/storage/box/syndie_kit/bee_grenades
+	name = "buzzkill grenade box"
+	desc = "A sleek, sturdy box with a buzzing noise coming from the inside. Uh oh."
+
+/obj/item/storage/box/syndie_kit/bee_grenades/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/grenade/spawnergrenade/buzzkill(src)

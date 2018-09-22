@@ -29,7 +29,7 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 	robust_searching = TRUE
 	stat_attack = UNCONSCIOUS
-	anchored = TRUE
+	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	var/combatant_state = SEEDLING_STATE_NEUTRAL
 	var/obj/seedling_weakpoint/weak_point
 	var/mob/living/beam_debuff_target
@@ -47,7 +47,7 @@
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
 	nondirectional_sprite = TRUE
 
-/obj/item/projectile/seedling/Collide(atom/A)//Stops seedlings from destroying other jungle mobs through FF
+/obj/item/projectile/seedling/Bump(atom/A)//Stops seedlings from destroying other jungle mobs through FF
 	if(isliving(A))
 		var/mob/living/L = A
 		if("jungle" in L.faction)

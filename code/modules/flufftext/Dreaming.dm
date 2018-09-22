@@ -5,12 +5,20 @@
 /mob/living/carbon/proc/dream()
 	set waitfor = FALSE
 	var/list/dream_fragments = list()
+	var/list/custom_dream_nouns = list()
 	var/fragment = ""
+
+	for(var/obj/item/bedsheet/sheet in loc)
+		custom_dream_nouns += sheet.dream_messages
 
 	dream_fragments += "you see"
 
 	//Subject
-	fragment += pick(GLOB.dream_strings)
+	if(custom_dream_nouns.len && prob(90))
+		fragment += pick(custom_dream_nouns)
+	else
+		fragment += pick(GLOB.dream_strings)
+
 	if(prob(50))
 		fragment = replacetext(fragment, "%ADJECTIVE%", pick(GLOB.adjectives))
 	else

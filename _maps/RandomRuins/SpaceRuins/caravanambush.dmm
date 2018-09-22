@@ -28,12 +28,12 @@
 "ag" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/gun/ballistic/automatic/pistol/APS,
+/obj/item/gun/energy/e_gun/mini,
 /turf/template_noop,
 /area/template_noop)
 "ah" = (
 /obj/structure/lattice/catwalk,
-/mob/living/simple_animal/hostile/pirate/space{
+/mob/living/simple_animal/hostile/pirate/ranged/space{
 	environment_smash = 0
 	},
 /turf/template_noop,
@@ -119,8 +119,11 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/flashlight,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/darkblue/side{
-	dir = 4;
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter3)
@@ -137,8 +140,10 @@
 /area/template_noop)
 "aG" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/darkblue/corner{
-	dir = 4;
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter3)
@@ -148,20 +153,27 @@
 	dir = 8
 	},
 /obj/item/shard,
-/turf/open/floor/plasteel/darkblue/side{
-	dir = 8;
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter3)
 "aM" = (
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plasteel/darkblue/corner{
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel/dark{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter3)
 "aN" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel/airless/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/airless,
 /area/shuttle/caravan/freighter3)
 "aO" = (
 /obj/machinery/airalarm/all_access{
@@ -176,10 +188,11 @@
 /area/shuttle/caravan/freighter3)
 "aP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/mob/living/simple_animal/hostile/pirate/space{
+/mob/living/simple_animal/hostile/pirate/ranged/space{
 	environment_smash = 0
 	},
-/turf/open/floor/plasteel/airless/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/airless,
 /area/shuttle/caravan/freighter2)
 "aQ" = (
 /obj/structure/rack,
@@ -187,8 +200,11 @@
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/clothing/mask/gas,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/darkblue/side{
-	dir = 4;
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter3)
@@ -404,6 +420,8 @@
 /area/shuttle/caravan/freighter3)
 "gt" = (
 /obj/effect/turf_decal/bot_white,
+/obj/structure/closet/crate/secure/weapon,
+/obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted,
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter3)
 "gv" = (
@@ -471,11 +489,9 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter3)
 "gT" = (
-/mob/living/simple_animal/hostile/syndicate/melee/space{
-	environment_smash = 0;
-	name = "Syndicate Salvage Worker"
-	},
-/turf/open/floor/plasteel/airless/floorgrime,
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/airless,
 /area/shuttle/caravan/freighter3)
 "gU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -497,8 +513,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/blue/side{
-	dir = 4;
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter3)
@@ -516,8 +535,16 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/turf/open/floor/plasteel/darkblue/side{
-	dir = 9;
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter3)
@@ -610,8 +637,9 @@
 /area/shuttle/caravan/freighter3)
 "hy" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 1
+	dir = 8
 	},
+/mob/living/simple_animal/hostile/syndicate/ranged/shotgun/space/stormtrooper,
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter3)
 "hz" = (
@@ -619,16 +647,14 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/turf/open/floor/plasteel/blue/corner{
-	dir = 4;
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter3)
 "hB" = (
-/mob/living/simple_animal/hostile/syndicate/ranged/space/stormtrooper{
-	environment_smash = 0;
-	name = "Syndicate Salvage Leader"
-	},
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
@@ -652,8 +678,8 @@
 /obj/item/ammo_casing/shotgun/ion,
 /obj/item/ammo_casing/shotgun/pulseslug,
 /obj/item/ammo_casing/shotgun/dragonsbreath,
-/obj/item/ammo_casing/shotgun/techshell,
-/obj/item/ammo_casing/shotgun/techshell,
+/obj/item/ammo_casing/shotgun/stunslug,
+/obj/item/ammo_casing/shotgun/stunslug,
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter2)
 "hU" = (
@@ -667,11 +693,7 @@
 /obj/effect/turf_decal/bot_white,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/secure/gear,
-/obj/item/storage/box/lethalshot,
-/obj/item/ammo_casing/shotgun/frag12,
-/obj/item/ammo_casing/shotgun/frag12,
-/obj/item/ammo_casing/shotgun/frag12,
-/obj/item/ammo_casing/shotgun/frag12,
+/obj/item/storage/box/rubbershot,
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter2)
 "hW" = (
@@ -685,7 +707,6 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/ammo_box/c10mm,
 /obj/item/ammo_box/magazine/m10mm{
 	pixel_x = -3;
 	pixel_y = 3
@@ -735,7 +756,7 @@
 /area/shuttle/caravan/freighter3)
 "ib" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 8
+	dir = 1
 	},
 /obj/structure/closet/crate/secure/plasma,
 /obj/item/tank/internals/plasma/full,
@@ -763,7 +784,8 @@
 	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/airless/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/airless,
 /area/shuttle/caravan/freighter3)
 "if" = (
 /obj/machinery/firealarm{
@@ -842,8 +864,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/blue/side{
-	dir = 4;
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter2)
@@ -895,11 +920,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/syndicate/melee/space{
-	environment_smash = 0;
-	name = "Syndicate Salvage Worker"
-	},
-/turf/open/floor/plasteel/airless/floorgrime,
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/airless,
 /area/shuttle/caravan/freighter3)
 "iF" = (
 /obj/effect/decal/cleanable/dirt,
@@ -908,8 +931,14 @@
 "iH" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/turf/open/floor/plasteel/darkblue/side{
-	dir = 10;
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter3)
@@ -936,27 +965,12 @@
 	dir = 4
 	},
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/gun/ballistic/shotgun/riot{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/ballistic/shotgun/riot,
-/turf/open/floor/plasteel/airless/dark,
-/area/shuttle/caravan/freighter2)
-"iW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/secure/weapon,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/gun/syringe/rapidsyringe,
-/obj/item/gun/syringe/syndicate{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/item/gun/ballistic/shotgun/sc_pump,
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter2)
 "iX" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 1
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/airless/dark,
@@ -966,8 +980,10 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/turf/open/floor/plasteel/blue/corner{
-	dir = 4;
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter2)
@@ -1028,13 +1044,16 @@
 /area/shuttle/caravan/freighter2)
 "jq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/airless/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/airless,
 /area/shuttle/caravan/freighter2)
 "jr" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 8
+	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/secure/weapon,
+/obj/item/gun/ballistic/automatic/pistol/APS,
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter2)
 "js" = (
@@ -1045,10 +1064,6 @@
 "jt" = (
 /obj/effect/turf_decal/box/white/corners,
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/gun/energy/e_gun/mini{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/item/gun/energy/e_gun/mini,
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter2)
@@ -1104,7 +1119,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/airless,
 /area/shuttle/caravan/freighter2)
 "jK" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -1116,10 +1132,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/pirate/space/ranged{
+/mob/living/simple_animal/hostile/pirate/ranged/space{
 	environment_smash = 0
 	},
-/turf/open/floor/plasteel/airless/floorgrime,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/airless,
 /area/shuttle/caravan/freighter2)
 "jN" = (
 /turf/open/floor/plasteel/airless{
@@ -1128,7 +1145,7 @@
 /area/shuttle/caravan/freighter2)
 "jO" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/pirate/space/ranged{
+/mob/living/simple_animal/hostile/pirate/ranged/space{
 	environment_smash = 0
 	},
 /turf/open/floor/plating/airless,
@@ -1176,8 +1193,8 @@
 "jY" = (
 /obj/effect/turf_decal/bot_white,
 /obj/structure/closet/crate/secure/gear,
-/obj/item/ammo_box/a40mm,
-/obj/item/ammo_box/a40mm,
+/obj/item/storage/belt/bandolier,
+/obj/item/storage/belt/holster,
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter2)
 "jZ" = (
@@ -1256,7 +1273,7 @@
 	height = 5;
 	id = "caravansyndicate1_ambush";
 	name = "Trade Route";
-	roundstart_template = /datum/map_template/shuttle/ruin/syndicate_fighter;
+	roundstart_template = /datum/map_template/shuttle/ruin/syndicate_fighter_shiv;
 	width = 9
 	},
 /turf/template_noop,
@@ -3728,7 +3745,7 @@ af
 hq
 hU
 it
-iW
+js
 js
 jK
 jZ

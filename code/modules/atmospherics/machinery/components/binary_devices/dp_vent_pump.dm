@@ -62,6 +62,18 @@ Acts like a normal vent, but has an input AND output.
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume
 	name = "large dual-port air vent"
 
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_toxmix
+	id = INCINERATOR_TOXMIX_DP_VENTPUMP
+	frequency = FREQ_AIRLOCK_CONTROL
+
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_atmos
+	id = INCINERATOR_ATMOS_DP_VENTPUMP
+	frequency = FREQ_AIRLOCK_CONTROL
+
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_syndicatelava
+	id = INCINERATOR_SYNDICATELAVA_DP_VENTPUMP
+	frequency = FREQ_AIRLOCK_CONTROL
+
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
@@ -215,7 +227,7 @@ Acts like a normal vent, but has an input AND output.
 		pressure_checks &= ~1
 		pump_direction = 0
 
-	if("stabalize" in signal.data)
+	if("stabilize" in signal.data)
 		pressure_checks |= 1
 		pump_direction = 1
 

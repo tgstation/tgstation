@@ -60,7 +60,7 @@
 /datum/symptom/heal/starlight/Start(datum/disease/advance/A)
 	if(!..())
 		return
-	if(A.properties["transmission"] >= 6)
+	if(A.properties["transmittable"] >= 6)
 		nearspace_penalty = 1
 	if(A.properties["stage_rate"] >= 6)
 		power = 2
@@ -233,7 +233,7 @@
 
 /datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
-	if(M.has_trait(TRAIT_FAKEDEATH))
+	if(M.has_trait(TRAIT_DEATHCOMA))
 		return power
 	else if(M.IsUnconscious() || M.stat == UNCONSCIOUS)
 		return power * 0.9
@@ -358,7 +358,7 @@
 		return
 	if(A.properties["stage_rate"] >= 7)
 		power = 2
-	if(A.properties["trasmission"] >= 6)
+	if(A.properties["transmittable"] >= 6)
 		temp_rate = 4
 
 /datum/symptom/heal/plasma/CanHeal(datum/disease/advance/A)
@@ -425,7 +425,7 @@
 		return
 	if(A.properties["resistance"] >= 7)
 		power = 2
-	if(A.properties["trasmission"] >= 6)
+	if(A.properties["transmittable"] >= 6)
 		cellular_damage = TRUE
 
 /datum/symptom/heal/radiation/CanHeal(datum/disease/advance/A)

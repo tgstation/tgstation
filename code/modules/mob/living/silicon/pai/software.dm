@@ -209,7 +209,7 @@
 					pda.silent = !pda.silent
 				else if(href_list["target"])
 					if(silent)
-						return alert("Communications circuits remain unitialized.")
+						return alert("Communications circuits remain uninitialized.")
 
 					var/target = locate(href_list["target"])
 					pda.create_message(src, target)

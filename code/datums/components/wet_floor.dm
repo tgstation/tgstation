@@ -26,8 +26,8 @@
 	if(!isopenturf(parent))
 		return COMPONENT_INCOMPATIBLE
 	add_wet(strength, duration_minimum, duration_add, duration_maximum)
-	RegisterSignal(COMSIG_TURF_IS_WET, .proc/is_wet)
-	RegisterSignal(COMSIG_TURF_MAKE_DRY, .proc/dry)
+	RegisterSignal(parent, COMSIG_TURF_IS_WET, .proc/is_wet)
+	RegisterSignal(parent, COMSIG_TURF_MAKE_DRY, .proc/dry)
 	permanent = _permanent
 	if(!permanent)
 		START_PROCESSING(SSwet_floors, src)
@@ -90,7 +90,7 @@
 	S.intensity = intensity
 	S.lube_flags = lube_flags
 
-/datum/component/wet_floor/proc/dry(strength = TURF_WET_WATER, immediate = FALSE, duration_decrease = INFINITY)
+/datum/component/wet_floor/proc/dry(datum/source, strength = TURF_WET_WATER, immediate = FALSE, duration_decrease = INFINITY)
 	for(var/i in time_left_list)
 		if(text2num(i) <= strength)
 			time_left_list[i] = max(0, time_left_list[i] - duration_decrease)
@@ -120,8 +120,8 @@
 			if(O.obj_flags & FROZEN)
 				O.make_unfrozen()
 		add_wet(TURF_WET_WATER, max_time_left())
-		dry(TURF_WET_ICE)
-	dry(ALL, FALSE, decrease)
+		dry(null, TURF_WET_ICE)
+	dry(null, ALL, FALSE, decrease)
 	check()
 	last_process = world.time
 

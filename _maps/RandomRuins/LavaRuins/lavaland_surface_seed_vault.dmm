@@ -21,11 +21,17 @@
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 "f" = (
-/obj/machinery/plantgenes/seedvault,
+/obj/machinery/plantgenes/seedvault{
+	pixel_y = 6
+	},
+/obj/structure/table/wood,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 "g" = (
 /obj/structure/table/wood,
+/obj/machinery/smartfridge/disks{
+	pixel_y = 2
+	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 "h" = (

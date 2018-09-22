@@ -47,13 +47,18 @@
 		var/atom/movable/AM = A
 		if(AM == src)
 			continue
+		SEND_SIGNAL(AM, COMSIG_MOVABLE_DISPOSING, src, D)
 		AM.forceMove(src)
 		if(istype(AM, /obj/structure/bigDelivery) && !hasmob)
 			var/obj/structure/bigDelivery/T = AM
 			src.destinationTag = T.sortTag
-		if(istype(AM, /obj/item/smallDelivery) && !hasmob)
+		else if(istype(AM, /obj/item/smallDelivery) && !hasmob)
 			var/obj/item/smallDelivery/T = AM
 			src.destinationTag = T.sortTag
+		else if(istype(AM, /mob/living/silicon/robot))
+			var/obj/item/destTagger/borg/tagger = locate() in AM
+			if (tagger)
+				src.destinationTag = tagger.currTag
 
 
 // start the movement process

@@ -2,11 +2,11 @@
 	plane = FLOOR_PLANE
 	var/slowdown = 0 //negative for faster, positive for slower
 
-	var/mutable_appearance/wet_overlay
 	var/postdig_icon_change = FALSE
 	var/postdig_icon
-	var/list/archdrops
 	var/wet
+
+	var/footstep = null
 
 /turf/open/ComponentInitialize()
 	. = ..()
@@ -17,12 +17,22 @@
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
+	footstep = FOOTSTEP_FLOOR
+	tiled_dirt = TRUE
+
+/turf/open/indestructible/Melt()
+	to_be_destroyed = FALSE
+	return src
+
+/turf/open/indestructible/singularity_act()
+	return
 
 /turf/open/indestructible/TerraformTurf(path, defer_change = FALSE, ignore_air = FALSE)
 	return
 
 /turf/open/indestructible/sound
-	name = "squeeky floor"
+	name = "squeaky floor"
+	footstep = null
 	var/sound
 
 /turf/open/indestructible/sound/Entered(var/mob/AM)
@@ -37,6 +47,8 @@
 	icon_state = "necro1"
 	baseturfs = /turf/open/indestructible/necropolis
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	footstep = FOOTSTEP_LAVA
+	tiled_dirt = FALSE
 
 /turf/open/indestructible/necropolis/Initialize()
 	. = ..()
@@ -61,6 +73,7 @@
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	baseturfs = /turf/open/indestructible/hierophant
 	smooth = SMOOTH_TRUE
+	tiled_dirt = FALSE
 
 /turf/open/indestructible/hierophant/two
 
@@ -71,12 +84,15 @@
 	name = "notebook floor"
 	desc = "A floor made of invulnerable notebook paper."
 	icon_state = "paperfloor"
+	footstep = null
+	tiled_dirt = FALSE
 
 /turf/open/indestructible/binary
 	name = "tear in the fabric of reality"
 	CanAtmosPass = ATMOS_PASS_NO
 	baseturfs = /turf/open/indestructible/binary
 	icon_state = "binary"
+	footstep = null
 
 /turf/open/indestructible/airblock
 	icon_state = "bluespace"
@@ -84,10 +100,11 @@
 	baseturfs = /turf/open/indestructible/airblock
 
 /turf/open/indestructible/clock_spawn_room
-	name = "cogmetal"
+	name = "cogmetal floor"
 	desc = "Brass plating that gently radiates heat. For some reason, it reminds you of blood."
 	icon_state = "reebe"
 	baseturfs = /turf/open/indestructible/clock_spawn_room
+	footstep = FOOTSTEP_PLATING
 
 /turf/open/indestructible/clock_spawn_room/Entered()
 	..()
@@ -185,7 +202,7 @@
 	for(var/mob/living/simple_animal/slime/M in src)
 		M.apply_water()
 
-	SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	for(var/obj/effect/O in src)
 		if(is_cleanable(O))
 			qdel(O)
@@ -209,7 +226,7 @@
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
 			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
-		C.SendSignal(COMSIG_ADD_MOOD_EVENT, "slipped", /datum/mood_event/slipped)
+		SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "slipped", /datum/mood_event/slipped)
 		for(var/obj/item/I in C.held_items)
 			C.accident(I)
 
@@ -230,19 +247,11 @@
 			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE)	//spinning would be bad for ice, fucks up the next dir
 		return 1
 
-/turf/open/copyTurf(turf/T)
-	. = ..()
-	if(. && isopenturf(T))
-		GET_COMPONENT(slip, /datum/component/wet_floor)
-		if(slip)
-			var/datum/component/wet_floor/WF = T.AddComponent(/datum/component/wet_floor)
-			WF.InheritComponent(slip)
-
 /turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0, max_wet_time = MAXIMUM_WET_TIME, permanent)
 	AddComponent(/datum/component/wet_floor, wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 
 /turf/open/proc/MakeDry(wet_setting = TURF_WET_WATER, immediate = FALSE, amount = INFINITY)
-	SendSignal(COMSIG_TURF_MAKE_DRY, wet_setting, immediate, amount)
+	SEND_SIGNAL(src, COMSIG_TURF_MAKE_DRY, wet_setting, immediate, amount)
 
 /turf/open/get_dumping_location()
 	return src

@@ -76,10 +76,8 @@
 			U.show_message("<span class='danger'>An error flashes on your [src].</span>", 1)
 		else
 			message_admins("[!is_special_character(U) ? "Non-antag " : ""][ADMIN_LOOKUPFLW(U)] triggered a PDA explosion on [target.name] at [ADMIN_VERBOSEJMP(target)].")
-			var/message_log = "triggered a PDA explosion on [target.name] at at [AREACOORD(target)]."
-			U.log_message(message_log, INDIVIDUAL_ATTACK_LOG)
-			log_game("[key_name(U)] [message_log]")
-			log_attack("[key_name(U)] [message_log]")
+			var/message_log = "triggered a PDA explosion on [target.name] at [AREACOORD(target)]."
+			U.log_message(message_log, LOG_ATTACK)
 			U.show_message("<span class='notice'>Success!</span>", 1)
 			target.explode()
 	else
@@ -101,7 +99,7 @@
 		GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, target)
 		if(!hidden_uplink)
 			hidden_uplink = target.AddComponent(/datum/component/uplink)
-			target.lock_code = lock_code
+			hidden_uplink.unlock_code = lock_code
 		else
 			hidden_uplink.hidden_crystals += hidden_uplink.telecrystals //Temporarially hide the PDA's crystals, so you can't steal telecrystals.
 		hidden_uplink.telecrystals = telecrystals

@@ -98,7 +98,7 @@
 /obj/machinery/gibber/attackby(obj/item/P, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
 		return
-		
+
 	else if(default_pry_open(P))
 		return
 
@@ -184,7 +184,7 @@
 	if(typeofskin)
 		skin = new typeofskin
 
-	add_logs(user, occupant, "gibbed")
+	log_combat(user, occupant, "gibbed")
 	mob_occupant.death(1)
 	mob_occupant.ghostize()
 	qdel(src.occupant)
@@ -215,7 +215,7 @@
 /obj/machinery/gibber/autogibber
 	var/input_dir = NORTH
 
-/obj/machinery/gibber/autogibber/CollidedWith(atom/movable/AM)
+/obj/machinery/gibber/autogibber/Bumped(atom/movable/AM)
 	var/atom/input = get_step(src, input_dir)
 	if(ismob(AM))
 		var/mob/M = AM

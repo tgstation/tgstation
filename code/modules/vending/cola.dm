@@ -22,8 +22,6 @@
 /obj/item/vending_refill/cola
 	machine_name = "Robust Softdrinks"
 	icon_state = "refill_cola"
-	charges = list(30, 4, 1)//of 90 standard, 12 contraband, 1 premium
-	init_charges = list(30, 4, 1)
 
 /obj/machinery/vending/cola/random
 	name = "\improper Random Drinkies"

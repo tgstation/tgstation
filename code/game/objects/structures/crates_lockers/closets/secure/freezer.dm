@@ -74,6 +74,6 @@
 	desc = "Contains pies filled with cream and/or custard, you sickos."
 	req_access = list(ACCESS_THEATRE)
 
-/obj/structure/closet/secure_closet/freezer/pie/PopulateContents()
+/obj/structure/closet/secure_closet/freezer/cream_pie/PopulateContents()
 	..()
 	new /obj/item/reagent_containers/food/snacks/pie/cream(src)

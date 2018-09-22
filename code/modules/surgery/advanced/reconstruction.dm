@@ -1,17 +1,10 @@
-/obj/item/disk/surgery/reconstruction
-	name = "Reconstruction Surgery Disk"
-	desc = "The disk provides instructions on how to repair a body without the use of chemicals."
-	surgeries = list(/datum/surgery/advanced/reconstruction)
-
 /datum/surgery/advanced/reconstruction
-	name = "body reconstruction"
+	name = "Reconstruction"
+	desc = "A surgical procedure that gradually repairs damage done to a body without the assistance of chemicals. Unlike classic medicine, it is effective on corpses."
 	steps = list(/datum/surgery_step/incise,
-				/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,
 				/datum/surgery_step/incise,
 				/datum/surgery_step/clamp_bleeders,
-				/datum/surgery_step/incise,
-				/datum/surgery_step/retract_skin,
 				/datum/surgery_step/reconstruct,
 				/datum/surgery_step/close)
 
@@ -30,7 +23,7 @@
 
 /datum/surgery_step/reconstruct/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] fixes some of [target]'s wounds.", "<span class='notice'>You succeed in fixing some of [target]'s wounds.</span>")
-	target.heal_bodypart_damage(10,10)
+	target.heal_bodypart_damage(30,30)
 	return TRUE
 
 /datum/surgery_step/reconstruct/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

@@ -4,6 +4,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield-old"
 	density = TRUE
+	move_resist = INFINITY
 	opacity = 0
 	anchored = TRUE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -14,11 +15,6 @@
 	. = ..()
 	setDir(pick(GLOB.cardinals))
 	air_update_turf(1)
-
-/obj/structure/emergency_shield/Destroy()
-	density = FALSE
-	air_update_turf(1)
-	return ..()
 
 /obj/structure/emergency_shield/Move()
 	var/turf/T = loc
@@ -98,6 +94,7 @@
 /obj/machinery/shieldgen/proc/shields_up()
 	active = TRUE
 	update_icon()
+	move_resist = INFINITY
 
 	for(var/turf/target_tile in range(shield_range, src))
 		if(isspaceturf(target_tile) && !(locate(/obj/structure/emergency_shield) in target_tile))
@@ -106,6 +103,7 @@
 
 /obj/machinery/shieldgen/proc/shields_down()
 	active = FALSE
+	move_resist = initial(move_resist)
 	update_icon()
 	QDEL_LIST(deployed_shields)
 
@@ -122,11 +120,11 @@
 			locked = pick(0,1)
 			update_icon()
 
-/obj/machinery/shieldgen/attack_hand(mob/user)
+/obj/machinery/shieldgen/interact(mob/user)
 	. = ..()
 	if(.)
 		return
-	if(locked)
+	if(locked && !issilicon(user))
 		to_chat(user, "<span class='warning'>The machine is locked, you are unable to use it!</span>")
 		return
 	if(panel_open)
@@ -178,14 +176,14 @@
 		if(!anchored && !isinspace())
 			W.play_tool_sound(src, 100)
 			to_chat(user, "<span class='notice'>You secure \the [src] to the floor!</span>")
-			anchored = TRUE
+			setAnchored(TRUE)
 		else if(anchored)
 			W.play_tool_sound(src, 100)
 			to_chat(user, "<span class='notice'>You unsecure \the [src] from the floor!</span>")
 			if(active)
 				to_chat(user, "<span class='notice'>\The [src] shuts off!</span>")
 				shields_down()
-			anchored = FALSE
+			setAnchored(FALSE)
 
 	else if(W.GetID())
 		if(allowed(user) && !(obj_flags & EMAGGED))
@@ -363,7 +361,7 @@
 		add_fingerprint(user)
 		return ..()
 
-/obj/machinery/shieldwallgen/attack_hand(mob/user)
+/obj/machinery/shieldwallgen/interact(mob/user)
 	. = ..()
 	if(.)
 		return

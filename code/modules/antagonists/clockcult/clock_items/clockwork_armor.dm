@@ -22,12 +22,12 @@
 	if(GLOB.ratvar_awakens)
 		armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 		clothing_flags |= STOPSPRESSUREDAMAGE
-		max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+		max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else if(GLOB.ratvar_approaches)
 		armor = list("melee" = 70, "bullet" = 80, "laser" = -15, "energy" = 25, "bomb" = 70, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 		clothing_flags |= STOPSPRESSUREDAMAGE
-		max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+		max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else
 		armor = list("melee" = 60, "bullet" = 70, "laser" = -25, "energy" = 0, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
@@ -83,12 +83,12 @@
 	if(GLOB.ratvar_awakens)
 		armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 		clothing_flags |= STOPSPRESSUREDAMAGE
-		max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+		max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else if(GLOB.ratvar_approaches)
 		armor = list("melee" = 70, "bullet" = 80, "laser" = -15, "energy" = 25, "bomb" = 70, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 		clothing_flags |= STOPSPRESSUREDAMAGE
-		max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+		max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else
 		armor = list("melee" = 60, "bullet" = 70, "laser" = -25, "energy" = 0, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
@@ -106,13 +106,13 @@
 	if(slot == SLOT_WEAR_SUIT && !is_servant_of_ratvar(user))
 		if(!iscultist(user))
 			to_chat(user, "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>")
-			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off [user.p_their()] body!</span>", "<span class='warning'>The curiass flickers off your body, leaving only nausea!</span>")
+			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off [user.p_their()] body!</span>", "<span class='warning'>The cuirass flickers off your body, leaving only nausea!</span>")
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.vomit(20)
 		else
 			to_chat(user, "<span class='heavy_brass'>\"I think this armor is too hot for you to handle.\"</span>")
-			to_chat(user, "<span class='userdanger'>The curiass emits a burst of flame as you scramble to get it off!</span>")
+			to_chat(user, "<span class='userdanger'>The cuirass emits a burst of flame as you scramble to get it off!</span>")
 			user.emote("scream")
 			user.apply_damage(15, BURN, BODY_ZONE_CHEST)
 			user.adjust_fire_stacks(2)
@@ -149,7 +149,7 @@
 	if(GLOB.ratvar_awakens)
 		armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 		clothing_flags |= STOPSPRESSUREDAMAGE
-		max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+		max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else
 		armor = list("melee" = 80, "bullet" = 70, "laser" = -25, "energy" = 0, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)

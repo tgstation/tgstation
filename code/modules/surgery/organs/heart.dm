@@ -54,11 +54,11 @@
 		var/sound/fastbeat = sound('sound/health/fastbeat.ogg', repeat = TRUE)
 		var/mob/living/carbon/H = owner
 
-		if(H.health <= HEALTH_THRESHOLD_CRIT && beat != BEAT_SLOW)
+		if(H.health <= H.crit_threshold && beat != BEAT_SLOW)
 			beat = BEAT_SLOW
 			H.playsound_local(get_turf(H), slowbeat,40,0, channel = CHANNEL_HEARTBEAT)
 			to_chat(owner, "<span class = 'notice'>You feel your heart slow down...</span>")
-		if(beat == BEAT_SLOW && H.health > HEALTH_THRESHOLD_CRIT)
+		if(beat == BEAT_SLOW && H.health > H.crit_threshold)
 			H.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
 
@@ -147,15 +147,22 @@
 
 /obj/item/organ/heart/cybernetic
 	name = "cybernetic heart"
-	desc = "An electronic device designed to mimic the functions of an organic human heart. Offers no benefit over an organic heart other than being easy to make."
+	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma."
 	icon_state = "heart-c"
 	synthetic = TRUE
+	var/crituse = FALSE // doses with epi if in crit once.
 
 /obj/item/organ/heart/cybernetic/emp_act()
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
 	Stop()
+
+/obj/item/organ/heart/cybernetic/on_life()
+	. = ..()
+	if(!crituse && owner.stat == UNCONSCIOUS)
+		crituse = TRUE
+		owner.reagents.add_reagent("epinephrine", 10)
 
 /obj/item/organ/heart/freedom
 	name = "heart of freedom"

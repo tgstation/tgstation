@@ -160,11 +160,22 @@
 			if(sensor.on && sensor.visible)
 				add_overlay("proxy_beam")
 
-/obj/item/transfer_valve/proc/merge_gases()
-	tank_two.air_contents.volume += tank_one.air_contents.volume
+/obj/item/transfer_valve/proc/merge_gases(datum/gas_mixture/target, change_volume = TRUE)
+	var/target_self = FALSE
+	if(!target || (target == tank_one.air_contents))
+		target = tank_two.air_contents
+	if(target == tank_two.air_contents)
+		target_self = TRUE
+	if(change_volume)
+		if(!target_self)
+			target.volume += tank_two.volume
+		target.volume += tank_one.air_contents.volume
 	var/datum/gas_mixture/temp
 	temp = tank_one.air_contents.remove_ratio(1)
-	tank_two.air_contents.merge(temp)
+	target.merge(temp)
+	if(!target_self)
+		temp = tank_two.air_contents.remove_ratio(1)
+		target.merge(temp)
 
 /obj/item/transfer_valve/proc/split_gases()
 	if (!valve_open || !tank_one || !tank_two)
