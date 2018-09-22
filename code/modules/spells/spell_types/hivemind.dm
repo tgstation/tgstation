@@ -340,6 +340,7 @@
 			continue
 		if(target.stat == DEAD)
 			continue
+		target.Jitter(14)
 		if(prob(50))
 			var/text = pick(";HELP!","I'm losing control of the situation!!","Get me outta here!")
 			target.say(text, forced = "panic")
@@ -359,7 +360,6 @@
 			if(3)
 				to_chat(target, "<span class='userdanger'>You freeze up in fear!</span>")
 				target.Stun(70)
-				target.Jitter(14)
 			if(4)
 				to_chat(target, "<span class='userdanger'>You feel nauseous as dread washes over you!</span>")
 				target.Dizzy(15)
@@ -415,11 +415,11 @@
 				to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")
 				revert_cast()
 		for(var/datum/antagonist/hivemind/enemy in GLOB.antagonists)
-			var/mob/M = enemy.owner.current
-			if(!M || M == user)
+			var/datum/mind/M = enemy.owner
+			if(!M || M.current == user)
 				continue
 			if(enemy.hivemembers.Find(target))
-				enemies += M.real_name
+				enemies += M.current.real_name
 				enemy.remove_from_hive(target)
 			if(enemy.owner == target)
 				user.Stun(70)
