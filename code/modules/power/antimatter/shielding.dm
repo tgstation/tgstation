@@ -245,9 +245,8 @@
 	throw_range = 2
 	materials = list(MAT_METAL=100)
 
-/obj/item/am_shielding_container/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/multitool) && istype(src.loc, /turf))
-		new/obj/machinery/am_shielding(src.loc)
+/obj/item/am_shielding_container/multitool_act(mob/living/user, obj/item/I)
+	if(isturf(loc))
+		new/obj/machinery/am_shielding(loc)
 		qdel(src)
-	else
-		return ..()
+		return TRUE

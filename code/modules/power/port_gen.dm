@@ -168,7 +168,7 @@
 		return
 	else if(!active)
 
-		if(istype(O, /obj/item/wrench))
+		if(O.tool_behaviour == TOOL_WRENCH)
 
 			if(!anchored && !isinspace())
 				connect_to_network()
@@ -179,9 +179,9 @@
 				to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
 				anchored = FALSE
 
-			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			return
-		else if(istype(O, /obj/item/screwdriver))
+		else if(O.tool_behaviour == TOOL_SCREWDRIVER)
 			panel_open = !panel_open
 			O.play_tool_sound(src)
 			if(panel_open)

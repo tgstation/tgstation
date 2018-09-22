@@ -92,7 +92,7 @@
 			boom()
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weldingtool))
+	if(I.tool_behaviour == TOOL_WELDER)
 		if(!reagents.has_reagent("welding_fuel"))
 			to_chat(user, "<span class='warning'>[src] is out of fuel!</span>")
 			return

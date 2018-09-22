@@ -9,8 +9,8 @@
 	icon_screen = "ai-fixer"
 	light_color = LIGHT_COLOR_PINK
 
-/obj/machinery/computer/aifixer/attackby(obj/I, mob/user, params)
-	if(occupier && istype(I, /obj/item/screwdriver))
+/obj/machinery/computer/aifixer/attackby(obj/item/I, mob/user, params)
+	if(occupier && I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(stat & (NOPOWER|BROKEN))
 			to_chat(user, "<span class='warning'>The screws on [name]'s screen won't budge.</span>")
 		else

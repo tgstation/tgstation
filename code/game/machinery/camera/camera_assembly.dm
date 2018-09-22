@@ -39,7 +39,7 @@
 	switch(state)
 		if(1)
 			// State 1
-			if(istype(W, /obj/item/weldingtool))
+			if(W.tool_behaviour == TOOL_WELDER)
 				if(weld(W, user))
 					to_chat(user, "<span class='notice'>You weld the assembly securely into place.</span>")
 					setAnchored(TRUE)
@@ -57,7 +57,7 @@
 					return
 				return
 
-			else if(istype(W, /obj/item/weldingtool))
+			else if(W.tool_behaviour == TOOL_WELDER)
 
 				if(weld(W, user))
 					to_chat(user, "<span class='notice'>You unweld the assembly from its place.</span>")

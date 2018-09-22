@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	return PROCESS_KILL
 
 /obj/machinery/doppler_array/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wrench))
+	if(I.tool_behaviour == TOOL_WRENCH)
 		if(!anchored && !isinspace())
 			anchored = TRUE
 			power_change()
@@ -114,13 +114,13 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 		return
 
 	var/point_gain = 0
-	
+
 	/*****The Point Calculator*****/
-	
+
 	if(orig_light < 10)
 		say("Explosion not large enough for research calculations.")
 		return
-	else if(orig_light < 4500) 
+	else if(orig_light < 4500)
 		point_gain = (83300 * orig_light) / (orig_light + 3000)
 	else
 		point_gain = TECHWEB_BOMB_POINTCAP
