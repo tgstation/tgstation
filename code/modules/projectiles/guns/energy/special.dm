@@ -166,6 +166,9 @@
 
 //This is called every tick of delay by tool_check_callback
 /obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount)
+	if(!cell)
+		to_chat(user, "<span class='warning'>[src] does not have a cell, and cannot be used!</span>")
+		return FALSE
 	if(cell.charge < charge_weld)
 		to_chat(user, "<span class='warning'>You need more charge to complete this task!</span>")
 		return FALSE
