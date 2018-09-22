@@ -525,7 +525,7 @@
 	owner.remove_trait(TRAIT_PACIFISM, "gonbolaPacify")
 	owner.remove_trait(TRAIT_MUTE, "gonbolaMute")
 	owner.remove_trait(TRAIT_JOLLY, "gonbolaJolly")
-	
+
 /datum/status_effect/trance
 	id = "trance"
 	status_type = STATUS_EFFECT_UNIQUE
@@ -537,23 +537,22 @@
 /datum/status_effect/trance/tick()
 	if(stun)
 		owner.Stun(60, TRUE, TRUE)
-	
+	owner.dizziness = 20
+
 /datum/status_effect/trance/on_apply()
 	if(!iscarbon(owner))
 		return FALSE
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/hypnotize)
 	owner.add_trait(TRAIT_MUTE, "trance")
-	owner.dizziness = 300
 	owner.visible_message("[stun ? "<span class='warning'>[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.</span>" : ""]", \
 	"<span class='warning'>[pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")]</span>")
-	return TRUE	
-	
+	return TRUE
+
 /datum/status_effect/trance/on_creation(mob/living/new_owner, _duration, _stun = TRUE)
+	duration = _duration
+	stun = _stun
 	. = ..()
-	if(.)
-		duration = _duration
-		stun = _stun
-	
+
 /datum/status_effect/trance/on_remove()
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 	owner.remove_trait(TRAIT_MUTE, "trance")
@@ -567,5 +566,6 @@
 		return
 	var/mob/living/carbon/C = owner
 	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
-	C.gain_trauma(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, raw_message)
-	C.Unconscious(60, TRUE, TRUE) //Take some time to think about it
+	addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, raw_message), 10)
+	addtimer(CALLBACK(C, /mob/living.proc/Unconscious, 60, TRUE, TRUE), 15) //Take some time to think about it
+	qdel(src)
