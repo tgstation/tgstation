@@ -113,6 +113,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	pin = null
 
+
 /obj/item/gun/energy/plasmacutter
 	name = "plasma cutter"
 	desc = "A mining tool capable of expelling concentrated plasma bursts. You could use it to cut limbs off xenos! Or, you know, mine stuff."
@@ -129,6 +130,8 @@
 	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
+	var/progress_flash_divisor = 10  //copypasta is best pasta
+	var/light_intensity = 0
 
 /obj/item/gun/energy/plasmacutter/Initialize()
 	. = ..()
@@ -152,16 +155,12 @@
 		..()
 
 // Tool procs, in case plasma cutter is used as welder
+
 /obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount)
 	if(!QDELETED(cell) && (cell.charge >= amount * 100))
 		return TRUE
 
-	to_chat(user, "<span class='warning'>You need more charge to complete this task!</span>")
-	return FALSE
-
 /obj/item/gun/energy/plasmacutter/use(amount)
-	return cell.use(amount * 100)
-
 /obj/item/gun/energy/plasmacutter/update_icon()
 	return
 
