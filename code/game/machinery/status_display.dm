@@ -267,7 +267,7 @@
 	name = "shuttle display"
 	var/shuttle_id
 
-/obj/machinery/status_display/shuttle/ComponentInitialize()
+/obj/machinery/status_display/shuttle/Initialize()
 	. = ..()
 	RegisterSignal(src, COMSIG_CONNECT_TO_SHUTTLE, .proc/connect_to_shuttle)
 

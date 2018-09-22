@@ -10,7 +10,7 @@
 	var/admin_controlled
 	var/no_destination_swap = 0
 
-/obj/machinery/computer/shuttle/ComponentInitialize()
+/obj/machinery/computer/shuttle/Initialize()
 	. = ..()
 	RegisterSignal(src, COMSIG_CONNECT_TO_SHUTTLE, .proc/connect_to_shuttle)
 
