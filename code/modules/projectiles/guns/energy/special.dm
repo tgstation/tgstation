@@ -37,7 +37,7 @@
 /obj/item/gun/energy/decloner/update_icon()
 	..()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if(!QDELETED(cell) && (cell.charge > shot.e_cost))
+	if(cell.charge > shot.e_cost)
 		add_overlay("decloner_spin")
 
 /obj/item/gun/energy/floragun
@@ -131,7 +131,8 @@
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
 	var/progress_flash_divisor = 10  //copypasta is best pasta
-	var/light_intensity = 0
+	var/light_intensity = 1
+	var/charge_weld = 25 //amount of charge used up to start action (multiplied by amount) and per progress_flash_divisor ticks of welding
 
 /obj/item/gun/energy/plasmacutter/Initialize()
 	. = ..()
@@ -155,12 +156,30 @@
 		..()
 
 // Tool procs, in case plasma cutter is used as welder
+// Plasma cutters do not toggle so they need to explicitly use charge
+/obj/item/gun/energy/plasmacutter/tool_start_check(mob/living/user, amount=0)
+	if(!use(amount)) //nearly everything calls with amount=0 explicitly, handed in use()
+		to_chat(user, "<span class='warning'>You need more charge to complete this task!</span>")
+		return FALSE
+	user.flash_act(light_intensity)
+	return TRUE
 
+//This is called every tick of delay by tool_check_callback
 /obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount)
-	if(!QDELETED(cell) && (cell.charge >= amount * 100))
-		return TRUE
+	if(cell.charge < charge_weld)
+		to_chat(user, "<span class='warning'>You need more charge to complete this task!</span>")
+		return FALSE
+	if (progress_flash_divisor == 0) //still best pasta, using welder code
+		user.flash_act(light_intensity)
+		use(1) //using amount would be disproportionate with things that actually use amount e.g. airlocks
+		progress_flash_divisor = initial(progress_flash_divisor)
+	else
+		progress_flash_divisor--
+	return TRUE
 
 /obj/item/gun/energy/plasmacutter/use(amount)
+	return cell.use(amount ? amount * charge_weld : charge_weld)
+
 /obj/item/gun/energy/plasmacutter/update_icon()
 	return
 
