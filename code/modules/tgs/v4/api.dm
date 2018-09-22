@@ -236,7 +236,7 @@
 	if(port == 0)
 		//to byond 0 means any port and "none" means close vOv
 		port = "none"
-
+	TGS_INFO_LOG("Setting port to [port]")
 	if(!world.OpenPort(port))
 		TGS_ERROR_LOG("Unable to set port to [port]!")
 
