@@ -171,7 +171,7 @@
 			W.reagents = R
 			R.my_atom = W
 			reagents.trans_to(W,1)
-	
+
 		//Make em move dat ass, hun
 		addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_particles, water_particles), 2)
 
@@ -230,3 +230,17 @@
 			theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 
 		user.visible_message("[user] empties out \the [src] onto the floor using the release valve.", "<span class='info'>You quietly empty out \the [src] using its release valve.</span>")
+
+/obj/item/extinguisher/large
+	name = "large extinguisher"
+	icon_state = "large_extinguisher0"
+	sprite_name = "large_extinguisher"
+	item_state = "large_extinguisher"
+	max_water = 100
+
+/obj/item/extinguisher/bluespace
+	name = "bluespace extinguisher"
+	icon_state = "fire_extinguisher_bluespace0"
+	sprite_name = "fire_extinguisher_bluespace"
+	item_state = "bluespace_extinguisher"
+	max_water = 250

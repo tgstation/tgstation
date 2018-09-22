@@ -226,6 +226,24 @@
 	build_path = /obj/item/vending_refill/donksoft
 	category = list("Equipment")
 
+/datum/design/bluespace_extinguisher
+	name = "Bluespace Extinguisher"
+	desc = "What better way to use experimental storage technology than extending the capacity of your fire extinguisher."
+	id = "bluespace_extinguisher"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_SILVER = 500, MAT_PLASMA = 500)
+	build_path = /obj/item/extinguisher/bluespace
+	category = list("Equipment")
+
+/datum/design/large_extinguisher
+	name = "Large Extinguisher"
+	desc = "Oddly not physically larger, just under greater pressure."
+	id = "large_extinguisher"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000)
+	build_path = /obj/item/extinguisher/large
+	category = list("Equipment")
+
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////
@@ -361,7 +379,7 @@
 	build_path = /obj/item/flashlight/seclite
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	
+
 /datum/design/detective_scanner
 	name = "Forensic Scanner"
 	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
@@ -371,7 +389,7 @@
 	build_path = /obj/item/detective_scanner
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	
+
 /datum/design/pepperspray
 	name = "Pepper Spray"
 	desc = "Manufactured by UhangInc, used to blind and down an opponent quickly. Printed pepper sprays do not contain reagents."
@@ -381,7 +399,7 @@
 	build_path = /obj/item/reagent_containers/spray/pepper/empty
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	
+
 /datum/design/bola_energy
 	name = "Energy Bola"
 	desc = "A specialized hard-light bola designed to ensnare fleeing criminals and aid in arrests."
@@ -391,7 +409,7 @@
 	build_path = /obj/item/restraints/legcuffs/bola/energy
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	
+
 /datum/design/zipties
 	name = "Zipties"
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
@@ -401,7 +419,7 @@
 	build_path = /obj/item/restraints/handcuffs/cable/zipties
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	
+
 /datum/design/evidencebag
 	name = "Evidence Bag"
 	desc = "An empty evidence bag."
