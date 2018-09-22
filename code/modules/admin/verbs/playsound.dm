@@ -69,7 +69,7 @@
 	if(!length(url))
 		return YTDL_FAILURE_NO_URL 
 	if(findtext(url, ":") && !findtext(url, GLOB.is_http_protocol))
-		return YTLD_FAILURE_NO_HTTPS
+		return YTDL_FAILURE_NO_HTTPS
 	var/shell_scrubbed_input = shell_url_scrub(web_sound_input)
 	var/list/output = world.shelleo("[ytdl] --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height<=360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist -- \"[shell_scrubbed_input]\"")
 	var/errorlevel = output[SHELLEO_ERRORLEVEL]
@@ -80,6 +80,10 @@
 		try			//NOTE: Try/catch might break admin proccalls on exception catch. It is recommended to admins to not directly call this proc unless they really know what they are doing or are willing to lose their proccall for a round.
 			data = json_decode(stdout)
 		catch(var/exception/e)
+			if(dump_error_to_chat)
+				if(!dump_to && usr)
+					dump_to = usr
+				to_chat(dump_to, "<span class='boldwarning'>Youtube-dl JSON parsing error: </span><span class='warning'>[e]: [stdout]</span>")
 			return YTDL_FAILURE_BAD_JSON
 		if(data["url"] && !findtext(data["url"], GLOB.is_http_protocol))
 			return YTDL_FAILURE_NO_HTTPS
@@ -119,7 +123,7 @@
 		return
 	if(returned == YTDL_FAILURE_BAD_JSON)
 		to_chat(src, "<span class='boldwarning'>Youtube-dl JSON parsing FAILED:</span>")
-		to_chat(src, "<span class='warning'>[e]: [stdout]</span>")
+		to_chat(src, "<span class='warning'>error: [stdout]</span>")
 		return
 	if(returned == YTDL_FAILURE_UNKNOWN)
 		return	
@@ -136,9 +140,9 @@
 				to_chat(world, "<span class='boldannounce'>An admin played: [webpage_url]</span>")
 			if("Cancel")
 				return
-		SSblackbox.record_feedback("nested tally", "played_url", 1, list("[ckey]", "[web_sound_input]"))
-		log_admin("[key_name(src)] played web sound: [web_sound_input]")
-		message_admins("[key_name(src)] played web sound: [web_sound_input]")
+		SSblackbox.record_feedback("nested tally", "played_url", 1, list("[ckey]", "[url]"))
+		log_admin("[key_name(src)] played web sound: [url]")
+		message_admins("[key_name(src)] played web sound: [url]")
 		for(var/m in GLOB.player_list)
 			var/mob/M = m
 			var/client/C = M.client
