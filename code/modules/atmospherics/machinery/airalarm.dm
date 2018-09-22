@@ -204,11 +204,10 @@
 		panel_open = TRUE
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir == 1 ? -24 : 24) : 0
+		update_icon()
 
 	if(name == initial(name))
 		name = "[get_area_name(src)] Air Alarm"
-
-	update_icon()
 
 /obj/machinery/airalarm/Destroy()
 	SSradio.remove_object(src, frequency)
@@ -218,7 +217,11 @@
 
 /obj/machinery/airalarm/Initialize(mapload)
 	. = ..()
+	if(!mapload)
+		return
+	power_change()
 	set_frequency(frequency)
+	update_icon()
 
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()
@@ -667,7 +670,7 @@
 
 /obj/machinery/airalarm/process()
 	if((stat & (NOPOWER|BROKEN)) || shorted)
-		return
+		return FALSE
 
 	var/turf/location = get_turf(src)
 	if(!location)
@@ -703,6 +706,8 @@
 	if(mode == AALARM_MODE_REPLACEMENT && environment_pressure < ONE_ATMOSPHERE * 0.05)
 		mode = AALARM_MODE_SCRUBBING
 		apply_mode()
+
+	return TRUE
 
 
 /obj/machinery/airalarm/proc/post_alert(alert_level)
