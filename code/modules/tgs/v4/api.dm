@@ -222,14 +222,13 @@
 	export_lock = FALSE
 
 /datum/tgs_api/v4/OnReboot()
-	var/json = Export(TGS4_COMM_WORLD_REBOOT)
-	var/list/result = json_decode(json)
+	var/list/result = Export(TGS4_COMM_WORLD_REBOOT)
 	if(!result)
 		return
 	
 	//okay so the standard TGS4 proceedure is: right before rebooting change the port to whatever was sent to us in the above json's data parameter
 
-	var/port = json[TGS4_PARAMETER_DATA]
+	var/port = result[TGS4_PARAMETER_DATA]
 	if(!isnum(port))
 		return	//this is valid, server may just want use to reboot
 
