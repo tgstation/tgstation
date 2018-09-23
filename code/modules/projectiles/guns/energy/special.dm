@@ -165,7 +165,7 @@
 // Can we weld? Plasma cutter does not use charge continuously.
 // Amount cannot be defaulted to 1: most of the code specifies 0 in the call.
 /obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount)
-	if(!cell)
+	if(QDELETED(cell))
 		to_chat(user, "<span class='warning'>[src] does not have a cell, and cannot be used!</span>")
 		return FALSE
 	// Amount cannot be used if drain is made continuous, e.g. amount = 5, charge_weld = 25
@@ -178,7 +178,7 @@
 	return TRUE
 
 /obj/item/gun/energy/plasmacutter/use(amount)
-	return (cell && cell.use(amount ? amount * charge_weld : charge_weld))
+	return !QDELETED(cell) ? cell.use(amount ? amount * charge_weld : charge_weld)) : FALSE
 
 // This only gets called by use_tool(delay > 0)
 // It's also supposed to not get overridden in the first place.
