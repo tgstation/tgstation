@@ -70,9 +70,9 @@
 		chamber_round(0)
 
 /obj/item/gun/ballistic/revolver/can_shoot()
-	return get_ammo(FALSE, FALSE)
+	return get_ammo(0,0)
 
-/obj/item/gun/ballistic/revolver/get_ammo(countchambered = FALSE, countempties = TRUE)
+/obj/item/gun/ballistic/revolver/get_ammo(countchambered = 0, countempties = 1)
 	var/boolets = 0 //mature var names for mature people
 	if (chambered && countchambered)
 		boolets++
@@ -82,8 +82,7 @@
 
 /obj/item/gun/ballistic/revolver/examine(mob/user)
 	..()
-	var/live_ammo = get_ammo(FALSE, FALSE)
-	to_chat(user, "[live_ammo ? live_ammo : "None"] of those are live rounds.")
+	to_chat(user, "[get_ammo(0,0)] of those are live rounds.")
 
 /obj/item/gun/ballistic/revolver/detective
 	name = "\improper .38 Mars Special"
