@@ -226,10 +226,10 @@
 /obj/machinery/particle_accelerator/control_box/ui_interact(mob/user)
 	. = ..()
 
-	if(construction_state != PA_CONSTRUCTION_COMPLETE)
-		return
 	if(construction_state == PA_CONSTRUCTION_PANEL_OPEN)
 		wires.interact(user)
+		return
+	if(construction_state != PA_CONSTRUCTION_COMPLETE)
 		return
 
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
