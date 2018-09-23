@@ -178,7 +178,7 @@
 	return TRUE
 
 /obj/item/gun/energy/plasmacutter/use(amount)
-	return !QDELETED(cell) ? cell.use(amount ? amount * charge_weld : charge_weld)) : FALSE
+	return (!QDELETED(cell) && cell.use(amount ? amount * charge_weld : charge_weld))
 
 // This only gets called by use_tool(delay > 0)
 // It's also supposed to not get overridden in the first place.
