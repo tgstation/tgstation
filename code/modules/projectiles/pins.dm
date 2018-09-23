@@ -214,7 +214,22 @@
 	suit_requirement = /obj/item/clothing/suit/bluetag
 	tagcolor = "blue"
 
+/obj/item/firing_pin/mining
+	name = "mining firing pin"
+	desc = "This is a mining firing pin. It only authorizes firing the weapon in designated mining locations."
+	fail_message = "<span class='warning'>INVALID LOCATION. REQUIRED LOCATION: MINING ZONE.</span>"
+	pin_removeable = TRUE
+
+/obj/item/firing_pin/mining/pin_auth(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if(is_mining_level(user.z)) //if you're somehow on a different turf z and user z, YOU HAVE BIGGER PROBLEMS BOY
+		return TRUE
+	return FALSE
+
+
 /obj/item/firing_pin/Destroy()
 	if(gun)
 		gun.pin = null
 	return ..()
+
