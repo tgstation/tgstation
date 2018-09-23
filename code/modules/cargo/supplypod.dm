@@ -108,7 +108,7 @@
 			M.gib() //After adjusting the fuck outta that brute loss we finish the job with some satisfying gibs
 		M.adjustBruteLoss(damage)
 
-	for (var/i in 1 to B.len-1)
+	for (var/i in B)
 		boomTotal += i //Count up all the values of the explosion
 
 	if (boomTotal != 0) //If the explosion list isn't all zeroes, call an explosion
@@ -137,13 +137,8 @@
 	if (openingSound)
 		playsound(get_turf(holder), openingSound, soundVolume, 0, 0)
 	INVOKE_ASYNC(holder, .proc/setOpened) //Use the INVOKE_ASYNC proc to call setOpened() on whatever the holder may be, without giving the atom/movable base class a setOpened() proc definition
-	for (var/thing in holder.contents) //Go through the contents of the holder
-		if (istype(thing, /datum/supply_order)) //If it's a supply_order datum (here because a supplypod was launched by an expressconsole):
-			var/datum/supply_order/SO = thing
-			SO.generate(T) //Generate it! We don't do this earlier because generate() requires a turf
-		else
-			var/atom/movable/O = thing //Otherwise, move everything from the contents of the holder to the turf of the holder
-			O.forceMove(T)
+	for (var/atom/movable/O in holder.contents) //Go through the contents of the holder
+		O.forceMove(T) //move everything from the contents of the holder to the turf of the holder
 	if (!effectQuiet) //If we aren't being quiet, play an open sound
 		playsound(get_turf(holder), open_sound, 15, 1, -3)
 	if (broken) //If the pod is opening because it's been destroyed, we end here
@@ -186,9 +181,6 @@
 /obj/structure/closet/supplypod/Destroy()
 	if (!opened) //If we havent opened yet, we're opening because we've been destroyed. Lets dump our contents by opening up
 		open(src, broken = TRUE)
-	for (var/thing in src) //Delete any supply_order datums that may lurk in our contents
-		if (istype(thing, /datum/supply_order))
-			QDEL_NULL(thing)
 	return ..()
 
 //------------------------------------FALLING SUPPLY POD-------------------------------------//
@@ -223,12 +215,12 @@
 /obj/effect/ex_act()
 	return
 
-/obj/effect/DPtarget/Initialize(mapload, podParam, var/supplyorder = null)
+/obj/effect/DPtarget/Initialize(mapload, podParam, var/datum/supply_order/SO = null)
 	if (ispath(podParam)) //We can pass either a path for a pod (as expressconsoles do), or a reference to an instantiated pod (as the centcom_podlauncher does)
 		podParam = new podParam() //If its just a path, instantiate it
 	pod = podParam
-	if (supplyorder)
-		pod.contents.Add(supplyorder) //Add the supply order to our pod's contents
+	if (SO)
+		SO.generate(pod)
 	for (var/mob/living/M in podParam) //If there are any mobs in the supplypod, we want to forceMove them into the target. This is so that they can see where they are about to land, AND so that they don't get sent to the nullspace error room (as the pod is currently in nullspace)
 		M.forceMove(src)
 	if(pod.effectStun) //If effectStun is true, stun any mobs caught on this target until the pod gets a chance to hit them
