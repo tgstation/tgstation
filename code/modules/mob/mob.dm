@@ -853,14 +853,7 @@
 	return
 
 /mob/proc/update_sight()
-	for(var/O in orbiters)
-		var/datum/orbit/orbit = O
-		var/obj/effect/wisp/wisp = orbit.orbiter
-		if (istype(wisp))
-			sight |= wisp.sight_flags
-			if(!isnull(wisp.lighting_alpha))
-				lighting_alpha = min(lighting_alpha, wisp.lighting_alpha)
-
+	SEND_SIGNAL(src, COMSIG_MOB_UPDATE_SIGHT)
 	sync_lighting_plane_alpha()
 
 /mob/proc/sync_lighting_plane_alpha()
