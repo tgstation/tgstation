@@ -183,16 +183,22 @@
 	filling_color = "#CD853F"
 	tastes = list("the jungle" = 1, "bananas" = 1)
 	foodtype = MEAT | SUGAR
+	var/faction
 
 /obj/item/reagent_containers/food/snacks/monkeycube/proc/Expand()
 	var/mob/spammer = get_mob_by_key(fingerprintslast)
 	var/mob/living/carbon/monkey/bananas = new(drop_location(), TRUE, spammer)
+	if(faction)
+		bananas.faction = faction
 	if (!QDELETED(bananas))
 		visible_message("<span class='notice'>[src] expands!</span>")
 		bananas.log_message("Spawned via [src] at [AREACOORD(src)], Last attached mob: [key_name(spammer)].", LOG_ATTACK)
 	else if (!spammer) // Visible message in case there are no fingerprints
 		visible_message("<span class='notice'>[src] fails to expand!</span>")
 	qdel(src)
+
+/obj/item/reagent_containers/food/snacks/monkeycube/syndicate
+	faction = list("neutral", ROLE_SYNDICATE)
 
 /obj/item/reagent_containers/food/snacks/enchiladas
 	name = "enchiladas"

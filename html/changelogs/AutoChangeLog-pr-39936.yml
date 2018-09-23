@@ -1,5 +1,0 @@
-author: "MrDoomBringer"
-delete-after: True
-changes: 
-  - admin: "Admins can now spawn things in ICly (as well as do a bunch of other cool new stuff) using the Config/Launch Supplypod verb!"
-  - code_imp: "also supplypods have been refactored"

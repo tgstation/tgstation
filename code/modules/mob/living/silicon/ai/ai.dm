@@ -352,10 +352,10 @@
 		return
 	var/is_anchored = FALSE
 	if(move_resist == MOVE_FORCE_VERY_STRONG)
-		move_resist = MOVE_FORCE_VERY_STRONG
+		move_resist = MOVE_FORCE_NORMAL
 	else
 		is_anchored = TRUE
-		move_resist = MOVE_FORCE_NORMAL
+		move_resist = MOVE_FORCE_VERY_STRONG
 
 	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
 	// the message in the [] will change depending whether or not the AI is anchored

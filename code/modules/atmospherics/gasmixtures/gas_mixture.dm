@@ -410,22 +410,19 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/react(datum/holder)
 	. = NO_REACTION
 	var/list/cached_gases = gases
-	if(!cached_gases.len)
+	if(!length(cached_gases))
 		return
-	var/possible
+	var/list/reactions = list()
 	for(var/I in cached_gases)
-		if(GLOB.nonreactive_gases[I])
-			continue
-		possible = TRUE
-		break
-	if(!possible)
+		reactions += SSair.gas_reactions[I]
+	if(!length(reactions))
 		return
 	reaction_results = new
 	var/temp = temperature
 	var/ener = THERMAL_ENERGY(src)
 
 	reaction_loop:
-		for(var/r in SSair.gas_reactions)
+		for(var/r in reactions)
 			var/datum/gas_reaction/reaction = r
 
 			var/list/min_reqs = reaction.min_requirements
@@ -455,14 +452,11 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 					continue reaction_loop
 			//at this point, all requirements for the reaction are satisfied. we can now react()
 			*/
-
 			. |= reaction.react(src, holder)
 			if (. & STOP_REACTIONS)
 				break
 	if(.)
 		garbage_collect()
-		if(temperature < TCMB) //just for safety
-			temperature = TCMB
 
 //Takes the amount of the gas you want to PP as an argument
 //So I don't have to do some hacky switches/defines/magic strings
