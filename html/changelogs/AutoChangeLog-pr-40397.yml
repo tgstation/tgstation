@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Every department has been given access to their corresponding mecha's maintenance features. These accesses are provided at roundstart, and can be altered by the HoP if need be."
+  - bugfix: "In continuation with the mech accesses, station side personnel will no longer be able to access the maintenance protocols of CentCom & Syndicate exclusive mechas."
