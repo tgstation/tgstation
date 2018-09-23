@@ -330,7 +330,8 @@
 
 /obj/effect/proc_holder/spell/target_hive/hive_control/process()
 	if(active)
-		if(QDELETED(vessel)) //If we've been gibbed or otherwise deleted, ghost both of them
+		if(QDELETED(vessel)) //If we've been gibbed or otherwise deleted, ghost both of them and kill the original
+			original_body.adjustBrainLoss(200)
 			release_control()
 		else if(!is_hivemember(vessel)) //If the vessel is no longer a hive member, return to original bodies
 			to_chat(vessel, "<span class='warning'>Our vessel is one of us no more!</span>")
@@ -342,8 +343,8 @@
 		else if(!QDELETED(original_body) && original_body.z != vessel.z) //Return to original bodies
 			release_control()
 			to_chat(original_body, "<span class='warning'>Our vessel is too far away to control!</span>")
-		if(QDELETED(original_body) || original_body.stat != CONSCIOUS) //Return vessel to its body, either return or ghost the original
-			to_chat(vessel, "<span class='userdanger'>Our body is in grave danger, we abandon the mind of the vessel to tend to more pressing matters!</span>")
+		if(QDELETED(original_body) || original_body.stat == DEAD) //Return vessel to its body, either return or ghost the original
+			to_chat(vessel, "<span class='userdanger'>Our body has been destroyed, the hive cannot survive without its host!</span>")
 			release_control()
 	..()
 

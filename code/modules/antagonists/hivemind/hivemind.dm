@@ -58,6 +58,10 @@
 	hivemembers -= H
 	calc_size()
 
+/datum/antagonist/hivemind/proc/destroy_hive()
+	hivemembers = list()
+	calc_size()
+
 /datum/antagonist/hivemind/antag_panel_data()
 	return "Vessels Assimilated: [hive_size]"
 
