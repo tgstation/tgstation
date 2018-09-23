@@ -1,0 +1,4 @@
+author: "Shdorsh"
+delete-after: True
+changes: 
+  - bugfix: "Fuel cell circuits are now using the right pin"
