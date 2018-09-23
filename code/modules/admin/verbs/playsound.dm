@@ -70,7 +70,7 @@
 		return YTDL_FAILURE_NO_URL 
 	if(findtext(url, ":") && !findtext(url, GLOB.is_http_protocol))
 		return YTDL_FAILURE_NO_HTTPS
-	var/shell_scrubbed_input = shell_url_scrub(web_sound_input)
+	var/shell_scrubbed_input = shell_url_scrub(url)
 	var/list/output = world.shelleo("[ytdl] --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height<=360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist -- \"[shell_scrubbed_input]\"")
 	var/errorlevel = output[SHELLEO_ERRORLEVEL]
 	var/stdout = output[SHELLEO_STDOUT]
@@ -123,8 +123,7 @@
 		to_chat(src, "<span class='warning'>For youtube-dl shortcuts like ytsearch: please use the appropriate full url from the website.</span>")
 		return
 	if(returned == YTDL_FAILURE_BAD_JSON)
-		to_chat(src, "<span class='boldwarning'>Youtube-dl JSON parsing FAILED:</span>")
-		to_chat(src, "<span class='warning'>error: [stdout]</span>")
+		to_chat(src, "<span class='boldwarning'>Youtube-dl JSON parsing FAILED. Error dumped above.</span>")
 		return
 	if(returned == YTDL_FAILURE_UNKNOWN)
 		return	
