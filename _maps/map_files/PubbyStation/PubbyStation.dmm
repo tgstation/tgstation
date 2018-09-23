@@ -32881,7 +32881,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel{
-	icon_state = "purple"
+	icon_state = "floor"
 	},
 /area/hallway/primary/aft)
 "byK" = (
@@ -36146,7 +36146,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark{
-	icon_state = "darkpurple"
+	icon_state = "darkfull"
 	},
 /area/crew_quarters/heads/hor)
 "bES" = (
