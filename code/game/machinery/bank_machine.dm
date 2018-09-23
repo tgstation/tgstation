@@ -26,7 +26,7 @@
 		var/obj/item/stack/spacecash/C = I
 		value = C.value * C.amount
 	if(value)
-		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(D)
 			D.adjust_money(value)
 			to_chat(user, "<span class='notice'>You deposit [I]. The Cargo Budget is now $[D.account_balance].</span>")
@@ -41,7 +41,7 @@
 		if (stat & (BROKEN|NOPOWER))
 			say("Insufficient power. Halting siphon.")
 			siphoning =	FALSE
-		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(!D.has_money(200))
 			say("Cargo budget depleted. Halting siphon.")
 			siphoning = FALSE
@@ -62,7 +62,7 @@
 	. = ..()
 
 	var/dat = "[station_name()] secure vault. Authorized personnel only.<br>"
-	var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(D)
 		dat += "Current Balance: $[D.account_balance]<br>"
 	if(!siphoning)

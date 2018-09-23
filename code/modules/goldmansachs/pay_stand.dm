@@ -27,7 +27,7 @@
 				return
 		var/obj/item/card/id/vbucks = W
 		if(vbucks.registered_account)
-			if(vbucks.registered_account.adjust_money(-1 * price))
+			if(vbucks.registered_account.adjust_money(-price))
 				my_card.registered_account.adjust_money(price)
 				my_card.registered_account.bank_card_talk("Purchase made at your vendor by [vbucks.registered_account.account_holder] for $[price].")
 				to_chat(user, "Thanks for purchasing! The vendor has been informed.")

@@ -168,7 +168,7 @@
 						to_chat(usr, "You have not met the requirements for purchasing this shuttle.")
 					else
 						var/points_to_check
-						var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+						var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 						if(D)
 							points_to_check = D.account_balance
 						if(points_to_check >= S.credit_cost)
@@ -179,7 +179,7 @@
 								M.load_template(S)
 								M.existing_shuttle = SSshuttle.emergency
 								M.action_load(S)
-								D.adjust_money(-1 * S.credit_cost)
+								D.adjust_money(-S.credit_cost)
 								minor_announce("[usr.real_name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
 								message_admins("[ADMIN_LOOKUPFLW(usr)] purchased [S.name].")
 								SSblackbox.record_feedback("text", "shuttle_purchase", 1, "[S.name]")

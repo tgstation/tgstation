@@ -93,9 +93,9 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 		if(!empty_turfs.len)
 			break
-		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(D)
-			if(!D.adjust_money(-1 * SO.pack.cost))
+			if(!D.adjust_money(-SO.pack.cost))
 				continue
 		value += SO.pack.cost
 		SSshuttle.shoppinglist -= SO
@@ -111,7 +111,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	investigate_log("[purchases] orders in this shipment, worth [value] credits. [SSshuttle.points] credits left.", INVESTIGATE_CARGO)
 
 /obj/docking_port/mobile/supply/proc/sell()
-	var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	var/presale_points = D.account_balance
 
 	if(!GLOB.exports_list.len) // No exports list? Generate it!

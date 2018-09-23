@@ -145,8 +145,9 @@
 	if(istype(W, /obj/item/stack/spacecash))
 		var/obj/item/stack/spacecash/vbucks = W
 		if(registered_account)
-			registered_account.adjust_money(vbucks.value * vbucks.amount)
-			to_chat(user, "You insert [vbucks] into [src], adding the value to your account.")
+			var/fortnite_money = vbucks.value * vbucks.amount
+			registered_account.adjust_money(fortnite_money)
+			to_chat(user, "You insert [vbucks] into [src], adding $[fortnite_money] to your account.")
 			qdel(vbucks)
 
 
@@ -156,7 +157,7 @@
 		if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
 			to_chat(user, "The ID needs to be between 111111 and 999999.")
 			return
-		for(var/A in SSgoldmansachs.bank_accounts)
+		for(var/A in SSeconomy.bank_accounts)
 			var/datum/bank_account/B = A
 			if(B.account_id == new_bank_id)
 				B.bank_cards += src
@@ -168,7 +169,7 @@
 	var/amount_to_remove = input(user, "How much do you want to withdraw?", "Account Reclamation", 5) as num
 	if(!amount_to_remove || amount_to_remove < 0)
 		return
-	if(registered_account.adjust_money(-1 * amount_to_remove))
+	if(registered_account.adjust_money(-amount_to_remove))
 		var/obj/item/stack/spacecash/c1/dosh = new /obj/item/stack/spacecash/c1(get_turf(user))
 		dosh.amount = amount_to_remove
 		user.put_in_hands(dosh)
@@ -183,7 +184,7 @@
 	if(registered_account)
 		to_chat(user, "The registered account belongs to '[registered_account.account_holder]' and reports a balance of $[registered_account.account_balance].")
 		if(registered_account.account_job)
-			var/datum/bank_account/D = SSgoldmansachs.get_dep_account(registered_account.account_job.paycheck_department)
+			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			if(D)
 				to_chat(user, "The [D.account_holder] reports a balance of $[D.account_balance].")
 		to_chat(user, "Use your ID in-hand to pull money from your account in the form of cash.")
@@ -459,17 +460,17 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/departmental_budget/Initialize()
 	. = ..()
-	var/datum/bank_account/B = SSgoldmansachs.get_dep_account(department_ID)
+	var/datum/bank_account/B = SSeconomy.get_dep_account(department_ID)
 	if(B)
 		registered_account = B
 		if(!B.bank_cards.Find(src))
 			B.bank_cards += src
 		name = "departmental card ([department_name])"
 		desc = "Provides access to the [department_name]."
-	SSgoldmansachs.dep_cards += src
+	SSeconomy.dep_cards += src
 
 /obj/item/card/id/departmental_budget/Destroy()
-	SSgoldmansachs.dep_cards -= src
+	SSeconomy.dep_cards -= src
 	return ..()
 
 /obj/item/card/id/departmental_budget/civ

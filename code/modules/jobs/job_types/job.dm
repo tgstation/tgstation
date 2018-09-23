@@ -205,7 +205,7 @@
 		C.registered_name = H.real_name
 		C.assignment = J.title
 		C.update_label()
-		for(var/A in SSgoldmansachs.bank_accounts)
+		for(var/A in SSeconomy.bank_accounts)
 			var/datum/bank_account/B = A
 			if(B.account_id == H.account_id)
 				C.registered_account = B

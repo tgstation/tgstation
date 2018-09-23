@@ -93,7 +93,7 @@
 /obj/machinery/computer/cargo/express/ui_data(mob/user)
 	var/canBeacon = beacon && (isturf(beacon.loc) || ismob(beacon.loc))//is the beacon in a valid location?
 	var/list/data = list()
-	var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(D)
 		data["points"] = D.account_balance
 	data["locked"] = locked//swipe an ID to unlock
@@ -136,9 +136,9 @@
 			if (beacon)
 				beacon.update_status(SP_READY) //turns on the beacon's ready light
 		if("printBeacon")
-			var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			if(D)
-				if(D.adjust_money(-1 * BEACON_COST))
+				if(D.adjust_money(-BEACON_COST))
 					cooldown = 10//a ~ten second cooldown for printing beacons to prevent spam
 					var/obj/item/supplypod_beacon/C = new /obj/item/supplypod_beacon(drop_location())
 					C.link_console(src, usr)//rather than in beacon's Initialize(), we can assign the computer to the beacon by reusing this proc)
@@ -165,7 +165,7 @@
 			var/list/empty_turfs
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason)
 			var/points_to_check
-			var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			if(D)
 				points_to_check = D.account_balance
 			if(!(obj_flags & EMAGGED))
@@ -187,7 +187,7 @@
 						if(empty_turfs && empty_turfs.len)
 							LZ = pick(empty_turfs)
 					if (SO.pack.cost <= points_to_check && LZ)//we need to call the cost check again because of the CHECK_TICK call
-						D.adjust_money(-1 * SO.pack.cost)
+						D.adjust_money(-SO.pack.cost)
 						new /obj/effect/DPtarget(LZ, podType, SO)
 						. = TRUE
 						update_icon()
@@ -200,7 +200,7 @@
 						LAZYADD(empty_turfs, T)
 						CHECK_TICK
 					if(empty_turfs && empty_turfs.len)
-						D.adjust_money(-1 * (SO.pack.cost * (0.72*MAX_EMAG_ROCKETS)))
+						D.adjust_money(-(SO.pack.cost * (0.72*MAX_EMAG_ROCKETS)))
 
 						SO.generateRequisition(get_turf(src))
 						for(var/i in 1 to MAX_EMAG_ROCKETS)

@@ -1,7 +1,7 @@
-SUBSYSTEM_DEF(goldmansachs)
+SUBSYSTEM_DEF(economy)
 	name = "Economy"
 	wait = 5 MINUTES
-	init_order = INIT_ORDER_GOLDMANSACHS
+	init_order = INIT_ORDER_ECONOMY
 	var/roundstart_paychecks = 5
 	var/budget_pool = 35000
 	var/list/department_accounts = list(ACCOUNT_CIV = ACCOUNT_CIV_NAME,
@@ -48,13 +48,13 @@ SUBSYSTEM_DEF(goldmansachs)
 	var/list/bank_accounts = list()
 	var/list/dep_cards = list()
 
-/datum/controller/subsystem/goldmansachs/Initialize(timeofday)
+/datum/controller/subsystem/economy/Initialize(timeofday)
 	var/budget_to_hand_out = round(budget_pool / department_accounts.len)
 	for(var/A in department_accounts)
 		new /datum/bank_account/department(A, budget_to_hand_out)
 	return ..()
 
-/datum/controller/subsystem/goldmansachs/fire(resumed = 0)
+/datum/controller/subsystem/economy/fire(resumed = 0)
 	boring_eng_payout()  // Payout based on integrity.
 	boring_sci_payout() // Payout based on slimes.
 	boring_secmedsrv_payout() // Payout based on crew safety, health, and mood.
@@ -64,12 +64,12 @@ SUBSYSTEM_DEF(goldmansachs)
 		B.payday(1)
 
 
-/datum/controller/subsystem/goldmansachs/proc/get_dep_account(dep_id)
+/datum/controller/subsystem/economy/proc/get_dep_account(dep_id)
 	for(var/datum/bank_account/department/D in generated_accounts)
 		if(D.department_id == dep_id)
 			return D
 
-/datum/controller/subsystem/goldmansachs/proc/boring_eng_payout()
+/datum/controller/subsystem/economy/proc/boring_eng_payout()
 	var/engineering_cash = 3000
 	engineering_check.count()
 	var/station_integrity = min(PERCENT(GLOB.start_state.score(engineering_check)), 100)
@@ -79,7 +79,7 @@ SUBSYSTEM_DEF(goldmansachs)
 	if(D)
 		D.adjust_money(engineering_cash)
 
-/datum/controller/subsystem/goldmansachs/proc/boring_secmedsrv_payout()
+/datum/controller/subsystem/economy/proc/boring_secmedsrv_payout()
 	var/crew
 	var/alive_crew
 	var/dead_monsters
@@ -118,7 +118,7 @@ SUBSYSTEM_DEF(goldmansachs)
 	if(D)
 		D.adjust_money(cash_to_grant)
 
-/datum/controller/subsystem/goldmansachs/proc/boring_sci_payout()
+/datum/controller/subsystem/economy/proc/boring_sci_payout()
 	var/science_bounty = 0
 	for(var/mob/living/simple_animal/slime/S in GLOB.mob_list)
 		if(S.stat == DEAD)
@@ -128,7 +128,7 @@ SUBSYSTEM_DEF(goldmansachs)
 	if(D)
 		D.adjust_money(science_bounty)
 
-/datum/controller/subsystem/goldmansachs/proc/boring_civ_payout()
+/datum/controller/subsystem/economy/proc/boring_civ_payout()
 	var/datum/bank_account/D = get_dep_account(ACCOUNT_CIV)
 	if(D)
 		D.adjust_money((rand(1,5) * 500))

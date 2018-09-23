@@ -8,14 +8,14 @@
 
 /datum/bank_account/New(newname, job)
 	if(add_to_accounts)
-		SSgoldmansachs.bank_accounts += src
+		SSeconomy.bank_accounts += src
 	account_holder = newname
 	account_job = job
 	account_id = rand(111111,999999)
 
 /datum/bank_account/Destroy()
 	if(add_to_accounts)
-		SSgoldmansachs.bank_accounts -= src
+		SSeconomy.bank_accounts -= src
 	return ..()
 
 /datum/bank_account/proc/_adjust_money(amt)
@@ -35,7 +35,7 @@
 /datum/bank_account/proc/transfer_money(datum/bank_account/from, amount)
 	if(from.has_money(amount))
 		adjust_money(amount)
-		from.adjust_money(-1 * amount)
+		from.adjust_money(-amount)
 		return TRUE
 	return FALSE
 
@@ -43,7 +43,7 @@
 	if(free)
 		adjust_money(account_job.paycheck * amt_of_paychecks)
 	else
-		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(account_job.paycheck_department)
+		var/datum/bank_account/D = SSeconomy.get_dep_account(account_job.paycheck_department)
 		if(D)
 			if(!transfer_money(D, account_job.paycheck * amt_of_paychecks))
 				bank_card_talk("ERROR: Payday aborted, departmental funds insufficient.")
@@ -69,5 +69,5 @@
 /datum/bank_account/department/New(dep_id, budget)
 	department_id = dep_id
 	account_balance = budget
-	account_holder = SSgoldmansachs.department_accounts[dep_id]
-	SSgoldmansachs.generated_accounts += src
+	account_holder = SSeconomy.department_accounts[dep_id]
+	SSeconomy.generated_accounts += src

@@ -302,57 +302,59 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			onstation = TRUE
 	var/dat = ""
 	var/datum/bank_account/account
+	var/mob/living/carbon/human/H
+	var/obj/item/card/id/C
 	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		var/obj/item/card/id/C = H.get_idcard()
-		if(!C)
-			dat += "<font color = 'red'><h3>No ID Card detected!</h3></font>"
-		else if (!C.registered_account)
-			dat += "<font color = 'red'><h3>No account on registered ID card!</h3></font>"
-		if((onstation && C && C.registered_account) || (!onstation))
-			if(onstation)
-				account = C.registered_account
-			dat += "<h3>Select an item</h3>"
-			dat += "<div class='statusDisplay'>"
-			if(!product_records.len)
-				dat += "<font color = 'red'>No product loaded!</font>"
+		H = user
+		C = H.get_idcard()
+
+	if(!C)
+		dat += "<font color = 'red'><h3>No ID Card detected!</h3></font>"
+	else if (!C.registered_account)
+		dat += "<font color = 'red'><h3>No account on registered ID card!</h3></font>"
+	if(onstation && C && C.registered_account)
+		account = C.registered_account
+	dat += "<h3>Select an item</h3>"
+	dat += "<div class='statusDisplay'>"
+	if(!product_records.len)
+		dat += "<font color = 'red'>No product loaded!</font>"
+	else
+		var/list/display_records = product_records + coin_records
+		if(extended_inventory)
+			display_records = product_records + coin_records + hidden_records
+		dat += "<ul>"
+		for (var/datum/data/vending_product/R in display_records)
+			var/price_listed = "$[default_price]"
+			var/is_hidden = hidden_records.Find(R)
+			if(is_hidden && !extended_inventory)
+				continue
+			if(coin_records.Find(R) || is_hidden)
+				price_listed = "$[extra_price]"
+			if(R.custom_price)
+				price_listed = "$[R.custom_price]"
+			if(!onstation || account && account.account_job && account.account_job.paycheck_department == payment_department)
+				price_listed = "FREE"
+			dat += "<li>"
+			if(R.amount > 0 && ((C && C.registered_account && onstation) || (!onstation && iscarbon(user))))
+				dat += "<a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a> "
 			else
-				var/list/display_records = product_records + coin_records
-				if(extended_inventory)
-					display_records = product_records + coin_records + hidden_records
-				dat += "<ul>"
-				for (var/datum/data/vending_product/R in display_records)
-					var/price_listed = "$[default_price]"
-					var/is_hidden = hidden_records.Find(R)
-					if(is_hidden && !extended_inventory)
-						continue
-					if(coin_records.Find(R) || is_hidden)
-						price_listed = "$[extra_price]"
-					if(R.custom_price)
-						price_listed = "$[R.custom_price]"
-					if(!onstation || account && account.account_job && account.account_job.paycheck_department == payment_department)
-						price_listed = "FREE"
-					dat += "<li>"
-					if(R.amount > 0)
-						dat += "<a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a> "
-					else
-						dat += "<span class='linkOff'>Sold out</span> "
-					dat += "<font color = '[R.display_color]'><b>[sanitize(R.name)] ([price_listed])</b>:</font>"
-					dat += " <b>[R.amount]</b>"
-					dat += "</li>"
-				dat += "</ul>"
-			dat += "</div>"
-			if(onstation)
-				dat += "<b>Balance: $[account.account_balance]</b>"
-			if(istype(src, /obj/machinery/vending/snack))
-				dat += "<h3>Chef's Food Selection</h3>"
-				dat += "<div class='statusDisplay'>"
-				for (var/O in dish_quants)
-					if(dish_quants[O] > 0)
-						var/N = dish_quants[O]
-						dat += "<a href='byond://?src=[REF(src)];dispense=[sanitize(O)]'>Dispense</A> "
-						dat += "<B>[capitalize(O)] ($[default_price]): [N]</B><br>"
-				dat += "</div>"
+				dat += "<span class='linkOff'>Not Available</span> "
+			dat += "<font color = '[R.display_color]'><b>[sanitize(R.name)] ([price_listed])</b>:</font>"
+			dat += " <b>[R.amount]</b>"
+			dat += "</li>"
+		dat += "</ul>"
+	dat += "</div>"
+	if(onstation && C && C.registered_account)
+		dat += "<b>Balance: $[account.account_balance]</b>"
+	if(istype(src, /obj/machinery/vending/snack))
+		dat += "<h3>Chef's Food Selection</h3>"
+		dat += "<div class='statusDisplay'>"
+		for (var/O in dish_quants)
+			if(dish_quants[O] > 0)
+				var/N = dish_quants[O]
+				dat += "<a href='byond://?src=[REF(src)];dispense=[sanitize(O)]'>Dispense</A> "
+				dat += "<B>[capitalize(O)] ($[default_price]): [N]</B><br>"
+		dat += "</div>"
 
 	var/datum/browser/popup = new(user, "vending", (name))
 	popup.set_content(dat)
@@ -389,9 +391,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 				vend_ready = 1
 				return
 			var/datum/bank_account/account = C.registered_account
-			if(!account.adjust_money(-1 * chef_price))
-				say("You do not posess the funds to purchase this meal.")
-		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_SRV)
+			if(!account.adjust_money(-chef_price))
+				say("You do not possess the funds to purchase this meal.")
+		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SRV)
 		if(D)
 			D.adjust_money(chef_price)
 		use_power(5)
@@ -457,12 +459,12 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 				var/datum/bank_account/account = C.registered_account
 				if(account.account_job && account.account_job.paycheck_department == payment_department)
 					price_to_use = 0
-				if(price_to_use && !account.adjust_money(-1 * price_to_use))
-					say("You do not posess the funds to purchase [R.name].")
+				if(price_to_use && !account.adjust_money(-price_to_use))
+					say("You do not possess the funds to purchase [R.name].")
 					flick(icon_deny,src)
 					vend_ready = 1
 					return
-				var/datum/bank_account/D = SSgoldmansachs.get_dep_account(payment_department)
+				var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
 				if(D)
 					D.adjust_money(price_to_use)
 		say("Thank you for shopping with [src]!")

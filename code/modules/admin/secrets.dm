@@ -471,9 +471,9 @@
 			if(!check_rights(R_FUN))
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Anarcho-capitalist Station"))
-			SSgoldmansachs.full_ancap = !SSgoldmansachs.full_ancap
+			SSeconomy.full_ancap = !SSeconomy.full_ancap
 			message_admins("[key_name_admin(usr)] toggled Anarcho-capitalist mode")
-			if(SSgoldmansachs.full_ancap)
+			if(SSeconomy.full_ancap)
 				priority_announce("The NAP is now in full effect.", null, 'sound/ai/commandreport.ogg')
 			else
 				priority_announce("The NAP has been revoked.", null, 'sound/ai/commandreport.ogg')

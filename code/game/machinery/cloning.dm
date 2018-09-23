@@ -224,7 +224,7 @@
 			connected_message("Clone Ejected: Loss of power.")
 
 	else if(mob_occupant && (mob_occupant.loc == src))
-		if(SSgoldmansachs.full_ancap)
+		if(SSeconomy.full_ancap)
 			if(!current_insurance)
 				go_out()
 				connected_message("Clone Ejected: No bank account.")
@@ -237,7 +237,7 @@
 					if(internal_radio)
 						SPEAK("The cloning of [mob_occupant.real_name] has been ended prematurely due to being unable to pay.")
 				else
-					var/datum/bank_account/D = SSgoldmansachs.get_dep_account(payment_department)
+					var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
 					if(D)
 						D.adjust_money(fair_market_price)
 		if(mob_occupant && (mob_occupant.stat == DEAD) || (mob_occupant.suiciding) || mob_occupant.hellbound)  //Autoeject corpses and suiciding dudes.

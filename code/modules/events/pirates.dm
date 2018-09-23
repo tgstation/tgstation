@@ -29,7 +29,7 @@
 	if(fake)
 		return
 	threat = new
-	var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(D)
 		payoff = round(D.account_balance * 0.80)
 	threat.title = "Business proposition"
@@ -40,9 +40,9 @@
 
 /datum/round_event/pirates/proc/answered()
 	if(threat && threat.answered == 1)
-		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(D)
-			if(D.adjust_money(-1 * payoff))
+			if(D.adjust_money(-payoff))
 				priority_announce("Thanks for the credits, landlubbers.",sender_override = ship_name)
 				paid_off = TRUE
 				return
@@ -106,10 +106,10 @@
 /obj/machinery/shuttle_scrambler/process()
 	if(active)
 		if(is_station_level(z))
-			var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_CAR)
+			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			if(D)
 				var/siphoned = min(D.account_balance,siphon_per_tick)
-				D.adjust_money(-1 * siphoned)
+				D.adjust_money(-siphoned)
 				credits_stored += siphoned
 			interrupt_research()
 		else

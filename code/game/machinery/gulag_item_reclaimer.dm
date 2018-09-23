@@ -93,7 +93,7 @@
 			var/mob/M = locate(params["mobref"])
 			if(M == usr || allowed(usr))
 				if(inserted_id)
-					var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_SEC)
+					var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SEC)
 					if(D)
 						D.adjust_money(inserted_id.points * 1.5)
 				drop_items(M)

@@ -135,7 +135,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 		else
 			linked_techweb.largest_bomb_value = TECHWEB_BOMB_POINTCAP
 			point_gain = 1000
-		var/datum/bank_account/D = SSgoldmansachs.get_dep_account(ACCOUNT_SCI)
+		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SCI)
 		if(D)
 			D.adjust_money(point_gain)
 			linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, point_gain)

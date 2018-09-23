@@ -235,8 +235,8 @@ Class Procs:
 	return TRUE
 
 /obj/machinery/proc/check_nap_violations()
-	if(!SSgoldmansachs.full_ancap)
-		return
+	if(!SSeconomy.full_ancap)
+		return TRUE
 	if(occupant && !state_open)
 		if(ishuman(occupant))
 			var/mob/living/carbon/human/H = occupant
@@ -248,11 +248,11 @@ Class Procs:
 					nap_violation()
 					return FALSE
 				else
-					if(!insurance.adjust_money(-1 * fair_market_price))
+					if(!insurance.adjust_money(-fair_market_price))
 						say("[market_verb] NAP Violation: Unable to pay.")
 						nap_violation()
 						return FALSE
-					var/datum/bank_account/D = SSgoldmansachs.get_dep_account(payment_department)
+					var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
 					if(D)
 						D.adjust_money(fair_market_price)
 			else
