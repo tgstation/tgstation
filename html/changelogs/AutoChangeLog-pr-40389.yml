@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "some floor tiles had their broken states broken by the list-culling PR a while back. they're fixed now."
