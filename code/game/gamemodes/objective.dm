@@ -490,7 +490,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 		var/custom_path = input(admin,"Search for target item type:","Type") as null|text
 		if (!custom_path)
 			return
-		var/obj/item/custom_target = pick_closest_path(custom_path, make_types_fancy(subtypesof(/obj)))
+		var/obj/item/custom_target = pick_closest_path(custom_path, make_types_fancy(subtypesof(/obj/item)))
 		var/custom_name = initial(custom_target.name)
 		custom_name = stripped_input(admin,"Enter target name:", "Objective target", custom_name)
 		if (!custom_name)
