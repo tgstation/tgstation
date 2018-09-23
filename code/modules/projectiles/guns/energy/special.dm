@@ -156,32 +156,39 @@
 		..()
 
 // Tool procs, in case plasma cutter is used as welder
-// Plasma cutters do not toggle so they need to explicitly use charge
-/obj/item/gun/energy/plasmacutter/tool_start_check(mob/living/user, amount=0)
-	if(!use(amount)) //nearly everything calls with amount=0 explicitly, handed in use()
-		to_chat(user, "<span class='warning'>You need more charge to complete this task!</span>")
-		return FALSE
-	user.flash_act(light_intensity)
-	return TRUE
+// Can we start welding?
+/obj/item/gun/energy/plasmacutter/tool_start_check(mob/living/user, amount)
+	. = tool_use_check(user, amount)
+	if(. && user)
+		user.flash_act(light_intensity)
 
-//This is called every tick of delay by tool_check_callback
+// Can we weld? Plasma cutter does not use charge continuously.
+// Amount cannot be defaulted to 1: most of the code specifies 0 in the call.
 /obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount)
 	if(!cell)
 		to_chat(user, "<span class='warning'>[src] does not have a cell, and cannot be used!</span>")
 		return FALSE
-	if(cell.charge < charge_weld)
+	// Amount cannot be used if drain is made continuous, e.g. amount = 5, charge_weld = 25,
+	if(amount ? cell.charge < charge_weld * amount : cell.charge < charge_weld)
 		to_chat(user, "<span class='warning'>You need more charge to complete this task!</span>")
 		return FALSE
-	if (progress_flash_divisor == 0) //still best pasta, using welder code
-		user.flash_act(light_intensity)
-		use(1) //using amount would be disproportionate with things that actually use amount e.g. airlocks
-		progress_flash_divisor = initial(progress_flash_divisor)
-	else
-		progress_flash_divisor--
+
 	return TRUE
 
 /obj/item/gun/energy/plasmacutter/use(amount)
 	return cell.use(amount ? amount * charge_weld : charge_weld)
+
+// This only gets called by use_tool(delay > 0)
+// It's also supposed to not get overridden in the first place.
+/obj/item/gun/energy/plasmacutter/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
+	. = ..() //return tool_use_check(user, amount) && (!extra_checks || extra_checks.Invoke())
+	if(. && user)
+		if (progress_flash_divisor == 0)
+			user.flash_act(min(light_intensity,1))
+			progress_flash_divisor = initial(progress_flash_divisor)
+		else
+			progress_flash_divisor--
+
 
 /obj/item/gun/energy/plasmacutter/update_icon()
 	return
