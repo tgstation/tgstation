@@ -6,6 +6,7 @@
 #define RANDOM_DRAWING "Random Drawing"
 #define RANDOM_ORIENTED "Random Oriented"
 #define RANDOM_RUNE "Random Rune"
+#define RANDOM_SHAPE "Random Shape"
 #define RANDOM_ANY "Random Anything"
 
 #define PAINT_NORMAL	1
@@ -43,11 +44,12 @@
 	var/static/list/drawings = list(".")
 	var/static/list/oriented = list("arrow","body") // These turn to face the same way as the drawer
 	var/static/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
+	var/static/list/shapes = list(".")
 	var/static/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
-		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER, RANDOM_SYMBOL, RANDOM_PUNCTUATION, RANDOM_DRAWING)
+		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER, RANDOM_SYMBOL, RANDOM_PUNCTUATION, RANDOM_DRAWING, RANDOM_SHAPE)
 	var/static/list/graffiti_large_h = list("yiffhell", "secborg", "paint")
 
-	var/static/list/all_drawables = graffiti + letters + punctuation + numerals + symbols + drawings + oriented + runes + graffiti_large_h
+	var/static/list/all_drawables = graffiti + letters + punctuation + numerals + symbols + drawings + oriented + runes + shapes + graffiti_large_h
 
 	var/paint_mode = PAINT_NORMAL
 
@@ -205,6 +207,11 @@
 	for(var/R in runes)
 		R_items += list(list("item" = R))
 
+	var/list/Sh_items = list()
+	. += list(list(name = "Shapes", "items" = Sh_items))
+	for(var/Sh in runes)
+		Sh_items += list(list("item" = Sh))
+
 	var/list/rand_items = list()
 	. += list(list(name = "Random", "items" = rand_items))
 	for(var/i in randoms)
@@ -302,6 +309,8 @@
 			drawing = pick(symbols)
 		if(RANDOM_DRAWING)
 			drawing = pick(drawings)
+		if(RANDOM_SHAPE)
+			drawing = pick(shapes)
 		if(RANDOM_GRAFFITI)
 			drawing = pick(graffiti)
 		if(RANDOM_RUNE)
@@ -749,6 +758,7 @@
 #undef RANDOM_PUNCTUATION
 #undef RANDOM_SYMBOL
 #undef RANDOM_DRAWING
+#undef RANDOM_SHAPE
 #undef RANDOM_NUMBER
 #undef RANDOM_ORIENTED
 #undef RANDOM_RUNE
