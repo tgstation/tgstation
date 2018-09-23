@@ -168,7 +168,9 @@
 	if(!cell)
 		to_chat(user, "<span class='warning'>[src] does not have a cell, and cannot be used!</span>")
 		return FALSE
-	// Amount cannot be used if drain is made continuous, e.g. amount = 5, charge_weld = 25,
+	// Amount cannot be used if drain is made continuous, e.g. amount = 5, charge_weld = 25
+	// Then it'll drain 125 at first and 25 periodically, but fail if charge dips below 125 even though it still can finish action
+	// Alternately it'll need to drain amount*charge_weld every period, which is either obscene or makes it free for other uses
 	if(amount ? cell.charge < charge_weld * amount : cell.charge < charge_weld)
 		to_chat(user, "<span class='warning'>You need more charge to complete this task!</span>")
 		return FALSE
@@ -176,7 +178,7 @@
 	return TRUE
 
 /obj/item/gun/energy/plasmacutter/use(amount)
-	return cell.use(amount ? amount * charge_weld : charge_weld)
+	return (cell && cell.use(amount ? amount * charge_weld : charge_weld))
 
 // This only gets called by use_tool(delay > 0)
 // It's also supposed to not get overridden in the first place.
