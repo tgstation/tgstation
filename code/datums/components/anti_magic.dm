@@ -7,8 +7,8 @@
 	holy = _holy
 
 /datum/component/anti_magic/proc/can_protect(_magic = TRUE, _holy = FALSE)
-	if(!enabled)
-		return FALSE
+	/*if(!enabled)
+		return FALSE*/
 	if((_magic && magic) || (_holy && holy))
 		return TRUE
 	return FALSE

@@ -179,6 +179,7 @@
 		category = list("Ammunition")
 		build_type = PODFAB
 		build_path = /obj/item/projectile/bullet/srmrocket
+		materials = list(MAT_METAL = 40000, MAT_URANIUM = 4000,MAT_PLASMA = 8000)
 		construction_time = 20
 
 	p_45_ammo/
@@ -188,6 +189,7 @@
 		category = list("Ammunition")
 		build_type = PODFAB
 		build_path = /obj/item/ammo_box/c45
+		materials = list(MAT_METAL = 30000)
 		construction_time = 20
 
 	p_9mm_ammo/
@@ -197,6 +199,7 @@
 		category = list("Ammunition")
 		build_type = PODFAB
 		build_path = /obj/item/ammo_box/c9mm
+		materials = list(MAT_METAL = 30000)
 		construction_time = 20
 
 	p_10mm_ammo/
@@ -206,6 +209,7 @@
 		category = list("Ammunition")
 		build_type = PODFAB
 		build_path = /obj/item/ammo_box/c10mm
+		materials = list(MAT_METAL = 30000)
 		construction_time = 20
 
 	p_75_ammo/
@@ -215,6 +219,7 @@
 		category = list("Ammunition")
 		build_type = PODFAB
 		build_path = /obj/item/ammo_box/magazine/m75
+		materials = list(MAT_METAL = 30000)
 		construction_time = 20
 
 	/*
