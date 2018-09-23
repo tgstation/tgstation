@@ -231,7 +231,7 @@
 				if(internal_radio)
 					SPEAK("The cloning of [mob_occupant.real_name] has been terminated due to no bank account to draw payment from.")
 			else
-				if(!current_insurance.adjust_money(-1*fair_market_price))
+				if(!current_insurance.adjust_money(-fair_market_price))
 					go_out()
 					connected_message("Clone Ejected: Out of Money.")
 					if(internal_radio)
